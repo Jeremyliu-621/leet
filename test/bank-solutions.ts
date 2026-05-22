@@ -1,0 +1,332 @@
+// Reference solutions — test-only, never imported by application code.
+// Each function is the source of truth that proves every test case's
+// `expected` value in the matching problem definition.
+
+export const solutions: Record<string, (...args: unknown[]) => unknown> = {
+  // --- arrays --------------------------------------------------------------
+  'running-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const out: number[] = [];
+    let sum = 0;
+    for (const n of nums) {
+      sum += n;
+      out.push(sum);
+    }
+    return out;
+  },
+
+  'peak-element-count': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let count = 0;
+    for (let i = 1; i < nums.length - 1; i++) {
+      const prev = nums[i - 1] as number;
+      const cur = nums[i] as number;
+      const next = nums[i + 1] as number;
+      if (cur > prev && cur > next) count++;
+    }
+    return count;
+  },
+
+  'rotate-left-one': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    if (nums.length <= 1) return [...nums];
+    const out: number[] = [];
+    for (let i = 1; i < nums.length; i++) out.push(nums[i] as number);
+    out.push(nums[0] as number);
+    return out;
+  },
+
+  // --- strings -------------------------------------------------------------
+  'vowel-tally': (...args: unknown[]) => {
+    const text = args[0] as string;
+    const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+    let count = 0;
+    for (const ch of text.toLowerCase()) {
+      if (vowels.has(ch)) count++;
+    }
+    return count;
+  },
+
+  'reverse-words-order': (...args: unknown[]) => {
+    const sentence = args[0] as string;
+    return sentence.split(' ').reverse().join(' ');
+  },
+
+  'is-palindrome-clean': (...args: unknown[]) => {
+    const text = args[0] as string;
+    const cleaned = text.toLowerCase().replace(/[^a-z]/g, '');
+    let lo = 0;
+    let hi = cleaned.length - 1;
+    while (lo < hi) {
+      if (cleaned[lo] !== cleaned[hi]) return false;
+      lo++;
+      hi--;
+    }
+    return true;
+  },
+
+  // --- hash-map ------------------------------------------------------------
+  'first-unique-char': (...args: unknown[]) => {
+    const text = args[0] as string;
+    const counts = new Map<string, number>();
+    for (const ch of text) counts.set(ch, (counts.get(ch) ?? 0) + 1);
+    for (let i = 0; i < text.length; i++) {
+      const ch = text[i] as string;
+      if (counts.get(ch) === 1) return i;
+    }
+    return -1;
+  },
+
+  'two-sum-indices': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    const seen = new Map<number, number>();
+    for (let i = 0; i < nums.length; i++) {
+      const value = nums[i] as number;
+      const need = target - value;
+      const j = seen.get(need);
+      if (j !== undefined) return [j, i];
+      seen.set(value, i);
+    }
+    return [-1, -1];
+  },
+
+  'most-frequent-value': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const counts = new Map<number, number>();
+    for (const n of nums) counts.set(n, (counts.get(n) ?? 0) + 1);
+    let bestValue = nums[0] as number;
+    let bestCount = 0;
+    for (const [value, count] of counts) {
+      if (count > bestCount || (count === bestCount && value < bestValue)) {
+        bestValue = value;
+        bestCount = count;
+      }
+    }
+    return bestValue;
+  },
+
+  // --- two-pointers --------------------------------------------------------
+  'reverse-array-inplace': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const out = [...nums];
+    let lo = 0;
+    let hi = out.length - 1;
+    while (lo < hi) {
+      const tmp = out[lo] as number;
+      out[lo] = out[hi] as number;
+      out[hi] = tmp;
+      lo++;
+      hi--;
+    }
+    return out;
+  },
+
+  'sorted-pair-exists': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    let lo = 0;
+    let hi = nums.length - 1;
+    while (lo < hi) {
+      const sum = (nums[lo] as number) + (nums[hi] as number);
+      if (sum === target) return true;
+      if (sum < target) lo++;
+      else hi--;
+    }
+    return false;
+  },
+
+  'merge-sorted-lists': (...args: unknown[]) => {
+    const a = args[0] as number[];
+    const b = args[1] as number[];
+    const out: number[] = [];
+    let i = 0;
+    let j = 0;
+    while (i < a.length && j < b.length) {
+      const av = a[i] as number;
+      const bv = b[j] as number;
+      if (av <= bv) {
+        out.push(av);
+        i++;
+      } else {
+        out.push(bv);
+        j++;
+      }
+    }
+    while (i < a.length) {
+      out.push(a[i] as number);
+      i++;
+    }
+    while (j < b.length) {
+      out.push(b[j] as number);
+      j++;
+    }
+    return out;
+  },
+
+  // --- sliding-window ------------------------------------------------------
+  'max-window-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let windowSum = 0;
+    for (let i = 0; i < k; i++) windowSum += nums[i] as number;
+    let best = windowSum;
+    for (let i = k; i < nums.length; i++) {
+      windowSum += (nums[i] as number) - (nums[i - k] as number);
+      if (windowSum > best) best = windowSum;
+    }
+    return best;
+  },
+
+  'longest-equal-run': (...args: unknown[]) => {
+    const text = args[0] as string;
+    if (text.length === 0) return 0;
+    let best = 1;
+    let current = 1;
+    for (let i = 1; i < text.length; i++) {
+      if (text[i] === text[i - 1]) {
+        current++;
+        if (current > best) best = current;
+      } else {
+        current = 1;
+      }
+    }
+    return best;
+  },
+
+  'min-window-average': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let windowSum = 0;
+    for (let i = 0; i < k; i++) windowSum += nums[i] as number;
+    let best = windowSum;
+    for (let i = k; i < nums.length; i++) {
+      windowSum += (nums[i] as number) - (nums[i - k] as number);
+      if (windowSum < best) best = windowSum;
+    }
+    return best;
+  },
+
+  // --- binary-search -------------------------------------------------------
+  'find-target-index': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    let lo = 0;
+    let hi = nums.length - 1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      const value = nums[mid] as number;
+      if (value === target) return mid;
+      if (value < target) lo = mid + 1;
+      else hi = mid - 1;
+    }
+    return -1;
+  },
+
+  'integer-square-root': (...args: unknown[]) => {
+    const n = args[0] as number;
+    if (n < 2) return n;
+    let lo = 1;
+    let hi = n;
+    let answer = 1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (mid * mid <= n) {
+        answer = mid;
+        lo = mid + 1;
+      } else {
+        hi = mid - 1;
+      }
+    }
+    return answer;
+  },
+
+  'first-not-smaller': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    let lo = 0;
+    let hi = nums.length;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if ((nums[mid] as number) < target) lo = mid + 1;
+      else hi = mid;
+    }
+    return lo;
+  },
+
+  // --- stack ---------------------------------------------------------------
+  'balanced-brackets': (...args: unknown[]) => {
+    const text = args[0] as string;
+    const pairs: Record<string, string> = { ')': '(', ']': '[', '}': '{' };
+    const stack: string[] = [];
+    for (const ch of text) {
+      if (ch === '(' || ch === '[' || ch === '{') {
+        stack.push(ch);
+      } else {
+        const expected = pairs[ch];
+        if (stack.pop() !== expected) return false;
+      }
+    }
+    return stack.length === 0;
+  },
+
+  'remove-adjacent-dupes': (...args: unknown[]) => {
+    const text = args[0] as string;
+    const stack: string[] = [];
+    for (const ch of text) {
+      if (stack.length > 0 && stack[stack.length - 1] === ch) {
+        stack.pop();
+      } else {
+        stack.push(ch);
+      }
+    }
+    return stack.join('');
+  },
+
+  'next-greater-element': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const out: number[] = new Array(nums.length).fill(-1);
+    const stack: number[] = [];
+    for (let i = 0; i < nums.length; i++) {
+      const value = nums[i] as number;
+      while (stack.length > 0 && (nums[stack[stack.length - 1] as number] as number) < value) {
+        const idx = stack.pop() as number;
+        out[idx] = value;
+      }
+      stack.push(i);
+    }
+    return out;
+  },
+
+  // --- math ----------------------------------------------------------------
+  'digit-sum': (...args: unknown[]) => {
+    let n = args[0] as number;
+    let sum = 0;
+    if (n === 0) return 0;
+    while (n > 0) {
+      sum += n % 10;
+      n = Math.floor(n / 10);
+    }
+    return sum;
+  },
+
+  'is-prime-number': (...args: unknown[]) => {
+    const n = args[0] as number;
+    if (n < 2) return false;
+    for (let d = 2; d * d <= n; d++) {
+      if (n % d === 0) return false;
+    }
+    return true;
+  },
+
+  'greatest-common-divisor': (...args: unknown[]) => {
+    let a = args[0] as number;
+    let b = args[1] as number;
+    while (b !== 0) {
+      const tmp = b;
+      b = a % b;
+      a = tmp;
+    }
+    return a;
+  },
+};
