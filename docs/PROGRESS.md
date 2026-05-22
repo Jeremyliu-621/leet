@@ -6,11 +6,12 @@
 
 ---
 
-**Last updated:** 2026-05-21
-**Current phase:** Phase 2 — Data layer
-**Current focus:** Domain types, the typed storage wrapper, and the problem bank.
-**Build status:** 🟢 `npm run build`, `npm run typecheck`, `npm run test` all green
-**Next up:** Write `src/lib/types.ts` — the shared domain types.
+**Last updated:** 2026-05-22
+**Current phase:** Phase 4 — Challenge UI
+**Current focus:** Building the challenge screen — problem panel, code editor, test runner, timer.
+**Build status:** 🟢 `npm run build` and `npm run test` green (84 tests across 6 files)
+**Next up:** Lay out the challenge page (left problem panel, top-right meta, editor panel). Use the
+`frontend-design` skill; honour the pure-grayscale design system in `CLAUDE.md` §5.
 
 ---
 
@@ -37,25 +38,28 @@
 - [x] Verified `npm run build` produces a loadable `dist/` (manifest + all pages + SW + content script)
 - [x] Vitest configured (`vitest.config.ts`) + passing smoke test
 
-## Phase 2 — Data layer
+## Phase 2 — Data layer ✅
 
-- [ ] `src/lib/types.ts` — all shared domain types
-- [ ] `src/lib/storage/schema.ts` + `defaults.ts` — keys, areas, default values
-- [ ] `src/lib/storage/store.ts` — typed get/set wrapper, area-aware, quota-error-safe + tests
-- [ ] `src/lib/problems/types.ts` — `Problem`, `TestCase`, `ProblemExample`
-- [ ] `src/lib/problems/bank/` — author 12+ original easy problems with visible + hidden tests
-- [ ] `src/lib/problems/index.ts` — bank registry + selector (by difficulty/tags)
-- [ ] `test/problem-bank.test.ts` — validate every problem against its reference solution
-- [ ] Tests for the problem selector
+- [x] `src/lib/types.ts` — all shared domain types
+- [x] `src/lib/storage/schema.ts` + `defaults.ts` — keys, areas, default values
+- [x] `src/lib/storage/store.ts` — typed get/set/update/remove wrapper, area-aware + tests
+- [x] `src/lib/problems/types.ts` — `Problem`, `TestCase`, `ProblemExample`
+- [x] `src/lib/problems/bank/` — 24 original easy problems (3 per tag) with visible + hidden tests
+- [x] `src/lib/problems/index.ts` — bank registry + preference-aware selector
+- [x] `test/problem-bank.test.ts` — every problem verified against its reference solution
+- [x] Tests for the problem selector
 
-## Phase 3 — Code runner
+## Phase 3 — Code runner ✅
 
-- [ ] `src/runner/worker.js` — runs user JS against test cases, structured results
-- [ ] `src/pages/sandbox/` — sandbox host page that owns the Worker + hard timeout
-- [ ] `src/lib/judge/judge.ts` — challenge-side API: post code+tests, await verdict
-- [ ] `src/lib/messaging/messages.ts` — typed message contracts
-- [ ] Deep-equality comparison for expected vs actual + tests
-- [ ] Tests: timeout, runtime error, wrong answer, all-pass, malformed code
+- [x] `src/runner/worker.js` — runs user JS against test cases, structured results
+- [x] `src/pages/sandbox/runner.ts` — sandbox host page that owns the Worker + hard timeout
+- [x] `src/lib/judge/judge.ts` — challenge-side API: post code+tests, await verdict
+- [x] `src/lib/messaging/messages.ts` — typed message contracts
+- [x] Deep-equality comparison for expected vs actual + tests
+- [x] Tests: timeout, runtime error, wrong answer, all-pass, malformed code (verdict judging)
+
+> Note: the live Blob-Worker executing real user code under the sandbox CSP is browser-only and
+> gets its first end-to-end exercise in Phase 4. The judging logic it feeds is fully unit-tested.
 
 ## Phase 4 — Challenge UI
 
@@ -145,3 +149,10 @@
 - 2026-05-21: Phase 1 done. Toolchain verified — `@crxjs/vite-plugin` v2 is stable (2.4.0); pinned
   Vite 7 + `@vitejs/plugin-react` 5 for a fully compatible trio (`DECISIONS.md` D2, D12). The dist
   `manifest.json` correctly resolves all five page surfaces, the SW loader, and the content script.
+- 2026-05-22: Phase 2 done — 24 verified problems (3 per tag), typed area-aware storage layer, and
+  a preference-aware problem selector that relaxes its filter so a challenge can always be shown.
+- 2026-05-22: Phase 3 done — sandboxed Blob-Worker code runner with a hard timeout, plus
+  deep-equality and verdict judging, all unit-tested. 84 tests passing overall.
+- Phase 4 guidance: the challenge page should use `runTests` from `src/lib/judge` for Run/Submit,
+  `pickChallengeProblem` from `src/lib/problems` to choose a problem, and CodeMirror 6 for the
+  editor. The `target` blocked URL arrives as a `?target=` query param on `challenge.html`.
