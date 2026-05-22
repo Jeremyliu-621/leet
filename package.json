@@ -1,0 +1,28 @@
+{
+  "name": "leetlock",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Turn distracting websites into mini coding-interview gates. Solve a problem, earn timed access.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Jeremy Liu",
+  "homepage": "https://github.com/Jeremyliu-621/leet",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jeremyliu-621/leet.git"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "build:watch": "vite build --watch --mode development",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "format": "prettier --write .",
+    "icons": "node scripts/generate-icons.mjs"
+  }
+}
