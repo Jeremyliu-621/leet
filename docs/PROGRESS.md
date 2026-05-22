@@ -7,10 +7,10 @@
 ---
 
 **Last updated:** 2026-05-21
-**Current phase:** Phase 1 — Toolchain & scaffold
-**Current focus:** Wiring the Vite + CRXJS + React + Tailwind toolchain so `npm run build` works.
-**Build status:** 🔴 not yet building (scaffold in progress)
-**Next up:** Install dependencies, then write Vite/TS/Tailwind config and `manifest.config.ts`.
+**Current phase:** Phase 2 — Data layer
+**Current focus:** Domain types, the typed storage wrapper, and the problem bank.
+**Build status:** 🟢 `npm run build`, `npm run typecheck`, `npm run test` all green
+**Next up:** Write `src/lib/types.ts` — the shared domain types.
 
 ---
 
@@ -24,18 +24,18 @@
 - [x] `docs/DECISIONS.md` — decision log seeded
 - [x] `docs/PROGRESS.md` — this tracker
 
-## Phase 1 — Toolchain & scaffold
+## Phase 1 — Toolchain & scaffold ✅
 
-- [ ] Install dependencies (React, Vite, CRXJS, Tailwind v3, CodeMirror, types, Vitest, resvg)
-- [ ] `tsconfig.json` + `tsconfig.node.json` (strict)
-- [ ] `vite.config.ts` wiring CRXJS + React
-- [ ] Tailwind v3 config + `postcss.config.js` + `src/ui/styles/globals.css` with grayscale tokens
-- [ ] `.prettierrc`
-- [ ] `src/manifest.config.ts` — MV3 manifest (permissions, pages, sandbox, CSP, web_accessible_resources)
-- [ ] `assets/logo.svg` + `scripts/generate-icons.mjs` → generate `public/icons/*`
-- [ ] Stub all five surfaces so the project builds: popup, options, challenge, blocked, sandbox pages + service worker + content script
-- [ ] Verify `npm run build` produces a loadable `dist/`; verify `npm run typecheck`
-- [ ] Set up Vitest; add one smoke test
+- [x] Install dependencies (React 19, Vite 7, CRXJS 2.4, Tailwind v3, CodeMirror 6, Vitest, resvg)
+- [x] `tsconfig.json` (strict; single config covering `src`, `test`, and config files)
+- [x] `vite.config.ts` wiring CRXJS + React
+- [x] Tailwind v3 config + `postcss.config.js` + `src/ui/styles/globals.css` with grayscale tokens
+- [x] `.prettierrc` + `.gitattributes`
+- [x] `src/manifest.config.ts` — MV3 manifest (permissions, pages, sandbox, CSP, web_accessible_resources)
+- [x] `assets/logo.svg` + `scripts/generate-icons.mjs` → generated `public/icons/*`
+- [x] Stub all five surfaces: popup, options, challenge, blocked, sandbox + service worker + content script
+- [x] Verified `npm run build` produces a loadable `dist/` (manifest + all pages + SW + content script)
+- [x] Vitest configured (`vitest.config.ts`) + passing smoke test
 
 ## Phase 2 — Data layer
 
@@ -142,5 +142,6 @@
 - 2026-05-21: Project bootstrapped. Research confirms the differentiation thesis — competitors
   redirect to leetcode.com and poll its unofficial API; LeetLock authors its own problems and runs
   code in-extension. See `docs/RESEARCH.md`.
-- Toolchain risk to watch: `@crxjs/vite-plugin` is a v2 beta — Phase 1 must prove the build works
-  before moving on (fallback documented in `DECISIONS.md` D2).
+- 2026-05-21: Phase 1 done. Toolchain verified — `@crxjs/vite-plugin` v2 is stable (2.4.0); pinned
+  Vite 7 + `@vitejs/plugin-react` 5 for a fully compatible trio (`DECISIONS.md` D2, D12). The dist
+  `manifest.json` correctly resolves all five page surfaces, the SW loader, and the content script.
