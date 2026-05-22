@@ -1,0 +1,13 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- LeetLock mark: a padlock with a code-caret keyhole. Pure grayscale. -->
+  <rect width="128" height="128" rx="28" fill="#0F0F0F" />
+  <rect x="1" y="1" width="126" height="126" rx="27" fill="none" stroke="#2A2A2A" stroke-width="2" />
+  <!-- shackle -->
+  <path d="M44 58 V46 a20 20 0 0 1 40 0 V58" fill="none" stroke="#EDEDED" stroke-width="11"
+    stroke-linecap="round" />
+  <!-- body -->
+  <rect x="33" y="57" width="62" height="47" rx="11" fill="#EDEDED" />
+  <!-- keyhole -->
+  <circle cx="64" cy="75" r="7.5" fill="#0F0F0F" />
+  <path d="M61 79 L67 79 L69 95 L59 95 Z" fill="#0F0F0F" />
+</svg>
