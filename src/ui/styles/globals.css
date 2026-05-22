@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Pure-grayscale design tokens, also exposed as CSS variables for contexts
+   that are not Tailwind-styled (e.g. the CodeMirror editor theme). */
+:root {
+  color-scheme: dark;
+  --ll-bg: #0a0a0a;
+  --ll-surface: #161616;
+  --ll-surface-2: #1e1e1e;
+  --ll-border: #262626;
+  --ll-border-strong: #383838;
+  --ll-text: #ededed;
+  --ll-muted: #8a8a8a;
+  --ll-faint: #5a5a5a;
+  --ll-accent: #ffffff;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ll-bg);
+  color: var(--ll-text);
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: #ffffff;
+  color: #0a0a0a;
+}
