@@ -12,12 +12,13 @@ styling; CodeMirror 6 as the code editor.
 **Rationale:** modern, well-documented, fast iteration. CRXJS is the de-facto standard for MV3 +
 Vite and handles the painful manifest ↔ bundle wiring for service workers and content scripts.
 
-### 2026-05-21 — D2: CRXJS v2 beta, with a documented fallback
+### 2026-05-21 — D2: `@crxjs/vite-plugin` for the MV3 build
 
-Use `@crxjs/vite-plugin` v2 (beta). **Rationale:** it is the most widely used solution and solves
-real MV3 bundling pain. **Risk:** it is a long-running beta. **Mitigation:** Phase 1 verifies
-`npm run build` produces a loadable `dist/`. If CRXJS proves unworkable, fall back to a manual Vite
-multi-page build plus a separate esbuild pass for the content script (IIFE).
+Use `@crxjs/vite-plugin` — v2 is **stable** (2.4.0; note the npm `beta` dist-tag is stale and
+points at an old `2.0.0-beta.33`, so install `@latest`). **Rationale:** it is the de-facto standard
+for MV3 + Vite and solves the painful manifest ↔ bundle wiring for service workers and content
+scripts. **Fallback if it ever breaks:** a manual Vite multi-page build plus a separate esbuild
+pass for the content script (IIFE). Phase 1 verifies `npm run build` produces a loadable `dist/`.
 
 ### 2026-05-21 — D3: Code execution via sandboxed page + Web Worker
 
@@ -82,3 +83,10 @@ heavily tested, engineered-enough, handle edge cases, explicit over clever) were
 Use Tailwind CSS v3. **Rationale:** v3 is rock-stable and universally compatible with the Vite +
 CRXJS toolchain; for a long autonomous build, toolchain reliability outweighs v4's newer features.
 The grayscale design system does not depend on the Tailwind major version.
+
+### 2026-05-21 — D12: Pin Vite 7 + `@vitejs/plugin-react` 5
+
+Vite's latest is 8, but `@vitejs/plugin-react@6` requires Vite 8, while CRXJS's declared Vite 8
+support is brand new. Pin **Vite 7** (the mature `previous` release line) with
+**`@vitejs/plugin-react@5`** (supports Vite 4–8) and **CRXJS 2.4.0** (supports Vite 3–8). This trio
+is fully consistent and well soaked. Revisit once CRXJS has proven Vite 8 support in the wild.

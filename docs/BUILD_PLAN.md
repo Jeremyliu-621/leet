@@ -171,7 +171,7 @@ demoable vertical slice** (block a site → solve a problem → earn timed acces
 
 | Risk                                                      | Mitigation                                                                 |
 | --------------------------------------------------------- | -------------------------------------------------------------------------- |
-| `@crxjs/vite-plugin` is a v2 beta; could break builds.    | Verify `npm run build` in Phase 1. Fallback: manual Vite multi-page + esbuild content-script build. Logged in `DECISIONS.md`. |
+| `@crxjs/vite-plugin` is third-party and central to the build. | v2 is stable (2.4.0). Verify `npm run build` in Phase 1. Fallback: manual Vite multi-page + esbuild content-script build. Logged in `DECISIONS.md` D2. |
 | Sandbox-page CSP / worker wiring is fiddly.               | Worker is plain JS, raw-imported and Blob-instantiated — avoids bundler edge cases. Isolated `judge` tests. |
 | SPA route changes evade DNR.                              | Content script + `webNavigation.onHistoryStateUpdated` as a second layer.   |
 | Ephemeral service worker drops timers.                    | Persist `expiresAt`/`appliesAt` timestamps; use `chrome.alarms`; reconcile on every SW wake. |
