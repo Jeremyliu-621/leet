@@ -5840,6 +5840,103 @@ def countCharacters(words, chars):
     return total
 `,
 
+  'validate-stack-sequences': `
+def validateStackSequences(pushed, popped):
+    pushed = list(pushed)
+    popped = list(popped)
+    stack = []
+    j = 0
+    for val in pushed:
+        stack.append(val)
+        while stack and stack[-1] == popped[j]:
+            stack.pop()
+            j += 1
+    return len(stack) == 0
+`,
+
+  '132-pattern': `
+def find132pattern(nums):
+    nums = list(nums)
+    stack = []
+    min3 = float('-inf')
+    for i in range(len(nums) - 1, -1, -1):
+        if nums[i] < min3:
+            return True
+        while stack and stack[-1] < nums[i]:
+            min3 = stack.pop()
+        stack.append(nums[i])
+    return False
+`,
+
+  'frequency-of-most-frequent-element': `
+def maxFrequency(nums, k):
+    nums = sorted(nums)
+    left = 0
+    total = 0
+    result = 0
+    for right in range(len(nums)):
+        total += nums[right]
+        while nums[right] * (right - left + 1) - total > k:
+            total -= nums[left]
+            left += 1
+        result = max(result, right - left + 1)
+    return result
+`,
+
+  'find-common-characters': `
+def commonChars(words):
+    words = list(words)
+    min_freq = [float('inf')] * 26
+    for word in words:
+        freq = [0] * 26
+        for c in word:
+            freq[ord(c) - 97] += 1
+        for i in range(26):
+            min_freq[i] = min(min_freq[i], freq[i])
+    result = []
+    for i in range(26):
+        result.extend([chr(97 + i)] * int(min_freq[i]))
+    return result
+`,
+
+  'minimum-rounds-to-complete-tasks': `
+def minimumRounds(tasks):
+    from collections import Counter
+    freq = Counter(list(tasks))
+    rounds = 0
+    for f in freq.values():
+        if f == 1:
+            return -1
+        rounds += (f + 2) // 3
+    return rounds
+`,
+
+  'minimum-steps-make-anagram': `
+def minSteps(s, t):
+    freq = [0] * 26
+    for c in s:
+        freq[ord(c) - 97] += 1
+    for c in t:
+        freq[ord(c) - 97] -= 1
+    return sum(-v for v in freq if v < 0)
+`,
+
+  'find-words-formed-by-characters': `
+def countCharacters(words, chars):
+    words = list(words)
+    char_freq = [0] * 26
+    for c in chars:
+        char_freq[ord(c) - 97] += 1
+    total = 0
+    for word in words:
+        w_freq = [0] * 26
+        for c in word:
+            w_freq[ord(c) - 97] += 1
+        if all(w_freq[i] <= char_freq[i] for i in range(26)):
+            total += len(word)
+    return total
+`,
+
   'sum-of-left-leaves': `
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
@@ -6194,4 +6291,29 @@ def leafSimilar(root1, root2):
     return dp[0][n-1]
 `,
 
+  'counting-words-with-given-prefix': `
+def prefixCount(words, pref):
+    words = list(words)
+    return sum(1 for w in words if w.startswith(pref))
+`,
+
+  'number-of-laser-beams': `
+def numberOfBeams(bank):
+    bank = list(bank)
+    prev = 0
+    total = 0
+    for row in bank:
+        count = row.count('1')
+        if count > 0:
+            total += prev * count
+            prev = count
+    return total
+`,
+
+  'minimum-number-of-moves-seat': `
+def minMovesToSeat(seats, students):
+    seats = sorted(seats)
+    students = sorted(students)
+    return sum(abs(seats[i] - students[i]) for i in range(len(seats)))
+`,
 };

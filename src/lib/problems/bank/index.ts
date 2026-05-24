@@ -59,6 +59,8 @@ import { problem as howManyNumbersSmallerThanCurrent } from './how-many-numbers-
 import { problem as findTargetIndicesAfterSorting } from './find-target-indices-after-sorting';
 import { problem as toeplitzMatrix } from './toeplitz-matrix';
 import { problem as transposeMatrix } from './transpose-matrix';
+import { problem as minimumNumberOfMovesSeat } from './minimum-number-of-moves-seat';
+import { problem as numberOfLaserBeams } from './number-of-laser-beams';
 // arrays — medium
 import { problem as rangeSumQuery2D } from './range-sum-query-2d';
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
@@ -99,6 +101,8 @@ import { problem as missingRanges } from './missing-ranges';
 import { problem as queueReconstructionByHeight } from './queue-reconstruction-by-height';
 
 // strings — easy
+import { problem as findCommonCharacters } from './find-common-characters';
+import { problem as countingWordsWithGivenPrefix } from './counting-words-with-given-prefix';
 import { problem as addBinary } from './add-binary';
 import { problem as goalParser } from './goal-parser';
 import { problem as detectCapital } from './detect-capital';
@@ -152,6 +156,7 @@ import { problem as stringCompression } from './string-compression';
 import { problem as restoreIpAddresses } from './restore-ip-addresses';
 
 // hash-map — easy
+import { problem as findWordsFormedByCharacters } from './find-words-formed-by-characters';
 import { problem as twoOutOfThree } from './two-out-of-three';
 import { problem as checkIfAllCharactersAppearTwice } from './check-if-all-characters-appear-twice';
 import { problem as findDifferenceOfTwoArrays } from './find-difference-of-two-arrays';
@@ -165,6 +170,8 @@ import { problem as minimumOperationsAlternating } from './minimum-operations-al
 import { problem as maximumNumberOfBalloons } from './maximum-number-of-balloons';
 import { problem as countCharacters } from './count-characters';
 // hash-map — medium (additional)
+import { problem as minimumRoundsToCompleteTasks } from './minimum-rounds-to-complete-tasks';
+import { problem as minimumStepsMakeAnagram } from './minimum-steps-make-anagram';
 import { problem as longestWordInDictionary } from './longest-word-in-dictionary';
 import { problem as twoSumIndices } from './two-sum-indices';
 import { problem as mostFrequentValue } from './most-frequent-value';
@@ -216,6 +223,7 @@ import { problem as maxConsecutiveFlips } from './max-consecutive-flips';
 import { problem as countSubarraysBoundedMax } from './count-subarrays-bounded-max';
 
 // sliding-window — medium
+import { problem as frequencyOfMostFrequentElement } from './frequency-of-most-frequent-element';
 import { problem as minimumSizeSubarraySum } from './minimum-size-subarray-sum';
 import { problem as atMostKDistinct } from './at-most-k-distinct';
 import { problem as permutationInString } from './permutation-in-string';
@@ -278,6 +286,8 @@ import { problem as asteroidCollision } from './asteroid-collision';
 import { problem as scoreOfParentheses } from './score-of-parentheses';
 import { problem as validParenthesisString } from './valid-parenthesis-string';
 import { problem as carFleet } from './car-fleet';
+import { problem as validateStackSequences } from './validate-stack-sequences';
+import { problem as pattern132 } from './132-pattern';
 // stack — hard
 import { problem as basicCalculator } from './basic-calculator';
 import { problem as sumSubarrayMinimums } from './sum-subarray-minimums';
@@ -592,6 +602,8 @@ export const problems: readonly Problem[] = [
   checkArrayArithmeticProgression,
   howManyNumbersSmallerThanCurrent,
   findTargetIndicesAfterSorting,
+  minimumNumberOfMovesSeat,
+  numberOfLaserBeams,
   singleNumber,
   toeplitzMatrix,
   transposeMatrix,
@@ -644,6 +656,8 @@ export const problems: readonly Problem[] = [
   missingRanges,
   queueReconstructionByHeight,
   // strings — easy
+  findCommonCharacters,
+  countingWordsWithGivenPrefix,
   addBinary,
   goalParser,
   detectCapital,
@@ -708,6 +722,7 @@ export const problems: readonly Problem[] = [
   minimumOperationsAlternating,
   maximumNumberOfBalloons,
   countCharacters,
+  findWordsFormedByCharacters,
   twoSumIndices,
   mostFrequentValue,
   anagramCheck,
@@ -720,6 +735,8 @@ export const problems: readonly Problem[] = [
   wordPattern,
   sumOfUniqueElements,
   // hash-map — medium
+  minimumRoundsToCompleteTasks,
+  minimumStepsMakeAnagram,
   topKFrequentWords,
   letterCombinationsPhone,
   groupAnagrams,
@@ -759,6 +776,7 @@ export const problems: readonly Problem[] = [
   maxConsecutiveFlips,
   countSubarraysBoundedMax,
   // sliding-window — medium
+  frequencyOfMostFrequentElement,
   maxConsecutiveOnesIII,
   maximumVowels,
   longestSubarrayAfterDeleting,
@@ -815,6 +833,8 @@ export const problems: readonly Problem[] = [
   minStack,
   maximumNestingDepth,
   // stack — medium
+  validateStackSequences,
+  pattern132,
   onlineStockSpan,
   simplifyPath,
   nextGreaterElementII,

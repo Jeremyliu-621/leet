@@ -6510,6 +6510,93 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return total;
   },
 
+  'validate-stack-sequences': (...args: unknown[]) => {
+    const pushed = args[0] as number[], popped = args[1] as number[];
+    const stack: number[] = [];
+    let j = 0;
+    for (const val of pushed) {
+      stack.push(val);
+      while (stack.length > 0 && stack[stack.length - 1] === popped[j]) {
+        stack.pop(); j++;
+      }
+    }
+    return stack.length === 0;
+  },
+
+  '132-pattern': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const stack: number[] = [];
+    let min3 = -Infinity;
+    for (let i = nums.length - 1; i >= 0; i--) {
+      if (nums[i]! < min3) return true;
+      while (stack.length > 0 && stack[stack.length - 1]! < nums[i]!) {
+        min3 = stack.pop()!;
+      }
+      stack.push(nums[i]!);
+    }
+    return false;
+  },
+
+  'frequency-of-most-frequent-element': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const k = args[1] as number;
+    let left = 0, sum = 0, max = 0;
+    for (let right = 0; right < nums.length; right++) {
+      sum += nums[right]!;
+      while (nums[right]! * (right - left + 1) - sum > k) sum -= nums[left++]!;
+      max = Math.max(max, right - left + 1);
+    }
+    return max;
+  },
+
+  'find-common-characters': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const minFreq = new Array(26).fill(Infinity);
+    for (const word of words) {
+      const freq = new Array(26).fill(0);
+      for (const c of word) freq[c.charCodeAt(0) - 97]++;
+      for (let i = 0; i < 26; i++) minFreq[i] = Math.min(minFreq[i], freq[i]);
+    }
+    const result: string[] = [];
+    for (let i = 0; i < 26; i++) {
+      for (let j = 0; j < minFreq[i]; j++) result.push(String.fromCharCode(97 + i));
+    }
+    return result;
+  },
+
+  'minimum-rounds-to-complete-tasks': (...args: unknown[]) => {
+    const tasks = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const t of tasks) freq.set(t, (freq.get(t) ?? 0) + 1);
+    let rounds = 0;
+    for (const f of freq.values()) {
+      if (f === 1) return -1;
+      rounds += Math.ceil(f / 3);
+    }
+    return rounds;
+  },
+
+  'minimum-steps-make-anagram': (...args: unknown[]) => {
+    const s = args[0] as string, t = args[1] as string;
+    const freq = new Array(26).fill(0);
+    for (const c of s) freq[c.charCodeAt(0) - 97]++;
+    for (const c of t) freq[c.charCodeAt(0) - 97]--;
+    return freq.reduce((sum, v) => sum + Math.max(0, -v), 0);
+  },
+
+  'find-words-formed-by-characters': (...args: unknown[]) => {
+    const words = args[0] as string[], chars = args[1] as string;
+    const charFreq = new Array(26).fill(0);
+    for (const c of chars) charFreq[c.charCodeAt(0) - 97]++;
+    let total = 0;
+    for (const word of words) {
+      const wFreq = new Array(26).fill(0);
+      for (const c of word) wFreq[c.charCodeAt(0) - 97]++;
+      if (wFreq.every((v, i) => v <= charFreq[i])) total += word.length;
+    }
+    return total;
+  },
+
   'sum-of-left-leaves': (...args: unknown[]) => {
     const arr = args[0] as (number | null)[];
     if (!arr || arr.length === 0 || arr[0] === null) return 0;
@@ -6831,6 +6918,27 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       }
     }
     return dp[0]![n - 1]!;
+  },
+
+  'counting-words-with-given-prefix': (...args: unknown[]) => {
+    const words = args[0] as string[], pref = args[1] as string;
+    return words.filter(w => w.startsWith(pref)).length;
+  },
+
+  'number-of-laser-beams': (...args: unknown[]) => {
+    const bank = args[0] as string[];
+    let prev = 0, total = 0;
+    for (const row of bank) {
+      const count = [...row].filter(c => c === '1').length;
+      if (count > 0) { total += prev * count; prev = count; }
+    }
+    return total;
+  },
+
+  'minimum-number-of-moves-seat': (...args: unknown[]) => {
+    const seats = [...(args[0] as number[])].sort((a, b) => a - b);
+    const students = [...(args[1] as number[])].sort((a, b) => a - b);
+    return seats.reduce((sum, s, i) => sum + Math.abs(s - students[i]!), 0);
   },
 
 };
