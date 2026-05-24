@@ -1907,4 +1907,55 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[m - 1]![n - 1];
   },
 
+  // --- hash-map — hard -------------------------------------------------------
+  'four-sum-ii': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const nums3 = args[2] as number[];
+    const nums4 = args[3] as number[];
+    const map = new Map<number, number>();
+    for (const a of nums1) {
+      for (const b of nums2) {
+        map.set(a + b, (map.get(a + b) ?? 0) + 1);
+      }
+    }
+    let count = 0;
+    for (const c of nums3) {
+      for (const d of nums4) {
+        count += map.get(-(c + d)) ?? 0;
+      }
+    }
+    return count;
+  },
+
+  'max-points-on-line': (...args: unknown[]) => {
+    const points = args[0] as number[][];
+    if (points.length <= 2) return points.length;
+    function gcd(a: number, b: number): number {
+      return b === 0 ? a : gcd(b, a % b);
+    }
+    let result = 1;
+    for (let i = 0; i < points.length; i++) {
+      const map = new Map<string, number>();
+      let localMax = 0;
+      for (let j = i + 1; j < points.length; j++) {
+        let dy = points[j]![1]! - points[i]![1]!;
+        let dx = points[j]![0]! - points[i]![0]!;
+        const g = gcd(Math.abs(dy), Math.abs(dx));
+        dy /= g;
+        dx /= g;
+        if (dx < 0 || (dx === 0 && dy < 0)) {
+          dy = -dy;
+          dx = -dx;
+        }
+        const key = `${dy},${dx}`;
+        const cnt = (map.get(key) ?? 0) + 1;
+        map.set(key, cnt);
+        localMax = Math.max(localMax, cnt);
+      }
+      result = Math.max(result, localMax + 1);
+    }
+    return result;
+  },
+
 };

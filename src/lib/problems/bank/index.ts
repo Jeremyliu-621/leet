@@ -57,6 +57,9 @@ import { problem as topKFrequentElements } from './top-k-frequent-elements';
 import { problem as longestConsecutiveSequence } from './longest-consecutive-sequence';
 import { problem as findAllAnagramsInString } from './find-all-anagrams-in-string';
 import { problem as maximumErasureValue } from './maximum-erasure-value';
+// hash-map — hard
+import { problem as fourSumII } from './four-sum-ii';
+import { problem as maxPointsOnLine } from './max-points-on-line';
 
 // two-pointers — hard
 import { problem as trappingRainWater } from './trapping-rain-water';
@@ -210,6 +213,9 @@ export const problems: readonly Problem[] = [
   longestConsecutiveSequence,
   findAllAnagramsInString,
   maximumErasureValue,
+  // hash-map — hard
+  fourSumII,
+  maxPointsOnLine,
   // two-pointers — hard
   trappingRainWater,
   fourSum,

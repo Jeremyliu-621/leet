@@ -1413,4 +1413,39 @@ export const pythonSolutions: Record<string, string> = {
             dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
     return dp[m - 1][n - 1]
 `,
+  'four-sum-ii': `def fourSumII(nums1: list[int], nums2: list[int], nums3: list[int], nums4: list[int]) -> int:
+    from collections import defaultdict
+    sum_map = defaultdict(int)
+    for a in nums1:
+        for b in nums2:
+            sum_map[a + b] += 1
+    count = 0
+    for c in nums3:
+        for d in nums4:
+            count += sum_map[-(c + d)]
+    return count
+`,
+  'max-points-on-line': `def maxPoints(points: list[list[int]]) -> int:
+    from math import gcd
+    n = len(points)
+    if n <= 2:
+        return n
+    result = 1
+    for i in range(n):
+        counts = {}
+        local_max = 0
+        for j in range(i + 1, n):
+            dy = points[j][1] - points[i][1]
+            dx = points[j][0] - points[i][0]
+            g = gcd(abs(dy), abs(dx))
+            dy //= g
+            dx //= g
+            if dx < 0 or (dx == 0 and dy < 0):
+                dy, dx = -dy, -dx
+            key = (dy, dx)
+            counts[key] = counts.get(key, 0) + 1
+            local_max = max(local_max, counts[key])
+        result = max(result, local_max + 1)
+    return result
+`,
 };
