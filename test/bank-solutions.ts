@@ -2868,6 +2868,17 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return -1;
   },
 
+  'same-tree': (...args: unknown[]) => {
+    const p = _buildTree(args[0] as (number | null)[]);
+    const q = _buildTree(args[1] as (number | null)[]);
+    const same = (a: _TN | null, b: _TN | null): boolean => {
+      if (!a && !b) return true;
+      if (!a || !b) return false;
+      return a.v === b.v && same(a.l, b.l) && same(a.r, b.r);
+    };
+    return same(p, q);
+  },
+
   'binary-tree-max-path-sum': (...args: unknown[]) => {
     let best = -Infinity;
     const gain = (n: _TN | null): number => {

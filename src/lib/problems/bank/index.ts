@@ -238,12 +238,13 @@ import { problem as invertBinaryTree } from './invert-binary-tree';
 import { problem as binaryTreePaths } from './binary-tree-paths';
 import { problem as pathSum } from './path-sum';
 import { problem as diameterOfBinaryTree } from './diameter-of-binary-tree';
+import { problem as sameTree } from './same-tree';
 // tree — medium
 import { problem as validateBst } from './validate-bst';
 import { problem as levelOrderTraversal } from './level-order-traversal';
+import { problem as binaryTreeRightSideView } from './binary-tree-right-side-view';
 import { problem as lowestCommonAncestorBst } from './lowest-common-ancestor-bst';
 import { problem as countGoodNodes } from './count-good-nodes';
-import { problem as binaryTreeRightSideView } from './binary-tree-right-side-view';
 // tree — hard
 import { problem as binaryTreeMaxPathSum } from './binary-tree-max-path-sum';
 
@@ -472,12 +473,13 @@ export const problems: readonly Problem[] = [
   binaryTreePaths,
   pathSum,
   diameterOfBinaryTree,
+  sameTree,
   // tree — medium
   validateBst,
   levelOrderTraversal,
+  binaryTreeRightSideView,
   lowestCommonAncestorBst,
   countGoodNodes,
-  binaryTreeRightSideView,
   // tree — hard
   binaryTreeMaxPathSum,
 ];

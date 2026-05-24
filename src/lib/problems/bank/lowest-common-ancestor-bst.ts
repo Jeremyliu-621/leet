@@ -2,33 +2,27 @@ import type { Problem } from '../types';
 
 const JS_PREAMBLE = `
 class TreeNode {
-  constructor(val, left = null, right = null) {
+  constructor(val = 0, left = null, right = null) {
     this.val = val; this.left = left; this.right = right;
   }
 }
 function __fromArray__(arr) {
-  if (!arr || arr.length === 0) return null;
+  if (!arr || arr.length === 0 || arr[0] === null) return null;
   const root = new TreeNode(arr[0]);
   const queue = [root];
   let i = 1;
   while (queue.length > 0 && i < arr.length) {
     const node = queue.shift();
-    if (arr[i] !== null && arr[i] !== undefined) {
-      node.left = new TreeNode(arr[i]);
-      queue.push(node.left);
-    }
+    if (arr[i] !== null && arr[i] !== undefined) { node.left = new TreeNode(arr[i]); queue.push(node.left); }
     i++;
-    if (i < arr.length && arr[i] !== null && arr[i] !== undefined) {
-      node.right = new TreeNode(arr[i]);
-      queue.push(node.right);
-    }
+    if (i < arr.length && arr[i] !== null && arr[i] !== undefined) { node.right = new TreeNode(arr[i]); queue.push(node.right); }
     i++;
   }
   return root;
 }
-function lcaBSTRunner(arr, p, q) {
-  const result = lowestCommonAncestor(__fromArray__(arr), new TreeNode(p), new TreeNode(q));
-  return result ? result.val : -1;
+function lowestCommonAncestorRunner(arr, p, q) {
+  const result = lowestCommonAncestor(__fromArray__(arr), p, q);
+  return result ? result.val : null;
 }
 `.trim();
 
@@ -39,9 +33,12 @@ class TreeNode:
         self.left = left
         self.right = right
 
-def __from_array__(raw):
-    raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
-    arr = [int(v) if isinstance(v, (int, float)) else None for v in raw_list]
+def __from_array__(arr):
+    if hasattr(arr, 'to_py'):
+        raw = arr.to_py()
+    else:
+        raw = list(arr)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
     if not arr or arr[0] is None:
         return None
     root = TreeNode(arr[0])
@@ -59,9 +56,9 @@ def __from_array__(raw):
         i += 1
     return root
 
-def lcaBSTRunner(arr, p, q):
-    result = lowestCommonAncestor(__from_array__(arr), TreeNode(int(p)), TreeNode(int(q)))
-    return result.val if result else -1
+def lowestCommonAncestorRunner(arr, p, q):
+    result = lowestCommonAncestor(__from_array__(arr), p, q)
+    return result.val if result else None
 `.trim();
 
 export const problem: Problem = {
@@ -69,57 +66,55 @@ export const problem: Problem = {
   title: 'Lowest Common Ancestor of a BST',
   difficulty: 'medium',
   tags: ['tree'],
-  description: `Given a **binary search tree (BST)**, find the **lowest common ancestor (LCA)** of two given nodes \`p\` and \`q\`.
+  description: `Given a binary search tree (BST) and two node values \`p\` and \`q\`, find their **lowest common ancestor (LCA)**.
 
-The LCA is defined as the lowest node in the tree that has both \`p\` and \`q\` as descendants (where we allow a node to be a descendant of itself).
+The LCA of two nodes \`p\` and \`q\` is the lowest node in the tree that has both \`p\` and \`q\` as descendants (a node can be a descendant of itself).
 
-The function signature is \`lowestCommonAncestor(root, p, q)\` where \`p\` and \`q\` are TreeNode objects. You can use \`p.val\` and \`q.val\` to access their values.
+Your function receives the tree \`root\` (a TreeNode) and two integer values \`p\` and \`q\` representing node values that are guaranteed to exist in the tree. Return the LCA **node** (not just its value).
 
-Trees are represented as level-order arrays (BFS order). Return the **value** of the LCA node.
-
-**Approach:** Use BST properties. If both p and q are less than the current node, go left. If both are greater, go right. Otherwise, the current node is the LCA.`,
+> **Note:** A \`TreeNode\` class is pre-defined. Nodes have \`val\`, \`left\`, and \`right\` fields. The test harness checks \`result.val\`.`,
   constraints: [
-    'The number of nodes in the tree is in the range [2, 100000]',
+    'The number of nodes in the tree is in the range [2, 10^5]',
     '-10^9 <= Node.val <= 10^9',
-    'All node values are unique',
-    'p != q',
-    'p and q will exist in the BST',
+    'All Node.val are unique',
+    'p and q are different node values that exist in the tree',
   ],
   examples: [
     {
       input: 'root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8',
       output: '6',
-      explanation: 'The LCA of nodes 2 and 8 is 6 (the root).',
+      explanation: 'LCA of 2 and 8 is the root 6.',
     },
     {
       input: 'root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 4',
       output: '2',
-      explanation: 'The LCA of nodes 2 and 4 is 2, since a node can be its own ancestor.',
+      explanation: '2 is an ancestor of 4, so LCA is 2.',
     },
   ],
   hints: [
-    'In a BST, if both p.val and q.val are less than the current node, the LCA must be in the left subtree.',
-    'If both are greater, the LCA is in the right subtree.',
-    'When the current node\'s value is between p.val and q.val (inclusive), it is the LCA.',
+    'Use the BST property: if both p and q are less than the current node, the LCA must be in the left subtree.',
+    'If both are greater, the LCA is in the right subtree. Otherwise, the current node IS the LCA.',
+    '`function lowestCommonAncestor(root, p, q) { if (p < root.val && q < root.val) return lowestCommonAncestor(root.left, p, q); if (p > root.val && q > root.val) return lowestCommonAncestor(root.right, p, q); return root; }`',
   ],
-  functionName: 'lcaBSTRunner',
+  functionName: 'lowestCommonAncestorRunner',
   params: ['root', 'p', 'q'],
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript:
-      '// TreeNode class and lcaBSTRunner wrapper are pre-defined.\n// Implement the function below:\nfunction lowestCommonAncestor(root, p, q) {\n  \n}\n',
+      '// TreeNode class is pre-defined. Implement the function below:\n// p and q are node VALUES (integers), not TreeNodes.\nfunction lowestCommonAncestor(root, p, q) {\n  \n}\n',
     python:
-      '# TreeNode class and lcaBSTRunner wrapper are pre-defined.\n# Implement the function below:\ndef lowestCommonAncestor(root, p, q):\n    pass\n',
+      '# TreeNode class is pre-defined. Implement the function below:\n# p and q are node VALUES (integers), not TreeNodes.\ndef lowestCommonAncestor(root, p, q):\n    pass\n',
   },
   visibleTests: [
     { args: [[6, 2, 8, 0, 4, 7, 9, null, null, 3, 5], 2, 8], expected: 6 },
     { args: [[6, 2, 8, 0, 4, 7, 9, null, null, 3, 5], 2, 4], expected: 2 },
     { args: [[2, 1, 3], 1, 3], expected: 2 },
+    { args: [[2, 1], 1, 2], expected: 2 },
   ],
   hiddenTests: [
-    { args: [[2, 1, 3], 1, 2], expected: 2 },
-    { args: [[5, 3, 7, 1, 4, 6, 8], 1, 4], expected: 3 },
-    { args: [[5, 3, 7, 1, 4, 6, 8], 6, 8], expected: 7 },
-    { args: [[5, 3, 7, 1, 4, 6, 8], 3, 7], expected: 5 },
+    { args: [[6, 2, 8, 0, 4, 7, 9, null, null, 3, 5], 3, 5], expected: 4 },
+    { args: [[6, 2, 8, 0, 4, 7, 9, null, null, 3, 5], 0, 5], expected: 2 },
+    { args: [[6, 2, 8, 0, 4, 7, 9, null, null, 3, 5], 7, 9], expected: 8 },
+    { args: [[10, 5, 15, 3, 7], 3, 7], expected: 5 },
   ],
 };

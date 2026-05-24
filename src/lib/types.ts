@@ -40,10 +40,9 @@ export const DIFFICULTIES: readonly Difficulty[] = ['easy', 'medium', 'hard'];
 export type FailureAction = 'close' | 'redirect';
 
 /**
- * Languages the code runner supports. Python runs via Pyodide (see
- * `docs/PYODIDE_PLAN.md`). TypeScript is transpiled to JavaScript by sucrase
- * in the judge before being handed to the JS worker — every bank problem
- * supports it since the JS starter is valid TypeScript.
+ * Languages the code runner supports. Python lands incrementally via the
+ * Pyodide milestones (see `docs/PYODIDE_PLAN.md`); JavaScript remains the
+ * default and is the only language every bank problem ships with today.
  */
 export type SupportedLanguage = 'javascript' | 'typescript' | 'python';
 

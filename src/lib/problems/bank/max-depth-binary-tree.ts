@@ -38,7 +38,7 @@ class TreeNode:
 
 def __from_array__(raw):
     raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
-    arr = [int(v) if isinstance(v, (int, float)) else None for v in raw_list]
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
     if not arr or arr[0] is None:
         return None
     root = TreeNode(arr[0])

@@ -20,7 +20,7 @@ function __fromArray__(arr) {
   }
   return root;
 }
-function hasPathSumRunner(arr, targetSum) { return hasPathSum(__fromArray__(arr), targetSum); }
+function isSameTreeRunner(arr1, arr2) { return isSameTree(__fromArray__(arr1), __fromArray__(arr2)); }
 `.trim();
 
 const PY_PREAMBLE = `
@@ -53,64 +53,57 @@ def __from_array__(arr):
         i += 1
     return root
 
-def hasPathSumRunner(arr, targetSum):
-    return hasPathSum(__from_array__(arr), targetSum)
+def isSameTreeRunner(arr1, arr2):
+    return isSameTree(__from_array__(arr1), __from_array__(arr2))
 `.trim();
 
 export const problem: Problem = {
-  id: 'path-sum',
-  title: 'Path Sum',
+  id: 'same-tree',
+  title: 'Same Tree',
   difficulty: 'easy',
   tags: ['tree'],
-  description: `Given the \`root\` of a binary tree and an integer \`targetSum\`, return \`true\` if the tree has a **root-to-leaf** path such that adding up all the values along the path equals \`targetSum\`.
+  description: `Given the roots of two binary trees \`p\` and \`q\`, write a function to check if they are the same or not.
 
-A **leaf** is a node with no children.
+Two binary trees are considered the same if they are structurally identical and the nodes have the same values.
 
 > **Note:** A \`TreeNode\` class is pre-defined. Nodes have \`val\`, \`left\`, and \`right\` fields.`,
   constraints: [
-    'The number of nodes in the tree is in the range [0, 5000]',
-    '-1000 <= Node.val <= 1000',
-    '-1000 <= targetSum <= 1000',
+    'The number of nodes in both trees is in the range [0, 100]',
+    '-10^4 <= Node.val <= 10^4',
   ],
   examples: [
+    { input: 'p = [1,2,3], q = [1,2,3]', output: 'true' },
     {
-      input: 'root = [5,4,8,11,null,13,4,7,2,null,null,null,1], targetSum = 22',
-      output: 'true',
-      explanation: 'The path 5 → 4 → 11 → 2 sums to 22.',
-    },
-    {
-      input: 'root = [1,2,3], targetSum = 5',
+      input: 'p = [1,2], q = [1,null,2]',
       output: 'false',
+      explanation: 'The trees have the same values but different structures.',
     },
-    { input: 'root = [], targetSum = 0', output: 'false' },
+    { input: 'p = [1,2,1], q = [1,1,2]', output: 'false' },
   ],
   hints: [
-    'At each recursive step, subtract the current node\'s value from targetSum, then check if a leaf was reached with remainder 0.',
-    'Recursion: `hasPathSum(root, target) = root && (isLeaf(root) ? root.val === target : hasPathSum(root.left, target - root.val) || hasPathSum(root.right, target - root.val))`.',
-    'A node is a leaf when both `root.left` and `root.right` are null.',
+    'If both nodes are null the trees match at this position. If exactly one is null they don\'t.',
+    'When both are non-null, they match if their values are equal AND the left subtrees match AND the right subtrees match.',
+    '`function isSameTree(p, q) { if (!p && !q) return true; if (!p || !q) return false; return p.val === q.val && isSameTree(p.left, q.left) && isSameTree(p.right, q.right); }`',
   ],
-  functionName: 'hasPathSumRunner',
-  params: ['root', 'targetSum'],
+  functionName: 'isSameTreeRunner',
+  params: ['p', 'q'],
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript:
-      '// TreeNode class is pre-defined. Implement the function below:\nfunction hasPathSum(root, targetSum) {\n  \n}\n',
+      '// TreeNode class is pre-defined. Implement the function below:\nfunction isSameTree(p, q) {\n  \n}\n',
     python:
-      '# TreeNode class is pre-defined. Implement the function below:\ndef hasPathSum(root, targetSum):\n    pass\n',
+      '# TreeNode class is pre-defined. Implement the function below:\ndef isSameTree(p, q):\n    pass\n',
   },
   visibleTests: [
-    {
-      args: [[5, 4, 8, 11, null, 13, 4, 7, 2, null, null, null, 1], 22],
-      expected: true,
-    },
-    { args: [[1, 2, 3], 5], expected: false },
-    { args: [[], 0], expected: false },
-    { args: [[1, 2], 1], expected: false },
+    { args: [[1, 2, 3], [1, 2, 3]], expected: true },
+    { args: [[1, 2], [1, null, 2]], expected: false },
+    { args: [[1, 2, 1], [1, 1, 2]], expected: false },
+    { args: [[], []], expected: true },
   ],
   hiddenTests: [
-    { args: [[1, 2], 3], expected: true },
-    { args: [[-2, null, -3], -5], expected: true },
-    { args: [[1], 1], expected: true },
-    { args: [[1], 2], expected: false },
+    { args: [[1], [1]], expected: true },
+    { args: [[1, null, 2], [1, null, 2]], expected: true },
+    { args: [[1, null, 2], [1, 2]], expected: false },
+    { args: [[1, 2, 3, 4], [1, 2, 3, null, 4]], expected: false },
   ],
 };

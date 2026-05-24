@@ -2235,6 +2235,22 @@ export const pythonSolutions: Record<string, string> = {
     return paths
 `,
 
+  'path-sum': `def hasPathSum(root, targetSum):
+    if not root:
+        return False
+    if not root.left and not root.right:
+        return root.val == targetSum
+    return hasPathSum(root.left, targetSum - root.val) or hasPathSum(root.right, targetSum - root.val)
+`,
+
+  'same-tree': `def isSameTree(p, q):
+    if not p and not q:
+        return True
+    if not p or not q:
+        return False
+    return p.val == q.val and isSameTree(p.left, q.left) and isSameTree(p.right, q.right)
+`,
+
   'validate-bst': `def isValidBST(root):
     def validate(node, min_val, max_val):
         if not node:
@@ -2263,14 +2279,6 @@ export const pythonSolutions: Record<string, string> = {
     return result
 `,
 
-  'path-sum': `def hasPathSum(root, targetSum):
-    if not root:
-        return False
-    if not root.left and not root.right:
-        return targetSum == root.val
-    return hasPathSum(root.left, targetSum - root.val) or hasPathSum(root.right, targetSum - root.val)
-`,
-
   'diameter-of-binary-tree': `def diameterOfBinaryTree(root):
     best = [0]
     def depth(node):
@@ -2286,15 +2294,11 @@ export const pythonSolutions: Record<string, string> = {
 `,
 
   'lowest-common-ancestor-bst': `def lowestCommonAncestor(root, p, q):
-    node = root
-    while node:
-        if p.val < node.val and q.val < node.val:
-            node = node.left
-        elif p.val > node.val and q.val > node.val:
-            node = node.right
-        else:
-            return node
-    return None
+    if p < root.val and q < root.val:
+        return lowestCommonAncestor(root.left, p, q)
+    if p > root.val and q > root.val:
+        return lowestCommonAncestor(root.right, p, q)
+    return root
 `,
 
   'binary-tree-max-path-sum': `def maxPathSum(root):
