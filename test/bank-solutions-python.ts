@@ -4910,6 +4910,30 @@ def sumRange(nums, left, right):
     return sum(nums[left:right+1])
 `,
 
+
+  'reverse-string-ii': `def reverseStr(s, k):
+    arr = list(s)
+    for i in range(0, len(arr), 2 * k):
+        arr[i:i+k] = arr[i:i+k][::-1]
+    return ''.join(arr)
+`,
+
+  'to-hex': `def toHex(num):
+    if num == 0:
+        return '0'
+    return format(num & 0xFFFFFFFF, 'x')
+`,
+
+  'find-words-from-chars': `def countCharacters(words, chars):
+    from collections import Counter
+    freq = Counter(chars)
+    total = 0
+    for word in words:
+        wf = Counter(word)
+        if all(wf[c] <= freq[c] for c in wf):
+            total += len(word)
+    return total
+`,
   'rotate-string': `
 def rotateString(s, goal):
     return len(s) == len(goal) and goal in s + s

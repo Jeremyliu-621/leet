@@ -5587,6 +5587,35 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return sum;
   },
 
+
+  'reverse-string-ii': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    const arr = s.split('');
+    for (let i = 0; i < arr.length; i += 2 * k) {
+      let l = i, r = Math.min(i + k - 1, arr.length - 1);
+      while (l < r) { [arr[l], arr[r]] = [arr[r]!, arr[l]!]; l++; r--; }
+    }
+    return arr.join('');
+  },
+
+  'to-hex': (...args: unknown[]) => {
+    const num = args[0] as number;
+    if (num === 0) return '0';
+    return (num >>> 0).toString(16);
+  },
+
+  'find-words-from-chars': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const chars = args[1] as string;
+    const freq: Record<string, number> = {};
+    for (const c of chars) freq[c] = (freq[c] ?? 0) + 1;
+    return words.filter(word => {
+      const wf: Record<string, number> = {};
+      for (const c of word) wf[c] = (wf[c] ?? 0) + 1;
+      return Object.entries(wf).every(([c, cnt]) => (freq[c] ?? 0) >= cnt);
+    }).reduce((sum, w) => sum + w.length, 0);
+  },
   'rotate-string': (...args: unknown[]) => {
     const s = args[0] as string, goal = args[1] as string;
     return s.length === goal.length && (s + s).includes(goal);

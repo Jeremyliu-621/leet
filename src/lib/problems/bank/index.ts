@@ -77,6 +77,7 @@ import { problem as detectCapital } from './detect-capital';
 import { problem as repeatedSubstringPattern } from './repeated-substring-pattern';
 import { problem as checkIfPangram } from './check-if-pangram';
 import { problem as truncateSentence } from './truncate-sentence';
+import { problem as reverseStringII } from './reverse-string-ii';
 // strings — medium (additional)
 import { problem as integerToRoman } from './integer-to-roman';
 import { problem as reverseOnlyLetters } from './reverse-only-letters';
@@ -110,6 +111,7 @@ import { problem as restoreIpAddresses } from './restore-ip-addresses';
 import { problem as validAnagram } from './valid-anagram';
 import { problem as pathCrossing } from './path-crossing';
 import { problem as firstUniqueChar } from './first-unique-char';
+import { problem as findWordsFromChars } from './word-pattern-ii';
 // hash-map — medium (additional)
 import { problem as longestWordInDictionary } from './longest-word-in-dictionary';
 import { problem as twoSumIndices } from './two-sum-indices';
@@ -234,6 +236,7 @@ import { problem as numberOfOneBits } from './number-of-1-bits';
 import { problem as singleNumberII } from './single-number-ii';
 import { problem as powerOfThree } from './power-of-three';
 import { problem as isPowerOfFour } from './is-power-of-four';
+import { problem as toHex } from './to-hex';
 import { problem as reverseBits } from './reverse-bits';
 import { problem as countAndSay } from './count-and-say';
 import { problem as fibonacciNumber } from './fibonacci-number';
@@ -522,6 +525,7 @@ export const problems: readonly Problem[] = [
   repeatedSubstringPattern,
   checkIfPangram,
   truncateSentence,
+  reverseStringII,
   reverseOnlyLetters,
   backspaceStringCompare,
   vowelTally,
@@ -554,6 +558,7 @@ export const problems: readonly Problem[] = [
   validAnagram,
   pathCrossing,
   firstUniqueChar,
+  findWordsFromChars,
   twoSumIndices,
   mostFrequentValue,
   anagramCheck,
@@ -686,6 +691,7 @@ export const problems: readonly Problem[] = [
   singleNumberII,
   powerOfThree,
   isPowerOfFour,
+  toHex,
   reverseBits,
   countAndSay,
   fibonacciNumber,
