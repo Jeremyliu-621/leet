@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 158 problems; hash-map/easy, dp/medium, math/medium tiers filled.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (735 unit tests across 22 files).
-**Next up:** Further bank growth; UI polish; stack/medium + math/medium + strings/easy gaps.
+**Current focus:** Bank at 165 problems; linked-list tag added (3 problems); easy tier expansion across arrays/math/strings.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (756 unit tests across 22 files).
+**Next up:** More linked-list problems; fill remaining thin easy tiers; consider graph/BFS tag.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -218,6 +218,8 @@ Still pending:
 - [x] Add car-fleet, koko-eating-bananas, find-peak-element, minimum-operations-reduce-x; 717 tests; bank at 152
 - [x] Add sort-list (merge sort) + subarrays-k-distinct; fill two-pointers/hard (2→4); 723 tests; bank at 154
 - [x] Add ransom-note, isomorphic-strings, nth-ugly-number, maximum-swap; 735 tests; bank at 158
+- [x] Add linked-list tag + 3 problems (reverse-linked-list, linked-list-cycle, merge-two-sorted-linked-lists) with preamble; bank at 161
+- [x] Add 4 easy problems (plus-one, length-of-last-word, palindrome-number, excel-column-number); 756 tests; bank at 165
 - [ ] Marketing site iteration + Vercel deployment
 
 ---
