@@ -5467,4 +5467,57 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best;
   },
 
+  'range-sum-query': (...args: unknown[]) => {
+    const nums = args[0] as number[], left = args[1] as number, right = args[2] as number;
+    let sum = 0;
+    for (let i = left; i <= right; i++) sum += nums[i]!;
+    return sum;
+  },
+
+  'minimum-arrows-burst-balloons': (...args: unknown[]) => {
+    const points = (args[0] as number[][]).slice().sort((a, b) => a[1]! - b[1]!);
+    let arrows = 1, end = points[0]![1]!;
+    for (let i = 1; i < points.length; i++) {
+      if (points[i]![0]! > end) { arrows++; end = points[i]![1]!; }
+    }
+    return arrows;
+  },
+
+  'set-matrix-zeroes': (...args: unknown[]) => {
+    const matrix = (args[0] as number[][]).map(row => [...row]);
+    const m = matrix.length, n = matrix[0]!.length;
+    const rows = new Set<number>(), cols = new Set<number>();
+    for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) {
+      if (matrix[r]![c] === 0) { rows.add(r); cols.add(c); }
+    }
+    for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) {
+      if (rows.has(r) || cols.has(c)) matrix[r]![c] = 0;
+    }
+    return matrix;
+  },
+
+  'rotate-string': (...args: unknown[]) => {
+    const s = args[0] as string, goal = args[1] as string;
+    return s.length === goal.length && (s + s).includes(goal);
+  },
+
+  'custom-sort-string': (...args: unknown[]) => {
+    const order = args[0] as string, s = args[1] as string;
+    const freq = new Map<string, number>();
+    for (const c of s) freq.set(c, (freq.get(c) ?? 0) + 1);
+    let result = '';
+    for (const c of order) {
+      if (freq.has(c)) { result += c.repeat(freq.get(c)!); freq.delete(c); }
+    }
+    const remaining = [...freq.entries()].sort(([a], [b]) => a.localeCompare(b));
+    for (const [c, cnt] of remaining) result += c.repeat(cnt);
+    return result;
+  },
+
+  'copy-list-with-random-pointer': (...args: unknown[]) => {
+    const arr = args[0] as ([number, number | null])[];
+    if (!arr || arr.length === 0) return [];
+    return arr.map(([val, ri]) => [val, ri]);
+  },
+
 };

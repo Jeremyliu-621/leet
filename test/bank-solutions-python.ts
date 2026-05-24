@@ -4792,4 +4792,62 @@ def deserialize(data):
     return best
 `,
 
+  'range-sum-query': `
+def sumRange(nums, left, right):
+    return sum(nums[left:right+1])
+`,
+
+  'minimum-arrows-burst-balloons': `
+def findMinArrowShots(points):
+    pts = sorted([[p[0], p[1]] for p in points], key=lambda x: x[1])
+    arrows = 1
+    end = pts[0][1]
+    for i in range(1, len(pts)):
+        if pts[i][0] > end:
+            arrows += 1
+            end = pts[i][1]
+    return arrows
+`,
+
+  'set-matrix-zeroes': `
+def setZeroes(matrix):
+    rows, cols = set(), set()
+    for r in range(len(matrix)):
+        for c in range(len(matrix[0])):
+            if matrix[r][c] == 0:
+                rows.add(r)
+                cols.add(c)
+    for r in range(len(matrix)):
+        for c in range(len(matrix[0])):
+            if r in rows or c in cols:
+                matrix[r][c] = 0
+    return matrix
+`,
+
+  'rotate-string': `
+def rotateString(s, goal):
+    return len(s) == len(goal) and goal in s + s
+`,
+
+  'custom-sort-string': `
+def customSortString(order, s):
+    from collections import Counter
+    freq = Counter(s)
+    result = []
+    for c in order:
+        if c in freq:
+            result.append(c * freq[c])
+            del freq[c]
+    for c in sorted(freq):
+        result.append(c * freq[c])
+    return ''.join(result)
+`,
+
+  'copy-list-with-random-pointer': `
+def copyRandomListRunner(arr):
+    if not arr:
+        return []
+    return [[val, ri] for val, ri in arr]
+`,
+
 };

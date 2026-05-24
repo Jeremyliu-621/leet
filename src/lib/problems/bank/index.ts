@@ -26,7 +26,10 @@ import { problem as thirdMaximumNumber } from './third-maximum-number';
 import { problem as replaceElementsWithGreatest } from './replace-elements-with-greatest';
 import { problem as highestAltitude } from './highest-altitude';
 import { problem as maximumDifferenceIncreasingElements } from './maximum-difference-increasing-elements';
+import { problem as rangeSum } from './range-sum-query';
 // arrays — medium
+import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
+import { problem as setMatrixZeroes } from './set-matrix-zeroes';
 import { problem as meetingRoomsII } from './meeting-rooms-ii';
 import { problem as hIndex } from './h-index';
 import { problem as mergeIntervals } from './merge-intervals';
@@ -84,7 +87,9 @@ import { problem as defangingIpAddress } from './defanging-ip-address';
 import { problem as toLowerCase } from './to-lower-case';
 import { problem as checkIfTwoStringArraysEquivalent } from './check-if-two-string-arrays-equivalent';
 import { problem as cellsInRange } from './cells-in-range';
+import { problem as rotateString } from './rotate-string';
 // strings — medium
+import { problem as customSortString } from './custom-sort-string';
 import { problem as longestPalindromicString } from './longest-palindromic-string';
 import { problem as countPalindromicSubstrings } from './count-palindromic-substrings';
 import { problem as decodeString } from './decode-string';
@@ -339,6 +344,7 @@ import { problem as swapNodesInPairs } from './swap-nodes-in-pairs';
 import { problem as partitionList } from './partition-list';
 import { problem as reverseLinkedListII } from './reverse-linked-list-ii';
 import { problem as rotateList } from './rotate-list';
+import { problem as copyListWithRandomPointer } from './copy-list-with-random-pointer';
 // linked-list — hard
 import { problem as mergeKSortedLists } from './merge-k-sorted-lists';
 import { problem as reverseNodesInKGroup } from './reverse-nodes-in-k-group';
@@ -449,8 +455,11 @@ export const problems: readonly Problem[] = [
   replaceElementsWithGreatest,
   highestAltitude,
   maximumDifferenceIncreasingElements,
+  rangeSum,
   singleNumber,
   // arrays — medium
+  minimumArrowsBurstBalloons,
+  setMatrixZeroes,
   meetingRoomsII,
   hIndex,
   majorityElementII,
@@ -513,7 +522,9 @@ export const problems: readonly Problem[] = [
   toLowerCase,
   checkIfTwoStringArraysEquivalent,
   cellsInRange,
+  rotateString,
   // strings — medium
+  customSortString,
   generateParentheses,
   palindromePartitioning,
   longestPalindromicString,
@@ -753,6 +764,7 @@ export const problems: readonly Problem[] = [
   partitionList,
   reverseLinkedListII,
   rotateList,
+  copyListWithRandomPointer,
   // linked-list — hard
   mergeKSortedLists,
   reverseNodesInKGroup,
