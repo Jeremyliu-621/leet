@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 217 problems (12 tags); word-search, surrounded-regions, redundant-connection, bipartite, all-paths added; 921 tests.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (921 unit tests across 23 files).
-**Next up:** More tree/graph/linked-list problems; update marketing site stats.
+**Current focus:** Bank at 220 problems (12 tags); binary-tree-level-order-bottom, find-duplicate-number, graph-valid-tree added; 930 tests.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (930 unit tests across 23 files).
+**Next up:** More tree/graph/linked-list problems.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -245,6 +245,7 @@ Still pending:
 - [x] sum-root-to-leaf-numbers (medium tree): DFS digit accumulator; lowest-common-ancestor-binary-tree (medium tree): recursive LCA; 891 tests; bank at 207 (removed duplicate zigzag)
 - [x] sum-root-to-leaf, number-of-provinces (graph/easy), path-sum-iii (tree/medium): prefix-sum O(n); 900 tests; bank at 210
 - [x] balanced-binary-tree (easy), minimum-depth-binary-tree (easy), word-search (graph/medium), surrounded-regions (graph/medium); bank at 217
+- [x] binary-tree-level-order-bottom (easy), find-duplicate-number (two-pointers/medium), graph-valid-tree (graph/medium); 930 tests; bank at 220
 - [x] redundant-connection (Union-Find/medium), is-graph-bipartite (BFS 2-color/medium), all-paths-source-target (DFS/medium); 921 tests; bank at 217
 
 ---
