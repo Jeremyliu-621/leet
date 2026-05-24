@@ -70,6 +70,10 @@ import { problem as moveZeros } from './move-zeros';
 import { problem as validSubsequence } from './valid-subsequence';
 import { problem as removeDuplicatesSorted } from './remove-duplicates-sorted';
 
+// sliding-window — hard
+import { problem as maxConsecutiveFlips } from './max-consecutive-flips';
+import { problem as countSubarraysBoundedMax } from './count-subarrays-bounded-max';
+
 // sliding-window — easy
 import { problem as maxWindowSum } from './max-window-sum';
 import { problem as longestEqualRun } from './longest-equal-run';
@@ -89,6 +93,8 @@ import { problem as findMinimumRotated } from './find-minimum-rotated';
 import { problem as singleElementSorted } from './single-element-sorted';
 // binary-search — hard
 import { problem as medianTwoSortedArrays } from './median-two-sorted-arrays';
+import { problem as splitArrayLargestSum } from './split-array-largest-sum';
+import { problem as capacityToShip } from './capacity-to-ship';
 
 // stack — easy
 import { problem as balancedBrackets } from './balanced-brackets';
@@ -198,6 +204,9 @@ export const problems: readonly Problem[] = [
   moveZeros,
   validSubsequence,
   removeDuplicatesSorted,
+  // sliding-window — hard
+  maxConsecutiveFlips,
+  countSubarraysBoundedMax,
   // sliding-window — easy
   maxWindowSum,
   longestEqualRun,
@@ -216,6 +225,8 @@ export const problems: readonly Problem[] = [
   singleElementSorted,
   // binary-search — hard
   medianTwoSortedArrays,
+  splitArrayLargestSum,
+  capacityToShip,
   // stack — easy
   balancedBrackets,
   removeAdjacentDupes,

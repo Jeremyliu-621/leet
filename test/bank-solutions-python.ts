@@ -1199,4 +1199,57 @@ export const pythonSolutions: Record<string, string> = {
             lo = i + 1
     return 0.0
 `,
+  'split-array-largest-sum': `def splitArrayLargest(nums, k):
+    lo, hi = max(nums), sum(nums)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        parts, curr = 1, 0
+        for n in nums:
+            if curr + n > mid:
+                parts += 1
+                curr = 0
+            curr += n
+        if parts <= k:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+  'capacity-to-ship': `def shipWithinDays(weights, days):
+    lo, hi = max(weights), sum(weights)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        d, curr = 1, 0
+        for w in weights:
+            if curr + w > mid:
+                d += 1
+                curr = 0
+            curr += w
+        if d <= days:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+  'max-consecutive-flips': `def longestOnes(nums, k):
+    left = zeros = best = 0
+    for right, v in enumerate(nums):
+        if v == 0:
+            zeros += 1
+        while zeros > k:
+            if nums[left] == 0:
+                zeros -= 1
+            left += 1
+        best = max(best, right - left + 1)
+    return best
+`,
+  'count-subarrays-bounded-max': `def numSubarrayBoundedMax(nums, left, right):
+    def count_at_most(bound):
+        res = curr = 0
+        for n in nums:
+            curr = curr + 1 if n <= bound else 0
+            res += curr
+        return res
+    return count_at_most(right) - count_at_most(left - 1)
+`,
 };

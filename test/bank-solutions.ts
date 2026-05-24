@@ -1592,6 +1592,83 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result + sign * num;
   },
 
+  'split-array-largest-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let lo = Math.max(...nums);
+    let hi = nums.reduce((a, b) => a + b, 0);
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      let parts = 1;
+      let curr = 0;
+      for (const n of nums) {
+        if (curr + n > mid) {
+          parts++;
+          curr = 0;
+        }
+        curr += n;
+      }
+      if (parts <= k) hi = mid;
+      else lo = mid + 1;
+    }
+    return lo;
+  },
+
+  'capacity-to-ship': (...args: unknown[]) => {
+    const weights = args[0] as number[];
+    const days = args[1] as number;
+    let lo = Math.max(...weights);
+    let hi = weights.reduce((a, b) => a + b, 0);
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      let d = 1;
+      let curr = 0;
+      for (const w of weights) {
+        if (curr + w > mid) {
+          d++;
+          curr = 0;
+        }
+        curr += w;
+      }
+      if (d <= days) hi = mid;
+      else lo = mid + 1;
+    }
+    return lo;
+  },
+
+  'max-consecutive-flips': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let left = 0;
+    let zeros = 0;
+    let best = 0;
+    for (let right = 0; right < nums.length; right++) {
+      if ((nums[right] as number) === 0) zeros++;
+      while (zeros > k) {
+        if ((nums[left] as number) === 0) zeros--;
+        left++;
+      }
+      best = Math.max(best, right - left + 1);
+    }
+    return best;
+  },
+
+  'count-subarrays-bounded-max': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const left = args[1] as number;
+    const right = args[2] as number;
+    function countAtMost(bound: number): number {
+      let res = 0;
+      let curr = 0;
+      for (const n of nums) {
+        curr = n <= bound ? curr + 1 : 0;
+        res += curr;
+      }
+      return res;
+    }
+    return countAtMost(right) - countAtMost(left - 1);
+  },
+
   'median-two-sorted-arrays': (...args: unknown[]) => {
     let nums1 = args[0] as number[];
     let nums2 = args[1] as number[];
