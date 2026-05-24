@@ -3519,6 +3519,53 @@ def deserialize(data):
     return dp[m-1][n-1]
 `,
 
+  'sudoku-solver': `def solveSudoku(board):
+    rows = [set() for _ in range(9)]
+    cols = [set() for _ in range(9)]
+    boxes = [set() for _ in range(9)]
+    empty = []
+    for r in range(9):
+        for c in range(9):
+            v = board[r][c]
+            if v != '.':
+                b = (r // 3) * 3 + c // 3
+                rows[r].add(v)
+                cols[c].add(v)
+                boxes[b].add(v)
+            else:
+                empty.append((r, c))
+    def bt(idx):
+        if idx == len(empty):
+            return True
+        r, c = empty[idx]
+        b = (r // 3) * 3 + c // 3
+        for d in '123456789':
+            if d in rows[r] or d in cols[c] or d in boxes[b]:
+                continue
+            board[r][c] = d
+            rows[r].add(d); cols[c].add(d); boxes[b].add(d)
+            if bt(idx + 1):
+                return True
+            board[r][c] = '.'
+            rows[r].discard(d); cols[c].discard(d); boxes[b].discard(d)
+        return False
+    bt(0)
+`,
+
+  'combinations': `def combine(n, k):
+    result = []
+    def bt(start, cur):
+        if len(cur) == k:
+            result.append(cur[:])
+            return
+        for i in range(start, n - (k - len(cur)) + 2):
+            cur.append(i)
+            bt(i + 1, cur)
+            cur.pop()
+    bt(1, [])
+    return result
+`,
+
   'alien-dictionary': `def alienOrder(words):
     from collections import defaultdict, deque
     chars = set(c for w in words for c in w)

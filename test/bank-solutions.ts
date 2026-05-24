@@ -4114,6 +4114,54 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[m-1]![n-1]!;
   },
 
+  'sudoku-solver': (...args: unknown[]) => {
+    const board = (args[0] as string[][]).map(row => [...row]);
+    const rows = Array.from({ length: 9 }, () => new Set<string>());
+    const cols = Array.from({ length: 9 }, () => new Set<string>());
+    const boxes = Array.from({ length: 9 }, () => new Set<string>());
+    for (let r = 0; r < 9; r++) {
+      for (let c = 0; c < 9; c++) {
+        const v = board[r]![c]!;
+        if (v !== '.') {
+          const b = Math.floor(r / 3) * 3 + Math.floor(c / 3);
+          rows[r]!.add(v); cols[c]!.add(v); boxes[b]!.add(v);
+        }
+      }
+    }
+    function bt(): boolean {
+      for (let r = 0; r < 9; r++) {
+        for (let c = 0; c < 9; c++) {
+          if (board[r]![c] !== '.') continue;
+          const b = Math.floor(r / 3) * 3 + Math.floor(c / 3);
+          for (let d = 1; d <= 9; d++) {
+            const s = String(d);
+            if (rows[r]!.has(s) || cols[c]!.has(s) || boxes[b]!.has(s)) continue;
+            board[r]![c] = s; rows[r]!.add(s); cols[c]!.add(s); boxes[b]!.add(s);
+            if (bt()) return true;
+            board[r]![c] = '.'; rows[r]!.delete(s); cols[c]!.delete(s); boxes[b]!.delete(s);
+          }
+          return false;
+        }
+      }
+      return true;
+    }
+    bt();
+    return board;
+  },
+
+  'combinations': (...args: unknown[]) => {
+    const [n, k] = args as [number, number];
+    const result: number[][] = [];
+    const bt = (start: number, cur: number[]): void => {
+      if (cur.length === k) { result.push([...cur]); return; }
+      for (let i = start; i <= n - (k - cur.length) + 1; i++) {
+        cur.push(i); bt(i + 1, cur); cur.pop();
+      }
+    };
+    bt(1, []);
+    return result;
+  },
+
   'alien-dictionary': (...args: unknown[]) => {
     const words = args[0] as string[];
     const chars = new Set<string>();

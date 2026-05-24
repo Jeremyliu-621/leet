@@ -292,6 +292,8 @@ import { problem as wordLadder } from './word-ladder';
 import { problem as alienDictionary } from './alien-dictionary';
 import { problem as criticalConnections } from './critical-connections';
 import { problem as longestIncreasingPathMatrix } from './longest-increasing-path-matrix';
+import { problem as sudokuSolver } from './sudoku-solver';
+import { problem as combinations } from './combinations';
 
 // tree — easy (additional)
 import { problem as balancedBinaryTree } from './balanced-binary-tree';
@@ -603,6 +605,10 @@ export const problems: readonly Problem[] = [
   alienDictionary,
   criticalConnections,
   longestIncreasingPathMatrix,
+  // arrays + backtracking — hard
+  sudokuSolver,
+  // arrays + backtracking — medium
+  combinations,
   // tree — easy
   balancedBinaryTree,
   minimumDepthBinaryTree,
