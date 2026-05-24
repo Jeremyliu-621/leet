@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 271 problems (14 tags); added longest-increasing-path-matrix (graph/hard), find-min-rotated-ii (binary-search/medium), number-of-substrings (sliding-window/medium); 1084 tests.
+**Current focus:** Bank at 272 problems (14 tags); sudoku-solver + combinations added; backtracking tag applied to n-queens, combination-sum-ii, palindrome-partitioning, word-search; 1090 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More medium/hard problems; word-search-ii (Trie+backtracking), sudoku-solver; fill gaps vs LeetCode parity.
+**Next up:** word-search-ii (Trie+backtracking/hard), more hard graph/tree problems.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -258,6 +258,8 @@ Still pending:
 - [x] triangle (DP/medium), interleaving-string (DP/medium), find-eventual-safe-states (graph/medium); letter-combinations-phone (hash-map/medium), subsets (arrays/medium), combination-sum (arrays/medium); 981 tests; bank at 237
 - [x] generate-parentheses (strings/medium), permutations (arrays/medium), unique-paths-ii (DP/medium); combination-sum-ii, palindrome-partitioning, number-of-dice-rolls; spiral-matrix-ii, max-consecutive-ones-iii, jump-game-iii; coin-change-ii, best-time-buy-sell-cooldown, longest-arithmetic-subsequence; k-closest-points, top-k-frequent-words, find-disappeared-numbers; 1026 tests; bank at 252
 - [x] swap-nodes-in-pairs (linked-list/medium), partition-list (linked-list/medium), find-if-path-exists (graph/easy); remove duplicate binary-tree-zigzag-traversal + orphan reverse-nodes-k-group; bank cleaned up
+- [x] backtracking tag applied to palindrome-partitioning, combination-sum-ii, n-queens, word-search
+- [x] sudoku-solver (backtracking/hard, runner preamble) + combinations (backtracking/medium); bank at 272; 1090 tests
 
 ---
 
