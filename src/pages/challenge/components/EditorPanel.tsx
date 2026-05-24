@@ -66,6 +66,10 @@ interface EditorPanelProps {
   showGiveUp: boolean;
   /** Number of attempts remaining. */
   attemptsRemaining: number | null;
+  /** Whether the editor is currently in fullscreen (problem panel hidden) mode. */
+  isFullscreen?: boolean;
+  /** Called when the user clicks the fullscreen toggle button. */
+  onToggleFullscreen?: () => void;
 }
 
 const INDENT_SPACES = '  ';
@@ -110,6 +114,8 @@ export function EditorPanel({
   verdictMode,
   showGiveUp,
   attemptsRemaining,
+  isFullscreen = false,
+  onToggleFullscreen,
 }: EditorPanelProps) {
   const editorContainerRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
@@ -339,7 +345,7 @@ export function EditorPanel({
 
   return (
     <section className="flex h-full flex-col overflow-hidden" aria-label="Code editor">
-      {/* Language label / selector */}
+      {/* Language label / selector + fullscreen toggle */}
       <div className="flex shrink-0 items-center justify-between border-b border-border px-4 py-2">
         {showLanguageSelector ? (
           <div role="radiogroup" aria-label="Code language" className="flex items-center gap-0.5">
@@ -370,6 +376,20 @@ export function EditorPanel({
           <span className="font-mono text-[10px] uppercase tracking-widest text-faint">
             {LANGUAGE_LABEL[language]}
           </span>
+        )}
+
+        {/* Fullscreen toggle — only rendered when the parent passes the callback */}
+        {onToggleFullscreen && (
+          <button
+            type="button"
+            onClick={onToggleFullscreen}
+            aria-label={isFullscreen ? 'Show problem panel' : 'Expand editor to full width'}
+            aria-pressed={isFullscreen}
+            title={isFullscreen ? 'Collapse (show problem)' : 'Expand editor'}
+            className="ml-2 rounded-sm border border-transparent p-1 font-mono text-[10px] text-faint transition-colors hover:border-border hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+          >
+            {isFullscreen ? '⊡' : '⊞'}
+          </button>
         )}
       </div>
 

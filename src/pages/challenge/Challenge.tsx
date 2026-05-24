@@ -190,6 +190,13 @@ export function Challenge() {
   // Initialised from prefs once `pageState` transitions to 'ready'.
   const [panelPct, setPanelPct] = useState(DEFAULT_PREFERENCES.problemPanelWidthPct);
 
+  // Fullscreen editor mode — hides the problem panel so the editor takes full width.
+  const [isEditorFullscreen, setIsEditorFullscreen] = useState(false);
+  const handleToggleFullscreen = useCallback(
+    () => setIsEditorFullscreen((v) => !v),
+    [],
+  );
+
   // Ref for the two-column container — used by DraggableSplitter to compute
   // pointer positions as a fraction of the container width.
   const splitContainerRef = useRef<HTMLElement | null>(null);
@@ -553,10 +560,11 @@ export function Challenge() {
         aria-label="Challenge workspace"
       >
         {/* Problem panel — scrollable independently.
-            On mobile (flex-col), !w-full overrides the inline percentage style.
-            On desktop (flex-row), the inline width drives the draggable split. */}
+            Hidden in fullscreen editor mode. On mobile (flex-col), !w-full
+            overrides the inline percentage style. On desktop (flex-row), the
+            inline width drives the draggable split. */}
         <div
-          className="flex flex-col overflow-hidden border-border lg:border-r max-lg:border-b max-lg:max-h-[45vh] max-lg:!w-full"
+          className={`flex flex-col overflow-hidden border-border lg:border-r max-lg:border-b max-lg:max-h-[45vh] max-lg:!w-full${isEditorFullscreen ? ' hidden' : ''}`}
           style={{ width: `${panelPct}%` }}
         >
           <ProblemPanel
@@ -566,12 +574,14 @@ export function Challenge() {
           />
         </div>
 
-        {/* Drag handle — only visible on desktop (lg+) */}
-        <DraggableSplitter
-          onDrag={handleSplitterDrag}
-          onDragEnd={handleSplitterDragEnd}
-          containerRef={splitContainerRef}
-        />
+        {/* Drag handle — only visible on desktop (lg+) and not in fullscreen */}
+        {!isEditorFullscreen && (
+          <DraggableSplitter
+            onDrag={handleSplitterDrag}
+            onDragEnd={handleSplitterDragEnd}
+            containerRef={splitContainerRef}
+          />
+        )}
 
         {/* Editor panel — fixed, no scroll on the outer shell */}
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
@@ -595,6 +605,8 @@ export function Challenge() {
             verdictMode={verdictMode}
             showGiveUp={prefs.allowGiveUp}
             attemptsRemaining={attemptsRemaining}
+            isFullscreen={isEditorFullscreen}
+            onToggleFullscreen={handleToggleFullscreen}
           />
           {/* Custom test drawer — collapses below the verdict/action bar */}
           <CustomTestPanel
