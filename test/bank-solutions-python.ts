@@ -4499,6 +4499,36 @@ def deserialize(data):
     return inc or dec
 `,
 
+  'build-array-from-permutation': `def buildArray(nums):
+    return [nums[nums[i]] for i in range(len(nums))]
+`,
+
+  'truncate-sentence': `def truncateSentence(s, k):
+    return ' '.join(s.split()[:k])
+`,
+
+  'largest-perimeter-triangle': `def largestPerimeter(nums):
+    nums = sorted(list(nums), reverse=True)
+    for i in range(len(nums) - 2):
+        if nums[i+1] + nums[i+2] > nums[i]:
+            return nums[i] + nums[i+1] + nums[i+2]
+    return 0
+`,
+
+  'to-lower-case': `def toLowerCase(s):
+    return s.lower()
+`,
+
+  'check-if-two-string-arrays-equivalent': `def arrayStringsAreEqual(word1, word2):
+    return ''.join(word1) == ''.join(word2)
+`,
+
+  'sum-of-unique-elements': `def sumOfUnique(nums):
+    from collections import Counter
+    c = Counter(nums)
+    return sum(k for k, v in c.items() if v == 1)
+`,
+
   'word-pattern': `def wordPattern(pattern, s):
     words = s.split()
     if len(pattern) != len(words):

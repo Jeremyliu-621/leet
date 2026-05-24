@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 338 problems (heap tag added); valid-anagram + defanging-ip + kids-with-candies + monotonic-array + add-binary + word-pattern; 1285 tests.
+**Current focus:** Bank at 344 problems (heap tag added); build-array + truncate-sentence + largest-perimeter + to-lower-case + check-two-string-arrays + sum-of-unique added; 1303 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing bank toward 350; more heap problems; UI/UX polish.
 
@@ -277,6 +277,7 @@ Still pending:
 =======
 - [x] pascals-triangle (arrays/easy) + single-number-ii + reverse-only-letters + backspace-string-compare + number-of-steps + richest-customer-wealth + maximum-units-on-truck + find-the-difference + goal-parser + shuffle-the-array + count-items-matching-rule; bank at 321; 1234 tests
 - [x] valid-anagram + defanging-ip-address + kids-with-candies + monotonic-array + add-binary + word-pattern; bank at 327; 1252 tests
+- [x] build-array-from-permutation + truncate-sentence + largest-perimeter-triangle + to-lower-case + check-if-two-string-arrays-equivalent + sum-of-unique-elements; bank at 344; 1303 tests
 >>>>>>> b0c66ec (feat: add valid-anagram, defanging-ip-address, kids-with-candies, monotonic-array, add-binary, word-pattern)
 >>>>>>> c399992 (feat: add valid-anagram, defanging-ip-address, kids-with-candies, monotonic-array, add-binary, word-pattern)
 

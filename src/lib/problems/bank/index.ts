@@ -20,6 +20,7 @@ import { problem as maxConsecutiveOnes } from './max-consecutive-ones';
 import { problem as plusOne } from './plus-one';
 import { problem as kidsWithCandies } from './kids-with-candies';
 import { problem as monotonicArray } from './monotonic-array';
+import { problem as buildArrayFromPermutation } from './build-array-from-permutation';
 // arrays — medium
 import { problem as meetingRoomsII } from './meeting-rooms-ii';
 import { problem as hIndex } from './h-index';
@@ -71,6 +72,9 @@ import { problem as reverseString } from './reverse-string';
 import { problem as capitalizeWords } from './capitalize-words';
 import { problem as lengthOfLastWord } from './length-of-last-word';
 import { problem as defangingIpAddress } from './defanging-ip-address';
+import { problem as truncateSentence } from './truncate-sentence';
+import { problem as toLowerCase } from './to-lower-case';
+import { problem as checkIfTwoStringArraysEquivalent } from './check-if-two-string-arrays-equivalent';
 // strings — medium
 import { problem as longestPalindromicString } from './longest-palindromic-string';
 import { problem as countPalindromicSubstrings } from './count-palindromic-substrings';
@@ -96,6 +100,7 @@ import { problem as subarraySumEqualsK } from './subarray-sum-equals-k';
 import { problem as ransomNote } from './ransom-note';
 import { problem as isomorphicStrings } from './isomorphic-strings';
 import { problem as wordPattern } from './word-pattern';
+import { problem as sumOfUniqueElements } from './sum-of-unique-elements';
 // hash-map — medium
 import { problem as letterCombinationsPhone } from './letter-combinations-phone';
 import { problem as groupAnagrams } from './group-anagrams';
@@ -214,6 +219,7 @@ import { problem as romanToInteger } from './roman-to-integer';
 import { problem as palindromeNumber } from './palindrome-number';
 import { problem as excelColumnNumber } from './excel-column-number';
 import { problem as sumOfTwoIntegers } from './sum-of-two-integers';
+import { problem as largestPerimeterTriangle } from './largest-perimeter-triangle';
 // math — hard
 import { problem as fractionToRecurringDecimal } from './fraction-to-recurring-decimal';
 import { problem as integerToEnglishWords } from './integer-to-english-words';
@@ -418,6 +424,7 @@ export const problems: readonly Problem[] = [
   plusOne,
   kidsWithCandies,
   monotonicArray,
+  buildArrayFromPermutation,
   singleNumber,
   // arrays — medium
   meetingRoomsII,
@@ -477,6 +484,9 @@ export const problems: readonly Problem[] = [
   capitalizeWords,
   lengthOfLastWord,
   defangingIpAddress,
+  truncateSentence,
+  toLowerCase,
+  checkIfTwoStringArraysEquivalent,
   // strings — medium
   generateParentheses,
   palindromePartitioning,
@@ -502,6 +512,7 @@ export const problems: readonly Problem[] = [
   ransomNote,
   isomorphicStrings,
   wordPattern,
+  sumOfUniqueElements,
   // hash-map — medium
   topKFrequentWords,
   letterCombinationsPhone,
@@ -627,6 +638,7 @@ export const problems: readonly Problem[] = [
   palindromeNumber,
   excelColumnNumber,
   sumOfTwoIntegers,
+  largestPerimeterTriangle,
   // math — hard
   fractionToRecurringDecimal,
   integerToEnglishWords,

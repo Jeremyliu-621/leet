@@ -5131,6 +5131,40 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return inc || dec;
   },
 
+  'build-array-from-permutation': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return nums.map((_, i) => nums[nums[i]!]!);
+  },
+
+  'truncate-sentence': (...args: unknown[]) => {
+    const s = args[0] as string, k = args[1] as number;
+    return s.split(' ').slice(0, k).join(' ');
+  },
+
+  'largest-perimeter-triangle': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => b - a);
+    for (let i = 0; i < nums.length - 2; i++) {
+      if (nums[i + 1]! + nums[i + 2]! > nums[i]!) return nums[i]! + nums[i + 1]! + nums[i + 2]!;
+    }
+    return 0;
+  },
+
+  'to-lower-case': (...args: unknown[]) => {
+    return (args[0] as string).toLowerCase();
+  },
+
+  'check-if-two-string-arrays-equivalent': (...args: unknown[]) => {
+    const w1 = args[0] as string[], w2 = args[1] as string[];
+    return w1.join('') === w2.join('');
+  },
+
+  'sum-of-unique-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const count: Record<number, number> = {};
+    for (const n of nums) count[n] = (count[n] ?? 0) + 1;
+    return Object.entries(count).filter(([, v]) => v === 1).reduce((s, [k]) => s + +k, 0);
+  },
+
   'word-pattern': (...args: unknown[]) => {
     const pattern = args[0] as string, s = args[1] as string;
     const words = s.split(' ');
