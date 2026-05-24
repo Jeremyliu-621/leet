@@ -5136,6 +5136,45 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return nums.map((_, i) => nums[nums[i]!]!);
   },
 
+  'concatenation-of-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return [...nums, ...nums];
+  },
+
+  'third-maximum-number': (...args: unknown[]) => {
+    const distinct = [...new Set(args[0] as number[])].sort((a, b) => b - a);
+    return distinct.length >= 3 ? distinct[2]! : distinct[0]!;
+  },
+
+  'count-odd-numbers-in-interval': (...args: unknown[]) => {
+    const low = args[0] as number, high = args[1] as number;
+    const countOdd = (n: number) => Math.floor((n + 1) / 2);
+    return countOdd(high) - countOdd(low - 1);
+  },
+
+  'maximum-product-three-numbers': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const n = nums.length;
+    return Math.max(nums[n - 1]! * nums[n - 2]! * nums[n - 3]!, nums[0]! * nums[1]! * nums[n - 1]!);
+  },
+
+  'average-salary-excluding-min-max': (...args: unknown[]) => {
+    const salary = args[0] as number[];
+    const min = Math.min(...salary), max = Math.max(...salary);
+    const sum = salary.reduce((acc, s) => acc + (s !== min && s !== max ? s : 0), 0);
+    return sum / (salary.length - 2);
+  },
+
+  'find-n-unique-integers-sum-to-zero': (...args: unknown[]) => {
+    const n = args[0] as number;
+    if (n === 1) return [0];
+    const result: number[] = [];
+    let sum = 0;
+    for (let i = 1; i < n; i++) { result.push(i); sum += i; }
+    result.push(-sum);
+    return result;
+  },
+
   'truncate-sentence': (...args: unknown[]) => {
     const s = args[0] as string, k = args[1] as number;
     return s.split(' ').slice(0, k).join(' ');

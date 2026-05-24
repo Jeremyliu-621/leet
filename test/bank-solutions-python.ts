@@ -4503,6 +4503,38 @@ def deserialize(data):
     return [nums[nums[i]] for i in range(len(nums))]
 `,
 
+  'concatenation-of-array': `def getConcatenation(nums):
+    return list(nums) + list(nums)
+`,
+
+  'third-maximum-number': `def thirdMax(nums):
+    distinct = sorted(set(nums), reverse=True)
+    return distinct[2] if len(distinct) >= 3 else distinct[0]
+`,
+
+  'count-odd-numbers-in-interval': `def countOdds(low, high):
+    def count_odd(n):
+        return (n + 1) // 2
+    return count_odd(high) - count_odd(low - 1)
+`,
+
+  'maximum-product-three-numbers': `def maximumProduct(nums):
+    nums = sorted(nums)
+    n = len(nums)
+    return max(nums[-1] * nums[-2] * nums[-3], nums[0] * nums[1] * nums[-1])
+`,
+
+  'average-salary-excluding-min-max': `def average(salary):
+    salary = list(salary)
+    return (sum(salary) - min(salary) - max(salary)) / (len(salary) - 2)
+`,
+
+  'find-n-unique-integers-sum-to-zero': `def sumZero(n):
+    result = list(range(1, n))
+    result.append(-sum(result))
+    return result
+`,
+
   'truncate-sentence': `def truncateSentence(s, k):
     return ' '.join(s.split()[:k])
 `,

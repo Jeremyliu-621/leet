@@ -21,6 +21,8 @@ import { problem as plusOne } from './plus-one';
 import { problem as kidsWithCandies } from './kids-with-candies';
 import { problem as monotonicArray } from './monotonic-array';
 import { problem as buildArrayFromPermutation } from './build-array-from-permutation';
+import { problem as concatenationOfArray } from './concatenation-of-array';
+import { problem as thirdMaximumNumber } from './third-maximum-number';
 // arrays — medium
 import { problem as meetingRoomsII } from './meeting-rooms-ii';
 import { problem as hIndex } from './h-index';
@@ -220,6 +222,10 @@ import { problem as palindromeNumber } from './palindrome-number';
 import { problem as excelColumnNumber } from './excel-column-number';
 import { problem as sumOfTwoIntegers } from './sum-of-two-integers';
 import { problem as largestPerimeterTriangle } from './largest-perimeter-triangle';
+import { problem as countOddNumbersInInterval } from './count-odd-numbers-in-interval';
+import { problem as maximumProductThreeNumbers } from './maximum-product-three-numbers';
+import { problem as averageSalaryExcludingMinMax } from './average-salary-excluding-min-max';
+import { problem as findNUniqueIntegersSumToZero } from './find-n-unique-integers-sum-to-zero';
 // math — hard
 import { problem as fractionToRecurringDecimal } from './fraction-to-recurring-decimal';
 import { problem as integerToEnglishWords } from './integer-to-english-words';
@@ -425,6 +431,8 @@ export const problems: readonly Problem[] = [
   kidsWithCandies,
   monotonicArray,
   buildArrayFromPermutation,
+  concatenationOfArray,
+  thirdMaximumNumber,
   singleNumber,
   // arrays — medium
   meetingRoomsII,
@@ -639,6 +647,10 @@ export const problems: readonly Problem[] = [
   excelColumnNumber,
   sumOfTwoIntegers,
   largestPerimeterTriangle,
+  countOddNumbersInInterval,
+  maximumProductThreeNumbers,
+  averageSalaryExcludingMinMax,
+  findNUniqueIntegersSumToZero,
   // math — hard
   fractionToRecurringDecimal,
   integerToEnglishWords,
