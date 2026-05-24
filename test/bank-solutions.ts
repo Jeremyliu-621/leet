@@ -6932,6 +6932,17 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'sort-array-by-parity-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const result = new Array<number>(nums.length);
+    let e = 0, o = 1;
+    for (const n of nums) {
+      if (n % 2 === 0) { result[e] = n; e += 2; }
+      else { result[o] = n; o += 2; }
+    }
+    return result;
+  },
+
   'smallest-number-in-infinite-set': (...args: unknown[]) => {
     const ops = args[0] as string[];
     const opArgs = args[1] as number[][];
@@ -7028,6 +7039,97 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       if (s < k) lo++; else hi--;
     }
     return false;
+  },
+
+  'number-of-arithmetic-triplets': (...args: unknown[]) => {
+    const nums = args[0] as number[], diff = args[1] as number;
+    const set = new Set(nums);
+    return nums.filter(n => set.has(n + diff) && set.has(n + 2 * diff)).length;
+  },
+
+  'nth-tribonacci-number': (...args: unknown[]) => {
+    const n = args[0] as number;
+    if (n === 0) return 0;
+    if (n <= 2) return 1;
+    let a = 0, b = 1, c = 1;
+    for (let i = 3; i <= n; i++) { [a, b, c] = [b, c, a + b + c]; }
+    return c;
+  },
+
+  'count-homogenous-substrings': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const MOD = 1_000_000_007;
+    let total = 0, run = 1;
+    for (let i = 1; i <= s.length; i++) {
+      if (i < s.length && s[i] === s[i - 1]) {
+        run++;
+      } else {
+        total = (total + Math.floor(run * (run + 1) / 2)) % MOD;
+        run = 1;
+      }
+    }
+    return total;
+  },
+
+  'binary-tree-tilt': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    if (!arr || arr.length === 0) return 0;
+    interface TN { val: number; left: TN | null; right: TN | null; }
+    function build(a: (number | null)[]): TN | null {
+      if (!a || a.length === 0 || a[0] == null) return null;
+      const root: TN = { val: a[0]!, left: null, right: null };
+      const q: TN[] = [root]; let i = 1;
+      while (q.length > 0 && i < a.length) {
+        const node = q.shift()!;
+        if (a[i] !== null && a[i] !== undefined) { node.left = { val: a[i]!, left: null, right: null }; q.push(node.left); }
+        i++;
+        if (i < a.length && a[i] !== null && a[i] !== undefined) { node.right = { val: a[i]!, left: null, right: null }; q.push(node.right); }
+        i++;
+      }
+      return root;
+    }
+    let total = 0;
+    function dfs(node: TN | null): number {
+      if (!node) return 0;
+      const l = dfs(node.left), r = dfs(node.right);
+      total += Math.abs(l - r);
+      return node.val + l + r;
+    }
+    dfs(build(arr));
+    return total;
+  },
+
+  'average-of-levels': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    if (!arr || arr.length === 0 || arr[0] == null) return [];
+    interface TN { val: number; left: TN | null; right: TN | null; }
+    function build(a: (number | null)[]): TN | null {
+      if (!a || a.length === 0 || a[0] == null) return null;
+      const root: TN = { val: a[0]!, left: null, right: null };
+      const q: TN[] = [root]; let i = 1;
+      while (q.length > 0 && i < a.length) {
+        const node = q.shift()!;
+        if (a[i] !== null && a[i] !== undefined) { node.left = { val: a[i]!, left: null, right: null }; q.push(node.left); }
+        i++;
+        if (i < a.length && a[i] !== null && a[i] !== undefined) { node.right = { val: a[i]!, left: null, right: null }; q.push(node.right); }
+        i++;
+      }
+      return root;
+    }
+    const result: number[] = [];
+    const queue: TN[] = [build(arr)!];
+    while (queue.length > 0) {
+      const n = queue.length;
+      let sum = 0;
+      for (let i = 0; i < n; i++) {
+        const node = queue.shift()!;
+        sum += node.val;
+        if (node.left) queue.push(node.left);
+        if (node.right) queue.push(node.right);
+      }
+      result.push(sum / n);
+    }
+    return result;
   },
 
 };

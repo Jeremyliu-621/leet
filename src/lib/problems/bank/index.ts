@@ -67,6 +67,8 @@ import { problem as countItemsWithTheGivenSum } from './count-items-with-the-giv
 import { problem as numberOfEmployeesCanMeet } from './number-of-employees-can-meet';
 import { problem as partitionArrayAccordingToGivenPivot } from './partition-array-according-to-given-pivot';
 import { problem as sortEvenOddIndices } from './sort-even-odd-indices';
+import { problem as sortArrayByParityII } from './sort-array-by-parity-ii';
+import { problem as numberOfArithmeticTriplets } from './number-of-arithmetic-triplets';
 // arrays — medium
 import { problem as rangeSumQuery2D } from './range-sum-query-2d';
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
@@ -160,7 +162,7 @@ import { problem as isSubsequenceMedium } from './is-subsequence-medium';
 import { problem as characterReplacement } from './character-replacement';
 import { problem as stringCompression } from './string-compression';
 import { problem as restoreIpAddresses } from './restore-ip-addresses';
-
+import { problem as countHomogenousSubstrings } from './count-homogenous-substrings';
 // hash-map — easy
 import { problem as findWordsFormedByCharacters } from './find-words-formed-by-characters';
 import { problem as twoOutOfThree } from './two-out-of-three';
@@ -340,6 +342,7 @@ import { problem as signOfProductArray } from './sign-of-product-array';
 import { problem as convertTemperature } from './convert-temperature';
 import { problem as maximum69Number } from './maximum-69-number';
 import { problem as countOfMatchesTournament } from './count-of-matches-tournament';
+import { problem as nthTribonacciNumber } from './nth-tribonacci-number';
 // math — hard
 import { problem as fractionToRecurringDecimal } from './fraction-to-recurring-decimal';
 import { problem as integerToEnglishWords } from './integer-to-english-words';
@@ -511,6 +514,8 @@ import { problem as sameTree } from './same-tree';
 import { problem as sumOfLeftLeaves } from './sum-of-left-leaves';
 import { problem as leafSimilarTrees } from './leaf-similar-trees';
 import { problem as twoSumIVBST } from './two-sum-iv-bst';
+import { problem as binaryTreeTilt } from './binary-tree-tilt';
+import { problem as averageOfLevels } from './average-of-levels';
 // tree — medium
 import { problem as binaryTreePruning } from './binary-tree-pruning';
 import { problem as countCompleteTreeNodes } from './count-complete-tree-nodes';
@@ -623,6 +628,8 @@ export const problems: readonly Problem[] = [
   singleNumber,
   toeplitzMatrix,
   transposeMatrix,
+  sortArrayByParityII,
+  numberOfArithmeticTriplets,
   // arrays — medium
   rearrangeArrayElementsBySign,
   numberOfZeroFilledSubarrays,
@@ -725,6 +732,7 @@ export const problems: readonly Problem[] = [
   stringCompression,
   zigzagConversion,
   integerToRoman,
+  countHomogenousSubstrings,
   // hash-map — easy
   twoOutOfThree,
   checkIfAllCharactersAppearTwice,
@@ -934,6 +942,7 @@ export const problems: readonly Problem[] = [
   convertTemperature,
   maximum69Number,
   countOfMatchesTournament,
+  nthTribonacciNumber,
   // math — hard
   fractionToRecurringDecimal,
   integerToEnglishWords,
@@ -1085,6 +1094,8 @@ export const problems: readonly Problem[] = [
   sumOfLeftLeaves,
   leafSimilarTrees,
   twoSumIVBST,
+  binaryTreeTilt,
+  averageOfLevels,
   // tree — medium
   binaryTreePruning,
   countCompleteTreeNodes,

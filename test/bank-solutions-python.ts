@@ -6404,4 +6404,144 @@ def minMovesToSeat(seats, students):
             pass
     return any(k - v in vals and k - v != v for v in vals)
 `,
+
+  'sort-array-by-parity-ii': `
+def sortArrayByParityII(nums):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    else:
+        nums = list(nums)
+    result = [0] * len(nums)
+    e, o = 0, 1
+    for n in nums:
+        if n % 2 == 0:
+            result[e] = n
+            e += 2
+        else:
+            result[o] = n
+            o += 2
+    return result
+`,
+
+  'number-of-arithmetic-triplets': `
+def arithmeticTriplets(nums, diff):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    else:
+        nums = list(nums)
+    s = set(nums)
+    return sum(1 for n in nums if (n + diff) in s and (n + 2 * diff) in s)
+`,
+
+  'nth-tribonacci-number': `
+def tribonacci(n):
+    if n == 0: return 0
+    if n <= 2: return 1
+    a, b, c = 0, 1, 1
+    for _ in range(n - 2):
+        a, b, c = b, c, a + b + c
+    return c
+`,
+
+  'count-homogenous-substrings': `
+def countHomogenous(s):
+    MOD = 10**9 + 7
+    total = 0
+    run = 1
+    for i in range(1, len(s) + 1):
+        if i < len(s) and s[i] == s[i-1]:
+            run += 1
+        else:
+            total = (total + run * (run + 1) // 2) % MOD
+            run = 1
+    return total
+`,
+
+  'binary-tree-tilt': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def __from_array__(arr):
+    if hasattr(arr, 'to_py'):
+        raw = arr.to_py()
+    else:
+        raw = list(arr)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i]); queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i]); queue.append(node.right)
+        i += 1
+    return root
+
+def findTiltRunner(arr):
+    return findTilt(__from_array__(arr))
+
+def findTilt(root):
+    total = [0]
+    def dfs(node):
+        if not node:
+            return 0
+        l = dfs(node.left)
+        r = dfs(node.right)
+        total[0] += abs(l - r)
+        return node.val + l + r
+    dfs(root)
+    return total[0]
+`,
+
+  'average-of-levels': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def __from_array__(arr):
+    if hasattr(arr, 'to_py'):
+        raw = arr.to_py()
+    else:
+        raw = list(arr)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i]); queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i]); queue.append(node.right)
+        i += 1
+    return root
+
+def averageOfLevelsRunner(arr):
+    return averageOfLevels(__from_array__(arr))
+
+def averageOfLevels(root):
+    if not root:
+        return []
+    result = []
+    queue = [root]
+    while queue:
+        n = len(queue)
+        level_sum = 0
+        for _ in range(n):
+            node = queue.pop(0)
+            level_sum += node.val
+            if node.left: queue.append(node.left)
+            if node.right: queue.append(node.right)
+        result.append(level_sum / n)
+    return result
+`,
 };
