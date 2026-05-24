@@ -22,6 +22,19 @@ blocked page.
 [`docs/PROGRESS.md`](docs/PROGRESS.md) for the live task tracker and
 [`docs/BUILD_PLAN.md`](docs/BUILD_PLAN.md) for the architecture and roadmap.
 
+## Screenshots
+
+| Popup | Challenge |
+| --- | --- |
+| ![LeetLock popup](docs/screenshots/popup.png) | ![LeetLock challenge screen](docs/screenshots/challenge.png) |
+
+| Settings | Blocked |
+| --- | --- |
+| ![LeetLock settings](docs/screenshots/options.png) | ![LeetLock blocked page](docs/screenshots/blocked.png) |
+
+*Captured automatically by `npm run test:e2e` (Playwright against a real Chromium load of the
+built extension).*
+
 ## How it works
 
 1. You define blocked **domains**, **full URLs**, or **URL keyword patterns** (`shorts`, `reels`, …).
