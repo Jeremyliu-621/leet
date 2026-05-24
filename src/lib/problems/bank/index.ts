@@ -164,6 +164,10 @@ import { problem as coinChange } from './coin-change';
 import { problem as longestCommonSubsequence } from './longest-common-subsequence';
 import { problem as minimumPathSum } from './minimum-path-sum';
 import { problem as decodeWays } from './decode-ways';
+// dynamic-programming — hard
+import { problem as longestPalindromicSubsequence } from './longest-palindromic-subsequence';
+import { problem as palindromePartitioningMinCuts } from './palindrome-partitioning-min-cuts';
+import { problem as maximumProductCutting } from './maximum-product-cutting';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -319,4 +323,8 @@ export const problems: readonly Problem[] = [
   longestCommonSubsequence,
   minimumPathSum,
   decodeWays,
+  // dynamic-programming — hard
+  longestPalindromicSubsequence,
+  palindromePartitioningMinCuts,
+  maximumProductCutting,
 ];

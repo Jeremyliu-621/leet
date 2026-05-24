@@ -1521,6 +1521,58 @@ export const pythonSolutions: Record<string, string> = {
     return result
 `,
 
+  'longest-palindromic-subsequence': `def longestPalindromeSubseq(s: str) -> int:
+    n = len(s)
+    dp = [[0] * n for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            if s[i] == s[j]:
+                dp[i][j] = 2 if length == 2 else dp[i + 1][j - 1] + 2
+            else:
+                dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+    return dp[0][n - 1]
+`,
+
+  'palindrome-partitioning-min-cuts': `def minCut(s: str) -> int:
+    n = len(s)
+    is_palin = [[False] * n for _ in range(n)]
+    for i in range(n):
+        d = 0
+        while i - d >= 0 and i + d < n:
+            if s[i - d] == s[i + d]:
+                is_palin[i - d][i + d] = True
+                d += 1
+            else:
+                break
+        d = 0
+        while i - d >= 0 and i + d + 1 < n:
+            if s[i - d] == s[i + d + 1]:
+                is_palin[i - d][i + d + 1] = True
+                d += 1
+            else:
+                break
+    cuts = list(range(n))
+    for i in range(1, n):
+        if is_palin[0][i]:
+            cuts[i] = 0
+            continue
+        for j in range(1, i + 1):
+            if is_palin[j][i]:
+                cuts[i] = min(cuts[i], cuts[j - 1] + 1)
+    return cuts[n - 1]
+`,
+
+  'maximum-product-cutting': `def integerBreak(n: int) -> int:
+    dp = [0] * (n + 1)
+    for i in range(2, n + 1):
+        for j in range(1, i):
+            dp[i] = max(dp[i], j * max(i - j, dp[i - j]))
+    return dp[n]
+`,
+
   'next-permutation': `def nextPermutation(nums: list[int]) -> list[int]:
     i = len(nums) - 2
     while i >= 0 and nums[i] >= nums[i + 1]:

@@ -2042,6 +2042,60 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  // --- dynamic-programming — hard --------------------------------------------
+  'longest-palindromic-subsequence': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const dp = Array.from({ length: n }, () => new Array<number>(n).fill(0));
+    for (let i = 0; i < n; i++) dp[i]![i] = 1;
+    for (let len = 2; len <= n; len++) {
+      for (let i = 0; i <= n - len; i++) {
+        const j = i + len - 1;
+        if (s[i] === s[j]) {
+          dp[i]![j] = len === 2 ? 2 : dp[i + 1]![j - 1]! + 2;
+        } else {
+          dp[i]![j] = Math.max(dp[i + 1]![j]!, dp[i]![j - 1]!);
+        }
+      }
+    }
+    return dp[0]![n - 1];
+  },
+
+  'palindrome-partitioning-min-cuts': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const isPalin = Array.from({ length: n }, () => new Array<boolean>(n).fill(false));
+    for (let i = 0; i < n; i++) {
+      for (let d = 0; i - d >= 0 && i + d < n; d++) {
+        if (s[i - d] === s[i + d]) isPalin[i - d]![i + d] = true;
+        else break;
+      }
+      for (let d = 0; i - d >= 0 && i + d + 1 < n; d++) {
+        if (s[i - d] === s[i + d + 1]) isPalin[i - d]![i + d + 1] = true;
+        else break;
+      }
+    }
+    const cuts = Array.from({ length: n }, (_, i) => i);
+    for (let i = 1; i < n; i++) {
+      if (isPalin[0]![i]) { cuts[i] = 0; continue; }
+      for (let j = 1; j <= i; j++) {
+        if (isPalin[j]![i]) cuts[i] = Math.min(cuts[i]!, cuts[j - 1]! + 1);
+      }
+    }
+    return cuts[n - 1];
+  },
+
+  'maximum-product-cutting': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const dp = new Array<number>(n + 1).fill(0);
+    for (let i = 2; i <= n; i++) {
+      for (let j = 1; j < i; j++) {
+        dp[i] = Math.max(dp[i]!, j * Math.max(i - j, dp[i - j]!));
+      }
+    }
+    return dp[n];
+  },
+
   // --- two-pointers — medium -------------------------------------------------
   'next-permutation': (...args: unknown[]) => {
     const nums = [...(args[0] as number[])];
