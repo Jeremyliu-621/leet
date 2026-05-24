@@ -268,7 +268,6 @@ import { problem as sameTree } from './same-tree';
 // tree — medium
 import { problem as validateBst } from './validate-bst';
 import { problem as levelOrderTraversal } from './level-order-traversal';
-import { problem as binaryTreeZigzagTraversal } from './binary-tree-zigzag-traversal';
 import { problem as binaryTreeRightSideView } from './binary-tree-right-side-view';
 import { problem as lowestCommonAncestorBst } from './lowest-common-ancestor-bst';
 import { problem as countGoodNodes } from './count-good-nodes';
@@ -538,7 +537,6 @@ export const problems: readonly Problem[] = [
   // tree — medium
   validateBst,
   levelOrderTraversal,
-  binaryTreeZigzagTraversal,
   binaryTreeRightSideView,
   lowestCommonAncestorBst,
   countGoodNodes,

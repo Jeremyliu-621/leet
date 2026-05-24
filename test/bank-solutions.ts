@@ -3004,27 +3004,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
-  'binary-tree-zigzag-traversal': (...args: unknown[]) => {
-    const root = _buildTree(args[0] as (number | null)[]);
-    if (!root) return [];
-    const result: number[][] = [];
-    const queue: _TN[] = [root];
-    let leftToRight = true;
-    while (queue.length) {
-      const size = queue.length;
-      const level: number[] = [];
-      for (let i = 0; i < size; i++) {
-        const node = queue.shift()!;
-        level.push(node.v);
-        if (node.l) queue.push(node.l);
-        if (node.r) queue.push(node.r);
-      }
-      result.push(leftToRight ? level : level.slice().reverse());
-      leftToRight = !leftToRight;
-    }
-    return result;
-  },
-
   'path-sum': (...args: unknown[]) => {
     const check = (n: _TN | null, rem: number): boolean => {
       if (!n) return false;
