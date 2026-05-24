@@ -1899,4 +1899,37 @@ export const pythonSolutions: Record<string, string> = {
             best = max(best, hi - lo + 1)
     return -1 if best == -1 else len(nums) - best
 `,
+  'sort-list': `def sortArray(nums):
+    if len(nums) <= 1:
+        return list(nums)
+    mid = len(nums) // 2
+    left = sortArray(nums[:mid])
+    right = sortArray(nums[mid:])
+    result = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i]); i += 1
+        else:
+            result.append(right[j]); j += 1
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
+`,
+  'subarrays-k-distinct': `def subarraysWithKDistinct(nums, k):
+    from collections import defaultdict
+    def at_most(limit):
+        freq = defaultdict(int)
+        lo = cnt = 0
+        for hi, v in enumerate(nums):
+            freq[v] += 1
+            while len(freq) > limit:
+                freq[nums[lo]] -= 1
+                if freq[nums[lo]] == 0:
+                    del freq[nums[lo]]
+                lo += 1
+            cnt += hi - lo + 1
+        return cnt
+    return at_most(k) - at_most(k - 1)
+`,
 };

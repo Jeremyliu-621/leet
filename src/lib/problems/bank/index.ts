@@ -68,6 +68,8 @@ import { problem as maxPointsOnLine } from './max-points-on-line';
 // two-pointers — hard
 import { problem as trappingRainWater } from './trapping-rain-water';
 import { problem as fourSum } from './four-sum';
+import { problem as sortList } from './sort-list';
+import { problem as subarraysKDistinct } from './subarrays-k-distinct';
 // two-pointers — medium
 import { problem as threeSumClosest } from './three-sum-closest';
 import { problem as boatsToSavePeople } from './boats-to-save-people';
@@ -257,6 +259,8 @@ export const problems: readonly Problem[] = [
   // two-pointers — hard
   trappingRainWater,
   fourSum,
+  sortList,
+  subarraysKDistinct,
   // two-pointers — medium
   threeSumClosest,
   boatsToSavePeople,

@@ -2468,4 +2468,39 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best === -1 ? -1 : nums.length - best;
   },
 
+  // --- two-pointers — hard ---------------------------------------------------
+  'sort-list': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    function merge(a: number[], b: number[]): number[] {
+      let i = 0, j = 0;
+      const r: number[] = [];
+      while (i < a.length && j < b.length) r.push(a[i]! <= b[j]! ? a[i++]! : b[j++]!);
+      return r.concat(a.slice(i), b.slice(j));
+    }
+    function ms(a: number[]): number[] {
+      if (a.length <= 1) return a;
+      const m = a.length >> 1;
+      return merge(ms(a.slice(0, m)), ms(a.slice(m)));
+    }
+    return ms(nums);
+  },
+
+  'subarrays-k-distinct': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    function atMost(limit: number): number {
+      const freq = new Map<number, number>();
+      let lo = 0, cnt = 0;
+      for (let hi = 0; hi < nums.length; hi++) {
+        freq.set(nums[hi]!, (freq.get(nums[hi]!) ?? 0) + 1);
+        while (freq.size > limit) {
+          const v = nums[lo++]!;
+          if (freq.get(v) === 1) freq.delete(v); else freq.set(v, freq.get(v)! - 1);
+        }
+        cnt += hi - lo + 1;
+      }
+      return cnt;
+    }
+    return atMost(k) - atMost(k - 1);
+  },
+
 };
