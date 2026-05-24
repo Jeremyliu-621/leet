@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 476 problems; 1705 tests; growing toward 500+. Added 14 new medium/hard problems (heap/backtracking/graph/dp: total-cost-hire-k-workers, maximum-subsequence-score, gray-code, count-vowels-permutation, snakes-and-ladders, swim-in-rising-water, n-queens-ii, remove-invalid-parentheses, number-of-ways-arrive-destination, minimum-cost-cut-stick, kth-missing-positive-number, process-tasks-using-servers, smallest-number-in-infinite-set, strange-printer). Also added editor indent size setting + line/column indicator.
+**Current focus:** Bank at 488 problems; 1735 tests; growing toward 500+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing bank toward 500+; more medium/hard problems across all tags.
+**Next up:** Continue growing bank toward 500+; more easy/medium problems across all tags.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -286,6 +286,7 @@ Still pending:
 - [x] number-of-students-eating-lunch + two-sum-less-than-k + find-smallest-letter-greater-than-target + minimum-difference-k-scores + two-out-of-three + sum-of-odd-length-subarrays; bank at 417; 1531 tests
 - [x] **400-problem milestone** — determine-if-string-halves-alike + check-two-strings-almost-equivalent + rearrange-characters-to-make-target + divide-string-into-groups + count-vowel-substrings + count-of-matches-in-tournament + minimum-sum-mountain-triplet (merged)
 - [x] merge-sorted-array (easy/arrays, preamble) + minimum-moves-equal-array (medium/math) + multiply-strings (medium/math+strings) + count-triplets-xor (medium/arrays+math) + water-and-jug (medium/math) + find-center-of-star-graph (easy/graph); bank at 444; 1603 tests
+- [x] validate-stack-sequences + 132-pattern (stack/medium) + frequency-of-most-frequent-element (sliding-window/medium) + find-common-characters + counting-words-with-given-prefix + find-words-formed-by-characters (strings/easy) + minimum-rounds-to-complete-tasks + minimum-steps-make-anagram (hash-map/medium) + number-of-laser-beams (arrays/medium) + minimum-number-of-moves-seat (arrays/easy); bank merged to 488; 1735 tests
 
 ---
 
