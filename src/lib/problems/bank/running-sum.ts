@@ -5,8 +5,11 @@ export const problem: Problem = {
   title: 'Running Sum',
   difficulty: 'easy',
   tags: ['arrays'],
-  description:
-    'You are given an integer array nums. Build a new array where each position holds the sum of every element from the start of nums up to and including that position.\n\nThe element at index i of the result is nums[0] + nums[1] + ... + nums[i]. This is sometimes called a prefix sum.\n\nReturn the resulting array. The input array is left unchanged.',
+  description: `You are given an integer array \`nums\`. Build a new array where each position holds the sum of every element from the start of \`nums\` up to and including that position.
+
+The element at index \`i\` of the result is \`nums[0] + nums[1] + ... + nums[i]\`. This is sometimes called a **prefix sum**.
+
+Return the resulting array. The input array is left unchanged.`,
   constraints: [
     '1 <= nums.length <= 1000',
     'All values in nums are integers.',
@@ -45,5 +48,9 @@ export const problem: Problem = {
     { args: [[10, -10, 10, -10]], expected: [10, 0, 10, 0] },
     { args: [[7, 0, 7, 0, 7]], expected: [7, 7, 14, 14, 21] },
     { args: [[-1]], expected: [-1] },
+  ],
+  hints: [
+    'Each output element is one addition away from the previous output element.',
+    'Track a running variable `sum`. For each `i`, do `sum += nums[i]` and push `sum` into the result. One pass, no nested loops.',
   ],
 };
