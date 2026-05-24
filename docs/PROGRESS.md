@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 148 problems; DP easy tier filled (min-cost-climbing-stairs, counting-bits, best-time-buy-sell); hard DP + easy binary-search growth.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (705 unit tests across 22 files).
-**Next up:** Further bank growth; UI polish; more medium stack / sliding-window problems.
+**Current focus:** Bank at 152 problems; stack/medium, binary-search/medium, sliding-window/medium growth.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (717 unit tests across 22 files).
+**Next up:** Further bank growth; UI polish; more problems for two-pointers/hard and hash-map tiers.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -215,6 +215,7 @@ Still pending:
 - [x] Add roman-to-integer (math/easy) + valid-sudoku (arrays/medium); 684 tests; bank at 141
 - [x] Add hard DP problems — burst-balloons, wildcard-matching, dungeon-game; bank at 144
 - [x] Add DP easy + binary-search easy — min-cost-climbing-stairs, counting-bits, best-time-buy-sell, search-insert-position; 705 tests; bank at 148
+- [x] Add car-fleet, koko-eating-bananas, find-peak-element, minimum-operations-reduce-x; 717 tests; bank at 152
 - [ ] Marketing site iteration + Vercel deployment
 
 ---
