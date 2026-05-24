@@ -3808,6 +3808,41 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return lca(root)?.v ?? null;
   },
 
+  'gas-station': (...args: unknown[]) => {
+    const gas = args[0] as number[];
+    const cost = args[1] as number[];
+    let total = 0, tank = 0, start = 0;
+    for (let i = 0; i < gas.length; i++) {
+      const diff = gas[i]! - cost[i]!;
+      total += diff; tank += diff;
+      if (tank < 0) { start = i + 1; tank = 0; }
+    }
+    return total >= 0 ? start : -1;
+  },
+
+  'minimum-cost-tickets': (...args: unknown[]) => {
+    const days = args[0] as number[];
+    const costs = args[1] as number[];
+    const dp = new Array<number>(366).fill(0);
+    const daySet = new Set(days);
+    for (let i = 1; i <= 365; i++) {
+      if (!daySet.has(i)) { dp[i] = dp[i-1]!; continue; }
+      dp[i] = Math.min(dp[i-1]! + costs[0]!, dp[Math.max(0,i-7)]! + costs[1]!, dp[Math.max(0,i-30)]! + costs[2]!);
+    }
+    return dp[365]!;
+  },
+
+  'max-subarray-circular': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let totalSum = 0, maxSum = nums[0]!, curMax = 0, minSum = nums[0]!, curMin = 0;
+    for (const n of nums) {
+      curMax = Math.max(curMax + n, n); maxSum = Math.max(maxSum, curMax);
+      curMin = Math.min(curMin + n, n); minSum = Math.min(minSum, curMin);
+      totalSum += n;
+    }
+    return maxSum > 0 ? Math.max(maxSum, totalSum - minSum) : maxSum;
+  },
+
   'squares-of-sorted-array': (...args: unknown[]) => {
     const nums = args[0] as number[];
     let left = 0, right = nums.length - 1;

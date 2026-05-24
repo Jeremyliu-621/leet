@@ -3199,6 +3199,47 @@ def deserialize(data):
     return left if left else right
 `,
 
+  'gas-station': `def canCompleteCircuit(gas, cost):
+    gas = list(gas)
+    cost = list(cost)
+    total = tank = start = 0
+    for i in range(len(gas)):
+        diff = gas[i] - cost[i]
+        total += diff
+        tank += diff
+        if tank < 0:
+            start = i + 1
+            tank = 0
+    return start if total >= 0 else -1
+`,
+
+  'minimum-cost-tickets': `def mincostTickets(days, costs):
+    day_set = set(days)
+    dp = [0] * 366
+    for i in range(1, 366):
+        if i not in day_set:
+            dp[i] = dp[i - 1]
+        else:
+            dp[i] = min(dp[i-1] + costs[0], dp[max(0,i-7)] + costs[1], dp[max(0,i-30)] + costs[2])
+    return dp[365]
+`,
+
+  'max-subarray-circular': `def maxSubarraySumCircular(nums):
+    nums = list(nums)
+    total_sum = 0
+    max_sum = nums[0]
+    min_sum = nums[0]
+    cur_max = 0
+    cur_min = 0
+    for n in nums:
+        cur_max = max(cur_max + n, n)
+        max_sum = max(max_sum, cur_max)
+        cur_min = min(cur_min + n, n)
+        min_sum = min(min_sum, cur_min)
+        total_sum += n
+    return max(max_sum, total_sum - min_sum) if max_sum > 0 else max_sum
+`,
+
   'squares-of-sorted-array': `def sortedSquares(nums):
     nums = list(nums)
     left, right = 0, len(nums) - 1

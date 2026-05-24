@@ -222,6 +222,9 @@ import { problem as findDisappearedNumbers } from './find-disappeared-numbers';
 import { problem as squaresOfSortedArray } from './squares-of-sorted-array';
 import { problem as minimumAbsoluteDifference } from './minimum-absolute-difference';
 import { problem as countNegativesInSortedMatrix } from './count-negatives-in-sorted-matrix';
+import { problem as gasStation } from './gas-station';
+import { problem as minimumCostTickets } from './minimum-cost-tickets';
+import { problem as maxSubarrayCircular } from './max-subarray-circular';
 // dynamic-programming — hard
 import { problem as longestPalindromicSubsequence } from './longest-palindromic-subsequence';
 import { problem as palindromePartitioningMinCuts } from './palindrome-partitioning-min-cuts';
@@ -332,6 +335,8 @@ export const problems: readonly Problem[] = [
   kClosestPoints,
   findDisappearedNumbers,
   minimumAbsoluteDifference,
+  gasStation,
+  maxSubarrayCircular,
   rotateArray,
   maxProductSubarray,
   productExceptSelf,
@@ -520,6 +525,7 @@ export const problems: readonly Problem[] = [
   coinChangeII,
   bestTimeBuySellCooldown,
   longestArithmeticSubsequence,
+  minimumCostTickets,
   // dynamic-programming — hard
   longestPalindromicSubsequence,
   palindromePartitioningMinCuts,
