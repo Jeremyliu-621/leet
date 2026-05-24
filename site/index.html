@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="LeetLock turns distracting websites into mini coding-interview gates. Solve a problem, earn timed access. A Chrome extension for programmers." />
+  <meta property="og:title" content="LeetLock — Earn your distractions" />
+  <meta property="og:description" content="Every blocked site costs you one algorithm problem." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>LeetLock — Earn your distractions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Design tokens — pure grayscale */
+    :root {
+      --bg: #0A0A0A;
+      --surface: #161616;
+      --border: #262626;
+      --border-strong: #3A3A3A;
+      --text: #EDEDED;
+      --muted: #8A8A8A;
+      --faint: #4A4A4A;
+      --accent: #FFFFFF;
+      --on-accent: #0A0A0A;
+      --radius: 8px;
+      --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', monospace;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Nav */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10, 10, 10, 0.92);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 52px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .nav-logo svg {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 96px 0 80px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-kicker {
+      display: inline-block;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 4px 10px;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 6vw, 56px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      max-width: 700px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: var(--accent);
+      color: var(--on-accent);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-radius: var(--radius);
+      border: 1px solid var(--accent);
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.88;
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: transparent;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--border-strong);
+      color: var(--text);
+    }
+
+    /* Flow diagram */
+    .flow {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--faint);
+      margin-bottom: 40px;
+    }
+
+    .flow-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .flow-step {
+      background: var(--surface);
+      padding: 28px 24px;
+    }
+
+    .flow-step-num {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--faint);
+      margin-bottom: 12px;
+    }
+
+    .flow-step h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .flow-step p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Feature grid */
+    .features {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-heading {
+      font-size: clamp(22px, 3vw, 30px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 48px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      padding: 24px;
+    }
+
+    .feature-icon {
+      font-size: 18px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .feature-card p {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Comparison */
+    .comparison {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comparison-intro {
+      font-size: 12px;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    .comparison-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 12px;
+    }
+
+    .comparison-item {
+      display: flex;
+      gap: 12px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
+    .check {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      border: 1px solid var(--border-strong);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+
+    .check::after {
+      content: '';
+      width: 8px;
+      height: 4px;
+      border-left: 1.5px solid var(--text);
+      border-bottom: 1.5px solid var(--text);
+      transform: rotate(-45deg) translateY(-1px);
+    }
+
+    .comparison-item p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .comparison-item strong {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    /* Commitment */
+    .commitment {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .commitment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .commitment-card {
+      background: var(--surface);
+      padding: 24px;
+    }
+
+    .commitment-card h3 {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .commitment-card p {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Bank stats */
+    .stats {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 48px;
+    }
+
+    .stat-cell {
+      background: var(--surface);
+      padding: 24px;
+    }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 3px 8px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--muted);
+    }
+
+    /* Terminal mockup */
+    .terminal-section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .terminal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      font-size: 12px;
+    }
+
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+
+    .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--faint);
+    }
+
+    .terminal-title {
+      font-size: 10px;
+      color: var(--faint);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .terminal-body {
+      padding: 20px 24px;
+      line-height: 1.8;
+    }
+
+    .term-comment { color: var(--faint); }
+    .term-keyword { color: var(--muted); font-weight: 600; }
+    .term-fn { color: var(--text); }
+    .term-type { color: var(--muted); }
+    .term-pass { color: var(--text); font-weight: 600; }
+    .term-meta { color: var(--faint); }
+
+    /* CTA */
+    .cta {
+      padding: 96px 0;
+    }
+
+    .cta-inner {
+      text-align: center;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 64px 40px;
+      background: var(--surface);
+    }
+
+    .cta h2 {
+      font-size: clamp(24px, 4vw, 38px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .cta p {
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 400px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+
+    .cta-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-inner p {
+      font-size: 11px;
+      color: var(--faint);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 11px;
+      color: var(--faint);
+      transition: color 0.15s;
+    }
+
+    .footer-links a:hover {
+      color: var(--muted);
+    }
+
+    /* Honesty note */
+    .honesty {
+      font-size: 11px;
+      color: var(--faint);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      line-height: 1.6;
+      margin-top: 40px;
+    }
+
+    .honesty strong {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hero { padding: 64px 0 56px; }
+      .hero-actions { flex-direction: column; }
+      .btn-primary, .btn-secondary { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="128" height="128" rx="28" fill="#0F0F0F" />
+          <rect x="1" y="1" width="126" height="126" rx="27" fill="none" stroke="#2A2A2A" stroke-width="2" />
+          <path d="M44 58 V46 a20 20 0 0 1 40 0 V58" fill="none" stroke="#EDEDED" stroke-width="11" stroke-linecap="round" />
+          <rect x="33" y="57" width="62" height="47" rx="11" fill="#EDEDED" />
+          <circle cx="64" cy="75" r="7.5" fill="#0F0F0F" />
+          <path d="M61 79 L67 79 L69 95 L59 95 Z" fill="#0F0F0F" />
+        </svg>
+        LeetLock
+      </a>
+      <ul class="nav-links">
+        <li><a href="#how-it-works">How it works</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#commitment">Commitment</a></li>
+        <li><a href="https://github.com/Jeremyliu-621/leet">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-kicker">Chrome Extension &middot; Manifest V3 &middot; MIT License</div>
+    <h1>Every distraction costs you <em>one algorithm problem.</em></h1>
+    <p>
+      LeetLock intercepts blocked sites and replaces the page with a focused coding challenge.
+      Solve it inside the time limit, earn timed access. Fail or give up — the tab closes.
+    </p>
+    <div class="hero-actions">
+      <a href="https://github.com/Jeremyliu-621/leet#getting-started-development" class="btn-primary">
+        Install from GitHub
+      </a>
+      <a href="https://github.com/Jeremyliu-621/leet" class="btn-secondary">
+        View source
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="flow" id="how-it-works">
+  <div class="container">
+    <p class="section-label">How it works</p>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <p class="flow-step-num">01</p>
+        <h3>Block a site</h3>
+        <p>Add YouTube, Reddit, Twitter — any domain, URL pattern, or keyword. Enable strict mode to lock the settings behind a cooldown.</p>
+      </div>
+      <div class="flow-step">
+        <p class="flow-step-num">02</p>
+        <h3>Hit the gate</h3>
+        <p>Navigate to a blocked site. LeetLock intercepts the navigation and presents a clean, focused coding challenge — no ads, no upsells.</p>
+      </div>
+      <div class="flow-step">
+        <p class="flow-step-num">03</p>
+        <h3>Solve to unlock</h3>
+        <p>Pass all test cases inside the time limit. LeetLock grants a timed unlock token for that domain. Token expires, gate rearms.</p>
+      </div>
+      <div class="flow-step">
+        <p class="flow-step-num">04</p>
+        <h3>Fail the cost</h3>
+        <p>Timeout, exhaust your attempts, or give up — the tab closes or redirects to a calm blocked page. Streak takes the hit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="features" id="features">
+  <div class="container">
+    <h2 class="section-heading">Built to make the gate real.</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3>165 original problems</h3>
+        <p>Arrays, strings, hash maps, two pointers, sliding window, binary search, stack, math, dynamic programming, and linked lists. Easy, medium, and hard. All original — no LeetCode API.</p>
+      </div>
+      <div class="feature-card">
+        <h3>JavaScript + Python</h3>
+        <p>Two languages, one gate. Switch in the editor header. Your choice persists across sessions. Pyodide runs Python entirely in-browser — no server, no network request.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Progressive hints</h3>
+        <p>Three-level hints per problem. Each reveal costs 60 seconds off the timer. The friction is intentional — hints should cost something.</p>
+      </div>
+      <div class="feature-card">
+        <h3>CodeMirror 6 editor</h3>
+        <p>Bracket matching, autocomplete, Vim + Emacs keymaps, multi-cursor, code folding, find/replace, font size, and light + dark mode. Every shortcut in a modal, press <kbd>?</kbd>.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Draft auto-save</h3>
+        <p>Code is saved to local storage with an 800 ms debounce, per-problem, with a 7-day TTL. Refresh or close the tab — your work-in-progress is there when you return.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Submission history</h3>
+        <p>Every Submit is recorded with outcome, test counts, timing, and a snapshot of the code. Restore any submission back to the editor with one click.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Custom test cases</h3>
+        <p>Run any argument combination against your code with the Custom Test drawer — no submission needed, no rate limits, results instantly.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Daily streak tracker</h3>
+        <p>A 12-week activity heatmap in the popup. Streak takes damage on failed challenges, disabled rules, and removed blocks — commitment features should sting.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Settings import / export</h3>
+        <p>Download your block rules, problem prefs, and timing config as JSON. Restore on a new device or share with a study partner.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Comparison -->
+<section class="comparison" id="vs">
+  <div class="container">
+    <p class="section-label">Why LeetLock</p>
+    <h2 class="section-heading">Better than the alternatives.</h2>
+    <p class="comparison-intro">
+      Site-blockers redirect you away. LeetLock charges you. The distinction matters
+      when your goal is to become a better programmer, not just to avoid Reddit.
+    </p>
+    <ul class="comparison-list">
+      <li class="comparison-item">
+        <span class="check" aria-hidden="true"></span>
+        <div>
+          <strong>No login required</strong>
+          <p>All state lives in chrome.storage. No account, no email, no data harvesting. Open the extension and it works.</p>
+        </div>
+      </li>
+      <li class="comparison-item">
+        <span class="check" aria-hidden="true"></span>
+        <div>
+          <strong>No ads, no Premium tier</strong>
+          <p>LeetCode's free experience is a constant upsell funnel. LeetLock has one screen: the problem. Nothing else.</p>
+        </div>
+      </li>
+      <li class="comparison-item">
+        <span class="check" aria-hidden="true"></span>
+        <div>
+          <strong>Accessible by default</strong>
+          <p>Every control has aria-label. The verdict panel uses aria-live so screen readers announce results. Monaco's focus-trap is not our problem.</p>
+        </div>
+      </li>
+      <li class="comparison-item">
+        <span class="check" aria-hidden="true"></span>
+        <div>
+          <strong>Honest time limits</strong>
+          <p>A hard 4-second worker timeout. If your code doesn't terminate, you see it immediately — no noisy "0 ms beats 100%" theater.</p>
+        </div>
+      </li>
+      <li class="comparison-item">
+        <span class="check" aria-hidden="true"></span>
+        <div>
+          <strong>Zero-hue design</strong>
+          <p>No green/red/yellow traffic-light UX. Emphasis comes from contrast and typographic weight. Color-blind users are not second-class.</p>
+        </div>
+      </li>
+      <li class="comparison-item">
+        <span class="check" aria-hidden="true"></span>
+        <div>
+          <strong>Open source, MIT</strong>
+          <p>The worker, the judge, and every test in the bank are readable on GitHub. No black boxes, no proprietary "algo" behind the scoring.</p>
+        </div>
+      </li>
+      <li class="comparison-item">
+        <span class="check" aria-hidden="true"></span>
+        <div>
+          <strong>No "show solution" escape</strong>
+          <p>LeetCode dangles a Solution tab and a Discussion tab. LeetLock has no exit. If you bail, you close the tab — and that's the cost.</p>
+        </div>
+      </li>
+      <li class="comparison-item">
+        <span class="check" aria-hidden="true"></span>
+        <div>
+          <strong>Tablet-responsive</strong>
+          <p>Stacks cleanly below 1024 px. Problem panel caps at 45 vh on mobile. LeetCode's layout on a tablet is effectively unusable.</p>
+        </div>
+      </li>
+    </ul>
+    <div class="honesty">
+      <strong>An honest note on limits.</strong> Manifest V3 does not allow true anti-uninstall. A determined user can always remove the extension. LeetLock ships <em>friction</em>, not false guarantees — the same way a gym membership works better than a padlock on your fridge.
+    </div>
+  </div>
+</section>
+
+<!-- Commitment features -->
+<section class="commitment" id="commitment">
+  <div class="container">
+    <p class="section-label">Commitment features</p>
+    <h2 class="section-heading">Make the gate hard to ignore.</h2>
+    <div class="commitment-grid">
+      <div class="commitment-card">
+        <h3>Settings cooldown</h3>
+        <p>Strictness-reducing changes (removing a block rule, shortening the time limit) don't apply immediately — they wait out a configurable delay. Regret-proof.</p>
+      </div>
+      <div class="commitment-card">
+        <h3>Password lock</h3>
+        <p>Protect settings behind a password hashed with PBKDF2/SHA-256. The plaintext is never stored. Change it on your own terms, not in a moment of weakness.</p>
+      </div>
+      <div class="commitment-card">
+        <h3>Accountability partner</h3>
+        <p>Give a trusted person a code. Settings changes require their code to apply. Social accountability, no server required.</p>
+      </div>
+      <div class="commitment-card">
+        <h3>Strict mode</h3>
+        <p>Disables Give Up. Locks the settings cooldown. Forces streak damage on any failed challenge. You said you meant it — strict mode makes you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Problem bank stats -->
+<section class="stats" id="bank">
+  <div class="container">
+    <p class="section-label">Problem bank</p>
+    <h2 class="section-heading">165 original problems. Growing.</h2>
+    <div class="stats-grid">
+      <div class="stat-cell">
+        <div class="stat-value">165</div>
+        <div class="stat-label">Total problems</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-value">10</div>
+        <div class="stat-label">Topic categories</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-value">3</div>
+        <div class="stat-label">Difficulty tiers</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-value">2</div>
+        <div class="stat-label">Languages</div>
+      </div>
+    </div>
+    <div class="tag-list" aria-label="Problem categories">
+      <span class="tag">Arrays</span>
+      <span class="tag">Strings</span>
+      <span class="tag">Hash Map</span>
+      <span class="tag">Two Pointers</span>
+      <span class="tag">Sliding Window</span>
+      <span class="tag">Binary Search</span>
+      <span class="tag">Stack</span>
+      <span class="tag">Math</span>
+      <span class="tag">Dynamic Programming</span>
+      <span class="tag">Linked List</span>
+    </div>
+  </div>
+</section>
+
+<!-- Code sample -->
+<section class="terminal-section">
+  <div class="container">
+    <p class="section-label">What the challenge looks like</p>
+    <h2 class="section-heading">A real coding problem. In your browser.</h2>
+    <div class="terminal" aria-label="Example coding challenge">
+      <div class="terminal-bar">
+        <div class="terminal-dot" aria-hidden="true"></div>
+        <div class="terminal-dot" aria-hidden="true"></div>
+        <div class="terminal-dot" aria-hidden="true"></div>
+        <span class="terminal-title">Two Sum · LeetLock &nbsp;·&nbsp; 07:32 remaining</span>
+      </div>
+      <div class="terminal-body">
+        <span class="term-comment">// Given an array of integers nums and an integer target,</span><br>
+        <span class="term-comment">// return indices of the two numbers that add up to target.</span><br>
+        <br>
+        <span class="term-comment">// Example: nums = [2,7,11,15], target = 9 → [0, 1]</span><br>
+        <br>
+        <span class="term-keyword">function</span> <span class="term-fn">twoSum</span>(<span class="term-type">nums</span>, <span class="term-type">target</span>) {<br>
+        &nbsp;&nbsp;<span class="term-keyword">const</span> <span class="term-type">seen</span> = <span class="term-keyword">new</span> Map();<br>
+        &nbsp;&nbsp;<span class="term-keyword">for</span> (<span class="term-keyword">let</span> i = 0; i &lt; nums.length; i++) {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="term-keyword">const</span> comp = target - nums[i];<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="term-keyword">if</span> (seen.has(comp)) <span class="term-keyword">return</span> [seen.get(comp), i];<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;seen.set(nums[i], i);<br>
+        &nbsp;&nbsp;}<br>
+        }<br>
+        <br>
+        <span class="term-meta">▶ run &nbsp;·&nbsp; ⌘↵ &nbsp;·&nbsp; Test 1 <span class="term-pass">pass</span> · Test 2 <span class="term-pass">pass</span> · Test 3 <span class="term-pass">pass</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="container">
+    <div class="cta-inner">
+      <h2>Stop planning to focus.</h2>
+      <p>Clone the repo, load the unpacked extension in Chrome, add a blocked site. Takes under two minutes.</p>
+      <div class="cta-actions">
+        <a href="https://github.com/Jeremyliu-621/leet#getting-started-development" class="btn-primary">
+          Get started
+        </a>
+        <a href="https://github.com/Jeremyliu-621/leet" class="btn-secondary">
+          Star on GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <p>LeetLock &mdash; MIT License &mdash; &copy; 2026 Jeremy Liu</p>
+      <ul class="footer-links">
+        <li><a href="https://github.com/Jeremyliu-621/leet">GitHub</a></li>
+        <li><a href="https://github.com/Jeremyliu-621/leet/blob/main/LICENSE">License</a></li>
+        <li><a href="https://github.com/Jeremyliu-621/leet/blob/main/docs/PROGRESS.md">Changelog</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
