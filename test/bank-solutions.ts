@@ -2387,4 +2387,34 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[0]![0];
   },
 
+  // --- dynamic-programming — easy --------------------------------------------
+  'min-cost-climbing-stairs': (...args: unknown[]) => {
+    const cost = args[0] as number[];
+    const n = cost.length;
+    const dp = [...cost];
+    for (let i = 2; i < n; i++) dp[i] = cost[i]! + Math.min(dp[i - 1]!, dp[i - 2]!);
+    return Math.min(dp[n - 1]!, dp[n - 2]!);
+  },
+
+  'counting-bits': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const ans = new Array<number>(n + 1).fill(0);
+    for (let i = 1; i <= n; i++) ans[i] = ans[i >> 1]! + (i & 1);
+    return ans;
+  },
+
+  'best-time-buy-sell': (...args: unknown[]) => {
+    const prices = args[0] as number[];
+    let min = Infinity, profit = 0;
+    for (const p of prices) { min = Math.min(min, p); profit = Math.max(profit, p - min); }
+    return profit;
+  },
+
+  'search-insert-position': (...args: unknown[]) => {
+    const nums = args[0] as number[], target = args[1] as number;
+    let lo = 0, hi = nums.length;
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (nums[mid]! < target) lo = mid + 1; else hi = mid; }
+    return lo;
+  },
+
 };

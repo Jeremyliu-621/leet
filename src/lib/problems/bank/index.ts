@@ -105,6 +105,7 @@ import { problem as integerSquareRoot } from './integer-square-root';
 import { problem as firstNotSmaller } from './first-not-smaller';
 import { problem as binarySearchRange } from './binary-search-range';
 import { problem as isPerfectSquare } from './is-perfect-square';
+import { problem as searchInsertPosition } from './search-insert-position';
 // binary-search — medium
 import { problem as searchRotatedSorted } from './search-rotated-sorted';
 import { problem as findMinimumRotated } from './find-minimum-rotated';
@@ -165,6 +166,9 @@ import { problem as wordBreak } from './word-break';
 
 // dynamic-programming — easy
 import { problem as uniquePaths } from './unique-paths';
+import { problem as minCostClimbingStairs } from './min-cost-climbing-stairs';
+import { problem as countingBits } from './counting-bits';
+import { problem as bestTimeBuySell } from './best-time-buy-sell';
 // dynamic-programming — medium
 import { problem as houseRobber } from './house-robber';
 import { problem as coinChange } from './coin-change';
@@ -282,6 +286,7 @@ export const problems: readonly Problem[] = [
   firstNotSmaller,
   binarySearchRange,
   isPerfectSquare,
+  searchInsertPosition,
   // binary-search — medium
   searchRotatedSorted,
   findMinimumRotated,
@@ -338,6 +343,9 @@ export const problems: readonly Problem[] = [
   wordBreak,
   // dynamic-programming — easy
   uniquePaths,
+  minCostClimbingStairs,
+  countingBits,
+  bestTimeBuySell,
   // dynamic-programming — medium
   houseRobber,
   coinChange,

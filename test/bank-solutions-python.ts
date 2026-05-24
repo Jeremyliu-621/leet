@@ -1817,4 +1817,40 @@ export const pythonSolutions: Record<string, string> = {
             dp[i][j] = max(1, int(need))
     return dp[0][0]
 `,
+
+  // --- dynamic-programming — easy -------------------------------------------
+  'min-cost-climbing-stairs': `def minCostClimbingStairs(cost):
+    n = len(cost)
+    dp = list(cost)
+    for i in range(2, n):
+        dp[i] = cost[i] + min(dp[i-1], dp[i-2])
+    return min(dp[n-1], dp[n-2])
+`,
+
+  'counting-bits': `def countBits(n):
+    ans = [0] * (n + 1)
+    for i in range(1, n + 1):
+        ans[i] = ans[i >> 1] + (i & 1)
+    return ans
+`,
+
+  'best-time-buy-sell': `def maxProfit(prices):
+    min_price = float('inf')
+    profit = 0
+    for p in prices:
+        min_price = min(min_price, p)
+        profit = max(profit, p - min_price)
+    return profit
+`,
+
+  'search-insert-position': `def searchInsert(nums, target):
+    lo, hi = 0, len(nums)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if nums[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+`,
 };
