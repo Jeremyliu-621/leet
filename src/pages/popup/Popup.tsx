@@ -23,6 +23,10 @@ import type { SolvedStats } from './popup-helpers';
 
 const BANK_SIZE = getAllProblems().length;
 
+const PROBLEM_TITLE_BY_ID: ReadonlyMap<string, { title: string; difficulty: Difficulty }> = new Map(
+  getAllProblems().map((p) => [p.id, { title: p.title, difficulty: p.difficulty }]),
+);
+
 const KEYMAP_OPTIONS: ReadonlyArray<{ value: EditorKeymap; label: string }> = [
   { value: 'default', label: 'Default' },
   { value: 'vim', label: 'Vim' },
@@ -51,12 +55,19 @@ const FIRST_RUN_SUGGESTIONS: readonly string[] = [
   'tiktok.com',
 ];
 
+interface RecentSolve {
+  title: string;
+  difficulty: Difficulty;
+  solvedAt: number;
+}
+
 interface PopupData {
   streak: StreakSummary;
   streakHistory: readonly StreakDay[];
   activeUnlocks: UnlockToken[];
   solvedToday: number;
   solvedStats: SolvedStats;
+  recentSolves: readonly RecentSolve[];
   currentDomain: string | null;
   alreadyBlocked: boolean;
   blockedDomains: ReadonlySet<string>;
@@ -100,6 +111,17 @@ export function Popup() {
         (record: SolvedProblemRecord) => localDateString(new Date(record.solvedAt)) === today,
       ).length;
 
+      // Last 5 unique solves (most recent first, deduplicated by problemId).
+      const seenIds = new Set<string>();
+      const recentSolves: RecentSolve[] = [];
+      for (const record of [...solved].reverse()) {
+        if (seenIds.has(record.problemId)) continue;
+        seenIds.add(record.problemId);
+        const meta = PROBLEM_TITLE_BY_ID.get(record.problemId);
+        if (meta) recentSolves.push({ title: meta.title, difficulty: meta.difficulty, solvedAt: record.solvedAt });
+        if (recentSolves.length >= 5) break;
+      }
+
       const blockedDomains = new Set(
         blockedRules
           .filter((rule) => rule.kind === 'domain')
@@ -113,6 +135,7 @@ export function Popup() {
         activeUnlocks: pruneTokens(tokens),
         solvedToday,
         solvedStats: computeSolvedStats(solved),
+        recentSolves,
         currentDomain,
         alreadyBlocked,
         blockedDomains,
@@ -226,6 +249,7 @@ export function Popup() {
 
       <StreakHeatmap history={data.streakHistory} />
       <SolveBreakdown stats={data.solvedStats} />
+      <RecentSolvesList solves={data.recentSolves} />
 
       {data.blockedDomains.size === 0 && (
         <section className="mt-5" aria-label="Quick start">
@@ -513,6 +537,37 @@ function SolveBreakdown({ stats }: { stats: SolvedStats }) {
           ))}
         </div>
       )}
+    </section>
+  );
+}
+
+/** Last 5 recently-solved problems, shown below the breakdown stats. */
+function RecentSolvesList({ solves }: { solves: readonly RecentSolve[] }) {
+  if (solves.length === 0) return null;
+
+  function timeAgo(ts: number): string {
+    const diff = Date.now() - ts;
+    const mins = Math.floor(diff / 60_000);
+    if (mins < 60) return `${mins}m ago`;
+    const hrs = Math.floor(diff / 3_600_000);
+    if (hrs < 24) return `${hrs}h ago`;
+    return `${Math.floor(diff / 86_400_000)}d ago`;
+  }
+
+  const DIFF_ABBR: Record<Difficulty, string> = { easy: 'E', medium: 'M', hard: 'H' };
+
+  return (
+    <section className="mt-4 border-t border-border pt-4" aria-label="Recent solves">
+      <h2 className="font-mono text-[9px] uppercase tracking-widest text-faint">Recent</h2>
+      <ul className="mt-2 space-y-1">
+        {solves.map((s, i) => (
+          <li key={i} className="flex items-center gap-2">
+            <span className="shrink-0 font-mono text-[9px] text-faint w-3">{DIFF_ABBR[s.difficulty]}</span>
+            <span className="flex-1 truncate font-mono text-[10px] text-muted">{s.title}</span>
+            <span className="shrink-0 font-mono text-[9px] text-faint tabular-nums">{timeAgo(s.solvedAt)}</span>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }
