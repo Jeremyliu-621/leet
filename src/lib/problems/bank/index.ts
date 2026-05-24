@@ -26,6 +26,7 @@ import { problem as longestSubarrayOfOnes } from './longest-subarray-of-ones';
 import { problem as spiralMatrix } from './spiral-matrix';
 import { problem as rotateImage } from './rotate-image';
 import { problem as maximalSquare } from './maximal-square';
+import { problem as validSudoku } from './valid-sudoku';
 
 // strings — easy
 import { problem as vowelTally } from './vowel-tally';
@@ -139,6 +140,7 @@ import { problem as powerOfTwo } from './power-of-two';
 import { problem as fibonacciNumber } from './fibonacci-number';
 import { problem as sumOfSquares } from './sum-of-squares';
 import { problem as climbingStairs } from './climbing-stairs';
+import { problem as romanToInteger } from './roman-to-integer';
 // math — hard
 import { problem as fractionToRecurringDecimal } from './fraction-to-recurring-decimal';
 import { problem as integerToEnglishWords } from './integer-to-english-words';
@@ -147,6 +149,7 @@ import { problem as countPrimesSieve } from './count-primes-sieve';
 import { problem as powXN } from './pow-x-n';
 import { problem as reverseInteger } from './reverse-integer';
 import { problem as happyNumber } from './happy-number';
+import { problem as perfectSquares } from './perfect-squares';
 
 // arrays — hard
 import { problem as firstMissingPositive } from './first-missing-positive';
@@ -205,6 +208,7 @@ export const problems: readonly Problem[] = [
   spiralMatrix,
   rotateImage,
   maximalSquare,
+  validSudoku,
   // strings — easy
   vowelTally,
   reverseWordsOrder,
@@ -309,6 +313,7 @@ export const problems: readonly Problem[] = [
   fibonacciNumber,
   sumOfSquares,
   climbingStairs,
+  romanToInteger,
   // math — hard
   fractionToRecurringDecimal,
   integerToEnglishWords,
@@ -317,6 +322,7 @@ export const problems: readonly Problem[] = [
   powXN,
   reverseInteger,
   happyNumber,
+  perfectSquares,
   // arrays — hard
   firstMissingPositive,
   jumpGameII,

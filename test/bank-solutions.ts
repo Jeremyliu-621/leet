@@ -2042,6 +2042,52 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  // --- math — easy -----------------------------------------------------------
+  'roman-to-integer': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const map: Record<string, number> = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
+    let res = 0;
+    for (let i = 0; i < s.length; i++) {
+      const cur = map[s[i]!]!;
+      const next = map[s[i + 1]!] ?? 0;
+      res += cur < next ? -cur : cur;
+    }
+    return res;
+  },
+
+  // --- math — medium ---------------------------------------------------------
+  'perfect-squares': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const dp = new Array<number>(n + 1).fill(Infinity);
+    dp[0] = 0;
+    for (let i = 1; i <= n; i++) {
+      for (let j = 1; j * j <= i; j++) {
+        dp[i] = Math.min(dp[i]!, dp[i - j * j]! + 1);
+      }
+    }
+    return dp[n];
+  },
+
+  // --- arrays — medium (extra) -----------------------------------------------
+  'valid-sudoku': (...args: unknown[]) => {
+    const board = args[0] as string[][];
+    const rows = Array.from({ length: 9 }, () => new Set<string>());
+    const cols = Array.from({ length: 9 }, () => new Set<string>());
+    const boxes = Array.from({ length: 9 }, () => new Set<string>());
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        const v = board[i]![j]!;
+        if (v === '.') continue;
+        const b = Math.floor(i / 3) * 3 + Math.floor(j / 3);
+        if (rows[i]!.has(v) || cols[j]!.has(v) || boxes[b]!.has(v)) return false;
+        rows[i]!.add(v);
+        cols[j]!.add(v);
+        boxes[b]!.add(v);
+      }
+    }
+    return true;
+  },
+
   // --- binary-search — medium ------------------------------------------------
   'find-first-and-last-position': (...args: unknown[]) => {
     const nums = args[0] as number[];

@@ -1521,6 +1521,46 @@ export const pythonSolutions: Record<string, string> = {
     return result
 `,
 
+  'roman-to-integer': `def romanToInt(s: str) -> int:
+    val = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+    res = 0
+    for i in range(len(s)):
+        cur = val[s[i]]
+        nxt = val[s[i + 1]] if i + 1 < len(s) else 0
+        res += -cur if cur < nxt else cur
+    return res
+`,
+
+  'perfect-squares': `def numSquares(n: int) -> int:
+    import math
+    dp = [float('inf')] * (n + 1)
+    dp[0] = 0
+    for i in range(1, n + 1):
+        j = 1
+        while j * j <= i:
+            dp[i] = min(dp[i], dp[i - j * j] + 1)
+            j += 1
+    return dp[n]
+`,
+
+  'valid-sudoku': `def isValidSudoku(board: list[list[str]]) -> bool:
+    rows = [set() for _ in range(9)]
+    cols = [set() for _ in range(9)]
+    boxes = [set() for _ in range(9)]
+    for i in range(9):
+        for j in range(9):
+            v = board[i][j]
+            if v == '.':
+                continue
+            b = (i // 3) * 3 + (j // 3)
+            if v in rows[i] or v in cols[j] or v in boxes[b]:
+                return False
+            rows[i].add(v)
+            cols[j].add(v)
+            boxes[b].add(v)
+    return True
+`,
+
   'find-first-and-last-position': `def searchRange(nums: list[int], target: int) -> list[int]:
     def search(find_first: bool) -> int:
         lo, hi, res = 0, len(nums) - 1, -1
