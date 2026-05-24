@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 281 problems (14 tags); recent additions: subsets-ii, insert-interval, sum-of-two-integers, single-number, house-robber-ii, wiggle-subsequence, find-min-rotated-ii, number-of-substrings, longest-increasing-path-matrix; 1114 tests.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** word-search-ii (Trie+backtracking/hard), more medium/hard problems toward 300.
+**Current focus:** Bank at 284 problems (13 tags); subsets-ii wired in with correct runner, AboutSection updated to 13 topic categories, site/index.html updated with backtracking tag; 1123 tests.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (1123 unit tests across 23 files).
+**Next up:** More backtracking medium (combination-sum-iii, restore-ip-addresses, beautiful-arrangement); fill gaps vs LeetCode parity.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -260,6 +260,8 @@ Still pending:
 - [x] swap-nodes-in-pairs (linked-list/medium), partition-list (linked-list/medium), find-if-path-exists (graph/easy); remove duplicate binary-tree-zigzag-traversal + orphan reverse-nodes-k-group; bank cleaned up
 - [x] backtracking tag applied to palindrome-partitioning, combination-sum-ii, n-queens, word-search
 - [x] sudoku-solver (backtracking/hard, runner preamble) + combinations (backtracking/medium); bank at 272; 1090 tests
+- [x] subsets-ii (backtracking/medium, duplicate-skip bt); AboutSection 12→13 topic categories; site description updated with backtracking tag; bank at 284; 1123 tests
+- [x] majority-element-ii, contains-duplicate-ii, summary-ranges added by parallel loop instance
 
 ---
 
