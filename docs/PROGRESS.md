@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 250 problems (12 tags); permutations, generate-parentheses, palindrome-partitioning, n-queens, combination-sum-ii added; 1020 tests.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (1020 unit tests across 23 files).
-**Next up:** More hard/medium problems; UI polish (color-contrast a11y, verdict UX).
+**Current focus:** Bank growing; squares-of-sorted-array, min-abs-diff, count-negatives added; 1035+ tests.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green.
+**Next up:** More medium/hard problems; additional tags, tree, graph.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -254,6 +254,7 @@ Still pending:
 - [x] permutations (arrays/medium, preamble-sort), generate-parentheses (strings/medium, preamble-sort), palindrome-partitioning (strings/medium); bank at ~244; remote also added: combination-sum-ii, number-of-dice-rolls, coin-change-ii, best-time-buy-sell-cooldown, longest-arithmetic-subsequence, unique-paths-ii, triangle, interleaving-string
 - [x] n-queens (arrays/hard); marketing site updated to 250 problems; 1020 tests; bank at 250
 - [x] triangle (DP/medium), interleaving-string (DP/medium), find-eventual-safe-states (graph/medium); letter-combinations-phone (hash-map/medium), subsets (arrays/medium), combination-sum (arrays/medium); 981 tests; bank at 237
+- [x] generate-parentheses (strings/medium), permutations (arrays/medium), unique-paths-ii (DP/medium); combination-sum-ii, palindrome-partitioning, number-of-dice-rolls; spiral-matrix-ii, max-consecutive-ones-iii, jump-game-iii; coin-change-ii, best-time-buy-sell-cooldown, longest-arithmetic-subsequence; k-closest-points, top-k-frequent-words, find-disappeared-numbers; 1026 tests; bank at 252
 
 ---
 

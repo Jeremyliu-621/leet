@@ -219,6 +219,9 @@ import { problem as jumpGameIII } from './jump-game-iii';
 import { problem as kClosestPoints } from './k-closest-points';
 import { problem as topKFrequentWords } from './top-k-frequent-words';
 import { problem as findDisappearedNumbers } from './find-disappeared-numbers';
+import { problem as squaresOfSortedArray } from './squares-of-sorted-array';
+import { problem as minimumAbsoluteDifference } from './minimum-absolute-difference';
+import { problem as countNegativesInSortedMatrix } from './count-negatives-in-sorted-matrix';
 // dynamic-programming — hard
 import { problem as longestPalindromicSubsequence } from './longest-palindromic-subsequence';
 import { problem as palindromePartitioningMinCuts } from './palindrome-partitioning-min-cuts';
@@ -328,6 +331,7 @@ export const problems: readonly Problem[] = [
   spiralMatrixII,
   kClosestPoints,
   findDisappearedNumbers,
+  minimumAbsoluteDifference,
   rotateArray,
   maxProductSubarray,
   productExceptSelf,
@@ -401,6 +405,7 @@ export const problems: readonly Problem[] = [
   intervalListIntersections,
   longestMountainInArray,
   // two-pointers — easy
+  squaresOfSortedArray,
   reverseArrayInplace,
   sortedPairExists,
   mergeSortedLists,
@@ -423,6 +428,7 @@ export const problems: readonly Problem[] = [
   longestUniqueWindow,
   minSubarrayLength,
   // binary-search — easy
+  countNegativesInSortedMatrix,
   findTargetIndex,
   integerSquareRoot,
   firstNotSmaller,

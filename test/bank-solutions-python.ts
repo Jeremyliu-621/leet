@@ -3199,6 +3199,45 @@ def deserialize(data):
     return left if left else right
 `,
 
+  'squares-of-sorted-array': `def sortedSquares(nums):
+    nums = list(nums)
+    left, right = 0, len(nums) - 1
+    result = [0] * len(nums)
+    pos = len(nums) - 1
+    while left <= right:
+        lsq, rsq = nums[left] ** 2, nums[right] ** 2
+        if lsq > rsq:
+            result[pos] = lsq
+            left += 1
+        else:
+            result[pos] = rsq
+            right -= 1
+        pos -= 1
+    return result
+`,
+
+  'minimum-absolute-difference': `def minimumAbsDifference(arr):
+    arr = sorted(arr)
+    best = float('inf')
+    for i in range(1, len(arr)):
+        best = min(best, arr[i] - arr[i-1])
+    return [[arr[i-1], arr[i]] for i in range(1, len(arr)) if arr[i] - arr[i-1] == best]
+`,
+
+  'count-negatives-in-sorted-matrix': `def countNegatives(grid):
+    count = 0
+    for row in grid:
+        l, r = 0, len(row)
+        while l < r:
+            m = (l + r) // 2
+            if row[m] < 0:
+                r = m
+            else:
+                l = m + 1
+        count += len(row) - l
+    return count
+`,
+
   'k-closest-points': `def kClosestRunner(points, k):
     pts = [list(p) for p in points]
     return sorted(pts, key=lambda p: (p[0]*p[0]+p[1]*p[1], p[0], p[1]))[:k]

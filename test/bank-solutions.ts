@@ -3808,6 +3808,39 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return lca(root)?.v ?? null;
   },
 
+  'squares-of-sorted-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let left = 0, right = nums.length - 1;
+    const result = new Array<number>(nums.length);
+    let pos = nums.length - 1;
+    while (left <= right) {
+      const lsq = nums[left]! ** 2, rsq = nums[right]! ** 2;
+      if (lsq > rsq) { result[pos--] = lsq; left++; }
+      else { result[pos--] = rsq; right--; }
+    }
+    return result;
+  },
+
+  'minimum-absolute-difference': (...args: unknown[]) => {
+    const arr = [...(args[0] as number[])].sort((a, b) => a - b);
+    let best = Infinity;
+    for (let i = 1; i < arr.length; i++) best = Math.min(best, arr[i]! - arr[i-1]!);
+    const result: number[][] = [];
+    for (let i = 1; i < arr.length; i++) { if (arr[i]! - arr[i-1]! === best) result.push([arr[i-1]!, arr[i]!]); }
+    return result;
+  },
+
+  'count-negatives-in-sorted-matrix': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    let count = 0;
+    for (const row of grid) {
+      let l = 0, r = row.length;
+      while (l < r) { const m = (l + r) >> 1; if (row[m]! < 0) r = m; else l = m + 1; }
+      count += row.length - l;
+    }
+    return count;
+  },
+
   'k-closest-points': (...args: unknown[]) => {
     const points = (args[0] as number[][]).map(p => [p[0]!, p[1]!] as [number, number]);
     const k = args[1] as number;
