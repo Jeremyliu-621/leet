@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import type { UserPreferences } from '../../lib/types';
+import type { SupportedLanguage, UserPreferences } from '../../lib/types';
 import type { Problem } from '../../lib/problems/types';
 import type { JudgeResult } from '../../lib/judge';
 import type { ChallengeFailureReason } from '../../lib/messaging/runtime';
-import { getValue } from '../../lib/storage';
+import { getValue, updateValue } from '../../lib/storage';
 import { pickChallengeProblem } from '../../lib/problems';
 import { runTests } from '../../lib/judge';
 import { DEFAULT_PREFERENCES } from '../../lib/storage/defaults';
@@ -20,6 +20,15 @@ type RunMode = 'run' | 'submit';
 
 /** Seconds deducted from the challenge timer per revealed hint. */
 const HINT_COST_SECONDS = 60;
+
+/** Languages a given problem ships starter code for, in display order. */
+function availableLanguagesFor(problem: Problem): SupportedLanguage[] {
+  const langs: SupportedLanguage[] = ['javascript'];
+  if (problem.starterCode.python) {
+    langs.push('python');
+  }
+  return langs;
+}
 
 type PageState =
   | { status: 'loading' }
@@ -91,6 +100,10 @@ export function Challenge() {
   // Editor code — mirrors the CodeMirror document.
   const [code, setCode] = useState('');
 
+  // Active language. Set on init from the user's preference (falling back to
+  // JS if the picked problem doesn't ship the preferred language).
+  const [language, setLanguage] = useState<SupportedLanguage>('javascript');
+
   // Timer state.
   const [secondsLeft, setSecondsLeft] = useState(DEFAULT_PREFERENCES.challengeTimeLimitSec);
 
@@ -128,7 +141,18 @@ export function Challenge() {
         return;
       }
 
-      setCode(problem.starterCode.javascript);
+      // Pick the user's preferred language if the problem ships it; otherwise
+      // fall back to JavaScript (which is always present).
+      const preferred = prefs.preferredLanguage;
+      const initialLanguage: SupportedLanguage =
+        preferred === 'python' && problem.starterCode.python ? 'python' : 'javascript';
+      const initialStarter =
+        initialLanguage === 'python' && problem.starterCode.python
+          ? problem.starterCode.python
+          : problem.starterCode.javascript;
+
+      setLanguage(initialLanguage);
+      setCode(initialStarter);
       setSecondsLeft(prefs.challengeTimeLimitSec);
       setPageState({ status: 'ready', problem, prefs });
     }
@@ -224,6 +248,7 @@ export function Challenge() {
       const result = await runTests({
         code,
         problem,
+        language,
         tests: problem.visibleTests,
         timeoutMs: 4000,
       });
@@ -240,7 +265,7 @@ export function Challenge() {
     } finally {
       setIsRunning(false);
     }
-  }, [pageState, isRunning, code]);
+  }, [pageState, isRunning, code, language]);
 
   // -------------------------------------------------------------------------
   // Submit handler — all tests
@@ -258,6 +283,7 @@ export function Challenge() {
       const result = await runTests({
         code,
         problem,
+        language,
         tests: [...problem.visibleTests, ...problem.hiddenTests],
         timeoutMs: 6000,
       });
@@ -309,7 +335,34 @@ export function Challenge() {
     } finally {
       setIsRunning(false);
     }
-  }, [pageState, isRunning, code, attempts, handleFail]);
+  }, [pageState, isRunning, code, language, attempts, handleFail]);
+
+  // -------------------------------------------------------------------------
+  // Language switch handler — replaces the editor doc with the new starter
+  // and persists the user's preference. WIP code is lost; user can undo.
+  // -------------------------------------------------------------------------
+
+  const handleLanguageChange = useCallback(
+    (next: SupportedLanguage) => {
+      if (pageState.status !== 'ready' || next === language) return;
+      const { problem } = pageState;
+      const nextStarter =
+        next === 'python' && problem.starterCode.python
+          ? problem.starterCode.python
+          : problem.starterCode.javascript;
+      setLanguage(next);
+      setCode(nextStarter);
+      // Persist the new preference so future challenges open in this language.
+      void (async () => {
+        try {
+          await updateValue('userPreferences', (curr) => ({ ...curr, preferredLanguage: next }));
+        } catch {
+          /* storage unavailable — preference is in-session only */
+        }
+      })();
+    },
+    [pageState, language],
+  );
 
   // -------------------------------------------------------------------------
   // Give up handler
@@ -367,7 +420,14 @@ export function Challenge() {
         {/* Editor panel — fixed, no scroll on the outer shell */}
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
           <EditorPanel
-            starterCode={problem.starterCode.javascript}
+            starterCode={
+              language === 'python' && problem.starterCode.python
+                ? problem.starterCode.python
+                : problem.starterCode.javascript
+            }
+            language={language}
+            availableLanguages={availableLanguagesFor(problem)}
+            onLanguageChange={handleLanguageChange}
             onChange={setCode}
             onRun={() => void handleRun()}
             onSubmit={() => void handleSubmit()}
