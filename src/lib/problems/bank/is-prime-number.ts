@@ -32,6 +32,7 @@ export const problem: Problem = {
   params: ['n'],
   starterCode: {
     javascript: 'function isPrime(n) {\n  // your code here\n}\n',
+    python: 'def isPrime(n):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: [7], expected: true },

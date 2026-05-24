@@ -31,6 +31,7 @@ export const problem: Problem = {
   params: ['n'],
   starterCode: {
     javascript: 'function digitSum(n) {\n  // your code here\n}\n',
+    python: 'def digitSum(n):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: [472], expected: 13 },

@@ -194,4 +194,30 @@ export const pythonSolutions: Record<string, string> = {
             stack.append(ch)
     return ''.join(stack)
 `,
+  'digit-sum': `def digitSum(n):
+    total = 0
+    while n > 0:
+        total += n % 10
+        n //= 10
+    return total
+`,
+  'greatest-common-divisor': `def greatestCommonDivisor(a, b):
+    while b != 0:
+        a, b = b, a % b
+    return a
+`,
+  'is-prime-number': `def isPrime(n):
+    if n < 2:
+        return False
+    if n < 4:
+        return True
+    if n % 2 == 0:
+        return False
+    i = 3
+    while i * i <= n:
+        if n % i == 0:
+            return False
+        i += 2
+    return True
+`,
 };
