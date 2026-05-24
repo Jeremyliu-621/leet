@@ -58,4 +58,15 @@ export const pythonSolutions: Record<string, string> = {
         return list(nums)
     return list(nums[1:]) + [nums[0]]
 `,
+  'is-palindrome-clean': `def isLetterPalindrome(text):
+    cleaned = ''.join(ch.lower() for ch in text if ch.isalpha())
+    return cleaned == cleaned[::-1]
+`,
+  'reverse-words-order': `def reverseWordOrder(sentence):
+    return ' '.join(sentence.split(' ')[::-1])
+`,
+  'vowel-tally': `def vowelTally(text):
+    vowels = set('aeiou')
+    return sum(1 for ch in text if ch.lower() in vowels)
+`,
 };

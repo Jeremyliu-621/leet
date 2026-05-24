@@ -31,6 +31,7 @@ export const problem: Problem = {
   params: ['text'],
   starterCode: {
     javascript: 'function vowelTally(text) {\n  // your code here\n}\n',
+    python: 'def vowelTally(text):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: ['hello'], expected: 2 },

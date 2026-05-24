@@ -32,6 +32,7 @@ export const problem: Problem = {
   params: ['sentence'],
   starterCode: {
     javascript: 'function reverseWordOrder(sentence) {\n  // your code here\n}\n',
+    python: 'def reverseWordOrder(sentence):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: ['the sky is blue'], expected: 'blue is sky the' },
