@@ -300,6 +300,63 @@ export const pythonSolutions: Record<string, string> = {
         stack.append(i)
     return answer
 `,
+  'find-max-min': `def findMaxMin(nums):
+    max_v = min_v = nums[0]
+    for v in nums[1:]:
+        if v > max_v:
+            max_v = v
+        if v < min_v:
+            min_v = v
+    return [max_v, min_v]
+`,
+  'reverse-string': `def reverseString(s):
+    return s[::-1]
+`,
+  'count-good-pairs': `def countGoodPairs(nums):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    count = 0
+    for n in nums:
+        count += freq[n]
+        freq[n] += 1
+    return count
+`,
+  'remove-duplicates-sorted': `def removeDuplicatesSorted(nums):
+    out = []
+    for i, v in enumerate(nums):
+        if i == 0 or v != nums[i - 1]:
+            out.append(v)
+    return out
+`,
+  'min-subarray-length': `def minSubarrayLength(nums, target):
+    left = 0
+    total = 0
+    best = float('inf')
+    for right in range(len(nums)):
+        total += nums[right]
+        while total >= target:
+            best = min(best, right - left + 1)
+            total -= nums[left]
+            left += 1
+    return 0 if best == float('inf') else best
+`,
+  'evaluate-rpn': `def evalRPN(tokens):
+    stack = []
+    for t in tokens:
+        if t in '+-*/' and len(t) == 1:
+            b, a = stack.pop(), stack.pop()
+            if t == '+':
+                stack.append(a + b)
+            elif t == '-':
+                stack.append(a - b)
+            elif t == '*':
+                stack.append(a * b)
+            else:
+                stack.append(int(a / b))
+        else:
+            stack.append(int(t))
+    return stack[0]
+`,
   'missing-number': `def missingNumber(nums):
     n = len(nums)
     return n * (n + 1) // 2 - sum(nums)

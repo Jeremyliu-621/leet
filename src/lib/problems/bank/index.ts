@@ -7,6 +7,7 @@ import { problem as rotateLeftOne } from './rotate-left-one';
 import { problem as maxSubarray } from './max-subarray';
 import { problem as missingNumber } from './missing-number';
 import { problem as containsDuplicate } from './contains-duplicate';
+import { problem as findMaxMin } from './find-max-min';
 
 // strings
 import { problem as vowelTally } from './vowel-tally';
@@ -14,6 +15,7 @@ import { problem as reverseWordsOrder } from './reverse-words-order';
 import { problem as isPalindromeClean } from './is-palindrome-clean';
 import { problem as compressString } from './compress-string';
 import { problem as longestCommonPrefix } from './longest-common-prefix';
+import { problem as reverseString } from './reverse-string';
 
 // hash-map
 import { problem as firstUniqueChar } from './first-unique-char';
@@ -21,6 +23,7 @@ import { problem as twoSumIndices } from './two-sum-indices';
 import { problem as mostFrequentValue } from './most-frequent-value';
 import { problem as anagramCheck } from './anagram-check';
 import { problem as wordFrequency } from './word-frequency';
+import { problem as countGoodPairs } from './count-good-pairs';
 
 // two-pointers
 import { problem as reverseArrayInplace } from './reverse-array-inplace';
@@ -28,12 +31,14 @@ import { problem as sortedPairExists } from './sorted-pair-exists';
 import { problem as mergeSortedLists } from './merge-sorted-lists';
 import { problem as moveZeros } from './move-zeros';
 import { problem as validSubsequence } from './valid-subsequence';
+import { problem as removeDuplicatesSorted } from './remove-duplicates-sorted';
 
 // sliding-window
 import { problem as maxWindowSum } from './max-window-sum';
 import { problem as longestEqualRun } from './longest-equal-run';
 import { problem as minWindowAverage } from './min-window-average';
 import { problem as longestUniqueWindow } from './longest-unique-window';
+import { problem as minSubarrayLength } from './min-subarray-length';
 
 // binary-search
 import { problem as findTargetIndex } from './find-target-index';
@@ -46,6 +51,7 @@ import { problem as balancedBrackets } from './balanced-brackets';
 import { problem as removeAdjacentDupes } from './remove-adjacent-dupes';
 import { problem as nextGreaterElement } from './next-greater-element';
 import { problem as dailyTemperatures } from './daily-temperatures';
+import { problem as evaluateRpn } from './evaluate-rpn';
 
 // math
 import { problem as digitSum } from './digit-sum';
@@ -62,25 +68,30 @@ export const problems: readonly Problem[] = [
   maxSubarray,
   missingNumber,
   containsDuplicate,
+  findMaxMin,
   vowelTally,
   reverseWordsOrder,
   isPalindromeClean,
   compressString,
   longestCommonPrefix,
+  reverseString,
   firstUniqueChar,
   twoSumIndices,
   mostFrequentValue,
   anagramCheck,
   wordFrequency,
+  countGoodPairs,
   reverseArrayInplace,
   sortedPairExists,
   mergeSortedLists,
   moveZeros,
   validSubsequence,
+  removeDuplicatesSorted,
   maxWindowSum,
   longestEqualRun,
   minWindowAverage,
   longestUniqueWindow,
+  minSubarrayLength,
   findTargetIndex,
   integerSquareRoot,
   firstNotSmaller,
@@ -89,6 +100,7 @@ export const problems: readonly Problem[] = [
   removeAdjacentDupes,
   nextGreaterElement,
   dailyTemperatures,
+  evaluateRpn,
   digitSum,
   isPrimeNumber,
   greatestCommonDivisor,

@@ -330,6 +330,84 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return a;
   },
 
+  // --- arrays (batch 5) ----------------------------------------------------
+  'find-max-min': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let max = nums[0] as number;
+    let min = nums[0] as number;
+    for (let i = 1; i < nums.length; i++) {
+      const v = nums[i] as number;
+      if (v > max) max = v;
+      if (v < min) min = v;
+    }
+    return [max, min];
+  },
+
+  // --- strings (batch 5) ---------------------------------------------------
+  'reverse-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    return s.split('').reverse().join('');
+  },
+
+  // --- hash-map (batch 5) --------------------------------------------------
+  'count-good-pairs': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    let count = 0;
+    for (const n of nums) {
+      count += freq.get(n) ?? 0;
+      freq.set(n, (freq.get(n) ?? 0) + 1);
+    }
+    return count;
+  },
+
+  // --- two-pointers (batch 5) ----------------------------------------------
+  'remove-duplicates-sorted': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const out: number[] = [];
+    for (let i = 0; i < nums.length; i++) {
+      if (i === 0 || (nums[i] as number) !== (nums[i - 1] as number)) out.push(nums[i] as number);
+    }
+    return out;
+  },
+
+  // --- sliding-window (batch 5) --------------------------------------------
+  'min-subarray-length': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    let left = 0;
+    let sum = 0;
+    let best = Infinity;
+    for (let right = 0; right < nums.length; right++) {
+      sum += nums[right] as number;
+      while (sum >= target) {
+        best = Math.min(best, right - left + 1);
+        sum -= nums[left] as number;
+        left++;
+      }
+    }
+    return best === Infinity ? 0 : best;
+  },
+
+  // --- stack (batch 5) -----------------------------------------------------
+  'evaluate-rpn': (...args: unknown[]) => {
+    const tokens = args[0] as string[];
+    const stack: number[] = [];
+    for (const t of tokens) {
+      if ('+-*/'.includes(t) && t.length === 1) {
+        const b = stack.pop() as number;
+        const a = stack.pop() as number;
+        if (t === '+') stack.push(a + b);
+        else if (t === '-') stack.push(a - b);
+        else if (t === '*') stack.push(a * b);
+        else stack.push(Math.trunc(a / b));
+      } else {
+        stack.push(Number(t));
+      }
+    }
+    return stack[0];
+  },
+
   // --- arrays (batch 4) ----------------------------------------------------
   'missing-number': (...args: unknown[]) => {
     const nums = args[0] as number[];
