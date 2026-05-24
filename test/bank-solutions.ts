@@ -3808,6 +3808,38 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return lca(root)?.v ?? null;
   },
 
+  'check-sorted-rotated': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    let count = 0;
+    for (let i = 0; i < n; i++) { if (nums[i]! > nums[(i + 1) % n]!) count++; }
+    return count <= 1;
+  },
+
+  'maximum-vowels': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    const vowels = new Set('aeiou');
+    let count = 0, best = 0;
+    for (let i = 0; i < s.length; i++) {
+      if (vowels.has(s[i]!)) count++;
+      if (i >= k && vowels.has(s[i - k]!)) count--;
+      best = Math.max(best, count);
+    }
+    return best;
+  },
+
+  'longest-subarray-after-deleting': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let left = 0, zeros = 0, best = 0;
+    for (let right = 0; right < nums.length; right++) {
+      if (nums[right] === 0) zeros++;
+      while (zeros > 1) { if (nums[left++] === 0) zeros--; }
+      best = Math.max(best, right - left);
+    }
+    return best;
+  },
+
   'gas-station': (...args: unknown[]) => {
     const gas = args[0] as number[];
     const cost = args[1] as number[];

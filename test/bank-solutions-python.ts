@@ -3199,6 +3199,39 @@ def deserialize(data):
     return left if left else right
 `,
 
+  'check-sorted-rotated': `def check(nums):
+    nums = list(nums)
+    n = len(nums)
+    count = sum(1 for i in range(n) if nums[i] > nums[(i + 1) % n])
+    return count <= 1
+`,
+
+  'maximum-vowels': `def maxVowels(s, k):
+    vowels = set('aeiou')
+    count = best = 0
+    for i in range(len(s)):
+        if s[i] in vowels:
+            count += 1
+        if i >= k and s[i - k] in vowels:
+            count -= 1
+        best = max(best, count)
+    return best
+`,
+
+  'longest-subarray-after-deleting': `def longestSubarray(nums):
+    nums = list(nums)
+    left = zeros = best = 0
+    for right in range(len(nums)):
+        if nums[right] == 0:
+            zeros += 1
+        while zeros > 1:
+            if nums[left] == 0:
+                zeros -= 1
+            left += 1
+        best = max(best, right - left)
+    return best
+`,
+
   'gas-station': `def canCompleteCircuit(gas, cost):
     gas = list(gas)
     cost = list(cost)

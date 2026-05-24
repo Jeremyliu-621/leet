@@ -225,6 +225,9 @@ import { problem as countNegativesInSortedMatrix } from './count-negatives-in-so
 import { problem as gasStation } from './gas-station';
 import { problem as minimumCostTickets } from './minimum-cost-tickets';
 import { problem as maxSubarrayCircular } from './max-subarray-circular';
+import { problem as checkSortedRotated } from './check-sorted-rotated';
+import { problem as maximumVowels } from './maximum-vowels';
+import { problem as longestSubarrayAfterDeleting } from './longest-subarray-after-deleting';
 // dynamic-programming — hard
 import { problem as longestPalindromicSubsequence } from './longest-palindromic-subsequence';
 import { problem as palindromePartitioningMinCuts } from './palindrome-partitioning-min-cuts';
@@ -337,6 +340,7 @@ export const problems: readonly Problem[] = [
   minimumAbsoluteDifference,
   gasStation,
   maxSubarrayCircular,
+  checkSortedRotated,
   rotateArray,
   maxProductSubarray,
   productExceptSelf,
@@ -422,6 +426,8 @@ export const problems: readonly Problem[] = [
   countSubarraysBoundedMax,
   // sliding-window — medium
   maxConsecutiveOnesIII,
+  maximumVowels,
+  longestSubarrayAfterDeleting,
   atMostKDistinct,
   permutationInString,
   subarrayProductLessThanK,
