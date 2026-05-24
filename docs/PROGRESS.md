@@ -8,16 +8,15 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish · Pyodide rollout
-**Current focus:** Pyodide M5 + M6 shipped — every bank problem (24/24) is now
-Python-capable, end-to-end-proven in real Chromium.
-**Build status:** 🟢 `npm run build` + `npm run test` green (290 unit tests across 20 files) +
-18/18 Playwright e2e against real Chromium (incl. the new `e2e/python-flow.spec.ts`).
-**Next up:** **Pyodide M7** — Pyodide boot-warmup on extension install (hidden
-`UserPreferences.warmPyodide`), first-run init-duration ring buffer, and an "About"-page
-reassurance line confirming Python is bundled-not-fetched. After M7: vim keymap, draggable
-splitter, hints for the remaining 13 problems, address logged a11y findings.
+**Current focus:** **Pyodide rollout complete (M1–M7).** Every bank problem is Python-capable end-to-end;
+warm-on-mount hides the cold-boot; Options "About" surfaces first-boot ms + run count.
+**Build status:** 🟢 `npm run build` + `npm run test` green (297 unit tests across 21 files) +
+18/18 Playwright e2e against real Chromium (incl. `e2e/python-flow.spec.ts`).
+**Next up:** Vim keymap toggle (`@replit/codemirror-vim` Compartment + popup toggle), draggable
+splitter between problem and editor panels, hints for the remaining 13 problems (11/24 enriched),
+address logged a11y findings (text-faint contrast, one `aria-prohibited-attr`).
 
-**Pyodide rollout status:**
+**Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
 - ✅ M2 — Vendored `pyodide-core 0.29.4` + WAR + CSP.
 - ✅ M3 — Python worker + sandbox dispatch. Sandbox-`chrome.runtime` regression caught by e2e + fixed.
@@ -25,7 +24,9 @@ splitter, hints for the remaining 13 problems, address logged a11y findings.
 - ✅ M5 — First Python problem (`two-sum-indices`) + Pyodide-in-Node test suite + real-browser e2e.
   E2e caught the partial-prefs `NaN expiresAt` bounce-back bug — fixed.
 - ✅ M6 — Backfilled Python for all 23 remaining bank problems, batched by tag (8 batches).
-- ⬜ M7 — Polish (warmup, observability, About copy).
+- ✅ M7 — Warm-Pyodide-on-challenge-mount (hides ~1–2 s cold boot during reading time);
+  `chrome.storage.local` boot-time + run-count ring buffer; Options "About this extension" card
+  surfacing the numbers with bundled-not-fetched reassurance copy.
 
 ---
 
