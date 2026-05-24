@@ -4526,6 +4526,31 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ones;
   },
 
+  'richest-customer-wealth': (...args: unknown[]) => {
+    const accounts = args[0] as number[][];
+    return Math.max(...accounts.map(row => row.reduce((a, b) => a + b, 0)));
+  },
+
+  'maximum-units-on-truck': (...args: unknown[]) => {
+    const boxTypes = (args[0] as number[][]).slice().sort((a, b) => b[1]! - a[1]!);
+    let truckSize = args[1] as number, total = 0;
+    for (const [count, units] of boxTypes) {
+      const take = Math.min(count!, truckSize);
+      total += take * units!;
+      truckSize -= take;
+      if (truckSize === 0) break;
+    }
+    return total;
+  },
+
+  'find-the-difference': (...args: unknown[]) => {
+    const s = args[0] as string, t = args[1] as string;
+    let c = 0;
+    for (const ch of s) c ^= ch.charCodeAt(0);
+    for (const ch of t) c ^= ch.charCodeAt(0);
+    return String.fromCharCode(c);
+  },
+
   'reverse-only-letters': (...args: unknown[]) => {
     const s = args[0] as string;
     const arr = s.split('');

@@ -4028,6 +4028,31 @@ def deserialize(data):
     return ones
 `,
 
+  'richest-customer-wealth': `def maximumWealth(accounts):
+    return max(sum(row) for row in accounts)
+`,
+
+  'maximum-units-on-truck': `def maximumUnits(boxTypes, truckSize):
+    boxTypes = sorted([list(b) for b in boxTypes], key=lambda x: -x[1])
+    total = 0
+    for count, units in boxTypes:
+        take = min(count, truckSize)
+        total += take * units
+        truckSize -= take
+        if truckSize == 0:
+            break
+    return total
+`,
+
+  'find-the-difference': `def findTheDifference(s, t):
+    c = 0
+    for ch in s:
+        c ^= ord(ch)
+    for ch in t:
+        c ^= ord(ch)
+    return chr(c)
+`,
+
   'reverse-only-letters': `def reverseOnlyLetters(s):
     arr = list(s)
     lo, hi = 0, len(arr) - 1

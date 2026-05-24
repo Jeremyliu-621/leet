@@ -9,6 +9,8 @@ import { problem as missingNumber } from './missing-number';
 import { problem as containsDuplicate } from './contains-duplicate';
 import { problem as containsDuplicateII } from './contains-duplicate-ii';
 import { problem as pascalsTriangle } from './pascals-triangle';
+import { problem as richestCustomerWealth } from './richest-customer-wealth';
+import { problem as maximumUnitsOnTruck } from './maximum-units-on-truck';
 import { problem as summaryRanges } from './summary-ranges';
 import { problem as findMaxMin } from './find-max-min';
 import { problem as maxConsecutiveOnes } from './max-consecutive-ones';
@@ -170,6 +172,7 @@ import { problem as removeKDigits } from './remove-k-digits';
 
 // math — easy
 import { problem as numberOfSteps } from './number-of-steps';
+import { problem as findTheDifference } from './find-the-difference';
 import { problem as hammingWeight } from './hamming-weight';
 import { problem as digitSum } from './digit-sum';
 import { problem as isPrimeNumber } from './is-prime-number';
@@ -370,6 +373,8 @@ export const problems: readonly Problem[] = [
   containsDuplicate,
   containsDuplicateII,
   pascalsTriangle,
+  richestCustomerWealth,
+  maximumUnitsOnTruck,
   summaryRanges,
   findMaxMin,
   maxConsecutiveOnes,
@@ -539,6 +544,7 @@ export const problems: readonly Problem[] = [
   removeKDigits,
   // math — easy
   numberOfSteps,
+  findTheDifference,
   fizzBuzz,
   hammingWeight,
   digitSum,
