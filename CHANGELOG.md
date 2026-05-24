@@ -21,15 +21,20 @@ pre-stable).
   polish-pass baseline.
 
 ### Fixed
-- **Solve → unlock bounces back into a new challenge** — after grant-unlock
-  the challenge page does `window.location.href = target` immediately, but
-  the SW's DNR rule was only removed asynchronously via
-  `storage.onChanged` → `reconcile()`, so the navigation raced the stale
-  rule and got redirected back into the challenge. **Fix:**
-  `grantUnlock` now `await reconcile()` before responding, so the rule is
-  definitively gone by the time the challenge navigates. Caught by a real
-  user; covered by an extended `solve-flow.spec.ts` assertion
-  (`waitForURL(/example\.com/)`) that would have caught it.
+- **Solve → unlock bounces back into a new challenge (real-user bug)** —
+  blocking `youtube.com` and solving while on `www.youtube.com` (where
+  YouTube redirects you) re-blocked the navigation; same for keyword
+  `instagram` on `www.instagram.com`. The unlock token was stored for the
+  full subdomain host, but the DNR rule's host was the registrable, so the
+  string-equality check `unlockedDomains.has(host)` missed it. Keyword rules
+  had no unlock awareness at all. **Fix:** block-rules check unlock by
+  *domain family* (equal / parent / subdomain in either direction); keyword
+  rules emit `excludedRequestDomains` covering the unlocked host *and* its
+  parent. See `docs/DECISIONS.md` D16. Covered by `e2e/user-bug.spec.ts`
+  exercising the user's exact rule set against real Chromium.
+- **Earlier solve-unlock race** — `grantUnlock` now `await reconcile()`
+  before responding so the DNR update is definitively committed before the
+  challenge's `window.location.href = target` fires.
 
 ## [0.1.0] — 2026-05-24 — First complete release
 

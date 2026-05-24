@@ -108,6 +108,31 @@ delegates to it. **Rationale:** lets us drive the full state machine in unit tes
 in-memory `chrome` (see `test/sw-reconcile.test.ts`) — the closest thing to true e2e we can get
 without a real browser load. The SW file shrinks; the integration surface gets 18 new tests.
 
+### 2026-05-24 — D16: Domain-family + excludedRequestDomains for unlock-aware DNR rules
+
+**Bug** (reported by a real user): blocking `youtube.com` and solving on `www.youtube.com`
+landed the user back on a fresh challenge instead of YouTube. Same for keyword `instagram`
+hitting `www.instagram.com`.
+
+**Cause:** the unlock check in `buildDynamicRules` was string-equality:
+`unlockedDomains.has(host)`. The token was stored for the host the user was actually on
+(`www.youtube.com`); the DNR block-rule's host was the registrable (`youtube.com`). Equality
+failed → rule stayed live → DNR re-redirected on navigate-back. Keyword rules had no unlock
+awareness at all — they always matched.
+
+**Fix:**
+- **Block-domain / block-url rules** now skip when any unlocked domain is in the same family
+  as the rule's host (`isInDomainFamily`: equal, parent, or subdomain in either direction).
+- **Keyword rules** now emit `excludedRequestDomains` set to the unlocked domains *plus their
+  immediate parent* (`expandUnlockedDomains`). Chrome's `excludedRequestDomains` "matches
+  subdomains as well", so including the parent (e.g. `instagram.com`) covers root + every
+  subdomain. Capped at 3+-part hosts to avoid collapsing `example.com` into the bogus parent
+  `com`. (Public-suffix-aware extraction via `tldts` is the future-proof upgrade.)
+
+**Detection:** `e2e/user-bug.spec.ts` reproduces the user's exact rule set and asserts the
+post-submit page URL actually lands on the unlocked site, plus 6 new unit tests in
+`blocking-dnr.test.ts` cover subdomain / parent / unrelated / empty cases.
+
 ### 2026-05-24 — D15: Force-transform web-accessible HTML via explicit Rollup inputs
 
 **Bug:** CRXJS auto-transforms HTML for `action.default_popup` and `options_page` but ships HTML
