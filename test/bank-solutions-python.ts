@@ -271,4 +271,33 @@ export const pythonSolutions: Record<string, string> = {
         d += 1
     return count
 `,
+  'valid-subsequence': `def isSubsequence(seq, arr):
+    i = 0
+    for val in arr:
+        if i < len(seq) and val == seq[i]:
+            i += 1
+    return i == len(seq)
+`,
+  'binary-search-range': `def countOccurrences(nums, target):
+    def lower_bound(t):
+        lo, hi = 0, len(nums)
+        while lo < hi:
+            mid = (lo + hi) // 2
+            if nums[mid] >= t:
+                hi = mid
+            else:
+                lo = mid + 1
+        return lo
+    return lower_bound(target + 1) - lower_bound(target)
+`,
+  'daily-temperatures': `def daysUntilWarmer(temps):
+    stack = []
+    answer = [0] * len(temps)
+    for i, t in enumerate(temps):
+        while stack and temps[stack[-1]] < t:
+            j = stack.pop()
+            answer[j] = i - j
+        stack.append(i)
+    return answer
+`,
 };

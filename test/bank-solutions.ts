@@ -403,4 +403,44 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return count;
   },
+
+  'valid-subsequence': (...args: unknown[]) => {
+    const seq = args[0] as number[];
+    const arr = args[1] as number[];
+    let i = 0;
+    for (const val of arr) {
+      if (i < seq.length && val === seq[i]) i++;
+    }
+    return i === seq.length;
+  },
+
+  'binary-search-range': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    function lowerBound(t: number): number {
+      let lo = 0;
+      let hi = nums.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if ((nums[mid] as number) >= t) hi = mid;
+        else lo = mid + 1;
+      }
+      return lo;
+    }
+    return lowerBound(target + 1) - lowerBound(target);
+  },
+
+  'daily-temperatures': (...args: unknown[]) => {
+    const temps = args[0] as number[];
+    const stack: number[] = [];
+    const answer = new Array<number>(temps.length).fill(0);
+    for (let i = 0; i < temps.length; i++) {
+      while (stack.length && (temps[i] as number) > (temps[stack[stack.length - 1] as number] as number)) {
+        const j = stack.pop() as number;
+        answer[j] = i - j;
+      }
+      stack.push(i);
+    }
+    return answer;
+  },
 };

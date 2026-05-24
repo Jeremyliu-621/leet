@@ -23,6 +23,7 @@ import { problem as reverseArrayInplace } from './reverse-array-inplace';
 import { problem as sortedPairExists } from './sorted-pair-exists';
 import { problem as mergeSortedLists } from './merge-sorted-lists';
 import { problem as moveZeros } from './move-zeros';
+import { problem as validSubsequence } from './valid-subsequence';
 
 // sliding-window
 import { problem as maxWindowSum } from './max-window-sum';
@@ -34,11 +35,13 @@ import { problem as longestUniqueWindow } from './longest-unique-window';
 import { problem as findTargetIndex } from './find-target-index';
 import { problem as integerSquareRoot } from './integer-square-root';
 import { problem as firstNotSmaller } from './first-not-smaller';
+import { problem as binarySearchRange } from './binary-search-range';
 
 // stack
 import { problem as balancedBrackets } from './balanced-brackets';
 import { problem as removeAdjacentDupes } from './remove-adjacent-dupes';
 import { problem as nextGreaterElement } from './next-greater-element';
+import { problem as dailyTemperatures } from './daily-temperatures';
 
 // math
 import { problem as digitSum } from './digit-sum';
@@ -63,6 +66,7 @@ export const problems: readonly Problem[] = [
   sortedPairExists,
   mergeSortedLists,
   moveZeros,
+  validSubsequence,
   maxWindowSum,
   longestEqualRun,
   minWindowAverage,
@@ -70,9 +74,11 @@ export const problems: readonly Problem[] = [
   findTargetIndex,
   integerSquareRoot,
   firstNotSmaller,
+  binarySearchRange,
   balancedBrackets,
   removeAdjacentDupes,
   nextGreaterElement,
+  dailyTemperatures,
   digitSum,
   isPrimeNumber,
   greatestCommonDivisor,
