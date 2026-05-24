@@ -1853,4 +1853,50 @@ export const pythonSolutions: Record<string, string> = {
             hi = mid
     return lo
 `,
+  'car-fleet': `def carFleet(target, position, speed):
+    pairs = sorted(zip(position, speed), reverse=True)
+    stack = []
+    for p, s in pairs:
+        t = (target - p) / s
+        if not stack or t > stack[-1]:
+            stack.append(t)
+    return len(stack)
+`,
+  'koko-eating-bananas': `def minEatingSpeed(piles, h):
+    import math
+    lo, hi = 1, max(piles)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if sum(math.ceil(p / mid) for p in piles) <= h:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+  'find-peak-element': `def findPeakElement(nums):
+    lo, hi = 0, len(nums) - 1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if nums[mid] < nums[mid + 1]:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+`,
+  'minimum-operations-reduce-x': `def minOperations(nums, x):
+    target = sum(nums) - x
+    if target < 0:
+        return -1
+    lo = 0
+    total = 0
+    best = -1
+    for hi in range(len(nums)):
+        total += nums[hi]
+        while total > target:
+            total -= nums[lo]
+            lo += 1
+        if total == target:
+            best = max(best, hi - lo + 1)
+    return -1 if best == -1 else len(nums) - best
+`,
 };

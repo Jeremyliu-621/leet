@@ -2417,4 +2417,55 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return lo;
   },
 
+  // --- stack — medium --------------------------------------------------------
+  'car-fleet': (...args: unknown[]) => {
+    const target = args[0] as number;
+    const position = args[1] as number[];
+    const speed = args[2] as number[];
+    const pairs = position.map((p, i) => [p, speed[i]!] as [number, number]);
+    pairs.sort((a, b) => b[0] - a[0]);
+    const stack: number[] = [];
+    for (const [p, s] of pairs) {
+      const t = (target - p) / s;
+      if (!stack.length || t > stack[stack.length - 1]!) stack.push(t);
+    }
+    return stack.length;
+  },
+
+  // --- binary-search — medium ------------------------------------------------
+  'koko-eating-bananas': (...args: unknown[]) => {
+    const piles = args[0] as number[], h = args[1] as number;
+    let lo = 1, hi = Math.max(...piles);
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      const hours = piles.reduce((s, p) => s + Math.ceil(p / mid), 0);
+      if (hours <= h) hi = mid; else lo = mid + 1;
+    }
+    return lo;
+  },
+
+  'find-peak-element': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let lo = 0, hi = nums.length - 1;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (nums[mid]! < nums[mid + 1]!) lo = mid + 1; else hi = mid;
+    }
+    return lo;
+  },
+
+  // --- sliding-window — medium -----------------------------------------------
+  'minimum-operations-reduce-x': (...args: unknown[]) => {
+    const nums = args[0] as number[], x = args[1] as number;
+    const target = nums.reduce((a, b) => a + b, 0) - x;
+    if (target < 0) return -1;
+    let lo = 0, sum = 0, best = -1;
+    for (let hi = 0; hi < nums.length; hi++) {
+      sum += nums[hi]!;
+      while (sum > target) sum -= nums[lo++]!;
+      if (sum === target) best = Math.max(best, hi - lo + 1);
+    }
+    return best === -1 ? -1 : nums.length - best;
+  },
+
 };

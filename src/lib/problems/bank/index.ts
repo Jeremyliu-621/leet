@@ -91,6 +91,7 @@ import { problem as countSubarraysBoundedMax } from './count-subarrays-bounded-m
 import { problem as atMostKDistinct } from './at-most-k-distinct';
 import { problem as permutationInString } from './permutation-in-string';
 import { problem as subarrayProductLessThanK } from './subarray-product-less-than-k';
+import { problem as minimumOperationsReduceX } from './minimum-operations-reduce-x';
 
 // sliding-window — easy
 import { problem as maxWindowSum } from './max-window-sum';
@@ -112,6 +113,8 @@ import { problem as findMinimumRotated } from './find-minimum-rotated';
 import { problem as singleElementSorted } from './single-element-sorted';
 import { problem as findFirstAndLastPosition } from './find-first-and-last-position';
 import { problem as search2dMatrix } from './search-2d-matrix';
+import { problem as kokoEatingBananas } from './koko-eating-bananas';
+import { problem as findPeakElement } from './find-peak-element';
 // binary-search — hard
 import { problem as medianTwoSortedArrays } from './median-two-sorted-arrays';
 import { problem as splitArrayLargestSum } from './split-array-largest-sum';
@@ -127,6 +130,7 @@ import { problem as evaluateRpn } from './evaluate-rpn';
 import { problem as asteroidCollision } from './asteroid-collision';
 import { problem as scoreOfParentheses } from './score-of-parentheses';
 import { problem as validParenthesisString } from './valid-parenthesis-string';
+import { problem as carFleet } from './car-fleet';
 // stack — hard
 import { problem as basicCalculator } from './basic-calculator';
 import { problem as sumSubarrayMinimums } from './sum-subarray-minimums';
@@ -274,6 +278,7 @@ export const problems: readonly Problem[] = [
   atMostKDistinct,
   permutationInString,
   subarrayProductLessThanK,
+  minimumOperationsReduceX,
   // sliding-window — easy
   maxWindowSum,
   longestEqualRun,
@@ -293,6 +298,8 @@ export const problems: readonly Problem[] = [
   singleElementSorted,
   findFirstAndLastPosition,
   search2dMatrix,
+  kokoEatingBananas,
+  findPeakElement,
   // binary-search — hard
   medianTwoSortedArrays,
   splitArrayLargestSum,
@@ -307,6 +314,7 @@ export const problems: readonly Problem[] = [
   asteroidCollision,
   scoreOfParentheses,
   validParenthesisString,
+  carFleet,
   // stack — hard
   basicCalculator,
   sumSubarrayMinimums,
