@@ -38,10 +38,9 @@ Return a list of pairs in ascending order (with respect to pairs), each pair \`[
   params: ['arr'],
   starterCode: {
     javascript: `function minimumAbsDifference(arr) {
-  // Return all pairs with minimum absolute difference
+
 }`,
     python: `def minimumAbsDifference(arr):
-    # Return all pairs with minimum absolute difference
     pass`,
   },
   visibleTests: [

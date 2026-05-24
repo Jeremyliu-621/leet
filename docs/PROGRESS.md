@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 454 problems; added 13 more easy problems (string/array/math/sliding-window); 1633 tests.
+**Current focus:** Bank at 459 problems; 1648 tests; growing toward 480+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing bank toward 480+; more easy/medium problems across all tags.
 

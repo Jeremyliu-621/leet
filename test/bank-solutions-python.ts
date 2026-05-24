@@ -4735,6 +4735,39 @@ def deserialize(data):
     return ans if ans != float('inf') else -1
 `,
 
+  'add-digits': `def addDigits(num):
+    if num == 0:
+        return 0
+    return 9 if num % 9 == 0 else num % 9
+`,
+
+  'degree-of-array': `def findShortestSubArray(nums):
+    count, first, last = {}, {}, {}
+    for i, n in enumerate(nums):
+        count[n] = count.get(n, 0) + 1
+        if n not in first:
+            first[n] = i
+        last[n] = i
+    deg = max(count.values())
+    return min(last[n] - first[n] + 1 for n, c in count.items() if c == deg)
+`,
+
+  'check-array-arithmetic-progression': `def canMakeArithmeticProgression(arr):
+    arr.sort()
+    diff = arr[1] - arr[0]
+    return all(arr[i] - arr[i-1] == diff for i in range(2, len(arr)))
+`,
+
+  'how-many-numbers-smaller-than-current': `def smallerNumbersThanCurrent(nums):
+    sorted_nums = sorted(nums)
+    return [sorted_nums.index(n) for n in nums]
+`,
+
+  'find-target-indices-after-sorting': `def targetIndices(nums, target):
+    nums_sorted = sorted(nums)
+    return [i for i, n in enumerate(nums_sorted) if n == target]
+`,
+
   'percentage-of-letter-in-string': `def percentageLetter(s, letter):
     return int(s.count(letter) / len(s) * 100)
 `,

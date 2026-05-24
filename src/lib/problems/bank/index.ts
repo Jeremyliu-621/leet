@@ -52,6 +52,11 @@ import { problem as mergeSortedArray } from './merge-sorted-array';
 import { problem as assignCookies } from './assign-cookies';
 import { problem as relativeRanks } from './relative-ranks';
 import { problem as maximumCount } from './maximum-count';
+import { problem as addDigits } from './add-digits';
+import { problem as degreeOfArray } from './degree-of-array';
+import { problem as checkArrayArithmeticProgression } from './check-array-arithmetic-progression';
+import { problem as howManyNumbersSmallerThanCurrent } from './how-many-numbers-smaller-than-current';
+import { problem as findTargetIndicesAfterSorting } from './find-target-indices-after-sorting';
 // arrays — medium
 import { problem as rangeSumQuery2D } from './range-sum-query-2d';
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
@@ -563,6 +568,11 @@ export const problems: readonly Problem[] = [
   assignCookies,
   relativeRanks,
   maximumCount,
+  addDigits,
+  degreeOfArray,
+  checkArrayArithmeticProgression,
+  howManyNumbersSmallerThanCurrent,
+  findTargetIndicesAfterSorting,
   singleNumber,
   // arrays — medium
   rearrangeArrayElementsBySign,

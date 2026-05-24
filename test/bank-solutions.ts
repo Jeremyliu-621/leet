@@ -5367,6 +5367,43 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
             ans = Math.min(ans, nums[i]! + nums[j]! + nums[k]!);
     return ans === Infinity ? -1 : ans;
   },
+  'add-digits': (...args: unknown[]) => {
+    const num = args[0] as number;
+    if (num === 0) return 0;
+    return num % 9 === 0 ? 9 : num % 9;
+  },
+  'degree-of-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const count = new Map<number, number>(), first = new Map<number, number>(), last = new Map<number, number>();
+    for (let i = 0; i < nums.length; i++) {
+      const n = nums[i]!;
+      count.set(n, (count.get(n) ?? 0) + 1);
+      if (!first.has(n)) first.set(n, i);
+      last.set(n, i);
+    }
+    const deg = Math.max(...count.values());
+    let res = Infinity;
+    for (const [n, c] of count) if (c === deg) res = Math.min(res, last.get(n)! - first.get(n)! + 1);
+    return res;
+  },
+  'check-array-arithmetic-progression': (...args: unknown[]) => {
+    const arr = [...(args[0] as number[])].sort((a, b) => a - b);
+    const diff = arr[1]! - arr[0]!;
+    for (let i = 2; i < arr.length; i++) if (arr[i]! - arr[i - 1]! !== diff) return false;
+    return true;
+  },
+  'how-many-numbers-smaller-than-current': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const sorted = [...nums].sort((a, b) => a - b);
+    return nums.map(n => sorted.indexOf(n));
+  },
+  'find-target-indices-after-sorting': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const target = args[1] as number;
+    const result: number[] = [];
+    for (let i = 0; i < nums.length; i++) if (nums[i] === target) result.push(i);
+    return result;
+  },
   'percentage-of-letter-in-string': (...args: unknown[]) => {
     const s = args[0] as string, letter = args[1] as string;
     const count = [...s].filter(c => c === letter).length;
