@@ -14,6 +14,9 @@
 import { useEffect, useState } from 'react';
 import { SectionCard } from './SectionCard';
 import { readInitStats, type InitStats } from '../../../lib/runner/init-stats';
+import { getAllProblems } from '../../../lib/problems';
+
+const BANK_SIZE = getAllProblems().length;
 
 export function AboutSection() {
   const [stats, setStats] = useState<InitStats | null>(null);
@@ -36,9 +39,11 @@ export function AboutSection() {
     >
       <div className="space-y-3 text-xs leading-relaxed text-muted">
         <p>
-          LeetLock is a Chrome Manifest V3 extension. Every problem and every
-          piece of code you write runs entirely on this device — there is no
-          server, no LeetLock account, and no telemetry.
+          LeetLock is a Chrome Manifest V3 extension with{' '}
+          <span className="font-semibold text-text">{BANK_SIZE} original problems</span>{' '}
+          covering 9 topic categories. Every problem and every piece of code you
+          write runs entirely on this device — there is no server, no LeetLock
+          account, and no telemetry.
         </p>
         <p>
           <span className="font-semibold text-text">Python support</span> is
