@@ -55,6 +55,8 @@ import { problem as wordFrequency } from './word-frequency';
 import { problem as countGoodPairs } from './count-good-pairs';
 import { problem as intersectionTwoArrays } from './intersection-two-arrays';
 import { problem as subarraySumEqualsK } from './subarray-sum-equals-k';
+import { problem as ransomNote } from './ransom-note';
+import { problem as isomorphicStrings } from './isomorphic-strings';
 // hash-map — medium
 import { problem as groupAnagrams } from './group-anagrams';
 import { problem as topKFrequentElements } from './top-k-frequent-elements';
@@ -156,6 +158,7 @@ import { problem as countPrimesSieve } from './count-primes-sieve';
 import { problem as powXN } from './pow-x-n';
 import { problem as reverseInteger } from './reverse-integer';
 import { problem as happyNumber } from './happy-number';
+import { problem as maximumSwap } from './maximum-swap';
 
 // arrays — hard
 import { problem as firstMissingPositive } from './first-missing-positive';
@@ -184,6 +187,7 @@ import { problem as decodeWays } from './decode-ways';
 import { problem as partitionEqualSubsetSum } from './partition-equal-subset-sum';
 import { problem as perfectSquares } from './perfect-squares';
 import { problem as targetSum } from './target-sum';
+import { problem as nthUglyNumber } from './nth-ugly-number';
 // dynamic-programming — hard
 import { problem as longestPalindromicSubsequence } from './longest-palindromic-subsequence';
 import { problem as palindromePartitioningMinCuts } from './palindrome-partitioning-min-cuts';
@@ -247,6 +251,8 @@ export const problems: readonly Problem[] = [
   countGoodPairs,
   intersectionTwoArrays,
   subarraySumEqualsK,
+  ransomNote,
+  isomorphicStrings,
   // hash-map — medium
   groupAnagrams,
   topKFrequentElements,
@@ -341,6 +347,7 @@ export const problems: readonly Problem[] = [
   powXN,
   reverseInteger,
   happyNumber,
+  maximumSwap,
   // arrays — hard
   firstMissingPositive,
   jumpGameII,
@@ -367,6 +374,7 @@ export const problems: readonly Problem[] = [
   partitionEqualSubsetSum,
   perfectSquares,
   targetSum,
+  nthUglyNumber,
   // dynamic-programming — hard
   longestPalindromicSubsequence,
   palindromePartitioningMinCuts,

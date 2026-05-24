@@ -1932,4 +1932,45 @@ export const pythonSolutions: Record<string, string> = {
         return cnt
     return at_most(k) - at_most(k - 1)
 `,
+  'ransom-note': `def canConstruct(ransomNote, magazine):
+    from collections import Counter
+    m = Counter(magazine)
+    for c in ransomNote:
+        if m[c] <= 0:
+            return False
+        m[c] -= 1
+    return True
+`,
+  'isomorphic-strings': `def isIsomorphic(s, t):
+    s_to_t = {}
+    t_to_s = {}
+    for sc, tc in zip(s, t):
+        if (sc in s_to_t and s_to_t[sc] != tc) or (tc in t_to_s and t_to_s[tc] != sc):
+            return False
+        s_to_t[sc] = tc
+        t_to_s[tc] = sc
+    return True
+`,
+  'nth-ugly-number': `def nthUglyNumber(n):
+    dp = [0] * n
+    dp[0] = 1
+    i2 = i3 = i5 = 0
+    for i in range(1, n):
+        nxt = min(dp[i2] * 2, dp[i3] * 3, dp[i5] * 5)
+        dp[i] = nxt
+        if nxt == dp[i2] * 2: i2 += 1
+        if nxt == dp[i3] * 3: i3 += 1
+        if nxt == dp[i5] * 5: i5 += 1
+    return dp[n - 1]
+`,
+  'maximum-swap': `def maximumSwap(num):
+    digits = list(str(num))
+    last = {int(d): i for i, d in enumerate(digits)}
+    for i, d in enumerate(digits):
+        for c in range(9, int(d), -1):
+            if last.get(c, -1) > i:
+                digits[i], digits[last[c]] = digits[last[c]], digits[i]
+                return int(''.join(digits))
+    return num
+`,
 };

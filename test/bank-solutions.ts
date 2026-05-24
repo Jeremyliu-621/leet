@@ -2503,4 +2503,53 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return atMost(k) - atMost(k - 1);
   },
 
+  'ransom-note': (...args: unknown[]) => {
+    const note = args[0] as string, mag = args[1] as string;
+    const freq = new Map<string, number>();
+    for (const c of mag) freq.set(c, (freq.get(c) ?? 0) + 1);
+    for (const c of note) {
+      if (!freq.get(c)) return false;
+      freq.set(c, freq.get(c)! - 1);
+    }
+    return true;
+  },
+  'isomorphic-strings': (...args: unknown[]) => {
+    const s = args[0] as string, t = args[1] as string;
+    const sToT = new Map<string, string>(), tToS = new Map<string, string>();
+    for (let i = 0; i < s.length; i++) {
+      const sc = s[i]!, tc = t[i]!;
+      if ((sToT.has(sc) && sToT.get(sc) !== tc) || (tToS.has(tc) && tToS.get(tc) !== sc)) return false;
+      sToT.set(sc, tc); tToS.set(tc, sc);
+    }
+    return true;
+  },
+  'nth-ugly-number': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const dp = new Array<number>(n).fill(0);
+    dp[0] = 1;
+    let i2 = 0, i3 = 0, i5 = 0;
+    for (let i = 1; i < n; i++) {
+      const next = Math.min(dp[i2]! * 2, dp[i3]! * 3, dp[i5]! * 5);
+      dp[i] = next;
+      if (next === dp[i2]! * 2) i2++;
+      if (next === dp[i3]! * 3) i3++;
+      if (next === dp[i5]! * 5) i5++;
+    }
+    return dp[n - 1];
+  },
+  'maximum-swap': (...args: unknown[]) => {
+    const digits = [...String(args[0] as number)].map(Number);
+    const last = new Array<number>(10).fill(-1);
+    for (let i = 0; i < digits.length; i++) last[digits[i]!] = i;
+    for (let i = 0; i < digits.length; i++) {
+      for (let d = 9; d > digits[i]!; d--) {
+        if (last[d]! > i) {
+          [digits[i], digits[last[d]!]] = [digits[last[d]!]!, digits[i]!];
+          return parseInt(digits.join(''), 10);
+        }
+      }
+    }
+    return args[0] as number;
+  },
+
 };
