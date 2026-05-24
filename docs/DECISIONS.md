@@ -107,3 +107,19 @@ The service worker was split: `src/background/reconcile.ts` owns the pure decisi
 delegates to it. **Rationale:** lets us drive the full state machine in unit tests against an
 in-memory `chrome` (see `test/sw-reconcile.test.ts`) — the closest thing to true e2e we can get
 without a real browser load. The SW file shrinks; the integration surface gets 18 new tests.
+
+### 2026-05-24 — D15: Force-transform web-accessible HTML via explicit Rollup inputs
+
+**Bug:** CRXJS auto-transforms HTML for `action.default_popup` and `options_page` but ships HTML
+referenced from `web_accessible_resources` or `sandbox.pages` **raw** — the production dist
+serves `./main.tsx` / `./runner.ts` as the `<script src>`, which Chrome 404s. The Challenge,
+Blocked, and Sandbox pages were therefore broken at runtime even though `npm run build`
+succeeded; React never mounted on the challenge page when loaded as an unpacked extension.
+
+**Fix:** list those pages as explicit `build.rollupOptions.input` entries in `vite.config.ts`
+so Vite transforms them through its normal HTML pipeline (injects hashed `<script>` + modulepreload
++ stylesheet links). After the fix the challenge HTML correctly references
+`/assets/challenge-…js`, the sandbox references `/assets/sandbox-…js`, etc.
+
+**Detection:** the Playwright e2e harness (`e2e/extension.spec.ts`) — this is exactly the class
+of bug only real-browser end-to-end testing can catch.
