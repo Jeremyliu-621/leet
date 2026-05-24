@@ -2643,26 +2643,6 @@ def deserialize(data):
     return prev
 `,
 
-  'binary-tree-zigzag-level-order': `def zigzagLevelOrder(root):
-    if not root:
-        return []
-    result = []
-    queue = [root]
-    left_to_right = True
-    while queue:
-        level = [node.val for node in queue]
-        result.append(level if left_to_right else level[::-1])
-        left_to_right = not left_to_right
-        next_queue = []
-        for node in queue:
-            if node.left:
-                next_queue.append(node.left)
-            if node.right:
-                next_queue.append(node.right)
-        queue = next_queue
-    return result
-`,
-
   'sum-root-to-leaf-numbers': `def sumNumbers(root):
     def dfs(node, cur):
         if not node:

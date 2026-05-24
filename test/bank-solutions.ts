@@ -3269,23 +3269,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return toArr(reverseK(fromArr(arr)));
   },
 
-  'binary-tree-zigzag-level-order': (...args: unknown[]) => {
-    const root = _buildTree(args[0] as (number | null)[]);
-    if (!root) return [];
-    const result: number[][] = [];
-    let queue: _TN[] = [root];
-    let leftToRight = true;
-    while (queue.length) {
-      const level = queue.map(n => n.v);
-      result.push(leftToRight ? level : level.slice().reverse());
-      leftToRight = !leftToRight;
-      const next: _TN[] = [];
-      for (const n of queue) { if (n.l) next.push(n.l); if (n.r) next.push(n.r); }
-      queue = next;
-    }
-    return result;
-  },
-
   'sum-root-to-leaf-numbers': (...args: unknown[]) => {
     const root = _buildTree(args[0] as (number | null)[]);
     function dfs(node: _TN | null, cur: number): number {
