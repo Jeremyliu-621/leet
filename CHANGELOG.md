@@ -9,12 +9,31 @@ pre-stable).
 ## [Unreleased]
 
 ### Added
+- **Light / dark / system theme** via CSS variables and a `data-theme`
+  attribute on `<html>`. Both palettes are pure grayscale, zero hue. A
+  three-way switcher lives in the popup; `system` follows the OS theme via
+  `prefers-color-scheme` and re-applies live when the OS flips.
+- **Editor QoL** in the challenge screen's CodeMirror 6:
+  - Auto-close brackets / quotes (`@codemirror/autocomplete`).
+  - Basic JS autocomplete (`autocompletion()`).
+  - Find / replace panel (`@codemirror/search`, `Cmd/Ctrl-F`).
+  - Active-line + active-gutter highlight, selection-match highlight.
+  - Code-folding gutter + keymap.
+  - Multi-cursor (`EditorState.allowMultipleSelections` + `drawSelection`).
+  - **`Cmd/Ctrl + Enter` = Run, `Cmd/Ctrl + Shift + Enter` = Submit,
+    `Alt + R` = reset to starter code.** Shortcut hint rendered in the
+    action bar.
+- **Tab-close confirmation** while a challenge is in progress — `beforeunload`
+  prompt suppressed during programmatic navigation (accepted → target, or
+  failure → SW) so legit flows don't trigger it.
 - **Full solve-and-unlock e2e test** (`e2e/solve-flow.spec.ts`) — loads the
   built extension into real Chromium, identifies which problem the bank
   picked, injects the matching reference solution into the CodeMirror editor,
   clicks Submit, and verifies the service worker writes an unlock token for
-  the target domain. Proves the entire vertical slice (bank → judge →
-  sandbox Worker → SW grant handler → storage) works end-to-end.
+  the target domain.
+- `docs/LEETCODE_PARITY.md` — research deliverable enumerating every visible
+  LeetCode editor / problem-page feature, whether LeetLock has it, and
+  prioritised next steps.
 - **Accessibility baseline** — axe-core/playwright integration in
   `e2e/a11y.spec.ts` audits all four extension surfaces. Fails on critical
   WCAG violations; logs serious/moderate/minor findings as the next
