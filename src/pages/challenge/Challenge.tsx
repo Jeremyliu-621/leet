@@ -280,6 +280,7 @@ export function Challenge() {
       setPanelPct(prefs.problemPanelWidthPct);
       setPageState({ status: 'ready', problem, prefs });
       setResolvedTheme(resolveTheme(prefs.theme));
+      document.title = `${problem.title} — LeetLock`;
 
       // Restore persisted submission history for this problem — non-critical.
       void (async () => {
