@@ -13,6 +13,8 @@ import { TopBar } from './components/TopBar';
 import { ProblemPanel } from './components/ProblemPanel';
 import { EditorPanel } from './components/EditorPanel';
 import { CustomTestPanel } from './components/CustomTestPanel';
+import { SubmissionsPanel } from './components/SubmissionsPanel';
+import type { SubmissionRecord } from './components/SubmissionsPanel';
 
 // ---------------------------------------------------------------------------
 // Draggable splitter
@@ -185,6 +187,9 @@ export function Challenge() {
 
   // Custom test state.
   const [customTestResult, setCustomTestResult] = useState<CustomTestStatus>({ status: 'idle' });
+
+  // Per-session submission history (Submit clicks only).
+  const [submissions, setSubmissions] = useState<SubmissionRecord[]>([]);
 
   // Problem panel width as a percentage of the two-column container.
   // Initialised from prefs once `pageState` transitions to 'ready'.
@@ -381,6 +386,9 @@ export function Challenge() {
     setVerdictMode('submit');
     setVerdict(undefined); // undefined = in-flight sentinel
 
+    const totalTests = problem.visibleTests.length + problem.hiddenTests.length;
+    const attemptNumber = attempts + 1;
+
     try {
       const result = await runTests({
         code,
@@ -390,6 +398,26 @@ export function Challenge() {
         timeoutMs: 6000,
       });
       setVerdict(result);
+
+      // Record the submission.
+      const outcomeMap: Partial<Record<typeof result.outcome, SubmissionRecord['outcome']>> = {
+        accepted: 'accepted',
+        'wrong-answer': 'wrong-answer',
+        'runtime-error': 'runtime-error',
+        timeout: 'timeout',
+        'compile-error': 'runtime-error',
+      };
+      setSubmissions((prev) => [
+        ...prev,
+        {
+          attempt: attemptNumber,
+          timestamp: Date.now(),
+          outcome: outcomeMap[result.outcome] ?? 'runtime-error',
+          passCount: result.passed,
+          totalTests: result.total,
+          durationMs: result.totalDurationMs,
+        },
+      ]);
 
       if (result.outcome === 'accepted') {
         // About to navigate back to the target — suppress the beforeunload prompt.
@@ -430,10 +458,20 @@ export function Challenge() {
       setVerdict({
         outcome: 'compile-error',
         passed: 0,
-        total: problem.visibleTests.length + problem.hiddenTests.length,
+        total: totalTests,
         verdicts: [],
         message: err instanceof Error ? err.message : 'The code sandbox failed to load.',
       });
+      setSubmissions((prev) => [
+        ...prev,
+        {
+          attempt: attemptNumber,
+          timestamp: Date.now(),
+          outcome: 'runtime-error',
+          passCount: 0,
+          totalTests,
+        },
+      ]);
     } finally {
       setIsRunning(false);
     }
@@ -614,6 +652,8 @@ export function Challenge() {
             onRun={handleCustomRun}
             result={customTestResult}
           />
+          {/* Submission history — appears after first submit, collapsible */}
+          <SubmissionsPanel submissions={submissions} />
         </div>
       </main>
     </div>
