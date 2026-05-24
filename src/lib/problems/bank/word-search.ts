@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'word-search',
   title: 'Word Search',
   difficulty: 'medium',
-  tags: ['graph'],
+  tags: ['graph', 'backtracking'],
   description: `Given an \`m × n\` grid of characters \`board\` and a string \`word\`, return \`true\` if \`word\` exists in the grid.
 
 The word can be constructed from letters of sequentially **adjacent cells** (horizontally or vertically neighboring). The same cell may **not** be used more than once.`,

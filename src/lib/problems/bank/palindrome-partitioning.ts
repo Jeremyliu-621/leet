@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'palindrome-partitioning',
   title: 'Palindrome Partitioning',
   difficulty: 'medium',
-  tags: ['strings'],
+  tags: ['strings', 'backtracking'],
   description: `Given a string \`s\`, partition \`s\` such that every substring of the partition is a **palindrome**. Return all possible palindrome partitioning of \`s\`.`,
   constraints: [
     '`1 <= s.length <= 16`',
