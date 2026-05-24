@@ -2651,4 +2651,33 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return r;
   },
 
+  'reorder-list': (...args: unknown[]) => {
+    const arr = [...(args[0] as number[])];
+    const result: number[] = [];
+    let l = 0, r = arr.length - 1;
+    while (l <= r) {
+      result.push(arr[l++]!);
+      if (l <= r) result.push(arr[r--]!);
+    }
+    return result;
+  },
+
+  'add-two-numbers': (...args: unknown[]) => {
+    const a = args[0] as number[];
+    const b = args[1] as number[];
+    let carry = 0, i = 0, j = 0;
+    const result: number[] = [];
+    while (i < a.length || j < b.length || carry) {
+      const sum = (a[i++] ?? 0) + (b[j++] ?? 0) + carry;
+      result.push(sum % 10);
+      carry = Math.floor(sum / 10);
+    }
+    return result;
+  },
+
+  'merge-k-sorted-lists': (...args: unknown[]) => {
+    const lists = args[0] as number[][];
+    return lists.flat().sort((a, b) => a - b);
+  },
+
 };

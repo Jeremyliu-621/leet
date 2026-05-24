@@ -2084,4 +2084,60 @@ export const pythonSolutions: Record<string, string> = {
         r = r * 26 + (ord(c) - 64)
     return r
 `,
+
+  'reorder-list': `def reorderList(head):
+    if not head:
+        return
+    slow, fast = head, head
+    while fast.next and fast.next.next:
+        slow = slow.next
+        fast = fast.next.next
+    prev, curr = None, slow.next
+    slow.next = None
+    while curr:
+        next_node = curr.next
+        curr.next = prev
+        prev = curr
+        curr = next_node
+    first, second = head, prev
+    while second:
+        tmp1, tmp2 = first.next, second.next
+        first.next = second
+        second.next = tmp1
+        first = tmp1
+        second = tmp2
+`,
+
+  'add-two-numbers': `def addTwoNumbers(l1, l2):
+    dummy = ListNode(0)
+    curr = dummy
+    carry = 0
+    while l1 or l2 or carry:
+        v1 = l1.val if l1 else 0
+        v2 = l2.val if l2 else 0
+        total = v1 + v2 + carry
+        carry = total // 10
+        curr.next = ListNode(total % 10)
+        curr = curr.next
+        if l1: l1 = l1.next
+        if l2: l2 = l2.next
+    return dummy.next
+`,
+
+  'merge-k-sorted-lists': `def mergeKLists(lists):
+    import heapq
+    heap = []
+    for i, node in enumerate(lists):
+        if node:
+            heapq.heappush(heap, (node.val, i, node))
+    dummy = ListNode(0)
+    curr = dummy
+    while heap:
+        val, i, node = heapq.heappop(heap)
+        curr.next = node
+        curr = curr.next
+        if node.next:
+            heapq.heappush(heap, (node.next.val, i, node.next))
+    return dummy.next
+`,
 };

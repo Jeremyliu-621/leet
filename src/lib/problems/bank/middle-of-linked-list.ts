@@ -44,37 +44,29 @@ def __to_array__(head):
     return result
 
 def middleNodeRunner(arr):
-    return __to_array__(middleNode(__from_array__(arr)))
+    return __to_array__(middleNode(__from_array__(list(arr))))
 `.trim();
 
 export const problem: Problem = {
   id: 'middle-of-linked-list',
   title: 'Middle of the Linked List',
   difficulty: 'easy',
-  tags: ['linked-list', 'two-pointers'],
-  description: `Given the head of a singly linked list, return **the middle node** of the linked list. If there are two middle nodes, return the **second middle** node.
+  tags: ['linked-list'],
+  description: `Given the \`head\` of a singly linked list, return the middle node. If there are two middle nodes, return the **second** middle node.
 
-**Approach:** Use slow and fast pointers. Move slow one step and fast two steps. When fast reaches the end, slow is at the middle.`,
+> **Note:** A \`ListNode\` class and helper utilities are pre-defined. Your function receives a \`ListNode | null\` head and must return the middle node.`,
   constraints: [
     'The number of nodes in the list is in the range [1, 100]',
     '1 <= Node.val <= 100',
   ],
   examples: [
-    {
-      input: 'head = [1,2,3,4,5]',
-      output: '[3,4,5]',
-      explanation: 'The middle node is 3. Return the node with value 3.',
-    },
-    {
-      input: 'head = [1,2,3,4,5,6]',
-      output: '[4,5,6]',
-      explanation: 'There are two middle nodes (3 and 4). Return the second one.',
-    },
+    { input: 'head = [1, 2, 3, 4, 5]', output: '[3, 4, 5]', explanation: 'Middle node has value 3. Return the node itself (and its successors).' },
+    { input: 'head = [1, 2, 3, 4]', output: '[3, 4]', explanation: 'Two middles: nodes 2 and 3. Return the second one.' },
   ],
   hints: [
-    'Use the slow and fast pointer technique. Slow moves 1 step, fast moves 2 steps each iteration.',
-    'When fast reaches null (odd length) or fast.next reaches null (even length), slow is at the middle node. Return slow.',
-    '`let slow=head, fast=head; while(fast && fast.next){slow=slow.next; fast=fast.next.next;} return slow;`',
+    'Use two pointers: a slow pointer that moves one step at a time, and a fast pointer that moves two steps. When fast reaches the end, slow is at the middle.',
+    'For a list of length n, the fast pointer exhausts when slow is at index ⌊n/2⌋, which is the second middle for even-length lists.',
+    '`let slow = head, fast = head; while (fast && fast.next) { slow = slow.next; fast = fast.next.next; } return slow;`',
   ],
   functionName: 'middleNodeRunner',
   params: ['head'],
@@ -85,13 +77,14 @@ export const problem: Problem = {
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5]], expected: [3, 4, 5] },
-    { args: [[1, 2, 3, 4, 5, 6]], expected: [4, 5, 6] },
+    { args: [[1, 2, 3, 4]], expected: [3, 4] },
+    { args: [[1, 2, 3]], expected: [2, 3] },
     { args: [[1]], expected: [1] },
   ],
   hiddenTests: [
     { args: [[1, 2]], expected: [2] },
-    { args: [[1, 2, 3]], expected: [2, 3] },
-    { args: [[1, 2, 3, 4]], expected: [3, 4] },
-    { args: [[5, 9, 3, 7, 4, 8, 2]], expected: [7, 4, 8, 2] },
+    { args: [[1, 2, 3, 4, 5, 6]], expected: [4, 5, 6] },
+    { args: [[10, 20, 30, 40]], expected: [30, 40] },
+    { args: [[1, 2, 3, 4, 5, 6, 7]], expected: [4, 5, 6, 7] },
   ],
 };

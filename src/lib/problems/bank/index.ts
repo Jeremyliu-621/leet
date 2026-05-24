@@ -211,6 +211,10 @@ import { problem as intersectionTwoLinkedLists } from './intersection-two-linked
 // linked-list — medium
 import { problem as removeNthFromEnd } from './remove-nth-from-end';
 import { problem as oddEvenLinkedList } from './odd-even-linked-list';
+import { problem as reorderList } from './reorder-list';
+import { problem as addTwoNumbers } from './add-two-numbers';
+// linked-list — hard
+import { problem as mergeKSortedLists } from './merge-k-sorted-lists';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -412,4 +416,8 @@ export const problems: readonly Problem[] = [
   // linked-list — medium
   removeNthFromEnd,
   oddEvenLinkedList,
+  reorderList,
+  addTwoNumbers,
+  // linked-list — hard
+  mergeKSortedLists,
 ];

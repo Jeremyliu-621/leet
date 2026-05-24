@@ -44,17 +44,19 @@ def __to_array__(head):
     return result
 
 def removeNthFromEndRunner(arr, n):
-    return __to_array__(removeNthFromEnd(__from_array__(arr), n))
+    head = __from_array__(list(arr))
+    result = removeNthFromEnd(head, int(n))
+    return __to_array__(result)
 `.trim();
 
 export const problem: Problem = {
   id: 'remove-nth-from-end',
   title: 'Remove Nth Node From End of List',
   difficulty: 'medium',
-  tags: ['linked-list', 'two-pointers'],
-  description: `Given the head of a linked list, remove the **n-th node from the end** of the list and return its head.
+  tags: ['linked-list'],
+  description: `Given the \`head\` of a linked list, remove the \`n\`th node from the end of the list and return its head.
 
-**Approach:** Use two pointers separated by n steps. Advance the fast pointer n+1 steps ahead, then move both together until fast reaches null. The slow pointer will be just before the node to remove.`,
+> **Note:** A \`ListNode\` class and helper utilities are pre-defined. Your function receives a \`ListNode | null\` head and an integer \`n\`, and must return the head of the modified list.`,
   constraints: [
     'The number of nodes in the list is sz',
     '1 <= sz <= 30',
@@ -62,46 +64,32 @@ export const problem: Problem = {
     '1 <= n <= sz',
   ],
   examples: [
-    {
-      input: 'head = [1,2,3,4,5], n = 2',
-      output: '[1,2,3,5]',
-      explanation: 'The 2nd node from the end is 4. Remove it.',
-    },
-    {
-      input: 'head = [1], n = 1',
-      output: '[]',
-      explanation: 'The only node is removed.',
-    },
-    {
-      input: 'head = [1,2], n = 1',
-      output: '[1]',
-      explanation: 'The 1st node from the end is 2. Remove it.',
-    },
+    { input: 'head = [1, 2, 3, 4, 5], n = 2', output: '[1, 2, 3, 5]', explanation: 'Remove the 2nd node from the end (value 4).' },
+    { input: 'head = [1], n = 1', output: '[]' },
+    { input: 'head = [1, 2], n = 1', output: '[1]' },
   ],
   hints: [
-    'Use a dummy node before head so you never need a special case for removing the head itself.',
-    'Move the fast pointer n+1 steps ahead of slow. Then advance both until fast is null — slow is now the node just before the target.',
-    '`let dummy = new ListNode(0, head), slow = dummy, fast = head; for(let i=0;i<n;i++) fast=fast.next; while(fast){slow=slow.next;fast=fast.next;} slow.next=slow.next.next; return dummy.next;`',
+    'Use a dummy node before head to simplify edge cases (removing the first node). Apply the fast/slow two-pointer technique.',
+    'Advance the fast pointer n+1 steps from the dummy. Then move both pointers together until fast reaches null. The slow pointer is now just before the node to remove.',
+    '`const dummy = new ListNode(0); dummy.next = head; let fast = dummy, slow = dummy; for (let i = 0; i <= n; i++) fast = fast.next; while (fast) { fast = fast.next; slow = slow.next; } slow.next = slow.next.next; return dummy.next;`',
   ],
   functionName: 'removeNthFromEndRunner',
   params: ['head', 'n'],
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
-    javascript:
-      '// ListNode class and removeNthFromEndRunner wrapper are pre-defined.\n// Implement the function below:\nfunction removeNthFromEnd(head, n) {\n  \n}\n',
-    python:
-      '# ListNode class and removeNthFromEndRunner wrapper are pre-defined.\n# Implement the function below:\ndef removeNthFromEnd(head, n):\n    pass\n',
+    javascript: '// ListNode class and removeNthFromEndRunner wrapper are pre-defined.\n// Implement the function below:\nfunction removeNthFromEnd(head, n) {\n  \n}\n',
+    python: '# ListNode class and removeNthFromEndRunner wrapper are pre-defined.\n# Implement the function below:\ndef removeNthFromEnd(head, n):\n    pass\n',
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5], 2], expected: [1, 2, 3, 5] },
     { args: [[1], 1], expected: [] },
     { args: [[1, 2], 1], expected: [1] },
+    { args: [[1, 2, 3, 4, 5], 5], expected: [2, 3, 4, 5] },
   ],
   hiddenTests: [
-    { args: [[1, 2], 2], expected: [2] },
-    { args: [[1, 2, 3], 1], expected: [1, 2] },
-    { args: [[1, 2, 3], 3], expected: [2, 3] },
-    { args: [[1, 2, 3, 4, 5], 5], expected: [2, 3, 4, 5] },
     { args: [[1, 2, 3, 4, 5], 1], expected: [1, 2, 3, 4] },
+    { args: [[1, 2], 2], expected: [2] },
+    { args: [[1, 2, 3], 2], expected: [1, 3] },
+    { args: [[1, 2, 3, 4], 3], expected: [1, 3, 4] },
   ],
 };
