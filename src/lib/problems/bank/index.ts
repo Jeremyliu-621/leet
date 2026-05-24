@@ -287,6 +287,8 @@ import { problem as minimumHeightTrees } from './minimum-height-trees';
 import { problem as findEventualSafeStates } from './find-eventual-safe-states';
 // graph — hard
 import { problem as wordLadder } from './word-ladder';
+import { problem as alienDictionary } from './alien-dictionary';
+import { problem as criticalConnections } from './critical-connections';
 
 // tree — easy (additional)
 import { problem as balancedBinaryTree } from './balanced-binary-tree';
@@ -318,6 +320,7 @@ import { problem as pathSumIII } from './path-sum-iii';
 // tree — hard
 import { problem as binaryTreeMaxPathSum } from './binary-tree-max-path-sum';
 import { problem as serializeBinaryTree } from './serialize-binary-tree';
+import { problem as verticalOrderTraversal } from './vertical-order-traversal';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -592,6 +595,8 @@ export const problems: readonly Problem[] = [
   jumpGameIII,
   // graph — hard
   wordLadder,
+  alienDictionary,
+  criticalConnections,
   // tree — easy
   balancedBinaryTree,
   minimumDepthBinaryTree,
@@ -621,4 +626,5 @@ export const problems: readonly Problem[] = [
   // tree — hard
   binaryTreeMaxPathSum,
   serializeBinaryTree,
+  verticalOrderTraversal,
 ];

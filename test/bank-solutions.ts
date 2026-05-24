@@ -4114,4 +4114,98 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[m-1]![n-1]!;
   },
 
+  'alien-dictionary': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const chars = new Set<string>();
+    for (const w of words) for (const c of w) chars.add(c);
+    const adj = new Map<string, Set<string>>();
+    const indeg = new Map<string, number>();
+    for (const c of chars) { adj.set(c, new Set()); indeg.set(c, 0); }
+    for (let i = 0; i < words.length - 1; i++) {
+      const [w1, w2] = [words[i]!, words[i + 1]!];
+      if (w1.length > w2.length && w1.startsWith(w2)) return '';
+      const len = Math.min(w1.length, w2.length);
+      for (let j = 0; j < len; j++) {
+        if (w1[j] !== w2[j]) {
+          if (!adj.get(w1[j]!)!.has(w2[j]!)) {
+            adj.get(w1[j]!)!.add(w2[j]!);
+            indeg.set(w2[j]!, indeg.get(w2[j]!)! + 1);
+          }
+          break;
+        }
+      }
+    }
+    let queue = [...chars].filter(c => indeg.get(c) === 0).sort();
+    let result = '';
+    while (queue.length > 0) {
+      const c = queue.shift()!;
+      result += c;
+      for (const nb of adj.get(c)!) {
+        indeg.set(nb, indeg.get(nb)! - 1);
+        if (indeg.get(nb) === 0) queue.push(nb);
+      }
+      queue.sort();
+    }
+    return result.length === chars.size ? result : '';
+  },
+
+  'critical-connections': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const connections = args[1] as number[][];
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const edge of connections) { const u = edge[0]!, v = edge[1]!; adj[u]!.push(v); adj[v]!.push(u); }
+    const disc = new Array<number>(n).fill(-1);
+    const low = new Array<number>(n).fill(0);
+    const bridges: number[][] = [];
+    let timer = 0;
+    function dfs(u: number, parent: number): void {
+      disc[u] = low[u] = timer++;
+      for (const v of adj[u]!) {
+        if (v === parent) continue;
+        if (disc[v] === -1) {
+          dfs(v, u);
+          low[u] = Math.min(low[u]!, low[v]!);
+          if (low[v]! > disc[u]!) bridges.push([Math.min(u, v), Math.max(u, v)]);
+        } else {
+          low[u] = Math.min(low[u]!, disc[v]!);
+        }
+      }
+    }
+    for (let i = 0; i < n; i++) if (disc[i] === -1) dfs(i, -1);
+    return bridges.sort((a, b) => a[0]! !== b[0]! ? a[0]! - b[0]! : a[1]! - b[1]!);
+  },
+
+  'vertical-order-traversal': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    if (!arr || arr.length === 0 || arr[0] === null) return [];
+    interface Node { val: number; left: Node | null; right: Node | null }
+    const makeNode = (v: number): Node => ({ val: v, left: null, right: null });
+    const root = makeNode(arr[0] as number);
+    const queue: Node[] = [root];
+    let i = 1;
+    while (queue.length > 0 && i < arr.length) {
+      const node = queue.shift()!;
+      if (arr[i] !== null && arr[i] !== undefined) { node.left = makeNode(arr[i] as number); queue.push(node.left); }
+      i++;
+      if (i < arr.length && arr[i] !== null && arr[i] !== undefined) { node.right = makeNode(arr[i] as number); queue.push(node.right); }
+      i++;
+    }
+    const nodes: [number, number, number][] = [];
+    const dfs = (node: Node | null, row: number, col: number): void => {
+      if (!node) return;
+      nodes.push([col, row, node.val]);
+      dfs(node.left, row + 1, col - 1);
+      dfs(node.right, row + 1, col + 1);
+    };
+    dfs(root, 0, 0);
+    nodes.sort((a, b) => a[0] !== b[0] ? a[0] - b[0] : a[1] !== b[1] ? a[1] - b[1] : a[2] - b[2]);
+    const colMap = new Map<number, number[]>();
+    for (const [col, , val] of nodes) {
+      if (!colMap.has(col)) colMap.set(col, []);
+      colMap.get(col)!.push(val);
+    }
+    const cols = [...colMap.keys()].sort((a, b) => a - b);
+    return cols.map(c => colMap.get(c)!);
+  },
+
 };

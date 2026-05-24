@@ -3519,4 +3519,80 @@ def deserialize(data):
     return dp[m-1][n-1]
 `,
 
+  'alien-dictionary': `def alienOrder(words):
+    from collections import defaultdict, deque
+    chars = set(c for w in words for c in w)
+    adj = defaultdict(set)
+    indeg = {c: 0 for c in chars}
+    for i in range(len(words) - 1):
+        w1, w2 = words[i], words[i + 1]
+        if len(w1) > len(w2) and w1.startswith(w2):
+            return ''
+        for c1, c2 in zip(w1, w2):
+            if c1 != c2:
+                if c2 not in adj[c1]:
+                    adj[c1].add(c2)
+                    indeg[c2] += 1
+                break
+    queue = deque(sorted(c for c in chars if indeg[c] == 0))
+    result = []
+    while queue:
+        c = queue.popleft()
+        result.append(c)
+        for nb in sorted(adj[c]):
+            indeg[nb] -= 1
+            if indeg[nb] == 0:
+                queue.append(nb)
+        queue = deque(sorted(queue))
+    return ''.join(result) if len(result) == len(chars) else ''
+`,
+
+  'critical-connections': `def criticalConnections(n, connections):
+    from collections import defaultdict
+    adj = defaultdict(list)
+    for u, v in connections:
+        adj[u].append(v)
+        adj[v].append(u)
+    disc = [-1] * n
+    low = [0] * n
+    bridges = []
+    timer = [0]
+    def dfs(u, parent):
+        disc[u] = low[u] = timer[0]
+        timer[0] += 1
+        for v in adj[u]:
+            if v == parent:
+                continue
+            if disc[v] == -1:
+                dfs(v, u)
+                low[u] = min(low[u], low[v])
+                if low[v] > disc[u]:
+                    bridges.append([min(u, v), max(u, v)])
+            else:
+                low[u] = min(low[u], disc[v])
+    for i in range(n):
+        if disc[i] == -1:
+            dfs(i, -1)
+    return sorted(bridges)
+`,
+
+  'vertical-order-traversal': `def verticalTraversal(root):
+    if root is None:
+        return []
+    nodes = []
+    def dfs(node, row, col):
+        if node is None:
+            return
+        nodes.append((col, row, node.val))
+        dfs(node.left, row + 1, col - 1)
+        dfs(node.right, row + 1, col + 1)
+    dfs(root, 0, 0)
+    nodes.sort()
+    from collections import defaultdict
+    col_map = defaultdict(list)
+    for col, row, val in nodes:
+        col_map[col].append(val)
+    return [col_map[c] for c in sorted(col_map)]
+`,
+
 };
