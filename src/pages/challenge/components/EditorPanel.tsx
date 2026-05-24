@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import {
   EditorView,
   keymap,
@@ -29,6 +29,7 @@ import { leetlockEditorTheme } from '../codemirror-theme';
 import type { JudgeResult } from '../../../lib/judge';
 import type { EditorKeymap, SupportedLanguage } from '../../../lib/types';
 import { VerdictPanel } from './VerdictPanel';
+import { KeyboardShortcutsModal } from './KeyboardShortcutsModal';
 
 interface EditorPanelProps {
   /** Starter code for the active language. Replacing this resets the editor. */
@@ -341,6 +342,8 @@ export function EditorPanel({
     [onGiveUp],
   );
 
+  const [showShortcuts, setShowShortcuts] = useState(false);
+
   const showLanguageSelector = availableLanguages.length > 1;
 
   return (
@@ -378,19 +381,32 @@ export function EditorPanel({
           </span>
         )}
 
-        {/* Fullscreen toggle — only rendered when the parent passes the callback */}
-        {onToggleFullscreen && (
+        {/* Right controls: shortcuts button + fullscreen toggle */}
+        <div className="flex items-center gap-1">
           <button
             type="button"
-            onClick={onToggleFullscreen}
-            aria-label={isFullscreen ? 'Show problem panel' : 'Expand editor to full width'}
-            aria-pressed={isFullscreen}
-            title={isFullscreen ? 'Collapse (show problem)' : 'Expand editor'}
-            className="ml-2 rounded-sm border border-transparent p-1 font-mono text-[10px] text-faint transition-colors hover:border-border hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+            onClick={() => setShowShortcuts(true)}
+            aria-label="Show keyboard shortcuts"
+            title="Keyboard shortcuts"
+            className="rounded-sm border border-transparent px-1.5 py-0.5 font-mono text-[10px] text-faint transition-colors hover:border-border hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
           >
-            {isFullscreen ? '⊡' : '⊞'}
+            ?
           </button>
-        )}
+
+          {/* Fullscreen toggle — only rendered when the parent passes the callback */}
+          {onToggleFullscreen && (
+            <button
+              type="button"
+              onClick={onToggleFullscreen}
+              aria-label={isFullscreen ? 'Show problem panel' : 'Expand editor to full width'}
+              aria-pressed={isFullscreen}
+              title={isFullscreen ? 'Collapse (show problem)' : 'Expand editor'}
+              className="rounded-sm border border-transparent p-1 font-mono text-[10px] text-faint transition-colors hover:border-border hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+            >
+              {isFullscreen ? '⊡' : '⊞'}
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Editor — role="group" is required for aria-label on a non-landmark div. */}
@@ -412,6 +428,9 @@ export function EditorPanel({
       <div className="min-h-[80px] shrink-0 overflow-y-auto">
         <VerdictPanel result={verdict} mode={verdictMode} />
       </div>
+
+      {/* Keyboard shortcuts modal */}
+      {showShortcuts && <KeyboardShortcutsModal onClose={() => setShowShortcuts(false)} />}
 
       {/* Action bar */}
       <div className="shrink-0 border-t border-border bg-surface">
