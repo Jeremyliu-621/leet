@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 107 problems; light-mode CodeMirror theme, verdict input display, persistent submission history all shipped.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (580 unit tests across 22 files).
-**Next up:** Review LEETCODE_PARITY.md for remaining gaps; marketing site is inaccessible (separate repo).
+**Current focus:** Bank at 111 problems; restore-last-submitted-code, grayscale syntax highlighting in hints, 8 new hard problems shipped.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (593 unit tests across 22 files).
+**Next up:** Emacs keymap (L priority), further bank growth, or browser-zoom QA before 1.0.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -194,6 +194,9 @@ Still pending:
 - [x] **Verdict input display** — `input: string` field on all `TestVerdict` variants; renders as Input/Output/Expected in VerdictPanel matching LeetCode parity
 - [x] **Persistent submission history** — per-problem array stored in `chrome.storage.local` under `submissionHistory` key; capped at 20 entries; cleared on acceptance; loaded on challenge mount
 - [x] **107-problem milestone** — 4 new hard problems: split-array-largest-sum, capacity-to-ship, max-consecutive-flips, count-subarrays-bounded-max (binary-search + sliding-window); 580 tests
+- [x] **Restore last submitted code** — `code` field on `SubmissionRecord`; "restore" button per row in SubmissionsPanel; `resetCode` Compartment-less prop on EditorPanel; 581 tests
+- [x] **Grayscale syntax highlighting in code blocks** — `rehype-highlight` (JS + Python only) added to `ProblemDescription`; custom CSS maps hljs token classes to `--ll-text`/`--ll-muted`/`--ll-faint` variables; no colour, matches editor theme
+- [x] **111-problem milestone** — 4 new hard problems for math + two-pointers tags (trapping-rain-water, four-sum, fraction-to-recurring-decimal, integer-to-english-words); 593 tests
 - [ ] Marketing site iteration + Vercel deployment
 
 ---

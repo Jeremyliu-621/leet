@@ -41,7 +41,7 @@ honest, frictionless gate that *feels* like LeetCode when you hit it.
 | Undo/redo                                | Yes; persisted while page is open                                                                   | Yes (`history()` extension)                 |   ✅   |    —     |                                                                                                                          |
 | Indent on input                          | Yes                                                                                                 | Yes (`indentOnInput()`)                     |   ✅   |    —     |                                                                                                                          |
 | Reset to starter code                    | "Reset code" button (Ctrl+Alt+L)                                                                    | `Alt-R` shortcut; listed in keyboard-shortcuts modal | ✅ | — | Replaces editor content with the problem's starter code.                                                                  |
-| Recover last submitted code              | Ctrl+Alt+M                                                                                          | No                                          |   ❌   |    L     | We don't store past submissions; would need history storage. Defer.                                                       |
+| Recover last submitted code              | Ctrl+Alt+M                                                                                          | "restore" button per row in SubmissionsPanel | ✅ | — | `code` field on `SubmissionRecord`; `resetCode` prop on EditorPanel dispatches content swap.                             |
 | Find / replace                           | Yes (Monaco built-in, Ctrl+F / Ctrl+H)                                                              | Yes — `@codemirror/search` + `searchKeymap` (Cmd-F) | ✅ | — |                                                                                                                          |
 
 ---
@@ -58,7 +58,7 @@ honest, frictionless gate that *feels* like LeetCode when you hit it.
 | Company tag chip row (Premium)           | Premium                                                                                             | n/a                                         |  🚫   |    —     | Out-of-scope.                                                                                                            |
 | Markdown rendering                       | Full markdown — headings, bold, italic, lists, links, code blocks                                   | Full GFM markdown via `react-markdown`; custom grayscale component map; raw HTML disabled | ✅ | — | Shipped in Phase 13 polish.                                                                                               |
 | Inline code (`` `like this` ``)          | Yes                                                                                                 | Yes (comes with react-markdown)             |   ✅   |    —     |                                                                                                                          |
-| Fenced code blocks in description        | Syntax-highlighted (e.g. for input/output schemas)                                                  | Rendered as `<pre><code>` with grayscale styling | 🟡 | L | No syntax highlighting inside description code blocks. Acceptable for the bank's style.                                  |
+| Fenced code blocks in description        | Syntax-highlighted (e.g. for input/output schemas)                                                  | Grayscale syntax highlighting via `rehype-highlight` (JS + Python) | ✅ | — | Token classes map to `--ll-text`/`--ll-muted`/`--ll-faint`; zero hue. Shipped in Phase 13 polish.                        |
 | LaTeX / math rendering                   | KaTeX in newer problems (sums, big-O notation)                                                      | No                                          |   ❌   |    L     | Useful for graph/math problems. Defer until the bank has any.                                                              |
 | Image support in examples                | Yes — many problems include diagrams (trees, grids)                                                 | No                                          |   ❌   |    L     | Real friction for tree/graph problems. Cost: bundle images + alt text in the problem bank.                                |
 | Worked examples block                    | Each example: Input, Output, Explanation                                                            | Same shape                                  |   ✅   |    —     |                                                                                                                          |
@@ -169,16 +169,13 @@ These are quotable, screenshot-able wins. Put them on the marketing page.
 
 Ordered by `(visible impact) × (1 / implementation cost)`:
 
-1. **Recover last submitted code** — LeetCode lets you restore the exact code you last
-   submitted (useful after Alt-R or overwriting). Now achievable: store `code` in each
-   `SubmissionRecord` and add a "restore" action in SubmissionsPanel.
-2. **Syntax highlighting in description code blocks** — minor cosmetic gap for problems
-   that include fenced code examples in hints. Design tension: grayscale highlight only.
-3. **Browser-zoom QA** — quick check at 150% and 200% before 1.0.
-4. **Emacs keymap** — niche, low priority.
-5. Everything else below this (runtime/memory percentiles, image support,
+1. **Browser-zoom QA** — quick check at 150% and 200% before 1.0.
+2. **Emacs keymap** — niche, low priority.
+3. Everything else (runtime/memory percentiles, image support,
    LaTeX rendering) is post-1.0 and should be considered against actual
    user feedback rather than blind parity chasing.
+
+*Completed from previous list: Recover last submitted code ✅; Syntax highlighting in code blocks ✅.*
 
 ---
 
