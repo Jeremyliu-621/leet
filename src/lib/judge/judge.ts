@@ -133,6 +133,88 @@ export async function runTests(options: RunTestsOptions): Promise<JudgeResult> {
   return buildVerdict(options.tests, response);
 }
 
+export type CustomTestStatus =
+  | { status: 'idle' }
+  | { status: 'running' }
+  | { status: 'ok'; output: string; durationMs?: number }
+  | { status: 'error'; message: string }
+  | { status: 'timeout' };
+
+/**
+ * Runs the user's code against a single custom set of args and returns the
+ * raw output (no expected-value comparison). Used by the Custom Test drawer.
+ */
+export async function runCustomArgs(options: {
+  code: string;
+  functionName: string;
+  args: readonly unknown[];
+  language: 'javascript' | 'python';
+  timeoutMs?: number;
+}): Promise<CustomTestStatus> {
+  const frame = await ensureSandbox();
+  const target = frame.contentWindow;
+  if (!target) return { status: 'error', message: 'Code sandbox is not available.' };
+
+  const timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
+  const requestId = `custom-${++requestCounter}-${Date.now()}`;
+  const request: RunRequest = {
+    type: 'run',
+    requestId,
+    code: options.code,
+    functionName: options.functionName,
+    tests: [{ args: options.args }],
+    timeoutMs,
+    language: options.language,
+  };
+
+  const response = await new Promise<RunResponse>((resolve) => {
+    function cleanup(): void {
+      clearTimeout(safety);
+      window.removeEventListener('message', onMessage);
+    }
+    function onMessage(event: MessageEvent): void {
+      const data = event.data as RunResponse | undefined;
+      if (data?.type === 'result' && data.requestId === requestId) {
+        cleanup();
+        resolve(data);
+      }
+    }
+    const safety = setTimeout(() => {
+      cleanup();
+      resolve({
+        type: 'result',
+        requestId,
+        ok: false,
+        reason: 'worker-error',
+        error: 'The code sandbox did not respond in time.',
+      });
+    }, timeoutMs + SANDBOX_GRACE_MS);
+
+    window.addEventListener('message', onMessage);
+    target.postMessage(request, '*');
+  });
+
+  if (!response.ok) {
+    if (response.reason === 'timeout') return { status: 'timeout' };
+    return { status: 'error', message: response.error };
+  }
+
+  const outcome = response.outcomes[0];
+  if (!outcome) return { status: 'error', message: 'No result returned.' };
+
+  if (outcome.status === 'threw') {
+    return { status: 'error', message: outcome.error };
+  }
+
+  let output: string;
+  try {
+    output = JSON.stringify(outcome.value);
+  } catch {
+    output = String(outcome.value);
+  }
+  return { status: 'ok', output, durationMs: outcome.durationMs };
+}
+
 /**
  * Eagerly initialise the Pyodide worker without sending any run, so the
  * user's first Submit doesn't pay the ~1–2 s Pyodide cold-boot. Called

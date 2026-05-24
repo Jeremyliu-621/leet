@@ -5,12 +5,14 @@ import type { JudgeResult } from '../../lib/judge';
 import type { ChallengeFailureReason } from '../../lib/messaging/runtime';
 import { getValue, updateValue } from '../../lib/storage';
 import { pickChallengeProblem } from '../../lib/problems';
-import { runTests, warmPython } from '../../lib/judge';
+import { runTests, warmPython, runCustomArgs } from '../../lib/judge';
+import type { CustomTestStatus } from '../../lib/judge';
 import { DEFAULT_PREFERENCES } from '../../lib/storage/defaults';
 import { parseTargetParam, extractDomain } from './challenge-helpers';
 import { TopBar } from './components/TopBar';
 import { ProblemPanel } from './components/ProblemPanel';
 import { EditorPanel } from './components/EditorPanel';
+import { CustomTestPanel } from './components/CustomTestPanel';
 
 // ---------------------------------------------------------------------------
 // Draggable splitter
@@ -180,6 +182,9 @@ export function Challenge() {
 
   // Streak — loaded from storage after mount.
   const [streak, setStreak] = useState(0);
+
+  // Custom test state.
+  const [customTestResult, setCustomTestResult] = useState<CustomTestStatus>({ status: 'idle' });
 
   // Problem panel width as a percentage of the two-column container.
   // Initialised from prefs once `pageState` transitions to 'ready'.
@@ -469,6 +474,26 @@ export function Challenge() {
   }, [pageState, handleFail]);
 
   // -------------------------------------------------------------------------
+  // Custom test handler
+  // -------------------------------------------------------------------------
+
+  const handleCustomRun = useCallback(
+    async (args: unknown[]) => {
+      if (pageState.status !== 'ready') return;
+      setCustomTestResult({ status: 'running' });
+      const result = await runCustomArgs({
+        code,
+        functionName: pageState.problem.functionName,
+        args,
+        language,
+        timeoutMs: 4000,
+      });
+      setCustomTestResult(result);
+    },
+    [pageState, code, language],
+  );
+
+  // -------------------------------------------------------------------------
   // Splitter drag handlers
   // -------------------------------------------------------------------------
 
@@ -570,6 +595,12 @@ export function Challenge() {
             verdictMode={verdictMode}
             showGiveUp={prefs.allowGiveUp}
             attemptsRemaining={attemptsRemaining}
+          />
+          {/* Custom test drawer — collapses below the verdict/action bar */}
+          <CustomTestPanel
+            params={problem.params}
+            onRun={handleCustomRun}
+            result={customTestResult}
           />
         </div>
       </main>
