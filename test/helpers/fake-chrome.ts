@@ -1,5 +1,7 @@
-// An in-memory fake of the slice of chrome.storage that LeetLock uses, for
-// unit tests that run under Node (where `chrome` does not exist).
+// In-memory fakes for the slice of the chrome.* APIs LeetLock uses, for unit
+// and integration tests that run under Node. Behaviours mirror the real APIs
+// closely enough that code written against `chrome.*` works unchanged when
+// these fakes are installed as the `chrome` global.
 
 type Bag = Record<string, unknown>;
 
@@ -37,17 +39,88 @@ export class FakeStorageArea {
   };
 }
 
+/** Minimal shape of a chrome.declarativeNetRequest.Rule sufficient for tests. */
+export interface FakeDnrRule {
+  id: number;
+  priority?: number;
+  action: { type: string; redirect?: { regexSubstitution?: string } };
+  condition: {
+    regexFilter?: string;
+    resourceTypes?: readonly string[];
+    isUrlFilterCaseSensitive?: boolean;
+  };
+}
+
+/** In-memory stand-in for chrome.declarativeNetRequest's dynamic rule API. */
+export class FakeDeclarativeNetRequest {
+  private rules: FakeDnrRule[] = [];
+
+  getDynamicRules = async (): Promise<FakeDnrRule[]> => {
+    return this.rules.map((rule) => structuredClone(rule));
+  };
+
+  updateDynamicRules = async (options: {
+    removeRuleIds?: readonly number[];
+    addRules?: readonly FakeDnrRule[];
+  }): Promise<void> => {
+    const remove = new Set(options.removeRuleIds ?? []);
+    this.rules = this.rules.filter((rule) => !remove.has(rule.id));
+    if (options.addRules) {
+      this.rules.push(...options.addRules.map((rule) => structuredClone(rule)));
+    }
+  };
+}
+
+export interface FakeAlarmInfo {
+  when?: number;
+  periodInMinutes?: number;
+  delayInMinutes?: number;
+}
+
+/** In-memory stand-in for chrome.alarms. */
+export class FakeAlarms {
+  scheduled = new Map<string, FakeAlarmInfo>();
+
+  create = (name: string, info: FakeAlarmInfo): void => {
+    this.scheduled.set(name, { ...info });
+  };
+
+  clear = async (name: string): Promise<boolean> => {
+    return this.scheduled.delete(name);
+  };
+
+  onAlarm = {
+    addListener: (_listener: (alarm: { name: string }) => void): void => {
+      /* no-op for tests */
+    },
+  };
+}
+
+interface FakeRuntime {
+  id: string;
+  getURL: (path: string) => string;
+}
+
 export interface FakeChrome {
   storage: {
     sync: FakeStorageArea;
     local: FakeStorageArea;
   };
+  declarativeNetRequest: FakeDeclarativeNetRequest;
+  alarms: FakeAlarms;
+  runtime: FakeRuntime;
 }
 
 /** Installs a fresh fake `chrome` on the global object and returns it. */
 export function installFakeChrome(): FakeChrome {
   const fake: FakeChrome = {
     storage: { sync: new FakeStorageArea(), local: new FakeStorageArea() },
+    declarativeNetRequest: new FakeDeclarativeNetRequest(),
+    alarms: new FakeAlarms(),
+    runtime: {
+      id: 'fakeextensionid',
+      getURL: (path) => `chrome-extension://fakeextensionid/${path.replace(/^\//, '')}`,
+    },
   };
   (globalThis as { chrome?: unknown }).chrome = fake;
   return fake;
