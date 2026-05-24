@@ -9,6 +9,7 @@ import type {
   BlockRule,
   EditorKeymap,
   SolvedProblemRecord,
+  StreakDay,
   StreakSummary,
   ThemePreference,
   UnlockToken,
@@ -43,6 +44,7 @@ const FIRST_RUN_SUGGESTIONS: readonly string[] = [
 
 interface PopupData {
   streak: StreakSummary;
+  streakHistory: readonly StreakDay[];
   activeUnlocks: UnlockToken[];
   solvedToday: number;
   currentDomain: string | null;
@@ -65,8 +67,9 @@ export function Popup() {
     let cancelled = false;
 
     async function init() {
-      const [streak, tokens, solved, blockedRules, prefs, tabs] = await Promise.all([
+      const [streak, streakHistory, tokens, solved, blockedRules, prefs, tabs] = await Promise.all([
         safeGet('streakSummary'),
+        safeGet('streakHistory'),
         safeGet('unlockTokens'),
         safeGet('solvedProblems'),
         safeGet('blockedRules'),
@@ -96,6 +99,7 @@ export function Popup() {
       if (cancelled) return;
       setData({
         streak,
+        streakHistory,
         activeUnlocks: pruneTokens(tokens),
         solvedToday,
         currentDomain,
@@ -208,6 +212,8 @@ export function Popup() {
         <Stat label="Today" value={data.solvedToday} sub="solves" />
         <Stat label="Unlocks" value={data.activeUnlocks.length} sub="active" />
       </section>
+
+      <StreakHeatmap history={data.streakHistory} />
 
       {data.blockedDomains.size === 0 && (
         <section className="mt-5" aria-label="Quick start">
@@ -359,6 +365,62 @@ export function Popup() {
         </div>
       </section>
     </main>
+  );
+}
+
+/** Grayscale contribution grid — last 12 weeks of solve activity. */
+function StreakHeatmap({ history }: { history: readonly StreakDay[] }) {
+  const WEEKS = 12;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  // Build a lookup from date string → solved count.
+  const lookup = new Map<string, number>(history.map((d) => [d.date, d.solved]));
+
+  // Collect WEEKS × 7 days ending today, starting from the most recent Monday.
+  const cells: Array<{ date: string; count: number }> = [];
+  // Start from WEEKS * 7 days ago.
+  const start = new Date(today);
+  start.setDate(today.getDate() - (WEEKS * 7 - 1));
+
+  for (let i = 0; i < WEEKS * 7; i++) {
+    const d = new Date(start);
+    d.setDate(start.getDate() + i);
+    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    cells.push({ date: key, count: lookup.get(key) ?? 0 });
+  }
+
+  // Split into columns of 7 days.
+  const columns: Array<Array<{ date: string; count: number }>> = [];
+  for (let w = 0; w < WEEKS; w++) {
+    columns.push(cells.slice(w * 7, w * 7 + 7));
+  }
+
+  function cellClass(count: number): string {
+    if (count === 0) return 'bg-surface';
+    if (count === 1) return 'bg-border-strong';
+    if (count === 2) return 'bg-muted';
+    return 'bg-text';
+  }
+
+  return (
+    <section className="mt-4" aria-label="Solve activity heatmap">
+      <h2 className="font-mono text-[9px] uppercase tracking-widest text-faint">Activity</h2>
+      <div className="mt-2 flex gap-0.5" role="grid" aria-label="Last 12 weeks">
+        {columns.map((col, wi) => (
+          <div key={wi} className="flex flex-col gap-0.5" role="row">
+            {col.map(({ date, count }) => (
+              <div
+                key={date}
+                role="gridcell"
+                aria-label={`${date}: ${count} solve${count !== 1 ? 's' : ''}`}
+                title={`${date}: ${count} solve${count !== 1 ? 's' : ''}`}
+                className={`h-2 w-2 rounded-[1px] ${cellClass(count)}`}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 
