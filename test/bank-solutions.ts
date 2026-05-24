@@ -2042,6 +2042,41 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  // --- binary-search — medium ------------------------------------------------
+  'find-first-and-last-position': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    function search(findFirst: boolean): number {
+      let lo = 0, hi = nums.length - 1, res = -1;
+      while (lo <= hi) {
+        const mid = (lo + hi) >> 1;
+        if (nums[mid] === target) {
+          res = mid;
+          if (findFirst) hi = mid - 1;
+          else lo = mid + 1;
+        } else if (nums[mid]! < target) lo = mid + 1;
+        else hi = mid - 1;
+      }
+      return res;
+    }
+    return [search(true), search(false)];
+  },
+
+  'search-2d-matrix': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const target = args[1] as number;
+    const m = matrix.length, n = matrix[0]!.length;
+    let lo = 0, hi = m * n - 1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      const val = matrix[Math.floor(mid / n)]![mid % n]!;
+      if (val === target) return true;
+      else if (val < target) lo = mid + 1;
+      else hi = mid - 1;
+    }
+    return false;
+  },
+
   // --- arrays — medium (matrix) ---------------------------------------------
   'spiral-matrix': (...args: unknown[]) => {
     const matrix = args[0] as number[][];

@@ -1521,6 +1521,40 @@ export const pythonSolutions: Record<string, string> = {
     return result
 `,
 
+  'find-first-and-last-position': `def searchRange(nums: list[int], target: int) -> list[int]:
+    def search(find_first: bool) -> int:
+        lo, hi, res = 0, len(nums) - 1, -1
+        while lo <= hi:
+            mid = (lo + hi) // 2
+            if nums[mid] == target:
+                res = mid
+                if find_first:
+                    hi = mid - 1
+                else:
+                    lo = mid + 1
+            elif nums[mid] < target:
+                lo = mid + 1
+            else:
+                hi = mid - 1
+        return res
+    return [search(True), search(False)]
+`,
+
+  'search-2d-matrix': `def searchMatrix(matrix: list[list[int]], target: int) -> bool:
+    m, n = len(matrix), len(matrix[0])
+    lo, hi = 0, m * n - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        val = matrix[mid // n][mid % n]
+        if val == target:
+            return True
+        elif val < target:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return False
+`,
+
   'spiral-matrix': `def spiralOrder(matrix: list[list[int]]) -> list[int]:
     m, n = len(matrix), len(matrix[0])
     top, bottom, left, right = 0, m - 1, 0, n - 1

@@ -108,6 +108,8 @@ import { problem as isPerfectSquare } from './is-perfect-square';
 import { problem as searchRotatedSorted } from './search-rotated-sorted';
 import { problem as findMinimumRotated } from './find-minimum-rotated';
 import { problem as singleElementSorted } from './single-element-sorted';
+import { problem as findFirstAndLastPosition } from './find-first-and-last-position';
+import { problem as search2dMatrix } from './search-2d-matrix';
 // binary-search — hard
 import { problem as medianTwoSortedArrays } from './median-two-sorted-arrays';
 import { problem as splitArrayLargestSum } from './split-array-largest-sum';
@@ -275,6 +277,8 @@ export const problems: readonly Problem[] = [
   searchRotatedSorted,
   findMinimumRotated,
   singleElementSorted,
+  findFirstAndLastPosition,
+  search2dMatrix,
   // binary-search — hard
   medianTwoSortedArrays,
   splitArrayLargestSum,
