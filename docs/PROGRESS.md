@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Graph (8 problems) + tree (10 problems) fully tiered; bank at 191 problems.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (840 unit tests across 23 files).
-**Next up:** Graph hard (word-ladder); more tree medium; UX polish (run-button spinner); marketing site TS update.
+**Current focus:** Bank at 196 problems (12 tags); clone-graph, word-ladder, network-delay-time, number-of-connected-components, count-good-nodes, binary-tree-right-side-view added.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (858 unit tests across 23 files).
+**Next up:** construct-binary-tree-from-preorder-inorder, serialize-deserialize-binary-tree; marketing site stats bump to 196.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -229,10 +229,13 @@ Still pending:
 - [x] More tree problems — binary-tree-paths (easy), validate-bst (medium), level-order-traversal (medium); bank at 182 problems, 816 tests
 - [x] Popup: add preferred-language segmented control (mirrors keymap row)
 - [x] Marketing site: update stats/copy to mention TypeScript — 182 problems / 12 tags / 3 languages; Graph + Tree tag chips added
-- [x] More tree/graph problems — path-sum (easy), diameter-of-binary-tree (easy), lowest-common-ancestor-bst (medium), binary-tree-max-path-sum (hard); graph: find-the-town-judge (easy), max-area-of-island (medium), rotting-oranges (medium), keys-and-rooms (medium); bank at 191 problems, 840 tests
-- [ ] More tree problems: construct-binary-tree-from-preorder-inorder (medium), count-good-nodes-in-binary-tree (medium)
-- [ ] More graph problems: word-ladder (hard), network-delay-time (medium)
-- [ ] UX: run-button loading spinner / debounce; verdict panel scroll-to-first-failure
+- [x] More tree/graph problems — path-sum (easy), diameter-of-binary-tree (easy), lowest-common-ancestor-bst (medium), max-path-sum (hard); town-judge (easy), max-area-island (medium), rotting-oranges (medium), keys-and-rooms (medium); bank at 190 problems, 840 tests
+- [x] UX: verdict panel scroll-to-first-failure (useEffect + scrollIntoView); animated loading dots (animate-pulse on "· · ·")
+- [x] More graph problems: clone-graph (medium), word-ladder (hard), network-delay-time (medium), number-of-connected-components (medium); bank at 196 problems, 858 tests
+- [x] More tree problems: count-good-nodes (medium), binary-tree-right-side-view (medium)
+- [ ] More tree problems: construct-binary-tree-from-preorder-inorder (medium), serialize-deserialize-binary-tree (hard)
+- [ ] Marketing site: update stats to 196 problems / 12 tags / 3 languages
+- [ ] Options/popup: show problem bank count next to each tag/difficulty pill (already in Options; verify accurate after 12 tags)
 
 ---
 
