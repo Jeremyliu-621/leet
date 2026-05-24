@@ -485,4 +485,477 @@ export const pythonSolutions: Record<string, string> = {
         a, b = b, a + b
     return b
 `,
+
+  // ---------------------------------------------------------------------------
+  // Medium-difficulty problems (batch expansion)
+  // ---------------------------------------------------------------------------
+
+  'product-except-self': `def productExceptSelf(nums):
+    n = len(nums)
+    out = [1] * n
+    p = 1
+    for i in range(n):
+        out[i] = p
+        p *= nums[i]
+    p = 1
+    for i in range(n - 1, -1, -1):
+        out[i] *= p
+        p *= nums[i]
+    return out
+`,
+
+  'sort-colors': `def sortColors(nums):
+    lo, mid, hi = 0, 0, len(nums) - 1
+    while mid <= hi:
+        if nums[mid] == 0:
+            nums[lo], nums[mid] = nums[mid], nums[lo]
+            lo += 1
+            mid += 1
+        elif nums[mid] == 2:
+            nums[hi], nums[mid] = nums[mid], nums[hi]
+            hi -= 1
+        else:
+            mid += 1
+    return nums
+`,
+
+  'trap-rain-water': `def trapRainWater(height):
+    if not height:
+        return 0
+    left, right = 0, len(height) - 1
+    max_left = max_right = water = 0
+    while left < right:
+        if height[left] <= height[right]:
+            if height[left] >= max_left:
+                max_left = height[left]
+            else:
+                water += max_left - height[left]
+            left += 1
+        else:
+            if height[right] >= max_right:
+                max_right = height[right]
+            else:
+                water += max_right - height[right]
+            right -= 1
+    return water
+`,
+
+  'container-with-most-water': `def containerWithMostWater(height):
+    left, right = 0, len(height) - 1
+    best = 0
+    while left < right:
+        best = max(best, min(height[left], height[right]) * (right - left))
+        if height[left] <= height[right]:
+            left += 1
+        else:
+            right -= 1
+    return best
+`,
+
+  'three-sum-zero': `def threeSumZero(nums):
+    nums.sort()
+    result = []
+    for i in range(len(nums) - 2):
+        if i > 0 and nums[i] == nums[i - 1]:
+            continue
+        left, right = i + 1, len(nums) - 1
+        while left < right:
+            s = nums[i] + nums[left] + nums[right]
+            if s == 0:
+                result.append([nums[i], nums[left], nums[right]])
+                while left < right and nums[left] == nums[left + 1]:
+                    left += 1
+                while left < right and nums[right] == nums[right - 1]:
+                    right -= 1
+                left += 1
+                right -= 1
+            elif s < 0:
+                left += 1
+            else:
+                right -= 1
+    return result
+`,
+
+  'jump-game': `def canJump(nums):
+    max_reach = 0
+    for i, v in enumerate(nums):
+        if i > max_reach:
+            return False
+        max_reach = max(max_reach, i + v)
+    return True
+`,
+
+  'best-time-buy-sell-two': `def maxProfitMultiple(prices):
+    profit = 0
+    for i in range(1, len(prices)):
+        if prices[i] > prices[i - 1]:
+            profit += prices[i] - prices[i - 1]
+    return profit
+`,
+
+  'majority-element': `def majorityElement(nums):
+    count = 0
+    candidate = None
+    for n in nums:
+        if count == 0:
+            candidate = n
+        count += 1 if n == candidate else -1
+    return candidate
+`,
+
+  'kth-largest-element': `def kthLargest(nums, k):
+    sorted_nums = sorted(list(nums))
+    return sorted_nums[len(sorted_nums) - k]
+`,
+
+  'find-all-duplicates': `def findAllDuplicates(nums):
+    result = []
+    for v in nums:
+        idx = abs(v) - 1
+        if nums[idx] < 0:
+            result.append(abs(v))
+        else:
+            nums[idx] = -nums[idx]
+    return sorted(result)
+`,
+
+  'longest-subarray-of-ones': `def longestSubarrayOfOnes(nums):
+    left = 0
+    zeros = 0
+    best = 0
+    for right in range(len(nums)):
+        if nums[right] == 0:
+            zeros += 1
+        while zeros > 1:
+            if nums[left] == 0:
+                zeros -= 1
+            left += 1
+        best = max(best, right - left)
+    return best
+`,
+
+  // ---------------------------------------------------------------------------
+  // Medium-difficulty problems — batch 2 (strings + hash-map)
+  // ---------------------------------------------------------------------------,
+
+  'count-palindromic-substrings': `def countPalindromicSubstrings(s):
+    count = 0
+    n = len(s)
+    for i in range(n):
+        l, r = i, i
+        while l >= 0 and r < n and s[l] == s[r]:
+            count += 1
+            l -= 1
+            r += 1
+        l, r = i, i + 1
+        while l >= 0 and r < n and s[l] == s[r]:
+            count += 1
+            l -= 1
+            r += 1
+    return count
+`,
+
+  'decode-string': `def decodeString(s):
+    stack = []
+    cur = ''
+    num = 0
+    for ch in s:
+        if ch.isdigit():
+            num = num * 10 + int(ch)
+        elif ch == '[':
+            stack.append((cur, num))
+            cur = ''
+            num = 0
+        elif ch == ']':
+            prev, k = stack.pop()
+            cur = prev + cur * k
+        else:
+            cur += ch
+    return cur
+`,
+
+  'minimum-remove-to-make-valid': `def minRemoveForValid(s):
+    open_count = 0
+    s1 = []
+    for c in s:
+        if c == '(':
+            open_count += 1
+            s1.append(c)
+        elif c == ')':
+            if open_count > 0:
+                open_count -= 1
+                s1.append(c)
+        else:
+            s1.append(c)
+    close_count = 0
+    s2 = []
+    for c in reversed(s1):
+        if c == ')':
+            close_count += 1
+            s2.append(c)
+        elif c == '(':
+            if close_count > 0:
+                close_count -= 1
+                s2.append(c)
+        else:
+            s2.append(c)
+    return ''.join(reversed(s2))
+`,
+
+  'reverse-string-words': `def reverseWordsInSentence(s):
+    return ' '.join(s.split()[::-1])
+`,
+
+  'string-multiply': `def multiplyStrings(num1, num2):
+    m, n = len(num1), len(num2)
+    res = [0] * (m + n)
+    for i in range(m - 1, -1, -1):
+        for j in range(n - 1, -1, -1):
+            mul = (ord(num1[i]) - 48) * (ord(num2[j]) - 48)
+            p1, p2 = i + j, i + j + 1
+            total = mul + res[p2]
+            res[p2] = total % 10
+            res[p1] += total // 10
+    s = ''.join(map(str, res)).lstrip('0')
+    return s if s else '0'
+`,
+
+  'is-subsequence-medium': `def countSubsequenceOccurrences(s, t):
+    MOD = 10 ** 9 + 7
+    m, n = len(s), len(t)
+    prev = [1] * (n + 1)
+    for i in range(1, m + 1):
+        curr = [0] * (n + 1)
+        for j in range(1, n + 1):
+            curr[j] = curr[j - 1]
+            if s[i - 1] == t[j - 1]:
+                curr[j] = (curr[j] + prev[j - 1]) % MOD
+        prev = curr
+    return prev[n]
+`,
+
+  'character-replacement': `def characterReplacement(s, k):
+    freq = [0] * 26
+    left = 0
+    max_count = 0
+    best = 0
+    for right in range(len(s)):
+        freq[ord(s[right]) - 65] += 1
+        max_count = max(max_count, freq[ord(s[right]) - 65])
+        while right - left + 1 - max_count > k:
+            freq[ord(s[left]) - 65] -= 1
+            left += 1
+        best = max(best, right - left + 1)
+    return best
+`,
+
+  'group-anagrams': `def groupAnagrams(strs):
+    from collections import defaultdict
+    groups = defaultdict(list)
+    for s in strs:
+        key = ''.join(sorted(s))
+        groups[key].append(s)
+    result = [sorted(g) for g in groups.values()]
+    result.sort(key=lambda g: g[0] if g else '')
+    return result
+`,
+
+  'top-k-frequent-elements': `def topKFrequent(nums, k):
+    from collections import Counter
+    freq = Counter(nums)
+    return sorted(sorted(freq.keys(), key=lambda x: (-freq[x], x))[:k])
+`,
+
+  'longest-consecutive-sequence': `def longestConsecutive(nums):
+    s = set(nums)
+    best = 0
+    for n in s:
+        if n - 1 not in s:
+            length = 1
+            while n + length in s:
+                length += 1
+            best = max(best, length)
+    return best
+`,
+
+  'find-all-anagrams-in-string': `def findAllAnagrams(s, p):
+    from collections import Counter
+    p_freq = Counter(p)
+    w_freq = Counter()
+    result = []
+    p_len = len(p)
+    for i in range(len(s)):
+        w_freq[s[i]] += 1
+        if i >= p_len:
+            out = s[i - p_len]
+            w_freq[out] -= 1
+            if w_freq[out] == 0:
+                del w_freq[out]
+        if i >= p_len - 1 and w_freq == p_freq:
+            result.append(i - p_len + 1)
+    return result
+`,
+
+  'maximum-erasure-value': `def maximumUniqueSum(nums):
+    seen = {}
+    left = 0
+    current_sum = 0
+    best = 0
+    for right in range(len(nums)):
+        v = nums[right]
+        if v in seen and seen[v] >= left:
+            while left <= seen[v]:
+                current_sum -= nums[left]
+                left += 1
+        seen[v] = right
+        current_sum += v
+        best = max(best, current_sum)
+    return best
+`,
+
+  // ---------------------------------------------------------------------------
+  // Medium-difficulty problems — batch 3 (binary-search + stack + math)
+  // ---------------------------------------------------------------------------,
+
+  'search-rotated-sorted': `def searchRotated(nums, target):
+    left, right = 0, len(nums) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if nums[mid] == target:
+            return mid
+        if nums[left] <= nums[mid]:
+            if nums[left] <= target < nums[mid]:
+                right = mid - 1
+            else:
+                left = mid + 1
+        else:
+            if nums[mid] < target <= nums[right]:
+                left = mid + 1
+            else:
+                right = mid - 1
+    return -1
+`,
+
+  'find-minimum-rotated': `def findMinRotated(nums):
+    left, right = 0, len(nums) - 1
+    while left < right:
+        mid = (left + right) // 2
+        if nums[mid] > nums[right]:
+            left = mid + 1
+        else:
+            right = mid
+    return nums[left]
+`,
+
+  'single-element-sorted': `def singleNonDuplicate(nums):
+    left, right = 0, len(nums) - 1
+    while left < right:
+        mid = (left + right) // 2
+        if mid % 2 == 1:
+            mid -= 1
+        if nums[mid] == nums[mid + 1]:
+            left = mid + 2
+        else:
+            right = mid
+    return nums[left]
+`,
+
+  'asteroid-collision': `def asteroidCollision(asteroids):
+    stack = []
+    for a in asteroids:
+        survived = True
+        while survived and a < 0 and stack and stack[-1] > 0:
+            if stack[-1] < -a:
+                stack.pop()
+            elif stack[-1] == -a:
+                stack.pop()
+                survived = False
+            else:
+                survived = False
+        if survived:
+            stack.append(a)
+    return stack
+`,
+
+  'score-of-parentheses': `def scoreOfParentheses(s):
+    stack = [0]
+    for c in s:
+        if c == '(':
+            stack.append(0)
+        else:
+            v = stack.pop()
+            stack[-1] += max(2 * v, 1)
+    return stack[0]
+`,
+
+  'valid-parenthesis-string': `def validParenthesisString(s):
+    min_open = 0
+    max_open = 0
+    for c in s:
+        if c == '(':
+            min_open += 1
+            max_open += 1
+        elif c == ')':
+            min_open -= 1
+            max_open -= 1
+        else:
+            min_open -= 1
+            max_open += 1
+        if max_open < 0:
+            return False
+        if min_open < 0:
+            min_open = 0
+    return min_open == 0
+`,
+
+  'count-primes-sieve': `def countPrimesUpTo(n):
+    if n < 2:
+        return 0
+    is_prime = [True] * n
+    is_prime[0] = is_prime[1] = False
+    i = 2
+    while i * i < n:
+        if is_prime[i]:
+            for j in range(i * i, n, i):
+                is_prime[j] = False
+        i += 1
+    return sum(is_prime)
+`,
+
+  'pow-x-n': `def fastPow(x, n):
+    def helper(base, exp):
+        if exp == 0:
+            return 1.0
+        half = helper(base, exp // 2)
+        return half * half if exp % 2 == 0 else base * half * half
+    if n < 0:
+        return helper(1.0 / x, -n)
+    return helper(x, n)
+`,
+
+  'reverse-integer': `def reverseInteger(x):
+    sign = -1 if x < 0 else 1
+    rev = int(str(abs(x))[::-1]) * sign
+    if rev > 2**31 - 1 or rev < -(2**31):
+        return 0
+    return rev
+`,
+
+  'happy-number': `def isHappyNumber(n):
+    def digit_square_sum(num):
+        total = 0
+        while num > 0:
+            d = num % 10
+            total += d * d
+            num //= 10
+        return total
+    seen = set()
+    cur = n
+    while cur != 1:
+        if cur in seen:
+            return False
+        seen.add(cur)
+        cur = digit_square_sum(cur)
+    return True
+`,
 };

@@ -712,4 +712,631 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return answer;
   },
+
+
+
+  // ---------------------------------------------------------------------------
+  // Medium-difficulty problems (batch expansion)
+  // ---------------------------------------------------------------------------
+
+  'product-except-self': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const out = new Array<number>(n).fill(1);
+    let p = 1;
+    for (let i = 0; i < n; i++) {
+      out[i] = p;
+      p *= nums[i] as number;
+    }
+    p = 1;
+    for (let i = n - 1; i >= 0; i--) {
+      out[i] = (out[i] as number) * p;
+      p *= nums[i] as number;
+    }
+    return out.map(v => v + 0); // normalize -0 → 0
+  },
+
+  'sort-colors': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice();
+    let lo = 0, mid = 0, hi = nums.length - 1;
+    while (mid <= hi) {
+      const mVal = nums[mid] as number;
+      if (mVal === 0) {
+        const tmp = nums[lo] as number;
+        nums[lo] = mVal;
+        nums[mid] = tmp;
+        lo++; mid++;
+      } else if (mVal === 2) {
+        const tmp = nums[hi] as number;
+        nums[hi] = mVal;
+        nums[mid] = tmp;
+        hi--;
+      } else {
+        mid++;
+      }
+    }
+    return nums;
+  },
+
+  'trap-rain-water': (...args: unknown[]) => {
+    const height = args[0] as number[];
+    let left = 0, right = height.length - 1, leftMax = 0, rightMax = 0, water = 0;
+    while (left < right) {
+      const lh = height[left] as number;
+      const rh = height[right] as number;
+      if (lh < rh) {
+        leftMax = Math.max(leftMax, lh);
+        water += leftMax - lh;
+        left++;
+      } else {
+        rightMax = Math.max(rightMax, rh);
+        water += rightMax - rh;
+        right--;
+      }
+    }
+    return water;
+  },
+
+  'container-with-most-water': (...args: unknown[]) => {
+    const height = args[0] as number[];
+    let left = 0, right = height.length - 1, max = 0;
+    while (left < right) {
+      const lh = height[left] as number;
+      const rh = height[right] as number;
+      max = Math.max(max, Math.min(lh, rh) * (right - left));
+      if (lh < rh) left++;
+      else right--;
+    }
+    return max;
+  },
+
+  'three-sum-zero': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const res: number[][] = [];
+    for (let i = 0; i < nums.length - 2; i++) {
+      if (i > 0 && nums[i] === nums[i - 1]) continue;
+      let l = i + 1, r = nums.length - 1;
+      while (l < r) {
+        const ni = nums[i] as number;
+        const nl = nums[l] as number;
+        const nr = nums[r] as number;
+        const s = ni + nl + nr;
+        if (s === 0) {
+          res.push([ni, nl, nr]);
+          while (l < r && nums[l] === nums[l + 1]) l++;
+          while (l < r && nums[r] === nums[r - 1]) r--;
+          l++; r--;
+        } else if (s < 0) {
+          l++;
+        } else {
+          r--;
+        }
+      }
+    }
+    return res;
+  },
+
+  'jump-game': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let maxReach = 0;
+    for (let i = 0; i < nums.length; i++) {
+      if (i > maxReach) return false;
+      maxReach = Math.max(maxReach, i + (nums[i] as number));
+    }
+    return true;
+  },
+
+  'best-time-buy-sell-two': (...args: unknown[]) => {
+    const prices = args[0] as number[];
+    let profit = 0;
+    for (let i = 1; i < prices.length; i++) {
+      const today = prices[i] as number;
+      const yesterday = prices[i - 1] as number;
+      if (today > yesterday) profit += today - yesterday;
+    }
+    return profit;
+  },
+
+  'majority-element': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let candidate = nums[0] as number, count = 1;
+    for (let i = 1; i < nums.length; i++) {
+      const cur = nums[i] as number;
+      if (count === 0) { candidate = cur; count = 1; }
+      else if (cur === candidate) count++;
+      else count--;
+    }
+    return candidate;
+  },
+
+  'kth-largest-element': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice();
+    const k = args[1] as number;
+    nums.sort((a, b) => b - a);
+    return nums[k - 1] as number;
+  },
+
+  'find-all-duplicates': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice();
+    const res: number[] = [];
+    for (let i = 0; i < nums.length; i++) {
+      const idx = Math.abs(nums[i] as number) - 1;
+      if ((nums[idx] as number) < 0) {
+        res.push(idx + 1);
+      } else {
+        nums[idx] = -(nums[idx] as number);
+      }
+    }
+    return res.sort((a, b) => a - b);
+  },
+
+  'longest-subarray-of-ones': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let left = 0, zeros = 0, best = 0;
+    for (let right = 0; right < nums.length; right++) {
+      if ((nums[right] as number) === 0) zeros++;
+      while (zeros > 1) {
+        if ((nums[left] as number) === 0) zeros--;
+        left++;
+      }
+      best = Math.max(best, right - left);
+    }
+    return best;
+  },
+
+  'maximum-erasure-value': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let left = 0, sum = 0, best = 0;
+    const seen = new Set<number>();
+    for (let right = 0; right < nums.length; right++) {
+      const val = nums[right] as number;
+      while (seen.has(val)) {
+        const lv = nums[left] as number;
+        seen.delete(lv);
+        sum -= lv;
+        left++;
+      }
+      seen.add(val);
+      sum += val;
+      best = Math.max(best, sum);
+    }
+    return best;
+  },
+
+
+  // -------------------------------------------------------------------------
+  // 1. group-anagrams
+  // Canonical: each group sorted asc, groups sorted lexicographically by [0].
+  // -------------------------------------------------------------------------
+  'group-anagrams': (...args: unknown[]) => {
+    const strs = args[0] as string[];
+    const map = new Map<string, string[]>();
+    for (const s of strs) {
+      const key = s.split('').sort().join('');
+      const group = map.get(key) ?? [];
+      group.push(s);
+      map.set(key, group);
+    }
+    return [...map.values()]
+      .map(g => g.sort())
+      .sort((a, b) => (a[0] ?? '').localeCompare(b[0] ?? ''));
+  },
+
+  // -------------------------------------------------------------------------
+  // 2. top-k-frequent-elements
+  // Canonical: sort by (-frequency, value), take k, return sorted ascending.
+  // -------------------------------------------------------------------------
+  'top-k-frequent-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const freq = new Map<number, number>();
+    for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+    return [...freq.keys()]
+      .sort((a, b) => (freq.get(b) ?? 0) - (freq.get(a) ?? 0) || a - b)
+      .slice(0, k)
+      .sort((a, b) => a - b);
+  },
+
+  // -------------------------------------------------------------------------
+  // 3. longest-consecutive-sequence
+  // O(n) set-based approach.
+  // -------------------------------------------------------------------------
+  'longest-consecutive-sequence': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const s = new Set(nums);
+    let best = 0;
+    for (const n of s) {
+      if (!s.has(n - 1)) {
+        let len = 1;
+        while (s.has(n + len)) len++;
+        best = Math.max(best, len);
+      }
+    }
+    return best;
+  },
+
+  // -------------------------------------------------------------------------
+  // 4. find-all-anagrams-in-string
+  // Canonical: sorted array of starting indices.
+  // -------------------------------------------------------------------------
+  'find-all-anagrams-in-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const p = args[1] as string;
+    const pFreq: Record<string, number> = {};
+    for (const c of p) pFreq[c] = (pFreq[c] ?? 0) + 1;
+    const wFreq: Record<string, number> = {};
+    const result: number[] = [];
+    for (let i = 0; i < s.length; i++) {
+      const ch = s.charAt(i);
+      wFreq[ch] = (wFreq[ch] ?? 0) + 1;
+      if (i >= p.length) {
+        const out = s.charAt(i - p.length);
+        wFreq[out] = (wFreq[out] ?? 0) - 1;
+        if (wFreq[out] === 0) delete wFreq[out];
+      }
+      if (i >= p.length - 1) {
+        if (
+          Object.keys(pFreq).length === Object.keys(wFreq).length &&
+          Object.keys(pFreq).every(c => pFreq[c] === wFreq[c])
+        ) {
+          result.push(i - p.length + 1);
+        }
+      }
+    }
+    return result;
+  },
+
+  // -------------------------------------------------------------------------
+  // 5. count-palindromic-substrings
+  // Expand-around-center.
+  // -------------------------------------------------------------------------
+  'count-palindromic-substrings': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let count = 0;
+    for (let i = 0; i < s.length; i++) {
+      // Odd length
+      for (let l = i, r = i; l >= 0 && r < s.length && s[l] === s[r]; l--, r++) count++;
+      // Even length
+      for (let l = i, r = i + 1; l >= 0 && r < s.length && s[l] === s[r]; l--, r++) count++;
+    }
+    return count;
+  },
+
+  // -------------------------------------------------------------------------
+  // 6. decode-string
+  // Stack-based decoder for k[encoded_string] patterns.
+  // -------------------------------------------------------------------------
+  'decode-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let cur = '';
+    let num = 0;
+    const stack: Array<[string, number]> = [];
+    for (const ch of s) {
+      if (ch >= '0' && ch <= '9') {
+        num = num * 10 + Number(ch);
+      } else if (ch === '[') {
+        stack.push([cur, num]);
+        cur = '';
+        num = 0;
+      } else if (ch === ']') {
+        const [prev, k] = stack.pop()!;
+        cur = prev + cur.repeat(k);
+      } else {
+        cur += ch;
+      }
+    }
+    return cur;
+  },
+
+  // -------------------------------------------------------------------------
+  // 7. minimum-remove-to-make-valid
+  // Two-pass: left-to-right removes unmatched ')'; right-to-left removes '('.
+  // -------------------------------------------------------------------------
+  'minimum-remove-to-make-valid': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let open = 0;
+    let s1 = '';
+    for (const c of s) {
+      if (c === '(') {
+        open++;
+        s1 += c;
+      } else if (c === ')') {
+        if (open > 0) {
+          open--;
+          s1 += c;
+        }
+        // else drop unmatched ')'
+      } else {
+        s1 += c;
+      }
+    }
+    let close = 0;
+    let s2 = '';
+    for (let i = s1.length - 1; i >= 0; i--) {
+      const c = s1[i];
+      if (c === ')') {
+        close++;
+        s2 = c + s2;
+      } else if (c === '(') {
+        if (close > 0) {
+          close--;
+          s2 = c + s2;
+        }
+        // else drop unmatched '('
+      } else {
+        s2 = c + s2;
+      }
+    }
+    return s2;
+  },
+
+  // -------------------------------------------------------------------------
+  // 8. reverse-string-words
+  // Split, filter, reverse, join.
+  // -------------------------------------------------------------------------
+  'reverse-string-words': (...args: unknown[]) => {
+    const s = args[0] as string;
+    return s.trim().split(/\s+/).reverse().join(' ');
+  },
+
+  // -------------------------------------------------------------------------
+  // 9. string-multiply
+  // Grade-school digit-by-digit multiplication.
+  // -------------------------------------------------------------------------
+  'string-multiply': (...args: unknown[]) => {
+    const num1 = args[0] as string;
+    const num2 = args[1] as string;
+    const m = num1.length;
+    const n = num2.length;
+    const res: number[] = new Array<number>(m + n).fill(0);
+    for (let i = m - 1; i >= 0; i--) {
+      for (let j = n - 1; j >= 0; j--) {
+        const d1 = num1.charCodeAt(i) - 48;
+        const d2 = num2.charCodeAt(j) - 48;
+        const sum = d1 * d2 + (res[i + j + 1] ?? 0);
+        res[i + j + 1] = sum % 10;
+        res[i + j] = (res[i + j] ?? 0) + Math.floor(sum / 10);
+      }
+    }
+    const str = res.join('').replace(/^0+/, '');
+    return str || '0';
+  },
+
+  // -------------------------------------------------------------------------
+  // 10. is-subsequence-medium
+  // DP: count distinct subsequence occurrences of s in t, mod 10^9+7.
+  // -------------------------------------------------------------------------
+  'is-subsequence-medium': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const t = args[1] as string;
+    const MOD = 1_000_000_007;
+    const m = s.length;
+    const n = t.length;
+    // prev[j] = number of ways to form s[0..i-1] using t[0..j-1]
+    let prev: number[] = new Array<number>(n + 1).fill(0);
+    // Base case: empty pattern matches exactly once at every position
+    for (let j = 0; j <= n; j++) prev[j] = 1;
+    for (let i = 1; i <= m; i++) {
+      const curr: number[] = new Array<number>(n + 1).fill(0);
+      for (let j = 1; j <= n; j++) {
+        curr[j] = curr[j - 1] as number;
+        if (s.charAt(i - 1) === t.charAt(j - 1)) {
+          curr[j] = ((curr[j] as number) + (prev[j - 1] as number)) % MOD;
+        }
+      }
+      prev = curr;
+    }
+    return prev[n] as number;
+  },
+
+  // -------------------------------------------------------------------------
+  // 11. character-replacement
+  // Sliding window: valid if (window_size - maxCount) <= k.
+  // -------------------------------------------------------------------------
+  'character-replacement': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    const freq = new Array<number>(26).fill(0);
+    let left = 0;
+    let maxCount = 0;
+    let best = 0;
+    for (let right = 0; right < s.length; right++) {
+      const idx = s.charCodeAt(right) - 65;
+      freq[idx] = (freq[idx] ?? 0) + 1;
+      maxCount = Math.max(maxCount, freq[idx] ?? 0);
+      while (right - left + 1 - maxCount > k) {
+        const li = s.charCodeAt(left) - 65;
+        freq[li] = (freq[li] ?? 0) - 1;
+        left++;
+      }
+      best = Math.max(best, right - left + 1);
+    }
+    return best;
+  },
+
+
+  // --- binary-search --------------------------------------------------------
+
+  'search-rotated-sorted': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    let left = 0;
+    let right = nums.length - 1;
+    while (left <= right) {
+      const mid = (left + right) >> 1;
+      const midVal = nums[mid] as number;
+      const leftVal = nums[left] as number;
+      const rightVal = nums[right] as number;
+      if (midVal === target) return mid;
+      if (leftVal <= midVal) {
+        // left half is sorted
+        if (target >= leftVal && target < midVal) {
+          right = mid - 1;
+        } else {
+          left = mid + 1;
+        }
+      } else {
+        // right half is sorted
+        if (target > midVal && target <= rightVal) {
+          left = mid + 1;
+        } else {
+          right = mid - 1;
+        }
+      }
+    }
+    return -1;
+  },
+
+  'find-minimum-rotated': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let left = 0;
+    let right = nums.length - 1;
+    while (left < right) {
+      const mid = (left + right) >> 1;
+      if ((nums[mid] as number) > (nums[right] as number)) {
+        left = mid + 1;
+      } else {
+        right = mid;
+      }
+    }
+    return nums[left] as number;
+  },
+
+  'single-element-sorted': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let left = 0;
+    let right = nums.length - 1;
+    while (left < right) {
+      let mid = (left + right) >> 1;
+      if (mid % 2 === 1) mid--; // align to even index
+      if ((nums[mid] as number) === (nums[mid + 1] as number)) {
+        left = mid + 2;
+      } else {
+        right = mid;
+      }
+    }
+    return nums[left] as number;
+  },
+
+  // --- stack ----------------------------------------------------------------
+
+  'asteroid-collision': (...args: unknown[]) => {
+    const asteroids = args[0] as number[];
+    const stack: number[] = [];
+    for (const a of asteroids) {
+      let survived = true;
+      while (survived && a < 0 && stack.length > 0 && (stack[stack.length - 1] as number) > 0) {
+        const top = stack[stack.length - 1] as number;
+        if (top < -a) {
+          stack.pop();
+        } else if (top === -a) {
+          stack.pop();
+          survived = false;
+        } else {
+          survived = false;
+        }
+      }
+      if (survived) stack.push(a);
+    }
+    return stack;
+  },
+
+  'score-of-parentheses': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const stack: number[] = [0];
+    for (const c of s) {
+      if (c === '(') {
+        stack.push(0);
+      } else {
+        const v = stack.pop() as number;
+        stack[stack.length - 1] = (stack[stack.length - 1] as number) + Math.max(2 * v, 1);
+      }
+    }
+    return stack[0] as number;
+  },
+
+  'valid-parenthesis-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let minOpen = 0;
+    let maxOpen = 0;
+    for (const c of s) {
+      if (c === '(') {
+        minOpen++;
+        maxOpen++;
+      } else if (c === ')') {
+        minOpen--;
+        maxOpen--;
+      } else {
+        // '*' can be '(', ')' or empty
+        minOpen--;
+        maxOpen++;
+      }
+      if (maxOpen < 0) return false;
+      if (minOpen < 0) minOpen = 0;
+    }
+    return minOpen === 0;
+  },
+
+  // --- math -----------------------------------------------------------------
+
+  'count-primes-sieve': (...args: unknown[]) => {
+    const n = args[0] as number;
+    if (n < 2) return 0;
+    const isPrime = new Array(n).fill(true) as boolean[];
+    isPrime[0] = false;
+    isPrime[1] = false;
+    for (let i = 2; i * i < n; i++) {
+      if (isPrime[i]) {
+        for (let j = i * i; j < n; j += i) {
+          isPrime[j] = false;
+        }
+      }
+    }
+    return isPrime.filter(Boolean).length;
+  },
+
+  'pow-x-n': (...args: unknown[]) => {
+    const x = args[0] as number;
+    const n = args[1] as number;
+    function helper(base: number, exp: number): number {
+      if (exp === 0) return 1;
+      const half = helper(base, Math.floor(exp / 2));
+      return exp % 2 === 0 ? half * half : base * half * half;
+    }
+    if (n < 0) return helper(1 / x, -n);
+    return helper(x, n);
+  },
+
+  'reverse-integer': (...args: unknown[]) => {
+    const x = args[0] as number;
+    const sign = x < 0 ? -1 : 1;
+    const abs = Math.abs(x);
+    const reversed = parseInt(String(abs).split('').reverse().join(''), 10) * sign;
+    const MAX = 2 ** 31 - 1;
+    const MIN = -(2 ** 31);
+    return reversed > MAX || reversed < MIN ? 0 : reversed;
+  },
+
+  'happy-number': (...args: unknown[]) => {
+    const n = args[0] as number;
+    function digitSquareSum(num: number): number {
+      let sum = 0;
+      let remaining = num;
+      while (remaining > 0) {
+        const d = remaining % 10;
+        sum += d * d;
+        remaining = Math.floor(remaining / 10);
+      }
+      return sum;
+    }
+    let cur = n;
+    const seen = new Set<number>();
+    while (cur !== 1) {
+      if (seen.has(cur)) return false;
+      seen.add(cur);
+      cur = digitSquareSum(cur);
+    }
+    return true;
+  },
+
 };
