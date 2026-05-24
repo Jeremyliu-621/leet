@@ -138,11 +138,11 @@ immediately, i.e. when strict mode is off).
 
 - [ ] Accessibility pass (focus, keyboard, contrast, ARIA) — sweep beyond what individual sections already do
 - [ ] Edge-case sweep across all `src/lib` modules
-- [ ] Integration tests for core flows (extract `reconcile()` from the SW into a pure module; mock chrome.declarativeNetRequest + alarms + runtime in `fake-chrome`)
+- [x] Integration tests for core flows — `reconcile()` extracted, fake-chrome covers DNR + alarms + runtime, 18 SW integration tests in `test/sw-reconcile.test.ts`
 - [x] GitHub Actions CI: typecheck + test + build (artifacts uploaded for 14 days)
 - [ ] Playwright load-extension smoke test (real chromium, headed)
 - [ ] README screenshots / demo notes
-- [ ] Chrome Web Store ZIP packaging script
+- [x] Chrome Web Store ZIP packaging script (`npm run package`)
 
 ## Phase 13+ — Post-MVP
 
