@@ -6,6 +6,16 @@ The format is loosely based on [Keep a Changelog](https://keepachangelog.com/);
 this project follows [Semantic Versioning](https://semver.org/) (0.x while
 pre-stable).
 
+## [Unreleased]
+
+### Added
+- **Full solve-and-unlock e2e test** (`e2e/solve-flow.spec.ts`) — loads the
+  built extension into real Chromium, identifies which problem the bank
+  picked, injects the matching reference solution into the CodeMirror editor,
+  clicks Submit, and verifies the service worker writes an unlock token for
+  the target domain. Proves the entire vertical slice (bank → judge →
+  sandbox Worker → SW grant handler → storage) works end-to-end.
+
 ## [0.1.0] — 2026-05-24 — First complete release
 
 The first end-to-end-working release of LeetLock — a Chrome Manifest V3

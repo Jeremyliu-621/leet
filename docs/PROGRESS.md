@@ -142,6 +142,7 @@ iterate on the marketing site (separate repo `Jeremyliu-621/leetlock-site` alrea
 - [x] GitHub Actions CI: typecheck + test + build (artifacts uploaded for 14 days)
 - [x] **Playwright load-extension smoke test — 4 tests in `e2e/extension.spec.ts` exercise the SW, popup, options, and challenge pages against real Chromium with `dist/` loaded as an unpacked extension. Caught and fixed a real bug — CRXJS was shipping unmodified `./main.tsx` references for web-accessible HTML (see `DECISIONS.md` D15).**
 - [x] **Real block-flow e2e tests — 2 tests in `e2e/block-flow.spec.ts` verify: (a) navigating to a blocked host is redirected to the challenge page, (b) a domain with an active unlock token bypasses the gate. These exercise the live declarativeNetRequest pipeline end-to-end.**
+- [x] **Full solve-and-unlock e2e — `e2e/solve-flow.spec.ts` injects the bank's reference solution into the CodeMirror editor, clicks Submit, and asserts the SW writes an unlock token. Proves the vertical slice (bank → judge → sandbox Worker → SW grant handler → storage) in real Chromium.**
 - [x] README screenshots — captured automatically by `e2e/screenshots.spec.ts`, referenced in the README
 - [x] Chrome Web Store ZIP packaging script (`npm run package`)
 - [x] Marketing website (separate repo `Jeremyliu-621/leetlock-site`, Next.js static export)

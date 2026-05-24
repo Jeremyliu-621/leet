@@ -29,6 +29,10 @@ in `test/sw-reconcile.test.ts`.
 - `e2e/extension.spec.ts` — SW registers, popup / options / challenge mount.
 - `e2e/block-flow.spec.ts` — **the real gate**: setting a block rule + visiting the host
   redirects to the challenge page; setting an unlock token bypasses the gate.
+- `e2e/solve-flow.spec.ts` — **the full vertical slice**: injects the matching reference
+  solution into the editor, clicks Submit, and verifies the service worker writes an unlock
+  token for the target domain. Exercises bank → judge → sandbox Worker → SW grant handler →
+  storage in a real browser.
 - `e2e/screenshots.spec.ts` — captures the four extension surfaces into `docs/screenshots/`.
 
 ## 3. Manual end-to-end (real Chrome)
