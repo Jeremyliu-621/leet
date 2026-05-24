@@ -23,6 +23,11 @@ export default defineConfig({
     target: 'esnext',
     sourcemap: true,
     emptyOutDir: true,
+    // The challenge page bundles CodeMirror, the full problem bank, Pyodide
+    // warm-up code, and syntax-highlight grammars. 1 MB+ is expected for a
+    // bundled Chrome extension (local, not over-the-wire). Raise the
+    // warning threshold so CI/build output stays noise-free.
+    chunkSizeWarningLimit: 1500,
     rollupOptions: {
       input: {
         challenge: resolve(root, 'src/pages/challenge/index.html'),
