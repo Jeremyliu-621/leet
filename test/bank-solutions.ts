@@ -1339,4 +1339,171 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
+  // ---------------------------------------------------------------------------
+  // Hard-difficulty problems
+  // ---------------------------------------------------------------------------
+
+  'first-missing-positive': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice();
+    const n = nums.length;
+    for (let i = 0; i < n; i++) {
+      while ((nums[i] as number) >= 1 && (nums[i] as number) <= n && nums[(nums[i] as number) - 1] !== nums[i]) {
+        const idx = (nums[i] as number) - 1;
+        const tmp = nums[idx] as number;
+        nums[idx] = nums[i] as number;
+        nums[i] = tmp;
+      }
+    }
+    for (let i = 0; i < n; i++) {
+      if (nums[i] !== i + 1) return i + 1;
+    }
+    return n + 1;
+  },
+
+  'jump-game-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let jumps = 0, curEnd = 0, farthest = 0;
+    for (let i = 0; i < nums.length - 1; i++) {
+      farthest = Math.max(farthest, i + (nums[i] as number));
+      if (i === curEnd) { jumps++; curEnd = farthest; }
+    }
+    return jumps;
+  },
+
+  'largest-rectangle-histogram': (...args: unknown[]) => {
+    const heights = args[0] as number[];
+    const stack: number[] = [];
+    let maxArea = 0;
+    const h = [...heights, 0];
+    for (let i = 0; i < h.length; i++) {
+      while (stack.length && (h[stack[stack.length - 1] as number] as number) > (h[i] as number)) {
+        const height = h[stack.pop() as number] as number;
+        const width = stack.length === 0 ? i : i - (stack[stack.length - 1] as number) - 1;
+        maxArea = Math.max(maxArea, height * width);
+      }
+      stack.push(i);
+    }
+    return maxArea;
+  },
+
+  'sliding-window-maximum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const deque: number[] = [];
+    const result: number[] = [];
+    for (let i = 0; i < nums.length; i++) {
+      while (deque.length && (deque[0] as number) < i - k + 1) deque.shift();
+      while (deque.length && (nums[deque[deque.length - 1] as number] as number) < (nums[i] as number)) deque.pop();
+      deque.push(i);
+      if (i >= k - 1) result.push(nums[deque[0] as number] as number);
+    }
+    return result;
+  },
+
+  'largest-number': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const strs = nums.map(String);
+    strs.sort((a, b) => (b + a) > (a + b) ? 1 : -1);
+    if (strs[0] === '0') return '0';
+    return strs.join('');
+  },
+
+  'longest-increasing-subsequence': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const tails: number[] = [];
+    for (const n of nums) {
+      let lo = 0, hi = tails.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if ((tails[mid] as number) < n) lo = mid + 1;
+        else hi = mid;
+      }
+      tails[lo] = n;
+    }
+    return tails.length;
+  },
+
+  'minimum-window-substring': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const t = args[1] as string;
+    const need = new Map<string, number>();
+    for (const c of t) need.set(c, (need.get(c) ?? 0) + 1);
+    let have = 0;
+    const required = need.size;
+    const window = new Map<string, number>();
+    let left = 0, minLen = Infinity, minLeft = 0;
+    for (let right = 0; right < s.length; right++) {
+      const c = s.charAt(right);
+      window.set(c, (window.get(c) ?? 0) + 1);
+      if (need.has(c) && window.get(c) === need.get(c)) have++;
+      while (have === required) {
+        if (right - left + 1 < minLen) { minLen = right - left + 1; minLeft = left; }
+        const lc = s.charAt(left);
+        window.set(lc, (window.get(lc) ?? 0) - 1);
+        if (need.has(lc) && (window.get(lc) ?? 0) < (need.get(lc) ?? 0)) have--;
+        left++;
+      }
+    }
+    return minLen === Infinity ? '' : s.slice(minLeft, minLeft + minLen);
+  },
+
+  'longest-valid-parentheses': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const stack: number[] = [-1];
+    let maxLen = 0;
+    for (let i = 0; i < s.length; i++) {
+      if (s.charAt(i) === '(') {
+        stack.push(i);
+      } else {
+        stack.pop();
+        if (stack.length === 0) {
+          stack.push(i);
+        } else {
+          maxLen = Math.max(maxLen, i - (stack[stack.length - 1] as number));
+        }
+      }
+    }
+    return maxLen;
+  },
+
+  'edit-distance': (...args: unknown[]) => {
+    const word1 = args[0] as string;
+    const word2 = args[1] as string;
+    const m = word1.length, n = word2.length;
+    const dp = Array.from({ length: m + 1 }, (_, i) =>
+      Array.from({ length: n + 1 }, (_, j) => (i === 0 ? j : j === 0 ? i : 0)),
+    );
+    for (let i = 1; i <= m; i++) {
+      for (let j = 1; j <= n; j++) {
+        if (word1.charAt(i - 1) === word2.charAt(j - 1)) {
+          (dp[i] as number[])[j] = (dp[i - 1] as number[])[j - 1] as number;
+        } else {
+          (dp[i] as number[])[j] = 1 + Math.min(
+            (dp[i - 1] as number[])[j] as number,
+            (dp[i] as number[])[j - 1] as number,
+            (dp[i - 1] as number[])[j - 1] as number,
+          );
+        }
+      }
+    }
+    return (dp[m] as number[])[n] as number;
+  },
+
+  'word-break': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const wordDict = args[1] as string[];
+    const wordSet = new Set(wordDict);
+    const dp = new Array<boolean>(s.length + 1).fill(false);
+    dp[0] = true;
+    for (let i = 1; i <= s.length; i++) {
+      for (let j = 0; j < i; j++) {
+        if (dp[j] && wordSet.has(s.slice(j, i))) {
+          dp[i] = true;
+          break;
+        }
+      }
+    }
+    return dp[s.length] as boolean;
+  },
+
 };

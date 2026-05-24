@@ -958,4 +958,154 @@ export const pythonSolutions: Record<string, string> = {
         cur = digit_square_sum(cur)
     return True
 `,
+
+  'first-missing-positive': `def firstMissingPositive(nums):
+    n = len(nums)
+    i = 0
+    while i < n:
+        j = nums[i] - 1
+        if 1 <= nums[i] <= n and nums[i] != nums[j]:
+            nums[i], nums[j] = nums[j], nums[i]
+        else:
+            i += 1
+    for i in range(n):
+        if nums[i] != i + 1:
+            return i + 1
+    return n + 1
+`,
+
+  'jump-game-ii': `def minJumps(nums):
+    jumps = 0
+    cur_end = 0
+    farthest = 0
+    for i in range(len(nums) - 1):
+        farthest = max(farthest, i + nums[i])
+        if i == cur_end:
+            jumps += 1
+            cur_end = farthest
+    return jumps
+`,
+
+  'largest-rectangle-histogram': `def largestRectangleArea(heights):
+    stack = []
+    max_area = 0
+    h = heights + [0]
+    for i, height in enumerate(h):
+        while stack and h[stack[-1]] > height:
+            ht = h[stack.pop()]
+            width = i if not stack else i - stack[-1] - 1
+            max_area = max(max_area, ht * width)
+        stack.append(i)
+    return max_area
+`,
+
+  'sliding-window-maximum': `def maxSlidingWindow(nums, k):
+    from collections import deque
+    dq = deque()
+    result = []
+    for i, val in enumerate(nums):
+        while dq and dq[0] < i - k + 1:
+            dq.popleft()
+        while dq and nums[dq[-1]] < val:
+            dq.pop()
+        dq.append(i)
+        if i >= k - 1:
+            result.append(nums[dq[0]])
+    return result
+`,
+
+  'largest-number': `def largestNumber(nums):
+    from functools import cmp_to_key
+    strs = list(map(str, nums))
+    def compare(a, b):
+        if a + b > b + a:
+            return -1
+        elif a + b < b + a:
+            return 1
+        return 0
+    strs.sort(key=cmp_to_key(compare))
+    if strs[0] == '0':
+        return '0'
+    return ''.join(strs)
+`,
+
+  'longest-increasing-subsequence': `def lengthOfLIS(nums):
+    import bisect
+    tails = []
+    for n in nums:
+        pos = bisect.bisect_left(tails, n)
+        if pos == len(tails):
+            tails.append(n)
+        else:
+            tails[pos] = n
+    return len(tails)
+`,
+
+  'minimum-window-substring': `def minWindow(s, t):
+    from collections import Counter
+    need = Counter(t)
+    have = 0
+    required = len(need)
+    window = {}
+    left = 0
+    min_len = float('inf')
+    min_left = 0
+    for right, c in enumerate(s):
+        window[c] = window.get(c, 0) + 1
+        if c in need and window[c] == need[c]:
+            have += 1
+        while have == required:
+            if right - left + 1 < min_len:
+                min_len = right - left + 1
+                min_left = left
+            lc = s[left]
+            window[lc] -= 1
+            if lc in need and window[lc] < need[lc]:
+                have -= 1
+            left += 1
+    return '' if min_len == float('inf') else s[min_left:min_left + min_len]
+`,
+
+  'longest-valid-parentheses': `def longestValidParentheses(s):
+    stack = [-1]
+    max_len = 0
+    for i, c in enumerate(s):
+        if c == '(':
+            stack.append(i)
+        else:
+            stack.pop()
+            if not stack:
+                stack.append(i)
+            else:
+                max_len = max(max_len, i - stack[-1])
+    return max_len
+`,
+
+  'edit-distance': `def editDistance(word1, word2):
+    m, n = len(word1), len(word2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(m + 1):
+        dp[i][0] = i
+    for j in range(n + 1):
+        dp[0][j] = j
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if word1[i-1] == word2[j-1]:
+                dp[i][j] = dp[i-1][j-1]
+            else:
+                dp[i][j] = 1 + min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1])
+    return dp[m][n]
+`,
+
+  'word-break': `def wordBreak(s, wordDict):
+    word_set = set(wordDict)
+    dp = [False] * (len(s) + 1)
+    dp[0] = True
+    for i in range(1, len(s) + 1):
+        for j in range(i):
+            if dp[j] and s[j:i] in word_set:
+                dp[i] = True
+                break
+    return dp[len(s)]
+`,
 };

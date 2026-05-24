@@ -23,7 +23,9 @@ describe('problem selector', () => {
     const easy = filterProblems({ difficulties: ['easy'] });
     expect(easy.length).toBeGreaterThan(0);
     expect(easy.every((p) => p.difficulty === 'easy')).toBe(true);
-    expect(filterProblems({ difficulties: ['hard'] })).toHaveLength(0);
+    const hard = filterProblems({ difficulties: ['hard'] });
+    expect(hard.length).toBeGreaterThan(0);
+    expect(hard.every((p) => p.difficulty === 'hard')).toBe(true);
   });
 
   it('filters by tag', () => {
@@ -52,8 +54,14 @@ describe('problem selector', () => {
     expect(last).toBe(matches[matches.length - 1]);
   });
 
-  it('returns undefined when nothing matches', () => {
-    expect(selectProblem({ difficulties: ['hard'] })).toBeUndefined();
+  it('returns undefined when nothing in the bank matches the filter', () => {
+    // No problem uses a hypothetical 'insane' difficulty level
+    // (Difficulty type only has easy | medium | hard, so we test a tag combo
+    // that guarantees zero matches — e.g., hard+math when no hard math exists)
+    expect(selectProblem({ difficulties: ['easy'], tags: ['stack'], excludeIds: [
+      'balanced-brackets', 'remove-adjacent-dupes', 'next-greater-element',
+      'daily-temperatures', 'evaluate-rpn',
+    ] })).toBeUndefined();
   });
 
   it('always picks a challenge problem, relaxing the filter as needed', () => {

@@ -110,6 +110,19 @@ import { problem as powXN } from './pow-x-n';
 import { problem as reverseInteger } from './reverse-integer';
 import { problem as happyNumber } from './happy-number';
 
+// arrays — hard
+import { problem as firstMissingPositive } from './first-missing-positive';
+import { problem as jumpGameII } from './jump-game-ii';
+import { problem as largestRectangleHistogram } from './largest-rectangle-histogram';
+import { problem as slidingWindowMaximum } from './sliding-window-maximum';
+import { problem as largestNumber } from './largest-number';
+import { problem as longestIncreasingSubsequence } from './longest-increasing-subsequence';
+// strings — hard
+import { problem as minimumWindowSubstring } from './minimum-window-substring';
+import { problem as longestValidParentheses } from './longest-valid-parentheses';
+import { problem as editDistance } from './edit-distance';
+import { problem as wordBreak } from './word-break';
+
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -213,4 +226,16 @@ export const problems: readonly Problem[] = [
   powXN,
   reverseInteger,
   happyNumber,
+  // arrays — hard
+  firstMissingPositive,
+  jumpGameII,
+  largestRectangleHistogram,
+  slidingWindowMaximum,
+  largestNumber,
+  longestIncreasingSubsequence,
+  // strings — hard
+  minimumWindowSubstring,
+  longestValidParentheses,
+  editDistance,
+  wordBreak,
 ];
