@@ -34,6 +34,8 @@ in `test/sw-reconcile.test.ts`.
   token for the target domain. Exercises bank → judge → sandbox Worker → SW grant handler →
   storage in a real browser.
 - `e2e/screenshots.spec.ts` — captures the four extension surfaces into `docs/screenshots/`.
+- `e2e/a11y.spec.ts` — axe-core audit on each surface; fails on critical WCAG violations,
+  logs serious/moderate/minor as baseline for the next polish pass.
 
 ## 3. Manual end-to-end (real Chrome)
 

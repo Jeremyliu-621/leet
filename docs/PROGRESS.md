@@ -136,7 +136,7 @@ iterate on the marketing site (separate repo `Jeremyliu-621/leetlock-site` alrea
 
 ## Phase 12 — Polish, tests, CI 🟡
 
-- [ ] Accessibility pass (focus, keyboard, contrast, ARIA) — sweep beyond what individual sections already do
+- [x] Accessibility baseline — axe-core/playwright integration in `e2e/a11y.spec.ts` audits all 4 surfaces; passes (no critical violations). Known logged findings for next polish pass: color-contrast on `text-faint` microlabels across all surfaces (design-system tradeoff), and one `aria-prohibited-attr` on the challenge page.
 - [ ] Edge-case sweep across all `src/lib` modules
 - [x] Integration tests for core flows — `reconcile()` extracted, fake-chrome covers DNR + alarms + runtime, 18 SW integration tests in `test/sw-reconcile.test.ts`
 - [x] GitHub Actions CI: typecheck + test + build (artifacts uploaded for 14 days)
