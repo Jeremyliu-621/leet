@@ -240,8 +240,22 @@ export function Challenge() {
           ? problem.starterCode.python
           : problem.starterCode.javascript;
 
-      setLanguage(initialLanguage);
-      setCode(initialStarter);
+      // Restore any in-progress draft from a previous session.
+      let restoreLanguage = initialLanguage;
+      let restoreCode = initialStarter;
+      try {
+        const drafts = await getValue('draftCode');
+        const draft = drafts[problem.id];
+        if (draft && draft.code !== initialStarter) {
+          restoreLanguage = draft.language;
+          restoreCode = draft.code;
+        }
+      } catch {
+        /* storage unavailable — proceed with fresh starter */
+      }
+
+      setLanguage(restoreLanguage);
+      setCode(restoreCode);
       setSecondsLeft(prefs.challengeTimeLimitSec);
       setPanelPct(prefs.problemPanelWidthPct);
       setPageState({ status: 'ready', problem, prefs });
@@ -422,6 +436,15 @@ export function Challenge() {
       if (result.outcome === 'accepted') {
         // About to navigate back to the target — suppress the beforeunload prompt.
         isResolvingRef.current = true;
+        // Clear the saved draft — problem is solved.
+        try {
+          await updateValue('draftCode', (drafts) => {
+            const { [problem.id]: _, ...rest } = drafts;
+            return rest;
+          });
+        } catch {
+          /* storage unavailable */
+        }
         // Notify service worker → grant unlock token.
         try {
           await chrome.runtime.sendMessage({
@@ -520,6 +543,38 @@ export function Challenge() {
     if (pageState.status !== 'ready') return;
     await handleFail('gave-up', pageState.prefs);
   }, [pageState, handleFail]);
+
+  // -------------------------------------------------------------------------
+  // Draft code auto-save (800 ms debounce; prunes entries older than 7 days)
+  // -------------------------------------------------------------------------
+
+  useEffect(() => {
+    if (pageState.status !== 'ready') return;
+    const { problem } = pageState;
+    const starter =
+      language === 'python' && problem.starterCode.python
+        ? problem.starterCode.python
+        : problem.starterCode.javascript;
+    // Don't persist the unmodified starter — nothing to restore.
+    if (code === starter) return;
+
+    const id = setTimeout(() => {
+      void (async () => {
+        try {
+          await updateValue('draftCode', (drafts) => {
+            const cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
+            const pruned = Object.fromEntries(
+              Object.entries(drafts).filter(([, e]) => e.savedAt >= cutoff),
+            );
+            return { ...pruned, [problem.id]: { code, language, savedAt: Date.now() } };
+          });
+        } catch {
+          /* storage unavailable — draft lost silently */
+        }
+      })();
+    }, 800);
+    return () => clearTimeout(id);
+  }, [code, language, pageState]);
 
   // -------------------------------------------------------------------------
   // Custom test handler
