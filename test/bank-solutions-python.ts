@@ -220,4 +220,55 @@ export const pythonSolutions: Record<string, string> = {
         i += 2
     return True
 `,
+  'max-subarray': `def maxSubarraySum(nums):
+    cur = nums[0]
+    best = cur
+    for n in nums[1:]:
+        cur = max(n, cur + n)
+        best = max(best, cur)
+    return best
+`,
+  'anagram-check': `def areAnagrams(s, t):
+    if len(s) != len(t):
+        return False
+    from collections import Counter
+    return Counter(s) == Counter(t)
+`,
+  'move-zeros': `def moveZeros(nums):
+    non_zero = [n for n in nums if n != 0]
+    return non_zero + [0] * (len(nums) - len(non_zero))
+`,
+  'compress-string': `def compressString(s):
+    if not s:
+        return ''
+    out = []
+    i = 0
+    while i < len(s):
+        j = i
+        while j < len(s) and s[j] == s[i]:
+            j += 1
+        out.append(s[i] + str(j - i))
+        i = j
+    return ''.join(out)
+`,
+  'longest-unique-window': `def longestUniqueWindow(s):
+    seen = {}
+    left = 0
+    best = 0
+    for right, ch in enumerate(s):
+        if ch in seen and seen[ch] >= left:
+            left = seen[ch] + 1
+        seen[ch] = right
+        best = max(best, right - left + 1)
+    return best
+`,
+  'count-divisors': `def countDivisors(n):
+    count = 0
+    d = 1
+    while d * d <= n:
+        if n % d == 0:
+            count += 1 if d * d == n else 2
+        d += 1
+    return count
+`,
 };

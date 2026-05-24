@@ -329,4 +329,78 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return a;
   },
+
+  // --- new problems --------------------------------------------------------
+  'max-subarray': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let cur = nums[0] as number;
+    let best = cur;
+    for (let i = 1; i < nums.length; i++) {
+      const n = nums[i] as number;
+      cur = Math.max(n, cur + n);
+      if (cur > best) best = cur;
+    }
+    return best;
+  },
+
+  'anagram-check': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const t = args[1] as string;
+    if (s.length !== t.length) return false;
+    const freq = new Map<string, number>();
+    for (const ch of s) freq.set(ch, (freq.get(ch) ?? 0) + 1);
+    for (const ch of t) {
+      const c = freq.get(ch);
+      if (!c) return false;
+      freq.set(ch, c - 1);
+    }
+    return true;
+  },
+
+  'move-zeros': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const out: number[] = nums.filter((n) => n !== 0);
+    while (out.length < nums.length) out.push(0);
+    return out;
+  },
+
+  'compress-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let out = '';
+    let i = 0;
+    while (i < s.length) {
+      let j = i;
+      while (j < s.length && s[j] === s[i]) j++;
+      out += s[i] + String(j - i);
+      i = j;
+    }
+    return out;
+  },
+
+  'longest-unique-window': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const seen = new Set<string>();
+    let left = 0;
+    let best = 0;
+    for (let right = 0; right < s.length; right++) {
+      while (seen.has(s[right] as string)) {
+        seen.delete(s[left] as string);
+        left++;
+      }
+      seen.add(s[right] as string);
+      if (right - left + 1 > best) best = right - left + 1;
+    }
+    return best;
+  },
+
+  'count-divisors': (...args: unknown[]) => {
+    const n = args[0] as number;
+    let count = 0;
+    for (let d = 1; d * d <= n; d++) {
+      if (n % d === 0) {
+        count += d * d === n ? 1 : 2;
+      }
+    }
+    return count;
+  },
 };
