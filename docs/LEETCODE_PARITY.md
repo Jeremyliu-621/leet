@@ -70,7 +70,7 @@ honest, frictionless gate that *feels* like LeetCode when you hit it.
 | Similar problems list                    | "Similar Questions" card with links                                                                 | None                                        |   ❌   |    L     | Could become a "next problem" suggestion on the post-solve screen.                                                        |
 | Solution tab (editorial)                 | Tab with paid+free editorial walkthrough                                                            | None                                        |   🚫   |    —     | Out-of-scope. We *should not* show solutions — undermines the gate.                                                       |
 | Discussion tab                           | Community discussion thread                                                                         | None                                        |   🚫   |    —     | Out-of-scope. Don't ship.                                                                                                 |
-| Submissions tab                          | Past submissions for *this* problem                                                                 | Per-session submission history table (collapsible SubmissionsPanel below editor) | 🟡 | L | Resets on page reload — would need persistent per-problem history to be full parity.                                     |
+| Submissions tab                          | Past submissions for *this* problem                                                                 | Per-session submission history table (collapsible SubmissionsPanel below editor) | ✅ | — | Persisted per-problem in `chrome.storage.local` under `submissionHistory`; cleared on acceptance.                        |
 
 ---
 
@@ -86,8 +86,8 @@ honest, frictionless gate that *feels* like LeetCode when you hit it.
 | Console.log output                       | Captured + shown in result panel                                                                    | Captured + shown beneath the failing test   |   ✅   |    —     |                                                                                                                          |
 | Runtime stat                             | "Runtime: 56 ms" + percentile beat                                                                  | Per-test `durationMs` shown; `totalDurationMs` in accepted banner | 🟡 | L | We show timing. Percentile is impossible without a backend.                                                              |
 | Memory stat                              | "Memory: 41.2 MB" + percentile beat                                                                 | None                                        |   ❌   |    L     | `performance.memory` is Chrome-only & gated; usually noisy. Skip.                                                         |
-| "Last submitted at" timestamp            | Yes                                                                                                 | Shown in per-session SubmissionsPanel       |   🟡   |    L     | Per-session only; doesn't persist across page loads.                                                                      |
-| Submission-history accordion             | Yes, under Submissions tab                                                                          | SubmissionsPanel — collapsible table below the verdict region | 🟡 | L | Per-session only. Full persistence would require `chrome.storage` history.                                               |
+| "Last submitted at" timestamp            | Yes                                                                                                 | Shown in SubmissionsPanel (persisted)       |   ✅   |    —     | Timestamp stored in `submissionHistory`; survives page reloads.                                                          |
+| Submission-history accordion             | Yes, under Submissions tab                                                                          | SubmissionsPanel — collapsible table below the verdict region | ✅ | — | Persisted to `chrome.storage.local`; loaded on mount.                                                                    |
 | Verdict states                           | Accepted / Wrong Answer / Runtime Error / TLE / Compile Error / Memory Limit Exceeded               | Accepted / Wrong Answer / Runtime Error / Compile Error / **Timeout (TLE)** | ✅ | — | LeetLock has every state that matters for our worker-based judge.                                                         |
 | Accept banner ("All test cases passed!") | Green banner + confetti                                                                             | Grayscale "accepted" banner                 |   ✅   |    —     | LeetLock omits confetti by design — solving is the reward, not the celebration.                                            |
 | Time-limit-exceeded handling             | Server-side TLE                                                                                     | `worker.terminate()` + `timeout` outcome    |   ✅   |    —     | LeetLock's hard 4s/6s timeout is honest and visible.                                                                      |
@@ -169,16 +169,14 @@ These are quotable, screenshot-able wins. Put them on the marketing page.
 
 Ordered by `(visible impact) × (1 / implementation cost)`:
 
-1. **Persistent submission history** — current SubmissionsPanel is per-session only;
-   storing it in `chrome.storage.local` would survive page reloads.
-2. **Per-test input in verdict panel** — showing the input that triggered a wrong
-   answer is the key debugging aid. Requires threading `test.args` through to
-   `TestVerdict`. (Targeted for next polish pass.)
-3. **Syntax highlighting in description code blocks** — minor cosmetic gap for problems
-   that include fenced code examples.
-4. **Browser-zoom QA** — quick check at 150% and 200% before 1.0.
-5. **Emacs keymap** — niche, low priority.
-6. Everything else below this (runtime/memory percentiles, image support,
+1. **Recover last submitted code** — LeetCode lets you restore the exact code you last
+   submitted (useful after Alt-R or overwriting). Now achievable: store `code` in each
+   `SubmissionRecord` and add a "restore" action in SubmissionsPanel.
+2. **Syntax highlighting in description code blocks** — minor cosmetic gap for problems
+   that include fenced code examples in hints. Design tension: grayscale highlight only.
+3. **Browser-zoom QA** — quick check at 150% and 200% before 1.0.
+4. **Emacs keymap** — niche, low priority.
+5. Everything else below this (runtime/memory percentiles, image support,
    LaTeX rendering) is post-1.0 and should be considered against actual
    user feedback rather than blind parity chasing.
 

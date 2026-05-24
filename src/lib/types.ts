@@ -96,6 +96,8 @@ export interface SubmissionRecord {
   totalTests: number;
   /** Total execution time of all test cases in this submission, if measured. */
   durationMs?: number;
+  /** Snapshot of the code that was submitted. Enables "restore" in SubmissionsPanel. */
+  code?: string;
 }
 
 // --- Streaks --------------------------------------------------------------

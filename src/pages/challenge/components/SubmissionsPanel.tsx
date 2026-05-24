@@ -5,6 +5,8 @@ export type { SubmissionRecord };
 
 interface SubmissionsPanelProps {
   submissions: readonly SubmissionRecord[];
+  /** Called when the user clicks "restore" on a submission row. */
+  onRestore?: (code: string) => void;
 }
 
 const OUTCOME_LABEL: Readonly<Record<SubmissionRecord['outcome'], string>> = {
@@ -26,7 +28,7 @@ function formatTime(ms: number): string {
   return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 }
 
-export function SubmissionsPanel({ submissions }: SubmissionsPanelProps) {
+export function SubmissionsPanel({ submissions, onRestore }: SubmissionsPanelProps) {
   const [open, setOpen] = useState(false);
 
   if (submissions.length === 0) return null;
@@ -53,7 +55,8 @@ export function SubmissionsPanel({ submissions }: SubmissionsPanelProps) {
                 <th scope="col" className="pb-1 pr-3 font-normal">Result</th>
                 <th scope="col" className="pb-1 pr-3 font-normal">Tests</th>
                 <th scope="col" className="pb-1 pr-3 font-normal">Time</th>
-                <th scope="col" className="pb-1 font-normal text-right">At</th>
+                <th scope="col" className="pb-1 pr-3 font-normal text-right">At</th>
+                {onRestore && <th scope="col" className="pb-1 font-normal" />}
               </tr>
             </thead>
             <tbody>
@@ -69,7 +72,21 @@ export function SubmissionsPanel({ submissions }: SubmissionsPanelProps) {
                   <td className="py-1 pr-3 text-faint">
                     {s.durationMs !== undefined ? `${s.durationMs} ms` : '—'}
                   </td>
-                  <td className="py-1 text-right text-faint">{formatTime(s.timestamp)}</td>
+                  <td className="py-1 pr-3 text-right text-faint">{formatTime(s.timestamp)}</td>
+                  {onRestore && (
+                    <td className="py-1">
+                      {s.code && (
+                        <button
+                          type="button"
+                          onClick={() => onRestore(s.code!)}
+                          aria-label={`Restore code from attempt ${s.attempt}`}
+                          className="font-mono text-[10px] uppercase tracking-widest text-faint transition-colors hover:text-text focus:outline focus:outline-2 focus:outline-offset-1 focus:outline-accent"
+                        >
+                          restore
+                        </button>
+                      )}
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>

@@ -102,6 +102,20 @@ describe('storage store', () => {
     expect(stored['other-problem']).toBeUndefined();
   });
 
+  it('submissionHistory persists optional code field', async () => {
+    const record = {
+      attempt: 1,
+      timestamp: 1000,
+      outcome: 'wrong-answer' as const,
+      passCount: 0,
+      totalTests: 3,
+      code: 'return null;',
+    };
+    await updateValue('submissionHistory', (h) => ({ ...h, 'two-sum': [record] }));
+    const stored = await getValue('submissionHistory');
+    expect(stored['two-sum']![0].code).toBe('return null;');
+  });
+
   it('submissionHistory can be cleared per problem id on solve', async () => {
     const record = { attempt: 1, timestamp: 1000, outcome: 'wrong-answer' as const, passCount: 1, totalTests: 3 };
     await setValue('submissionHistory', { 'two-sum': [record], 'fizz-buzz': [record] });

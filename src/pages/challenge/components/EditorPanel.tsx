@@ -73,6 +73,12 @@ interface EditorPanelProps {
   onToggleFullscreen?: () => void;
   /** Current resolved theme — controls the CodeMirror colour scheme. */
   resolvedTheme?: 'dark' | 'light';
+  /**
+   * When set, replaces the entire editor content with `content` once. The
+   * `version` counter must change for each new restore request so the effect
+   * re-fires even if the content string happens to be the same.
+   */
+  resetCode?: { content: string; version: number };
 }
 
 const INDENT_SPACES = '  ';
@@ -120,6 +126,7 @@ export function EditorPanel({
   isFullscreen = false,
   onToggleFullscreen,
   resolvedTheme = 'dark',
+  resetCode,
 }: EditorPanelProps) {
   const editorContainerRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
@@ -297,6 +304,18 @@ export function EditorPanel({
       changes: { from: 0, to: view.state.doc.length, insert: starterCode },
     });
   }, [starterCode]);
+
+  // External content restore (e.g. "restore last submitted code").
+  // Fires whenever `version` increments, replacing the full document.
+  useEffect(() => {
+    if (!resetCode) return;
+    const view = viewRef.current;
+    if (!view) return;
+    view.dispatch({
+      changes: { from: 0, to: view.state.doc.length, insert: resetCode.content },
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resetCode?.version]);
 
   // Swap the language extension when `language` changes.
   useEffect(() => {

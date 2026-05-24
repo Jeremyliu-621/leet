@@ -204,6 +204,13 @@ export function Challenge() {
     submissionsRef.current = submissions;
   }, [submissions]);
 
+  // Externally-triggered editor content restore (from SubmissionsPanel "restore" action).
+  // The `version` counter forces the effect to re-fire even for identical code strings.
+  const [resetCode, setResetCode] = useState<{ content: string; version: number } | undefined>();
+  const handleRestoreCode = useCallback((content: string) => {
+    setResetCode((prev) => ({ content, version: (prev?.version ?? 0) + 1 }));
+  }, []);
+
   // Problem panel width as a percentage of the two-column container.
   // Initialised from prefs once `pageState` transitions to 'ready'.
   const [panelPct, setPanelPct] = useState(DEFAULT_PREFERENCES.problemPanelWidthPct);
@@ -465,6 +472,7 @@ export function Challenge() {
         passCount: result.passed,
         totalTests: result.total,
         durationMs: result.totalDurationMs,
+        code,
       };
       const updatedSubmissions = [...submissionsRef.current, newRecord];
       setSubmissions(updatedSubmissions);
@@ -541,6 +549,7 @@ export function Challenge() {
         outcome: 'runtime-error',
         passCount: 0,
         totalTests,
+        code,
       };
       const updatedOnError = [...submissionsRef.current, errorRecord];
       setSubmissions(updatedOnError);
@@ -767,6 +776,7 @@ export function Challenge() {
             isFullscreen={isEditorFullscreen}
             onToggleFullscreen={handleToggleFullscreen}
             resolvedTheme={resolvedTheme}
+            resetCode={resetCode}
           />
           {/* Custom test drawer — collapses below the verdict/action bar */}
           <CustomTestPanel
@@ -775,7 +785,7 @@ export function Challenge() {
             result={customTestResult}
           />
           {/* Submission history — appears after first submit, collapsible */}
-          <SubmissionsPanel submissions={submissions} />
+          <SubmissionsPanel submissions={submissions} onRestore={handleRestoreCode} />
         </div>
       </main>
     </div>
