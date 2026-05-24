@@ -155,6 +155,9 @@ export interface UserPreferences {
   settingsCooldownMs: number;
   /** Whether the "give up" action is available (always false in strict mode). */
   allowGiveUp: boolean;
-  /** Dark-only for the MVP. */
-  theme: 'dark';
+  /** Active UI theme. `'system'` follows the OS preference. */
+  theme: ThemePreference;
 }
+
+/** Theme options exposed in the UI. */
+export type ThemePreference = 'dark' | 'light' | 'system';

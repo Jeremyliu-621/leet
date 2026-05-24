@@ -2,9 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Pure-grayscale design tokens, also exposed as CSS variables for contexts
-   that are not Tailwind-styled (e.g. the CodeMirror editor theme). */
-:root {
+/* Grayscale design tokens. Both themes are zero-hue; emphasis comes from
+   contrast and typographic weight, never colour. The active theme is selected
+   via the `data-theme` attribute on the root element. `:root` carries the
+   dark defaults so a missing attribute still renders consistently. */
+:root,
+:root[data-theme='dark'] {
   color-scheme: dark;
   --ll-bg: #0a0a0a;
   --ll-surface: #161616;
@@ -15,6 +18,21 @@
   --ll-muted: #8a8a8a;
   --ll-faint: #5a5a5a;
   --ll-accent: #ffffff;
+  --ll-on-accent: #0a0a0a;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --ll-bg: #ffffff;
+  --ll-surface: #f7f7f7;
+  --ll-surface-2: #efefef;
+  --ll-border: #e3e3e3;
+  --ll-border-strong: #c8c8c8;
+  --ll-text: #0a0a0a;
+  --ll-muted: #555555;
+  --ll-faint: #888888;
+  --ll-accent: #0a0a0a;
+  --ll-on-accent: #ffffff;
 }
 
 html,
@@ -37,6 +55,6 @@ body {
 }
 
 ::selection {
-  background: #ffffff;
-  color: #0a0a0a;
+  background: var(--ll-accent);
+  color: var(--ll-on-accent);
 }

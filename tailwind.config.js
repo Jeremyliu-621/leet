@@ -3,19 +3,22 @@ export default {
   content: ['./src/**/*.{ts,tsx,html}'],
   theme: {
     extend: {
-      // Pure-grayscale design system — zero hue. Emphasis is carried by
-      // contrast and typographic weight, never color.
+      // Grayscale design tokens — values come from CSS variables so the theme
+      // (`[data-theme="light"]` / `[data-theme="dark"]`) can flip at runtime
+      // without rebuilding the bundle. Both themes are pure grayscale, zero
+      // hue. Default-document attribute is set in `src/ui/mount.tsx` before
+      // React renders.
       colors: {
-        bg: '#0A0A0A',
-        surface: '#161616',
-        'surface-2': '#1E1E1E',
-        border: '#262626',
-        'border-strong': '#383838',
-        text: '#EDEDED',
-        muted: '#8A8A8A',
-        faint: '#5A5A5A',
-        accent: '#FFFFFF',
-        'on-accent': '#0A0A0A',
+        bg: 'var(--ll-bg)',
+        surface: 'var(--ll-surface)',
+        'surface-2': 'var(--ll-surface-2)',
+        border: 'var(--ll-border)',
+        'border-strong': 'var(--ll-border-strong)',
+        text: 'var(--ll-text)',
+        muted: 'var(--ll-muted)',
+        faint: 'var(--ll-faint)',
+        accent: 'var(--ll-accent)',
+        'on-accent': 'var(--ll-on-accent)',
       },
       fontFamily: {
         sans: ['ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
