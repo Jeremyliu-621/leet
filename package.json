@@ -23,7 +23,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "format": "prettier --write .",
-    "icons": "node scripts/generate-icons.mjs"
+    "icons": "node scripts/generate-icons.mjs",
+    "package": "node scripts/package.mjs"
   },
   "dependencies": {
     "@codemirror/lang-javascript": "^6.2.5",
@@ -37,11 +38,13 @@
   "devDependencies": {
     "@crxjs/vite-plugin": "^2.4.0",
     "@resvg/resvg-js": "^2.6.2",
+    "@types/adm-zip": "^0.5.8",
     "@types/chrome": "^0.1.42",
     "@types/node": "^25.9.1",
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.2.0",
+    "adm-zip": "^0.5.17",
     "autoprefixer": "^10.5.0",
     "postcss": "^8.5.15",
     "prettier": "^3.8.3",
