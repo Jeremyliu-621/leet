@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 344 problems (heap tag added); build-array + truncate-sentence + largest-perimeter + to-lower-case + check-two-string-arrays + sum-of-unique added; 1303 tests.
+**Current focus:** Bank at 348 problems; build-array + truncate-sentence + largest-perimeter-triangle + to-lower-case + sum-of-unique + missing-number + lucky-numbers added; 1312 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing bank toward 350; more heap problems; UI/UX polish.
+**Next up:** Continue growing bank toward 360+; more medium/hard problems across all tags; UI/UX polish.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -268,18 +268,13 @@ Still pending:
 - [x] 6 new problems: accounts-merge (graph/medium), next-greater-element-ii (stack/medium), minimum-size-subarray-sum (sliding-window/medium), decode-ways-ii (dp/hard), queue-reconstruction-by-height (arrays/medium), find-k-pairs-smallest-sums (binary-search/medium); bank at 307; 1171+ tests
 - [x] **300-problem milestone** — missing-ranges (arrays/easy) + excel-sheet-column-title (math/easy) + longest-palindrome-build (strings/easy); bank at 301; 1174 tests
 - [x] reverse-linked-list-ii (linked-list/medium) + rotate-list (linked-list/medium) + number-of-1-bits (math/easy) + single-number-ii (math/medium); bank at 309; 1198 tests
-<<<<<<< HEAD
-- [x] simplify-path (stack/medium) + add-binary (math+strings/easy) + search-2d-matrix-ii (binary-search+arrays/medium) + remove-linked-list-elements (linked-list/easy); bank at 325; 1246 tests
-<<<<<<< HEAD
-- [x] detect-capital (strings/easy) + repeated-substring-pattern (strings/easy) + find-pivot-index (arrays/easy) + valid-anagram (hash-map/easy) + path-crossing (hash-map/easy); bank at 330; 1273 tests
-- [x] **heap tag** added as 14th ProblemTag; 5 existing problems re-tagged (kth-largest-element, k-closest-points, merge-k-sorted-lists, top-k-frequent-elements, nth-ugly-number); 4 new heap problems: last-stone-weight (easy), meeting-rooms-ii (medium), kth-largest-in-stream (medium), median-from-data-stream (hard); find-k-pairs-smallest-sums retag → heap+binary-search; bank at 334; 1273 tests
-=======
-=======
-- [x] pascals-triangle (arrays/easy) + single-number-ii + reverse-only-letters + backspace-string-compare + number-of-steps + richest-customer-wealth + maximum-units-on-truck + find-the-difference + goal-parser + shuffle-the-array + count-items-matching-rule; bank at 321; 1234 tests
-- [x] valid-anagram + defanging-ip-address + kids-with-candies + monotonic-array + add-binary + word-pattern; bank at 327; 1252 tests
-- [x] build-array-from-permutation + truncate-sentence + largest-perimeter-triangle + to-lower-case + check-if-two-string-arrays-equivalent + sum-of-unique-elements; bank at 344; 1303 tests
->>>>>>> b0c66ec (feat: add valid-anagram, defanging-ip-address, kids-with-candies, monotonic-array, add-binary, word-pattern)
->>>>>>> c399992 (feat: add valid-anagram, defanging-ip-address, kids-with-candies, monotonic-array, add-binary, word-pattern)
+- [x] pascals-triangle (arrays/easy) + reverse-only-letters + backspace-string-compare + number-of-steps + richest-customer-wealth + maximum-units-on-truck + find-the-difference + goal-parser + shuffle-the-array + count-items-matching-rule; bank at 319; 1220 tests
+- [x] simplify-path (stack/medium) + search-2d-matrix-ii (binary-search+arrays/medium) + remove-linked-list-elements (linked-list/easy); bank at 322; 1234 tests
+- [x] valid-anagram + defanging-ip-address + kids-with-candies + monotonic-array + add-binary + word-pattern; bank at 328; 1252 tests
+- [x] detect-capital (strings/easy) + repeated-substring-pattern (strings/easy) + find-pivot-index (arrays/easy) + path-crossing (hash-map/easy); bank at 332; 1265 tests
+- [x] **heap tag** added as 14th ProblemTag; 5 existing problems re-tagged (kth-largest-element, k-closest-points, merge-k-sorted-lists, top-k-frequent-elements, nth-ugly-number); 4 new heap problems: last-stone-weight (easy), kth-largest-in-stream (medium), median-from-data-stream (hard); bank at 335; 1273 tests
+- [x] meeting-rooms-ii (arrays+two-pointers/medium) + h-index (arrays/medium) + integer-to-roman (math+strings/medium) + word-break-ii (dp+backtracking/hard); bank at 342; 1294 tests
+- [x] build-array-from-permutation (arrays/easy) + truncate-sentence (strings/easy) + largest-perimeter-triangle (arrays/easy) + to-lower-case (strings/easy) + sum-of-unique-elements (arrays/easy) + missing-number (math/easy) + lucky-numbers-in-matrix (arrays/easy); bank at 348; 1312 tests
 
 ---
 
