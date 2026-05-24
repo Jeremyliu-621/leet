@@ -3521,15 +3521,66 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     });
   },
 
-  'sum-root-to-leaf-numbers': (...args: unknown[]) => {
+  'house-robber-iii': (...args: unknown[]) => {
     const root = _buildTree(args[0] as (number | null)[]);
-    function dfs(node: _TN | null, cur: number): number {
-      if (!node) return 0;
-      cur = cur * 10 + node.v;
-      if (!node.l && !node.r) return cur;
-      return dfs(node.l, cur) + dfs(node.r, cur);
+    function dp(node: _TN | null): [number, number] {
+      if (!node) return [0, 0];
+      const [ll, ls] = dp(node.l);
+      const [rl, rs] = dp(node.r);
+      const rob = node.v + ls + rs;
+      const skip = Math.max(ll, ls) + Math.max(rl, rs);
+      return [rob, skip];
     }
-    return dfs(root, 0);
+    const [r, s] = dp(root);
+    return Math.max(r, s);
+  },
+
+  'maximum-width-binary-tree': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    if (!root) return 0;
+    let max = 0;
+    let queue: [_TN, bigint][] = [[root, 0n]];
+    while (queue.length) {
+      const leftIdx = queue[0]![1];
+      const next: [_TN, bigint][] = [];
+      let rightIdx = leftIdx;
+      for (const [node, idx] of queue) {
+        rightIdx = idx;
+        const norm = idx - leftIdx;
+        if (node.l) next.push([node.l, 2n * norm]);
+        if (node.r) next.push([node.r, 2n * norm + 1n]);
+      }
+      max = Math.max(max, Number(rightIdx - leftIdx + 1n));
+      queue = next;
+    }
+    return max;
+  },
+
+  'minimum-height-trees': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    if (n === 1) return [0];
+    const deg = new Array<number>(n).fill(0);
+    const adj: Set<number>[] = Array.from({ length: n }, () => new Set<number>());
+    for (const edge of edges) {
+      const [a, b] = edge as [number, number];
+      adj[a]!.add(b); adj[b]!.add(a); deg[a]!++; deg[b]!++;
+    }
+    let leaves: number[] = [];
+    for (let i = 0; i < n; i++) { if (deg[i] === 1) leaves.push(i); }
+    let remaining = n;
+    while (remaining > 2) {
+      remaining -= leaves.length;
+      const next: number[] = [];
+      for (const l of leaves) {
+        for (const nb of adj[l]!) {
+          adj[nb]!.delete(l);
+          if (--deg[nb]! === 1) next.push(nb);
+        }
+      }
+      leaves = next;
+    }
+    return leaves.sort((a, b) => a - b);
   },
 
   'lowest-common-ancestor-binary-tree': (...args: unknown[]) => {

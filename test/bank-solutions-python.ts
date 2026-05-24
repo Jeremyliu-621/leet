@@ -2930,15 +2930,63 @@ def deserialize(data):
     return result
 `,
 
-  'sum-root-to-leaf-numbers': `def sumNumbers(root):
-    def dfs(node, cur):
+  'house-robber-iii': `def rob(root):
+    def dp(node):
         if not node:
-            return 0
-        cur = cur * 10 + node.val
-        if not node.left and not node.right:
-            return cur
-        return dfs(node.left, cur) + dfs(node.right, cur)
-    return dfs(root, 0)
+            return (0, 0)
+        ll, ls = dp(node.left)
+        rl, rs = dp(node.right)
+        return (node.val + ls + rs, max(ll, ls) + max(rl, rs))
+    r, s = dp(root)
+    return max(r, s)
+`,
+
+  'maximum-width-binary-tree': `def widthOfBinaryTree(root):
+    if not root:
+        return 0
+    max_width = 0
+    queue = [(root, 0)]
+    while queue:
+        left_idx = queue[0][1]
+        right_idx = left_idx
+        next_queue = []
+        for node, idx in queue:
+            right_idx = idx
+            norm = idx - left_idx
+            if node.left:
+                next_queue.append((node.left, 2 * norm))
+            if node.right:
+                next_queue.append((node.right, 2 * norm + 1))
+        max_width = max(max_width, right_idx - left_idx + 1)
+        queue = next_queue
+    return max_width
+`,
+
+  'minimum-height-trees': `def findMinHeightTrees(n, edges):
+    if n == 1:
+        return [0]
+    from collections import defaultdict, deque
+    adj = defaultdict(set)
+    deg = [0] * n
+    for a, b in edges:
+        adj[a].add(b)
+        adj[b].add(a)
+        deg[a] += 1
+        deg[b] += 1
+    leaves = deque(i for i in range(n) if deg[i] == 1)
+    remaining = n
+    while remaining > 2:
+        remaining -= len(leaves)
+        next_leaves = deque()
+        for _ in range(len(leaves)):
+            l = leaves.popleft()
+            for nb in adj[l]:
+                adj[nb].discard(l)
+                deg[nb] -= 1
+                if deg[nb] == 1:
+                    next_leaves.append(nb)
+        leaves = next_leaves
+    return sorted(leaves)
 `,
 
   'lowest-common-ancestor-binary-tree': `def lowestCommonAncestor(root, p, q):

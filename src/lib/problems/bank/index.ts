@@ -243,6 +243,7 @@ import { problem as numberOfConnectedComponents } from './number-of-connected-co
 import { problem as redundantConnection } from './redundant-connection';
 import { problem as isGraphBipartite } from './is-graph-bipartite';
 import { problem as allPathsSourceTarget } from './all-paths-source-target';
+import { problem as minimumHeightTrees } from './minimum-height-trees';
 // graph — hard
 import { problem as wordLadder } from './word-ladder';
 
@@ -269,9 +270,10 @@ import { problem as constructBinaryTree } from './construct-binary-tree';
 import { problem as kthSmallestBst } from './kth-smallest-bst';
 import { problem as zigzagLevelOrder } from './zigzag-level-order';
 import { problem as flattenBinaryTree } from './flatten-binary-tree';
-import { problem as sumRootToLeafNumbers } from './sum-root-to-leaf-numbers';
 import { problem as lowestCommonAncestorBinaryTree } from './lowest-common-ancestor-binary-tree';
 import { problem as sumRootToLeaf } from './sum-root-to-leaf';
+import { problem as houseRobberIII } from './house-robber-iii';
+import { problem as maximumWidthBinaryTree } from './maximum-width-binary-tree';
 import { problem as pathSumIII } from './path-sum-iii';
 // tree — hard
 import { problem as binaryTreeMaxPathSum } from './binary-tree-max-path-sum';
@@ -507,6 +509,7 @@ export const problems: readonly Problem[] = [
   redundantConnection,
   isGraphBipartite,
   allPathsSourceTarget,
+  minimumHeightTrees,
   // graph — hard
   wordLadder,
   // tree — easy
@@ -531,10 +534,11 @@ export const problems: readonly Problem[] = [
   kthSmallestBst,
   zigzagLevelOrder,
   flattenBinaryTree,
-  sumRootToLeafNumbers,
   lowestCommonAncestorBinaryTree,
   sumRootToLeaf,
   pathSumIII,
+  houseRobberIII,
+  maximumWidthBinaryTree,
   // tree — hard
   binaryTreeMaxPathSum,
   serializeBinaryTree,
