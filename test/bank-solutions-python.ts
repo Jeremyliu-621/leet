@@ -382,6 +382,28 @@ export const pythonSolutions: Record<string, string> = {
     return result
 `,
 
+  'meeting-rooms-ii': `def minMeetingRooms(intervals):
+    starts = sorted(iv[0] for iv in intervals)
+    ends = sorted(iv[1] for iv in intervals)
+    j, max_rooms = 0, 0
+    for i in range(len(starts)):
+        if starts[i] >= ends[j]:
+            j += 1
+        max_rooms = max(max_rooms, i - j + 1)
+    return max_rooms
+`,
+
+  'h-index': `def hIndex(citations):
+    citations = sorted(citations, reverse=True)
+    h = 0
+    for i, c in enumerate(citations):
+        if c >= i + 1:
+            h = i + 1
+        else:
+            break
+    return h
+`,
+
   'merge-intervals': `def merge(intervals):
     intervals = sorted(intervals, key=lambda x: x[0])
     result = []
@@ -1111,6 +1133,17 @@ export const pythonSolutions: Record<string, string> = {
         i -= 1
         j -= 1
     return result or '0'
+`,
+
+  'integer-to-roman': `def intToRoman(num):
+    table = [(1000,'M'),(900,'CM'),(500,'D'),(400,'CD'),(100,'C'),(90,'XC'),
+             (50,'L'),(40,'XL'),(10,'X'),(9,'IX'),(5,'V'),(4,'IV'),(1,'I')]
+    result = ''
+    for val, sym in table:
+        while num >= val:
+            result += sym
+            num -= val
+    return result
 `,
 
   'task-scheduler': `def leastInterval(tasks, n):
@@ -1956,6 +1989,23 @@ export const pythonSolutions: Record<string, string> = {
     for p in people:
         result.insert(p[1], p)
     return result
+`,
+
+  'word-break-ii': `def wordBreak(s, wordDict):
+    from functools import lru_cache
+    word_set = set(wordDict)
+    @lru_cache(maxsize=None)
+    def bt(start):
+        if start == len(s):
+            return ['']
+        results = []
+        for end in range(start + 1, len(s) + 1):
+            word = s[start:end]
+            if word in word_set:
+                for rest in bt(end):
+                    results.append(word if rest == '' else word + ' ' + rest)
+        return results
+    return sorted(bt(0))
 `,
 
   'decode-ways-ii': `def numDecodings(s):
@@ -4531,19 +4581,6 @@ def deserialize(data):
 `,
 
   // --- heap — medium ---------------------------------------------------------
-  'meeting-rooms-ii': `def minMeetingRooms(intervals):
-    import heapq
-    if not intervals:
-        return 0
-    intervals = sorted(intervals, key=lambda x: x[0])
-    heap = []
-    for start, end in intervals:
-        if heap and heap[0] <= start:
-            heapq.heapreplace(heap, end)
-        else:
-            heapq.heappush(heap, end)
-    return len(heap)
-`,
 
   'kth-largest-in-stream': `def kthLargestRunner(k, nums, adds):
     import heapq

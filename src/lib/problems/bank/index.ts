@@ -21,6 +21,8 @@ import { problem as plusOne } from './plus-one';
 import { problem as kidsWithCandies } from './kids-with-candies';
 import { problem as monotonicArray } from './monotonic-array';
 // arrays — medium
+import { problem as meetingRoomsII } from './meeting-rooms-ii';
+import { problem as hIndex } from './h-index';
 import { problem as mergeIntervals } from './merge-intervals';
 import { problem as nonOverlappingIntervals } from './non-overlapping-intervals';
 import { problem as subsets } from './subsets';
@@ -216,6 +218,7 @@ import { problem as sumOfTwoIntegers } from './sum-of-two-integers';
 import { problem as fractionToRecurringDecimal } from './fraction-to-recurring-decimal';
 import { problem as integerToEnglishWords } from './integer-to-english-words';
 // math — medium
+import { problem as integerToRoman } from './integer-to-roman';
 import { problem as taskScheduler } from './task-scheduler';
 import { problem as countPrimesSieve } from './count-primes-sieve';
 import { problem as powXN } from './pow-x-n';
@@ -285,6 +288,7 @@ import { problem as reverseVowels } from './reverse-vowels';
 import { problem as fizzBuzz } from './fizz-buzz';
 import { problem as luckyNumbersInMatrix } from './lucky-numbers-in-matrix';
 // dynamic-programming — hard
+import { problem as wordBreakII } from './word-break-ii';
 import { problem as decodeWaysII } from './decode-ways-ii';
 import { problem as longestPalindromicSubsequence } from './longest-palindromic-subsequence';
 import { problem as palindromePartitioningMinCuts } from './palindrome-partitioning-min-cuts';
@@ -390,7 +394,6 @@ import { problem as verticalOrderTraversal } from './vertical-order-traversal';
 
 // heap
 import { problem as lastStoneWeight } from './last-stone-weight';
-import { problem as meetingRoomsII } from './meeting-rooms-ii';
 import { problem as kthLargestInStream } from './kth-largest-in-stream';
 import { problem as medianFromDataStream } from './median-from-data-stream';
 
@@ -417,6 +420,8 @@ export const problems: readonly Problem[] = [
   monotonicArray,
   singleNumber,
   // arrays — medium
+  meetingRoomsII,
+  hIndex,
   majorityElementII,
   maximumProductWordLengths,
   insertInterval,
@@ -595,7 +600,6 @@ export const problems: readonly Problem[] = [
   // heap — easy
   lastStoneWeight,
   // heap — medium
-  meetingRoomsII,
   kthLargestInStream,
   // heap — hard
   medianFromDataStream,
@@ -627,6 +631,7 @@ export const problems: readonly Problem[] = [
   fractionToRecurringDecimal,
   integerToEnglishWords,
   // math — medium
+  integerToRoman,
   taskScheduler,
   countPrimesSieve,
   powXN,
@@ -673,6 +678,7 @@ export const problems: readonly Problem[] = [
   longestArithmeticSubsequence,
   minimumCostTickets,
   // dynamic-programming — hard
+  wordBreakII,
   decodeWaysII,
   longestPalindromicSubsequence,
   palindromePartitioningMinCuts,

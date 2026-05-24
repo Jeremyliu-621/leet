@@ -459,6 +459,27 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result.sort((a, b) => { for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return a[i]! - b[i]!; return 0; });
   },
 
+  'meeting-rooms-ii': (...args: unknown[]) => {
+    const intervals = args[0] as number[][];
+    const starts = intervals.map((iv) => iv[0]!).sort((a, b) => a - b);
+    const ends = intervals.map((iv) => iv[1]!).sort((a, b) => a - b);
+    let maxRooms = 0, j = 0;
+    for (let i = 0; i < starts.length; i++) {
+      if (starts[i]! >= ends[j]!) j++;
+      maxRooms = Math.max(maxRooms, i - j + 1);
+    }
+    return maxRooms;
+  },
+
+  'h-index': (...args: unknown[]) => {
+    const citations = [...(args[0] as number[])].sort((a, b) => b - a);
+    let h = 0;
+    for (let i = 0; i < citations.length; i++) {
+      if (citations[i]! >= i + 1) h = i + 1; else break;
+    }
+    return h;
+  },
+
   'merge-intervals': (...args: unknown[]) => {
     const intervals = [...(args[0] as number[][])].sort((a, b) => a[0]! - b[0]!);
     const result: number[][] = [];
@@ -1564,6 +1585,19 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result || '0';
   },
 
+  'integer-to-roman': (...args: unknown[]) => {
+    let num = args[0] as number;
+    const table: [number, string][] = [
+      [1000,'M'],[900,'CM'],[500,'D'],[400,'CD'],[100,'C'],[90,'XC'],
+      [50,'L'],[40,'XL'],[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I'],
+    ];
+    let result = '';
+    for (const [val, sym] of table) {
+      while (num >= val) { result += sym; num -= val; }
+    }
+    return result;
+  },
+
   'task-scheduler': (...args: unknown[]) => {
     const tasks = args[0] as string[];
     const n = args[1] as number;
@@ -2592,6 +2626,28 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   },
 
   // --- dynamic-programming — hard --------------------------------------------
+  'word-break-ii': (...args: unknown[]) => {
+    const s = args[0] as string, wordDict = args[1] as string[];
+    const wordSet = new Set(wordDict);
+    const memo = new Map<number, string[]>();
+    function bt(start: number): string[] {
+      if (memo.has(start)) return memo.get(start)!;
+      if (start === s.length) return [''];
+      const results: string[] = [];
+      for (let end = start + 1; end <= s.length; end++) {
+        const word = s.slice(start, end);
+        if (wordSet.has(word)) {
+          for (const rest of bt(end)) {
+            results.push(rest === '' ? word : word + ' ' + rest);
+          }
+        }
+      }
+      memo.set(start, results);
+      return results;
+    }
+    return bt(0).sort();
+  },
+
   'decode-ways-ii': (...args: unknown[]) => {
     const s = args[0] as string;
     const MOD = 1_000_000_007n;
@@ -5172,21 +5228,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   },
 
   // --- heap — medium ---------------------------------------------------------
-  'meeting-rooms-ii': (...args: unknown[]) => {
-    const intervals = args[0] as number[][];
-    const starts = intervals.map((i) => i[0]!).sort((a, b) => a - b);
-    const ends = intervals.map((i) => i[1]!).sort((a, b) => a - b);
-    let rooms = 0;
-    let endIdx = 0;
-    for (let i = 0; i < starts.length; i++) {
-      if (starts[i]! < ends[endIdx]!) {
-        rooms++;
-      } else {
-        endIdx++;
-      }
-    }
-    return rooms;
-  },
 
   'kth-largest-in-stream': (...args: unknown[]) => {
     const k = args[0] as number;
