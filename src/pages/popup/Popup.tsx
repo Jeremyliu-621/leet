@@ -7,13 +7,18 @@ import { localDateString } from '../../lib/streak';
 import { applyEditorFontSize, applyTheme } from '../../lib/theme';
 import type {
   BlockRule,
+  Difficulty,
   EditorKeymap,
+  ProblemTag,
   SolvedProblemRecord,
   StreakDay,
   StreakSummary,
   ThemePreference,
   UnlockToken,
 } from '../../lib/types';
+import { DIFFICULTIES, PROBLEM_TAGS } from '../../lib/types';
+import { computeSolvedStats } from './popup-helpers';
+import type { SolvedStats } from './popup-helpers';
 
 const KEYMAP_OPTIONS: ReadonlyArray<{ value: EditorKeymap; label: string }> = [
   { value: 'default', label: 'Default' },
@@ -47,6 +52,7 @@ interface PopupData {
   streakHistory: readonly StreakDay[];
   activeUnlocks: UnlockToken[];
   solvedToday: number;
+  solvedStats: SolvedStats;
   currentDomain: string | null;
   alreadyBlocked: boolean;
   blockedDomains: ReadonlySet<string>;
@@ -102,6 +108,7 @@ export function Popup() {
         streakHistory,
         activeUnlocks: pruneTokens(tokens),
         solvedToday,
+        solvedStats: computeSolvedStats(solved),
         currentDomain,
         alreadyBlocked,
         blockedDomains,
@@ -214,6 +221,7 @@ export function Popup() {
       </section>
 
       <StreakHeatmap history={data.streakHistory} />
+      <SolveBreakdown stats={data.solvedStats} />
 
       {data.blockedDomains.size === 0 && (
         <section className="mt-5" aria-label="Quick start">
@@ -431,6 +439,76 @@ function Stat({ label, value, sub }: { label: string; value: number; sub: string
       <p className="mt-1 text-xl font-semibold tracking-tight text-text tabular-nums">{value}</p>
       <p className="mt-0.5 font-mono text-[9px] text-faint">{sub}</p>
     </div>
+  );
+}
+
+/** Compact difficulty + top-tag breakdown for the popup. */
+function SolveBreakdown({ stats }: { stats: SolvedStats }) {
+  if (stats.total === 0) return null;
+
+  // Max count across difficulties — used to size the mini bars.
+  const maxDiff = Math.max(1, ...DIFFICULTIES.map((d) => stats.byDifficulty[d]));
+
+  // Tags the user has actually solved, sorted by count descending, capped at 5.
+  const activeTags: Array<{ tag: ProblemTag; count: number }> = PROBLEM_TAGS.flatMap((tag) => {
+    const count = stats.byTag[tag] ?? 0;
+    return count > 0 ? [{ tag, count }] : [];
+  })
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 5);
+
+  const DIFF_LABEL: Record<Difficulty, string> = { easy: 'Easy', medium: 'Med', hard: 'Hard' };
+
+  return (
+    <section className="mt-4 border-t border-border pt-4" aria-label="Solved problem breakdown">
+      <h2 className="font-mono text-[9px] uppercase tracking-widest text-faint">
+        Breakdown · {stats.total} unique solved
+      </h2>
+
+      {/* Difficulty mini bars */}
+      <div className="mt-2 space-y-1">
+        {DIFFICULTIES.map((d) => {
+          const count = stats.byDifficulty[d];
+          const widthPct = count === 0 ? 0 : Math.max(4, Math.round((count / maxDiff) * 100));
+          return (
+            <div
+              key={d}
+              className="flex items-center gap-2"
+              aria-label={`${DIFF_LABEL[d]}: ${count}`}
+            >
+              <span className="w-7 font-mono text-[9px] text-faint">{DIFF_LABEL[d]}</span>
+              <div className="flex flex-1 items-center gap-1.5">
+                <div className="h-1.5 flex-1 rounded-full bg-surface">
+                  <div
+                    className="h-1.5 rounded-full bg-border-strong transition-all"
+                    style={{ width: `${widthPct}%` }}
+                  />
+                </div>
+                <span className="w-4 text-right font-mono text-[9px] text-muted tabular-nums">
+                  {count}
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Top tags */}
+      {activeTags.length > 0 && (
+        <div className="mt-3 flex flex-wrap gap-1">
+          {activeTags.map(({ tag, count }) => (
+            <span
+              key={tag}
+              className="inline-flex items-center gap-1 rounded-sm border border-border bg-surface px-1.5 py-0.5"
+              aria-label={`${tag}: ${count} solved`}
+            >
+              <span className="font-mono text-[9px] text-muted">{tag}</span>
+              <span className="font-mono text-[9px] text-faint tabular-nums">{count}</span>
+            </span>
+          ))}
+        </div>
+      )}
+    </section>
   );
 }
 
