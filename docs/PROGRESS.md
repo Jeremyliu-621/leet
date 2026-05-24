@@ -7,12 +7,14 @@
 ---
 
 **Last updated:** 2026-05-24
-**Current phase:** Phase 12 — Polish
-**Current focus:** Accessibility pass, screenshots, marketing-site iteration.
-**Build status:** 🟢 `npm run build` + `npm run test` green (249 tests across 17 files) +
-**4/4 Playwright e2e tests pass against real Chromium with the extension loaded.**
-**Next up:** Accessibility sweep across surfaces; README screenshots from the Playwright runs;
-iterate on the marketing site (separate repo `Jeremyliu-621/leetlock-site` already live).
+**Current phase:** Phase 13 — Post-MVP polish
+**Current focus:** Editor QoL parity with LeetCode, theme system, problem-content quality.
+**Build status:** 🟢 `npm run build` + `npm run test` green (259 unit tests across 18 files) +
+**17/17 Playwright e2e tests pass against real Chromium** including the solve→unlock flow + the
+real-user redirect-loop fix + a11y baseline.
+**Next up:** Pyodide research lands → execute the phased plan. Also pending: editor settings
+popover (font size, vim keymap toggle), draggable splitter, ZIP-package post-build, more hint
+authoring across the rest of the bank.
 
 ---
 
@@ -147,11 +149,28 @@ iterate on the marketing site (separate repo `Jeremyliu-621/leetlock-site` alrea
 - [x] Chrome Web Store ZIP packaging script (`npm run package`)
 - [x] Marketing website (separate repo `Jeremyliu-621/leetlock-site`, Next.js static export)
 
-## Phase 13+ — Post-MVP
+## Phase 13+ — Post-MVP polish
 
-- [ ] Grow the problem bank to 100+ verified problems across more tags
-- [ ] Python support via a sandboxed Pyodide runtime
-- [ ] Analytics: focus stats, streak heatmap, per-site time-saved, settings import/export
+Shipped after v0.1.0:
+- [x] **Editor QoL** — close-brackets, autocomplete, search (Cmd-F), `Cmd+Enter` run / `Cmd+Shift+Enter` submit / `Alt-R` reset shortcuts, active-line highlight, code-folding, multi-cursor (`drawSelection` + `allowMultipleSelections`)
+- [x] **Tab-close guard** — `beforeunload` while a challenge is in progress, suppressed during programmatic navigation
+- [x] **Light / dark / system theme** — CSS variables + `data-theme` attribute; popup switcher; live OS-theme sync for `system`
+- [x] **Markdown problem descriptions** — `react-markdown` + GFM, custom grayscale component map, raw-HTML disabled
+- [x] **Progressive hints** with **60s-per-reveal cost** — `Problem.hints?: string[]`, markdown-rendered, friction-aligned; wired into three bank problems
+- [x] **Real-Chrome e2e** — `e2e/extension.spec.ts`, `block-flow.spec.ts`, `solve-flow.spec.ts`, `user-bug.spec.ts`, `screenshots.spec.ts`, `a11y.spec.ts` — 17 tests total
+
+Still pending:
+- [ ] Grow the problem bank to 50+ then 100+ verified problems across more tags / difficulties
+- [ ] Add hints to the remaining 21 problems
+- [ ] **Python support via Pyodide** — research deliverable landing in `docs/PYODIDE_PLAN.md`; then execute the phased plan
+- [ ] Editor settings popover — font size, vim keymap toggle (`@replit/codemirror-vim`), tab-size
+- [ ] Draggable splitter between problem and editor panels (+ persist width in prefs)
+- [ ] Fullscreen-editor toggle (after splitter)
+- [ ] Custom test-case input drawer ("Testcase" tab)
+- [ ] Submission history + per-submit stats (runtime, attempts)
+- [ ] Streak heatmap, time-saved, settings import/export
+- [ ] Marketing site iteration + Vercel deployment
+- [ ] Address logged a11y findings (text-faint contrast on microlabels, one `aria-prohibited-attr`)
 
 ---
 
