@@ -27,6 +27,11 @@ export const problem: Problem = {
       output: '"abc"',
     },
   ],
+  hints: [
+    'A stack always exposes its top element. As you process each character, what single condition tells you to pop instead of push?',
+    'If the current character matches the top of the stack, pop (both characters annihilate). Otherwise push. After processing the whole string, join the stack into a result string.',
+    '`const stack: string[] = []; for (const ch of text) { if (stack.length && stack[stack.length - 1] === ch) stack.pop(); else stack.push(ch); } return stack.join(\'\');`',
+  ],
   functionName: 'collapseAdjacentDuplicates',
   params: ['text'],
   starterCode: {

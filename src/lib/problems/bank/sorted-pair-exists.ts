@@ -28,6 +28,11 @@ export const problem: Problem = {
       output: 'true',
     },
   ],
+  hints: [
+    'The array is sorted — that means you can reason about whether the current sum is too small or too large and adjust accordingly. A hash-set works, but there\'s an O(1) space approach.',
+    'Place one pointer at the smallest value (`lo = 0`) and one at the largest (`hi = nums.length - 1`). If their sum equals target, return true. If it\'s too small, advance `lo`; if too large, retreat `hi`.',
+    '`let lo = 0, hi = nums.length - 1; while (lo < hi) { const s = nums[lo] + nums[hi]; if (s === target) return true; if (s < target) lo++; else hi--; } return false;`',
+  ],
   functionName: 'sortedPairExists',
   params: ['nums', 'target'],
   starterCode: {

@@ -27,6 +27,11 @@ export const problem: Problem = {
       output: '[6,5,5]',
     },
   ],
+  hints: [
+    'The problem says "must not modify the original array," so start by making a copy. Once you have a copy, how do you reverse it in place?',
+    'Two-pointer: set `lo = 0` and `hi = copy.length - 1`. While `lo < hi`, swap `copy[lo]` and `copy[hi]`, then advance both pointers toward the middle.',
+    '`const out = [...nums]; let lo = 0, hi = out.length - 1; while (lo < hi) { [out[lo], out[hi]] = [out[hi], out[lo]]; lo++; hi--; } return out;` — or simply `return [...nums].reverse();`',
+  ],
   functionName: 'reverseArray',
   params: ['nums'],
   starterCode: {

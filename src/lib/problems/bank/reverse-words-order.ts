@@ -28,6 +28,11 @@ export const problem: Problem = {
       output: '"day every code"',
     },
   ],
+  hints: [
+    'Words are already separated by single spaces and there are no leading/trailing spaces. What does splitting on `\' \'` give you, and what do you need to do with the resulting array?',
+    '`.split(\' \')` breaks the sentence into a word array. Reversing that array with `.reverse()` puts the words in the right order. Joining with `\' \'` reconstructs the sentence.',
+    '`return sentence.split(\' \').reverse().join(\' \');` — three chained methods. Edge case: a single word splits to `[word]`, reverses to `[word]`, joins to `\'word\'` — correct.',
+  ],
   functionName: 'reverseWordOrder',
   params: ['sentence'],
   starterCode: {

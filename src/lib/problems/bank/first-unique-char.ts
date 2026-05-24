@@ -28,6 +28,11 @@ export const problem: Problem = {
       explanation: '"w" at index 1 is the first unique character.',
     },
   ],
+  hints: [
+    'You need each character\'s *frequency* across the whole string before you can decide which one appears exactly once. A single pass cannot answer this — why?',
+    'Use a `Map<string, number>` to count occurrences in a **first** pass over the string. Then make a **second** pass to find the earliest index whose character has a count of exactly 1.',
+    'Pass 1: `for (const ch of text) freq.set(ch, (freq.get(ch) ?? 0) + 1)`. Pass 2: `for (let i = 0; i < text.length; i++) if (freq.get(text[i]) === 1) return i`. If nothing qualifies, return -1.',
+  ],
   functionName: 'firstUniqueChar',
   params: ['text'],
   starterCode: {

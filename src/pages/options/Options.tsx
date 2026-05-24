@@ -61,6 +61,7 @@ import { PendingChangesSection } from './components/PendingChangesSection';
 import { SyncStatusSection } from './components/SyncStatusSection';
 import { ResetSection } from './components/ResetSection';
 import { AboutSection } from './components/AboutSection';
+import { EditorSection } from './components/EditorSection';
 import { VerifyModal } from './components/VerifyModal';
 
 // ---------------------------------------------------------------------------
@@ -744,7 +745,13 @@ export function Options() {
             onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}
           />
 
-          {/* 6. Failure */}
+          {/* 6. Editor */}
+          <EditorSection
+            prefs={d.prefs}
+            onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}
+          />
+
+          {/* 7. Failure */}
           <FailureSection
             prefs={d.prefs}
             onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}

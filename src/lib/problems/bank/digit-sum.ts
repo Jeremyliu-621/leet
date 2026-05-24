@@ -27,6 +27,11 @@ export const problem: Problem = {
       output: '36',
     },
   ],
+  hints: [
+    'You need to inspect each digit of `n` independently. How do you extract a single digit from a number using arithmetic operators?',
+    'To strip the last digit use `n % 10`. To remove it use integer division `Math.floor(n / 10)`. Loop until `n` reaches 0, adding each stripped digit to an accumulator.',
+    'Initialize `sum = 0`. While `n > 0`: `sum += n % 10`, then `n = Math.floor(n / 10)`. Return `sum`. Edge case: `digitSum(0)` should return 0 — a pre-check `if (n === 0) return 0` handles it cleanly.',
+  ],
   functionName: 'digitSum',
   params: ['n'],
   starterCode: {

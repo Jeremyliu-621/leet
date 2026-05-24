@@ -167,6 +167,8 @@ export interface UserPreferences {
   preferredLanguage: SupportedLanguage;
   /** CodeMirror keymap flavour. `'vim'` enables the full `@replit/codemirror-vim` modal keymap. */
   editorKeymap: EditorKeymap;
+  /** Width of the problem panel as a percentage of the split-view container (desktop only). Clamped to [20, 80]. */
+  problemPanelWidthPct: number;
 }
 
 /** Theme options exposed in the UI. */

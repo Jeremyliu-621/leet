@@ -13,6 +13,70 @@ import { ProblemPanel } from './components/ProblemPanel';
 import { EditorPanel } from './components/EditorPanel';
 
 // ---------------------------------------------------------------------------
+// Draggable splitter
+// ---------------------------------------------------------------------------
+
+const PANEL_MIN_PCT = 20;
+const PANEL_MAX_PCT = 80;
+
+interface SplitterProps {
+  onDrag: (newPct: number) => void;
+  onDragEnd: (finalPct: number) => void;
+  containerRef: React.RefObject<HTMLElement | null>;
+}
+
+function DraggableSplitter({ onDrag, onDragEnd, containerRef }: SplitterProps) {
+  const isDraggingRef = useRef(false);
+
+  const handlePointerDown = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      isDraggingRef.current = true;
+      (e.target as HTMLDivElement).setPointerCapture(e.pointerId);
+    },
+    [],
+  );
+
+  const handlePointerMove = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      if (!isDraggingRef.current || !containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const rawPct = ((e.clientX - rect.left) / rect.width) * 100;
+      const clamped = Math.min(PANEL_MAX_PCT, Math.max(PANEL_MIN_PCT, rawPct));
+      onDrag(clamped);
+    },
+    [onDrag, containerRef],
+  );
+
+  const handlePointerUp = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      if (!isDraggingRef.current || !containerRef.current) return;
+      isDraggingRef.current = false;
+      const rect = containerRef.current.getBoundingClientRect();
+      const rawPct = ((e.clientX - rect.left) / rect.width) * 100;
+      const clamped = Math.min(PANEL_MAX_PCT, Math.max(PANEL_MIN_PCT, rawPct));
+      onDragEnd(clamped);
+    },
+    [onDragEnd, containerRef],
+  );
+
+  return (
+    <div
+      role="separator"
+      aria-orientation="vertical"
+      aria-label="Drag to resize panels"
+      className="group relative hidden w-1 shrink-0 cursor-col-resize bg-border transition-colors hover:bg-border-strong lg:flex items-center justify-center"
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+    >
+      {/* Visual drag handle dot */}
+      <div className="absolute h-8 w-1 rounded-full bg-border-strong opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
 
@@ -117,6 +181,14 @@ export function Challenge() {
   // Streak (loaded from storage in a future phase; placeholder 0 for now).
   const [streak] = useState(0);
 
+  // Problem panel width as a percentage of the two-column container.
+  // Initialised from prefs once `pageState` transitions to 'ready'.
+  const [panelPct, setPanelPct] = useState(DEFAULT_PREFERENCES.problemPanelWidthPct);
+
+  // Ref for the two-column container — used by DraggableSplitter to compute
+  // pointer positions as a fraction of the container width.
+  const splitContainerRef = useRef<HTMLElement | null>(null);
+
   // -------------------------------------------------------------------------
   // Load prefs + pick problem (once on mount)
   // -------------------------------------------------------------------------
@@ -154,6 +226,7 @@ export function Challenge() {
       setLanguage(initialLanguage);
       setCode(initialStarter);
       setSecondsLeft(prefs.challengeTimeLimitSec);
+      setPanelPct(prefs.problemPanelWidthPct);
       setPageState({ status: 'ready', problem, prefs });
 
       // Warm Pyodide while the user is reading the problem, so the first
@@ -386,6 +459,28 @@ export function Challenge() {
   }, [pageState, handleFail]);
 
   // -------------------------------------------------------------------------
+  // Splitter drag handlers
+  // -------------------------------------------------------------------------
+
+  const handleSplitterDrag = useCallback((newPct: number) => {
+    setPanelPct(newPct);
+  }, []);
+
+  const handleSplitterDragEnd = useCallback((finalPct: number) => {
+    setPanelPct(finalPct);
+    void (async () => {
+      try {
+        await updateValue('userPreferences', (curr) => ({
+          ...curr,
+          problemPanelWidthPct: finalPct,
+        }));
+      } catch {
+        /* storage unavailable */
+      }
+    })();
+  }, []);
+
+  // -------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------
 
@@ -412,22 +507,36 @@ export function Challenge() {
 
       {/*
        * Two-column layout:
-       *   - Left (problem panel): 5 parts, min-w-0 so text wraps correctly.
-       *   - Right (editor panel): 7 parts.
-       * Stacks vertically below ~900px via flex-col on narrow viewports.
+       *   - Left (problem panel): dynamic width set via inline style (desktop).
+       *   - A 4px draggable splitter bar.
+       *   - Right (editor panel): flex-1, takes the remaining space.
+       * Stacks vertically below the `lg` breakpoint.
        */}
       <main
+        ref={splitContainerRef}
         className="min-h-0 flex-1 flex flex-col lg:flex-row overflow-hidden"
         aria-label="Challenge workspace"
       >
-        {/* Problem panel — scrollable independently */}
-        <div className="flex flex-col overflow-hidden border-border lg:border-r lg:w-5/12 max-lg:border-b max-lg:max-h-[45vh]">
+        {/* Problem panel — scrollable independently.
+            On mobile (flex-col), !w-full overrides the inline percentage style.
+            On desktop (flex-row), the inline width drives the draggable split. */}
+        <div
+          className="flex flex-col overflow-hidden border-border lg:border-r max-lg:border-b max-lg:max-h-[45vh] max-lg:!w-full"
+          style={{ width: `${panelPct}%` }}
+        >
           <ProblemPanel
             problem={problem}
             hintCostLabel="1 min"
             onHintRevealed={() => setSecondsLeft((s) => Math.max(0, s - HINT_COST_SECONDS))}
           />
         </div>
+
+        {/* Drag handle — only visible on desktop (lg+) */}
+        <DraggableSplitter
+          onDrag={handleSplitterDrag}
+          onDragEnd={handleSplitterDragEnd}
+          containerRef={splitContainerRef}
+        />
 
         {/* Editor panel — fixed, no scroll on the outer shell */}
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
@@ -441,6 +550,7 @@ export function Challenge() {
             availableLanguages={availableLanguagesFor(problem)}
             onLanguageChange={handleLanguageChange}
             editorKeymap={prefs.editorKeymap}
+            fontSize={prefs.editorFontSize}
             onChange={setCode}
             onRun={() => void handleRun()}
             onSubmit={() => void handleSubmit()}

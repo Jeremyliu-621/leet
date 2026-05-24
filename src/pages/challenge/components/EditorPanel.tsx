@@ -41,6 +41,8 @@ interface EditorPanelProps {
   onLanguageChange: (language: SupportedLanguage) => void;
   /** Active CodeMirror keymap. `'vim'` switches the editor to modal vim bindings. */
   editorKeymap: EditorKeymap;
+  /** Editor font size in CSS pixels. Reconfigured live via a Compartment. */
+  fontSize: number;
   /** Callback invoked whenever the editor content changes. */
   onChange: (code: string) => void;
   /** Called when user clicks Run. */
@@ -68,6 +70,10 @@ interface EditorPanelProps {
 
 const INDENT_SPACES = '  ';
 
+function fontSizeTheme(px: number) {
+  return EditorView.theme({ '&': { fontSize: `${px}px` } });
+}
+
 const LANGUAGE_LABEL: Readonly<Record<SupportedLanguage, string>> = {
   javascript: 'JavaScript',
   python: 'Python',
@@ -94,6 +100,7 @@ export function EditorPanel({
   availableLanguages,
   onLanguageChange,
   editorKeymap,
+  fontSize,
   onChange,
   onRun,
   onSubmit,
@@ -111,6 +118,9 @@ export function EditorPanel({
   // mode in the popup without rebuilding the editor (which would lose
   // their in-progress code).
   const keymapCompartmentRef = useRef(new Compartment());
+  // Font size goes through its own Compartment so it can be changed live
+  // without rebuilding the editor or losing the document state.
+  const fontSizeCompartmentRef = useRef(new Compartment());
 
   // Stable refs — the editor builds ONCE; refs let the keymap and the doc-
   // change effect read fresh callback values without rebuilding.
@@ -240,6 +250,9 @@ export function EditorPanel({
           },
         ]),
         leetlockEditorTheme,
+        // Font size goes through its own Compartment so it can be reconfigured
+        // live when the user adjusts it in Settings without rebuilding the editor.
+        fontSizeCompartmentRef.current.of(fontSizeTheme(fontSize)),
         updateListener,
         EditorView.lineWrapping,
       ],
@@ -291,6 +304,15 @@ export function EditorPanel({
       ),
     });
   }, [editorKeymap]);
+
+  // Reconfigure font size when the user changes it in Settings.
+  useEffect(() => {
+    const view = viewRef.current;
+    if (!view) return;
+    view.dispatch({
+      effects: fontSizeCompartmentRef.current.reconfigure(fontSizeTheme(fontSize)),
+    });
+  }, [fontSize]);
 
   const handleRunKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
