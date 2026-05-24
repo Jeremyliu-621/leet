@@ -1,11 +1,10 @@
 import type { Problem } from '../types';
 
 const JS_PREAMBLE = `
-function lruCacheRunner(ops, args) {
-  let cache = null;
+function lruCacheRunner(capacity, ops, args) {
+  const cache = new LRUCache(Number(capacity));
   return ops.map((op, i) => {
     const a = args[i] || [];
-    if (op === 'LRUCache') { cache = new LRUCache(a[0]); return null; }
     if (op === 'get') return cache.get(a[0]);
     if (op === 'put') { cache.put(a[0], a[1]); return null; }
     return null;
@@ -14,14 +13,11 @@ function lruCacheRunner(ops, args) {
 `.trim();
 
 const PY_PREAMBLE = `
-def lruCacheRunner(ops, args):
-    cache = None
+def lruCacheRunner(capacity, ops, args):
+    cache = LRUCache(int(capacity))
     result = []
     for op, a in zip(ops, args):
-        if op == 'LRUCache':
-            cache = LRUCache(a[0])
-            result.append(None)
-        elif op == 'get':
+        if op == 'get':
             result.append(cache.get(a[0]))
         elif op == 'put':
             cache.put(a[0], a[1])
@@ -39,11 +35,11 @@ export const problem: Problem = {
   description: `Design a data structure that follows the constraints of a **Least Recently Used (LRU) cache**.
 
 Implement the \`LRUCache\` class:
-- \`LRUCache(capacity)\` — initializes the cache with positive size \`capacity\`.
-- \`get(key)\` — returns the value of the key if it exists, otherwise returns \`-1\`.
-- \`put(key, value)\` — updates the value of the key if it exists, or inserts the key-value pair. If inserting causes the cache to exceed capacity, evict the least recently used key.
+- \`LRUCache(capacity)\` — initializes the LRU cache with positive size \`capacity\`.
+- \`get(key)\` — returns the value of the \`key\` if it exists, otherwise returns \`-1\`.
+- \`put(key, value)\` — updates the value of the \`key\` if it exists, or inserts the key-value pair. If the number of keys exceeds \`capacity\`, **evict the least recently used key**.
 
-Both \`get\` and \`put\` must run in **O(1)** average time complexity.
+The \`get\` and \`put\` operations must each run in **O(1)** average time complexity.
 
 > **Note:** A runner function is pre-defined that creates an \`LRUCache\` and calls your methods. Implement the class below.`,
   constraints: [
@@ -55,56 +51,68 @@ Both \`get\` and \`put\` must run in **O(1)** average time complexity.
   examples: [
     {
       input:
-        'ops = ["LRUCache","put","put","get","put","get","put","get","get","get"], args = [[2],[1,1],[2,2],[1],[3,3],[2],[4,4],[1],[3],[4]]',
-      output: '[null,null,null,1,null,-1,null,-1,3,4]',
+        'capacity = 2, ops = ["put","put","get","put","get","put","get","get","get"], args = [[1,1],[2,2],[1],[3,3],[2],[4,4],[1],[3],[4]]',
+      output: '[null,null,1,null,-1,null,-1,3,4]',
       explanation:
-        'Cache capacity 2. After put(1,1) and put(2,2): cache = {1:1, 2:2}. get(1)=1 (1 now MRU). put(3,3) evicts key 2 (LRU). get(2)=-1. put(4,4) evicts key 1 (LRU). get(1)=-1, get(3)=3, get(4)=4.',
+        'Cache capacity=2. put(1,1), put(2,2): cache={1:1,2:2}. get(1)=1. put(3,3): evicts key 2, cache={1:1,3:3}. get(2)=-1 (evicted). put(4,4): evicts key 1, cache={3:3,4:4}. get(1)=-1, get(3)=3, get(4)=4.',
     },
   ],
   hints: [
-    'Use a doubly-linked list to track recency order (head = MRU, tail = LRU) combined with a hash map from key to node for O(1) access.',
-    'On every get or put, move the accessed/updated node to the head of the list.',
-    'When capacity is exceeded on a put, remove the node at the tail and also delete its key from the hash map.',
+    'Use a hash map for O(1) key lookup combined with a doubly-linked list to maintain insertion/access order.',
+    'The doubly-linked list keeps the most recently used items near one end and the least recently used near the other. On every get or put, move the accessed node to the "most recent" end.',
+    'On eviction, remove the node at the "least recently used" end and delete its key from the hash map.',
   ],
   functionName: 'lruCacheRunner',
-  params: ['ops', 'args'],
+  params: ['capacity', 'ops', 'args'],
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript:
-      '// lruCacheRunner is pre-defined and calls your class below.\nclass LRUCache {\n  constructor(capacity) {}\n  get(key) {}\n  put(key, value) {}\n}\n',
+      '// lruCacheRunner is pre-defined and calls your class below.\nclass LRUCache {\n  constructor(capacity) {\n    this.capacity = capacity;\n  }\n  get(key) {}\n  put(key, value) {}\n}\n',
     python:
-      '# lruCacheRunner is pre-defined and calls your class below.\nclass LRUCache:\n    def __init__(self, capacity): pass\n    def get(self, key): pass\n    def put(self, key, value): pass\n',
+      '# lruCacheRunner is pre-defined and calls your class below.\nclass LRUCache:\n    def __init__(self, capacity):\n        self.capacity = capacity\n    def get(self, key): pass\n    def put(self, key, value): pass\n',
   },
   visibleTests: [
     {
       args: [
-        ['LRUCache', 'put', 'put', 'get', 'put', 'get', 'put', 'get', 'get', 'get'],
-        [[2], [1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]],
+        2,
+        ['put', 'put', 'get', 'put', 'get', 'put', 'get', 'get', 'get'],
+        [[1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]],
       ],
-      expected: [null, null, null, 1, null, -1, null, -1, 3, 4],
+      expected: [null, null, 1, null, -1, null, -1, 3, 4],
     },
     {
       args: [
-        ['LRUCache', 'put', 'get', 'put', 'get', 'get'],
-        [[1], [2, 1], [2], [3, 2], [2], [3]],
+        1,
+        ['put', 'get', 'put', 'get', 'get'],
+        [[1, 1], [1], [2, 2], [1], [2]],
       ],
-      expected: [null, null, 1, null, -1, 2],
+      expected: [null, 1, null, -1, 2],
     },
   ],
   hiddenTests: [
     {
       args: [
-        ['LRUCache', 'put', 'put', 'put', 'get', 'get', 'get'],
-        [[2], [1, 10], [2, 20], [1, 30], [1], [2], [3]],
+        2,
+        ['put', 'put', 'put', 'get', 'get'],
+        [[1, 1], [2, 2], [3, 3], [1], [2]],
       ],
-      expected: [null, null, null, null, 30, 20, -1],
+      expected: [null, null, null, -1, 2],
     },
     {
       args: [
-        ['LRUCache', 'put', 'put', 'get', 'put', 'put', 'get', 'get'],
-        [[3], [1, 1], [2, 2], [1], [3, 3], [4, 4], [2], [3]],
+        3,
+        ['put', 'put', 'put', 'get', 'put', 'get', 'get'],
+        [[1, 1], [2, 2], [3, 3], [1], [4, 4], [2], [3]],
       ],
-      expected: [null, null, null, 1, null, null, -1, 3],
+      expected: [null, null, null, 1, null, -1, 3],
+    },
+    {
+      args: [
+        2,
+        ['put', 'get', 'put', 'put', 'get', 'get'],
+        [[2, 1], [2], [3, 2], [4, 3], [3], [2]],
+      ],
+      expected: [null, 1, null, null, 2, -1],
     },
   ],
 };

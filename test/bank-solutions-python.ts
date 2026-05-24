@@ -1717,6 +1717,38 @@ export const pythonSolutions: Record<string, string> = {
     return result
 `,
 
+  'lru-cache': `def lruCacheRunner(capacity, ops, args):
+    from collections import OrderedDict
+    class LRUCache:
+        def __init__(self, cap):
+            self.cap = cap
+            self.cache = OrderedDict()
+        def get(self, key):
+            if key not in self.cache:
+                return -1
+            self.cache.move_to_end(key)
+            return self.cache[key]
+        def put(self, key, value):
+            if key in self.cache:
+                self.cache.move_to_end(key)
+                self.cache[key] = value
+            else:
+                if len(self.cache) >= self.cap:
+                    self.cache.popitem(last=False)
+                self.cache[key] = value
+    cache = LRUCache(int(capacity))
+    result = []
+    for op, a in zip(ops, args):
+        if op == 'get':
+            result.append(cache.get(a[0]))
+        elif op == 'put':
+            cache.put(a[0], a[1])
+            result.append(None)
+        else:
+            result.append(None)
+    return result
+`,
+
   'roman-to-integer': `def romanToInt(s: str) -> int:
     val = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
     res = 0
@@ -4024,40 +4056,6 @@ def deserialize(data):
             result.append(st[-1])
         elif op == 'getMin':
             result.append(min_st[-1])
-        else:
-            result.append(None)
-    return result
-`,
-
-  'lru-cache': `def lruCacheRunner(ops, args):
-    from collections import OrderedDict
-    cache = None
-    capacity = 0
-    od = OrderedDict()
-    result = []
-    for op, a in zip(ops, args):
-        if op == 'LRUCache':
-            capacity = a[0]
-            od.clear()
-            result.append(None)
-        elif op == 'get':
-            key = a[0]
-            if key in od:
-                od.move_to_end(key, last=False)
-                result.append(od[key])
-            else:
-                result.append(-1)
-        elif op == 'put':
-            key, val = a[0], a[1]
-            if key in od:
-                od.move_to_end(key, last=False)
-                od[key] = val
-            else:
-                od[key] = val
-                od.move_to_end(key, last=False)
-                if len(od) > capacity:
-                    od.popitem(last=True)
-            result.append(None)
         else:
             result.append(None)
     return result
