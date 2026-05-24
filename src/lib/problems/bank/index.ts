@@ -18,6 +18,7 @@ import { problem as nonOverlappingIntervals } from './non-overlapping-intervals'
 import { problem as subsets } from './subsets';
 import { problem as subsetsII } from './subsets-ii';
 import { problem as combinationSum } from './combination-sum';
+import { problem as combinationSumIII } from './combination-sum-iii';
 import { problem as combinationSumII } from './combination-sum-ii';
 import { problem as permutations } from './permutations';
 // strings — medium (additional)
@@ -309,7 +310,6 @@ import { problem as sudokuSolver } from './sudoku-solver';
 import { problem as combinations } from './combinations';
 import { problem as wordSearchII } from './word-search-ii';
 import { problem as letterCasePermutation } from './letter-case-permutation';
-import { problem as combinationSumIII } from './combination-sum-iii';
 import { problem as restoreIpAddresses } from './restore-ip-addresses';
 import { problem as expressionAddOperators } from './expression-add-operators';
 
@@ -367,6 +367,7 @@ export const problems: readonly Problem[] = [
   nonOverlappingIntervals,
   subsets,
   combinationSum,
+  combinationSumIII,
   combinationSumII,
   permutations,
   spiralMatrixII,
@@ -642,7 +643,6 @@ export const problems: readonly Problem[] = [
   sudokuSolver,
   // arrays + backtracking — medium
   combinations,
-  combinationSumIII,
   // strings + backtracking — hard
   expressionAddOperators,
   // strings + backtracking — medium

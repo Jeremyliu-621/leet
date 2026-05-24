@@ -428,6 +428,21 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'combination-sum-iii': (...args: unknown[]) => {
+    const k = args[0] as number;
+    const n = args[1] as number;
+    const result: number[][] = [];
+    const bt = (start: number, rem: number, cur: number[]): void => {
+      if (cur.length === k && rem === 0) { result.push([...cur]); return; }
+      if (cur.length === k || rem <= 0) return;
+      for (let d = start; d <= 9; d++) {
+        cur.push(d); bt(d + 1, rem - d, cur); cur.pop();
+      }
+    };
+    bt(1, n, []);
+    return result.sort((a, b) => { for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return a[i]! - b[i]!; return 0; });
+  },
+
   'merge-intervals': (...args: unknown[]) => {
     const intervals = [...(args[0] as number[][])].sort((a, b) => a[0]! - b[0]!);
     const result: number[][] = [];
@@ -4518,23 +4533,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     let idx = maxIdx;
     while (idx !== -1) { result.push(nums[idx]!); idx = parent[idx]!; }
     return result.sort((a, b) => a - b);
-  },
-
-  'combination-sum-iii': (...args: unknown[]) => {
-    const k = args[0] as number, n = args[1] as number;
-    const result: number[][] = [];
-    function bt(start: number, rem: number, path: number[]): void {
-      if (path.length === k && rem === 0) { result.push([...path]); return; }
-      if (path.length === k || rem <= 0) return;
-      for (let d = start; d <= 9; d++) {
-        if (d > rem) break;
-        path.push(d);
-        bt(d + 1, rem - d, path);
-        path.pop();
-      }
-    }
-    bt(1, n, []);
-    return result;
   },
 
   'restore-ip-addresses': (...args: unknown[]) => {

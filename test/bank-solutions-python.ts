@@ -3525,6 +3525,22 @@ def deserialize(data):
     return result
 `,
 
+  'combination-sum-iii': `def combinationSumIII(k, n):
+    result = []
+    def bt(start, rem, cur):
+        if len(cur) == k and rem == 0:
+            result.append(cur[:])
+            return
+        if len(cur) == k or rem <= 0:
+            return
+        for d in range(start, 10):
+            cur.append(d)
+            bt(d + 1, rem - d, cur)
+            cur.pop()
+    bt(1, n, [])
+    return sorted([sorted(c) for c in result])
+`,
+
   'number-of-dice-rolls': `def numRollsToTarget(n, k, target):
     MOD = 10**9 + 7
     dp = [0] * (target + 1)
@@ -3795,24 +3811,6 @@ def deserialize(data):
                 bt(start + length, expr + '-' + s, val - cur, -cur)
                 bt(start + length, expr + '*' + s, val - last_mul + last_mul * cur, last_mul * cur)
     bt(0, '', 0, 0)
-    return result
-`,
-
-  'combination-sum-iii': `def combinationSum3(k, n):
-    result = []
-    def bt(start, rem, path):
-        if len(path) == k and rem == 0:
-            result.append(list(path))
-            return
-        if len(path) == k or rem <= 0:
-            return
-        for d in range(start, 10):
-            if d > rem:
-                break
-            path.append(d)
-            bt(d + 1, rem - d, path)
-            path.pop()
-    bt(1, n, [])
     return result
 `,
 

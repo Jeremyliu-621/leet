@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 291 problems (14 tags); min-stack + expression-add-operators + combination-sum-iii + restore-ip-addresses; approaching 300.
+**Current focus:** Bank at 291 problems (13 tags); min-stack + expression-add-operators added; combination-sum-iii conflict resolved; approaching 300.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** LRU Cache (hash-map/hard), more problems across all tags, 300-problem milestone.
 
