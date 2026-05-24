@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 267 problems (13 tags); 3 new hard problems (alien-dictionary, critical-connections, vertical-order-traversal); 1056+ tests.
+**Current focus:** Bank at 271 problems (14 tags); added longest-increasing-path-matrix (graph/hard), find-min-rotated-ii (binary-search/medium), number-of-substrings (sliding-window/medium); 1084 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More hard problems; word-search-ii (Trie+backtracking), sudoku-solver; fill gaps vs LeetCode parity.
+**Next up:** More medium/hard problems; word-search-ii (Trie+backtracking), sudoku-solver; fill gaps vs LeetCode parity.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
