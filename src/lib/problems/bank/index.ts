@@ -149,7 +149,6 @@ import { problem as countPrimesSieve } from './count-primes-sieve';
 import { problem as powXN } from './pow-x-n';
 import { problem as reverseInteger } from './reverse-integer';
 import { problem as happyNumber } from './happy-number';
-import { problem as perfectSquares } from './perfect-squares';
 
 // arrays — hard
 import { problem as firstMissingPositive } from './first-missing-positive';
@@ -322,7 +321,6 @@ export const problems: readonly Problem[] = [
   powXN,
   reverseInteger,
   happyNumber,
-  perfectSquares,
   // arrays — hard
   firstMissingPositive,
   jumpGameII,
