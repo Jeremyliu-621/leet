@@ -3684,4 +3684,35 @@ def deserialize(data):
     return result
 `,
 
+  'single-number': `def singleNumber(nums):
+    result = 0
+    for n in nums:
+        result ^= n
+    return result
+`,
+
+  'house-robber-ii': `def rob(nums):
+    if len(nums) == 1:
+        return nums[0]
+    def rob_range(lo, hi):
+        prev2, prev1 = 0, 0
+        for i in range(lo, hi + 1):
+            cur = max(prev1, prev2 + nums[i])
+            prev2, prev1 = prev1, cur
+        return prev1
+    return max(rob_range(0, len(nums) - 2), rob_range(1, len(nums) - 1))
+`,
+
+  'wiggle-subsequence': `def wiggleMaxLength(nums):
+    if len(nums) < 2:
+        return len(nums)
+    up = down = 1
+    for i in range(1, len(nums)):
+        if nums[i] > nums[i - 1]:
+            up = down + 1
+        elif nums[i] < nums[i - 1]:
+            down = up + 1
+    return max(up, down)
+`,
+
 };

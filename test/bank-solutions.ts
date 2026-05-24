@@ -4303,4 +4303,35 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'single-number': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return nums.reduce((acc, n) => acc ^ n, 0);
+  },
+
+  'house-robber-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    if (nums.length === 1) return nums[0]!;
+    function robRange(arr: number[], lo: number, hi: number): number {
+      let prev2 = 0, prev1 = 0;
+      for (let i = lo; i <= hi; i++) {
+        const cur = Math.max(prev1, prev2 + arr[i]!);
+        prev2 = prev1;
+        prev1 = cur;
+      }
+      return prev1;
+    }
+    return Math.max(robRange(nums, 0, nums.length - 2), robRange(nums, 1, nums.length - 1));
+  },
+
+  'wiggle-subsequence': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    if (nums.length < 2) return nums.length;
+    let up = 1, down = 1;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i]! > nums[i - 1]!) up = down + 1;
+      else if (nums[i]! < nums[i - 1]!) down = up + 1;
+    }
+    return Math.max(up, down);
+  },
+
 };

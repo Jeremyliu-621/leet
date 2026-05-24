@@ -179,6 +179,7 @@ import { problem as reverseInteger } from './reverse-integer';
 import { problem as happyNumber } from './happy-number';
 import { problem as maximumSwap } from './maximum-swap';
 
+import { problem as singleNumber } from './single-number';
 // arrays — hard
 import { problem as nQueens } from './n-queens';
 import { problem as firstMissingPositive } from './first-missing-positive';
@@ -200,6 +201,8 @@ import { problem as countingBits } from './counting-bits';
 import { problem as bestTimeBuySell } from './best-time-buy-sell';
 // dynamic-programming — medium
 import { problem as houseRobber } from './house-robber';
+import { problem as houseRobberII } from './house-robber-ii';
+import { problem as wiggleSubsequence } from './wiggle-subsequence';
 import { problem as coinChange } from './coin-change';
 import { problem as longestCommonSubsequence } from './longest-common-subsequence';
 import { problem as minimumPathSum } from './minimum-path-sum';
@@ -338,6 +341,7 @@ export const problems: readonly Problem[] = [
   findMaxMin,
   maxConsecutiveOnes,
   plusOne,
+  singleNumber,
   // arrays — medium
   mergeIntervals,
   nonOverlappingIntervals,
@@ -532,6 +536,8 @@ export const problems: readonly Problem[] = [
   bestTimeBuySell,
   // dynamic-programming — medium
   houseRobber,
+  houseRobberII,
+  wiggleSubsequence,
   coinChange,
   longestCommonSubsequence,
   minimumPathSum,
