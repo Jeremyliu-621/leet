@@ -11,6 +11,7 @@ export type ProblemTag =
   | 'sliding-window'
   | 'binary-search'
   | 'stack'
+  | 'heap'
   | 'math'
   | 'dynamic-programming'
   | 'linked-list'
@@ -27,6 +28,7 @@ export const PROBLEM_TAGS: readonly ProblemTag[] = [
   'sliding-window',
   'binary-search',
   'stack',
+  'heap',
   'math',
   'dynamic-programming',
   'linked-list',

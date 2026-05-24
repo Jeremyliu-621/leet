@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'kth-largest-element',
   title: 'K-th Largest Element in Array',
   difficulty: 'medium',
-  tags: ['arrays'],
+  tags: ['arrays', 'heap'],
   description: `Given an integer array \`nums\` and an integer \`k\`, return the **k-th largest element** in the array.
 
 This is the k-th largest element **in sorted order**, not the k-th distinct element.

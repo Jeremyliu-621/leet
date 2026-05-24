@@ -5124,4 +5124,77 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return false;
   },
 
+  // --- heap — easy -----------------------------------------------------------
+  'last-stone-weight': (...args: unknown[]) => {
+    const arr = [...(args[0] as number[])];
+    while (arr.length > 1) {
+      arr.sort((a, b) => a - b);
+      const y = arr.pop()!;
+      const x = arr.pop()!;
+      if (y !== x) arr.push(y - x);
+    }
+    return arr.length ? arr[0] : 0;
+  },
+
+  // --- heap — medium ---------------------------------------------------------
+  'meeting-rooms-ii': (...args: unknown[]) => {
+    const intervals = args[0] as number[][];
+    const starts = intervals.map((i) => i[0]!).sort((a, b) => a - b);
+    const ends = intervals.map((i) => i[1]!).sort((a, b) => a - b);
+    let rooms = 0;
+    let endIdx = 0;
+    for (let i = 0; i < starts.length; i++) {
+      if (starts[i]! < ends[endIdx]!) {
+        rooms++;
+      } else {
+        endIdx++;
+      }
+    }
+    return rooms;
+  },
+
+  'kth-largest-in-stream': (...args: unknown[]) => {
+    const k = args[0] as number;
+    const nums = [...(args[1] as number[])];
+    const adds = args[2] as number[];
+    nums.sort((a, b) => a - b);
+    const add = (val: number): number => {
+      let lo = 0, hi = nums.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (nums[mid]! < val) lo = mid + 1; else hi = mid;
+      }
+      nums.splice(lo, 0, val);
+      return nums[nums.length - k]!;
+    };
+    return adds.map(add);
+  },
+
+  // --- heap — hard -----------------------------------------------------------
+  'median-from-data-stream': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as number[][];
+    const data: number[] = [];
+    const getMedian = (): number => {
+      const n = data.length;
+      if (n % 2 === 1) return data[(n - 1) / 2]!;
+      return (data[n / 2 - 1]! + data[n / 2]!) / 2;
+    };
+    return ops.map((op, i) => {
+      const a = opArgs[i] ?? [];
+      if (op === 'addNum') {
+        const val = a[0]!;
+        let lo = 0, hi = data.length;
+        while (lo < hi) {
+          const mid = (lo + hi) >> 1;
+          if (data[mid]! < val) lo = mid + 1; else hi = mid;
+        }
+        data.splice(lo, 0, val);
+        return null;
+      }
+      if (op === 'findMedian') return getMedian();
+      return null;
+    });
+  },
+
 };

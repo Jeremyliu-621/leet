@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'nth-ugly-number',
   title: 'Nth Ugly Number',
   difficulty: 'medium',
-  tags: ['dynamic-programming', 'math'],
+  tags: ['dynamic-programming', 'math', 'heap'],
   description: `An **ugly number** is a positive integer whose prime factors are limited to \`2\`, \`3\`, and \`5\`.
 
 Given an integer \`n\`, return the \`n\`th ugly number.

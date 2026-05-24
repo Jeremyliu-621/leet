@@ -384,6 +384,12 @@ import { problem as binaryTreeMaxPathSum } from './binary-tree-max-path-sum';
 import { problem as serializeBinaryTree } from './serialize-binary-tree';
 import { problem as verticalOrderTraversal } from './vertical-order-traversal';
 
+// heap
+import { problem as lastStoneWeight } from './last-stone-weight';
+import { problem as meetingRoomsII } from './meeting-rooms-ii';
+import { problem as kthLargestInStream } from './kth-largest-in-stream';
+import { problem as medianFromDataStream } from './median-from-data-stream';
+
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -578,6 +584,13 @@ export const problems: readonly Problem[] = [
   basicCalculator,
   sumSubarrayMinimums,
   removeKDigits,
+  // heap — easy
+  lastStoneWeight,
+  // heap — medium
+  meetingRoomsII,
+  kthLargestInStream,
+  // heap — hard
+  medianFromDataStream,
   // math — easy
   numberOfSteps,
   findTheDifference,

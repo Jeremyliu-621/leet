@@ -17,7 +17,7 @@ export const problem: Problem = {
   id: 'find-k-pairs-smallest-sums',
   title: 'Find K Pairs with Smallest Sums',
   difficulty: 'medium',
-  tags: ['binary-search'],
+  tags: ['heap', 'binary-search'],
   description: `You are given two integer arrays \`nums1\` and \`nums2\` sorted in **non-decreasing** order and an integer \`k\`.
 
 Define a pair \`(u, v)\` which consists of one element from the first array and one element from the second array.

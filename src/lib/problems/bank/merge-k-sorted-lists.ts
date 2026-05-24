@@ -55,7 +55,7 @@ export const problem: Problem = {
   id: 'merge-k-sorted-lists',
   title: 'Merge k Sorted Lists',
   difficulty: 'hard',
-  tags: ['linked-list'],
+  tags: ['linked-list', 'heap'],
   description: `You are given an array of \`k\` linked lists, each linked list is sorted in ascending order.
 
 Merge all the linked lists into one sorted linked list and return it.

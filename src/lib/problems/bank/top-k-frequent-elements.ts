@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'top-k-frequent-elements',
   title: 'Top K Frequent Elements',
   difficulty: 'medium',
-  tags: ['hash-map', 'arrays'],
+  tags: ['hash-map', 'arrays', 'heap'],
   description: `Given an integer array \`nums\` and an integer \`k\`, return the \`k\` most frequent elements.
 
 If multiple elements have the same frequency, prefer the element with the **smaller value**. Return the result sorted in ascending order.`,

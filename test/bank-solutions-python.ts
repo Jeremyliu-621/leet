@@ -4493,4 +4493,76 @@ def deserialize(data):
     return False
 `,
 
+  // --- heap — easy -----------------------------------------------------------
+  'last-stone-weight': `def lastStoneWeight(stones):
+    import heapq
+    heap = [-s for s in stones]
+    heapq.heapify(heap)
+    while len(heap) > 1:
+        y = -heapq.heappop(heap)
+        x = -heapq.heappop(heap)
+        if y != x:
+            heapq.heappush(heap, -(y - x))
+    return -heap[0] if heap else 0
+`,
+
+  // --- heap — medium ---------------------------------------------------------
+  'meeting-rooms-ii': `def minMeetingRooms(intervals):
+    import heapq
+    if not intervals:
+        return 0
+    intervals = sorted(intervals, key=lambda x: x[0])
+    heap = []
+    for start, end in intervals:
+        if heap and heap[0] <= start:
+            heapq.heapreplace(heap, end)
+        else:
+            heapq.heappush(heap, end)
+    return len(heap)
+`,
+
+  'kth-largest-in-stream': `def kthLargestRunner(k, nums, adds):
+    import heapq
+    heap = list(nums)
+    heapq.heapify(heap)
+    while len(heap) > k:
+        heapq.heappop(heap)
+    result = []
+    for val in adds:
+        heapq.heappush(heap, val)
+        if len(heap) > k:
+            heapq.heappop(heap)
+        result.append(heap[0])
+    return result
+`,
+
+  // --- heap — hard -----------------------------------------------------------
+  'median-from-data-stream': `def medianFinderRunner(ops, args):
+    import heapq
+    lo = []  # max-heap (negated)
+    hi = []  # min-heap
+    def add_num(num):
+        heapq.heappush(lo, -num)
+        if hi and -lo[0] > hi[0]:
+            heapq.heappush(hi, -heapq.heappop(lo))
+        if len(lo) > len(hi) + 1:
+            heapq.heappush(hi, -heapq.heappop(lo))
+        elif len(hi) > len(lo):
+            heapq.heappush(lo, -heapq.heappop(hi))
+    def find_median():
+        if len(lo) == len(hi):
+            return (-lo[0] + hi[0]) / 2
+        return float(-lo[0])
+    result = []
+    for op, a in zip(ops, args):
+        if op == 'addNum':
+            add_num(a[0])
+            result.append(None)
+        elif op == 'findMedian':
+            result.append(find_median())
+        else:
+            result.append(None)
+    return result
+`,
+
 };
