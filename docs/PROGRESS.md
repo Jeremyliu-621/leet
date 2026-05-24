@@ -8,10 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** 51 problems, fullscreen editor, submission history panel, edge-case hardening done.
-387 unit tests across 21 files.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (387 unit tests across 21 files).
-**Next up:** Streak heatmap display in popup, settings import/export, marketing site iteration.
+**Current focus:** 55 problems (4 medium-difficulty), all Phase 13 items complete. Build clean.
+**Build status:** 🟢 `npm run build` + `npm run test` green (399 unit tests across 21 files).
+**Next up:** Marketing site iteration, add more medium-difficulty problems, 100+ problem goal.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -182,9 +181,12 @@ Still pending:
 - [x] Edge-case sweep — verdict non-finite duration, token clamping, streak date validation; 6 new tests
 - [x] Streak heatmap — 12-week grayscale activity grid in popup (aria-grid accessible)
 - [x] Settings import/export — JSON download/restore in Options (blocked sites, rules, prefs)
+- [x] Acceptance UX — 1.2s pause after accepted verdict before redirecting
+- [x] 4 new problems (rotate-array, max-product-subarray medium, longest-palindromic-string medium, climbing-stairs)
+- [x] Bank at 55 problems; first medium-difficulty problems added
+- [ ] Grow bank to 100+ problems
+- [ ] Add more medium-difficulty problems (currently 2: max-product-subarray, longest-palindromic-string)
 - [ ] Marketing site iteration + Vercel deployment
-- [ ] Keyboard shortcut reference card in the challenge page
-- [ ] Problem tag/difficulty breakdown stats in popup or options
 
 ---
 
