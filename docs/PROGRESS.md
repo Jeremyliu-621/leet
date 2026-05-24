@@ -11,9 +11,20 @@
 **Current focus:** Editor QoL, theme system, problem-content quality, first-run UX, Pyodide M1 done.
 **Build status:** 🟢 `npm run build` + `npm run test` green (264 unit tests across 19 files) +
 17/17 Playwright e2e against real Chromium.
-**Next up:** **Pyodide M2** — vendor `pyodide-core-0.29.4` into `public/pyodide/`, list it in
-`web_accessible_resources`, add `wasm-unsafe-eval` to the sandbox CSP (see `docs/PYODIDE_PLAN.md`
-§8 M2). Also pending: vim keymap toggle, draggable splitter, hints on the remaining 13 problems.
+**Next up:** **Pyodide M3** — `src/runner/python-worker.js`: a long-lived module worker that
+boots Pyodide once from the vendored files and handles `RunRequest`/`RunResponse` with the same
+contract as the JS worker. Update the sandbox host to dispatch by `request.language`. See
+`docs/PYODIDE_PLAN.md` §8 M3 (~250 LOC new + ~40 edited). Also pending: vim keymap toggle,
+draggable splitter, hints on the remaining 13 problems.
+
+**Pyodide rollout status:**
+- ✅ M1 — Type plumbing (`SupportedLanguage`, `Problem.starterCode`, `RunRequest.language`, `UserPreferences.preferredLanguage`).
+- ✅ M2 — Vendored `pyodide-core 0.29.4` (11.7 MB) into `public/pyodide/`; web-accessible-resources entry; `wasm-unsafe-eval` in sandbox CSP.
+- ⬜ M3 — Python worker + sandbox dispatch.
+- ⬜ M4 — `@codemirror/lang-python` + JS|Py selector in `EditorPanel`.
+- ⬜ M5 — First Python problem (`two-sum-indices`) + Python test suite.
+- ⬜ M6 — Backfill Python for the rest of the bank.
+- ⬜ M7 — Polish (warmup, observability).
 
 ---
 
