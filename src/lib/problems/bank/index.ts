@@ -175,6 +175,9 @@ import { problem as jewelsAndStones } from './jewels-and-stones';
 import { problem as minimumOperationsAlternating } from './minimum-operations-alternating';
 import { problem as maximumNumberOfBalloons } from './maximum-number-of-balloons';
 import { problem as countCharacters } from './count-characters';
+import { problem as uniqueNumberOfOccurrences } from './unique-number-of-occurrences';
+import { problem as findLuckyInteger } from './find-lucky-integer';
+import { problem as minimumIndexSumOfTwoLists } from './minimum-index-sum-of-two-lists';
 // hash-map — medium (additional)
 import { problem as minimumRoundsToCompleteTasks } from './minimum-rounds-to-complete-tasks';
 import { problem as minimumStepsMakeAnagram } from './minimum-steps-make-anagram';
@@ -507,6 +510,7 @@ import { problem as diameterOfBinaryTree } from './diameter-of-binary-tree';
 import { problem as sameTree } from './same-tree';
 import { problem as sumOfLeftLeaves } from './sum-of-left-leaves';
 import { problem as leafSimilarTrees } from './leaf-similar-trees';
+import { problem as twoSumIVBST } from './two-sum-iv-bst';
 // tree — medium
 import { problem as binaryTreePruning } from './binary-tree-pruning';
 import { problem as countCompleteTreeNodes } from './count-complete-tree-nodes';
@@ -735,6 +739,9 @@ export const problems: readonly Problem[] = [
   maximumNumberOfBalloons,
   countCharacters,
   findWordsFormedByCharacters,
+  uniqueNumberOfOccurrences,
+  findLuckyInteger,
+  minimumIndexSumOfTwoLists,
   twoSumIndices,
   mostFrequentValue,
   anagramCheck,
@@ -1077,6 +1084,7 @@ export const problems: readonly Problem[] = [
   sameTree,
   sumOfLeftLeaves,
   leafSimilarTrees,
+  twoSumIVBST,
   // tree — medium
   binaryTreePruning,
   countCompleteTreeNodes,

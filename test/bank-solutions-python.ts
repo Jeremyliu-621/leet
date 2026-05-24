@@ -6363,4 +6363,45 @@ def minMovesToSeat(seats, students):
     students = sorted(students)
     return sum(abs(seats[i] - students[i]) for i in range(len(seats)))
 `,
+
+  'unique-number-of-occurrences': `def uniqueOccurrences(arr):
+    from collections import Counter
+    counts = list(Counter(arr).values())
+    return len(set(counts)) == len(counts)
+`,
+
+  'find-lucky-integer': `def findLucky(arr):
+    from collections import Counter
+    freq = Counter(arr)
+    result = -1
+    for val, count in freq.items():
+        if val == count:
+            result = max(result, val)
+    return result
+`,
+
+  'minimum-index-sum-of-two-lists': `def findRestaurant(list1, list2):
+    idx_map = {s: i for i, s in enumerate(list1)}
+    min_sum = float('inf')
+    result = []
+    for j, s in enumerate(list2):
+        if s in idx_map:
+            total = idx_map[s] + j
+            if total < min_sum:
+                min_sum = total
+                result = [s]
+            elif total == min_sum:
+                result.append(s)
+    return result
+`,
+
+  'two-sum-iv-bst': `def findTarget(root, k):
+    vals = set()
+    for v in root:
+        try:
+            vals.add(int(v))
+        except (TypeError, AttributeError):
+            pass
+    return any(k - v in vals and k - v != v for v in vals)
+`,
 };

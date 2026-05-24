@@ -6913,6 +6913,25 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'unique-number-of-occurrences': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const n of arr) freq.set(n, (freq.get(n) ?? 0) + 1);
+    const counts = [...freq.values()];
+    return new Set(counts).size === counts.length;
+  },
+
+  'find-lucky-integer': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const n of arr) freq.set(n, (freq.get(n) ?? 0) + 1);
+    let result = -1;
+    for (const [val, count] of freq) {
+      if (val === count && val > result) result = val;
+    }
+    return result;
+  },
+
   'smallest-number-in-infinite-set': (...args: unknown[]) => {
     const ops = args[0] as string[];
     const opArgs = args[1] as number[][];
@@ -6978,6 +6997,37 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const seats = [...(args[0] as number[])].sort((a, b) => a - b);
     const students = [...(args[1] as number[])].sort((a, b) => a - b);
     return seats.reduce((sum, s, i) => sum + Math.abs(s - students[i]!), 0);
+  },
+
+  'minimum-index-sum-of-two-lists': (...args: unknown[]) => {
+    const list1 = args[0] as string[], list2 = args[1] as string[];
+    const map = new Map<string, number>();
+    list1.forEach((s, i) => map.set(s, i));
+    let minSum = Infinity;
+    const result: string[] = [];
+    list2.forEach((s, j) => {
+      if (map.has(s)) {
+        const sum = map.get(s)! + j;
+        if (sum < minSum) { minSum = sum; result.length = 0; result.push(s); }
+        else if (sum === minSum) result.push(s);
+      }
+    });
+    return result;
+  },
+
+  'two-sum-iv-bst': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    const k = args[1] as number;
+    const vals: number[] = [];
+    const inorder = (n: _TN | null) => { if (!n) return; inorder(n.l); vals.push(n.v); inorder(n.r); };
+    inorder(root);
+    let lo = 0, hi = vals.length - 1;
+    while (lo < hi) {
+      const s = vals[lo]! + vals[hi]!;
+      if (s === k) return true;
+      if (s < k) lo++; else hi--;
+    }
+    return false;
   },
 
 };
