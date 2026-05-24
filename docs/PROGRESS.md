@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 204 problems (12 tags); zigzag, flatten, course-ii, reverse-k-group added; 885 tests.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (885 unit tests across 23 files).
-**Next up:** More tree/graph/linked-list problems; consider UI polish for challenge page.
+**Current focus:** Bank at 207 problems (12 tags); sum-root-to-leaf + lca-binary-tree added; 891 tests.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (891 unit tests across 23 files).
+**Next up:** More graph medium problems; populating-next-right-pointers; UI polish tasks.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -241,7 +241,8 @@ Still pending:
 - [x] course-schedule-ii (medium graph): Kahn's BFS topological sort; 873 tests; bank at 200
 - [x] kth-smallest-bst (medium tree): in-order BST traversal; 876 tests; bank at 201
 - [x] pacific-atlantic (medium graph): multi-source reverse BFS; 879 tests; bank at 202
-- [x] flatten-binary-tree + zigzag-level-order (tree/medium) + reverse-nodes-in-k-group (linked-list/hard); 885 tests; bank at ~206
+- [x] flatten-binary-tree + zigzag-level-order (tree/medium) + reverse-nodes-in-k-group (linked-list/hard); 885 tests; bank at 205
+- [x] sum-root-to-leaf-numbers (medium tree): DFS digit accumulator; lowest-common-ancestor-binary-tree (medium tree): recursive LCA; 891 tests; bank at 207 (removed duplicate zigzag)
 
 ---
 
