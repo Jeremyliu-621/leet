@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 298 problems (14 tags); power-of-three + reverse-bits + game-of-life added; 1162 tests.
+**Current focus:** Bank at 298 problems (14 tags); maximum-product-word-lengths, power-of-three, reverse-bits, game-of-life added; 1165 tests; approaching 300.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** 300-problem milestone; 2 more problems; continue growing bank past 300.
 
