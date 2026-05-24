@@ -12,7 +12,8 @@ export type ProblemTag =
   | 'binary-search'
   | 'stack'
   | 'math'
-  | 'dynamic-programming';
+  | 'dynamic-programming'
+  | 'linked-list';
 
 /** Every tag, in canonical display order. */
 export const PROBLEM_TAGS: readonly ProblemTag[] = [
@@ -25,6 +26,7 @@ export const PROBLEM_TAGS: readonly ProblemTag[] = [
   'stack',
   'math',
   'dynamic-programming',
+  'linked-list',
 ];
 
 /** Every difficulty, easiest first. */

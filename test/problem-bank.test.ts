@@ -47,10 +47,14 @@ describe('problem bank', () => {
           expect(example.output.trim()).not.toBe('');
         }
         expect(problem.starterCode.javascript.trim()).not.toBe('');
-        expect(
-          problem.starterCode.javascript.includes(problem.functionName),
-          'starter code should declare the solution function',
-        ).toBe(true);
+        // When a preamble is present it may define the runner function; otherwise
+        // the starter code itself must declare the expected function name.
+        if (!problem.preamble?.javascript) {
+          expect(
+            problem.starterCode.javascript.includes(problem.functionName),
+            'starter code should declare the solution function',
+          ).toBe(true);
+        }
         expect(problem.visibleTests.length).toBeGreaterThan(0);
         expect(problem.hiddenTests.length).toBeGreaterThan(0);
       });

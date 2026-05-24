@@ -57,4 +57,11 @@ export interface Problem {
    * reveals them one at a time, gated by an explicit user click.
    */
   hints?: readonly string[];
+  /**
+   * Optional preamble code injected before the user's solution. Useful for
+   * problems that require a shared data-structure definition (e.g. ListNode for
+   * linked-list problems). The user's editor shows only `starterCode`; the
+   * preamble runs invisibly in the sandbox before the user's code.
+   */
+  preamble?: Readonly<{ javascript?: string; python?: string }>;
 }

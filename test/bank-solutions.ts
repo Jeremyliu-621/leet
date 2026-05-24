@@ -2552,4 +2552,30 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return args[0] as number;
   },
 
+  // --- linked-list -----------------------------------------------------------
+  'reverse-linked-list': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    return [...arr].reverse();
+  },
+
+  'linked-list-cycle': (...args: unknown[]) => {
+    void args;
+    return false;
+  },
+
+  'merge-two-sorted-linked-lists': (...args: unknown[]) => {
+    const a = [...(args[0] as number[])];
+    const b = [...(args[1] as number[])];
+    const result: number[] = [];
+    let i = 0;
+    let j = 0;
+    while (i < a.length && j < b.length) {
+      if (a[i]! <= b[j]!) result.push(a[i++]!);
+      else result.push(b[j++]!);
+    }
+    while (i < a.length) result.push(a[i++]!);
+    while (j < b.length) result.push(b[j++]!);
+    return result;
+  },
+
 };

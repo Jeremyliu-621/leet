@@ -37,6 +37,7 @@ self.onmessage = async function handleMessage(event) {
     return;
   }
   const requestId = data.requestId;
+  const preamble = typeof data.preamble === 'string' ? data.preamble + '\n' : '';
   const code = typeof data.code === 'string' ? data.code : '';
   const functionName = typeof data.functionName === 'string' ? data.functionName : '';
   const tests = Array.isArray(data.tests) ? data.tests : [];
@@ -72,7 +73,7 @@ self.onmessage = async function handleMessage(event) {
 
   let userFn;
   try {
-    await pyodide.runPythonAsync(code, { globals: userGlobals });
+    await pyodide.runPythonAsync(preamble + code, { globals: userGlobals });
     userFn = userGlobals.get(functionName);
   } catch (err) {
     destroy(userGlobals);

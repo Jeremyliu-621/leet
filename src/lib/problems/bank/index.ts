@@ -197,6 +197,11 @@ import { problem as burstBalloons } from './burst-balloons';
 import { problem as wildcardMatching } from './wildcard-matching';
 import { problem as dungeonGame } from './dungeon-game';
 
+// linked-list — easy
+import { problem as reverseLinkedList } from './reverse-linked-list';
+import { problem as linkedListCycle } from './linked-list-cycle';
+import { problem as mergeTwoSortedLinkedLists } from './merge-two-sorted-linked-lists';
+
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -383,4 +388,8 @@ export const problems: readonly Problem[] = [
   burstBalloons,
   wildcardMatching,
   dungeonGame,
+  // linked-list — easy
+  reverseLinkedList,
+  linkedListCycle,
+  mergeTwoSortedLinkedLists,
 ];

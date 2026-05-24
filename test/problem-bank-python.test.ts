@@ -50,8 +50,9 @@ describe('problem bank (python)', () => {
 
         // Fresh globals per problem keeps name collisions impossible.
         const namespace = pyodide.toPy({});
+        const preamble = problem.preamble?.python ? problem.preamble.python + '\n' : '';
         try {
-          await pyodide.runPythonAsync(source!, { globals: namespace });
+          await pyodide.runPythonAsync(preamble + source!, { globals: namespace });
           const fn = namespace.get(problem.functionName);
           expect(typeof fn).toBe('function');
 

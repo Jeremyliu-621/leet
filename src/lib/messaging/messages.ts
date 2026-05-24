@@ -30,6 +30,12 @@ export interface RunRequest {
    * `docs/PYODIDE_PLAN.md`.
    */
   language?: 'javascript' | 'python';
+  /**
+   * Optional preamble source code executed before the user's code. Used by
+   * problems that need shared definitions (e.g. ListNode for linked-list
+   * problems). Must be valid JavaScript (or Python when language is python).
+   */
+  preamble?: string;
 }
 
 /** Outcome of a single test executed by the Worker. */

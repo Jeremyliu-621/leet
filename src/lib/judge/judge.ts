@@ -88,6 +88,11 @@ export async function runTests(options: RunTestsOptions): Promise<JudgeResult> {
 
   const timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
   const requestId = `run-${++requestCounter}-${Date.now()}`;
+  const lang = options.language ?? 'javascript';
+  const preamble =
+    lang === 'python'
+      ? options.problem.preamble?.python
+      : options.problem.preamble?.javascript;
   const request: RunRequest = {
     type: 'run',
     requestId,
@@ -95,7 +100,8 @@ export async function runTests(options: RunTestsOptions): Promise<JudgeResult> {
     functionName: options.problem.functionName,
     tests: options.tests.map((test) => ({ args: test.args })),
     timeoutMs,
-    language: options.language ?? 'javascript',
+    language: lang,
+    ...(preamble ? { preamble } : {}),
   };
 
   const response = await new Promise<RunResponse>((resolve) => {

@@ -1973,4 +1973,41 @@ export const pythonSolutions: Record<string, string> = {
                 return int(''.join(digits))
     return num
 `,
+
+  // --- linked-list -----------------------------------------------------------
+  'reverse-linked-list': `def reverseList(head):
+    prev = None
+    curr = head
+    while curr:
+        next_node = curr.next
+        curr.next = prev
+        prev = curr
+        curr = next_node
+    return prev
+`,
+  'linked-list-cycle': `def hasCycle(head):
+    slow = head
+    fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow is fast:
+            return True
+    return False
+`,
+  'merge-two-sorted-linked-lists': `def mergeTwoLists(list1, list2):
+    dummy = ListNode(0)
+    curr = dummy
+    l1, l2 = list1, list2
+    while l1 and l2:
+        if l1.val <= l2.val:
+            curr.next = l1
+            l1 = l1.next
+        else:
+            curr.next = l2
+            l2 = l2.next
+        curr = curr.next
+    curr.next = l1 if l1 else l2
+    return dummy.next
+`,
 };
