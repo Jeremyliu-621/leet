@@ -179,6 +179,9 @@ import { problem as longestPalindromicSubsequence } from './longest-palindromic-
 import { problem as palindromePartitioningMinCuts } from './palindrome-partitioning-min-cuts';
 import { problem as maximumProductCutting } from './maximum-product-cutting';
 import { problem as regularExpressionMatching } from './regular-expression-matching';
+import { problem as burstBalloons } from './burst-balloons';
+import { problem as wildcardMatching } from './wildcard-matching';
+import { problem as dungeonGame } from './dungeon-game';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -349,4 +352,7 @@ export const problems: readonly Problem[] = [
   palindromePartitioningMinCuts,
   maximumProductCutting,
   regularExpressionMatching,
+  burstBalloons,
+  wildcardMatching,
+  dungeonGame,
 ];

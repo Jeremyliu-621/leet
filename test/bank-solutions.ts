@@ -2346,4 +2346,57 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp.get(target) ?? 0;
   },
 
+  'burst-balloons': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const a = [1, ...nums, 1];
+    const n = a.length;
+    const dp = Array.from({ length: n }, () => new Array<number>(n).fill(0));
+    for (let len = 2; len < n; len++) {
+      for (let i = 0; i + len < n; i++) {
+        const j = i + len;
+        for (let k = i + 1; k < j; k++) {
+          dp[i]![j] = Math.max(dp[i]![j]!, dp[i]![k]! + a[i]! * a[k]! * a[j]! + dp[k]![j]!);
+        }
+      }
+    }
+    return dp[0]![n - 1];
+  },
+
+  'wildcard-matching': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const p = args[1] as string;
+    const m = s.length;
+    const n = p.length;
+    const dp = Array.from({ length: m + 1 }, () => new Array<boolean>(n + 1).fill(false));
+    dp[0]![0] = true;
+    for (let j = 1; j <= n; j++) {
+      if (p[j - 1] === '*') dp[0]![j] = dp[0]![j - 1]!;
+    }
+    for (let i = 1; i <= m; i++) {
+      for (let j = 1; j <= n; j++) {
+        if (p[j - 1] === '*') {
+          dp[i]![j] = dp[i - 1]![j]! || dp[i]![j - 1]!;
+        } else if (p[j - 1] === '?' || p[j - 1] === s[i - 1]) {
+          dp[i]![j] = dp[i - 1]![j - 1]!;
+        }
+      }
+    }
+    return dp[m]![n];
+  },
+
+  'dungeon-game': (...args: unknown[]) => {
+    const dungeon = args[0] as number[][];
+    const m = dungeon.length;
+    const n = dungeon[0]!.length;
+    const dp = Array.from({ length: m + 1 }, () => new Array<number>(n + 1).fill(Infinity));
+    dp[m]![n - 1] = 1;
+    dp[m - 1]![n] = 1;
+    for (let i = m - 1; i >= 0; i--) {
+      for (let j = n - 1; j >= 0; j--) {
+        dp[i]![j] = Math.max(1, Math.min(dp[i + 1]![j]!, dp[i]![j + 1]!) - dungeon[i]![j]!);
+      }
+    }
+    return dp[0]![0];
+  },
+
 };

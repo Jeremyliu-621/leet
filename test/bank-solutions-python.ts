@@ -1789,4 +1789,42 @@ export const pythonSolutions: Record<string, string> = {
         dp = next_dp
     return dp.get(target, 0)
 `,
+  'burst-balloons': `def maxCoins(nums: list[int]) -> int:
+    a = [1] + list(nums) + [1]
+    n = len(a)
+    dp = [[0] * n for _ in range(n)]
+    for length in range(2, n):
+        for i in range(n - length):
+            j = i + length
+            for k in range(i + 1, j):
+                dp[i][j] = max(dp[i][j], dp[i][k] + a[i] * a[k] * a[j] + dp[k][j])
+    return dp[0][n - 1]
+`,
+  'wildcard-matching': `def isMatch(s: str, p: str) -> bool:
+    m, n = len(s), len(p)
+    dp = [[False] * (n + 1) for _ in range(m + 1)]
+    dp[0][0] = True
+    for j in range(1, n + 1):
+        if p[j - 1] == '*':
+            dp[0][j] = dp[0][j - 1]
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if p[j - 1] == '*':
+                dp[i][j] = dp[i - 1][j] or dp[i][j - 1]
+            elif p[j - 1] == '?' or p[j - 1] == s[i - 1]:
+                dp[i][j] = dp[i - 1][j - 1]
+    return dp[m][n]
+`,
+  'dungeon-game': `def calculateMinimumHP(dungeon: list[list[int]]) -> int:
+    dungeon = [list(row) for row in dungeon]
+    m, n = len(dungeon), len(dungeon[0])
+    dp = [[float('inf')] * (n + 1) for _ in range(m + 1)]
+    dp[m][n - 1] = 1
+    dp[m - 1][n] = 1
+    for i in range(m - 1, -1, -1):
+        for j in range(n - 1, -1, -1):
+            need = min(dp[i + 1][j], dp[i][j + 1]) - dungeon[i][j]
+            dp[i][j] = max(1, int(need))
+    return dp[0][0]
+`,
 };
