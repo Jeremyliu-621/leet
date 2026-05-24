@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 459 problems; 1648 tests; growing toward 480+.
+**Current focus:** Bank at 465 problems; 1663 tests; growing toward 480+. Added sum-of-left-leaves, toeplitz-matrix, transpose-matrix, leaf-similar-trees, maximum-number-of-balloons, count-characters; removed duplicate determine-if-string-halves-alike.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing bank toward 480+; more easy/medium problems across all tags.
 
