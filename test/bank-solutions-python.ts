@@ -5517,6 +5517,73 @@ def convert(s, numRows):
     return ''.join(rows)
 `,
 
+  'merge-sorted-array': `
+def mergeSortedRunner(nums1, m, nums2, n):
+    a = list(nums1[:m]) + [0] * n
+    b = list(nums2[:n])
+    p1, p2, p = m - 1, n - 1, m + n - 1
+    while p2 >= 0:
+        if p1 >= 0 and a[p1] > b[p2]:
+            a[p] = a[p1]; p1 -= 1
+        else:
+            a[p] = b[p2]; p2 -= 1
+        p -= 1
+    return a
+`,
+
+  'minimum-moves-equal-array': `
+def minMoves(nums):
+    nums = list(nums)
+    return sum(nums) - min(nums) * len(nums)
+`,
+
+  'multiply-strings': `
+def multiply(num1, num2):
+    m, n = len(num1), len(num2)
+    pos = [0] * (m + n)
+    for i in range(m - 1, -1, -1):
+        for j in range(n - 1, -1, -1):
+            mul = int(num1[i]) * int(num2[j])
+            p1, p2 = i + j, i + j + 1
+            s = mul + pos[p2]
+            pos[p2] = s % 10
+            pos[p1] += s // 10
+    result = ''.join(map(str, pos)).lstrip('0')
+    return result or '0'
+`,
+
+  'count-triplets-xor': `
+def countTriplets(arr):
+    arr = list(arr)
+    n = len(arr)
+    count = 0
+    for i in range(n - 1):
+        xor = arr[i]
+        for k in range(i + 1, n):
+            xor ^= arr[k]
+            if xor == 0:
+                count += k - i
+    return count
+`,
+
+  'water-and-jug': `
+def canMeasureWater(jug1Capacity, jug2Capacity, targetCapacity):
+    from math import gcd
+    if targetCapacity == 0:
+        return True
+    if targetCapacity > jug1Capacity + jug2Capacity:
+        return False
+    return targetCapacity % gcd(jug1Capacity, jug2Capacity) == 0
+`,
+
+  'find-center-of-star-graph': `
+def findCenter(edges):
+    edges = [list(e) for e in edges]
+    a, b = edges[0]
+    c, d = edges[1]
+    return a if a == c or a == d else b
+`,
+
   'maximum-frequency-stack': `
 def freqStackRunner(ops, vals):
     freq = {}

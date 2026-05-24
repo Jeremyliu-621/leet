@@ -6189,6 +6189,69 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return rows.join('');
   },
 
+  'merge-sorted-array': (...args: unknown[]) => {
+    const nums1 = args[0] as number[], m = args[1] as number;
+    const nums2 = args[2] as number[], n = args[3] as number;
+    let p1 = m - 1, p2 = n - 1, p = m + n - 1;
+    while (p2 >= 0) {
+      if (p1 >= 0 && nums1[p1]! > nums2[p2]!) nums1[p--] = nums1[p1--]!;
+      else nums1[p--] = nums2[p2--]!;
+    }
+    return nums1.slice(0, m + n);
+  },
+
+  'minimum-moves-equal-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const min = Math.min(...nums);
+    return nums.reduce((s, v) => s + v - min, 0);
+  },
+
+  'multiply-strings': (...args: unknown[]) => {
+    const num1 = args[0] as string, num2 = args[1] as string;
+    const m = num1.length, n = num2.length;
+    const pos = new Array(m + n).fill(0);
+    for (let i = m - 1; i >= 0; i--) {
+      for (let j = n - 1; j >= 0; j--) {
+        const mul = (num1.charCodeAt(i) - 48) * (num2.charCodeAt(j) - 48);
+        const p1 = i + j, p2 = i + j + 1;
+        const sum = mul + pos[p2]!;
+        pos[p2] = sum % 10;
+        pos[p1] = (pos[p1]! + Math.floor(sum / 10));
+      }
+    }
+    const result = pos.join('').replace(/^0+/, '');
+    return result || '0';
+  },
+
+  'count-triplets-xor': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const n = arr.length;
+    let count = 0;
+    for (let i = 0; i < n - 1; i++) {
+      let xor = arr[i]!;
+      for (let k = i + 1; k < n; k++) {
+        xor ^= arr[k]!;
+        if (xor === 0) count += k - i;
+      }
+    }
+    return count;
+  },
+
+  'water-and-jug': (...args: unknown[]) => {
+    const x = args[0] as number, y = args[1] as number, z = args[2] as number;
+    if (z === 0) return true;
+    if (z > x + y) return false;
+    const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+    return z % gcd(x, y) === 0;
+  },
+
+  'find-center-of-star-graph': (...args: unknown[]) => {
+    const edges = args[0] as number[][];
+    const [a, b] = edges[0]!;
+    const [c, d] = edges[1]!;
+    return a === c || a === d ? a : b!;
+  },
+
   'maximum-frequency-stack': (...args: unknown[]) => {
     const ops = args[0] as string[], vals = args[1] as number[];
     const freq = new Map<number, number>();

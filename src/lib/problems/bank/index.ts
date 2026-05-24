@@ -47,6 +47,8 @@ import { problem as minimumSumMountainTriplet } from './minimum-sum-mountain-tri
 import { problem as findNumbersEvenDigits } from './find-numbers-even-digits';
 import { problem as rearrangeArrayElementsBySign } from './rearrange-array-elements-by-sign';
 import { problem as numberOfZeroFilledSubarrays } from './number-of-zero-filled-subarrays';
+// arrays — easy (additional)
+import { problem as mergeSortedArray } from './merge-sorted-array';
 // arrays — medium
 import { problem as rangeSumQuery2D } from './range-sum-query-2d';
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
@@ -305,6 +307,10 @@ import { problem as countOfMatchesTournament } from './count-of-matches-tourname
 import { problem as fractionToRecurringDecimal } from './fraction-to-recurring-decimal';
 import { problem as integerToEnglishWords } from './integer-to-english-words';
 // math — medium
+import { problem as minimumMovesEqualArray } from './minimum-moves-equal-array';
+import { problem as multiplyStrings } from './multiply-strings';
+import { problem as waterAndJug } from './water-and-jug';
+import { problem as countTripletsXor } from './count-triplets-xor';
 import { problem as taskScheduler } from './task-scheduler';
 import { problem as countPrimesLessThan } from './count-primes-less-than';
 import { problem as countPrimesSieve } from './count-primes-sieve';
@@ -412,6 +418,7 @@ import { problem as mergeKSortedLists } from './merge-k-sorted-lists';
 import { problem as reverseNodesInKGroup } from './reverse-nodes-in-k-group';
 
 // graph — easy
+import { problem as findCenterOfStarGraph } from './find-center-of-star-graph';
 import { problem as floodFill } from './flood-fill';
 import { problem as findTheTownJudge } from './find-the-town-judge';
 import { problem as numberOfProvinces } from './number-of-provinces';
@@ -542,6 +549,7 @@ export const problems: readonly Problem[] = [
   sumOfOddLengthSubarrays,
   minimumSumMountainTriplet,
   findNumbersEvenDigits,
+  mergeSortedArray,
   singleNumber,
   // arrays — medium
   rearrangeArrayElementsBySign,
@@ -819,6 +827,10 @@ export const problems: readonly Problem[] = [
   fractionToRecurringDecimal,
   integerToEnglishWords,
   // math — medium
+  minimumMovesEqualArray,
+  multiplyStrings,
+  waterAndJug,
+  countTripletsXor,
   taskScheduler,
   countPrimesSieve,
   countPrimesLessThan,
@@ -901,6 +913,7 @@ export const problems: readonly Problem[] = [
   mergeKSortedLists,
   reverseNodesInKGroup,
   // graph — easy
+  findCenterOfStarGraph,
   floodFill,
   findTheTownJudge,
   numberOfProvinces,
