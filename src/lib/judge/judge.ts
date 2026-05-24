@@ -53,6 +53,8 @@ export interface RunTestsOptions {
   tests: readonly TestCase[];
   /** Per-run hard timeout in ms; defaults to 4000. */
   timeoutMs?: number;
+  /** Language the code is written in; defaults to JavaScript. */
+  language?: 'javascript' | 'python';
 }
 
 /**
@@ -75,6 +77,7 @@ export async function runTests(options: RunTestsOptions): Promise<JudgeResult> {
     functionName: options.problem.functionName,
     tests: options.tests.map((test) => ({ args: test.args })),
     timeoutMs,
+    language: options.language ?? 'javascript',
   };
 
   const response = await new Promise<RunResponse>((resolve) => {
