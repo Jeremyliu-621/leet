@@ -5345,4 +5345,75 @@ def numberOfMatches(n):
     return sum(sieve)
 `,
 
+  'number-of-students-eating-lunch': `
+def countStudents(students, sandwiches):
+    s = list(students)
+    w = list(sandwiches)
+    zeros = sum(1 for x in s if x == 0)
+    ones = len(s) - zeros
+    for sandwich in w:
+        if sandwich == 0 and zeros > 0:
+            zeros -= 1
+        elif sandwich == 1 and ones > 0:
+            ones -= 1
+        else:
+            return zeros + ones
+    return 0
+`,
+
+  'two-sum-less-than-k': `
+def twoSumLessThanK(nums, k):
+    a = sorted(nums)
+    lo, hi, best = 0, len(a)-1, -1
+    while lo < hi:
+        s = a[lo] + a[hi]
+        if s < k:
+            best = max(best, s)
+            lo += 1
+        else:
+            hi -= 1
+    return best
+`,
+
+  'find-smallest-letter-greater-than-target': `
+def nextGreatestLetter(letters, target):
+    a = list(letters)
+    lo, hi = 0, len(a)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if a[mid] <= target:
+            lo = mid + 1
+        else:
+            hi = mid
+    return a[lo % len(a)]
+`,
+
+  'minimum-difference-k-scores': `
+def minimumDifference(nums, k):
+    a = sorted(nums)
+    return min(a[i+k-1] - a[i] for i in range(len(a)-k+1))
+`,
+
+  'two-out-of-three': `
+def twoOutOfThree(nums1, nums2, nums3):
+    s1, s2, s3 = set(nums1), set(nums2), set(nums3)
+    result = set()
+    for v in s1:
+        if v in s2 or v in s3: result.add(v)
+    for v in s2:
+        if v in s1 or v in s3: result.add(v)
+    return sorted(result)
+`,
+
+  'sum-of-odd-length-subarrays': `
+def sumOddLengthSubarrays(arr):
+    a = list(arr)
+    total = 0
+    length = len(a)
+    for l in range(1, length+1, 2):
+        for i in range(length - l + 1):
+            total += sum(a[i:i+l])
+    return total
+`,
+
 };

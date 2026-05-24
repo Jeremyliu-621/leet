@@ -6015,4 +6015,65 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  'number-of-students-eating-lunch': (...args: unknown[]) => {
+    const students = args[0] as number[], sandwiches = args[1] as number[];
+    let zeros = students.filter(s => s === 0).length;
+    let ones = students.length - zeros;
+    for (const s of sandwiches) {
+      if (s === 0 && zeros > 0) zeros--;
+      else if (s === 1 && ones > 0) ones--;
+      else return zeros + ones;
+    }
+    return 0;
+  },
+
+  'two-sum-less-than-k': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const k = args[1] as number;
+    let lo = 0, hi = nums.length - 1, max = -1;
+    while (lo < hi) {
+      const s = nums[lo]! + nums[hi]!;
+      if (s < k) { max = Math.max(max, s); lo++; }
+      else hi--;
+    }
+    return max;
+  },
+
+  'find-smallest-letter-greater-than-target': (...args: unknown[]) => {
+    const letters = args[0] as string[], target = args[1] as string;
+    let lo = 0, hi = letters.length;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (letters[mid]! <= target) lo = mid + 1;
+      else hi = mid;
+    }
+    return letters[lo % letters.length]!;
+  },
+
+  'minimum-difference-k-scores': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const k = args[1] as number;
+    let min = Infinity;
+    for (let i = 0; i + k - 1 < nums.length; i++) min = Math.min(min, nums[i + k - 1]! - nums[i]!);
+    return min;
+  },
+
+  'two-out-of-three': (...args: unknown[]) => {
+    const [n1, n2, n3] = [args[0] as number[], args[1] as number[], args[2] as number[]];
+    const s1 = new Set(n1), s2 = new Set(n2), s3 = new Set(n3);
+    const result = new Set<number>();
+    for (const v of s1) { if (s2.has(v) || s3.has(v)) result.add(v); }
+    for (const v of s2) { if (s1.has(v) || s3.has(v)) result.add(v); }
+    return [...result].sort((a, b) => a - b);
+  },
+
+  'sum-of-odd-length-subarrays': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    let sum = 0;
+    for (let len = 1; len <= arr.length; len += 2)
+      for (let i = 0; i + len <= arr.length; i++)
+        for (let j = i; j < i + len; j++) sum += arr[j]!;
+    return sum;
+  },
+
 };

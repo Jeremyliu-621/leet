@@ -62,6 +62,7 @@ describe('problem selector', () => {
       'balanced-brackets', 'remove-adjacent-dupes', 'next-greater-element',
       'daily-temperatures', 'evaluate-rpn', 'min-stack', 'implement-queue-using-stacks',
       'maximum-nesting-depth',
+      'number-of-students-eating-lunch',
     ] })).toBeUndefined();
   });
 

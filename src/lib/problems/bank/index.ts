@@ -42,6 +42,7 @@ import { problem as maximumProductTwoElements } from './maximum-product-two-elem
 import { problem as increasingTripletSubsequence } from './increasing-triplet-subsequence';
 import { problem as numberOfRectangles } from './number-of-rectangles';
 import { problem as largestAltitude } from './largest-altitude';
+import { problem as sumOfOddLengthSubarrays } from './sum-of-odd-length-subarrays';
 // arrays — medium
 import { problem as rangeSumQuery2D } from './range-sum-query-2d';
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
@@ -124,6 +125,7 @@ import { problem as stringCompression } from './string-compression';
 import { problem as restoreIpAddresses } from './restore-ip-addresses';
 
 // hash-map — easy
+import { problem as twoOutOfThree } from './two-out-of-three';
 import { problem as findAnagramMappings } from './find-anagram-mappings';
 import { problem as validAnagram } from './valid-anagram';
 import { problem as pathCrossing } from './path-crossing';
@@ -171,6 +173,7 @@ import { problem as nextPermutation } from './next-permutation';
 import { problem as intervalListIntersections } from './interval-list-intersections';
 import { problem as longestMountainInArray } from './longest-mountain-in-array';
 // two-pointers — easy
+import { problem as twoSumLessThanK } from './two-sum-less-than-k';
 import { problem as reverseArrayInplace } from './reverse-array-inplace';
 import { problem as sortedPairExists } from './sorted-pair-exists';
 import { problem as mergeSortedLists } from './merge-sorted-lists';
@@ -192,6 +195,7 @@ import { problem as minimumOperationsReduceX } from './minimum-operations-reduce
 import { problem as numberOfSubstrings } from './number-of-substrings';
 import { problem as longestTurbulentSubarray } from './longest-turbulent-subarray';
 // sliding-window — easy
+import { problem as minimumDifferenceKScores } from './minimum-difference-k-scores';
 import { problem as maxWindowSum } from './max-window-sum';
 import { problem as maximumAverageSubarray } from './maximum-average-subarray';
 import { problem as longestEqualRun } from './longest-equal-run';
@@ -200,6 +204,7 @@ import { problem as longestUniqueWindow } from './longest-unique-window';
 import { problem as minSubarrayLength } from './min-subarray-length';
 
 // binary-search — easy
+import { problem as findSmallestLetterGreaterThanTarget } from './find-smallest-letter-greater-than-target';
 import { problem as findTargetIndex } from './find-target-index';
 import { problem as integerSquareRoot } from './integer-square-root';
 import { problem as firstNotSmaller } from './first-not-smaller';
@@ -224,6 +229,7 @@ import { problem as splitArrayLargestSum } from './split-array-largest-sum';
 import { problem as capacityToShip } from './capacity-to-ship';
 
 // stack — easy
+import { problem as numberOfStudentsEatingLunch } from './number-of-students-eating-lunch';
 import { problem as implementQueueUsingStacks } from './implement-queue-using-stacks';
 import { problem as balancedBrackets } from './balanced-brackets';
 import { problem as removeAdjacentDupes } from './remove-adjacent-dupes';
@@ -515,6 +521,7 @@ export const problems: readonly Problem[] = [
   increasingTripletSubsequence,
   numberOfRectangles,
   largestAltitude,
+  sumOfOddLengthSubarrays,
   singleNumber,
   // arrays — medium
   rangeSumQuery2D,
@@ -604,6 +611,7 @@ export const problems: readonly Problem[] = [
   stringCompression,
   integerToRoman,
   // hash-map — easy
+  twoOutOfThree,
   findAnagramMappings,
   validAnagram,
   pathCrossing,
@@ -650,6 +658,7 @@ export const problems: readonly Problem[] = [
   intervalListIntersections,
   longestMountainInArray,
   // two-pointers — easy
+  twoSumLessThanK,
   squaresOfSortedArray,
   reverseVowels,
   reverseArrayInplace,
@@ -673,6 +682,7 @@ export const problems: readonly Problem[] = [
   numberOfSubstrings,
   longestTurbulentSubarray,
   // sliding-window — easy
+  minimumDifferenceKScores,
   maxWindowSum,
   maximumAverageSubarray,
   longestEqualRun,
@@ -680,6 +690,7 @@ export const problems: readonly Problem[] = [
   longestUniqueWindow,
   minSubarrayLength,
   // binary-search — easy
+  findSmallestLetterGreaterThanTarget,
   countNegativesInSortedMatrix,
   findTargetIndex,
   integerSquareRoot,
@@ -704,6 +715,7 @@ export const problems: readonly Problem[] = [
   splitArrayLargestSum,
   capacityToShip,
   // stack — easy
+  numberOfStudentsEatingLunch,
   implementQueueUsingStacks,
   balancedBrackets,
   removeAdjacentDupes,
