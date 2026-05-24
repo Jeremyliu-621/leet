@@ -2771,6 +2771,31 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   },
 
   // --- tree -------------------------------------------------------------------
+  'balanced-binary-tree': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    const height = (n: _TN | null): number => {
+      if (!n) return 0;
+      const l = height(n.l);
+      if (l === -1) return -1;
+      const r = height(n.r);
+      if (r === -1) return -1;
+      if (Math.abs(l - r) > 1) return -1;
+      return 1 + Math.max(l, r);
+    };
+    return height(root) !== -1;
+  },
+
+  'minimum-depth-binary-tree': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    if (!root) return 0;
+    const minD = (n: _TN | null): number => {
+      if (!n) return Infinity;
+      if (!n.l && !n.r) return 1;
+      return 1 + Math.min(minD(n.l), minD(n.r));
+    };
+    return minD(root);
+  },
+
   'max-depth-binary-tree': (...args: unknown[]) => {
     const d = (n: _TN | null): number => n ? 1 + Math.max(d(n.l), d(n.r)) : 0;
     return d(_buildTree(args[0] as (number | null)[]));
@@ -2893,6 +2918,40 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   },
 
   // --- graph additions -------------------------------------------------------
+
+  'word-search': (...args: unknown[]) => {
+    const board = (args[0] as string[][]).map(r => [...r]);
+    const word = args[1] as string;
+    const m = board.length, n = board[0]!.length;
+    const dfs = (r: number, c: number, idx: number): boolean => {
+      if (idx === word.length) return true;
+      if (r < 0 || r >= m || c < 0 || c >= n || board[r]![c] !== word[idx]) return false;
+      const ch = board[r]![c]!;
+      board[r]![c] = '#';
+      const found = dfs(r + 1, c, idx + 1) || dfs(r - 1, c, idx + 1) || dfs(r, c + 1, idx + 1) || dfs(r, c - 1, idx + 1);
+      board[r]![c] = ch;
+      return found;
+    };
+    for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) { if (dfs(r, c, 0)) return true; }
+    return false;
+  },
+
+  'surrounded-regions': (...args: unknown[]) => {
+    const board = (args[0] as string[][]).map(r => [...r]);
+    const m = board.length, n = board[0]!.length;
+    const mark = (r: number, c: number): void => {
+      if (r < 0 || r >= m || c < 0 || c >= n || board[r]![c] !== 'O') return;
+      board[r]![c] = 'S';
+      mark(r + 1, c); mark(r - 1, c); mark(r, c + 1); mark(r, c - 1);
+    };
+    for (let r = 0; r < m; r++) { mark(r, 0); mark(r, n - 1); }
+    for (let c = 0; c < n; c++) { mark(0, c); mark(m - 1, c); }
+    for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) {
+      if (board[r]![c] === 'O') board[r]![c] = 'X';
+      else if (board[r]![c] === 'S') board[r]![c] = 'O';
+    }
+    return board;
+  },
 
   'find-the-town-judge': (...args: unknown[]) => {
     const n = args[0] as number;

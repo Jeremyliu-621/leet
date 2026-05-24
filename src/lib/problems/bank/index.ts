@@ -221,6 +221,9 @@ import { problem as reverseNodesInKGroup } from './reverse-nodes-in-k-group';
 import { problem as floodFill } from './flood-fill';
 import { problem as findTheTownJudge } from './find-the-town-judge';
 import { problem as numberOfProvinces } from './number-of-provinces';
+// graph — medium (additional)
+import { problem as wordSearch } from './word-search';
+import { problem as surroundedRegions } from './surrounded-regions';
 // graph — medium
 import { problem as numberOfIslands } from './number-of-islands';
 import { problem as courseSchedule } from './course-schedule';
@@ -238,6 +241,9 @@ import { problem as allPathsSourceTarget } from './all-paths-source-target';
 // graph — hard
 import { problem as wordLadder } from './word-ladder';
 
+// tree — easy (additional)
+import { problem as balancedBinaryTree } from './balanced-binary-tree';
+import { problem as minimumDepthBinaryTree } from './minimum-depth-binary-tree';
 // tree — easy
 import { problem as maxDepthBinaryTree } from './max-depth-binary-tree';
 import { problem as symmetricTree } from './symmetric-tree';
@@ -474,6 +480,8 @@ export const problems: readonly Problem[] = [
   findTheTownJudge,
   numberOfProvinces,
   // graph — medium
+  wordSearch,
+  surroundedRegions,
   numberOfIslands,
   courseSchedule,
   maxAreaOfIsland,
@@ -490,6 +498,8 @@ export const problems: readonly Problem[] = [
   // graph — hard
   wordLadder,
   // tree — easy
+  balancedBinaryTree,
+  minimumDepthBinaryTree,
   maxDepthBinaryTree,
   symmetricTree,
   invertBinaryTree,

@@ -2199,6 +2199,34 @@ export const pythonSolutions: Record<string, string> = {
 `,
 
   // --- tree -------------------------------------------------------------------
+  'balanced-binary-tree': `def isBalanced(root):
+    def height(node):
+        if not node:
+            return 0
+        l = height(node.left)
+        if l == -1:
+            return -1
+        r = height(node.right)
+        if r == -1:
+            return -1
+        if abs(l - r) > 1:
+            return -1
+        return 1 + max(l, r)
+    return height(root) != -1
+`,
+
+  'minimum-depth-binary-tree': `def minDepth(root):
+    if not root:
+        return 0
+    if not root.left and not root.right:
+        return 1
+    if not root.left:
+        return 1 + minDepth(root.right)
+    if not root.right:
+        return 1 + minDepth(root.left)
+    return 1 + min(minDepth(root.left), minDepth(root.right))
+`,
+
   'max-depth-binary-tree': `def maxDepth(root):
     if not root:
         return 0
@@ -2313,6 +2341,49 @@ export const pythonSolutions: Record<string, string> = {
         return node.val + max(l, r)
     gain(root)
     return best[0]
+`,
+
+  'word-search': `def exist(board, word):
+    board = [list(row) for row in board]
+    m, n = len(board), len(board[0])
+    def dfs(r, c, idx):
+        if idx == len(word):
+            return True
+        if r < 0 or r >= m or c < 0 or c >= n or board[r][c] != word[idx]:
+            return False
+        ch = board[r][c]
+        board[r][c] = '#'
+        found = dfs(r+1,c,idx+1) or dfs(r-1,c,idx+1) or dfs(r,c+1,idx+1) or dfs(r,c-1,idx+1)
+        board[r][c] = ch
+        return found
+    for r in range(m):
+        for c in range(n):
+            if dfs(r, c, 0):
+                return True
+    return False
+`,
+
+  'surrounded-regions': `def solve(board):
+    if not board:
+        return board
+    board = [list(row) for row in board]
+    m, n = len(board), len(board[0])
+    def mark(r, c):
+        if r < 0 or r >= m or c < 0 or c >= n or board[r][c] != 'O':
+            return
+        board[r][c] = 'S'
+        mark(r+1, c); mark(r-1, c); mark(r, c+1); mark(r, c-1)
+    for r in range(m):
+        mark(r, 0); mark(r, n-1)
+    for c in range(n):
+        mark(0, c); mark(m-1, c)
+    for r in range(m):
+        for c in range(n):
+            if board[r][c] == 'O':
+                board[r][c] = 'X'
+            elif board[r][c] == 'S':
+                board[r][c] = 'O'
+    return board
 `,
 
   'find-the-town-judge': `def findJudge(n, trust):
