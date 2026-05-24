@@ -49,6 +49,9 @@ export default defineManifest({
         'src/pages/blocked/index.html',
         'src/pages/sandbox/index.html',
         'icons/*',
+        // Pyodide runtime bundled in the extension (no remote code — see
+        // docs/PYODIDE_PLAN.md §2). The sandbox host fetches these on demand.
+        'pyodide/*',
       ],
       matches: ['<all_urls>'],
     },
@@ -58,7 +61,9 @@ export default defineManifest({
   },
   content_security_policy: {
     extension_pages: "script-src 'self'; object-src 'self';",
+    // Pyodide instantiates WASM; Chrome MV3 requires 'wasm-unsafe-eval' in
+    // script-src for any context that runs a WebAssembly module.
     sandbox:
-      "sandbox allow-scripts allow-forms allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob:; worker-src 'self' blob:; object-src 'self';",
+      "sandbox allow-scripts allow-forms allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; object-src 'self';",
   },
 });
