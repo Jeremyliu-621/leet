@@ -26,12 +26,22 @@ const FONT_SIZE_OPTIONS: ReadonlyArray<{ value: number; label: string }> = [
   { value: 17, label: 'XL' },
 ];
 
+/** Common distractions surfaced as one-click adds on first run. */
+const FIRST_RUN_SUGGESTIONS: readonly string[] = [
+  'youtube.com',
+  'reddit.com',
+  'x.com',
+  'instagram.com',
+  'tiktok.com',
+];
+
 interface PopupData {
   streak: StreakSummary;
   activeUnlocks: UnlockToken[];
   solvedToday: number;
   currentDomain: string | null;
   alreadyBlocked: boolean;
+  blockedDomains: ReadonlySet<string>;
   theme: ThemePreference;
   editorFontSize: number;
 }
@@ -70,6 +80,12 @@ export function Popup() {
         (record: SolvedProblemRecord) => localDateString(new Date(record.solvedAt)) === today,
       ).length;
 
+      const blockedDomains = new Set(
+        blockedRules
+          .filter((rule) => rule.kind === 'domain')
+          .map((rule) => rule.pattern.toLowerCase()),
+      );
+
       if (cancelled) return;
       setData({
         streak,
@@ -77,6 +93,7 @@ export function Popup() {
         solvedToday,
         currentDomain,
         alreadyBlocked,
+        blockedDomains,
         theme: prefs.theme,
         editorFontSize: prefs.editorFontSize,
       });
@@ -90,16 +107,29 @@ export function Popup() {
 
   async function handleBlock(): Promise<void> {
     if (!data || !data.currentDomain || data.alreadyBlocked) return;
+    await addDomainRule(data.currentDomain);
+  }
+
+  async function addDomainRule(domain: string): Promise<void> {
+    if (!data) return;
+    const lower = domain.toLowerCase();
+    if (data.blockedDomains.has(lower)) return;
     const rules = await getValue('blockedRules');
     const rule: BlockRule = {
       id: `r-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`,
       kind: 'domain',
-      pattern: data.currentDomain,
+      pattern: lower,
       enabled: true,
       createdAt: Date.now(),
     };
     await setValue('blockedRules', [...rules, rule]);
-    setData({ ...data, alreadyBlocked: true });
+    const nextDomains = new Set(data.blockedDomains);
+    nextDomains.add(lower);
+    setData({
+      ...data,
+      blockedDomains: nextDomains,
+      alreadyBlocked: data.currentDomain === lower ? true : data.alreadyBlocked,
+    });
   }
 
   function handleOpenSettings(): void {
@@ -160,6 +190,30 @@ export function Popup() {
         <Stat label="Today" value={data.solvedToday} sub="solves" />
         <Stat label="Unlocks" value={data.activeUnlocks.length} sub="active" />
       </section>
+
+      {data.blockedDomains.size === 0 && (
+        <section className="mt-5" aria-label="Quick start">
+          <h2 className="font-mono text-[10px] uppercase tracking-widest text-faint">
+            Add a site to start
+          </h2>
+          <p className="mt-1 text-xs text-muted">
+            Pick a distraction. You can change or remove these any time in Settings.
+          </p>
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {FIRST_RUN_SUGGESTIONS.map((domain) => (
+              <button
+                key={domain}
+                type="button"
+                onClick={() => void addDomainRule(domain)}
+                aria-label={`Block ${domain}`}
+                className="rounded-sm border border-border bg-bg px-2.5 py-1 font-mono text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+              >
+                + {domain}
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className="mt-5">
         <h2 className="font-mono text-[10px] uppercase tracking-widest text-faint">
