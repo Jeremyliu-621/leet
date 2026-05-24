@@ -2296,4 +2296,85 @@ export const pythonSolutions: Record<string, string> = {
             return node
     return None
 `,
+
+  'binary-tree-max-path-sum': `def maxPathSum(root):
+    best = [float('-inf')]
+    def gain(node):
+        if not node:
+            return 0
+        l = max(0, gain(node.left))
+        r = max(0, gain(node.right))
+        if node.val + l + r > best[0]:
+            best[0] = node.val + l + r
+        return node.val + max(l, r)
+    gain(root)
+    return best[0]
+`,
+
+  'find-the-town-judge': `def findJudge(n, trust):
+    in_deg = [0] * (n + 1)
+    out_deg = [0] * (n + 1)
+    for a, b in trust:
+        out_deg[a] += 1
+        in_deg[b] += 1
+    for i in range(1, n + 1):
+        if in_deg[i] == n - 1 and out_deg[i] == 0:
+            return i
+    return -1
+`,
+
+  'max-area-of-island': `def maxAreaOfIsland(grid):
+    rows, cols = len(grid), len(grid[0])
+    def dfs(r, c):
+        if r < 0 or r >= rows or c < 0 or c >= cols or grid[r][c] != 1:
+            return 0
+        grid[r][c] = 0
+        return 1 + dfs(r-1,c) + dfs(r+1,c) + dfs(r,c-1) + dfs(r,c+1)
+    best = 0
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == 1:
+                area = dfs(r, c)
+                if area > best:
+                    best = area
+    return best
+`,
+
+  'rotting-oranges': `def orangesRotting(grid):
+    from collections import deque
+    rows, cols = len(grid), len(grid[0])
+    queue = deque()
+    fresh = 0
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == 2:
+                queue.append((r, c))
+            elif grid[r][c] == 1:
+                fresh += 1
+    minutes = 0
+    dirs = [(-1,0),(1,0),(0,-1),(0,1)]
+    while queue and fresh > 0:
+        for _ in range(len(queue)):
+            r, c = queue.popleft()
+            for dr, dc in dirs:
+                nr, nc = r + dr, c + dc
+                if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == 1:
+                    grid[nr][nc] = 2
+                    fresh -= 1
+                    queue.append((nr, nc))
+        minutes += 1
+    return minutes if fresh == 0 else -1
+`,
+
+  'keys-and-rooms': `def canVisitAllRooms(rooms):
+    visited = {0}
+    stack = [0]
+    while stack:
+        room = stack.pop()
+        for key in rooms[room]:
+            if key not in visited:
+                visited.add(key)
+                stack.append(key)
+    return len(visited) == len(rooms)
+`,
 };

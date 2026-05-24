@@ -2868,4 +2868,92 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return -1;
   },
 
+  'binary-tree-max-path-sum': (...args: unknown[]) => {
+    let best = -Infinity;
+    const gain = (n: _TN | null): number => {
+      if (!n) return 0;
+      const l = Math.max(0, gain(n.l));
+      const r = Math.max(0, gain(n.r));
+      if (n.v + l + r > best) best = n.v + l + r;
+      return n.v + Math.max(l, r);
+    };
+    gain(_buildTree(args[0] as (number | null)[]));
+    return best;
+  },
+
+  // --- graph additions -------------------------------------------------------
+
+  'find-the-town-judge': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const trust = args[1] as number[][];
+    const inDeg = new Array<number>(n + 1).fill(0);
+    const outDeg = new Array<number>(n + 1).fill(0);
+    for (const edge of trust) { const [a, b] = edge as [number, number]; outDeg[a] = (outDeg[a] ?? 0) + 1; inDeg[b] = (inDeg[b] ?? 0) + 1; }
+    for (let i = 1; i <= n; i++) { if ((inDeg[i] ?? 0) === n - 1 && (outDeg[i] ?? 0) === 0) return i; }
+    return -1;
+  },
+
+  'max-area-of-island': (...args: unknown[]) => {
+    const grid = (args[0] as number[][]).map((r) => [...r]);
+    const rows = grid.length;
+    const cols = grid[0]!.length;
+    let best = 0;
+    function dfs(r: number, c: number): number {
+      if (r < 0 || r >= rows || c < 0 || c >= cols || grid[r]![c] !== 1) return 0;
+      grid[r]![c] = 0;
+      return 1 + dfs(r - 1, c) + dfs(r + 1, c) + dfs(r, c - 1) + dfs(r, c + 1);
+    }
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        if (grid[r]![c] === 1) { const area = dfs(r, c); if (area > best) best = area; }
+      }
+    }
+    return best;
+  },
+
+  'rotting-oranges': (...args: unknown[]) => {
+    const grid = (args[0] as number[][]).map((r) => [...r]);
+    const rows = grid.length;
+    const cols = grid[0]!.length;
+    const queue: [number, number][] = [];
+    let fresh = 0;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        if (grid[r]![c] === 2) queue.push([r, c]);
+        else if (grid[r]![c] === 1) fresh++;
+      }
+    }
+    let minutes = 0;
+    const dirs: [number, number][] = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+    while (queue.length && fresh > 0) {
+      const size = queue.length;
+      for (let i = 0; i < size; i++) {
+        const [r, c] = queue.shift()!;
+        for (const [dr, dc] of dirs) {
+          const nr = r + dr; const nc = c + dc;
+          if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && grid[nr]![nc] === 1) {
+            grid[nr]![nc] = 2;
+            fresh--;
+            queue.push([nr, nc]);
+          }
+        }
+      }
+      minutes++;
+    }
+    return fresh === 0 ? minutes : -1;
+  },
+
+  'keys-and-rooms': (...args: unknown[]) => {
+    const rooms = args[0] as number[][];
+    const visited = new Set<number>([0]);
+    const stack = [0];
+    while (stack.length) {
+      const room = stack.pop()!;
+      for (const key of rooms[room]!) {
+        if (!visited.has(key)) { visited.add(key); stack.push(key); }
+      }
+    }
+    return visited.size === rooms.length;
+  },
+
 };

@@ -218,9 +218,13 @@ import { problem as mergeKSortedLists } from './merge-k-sorted-lists';
 
 // graph — easy
 import { problem as floodFill } from './flood-fill';
+import { problem as findTheTownJudge } from './find-the-town-judge';
 // graph — medium
 import { problem as numberOfIslands } from './number-of-islands';
 import { problem as courseSchedule } from './course-schedule';
+import { problem as maxAreaOfIsland } from './max-area-of-island';
+import { problem as rottingOranges } from './rotting-oranges';
+import { problem as keysAndRooms } from './keys-and-rooms';
 
 // tree — easy
 import { problem as maxDepthBinaryTree } from './max-depth-binary-tree';
@@ -233,6 +237,8 @@ import { problem as diameterOfBinaryTree } from './diameter-of-binary-tree';
 import { problem as validateBst } from './validate-bst';
 import { problem as levelOrderTraversal } from './level-order-traversal';
 import { problem as lowestCommonAncestorBst } from './lowest-common-ancestor-bst';
+// tree — hard
+import { problem as binaryTreeMaxPathSum } from './binary-tree-max-path-sum';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -440,9 +446,13 @@ export const problems: readonly Problem[] = [
   mergeKSortedLists,
   // graph — easy
   floodFill,
+  findTheTownJudge,
   // graph — medium
   numberOfIslands,
   courseSchedule,
+  maxAreaOfIsland,
+  rottingOranges,
+  keysAndRooms,
   // tree — easy
   maxDepthBinaryTree,
   symmetricTree,
@@ -454,4 +464,6 @@ export const problems: readonly Problem[] = [
   validateBst,
   levelOrderTraversal,
   lowestCommonAncestorBst,
+  // tree — hard
+  binaryTreeMaxPathSum,
 ];
