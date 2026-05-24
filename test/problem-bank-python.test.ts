@@ -26,6 +26,13 @@ function hasPythonStarter(problem: Problem): boolean {
   return typeof problem.starterCode.python === 'string' && problem.starterCode.python.length > 0;
 }
 
+// Pyodide converts Python None → JS undefined; normalize for comparison.
+function normalizeUndefined(val: unknown): unknown {
+  if (val === undefined) return null;
+  if (Array.isArray(val)) return val.map(normalizeUndefined);
+  return val;
+}
+
 describe('problem bank (python)', () => {
   const pythonProblems = problems.filter(hasPythonStarter);
 
@@ -71,7 +78,7 @@ describe('problem bank (python)', () => {
             } else {
               value = raw;
             }
-            expect(value, `${problem.id} test #${i} (python)`).toEqual(testCase.expected);
+            expect(normalizeUndefined(value), `${problem.id} test #${i} (python)`).toEqual(testCase.expected);
           }
 
           if (typeof (fn as { destroy?: unknown }).destroy === 'function') {

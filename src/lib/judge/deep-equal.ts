@@ -9,13 +9,19 @@ export function deepEqual(a: unknown, b: unknown): boolean {
     return true;
   }
 
+  // Pyodide converts Python None to JS undefined; treat null/undefined as equivalent
+  // so tree array outputs like [3,9,null,null,7] work correctly for both JS and Python.
+  if ((a === null || a === undefined) && (b === null || b === undefined)) {
+    return true;
+  }
+
   // NaN is the one primitive that is not `===` to itself.
   if (typeof a === 'number' && typeof b === 'number') {
     return Number.isNaN(a) && Number.isNaN(b);
   }
 
   // Past this point only two non-null objects can still be equal.
-  if (a === null || b === null || typeof a !== 'object' || typeof b !== 'object') {
+  if (a === null || a === undefined || b === null || b === undefined || typeof a !== 'object' || typeof b !== 'object') {
     return false;
   }
 
