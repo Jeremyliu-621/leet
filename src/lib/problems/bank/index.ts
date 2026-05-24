@@ -143,6 +143,12 @@ import { problem as longestValidParentheses } from './longest-valid-parentheses'
 import { problem as editDistance } from './edit-distance';
 import { problem as wordBreak } from './word-break';
 
+// dynamic-programming — easy
+import { problem as uniquePaths } from './unique-paths';
+// dynamic-programming — medium
+import { problem as houseRobber } from './house-robber';
+import { problem as coinChange } from './coin-change';
+
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -277,4 +283,9 @@ export const problems: readonly Problem[] = [
   longestValidParentheses,
   editDistance,
   wordBreak,
+  // dynamic-programming — easy
+  uniquePaths,
+  // dynamic-programming — medium
+  houseRobber,
+  coinChange,
 ];

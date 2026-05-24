@@ -1343,4 +1343,29 @@ export const pythonSolutions: Record<string, string> = {
             remaining = remaining % scale
     return result.strip()
 `,
+  'house-robber': `def rob(nums: list[int]) -> int:
+    prev2 = 0
+    prev1 = 0
+    for n in nums:
+        curr = max(prev1, prev2 + n)
+        prev2 = prev1
+        prev1 = curr
+    return prev1
+`,
+  'coin-change': `def coinChange(coins: list[int], amount: int) -> int:
+    dp = [float('inf')] * (amount + 1)
+    dp[0] = 0
+    for i in range(1, amount + 1):
+        for c in coins:
+            if i >= c:
+                dp[i] = min(dp[i], dp[i - c] + 1)
+    return dp[amount] if dp[amount] != float('inf') else -1
+`,
+  'unique-paths': `def uniquePaths(m: int, n: int) -> int:
+    dp = [[1] * n for _ in range(m)]
+    for i in range(1, m):
+        for j in range(1, n):
+            dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
+    return dp[m - 1][n - 1]
+`,
 };

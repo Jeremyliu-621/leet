@@ -1812,4 +1812,42 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return 0; // unreachable for valid inputs
   },
 
+  // --- dynamic-programming --------------------------------------------------
+  'house-robber': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let prev2 = 0;
+    let prev1 = 0;
+    for (const n of nums) {
+      const curr = Math.max(prev1, prev2 + n);
+      prev2 = prev1;
+      prev1 = curr;
+    }
+    return prev1;
+  },
+
+  'coin-change': (...args: unknown[]) => {
+    const coins = args[0] as number[];
+    const amount = args[1] as number;
+    const dp = new Array<number>(amount + 1).fill(Infinity);
+    dp[0] = 0;
+    for (let i = 1; i <= amount; i++) {
+      for (const c of coins) {
+        if (i >= c) dp[i] = Math.min(dp[i]!, dp[i - c]! + 1);
+      }
+    }
+    return dp[amount] === Infinity ? -1 : dp[amount];
+  },
+
+  'unique-paths': (...args: unknown[]) => {
+    const m = args[0] as number;
+    const n = args[1] as number;
+    const dp = Array.from({ length: m }, () => new Array<number>(n).fill(1));
+    for (let i = 1; i < m; i++) {
+      for (let j = 1; j < n; j++) {
+        dp[i]![j] = dp[i - 1]![j]! + dp[i]![j - 1]!;
+      }
+    }
+    return dp[m - 1]![n - 1];
+  },
+
 };
