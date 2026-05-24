@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 137 problems; run-mode verdict summary; DP medium + hard tier filled; popup recent solves; Options bank browser.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (672 unit tests across 22 files).
-**Next up:** Further bank growth; UI/UX polish; more hard problems across sparse tags.
+**Current focus:** Bank at 141 problems; roman-to-integer + valid-sudoku added; recent solves in popup; problem browser in Options.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (684 unit tests across 22 files).
+**Next up:** Further bank growth; more easy/medium problems for thin tags; graph/BFS problems (new tag).
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -212,6 +212,7 @@ Still pending:
 - [x] Add classic missing medium problems — spiral-matrix, rotate-image, maximal-square, find-first-last-pos, search-2d-matrix; 666 tests; bank at 135
 - [x] Run-mode verdict summary — `RunSummaryBanner` shows X/N passed + total timing in run mode when all visible tests pass
 - [x] Add medium DP problems (3 more) — partition-equal-subset-sum, perfect-squares, target-sum; 672 tests; bank at 137
+- [x] Add roman-to-integer (math/easy) + valid-sudoku (arrays/medium); 684 tests; bank at 141
 - [ ] Marketing site iteration + Vercel deployment
 
 ---
