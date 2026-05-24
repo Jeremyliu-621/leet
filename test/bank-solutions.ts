@@ -5404,6 +5404,45 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     for (let i = 0; i < nums.length; i++) if (nums[i] === target) result.push(i);
     return result;
   },
+  'max-average-subarray': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    let sum = nums.slice(0, k).reduce((a, b) => a + b, 0);
+    let max = sum;
+    for (let i = k; i < nums.length; i++) { sum += nums[i]! - nums[i - k]!; if (sum > max) max = sum; }
+    return max / k;
+  },
+  'consecutive-characters': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let max = 1, cur = 1;
+    for (let i = 1; i < s.length; i++) { cur = s[i] === s[i - 1] ? cur + 1 : 1; if (cur > max) max = cur; }
+    return max;
+  },
+  'count-items-with-the-given-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+    const maxFreq = Math.max(...freq.values());
+    let total = 0;
+    for (const c of freq.values()) if (c === maxFreq) total += c;
+    return total;
+  },
+  'number-of-employees-can-meet': (...args: unknown[]) => {
+    const hours = args[0] as number[], target = args[1] as number;
+    return hours.filter(h => h >= target).length;
+  },
+  'partition-array-according-to-given-pivot': (...args: unknown[]) => {
+    const nums = args[0] as number[], pivot = args[1] as number;
+    return [...nums.filter(n => n < pivot), ...nums.filter(n => n === pivot), ...nums.filter(n => n > pivot)];
+  },
+  'sort-even-odd-indices': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    const evens = nums.filter((_, i) => i % 2 === 0).sort((a, b) => a - b);
+    const odds = nums.filter((_, i) => i % 2 === 1).sort((a, b) => b - a);
+    const result: number[] = [];
+    let ei = 0, oi = 0;
+    for (let i = 0; i < nums.length; i++) result.push(i % 2 === 0 ? evens[ei++]! : odds[oi++]!);
+    return result;
+  },
   'percentage-of-letter-in-string': (...args: unknown[]) => {
     const s = args[0] as string, letter = args[1] as string;
     const count = [...s].filter(c => c === letter).length;

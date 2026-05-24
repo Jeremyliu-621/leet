@@ -61,6 +61,12 @@ import { problem as toeplitzMatrix } from './toeplitz-matrix';
 import { problem as transposeMatrix } from './transpose-matrix';
 import { problem as minimumNumberOfMovesSeat } from './minimum-number-of-moves-seat';
 import { problem as numberOfLaserBeams } from './number-of-laser-beams';
+import { problem as maxAverageSubarray } from './max-average-subarray';
+import { problem as consecutiveCharacters } from './consecutive-characters';
+import { problem as countItemsWithTheGivenSum } from './count-items-with-the-given-sum';
+import { problem as numberOfEmployeesCanMeet } from './number-of-employees-can-meet';
+import { problem as partitionArrayAccordingToGivenPivot } from './partition-array-according-to-given-pivot';
+import { problem as sortEvenOddIndices } from './sort-even-odd-indices';
 // arrays — medium
 import { problem as rangeSumQuery2D } from './range-sum-query-2d';
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
@@ -604,6 +610,12 @@ export const problems: readonly Problem[] = [
   findTargetIndicesAfterSorting,
   minimumNumberOfMovesSeat,
   numberOfLaserBeams,
+  maxAverageSubarray,
+  consecutiveCharacters,
+  countItemsWithTheGivenSum,
+  numberOfEmployeesCanMeet,
+  partitionArrayAccordingToGivenPivot,
+  sortEvenOddIndices,
   singleNumber,
   toeplitzMatrix,
   transposeMatrix,

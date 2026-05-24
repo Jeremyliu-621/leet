@@ -4768,6 +4768,53 @@ def deserialize(data):
     return [i for i, n in enumerate(nums_sorted) if n == target]
 `,
 
+  'max-average-subarray': `def findMaxAverage(nums, k):
+    window = sum(nums[:k])
+    max_sum = window
+    for i in range(k, len(nums)):
+        window += nums[i] - nums[i - k]
+        if window > max_sum:
+            max_sum = window
+    return max_sum / k
+`,
+
+  'consecutive-characters': `def maxPower(s):
+    max_p = cur = 1
+    for i in range(1, len(s)):
+        cur = cur + 1 if s[i] == s[i-1] else 1
+        if cur > max_p:
+            max_p = cur
+    return max_p
+`,
+
+  'count-items-with-the-given-sum': `def maxFrequencyElements(nums):
+    from collections import Counter
+    freq = Counter(nums)
+    max_f = max(freq.values())
+    return sum(c for c in freq.values() if c == max_f)
+`,
+
+  'number-of-employees-can-meet': `def numberOfEmployeesWhoMetTarget(hours, target):
+    return sum(1 for h in hours if h >= target)
+`,
+
+  'partition-array-according-to-given-pivot': `def pivotArray(nums, pivot):
+    return [x for x in nums if x < pivot] + [x for x in nums if x == pivot] + [x for x in nums if x > pivot]
+`,
+
+  'sort-even-odd-indices': `def sortEvenOdd(nums):
+    evens = sorted(nums[::2])
+    odds = sorted(nums[1::2], reverse=True)
+    result = []
+    ei = oi = 0
+    for i in range(len(nums)):
+        if i % 2 == 0:
+            result.append(evens[ei]); ei += 1
+        else:
+            result.append(odds[oi]); oi += 1
+    return result
+`,
+
   'percentage-of-letter-in-string': `def percentageLetter(s, letter):
     return int(s.count(letter) / len(s) * 100)
 `,
