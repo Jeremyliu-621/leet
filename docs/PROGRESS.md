@@ -228,7 +228,7 @@ Still pending:
 - [x] Tree tag — add `tree` to ProblemTag + PROBLEM_TAGS; 3 easy problems: max-depth-binary-tree, symmetric-tree, invert-binary-tree; TreeNode preamble with BFS array format + Pyodide isinstance fix; 807 tests; bank at 179
 - [x] More tree problems — binary-tree-paths (easy), validate-bst (medium), level-order-traversal (medium); bank at 182 problems, 816 tests
 - [x] Popup: add preferred-language segmented control (mirrors keymap row)
-- [ ] Marketing site: update stats/copy to mention TypeScript (currently says "JavaScript + Python")
+- [x] Marketing site: update stats/copy to mention TypeScript — 182 problems / 12 tags / 3 languages; Graph + Tree tag chips added
 - [ ] More tree problems: lowest-common-ancestor (medium), construct-binary-tree-from-preorder-inorder (medium)
 - [ ] More graph problems: clone-graph (medium), word-ladder (hard)
 - [ ] UX: run-button loading spinner / debounce; verdict panel scroll-to-first-failure

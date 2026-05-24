@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { JudgeResult, TestVerdict } from '../../../lib/judge';
 
 /** Serialises a judge value for display — handles arrays, objects, primitives. */
@@ -236,6 +236,15 @@ function RunSummaryBanner({ result }: { result: JudgeResult }) {
  * announce updates without requiring focus.
  */
 export function VerdictPanel({ result, mode }: VerdictPanelProps) {
+  const firstFailRef = useRef<HTMLDivElement>(null);
+
+  // Scroll to first failure after a new submit result arrives.
+  useEffect(() => {
+    if (result && mode === 'submit' && result.outcome !== 'accepted') {
+      firstFailRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [result, mode]);
+
   // Still running
   if (result === undefined) {
     return (
@@ -246,7 +255,7 @@ export function VerdictPanel({ result, mode }: VerdictPanelProps) {
         aria-label="Running tests"
       >
         <span className="font-mono text-xs text-faint">running</span>
-        <span className="ml-1.5 font-mono text-xs text-faint" aria-hidden="true">
+        <span className="ml-1.5 animate-pulse font-mono text-xs text-faint" aria-hidden="true">
           · · ·
         </span>
       </div>
@@ -285,9 +294,18 @@ export function VerdictPanel({ result, mode }: VerdictPanelProps) {
       {/* Per-test verdict cards */}
       {result.verdicts.length > 0 && (
         <div className="space-y-2">
-          {result.verdicts.map((verdict) => (
-            <SingleVerdict key={verdict.index} verdict={verdict} index={verdict.index} />
-          ))}
+          {(() => {
+            let firstFailSeen = false;
+            return result.verdicts.map((verdict) => {
+              const isFirstFail = !firstFailSeen && verdict.status !== 'pass';
+              if (isFirstFail) firstFailSeen = true;
+              return (
+                <div key={verdict.index} ref={isFirstFail ? firstFailRef : undefined}>
+                  <SingleVerdict verdict={verdict} index={verdict.index} />
+                </div>
+              );
+            });
+          })()}
         </div>
       )}
     </div>
