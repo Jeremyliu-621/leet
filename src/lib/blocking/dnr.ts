@@ -69,20 +69,62 @@ function keywordRule(
   id: number,
   keyword: string,
   challengeUrl: string,
+  excludedRequestDomains: readonly string[],
 ): chrome.declarativeNetRequest.Rule {
   const safe = escapeRegex(keyword);
   // ^https?://(anything not whitespace)*<keyword>(anything not whitespace)*$
   const regexFilter = `^https?://[^\\s]*${safe}[^\\s]*$`;
+  const condition: Record<string, unknown> = {
+    regexFilter,
+    resourceTypes: ['main_frame'],
+    isUrlFilterCaseSensitive: false,
+  };
+  if (excludedRequestDomains.length > 0) {
+    condition['excludedRequestDomains'] = [...excludedRequestDomains];
+  }
   return {
     id,
     priority: 1,
     action: { type: 'redirect', redirect: makeRedirect(challengeUrl) },
-    condition: {
-      regexFilter,
-      resourceTypes: ['main_frame'],
-      isUrlFilterCaseSensitive: false,
-    },
+    condition,
   } as chrome.declarativeNetRequest.Rule;
+}
+
+/**
+ * True if rule `host` and any of `unlockedDomains` are in the same domain
+ * family — either equal, or one is a subdomain of the other. This catches
+ * the common case of blocking `youtube.com` while the user lands on
+ * `www.youtube.com` and earns an unlock for that subdomain.
+ */
+function isInDomainFamily(host: string, unlockedDomains: ReadonlySet<string>): boolean {
+  const h = host.toLowerCase();
+  for (const raw of unlockedDomains) {
+    const d = raw.toLowerCase();
+    if (d === h) return true;
+    if (d.endsWith('.' + h)) return true; // unlocked is a subdomain of host
+    if (h.endsWith('.' + d)) return true; // host is a subdomain of unlocked
+  }
+  return false;
+}
+
+/**
+ * Expands the unlocked-domain set so DNR `excludedRequestDomains` covers both
+ * the exact host and its parent (stripping the leftmost subdomain). Chrome's
+ * `excludedRequestDomains` "matches subdomains as well", so adding the parent
+ * also covers root-domain navigations. The 3+-part guard avoids collapsing
+ * `example.com` into the bogus parent `com`.
+ */
+function expandUnlockedDomains(domains: ReadonlySet<string>): string[] {
+  const out = new Set<string>();
+  for (const raw of domains) {
+    const host = raw.toLowerCase();
+    out.add(host);
+    const parts = host.split('.');
+    if (parts.length > 2) {
+      out.add(parts.slice(1).join('.'));
+    }
+  }
+  return [...out];
 }
 
 export interface BuildRulesInput {
@@ -103,6 +145,7 @@ export interface BuildRulesInput {
 export function buildDynamicRules(input: BuildRulesInput): chrome.declarativeNetRequest.Rule[] {
   const out: chrome.declarativeNetRequest.Rule[] = [];
   let nextId = 1;
+  const excludedForKeywords = expandUnlockedDomains(input.unlockedDomains);
 
   for (const rule of input.blockRules) {
     if (out.length >= MAX_DYNAMIC_RULES) break;
@@ -110,7 +153,7 @@ export function buildDynamicRules(input: BuildRulesInput): chrome.declarativeNet
     if (rule.kind === 'domain') {
       const host = normaliseDomain(rule.pattern);
       if (host.length === 0) continue;
-      if (input.unlockedDomains.has(host)) continue;
+      if (isInDomainFamily(host, input.unlockedDomains)) continue;
       out.push(domainRule(nextId++, host, input.challengeUrl));
     } else {
       const prefix = rule.pattern;
@@ -121,7 +164,7 @@ export function buildDynamicRules(input: BuildRulesInput): chrome.declarativeNet
       } catch {
         host = null;
       }
-      if (host !== null && input.unlockedDomains.has(host)) continue;
+      if (host !== null && isInDomainFamily(host, input.unlockedDomains)) continue;
       out.push(urlRule(nextId++, prefix, input.challengeUrl));
     }
   }
@@ -131,7 +174,7 @@ export function buildDynamicRules(input: BuildRulesInput): chrome.declarativeNet
     if (!rule.enabled) continue;
     const keyword = rule.keyword.trim();
     if (keyword.length === 0) continue;
-    out.push(keywordRule(nextId++, keyword, input.challengeUrl));
+    out.push(keywordRule(nextId++, keyword, input.challengeUrl, excludedForKeywords));
   }
 
   return out;
