@@ -6442,4 +6442,96 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return '';
   },
 
+  'toeplitz-matrix': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    for (let i = 1; i < matrix.length; i++) {
+      for (let j = 1; j < matrix[0]!.length; j++) {
+        if (matrix[i]![j] !== matrix[i - 1]![j - 1]) return false;
+      }
+    }
+    return true;
+  },
+
+  'transpose-matrix': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    return matrix[0]!.map((_, j) => matrix.map(row => row[j]!));
+  },
+
+  'maximum-number-of-balloons': (...args: unknown[]) => {
+    const text = args[0] as string;
+    const freq: Record<string, number> = {};
+    for (const c of text) freq[c] = (freq[c] ?? 0) + 1;
+    return Math.min(
+      freq['b'] ?? 0,
+      freq['a'] ?? 0,
+      Math.floor((freq['l'] ?? 0) / 2),
+      Math.floor((freq['o'] ?? 0) / 2),
+      freq['n'] ?? 0,
+    );
+  },
+
+  'count-characters': (...args: unknown[]) => {
+    const words = args[0] as string[], chars = args[1] as string;
+    const freq: Record<string, number> = {};
+    for (const c of chars) freq[c] = (freq[c] ?? 0) + 1;
+    let total = 0;
+    for (const word of words) {
+      const wfreq: Record<string, number> = {};
+      for (const c of word) wfreq[c] = (wfreq[c] ?? 0) + 1;
+      if (Object.entries(wfreq).every(([c, cnt]) => (freq[c] ?? 0) >= cnt)) {
+        total += word.length;
+      }
+    }
+    return total;
+  },
+
+  'sum-of-left-leaves': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    if (!arr || arr.length === 0 || arr[0] === null) return 0;
+    interface TN { val: number; left: TN | null; right: TN | null; }
+    function build(a: (number | null)[]): TN | null {
+      if (!a || a.length === 0 || a[0] == null) return null;
+      const root: TN = { val: a[0]!, left: null, right: null };
+      const q: TN[] = [root]; let i = 1;
+      while (q.length > 0 && i < a.length) {
+        const node = q.shift()!;
+        if (a[i] !== null && a[i] !== undefined) { node.left = { val: a[i]!, left: null, right: null }; q.push(node.left); }
+        i++;
+        if (i < a.length && a[i] !== null && a[i] !== undefined) { node.right = { val: a[i]!, left: null, right: null }; q.push(node.right); }
+        i++;
+      }
+      return root;
+    }
+    function dfs(node: TN | null, isLeft: boolean): number {
+      if (!node) return 0;
+      if (!node.left && !node.right) return isLeft ? node.val : 0;
+      return dfs(node.left, true) + dfs(node.right, false);
+    }
+    return dfs(build(arr), false);
+  },
+
+  'leaf-similar-trees': (...args: unknown[]) => {
+    const arr1 = args[0] as (number | null)[], arr2 = args[1] as (number | null)[];
+    interface TN { val: number; left: TN | null; right: TN | null; }
+    function build(a: (number | null)[]): TN | null {
+      if (!a || a.length === 0 || a[0] == null) return null;
+      const root: TN = { val: a[0]!, left: null, right: null };
+      const q: TN[] = [root]; let i = 1;
+      while (q.length > 0 && i < a.length) {
+        const node = q.shift()!;
+        if (a[i] !== null && a[i] !== undefined) { node.left = { val: a[i]!, left: null, right: null }; q.push(node.left); }
+        i++;
+        if (i < a.length && a[i] !== null && a[i] !== undefined) { node.right = { val: a[i]!, left: null, right: null }; q.push(node.right); }
+        i++;
+      }
+      return root;
+    }
+    function getLeaves(node: TN | null): number[] {
+      if (!node) return [];
+      if (!node.left && !node.right) return [node.val];
+      return [...getLeaves(node.left), ...getLeaves(node.right)];
+    }
+    return JSON.stringify(getLeaves(build(arr1))) === JSON.stringify(getLeaves(build(arr2)));
+  },
+
 };

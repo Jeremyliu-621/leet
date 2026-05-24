@@ -57,6 +57,8 @@ import { problem as degreeOfArray } from './degree-of-array';
 import { problem as checkArrayArithmeticProgression } from './check-array-arithmetic-progression';
 import { problem as howManyNumbersSmallerThanCurrent } from './how-many-numbers-smaller-than-current';
 import { problem as findTargetIndicesAfterSorting } from './find-target-indices-after-sorting';
+import { problem as toeplitzMatrix } from './toeplitz-matrix';
+import { problem as transposeMatrix } from './transpose-matrix';
 // arrays — medium
 import { problem as rangeSumQuery2D } from './range-sum-query-2d';
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
@@ -130,7 +132,6 @@ import { problem as cellsInRange } from './cells-in-range';
 import { problem as rotateString } from './rotate-string';
 import { problem as percentageOfLetterInString } from './percentage-of-letter-in-string';
 import { problem as countCommonWordsOneOccurrence } from './count-common-words-one-occurrence';
-import { problem as determineIfStringHalvesAlike } from './determine-if-string-halves-alike';
 import { problem as checkTwoStringsAlmostEquivalent } from './check-two-strings-almost-equivalent';
 import { problem as rearrangeCharactersToMakeTarget } from './rearrange-characters-to-make-target';
 import { problem as divideStringIntoGroups } from './divide-string-into-groups';
@@ -161,6 +162,8 @@ import { problem as firstUniqueChar } from './first-unique-char';
 import { problem as findWordsFromChars } from './word-pattern-ii';
 import { problem as jewelsAndStones } from './jewels-and-stones';
 import { problem as minimumOperationsAlternating } from './minimum-operations-alternating';
+import { problem as maximumNumberOfBalloons } from './maximum-number-of-balloons';
+import { problem as countCharacters } from './count-characters';
 // hash-map — medium (additional)
 import { problem as longestWordInDictionary } from './longest-word-in-dictionary';
 import { problem as twoSumIndices } from './two-sum-indices';
@@ -486,6 +489,8 @@ import { problem as binaryTreePaths } from './binary-tree-paths';
 import { problem as pathSum } from './path-sum';
 import { problem as diameterOfBinaryTree } from './diameter-of-binary-tree';
 import { problem as sameTree } from './same-tree';
+import { problem as sumOfLeftLeaves } from './sum-of-left-leaves';
+import { problem as leafSimilarTrees } from './leaf-similar-trees';
 // tree — medium
 import { problem as binaryTreePruning } from './binary-tree-pruning';
 import { problem as countCompleteTreeNodes } from './count-complete-tree-nodes';
@@ -574,6 +579,8 @@ export const problems: readonly Problem[] = [
   howManyNumbersSmallerThanCurrent,
   findTargetIndicesAfterSorting,
   singleNumber,
+  toeplitzMatrix,
+  transposeMatrix,
   // arrays — medium
   rearrangeArrayElementsBySign,
   numberOfZeroFilledSubarrays,
@@ -654,7 +661,6 @@ export const problems: readonly Problem[] = [
   rotateString,
   percentageOfLetterInString,
   countCommonWordsOneOccurrence,
-  determineIfStringHalvesAlike,
   checkTwoStringsAlmostEquivalent,
   rearrangeCharactersToMakeTarget,
   divideStringIntoGroups,
@@ -686,6 +692,8 @@ export const problems: readonly Problem[] = [
   findWordsFromChars,
   jewelsAndStones,
   minimumOperationsAlternating,
+  maximumNumberOfBalloons,
+  countCharacters,
   twoSumIndices,
   mostFrequentValue,
   anagramCheck,
@@ -1001,6 +1009,8 @@ export const problems: readonly Problem[] = [
   pathSum,
   diameterOfBinaryTree,
   sameTree,
+  sumOfLeftLeaves,
+  leafSimilarTrees,
   // tree — medium
   binaryTreePruning,
   countCompleteTreeNodes,

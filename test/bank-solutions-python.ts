@@ -5794,4 +5794,127 @@ def minimumRecolors(blocks, k):
     return ''
 `,
 
+  'toeplitz-matrix': `
+def isToeplitzMatrix(matrix):
+    if hasattr(matrix, 'to_py'):
+        matrix = matrix.to_py()
+    rows = [list(r.to_py()) if hasattr(r, 'to_py') else list(r) for r in matrix]
+    for i in range(1, len(rows)):
+        for j in range(1, len(rows[0])):
+            if rows[i][j] != rows[i-1][j-1]:
+                return False
+    return True
+`,
+
+  'transpose-matrix': `
+def transpose(matrix):
+    if hasattr(matrix, 'to_py'):
+        matrix = matrix.to_py()
+    rows = [list(r.to_py()) if hasattr(r, 'to_py') else list(r) for r in matrix]
+    m, n = len(rows), len(rows[0])
+    return [[rows[i][j] for i in range(m)] for j in range(n)]
+`,
+
+  'maximum-number-of-balloons': `
+def maxNumberOfBalloons(text):
+    from collections import Counter
+    freq = Counter(text)
+    return min(freq['b'], freq['a'], freq['l']//2, freq['o']//2, freq['n'])
+`,
+
+  'count-characters': `
+def countCharacters(words, chars):
+    if hasattr(words, 'to_py'):
+        words = words.to_py()
+    if hasattr(chars, 'to_py'):
+        chars = chars.to_py()
+    words = [str(w) for w in words]
+    chars = str(chars)
+    from collections import Counter
+    freq = Counter(chars)
+    total = 0
+    for word in words:
+        wfreq = Counter(word)
+        if all(wfreq[c] <= freq[c] for c in wfreq):
+            total += len(word)
+    return total
+`,
+
+  'sum-of-left-leaves': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def __from_array__(arr):
+    if hasattr(arr, 'to_py'):
+        raw = arr.to_py()
+    else:
+        raw = list(arr)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i]); queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i]); queue.append(node.right)
+        i += 1
+    return root
+
+def sumOfLeftLeavesRunner(arr):
+    return sumOfLeftLeaves(__from_array__(arr))
+
+def sumOfLeftLeaves(root):
+    def dfs(node, is_left):
+        if not node:
+            return 0
+        if not node.left and not node.right:
+            return node.val if is_left else 0
+        return dfs(node.left, True) + dfs(node.right, False)
+    return dfs(root, False)
+`,
+
+  'leaf-similar-trees': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def __from_array__(arr):
+    if hasattr(arr, 'to_py'):
+        raw = arr.to_py()
+    else:
+        raw = list(arr)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i]); queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i]); queue.append(node.right)
+        i += 1
+    return root
+
+def leafSimilarRunner(arr1, arr2):
+    return leafSimilar(__from_array__(arr1), __from_array__(arr2))
+
+def leafSimilar(root1, root2):
+    def get_leaves(node):
+        if not node:
+            return []
+        if not node.left and not node.right:
+            return [node.val]
+        return get_leaves(node.left) + get_leaves(node.right)
+    return get_leaves(root1) == get_leaves(root2)
+`,
 };
