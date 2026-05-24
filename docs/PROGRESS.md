@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 465 problems; 1663 tests; growing toward 480+. Added sum-of-left-leaves, toeplitz-matrix, transpose-matrix, leaf-similar-trees, maximum-number-of-balloons, count-characters; removed duplicate determine-if-string-halves-alike.
+**Current focus:** Bank at 476 problems; 1705 tests; growing toward 500+. Added 14 new medium/hard problems (heap/backtracking/graph/dp: total-cost-hire-k-workers, maximum-subsequence-score, gray-code, count-vowels-permutation, snakes-and-ladders, swim-in-rising-water, n-queens-ii, remove-invalid-parentheses, number-of-ways-arrive-destination, minimum-cost-cut-stick, kth-missing-positive-number, process-tasks-using-servers, smallest-number-in-infinite-set, strange-printer). Also added editor indent size setting + line/column indicator.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing bank toward 480+; more easy/medium problems across all tags.
+**Next up:** Continue growing bank toward 500+; more medium/hard problems across all tags.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
