@@ -334,6 +334,13 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   },
 
   // --- math ----------------------------------------------------------------
+  'hamming-weight': (...args: unknown[]) => {
+    let n = args[0] as number;
+    let count = 0;
+    while (n) { n &= n - 1; count++; }
+    return count;
+  },
+
   'digit-sum': (...args: unknown[]) => {
     let n = args[0] as number;
     let sum = 0;
@@ -2588,6 +2595,12 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   },
 
   // --- linked-list -----------------------------------------------------------
+  'delete-node-in-linked-list': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const nodeVal = args[1] as number;
+    return arr.filter(v => v !== nodeVal);
+  },
+
   'reverse-linked-list': (...args: unknown[]) => {
     const arr = args[0] as number[];
     return [...arr].reverse();
@@ -2751,6 +2764,27 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       }
     }
     return false;
+  },
+
+  '01-matrix': (...args: unknown[]) => {
+    const mat = (args[0] as number[][]).map(r => [...r]);
+    const m = mat.length, n = mat[0]!.length;
+    const dist = mat.map(r => r.map(v => v === 0 ? 0 : Infinity));
+    const queue: [number, number][] = [];
+    for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) if (mat[r]![c] === 0) queue.push([r, c]);
+    const dirs: [number, number][] = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+    let qi = 0;
+    while (qi < queue.length) {
+      const [r, c] = queue[qi++]!;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr, nc = c + dc;
+        if (nr >= 0 && nr < m && nc >= 0 && nc < n && dist[nr]![nc]! > dist[r]![c]! + 1) {
+          dist[nr]![nc] = dist[r]![c]! + 1;
+          queue.push([nr, nc]);
+        }
+      }
+    }
+    return dist;
   },
 
   'flood-fill': (...args: unknown[]) => {

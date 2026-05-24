@@ -194,6 +194,13 @@ export const pythonSolutions: Record<string, string> = {
             stack.append(ch)
     return ''.join(stack)
 `,
+  'hamming-weight': `def hammingWeight(n):
+    count = 0
+    while n:
+        n &= n - 1
+        count += 1
+    return count
+`,
   'digit-sum': `def digitSum(n):
     total = 0
     while n > 0:
@@ -1974,6 +1981,11 @@ export const pythonSolutions: Record<string, string> = {
     return num
 `,
   // --- linked-list -----------------------------------------------------------
+  'delete-node-in-linked-list': `def deleteNode(node):
+    node.val = node.next.val
+    node.next = node.next.next
+`,
+
   'reverse-linked-list': `def reverseList(head):
     prev = None
     curr = head
@@ -2172,6 +2184,22 @@ export const pythonSolutions: Record<string, string> = {
     greater.next = None
     less.next = greater_dummy.next
     return less_dummy.next
+`,
+
+  '01-matrix': `def updateMatrix(mat):
+    from collections import deque
+    m, n = len(mat), len(mat[0])
+    dist = [[0 if mat[r][c] == 0 else float('inf') for c in range(n)] for r in range(m)]
+    queue = deque((r, c) for r in range(m) for c in range(n) if mat[r][c] == 0)
+    dirs = [(1,0),(-1,0),(0,1),(0,-1)]
+    while queue:
+        r, c = queue.popleft()
+        for dr, dc in dirs:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n and dist[nr][nc] > dist[r][c] + 1:
+                dist[nr][nc] = dist[r][c] + 1
+                queue.append((nr, nc))
+    return dist
 `,
 
   'flood-fill': `def floodFill(image, sr, sc, color):

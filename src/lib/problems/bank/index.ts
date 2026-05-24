@@ -144,6 +144,7 @@ import { problem as sumSubarrayMinimums } from './sum-subarray-minimums';
 import { problem as removeKDigits } from './remove-k-digits';
 
 // math — easy
+import { problem as hammingWeight } from './hamming-weight';
 import { problem as digitSum } from './digit-sum';
 import { problem as isPrimeNumber } from './is-prime-number';
 import { problem as greatestCommonDivisor } from './greatest-common-divisor';
@@ -203,6 +204,7 @@ import { problem as wildcardMatching } from './wildcard-matching';
 import { problem as dungeonGame } from './dungeon-game';
 
 // linked-list — easy
+import { problem as deleteNodeInLinkedList } from './delete-node-in-linked-list';
 import { problem as reverseLinkedList } from './reverse-linked-list';
 import { problem as linkedListCycle } from './linked-list-cycle';
 import { problem as mergeTwoSortedLinkedLists } from './merge-two-sorted-linked-lists';
@@ -229,6 +231,7 @@ import { problem as findIfPathExists } from './find-if-path-exists';
 import { problem as wordSearch } from './word-search';
 import { problem as surroundedRegions } from './surrounded-regions';
 import { problem as graphValidTree } from './graph-valid-tree';
+import { problem as zeroOneMatrix } from './01-matrix';
 // graph — medium
 import { problem as numberOfIslands } from './number-of-islands';
 import { problem as courseSchedule } from './course-schedule';
@@ -415,6 +418,7 @@ export const problems: readonly Problem[] = [
   sumSubarrayMinimums,
   removeKDigits,
   // math — easy
+  hammingWeight,
   digitSum,
   isPrimeNumber,
   greatestCommonDivisor,
@@ -471,6 +475,7 @@ export const problems: readonly Problem[] = [
   wildcardMatching,
   dungeonGame,
   // linked-list — easy
+  deleteNodeInLinkedList,
   reverseLinkedList,
   linkedListCycle,
   mergeTwoSortedLinkedLists,
@@ -496,6 +501,7 @@ export const problems: readonly Problem[] = [
   wordSearch,
   surroundedRegions,
   graphValidTree,
+  zeroOneMatrix,
   numberOfIslands,
   courseSchedule,
   maxAreaOfIsland,
