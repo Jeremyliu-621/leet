@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 444 problems; added merge-sorted-array, minimum-moves-equal-array, multiply-strings, count-triplets-xor, water-and-jug, find-center-of-star-graph; 1603 tests.
+**Current focus:** Bank at 454 problems; added 13 more easy problems (string/array/math/sliding-window); 1633 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing bank toward 460+; more easy/medium problems across all tags.
+**Next up:** Continue growing bank toward 480+; more easy/medium problems across all tags.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
