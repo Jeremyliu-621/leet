@@ -25,6 +25,7 @@ function formatUnlockDuration(minutes: number): string {
 
 export function TopBar({ secondsLeft, prefs, streak }: TopBarProps) {
   const isLow = secondsLeft <= 60 && secondsLeft > 0;
+  const isCritical = secondsLeft <= 30 && secondsLeft > 0;
   const isExpired = secondsLeft <= 0;
 
   return (
@@ -74,6 +75,7 @@ export function TopBar({ secondsLeft, prefs, streak }: TopBarProps) {
             className={[
               'font-mono text-sm font-semibold tabular-nums',
               isExpired ? 'text-accent' : isLow ? 'text-text' : 'text-muted',
+              isCritical ? 'animate-pulse' : '',
             ]
               .filter(Boolean)
               .join(' ')}

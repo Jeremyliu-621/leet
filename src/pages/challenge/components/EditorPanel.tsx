@@ -468,7 +468,11 @@ export function EditorPanel({
       <div className="shrink-0 border-t border-border" aria-hidden="true" />
 
       {/* Verdict region — fixed height to prevent layout shift */}
-      <div className="min-h-[80px] shrink-0 overflow-y-auto">
+      <div
+        className="min-h-[80px] shrink-0 overflow-y-auto"
+        role="region"
+        aria-label="Test verdicts"
+      >
         <VerdictPanel result={verdict} mode={verdictMode} />
       </div>
 

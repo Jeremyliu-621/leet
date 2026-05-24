@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { JudgeResult, TestVerdict } from '../../../lib/judge';
 
 /** Serialises a judge value for display — handles arrays, objects, primitives. */
@@ -9,6 +10,27 @@ function displayValue(v: unknown): string {
   } catch {
     return String(v);
   }
+}
+
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+  function handleCopy() {
+    void navigator.clipboard.writeText(text).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    });
+  }
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      className="ml-1 font-mono text-[9px] uppercase tracking-wider text-faint hover:text-muted transition-colors"
+      title="Copy input"
+      aria-label={copied ? 'Copied' : 'Copy input to clipboard'}
+    >
+      {copied ? 'copied' : 'copy'}
+    </button>
+  );
 }
 
 interface SingleVerdictProps {
@@ -51,11 +73,12 @@ function SingleVerdict({ verdict, index }: SingleVerdictProps) {
         </div>
         <div className="space-y-1.5">
           {verdict.input && (
-            <div className="flex flex-wrap gap-x-3 gap-y-0.5">
+            <div className="flex flex-wrap gap-x-3 gap-y-0.5 items-baseline">
               <span className="font-mono text-[10px] uppercase tracking-wider text-faint w-16">
                 input
               </span>
               <code className="font-mono text-xs text-text">{verdict.input}</code>
+              <CopyButton text={verdict.input} />
             </div>
           )}
           <div className="flex flex-wrap gap-x-3 gap-y-0.5">
