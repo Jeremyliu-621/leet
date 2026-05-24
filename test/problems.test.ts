@@ -65,13 +65,25 @@ describe('problem selector', () => {
   });
 
   it('always picks a challenge problem, relaxing the filter as needed', () => {
-    // No bank problem is 'hard' or tagged in a way these prefs expect together,
-    // yet a problem must still be produced.
+    // With no difficulty + very narrow tag combo, it falls back gracefully.
     const picked = pickChallengeProblem(
-      { difficulties: ['hard'], tags: ['math'] },
+      { difficulties: ['hard'], tags: ['dynamic-programming'] },
       { random: () => 0 },
     );
     expect(picked).toBeDefined();
+  });
+
+  it('filters by dynamic-programming tag', () => {
+    const dp = filterProblems({ tags: ['dynamic-programming'] });
+    expect(dp.length).toBeGreaterThan(0);
+    expect(dp.every((p) => p.tags.includes('dynamic-programming'))).toBe(true);
+    // At least the 5 backfilled classic DP problems should appear.
+    const ids = dp.map((p) => p.id);
+    expect(ids).toContain('climbing-stairs');
+    expect(ids).toContain('fibonacci-number');
+    expect(ids).toContain('word-break');
+    expect(ids).toContain('edit-distance');
+    expect(ids).toContain('longest-increasing-subsequence');
   });
 
   it('respects difficulty when it is satisfiable', () => {
