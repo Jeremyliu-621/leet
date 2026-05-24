@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 100 problems milestone — two-pointers medium tier filled, hard tier added to stack + binary-search.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (565 unit tests across 22 files).
-**Next up:** Marketing site iteration + Vercel deployment.
+**Current focus:** Bank at 107 problems; light-mode CodeMirror theme, verdict input display, persistent submission history all shipped.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (580 unit tests across 22 files).
+**Next up:** Review LEETCODE_PARITY.md for remaining gaps; marketing site is inaccessible (separate repo).
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -190,6 +190,10 @@ Still pending:
 - [x] Add more medium-difficulty problems — bank now has full medium tier across all 6 tag categories
 - [x] Grow bank to 95 problems — 10 hard problems added (arrays: first-missing-positive, jump-game-ii, largest-rectangle-histogram, sliding-window-maximum, largest-number, longest-increasing-subsequence; strings: minimum-window-substring, longest-valid-parentheses, edit-distance, word-break); all with JS + Python solutions, hints, and test coverage (550 tests)
 - [x] **100-problem milestone** — 5 more problems: three-sum-closest, boats-to-save-people, partition-labels (two-pointers/medium), basic-calculator (stack/hard), median-two-sorted-arrays (binary-search/hard); 565 tests
+- [x] **Light-mode CodeMirror theme** — `leetlockEditorThemeLight` (inverted grayscale, `{ dark: false }`); Compartment-driven swap wired to `resolvedTheme` in Challenge
+- [x] **Verdict input display** — `input: string` field on all `TestVerdict` variants; renders as Input/Output/Expected in VerdictPanel matching LeetCode parity
+- [x] **Persistent submission history** — per-problem array stored in `chrome.storage.local` under `submissionHistory` key; capped at 20 entries; cleared on acceptance; loaded on challenge mount
+- [x] **107-problem milestone** — 4 new hard problems: split-array-largest-sum, capacity-to-ship, max-consecutive-flips, count-subarrays-bounded-max (binary-search + sliding-window); 580 tests
 - [ ] Marketing site iteration + Vercel deployment
 
 ---
