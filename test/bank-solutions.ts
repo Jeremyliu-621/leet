@@ -3137,6 +3137,24 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return _treeToArr(build(0, inorder.length - 1));
   },
 
+  'flatten-binary-tree': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    if (!root) return [];
+    // preorder iterative flatten
+    const stack: _TN[] = [root];
+    while (stack.length) {
+      const node = stack.pop()!;
+      if (node.r) stack.push(node.r);
+      if (node.l) stack.push(node.l);
+      node.l = null;
+      node.r = stack.length ? stack[stack.length - 1]! : null;
+    }
+    const vals: number[] = [];
+    let cur: _TN | null = root;
+    while (cur) { vals.push(cur.v); cur = cur.r; }
+    return vals;
+  },
+
   'pacific-atlantic': (...args: unknown[]) => {
     const heights = args[0] as number[][];
     const rows = heights.length;

@@ -249,6 +249,7 @@ import { problem as lowestCommonAncestorBst } from './lowest-common-ancestor-bst
 import { problem as countGoodNodes } from './count-good-nodes';
 import { problem as constructBinaryTree } from './construct-binary-tree';
 import { problem as kthSmallestBst } from './kth-smallest-bst';
+import { problem as flattenBinaryTree } from './flatten-binary-tree';
 // tree — hard
 import { problem as binaryTreeMaxPathSum } from './binary-tree-max-path-sum';
 import { problem as serializeBinaryTree } from './serialize-binary-tree';
@@ -489,6 +490,7 @@ export const problems: readonly Problem[] = [
   countGoodNodes,
   constructBinaryTree,
   kthSmallestBst,
+  flattenBinaryTree,
   // tree — hard
   binaryTreeMaxPathSum,
   serializeBinaryTree,

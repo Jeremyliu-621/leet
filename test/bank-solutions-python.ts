@@ -2516,6 +2516,20 @@ def deserialize(data):
     return root
 `,
 
+  'flatten-binary-tree': `def flatten(root):
+    if not root:
+        return
+    stack = [root]
+    while stack:
+        node = stack.pop()
+        if node.right:
+            stack.append(node.right)
+        if node.left:
+            stack.append(node.left)
+        node.left = None
+        node.right = stack[-1] if stack else None
+`,
+
   'pacific-atlantic': `def pacificAtlantic(heights):
     rows, cols = len(heights), len(heights[0])
     dirs = [(-1,0),(1,0),(0,-1),(0,1)]
