@@ -61,6 +61,7 @@ import { problem as reverseStringWords } from './reverse-string-words';
 import { problem as stringMultiply } from './string-multiply';
 import { problem as isSubsequenceMedium } from './is-subsequence-medium';
 import { problem as characterReplacement } from './character-replacement';
+import { problem as restoreIpAddresses } from './restore-ip-addresses';
 
 // hash-map — easy
 import { problem as firstUniqueChar } from './first-unique-char';
@@ -193,6 +194,7 @@ import { problem as maximumSwap } from './maximum-swap';
 
 import { problem as singleNumber } from './single-number';
 import { problem as majorityElementII } from './majority-element-ii';
+import { problem as maximumProductWordLengths } from './maximum-product-word-lengths';
 import { problem as insertInterval } from './insert-interval';
 // arrays — hard
 import { problem as nQueens } from './n-queens';
@@ -316,7 +318,6 @@ import { problem as combinations } from './combinations';
 import { problem as wordSearchII } from './word-search-ii';
 import { problem as letterCasePermutation } from './letter-case-permutation';
 import { problem as beautifulArrangement } from './beautiful-arrangement';
-import { problem as restoreIpAddresses } from './restore-ip-addresses';
 import { problem as expressionAddOperators } from './expression-add-operators';
 
 // tree — easy (additional)
@@ -367,6 +368,7 @@ export const problems: readonly Problem[] = [
   singleNumber,
   // arrays — medium
   majorityElementII,
+  maximumProductWordLengths,
   insertInterval,
   subsetsII,
   mergeIntervals,

@@ -4577,23 +4577,38 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   'restore-ip-addresses': (...args: unknown[]) => {
     const s = args[0] as string;
     const result: string[] = [];
-    function bt(start: number, segs: string[]): void {
-      if (segs.length === 4) {
-        if (start === s.length) result.push(segs.join('.'));
-        return;
-      }
-      for (let len = 1; len <= 3; len++) {
-        if (start + len > s.length) break;
-        const seg = s.slice(start, start + len);
-        if (seg.length > 1 && seg[0] === '0') break;
-        if (parseInt(seg, 10) > 255) break;
-        segs.push(seg);
-        bt(start + len, segs);
-        segs.pop();
+    function bt(start: number, parts: string[]): void {
+      if (parts.length === 4 && start === s.length) { result.push(parts.join('.')); return; }
+      if (parts.length === 4 || start === s.length) return;
+      const remaining = s.length - start;
+      const partsLeft = 4 - parts.length;
+      if (remaining < partsLeft || remaining > partsLeft * 3) return;
+      for (let len = 1; len <= 3 && start + len <= s.length; len++) {
+        const part = s.slice(start, start + len);
+        if (len > 1 && part[0] === '0') break;
+        if (parseInt(part, 10) > 255) break;
+        parts.push(part);
+        bt(start + len, parts);
+        parts.pop();
       }
     }
     bt(0, []);
-    return result;
+    return result.sort();
+  },
+
+  'maximum-product-word-lengths': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const masks = words.map(w => {
+      let m = 0;
+      for (const c of w) m |= 1 << (c.charCodeAt(0) - 97);
+      return m;
+    });
+    let best = 0;
+    for (let i = 0; i < words.length; i++)
+      for (let j = i + 1; j < words.length; j++)
+        if ((masks[i]! & masks[j]!) === 0)
+          best = Math.max(best, words[i]!.length * words[j]!.length);
+    return best;
   },
 
   'power-of-three': (...args: unknown[]) => {

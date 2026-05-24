@@ -33,13 +33,22 @@ Given a string \`s\` containing only digits, return all possible valid IP addres
     'A segment is valid if it has no leading zero (unless the segment itself is "0") and its numeric value is ≤ 255.',
     'Stop recursing when you have 4 segments — the remaining string must be empty for a valid IP.',
   ],
-  functionName: 'restoreIpAddresses',
+  functionName: 'restoreIpAddressesRunner',
   params: ['s'],
+  preamble: {
+    javascript: `function restoreIpAddressesRunner(s) {
+  return restoreIpAddresses(s).slice().sort();
+}`,
+    python: `def restoreIpAddressesRunner(s):
+    return sorted(restoreIpAddresses(s))
+`,
+  },
   starterCode: {
     javascript: `function restoreIpAddresses(s) {
-
+  // Return all valid IP addresses that can be formed from s
 }`,
     python: `def restoreIpAddresses(s):
+    # Return all valid IP addresses that can be formed from s
     pass`,
   },
   visibleTests: [
@@ -50,6 +59,7 @@ Given a string \`s\` containing only digits, return all possible valid IP addres
   hiddenTests: [
     { args: ['1111'], expected: ['1.1.1.1'] },
     { args: ['010010'], expected: ['0.10.0.10', '0.100.1.0'] },
+    { args: ['255255255255'], expected: ['255.255.255.255'] },
     { args: ['11111111111111111111'], expected: [] },
     { args: ['192168'], expected: ['1.9.2.168', '1.9.21.68', '1.9.216.8', '1.92.1.68', '1.92.16.8', '19.2.1.68', '19.2.16.8', '19.21.6.8', '192.1.6.8'] },
   ],

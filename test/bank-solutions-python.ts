@@ -3911,27 +3911,6 @@ def deserialize(data):
     return result
 `,
 
-  'restore-ip-addresses': `def restoreIpAddresses(s):
-    result = []
-    def bt(start, segs):
-        if len(segs) == 4:
-            if start == len(s):
-                result.append('.'.join(segs))
-            return
-        for length in range(1, 4):
-            if start + length > len(s):
-                break
-            seg = s[start:start + length]
-            if len(seg) > 1 and seg[0] == '0':
-                break
-            if int(seg) > 255:
-                break
-            segs.append(seg)
-            bt(start + length, segs)
-            segs.pop()
-    bt(0, [])
-    return result
-`,
   'insert-interval': `def insert(intervals, newInterval):
     result = []
     start, end = newInterval
@@ -4093,6 +4072,48 @@ def deserialize(data):
         else:
             result.append(None)
     return result
+`,
+
+  'restore-ip-addresses': `def restoreIpAddresses(s):
+    result = []
+    def bt(start, parts):
+        if len(parts) == 4 and start == len(s):
+            result.append('.'.join(parts))
+            return
+        if len(parts) == 4 or start == len(s):
+            return
+        remaining = len(s) - start
+        parts_left = 4 - len(parts)
+        if remaining < parts_left or remaining > parts_left * 3:
+            return
+        for length in range(1, 4):
+            if start + length > len(s):
+                break
+            part = s[start:start + length]
+            if length > 1 and part[0] == '0':
+                break
+            if int(part) > 255:
+                break
+            parts.append(part)
+            bt(start + length, parts)
+            parts.pop()
+    bt(0, [])
+    return result
+`,
+
+  'maximum-product-word-lengths': `def maxProduct(words):
+    masks = []
+    for w in words:
+        m = 0
+        for c in w:
+            m |= 1 << (ord(c) - ord('a'))
+        masks.append(m)
+    best = 0
+    for i in range(len(words)):
+        for j in range(i + 1, len(words)):
+            if (masks[i] & masks[j]) == 0:
+                best = max(best, len(words[i]) * len(words[j]))
+    return best
 `,
 
 };
