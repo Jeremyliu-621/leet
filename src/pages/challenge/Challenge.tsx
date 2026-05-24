@@ -77,6 +77,10 @@ export function Challenge() {
   const domain = useRef<string | null>(
     targetUrl.current ? extractDomain(targetUrl.current) : null,
   );
+  // True once a programmatic navigation (accepted → target, or failure → SW)
+  // is in flight. The beforeunload handler skips its prompt while this is set
+  // so the user doesn't see "Leave site?" right after solving correctly.
+  const isResolvingRef = useRef(false);
 
   // Page-level state machine.
   const [pageState, setPageState] = useState<PageState>({ status: 'loading' });
@@ -138,6 +142,10 @@ export function Challenge() {
 
   const handleFail = useCallback(
     async (reason: ChallengeFailureReason, prefs: UserPreferences) => {
+      // The SW is about to close or redirect this tab — suppress the
+      // beforeunload prompt that would otherwise interrupt that navigation.
+      isResolvingRef.current = true;
+
       let tabId: number | undefined;
       try {
         const tab = await chrome.tabs.getCurrent();
@@ -161,6 +169,22 @@ export function Challenge() {
     },
     [],
   );
+
+  // Block accidental tab-close / refresh while a challenge is in progress.
+  // The browser shows its generic "Leave site?" confirmation; if the user
+  // confirms, the tab closes (silent give-up — a future polish item is to
+  // also dispatch a fail-challenge in pagehide so the streak takes the hit).
+  useEffect(() => {
+    if (pageState.status !== 'ready') return;
+    function onBeforeUnload(event: BeforeUnloadEvent): void {
+      if (isResolvingRef.current) return;
+      event.preventDefault();
+      // Legacy browsers require returnValue to be set explicitly.
+      event.returnValue = '';
+    }
+    window.addEventListener('beforeunload', onBeforeUnload);
+    return () => window.removeEventListener('beforeunload', onBeforeUnload);
+  }, [pageState.status]);
 
   useEffect(() => {
     if (pageState.status !== 'ready') return;
@@ -237,6 +261,8 @@ export function Challenge() {
       setVerdict(result);
 
       if (result.outcome === 'accepted') {
+        // About to navigate back to the target — suppress the beforeunload prompt.
+        isResolvingRef.current = true;
         // Notify service worker → grant unlock token.
         try {
           await chrome.runtime.sendMessage({
