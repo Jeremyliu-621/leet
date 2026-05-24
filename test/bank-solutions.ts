@@ -3670,6 +3670,45 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return leaves.sort((a, b) => a - b);
   },
 
+  'triangle': (...args: unknown[]) => {
+    const tri = args[0] as number[][];
+    const dp = [...tri[tri.length - 1]!];
+    for (let i = tri.length - 2; i >= 0; i--) {
+      for (let j = 0; j <= i; j++) { dp[j] = tri[i]![j]! + Math.min(dp[j]!, dp[j + 1]!); }
+    }
+    return dp[0]!;
+  },
+
+  'interleaving-string': (...args: unknown[]) => {
+    const s1 = args[0] as string; const s2 = args[1] as string; const s3 = args[2] as string;
+    if (s1.length + s2.length !== s3.length) return false;
+    const dp = Array.from({ length: s1.length + 1 }, () => new Array<boolean>(s2.length + 1).fill(false));
+    dp[0]![0] = true;
+    for (let i = 1; i <= s1.length; i++) dp[i]![0] = dp[i - 1]![0]! && s1[i - 1] === s3[i - 1];
+    for (let j = 1; j <= s2.length; j++) dp[0]![j] = dp[0]![j - 1]! && s2[j - 1] === s3[j - 1];
+    for (let i = 1; i <= s1.length; i++)
+      for (let j = 1; j <= s2.length; j++)
+        dp[i]![j] = (s1[i - 1] === s3[i + j - 1] && dp[i - 1]![j]!) || (s2[j - 1] === s3[i + j - 1] && dp[i]![j - 1]!);
+    return dp[s1.length]![s2.length]!;
+  },
+
+  'find-eventual-safe-states': (...args: unknown[]) => {
+    const graph = args[0] as number[][];
+    const n = graph.length;
+    const state = new Array<number>(n).fill(0);
+    function dfs(node: number): boolean {
+      if (state[node] === 1) return false;
+      if (state[node] === 2) return true;
+      state[node] = 1;
+      for (const nb of graph[node]!) { if (!dfs(nb)) { state[node] = 1; return false; } }
+      state[node] = 2;
+      return true;
+    }
+    const result: number[] = [];
+    for (let i = 0; i < n; i++) { if (dfs(i)) result.push(i); }
+    return result;
+  },
+
   'lowest-common-ancestor-binary-tree': (...args: unknown[]) => {
     const root = _buildTree(args[0] as (number | null)[]);
     const p = args[1] as number;

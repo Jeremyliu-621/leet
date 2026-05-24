@@ -200,6 +200,8 @@ import { problem as partitionEqualSubsetSum } from './partition-equal-subset-sum
 import { problem as perfectSquares } from './perfect-squares';
 import { problem as targetSum } from './target-sum';
 import { problem as nthUglyNumber } from './nth-ugly-number';
+import { problem as triangle } from './triangle';
+import { problem as interleavingString } from './interleaving-string';
 // dynamic-programming — hard
 import { problem as longestPalindromicSubsequence } from './longest-palindromic-subsequence';
 import { problem as palindromePartitioningMinCuts } from './palindrome-partitioning-min-cuts';
@@ -253,6 +255,7 @@ import { problem as redundantConnection } from './redundant-connection';
 import { problem as isGraphBipartite } from './is-graph-bipartite';
 import { problem as allPathsSourceTarget } from './all-paths-source-target';
 import { problem as minimumHeightTrees } from './minimum-height-trees';
+import { problem as findEventualSafeStates } from './find-eventual-safe-states';
 // graph — hard
 import { problem as wordLadder } from './word-ladder';
 
@@ -477,6 +480,8 @@ export const problems: readonly Problem[] = [
   perfectSquares,
   targetSum,
   nthUglyNumber,
+  triangle,
+  interleavingString,
   // dynamic-programming — hard
   longestPalindromicSubsequence,
   palindromePartitioningMinCuts,
@@ -527,6 +532,7 @@ export const problems: readonly Problem[] = [
   isGraphBipartite,
   allPathsSourceTarget,
   minimumHeightTrees,
+  findEventualSafeStates,
   // graph — hard
   wordLadder,
   // tree — easy

@@ -3074,6 +3074,47 @@ def deserialize(data):
     return sorted(leaves)
 `,
 
+  'triangle': `def minimumTotal(triangle):
+    dp = list(triangle[-1])
+    for i in range(len(triangle) - 2, -1, -1):
+        for j in range(i + 1):
+            dp[j] = triangle[i][j] + min(dp[j], dp[j + 1])
+    return dp[0]
+`,
+
+  'interleaving-string': `def isInterleave(s1, s2, s3):
+    if len(s1) + len(s2) != len(s3):
+        return False
+    dp = [[False] * (len(s2) + 1) for _ in range(len(s1) + 1)]
+    dp[0][0] = True
+    for i in range(1, len(s1) + 1):
+        dp[i][0] = dp[i-1][0] and s1[i-1] == s3[i-1]
+    for j in range(1, len(s2) + 1):
+        dp[0][j] = dp[0][j-1] and s2[j-1] == s3[j-1]
+    for i in range(1, len(s1) + 1):
+        for j in range(1, len(s2) + 1):
+            dp[i][j] = (s1[i-1] == s3[i+j-1] and dp[i-1][j]) or (s2[j-1] == s3[i+j-1] and dp[i][j-1])
+    return dp[len(s1)][len(s2)]
+`,
+
+  'find-eventual-safe-states': `def eventualSafeNodes(graph):
+    n = len(graph)
+    state = [0] * n  # 0=unvisited, 1=in-progress, 2=safe
+    def dfs(node):
+        if state[node] == 1:
+            return False
+        if state[node] == 2:
+            return True
+        state[node] = 1
+        for nb in graph[node]:
+            if not dfs(nb):
+                state[node] = 1
+                return False
+        state[node] = 2
+        return True
+    return [i for i in range(n) if dfs(i)]
+`,
+
   'lowest-common-ancestor-binary-tree': `def lowestCommonAncestor(root, p, q):
     if not root:
         return None
