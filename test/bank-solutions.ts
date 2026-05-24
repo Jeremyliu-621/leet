@@ -4463,4 +4463,61 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'longest-turbulent-subarray': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    if (arr.length < 2) return arr.length;
+    let ans = 1, inc = 1, dec = 1;
+    for (let i = 1; i < arr.length; i++) {
+      if (arr[i]! > arr[i - 1]!) { inc = dec + 1; dec = 1; }
+      else if (arr[i]! < arr[i - 1]!) { dec = inc + 1; inc = 1; }
+      else { inc = 1; dec = 1; }
+      ans = Math.max(ans, inc, dec);
+    }
+    return ans;
+  },
+
+  'minimum-genetic-mutation': (...args: unknown[]) => {
+    const startGene = args[0] as string, endGene = args[1] as string;
+    const bank = new Set(args[2] as string[]);
+    const queue: [string, number][] = [[startGene, 0]];
+    const visited = new Set([startGene]);
+    const chars = 'ACGT';
+    while (queue.length) {
+      const [gene, steps] = queue.shift()!;
+      if (gene === endGene) return steps;
+      for (let i = 0; i < 8; i++) {
+        for (const c of chars) {
+          if (c === gene[i]) continue;
+          const next = gene.slice(0, i) + c + gene.slice(i + 1);
+          if (bank.has(next) && !visited.has(next)) {
+            visited.add(next);
+            queue.push([next, steps + 1]);
+          }
+        }
+      }
+    }
+    return -1;
+  },
+
+  'largest-divisible-subset': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const n = nums.length;
+    const dp = new Array<number>(n).fill(1);
+    const parent = new Array<number>(n).fill(-1);
+    let maxLen = 1, maxIdx = 0;
+    for (let i = 1; i < n; i++) {
+      for (let j = 0; j < i; j++) {
+        if (nums[i]! % nums[j]! === 0 && dp[j]! + 1 > dp[i]!) {
+          dp[i] = dp[j]! + 1;
+          parent[i] = j;
+        }
+      }
+      if (dp[i]! > maxLen) { maxLen = dp[i]!; maxIdx = i; }
+    }
+    const result: number[] = [];
+    let idx = maxIdx;
+    while (idx !== -1) { result.push(nums[idx]!); idx = parent[idx]!; }
+    return result.sort((a, b) => a - b);
+  },
+
 };

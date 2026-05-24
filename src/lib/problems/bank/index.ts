@@ -114,6 +114,7 @@ import { problem as subarrayProductLessThanK } from './subarray-product-less-tha
 import { problem as minimumOperationsReduceX } from './minimum-operations-reduce-x';
 
 import { problem as numberOfSubstrings } from './number-of-substrings';
+import { problem as longestTurbulentSubarray } from './longest-turbulent-subarray';
 // sliding-window — easy
 import { problem as maxWindowSum } from './max-window-sum';
 import { problem as longestEqualRun } from './longest-equal-run';
@@ -209,6 +210,7 @@ import { problem as bestTimeBuySell } from './best-time-buy-sell';
 import { problem as houseRobber } from './house-robber';
 import { problem as houseRobberII } from './house-robber-ii';
 import { problem as wiggleSubsequence } from './wiggle-subsequence';
+import { problem as largestDivisibleSubset } from './largest-divisible-subset';
 import { problem as coinChange } from './coin-change';
 import { problem as longestCommonSubsequence } from './longest-common-subsequence';
 import { problem as minimumPathSum } from './minimum-path-sum';
@@ -301,6 +303,7 @@ import { problem as wordLadder } from './word-ladder';
 import { problem as alienDictionary } from './alien-dictionary';
 import { problem as criticalConnections } from './critical-connections';
 import { problem as longestIncreasingPathMatrix } from './longest-increasing-path-matrix';
+import { problem as minimumGeneticMutation } from './minimum-genetic-mutation';
 import { problem as sudokuSolver } from './sudoku-solver';
 import { problem as combinations } from './combinations';
 import { problem as wordSearchII } from './word-search-ii';
@@ -463,6 +466,7 @@ export const problems: readonly Problem[] = [
   subarrayProductLessThanK,
   minimumOperationsReduceX,
   numberOfSubstrings,
+  longestTurbulentSubarray,
   // sliding-window — easy
   maxWindowSum,
   longestEqualRun,
@@ -552,6 +556,7 @@ export const problems: readonly Problem[] = [
   houseRobber,
   houseRobberII,
   wiggleSubsequence,
+  largestDivisibleSubset,
   coinChange,
   longestCommonSubsequence,
   minimumPathSum,
@@ -625,6 +630,7 @@ export const problems: readonly Problem[] = [
   alienDictionary,
   criticalConnections,
   longestIncreasingPathMatrix,
+  minimumGeneticMutation,
   // graph + backtracking — hard
   wordSearchII,
   // arrays + backtracking — hard

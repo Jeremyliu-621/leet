@@ -3856,4 +3856,63 @@ def deserialize(data):
     return result
 `,
 
+  'longest-turbulent-subarray': `def maxTurbulenceSize(arr):
+    if len(arr) < 2:
+        return len(arr)
+    ans = inc = dec = 1
+    for i in range(1, len(arr)):
+        if arr[i] > arr[i - 1]:
+            inc = dec + 1
+            dec = 1
+        elif arr[i] < arr[i - 1]:
+            dec = inc + 1
+            inc = 1
+        else:
+            inc = dec = 1
+        ans = max(ans, inc, dec)
+    return ans
+`,
+
+  'minimum-genetic-mutation': `def minMutation(startGene, endGene, bank):
+    from collections import deque
+    bank_set = set(bank)
+    queue = deque([(startGene, 0)])
+    visited = {startGene}
+    while queue:
+        gene, steps = queue.popleft()
+        if gene == endGene:
+            return steps
+        for i in range(8):
+            for c in 'ACGT':
+                if c == gene[i]:
+                    continue
+                nxt = gene[:i] + c + gene[i+1:]
+                if nxt in bank_set and nxt not in visited:
+                    visited.add(nxt)
+                    queue.append((nxt, steps + 1))
+    return -1
+`,
+
+  'largest-divisible-subset': `def largestDivisibleSubset(nums):
+    nums = sorted(nums)
+    n = len(nums)
+    dp = [1] * n
+    parent = [-1] * n
+    max_len, max_idx = 1, 0
+    for i in range(1, n):
+        for j in range(i):
+            if nums[i] % nums[j] == 0 and dp[j] + 1 > dp[i]:
+                dp[i] = dp[j] + 1
+                parent[i] = j
+        if dp[i] > max_len:
+            max_len = dp[i]
+            max_idx = i
+    result = []
+    idx = max_idx
+    while idx != -1:
+        result.append(nums[idx])
+        idx = parent[idx]
+    return sorted(result)
+`,
+
 };
