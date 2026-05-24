@@ -436,6 +436,60 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return removed;
   },
 
+  'permutations': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    const result: number[][] = [];
+    const bt = (start: number): void => {
+      if (start === nums.length) { result.push([...nums]); return; }
+      for (let i = start; i < nums.length; i++) {
+        [nums[start], nums[i]] = [nums[i]!, nums[start]!];
+        bt(start + 1);
+        [nums[start], nums[i]] = [nums[i]!, nums[start]!];
+      }
+    };
+    bt(0);
+    return result.sort((a, b) => {
+      for (let i = 0; i < a.length; i++) {
+        if (a[i]! < b[i]!) return -1;
+        if (a[i]! > b[i]!) return 1;
+      }
+      return 0;
+    });
+  },
+
+  'generate-parentheses': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const result: string[] = [];
+    const bt = (cur: string, open: number, close: number): void => {
+      if (cur.length === 2 * n) { result.push(cur); return; }
+      if (open < n) bt(cur + '(', open + 1, close);
+      if (close < open) bt(cur + ')', open, close + 1);
+    };
+    bt('', 0, 0);
+    return result.sort();
+  },
+
+  'palindrome-partitioning': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const result: string[][] = [];
+    const isPalin = (l: number, r: number): boolean => {
+      while (l < r) { if (s[l++] !== s[r--]) return false; }
+      return true;
+    };
+    const bt = (start: number, cur: string[]): void => {
+      if (start === s.length) { result.push([...cur]); return; }
+      for (let end = start + 1; end <= s.length; end++) {
+        if (isPalin(start, end - 1)) {
+          cur.push(s.slice(start, end));
+          bt(end, cur);
+          cur.pop();
+        }
+      }
+    };
+    bt(0, []);
+    return result;
+  },
+
   // --- arrays (batch 7) ----------------------------------------------------
   'rotate-array': (...args: unknown[]) => {
     const nums = args[0] as number[];
@@ -3834,20 +3888,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
-  'palindrome-partitioning': (...args: unknown[]) => {
-    const s = args[0] as string;
-    const result: string[][] = [];
-    function isPalin(l: number, r: number) { while (l < r) { if (s[l++] !== s[r--]) return false; } return true; }
-    function bt(start: number, cur: string[]) {
-      if (start === s.length) { result.push([...cur]); return; }
-      for (let end = start; end < s.length; end++) {
-        if (isPalin(start, end)) { cur.push(s.slice(start, end + 1)); bt(end + 1, cur); cur.pop(); }
-      }
-    }
-    bt(0, []);
-    return result;
-  },
-
   'number-of-dice-rolls': (...args: unknown[]) => {
     const n = args[0] as number;
     const k = args[1] as number;
@@ -3882,33 +3922,4 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[m-1]![n-1]!;
   },
 
-  'generate-parentheses': (...args: unknown[]) => {
-    const n = args[0] as number;
-    const results: string[] = [];
-    function bt(s: string, open: number, close: number) {
-      if (s.length === 2 * n) { results.push(s); return; }
-      if (open < n) bt(s + '(', open + 1, close);
-      if (close < open) bt(s + ')', open, close + 1);
-    }
-    bt('', 0, 0);
-    return results.sort();
-  },
-
-  'permutations': (...args: unknown[]) => {
-    const nums = args[0] as number[];
-    const result: number[][] = [];
-    function bt(current: number[], remaining: number[]) {
-      if (remaining.length === 0) { result.push([...current]); return; }
-      for (let i = 0; i < remaining.length; i++) {
-        current.push(remaining[i]!);
-        bt(current, remaining.slice(0, i).concat(remaining.slice(i + 1)));
-        current.pop();
-      }
-    }
-    bt([], nums);
-    return result.sort((a, b) => {
-      for (let i = 0; i < a.length; i++) { if (a[i]! !== b[i]!) return a[i]! - b[i]!; }
-      return 0;
-    });
-  },
 };

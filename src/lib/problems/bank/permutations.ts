@@ -7,9 +7,9 @@ export const problem: Problem = {
   tags: ['arrays'],
   description: `Given an array \`nums\` of distinct integers, return all the possible permutations. You can return the answer in **any order**.`,
   constraints: [
-    '1 <= nums.length <= 6',
-    '-10 <= nums[i] <= 10',
-    'All the integers of nums are unique',
+    '`1 <= nums.length <= 6`',
+    '`-10 <= nums[i] <= 10`',
+    'All the integers of `nums` are **unique**',
   ],
   examples: [
     {
@@ -45,10 +45,9 @@ export const problem: Problem = {
   },
   starterCode: {
     javascript: `function permute(nums) {
-  // Return all permutations of nums
+
 }`,
     python: `def permute(nums):
-    # Return all permutations of nums
     pass`,
   },
   visibleTests: [
@@ -60,6 +59,5 @@ export const problem: Problem = {
     { args: [[1, 2]], expected: [[1,2],[2,1]] },
     { args: [[-1, 0, 1]], expected: [[-1,0,1],[-1,1,0],[0,-1,1],[0,1,-1],[1,-1,0],[1,0,-1]] },
     { args: [[3, 1, 2]], expected: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]] },
-    { args: [[1, 2, 3]], expected: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]] },
   ],
 };

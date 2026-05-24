@@ -4,11 +4,11 @@ export const problem: Problem = {
   id: 'palindrome-partitioning',
   title: 'Palindrome Partitioning',
   difficulty: 'medium',
-  tags: ['arrays'],
+  tags: ['strings'],
   description: `Given a string \`s\`, partition \`s\` such that every substring of the partition is a **palindrome**. Return all possible palindrome partitioning of \`s\`.`,
   constraints: [
-    '1 <= s.length <= 16',
-    's contains only lowercase English letters',
+    '`1 <= s.length <= 16`',
+    '`s` contains only lowercase English letters',
   ],
   examples: [
     {
@@ -29,10 +29,9 @@ export const problem: Problem = {
   params: ['s'],
   starterCode: {
     javascript: `function partition(s) {
-  // Return all palindrome partitions of s
+
 }`,
     python: `def partition(s):
-    # Return all palindrome partitions of s
     pass`,
   },
   visibleTests: [
@@ -42,8 +41,8 @@ export const problem: Problem = {
   ],
   hiddenTests: [
     { args: ['aa'], expected: [['a','a'],['aa']] },
-    { args: ['abba'], expected: [['a','b','b','a'],['a','bb','a'],['abba']] },
     { args: ['ab'], expected: [['a','b']] },
+    { args: ['abba'], expected: [['a','b','b','a'],['a','bb','a'],['abba']] },
     { args: ['aaa'], expected: [['a','a','a'],['a','aa'],['aa','a'],['aaa']] },
   ],
 };

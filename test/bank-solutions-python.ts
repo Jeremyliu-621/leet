@@ -376,6 +376,57 @@ export const pythonSolutions: Record<string, string> = {
     return removed
 `,
 
+  'permutations': `def permute(nums):
+    result = []
+    nums = list(nums)
+    def bt(start):
+        if start == len(nums):
+            result.append(nums[:])
+            return
+        for i in range(start, len(nums)):
+            nums[start], nums[i] = nums[i], nums[start]
+            bt(start + 1)
+            nums[start], nums[i] = nums[i], nums[start]
+    bt(0)
+    return sorted(result)
+`,
+
+  'generate-parentheses': `def generateParenthesis(n):
+    result = []
+    def bt(cur, open_count, close_count):
+        if len(cur) == 2 * n:
+            result.append(cur)
+            return
+        if open_count < n:
+            bt(cur + '(', open_count + 1, close_count)
+        if close_count < open_count:
+            bt(cur + ')', open_count, close_count + 1)
+    bt('', 0, 0)
+    return sorted(result)
+`,
+
+  'palindrome-partitioning': `def partition(s):
+    result = []
+    def is_palindrome(l, r):
+        while l < r:
+            if s[l] != s[r]:
+                return False
+            l += 1
+            r -= 1
+        return True
+    def bt(start, cur):
+        if start == len(s):
+            result.append(list(cur))
+            return
+        for end in range(start + 1, len(s) + 1):
+            if is_palindrome(start, end - 1):
+                cur.append(s[start:end])
+                bt(end, cur)
+                cur.pop()
+    bt(0, [])
+    return result
+`,
+
   'rotate-array': `def rotateArray(nums, k):
     n = len(nums)
     steps = k % n
@@ -3238,28 +3289,6 @@ def deserialize(data):
     return result
 `,
 
-  'palindrome-partitioning': `def partition(s):
-    result = []
-    def is_palin(l, r):
-        while l < r:
-            if s[l] != s[r]:
-                return False
-            l += 1
-            r -= 1
-        return True
-    def bt(start, cur):
-        if start == len(s):
-            result.append(list(cur))
-            return
-        for end in range(start, len(s)):
-            if is_palin(start, end):
-                cur.append(s[start:end+1])
-                bt(end + 1, cur)
-                cur.pop()
-    bt(0, [])
-    return result
-`,
-
   'number-of-dice-rolls': `def numRollsToTarget(n, k, target):
     MOD = 10**9 + 7
     dp = [0] * (target + 1)
@@ -3294,31 +3323,4 @@ def deserialize(data):
     return dp[m-1][n-1]
 `,
 
-  'generate-parentheses': `def generateParenthesis(n):
-    results = []
-    def bt(s, open_count, close_count):
-        if len(s) == 2 * n:
-            results.append(s)
-            return
-        if open_count < n:
-            bt(s + '(', open_count + 1, close_count)
-        if close_count < open_count:
-            bt(s + ')', open_count, close_count + 1)
-    bt('', 0, 0)
-    return sorted(results)
-`,
-
-  'permutations': `def permute(nums):
-    result = []
-    def bt(current, remaining):
-        if not remaining:
-            result.append(list(current))
-            return
-        for i in range(len(remaining)):
-            current.append(remaining[i])
-            bt(current, remaining[:i] + remaining[i+1:])
-            current.pop()
-    bt([], nums)
-    return sorted(result)
-`,
 };

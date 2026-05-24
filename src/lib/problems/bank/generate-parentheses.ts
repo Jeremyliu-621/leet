@@ -4,10 +4,10 @@ export const problem: Problem = {
   id: 'generate-parentheses',
   title: 'Generate Parentheses',
   difficulty: 'medium',
-  tags: ['arrays'],
+  tags: ['strings'],
   description: `Given \`n\` pairs of parentheses, write a function to **generate all combinations of well-formed parentheses**.`,
   constraints: [
-    '1 <= n <= 8',
+    '`1 <= n <= 8`',
   ],
   examples: [
     {
@@ -36,10 +36,9 @@ export const problem: Problem = {
   },
   starterCode: {
     javascript: `function generateParenthesis(n) {
-  // Return all valid combinations of n pairs of parentheses
+
 }`,
     python: `def generateParenthesis(n):
-    # Return all valid combinations of n pairs of parentheses
     pass`,
   },
   visibleTests: [

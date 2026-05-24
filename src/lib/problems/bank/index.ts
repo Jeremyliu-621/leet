@@ -16,6 +16,9 @@ import { problem as nonOverlappingIntervals } from './non-overlapping-intervals'
 import { problem as subsets } from './subsets';
 import { problem as combinationSum } from './combination-sum';
 import { problem as combinationSumII } from './combination-sum-ii';
+import { problem as permutations } from './permutations';
+// strings — medium (additional)
+import { problem as generateParentheses } from './generate-parentheses';
 import { problem as palindromePartitioning } from './palindrome-partitioning';
 import { problem as rotateArray } from './rotate-array';
 import { problem as maxProductSubarray } from './max-product-subarray';
@@ -205,8 +208,6 @@ import { problem as nthUglyNumber } from './nth-ugly-number';
 import { problem as triangle } from './triangle';
 import { problem as interleavingString } from './interleaving-string';
 import { problem as uniquePathsII } from './unique-paths-ii';
-import { problem as generateParentheses } from './generate-parentheses';
-import { problem as permutations } from './permutations';
 import { problem as numberOfDiceRolls } from './number-of-dice-rolls';
 import { problem as coinChangeII } from './coin-change-ii';
 import { problem as bestTimeBuySellCooldown } from './best-time-buy-sell-cooldown';
@@ -319,8 +320,6 @@ export const problems: readonly Problem[] = [
   subsets,
   combinationSum,
   combinationSumII,
-  palindromePartitioning,
-  generateParentheses,
   permutations,
   spiralMatrixII,
   rotateArray,
@@ -350,6 +349,8 @@ export const problems: readonly Problem[] = [
   capitalizeWords,
   lengthOfLastWord,
   // strings — medium
+  generateParentheses,
+  palindromePartitioning,
   longestPalindromicString,
   countPalindromicSubstrings,
   decodeString,
