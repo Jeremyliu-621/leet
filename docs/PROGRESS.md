@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 415+ problems; 1522 tests; growing toward 420+.
+**Current focus:** Bank at 417 problems; 1531 tests; growing toward 450+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing bank toward 420+; more medium/hard problems across all tags.
 
@@ -283,6 +283,7 @@ Still pending:
 - [x] implement-queue-using-stacks (stack/easy) + binary-tree-pruning (tree/medium) + count-complete-tree-nodes (tree+binary-search/medium) + populating-next-right-pointers (tree/medium) + range-sum-query-2d (arrays/medium) + find-anagram-mappings (hash-map/easy); bank at 393; 1450 tests
 - [x] remove-duplicates-sorted-array-ii + longest-string-chain + implement-trie (merged with remote additions); bank at 401; 1474 tests
 - [x] can-place-flowers + find-k-closest-elements + string-compression + maximum-69-number + count-of-matches-tournament + maximum-product-two-elements; bank at 403; 1489 tests
+- [x] number-of-students-eating-lunch + two-sum-less-than-k + find-smallest-letter-greater-than-target + minimum-difference-k-scores + two-out-of-three + sum-of-odd-length-subarrays; bank at 417; 1531 tests
 
 ---
 
