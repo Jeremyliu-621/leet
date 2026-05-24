@@ -7,8 +7,9 @@ import {
   highlightActiveLineGutter,
   drawSelection,
 } from '@codemirror/view';
-import { EditorState } from '@codemirror/state';
+import { Compartment, EditorState } from '@codemirror/state';
 import { javascript } from '@codemirror/lang-javascript';
+import { python } from '@codemirror/lang-python';
 import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
 import {
   bracketMatching,
@@ -25,11 +26,18 @@ import {
 import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/search';
 import { leetlockEditorTheme } from '../codemirror-theme';
 import type { JudgeResult } from '../../../lib/judge';
+import type { SupportedLanguage } from '../../../lib/types';
 import { VerdictPanel } from './VerdictPanel';
 
 interface EditorPanelProps {
-  /** Initial starter code for the problem. */
+  /** Starter code for the active language. Replacing this resets the editor. */
   starterCode: string;
+  /** Language currently active in the editor (controls syntax highlighting + the runner). */
+  language: SupportedLanguage;
+  /** Languages this problem provides a starter for. When `length > 1` a segmented selector renders. */
+  availableLanguages: readonly SupportedLanguage[];
+  /** Called when the user picks a different language. */
+  onLanguageChange: (language: SupportedLanguage) => void;
   /** Callback invoked whenever the editor content changes. */
   onChange: (code: string) => void;
   /** Called when user clicks Run. */
@@ -57,13 +65,31 @@ interface EditorPanelProps {
 
 const INDENT_SPACES = '  ';
 
+const LANGUAGE_LABEL: Readonly<Record<SupportedLanguage, string>> = {
+  javascript: 'JavaScript',
+  python: 'Python',
+};
+
+const LANGUAGE_SHORT: Readonly<Record<SupportedLanguage, string>> = {
+  javascript: 'JS',
+  python: 'Py',
+};
+
+function languageExtension(language: SupportedLanguage) {
+  return language === 'python' ? python() : javascript();
+}
+
 /**
- * Right panel — houses the CodeMirror 6 editor, language label, action buttons,
- * and the verdict region. The editor is initialised once via useRef so that the
- * EditorView instance is stable across re-renders.
+ * Right panel — houses the CodeMirror 6 editor, the JS/Py language selector,
+ * action buttons, and the verdict region. The editor is built once via
+ * `useRef`; language changes go through a `Compartment.reconfigure` so the
+ * syntax extension swaps without rebuilding the editor state.
  */
 export function EditorPanel({
   starterCode,
+  language,
+  availableLanguages,
+  onLanguageChange,
   onChange,
   onRun,
   onSubmit,
@@ -76,10 +102,10 @@ export function EditorPanel({
 }: EditorPanelProps) {
   const editorContainerRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
+  const languageCompartmentRef = useRef(new Compartment());
 
-  // Stable refs — avoids re-creating the editor on every parent re-render.
-  // The Cmd/Ctrl+Enter shortcuts and Alt-R reset inside the editor read from
-  // these refs so the keymap captures stay current without rebuilding.
+  // Stable refs — the editor builds ONCE; refs let the keymap and the doc-
+  // change effect read fresh callback values without rebuilding.
   const onChangeRef = useRef(onChange);
   const onRunRef = useRef(onRun);
   const onSubmitRef = useRef(onSubmit);
@@ -127,7 +153,9 @@ export function EditorPanel({
         closeBrackets(),
         autocompletion(),
         search(),
-        javascript(),
+        // Language goes through a Compartment so it can be swapped without
+        // rebuilding the editor state on language change.
+        languageCompartmentRef.current.of(languageExtension(language)),
         // Keymap — order matters; first match wins.
         keymap.of([
           // Cmd/Ctrl+Enter runs visible tests; Cmd/Ctrl+Shift+Enter submits.
@@ -232,6 +260,15 @@ export function EditorPanel({
     });
   }, [starterCode]);
 
+  // Swap the language extension when `language` changes.
+  useEffect(() => {
+    const view = viewRef.current;
+    if (!view) return;
+    view.dispatch({
+      effects: languageCompartmentRef.current.reconfigure(languageExtension(language)),
+    });
+  }, [language]);
+
   const handleRunKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key === 'Enter' || e.key === ' ') onRun();
@@ -253,23 +290,46 @@ export function EditorPanel({
     [onGiveUp],
   );
 
+  const showLanguageSelector = availableLanguages.length > 1;
+
   return (
-    <section
-      className="flex h-full flex-col overflow-hidden"
-      aria-label="Code editor"
-    >
-      {/* Language label bar */}
+    <section className="flex h-full flex-col overflow-hidden" aria-label="Code editor">
+      {/* Language label / selector */}
       <div className="flex shrink-0 items-center justify-between border-b border-border px-4 py-2">
-        <span className="font-mono text-[10px] uppercase tracking-widest text-faint">
-          JavaScript
-        </span>
+        {showLanguageSelector ? (
+          <div role="radiogroup" aria-label="Code language" className="flex items-center gap-0.5">
+            {availableLanguages.map((lang) => {
+              const selected = lang === language;
+              return (
+                <button
+                  key={lang}
+                  type="button"
+                  role="radio"
+                  aria-checked={selected}
+                  aria-label={`Switch to ${LANGUAGE_LABEL[lang]}`}
+                  onClick={() => {
+                    if (!selected) onLanguageChange(lang);
+                  }}
+                  className={
+                    selected
+                      ? 'rounded-sm border border-border-strong bg-surface-2 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent'
+                      : 'rounded-sm border border-transparent px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-faint transition-colors hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent'
+                  }
+                >
+                  {LANGUAGE_SHORT[lang]}
+                </button>
+              );
+            })}
+          </div>
+        ) : (
+          <span className="font-mono text-[10px] uppercase tracking-widest text-faint">
+            {LANGUAGE_LABEL[language]}
+          </span>
+        )}
       </div>
 
       {/* Editor */}
-      <div
-        className="min-h-0 flex-1 overflow-hidden"
-        aria-label="Code editor — JavaScript"
-      >
+      <div className="min-h-0 flex-1 overflow-hidden" aria-label={`Code editor — ${LANGUAGE_LABEL[language]}`}>
         <div
           ref={editorContainerRef}
           className="h-full w-full"
