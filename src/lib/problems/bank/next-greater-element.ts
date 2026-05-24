@@ -35,6 +35,7 @@ A *stack* of indices waiting for their next greater value solves this in a singl
   params: ['nums'],
   starterCode: {
     javascript: 'function nextGreaterElement(nums) {\n  // your code here\n}\n',
+    python: 'def nextGreaterElement(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: [[2, 1, 3]], expected: [3, 3, -1] },

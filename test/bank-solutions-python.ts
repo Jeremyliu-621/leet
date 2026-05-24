@@ -164,4 +164,34 @@ export const pythonSolutions: Record<string, string> = {
             hi = mid - 1
     return best
 `,
+  'balanced-brackets': `def balancedBrackets(text):
+    pairs = {')': '(', ']': '[', '}': '{'}
+    stack = []
+    for ch in text:
+        if ch in '([{':
+            stack.append(ch)
+        else:
+            if not stack or stack[-1] != pairs[ch]:
+                return False
+            stack.pop()
+    return not stack
+`,
+  'next-greater-element': `def nextGreaterElement(nums):
+    result = [-1] * len(nums)
+    stack = []
+    for i, v in enumerate(nums):
+        while stack and nums[stack[-1]] < v:
+            result[stack.pop()] = v
+        stack.append(i)
+    return result
+`,
+  'remove-adjacent-dupes': `def collapseAdjacentDuplicates(text):
+    stack = []
+    for ch in text:
+        if stack and stack[-1] == ch:
+            stack.pop()
+        else:
+            stack.append(ch)
+    return ''.join(stack)
+`,
 };
