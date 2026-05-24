@@ -110,6 +110,7 @@ import { problem as permutationInString } from './permutation-in-string';
 import { problem as subarrayProductLessThanK } from './subarray-product-less-than-k';
 import { problem as minimumOperationsReduceX } from './minimum-operations-reduce-x';
 
+import { problem as numberOfSubstrings } from './number-of-substrings';
 // sliding-window — easy
 import { problem as maxWindowSum } from './max-window-sum';
 import { problem as longestEqualRun } from './longest-equal-run';
@@ -133,6 +134,7 @@ import { problem as search2dMatrix } from './search-2d-matrix';
 import { problem as kokoEatingBananas } from './koko-eating-bananas';
 import { problem as findPeakElement } from './find-peak-element';
 // binary-search — hard
+import { problem as findMinRotatedII } from './find-min-rotated-ii';
 import { problem as medianTwoSortedArrays } from './median-two-sorted-arrays';
 import { problem as splitArrayLargestSum } from './split-array-largest-sum';
 import { problem as capacityToShip } from './capacity-to-ship';
@@ -289,6 +291,7 @@ import { problem as findEventualSafeStates } from './find-eventual-safe-states';
 import { problem as wordLadder } from './word-ladder';
 import { problem as alienDictionary } from './alien-dictionary';
 import { problem as criticalConnections } from './critical-connections';
+import { problem as longestIncreasingPathMatrix } from './longest-increasing-path-matrix';
 
 // tree — easy (additional)
 import { problem as balancedBinaryTree } from './balanced-binary-tree';
@@ -440,6 +443,7 @@ export const problems: readonly Problem[] = [
   permutationInString,
   subarrayProductLessThanK,
   minimumOperationsReduceX,
+  numberOfSubstrings,
   // sliding-window — easy
   maxWindowSum,
   longestEqualRun,
@@ -463,6 +467,7 @@ export const problems: readonly Problem[] = [
   kokoEatingBananas,
   findPeakElement,
   // binary-search — hard
+  findMinRotatedII,
   medianTwoSortedArrays,
   splitArrayLargestSum,
   capacityToShip,
@@ -597,6 +602,7 @@ export const problems: readonly Problem[] = [
   wordLadder,
   alienDictionary,
   criticalConnections,
+  longestIncreasingPathMatrix,
   // tree — easy
   balancedBinaryTree,
   minimumDepthBinaryTree,

@@ -3595,4 +3595,46 @@ def deserialize(data):
     return [col_map[c] for c in sorted(col_map)]
 `,
 
+  'longest-increasing-path-matrix': `def longestIncreasingPath(matrix):
+    m, n = len(matrix), len(matrix[0])
+    memo = [[0] * n for _ in range(m)]
+    def dfs(i, j):
+        if memo[i][j]:
+            return memo[i][j]
+        best = 1
+        for di, dj in [(-1,0),(1,0),(0,-1),(0,1)]:
+            ni, nj = i + di, j + dj
+            if 0 <= ni < m and 0 <= nj < n and matrix[ni][nj] > matrix[i][j]:
+                best = max(best, 1 + dfs(ni, nj))
+        memo[i][j] = best
+        return best
+    return max(dfs(i, j) for i in range(m) for j in range(n))
+`,
+
+  'find-min-rotated-ii': `def findMin(nums):
+    lo, hi = 0, len(nums) - 1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if nums[mid] > nums[hi]:
+            lo = mid + 1
+        elif nums[mid] < nums[hi]:
+            hi = mid
+        else:
+            hi -= 1
+    return nums[lo]
+`,
+
+  'number-of-substrings': `def numberOfSubstrings(s):
+    count = [0, 0, 0]
+    left = 0
+    result = 0
+    for right in range(len(s)):
+        count[ord(s[right]) - ord('a')] += 1
+        while count[0] > 0 and count[1] > 0 and count[2] > 0:
+            result += len(s) - right
+            count[ord(s[left]) - ord('a')] -= 1
+            left += 1
+    return result
+`,
+
 };

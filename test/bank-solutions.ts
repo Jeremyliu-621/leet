@@ -4208,4 +4208,51 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return cols.map(c => colMap.get(c)!);
   },
 
+  'longest-increasing-path-matrix': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const m = matrix.length, n = matrix[0]!.length;
+    const memo = Array.from({ length: m }, () => new Array<number>(n).fill(0));
+    function dfs(i: number, j: number): number {
+      if (memo[i]![j]) return memo[i]![j]!;
+      let best = 1;
+      for (const [di, dj] of [[-1, 0], [1, 0], [0, -1], [0, 1]] as [number, number][]) {
+        const ni = i + di, nj = j + dj;
+        if (ni >= 0 && ni < m && nj >= 0 && nj < n && matrix[ni]![nj]! > matrix[i]![j]!) {
+          best = Math.max(best, 1 + dfs(ni, nj));
+        }
+      }
+      return (memo[i]![j] = best);
+    }
+    let ans = 0;
+    for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) ans = Math.max(ans, dfs(i, j));
+    return ans;
+  },
+
+  'find-min-rotated-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let lo = 0, hi = nums.length - 1;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (nums[mid]! > nums[hi]!) lo = mid + 1;
+      else if (nums[mid]! < nums[hi]!) hi = mid;
+      else hi--;
+    }
+    return nums[lo]!;
+  },
+
+  'number-of-substrings': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const count = [0, 0, 0];
+    let left = 0, result = 0;
+    for (let right = 0; right < s.length; right++) {
+      count[s.charCodeAt(right) - 97]!++;
+      while (count[0]! > 0 && count[1]! > 0 && count[2]! > 0) {
+        result += s.length - right;
+        count[s.charCodeAt(left) - 97]!--;
+        left++;
+      }
+    }
+    return result;
+  },
+
 };
