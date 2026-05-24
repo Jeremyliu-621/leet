@@ -2642,4 +2642,47 @@ def deserialize(data):
     head.next = reverseKGroup(cur, k)
     return prev
 `,
+
+  'binary-tree-zigzag-level-order': `def zigzagLevelOrder(root):
+    if not root:
+        return []
+    result = []
+    queue = [root]
+    left_to_right = True
+    while queue:
+        level = [node.val for node in queue]
+        result.append(level if left_to_right else level[::-1])
+        left_to_right = not left_to_right
+        next_queue = []
+        for node in queue:
+            if node.left:
+                next_queue.append(node.left)
+            if node.right:
+                next_queue.append(node.right)
+        queue = next_queue
+    return result
+`,
+
+  'sum-root-to-leaf-numbers': `def sumNumbers(root):
+    def dfs(node, cur):
+        if not node:
+            return 0
+        cur = cur * 10 + node.val
+        if not node.left and not node.right:
+            return cur
+        return dfs(node.left, cur) + dfs(node.right, cur)
+    return dfs(root, 0)
+`,
+
+  'lowest-common-ancestor-binary-tree': `def lowestCommonAncestor(root, p, q):
+    if not root:
+        return None
+    if root is p or root is q:
+        return root
+    left = lowestCommonAncestor(root.left, p, q)
+    right = lowestCommonAncestor(root.right, p, q)
+    if left and right:
+        return root
+    return left if left else right
+`,
 };

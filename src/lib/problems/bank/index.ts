@@ -252,6 +252,9 @@ import { problem as constructBinaryTree } from './construct-binary-tree';
 import { problem as kthSmallestBst } from './kth-smallest-bst';
 import { problem as zigzagLevelOrder } from './zigzag-level-order';
 import { problem as flattenBinaryTree } from './flatten-binary-tree';
+import { problem as zigzagLevelOrderBt } from './binary-tree-zigzag-level-order';
+import { problem as sumRootToLeafNumbers } from './sum-root-to-leaf-numbers';
+import { problem as lowestCommonAncestorBinaryTree } from './lowest-common-ancestor-binary-tree';
 // tree — hard
 import { problem as binaryTreeMaxPathSum } from './binary-tree-max-path-sum';
 import { problem as serializeBinaryTree } from './serialize-binary-tree';
@@ -495,6 +498,9 @@ export const problems: readonly Problem[] = [
   kthSmallestBst,
   zigzagLevelOrder,
   flattenBinaryTree,
+  zigzagLevelOrderBt,
+  sumRootToLeafNumbers,
+  lowestCommonAncestorBinaryTree,
   // tree — hard
   binaryTreeMaxPathSum,
   serializeBinaryTree,
