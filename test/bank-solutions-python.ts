@@ -5917,4 +5917,281 @@ def leafSimilar(root1, root2):
         return get_leaves(node.left) + get_leaves(node.right)
     return get_leaves(root1) == get_leaves(root2)
 `,
+
+  'total-cost-hire-k-workers': `def totalCost(costs, k, candidates):
+    import heapq
+    n = len(costs)
+    heap = []
+    lo, hi = 0, n - 1
+    for i in range(candidates):
+        if lo <= hi:
+            heapq.heappush(heap, (costs[lo], lo))
+            lo += 1
+    for i in range(candidates):
+        if hi >= lo:
+            heapq.heappush(heap, (costs[hi], hi))
+            hi -= 1
+    total = 0
+    for _ in range(k):
+        cost, idx = heapq.heappop(heap)
+        total += cost
+        if lo <= hi:
+            if idx < lo:
+                heapq.heappush(heap, (costs[lo], lo))
+                lo += 1
+            else:
+                heapq.heappush(heap, (costs[hi], hi))
+                hi -= 1
+    return total
+`,
+
+  'maximum-subsequence-score': `def maxScore(nums1, nums2, k):
+    import heapq
+    pairs = sorted(zip(nums1, nums2), key=lambda x: -x[1])
+    heap = []
+    s = 0
+    best = 0
+    for v1, v2 in pairs:
+        heapq.heappush(heap, v1)
+        s += v1
+        if len(heap) > k:
+            s -= heapq.heappop(heap)
+        if len(heap) == k:
+            best = max(best, s * v2)
+    return best
+`,
+
+  'gray-code': `def grayCode(n):
+    return [i ^ (i >> 1) for i in range(1 << n)]
+`,
+
+  'count-vowels-permutation': `def countVowelPermutation(n):
+    MOD = 10**9 + 7
+    a = e = i = o = u = 1
+    for _ in range(n - 1):
+        na = (e + i + u) % MOD
+        ne = (a + i) % MOD
+        ni = (e + o) % MOD
+        no = i % MOD
+        nu = (i + o) % MOD
+        a, e, i, o, u = na, ne, ni, no, nu
+    return (a + e + i + o + u) % MOD
+`,
+
+  'snakes-and-ladders': `def snakesAndLadders(board):
+    from collections import deque
+    n = len(board)
+    def get_cell(num):
+        row = (num - 1) // n
+        col = (num - 1) % n
+        r = n - 1 - row
+        c = col if row % 2 == 0 else n - 1 - col
+        return board[r][c]
+    visited = {1}
+    queue = deque([1])
+    moves = 0
+    while queue:
+        for _ in range(len(queue)):
+            sq = queue.popleft()
+            if sq == n * n:
+                return moves
+            for dice in range(1, 7):
+                dest = sq + dice
+                if dest > n * n:
+                    break
+                cell = get_cell(dest)
+                if cell != -1:
+                    dest = cell
+                if dest not in visited:
+                    visited.add(dest)
+                    queue.append(dest)
+        moves += 1
+    return -1
+`,
+
+  'swim-in-rising-water': `def swimInWater(grid):
+    import heapq
+    n = len(grid)
+    heap = [(grid[0][0], 0, 0)]
+    visited = [[False]*n for _ in range(n)]
+    visited[0][0] = True
+    while heap:
+        t, r, c = heapq.heappop(heap)
+        if r == n-1 and c == n-1:
+            return t
+        for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < n and 0 <= nc < n and not visited[nr][nc]:
+                visited[nr][nc] = True
+                heapq.heappush(heap, (max(t, grid[nr][nc]), nr, nc))
+    return -1
+`,
+
+  'n-queens-ii': `def totalNQueens(n):
+    count = [0]
+    cols = set()
+    diag1 = set()
+    diag2 = set()
+    def bt(row):
+        if row == n:
+            count[0] += 1
+            return
+        for col in range(n):
+            if col in cols or row-col in diag1 or row+col in diag2:
+                continue
+            cols.add(col); diag1.add(row-col); diag2.add(row+col)
+            bt(row+1)
+            cols.discard(col); diag1.discard(row-col); diag2.discard(row+col)
+    bt(0)
+    return count[0]
+`,
+
+  'remove-invalid-parentheses': `def removeInvalidParentheses(s):
+    def is_valid(st):
+        count = 0
+        for c in st:
+            if c == '(':
+                count += 1
+            elif c == ')':
+                count -= 1
+                if count < 0:
+                    return False
+        return count == 0
+    result = set()
+    queue = {s}
+    found = False
+    while queue:
+        next_q = set()
+        for cur in queue:
+            if is_valid(cur):
+                result.add(cur)
+                found = True
+            if not found:
+                for i in range(len(cur)):
+                    if cur[i] not in '()':
+                        continue
+                    next_q.add(cur[:i] + cur[i+1:])
+        if found:
+            break
+        queue = next_q
+    return sorted(result)
+`,
+
+  'number-of-ways-arrive-destination': `def countPaths(n, roads):
+    import heapq
+    MOD = 10**9 + 7
+    adj = [[] for _ in range(n)]
+    for u, v, t in roads:
+        adj[u].append((v, t))
+        adj[v].append((u, t))
+    dist = [float('inf')] * n
+    ways = [0] * n
+    dist[0] = 0
+    ways[0] = 1
+    heap = [(0, 0)]
+    while heap:
+        d, u = heapq.heappop(heap)
+        if d > dist[u]:
+            continue
+        for v, t in adj[u]:
+            nd = d + t
+            if nd < dist[v]:
+                dist[v] = nd
+                ways[v] = ways[u]
+                heapq.heappush(heap, (nd, v))
+            elif nd == dist[v]:
+                ways[v] = (ways[v] + ways[u]) % MOD
+    return ways[n-1]
+`,
+
+  'minimum-cost-cut-stick': `def minCost(n, cuts):
+    c = sorted([0] + list(cuts) + [n])
+    m = len(c)
+    dp = [[0]*m for _ in range(m)]
+    for length in range(2, m):
+        for i in range(m - length):
+            j = i + length
+            dp[i][j] = float('inf')
+            for k in range(i+1, j):
+                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j] + c[j] - c[i])
+    return dp[0][m-1]
+`,
+
+  'kth-missing-positive-number': `def findKthPositive(arr, k):
+    lo, hi = 0, len(arr)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if arr[mid] - (mid + 1) >= k:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo + k
+`,
+
+  'process-tasks-using-servers': `def assignTasks(servers, tasks):
+    import heapq
+    available = sorted((w, i) for i, w in enumerate(servers))
+    available = list(available)
+    busy = []  # (freeAt, weight, idx)
+    result = []
+    time = 0
+    for j, task in enumerate(tasks):
+        time = max(time, j)
+        while busy and busy[0][0] <= time:
+            free_at, w, i = heapq.heappop(busy)
+            heapq.heappush(available, (w, i))
+        if not available:
+            free_at, w, i = heapq.heappop(busy)
+            time = free_at
+            heapq.heappush(available, (w, i))
+            while busy and busy[0][0] == time:
+                free_at2, w2, i2 = heapq.heappop(busy)
+                heapq.heappush(available, (w2, i2))
+        w, i = heapq.heappop(available)
+        result.append(i)
+        heapq.heappush(busy, (time + task, w, i))
+    return result
+`,
+
+  'smallest-number-in-infinite-set': `def smallestInfiniteSetRunner(ops, args):
+    import heapq
+    cursor = 1
+    added = []
+    added_set = set()
+    result = []
+    for op, a in zip(ops, args):
+        if op == 'popSmallest':
+            if added and added[0] < cursor:
+                v = heapq.heappop(added)
+                added_set.discard(v)
+                result.append(v)
+            else:
+                result.append(cursor)
+                cursor += 1
+        elif op == 'addBack':
+            num = a[0] if a else 0
+            if num < cursor and num not in added_set:
+                added_set.add(num)
+                heapq.heappush(added, num)
+            result.append(None)
+        else:
+            result.append(None)
+    return result
+`,
+
+  'strange-printer': `def strangePrinter(s):
+    n = len(s)
+    dp = [[0]*n for _ in range(n)]
+    for i in range(n-1, -1, -1):
+        dp[i][i] = 1
+        for j in range(i+1, n):
+            if s[i] == s[j]:
+                dp[i][j] = dp[i][j-1]
+            else:
+                dp[i][j] = float('inf')
+                for k in range(i, j):
+                    dp[i][j] = min(dp[i][j], dp[i][k] + dp[k+1][j])
+    return dp[0][n-1]
+`,
+
 };

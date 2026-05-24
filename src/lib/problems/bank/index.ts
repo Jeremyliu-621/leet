@@ -522,6 +522,20 @@ import { problem as minimumCostToConnectSticks } from './minimum-cost-to-connect
 import { problem as medianFromDataStream } from './median-from-data-stream';
 import { problem as sortCharactersByFrequency } from './sort-characters-by-frequency';
 import { problem as maximumFrequencyStack } from './maximum-frequency-stack';
+import { problem as totalCostHireKWorkers } from './total-cost-hire-k-workers';
+import { problem as maximumSubsequenceScore } from './maximum-subsequence-score';
+import { problem as processTasksUsingServers } from './process-tasks-using-servers';
+import { problem as smallestNumberInInfiniteSet } from './smallest-number-in-infinite-set';
+import { problem as grayCode } from './gray-code';
+import { problem as countVowelsPermutation } from './count-vowels-permutation';
+import { problem as snakesAndLadders } from './snakes-and-ladders';
+import { problem as swimInRisingWater } from './swim-in-rising-water';
+import { problem as nQueensII } from './n-queens-ii';
+import { problem as removeInvalidParentheses } from './remove-invalid-parentheses';
+import { problem as numberOfWaysArriveDestination } from './number-of-ways-arrive-destination';
+import { problem as minimumCostCutStick } from './minimum-cost-cut-stick';
+import { problem as kthMissingPositiveNumber } from './kth-missing-positive-number';
+import { problem as strangePrinter } from './strange-printer';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -822,6 +836,26 @@ export const problems: readonly Problem[] = [
   // heap — hard
   medianFromDataStream,
   maximumFrequencyStack,
+  // heap — medium (new)
+  totalCostHireKWorkers,
+  maximumSubsequenceScore,
+  processTasksUsingServers,
+  smallestNumberInInfiniteSet,
+  // math/backtracking — medium (new)
+  grayCode,
+  // dynamic-programming — new
+  countVowelsPermutation,
+  minimumCostCutStick,
+  strangePrinter,
+  // graph — new
+  snakesAndLadders,
+  swimInRisingWater,
+  numberOfWaysArriveDestination,
+  // backtracking — new
+  nQueensII,
+  removeInvalidParentheses,
+  // binary-search — easy (new)
+  kthMissingPositiveNumber,
   // math — easy
   numberOfSteps,
   findTheDifference,
