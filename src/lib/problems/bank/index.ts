@@ -44,6 +44,7 @@ import { problem as numberOfRectangles } from './number-of-rectangles';
 import { problem as largestAltitude } from './largest-altitude';
 import { problem as sumOfOddLengthSubarrays } from './sum-of-odd-length-subarrays';
 import { problem as minimumSumMountainTriplet } from './minimum-sum-mountain-triplet';
+import { problem as findNumbersEvenDigits } from './find-numbers-even-digits';
 // arrays — medium
 import { problem as rangeSumQuery2D } from './range-sum-query-2d';
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
@@ -92,6 +93,7 @@ import { problem as checkIfPangram } from './check-if-pangram';
 import { problem as truncateSentence } from './truncate-sentence';
 import { problem as reverseStringII } from './reverse-string-ii';
 import { problem as determineIfHalvesAlike } from './determine-if-halves-alike';
+import { problem as shuffleString } from './shuffle-string';
 // strings — medium (additional)
 import { problem as integerToRoman } from './integer-to-roman';
 import { problem as reverseOnlyLetters } from './reverse-only-letters';
@@ -274,6 +276,7 @@ import { problem as powerOfThree } from './power-of-three';
 import { problem as isPowerOfFour } from './is-power-of-four';
 import { problem as toHex } from './to-hex';
 import { problem as numberComplement } from './number-complement';
+import { problem as subtractProductAndSum } from './subtract-product-and-sum';
 import { problem as reverseBits } from './reverse-bits';
 import { problem as countAndSay } from './count-and-say';
 import { problem as fibonacciNumber } from './fibonacci-number';
@@ -533,6 +536,7 @@ export const problems: readonly Problem[] = [
   largestAltitude,
   sumOfOddLengthSubarrays,
   minimumSumMountainTriplet,
+  findNumbersEvenDigits,
   singleNumber,
   // arrays — medium
   rangeSumQuery2D,
@@ -589,6 +593,7 @@ export const problems: readonly Problem[] = [
   truncateSentence,
   reverseStringII,
   determineIfHalvesAlike,
+  shuffleString,
   reverseOnlyLetters,
   backspaceStringCompare,
   vowelTally,
@@ -780,6 +785,7 @@ export const problems: readonly Problem[] = [
   isPowerOfFour,
   toHex,
   numberComplement,
+  subtractProductAndSum,
   reverseBits,
   countAndSay,
   fibonacciNumber,

@@ -5981,6 +5981,25 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return (args[0] as number) - 1;
   },
 
+  'find-numbers-even-digits': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return nums.filter(n => String(n).length % 2 === 0).length;
+  },
+
+  'shuffle-string': (...args: unknown[]) => {
+    const s = args[0] as string, indices = args[1] as number[];
+    const result = new Array<string>(s.length);
+    for (let i = 0; i < s.length; i++) result[indices[i]!] = s[i]!;
+    return result.join('');
+  },
+
+  'subtract-product-and-sum': (...args: unknown[]) => {
+    const n = args[0] as number;
+    let product = 1, sum = 0, x = n;
+    while (x > 0) { const d = x % 10; product *= d; sum += d; x = Math.floor(x / 10); }
+    return product - sum;
+  },
+
   'sort-characters-by-frequency': (...args: unknown[]) => {
     const s = args[0] as string;
     const freq = new Map<string, number>();

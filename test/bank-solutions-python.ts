@@ -5544,4 +5544,25 @@ def freqStackRunner(ops, vals):
     return result
 `,
 
+  'shuffle-string': `def restoreString(s, indices):
+    result = [''] * len(s)
+    for i, c in enumerate(s):
+        result[indices[i]] = c
+    return ''.join(result)
+`,
+
+  'subtract-product-and-sum': `def subtractProductAndSum(n):
+    product, total = 1, 0
+    while n > 0:
+        d = n % 10
+        product *= d
+        total += d
+        n //= 10
+    return product - total
+`,
+
+  'find-numbers-even-digits': `def findNumbers(nums):
+    return sum(1 for n in nums if len(str(n)) % 2 == 0)
+`,
+
 };
