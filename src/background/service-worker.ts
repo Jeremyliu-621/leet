@@ -78,8 +78,12 @@ async function grantUnlock(request: GrantUnlockRequest): Promise<RuntimeResponse
     setValue('streakSummary', streak.summary),
     setValue('streakHistory', streak.history),
   ]);
-  // storage.onChanged triggers reconcile(); the DNR rule for the unlocked
-  // domain disappears before this response returns to the caller.
+  // Critical: synchronously reconcile here so the DNR rule for the unlocked
+  // domain is definitively removed before the caller (the challenge page)
+  // navigates to the target URL. Without this await, the storage.onChanged
+  // -> reconcile() path is async and the challenge page's navigation races
+  // the stale rule, bouncing back into a fresh challenge.
+  await reconcile(now);
   return { ok: true, token };
 }
 
