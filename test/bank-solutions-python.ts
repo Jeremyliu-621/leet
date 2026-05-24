@@ -3126,4 +3126,50 @@ def deserialize(data):
         return root
     return left if left else right
 `,
+
+  'unique-paths-ii': `def uniquePathsWithObstacles(obstacleGrid):
+    m, n = len(obstacleGrid), len(obstacleGrid[0])
+    dp = [[0] * n for _ in range(m)]
+    for i in range(m):
+        if obstacleGrid[i][0] == 1:
+            break
+        dp[i][0] = 1
+    for j in range(n):
+        if obstacleGrid[0][j] == 1:
+            break
+        dp[0][j] = 1
+    for i in range(1, m):
+        for j in range(1, n):
+            if obstacleGrid[i][j] == 0:
+                dp[i][j] = dp[i-1][j] + dp[i][j-1]
+    return dp[m-1][n-1]
+`,
+
+  'generate-parentheses': `def generateParenthesis(n):
+    results = []
+    def bt(s, open_count, close_count):
+        if len(s) == 2 * n:
+            results.append(s)
+            return
+        if open_count < n:
+            bt(s + '(', open_count + 1, close_count)
+        if close_count < open_count:
+            bt(s + ')', open_count, close_count + 1)
+    bt('', 0, 0)
+    return sorted(results)
+`,
+
+  'permutations': `def permute(nums):
+    result = []
+    def bt(current, remaining):
+        if not remaining:
+            result.append(list(current))
+            return
+        for i in range(len(remaining)):
+            current.append(remaining[i])
+            bt(current, remaining[:i] + remaining[i+1:])
+            current.pop()
+    bt([], nums)
+    return sorted(result)
+`,
 };

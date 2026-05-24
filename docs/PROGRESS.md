@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 232 problems (12 tags); merge-intervals, non-overlapping-intervals, task-scheduler added; 966 tests.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (966 unit tests across 23 files).
-**Next up:** More medium problems; string/DP problems.
+**Current focus:** Bank at 237 problems (12 tags); triangle, interleaving-string, find-eventual-safe-states, letter-combinations-phone, subsets, combination-sum added; 981 tests.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (981 unit tests across 23 files).
+**Next up:** More medium/hard problems; backtracking, DP, graph.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -250,6 +250,7 @@ Still pending:
 - [x] house-robber-iii (tree DP/medium), maximum-width-binary-tree (BFS/medium), minimum-height-trees (graph/medium); bank at 226 (removed duplicate sum-root-to-leaf-numbers)
 - [x] hamming-weight (math/easy), 01-matrix (graph/medium), delete-node-in-linked-list (easy); 957 tests; bank at 229
 - [x] merge-intervals, non-overlapping-intervals (arrays/medium), task-scheduler (math/medium); 966 tests; bank at 232
+- [x] triangle (DP/medium), interleaving-string (DP/medium), find-eventual-safe-states (graph/medium); letter-combinations-phone (hash-map/medium), subsets (arrays/medium), combination-sum (arrays/medium); 981 tests; bank at 237
 
 ---
 

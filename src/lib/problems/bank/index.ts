@@ -202,6 +202,9 @@ import { problem as targetSum } from './target-sum';
 import { problem as nthUglyNumber } from './nth-ugly-number';
 import { problem as triangle } from './triangle';
 import { problem as interleavingString } from './interleaving-string';
+import { problem as uniquePathsII } from './unique-paths-ii';
+import { problem as generateParentheses } from './generate-parentheses';
+import { problem as permutations } from './permutations';
 // dynamic-programming — hard
 import { problem as longestPalindromicSubsequence } from './longest-palindromic-subsequence';
 import { problem as palindromePartitioningMinCuts } from './palindrome-partitioning-min-cuts';
@@ -306,6 +309,8 @@ export const problems: readonly Problem[] = [
   nonOverlappingIntervals,
   subsets,
   combinationSum,
+  generateParentheses,
+  permutations,
   rotateArray,
   maxProductSubarray,
   productExceptSelf,
@@ -482,6 +487,7 @@ export const problems: readonly Problem[] = [
   nthUglyNumber,
   triangle,
   interleavingString,
+  uniquePathsII,
   // dynamic-programming — hard
   longestPalindromicSubsequence,
   palindromePartitioningMinCuts,

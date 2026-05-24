@@ -3730,4 +3730,48 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return lca(root)?.v ?? null;
   },
+
+  'unique-paths-ii': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    const dp = Array.from({ length: m }, () => new Array<number>(n).fill(0));
+    for (let i = 0; i < m; i++) { if (grid[i]![0] === 1) break; dp[i]![0] = 1; }
+    for (let j = 0; j < n; j++) { if (grid[0]![j] === 1) break; dp[0]![j] = 1; }
+    for (let i = 1; i < m; i++) {
+      for (let j = 1; j < n; j++) {
+        if (grid[i]![j] === 0) dp[i]![j] = dp[i-1]![j]! + dp[i]![j-1]!;
+      }
+    }
+    return dp[m-1]![n-1]!;
+  },
+
+  'generate-parentheses': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const results: string[] = [];
+    function bt(s: string, open: number, close: number) {
+      if (s.length === 2 * n) { results.push(s); return; }
+      if (open < n) bt(s + '(', open + 1, close);
+      if (close < open) bt(s + ')', open, close + 1);
+    }
+    bt('', 0, 0);
+    return results.sort();
+  },
+
+  'permutations': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const result: number[][] = [];
+    function bt(current: number[], remaining: number[]) {
+      if (remaining.length === 0) { result.push([...current]); return; }
+      for (let i = 0; i < remaining.length; i++) {
+        current.push(remaining[i]!);
+        bt(current, remaining.slice(0, i).concat(remaining.slice(i + 1)));
+        current.pop();
+      }
+    }
+    bt([], nums);
+    return result.sort((a, b) => {
+      for (let i = 0; i < a.length; i++) { if (a[i]! !== b[i]!) return a[i]! - b[i]!; }
+      return 0;
+    });
+  },
 };
