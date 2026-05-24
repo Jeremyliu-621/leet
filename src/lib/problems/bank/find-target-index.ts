@@ -32,6 +32,7 @@ export const problem: Problem = {
   params: ['nums', 'target'],
   starterCode: {
     javascript: 'function findTargetIndex(nums, target) {\n  // your code here\n}\n',
+    python: 'def findTargetIndex(nums, target):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: [[1, 3, 5, 7, 9], 7], expected: 3 },

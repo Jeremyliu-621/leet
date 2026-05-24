@@ -130,4 +130,38 @@ export const pythonSolutions: Record<string, string> = {
             best = window
     return best
 `,
+  'find-target-index': `def findTargetIndex(nums, target):
+    lo, hi = 0, len(nums) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if nums[mid] == target:
+            return mid
+        if nums[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return -1
+`,
+  'first-not-smaller': `def firstNotSmaller(nums, target):
+    lo, hi = 0, len(nums)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if nums[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+`,
+  'integer-square-root': `def integerSquareRoot(n):
+    lo, hi = 0, n
+    best = 0
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if mid * mid <= n:
+            best = mid
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return best
+`,
 };

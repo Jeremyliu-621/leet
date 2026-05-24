@@ -33,6 +33,7 @@ export const problem: Problem = {
   params: ['nums', 'target'],
   starterCode: {
     javascript: 'function firstNotSmaller(nums, target) {\n  // your code here\n}\n',
+    python: 'def firstNotSmaller(nums, target):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: [[1, 3, 5, 7], 5], expected: 2 },
