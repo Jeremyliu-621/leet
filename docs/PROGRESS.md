@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 291 problems (13 tags); min-stack + expression-add-operators added; combination-sum-iii conflict resolved; approaching 300.
+**Current focus:** Bank at 292 problems (14 tags); lru-cache (hash-map/hard, doubly-linked-list+Map) added; 1147 tests; approaching 300.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** LRU Cache (hash-map/hard), more problems across all tags, 300-problem milestone.
+**Next up:** More problems across all tags, 300-problem milestone.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -265,6 +265,7 @@ Still pending:
 - [x] combination-sum-iii (backtracking/medium) + restore-ip-addresses (backtracking/medium); bank at 289
 - [x] expression-add-operators (strings+backtracking/hard, operator insertion with multiplication precedence); bank at 290
 - [x] min-stack (stack/easy, class runner preamble); bank at 291; 1144 tests
+- [x] lru-cache (hash-map/hard, doubly-linked-list+Map, class runner preamble); bank at 292; 1147 tests
 
 ---
 

@@ -4605,4 +4605,63 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     });
   },
 
+  'lru-cache': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as number[][];
+    interface DLNode { key: number; val: number; prev: DLNode | null; next: DLNode | null }
+    const map = new Map<number, DLNode>();
+    let capacity = 0;
+    // sentinel head (MRU side) and tail (LRU side)
+    const head: DLNode = { key: -1, val: -1, prev: null, next: null };
+    const tail: DLNode = { key: -1, val: -1, prev: null, next: null };
+    head.next = tail;
+    tail.prev = head;
+    function remove(node: DLNode): void {
+      node.prev!.next = node.next;
+      node.next!.prev = node.prev;
+    }
+    function insertFront(node: DLNode): void {
+      node.next = head.next;
+      node.prev = head;
+      head.next!.prev = node;
+      head.next = node;
+    }
+    return ops.map((op, i) => {
+      const a = opArgs[i]!;
+      if (op === 'LRUCache') {
+        capacity = a[0]!;
+        map.clear();
+        head.next = tail;
+        tail.prev = head;
+        return null;
+      }
+      if (op === 'get') {
+        const node = map.get(a[0]!);
+        if (!node) return -1;
+        remove(node);
+        insertFront(node);
+        return node.val;
+      }
+      if (op === 'put') {
+        const existing = map.get(a[0]!);
+        if (existing) {
+          existing.val = a[1]!;
+          remove(existing);
+          insertFront(existing);
+        } else {
+          const node: DLNode = { key: a[0]!, val: a[1]!, prev: null, next: null };
+          map.set(a[0]!, node);
+          insertFront(node);
+          if (map.size > capacity) {
+            const lru = tail.prev!;
+            remove(lru);
+            map.delete(lru.key);
+          }
+        }
+        return null;
+      }
+      return null;
+    });
+  },
+
 };

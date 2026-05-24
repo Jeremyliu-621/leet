@@ -3998,4 +3998,38 @@ def deserialize(data):
     return result
 `,
 
+  'lru-cache': `def lruCacheRunner(ops, args):
+    from collections import OrderedDict
+    cache = None
+    capacity = 0
+    od = OrderedDict()
+    result = []
+    for op, a in zip(ops, args):
+        if op == 'LRUCache':
+            capacity = a[0]
+            od.clear()
+            result.append(None)
+        elif op == 'get':
+            key = a[0]
+            if key in od:
+                od.move_to_end(key, last=False)
+                result.append(od[key])
+            else:
+                result.append(-1)
+        elif op == 'put':
+            key, val = a[0], a[1]
+            if key in od:
+                od.move_to_end(key, last=False)
+                od[key] = val
+            else:
+                od[key] = val
+                od.move_to_end(key, last=False)
+                if len(od) > capacity:
+                    od.popitem(last=True)
+            result.append(None)
+        else:
+            result.append(None)
+    return result
+`,
+
 };

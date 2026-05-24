@@ -82,6 +82,7 @@ import { problem as maximumErasureValue } from './maximum-erasure-value';
 // hash-map — hard
 import { problem as fourSumII } from './four-sum-ii';
 import { problem as maxPointsOnLine } from './max-points-on-line';
+import { problem as lruCache } from './lru-cache';
 
 // two-pointers — hard
 import { problem as trappingRainWater } from './trapping-rain-water';
@@ -437,6 +438,7 @@ export const problems: readonly Problem[] = [
   // hash-map — hard
   fourSumII,
   maxPointsOnLine,
+  lruCache,
   // two-pointers — hard
   trappingRainWater,
   fourSum,
