@@ -2482,4 +2482,22 @@ export const pythonSolutions: Record<string, string> = {
         return copy
     return dfs(node)
 `,
+
+  'construct-binary-tree': `def buildTree(preorder, inorder):
+    if not preorder:
+        return None
+    index_map = {v: i for i, v in enumerate(inorder)}
+    pi = [0]
+    def build(lo, hi):
+        if lo > hi:
+            return None
+        root_val = preorder[pi[0]]
+        pi[0] += 1
+        mid = index_map[root_val]
+        node = TreeNode(root_val)
+        node.left = build(lo, mid - 1)
+        node.right = build(mid + 1, hi)
+        return node
+    return build(0, len(inorder) - 1)
+`,
 };

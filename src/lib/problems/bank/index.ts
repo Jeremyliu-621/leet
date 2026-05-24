@@ -245,6 +245,7 @@ import { problem as levelOrderTraversal } from './level-order-traversal';
 import { problem as binaryTreeRightSideView } from './binary-tree-right-side-view';
 import { problem as lowestCommonAncestorBst } from './lowest-common-ancestor-bst';
 import { problem as countGoodNodes } from './count-good-nodes';
+import { problem as constructBinaryTree } from './construct-binary-tree';
 // tree — hard
 import { problem as binaryTreeMaxPathSum } from './binary-tree-max-path-sum';
 
@@ -480,6 +481,7 @@ export const problems: readonly Problem[] = [
   binaryTreeRightSideView,
   lowestCommonAncestorBst,
   countGoodNodes,
+  constructBinaryTree,
   // tree — hard
   binaryTreeMaxPathSum,
 ];

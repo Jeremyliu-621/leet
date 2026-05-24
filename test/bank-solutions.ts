@@ -3091,4 +3091,20 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return result;
   },
+
+  'construct-binary-tree': (...args: unknown[]) => {
+    const preorder = args[0] as number[];
+    const inorder = args[1] as number[];
+    if (!preorder.length) return [];
+    const indexMap = new Map<number, number>();
+    inorder.forEach((v, i) => indexMap.set(v, i));
+    let pi = 0;
+    function build(lo: number, hi: number): _TN | null {
+      if (lo > hi) return null;
+      const rootVal = preorder[pi++]!;
+      const mid = indexMap.get(rootVal)!;
+      return { v: rootVal, l: build(lo, mid - 1), r: build(mid + 1, hi) };
+    }
+    return _treeToArr(build(0, inorder.length - 1));
+  },
 };
