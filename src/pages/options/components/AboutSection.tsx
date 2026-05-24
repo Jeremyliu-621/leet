@@ -41,7 +41,7 @@ export function AboutSection() {
         <p>
           LeetLock is a Chrome Manifest V3 extension with{' '}
           <span className="font-semibold text-text">{BANK_SIZE} original problems</span>{' '}
-          covering 10 topic categories.{' '}
+          covering 12 topic categories.{' '}
           <span className="font-semibold text-text">JavaScript, TypeScript, and Python</span>{' '}
           are all supported. Every problem and every piece of code you write runs
           entirely on this device — there is no server, no LeetLock account, and
