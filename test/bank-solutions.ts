@@ -2602,6 +2602,25 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return arr;
   },
 
+  'odd-even-linked-list': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const odd: number[] = [];
+    const even: number[] = [];
+    for (let i = 0; i < arr.length; i++) {
+      if (i % 2 === 0) odd.push(arr[i]!);
+      else even.push(arr[i]!);
+    }
+    return [...odd, ...even];
+  },
+
+  'intersection-two-linked-lists': (...args: unknown[]) => {
+    const arrA = args[0] as number[];
+    const arrB = args[1] as number[];
+    const shared = args[2] as number[];
+    void arrA; void arrB;
+    return shared.length > 0 ? shared[0]! : -1;
+  },
+
   // --- arrays + math + strings — easy ----------------------------------------
   'plus-one': (...args: unknown[]) => {
     const digits = [...(args[0] as number[])];

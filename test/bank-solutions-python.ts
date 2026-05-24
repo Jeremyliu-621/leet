@@ -2035,6 +2035,27 @@ export const pythonSolutions: Record<string, string> = {
     slow.next = slow.next.next
     return dummy.next
 `,
+  'odd-even-linked-list': `def oddEvenList(head):
+    if not head:
+        return head
+    odd = head
+    even = head.next
+    even_head = even
+    while even and even.next:
+        odd.next = even.next
+        odd = odd.next
+        even.next = odd.next
+        even = even.next
+    odd.next = even_head
+    return head
+`,
+  'intersection-two-linked-lists': `def getIntersectionNode(headA, headB):
+    a, b = headA, headB
+    while a is not b:
+        a = a.next if a else headB
+        b = b.next if b else headA
+    return a
+`,
   'plus-one': `def plusOne(digits):
     digits = list(digits)
     for i in range(len(digits) - 1, -1, -1):

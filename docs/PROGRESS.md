@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 165 problems; linked-list tag added (3 problems); easy tier expansion across arrays/math/strings.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (756 unit tests across 22 files).
-**Next up:** More linked-list problems; fill remaining thin easy tiers; consider graph/BFS tag.
+**Current focus:** Bank at 168 problems; linked-list at 5 easy + 1 medium; preamble pattern established.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (765 unit tests across 22 files).
+**Next up:** More linked-list medium problems (odd-even, intersection); fill remaining thin tiers.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -220,6 +220,8 @@ Still pending:
 - [x] Add ransom-note, isomorphic-strings, nth-ugly-number, maximum-swap; 735 tests; bank at 158
 - [x] Add linked-list tag + 3 problems (reverse-linked-list, linked-list-cycle, merge-two-sorted-linked-lists) with preamble; bank at 161
 - [x] Add 4 easy problems (plus-one, length-of-last-word, palindrome-number, excel-column-number); 756 tests; bank at 165
+- [x] Add middle-of-linked-list (easy), palindrome-linked-list (easy), remove-nth-from-end (medium); 765 tests; bank at 168
+- [ ] Add more linked-list medium problems (odd-even-linked-list, add-two-numbers)
 - [ ] Marketing site iteration + Vercel deployment
 
 ---

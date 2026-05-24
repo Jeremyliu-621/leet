@@ -207,8 +207,10 @@ import { problem as linkedListCycle } from './linked-list-cycle';
 import { problem as mergeTwoSortedLinkedLists } from './merge-two-sorted-linked-lists';
 import { problem as middleOfLinkedList } from './middle-of-linked-list';
 import { problem as palindromeLinkedList } from './palindrome-linked-list';
+import { problem as intersectionTwoLinkedLists } from './intersection-two-linked-lists';
 // linked-list — medium
 import { problem as removeNthFromEnd } from './remove-nth-from-end';
+import { problem as oddEvenLinkedList } from './odd-even-linked-list';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -406,6 +408,8 @@ export const problems: readonly Problem[] = [
   mergeTwoSortedLinkedLists,
   middleOfLinkedList,
   palindromeLinkedList,
+  intersectionTwoLinkedLists,
   // linked-list — medium
   removeNthFromEnd,
+  oddEvenLinkedList,
 ];
