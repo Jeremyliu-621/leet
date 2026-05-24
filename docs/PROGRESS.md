@@ -7,12 +7,12 @@
 ---
 
 **Last updated:** 2026-05-23
-**Current phase:** Phase 8 — Settings page
-**Current focus:** Options UI — block-rules editor, keyword triggers, prefs form, lock setup,
-pending-changes review.
-**Build status:** 🟢 `npm run build` and `npm run test` green (159 tests across 13 files)
-**Next up:** Spawn a UI agent for the settings page using the `frontend-design` skill; integrate
-the password/partner-code lock (Phase 9) and the pending-changes review into that page.
+**Current phase:** Phase 12 — Polish, browser verification, e2e harness
+**Current focus:** Manual e2e in real Chrome; Playwright load-extension smoke test; screenshots.
+**Build status:** 🟢 `npm run build` + `npm run test` green (227 tests across 15 files)
+**Next up:** Walk `TESTING.md` flow A end-to-end in Chrome; stand up Playwright; finish the last
+two Phase 10 streak-damage hooks (called from Options when a strictness-reducing change applies
+immediately, i.e. when strict mode is off).
 
 ---
 
@@ -103,24 +103,24 @@ the password/partner-code lock (Phase 9) and the pending-changes review into tha
 - [x] Blocked page UI — calm, minimal, grayscale
 - [x] Strict mode disables give-up (challenge UI honours `prefs.allowGiveUp`)
 
-## Phase 8 — Settings page
+## Phase 8 — Settings page ✅
 
-- [ ] Options page shell + navigation
-- [ ] Blocked sites + keyword triggers editors
-- [ ] Difficulty + category/tag selectors
-- [ ] Challenge time limit + unlock duration controls
-- [ ] Failure action config
-- [ ] Strict mode toggle + settings cooldown duration
-- [ ] Sync status indicator
+- [x] Options page shell + navigation
+- [x] Blocked sites + keyword triggers editors
+- [x] Difficulty + category/tag selectors
+- [x] Challenge time limit + unlock duration controls
+- [x] Failure action config
+- [x] Strict mode toggle + settings cooldown duration
+- [x] Sync status indicator
 
 ## Phase 9 — Anti-bypass / commitment 🟡
 
 - [x] Cooldown pipeline lib — schedule/applicable/cancel/nextApply (+ tests)
 - [x] `src/lib/crypto/hash.ts` — salted PBKDF2/SHA-256 via SubtleCrypto (+ tests)
-- [ ] Password lock setup + enforcement on protected settings (needs Phase 8 UI)
-- [ ] Accountability-partner code lock (needs Phase 8 UI)
-- [ ] Strict mode hardening across surfaces (needs Phase 8 UI for full coverage)
-- [ ] Pending-changes review UI — list + cancel (needs Phase 8 UI)
+- [x] Password lock setup + enforcement on protected settings
+- [x] Accountability-partner code lock
+- [x] Strict mode hardening across surfaces
+- [x] Pending-changes review UI — list + cancel
 
 ## Phase 10 — Streaks 🟡
 
@@ -129,18 +129,20 @@ the password/partner-code lock (Phase 9) and the pending-changes review into tha
 - [ ] Streak damage on disable / removed rule (needs Phase 8 hooks)
 - [ ] Subtle streak UI in popup (Phase 11) + challenge header (placeholder is in place)
 
-## Phase 11 — Popup
+## Phase 11 — Popup ✅
 
-- [ ] Popup: active unlocks, today's solves, streak, quick "open settings"
-- [ ] Quick add-current-site-to-blocklist action
+- [x] Popup: active unlocks, today's solves, streak, quick "open settings"
+- [x] Quick add-current-site-to-blocklist action
 
-## Phase 12 — Polish, tests, CI
+## Phase 12 — Polish, tests, CI 🟡
 
-- [ ] Accessibility pass (focus, keyboard, contrast, ARIA)
+- [ ] Accessibility pass (focus, keyboard, contrast, ARIA) — sweep beyond what individual sections already do
 - [ ] Edge-case sweep across all `src/lib` modules
-- [ ] Raise unit-test coverage; integration tests for core flows
-- [ ] GitHub Actions CI: typecheck + test + build
+- [ ] Integration tests for core flows (extract `reconcile()` from the SW into a pure module; mock chrome.declarativeNetRequest + alarms + runtime in `fake-chrome`)
+- [x] GitHub Actions CI: typecheck + test + build (artifacts uploaded for 14 days)
+- [ ] Playwright load-extension smoke test (real chromium, headed)
 - [ ] README screenshots / demo notes
+- [ ] Chrome Web Store ZIP packaging script
 
 ## Phase 13+ — Post-MVP
 
@@ -173,3 +175,10 @@ the password/partner-code lock (Phase 9) and the pending-changes review into tha
 - 2026-05-23: Phases 9 and 10 are partial — all the *lib* code is done and tested (crypto, streak,
   cooldown), but the UI integration of password/partner locks, pending-changes review, and the
   streak display in the popup must wait for Phases 8 (Settings page) and 11 (popup).
+- 2026-05-23: Phase 8 + Phase 9 UI integration complete. Settings page built by ui-generator-reviewer
+  agent (Options.tsx + 12 sub-components + options-helpers.ts + 68 new helper tests = 227 total).
+  All 12 sections implemented: blocked-sites editor, keyword triggers, challenge prefs, unlock,
+  problem selection, failure action, strict mode, password lock, accountability partner,
+  pending changes (with live countdown), sync status, and reset. Full cooldown-deferral and
+  password-gate logic wired in the Options.tsx orchestrator. Also fixed a pre-existing
+  Popup.tsx TS2322 type error (Awaited<ReturnType<...>> -> Promise<StorageSchema[K]>).
