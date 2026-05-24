@@ -407,6 +407,8 @@ import { problem as verticalOrderTraversal } from './vertical-order-traversal';
 // heap
 import { problem as lastStoneWeight } from './last-stone-weight';
 import { problem as kthLargestInStream } from './kth-largest-in-stream';
+import { problem as reorganizeString } from './reorganize-string';
+import { problem as minimumCostToConnectSticks } from './minimum-cost-to-connect-sticks';
 import { problem as medianFromDataStream } from './median-from-data-stream';
 
 export const problems: readonly Problem[] = [
@@ -620,6 +622,8 @@ export const problems: readonly Problem[] = [
   lastStoneWeight,
   // heap — medium
   kthLargestInStream,
+  reorganizeString,
+  minimumCostToConnectSticks,
   // heap — hard
   medianFromDataStream,
   // math — easy

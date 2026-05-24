@@ -4688,4 +4688,36 @@ def deserialize(data):
     return result
 `,
 
+  'minimum-cost-to-connect-sticks': `def connectSticks(sticks):
+    import heapq
+    heap = [int(x) for x in sticks]
+    heapq.heapify(heap)
+    cost = 0
+    while len(heap) > 1:
+        a = heapq.heappop(heap)
+        b = heapq.heappop(heap)
+        combined = a + b
+        cost += combined
+        heapq.heappush(heap, combined)
+    return cost
+`,
+
+  'reorganize-string': `def reorganizeString(s):
+    from collections import Counter
+    freq = Counter(s)
+    n = len(s)
+    entries = sorted(freq.items(), key=lambda x: (-x[1], x[0]))
+    if entries[0][1] > (n + 1) // 2:
+        return ''
+    result = [''] * n
+    pos = 0
+    for char, count in entries:
+        for _ in range(count):
+            if pos >= n:
+                pos = 1
+            result[pos] = char
+            pos += 2
+    return ''.join(result)
+`,
+
 };

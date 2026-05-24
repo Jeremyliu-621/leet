@@ -5346,4 +5346,44 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     });
   },
 
+  'minimum-cost-to-connect-sticks': (...args: unknown[]) => {
+    const sticks = (args[0] as number[]).slice();
+    if (sticks.length <= 1) return 0;
+    // sorted-array min-heap simulation
+    sticks.sort((a, b) => a - b);
+    let cost = 0;
+    while (sticks.length > 1) {
+      const a = sticks.shift()!;
+      const b = sticks.shift()!;
+      const combined = a + b;
+      cost += combined;
+      let lo = 0, hi = sticks.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (sticks[mid]! < combined) lo = mid + 1; else hi = mid;
+      }
+      sticks.splice(lo, 0, combined);
+    }
+    return cost;
+  },
+
+  'reorganize-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const freq: Record<string, number> = {};
+    for (const c of s) freq[c] = (freq[c] ?? 0) + 1;
+    const n = s.length;
+    const entries = Object.entries(freq).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+    if (entries[0]![1] > Math.ceil(n / 2)) return '';
+    const result: string[] = Array(n);
+    let pos = 0;
+    for (const [char, count] of entries) {
+      for (let i = 0; i < count; i++) {
+        if (pos >= n) pos = 1;
+        result[pos] = char;
+        pos += 2;
+      }
+    }
+    return result.join('');
+  },
+
 };
