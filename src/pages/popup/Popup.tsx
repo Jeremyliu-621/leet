@@ -13,6 +13,7 @@ import type {
   SolvedProblemRecord,
   StreakDay,
   StreakSummary,
+  SupportedLanguage,
   ThemePreference,
   UnlockToken,
 } from '../../lib/types';
@@ -26,6 +27,12 @@ const BANK_SIZE = getAllProblems().length;
 const PROBLEM_TITLE_BY_ID: ReadonlyMap<string, { title: string; difficulty: Difficulty }> = new Map(
   getAllProblems().map((p) => [p.id, { title: p.title, difficulty: p.difficulty }]),
 );
+
+const LANGUAGE_OPTIONS: ReadonlyArray<{ value: SupportedLanguage; label: string }> = [
+  { value: 'javascript', label: 'JS' },
+  { value: 'typescript', label: 'TS' },
+  { value: 'python', label: 'Py' },
+];
 
 const KEYMAP_OPTIONS: ReadonlyArray<{ value: EditorKeymap; label: string }> = [
   { value: 'default', label: 'Default' },
@@ -74,6 +81,7 @@ interface PopupData {
   theme: ThemePreference;
   editorFontSize: number;
   editorKeymap: EditorKeymap;
+  preferredLanguage: SupportedLanguage;
 }
 
 /**
@@ -142,6 +150,7 @@ export function Popup() {
         theme: prefs.theme,
         editorFontSize: prefs.editorFontSize,
         editorKeymap: prefs.editorKeymap,
+        preferredLanguage: prefs.preferredLanguage,
       });
     }
 
@@ -213,6 +222,16 @@ export function Popup() {
     setData({ ...data, editorKeymap: next });
     try {
       await updateValue('userPreferences', (curr) => ({ ...curr, editorKeymap: next }));
+    } catch {
+      // Storage unavailable — preference change is in-session only.
+    }
+  }
+
+  async function handleLanguageChange(next: SupportedLanguage): Promise<void> {
+    if (!data || data.preferredLanguage === next) return;
+    setData({ ...data, preferredLanguage: next });
+    try {
+      await updateValue('userPreferences', (curr) => ({ ...curr, preferredLanguage: next }));
     } catch {
       // Storage unavailable — preference change is in-session only.
     }
@@ -360,6 +379,34 @@ export function Popup() {
                 aria-checked={selected}
                 aria-label={`Set editor font size to ${opt.value} pixels`}
                 onClick={() => void handleFontSizeChange(opt.value)}
+                className={
+                  selected
+                    ? 'flex-1 border border-border-strong bg-surface-2 px-3 py-1.5 font-mono text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+                    : 'flex-1 border border-border bg-bg px-3 py-1.5 font-mono text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+                }
+              >
+                {opt.label}
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="mt-4" role="radiogroup" aria-label="Default language">
+        <p className="mb-2 font-mono text-[9px] uppercase tracking-widest text-faint">
+          Default language
+        </p>
+        <div className="flex items-center gap-1">
+          {LANGUAGE_OPTIONS.map((opt) => {
+            const selected = data.preferredLanguage === opt.value;
+            return (
+              <button
+                key={opt.value}
+                type="button"
+                role="radio"
+                aria-checked={selected}
+                aria-label={`Set default language to ${opt.label}`}
+                onClick={() => void handleLanguageChange(opt.value)}
                 className={
                   selected
                     ? 'flex-1 border border-border-strong bg-surface-2 px-3 py-1.5 font-mono text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
