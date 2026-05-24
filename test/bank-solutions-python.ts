@@ -3808,4 +3808,59 @@ def deserialize(data):
     return a if b == 0 else a & mask | -(~(a & mask) + 1) & ~mask
 `,
 
+  'majority-element-ii': `def majorityElementII(nums):
+    c1, c2, cnt1, cnt2 = 0, 1, 0, 0
+    for n in nums:
+        if n == c1:
+            cnt1 += 1
+        elif n == c2:
+            cnt2 += 1
+        elif cnt1 == 0:
+            c1, cnt1 = n, 1
+        elif cnt2 == 0:
+            c2, cnt2 = n, 1
+        else:
+            cnt1 -= 1
+            cnt2 -= 1
+    cnt1 = cnt2 = 0
+    for n in nums:
+        if n == c1:
+            cnt1 += 1
+        elif n == c2:
+            cnt2 += 1
+    result = []
+    threshold = len(nums) / 3
+    if cnt1 > threshold:
+        result.append(c1)
+    if cnt2 > threshold:
+        result.append(c2)
+    return sorted(result)
+`,
+
+  'contains-duplicate-ii': `def containsNearbyDuplicate(nums, k):
+    seen = set()
+    for i, n in enumerate(nums):
+        if n in seen:
+            return True
+        seen.add(n)
+        if len(seen) > k:
+            seen.discard(nums[i - k])
+    return False
+`,
+
+  'summary-ranges': `def summaryRanges(nums):
+    result = []
+    i = 0
+    while i < len(nums):
+        start = nums[i]
+        while i + 1 < len(nums) and nums[i + 1] == nums[i] + 1:
+            i += 1
+        if nums[i] == start:
+            result.append(str(start))
+        else:
+            result.append(f'{start}->{nums[i]}')
+        i += 1
+    return result
+`,
+
 };

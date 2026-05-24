@@ -4428,4 +4428,46 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return a;
   },
 
+  'majority-element-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let c1 = 0, c2 = 1, cnt1 = 0, cnt2 = 0;
+    for (const n of nums) {
+      if (n === c1) cnt1++;
+      else if (n === c2) cnt2++;
+      else if (cnt1 === 0) { c1 = n; cnt1 = 1; }
+      else if (cnt2 === 0) { c2 = n; cnt2 = 1; }
+      else { cnt1--; cnt2--; }
+    }
+    cnt1 = cnt2 = 0;
+    for (const n of nums) { if (n === c1) cnt1++; else if (n === c2) cnt2++; }
+    const result: number[] = [];
+    if (cnt1 > nums.length / 3) result.push(c1);
+    if (cnt2 > nums.length / 3) result.push(c2);
+    return result.sort((a, b) => a - b);
+  },
+
+  'contains-duplicate-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const seen = new Set<number>();
+    for (let i = 0; i < nums.length; i++) {
+      if (seen.has(nums[i]!)) return true;
+      seen.add(nums[i]!);
+      if (seen.size > k) seen.delete(nums[i - k]!);
+    }
+    return false;
+  },
+
+  'summary-ranges': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const result: string[] = [];
+    let i = 0;
+    while (i < nums.length) {
+      const start = nums[i]!;
+      while (i + 1 < nums.length && nums[i + 1]! === nums[i]! + 1) i++;
+      result.push(nums[i] === start ? `${start}` : `${start}->${nums[i]}`);
+      i++;
+    }
+    return result;
+  },
+
 };

@@ -7,6 +7,8 @@ import { problem as rotateLeftOne } from './rotate-left-one';
 import { problem as maxSubarray } from './max-subarray';
 import { problem as missingNumber } from './missing-number';
 import { problem as containsDuplicate } from './contains-duplicate';
+import { problem as containsDuplicateII } from './contains-duplicate-ii';
+import { problem as summaryRanges } from './summary-ranges';
 import { problem as findMaxMin } from './find-max-min';
 import { problem as maxConsecutiveOnes } from './max-consecutive-ones';
 import { problem as plusOne } from './plus-one';
@@ -181,6 +183,7 @@ import { problem as happyNumber } from './happy-number';
 import { problem as maximumSwap } from './maximum-swap';
 
 import { problem as singleNumber } from './single-number';
+import { problem as majorityElementII } from './majority-element-ii';
 import { problem as subsetsII } from './subsets-ii';
 import { problem as insertInterval } from './insert-interval';
 // arrays — hard
@@ -343,11 +346,14 @@ export const problems: readonly Problem[] = [
   maxSubarray,
   missingNumber,
   containsDuplicate,
+  containsDuplicateII,
+  summaryRanges,
   findMaxMin,
   maxConsecutiveOnes,
   plusOne,
   singleNumber,
   // arrays — medium
+  majorityElementII,
   insertInterval,
   subsetsII,
   mergeIntervals,
