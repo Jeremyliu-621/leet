@@ -4559,4 +4559,29 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'expression-add-operators': (...args: unknown[]) => {
+    const num = args[0] as string, target = args[1] as number;
+    const result: string[] = [];
+    function bt(start: number, expr: string, val: number, lastMul: number): void {
+      if (start === num.length) {
+        if (val === target) result.push(expr);
+        return;
+      }
+      for (let len = 1; len <= num.length - start; len++) {
+        const s = num.slice(start, start + len);
+        if (s.length > 1 && s[0] === '0') break;
+        const cur = parseInt(s, 10);
+        if (start === 0) {
+          bt(len, s, cur, cur);
+        } else {
+          bt(start + len, expr + '+' + s, val + cur, cur);
+          bt(start + len, expr + '-' + s, val - cur, -cur);
+          bt(start + len, expr + '*' + s, val - lastMul + lastMul * cur, lastMul * cur);
+        }
+      }
+    }
+    bt(0, '', 0, 0);
+    return result;
+  },
+
 };

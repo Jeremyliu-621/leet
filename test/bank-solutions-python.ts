@@ -3776,6 +3776,28 @@ def deserialize(data):
     return max(up, down)
 `,
 
+  'expression-add-operators': `def addOperators(num, target):
+    result = []
+    def bt(start, expr, val, last_mul):
+        if start == len(num):
+            if val == target:
+                result.append(expr)
+            return
+        for length in range(1, len(num) - start + 1):
+            s = num[start:start + length]
+            if len(s) > 1 and s[0] == '0':
+                break
+            cur = int(s)
+            if start == 0:
+                bt(length, s, cur, cur)
+            else:
+                bt(start + length, expr + '+' + s, val + cur, cur)
+                bt(start + length, expr + '-' + s, val - cur, -cur)
+                bt(start + length, expr + '*' + s, val - last_mul + last_mul * cur, last_mul * cur)
+    bt(0, '', 0, 0)
+    return result
+`,
+
   'combination-sum-iii': `def combinationSum3(k, n):
     result = []
     def bt(start, rem, path):

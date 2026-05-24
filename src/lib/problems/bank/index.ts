@@ -310,6 +310,7 @@ import { problem as wordSearchII } from './word-search-ii';
 import { problem as letterCasePermutation } from './letter-case-permutation';
 import { problem as combinationSumIII } from './combination-sum-iii';
 import { problem as restoreIpAddresses } from './restore-ip-addresses';
+import { problem as expressionAddOperators } from './expression-add-operators';
 
 // tree — easy (additional)
 import { problem as balancedBinaryTree } from './balanced-binary-tree';
@@ -640,6 +641,8 @@ export const problems: readonly Problem[] = [
   // arrays + backtracking — medium
   combinations,
   combinationSumIII,
+  // strings + backtracking — hard
+  expressionAddOperators,
   // strings + backtracking — medium
   restoreIpAddresses,
   // strings + backtracking — easy

@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 289 problems (14 tags); combination-sum-iii + restore-ip-addresses added; approaching 300 problems; 1138 tests.
+**Current focus:** Bank at 290 problems (14 tags); expression-add-operators added (strings+backtracking/hard); 1141 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More hard problems; expression-add-operators (hard backtracking); 300-problem milestone.
+**Next up:** 300-problem milestone; more problems across all tags; continue growing bank.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -262,6 +262,7 @@ Still pending:
 - [x] sudoku-solver (backtracking/hard, runner preamble) + combinations (backtracking/medium); bank at 272; 1090 tests
 - [x] word-search-ii (graph+backtracking/hard, Trie-pruned DFS) + letter-case-permutation (easy); single-number (math/easy), house-robber-ii (DP/medium), wiggle-subsequence (DP/medium); subsets-ii (backtracking/medium); majority-element-ii, contains-duplicate-ii, summary-ranges; bank at 284; 1123 tests
 - [x] combination-sum-iii (arrays+backtracking/medium) + restore-ip-addresses (strings+backtracking/medium); bank at 285; 1129 tests
+- [x] expression-add-operators (strings+backtracking/hard): operator insertion with multiplication precedence tracking; bank at 290; 1141 tests
 
 ---
 
