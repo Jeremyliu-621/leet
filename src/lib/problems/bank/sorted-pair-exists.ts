@@ -32,6 +32,7 @@ export const problem: Problem = {
   params: ['nums', 'target'],
   starterCode: {
     javascript: 'function sortedPairExists(nums, target) {\n  // your code here\n}\n',
+    python: 'def sortedPairExists(nums, target):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: [[1, 2, 4, 7], 6], expected: true },

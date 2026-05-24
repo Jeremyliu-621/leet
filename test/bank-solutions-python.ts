@@ -69,4 +69,33 @@ export const pythonSolutions: Record<string, string> = {
     vowels = set('aeiou')
     return sum(1 for ch in text if ch.lower() in vowels)
 `,
+  'merge-sorted-lists': `def mergeSortedArrays(a, b):
+    out = []
+    i = j = 0
+    while i < len(a) and j < len(b):
+        if a[i] <= b[j]:
+            out.append(a[i])
+            i += 1
+        else:
+            out.append(b[j])
+            j += 1
+    out.extend(a[i:])
+    out.extend(b[j:])
+    return out
+`,
+  'reverse-array-inplace': `def reverseArray(nums):
+    return list(nums)[::-1]
+`,
+  'sorted-pair-exists': `def sortedPairExists(nums, target):
+    left, right = 0, len(nums) - 1
+    while left < right:
+        total = nums[left] + nums[right]
+        if total == target:
+            return True
+        if total < target:
+            left += 1
+        else:
+            right -= 1
+    return False
+`,
 };

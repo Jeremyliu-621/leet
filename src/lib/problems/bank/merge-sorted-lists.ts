@@ -35,6 +35,7 @@ Return the merged array. Both inputs are left unchanged, and either of them may 
   params: ['a', 'b'],
   starterCode: {
     javascript: 'function mergeSortedArrays(a, b) {\n  // your code here\n}\n',
+    python: 'def mergeSortedArrays(a, b):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: [[1, 3, 5], [2, 4, 6]], expected: [1, 2, 3, 4, 5, 6] },

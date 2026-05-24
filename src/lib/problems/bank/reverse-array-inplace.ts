@@ -31,6 +31,7 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: 'function reverseArray(nums) {\n  // your code here\n}\n',
+    python: 'def reverseArray(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: [[1, 2, 3, 4]], expected: [4, 3, 2, 1] },
