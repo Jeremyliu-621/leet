@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 401 problems; merged remove-duplicates-sorted-array-ii + longest-string-chain + implement-trie with remote additions; 1474 tests.
+**Current focus:** Bank at 415 problems; added increasing-triplet, count-primes, halves-alike, nesting-depth, rectangles and 5 more from remote; 1504 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing bank toward 420+; more medium/hard problems across all tags.
 

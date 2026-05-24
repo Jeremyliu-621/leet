@@ -41,6 +41,7 @@ import { problem as canPlaceFlowers } from './can-place-flowers';
 import { problem as maximumProductTwoElements } from './maximum-product-two-elements';
 import { problem as increasingTripletSubsequence } from './increasing-triplet-subsequence';
 import { problem as numberOfRectangles } from './number-of-rectangles';
+import { problem as largestAltitude } from './largest-altitude';
 // arrays — medium
 import { problem as rangeSumQuery2D } from './range-sum-query-2d';
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
@@ -129,6 +130,8 @@ import { problem as pathCrossing } from './path-crossing';
 import { problem as firstUniqueChar } from './first-unique-char';
 import { problem as findWordsFromChars } from './word-pattern-ii';
 import { problem as jewelsAndStones } from './jewels-and-stones';
+import { problem as sortCharactersByFrequency } from './accounts-merge-ii';
+import { problem as minimumOperationsAlternating } from './minimum-operations-alternating';
 // hash-map — medium (additional)
 import { problem as longestWordInDictionary } from './longest-word-in-dictionary';
 import { problem as twoSumIndices } from './two-sum-indices';
@@ -511,6 +514,7 @@ export const problems: readonly Problem[] = [
   maximumProductTwoElements,
   increasingTripletSubsequence,
   numberOfRectangles,
+  largestAltitude,
   singleNumber,
   // arrays — medium
   rangeSumQuery2D,
@@ -606,6 +610,8 @@ export const problems: readonly Problem[] = [
   firstUniqueChar,
   findWordsFromChars,
   jewelsAndStones,
+  sortCharactersByFrequency,
+  minimumOperationsAlternating,
   twoSumIndices,
   mostFrequentValue,
   anagramCheck,

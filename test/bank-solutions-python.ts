@@ -5265,6 +5265,37 @@ def numberOfMatches(n):
     return n - 1
 `,
 
+  'sort-characters-by-frequency': `def frequencySort(s):
+    from collections import Counter
+    freq = Counter(s)
+    return ''.join(c * n for c, n in sorted(freq.items(), key=lambda x: (-x[1], x[0])))
+`,
+
+  'minimum-operations-alternating': `def minimumOperations(nums):
+    from collections import Counter
+    n = len(nums)
+    even_freq = Counter(nums[i] for i in range(0, n, 2))
+    odd_freq = Counter(nums[i] for i in range(1, n, 2))
+    def top2(freq):
+        items = sorted(freq.items(), key=lambda x: -x[1])
+        first = items[0] if items else (None, 0)
+        second = items[1] if len(items) > 1 else (None, 0)
+        return first, second
+    (ev1, ef1), (_, ef2) = top2(even_freq)
+    (ov1, of1), (_, of2) = top2(odd_freq)
+    if ev1 != ov1:
+        return n - ef1 - of1
+    return n - max(ef1 + of2, ef2 + of1)
+`,
+
+  'largest-altitude': `def largestAltitude(gain):
+    alt = max_alt = 0
+    for g in gain:
+        alt += g
+        max_alt = max(max_alt, alt)
+    return max_alt
+`,
+
   'increasing-triplet-subsequence': `def increasingTriplet(nums):
     first = second = float('inf')
     for n in nums:

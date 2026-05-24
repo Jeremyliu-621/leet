@@ -5926,6 +5926,45 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return (args[0] as number) - 1;
   },
 
+  'sort-characters-by-frequency': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const freq: Record<string, number> = {};
+    for (const c of s) freq[c] = (freq[c] ?? 0) + 1;
+    return Object.entries(freq)
+      .sort(([a, ca], [b, cb]) => cb - ca || a.charCodeAt(0) - b.charCodeAt(0))
+      .map(([c, n]) => c.repeat(n))
+      .join('');
+  },
+
+  'minimum-operations-alternating': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const topFreq = (freq: Record<number, number>) => {
+      let f1 = 0, v1 = 0, f2 = 0, v2 = 0;
+      for (const [k, v] of Object.entries(freq)) {
+        if (v > f1) { f2 = f1; v2 = v1; f1 = v; v1 = +k; }
+        else if (v > f2) { f2 = v; v2 = +k; }
+      }
+      return [[v1, f1], [v2, f2]] as const;
+    };
+    const evenFreq: Record<number, number> = {}, oddFreq: Record<number, number> = {};
+    for (let i = 0; i < n; i++) {
+      if (i % 2 === 0) evenFreq[nums[i]!] = (evenFreq[nums[i]!] ?? 0) + 1;
+      else oddFreq[nums[i]!] = (oddFreq[nums[i]!] ?? 0) + 1;
+    }
+    const [[ev1, ef1], [, ef2]] = topFreq(evenFreq);
+    const [[ov1, of1], [, of2]] = topFreq(oddFreq);
+    if (ev1 !== ov1) return n - ef1 - of1;
+    return n - Math.max(ef1 + of2, ef2 + of1);
+  },
+
+  'largest-altitude': (...args: unknown[]) => {
+    const gain = args[0] as number[];
+    let alt = 0, max = 0;
+    for (const g of gain) { alt += g; if (alt > max) max = alt; }
+    return max;
+  },
+
   'increasing-triplet-subsequence': (...args: unknown[]) => {
     const nums = args[0] as number[];
     let first = Infinity, second = Infinity;
