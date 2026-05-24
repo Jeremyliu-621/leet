@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 393 problems; left-and-right-sum-differences + minimum-value-positive-step-sum + count-number-of-pairs + percentage-of-letter + count-common-words + convert-temperature (+ remote additions); 1450 tests.
+**Current focus:** Bank at 393 problems; 1450 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing bank toward 380+; more medium/hard problems; UI/UX polish.
+**Next up:** Continue growing bank toward 400+; more medium/hard problems; UI/UX polish.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -280,6 +280,7 @@ Still pending:
 - [x] shortest-path-binary-matrix + online-stock-span; bank at 372; 1387 tests
 - [x] find-all-numbers-disappeared + check-if-n-and-double-exist + largest-number-at-least-twice + special-positions-binary-matrix + matrix-diagonal-sum + sort-array-by-parity; bank at 378; 1399 tests
 - [x] left-and-right-sum-differences + minimum-value-positive-step-sum + count-number-of-pairs + percentage-of-letter-in-string + count-common-words-one-occurrence + convert-temperature; bank at 384; 1423 tests
+- [x] implement-queue-using-stacks (stack/easy) + binary-tree-pruning (tree/medium) + count-complete-tree-nodes (tree+binary-search/medium) + populating-next-right-pointers (tree/medium) + range-sum-query-2d (arrays/medium) + find-anagram-mappings (hash-map/easy); bank at 393; 1450 tests
 
 ---
 
