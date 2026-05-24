@@ -155,4 +155,24 @@ describe('buildDynamicRules', () => {
     const [rule] = build({ block: [domainRule('youtube.com')] });
     expect(rule!.condition.resourceTypes).toEqual(['main_frame']);
   });
+
+  it('produces zero rules when all block and keyword lists are empty', () => {
+    expect(build({})).toHaveLength(0);
+  });
+
+  it('skips domain rules whose normalised host is empty', () => {
+    const rules = build({ block: [domainRule('')] });
+    expect(rules).toHaveLength(0);
+  });
+
+  it('expandUnlockedDomains: single-part host (localhost) is not collapsed further', () => {
+    const rules = build({ block: [domainRule('localhost')], unlocked: ['localhost'] });
+    // Domain is in the unlock set → rule is skipped
+    expect(rules).toHaveLength(0);
+  });
+
+  it('skips keyword rules whose keyword is blank after trimming', () => {
+    const rules = build({ keyword: [keywordRule('   ')] });
+    expect(rules).toHaveLength(0);
+  });
 });

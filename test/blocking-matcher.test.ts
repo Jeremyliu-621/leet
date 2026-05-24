@@ -80,4 +80,18 @@ describe('matchUrl', () => {
   it('returns null when no rules match', () => {
     expect(matchUrl('https://wikipedia.org/wiki/A', rules)).toBeNull();
   });
+
+  it('returns null when both rule arrays are empty', () => {
+    expect(matchUrl('https://youtube.com/', { blockRules: [], keywordRules: [] })).toBeNull();
+  });
+});
+
+describe('extractDomain edge cases', () => {
+  it('returns lowercase hostname for mixed-case URL', () => {
+    expect(extractDomain('HTTPS://YOUTUBE.COM/watch')).toBe('youtube.com');
+  });
+
+  it('returns null for a bare domain without protocol', () => {
+    expect(extractDomain('youtube.com')).toBeNull();
+  });
 });

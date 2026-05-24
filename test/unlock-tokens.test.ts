@@ -131,3 +131,34 @@ describe('createToken edge cases', () => {
     expect(t.expiresAt).toBe(300_000);
   });
 });
+
+describe('upsertToken edge cases', () => {
+  it('deduplicates when domain differs only in case', () => {
+    const existing = [token('YOUTUBE.COM', 0, 600_000)];
+    const next = upsertToken(existing, token('youtube.com', 100, 300_000), 50);
+    // Should replace the old entry, not add a second
+    expect(next.filter((t) => t.domain === 'youtube.com')).toHaveLength(1);
+  });
+
+  it('returns a single token when upsert into empty list', () => {
+    const next = upsertToken([], token('a.com', 0, 60_000), 0);
+    expect(next).toHaveLength(1);
+  });
+});
+
+describe('pruneTokens edge cases', () => {
+  it('keeps tokens whose expiresAt equals now (exact boundary)', () => {
+    const t = token('a.com', 0, 100);
+    // isActive uses expiresAt > now, so at exactly now the token is expired
+    expect(pruneTokens([t], 100)).toHaveLength(0);
+  });
+
+  it('keeps tokens expiring strictly after now', () => {
+    const t = token('a.com', 0, 101);
+    expect(pruneTokens([t], 100)).toHaveLength(1);
+  });
+
+  it('returns empty list from empty input', () => {
+    expect(pruneTokens([], 999)).toHaveLength(0);
+  });
+});
