@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 121 problems; dynamic tab title, bank size in About/Popup, problem counts on filter buttons.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (624 unit tests across 22 files).
-**Next up:** Grow DP medium tier (only 2 medium DP problems), further bank growth.
+**Current focus:** Bank at 135 problems; hard DP tier (3), two-pointers medium (6), binary-search medium (5), matrix problems added.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (666 unit tests across 22 files).
+**Next up:** Further bank growth and feature polish.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -207,7 +207,10 @@ Still pending:
 - [x] Add hard stack problems — sum-subarray-minimums, remove-k-digits; 624 tests; bank at 121
 - [x] Dynamic challenge tab title — shows problem name (e.g. "Two Sum — LeetLock")
 - [x] Bank size in Options About section — "119 original problems covering 9 topic categories"
-- [ ] Add medium DP problems — only 2 medium (house-robber, coin-change); add LCS, min-path-sum, decode-ways
+- [x] Add medium DP problems — only 2 medium (house-robber, coin-change); add LCS, min-path-sum, decode-ways; 633 tests; bank at 124
+- [x] Add medium two-pointers problems — added next-permutation, interval-list-intersections, longest-mountain-in-array; 642 tests; bank at 127
+- [x] Add hard dynamic-programming problems — added LPS, palindrome-min-cuts, integer-break; 651 tests; bank at 130
+- [x] Add classic missing medium problems — spiral-matrix, rotate-image, maximal-square, find-first-last-pos, search-2d-matrix; 666 tests; bank at 135
 - [ ] Marketing site iteration + Vercel deployment
 
 ---
