@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 111 problems; restore-last-submitted-code, grayscale syntax highlighting in hints, 8 new hard problems shipped.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (593 unit tests across 22 files).
-**Next up:** Emacs keymap (L priority), further bank growth, or browser-zoom QA before 1.0.
+**Current focus:** Bank at 119 problems; hash-map hard gap filled; popup shows bank progress (X/119 solved).
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (618 unit tests across 22 files).
+**Next up:** Add hard stack problems (only 1 hard), further bank growth, or other polish.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -197,6 +197,14 @@ Still pending:
 - [x] **Restore last submitted code** — `code` field on `SubmissionRecord`; "restore" button per row in SubmissionsPanel; `resetCode` Compartment-less prop on EditorPanel; 581 tests
 - [x] **Grayscale syntax highlighting in code blocks** — `rehype-highlight` (JS + Python only) added to `ProblemDescription`; custom CSS maps hljs token classes to `--ll-text`/`--ll-muted`/`--ll-faint` variables; no colour, matches editor theme
 - [x] **111-problem milestone** — 4 new hard problems for math + two-pointers tags (trapping-rain-water, four-sum, fraction-to-recurring-decimal, integer-to-english-words); 593 tests
+- [x] **Emacs keymap** — `editorKeymap: 'emacs'` via `@replit/codemirror-emacs`; wired in EditorPanel, EditorSection, Popup; persisted to `userPreferences`
+- [x] **dynamic-programming tag** — 9th ProblemTag added to type system + PROBLEM_TAGS; backfilled 5 existing DP problems; new `filters by dynamic-programming tag` test
+- [x] **114-problem milestone** — 3 new DP problems (house-robber, coin-change, unique-paths); 603 tests
+- [x] Fill sliding-window medium gap — added at-most-k-distinct, permutation-in-string, subarray-product-less-than-k; 612 tests
+- [x] Problem counts on Options filter buttons — difficulty + tag pills now show "easy 38", "arrays 25" etc.
+- [x] Add hash-map hard problems — four-sum-ii, max-points-on-line; 618 tests; bank at 119
+- [x] Bank progress in popup — "X/119 solved (Y%)" in SolveBreakdown header
+- [ ] Add hard stack problems — only 1 hard (basic-calculator)
 - [ ] Marketing site iteration + Vercel deployment
 
 ---
