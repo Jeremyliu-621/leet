@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 152 problems; stack/medium, binary-search/medium, sliding-window/medium growth.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (717 unit tests across 22 files).
-**Next up:** Further bank growth; UI polish; more problems for two-pointers/hard and hash-map tiers.
+**Current focus:** Bank at 158 problems; hash-map/easy, dp/medium, math/medium tiers filled.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (735 unit tests across 22 files).
+**Next up:** Further bank growth; UI polish; stack/medium + math/medium + strings/easy gaps.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -216,6 +216,8 @@ Still pending:
 - [x] Add hard DP problems — burst-balloons, wildcard-matching, dungeon-game; bank at 144
 - [x] Add DP easy + binary-search easy — min-cost-climbing-stairs, counting-bits, best-time-buy-sell, search-insert-position; 705 tests; bank at 148
 - [x] Add car-fleet, koko-eating-bananas, find-peak-element, minimum-operations-reduce-x; 717 tests; bank at 152
+- [x] Add sort-list (merge sort) + subarrays-k-distinct; fill two-pointers/hard (2→4); 723 tests; bank at 154
+- [x] Add ransom-note, isomorphic-strings, nth-ugly-number, maximum-swap; 735 tests; bank at 158
 - [ ] Marketing site iteration + Vercel deployment
 
 ---
