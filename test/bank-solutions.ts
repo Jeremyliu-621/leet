@@ -760,20 +760,16 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
 
   'trap-rain-water': (...args: unknown[]) => {
     const height = args[0] as number[];
-    let left = 0, right = height.length - 1, leftMax = 0, rightMax = 0, water = 0;
-    while (left < right) {
-      const lh = height[left] as number;
-      const rh = height[right] as number;
-      if (lh < rh) {
-        leftMax = Math.max(leftMax, lh);
-        water += leftMax - lh;
-        left++;
-      } else {
-        rightMax = Math.max(rightMax, rh);
-        water += rightMax - rh;
-        right--;
-      }
-    }
+    const n = height.length;
+    if (n === 0) return 0;
+    const leftMax = new Array<number>(n);
+    const rightMax = new Array<number>(n);
+    leftMax[0] = height[0] as number;
+    for (let i = 1; i < n; i++) leftMax[i] = Math.max(leftMax[i - 1] as number, height[i] as number);
+    rightMax[n - 1] = height[n - 1] as number;
+    for (let i = n - 2; i >= 0; i--) rightMax[i] = Math.max(rightMax[i + 1] as number, height[i] as number);
+    let water = 0;
+    for (let i = 0; i < n; i++) water += Math.max(0, Math.min(leftMax[i] as number, rightMax[i] as number) - (height[i] as number));
     return water;
   },
 
