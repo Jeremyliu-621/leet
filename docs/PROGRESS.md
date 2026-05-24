@@ -8,10 +8,10 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Problem bank at 33 problems; editor QoL (font size, keymap, draggable splitter,
-custom test drawer, verdict timing) complete; a11y fixes applied; hints enriched for 22/33 problems.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (327 unit tests across 21 files).
-**Next up:** Fullscreen editor toggle, add hints to 11 remaining original problems, grow bank to 50+.
+**Current focus:** 51 problems, fullscreen editor, submission history panel, edge-case hardening done.
+387 unit tests across 21 files.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (387 unit tests across 21 files).
+**Next up:** Streak heatmap display in popup, settings import/export, marketing site iteration.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -169,17 +169,19 @@ Shipped after v0.1.0:
 - [x] **Real-Chrome e2e** — `e2e/extension.spec.ts`, `block-flow.spec.ts`, `solve-flow.spec.ts`, `user-bug.spec.ts`, `screenshots.spec.ts`, `a11y.spec.ts` — 17 tests total
 
 Still pending:
-- [ ] Grow the problem bank to 50+ then 100+ verified problems across more tags / difficulties
-- [ ] Add hints to the remaining 11 original problems (22/33 enriched)
+- [x] Grow the problem bank to 50+ verified problems — **51 problems, all with hints + JS+Python solutions**
+- [x] Add hints to all problems — every problem in the bank has 3-level progressive hints
 - [x] **Python support via Pyodide** — M1–M7 complete; every bank problem Python-capable
 - [x] Editor settings — font size slider + vim keymap toggle in Options EditorSection
 - [x] Draggable splitter between problem and editor panels (+ persist width in prefs)
-- [ ] Fullscreen-editor toggle (after splitter ✅)
+- [x] Fullscreen-editor toggle — ⊞/⊡ button in editor header hides problem panel; aria-pressed
 - [x] Custom test-case input drawer (CustomTestPanel with per-param JSON inputs + aria-live output)
 - [x] Verdict timing — per-test durationMs + totalDurationMs accumulated across all tests
 - [x] a11y fixes — `aria-prohibited-attr` on editor fixed; mobile `!w-full` override for splitter
-- [ ] Submission history + per-submit stats (runtime, attempts)
-- [ ] Streak heatmap, time-saved, settings import/export
+- [x] Submission history — collapsible panel shows per-attempt outcome/tests/timing/timestamp
+- [x] Edge-case sweep — verdict non-finite duration, token clamping, streak date validation; 6 new tests
+- [ ] Streak heatmap display (time-saved, longest streak visualized)
+- [ ] Settings import/export
 - [ ] Marketing site iteration + Vercel deployment
 
 ---
