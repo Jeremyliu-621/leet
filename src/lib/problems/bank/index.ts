@@ -11,6 +11,8 @@ import { problem as containsDuplicateII } from './contains-duplicate-ii';
 import { problem as pascalsTriangle } from './pascals-triangle';
 import { problem as richestCustomerWealth } from './richest-customer-wealth';
 import { problem as maximumUnitsOnTruck } from './maximum-units-on-truck';
+import { problem as shuffleTheArray } from './shuffle-the-array';
+import { problem as countItemsMatchingRule } from './count-items-matching-rule';
 import { problem as summaryRanges } from './summary-ranges';
 import { problem as findMaxMin } from './find-max-min';
 import { problem as maxConsecutiveOnes } from './max-consecutive-ones';
@@ -49,6 +51,7 @@ import { problem as missingRanges } from './missing-ranges';
 import { problem as queueReconstructionByHeight } from './queue-reconstruction-by-height';
 
 // strings — easy
+import { problem as goalParser } from './goal-parser';
 import { problem as reverseOnlyLetters } from './reverse-only-letters';
 import { problem as backspaceStringCompare } from './backspace-string-compare';
 import { problem as vowelTally } from './vowel-tally';
@@ -384,6 +387,8 @@ export const problems: readonly Problem[] = [
   pascalsTriangle,
   richestCustomerWealth,
   maximumUnitsOnTruck,
+  shuffleTheArray,
+  countItemsMatchingRule,
   summaryRanges,
   findMaxMin,
   maxConsecutiveOnes,
@@ -430,6 +435,7 @@ export const problems: readonly Problem[] = [
   missingRanges,
   queueReconstructionByHeight,
   // strings — easy
+  goalParser,
   reverseOnlyLetters,
   backspaceStringCompare,
   vowelTally,

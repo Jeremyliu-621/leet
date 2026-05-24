@@ -4170,6 +4170,23 @@ def deserialize(data):
     return ones
 `,
 
+  'goal-parser': `def interpret(command):
+    return command.replace('()', 'o').replace('(al)', 'al')
+`,
+
+  'shuffle-the-array': `def shuffle(nums, n):
+    result = []
+    for i in range(n):
+        result.append(nums[i])
+        result.append(nums[i + n])
+    return result
+`,
+
+  'count-items-matching-rule': `def countMatches(items, ruleKey, ruleValue):
+    idx = {'type': 0, 'color': 1, 'name': 2}[ruleKey]
+    return sum(1 for item in items if item[idx] == ruleValue)
+`,
+
   'richest-customer-wealth': `def maximumWealth(accounts):
     return max(sum(row) for row in accounts)
 `,

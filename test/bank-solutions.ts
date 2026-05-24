@@ -4691,6 +4691,23 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ones;
   },
 
+  'goal-parser': (...args: unknown[]) => {
+    return (args[0] as string).replace(/\(\)/g, 'o').replace(/\(al\)/g, 'al');
+  },
+
+  'shuffle-the-array': (...args: unknown[]) => {
+    const nums = args[0] as number[], n = args[1] as number;
+    const result: number[] = [];
+    for (let i = 0; i < n; i++) { result.push(nums[i]!); result.push(nums[i + n]!); }
+    return result;
+  },
+
+  'count-items-matching-rule': (...args: unknown[]) => {
+    const items = args[0] as string[][], ruleKey = args[1] as string, ruleValue = args[2] as string;
+    const idx = { type: 0, color: 1, name: 2 }[ruleKey] as number;
+    return items.filter(item => item[idx] === ruleValue).length;
+  },
+
   'richest-customer-wealth': (...args: unknown[]) => {
     const accounts = args[0] as number[][];
     return Math.max(...accounts.map(row => row.reduce((a, b) => a + b, 0)));
