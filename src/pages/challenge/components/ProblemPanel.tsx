@@ -1,5 +1,7 @@
 import type { Problem } from '../../../lib/problems/types';
 import type { Difficulty } from '../../../lib/types';
+import { ProblemDescription } from './ProblemDescription';
+import { HintsSection } from './HintsSection';
 
 interface ProblemPanelProps {
   problem: Problem;
@@ -21,16 +23,10 @@ function difficultyClasses(difficulty: Difficulty): string {
 
 /**
  * Left panel — renders the full problem statement: title, difficulty, tags,
- * description paragraphs, worked examples, and constraints.
+ * the markdown description, worked examples, optional hints, and constraints.
  */
 export function ProblemPanel({ problem }: ProblemPanelProps) {
-  const { title, difficulty, tags, description, examples, constraints } = problem;
-
-  // Description uses blank lines as paragraph separators.
-  const paragraphs = description
-    .split(/\n\n+/)
-    .map((p) => p.trim())
-    .filter(Boolean);
+  const { title, difficulty, tags, description, examples, constraints, hints } = problem;
 
   return (
     <section
@@ -69,13 +65,9 @@ export function ProblemPanel({ problem }: ProblemPanelProps) {
           </div>
         )}
 
-        {/* Description */}
-        <div className="mb-6 space-y-3">
-          {paragraphs.map((paragraph, i) => (
-            <p key={i} className="text-sm leading-relaxed text-text">
-              {paragraph}
-            </p>
-          ))}
+        {/* Description — markdown (GFM); plain text still renders cleanly. */}
+        <div className="mb-6">
+          <ProblemDescription markdown={description} />
         </div>
 
         {/* Examples */}
@@ -115,6 +107,9 @@ export function ProblemPanel({ problem }: ProblemPanelProps) {
             </div>
           </div>
         )}
+
+        {/* Hints — progressively revealed by user click */}
+        {hints && hints.length > 0 && <HintsSection hints={hints} />}
 
         {/* Constraints */}
         {constraints.length > 0 && (
