@@ -2625,6 +2625,33 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'set-matrix-zeroes': (...args: unknown[]) => {
+    const matrix = (args[0] as number[][]).map(r => [...r]);
+    const m = matrix.length, n = matrix[0]!.length;
+    let firstRowZero = false, firstColZero = false;
+    for (let j = 0; j < n; j++) if (matrix[0]![j] === 0) firstRowZero = true;
+    for (let i = 0; i < m; i++) if (matrix[i]![0] === 0) firstColZero = true;
+    for (let i = 1; i < m; i++)
+      for (let j = 1; j < n; j++)
+        if (matrix[i]![j] === 0) { matrix[i]![0] = 0; matrix[0]![j] = 0; }
+    for (let i = 1; i < m; i++)
+      for (let j = 1; j < n; j++)
+        if (matrix[i]![0] === 0 || matrix[0]![j] === 0) matrix[i]![j] = 0;
+    if (firstRowZero) for (let j = 0; j < n; j++) matrix[0]![j] = 0;
+    if (firstColZero) for (let i = 0; i < m; i++) matrix[i]![0] = 0;
+    return matrix;
+  },
+
+  'minimum-arrows-burst-balloons': (...args: unknown[]) => {
+    const points = (args[0] as number[][]).map(p => [...p]);
+    points.sort((a, b) => a[1]! - b[1]!);
+    let arrows = 1, arrowPos = points[0]![1]!;
+    for (let i = 1; i < points.length; i++) {
+      if (points[i]![0]! > arrowPos) { arrows++; arrowPos = points[i]![1]!; }
+    }
+    return arrows;
+  },
+
   // --- dynamic-programming — hard --------------------------------------------
   'word-break-ii': (...args: unknown[]) => {
     const s = args[0] as string, wordDict = args[1] as string[];
@@ -2929,6 +2956,18 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       if (!stack.length || t > stack[stack.length - 1]!) stack.push(t);
     }
     return stack.length;
+  },
+
+  'online-stock-span': (...args: unknown[]) => {
+    const prices = args[0] as number[];
+    const stack: [number, number][] = [];
+    return prices.map(price => {
+      let span = 1;
+      while (stack.length && stack[stack.length - 1]![0] <= price)
+        span += stack.pop()![1];
+      stack.push([price, span]);
+      return span;
+    });
   },
 
   // --- binary-search — medium ------------------------------------------------
@@ -3344,6 +3383,28 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     slow = nums[0]!;
     while (slow !== fast) { slow = nums[slow]!; fast = nums[fast]!; }
     return slow;
+  },
+
+  'shortest-path-binary-matrix': (...args: unknown[]) => {
+    const grid = (args[0] as number[][]).map(r => [...r]);
+    const n = grid.length;
+    if (grid[0]![0] || grid[n - 1]![n - 1]) return -1;
+    if (n === 1) return 1;
+    const q: [number, number, number][] = [[0, 0, 1]];
+    grid[0]![0] = 1;
+    const dirs = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]] as const;
+    while (q.length) {
+      const [r, c, d] = q.shift()!;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr, nc = c + dc;
+        if (nr >= 0 && nr < n && nc >= 0 && nc < n && grid[nr]![nc] === 0) {
+          if (nr === n - 1 && nc === n - 1) return d + 1;
+          grid[nr]![nc] = 1;
+          q.push([nr, nc, d + 1]);
+        }
+      }
+    }
+    return -1;
   },
 
   'accounts-merge': (...args: unknown[]) => {
@@ -5472,28 +5533,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     let sum = 0;
     for (let i = left; i <= right; i++) sum += nums[i]!;
     return sum;
-  },
-
-  'minimum-arrows-burst-balloons': (...args: unknown[]) => {
-    const points = (args[0] as number[][]).slice().sort((a, b) => a[1]! - b[1]!);
-    let arrows = 1, end = points[0]![1]!;
-    for (let i = 1; i < points.length; i++) {
-      if (points[i]![0]! > end) { arrows++; end = points[i]![1]!; }
-    }
-    return arrows;
-  },
-
-  'set-matrix-zeroes': (...args: unknown[]) => {
-    const matrix = (args[0] as number[][]).map(row => [...row]);
-    const m = matrix.length, n = matrix[0]!.length;
-    const rows = new Set<number>(), cols = new Set<number>();
-    for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) {
-      if (matrix[r]![c] === 0) { rows.add(r); cols.add(c); }
-    }
-    for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) {
-      if (rows.has(r) || cols.has(c)) matrix[r]![c] = 0;
-    }
-    return matrix;
   },
 
   'rotate-string': (...args: unknown[]) => {

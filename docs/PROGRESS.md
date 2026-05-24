@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 371 problems; +6 problems (minimum-arrows-burst-balloons, set-matrix-zeroes, range-sum-query, rotate-string, custom-sort-string, copy-list-with-random-pointer); 1381 tests.
+**Current focus:** Bank at 372 problems; +2 new (shortest-path-binary-matrix, online-stock-span) merged with remote's additions; 1387 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing bank toward 380+; more medium/hard problems; UI/UX polish.
 
@@ -274,9 +274,10 @@ Still pending:
 - [x] heap tag added; last-stone-weight + kth-largest-in-stream + median-from-data-stream; meeting-rooms-ii + h-index + word-break-ii; bank at 342; 1294 tests
 - [x] build-array-from-permutation + truncate-sentence + largest-perimeter-triangle + to-lower-case + check-if-two-string-arrays-equivalent + sum-of-unique-elements; bank at 348; 1312 tests
 - [x] concatenation-of-array + third-maximum-number + count-odd-numbers + maximum-product-three-numbers + average-salary-excluding-min-max + find-n-unique-integers-sum-to-zero; bank at 353; 1330 tests
-- [x] reorganize-string + minimum-cost-to-connect-sticks; check-if-pangram + is-power-of-four + integer-to-roman + longest-word-in-dictionary; bank at 360; 1345 tests
-- [x] decode-xored-array + replace-elements-with-greatest + highest-altitude + sign-of-product-array + maximum-difference-increasing-elements + cells-in-range; bank at 364; 1360 tests
-- [x] minimum-arrows-burst-balloons (arrays/medium) + set-matrix-zeroes (arrays/medium) + range-sum-query (arrays/easy) + rotate-string (strings/easy) + custom-sort-string (strings+hash-map/medium) + copy-list-with-random-pointer (linked-list+hash-map/medium); bank at 371; 1381 tests
+- [x] reorganize-string + minimum-cost-to-connect-sticks; check-if-pangram + is-power-of-four + integer-to-roman + longest-word-in-dictionary; bank at 360+
+- [x] decode-xored-array + replace-elements-with-greatest + highest-altitude + sign-of-product-array + maximum-difference-increasing-elements + cells-in-range; bank at 364+
+- [x] minimum-arrows-burst-balloons + set-matrix-zeroes + range-sum-query + rotate-string + custom-sort-string + copy-list-with-random-pointer; bank at 371+
+- [x] shortest-path-binary-matrix (graph/medium) + online-stock-span (stack/medium); bank at 372; 1387 tests
 
 ---
 

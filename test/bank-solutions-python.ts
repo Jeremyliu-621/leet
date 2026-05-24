@@ -1991,6 +1991,39 @@ export const pythonSolutions: Record<string, string> = {
     return result
 `,
 
+  'set-matrix-zeroes': `def setZeroes(matrix):
+    matrix = [list(row) for row in matrix]
+    m, n = len(matrix), len(matrix[0])
+    first_row_zero = any(matrix[0][j] == 0 for j in range(n))
+    first_col_zero = any(matrix[i][0] == 0 for i in range(m))
+    for i in range(1, m):
+        for j in range(1, n):
+            if matrix[i][j] == 0:
+                matrix[i][0] = 0
+                matrix[0][j] = 0
+    for i in range(1, m):
+        for j in range(1, n):
+            if matrix[i][0] == 0 or matrix[0][j] == 0:
+                matrix[i][j] = 0
+    if first_row_zero:
+        for j in range(n):
+            matrix[0][j] = 0
+    if first_col_zero:
+        for i in range(m):
+            matrix[i][0] = 0
+    return matrix
+`,
+
+  'minimum-arrows-burst-balloons': `def findMinArrowShots(points):
+    points = sorted(points, key=lambda x: x[1])
+    arrows, arrow_pos = 1, points[0][1]
+    for i in range(1, len(points)):
+        if points[i][0] > arrow_pos:
+            arrows += 1
+            arrow_pos = points[i][1]
+    return arrows
+`,
+
   'word-break-ii': `def wordBreak(s, wordDict):
     from functools import lru_cache
     word_set = set(wordDict)
@@ -2253,6 +2286,18 @@ export const pythonSolutions: Record<string, string> = {
         if not stack or t > stack[-1]:
             stack.append(t)
     return len(stack)
+`,
+
+  'online-stock-span': `def stockSpannerRunner(prices):
+    stack = []
+    result = []
+    for price in prices:
+        span = 1
+        while stack and stack[-1][0] <= price:
+            span += stack.pop()[1]
+        stack.append((price, span))
+        result.append(span)
+    return result
 `,
   'koko-eating-bananas': `def minEatingSpeed(piles, h):
     import math
@@ -2718,6 +2763,29 @@ export const pythonSolutions: Record<string, string> = {
         slow = nums[slow]
         fast = nums[fast]
     return slow
+`,
+
+  'shortest-path-binary-matrix': `def shortestPathBinaryMatrix(grid):
+    from collections import deque
+    grid = [list(row) for row in grid]
+    n = len(grid)
+    if grid[0][0] or grid[n-1][n-1]:
+        return -1
+    if n == 1:
+        return 1
+    q = deque([(0, 0, 1)])
+    grid[0][0] = 1
+    dirs = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
+    while q:
+        r, c, d = q.popleft()
+        for dr, dc in dirs:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < n and 0 <= nc < n and grid[nr][nc] == 0:
+                if nr == n-1 and nc == n-1:
+                    return d+1
+                grid[nr][nc] = 1
+                q.append((nr, nc, d+1))
+    return -1
 `,
 
   'accounts-merge': `def accountsMerge(accounts):
@@ -4795,33 +4863,6 @@ def deserialize(data):
   'range-sum-query': `
 def sumRange(nums, left, right):
     return sum(nums[left:right+1])
-`,
-
-  'minimum-arrows-burst-balloons': `
-def findMinArrowShots(points):
-    pts = sorted([[p[0], p[1]] for p in points], key=lambda x: x[1])
-    arrows = 1
-    end = pts[0][1]
-    for i in range(1, len(pts)):
-        if pts[i][0] > end:
-            arrows += 1
-            end = pts[i][1]
-    return arrows
-`,
-
-  'set-matrix-zeroes': `
-def setZeroes(matrix):
-    rows, cols = set(), set()
-    for r in range(len(matrix)):
-        for c in range(len(matrix[0])):
-            if matrix[r][c] == 0:
-                rows.add(r)
-                cols.add(c)
-    for r in range(len(matrix)):
-        for c in range(len(matrix[0])):
-            if r in rows or c in cols:
-                matrix[r][c] = 0
-    return matrix
 `,
 
   'rotate-string': `

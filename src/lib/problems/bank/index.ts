@@ -201,6 +201,7 @@ import { problem as dailyTemperatures } from './daily-temperatures';
 import { problem as evaluateRpn } from './evaluate-rpn';
 import { problem as minStack } from './min-stack';
 // stack — medium
+import { problem as onlineStockSpan } from './online-stock-span';
 import { problem as simplifyPath } from './simplify-path';
 import { problem as nextGreaterElementII } from './next-greater-element-ii';
 import { problem as asteroidCollision } from './asteroid-collision';
@@ -355,6 +356,7 @@ import { problem as findTheTownJudge } from './find-the-town-judge';
 import { problem as numberOfProvinces } from './number-of-provinces';
 import { problem as findIfPathExists } from './find-if-path-exists';
 // graph — medium (additional)
+import { problem as shortestPathBinaryMatrix } from './shortest-path-binary-matrix';
 import { problem as accountsMerge } from './accounts-merge';
 import { problem as wordSearch } from './word-search';
 import { problem as surroundedRegions } from './surrounded-regions';
@@ -637,6 +639,7 @@ export const problems: readonly Problem[] = [
   evaluateRpn,
   minStack,
   // stack — medium
+  onlineStockSpan,
   simplifyPath,
   nextGreaterElementII,
   asteroidCollision,
@@ -774,6 +777,7 @@ export const problems: readonly Problem[] = [
   numberOfProvinces,
   findIfPathExists,
   // graph — medium
+  shortestPathBinaryMatrix,
   accountsMerge,
   wordSearch,
   surroundedRegions,
