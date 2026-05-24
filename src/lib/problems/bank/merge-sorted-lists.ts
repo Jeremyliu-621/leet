@@ -5,8 +5,11 @@ export const problem: Problem = {
   title: 'Merge Two Sorted Arrays',
   difficulty: 'easy',
   tags: ['two-pointers'],
-  description:
-    'Given two integer arrays a and b, each sorted in non-decreasing order, merge them into a single sorted array containing every element from both inputs.\n\nA two-pointer walk advances through both arrays at once, always taking the smaller front value next.\n\nReturn the merged array. Both inputs are left unchanged, and either of them may be empty.',
+  description: `Given two integer arrays \`a\` and \`b\`, each sorted in non-decreasing order, merge them into a single sorted array containing every element from both inputs.
+
+A **two-pointer** walk advances through both arrays at once, always taking the smaller front value next.
+
+Return the merged array. Both inputs are left unchanged, and either of them may be empty.`,
   constraints: [
     '0 <= a.length <= 1000',
     '0 <= b.length <= 1000',
@@ -45,5 +48,10 @@ export const problem: Problem = {
     { args: [[1, 2, 3], [4, 5, 6]], expected: [1, 2, 3, 4, 5, 6] },
     { args: [[10], [1, 2, 3]], expected: [1, 2, 3, 10] },
     { args: [[0, 0], [0, 0]], expected: [0, 0, 0, 0] },
+  ],
+  hints: [
+    'Concatenate-then-sort works but throws away the precondition. You can do better than `O((n + m) log(n + m))` by using the fact that each input is already sorted.',
+    'Keep two pointers `i` and `j` starting at `0`. At each step, compare `a[i]` and `b[j]`, push the smaller one into the result, and advance only that pointer. Ties can go to either side.',
+    'When one pointer runs off the end, the rest of the other array is already sorted — just append its remaining tail in one go. Total work is `O(n + m)` time and `O(n + m)` output space.',
   ],
 };

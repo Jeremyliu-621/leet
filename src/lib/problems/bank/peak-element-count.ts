@@ -5,8 +5,11 @@ export const problem: Problem = {
   title: 'Count Interior Peaks',
   difficulty: 'easy',
   tags: ['arrays'],
-  description:
-    'An interior peak is an element that is strictly greater than both of its immediate neighbours.\n\nGiven an integer array nums, count how many interior peaks it contains. The first and last elements can never be interior peaks because they each have only one neighbour.\n\nReturn the count as a number.',
+  description: `An **interior peak** is an element that is *strictly* greater than both of its immediate neighbours.
+
+Given an integer array \`nums\`, count how many interior peaks it contains. The first and last elements can never be interior peaks because they each have only one neighbour.
+
+Return the count as a number.`,
   constraints: [
     '1 <= nums.length <= 1000',
     'All values in nums are integers.',
@@ -46,5 +49,10 @@ export const problem: Problem = {
     { args: [[0, 10, 0, 10, 0, 10, 0]], expected: 3 },
     { args: [[-3, -1, -3, -1, -3]], expected: 2 },
     { args: [[2, 2, 2, 2]], expected: 0 },
+  ],
+  hints: [
+    'Only indices `1` through `nums.length - 2` can be peaks — endpoints are missing a neighbour and never qualify.',
+    'For each interior index `i`, check both sides at once: `nums[i] > nums[i - 1]` **and** `nums[i] > nums[i + 1]`. Both comparisons must be strict, so a plateau like `[1,2,2,1]` contributes zero.',
+    'Walk the array once with a counter. No sorting, no nested loops — a single linear scan is `O(n)` time and `O(1)` extra space.',
   ],
 };

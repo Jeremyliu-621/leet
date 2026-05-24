@@ -5,8 +5,11 @@ export const problem: Problem = {
   title: 'Maximum Window Sum',
   difficulty: 'easy',
   tags: ['sliding-window'],
-  description:
-    'Given an integer array nums and a positive integer k, consider every contiguous block of exactly k elements.\n\nReturn the largest sum among all such blocks. A sliding window of width k can compute this efficiently: as the window moves one step right, subtract the element leaving and add the element entering.\n\nYou may assume k is at least 1 and never larger than nums.length.',
+  description: `Given an integer array \`nums\` and a positive integer \`k\`, consider every contiguous block of *exactly* \`k\` elements.
+
+Return the **largest sum** among all such blocks. A sliding window of width \`k\` can compute this efficiently: as the window moves one step right, subtract the element leaving and add the element entering.
+
+You may assume \`k\` is at least \`1\` and never larger than \`nums.length\`.`,
   constraints: [
     '1 <= k <= nums.length <= 1000',
     'All values in nums are integers.',
@@ -45,5 +48,10 @@ export const problem: Problem = {
     { args: [[0, 0, 0, 0], 2], expected: 0 },
     { args: [[100, -100, 100, -100], 2], expected: 0 },
     { args: [[1, 2, 3, 4, 5], 5], expected: 15 },
+  ],
+  hints: [
+    'Recomputing the sum of each window from scratch is `O(n · k)` — most of that work is duplicated, because adjacent windows overlap in `k - 1` elements.',
+    'Compute the sum of the **first** window (`nums[0]` through `nums[k - 1]`) once and call it the running `windowSum`. That is also your initial answer.',
+    'Slide the window one step at a time: `windowSum += nums[i] - nums[i - k]`, then update the best with `Math.max`. The whole pass is `O(n)` time and `O(1)` extra space — handle negative numbers by *not* initialising the best to `0`.',
   ],
 };

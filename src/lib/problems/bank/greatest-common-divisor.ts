@@ -5,8 +5,11 @@ export const problem: Problem = {
   title: 'Greatest Common Divisor',
   difficulty: 'easy',
   tags: ['math'],
-  description:
-    'Given two positive integers a and b, return their greatest common divisor: the largest integer that divides both a and b without leaving a remainder.\n\nThe Euclidean algorithm computes this quickly by repeatedly replacing the larger number with the remainder of dividing it by the smaller, until one becomes zero.\n\nThe other number at that point is the greatest common divisor.',
+  description: `Given two positive integers \`a\` and \`b\`, return their **greatest common divisor**: the largest integer that divides both \`a\` and \`b\` without leaving a remainder.
+
+The *Euclidean algorithm* computes this quickly by repeatedly replacing the larger number with the remainder of dividing it by the smaller, until one becomes zero.
+
+The other number at that point is the greatest common divisor.`,
   constraints: [
     '1 <= a <= 1000000',
     '1 <= b <= 1000000',
@@ -45,5 +48,10 @@ export const problem: Problem = {
     { args: [48, 36], expected: 12 },
     { args: [1000000, 500000], expected: 500000 },
     { args: [17, 34], expected: 17 },
+  ],
+  hints: [
+    'Trying every candidate from `1` up to `min(a, b)` works, but it is far slower than necessary on large inputs like `1000000`.',
+    'Use the key identity behind the Euclidean algorithm: `gcd(a, b) = gcd(b, a % b)`. The remainder strictly shrinks each step until it hits `0`.',
+    'Loop while `b !== 0`: set `[a, b] = [b, a % b]`. When `b` becomes `0`, return `a`. This runs in `O(log(min(a, b)))` steps — trivially fast even at the constraint maximum.',
   ],
 };
