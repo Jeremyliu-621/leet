@@ -3048,4 +3048,36 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return components;
   },
 
+  'clone-graph': (...args: unknown[]) => {
+    const adjList = args[0] as number[][];
+    if (!adjList || adjList.length === 0) return [];
+    interface GN { val: number; neighbors: GN[] }
+    const nodes: GN[] = adjList.map((_, i) => ({ val: i + 1, neighbors: [] }));
+    adjList.forEach((nbrs, i) => { nodes[i]!.neighbors = nbrs.map((n) => nodes[n - 1]!); });
+    const cloned = new Map<GN, GN>();
+    function dfs(node: GN): GN {
+      if (cloned.has(node)) return cloned.get(node)!;
+      const copy: GN = { val: node.val, neighbors: [] };
+      cloned.set(node, copy);
+      copy.neighbors = node.neighbors.map(dfs);
+      return copy;
+    }
+    const cloneRoot = dfs(nodes[0]!);
+    const visited = new Map<number, GN>();
+    const queue = [cloneRoot];
+    visited.set(cloneRoot.val, cloneRoot);
+    while (queue.length) {
+      const curr = queue.shift()!;
+      for (const nb of curr.neighbors) {
+        if (!visited.has(nb.val)) { visited.set(nb.val, nb); queue.push(nb); }
+      }
+    }
+    const n = visited.size;
+    const result: number[][] = [];
+    for (let i = 1; i <= n; i++) {
+      const nd = visited.get(i)!;
+      result.push([...nd.neighbors.map((nb) => nb.val)].sort((a, b) => a - b));
+    }
+    return result;
+  },
 };

@@ -2464,4 +2464,18 @@ export const pythonSolutions: Record<string, string> = {
             components -= 1
     return components
 `,
+
+  'clone-graph': `def cloneGraph(node):
+    if not node:
+        return None
+    cloned = {}
+    def dfs(n):
+        if n.val in cloned:
+            return cloned[n.val]
+        copy = Node(n.val)
+        cloned[n.val] = copy
+        copy.neighbors = [dfs(nb) for nb in n.neighbors]
+        return copy
+    return dfs(node)
+`,
 };
