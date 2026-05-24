@@ -2198,6 +2198,54 @@ export const pythonSolutions: Record<string, string> = {
     return all(dfs(i) for i in range(numCourses))
 `,
 
+  'binary-tree-level-order-bottom': `def levelOrderBottom(root):
+    if not root:
+        return []
+    result = []
+    queue = [root]
+    while queue:
+        level = []
+        for _ in range(len(queue)):
+            node = queue.pop(0)
+            level.append(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        result.insert(0, level)
+    return result
+`,
+
+  'find-duplicate-number': `def findDuplicate(nums):
+    slow = fast = nums[0]
+    while True:
+        slow = nums[slow]
+        fast = nums[nums[fast]]
+        if slow == fast:
+            break
+    slow = nums[0]
+    while slow != fast:
+        slow = nums[slow]
+        fast = nums[fast]
+    return slow
+`,
+
+  'graph-valid-tree': `def validTree(n, edges):
+    if len(edges) != n - 1:
+        return False
+    parent = list(range(n))
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    for a, b in edges:
+        ra, rb = find(a), find(b)
+        if ra == rb:
+            return False
+        parent[ra] = rb
+    return True
+`,
+
   // --- tree -------------------------------------------------------------------
   'balanced-binary-tree': `def isBalanced(root):
     def height(node):

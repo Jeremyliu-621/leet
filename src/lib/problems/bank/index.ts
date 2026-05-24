@@ -75,6 +75,7 @@ import { problem as fourSum } from './four-sum';
 import { problem as sortList } from './sort-list';
 import { problem as subarraysKDistinct } from './subarrays-k-distinct';
 // two-pointers — medium
+import { problem as findDuplicateNumber } from './find-duplicate-number';
 import { problem as threeSumClosest } from './three-sum-closest';
 import { problem as boatsToSavePeople } from './boats-to-save-people';
 import { problem as partitionLabels } from './partition-labels';
@@ -224,6 +225,7 @@ import { problem as numberOfProvinces } from './number-of-provinces';
 // graph — medium (additional)
 import { problem as wordSearch } from './word-search';
 import { problem as surroundedRegions } from './surrounded-regions';
+import { problem as graphValidTree } from './graph-valid-tree';
 // graph — medium
 import { problem as numberOfIslands } from './number-of-islands';
 import { problem as courseSchedule } from './course-schedule';
@@ -244,6 +246,7 @@ import { problem as wordLadder } from './word-ladder';
 // tree — easy (additional)
 import { problem as balancedBinaryTree } from './balanced-binary-tree';
 import { problem as minimumDepthBinaryTree } from './minimum-depth-binary-tree';
+import { problem as binaryTreeLevelOrderBottom } from './binary-tree-level-order-bottom';
 // tree — easy
 import { problem as maxDepthBinaryTree } from './max-depth-binary-tree';
 import { problem as symmetricTree } from './symmetric-tree';
@@ -343,6 +346,7 @@ export const problems: readonly Problem[] = [
   sortList,
   subarraysKDistinct,
   // two-pointers — medium
+  findDuplicateNumber,
   threeSumClosest,
   boatsToSavePeople,
   partitionLabels,
@@ -482,6 +486,7 @@ export const problems: readonly Problem[] = [
   // graph — medium
   wordSearch,
   surroundedRegions,
+  graphValidTree,
   numberOfIslands,
   courseSchedule,
   maxAreaOfIsland,
@@ -500,6 +505,7 @@ export const problems: readonly Problem[] = [
   // tree — easy
   balancedBinaryTree,
   minimumDepthBinaryTree,
+  binaryTreeLevelOrderBottom,
   maxDepthBinaryTree,
   symmetricTree,
   invertBinaryTree,

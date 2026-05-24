@@ -2770,6 +2770,48 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
+  'binary-tree-level-order-bottom': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    if (!root) return [];
+    const result: number[][] = [];
+    const queue: _TN[] = [root];
+    while (queue.length) {
+      const size = queue.length;
+      const level: number[] = [];
+      for (let i = 0; i < size; i++) {
+        const node = queue.shift()!;
+        level.push(node.v);
+        if (node.l) queue.push(node.l);
+        if (node.r) queue.push(node.r);
+      }
+      result.unshift(level);
+    }
+    return result;
+  },
+
+  'find-duplicate-number': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let slow = nums[0]!, fast = nums[0]!;
+    do { slow = nums[slow]!; fast = nums[nums[fast]!]!; } while (slow !== fast);
+    slow = nums[0]!;
+    while (slow !== fast) { slow = nums[slow]!; fast = nums[fast]!; }
+    return slow;
+  },
+
+  'graph-valid-tree': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    if (edges.length !== n - 1) return false;
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const find = (x: number): number => parent[x] === x ? x : (parent[x] = find(parent[x]!));
+    for (const [a, b] of edges) {
+      const ra = find(a!), rb = find(b!);
+      if (ra === rb) return false;
+      parent[ra] = rb;
+    }
+    return true;
+  },
+
   // --- tree -------------------------------------------------------------------
   'balanced-binary-tree': (...args: unknown[]) => {
     const root = _buildTree(args[0] as (number | null)[]);
