@@ -4008,6 +4008,26 @@ def deserialize(data):
     return False
 `,
 
+  'pascals-triangle': `def generate(numRows):
+    result = []
+    for i in range(numRows):
+        row = [1]
+        for j in range(1, i):
+            row.append(result[i-1][j-1] + result[i-1][j])
+        if i > 0:
+            row.append(1)
+        result.append(row)
+    return result
+`,
+
+  'single-number-ii': `def singleNumber(nums):
+    ones, twos = 0, 0
+    for n in nums:
+        ones = (ones ^ n) & ~twos
+        twos = (twos ^ n) & ~ones
+    return ones
+`,
+
   'summary-ranges': `def summaryRanges(nums):
     result = []
     i = 0

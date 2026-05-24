@@ -8,6 +8,7 @@ import { problem as maxSubarray } from './max-subarray';
 import { problem as missingNumber } from './missing-number';
 import { problem as containsDuplicate } from './contains-duplicate';
 import { problem as containsDuplicateII } from './contains-duplicate-ii';
+import { problem as pascalsTriangle } from './pascals-triangle';
 import { problem as summaryRanges } from './summary-ranges';
 import { problem as findMaxMin } from './find-max-min';
 import { problem as maxConsecutiveOnes } from './max-consecutive-ones';
@@ -188,6 +189,7 @@ import { problem as sumOfTwoIntegers } from './sum-of-two-integers';
 import { problem as fractionToRecurringDecimal } from './fraction-to-recurring-decimal';
 import { problem as integerToEnglishWords } from './integer-to-english-words';
 // math — medium
+import { problem as singleNumberII } from './single-number-ii';
 import { problem as taskScheduler } from './task-scheduler';
 import { problem as countPrimesSieve } from './count-primes-sieve';
 import { problem as powXN } from './pow-x-n';
@@ -364,6 +366,7 @@ export const problems: readonly Problem[] = [
   missingNumber,
   containsDuplicate,
   containsDuplicateII,
+  pascalsTriangle,
   summaryRanges,
   findMaxMin,
   maxConsecutiveOnes,
@@ -553,6 +556,7 @@ export const problems: readonly Problem[] = [
   fractionToRecurringDecimal,
   integerToEnglishWords,
   // math — medium
+  singleNumberII,
   taskScheduler,
   countPrimesSieve,
   powXN,

@@ -4504,6 +4504,28 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return false;
   },
 
+  'pascals-triangle': (...args: unknown[]) => {
+    const numRows = args[0] as number;
+    const result: number[][] = [];
+    for (let i = 0; i < numRows; i++) {
+      const row: number[] = [1];
+      for (let j = 1; j < i; j++) row.push(result[i - 1]![j - 1]! + result[i - 1]![j]!);
+      if (i > 0) row.push(1);
+      result.push(row);
+    }
+    return result;
+  },
+
+  'single-number-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let ones = 0, twos = 0;
+    for (const n of nums) {
+      ones = (ones ^ n) & ~twos;
+      twos = (twos ^ n) & ~ones;
+    }
+    return ones;
+  },
+
   'summary-ranges': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const result: string[] = [];
