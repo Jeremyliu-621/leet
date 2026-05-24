@@ -85,4 +85,48 @@ describe('buildVerdict', () => {
     const result = buildVerdict(arrayTests, okResponse([returned(0, [1, 2, 3])]));
     expect(result.outcome).toBe('accepted');
   });
+
+  it('accumulates totalDurationMs from outcomes that carry durationMs', () => {
+    const withTiming: RunResponse = {
+      type: 'result',
+      requestId: 'r',
+      ok: true,
+      outcomes: [
+        { index: 0, status: 'returned', value: 3, logs: [], durationMs: 2 },
+        { index: 1, status: 'returned', value: 15, logs: [], durationMs: 3 },
+      ],
+    };
+    const result = buildVerdict(tests, withTiming);
+    expect(result.outcome).toBe('accepted');
+    expect(result.totalDurationMs).toBe(5);
+    const v0 = result.verdicts[0];
+    if (v0?.status === 'pass') expect(v0.durationMs).toBe(2);
+    const v1 = result.verdicts[1];
+    if (v1?.status === 'pass') expect(v1.durationMs).toBe(3);
+  });
+
+  it('leaves totalDurationMs undefined when no outcomes carry durationMs', () => {
+    const result = buildVerdict(tests, okResponse([returned(0, 3), returned(1, 15)]));
+    expect(result.totalDurationMs).toBeUndefined();
+  });
+
+  it('includes durationMs on failing verdicts and accumulates all test times', () => {
+    const withTiming: RunResponse = {
+      type: 'result',
+      requestId: 'r',
+      ok: true,
+      outcomes: [
+        { index: 0, status: 'returned', value: 3, logs: [], durationMs: 1 },
+        { index: 1, status: 'returned', value: 99, logs: [], durationMs: 2 },
+      ],
+    };
+    const result = buildVerdict(tests, withTiming);
+    expect(result.outcome).toBe('wrong-answer');
+    // totalDurationMs is the sum of ALL test timings (pass + fail).
+    expect(result.totalDurationMs).toBe(3);
+    const v0 = result.verdicts[0];
+    if (v0?.status === 'pass') expect(v0.durationMs).toBe(1);
+    const v1 = result.verdicts[1];
+    if (v1?.status === 'fail') expect(v1.durationMs).toBe(2);
+  });
 });
