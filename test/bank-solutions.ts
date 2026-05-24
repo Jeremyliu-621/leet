@@ -372,6 +372,29 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return a;
   },
 
+  'merge-intervals': (...args: unknown[]) => {
+    const intervals = [...(args[0] as number[][])].sort((a, b) => a[0]! - b[0]!);
+    const result: number[][] = [];
+    for (const iv of intervals) {
+      if (result.length && iv[0]! <= result[result.length - 1]![1]!) {
+        result[result.length - 1]![1] = Math.max(result[result.length - 1]![1]!, iv[1]!);
+      } else {
+        result.push([...iv]);
+      }
+    }
+    return result;
+  },
+
+  'non-overlapping-intervals': (...args: unknown[]) => {
+    const intervals = [...(args[0] as number[][])].sort((a, b) => a[1]! - b[1]!);
+    let removed = 0, end = -Infinity;
+    for (const iv of intervals) {
+      if (iv[0]! >= end) { end = iv[1]!; }
+      else { removed++; }
+    }
+    return removed;
+  },
+
   // --- arrays (batch 7) ----------------------------------------------------
   'rotate-array': (...args: unknown[]) => {
     const nums = args[0] as number[];
@@ -1316,6 +1339,16 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   },
 
   // --- math -----------------------------------------------------------------
+
+  'task-scheduler': (...args: unknown[]) => {
+    const tasks = args[0] as string[];
+    const n = args[1] as number;
+    const freq = new Map<string, number>();
+    for (const t of tasks) freq.set(t, (freq.get(t) ?? 0) + 1);
+    const maxFreq = Math.max(...freq.values());
+    const maxCount = [...freq.values()].filter(v => v === maxFreq).length;
+    return Math.max(tasks.length, (maxFreq - 1) * (n + 1) + maxCount);
+  },
 
   'count-primes-sieve': (...args: unknown[]) => {
     const n = args[0] as number;

@@ -307,6 +307,29 @@ export const pythonSolutions: Record<string, string> = {
         stack.append(i)
     return answer
 `,
+  'merge-intervals': `def merge(intervals):
+    intervals = sorted(intervals, key=lambda x: x[0])
+    result = []
+    for iv in intervals:
+        if result and iv[0] <= result[-1][1]:
+            result[-1][1] = max(result[-1][1], iv[1])
+        else:
+            result.append(list(iv))
+    return result
+`,
+
+  'non-overlapping-intervals': `def eraseOverlapIntervals(intervals):
+    intervals = sorted(intervals, key=lambda x: x[1])
+    removed = 0
+    end = float('-inf')
+    for iv in intervals:
+        if iv[0] >= end:
+            end = iv[1]
+        else:
+            removed += 1
+    return removed
+`,
+
   'rotate-array': `def rotateArray(nums, k):
     n = len(nums)
     steps = k % n
@@ -910,6 +933,14 @@ export const pythonSolutions: Record<string, string> = {
         if min_open < 0:
             min_open = 0
     return min_open == 0
+`,
+
+  'task-scheduler': `def leastInterval(tasks, n):
+    from collections import Counter
+    freq = Counter(tasks)
+    max_freq = max(freq.values())
+    max_count = sum(1 for v in freq.values() if v == max_freq)
+    return max(len(tasks), (max_freq - 1) * (n + 1) + max_count)
 `,
 
   'count-primes-sieve': `def countPrimesUpTo(n):

@@ -11,6 +11,8 @@ import { problem as findMaxMin } from './find-max-min';
 import { problem as maxConsecutiveOnes } from './max-consecutive-ones';
 import { problem as plusOne } from './plus-one';
 // arrays — medium
+import { problem as mergeIntervals } from './merge-intervals';
+import { problem as nonOverlappingIntervals } from './non-overlapping-intervals';
 import { problem as rotateArray } from './rotate-array';
 import { problem as maxProductSubarray } from './max-product-subarray';
 import { problem as productExceptSelf } from './product-except-self';
@@ -160,6 +162,7 @@ import { problem as excelColumnNumber } from './excel-column-number';
 import { problem as fractionToRecurringDecimal } from './fraction-to-recurring-decimal';
 import { problem as integerToEnglishWords } from './integer-to-english-words';
 // math — medium
+import { problem as taskScheduler } from './task-scheduler';
 import { problem as countPrimesSieve } from './count-primes-sieve';
 import { problem as powXN } from './pow-x-n';
 import { problem as reverseInteger } from './reverse-integer';
@@ -294,6 +297,8 @@ export const problems: readonly Problem[] = [
   maxConsecutiveOnes,
   plusOne,
   // arrays — medium
+  mergeIntervals,
+  nonOverlappingIntervals,
   rotateArray,
   maxProductSubarray,
   productExceptSelf,
@@ -434,6 +439,7 @@ export const problems: readonly Problem[] = [
   fractionToRecurringDecimal,
   integerToEnglishWords,
   // math — medium
+  taskScheduler,
   countPrimesSieve,
   powXN,
   reverseInteger,
