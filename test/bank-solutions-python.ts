@@ -300,6 +300,45 @@ export const pythonSolutions: Record<string, string> = {
         stack.append(i)
     return answer
 `,
+  'rotate-array': `def rotateArray(nums, k):
+    n = len(nums)
+    steps = k % n
+    return nums[-steps:] + nums[:-steps] if steps else list(nums)
+`,
+  'max-product-subarray': `def maxProductSubarray(nums):
+    cur_max = cur_min = best = nums[0]
+    for v in nums[1:]:
+        new_max = max(v, cur_max * v, cur_min * v)
+        cur_min = min(v, cur_max * v, cur_min * v)
+        cur_max = new_max
+        if cur_max > best:
+            best = cur_max
+    return best
+`,
+  'longest-palindromic-string': `def longestPalindrome(s):
+    def expand(l, r):
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            l -= 1
+            r += 1
+        return s[l+1:r]
+    best = ''
+    for i in range(len(s)):
+        a = expand(i, i)
+        b = expand(i, i + 1)
+        if len(a) > len(best):
+            best = a
+        if len(b) > len(best):
+            best = b
+    return best
+`,
+  'climbing-stairs': `def climbStairs(n):
+    if n <= 2:
+        return n
+    a, b = 1, 2
+    for _ in range(3, n + 1):
+        a, b = b, a + b
+    return b
+`,
   'max-consecutive-ones': `def maxConsecutiveOnes(nums):
     best = 0
     current = 0

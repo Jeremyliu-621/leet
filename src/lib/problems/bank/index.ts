@@ -9,6 +9,8 @@ import { problem as missingNumber } from './missing-number';
 import { problem as containsDuplicate } from './contains-duplicate';
 import { problem as findMaxMin } from './find-max-min';
 import { problem as maxConsecutiveOnes } from './max-consecutive-ones';
+import { problem as rotateArray } from './rotate-array';
+import { problem as maxProductSubarray } from './max-product-subarray';
 
 // strings
 import { problem as vowelTally } from './vowel-tally';
@@ -18,6 +20,7 @@ import { problem as compressString } from './compress-string';
 import { problem as longestCommonPrefix } from './longest-common-prefix';
 import { problem as reverseString } from './reverse-string';
 import { problem as capitalizeWords } from './capitalize-words';
+import { problem as longestPalindromicString } from './longest-palindromic-string';
 
 // hash-map
 import { problem as firstUniqueChar } from './first-unique-char';
@@ -66,6 +69,7 @@ import { problem as countDivisors } from './count-divisors';
 import { problem as powerOfTwo } from './power-of-two';
 import { problem as fibonacciNumber } from './fibonacci-number';
 import { problem as sumOfSquares } from './sum-of-squares';
+import { problem as climbingStairs } from './climbing-stairs';
 
 export const problems: readonly Problem[] = [
   runningSum,
@@ -76,6 +80,8 @@ export const problems: readonly Problem[] = [
   containsDuplicate,
   findMaxMin,
   maxConsecutiveOnes,
+  rotateArray,
+  maxProductSubarray,
   vowelTally,
   reverseWordsOrder,
   isPalindromeClean,
@@ -83,6 +89,7 @@ export const problems: readonly Problem[] = [
   longestCommonPrefix,
   reverseString,
   capitalizeWords,
+  longestPalindromicString,
   firstUniqueChar,
   twoSumIndices,
   mostFrequentValue,
@@ -119,4 +126,5 @@ export const problems: readonly Problem[] = [
   powerOfTwo,
   fibonacciNumber,
   sumOfSquares,
+  climbingStairs,
 ];

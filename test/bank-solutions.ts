@@ -330,6 +330,64 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return a;
   },
 
+  // --- arrays (batch 7) ----------------------------------------------------
+  'rotate-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const n = nums.length;
+    const steps = k % n;
+    return [...nums.slice(n - steps), ...nums.slice(0, n - steps)];
+  },
+
+  'max-product-subarray': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let curMax = nums[0] as number;
+    let curMin = nums[0] as number;
+    let best = nums[0] as number;
+    for (let i = 1; i < nums.length; i++) {
+      const v = nums[i] as number;
+      const newMax = Math.max(v, curMax * v, curMin * v);
+      curMin = Math.min(v, curMax * v, curMin * v);
+      curMax = newMax;
+      if (curMax > best) best = curMax;
+    }
+    return best;
+  },
+
+  // --- strings (batch 7) ---------------------------------------------------
+  'longest-palindromic-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    function expand(l: number, r: number): string {
+      while (l >= 0 && r < s.length && s[l] === s[r]) {
+        l--;
+        r++;
+      }
+      return s.slice(l + 1, r);
+    }
+    let best = '';
+    for (let i = 0; i < s.length; i++) {
+      const a = expand(i, i);
+      const b = expand(i, i + 1);
+      if (a.length > best.length) best = a;
+      if (b.length > best.length) best = b;
+    }
+    return best;
+  },
+
+  // --- math (batch 7) ------------------------------------------------------
+  'climbing-stairs': (...args: unknown[]) => {
+    const n = args[0] as number;
+    if (n <= 2) return n;
+    let a = 1;
+    let b = 2;
+    for (let i = 3; i <= n; i++) {
+      const tmp = a + b;
+      a = b;
+      b = tmp;
+    }
+    return b;
+  },
+
   // --- arrays (batch 6) ----------------------------------------------------
   'max-consecutive-ones': (...args: unknown[]) => {
     const nums = args[0] as number[];
