@@ -28,7 +28,7 @@ honest, frictionless gate that *feels* like LeetCode when you hit it.
 | Snippet expansion                        | Some language stubs offered on first open                                                           | Starter code only                           |   ❌   |    L     | Out-of-scope unless we ship many languages.                                                                              |
 | Multi-cursor                             | Yes (Monaco default — alt-click, ctrl-d)                                                            | Yes (`drawSelection` + `allowMultipleSelections`) |   ✅   |    —     | Alt-Click adds a cursor; Ctrl-D/Cmd-D selects next occurrence.                                                           |
 | Vim keymap                               | Yes — Settings → Code editor → Key binding → Vim                                                    | Yes — `editorKeymap: 'vim'` via `@replit/codemirror-vim`; toggle in popup + options |   ✅   |    —     | Full modal Vim; persisted to `userPreferences`.                                                                          |
-| Emacs keymap                             | Yes (same menu)                                                                                     | No                                          |   ❌   |    L     | `@replit/codemirror-emacs`. Niche; ship if/when Vim has traction.                                                        |
+| Emacs keymap                             | Yes (same menu)                                                                                     | Yes — `editorKeymap: 'emacs'` via `@replit/codemirror-emacs`; toggle in popup + options | ✅ | — | Full Emacs bindings (Ctrl-A/E, M-f/b, Ctrl-K, etc.); persisted to `userPreferences`.                                    |
 | Font size control                        | Settings drawer slider (12–24 px ish)                                                               | Segmented button (S/M/L/XL) in popup; slider in Options → Editor | ✅ | — | Persisted to `userPreferences`; live-reconfigured via Compartment.                                                       |
 | Font family choice                       | A handful of monospace choices                                                                      | Single (theme-defined)                      |   ❌   |    L     | Nice-to-have. Don't ship a font picker for one user request.                                                              |
 | Tab size / spaces vs tabs                | Configurable                                                                                        | Hard-coded 2 spaces                         |   ❌   |    L     | Almost nobody changes it; defer.                                                                                          |
@@ -167,15 +167,15 @@ These are quotable, screenshot-able wins. Put them on the marketing page.
 
 ## Top-of-stack: remaining gaps
 
-Ordered by `(visible impact) × (1 / implementation cost)`:
+All H/M priority items have been addressed. Remaining gaps are L priority:
 
 1. **Browser-zoom QA** — quick check at 150% and 200% before 1.0.
-2. **Emacs keymap** — niche, low priority.
-3. Everything else (runtime/memory percentiles, image support,
-   LaTeX rendering) is post-1.0 and should be considered against actual
-   user feedback rather than blind parity chasing.
+2. **LaTeX / math rendering** — useful for graph/math problems; defer until the bank has any.
+3. **Image support in problem descriptions** — needed for tree/grid problems; significant authoring cost.
+4. Everything else (runtime/memory percentiles, snippet expansion, font family picker)
+   is post-1.0 and should be evaluated against actual user feedback.
 
-*Completed from previous list: Recover last submitted code ✅; Syntax highlighting in code blocks ✅.*
+*Completed from previous iterations: Emacs keymap ✅; Recover last submitted code ✅; Syntax highlighting in code blocks ✅; Persistent submission history ✅; Per-test input in verdict ✅.*
 
 ---
 

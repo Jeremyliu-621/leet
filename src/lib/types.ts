@@ -193,4 +193,4 @@ export interface UserPreferences {
 export type ThemePreference = 'dark' | 'light' | 'system';
 
 /** Modal-vs-default selector for the CodeMirror editor. */
-export type EditorKeymap = 'default' | 'vim';
+export type EditorKeymap = 'default' | 'vim' | 'emacs';

@@ -25,6 +25,7 @@ import {
 } from '@codemirror/autocomplete';
 import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/search';
 import { vim } from '@replit/codemirror-vim';
+import { emacs } from '@replit/codemirror-emacs';
 import { leetlockEditorThemeDark, leetlockEditorThemeLight } from '../codemirror-theme';
 import type { JudgeResult } from '../../../lib/judge';
 import type { EditorKeymap, SupportedLanguage } from '../../../lib/types';
@@ -99,6 +100,12 @@ const LANGUAGE_SHORT: Readonly<Record<SupportedLanguage, string>> = {
 
 function languageExtension(language: SupportedLanguage) {
   return language === 'python' ? python() : javascript();
+}
+
+function modalKeymapExtension(k: EditorKeymap) {
+  if (k === 'vim') return vim();
+  if (k === 'emacs') return emacs();
+  return [];
 }
 
 /**
@@ -177,7 +184,7 @@ export function EditorPanel({
         // Vim mode (when enabled) MUST come before every other keymap so
         // its modal handlers take precedence. The Compartment lets us
         // swap it in / out without rebuilding the editor.
-        keymapCompartmentRef.current.of(editorKeymap === 'vim' ? vim() : []),
+        keymapCompartmentRef.current.of(modalKeymapExtension(editorKeymap)),
         // Display extensions
         lineNumbers(),
         highlightActiveLineGutter(),
@@ -332,7 +339,7 @@ export function EditorPanel({
     if (!view) return;
     view.dispatch({
       effects: keymapCompartmentRef.current.reconfigure(
-        editorKeymap === 'vim' ? vim() : [],
+        modalKeymapExtension(editorKeymap),
       ),
     });
   }, [editorKeymap]);

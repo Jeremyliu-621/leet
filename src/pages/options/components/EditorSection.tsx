@@ -13,6 +13,7 @@ const FONT_MAX = 20;
 const KEYMAP_OPTIONS: { value: EditorKeymap; label: string; description: string }[] = [
   { value: 'default', label: 'Default', description: 'Standard browser key bindings.' },
   { value: 'vim', label: 'Vim', description: 'Full modal vim bindings via @replit/codemirror-vim.' },
+  { value: 'emacs', label: 'Emacs', description: 'Emacs bindings (Ctrl-A/E, M-f/b, Ctrl-K, etc.) via @replit/codemirror-emacs.' },
 ];
 
 export function EditorSection({ prefs, onChange }: EditorSectionProps) {

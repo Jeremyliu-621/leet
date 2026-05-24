@@ -23,6 +23,7 @@ import type { SolvedStats } from './popup-helpers';
 const KEYMAP_OPTIONS: ReadonlyArray<{ value: EditorKeymap; label: string }> = [
   { value: 'default', label: 'Default' },
   { value: 'vim', label: 'Vim' },
+  { value: 'emacs', label: 'Emacs' },
 ];
 
 const THEME_OPTIONS: ReadonlyArray<{ value: ThemePreference; label: string }> = [
