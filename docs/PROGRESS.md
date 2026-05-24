@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 306 problems (14 tags); reverse-only-letters + backspace-string-compare + number-of-steps added; 1189 tests.
+**Current focus:** Bank at 309 problems (14 tags); richest-customer-wealth + find-the-difference + maximum-units-on-truck added; 1198 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing bank; add more problems across all tags.
 
