@@ -116,7 +116,8 @@ function starterCodeFor(problem: Problem, language: SupportedLanguage): string {
 type PageState =
   | { status: 'loading' }
   | { status: 'no-problem' }
-  | { status: 'ready'; problem: Problem; prefs: UserPreferences };
+  | { status: 'ready'; problem: Problem; prefs: UserPreferences }
+  | { status: 'solved-standalone'; problemTitle: string };
 
 // ---------------------------------------------------------------------------
 // Empty / loading states
@@ -148,6 +149,44 @@ function NoTargetBanner() {
       <p className="font-mono text-[10px] text-faint">
         No blocked site detected — running in standalone mode.
       </p>
+    </div>
+  );
+}
+
+function SolvedStandaloneScreen({ problemTitle }: { problemTitle: string }) {
+  return (
+    <div className="flex h-full flex-col items-center justify-center gap-6 bg-bg px-8 text-center">
+      <div className="space-y-2">
+        <p className="font-mono text-xs uppercase tracking-widest text-faint">Accepted</p>
+        <h1 className="text-lg font-semibold text-text">{problemTitle}</h1>
+        <p className="text-xs text-muted">Challenge complete.</p>
+      </div>
+      <div className="flex gap-3">
+        <button
+          type="button"
+          onClick={() => window.location.reload()}
+          className={[
+            'rounded-sm border border-accent bg-accent px-4 py-2',
+            'font-mono text-xs font-medium text-on-accent',
+            'hover:opacity-90 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent',
+            'transition-opacity',
+          ].join(' ')}
+        >
+          Try another →
+        </button>
+        <button
+          type="button"
+          onClick={() => window.close()}
+          className={[
+            'rounded-sm border border-border px-4 py-2',
+            'font-mono text-xs text-muted',
+            'hover:border-border-strong hover:text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent',
+            'transition-colors',
+          ].join(' ')}
+        >
+          Close
+        </button>
+      </div>
     </div>
   );
 }
@@ -531,12 +570,8 @@ export function Challenge() {
         if (targetUrl.current) {
           window.location.href = targetUrl.current;
         } else {
-          // No target (standalone mode) — just close.
-          try {
-            window.close();
-          } catch {
-            // ignore
-          }
+          // No target (standalone/practice mode) — show a "try another" screen.
+          setPageState({ status: 'solved-standalone', problemTitle: problem.title });
         }
       } else {
         // Failed submission — persist history and increment attempt counter.
@@ -708,6 +743,10 @@ export function Challenge() {
 
   if (pageState.status === 'no-problem') {
     return <NoProblemScreen />;
+  }
+
+  if (pageState.status === 'solved-standalone') {
+    return <SolvedStandaloneScreen problemTitle={pageState.problemTitle} />;
   }
 
   const { problem, prefs } = pageState;
