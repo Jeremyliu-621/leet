@@ -12,6 +12,11 @@ dist/
 coverage/
 *.tsbuildinfo
 
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
+
 # Editor / OS
 .DS_Store
 Thumbs.db
