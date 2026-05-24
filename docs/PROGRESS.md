@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank growing (12 tags); zigzag-level-order, flatten-binary-tree, reverse-nodes-in-k-group added; 885 tests.
+**Current focus:** Bank at 204 problems (12 tags); zigzag, flatten, course-ii, reverse-k-group added; 885 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green (885 unit tests across 23 files).
-**Next up:** Continue growing bank; more hard problems; UI polish.
+**Next up:** More tree/graph/linked-list problems; consider UI polish for challenge page.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
