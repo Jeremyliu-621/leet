@@ -41,6 +41,7 @@ import { problem as spiralMatrix } from './spiral-matrix';
 import { problem as rotateImage } from './rotate-image';
 import { problem as maximalSquare } from './maximal-square';
 import { problem as validSudoku } from './valid-sudoku';
+import { problem as gameOfLife } from './game-of-life';
 
 // strings — easy
 import { problem as vowelTally } from './vowel-tally';
@@ -169,6 +170,8 @@ import { problem as isPrimeNumber } from './is-prime-number';
 import { problem as greatestCommonDivisor } from './greatest-common-divisor';
 import { problem as countDivisors } from './count-divisors';
 import { problem as powerOfTwo } from './power-of-two';
+import { problem as powerOfThree } from './power-of-three';
+import { problem as reverseBits } from './reverse-bits';
 import { problem as countAndSay } from './count-and-say';
 import { problem as fibonacciNumber } from './fibonacci-number';
 import { problem as sumOfSquares } from './sum-of-squares';
@@ -398,6 +401,7 @@ export const problems: readonly Problem[] = [
   rotateImage,
   maximalSquare,
   validSudoku,
+  gameOfLife,
   // strings — easy
   vowelTally,
   reverseWordsOrder,
@@ -527,6 +531,8 @@ export const problems: readonly Problem[] = [
   greatestCommonDivisor,
   countDivisors,
   powerOfTwo,
+  powerOfThree,
+  reverseBits,
   countAndSay,
   fibonacciNumber,
   sumOfSquares,

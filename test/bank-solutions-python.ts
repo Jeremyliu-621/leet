@@ -3824,6 +3824,40 @@ def deserialize(data):
     return max(up, down)
 `,
 
+  'power-of-three': `def isPowerOfThree(n):
+    if n <= 0:
+        return False
+    while n % 3 == 0:
+        n //= 3
+    return n == 1
+`,
+
+  'reverse-bits': `def reverseBits(n):
+    result = 0
+    for _ in range(32):
+        result = (result << 1) | (n & 1)
+        n >>= 1
+    return result
+`,
+
+  'game-of-life': `def gameOfLife(board):
+    board = [[int(board[r][c]) for c in range(len(board[r]))] for r in range(len(board))]
+    m, n = len(board), len(board[0])
+    dirs = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
+    snapshot = [row[:] for row in board]
+    for r in range(m):
+        for c in range(n):
+            live = sum(
+                1 for dr, dc in dirs
+                if 0 <= r+dr < m and 0 <= c+dc < n and snapshot[r+dr][c+dc] == 1
+            )
+            if snapshot[r][c] == 1:
+                board[r][c] = 1 if live in (2, 3) else 0
+            else:
+                board[r][c] = 1 if live == 3 else 0
+    return board
+`,
+
   'count-and-say': `def countAndSay(n):
     s = '1'
     for _ in range(n - 1):

@@ -4596,6 +4596,40 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'power-of-three': (...args: unknown[]) => {
+    let n = args[0] as number;
+    if (n <= 0) return false;
+    while (n % 3 === 0) n = Math.floor(n / 3);
+    return n === 1;
+  },
+
+  'reverse-bits': (...args: unknown[]) => {
+    let n = args[0] as number, result = 0;
+    for (let i = 0; i < 32; i++) {
+      result = ((result * 2) + (n & 1)) >>> 0;
+      n = Math.floor(n / 2);
+    }
+    return result >>> 0;
+  },
+
+  'game-of-life': (...args: unknown[]) => {
+    const board = (args[0] as number[][]).map(r => [...r]);
+    const m = board.length, n = board[0]!.length;
+    const dirs = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]] as [number,number][];
+    const next = board.map(r => [...r]);
+    for (let r = 0; r < m; r++) {
+      for (let c = 0; c < n; c++) {
+        const live = dirs.reduce((acc, [dr, dc]) => {
+          const nr = r + dr!, nc = c + dc!;
+          return acc + (nr >= 0 && nr < m && nc >= 0 && nc < n && board[nr]![nc] === 1 ? 1 : 0);
+        }, 0);
+        if (board[r]![c] === 1) next[r]![c] = (live === 2 || live === 3) ? 1 : 0;
+        else next[r]![c] = live === 3 ? 1 : 0;
+      }
+    }
+    return next;
+  },
+
   'count-and-say': (...args: unknown[]) => {
     let s = '1';
     for (let i = 1; i < (args[0] as number); i++) {
