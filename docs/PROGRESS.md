@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 300 problems (14 tags) — milestone reached! pascals-triangle + single-number-ii added; 1171 tests.
+**Current focus:** Bank at 303 problems (14 tags) — past 300! pascals-triangle + single-number-ii + missing-ranges added; 1180 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing bank past 300; add more problems across all tags.
+**Next up:** Continue growing bank; add more problems across all tags.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
