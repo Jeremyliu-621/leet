@@ -4,24 +4,18 @@ export const problem: Problem = {
   id: 'single-number-ii',
   title: 'Single Number II',
   difficulty: 'medium',
-  tags: ['math'],
-  description: `Given an integer array \`nums\` where every element appears **exactly three times** except for one element which appears **exactly once**. Find the single element and return it.
+  tags: ['math', 'arrays'],
+  description: `Given an integer array \`nums\` where every element appears **exactly three times** except for one element which appears **exactly once**, find and return the single element.
 
-You must implement a solution with a linear runtime complexity and use only constant extra space.`,
+You must implement a solution with linear runtime complexity and use only constant extra space.`,
   constraints: [
     '`1 <= nums.length <= 3 * 10^4`',
     '`-2^31 <= nums[i] <= 2^31 - 1`',
-    'Each element in \`nums\` appears exactly **three times** except for one element which appears **exactly once**.',
+    'Every element except one appears exactly 3 times',
   ],
   examples: [
-    {
-      input: 'nums = [2,2,3,2]',
-      output: '3',
-    },
-    {
-      input: 'nums = [0,1,0,1,0,1,99]',
-      output: '99',
-    },
+    { input: 'nums = [2,2,3,2]', output: '3' },
+    { input: 'nums = [0,1,0,1,0,1,99]', output: '99' },
   ],
   hints: [
     'Track two bit masks `ones` and `twos`. For each number: `ones = (ones ^ n) & ~twos`, then `twos = (twos ^ n) & ~ones`.',

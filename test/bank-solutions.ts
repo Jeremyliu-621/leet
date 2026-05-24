@@ -3111,6 +3111,22 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return [...arr.filter((v) => v < x), ...arr.filter((v) => v >= x)];
   },
 
+  'reverse-linked-list-ii': (...args: unknown[]) => {
+    const arr = args[0] as number[], left = args[1] as number, right = args[2] as number;
+    const result = [...arr];
+    let l = left - 1, r = right - 1;
+    while (l < r) { [result[l], result[r]] = [result[r]!, result[l]!]; l++; r--; }
+    return result;
+  },
+
+  'rotate-list': (...args: unknown[]) => {
+    const arr = args[0] as number[], k = args[1] as number;
+    if (arr.length === 0) return [];
+    const n = arr.length, step = k % n;
+    if (step === 0) return [...arr];
+    return [...arr.slice(n - step), ...arr.slice(0, n - step)];
+  },
+
   // --- graph ---------------------------------------------------------------
 
   'find-if-path-exists': (...args: unknown[]) => {
@@ -4859,6 +4875,22 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       n = Math.floor(n / 26);
     }
     return result;
+  },
+
+  'number-of-1-bits': (...args: unknown[]) => {
+    let n = args[0] as number, count = 0;
+    while (n > 0) { count += n & 1; n >>>= 1; }
+    return count;
+  },
+
+  'single-number-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let result = 0;
+    for (let i = 0; i < 32; i++) {
+      const bitSum = nums.reduce((acc, n) => acc + ((n >>> i) & 1), 0);
+      if (bitSum % 3 !== 0) result |= (1 << i);
+    }
+    return result | 0;
   },
 
   'longest-palindrome-build': (...args: unknown[]) => {

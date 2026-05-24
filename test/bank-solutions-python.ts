@@ -2465,6 +2465,38 @@ export const pythonSolutions: Record<string, string> = {
     return dummy.next
 `,
 
+  'reverse-linked-list-ii': `def reverseBetween(head, left, right):
+    dummy = ListNode(0)
+    dummy.next = head
+    pre = dummy
+    for _ in range(left - 1):
+        pre = pre.next
+    cur = pre.next
+    for _ in range(right - left):
+        nxt = cur.next
+        cur.next = nxt.next
+        nxt.next = pre.next
+        pre.next = nxt
+    return dummy.next
+`,
+
+  'rotate-list': `def rotateRight(head, k):
+    if not head or not head.next or k == 0:
+        return head
+    n, tail = 1, head
+    while tail.next:
+        tail = tail.next
+        n += 1
+    tail.next = head
+    step = k % n
+    new_tail = head
+    for _ in range(n - step - 1):
+        new_tail = new_tail.next
+    new_head = new_tail.next
+    new_tail.next = None
+    return new_head
+`,
+
   'partition-list': `def partition(head, x):
     less_dummy = ListNode(0)
     greater_dummy = ListNode(0)
@@ -3947,6 +3979,25 @@ def deserialize(data):
         n -= 1
         result = chr(65 + n % 26) + result
         n //= 26
+    return result
+`,
+
+  'number-of-1-bits': `def hammingWeight(n):
+    count = 0
+    while n:
+        count += n & 1
+        n >>= 1
+    return count
+`,
+
+  'single-number-ii': `def singleNumber(nums):
+    result = 0
+    for i in range(32):
+        bit_sum = sum((n >> i) & 1 for n in nums)
+        if bit_sum % 3 != 0:
+            result |= (1 << i)
+    if result >= 2**31:
+        result -= 2**32
     return result
 `,
 

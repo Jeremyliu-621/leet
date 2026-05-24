@@ -185,6 +185,8 @@ import { problem as countDivisors } from './count-divisors';
 import { problem as powerOfTwo } from './power-of-two';
 import { problem as excelSheetColumnTitle } from './excel-sheet-column-title';
 import { problem as longestPalindromeBuild } from './longest-palindrome-build';
+import { problem as numberOfOneBits } from './number-of-1-bits';
+import { problem as singleNumberII } from './single-number-ii';
 import { problem as powerOfThree } from './power-of-three';
 import { problem as reverseBits } from './reverse-bits';
 import { problem as countAndSay } from './count-and-say';
@@ -293,6 +295,8 @@ import { problem as addTwoNumbers } from './add-two-numbers';
 import { problem as reorderList } from './reorder-list';
 import { problem as swapNodesInPairs } from './swap-nodes-in-pairs';
 import { problem as partitionList } from './partition-list';
+import { problem as reverseLinkedListII } from './reverse-linked-list-ii';
+import { problem as rotateList } from './rotate-list';
 // linked-list — hard
 import { problem as mergeKSortedLists } from './merge-k-sorted-lists';
 import { problem as reverseNodesInKGroup } from './reverse-nodes-in-k-group';
@@ -564,6 +568,8 @@ export const problems: readonly Problem[] = [
   powerOfTwo,
   excelSheetColumnTitle,
   longestPalindromeBuild,
+  numberOfOneBits,
+  singleNumberII,
   powerOfThree,
   reverseBits,
   countAndSay,
@@ -648,6 +654,8 @@ export const problems: readonly Problem[] = [
   reorderList,
   swapNodesInPairs,
   partitionList,
+  reverseLinkedListII,
+  rotateList,
   // linked-list — hard
   mergeKSortedLists,
   reverseNodesInKGroup,
