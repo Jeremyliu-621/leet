@@ -34,6 +34,7 @@ import { problem as specialPositionsBinaryMatrix } from './special-positions-bin
 import { problem as matrixDiagonalSum } from './matrix-diagonal-sum';
 import { problem as sortArrayByParity } from './sort-array-by-parity';
 // arrays — medium
+import { problem as rangeSumQuery2D } from './range-sum-query-2d';
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
 import { problem as setMatrixZeroes } from './set-matrix-zeroes';
 import { problem as meetingRoomsII } from './meeting-rooms-ii';
@@ -108,6 +109,7 @@ import { problem as characterReplacement } from './character-replacement';
 import { problem as restoreIpAddresses } from './restore-ip-addresses';
 
 // hash-map — easy
+import { problem as findAnagramMappings } from './find-anagram-mappings';
 import { problem as validAnagram } from './valid-anagram';
 import { problem as pathCrossing } from './path-crossing';
 import { problem as firstUniqueChar } from './first-unique-char';
@@ -202,6 +204,7 @@ import { problem as splitArrayLargestSum } from './split-array-largest-sum';
 import { problem as capacityToShip } from './capacity-to-ship';
 
 // stack — easy
+import { problem as implementQueueUsingStacks } from './implement-queue-using-stacks';
 import { problem as balancedBrackets } from './balanced-brackets';
 import { problem as removeAdjacentDupes } from './remove-adjacent-dupes';
 import { problem as nextGreaterElement } from './next-greater-element';
@@ -413,6 +416,9 @@ import { problem as pathSum } from './path-sum';
 import { problem as diameterOfBinaryTree } from './diameter-of-binary-tree';
 import { problem as sameTree } from './same-tree';
 // tree — medium
+import { problem as binaryTreePruning } from './binary-tree-pruning';
+import { problem as countCompleteTreeNodes } from './count-complete-tree-nodes';
+import { problem as populatingNextRightPointers } from './populating-next-right-pointers';
 import { problem as validateBst } from './validate-bst';
 import { problem as levelOrderTraversal } from './level-order-traversal';
 import { problem as binaryTreeRightSideView } from './binary-tree-right-side-view';
@@ -475,6 +481,7 @@ export const problems: readonly Problem[] = [
   sortArrayByParity,
   singleNumber,
   // arrays — medium
+  rangeSumQuery2D,
   minimumArrowsBurstBalloons,
   setMatrixZeroes,
   meetingRoomsII,
@@ -555,6 +562,7 @@ export const problems: readonly Problem[] = [
   characterReplacement,
   integerToRoman,
   // hash-map — easy
+  findAnagramMappings,
   validAnagram,
   pathCrossing,
   firstUniqueChar,
@@ -649,6 +657,7 @@ export const problems: readonly Problem[] = [
   splitArrayLargestSum,
   capacityToShip,
   // stack — easy
+  implementQueueUsingStacks,
   balancedBrackets,
   removeAdjacentDupes,
   nextGreaterElement,
@@ -848,6 +857,9 @@ export const problems: readonly Problem[] = [
   diameterOfBinaryTree,
   sameTree,
   // tree — medium
+  binaryTreePruning,
+  countCompleteTreeNodes,
+  populatingNextRightPointers,
   validateBst,
   levelOrderTraversal,
   binaryTreeRightSideView,

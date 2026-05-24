@@ -5640,4 +5640,102 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return arr.map(([val, ri]) => [val, ri]);
   },
 
+  'implement-queue-using-stacks': (...args: unknown[]) => {
+    const ops = args[0] as string[], vals = args[1] as (number | null)[];
+    const inbox: number[] = [], outbox: number[] = [];
+    const pour = () => { while (inbox.length) outbox.push(inbox.pop()!); };
+    const result: (number | boolean)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      if (op === 'push') { inbox.push(vals[i] as number); }
+      else if (op === 'pop') { if (!outbox.length) pour(); result.push(outbox.pop()!); }
+      else if (op === 'peek') { if (!outbox.length) pour(); result.push(outbox[outbox.length - 1]!); }
+      else if (op === 'empty') { result.push(inbox.length === 0 && outbox.length === 0); }
+    }
+    return result;
+  },
+
+  'binary-tree-pruning': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    if (!arr.length) return [];
+    interface N { v: number; l: N | null; r: N | null }
+    const build = (a: (number | null)[]): N | null => {
+      if (!a.length || a[0] == null) return null;
+      const root: N = { v: a[0], l: null, r: null };
+      const q: N[] = [root]; let i = 1;
+      while (q.length && i < a.length) {
+        const node = q.shift()!;
+        if (i < a.length && a[i] != null) { node.l = { v: a[i]!, l: null, r: null }; q.push(node.l); } i++;
+        if (i < a.length && a[i] != null) { node.r = { v: a[i]!, l: null, r: null }; q.push(node.r); } i++;
+      }
+      return root;
+    };
+    const toBFS = (root: N | null): (number | null)[] => {
+      if (!root) return [];
+      const result: (number | null)[] = [], q: (N | null)[] = [root];
+      while (q.length) {
+        const n = q.shift()!;
+        if (n == null) { result.push(null); continue; }
+        result.push(n.v);
+        if (n.l !== null || n.r !== null) { q.push(n.l); q.push(n.r); }
+      }
+      while (result.length && result[result.length - 1] === null) result.pop();
+      return result;
+    };
+    const prune = (n: N | null): N | null => {
+      if (!n) return null;
+      n.l = prune(n.l); n.r = prune(n.r);
+      return n.v === 0 && !n.l && !n.r ? null : n;
+    };
+    return toBFS(prune(build(arr)));
+  },
+
+  'count-complete-tree-nodes': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    if (!arr.length) return 0;
+    interface N { l: N | null; r: N | null }
+    const build = (a: (number | null)[]): N | null => {
+      if (!a.length || a[0] == null) return null;
+      const root: N = { l: null, r: null };
+      const q: N[] = [root]; let i = 1;
+      while (q.length && i < a.length) {
+        const node = q.shift()!;
+        if (i < a.length && a[i] != null) { node.l = { l: null, r: null }; q.push(node.l); } i++;
+        if (i < a.length && a[i] != null) { node.r = { l: null, r: null }; q.push(node.r); } i++;
+      }
+      return root;
+    };
+    const count = (n: N | null): number => n ? 1 + count(n.l) + count(n.r) : 0;
+    return count(build(arr));
+  },
+
+  'populating-next-right-pointers': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    if (!arr.length) return [];
+    const levels: number[][] = [];
+    let size = 1, i = 0;
+    while (i < arr.length) {
+      const level: number[] = [];
+      for (let j = 0; j < size && i < arr.length; j++, i++) level.push(arr[i]!);
+      levels.push(level);
+      size *= 2;
+    }
+    return levels;
+  },
+
+  'range-sum-query-2d': (...args: unknown[]) => {
+    const matrix = args[0] as number[][], r1 = args[1] as number, c1 = args[2] as number;
+    const r2 = args[3] as number, c2 = args[4] as number;
+    let sum = 0;
+    for (let r = r1; r <= r2; r++) for (let c = c1; c <= c2; c++) sum += matrix[r]![c]!;
+    return sum;
+  },
+
+  'find-anagram-mappings': (...args: unknown[]) => {
+    const nums1 = args[0] as number[], nums2 = args[1] as number[];
+    const map = new Map<number, number>();
+    nums2.forEach((v, i) => map.set(v, i));
+    return nums1.map(v => map.get(v)!);
+  },
+
 };

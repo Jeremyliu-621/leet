@@ -4960,4 +4960,113 @@ def copyRandomListRunner(arr):
     return [[val, ri] for val, ri in arr]
 `,
 
+  'implement-queue-using-stacks': `
+def queueOps(operations, values):
+    inbox, outbox = [], []
+    def pour():
+        while inbox:
+            outbox.append(inbox.pop())
+    result = []
+    for op, val in zip(operations, values):
+        if op == 'push':
+            inbox.append(int(val))
+        elif op == 'pop':
+            if not outbox: pour()
+            result.append(outbox.pop())
+        elif op == 'peek':
+            if not outbox: pour()
+            result.append(outbox[-1])
+        elif op == 'empty':
+            result.append(len(inbox) == 0 and len(outbox) == 0)
+    return result
+`,
+
+  'binary-tree-pruning': `
+def pruneTreeRunner(arr):
+    a = list(arr)
+    if not a: return []
+    def _safe_int(v):
+        try: return int(v)
+        except: return None
+    # Build tree as list of [val, left_idx, right_idx], using compact BFS parsing
+    n = len(a)
+    vals = [_safe_int(v) for v in a]
+    left_c = [None] * n
+    right_c = [None] * n
+    bfs = [0]; ptr = 1
+    for ni in bfs:
+        if ptr < n:
+            if vals[ptr] is not None:
+                left_c[ni] = ptr; bfs.append(ptr)
+            ptr += 1
+        if ptr < n:
+            if vals[ptr] is not None:
+                right_c[ni] = ptr; bfs.append(ptr)
+            ptr += 1
+    def contains_one(i):
+        if i is None: return False
+        return vals[i] == 1 or contains_one(left_c[i]) or contains_one(right_c[i])
+    def prune(i):
+        if i is None: return None
+        left_c[i] = prune(left_c[i])
+        right_c[i] = prune(right_c[i])
+        if vals[i] == 0 and left_c[i] is None and right_c[i] is None:
+            return None
+        return i
+    root = prune(0)
+    if root is None: return []
+    result = []; out_q = [0]
+    while out_q:
+        i = out_q.pop(0)
+        if i is None: result.append(None); continue
+        result.append(vals[i])
+        l, r = left_c[i], right_c[i]
+        if l is not None or r is not None:
+            out_q.append(l); out_q.append(r)
+    while result and result[-1] is None: result.pop()
+    return result
+`,
+
+  'count-complete-tree-nodes': `
+def countNodesRunner(arr):
+    a = list(arr)
+    if not a: return 0
+    def _ok(v):
+        try: int(v); return True
+        except: return False
+    return sum(1 for v in a if _ok(v))
+`,
+
+  'populating-next-right-pointers': `
+def connectTree(arr):
+    a = list(arr)
+    if not a: return []
+    result = []
+    size = 1; i = 0
+    while i < len(a):
+        level = []
+        for _ in range(size):
+            if i < len(a):
+                level.append(a[i]); i += 1
+        if level: result.append(level)
+        size *= 2
+    return result
+`,
+
+  'range-sum-query-2d': `
+def sumRegion(matrix, row1, col1, row2, col2):
+    total = 0
+    for r in range(row1, row2 + 1):
+        for c in range(col1, col2 + 1):
+            total += matrix[r][c]
+    return total
+`,
+
+  'find-anagram-mappings': `
+def anagramMappings(nums1, nums2):
+    nums2_list = list(nums2)
+    idx = {v: i for i, v in enumerate(nums2_list)}
+    return [idx[v] for v in nums1]
+`,
+
 };
