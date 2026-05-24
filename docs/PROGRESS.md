@@ -6,13 +6,13 @@
 
 ---
 
-**Last updated:** 2026-05-23
-**Current phase:** Phase 12 — Polish, browser verification, e2e harness
-**Current focus:** Manual e2e in real Chrome; Playwright load-extension smoke test; screenshots.
-**Build status:** 🟢 `npm run build` + `npm run test` green (227 tests across 15 files)
-**Next up:** Walk `TESTING.md` flow A end-to-end in Chrome; stand up Playwright; finish the last
-two Phase 10 streak-damage hooks (called from Options when a strictness-reducing change applies
-immediately, i.e. when strict mode is off).
+**Last updated:** 2026-05-24
+**Current phase:** Phase 12 — Polish
+**Current focus:** Accessibility pass, screenshots, marketing-site iteration.
+**Build status:** 🟢 `npm run build` + `npm run test` green (249 tests across 17 files) +
+**4/4 Playwright e2e tests pass against real Chromium with the extension loaded.**
+**Next up:** Accessibility sweep across surfaces; README screenshots from the Playwright runs;
+iterate on the marketing site (separate repo `Jeremyliu-621/leetlock-site` already live).
 
 ---
 
@@ -122,12 +122,12 @@ immediately, i.e. when strict mode is off).
 - [x] Strict mode hardening across surfaces
 - [x] Pending-changes review UI — list + cancel
 
-## Phase 10 — Streaks 🟡
+## Phase 10 — Streaks ✅
 
 - [x] `src/lib/streak/streak.ts` — daily streak compute + damage rules (+ tests)
 - [x] Streak damage on failed challenge (SW `failChallenge` calls `recordFail`)
-- [ ] Streak damage on disable / removed rule (needs Phase 8 hooks)
-- [ ] Subtle streak UI in popup (Phase 11) + challenge header (placeholder is in place)
+- [x] Streak damage on disable / removed rule — `damageStreakNow` helper called from Options on the immediate-apply path (deferred-apply path handles damage via SW `applyPendingChanges`)
+- [x] Subtle streak UI in popup ✅; challenge-header streak placeholder in place (live-streak wiring tracked as small Phase 12 polish)
 
 ## Phase 11 — Popup ✅
 
@@ -140,9 +140,10 @@ immediately, i.e. when strict mode is off).
 - [ ] Edge-case sweep across all `src/lib` modules
 - [x] Integration tests for core flows — `reconcile()` extracted, fake-chrome covers DNR + alarms + runtime, 18 SW integration tests in `test/sw-reconcile.test.ts`
 - [x] GitHub Actions CI: typecheck + test + build (artifacts uploaded for 14 days)
-- [ ] Playwright load-extension smoke test (real chromium, headed)
-- [ ] README screenshots / demo notes
+- [x] **Playwright load-extension smoke test — 4 tests in `e2e/extension.spec.ts` exercise the SW, popup, options, and challenge pages against real Chromium with `dist/` loaded as an unpacked extension. Caught and fixed a real bug — CRXJS was shipping unmodified `./main.tsx` references for web-accessible HTML (see `DECISIONS.md` D15).**
+- [ ] README screenshots / demo notes (Playwright run can now produce them)
 - [x] Chrome Web Store ZIP packaging script (`npm run package`)
+- [x] Marketing website (separate repo `Jeremyliu-621/leetlock-site`, Next.js static export)
 
 ## Phase 13+ — Post-MVP
 
