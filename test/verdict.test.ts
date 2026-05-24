@@ -129,4 +129,33 @@ describe('buildVerdict', () => {
     const v1 = result.verdicts[1];
     if (v1?.status === 'fail') expect(v1.durationMs).toBe(2);
   });
+
+  it('ignores non-finite durationMs values in accumulation', () => {
+    const withBadTiming: RunResponse = {
+      type: 'result',
+      requestId: 'r',
+      ok: true,
+      outcomes: [
+        { index: 0, status: 'returned', value: 3, logs: [], durationMs: Infinity },
+        { index: 1, status: 'returned', value: 15, logs: [], durationMs: 5 },
+      ],
+    };
+    const result = buildVerdict(tests, withBadTiming);
+    // Only the finite durationMs contributes.
+    expect(result.totalDurationMs).toBe(5);
+  });
+
+  it('ignores negative durationMs values in accumulation', () => {
+    const withNegTiming: RunResponse = {
+      type: 'result',
+      requestId: 'r',
+      ok: true,
+      outcomes: [
+        { index: 0, status: 'returned', value: 3, logs: [], durationMs: -10 },
+        { index: 1, status: 'returned', value: 15, logs: [], durationMs: 4 },
+      ],
+    };
+    const result = buildVerdict(tests, withNegTiming);
+    expect(result.totalDurationMs).toBe(4);
+  });
 });

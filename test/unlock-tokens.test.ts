@@ -106,3 +106,28 @@ describe('nextExpiry', () => {
     expect(nextExpiry([], 0)).toBeNull();
   });
 });
+
+describe('createToken edge cases', () => {
+  it('clamps non-positive durationMs to MIN_DURATION_MS', () => {
+    const t0 = createToken({ domain: 'test.com', problemId: 'p1', durationMs: 0, now: 1000 });
+    expect(t0.durationMs).toBe(60_000);
+    expect(t0.expiresAt).toBe(1000 + 60_000);
+
+    const tNeg = createToken({ domain: 'test.com', problemId: 'p1', durationMs: -500, now: 1000 });
+    expect(tNeg.durationMs).toBe(60_000);
+  });
+
+  it('clamps Infinity and NaN durationMs to MIN_DURATION_MS', () => {
+    const tInf = createToken({ domain: 'test.com', problemId: 'p1', durationMs: Infinity, now: 1000 });
+    expect(tInf.durationMs).toBe(60_000);
+
+    const tNaN = createToken({ domain: 'test.com', problemId: 'p1', durationMs: NaN, now: 1000 });
+    expect(tNaN.durationMs).toBe(60_000);
+  });
+
+  it('accepts a valid positive durationMs', () => {
+    const t = createToken({ domain: 'test.com', problemId: 'p1', durationMs: 300_000, now: 0 });
+    expect(t.durationMs).toBe(300_000);
+    expect(t.expiresAt).toBe(300_000);
+  });
+});

@@ -17,6 +17,12 @@ describe('daysBetween', () => {
     expect(daysBetween('2026-05-23', '2026-05-23')).toBe(0);
     expect(daysBetween('2026-06-01', '2026-05-30')).toBe(2);
   });
+
+  it('returns NaN for malformed date strings', () => {
+    expect(daysBetween('not-a-date', '2026-05-22')).toBeNaN();
+    expect(daysBetween('2026-05-22', '')).toBeNaN();
+    expect(daysBetween('2026/05/22', '2026-05-22')).toBeNaN();
+  });
 });
 
 describe('localDateString', () => {
