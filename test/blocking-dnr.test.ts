@@ -69,6 +69,56 @@ describe('buildDynamicRules', () => {
     expect(rules[0]?.condition.regexFilter).toContain('shorts');
   });
 
+  it('skips a block-domain rule when an unlocked domain is its subdomain', () => {
+    // User blocks "youtube.com" but lands on "www.youtube.com" — the token is
+    // for the subdomain; the rule for the root must still be skipped.
+    const rules = build({
+      block: [domainRule('youtube.com')],
+      unlocked: ['www.youtube.com'],
+    });
+    expect(rules).toHaveLength(0);
+  });
+
+  it('skips a block-domain rule when the unlocked domain is its parent', () => {
+    const rules = build({
+      block: [domainRule('m.youtube.com')],
+      unlocked: ['youtube.com'],
+    });
+    expect(rules).toHaveLength(0);
+  });
+
+  it('does NOT skip a block-domain rule for an unrelated unlock', () => {
+    const rules = build({
+      block: [domainRule('youtube.com')],
+      unlocked: ['reddit.com'],
+    });
+    expect(rules).toHaveLength(1);
+  });
+
+  it('keyword rule excludes unlocked domains AND their parent', () => {
+    const rules = build({
+      keyword: [keywordRule('instagram')],
+      unlocked: ['www.instagram.com'],
+    });
+    expect(rules).toHaveLength(1);
+    const excluded = rules[0]?.condition.excludedRequestDomains ?? [];
+    expect(excluded).toEqual(expect.arrayContaining(['www.instagram.com', 'instagram.com']));
+  });
+
+  it('keyword rule omits excludedRequestDomains when nothing is unlocked', () => {
+    const rules = build({ keyword: [keywordRule('shorts')] });
+    expect(rules[0]?.condition.excludedRequestDomains).toBeUndefined();
+  });
+
+  it('expanded excluded domains do not collapse 2-part hosts into a TLD', () => {
+    const rules = build({
+      keyword: [keywordRule('foo')],
+      unlocked: ['example.com'],
+    });
+    const excluded = rules[0]?.condition.excludedRequestDomains ?? [];
+    expect(excluded).toEqual(['example.com']); // not also "com"
+  });
+
   it('builds a domain regex that matches the host and its subdomains', () => {
     const [rule] = build({ block: [domainRule('youtube.com')] });
     const regex = new RegExp(rule!.condition.regexFilter!);
