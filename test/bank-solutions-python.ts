@@ -2483,6 +2483,39 @@ export const pythonSolutions: Record<string, string> = {
     return dfs(node)
 `,
 
+  'serialize-binary-tree': `def serialize(root):
+    tokens = []
+    queue = [root]
+    while queue:
+        node = queue.pop(0)
+        if node is None:
+            tokens.append('#')
+        else:
+            tokens.append(str(node.val))
+            queue.append(node.left)
+            queue.append(node.right)
+    return ','.join(tokens)
+
+def deserialize(data):
+    parts = data.split(',')
+    if not parts or parts[0] == '#':
+        return None
+    root = TreeNode(int(parts[0]))
+    queue = [root]
+    i = 1
+    while queue and i < len(parts):
+        node = queue.pop(0)
+        if i < len(parts) and parts[i] != '#':
+            node.left = TreeNode(int(parts[i]))
+            queue.append(node.left)
+        i += 1
+        if i < len(parts) and parts[i] != '#':
+            node.right = TreeNode(int(parts[i]))
+            queue.append(node.right)
+        i += 1
+    return root
+`,
+
   'construct-binary-tree': `def buildTree(preorder, inorder):
     if not preorder:
         return None

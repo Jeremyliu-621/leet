@@ -3092,6 +3092,35 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'serialize-binary-tree': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    if (!arr || arr.length === 0) return [];
+    const root = _buildTree(arr);
+    const tokens: string[] = [];
+    const q: (_TN | null)[] = [root];
+    while (q.length) {
+      const n = q.shift()!;
+      if (!n) { tokens.push('#'); continue; }
+      tokens.push(String(n.v));
+      q.push(n.l);
+      q.push(n.r);
+    }
+    const data = tokens.join(',');
+    const parts = data.split(',');
+    if (!parts[0] || parts[0] === '#') return [];
+    const rNode: _TN = { v: parseInt(parts[0]!), l: null, r: null };
+    const q2: _TN[] = [rNode];
+    let i = 1;
+    while (q2.length && i < parts.length) {
+      const cur = q2.shift()!;
+      if (i < parts.length && parts[i] !== '#') { cur.l = { v: parseInt(parts[i]!), l: null, r: null }; q2.push(cur.l); }
+      i++;
+      if (i < parts.length && parts[i] !== '#') { cur.r = { v: parseInt(parts[i]!), l: null, r: null }; q2.push(cur.r); }
+      i++;
+    }
+    return _treeToArr(rNode);
+  },
+
   'construct-binary-tree': (...args: unknown[]) => {
     const preorder = args[0] as number[];
     const inorder = args[1] as number[];

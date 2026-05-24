@@ -248,6 +248,7 @@ import { problem as countGoodNodes } from './count-good-nodes';
 import { problem as constructBinaryTree } from './construct-binary-tree';
 // tree — hard
 import { problem as binaryTreeMaxPathSum } from './binary-tree-max-path-sum';
+import { problem as serializeBinaryTree } from './serialize-binary-tree';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -484,4 +485,5 @@ export const problems: readonly Problem[] = [
   constructBinaryTree,
   // tree — hard
   binaryTreeMaxPathSum,
+  serializeBinaryTree,
 ];
