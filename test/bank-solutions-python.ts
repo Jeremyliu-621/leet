@@ -5680,4 +5680,52 @@ def minimumRecolors(blocks, k):
         min_w = min(min_w, whites)
     return min_w
 `,
+
+  'assign-cookies': `def findContentChildren(g, s):
+    g_s = sorted(g)
+    s_s = sorted(s)
+    count = j = 0
+    for greed in g_s:
+        while j < len(s_s) and s_s[j] < greed:
+            j += 1
+        if j < len(s_s):
+            count += 1
+            j += 1
+    return count
+`,
+
+  'relative-ranks': `def findRelativeRanks(score):
+    sorted_idx = sorted(range(len(score)), key=lambda i: -score[i])
+    medals = ['Gold Medal', 'Silver Medal', 'Bronze Medal']
+    result = [''] * len(score)
+    for rank, idx in enumerate(sorted_idx):
+        result[idx] = medals[rank] if rank < 3 else str(rank + 1)
+    return result
+`,
+
+  'base-7': `def convertToBase7(num):
+    if num == 0:
+        return '0'
+    neg = num < 0
+    n, result = abs(num), ''
+    while n > 0:
+        result = str(n % 7) + result
+        n //= 7
+    return ('-' + result) if neg else result
+`,
+
+  'maximum-count': `def maximumCount(nums):
+    neg = sum(1 for n in nums if n < 0)
+    pos = sum(1 for n in nums if n > 0)
+    return max(neg, pos)
+`,
+
+  'minimum-recolors': `def minimumRecolors(blocks, k):
+    whites = blocks[:k].count('W')
+    min_w = whites
+    for i in range(k, len(blocks)):
+        whites += (blocks[i] == 'W') - (blocks[i - k] == 'W')
+        min_w = min(min_w, whites)
+    return min_w
+`,
 };

@@ -49,6 +49,9 @@ import { problem as rearrangeArrayElementsBySign } from './rearrange-array-eleme
 import { problem as numberOfZeroFilledSubarrays } from './number-of-zero-filled-subarrays';
 // arrays — easy (additional)
 import { problem as mergeSortedArray } from './merge-sorted-array';
+import { problem as assignCookies } from './assign-cookies';
+import { problem as relativeRanks } from './relative-ranks';
+import { problem as maximumCount } from './maximum-count';
 // arrays — medium
 import { problem as rangeSumQuery2D } from './range-sum-query-2d';
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
@@ -213,6 +216,7 @@ import { problem as minimumRecolorsToGetKConsecutiveBlack } from './minimum-reco
 import { problem as minimumDifferenceKScores } from './minimum-difference-k-scores';
 import { problem as maxWindowSum } from './max-window-sum';
 import { problem as maximumAverageSubarray } from './maximum-average-subarray';
+import { problem as minimumRecolors } from './minimum-recolors';
 import { problem as longestEqualRun } from './longest-equal-run';
 import { problem as minWindowAverage } from './min-window-average';
 import { problem as longestUniqueWindow } from './longest-unique-window';
@@ -284,6 +288,7 @@ import { problem as isPowerOfFour } from './is-power-of-four';
 import { problem as toHex } from './to-hex';
 import { problem as numberComplement } from './number-complement';
 import { problem as subtractProductAndSum } from './subtract-product-and-sum';
+import { problem as base7 } from './base-7';
 import { problem as reverseBits } from './reverse-bits';
 import { problem as countAndSay } from './count-and-say';
 import { problem as fibonacciNumber } from './fibonacci-number';
@@ -550,6 +555,9 @@ export const problems: readonly Problem[] = [
   minimumSumMountainTriplet,
   findNumbersEvenDigits,
   mergeSortedArray,
+  assignCookies,
+  relativeRanks,
+  maximumCount,
   singleNumber,
   // arrays — medium
   rearrangeArrayElementsBySign,
@@ -724,6 +732,7 @@ export const problems: readonly Problem[] = [
   minimumDifferenceKScores,
   maxWindowSum,
   maximumAverageSubarray,
+  minimumRecolors,
   longestEqualRun,
   minWindowAverage,
   longestUniqueWindow,
@@ -804,6 +813,7 @@ export const problems: readonly Problem[] = [
   toHex,
   numberComplement,
   subtractProductAndSum,
+  base7,
   reverseBits,
   countAndSay,
   fibonacciNumber,

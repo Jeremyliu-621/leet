@@ -6318,4 +6318,54 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return min;
   },
 
+  'assign-cookies': (...args: unknown[]) => {
+    const g = [...(args[0] as number[])].sort((a, b) => a - b);
+    const s = [...(args[1] as number[])].sort((a, b) => a - b);
+    let count = 0, j = 0;
+    for (let i = 0; i < g.length && j < s.length; j++) {
+      if (s[j]! >= g[i]!) { count++; i++; }
+    }
+    return count;
+  },
+
+  'relative-ranks': (...args: unknown[]) => {
+    const score = args[0] as number[];
+    const sorted = [...score].map((v, i) => [v, i] as [number, number]).sort((a, b) => b[0] - a[0]);
+    const result = new Array<string>(score.length);
+    const medals = ['Gold Medal', 'Silver Medal', 'Bronze Medal'];
+    sorted.forEach(([, idx], rank) => {
+      result[idx] = rank < 3 ? medals[rank]! : String(rank + 1);
+    });
+    return result;
+  },
+
+  'base-7': (...args: unknown[]) => {
+    const num = args[0] as number;
+    if (num === 0) return '0';
+    const neg = num < 0;
+    let n = Math.abs(num), result = '';
+    while (n > 0) { result = String(n % 7) + result; n = Math.floor(n / 7); }
+    return neg ? '-' + result : result;
+  },
+
+  'maximum-count': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const neg = nums.filter(n => n < 0).length;
+    const pos = nums.filter(n => n > 0).length;
+    return Math.max(neg, pos);
+  },
+
+  'minimum-recolors': (...args: unknown[]) => {
+    const blocks = args[0] as string, k = args[1] as number;
+    let whites = 0;
+    for (let i = 0; i < k; i++) if (blocks[i] === 'W') whites++;
+    let min = whites;
+    for (let i = k; i < blocks.length; i++) {
+      if (blocks[i] === 'W') whites++;
+      if (blocks[i - k] === 'W') whites--;
+      min = Math.min(min, whites);
+    }
+    return min;
+  },
+
 };
