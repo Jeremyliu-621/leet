@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 384 problems; left-and-right-sum-differences + minimum-value-positive-step-sum + count-number-of-pairs + percentage-of-letter + count-common-words + convert-temperature; 1423 tests.
+**Current focus:** Bank at 393 problems; left-and-right-sum-differences + minimum-value-positive-step-sum + count-number-of-pairs + percentage-of-letter + count-common-words + convert-temperature (+ remote additions); 1450 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing bank toward 380+; more medium/hard problems; UI/UX polish.
 
