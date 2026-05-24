@@ -3127,6 +3127,61 @@ def deserialize(data):
     return left if left else right
 `,
 
+  'spiral-matrix-ii': `def generateMatrix(n):
+    mat = [[0] * n for _ in range(n)]
+    top, bottom, left, right, num = 0, n - 1, 0, n - 1, 1
+    while top <= bottom and left <= right:
+        for i in range(left, right + 1):
+            mat[top][i] = num
+            num += 1
+        top += 1
+        for i in range(top, bottom + 1):
+            mat[i][right] = num
+            num += 1
+        right -= 1
+        if top <= bottom:
+            for i in range(right, left - 1, -1):
+                mat[bottom][i] = num
+                num += 1
+            bottom -= 1
+        if left <= right:
+            for i in range(bottom, top - 1, -1):
+                mat[i][left] = num
+                num += 1
+            left += 1
+    return mat
+`,
+
+  'max-consecutive-ones-iii': `def longestOnes(nums, k):
+    left = zeros = best = 0
+    for right in range(len(nums)):
+        if nums[right] == 0:
+            zeros += 1
+        while zeros > k:
+            if nums[left] == 0:
+                zeros -= 1
+            left += 1
+        best = max(best, right - left + 1)
+    return best
+`,
+
+  'jump-game-iii': `def canReach(arr, start):
+    from collections import deque
+    n = len(arr)
+    visited = [False] * n
+    queue = deque([start])
+    visited[start] = True
+    while queue:
+        i = queue.popleft()
+        if arr[i] == 0:
+            return True
+        for nxt in [i - arr[i], i + arr[i]]:
+            if 0 <= nxt < n and not visited[nxt]:
+                visited[nxt] = True
+                queue.append(nxt)
+    return False
+`,
+
   'coin-change-ii': `def change(amount, coins):
     dp = [0] * (amount + 1)
     dp[0] = 1

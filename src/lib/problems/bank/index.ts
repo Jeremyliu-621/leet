@@ -211,6 +211,9 @@ import { problem as numberOfDiceRolls } from './number-of-dice-rolls';
 import { problem as coinChangeII } from './coin-change-ii';
 import { problem as bestTimeBuySellCooldown } from './best-time-buy-sell-cooldown';
 import { problem as longestArithmeticSubsequence } from './longest-arithmetic-subsequence';
+import { problem as spiralMatrixII } from './spiral-matrix-ii';
+import { problem as maxConsecutiveOnesIII } from './max-consecutive-ones-iii';
+import { problem as jumpGameIII } from './jump-game-iii';
 // dynamic-programming — hard
 import { problem as longestPalindromicSubsequence } from './longest-palindromic-subsequence';
 import { problem as palindromePartitioningMinCuts } from './palindrome-partitioning-min-cuts';
@@ -319,6 +322,7 @@ export const problems: readonly Problem[] = [
   palindromePartitioning,
   generateParentheses,
   permutations,
+  spiralMatrixII,
   rotateArray,
   maxProductSubarray,
   productExceptSelf,
@@ -399,6 +403,7 @@ export const problems: readonly Problem[] = [
   maxConsecutiveFlips,
   countSubarraysBoundedMax,
   // sliding-window — medium
+  maxConsecutiveOnesIII,
   atMostKDistinct,
   permutationInString,
   subarrayProductLessThanK,
@@ -551,6 +556,7 @@ export const problems: readonly Problem[] = [
   allPathsSourceTarget,
   minimumHeightTrees,
   findEventualSafeStates,
+  jumpGameIII,
   // graph — hard
   wordLadder,
   // tree — easy

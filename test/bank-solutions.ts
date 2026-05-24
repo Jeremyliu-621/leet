@@ -3731,6 +3731,50 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return lca(root)?.v ?? null;
   },
 
+  'spiral-matrix-ii': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const mat = Array.from({ length: n }, () => new Array<number>(n).fill(0));
+    let top = 0, bottom = n - 1, left = 0, right = n - 1, num = 1;
+    while (top <= bottom && left <= right) {
+      for (let i = left; i <= right; i++) mat[top]![i] = num++;
+      top++;
+      for (let i = top; i <= bottom; i++) mat[i]![right] = num++;
+      right--;
+      if (top <= bottom) { for (let i = right; i >= left; i--) mat[bottom]![i] = num++; bottom--; }
+      if (left <= right) { for (let i = bottom; i >= top; i--) mat[i]![left] = num++; left++; }
+    }
+    return mat;
+  },
+
+  'max-consecutive-ones-iii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let left = 0, zeros = 0, best = 0;
+    for (let right = 0; right < nums.length; right++) {
+      if (nums[right] === 0) zeros++;
+      while (zeros > k) { if (nums[left++] === 0) zeros--; }
+      best = Math.max(best, right - left + 1);
+    }
+    return best;
+  },
+
+  'jump-game-iii': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const start = args[1] as number;
+    const n = arr.length;
+    const visited = new Array<boolean>(n).fill(false);
+    const queue = [start];
+    visited[start] = true;
+    while (queue.length) {
+      const i = queue.shift()!;
+      if (arr[i] === 0) return true;
+      for (const next of [i - arr[i]!, i + arr[i]!]) {
+        if (next >= 0 && next < n && !visited[next]) { visited[next] = true; queue.push(next); }
+      }
+    }
+    return false;
+  },
+
   'coin-change-ii': (...args: unknown[]) => {
     const amount = args[0] as number;
     const coins = args[1] as number[];
