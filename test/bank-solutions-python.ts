@@ -1442,6 +1442,42 @@ export const pythonSolutions: Record<string, string> = {
                 dp[i] = min(dp[i], dp[i - c] + 1)
     return dp[amount] if dp[amount] != float('inf') else -1
 `,
+  'longest-common-subsequence': `def longestCommonSubsequence(text1: str, text2: str) -> int:
+    m, n = len(text1), len(text2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if text1[i - 1] == text2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+            else:
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+    return dp[m][n]
+`,
+  'minimum-path-sum': `def minPathSum(grid: list[list[int]]) -> int:
+    m, n = len(grid), len(grid[0])
+    dp = [row[:] for row in grid]
+    for j in range(1, n):
+        dp[0][j] += dp[0][j - 1]
+    for i in range(1, m):
+        dp[i][0] += dp[i - 1][0]
+    for i in range(1, m):
+        for j in range(1, n):
+            dp[i][j] += min(dp[i - 1][j], dp[i][j - 1])
+    return dp[m - 1][n - 1]
+`,
+  'decode-ways': `def numDecodings(s: str) -> int:
+    n = len(s)
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    dp[1] = 1 if s[0] != '0' else 0
+    for i in range(2, n + 1):
+        if s[i - 1] != '0':
+            dp[i] += dp[i - 1]
+        two = int(s[i - 2:i])
+        if 10 <= two <= 26:
+            dp[i] += dp[i - 2]
+    return dp[n]
+`,
   'unique-paths': `def uniquePaths(m: int, n: int) -> int:
     dp = [[1] * n for _ in range(m)]
     for i in range(1, m):

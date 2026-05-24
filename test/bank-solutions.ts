@@ -1936,6 +1936,49 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[amount] === Infinity ? -1 : dp[amount];
   },
 
+  'longest-common-subsequence': (...args: unknown[]) => {
+    const text1 = args[0] as string;
+    const text2 = args[1] as string;
+    const m = text1.length, n = text2.length;
+    const dp = Array.from({ length: m + 1 }, () => new Array<number>(n + 1).fill(0));
+    for (let i = 1; i <= m; i++) {
+      for (let j = 1; j <= n; j++) {
+        dp[i]![j] = text1[i - 1] === text2[j - 1]
+          ? dp[i - 1]![j - 1]! + 1
+          : Math.max(dp[i - 1]![j]!, dp[i]![j - 1]!);
+      }
+    }
+    return dp[m]![n];
+  },
+
+  'minimum-path-sum': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    const dp = grid.map(row => [...row]);
+    for (let j = 1; j < n; j++) dp[0]![j]! += dp[0]![j - 1]!;
+    for (let i = 1; i < m; i++) dp[i]![0]! += dp[i - 1]![0]!;
+    for (let i = 1; i < m; i++) {
+      for (let j = 1; j < n; j++) {
+        dp[i]![j]! += Math.min(dp[i - 1]![j]!, dp[i]![j - 1]!);
+      }
+    }
+    return dp[m - 1]![n - 1];
+  },
+
+  'decode-ways': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const dp = new Array<number>(n + 1).fill(0);
+    dp[0] = 1;
+    dp[1] = s[0] !== '0' ? 1 : 0;
+    for (let i = 2; i <= n; i++) {
+      if (s[i - 1] !== '0') dp[i]! += dp[i - 1]!;
+      const two = +s.slice(i - 2, i);
+      if (two >= 10 && two <= 26) dp[i]! += dp[i - 2]!;
+    }
+    return dp[n];
+  },
+
   'unique-paths': (...args: unknown[]) => {
     const m = args[0] as number;
     const n = args[1] as number;

@@ -158,6 +158,9 @@ import { problem as uniquePaths } from './unique-paths';
 // dynamic-programming — medium
 import { problem as houseRobber } from './house-robber';
 import { problem as coinChange } from './coin-change';
+import { problem as longestCommonSubsequence } from './longest-common-subsequence';
+import { problem as minimumPathSum } from './minimum-path-sum';
+import { problem as decodeWays } from './decode-ways';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -307,4 +310,7 @@ export const problems: readonly Problem[] = [
   // dynamic-programming — medium
   houseRobber,
   coinChange,
+  longestCommonSubsequence,
+  minimumPathSum,
+  decodeWays,
 ];
