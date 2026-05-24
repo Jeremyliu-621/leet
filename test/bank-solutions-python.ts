@@ -1108,4 +1108,95 @@ export const pythonSolutions: Record<string, string> = {
                 break
     return dp[len(s)]
 `,
+
+  'three-sum-closest': `def threeSumClosest(nums, target):
+    nums = sorted(nums)
+    closest = nums[0] + nums[1] + nums[2]
+    for i in range(len(nums) - 2):
+        l, r = i + 1, len(nums) - 1
+        while l < r:
+            s = nums[i] + nums[l] + nums[r]
+            if abs(s - target) < abs(closest - target):
+                closest = s
+            if s == target:
+                return s
+            elif s < target:
+                l += 1
+            else:
+                r -= 1
+    return closest
+`,
+
+  'boats-to-save-people': `def numRescueBoats(people, limit):
+    people = sorted(people)
+    left, right, boats = 0, len(people) - 1, 0
+    while left <= right:
+        if people[left] + people[right] <= limit:
+            left += 1
+        right -= 1
+        boats += 1
+    return boats
+`,
+
+  'partition-labels': `def partitionLabels(s):
+    last = {ch: i for i, ch in enumerate(s)}
+    parts = []
+    start = end = 0
+    for i, ch in enumerate(s):
+        end = max(end, last[ch])
+        if i == end:
+            parts.append(end - start + 1)
+            start = i + 1
+    return parts
+`,
+
+  'basic-calculator': `def calculate(s):
+    result, num, sign = 0, 0, 1
+    stack = []
+    for ch in s:
+        if ch.isdigit():
+            num = num * 10 + int(ch)
+        elif ch == '+':
+            result += sign * num
+            num, sign = 0, 1
+        elif ch == '-':
+            result += sign * num
+            num, sign = 0, -1
+        elif ch == '(':
+            stack.append(result)
+            stack.append(sign)
+            result, sign = 0, 1
+        elif ch == ')':
+            result += sign * num
+            num = 0
+            saved_sign = stack.pop()
+            saved_result = stack.pop()
+            result = saved_result + saved_sign * result
+    return result + sign * num
+`,
+
+  'median-two-sorted-arrays': `def findMedianSortedArrays(nums1, nums2):
+    if len(nums1) > len(nums2):
+        nums1, nums2 = nums2, nums1
+    m, n = len(nums1), len(nums2)
+    half = (m + n + 1) // 2
+    lo, hi = 0, m
+    while lo <= hi:
+        i = (lo + hi) // 2
+        j = half - i
+        ln1 = float('-inf') if i == 0 else nums1[i - 1]
+        rn1 = float('inf') if i == m else nums1[i]
+        ln2 = float('-inf') if j == 0 else nums2[j - 1]
+        rn2 = float('inf') if j == n else nums2[j]
+        if ln1 <= rn2 and ln2 <= rn1:
+            max_left = max(ln1, ln2)
+            if (m + n) % 2 == 1:
+                return float(max_left)
+            return (max_left + min(rn1, rn2)) / 2.0
+        elif ln1 > rn2:
+            hi = i - 1
+        else:
+            lo = i + 1
+    return 0.0
+`,
 };

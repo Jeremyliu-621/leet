@@ -1506,4 +1506,123 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[s.length] as boolean;
   },
 
+  // ---------------------------------------------------------------------------
+  // New problems — two-pointers (medium) + binary-search (hard) + stack (hard)
+  // ---------------------------------------------------------------------------
+
+  'three-sum-closest': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const target = args[1] as number;
+    let closest = (nums[0] as number) + (nums[1] as number) + (nums[2] as number);
+    for (let i = 0; i < nums.length - 2; i++) {
+      let l = i + 1;
+      let r = nums.length - 1;
+      while (l < r) {
+        const s = (nums[i] as number) + (nums[l] as number) + (nums[r] as number);
+        if (Math.abs(s - target) < Math.abs(closest - target)) closest = s;
+        if (s === target) return s;
+        else if (s < target) l++;
+        else r--;
+      }
+    }
+    return closest;
+  },
+
+  'boats-to-save-people': (...args: unknown[]) => {
+    const people = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const limit = args[1] as number;
+    let left = 0;
+    let right = people.length - 1;
+    let boats = 0;
+    while (left <= right) {
+      if ((people[left] as number) + (people[right] as number) <= limit) left++;
+      right--;
+      boats++;
+    }
+    return boats;
+  },
+
+  'partition-labels': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const last: Record<string, number> = {};
+    for (let i = 0; i < s.length; i++) last[s[i] as string] = i;
+    const parts: number[] = [];
+    let start = 0;
+    let end = 0;
+    for (let i = 0; i < s.length; i++) {
+      end = Math.max(end, last[s[i] as string] as number);
+      if (i === end) {
+        parts.push(end - start + 1);
+        start = i + 1;
+      }
+    }
+    return parts;
+  },
+
+  'basic-calculator': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let result = 0;
+    let num = 0;
+    let sign = 1;
+    const stack: number[] = [];
+    for (const ch of s) {
+      if (ch >= '0' && ch <= '9') {
+        num = num * 10 + Number(ch);
+      } else if (ch === '+') {
+        result += sign * num;
+        num = 0;
+        sign = 1;
+      } else if (ch === '-') {
+        result += sign * num;
+        num = 0;
+        sign = -1;
+      } else if (ch === '(') {
+        stack.push(result, sign);
+        result = 0;
+        sign = 1;
+      } else if (ch === ')') {
+        result += sign * num;
+        num = 0;
+        const savedSign = stack.pop() as number;
+        const savedResult = stack.pop() as number;
+        result = savedResult + savedSign * result;
+      }
+      // spaces are skipped
+    }
+    return result + sign * num;
+  },
+
+  'median-two-sorted-arrays': (...args: unknown[]) => {
+    let nums1 = args[0] as number[];
+    let nums2 = args[1] as number[];
+    if (nums1.length > nums2.length) {
+      const tmp = nums1;
+      nums1 = nums2;
+      nums2 = tmp;
+    }
+    const m = nums1.length;
+    const n = nums2.length;
+    const half = Math.floor((m + n + 1) / 2);
+    let lo = 0;
+    let hi = m;
+    while (lo <= hi) {
+      const i = (lo + hi) >> 1;
+      const j = half - i;
+      const ln1 = i === 0 ? -Infinity : (nums1[i - 1] as number);
+      const rn1 = i === m ? Infinity : (nums1[i] as number);
+      const ln2 = j === 0 ? -Infinity : (nums2[j - 1] as number);
+      const rn2 = j === n ? Infinity : (nums2[j] as number);
+      if (ln1 <= rn2 && ln2 <= rn1) {
+        const maxLeft = Math.max(ln1, ln2);
+        if ((m + n) % 2 === 1) return maxLeft;
+        return (maxLeft + Math.min(rn1, rn2)) / 2;
+      } else if (ln1 > rn2) {
+        hi = i - 1;
+      } else {
+        lo = i + 1;
+      }
+    }
+    return 0; // unreachable for valid inputs
+  },
+
 };

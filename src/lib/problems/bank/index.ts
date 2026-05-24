@@ -58,6 +58,10 @@ import { problem as longestConsecutiveSequence } from './longest-consecutive-seq
 import { problem as findAllAnagramsInString } from './find-all-anagrams-in-string';
 import { problem as maximumErasureValue } from './maximum-erasure-value';
 
+// two-pointers — medium
+import { problem as threeSumClosest } from './three-sum-closest';
+import { problem as boatsToSavePeople } from './boats-to-save-people';
+import { problem as partitionLabels } from './partition-labels';
 // two-pointers — easy
 import { problem as reverseArrayInplace } from './reverse-array-inplace';
 import { problem as sortedPairExists } from './sorted-pair-exists';
@@ -83,6 +87,8 @@ import { problem as isPerfectSquare } from './is-perfect-square';
 import { problem as searchRotatedSorted } from './search-rotated-sorted';
 import { problem as findMinimumRotated } from './find-minimum-rotated';
 import { problem as singleElementSorted } from './single-element-sorted';
+// binary-search — hard
+import { problem as medianTwoSortedArrays } from './median-two-sorted-arrays';
 
 // stack — easy
 import { problem as balancedBrackets } from './balanced-brackets';
@@ -94,6 +100,8 @@ import { problem as evaluateRpn } from './evaluate-rpn';
 import { problem as asteroidCollision } from './asteroid-collision';
 import { problem as scoreOfParentheses } from './score-of-parentheses';
 import { problem as validParenthesisString } from './valid-parenthesis-string';
+// stack — hard
+import { problem as basicCalculator } from './basic-calculator';
 
 // math — easy
 import { problem as digitSum } from './digit-sum';
@@ -179,6 +187,10 @@ export const problems: readonly Problem[] = [
   longestConsecutiveSequence,
   findAllAnagramsInString,
   maximumErasureValue,
+  // two-pointers — medium
+  threeSumClosest,
+  boatsToSavePeople,
+  partitionLabels,
   // two-pointers — easy
   reverseArrayInplace,
   sortedPairExists,
@@ -202,6 +214,8 @@ export const problems: readonly Problem[] = [
   searchRotatedSorted,
   findMinimumRotated,
   singleElementSorted,
+  // binary-search — hard
+  medianTwoSortedArrays,
   // stack — easy
   balancedBrackets,
   removeAdjacentDupes,
@@ -212,6 +226,8 @@ export const problems: readonly Problem[] = [
   asteroidCollision,
   scoreOfParentheses,
   validParenthesisString,
+  // stack — hard
+  basicCalculator,
   // math — easy
   digitSum,
   isPrimeNumber,
