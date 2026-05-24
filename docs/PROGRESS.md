@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 284 problems (13 tags); subsets-ii wired in with correct runner, AboutSection updated to 13 topic categories, site/index.html updated with backtracking tag; 1123 tests.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (1123 unit tests across 23 files).
-**Next up:** More backtracking medium (combination-sum-iii, restore-ip-addresses, beautiful-arrangement); fill gaps vs LeetCode parity.
+**Current focus:** Bank at 287 problems (14 tags); latest: longest-turbulent-subarray, minimum-genetic-mutation, largest-divisible-subset, majority-element-ii, summary-ranges, contains-duplicate-ii; 1132 tests.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green.
+**Next up:** More medium/hard problems toward 300; combination-sum-iii, restore-ip-addresses, more graph/tree.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
