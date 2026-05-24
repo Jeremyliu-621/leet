@@ -5,7 +5,7 @@ import type { JudgeResult } from '../../lib/judge';
 import type { ChallengeFailureReason } from '../../lib/messaging/runtime';
 import { getValue, updateValue } from '../../lib/storage';
 import { pickChallengeProblem } from '../../lib/problems';
-import { runTests } from '../../lib/judge';
+import { runTests, warmPython } from '../../lib/judge';
 import { DEFAULT_PREFERENCES } from '../../lib/storage/defaults';
 import { parseTargetParam, extractDomain } from './challenge-helpers';
 import { TopBar } from './components/TopBar';
@@ -155,6 +155,13 @@ export function Challenge() {
       setCode(initialStarter);
       setSecondsLeft(prefs.challengeTimeLimitSec);
       setPageState({ status: 'ready', problem, prefs });
+
+      // Warm Pyodide while the user is reading the problem, so the first
+      // Run / Submit doesn't pay the cold-boot cost. Only when the user
+      // starts in Python — JS users don't need this.
+      if (initialLanguage === 'python') {
+        void warmPython();
+      }
     }
 
     void init();
@@ -352,6 +359,11 @@ export function Challenge() {
           : problem.starterCode.javascript;
       setLanguage(next);
       setCode(nextStarter);
+      // First time switching to Python this session? Warm Pyodide now so
+      // the next Run isn't the user's first encounter with the cold-boot.
+      if (next === 'python') {
+        void warmPython();
+      }
       // Persist the new preference so future challenges open in this language.
       void (async () => {
         try {

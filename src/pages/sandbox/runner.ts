@@ -235,9 +235,14 @@ function executeRun(request: RunRequest): void {
 }
 
 window.addEventListener('message', (event: MessageEvent) => {
-  const request = event.data as RunRequest | undefined;
-  if (request?.type === 'run') {
-    executeRun(request);
+  const data = event.data as { type?: string } | undefined;
+  if (data?.type === 'run') {
+    executeRun(event.data as RunRequest);
+  } else if (data?.type === 'warm-python') {
+    // Fire-and-forget Pyodide pre-init. The challenge page sends this on
+    // mount when the user's preferredLanguage is python so the first
+    // Run/Submit doesn't have to wait the ~1–2 s cold boot.
+    getOrCreatePythonWorker();
   }
 });
 

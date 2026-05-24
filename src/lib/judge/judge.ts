@@ -132,3 +132,18 @@ export async function runTests(options: RunTestsOptions): Promise<JudgeResult> {
 
   return buildVerdict(options.tests, response);
 }
+
+/**
+ * Eagerly initialise the Pyodide worker without sending any run, so the
+ * user's first Submit doesn't pay the ~1–2 s Pyodide cold-boot. Called
+ * by the challenge page on mount when `preferredLanguage === 'python'`.
+ * Fire-and-forget; safe to call repeatedly (the warm worker is shared).
+ */
+export async function warmPython(): Promise<void> {
+  try {
+    const frame = await ensureSandbox();
+    frame.contentWindow?.postMessage({ type: 'warm-python' }, '*');
+  } catch {
+    // Sandbox failed to load — the next runTests call will report it.
+  }
+}
