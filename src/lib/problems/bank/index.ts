@@ -101,6 +101,11 @@ import { problem as truncateSentence } from './truncate-sentence';
 import { problem as reverseStringII } from './reverse-string-ii';
 import { problem as determineIfHalvesAlike } from './determine-if-halves-alike';
 import { problem as shuffleString } from './shuffle-string';
+import { problem as decodeTheMessage } from './decode-the-message';
+import { problem as removeTrailingZeros } from './remove-trailing-zeros';
+import { problem as reversePrefixOfWord } from './reverse-prefix-of-word';
+import { problem as countWordsWithGivenPrefix } from './count-words-with-given-prefix';
+import { problem as largestOddNumberInString } from './largest-odd-number-in-string';
 // strings — medium (additional)
 import { problem as integerToRoman } from './integer-to-roman';
 import { problem as reverseOnlyLetters } from './reverse-only-letters';
@@ -617,6 +622,11 @@ export const problems: readonly Problem[] = [
   reverseStringII,
   determineIfHalvesAlike,
   shuffleString,
+  decodeTheMessage,
+  removeTrailingZeros,
+  reversePrefixOfWord,
+  countWordsWithGivenPrefix,
+  largestOddNumberInString,
   reverseOnlyLetters,
   backspaceStringCompare,
   vowelTally,

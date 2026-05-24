@@ -5728,4 +5728,37 @@ def minimumRecolors(blocks, k):
         min_w = min(min_w, whites)
     return min_w
 `,
+
+  'decode-the-message': `def decodeMessage(key, message):
+    mapping = {}
+    idx = 0
+    for c in key:
+        if c != ' ' and c not in mapping:
+            mapping[c] = chr(ord('a') + idx)
+            idx += 1
+    return ''.join(mapping.get(c, ' ') for c in message)
+`,
+
+  'remove-trailing-zeros': `def removeTrailingZeros(num):
+    return num.rstrip('0')
+`,
+
+  'reverse-prefix-of-word': `def reversePrefix(word, ch):
+    idx = word.find(ch)
+    if idx == -1:
+        return word
+    return word[:idx+1][::-1] + word[idx+1:]
+`,
+
+  'count-words-with-given-prefix': `def prefixCount(words, pref):
+    return sum(1 for w in words if w.startswith(pref))
+`,
+
+  'largest-odd-number-in-string': `def largestOddNumber(num):
+    for i in range(len(num) - 1, -1, -1):
+        if int(num[i]) % 2 == 1:
+            return num[:i+1]
+    return ''
+`,
+
 };

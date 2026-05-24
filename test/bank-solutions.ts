@@ -6368,4 +6368,41 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return min;
   },
 
+  'decode-the-message': (...args: unknown[]) => {
+    const key = args[0] as string, message = args[1] as string;
+    const map = new Map<string, string>();
+    let idx = 0;
+    for (const c of key) {
+      if (c !== ' ' && !map.has(c)) { map.set(c, String.fromCharCode(97 + idx)); idx++; }
+    }
+    return [...message].map(c => c === ' ' ? ' ' : map.get(c)!).join('');
+  },
+
+  'remove-trailing-zeros': (...args: unknown[]) => {
+    const num = args[0] as string;
+    let i = num.length - 1;
+    while (i >= 0 && num[i] === '0') i--;
+    return num.slice(0, i + 1);
+  },
+
+  'reverse-prefix-of-word': (...args: unknown[]) => {
+    const word = args[0] as string, ch = args[1] as string;
+    const idx = word.indexOf(ch);
+    if (idx === -1) return word;
+    return word.slice(0, idx + 1).split('').reverse().join('') + word.slice(idx + 1);
+  },
+
+  'count-words-with-given-prefix': (...args: unknown[]) => {
+    const words = args[0] as string[], pref = args[1] as string;
+    return words.filter(w => w.startsWith(pref)).length;
+  },
+
+  'largest-odd-number-in-string': (...args: unknown[]) => {
+    const num = args[0] as string;
+    for (let i = num.length - 1; i >= 0; i--) {
+      if (Number(num[i]) % 2 === 1) return num.slice(0, i + 1);
+    }
+    return '';
+  },
+
 };
