@@ -2219,4 +2219,47 @@ export const pythonSolutions: Record<string, string> = {
     root.left, root.right = invertTree(root.right), invertTree(root.left)
     return root
 `,
+
+  'binary-tree-paths': `def binaryTreePaths(root):
+    paths = []
+    def dfs(node, path):
+        if not node:
+            return
+        p = path + '->' + str(node.val) if path else str(node.val)
+        if not node.left and not node.right:
+            paths.append(p)
+            return
+        dfs(node.left, p)
+        dfs(node.right, p)
+    dfs(root, '')
+    return paths
+`,
+
+  'validate-bst': `def isValidBST(root):
+    def validate(node, min_val, max_val):
+        if not node:
+            return True
+        if node.val <= min_val or node.val >= max_val:
+            return False
+        return validate(node.left, min_val, node.val) and validate(node.right, node.val, max_val)
+    return validate(root, float('-inf'), float('inf'))
+`,
+
+  'level-order-traversal': `def levelOrder(root):
+    if not root:
+        return []
+    result = []
+    queue = [root]
+    while queue:
+        level = []
+        for _ in range(len(queue)):
+            node = queue.pop(0)
+            level.append(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        result.append(level)
+    return result
+`,
 };

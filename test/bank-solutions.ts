@@ -2792,4 +2792,46 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return _treeToArr(inv(_buildTree(args[0] as (number | null)[])));
   },
 
+  'binary-tree-paths': (...args: unknown[]) => {
+    const tree = _buildTree(args[0] as (number | null)[]);
+    const paths: string[] = [];
+    function dfs(n: _TN | null, path: string): void {
+      if (!n) return;
+      const p = path ? `${path}->${n.v}` : `${n.v}`;
+      if (!n.l && !n.r) { paths.push(p); return; }
+      dfs(n.l, p);
+      dfs(n.r, p);
+    }
+    dfs(tree, '');
+    return paths;
+  },
+
+  'validate-bst': (...args: unknown[]) => {
+    const validate = (n: _TN | null, min: number, max: number): boolean => {
+      if (!n) return true;
+      if (n.v <= min || n.v >= max) return false;
+      return validate(n.l, min, n.v) && validate(n.r, n.v, max);
+    };
+    return validate(_buildTree(args[0] as (number | null)[]), -Infinity, Infinity);
+  },
+
+  'level-order-traversal': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    if (!root) return [];
+    const result: number[][] = [];
+    const queue: _TN[] = [root];
+    while (queue.length) {
+      const size = queue.length;
+      const level: number[] = [];
+      for (let i = 0; i < size; i++) {
+        const node = queue.shift()!;
+        level.push(node.v);
+        if (node.l) queue.push(node.l);
+        if (node.r) queue.push(node.r);
+      }
+      result.push(level);
+    }
+    return result;
+  },
+
 };

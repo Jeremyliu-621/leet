@@ -226,6 +226,10 @@ import { problem as courseSchedule } from './course-schedule';
 import { problem as maxDepthBinaryTree } from './max-depth-binary-tree';
 import { problem as symmetricTree } from './symmetric-tree';
 import { problem as invertBinaryTree } from './invert-binary-tree';
+import { problem as binaryTreePaths } from './binary-tree-paths';
+// tree — medium
+import { problem as validateBst } from './validate-bst';
+import { problem as levelOrderTraversal } from './level-order-traversal';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -440,4 +444,8 @@ export const problems: readonly Problem[] = [
   maxDepthBinaryTree,
   symmetricTree,
   invertBinaryTree,
+  binaryTreePaths,
+  // tree — medium
+  validateBst,
+  levelOrderTraversal,
 ];
