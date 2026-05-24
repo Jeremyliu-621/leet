@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Tree tag complete (6 problems); TypeScript support; popup language control; bank at 182 problems.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (816 unit tests across 23 files).
-**Next up:** Marketing site TS update; more tree/graph problems; UX polish per LEETCODE_PARITY.md.
+**Current focus:** Graph (8 problems) + tree (10 problems) fully tiered; bank at 191 problems.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (840 unit tests across 23 files).
+**Next up:** Graph hard (word-ladder); more tree medium; UX polish (run-button spinner); marketing site TS update.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -229,8 +229,9 @@ Still pending:
 - [x] More tree problems — binary-tree-paths (easy), validate-bst (medium), level-order-traversal (medium); bank at 182 problems, 816 tests
 - [x] Popup: add preferred-language segmented control (mirrors keymap row)
 - [x] Marketing site: update stats/copy to mention TypeScript — 182 problems / 12 tags / 3 languages; Graph + Tree tag chips added
-- [ ] More tree problems: lowest-common-ancestor (medium), construct-binary-tree-from-preorder-inorder (medium)
-- [ ] More graph problems: clone-graph (medium), word-ladder (hard)
+- [x] More tree/graph problems — path-sum (easy), diameter-of-binary-tree (easy), lowest-common-ancestor-bst (medium), binary-tree-max-path-sum (hard); graph: find-the-town-judge (easy), max-area-of-island (medium), rotting-oranges (medium), keys-and-rooms (medium); bank at 191 problems, 840 tests
+- [ ] More tree problems: construct-binary-tree-from-preorder-inorder (medium), count-good-nodes-in-binary-tree (medium)
+- [ ] More graph problems: word-ladder (hard), network-delay-time (medium)
 - [ ] UX: run-button loading spinner / debounce; verdict panel scroll-to-first-failure
 
 ---
