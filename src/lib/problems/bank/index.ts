@@ -171,6 +171,7 @@ import { problem as decodeWays } from './decode-ways';
 import { problem as longestPalindromicSubsequence } from './longest-palindromic-subsequence';
 import { problem as palindromePartitioningMinCuts } from './palindrome-partitioning-min-cuts';
 import { problem as maximumProductCutting } from './maximum-product-cutting';
+import { problem as regularExpressionMatching } from './regular-expression-matching';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -333,4 +334,5 @@ export const problems: readonly Problem[] = [
   longestPalindromicSubsequence,
   palindromePartitioningMinCuts,
   maximumProductCutting,
+  regularExpressionMatching,
 ];

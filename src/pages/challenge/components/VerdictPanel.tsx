@@ -185,6 +185,28 @@ function OutcomeBanner({ result }: { result: JudgeResult }) {
   );
 }
 
+/** Compact summary shown in run-mode when all visible tests pass. */
+function RunSummaryBanner({ result }: { result: JudgeResult }) {
+  const allPass = result.verdicts.length > 0 && result.verdicts.every((v) => v.status === 'pass');
+  if (!allPass) return null;
+  return (
+    <div
+      className="flex items-baseline gap-3 rounded-sm border border-border bg-surface-2 px-3 py-2"
+      aria-label={`${result.passed} of ${result.verdicts.length} visible tests passed`}
+    >
+      <span className="font-mono text-xs font-semibold text-accent">
+        {result.passed}/{result.verdicts.length} passed
+      </span>
+      <span className="font-mono text-[10px] text-faint">visible tests</span>
+      {result.totalDurationMs !== undefined && (
+        <span className="ml-auto font-mono text-[10px] text-faint tabular-nums">
+          {result.totalDurationMs} ms total
+        </span>
+      )}
+    </div>
+  );
+}
+
 /**
  * The verdict region below the editor. Shows per-test pass/fail after "Run",
  * and a full outcome banner after "Submit". Uses aria-live so screen readers
@@ -201,7 +223,6 @@ export function VerdictPanel({ result, mode }: VerdictPanelProps) {
         aria-label="Running tests"
       >
         <span className="font-mono text-xs text-faint">running</span>
-        {/* Static dot indicator — no animation per design spec */}
         <span className="ml-1.5 font-mono text-xs text-faint" aria-hidden="true">
           · · ·
         </span>
@@ -228,12 +249,17 @@ export function VerdictPanel({ result, mode }: VerdictPanelProps) {
       aria-live="polite"
       aria-label="Test results"
     >
-      {/* Outcome banner only after submit, or on compile/timeout (no per-test verdicts) */}
+      {/* Outcome banner after submit, or on compile/timeout (no per-test verdicts) */}
       {(mode === 'submit' || result.verdicts.length === 0) && (
         <OutcomeBanner result={result} />
       )}
 
-      {/* Per-test verdicts (only for visible tests on Run; all on Submit) */}
+      {/* In run mode: compact pass summary when all visible tests pass */}
+      {mode === 'run' && result.verdicts.length > 0 && (
+        <RunSummaryBanner result={result} />
+      )}
+
+      {/* Per-test verdict cards */}
       {result.verdicts.length > 0 && (
         <div className="space-y-2">
           {result.verdicts.map((verdict) => (
