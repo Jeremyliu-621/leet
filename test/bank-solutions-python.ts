@@ -1091,6 +1091,27 @@ export const pythonSolutions: Record<string, string> = {
     return True
 `,
 
+  'n-queens': `def solveNQueens(n):
+    result = []
+    cols = set()
+    diag1 = set()
+    diag2 = set()
+    queens = []
+    def bt(row):
+        if row == n:
+            board = ['.' * c + 'Q' + '.' * (n - c - 1) for c in queens]
+            result.append(board)
+            return
+        for c in range(n):
+            if c in cols or (row - c) in diag1 or (row + c) in diag2:
+                continue
+            cols.add(c); diag1.add(row - c); diag2.add(row + c); queens.append(c)
+            bt(row + 1)
+            cols.discard(c); diag1.discard(row - c); diag2.discard(row + c); queens.pop()
+    bt(0)
+    return result
+`,
+
   'first-missing-positive': `def firstMissingPositive(nums):
     n = len(nums)
     i = 0

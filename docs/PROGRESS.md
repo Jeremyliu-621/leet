@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 237 problems (12 tags); triangle, interleaving-string, find-eventual-safe-states, letter-combinations-phone, subsets, combination-sum added; 981 tests.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (981 unit tests across 23 files).
-**Next up:** More medium/hard problems; backtracking, DP, graph.
+**Current focus:** Bank at 250 problems (12 tags); permutations, generate-parentheses, palindrome-partitioning, n-queens, combination-sum-ii added; 1020 tests.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (1020 unit tests across 23 files).
+**Next up:** More hard/medium problems; UI polish (color-contrast a11y, verdict UX).
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -250,6 +250,9 @@ Still pending:
 - [x] house-robber-iii (tree DP/medium), maximum-width-binary-tree (BFS/medium), minimum-height-trees (graph/medium); bank at 226 (removed duplicate sum-root-to-leaf-numbers)
 - [x] hamming-weight (math/easy), 01-matrix (graph/medium), delete-node-in-linked-list (easy); 957 tests; bank at 229
 - [x] merge-intervals, non-overlapping-intervals (arrays/medium), task-scheduler (math/medium); 966 tests; bank at 232
+- [x] letter-combinations-phone (hash-map/medium), subsets (arrays/medium), combination-sum (arrays/medium); 972 tests; bank at 235
+- [x] permutations (arrays/medium, preamble-sort), generate-parentheses (strings/medium, preamble-sort), palindrome-partitioning (strings/medium); bank at ~244; remote also added: combination-sum-ii, number-of-dice-rolls, coin-change-ii, best-time-buy-sell-cooldown, longest-arithmetic-subsequence, unique-paths-ii, triangle, interleaving-string
+- [x] n-queens (arrays/hard); marketing site updated to 250 problems; 1020 tests; bank at 250
 - [x] triangle (DP/medium), interleaving-string (DP/medium), find-eventual-safe-states (graph/medium); letter-combinations-phone (hash-map/medium), subsets (arrays/medium), combination-sum (arrays/medium); 981 tests; bank at 237
 
 ---

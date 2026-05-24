@@ -1509,6 +1509,29 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   // Hard-difficulty problems
   // ---------------------------------------------------------------------------
 
+  'n-queens': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const result: string[][] = [];
+    const cols = new Set<number>();
+    const diag1 = new Set<number>(); // row - col
+    const diag2 = new Set<number>(); // row + col
+    const queens: number[] = [];
+    const bt = (row: number): void => {
+      if (row === n) {
+        result.push(queens.map(c => '.'.repeat(c) + 'Q' + '.'.repeat(n - c - 1)));
+        return;
+      }
+      for (let c = 0; c < n; c++) {
+        if (cols.has(c) || diag1.has(row - c) || diag2.has(row + c)) continue;
+        cols.add(c); diag1.add(row - c); diag2.add(row + c); queens.push(c);
+        bt(row + 1);
+        cols.delete(c); diag1.delete(row - c); diag2.delete(row + c); queens.pop();
+      }
+    };
+    bt(0);
+    return result;
+  },
+
   'first-missing-positive': (...args: unknown[]) => {
     const nums = (args[0] as number[]).slice();
     const n = nums.length;

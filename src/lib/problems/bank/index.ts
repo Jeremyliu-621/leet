@@ -178,6 +178,7 @@ import { problem as happyNumber } from './happy-number';
 import { problem as maximumSwap } from './maximum-swap';
 
 // arrays — hard
+import { problem as nQueens } from './n-queens';
 import { problem as firstMissingPositive } from './first-missing-positive';
 import { problem as jumpGameII } from './jump-game-ii';
 import { problem as largestRectangleHistogram } from './largest-rectangle-histogram';
@@ -479,6 +480,7 @@ export const problems: readonly Problem[] = [
   happyNumber,
   maximumSwap,
   // arrays — hard
+  nQueens,
   firstMissingPositive,
   jumpGameII,
   largestRectangleHistogram,
