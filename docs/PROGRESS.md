@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 272 problems (14 tags); sudoku-solver + combinations added; backtracking tag applied to n-queens, combination-sum-ii, palindrome-partitioning, word-search; 1090 tests.
+**Current focus:** Bank at 281 problems (14 tags); recent additions: subsets-ii, insert-interval, sum-of-two-integers, single-number, house-robber-ii, wiggle-subsequence, find-min-rotated-ii, number-of-substrings, longest-increasing-path-matrix; 1114 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** word-search-ii (Trie+backtracking/hard), more hard graph/tree problems.
+**Next up:** word-search-ii (Trie+backtracking/hard), more medium/hard problems toward 300.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
