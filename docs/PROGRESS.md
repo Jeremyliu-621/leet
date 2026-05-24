@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 417 problems; 1531 tests; growing toward 450+.
+**Current focus:** Bank at 424 problems; added sort-characters-by-frequency, stone-game, robot-bounded-in-circle, zigzag-conversion, maximum-frequency-stack; 1543 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing bank toward 420+; more medium/hard problems across all tags.
 
