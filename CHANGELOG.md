@@ -9,6 +9,16 @@ pre-stable).
 ## [Unreleased]
 
 ### Added
+- **Markdown problem descriptions** — `description` is now GFM-flavoured
+  markdown via `react-markdown`, rendered through a custom grayscale
+  component map. Plain-text descriptions still render cleanly so the rest of
+  the bank keeps working. Raw HTML is disabled at the renderer (problem
+  content ships in the extension bundle, no script-injection surface).
+- **Progressive hints** on problems via an optional `hints?: readonly
+  string[]` field. Hints are markdown-rendered, revealed one at a time by
+  explicit user click, and **cost one minute off the challenge timer per
+  reveal** — brand-aligned: friction is the point. Wired up on three bank
+  problems (`two-sum-indices`, `running-sum`, `balanced-brackets`).
 - **Light / dark / system theme** via CSS variables and a `data-theme`
   attribute on `<html>`. Both palettes are pure grayscale, zero hue. A
   three-way switcher lives in the popup; `system` follows the OS theme via
