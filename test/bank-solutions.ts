@@ -2301,6 +2301,23 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   },
 
   // --- dynamic-programming --------------------------------------------------
+  'longest-string-chain': (...args: unknown[]) => {
+    const words = (args[0] as string[]).slice();
+    words.sort((a, b) => a.length - b.length);
+    const dp = new Map<string, number>();
+    let best = 1;
+    for (const word of words) {
+      let max = 0;
+      for (let i = 0; i < word.length; i++) {
+        const pred = word.slice(0, i) + word.slice(i + 1);
+        max = Math.max(max, dp.get(pred) ?? 0);
+      }
+      dp.set(word, max + 1);
+      best = Math.max(best, max + 1);
+    }
+    return best;
+  },
+
   'house-robber': (...args: unknown[]) => {
     const nums = args[0] as number[];
     let prev2 = 0;
@@ -2623,6 +2640,15 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const result: number[][] = [];
     for (const p of people) result.splice(p[1]!, 0, p);
     return result;
+  },
+
+  'remove-duplicates-sorted-array-ii': (...args: unknown[]) => {
+    const arr = (args[0] as number[]).slice();
+    let k = 0;
+    for (const num of arr) {
+      if (k < 2 || arr[k - 2] !== num) arr[k++] = num;
+    }
+    return arr.slice(0, k);
   },
 
   'set-matrix-zeroes': (...args: unknown[]) => {
@@ -5708,6 +5734,37 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   'rotate-string': (...args: unknown[]) => {
     const s = args[0] as string, goal = args[1] as string;
     return s.length === goal.length && (s + s).includes(goal);
+  },
+
+  'implement-trie': (...args: unknown[]) => {
+    const ops = args[0] as string[], words = args[1] as string[];
+    const root: Map<string, unknown>[] = [new Map()];
+    const ends = new Set<number>();
+    const getNode = (from: number, ch: string, create: boolean) => {
+      const node = root[from] as Map<string, number>;
+      if (!node.has(ch)) {
+        if (!create) return -1;
+        const idx = root.length;
+        root.push(new Map());
+        node.set(ch, idx);
+      }
+      return node.get(ch) as number;
+    };
+    return ops.map((op, i) => {
+      const word = words[i]!;
+      if (op === 'insert') {
+        let cur = 0;
+        for (const ch of word) cur = getNode(cur, ch, true);
+        ends.add(cur);
+        return null;
+      }
+      if (op === 'search' || op === 'startsWith') {
+        let cur = 0;
+        for (const ch of word) { cur = getNode(cur, ch, false); if (cur === -1) return false; }
+        return op === 'startsWith' ? true : ends.has(cur);
+      }
+      return null;
+    });
   },
 
   'custom-sort-string': (...args: unknown[]) => {

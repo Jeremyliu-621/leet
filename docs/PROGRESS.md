@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 403 problems; added number-complement, jewels-and-stones, maximum-average-subarray, valid-mountain-array, can-place-flowers; 1465 tests.
+**Current focus:** Bank at 401 problems; merged remove-duplicates-sorted-array-ii + longest-string-chain + implement-trie with remote additions; 1474 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing bank toward 420+; more medium/hard problems across all tags.
 
@@ -281,6 +281,7 @@ Still pending:
 - [x] find-all-numbers-disappeared + check-if-n-and-double-exist + largest-number-at-least-twice + special-positions-binary-matrix + matrix-diagonal-sum + sort-array-by-parity; bank at 378; 1399 tests
 - [x] left-and-right-sum-differences + minimum-value-positive-step-sum + count-number-of-pairs + percentage-of-letter-in-string + count-common-words-one-occurrence + convert-temperature; bank at 384; 1423 tests
 - [x] implement-queue-using-stacks (stack/easy) + binary-tree-pruning (tree/medium) + count-complete-tree-nodes (tree+binary-search/medium) + populating-next-right-pointers (tree/medium) + range-sum-query-2d (arrays/medium) + find-anagram-mappings (hash-map/easy); bank at 393; 1450 tests
+- [x] remove-duplicates-sorted-array-ii + longest-string-chain + implement-trie (merged with remote additions)
 
 ---
 

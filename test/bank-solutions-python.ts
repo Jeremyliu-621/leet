@@ -1719,6 +1719,21 @@ export const pythonSolutions: Record<string, string> = {
         count += r - l + 1
     return count
 `,
+  'longest-string-chain': `def longestStrChain(words):
+    words = sorted(list(words), key=len)
+    dp = {}
+    best = 1
+    for word in words:
+        max_chain = 0
+        for i in range(len(word)):
+            pred = word[:i] + word[i+1:]
+            if pred in dp:
+                max_chain = max(max_chain, dp[pred])
+        dp[word] = max_chain + 1
+        best = max(best, dp[word])
+    return best
+`,
+
   'house-robber': `def rob(nums: list[int]) -> int:
     prev2 = 0
     prev1 = 0
@@ -1989,6 +2004,16 @@ export const pythonSolutions: Record<string, string> = {
     for p in people:
         result.insert(p[1], p)
     return result
+`,
+
+  'remove-duplicates-sorted-array-ii': `def removeDuplicatesIIRunner(nums):
+    nums = list(nums)
+    k = 0
+    for num in nums:
+        if k < 2 or nums[k-2] != num:
+            nums[k] = num
+            k += 1
+    return nums[:k]
 `,
 
   'set-matrix-zeroes': `def setZeroes(matrix):
@@ -5027,6 +5052,43 @@ def sumRange(nums, left, right):
   'rotate-string': `
 def rotateString(s, goal):
     return len(s) == len(goal) and goal in s + s
+`,
+
+  'implement-trie': `def trieRunner(ops, words):
+    trie = Trie()
+    result = []
+    for op, word in zip(ops, words):
+        if op == 'insert':
+            trie.insert(word)
+            result.append(None)
+        elif op == 'search':
+            result.append(trie.search(word))
+        elif op == 'startsWith':
+            result.append(trie.startsWith(word))
+        else:
+            result.append(None)
+    return result
+
+class Trie:
+    def __init__(self):
+        self.root = {}
+    def insert(self, word):
+        node = self.root
+        for ch in word:
+            node = node.setdefault(ch, {})
+        node['#'] = True
+    def search(self, word):
+        node = self.root
+        for ch in word:
+            if ch not in node: return False
+            node = node[ch]
+        return '#' in node
+    def startsWith(self, prefix):
+        node = self.root
+        for ch in prefix:
+            if ch not in node: return False
+            node = node[ch]
+        return True
 `,
 
   'custom-sort-string': `

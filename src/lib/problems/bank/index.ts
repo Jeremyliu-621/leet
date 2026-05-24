@@ -42,6 +42,7 @@ import { problem as canPlaceFlowers } from './can-place-flowers';
 import { problem as rangeSumQuery2D } from './range-sum-query-2d';
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
 import { problem as setMatrixZeroes } from './set-matrix-zeroes';
+import { problem as removeDuplicatesSortedArrayII } from './remove-duplicates-sorted-array-ii';
 import { problem as meetingRoomsII } from './meeting-rooms-ii';
 import { problem as hIndex } from './h-index';
 import { problem as mergeIntervals } from './merge-intervals';
@@ -104,6 +105,7 @@ import { problem as rotateString } from './rotate-string';
 import { problem as percentageOfLetterInString } from './percentage-of-letter-in-string';
 import { problem as countCommonWordsOneOccurrence } from './count-common-words-one-occurrence';
 // strings — medium
+import { problem as implementTrie } from './implement-trie';
 import { problem as customSortString } from './custom-sort-string';
 import { problem as longestPalindromicString } from './longest-palindromic-string';
 import { problem as countPalindromicSubstrings } from './count-palindromic-substrings';
@@ -302,6 +304,7 @@ import { problem as minCostClimbingStairs } from './min-cost-climbing-stairs';
 import { problem as countingBits } from './counting-bits';
 import { problem as bestTimeBuySell } from './best-time-buy-sell';
 // dynamic-programming — medium
+import { problem as longestStringChain } from './longest-string-chain';
 import { problem as houseRobber } from './house-robber';
 import { problem as houseRobberII } from './house-robber-ii';
 import { problem as wiggleSubsequence } from './wiggle-subsequence';
@@ -500,6 +503,7 @@ export const problems: readonly Problem[] = [
   rangeSumQuery2D,
   minimumArrowsBurstBalloons,
   setMatrixZeroes,
+  removeDuplicatesSortedArrayII,
   meetingRoomsII,
   hIndex,
   majorityElementII,
@@ -567,6 +571,7 @@ export const problems: readonly Problem[] = [
   percentageOfLetterInString,
   countCommonWordsOneOccurrence,
   // strings — medium
+  implementTrie,
   customSortString,
   generateParentheses,
   palindromePartitioning,
@@ -768,6 +773,7 @@ export const problems: readonly Problem[] = [
   countingBits,
   bestTimeBuySell,
   // dynamic-programming — medium
+  longestStringChain,
   houseRobber,
   houseRobberII,
   wiggleSubsequence,
