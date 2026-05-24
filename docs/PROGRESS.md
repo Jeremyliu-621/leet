@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 217 problems (12 tags); balanced-binary-tree, minimum-depth, word-search, surrounded-regions added; 921 tests.
+**Current focus:** Bank at 217 problems (12 tags); word-search, surrounded-regions, redundant-connection, bipartite, all-paths added; 921 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green (921 unit tests across 23 files).
-**Next up:** More tree/graph/linked-list problems.
+**Next up:** More tree/graph/linked-list problems; update marketing site stats.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -244,7 +244,8 @@ Still pending:
 - [x] flatten-binary-tree + zigzag-level-order (tree/medium) + reverse-nodes-in-k-group (linked-list/hard); 885 tests; bank at 205
 - [x] sum-root-to-leaf-numbers (medium tree): DFS digit accumulator; lowest-common-ancestor-binary-tree (medium tree): recursive LCA; 891 tests; bank at 207 (removed duplicate zigzag)
 - [x] sum-root-to-leaf, number-of-provinces (graph/easy), path-sum-iii (tree/medium): prefix-sum O(n); 900 tests; bank at 210
-- [x] balanced-binary-tree (easy), minimum-depth-binary-tree (easy), word-search (graph/medium), surrounded-regions (graph/medium); 921 tests; bank at 217
+- [x] balanced-binary-tree (easy), minimum-depth-binary-tree (easy), word-search (graph/medium), surrounded-regions (graph/medium); bank at 217
+- [x] redundant-connection (Union-Find/medium), is-graph-bipartite (BFS 2-color/medium), all-paths-source-target (DFS/medium); 921 tests; bank at 217
 
 ---
 
