@@ -15,13 +15,21 @@ npm run typecheck    # tsc --noEmit, strict; no errors
 ## 2. Automated tests
 
 ```bash
-npm run test         # vitest run, all suites
+npm run test         # vitest — unit + integration suites
+npm run test:e2e     # playwright — real Chromium with dist/ loaded as an extension
 ```
 
-Each pure module under `src/lib/**` has its own suite under `test/`. The
-problem bank is validated by `test/problem-bank.test.ts`, which runs every
-reference solution against every visible and hidden test case for every
-problem — if the suite is green, the bank's `expected` values are correct.
+**Vitest:** every pure module under `src/lib/**` has a suite under `test/`. The problem bank is
+validated by `test/problem-bank.test.ts`, which runs every reference solution against every
+visible and hidden test case — if the suite is green, the bank's `expected` values are correct.
+The service worker reconciliation pipeline is exercised end-to-end against an in-memory `chrome`
+in `test/sw-reconcile.test.ts`.
+
+**Playwright e2e** (`npm run test:e2e`, headed local Chromium):
+- `e2e/extension.spec.ts` — SW registers, popup / options / challenge mount.
+- `e2e/block-flow.spec.ts` — **the real gate**: setting a block rule + visiting the host
+  redirects to the challenge page; setting an unlock token bypasses the gate.
+- `e2e/screenshots.spec.ts` — captures the four extension surfaces into `docs/screenshots/`.
 
 ## 3. Manual end-to-end (real Chrome)
 
