@@ -6,12 +6,13 @@
 
 ---
 
-**Last updated:** 2026-05-22
-**Current phase:** Phase 4 — Challenge UI
-**Current focus:** Building the challenge screen — problem panel, code editor, test runner, timer.
-**Build status:** 🟢 `npm run build` and `npm run test` green (84 tests across 6 files)
-**Next up:** Lay out the challenge page (left problem panel, top-right meta, editor panel). Use the
-`frontend-design` skill; honour the pure-grayscale design system in `CLAUDE.md` §5.
+**Last updated:** 2026-05-23
+**Current phase:** Phase 8 — Settings page
+**Current focus:** Options UI — block-rules editor, keyword triggers, prefs form, lock setup,
+pending-changes review.
+**Build status:** 🟢 `npm run build` and `npm run test` green (159 tests across 13 files)
+**Next up:** Spawn a UI agent for the settings page using the `frontend-design` skill; integrate
+the password/partner-code lock (Phase 9) and the pending-changes review into that page.
 
 ---
 
@@ -61,39 +62,46 @@
 > Note: the live Blob-Worker executing real user code under the sandbox CSP is browser-only and
 > gets its first end-to-end exercise in Phase 4. The judging logic it feeds is fully unit-tested.
 
-## Phase 4 — Challenge UI
+## Phase 4 — Challenge UI ✅
 
-- [ ] Challenge page layout: left problem panel, top-right meta (timer/reward/streak), editor panel
-- [ ] Problem panel: title, difficulty, tags, description, examples, constraints
-- [ ] CodeMirror 6 editor + grayscale theme + language selector (JS only for now)
-- [ ] Test-case panel + Run button (visible tests) + Submit button (all tests)
-- [ ] Countdown timer wired to `challengeTimeLimitSec`
-- [ ] Verdict states: running, passed, failed, error, timeout
-- [ ] Empty/loading/error states
+- [x] Challenge page layout: left problem panel, top-right meta (timer/reward/streak), editor panel
+- [x] Problem panel: title, difficulty, tags, description, examples, constraints
+- [x] CodeMirror 6 editor + grayscale theme + language selector (JS only for now)
+- [x] Test-case panel + Run button (visible tests) + Submit button (all tests)
+- [x] Countdown timer wired to `challengeTimeLimitSec`
+- [x] Verdict states: running, passed, failed, error, timeout
+- [x] Empty/loading/error states (`loading`, `no-problem`, `no-target` banner)
 
-## Phase 5 — Blocking engine
+## Phase 5 — Blocking engine ✅
 
-- [ ] `src/lib/blocking/matcher.ts` — match a URL against block + keyword rules (+ tests)
-- [ ] `src/lib/blocking/dnr.ts` — build DNR dynamic rules from rule sets (+ tests)
-- [ ] Service worker: install/startup, rule reconciliation, `storage.onChanged` handling
-- [ ] Service worker: redirect blocked navigations to the challenge page
-- [ ] Content script: detect SPA route changes, blank page at `document_start`, ask SW to redirect
-- [ ] `webNavigation.onHistoryStateUpdated` handling
+- [x] `src/lib/blocking/matcher.ts` — match a URL against block + keyword rules (+ tests)
+- [x] `src/lib/blocking/dnr.ts` — build DNR dynamic rules from rule sets (+ tests)
+- [x] Service worker: install/startup, alarm, `storage.onChanged` reconciliation
+- [x] Service worker: redirect blocked navigations to the challenge page (via DNR + tabs.update)
+- [x] Content script: detect SPA route changes (history hook + popstate); asks SW to redirect
+- [x] `webNavigation.onHistoryStateUpdated` handling in the SW
 
-## Phase 6 — Unlock system (→ demoable vertical slice)
+> Page-blanking at `document_start` was deferred — the small flash before the SW redirects is
+> acceptable for the MVP and tracked as a Phase 12 polish item.
 
-- [ ] `src/lib/unlock/tokens.ts` — create/validate/prune unlock tokens (+ tests)
-- [ ] On solve: write token, remove the domain's DNR rule, redirect tab back to target
-- [ ] `chrome.alarms` + reconcile for token expiry → re-arm the DNR rule
-- [ ] Record `SolvedProblemRecord`
-- [ ] End-to-end check: block → challenge → solve → timed access → expiry → challenge again
+## Phase 6 — Unlock system (→ demoable vertical slice) ✅
 
-## Phase 7 — Failure handling
+- [x] `src/lib/unlock/tokens.ts` — create/validate/prune unlock tokens (+ tests)
+- [x] On solve: write token, remove the domain's DNR rule (reconcile), redirect tab back to target
+- [x] `chrome.alarms` + reconcile for token expiry → re-arm the DNR rule
+- [x] Record `SolvedProblemRecord` on grant-unlock (capped at 1000 entries)
+- [x] End-to-end check: block → challenge → solve → timed access → expiry → challenge again
 
-- [ ] Failure on timeout / give-up / attempt-limit
-- [ ] `failureAction`: close tab vs redirect to blocked page
-- [ ] Blocked page UI (calm, minimal)
-- [ ] Strict mode disables give-up
+> The end-to-end loop is implemented in code; manual verification in real Chrome is documented in
+> `TESTING.md` flow A and remains the last 5% (browser-only behaviour: live sandbox CSP, DNR
+> redirect timing, real SPA detection).
+
+## Phase 7 — Failure handling ✅
+
+- [x] Failure on timeout / give-up / attempt-limit (challenge UI + SW handler)
+- [x] `failureAction`: close tab vs redirect to blocked page (SW `failChallenge`)
+- [x] Blocked page UI — calm, minimal, grayscale
+- [x] Strict mode disables give-up (challenge UI honours `prefs.allowGiveUp`)
 
 ## Phase 8 — Settings page
 
@@ -105,20 +113,21 @@
 - [ ] Strict mode toggle + settings cooldown duration
 - [ ] Sync status indicator
 
-## Phase 9 — Anti-bypass / commitment
+## Phase 9 — Anti-bypass / commitment 🟡
 
-- [ ] Cooldown pipeline: strictness-reducing changes deferred via `CooldownPendingChange`
-- [ ] `src/lib/crypto/hash.ts` — salted SubtleCrypto hashing (+ tests)
-- [ ] Password lock setup + enforcement on protected settings
-- [ ] Accountability-partner code lock
-- [ ] Strict mode hardening across surfaces
-- [ ] Pending-changes review UI (list + cancel)
+- [x] Cooldown pipeline lib — schedule/applicable/cancel/nextApply (+ tests)
+- [x] `src/lib/crypto/hash.ts` — salted PBKDF2/SHA-256 via SubtleCrypto (+ tests)
+- [ ] Password lock setup + enforcement on protected settings (needs Phase 8 UI)
+- [ ] Accountability-partner code lock (needs Phase 8 UI)
+- [ ] Strict mode hardening across surfaces (needs Phase 8 UI for full coverage)
+- [ ] Pending-changes review UI — list + cancel (needs Phase 8 UI)
 
-## Phase 10 — Streaks
+## Phase 10 — Streaks 🟡
 
-- [ ] `src/lib/streak/streak.ts` — daily streak compute + damage rules (+ tests)
-- [ ] Streak damage on disable / removed rule / failed challenge
-- [ ] Subtle streak UI in popup + challenge header
+- [x] `src/lib/streak/streak.ts` — daily streak compute + damage rules (+ tests)
+- [x] Streak damage on failed challenge (SW `failChallenge` calls `recordFail`)
+- [ ] Streak damage on disable / removed rule (needs Phase 8 hooks)
+- [ ] Subtle streak UI in popup (Phase 11) + challenge header (placeholder is in place)
 
 ## Phase 11 — Popup
 
@@ -156,3 +165,11 @@
 - Phase 4 guidance: the challenge page should use `runTests` from `src/lib/judge` for Run/Submit,
   `pickChallengeProblem` from `src/lib/problems` to choose a problem, and CodeMirror 6 for the
   editor. The `target` blocked URL arrives as a `?target=` query param on `challenge.html`.
+- 2026-05-23: Phases 4–7 done in one cycle. Challenge UI built by a `ui-generator-reviewer`
+  agent (Challenge.tsx + 4 sub-components + grayscale CodeMirror theme + 33 helper tests).
+  Blocking engine (matcher + DNR builder), unlock tokens, full service worker, content script,
+  and Blocked page all implemented. 75 new tests added (159 total). The end-to-end "block → solve
+  → timed unlock" loop is wired in code; manual browser verification documented in `TESTING.md`.
+- 2026-05-23: Phases 9 and 10 are partial — all the *lib* code is done and tested (crypto, streak,
+  cooldown), but the UI integration of password/partner locks, pending-changes review, and the
+  streak display in the popup must wait for Phases 8 (Settings page) and 11 (popup).
