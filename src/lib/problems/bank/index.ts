@@ -77,6 +77,11 @@ import { problem as removeDuplicatesSorted } from './remove-duplicates-sorted';
 import { problem as maxConsecutiveFlips } from './max-consecutive-flips';
 import { problem as countSubarraysBoundedMax } from './count-subarrays-bounded-max';
 
+// sliding-window — medium
+import { problem as atMostKDistinct } from './at-most-k-distinct';
+import { problem as permutationInString } from './permutation-in-string';
+import { problem as subarrayProductLessThanK } from './subarray-product-less-than-k';
+
 // sliding-window — easy
 import { problem as maxWindowSum } from './max-window-sum';
 import { problem as longestEqualRun } from './longest-equal-run';
@@ -222,6 +227,10 @@ export const problems: readonly Problem[] = [
   // sliding-window — hard
   maxConsecutiveFlips,
   countSubarraysBoundedMax,
+  // sliding-window — medium
+  atMostKDistinct,
+  permutationInString,
+  subarrayProductLessThanK,
   // sliding-window — easy
   maxWindowSum,
   longestEqualRun,

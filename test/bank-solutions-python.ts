@@ -1343,6 +1343,51 @@ export const pythonSolutions: Record<string, string> = {
             remaining = remaining % scale
     return result.strip()
 `,
+  'at-most-k-distinct': `def atMostKDistinct(s, k):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    l = 0
+    best = 0
+    for r in range(len(s)):
+        freq[s[r]] += 1
+        while len(freq) > k:
+            freq[s[l]] -= 1
+            if freq[s[l]] == 0:
+                del freq[s[l]]
+            l += 1
+        best = max(best, r - l + 1)
+    return best
+`,
+  'permutation-in-string': `def permutationInString(s1, s2):
+    if len(s1) > len(s2):
+        return False
+    count = [0] * 26
+    window = [0] * 26
+    for c in s1:
+        count[ord(c) - ord('a')] += 1
+    n = len(s1)
+    for r in range(len(s2)):
+        window[ord(s2[r]) - ord('a')] += 1
+        if r >= n:
+            window[ord(s2[r - n]) - ord('a')] -= 1
+        if r >= n - 1 and window == count:
+            return True
+    return False
+`,
+  'subarray-product-less-than-k': `def subarrayProductLessThanK(nums, k):
+    if k <= 1:
+        return 0
+    l = 0
+    product = 1
+    count = 0
+    for r in range(len(nums)):
+        product *= nums[r]
+        while product >= k:
+            product //= nums[l]
+            l += 1
+        count += r - l + 1
+    return count
+`,
   'house-robber': `def rob(nums: list[int]) -> int:
     prev2 = 0
     prev1 = 0

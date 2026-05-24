@@ -1812,6 +1812,63 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return 0; // unreachable for valid inputs
   },
 
+  // --- sliding-window — medium ----------------------------------------------
+  'at-most-k-distinct': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    const freq = new Map<string, number>();
+    let l = 0;
+    let best = 0;
+    for (let r = 0; r < s.length; r++) {
+      freq.set(s[r]!, (freq.get(s[r]!) ?? 0) + 1);
+      while (freq.size > k) {
+        const lc = s[l++]!;
+        freq.set(lc, freq.get(lc)! - 1);
+        if (freq.get(lc) === 0) freq.delete(lc);
+      }
+      best = Math.max(best, r - l + 1);
+    }
+    return best;
+  },
+
+  'permutation-in-string': (...args: unknown[]) => {
+    const s1 = args[0] as string;
+    const s2 = args[1] as string;
+    if (s1.length > s2.length) return false;
+    const count = new Array<number>(26).fill(0);
+    const window = new Array<number>(26).fill(0);
+    const a = 'a'.charCodeAt(0);
+    for (const c of s1) count[c.charCodeAt(0) - a]!++;
+    const n = s1.length;
+    for (let r = 0; r < s2.length; r++) {
+      window[s2.charCodeAt(r) - a]!++;
+      if (r >= n) window[s2.charCodeAt(r - n) - a]!--;
+      if (r >= n - 1) {
+        let ok = true;
+        for (let i = 0; i < 26; i++) {
+          if (window[i] !== count[i]) { ok = false; break; }
+        }
+        if (ok) return true;
+      }
+    }
+    return false;
+  },
+
+  'subarray-product-less-than-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    if (k <= 1) return 0;
+    let l = 0;
+    let product = 1;
+    let count = 0;
+    for (let r = 0; r < nums.length; r++) {
+      product *= nums[r]!;
+      while (product >= k) product /= nums[l++]!;
+      count += r - l + 1;
+    }
+    return count;
+  },
+
   // --- dynamic-programming --------------------------------------------------
   'house-robber': (...args: unknown[]) => {
     const nums = args[0] as number[];
