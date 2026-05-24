@@ -41,6 +41,7 @@ import {
   schedulePending,
   cancelPending,
 } from '../../lib/cooldown/cooldown';
+import { damageStreakNow } from '../../lib/streak/damage-now';
 import {
   isReducingUnlockDuration,
   isReducingTimeLimitSec,
@@ -327,6 +328,10 @@ export function Options() {
           const updated = await updateValue('blockedRules', (curr) =>
             curr.map((r) => (r.id === rule.id ? { ...r, enabled } : r)),
           );
+          // Disabling a rule outside the cooldown pipeline damages the streak.
+          if (!enabled) {
+            await damageStreakNow();
+          }
           setData((prev) => (prev ? { ...prev, blockRules: updated } : prev));
           announce(`Rule ${enabled ? 'enabled' : 'disabled'}: ${rule.pattern}`);
         }
@@ -356,6 +361,7 @@ export function Options() {
           const updated = await updateValue('blockedRules', (curr) =>
             curr.filter((r) => r.id !== rule.id),
           );
+          await damageStreakNow();
           setData((prev) => (prev ? { ...prev, blockRules: updated } : prev));
           announce(`Block rule removed: ${rule.pattern}`);
         }
@@ -406,6 +412,10 @@ export function Options() {
           const updated = await updateValue('keywordRules', (curr) =>
             curr.map((r) => (r.id === rule.id ? { ...r, enabled } : r)),
           );
+          // Disabling a keyword outside the cooldown pipeline damages the streak.
+          if (!enabled) {
+            await damageStreakNow();
+          }
           setData((prev) => (prev ? { ...prev, keywordRules: updated } : prev));
           announce(`Keyword ${enabled ? 'enabled' : 'disabled'}: ${rule.keyword}`);
         }
@@ -435,6 +445,7 @@ export function Options() {
           const updated = await updateValue('keywordRules', (curr) =>
             curr.filter((r) => r.id !== rule.id),
           );
+          await damageStreakNow();
           setData((prev) => (prev ? { ...prev, keywordRules: updated } : prev));
           announce(`Keyword removed: ${rule.keyword}`);
         }
