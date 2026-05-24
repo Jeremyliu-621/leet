@@ -8,8 +8,8 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Edge-case sweep complete; draft code auto-save implemented.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (520 unit tests across 22 files).
+**Current focus:** Bank expanded to 95 problems (10 hard problems added); all JS + Python solutions verified.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (550 unit tests across 22 files).
 **Next up:** Marketing site iteration + Vercel deployment.
 
 **Pyodide rollout status — COMPLETE:**
@@ -188,6 +188,7 @@ Still pending:
 - [x] Problem tag/difficulty breakdown stats in popup — mini bar chart by difficulty + top-5 tag pills; computeSolvedStats in popup-helpers.ts with 6 unit tests
 - [x] Grow bank to 85 problems — 33 new medium problems added across arrays, strings, hash-map, binary-search, stack, math; all with JS + Python solutions and test coverage (505 tests)
 - [x] Add more medium-difficulty problems — bank now has full medium tier across all 6 tag categories
+- [x] Grow bank to 95 problems — 10 hard problems added (arrays: first-missing-positive, jump-game-ii, largest-rectangle-histogram, sliding-window-maximum, largest-number, longest-increasing-subsequence; strings: minimum-window-substring, longest-valid-parentheses, edit-distance, word-break); all with JS + Python solutions, hints, and test coverage (550 tests)
 - [ ] Marketing site iteration + Vercel deployment
 
 ---
