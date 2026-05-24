@@ -90,16 +90,20 @@ function fontSizeTheme(px: number) {
 
 const LANGUAGE_LABEL: Readonly<Record<SupportedLanguage, string>> = {
   javascript: 'JavaScript',
+  typescript: 'TypeScript',
   python: 'Python',
 };
 
 const LANGUAGE_SHORT: Readonly<Record<SupportedLanguage, string>> = {
   javascript: 'JS',
+  typescript: 'TS',
   python: 'Py',
 };
 
 function languageExtension(language: SupportedLanguage) {
-  return language === 'python' ? python() : javascript();
+  if (language === 'python') return python();
+  if (language === 'typescript') return javascript({ typescript: true });
+  return javascript();
 }
 
 function modalKeymapExtension(k: EditorKeymap) {

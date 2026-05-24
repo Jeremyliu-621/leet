@@ -41,9 +41,18 @@ export function AboutSection() {
         <p>
           LeetLock is a Chrome Manifest V3 extension with{' '}
           <span className="font-semibold text-text">{BANK_SIZE} original problems</span>{' '}
-          covering 9 topic categories. Every problem and every piece of code you
-          write runs entirely on this device — there is no server, no LeetLock
-          account, and no telemetry.
+          covering 10 topic categories.{' '}
+          <span className="font-semibold text-text">JavaScript, TypeScript, and Python</span>{' '}
+          are all supported. Every problem and every piece of code you write runs
+          entirely on this device — there is no server, no LeetLock account, and
+          no telemetry.
+        </p>
+        <p>
+          <span className="font-semibold text-text">TypeScript support</span> strips
+          type annotations via <span className="font-mono">sucrase</span> before
+          passing your code to the JavaScript runner — no compilation server,
+          no network request. The JS starter code is valid TypeScript, so you can
+          add types freely.
         </p>
         <p>
           <span className="font-semibold text-text">Python support</span> is

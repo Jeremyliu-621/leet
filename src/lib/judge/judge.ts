@@ -1,3 +1,4 @@
+import { transform as sucraseTransform } from 'sucrase';
 import type { Problem, TestCase } from '../problems/types';
 import type { RunRequest, RunResponse } from '../messaging/messages';
 import { buildVerdict } from './verdict';
@@ -72,7 +73,25 @@ export interface RunTestsOptions {
   /** Per-run hard timeout in ms; defaults to 4000. */
   timeoutMs?: number;
   /** Language the code is written in; defaults to JavaScript. */
-  language?: 'javascript' | 'python';
+  language?: 'javascript' | 'typescript' | 'python';
+}
+
+/**
+ * Transpiles TypeScript to JavaScript using sucrase.
+ * Returns { ok: true, code } on success, or { ok: false, message } on error.
+ */
+function transpileTypeScript(
+  code: string,
+): { ok: true; code: string } | { ok: false; message: string } {
+  try {
+    const result = sucraseTransform(code, { transforms: ['typescript'] });
+    return { ok: true, code: result.code };
+  } catch (err) {
+    return {
+      ok: false,
+      message: err instanceof Error ? err.message : 'TypeScript compilation failed.',
+    };
+  }
 }
 
 /**
@@ -88,7 +107,27 @@ export async function runTests(options: RunTestsOptions): Promise<JudgeResult> {
 
   const timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
   const requestId = `run-${++requestCounter}-${Date.now()}`;
-  const lang = options.language ?? 'javascript';
+  const rawLang = options.language ?? 'javascript';
+
+  // TypeScript is transpiled to JavaScript here before hitting the sandbox;
+  // the worker only ever sees plain JS. A transpile failure surfaces as a
+  // compile-error result immediately, without touching the sandbox at all.
+  let execCode = options.code;
+  if (rawLang === 'typescript') {
+    const transpiled = transpileTypeScript(options.code);
+    if (!transpiled.ok) {
+      return {
+        outcome: 'compile-error',
+        passed: 0,
+        total: options.tests.length,
+        verdicts: [],
+        message: transpiled.message,
+      };
+    }
+    execCode = transpiled.code;
+  }
+
+  const lang: 'javascript' | 'python' = rawLang === 'python' ? 'python' : 'javascript';
   const preamble =
     lang === 'python'
       ? options.problem.preamble?.python
@@ -96,7 +135,7 @@ export async function runTests(options: RunTestsOptions): Promise<JudgeResult> {
   const request: RunRequest = {
     type: 'run',
     requestId,
-    code: options.code,
+    code: execCode,
     functionName: options.problem.functionName,
     tests: options.tests.map((test) => ({ args: test.args })),
     timeoutMs,
@@ -154,7 +193,7 @@ export async function runCustomArgs(options: {
   code: string;
   functionName: string;
   args: readonly unknown[];
-  language: 'javascript' | 'python';
+  language: 'javascript' | 'typescript' | 'python';
   timeoutMs?: number;
 }): Promise<CustomTestStatus> {
   const frame = await ensureSandbox();
@@ -163,14 +202,27 @@ export async function runCustomArgs(options: {
 
   const timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
   const requestId = `custom-${++requestCounter}-${Date.now()}`;
+
+  // Same TypeScript → JavaScript transpilation as in runTests.
+  let execCode = options.code;
+  if (options.language === 'typescript') {
+    const transpiled = transpileTypeScript(options.code);
+    if (!transpiled.ok) {
+      return { status: 'error', message: transpiled.message };
+    }
+    execCode = transpiled.code;
+  }
+
+  const execLang: 'javascript' | 'python' =
+    options.language === 'python' ? 'python' : 'javascript';
   const request: RunRequest = {
     type: 'run',
     requestId,
-    code: options.code,
+    code: execCode,
     functionName: options.functionName,
     tests: [{ args: options.args }],
     timeoutMs,
-    language: options.language,
+    language: execLang,
   };
 
   const response = await new Promise<RunResponse>((resolve) => {

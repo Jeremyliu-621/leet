@@ -92,13 +92,25 @@ type RunMode = 'run' | 'submit';
 /** Seconds deducted from the challenge timer per revealed hint. */
 const HINT_COST_SECONDS = 60;
 
-/** Languages a given problem ships starter code for, in display order. */
+/** Languages available for a given problem, in display order. */
 function availableLanguagesFor(problem: Problem): SupportedLanguage[] {
-  const langs: SupportedLanguage[] = ['javascript'];
+  // TypeScript uses the JS starter code (TS is a superset of JS), so it is
+  // always available regardless of whether the problem ships a separate TS
+  // starter. Python requires an explicit starter.
+  const langs: SupportedLanguage[] = ['javascript', 'typescript'];
   if (problem.starterCode.python) {
     langs.push('python');
   }
   return langs;
+}
+
+/** Returns the starter code for a given language, falling back to JS. */
+function starterCodeFor(problem: Problem, language: SupportedLanguage): string {
+  if (language === 'python' && problem.starterCode.python) {
+    return problem.starterCode.python;
+  }
+  // TypeScript uses the JS starter — it is valid TypeScript.
+  return problem.starterCode.javascript;
 }
 
 type PageState =
@@ -250,15 +262,17 @@ export function Challenge() {
         return;
       }
 
-      // Pick the user's preferred language if the problem ships it; otherwise
-      // fall back to JavaScript (which is always present).
+      // Pick the user's preferred language if the problem supports it.
+      // TypeScript is always available (uses JS starter). Python requires an
+      // explicit starter in the problem definition.
       const preferred = prefs.preferredLanguage;
       const initialLanguage: SupportedLanguage =
-        preferred === 'python' && problem.starterCode.python ? 'python' : 'javascript';
-      const initialStarter =
-        initialLanguage === 'python' && problem.starterCode.python
-          ? problem.starterCode.python
-          : problem.starterCode.javascript;
+        preferred === 'python' && problem.starterCode.python
+          ? 'python'
+          : preferred === 'typescript'
+          ? 'typescript'
+          : 'javascript';
+      const initialStarter = starterCodeFor(problem, initialLanguage);
 
       // Restore any in-progress draft from a previous session.
       let restoreLanguage = initialLanguage;
@@ -585,12 +599,8 @@ export function Challenge() {
     (next: SupportedLanguage) => {
       if (pageState.status !== 'ready' || next === language) return;
       const { problem } = pageState;
-      const nextStarter =
-        next === 'python' && problem.starterCode.python
-          ? problem.starterCode.python
-          : problem.starterCode.javascript;
       setLanguage(next);
-      setCode(nextStarter);
+      setCode(starterCodeFor(problem, next));
       // First time switching to Python this session? Warm Pyodide now so
       // the next Run isn't the user's first encounter with the cold-boot.
       if (next === 'python') {
@@ -624,10 +634,7 @@ export function Challenge() {
   useEffect(() => {
     if (pageState.status !== 'ready') return;
     const { problem } = pageState;
-    const starter =
-      language === 'python' && problem.starterCode.python
-        ? problem.starterCode.python
-        : problem.starterCode.javascript;
+    const starter = starterCodeFor(problem, language);
     // Don't persist the unmodified starter — nothing to restore.
     if (code === starter) return;
 
@@ -755,11 +762,7 @@ export function Challenge() {
         {/* Editor panel — fixed, no scroll on the outer shell */}
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
           <EditorPanel
-            starterCode={
-              language === 'python' && problem.starterCode.python
-                ? problem.starterCode.python
-                : problem.starterCode.javascript
-            }
+            starterCode={starterCodeFor(problem, language)}
             language={language}
             availableLanguages={availableLanguagesFor(problem)}
             onLanguageChange={handleLanguageChange}
