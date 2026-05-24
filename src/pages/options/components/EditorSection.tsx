@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import type { EditorKeymap, UserPreferences } from '../../../lib/types';
+import type { EditorKeymap, SupportedLanguage, UserPreferences } from '../../../lib/types';
 import { SectionCard } from './SectionCard';
 import { FormField } from './FormField';
 
@@ -10,6 +10,21 @@ interface EditorSectionProps {
 
 const FONT_MIN = 11;
 const FONT_MAX = 20;
+
+const LANGUAGE_OPTIONS: { value: SupportedLanguage; label: string; description: string }[] = [
+  { value: 'javascript', label: 'JavaScript', description: 'Default. No setup required.' },
+  {
+    value: 'typescript',
+    label: 'TypeScript',
+    description: 'Type annotations stripped by sucrase before running. JS starter is valid TS.',
+  },
+  {
+    value: 'python',
+    label: 'Python',
+    description: 'Runs via Pyodide (WebAssembly CPython, bundled). ~1–2 s first-boot.',
+  },
+];
+
 const KEYMAP_OPTIONS: { value: EditorKeymap; label: string; description: string }[] = [
   { value: 'default', label: 'Default', description: 'Standard browser key bindings.' },
   { value: 'vim', label: 'Vim', description: 'Full modal vim bindings via @replit/codemirror-vim.' },
@@ -19,6 +34,7 @@ const KEYMAP_OPTIONS: { value: EditorKeymap; label: string; description: string 
 export function EditorSection({ prefs, onChange }: EditorSectionProps) {
   const uid = useId();
   const fontSizeId = `${uid}-font-size`;
+  const languageId = `${uid}-language`;
   const keymapId = `${uid}-keymap`;
 
   return (
@@ -60,6 +76,50 @@ export function EditorSection({ prefs, onChange }: EditorSectionProps) {
             >
               {prefs.editorFontSize}px
             </span>
+          </div>
+        </FormField>
+
+        {/* Default language */}
+        <FormField
+          label="Default language"
+          htmlFor={languageId}
+          help="Language pre-selected when a new challenge opens. Overridden by switching language in the editor."
+        >
+          <div
+            id={languageId}
+            role="radiogroup"
+            aria-label="Default coding language"
+            className="flex flex-col gap-2"
+          >
+            {LANGUAGE_OPTIONS.map(({ value, label, description }) => {
+              const selected = prefs.preferredLanguage === value;
+              const inputId = `${uid}-lang-${value}`;
+              return (
+                <label
+                  key={value}
+                  htmlFor={inputId}
+                  className={`flex cursor-pointer items-start gap-3 rounded-sm border px-3 py-2.5 transition-colors ${
+                    selected
+                      ? 'border-border-strong bg-surface-2'
+                      : 'border-border hover:border-border-strong'
+                  }`}
+                >
+                  <input
+                    id={inputId}
+                    type="radio"
+                    name={`${uid}-language`}
+                    value={value}
+                    checked={selected}
+                    onChange={() => onChange({ preferredLanguage: value })}
+                    className="mt-0.5 accent-accent"
+                  />
+                  <div>
+                    <div className="font-mono text-xs font-semibold text-text">{label}</div>
+                    <div className="mt-0.5 font-mono text-[10px] text-faint">{description}</div>
+                  </div>
+                </label>
+              );
+            })}
           </div>
         </FormField>
 
