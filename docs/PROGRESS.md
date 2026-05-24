@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 141 problems; roman-to-integer + valid-sudoku added; recent solves in popup; problem browser in Options.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (684 unit tests across 22 files).
-**Next up:** Further bank growth; more easy/medium problems for thin tags; graph/BFS problems (new tag).
+**Current focus:** Bank at 144 problems; hard DP filled (burst-balloons, wildcard-matching, dungeon-game); run-mode verdict summary.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (693 unit tests across 22 files).
+**Next up:** Further bank growth; UI polish; linked-list tag or more problems per existing tags.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
