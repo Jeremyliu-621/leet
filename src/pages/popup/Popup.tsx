@@ -7,11 +7,17 @@ import { localDateString } from '../../lib/streak';
 import { applyEditorFontSize, applyTheme } from '../../lib/theme';
 import type {
   BlockRule,
+  EditorKeymap,
   SolvedProblemRecord,
   StreakSummary,
   ThemePreference,
   UnlockToken,
 } from '../../lib/types';
+
+const KEYMAP_OPTIONS: ReadonlyArray<{ value: EditorKeymap; label: string }> = [
+  { value: 'default', label: 'Default' },
+  { value: 'vim', label: 'Vim' },
+];
 
 const THEME_OPTIONS: ReadonlyArray<{ value: ThemePreference; label: string }> = [
   { value: 'dark', label: 'Dark' },
@@ -44,6 +50,7 @@ interface PopupData {
   blockedDomains: ReadonlySet<string>;
   theme: ThemePreference;
   editorFontSize: number;
+  editorKeymap: EditorKeymap;
 }
 
 /**
@@ -96,6 +103,7 @@ export function Popup() {
         blockedDomains,
         theme: prefs.theme,
         editorFontSize: prefs.editorFontSize,
+        editorKeymap: prefs.editorKeymap,
       });
     }
 
@@ -159,6 +167,16 @@ export function Popup() {
       await updateValue('userPreferences', (curr) => ({ ...curr, editorFontSize: applied }));
     } catch {
       // Storage unavailable — the visual change still applied for this session.
+    }
+  }
+
+  async function handleKeymapChange(next: EditorKeymap): Promise<void> {
+    if (!data || data.editorKeymap === next) return;
+    setData({ ...data, editorKeymap: next });
+    try {
+      await updateValue('userPreferences', (curr) => ({ ...curr, editorKeymap: next }));
+    } catch {
+      // Storage unavailable — preference change is in-session only.
     }
   }
 
@@ -300,6 +318,34 @@ export function Popup() {
                 aria-checked={selected}
                 aria-label={`Set editor font size to ${opt.value} pixels`}
                 onClick={() => void handleFontSizeChange(opt.value)}
+                className={
+                  selected
+                    ? 'flex-1 border border-border-strong bg-surface-2 px-3 py-1.5 font-mono text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+                    : 'flex-1 border border-border bg-bg px-3 py-1.5 font-mono text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+                }
+              >
+                {opt.label}
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="mt-4" role="radiogroup" aria-label="Editor keymap">
+        <p className="mb-2 font-mono text-[9px] uppercase tracking-widest text-faint">
+          Editor keymap
+        </p>
+        <div className="flex items-center gap-1">
+          {KEYMAP_OPTIONS.map((opt) => {
+            const selected = data.editorKeymap === opt.value;
+            return (
+              <button
+                key={opt.value}
+                type="button"
+                role="radio"
+                aria-checked={selected}
+                aria-label={`Set editor keymap to ${opt.label}`}
+                onClick={() => void handleKeymapChange(opt.value)}
                 className={
                   selected
                     ? 'flex-1 border border-border-strong bg-surface-2 px-3 py-1.5 font-mono text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'

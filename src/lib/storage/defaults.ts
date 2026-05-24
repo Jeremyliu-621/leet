@@ -19,6 +19,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   theme: 'dark',
   editorFontSize: 13,
   preferredLanguage: 'javascript',
+  editorKeymap: 'default',
 };
 
 /**

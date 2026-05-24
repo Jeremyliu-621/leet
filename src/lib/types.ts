@@ -165,7 +165,12 @@ export interface UserPreferences {
   editorFontSize: number;
   /** The user's preferred coding language. Falls back to JS for any problem that doesn't ship a Python starter. */
   preferredLanguage: SupportedLanguage;
+  /** CodeMirror keymap flavour. `'vim'` enables the full `@replit/codemirror-vim` modal keymap. */
+  editorKeymap: EditorKeymap;
 }
 
 /** Theme options exposed in the UI. */
 export type ThemePreference = 'dark' | 'light' | 'system';
+
+/** Modal-vs-default selector for the CodeMirror editor. */
+export type EditorKeymap = 'default' | 'vim';

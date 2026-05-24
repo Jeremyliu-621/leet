@@ -440,6 +440,7 @@ export function Challenge() {
             language={language}
             availableLanguages={availableLanguagesFor(problem)}
             onLanguageChange={handleLanguageChange}
+            editorKeymap={prefs.editorKeymap}
             onChange={setCode}
             onRun={() => void handleRun()}
             onSubmit={() => void handleSubmit()}

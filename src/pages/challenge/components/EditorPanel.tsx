@@ -24,9 +24,10 @@ import {
   completionKeymap,
 } from '@codemirror/autocomplete';
 import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/search';
+import { vim } from '@replit/codemirror-vim';
 import { leetlockEditorTheme } from '../codemirror-theme';
 import type { JudgeResult } from '../../../lib/judge';
-import type { SupportedLanguage } from '../../../lib/types';
+import type { EditorKeymap, SupportedLanguage } from '../../../lib/types';
 import { VerdictPanel } from './VerdictPanel';
 
 interface EditorPanelProps {
@@ -38,6 +39,8 @@ interface EditorPanelProps {
   availableLanguages: readonly SupportedLanguage[];
   /** Called when the user picks a different language. */
   onLanguageChange: (language: SupportedLanguage) => void;
+  /** Active CodeMirror keymap. `'vim'` switches the editor to modal vim bindings. */
+  editorKeymap: EditorKeymap;
   /** Callback invoked whenever the editor content changes. */
   onChange: (code: string) => void;
   /** Called when user clicks Run. */
@@ -90,6 +93,7 @@ export function EditorPanel({
   language,
   availableLanguages,
   onLanguageChange,
+  editorKeymap,
   onChange,
   onRun,
   onSubmit,
@@ -103,6 +107,10 @@ export function EditorPanel({
   const editorContainerRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
   const languageCompartmentRef = useRef(new Compartment());
+  // Keymap goes through its own Compartment so the user can toggle vim
+  // mode in the popup without rebuilding the editor (which would lose
+  // their in-progress code).
+  const keymapCompartmentRef = useRef(new Compartment());
 
   // Stable refs — the editor builds ONCE; refs let the keymap and the doc-
   // change effect read fresh callback values without rebuilding.
@@ -136,6 +144,10 @@ export function EditorPanel({
     const state = EditorState.create({
       doc: starterCode,
       extensions: [
+        // Vim mode (when enabled) MUST come before every other keymap so
+        // its modal handlers take precedence. The Compartment lets us
+        // swap it in / out without rebuilding the editor.
+        keymapCompartmentRef.current.of(editorKeymap === 'vim' ? vim() : []),
         // Display extensions
         lineNumbers(),
         highlightActiveLineGutter(),
@@ -268,6 +280,17 @@ export function EditorPanel({
       effects: languageCompartmentRef.current.reconfigure(languageExtension(language)),
     });
   }, [language]);
+
+  // Swap the keymap extension when `editorKeymap` changes.
+  useEffect(() => {
+    const view = viewRef.current;
+    if (!view) return;
+    view.dispatch({
+      effects: keymapCompartmentRef.current.reconfigure(
+        editorKeymap === 'vim' ? vim() : [],
+      ),
+    });
+  }, [editorKeymap]);
 
   const handleRunKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
