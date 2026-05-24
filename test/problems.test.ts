@@ -86,6 +86,16 @@ describe('problem selector', () => {
     expect(ids).toContain('longest-increasing-subsequence');
   });
 
+  it('filters by graph tag', () => {
+    const graph = filterProblems({ tags: ['graph'] });
+    expect(graph.length).toBeGreaterThan(0);
+    expect(graph.every((p) => p.tags.includes('graph'))).toBe(true);
+    const ids = graph.map((p) => p.id);
+    expect(ids).toContain('flood-fill');
+    expect(ids).toContain('number-of-islands');
+    expect(ids).toContain('course-schedule');
+  });
+
   it('respects difficulty when it is satisfiable', () => {
     const picked = pickChallengeProblem({ difficulties: ['easy'], tags: [] }, { random: () => 0 });
     expect(picked?.difficulty).toBe('easy');

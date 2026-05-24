@@ -216,6 +216,12 @@ import { problem as reorderList } from './reorder-list';
 // linked-list — hard
 import { problem as mergeKSortedLists } from './merge-k-sorted-lists';
 
+// graph — easy
+import { problem as floodFill } from './flood-fill';
+// graph — medium
+import { problem as numberOfIslands } from './number-of-islands';
+import { problem as courseSchedule } from './course-schedule';
+
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -420,4 +426,9 @@ export const problems: readonly Problem[] = [
   reorderList,
   // linked-list — hard
   mergeKSortedLists,
+  // graph — easy
+  floodFill,
+  // graph — medium
+  numberOfIslands,
+  courseSchedule,
 ];

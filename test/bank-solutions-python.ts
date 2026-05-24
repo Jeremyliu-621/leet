@@ -2140,4 +2140,61 @@ export const pythonSolutions: Record<string, string> = {
             heapq.heappush(heap, (node.next.val, i, node.next))
     return dummy.next
 `,
+
+  'flood-fill': `def floodFill(image, sr, sc, color):
+    orig = image[sr][sc]
+    if orig == color:
+        return image
+    def dfs(r, c):
+        if r < 0 or r >= len(image) or c < 0 or c >= len(image[0]):
+            return
+        if image[r][c] != orig:
+            return
+        image[r][c] = color
+        dfs(r - 1, c)
+        dfs(r + 1, c)
+        dfs(r, c - 1)
+        dfs(r, c + 1)
+    dfs(sr, sc)
+    return image
+`,
+
+  'number-of-islands': `def numIslands(grid):
+    count = 0
+    rows, cols = len(grid), len(grid[0])
+    def dfs(r, c):
+        if r < 0 or r >= rows or c < 0 or c >= cols or grid[r][c] != '1':
+            return
+        grid[r][c] = '0'
+        dfs(r - 1, c)
+        dfs(r + 1, c)
+        dfs(r, c - 1)
+        dfs(r, c + 1)
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == '1':
+                count += 1
+                dfs(r, c)
+    return count
+`,
+
+  'course-schedule': `def canFinish(numCourses, prerequisites):
+    from collections import defaultdict
+    adj = defaultdict(list)
+    for a, b in prerequisites:
+        adj[b].append(a)
+    state = [0] * numCourses
+    def dfs(node):
+        if state[node] == 1:
+            return False
+        if state[node] == 2:
+            return True
+        state[node] = 1
+        for nb in adj[node]:
+            if not dfs(nb):
+                return False
+        state[node] = 2
+        return True
+    return all(dfs(i) for i in range(numCourses))
+`,
 };

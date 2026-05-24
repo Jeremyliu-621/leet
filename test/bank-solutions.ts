@@ -2680,4 +2680,59 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return lists.flat().sort((a, b) => a - b);
   },
 
+  // --- graph ---------------------------------------------------------------
+
+  'flood-fill': (...args: unknown[]) => {
+    const image = (args[0] as number[][]).map((row) => [...row]);
+    const sr = args[1] as number;
+    const sc = args[2] as number;
+    const color = args[3] as number;
+    const orig = image[sr]![sc]!;
+    if (orig === color) return image;
+    function dfs(r: number, c: number): void {
+      if (r < 0 || r >= image.length || c < 0 || c >= image[0]!.length) return;
+      if (image[r]![c] !== orig) return;
+      image[r]![c] = color;
+      dfs(r - 1, c); dfs(r + 1, c); dfs(r, c - 1); dfs(r, c + 1);
+    }
+    dfs(sr, sc);
+    return image;
+  },
+
+  'number-of-islands': (...args: unknown[]) => {
+    const grid = (args[0] as string[][]).map((row) => [...row]);
+    let count = 0;
+    const rows = grid.length;
+    const cols = grid[0]!.length;
+    function dfs(r: number, c: number): void {
+      if (r < 0 || r >= rows || c < 0 || c >= cols || grid[r]![c] !== '1') return;
+      grid[r]![c] = '0';
+      dfs(r - 1, c); dfs(r + 1, c); dfs(r, c - 1); dfs(r, c + 1);
+    }
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        if (grid[r]![c] === '1') { count++; dfs(r, c); }
+      }
+    }
+    return count;
+  },
+
+  'course-schedule': (...args: unknown[]) => {
+    const numCourses = args[0] as number;
+    const prerequisites = args[1] as number[][];
+    const adj: number[][] = Array.from({ length: numCourses }, () => []);
+    for (const [a, b] of prerequisites) adj[b!]!.push(a!);
+    const state = new Array<number>(numCourses).fill(0);
+    function dfs(node: number): boolean {
+      if (state[node] === 1) return false;
+      if (state[node] === 2) return true;
+      state[node] = 1;
+      for (const nb of adj[node]!) { if (!dfs(nb)) return false; }
+      state[node] = 2;
+      return true;
+    }
+    for (let i = 0; i < numCourses; i++) { if (!dfs(i)) return false; }
+    return true;
+  },
+
 };

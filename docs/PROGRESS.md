@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 173 problems; linked-list fully tiered (easy/medium/hard). Preamble infrastructure for ListNode problems complete.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (780 unit tests across 22 files).
-**Next up:** Tree tag (binary trees); UI polish; additional hard/medium problems.
+**Current focus:** TypeScript language support added (sucrase); bank at 174 problems; marketing site at /site/; language preference in Options EditorSection.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (788 unit tests across 23 files).
+**Next up:** Graph/BFS tag (3+ problems); tree tag; more UX polish.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -222,7 +222,11 @@ Still pending:
 - [x] Add 4 easy problems (plus-one, length-of-last-word, palindrome-number, excel-column-number); 756 tests; bank at 165
 - [x] Add middle-of-linked-list (easy), palindrome-linked-list (easy), remove-nth-from-end (medium); 765 tests; bank at 168
 - [x] Add linked-list medium/hard — reorder-list, add-two-numbers, odd-even-linked-list, intersection-two-linked-lists, merge-k-sorted-lists; 780 tests; bank at 173
-- [ ] Marketing site iteration + Vercel deployment
+- [x] Marketing site iteration + Vercel deployment — static HTML landing page at /site/index.html with vercel.json; pure grayscale design, 12-point comparison, problem bank stats, commit+features CTAs
+- [x] **TypeScript language support** — sucrase strips type annotations before the JS worker runs; all 174 problems support TS via JS starter; CM6 uses `javascript({ typescript: true })`; Options → Editor adds default-language radio group; 8 new transpile tests
+- [ ] Graph/BFS tag — add `graph` to ProblemTag + PROBLEM_TAGS; 3 representative problems (flood-fill easy, number-of-islands medium, course-schedule medium)
+- [ ] Tree tag — binary tree problems with TreeNode preamble (similar pattern to ListNode linked-list preamble)
+- [ ] Popup: add preferred-language segmented control (mirrors keymap row)
 
 ---
 
