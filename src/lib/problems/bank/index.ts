@@ -38,6 +38,7 @@ import { problem as minimumValuePositiveStepSum } from './minimum-value-positive
 import { problem as countNumberOfPairs } from './count-number-of-pairs';
 import { problem as validMountainArray } from './valid-mountain-array';
 import { problem as canPlaceFlowers } from './can-place-flowers';
+import { problem as maximumProductTwoElements } from './maximum-product-two-elements';
 // arrays — medium
 import { problem as rangeSumQuery2D } from './range-sum-query-2d';
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
@@ -115,6 +116,7 @@ import { problem as reverseStringWords } from './reverse-string-words';
 import { problem as stringMultiply } from './string-multiply';
 import { problem as isSubsequenceMedium } from './is-subsequence-medium';
 import { problem as characterReplacement } from './character-replacement';
+import { problem as stringCompression } from './string-compression';
 import { problem as restoreIpAddresses } from './restore-ip-addresses';
 
 // hash-map — easy
@@ -199,6 +201,7 @@ import { problem as binarySearchRange } from './binary-search-range';
 import { problem as isPerfectSquare } from './is-perfect-square';
 import { problem as searchInsertPosition } from './search-insert-position';
 // binary-search — medium
+import { problem as findKClosestElements } from './find-k-closest-elements';
 import { problem as search2dMatrixII } from './search-2d-matrix-ii';
 import { problem as findKPairsSmallestSums } from './find-k-pairs-smallest-sums';
 import { problem as searchRotatedSorted } from './search-rotated-sorted';
@@ -269,6 +272,8 @@ import { problem as findNUniqueIntegersSumToZero } from './find-n-unique-integer
 import { problem as decodeXoredArray } from './decode-xored-array';
 import { problem as signOfProductArray } from './sign-of-product-array';
 import { problem as convertTemperature } from './convert-temperature';
+import { problem as maximum69Number } from './maximum-69-number';
+import { problem as countOfMatchesTournament } from './count-of-matches-tournament';
 // math — hard
 import { problem as fractionToRecurringDecimal } from './fraction-to-recurring-decimal';
 import { problem as integerToEnglishWords } from './integer-to-english-words';
@@ -498,6 +503,7 @@ export const problems: readonly Problem[] = [
   countNumberOfPairs,
   validMountainArray,
   canPlaceFlowers,
+  maximumProductTwoElements,
   singleNumber,
   // arrays — medium
   rangeSumQuery2D,
@@ -583,6 +589,7 @@ export const problems: readonly Problem[] = [
   stringMultiply,
   isSubsequenceMedium,
   characterReplacement,
+  stringCompression,
   integerToRoman,
   // hash-map — easy
   findAnagramMappings,
@@ -667,6 +674,7 @@ export const problems: readonly Problem[] = [
   isPerfectSquare,
   searchInsertPosition,
   // binary-search — medium
+  findKClosestElements,
   search2dMatrixII,
   findKPairsSmallestSums,
   searchRotatedSorted,
@@ -744,6 +752,8 @@ export const problems: readonly Problem[] = [
   decodeXoredArray,
   signOfProductArray,
   convertTemperature,
+  maximum69Number,
+  countOfMatchesTournament,
   // math — hard
   fractionToRecurringDecimal,
   integerToEnglishWords,

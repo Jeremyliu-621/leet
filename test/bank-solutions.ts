@@ -5884,4 +5884,46 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return nums1.map(v => map.get(v)!);
   },
 
+  'maximum-product-two-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let max1 = 0, max2 = 0;
+    for (const n of nums) {
+      if (n > max1) { max2 = max1; max1 = n; }
+      else if (n > max2) max2 = n;
+    }
+    return (max1 - 1) * (max2 - 1);
+  },
+
+  'find-k-closest-elements': (...args: unknown[]) => {
+    const arr = args[0] as number[], k = args[1] as number, x = args[2] as number;
+    let lo = 0, hi = arr.length - k;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (x - arr[mid]! > arr[mid + k]! - x) lo = mid + 1;
+      else hi = mid;
+    }
+    return arr.slice(lo, lo + k);
+  },
+
+  'string-compression': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let result = '', i = 0;
+    while (i < s.length) {
+      let j = i;
+      while (j < s.length && s[j] === s[i]) j++;
+      result += s[i];
+      if (j - i > 1) result += (j - i);
+      i = j;
+    }
+    return result.length;
+  },
+
+  'maximum-69-number': (...args: unknown[]) => {
+    return parseInt((args[0] as number).toString().replace('6', '9'));
+  },
+
+  'count-of-matches-tournament': (...args: unknown[]) => {
+    return (args[0] as number) - 1;
+  },
+
 };

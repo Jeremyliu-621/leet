@@ -5221,4 +5221,48 @@ def anagramMappings(nums1, nums2):
     return [idx[v] for v in nums1]
 `,
 
+  'maximum-product-two-elements': `
+def maxProduct(nums):
+    a = sorted(nums, reverse=True)
+    return (a[0]-1)*(a[1]-1)
+`,
+
+  'find-k-closest-elements': `
+def findClosestElements(arr, k, x):
+    a = list(arr)
+    lo, hi = 0, len(a) - k
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if x - a[mid] > a[mid+k] - x:
+            lo = mid + 1
+        else:
+            hi = mid
+    return a[lo:lo+k]
+`,
+
+  'string-compression': `
+def compress(s):
+    result = ''
+    i = 0
+    while i < len(s):
+        j = i
+        while j < len(s) and s[j] == s[i]:
+            j += 1
+        result += s[i]
+        if j - i > 1:
+            result += str(j - i)
+        i = j
+    return len(result)
+`,
+
+  'maximum-69-number': `
+def maximum69Number(num):
+    return int(str(num).replace('6', '9', 1))
+`,
+
+  'count-of-matches-tournament': `
+def numberOfMatches(n):
+    return n - 1
+`,
+
 };
