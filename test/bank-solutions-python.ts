@@ -300,6 +300,55 @@ export const pythonSolutions: Record<string, string> = {
         stack.append(i)
     return answer
 `,
+  'max-consecutive-ones': `def maxConsecutiveOnes(nums):
+    best = 0
+    current = 0
+    for n in nums:
+        current = current + 1 if n == 1 else 0
+        if current > best:
+            best = current
+    return best
+`,
+  'capitalize-words': `def capitalizeWords(sentence):
+    return ' '.join(w[0].upper() + w[1:] for w in sentence.split(' '))
+`,
+  'intersection-two-arrays': `def intersectionTwoArrays(nums1, nums2):
+    set1 = set(nums1)
+    return list(dict.fromkeys(n for n in nums2 if n in set1))
+`,
+  'subarray-sum-equals-k': `def subarraySumEqualsK(nums, k):
+    freq = {0: 1}
+    total = 0
+    count = 0
+    for n in nums:
+        total += n
+        count += freq.get(total - k, 0)
+        freq[total] = freq.get(total, 0) + 1
+    return count
+`,
+  'is-perfect-square': `def isPerfectSquare(n):
+    lo, hi = 1, n
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        sq = mid * mid
+        if sq == n:
+            return True
+        if sq < n:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return False
+`,
+  'sum-of-squares': `def sumOfSquares(n):
+    if n == 0:
+        return 0
+    total = 0
+    while n > 0:
+        d = n % 10
+        total += d * d
+        n //= 10
+    return total
+`,
   'find-max-min': `def findMaxMin(nums):
     max_v = min_v = nums[0]
     for v in nums[1:]:

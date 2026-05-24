@@ -330,6 +330,77 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return a;
   },
 
+  // --- arrays (batch 6) ----------------------------------------------------
+  'max-consecutive-ones': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let best = 0;
+    let current = 0;
+    for (const n of nums) {
+      current = n === 1 ? current + 1 : 0;
+      if (current > best) best = current;
+    }
+    return best;
+  },
+
+  // --- strings (batch 6) ---------------------------------------------------
+  'capitalize-words': (...args: unknown[]) => {
+    const sentence = args[0] as string;
+    return sentence
+      .split(' ')
+      .map((w) => (w[0] as string).toUpperCase() + w.slice(1))
+      .join(' ');
+  },
+
+  // --- hash-map (batch 6) --------------------------------------------------
+  'intersection-two-arrays': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const set1 = new Set(nums1);
+    return [...new Set(nums2)].filter((n) => set1.has(n));
+  },
+
+  'subarray-sum-equals-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const freq = new Map<number, number>([[0, 1]]);
+    let sum = 0;
+    let count = 0;
+    for (const n of nums) {
+      sum += n;
+      count += freq.get(sum - k) ?? 0;
+      freq.set(sum, (freq.get(sum) ?? 0) + 1);
+    }
+    return count;
+  },
+
+  // --- binary-search (batch 6) ---------------------------------------------
+  'is-perfect-square': (...args: unknown[]) => {
+    const n = args[0] as number;
+    let lo = 1;
+    let hi = n;
+    while (lo <= hi) {
+      const mid = Math.floor((lo + hi) / 2);
+      const sq = mid * mid;
+      if (sq === n) return true;
+      if (sq < n) lo = mid + 1;
+      else hi = mid - 1;
+    }
+    return false;
+  },
+
+  // --- math (batch 6) ------------------------------------------------------
+  'sum-of-squares': (...args: unknown[]) => {
+    let n = args[0] as number;
+    if (n === 0) return 0;
+    let sum = 0;
+    while (n > 0) {
+      const d = n % 10;
+      sum += d * d;
+      n = Math.floor(n / 10);
+    }
+    return sum;
+  },
+
   // --- arrays (batch 5) ----------------------------------------------------
   'find-max-min': (...args: unknown[]) => {
     const nums = args[0] as number[];

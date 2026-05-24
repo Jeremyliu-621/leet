@@ -8,6 +8,7 @@ import { problem as maxSubarray } from './max-subarray';
 import { problem as missingNumber } from './missing-number';
 import { problem as containsDuplicate } from './contains-duplicate';
 import { problem as findMaxMin } from './find-max-min';
+import { problem as maxConsecutiveOnes } from './max-consecutive-ones';
 
 // strings
 import { problem as vowelTally } from './vowel-tally';
@@ -16,6 +17,7 @@ import { problem as isPalindromeClean } from './is-palindrome-clean';
 import { problem as compressString } from './compress-string';
 import { problem as longestCommonPrefix } from './longest-common-prefix';
 import { problem as reverseString } from './reverse-string';
+import { problem as capitalizeWords } from './capitalize-words';
 
 // hash-map
 import { problem as firstUniqueChar } from './first-unique-char';
@@ -24,6 +26,8 @@ import { problem as mostFrequentValue } from './most-frequent-value';
 import { problem as anagramCheck } from './anagram-check';
 import { problem as wordFrequency } from './word-frequency';
 import { problem as countGoodPairs } from './count-good-pairs';
+import { problem as intersectionTwoArrays } from './intersection-two-arrays';
+import { problem as subarraySumEqualsK } from './subarray-sum-equals-k';
 
 // two-pointers
 import { problem as reverseArrayInplace } from './reverse-array-inplace';
@@ -45,6 +49,7 @@ import { problem as findTargetIndex } from './find-target-index';
 import { problem as integerSquareRoot } from './integer-square-root';
 import { problem as firstNotSmaller } from './first-not-smaller';
 import { problem as binarySearchRange } from './binary-search-range';
+import { problem as isPerfectSquare } from './is-perfect-square';
 
 // stack
 import { problem as balancedBrackets } from './balanced-brackets';
@@ -60,6 +65,7 @@ import { problem as greatestCommonDivisor } from './greatest-common-divisor';
 import { problem as countDivisors } from './count-divisors';
 import { problem as powerOfTwo } from './power-of-two';
 import { problem as fibonacciNumber } from './fibonacci-number';
+import { problem as sumOfSquares } from './sum-of-squares';
 
 export const problems: readonly Problem[] = [
   runningSum,
@@ -69,18 +75,22 @@ export const problems: readonly Problem[] = [
   missingNumber,
   containsDuplicate,
   findMaxMin,
+  maxConsecutiveOnes,
   vowelTally,
   reverseWordsOrder,
   isPalindromeClean,
   compressString,
   longestCommonPrefix,
   reverseString,
+  capitalizeWords,
   firstUniqueChar,
   twoSumIndices,
   mostFrequentValue,
   anagramCheck,
   wordFrequency,
   countGoodPairs,
+  intersectionTwoArrays,
+  subarraySumEqualsK,
   reverseArrayInplace,
   sortedPairExists,
   mergeSortedLists,
@@ -96,6 +106,7 @@ export const problems: readonly Problem[] = [
   integerSquareRoot,
   firstNotSmaller,
   binarySearchRange,
+  isPerfectSquare,
   balancedBrackets,
   removeAdjacentDupes,
   nextGreaterElement,
@@ -107,4 +118,5 @@ export const problems: readonly Problem[] = [
   countDivisors,
   powerOfTwo,
   fibonacciNumber,
+  sumOfSquares,
 ];
