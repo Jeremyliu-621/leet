@@ -17,8 +17,11 @@ import type {
   UnlockToken,
 } from '../../lib/types';
 import { DIFFICULTIES, PROBLEM_TAGS } from '../../lib/types';
+import { getAllProblems } from '../../lib/problems';
 import { computeSolvedStats } from './popup-helpers';
 import type { SolvedStats } from './popup-helpers';
+
+const BANK_SIZE = getAllProblems().length;
 
 const KEYMAP_OPTIONS: ReadonlyArray<{ value: EditorKeymap; label: string }> = [
   { value: 'default', label: 'Default' },
@@ -446,6 +449,7 @@ function Stat({ label, value, sub }: { label: string; value: number; sub: string
 /** Compact difficulty + top-tag breakdown for the popup. */
 function SolveBreakdown({ stats }: { stats: SolvedStats }) {
   if (stats.total === 0) return null;
+  const pct = Math.round((stats.total / BANK_SIZE) * 100);
 
   // Max count across difficulties — used to size the mini bars.
   const maxDiff = Math.max(1, ...DIFFICULTIES.map((d) => stats.byDifficulty[d]));
@@ -463,7 +467,7 @@ function SolveBreakdown({ stats }: { stats: SolvedStats }) {
   return (
     <section className="mt-4 border-t border-border pt-4" aria-label="Solved problem breakdown">
       <h2 className="font-mono text-[9px] uppercase tracking-widest text-faint">
-        Breakdown · {stats.total} unique solved
+        Breakdown · {stats.total}/{BANK_SIZE} solved ({pct}%)
       </h2>
 
       {/* Difficulty mini bars */}
