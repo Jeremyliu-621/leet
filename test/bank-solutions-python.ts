@@ -4028,6 +4028,45 @@ def deserialize(data):
     return ones
 `,
 
+  'reverse-only-letters': `def reverseOnlyLetters(s):
+    arr = list(s)
+    lo, hi = 0, len(arr) - 1
+    while lo < hi:
+        while lo < hi and not arr[lo].isalpha():
+            lo += 1
+        while lo < hi and not arr[hi].isalpha():
+            hi -= 1
+        if lo < hi:
+            arr[lo], arr[hi] = arr[hi], arr[lo]
+            lo += 1
+            hi -= 1
+    return ''.join(arr)
+`,
+
+  'backspace-string-compare': `def backspaceCompare(s, t):
+    def build(st):
+        stack = []
+        for c in st:
+            if c == '#':
+                if stack:
+                    stack.pop()
+            else:
+                stack.append(c)
+        return ''.join(stack)
+    return build(s) == build(t)
+`,
+
+  'number-of-steps': `def numberOfSteps(num):
+    steps = 0
+    while num > 0:
+        if num % 2 == 0:
+            num >>= 1
+        else:
+            num -= 1
+        steps += 1
+    return steps
+`,
+
   'summary-ranges': `def summaryRanges(nums):
     result = []
     i = 0

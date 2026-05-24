@@ -46,6 +46,8 @@ import { problem as gameOfLife } from './game-of-life';
 import { problem as missingRanges } from './missing-ranges';
 
 // strings — easy
+import { problem as reverseOnlyLetters } from './reverse-only-letters';
+import { problem as backspaceStringCompare } from './backspace-string-compare';
 import { problem as vowelTally } from './vowel-tally';
 import { problem as reverseWordsOrder } from './reverse-words-order';
 import { problem as isPalindromeClean } from './is-palindrome-clean';
@@ -167,6 +169,7 @@ import { problem as sumSubarrayMinimums } from './sum-subarray-minimums';
 import { problem as removeKDigits } from './remove-k-digits';
 
 // math — easy
+import { problem as numberOfSteps } from './number-of-steps';
 import { problem as hammingWeight } from './hamming-weight';
 import { problem as digitSum } from './digit-sum';
 import { problem as isPrimeNumber } from './is-prime-number';
@@ -412,6 +415,8 @@ export const problems: readonly Problem[] = [
   gameOfLife,
   missingRanges,
   // strings — easy
+  reverseOnlyLetters,
+  backspaceStringCompare,
   vowelTally,
   reverseWordsOrder,
   isPalindromeClean,
@@ -533,6 +538,7 @@ export const problems: readonly Problem[] = [
   sumSubarrayMinimums,
   removeKDigits,
   // math — easy
+  numberOfSteps,
   fizzBuzz,
   hammingWeight,
   digitSum,

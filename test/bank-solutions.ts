@@ -4526,6 +4526,35 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ones;
   },
 
+  'reverse-only-letters': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const arr = s.split('');
+    let lo = 0, hi = arr.length - 1;
+    while (lo < hi) {
+      while (lo < hi && !/[a-zA-Z]/.test(arr[lo]!)) lo++;
+      while (lo < hi && !/[a-zA-Z]/.test(arr[hi]!)) hi--;
+      if (lo < hi) { [arr[lo], arr[hi]] = [arr[hi]!, arr[lo]!]; lo++; hi--; }
+    }
+    return arr.join('');
+  },
+
+  'backspace-string-compare': (...args: unknown[]) => {
+    const s = args[0] as string, t = args[1] as string;
+    function build(str: string): string {
+      const stack: string[] = [];
+      for (const c of str) { if (c === '#') stack.pop(); else stack.push(c); }
+      return stack.join('');
+    }
+    return build(s) === build(t);
+  },
+
+  'number-of-steps': (...args: unknown[]) => {
+    let num = args[0] as number;
+    let steps = 0;
+    while (num > 0) { if (num % 2 === 0) num >>= 1; else num--; steps++; }
+    return steps;
+  },
+
   'summary-ranges': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const result: string[] = [];
