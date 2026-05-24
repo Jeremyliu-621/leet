@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 168 problems; linked-list at 5 easy + 1 medium; preamble pattern established.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (765 unit tests across 22 files).
-**Next up:** More linked-list medium problems (odd-even, intersection); fill remaining thin tiers.
+**Current focus:** Bank at 173 problems; linked-list fully tiered (easy/medium/hard). Preamble infrastructure for ListNode problems complete.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (780 unit tests across 22 files).
+**Next up:** Tree tag (binary trees); UI polish; additional hard/medium problems.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -221,7 +221,7 @@ Still pending:
 - [x] Add linked-list tag + 3 problems (reverse-linked-list, linked-list-cycle, merge-two-sorted-linked-lists) with preamble; bank at 161
 - [x] Add 4 easy problems (plus-one, length-of-last-word, palindrome-number, excel-column-number); 756 tests; bank at 165
 - [x] Add middle-of-linked-list (easy), palindrome-linked-list (easy), remove-nth-from-end (medium); 765 tests; bank at 168
-- [ ] Add more linked-list medium problems (odd-even-linked-list, add-two-numbers)
+- [x] Add linked-list medium/hard — reorder-list, add-two-numbers, odd-even-linked-list, intersection-two-linked-lists, merge-k-sorted-lists; 780 tests; bank at 173
 - [ ] Marketing site iteration + Vercel deployment
 
 ---
