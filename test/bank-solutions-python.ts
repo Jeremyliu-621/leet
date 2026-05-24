@@ -3976,4 +3976,28 @@ def deserialize(data):
     return sorted(result)
 `,
 
+  'min-stack': `def minStackRunner(ops, args):
+    st, min_st = [], []
+    result = []
+    for op, a in zip(ops, args):
+        if op == 'push':
+            v = a[0]
+            st.append(v)
+            if not min_st or v <= min_st[-1]:
+                min_st.append(v)
+            result.append(None)
+        elif op == 'pop':
+            v = st.pop()
+            if v == min_st[-1]:
+                min_st.pop()
+            result.append(None)
+        elif op == 'top':
+            result.append(st[-1])
+        elif op == 'getMin':
+            result.append(min_st[-1])
+        else:
+            result.append(None)
+    return result
+`,
+
 };

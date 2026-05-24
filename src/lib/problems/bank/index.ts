@@ -149,6 +149,7 @@ import { problem as removeAdjacentDupes } from './remove-adjacent-dupes';
 import { problem as nextGreaterElement } from './next-greater-element';
 import { problem as dailyTemperatures } from './daily-temperatures';
 import { problem as evaluateRpn } from './evaluate-rpn';
+import { problem as minStack } from './min-stack';
 // stack — medium
 import { problem as asteroidCollision } from './asteroid-collision';
 import { problem as scoreOfParentheses } from './score-of-parentheses';
@@ -503,6 +504,7 @@ export const problems: readonly Problem[] = [
   nextGreaterElement,
   dailyTemperatures,
   evaluateRpn,
+  minStack,
   // stack — medium
   asteroidCollision,
   scoreOfParentheses,

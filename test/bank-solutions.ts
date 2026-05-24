@@ -4584,4 +4584,27 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'min-stack': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as number[][];
+    const st: number[] = [];
+    const minSt: number[] = [];
+    return ops.map((op, i) => {
+      const a = opArgs[i]!;
+      if (op === 'push') {
+        st.push(a[0]!);
+        if (minSt.length === 0 || a[0]! <= minSt[minSt.length - 1]!) minSt.push(a[0]!);
+        return null;
+      }
+      if (op === 'pop') {
+        const v = st.pop()!;
+        if (v === minSt[minSt.length - 1]) minSt.pop();
+        return null;
+      }
+      if (op === 'top') return st[st.length - 1]!;
+      if (op === 'getMin') return minSt[minSt.length - 1]!;
+      return null;
+    });
+  },
+
 };

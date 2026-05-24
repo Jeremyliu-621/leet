@@ -60,7 +60,7 @@ describe('problem selector', () => {
     // that guarantees zero matches — e.g., hard+math when no hard math exists)
     expect(selectProblem({ difficulties: ['easy'], tags: ['stack'], excludeIds: [
       'balanced-brackets', 'remove-adjacent-dupes', 'next-greater-element',
-      'daily-temperatures', 'evaluate-rpn',
+      'daily-temperatures', 'evaluate-rpn', 'min-stack',
     ] })).toBeUndefined();
   });
 
