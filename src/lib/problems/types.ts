@@ -28,7 +28,11 @@ export interface Problem {
   title: string;
   difficulty: Difficulty;
   tags: readonly ProblemTag[];
-  /** Problem statement as plain text; blank lines separate paragraphs. */
+  /**
+   * Problem statement. Markdown (GitHub-flavoured) is supported — plain text
+   * with blank-line paragraph breaks renders cleanly too, so older bank
+   * entries authored as plain text keep working.
+   */
   description: string;
   /** Constraint lines, rendered as a list. */
   constraints: readonly string[];
@@ -44,4 +48,9 @@ export interface Problem {
   visibleTests: readonly TestCase[];
   /** Tests hidden from the user and run only by the "Submit" button. */
   hiddenTests: readonly TestCase[];
+  /**
+   * Optional progressive hints. Each hint is markdown. The challenge UI
+   * reveals them one at a time, gated by an explicit user click.
+   */
+  hints?: readonly string[];
 }
