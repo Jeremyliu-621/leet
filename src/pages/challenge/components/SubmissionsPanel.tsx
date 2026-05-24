@@ -1,13 +1,7 @@
 import { useState } from 'react';
+import type { SubmissionRecord } from '../../../lib/types';
 
-export interface SubmissionRecord {
-  attempt: number;
-  timestamp: number;
-  outcome: 'accepted' | 'wrong-answer' | 'runtime-error' | 'timeout';
-  passCount: number;
-  totalTests: number;
-  durationMs?: number;
-}
+export type { SubmissionRecord };
 
 interface SubmissionsPanelProps {
   submissions: readonly SubmissionRecord[];

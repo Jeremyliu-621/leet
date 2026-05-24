@@ -82,6 +82,22 @@ export interface SolvedProblemRecord {
   domain: string;
 }
 
+// --- Submission history ---------------------------------------------------
+
+/**
+ * A single Submit attempt recorded on the challenge page. Persisted per-problem
+ * so the SubmissionsPanel can restore history after a page reload.
+ */
+export interface SubmissionRecord {
+  attempt: number;
+  timestamp: number;
+  outcome: 'accepted' | 'wrong-answer' | 'runtime-error' | 'timeout';
+  passCount: number;
+  totalTests: number;
+  /** Total execution time of all test cases in this submission, if measured. */
+  durationMs?: number;
+}
+
 // --- Streaks --------------------------------------------------------------
 
 export interface StreakDay {

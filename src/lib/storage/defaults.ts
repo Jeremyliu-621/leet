@@ -39,4 +39,5 @@ export const STORAGE_DEFAULTS: StorageSchema = {
   solvedProblems: [],
   streakHistory: [],
   draftCode: {},
+  submissionHistory: {},
 };

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import type { SupportedLanguage, UserPreferences } from '../../lib/types';
+import type { SupportedLanguage, SubmissionRecord, UserPreferences } from '../../lib/types';
 import type { Problem } from '../../lib/problems/types';
 import type { JudgeResult } from '../../lib/judge';
 import type { ChallengeFailureReason } from '../../lib/messaging/runtime';
@@ -15,7 +15,9 @@ import { ProblemPanel } from './components/ProblemPanel';
 import { EditorPanel } from './components/EditorPanel';
 import { CustomTestPanel } from './components/CustomTestPanel';
 import { SubmissionsPanel } from './components/SubmissionsPanel';
-import type { SubmissionRecord } from './components/SubmissionsPanel';
+
+/** Maximum submissions persisted per problem to cap storage usage. */
+const MAX_HISTORY_PER_PROBLEM = 20;
 
 // ---------------------------------------------------------------------------
 // Draggable splitter
@@ -192,8 +194,15 @@ export function Challenge() {
   // Custom test state.
   const [customTestResult, setCustomTestResult] = useState<CustomTestStatus>({ status: 'idle' });
 
-  // Per-session submission history (Submit clicks only).
+  // Per-session submission history (Submit clicks only). Persisted to storage
+  // so history survives a page reload. Cleared on acceptance.
   const [submissions, setSubmissions] = useState<SubmissionRecord[]>([]);
+  // Ref mirrors submissions so handlers can read the current list synchronously
+  // without closures going stale, enabling direct persistence after each update.
+  const submissionsRef = useRef<SubmissionRecord[]>([]);
+  useEffect(() => {
+    submissionsRef.current = submissions;
+  }, [submissions]);
 
   // Problem panel width as a percentage of the two-column container.
   // Initialised from prefs once `pageState` transitions to 'ready'.
@@ -264,6 +273,19 @@ export function Challenge() {
       setPanelPct(prefs.problemPanelWidthPct);
       setPageState({ status: 'ready', problem, prefs });
       setResolvedTheme(resolveTheme(prefs.theme));
+
+      // Restore persisted submission history for this problem — non-critical.
+      void (async () => {
+        try {
+          const allHistory = await getValue('submissionHistory');
+          const prior = allHistory[problem.id];
+          if (prior && prior.length > 0 && !cancelled) {
+            setSubmissions(prior);
+          }
+        } catch {
+          /* storage unavailable */
+        }
+      })();
 
       // Load streak summary in the background — non-critical, fails silently.
       void (async () => {
@@ -436,25 +458,32 @@ export function Challenge() {
         timeout: 'timeout',
         'compile-error': 'runtime-error',
       };
-      setSubmissions((prev) => [
-        ...prev,
-        {
-          attempt: attemptNumber,
-          timestamp: Date.now(),
-          outcome: outcomeMap[result.outcome] ?? 'runtime-error',
-          passCount: result.passed,
-          totalTests: result.total,
-          durationMs: result.totalDurationMs,
-        },
-      ]);
+      const newRecord: SubmissionRecord = {
+        attempt: attemptNumber,
+        timestamp: Date.now(),
+        outcome: outcomeMap[result.outcome] ?? 'runtime-error',
+        passCount: result.passed,
+        totalTests: result.total,
+        durationMs: result.totalDurationMs,
+      };
+      const updatedSubmissions = [...submissionsRef.current, newRecord];
+      setSubmissions(updatedSubmissions);
 
       if (result.outcome === 'accepted') {
         // About to navigate back to the target — suppress the beforeunload prompt.
         isResolvingRef.current = true;
-        // Clear the saved draft — problem is solved.
+        // Clear the saved draft and submission history — problem is solved.
         try {
           await updateValue('draftCode', (drafts) => {
             const { [problem.id]: _, ...rest } = drafts;
+            return rest;
+          });
+        } catch {
+          /* storage unavailable */
+        }
+        try {
+          await updateValue('submissionHistory', (history) => {
+            const { [problem.id]: _, ...rest } = history;
             return rest;
           });
         } catch {
@@ -487,7 +516,17 @@ export function Challenge() {
           }
         }
       } else {
-        // Failed submission — increment attempt counter.
+        // Failed submission — persist history and increment attempt counter.
+        void (async () => {
+          try {
+            await updateValue('submissionHistory', (history) => ({
+              ...history,
+              [problem.id]: updatedSubmissions.slice(-MAX_HISTORY_PER_PROBLEM),
+            }));
+          } catch {
+            /* storage unavailable */
+          }
+        })();
         const newAttempts = attempts + 1;
         setAttempts(newAttempts);
 
@@ -496,6 +535,15 @@ export function Challenge() {
         }
       }
     } catch (err) {
+      const errorRecord: SubmissionRecord = {
+        attempt: attemptNumber,
+        timestamp: Date.now(),
+        outcome: 'runtime-error',
+        passCount: 0,
+        totalTests,
+      };
+      const updatedOnError = [...submissionsRef.current, errorRecord];
+      setSubmissions(updatedOnError);
       setVerdict({
         outcome: 'compile-error',
         passed: 0,
@@ -503,16 +551,16 @@ export function Challenge() {
         verdicts: [],
         message: err instanceof Error ? err.message : 'The code sandbox failed to load.',
       });
-      setSubmissions((prev) => [
-        ...prev,
-        {
-          attempt: attemptNumber,
-          timestamp: Date.now(),
-          outcome: 'runtime-error',
-          passCount: 0,
-          totalTests,
-        },
-      ]);
+      void (async () => {
+        try {
+          await updateValue('submissionHistory', (history) => ({
+            ...history,
+            [problem.id]: updatedOnError.slice(-MAX_HISTORY_PER_PROBLEM),
+          }));
+        } catch {
+          /* storage unavailable */
+        }
+      })();
     } finally {
       setIsRunning(false);
     }

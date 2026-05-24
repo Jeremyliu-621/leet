@@ -7,6 +7,7 @@ import type {
   SolvedProblemRecord,
   StreakDay,
   StreakSummary,
+  SubmissionRecord,
   SupportedLanguage,
   UnlockToken,
   UserPreferences,
@@ -32,6 +33,13 @@ export interface StorageSchema {
   solvedProblems: SolvedProblemRecord[];
   streakHistory: StreakDay[];
   draftCode: Record<string, DraftCodeEntry>;
+  /**
+   * Per-problem submission history. Keyed by problem id; each array holds the
+   * last MAX_SUBMISSION_HISTORY_PER_PROBLEM attempts, newest-last. Cleared when
+   * a problem is solved (accepted verdict). Stored in local (not sync) to avoid
+   * quota pressure.
+   */
+  submissionHistory: Record<string, SubmissionRecord[]>;
 }
 
 export type StorageKey = keyof StorageSchema;
@@ -55,4 +63,5 @@ export const STORAGE_AREAS: Readonly<Record<StorageKey, StorageAreaName>> = {
   solvedProblems: 'local',
   streakHistory: 'local',
   draftCode: 'local',
+  submissionHistory: 'local',
 };
