@@ -7,14 +7,14 @@ export const problem: Problem = {
   tags: ['graph'],
   description: `There are \`numCourses\` courses labeled \`0\` to \`numCourses - 1\`. You are given an array \`prerequisites\` where \`prerequisites[i] = [a, b]\` means course \`b\` must be taken before course \`a\`.
 
-Return **a valid ordering** to finish all courses. If it is impossible (a cycle exists), return an empty array.
+Return **a valid ordering** to finish all courses. If it is impossible (a cycle exists), return an empty array \`[]\`.
 
-There may be multiple valid orderings — any one is accepted.`,
+If multiple valid orderings exist, any one of them is accepted.`,
   constraints: [
-    '1 <= numCourses <= 2000',
-    '0 <= prerequisites.length <= numCourses * (numCourses - 1)',
-    'prerequisites[i].length == 2',
-    '0 <= a, b < numCourses',
+    '`1 <= numCourses <= 2000`',
+    '`0 <= prerequisites.length <= 5000`',
+    '`prerequisites[i].length == 2`',
+    '`0 <= a, b < numCourses`',
     'All prerequisite pairs are unique',
   ],
   examples: [
@@ -25,12 +25,17 @@ There may be multiple valid orderings — any one is accepted.`,
     },
     {
       input: 'numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]',
-      output: '[0,1,2,3] or [0,2,1,3]',
-      explanation: 'Multiple valid orderings exist.',
+      output: '[0,1,2,3]',
+      explanation: 'One valid ordering: take 0, then 1 and 2 (in any order), then 3.',
+    },
+    {
+      input: 'numCourses = 2, prerequisites = [[1,0],[0,1]]',
+      output: '[]',
+      explanation: 'Courses 0 and 1 depend on each other — impossible.',
     },
   ],
   hints: [
-    'Use Kahn\'s algorithm (BFS topological sort): build an in-degree table, start with all nodes with in-degree 0, and process them in a queue — appending each to the result and reducing the in-degrees of their neighbors.',
+    "Use Kahn's algorithm (BFS topological sort): build an in-degree table, start with all nodes with in-degree 0, and process them in a queue — appending each to the result and reducing the in-degrees of their neighbors.",
     'If the result array ends up shorter than numCourses, a cycle exists — return [].',
     'DFS also works: post-order DFS reverses to a valid topological order. Track three states (unvisited, in-progress, done) to detect cycles.',
   ],

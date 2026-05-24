@@ -3204,7 +3204,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const prereqs = args[1] as number[][];
     const inDeg = new Array<number>(n).fill(0);
     const adj: number[][] = Array.from({ length: n }, () => []);
-    for (const edge of prereqs) { const [a, b] = edge as [number, number]; adj[b]!.push(a); inDeg[a]!++; }
+    for (const edge of prereqs) { const [a, b] = edge as [number, number]; adj[b]!.push(a); inDeg[a] = (inDeg[a] ?? 0) + 1; }
     const queue: number[] = [];
     for (let i = 0; i < n; i++) { if (inDeg[i] === 0) queue.push(i); }
     const order: number[] = [];
@@ -3214,5 +3214,58 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       for (const nb of adj[cur]!) { if (--inDeg[nb]! === 0) queue.push(nb); }
     }
     return order.length === n ? order : [];
+  },
+
+  'zigzag-level-order': (...args: unknown[]) => {
+    const a = args[0] as (number | null)[] | null;
+    const root = a ? _buildTree(a) : null;
+    if (!root) return [];
+    const result: number[][] = [];
+    const queue: _TN[] = [root];
+    let leftToRight = true;
+    while (queue.length) {
+      const size = queue.length;
+      const level: number[] = [];
+      for (let i = 0; i < size; i++) {
+        const node = queue.shift()!;
+        level.push(node.v);
+        if (node.l) queue.push(node.l);
+        if (node.r) queue.push(node.r);
+      }
+      result.push(leftToRight ? level : [...level].reverse());
+      leftToRight = !leftToRight;
+    }
+    return result;
+  },
+
+  'reverse-nodes-in-k-group': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const k = args[1] as number;
+    interface LN { v: number; n: LN | null }
+    function fromArr(a: number[]): LN | null {
+      if (!a.length) return null;
+      const h: LN = { v: a[0]!, n: null };
+      let c = h;
+      for (let i = 1; i < a.length; i++) { c.n = { v: a[i]!, n: null }; c = c.n; }
+      return h;
+    }
+    function toArr(h: LN | null): number[] {
+      const r: number[] = [];
+      while (h) { r.push(h.v); h = h.n; }
+      return r;
+    }
+    function reverseK(head: LN | null): LN | null {
+      if (!head) return null;
+      let count = 0;
+      let cur: LN | null = head;
+      while (cur && count < k) { cur = cur.n; count++; }
+      if (count < k) return head;
+      let prev: LN | null = null;
+      cur = head;
+      for (let i = 0; i < k; i++) { const nxt: LN | null = cur!.n; cur!.n = prev; prev = cur; cur = nxt; }
+      head.n = reverseK(cur);
+      return prev;
+    }
+    return toArr(reverseK(fromArr(arr)));
   },
 };

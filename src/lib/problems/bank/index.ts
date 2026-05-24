@@ -215,6 +215,7 @@ import { problem as addTwoNumbers } from './add-two-numbers';
 import { problem as reorderList } from './reorder-list';
 // linked-list — hard
 import { problem as mergeKSortedLists } from './merge-k-sorted-lists';
+import { problem as reverseNodesInKGroup } from './reverse-nodes-in-k-group';
 
 // graph — easy
 import { problem as floodFill } from './flood-fill';
@@ -249,6 +250,7 @@ import { problem as lowestCommonAncestorBst } from './lowest-common-ancestor-bst
 import { problem as countGoodNodes } from './count-good-nodes';
 import { problem as constructBinaryTree } from './construct-binary-tree';
 import { problem as kthSmallestBst } from './kth-smallest-bst';
+import { problem as zigzagLevelOrder } from './zigzag-level-order';
 import { problem as flattenBinaryTree } from './flatten-binary-tree';
 // tree — hard
 import { problem as binaryTreeMaxPathSum } from './binary-tree-max-path-sum';
@@ -458,6 +460,7 @@ export const problems: readonly Problem[] = [
   reorderList,
   // linked-list — hard
   mergeKSortedLists,
+  reverseNodesInKGroup,
   // graph — easy
   floodFill,
   findTheTownJudge,
@@ -490,6 +493,7 @@ export const problems: readonly Problem[] = [
   countGoodNodes,
   constructBinaryTree,
   kthSmallestBst,
+  zigzagLevelOrder,
   flattenBinaryTree,
   // tree — hard
   binaryTreeMaxPathSum,

@@ -2602,4 +2602,44 @@ def deserialize(data):
     return build(0, len(inorder) - 1)
 `,
 
+  'zigzag-level-order': `def zigzagLevelOrder(root):
+    if not root:
+        return []
+    result = []
+    queue = [root]
+    left_to_right = True
+    while queue:
+        size = len(queue)
+        level = []
+        for _ in range(size):
+            node = queue.pop(0)
+            level.append(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        result.append(level if left_to_right else level[::-1])
+        left_to_right = not left_to_right
+    return result
+`,
+
+  'reverse-nodes-in-k-group': `def reverseKGroup(head, k):
+    def count_nodes(node):
+        count = 0
+        while node and count < k:
+            node = node.next
+            count += 1
+        return count
+    if count_nodes(head) < k:
+        return head
+    prev = None
+    cur = head
+    for _ in range(k):
+        nxt = cur.next
+        cur.next = prev
+        prev = cur
+        cur = nxt
+    head.next = reverseKGroup(cur, k)
+    return prev
+`,
 };
