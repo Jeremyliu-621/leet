@@ -15,6 +15,8 @@ import { problem as mergeIntervals } from './merge-intervals';
 import { problem as nonOverlappingIntervals } from './non-overlapping-intervals';
 import { problem as subsets } from './subsets';
 import { problem as combinationSum } from './combination-sum';
+import { problem as combinationSumII } from './combination-sum-ii';
+import { problem as palindromePartitioning } from './palindrome-partitioning';
 import { problem as rotateArray } from './rotate-array';
 import { problem as maxProductSubarray } from './max-product-subarray';
 import { problem as productExceptSelf } from './product-except-self';
@@ -205,6 +207,7 @@ import { problem as interleavingString } from './interleaving-string';
 import { problem as uniquePathsII } from './unique-paths-ii';
 import { problem as generateParentheses } from './generate-parentheses';
 import { problem as permutations } from './permutations';
+import { problem as numberOfDiceRolls } from './number-of-dice-rolls';
 // dynamic-programming — hard
 import { problem as longestPalindromicSubsequence } from './longest-palindromic-subsequence';
 import { problem as palindromePartitioningMinCuts } from './palindrome-partitioning-min-cuts';
@@ -309,6 +312,8 @@ export const problems: readonly Problem[] = [
   nonOverlappingIntervals,
   subsets,
   combinationSum,
+  combinationSumII,
+  palindromePartitioning,
   generateParentheses,
   permutations,
   rotateArray,
@@ -488,6 +493,7 @@ export const problems: readonly Problem[] = [
   triangle,
   interleavingString,
   uniquePathsII,
+  numberOfDiceRolls,
   // dynamic-programming — hard
   longestPalindromicSubsequence,
   palindromePartitioningMinCuts,

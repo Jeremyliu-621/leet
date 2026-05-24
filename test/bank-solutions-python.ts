@@ -3127,6 +3127,63 @@ def deserialize(data):
     return left if left else right
 `,
 
+  'combination-sum-ii': `def combinationSum2(candidates, target):
+    candidates = sorted(candidates)
+    result = []
+    def bt(start, rem, cur):
+        if rem == 0:
+            result.append(list(cur))
+            return
+        for i in range(start, len(candidates)):
+            if i > start and candidates[i] == candidates[i-1]:
+                continue
+            if candidates[i] > rem:
+                break
+            cur.append(candidates[i])
+            bt(i + 1, rem - candidates[i], cur)
+            cur.pop()
+    bt(0, target, [])
+    return result
+`,
+
+  'palindrome-partitioning': `def partition(s):
+    result = []
+    def is_palin(l, r):
+        while l < r:
+            if s[l] != s[r]:
+                return False
+            l += 1
+            r -= 1
+        return True
+    def bt(start, cur):
+        if start == len(s):
+            result.append(list(cur))
+            return
+        for end in range(start, len(s)):
+            if is_palin(start, end):
+                cur.append(s[start:end+1])
+                bt(end + 1, cur)
+                cur.pop()
+    bt(0, [])
+    return result
+`,
+
+  'number-of-dice-rolls': `def numRollsToTarget(n, k, target):
+    MOD = 10**9 + 7
+    dp = [0] * (target + 1)
+    dp[0] = 1
+    for _ in range(n):
+        nxt = [0] * (target + 1)
+        for t in range(target + 1):
+            if not dp[t]:
+                continue
+            for face in range(1, k + 1):
+                if t + face <= target:
+                    nxt[t + face] = (nxt[t + face] + dp[t]) % MOD
+        dp = nxt
+    return dp[target]
+`,
+
   'unique-paths-ii': `def uniquePathsWithObstacles(obstacleGrid):
     m, n = len(obstacleGrid), len(obstacleGrid[0])
     dp = [[0] * n for _ in range(m)]

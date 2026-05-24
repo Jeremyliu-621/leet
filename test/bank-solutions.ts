@@ -3731,6 +3731,58 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return lca(root)?.v ?? null;
   },
 
+  'combination-sum-ii': (...args: unknown[]) => {
+    const candidates = [...(args[0] as number[])].sort((a, b) => a - b);
+    const target = args[1] as number;
+    const result: number[][] = [];
+    function bt(start: number, rem: number, cur: number[]) {
+      if (rem === 0) { result.push([...cur]); return; }
+      for (let i = start; i < candidates.length; i++) {
+        if (i > start && candidates[i] === candidates[i-1]) continue;
+        if (candidates[i]! > rem) break;
+        cur.push(candidates[i]!);
+        bt(i + 1, rem - candidates[i]!, cur);
+        cur.pop();
+      }
+    }
+    bt(0, target, []);
+    return result;
+  },
+
+  'palindrome-partitioning': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const result: string[][] = [];
+    function isPalin(l: number, r: number) { while (l < r) { if (s[l++] !== s[r--]) return false; } return true; }
+    function bt(start: number, cur: string[]) {
+      if (start === s.length) { result.push([...cur]); return; }
+      for (let end = start; end < s.length; end++) {
+        if (isPalin(start, end)) { cur.push(s.slice(start, end + 1)); bt(end + 1, cur); cur.pop(); }
+      }
+    }
+    bt(0, []);
+    return result;
+  },
+
+  'number-of-dice-rolls': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const k = args[1] as number;
+    const target = args[2] as number;
+    const MOD = 1_000_000_007;
+    let dp = new Array<number>(target + 1).fill(0);
+    dp[0] = 1;
+    for (let i = 0; i < n; i++) {
+      const next = new Array<number>(target + 1).fill(0);
+      for (let t = 0; t <= target; t++) {
+        if (!dp[t]) continue;
+        for (let face = 1; face <= k; face++) {
+          if (t + face <= target) next[t + face] = (next[t + face]! + dp[t]!) % MOD;
+        }
+      }
+      dp = next;
+    }
+    return dp[target]!;
+  },
+
   'unique-paths-ii': (...args: unknown[]) => {
     const grid = args[0] as number[][];
     const m = grid.length, n = grid[0]!.length;
