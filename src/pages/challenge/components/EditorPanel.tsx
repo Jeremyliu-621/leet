@@ -373,14 +373,15 @@ export function EditorPanel({
         )}
       </div>
 
-      {/* Editor */}
-      <div className="min-h-0 flex-1 overflow-hidden" aria-label={`Code editor — ${LANGUAGE_LABEL[language]}`}>
+      {/* Editor — role="group" is required for aria-label on a non-landmark div. */}
+      <div
+        role="group"
+        aria-label={`Code editor — ${LANGUAGE_LABEL[language]}`}
+        className="min-h-0 flex-1 overflow-hidden"
+      >
         <div
           ref={editorContainerRef}
           className="h-full w-full"
-          // CodeMirror manages its own focus/tab behaviour; the outer div is
-          // presentational only.
-          aria-hidden="true"
         />
       </div>
 

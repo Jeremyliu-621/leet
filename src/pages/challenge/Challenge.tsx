@@ -178,8 +178,8 @@ export function Challenge() {
   const [verdictMode, setVerdictMode] = useState<RunMode>('run');
   const [attempts, setAttempts] = useState(0);
 
-  // Streak (loaded from storage in a future phase; placeholder 0 for now).
-  const [streak] = useState(0);
+  // Streak — loaded from storage after mount.
+  const [streak, setStreak] = useState(0);
 
   // Problem panel width as a percentage of the two-column container.
   // Initialised from prefs once `pageState` transitions to 'ready'.
@@ -228,6 +228,16 @@ export function Challenge() {
       setSecondsLeft(prefs.challengeTimeLimitSec);
       setPanelPct(prefs.problemPanelWidthPct);
       setPageState({ status: 'ready', problem, prefs });
+
+      // Load streak summary in the background — non-critical, fails silently.
+      void (async () => {
+        try {
+          const summary = await getValue('streakSummary');
+          if (!cancelled) setStreak(summary.current);
+        } catch {
+          /* storage unavailable */
+        }
+      })();
 
       // Warm Pyodide while the user is reading the problem, so the first
       // Run / Submit doesn't pay the cold-boot cost. Only when the user

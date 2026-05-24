@@ -4,13 +4,14 @@ import { deepEqual } from './deep-equal';
 
 /** Result for a single test, after comparing the Worker's output to `expected`. */
 export type TestVerdict =
-  | { index: number; status: 'pass'; logs: readonly string[] }
+  | { index: number; status: 'pass'; logs: readonly string[]; durationMs?: number }
   | {
       index: number;
       status: 'fail';
       expected: unknown;
       actual: unknown;
       logs: readonly string[];
+      durationMs?: number;
     }
   | { index: number; status: 'error'; error: string; logs: readonly string[] };
 
@@ -29,6 +30,8 @@ export interface JudgeResult {
   verdicts: readonly TestVerdict[];
   /** Human-readable detail for whole-run failures (timeout, compile error). */
   message?: string;
+  /** Sum of all per-test execution times in ms. Undefined if not measured. */
+  totalDurationMs?: number;
 }
 
 /**
@@ -49,6 +52,8 @@ export function buildVerdict(tests: readonly TestCase[], response: RunResponse):
   const verdicts: TestVerdict[] = [];
   let passed = 0;
   let sawError = false;
+  let totalDurationMs = 0;
+  let hasDuration = false;
 
   for (let i = 0; i < tests.length; i++) {
     const test = tests[i];
@@ -72,9 +77,15 @@ export function buildVerdict(tests: readonly TestCase[], response: RunResponse):
       continue;
     }
 
+    const durationMs = outcome.durationMs;
+    if (typeof durationMs === 'number') {
+      totalDurationMs += durationMs;
+      hasDuration = true;
+    }
+
     if (deepEqual(outcome.value, test.expected)) {
       passed++;
-      verdicts.push({ index: i, status: 'pass', logs: outcome.logs });
+      verdicts.push({ index: i, status: 'pass', logs: outcome.logs, durationMs });
     } else {
       verdicts.push({
         index: i,
@@ -82,6 +93,7 @@ export function buildVerdict(tests: readonly TestCase[], response: RunResponse):
         expected: test.expected,
         actual: outcome.value,
         logs: outcome.logs,
+        durationMs,
       });
     }
   }
@@ -95,5 +107,11 @@ export function buildVerdict(tests: readonly TestCase[], response: RunResponse):
     outcome = 'wrong-answer';
   }
 
-  return { outcome, passed, total: tests.length, verdicts };
+  return {
+    outcome,
+    passed,
+    total: tests.length,
+    verdicts,
+    totalDurationMs: hasDuration ? totalDurationMs : undefined,
+  };
 }

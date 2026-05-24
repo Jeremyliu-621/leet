@@ -61,6 +61,7 @@ self.onmessage = function handleMessage(event) {
 };
 
 // Runs a single test, capturing console output and any thrown error.
+// Measures wall-clock execution time with Date.now() for approximate ms timing.
 function runOne(userFn, test, index) {
   var logs = [];
   var originalLog = console.log;
@@ -69,8 +70,10 @@ function runOne(userFn, test, index) {
   };
   try {
     var args = test && Array.isArray(test.args) ? test.args : [];
+    var start = Date.now();
     var value = userFn.apply(null, args);
-    return { index: index, status: 'returned', value: value, logs: logs };
+    var durationMs = Date.now() - start;
+    return { index: index, status: 'returned', value: value, logs: logs, durationMs: durationMs };
   } catch (err) {
     return { index: index, status: 'threw', error: describeError(err), logs: logs };
   } finally {

@@ -34,7 +34,7 @@ export interface RunRequest {
 
 /** Outcome of a single test executed by the Worker. */
 export type TestOutcome =
-  | { index: number; status: 'returned'; value: unknown; logs: readonly string[] }
+  | { index: number; status: 'returned'; value: unknown; logs: readonly string[]; durationMs?: number }
   | { index: number; status: 'threw'; error: string; logs: readonly string[] };
 
 /** Why a run failed before producing per-test outcomes. */

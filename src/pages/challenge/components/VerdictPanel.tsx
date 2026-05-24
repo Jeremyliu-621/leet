@@ -27,6 +27,11 @@ function SingleVerdict({ verdict, index }: SingleVerdictProps) {
       >
         <span className="font-mono text-[10px] uppercase tracking-wider text-faint">{label}</span>
         <span className="font-mono text-xs font-semibold text-accent">pass</span>
+        {verdict.durationMs !== undefined && (
+          <span className="ml-auto font-mono text-[10px] text-faint tabular-nums">
+            {verdict.durationMs} ms
+          </span>
+        )}
       </div>
     );
   }
@@ -114,6 +119,11 @@ function OutcomeBanner({ result }: { result: JudgeResult }) {
           <span className="font-mono text-xs text-on-accent opacity-60">
             {result.passed}/{result.total} passed
           </span>
+          {result.totalDurationMs !== undefined && (
+            <span className="font-mono text-xs text-on-accent opacity-50">
+              {result.totalDurationMs} ms
+            </span>
+          )}
         </div>
       </div>
     );
