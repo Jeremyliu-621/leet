@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 210 problems (12 tags); sum-root-to-leaf, number-of-provinces, path-sum-iii added; 900 tests.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (900 unit tests across 23 files).
-**Next up:** More tree/graph problems; UI polish tasks.
+**Current focus:** Bank at 217 problems (12 tags); balanced-binary-tree, minimum-depth, word-search, surrounded-regions added; 921 tests.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (921 unit tests across 23 files).
+**Next up:** More tree/graph/linked-list problems.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -244,6 +244,7 @@ Still pending:
 - [x] flatten-binary-tree + zigzag-level-order (tree/medium) + reverse-nodes-in-k-group (linked-list/hard); 885 tests; bank at 205
 - [x] sum-root-to-leaf-numbers (medium tree): DFS digit accumulator; lowest-common-ancestor-binary-tree (medium tree): recursive LCA; 891 tests; bank at 207 (removed duplicate zigzag)
 - [x] sum-root-to-leaf, number-of-provinces (graph/easy), path-sum-iii (tree/medium): prefix-sum O(n); 900 tests; bank at 210
+- [x] balanced-binary-tree (easy), minimum-depth-binary-tree (easy), word-search (graph/medium), surrounded-regions (graph/medium); 921 tests; bank at 217
 
 ---
 
