@@ -45,6 +45,8 @@ import { problem as largestAltitude } from './largest-altitude';
 import { problem as sumOfOddLengthSubarrays } from './sum-of-odd-length-subarrays';
 import { problem as minimumSumMountainTriplet } from './minimum-sum-mountain-triplet';
 import { problem as findNumbersEvenDigits } from './find-numbers-even-digits';
+import { problem as rearrangeArrayElementsBySign } from './rearrange-array-elements-by-sign';
+import { problem as numberOfZeroFilledSubarrays } from './number-of-zero-filled-subarrays';
 // arrays — medium
 import { problem as rangeSumQuery2D } from './range-sum-query-2d';
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
@@ -135,6 +137,8 @@ import { problem as restoreIpAddresses } from './restore-ip-addresses';
 
 // hash-map — easy
 import { problem as twoOutOfThree } from './two-out-of-three';
+import { problem as checkIfAllCharactersAppearTwice } from './check-if-all-characters-appear-twice';
+import { problem as findDifferenceOfTwoArrays } from './find-difference-of-two-arrays';
 import { problem as findAnagramMappings } from './find-anagram-mappings';
 import { problem as validAnagram } from './valid-anagram';
 import { problem as pathCrossing } from './path-crossing';
@@ -203,6 +207,7 @@ import { problem as minimumOperationsReduceX } from './minimum-operations-reduce
 import { problem as numberOfSubstrings } from './number-of-substrings';
 import { problem as longestTurbulentSubarray } from './longest-turbulent-subarray';
 // sliding-window — easy
+import { problem as minimumRecolorsToGetKConsecutiveBlack } from './minimum-recolors-to-get-k-consecutive-black';
 import { problem as minimumDifferenceKScores } from './minimum-difference-k-scores';
 import { problem as maxWindowSum } from './max-window-sum';
 import { problem as maximumAverageSubarray } from './maximum-average-subarray';
@@ -539,6 +544,8 @@ export const problems: readonly Problem[] = [
   findNumbersEvenDigits,
   singleNumber,
   // arrays — medium
+  rearrangeArrayElementsBySign,
+  numberOfZeroFilledSubarrays,
   rangeSumQuery2D,
   minimumArrowsBurstBalloons,
   setMatrixZeroes,
@@ -634,6 +641,8 @@ export const problems: readonly Problem[] = [
   integerToRoman,
   // hash-map — easy
   twoOutOfThree,
+  checkIfAllCharactersAppearTwice,
+  findDifferenceOfTwoArrays,
   findAnagramMappings,
   validAnagram,
   pathCrossing,
@@ -703,6 +712,7 @@ export const problems: readonly Problem[] = [
   numberOfSubstrings,
   longestTurbulentSubarray,
   // sliding-window — easy
+  minimumRecolorsToGetKConsecutiveBlack,
   minimumDifferenceKScores,
   maxWindowSum,
   maximumAverageSubarray,

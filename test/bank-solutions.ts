@@ -6210,4 +6210,49 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     });
   },
 
+  'check-if-all-characters-appear-twice': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const freq = new Map<string, number>();
+    for (const c of s) freq.set(c, (freq.get(c) ?? 0) + 1);
+    return new Set(freq.values()).size === 1;
+  },
+
+  'find-difference-of-two-arrays': (...args: unknown[]) => {
+    const s1 = new Set(args[0] as number[]), s2 = new Set(args[1] as number[]);
+    return [
+      [...s1].filter(v => !s2.has(v)).sort((a, b) => a - b),
+      [...s2].filter(v => !s1.has(v)).sort((a, b) => a - b),
+    ];
+  },
+
+  'rearrange-array-elements-by-sign': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const pos = nums.filter(n => n > 0), neg = nums.filter(n => n < 0);
+    const result: number[] = [];
+    for (let i = 0; i < pos.length; i++) { result.push(pos[i]!); result.push(neg[i]!); }
+    return result;
+  },
+
+  'number-of-zero-filled-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let total = 0, run = 0;
+    for (const n of nums) {
+      if (n === 0) { run++; total += run; }
+      else run = 0;
+    }
+    return total;
+  },
+
+  'minimum-recolors-to-get-k-consecutive-black': (...args: unknown[]) => {
+    const blocks = args[0] as string, k = args[1] as number;
+    let whites = [...blocks.slice(0, k)].filter(c => c === 'W').length;
+    let min = whites;
+    for (let i = k; i < blocks.length; i++) {
+      if (blocks[i] === 'W') whites++;
+      if (blocks[i - k] === 'W') whites--;
+      min = Math.min(min, whites);
+    }
+    return min;
+  },
+
 };

@@ -5565,4 +5565,52 @@ def freqStackRunner(ops, vals):
     return sum(1 for n in nums if len(str(n)) % 2 == 0)
 `,
 
+  'check-if-all-characters-appear-twice': `
+def areOccurrencesEqual(s):
+    from collections import Counter
+    counts = Counter(s)
+    return len(set(counts.values())) == 1
+`,
+
+  'find-difference-of-two-arrays': `
+def findDifference(nums1, nums2):
+    s1, s2 = set(nums1), set(nums2)
+    return [sorted(v for v in s1 if v not in s2), sorted(v for v in s2 if v not in s1)]
+`,
+
+  'rearrange-array-elements-by-sign': `
+def rearrangeArray(nums):
+    a = list(nums)
+    pos = [x for x in a if x > 0]
+    neg = [x for x in a if x < 0]
+    result = []
+    for i in range(len(pos)):
+        result.append(pos[i])
+        result.append(neg[i])
+    return result
+`,
+
+  'number-of-zero-filled-subarrays': `
+def zeroFilledSubarray(nums):
+    a = list(nums)
+    total = run = 0
+    for n in a:
+        if n == 0:
+            run += 1
+            total += run
+        else:
+            run = 0
+    return total
+`,
+
+  'minimum-recolors-to-get-k-consecutive-black': `
+def minimumRecolors(blocks, k):
+    whites = blocks[:k].count('W')
+    min_w = whites
+    for i in range(k, len(blocks)):
+        if blocks[i] == 'W': whites += 1
+        if blocks[i-k] == 'W': whites -= 1
+        min_w = min(min_w, whites)
+    return min_w
+`,
 };
