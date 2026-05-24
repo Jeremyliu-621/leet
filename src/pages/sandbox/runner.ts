@@ -103,12 +103,22 @@ function getOrCreatePythonWorker(): PythonWorkerSlot {
 
   const worker = new Worker(pythonWorkerUrl);
   const pending = new Map<string, (response: RunResponse) => void>();
+  // Capture how long Pyodide takes to boot for observability — surfaced
+  // verbatim in the Options "About" section so a user reporting "Python
+  // feels slow" can read the number off the page.
+  const bootStartedAt = performance.now();
 
   const ready = new Promise<void>((resolve, reject) => {
     function onInit(event: MessageEvent): void {
       const data = event.data as { type?: string; error?: string } | undefined;
       if (data?.type === 'init-ack') {
         worker.removeEventListener('message', onInit);
+        const durationMs = performance.now() - bootStartedAt;
+        // Forward to the challenge page; the sandbox has no chrome.* access.
+        window.parent.postMessage(
+          { type: 'python-boot', durationMs },
+          '*',
+        );
         resolve();
       } else if (data?.type === 'init-error') {
         worker.removeEventListener('message', onInit);

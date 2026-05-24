@@ -2,6 +2,7 @@ import type { Problem, TestCase } from '../problems/types';
 import type { RunRequest, RunResponse } from '../messaging/messages';
 import { buildVerdict } from './verdict';
 import type { JudgeResult } from './verdict';
+import { recordPythonBoot, recordPythonRun } from '../runner/init-stats';
 
 // Challenge-page side of the code runner. Owns a hidden sandbox iframe, sends
 // run requests to it, and turns the raw response into a judged result.
@@ -16,12 +17,29 @@ const DEFAULT_TIMEOUT_MS = 4000;
 const SANDBOX_GRACE_MS = 2000;
 
 let sandboxReady: Promise<HTMLIFrameElement> | null = null;
+let pythonBootListenerInstalled = false;
+
+/**
+ * Subscribes once to `python-boot` messages emitted by the sandbox runner
+ * the moment Pyodide finishes its first boot. Idempotent.
+ */
+function ensurePythonBootListener(): void {
+  if (pythonBootListenerInstalled) return;
+  pythonBootListenerInstalled = true;
+  window.addEventListener('message', (event: MessageEvent) => {
+    const data = event.data as { type?: string; durationMs?: number } | undefined;
+    if (data?.type === 'python-boot' && typeof data.durationMs === 'number') {
+      void recordPythonBoot(data.durationMs);
+    }
+  });
+}
 
 /** Lazily creates the hidden sandbox iframe and resolves once it reports ready. */
 function ensureSandbox(): Promise<HTMLIFrameElement> {
   if (sandboxReady) {
     return sandboxReady;
   }
+  ensurePythonBootListener();
   sandboxReady = new Promise<HTMLIFrameElement>((resolve, reject) => {
     const frame = document.createElement('iframe');
     frame.setAttribute('aria-hidden', 'true');
@@ -106,6 +124,11 @@ export async function runTests(options: RunTestsOptions): Promise<JudgeResult> {
     window.addEventListener('message', onMessage);
     target.postMessage(request, '*');
   });
+
+  // Lifetime counter — useful only on the Options "About" panel.
+  if (request.language === 'python' && response.ok) {
+    void recordPythonRun();
+  }
 
   return buildVerdict(options.tests, response);
 }
