@@ -201,7 +201,6 @@ import { problem as sumOfTwoIntegers } from './sum-of-two-integers';
 import { problem as fractionToRecurringDecimal } from './fraction-to-recurring-decimal';
 import { problem as integerToEnglishWords } from './integer-to-english-words';
 // math — medium
-import { problem as singleNumberII } from './single-number-ii';
 import { problem as taskScheduler } from './task-scheduler';
 import { problem as countPrimesSieve } from './count-primes-sieve';
 import { problem as powXN } from './pow-x-n';
@@ -584,7 +583,6 @@ export const problems: readonly Problem[] = [
   fractionToRecurringDecimal,
   integerToEnglishWords,
   // math — medium
-  singleNumberII,
   taskScheduler,
   countPrimesSieve,
   powXN,

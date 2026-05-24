@@ -3990,17 +3990,6 @@ def deserialize(data):
     return count
 `,
 
-  'single-number-ii': `def singleNumber(nums):
-    result = 0
-    for i in range(32):
-        bit_sum = sum((n >> i) & 1 for n in nums)
-        if bit_sum % 3 != 0:
-            result |= (1 << i)
-    if result >= 2**31:
-        result -= 2**32
-    return result
-`,
-
   'longest-palindrome-build': `def longestPalindrome(s):
     from collections import Counter
     freq = Counter(s)

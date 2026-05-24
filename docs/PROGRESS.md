@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 313 problems (13 tags); 300-milestone passed; 1200+ tests approaching.
+**Current focus:** Bank at 318 problems (14 tags); growing steadily past 300-milestone.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing bank; 350-problem milestone.
+**Next up:** Continue growing bank toward 350; UI/UX polish.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -265,7 +265,12 @@ Still pending:
 - [x] expression-add-operators (strings+backtracking/hard): operator insertion with multiplication precedence tracking; min-stack (stack/easy); lru-cache (hash-map/hard, DLL+Map); bank at 292
 - [x] count-and-say (strings/medium) + beautiful-arrangement (arrays+backtracking/medium); bank at 295; 1150 tests
 - [x] power-of-three (math/easy) + reverse-bits (math/easy) + game-of-life (arrays/medium); bank at 298; 1162 tests
+<<<<<<< HEAD
 - [x] 6 new problems: accounts-merge (graph/medium), next-greater-element-ii (stack/medium), minimum-size-subarray-sum (sliding-window/medium), decode-ways-ii (dp/hard), queue-reconstruction-by-height (arrays/medium), find-k-pairs-smallest-sums (binary-search/medium); bank at 307; 1171+ tests
+=======
+- [x] **300-problem milestone** — missing-ranges (arrays/easy) + excel-sheet-column-title (math/easy) + longest-palindrome-build (strings/easy); bank at 301; 1174 tests
+- [x] reverse-linked-list-ii (linked-list/medium) + rotate-list (linked-list/medium) + number-of-1-bits (math/easy) + single-number-ii (math/medium); bank at 309; 1198 tests
+>>>>>>> 76e4cde (fix: resolve merge conflicts — remove duplicate single-number-ii import/solution)
 
 ---
 

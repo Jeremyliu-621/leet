@@ -4883,16 +4883,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
-  'single-number-ii': (...args: unknown[]) => {
-    const nums = args[0] as number[];
-    let result = 0;
-    for (let i = 0; i < 32; i++) {
-      const bitSum = nums.reduce((acc, n) => acc + ((n >>> i) & 1), 0);
-      if (bitSum % 3 !== 0) result |= (1 << i);
-    }
-    return result | 0;
-  },
-
   'longest-palindrome-build': (...args: unknown[]) => {
     const s = args[0] as string;
     const freq: Record<string, number> = {};
