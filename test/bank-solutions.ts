@@ -3316,6 +3316,53 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return toArr(reverseK(fromArr(arr)));
   },
 
+  'redundant-connection': (...args: unknown[]) => {
+    const edges = args[0] as number[][];
+    const parent: number[] = Array.from({ length: edges.length + 1 }, (_, i) => i);
+    function find(x: number): number { return parent[x] === x ? x : (parent[x] = find(parent[x]!)); }
+    for (const edge of edges) {
+      const [u, v] = edge as [number, number];
+      const pu = find(u); const pv = find(v);
+      if (pu === pv) return [u, v];
+      parent[pu] = pv;
+    }
+    return [];
+  },
+
+  'is-graph-bipartite': (...args: unknown[]) => {
+    const graph = args[0] as number[][];
+    const color = new Array<number>(graph.length).fill(-1);
+    function bfs(start: number): boolean {
+      color[start] = 0;
+      const q: number[] = [start];
+      while (q.length) {
+        const u = q.shift()!;
+        for (const v of graph[u]!) {
+          if (color[v] === -1) { color[v] = 1 - color[u]!; q.push(v); }
+          else if (color[v] === color[u]) return false;
+        }
+      }
+      return true;
+    }
+    for (let i = 0; i < graph.length; i++) { if (color[i] === -1 && !bfs(i)) return false; }
+    return true;
+  },
+
+  'all-paths-source-target': (...args: unknown[]) => {
+    const graph = args[0] as number[][];
+    const n = graph.length;
+    const result: number[][] = [];
+    function dfs(node: number, path: number[]): void {
+      if (node === n - 1) { result.push([...path]); return; }
+      for (const nb of graph[node]!) { path.push(nb); dfs(nb, path); path.pop(); }
+    }
+    dfs(0, [0]);
+    return result.sort((a, b) => {
+      for (let i = 0; i < Math.min(a.length, b.length); i++) { if (a[i] !== b[i]) return a[i]! - b[i]!; }
+      return a.length - b.length;
+    });
+  },
+
   'sum-root-to-leaf-numbers': (...args: unknown[]) => {
     const root = _buildTree(args[0] as (number | null)[]);
     function dfs(node: _TN | null, cur: number): number {

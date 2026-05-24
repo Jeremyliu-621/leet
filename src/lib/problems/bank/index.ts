@@ -232,6 +232,9 @@ import { problem as courseScheduleII } from './course-schedule-ii';
 import { problem as pacificAtlantic } from './pacific-atlantic';
 import { problem as networkDelayTime } from './network-delay-time';
 import { problem as numberOfConnectedComponents } from './number-of-connected-components';
+import { problem as redundantConnection } from './redundant-connection';
+import { problem as isGraphBipartite } from './is-graph-bipartite';
+import { problem as allPathsSourceTarget } from './all-paths-source-target';
 // graph — hard
 import { problem as wordLadder } from './word-ladder';
 
@@ -481,6 +484,9 @@ export const problems: readonly Problem[] = [
   pacificAtlantic,
   networkDelayTime,
   numberOfConnectedComponents,
+  redundantConnection,
+  isGraphBipartite,
+  allPathsSourceTarget,
   // graph — hard
   wordLadder,
   // tree — easy

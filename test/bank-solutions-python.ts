@@ -2688,6 +2688,56 @@ def deserialize(data):
     return prev
 `,
 
+  'redundant-connection': `def findRedundantConnection(edges):
+    n = len(edges)
+    parent = list(range(n + 1))
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    for u, v in edges:
+        pu, pv = find(u), find(v)
+        if pu == pv:
+            return [u, v]
+        parent[pu] = pv
+    return []
+`,
+
+  'is-graph-bipartite': `def isBipartite(graph):
+    from collections import deque
+    n = len(graph)
+    color = [-1] * n
+    for start in range(n):
+        if color[start] != -1:
+            continue
+        color[start] = 0
+        queue = deque([start])
+        while queue:
+            u = queue.popleft()
+            for v in graph[u]:
+                if color[v] == -1:
+                    color[v] = 1 - color[u]
+                    queue.append(v)
+                elif color[v] == color[u]:
+                    return False
+    return True
+`,
+
+  'all-paths-source-target': `def allPathsSourceTarget(graph):
+    n = len(graph)
+    result = []
+    def dfs(node, path):
+        if node == n - 1:
+            result.append(list(path))
+            return
+        for nb in graph[node]:
+            path.append(nb)
+            dfs(nb, path)
+            path.pop()
+    dfs(0, [0])
+    return result
+`,
+
   'sum-root-to-leaf-numbers': `def sumNumbers(root):
     def dfs(node, cur):
         if not node:
