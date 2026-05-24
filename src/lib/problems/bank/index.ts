@@ -119,6 +119,8 @@ import { problem as scoreOfParentheses } from './score-of-parentheses';
 import { problem as validParenthesisString } from './valid-parenthesis-string';
 // stack — hard
 import { problem as basicCalculator } from './basic-calculator';
+import { problem as sumSubarrayMinimums } from './sum-subarray-minimums';
+import { problem as removeKDigits } from './remove-k-digits';
 
 // math — easy
 import { problem as digitSum } from './digit-sum';
@@ -269,6 +271,8 @@ export const problems: readonly Problem[] = [
   validParenthesisString,
   // stack — hard
   basicCalculator,
+  sumSubarrayMinimums,
+  removeKDigits,
   // math — easy
   digitSum,
   isPrimeNumber,

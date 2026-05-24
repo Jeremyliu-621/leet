@@ -1171,6 +1171,42 @@ export const pythonSolutions: Record<string, string> = {
             result = saved_result + saved_sign * result
     return result + sign * num
 `,
+  'sum-subarray-minimums': `def sumSubarrayMins(arr: list[int]) -> int:
+    MOD = 10**9 + 7
+    n = len(arr)
+    left = [0] * n
+    right = [0] * n
+    stk = []
+    for i in range(n):
+        while stk and arr[stk[-1]] >= arr[i]:
+            stk.pop()
+        left[i] = i - stk[-1] if stk else i + 1
+        stk.append(i)
+    stk = []
+    for i in range(n - 1, -1, -1):
+        while stk and arr[stk[-1]] > arr[i]:
+            stk.pop()
+        right[i] = stk[-1] - i if stk else n - i
+        stk.append(i)
+    ans = 0
+    for i in range(n):
+        ans = (ans + arr[i] * left[i] * right[i]) % MOD
+    return ans
+`,
+  'remove-k-digits': `def removeKdigits(num: str, k: int) -> str:
+    stk = []
+    rem = k
+    for d in num:
+        while rem > 0 and stk and stk[-1] > d:
+            stk.pop()
+            rem -= 1
+        stk.append(d)
+    while rem > 0:
+        stk.pop()
+        rem -= 1
+    result = ''.join(stk).lstrip('0')
+    return result if result else '0'
+`,
 
   'median-two-sorted-arrays': `def findMedianSortedArrays(nums1, nums2):
     if len(nums1) > len(nums2):

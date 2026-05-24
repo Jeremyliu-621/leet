@@ -1588,6 +1588,47 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result + sign * num;
   },
 
+  'sum-subarray-minimums': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const MOD = 1_000_000_007;
+    const n = arr.length;
+    const left = new Array<number>(n).fill(0);
+    const right = new Array<number>(n).fill(0);
+    const stk: number[] = [];
+    for (let i = 0; i < n; i++) {
+      while (stk.length && (arr[stk[stk.length - 1] as number] as number) >= (arr[i] as number)) stk.pop();
+      left[i] = stk.length ? i - (stk[stk.length - 1] as number) : i + 1;
+      stk.push(i);
+    }
+    stk.length = 0;
+    for (let i = n - 1; i >= 0; i--) {
+      while (stk.length && (arr[stk[stk.length - 1] as number] as number) > (arr[i] as number)) stk.pop();
+      right[i] = stk.length ? (stk[stk.length - 1] as number) - i : n - i;
+      stk.push(i);
+    }
+    let ans = 0;
+    for (let i = 0; i < n; i++) {
+      ans = (ans + (arr[i] as number) * (left[i] as number) * (right[i] as number)) % MOD;
+    }
+    return ans;
+  },
+
+  'remove-k-digits': (...args: unknown[]) => {
+    const num = args[0] as string;
+    const k = args[1] as number;
+    const stk: string[] = [];
+    let rem = k;
+    for (const d of num) {
+      while (rem > 0 && stk.length && (stk[stk.length - 1] as string) > d) {
+        stk.pop();
+        rem--;
+      }
+      stk.push(d);
+    }
+    while (rem-- > 0) stk.pop();
+    return stk.join('').replace(/^0+/, '') || '0';
+  },
+
   'split-array-largest-sum': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const k = args[1] as number;
