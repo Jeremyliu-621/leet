@@ -18,6 +18,8 @@ import { problem as findMaxMin } from './find-max-min';
 import { problem as findPivotIndex } from './find-pivot-index';
 import { problem as maxConsecutiveOnes } from './max-consecutive-ones';
 import { problem as plusOne } from './plus-one';
+import { problem as kidsWithCandies } from './kids-with-candies';
+import { problem as monotonicArray } from './monotonic-array';
 // arrays — medium
 import { problem as mergeIntervals } from './merge-intervals';
 import { problem as nonOverlappingIntervals } from './non-overlapping-intervals';
@@ -66,6 +68,7 @@ import { problem as longestCommonPrefix } from './longest-common-prefix';
 import { problem as reverseString } from './reverse-string';
 import { problem as capitalizeWords } from './capitalize-words';
 import { problem as lengthOfLastWord } from './length-of-last-word';
+import { problem as defangingIpAddress } from './defanging-ip-address';
 // strings — medium
 import { problem as longestPalindromicString } from './longest-palindromic-string';
 import { problem as countPalindromicSubstrings } from './count-palindromic-substrings';
@@ -90,6 +93,7 @@ import { problem as intersectionTwoArrays } from './intersection-two-arrays';
 import { problem as subarraySumEqualsK } from './subarray-sum-equals-k';
 import { problem as ransomNote } from './ransom-note';
 import { problem as isomorphicStrings } from './isomorphic-strings';
+import { problem as wordPattern } from './word-pattern';
 // hash-map — medium
 import { problem as letterCombinationsPhone } from './letter-combinations-phone';
 import { problem as groupAnagrams } from './group-anagrams';
@@ -409,6 +413,8 @@ export const problems: readonly Problem[] = [
   findPivotIndex,
   maxConsecutiveOnes,
   plusOne,
+  kidsWithCandies,
+  monotonicArray,
   singleNumber,
   // arrays — medium
   majorityElementII,
@@ -465,6 +471,7 @@ export const problems: readonly Problem[] = [
   reverseString,
   capitalizeWords,
   lengthOfLastWord,
+  defangingIpAddress,
   // strings — medium
   generateParentheses,
   palindromePartitioning,
@@ -489,6 +496,7 @@ export const problems: readonly Problem[] = [
   subarraySumEqualsK,
   ransomNote,
   isomorphicStrings,
+  wordPattern,
   // hash-map — medium
   topKFrequentWords,
   letterCombinationsPhone,

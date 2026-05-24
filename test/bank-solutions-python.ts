@@ -4425,6 +4425,43 @@ def deserialize(data):
     return result
 `,
 
+  'valid-anagram': `def isAnagram(s, t):
+    if len(s) != len(t):
+        return False
+    from collections import Counter
+    return Counter(s) == Counter(t)
+`,
+
+  'defanging-ip-address': `def defangIPaddr(address):
+    return address.replace('.', '[.]')
+`,
+
+  'kids-with-candies': `def kidsWithCandies(candies, extraCandies):
+    max_c = max(candies)
+    return [c + extraCandies >= max_c for c in candies]
+`,
+
+  'monotonic-array': `def isMonotonic(nums):
+    inc = dec = True
+    for i in range(1, len(nums)):
+        if nums[i] > nums[i-1]: dec = False
+        if nums[i] < nums[i-1]: inc = False
+    return inc or dec
+`,
+
+  'word-pattern': `def wordPattern(pattern, s):
+    words = s.split()
+    if len(pattern) != len(words):
+        return False
+    char_to_word, word_to_char = {}, {}
+    for c, w in zip(pattern, words):
+        if char_to_word.get(c, w) != w or word_to_char.get(w, c) != c:
+            return False
+        char_to_word[c] = w
+        word_to_char[w] = c
+    return True
+`,
+
   'maximum-product-word-lengths': `def maxProduct(words):
     masks = []
     for w in words:
@@ -4464,19 +4501,6 @@ def deserialize(data):
             return i
         left += v
     return -1
-`,
-
-  'valid-anagram': `def isAnagram(s, t):
-    if len(s) != len(t):
-        return False
-    freq = {}
-    for c in s:
-        freq[c] = freq.get(c, 0) + 1
-    for c in t:
-        if freq.get(c, 0) == 0:
-            return False
-        freq[c] -= 1
-    return True
 `,
 
   'path-crossing': `def isPathCrossing(path):

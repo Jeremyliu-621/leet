@@ -4,16 +4,22 @@ export const problem: Problem = {
   id: 'add-binary',
   title: 'Add Binary',
   difficulty: 'easy',
-  tags: ['math', 'strings'],
+  tags: ['strings', 'math'],
   description: `Given two binary strings \`a\` and \`b\`, return their sum as a binary string.`,
   constraints: [
     '`1 <= a.length, b.length <= 10^4`',
-    '`a` and `b` consist only of `\'0\'` or `\'1\'` characters',
-    'Each string does not contain leading zeros except for the zero itself',
+    '`a` and `b` consist only of `\'0\'` or `\'1\'` characters.',
+    'Each string does not contain leading zeros except for the zero itself.',
   ],
   examples: [
-    { input: 'a = "11", b = "1"', output: '"100"' },
-    { input: 'a = "1010", b = "1011"', output: '"10101"' },
+    {
+      input: 'a = "11", b = "1"',
+      output: '"100"',
+    },
+    {
+      input: 'a = "1010", b = "1011"',
+      output: '"10101"',
+    },
   ],
   hints: [
     'Work from right to left, tracking a carry. At each position sum the two bits plus carry; the result bit is `sum % 2` and the new carry is `Math.floor(sum / 2)`.',
@@ -37,5 +43,8 @@ export const problem: Problem = {
     { args: ['1', '1'], expected: '10' },
     { args: ['111', '111'], expected: '1110' },
     { args: ['1111', '1111'], expected: '11110' },
+    { args: ['100', '110010'], expected: '110110' },
+    { args: ['0', '1'], expected: '1' },
+    { args: ['1111111', '1'], expected: '10000000' },
   ],
 };

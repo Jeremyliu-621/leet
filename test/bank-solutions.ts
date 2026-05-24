@@ -5043,6 +5043,54 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'valid-anagram': (...args: unknown[]) => {
+    const s = args[0] as string, t = args[1] as string;
+    if (s.length !== t.length) return false;
+    const count: Record<string, number> = {};
+    for (const c of s) count[c] = (count[c] ?? 0) + 1;
+    for (const c of t) {
+      if (!count[c]) return false;
+      count[c]!--;
+    }
+    return true;
+  },
+
+  'defanging-ip-address': (...args: unknown[]) => {
+    return (args[0] as string).replace(/\./g, '[.]');
+  },
+
+  'kids-with-candies': (...args: unknown[]) => {
+    const candies = args[0] as number[], extra = args[1] as number;
+    const max = Math.max(...candies);
+    return candies.map(c => c + extra >= max);
+  },
+
+  'monotonic-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let inc = true, dec = true;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i]! > nums[i - 1]!) dec = false;
+      if (nums[i]! < nums[i - 1]!) inc = false;
+    }
+    return inc || dec;
+  },
+
+  'word-pattern': (...args: unknown[]) => {
+    const pattern = args[0] as string, s = args[1] as string;
+    const words = s.split(' ');
+    if (pattern.length !== words.length) return false;
+    const charToWord = new Map<string, string>();
+    const wordToChar = new Map<string, string>();
+    for (let i = 0; i < pattern.length; i++) {
+      const c = pattern[i]!, w = words[i]!;
+      if (charToWord.has(c) && charToWord.get(c) !== w) return false;
+      if (wordToChar.has(w) && wordToChar.get(w) !== c) return false;
+      charToWord.set(c, w);
+      wordToChar.set(w, c);
+    }
+    return true;
+  },
+
   'min-stack': (...args: unknown[]) => {
     const ops = args[0] as string[];
     const opArgs = args[1] as number[][];
@@ -5092,19 +5140,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       left += nums[i]!;
     }
     return -1;
-  },
-
-  'valid-anagram': (...args: unknown[]) => {
-    const s = args[0] as string;
-    const t = args[1] as string;
-    if (s.length !== t.length) return false;
-    const freq: Record<string, number> = {};
-    for (const c of s) freq[c] = (freq[c] ?? 0) + 1;
-    for (const c of t) {
-      if (!freq[c]) return false;
-      freq[c]!--;
-    }
-    return true;
   },
 
   'path-crossing': (...args: unknown[]) => {

@@ -7,14 +7,20 @@ export const problem: Problem = {
   tags: ['hash-map'],
   description: `Given two strings \`s\` and \`t\`, return \`true\` if \`t\` is an anagram of \`s\`, and \`false\` otherwise.
 
-An **anagram** is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.`,
+An **anagram** is a word or phrase formed by rearranging the letters of a different word or phrase, using all the original letters exactly once.`,
   constraints: [
-    '1 <= s.length, t.length <= 5 × 10^4',
-    's and t consist of lowercase English letters',
+    '`1 <= s.length, t.length <= 5 * 10^4`',
+    '`s` and `t` consist of lowercase English letters.',
   ],
   examples: [
-    { input: 's = "anagram", t = "nagaram"', output: 'true' },
-    { input: 's = "rat", t = "car"', output: 'false' },
+    {
+      input: 's = "anagram", t = "nagaram"',
+      output: 'true',
+    },
+    {
+      input: 's = "rat", t = "car"',
+      output: 'false',
+    },
   ],
   hints: [
     'Count the frequency of each character in s, then subtract the frequency for each character in t.',
@@ -24,18 +30,23 @@ An **anagram** is a word or phrase formed by rearranging the letters of a differ
   functionName: 'isAnagram',
   params: ['s', 't'],
   starterCode: {
-    javascript: 'function isAnagram(s, t) {\n  \n}\n',
-    python: 'def isAnagram(s, t):\n    pass\n',
+    javascript: `function isAnagram(s, t) {
+
+}`,
+    python: `def isAnagram(s, t):
+    pass`,
   },
   visibleTests: [
     { args: ['anagram', 'nagaram'], expected: true },
     { args: ['rat', 'car'], expected: false },
-    { args: ['listen', 'silent'], expected: true },
   ],
   hiddenTests: [
+    { args: ['a', 'a'], expected: true },
     { args: ['a', 'ab'], expected: false },
-    { args: ['ab', 'ab'], expected: true },
-    { args: ['aacc', 'ccac'], expected: false },
+    { args: ['ab', 'a'], expected: false },
+    { args: ['listen', 'silent'], expected: true },
+    { args: ['hello', 'world'], expected: false },
     { args: ['aab', 'baa'], expected: true },
+    { args: ['aacc', 'ccac'], expected: false },
   ],
 };
