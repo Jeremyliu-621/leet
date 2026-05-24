@@ -141,7 +141,8 @@ iterate on the marketing site (separate repo `Jeremyliu-621/leetlock-site` alrea
 - [x] Integration tests for core flows — `reconcile()` extracted, fake-chrome covers DNR + alarms + runtime, 18 SW integration tests in `test/sw-reconcile.test.ts`
 - [x] GitHub Actions CI: typecheck + test + build (artifacts uploaded for 14 days)
 - [x] **Playwright load-extension smoke test — 4 tests in `e2e/extension.spec.ts` exercise the SW, popup, options, and challenge pages against real Chromium with `dist/` loaded as an unpacked extension. Caught and fixed a real bug — CRXJS was shipping unmodified `./main.tsx` references for web-accessible HTML (see `DECISIONS.md` D15).**
-- [ ] README screenshots / demo notes (Playwright run can now produce them)
+- [x] **Real block-flow e2e tests — 2 tests in `e2e/block-flow.spec.ts` verify: (a) navigating to a blocked host is redirected to the challenge page, (b) a domain with an active unlock token bypasses the gate. These exercise the live declarativeNetRequest pipeline end-to-end.**
+- [x] README screenshots — captured automatically by `e2e/screenshots.spec.ts`, referenced in the README
 - [x] Chrome Web Store ZIP packaging script (`npm run package`)
 - [x] Marketing website (separate repo `Jeremyliu-621/leetlock-site`, Next.js static export)
 
