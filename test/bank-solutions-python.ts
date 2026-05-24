@@ -2516,6 +2516,25 @@ def deserialize(data):
     return root
 `,
 
+  'course-schedule-ii': `def findOrder(numCourses, prerequisites):
+    from collections import deque
+    in_deg = [0] * numCourses
+    adj = [[] for _ in range(numCourses)]
+    for a, b in prerequisites:
+        adj[b].append(a)
+        in_deg[a] += 1
+    queue = deque(i for i in range(numCourses) if in_deg[i] == 0)
+    order = []
+    while queue:
+        cur = queue.popleft()
+        order.append(cur)
+        for nb in adj[cur]:
+            in_deg[nb] -= 1
+            if in_deg[nb] == 0:
+                queue.append(nb)
+    return order if len(order) == numCourses else []
+`,
+
   'construct-binary-tree': `def buildTree(preorder, inorder):
     if not preorder:
         return None

@@ -226,6 +226,7 @@ import { problem as maxAreaOfIsland } from './max-area-of-island';
 import { problem as rottingOranges } from './rotting-oranges';
 import { problem as keysAndRooms } from './keys-and-rooms';
 import { problem as cloneGraph } from './clone-graph';
+import { problem as courseScheduleII } from './course-schedule-ii';
 import { problem as networkDelayTime } from './network-delay-time';
 import { problem as numberOfConnectedComponents } from './number-of-connected-components';
 // graph — hard
@@ -464,6 +465,7 @@ export const problems: readonly Problem[] = [
   rottingOranges,
   keysAndRooms,
   cloneGraph,
+  courseScheduleII,
   networkDelayTime,
   numberOfConnectedComponents,
   // graph — hard

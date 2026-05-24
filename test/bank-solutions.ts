@@ -3136,4 +3136,21 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return _treeToArr(build(0, inorder.length - 1));
   },
+
+  'course-schedule-ii': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const prereqs = args[1] as number[][];
+    const inDeg = new Array<number>(n).fill(0);
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const edge of prereqs) { const [a, b] = edge as [number, number]; adj[b]!.push(a); inDeg[a]!++; }
+    const queue: number[] = [];
+    for (let i = 0; i < n; i++) { if (inDeg[i] === 0) queue.push(i); }
+    const order: number[] = [];
+    while (queue.length) {
+      const cur = queue.shift()!;
+      order.push(cur);
+      for (const nb of adj[cur]!) { if (--inDeg[nb]! === 0) queue.push(nb); }
+    }
+    return order.length === n ? order : [];
+  },
 };
