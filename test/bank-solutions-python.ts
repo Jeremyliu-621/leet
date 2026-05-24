@@ -2014,6 +2014,27 @@ export const pythonSolutions: Record<string, string> = {
         fast = fast.next.next
     return slow
 `,
+  'palindrome-linked-list': `def isPalindrome(head):
+    vals = []
+    cur = head
+    while cur:
+        vals.append(cur.val)
+        cur = cur.next
+    return vals == vals[::-1]
+`,
+  'remove-nth-from-end': `def removeNthFromEnd(head, n):
+    dummy = ListNode(0)
+    dummy.next = head
+    slow = dummy
+    fast = head
+    for _ in range(n):
+        fast = fast.next
+    while fast:
+        slow = slow.next
+        fast = fast.next
+    slow.next = slow.next.next
+    return dummy.next
+`,
   'plus-one': `def plusOne(digits):
     digits = list(digits)
     for i in range(len(digits) - 1, -1, -1):

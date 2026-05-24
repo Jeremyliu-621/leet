@@ -206,6 +206,9 @@ import { problem as reverseLinkedList } from './reverse-linked-list';
 import { problem as linkedListCycle } from './linked-list-cycle';
 import { problem as mergeTwoSortedLinkedLists } from './merge-two-sorted-linked-lists';
 import { problem as middleOfLinkedList } from './middle-of-linked-list';
+import { problem as palindromeLinkedList } from './palindrome-linked-list';
+// linked-list — medium
+import { problem as removeNthFromEnd } from './remove-nth-from-end';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -402,4 +405,7 @@ export const problems: readonly Problem[] = [
   linkedListCycle,
   mergeTwoSortedLinkedLists,
   middleOfLinkedList,
+  palindromeLinkedList,
+  // linked-list — medium
+  removeNthFromEnd,
 ];

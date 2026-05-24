@@ -2589,6 +2589,19 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return arr.slice(slow);
   },
 
+  'palindrome-linked-list': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const rev = [...arr].reverse();
+    return arr.every((v, i) => v === rev[i]);
+  },
+
+  'remove-nth-from-end': (...args: unknown[]) => {
+    const arr = [...(args[0] as number[])];
+    const n = args[1] as number;
+    arr.splice(arr.length - n, 1);
+    return arr;
+  },
+
   // --- arrays + math + strings — easy ----------------------------------------
   'plus-one': (...args: unknown[]) => {
     const digits = [...(args[0] as number[])];
