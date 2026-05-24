@@ -33,6 +33,9 @@ import { problem as largestNumberAtLeastTwice } from './largest-number-at-least-
 import { problem as specialPositionsBinaryMatrix } from './special-positions-binary-matrix';
 import { problem as matrixDiagonalSum } from './matrix-diagonal-sum';
 import { problem as sortArrayByParity } from './sort-array-by-parity';
+import { problem as leftAndRightSumDifferences } from './left-and-right-sum-differences';
+import { problem as minimumValuePositiveStepSum } from './minimum-value-positive-step-sum';
+import { problem as countNumberOfPairs } from './count-number-of-pairs';
 // arrays — medium
 import { problem as rangeSumQuery2D } from './range-sum-query-2d';
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
@@ -96,6 +99,8 @@ import { problem as toLowerCase } from './to-lower-case';
 import { problem as checkIfTwoStringArraysEquivalent } from './check-if-two-string-arrays-equivalent';
 import { problem as cellsInRange } from './cells-in-range';
 import { problem as rotateString } from './rotate-string';
+import { problem as percentageOfLetterInString } from './percentage-of-letter-in-string';
+import { problem as countCommonWordsOneOccurrence } from './count-common-words-one-occurrence';
 // strings — medium
 import { problem as customSortString } from './custom-sort-string';
 import { problem as longestPalindromicString } from './longest-palindromic-string';
@@ -256,6 +261,7 @@ import { problem as averageSalaryExcludingMinMax } from './average-salary-exclud
 import { problem as findNUniqueIntegersSumToZero } from './find-n-unique-integers-sum-to-zero';
 import { problem as decodeXoredArray } from './decode-xored-array';
 import { problem as signOfProductArray } from './sign-of-product-array';
+import { problem as convertTemperature } from './convert-temperature';
 // math — hard
 import { problem as fractionToRecurringDecimal } from './fraction-to-recurring-decimal';
 import { problem as integerToEnglishWords } from './integer-to-english-words';
@@ -479,6 +485,9 @@ export const problems: readonly Problem[] = [
   specialPositionsBinaryMatrix,
   matrixDiagonalSum,
   sortArrayByParity,
+  leftAndRightSumDifferences,
+  minimumValuePositiveStepSum,
+  countNumberOfPairs,
   singleNumber,
   // arrays — medium
   rangeSumQuery2D,
@@ -548,6 +557,8 @@ export const problems: readonly Problem[] = [
   checkIfTwoStringArraysEquivalent,
   cellsInRange,
   rotateString,
+  percentageOfLetterInString,
+  countCommonWordsOneOccurrence,
   // strings — medium
   customSortString,
   generateParentheses,
@@ -717,6 +728,7 @@ export const problems: readonly Problem[] = [
   findNUniqueIntegersSumToZero,
   decodeXoredArray,
   signOfProductArray,
+  convertTemperature,
   // math — hard
   fractionToRecurringDecimal,
   integerToEnglishWords,

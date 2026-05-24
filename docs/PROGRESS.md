@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 378 problems; shortest-path-binary-matrix + online-stock-span + find-all-numbers-disappeared + check-if-n-and-double-exist + largest-number-at-least-twice + special-positions-binary-matrix + matrix-diagonal-sum + sort-array-by-parity; 1399 tests.
+**Current focus:** Bank at 384 problems; left-and-right-sum-differences + minimum-value-positive-step-sum + count-number-of-pairs + percentage-of-letter + count-common-words + convert-temperature; 1423 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing bank toward 380+; more medium/hard problems; UI/UX polish.
 
@@ -279,6 +279,7 @@ Still pending:
 - [x] minimum-arrows-burst-balloons + set-matrix-zeroes + range-sum-query + rotate-string + custom-sort-string + copy-list-with-random-pointer; bank at 371; 1381 tests
 - [x] shortest-path-binary-matrix + online-stock-span; bank at 372; 1387 tests
 - [x] find-all-numbers-disappeared + check-if-n-and-double-exist + largest-number-at-least-twice + special-positions-binary-matrix + matrix-diagonal-sum + sort-array-by-parity; bank at 378; 1399 tests
+- [x] left-and-right-sum-differences + minimum-value-positive-step-sum + count-number-of-pairs + percentage-of-letter-in-string + count-common-words-one-occurrence + convert-temperature; bank at 384; 1423 tests
 
 ---
 

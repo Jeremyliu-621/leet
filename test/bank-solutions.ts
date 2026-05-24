@@ -5305,6 +5305,50 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const nums = args[0] as number[];
     return [...nums.filter(x => x % 2 === 0), ...nums.filter(x => x % 2 !== 0)];
   },
+  'left-and-right-sum-differences': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const result: number[] = [];
+    let leftSum = 0, total = nums.reduce((a, b) => a + b, 0);
+    for (let i = 0; i < n; i++) {
+      const rightSum = total - leftSum - nums[i]!;
+      result.push(Math.abs(leftSum - rightSum));
+      leftSum += nums[i]!;
+    }
+    return result;
+  },
+  'minimum-value-positive-step-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let minPrefix = 0, cur = 0;
+    for (const n of nums) { cur += n; if (cur < minPrefix) minPrefix = cur; }
+    return Math.max(1, 1 - minPrefix);
+  },
+  'count-number-of-pairs': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    let count = 0;
+    for (let i = 0; i < nums.length; i++)
+      for (let j = i + 1; j < nums.length; j++)
+        if (Math.abs(nums[i]! - nums[j]!) === k) count++;
+    return count;
+  },
+  'percentage-of-letter-in-string': (...args: unknown[]) => {
+    const s = args[0] as string, letter = args[1] as string;
+    const count = [...s].filter(c => c === letter).length;
+    return Math.floor(count / s.length * 100);
+  },
+  'count-common-words-one-occurrence': (...args: unknown[]) => {
+    const words1 = args[0] as string[], words2 = args[1] as string[];
+    const freq1 = new Map<string, number>(), freq2 = new Map<string, number>();
+    for (const w of words1) freq1.set(w, (freq1.get(w) ?? 0) + 1);
+    for (const w of words2) freq2.set(w, (freq2.get(w) ?? 0) + 1);
+    let count = 0;
+    for (const [w, c] of freq1) if (c === 1 && freq2.get(w) === 1) count++;
+    return count;
+  },
+  'convert-temperature': (...args: unknown[]) => {
+    const celsius = args[0] as number;
+    return [celsius + 273.15, celsius * 1.8 + 32];
+  },
   'concatenation-of-array': (...args: unknown[]) => {
     const nums = args[0] as number[];
     return [...nums, ...nums];

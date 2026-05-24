@@ -4669,6 +4669,51 @@ def deserialize(data):
     return [x for x in nums if x % 2 == 0] + [x for x in nums if x % 2 != 0]
 `,
 
+  'left-and-right-sum-differences': `def leftRightDifference(nums):
+    total = sum(nums)
+    result = []
+    left = 0
+    for x in nums:
+        right = total - left - x
+        result.append(abs(left - right))
+        left += x
+    return result
+`,
+
+  'minimum-value-positive-step-sum': `def minStartValue(nums):
+    min_prefix = 0
+    cur = 0
+    for n in nums:
+        cur += n
+        if cur < min_prefix:
+            min_prefix = cur
+    return max(1, 1 - min_prefix)
+`,
+
+  'count-number-of-pairs': `def countKDifference(nums, k):
+    count = 0
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            if abs(nums[i] - nums[j]) == k:
+                count += 1
+    return count
+`,
+
+  'percentage-of-letter-in-string': `def percentageLetter(s, letter):
+    return int(s.count(letter) / len(s) * 100)
+`,
+
+  'count-common-words-one-occurrence': `def countWords(words1, words2):
+    from collections import Counter
+    c1 = Counter(list(words1))
+    c2 = Counter(list(words2))
+    return sum(1 for w, cnt in c1.items() if cnt == 1 and c2[w] == 1)
+`,
+
+  'convert-temperature': `def convertTemperature(celsius):
+    return [celsius + 273.15, celsius * 1.8 + 32]
+`,
+
   'concatenation-of-array': `def getConcatenation(nums):
     return list(nums) + list(nums)
 `,
