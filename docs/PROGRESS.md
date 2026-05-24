@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 494 problems; 1753 tests; growing toward 500+.
+**Current focus:** Bank at 498 problems; added 4 hash-map/tree problems (unique-occurrences, find-lucky, min-index-sum, two-sum-iv-bst); 1747 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing bank toward 500+; more easy/medium problems across all tags.
+**Next up:** Reach 500+ milestone; continue adding across all tags.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
