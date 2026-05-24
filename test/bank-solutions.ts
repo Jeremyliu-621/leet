@@ -5253,6 +5253,58 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'find-all-numbers-disappeared': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const seen = new Set(nums);
+    const result: number[] = [];
+    for (let i = 1; i <= n; i++) if (!seen.has(i)) result.push(i);
+    return result;
+  },
+  'check-if-n-and-double-exist': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const seen = new Set<number>();
+    for (const x of arr) {
+      if (seen.has(x * 2) || (x % 2 === 0 && seen.has(x / 2))) return true;
+      seen.add(x);
+    }
+    return false;
+  },
+  'largest-number-at-least-twice': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let maxIdx = 0;
+    for (let i = 1; i < nums.length; i++) if (nums[i]! > nums[maxIdx]!) maxIdx = i;
+    for (let i = 0; i < nums.length; i++) {
+      if (i !== maxIdx && nums[maxIdx]! < 2 * nums[i]!) return -1;
+    }
+    return maxIdx;
+  },
+  'special-positions-binary-matrix': (...args: unknown[]) => {
+    const mat = args[0] as number[][];
+    const m = mat.length, n = mat[0]!.length;
+    let count = 0;
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        if (mat[i]![j] !== 1) continue;
+        const rowSum = mat[i]!.reduce((a, b) => a + b, 0);
+        const colSum = mat.reduce((a, row) => a + row[j]!, 0);
+        if (rowSum === 1 && colSum === 1) count++;
+      }
+    }
+    return count;
+  },
+  'matrix-diagonal-sum': (...args: unknown[]) => {
+    const mat = args[0] as number[][];
+    const n = mat.length;
+    let sum = 0;
+    for (let i = 0; i < n; i++) sum += mat[i]![i]! + mat[i]![n - 1 - i]!;
+    if (n % 2 === 1) sum -= mat[Math.floor(n / 2)]![Math.floor(n / 2)]!;
+    return sum;
+  },
+  'sort-array-by-parity': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return [...nums.filter(x => x % 2 === 0), ...nums.filter(x => x % 2 !== 0)];
+  },
   'concatenation-of-array': (...args: unknown[]) => {
     const nums = args[0] as number[];
     return [...nums, ...nums];

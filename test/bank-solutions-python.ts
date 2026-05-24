@@ -4624,6 +4624,51 @@ def deserialize(data):
     return result
 `,
 
+  'find-all-numbers-disappeared': `def findDisappearedNumbers(nums):
+    n = len(nums)
+    seen = set(nums)
+    return [i for i in range(1, n + 1) if i not in seen]
+`,
+
+  'check-if-n-and-double-exist': `def checkIfExist(arr):
+    seen = set()
+    for x in arr:
+        if x * 2 in seen or (x % 2 == 0 and x // 2 in seen):
+            return True
+        seen.add(x)
+    return False
+`,
+
+  'largest-number-at-least-twice': `def dominantIndex(nums):
+    max_idx = nums.index(max(nums))
+    for i, v in enumerate(nums):
+        if i != max_idx and nums[max_idx] < 2 * v:
+            return -1
+    return max_idx
+`,
+
+  'special-positions-binary-matrix': `def numSpecial(mat):
+    count = 0
+    for i in range(len(mat)):
+        for j in range(len(mat[0])):
+            if mat[i][j] == 1:
+                if sum(mat[i]) == 1 and sum(row[j] for row in mat) == 1:
+                    count += 1
+    return count
+`,
+
+  'matrix-diagonal-sum': `def diagonalSum(mat):
+    n = len(mat)
+    total = sum(mat[i][i] + mat[i][n - 1 - i] for i in range(n))
+    if n % 2 == 1:
+        total -= mat[n // 2][n // 2]
+    return total
+`,
+
+  'sort-array-by-parity': `def sortArrayByParity(nums):
+    return [x for x in nums if x % 2 == 0] + [x for x in nums if x % 2 != 0]
+`,
+
   'concatenation-of-array': `def getConcatenation(nums):
     return list(nums) + list(nums)
 `,

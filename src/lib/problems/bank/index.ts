@@ -27,6 +27,12 @@ import { problem as replaceElementsWithGreatest } from './replace-elements-with-
 import { problem as highestAltitude } from './highest-altitude';
 import { problem as maximumDifferenceIncreasingElements } from './maximum-difference-increasing-elements';
 import { problem as rangeSum } from './range-sum-query';
+import { problem as findAllNumbersDisappeared } from './find-all-numbers-disappeared';
+import { problem as checkIfNAndDoubleExist } from './check-if-n-and-double-exist';
+import { problem as largestNumberAtLeastTwice } from './largest-number-at-least-twice';
+import { problem as specialPositionsBinaryMatrix } from './special-positions-binary-matrix';
+import { problem as matrixDiagonalSum } from './matrix-diagonal-sum';
+import { problem as sortArrayByParity } from './sort-array-by-parity';
 // arrays — medium
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
 import { problem as setMatrixZeroes } from './set-matrix-zeroes';
@@ -458,6 +464,12 @@ export const problems: readonly Problem[] = [
   highestAltitude,
   maximumDifferenceIncreasingElements,
   rangeSum,
+  findAllNumbersDisappeared,
+  checkIfNAndDoubleExist,
+  largestNumberAtLeastTwice,
+  specialPositionsBinaryMatrix,
+  matrixDiagonalSum,
+  sortArrayByParity,
   singleNumber,
   // arrays — medium
   minimumArrowsBurstBalloons,
