@@ -220,6 +220,7 @@ import { problem as reverseNodesInKGroup } from './reverse-nodes-in-k-group';
 // graph — easy
 import { problem as floodFill } from './flood-fill';
 import { problem as findTheTownJudge } from './find-the-town-judge';
+import { problem as numberOfProvinces } from './number-of-provinces';
 // graph — medium
 import { problem as numberOfIslands } from './number-of-islands';
 import { problem as courseSchedule } from './course-schedule';
@@ -254,6 +255,8 @@ import { problem as zigzagLevelOrder } from './zigzag-level-order';
 import { problem as flattenBinaryTree } from './flatten-binary-tree';
 import { problem as sumRootToLeafNumbers } from './sum-root-to-leaf-numbers';
 import { problem as lowestCommonAncestorBinaryTree } from './lowest-common-ancestor-binary-tree';
+import { problem as sumRootToLeaf } from './sum-root-to-leaf';
+import { problem as pathSumIII } from './path-sum-iii';
 // tree — hard
 import { problem as binaryTreeMaxPathSum } from './binary-tree-max-path-sum';
 import { problem as serializeBinaryTree } from './serialize-binary-tree';
@@ -466,6 +469,7 @@ export const problems: readonly Problem[] = [
   // graph — easy
   floodFill,
   findTheTownJudge,
+  numberOfProvinces,
   // graph — medium
   numberOfIslands,
   courseSchedule,
@@ -499,6 +503,8 @@ export const problems: readonly Problem[] = [
   flattenBinaryTree,
   sumRootToLeafNumbers,
   lowestCommonAncestorBinaryTree,
+  sumRootToLeaf,
+  pathSumIII,
   // tree — hard
   binaryTreeMaxPathSum,
   serializeBinaryTree,

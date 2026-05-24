@@ -3238,6 +3238,53 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'sum-root-to-leaf': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    function dfs(node: _TN | null, cur: number): number {
+      if (!node) return 0;
+      const n = cur * 10 + node.v;
+      if (!node.l && !node.r) return n;
+      return dfs(node.l, n) + dfs(node.r, n);
+    }
+    return dfs(root, 0);
+  },
+
+  'number-of-provinces': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const n = grid.length;
+    const visited = new Array<boolean>(n).fill(false);
+    function dfs(i: number): void {
+      visited[i] = true;
+      for (let j = 0; j < n; j++) {
+        if (grid[i]![j] === 1 && !visited[j]) dfs(j);
+      }
+    }
+    let provinces = 0;
+    for (let i = 0; i < n; i++) {
+      if (!visited[i]) { dfs(i); provinces++; }
+    }
+    return provinces;
+  },
+
+  'path-sum-iii': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    const target = args[1] as number;
+    const prefixCount = new Map<number, number>();
+    prefixCount.set(0, 1);
+    let count = 0;
+    function dfs(node: _TN | null, sum: number): void {
+      if (!node) return;
+      sum += node.v;
+      count += prefixCount.get(sum - target) ?? 0;
+      prefixCount.set(sum, (prefixCount.get(sum) ?? 0) + 1);
+      dfs(node.l, sum);
+      dfs(node.r, sum);
+      prefixCount.set(sum, prefixCount.get(sum)! - 1);
+    }
+    dfs(root, 0);
+    return count;
+  },
+
   'reverse-nodes-in-k-group': (...args: unknown[]) => {
     const arr = args[0] as number[];
     const k = args[1] as number;

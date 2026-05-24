@@ -2623,6 +2623,51 @@ def deserialize(data):
     return result
 `,
 
+  'sum-root-to-leaf': `def sumNumbers(root):
+    def dfs(node, cur):
+        if not node:
+            return 0
+        n = cur * 10 + node.val
+        if not node.left and not node.right:
+            return n
+        return dfs(node.left, n) + dfs(node.right, n)
+    return dfs(root, 0)
+`,
+
+  'number-of-provinces': `def findCircleNum(isConnected):
+    n = len(isConnected)
+    visited = [False] * n
+    def dfs(i):
+        visited[i] = True
+        for j in range(n):
+            if isConnected[i][j] == 1 and not visited[j]:
+                dfs(j)
+    provinces = 0
+    for i in range(n):
+        if not visited[i]:
+            dfs(i)
+            provinces += 1
+    return provinces
+`,
+
+  'path-sum-iii': `def pathSum(root, targetSum):
+    from collections import defaultdict
+    prefix_count = defaultdict(int)
+    prefix_count[0] = 1
+    count = [0]
+    def dfs(node, cur_sum):
+        if not node:
+            return
+        cur_sum += node.val
+        count[0] += prefix_count[cur_sum - targetSum]
+        prefix_count[cur_sum] += 1
+        dfs(node.left, cur_sum)
+        dfs(node.right, cur_sum)
+        prefix_count[cur_sum] -= 1
+    dfs(root, 0)
+    return count[0]
+`,
+
   'reverse-nodes-in-k-group': `def reverseKGroup(head, k):
     def count_nodes(node):
         count = 0
