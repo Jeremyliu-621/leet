@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** 55 problems, keyboard shortcut modal + popup solve breakdown stats added. Growing bank toward 100+ problems.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (394 unit tests across 22 files).
-**Next up:** Complete bank expansion to 100+ problems (batch writes in progress).
+**Current focus:** 85 problems across all difficulty tiers; bank expansion complete.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (505 unit tests across 22 files).
+**Next up:** Marketing site iteration + Vercel deployment; edge-case sweep of remaining lib modules.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -186,8 +186,8 @@ Still pending:
 - [x] Bank at 55 problems; first medium-difficulty problems added
 - [x] Keyboard shortcut reference card — `?` button in editor header opens modal (all shortcuts, Esc/backdrop close, aria-modal)
 - [x] Problem tag/difficulty breakdown stats in popup — mini bar chart by difficulty + top-5 tag pills; computeSolvedStats in popup-helpers.ts with 6 unit tests
-- [ ] Grow bank to 100+ problems (batch expansion in progress)
-- [ ] Add more medium-difficulty problems (currently 2: max-product-subarray, longest-palindromic-string)
+- [x] Grow bank to 85 problems — 33 new medium problems added across arrays, strings, hash-map, binary-search, stack, math; all with JS + Python solutions and test coverage (505 tests)
+- [x] Add more medium-difficulty problems — bank now has full medium tier across all 6 tag categories
 - [ ] Marketing site iteration + Vercel deployment
 
 ---
