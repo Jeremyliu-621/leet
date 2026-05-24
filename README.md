@@ -1,5 +1,9 @@
 # LeetLock
 
+[![CI](https://github.com/Jeremyliu-621/leet/actions/workflows/ci.yml/badge.svg)](https://github.com/Jeremyliu-621/leet/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-2A2A2A?style=flat-square)](LICENSE)
+[![Manifest V3](https://img.shields.io/badge/Manifest-V3-2A2A2A?style=flat-square&logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/develop/migrate)
+
 **Turn distracting websites into mini coding-interview gates: solve a problem, earn timed access.**
 
 LeetLock is a Chrome extension (Manifest V3) for programmers who want to stop doom-scrolling
