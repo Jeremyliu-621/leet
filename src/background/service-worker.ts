@@ -8,7 +8,9 @@ import {
   pruneTokens,
   upsertToken,
 } from '../lib/unlock/tokens';
-import { recordFail, recordSolve } from '../lib/streak/streak';
+import { nextApply, pickApplicable } from '../lib/cooldown/cooldown';
+import { applyAll } from '../lib/cooldown/apply';
+import { damageStreak, recordFail, recordSolve } from '../lib/streak/streak';
 import type { SolvedProblemRecord, UnlockToken } from '../lib/types';
 import type {
   FailChallengeRequest,
@@ -23,11 +25,11 @@ import type {
 // Owns all blocking decisions. The MV3 service worker is ephemeral (Chrome
 // terminates it after ~30 s idle), so:
 //   * all state lives in chrome.storage, never in module-level variables;
-//   * `reconcile()` is the single function that brings the live DNR rule set
-//     and the next alarm into agreement with current storage; it is called on
-//     every wake, on every storage change, and on every alarm — idempotent.
+//   * `reconcile()` is the single function that brings live DNR rules and the
+//     next alarm into agreement with current storage; it is called on every
+//     wake, on every storage change, and on every alarm — idempotent.
 
-const EXPIRY_ALARM = 'leetlock/unlock-expiry';
+const RECONCILE_ALARM = 'leetlock/reconcile';
 const HISTORY_REDIRECT_DEBOUNCE_MS = 750;
 /** Cap on persisted solve records to keep storage.local bounded. */
 const MAX_SOLVED_HISTORY = 1000;
@@ -35,18 +37,27 @@ const MAX_SOLVED_HISTORY = 1000;
 // --- Reconciliation -------------------------------------------------------
 
 async function reconcile(): Promise<void> {
-  const [blockRules, keywordRules, rawTokens] = await Promise.all([
+  const now = Date.now();
+
+  // 1. Apply any pending cooldown-deferred settings changes whose timer has
+  //    elapsed; this may mutate blockedRules / keywordRules / userPreferences.
+  await applyPendingChanges(now);
+
+  // 2. Read the (possibly mutated) state.
+  const [blockRules, keywordRules, rawTokens, pending] = await Promise.all([
     getValue('blockedRules'),
     getValue('keywordRules'),
     getValue('unlockTokens'),
+    getValue('cooldownPendingChanges'),
   ]);
 
-  const now = Date.now();
+  // 3. Prune expired unlock tokens.
   const pruned = pruneTokens(rawTokens, now);
   if (pruned.length !== rawTokens.length) {
     await setValue('unlockTokens', pruned);
   }
 
+  // 4. Rebuild the live DNR dynamic rule set.
   const unlockedDomains = activeDomains(pruned, now);
   const desiredRules = buildDynamicRules({
     blockRules,
@@ -61,11 +72,48 @@ async function reconcile(): Promise<void> {
     addRules: desiredRules,
   });
 
-  const upcoming = nextExpiry(pruned, now);
-  if (upcoming !== null) {
-    chrome.alarms.create(EXPIRY_ALARM, { when: upcoming });
+  // 5. Schedule the next alarm at the earliest of any token expiry and any
+  //    upcoming pending-change apply time.
+  const nextTokenExpiry = nextExpiry(pruned, now);
+  const nextPendingApply = nextApply(pending, now);
+  const nextWake = earliest(nextTokenExpiry, nextPendingApply);
+  if (nextWake !== null) {
+    chrome.alarms.create(RECONCILE_ALARM, { when: nextWake });
   } else {
-    await chrome.alarms.clear(EXPIRY_ALARM);
+    await chrome.alarms.clear(RECONCILE_ALARM);
+  }
+}
+
+function earliest(a: number | null, b: number | null): number | null {
+  if (a === null) return b;
+  if (b === null) return a;
+  return Math.min(a, b);
+}
+
+async function applyPendingChanges(now: number): Promise<void> {
+  const pending = await getValue('cooldownPendingChanges');
+  const applicable = pickApplicable(pending, now);
+  if (applicable.length === 0) return;
+
+  const [blockedRules, keywordRules, userPreferences] = await Promise.all([
+    getValue('blockedRules'),
+    getValue('keywordRules'),
+    getValue('userPreferences'),
+  ]);
+
+  const result = applyAll({ blockedRules, keywordRules, userPreferences }, applicable);
+  const remaining = pending.filter((change) => change.appliesAt > now);
+
+  await Promise.all([
+    setValue('blockedRules', result.state.blockedRules),
+    setValue('keywordRules', result.state.keywordRules),
+    setValue('userPreferences', result.state.userPreferences),
+    setValue('cooldownPendingChanges', remaining),
+  ]);
+
+  if (result.damagedStreak) {
+    const summary = await getValue('streakSummary');
+    await setValue('streakSummary', damageStreak(summary));
   }
 }
 
@@ -135,8 +183,8 @@ async function failChallenge(
     return { ok: false, error: 'no-tab-id' };
   }
 
-  // Update the streak first — record a fail for today, mark damaged. Done
-  // before the tab action so a same-tick redirect doesn't race the write.
+  // Streak first — recording a fail flags damaged for today. Done before the
+  // tab action so a same-tick redirect doesn't race the write.
   const [streakSummary, streakHistory] = await Promise.all([
     getValue('streakSummary'),
     getValue('streakHistory'),
@@ -194,9 +242,9 @@ async function openChallenge(
 // --- webNavigation: catch SPA history-state changes ----------------------
 //
 // declarativeNetRequest only fires for network requests. Sites like YouTube
-// transition between routes (home → /shorts) entirely client-side. The
-// webNavigation API fires onHistoryStateUpdated for those transitions; we
-// re-evaluate the URL ourselves and redirect the tab if it now matches.
+// transition between routes entirely client-side. The webNavigation API fires
+// onHistoryStateUpdated for those transitions; we re-evaluate the URL ourselves
+// and redirect the tab if it now matches.
 
 const recentRedirects = new Map<number, { url: string; at: number }>();
 
@@ -239,13 +287,19 @@ chrome.runtime.onStartup.addListener(() => {
 });
 
 chrome.alarms.onAlarm.addListener((alarm) => {
-  if (alarm.name === EXPIRY_ALARM) {
+  if (alarm.name === RECONCILE_ALARM) {
     void reconcile();
   }
 });
 
 chrome.storage.onChanged.addListener((changes, _area) => {
-  const triggers = ['blockedRules', 'keywordRules', 'unlockTokens'];
+  const triggers = [
+    'blockedRules',
+    'keywordRules',
+    'unlockTokens',
+    'cooldownPendingChanges',
+    'userPreferences',
+  ];
   if (triggers.some((key) => Object.prototype.hasOwnProperty.call(changes, key))) {
     void reconcile();
   }
