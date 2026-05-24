@@ -3519,6 +3519,59 @@ def deserialize(data):
     return dp[m-1][n-1]
 `,
 
+  'word-search-ii': `def findWords(board, words):
+    trie = {}
+    for word in words:
+        node = trie
+        for c in word:
+            if c not in node:
+                node[c] = {}
+            node = node[c]
+        node['$'] = word
+    result = []
+    m, n = len(board), len(board[0])
+    def dfs(r, c, node):
+        ch = board[r][c]
+        if ch not in node:
+            return
+        nxt = node[ch]
+        if '$' in nxt:
+            result.append(nxt['$'])
+            del nxt['$']
+        board[r][c] = '#'
+        for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
+            nr, nc2 = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc2 < n and board[nr][nc2] != '#':
+                dfs(nr, nc2, nxt)
+        board[r][c] = ch
+    for r in range(m):
+        for c in range(n):
+            dfs(r, c, trie)
+    return sorted(result)
+`,
+
+  'letter-case-permutation': `def letterCasePermutation(s):
+    result = []
+    def bt(i, cur):
+        if i == len(s):
+            result.append(''.join(cur))
+            return
+        ch = s[i]
+        if ch.isdigit():
+            cur.append(ch)
+            bt(i + 1, cur)
+            cur.pop()
+        else:
+            cur.append(ch.lower())
+            bt(i + 1, cur)
+            cur.pop()
+            cur.append(ch.upper())
+            bt(i + 1, cur)
+            cur.pop()
+    bt(0, [])
+    return sorted(result)
+`,
+
   'sudoku-solver': `def solveSudoku(board):
     rows = [set() for _ in range(9)]
     cols = [set() for _ in range(9)]

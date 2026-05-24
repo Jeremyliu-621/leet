@@ -297,6 +297,8 @@ import { problem as criticalConnections } from './critical-connections';
 import { problem as longestIncreasingPathMatrix } from './longest-increasing-path-matrix';
 import { problem as sudokuSolver } from './sudoku-solver';
 import { problem as combinations } from './combinations';
+import { problem as wordSearchII } from './word-search-ii';
+import { problem as letterCasePermutation } from './letter-case-permutation';
 
 // tree — easy (additional)
 import { problem as balancedBinaryTree } from './balanced-binary-tree';
@@ -611,10 +613,14 @@ export const problems: readonly Problem[] = [
   alienDictionary,
   criticalConnections,
   longestIncreasingPathMatrix,
+  // graph + backtracking — hard
+  wordSearchII,
   // arrays + backtracking — hard
   sudokuSolver,
   // arrays + backtracking — medium
   combinations,
+  // strings + backtracking — easy
+  letterCasePermutation,
   // tree — easy
   balancedBinaryTree,
   minimumDepthBinaryTree,

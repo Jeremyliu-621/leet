@@ -4114,6 +4114,51 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[m-1]![n-1]!;
   },
 
+  'word-search-ii': (...args: unknown[]) => {
+    const board = (args[0] as string[][]).map(r => [...r]);
+    const words = args[1] as string[];
+    interface TN { c: Record<string, TN>; w: string | null }
+    const mk = (): TN => ({ c: {}, w: null });
+    const root = mk();
+    for (const word of words) {
+      let n = root;
+      for (const ch of word) { if (!n.c[ch]) n.c[ch] = mk(); n = n.c[ch]!; }
+      n.w = word;
+    }
+    const result: string[] = [];
+    const m = board.length, nc = board[0]!.length;
+    function dfs(r: number, c: number, node: TN): void {
+      const ch = board[r]![c]!;
+      const next = node.c[ch];
+      if (!next) return;
+      if (next.w) { result.push(next.w); next.w = null; }
+      board[r]![c] = '#';
+      for (const [dr, dc] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) {
+        const nr = r + dr!, nc2 = c + dc!;
+        if (nr >= 0 && nr < m && nc2 >= 0 && nc2 < nc && board[nr]![nc2] !== '#') dfs(nr, nc2, next);
+      }
+      board[r]![c] = ch;
+    }
+    for (let r = 0; r < m; r++) for (let c = 0; c < nc; c++) dfs(r, c, root);
+    return result.sort();
+  },
+
+  'letter-case-permutation': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const result: string[] = [];
+    const bt = (i: number, cur: string[]): void => {
+      if (i === s.length) { result.push(cur.join('')); return; }
+      const ch = s[i]!;
+      if (/\d/.test(ch)) { cur.push(ch); bt(i + 1, cur); cur.pop(); }
+      else {
+        cur.push(ch.toLowerCase()); bt(i + 1, cur); cur.pop();
+        cur.push(ch.toUpperCase()); bt(i + 1, cur); cur.pop();
+      }
+    };
+    bt(0, []);
+    return result.sort();
+  },
+
   'sudoku-solver': (...args: unknown[]) => {
     const board = (args[0] as string[][]).map(row => [...row]);
     const rows = Array.from({ length: 9 }, () => new Set<string>());
