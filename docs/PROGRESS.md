@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 199 problems (12 tags); serialize-binary-tree (hard) added; 867 tests.
+**Current focus:** Bank at 199 problems (12 tags); full tree/graph coverage; 867 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green (867 unit tests across 23 files).
-**Next up:** Marketing site stats update; explore more graph/tree hard problems; UI/UX improvements.
+**Next up:** Add more hard problems (graph BFS/Dijkstra variants); deepen tree coverage; UI polish.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -237,7 +237,7 @@ Still pending:
 - [x] construct-binary-tree-from-preorder-inorder (medium); bank at 199 problems, 864 tests
 - [x] serialize-deserialize-binary-tree (hard tree): BFS round-trip with '#' sentinel; 867 tests; bank at 199
 - [x] Marketing site: update stats to 199 problems
-- [ ] Options/popup: show problem bank count next to each tag/difficulty pill (already in Options; verify accurate after 12 tags)
+- [x] Options: fix About section hardcoded "10 topic categories" → 12; tag/difficulty pill counts are already dynamic (computed from getAllProblems() at load time)
 
 ---
 
