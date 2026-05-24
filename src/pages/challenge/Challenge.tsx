@@ -434,6 +434,9 @@ export function Challenge() {
           // SW not yet wired (Phase 6) — continue to redirect anyway.
         }
 
+        // Brief pause so the user sees their "Accepted" verdict before navigating.
+        await new Promise<void>((resolve) => setTimeout(resolve, 1200));
+
         // Redirect back to the original target.
         if (targetUrl.current) {
           window.location.href = targetUrl.current;

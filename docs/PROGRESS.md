@@ -180,9 +180,11 @@ Still pending:
 - [x] a11y fixes — `aria-prohibited-attr` on editor fixed; mobile `!w-full` override for splitter
 - [x] Submission history — collapsible panel shows per-attempt outcome/tests/timing/timestamp
 - [x] Edge-case sweep — verdict non-finite duration, token clamping, streak date validation; 6 new tests
-- [ ] Streak heatmap display (time-saved, longest streak visualized)
-- [ ] Settings import/export
+- [x] Streak heatmap — 12-week grayscale activity grid in popup (aria-grid accessible)
+- [x] Settings import/export — JSON download/restore in Options (blocked sites, rules, prefs)
 - [ ] Marketing site iteration + Vercel deployment
+- [ ] Keyboard shortcut reference card in the challenge page
+- [ ] Problem tag/difficulty breakdown stats in popup or options
 
 ---
 
