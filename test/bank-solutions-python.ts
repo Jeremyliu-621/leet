@@ -2516,6 +2516,18 @@ def deserialize(data):
     return root
 `,
 
+  'kth-smallest-bst': `def kthSmallest(root, k):
+    vals = []
+    def inorder(node):
+        if not node:
+            return
+        inorder(node.left)
+        vals.append(node.val)
+        inorder(node.right)
+    inorder(root)
+    return vals[k - 1]
+`,
+
   'course-schedule-ii': `def findOrder(numCourses, prerequisites):
     from collections import deque
     in_deg = [0] * numCourses

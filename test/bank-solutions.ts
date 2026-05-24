@@ -3137,6 +3137,20 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return _treeToArr(build(0, inorder.length - 1));
   },
 
+  'kth-smallest-bst': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    const k = args[1] as number;
+    const vals: number[] = [];
+    function inorder(n: _TN | null): void {
+      if (!n) return;
+      inorder(n.l);
+      vals.push(n.v);
+      inorder(n.r);
+    }
+    inorder(root);
+    return vals[k - 1]!;
+  },
+
   'course-schedule-ii': (...args: unknown[]) => {
     const n = args[0] as number;
     const prereqs = args[1] as number[][];
