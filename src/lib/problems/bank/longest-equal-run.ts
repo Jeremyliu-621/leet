@@ -31,6 +31,7 @@ export const problem: Problem = {
   params: ['text'],
   starterCode: {
     javascript: 'function longestEqualRun(text) {\n  // your code here\n}\n',
+    python: 'def longestEqualRun(text):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: ['aabbbcc'], expected: 3 },

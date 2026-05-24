@@ -32,6 +32,7 @@ export const problem: Problem = {
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function minWindowSum(nums, k) {\n  // your code here\n}\n',
+    python: 'def minWindowSum(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: [[4, 2, 1, 7], 2], expected: 3 },

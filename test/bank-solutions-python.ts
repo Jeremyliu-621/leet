@@ -98,4 +98,36 @@ export const pythonSolutions: Record<string, string> = {
             right -= 1
     return False
 `,
+  'longest-equal-run': `def longestEqualRun(text):
+    if not text:
+        return 0
+    best = 1
+    current = 1
+    for i in range(1, len(text)):
+        if text[i] == text[i - 1]:
+            current += 1
+            if current > best:
+                best = current
+        else:
+            current = 1
+    return best
+`,
+  'max-window-sum': `def maxWindowSum(nums, k):
+    window = sum(nums[:k])
+    best = window
+    for i in range(k, len(nums)):
+        window += nums[i] - nums[i - k]
+        if window > best:
+            best = window
+    return best
+`,
+  'min-window-average': `def minWindowSum(nums, k):
+    window = sum(nums[:k])
+    best = window
+    for i in range(k, len(nums)):
+        window += nums[i] - nums[i - k]
+        if window < best:
+            best = window
+    return best
+`,
 };

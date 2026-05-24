@@ -35,6 +35,7 @@ You may assume \`k\` is at least \`1\` and never larger than \`nums.length\`.`,
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function maxWindowSum(nums, k) {\n  // your code here\n}\n',
+    python: 'def maxWindowSum(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: [[1, 2, 3, 4], 2], expected: 7 },
