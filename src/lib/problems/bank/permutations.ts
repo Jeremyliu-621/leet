@@ -1,15 +1,35 @@
 import type { Problem } from '../types';
 
+const JS_PREAMBLE = `
+function permuteRunner(arr) {
+  const r = permute(arr);
+  return r.sort((a, b) => {
+    for (let i = 0; i < Math.min(a.length, b.length); i++)
+      if (a[i] !== b[i]) return a[i] - b[i];
+    return a.length - b.length;
+  });
+}
+`.trim();
+
+const PY_PREAMBLE = `
+def permuteRunner(arr):
+    arr = list(arr) if hasattr(arr, 'to_py') else list(arr)
+    r = permute(arr)
+    return sorted([list(p) for p in r])
+`.trim();
+
 export const problem: Problem = {
   id: 'permutations',
   title: 'Permutations',
   difficulty: 'medium',
-  tags: ['arrays'],
-  description: `Given an array \`nums\` of distinct integers, return all the possible permutations. You can return the answer in **any order**.`,
+  tags: ['arrays', 'backtracking'],
+  description: `Given an array \`nums\` of **distinct** integers, return *all possible permutations*. You may return the answer in **any order**.
+
+> **Note:** The \`permuteRunner\` wrapper is pre-defined. Implement \`permute(nums)\`.`,
   constraints: [
-    '`1 <= nums.length <= 6`',
-    '`-10 <= nums[i] <= 10`',
-    'All the integers of `nums` are **unique**',
+    '1 <= nums.length <= 6',
+    '-10 <= nums[i] <= 10',
+    'All integers in nums are unique',
   ],
   examples: [
     {
@@ -26,29 +46,16 @@ export const problem: Problem = {
     },
   ],
   hints: [
-    'Use backtracking. Maintain a `current` list and a set of remaining elements.',
-    'At each step, try each remaining element as the next element in the permutation.',
-    'When `current.length == nums.length`, you have a complete permutation — add it to results.',
+    'Use backtracking: at each step, pick one unused number, add it to the current path, recurse, then remove it (backtrack).',
+    'Track which elements have been "used" with a boolean array or by swapping in-place.',
+    'Base case: when your current path length equals nums.length, push a copy of it to results and return.',
   ],
   functionName: 'permuteRunner',
   params: ['nums'],
-  preamble: {
-    javascript: `function permuteRunner(nums) {
-  return permute(nums).slice().sort((a, b) => {
-    for (let i = 0; i < a.length; i++) { if (a[i] !== b[i]) return a[i] - b[i]; }
-    return 0;
-  });
-}`,
-    python: `def permuteRunner(nums):
-    return sorted([list(p) for p in permute(nums)])
-`,
-  },
+  preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
-    javascript: `function permute(nums) {
-
-}`,
-    python: `def permute(nums):
-    pass`,
+    javascript: 'function permute(nums) {\n  \n}\n',
+    python: 'def permute(nums):\n    pass\n',
   },
   visibleTests: [
     { args: [[1, 2, 3]], expected: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]] },
@@ -56,8 +63,15 @@ export const problem: Problem = {
     { args: [[1]], expected: [[1]] },
   ],
   hiddenTests: [
-    { args: [[1, 2]], expected: [[1,2],[2,1]] },
-    { args: [[-1, 0, 1]], expected: [[-1,0,1],[-1,1,0],[0,-1,1],[0,1,-1],[1,-1,0],[1,0,-1]] },
-    { args: [[3, 1, 2]], expected: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]] },
+    { args: [[-1, 2]], expected: [[-1,2],[2,-1]] },
+    {
+      args: [[1, 2, 3, 4]],
+      expected: [
+        [1,2,3,4],[1,2,4,3],[1,3,2,4],[1,3,4,2],[1,4,2,3],[1,4,3,2],
+        [2,1,3,4],[2,1,4,3],[2,3,1,4],[2,3,4,1],[2,4,1,3],[2,4,3,1],
+        [3,1,2,4],[3,1,4,2],[3,2,1,4],[3,2,4,1],[3,4,1,2],[3,4,2,1],
+        [4,1,2,3],[4,1,3,2],[4,2,1,3],[4,2,3,1],[4,3,1,2],[4,3,2,1],
+      ],
+    },
   ],
 };

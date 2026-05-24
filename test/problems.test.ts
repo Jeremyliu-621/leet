@@ -96,6 +96,18 @@ describe('problem selector', () => {
     expect(ids).toContain('course-schedule');
   });
 
+  it('filters by backtracking tag', () => {
+    const bt = filterProblems({ tags: ['backtracking'] });
+    expect(bt.length).toBeGreaterThan(0);
+    expect(bt.every((p) => p.tags.includes('backtracking'))).toBe(true);
+    const ids = bt.map((p) => p.id);
+    expect(ids).toContain('permutations');
+    expect(ids).toContain('subsets');
+    expect(ids).toContain('combination-sum');
+    expect(ids).toContain('letter-combinations-phone');
+    expect(ids).toContain('generate-parentheses');
+  });
+
   it('respects difficulty when it is satisfiable', () => {
     const picked = pickChallengeProblem({ difficulties: ['easy'], tags: [] }, { random: () => 0 });
     expect(picked?.difficulty).toBe('easy');

@@ -15,7 +15,8 @@ export type ProblemTag =
   | 'dynamic-programming'
   | 'linked-list'
   | 'graph'
-  | 'tree';
+  | 'tree'
+  | 'backtracking';
 
 /** Every tag, in canonical display order. */
 export const PROBLEM_TAGS: readonly ProblemTag[] = [
@@ -31,6 +32,7 @@ export const PROBLEM_TAGS: readonly ProblemTag[] = [
   'linked-list',
   'graph',
   'tree',
+  'backtracking',
 ];
 
 /** Every difficulty, easiest first. */

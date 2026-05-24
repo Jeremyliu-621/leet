@@ -391,7 +391,7 @@ export const pythonSolutions: Record<string, string> = {
     return sorted(result)
 `,
 
-  'generate-parentheses': `def generateParenthesis(n):
+  'generate-parentheses': `def generateParentheses(n):
     result = []
     def bt(cur, open_count, close_count):
         if len(cur) == 2 * n:
