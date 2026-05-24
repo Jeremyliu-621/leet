@@ -2042,6 +2042,59 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  // --- arrays — medium (matrix) ---------------------------------------------
+  'spiral-matrix': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const m = matrix.length, n = matrix[0]!.length;
+    let top = 0, bottom = m - 1, left = 0, right = n - 1;
+    const res: number[] = [];
+    while (top <= bottom && left <= right) {
+      for (let c = left; c <= right; c++) res.push(matrix[top]![c]!);
+      top++;
+      for (let r = top; r <= bottom; r++) res.push(matrix[r]![right]!);
+      right--;
+      if (top <= bottom) {
+        for (let c = right; c >= left; c--) res.push(matrix[bottom]![c]!);
+        bottom--;
+      }
+      if (left <= right) {
+        for (let r = bottom; r >= top; r--) res.push(matrix[r]![left]!);
+        left++;
+      }
+    }
+    return res;
+  },
+
+  'rotate-image': (...args: unknown[]) => {
+    const matrix = (args[0] as number[][]).map(r => [...r]);
+    const n = matrix.length;
+    for (let i = 0; i < n; i++) {
+      for (let j = i + 1; j < n; j++) {
+        [matrix[i]![j], matrix[j]![i]] = [matrix[j]![i]!, matrix[i]![j]!];
+      }
+    }
+    for (const row of matrix) row.reverse();
+    return matrix;
+  },
+
+  'maximal-square': (...args: unknown[]) => {
+    const matrix = args[0] as string[][];
+    const m = matrix.length, n = matrix[0]!.length;
+    const dp = Array.from({ length: m }, () => new Array<number>(n).fill(0));
+    let best = 0;
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        if (matrix[i]![j] === '1') {
+          dp[i]![j] = i > 0 && j > 0
+            ? Math.min(dp[i - 1]![j]!, dp[i]![j - 1]!, dp[i - 1]![j - 1]!) + 1
+            : 1;
+          best = Math.max(best, dp[i]![j]!);
+        }
+      }
+    }
+    return best * best;
+  },
+
   // --- dynamic-programming — hard --------------------------------------------
   'longest-palindromic-subsequence': (...args: unknown[]) => {
     const s = args[0] as string;

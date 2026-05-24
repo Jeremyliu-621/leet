@@ -23,6 +23,9 @@ import { problem as majorityElement } from './majority-element';
 import { problem as kthLargestElement } from './kth-largest-element';
 import { problem as findAllDuplicates } from './find-all-duplicates';
 import { problem as longestSubarrayOfOnes } from './longest-subarray-of-ones';
+import { problem as spiralMatrix } from './spiral-matrix';
+import { problem as rotateImage } from './rotate-image';
+import { problem as maximalSquare } from './maximal-square';
 
 // strings — easy
 import { problem as vowelTally } from './vowel-tally';
@@ -193,6 +196,9 @@ export const problems: readonly Problem[] = [
   kthLargestElement,
   findAllDuplicates,
   longestSubarrayOfOnes,
+  spiralMatrix,
+  rotateImage,
+  maximalSquare,
   // strings — easy
   vowelTally,
   reverseWordsOrder,

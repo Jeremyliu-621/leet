@@ -1521,6 +1521,53 @@ export const pythonSolutions: Record<string, string> = {
     return result
 `,
 
+  'spiral-matrix': `def spiralOrder(matrix: list[list[int]]) -> list[int]:
+    m, n = len(matrix), len(matrix[0])
+    top, bottom, left, right = 0, m - 1, 0, n - 1
+    res = []
+    while top <= bottom and left <= right:
+        for c in range(left, right + 1):
+            res.append(matrix[top][c])
+        top += 1
+        for r in range(top, bottom + 1):
+            res.append(matrix[r][right])
+        right -= 1
+        if top <= bottom:
+            for c in range(right, left - 1, -1):
+                res.append(matrix[bottom][c])
+            bottom -= 1
+        if left <= right:
+            for r in range(bottom, top - 1, -1):
+                res.append(matrix[r][left])
+            left += 1
+    return res
+`,
+
+  'rotate-image': `def rotate(matrix: list[list[int]]) -> list[list[int]]:
+    n = len(matrix)
+    for i in range(n):
+        for j in range(i + 1, n):
+            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+    for row in matrix:
+        row.reverse()
+    return matrix
+`,
+
+  'maximal-square': `def maximalSquare(matrix: list[list[str]]) -> int:
+    m, n = len(matrix), len(matrix[0])
+    dp = [[0] * n for _ in range(m)]
+    best = 0
+    for i in range(m):
+        for j in range(n):
+            if matrix[i][j] == '1':
+                if i > 0 and j > 0:
+                    dp[i][j] = min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1
+                else:
+                    dp[i][j] = 1
+                best = max(best, dp[i][j])
+    return best * best
+`,
+
   'longest-palindromic-subsequence': `def longestPalindromeSubseq(s: str) -> int:
     n = len(s)
     dp = [[0] * n for _ in range(n)]
