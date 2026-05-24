@@ -5,8 +5,11 @@ export const problem: Problem = {
   title: 'Pair That Sums To Target',
   difficulty: 'easy',
   tags: ['hash-map'],
-  description:
-    'Given an integer array nums and an integer target, find two distinct positions whose values add up to target.\n\nReturn their indices as a two-element array [i, j] with i < j. You may assume that exactly one such pair exists for every input, so there is always a single correct answer.\n\nA value at one index may not be paired with itself; the two indices must be different.',
+  description: `Given an integer array \`nums\` and an integer \`target\`, find **two distinct positions** whose values add up to \`target\`.
+
+Return their indices as a two-element array \`[i, j]\` with \`i < j\`. You may assume that exactly one such pair exists for every input, so there is always a single correct answer.
+
+A value at one index may not be paired with itself; the two indices must be different.`,
   constraints: [
     '2 <= nums.length <= 1000',
     'All values in nums are integers.',
@@ -32,6 +35,7 @@ export const problem: Problem = {
   params: ['nums', 'target'],
   starterCode: {
     javascript: 'function pairSumIndices(nums, target) {\n  // your code here\n}\n',
+    python: 'def pairSumIndices(nums, target):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: [[2, 7, 11, 15], 9], expected: [0, 1] },
@@ -45,5 +49,10 @@ export const problem: Problem = {
     { args: [[10, 20, 30], 50], expected: [1, 2] },
     { args: [[-5, 8, 1], 3], expected: [0, 1] },
     { args: [[100, 1, 99], 100], expected: [1, 2] },
+  ],
+  hints: [
+    'The naive approach is two nested loops — `O(n²)`. Can you trade memory for time?',
+    'For each value `v` you visit, the complement you need is `target - v`. If you remember which indices you have already seen, you can ask "have I seen the complement?" in constant time.',
+    'Use a `Map` / `dict` from value → first index. For each `i`, check if `target - nums[i]` is in the map; if it is, return `[map[target - nums[i]], i]`. Otherwise record `nums[i] -> i` and move on.',
   ],
 };
