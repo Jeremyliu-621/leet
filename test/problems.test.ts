@@ -61,6 +61,7 @@ describe('problem selector', () => {
     expect(selectProblem({ difficulties: ['easy'], tags: ['stack'], excludeIds: [
       'balanced-brackets', 'remove-adjacent-dupes', 'next-greater-element',
       'daily-temperatures', 'evaluate-rpn', 'min-stack', 'implement-queue-using-stacks',
+      'maximum-nesting-depth',
     ] })).toBeUndefined();
   });
 

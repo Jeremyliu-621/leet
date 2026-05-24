@@ -5265,4 +5265,53 @@ def numberOfMatches(n):
     return n - 1
 `,
 
+  'increasing-triplet-subsequence': `def increasingTriplet(nums):
+    first = second = float('inf')
+    for n in nums:
+        if n <= first:
+            first = n
+        elif n <= second:
+            second = n
+        else:
+            return True
+    return False
+`,
+
+  'number-of-rectangles': `def countGoodRectangles(rectangles):
+    sides = [min(l, w) for l, w in rectangles]
+    max_len = max(sides)
+    return sum(1 for s in sides if s == max_len)
+`,
+
+  'determine-if-halves-alike': `def halvesAreAlike(s):
+    vowels = set('aeiouAEIOU')
+    half = len(s) // 2
+    return sum(1 for c in s[:half] if c in vowels) == sum(1 for c in s[half:] if c in vowels)
+`,
+
+  'maximum-nesting-depth': `def maxDepth(s):
+    depth = max_depth = 0
+    for c in s:
+        if c == '(':
+            depth += 1
+            max_depth = max(max_depth, depth)
+        elif c == ')':
+            depth -= 1
+    return max_depth
+`,
+
+  'count-primes-less-than': `def countPrimes(n):
+    if n < 2:
+        return 0
+    sieve = [True] * n
+    sieve[0] = sieve[1] = False
+    i = 2
+    while i * i < n:
+        if sieve[i]:
+            for j in range(i * i, n, i):
+                sieve[j] = False
+        i += 1
+    return sum(sieve)
+`,
+
 };

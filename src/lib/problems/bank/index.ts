@@ -39,6 +39,8 @@ import { problem as countNumberOfPairs } from './count-number-of-pairs';
 import { problem as validMountainArray } from './valid-mountain-array';
 import { problem as canPlaceFlowers } from './can-place-flowers';
 import { problem as maximumProductTwoElements } from './maximum-product-two-elements';
+import { problem as increasingTripletSubsequence } from './increasing-triplet-subsequence';
+import { problem as numberOfRectangles } from './number-of-rectangles';
 // arrays — medium
 import { problem as rangeSumQuery2D } from './range-sum-query-2d';
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
@@ -86,6 +88,7 @@ import { problem as repeatedSubstringPattern } from './repeated-substring-patter
 import { problem as checkIfPangram } from './check-if-pangram';
 import { problem as truncateSentence } from './truncate-sentence';
 import { problem as reverseStringII } from './reverse-string-ii';
+import { problem as determineIfHalvesAlike } from './determine-if-halves-alike';
 // strings — medium (additional)
 import { problem as integerToRoman } from './integer-to-roman';
 import { problem as reverseOnlyLetters } from './reverse-only-letters';
@@ -225,6 +228,7 @@ import { problem as nextGreaterElement } from './next-greater-element';
 import { problem as dailyTemperatures } from './daily-temperatures';
 import { problem as evaluateRpn } from './evaluate-rpn';
 import { problem as minStack } from './min-stack';
+import { problem as maximumNestingDepth } from './maximum-nesting-depth';
 // stack — medium
 import { problem as onlineStockSpan } from './online-stock-span';
 import { problem as simplifyPath } from './simplify-path';
@@ -279,6 +283,7 @@ import { problem as fractionToRecurringDecimal } from './fraction-to-recurring-d
 import { problem as integerToEnglishWords } from './integer-to-english-words';
 // math — medium
 import { problem as taskScheduler } from './task-scheduler';
+import { problem as countPrimesLessThan } from './count-primes-less-than';
 import { problem as countPrimesSieve } from './count-primes-sieve';
 import { problem as powXN } from './pow-x-n';
 import { problem as reverseInteger } from './reverse-integer';
@@ -504,6 +509,8 @@ export const problems: readonly Problem[] = [
   validMountainArray,
   canPlaceFlowers,
   maximumProductTwoElements,
+  increasingTripletSubsequence,
+  numberOfRectangles,
   singleNumber,
   // arrays — medium
   rangeSumQuery2D,
@@ -559,6 +566,7 @@ export const problems: readonly Problem[] = [
   checkIfPangram,
   truncateSentence,
   reverseStringII,
+  determineIfHalvesAlike,
   reverseOnlyLetters,
   backspaceStringCompare,
   vowelTally,
@@ -697,6 +705,7 @@ export const problems: readonly Problem[] = [
   dailyTemperatures,
   evaluateRpn,
   minStack,
+  maximumNestingDepth,
   // stack — medium
   onlineStockSpan,
   simplifyPath,
@@ -760,6 +769,7 @@ export const problems: readonly Problem[] = [
   // math — medium
   taskScheduler,
   countPrimesSieve,
+  countPrimesLessThan,
   powXN,
   reverseInteger,
   happyNumber,

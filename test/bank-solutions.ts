@@ -5926,4 +5926,54 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return (args[0] as number) - 1;
   },
 
+  'increasing-triplet-subsequence': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let first = Infinity, second = Infinity;
+    for (const n of nums) {
+      if (n <= first) first = n;
+      else if (n <= second) second = n;
+      else return true;
+    }
+    return false;
+  },
+
+  'number-of-rectangles': (...args: unknown[]) => {
+    const rects = args[0] as number[][];
+    const sides = rects.map(([l, w]) => Math.min(l!, w!));
+    const maxLen = Math.max(...sides);
+    return sides.filter(s => s === maxLen).length;
+  },
+
+  'determine-if-halves-alike': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const vowels = new Set('aeiouAEIOU');
+    const half = s.length / 2;
+    const countA = [...s.slice(0, half)].filter(c => vowels.has(c)).length;
+    const countB = [...s.slice(half)].filter(c => vowels.has(c)).length;
+    return countA === countB;
+  },
+
+  'maximum-nesting-depth': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let depth = 0, max = 0;
+    for (const c of s) {
+      if (c === '(') { depth++; if (depth > max) max = depth; }
+      else if (c === ')') depth--;
+    }
+    return max;
+  },
+
+  'count-primes-less-than': (...args: unknown[]) => {
+    const n = args[0] as number;
+    if (n < 2) return 0;
+    const sieve = new Uint8Array(n).fill(1);
+    sieve[0] = 0; sieve[1] = 0;
+    for (let i = 2; i * i < n; i++) {
+      if (sieve[i]) for (let j = i * i; j < n; j += i) sieve[j] = 0;
+    }
+    let count = 0;
+    for (let i = 2; i < n; i++) if (sieve[i]) count++;
+    return count;
+  },
+
 };
