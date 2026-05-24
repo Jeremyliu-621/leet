@@ -4720,4 +4720,23 @@ def deserialize(data):
     return ''.join(result)
 `,
 
+  'check-if-pangram': `def checkIfPangram(sentence):
+    return len(set(sentence)) >= 26
+`,
+
+  'is-power-of-four': `def isPowerOfFour(n):
+    return n > 0 and (n & (n - 1)) == 0 and (n & 0xAAAAAAAA) == 0
+`,
+
+  'longest-word-in-dictionary': `def longestWord(words):
+    word_set = set(words)
+    best = ''
+    for word in words:
+        valid = all(word[:i] in word_set for i in range(1, len(word)))
+        if valid:
+            if len(word) > len(best) or (len(word) == len(best) and word < best):
+                best = word
+    return best
+`,
+
 };

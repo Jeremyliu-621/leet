@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'integer-to-roman',
   title: 'Integer to Roman',
   difficulty: 'medium',
-  tags: ['math', 'strings'],
+  tags: ['strings'],
   description: `Roman numerals are represented by seven symbols:
 
 | Symbol | Value |
@@ -21,7 +21,7 @@ Roman numerals are usually written largest to smallest left to right. However, w
 
 Given an integer \`num\`, convert it to a Roman numeral.`,
   constraints: [
-    '`1 <= num <= 3999`',
+    '1 <= num <= 3999',
   ],
   examples: [
     { input: 'num = 3749', output: '"MMMDCCXLIX"' },
@@ -35,11 +35,8 @@ Given an integer \`num\`, convert it to a Roman numeral.`,
   functionName: 'intToRoman',
   params: ['num'],
   starterCode: {
-    javascript: `function intToRoman(num) {
-
-}`,
-    python: `def intToRoman(num):
-    pass`,
+    javascript: 'function intToRoman(num) {\n  \n}\n',
+    python: 'def intToRoman(num):\n    pass\n',
   },
   visibleTests: [
     { args: [3749], expected: 'MMMDCCXLIX' },
@@ -51,5 +48,7 @@ Given an integer \`num\`, convert it to a Roman numeral.`,
     { args: [4], expected: 'IV' },
     { args: [9], expected: 'IX' },
     { args: [3999], expected: 'MMMCMXCIX' },
+    { args: [400], expected: 'CD' },
+    { args: [900], expected: 'CM' },
   ],
 };

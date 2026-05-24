@@ -5349,7 +5349,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   'minimum-cost-to-connect-sticks': (...args: unknown[]) => {
     const sticks = (args[0] as number[]).slice();
     if (sticks.length <= 1) return 0;
-    // sorted-array min-heap simulation
     sticks.sort((a, b) => a - b);
     let cost = 0;
     while (sticks.length > 1) {
@@ -5384,6 +5383,32 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       }
     }
     return result.join('');
+  },
+
+  'check-if-pangram': (...args: unknown[]) => {
+    const sentence = args[0] as string;
+    return new Set(sentence).size >= 26;
+  },
+
+  'is-power-of-four': (...args: unknown[]) => {
+    const n = args[0] as number;
+    return n > 0 && (n & (n - 1)) === 0 && (n & 0xAAAAAAAA) === 0;
+  },
+
+  'longest-word-in-dictionary': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const set = new Set(words);
+    let best = '';
+    for (const word of words) {
+      let valid = true;
+      for (let i = 1; i < word.length; i++) {
+        if (!set.has(word.slice(0, i))) { valid = false; break; }
+      }
+      if (valid && (word.length > best.length || (word.length === best.length && word < best))) {
+        best = word;
+      }
+    }
+    return best;
   },
 
 };

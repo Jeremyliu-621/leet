@@ -63,6 +63,10 @@ import { problem as addBinary } from './add-binary';
 import { problem as goalParser } from './goal-parser';
 import { problem as detectCapital } from './detect-capital';
 import { problem as repeatedSubstringPattern } from './repeated-substring-pattern';
+import { problem as checkIfPangram } from './check-if-pangram';
+import { problem as truncateSentence } from './truncate-sentence';
+// strings — medium (additional)
+import { problem as integerToRoman } from './integer-to-roman';
 import { problem as reverseOnlyLetters } from './reverse-only-letters';
 import { problem as backspaceStringCompare } from './backspace-string-compare';
 import { problem as vowelTally } from './vowel-tally';
@@ -74,7 +78,6 @@ import { problem as reverseString } from './reverse-string';
 import { problem as capitalizeWords } from './capitalize-words';
 import { problem as lengthOfLastWord } from './length-of-last-word';
 import { problem as defangingIpAddress } from './defanging-ip-address';
-import { problem as truncateSentence } from './truncate-sentence';
 import { problem as toLowerCase } from './to-lower-case';
 import { problem as checkIfTwoStringArraysEquivalent } from './check-if-two-string-arrays-equivalent';
 // strings — medium
@@ -92,6 +95,8 @@ import { problem as restoreIpAddresses } from './restore-ip-addresses';
 import { problem as validAnagram } from './valid-anagram';
 import { problem as pathCrossing } from './path-crossing';
 import { problem as firstUniqueChar } from './first-unique-char';
+// hash-map — medium (additional)
+import { problem as longestWordInDictionary } from './longest-word-in-dictionary';
 import { problem as twoSumIndices } from './two-sum-indices';
 import { problem as mostFrequentValue } from './most-frequent-value';
 import { problem as anagramCheck } from './anagram-check';
@@ -212,6 +217,7 @@ import { problem as longestPalindromeBuild } from './longest-palindrome-build';
 import { problem as numberOfOneBits } from './number-of-1-bits';
 import { problem as singleNumberII } from './single-number-ii';
 import { problem as powerOfThree } from './power-of-three';
+import { problem as isPowerOfFour } from './is-power-of-four';
 import { problem as reverseBits } from './reverse-bits';
 import { problem as countAndSay } from './count-and-say';
 import { problem as fibonacciNumber } from './fibonacci-number';
@@ -230,7 +236,6 @@ import { problem as findNUniqueIntegersSumToZero } from './find-n-unique-integer
 import { problem as fractionToRecurringDecimal } from './fraction-to-recurring-decimal';
 import { problem as integerToEnglishWords } from './integer-to-english-words';
 // math — medium
-import { problem as integerToRoman } from './integer-to-roman';
 import { problem as taskScheduler } from './task-scheduler';
 import { problem as countPrimesSieve } from './count-primes-sieve';
 import { problem as powXN } from './pow-x-n';
@@ -483,6 +488,8 @@ export const problems: readonly Problem[] = [
   goalParser,
   detectCapital,
   repeatedSubstringPattern,
+  checkIfPangram,
+  truncateSentence,
   reverseOnlyLetters,
   backspaceStringCompare,
   vowelTally,
@@ -494,7 +501,6 @@ export const problems: readonly Problem[] = [
   capitalizeWords,
   lengthOfLastWord,
   defangingIpAddress,
-  truncateSentence,
   toLowerCase,
   checkIfTwoStringArraysEquivalent,
   // strings — medium
@@ -508,6 +514,7 @@ export const problems: readonly Problem[] = [
   stringMultiply,
   isSubsequenceMedium,
   characterReplacement,
+  integerToRoman,
   // hash-map — easy
   validAnagram,
   pathCrossing,
@@ -531,6 +538,7 @@ export const problems: readonly Problem[] = [
   longestConsecutiveSequence,
   findAllAnagramsInString,
   maximumErasureValue,
+  longestWordInDictionary,
   // hash-map — hard
   fourSumII,
   maxPointsOnLine,
@@ -641,6 +649,7 @@ export const problems: readonly Problem[] = [
   numberOfOneBits,
   singleNumberII,
   powerOfThree,
+  isPowerOfFour,
   reverseBits,
   countAndSay,
   fibonacciNumber,
@@ -659,7 +668,6 @@ export const problems: readonly Problem[] = [
   fractionToRecurringDecimal,
   integerToEnglishWords,
   // math — medium
-  integerToRoman,
   taskScheduler,
   countPrimesSieve,
   powXN,
