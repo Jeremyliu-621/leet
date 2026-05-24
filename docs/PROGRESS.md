@@ -7,14 +7,13 @@
 ---
 
 **Last updated:** 2026-05-24
-**Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Editor QoL parity with LeetCode, theme system, problem-content quality.
-**Build status:** 🟢 `npm run build` + `npm run test` green (259 unit tests across 18 files) +
-**17/17 Playwright e2e tests pass against real Chromium** including the solve→unlock flow + the
-real-user redirect-loop fix + a11y baseline.
-**Next up:** Pyodide research lands → execute the phased plan. Also pending: editor settings
-popover (font size, vim keymap toggle), draggable splitter, ZIP-package post-build, more hint
-authoring across the rest of the bank.
+**Current phase:** Phase 13 — Post-MVP polish · Pyodide rollout
+**Current focus:** Editor QoL, theme system, problem-content quality, first-run UX, Pyodide M1 done.
+**Build status:** 🟢 `npm run build` + `npm run test` green (264 unit tests across 19 files) +
+17/17 Playwright e2e against real Chromium.
+**Next up:** **Pyodide M2** — vendor `pyodide-core-0.29.4` into `public/pyodide/`, list it in
+`web_accessible_resources`, add `wasm-unsafe-eval` to the sandbox CSP (see `docs/PYODIDE_PLAN.md`
+§8 M2). Also pending: vim keymap toggle, draggable splitter, hints on the remaining 13 problems.
 
 ---
 

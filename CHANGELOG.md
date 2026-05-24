@@ -19,6 +19,20 @@ pre-stable).
   explicit user click, and **cost one minute off the challenge timer per
   reveal** — brand-aligned: friction is the point. Wired up on three bank
   problems (`two-sum-indices`, `running-sum`, `balanced-brackets`).
+- **First-run quick-start** in the popup — when the user has zero block
+  rules, a chip row surfaces five common distractions
+  (`youtube.com`, `reddit.com`, `x.com`, `instagram.com`, `tiktok.com`) for
+  one-click adds. Disappears as soon as any rule exists.
+- **Editor font-size preference** (`S` / `M` / `L` / `XL` = 11 / 13 / 15 /
+  17 px) — persisted, sync'd across devices, applied via a CSS variable so
+  every CodeMirror instance picks it up without rebuild.
+- **Python plumbing (M1 of the Pyodide rollout)** — `SupportedLanguage` is
+  now `'javascript' | 'python'`; `Problem.starterCode` requires JS and
+  allows Python; `RunRequest.language` is optional; `UserPreferences` gains
+  `preferredLanguage`. **No behaviour change** — the Python worker and
+  bundled Pyodide runtime land in M2–M3 (see `docs/PYODIDE_PLAN.md`).
+- 8 more bank problems (one per tag) enriched with markdown formatting and
+  progressive hints — 11/24 problems now have hints, 24 new hints added.
 - **Light / dark / system theme** via CSS variables and a `data-theme`
   attribute on `<html>`. Both palettes are pure grayscale, zero hue. A
   three-way switcher lives in the popup; `system` follows the OS theme via
