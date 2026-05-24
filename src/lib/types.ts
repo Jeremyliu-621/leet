@@ -11,7 +11,8 @@ export type ProblemTag =
   | 'sliding-window'
   | 'binary-search'
   | 'stack'
-  | 'math';
+  | 'math'
+  | 'dynamic-programming';
 
 /** Every tag, in canonical display order. */
 export const PROBLEM_TAGS: readonly ProblemTag[] = [
@@ -23,6 +24,7 @@ export const PROBLEM_TAGS: readonly ProblemTag[] = [
   'binary-search',
   'stack',
   'math',
+  'dynamic-programming',
 ];
 
 /** Every difficulty, easiest first. */

@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'word-break',
   title: 'Word Break',
   difficulty: 'hard',
-  tags: ['strings', 'hash-map'],
+  tags: ['strings', 'hash-map', 'dynamic-programming'],
   description: `Given a string \`s\` and a list of dictionary words \`wordDict\`, return \`true\` if \`s\` can be segmented into a space-separated sequence of one or more dictionary words.
 
 The same word from the dictionary may be reused multiple times in the segmentation.

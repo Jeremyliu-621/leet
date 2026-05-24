@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'longest-increasing-subsequence',
   title: 'Longest Increasing Subsequence',
   difficulty: 'hard',
-  tags: ['arrays', 'binary-search'],
+  tags: ['arrays', 'binary-search', 'dynamic-programming'],
   description: `Given an integer array \`nums\`, return the **length of the longest strictly increasing subsequence**.
 
 A **subsequence** is a sequence derived from the array by deleting some or no elements without changing the order of the remaining elements.

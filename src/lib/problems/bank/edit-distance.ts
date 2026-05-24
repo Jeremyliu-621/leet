@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'edit-distance',
   title: 'Edit Distance (Levenshtein)',
   difficulty: 'hard',
-  tags: ['strings'],
+  tags: ['strings', 'dynamic-programming'],
   description: `Given two strings \`word1\` and \`word2\`, return the **minimum number of operations** required to convert \`word1\` to \`word2\`.
 
 You have three operations available:

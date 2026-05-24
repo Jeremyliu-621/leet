@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'climbing-stairs',
   title: 'Climbing Stairs',
   difficulty: 'easy',
-  tags: ['math'],
+  tags: ['math', 'dynamic-programming'],
   description: `You are climbing a staircase with \`n\` steps. Each time you can climb either **1** or **2** steps. In how many distinct ways can you climb to the top?
 
 For example, with 3 steps you can go: [1,1,1], [1,2], or [2,1] — three distinct ways.

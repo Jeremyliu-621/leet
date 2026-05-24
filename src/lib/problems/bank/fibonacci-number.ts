@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'fibonacci-number',
   title: 'Fibonacci Number',
   difficulty: 'easy',
-  tags: ['math'],
+  tags: ['math', 'dynamic-programming'],
   description: `The **Fibonacci sequence** is defined as:
 
 - F(0) = 0
