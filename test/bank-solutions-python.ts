@@ -2262,4 +2262,38 @@ export const pythonSolutions: Record<string, string> = {
         result.append(level)
     return result
 `,
+
+  'path-sum': `def hasPathSum(root, targetSum):
+    if not root:
+        return False
+    if not root.left and not root.right:
+        return targetSum == root.val
+    return hasPathSum(root.left, targetSum - root.val) or hasPathSum(root.right, targetSum - root.val)
+`,
+
+  'diameter-of-binary-tree': `def diameterOfBinaryTree(root):
+    best = [0]
+    def depth(node):
+        if not node:
+            return 0
+        l = depth(node.left)
+        r = depth(node.right)
+        if l + r > best[0]:
+            best[0] = l + r
+        return 1 + max(l, r)
+    depth(root)
+    return best[0]
+`,
+
+  'lowest-common-ancestor-bst': `def lowestCommonAncestor(root, p, q):
+    node = root
+    while node:
+        if p.val < node.val and q.val < node.val:
+            node = node.left
+        elif p.val > node.val and q.val > node.val:
+            node = node.right
+        else:
+            return node
+    return None
+`,
 };

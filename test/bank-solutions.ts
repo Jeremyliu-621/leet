@@ -2834,4 +2834,38 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'path-sum': (...args: unknown[]) => {
+    const check = (n: _TN | null, rem: number): boolean => {
+      if (!n) return false;
+      if (!n.l && !n.r) return rem === n.v;
+      return check(n.l, rem - n.v) || check(n.r, rem - n.v);
+    };
+    return check(_buildTree(args[0] as (number | null)[]), args[1] as number);
+  },
+
+  'diameter-of-binary-tree': (...args: unknown[]) => {
+    let best = 0;
+    const depth = (n: _TN | null): number => {
+      if (!n) return 0;
+      const l = depth(n.l);
+      const r = depth(n.r);
+      if (l + r > best) best = l + r;
+      return 1 + Math.max(l, r);
+    };
+    depth(_buildTree(args[0] as (number | null)[]));
+    return best;
+  },
+
+  'lowest-common-ancestor-bst': (...args: unknown[]) => {
+    const p = args[1] as number;
+    const q = args[2] as number;
+    let node = _buildTree(args[0] as (number | null)[]);
+    while (node) {
+      if (p < node.v && q < node.v) { node = node.l; }
+      else if (p > node.v && q > node.v) { node = node.r; }
+      else { return node.v; }
+    }
+    return -1;
+  },
+
 };

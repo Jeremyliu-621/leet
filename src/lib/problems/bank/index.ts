@@ -227,9 +227,12 @@ import { problem as maxDepthBinaryTree } from './max-depth-binary-tree';
 import { problem as symmetricTree } from './symmetric-tree';
 import { problem as invertBinaryTree } from './invert-binary-tree';
 import { problem as binaryTreePaths } from './binary-tree-paths';
+import { problem as pathSum } from './path-sum';
+import { problem as diameterOfBinaryTree } from './diameter-of-binary-tree';
 // tree — medium
 import { problem as validateBst } from './validate-bst';
 import { problem as levelOrderTraversal } from './level-order-traversal';
+import { problem as lowestCommonAncestorBst } from './lowest-common-ancestor-bst';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -445,7 +448,10 @@ export const problems: readonly Problem[] = [
   symmetricTree,
   invertBinaryTree,
   binaryTreePaths,
+  pathSum,
+  diameterOfBinaryTree,
   // tree — medium
   validateBst,
   levelOrderTraversal,
+  lowestCommonAncestorBst,
 ];
