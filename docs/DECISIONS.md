@@ -90,3 +90,20 @@ Vite's latest is 8, but `@vitejs/plugin-react@6` requires Vite 8, while CRXJS's 
 support is brand new. Pin **Vite 7** (the mature `previous` release line) with
 **`@vitejs/plugin-react@5`** (supports Vite 4–8) and **CRXJS 2.4.0** (supports Vite 3–8). This trio
 is fully consistent and well soaked. Revisit once CRXJS has proven Vite 8 support in the wild.
+
+### 2026-05-23 — D13: Accept CRXJS→rollup transitive audit warning
+
+`npm audit` reports two high-severity findings for `rollup <2.80.0` (path-traversal in dev builds)
+via `@crxjs/vite-plugin`'s pinned rollup. The advisory affects the *build tool* when handling
+attacker-controlled inputs at build time, not the produced extension shipped to users. The
+auto-fix downgrades CRXJS to v1.0.14 — a major regression. We **accept the dev-only risk** and
+keep CRXJS v2; an upstream fix will be pulled in when CRXJS bumps its rollup pin. Tracked.
+
+### 2026-05-23 — D14: Extracted `reconcile()` for integration testability
+
+The service worker was split: `src/background/reconcile.ts` owns the pure decision pipeline
+(apply pending changes → prune tokens → rebuild DNR rules → schedule next alarm), and
+`src/background/service-worker.ts` is a thin shell of event listeners and message handlers that
+delegates to it. **Rationale:** lets us drive the full state machine in unit tests against an
+in-memory `chrome` (see `test/sw-reconcile.test.ts`) — the closest thing to true e2e we can get
+without a real browser load. The SW file shrinks; the integration surface gets 18 new tests.
