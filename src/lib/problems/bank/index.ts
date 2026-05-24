@@ -15,6 +15,7 @@ import { problem as shuffleTheArray } from './shuffle-the-array';
 import { problem as countItemsMatchingRule } from './count-items-matching-rule';
 import { problem as summaryRanges } from './summary-ranges';
 import { problem as findMaxMin } from './find-max-min';
+import { problem as findPivotIndex } from './find-pivot-index';
 import { problem as maxConsecutiveOnes } from './max-consecutive-ones';
 import { problem as plusOne } from './plus-one';
 // arrays — medium
@@ -53,6 +54,8 @@ import { problem as queueReconstructionByHeight } from './queue-reconstruction-b
 // strings — easy
 import { problem as addBinary } from './add-binary';
 import { problem as goalParser } from './goal-parser';
+import { problem as detectCapital } from './detect-capital';
+import { problem as repeatedSubstringPattern } from './repeated-substring-pattern';
 import { problem as reverseOnlyLetters } from './reverse-only-letters';
 import { problem as backspaceStringCompare } from './backspace-string-compare';
 import { problem as vowelTally } from './vowel-tally';
@@ -75,6 +78,8 @@ import { problem as characterReplacement } from './character-replacement';
 import { problem as restoreIpAddresses } from './restore-ip-addresses';
 
 // hash-map — easy
+import { problem as validAnagram } from './valid-anagram';
+import { problem as pathCrossing } from './path-crossing';
 import { problem as firstUniqueChar } from './first-unique-char';
 import { problem as twoSumIndices } from './two-sum-indices';
 import { problem as mostFrequentValue } from './most-frequent-value';
@@ -395,6 +400,7 @@ export const problems: readonly Problem[] = [
   countItemsMatchingRule,
   summaryRanges,
   findMaxMin,
+  findPivotIndex,
   maxConsecutiveOnes,
   plusOne,
   singleNumber,
@@ -441,6 +447,8 @@ export const problems: readonly Problem[] = [
   // strings — easy
   addBinary,
   goalParser,
+  detectCapital,
+  repeatedSubstringPattern,
   reverseOnlyLetters,
   backspaceStringCompare,
   vowelTally,
@@ -463,6 +471,8 @@ export const problems: readonly Problem[] = [
   isSubsequenceMedium,
   characterReplacement,
   // hash-map — easy
+  validAnagram,
+  pathCrossing,
   firstUniqueChar,
   twoSumIndices,
   mostFrequentValue,

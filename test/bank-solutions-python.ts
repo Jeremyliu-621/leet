@@ -4440,4 +4440,57 @@ def deserialize(data):
     return best
 `,
 
+  'detect-capital': `def detectCapitalUse(word):
+    uppers = sum(1 for c in word if c.isupper())
+    return uppers == len(word) or uppers == 0 or (uppers == 1 and word[0].isupper())
+`,
+
+  'repeated-substring-pattern': `def repeatedSubstringPattern(s):
+    n = len(s)
+    for length in range(1, n // 2 + 1):
+        if n % length != 0:
+            continue
+        pattern = s[:length]
+        if pattern * (n // length) == s:
+            return True
+    return False
+`,
+
+  'find-pivot-index': `def pivotIndex(nums):
+    total = sum(nums)
+    left = 0
+    for i, v in enumerate(nums):
+        if left == total - left - v:
+            return i
+        left += v
+    return -1
+`,
+
+  'valid-anagram': `def isAnagram(s, t):
+    if len(s) != len(t):
+        return False
+    freq = {}
+    for c in s:
+        freq[c] = freq.get(c, 0) + 1
+    for c in t:
+        if freq.get(c, 0) == 0:
+            return False
+        freq[c] -= 1
+    return True
+`,
+
+  'path-crossing': `def isPathCrossing(path):
+    visited = {(0, 0)}
+    x, y = 0, 0
+    for d in path:
+        if d == 'N': y += 1
+        elif d == 'S': y -= 1
+        elif d == 'E': x += 1
+        else: x -= 1
+        if (x, y) in visited:
+            return True
+        visited.add((x, y))
+    return False
+`,
+
 };

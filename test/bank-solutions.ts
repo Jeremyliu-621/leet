@@ -5066,4 +5066,62 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     });
   },
 
+  'detect-capital': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const uppers = (word.match(/[A-Z]/g) ?? []).length;
+    return uppers === word.length || uppers === 0 || (uppers === 1 && word[0] === word[0]!.toUpperCase());
+  },
+
+  'repeated-substring-pattern': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    for (let len = 1; len <= Math.floor(n / 2); len++) {
+      if (n % len !== 0) continue;
+      const pattern = s.slice(0, len);
+      if (pattern.repeat(n / len) === s) return true;
+    }
+    return false;
+  },
+
+  'find-pivot-index': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const total = nums.reduce((a, b) => a + b, 0);
+    let left = 0;
+    for (let i = 0; i < nums.length; i++) {
+      if (left === total - left - nums[i]!) return i;
+      left += nums[i]!;
+    }
+    return -1;
+  },
+
+  'valid-anagram': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const t = args[1] as string;
+    if (s.length !== t.length) return false;
+    const freq: Record<string, number> = {};
+    for (const c of s) freq[c] = (freq[c] ?? 0) + 1;
+    for (const c of t) {
+      if (!freq[c]) return false;
+      freq[c]!--;
+    }
+    return true;
+  },
+
+  'path-crossing': (...args: unknown[]) => {
+    const path = args[0] as string;
+    const visited = new Set<string>();
+    let x = 0, y = 0;
+    visited.add('0,0');
+    for (const dir of path) {
+      if (dir === 'N') y++;
+      else if (dir === 'S') y--;
+      else if (dir === 'E') x++;
+      else x--;
+      const key = `${x},${y}`;
+      if (visited.has(key)) return true;
+      visited.add(key);
+    }
+    return false;
+  },
+
 };
