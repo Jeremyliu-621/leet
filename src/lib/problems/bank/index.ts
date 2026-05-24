@@ -42,6 +42,7 @@ import { problem as rotateImage } from './rotate-image';
 import { problem as maximalSquare } from './maximal-square';
 import { problem as validSudoku } from './valid-sudoku';
 import { problem as gameOfLife } from './game-of-life';
+import { problem as missingRanges } from './missing-ranges';
 
 // strings — easy
 import { problem as vowelTally } from './vowel-tally';
@@ -171,6 +172,8 @@ import { problem as isPrimeNumber } from './is-prime-number';
 import { problem as greatestCommonDivisor } from './greatest-common-divisor';
 import { problem as countDivisors } from './count-divisors';
 import { problem as powerOfTwo } from './power-of-two';
+import { problem as excelSheetColumnTitle } from './excel-sheet-column-title';
+import { problem as longestPalindromeBuild } from './longest-palindrome-build';
 import { problem as powerOfThree } from './power-of-three';
 import { problem as reverseBits } from './reverse-bits';
 import { problem as countAndSay } from './count-and-say';
@@ -404,6 +407,7 @@ export const problems: readonly Problem[] = [
   maximalSquare,
   validSudoku,
   gameOfLife,
+  missingRanges,
   // strings — easy
   vowelTally,
   reverseWordsOrder,
@@ -533,6 +537,8 @@ export const problems: readonly Problem[] = [
   greatestCommonDivisor,
   countDivisors,
   powerOfTwo,
+  excelSheetColumnTitle,
+  longestPalindromeBuild,
   powerOfThree,
   reverseBits,
   countAndSay,

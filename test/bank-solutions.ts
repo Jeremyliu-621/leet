@@ -4611,6 +4611,43 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best;
   },
 
+  'missing-ranges': (...args: unknown[]) => {
+    const nums = args[0] as number[], lower = args[1] as number, upper = args[2] as number;
+    const result: string[] = [];
+    let prev = lower - 1;
+    for (let i = 0; i <= nums.length; i++) {
+      const cur = i < nums.length ? nums[i]! : upper + 1;
+      if (cur - prev >= 2) {
+        result.push(cur - prev === 2 ? `${prev + 1}` : `${prev + 1}->${cur - 1}`);
+      }
+      prev = cur;
+    }
+    return result;
+  },
+
+  'excel-sheet-column-title': (...args: unknown[]) => {
+    let n = args[0] as number;
+    let result = '';
+    while (n > 0) {
+      n--;
+      result = String.fromCharCode(65 + (n % 26)) + result;
+      n = Math.floor(n / 26);
+    }
+    return result;
+  },
+
+  'longest-palindrome-build': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const freq: Record<string, number> = {};
+    for (const c of s) freq[c] = (freq[c] ?? 0) + 1;
+    let len = 0, hasOdd = false;
+    for (const cnt of Object.values(freq)) {
+      len += Math.floor(cnt / 2) * 2;
+      if (cnt % 2 === 1) hasOdd = true;
+    }
+    return hasOdd ? len + 1 : len;
+  },
+
   'power-of-three': (...args: unknown[]) => {
     let n = args[0] as number;
     if (n <= 0) return false;

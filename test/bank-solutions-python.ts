@@ -3824,6 +3824,38 @@ def deserialize(data):
     return max(up, down)
 `,
 
+  'missing-ranges': `def findMissingRanges(nums, lower, upper):
+    result = []
+    prev = lower - 1
+    for i in range(len(nums) + 1):
+        cur = nums[i] if i < len(nums) else upper + 1
+        if cur - prev >= 2:
+            if cur - prev == 2:
+                result.append(str(prev + 1))
+            else:
+                result.append(f'{prev + 1}->{cur - 1}')
+        prev = cur
+    return result
+`,
+
+  'excel-sheet-column-title': `def convertToTitle(columnNumber):
+    result = ''
+    n = columnNumber
+    while n > 0:
+        n -= 1
+        result = chr(65 + n % 26) + result
+        n //= 26
+    return result
+`,
+
+  'longest-palindrome-build': `def longestPalindrome(s):
+    from collections import Counter
+    freq = Counter(s)
+    length = sum(c // 2 * 2 for c in freq.values())
+    has_odd = any(c % 2 == 1 for c in freq.values())
+    return length + (1 if has_odd else 0)
+`,
+
   'power-of-three': `def isPowerOfThree(n):
     if n <= 0:
         return False
