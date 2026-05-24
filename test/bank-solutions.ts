@@ -2042,4 +2042,52 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  // --- two-pointers — medium -------------------------------------------------
+  'next-permutation': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    let i = nums.length - 2;
+    while (i >= 0 && nums[i]! >= nums[i + 1]!) i--;
+    if (i >= 0) {
+      let j = nums.length - 1;
+      while (nums[j]! <= nums[i]!) j--;
+      [nums[i], nums[j]] = [nums[j]!, nums[i]!];
+    }
+    let l = i + 1, r = nums.length - 1;
+    while (l < r) {
+      [nums[l], nums[r]] = [nums[r]!, nums[l]!];
+      l++;
+      r--;
+    }
+    return nums;
+  },
+
+  'interval-list-intersections': (...args: unknown[]) => {
+    const firstList = args[0] as number[][];
+    const secondList = args[1] as number[][];
+    const res: number[][] = [];
+    let i = 0, j = 0;
+    while (i < firstList.length && j < secondList.length) {
+      const lo = Math.max(firstList[i]![0]!, secondList[j]![0]!);
+      const hi = Math.min(firstList[i]![1]!, secondList[j]![1]!);
+      if (lo <= hi) res.push([lo, hi]);
+      if (firstList[i]![1]! < secondList[j]![1]!) i++;
+      else j++;
+    }
+    return res;
+  },
+
+  'longest-mountain-in-array': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    let best = 0;
+    for (let k = 1; k < arr.length - 1; k++) {
+      if (arr[k - 1]! < arr[k]! && arr[k]! > arr[k + 1]!) {
+        let l = k - 1, r = k + 1;
+        while (l > 0 && arr[l - 1]! < arr[l]!) l--;
+        while (r < arr.length - 1 && arr[r]! > arr[r + 1]!) r++;
+        best = Math.max(best, r - l + 1);
+      }
+    }
+    return best;
+  },
+
 };

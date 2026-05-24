@@ -68,6 +68,9 @@ import { problem as fourSum } from './four-sum';
 import { problem as threeSumClosest } from './three-sum-closest';
 import { problem as boatsToSavePeople } from './boats-to-save-people';
 import { problem as partitionLabels } from './partition-labels';
+import { problem as nextPermutation } from './next-permutation';
+import { problem as intervalListIntersections } from './interval-list-intersections';
+import { problem as longestMountainInArray } from './longest-mountain-in-array';
 // two-pointers — easy
 import { problem as reverseArrayInplace } from './reverse-array-inplace';
 import { problem as sortedPairExists } from './sorted-pair-exists';
@@ -228,6 +231,9 @@ export const problems: readonly Problem[] = [
   threeSumClosest,
   boatsToSavePeople,
   partitionLabels,
+  nextPermutation,
+  intervalListIntersections,
+  longestMountainInArray,
   // two-pointers — easy
   reverseArrayInplace,
   sortedPairExists,

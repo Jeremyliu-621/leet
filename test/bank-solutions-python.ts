@@ -1520,4 +1520,49 @@ export const pythonSolutions: Record<string, string> = {
         result = max(result, local_max + 1)
     return result
 `,
+
+  'next-permutation': `def nextPermutation(nums: list[int]) -> list[int]:
+    i = len(nums) - 2
+    while i >= 0 and nums[i] >= nums[i + 1]:
+        i -= 1
+    if i >= 0:
+        j = len(nums) - 1
+        while nums[j] <= nums[i]:
+            j -= 1
+        nums[i], nums[j] = nums[j], nums[i]
+    l, r = i + 1, len(nums) - 1
+    while l < r:
+        nums[l], nums[r] = nums[r], nums[l]
+        l += 1
+        r -= 1
+    return nums
+`,
+
+  'interval-list-intersections': `def intervalIntersection(firstList: list[list[int]], secondList: list[list[int]]) -> list[list[int]]:
+    res = []
+    i, j = 0, 0
+    while i < len(firstList) and j < len(secondList):
+        lo = max(firstList[i][0], secondList[j][0])
+        hi = min(firstList[i][1], secondList[j][1])
+        if lo <= hi:
+            res.append([lo, hi])
+        if firstList[i][1] < secondList[j][1]:
+            i += 1
+        else:
+            j += 1
+    return res
+`,
+
+  'longest-mountain-in-array': `def longestMountain(arr: list[int]) -> int:
+    best = 0
+    for k in range(1, len(arr) - 1):
+        if arr[k - 1] < arr[k] > arr[k + 1]:
+            l, r = k - 1, k + 1
+            while l > 0 and arr[l - 1] < arr[l]:
+                l -= 1
+            while r < len(arr) - 1 and arr[r] > arr[r + 1]:
+                r += 1
+            best = max(best, r - l + 1)
+    return best
+`,
 };
