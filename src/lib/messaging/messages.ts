@@ -24,6 +24,12 @@ export interface RunRequest {
   tests: readonly RunnableTest[];
   /** Hard wall-clock limit for the whole batch, in milliseconds. */
   timeoutMs: number;
+  /**
+   * Language to execute. Optional for backward compatibility; the sandbox
+   * host defaults to `'javascript'` when absent. Python lands in M3 of
+   * `docs/PYODIDE_PLAN.md`.
+   */
+  language?: 'javascript' | 'python';
 }
 
 /** Outcome of a single test executed by the Worker. */

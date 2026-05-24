@@ -1,4 +1,4 @@
-import type { Difficulty, ProblemTag, SupportedLanguage } from '../types';
+import type { Difficulty, ProblemTag } from '../types';
 
 /** A worked example shown on the challenge problem panel. */
 export interface ProblemExample {
@@ -42,8 +42,12 @@ export interface Problem {
   functionName: string;
   /** Ordered parameter names for that function. */
   params: readonly string[];
-  /** Starter code skeleton, per supported language. */
-  starterCode: Readonly<Record<SupportedLanguage, string>>;
+  /**
+   * Starter code skeleton per language. JavaScript is **required**. Python
+   * is added problem-by-problem during the Pyodide rollout (see
+   * `docs/PYODIDE_PLAN.md`); additional languages stay optional.
+   */
+  starterCode: Readonly<{ javascript: string; python?: string }>;
   /** Tests shown to the user and run by the "Run" button. */
   visibleTests: readonly TestCase[];
   /** Tests hidden from the user and run only by the "Submit" button. */

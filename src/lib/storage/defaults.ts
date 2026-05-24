@@ -18,6 +18,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   allowGiveUp: true,
   theme: 'dark',
   editorFontSize: 13,
+  preferredLanguage: 'javascript',
 };
 
 /**

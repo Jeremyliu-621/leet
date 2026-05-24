@@ -31,8 +31,12 @@ export const DIFFICULTIES: readonly Difficulty[] = ['easy', 'medium', 'hard'];
 /** What happens when a challenge is failed or abandoned. */
 export type FailureAction = 'close' | 'redirect';
 
-/** Languages the code runner supports. JavaScript only for the MVP. */
-export type SupportedLanguage = 'javascript';
+/**
+ * Languages the code runner supports. Python lands incrementally via the
+ * Pyodide milestones (see `docs/PYODIDE_PLAN.md`); JavaScript remains the
+ * default and is the only language every bank problem ships with today.
+ */
+export type SupportedLanguage = 'javascript' | 'python';
 
 // --- Block rules ----------------------------------------------------------
 
@@ -159,6 +163,8 @@ export interface UserPreferences {
   theme: ThemePreference;
   /** CodeMirror editor font size, in CSS pixels. */
   editorFontSize: number;
+  /** The user's preferred coding language. Falls back to JS for any problem that doesn't ship a Python starter. */
+  preferredLanguage: SupportedLanguage;
 }
 
 /** Theme options exposed in the UI. */
