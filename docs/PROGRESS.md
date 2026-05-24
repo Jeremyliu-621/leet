@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** 85 problems across all difficulty tiers; bank expansion complete.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (505 unit tests across 22 files).
-**Next up:** Marketing site iteration + Vercel deployment; edge-case sweep of remaining lib modules.
+**Current focus:** Edge-case sweep complete; draft code auto-save implemented.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (520 unit tests across 22 files).
+**Next up:** Marketing site iteration + Vercel deployment.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -147,7 +147,7 @@
 ## Phase 12 — Polish, tests, CI 🟡
 
 - [x] Accessibility baseline — axe-core/playwright integration in `e2e/a11y.spec.ts` audits all 4 surfaces; passes (no critical violations). Known logged findings for next polish pass: color-contrast on `text-faint` microlabels across all surfaces (design-system tradeoff), and one `aria-prohibited-attr` on the challenge page.
-- [ ] Edge-case sweep across all `src/lib` modules
+- [x] Edge-case sweep across all `src/lib` modules — 15 new tests for blocking, unlock, streak (empty inputs, boundary expiry, case-insensitive dedup, history cap, same-day multi-solve)
 - [x] Integration tests for core flows — `reconcile()` extracted, fake-chrome covers DNR + alarms + runtime, 18 SW integration tests in `test/sw-reconcile.test.ts`
 - [x] GitHub Actions CI: typecheck + test + build (artifacts uploaded for 14 days)
 - [x] **Playwright load-extension smoke test — 4 tests in `e2e/extension.spec.ts` exercise the SW, popup, options, and challenge pages against real Chromium with `dist/` loaded as an unpacked extension. Caught and fixed a real bug — CRXJS was shipping unmodified `./main.tsx` references for web-accessible HTML (see `DECISIONS.md` D15).**
