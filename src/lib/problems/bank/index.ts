@@ -228,6 +228,9 @@ import { problem as maxSubarrayCircular } from './max-subarray-circular';
 import { problem as checkSortedRotated } from './check-sorted-rotated';
 import { problem as maximumVowels } from './maximum-vowels';
 import { problem as longestSubarrayAfterDeleting } from './longest-subarray-after-deleting';
+import { problem as reverseVowels } from './reverse-vowels';
+import { problem as fizzBuzz } from './fizz-buzz';
+import { problem as luckyNumbersInMatrix } from './lucky-numbers-in-matrix';
 // dynamic-programming — hard
 import { problem as longestPalindromicSubsequence } from './longest-palindromic-subsequence';
 import { problem as palindromePartitioningMinCuts } from './palindrome-partitioning-min-cuts';
@@ -338,6 +341,7 @@ export const problems: readonly Problem[] = [
   kClosestPoints,
   findDisappearedNumbers,
   minimumAbsoluteDifference,
+  luckyNumbersInMatrix,
   gasStation,
   maxSubarrayCircular,
   checkSortedRotated,
@@ -415,6 +419,7 @@ export const problems: readonly Problem[] = [
   longestMountainInArray,
   // two-pointers — easy
   squaresOfSortedArray,
+  reverseVowels,
   reverseArrayInplace,
   sortedPairExists,
   mergeSortedLists,
@@ -474,6 +479,7 @@ export const problems: readonly Problem[] = [
   sumSubarrayMinimums,
   removeKDigits,
   // math — easy
+  fizzBuzz,
   hammingWeight,
   digitSum,
   isPrimeNumber,

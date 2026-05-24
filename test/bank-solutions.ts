@@ -3808,6 +3808,45 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return lca(root)?.v ?? null;
   },
 
+  'reverse-vowels': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const vowels = new Set('aeiouAEIOU');
+    const arr = s.split('');
+    let l = 0, r = arr.length - 1;
+    while (l < r) {
+      while (l < r && !vowels.has(arr[l]!)) l++;
+      while (l < r && !vowels.has(arr[r]!)) r--;
+      if (l < r) { [arr[l], arr[r]] = [arr[r]!, arr[l]!]; l++; r--; }
+    }
+    return arr.join('');
+  },
+
+  'fizz-buzz': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const result: string[] = [];
+    for (let i = 1; i <= n; i++) {
+      if (i % 15 === 0) result.push('FizzBuzz');
+      else if (i % 3 === 0) result.push('Fizz');
+      else if (i % 5 === 0) result.push('Buzz');
+      else result.push(String(i));
+    }
+    return result;
+  },
+
+  'lucky-numbers-in-matrix': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const m = matrix.length, n = matrix[0]!.length;
+    const result: number[] = [];
+    for (let i = 0; i < m; i++) {
+      let minVal = Infinity, minCol = 0;
+      for (let j = 0; j < n; j++) { if (matrix[i]![j]! < minVal) { minVal = matrix[i]![j]!; minCol = j; } }
+      let isMax = true;
+      for (let k = 0; k < m; k++) { if (matrix[k]![minCol]! > minVal) { isMax = false; break; } }
+      if (isMax) result.push(minVal);
+    }
+    return result;
+  },
+
   'check-sorted-rotated': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const n = nums.length;

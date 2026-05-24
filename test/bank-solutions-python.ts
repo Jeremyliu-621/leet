@@ -3199,6 +3199,48 @@ def deserialize(data):
     return left if left else right
 `,
 
+  'reverse-vowels': `def reverseVowels(s):
+    vowels = set('aeiouAEIOU')
+    arr = list(s)
+    l, r = 0, len(arr) - 1
+    while l < r:
+        while l < r and arr[l] not in vowels:
+            l += 1
+        while l < r and arr[r] not in vowels:
+            r -= 1
+        if l < r:
+            arr[l], arr[r] = arr[r], arr[l]
+            l += 1
+            r -= 1
+    return ''.join(arr)
+`,
+
+  'fizz-buzz': `def fizzBuzz(n):
+    result = []
+    for i in range(1, n + 1):
+        if i % 15 == 0:
+            result.append('FizzBuzz')
+        elif i % 3 == 0:
+            result.append('Fizz')
+        elif i % 5 == 0:
+            result.append('Buzz')
+        else:
+            result.append(str(i))
+    return result
+`,
+
+  'lucky-numbers-in-matrix': `def luckyNumbers(matrix):
+    matrix = [list(row) for row in matrix]
+    m, n = len(matrix), len(matrix[0])
+    result = []
+    for i in range(m):
+        min_val = min(matrix[i])
+        min_col = matrix[i].index(min_val)
+        if max(matrix[k][min_col] for k in range(m)) == min_val:
+            result.append(min_val)
+    return result
+`,
+
   'check-sorted-rotated': `def check(nums):
     nums = list(nums)
     n = len(nums)
