@@ -51,6 +51,7 @@ import { problem as missingRanges } from './missing-ranges';
 import { problem as queueReconstructionByHeight } from './queue-reconstruction-by-height';
 
 // strings — easy
+import { problem as addBinary } from './add-binary';
 import { problem as goalParser } from './goal-parser';
 import { problem as reverseOnlyLetters } from './reverse-only-letters';
 import { problem as backspaceStringCompare } from './backspace-string-compare';
@@ -145,6 +146,7 @@ import { problem as binarySearchRange } from './binary-search-range';
 import { problem as isPerfectSquare } from './is-perfect-square';
 import { problem as searchInsertPosition } from './search-insert-position';
 // binary-search — medium
+import { problem as search2dMatrixII } from './search-2d-matrix-ii';
 import { problem as findKPairsSmallestSums } from './find-k-pairs-smallest-sums';
 import { problem as searchRotatedSorted } from './search-rotated-sorted';
 import { problem as findMinimumRotated } from './find-minimum-rotated';
@@ -167,6 +169,7 @@ import { problem as dailyTemperatures } from './daily-temperatures';
 import { problem as evaluateRpn } from './evaluate-rpn';
 import { problem as minStack } from './min-stack';
 // stack — medium
+import { problem as simplifyPath } from './simplify-path';
 import { problem as nextGreaterElementII } from './next-greater-element-ii';
 import { problem as asteroidCollision } from './asteroid-collision';
 import { problem as scoreOfParentheses } from './score-of-parentheses';
@@ -283,6 +286,7 @@ import { problem as wildcardMatching } from './wildcard-matching';
 import { problem as dungeonGame } from './dungeon-game';
 
 // linked-list — easy
+import { problem as removeLinkedListElements } from './remove-linked-list-elements';
 import { problem as deleteNodeInLinkedList } from './delete-node-in-linked-list';
 import { problem as reverseLinkedList } from './reverse-linked-list';
 import { problem as linkedListCycle } from './linked-list-cycle';
@@ -435,6 +439,7 @@ export const problems: readonly Problem[] = [
   missingRanges,
   queueReconstructionByHeight,
   // strings — easy
+  addBinary,
   goalParser,
   reverseOnlyLetters,
   backspaceStringCompare,
@@ -531,6 +536,7 @@ export const problems: readonly Problem[] = [
   isPerfectSquare,
   searchInsertPosition,
   // binary-search — medium
+  search2dMatrixII,
   findKPairsSmallestSums,
   searchRotatedSorted,
   findMinimumRotated,
@@ -552,6 +558,7 @@ export const problems: readonly Problem[] = [
   evaluateRpn,
   minStack,
   // stack — medium
+  simplifyPath,
   nextGreaterElementII,
   asteroidCollision,
   scoreOfParentheses,
@@ -644,6 +651,7 @@ export const problems: readonly Problem[] = [
   wildcardMatching,
   dungeonGame,
   // linked-list — easy
+  removeLinkedListElements,
   deleteNodeInLinkedList,
   reverseLinkedList,
   linkedListCycle,

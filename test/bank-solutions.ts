@@ -1541,7 +1541,28 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return minOpen === 0;
   },
 
+  'simplify-path': (...args: unknown[]) => {
+    const path = args[0] as string;
+    const stack: string[] = [];
+    for (const part of path.split('/')) {
+      if (part === '' || part === '.') continue;
+      if (part === '..') { stack.pop(); } else { stack.push(part); }
+    }
+    return '/' + stack.join('/');
+  },
+
   // --- math -----------------------------------------------------------------
+
+  'add-binary': (...args: unknown[]) => {
+    const a = args[0] as string, b = args[1] as string;
+    let i = a.length - 1, j = b.length - 1, carry = 0, result = '';
+    while (i >= 0 || j >= 0 || carry) {
+      const sum = (i >= 0 ? parseInt(a[i--]!) : 0) + (j >= 0 ? parseInt(b[j--]!) : 0) + carry;
+      result = (sum % 2) + result;
+      carry = Math.floor(sum / 2);
+    }
+    return result || '0';
+  },
 
   'task-scheduler': (...args: unknown[]) => {
     const tasks = args[0] as string[];
@@ -2497,6 +2518,18 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return false;
   },
 
+  'search-2d-matrix-ii': (...args: unknown[]) => {
+    const matrix = args[0] as number[][], target = args[1] as number;
+    let row = 0, col = matrix[0]!.length - 1;
+    while (row < matrix.length && col >= 0) {
+      const val = matrix[row]![col]!;
+      if (val === target) return true;
+      else if (val > target) col--;
+      else row++;
+    }
+    return false;
+  },
+
   // --- arrays — medium (matrix) ---------------------------------------------
   'spiral-matrix': (...args: unknown[]) => {
     const matrix = args[0] as number[][];
@@ -3103,6 +3136,11 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       [result[i], result[i + 1]] = [result[i + 1]!, result[i]!];
     }
     return result;
+  },
+
+  'remove-linked-list-elements': (...args: unknown[]) => {
+    const arr = args[0] as number[], val = args[1] as number;
+    return arr.filter((v) => v !== val);
   },
 
   'partition-list': (...args: unknown[]) => {

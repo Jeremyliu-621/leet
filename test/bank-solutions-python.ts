@@ -1089,6 +1089,30 @@ export const pythonSolutions: Record<string, string> = {
     return min_open == 0
 `,
 
+  'simplify-path': `def simplifyPath(path):
+    stack = []
+    for part in path.split('/'):
+        if part == '' or part == '.':
+            continue
+        elif part == '..':
+            if stack:
+                stack.pop()
+        else:
+            stack.append(part)
+    return '/' + '/'.join(stack)
+`,
+
+  'add-binary': `def addBinary(a, b):
+    i, j, carry, result = len(a) - 1, len(b) - 1, 0, ''
+    while i >= 0 or j >= 0 or carry:
+        s = (int(a[i]) if i >= 0 else 0) + (int(b[j]) if j >= 0 else 0) + carry
+        result = str(s % 2) + result
+        carry = s // 2
+        i -= 1
+        j -= 1
+    return result or '0'
+`,
+
   'task-scheduler': `def leastInterval(tasks, n):
     from collections import Counter
     freq = Counter(tasks)
@@ -1865,6 +1889,19 @@ export const pythonSolutions: Record<string, string> = {
     return False
 `,
 
+  'search-2d-matrix-ii': `def searchMatrix(matrix, target):
+    row, col = 0, len(matrix[0]) - 1
+    while row < len(matrix) and col >= 0:
+        val = matrix[row][col]
+        if val == target:
+            return True
+        elif val > target:
+            col -= 1
+        else:
+            row += 1
+    return False
+`,
+
   'spiral-matrix': `def spiralOrder(matrix: list[list[int]]) -> list[int]:
     m, n = len(matrix), len(matrix[0])
     top, bottom, left, right = 0, m - 1, 0, n - 1
@@ -2495,6 +2532,18 @@ export const pythonSolutions: Record<string, string> = {
     new_head = new_tail.next
     new_tail.next = None
     return new_head
+`,
+
+  'remove-linked-list-elements': `def removeElements(head, val):
+    dummy = ListNode(0)
+    dummy.next = head
+    cur = dummy
+    while cur.next:
+        if cur.next.val == val:
+            cur.next = cur.next.next
+        else:
+            cur = cur.next
+    return dummy.next
 `,
 
   'partition-list': `def partition(head, x):
