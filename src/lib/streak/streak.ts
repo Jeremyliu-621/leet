@@ -15,11 +15,16 @@ export function localDateString(date: Date = new Date()): string {
   return `${year}-${month}-${day}`;
 }
 
+/** Regex that validates a 'YYYY-MM-DD' date string (basic format check). */
+const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+
 /** Whole-day distance (a − b) between two 'YYYY-MM-DD' strings, local. */
 export function daysBetween(a: string, b: string): number {
-  const aDate = new Date(`${a}T00:00:00`);
-  const bDate = new Date(`${b}T00:00:00`);
-  return Math.round((aDate.getTime() - bDate.getTime()) / (24 * 60 * 60 * 1000));
+  if (!DATE_RE.test(a) || !DATE_RE.test(b)) return NaN;
+  const aMs = new Date(`${a}T00:00:00`).getTime();
+  const bMs = new Date(`${b}T00:00:00`).getTime();
+  if (isNaN(aMs) || isNaN(bMs)) return NaN;
+  return Math.round((aMs - bMs) / (24 * 60 * 60 * 1000));
 }
 
 /** Empty initial summary, used on first run. */
@@ -77,7 +82,8 @@ export function recordSolve(
     current = summary.current; // same-day repeat solve doesn't double-count
   } else {
     const delta = daysBetween(today, summary.lastSolvedDate);
-    current = delta === 1 ? summary.current + 1 : 1; // missed a day → reset
+    // NaN (malformed date in storage) is treated as a non-consecutive day.
+    current = delta === 1 ? summary.current + 1 : 1;
   }
   const longest = Math.max(summary.longest, current);
   return {

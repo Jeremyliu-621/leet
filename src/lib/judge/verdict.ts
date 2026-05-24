@@ -78,7 +78,7 @@ export function buildVerdict(tests: readonly TestCase[], response: RunResponse):
     }
 
     const durationMs = outcome.durationMs;
-    if (typeof durationMs === 'number') {
+    if (typeof durationMs === 'number' && isFinite(durationMs) && durationMs >= 0) {
       totalDurationMs += durationMs;
       hasDuration = true;
     }
