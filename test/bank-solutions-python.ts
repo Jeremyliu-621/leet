@@ -1973,21 +1973,19 @@ export const pythonSolutions: Record<string, string> = {
                 return int(''.join(digits))
     return num
 `,
-
   // --- linked-list -----------------------------------------------------------
   'reverse-linked-list': `def reverseList(head):
     prev = None
     curr = head
     while curr:
-        next_node = curr.next
+        nxt = curr.next
         curr.next = prev
         prev = curr
-        curr = next_node
+        curr = nxt
     return prev
 `,
   'linked-list-cycle': `def hasCycle(head):
-    slow = head
-    fast = head
+    slow = fast = head
     while fast and fast.next:
         slow = slow.next
         fast = fast.next.next
@@ -1998,16 +1996,43 @@ export const pythonSolutions: Record<string, string> = {
   'merge-two-sorted-linked-lists': `def mergeTwoLists(list1, list2):
     dummy = ListNode(0)
     curr = dummy
-    l1, l2 = list1, list2
-    while l1 and l2:
-        if l1.val <= l2.val:
-            curr.next = l1
-            l1 = l1.next
+    while list1 and list2:
+        if list1.val <= list2.val:
+            curr.next = list1
+            list1 = list1.next
         else:
-            curr.next = l2
-            l2 = l2.next
+            curr.next = list2
+            list2 = list2.next
         curr = curr.next
-    curr.next = l1 if l1 else l2
+    curr.next = list1 if list1 else list2
     return dummy.next
+`,
+  'plus-one': `def plusOne(digits):
+    digits = list(digits)
+    for i in range(len(digits) - 1, -1, -1):
+        if digits[i] < 9:
+            digits[i] += 1
+            return digits
+        digits[i] = 0
+    return [1] + digits
+`,
+  'length-of-last-word': `def lengthOfLastWord(s):
+    s = s.rstrip()
+    return len(s) - s.rfind(' ') - 1
+`,
+  'palindrome-number': `def isPalindrome(x):
+    if x < 0 or (x % 10 == 0 and x != 0):
+        return False
+    rev = 0
+    while x > rev:
+        rev = rev * 10 + x % 10
+        x //= 10
+    return x == rev or x == rev // 10
+`,
+  'excel-column-number': `def titleToNumber(columnTitle):
+    r = 0
+    for c in columnTitle:
+        r = r * 26 + (ord(c) - 64)
+    return r
 `,
 };

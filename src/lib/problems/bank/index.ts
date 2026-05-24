@@ -9,6 +9,7 @@ import { problem as missingNumber } from './missing-number';
 import { problem as containsDuplicate } from './contains-duplicate';
 import { problem as findMaxMin } from './find-max-min';
 import { problem as maxConsecutiveOnes } from './max-consecutive-ones';
+import { problem as plusOne } from './plus-one';
 // arrays — medium
 import { problem as rotateArray } from './rotate-array';
 import { problem as maxProductSubarray } from './max-product-subarray';
@@ -36,6 +37,7 @@ import { problem as compressString } from './compress-string';
 import { problem as longestCommonPrefix } from './longest-common-prefix';
 import { problem as reverseString } from './reverse-string';
 import { problem as capitalizeWords } from './capitalize-words';
+import { problem as lengthOfLastWord } from './length-of-last-word';
 // strings — medium
 import { problem as longestPalindromicString } from './longest-palindromic-string';
 import { problem as countPalindromicSubstrings } from './count-palindromic-substrings';
@@ -150,6 +152,8 @@ import { problem as fibonacciNumber } from './fibonacci-number';
 import { problem as sumOfSquares } from './sum-of-squares';
 import { problem as climbingStairs } from './climbing-stairs';
 import { problem as romanToInteger } from './roman-to-integer';
+import { problem as palindromeNumber } from './palindrome-number';
+import { problem as excelColumnNumber } from './excel-column-number';
 // math — hard
 import { problem as fractionToRecurringDecimal } from './fraction-to-recurring-decimal';
 import { problem as integerToEnglishWords } from './integer-to-english-words';
@@ -212,6 +216,7 @@ export const problems: readonly Problem[] = [
   containsDuplicate,
   findMaxMin,
   maxConsecutiveOnes,
+  plusOne,
   // arrays — medium
   rotateArray,
   maxProductSubarray,
@@ -238,6 +243,7 @@ export const problems: readonly Problem[] = [
   longestCommonPrefix,
   reverseString,
   capitalizeWords,
+  lengthOfLastWord,
   // strings — medium
   longestPalindromicString,
   countPalindromicSubstrings,
@@ -344,6 +350,8 @@ export const problems: readonly Problem[] = [
   sumOfSquares,
   climbingStairs,
   romanToInteger,
+  palindromeNumber,
+  excelColumnNumber,
   // math — hard
   fractionToRecurringDecimal,
   integerToEnglishWords,

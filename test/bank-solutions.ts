@@ -2578,4 +2578,34 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  // --- arrays + math + strings — easy ----------------------------------------
+  'plus-one': (...args: unknown[]) => {
+    const digits = [...(args[0] as number[])];
+    for (let i = digits.length - 1; i >= 0; i--) {
+      if (digits[i]! < 9) { digits[i]!++; return digits; }
+      digits[i] = 0;
+    }
+    return [1, ...digits];
+  },
+
+  'length-of-last-word': (...args: unknown[]) => {
+    const s = (args[0] as string).trimEnd();
+    return s.length - s.lastIndexOf(' ') - 1;
+  },
+
+  'palindrome-number': (...args: unknown[]) => {
+    let x = args[0] as number;
+    if (x < 0 || (x % 10 === 0 && x !== 0)) return false;
+    let rev = 0;
+    while (x > rev) { rev = rev * 10 + (x % 10); x = Math.floor(x / 10); }
+    return x === rev || x === Math.floor(rev / 10);
+  },
+
+  'excel-column-number': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let r = 0;
+    for (const c of s) r = r * 26 + (c.charCodeAt(0) - 64);
+    return r;
+  },
+
 };
