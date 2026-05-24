@@ -1,7 +1,19 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeHighlight from 'rehype-highlight';
+import javascript from 'highlight.js/lib/languages/javascript';
+import python from 'highlight.js/lib/languages/python';
 import type { Components } from 'react-markdown';
 import type { ReactNode } from 'react';
+
+// Only register the two languages the bank actually uses in code blocks.
+const HIGHLIGHT_LANGUAGES = { javascript, python };
+
+const rehypeHighlightOptions = {
+  languages: HIGHLIGHT_LANGUAGES,
+  detect: false,
+  ignoreMissing: true,
+};
 
 interface ProblemDescriptionProps {
   /** Markdown source. Plain-text content renders cleanly too. */
@@ -72,7 +84,11 @@ const components: Components = {
 export function ProblemDescription({ markdown }: ProblemDescriptionProps) {
   return (
     <div className="space-y-3 text-text">
-      <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[[rehypeHighlight, rehypeHighlightOptions]]}
+        components={components}
+      >
         {markdown}
       </ReactMarkdown>
     </div>

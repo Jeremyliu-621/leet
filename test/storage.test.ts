@@ -113,7 +113,7 @@ describe('storage store', () => {
     };
     await updateValue('submissionHistory', (h) => ({ ...h, 'two-sum': [record] }));
     const stored = await getValue('submissionHistory');
-    expect(stored['two-sum']![0].code).toBe('return null;');
+    expect(stored['two-sum']?.[0]?.code).toBe('return null;');
   });
 
   it('submissionHistory can be cleared per problem id on solve', async () => {

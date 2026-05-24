@@ -65,3 +65,47 @@ body {
   background: var(--ll-accent);
   color: var(--ll-on-accent);
 }
+
+/* Grayscale overrides for highlight.js token classes.
+   No colour — emphasis is entirely contrast and weight, matching the
+   LeetLock design language. Both dark and light themes share this
+   because the tokens reference CSS variables that adapt per-theme. */
+.hljs-keyword,
+.hljs-built_in,
+.hljs-type,
+.hljs-selector-tag,
+.hljs-title,
+.hljs-title.class_,
+.hljs-title.function_ {
+  color: var(--ll-text);
+  font-weight: 500;
+}
+
+.hljs-string,
+.hljs-number,
+.hljs-literal,
+.hljs-symbol,
+.hljs-regexp,
+.hljs-template-variable,
+.hljs-template-tag {
+  color: var(--ll-muted);
+}
+
+.hljs-comment,
+.hljs-meta,
+.hljs-quote {
+  color: var(--ll-faint);
+  font-style: italic;
+}
+
+.hljs-variable,
+.hljs-attr,
+.hljs-params,
+.hljs-property {
+  color: var(--ll-text);
+}
+
+.hljs-operator,
+.hljs-punctuation {
+  color: var(--ll-muted);
+}
