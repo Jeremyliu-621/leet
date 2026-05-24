@@ -3137,6 +3137,36 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return _treeToArr(build(0, inorder.length - 1));
   },
 
+  'pacific-atlantic': (...args: unknown[]) => {
+    const heights = args[0] as number[][];
+    const rows = heights.length;
+    const cols = heights[0]!.length;
+    const dirs: [number, number][] = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+    function bfs(starts: [number, number][]): boolean[][] {
+      const reach = Array.from({ length: rows }, () => new Array<boolean>(cols).fill(false));
+      const queue: [number, number][] = [...starts];
+      for (const [r, c] of starts) reach[r]![c] = true;
+      while (queue.length) {
+        const [r, c] = queue.shift()!;
+        for (const [dr, dc] of dirs) {
+          const nr = r + dr; const nc = c + dc;
+          if (nr < 0 || nr >= rows || nc < 0 || nc >= cols || reach[nr]![nc] || heights[nr]![nc]! < heights[r]![c]!) continue;
+          reach[nr]![nc] = true;
+          queue.push([nr, nc]);
+        }
+      }
+      return reach;
+    }
+    const pStarts: [number, number][] = [];
+    const aStarts: [number, number][] = [];
+    for (let r = 0; r < rows; r++) { pStarts.push([r, 0]); aStarts.push([r, cols - 1]); }
+    for (let c = 0; c < cols; c++) { pStarts.push([0, c]); aStarts.push([rows - 1, c]); }
+    const pr = bfs(pStarts); const ar = bfs(aStarts);
+    const result: number[][] = [];
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) { if (pr[r]![c] && ar[r]![c]) result.push([r, c]); }
+    return result;
+  },
+
   'kth-smallest-bst': (...args: unknown[]) => {
     const root = _buildTree(args[0] as (number | null)[]);
     const k = args[1] as number;

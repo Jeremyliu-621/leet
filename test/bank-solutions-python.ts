@@ -2516,6 +2516,29 @@ def deserialize(data):
     return root
 `,
 
+  'pacific-atlantic': `def pacificAtlantic(heights):
+    rows, cols = len(heights), len(heights[0])
+    dirs = [(-1,0),(1,0),(0,-1),(0,1)]
+    def bfs(starts):
+        reach = [[False]*cols for _ in range(rows)]
+        queue = list(starts)
+        for r, c in starts:
+            reach[r][c] = True
+        while queue:
+            r, c = queue.pop(0)
+            for dr, dc in dirs:
+                nr, nc = r+dr, c+dc
+                if 0 <= nr < rows and 0 <= nc < cols and not reach[nr][nc] and heights[nr][nc] >= heights[r][c]:
+                    reach[nr][nc] = True
+                    queue.append((nr, nc))
+        return reach
+    p_starts = [(r, 0) for r in range(rows)] + [(0, c) for c in range(cols)]
+    a_starts = [(r, cols-1) for r in range(rows)] + [(rows-1, c) for c in range(cols)]
+    pr = bfs(p_starts)
+    ar = bfs(a_starts)
+    return [[r, c] for r in range(rows) for c in range(cols) if pr[r][c] and ar[r][c]]
+`,
+
   'kth-smallest-bst': `def kthSmallest(root, k):
     vals = []
     def inorder(node):
