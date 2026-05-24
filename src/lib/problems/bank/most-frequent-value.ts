@@ -35,6 +35,7 @@ The input array is not modified.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function mostFrequentValue(nums) {\n  // your code here\n}\n',
+    python: 'def mostFrequentValue(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: [[1, 2, 2, 3, 3, 3]], expected: 3 },

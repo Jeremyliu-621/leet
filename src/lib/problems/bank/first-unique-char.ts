@@ -32,6 +32,7 @@ export const problem: Problem = {
   params: ['text'],
   starterCode: {
     javascript: 'function firstUniqueChar(text) {\n  // your code here\n}\n',
+    python: 'def firstUniqueChar(text):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: ['leetcode'], expected: 0 },
