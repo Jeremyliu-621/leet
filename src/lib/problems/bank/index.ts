@@ -226,6 +226,7 @@ import { problem as maxAreaOfIsland } from './max-area-of-island';
 import { problem as rottingOranges } from './rotting-oranges';
 import { problem as keysAndRooms } from './keys-and-rooms';
 import { problem as networkDelayTime } from './network-delay-time';
+import { problem as numberOfConnectedComponents } from './number-of-connected-components';
 // graph — hard
 import { problem as wordLadder } from './word-ladder';
 
@@ -241,6 +242,7 @@ import { problem as validateBst } from './validate-bst';
 import { problem as levelOrderTraversal } from './level-order-traversal';
 import { problem as lowestCommonAncestorBst } from './lowest-common-ancestor-bst';
 import { problem as countGoodNodes } from './count-good-nodes';
+import { problem as binaryTreeRightSideView } from './binary-tree-right-side-view';
 // tree — hard
 import { problem as binaryTreeMaxPathSum } from './binary-tree-max-path-sum';
 
@@ -458,6 +460,7 @@ export const problems: readonly Problem[] = [
   rottingOranges,
   keysAndRooms,
   networkDelayTime,
+  numberOfConnectedComponents,
   // graph — hard
   wordLadder,
   // tree — easy
@@ -472,6 +475,7 @@ export const problems: readonly Problem[] = [
   levelOrderTraversal,
   lowestCommonAncestorBst,
   countGoodNodes,
+  binaryTreeRightSideView,
   // tree — hard
   binaryTreeMaxPathSum,
 ];

@@ -2431,4 +2431,37 @@ export const pythonSolutions: Record<string, string> = {
     dfs(root, float('-inf'))
     return count[0]
 `,
+
+  'binary-tree-right-side-view': `def rightSideView(root):
+    if not root:
+        return []
+    result = []
+    queue = [root]
+    while queue:
+        size = len(queue)
+        for i in range(size):
+            node = queue.pop(0)
+            if i == size - 1:
+                result.append(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+    return result
+`,
+
+  'number-of-connected-components': `def countComponents(n, edges):
+    parent = list(range(n))
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    components = n
+    for a, b in edges:
+        ra, rb = find(a), find(b)
+        if ra != rb:
+            parent[ra] = rb
+            components -= 1
+    return components
+`,
 };

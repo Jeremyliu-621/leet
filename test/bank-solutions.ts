@@ -3014,4 +3014,38 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return cnt;
   },
 
+  'binary-tree-right-side-view': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    if (!root) return [];
+    const result: number[] = [];
+    const queue: _TN[] = [root];
+    while (queue.length) {
+      const size = queue.length;
+      for (let i = 0; i < size; i++) {
+        const node = queue.shift()!;
+        if (i === size - 1) result.push(node.v);
+        if (node.l) queue.push(node.l);
+        if (node.r) queue.push(node.r);
+      }
+    }
+    return result;
+  },
+
+  'number-of-connected-components': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const parent = Array.from({ length: n }, (_, i) => i);
+    function find(x: number): number {
+      if (parent[x] !== x) parent[x] = find(parent[x]!);
+      return parent[x]!;
+    }
+    let components = n;
+    for (const edge of edges) {
+      const a = find(edge[0] as number);
+      const b = find(edge[1] as number);
+      if (a !== b) { parent[a] = b; components--; }
+    }
+    return components;
+  },
+
 };
