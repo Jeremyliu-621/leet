@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 121 problems; 2 new hard stack problems added (sum-subarray-minimums, remove-k-digits).
+**Current focus:** Bank at 121 problems; dynamic tab title, bank size in About/Popup, problem counts on filter buttons.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green (624 unit tests across 22 files).
-**Next up:** Marketing site iteration, further bank growth, or other polish.
+**Next up:** Grow DP medium tier (only 2 medium DP problems), further bank growth.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -205,6 +205,9 @@ Still pending:
 - [x] Add hash-map hard problems — four-sum-ii, max-points-on-line; 618 tests; bank at 119
 - [x] Bank progress in popup — "X/119 solved (Y%)" in SolveBreakdown header
 - [x] Add hard stack problems — sum-subarray-minimums, remove-k-digits; 624 tests; bank at 121
+- [x] Dynamic challenge tab title — shows problem name (e.g. "Two Sum — LeetLock")
+- [x] Bank size in Options About section — "119 original problems covering 9 topic categories"
+- [ ] Add medium DP problems — only 2 medium (house-robber, coin-change); add LCS, min-path-sum, decode-ways
 - [ ] Marketing site iteration + Vercel deployment
 
 ---
