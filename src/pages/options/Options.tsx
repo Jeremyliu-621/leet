@@ -61,6 +61,7 @@ import { PendingChangesSection } from './components/PendingChangesSection';
 import { SyncStatusSection } from './components/SyncStatusSection';
 import { ResetSection } from './components/ResetSection';
 import { AboutSection } from './components/AboutSection';
+import { ImportExportSection } from './components/ImportExportSection';
 import { EditorSection } from './components/EditorSection';
 import { VerifyModal } from './components/VerifyModal';
 
@@ -777,7 +778,10 @@ export function Options() {
           {/* 11. Sync status */}
           <SyncStatusSection lastSyncAt={null} />
 
-          {/* 12. Reset */}
+          {/* 12. Import / Export */}
+          <ImportExportSection />
+
+          {/* 13. Reset */}
           <ResetSection
             lock={d.lock}
             strictMode={d.prefs.strictMode}
