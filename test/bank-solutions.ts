@@ -3785,6 +3785,36 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return lca(root)?.v ?? null;
   },
 
+  'k-closest-points': (...args: unknown[]) => {
+    const points = (args[0] as number[][]).map(p => [p[0]!, p[1]!] as [number, number]);
+    const k = args[1] as number;
+    return points.sort((a, b) => {
+      const da = a[0] * a[0] + a[1] * a[1], db = b[0] * b[0] + b[1] * b[1];
+      if (da !== db) return da - db;
+      if (a[0] !== b[0]) return a[0] - b[0];
+      return a[1] - b[1];
+    }).slice(0, k);
+  },
+
+  'top-k-frequent-words': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const k = args[1] as number;
+    const map = new Map<string, number>();
+    for (const w of words) map.set(w, (map.get(w) ?? 0) + 1);
+    return [...map.entries()]
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .slice(0, k)
+      .map(e => e[0]);
+  },
+
+  'find-disappeared-numbers': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    for (const n of nums) { const idx = Math.abs(n) - 1; if (nums[idx]! > 0) nums[idx]! *= -1; }
+    const result: number[] = [];
+    for (let i = 0; i < nums.length; i++) { if (nums[i]! > 0) result.push(i + 1); }
+    return result;
+  },
+
   'spiral-matrix-ii': (...args: unknown[]) => {
     const n = args[0] as number;
     const mat = Array.from({ length: n }, () => new Array<number>(n).fill(0));

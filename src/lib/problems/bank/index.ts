@@ -215,6 +215,9 @@ import { problem as longestArithmeticSubsequence } from './longest-arithmetic-su
 import { problem as spiralMatrixII } from './spiral-matrix-ii';
 import { problem as maxConsecutiveOnesIII } from './max-consecutive-ones-iii';
 import { problem as jumpGameIII } from './jump-game-iii';
+import { problem as kClosestPoints } from './k-closest-points';
+import { problem as topKFrequentWords } from './top-k-frequent-words';
+import { problem as findDisappearedNumbers } from './find-disappeared-numbers';
 // dynamic-programming — hard
 import { problem as longestPalindromicSubsequence } from './longest-palindromic-subsequence';
 import { problem as palindromePartitioningMinCuts } from './palindrome-partitioning-min-cuts';
@@ -322,6 +325,8 @@ export const problems: readonly Problem[] = [
   combinationSumII,
   permutations,
   spiralMatrixII,
+  kClosestPoints,
+  findDisappearedNumbers,
   rotateArray,
   maxProductSubarray,
   productExceptSelf,
@@ -371,6 +376,7 @@ export const problems: readonly Problem[] = [
   ransomNote,
   isomorphicStrings,
   // hash-map — medium
+  topKFrequentWords,
   letterCombinationsPhone,
   groupAnagrams,
   topKFrequentElements,

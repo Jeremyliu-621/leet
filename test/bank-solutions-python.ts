@@ -3178,6 +3178,26 @@ def deserialize(data):
     return left if left else right
 `,
 
+  'k-closest-points': `def kClosestRunner(points, k):
+    pts = [list(p) for p in points]
+    return sorted(pts, key=lambda p: (p[0]*p[0]+p[1]*p[1], p[0], p[1]))[:k]
+`,
+
+  'top-k-frequent-words': `def topKFrequent(words, k):
+    from collections import Counter
+    freq = Counter(words)
+    return sorted(freq.keys(), key=lambda w: (-freq[w], w))[:k]
+`,
+
+  'find-disappeared-numbers': `def findDisappearedNumbers(nums):
+    nums = list(nums)
+    for n in nums:
+        idx = abs(n) - 1
+        if nums[idx] > 0:
+            nums[idx] = -nums[idx]
+    return [i + 1 for i in range(len(nums)) if nums[i] > 0]
+`,
+
   'spiral-matrix-ii': `def generateMatrix(n):
     mat = [[0] * n for _ in range(n)]
     top, bottom, left, right, num = 0, n - 1, 0, n - 1, 1
