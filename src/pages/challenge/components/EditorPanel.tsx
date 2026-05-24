@@ -5,6 +5,7 @@ import {
   lineNumbers,
   highlightActiveLine,
   highlightActiveLineGutter,
+  drawSelection,
 } from '@codemirror/view';
 import { EditorState } from '@codemirror/state';
 import { javascript } from '@codemirror/lang-javascript';
@@ -77,11 +78,12 @@ export function EditorPanel({
   const viewRef = useRef<EditorView | null>(null);
 
   // Stable refs — avoids re-creating the editor on every parent re-render.
-  // The Cmd/Ctrl+Enter shortcuts inside the editor read from these refs so
-  // the keymap captures stay current without rebuilding the editor.
+  // The Cmd/Ctrl+Enter shortcuts and Alt-R reset inside the editor read from
+  // these refs so the keymap captures stay current without rebuilding.
   const onChangeRef = useRef(onChange);
   const onRunRef = useRef(onRun);
   const onSubmitRef = useRef(onSubmit);
+  const starterCodeRef = useRef(starterCode);
   useEffect(() => {
     onChangeRef.current = onChange;
   }, [onChange]);
@@ -91,6 +93,9 @@ export function EditorPanel({
   useEffect(() => {
     onSubmitRef.current = onSubmit;
   }, [onSubmit]);
+  useEffect(() => {
+    starterCodeRef.current = starterCode;
+  }, [starterCode]);
 
   // Build and mount the editor once.
   useEffect(() => {
@@ -111,6 +116,10 @@ export function EditorPanel({
         highlightActiveLine(),
         highlightSelectionMatches(),
         foldGutter(),
+        drawSelection(),
+        // Allow multi-cursor (Alt-click, Ctrl-D add-next via defaultKeymap).
+        // drawSelection above is what makes the additional carets visible.
+        EditorState.allowMultipleSelections.of(true),
         // Editing extensions
         history(),
         indentOnInput(),
@@ -135,6 +144,24 @@ export function EditorPanel({
             preventDefault: true,
             run() {
               onSubmitRef.current();
+              return true;
+            },
+          },
+          // Alt-R: reset the editor to the problem's starter code. Browser
+          // hard-refresh owns Ctrl/Cmd-Shift-R, so this picks a free combo.
+          {
+            key: 'Alt-r',
+            preventDefault: true,
+            run(view) {
+              view.dispatch(
+                view.state.update({
+                  changes: {
+                    from: 0,
+                    to: view.state.doc.length,
+                    insert: starterCodeRef.current,
+                  },
+                }),
+              );
               return true;
             },
           },
@@ -265,8 +292,9 @@ export function EditorPanel({
         <div className="flex items-center justify-between px-4 py-3">
           {/* Left: shortcut hint + attempts remaining (when relevant) */}
           <div className="flex items-center gap-3 font-mono text-[10px] text-faint">
-            <span aria-hidden="true" className="hidden sm:inline">
+            <span aria-hidden="true" className="hidden md:inline">
               <kbd className="font-mono">⌘↵</kbd> run · <kbd className="font-mono">⌘⇧↵</kbd> submit
+              · <kbd className="font-mono">⌥R</kbd> reset
             </span>
             {attemptsRemaining !== null && attemptsRemaining < Infinity && (
               <span aria-label={`${attemptsRemaining} submissions remaining`} className="text-xs">
