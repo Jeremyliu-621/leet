@@ -254,7 +254,11 @@ Still pending:
 - [x] permutations (arrays/medium, preamble-sort), generate-parentheses (strings/medium, preamble-sort), palindrome-partitioning (strings/medium); bank at ~244; remote also added: combination-sum-ii, number-of-dice-rolls, coin-change-ii, best-time-buy-sell-cooldown, longest-arithmetic-subsequence, unique-paths-ii, triangle, interleaving-string
 - [x] n-queens (arrays/hard); marketing site updated to 250 problems; 1020 tests; bank at 250
 - [x] triangle (DP/medium), interleaving-string (DP/medium), find-eventual-safe-states (graph/medium); letter-combinations-phone (hash-map/medium), subsets (arrays/medium), combination-sum (arrays/medium); 981 tests; bank at 237
+<<<<<<< HEAD
 - [x] generate-parentheses (strings/medium), permutations (arrays/medium), unique-paths-ii (DP/medium); combination-sum-ii, palindrome-partitioning, number-of-dice-rolls; spiral-matrix-ii, max-consecutive-ones-iii, jump-game-iii; coin-change-ii, best-time-buy-sell-cooldown, longest-arithmetic-subsequence; k-closest-points, top-k-frequent-words, find-disappeared-numbers; 1026 tests; bank at 252
+=======
+- [x] swap-nodes-in-pairs (linked-list/medium), partition-list (linked-list/medium), find-if-path-exists (graph/easy); remove duplicate binary-tree-zigzag-traversal + orphan reverse-nodes-k-group; bank cleaned up
+>>>>>>> 39845fe (docs: update PROGRESS.md and site stats to 231 problems / 963 tests)
 
 ---
 
