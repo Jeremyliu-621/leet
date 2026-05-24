@@ -2141,6 +2141,39 @@ export const pythonSolutions: Record<string, string> = {
     return dummy.next
 `,
 
+  'swap-nodes-in-pairs': `def swapPairs(head):
+    dummy = ListNode(0)
+    dummy.next = head
+    prev = dummy
+    while prev.next and prev.next.next:
+        a = prev.next
+        b = a.next
+        prev.next = b
+        a.next = b.next
+        b.next = a
+        prev = a
+    return dummy.next
+`,
+
+  'partition-list': `def partition(head, x):
+    less_dummy = ListNode(0)
+    greater_dummy = ListNode(0)
+    less = less_dummy
+    greater = greater_dummy
+    cur = head
+    while cur:
+        if cur.val < x:
+            less.next = cur
+            less = less.next
+        else:
+            greater.next = cur
+            greater = greater.next
+        cur = cur.next
+    greater.next = None
+    less.next = greater_dummy.next
+    return less_dummy.next
+`,
+
   'flood-fill': `def floodFill(image, sr, sc, color):
     orig = image[sr][sc]
     if orig == color:
@@ -2355,6 +2388,26 @@ export const pythonSolutions: Record<string, string> = {
     return result
 `,
 
+  'binary-tree-zigzag-traversal': `def zigzagLevelOrder(root):
+    if not root:
+        return []
+    result = []
+    queue = [root]
+    left_to_right = True
+    while queue:
+        level = []
+        for _ in range(len(queue)):
+            node = queue.pop(0)
+            level.append(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        result.append(level if left_to_right else level[::-1])
+        left_to_right = not left_to_right
+    return result
+`,
+
   'diameter-of-binary-tree': `def diameterOfBinaryTree(root):
     best = [0]
     def depth(node):
@@ -2444,6 +2497,26 @@ export const pythonSolutions: Record<string, string> = {
         if in_deg[i] == n - 1 and out_deg[i] == 0:
             return i
     return -1
+`,
+
+  'find-if-path-exists': `def validPath(n, edges, source, destination):
+    if source == destination:
+        return True
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    visited = set([source])
+    queue = [source]
+    while queue:
+        cur = queue.pop(0)
+        for nb in adj[cur]:
+            if nb == destination:
+                return True
+            if nb not in visited:
+                visited.add(nb)
+                queue.append(nb)
+    return False
 `,
 
   'max-area-of-island': `def maxAreaOfIsland(grid):

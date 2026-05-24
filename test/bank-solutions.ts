@@ -2715,7 +2715,43 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return lists.flat().sort((a, b) => a - b);
   },
 
+  'swap-nodes-in-pairs': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const result = [...arr];
+    for (let i = 0; i + 1 < result.length; i += 2) {
+      [result[i], result[i + 1]] = [result[i + 1]!, result[i]!];
+    }
+    return result;
+  },
+
+  'partition-list': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const x = args[1] as number;
+    return [...arr.filter((v) => v < x), ...arr.filter((v) => v >= x)];
+  },
+
   // --- graph ---------------------------------------------------------------
+
+  'find-if-path-exists': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const source = args[2] as number;
+    const destination = args[3] as number;
+    if (source === destination) return true;
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const [u, v] of edges) { adj[u as number]!.push(v as number); adj[v as number]!.push(u as number); }
+    const visited = new Set<number>();
+    const queue = [source];
+    visited.add(source);
+    while (queue.length) {
+      const cur = queue.shift()!;
+      for (const nb of adj[cur]!) {
+        if (nb === destination) return true;
+        if (!visited.has(nb)) { visited.add(nb); queue.push(nb); }
+      }
+    }
+    return false;
+  },
 
   'flood-fill': (...args: unknown[]) => {
     const image = (args[0] as number[][]).map((row) => [...row]);
@@ -2897,6 +2933,27 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
         if (node.r) queue.push(node.r);
       }
       result.push(level);
+    }
+    return result;
+  },
+
+  'binary-tree-zigzag-traversal': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    if (!root) return [];
+    const result: number[][] = [];
+    const queue: _TN[] = [root];
+    let leftToRight = true;
+    while (queue.length) {
+      const size = queue.length;
+      const level: number[] = [];
+      for (let i = 0; i < size; i++) {
+        const node = queue.shift()!;
+        level.push(node.v);
+        if (node.l) queue.push(node.l);
+        if (node.r) queue.push(node.r);
+      }
+      result.push(leftToRight ? level : level.slice().reverse());
+      leftToRight = !leftToRight;
     }
     return result;
   },

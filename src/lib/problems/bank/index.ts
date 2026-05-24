@@ -214,6 +214,8 @@ import { problem as removeNthFromEnd } from './remove-nth-from-end';
 import { problem as oddEvenLinkedList } from './odd-even-linked-list';
 import { problem as addTwoNumbers } from './add-two-numbers';
 import { problem as reorderList } from './reorder-list';
+import { problem as swapNodesInPairs } from './swap-nodes-in-pairs';
+import { problem as partitionList } from './partition-list';
 // linked-list — hard
 import { problem as mergeKSortedLists } from './merge-k-sorted-lists';
 import { problem as reverseNodesInKGroup } from './reverse-nodes-in-k-group';
@@ -222,6 +224,7 @@ import { problem as reverseNodesInKGroup } from './reverse-nodes-in-k-group';
 import { problem as floodFill } from './flood-fill';
 import { problem as findTheTownJudge } from './find-the-town-judge';
 import { problem as numberOfProvinces } from './number-of-provinces';
+import { problem as findIfPathExists } from './find-if-path-exists';
 // graph — medium (additional)
 import { problem as wordSearch } from './word-search';
 import { problem as surroundedRegions } from './surrounded-regions';
@@ -258,6 +261,7 @@ import { problem as sameTree } from './same-tree';
 // tree — medium
 import { problem as validateBst } from './validate-bst';
 import { problem as levelOrderTraversal } from './level-order-traversal';
+import { problem as binaryTreeZigzagTraversal } from './binary-tree-zigzag-traversal';
 import { problem as binaryTreeRightSideView } from './binary-tree-right-side-view';
 import { problem as lowestCommonAncestorBst } from './lowest-common-ancestor-bst';
 import { problem as countGoodNodes } from './count-good-nodes';
@@ -476,6 +480,8 @@ export const problems: readonly Problem[] = [
   oddEvenLinkedList,
   addTwoNumbers,
   reorderList,
+  swapNodesInPairs,
+  partitionList,
   // linked-list — hard
   mergeKSortedLists,
   reverseNodesInKGroup,
@@ -483,6 +489,7 @@ export const problems: readonly Problem[] = [
   floodFill,
   findTheTownJudge,
   numberOfProvinces,
+  findIfPathExists,
   // graph — medium
   wordSearch,
   surroundedRegions,
@@ -516,6 +523,7 @@ export const problems: readonly Problem[] = [
   // tree — medium
   validateBst,
   levelOrderTraversal,
+  binaryTreeZigzagTraversal,
   binaryTreeRightSideView,
   lowestCommonAncestorBst,
   countGoodNodes,
