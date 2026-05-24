@@ -2578,6 +2578,17 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'middle-of-linked-list': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    let slow = 0;
+    let fast = 0;
+    while (fast < arr.length && fast + 1 < arr.length) {
+      slow++;
+      fast += 2;
+    }
+    return arr.slice(slow);
+  },
+
   // --- arrays + math + strings — easy ----------------------------------------
   'plus-one': (...args: unknown[]) => {
     const digits = [...(args[0] as number[])];

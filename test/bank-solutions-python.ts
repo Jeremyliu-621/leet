@@ -2007,6 +2007,13 @@ export const pythonSolutions: Record<string, string> = {
     curr.next = list1 if list1 else list2
     return dummy.next
 `,
+  'middle-of-linked-list': `def middleNode(head):
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+    return slow
+`,
   'plus-one': `def plusOne(digits):
     digits = list(digits)
     for i in range(len(digits) - 1, -1, -1):
