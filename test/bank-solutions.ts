@@ -4379,4 +4379,53 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Math.max(up, down);
   },
 
+  'subsets-ii': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const result: number[][] = [];
+    function bt(start: number, cur: number[]): void {
+      result.push(cur.slice());
+      for (let i = start; i < nums.length; i++) {
+        if (i > start && nums[i] === nums[i - 1]) continue;
+        cur.push(nums[i]!);
+        bt(i + 1, cur);
+        cur.pop();
+      }
+    }
+    bt(0, []);
+    return result
+      .map(s => s.slice().sort((a, b) => a - b))
+      .sort((a, b) => {
+        const len = Math.min(a.length, b.length);
+        for (let i = 0; i < len; i++) { if (a[i] !== b[i]) return a[i]! - b[i]!; }
+        return a.length - b.length;
+      });
+  },
+
+  'insert-interval': (...args: unknown[]) => {
+    const intervals = args[0] as number[][];
+    const [ns, ne] = args[1] as number[];
+    const result: number[][] = [];
+    let start = ns!, end = ne!;
+    let i = 0;
+    while (i < intervals.length && intervals[i]![1]! < start) result.push(intervals[i++]!);
+    while (i < intervals.length && intervals[i]![0]! <= end) {
+      start = Math.min(start, intervals[i]![0]!);
+      end = Math.max(end, intervals[i]![1]!);
+      i++;
+    }
+    result.push([start, end]);
+    while (i < intervals.length) result.push(intervals[i++]!);
+    return result;
+  },
+
+  'sum-of-two-integers': (...args: unknown[]) => {
+    let a = args[0] as number, b = args[1] as number;
+    while (b !== 0) {
+      const carry = (a & b) << 1;
+      a = a ^ b;
+      b = carry;
+    }
+    return a;
+  },
+
 };

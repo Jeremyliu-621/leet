@@ -3768,4 +3768,44 @@ def deserialize(data):
     return max(up, down)
 `,
 
+  'subsets-ii': `def subsetsWithDup(nums):
+    nums = sorted(nums)
+    result = []
+    def bt(start, cur):
+        result.append(cur[:])
+        for i in range(start, len(nums)):
+            if i > start and nums[i] == nums[i - 1]:
+                continue
+            cur.append(nums[i])
+            bt(i + 1, cur)
+            cur.pop()
+    bt(0, [])
+    return result
+`,
+
+  'insert-interval': `def insert(intervals, newInterval):
+    result = []
+    start, end = newInterval
+    i = 0
+    while i < len(intervals) and intervals[i][1] < start:
+        result.append(intervals[i])
+        i += 1
+    while i < len(intervals) and intervals[i][0] <= end:
+        start = min(start, intervals[i][0])
+        end = max(end, intervals[i][1])
+        i += 1
+    result.append([start, end])
+    result.extend(intervals[i:])
+    return result
+`,
+
+  'sum-of-two-integers': `def getSum(a, b):
+    mask = 0xFFFFFFFF
+    while b & mask:
+        carry = (a & b) << 1
+        a = a ^ b
+        b = carry
+    return a if b == 0 else a & mask | -(~(a & mask) + 1) & ~mask
+`,
+
 };

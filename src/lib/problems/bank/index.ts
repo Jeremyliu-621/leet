@@ -168,6 +168,7 @@ import { problem as climbingStairs } from './climbing-stairs';
 import { problem as romanToInteger } from './roman-to-integer';
 import { problem as palindromeNumber } from './palindrome-number';
 import { problem as excelColumnNumber } from './excel-column-number';
+import { problem as sumOfTwoIntegers } from './sum-of-two-integers';
 // math — hard
 import { problem as fractionToRecurringDecimal } from './fraction-to-recurring-decimal';
 import { problem as integerToEnglishWords } from './integer-to-english-words';
@@ -180,6 +181,8 @@ import { problem as happyNumber } from './happy-number';
 import { problem as maximumSwap } from './maximum-swap';
 
 import { problem as singleNumber } from './single-number';
+import { problem as subsetsII } from './subsets-ii';
+import { problem as insertInterval } from './insert-interval';
 // arrays — hard
 import { problem as nQueens } from './n-queens';
 import { problem as firstMissingPositive } from './first-missing-positive';
@@ -345,6 +348,8 @@ export const problems: readonly Problem[] = [
   plusOne,
   singleNumber,
   // arrays — medium
+  insertInterval,
+  subsetsII,
   mergeIntervals,
   nonOverlappingIntervals,
   subsets,
@@ -508,6 +513,7 @@ export const problems: readonly Problem[] = [
   romanToInteger,
   palindromeNumber,
   excelColumnNumber,
+  sumOfTwoIntegers,
   // math — hard
   fractionToRecurringDecimal,
   integerToEnglishWords,
