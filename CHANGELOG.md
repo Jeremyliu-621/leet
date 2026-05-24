@@ -15,6 +15,21 @@ pre-stable).
   clicks Submit, and verifies the service worker writes an unlock token for
   the target domain. Proves the entire vertical slice (bank → judge →
   sandbox Worker → SW grant handler → storage) works end-to-end.
+- **Accessibility baseline** — axe-core/playwright integration in
+  `e2e/a11y.spec.ts` audits all four extension surfaces. Fails on critical
+  WCAG violations; logs serious/moderate/minor findings as the next
+  polish-pass baseline.
+
+### Fixed
+- **Solve → unlock bounces back into a new challenge** — after grant-unlock
+  the challenge page does `window.location.href = target` immediately, but
+  the SW's DNR rule was only removed asynchronously via
+  `storage.onChanged` → `reconcile()`, so the navigation raced the stale
+  rule and got redirected back into the challenge. **Fix:**
+  `grantUnlock` now `await reconcile()` before responding, so the rule is
+  definitively gone by the time the challenge navigates. Caught by a real
+  user; covered by an extended `solve-flow.spec.ts` assertion
+  (`waitForURL(/example\.com/)`) that would have caught it.
 
 ## [0.1.0] — 2026-05-24 — First complete release
 
