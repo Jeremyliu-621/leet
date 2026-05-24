@@ -336,6 +336,21 @@ export const pythonSolutions: Record<string, string> = {
     return sorted(result)
 `,
 
+  'subsets-ii': `def subsetsII(nums):
+    nums = sorted(nums)
+    result = []
+    def bt(start, cur):
+        result.append(list(cur))
+        for i in range(start, len(nums)):
+            if i > start and nums[i] == nums[i - 1]:
+                continue
+            cur.append(nums[i])
+            bt(i + 1, cur)
+            cur.pop()
+    bt(0, [])
+    return sorted([sorted(s) for s in result])
+`,
+
   'combination-sum': `def combinationSum(candidates, target):
     candidates = sorted(candidates)
     result = []
@@ -1110,6 +1125,31 @@ export const pythonSolutions: Record<string, string> = {
             cols.discard(c); diag1.discard(row - c); diag2.discard(row + c); queens.pop()
     bt(0)
     return result
+`,
+
+  'sudoku-solver': `def solveSudoku(board):
+    def is_valid(r, c, d):
+        for i in range(9):
+            if board[r][i] == d or board[i][c] == d:
+                return False
+            br = 3 * (r // 3) + i // 3
+            bc = 3 * (c // 3) + i % 3
+            if board[br][bc] == d:
+                return False
+        return True
+    def solve():
+        for r in range(9):
+            for c in range(9):
+                if board[r][c] == '.':
+                    for d in '123456789':
+                        if is_valid(r, c, d):
+                            board[r][c] = d
+                            if solve():
+                                return True
+                            board[r][c] = '.'
+                    return False
+        return True
+    solve()
 `,
 
   'first-missing-positive': `def firstMissingPositive(nums):
@@ -3572,38 +3612,6 @@ def deserialize(data):
     return sorted(result)
 `,
 
-  'sudoku-solver': `def solveSudoku(board):
-    rows = [set() for _ in range(9)]
-    cols = [set() for _ in range(9)]
-    boxes = [set() for _ in range(9)]
-    empty = []
-    for r in range(9):
-        for c in range(9):
-            v = board[r][c]
-            if v != '.':
-                b = (r // 3) * 3 + c // 3
-                rows[r].add(v)
-                cols[c].add(v)
-                boxes[b].add(v)
-            else:
-                empty.append((r, c))
-    def bt(idx):
-        if idx == len(empty):
-            return True
-        r, c = empty[idx]
-        b = (r // 3) * 3 + c // 3
-        for d in '123456789':
-            if d in rows[r] or d in cols[c] or d in boxes[b]:
-                continue
-            board[r][c] = d
-            rows[r].add(d); cols[c].add(d); boxes[b].add(d)
-            if bt(idx + 1):
-                return True
-            board[r][c] = '.'
-            rows[r].discard(d); cols[c].discard(d); boxes[b].discard(d)
-        return False
-    bt(0)
-`,
 
   'combinations': `def combine(n, k):
     result = []
@@ -3766,21 +3774,6 @@ def deserialize(data):
         elif nums[i] < nums[i - 1]:
             down = up + 1
     return max(up, down)
-`,
-
-  'subsets-ii': `def subsetsWithDup(nums):
-    nums = sorted(nums)
-    result = []
-    def bt(start, cur):
-        result.append(cur[:])
-        for i in range(start, len(nums)):
-            if i > start and nums[i] == nums[i - 1]:
-                continue
-            cur.append(nums[i])
-            bt(i + 1, cur)
-            cur.pop()
-    bt(0, [])
-    return result
 `,
 
   'insert-interval': `def insert(intervals, newInterval):

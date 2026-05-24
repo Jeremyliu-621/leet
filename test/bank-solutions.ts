@@ -396,6 +396,21 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result.sort((a, b) => { for (let i = 0; i < Math.max(a.length, b.length); i++) { const d = (a[i] ?? -Infinity) - (b[i] ?? -Infinity); if (d) return d; } return a.length - b.length; });
   },
 
+  'subsets-ii': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const result: number[][] = [];
+    const bt = (start: number, cur: number[]): void => {
+      result.push([...cur]);
+      for (let i = start; i < nums.length; i++) {
+        if (i > start && nums[i] === nums[i - 1]) continue;
+        cur.push(nums[i]!); bt(i + 1, cur); cur.pop();
+      }
+    };
+    bt(0, []);
+    const norm = result.map(s => [...s].sort((a, b) => a - b));
+    return norm.sort((a, b) => { for (let i = 0; i < Math.max(a.length, b.length); i++) { const d = (a[i] ?? -Infinity) - (b[i] ?? -Infinity); if (d) return d; } return a.length - b.length; });
+  },
+
   'combination-sum': (...args: unknown[]) => {
     const candidates = [...(args[0] as number[])].sort((a, b) => a - b);
     const target = args[1] as number;
@@ -1530,6 +1545,40 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     };
     bt(0);
     return result;
+  },
+
+  'sudoku-solver': (...args: unknown[]) => {
+    const board = (args[0] as string[][]).map(r => [...r]);
+    const isValid = (r: number, c: number, d: string): boolean => {
+      for (let i = 0; i < 9; i++) {
+        if (board[r]![i] === d) return false;
+        if (board[i]![c] === d) return false;
+        const br = 3 * Math.floor(r / 3) + Math.floor(i / 3);
+        const bc = 3 * Math.floor(c / 3) + (i % 3);
+        if (board[br]![bc] === d) return false;
+      }
+      return true;
+    };
+    const solve = (): boolean => {
+      for (let r = 0; r < 9; r++) {
+        for (let c = 0; c < 9; c++) {
+          if (board[r]![c] === '.') {
+            for (let d = 1; d <= 9; d++) {
+              const ch = String(d);
+              if (isValid(r, c, ch)) {
+                board[r]![c] = ch;
+                if (solve()) return true;
+                board[r]![c] = '.';
+              }
+            }
+            return false;
+          }
+        }
+      }
+      return true;
+    };
+    solve();
+    return board;
   },
 
   'first-missing-positive': (...args: unknown[]) => {
@@ -4159,40 +4208,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result.sort();
   },
 
-  'sudoku-solver': (...args: unknown[]) => {
-    const board = (args[0] as string[][]).map(row => [...row]);
-    const rows = Array.from({ length: 9 }, () => new Set<string>());
-    const cols = Array.from({ length: 9 }, () => new Set<string>());
-    const boxes = Array.from({ length: 9 }, () => new Set<string>());
-    for (let r = 0; r < 9; r++) {
-      for (let c = 0; c < 9; c++) {
-        const v = board[r]![c]!;
-        if (v !== '.') {
-          const b = Math.floor(r / 3) * 3 + Math.floor(c / 3);
-          rows[r]!.add(v); cols[c]!.add(v); boxes[b]!.add(v);
-        }
-      }
-    }
-    function bt(): boolean {
-      for (let r = 0; r < 9; r++) {
-        for (let c = 0; c < 9; c++) {
-          if (board[r]![c] !== '.') continue;
-          const b = Math.floor(r / 3) * 3 + Math.floor(c / 3);
-          for (let d = 1; d <= 9; d++) {
-            const s = String(d);
-            if (rows[r]!.has(s) || cols[c]!.has(s) || boxes[b]!.has(s)) continue;
-            board[r]![c] = s; rows[r]!.add(s); cols[c]!.add(s); boxes[b]!.add(s);
-            if (bt()) return true;
-            board[r]![c] = '.'; rows[r]!.delete(s); cols[c]!.delete(s); boxes[b]!.delete(s);
-          }
-          return false;
-        }
-      }
-      return true;
-    }
-    bt();
-    return board;
-  },
 
   'combinations': (...args: unknown[]) => {
     const [n, k] = args as [number, number];
@@ -4377,28 +4392,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       else if (nums[i]! < nums[i - 1]!) down = up + 1;
     }
     return Math.max(up, down);
-  },
-
-  'subsets-ii': (...args: unknown[]) => {
-    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
-    const result: number[][] = [];
-    function bt(start: number, cur: number[]): void {
-      result.push(cur.slice());
-      for (let i = start; i < nums.length; i++) {
-        if (i > start && nums[i] === nums[i - 1]) continue;
-        cur.push(nums[i]!);
-        bt(i + 1, cur);
-        cur.pop();
-      }
-    }
-    bt(0, []);
-    return result
-      .map(s => s.slice().sort((a, b) => a - b))
-      .sort((a, b) => {
-        const len = Math.min(a.length, b.length);
-        for (let i = 0; i < len; i++) { if (a[i] !== b[i]) return a[i]! - b[i]!; }
-        return a.length - b.length;
-      });
   },
 
   'insert-interval': (...args: unknown[]) => {

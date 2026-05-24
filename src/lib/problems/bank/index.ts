@@ -16,6 +16,7 @@ import { problem as plusOne } from './plus-one';
 import { problem as mergeIntervals } from './merge-intervals';
 import { problem as nonOverlappingIntervals } from './non-overlapping-intervals';
 import { problem as subsets } from './subsets';
+import { problem as subsetsII } from './subsets-ii';
 import { problem as combinationSum } from './combination-sum';
 import { problem as combinationSumII } from './combination-sum-ii';
 import { problem as permutations } from './permutations';
@@ -184,7 +185,6 @@ import { problem as maximumSwap } from './maximum-swap';
 
 import { problem as singleNumber } from './single-number';
 import { problem as majorityElementII } from './majority-element-ii';
-import { problem as subsetsII } from './subsets-ii';
 import { problem as insertInterval } from './insert-interval';
 // arrays — hard
 import { problem as nQueens } from './n-queens';

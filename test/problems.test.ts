@@ -103,9 +103,11 @@ describe('problem selector', () => {
     const ids = bt.map((p) => p.id);
     expect(ids).toContain('permutations');
     expect(ids).toContain('subsets');
+    expect(ids).toContain('subsets-ii');
     expect(ids).toContain('combination-sum');
     expect(ids).toContain('letter-combinations-phone');
     expect(ids).toContain('generate-parentheses');
+    expect(ids).toContain('sudoku-solver');
   });
 
   it('respects difficulty when it is satisfiable', () => {
