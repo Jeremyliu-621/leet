@@ -2258,4 +2258,46 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[m]![n];
   },
 
+  'partition-equal-subset-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const total = nums.reduce((a, b) => a + b, 0);
+    if (total % 2 !== 0) return false;
+    const target = total / 2;
+    const dp = new Array<boolean>(target + 1).fill(false);
+    dp[0] = true;
+    for (const num of nums) {
+      for (let j = target; j >= num; j--) {
+        dp[j] = dp[j]! || dp[j - num]!;
+      }
+    }
+    return dp[target];
+  },
+
+  'perfect-squares': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const dp = new Array<number>(n + 1).fill(Infinity);
+    dp[0] = 0;
+    for (let i = 1; i <= n; i++) {
+      for (let j = 1; j * j <= i; j++) {
+        dp[i] = Math.min(dp[i]!, dp[i - j * j]! + 1);
+      }
+    }
+    return dp[n];
+  },
+
+  'target-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    let dp = new Map<number, number>([[0, 1]]);
+    for (const num of nums) {
+      const next = new Map<number, number>();
+      for (const [s, c] of dp) {
+        next.set(s + num, (next.get(s + num) ?? 0) + c);
+        next.set(s - num, (next.get(s - num) ?? 0) + c);
+      }
+      dp = next;
+    }
+    return dp.get(target) ?? 0;
+  },
+
 };

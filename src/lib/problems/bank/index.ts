@@ -169,6 +169,9 @@ import { problem as coinChange } from './coin-change';
 import { problem as longestCommonSubsequence } from './longest-common-subsequence';
 import { problem as minimumPathSum } from './minimum-path-sum';
 import { problem as decodeWays } from './decode-ways';
+import { problem as partitionEqualSubsetSum } from './partition-equal-subset-sum';
+import { problem as perfectSquares } from './perfect-squares';
+import { problem as targetSum } from './target-sum';
 // dynamic-programming — hard
 import { problem as longestPalindromicSubsequence } from './longest-palindromic-subsequence';
 import { problem as palindromePartitioningMinCuts } from './palindrome-partitioning-min-cuts';
@@ -334,6 +337,9 @@ export const problems: readonly Problem[] = [
   longestCommonSubsequence,
   minimumPathSum,
   decodeWays,
+  partitionEqualSubsetSum,
+  perfectSquares,
+  targetSum,
   // dynamic-programming — hard
   longestPalindromicSubsequence,
   palindromePartitioningMinCuts,

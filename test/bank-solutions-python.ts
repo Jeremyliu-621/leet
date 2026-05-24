@@ -1717,4 +1717,36 @@ export const pythonSolutions: Record<string, string> = {
                 dp[i][j] = dp[i - 1][j - 1]
     return dp[m][n]
 `,
+  'partition-equal-subset-sum': `def canPartition(nums: list[int]) -> bool:
+    total = sum(nums)
+    if total % 2 != 0:
+        return False
+    target = total // 2
+    dp = [False] * (target + 1)
+    dp[0] = True
+    for num in nums:
+        for j in range(target, num - 1, -1):
+            dp[j] = dp[j] or dp[j - num]
+    return dp[target]
+`,
+  'perfect-squares': `def numSquares(n: int) -> int:
+    dp = [float('inf')] * (n + 1)
+    dp[0] = 0
+    for i in range(1, n + 1):
+        j = 1
+        while j * j <= i:
+            dp[i] = min(dp[i], dp[i - j * j] + 1)
+            j += 1
+    return int(dp[n])
+`,
+  'target-sum': `def findTargetSumWays(nums: list[int], target: int) -> int:
+    dp = {0: 1}
+    for num in nums:
+        next_dp: dict[int, int] = {}
+        for s, c in dp.items():
+            next_dp[s + num] = next_dp.get(s + num, 0) + c
+            next_dp[s - num] = next_dp.get(s - num, 0) + c
+        dp = next_dp
+    return dp.get(target, 0)
+`,
 };
