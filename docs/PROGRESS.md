@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** 55 problems (4 medium-difficulty), all Phase 13 items complete. Build clean.
-**Build status:** 🟢 `npm run build` + `npm run test` green (399 unit tests across 21 files).
-**Next up:** Marketing site iteration, add more medium-difficulty problems, 100+ problem goal.
+**Current focus:** 55 problems, keyboard shortcut modal + popup solve breakdown stats added. Growing bank toward 100+ problems.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (394 unit tests across 22 files).
+**Next up:** Complete bank expansion to 100+ problems (batch writes in progress).
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -184,7 +184,9 @@ Still pending:
 - [x] Acceptance UX — 1.2s pause after accepted verdict before redirecting
 - [x] 4 new problems (rotate-array, max-product-subarray medium, longest-palindromic-string medium, climbing-stairs)
 - [x] Bank at 55 problems; first medium-difficulty problems added
-- [ ] Grow bank to 100+ problems
+- [x] Keyboard shortcut reference card — `?` button in editor header opens modal (all shortcuts, Esc/backdrop close, aria-modal)
+- [x] Problem tag/difficulty breakdown stats in popup — mini bar chart by difficulty + top-5 tag pills; computeSolvedStats in popup-helpers.ts with 6 unit tests
+- [ ] Grow bank to 100+ problems (batch expansion in progress)
 - [ ] Add more medium-difficulty problems (currently 2: max-product-subarray, longest-palindromic-string)
 - [ ] Marketing site iteration + Vercel deployment
 
