@@ -63,6 +63,7 @@ import { ResetSection } from './components/ResetSection';
 import { AboutSection } from './components/AboutSection';
 import { ImportExportSection } from './components/ImportExportSection';
 import { EditorSection } from './components/EditorSection';
+import { ProblemBrowserSection } from './components/ProblemBrowserSection';
 import { VerifyModal } from './components/VerifyModal';
 
 // ---------------------------------------------------------------------------
@@ -788,7 +789,10 @@ export function Options() {
             onReset={handleReset(d)}
           />
 
-          {/* 13. About — bundled-Pyodide reassurance + boot-time stat */}
+          {/* 14. Problem bank browser */}
+          <ProblemBrowserSection />
+
+          {/* 15. About — bundled-Pyodide reassurance + boot-time stat */}
           <AboutSection />
         </main>
       </div>
