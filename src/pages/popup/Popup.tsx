@@ -1,15 +1,23 @@
 import { useEffect, useState } from 'react';
-import { getValue, setValue } from '../../lib/storage';
+import { getValue, setValue, updateValue } from '../../lib/storage';
 import type { StorageSchema } from '../../lib/storage';
 import { extractDomain } from '../../lib/blocking';
 import { pruneTokens } from '../../lib/unlock';
 import { localDateString } from '../../lib/streak';
+import { applyTheme } from '../../lib/theme';
 import type {
   BlockRule,
   SolvedProblemRecord,
   StreakSummary,
+  ThemePreference,
   UnlockToken,
 } from '../../lib/types';
+
+const THEME_OPTIONS: ReadonlyArray<{ value: ThemePreference; label: string }> = [
+  { value: 'dark', label: 'Dark' },
+  { value: 'light', label: 'Light' },
+  { value: 'system', label: 'System' },
+];
 
 interface PopupData {
   streak: StreakSummary;
@@ -17,11 +25,12 @@ interface PopupData {
   solvedToday: number;
   currentDomain: string | null;
   alreadyBlocked: boolean;
+  theme: ThemePreference;
 }
 
 /**
  * Toolbar popup. Shows the streak, today's solves, active unlocks, and lets
- * the user block the current site in one click or open Settings.
+ * the user block the current site in one click, switch theme, or open Settings.
  */
 export function Popup() {
   const [data, setData] = useState<PopupData | null>(null);
@@ -30,11 +39,12 @@ export function Popup() {
     let cancelled = false;
 
     async function init() {
-      const [streak, tokens, solved, blockedRules, tabs] = await Promise.all([
+      const [streak, tokens, solved, blockedRules, prefs, tabs] = await Promise.all([
         safeGet('streakSummary'),
         safeGet('unlockTokens'),
         safeGet('solvedProblems'),
         safeGet('blockedRules'),
+        safeGet('userPreferences'),
         safeQueryActiveTab(),
       ]);
 
@@ -58,6 +68,7 @@ export function Popup() {
         solvedToday,
         currentDomain,
         alreadyBlocked,
+        theme: prefs.theme,
       });
     }
 
@@ -86,6 +97,17 @@ export function Popup() {
       void chrome.runtime.openOptionsPage();
     } catch {
       // Outside an extension context — silently ignore.
+    }
+  }
+
+  async function handleThemeChange(next: ThemePreference): Promise<void> {
+    if (!data || data.theme === next) return;
+    applyTheme(next);
+    setData({ ...data, theme: next });
+    try {
+      await updateValue('userPreferences', (curr) => ({ ...curr, theme: next }));
+    } catch {
+      // Storage unavailable — the visual change still applied for this session.
     }
   }
 
@@ -157,6 +179,35 @@ export function Popup() {
         >
           Open settings
         </button>
+      </section>
+
+      <section
+        className="mt-5 border-t border-border pt-4"
+        role="radiogroup"
+        aria-label="Theme"
+      >
+        <p className="mb-2 font-mono text-[9px] uppercase tracking-widest text-faint">Theme</p>
+        <div className="flex items-center gap-1">
+          {THEME_OPTIONS.map((opt) => {
+            const selected = data.theme === opt.value;
+            return (
+              <button
+                key={opt.value}
+                type="button"
+                role="radio"
+                aria-checked={selected}
+                onClick={() => void handleThemeChange(opt.value)}
+                className={
+                  selected
+                    ? 'flex-1 border border-border-strong bg-surface-2 px-3 py-1.5 text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+                    : 'flex-1 border border-border bg-bg px-3 py-1.5 text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+                }
+              >
+                {opt.label}
+              </button>
+            );
+          })}
+        </div>
       </section>
     </main>
   );
