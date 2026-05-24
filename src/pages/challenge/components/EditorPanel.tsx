@@ -1,10 +1,27 @@
 import { useEffect, useRef, useCallback } from 'react';
-import { EditorView, keymap, lineNumbers } from '@codemirror/view';
+import {
+  EditorView,
+  keymap,
+  lineNumbers,
+  highlightActiveLine,
+  highlightActiveLineGutter,
+} from '@codemirror/view';
 import { EditorState } from '@codemirror/state';
 import { javascript } from '@codemirror/lang-javascript';
-import { defaultKeymap, indentWithTab } from '@codemirror/commands';
-import { bracketMatching, indentOnInput } from '@codemirror/language';
-import { history, historyKeymap } from '@codemirror/commands';
+import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
+import {
+  bracketMatching,
+  indentOnInput,
+  foldGutter,
+  foldKeymap,
+} from '@codemirror/language';
+import {
+  autocompletion,
+  closeBrackets,
+  closeBracketsKeymap,
+  completionKeymap,
+} from '@codemirror/autocomplete';
+import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/search';
 import { leetlockEditorTheme } from '../codemirror-theme';
 import type { JudgeResult } from '../../../lib/judge';
 import { VerdictPanel } from './VerdictPanel';
@@ -59,11 +76,21 @@ export function EditorPanel({
   const editorContainerRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
 
-  // Stable onChange ref — avoids re-creating the editor on every parent re-render.
+  // Stable refs — avoids re-creating the editor on every parent re-render.
+  // The Cmd/Ctrl+Enter shortcuts inside the editor read from these refs so
+  // the keymap captures stay current without rebuilding the editor.
   const onChangeRef = useRef(onChange);
+  const onRunRef = useRef(onRun);
+  const onSubmitRef = useRef(onSubmit);
   useEffect(() => {
     onChangeRef.current = onChange;
   }, [onChange]);
+  useEffect(() => {
+    onRunRef.current = onRun;
+  }, [onRun]);
+  useEffect(() => {
+    onSubmitRef.current = onSubmit;
+  }, [onSubmit]);
 
   // Build and mount the editor once.
   useEffect(() => {
@@ -78,15 +105,54 @@ export function EditorPanel({
     const state = EditorState.create({
       doc: starterCode,
       extensions: [
+        // Display extensions
         lineNumbers(),
+        highlightActiveLineGutter(),
+        highlightActiveLine(),
+        highlightSelectionMatches(),
+        foldGutter(),
+        // Editing extensions
         history(),
         indentOnInput(),
         bracketMatching(),
+        closeBrackets(),
+        autocompletion(),
+        search(),
         javascript(),
+        // Keymap — order matters; first match wins.
         keymap.of([
-          ...defaultKeymap,
+          // Cmd/Ctrl+Enter runs visible tests; Cmd/Ctrl+Shift+Enter submits.
+          {
+            key: 'Mod-Enter',
+            preventDefault: true,
+            run() {
+              onRunRef.current();
+              return true;
+            },
+          },
+          {
+            key: 'Mod-Shift-Enter',
+            preventDefault: true,
+            run() {
+              onSubmitRef.current();
+              return true;
+            },
+          },
+          // Autocomplete first — accepts a completion with Tab/Enter while the
+          // popup is open. Falls through to plain Tab insertion below otherwise.
+          ...completionKeymap,
+          // Close-brackets Backspace deletes both halves of an empty pair.
+          ...closeBracketsKeymap,
+          // Cmd/Ctrl+F search panel.
+          ...searchKeymap,
+          // Code-folding shortcuts.
+          ...foldKeymap,
+          // Undo/redo.
           ...historyKeymap,
-          // Tab inserts two spaces — no hard tabs.
+          // Arrow keys, selection, copy/paste, etc.
+          ...defaultKeymap,
+          // Tab inserts two spaces — no hard tabs. (Completions captured Tab
+          // above when their popup is open, so this only fires otherwise.)
           {
             key: 'Tab',
             run(view) {
@@ -105,8 +171,6 @@ export function EditorPanel({
               return true;
             },
           },
-          // Shift-Tab dedents by removing up to two leading spaces.
-          indentWithTab,
         ]),
         leetlockEditorTheme,
         updateListener,
@@ -199,10 +263,13 @@ export function EditorPanel({
       {/* Action bar */}
       <div className="shrink-0 border-t border-border bg-surface">
         <div className="flex items-center justify-between px-4 py-3">
-          {/* Left: attempts remaining (only shown when relevant) */}
-          <div className="text-xs font-mono text-faint">
+          {/* Left: shortcut hint + attempts remaining (when relevant) */}
+          <div className="flex items-center gap-3 font-mono text-[10px] text-faint">
+            <span aria-hidden="true" className="hidden sm:inline">
+              <kbd className="font-mono">⌘↵</kbd> run · <kbd className="font-mono">⌘⇧↵</kbd> submit
+            </span>
             {attemptsRemaining !== null && attemptsRemaining < Infinity && (
-              <span aria-label={`${attemptsRemaining} submissions remaining`}>
+              <span aria-label={`${attemptsRemaining} submissions remaining`} className="text-xs">
                 {attemptsRemaining} left
               </span>
             )}
@@ -228,6 +295,7 @@ export function EditorPanel({
               onClick={onRun}
               onKeyDown={handleRunKeyDown}
               disabled={isRunning}
+              aria-keyshortcuts="Control+Enter Meta+Enter"
               aria-label="Run visible test cases"
               className="rounded-sm border border-border px-3 py-1.5 font-mono text-xs text-muted transition-colors hover:border-border-strong hover:text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent disabled:cursor-not-allowed disabled:opacity-40"
             >
@@ -239,6 +307,7 @@ export function EditorPanel({
               onClick={onSubmit}
               onKeyDown={handleSubmitKeyDown}
               disabled={isRunning}
+              aria-keyshortcuts="Control+Shift+Enter Meta+Shift+Enter"
               aria-label="Submit solution against all test cases"
               className="rounded-sm bg-accent px-3 py-1.5 font-mono text-xs font-semibold text-on-accent transition-opacity hover:opacity-90 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent disabled:cursor-not-allowed disabled:opacity-40"
             >
