@@ -222,6 +222,11 @@ import { problem as floodFill } from './flood-fill';
 import { problem as numberOfIslands } from './number-of-islands';
 import { problem as courseSchedule } from './course-schedule';
 
+// tree — easy
+import { problem as maxDepthBinaryTree } from './max-depth-binary-tree';
+import { problem as symmetricTree } from './symmetric-tree';
+import { problem as invertBinaryTree } from './invert-binary-tree';
+
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -431,4 +436,8 @@ export const problems: readonly Problem[] = [
   // graph — medium
   numberOfIslands,
   courseSchedule,
+  // tree — easy
+  maxDepthBinaryTree,
+  symmetricTree,
+  invertBinaryTree,
 ];

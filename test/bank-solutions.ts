@@ -2,6 +2,41 @@
 // Each function is the source of truth that proves every test case's
 // `expected` value in the matching problem definition.
 
+// Helpers for tree reference solutions (BFS-based, matches preamble format)
+interface _TN { v: number; l: _TN | null; r: _TN | null }
+function _buildTree(arr: (number | null)[]): _TN | null {
+  if (!arr.length || arr[0] === null || arr[0] === undefined) return null;
+  const root: _TN = { v: arr[0], l: null, r: null };
+  const q: _TN[] = [root];
+  let i = 1;
+  while (q.length && i < arr.length) {
+    const node = q.shift()!;
+    if (i < arr.length && arr[i] !== null && arr[i] !== undefined) {
+      node.l = { v: arr[i]!, l: null, r: null }; q.push(node.l);
+    }
+    i++;
+    if (i < arr.length && arr[i] !== null && arr[i] !== undefined) {
+      node.r = { v: arr[i]!, l: null, r: null }; q.push(node.r);
+    }
+    i++;
+  }
+  return root;
+}
+function _treeToArr(root: _TN | null): (number | null)[] {
+  if (!root) return [];
+  const result: (number | null)[] = [];
+  const q: (_TN | null)[] = [root];
+  while (q.length) {
+    const n = q.shift()!;
+    if (!n) { result.push(null); continue; }
+    result.push(n.v);
+    q.push(n.l);
+    q.push(n.r);
+  }
+  while (result.length && result[result.length - 1] === null) result.pop();
+  return result;
+}
+
 export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   // --- arrays --------------------------------------------------------------
   'running-sum': (...args: unknown[]) => {
@@ -2733,6 +2768,28 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     for (let i = 0; i < numCourses; i++) { if (!dfs(i)) return false; }
     return true;
+  },
+
+  // --- tree -------------------------------------------------------------------
+  'max-depth-binary-tree': (...args: unknown[]) => {
+    const d = (n: _TN | null): number => n ? 1 + Math.max(d(n.l), d(n.r)) : 0;
+    return d(_buildTree(args[0] as (number | null)[]));
+  },
+
+  'symmetric-tree': (...args: unknown[]) => {
+    const tree = _buildTree(args[0] as (number | null)[]);
+    const mirror = (a: _TN | null, b: _TN | null): boolean => {
+      if (!a && !b) return true;
+      if (!a || !b || a.v !== b.v) return false;
+      return mirror(a.l, b.r) && mirror(a.r, b.l);
+    };
+    return !tree || mirror(tree.l, tree.r);
+  },
+
+  'invert-binary-tree': (...args: unknown[]) => {
+    const inv = (n: _TN | null): _TN | null =>
+      n ? { v: n.v, l: inv(n.r), r: inv(n.l) } : null;
+    return _treeToArr(inv(_buildTree(args[0] as (number | null)[])));
   },
 
 };

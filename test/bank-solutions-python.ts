@@ -2197,4 +2197,26 @@ export const pythonSolutions: Record<string, string> = {
         return True
     return all(dfs(i) for i in range(numCourses))
 `,
+
+  // --- tree -------------------------------------------------------------------
+  'max-depth-binary-tree': `def maxDepth(root):
+    if not root:
+        return 0
+    return 1 + max(maxDepth(root.left), maxDepth(root.right))
+`,
+  'symmetric-tree': `def isSymmetric(root):
+    def mirror(a, b):
+        if not a and not b:
+            return True
+        if not a or not b or a.val != b.val:
+            return False
+        return mirror(a.left, b.right) and mirror(a.right, b.left)
+    return not root or mirror(root.left, root.right)
+`,
+  'invert-binary-tree': `def invertTree(root):
+    if not root:
+        return None
+    root.left, root.right = invertTree(root.right), invertTree(root.left)
+    return root
+`,
 };

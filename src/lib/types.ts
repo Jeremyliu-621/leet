@@ -14,7 +14,8 @@ export type ProblemTag =
   | 'math'
   | 'dynamic-programming'
   | 'linked-list'
-  | 'graph';
+  | 'graph'
+  | 'tree';
 
 /** Every tag, in canonical display order. */
 export const PROBLEM_TAGS: readonly ProblemTag[] = [
@@ -29,6 +30,7 @@ export const PROBLEM_TAGS: readonly ProblemTag[] = [
   'dynamic-programming',
   'linked-list',
   'graph',
+  'tree',
 ];
 
 /** Every difficulty, easiest first. */
