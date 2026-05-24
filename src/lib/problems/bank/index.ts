@@ -43,6 +43,7 @@ import { problem as increasingTripletSubsequence } from './increasing-triplet-su
 import { problem as numberOfRectangles } from './number-of-rectangles';
 import { problem as largestAltitude } from './largest-altitude';
 import { problem as sumOfOddLengthSubarrays } from './sum-of-odd-length-subarrays';
+import { problem as minimumSumMountainTriplet } from './minimum-sum-mountain-triplet';
 // arrays — medium
 import { problem as rangeSumQuery2D } from './range-sum-query-2d';
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
@@ -110,6 +111,11 @@ import { problem as cellsInRange } from './cells-in-range';
 import { problem as rotateString } from './rotate-string';
 import { problem as percentageOfLetterInString } from './percentage-of-letter-in-string';
 import { problem as countCommonWordsOneOccurrence } from './count-common-words-one-occurrence';
+import { problem as determineIfStringHalvesAlike } from './determine-if-string-halves-alike';
+import { problem as checkTwoStringsAlmostEquivalent } from './check-two-strings-almost-equivalent';
+import { problem as rearrangeCharactersToMakeTarget } from './rearrange-characters-to-make-target';
+import { problem as divideStringIntoGroups } from './divide-string-into-groups';
+import { problem as countVowelSubstrings } from './count-vowel-substrings';
 // strings — medium
 import { problem as zigzagConversion } from './zigzag-conversion';
 import { problem as implementTrie } from './implement-trie';
@@ -526,6 +532,7 @@ export const problems: readonly Problem[] = [
   numberOfRectangles,
   largestAltitude,
   sumOfOddLengthSubarrays,
+  minimumSumMountainTriplet,
   singleNumber,
   // arrays — medium
   rangeSumQuery2D,
@@ -599,6 +606,11 @@ export const problems: readonly Problem[] = [
   rotateString,
   percentageOfLetterInString,
   countCommonWordsOneOccurrence,
+  determineIfStringHalvesAlike,
+  checkTwoStringsAlmostEquivalent,
+  rearrangeCharactersToMakeTarget,
+  divideStringIntoGroups,
+  countVowelSubstrings,
   // strings — medium
   implementTrie,
   customSortString,

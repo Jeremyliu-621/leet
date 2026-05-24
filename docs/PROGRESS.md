@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 424 problems; added sort-characters-by-frequency, stone-game, robot-bounded-in-circle, zigzag-conversion, maximum-frequency-stack; 1543 tests.
+**Current focus:** Bank at 430 problems; merged all batches; continuing to 450+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing bank toward 420+; more medium/hard problems across all tags.
 
@@ -284,6 +284,7 @@ Still pending:
 - [x] remove-duplicates-sorted-array-ii + longest-string-chain + implement-trie (merged with remote additions); bank at 401; 1474 tests
 - [x] can-place-flowers + find-k-closest-elements + string-compression + maximum-69-number + count-of-matches-tournament + maximum-product-two-elements; bank at 403; 1489 tests
 - [x] number-of-students-eating-lunch + two-sum-less-than-k + find-smallest-letter-greater-than-target + minimum-difference-k-scores + two-out-of-three + sum-of-odd-length-subarrays; bank at 417; 1531 tests
+- [x] **400-problem milestone** — determine-if-string-halves-alike + check-two-strings-almost-equivalent + rearrange-characters-to-make-target + divide-string-into-groups + count-vowel-substrings + count-of-matches-in-tournament + minimum-sum-mountain-triplet (merged)
 
 ---
 

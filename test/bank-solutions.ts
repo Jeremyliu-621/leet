@@ -5357,6 +5357,16 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
         if (Math.abs(nums[i]! - nums[j]!) === k) count++;
     return count;
   },
+  'minimum-sum-mountain-triplet': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let ans = Infinity;
+    for (let i = 0; i < nums.length; i++)
+      for (let j = i + 1; j < nums.length; j++)
+        for (let k = j + 1; k < nums.length; k++)
+          if (nums[i]! < nums[j]! && nums[k]! < nums[j]!)
+            ans = Math.min(ans, nums[i]! + nums[j]! + nums[k]!);
+    return ans === Infinity ? -1 : ans;
+  },
   'percentage-of-letter-in-string': (...args: unknown[]) => {
     const s = args[0] as string, letter = args[1] as string;
     const count = [...s].filter(c => c === letter).length;
@@ -5374,6 +5384,51 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   'convert-temperature': (...args: unknown[]) => {
     const celsius = args[0] as number;
     return [celsius + 273.15, celsius * 1.8 + 32];
+  },
+  'determine-if-string-halves-alike': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const vowels = new Set('aeiouAEIOU');
+    const half = s.length / 2;
+    const count = (str: string) => [...str].filter(c => vowels.has(c)).length;
+    return count(s.slice(0, half)) === count(s.slice(half));
+  },
+  'check-two-strings-almost-equivalent': (...args: unknown[]) => {
+    const w1 = args[0] as string, w2 = args[1] as string;
+    const freq = new Array(26).fill(0);
+    for (const c of w1) freq[c.charCodeAt(0) - 97]!++;
+    for (const c of w2) freq[c.charCodeAt(0) - 97]!--;
+    return freq.every(f => Math.abs(f) <= 3);
+  },
+  'rearrange-characters-to-make-target': (...args: unknown[]) => {
+    const s = args[0] as string, target = args[1] as string;
+    const sFreq = new Map<string, number>(), tFreq = new Map<string, number>();
+    for (const c of s) sFreq.set(c, (sFreq.get(c) ?? 0) + 1);
+    for (const c of target) tFreq.set(c, (tFreq.get(c) ?? 0) + 1);
+    let min = Infinity;
+    for (const [c, cnt] of tFreq) min = Math.min(min, Math.floor((sFreq.get(c) ?? 0) / cnt));
+    return min === Infinity ? 0 : min;
+  },
+  'divide-string-into-groups': (...args: unknown[]) => {
+    const s = args[0] as string, k = args[1] as number, fill = args[2] as string;
+    const padded = s.length % k === 0 ? s : s + fill.repeat(k - (s.length % k));
+    const result: string[] = [];
+    for (let i = 0; i < padded.length; i += k) result.push(padded.slice(i, i + k));
+    return result;
+  },
+  'count-vowel-substrings': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const vowels = new Set('aeiou');
+    let count = 0;
+    for (let i = 0; i < word.length; i++) {
+      if (!vowels.has(word[i]!)) continue;
+      const seen = new Set<string>();
+      for (let j = i; j < word.length; j++) {
+        if (!vowels.has(word[j]!)) break;
+        seen.add(word[j]!);
+        if (seen.size === 5) count++;
+      }
+    }
+    return count;
   },
   'concatenation-of-array': (...args: unknown[]) => {
     const nums = args[0] as number[];

@@ -4724,6 +4724,17 @@ def deserialize(data):
     return count
 `,
 
+  'minimum-sum-mountain-triplet': `def minimumSum(nums):
+    ans = float('inf')
+    n = len(nums)
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if nums[i] < nums[j] and nums[k] < nums[j]:
+                    ans = min(ans, nums[i] + nums[j] + nums[k])
+    return ans if ans != float('inf') else -1
+`,
+
   'percentage-of-letter-in-string': `def percentageLetter(s, letter):
     return int(s.count(letter) / len(s) * 100)
 `,
@@ -4737,6 +4748,52 @@ def deserialize(data):
 
   'convert-temperature': `def convertTemperature(celsius):
     return [celsius + 273.15, celsius * 1.8 + 32]
+`,
+
+  'determine-if-string-halves-alike': `def halvesAreAlike(s):
+    vowels = set('aeiouAEIOU')
+    half = len(s) // 2
+    return sum(1 for c in s[:half] if c in vowels) == sum(1 for c in s[half:] if c in vowels)
+`,
+
+  'check-two-strings-almost-equivalent': `def checkAlmostEquivalent(word1, word2):
+    from collections import Counter
+    c1 = Counter(word1)
+    c2 = Counter(word2)
+    for ch in 'abcdefghijklmnopqrstuvwxyz':
+        if abs(c1[ch] - c2[ch]) > 3:
+            return False
+    return True
+`,
+
+  'rearrange-characters-to-make-target': `def rearrangeCharacters(s, target):
+    from collections import Counter
+    sc = Counter(s)
+    tc = Counter(target)
+    return min(sc[c] // cnt for c, cnt in tc.items())
+`,
+
+  'divide-string-into-groups': `def divideString(s, k, fill):
+    remainder = len(s) % k
+    if remainder:
+        s = s + fill * (k - remainder)
+    return [s[i:i+k] for i in range(0, len(s), k)]
+`,
+
+  'count-vowel-substrings': `def countVowelSubstrings(word):
+    vowels = set('aeiou')
+    count = 0
+    for i in range(len(word)):
+        if word[i] not in vowels:
+            continue
+        seen = set()
+        for j in range(i, len(word)):
+            if word[j] not in vowels:
+                break
+            seen.add(word[j])
+            if len(seen) == 5:
+                count += 1
+    return count
 `,
 
   'concatenation-of-array': `def getConcatenation(nums):
