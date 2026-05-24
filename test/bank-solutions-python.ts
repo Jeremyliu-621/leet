@@ -4503,6 +4503,59 @@ def deserialize(data):
     return [nums[nums[i]] for i in range(len(nums))]
 `,
 
+  'decode-xored-array': `def decode(encoded, first):
+    arr = [first]
+    for e in encoded:
+        arr.append(arr[-1] ^ e)
+    return arr
+`,
+
+  'replace-elements-with-greatest': `def replaceElements(arr):
+    arr = list(arr)
+    max_val = -1
+    for i in range(len(arr) - 1, -1, -1):
+        cur = arr[i]
+        arr[i] = max_val
+        if cur > max_val:
+            max_val = cur
+    return arr
+`,
+
+  'highest-altitude': `def largestAltitude(gain):
+    max_alt, cur = 0, 0
+    for g in gain:
+        cur += g
+        max_alt = max(max_alt, cur)
+    return max_alt
+`,
+
+  'sign-of-product-array': `def arraySign(nums):
+    neg = 0
+    for n in nums:
+        if n == 0: return 0
+        if n < 0: neg += 1
+    return 1 if neg % 2 == 0 else -1
+`,
+
+  'maximum-difference-increasing-elements': `def maximumDifference(nums):
+    min_val, ans = nums[0], -1
+    for i in range(1, len(nums)):
+        if nums[i] > min_val:
+            ans = max(ans, nums[i] - min_val)
+        else:
+            min_val = nums[i]
+    return ans
+`,
+
+  'cells-in-range': `def cellsInRange(s):
+    c1, r1, c2, r2 = ord(s[0]), int(s[1]), ord(s[3]), int(s[4])
+    result = []
+    for c in range(c1, c2 + 1):
+        for r in range(r1, r2 + 1):
+            result.append(chr(c) + str(r))
+    return result
+`,
+
   'concatenation-of-array': `def getConcatenation(nums):
     return list(nums) + list(nums)
 `,

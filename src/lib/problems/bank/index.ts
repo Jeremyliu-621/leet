@@ -23,6 +23,9 @@ import { problem as monotonicArray } from './monotonic-array';
 import { problem as buildArrayFromPermutation } from './build-array-from-permutation';
 import { problem as concatenationOfArray } from './concatenation-of-array';
 import { problem as thirdMaximumNumber } from './third-maximum-number';
+import { problem as replaceElementsWithGreatest } from './replace-elements-with-greatest';
+import { problem as highestAltitude } from './highest-altitude';
+import { problem as maximumDifferenceIncreasingElements } from './maximum-difference-increasing-elements';
 // arrays — medium
 import { problem as meetingRoomsII } from './meeting-rooms-ii';
 import { problem as hIndex } from './h-index';
@@ -80,6 +83,7 @@ import { problem as lengthOfLastWord } from './length-of-last-word';
 import { problem as defangingIpAddress } from './defanging-ip-address';
 import { problem as toLowerCase } from './to-lower-case';
 import { problem as checkIfTwoStringArraysEquivalent } from './check-if-two-string-arrays-equivalent';
+import { problem as cellsInRange } from './cells-in-range';
 // strings — medium
 import { problem as longestPalindromicString } from './longest-palindromic-string';
 import { problem as countPalindromicSubstrings } from './count-palindromic-substrings';
@@ -232,6 +236,8 @@ import { problem as countOddNumbersInInterval } from './count-odd-numbers-in-int
 import { problem as maximumProductThreeNumbers } from './maximum-product-three-numbers';
 import { problem as averageSalaryExcludingMinMax } from './average-salary-excluding-min-max';
 import { problem as findNUniqueIntegersSumToZero } from './find-n-unique-integers-sum-to-zero';
+import { problem as decodeXoredArray } from './decode-xored-array';
+import { problem as signOfProductArray } from './sign-of-product-array';
 // math — hard
 import { problem as fractionToRecurringDecimal } from './fraction-to-recurring-decimal';
 import { problem as integerToEnglishWords } from './integer-to-english-words';
@@ -440,6 +446,9 @@ export const problems: readonly Problem[] = [
   buildArrayFromPermutation,
   concatenationOfArray,
   thirdMaximumNumber,
+  replaceElementsWithGreatest,
+  highestAltitude,
+  maximumDifferenceIncreasingElements,
   singleNumber,
   // arrays — medium
   meetingRoomsII,
@@ -503,6 +512,7 @@ export const problems: readonly Problem[] = [
   defangingIpAddress,
   toLowerCase,
   checkIfTwoStringArraysEquivalent,
+  cellsInRange,
   // strings — medium
   generateParentheses,
   palindromePartitioning,
@@ -664,6 +674,8 @@ export const problems: readonly Problem[] = [
   maximumProductThreeNumbers,
   averageSalaryExcludingMinMax,
   findNUniqueIntegersSumToZero,
+  decodeXoredArray,
+  signOfProductArray,
   // math — hard
   fractionToRecurringDecimal,
   integerToEnglishWords,

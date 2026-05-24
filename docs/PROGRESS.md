@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 360 problems; 1345 tests green.
+**Current focus:** Bank at 364 problems; reorganize-string + minimum-cost-to-connect-sticks + check-if-pangram + is-power-of-four + integer-to-roman + longest-word-in-dictionary + decode-xored + replace-elements + highest-altitude + sign-of-product + max-diff-increasing + cells-in-range; 1360 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing bank toward 360+; more medium/hard problems across all tags; UI/UX polish.
 
@@ -275,6 +275,7 @@ Still pending:
 - [x] build-array-from-permutation + truncate-sentence + largest-perimeter-triangle + to-lower-case + check-if-two-string-arrays-equivalent + sum-of-unique-elements; bank at 348; 1312 tests
 - [x] concatenation-of-array + third-maximum-number + count-odd-numbers + maximum-product-three-numbers + average-salary-excluding-min-max + find-n-unique-integers-sum-to-zero; bank at 353; 1330 tests
 - [x] reorganize-string + minimum-cost-to-connect-sticks; check-if-pangram + is-power-of-four + integer-to-roman + longest-word-in-dictionary; bank at 360; 1345 tests
+- [x] decode-xored-array + replace-elements-with-greatest + highest-altitude + sign-of-product-array + maximum-difference-increasing-elements + cells-in-range; bank at 364; 1360 tests
 
 ---
 

@@ -5136,6 +5136,62 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return nums.map((_, i) => nums[nums[i]!]!);
   },
 
+  'decode-xored-array': (...args: unknown[]) => {
+    const encoded = args[0] as number[], first = args[1] as number;
+    const arr = [first];
+    for (const e of encoded) arr.push(arr[arr.length - 1]! ^ e);
+    return arr;
+  },
+
+  'replace-elements-with-greatest': (...args: unknown[]) => {
+    const arr = [...(args[0] as number[])];
+    let max = -1;
+    for (let i = arr.length - 1; i >= 0; i--) {
+      const cur = arr[i]!;
+      arr[i] = max;
+      if (cur > max) max = cur;
+    }
+    return arr;
+  },
+
+  'highest-altitude': (...args: unknown[]) => {
+    const gain = args[0] as number[];
+    let max = 0, cur = 0;
+    for (const g of gain) { cur += g; if (cur > max) max = cur; }
+    return max;
+  },
+
+  'sign-of-product-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let neg = 0;
+    for (const n of nums) {
+      if (n === 0) return 0;
+      if (n < 0) neg++;
+    }
+    return neg % 2 === 0 ? 1 : -1;
+  },
+
+  'maximum-difference-increasing-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let minVal = nums[0]!, ans = -1;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i]! > minVal) ans = Math.max(ans, nums[i]! - minVal);
+      else minVal = nums[i]!;
+    }
+    return ans;
+  },
+
+  'cells-in-range': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const c1 = s.charCodeAt(0), c2 = s.charCodeAt(3);
+    const r1 = +s[1]!, r2 = +s[4]!;
+    const result: string[] = [];
+    for (let c = c1; c <= c2; c++)
+      for (let r = r1; r <= r2; r++)
+        result.push(String.fromCharCode(c) + r);
+    return result;
+  },
+
   'concatenation-of-array': (...args: unknown[]) => {
     const nums = args[0] as number[];
     return [...nums, ...nums];
