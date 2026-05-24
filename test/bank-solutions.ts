@@ -3731,6 +3731,47 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return lca(root)?.v ?? null;
   },
 
+  'coin-change-ii': (...args: unknown[]) => {
+    const amount = args[0] as number;
+    const coins = args[1] as number[];
+    const dp = new Array<number>(amount + 1).fill(0);
+    dp[0] = 1;
+    for (const coin of coins) {
+      for (let i = coin; i <= amount; i++) dp[i]! += dp[i - coin]!;
+    }
+    return dp[amount]!;
+  },
+
+  'best-time-buy-sell-cooldown': (...args: unknown[]) => {
+    const prices = args[0] as number[];
+    if (prices.length <= 1) return 0;
+    let held = -prices[0]!, sold = 0, rest = 0;
+    for (let i = 1; i < prices.length; i++) {
+      const ph = held, ps = sold, pr = rest;
+      held = Math.max(ph, pr - prices[i]!);
+      sold = ph + prices[i]!;
+      rest = Math.max(pr, ps);
+    }
+    return Math.max(sold, rest);
+  },
+
+  'longest-arithmetic-subsequence': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const dp = Array.from({ length: n }, () => new Map<number, number>());
+    let best = 2;
+    for (let i = 1; i < n; i++) {
+      for (let j = 0; j < i; j++) {
+        const diff = nums[i]! - nums[j]!;
+        const prev = dp[j]!.get(diff) ?? 1;
+        const cur = prev + 1;
+        dp[i]!.set(diff, Math.max(dp[i]!.get(diff) ?? 0, cur));
+        best = Math.max(best, cur);
+      }
+    }
+    return best;
+  },
+
   'combination-sum-ii': (...args: unknown[]) => {
     const candidates = [...(args[0] as number[])].sort((a, b) => a - b);
     const target = args[1] as number;

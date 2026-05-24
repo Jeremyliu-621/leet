@@ -208,6 +208,9 @@ import { problem as uniquePathsII } from './unique-paths-ii';
 import { problem as generateParentheses } from './generate-parentheses';
 import { problem as permutations } from './permutations';
 import { problem as numberOfDiceRolls } from './number-of-dice-rolls';
+import { problem as coinChangeII } from './coin-change-ii';
+import { problem as bestTimeBuySellCooldown } from './best-time-buy-sell-cooldown';
+import { problem as longestArithmeticSubsequence } from './longest-arithmetic-subsequence';
 // dynamic-programming — hard
 import { problem as longestPalindromicSubsequence } from './longest-palindromic-subsequence';
 import { problem as palindromePartitioningMinCuts } from './palindrome-partitioning-min-cuts';
@@ -494,6 +497,9 @@ export const problems: readonly Problem[] = [
   interleavingString,
   uniquePathsII,
   numberOfDiceRolls,
+  coinChangeII,
+  bestTimeBuySellCooldown,
+  longestArithmeticSubsequence,
   // dynamic-programming — hard
   longestPalindromicSubsequence,
   palindromePartitioningMinCuts,

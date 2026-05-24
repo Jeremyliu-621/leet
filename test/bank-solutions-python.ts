@@ -3127,6 +3127,43 @@ def deserialize(data):
     return left if left else right
 `,
 
+  'coin-change-ii': `def change(amount, coins):
+    dp = [0] * (amount + 1)
+    dp[0] = 1
+    for coin in coins:
+        for i in range(coin, amount + 1):
+            dp[i] += dp[i - coin]
+    return dp[amount]
+`,
+
+  'best-time-buy-sell-cooldown': `def maxProfit(prices):
+    if len(prices) <= 1:
+        return 0
+    held = -prices[0]
+    sold = 0
+    rest = 0
+    for i in range(1, len(prices)):
+        ph, ps, pr = held, sold, rest
+        held = max(ph, pr - prices[i])
+        sold = ph + prices[i]
+        rest = max(pr, ps)
+    return max(sold, rest)
+`,
+
+  'longest-arithmetic-subsequence': `def longestArithSeqLength(nums):
+    n = len(nums)
+    dp = [{} for _ in range(n)]
+    best = 2
+    for i in range(1, n):
+        for j in range(i):
+            diff = nums[i] - nums[j]
+            prev = dp[j].get(diff, 1)
+            cur = prev + 1
+            dp[i][diff] = max(dp[i].get(diff, 0), cur)
+            best = max(best, cur)
+    return best
+`,
+
   'combination-sum-ii': `def combinationSum2(candidates, target):
     candidates = sorted(candidates)
     result = []
