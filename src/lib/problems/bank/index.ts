@@ -225,6 +225,9 @@ import { problem as courseSchedule } from './course-schedule';
 import { problem as maxAreaOfIsland } from './max-area-of-island';
 import { problem as rottingOranges } from './rotting-oranges';
 import { problem as keysAndRooms } from './keys-and-rooms';
+import { problem as networkDelayTime } from './network-delay-time';
+// graph — hard
+import { problem as wordLadder } from './word-ladder';
 
 // tree — easy
 import { problem as maxDepthBinaryTree } from './max-depth-binary-tree';
@@ -237,6 +240,7 @@ import { problem as diameterOfBinaryTree } from './diameter-of-binary-tree';
 import { problem as validateBst } from './validate-bst';
 import { problem as levelOrderTraversal } from './level-order-traversal';
 import { problem as lowestCommonAncestorBst } from './lowest-common-ancestor-bst';
+import { problem as countGoodNodes } from './count-good-nodes';
 // tree — hard
 import { problem as binaryTreeMaxPathSum } from './binary-tree-max-path-sum';
 
@@ -453,6 +457,9 @@ export const problems: readonly Problem[] = [
   maxAreaOfIsland,
   rottingOranges,
   keysAndRooms,
+  networkDelayTime,
+  // graph — hard
+  wordLadder,
   // tree — easy
   maxDepthBinaryTree,
   symmetricTree,
@@ -464,6 +471,7 @@ export const problems: readonly Problem[] = [
   validateBst,
   levelOrderTraversal,
   lowestCommonAncestorBst,
+  countGoodNodes,
   // tree — hard
   binaryTreeMaxPathSum,
 ];

@@ -2377,4 +2377,58 @@ export const pythonSolutions: Record<string, string> = {
                 stack.append(key)
     return len(visited) == len(rooms)
 `,
+
+  'network-delay-time': `def networkDelayTime(times, n, k):
+    import heapq
+    adj = [[] for _ in range(n + 1)]
+    for u, v, w in times:
+        adj[u].append((v, w))
+    dist = [float('inf')] * (n + 1)
+    dist[k] = 0
+    heap = [(0, k)]
+    while heap:
+        d, u = heapq.heappop(heap)
+        if d > dist[u]:
+            continue
+        for v, w in adj[u]:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                heapq.heappush(heap, (dist[v], v))
+    max_dist = max(dist[1:])
+    return max_dist if max_dist < float('inf') else -1
+`,
+
+  'word-ladder': `def ladderLength(beginWord, endWord, wordList):
+    word_set = set(wordList)
+    if endWord not in word_set:
+        return 0
+    from collections import deque
+    queue = deque([(beginWord, 1)])
+    visited = {beginWord}
+    while queue:
+        word, length = queue.popleft()
+        for i in range(len(word)):
+            for c in 'abcdefghijklmnopqrstuvwxyz':
+                next_word = word[:i] + c + word[i+1:]
+                if next_word == endWord:
+                    return length + 1
+                if next_word in word_set and next_word not in visited:
+                    visited.add(next_word)
+                    queue.append((next_word, length + 1))
+    return 0
+`,
+
+  'count-good-nodes': `def goodNodes(root):
+    count = [0]
+    def dfs(node, max_so_far):
+        if not node:
+            return
+        if node.val >= max_so_far:
+            count[0] += 1
+        new_max = max(max_so_far, node.val)
+        dfs(node.left, new_max)
+        dfs(node.right, new_max)
+    dfs(root, float('-inf'))
+    return count[0]
+`,
 };

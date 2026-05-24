@@ -2956,4 +2956,62 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return visited.size === rooms.length;
   },
 
+  'network-delay-time': (...args: unknown[]) => {
+    const times = args[0] as number[][];
+    const n = args[1] as number;
+    const k = args[2] as number;
+    const dist = new Array<number>(n + 1).fill(Infinity);
+    dist[k] = 0;
+    const adj: [number, number][][] = Array.from({ length: n + 1 }, () => []);
+    for (const edge of times) { adj[edge[0] as number]!.push([edge[1] as number, edge[2] as number]); }
+    const seen = new Set<number>();
+    for (;;) {
+      let u = -1;
+      for (let i = 1; i <= n; i++) {
+        if (!seen.has(i) && (u === -1 || (dist[i] ?? Infinity) < (dist[u] ?? Infinity))) u = i;
+      }
+      if (u === -1 || (dist[u] ?? Infinity) === Infinity) break;
+      seen.add(u);
+      for (const [v, w] of adj[u]!) {
+        if ((dist[u] ?? Infinity) + w < (dist[v] ?? Infinity)) dist[v] = (dist[u] ?? 0) + w;
+      }
+    }
+    const maxDist = Math.max(...dist.slice(1));
+    return maxDist === Infinity ? -1 : maxDist;
+  },
+
+  'word-ladder': (...args: unknown[]) => {
+    const beginWord = args[0] as string;
+    const endWord = args[1] as string;
+    const wordSet = new Set<string>(args[2] as string[]);
+    if (!wordSet.has(endWord)) return 0;
+    const queue: [string, number][] = [[beginWord, 1]];
+    const visited = new Set<string>([beginWord]);
+    while (queue.length) {
+      const item = queue.shift()!;
+      const word = item[0]; const len = item[1];
+      for (let i = 0; i < word.length; i++) {
+        for (let c = 97; c <= 122; c++) {
+          const next = word.slice(0, i) + String.fromCharCode(c) + word.slice(i + 1);
+          if (next === endWord) return len + 1;
+          if (wordSet.has(next) && !visited.has(next)) { visited.add(next); queue.push([next, len + 1]); }
+        }
+      }
+    }
+    return 0;
+  },
+
+  'count-good-nodes': (...args: unknown[]) => {
+    let cnt = 0;
+    const dfs = (n: _TN | null, mx: number): void => {
+      if (!n) return;
+      if (n.v >= mx) cnt++;
+      const nx = n.v > mx ? n.v : mx;
+      dfs(n.l, nx);
+      dfs(n.r, nx);
+    };
+    dfs(_buildTree(args[0] as (number | null)[]), -Infinity);
+    return cnt;
+  },
+
 };
