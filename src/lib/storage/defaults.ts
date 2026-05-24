@@ -17,6 +17,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   settingsCooldownMs: 10 * MINUTE_MS,
   allowGiveUp: true,
   theme: 'dark',
+  editorFontSize: 13,
 };
 
 /**

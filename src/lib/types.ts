@@ -157,6 +157,8 @@ export interface UserPreferences {
   allowGiveUp: boolean;
   /** Active UI theme. `'system'` follows the OS preference. */
   theme: ThemePreference;
+  /** CodeMirror editor font size, in CSS pixels. */
+  editorFontSize: number;
 }
 
 /** Theme options exposed in the UI. */

@@ -41,6 +41,13 @@ body,
   height: 100%;
 }
 
+/* CodeMirror content respects the user's editor-font-size preference. The
+   CSS variable is set by `applyEditorFontSize` (see `src/lib/theme/theme.ts`)
+   on every page mount; defaults match `DEFAULT_PREFERENCES.editorFontSize`. */
+.cm-content {
+  font-size: var(--ll-editor-font-size, 13px);
+}
+
 body {
   margin: 0;
   background: var(--ll-bg);

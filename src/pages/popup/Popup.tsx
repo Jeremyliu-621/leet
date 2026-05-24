@@ -4,7 +4,7 @@ import type { StorageSchema } from '../../lib/storage';
 import { extractDomain } from '../../lib/blocking';
 import { pruneTokens } from '../../lib/unlock';
 import { localDateString } from '../../lib/streak';
-import { applyTheme } from '../../lib/theme';
+import { applyEditorFontSize, applyTheme } from '../../lib/theme';
 import type {
   BlockRule,
   SolvedProblemRecord,
@@ -19,6 +19,13 @@ const THEME_OPTIONS: ReadonlyArray<{ value: ThemePreference; label: string }> = 
   { value: 'system', label: 'System' },
 ];
 
+const FONT_SIZE_OPTIONS: ReadonlyArray<{ value: number; label: string }> = [
+  { value: 11, label: 'S' },
+  { value: 13, label: 'M' },
+  { value: 15, label: 'L' },
+  { value: 17, label: 'XL' },
+];
+
 interface PopupData {
   streak: StreakSummary;
   activeUnlocks: UnlockToken[];
@@ -26,11 +33,13 @@ interface PopupData {
   currentDomain: string | null;
   alreadyBlocked: boolean;
   theme: ThemePreference;
+  editorFontSize: number;
 }
 
 /**
  * Toolbar popup. Shows the streak, today's solves, active unlocks, and lets
- * the user block the current site in one click, switch theme, or open Settings.
+ * the user block the current site in one click, switch theme + editor font
+ * size, or open Settings.
  */
 export function Popup() {
   const [data, setData] = useState<PopupData | null>(null);
@@ -69,6 +78,7 @@ export function Popup() {
         currentDomain,
         alreadyBlocked,
         theme: prefs.theme,
+        editorFontSize: prefs.editorFontSize,
       });
     }
 
@@ -106,6 +116,17 @@ export function Popup() {
     setData({ ...data, theme: next });
     try {
       await updateValue('userPreferences', (curr) => ({ ...curr, theme: next }));
+    } catch {
+      // Storage unavailable — the visual change still applied for this session.
+    }
+  }
+
+  async function handleFontSizeChange(next: number): Promise<void> {
+    if (!data || data.editorFontSize === next) return;
+    const applied = applyEditorFontSize(next);
+    setData({ ...data, editorFontSize: applied });
+    try {
+      await updateValue('userPreferences', (curr) => ({ ...curr, editorFontSize: applied }));
     } catch {
       // Storage unavailable — the visual change still applied for this session.
     }
@@ -201,6 +222,34 @@ export function Popup() {
                   selected
                     ? 'flex-1 border border-border-strong bg-surface-2 px-3 py-1.5 text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
                     : 'flex-1 border border-border bg-bg px-3 py-1.5 text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+                }
+              >
+                {opt.label}
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="mt-4" role="radiogroup" aria-label="Editor font size">
+        <p className="mb-2 font-mono text-[9px] uppercase tracking-widest text-faint">
+          Editor font · {data.editorFontSize}px
+        </p>
+        <div className="flex items-center gap-1">
+          {FONT_SIZE_OPTIONS.map((opt) => {
+            const selected = data.editorFontSize === opt.value;
+            return (
+              <button
+                key={opt.value}
+                type="button"
+                role="radio"
+                aria-checked={selected}
+                aria-label={`Set editor font size to ${opt.value} pixels`}
+                onClick={() => void handleFontSizeChange(opt.value)}
+                className={
+                  selected
+                    ? 'flex-1 border border-border-strong bg-surface-2 px-3 py-1.5 font-mono text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+                    : 'flex-1 border border-border bg-bg px-3 py-1.5 font-mono text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
                 }
               >
                 {opt.label}

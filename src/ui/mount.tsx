@@ -1,8 +1,9 @@
 import { StrictMode } from 'react';
 import type { ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { applyTheme, watchSystemTheme } from '../lib/theme';
+import { applyEditorFontSize, applyTheme, watchSystemTheme } from '../lib/theme';
 import { getValue } from '../lib/storage';
+import { DEFAULT_PREFERENCES } from '../lib/storage/defaults';
 import './styles/globals.css';
 
 // Apply the dark default synchronously so React never renders with a missing
@@ -10,6 +11,7 @@ import './styles/globals.css';
 // for `light` users this is a brief flash that an inline-in-<head> script
 // could eliminate — accepted as a small polish item for now.
 applyTheme('dark');
+applyEditorFontSize(DEFAULT_PREFERENCES.editorFontSize);
 
 /**
  * Mounts a React tree into the page's `#root` element.
@@ -31,6 +33,7 @@ export function mount(node: ReactNode): void {
       const prefs = await getValue('userPreferences');
       currentPreference = prefs.theme;
       applyTheme(prefs.theme);
+      applyEditorFontSize(prefs.editorFontSize);
     } catch {
       // chrome.storage unavailable (preview / non-extension context) — keep
       // the synchronous default applied above.

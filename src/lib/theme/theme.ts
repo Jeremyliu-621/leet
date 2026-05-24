@@ -28,6 +28,23 @@ export function applyTheme(preference: ThemePreference): ResolvedTheme {
   return resolved;
 }
 
+/** Smallest / largest editor font sizes accepted by the popup slider. */
+export const MIN_EDITOR_FONT_SIZE = 10;
+export const MAX_EDITOR_FONT_SIZE = 24;
+
+/**
+ * Writes the editor font size to a CSS variable on the root element. The
+ * stylesheet (`globals.css`) wires `.cm-content { font-size: var(--ll-editor-font-size) }`,
+ * so this is enough to update every live CodeMirror editor.
+ */
+export function applyEditorFontSize(pixels: number): number {
+  const clamped = Math.max(MIN_EDITOR_FONT_SIZE, Math.min(MAX_EDITOR_FONT_SIZE, Math.round(pixels)));
+  if (typeof document !== 'undefined') {
+    document.documentElement.style.setProperty('--ll-editor-font-size', `${clamped}px`);
+  }
+  return clamped;
+}
+
 /**
  * Watches the OS theme and re-applies whenever it changes — but only while
  * the user has picked `system`. Returns an unsubscribe function for cleanup.
