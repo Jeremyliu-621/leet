@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 321 problems (14 tags); growing steadily past 300-milestone.
+**Current focus:** Bank at 325 problems (14 tags); 1246 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing bank toward 350; UI/UX polish.
 
@@ -268,6 +268,7 @@ Still pending:
 - [x] 6 new problems: accounts-merge (graph/medium), next-greater-element-ii (stack/medium), minimum-size-subarray-sum (sliding-window/medium), decode-ways-ii (dp/hard), queue-reconstruction-by-height (arrays/medium), find-k-pairs-smallest-sums (binary-search/medium); bank at 307; 1171+ tests
 - [x] **300-problem milestone** — missing-ranges (arrays/easy) + excel-sheet-column-title (math/easy) + longest-palindrome-build (strings/easy); bank at 301; 1174 tests
 - [x] reverse-linked-list-ii (linked-list/medium) + rotate-list (linked-list/medium) + number-of-1-bits (math/easy) + single-number-ii (math/medium); bank at 309; 1198 tests
+- [x] simplify-path (stack/medium) + add-binary (math+strings/easy) + search-2d-matrix-ii (binary-search+arrays/medium) + remove-linked-list-elements (linked-list/easy); bank at 325; 1246 tests
 
 ---
 
