@@ -5928,11 +5928,11 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
 
   'sort-characters-by-frequency': (...args: unknown[]) => {
     const s = args[0] as string;
-    const freq: Record<string, number> = {};
-    for (const c of s) freq[c] = (freq[c] ?? 0) + 1;
-    return Object.entries(freq)
-      .sort(([a, ca], [b, cb]) => cb - ca || a.charCodeAt(0) - b.charCodeAt(0))
-      .map(([c, n]) => c.repeat(n))
+    const freq = new Map<string, number>();
+    for (const c of s) freq.set(c, (freq.get(c) ?? 0) + 1);
+    return [...freq.entries()]
+      .sort(([a, fa], [b, fb]) => fb - fa || (a < b ? -1 : a > b ? 1 : 0))
+      .map(([c, f]) => c.repeat(f))
       .join('');
   },
 
@@ -6074,6 +6074,66 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       for (let i = 0; i + len <= arr.length; i++)
         for (let j = i; j < i + len; j++) sum += arr[j]!;
     return sum;
+  },
+
+  'stone-game': (...args: unknown[]) => {
+    const piles = args[0] as number[];
+    const n = piles.length;
+    const dp: number[][] = Array.from({ length: n }, () => new Array(n).fill(0));
+    for (let i = 0; i < n; i++) dp[i]![i] = piles[i]!;
+    for (let len = 2; len <= n; len++) {
+      for (let i = 0; i <= n - len; i++) {
+        const j = i + len - 1;
+        dp[i]![j] = Math.max(piles[i]! - dp[i + 1]![j]!, piles[j]! - dp[i]![j - 1]!);
+      }
+    }
+    return dp[0]![n - 1]! > 0;
+  },
+
+  'robot-bounded-in-circle': (...args: unknown[]) => {
+    const instructions = args[0] as string;
+    const dirs = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+    let x = 0, y = 0, d = 0;
+    for (const c of instructions) {
+      if (c === 'G') { x += dirs[d]![0]!; y += dirs[d]![1]!; }
+      else if (c === 'L') d = (d + 3) % 4;
+      else d = (d + 1) % 4;
+    }
+    return (x === 0 && y === 0) || d !== 0;
+  },
+
+  'zigzag-conversion': (...args: unknown[]) => {
+    const s = args[0] as string, numRows = args[1] as number;
+    if (numRows === 1) return s;
+    const rows: string[] = Array.from({ length: numRows }, () => '');
+    let row = 0, dir = -1;
+    for (const c of s) {
+      rows[row] += c;
+      if (row === 0 || row === numRows - 1) dir = -dir;
+      row += dir;
+    }
+    return rows.join('');
+  },
+
+  'maximum-frequency-stack': (...args: unknown[]) => {
+    const ops = args[0] as string[], vals = args[1] as number[];
+    const freq = new Map<number, number>();
+    const group = new Map<number, number[]>();
+    let maxFreq = 0;
+    return ops.map((op, i) => {
+      if (op === 'push') {
+        const f = (freq.get(vals[i]!) ?? 0) + 1;
+        freq.set(vals[i]!, f);
+        if (!group.has(f)) group.set(f, []);
+        group.get(f)!.push(vals[i]!);
+        if (f > maxFreq) maxFreq = f;
+        return null;
+      }
+      const val = group.get(maxFreq)!.pop()!;
+      freq.set(val, maxFreq - 1);
+      if (!group.get(maxFreq)!.length) maxFreq--;
+      return val;
+    });
   },
 
 };

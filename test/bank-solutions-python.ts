@@ -5265,10 +5265,12 @@ def numberOfMatches(n):
     return n - 1
 `,
 
-  'sort-characters-by-frequency': `def frequencySort(s):
+  'sort-characters-by-frequency': `
+def frequencySort(s):
     from collections import Counter
     freq = Counter(s)
-    return ''.join(c * n for c, n in sorted(freq.items(), key=lambda x: (-x[1], x[0])))
+    chars = sorted(freq.keys(), key=lambda c: (-freq[c], c))
+    return ''.join(c * freq[c] for c in chars)
 `,
 
   'minimum-operations-alternating': `def minimumOperations(nums):
@@ -5414,6 +5416,75 @@ def sumOddLengthSubarrays(arr):
         for i in range(length - l + 1):
             total += sum(a[i:i+l])
     return total
+`,
+
+  'stone-game': `
+def stoneGame(piles):
+    piles = list(piles)
+    n = len(piles)
+    dp = [[0] * n for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = piles[i]
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            dp[i][j] = max(piles[i] - dp[i+1][j], piles[j] - dp[i][j-1])
+    return dp[0][n-1] > 0
+`,
+
+  'robot-bounded-in-circle': `
+def isRobotBounded(instructions):
+    dirs = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+    x, y, d = 0, 0, 0
+    for c in instructions:
+        if c == 'G':
+            x += dirs[d][0]; y += dirs[d][1]
+        elif c == 'L':
+            d = (d + 3) % 4
+        else:
+            d = (d + 1) % 4
+    return (x == 0 and y == 0) or d != 0
+`,
+
+  'zigzag-conversion': `
+def convert(s, numRows):
+    if numRows == 1:
+        return s
+    rows = [''] * numRows
+    row, direction = 0, -1
+    for c in s:
+        rows[row] += c
+        if row == 0 or row == numRows - 1:
+            direction = -direction
+        row += direction
+    return ''.join(rows)
+`,
+
+  'maximum-frequency-stack': `
+def freqStackRunner(ops, vals):
+    freq = {}
+    group = {}
+    max_freq = 0
+    result = []
+    ops_list = list(ops)
+    vals_list = list(vals)
+    for op, val in zip(ops_list, vals_list):
+        if op == 'push':
+            f = freq.get(val, 0) + 1
+            freq[val] = f
+            if f not in group:
+                group[f] = []
+            group[f].append(val)
+            if f > max_freq:
+                max_freq = f
+            result.append(None)
+        else:
+            val = group[max_freq].pop()
+            freq[val] -= 1
+            if not group[max_freq]:
+                max_freq -= 1
+            result.append(val)
+    return result
 `,
 
 };

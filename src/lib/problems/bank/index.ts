@@ -111,6 +111,7 @@ import { problem as rotateString } from './rotate-string';
 import { problem as percentageOfLetterInString } from './percentage-of-letter-in-string';
 import { problem as countCommonWordsOneOccurrence } from './count-common-words-one-occurrence';
 // strings — medium
+import { problem as zigzagConversion } from './zigzag-conversion';
 import { problem as implementTrie } from './implement-trie';
 import { problem as customSortString } from './custom-sort-string';
 import { problem as longestPalindromicString } from './longest-palindromic-string';
@@ -132,7 +133,6 @@ import { problem as pathCrossing } from './path-crossing';
 import { problem as firstUniqueChar } from './first-unique-char';
 import { problem as findWordsFromChars } from './word-pattern-ii';
 import { problem as jewelsAndStones } from './jewels-and-stones';
-import { problem as sortCharactersByFrequency } from './accounts-merge-ii';
 import { problem as minimumOperationsAlternating } from './minimum-operations-alternating';
 // hash-map — medium (additional)
 import { problem as longestWordInDictionary } from './longest-word-in-dictionary';
@@ -298,6 +298,7 @@ import { problem as powXN } from './pow-x-n';
 import { problem as reverseInteger } from './reverse-integer';
 import { problem as happyNumber } from './happy-number';
 import { problem as maximumSwap } from './maximum-swap';
+import { problem as robotBoundedInCircle } from './robot-bounded-in-circle';
 
 import { problem as singleNumber } from './single-number';
 import { problem as majorityElementII } from './majority-element-ii';
@@ -323,6 +324,7 @@ import { problem as minCostClimbingStairs } from './min-cost-climbing-stairs';
 import { problem as countingBits } from './counting-bits';
 import { problem as bestTimeBuySell } from './best-time-buy-sell';
 // dynamic-programming — medium
+import { problem as stoneGame } from './stone-game';
 import { problem as longestStringChain } from './longest-string-chain';
 import { problem as houseRobber } from './house-robber';
 import { problem as houseRobberII } from './house-robber-ii';
@@ -477,6 +479,8 @@ import { problem as kthLargestInStream } from './kth-largest-in-stream';
 import { problem as reorganizeString } from './reorganize-string';
 import { problem as minimumCostToConnectSticks } from './minimum-cost-to-connect-sticks';
 import { problem as medianFromDataStream } from './median-from-data-stream';
+import { problem as sortCharactersByFrequency } from './sort-characters-by-frequency';
+import { problem as maximumFrequencyStack } from './maximum-frequency-stack';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -609,6 +613,7 @@ export const problems: readonly Problem[] = [
   isSubsequenceMedium,
   characterReplacement,
   stringCompression,
+  zigzagConversion,
   integerToRoman,
   // hash-map — easy
   twoOutOfThree,
@@ -618,7 +623,6 @@ export const problems: readonly Problem[] = [
   firstUniqueChar,
   findWordsFromChars,
   jewelsAndStones,
-  sortCharactersByFrequency,
   minimumOperationsAlternating,
   twoSumIndices,
   mostFrequentValue,
@@ -742,8 +746,10 @@ export const problems: readonly Problem[] = [
   kthLargestInStream,
   reorganizeString,
   minimumCostToConnectSticks,
+  sortCharactersByFrequency,
   // heap — hard
   medianFromDataStream,
+  maximumFrequencyStack,
   // math — easy
   numberOfSteps,
   findTheDifference,
@@ -792,6 +798,7 @@ export const problems: readonly Problem[] = [
   reverseInteger,
   happyNumber,
   maximumSwap,
+  robotBoundedInCircle,
   // arrays — hard
   nQueens,
   firstMissingPositive,
@@ -811,6 +818,7 @@ export const problems: readonly Problem[] = [
   countingBits,
   bestTimeBuySell,
   // dynamic-programming — medium
+  stoneGame,
   longestStringChain,
   houseRobber,
   houseRobberII,
