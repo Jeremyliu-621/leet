@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 430 problems; merged all batches; continuing to 450+.
+**Current focus:** Bank at 433 problems; added find-numbers-even-digits, shuffle-string, subtract-product-and-sum; 1570 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing bank toward 420+; more medium/hard problems across all tags.
+**Next up:** Continue growing bank toward 450+; more easy/medium problems across all tags.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
