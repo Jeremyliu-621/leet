@@ -8,24 +8,24 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish · Pyodide rollout
-**Current focus:** Editor QoL, theme system, problem-content quality, first-run UX, Pyodide M1 done.
-**Build status:** 🟢 `npm run build` + `npm run test` green (264 unit tests across 19 files) +
-17/17 Playwright e2e against real Chromium.
-**Next up:** **Pyodide M5** — author the Python starter + reference solution for
-`two-sum-indices`, install `pyodide` as a Node dev-dep, write `test/problem-bank-python.test.ts`
-that boots Pyodide-in-Node and validates the Python reference against the same shared test cases
-as the JS bank. End-to-end: select Python in the editor selector → solve → unlock. See
-`docs/PYODIDE_PLAN.md` §8 M5. Also pending: vim keymap, draggable splitter, hints for the
-remaining 13 problems.
+**Current focus:** Pyodide M5 + M6 shipped — every bank problem (24/24) is now
+Python-capable, end-to-end-proven in real Chromium.
+**Build status:** 🟢 `npm run build` + `npm run test` green (290 unit tests across 20 files) +
+18/18 Playwright e2e against real Chromium (incl. the new `e2e/python-flow.spec.ts`).
+**Next up:** **Pyodide M7** — Pyodide boot-warmup on extension install (hidden
+`UserPreferences.warmPyodide`), first-run init-duration ring buffer, and an "About"-page
+reassurance line confirming Python is bundled-not-fetched. After M7: vim keymap, draggable
+splitter, hints for the remaining 13 problems, address logged a11y findings.
 
 **Pyodide rollout status:**
 - ✅ M1 — Type plumbing.
 - ✅ M2 — Vendored `pyodide-core 0.29.4` + WAR + CSP.
 - ✅ M3 — Python worker + sandbox dispatch. Sandbox-`chrome.runtime` regression caught by e2e + fixed.
 - ✅ M4 — `@codemirror/lang-python` + Compartment-driven JS|Py selector.
-- ⬜ M5 — First Python problem (`two-sum-indices`) + Pyodide-in-Node test suite.
-- ⬜ M6 — Backfill Python for the rest of the bank.
-- ⬜ M7 — Polish (warmup, observability).
+- ✅ M5 — First Python problem (`two-sum-indices`) + Pyodide-in-Node test suite + real-browser e2e.
+  E2e caught the partial-prefs `NaN expiresAt` bounce-back bug — fixed.
+- ✅ M6 — Backfilled Python for all 23 remaining bank problems, batched by tag (8 batches).
+- ⬜ M7 — Polish (warmup, observability, About copy).
 
 ---
 
