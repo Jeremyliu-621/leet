@@ -58,6 +58,9 @@ import { problem as longestConsecutiveSequence } from './longest-consecutive-seq
 import { problem as findAllAnagramsInString } from './find-all-anagrams-in-string';
 import { problem as maximumErasureValue } from './maximum-erasure-value';
 
+// two-pointers — hard
+import { problem as trappingRainWater } from './trapping-rain-water';
+import { problem as fourSum } from './four-sum';
 // two-pointers — medium
 import { problem as threeSumClosest } from './three-sum-closest';
 import { problem as boatsToSavePeople } from './boats-to-save-people';
@@ -118,6 +121,9 @@ import { problem as powerOfTwo } from './power-of-two';
 import { problem as fibonacciNumber } from './fibonacci-number';
 import { problem as sumOfSquares } from './sum-of-squares';
 import { problem as climbingStairs } from './climbing-stairs';
+// math — hard
+import { problem as fractionToRecurringDecimal } from './fraction-to-recurring-decimal';
+import { problem as integerToEnglishWords } from './integer-to-english-words';
 // math — medium
 import { problem as countPrimesSieve } from './count-primes-sieve';
 import { problem as powXN } from './pow-x-n';
@@ -193,6 +199,9 @@ export const problems: readonly Problem[] = [
   longestConsecutiveSequence,
   findAllAnagramsInString,
   maximumErasureValue,
+  // two-pointers — hard
+  trappingRainWater,
+  fourSum,
   // two-pointers — medium
   threeSumClosest,
   boatsToSavePeople,
@@ -248,6 +257,9 @@ export const problems: readonly Problem[] = [
   fibonacciNumber,
   sumOfSquares,
   climbingStairs,
+  // math — hard
+  fractionToRecurringDecimal,
+  integerToEnglishWords,
   // math — medium
   countPrimesSieve,
   powXN,

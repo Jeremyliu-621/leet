@@ -1252,4 +1252,98 @@ export const pythonSolutions: Record<string, string> = {
         return res
     return count_at_most(right) - count_at_most(left - 1)
 `,
+  'trapping-rain-water': `def trap(height):
+    if not height:
+        return 0
+    l, r = 0, len(height) - 1
+    left_max = right_max = 0
+    water = 0
+    while l < r:
+        if height[l] <= height[r]:
+            left_max = max(left_max, height[l])
+            water += left_max - height[l]
+            l += 1
+        else:
+            right_max = max(right_max, height[r])
+            water += right_max - height[r]
+            r -= 1
+    return water
+`,
+  'four-sum': `def fourSum(nums, target):
+    nums = sorted(nums)
+    n = len(nums)
+    result = []
+    for i in range(n - 3):
+        if i > 0 and nums[i] == nums[i - 1]:
+            continue
+        for j in range(i + 1, n - 2):
+            if j > i + 1 and nums[j] == nums[j - 1]:
+                continue
+            l, r = j + 1, n - 1
+            while l < r:
+                s = nums[i] + nums[j] + nums[l] + nums[r]
+                if s == target:
+                    result.append([nums[i], nums[j], nums[l], nums[r]])
+                    while l < r and nums[l] == nums[l + 1]:
+                        l += 1
+                    while l < r and nums[r] == nums[r - 1]:
+                        r -= 1
+                    l += 1
+                    r -= 1
+                elif s < target:
+                    l += 1
+                else:
+                    r -= 1
+    return result
+`,
+  'fraction-to-recurring-decimal': `def fractionToDecimal(numerator, denominator):
+    if numerator == 0:
+        return '0'
+    result = ''
+    if (numerator < 0) != (denominator < 0):
+        result += '-'
+    numerator, denominator = abs(numerator), abs(denominator)
+    result += str(numerator // denominator)
+    remainder = numerator % denominator
+    if remainder == 0:
+        return result
+    result += '.'
+    seen = {}
+    frac_chars = []
+    while remainder != 0:
+        if remainder in seen:
+            pos = seen[remainder]
+            frac_chars.insert(pos, '(')
+            frac_chars.append(')')
+            break
+        seen[remainder] = len(frac_chars)
+        remainder *= 10
+        frac_chars.append(str(remainder // denominator))
+        remainder = remainder % denominator
+    return result + ''.join(frac_chars)
+`,
+  'integer-to-english-words': `def numberToWords(num):
+    if num == 0:
+        return 'Zero'
+    ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
+            'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen',
+            'Seventeen', 'Eighteen', 'Nineteen']
+    tens_words = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety']
+    def helper(n):
+        if n == 0:
+            return ''
+        if n < 20:
+            return ones[n] + ' '
+        if n < 100:
+            return tens_words[n // 10] + ' ' + helper(n % 10)
+        return ones[n // 100] + ' Hundred ' + helper(n % 100)
+    scales = [(1_000_000_000, 'Billion'), (1_000_000, 'Million'), (1_000, 'Thousand'), (1, '')]
+    result = ''
+    remaining = num
+    for scale, label in scales:
+        if remaining >= scale:
+            result += helper(remaining // scale) + (label + ' ' if label else '')
+            remaining = remaining % scale
+    return result.strip()
+`,
 };

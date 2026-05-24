@@ -1669,6 +1669,120 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return countAtMost(right) - countAtMost(left - 1);
   },
 
+  // --- two-pointers — hard -------------------------------------------------
+  'trapping-rain-water': (...args: unknown[]) => {
+    const height = args[0] as number[];
+    if (height.length === 0) return 0;
+    let l = 0;
+    let r = height.length - 1;
+    let leftMax = 0;
+    let rightMax = 0;
+    let water = 0;
+    while (l < r) {
+      if ((height[l] as number) <= (height[r] as number)) {
+        leftMax = Math.max(leftMax, height[l] as number);
+        water += leftMax - (height[l] as number);
+        l++;
+      } else {
+        rightMax = Math.max(rightMax, height[r] as number);
+        water += rightMax - (height[r] as number);
+        r--;
+      }
+    }
+    return water;
+  },
+
+  'four-sum': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    const target = args[1] as number;
+    nums.sort((a, b) => a - b);
+    const n = nums.length;
+    const result: number[][] = [];
+    for (let i = 0; i < n - 3; i++) {
+      if (i > 0 && nums[i] === nums[i - 1]) continue;
+      for (let j = i + 1; j < n - 2; j++) {
+        if (j > i + 1 && nums[j] === nums[j - 1]) continue;
+        let l = j + 1;
+        let r = n - 1;
+        while (l < r) {
+          const sum = (nums[i] as number) + (nums[j] as number) + (nums[l] as number) + (nums[r] as number);
+          if (sum === target) {
+            result.push([nums[i] as number, nums[j] as number, nums[l] as number, nums[r] as number]);
+            while (l < r && nums[l] === nums[l + 1]) l++;
+            while (l < r && nums[r] === nums[r - 1]) r--;
+            l++;
+            r--;
+          } else if (sum < target) {
+            l++;
+          } else {
+            r--;
+          }
+        }
+      }
+    }
+    return result;
+  },
+
+  // --- math — hard ---------------------------------------------------------
+  'fraction-to-recurring-decimal': (...args: unknown[]) => {
+    let numerator = args[0] as number;
+    let denominator = args[1] as number;
+    if (numerator === 0) return '0';
+    let result = '';
+    if ((numerator < 0) !== (denominator < 0)) result += '-';
+    numerator = Math.abs(numerator);
+    denominator = Math.abs(denominator);
+    result += Math.floor(numerator / denominator).toString();
+    let remainder = numerator % denominator;
+    if (remainder === 0) return result;
+    result += '.';
+    const seen = new Map<number, number>();
+    const fracChars: string[] = [];
+    while (remainder !== 0) {
+      if (seen.has(remainder)) {
+        const pos = seen.get(remainder) as number;
+        fracChars.splice(pos, 0, '(');
+        fracChars.push(')');
+        break;
+      }
+      seen.set(remainder, fracChars.length);
+      remainder *= 10;
+      fracChars.push(Math.floor(remainder / denominator).toString());
+      remainder = remainder % denominator;
+    }
+    return result + fracChars.join('');
+  },
+
+  'integer-to-english-words': (...args: unknown[]) => {
+    const num = args[0] as number;
+    if (num === 0) return 'Zero';
+    const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
+      'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen',
+      'Eighteen', 'Nineteen'];
+    const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+    function helper(n: number): string {
+      if (n === 0) return '';
+      if (n < 20) return (ones[n] as string) + ' ';
+      if (n < 100) return (tens[Math.floor(n / 10)] as string) + ' ' + helper(n % 10);
+      return (ones[Math.floor(n / 100)] as string) + ' Hundred ' + helper(n % 100);
+    }
+    const scales: [number, string][] = [
+      [1_000_000_000, 'Billion'],
+      [1_000_000, 'Million'],
+      [1_000, 'Thousand'],
+      [1, ''],
+    ];
+    let result = '';
+    let remaining = num;
+    for (const [scale, label] of scales) {
+      if (remaining >= scale) {
+        result += helper(Math.floor(remaining / scale)) + (label ? label + ' ' : '');
+        remaining = remaining % scale;
+      }
+    }
+    return result.trim();
+  },
+
   'median-two-sorted-arrays': (...args: unknown[]) => {
     let nums1 = args[0] as number[];
     let nums2 = args[1] as number[];
