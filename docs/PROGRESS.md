@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 229 problems (12 tags); house-robber-iii, max-width-bt, min-height-trees + remote additions; 957 tests.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (957 unit tests across 23 files).
-**Next up:** More medium problems; update marketing site.
+**Current focus:** Bank at 232 problems (12 tags); merge-intervals, non-overlapping-intervals, task-scheduler added; 966 tests.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (966 unit tests across 23 files).
+**Next up:** More medium problems; string/DP problems.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -249,6 +249,7 @@ Still pending:
 - [x] redundant-connection (Union-Find/medium), is-graph-bipartite (BFS 2-color/medium), all-paths-source-target (DFS/medium); bank at 223
 - [x] house-robber-iii (tree DP/medium), maximum-width-binary-tree (BFS/medium), minimum-height-trees (graph/medium); bank at 226 (removed duplicate sum-root-to-leaf-numbers)
 - [x] hamming-weight (math/easy), 01-matrix (graph/medium), delete-node-in-linked-list (easy); 957 tests; bank at 229
+- [x] merge-intervals, non-overlapping-intervals (arrays/medium), task-scheduler (math/medium); 966 tests; bank at 232
 
 ---
 
