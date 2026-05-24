@@ -7,14 +7,11 @@
 ---
 
 **Last updated:** 2026-05-24
-**Current phase:** Phase 13 — Post-MVP polish · Pyodide rollout
-**Current focus:** **Pyodide rollout complete (M1–M7).** Every bank problem is Python-capable end-to-end;
-warm-on-mount hides the cold-boot; Options "About" surfaces first-boot ms + run count.
-**Build status:** 🟢 `npm run build` + `npm run test` green (297 unit tests across 21 files) +
-18/18 Playwright e2e against real Chromium (incl. `e2e/python-flow.spec.ts`).
-**Next up:** Vim keymap toggle (`@replit/codemirror-vim` Compartment + popup toggle), draggable
-splitter between problem and editor panels, hints for the remaining 13 problems (11/24 enriched),
-address logged a11y findings (text-faint contrast, one `aria-prohibited-attr`).
+**Current phase:** Phase 13 — Post-MVP polish
+**Current focus:** Problem bank at 33 problems; editor QoL (font size, keymap, draggable splitter,
+custom test drawer, verdict timing) complete; a11y fixes applied; hints enriched for 22/33 problems.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (327 unit tests across 21 files).
+**Next up:** Fullscreen editor toggle, add hints to 11 remaining original problems, grow bank to 50+.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -173,16 +170,17 @@ Shipped after v0.1.0:
 
 Still pending:
 - [ ] Grow the problem bank to 50+ then 100+ verified problems across more tags / difficulties
-- [ ] Add hints to the remaining 21 problems
-- [ ] **Python support via Pyodide** — research deliverable landing in `docs/PYODIDE_PLAN.md`; then execute the phased plan
-- [ ] Editor settings popover — font size, vim keymap toggle (`@replit/codemirror-vim`), tab-size
-- [ ] Draggable splitter between problem and editor panels (+ persist width in prefs)
-- [ ] Fullscreen-editor toggle (after splitter)
-- [ ] Custom test-case input drawer ("Testcase" tab)
+- [ ] Add hints to the remaining 11 original problems (22/33 enriched)
+- [x] **Python support via Pyodide** — M1–M7 complete; every bank problem Python-capable
+- [x] Editor settings — font size slider + vim keymap toggle in Options EditorSection
+- [x] Draggable splitter between problem and editor panels (+ persist width in prefs)
+- [ ] Fullscreen-editor toggle (after splitter ✅)
+- [x] Custom test-case input drawer (CustomTestPanel with per-param JSON inputs + aria-live output)
+- [x] Verdict timing — per-test durationMs + totalDurationMs accumulated across all tests
+- [x] a11y fixes — `aria-prohibited-attr` on editor fixed; mobile `!w-full` override for splitter
 - [ ] Submission history + per-submit stats (runtime, attempts)
 - [ ] Streak heatmap, time-saved, settings import/export
 - [ ] Marketing site iteration + Vercel deployment
-- [ ] Address logged a11y findings (text-faint contrast on microlabels, one `aria-prohibited-attr`)
 
 ---
 

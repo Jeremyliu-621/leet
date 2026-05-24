@@ -300,4 +300,44 @@ export const pythonSolutions: Record<string, string> = {
         stack.append(i)
     return answer
 `,
+  'missing-number': `def missingNumber(nums):
+    n = len(nums)
+    return n * (n + 1) // 2 - sum(nums)
+`,
+  'contains-duplicate': `def containsDuplicate(nums):
+    seen = set()
+    for n in nums:
+        if n in seen:
+            return True
+        seen.add(n)
+    return False
+`,
+  'longest-common-prefix': `def longestCommonPrefix(strs):
+    prefix = strs[0]
+    for s in strs:
+        while not s.startswith(prefix):
+            prefix = prefix[:-1]
+            if not prefix:
+                return ''
+    return prefix
+`,
+  'word-frequency': `def wordFrequency(text):
+    freq = {}
+    for w in text.split(' '):
+        freq[w] = freq.get(w, 0) + 1
+    return freq
+`,
+  'power-of-two': `def isPowerOfTwo(n):
+    if n <= 0:
+        return False
+    return (n & (n - 1)) == 0
+`,
+  'fibonacci-number': `def fibonacci(n):
+    if n <= 1:
+        return n
+    a, b = 0, 1
+    for _ in range(2, n + 1):
+        a, b = b, a + b
+    return b
+`,
 };

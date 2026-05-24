@@ -53,5 +53,6 @@ Return the resulting array. The input array is left unchanged.`,
   hints: [
     'Each output element is one addition away from the previous output element.',
     'Track a running variable `sum`. For each `i`, do `sum += nums[i]` and push `sum` into the result. One pass, no nested loops.',
+    '`let sum = 0; const out = []; for (const n of nums) { sum += n; out.push(sum); } return out;`',
   ],
 };

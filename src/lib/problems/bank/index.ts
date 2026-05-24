@@ -5,18 +5,22 @@ import { problem as runningSum } from './running-sum';
 import { problem as peakElementCount } from './peak-element-count';
 import { problem as rotateLeftOne } from './rotate-left-one';
 import { problem as maxSubarray } from './max-subarray';
+import { problem as missingNumber } from './missing-number';
+import { problem as containsDuplicate } from './contains-duplicate';
 
 // strings
 import { problem as vowelTally } from './vowel-tally';
 import { problem as reverseWordsOrder } from './reverse-words-order';
 import { problem as isPalindromeClean } from './is-palindrome-clean';
 import { problem as compressString } from './compress-string';
+import { problem as longestCommonPrefix } from './longest-common-prefix';
 
 // hash-map
 import { problem as firstUniqueChar } from './first-unique-char';
 import { problem as twoSumIndices } from './two-sum-indices';
 import { problem as mostFrequentValue } from './most-frequent-value';
 import { problem as anagramCheck } from './anagram-check';
+import { problem as wordFrequency } from './word-frequency';
 
 // two-pointers
 import { problem as reverseArrayInplace } from './reverse-array-inplace';
@@ -48,20 +52,26 @@ import { problem as digitSum } from './digit-sum';
 import { problem as isPrimeNumber } from './is-prime-number';
 import { problem as greatestCommonDivisor } from './greatest-common-divisor';
 import { problem as countDivisors } from './count-divisors';
+import { problem as powerOfTwo } from './power-of-two';
+import { problem as fibonacciNumber } from './fibonacci-number';
 
 export const problems: readonly Problem[] = [
   runningSum,
   peakElementCount,
   rotateLeftOne,
   maxSubarray,
+  missingNumber,
+  containsDuplicate,
   vowelTally,
   reverseWordsOrder,
   isPalindromeClean,
   compressString,
+  longestCommonPrefix,
   firstUniqueChar,
   twoSumIndices,
   mostFrequentValue,
   anagramCheck,
+  wordFrequency,
   reverseArrayInplace,
   sortedPairExists,
   mergeSortedLists,
@@ -83,4 +93,6 @@ export const problems: readonly Problem[] = [
   isPrimeNumber,
   greatestCommonDivisor,
   countDivisors,
+  powerOfTwo,
+  fibonacciNumber,
 ];

@@ -330,6 +330,68 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return a;
   },
 
+  // --- arrays (batch 4) ----------------------------------------------------
+  'missing-number': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const expected = (n * (n + 1)) / 2;
+    const actual = nums.reduce((a, b) => a + b, 0);
+    return expected - actual;
+  },
+
+  'contains-duplicate': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const seen = new Set<number>();
+    for (const n of nums) {
+      if (seen.has(n)) return true;
+      seen.add(n);
+    }
+    return false;
+  },
+
+  // --- strings (batch 4) ---------------------------------------------------
+  'longest-common-prefix': (...args: unknown[]) => {
+    const strs = args[0] as string[];
+    let prefix = strs[0] as string;
+    for (const s of strs) {
+      while (!s.startsWith(prefix)) {
+        prefix = prefix.slice(0, -1);
+        if (!prefix) return '';
+      }
+    }
+    return prefix;
+  },
+
+  // --- hash-map (batch 4) --------------------------------------------------
+  'word-frequency': (...args: unknown[]) => {
+    const text = args[0] as string;
+    const freq: Record<string, number> = {};
+    for (const w of text.split(' ')) {
+      freq[w] = (freq[w] ?? 0) + 1;
+    }
+    return freq;
+  },
+
+  // --- math (batch 4) ------------------------------------------------------
+  'power-of-two': (...args: unknown[]) => {
+    const n = args[0] as number;
+    if (n <= 0) return false;
+    return (n & (n - 1)) === 0;
+  },
+
+  'fibonacci-number': (...args: unknown[]) => {
+    const n = args[0] as number;
+    if (n <= 1) return n;
+    let a = 0;
+    let b = 1;
+    for (let i = 2; i <= n; i++) {
+      const tmp = a + b;
+      a = b;
+      b = tmp;
+    }
+    return b;
+  },
+
   // --- new problems --------------------------------------------------------
   'max-subarray': (...args: unknown[]) => {
     const nums = args[0] as number[];
