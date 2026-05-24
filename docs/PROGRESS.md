@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 292 problems (14 tags); lru-cache (hash-map/hard, doubly-linked-list+Map) added; 1147 tests; approaching 300.
+**Current focus:** Bank at 295 problems (14 tags); lru-cache, min-stack, count-and-say, beautiful-arrangement added; 1150+ tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More problems across all tags, 300-problem milestone.
+**Next up:** 300-problem milestone; more problems across all tags.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -260,12 +260,10 @@ Still pending:
 - [x] swap-nodes-in-pairs (linked-list/medium), partition-list (linked-list/medium), find-if-path-exists (graph/easy); remove duplicate binary-tree-zigzag-traversal + orphan reverse-nodes-k-group; bank cleaned up
 - [x] backtracking tag applied to palindrome-partitioning, combination-sum-ii, n-queens, word-search
 - [x] sudoku-solver (backtracking/hard, runner preamble) + combinations (backtracking/medium); bank at 272; 1090 tests
-- [x] word-search-ii (backtracking/hard, Trie-DFS) + letter-case-permutation (easy); single-number + house-robber-ii + wiggle-subsequence; subsets-ii; majority-element-ii + contains-duplicate-ii + summary-ranges; bank at 284
-- [x] longest-turbulent-subarray (sliding-window/medium), minimum-genetic-mutation (graph/medium), largest-divisible-subset (dp/medium); bank at 287
+- [x] word-search-ii (Trie-DFS/hard) + letter-case-permutation (easy); single-number + house-robber-ii + wiggle-subsequence; subsets-ii; majority-element-ii + contains-duplicate-ii + summary-ranges; longest-turbulent-subarray + minimum-genetic-mutation + largest-divisible-subset; bank at 287; 1132 tests
 - [x] combination-sum-iii (backtracking/medium) + restore-ip-addresses (backtracking/medium); bank at 289
-- [x] expression-add-operators (strings+backtracking/hard, operator insertion with multiplication precedence); bank at 290
-- [x] min-stack (stack/easy, class runner preamble); bank at 291; 1144 tests
-- [x] lru-cache (hash-map/hard, doubly-linked-list+Map, class runner preamble); bank at 292; 1147 tests
+- [x] expression-add-operators (strings+backtracking/hard): operator insertion with multiplication precedence tracking; min-stack (stack/easy); lru-cache (hash-map/hard, DLL+Map); bank at 292
+- [x] count-and-say (strings/medium) + beautiful-arrangement (arrays+backtracking/medium); bank at 295; 1150 tests
 
 ---
 

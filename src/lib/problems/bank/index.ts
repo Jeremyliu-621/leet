@@ -169,6 +169,7 @@ import { problem as isPrimeNumber } from './is-prime-number';
 import { problem as greatestCommonDivisor } from './greatest-common-divisor';
 import { problem as countDivisors } from './count-divisors';
 import { problem as powerOfTwo } from './power-of-two';
+import { problem as countAndSay } from './count-and-say';
 import { problem as fibonacciNumber } from './fibonacci-number';
 import { problem as sumOfSquares } from './sum-of-squares';
 import { problem as climbingStairs } from './climbing-stairs';
@@ -311,6 +312,7 @@ import { problem as sudokuSolver } from './sudoku-solver';
 import { problem as combinations } from './combinations';
 import { problem as wordSearchII } from './word-search-ii';
 import { problem as letterCasePermutation } from './letter-case-permutation';
+import { problem as beautifulArrangement } from './beautiful-arrangement';
 import { problem as restoreIpAddresses } from './restore-ip-addresses';
 import { problem as expressionAddOperators } from './expression-add-operators';
 
@@ -525,6 +527,7 @@ export const problems: readonly Problem[] = [
   greatestCommonDivisor,
   countDivisors,
   powerOfTwo,
+  countAndSay,
   fibonacciNumber,
   sumOfSquares,
   climbingStairs,
@@ -645,6 +648,7 @@ export const problems: readonly Problem[] = [
   sudokuSolver,
   // arrays + backtracking — medium
   combinations,
+  beautifulArrangement,
   // strings + backtracking — hard
   expressionAddOperators,
   // strings + backtracking — medium

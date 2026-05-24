@@ -3792,6 +3792,37 @@ def deserialize(data):
     return max(up, down)
 `,
 
+  'count-and-say': `def countAndSay(n):
+    s = '1'
+    for _ in range(n - 1):
+        next_s = ''
+        j = 0
+        while j < len(s):
+            count = 1
+            while j + count < len(s) and s[j + count] == s[j]:
+                count += 1
+            next_s += str(count) + s[j]
+            j += count
+        s = next_s
+    return s
+`,
+
+  'beautiful-arrangement': `def countArrangement(n):
+    visited = [False] * (n + 1)
+    count = [0]
+    def bt(pos):
+        if pos > n:
+            count[0] += 1
+            return
+        for k in range(1, n + 1):
+            if not visited[k] and (k % pos == 0 or pos % k == 0):
+                visited[k] = True
+                bt(pos + 1)
+                visited[k] = False
+    bt(1)
+    return count[0]
+`,
+
   'expression-add-operators': `def addOperators(num, target):
     result = []
     def bt(start, expr, val, last_mul):

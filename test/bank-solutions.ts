@@ -4557,6 +4557,40 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'count-and-say': (...args: unknown[]) => {
+    let s = '1';
+    for (let i = 1; i < (args[0] as number); i++) {
+      let next = '';
+      let j = 0;
+      while (j < s.length) {
+        let count = 1;
+        while (j + count < s.length && s[j + count] === s[j]) count++;
+        next += count + s[j]!;
+        j += count;
+      }
+      s = next;
+    }
+    return s;
+  },
+
+  'beautiful-arrangement': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const visited = new Array<boolean>(n + 1).fill(false);
+    let count = 0;
+    function bt(pos: number): void {
+      if (pos > n) { count++; return; }
+      for (let k = 1; k <= n; k++) {
+        if (!visited[k] && (k % pos === 0 || pos % k === 0)) {
+          visited[k] = true;
+          bt(pos + 1);
+          visited[k] = false;
+        }
+      }
+    }
+    bt(1);
+    return count;
+  },
+
   'expression-add-operators': (...args: unknown[]) => {
     const num = args[0] as string, target = args[1] as number;
     const result: string[] = [];
