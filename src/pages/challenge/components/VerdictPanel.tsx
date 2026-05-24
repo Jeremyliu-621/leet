@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import type { JudgeResult, TestVerdict } from '../../../lib/judge';
 
+const TRUNCATE_LEN = 200;
+
 /** Serialises a judge value for display — handles arrays, objects, primitives. */
 function displayValue(v: unknown): string {
   if (v === undefined) return 'undefined';
@@ -10,6 +12,38 @@ function displayValue(v: unknown): string {
   } catch {
     return String(v);
   }
+}
+
+/** Returns how many elements differ between two arrays, or null if not comparable. */
+function arrayDiffCount(expected: unknown, actual: unknown): number | null {
+  if (!Array.isArray(expected) || !Array.isArray(actual)) return null;
+  if (expected.length !== actual.length) return null;
+  let diffs = 0;
+  for (let i = 0; i < expected.length; i++) {
+    if (JSON.stringify(expected[i]) !== JSON.stringify(actual[i])) diffs++;
+  }
+  return diffs;
+}
+
+function TruncatedValue({ raw }: { raw: string }) {
+  const [expanded, setExpanded] = useState(false);
+  const needsTruncation = raw.length > TRUNCATE_LEN;
+  const displayed = needsTruncation && !expanded ? raw.slice(0, TRUNCATE_LEN) + '…' : raw;
+  return (
+    <span>
+      <code className="font-mono text-xs text-text break-all">{displayed}</code>
+      {needsTruncation && (
+        <button
+          type="button"
+          onClick={() => setExpanded((e) => !e)}
+          className="ml-1.5 font-mono text-[9px] uppercase tracking-wider text-muted hover:text-text transition-colors"
+          aria-label={expanded ? 'Show less' : 'Show full value'}
+        >
+          {expanded ? 'less' : `+${raw.length - TRUNCATE_LEN} chars`}
+        </button>
+      )}
+    </span>
+  );
 }
 
 function CopyButton({ text }: { text: string }) {
@@ -24,9 +58,9 @@ function CopyButton({ text }: { text: string }) {
     <button
       type="button"
       onClick={handleCopy}
-      className="ml-1 font-mono text-[9px] uppercase tracking-wider text-faint hover:text-muted transition-colors"
-      title="Copy input"
-      aria-label={copied ? 'Copied' : 'Copy input to clipboard'}
+      className="ml-1 font-mono text-[9px] uppercase tracking-wider text-muted hover:text-text transition-colors"
+      title="Copy to clipboard"
+      aria-label={copied ? 'Copied' : 'Copy to clipboard'}
     >
       {copied ? 'copied' : 'copy'}
     </button>
@@ -47,13 +81,13 @@ function SingleVerdict({ verdict, index }: SingleVerdictProps) {
         className="flex items-center gap-2 rounded-sm border border-border bg-surface-2 px-3 py-2"
         aria-label={`${label}: passed`}
       >
-        <span className="font-mono text-[10px] uppercase tracking-wider text-faint">{label}</span>
+        <span className="font-mono text-[10px] uppercase tracking-wider text-muted">{label}</span>
         <span className="font-mono text-xs font-semibold text-accent">pass</span>
         {verdict.input && (
-          <span className="font-mono text-[10px] text-faint">{verdict.input}</span>
+          <span className="font-mono text-[10px] text-muted truncate max-w-[300px]">{verdict.input}</span>
         )}
         {verdict.durationMs !== undefined && (
-          <span className="ml-auto font-mono text-[10px] text-faint tabular-nums">
+          <span className="ml-auto font-mono text-[10px] text-muted tabular-nums">
             {verdict.durationMs} ms
           </span>
         )}
@@ -62,42 +96,52 @@ function SingleVerdict({ verdict, index }: SingleVerdictProps) {
   }
 
   if (verdict.status === 'fail') {
+    const diffCount = arrayDiffCount(verdict.expected, verdict.actual);
+    const expectedStr = displayValue(verdict.expected);
+    const actualStr = displayValue(verdict.actual);
     return (
       <div
         className="rounded-card border border-border-strong bg-surface-2 p-3"
         aria-label={`${label}: failed`}
       >
         <div className="mb-2 flex items-center gap-2">
-          <span className="font-mono text-[10px] uppercase tracking-wider text-faint">{label}</span>
-          <span className="font-mono text-xs font-medium text-muted">wrong answer</span>
+          <span className="font-mono text-[10px] uppercase tracking-wider text-muted">{label}</span>
+          <span className="font-mono text-xs font-medium text-text">wrong answer</span>
+          {diffCount !== null && diffCount > 0 && (
+            <span className="font-mono text-[10px] text-muted">
+              {diffCount} of {(verdict.expected as unknown[]).length} differ
+            </span>
+          )}
         </div>
         <div className="space-y-1.5">
           {verdict.input && (
             <div className="flex flex-wrap gap-x-3 gap-y-0.5 items-baseline">
-              <span className="font-mono text-[10px] uppercase tracking-wider text-faint w-16">
+              <span className="font-mono text-[10px] uppercase tracking-wider text-muted w-16 shrink-0">
                 input
               </span>
-              <code className="font-mono text-xs text-text">{verdict.input}</code>
+              <code className="font-mono text-xs text-text break-all">{verdict.input}</code>
               <CopyButton text={verdict.input} />
             </div>
           )}
-          <div className="flex flex-wrap gap-x-3 gap-y-0.5">
-            <span className="font-mono text-[10px] uppercase tracking-wider text-faint w-16">
+          <div className="flex flex-wrap gap-x-3 gap-y-0.5 items-baseline">
+            <span className="font-mono text-[10px] uppercase tracking-wider text-muted w-16 shrink-0">
               expected
             </span>
-            <code className="font-mono text-xs text-text">{displayValue(verdict.expected)}</code>
+            <TruncatedValue raw={expectedStr} />
+            <CopyButton text={expectedStr} />
           </div>
-          <div className="flex flex-wrap gap-x-3 gap-y-0.5">
-            <span className="font-mono text-[10px] uppercase tracking-wider text-faint w-16">
+          <div className="flex flex-wrap gap-x-3 gap-y-0.5 items-baseline">
+            <span className="font-mono text-[10px] uppercase tracking-wider text-muted w-16 shrink-0">
               actual
             </span>
-            <code className="font-mono text-xs text-muted">{displayValue(verdict.actual)}</code>
+            <TruncatedValue raw={actualStr} />
+            <CopyButton text={actualStr} />
           </div>
         </div>
         {verdict.logs.length > 0 && (
           <div className="mt-2 border-t border-border pt-2">
             {verdict.logs.map((line, i) => (
-              <code key={i} className="block font-mono text-[11px] text-faint">
+              <code key={i} className="block font-mono text-[11px] text-muted">
                 {line}
               </code>
             ))}
@@ -114,22 +158,22 @@ function SingleVerdict({ verdict, index }: SingleVerdictProps) {
       aria-label={`${label}: error`}
     >
       <div className="mb-2 flex items-center gap-2">
-        <span className="font-mono text-[10px] uppercase tracking-wider text-faint">{label}</span>
-        <span className="font-mono text-xs font-medium text-muted">runtime error</span>
+        <span className="font-mono text-[10px] uppercase tracking-wider text-muted">{label}</span>
+        <span className="font-mono text-xs font-medium text-text">runtime error</span>
       </div>
       {verdict.input && (
-        <div className="mb-1.5 flex flex-wrap gap-x-3 gap-y-0.5">
-          <span className="font-mono text-[10px] uppercase tracking-wider text-faint w-16">
+        <div className="mb-1.5 flex flex-wrap gap-x-3 gap-y-0.5 items-baseline">
+          <span className="font-mono text-[10px] uppercase tracking-wider text-muted w-16 shrink-0">
             input
           </span>
-          <code className="font-mono text-xs text-text">{verdict.input}</code>
+          <code className="font-mono text-xs text-text break-all">{verdict.input}</code>
         </div>
       )}
-      <code className="block font-mono text-xs text-muted">{verdict.error}</code>
+      <code className="block font-mono text-xs text-text">{verdict.error}</code>
       {verdict.logs.length > 0 && (
         <div className="mt-2 border-t border-border pt-2">
           {verdict.logs.map((line, i) => (
-            <code key={i} className="block font-mono text-[11px] text-faint">
+            <code key={i} className="block font-mono text-[11px] text-muted">
               {line}
             </code>
           ))}
@@ -220,9 +264,9 @@ function RunSummaryBanner({ result }: { result: JudgeResult }) {
       <span className="font-mono text-xs font-semibold text-accent">
         {result.passed}/{result.verdicts.length} passed
       </span>
-      <span className="font-mono text-[10px] text-faint">visible tests</span>
+      <span className="font-mono text-[10px] text-muted">visible tests</span>
       {result.totalDurationMs !== undefined && (
-        <span className="ml-auto font-mono text-[10px] text-faint tabular-nums">
+        <span className="ml-auto font-mono text-[10px] text-muted tabular-nums">
           {result.totalDurationMs} ms total
         </span>
       )}
@@ -254,8 +298,8 @@ export function VerdictPanel({ result, mode }: VerdictPanelProps) {
         aria-live="polite"
         aria-label="Running tests"
       >
-        <span className="font-mono text-xs text-faint">running</span>
-        <span className="ml-1.5 animate-pulse font-mono text-xs text-faint" aria-hidden="true">
+        <span className="font-mono text-xs text-muted">running</span>
+        <span className="ml-1.5 animate-pulse font-mono text-xs text-muted" aria-hidden="true">
           · · ·
         </span>
       </div>
