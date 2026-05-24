@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Graph tag (flood-fill, number-of-islands, course-schedule) + tree tag (max-depth, symmetric, invert) added; bank at 179 problems.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (807 unit tests across 23 files).
-**Next up:** More tree problems (validate-bst, level-order-traversal medium); graph medium problems; popup preferred-language control.
+**Current focus:** Tree tag complete (6 problems); TypeScript support; popup language control; bank at 182 problems.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (816 unit tests across 23 files).
+**Next up:** Marketing site TS update; more tree/graph problems; UX polish per LEETCODE_PARITY.md.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -226,8 +226,12 @@ Still pending:
 - [x] **TypeScript language support** — sucrase strips type annotations before the JS worker runs; all 174 problems support TS via JS starter; CM6 uses `javascript({ typescript: true })`; Options → Editor adds default-language radio group; 8 new transpile tests
 - [x] Graph/BFS tag — add `graph` to ProblemTag + PROBLEM_TAGS; 3 problems: flood-fill (easy), number-of-islands (medium), course-schedule (medium); JS + Python solutions + tests
 - [x] Tree tag — add `tree` to ProblemTag + PROBLEM_TAGS; 3 easy problems: max-depth-binary-tree, symmetric-tree, invert-binary-tree; TreeNode preamble with BFS array format + Pyodide isinstance fix; 807 tests; bank at 179
-- [ ] More tree problems — validate-bst (medium), level-order-traversal (medium), binary-tree-paths (easy)
-- [ ] Popup: add preferred-language segmented control (mirrors keymap row)
+- [x] More tree problems — binary-tree-paths (easy), validate-bst (medium), level-order-traversal (medium); bank at 182 problems, 816 tests
+- [x] Popup: add preferred-language segmented control (mirrors keymap row)
+- [ ] Marketing site: update stats/copy to mention TypeScript (currently says "JavaScript + Python")
+- [ ] More tree problems: lowest-common-ancestor (medium), construct-binary-tree-from-preorder-inorder (medium)
+- [ ] More graph problems: clone-graph (medium), word-ladder (hard)
+- [ ] UX: run-button loading spinner / debounce; verdict panel scroll-to-first-failure
 
 ---
 
