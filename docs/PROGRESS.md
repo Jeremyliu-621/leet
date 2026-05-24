@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 196 problems (12 tags); clone-graph, word-ladder, network-delay-time, number-of-connected-components, count-good-nodes, binary-tree-right-side-view added.
+**Current focus:** Bank at 198 problems (12 tags); same-tree (easy) added; 858+ tests passing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green (858 unit tests across 23 files).
-**Next up:** construct-binary-tree-from-preorder-inorder, serialize-deserialize-binary-tree; marketing site stats bump to 196.
+**Next up:** construct-binary-tree-from-preorder-inorder, serialize-deserialize-binary-tree; marketing site stats bump.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -233,6 +233,7 @@ Still pending:
 - [x] UX: verdict panel scroll-to-first-failure (useEffect + scrollIntoView); animated loading dots (animate-pulse on "· · ·")
 - [x] More graph problems: clone-graph (medium), word-ladder (hard), network-delay-time (medium), number-of-connected-components (medium); bank at 196 problems, 858 tests
 - [x] More tree problems: count-good-nodes (medium), binary-tree-right-side-view (medium)
+- [x] same-tree (easy) + isinstance bool fix applied to all tree problem Python preambles; 858 tests; bank at 198
 - [ ] More tree problems: construct-binary-tree-from-preorder-inorder (medium), serialize-deserialize-binary-tree (hard)
 - [ ] Marketing site: update stats to 196 problems / 12 tags / 3 languages
 - [ ] Options/popup: show problem bank count next to each tag/difficulty pill (already in Options; verify accurate after 12 tags)
