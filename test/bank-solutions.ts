@@ -372,6 +372,47 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return a;
   },
 
+  'letter-combinations-phone': (...args: unknown[]) => {
+    const digits = args[0] as string;
+    if (!digits) return [];
+    const map: Record<string, string> = { '2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl', '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz' };
+    const result: string[] = [];
+    const bt = (idx: number, cur: string): void => {
+      if (idx === digits.length) { result.push(cur); return; }
+      for (const ch of map[digits[idx]!]!) bt(idx + 1, cur + ch);
+    };
+    bt(0, '');
+    return result;
+  },
+
+  'subsets': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const result: number[][] = [];
+    const bt = (start: number, cur: number[]): void => {
+      result.push([...cur]);
+      for (let i = start; i < nums.length; i++) { cur.push(nums[i]!); bt(i + 1, cur); cur.pop(); }
+    };
+    bt(0, []);
+    return result.sort((a, b) => { for (let i = 0; i < Math.max(a.length, b.length); i++) { const d = (a[i] ?? -Infinity) - (b[i] ?? -Infinity); if (d) return d; } return a.length - b.length; });
+  },
+
+  'combination-sum': (...args: unknown[]) => {
+    const candidates = [...(args[0] as number[])].sort((a, b) => a - b);
+    const target = args[1] as number;
+    const result: number[][] = [];
+    const bt = (start: number, rem: number, cur: number[]): void => {
+      if (rem === 0) { result.push([...cur]); return; }
+      for (let i = start; i < candidates.length; i++) {
+        if (candidates[i]! > rem) break;
+        cur.push(candidates[i]!);
+        bt(i, rem - candidates[i]!, cur);
+        cur.pop();
+      }
+    };
+    bt(0, target, []);
+    return result;
+  },
+
   'merge-intervals': (...args: unknown[]) => {
     const intervals = [...(args[0] as number[][])].sort((a, b) => a[0]! - b[0]!);
     const result: number[][] = [];

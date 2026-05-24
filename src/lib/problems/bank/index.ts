@@ -13,6 +13,8 @@ import { problem as plusOne } from './plus-one';
 // arrays — medium
 import { problem as mergeIntervals } from './merge-intervals';
 import { problem as nonOverlappingIntervals } from './non-overlapping-intervals';
+import { problem as subsets } from './subsets';
+import { problem as combinationSum } from './combination-sum';
 import { problem as rotateArray } from './rotate-array';
 import { problem as maxProductSubarray } from './max-product-subarray';
 import { problem as productExceptSelf } from './product-except-self';
@@ -62,6 +64,7 @@ import { problem as subarraySumEqualsK } from './subarray-sum-equals-k';
 import { problem as ransomNote } from './ransom-note';
 import { problem as isomorphicStrings } from './isomorphic-strings';
 // hash-map — medium
+import { problem as letterCombinationsPhone } from './letter-combinations-phone';
 import { problem as groupAnagrams } from './group-anagrams';
 import { problem as topKFrequentElements } from './top-k-frequent-elements';
 import { problem as longestConsecutiveSequence } from './longest-consecutive-sequence';
@@ -298,6 +301,8 @@ export const problems: readonly Problem[] = [
   // arrays — medium
   mergeIntervals,
   nonOverlappingIntervals,
+  subsets,
+  combinationSum,
   rotateArray,
   maxProductSubarray,
   productExceptSelf,
@@ -345,6 +350,7 @@ export const problems: readonly Problem[] = [
   ransomNote,
   isomorphicStrings,
   // hash-map — medium
+  letterCombinationsPhone,
   groupAnagrams,
   topKFrequentElements,
   longestConsecutiveSequence,

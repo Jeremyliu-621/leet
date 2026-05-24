@@ -307,6 +307,52 @@ export const pythonSolutions: Record<string, string> = {
         stack.append(i)
     return answer
 `,
+  'letter-combinations-phone': `def letterCombinations(digits):
+    if not digits:
+        return []
+    mapping = {'2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl',
+               '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'}
+    result = []
+    def bt(idx, cur):
+        if idx == len(digits):
+            result.append(cur)
+            return
+        for ch in mapping[digits[idx]]:
+            bt(idx + 1, cur + ch)
+    bt(0, '')
+    return result
+`,
+
+  'subsets': `def subsets(nums):
+    nums = sorted(nums)
+    result = []
+    def bt(start, cur):
+        result.append(list(cur))
+        for i in range(start, len(nums)):
+            cur.append(nums[i])
+            bt(i + 1, cur)
+            cur.pop()
+    bt(0, [])
+    return sorted(result)
+`,
+
+  'combination-sum': `def combinationSum(candidates, target):
+    candidates = sorted(candidates)
+    result = []
+    def bt(start, rem, cur):
+        if rem == 0:
+            result.append(list(cur))
+            return
+        for i in range(start, len(candidates)):
+            if candidates[i] > rem:
+                break
+            cur.append(candidates[i])
+            bt(i, rem - candidates[i], cur)
+            cur.pop()
+    bt(0, target, [])
+    return result
+`,
+
   'merge-intervals': `def merge(intervals):
     intervals = sorted(intervals, key=lambda x: x[0])
     result = []
