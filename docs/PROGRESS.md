@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** TypeScript language support added (sucrase); bank at 174 problems; marketing site at /site/; language preference in Options EditorSection.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (788 unit tests across 23 files).
-**Next up:** Graph/BFS tag (3+ problems); tree tag; more UX polish.
+**Current focus:** Graph tag (flood-fill, number-of-islands, course-schedule) + tree tag (max-depth, symmetric, invert) added; bank at 179 problems.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (807 unit tests across 23 files).
+**Next up:** More tree problems (validate-bst, level-order-traversal medium); graph medium problems; popup preferred-language control.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -224,8 +224,9 @@ Still pending:
 - [x] Add linked-list medium/hard — reorder-list, add-two-numbers, odd-even-linked-list, intersection-two-linked-lists, merge-k-sorted-lists; 780 tests; bank at 173
 - [x] Marketing site iteration + Vercel deployment — static HTML landing page at /site/index.html with vercel.json; pure grayscale design, 12-point comparison, problem bank stats, commit+features CTAs
 - [x] **TypeScript language support** — sucrase strips type annotations before the JS worker runs; all 174 problems support TS via JS starter; CM6 uses `javascript({ typescript: true })`; Options → Editor adds default-language radio group; 8 new transpile tests
-- [ ] Graph/BFS tag — add `graph` to ProblemTag + PROBLEM_TAGS; 3 representative problems (flood-fill easy, number-of-islands medium, course-schedule medium)
-- [ ] Tree tag — binary tree problems with TreeNode preamble (similar pattern to ListNode linked-list preamble)
+- [x] Graph/BFS tag — add `graph` to ProblemTag + PROBLEM_TAGS; 3 problems: flood-fill (easy), number-of-islands (medium), course-schedule (medium); JS + Python solutions + tests
+- [x] Tree tag — add `tree` to ProblemTag + PROBLEM_TAGS; 3 easy problems: max-depth-binary-tree, symmetric-tree, invert-binary-tree; TreeNode preamble with BFS array format + Pyodide isinstance fix; 807 tests; bank at 179
+- [ ] More tree problems — validate-bst (medium), level-order-traversal (medium), binary-tree-paths (easy)
 - [ ] Popup: add preferred-language segmented control (mirrors keymap row)
 
 ---
