@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 325 problems (14 tags); 1246 tests green.
+**Current focus:** Bank at 334 problems (14 tags / heap added); 1273 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing bank toward 350; UI/UX polish.
+**Next up:** Continue growing bank toward 350; more heap problems; UI/UX polish.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -269,6 +269,8 @@ Still pending:
 - [x] **300-problem milestone** — missing-ranges (arrays/easy) + excel-sheet-column-title (math/easy) + longest-palindrome-build (strings/easy); bank at 301; 1174 tests
 - [x] reverse-linked-list-ii (linked-list/medium) + rotate-list (linked-list/medium) + number-of-1-bits (math/easy) + single-number-ii (math/medium); bank at 309; 1198 tests
 - [x] simplify-path (stack/medium) + add-binary (math+strings/easy) + search-2d-matrix-ii (binary-search+arrays/medium) + remove-linked-list-elements (linked-list/easy); bank at 325; 1246 tests
+- [x] detect-capital (strings/easy) + repeated-substring-pattern (strings/easy) + find-pivot-index (arrays/easy) + valid-anagram (hash-map/easy) + path-crossing (hash-map/easy); bank at 330; 1273 tests
+- [x] **heap tag** added as 14th ProblemTag; 5 existing problems re-tagged (kth-largest-element, k-closest-points, merge-k-sorted-lists, top-k-frequent-elements, nth-ugly-number); 4 new heap problems: last-stone-weight (easy), meeting-rooms-ii (medium), kth-largest-in-stream (medium), median-from-data-stream (hard); find-k-pairs-smallest-sums retag → heap+binary-search; bank at 334; 1273 tests
 
 ---
 
