@@ -26,11 +26,25 @@ pre-stable).
 - **Editor font-size preference** (`S` / `M` / `L` / `XL` = 11 / 13 / 15 /
   17 px) — persisted, sync'd across devices, applied via a CSS variable so
   every CodeMirror instance picks it up without rebuild.
-- **Python plumbing (M1 of the Pyodide rollout)** — `SupportedLanguage` is
-  now `'javascript' | 'python'`; `Problem.starterCode` requires JS and
-  allows Python; `RunRequest.language` is optional; `UserPreferences` gains
-  `preferredLanguage`. **No behaviour change** — the Python worker and
-  bundled Pyodide runtime land in M2–M3 (see `docs/PYODIDE_PLAN.md`).
+- **Pyodide rollout — M1 through M4 shipped** (see `docs/PYODIDE_PLAN.md`):
+  - **M1** — `SupportedLanguage` widened to `'javascript' | 'python'`;
+    `Problem.starterCode` requires JS, allows Python; `RunRequest.language`
+    optional; `UserPreferences.preferredLanguage` added.
+  - **M2** — Vendored `pyodide-core 0.29.4` (11.7 MB) into `public/pyodide/`;
+    `pyodide/*` is web-accessible; sandbox CSP gains `wasm-unsafe-eval`.
+  - **M3** — `src/runner/python-worker.js`: a long-lived Blob worker that
+    `importScripts`-loads Pyodide once from the bundled files and mirrors the
+    existing `RunRequest`/`RunResponse` contract. Sandbox host dispatches
+    by `request.language`; the warm Python worker is terminated only on
+    timeout (next request re-pays the ~1–2 s Pyodide boot). Fresh per-run
+    Python globals so submissions can't cross-contaminate. **One real bug
+    caught by e2e:** sandboxed pages can't access `chrome.runtime` — the
+    Pyodide base URL now derives from the sandbox's own `window.location`.
+  - **M4** — `@codemirror/lang-python` + `Compartment`-driven language swap
+    in the editor; a segmented **JS | Py** selector renders only when a
+    problem ships starter code for more than one language; switching
+    persists `UserPreferences.preferredLanguage`. **No problem ships Python
+    starter yet** — M5 lights up the first one.
 - 8 more bank problems (one per tag) enriched with markdown formatting and
   progressive hints — 11/24 problems now have hints, 24 new hints added.
 - **Light / dark / system theme** via CSS variables and a `data-theme`

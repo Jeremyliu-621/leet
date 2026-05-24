@@ -11,18 +11,19 @@
 **Current focus:** Editor QoL, theme system, problem-content quality, first-run UX, Pyodide M1 done.
 **Build status:** 🟢 `npm run build` + `npm run test` green (264 unit tests across 19 files) +
 17/17 Playwright e2e against real Chromium.
-**Next up:** **Pyodide M3** — `src/runner/python-worker.js`: a long-lived module worker that
-boots Pyodide once from the vendored files and handles `RunRequest`/`RunResponse` with the same
-contract as the JS worker. Update the sandbox host to dispatch by `request.language`. See
-`docs/PYODIDE_PLAN.md` §8 M3 (~250 LOC new + ~40 edited). Also pending: vim keymap toggle,
-draggable splitter, hints on the remaining 13 problems.
+**Next up:** **Pyodide M5** — author the Python starter + reference solution for
+`two-sum-indices`, install `pyodide` as a Node dev-dep, write `test/problem-bank-python.test.ts`
+that boots Pyodide-in-Node and validates the Python reference against the same shared test cases
+as the JS bank. End-to-end: select Python in the editor selector → solve → unlock. See
+`docs/PYODIDE_PLAN.md` §8 M5. Also pending: vim keymap, draggable splitter, hints for the
+remaining 13 problems.
 
 **Pyodide rollout status:**
-- ✅ M1 — Type plumbing (`SupportedLanguage`, `Problem.starterCode`, `RunRequest.language`, `UserPreferences.preferredLanguage`).
-- ✅ M2 — Vendored `pyodide-core 0.29.4` (11.7 MB) into `public/pyodide/`; web-accessible-resources entry; `wasm-unsafe-eval` in sandbox CSP.
-- ⬜ M3 — Python worker + sandbox dispatch.
-- ⬜ M4 — `@codemirror/lang-python` + JS|Py selector in `EditorPanel`.
-- ⬜ M5 — First Python problem (`two-sum-indices`) + Python test suite.
+- ✅ M1 — Type plumbing.
+- ✅ M2 — Vendored `pyodide-core 0.29.4` + WAR + CSP.
+- ✅ M3 — Python worker + sandbox dispatch. Sandbox-`chrome.runtime` regression caught by e2e + fixed.
+- ✅ M4 — `@codemirror/lang-python` + Compartment-driven JS|Py selector.
+- ⬜ M5 — First Python problem (`two-sum-indices`) + Pyodide-in-Node test suite.
 - ⬜ M6 — Backfill Python for the rest of the bank.
 - ⬜ M7 — Polish (warmup, observability).
 
