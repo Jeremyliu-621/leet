@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 309 problems (14 tags); richest-customer-wealth + find-the-difference + maximum-units-on-truck added; 1198 tests.
+**Current focus:** Bank at 313 problems (13 tags); 300-milestone passed; 1200+ tests approaching.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing bank; add more problems across all tags.
+**Next up:** Continue growing bank; 350-problem milestone.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -265,6 +265,7 @@ Still pending:
 - [x] expression-add-operators (strings+backtracking/hard): operator insertion with multiplication precedence tracking; min-stack (stack/easy); lru-cache (hash-map/hard, DLL+Map); bank at 292
 - [x] count-and-say (strings/medium) + beautiful-arrangement (arrays+backtracking/medium); bank at 295; 1150 tests
 - [x] power-of-three (math/easy) + reverse-bits (math/easy) + game-of-life (arrays/medium); bank at 298; 1162 tests
+- [x] 6 new problems: accounts-merge (graph/medium), next-greater-element-ii (stack/medium), minimum-size-subarray-sum (sliding-window/medium), decode-ways-ii (dp/hard), queue-reconstruction-by-height (arrays/medium), find-k-pairs-smallest-sums (binary-search/medium); bank at 307; 1171+ tests
 
 ---
 

@@ -194,6 +194,20 @@ export const pythonSolutions: Record<string, string> = {
             stack.append(ch)
     return ''.join(stack)
 `,
+  'next-greater-element-ii': `def nextGreaterElements(nums):
+    n = len(nums)
+    res = [-1] * n
+    stack = []
+    for i in range(2 * n):
+        val = nums[i % n]
+        while stack and nums[stack[-1]] < val:
+            idx = stack.pop()
+            res[idx] = val
+        if i < n:
+            stack.append(i)
+    return res
+`,
+
   'hamming-weight': `def hammingWeight(n):
     count = 0
     while n:
@@ -570,6 +584,19 @@ export const pythonSolutions: Record<string, string> = {
             left += 1
     return 0 if best == float('inf') else best
 `,
+  'minimum-size-subarray-sum': `def minSubArrayLen(target, nums):
+    left = 0
+    total = 0
+    best = float('inf')
+    for right in range(len(nums)):
+        total += nums[right]
+        while total >= target:
+            best = min(best, right - left + 1)
+            total -= nums[left]
+            left += 1
+    return 0 if best == float('inf') else best
+`,
+
   'evaluate-rpn': `def evalRPN(tokens):
     stack = []
     for t in tokens:
@@ -955,6 +982,21 @@ export const pythonSolutions: Record<string, string> = {
   // ---------------------------------------------------------------------------
   // Medium-difficulty problems — batch 3 (binary-search + stack + math)
   // ---------------------------------------------------------------------------,
+
+  'find-k-pairs-smallest-sums': `def findKPairsRunner(nums1, nums2, k):
+    import heapq
+    result = []
+    if not nums1 or not nums2:
+        return result
+    heap = [(nums1[i] + nums2[0], i, 0) for i in range(min(len(nums1), k))]
+    heapq.heapify(heap)
+    while heap and len(result) < k:
+        _, i, j = heapq.heappop(heap)
+        result.append([nums1[i], nums2[j]])
+        if j + 1 < len(nums2):
+            heapq.heappush(heap, (nums1[i] + nums2[j+1], i, j+1))
+    return sorted(result, key=lambda p: (p[0], p[1]))
+`,
 
   'search-rotated-sorted': `def searchRotated(nums, target):
     left, right = 0, len(nums) - 1
@@ -1870,6 +1912,41 @@ export const pythonSolutions: Record<string, string> = {
     return best * best
 `,
 
+  'queue-reconstruction-by-height': `def reconstructQueue(people):
+    people = [list(p) for p in people]
+    people.sort(key=lambda x: (-x[0], x[1]))
+    result = []
+    for p in people:
+        result.insert(p[1], p)
+    return result
+`,
+
+  'decode-ways-ii': `def numDecodings(s):
+    MOD = 10**9 + 7
+    prev2 = 1
+    prev1 = 9 if s[0] == '*' else (0 if s[0] == '0' else 1)
+    for i in range(1, len(s)):
+        cur, pre = s[i], s[i-1]
+        single = 9 if cur == '*' else (0 if cur == '0' else 1)
+        two = 0
+        if pre == '*':
+            if cur == '*':
+                two = 15
+            elif int(cur) <= 6:
+                two = 2
+            else:
+                two = 1
+        elif pre == '1':
+            two = 9 if cur == '*' else 1
+        elif pre == '2':
+            if cur == '*':
+                two = 6
+            elif int(cur) <= 6:
+                two = 1
+        prev2, prev1 = prev1, (single * prev1 + two * prev2) % MOD
+    return prev1
+`,
+
   'longest-palindromic-subsequence': `def longestPalindromeSubseq(s: str) -> int:
     n = len(s)
     dp = [[0] * n for _ in range(n)]
@@ -2510,6 +2587,31 @@ export const pythonSolutions: Record<string, string> = {
         slow = nums[slow]
         fast = nums[fast]
     return slow
+`,
+
+  'accounts-merge': `def accountsMerge(accounts):
+    parent = {}
+    def find(x):
+        parent.setdefault(x, x)
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    def union(a, b):
+        parent[find(a)] = find(b)
+    email_name = {}
+    for acc in accounts:
+        name = acc[0]
+        for email in acc[1:]:
+            email_name[email] = name
+            union(acc[1], email)
+    from collections import defaultdict
+    groups = defaultdict(list)
+    for email in email_name:
+        groups[find(email)].append(email)
+    result = []
+    for root, emails in groups.items():
+        result.append([email_name[root]] + sorted(emails))
+    return sorted([[a[0]] + sorted(a[1:]) for a in result], key=lambda a: (a[0], a[1] if len(a) > 1 else ''))
 `,
 
   'graph-valid-tree': `def validTree(n, edges):

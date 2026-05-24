@@ -333,6 +333,22 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return out;
   },
 
+  'next-greater-element-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const res = new Array<number>(n).fill(-1);
+    const stack: number[] = [];
+    for (let i = 0; i < 2 * n; i++) {
+      const val = nums[i % n]!;
+      while (stack.length > 0 && nums[stack[stack.length - 1]!]! < val) {
+        const idx = stack.pop()!;
+        res[idx] = val;
+      }
+      if (i < n) stack.push(i);
+    }
+    return res;
+  },
+
   // --- math ----------------------------------------------------------------
   'hamming-weight': (...args: unknown[]) => {
     let n = args[0] as number;
@@ -702,6 +718,23 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       while (sum >= target) {
         best = Math.min(best, right - left + 1);
         sum -= nums[left] as number;
+        left++;
+      }
+    }
+    return best === Infinity ? 0 : best;
+  },
+
+  'minimum-size-subarray-sum': (...args: unknown[]) => {
+    const target = args[0] as number;
+    const nums = args[1] as number[];
+    let left = 0;
+    let sum = 0;
+    let best = Infinity;
+    for (let right = 0; right < nums.length; right++) {
+      sum += nums[right]!;
+      while (sum >= target) {
+        best = Math.min(best, right - left + 1);
+        sum -= nums[left]!;
         left++;
       }
     }
@@ -1342,6 +1375,51 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
 
 
   // --- binary-search --------------------------------------------------------
+
+  'find-k-pairs-smallest-sums': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const k = args[2] as number;
+    if (!nums1.length || !nums2.length) return [];
+    const heap: [number, number, number][] = [];
+    const push = (sum: number, i: number, j: number) => {
+      let idx = heap.length;
+      heap.push([sum, i, j]);
+      while (idx > 0) {
+        const parent = (idx - 1) >> 1;
+        if (heap[parent]![0] > heap[idx]![0]) {
+          [heap[parent], heap[idx]] = [heap[idx]!, heap[parent]!];
+          idx = parent;
+        } else break;
+      }
+    };
+    const pop = () => {
+      const top = heap[0];
+      const last = heap.pop()!;
+      if (heap.length > 0) {
+        heap[0] = last;
+        let idx = 0;
+        while (true) {
+          let small = idx;
+          const l = 2 * idx + 1, r = 2 * idx + 2;
+          if (l < heap.length && heap[l]![0] < heap[small]![0]) small = l;
+          if (r < heap.length && heap[r]![0] < heap[small]![0]) small = r;
+          if (small === idx) break;
+          [heap[small], heap[idx]] = [heap[idx]!, heap[small]!];
+          idx = small;
+        }
+      }
+      return top;
+    };
+    for (let i = 0; i < Math.min(nums1.length, k); i++) push(nums1[i]! + nums2[0]!, i, 0);
+    const result: number[][] = [];
+    while (result.length < k && heap.length > 0) {
+      const [, i, j] = pop()!;
+      result.push([nums1[i]!, nums2[j]!]);
+      if (j + 1 < nums2.length) push(nums1[i]! + nums2[j + 1]!, i, j + 1);
+    }
+    return result.sort((a, b) => (a[0]! - b[0]!) || (a[1]! - b[1]!));
+  },
 
   'search-rotated-sorted': (...args: unknown[]) => {
     const nums = args[0] as number[];
@@ -2472,7 +2550,43 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best * best;
   },
 
+  'queue-reconstruction-by-height': (...args: unknown[]) => {
+    const people = (args[0] as number[][]).map(p => [...p]);
+    people.sort((a, b) => b[0]! !== a[0]! ? b[0]! - a[0]! : a[1]! - b[1]!);
+    const result: number[][] = [];
+    for (const p of people) result.splice(p[1]!, 0, p);
+    return result;
+  },
+
   // --- dynamic-programming — hard --------------------------------------------
+  'decode-ways-ii': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const MOD = 1_000_000_007n;
+    let prev2 = 1n;
+    let prev1 = s[0] === '*' ? 9n : s[0] === '0' ? 0n : 1n;
+    for (let i = 1; i < s.length; i++) {
+      const cur = s[i]!;
+      const pre = s[i - 1]!;
+      let single = cur === '*' ? 9n : cur === '0' ? 0n : 1n;
+      let two = 0n;
+      if (pre === '*') {
+        if (cur === '*') two = 15n;
+        else if (Number(cur) <= 6) two = 2n;
+        else two = 1n;
+      } else if (pre === '1') {
+        if (cur === '*') two = 9n;
+        else two = 1n;
+      } else if (pre === '2') {
+        if (cur === '*') two = 6n;
+        else if (Number(cur) <= 6) two = 1n;
+      }
+      const next = (single * prev1 + two * prev2) % MOD;
+      prev2 = prev1;
+      prev1 = next;
+    }
+    return Number(prev1);
+  },
+
   'longest-palindromic-subsequence': (...args: unknown[]) => {
     const s = args[0] as string;
     const n = s.length;
@@ -3120,6 +3234,41 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     slow = nums[0]!;
     while (slow !== fast) { slow = nums[slow]!; fast = nums[fast]!; }
     return slow;
+  },
+
+  'accounts-merge': (...args: unknown[]) => {
+    const accounts = args[0] as string[][];
+    const parent = new Map<string, string>();
+    const find = (x: string): string => {
+      if (!parent.has(x)) parent.set(x, x);
+      if (parent.get(x) !== x) parent.set(x, find(parent.get(x)!));
+      return parent.get(x)!;
+    };
+    const union = (a: string, b: string) => parent.set(find(a), find(b));
+    const emailToName = new Map<string, string>();
+    for (const acc of accounts) {
+      const name = acc[0]!;
+      for (let i = 1; i < acc.length; i++) {
+        emailToName.set(acc[i]!, name);
+        union(acc[1]!, acc[i]!);
+      }
+    }
+    const groups = new Map<string, string[]>();
+    for (const [email] of emailToName) {
+      const root = find(email);
+      if (!groups.has(root)) groups.set(root, []);
+      groups.get(root)!.push(email);
+    }
+    const result: string[][] = [];
+    for (const [root, emails] of groups) {
+      emails.sort();
+      result.push([emailToName.get(root)!, ...emails]);
+    }
+    return result.map(a => [a[0], ...a.slice(1).sort()]).sort((a, b) => {
+      if (a[0] !== b[0]) return (a[0]! < b[0]! ? -1 : 1);
+      if (a[1] !== b[1]) return (a[1]! < b[1]! ? -1 : 1);
+      return 0;
+    });
   },
 
   'graph-valid-tree': (...args: unknown[]) => {

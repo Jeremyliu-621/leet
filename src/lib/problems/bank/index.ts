@@ -46,6 +46,7 @@ import { problem as maximalSquare } from './maximal-square';
 import { problem as validSudoku } from './valid-sudoku';
 import { problem as gameOfLife } from './game-of-life';
 import { problem as missingRanges } from './missing-ranges';
+import { problem as queueReconstructionByHeight } from './queue-reconstruction-by-height';
 
 // strings — easy
 import { problem as reverseOnlyLetters } from './reverse-only-letters';
@@ -118,6 +119,7 @@ import { problem as maxConsecutiveFlips } from './max-consecutive-flips';
 import { problem as countSubarraysBoundedMax } from './count-subarrays-bounded-max';
 
 // sliding-window — medium
+import { problem as minimumSizeSubarraySum } from './minimum-size-subarray-sum';
 import { problem as atMostKDistinct } from './at-most-k-distinct';
 import { problem as permutationInString } from './permutation-in-string';
 import { problem as subarrayProductLessThanK } from './subarray-product-less-than-k';
@@ -140,6 +142,7 @@ import { problem as binarySearchRange } from './binary-search-range';
 import { problem as isPerfectSquare } from './is-perfect-square';
 import { problem as searchInsertPosition } from './search-insert-position';
 // binary-search — medium
+import { problem as findKPairsSmallestSums } from './find-k-pairs-smallest-sums';
 import { problem as searchRotatedSorted } from './search-rotated-sorted';
 import { problem as findMinimumRotated } from './find-minimum-rotated';
 import { problem as singleElementSorted } from './single-element-sorted';
@@ -161,6 +164,7 @@ import { problem as dailyTemperatures } from './daily-temperatures';
 import { problem as evaluateRpn } from './evaluate-rpn';
 import { problem as minStack } from './min-stack';
 // stack — medium
+import { problem as nextGreaterElementII } from './next-greater-element-ii';
 import { problem as asteroidCollision } from './asteroid-collision';
 import { problem as scoreOfParentheses } from './score-of-parentheses';
 import { problem as validParenthesisString } from './valid-parenthesis-string';
@@ -265,6 +269,7 @@ import { problem as reverseVowels } from './reverse-vowels';
 import { problem as fizzBuzz } from './fizz-buzz';
 import { problem as luckyNumbersInMatrix } from './lucky-numbers-in-matrix';
 // dynamic-programming — hard
+import { problem as decodeWaysII } from './decode-ways-ii';
 import { problem as longestPalindromicSubsequence } from './longest-palindromic-subsequence';
 import { problem as palindromePartitioningMinCuts } from './palindrome-partitioning-min-cuts';
 import { problem as maximumProductCutting } from './maximum-product-cutting';
@@ -298,6 +303,7 @@ import { problem as findTheTownJudge } from './find-the-town-judge';
 import { problem as numberOfProvinces } from './number-of-provinces';
 import { problem as findIfPathExists } from './find-if-path-exists';
 // graph — medium (additional)
+import { problem as accountsMerge } from './accounts-merge';
 import { problem as wordSearch } from './word-search';
 import { problem as surroundedRegions } from './surrounded-regions';
 import { problem as graphValidTree } from './graph-valid-tree';
@@ -419,6 +425,7 @@ export const problems: readonly Problem[] = [
   validSudoku,
   gameOfLife,
   missingRanges,
+  queueReconstructionByHeight,
   // strings — easy
   reverseOnlyLetters,
   backspaceStringCompare,
@@ -493,6 +500,7 @@ export const problems: readonly Problem[] = [
   maxConsecutiveOnesIII,
   maximumVowels,
   longestSubarrayAfterDeleting,
+  minimumSizeSubarraySum,
   atMostKDistinct,
   permutationInString,
   subarrayProductLessThanK,
@@ -514,6 +522,7 @@ export const problems: readonly Problem[] = [
   isPerfectSquare,
   searchInsertPosition,
   // binary-search — medium
+  findKPairsSmallestSums,
   searchRotatedSorted,
   findMinimumRotated,
   singleElementSorted,
@@ -534,6 +543,7 @@ export const problems: readonly Problem[] = [
   evaluateRpn,
   minStack,
   // stack — medium
+  nextGreaterElementII,
   asteroidCollision,
   scoreOfParentheses,
   validParenthesisString,
@@ -615,6 +625,7 @@ export const problems: readonly Problem[] = [
   longestArithmeticSubsequence,
   minimumCostTickets,
   // dynamic-programming — hard
+  decodeWaysII,
   longestPalindromicSubsequence,
   palindromePartitioningMinCuts,
   maximumProductCutting,
@@ -646,6 +657,7 @@ export const problems: readonly Problem[] = [
   numberOfProvinces,
   findIfPathExists,
   // graph — medium
+  accountsMerge,
   wordSearch,
   surroundedRegions,
   graphValidTree,
