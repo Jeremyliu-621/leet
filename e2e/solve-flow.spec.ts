@@ -133,6 +133,13 @@ test.describe('LeetLock solve-and-unlock @e2e', () => {
       ).not.toBeNull();
       expect(token?.problemId).toBe(problem.id);
       expect(token?.expiresAt).toBeGreaterThan(Date.now());
+
+      // Regression guard for the SW-reconcile race: the challenge page does
+      // `window.location.href = target` immediately after grant-unlock; the
+      // DNR rule MUST be gone by then, otherwise the navigation gets
+      // intercepted and the tab bounces back into a fresh challenge.
+      await page.waitForURL(/^https?:\/\/(www\.)?example\.com/, { timeout: 10_000 });
+      expect(page.url()).not.toContain('chrome-extension://');
     } finally {
       await context.close();
     }
