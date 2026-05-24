@@ -36,6 +36,8 @@ import { problem as sortArrayByParity } from './sort-array-by-parity';
 import { problem as leftAndRightSumDifferences } from './left-and-right-sum-differences';
 import { problem as minimumValuePositiveStepSum } from './minimum-value-positive-step-sum';
 import { problem as countNumberOfPairs } from './count-number-of-pairs';
+import { problem as validMountainArray } from './valid-mountain-array';
+import { problem as canPlaceFlowers } from './can-place-flowers';
 // arrays — medium
 import { problem as rangeSumQuery2D } from './range-sum-query-2d';
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
@@ -119,6 +121,7 @@ import { problem as validAnagram } from './valid-anagram';
 import { problem as pathCrossing } from './path-crossing';
 import { problem as firstUniqueChar } from './first-unique-char';
 import { problem as findWordsFromChars } from './word-pattern-ii';
+import { problem as jewelsAndStones } from './jewels-and-stones';
 // hash-map — medium (additional)
 import { problem as longestWordInDictionary } from './longest-word-in-dictionary';
 import { problem as twoSumIndices } from './two-sum-indices';
@@ -180,6 +183,7 @@ import { problem as numberOfSubstrings } from './number-of-substrings';
 import { problem as longestTurbulentSubarray } from './longest-turbulent-subarray';
 // sliding-window — easy
 import { problem as maxWindowSum } from './max-window-sum';
+import { problem as maximumAverageSubarray } from './maximum-average-subarray';
 import { problem as longestEqualRun } from './longest-equal-run';
 import { problem as minWindowAverage } from './min-window-average';
 import { problem as longestUniqueWindow } from './longest-unique-window';
@@ -245,6 +249,7 @@ import { problem as singleNumberII } from './single-number-ii';
 import { problem as powerOfThree } from './power-of-three';
 import { problem as isPowerOfFour } from './is-power-of-four';
 import { problem as toHex } from './to-hex';
+import { problem as numberComplement } from './number-complement';
 import { problem as reverseBits } from './reverse-bits';
 import { problem as countAndSay } from './count-and-say';
 import { problem as fibonacciNumber } from './fibonacci-number';
@@ -488,6 +493,8 @@ export const problems: readonly Problem[] = [
   leftAndRightSumDifferences,
   minimumValuePositiveStepSum,
   countNumberOfPairs,
+  validMountainArray,
+  canPlaceFlowers,
   singleNumber,
   // arrays — medium
   rangeSumQuery2D,
@@ -578,6 +585,7 @@ export const problems: readonly Problem[] = [
   pathCrossing,
   firstUniqueChar,
   findWordsFromChars,
+  jewelsAndStones,
   twoSumIndices,
   mostFrequentValue,
   anagramCheck,
@@ -640,6 +648,7 @@ export const problems: readonly Problem[] = [
   longestTurbulentSubarray,
   // sliding-window — easy
   maxWindowSum,
+  maximumAverageSubarray,
   longestEqualRun,
   minWindowAverage,
   longestUniqueWindow,
@@ -712,6 +721,7 @@ export const problems: readonly Problem[] = [
   powerOfThree,
   isPowerOfFour,
   toHex,
+  numberComplement,
   reverseBits,
   countAndSay,
   fibonacciNumber,

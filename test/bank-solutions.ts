@@ -5624,6 +5624,45 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best;
   },
 
+  'valid-mountain-array': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    if (arr.length < 3) return false;
+    let i = 0;
+    while (i + 1 < arr.length && arr[i]! < arr[i + 1]!) i++;
+    if (i === 0 || i === arr.length - 1) return false;
+    while (i + 1 < arr.length && arr[i]! > arr[i + 1]!) i++;
+    return i === arr.length - 1;
+  },
+
+  'can-place-flowers': (...args: unknown[]) => {
+    const bed = [...(args[0] as number[])];
+    let n = args[1] as number;
+    for (let i = 0; i < bed.length && n > 0; i++) {
+      if (bed[i] === 0 && (i === 0 || bed[i - 1] === 0) && (i === bed.length - 1 || bed[i + 1] === 0)) {
+        bed[i] = 1; n--;
+      }
+    }
+    return n <= 0;
+  },
+
+  'number-complement': (...args: unknown[]) => {
+    const num = args[0] as number;
+    let mask = 1;
+    while (mask <= num) mask <<= 1;
+    return (mask - 1) ^ num;
+  },
+
+  'maximum-average-subarray': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    let sum = nums.slice(0, k).reduce((a, b) => a + b, 0);
+    let max = sum;
+    for (let i = k; i < nums.length; i++) {
+      sum += nums[i]! - nums[i - k]!;
+      if (sum > max) max = sum;
+    }
+    return max / k;
+  },
+
   'range-sum-query': (...args: unknown[]) => {
     const nums = args[0] as number[], left = args[1] as number, right = args[2] as number;
     let sum = 0;
@@ -5647,6 +5686,12 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const num = args[0] as number;
     if (num === 0) return '0';
     return (num >>> 0).toString(16);
+  },
+
+  'jewels-and-stones': (...args: unknown[]) => {
+    const jewels = args[0] as string, stones = args[1] as string;
+    const set = new Set(jewels);
+    return [...stones].filter(c => set.has(c)).length;
   },
 
   'find-words-from-chars': (...args: unknown[]) => {

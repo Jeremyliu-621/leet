@@ -4950,6 +4950,46 @@ def deserialize(data):
     return best
 `,
 
+  'valid-mountain-array': `def validMountainArray(arr):
+    n = len(arr)
+    if n < 3:
+        return False
+    i = 0
+    while i + 1 < n and arr[i] < arr[i + 1]:
+        i += 1
+    if i == 0 or i == n - 1:
+        return False
+    while i + 1 < n and arr[i] > arr[i + 1]:
+        i += 1
+    return i == n - 1
+`,
+
+  'can-place-flowers': `def canPlaceFlowers(flowerbed, n):
+    bed = flowerbed[:]
+    for i in range(len(bed)):
+        if bed[i] == 0 and (i == 0 or bed[i-1] == 0) and (i == len(bed)-1 or bed[i+1] == 0):
+            bed[i] = 1
+            n -= 1
+    return n <= 0
+`,
+
+  'number-complement': `def findComplement(num):
+    mask = 1
+    while mask <= num:
+        mask <<= 1
+    return (mask - 1) ^ num
+`,
+
+  'maximum-average-subarray': `def findMaxAverage(nums, k):
+    total = sum(nums[:k])
+    best = total
+    for i in range(k, len(nums)):
+        total += nums[i] - nums[i - k]
+        if total > best:
+            best = total
+    return best / k
+`,
+
   'range-sum-query': `
 def sumRange(nums, left, right):
     return sum(nums[left:right+1])
@@ -4967,6 +5007,11 @@ def sumRange(nums, left, right):
     if num == 0:
         return '0'
     return format(num & 0xFFFFFFFF, 'x')
+`,
+
+  'jewels-and-stones': `def numJewelsInStones(jewels, stones):
+    jewel_set = set(jewels)
+    return sum(1 for s in stones if s in jewel_set)
 `,
 
   'find-words-from-chars': `def countCharacters(words, chars):

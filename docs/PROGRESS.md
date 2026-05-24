@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 393 problems; 1450 tests.
+**Current focus:** Bank at 403 problems; added number-complement, jewels-and-stones, maximum-average-subarray, valid-mountain-array, can-place-flowers; 1465 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing bank toward 400+; more medium/hard problems; UI/UX polish.
+**Next up:** Continue growing bank toward 420+; more medium/hard problems across all tags.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
