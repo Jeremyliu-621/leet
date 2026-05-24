@@ -3776,6 +3776,45 @@ def deserialize(data):
     return max(up, down)
 `,
 
+  'combination-sum-iii': `def combinationSum3(k, n):
+    result = []
+    def bt(start, rem, path):
+        if len(path) == k and rem == 0:
+            result.append(list(path))
+            return
+        if len(path) == k or rem <= 0:
+            return
+        for d in range(start, 10):
+            if d > rem:
+                break
+            path.append(d)
+            bt(d + 1, rem - d, path)
+            path.pop()
+    bt(1, n, [])
+    return result
+`,
+
+  'restore-ip-addresses': `def restoreIpAddresses(s):
+    result = []
+    def bt(start, segs):
+        if len(segs) == 4:
+            if start == len(s):
+                result.append('.'.join(segs))
+            return
+        for length in range(1, 4):
+            if start + length > len(s):
+                break
+            seg = s[start:start + length]
+            if len(seg) > 1 and seg[0] == '0':
+                break
+            if int(seg) > 255:
+                break
+            segs.append(seg)
+            bt(start + length, segs)
+            segs.pop()
+    bt(0, [])
+    return result
+`,
   'insert-interval': `def insert(intervals, newInterval):
     result = []
     start, end = newInterval

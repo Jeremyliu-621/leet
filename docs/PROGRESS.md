@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 287 problems (14 tags); latest: longest-turbulent-subarray, minimum-genetic-mutation, largest-divisible-subset, majority-element-ii, summary-ranges, contains-duplicate-ii; 1132 tests.
+**Current focus:** Bank at 289 problems (14 tags); combination-sum-iii + restore-ip-addresses added; approaching 300 problems; 1138 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More medium/hard problems toward 300; combination-sum-iii, restore-ip-addresses, more graph/tree.
+**Next up:** More hard problems; expression-add-operators (hard backtracking); 300-problem milestone.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -260,8 +260,8 @@ Still pending:
 - [x] swap-nodes-in-pairs (linked-list/medium), partition-list (linked-list/medium), find-if-path-exists (graph/easy); remove duplicate binary-tree-zigzag-traversal + orphan reverse-nodes-k-group; bank cleaned up
 - [x] backtracking tag applied to palindrome-partitioning, combination-sum-ii, n-queens, word-search
 - [x] sudoku-solver (backtracking/hard, runner preamble) + combinations (backtracking/medium); bank at 272; 1090 tests
-- [x] subsets-ii (backtracking/medium, duplicate-skip bt); AboutSection 12→13 topic categories; site description updated with backtracking tag; bank at 284; 1123 tests
-- [x] majority-element-ii, contains-duplicate-ii, summary-ranges added by parallel loop instance
+- [x] word-search-ii (graph+backtracking/hard, Trie-pruned DFS) + letter-case-permutation (easy); single-number (math/easy), house-robber-ii (DP/medium), wiggle-subsequence (DP/medium); subsets-ii (backtracking/medium); majority-element-ii, contains-duplicate-ii, summary-ranges; bank at 284; 1123 tests
+- [x] combination-sum-iii (arrays+backtracking/medium) + restore-ip-addresses (strings+backtracking/medium); bank at 285; 1129 tests
 
 ---
 

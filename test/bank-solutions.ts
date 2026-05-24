@@ -4520,4 +4520,43 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result.sort((a, b) => a - b);
   },
 
+  'combination-sum-iii': (...args: unknown[]) => {
+    const k = args[0] as number, n = args[1] as number;
+    const result: number[][] = [];
+    function bt(start: number, rem: number, path: number[]): void {
+      if (path.length === k && rem === 0) { result.push([...path]); return; }
+      if (path.length === k || rem <= 0) return;
+      for (let d = start; d <= 9; d++) {
+        if (d > rem) break;
+        path.push(d);
+        bt(d + 1, rem - d, path);
+        path.pop();
+      }
+    }
+    bt(1, n, []);
+    return result;
+  },
+
+  'restore-ip-addresses': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const result: string[] = [];
+    function bt(start: number, segs: string[]): void {
+      if (segs.length === 4) {
+        if (start === s.length) result.push(segs.join('.'));
+        return;
+      }
+      for (let len = 1; len <= 3; len++) {
+        if (start + len > s.length) break;
+        const seg = s.slice(start, start + len);
+        if (seg.length > 1 && seg[0] === '0') break;
+        if (parseInt(seg, 10) > 255) break;
+        segs.push(seg);
+        bt(start + len, segs);
+        segs.pop();
+      }
+    }
+    bt(0, []);
+    return result;
+  },
+
 };
