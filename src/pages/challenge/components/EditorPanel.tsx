@@ -33,6 +33,8 @@ import { VerdictPanel } from './VerdictPanel';
 import { KeyboardShortcutsModal } from './KeyboardShortcutsModal';
 
 interface EditorPanelProps {
+  /** Number of spaces inserted by the Tab key. */
+  indentSize?: 2 | 4;
   /** Starter code for the active language. Replacing this resets the editor. */
   starterCode: string;
   /** Language currently active in the editor (controls syntax highlighting + the runner). */
@@ -82,7 +84,9 @@ interface EditorPanelProps {
   resetCode?: { content: string; version: number };
 }
 
-const INDENT_SPACES = '  ';
+function indentSpaces(n: 2 | 4): string {
+  return ' '.repeat(n);
+}
 
 function fontSizeTheme(px: number) {
   return EditorView.theme({ '&': { fontSize: `${px}px` } });
@@ -119,6 +123,7 @@ function modalKeymapExtension(k: EditorKeymap) {
  * syntax extension swaps without rebuilding the editor state.
  */
 export function EditorPanel({
+  indentSize = 2,
   starterCode,
   language,
   availableLanguages,
@@ -159,6 +164,10 @@ export function EditorPanel({
   const onRunRef = useRef(onRun);
   const onSubmitRef = useRef(onSubmit);
   const starterCodeRef = useRef(starterCode);
+  const indentSizeRef = useRef(indentSize);
+  useEffect(() => {
+    indentSizeRef.current = indentSize;
+  }, [indentSize]);
   useEffect(() => {
     onChangeRef.current = onChange;
   }, [onChange]);
@@ -179,6 +188,12 @@ export function EditorPanel({
     const updateListener = EditorView.updateListener.of((update) => {
       if (update.docChanged) {
         onChangeRef.current(update.state.doc.toString());
+      }
+      if (update.docChanged || update.selectionSet) {
+        const { state } = update;
+        const head = state.selection.main.head;
+        const line = state.doc.lineAt(head);
+        setCursorPosRef.current({ line: line.number, col: head - line.from + 1 });
       }
     });
 
@@ -264,15 +279,16 @@ export function EditorPanel({
           {
             key: 'Tab',
             run(view) {
+              const spaces = indentSpaces(indentSizeRef.current);
               view.dispatch(
                 view.state.update({
                   changes: {
                     from: view.state.selection.main.from,
                     to: view.state.selection.main.to,
-                    insert: INDENT_SPACES,
+                    insert: spaces,
                   },
                   selection: {
-                    anchor: view.state.selection.main.from + INDENT_SPACES.length,
+                    anchor: view.state.selection.main.from + spaces.length,
                   },
                 }),
               );
@@ -391,6 +407,10 @@ export function EditorPanel({
 
   const [showShortcuts, setShowShortcuts] = useState(false);
 
+  // Line / column state — updated on every selection change.
+  const [cursorPos, setCursorPos] = useState<{ line: number; col: number }>({ line: 1, col: 1 });
+  const setCursorPosRef = useRef(setCursorPos);
+
   const showLanguageSelector = availableLanguages.length > 1;
 
   return (
@@ -497,6 +517,13 @@ export function EditorPanel({
                 {attemptsRemaining} left
               </span>
             )}
+            {/* Line / column indicator — mirrors every major IDE */}
+            <span
+              aria-label={`Line ${cursorPos.line}, column ${cursorPos.col}`}
+              className="tabular-nums"
+            >
+              {cursorPos.line}:{cursorPos.col}
+            </span>
           </div>
 
           {/* Right: action buttons */}

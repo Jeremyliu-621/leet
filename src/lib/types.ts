@@ -199,6 +199,8 @@ export interface UserPreferences {
   editorKeymap: EditorKeymap;
   /** Width of the problem panel as a percentage of the split-view container (desktop only). Clamped to [20, 80]. */
   problemPanelWidthPct: number;
+  /** Number of spaces inserted by the Tab key. 2 or 4. */
+  editorIndentSize: 2 | 4;
 }
 
 /** Theme options exposed in the UI. */

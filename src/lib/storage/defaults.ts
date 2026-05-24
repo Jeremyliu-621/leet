@@ -21,6 +21,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   preferredLanguage: 'javascript',
   editorKeymap: 'default',
   problemPanelWidthPct: 41.67,
+  editorIndentSize: 2,
 };
 
 /**

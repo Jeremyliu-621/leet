@@ -768,6 +768,7 @@ export function Challenge() {
             onLanguageChange={handleLanguageChange}
             editorKeymap={prefs.editorKeymap}
             fontSize={prefs.editorFontSize}
+            indentSize={prefs.editorIndentSize}
             onChange={setCode}
             onRun={() => void handleRun()}
             onSubmit={() => void handleSubmit()}

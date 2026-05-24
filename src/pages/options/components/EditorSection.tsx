@@ -11,6 +11,11 @@ interface EditorSectionProps {
 const FONT_MIN = 11;
 const FONT_MAX = 20;
 
+const INDENT_OPTIONS: ReadonlyArray<{ value: 2 | 4; label: string }> = [
+  { value: 2, label: '2 spaces' },
+  { value: 4, label: '4 spaces' },
+];
+
 const LANGUAGE_OPTIONS: { value: SupportedLanguage; label: string; description: string }[] = [
   { value: 'javascript', label: 'JavaScript', description: 'Default. No setup required.' },
   {
@@ -36,6 +41,7 @@ export function EditorSection({ prefs, onChange }: EditorSectionProps) {
   const fontSizeId = `${uid}-font-size`;
   const languageId = `${uid}-language`;
   const keymapId = `${uid}-keymap`;
+  const indentId = `${uid}-indent`;
 
   return (
     <SectionCard
@@ -117,6 +123,47 @@ export function EditorSection({ prefs, onChange }: EditorSectionProps) {
                     <div className="font-mono text-xs font-semibold text-text">{label}</div>
                     <div className="mt-0.5 font-mono text-[10px] text-faint">{description}</div>
                   </div>
+                </label>
+              );
+            })}
+          </div>
+        </FormField>
+
+        {/* Indent size */}
+        <FormField
+          label="Indent size"
+          htmlFor={indentId}
+          help="Spaces inserted by the Tab key. 2 is the JavaScript community default; Python conventionally uses 4."
+        >
+          <div
+            id={indentId}
+            role="radiogroup"
+            aria-label="Indent size"
+            className="flex gap-2"
+          >
+            {INDENT_OPTIONS.map(({ value, label }) => {
+              const selected = (prefs.editorIndentSize ?? 2) === value;
+              const inputId = `${uid}-indent-${value}`;
+              return (
+                <label
+                  key={value}
+                  htmlFor={inputId}
+                  className={`flex cursor-pointer items-center gap-2 rounded-sm border px-3 py-2 transition-colors ${
+                    selected
+                      ? 'border-border-strong bg-surface-2'
+                      : 'border-border hover:border-border-strong'
+                  }`}
+                >
+                  <input
+                    id={inputId}
+                    type="radio"
+                    name={`${uid}-indent`}
+                    value={String(value)}
+                    checked={selected}
+                    onChange={() => onChange({ editorIndentSize: value })}
+                    className="accent-accent"
+                  />
+                  <span className="font-mono text-xs text-text">{label}</span>
                 </label>
               );
             })}
