@@ -38,4 +38,24 @@ export const pythonSolutions: Record<string, string> = {
             best_count = c
     return best_value
 `,
+  'running-sum': `def runningSum(nums):
+    out = []
+    total = 0
+    for v in nums:
+        total += v
+        out.append(total)
+    return out
+`,
+  'peak-element-count': `def countInteriorPeaks(nums):
+    count = 0
+    for i in range(1, len(nums) - 1):
+        if nums[i] > nums[i - 1] and nums[i] > nums[i + 1]:
+            count += 1
+    return count
+`,
+  'rotate-left-one': `def shiftLeftByOne(nums):
+    if len(nums) <= 1:
+        return list(nums)
+    return list(nums[1:]) + [nums[0]]
+`,
 };

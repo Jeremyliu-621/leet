@@ -32,6 +32,7 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: 'function shiftLeftByOne(nums) {\n  // your code here\n}\n',
+    python: 'def shiftLeftByOne(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: [[1, 2, 3]], expected: [2, 3, 1] },

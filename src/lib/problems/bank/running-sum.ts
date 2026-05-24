@@ -35,6 +35,7 @@ Return the resulting array. The input array is left unchanged.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function runningSum(nums) {\n  // your code here\n}\n',
+    python: 'def runningSum(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: [[1, 2, 3, 4]], expected: [1, 3, 6, 10] },
