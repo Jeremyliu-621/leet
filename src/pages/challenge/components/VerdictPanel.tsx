@@ -27,6 +27,9 @@ function SingleVerdict({ verdict, index }: SingleVerdictProps) {
       >
         <span className="font-mono text-[10px] uppercase tracking-wider text-faint">{label}</span>
         <span className="font-mono text-xs font-semibold text-accent">pass</span>
+        {verdict.input && (
+          <span className="font-mono text-[10px] text-faint">{verdict.input}</span>
+        )}
         {verdict.durationMs !== undefined && (
           <span className="ml-auto font-mono text-[10px] text-faint tabular-nums">
             {verdict.durationMs} ms
@@ -47,6 +50,14 @@ function SingleVerdict({ verdict, index }: SingleVerdictProps) {
           <span className="font-mono text-xs font-medium text-muted">wrong answer</span>
         </div>
         <div className="space-y-1.5">
+          {verdict.input && (
+            <div className="flex flex-wrap gap-x-3 gap-y-0.5">
+              <span className="font-mono text-[10px] uppercase tracking-wider text-faint w-16">
+                input
+              </span>
+              <code className="font-mono text-xs text-text">{verdict.input}</code>
+            </div>
+          )}
           <div className="flex flex-wrap gap-x-3 gap-y-0.5">
             <span className="font-mono text-[10px] uppercase tracking-wider text-faint w-16">
               expected
@@ -83,6 +94,14 @@ function SingleVerdict({ verdict, index }: SingleVerdictProps) {
         <span className="font-mono text-[10px] uppercase tracking-wider text-faint">{label}</span>
         <span className="font-mono text-xs font-medium text-muted">runtime error</span>
       </div>
+      {verdict.input && (
+        <div className="mb-1.5 flex flex-wrap gap-x-3 gap-y-0.5">
+          <span className="font-mono text-[10px] uppercase tracking-wider text-faint w-16">
+            input
+          </span>
+          <code className="font-mono text-xs text-text">{verdict.input}</code>
+        </div>
+      )}
       <code className="block font-mono text-xs text-muted">{verdict.error}</code>
       {verdict.logs.length > 0 && (
         <div className="mt-2 border-t border-border pt-2">

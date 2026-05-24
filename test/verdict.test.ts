@@ -23,6 +23,8 @@ describe('buildVerdict', () => {
     expect(result.passed).toBe(2);
     expect(result.total).toBe(2);
     expect(result.verdicts.every((v) => v.status === 'pass')).toBe(true);
+    expect(result.verdicts[0]?.input).toBe('1, 2');
+    expect(result.verdicts[1]?.input).toBe('10, 5');
   });
 
   it('reports wrong-answer when a result mismatches', () => {
@@ -34,6 +36,7 @@ describe('buildVerdict', () => {
     if (failing?.status === 'fail') {
       expect(failing.expected).toBe(15);
       expect(failing.actual).toBe(99);
+      expect(failing.input).toBe('10, 5');
     }
   });
 
@@ -45,6 +48,7 @@ describe('buildVerdict', () => {
     expect(result.outcome).toBe('runtime-error');
     expect(result.passed).toBe(1);
     expect(result.verdicts[1]?.status).toBe('error');
+    expect(result.verdicts[1]?.input).toBe('10, 5');
   });
 
   it('reports timeout for a timed-out run', () => {
@@ -84,6 +88,7 @@ describe('buildVerdict', () => {
     const arrayTests: TestCase[] = [{ args: [[3, 1, 2]], expected: [1, 2, 3] }];
     const result = buildVerdict(arrayTests, okResponse([returned(0, [1, 2, 3])]));
     expect(result.outcome).toBe('accepted');
+    expect(result.verdicts[0]?.input).toBe('[3,1,2]');
   });
 
   it('accumulates totalDurationMs from outcomes that carry durationMs', () => {

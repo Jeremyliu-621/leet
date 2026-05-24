@@ -4,16 +4,17 @@ import { deepEqual } from './deep-equal';
 
 /** Result for a single test, after comparing the Worker's output to `expected`. */
 export type TestVerdict =
-  | { index: number; status: 'pass'; logs: readonly string[]; durationMs?: number }
+  | { index: number; status: 'pass'; input: string; logs: readonly string[]; durationMs?: number }
   | {
       index: number;
       status: 'fail';
+      input: string;
       expected: unknown;
       actual: unknown;
       logs: readonly string[];
       durationMs?: number;
     }
-  | { index: number; status: 'error'; error: string; logs: readonly string[] };
+  | { index: number; status: 'error'; input: string; error: string; logs: readonly string[] };
 
 /** Overall result of a run. */
 export type JudgeOutcome =
@@ -32,6 +33,11 @@ export interface JudgeResult {
   message?: string;
   /** Sum of all per-test execution times in ms. Undefined if not measured. */
   totalDurationMs?: number;
+}
+
+/** Formats the args of a test case into a human-readable string. */
+function formatArgs(args: readonly unknown[]): string {
+  return args.map(a => { try { return JSON.stringify(a); } catch { return String(a); } }).join(', ');
 }
 
 /**
@@ -65,15 +71,18 @@ export function buildVerdict(tests: readonly TestCase[], response: RunResponse):
       verdicts.push({
         index: i,
         status: 'error',
+        input: '',
         error: 'No result was produced for this test.',
         logs: [],
       });
       continue;
     }
 
+    const input = formatArgs(test.args);
+
     if (outcome.status === 'threw') {
       sawError = true;
-      verdicts.push({ index: i, status: 'error', error: outcome.error, logs: outcome.logs });
+      verdicts.push({ index: i, status: 'error', input, error: outcome.error, logs: outcome.logs });
       continue;
     }
 
@@ -85,11 +94,12 @@ export function buildVerdict(tests: readonly TestCase[], response: RunResponse):
 
     if (deepEqual(outcome.value, test.expected)) {
       passed++;
-      verdicts.push({ index: i, status: 'pass', logs: outcome.logs, durationMs });
+      verdicts.push({ index: i, status: 'pass', input, logs: outcome.logs, durationMs });
     } else {
       verdicts.push({
         index: i,
         status: 'fail',
+        input,
         expected: test.expected,
         actual: outcome.value,
         logs: outcome.logs,

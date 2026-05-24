@@ -8,6 +8,7 @@ import { pickChallengeProblem } from '../../lib/problems';
 import { runTests, warmPython, runCustomArgs } from '../../lib/judge';
 import type { CustomTestStatus } from '../../lib/judge';
 import { DEFAULT_PREFERENCES } from '../../lib/storage/defaults';
+import { resolveTheme } from '../../lib/theme';
 import { parseTargetParam, extractDomain } from './challenge-helpers';
 import { TopBar } from './components/TopBar';
 import { ProblemPanel } from './components/ProblemPanel';
@@ -165,6 +166,9 @@ export function Challenge() {
   // Page-level state machine.
   const [pageState, setPageState] = useState<PageState>({ status: 'loading' });
 
+  // Resolved theme — 'dark' or 'light'. Derived from prefs.theme and OS setting.
+  const [resolvedTheme, setResolvedTheme] = useState<'dark' | 'light'>('dark');
+
   // Editor code — mirrors the CodeMirror document.
   const [code, setCode] = useState('');
 
@@ -259,6 +263,7 @@ export function Challenge() {
       setSecondsLeft(prefs.challengeTimeLimitSec);
       setPanelPct(prefs.problemPanelWidthPct);
       setPageState({ status: 'ready', problem, prefs });
+      setResolvedTheme(resolveTheme(prefs.theme));
 
       // Load streak summary in the background — non-critical, fails silently.
       void (async () => {
@@ -333,6 +338,16 @@ export function Challenge() {
     window.addEventListener('beforeunload', onBeforeUnload);
     return () => window.removeEventListener('beforeunload', onBeforeUnload);
   }, [pageState.status]);
+
+  useEffect(() => {
+    if (pageState.status !== 'ready') return;
+    const { prefs } = pageState;
+    if (prefs.theme !== 'system') return;
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    const listener = () => setResolvedTheme(media.matches ? 'dark' : 'light');
+    media.addEventListener('change', listener);
+    return () => media.removeEventListener('change', listener);
+  }, [pageState]);
 
   useEffect(() => {
     if (pageState.status !== 'ready') return;
@@ -703,6 +718,7 @@ export function Challenge() {
             attemptsRemaining={attemptsRemaining}
             isFullscreen={isEditorFullscreen}
             onToggleFullscreen={handleToggleFullscreen}
+            resolvedTheme={resolvedTheme}
           />
           {/* Custom test drawer — collapses below the verdict/action bar */}
           <CustomTestPanel

@@ -25,7 +25,7 @@ import {
 } from '@codemirror/autocomplete';
 import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/search';
 import { vim } from '@replit/codemirror-vim';
-import { leetlockEditorTheme } from '../codemirror-theme';
+import { leetlockEditorThemeDark, leetlockEditorThemeLight } from '../codemirror-theme';
 import type { JudgeResult } from '../../../lib/judge';
 import type { EditorKeymap, SupportedLanguage } from '../../../lib/types';
 import { VerdictPanel } from './VerdictPanel';
@@ -71,6 +71,8 @@ interface EditorPanelProps {
   isFullscreen?: boolean;
   /** Called when the user clicks the fullscreen toggle button. */
   onToggleFullscreen?: () => void;
+  /** Current resolved theme — controls the CodeMirror colour scheme. */
+  resolvedTheme?: 'dark' | 'light';
 }
 
 const INDENT_SPACES = '  ';
@@ -117,6 +119,7 @@ export function EditorPanel({
   attemptsRemaining,
   isFullscreen = false,
   onToggleFullscreen,
+  resolvedTheme = 'dark',
 }: EditorPanelProps) {
   const editorContainerRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
@@ -128,6 +131,9 @@ export function EditorPanel({
   // Font size goes through its own Compartment so it can be changed live
   // without rebuilding the editor or losing the document state.
   const fontSizeCompartmentRef = useRef(new Compartment());
+  // Theme goes through its own Compartment so it can be swapped when the
+  // user toggles between dark and light mode without rebuilding the editor.
+  const themeCompartmentRef = useRef(new Compartment());
 
   // Stable refs — the editor builds ONCE; refs let the keymap and the doc-
   // change effect read fresh callback values without rebuilding.
@@ -256,7 +262,7 @@ export function EditorPanel({
             },
           },
         ]),
-        leetlockEditorTheme,
+        themeCompartmentRef.current.of(resolvedTheme === 'light' ? leetlockEditorThemeLight : leetlockEditorThemeDark),
         // Font size goes through its own Compartment so it can be reconfigured
         // live when the user adjusts it in Settings without rebuilding the editor.
         fontSizeCompartmentRef.current.of(fontSizeTheme(fontSize)),
@@ -320,6 +326,17 @@ export function EditorPanel({
       effects: fontSizeCompartmentRef.current.reconfigure(fontSizeTheme(fontSize)),
     });
   }, [fontSize]);
+
+  // Swap the colour theme when resolvedTheme changes.
+  useEffect(() => {
+    const view = viewRef.current;
+    if (!view) return;
+    view.dispatch({
+      effects: themeCompartmentRef.current.reconfigure(
+        resolvedTheme === 'light' ? leetlockEditorThemeLight : leetlockEditorThemeDark,
+      ),
+    });
+  }, [resolvedTheme]);
 
   const handleRunKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
