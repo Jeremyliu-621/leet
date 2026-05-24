@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-24
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 119 problems; hash-map hard gap filled; popup shows bank progress (X/119 solved).
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (618 unit tests across 22 files).
-**Next up:** Add hard stack problems (only 1 hard), further bank growth, or other polish.
+**Current focus:** Bank at 121 problems; 2 new hard stack problems added (sum-subarray-minimums, remove-k-digits).
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (624 unit tests across 22 files).
+**Next up:** Marketing site iteration, further bank growth, or other polish.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -204,7 +204,7 @@ Still pending:
 - [x] Problem counts on Options filter buttons — difficulty + tag pills now show "easy 38", "arrays 25" etc.
 - [x] Add hash-map hard problems — four-sum-ii, max-points-on-line; 618 tests; bank at 119
 - [x] Bank progress in popup — "X/119 solved (Y%)" in SolveBreakdown header
-- [ ] Add hard stack problems — only 1 hard (basic-calculator)
+- [x] Add hard stack problems — sum-subarray-minimums, remove-k-digits; 624 tests; bank at 121
 - [ ] Marketing site iteration + Vercel deployment
 
 ---
