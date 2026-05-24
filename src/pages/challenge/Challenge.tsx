@@ -18,6 +18,9 @@ import { EditorPanel } from './components/EditorPanel';
 
 type RunMode = 'run' | 'submit';
 
+/** Seconds deducted from the challenge timer per revealed hint. */
+const HINT_COST_SECONDS = 60;
+
 type PageState =
   | { status: 'loading' }
   | { status: 'no-problem' }
@@ -354,7 +357,11 @@ export function Challenge() {
       >
         {/* Problem panel — scrollable independently */}
         <div className="flex flex-col overflow-hidden border-border lg:border-r lg:w-5/12 max-lg:border-b max-lg:max-h-[45vh]">
-          <ProblemPanel problem={problem} />
+          <ProblemPanel
+            problem={problem}
+            hintCostLabel="1 min"
+            onHintRevealed={() => setSecondsLeft((s) => Math.max(0, s - HINT_COST_SECONDS))}
+          />
         </div>
 
         {/* Editor panel — fixed, no scroll on the outer shell */}

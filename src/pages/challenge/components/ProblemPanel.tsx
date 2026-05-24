@@ -5,6 +5,10 @@ import { HintsSection } from './HintsSection';
 
 interface ProblemPanelProps {
   problem: Problem;
+  /** Called when the user reveals a hint, with the 0-based hint index. */
+  onHintRevealed?: (index: number) => void;
+  /** Cost label rendered on the reveal button (e.g. "1 min"). */
+  hintCostLabel?: string;
 }
 
 /** Maps difficulty to Tailwind classes for the pill label. */
@@ -25,7 +29,7 @@ function difficultyClasses(difficulty: Difficulty): string {
  * Left panel — renders the full problem statement: title, difficulty, tags,
  * the markdown description, worked examples, optional hints, and constraints.
  */
-export function ProblemPanel({ problem }: ProblemPanelProps) {
+export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: ProblemPanelProps) {
   const { title, difficulty, tags, description, examples, constraints, hints } = problem;
 
   return (
@@ -109,7 +113,9 @@ export function ProblemPanel({ problem }: ProblemPanelProps) {
         )}
 
         {/* Hints — progressively revealed by user click */}
-        {hints && hints.length > 0 && <HintsSection hints={hints} />}
+        {hints && hints.length > 0 && (
+          <HintsSection hints={hints} onReveal={onHintRevealed} costLabel={hintCostLabel} />
+        )}
 
         {/* Constraints */}
         {constraints.length > 0 && (
