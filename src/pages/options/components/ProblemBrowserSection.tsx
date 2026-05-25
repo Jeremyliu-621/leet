@@ -108,6 +108,12 @@ export function ProblemBrowserSection() {
     openProblemInChallenge(problemId);
   }, []);
 
+  const handleRandom = useCallback(() => {
+    if (filtered.length === 0) return;
+    const pick = filtered[Math.floor(Math.random() * filtered.length)];
+    if (pick) openProblemInChallenge(pick.id);
+  }, [filtered]);
+
   return (
     <SectionCard
       label="Problem bank"
@@ -167,6 +173,22 @@ export function ProblemBrowserSection() {
               <option value="diff-asc">easy → hard</option>
               <option value="diff-desc">hard → easy</option>
             </select>
+            <button
+              type="button"
+              onClick={handleRandom}
+              disabled={filtered.length === 0}
+              aria-label="Open a random problem from filtered list"
+              title="Random problem"
+              className={[
+                'shrink-0 rounded-sm border border-border bg-surface-2 px-2.5 py-1.5',
+                'font-mono text-[10px] text-muted transition-colors',
+                'hover:border-border-strong hover:text-text',
+                'focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent',
+                'disabled:cursor-not-allowed disabled:opacity-40',
+              ].join(' ')}
+            >
+              ⚂ random
+            </button>
           </div>
 
           {/* Difficulty filter tabs */}
