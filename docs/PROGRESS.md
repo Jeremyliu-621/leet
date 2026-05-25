@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1254 problems; 3990 tests green.
+**Current focus:** Bank at 1257 problems; 3999 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems; UI/UX polish; Options/popup improvements.
 
@@ -358,6 +358,7 @@ Still pending:
 - [x] **TerminalPanel diff hints in Terminal tab** — Terminal tab now shows `ArrayDiffHint` + `StringDiffHint` on fail entries (stored raw expected/actual alongside stringified); previously only Test Results tab showed diff hints.
 - [x] **Marketing site stats updated** — all three "1,100+" stat locations updated to "1,200+".
 - [x] **5 more classic problems (Batch 25)** — find-largest-value-each-tree-row (tree/medium, BFS max per level), find-bottom-left-tree-value (tree/medium, BFS leftmost last row), most-stones-removed-same-row-or-column (graph/medium, Union-Find), count-unreachable-pairs-of-nodes (graph/medium, DFS component counting), my-calendar-i (arrays+binary-search/medium, interval overlap); bank at **1254**; 3990 tests.
+- [x] **3 more classic problems (Batch 26)** — find-players-with-zero-or-one-losses (hash-map/medium), count-unreachable-pairs-after-removing-vertices (graph/medium, Union-Find), maximum-value-at-given-index-in-bounded-array (binary-search/medium, BigInt for overflow safety); bank at **1257**; 3999 tests.
 
 ---
 
