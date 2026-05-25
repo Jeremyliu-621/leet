@@ -18087,6 +18087,8 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
                 res += 1
         i += 1
     return res + 2 * open_count
+`,
+
   'longest-subarray-of-1s-after-deleting-one-element': `def longestSubarray(nums):
     nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
     left = 0
@@ -18138,3 +18140,5 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
                 dfs(i + 1, mask | m, length + len(arr[i]))
     dfs(0, 0, 0)
     return result[0]
+`,
+};
