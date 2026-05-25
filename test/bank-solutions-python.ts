@@ -19305,4 +19305,30 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
             result.append(second[i])
     return ''.join(result)
 `,
+
+  'find-n-unique-integers-sum-up-to-zero': `def sumZero(n):
+    n = int(n)
+    if n == 1:
+        return [0]
+    result = list(range(1, n))
+    result.append(-sum(result))
+    return result
+`,
+
+  'check-array-formation-through-concatenation': `def canFormArray(arr, pieces):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    pieces = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in (pieces.to_py() if hasattr(pieces, 'to_py') else pieces)]
+    piece_map = {int(p[0]): [int(x) for x in p] for p in pieces}
+    i = 0
+    while i < len(arr):
+        piece = piece_map.get(int(arr[i]))
+        if piece is None:
+            return False
+        for v in piece:
+            if int(arr[i]) != v:
+                return False
+            i += 1
+    return True
+`,
+
 };

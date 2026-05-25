@@ -1446,6 +1446,8 @@ import { problem as checkIfSentenceIsPangram } from './check-if-sentence-is-pang
 import { problem as findTheStudentThatWillReplaceTheChalk } from './find-the-student-that-will-replace-the-chalk';
 import { problem as greatestEnglishLetterInUpperAndLowerCase } from './greatest-english-letter-in-upper-and-lower-case';
 import { problem as reformatTheString } from './reformat-the-string';
+import { problem as findNUniqueIntegersSumUpToZero } from './find-n-unique-integers-sum-up-to-zero';
+import { problem as checkArrayFormationThroughConcatenation } from './check-array-formation-through-concatenation';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2940,4 +2942,6 @@ export const problems: readonly Problem[] = [
   findTheStudentThatWillReplaceTheChalk,
   greatestEnglishLetterInUpperAndLowerCase,
   reformatTheString,
+  findNUniqueIntegersSumUpToZero,
+  checkArrayFormationThroughConcatenation,
 ];

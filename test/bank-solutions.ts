@@ -19282,4 +19282,34 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'find-n-unique-integers-sum-up-to-zero': (n: unknown) => {
+    const size = n as number;
+    if (size === 1) return [0];
+    const result: number[] = [];
+    let sum = 0;
+    for (let i = 1; i < size; i++) {
+      result.push(i);
+      sum += i;
+    }
+    result.push(-sum);
+    return result;
+  },
+
+  'check-array-formation-through-concatenation': (arr: unknown, pieces: unknown) => {
+    const arrArr = arr as number[];
+    const piecesArr = pieces as number[][];
+    const map = new Map<number, number[]>();
+    for (const piece of piecesArr) map.set(piece[0]!, piece);
+    let i = 0;
+    while (i < arrArr.length) {
+      const piece = map.get(arrArr[i]!);
+      if (!piece) return false;
+      for (const v of piece) {
+        if (arrArr[i] !== v) return false;
+        i++;
+      }
+    }
+    return true;
+  },
+
 };
