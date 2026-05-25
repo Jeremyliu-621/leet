@@ -18644,4 +18644,81 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
     bt(0)
     return count[0] - 1
 `,
+
+  'my-calendar-ii': `def myCalendarTwo(bookings):
+    raw = bookings.to_py() if hasattr(bookings, 'to_py') else bookings
+    bs = [list(b.to_py() if hasattr(b, 'to_py') else b) for b in raw]
+    calendar = []
+    double_booked = []
+    result = []
+    for s, e in bs:
+        conflict = any(s < e2 and e > s2 for s2, e2 in double_booked)
+        if conflict:
+            result.append(False)
+        else:
+            for cs, ce in calendar:
+                os_ = max(s, cs)
+                oe_ = min(e, ce)
+                if os_ < oe_:
+                    double_booked.append([os_, oe_])
+            calendar.append([s, e])
+            result.append(True)
+    return result
+`,
+
+  'task-scheduler-ii': `def taskSchedulerII(tasks, space):
+    tasks_list = list(tasks.to_py() if hasattr(tasks, 'to_py') else tasks)
+    sp = int(space)
+    last_day = {}
+    day = 0
+    for task in tasks_list:
+        day += 1
+        if task in last_day:
+            day = max(day, last_day[task] + sp + 1)
+        last_day[task] = day
+    return day
+`,
+
+  'swapping-nodes-in-a-linked-list': `def swapNodes(head, k):
+    length = 0
+    curr = head
+    while curr:
+        length += 1
+        curr = curr.next
+    first = head
+    for _ in range(k - 1):
+        first = first.next
+    second = head
+    for _ in range(length - k):
+        second = second.next
+    first.val, second.val = second.val, first.val
+    return head
+`,
+
+  'move-pieces-to-obtain-a-string': `def canChange(start, target):
+    n = len(start)
+    s_chars = [c for c in start if c != '_']
+    t_chars = [c for c in target if c != '_']
+    if s_chars != t_chars:
+        return False
+    i = j = 0
+    while i < n or j < n:
+        while i < n and start[i] == '_':
+            i += 1
+        while j < n and target[j] == '_':
+            j += 1
+        if i == n and j == n:
+            return True
+        if i == n or j == n:
+            return False
+        if start[i] != target[j]:
+            return False
+        if start[i] == 'L' and i < j:
+            return False
+        if start[i] == 'R' and i > j:
+            return False
+        i += 1
+        j += 1
+    return True
+`,
 };

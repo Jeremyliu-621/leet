@@ -18583,6 +18583,77 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
+  'my-calendar-ii': (bookings: unknown) => {
+    const bks = bookings as number[][];
+    const calendar: number[][] = [];
+    const doubleBooked: number[][] = [];
+    const result: boolean[] = [];
+    for (const [start, end] of bks) {
+      let conflict = false;
+      for (const [s, e] of doubleBooked) {
+        if (start! < e! && end! > s!) { conflict = true; break; }
+      }
+      if (conflict) {
+        result.push(false);
+      } else {
+        for (const [s, e] of calendar) {
+          const os = Math.max(start!, s!), oe = Math.min(end!, e!);
+          if (os < oe) doubleBooked.push([os, oe]);
+        }
+        calendar.push([start!, end!]);
+        result.push(true);
+      }
+    }
+    return result;
+  },
+
+  'task-scheduler-ii': (tasks: unknown, space: unknown) => {
+    const t = tasks as number[];
+    const sp = space as number;
+    const lastDay = new Map<number, number>();
+    let day = 0;
+    for (const task of t) {
+      day++;
+      const last = lastDay.get(task);
+      if (last !== undefined) day = Math.max(day, last + sp + 1);
+      lastDay.set(task, day);
+    }
+    return day;
+  },
+
+  'swapping-nodes-in-a-linked-list': (arr: unknown, k: unknown) => {
+    const list = arr as number[];
+    const idx = k as number;
+    if (list.length === 0) return [];
+    const result = list.slice();
+    const n = result.length;
+    const i = idx - 1;          // kth from start (0-indexed)
+    const j = n - idx;          // kth from end (0-indexed)
+    [result[i]!, result[j!]!] = [result[j!]!, result[i]!];
+    return result;
+  },
+
+  'move-pieces-to-obtain-a-string': (start: unknown, target: unknown) => {
+    const s = start as string;
+    const t = target as string;
+    const n = s.length;
+    const sChars = s.split('').filter(c => c !== '_').join('');
+    const tChars = t.split('').filter(c => c !== '_').join('');
+    if (sChars !== tChars) return false;
+    let i = 0, j = 0;
+    while (i < n || j < n) {
+      while (i < n && s[i] === '_') i++;
+      while (j < n && t[j] === '_') j++;
+      if (i === n && j === n) return true;
+      if (i === n || j === n) return false;
+      if (s[i] !== t[j]) return false;
+      if (s[i] === 'L' && i < j) return false;
+      if (s[i] === 'R' && i > j) return false;
+      i++; j++;
+    }
+    return true;
+  },
+
   'peak-index-in-mountain-array': (arr: unknown) => {
     const a = arr as number[];
     let l = 0, r = a.length - 1;

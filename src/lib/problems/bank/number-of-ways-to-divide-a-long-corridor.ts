@@ -5,37 +5,44 @@ export const problem: Problem = {
   title: 'Number of Ways to Divide a Long Corridor',
   difficulty: 'hard',
   tags: ['math', 'dynamic-programming'],
-  description: `Along a long corridor, there are \`n\` rooms numbered \`0\` to \`n - 1\`. Each room is identified as either a **seat** (\`'S'\`) or a **plant** (\`'P'\`).
+  description: `Along a hallway, there are \`n\` sections of wall, each marked as either a seat (\`'S'\`) or plant (\`'P'\`). You want to install dividers so that **every section between two consecutive dividers contains exactly 2 seats**.
 
-A corridor is divided into sections by placing dividers such that each section contains **exactly two seats**. Dividers can be placed at any gap between adjacent rooms.
+Return the number of ways to place the dividers, modulo \`10^9 + 7\`. If there is no valid placement, return \`0\`.
 
-Return the **number of ways** to place dividers, modulo \`10^9 + 7\`. If there is no valid way, return \`0\`.`,
+Dividers go **between** adjacent positions (in the gaps, not on top of sections). The two ends of the corridor are fixed walls and do not need dividers.
+
+\`\`\`
+Input:  corridor = "SSPPSPS"
+Output: 3
+\`\`\`
+Seats are at positions 0, 1, 4, 6. Valid pairs: (0,1) and (4,6). The divider must go in one of 3 gaps between positions 1 and 4: after position 1, 2, or 3.`,
   constraints: [
-    '`n == corridor.length`',
-    '`1 <= n <= 10^5`',
-    "`corridor[i]` is either `'S'` or `'P'`",
+    'n == corridor.length',
+    '1 <= n <= 10^5',
+    "corridor[i] is either 'S' or 'P'.",
   ],
   examples: [
     {
-      input: "corridor = 'SSPPSPS'",
+      input: 'corridor = "SSPPSPS"',
       output: '3',
-      explanation: "Seat positions are 0, 1, 4, 6. Between the 2nd seat (index 1) and 3rd seat (index 4), a divider can go after index 1, 2, or 3 — giving 3 ways.",
+      explanation:
+        'Seats at indices 0,1,4,6. One divider must separate pair (0,1) from pair (4,6); it can go after index 1, 2, or 3 — giving 3 ways.',
     },
     {
-      input: "corridor = 'PPSPSP'",
+      input: 'corridor = "PPSPSP"',
       output: '1',
-      explanation: 'There are exactly 2 seats, so there is only 1 section and no dividers are needed (or one mandatory split). Only 1 valid arrangement.',
+      explanation: 'Only 2 seats (at indices 2 and 4), so just one section covering the entire corridor.',
     },
     {
-      input: "corridor = 'S'",
+      input: 'corridor = "S"',
       output: '0',
-      explanation: 'There is only one seat, so it is impossible to divide the corridor into sections of exactly two seats.',
+      explanation: 'Odd number of seats — no valid division exists.',
     },
   ],
   hints: [
-    'Count total seats. If the count is odd or zero, return 0.',
-    'Collect the positions of all seats. Between the (2i)th seat and (2i+1)th seat (0-indexed pairs), the number of valid divider positions equals pos[2i+1] - pos[2i].',
-    'Multiply all such gap counts together modulo 10^9 + 7 to get the answer.',
+    "Collect all seat indices into an array. If the count is odd or zero, return 0.",
+    'Pair up seats: (seat[0], seat[1]), (seat[2], seat[3]), …. Between adjacent pairs — between seat[2k−1] and seat[2k] — a divider can go in any of the `seat[2k] − seat[2k−1]` gaps.',
+    'Multiply all gap counts together modulo 10^9+7. Use BigInt to avoid overflow: `result = (result * BigInt(gap)) % BigInt(1e9+7)`, then convert back to a number at the end.',
   ],
   functionName: 'numberOfWays',
   params: ['corridor'],
@@ -52,9 +59,14 @@ Return the **number of ways** to place dividers, modulo \`10^9 + 7\`. If there i
     { args: ['S'], expected: 0 },
   ],
   hiddenTests: [
+    { args: ['P'], expected: 0 },
     { args: ['SS'], expected: 1 },
-    { args: ['SSSSS'], expected: 0 },
-    { args: ['SSPPSS'], expected: 3 },
-    { args: ['SPSPSPS'], expected: 2 },
+    { args: ['SP'], expected: 0 },
+    { args: ['SSSSSS'], expected: 1 },
+    { args: ['SSPSPS'], expected: 2 },
+    { args: ['SSPSSPPSPS'], expected: 6 },
+    { args: ['PPPPP'], expected: 0 },
+    { args: ['SPPS'], expected: 1 },
+    { args: ['SPPSSPP'], expected: 0 },
   ],
 };

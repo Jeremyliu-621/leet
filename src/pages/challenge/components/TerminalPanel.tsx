@@ -418,13 +418,24 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
             id="terminal-tab-testcases"
             onClick={() => setActiveTab('testcases')}
             className={[
-              'px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest transition-colors',
+              'px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest transition-colors flex items-center gap-1.5',
               activeTab === 'testcases'
                 ? 'text-text border-b-2 border-accent'
                 : 'text-faint hover:text-muted',
             ].join(' ')}
           >
             Test Results
+            {/* Count badge: shows X/Y when a result exists; animated dots while running */}
+            {result === undefined ? (
+              <span className="tabular-nums animate-pulse" aria-hidden="true">···</span>
+            ) : result != null ? (
+              <span
+                className={`tabular-nums ${result.outcome === 'accepted' ? 'text-accent' : ''}`}
+                aria-label={`${result.passed} of ${result.total} passed`}
+              >
+                {result.passed}/{result.total}
+              </span>
+            ) : null}
           </button>
         </div>
         <button

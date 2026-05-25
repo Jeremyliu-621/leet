@@ -1400,6 +1400,10 @@ import { problem as divideTwoIntegers } from './divide-two-integers';
 import { problem as longestHarmoniousSubsequence } from './longest-harmonious-subsequence';
 import { problem as buddyStrings } from './buddy-strings';
 import { problem as beautifulSubsets } from './beautiful-subsets';
+import { problem as myCalendarIi } from './my-calendar-ii';
+import { problem as taskSchedulerIi } from './task-scheduler-ii';
+import { problem as swappingNodesInALinkedList } from './swapping-nodes-in-a-linked-list';
+import { problem as movePiecesToObtainAString } from './move-pieces-to-obtain-a-string';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2848,4 +2852,8 @@ export const problems: readonly Problem[] = [
   longestHarmoniousSubsequence,
   buddyStrings,
   beautifulSubsets,
+  myCalendarIi,
+  taskSchedulerIi,
+  swappingNodesInALinkedList,
+  movePiecesToObtainAString,
 ];
