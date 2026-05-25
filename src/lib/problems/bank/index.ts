@@ -716,6 +716,13 @@ import { problem as numberOfWaysSelectBuildings } from './number-of-ways-select-
 import { problem as findCitySmallestNumberNeighbors } from './find-city-smallest-number-neighbors';
 import { problem as totalAppealOfString } from './total-appeal-of-string';
 import { problem as minimumFuelCostReportCapital } from './minimum-fuel-cost-report-capital';
+import { problem as maximumProductOfWordLengths } from './maximum-product-of-word-lengths';
+import { problem as asFarFromLandAsPossible } from './as-far-from-land-as-possible';
+import { problem as cheapestFlightsWithinKStops } from './cheapest-flights-within-k-stops';
+import { problem as sortedArrayToBst } from './sorted-array-to-bst';
+import { problem as countSortedVowelStrings } from './count-sorted-vowel-strings';
+import { problem as exclusiveTimeOfFunctions } from './exclusive-time-of-functions';
+import { problem as robotReturnToOrigin } from './robot-return-to-origin';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1417,14 +1424,17 @@ export const problems: readonly Problem[] = [
   numberOfVisiblePeopleInQueue,
   // dp — medium (new)
   combinationSumIv,
+  countSortedVowelStrings,
   // stack — easy (new)
   validParentheses,
   // stack — medium (new)
   evaluateReversePolishNotation,
+  exclusiveTimeOfFunctions,
   // arrays — easy (new)
   moveZeroes,
   // strings — easy (new)
   mergeStringsAlternately,
+  robotReturnToOrigin,
   // dp — medium (new)
   uncrossedLines,
   // heap — medium (new)
@@ -1467,4 +1477,11 @@ export const problems: readonly Problem[] = [
   findCitySmallestNumberNeighbors,
   // tree + graph — medium (new)
   minimumFuelCostReportCapital,
+  // arrays + math — medium (new)
+  maximumProductOfWordLengths,
+  // graph — medium (new)
+  asFarFromLandAsPossible,
+  cheapestFlightsWithinKStops,
+  // tree + binary-search — easy (new)
+  sortedArrayToBst,
 ];

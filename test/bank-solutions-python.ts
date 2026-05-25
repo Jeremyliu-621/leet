@@ -8485,4 +8485,118 @@ def minimumFuelCost(roads, seats):
     dfs(0, -1)
     return ans[0]
 `,
+
+  'robot-return-to-origin': `
+def judgeCircle(moves):
+    x, y = 0, 0
+    for c in moves:
+        if c == 'U': y += 1
+        elif c == 'D': y -= 1
+        elif c == 'L': x -= 1
+        else: x += 1
+    return x == 0 and y == 0
+`,
+
+  'count-sorted-vowel-strings': `
+def countVowelStrings(n):
+    dp = [1, 1, 1, 1, 1]
+    for _ in range(1, n):
+        next_dp = [0] * 5
+        acc = 0
+        for v in range(5):
+            acc += dp[v]
+            next_dp[v] = acc
+        dp = next_dp
+    return sum(dp)
+`,
+
+  'maximum-product-of-word-lengths': `
+def maxProduct(words):
+    words = list(words)
+    masks = []
+    for w in words:
+        m = 0
+        for c in w:
+            m |= (1 << (ord(c) - ord('a')))
+        masks.append(m)
+    max_val = 0
+    for i in range(len(words)):
+        for j in range(i + 1, len(words)):
+            if not (masks[i] & masks[j]):
+                max_val = max(max_val, len(words[i]) * len(words[j]))
+    return max_val
+`,
+
+  'exclusive-time-of-functions': `
+def exclusiveTime(n, logs):
+    logs = list(logs)
+    result = [0] * n
+    stack = []
+    prev = 0
+    for log in logs:
+        parts = log.split(':')
+        fid = int(parts[0])
+        typ = parts[1]
+        t = int(parts[2])
+        if typ == 'start':
+            if stack:
+                result[stack[-1]] += t - prev
+            stack.append(fid)
+            prev = t
+        else:
+            result[fid] += t - prev + 1
+            stack.pop()
+            prev = t + 1
+    return result
+`,
+
+  'as-far-from-land-as-possible': `
+def maxDistance(grid):
+    grid = [list(row) for row in grid]
+    n = len(grid)
+    dist = [[0 if grid[r][c] == 1 else -1 for c in range(n)] for r in range(n)]
+    q = [(r, c) for r in range(n) for c in range(n) if grid[r][c] == 1]
+    if len(q) == 0 or len(q) == n * n:
+        return -1
+    head = 0
+    max_d = -1
+    while head < len(q):
+        r, c = q[head]
+        head += 1
+        for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < n and 0 <= nc < n and dist[nr][nc] == -1:
+                dist[nr][nc] = dist[r][c] + 1
+                max_d = max(max_d, dist[nr][nc])
+                q.append((nr, nc))
+    return max_d
+`,
+
+  'cheapest-flights-within-k-stops': `
+def findCheapestPrice(n, flights, src, dst, k):
+    flights = [list(f) for f in flights]
+    prices = [float('inf')] * n
+    prices[src] = 0
+    for _ in range(k + 1):
+        tmp = prices[:]
+        for frm, to, price in flights:
+            if prices[frm] < float('inf'):
+                tmp[to] = min(tmp[to], prices[frm] + price)
+        prices = tmp
+    return prices[dst] if prices[dst] < float('inf') else -1
+`,
+
+  'sorted-array-to-bst': `
+def sortedArrayToBST(nums):
+    import math
+    def build(lo, hi):
+        if lo > hi:
+            return None
+        mid = lo + math.ceil((hi - lo) / 2)
+        node = TreeNode(nums[mid])
+        node.left = build(lo, mid - 1)
+        node.right = build(mid + 1, hi)
+        return node
+    return build(0, len(nums) - 1)
+`,
 };

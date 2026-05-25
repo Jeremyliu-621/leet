@@ -8692,6 +8692,67 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'robot-return-to-origin': (...args: unknown[]) => {
+    const moves = args[0] as string;
+    let x = 0, y = 0;
+    for (const c of moves) {
+      if (c === 'U') y++;
+      else if (c === 'D') y--;
+      else if (c === 'L') x--;
+      else x++;
+    }
+    return x === 0 && y === 0;
+  },
+
+  'count-sorted-vowel-strings': (...args: unknown[]) => {
+    const n = args[0] as number;
+    let dp = [1, 1, 1, 1, 1];
+    for (let i = 1; i < n; i++) {
+      const next = [0, 0, 0, 0, 0];
+      let acc = 0;
+      for (let v = 0; v < 5; v++) { acc += dp[v]!; next[v] = acc; }
+      dp = next;
+    }
+    return dp.reduce((a, b) => a + b, 0);
+  },
+
+  'maximum-product-of-word-lengths': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const masks = words.map((w) =>
+      [...w].reduce((m, c) => m | (1 << (c.charCodeAt(0) - 97)), 0),
+    );
+    let max = 0;
+    for (let i = 0; i < words.length; i++)
+      for (let j = i + 1; j < words.length; j++)
+        if (!(masks[i]! & masks[j]!))
+          max = Math.max(max, words[i]!.length * words[j]!.length);
+    return max;
+  },
+
+  'exclusive-time-of-functions': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const logs = args[1] as string[];
+    const result = new Array(n).fill(0) as number[];
+    const stack: number[] = [];
+    let prev = 0;
+    for (const log of logs) {
+      const parts = log.split(':');
+      const id = parseInt(parts[0]!);
+      const type = parts[1];
+      const t = parseInt(parts[2]!);
+      if (type === 'start') {
+        if (stack.length) result[stack[stack.length - 1]!]! += t - prev;
+        stack.push(id);
+        prev = t;
+      } else {
+        result[id]! += t - prev + 1;
+        stack.pop();
+        prev = t + 1;
+      }
+    }
+    return result;
+  },
+
   'uncrossed-lines': (...args: unknown[]) => {
     const nums1 = args[0] as number[], nums2 = args[1] as number[];
     const m = nums1.length, n = nums2.length;
@@ -8974,6 +9035,64 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     };
     dfs(0, -1);
     return ans;
+  },
+
+  'as-far-from-land-as-possible': (...args: unknown[]) => {
+    const grid = (args[0] as number[][]).map((r) => [...r]);
+    const n = grid.length;
+    const q: [number, number][] = [];
+    for (let r = 0; r < n; r++)
+      for (let c = 0; c < n; c++)
+        if (grid[r]![c] === 1) q.push([r, c]);
+    if (q.length === 0 || q.length === n * n) return -1;
+    const dist: number[][] = grid.map((r) => r.map((v) => (v === 1 ? 0 : -1)));
+    let head = 0;
+    let maxD = -1;
+    const dirs: [number, number][] = [[-1,0],[1,0],[0,-1],[0,1]];
+    while (head < q.length) {
+      const cell = q[head++];
+      const r = cell![0]!, c = cell![1]!;
+      for (const d of dirs) {
+        const nr = r + d[0]!, nc = c + d[1]!;
+        if (nr >= 0 && nr < n && nc >= 0 && nc < n && dist[nr]![nc] === -1) {
+          dist[nr]![nc] = dist[r]![c]! + 1;
+          maxD = Math.max(maxD, dist[nr]![nc]!);
+          q.push([nr, nc]);
+        }
+      }
+    }
+    return maxD;
+  },
+
+  'cheapest-flights-within-k-stops': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const flights = args[1] as number[][];
+    const src = args[2] as number;
+    const dst = args[3] as number;
+    const k = args[4] as number;
+    let prices = new Array<number>(n).fill(Infinity);
+    prices[src] = 0;
+    for (let i = 0; i <= k; i++) {
+      const tmp = [...prices];
+      for (const flight of flights) {
+        const from = flight[0]!, to = flight[1]!, price = flight[2]!;
+        if (prices[from]! < Infinity) {
+          tmp[to] = Math.min(tmp[to]!, prices[from]! + price);
+        }
+      }
+      prices = tmp;
+    }
+    return prices[dst]! === Infinity ? -1 : prices[dst]!;
+  },
+
+  'sorted-array-to-bst': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    function build(lo: number, hi: number): _TN | null {
+      if (lo > hi) return null;
+      const mid = lo + Math.ceil((hi - lo) / 2);
+      return { v: nums[mid]!, l: build(lo, mid - 1), r: build(mid + 1, hi) };
+    }
+    return _treeToArr(build(0, nums.length - 1));
   },
 
 };
