@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 820 problems; 2731 tests green.
+**Current focus:** Bank at 840 problems; 2791 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing bank toward 850; UI/UX polish, accessibility.
+**Next up:** Continue growing bank toward 850+; UI/UX polish, accessibility.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -315,6 +315,8 @@ Still pending:
 - [x] **22 more problems** (batch 11, remote merge) — count-operations-to-obtain-zero, design-underground-system, sort-vowels-in-a-string, minimum-time-to-repair-cars, number-of-matching-subsequences, beautiful-arrangement-ii, lfu-cache, smallest-range-covering-k-lists, bus-routes, maximum-score-words-formed + remote: decompress-run-length-encoding, check-almost-equivalent-strings, minimum-value-positive-steps, check-if-all-as-before-bs, check-if-word-equals-summation, ways-to-buy-pens-pencils, check-array-sorted-rotated, interpret-string, merge-similar-items, count-good-rectangles, maximum-population-year, find-kth-bit-nth-binary-string; bank at 783; 2620 tests.
 - [x] **20 more problems** (batches 12-14) — largest-positive-integer-with-negative, maximize-sum-k-elements, check-if-acronym, count-pairs-absolute-diff-k, number-of-arithmetic-subarrays, check-valid-matrix, count-max-frequency-elements, minimum-difference-after-k-removals, number-of-valid-clock-times, calculate-money-in-bank, score-of-string, chalk-replacer, split-with-minimum-sum, max-difference-increasing-elements, longest-nice-subarray, interchangeable-rectangles, find-triangular-sum, two-furthest-houses-different-colors, count-lattice-points-circle, nearest-exit-maze; **🎉 800-problem milestone**; bank at 803; 2680 tests.
 - [x] **17 more problems** — climbing-stairs-k-steps, maximum-xor-two-numbers, remove-stones-to-minimize-total, maximize-happiness-of-selected-children, find-the-maximum-achievable-number, partition-array-maximum-difference, remove-duplicates-from-sorted-list-ii, count-number-of-homogenous-substrings, stone-game-vi, count-special-quadruplets (remote), alternating-digit-sum, count-ways-to-build-good-string, divide-players-into-teams-of-equal-skill, maximum-number-of-pairs-in-array, minimize-maximum-pair-sum-in-array, minimum-operations-to-exceed-threshold-value-ii, number-of-ways-to-split-array; bank at 820; 2731 tests.
+- [x] **10 more problems + 1** (in previous session) — find-all-duplicates-in-array, check-if-word-occurs-as-prefix, count-subarrays-score-less-than-k, excel-sheet-column-number, jump-game-vii, longest-square-streak, maximum-beauty-array-after-applying-operation, maximum-product-after-k-increments, pairs-of-songs-divisible-60, find-all-duplicates (bank at 830); 2758 tests.
+- [x] **11 more problems** — find-the-index-of-first-occurrence, integer-replacement, number-of-smooth-descent-periods, maximum-matrix-sum, count-nodes-with-highest-score, find-right-interval, circular-sentence, minimum-garden-perimeter, group-people-given-group-size, count-number-of-bad-pairs, minimum-changes-to-make-binary-string-beautiful; bank at 840; 2791 tests.
 
 ---
 
