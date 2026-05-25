@@ -8,9 +8,17 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1425 problems; 4560 tests green.
+**Current focus:** Bank at 1430 problems; 4575 tests green; UI/UX polish pass complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue adding classic problems (Batch 49+); UI/UX polish; draggable splitter; options improvements.
+**Next up:** Continue growing problem bank (Batch 49+); marketing site stat update at 1500.
+
+### UI/UX polish (2026-05-25)
+- **Back-to-settings link in practice mode**: TopBar now shows "← settings" link back to Options/problem browser when in practice mode (no blocked target URL). settingsHref computed via chrome.runtime.getURL.
+- **Browse problems button on solved screen**: Solved-standalone screen now has "Browse problems" button alongside "Try another" and "Close".
+- **Filter button counts in problem browser**: Difficulty and tag pills in the problem browser now show total problem counts (e.g. "easy 420", "arrays 312"). `totalByTag` computed via `useMemo` with `[]` deps.
+- **Practice mode banner clarified**: NoTargetBanner text changed from "Standalone mode — no blocked site detected" to "Practice mode — solving here won't grant site access", consistent with header "practice mode" label.
+- **All hints revealed message**: HintsSection now shows "All hints revealed." after the last hint is shown.
+- **Target domain in header**: TopBar subtitle shows "unlock youtube.com" instead of generic "solve to unlock" when gate mode is active and domain is known.
 
 ### Batch 48 (2026-05-25)
 Added 5 problems: `day-of-the-week` (math/easy), `guess-number-higher-or-lower` (binary-search/easy), `largest-triangle-area` (math/easy), `minimum-value-to-get-positive-step-sum` (arrays/easy), `number-of-rectangles-that-can-form-largest-square` (arrays/easy). Skipped 4 originally requested problems that already existed in the bank; substituted equivalent-difficulty originals.
@@ -409,6 +417,8 @@ Still pending:
 - [x] **Popup UX** — recent solves are now clickable buttons that open the specific problem in challenge; active unlock domains are clickable to navigate to the site.
 - [x] **5 more classic problems (Batch 48-remote)** — day-of-the-week (math/easy), guess-number-higher-or-lower (binary-search/easy), largest-triangle-area (math/easy), minimum-value-to-get-positive-step-sum (arrays/easy), number-of-rectangles-that-can-form-largest-square (arrays/easy); bank at ~1420; 4545 tests.
 - [x] **5 more classic problems (Batch 47-local)** — successful-pairs-of-spells-and-potions (binary-search/medium, sort+binary-search per spell), minimum-operations-to-reduce-x-to-zero (sliding-window/medium, longest subarray = total−x), largest-submatrix-with-rearrangements (arrays/medium, column heights+sort), subtree-of-another-tree (tree/easy, isSameTree+DFS), maximum-product-of-splitted-binary-tree (tree+dp/medium, DFS maximize s×(total−s) mod 1e9+7); bank at **1425**; 4560 tests.
+- [x] **Challenge UX polish** — TopBar shows "← settings" back link in practice mode; "Browse problems" button on solved-standalone screen; target domain in subtitle ("unlock youtube.com") in gate mode; NoTargetBanner text unified with header terminology; HintsSection shows "All hints revealed." after last hint; difficulty+tag filter pills restored with static counts.
+- [x] **Batch 49** — watering-plants (arrays/easy), logger-rate-limiter (hash-map/easy), bst-from-preorder (tree/medium), balance-a-binary-search-tree (tree/medium), maximum-sum-bst-in-binary-tree (tree/hard); bank at **1430**; 4575 tests.
 
 ---
 
