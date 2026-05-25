@@ -158,6 +158,11 @@ import { problem as mostProfitAssigningWork } from './most-profit-assigning-work
 import { problem as fruitIntoBaskets } from './fruit-into-baskets';
 import { problem as minimumSwapsStringBalanced } from './minimum-swaps-string-balanced';
 import { problem as sumOfSubarrayRanges } from './sum-of-subarray-ranges';
+import { problem as maximizeConfusionExam } from './maximize-confusion-exam';
+import { problem as sumOfAllSubsetXorTotals } from './sum-of-all-subset-xor-totals';
+import { problem as continuousSubarraySum } from './continuous-subarray-sum';
+import { problem as equalRowColumnPairs } from './equal-row-column-pairs';
+import { problem as determineIfTwoStringsClose } from './determine-if-two-strings-close';
 // arrays — medium (additional)
 import { problem as shortestUnsortedContinuousSubarray } from './shortest-unsorted-continuous-subarray';
 import { problem as maxChunksToMakeSorted } from './max-chunks-to-make-sorted';
@@ -977,6 +982,7 @@ export const problems: readonly Problem[] = [
   maxConsecutiveFlips,
   countSubarraysBoundedMax,
   // sliding-window — medium
+  maximizeConfusionExam,
   countNiceSubarrays,
   frequencyOfMostFrequentElement,
   maxConsecutiveOnesIII,
@@ -1021,6 +1027,9 @@ export const problems: readonly Problem[] = [
   findPeakElement,
   countRectanglesContainingPoint,
   mostProfitAssigningWork,
+  continuousSubarraySum,
+  equalRowColumnPairs,
+  determineIfTwoStringsClose,
   // binary-search — hard
   findKthSmallestPairDistance,
   findMinRotatedII,
@@ -1124,6 +1133,7 @@ export const problems: readonly Problem[] = [
   maximum69Number,
   countOfMatchesTournament,
   nthTribonacciNumber,
+  sumOfAllSubsetXorTotals,
   // math — hard
   fractionToRecurringDecimal,
   integerToEnglishWords,

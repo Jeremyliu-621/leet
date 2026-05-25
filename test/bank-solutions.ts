@@ -8314,4 +8314,62 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return res === Infinity ? -1 : res;
   },
 
+  'maximize-confusion-exam': (...args: unknown[]) => {
+    const answerKey = args[0] as string, k = args[1] as number;
+    const solve = (c: string) => {
+      let l = 0, cnt = 0, ans = 0;
+      for (let r = 0; r < answerKey.length; r++) {
+        if (answerKey[r] !== c) cnt++;
+        while (cnt > k) if (answerKey[l++] !== c) cnt--;
+        ans = Math.max(ans, r - l + 1);
+      }
+      return ans;
+    };
+    return Math.max(solve('T'), solve('F'));
+  },
+
+  'sum-of-all-subset-xor-totals': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const or = nums.reduce((a, b) => a | b, 0);
+    return or * (1 << (nums.length - 1));
+  },
+
+  'continuous-subarray-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const seen = new Map([[0, -1]]);
+    let s = 0;
+    for (let i = 0; i < nums.length; i++) {
+      s = (s + nums[i]!) % k;
+      if (seen.has(s)) { if (i - seen.get(s)! >= 2) return true; }
+      else seen.set(s, i);
+    }
+    return false;
+  },
+
+  'equal-row-column-pairs': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const rowMap = new Map<string, number>();
+    for (const row of grid) {
+      const key = row.join(',');
+      rowMap.set(key, (rowMap.get(key) ?? 0) + 1);
+    }
+    let ans = 0;
+    const n = grid.length;
+    for (let j = 0; j < n; j++) {
+      const key = grid.map(r => r[j]).join(',');
+      ans += rowMap.get(key) ?? 0;
+    }
+    return ans;
+  },
+
+  'determine-if-two-strings-close': (...args: unknown[]) => {
+    const word1 = args[0] as string, word2 = args[1] as string;
+    if (word1.length !== word2.length) return false;
+    const f1 = new Map<string, number>(), f2 = new Map<string, number>();
+    for (const c of word1) f1.set(c, (f1.get(c) ?? 0) + 1);
+    for (const c of word2) f2.set(c, (f2.get(c) ?? 0) + 1);
+    if ([...f1.keys()].sort().join() !== [...f2.keys()].sort().join()) return false;
+    return [...f1.values()].sort((a, b) => a - b).join() === [...f2.values()].sort((a, b) => a - b).join();
+  },
+
 };

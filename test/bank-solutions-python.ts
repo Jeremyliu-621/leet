@@ -4694,7 +4694,7 @@ def deserialize(data):
     return [x for x in nums if x % 2 == 0] + [x for x in nums if x % 2 != 0]
 `,
 
-  'left-and-right-sum-differences': `def leftRightDifference(nums):
+  'left-and-right-sum-differences': `def leftRigthDifference(nums):
     total = sum(nums)
     result = []
     left = 0
@@ -7767,5 +7767,59 @@ def minDominoRotations(tops, bottoms):
         return min(rt, rb)
     res = min(check(tops[0]), check(bottoms[0]))
     return res if res != float('inf') else -1
+`,
+
+  'maximize-confusion-exam': `def maxConsecutiveAnswers(answerKey, k):
+    def solve(c):
+        l = cnt = ans = 0
+        for r in range(len(answerKey)):
+            if answerKey[r] != c:
+                cnt += 1
+            while cnt > k:
+                if answerKey[l] != c:
+                    cnt -= 1
+                l += 1
+            ans = max(ans, r - l + 1)
+        return ans
+    return max(solve('T'), solve('F'))
+`,
+
+  'sum-of-all-subset-xor-totals': `def subsetXORSum(nums):
+    from functools import reduce
+    from operator import or_
+    total_or = reduce(or_, nums, 0)
+    return total_or * (1 << (len(nums) - 1))
+`,
+
+  'continuous-subarray-sum': `def checkSubarraySum(nums, k):
+    seen = {0: -1}
+    s = 0
+    for i, n in enumerate(nums):
+        s = (s + n) % k
+        if s in seen:
+            if i - seen[s] >= 2:
+                return True
+        else:
+            seen[s] = i
+    return False
+`,
+
+  'equal-row-column-pairs': `def equalPairs(grid):
+    from collections import Counter
+    n = len(grid)
+    row_counts = Counter(tuple(row) for row in grid)
+    ans = 0
+    for j in range(n):
+        col = tuple(grid[i][j] for i in range(n))
+        ans += row_counts[col]
+    return ans
+`,
+
+  'determine-if-two-strings-close': `def closeStrings(word1, word2):
+    from collections import Counter
+    if len(word1) != len(word2):
+        return False
+    c1, c2 = Counter(word1), Counter(word2)
+    return set(c1.keys()) == set(c2.keys()) and sorted(c1.values()) == sorted(c2.values())
 `,
 };
