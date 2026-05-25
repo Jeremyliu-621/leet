@@ -1,7 +1,30 @@
+import { useState, useCallback } from 'react';
 import type { Problem } from '../../../lib/problems/types';
 import type { Difficulty } from '../../../lib/types';
 import { ProblemDescription } from './ProblemDescription';
 import { HintsSection } from './HintsSection';
+
+/** Inline copy button for example inputs and outputs. */
+function InlineCopy({ value }: { value: string }) {
+  const [copied, setCopied] = useState(false);
+  const handleCopy = useCallback(() => {
+    void navigator.clipboard.writeText(value).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    });
+  }, [value]);
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      aria-label="Copy to clipboard"
+      className="ml-1 shrink-0 font-mono text-faint transition-colors hover:text-muted"
+      style={{ fontSize: '9px', letterSpacing: '0.05em' }}
+    >
+      {copied ? '✓' : 'copy'}
+    </button>
+  );
+}
 
 interface ProblemPanelProps {
   problem: Problem;
@@ -91,6 +114,7 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
                         Input
                       </span>
                       <code className="font-mono text-xs text-text break-all">{example.input}</code>
+                      <InlineCopy value={example.input} />
                     </div>
                     <div className="flex flex-wrap gap-x-3 gap-y-1">
                       <span className="font-mono text-[10px] uppercase tracking-wider text-faint w-14 shrink-0">
@@ -99,6 +123,7 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
                       <code className="font-mono text-xs text-text break-all">
                         {example.output}
                       </code>
+                      <InlineCopy value={example.output} />
                     </div>
                     {example.explanation && (
                       <div className="border-t border-border pt-2 mt-1">

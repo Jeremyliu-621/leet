@@ -53,6 +53,46 @@ function ValueDisplay({ value }: { value: string }) {
   );
 }
 
+/**
+ * Shows a concise diff hint when expected and actual are both arrays.
+ * Highlights the first differing index so the user can quickly spot the
+ * off-by-one / wrong-element error without mentally comparing long arrays.
+ */
+function ArrayDiffHint({ expected, actual }: { expected: unknown; actual: unknown }) {
+  if (!Array.isArray(expected) || !Array.isArray(actual)) return null;
+
+  const diffIndices: number[] = [];
+  const maxLen = Math.max(expected.length, actual.length);
+  for (let i = 0; i < maxLen; i++) {
+    try {
+      if (JSON.stringify(expected[i]) !== JSON.stringify(actual[i])) {
+        diffIndices.push(i);
+      }
+    } catch {
+      diffIndices.push(i);
+    }
+  }
+
+  if (diffIndices.length === 0) return null;
+
+  const lenDiff = actual.length - expected.length;
+  const lenNote =
+    lenDiff !== 0
+      ? ` · length ${actual.length} vs ${expected.length}`
+      : '';
+
+  const label =
+    diffIndices.length === 1
+      ? `diff at index ${diffIndices[0]}${lenNote}`
+      : `${diffIndices.length} diffs (first: index ${diffIndices[0]})${lenNote}`;
+
+  return (
+    <div className="pl-4 text-[10px] text-faint tabular-nums" aria-label={`Array diff: ${label}`}>
+      ↳ {label}
+    </div>
+  );
+}
+
 /** Terminal entry types for the output log. */
 type TerminalEntry =
   | { type: 'system'; text: string }
@@ -464,6 +504,7 @@ function TestResultCard({ verdict }: { verdict: TestVerdict }) {
                 <ValueDisplay value={displayValue(verdict.actual)} />
                 <CopyButton value={displayValue(verdict.actual)} />
               </div>
+              <ArrayDiffHint expected={verdict.expected} actual={verdict.actual} />
             </>
           )}
           {verdict.status === 'error' && (

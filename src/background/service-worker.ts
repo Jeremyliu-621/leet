@@ -121,7 +121,11 @@ async function failChallenge(
     url = request.redirectUrl;
   } else {
     const base = chrome.runtime.getURL('src/pages/blocked/index.html');
-    url = request.domain ? `${base}?domain=${encodeURIComponent(request.domain)}` : base;
+    const q = new URLSearchParams();
+    if (request.domain) q.set('domain', request.domain);
+    if (request.targetUrl) q.set('target', request.targetUrl);
+    const qs = q.toString();
+    url = qs ? `${base}?${qs}` : base;
   }
   await chrome.tabs.update(tabId, { url });
   return { ok: true };

@@ -34,6 +34,8 @@ export interface FailChallengeRequest {
   failureAction: 'close' | 'redirect';
   /** Used when failureAction is "redirect". */
   redirectUrl?: string;
+  /** The original blocked URL; passed to the blocked page so it can offer a retry. */
+  targetUrl?: string;
   /** The challenge tab id; the SW closes or redirects it as configured. */
   tabId?: number;
 }

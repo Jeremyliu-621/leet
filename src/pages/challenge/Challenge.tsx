@@ -551,6 +551,7 @@ export function Challenge() {
         reason,
         failureAction: prefs.failureAction,
         redirectUrl: prefs.redirectUrl,
+        targetUrl: targetUrl.current ?? undefined,
         tabId,
       });
     } catch {

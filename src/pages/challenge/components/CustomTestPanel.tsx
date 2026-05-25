@@ -149,6 +149,9 @@ export function CustomTestPanel({ params, onRun, result }: CustomTestPanelProps)
                         setParseErrors(errs);
                       }
                     }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && !isRunning) void handleRun();
+                    }}
                     aria-invalid={error}
                     aria-describedby={error ? `${inputId}-err` : undefined}
                     className={[
