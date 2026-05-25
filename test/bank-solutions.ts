@@ -15015,4 +15015,187 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return -1;
   },
 
+  'stone-game-vii': (stoneValue: unknown) => {
+    const sv = stoneValue as number[];
+    const n = sv.length;
+    const prefix = new Array(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + sv[i]!;
+    const dp: number[][] = Array.from({ length: n }, () => new Array(n).fill(0));
+    for (let len = 2; len <= n; len++) {
+      for (let i = 0; i <= n - len; i++) {
+        const j = i + len - 1;
+        const removeLeft = prefix[j + 1] - prefix[i + 1] - dp[i + 1]![j]!;
+        const removeRight = prefix[j] - prefix[i] - dp[i]![j - 1]!;
+        dp[i]![j] = Math.max(removeLeft, removeRight);
+      }
+    }
+    return dp[0]![n - 1]!;
+  },
+
+  'stone-game-v': (stoneValue: unknown) => {
+    const sv = stoneValue as number[];
+    const n = sv.length;
+    if (n === 1) return 0;
+    const prefix = new Array(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + sv[i]!;
+    const dp: number[][] = Array.from({ length: n }, () => new Array(n).fill(0));
+    for (let len = 2; len <= n; len++) {
+      for (let i = 0; i <= n - len; i++) {
+        const j = i + len - 1;
+        for (let m = i; m < j; m++) {
+          const left = prefix[m + 1] - prefix[i];
+          const right = prefix[j + 1] - prefix[m + 1];
+          if (left < right) dp[i]![j] = Math.max(dp[i]![j]!, left + dp[i]![m]!);
+          else if (left > right) dp[i]![j] = Math.max(dp[i]![j]!, right + dp[m + 1]![j]!);
+          else dp[i]![j] = Math.max(dp[i]![j]!, left + Math.max(dp[i]![m]!, dp[m + 1]![j]!));
+        }
+      }
+    }
+    return dp[0]![n - 1]!;
+  },
+
+  'maximum-sum-three-non-overlapping-subarrays': (nums: unknown, k: unknown) => {
+    const a = nums as number[], kk = k as number;
+    const n = a.length;
+    const w: number[] = [];
+    let s = 0;
+    for (let i = 0; i < kk; i++) s += a[i]!;
+    w.push(s);
+    for (let i = kk; i < n; i++) { s += a[i]! - a[i - kk]!; w.push(s); }
+    const wn = w.length;
+    const left = new Array(wn).fill(0);
+    const right = new Array(wn).fill(0);
+    let best = w[0]!, bidx = 0;
+    for (let i = 0; i < wn; i++) { if (w[i]! > best) { best = w[i]!; bidx = i; } left[i] = bidx; }
+    best = w[wn - 1]!; bidx = wn - 1;
+    for (let i = wn - 1; i >= 0; i--) { if (w[i]! >= best) { best = w[i]!; bidx = i; } right[i] = bidx; }
+    let ans = [-1, -1, -1], bestSum = 0;
+    for (let j = kk; j < wn - kk; j++) {
+      const l = left[j - kk]!, r = right[j + kk]!;
+      const total = w[l]! + w[j]! + w[r]!;
+      if (total > bestSum) { bestSum = total; ans = [l, j, r]; }
+    }
+    return ans;
+  },
+
+  'minimum-cost-to-merge-stones': (stones: unknown, k: unknown) => {
+    const st = stones as number[], kk = k as number;
+    const n = st.length;
+    if (n === 1) return 0;
+    if ((n - 1) % (kk - 1) !== 0) return -1;
+    const prefix = new Array(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + st[i]!;
+    const dp: number[][] = Array.from({ length: n }, () => new Array(n).fill(0));
+    for (let len = kk; len <= n; len++) {
+      for (let i = 0; i <= n - len; i++) {
+        const j = i + len - 1;
+        dp[i]![j] = Infinity;
+        for (let m = i; m < j; m += kk - 1) {
+          dp[i]![j] = Math.min(dp[i]![j]!, dp[i]![m]! + dp[m + 1]![j]!);
+        }
+        if ((len - 1) % (kk - 1) === 0) dp[i]![j] = dp[i]![j]! + prefix[j + 1] - prefix[i];
+      }
+    }
+    return dp[0]![n - 1]!;
+  },
+
+  'palindrome-partitioning-iii': (s: unknown, k: unknown) => {
+    const str = s as string, kk = k as number;
+    const n = str.length;
+    const cost: number[][] = Array.from({ length: n }, () => new Array(n).fill(0));
+    for (let len = 2; len <= n; len++) {
+      for (let i = 0; i <= n - len; i++) {
+        const j = i + len - 1;
+        cost[i]![j] = cost[i + 1]![j - 1]! + (str[i] !== str[j] ? 1 : 0);
+      }
+    }
+    const INF = Infinity;
+    const dp: number[][] = Array.from({ length: kk + 1 }, () => new Array(n).fill(INF));
+    for (let j = 0; j < n; j++) dp[1]![j] = cost[0]![j]!;
+    for (let t = 2; t <= kk; t++) {
+      for (let j = t - 1; j < n; j++) {
+        for (let m = t - 1; m <= j; m++) {
+          dp[t]![j] = Math.min(dp[t]![j]!, dp[t - 1]![m - 1]! + cost[m]![j]!);
+        }
+      }
+    }
+    return dp[kk]![n - 1]!;
+  },
+
+  'maximum-height-by-stacking-cuboids': (cuboids: unknown) => {
+    const cs = (cuboids as number[][]).map(c => [...c].sort((a, b) => a - b));
+    cs.sort((a, b) => a[0]! - b[0]! || a[1]! - b[1]! || a[2]! - b[2]!);
+    const n = cs.length;
+    const dp = cs.map(c => c[2]!);
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < i; j++) {
+        if (cs[j]![0]! <= cs[i]![0]! && cs[j]![1]! <= cs[i]![1]! && cs[j]![2]! <= cs[i]![2]!) {
+          dp[i] = Math.max(dp[i]!, dp[j]! + cs[i]![2]!);
+        }
+      }
+    }
+    return Math.max(...dp);
+  },
+
+  'minimum-number-of-days-to-eat-n-oranges': (n: unknown) => {
+    const memo = new Map<number, number>();
+    function dp(x: number): number {
+      if (x <= 1) return x;
+      if (memo.has(x)) return memo.get(x)!;
+      const res = 1 + Math.min(x % 2 + dp(Math.floor(x / 2)), x % 3 + dp(Math.floor(x / 3)));
+      memo.set(x, res);
+      return res;
+    }
+    return dp(n as number);
+  },
+
+  'best-team-with-no-conflicts': (scores: unknown, ages: unknown) => {
+    const s = scores as number[], a = ages as number[];
+    const players = a.map((age, i) => [age, s[i]!] as [number, number]).sort((x, y) => x[0] - y[0] || x[1] - y[1]);
+    const n = players.length;
+    const dp = players.map(p => p[1]);
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < i; j++) {
+        if (players[j]![1]! <= players[i]![1]!) dp[i] = Math.max(dp[i]!, dp[j]! + players[i]![1]!);
+      }
+    }
+    return Math.max(...dp);
+  },
+
+  'number-of-ways-to-form-target-given-dictionary': (words: unknown, target: unknown) => {
+    const ws = words as string[], t = target as string;
+    const MOD = 1_000_000_007;
+    const wlen = ws[0]!.length, tlen = t.length;
+    const count: number[][] = Array.from({ length: wlen }, () => new Array(26).fill(0));
+    for (const w of ws) for (let j = 0; j < wlen; j++) count[j]![w.charCodeAt(j) - 97]!++;
+    const dp = new Array(tlen + 1).fill(0);
+    dp[0] = 1;
+    for (let j = 0; j < wlen; j++) {
+      for (let i = Math.min(j + 1, tlen); i >= 1; i--) {
+        const c = t.charCodeAt(i - 1) - 97;
+        dp[i] = (dp[i] + dp[i - 1] * count[j]![c]!) % MOD;
+      }
+    }
+    return dp[tlen];
+  },
+
+  'minimum-xor-sum-of-two-arrays': (nums1: unknown, nums2: unknown) => {
+    const a = nums1 as number[], b = nums2 as number[];
+    const n = a.length;
+    const dp = new Array(1 << n).fill(Infinity);
+    dp[0] = 0;
+    for (let mask = 0; mask < (1 << n); mask++) {
+      if (dp[mask] === Infinity) continue;
+      const i = (mask).toString(2).split('').filter(c => c === '1').length;
+      if (i >= n) continue;
+      for (let j = 0; j < n; j++) {
+        if (!(mask & (1 << j))) {
+          const next = mask | (1 << j);
+          dp[next] = Math.min(dp[next]!, dp[mask]! + (a[i]! ^ b[j]!));
+        }
+      }
+    }
+    return dp[(1 << n) - 1]!;
+  },
+
 };

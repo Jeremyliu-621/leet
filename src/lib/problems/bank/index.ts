@@ -1174,6 +1174,16 @@ import { problem as minimumRemovals } from './minimum-number-of-removals-to-make
 import { problem as countDifferentPalindromicSubsequences } from './count-different-palindromic-subsequences';
 import { problem as paintingTheWalls } from './painting-the-walls';
 import { problem as shortestPathAllKeys } from './shortest-path-to-get-all-keys';
+import { problem as stoneGameVii } from './stone-game-vii';
+import { problem as stoneGameV } from './stone-game-v';
+import { problem as maximumSumThreeNonOverlappingSubarrays } from './maximum-sum-three-non-overlapping-subarrays';
+import { problem as minimumCostToMergeStones } from './minimum-cost-to-merge-stones';
+import { problem as palindromePartitioningIii } from './palindrome-partitioning-iii';
+import { problem as maximumHeightByStackingCuboids } from './maximum-height-by-stacking-cuboids';
+import { problem as minimumDaysToEatOranges } from './minimum-number-of-days-to-eat-n-oranges';
+import { problem as bestTeamWithNoConflicts } from './best-team-with-no-conflicts';
+import { problem as numberOfWaysToFormTarget } from './number-of-ways-to-form-target-given-dictionary';
+import { problem as minimumXorSumOfTwoArrays } from './minimum-xor-sum-of-two-arrays';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2396,4 +2406,14 @@ export const problems: readonly Problem[] = [
   countDifferentPalindromicSubsequences,
   paintingTheWalls,
   shortestPathAllKeys,
+  stoneGameVii,
+  stoneGameV,
+  maximumSumThreeNonOverlappingSubarrays,
+  minimumCostToMergeStones,
+  palindromePartitioningIii,
+  maximumHeightByStackingCuboids,
+  minimumDaysToEatOranges,
+  bestTeamWithNoConflicts,
+  numberOfWaysToFormTarget,
+  minimumXorSumOfTwoArrays,
 ];

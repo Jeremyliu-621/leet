@@ -14646,4 +14646,175 @@ def shortestPathAllKeys(grid):
                 q.append((nr, nc, nkeys, dist + 1))
     return -1
 `,
+
+  'stone-game-vii': `
+def stoneGameVII(stoneValue):
+    stoneValue = list(stoneValue.to_py()) if hasattr(stoneValue, 'to_py') else list(stoneValue)
+    n = len(stoneValue)
+    prefix = [0] * (n + 1)
+    for i in range(n): prefix[i+1] = prefix[i] + stoneValue[i]
+    dp = [[0]*n for _ in range(n)]
+    for length in range(2, n+1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            dp[i][j] = max(prefix[j+1]-prefix[i+1]-dp[i+1][j], prefix[j]-prefix[i]-dp[i][j-1])
+    return dp[0][n-1]
+`,
+
+  'stone-game-v': `
+def stoneGameV(stoneValue):
+    stoneValue = list(stoneValue.to_py()) if hasattr(stoneValue, 'to_py') else list(stoneValue)
+    n = len(stoneValue)
+    if n == 1: return 0
+    prefix = [0]*(n+1)
+    for i in range(n): prefix[i+1] = prefix[i] + stoneValue[i]
+    dp = [[0]*n for _ in range(n)]
+    for length in range(2, n+1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            for m in range(i, j):
+                left = prefix[m+1] - prefix[i]
+                right = prefix[j+1] - prefix[m+1]
+                if left < right: dp[i][j] = max(dp[i][j], left + dp[i][m])
+                elif left > right: dp[i][j] = max(dp[i][j], right + dp[m+1][j])
+                else: dp[i][j] = max(dp[i][j], left + max(dp[i][m], dp[m+1][j]))
+    return dp[0][n-1]
+`,
+
+  'maximum-sum-three-non-overlapping-subarrays': `
+def maxSumOfThreeSubarrays(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums)
+    w = []
+    s = sum(nums[:k]); w.append(s)
+    for i in range(k, n): s += nums[i] - nums[i-k]; w.append(s)
+    wn = len(w)
+    left = [0]*wn; right = [0]*wn
+    best = w[0]; bidx = 0
+    for i in range(wn):
+        if w[i] > best: best = w[i]; bidx = i
+        left[i] = bidx
+    best = w[-1]; bidx = wn-1
+    for i in range(wn-1, -1, -1):
+        if w[i] >= best: best = w[i]; bidx = i
+        right[i] = bidx
+    ans = [-1,-1,-1]; best_sum = 0
+    for j in range(k, wn-k):
+        l, r = left[j-k], right[j+k]
+        if w[l]+w[j]+w[r] > best_sum:
+            best_sum = w[l]+w[j]+w[r]; ans = [l,j,r]
+    return ans
+`,
+
+  'minimum-cost-to-merge-stones': `
+def mergeStones(stones, k):
+    stones = list(stones.to_py()) if hasattr(stones, 'to_py') else list(stones)
+    n = len(stones)
+    if n == 1: return 0
+    if (n - 1) % (k - 1) != 0: return -1
+    prefix = [0]*(n+1)
+    for i in range(n): prefix[i+1] = prefix[i] + stones[i]
+    dp = [[0]*n for _ in range(n)]
+    for length in range(k, n+1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            dp[i][j] = float('inf')
+            for m in range(i, j, k-1):
+                dp[i][j] = min(dp[i][j], dp[i][m] + dp[m+1][j])
+            if (length - 1) % (k - 1) == 0:
+                dp[i][j] += prefix[j+1] - prefix[i]
+    return dp[0][n-1]
+`,
+
+  'palindrome-partitioning-iii': `
+def palindromePartition(s, k):
+    n = len(s)
+    cost = [[0]*n for _ in range(n)]
+    for length in range(2, n+1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            cost[i][j] = cost[i+1][j-1] + (0 if s[i] == s[j] else 1)
+    INF = float('inf')
+    dp = [[INF]*n for _ in range(k+1)]
+    for j in range(n): dp[1][j] = cost[0][j]
+    for t in range(2, k+1):
+        for j in range(t-1, n):
+            for m in range(t-1, j+1):
+                dp[t][j] = min(dp[t][j], dp[t-1][m-1] + cost[m][j])
+    return dp[k][n-1]
+`,
+
+  'maximum-height-by-stacking-cuboids': `
+def maxHeight(cuboids):
+    cuboids = [list(c.to_py()) if hasattr(c, 'to_py') else list(c) for c in (cuboids.to_py() if hasattr(cuboids, 'to_py') else cuboids)]
+    for c in cuboids: c.sort()
+    cuboids.sort()
+    n = len(cuboids)
+    dp = [c[2] for c in cuboids]
+    for i in range(n):
+        for j in range(i):
+            if cuboids[j][0] <= cuboids[i][0] and cuboids[j][1] <= cuboids[i][1] and cuboids[j][2] <= cuboids[i][2]:
+                dp[i] = max(dp[i], dp[j] + cuboids[i][2])
+    return max(dp)
+`,
+
+  'minimum-number-of-days-to-eat-n-oranges': `
+def minDays(n):
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dp(x):
+        if x <= 1: return x
+        return 1 + min(x % 2 + dp(x // 2), x % 3 + dp(x // 3))
+    return dp(n)
+`,
+
+  'best-team-with-no-conflicts': `
+def bestTeamScore(scores, ages):
+    scores = list(scores.to_py()) if hasattr(scores, 'to_py') else list(scores)
+    ages = list(ages.to_py()) if hasattr(ages, 'to_py') else list(ages)
+    players = sorted(zip(ages, scores))
+    n = len(players)
+    dp = [p[1] for p in players]
+    for i in range(n):
+        for j in range(i):
+            if players[j][1] <= players[i][1]:
+                dp[i] = max(dp[i], dp[j] + players[i][1])
+    return max(dp)
+`,
+
+  'number-of-ways-to-form-target-given-dictionary': `
+def numWays(words, target):
+    words = list(words.to_py()) if hasattr(words, 'to_py') else list(words)
+    words = [str(w) for w in words]
+    MOD = 10**9 + 7
+    wlen, tlen = len(words[0]), len(target)
+    count = [[0]*26 for _ in range(wlen)]
+    for w in words:
+        for j, c in enumerate(w):
+            count[j][ord(c)-ord('a')] += 1
+    dp = [0]*(tlen+1); dp[0] = 1
+    for j in range(wlen):
+        for i in range(min(j+1,tlen), 0, -1):
+            c = ord(target[i-1]) - ord('a')
+            dp[i] = (dp[i] + dp[i-1] * count[j][c]) % MOD
+    return dp[tlen]
+`,
+
+  'minimum-xor-sum-of-two-arrays': `
+def minimumXORSum(nums1, nums2):
+    nums1 = list(nums1.to_py()) if hasattr(nums1, 'to_py') else list(nums1)
+    nums2 = list(nums2.to_py()) if hasattr(nums2, 'to_py') else list(nums2)
+    n = len(nums1)
+    INF = float('inf')
+    dp = [INF] * (1 << n); dp[0] = 0
+    for mask in range(1 << n):
+        if dp[mask] == INF: continue
+        i = bin(mask).count('1')
+        if i >= n: continue
+        for j in range(n):
+            if not (mask & (1 << j)):
+                nxt = mask | (1 << j)
+                dp[nxt] = min(dp[nxt], dp[mask] + (nums1[i] ^ nums2[j]))
+    return dp[(1 << n) - 1]
+`,
 };
