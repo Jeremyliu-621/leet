@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1334 problems; 4287 tests green.
+**Current focus:** Bank at 1344 problems; 4302 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue adding classic problems (Batch 38+); UI/UX polish; Options/popup improvements.
+**Next up:** Continue adding classic problems (Batch 39+); UI/UX polish; Options/popup improvements.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -377,6 +377,7 @@ Still pending:
 - [x] **5 more classic problems (Batch 34-local)** — count-the-number-of-fair-pairs (arrays+binary-search/medium, sort+two-pointer countAtMost), find-if-array-can-be-sorted (arrays/medium, popcount grouping+prevMax check), construct-string-with-repeat-limit (strings+heap/medium, greedy freq array desc), count-ways-to-select-buildings (strings+dp/medium, prefix-ones 010/101 pattern), power-of-heroes (arrays+math/hard, sort+running weighted sum BigInt mod); bank at **1318**; 4251 tests.
 - [x] **5 more classic problems (Batch 37)** — valid-palindrome (strings/easy, two-pointer alphanumeric), peak-index-in-mountain-array (binary-search/easy, O(log n) binary search), two-keys-keyboard (math+dp/medium, prime factorization sum), bag-of-tokens (arrays+two-pointers/medium, greedy sort+two-pointer), find-the-k-weakest-rows-in-a-matrix (arrays+binary-search/easy, sort by soldier count); bank at **1331**; 4278 tests.
 - [x] **3 more classic problems (Batch 37-local)** — separate-black-and-white-balls (strings+two-pointers/medium, count inversion-cost scanning left), minimum-number-of-steps-to-make-two-strings-anagram (strings+hash-map/medium, freq diff then sum negatives), find-the-prefix-common-array-of-two-arrays (arrays+hash-map/medium, freq hits 2 = common); bank at **1334**; 4287 tests.
+- [x] **5 more classic problems (Batch 38)** — last-stone-weight-ii (dp/medium, 0/1 knapsack partition minimize |sum1−sum2|), divide-two-integers (math/medium, BigInt bit-shifting without * / %), longest-harmonious-subsequence (arrays+hash-map/easy, freq map count k + k+1 pairs), buddy-strings (strings/easy, swap two identical or exactly-2-diff-positions), beautiful-subsets (arrays+backtracking/medium, sort+backtrack+freq-map no two elements differ by k); fixed beautiful-subsets expected for [1..5] k=1 to 12 (not 8); bank at **1344**; 4302 tests.
 
 ---
 
