@@ -13532,4 +13532,214 @@ def insertDeleteGetRandomRunner(ops, args):
             result.append(None)
     return result
 `,
+
+  'maximum-points-from-cards': `
+def maxScore(cardPoints, k):
+    pts = list(cardPoints.to_py()) if hasattr(cardPoints, 'to_py') else list(cardPoints)
+    n = len(pts)
+    total = sum(pts)
+    if k == n:
+        return total
+    win = n - k
+    window_sum = sum(pts[:win])
+    min_window = window_sum
+    for i in range(win, n):
+        window_sum += pts[i] - pts[i - win]
+        if window_sum < min_window:
+            min_window = window_sum
+    return total - min_window
+`,
+
+  'minimum-ascii-delete-sum': `
+def minimumDeleteSum(s1, s2):
+    m, n = len(s1), len(s2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(1, m + 1):
+        dp[i][0] = dp[i-1][0] + ord(s1[i-1])
+    for j in range(1, n + 1):
+        dp[0][j] = dp[0][j-1] + ord(s2[j-1])
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if s1[i-1] == s2[j-1]:
+                dp[i][j] = dp[i-1][j-1]
+            else:
+                dp[i][j] = min(dp[i-1][j] + ord(s1[i-1]), dp[i][j-1] + ord(s2[j-1]))
+    return dp[m][n]
+`,
+
+  'sum-of-distances-in-tree': `
+import sys
+sys.setrecursionlimit(50000)
+def sumOfDistancesInTree(n, edges):
+    edges_list = list(edges.to_py()) if hasattr(edges, 'to_py') else list(edges)
+    adj = [[] for _ in range(n)]
+    for e in edges_list:
+        e = list(e.to_py()) if hasattr(e, 'to_py') else list(e)
+        adj[e[0]].append(e[1])
+        adj[e[1]].append(e[0])
+    count = [1] * n
+    ans = [0] * n
+    def dfs1(node, parent):
+        for child in adj[node]:
+            if child == parent:
+                continue
+            dfs1(child, node)
+            count[node] += count[child]
+            ans[node] += ans[child] + count[child]
+    def dfs2(node, parent):
+        for child in adj[node]:
+            if child == parent:
+                continue
+            ans[child] = ans[node] - count[child] + (n - count[child])
+            dfs2(child, node)
+    dfs1(0, -1)
+    dfs2(0, -1)
+    return ans
+`,
+
+  'couples-holding-hands': `
+def minSwapsCouples(row):
+    row = list(row.to_py()) if hasattr(row, 'to_py') else list(row)
+    pos = [0] * len(row)
+    for i, v in enumerate(row):
+        pos[v] = i
+    swaps = 0
+    for i in range(0, len(row), 2):
+        partner = row[i] ^ 1
+        if row[i + 1] == partner:
+            continue
+        j = pos[partner]
+        pos[row[j]] = i + 1
+        row[i + 1], row[j] = row[j], row[i + 1]
+        pos[partner] = i + 1
+        swaps += 1
+    return swaps
+`,
+
+  'falling-squares': `
+def fallingSquares(positions):
+    positions = list(positions.to_py()) if hasattr(positions, 'to_py') else list(positions)
+    intervals = []
+    max_h = 0
+    result = []
+    for pos in positions:
+        pos = list(pos.to_py()) if hasattr(pos, 'to_py') else list(pos)
+        left, size = pos[0], pos[1]
+        r = left + size
+        base = 0
+        for seg in intervals:
+            if seg[0] < r and left < seg[1]:
+                base = max(base, seg[2])
+        new_h = base + size
+        intervals.append((left, r, new_h))
+        max_h = max(max_h, new_h)
+        result.append(max_h)
+    return result
+`,
+
+  'constrained-subsequence-sum': `
+from collections import deque
+def constrainedSubsetSum(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    dp = nums[:]
+    dq = deque()
+    res = -float('inf')
+    for i in range(len(nums)):
+        if dq and dq[0] < i - k:
+            dq.popleft()
+        if dq:
+            dp[i] = nums[i] + max(0, dp[dq[0]])
+        while dq and dp[dq[-1]] <= dp[i]:
+            dq.pop()
+        dq.append(i)
+        if dp[i] > res:
+            res = dp[i]
+    return res
+`,
+
+  'pseudo-palindromic-paths': `
+def pseudoPalindromicPathsRunner(arr):
+    raw_list = list(arr.to_py()) if hasattr(arr, 'to_py') else list(arr)
+    cleaned = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    if not cleaned or cleaned[0] is None:
+        return 0
+    class TreeNode:
+        def __init__(self, v): self.v = v; self.l = None; self.r = None
+    def build(i):
+        if i >= len(cleaned) or cleaned[i] is None:
+            return None
+        node = TreeNode(cleaned[i])
+        node.l = build(2 * i + 1)
+        node.r = build(2 * i + 2)
+        return node
+    root = build(0)
+    result = [0]
+    def dfs(node, mask):
+        if not node:
+            return
+        mask ^= (1 << node.v)
+        if not node.l and not node.r:
+            if (mask & (mask - 1)) == 0:
+                result[0] += 1
+            return
+        dfs(node.l, mask)
+        dfs(node.r, mask)
+    dfs(root, 0)
+    return result[0]
+`,
+
+  'number-of-nodes-same-label': `
+import sys
+sys.setrecursionlimit(200000)
+def countSubTrees(n, edges, labels):
+    edges_list = list(edges.to_py()) if hasattr(edges, 'to_py') else list(edges)
+    adj = [[] for _ in range(n)]
+    for e in edges_list:
+        e = list(e.to_py()) if hasattr(e, 'to_py') else list(e)
+        adj[e[0]].append(e[1])
+        adj[e[1]].append(e[0])
+    ans = [0] * n
+    def dfs(node, parent):
+        freq = [0] * 26
+        freq[ord(labels[node]) - 97] += 1
+        for child in adj[node]:
+            if child == parent:
+                continue
+            child_freq = dfs(child, node)
+            for i in range(26):
+                freq[i] += child_freq[i]
+        ans[node] = freq[ord(labels[node]) - 97]
+        return freq
+    dfs(0, -1)
+    return ans
+`,
+
+  'minimum-cost-tree-leaf-values': `
+def mctFromLeafValues(arr):
+    arr = list(arr.to_py()) if hasattr(arr, 'to_py') else list(arr)
+    cost = 0
+    while len(arr) > 1:
+        min_idx = arr.index(min(arr))
+        left = arr[min_idx - 1] if min_idx > 0 else float('inf')
+        right = arr[min_idx + 1] if min_idx < len(arr) - 1 else float('inf')
+        cost += arr[min_idx] * min(left, right)
+        arr.pop(min_idx)
+    return cost
+`,
+
+  'valid-partition-array': `
+def validPartition(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums)
+    dp = [False] * (n + 1)
+    dp[0] = True
+    for i in range(2, n + 1):
+        if dp[i - 2] and nums[i - 2] == nums[i - 1]:
+            dp[i] = True
+        if i >= 3 and dp[i - 3]:
+            a, b, c = nums[i - 3], nums[i - 2], nums[i - 1]
+            if (a == b == c) or (b == a + 1 and c == a + 2):
+                dp[i] = True
+    return dp[n]
+`,
 };

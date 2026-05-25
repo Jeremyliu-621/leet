@@ -13905,4 +13905,195 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     });
   },
 
+  'maximum-points-from-cards': (cardPoints: unknown, k: unknown) => {
+    const pts = cardPoints as number[];
+    const ki = k as number;
+    const n = pts.length;
+    const total = pts.reduce((a, b) => a + b, 0);
+    if (ki === n) return total;
+    const win = n - ki;
+    let windowSum = 0;
+    for (let i = 0; i < win; i++) windowSum += pts[i]!;
+    let minWindow = windowSum;
+    for (let i = win; i < n; i++) {
+      windowSum += pts[i]! - pts[i - win]!;
+      if (windowSum < minWindow) minWindow = windowSum;
+    }
+    return total - minWindow;
+  },
+
+  'minimum-ascii-delete-sum': (s1: unknown, s2: unknown) => {
+    const a = s1 as string, b = s2 as string;
+    const m = a.length, n = b.length;
+    const dp: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+    for (let i = 1; i <= m; i++) dp[i]![0] = dp[i - 1]![0]! + a.charCodeAt(i - 1);
+    for (let j = 1; j <= n; j++) dp[0]![j] = dp[0]![j - 1]! + b.charCodeAt(j - 1);
+    for (let i = 1; i <= m; i++) {
+      for (let j = 1; j <= n; j++) {
+        if (a[i - 1] === b[j - 1]) {
+          dp[i]![j] = dp[i - 1]![j - 1]!;
+        } else {
+          dp[i]![j] = Math.min(dp[i - 1]![j]! + a.charCodeAt(i - 1), dp[i]![j - 1]! + b.charCodeAt(j - 1));
+        }
+      }
+    }
+    return dp[m]![n]!;
+  },
+
+  'sum-of-distances-in-tree': (n: unknown, edges: unknown) => {
+    const N = n as number;
+    const edgeArr = edges as number[][];
+    const adj: number[][] = Array.from({ length: N }, () => []);
+    for (const edge of edgeArr) {
+      adj[edge[0]!]!.push(edge[1]!);
+      adj[edge[1]!]!.push(edge[0]!);
+    }
+    const count = new Array(N).fill(1);
+    const ans = new Array(N).fill(0);
+    // first DFS: compute subtree sizes and distances from root
+    const dfs1 = (node: number, parent: number) => {
+      for (const child of adj[node]!) {
+        if (child === parent) continue;
+        dfs1(child, node);
+        count[node] += count[child];
+        ans[node] += ans[child] + count[child];
+      }
+    };
+    // second DFS: rerooting
+    const dfs2 = (node: number, parent: number) => {
+      for (const child of adj[node]!) {
+        if (child === parent) continue;
+        ans[child] = ans[node] - count[child] + (N - count[child]);
+        dfs2(child, node);
+      }
+    };
+    dfs1(0, -1);
+    dfs2(0, -1);
+    return ans;
+  },
+
+  'couples-holding-hands': (row: unknown) => {
+    const r = [...(row as number[])];
+    const pos = new Array(r.length);
+    for (let i = 0; i < r.length; i++) pos[r[i]!] = i;
+    let swaps = 0;
+    for (let i = 0; i < r.length; i += 2) {
+      const partner = r[i]! ^ 1;
+      if (r[i + 1] === partner) continue;
+      const j = pos[partner]!;
+      pos[r[j]!] = i + 1;
+      [r[i + 1], r[j]] = [r[j]!, r[i + 1]!];
+      pos[partner] = i + 1;
+      swaps++;
+    }
+    return swaps;
+  },
+
+  'falling-squares': (positions: unknown) => {
+    const pos = positions as number[][];
+    const intervals: { l: number; r: number; h: number }[] = [];
+    let maxH = 0;
+    const result: number[] = [];
+    for (const [left, size] of pos) {
+      const r = left! + size!;
+      let base = 0;
+      for (const seg of intervals) {
+        if (seg.l < r && left! < seg.r) base = Math.max(base, seg.h);
+      }
+      const newH = base + size!;
+      intervals.push({ l: left!, r, h: newH });
+      maxH = Math.max(maxH, newH);
+      result.push(maxH);
+    }
+    return result;
+  },
+
+  'constrained-subsequence-sum': (nums: unknown, k: unknown) => {
+    const arr = nums as number[], ki = k as number;
+    const dp = [...arr];
+    const deque: number[] = [];
+    let res = -Infinity;
+    for (let i = 0; i < arr.length; i++) {
+      if (deque.length && deque[0]! < i - ki) deque.shift();
+      if (deque.length) dp[i] = arr[i]! + Math.max(0, dp[deque[0]!]!);
+      while (deque.length && dp[deque[deque.length - 1]!]! <= dp[i]!) deque.pop();
+      deque.push(i);
+      if (dp[i]! > res) res = dp[i]!;
+    }
+    return res;
+  },
+
+  'pseudo-palindromic-paths': (arr: unknown) => {
+    const a = arr as (number | null)[];
+    if (!a.length || a[0] === null) return 0;
+    type N = { v: number; l: N | null; r: N | null };
+    const build = (i: number): N | null => {
+      if (i >= a.length || a[i] === null || a[i] === undefined) return null;
+      return { v: a[i] as number, l: build(2 * i + 1), r: build(2 * i + 2) };
+    };
+    const root = build(0);
+    let count = 0;
+    const dfs = (node: N | null, mask: number) => {
+      if (!node) return;
+      mask ^= 1 << node.v;
+      if (!node.l && !node.r) {
+        if ((mask & (mask - 1)) === 0) count++;
+        return;
+      }
+      dfs(node.l, mask);
+      dfs(node.r, mask);
+    };
+    dfs(root, 0);
+    return count;
+  },
+
+  'number-of-nodes-same-label': (n: unknown, edges: unknown, labels: unknown) => {
+    const N = n as number, edgeArr = edges as number[][], lbls = labels as string;
+    const adj: number[][] = Array.from({ length: N }, () => []);
+    for (const e of edgeArr) { adj[e[0]!]!.push(e[1]!); adj[e[1]!]!.push(e[0]!); }
+    const ans = new Array(N).fill(0);
+    const dfs = (node: number, parent: number): number[] => {
+      const freq = new Array(26).fill(0);
+      freq[lbls.charCodeAt(node) - 97]!++;
+      for (const child of adj[node]!) {
+        if (child === parent) continue;
+        const childFreq = dfs(child, node);
+        for (let i = 0; i < 26; i++) freq[i] += childFreq[i]!;
+      }
+      ans[node] = freq[lbls.charCodeAt(node) - 97]!;
+      return freq;
+    };
+    dfs(0, -1);
+    return ans;
+  },
+
+  'minimum-cost-tree-leaf-values': (arr: unknown) => {
+    const a = [...(arr as number[])];
+    let cost = 0;
+    while (a.length > 1) {
+      let minIdx = 0;
+      for (let i = 1; i < a.length; i++) if (a[i]! < a[minIdx]!) minIdx = i;
+      const left = minIdx > 0 ? a[minIdx - 1]! : Infinity;
+      const right = minIdx < a.length - 1 ? a[minIdx + 1]! : Infinity;
+      cost += a[minIdx]! * Math.min(left, right);
+      a.splice(minIdx, 1);
+    }
+    return cost;
+  },
+
+  'valid-partition-array': (nums: unknown) => {
+    const arr = nums as number[];
+    const n = arr.length;
+    const dp = new Array(n + 1).fill(false);
+    dp[0] = true;
+    for (let i = 2; i <= n; i++) {
+      if (dp[i - 2] && arr[i - 2] === arr[i - 1]) dp[i] = true;
+      if (i >= 3 && dp[i - 3]) {
+        const a = arr[i - 3]!, b = arr[i - 2]!, c = arr[i - 1]!;
+        if ((a === b && b === c) || (b === a + 1 && c === a + 2)) dp[i] = true;
+      }
+    }
+    return dp[n];
+  },
+
 };

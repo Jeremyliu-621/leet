@@ -1114,6 +1114,16 @@ import { problem as textJustification } from './text-justification';
 import { problem as minimumOperationsMakeArrayContinuous } from './minimum-operations-make-array-continuous';
 import { problem as arithmeticSubarrays } from './arithmetic-subarrays';
 import { problem as minimumScorePath } from './minimum-score-path';
+import { problem as maximumPointsFromCards } from './maximum-points-from-cards';
+import { problem as minimumAsciiDeleteSum } from './minimum-ascii-delete-sum';
+import { problem as sumOfDistancesInTree } from './sum-of-distances-in-tree';
+import { problem as couplesHoldingHands } from './couples-holding-hands';
+import { problem as fallingSquares } from './falling-squares';
+import { problem as constrainedSubsequenceSum } from './constrained-subsequence-sum';
+import { problem as pseudoPalindromicPaths } from './pseudo-palindromic-paths';
+import { problem as numberOfNodesSameLabel } from './number-of-nodes-same-label';
+import { problem as minimumCostTreeLeafValues } from './minimum-cost-tree-leaf-values';
+import { problem as validPartitionArray } from './valid-partition-array';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2276,4 +2286,14 @@ export const problems: readonly Problem[] = [
   minimumOperationsMakeArrayContinuous,
   arithmeticSubarrays,
   minimumScorePath,
+  maximumPointsFromCards,
+  minimumAsciiDeleteSum,
+  sumOfDistancesInTree,
+  couplesHoldingHands,
+  fallingSquares,
+  constrainedSubsequenceSum,
+  pseudoPalindromicPaths,
+  numberOfNodesSameLabel,
+  minimumCostTreeLeafValues,
+  validPartitionArray,
 ];
