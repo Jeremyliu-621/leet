@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1000 problems; 3271 tests green.
+**Current focus:** Bank at 1008 problems; 3295 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Update marketing site to reflect 1000-problem milestone; continue UI/UX polish.
+**Next up:** Update marketing site to reflect 1008-problem milestone; continue UI/UX polish.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -324,6 +324,7 @@ Still pending:
 - [x] **37 more problems** (batches 6-8) — count-zero-filled-subarrays, check-whether-two-string-arrays-equal, minimum-flips-make-or-b-equal-c, make-array-zero-subtracting-equal-amounts, find-all-groups-farmland, merge-triplets-form-target, replace-elements-greatest-right, destroy-asteroids, largest-number-after-digit-swaps-parity, maximum-count-positive-negative, find-original-array-prefix-xor, separate-digits-array, number-of-pairs-interchangeable-rectangles, optimal-partition-string, unique-length-three-palindromic-subsequences, bitwise-xor-all-pairings, number-rectangles-largest-square, maximize-number-subsequences, number-ways-buy-pens-pencils, sum-digits-string-after-convert, smallest-value-rearranged-number, removing-stars-from-string, find-the-peaks, minimum-penalty-for-a-shop, apply-operations-to-array, kth-distinct-string-array, count-elements-strictly-smaller-greater, largest-positive-integer-exists-negative, check-if-number-equal-digit-count-value, decode-xor-array, maximum-split-positive-even-integers, minimum-average-smallest-largest, count-tested-devices-after-test-runs, number-subarrays-gcd-equal-k, find-subsequence-length-k-largest-sum, minimum-absolute-sum-difference, find-k-beauty-of-number; **🎉 900-problem milestone**; bank at 900; 2971 tests.
 - [x] **Batches 13-14** — 80 more problems: sum-of-all-odd-length-subarrays, find-middle-index-in-array, maximum-absolute-sum-any-subarray, count-substrings-one-distinct-letter, sum-number-and-its-reverse, sum-absolute-differences-sorted-array, number-subarrays-odd-sum, people-aware-of-secret, valid-word-abbreviation, number-valid-words, is-subsequence, find-longest-balanced-substring, count-distinct-integers-after-reverse, most-frequent-number-following-key, minimum-diff-highest-lowest-k-scores, find-array-concat-val, sort-array-increasing-frequency, find-all-k-distant-indices, number-beautiful-pairs, split-string-by-separator, count-vowel-strings-ranges, number-even-odd-bits, average-value-even-divisible-three, count-prefix-suffix-pairs, minimum-cost-buying-candies-discount, find-original-array-prefix-xor, total-distance-traveled, delete-chars-fancy-string, three-consecutive-odds, count-equal-divisible-pairs, minimum-changes-alternating-binary-string, and more; bank at 980; 3208 tests.
 - [x] **🎉 1000-problem milestone** (batch 15 — 21 problems) — rotate-function, maximum-sum-distinct-subarrays-length-k, find-the-sum-encrypted-integers, maximum-number-weeks-work, count-complete-subarrays, count-subarrays-max-element-at-least-k-times, minimum-index-valid-split, last-moment-ants-fall-off-plank, check-chessboard-same-color, count-number-of-teams, remove-colored-pieces, longest-alternating-subarray, divisible-non-divisible-sums-diff, minimum-element-digit-sum-replacement, pick-gifts, minimum-ops-xor-equal-k, maximum-count-positive-negative, students-doing-homework, find-xor-numbers-appear-twice, minimum-sum-mountain-triplet-ii, minimum-ops-exceed-threshold-i; bank at **1000**; 3271 tests.
+- [x] **8 more classic problems** — maximum-subarray (Kadane's), meeting-rooms, brick-wall, number-of-longest-increasing-subsequence, kth-smallest-element-in-sorted-matrix, minimum-knight-moves (BFS), palindrome-pairs (hard, sort preamble), search-suggestions-system; bank at **1008**; 3295 tests.
 
 ---
 
