@@ -1481,6 +1481,11 @@ import { problem as guessNumberHigherOrLower } from './guess-number-higher-or-lo
 import { problem as largestTriangleArea } from './largest-triangle-area';
 import { problem as minimumValueToGetPositiveStepSum } from './minimum-value-to-get-positive-step-sum';
 import { problem as numberOfRectanglesThatCanFormLargestSquare } from './number-of-rectangles-that-can-form-largest-square';
+import { problem as successfulPairsOfSpellsAndPotions } from './successful-pairs-of-spells-and-potions';
+import { problem as minimumOperationsToReduceXToZero } from './minimum-operations-to-reduce-x-to-zero';
+import { problem as largestSubmatrixWithRearrangements } from './largest-submatrix-with-rearrangements';
+import { problem as subtreeOfAnotherTree } from './subtree-of-another-tree';
+import { problem as maximumProductOfSplittedBinaryTree } from './maximum-product-of-splitted-binary-tree';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3010,4 +3015,9 @@ export const problems: readonly Problem[] = [
   largestTriangleArea,
   minimumValueToGetPositiveStepSum,
   numberOfRectanglesThatCanFormLargestSquare,
+  successfulPairsOfSpellsAndPotions,
+  minimumOperationsToReduceXToZero,
+  largestSubmatrixWithRearrangements,
+  subtreeOfAnotherTree,
+  maximumProductOfSplittedBinaryTree,
 ];

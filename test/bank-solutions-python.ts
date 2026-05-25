@@ -19839,4 +19839,108 @@ def distanceK(root, target, k):
     max_len = max(mins)
     return sum(1 for m in mins if m == max_len)
 `,
+
+  'successful-pairs-of-spells-and-potions': `def successfulPairs(spells, potions, success):
+    from bisect import bisect_left
+    import math
+    spells = list(spells.to_py() if hasattr(spells, 'to_py') else spells)
+    potions = sorted(potions.to_py() if hasattr(potions, 'to_py') else potions)
+    success = int(success)
+    result = []
+    for spell in spells:
+        target = math.ceil(success / spell)
+        idx = bisect_left(potions, target)
+        result.append(len(potions) - idx)
+    return result
+`,
+
+  'minimum-operations-to-reduce-x-to-zero': `def minOperations(nums, x):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    x = int(x)
+    total = sum(nums)
+    target = total - x
+    if target < 0: return -1
+    if target == 0: return len(nums)
+    max_len = -1
+    left = 0
+    curr_sum = 0
+    for right in range(len(nums)):
+        curr_sum += nums[right]
+        while curr_sum > target and left <= right:
+            curr_sum -= nums[left]
+            left += 1
+        if curr_sum == target:
+            max_len = max(max_len, right - left + 1)
+    return -1 if max_len == -1 else len(nums) - max_len
+`,
+
+  'largest-submatrix-with-rearrangements': `def largestSubmatrix(matrix):
+    matrix = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (matrix.to_py() if hasattr(matrix, 'to_py') else matrix)]
+    m, n = len(matrix), len(matrix[0])
+    res = 0
+    for i in range(m):
+        for j in range(n):
+            if matrix[i][j] == 1 and i > 0:
+                matrix[i][j] += matrix[i-1][j]
+        row = sorted(matrix[i], reverse=True)
+        for j in range(n):
+            res = max(res, row[j] * (j + 1))
+    return res
+`,
+
+  'subtree-of-another-tree': `def isSubtreeRunner(rootArr, subRootArr):
+    from collections import deque
+    def from_array(raw):
+        raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+        a = [int(v) if isinstance(v, (int, float)) else None for v in raw_list]
+        if not a or a[0] is None: return None
+        class TreeNode:
+            def __init__(self, val): self.val = val; self.left = None; self.right = None
+        root = TreeNode(a[0]); q = deque([root]); i = 1
+        while q and i < len(a):
+            node = q.popleft()
+            if i < len(a) and a[i] is not None: node.left = TreeNode(a[i]); q.append(node.left)
+            i += 1
+            if i < len(a) and a[i] is not None: node.right = TreeNode(a[i]); q.append(node.right)
+            i += 1
+        return root
+    def is_same(s, t):
+        if not s and not t: return True
+        if not s or not t or s.val != t.val: return False
+        return is_same(s.left, t.left) and is_same(s.right, t.right)
+    def is_sub(root, sub):
+        if not root: return False
+        if is_same(root, sub): return True
+        return is_sub(root.left, sub) or is_sub(root.right, sub)
+    return is_sub(from_array(rootArr), from_array(subRootArr))
+`,
+
+  'maximum-product-of-splitted-binary-tree': `def maxProductRunner(arr):
+    from collections import deque
+    raw_list = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
+    a = [int(v) if isinstance(v, (int, float)) else None for v in raw_list]
+    if not a or a[0] is None: return 0
+    class TreeNode:
+        def __init__(self, val): self.val = val; self.left = None; self.right = None
+    root = TreeNode(a[0]); q = deque([root]); i = 1
+    while q and i < len(a):
+        node = q.popleft()
+        if i < len(a) and a[i] is not None: node.left = TreeNode(a[i]); q.append(node.left)
+        i += 1
+        if i < len(a) and a[i] is not None: node.right = TreeNode(a[i]); q.append(node.right)
+        i += 1
+    MOD = 10**9 + 7
+    def tree_sum(node):
+        if not node: return 0
+        return node.val + tree_sum(node.left) + tree_sum(node.right)
+    total = tree_sum(root)
+    best = [0]
+    def dfs(node):
+        if not node: return 0
+        s = node.val + dfs(node.left) + dfs(node.right)
+        best[0] = max(best[0], s * (total - s))
+        return s
+    dfs(root)
+    return best[0] % MOD
+`,
 };

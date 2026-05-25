@@ -19780,4 +19780,122 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return mins.filter(m => m === maxLen).length;
   },
 
+  'successful-pairs-of-spells-and-potions': (spells: unknown, potions: unknown, success: unknown) => {
+    const sorted = [...(potions as number[])].sort((a, b) => a - b);
+    const suc = success as number;
+    return (spells as number[]).map(spell => {
+      const target = Math.ceil(suc / spell);
+      let lo = 0, hi = sorted.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (sorted[mid]! < target) lo = mid + 1;
+        else hi = mid;
+      }
+      return sorted.length - lo;
+    });
+  },
+
+  'minimum-operations-to-reduce-x-to-zero': (nums: unknown, x: unknown) => {
+    const arr = nums as number[];
+    const xv = x as number;
+    const total = arr.reduce((a, b) => a + b, 0);
+    const target = total - xv;
+    if (target < 0) return -1;
+    if (target === 0) return arr.length;
+    let maxLen = -1, sum = 0, left = 0;
+    for (let right = 0; right < arr.length; right++) {
+      sum += arr[right]!;
+      while (sum > target && left <= right) sum -= arr[left++]!;
+      if (sum === target) maxLen = Math.max(maxLen, right - left + 1);
+    }
+    return maxLen === -1 ? -1 : arr.length - maxLen;
+  },
+
+  'largest-submatrix-with-rearrangements': (matrix: unknown) => {
+    const m = matrix as number[][];
+    const rows = m.length, cols = m[0]!.length;
+    const h = m.map(r => [...r]);
+    let res = 0;
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        if (h[i]![j]! === 1 && i > 0) h[i]![j] = 1 + h[i - 1]![j]!;
+      }
+      const row = [...h[i]!].sort((a, b) => b - a);
+      for (let j = 0; j < cols; j++) res = Math.max(res, row[j]! * (j + 1));
+    }
+    return res;
+  },
+
+  'subtree-of-another-tree': (rootArr: unknown, subRootArr: unknown) => {
+    class TreeNode {
+      val: number; left: TreeNode | null = null; right: TreeNode | null = null;
+      constructor(val: number) { this.val = val; }
+    }
+    function fromArray(a: (number | null)[]): TreeNode | null {
+      if (!a || a.length === 0) return null;
+      const root = new TreeNode(a[0]!);
+      const queue: TreeNode[] = [root];
+      let i = 1;
+      while (queue.length > 0 && i < a.length) {
+        const node = queue.shift()!;
+        if (a[i] !== null && a[i] !== undefined) { node.left = new TreeNode(a[i]!); queue.push(node.left); }
+        i++;
+        if (i < a.length && a[i] !== null && a[i] !== undefined) { node.right = new TreeNode(a[i]!); queue.push(node.right); }
+        i++;
+      }
+      return root;
+    }
+    function isSame(s: TreeNode | null, t: TreeNode | null): boolean {
+      if (!s && !t) return true;
+      if (!s || !t || s.val !== t.val) return false;
+      return isSame(s.left, t.left) && isSame(s.right, t.right);
+    }
+    function isSub(root: TreeNode | null, sub: TreeNode | null): boolean {
+      if (!root) return false;
+      if (isSame(root, sub)) return true;
+      return isSub(root.left, sub) || isSub(root.right, sub);
+    }
+    const root = fromArray(rootArr as (number | null)[]);
+    const sub = fromArray(subRootArr as (number | null)[]);
+    return isSub(root, sub);
+  },
+
+  'maximum-product-of-splitted-binary-tree': (rootArr: unknown) => {
+    class TreeNode {
+      val: number; left: TreeNode | null = null; right: TreeNode | null = null;
+      constructor(val: number) { this.val = val; }
+    }
+    function fromArray(a: (number | null)[]): TreeNode | null {
+      if (!a || a.length === 0) return null;
+      const root = new TreeNode(a[0]!);
+      const queue: TreeNode[] = [root];
+      let i = 1;
+      while (queue.length > 0 && i < a.length) {
+        const node = queue.shift()!;
+        if (a[i] !== null && a[i] !== undefined) { node.left = new TreeNode(a[i]!); queue.push(node.left); }
+        i++;
+        if (i < a.length && a[i] !== null && a[i] !== undefined) { node.right = new TreeNode(a[i]!); queue.push(node.right); }
+        i++;
+      }
+      return root;
+    }
+    const MOD = 1000000007n;
+    const root = fromArray(rootArr as (number | null)[]);
+    function treeSum(node: TreeNode | null): number {
+      if (!node) return 0;
+      return node.val + treeSum(node.left) + treeSum(node.right);
+    }
+    const total = treeSum(root);
+    let best = 0n;
+    function dfs(node: TreeNode | null): number {
+      if (!node) return 0;
+      const s = node.val + dfs(node.left) + dfs(node.right);
+      const prod = BigInt(s) * BigInt(total - s);
+      if (prod > best) best = prod;
+      return s;
+    }
+    dfs(root);
+    return Number(best % MOD);
+  },
+
 };
