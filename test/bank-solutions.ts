@@ -13283,4 +13283,211 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best;
   },
 
+  'reconstruct-itinerary': (...args: unknown[]) => {
+    const tickets = args[0] as string[][];
+    const graph: Record<string, string[]> = {};
+    for (const ticket of tickets) {
+      const f = ticket[0]!, t = ticket[1]!;
+      if (!graph[f]) graph[f] = [];
+      graph[f]!.push(t);
+    }
+    for (const k of Object.keys(graph)) graph[k]!.sort();
+    const result: string[] = [];
+    const dfs = (node: string) => {
+      while (graph[node] && graph[node]!.length > 0) dfs(graph[node]!.shift()!);
+      result.unshift(node);
+    };
+    dfs('JFK');
+    return result;
+  },
+
+  'partition-k-equal-subset-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const total = nums.reduce((a, b) => a + b, 0);
+    if (total % k !== 0) return false;
+    const target = total / k;
+    nums.sort((a, b) => b - a);
+    if (nums[0]! > target) return false;
+    const buckets = new Array(k).fill(0);
+    const bt = (idx: number): boolean => {
+      if (idx === nums.length) return buckets.every(b => b === target);
+      for (let i = 0; i < k; i++) {
+        if (buckets[i]! + nums[idx]! <= target) {
+          buckets[i]! += nums[idx]!;
+          if (bt(idx + 1)) return true;
+          buckets[i]! -= nums[idx]!;
+          if (buckets[i] === 0) break;
+        }
+      }
+      return false;
+    };
+    return bt(0);
+  },
+
+  'paint-house': (...args: unknown[]) => {
+    const costs = args[0] as number[][];
+    let r = costs[0]![0]!, g = costs[0]![1]!, b = costs[0]![2]!;
+    for (let i = 1; i < costs.length; i++) {
+      const [cr, cg, cb] = costs[i]!;
+      [r, g, b] = [cr! + Math.min(g, b), cg! + Math.min(r, b), cb! + Math.min(r, g)];
+    }
+    return Math.min(r, g, b);
+  },
+
+  'add-strings': (...args: unknown[]) => {
+    const num1 = args[0] as string, num2 = args[1] as string;
+    let i = num1.length - 1, j = num2.length - 1, carry = 0;
+    const res: string[] = [];
+    while (i >= 0 || j >= 0 || carry) {
+      const d1 = i >= 0 ? num1.charCodeAt(i--) - 48 : 0;
+      const d2 = j >= 0 ? num2.charCodeAt(j--) - 48 : 0;
+      const sum = d1 + d2 + carry;
+      res.push(String(sum % 10));
+      carry = Math.floor(sum / 10);
+    }
+    return res.reverse().join('');
+  },
+
+  'palindrome-partitioning-ii': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const isPalin = Array.from({ length: n }, () => new Array(n).fill(false));
+    for (let i = n - 1; i >= 0; i--) {
+      for (let j = i; j < n; j++) {
+        isPalin[i]![j] = s[i] === s[j] && (j - i <= 2 || isPalin[i + 1]![j - 1]);
+      }
+    }
+    const cut = new Array(n).fill(0);
+    for (let i = 0; i < n; i++) {
+      if (isPalin[0]![i]) { cut[i] = 0; continue; }
+      cut[i] = Infinity;
+      for (let j = 1; j <= i; j++) {
+        if (isPalin[j]![i]) cut[i] = Math.min(cut[i] as number, (cut[j - 1] as number) + 1);
+      }
+    }
+    return cut[n - 1];
+  },
+
+  'wiggle-sort-ii': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    const sorted = [...nums].sort((a, b) => a - b);
+    const n = nums.length;
+    const mid = Math.floor((n - 1) / 2);
+    let lo = mid, hi = n - 1;
+    for (let i = 0; i < n; i++) {
+      nums[i] = i % 2 === 0 ? sorted[lo--]! : sorted[hi--]!;
+    }
+    return nums;
+  },
+
+  'stone-game-iv': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const dp = new Array(n + 1).fill(false);
+    for (let i = 1; i <= n; i++) {
+      for (let k = 1; k * k <= i; k++) {
+        if (!dp[i - k * k]) { dp[i] = true; break; }
+      }
+    }
+    return dp[n];
+  },
+
+  'minimum-refueling-stops': (...args: unknown[]) => {
+    const target = args[0] as number, startFuel = args[1] as number;
+    const stations = args[2] as number[][];
+    let fuel = startFuel, stops = 0, idx = 0;
+    const heap: number[] = [];
+    const push = (v: number) => {
+      heap.push(v);
+      let i = heap.length - 1;
+      while (i > 0) {
+        const p = (i - 1) >> 1;
+        if (heap[p]! >= heap[i]!) break;
+        [heap[p], heap[i]] = [heap[i]!, heap[p]!]; i = p;
+      }
+    };
+    const pop = (): number => {
+      const top = heap[0]!;
+      const last = heap.pop()!;
+      if (heap.length > 0) {
+        heap[0] = last; let i = 0;
+        while (true) {
+          let max = i, l = 2*i+1, r = 2*i+2;
+          if (l < heap.length && heap[l]! > heap[max]!) max = l;
+          if (r < heap.length && heap[r]! > heap[max]!) max = r;
+          if (max === i) break;
+          [heap[i], heap[max]] = [heap[max]!, heap[i]!]; i = max;
+        }
+      }
+      return top;
+    };
+    while (fuel < target) {
+      while (idx < stations.length && stations[idx]![0]! <= fuel) push(stations[idx++]![1]!);
+      if (heap.length === 0) return -1;
+      fuel += pop(); stops++;
+    }
+    return stops;
+  },
+
+  'snapshot-array': (...args: unknown[]) => {
+    const length = args[0] as number;
+    const ops = args[1] as string[];
+    const opArgs = args[2] as number[][];
+    const history: Array<Array<[number, number]>> = Array.from({ length }, () => [[0, 0]]);
+    let snapId = 0;
+    return ops.map((op, i) => {
+      const a = opArgs[i] ?? [];
+      if (op === 'set') {
+        const [idx, val] = a as [number, number];
+        const h = history[idx]!;
+        if (h[h.length - 1]![0] === snapId) h[h.length - 1]![1] = val;
+        else h.push([snapId, val]);
+        return null;
+      }
+      if (op === 'snap') return snapId++;
+      if (op === 'get') {
+        const [idx, sid] = a as [number, number];
+        const h = history[idx]!;
+        let lo = 0, hi = h.length - 1;
+        while (lo < hi) {
+          const mid = (lo + hi + 1) >> 1;
+          if (h[mid]![0] <= sid) lo = mid; else hi = mid - 1;
+        }
+        return h[lo]![1];
+      }
+      return null;
+    });
+  },
+
+  'insert-delete-getrandom': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = (args[1] as number[][]) || [];
+    const map = new Map<number, number>();
+    const arr: number[] = [];
+    return ops.map((op, i) => {
+      const a = opArgs[i] ?? [];
+      if (op === 'insert') {
+        const val = a[0]!;
+        if (map.has(val)) return false;
+        map.set(val, arr.length);
+        arr.push(val);
+        return true;
+      }
+      if (op === 'remove') {
+        const val = a[0]!;
+        if (!map.has(val)) return false;
+        const idx = map.get(val)!;
+        const last = arr[arr.length - 1]!;
+        arr[idx] = last;
+        map.set(last, idx);
+        arr.pop();
+        map.delete(val);
+        return true;
+      }
+      if (op === 'getRandom') {
+        return arr[Math.floor(Math.random() * arr.length)]!;
+      }
+      return null;
+    });
+  },
+
 };

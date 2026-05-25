@@ -12884,4 +12884,205 @@ def minWindow(s1, s2):
         lo = hi + 2
     return best
 `,
+
+  'reconstruct-itinerary': `
+from collections import defaultdict
+def reconstructItinerary(tickets):
+    graph = defaultdict(list)
+    for f, t in tickets:
+        graph[f].append(t)
+    for k in graph:
+        graph[k].sort()
+    result = []
+    def dfs(node):
+        while graph[node]:
+            dfs(graph[node].pop(0))
+        result.append(node)
+    dfs('JFK')
+    return result[::-1]
+`,
+
+  'partition-k-equal-subset-sum': `
+def canPartitionKSubsets(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    total = sum(nums)
+    if total % k != 0:
+        return False
+    target = total // k
+    nums.sort(reverse=True)
+    if nums[0] > target:
+        return False
+    buckets = [0] * k
+    def bt(idx):
+        if idx == len(nums):
+            return all(b == target for b in buckets)
+        for i in range(k):
+            if buckets[i] + nums[idx] <= target:
+                buckets[i] += nums[idx]
+                if bt(idx + 1):
+                    return True
+                buckets[i] -= nums[idx]
+                if buckets[i] == 0:
+                    break
+        return False
+    return bt(0)
+`,
+
+  'paint-house': `
+def minCostPaintHouse(costs):
+    r, g, b = costs[0]
+    for i in range(1, len(costs)):
+        cr, cg, cb = costs[i]
+        r, g, b = cr + min(g, b), cg + min(r, b), cb + min(r, g)
+    return min(r, g, b)
+`,
+
+  'add-strings': `
+def addStrings(num1, num2):
+    i, j, carry = len(num1)-1, len(num2)-1, 0
+    res = []
+    while i >= 0 or j >= 0 or carry:
+        d1 = ord(num1[i]) - 48 if i >= 0 else 0
+        d2 = ord(num2[j]) - 48 if j >= 0 else 0
+        s = d1 + d2 + carry
+        res.append(str(s % 10))
+        carry = s // 10
+        i -= 1; j -= 1
+    return ''.join(reversed(res))
+`,
+
+  'palindrome-partitioning-ii': `
+def minCutPalindrome(s):
+    n = len(s)
+    is_palin = [[False]*n for _ in range(n)]
+    for i in range(n-1, -1, -1):
+        for j in range(i, n):
+            is_palin[i][j] = s[i] == s[j] and (j - i <= 2 or is_palin[i+1][j-1])
+    cut = [0] * n
+    for i in range(n):
+        if is_palin[0][i]:
+            cut[i] = 0
+            continue
+        cut[i] = float('inf')
+        for j in range(1, i+1):
+            if is_palin[j][i]:
+                cut[i] = min(cut[i], cut[j-1] + 1)
+    return cut[n-1]
+`,
+
+  'wiggle-sort-ii': `
+def wiggleSortII(nums):
+    sorted_nums = sorted(nums)
+    n = len(nums)
+    mid = (n - 1) // 2
+    lo, hi = mid, n - 1
+    for i in range(n):
+        if i % 2 == 0:
+            nums[i] = sorted_nums[lo]; lo -= 1
+        else:
+            nums[i] = sorted_nums[hi]; hi -= 1
+`,
+
+  'stone-game-iv': `
+def winnerSquareGame(n):
+    dp = [False] * (n + 1)
+    k = 1
+    squares = []
+    while k * k <= n:
+        squares.append(k * k)
+        k += 1
+    for i in range(1, n + 1):
+        for sq in squares:
+            if sq > i:
+                break
+            if not dp[i - sq]:
+                dp[i] = True
+                break
+    return dp[n]
+`,
+
+  'minimum-refueling-stops': `
+import heapq
+def minRefuelStops(target, startFuel, stations):
+    fuel = startFuel
+    stops = 0
+    heap = []
+    idx = 0
+    while fuel < target:
+        while idx < len(stations) and stations[idx][0] <= fuel:
+            heapq.heappush(heap, -stations[idx][1])
+            idx += 1
+        if not heap:
+            return -1
+        fuel -= heapq.heappop(heap)
+        stops += 1
+    return stops
+`,
+
+  'snapshot-array': `
+import bisect
+def snapshotArrayRunner(length, ops, args):
+    history = [[[0, 0]] for _ in range(int(length))]
+    snap_id = 0
+    result = []
+    for op, a in zip(ops, args):
+        if op == 'set':
+            idx, val = a[0], a[1]
+            if history[idx][-1][0] == snap_id:
+                history[idx][-1][1] = val
+            else:
+                history[idx].append([snap_id, val])
+            result.append(None)
+        elif op == 'snap':
+            result.append(snap_id)
+            snap_id += 1
+        elif op == 'get':
+            idx, sid = a[0], a[1]
+            h = history[idx]
+            lo, hi = 0, len(h) - 1
+            while lo < hi:
+                mid = (lo + hi + 1) // 2
+                if h[mid][0] <= sid:
+                    lo = mid
+                else:
+                    hi = mid - 1
+            result.append(h[lo][1])
+        else:
+            result.append(None)
+    return result
+`,
+
+  'insert-delete-getrandom': `
+import random
+def insertDeleteGetRandomRunner(ops, args):
+    val_to_idx = {}
+    arr = []
+    result = []
+    for op, a in zip(ops, args):
+        if op == 'insert':
+            val = a[0]
+            if val in val_to_idx:
+                result.append(False)
+            else:
+                val_to_idx[val] = len(arr)
+                arr.append(val)
+                result.append(True)
+        elif op == 'remove':
+            val = a[0]
+            if val not in val_to_idx:
+                result.append(False)
+            else:
+                idx = val_to_idx[val]
+                last = arr[-1]
+                arr[idx] = last
+                val_to_idx[last] = idx
+                arr.pop()
+                del val_to_idx[val]
+                result.append(True)
+        elif op == 'getRandom':
+            result.append(random.choice(arr))
+        else:
+            result.append(None)
+    return result
+`,
 };

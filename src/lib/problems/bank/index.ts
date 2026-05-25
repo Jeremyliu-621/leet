@@ -1079,6 +1079,16 @@ import { problem as findMinimumRotatedSortedArrayII } from './find-minimum-in-ro
 import { problem as searchRotatedSortedArrayII } from './search-in-rotated-sorted-array-ii';
 import { problem as distinctSubsequences } from './distinct-subsequences';
 import { problem as minimumWindowSubsequence } from './minimum-window-subsequence';
+import { problem as reconstructItinerary } from './reconstruct-itinerary';
+import { problem as partitionKEqualSubsetSum } from './partition-k-equal-subset-sum';
+import { problem as paintHouse } from './paint-house';
+import { problem as addStrings } from './add-strings';
+import { problem as palindromePartitioningII } from './palindrome-partitioning-ii';
+import { problem as wiggleSortII } from './wiggle-sort-ii';
+import { problem as stoneGameIV } from './stone-game-iv';
+import { problem as minimumRefuelingStops } from './minimum-refueling-stops';
+import { problem as snapshotArray } from './snapshot-array';
+import { problem as insertDeleteGetrandom } from './insert-delete-getrandom';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2206,4 +2216,14 @@ export const problems: readonly Problem[] = [
   searchRotatedSortedArrayII,
   distinctSubsequences,
   minimumWindowSubsequence,
+  reconstructItinerary,
+  partitionKEqualSubsetSum,
+  paintHouse,
+  addStrings,
+  palindromePartitioningII,
+  wiggleSortII,
+  stoneGameIV,
+  minimumRefuelingStops,
+  snapshotArray,
+  insertDeleteGetrandom,
 ];
