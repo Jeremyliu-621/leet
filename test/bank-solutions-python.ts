@@ -20623,4 +20623,125 @@ def secondMinimum(n, edges, time, change):
   'minimum-operations-to-make-array-equal': `def minOperations(n):
     return int(n) * int(n) // 4
 `,
+
+  'convert-sorted-list-to-binary-search-tree': `def convertSortedListToBST(listValues):
+    from collections import deque
+
+    class TreeNode:
+        def __init__(self, val=0, left=None, right=None):
+            self.val = val
+            self.left = left
+            self.right = right
+
+    def build(arr, lo, hi):
+        if lo > hi:
+            return None
+        mid = (lo + hi) // 2
+        node = TreeNode(arr[mid])
+        node.left = build(arr, lo, mid - 1)
+        node.right = build(arr, mid + 1, hi)
+        return node
+
+    def to_bfs_array(root):
+        if not root:
+            return []
+        res = []
+        q = deque([root])
+        while q:
+            node = q.popleft()
+            if node is None:
+                res.append(None)
+                continue
+            res.append(node.val)
+            q.append(node.left)
+            q.append(node.right)
+        while res and res[-1] is None:
+            res.pop()
+        return res
+
+    root = build(listValues, 0, len(listValues) - 1)
+    return to_bfs_array(root)
+`,
+
+  'contains-duplicate-iii': `def containsNearbyAlmostDuplicate(nums, indexDiff, valueDiff):
+    w = valueDiff + 1
+
+    def bucket(x):
+        if x >= 0:
+            return x // w
+        return (x + 1) // w - 1
+
+    mp = {}
+    for i, x in enumerate(nums):
+        b = bucket(x)
+        if b in mp:
+            return True
+        if b - 1 in mp and abs(x - mp[b - 1]) <= valueDiff:
+            return True
+        if b + 1 in mp and abs(x - mp[b + 1]) <= valueDiff:
+            return True
+        mp[b] = x
+        if len(mp) > indexDiff:
+            del mp[bucket(nums[i - indexDiff])]
+    return False
+`,
+
+  'make-array-strictly-increasing': `def makeArrayIncreasing(arr1, arr2):
+    arr2 = sorted(set(arr2))
+    dp = {float('-inf'): 0}
+    for x in arr1:
+        ndp = {}
+        for last, ops in dp.items():
+            if x > last:
+                if x not in ndp or ndp[x] > ops:
+                    ndp[x] = ops
+            for v in arr2:
+                if v <= last:
+                    continue
+                cost = ops + 1
+                if v not in ndp or ndp[v] > cost:
+                    ndp[v] = cost
+        dp = ndp
+        if not dp:
+            return -1
+    return min(dp.values())
+`,
+
+  'encode-and-decode-tinyurl': `def tinyUrl(operations, args):
+    long_to_short = {}
+    short_to_long = {}
+    counter = [0]
+
+    def encode(long_url):
+        if long_url not in long_to_short:
+            counter[0] += 1
+            short = f"http://tinyurl.com/{counter[0]}"
+            long_to_short[long_url] = short
+            short_to_long[short] = long_url
+        return long_to_short[long_url]
+
+    def decode(short_url):
+        return short_to_long.get(short_url, '')
+
+    results = []
+    for i, op in enumerate(operations):
+        a = args[i] if i < len(args) else []
+        if op == 'encode':
+            results.append(encode(a[0]))
+        else:
+            results.append(decode(a[0]))
+    return results
+`,
+
+  'course-schedule-iv': `def checkIfPrerequisite(numCourses, prerequisites, queries):
+    reach = [[False] * numCourses for _ in range(numCourses)]
+    for a, b in prerequisites:
+        reach[a][b] = True
+    for k in range(numCourses):
+        for i in range(numCourses):
+            for j in range(numCourses):
+                if reach[i][k] and reach[k][j]:
+                    reach[i][j] = True
+    return [reach[u][v] for u, v in queries]
+`,
 };

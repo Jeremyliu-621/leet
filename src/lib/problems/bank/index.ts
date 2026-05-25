@@ -1514,6 +1514,11 @@ import { problem as addOneRowToTree } from './add-one-row-to-tree';
 import { problem as evenOddTree } from './even-odd-tree';
 import { problem as sortIntegersByNumberOf1Bits } from './sort-integers-by-number-of-1-bits';
 import { problem as minimumOperationsToMakeArrayEqual } from './minimum-operations-to-make-array-equal';
+import { problem as convertSortedListToBinarySearchTree } from './convert-sorted-list-to-binary-search-tree';
+import { problem as containsDuplicateIII } from './contains-duplicate-iii';
+import { problem as makeArrayStrictlyIncreasing } from './make-array-strictly-increasing';
+import { problem as encodeAndDecodeTinyurl } from './encode-and-decode-tinyurl';
+import { problem as courseScheduleIV } from './course-schedule-iv';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3076,4 +3081,9 @@ export const problems: readonly Problem[] = [
   evenOddTree,
   sortIntegersByNumberOf1Bits,
   minimumOperationsToMakeArrayEqual,
+  convertSortedListToBinarySearchTree,
+  containsDuplicateIII,
+  makeArrayStrictlyIncreasing,
+  encodeAndDecodeTinyurl,
+  courseScheduleIV,
 ];

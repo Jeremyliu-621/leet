@@ -20622,4 +20622,107 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Math.floor(k * k / 4);
   },
 
+  'convert-sorted-list-to-binary-search-tree': (...args: unknown[]) => {
+    const listValues = args[0] as number[];
+    class TreeNode { val: number; left: TreeNode | null; right: TreeNode | null; constructor(v: number) { this.val = v; this.left = this.right = null; } }
+    function build(arr: number[], lo: number, hi: number): TreeNode | null {
+      if (lo > hi) return null;
+      const mid = Math.floor((lo + hi) / 2);
+      const node = new TreeNode(arr[mid]!);
+      node.left = build(arr, lo, mid - 1);
+      node.right = build(arr, mid + 1, hi);
+      return node;
+    }
+    function toBfsArray(root: TreeNode | null): (number | null)[] {
+      if (!root) return [];
+      const res: (number | null)[] = [];
+      const q: (TreeNode | null)[] = [root];
+      while (q.length > 0) {
+        const node = q.shift()!;
+        if (!node) { res.push(null); continue; }
+        res.push(node.val);
+        q.push(node.left ?? null);
+        q.push(node.right ?? null);
+      }
+      while (res.length > 0 && res[res.length - 1] === null) res.pop();
+      return res;
+    }
+    return toBfsArray(build(listValues, 0, listValues.length - 1));
+  },
+
+  'contains-duplicate-iii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const indexDiff = args[1] as number;
+    const valueDiff = args[2] as number;
+    const w = valueDiff + 1;
+    const bucket = (x: number) => x >= 0 ? Math.floor(x / w) : Math.floor((x + 1) / w) - 1;
+    const map = new Map<number, number>();
+    for (let i = 0; i < nums.length; i++) {
+      const b = bucket(nums[i]!);
+      if (map.has(b)) return true;
+      if (map.has(b - 1) && Math.abs(nums[i]! - map.get(b - 1)!) <= valueDiff) return true;
+      if (map.has(b + 1) && Math.abs(nums[i]! - map.get(b + 1)!) <= valueDiff) return true;
+      map.set(b, nums[i]!);
+      if (map.size > indexDiff) map.delete(bucket(nums[i - indexDiff]!));
+    }
+    return false;
+  },
+
+  'make-array-strictly-increasing': (...args: unknown[]) => {
+    const arr1 = args[0] as number[];
+    const arr2In = args[1] as number[];
+    const arr2 = [...new Set(arr2In)].sort((a, b) => a - b);
+    let dp = new Map<number, number>([[-Infinity, 0]]);
+    for (const x of arr1) {
+      const ndp = new Map<number, number>();
+      for (const [last, ops] of dp) {
+        if (x > last) { if (!ndp.has(x) || ndp.get(x)! > ops) ndp.set(x, ops); }
+        for (const v of arr2) {
+          if (v <= last) continue;
+          const cost = ops + 1;
+          if (!ndp.has(v) || ndp.get(v)! > cost) ndp.set(v, cost);
+        }
+      }
+      dp = ndp;
+      if (dp.size === 0) return -1;
+    }
+    return Math.min(...dp.values());
+  },
+
+  'encode-and-decode-tinyurl': (...args: unknown[]) => {
+    const operations = args[0] as string[];
+    const argsArr = args[1] as string[][];
+    const longToShort = new Map<string, string>();
+    const shortToLong = new Map<string, string>();
+    let counter = 0;
+    return operations.map((op, i) => {
+      const a = argsArr[i] ?? [];
+      if (op === 'encode') {
+        const longUrl = a[0]!;
+        if (!longToShort.has(longUrl)) {
+          counter++;
+          const short = `http://tinyurl.com/${counter}`;
+          longToShort.set(longUrl, short);
+          shortToLong.set(short, longUrl);
+        }
+        return longToShort.get(longUrl)!;
+      } else {
+        return shortToLong.get(a[0]!) ?? '';
+      }
+    });
+  },
+
+  'course-schedule-iv': (...args: unknown[]) => {
+    const numCourses = args[0] as number;
+    const prerequisites = args[1] as number[][];
+    const queries = args[2] as number[][];
+    const reach = Array.from({ length: numCourses }, () => new Array(numCourses).fill(false)) as boolean[][];
+    for (const prereq of prerequisites) { const a = prereq[0]!; const b = prereq[1]!; reach[a]![b] = true; }
+    for (let k = 0; k < numCourses; k++)
+      for (let i = 0; i < numCourses; i++)
+        for (let j = 0; j < numCourses; j++)
+          if (reach[i]![k] && reach[k]![j]) reach[i]![j] = true;
+    return queries.map((q) => reach[q[0]!]![q[1]!]!);
+  },
+
 };
