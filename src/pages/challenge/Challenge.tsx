@@ -30,9 +30,13 @@ interface SplitterProps {
   onDrag: (newPct: number) => void;
   onDragEnd: (finalPct: number) => void;
   containerRef: React.RefObject<HTMLElement | null>;
+  currentPct: number;
 }
 
-function DraggableSplitter({ onDrag, onDragEnd, containerRef }: SplitterProps) {
+/** Keyboard step size for arrow-key resizing (percentage points). */
+const SPLITTER_STEP = 2;
+
+function DraggableSplitter({ onDrag, onDragEnd, containerRef, currentPct }: SplitterProps) {
   const isDraggingRef = useRef(false);
 
   const handlePointerDown = useCallback(
@@ -67,15 +71,35 @@ function DraggableSplitter({ onDrag, onDragEnd, containerRef }: SplitterProps) {
     [onDragEnd, containerRef],
   );
 
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      let delta = 0;
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') delta = -SPLITTER_STEP;
+      else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') delta = SPLITTER_STEP;
+      else if (e.key === 'Home') { onDragEnd(PANEL_MIN_PCT); return; }
+      else if (e.key === 'End') { onDragEnd(PANEL_MAX_PCT); return; }
+      else return;
+      e.preventDefault();
+      const next = Math.min(PANEL_MAX_PCT, Math.max(PANEL_MIN_PCT, currentPct + delta));
+      onDragEnd(next);
+    },
+    [currentPct, onDragEnd],
+  );
+
   return (
     <div
       role="separator"
       aria-orientation="vertical"
-      aria-label="Drag to resize panels"
-      className="group relative hidden w-1 shrink-0 cursor-col-resize bg-border transition-colors hover:bg-border-strong lg:flex items-center justify-center"
+      aria-label="Resize panels"
+      aria-valuenow={Math.round(currentPct)}
+      aria-valuemin={PANEL_MIN_PCT}
+      aria-valuemax={PANEL_MAX_PCT}
+      tabIndex={0}
+      className="group relative hidden w-1 shrink-0 cursor-col-resize bg-border transition-colors hover:bg-border-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-1 focus-visible:ring-offset-bg lg:flex items-center justify-center"
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
+      onKeyDown={handleKeyDown}
     >
       {/* Visual drag handle dot */}
       <div className="absolute h-8 w-1 rounded-full bg-border-strong opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
@@ -795,6 +819,7 @@ export function Challenge() {
             onDrag={handleSplitterDrag}
             onDragEnd={handleSplitterDragEnd}
             containerRef={splitContainerRef}
+            currentPct={panelPct}
           />
         )}
 
