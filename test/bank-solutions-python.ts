@@ -11934,4 +11934,214 @@ def categorizeBox(length, width, height, mass):
         return 'Heavy'
     return 'Neither'
 `,
+
+  'find-the-middle-index-in-array': `
+def findMiddleIndex(nums):
+    nums_list = [int(x) for x in nums]
+    total = sum(nums_list)
+    left_sum = 0
+    for i, n in enumerate(nums_list):
+        if left_sum == total - left_sum - n:
+            return i
+        left_sum += n
+    return -1
+`,
+
+  'maximum-absolute-sum-of-any-subarray': `
+def maxAbsoluteSum(nums):
+    nums_list = [int(x) for x in nums]
+    max_sum = min_sum = cur_max = cur_min = 0
+    for n in nums_list:
+        cur_max = max(cur_max + n, n)
+        max_sum = max(max_sum, cur_max)
+        cur_min = min(cur_min + n, n)
+        min_sum = min(min_sum, cur_min)
+    return max(max_sum, abs(min_sum))
+`,
+
+  'count-substrings-with-only-one-distinct-letter': `
+def countLetters(s):
+    count = 0
+    run = 1
+    for i in range(1, len(s) + 1):
+        if i < len(s) and s[i] == s[i - 1]:
+            run += 1
+        else:
+            count += run * (run + 1) // 2
+            run = 1
+    return count
+`,
+
+  'sum-of-number-and-its-reverse': `
+def sumOfNumberAndReverse(num):
+    num = int(num)
+    for k in range(num + 1):
+        rev = int(str(k)[::-1])
+        if k + rev == num:
+            return True
+    return False
+`,
+
+  'sum-of-absolute-differences-in-sorted-array': `
+def getSumAbsoluteDifferences(nums):
+    nums_list = [int(x) for x in nums]
+    n = len(nums_list)
+    prefix = [0] * n
+    prefix[0] = nums_list[0]
+    for i in range(1, n):
+        prefix[i] = prefix[i - 1] + nums_list[i]
+    result = []
+    for i in range(n):
+        left_sum = prefix[i - 1] if i > 0 else 0
+        right_sum = prefix[n - 1] - prefix[i]
+        result.append(nums_list[i] * i - left_sum + right_sum - nums_list[i] * (n - 1 - i))
+    return result
+`,
+
+  'number-of-subarrays-with-odd-sum': `
+def numOfSubarrays(arr):
+    MOD = 10**9 + 7
+    arr_list = [int(x) for x in arr]
+    even_count, odd_count, pref_sum, res = 1, 0, 0, 0
+    for n in arr_list:
+        pref_sum += n
+        if pref_sum % 2 == 0:
+            res = (res + odd_count) % MOD
+        else:
+            res = (res + even_count) % MOD
+        if pref_sum % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+    return res
+`,
+
+  'number-of-people-aware-of-secret': `
+def peopleAwareOfSecret(n, delay, forget):
+    n, delay, forget = int(n), int(delay), int(forget)
+    MOD = 10**9 + 7
+    dp = [0] * (n + 1)
+    dp[1] = 1
+    for i in range(1, n + 1):
+        for j in range(i + delay, min(n, i + forget - 1) + 1):
+            dp[j] = (dp[j] + dp[i]) % MOD
+    ans = 0
+    for i in range(max(1, n - forget + 1), n + 1):
+        ans = (ans + dp[i]) % MOD
+    return ans
+`,
+
+  'valid-word-abbreviation': `
+def validWordAbbreviation(word, abbr):
+    i, j = 0, 0
+    while i < len(word) and j < len(abbr):
+        if abbr[j].isalpha():
+            if word[i] != abbr[j]:
+                return False
+            i += 1
+            j += 1
+        else:
+            if abbr[j] == '0':
+                return False
+            num = 0
+            while j < len(abbr) and abbr[j].isdigit():
+                num = num * 10 + int(abbr[j])
+                j += 1
+            i += num
+    return i == len(word) and j == len(abbr)
+`,
+
+  'number-of-valid-words-in-sentence': `
+def countValidWords(sentence):
+    count = 0
+    for tok in sentence.split(' '):
+        if not tok:
+            continue
+        if any(c.isdigit() for c in tok):
+            continue
+        hyphens = tok.count('-')
+        if hyphens > 1:
+            continue
+        if hyphens == 1:
+            idx = tok.index('-')
+            if idx == 0 or idx == len(tok) - 1:
+                continue
+            if not tok[idx - 1].isalpha() or not tok[idx + 1].isalpha():
+                continue
+        puncts = sum(1 for c in tok if c in '!.,')
+        if puncts > 1:
+            continue
+        if puncts == 1 and tok[-1] not in '!.,':
+            continue
+        count += 1
+    return count
+`,
+
+  'is-subsequence': `
+def isSubsequence(s, t):
+    i = 0
+    for c in t:
+        if i < len(s) and s[i] == c:
+            i += 1
+    return i == len(s)
+`,
+
+  'find-the-longest-balanced-substring-of-binary-string': `
+def findTheLongestBalancedSubstring(s):
+    res, i = 0, 0
+    while i < len(s):
+        zeros = ones = 0
+        while i < len(s) and s[i] == '0':
+            zeros += 1
+            i += 1
+        while i < len(s) and s[i] == '1':
+            ones += 1
+            i += 1
+        res = max(res, 2 * min(zeros, ones))
+    return res
+`,
+
+  'count-number-of-distinct-integers-after-reverse-operations': `
+def countDistinctIntegers(nums):
+    nums_list = [int(x) for x in nums]
+    s = set(nums_list)
+    for n in nums_list:
+        s.add(int(str(n)[::-1]))
+    return len(s)
+`,
+
+  'most-frequent-number-following-key': `
+def mostFrequent(nums, key):
+    nums_list = [int(x) for x in nums]
+    key = int(key)
+    from collections import Counter
+    c = Counter()
+    for i in range(len(nums_list) - 1):
+        if nums_list[i] == key:
+            c[nums_list[i + 1]] += 1
+    return c.most_common(1)[0][0]
+`,
+
+  'minimum-difference-between-highest-and-lowest-of-k-scores': `
+def minimumDifference(nums, k):
+    nums_list = sorted(int(x) for x in nums)
+    k = int(k)
+    res = float('inf')
+    for i in range(len(nums_list) - k + 1):
+        res = min(res, nums_list[i + k - 1] - nums_list[i])
+    return res
+`,
+
+  'find-the-array-concat-val': `
+def findTheArrayConcVal(nums):
+    nums_list = [int(x) for x in nums]
+    val, l, r = 0, 0, len(nums_list) - 1
+    while l < r:
+        val += int(str(nums_list[l]) + str(nums_list[r]))
+        l += 1
+        r -= 1
+    if l == r:
+        val += nums_list[l]
+    return val
+`,
 };

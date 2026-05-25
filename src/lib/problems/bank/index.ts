@@ -1011,6 +1011,21 @@ import { problem as differenceBetweenElementSumAndDigitSumOfArray } from './diff
 import { problem as minimumLengthOfStringAfterDeletingSimilarEnds } from './minimum-length-of-string-after-deleting-similar-ends';
 import { problem as maximumNumberOfVowelsInSubstringOfGivenLength } from './maximum-number-of-vowels-in-substring-of-given-length';
 import { problem as categorizeBoxAccordingToCriteria } from './categorize-box-according-to-criteria';
+import { problem as findTheMiddleIndexInArray } from './find-the-middle-index-in-array';
+import { problem as maximumAbsoluteSumOfAnySubarray } from './maximum-absolute-sum-of-any-subarray';
+import { problem as countSubstringsWithOnlyOneDistinctLetter } from './count-substrings-with-only-one-distinct-letter';
+import { problem as sumOfNumberAndItsReverse } from './sum-of-number-and-its-reverse';
+import { problem as sumOfAbsoluteDifferencesInSortedArray } from './sum-of-absolute-differences-in-sorted-array';
+import { problem as numberOfSubarraysWithOddSum } from './number-of-subarrays-with-odd-sum';
+import { problem as numberOfPeopleAwareOfSecret } from './number-of-people-aware-of-secret';
+import { problem as validWordAbbreviation } from './valid-word-abbreviation';
+import { problem as numberOfValidWordsInSentence } from './number-of-valid-words-in-sentence';
+import { problem as isSubsequence } from './is-subsequence';
+import { problem as findTheLongestBalancedSubstringOfBinaryString } from './find-the-longest-balanced-substring-of-binary-string';
+import { problem as countNumberOfDistinctIntegersAfterReverseOperations } from './count-number-of-distinct-integers-after-reverse-operations';
+import { problem as mostFrequentNumberFollowingKey } from './most-frequent-number-following-key';
+import { problem as minimumDifferenceBetweenHighestAndLowestOfKScores } from './minimum-difference-between-highest-and-lowest-of-k-scores';
+import { problem as findTheArrayConcVal } from './find-the-array-concat-val';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2070,4 +2085,19 @@ export const problems: readonly Problem[] = [
   minimumLengthOfStringAfterDeletingSimilarEnds,
   maximumNumberOfVowelsInSubstringOfGivenLength,
   categorizeBoxAccordingToCriteria,
+  findTheMiddleIndexInArray,
+  maximumAbsoluteSumOfAnySubarray,
+  countSubstringsWithOnlyOneDistinctLetter,
+  sumOfNumberAndItsReverse,
+  sumOfAbsoluteDifferencesInSortedArray,
+  numberOfSubarraysWithOddSum,
+  numberOfPeopleAwareOfSecret,
+  validWordAbbreviation,
+  numberOfValidWordsInSentence,
+  isSubsequence,
+  findTheLongestBalancedSubstringOfBinaryString,
+  countNumberOfDistinctIntegersAfterReverseOperations,
+  mostFrequentNumberFollowingKey,
+  minimumDifferenceBetweenHighestAndLowestOfKScores,
+  findTheArrayConcVal,
 ];

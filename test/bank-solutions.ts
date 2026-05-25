@@ -12456,4 +12456,182 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return 'Neither';
   },
 
+  'find-the-middle-index-in-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const total = nums.reduce((a, b) => a + b, 0);
+    let leftSum = 0;
+    for (let i = 0; i < nums.length; i++) {
+      if (leftSum === total - leftSum - (nums[i] as number)) return i;
+      leftSum += nums[i] as number;
+    }
+    return -1;
+  },
+
+  'maximum-absolute-sum-of-any-subarray': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let maxSum = 0, minSum = 0, curMax = 0, curMin = 0;
+    for (const n of nums) {
+      curMax = Math.max(curMax + n, n);
+      maxSum = Math.max(maxSum, curMax);
+      curMin = Math.min(curMin + n, n);
+      minSum = Math.min(minSum, curMin);
+    }
+    return Math.max(maxSum, Math.abs(minSum));
+  },
+
+  'count-substrings-with-only-one-distinct-letter': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let count = 0, run = 1;
+    for (let i = 1; i <= s.length; i++) {
+      if (i < s.length && s[i] === s[i - 1]) run++;
+      else { count += (run * (run + 1)) / 2; run = 1; }
+    }
+    return count;
+  },
+
+  'sum-of-number-and-its-reverse': (...args: unknown[]) => {
+    const num = args[0] as number;
+    for (let k = 0; k <= num; k++) {
+      const rev = parseInt(String(k).split('').reverse().join(''));
+      if (k + rev === num) return true;
+    }
+    return false;
+  },
+
+  'sum-of-absolute-differences-in-sorted-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const prefix = Array(n).fill(0);
+    prefix[0] = nums[0];
+    for (let i = 1; i < n; i++) prefix[i] = prefix[i - 1] + (nums[i] as number);
+    const result = Array(n).fill(0);
+    for (let i = 0; i < n; i++) {
+      const leftSum = i > 0 ? prefix[i - 1] : 0;
+      const rightSum = prefix[n - 1] - prefix[i];
+      result[i] = (nums[i] as number) * i - leftSum + rightSum - (nums[i] as number) * (n - 1 - i);
+    }
+    return result;
+  },
+
+  'number-of-subarrays-with-odd-sum': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const MOD = 1_000_000_007;
+    let evenCount = 1, oddCount = 0, prefSum = 0, res = 0;
+    for (const n of arr) {
+      prefSum += n;
+      if (prefSum % 2 === 0) res = (res + oddCount) % MOD;
+      else res = (res + evenCount) % MOD;
+      if (prefSum % 2 === 0) evenCount++;
+      else oddCount++;
+    }
+    return res;
+  },
+
+  'number-of-people-aware-of-secret': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const delay = args[1] as number;
+    const forget = args[2] as number;
+    const MOD = 1_000_000_007n;
+    const dp = new Array(n + 1).fill(0n);
+    dp[1] = 1n;
+    for (let i = 1; i <= n; i++) {
+      for (let j = i + delay; j <= Math.min(n, i + forget - 1); j++) {
+        dp[j] = (dp[j] + dp[i]) % MOD;
+      }
+    }
+    let ans = 0n;
+    for (let i = Math.max(1, n - forget + 1); i <= n; i++) ans = (ans + dp[i]) % MOD;
+    return Number(ans);
+  },
+
+  'valid-word-abbreviation': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const abbr = args[1] as string;
+    let i = 0, j = 0;
+    while (i < word.length && j < abbr.length) {
+      if (/[a-z]/.test(abbr[j] as string)) {
+        if (word[i] !== abbr[j]) return false;
+        i++; j++;
+      } else {
+        if (abbr[j] === '0') return false;
+        let num = 0;
+        while (j < abbr.length && /[0-9]/.test(abbr[j] as string)) { num = num * 10 + +(abbr[j] as string); j++; }
+        i += num;
+      }
+    }
+    return i === word.length && j === abbr.length;
+  },
+
+  'number-of-valid-words-in-sentence': (...args: unknown[]) => {
+    const sentence = args[0] as string;
+    return sentence.split(' ').filter((tok) => {
+      if (tok.length === 0) return false;
+      if (/[0-9]/.test(tok)) return false;
+      const hyphens = (tok.match(/-/g) ?? []).length;
+      if (hyphens > 1) return false;
+      if (hyphens === 1) {
+        const idx = tok.indexOf('-');
+        if (idx === 0 || idx === tok.length - 1) return false;
+        if (!/[a-z]/.test(tok[idx - 1] as string) || !/[a-z]/.test(tok[idx + 1] as string)) return false;
+      }
+      const puncts = (tok.match(/[!.,]/g) ?? []).length;
+      if (puncts > 1) return false;
+      if (puncts === 1 && !/[!.,]$/.test(tok)) return false;
+      return true;
+    }).length;
+  },
+
+  'is-subsequence': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const t = args[1] as string;
+    let i = 0;
+    for (const c of t) if (i < s.length && s[i] === c) i++;
+    return i === s.length;
+  },
+
+  'find-the-longest-balanced-substring-of-binary-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let res = 0, i = 0;
+    while (i < s.length) {
+      let zeros = 0, ones = 0;
+      while (i < s.length && s[i] === '0') { zeros++; i++; }
+      while (i < s.length && s[i] === '1') { ones++; i++; }
+      res = Math.max(res, 2 * Math.min(zeros, ones));
+    }
+    return res;
+  },
+
+  'count-number-of-distinct-integers-after-reverse-operations': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const set = new Set(nums);
+    for (const n of nums) set.add(parseInt(String(n).split('').reverse().join('')));
+    return set.size;
+  },
+
+  'most-frequent-number-following-key': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const key = args[1] as number;
+    const map: Record<number, number> = {};
+    for (let i = 0; i < nums.length - 1; i++) {
+      if (nums[i] === key) map[nums[i + 1] as number] = (map[nums[i + 1] as number] ?? 0) + 1;
+    }
+    return +Object.entries(map).reduce((a, b) => (Number(a[1]) >= Number(b[1]) ? a : b))[0];
+  },
+
+  'minimum-difference-between-highest-and-lowest-of-k-scores': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const k = args[1] as number;
+    let res = Infinity;
+    for (let i = 0; i + k - 1 < nums.length; i++) res = Math.min(res, (nums[i + k - 1] as number) - (nums[i] as number));
+    return res;
+  },
+
+  'find-the-array-concat-val': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let val = 0, l = 0, r = nums.length - 1;
+    while (l < r) { val += Number(String(nums[l]) + String(nums[r])); l++; r--; }
+    if (l === r) val += nums[l] as number;
+    return val;
+  },
+
 };
