@@ -19943,4 +19943,78 @@ def distanceK(root, target, k):
     dfs(root)
     return best[0] % MOD
 `,
+
+  'watering-plants': `def wateringPlants(plants, capacity):
+    plants = list(plants.to_py() if hasattr(plants, 'to_py') else plants)
+    plants = [int(x) for x in plants]
+    capacity = int(capacity)
+    steps = 0
+    water = capacity
+    for i, need in enumerate(plants):
+        steps += 1
+        if water < need:
+            steps += 2 * i
+            water = capacity
+        water -= need
+    return steps
+`,
+
+  'logger-rate-limiter': `def loggerRateLimiter(calls):
+    calls_list = list(calls.to_py() if hasattr(calls, 'to_py') else calls)
+    last_printed = {}
+    result = []
+    for entry in calls_list:
+        entry = list(entry.to_py() if hasattr(entry, 'to_py') else entry)
+        timestamp = int(entry[0])
+        message = str(entry[1])
+        if message not in last_printed or timestamp - last_printed[message] >= 10:
+            last_printed[message] = timestamp
+            result.append(True)
+        else:
+            result.append(False)
+    return result
+`,
+
+  'bst-from-preorder': `def bstFromPreorder(preorder):
+    def insert(root, val):
+        if not root: return TreeNode(val)
+        if val < root.val: root.left = insert(root.left, val)
+        else: root.right = insert(root.right, val)
+        return root
+    root = None
+    for v in preorder:
+        root = insert(root, v)
+    return root
+`,
+
+  'balance-a-binary-search-tree': `def balanceBST(root):
+    vals = []
+    def inorder(n):
+        if not n: return
+        inorder(n.left); vals.append(n.val); inorder(n.right)
+    inorder(root)
+    def build(lo, hi):
+        if lo > hi: return None
+        mid = (lo + hi) // 2
+        node = TreeNode(vals[mid])
+        node.left = build(lo, mid - 1)
+        node.right = build(mid + 1, hi)
+        return node
+    return build(0, len(vals) - 1)
+`,
+
+  'maximum-sum-bst-in-binary-tree': `def maxSumBST(root):
+    max_sum = [0]
+    def dfs(n):
+        if not n: return True, float('inf'), float('-inf'), 0
+        l_bst, l_min, l_max, l_sum = dfs(n.left)
+        r_bst, r_min, r_max, r_sum = dfs(n.right)
+        if l_bst and r_bst and l_max < n.val < r_min:
+            s = l_sum + n.val + r_sum
+            if s > max_sum[0]: max_sum[0] = s
+            return True, min(l_min, n.val), max(r_max, n.val), s
+        return False, 0, 0, 0
+    dfs(root)
+    return max_sum[0]
+`,
 };

@@ -19898,4 +19898,105 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(best % MOD);
   },
 
+  'watering-plants': (...args: unknown[]) => {
+    const plants = args[0] as number[];
+    const capacity = args[1] as number;
+    let steps = 0;
+    let water = capacity;
+    for (let i = 0; i < plants.length; i++) {
+      steps++; // step to plant i
+      if (water < plants[i]!) {
+        steps += 2 * i; // walk back to river and return
+        water = capacity;
+      }
+      water -= plants[i]!;
+    }
+    return steps;
+  },
+
+  'logger-rate-limiter': (...args: unknown[]) => {
+    const calls = args[0] as [number, string][];
+    const lastPrinted = new Map<string, number>();
+    const result: boolean[] = [];
+    for (const [timestamp, message] of calls) {
+      const last = lastPrinted.get(message);
+      if (last === undefined || timestamp - last >= 10) {
+        lastPrinted.set(message, timestamp);
+        result.push(true);
+      } else {
+        result.push(false);
+      }
+    }
+    return result;
+  },
+
+  'bst-from-preorder': (...args: unknown[]) => {
+    const preorder = args[0] as number[];
+    interface TN { val: number; left: TN | null; right: TN | null }
+    const insert = (root: TN | null, val: number): TN => {
+      if (!root) return { val, left: null, right: null };
+      if (val < root.val) root.left = insert(root.left, val);
+      else root.right = insert(root.right, val);
+      return root;
+    };
+    let root: TN | null = null;
+    for (const v of preorder) root = insert(root, v);
+    // Return as inorder for comparison (same sorted values)
+    const inorder: number[] = [];
+    const dfs = (n: TN | null) => {
+      if (!n) return;
+      dfs(n.left); inorder.push(n.val); dfs(n.right);
+    };
+    dfs(root);
+    // Return level-order array
+    const toArr = (n: TN | null): (number | null)[] => {
+      if (!n) return [];
+      const result: (number | null)[] = [];
+      const q: (TN | null)[] = [n];
+      while (q.length) {
+        const node = q.shift()!;
+        if (!node) { result.push(null); continue; }
+        result.push(node.val);
+        q.push(node.left);
+        q.push(node.right);
+      }
+      while (result.length && result[result.length - 1] === null) result.pop();
+      return result;
+    };
+    return toArr(root);
+  },
+
+  'balance-a-binary-search-tree': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const root = _buildTree(arr);
+    const vals: number[] = [];
+    const inorder = (n: _TN | null) => {
+      if (!n) return;
+      inorder(n.l); vals.push(n.v); inorder(n.r);
+    };
+    inorder(root);
+    // Return sorted values (inorder of balanced result)
+    return vals;
+  },
+
+  'maximum-sum-bst-in-binary-tree': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const root = _buildTree(arr);
+    let maxSum = 0;
+    // Returns [isBST, min, max, sum]
+    const dfs = (n: _TN | null): [boolean, number, number, number] => {
+      if (!n) return [true, Infinity, -Infinity, 0];
+      const [lBST, lMin, lMax, lSum] = dfs(n.l);
+      const [rBST, rMin, rMax, rSum] = dfs(n.r);
+      if (lBST && rBST && lMax < n.v && n.v < rMin) {
+        const sum = lSum + n.v + rSum;
+        if (sum > maxSum) maxSum = sum;
+        return [true, Math.min(lMin, n.v), Math.max(rMax, n.v), sum];
+      }
+      return [false, 0, 0, 0];
+    };
+    dfs(root);
+    return maxSum;
+  },
+
 };

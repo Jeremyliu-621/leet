@@ -1486,6 +1486,11 @@ import { problem as minimumOperationsToReduceXToZero } from './minimum-operation
 import { problem as largestSubmatrixWithRearrangements } from './largest-submatrix-with-rearrangements';
 import { problem as subtreeOfAnotherTree } from './subtree-of-another-tree';
 import { problem as maximumProductOfSplittedBinaryTree } from './maximum-product-of-splitted-binary-tree';
+import { problem as wateringPlants } from './watering-plants';
+import { problem as loggerRateLimiter } from './logger-rate-limiter';
+import { problem as bstFromPreorder } from './bst-from-preorder';
+import { problem as balanceABinarySearchTree } from './balance-a-binary-search-tree';
+import { problem as maximumSumBstInBinaryTree } from './maximum-sum-bst-in-binary-tree';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3020,4 +3025,9 @@ export const problems: readonly Problem[] = [
   largestSubmatrixWithRearrangements,
   subtreeOfAnotherTree,
   maximumProductOfSplittedBinaryTree,
+  wateringPlants,
+  loggerRateLimiter,
+  bstFromPreorder,
+  balanceABinarySearchTree,
+  maximumSumBstInBinaryTree,
 ];
