@@ -1395,6 +1395,11 @@ import { problem as findTheKWeakestRowsInAMatrix } from './find-the-k-weakest-ro
 import { problem as separateBlackAndWhiteBalls } from './separate-black-and-white-balls';
 import { problem as minimumNumberOfStepsToMakeTwoStringsAnagram } from './minimum-number-of-steps-to-make-two-strings-anagram';
 import { problem as findThePrefixCommonArrayOfTwoArrays } from './find-the-prefix-common-array-of-two-arrays';
+import { problem as lastStoneWeightII } from './last-stone-weight-ii';
+import { problem as divideTwoIntegers } from './divide-two-integers';
+import { problem as longestHarmoniousSubsequence } from './longest-harmonious-subsequence';
+import { problem as buddyStrings } from './buddy-strings';
+import { problem as beautifulSubsets } from './beautiful-subsets';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2838,4 +2843,9 @@ export const problems: readonly Problem[] = [
   separateBlackAndWhiteBalls,
   minimumNumberOfStepsToMakeTwoStringsAnagram,
   findThePrefixCommonArrayOfTwoArrays,
+  lastStoneWeightII,
+  divideTwoIntegers,
+  longestHarmoniousSubsequence,
+  buddyStrings,
+  beautifulSubsets,
 ];

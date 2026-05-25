@@ -18564,4 +18564,84 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
         result.append(common)
     return result
 `,
+
+  'last-stone-weight-ii': `def lastStoneWeightII(stones):
+    stones = list(stones.to_py() if hasattr(stones, 'to_py') else stones)
+    total = sum(stones)
+    half = total // 2
+    dp = [False] * (half + 1)
+    dp[0] = True
+    for s in stones:
+        for j in range(half, s - 1, -1):
+            dp[j] = dp[j] or dp[j - s]
+    for j in range(half, -1, -1):
+        if dp[j]:
+            return total - 2 * j
+    return total
+`,
+
+  'divide-two-integers': `def divide(dividend, divisor):
+    dividend = int(dividend)
+    divisor = int(divisor)
+    INT_MAX = 2**31 - 1
+    INT_MIN = -(2**31)
+    if dividend == INT_MIN and divisor == -1:
+        return INT_MAX
+    sign = -1 if (dividend > 0) != (divisor > 0) else 1
+    a, b = abs(dividend), abs(divisor)
+    result = 0
+    while a >= b:
+        temp, mul = b, 1
+        while a >= (temp << 1):
+            temp <<= 1
+            mul <<= 1
+        a -= temp
+        result += mul
+    return sign * result
+`,
+
+  'longest-harmonious-subsequence': `def findLHS(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    from collections import Counter
+    freq = Counter(nums)
+    ans = 0
+    for k in freq:
+        if k + 1 in freq:
+            ans = max(ans, freq[k] + freq[k + 1])
+    return ans
+`,
+
+  'buddy-strings': `def buddyStrings(s, goal):
+    s = str(s)
+    goal = str(goal)
+    if len(s) != len(goal):
+        return False
+    if s == goal:
+        return len(set(s)) < len(s)
+    diffs = [i for i in range(len(s)) if s[i] != goal[i]]
+    if len(diffs) != 2:
+        return False
+    i, j = diffs
+    return s[i] == goal[j] and s[j] == goal[i]
+`,
+
+  'beautiful-subsets': `def beautifulSubsets(nums, k):
+    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else list(nums))
+    k = int(k)
+    freq = {}
+    count = [0]
+    def bt(idx):
+        if idx == len(nums):
+            count[0] += 1
+            return
+        bt(idx + 1)
+        if not freq.get(nums[idx] - k, 0):
+            freq[nums[idx]] = freq.get(nums[idx], 0) + 1
+            bt(idx + 1)
+            freq[nums[idx]] -= 1
+            if freq[nums[idx]] == 0:
+                del freq[nums[idx]]
+    bt(0)
+    return count[0] - 1
+`,
 };

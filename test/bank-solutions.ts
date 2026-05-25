@@ -18653,4 +18653,71 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'last-stone-weight-ii': (stones: unknown) => {
+    const s = stones as number[];
+    const total = s.reduce((a, b) => a + b, 0);
+    const half = Math.floor(total / 2);
+    const dp = new Array(half + 1).fill(false);
+    dp[0] = true;
+    for (const w of s)
+      for (let j = half; j >= w; j--)
+        dp[j] = dp[j] || dp[j - w];
+    for (let j = half; j >= 0; j--)
+      if (dp[j]) return total - 2 * j;
+    return total;
+  },
+
+  'divide-two-integers': (dividend: unknown, divisor: unknown) => {
+    const dvd = dividend as number, dvs = divisor as number;
+    if (dvd === -2147483648 && dvs === -1) return 2147483647;
+    const sign = (dvd > 0) === (dvs > 0) ? 1 : -1;
+    let a = BigInt(Math.abs(dvd)), b = BigInt(Math.abs(dvs));
+    let result = 0n;
+    while (a >= b) {
+      let temp = b, mul = 1n;
+      while (a >= (temp << 1n)) { temp <<= 1n; mul <<= 1n; }
+      a -= temp; result += mul;
+    }
+    return Number(BigInt(sign) * result);
+  },
+
+  'longest-harmonious-subsequence': (nums: unknown) => {
+    const freq = new Map<number, number>();
+    for (const n of nums as number[]) freq.set(n, (freq.get(n) ?? 0) + 1);
+    let ans = 0;
+    for (const [k, v] of freq)
+      if (freq.has(k + 1)) ans = Math.max(ans, v + freq.get(k + 1)!);
+    return ans;
+  },
+
+  'buddy-strings': (s: unknown, goal: unknown) => {
+    const a = s as string, b = goal as string;
+    if (a.length !== b.length) return false;
+    if (a === b) return new Set(a).size < a.length;
+    const diffs: number[] = [];
+    for (let i = 0; i < a.length; i++) {
+      if (a[i] !== b[i]) { diffs.push(i); if (diffs.length > 2) return false; }
+    }
+    return diffs.length === 2 && a[diffs[0]!] === b[diffs[1]!] && a[diffs[1]!] === b[diffs[0]!];
+  },
+
+  'beautiful-subsets': (nums: unknown, k: unknown) => {
+    const arr = ([...(nums as number[])]).sort((x, y) => x - y);
+    const kn = Number(k);
+    const freq = new Map<number, number>();
+    let count = 0;
+    function bt(idx: number) {
+      if (idx === arr.length) { count++; return; }
+      bt(idx + 1);
+      if (!freq.get(arr[idx]! - kn)) {
+        freq.set(arr[idx]!, (freq.get(arr[idx]!) ?? 0) + 1);
+        bt(idx + 1);
+        const v = freq.get(arr[idx]!)! - 1;
+        if (v === 0) freq.delete(arr[idx]!); else freq.set(arr[idx]!, v);
+      }
+    }
+    bt(0);
+    return count - 1;
+  },
+
 };
