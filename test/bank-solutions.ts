@@ -17218,6 +17218,49 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'time-needed-to-buy-tickets': (tickets: unknown, k: unknown) => {
+    const t = tickets as number[], ki = k as number;
+    return t.reduce((sum, v, i) => sum + Math.min(v, i <= ki ? t[ki]! : t[ki]! - 1), 0);
+  },
+
+  'number-of-subarrays-with-bounded-maximum': (nums: unknown, left: unknown, right: unknown) => {
+    const a = nums as number[], lo = left as number, hi = right as number;
+    let count = 0, lastOver = -1, lastIn = -1;
+    for (let i = 0; i < a.length; i++) {
+      if (a[i]! > hi) { lastOver = i; lastIn = i; }
+      else if (a[i]! >= lo) lastIn = i;
+      count += Math.max(0, lastIn - lastOver);
+    }
+    return count;
+  },
+
+  'kth-smallest-element-in-bst': (arr: unknown, k: unknown) => {
+    const nodes = arr as (number | null)[];
+    const K = k as number;
+    if (!nodes || nodes.length === 0) return null;
+    class TreeNode { constructor(public val: number, public left: TreeNode | null = null, public right: TreeNode | null = null) {} }
+    const root = new TreeNode(nodes[0]!);
+    const queue: TreeNode[] = [root];
+    let i = 1;
+    while (queue.length > 0 && i < nodes.length) {
+      const node = queue.shift()!;
+      if (nodes[i] !== null && nodes[i] !== undefined) { node.left = new TreeNode(nodes[i]!); queue.push(node.left); }
+      i++;
+      if (i < nodes.length && nodes[i] !== null && nodes[i] !== undefined) { node.right = new TreeNode(nodes[i]!); queue.push(node.right); }
+      i++;
+    }
+    let count = 0, result = 0;
+    function inorder(node: TreeNode | null): void {
+      if (!node) return;
+      inorder(node.left);
+      count++;
+      if (count === K) result = node.val;
+      inorder(node.right);
+    }
+    inorder(root);
+    return result;
+  },
+
   'maximum-value-at-given-index-in-bounded-array': (n: unknown, index: unknown, maxSum: unknown) => {
     const N = n as number, idx = index as number, ms = maxSum as number;
     function sumAtPeak(v: bigint, len: bigint): bigint {

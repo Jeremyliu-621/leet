@@ -1304,6 +1304,9 @@ import { problem as minimumOperationsToHalveArraySum } from './minimum-operation
 import { problem as maximumBinaryStringAfterChange } from './maximum-binary-string-after-change';
 import { problem as circularArrayLoop } from './circular-array-loop';
 import { problem as longestArithmeticSubsequenceOfGivenDifference } from './longest-arithmetic-subsequence-of-given-difference';
+import { problem as timeNeededToBuyTickets } from './time-needed-to-buy-tickets';
+import { problem as numberOfSubarraysWithBoundedMaximum } from './number-of-subarrays-with-bounded-maximum';
+import { problem as kthSmallestElementInBst } from './kth-smallest-element-in-bst';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2656,4 +2659,7 @@ export const problems: readonly Problem[] = [
   maximumBinaryStringAfterChange,
   circularArrayLoop,
   longestArithmeticSubsequenceOfGivenDifference,
+  timeNeededToBuyTickets,
+  numberOfSubarraysWithBoundedMaximum,
+  kthSmallestElementInBst,
 ];

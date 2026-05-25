@@ -16966,6 +16966,70 @@ def minimumDeletions(s):
     return result
 `,
 
+  'time-needed-to-buy-tickets': `def timeRequiredToBuy(tickets, k):
+    tickets = list(tickets.to_py() if hasattr(tickets, 'to_py') else tickets)
+    k = int(k)
+    total = 0
+    for i, v in enumerate(tickets):
+        if i <= k:
+            total += min(v, tickets[k])
+        else:
+            total += min(v, tickets[k] - 1)
+    return total
+`,
+
+  'number-of-subarrays-with-bounded-maximum': `def numSubarrayBoundedMax(nums, left, right):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    left, right = int(left), int(right)
+    count = 0
+    last_over = -1
+    last_in = -1
+    for i, v in enumerate(nums):
+        if v > right:
+            last_over = i
+            last_in = i
+        elif v >= left:
+            last_in = i
+        count += max(0, last_in - last_over)
+    return count
+`,
+
+  'kth-smallest-element-in-bst': `def kthSmallestRunner(arr, k):
+    raw = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
+    k = int(k)
+    class TreeNode:
+        def __init__(self, val=0, left=None, right=None):
+            self.val = val; self.left = left; self.right = right
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i])
+            queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i])
+            queue.append(node.right)
+        i += 1
+    result = [0]
+    count = [0]
+    def inorder(node):
+        if not node:
+            return
+        inorder(node.left)
+        count[0] += 1
+        if count[0] == k:
+            result[0] = node.val
+        inorder(node.right)
+    inorder(root)
+    return result[0]
+`,
+
   'find-players-with-zero-or-one-losses': `def findWinners(matches):
     matches = [list(m.to_py() if hasattr(m, 'to_py') else m) for m in (matches.to_py() if hasattr(matches, 'to_py') else matches)]
     losses = {}
