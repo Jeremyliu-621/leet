@@ -355,6 +355,11 @@ export function Popup() {
                 </button>
               </li>
             ))}
+            {data.activeUnlocks.length > 4 && (
+              <li className="font-mono text-[10px] text-faint px-1">
+                +{data.activeUnlocks.length - 4} more · see Settings
+              </li>
+            )}
           </ul>
         )}
       </section>
