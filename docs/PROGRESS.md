@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1157 problems; 3745 tests green.
+**Current focus:** Bank at 1166 problems; 3772 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems; UI/UX polish; Options/popup improvements.
 
@@ -344,6 +344,7 @@ Still pending:
 - [x] **9 new classic medium/hard problems (Batch 12)** — dota2-senate (medium/strings+stack), time-needed-to-inform-all-employees (medium/graph+tree), minesweeper (medium/graph+arrays), minimum-score-triangulation (medium/dp), score-after-flipping-matrix (medium/arrays), beautiful-array (hard/arrays+dp), recover-binary-search-tree (hard/tree), find-duplicate-subtrees (medium/tree+hash-map), all-possible-full-binary-trees (medium/tree+dp); bank at **1144**; 3700 tests.
 - [x] **8 new classic problems (Batch 13)** — cherry-pickup-ii (hard/dp), detonate-maximum-bombs (medium/graph), stone-game-vii (medium/dp), design-browser-history (medium/stack), knight-dialer (medium/dp), paint-house-iii (hard/dp), maximize-distance-to-closest-person (medium/arrays), minimum-number-of-vertices (medium/graph); bank at **1149**; 3721 tests.
 - [x] **8 more classic problems (Batch 14)** — path-with-minimum-effort (medium/graph, Dijkstra), path-with-maximum-probability (medium/graph, Bellman-Ford), video-stitching (medium/dp, greedy interval), subarray-sums-divisible-by-k (medium/hash-map), sum-of-even-numbers-after-queries (medium/arrays), average-waiting-time (medium/arrays), sort-an-array (medium/arrays, merge sort), sliding-puzzle (hard/graph, BFS); bank at **1157**; 3745 tests.
+- [x] **9 more classic problems (Batch 15)** — knight-probability-in-chessboard (medium/dp), minimum-distance-bst-nodes (easy/tree), second-minimum-node-binary-tree (easy/tree), meeting-rooms-iii (hard/heap), minimum-obstacle-removal-to-reach-corner (hard/graph), max-sum-of-rectangle-no-larger-than-k (hard/arrays+binary-search), count-unique-characters-of-all-substrings (hard/strings+math), zuma-game (hard/dp+backtracking), find-longest-valid-obstacle-course (hard/binary-search+dp); bank at **1166**; 3772 tests.
 
 ---
 
