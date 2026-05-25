@@ -991,6 +991,11 @@ export function Challenge() {
             onRun={() => void handleRun()}
             onSubmit={() => void handleSubmit()}
             onGiveUp={prefs.allowGiveUp ? () => void handleGiveUp() : undefined}
+            onNewProblem={
+              !targetUrl.current
+                ? () => { window.location.href = window.location.pathname; }
+                : undefined
+            }
             isRunning={isRunning}
             verdict={verdict}
             verdictMode={verdictMode}

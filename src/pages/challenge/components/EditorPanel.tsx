@@ -80,6 +80,8 @@ interface EditorPanelProps {
   verdictMode: 'run' | 'submit';
   /** Whether the Give Up button should be shown. */
   showGiveUp: boolean;
+  /** Called when the user wants to skip to a different problem (practice mode only). */
+  onNewProblem?: () => void;
   /** Number of attempts remaining. */
   attemptsRemaining: number | null;
   /** Whether the editor is currently in fullscreen (problem panel hidden) mode. */
@@ -189,6 +191,7 @@ export function EditorPanel({
   verdict,
   verdictMode,
   showGiveUp,
+  onNewProblem,
   attemptsRemaining,
   isFullscreen = false,
   onToggleFullscreen,
@@ -593,6 +596,17 @@ export function EditorPanel({
 
           {/* Right: action buttons */}
           <div className="flex items-center gap-2">
+            {onNewProblem && (
+              <button
+                type="button"
+                onClick={onNewProblem}
+                disabled={isRunning}
+                aria-label="Skip to a different problem"
+                className="rounded-sm border border-border px-3 py-1.5 font-mono text-[11px] text-faint transition-colors hover:border-border-strong hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                new problem
+              </button>
+            )}
             {showGiveUp && onGiveUp && (
               <button
                 type="button"
