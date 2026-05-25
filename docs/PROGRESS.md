@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 512 problems, 1807 tests; added check-prefix-string, sum-digits-string-convert; deleted 2 duplicate files.
+**Current focus:** Bank at 515 problems; 1807 tests; growing toward 520+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing bank toward 530+; more medium/hard problems. Browser-zoom QA (L).
 

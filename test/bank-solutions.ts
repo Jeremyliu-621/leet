@@ -7251,4 +7251,44 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best;
   },
 
+  'append-characters-to-make-subsequence': (...args: unknown[]) => {
+    const s = args[0] as string, t = args[1] as string;
+    let j = 0;
+    for (let i = 0; i < s.length && j < t.length; i++) {
+      if (s[i] === t[j]) j++;
+    }
+    return t.length - j;
+  },
+
+  'max-sum-of-pair-with-equal-sum-of-digits': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const digitSum = (n: number) => { let s = 0; while (n > 0) { s += n % 10; n = Math.floor(n / 10); } return s; };
+    const best = new Map<number, number>();
+    let ans = -1;
+    for (const n of nums) {
+      const ds = digitSum(n);
+      if (best.has(ds)) { ans = Math.max(ans, best.get(ds)! + n); best.set(ds, Math.max(best.get(ds)!, n)); }
+      else best.set(ds, n);
+    }
+    return ans;
+  },
+
+  'count-number-of-rectangles': (...args: unknown[]) => {
+    const rectangles = args[0] as number[][], points = args[1] as number[][];
+    const byHeight: number[][] = Array.from({ length: 101 }, () => []);
+    for (const rect of rectangles) { const l = rect[0]!, h = rect[1]!; byHeight[h]!.push(l); }
+    for (let h = 0; h <= 100; h++) byHeight[h]!.sort((a, b) => a - b);
+    return points.map((pt) => {
+      const x = pt[0]!, y = pt[1]!;
+      let count = 0;
+      for (let h = y; h <= 100; h++) {
+        const arr = byHeight[h]!;
+        let lo = 0, hi = arr.length;
+        while (lo < hi) { const mid = (lo + hi) >> 1; if (arr[mid]! < x) lo = mid + 1; else hi = mid; }
+        count += arr.length - lo;
+      }
+      return count;
+    });
+  },
+
 };

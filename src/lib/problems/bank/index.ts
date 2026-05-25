@@ -173,6 +173,7 @@ import { problem as characterReplacement } from './character-replacement';
 import { problem as stringCompression } from './string-compression';
 import { problem as restoreIpAddresses } from './restore-ip-addresses';
 import { problem as countHomogenousSubstrings } from './count-homogenous-substrings';
+import { problem as appendCharactersToMakeSubsequence } from './append-characters-to-make-subsequence';
 // hash-map — easy
 import { problem as findWordsFormedByCharacters } from './find-words-formed-by-characters';
 import { problem as twoOutOfThree } from './two-out-of-three';
@@ -212,6 +213,7 @@ import { problem as topKFrequentElements } from './top-k-frequent-elements';
 import { problem as longestConsecutiveSequence } from './longest-consecutive-sequence';
 import { problem as findAllAnagramsInString } from './find-all-anagrams-in-string';
 import { problem as maximumErasureValue } from './maximum-erasure-value';
+import { problem as maxSumPairEqualDigits } from './max-sum-of-pair-with-equal-sum-of-digits';
 // hash-map — hard
 import { problem as fourSumII } from './four-sum-ii';
 import { problem as maxPointsOnLine } from './max-points-on-line';
@@ -283,6 +285,7 @@ import { problem as findFirstAndLastPosition } from './find-first-and-last-posit
 import { problem as search2dMatrix } from './search-2d-matrix';
 import { problem as kokoEatingBananas } from './koko-eating-bananas';
 import { problem as findPeakElement } from './find-peak-element';
+import { problem as countRectanglesContainingPoint } from './count-number-of-rectangles';
 // binary-search — hard
 import { problem as findMinRotatedII } from './find-min-rotated-ii';
 import { problem as medianTwoSortedArrays } from './median-two-sorted-arrays';
@@ -754,6 +757,7 @@ export const problems: readonly Problem[] = [
   zigzagConversion,
   integerToRoman,
   countHomogenousSubstrings,
+  appendCharactersToMakeSubsequence,
   // hash-map — easy
   twoOutOfThree,
   checkIfAllCharactersAppearTwice,
@@ -793,6 +797,7 @@ export const problems: readonly Problem[] = [
   findAllAnagramsInString,
   maximumErasureValue,
   longestWordInDictionary,
+  maxSumPairEqualDigits,
   // hash-map — hard
   fourSumII,
   maxPointsOnLine,
@@ -865,6 +870,7 @@ export const problems: readonly Problem[] = [
   search2dMatrix,
   kokoEatingBananas,
   findPeakElement,
+  countRectanglesContainingPoint,
   // binary-search — hard
   findMinRotatedII,
   medianTwoSortedArrays,

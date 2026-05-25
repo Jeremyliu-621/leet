@@ -6653,4 +6653,52 @@ def maxScore(s):
         best = max(best, score)
     return best
 `,
+
+  'append-characters-to-make-subsequence': `
+def appendCharacters(s, t):
+    j = 0
+    for i in range(len(s)):
+        if j < len(t) and s[i] == t[j]:
+            j += 1
+    return len(t) - j
+`,
+
+  'max-sum-of-pair-with-equal-sum-of-digits': `
+def maximumSum(nums):
+    def digit_sum(n):
+        s = 0
+        while n > 0:
+            s += n % 10
+            n //= 10
+        return s
+    best = {}
+    ans = -1
+    for n in nums:
+        ds = digit_sum(n)
+        if ds in best:
+            ans = max(ans, best[ds] + n)
+            best[ds] = max(best[ds], n)
+        else:
+            best[ds] = n
+    return ans
+`,
+
+  'count-number-of-rectangles': `
+def countRectangles(rectangles, points):
+    import bisect
+    by_height = [[] for _ in range(101)]
+    for l, h in rectangles:
+        by_height[h].append(l)
+    for h in range(101):
+        by_height[h].sort()
+    result = []
+    for x, y in points:
+        count = 0
+        for h in range(y, 101):
+            arr = by_height[h]
+            lo = bisect.bisect_left(arr, x)
+            count += len(arr) - lo
+        result.append(count)
+    return result
+`,
 };
