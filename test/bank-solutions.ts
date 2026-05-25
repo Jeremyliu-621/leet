@@ -17236,4 +17236,66 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return lo;
   },
 
+  'minimum-area-rectangle': (points: unknown) => {
+    const pts = points as number[][];
+    const set = new Set(pts.map(([x, y]) => `${x},${y}`));
+    let min = Infinity;
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        const [x1, y1] = pts[i]!, [x2, y2] = pts[j]!;
+        if (x1 !== x2 && y1 !== y2 && set.has(`${x1},${y2}`) && set.has(`${x2},${y1}`))
+          min = Math.min(min, Math.abs(x2! - x1!) * Math.abs(y2! - y1!));
+      }
+    }
+    return min === Infinity ? 0 : min;
+  },
+
+  'minimum-operations-to-halve-array-sum': (nums: unknown) => {
+    const total = (nums as number[]).reduce((a, b) => a + b, 0);
+    let need = total / 2, reduced = 0, ops = 0;
+    const arr = [...(nums as number[])];
+    while (reduced < need) {
+      arr.sort((a, b) => b - a);
+      arr[0] = arr[0]! / 2;
+      reduced += arr[0]!;
+      ops++;
+    }
+    return ops;
+  },
+
+  'maximum-binary-string-after-change': (binary: unknown) => {
+    const s = binary as string;
+    const firstZero = s.indexOf('0');
+    if (firstZero === -1) return s;
+    const zeros = [...s].filter(c => c === '0').length;
+    return '1'.repeat(firstZero + zeros - 1) + '0' + '1'.repeat(s.length - firstZero - zeros);
+  },
+
+  'circular-array-loop': (nums: unknown) => {
+    const a = nums as number[];
+    const n = a.length;
+    const nxt = (i: number) => ((i + a[i]!) % n + n) % n;
+    for (let i = 0; i < n; i++) {
+      let s = i, f = i;
+      while (a[s]! * a[nxt(s)]! > 0 && a[f]! * a[nxt(nxt(f))]! > 0) {
+        s = nxt(s);
+        f = nxt(nxt(f));
+        if (s === f) return nxt(s) !== s;
+      }
+    }
+    return false;
+  },
+
+  'longest-arithmetic-subsequence-of-given-difference': (arr: unknown, difference: unknown) => {
+    const a = arr as number[], d = difference as number;
+    const dp = new Map<number, number>();
+    let ans = 1;
+    for (const x of a) {
+      const prev = dp.get(x - d) ?? 0;
+      dp.set(x, prev + 1);
+      ans = Math.max(ans, prev + 1);
+    }
+    return ans;
+  },
+
 };

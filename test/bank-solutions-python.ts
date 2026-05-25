@@ -17019,4 +17019,75 @@ def minimumDeletions(s):
             hi = mid - 1
     return lo
 `,
+
+  'minimum-area-rectangle': `def minAreaRect(points):
+    pts = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in (points.to_py() if hasattr(points, 'to_py') else points)]
+    point_set = set((p[0], p[1]) for p in pts)
+    min_area = float('inf')
+    n = len(pts)
+    for i in range(n):
+        for j in range(i + 1, n):
+            x1, y1 = pts[i][0], pts[i][1]
+            x2, y2 = pts[j][0], pts[j][1]
+            if x1 != x2 and y1 != y2:
+                if (x1, y2) in point_set and (x2, y1) in point_set:
+                    area = abs(x2 - x1) * abs(y2 - y1)
+                    if area < min_area:
+                        min_area = area
+    return 0 if min_area == float('inf') else min_area
+`,
+
+  'minimum-operations-to-halve-array-sum': `def halveArray(nums):
+    import heapq
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    total = sum(nums)
+    need = total / 2
+    reduced = 0
+    ops = 0
+    heap = [-x for x in nums]
+    heapq.heapify(heap)
+    while reduced < need:
+        val = -heapq.heappop(heap)
+        half = val / 2
+        reduced += half
+        heapq.heappush(heap, -half)
+        ops += 1
+    return ops
+`,
+
+  'maximum-binary-string-after-change': `def maximumBinaryString(binary):
+    first_zero = binary.find('0')
+    if first_zero == -1:
+        return binary
+    zeros = binary.count('0')
+    n = len(binary)
+    return '1' * (first_zero + zeros - 1) + '0' + '1' * (n - first_zero - zeros)
+`,
+
+  'circular-array-loop': `def circularArrayLoop(nums):
+    n = len(nums)
+    def nxt(i):
+        return (i + nums[i]) % n
+    for i in range(n):
+        s, f = i, i
+        while nums[s] * nums[nxt(s)] > 0 and nums[f] * nums[nxt(nxt(f))] > 0:
+            s = nxt(s)
+            f = nxt(nxt(f))
+            if s == f:
+                return nxt(s) != s
+    return False
+`,
+
+  'longest-arithmetic-subsequence-of-given-difference': `def longestSubsequence(arr, difference):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    d = int(difference)
+    dp = {}
+    ans = 1
+    for x in arr:
+        prev = dp.get(x - d, 0)
+        dp[x] = prev + 1
+        if dp[x] > ans:
+            ans = dp[x]
+    return ans
+`,
 };

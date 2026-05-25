@@ -1299,6 +1299,11 @@ import { problem as myCalendarI } from './my-calendar-i';
 import { problem as findPlayersWithZeroOrOneLosses } from './find-players-with-zero-or-one-losses';
 import { problem as countUnreachablePairsAfterRemovingVertices } from './count-unreachable-pairs-after-removing-vertices';
 import { problem as maximumValueAtGivenIndexInBoundedArray } from './maximum-value-at-given-index-in-bounded-array';
+import { problem as minimumAreaRectangle } from './minimum-area-rectangle';
+import { problem as minimumOperationsToHalveArraySum } from './minimum-operations-to-halve-array-sum';
+import { problem as maximumBinaryStringAfterChange } from './maximum-binary-string-after-change';
+import { problem as circularArrayLoop } from './circular-array-loop';
+import { problem as longestArithmeticSubsequenceOfGivenDifference } from './longest-arithmetic-subsequence-of-given-difference';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2646,4 +2651,9 @@ export const problems: readonly Problem[] = [
   findPlayersWithZeroOrOneLosses,
   countUnreachablePairsAfterRemovingVertices,
   maximumValueAtGivenIndexInBoundedArray,
+  minimumAreaRectangle,
+  minimumOperationsToHalveArraySum,
+  maximumBinaryStringAfterChange,
+  circularArrayLoop,
+  longestArithmeticSubsequenceOfGivenDifference,
 ];
