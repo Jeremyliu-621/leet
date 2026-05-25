@@ -159,7 +159,15 @@ type PageState =
   | { status: 'loading' }
   | { status: 'no-problem' }
   | { status: 'ready'; problem: Problem; prefs: UserPreferences }
-  | { status: 'solved-standalone'; problemTitle: string };
+  | {
+      status: 'solved-standalone';
+      problemTitle: string;
+      difficulty: string;
+      attempts: number;
+      /** Elapsed wall-clock seconds (total limit minus remaining). */
+      elapsedSec: number;
+      language: SupportedLanguage;
+    };
 
 // ---------------------------------------------------------------------------
 // Empty / loading states
@@ -196,7 +204,26 @@ function NoTargetBanner() {
   );
 }
 
-function SolvedStandaloneScreen({ problemTitle }: { problemTitle: string }) {
+function formatElapsed(sec: number): string {
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  if (m === 0) return `${s}s`;
+  return `${m}m ${s}s`;
+}
+
+function SolvedStandaloneScreen({
+  problemTitle,
+  difficulty,
+  attempts,
+  elapsedSec,
+  language,
+}: {
+  problemTitle: string;
+  difficulty: string;
+  attempts: number;
+  elapsedSec: number;
+  language: SupportedLanguage;
+}) {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-8 bg-bg px-8 text-center">
       <div className="space-y-3">
@@ -214,8 +241,37 @@ function SolvedStandaloneScreen({ problemTitle }: { problemTitle: string }) {
         </div>
         <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-faint">Accepted</p>
         <h1 className="text-lg font-semibold text-text">{problemTitle}</h1>
-        <p className="text-xs text-muted">Challenge complete. Well done.</p>
+        <p className="text-xs text-muted capitalize">{difficulty}</p>
       </div>
+
+      {/* Solve stats row */}
+      <div className="flex items-center gap-6 border border-border bg-surface px-6 py-3 rounded-sm">
+        <div className="text-center">
+          <p className="font-mono text-[9px] uppercase tracking-widest text-faint">Time</p>
+          <p className="font-mono text-sm font-semibold text-text tabular-nums mt-0.5">
+            {formatElapsed(elapsedSec)}
+          </p>
+        </div>
+        <div className="h-6 w-px bg-border" aria-hidden="true" />
+        <div className="text-center">
+          <p className="font-mono text-[9px] uppercase tracking-widest text-faint">Submissions</p>
+          <p className="font-mono text-sm font-semibold text-text tabular-nums mt-0.5">{attempts}</p>
+        </div>
+        <div className="h-6 w-px bg-border" aria-hidden="true" />
+        <div className="text-center">
+          <p className="font-mono text-[9px] uppercase tracking-widest text-faint">Language</p>
+          <p className="font-mono text-sm font-semibold text-text mt-0.5 uppercase">
+            {language === 'javascript'
+              ? 'JS'
+              : language === 'typescript'
+                ? 'TS'
+                : language === 'python'
+                  ? 'Py'
+                  : language}
+          </p>
+        </div>
+      </div>
+
       <div className="flex gap-3">
         <button
           type="button"
@@ -608,7 +664,14 @@ export function Challenge() {
           window.location.href = targetUrl.current;
         } else {
           // No target (standalone/practice mode) — show a "try another" screen.
-          setPageState({ status: 'solved-standalone', problemTitle: problem.title });
+          setPageState({
+            status: 'solved-standalone',
+            problemTitle: problem.title,
+            difficulty: problem.difficulty,
+            attempts: attempts + 1,
+            elapsedSec: Math.max(0, prefs.challengeTimeLimitSec - secondsLeft),
+            language,
+          });
         }
       } else {
         // Failed submission — persist history and increment attempt counter.
@@ -783,7 +846,15 @@ export function Challenge() {
   }
 
   if (pageState.status === 'solved-standalone') {
-    return <SolvedStandaloneScreen problemTitle={pageState.problemTitle} />;
+    return (
+      <SolvedStandaloneScreen
+        problemTitle={pageState.problemTitle}
+        difficulty={pageState.difficulty}
+        attempts={pageState.attempts}
+        elapsedSec={pageState.elapsedSec}
+        language={pageState.language}
+      />
+    );
   }
 
   const { problem, prefs } = pageState;
