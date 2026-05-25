@@ -77,7 +77,7 @@ Return the list of BFS-order arrays (level-order, trailing nulls omitted), **sor
   examples: [
     {
       input: 'n = 7',
-      output: '[[0,0,0,0,0,0,0],[0,0,0,0,0,null,null,null,null,0,0],[0,0,0,null,null,0,0,0,0],[0,0,0,null,null,0,0,null,null,null,null,null,null,0,0],[0,0,0,null,null,null,null,null,null,null,null,0,0,0,0]]',
+      output: '[[0,0,0,0,0,0,0],[0,0,0,0,0,null,null,0,0],[0,0,0,0,0,null,null,null,null,0,0],[0,0,0,null,null,0,0,0,0],[0,0,0,null,null,0,0,null,null,0,0]]',
       explanation: 'Five full binary trees with 7 nodes.',
     },
     {
@@ -115,10 +115,29 @@ Return the list of BFS-order arrays (level-order, trailing nulls omitted), **sor
       args: [7],
       expected: [
         [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, null, null, 0, 0],
         [0, 0, 0, 0, 0, null, null, null, null, 0, 0],
         [0, 0, 0, null, null, 0, 0, 0, 0],
-        [0, 0, 0, null, null, 0, 0, null, null, null, null, null, null, 0, 0],
-        [0, 0, 0, null, null, null, null, null, null, null, null, 0, 0, 0, 0],
+        [0, 0, 0, null, null, 0, 0, null, null, 0, 0],
+      ],
+    },
+    {
+      args: [9],
+      expected: [
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,null,null,0,0],
+        [0,0,0,0,0,0,0,null,null,null,null,0,0],
+        [0,0,0,0,0,0,0,null,null,null,null,null,null,0,0],
+        [0,0,0,0,0,null,null,0,0,0,0],
+        [0,0,0,0,0,null,null,0,0,null,null,0,0],
+        [0,0,0,0,0,null,null,0,0,null,null,null,null,0,0],
+        [0,0,0,0,0,null,null,null,null,0,0,0,0],
+        [0,0,0,0,0,null,null,null,null,0,0,null,null,0,0],
+        [0,0,0,null,null,0,0,0,0,0,0],
+        [0,0,0,null,null,0,0,0,0,null,null,0,0],
+        [0,0,0,null,null,0,0,0,0,null,null,null,null,0,0],
+        [0,0,0,null,null,0,0,null,null,0,0,0,0],
+        [0,0,0,null,null,0,0,null,null,0,0,null,null,0,0],
       ],
     },
   ],

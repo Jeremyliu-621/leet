@@ -15027,4 +15027,180 @@ def jobScheduling(startTime, endTime, profit):
         dp[i] = max(dp[i - 1], dp[idx] + p)
     return dp[n]
 `,
+
+  'dota2-senate': `
+def predictPartyVictory(senate):
+    from collections import deque
+    n = len(senate)
+    r = deque(i for i, s in enumerate(senate) if s == 'R')
+    d = deque(i for i, s in enumerate(senate) if s == 'D')
+    while r and d:
+        ri, di = r.popleft(), d.popleft()
+        if ri < di:
+            r.append(ri + n)
+        else:
+            d.append(di + n)
+    return 'Radiant' if r else 'Dire'
+`,
+
+  'time-needed-to-inform-all-employees': `
+def numTimeToInform(n, headID, manager, informTime):
+    children = [[] for _ in range(n)]
+    for i in range(n):
+        if manager[i] != -1:
+            children[manager[i]].append(i)
+    best = 0
+    def dfs(emp, time):
+        nonlocal best
+        if time > best:
+            best = time
+        for child in children[emp]:
+            dfs(child, time + informTime[emp])
+    dfs(headID, 0)
+    return best
+`,
+
+  'minesweeper': `
+def updateBoard(board, click):
+    if hasattr(board, 'to_py'):
+        board = [list(row) for row in board.to_py()]
+    else:
+        board = [list(row) for row in board]
+    if hasattr(click, 'to_py'):
+        click = list(click.to_py())
+    cr, cc = int(click[0]), int(click[1])
+    m, n = len(board), len(board[0])
+    if board[cr][cc] == 'M':
+        board[cr][cc] = 'X'
+        return board
+    dirs = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
+    def dfs(r, c):
+        mines = sum(
+            1 for dr, dc in dirs
+            if 0 <= r+dr < m and 0 <= c+dc < n and board[r+dr][c+dc] == 'M'
+        )
+        if mines > 0:
+            board[r][c] = str(mines)
+        else:
+            board[r][c] = 'B'
+            for dr, dc in dirs:
+                nr, nc = r+dr, c+dc
+                if 0 <= nr < m and 0 <= nc < n and board[nr][nc] == 'E':
+                    dfs(nr, nc)
+    dfs(cr, cc)
+    return board
+`,
+
+  'minimum-score-triangulation': `
+def minScoreTriangulation(values):
+    n = len(values)
+    dp = [[0] * n for _ in range(n)]
+    for length in range(3, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            dp[i][j] = float('inf')
+            for k in range(i + 1, j):
+                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j] + values[i] * values[k] * values[j])
+    return dp[0][n - 1]
+`,
+
+  'score-after-flipping-matrix': `
+def matrixScore(grid):
+    if hasattr(grid, 'to_py'):
+        g = [list(row) for row in grid.to_py()]
+    else:
+        g = [list(row) for row in grid]
+    m, n = len(g), len(g[0])
+    for i in range(m):
+        if g[i][0] == 0:
+            g[i] = [1 - x for x in g[i]]
+    for j in range(1, n):
+        ones = sum(g[i][j] for i in range(m))
+        if ones < m - ones:
+            for i in range(m):
+                g[i][j] = 1 - g[i][j]
+    total = 0
+    for i in range(m):
+        row = 0
+        for j in range(n):
+            row = (row << 1) | g[i][j]
+        total += row
+    return total
+`,
+
+  'beautiful-array': `
+def beautifulArray(n):
+    from math import ceil, floor
+    memo = {}
+    def ba(k):
+        if k in memo:
+            return memo[k]
+        if k == 1:
+            return [1]
+        left = ba(ceil(k / 2))
+        right = ba(floor(k / 2))
+        result = [2*x - 1 for x in left if 2*x - 1 <= k] + [2*x for x in right if 2*x <= k]
+        memo[k] = result
+        return result
+    return ba(n)
+`,
+
+  'recover-binary-search-tree': `
+def recoverTree(root):
+    first = second = prev = None
+    def inorder(node):
+        nonlocal first, second, prev
+        if not node:
+            return
+        inorder(node.left)
+        if prev and prev.val > node.val:
+            if not first:
+                first = prev
+            second = node
+        prev = node
+        inorder(node.right)
+    inorder(root)
+    if first and second:
+        first.val, second.val = second.val, first.val
+`,
+
+  'find-duplicate-subtrees': `
+def findDuplicateSubtrees(root):
+    from collections import defaultdict
+    count = defaultdict(int)
+    result = []
+    def serialize(node):
+        if not node:
+            return '#'
+        s = f"{node.val},{serialize(node.left)},{serialize(node.right)}"
+        count[s] += 1
+        if count[s] == 2:
+            result.append(node)
+        return s
+    serialize(root)
+    return result
+`,
+
+  'all-possible-full-binary-trees': `
+def allPossibleFBT(n):
+    memo = {}
+    def gen(k):
+        if k in memo:
+            return memo[k]
+        if k == 1:
+            return [TreeNode(0)]
+        if k % 2 == 0:
+            return []
+        result = []
+        for left in range(1, k - 1, 2):
+            for lt in gen(left):
+                for rt in gen(k - 1 - left):
+                    node = TreeNode(0)
+                    node.left = lt
+                    node.right = rt
+                    result.append(node)
+        memo[k] = result
+        return result
+    return gen(n)
+`,
 };

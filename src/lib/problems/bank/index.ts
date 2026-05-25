@@ -1194,6 +1194,16 @@ import { problem as minimumTotalDistanceTraveled } from './minimum-total-distanc
 import { problem as minimumIncompatibility } from './minimum-incompatibility';
 import { problem as fairDistributionOfCookies } from './fair-distribution-of-cookies';
 import { problem as maximumProfitInJobScheduling } from './maximum-profit-in-job-scheduling';
+// new classic problems
+import { problem as dota2Senate } from './dota2-senate';
+import { problem as timeNeededToInformAllEmployees } from './time-needed-to-inform-all-employees';
+import { problem as minesweeper } from './minesweeper';
+import { problem as minimumScoreTriangulation } from './minimum-score-triangulation';
+import { problem as scoreAfterFlippingMatrix } from './score-after-flipping-matrix';
+import { problem as beautifulArray } from './beautiful-array';
+import { problem as recoverBinarySearchTree } from './recover-binary-search-tree';
+import { problem as findDuplicateSubtrees } from './find-duplicate-subtrees';
+import { problem as allPossibleFullBinaryTrees } from './all-possible-full-binary-trees';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2436,4 +2446,14 @@ export const problems: readonly Problem[] = [
   minimumIncompatibility,
   fairDistributionOfCookies,
   maximumProfitInJobScheduling,
+  // new classic problems
+  dota2Senate,
+  timeNeededToInformAllEmployees,
+  minesweeper,
+  minimumScoreTriangulation,
+  scoreAfterFlippingMatrix,
+  beautifulArray,
+  recoverBinarySearchTree,
+  findDuplicateSubtrees,
+  allPossibleFullBinaryTrees,
 ];

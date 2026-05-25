@@ -37,6 +37,7 @@ Return *the number of good triplets*.`,
   hints: [
     'Brute force: check all O(n³) triplets (i, j, k) with i < j < k.',
     'For each triplet, verify all three conditions using absolute value.',
+    'Use three nested loops: the outermost iterates `i`, middle iterates `j > i`, innermost iterates `k > j`. Early-continue on the first condition to skip unnecessary checks.',
   ],
   functionName: 'countGoodTriplets',
   params: ['arr', 'a', 'b', 'c'],

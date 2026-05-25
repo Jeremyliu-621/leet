@@ -15403,4 +15403,178 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[n]!;
   },
 
+  'dota2-senate': (senate: unknown) => {
+    const s = senate as string;
+    const n = s.length;
+    const r: number[] = [], d: number[] = [];
+    for (let i = 0; i < n; i++) {
+      if (s[i] === 'R') r.push(i); else d.push(i);
+    }
+    while (r.length && d.length) {
+      const ri = r.shift()!;
+      const di = d.shift()!;
+      if (ri < di) r.push(ri + n); else d.push(di + n);
+    }
+    return r.length ? 'Radiant' : 'Dire';
+  },
+
+  'time-needed-to-inform-all-employees': (...args: unknown[]) => {
+    const N = args[0] as number;
+    const head = args[1] as number;
+    const mgr = args[2] as number[];
+    const inf = args[3] as number[];
+    const children: number[][] = Array.from({ length: N }, () => []);
+    for (let i = 0; i < N; i++) {
+      if (mgr[i] !== -1) children[mgr[i]!]!.push(i);
+    }
+    let best = 0;
+    function dfs2(emp: number, time: number): void {
+      if (time > best) best = time;
+      for (const child of children[emp]!) dfs2(child, time + inf[emp]!);
+    }
+    dfs2(head, 0);
+    return best;
+  },
+
+  'minesweeper': (...args: unknown[]) => {
+    const board = (args[0] as string[][]).map(r => [...r]);
+    const click = args[1] as number[];
+    const cr = click[0]!, cc = click[1]!;
+    const m = board.length, n = board[0]!.length;
+    if (board[cr]![cc] === 'M') { board[cr]![cc] = 'X'; return board; }
+    const dirs: [number, number][] = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+    const dfs3 = (r: number, c: number): void => {
+      let mines = 0;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr, nc = c + dc;
+        if (nr >= 0 && nr < m && nc >= 0 && nc < n && board[nr]![nc] === 'M') mines++;
+      }
+      if (mines > 0) {
+        board[r]![c] = String(mines);
+      } else {
+        board[r]![c] = 'B';
+        for (const [dr, dc] of dirs) {
+          const nr = r + dr, nc = c + dc;
+          if (nr >= 0 && nr < m && nc >= 0 && nc < n && board[nr]![nc] === 'E') dfs3(nr, nc);
+        }
+      }
+    };
+    dfs3(cr, cc);
+    return board;
+  },
+
+  'minimum-score-triangulation': (values: unknown) => {
+    const v = values as number[];
+    const n = v.length;
+    const dp: number[][] = Array.from({ length: n }, () => new Array(n).fill(0));
+    for (let len = 3; len <= n; len++) {
+      for (let i = 0; i + len - 1 < n; i++) {
+        const j = i + len - 1;
+        dp[i]![j] = Infinity;
+        for (let k = i + 1; k < j; k++) {
+          dp[i]![j] = Math.min(dp[i]![j]!, dp[i]![k]! + dp[k]![j]! + v[i]! * v[k]! * v[j]!);
+        }
+      }
+    }
+    return dp[0]![n - 1];
+  },
+
+  'score-after-flipping-matrix': (grid: unknown) => {
+    const g = (grid as number[][]).map(r => [...r]);
+    const m = g.length, n = g[0]!.length;
+    for (let i = 0; i < m; i++) {
+      if (g[i]![0] === 0) for (let j = 0; j < n; j++) g[i]![j] = 1 - g[i]![j]!;
+    }
+    for (let j = 1; j < n; j++) {
+      let ones = 0;
+      for (let i = 0; i < m; i++) if (g[i]![j] === 1) ones++;
+      if (ones < m - ones) for (let i = 0; i < m; i++) g[i]![j] = 1 - g[i]![j]!;
+    }
+    let total = 0;
+    for (let i = 0; i < m; i++) {
+      let row = 0;
+      for (let j = 0; j < n; j++) row = (row << 1) | g[i]![j]!;
+      total += row;
+    }
+    return total;
+  },
+
+  'beautiful-array': (n: unknown) => {
+    const num = n as number;
+    const memo = new Map<number, number[]>();
+    function ba(k: number): number[] {
+      if (memo.has(k)) return memo.get(k)!;
+      if (k === 1) return [1];
+      const left = ba(Math.ceil(k / 2));
+      const right = ba(Math.floor(k / 2));
+      const result = [
+        ...left.map(x => 2 * x - 1).filter(x => x <= k),
+        ...right.map(x => 2 * x).filter(x => x <= k),
+      ];
+      memo.set(k, result);
+      return result;
+    }
+    return ba(num);
+  },
+
+  'recover-binary-search-tree': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    let firstNode: _TN | null = null, secondNode: _TN | null = null, prevNode: _TN | null = null;
+    function inorder(node: _TN | null): void {
+      if (!node) return;
+      inorder(node.l);
+      if (prevNode && prevNode.v > node.v) {
+        if (!firstNode) firstNode = prevNode;
+        secondNode = node;
+      }
+      prevNode = node;
+      inorder(node.r);
+    }
+    inorder(root);
+    const f = firstNode as _TN | null;
+    const s = secondNode as _TN | null;
+    if (f !== null && s !== null) { const tmp = f.v; f.v = s.v; s.v = tmp; }
+    return _treeToArr(root);
+  },
+
+  'find-duplicate-subtrees': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    const count = new Map<string, number>();
+    const result: number[] = [];
+    function serialize(node: _TN | null): string {
+      if (!node) return '#';
+      const s = `${node.v},${serialize(node.l)},${serialize(node.r)}`;
+      const c = (count.get(s) ?? 0) + 1;
+      count.set(s, c);
+      if (c === 2) result.push(node.v);
+      return s;
+    }
+    serialize(root);
+    return result.sort((a, b) => a - b);
+  },
+
+  'all-possible-full-binary-trees': (n: unknown) => {
+    const num = n as number;
+    const memo = new Map<number, _TN[]>();
+    function gen(k: number): _TN[] {
+      if (memo.has(k)) return memo.get(k)!;
+      if (k === 1) return [{ v: 0, l: null, r: null }];
+      if (k % 2 === 0) return [];
+      const result: _TN[] = [];
+      for (let left = 1; left <= k - 2; left += 2) {
+        for (const lt of gen(left)) {
+          for (const rt of gen(k - 1 - left)) {
+            result.push({ v: 0, l: lt, r: rt });
+          }
+        }
+      }
+      memo.set(k, result);
+      return result;
+    }
+    const arrays = gen(num).map(t => _treeToArr(t));
+    return arrays.sort((a, b) =>
+      JSON.stringify(a) < JSON.stringify(b) ? -1 : JSON.stringify(a) > JSON.stringify(b) ? 1 : 0,
+    );
+  },
+
 };

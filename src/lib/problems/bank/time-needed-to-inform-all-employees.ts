@@ -61,7 +61,7 @@ Return the **number of minutes needed to inform all the employees**.`,
   hiddenTests: [
     { args: [4, 2, [3, 3, -1, 2], [0, 0, 162, 914]], expected: 1076 },
     { args: [2, 0, [-1, 0], [5, 0]], expected: 5 },
-    { args: [3, 0, [-1, 0, 0], [3, 1, 2]], expected: 5 },
+    { args: [3, 0, [-1, 0, 0], [3, 1, 2]], expected: 3 },
     { args: [5, 0, [-1, 0, 1, 2, 3], [1, 2, 3, 4, 0]], expected: 10 },
     { args: [3, 0, [-1, 0, 1], [2, 3, 0]], expected: 5 },
   ],

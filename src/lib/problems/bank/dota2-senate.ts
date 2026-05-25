@@ -55,7 +55,7 @@ Both sides play **optimally** — a senator will always ban the nearest next opp
   hiddenTests: [
     { args: ['R'], expected: 'Radiant' },
     { args: ['D'], expected: 'Dire' },
-    { args: ['DDRRR'], expected: 'Radiant' },
+    { args: ['DDRRR'], expected: 'Dire' },
     { args: ['DRRD'], expected: 'Dire' },
     { args: ['RDRDR'], expected: 'Radiant' },
   ],
