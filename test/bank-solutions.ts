@@ -21518,4 +21518,38 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[target];
   },
 
+  'count-all-valid-pickup-and-delivery-options': (n: unknown) => {
+    const MOD = 1_000_000_007n;
+    let dp = 1n;
+    for (let i = 2; i <= (n as number); i++) {
+      dp = dp * BigInt(i) * BigInt(2 * i - 1) % MOD;
+    }
+    return Number(dp);
+  },
+
+  'maximum-average-subarray-ii': (nums: unknown, k: unknown) => {
+    const a = nums as number[], kk = k as number;
+    const n = a.length;
+    let lo = Math.min(...a), hi = Math.max(...a);
+    const check = (mid: number) => {
+      const adj = a.map(v => v - mid);
+      let windowSum = adj.slice(0, kk).reduce((s, v) => s + v, 0);
+      if (windowSum >= 0) return true;
+      let prevSum = 0, minPrevSum = 0;
+      for (let i = kk; i < n; i++) {
+        windowSum += adj[i]!;
+        prevSum += adj[i - kk]!;
+        minPrevSum = Math.min(minPrevSum, prevSum);
+        if (windowSum - minPrevSum >= 0) return true;
+      }
+      return false;
+    };
+    for (let iter = 0; iter < 100; iter++) {
+      const mid = (lo + hi) / 2;
+      if (check(mid)) lo = mid;
+      else hi = mid;
+    }
+    return parseFloat(lo.toFixed(5));
+  },
+
 };

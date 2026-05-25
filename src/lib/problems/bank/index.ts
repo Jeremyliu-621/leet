@@ -1566,6 +1566,8 @@ import { problem as maxDotProductOfTwoSubsequences } from './max-dot-product-of-
 import { problem as numberOfSquarefulArrays } from './number-of-squareful-arrays';
 import { problem as sellingPiecesOfWood } from './selling-pieces-of-wood';
 import { problem as numberOfDiceRollsWithTargetSum } from './number-of-dice-rolls-with-target-sum';
+import { problem as countAllValidPickupAndDeliveryOptions } from './count-all-valid-pickup-and-delivery-options';
+import { problem as maximumAverageSubarrayII } from './maximum-average-subarray-ii';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3179,4 +3181,6 @@ export const problems: readonly Problem[] = [
   numberOfSquarefulArrays,
   sellingPiecesOfWood,
   numberOfDiceRollsWithTargetSum,
+  countAllValidPickupAndDeliveryOptions,
+  maximumAverageSubarrayII,
 ];

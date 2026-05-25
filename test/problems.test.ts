@@ -55,29 +55,9 @@ describe('problem selector', () => {
   });
 
   it('returns undefined when nothing in the bank matches the filter', () => {
-    // No problem uses a hypothetical 'insane' difficulty level
-    // (Difficulty type only has easy | medium | hard, so we test a tag combo
-    // that guarantees zero matches — e.g., hard+math when no hard math exists)
-    expect(selectProblem({ difficulties: ['easy'], tags: ['stack'], excludeIds: [
-      'balanced-brackets', 'remove-adjacent-dupes', 'next-greater-element',
-      'daily-temperatures', 'evaluate-rpn', 'min-stack', 'implement-queue-using-stacks',
-      'maximum-nesting-depth',
-      'number-of-students-eating-lunch',
-      'number-of-students-unable-to-eat-lunch',
-      'make-string-great',
-      'minimum-string-length',
-      'minimum-length-string-operations',
-      'students-unable-to-eat-lunch',
-      'valid-parentheses',
-      'find-resultant-array-after-removing-anagrams',
-      'baseball-game',
-      'next-greater-element-i',
-      'remove-outermost-parentheses',
-      'remove-all-adjacent-duplicates-in-string',
-      'minimum-string-length-after-removing-substrings',
-      'implement-stack-using-queues',
-      'final-prices-with-a-special-discount-in-a-shop',
-    ] })).toBeUndefined();
+    // Exclude every problem in the bank — guaranteed zero matches regardless of bank size.
+    const allIds = getAllProblems().map((p) => p.id);
+    expect(selectProblem({ excludeIds: allIds }, () => 0)).toBeUndefined();
   });
 
   it('always picks a challenge problem, relaxing the filter as needed', () => {

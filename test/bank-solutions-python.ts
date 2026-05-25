@@ -21348,4 +21348,41 @@ def secondMinimum(n, edges, time, change):
         dp = nxt
     return dp[target]
 `,
+
+  'count-all-valid-pickup-and-delivery-options': `def countOrders(n):
+    n = int(n)
+    MOD = 10**9 + 7
+    dp = 1
+    for i in range(2, n + 1):
+        dp = dp * i * (2 * i - 1) % MOD
+    return dp
+`,
+
+  'maximum-average-subarray-ii': `def findMaxAverage(nums, k):
+    a = list(float(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    k = int(k)
+    n = len(a)
+    lo, hi = min(a), max(a)
+    def check(mid):
+        adj = [v - mid for v in a]
+        window_sum = sum(adj[:k])
+        if window_sum >= 0:
+            return True
+        prev_sum = 0.0
+        min_prev_sum = 0.0
+        for i in range(k, n):
+            window_sum += adj[i]
+            prev_sum += adj[i - k]
+            min_prev_sum = min(min_prev_sum, prev_sum)
+            if window_sum - min_prev_sum >= 0:
+                return True
+        return False
+    for _ in range(100):
+        mid = (lo + hi) / 2
+        if check(mid):
+            lo = mid
+        else:
+            hi = mid
+    return round(lo, 5)
+`,
 };
