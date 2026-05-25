@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1135 problems; 3673 tests green.
+**Current focus:** Bank at 1144 problems; 3700 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems; UI/UX polish; Options/popup improvements.
 
@@ -338,7 +338,10 @@ Still pending:
 - [x] **10 more classic problems** — array-nesting, evaluate-division (BFS w/ weights), out-of-boundary-paths (DP/mod), maximum-ice-cream-bars (greedy), count-numbers-unique-digits (DP), minimum-cost-to-cut-stick (interval DP/hard), find-min-rotated-ii, search-rotated-ii, distinct-subsequences (DP/hard), minimum-window-subsequence (two-pointer/hard); bank at ~**1018**; 3322 tests.
 - [x] **10 more classic hard problems (Batch 9)** — sliding-window-median, minimum-difficulty-of-job-schedule, tallest-billboard, concatenated-words, max-value-of-equation, number-of-music-playlists, minimum-removals-mountain-array, count-different-palindromic-subsequences, painting-the-walls, shortest-path-to-get-all-keys; bank at **1115**; 3613 tests.
 - [x] **10 more classic hard problems (Batch 10)** — stone-game-vii, stone-game-v, maximum-sum-three-non-overlapping-subarrays, minimum-cost-to-merge-stones, palindrome-partitioning-iii, maximum-height-by-stacking-cuboids, minimum-number-of-days-to-eat-n-oranges, best-team-with-no-conflicts, number-of-ways-to-form-target, minimum-xor-sum-of-two-arrays; bank at **1125**; 3643 tests.
-- [x] **10 more classic hard problems (Batch 11)** — rearrange-sticks-k-visible, stay-in-same-place-after-steps, minimum-score-triangulation, minimum-cost-to-make-array-equal, maximum-achievable-transfer-requests, maximum-elegance-k-subsequence, minimum-total-distance-traveled, minimum-incompatibility, fair-distribution-of-cookies, maximum-profit-in-job-scheduling; bank at **1135**; 3673 tests.
+- [x] **10 more classic hard problems (Batch 11)** — rearrange-sticks-k-visible, stay-in-same-place-after-steps, minimum-score-triangulation-of-polygon, minimum-cost-to-make-array-equal, maximum-achievable-transfer-requests, maximum-elegance-k-subsequence, minimum-total-distance-traveled, minimum-incompatibility, fair-distribution-of-cookies, maximum-profit-in-job-scheduling; bank at **1135**; 3673 tests.
+- [x] **Challenge page UX improvements** — array diff hints in TerminalPanel (shows index + length diff when expected/actual diverge); inline copy buttons on problem examples; Enter-key submit in CustomTestPanel; blocked-page "Try another challenge" button threading targetUrl through fail-challenge message.
+- [x] **Marketing site stats updated** — 1,100+ problems in all three stat locations.
+- [x] **9 new classic medium/hard problems (Batch 12)** — dota2-senate (medium/strings+stack), time-needed-to-inform-all-employees (medium/graph+tree), minesweeper (medium/graph+arrays), minimum-score-triangulation (medium/dp), score-after-flipping-matrix (medium/arrays), beautiful-array (hard/arrays+dp), recover-binary-search-tree (hard/tree), find-duplicate-subtrees (medium/tree+hash-map), all-possible-full-binary-trees (medium/tree+dp); bank at **1144**; 3700 tests.
 
 ---
 
