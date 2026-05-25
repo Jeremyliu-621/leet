@@ -1366,6 +1366,18 @@ import { problem as minimumInsertionsToBalanceParentheses } from './minimum-inse
 import { problem as longestSubarrayOf1sAfterDeletingOneElement } from './longest-subarray-of-1s-after-deleting-one-element';
 import { problem as countNumberOfNiceSubarrays } from './count-number-of-nice-subarrays';
 import { problem as maximumLengthOfAConcatenatedStringWithUniqueCharacters } from './maximum-length-of-a-concatenated-string-with-unique-characters';
+import { problem as nimGame } from './nim-game';
+import { problem as palindromePermutation } from './palindrome-permutation';
+import { problem as removeElement } from './remove-element';
+import { problem as waterBottles } from './water-bottles';
+import { problem as distributeCandies } from './distribute-candies';
+import { problem as countPrimeSetBits } from './count-prime-set-bits';
+import { problem as verifyingAlienDictionary } from './verifying-alien-dictionary';
+import { problem as rectangleArea } from './rectangle-area';
+import { problem as encodeDecodeStrings } from './encode-decode-strings';
+import { problem as shortestDistanceToCharacter } from './shortest-distance-to-character';
+import { problem as utf8Validation } from './utf-8-validation';
+import { problem as rangeAddition } from './range-addition';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2780,4 +2792,16 @@ export const problems: readonly Problem[] = [
   longestSubarrayOf1sAfterDeletingOneElement,
   countNumberOfNiceSubarrays,
   maximumLengthOfAConcatenatedStringWithUniqueCharacters,
+  nimGame,
+  palindromePermutation,
+  removeElement,
+  waterBottles,
+  distributeCandies,
+  countPrimeSetBits,
+  verifyingAlienDictionary,
+  rectangleArea,
+  encodeDecodeStrings,
+  shortestDistanceToCharacter,
+  utf8Validation,
+  rangeAddition,
 ];

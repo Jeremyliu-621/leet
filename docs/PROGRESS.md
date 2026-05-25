@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1301 problems; 4200 tests green.
+**Current focus:** Bank at 1313 problems; 4236 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems (Batch 36+); UI/UX polish; Options/popup improvements.
 
@@ -372,6 +372,7 @@ Still pending:
 - [x] **3 more classic problems (Batch 33)** — minimum-deletions-to-make-string-balanced (strings+dp/medium, O(n) scan bCount/dp), minimum-difference-between-largest-smallest-three-moves (arrays/medium, sort + 4-window min), shortest-subarray-to-remove-to-make-array-sorted (arrays+two-pointers/medium, prefix/suffix + two-pointer merge); bank at **1307**; 4167 tests.
 - [x] **3 more classic problems (Batch 34)** — minimum-health-to-beat-the-game (arrays/medium, greedy armor on max), check-if-string-contains-all-binary-codes-of-size-k (strings+hash-map/medium, sliding window + set), longest-nice-substring (strings/easy, divide-and-conquer on missing-case chars); bank at **1310**; 4176 tests.
 - [x] **3 more classic problems (Batch 35)** — longest-subarray-of-1s-after-deleting-one-element (sliding-window/medium, window with at most 1 zero, answer = size−1), count-number-of-nice-subarrays (sliding-window/medium, exactly k = atMost(k)−atMost(k−1)), maximum-length-of-a-concatenated-string-with-unique-characters (backtracking/medium, bitmask DFS); also merged remote Batch 35 (minimum-add-to-make-parentheses-valid, predict-winner, can-i-win, optimal-division, minimum-insertions-to-balance-parentheses); bank at **1301**; 4200 tests.
+- [x] **12 more classic problems (Batch 36)** — nim-game (math/easy), palindrome-permutation (strings+hash-map/easy), remove-element (arrays+two-pointers/easy), water-bottles (math/easy), distribute-candies (hash-map+arrays/easy), count-prime-set-bits (math/easy), verifying-alien-dictionary (strings+hash-map/easy), rectangle-area (math/medium, union of two rectangles), encode-decode-strings (strings/medium, length-prefix encoding), shortest-distance-to-character (arrays+two-pointers/easy, two-pass), utf-8-validation (math/medium, bit parsing), range-addition (arrays/medium, difference array); bank at **1313**; 4236 tests. Marketing site updated to 1,320+.
 
 ---
 

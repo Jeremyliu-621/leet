@@ -18141,4 +18141,152 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
     dfs(0, 0, 0)
     return result[0]
 `,
+
+  'nim-game': `def canWinNim(n):
+    return int(n) % 4 != 0
+`,
+
+  'palindrome-permutation': `def canPermutePalindrome(s):
+    from collections import Counter
+    freq = Counter(s)
+    odds = sum(1 for v in freq.values() if v % 2 == 1)
+    return odds <= 1
+`,
+
+  'remove-element': `def removeElement(nums, val):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    val = int(val)
+    k = 0
+    for i in range(len(nums)):
+        if nums[i] != val:
+            nums[k] = nums[i]
+            k += 1
+    return k
+`,
+
+  'water-bottles': `def numWaterBottles(numBottles, numExchange):
+    bottles = int(numBottles)
+    exchange = int(numExchange)
+    total = bottles
+    while bottles >= exchange:
+        new_bottles = bottles // exchange
+        bottles = new_bottles + bottles % exchange
+        total += new_bottles
+    return total
+`,
+
+  'distribute-candies': `def distributeCandies(candyType):
+    candy = list(candyType.to_py() if hasattr(candyType, 'to_py') else candyType)
+    types = len(set(candy))
+    half = len(candy) // 2
+    return min(types, half)
+`,
+
+  'count-prime-set-bits': `def countPrimeSetBits(left, right):
+    primes = {2, 3, 5, 7, 11, 13, 17, 19}
+    count = 0
+    for n in range(int(left), int(right) + 1):
+        bits = bin(n).count('1')
+        if bits in primes:
+            count += 1
+    return count
+`,
+
+  'verifying-alien-dictionary': `def isAlienSorted(words, order):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    rank = {c: i for i, c in enumerate(order)}
+    for i in range(len(words) - 1):
+        a, b = words[i], words[i + 1]
+        found = False
+        for j in range(len(a)):
+            if j >= len(b):
+                return False
+            if rank[a[j]] < rank[b[j]]:
+                found = True
+                break
+            if rank[a[j]] > rank[b[j]]:
+                return False
+        if not found and len(a) > len(b):
+            return False
+    return True
+`,
+
+  'rectangle-area': `def computeArea(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2):
+    ax1, ay1, ax2, ay2 = int(ax1), int(ay1), int(ax2), int(ay2)
+    bx1, by1, bx2, by2 = int(bx1), int(by1), int(bx2), int(by2)
+    A = (ax2 - ax1) * (ay2 - ay1)
+    B = (bx2 - bx1) * (by2 - by1)
+    overlap_w = max(0, min(ax2, bx2) - max(ax1, bx1))
+    overlap_h = max(0, min(ay2, by2) - max(ay1, by1))
+    return A + B - overlap_w * overlap_h
+`,
+
+  'encode-decode-strings': `def encodeDecodeStrings(strs):
+    strs = list(strs.to_py() if hasattr(strs, 'to_py') else strs)
+    encoded = ''
+    for s in strs:
+        encoded += str(len(s)) + '#' + s
+    decoded = []
+    i = 0
+    while i < len(encoded):
+        j = encoded.index('#', i)
+        length = int(encoded[i:j])
+        decoded.append(encoded[j + 1:j + 1 + length])
+        i = j + 1 + length
+    return decoded
+`,
+
+  'shortest-distance-to-character': `def shortestToChar(s, c):
+    n = len(s)
+    ans = [float('inf')] * n
+    prev = float('-inf')
+    for i in range(n):
+        if s[i] == c:
+            prev = i
+        ans[i] = i - prev
+    prev = float('inf')
+    for i in range(n - 1, -1, -1):
+        if s[i] == c:
+            prev = i
+        ans[i] = min(ans[i], prev - i)
+    return ans
+`,
+
+  'utf-8-validation': `def validUtf8(data):
+    data = list(data.to_py() if hasattr(data, 'to_py') else data)
+    i = 0
+    while i < len(data):
+        b = data[i] & 0xFF
+        if (b & 0x80) == 0:
+            count = 0
+        elif (b & 0xE0) == 0xC0:
+            count = 1
+        elif (b & 0xF0) == 0xE0:
+            count = 2
+        elif (b & 0xF8) == 0xF0:
+            count = 3
+        else:
+            return False
+        i += 1
+        for _ in range(count):
+            if i >= len(data) or (data[i] & 0xC0) != 0x80:
+                return False
+            i += 1
+    return True
+`,
+
+  'range-addition': `def getModifiedArray(n, updates):
+    n = int(n)
+    updates = [list(u.to_py() if hasattr(u, 'to_py') else u) for u in (updates.to_py() if hasattr(updates, 'to_py') else updates)]
+    diff = [0] * (n + 1)
+    for start, end, inc in updates:
+        diff[start] += inc
+        diff[end + 1] -= inc
+    res = []
+    s = 0
+    for i in range(n):
+        s += diff[i]
+        res.append(s)
+    return res
+`,
 };

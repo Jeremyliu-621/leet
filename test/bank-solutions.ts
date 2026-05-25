@@ -18276,4 +18276,146 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'nim-game': (n: unknown) => {
+    return (n as number) % 4 !== 0;
+  },
+
+  'palindrome-permutation': (s: unknown) => {
+    const freq: Record<string, number> = {};
+    for (const c of s as string) freq[c] = (freq[c] ?? 0) + 1;
+    const odds = Object.values(freq).filter(v => v % 2 === 1).length;
+    return odds <= 1;
+  },
+
+  'remove-element': (nums: unknown, val: unknown) => {
+    const arr = nums as number[], v = val as number;
+    let k = 0;
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] !== v) arr[k++] = arr[i]!;
+    }
+    return k;
+  },
+
+  'water-bottles': (numBottles: unknown, numExchange: unknown) => {
+    let bottles = numBottles as number;
+    const exchange = numExchange as number;
+    let total = bottles;
+    while (bottles >= exchange) {
+      const newBottles = Math.floor(bottles / exchange);
+      bottles = newBottles + (bottles % exchange);
+      total += newBottles;
+    }
+    return total;
+  },
+
+  'distribute-candies': (candyType: unknown) => {
+    const types = new Set(candyType as number[]).size;
+    const half = (candyType as number[]).length / 2;
+    return Math.min(types, half);
+  },
+
+  'count-prime-set-bits': (left: unknown, right: unknown) => {
+    const primes = new Set([2, 3, 5, 7, 11, 13, 17, 19]);
+    let count = 0;
+    for (let n = left as number; n <= (right as number); n++) {
+      let bits = 0, x = n;
+      while (x) { bits += x & 1; x >>= 1; }
+      if (primes.has(bits)) count++;
+    }
+    return count;
+  },
+
+  'verifying-alien-dictionary': (words: unknown, order: unknown) => {
+    const rank: Record<string, number> = {};
+    (order as string).split('').forEach((c, i) => { rank[c] = i; });
+    const ws = words as string[];
+    for (let i = 0; i < ws.length - 1; i++) {
+      const a = ws[i]!, b = ws[i + 1]!;
+      let found = false;
+      for (let j = 0; j < a.length; j++) {
+        if (j >= b.length) return false;
+        if (rank[a[j]!]! < rank[b[j]!]!) { found = true; break; }
+        if (rank[a[j]!]! > rank[b[j]!]!) return false;
+      }
+      if (!found && a.length > b.length) return false;
+    }
+    return true;
+  },
+
+  'rectangle-area': (ax1: unknown, ay1: unknown, ax2: unknown, ay2: unknown, bx1: unknown, by1: unknown, bx2: unknown, by2: unknown) => {
+    const A = (ax2 as number - (ax1 as number)) * (ay2 as number - (ay1 as number));
+    const B = (bx2 as number - (bx1 as number)) * (by2 as number - (by1 as number));
+    const overlapW = Math.max(0, Math.min(ax2 as number, bx2 as number) - Math.max(ax1 as number, bx1 as number));
+    const overlapH = Math.max(0, Math.min(ay2 as number, by2 as number) - Math.max(ay1 as number, by1 as number));
+    return A + B - overlapW * overlapH;
+  },
+
+  'encode-decode-strings': (strs: unknown) => {
+    const arr = strs as string[];
+    let encoded = '';
+    for (const s of arr) encoded += s.length + '#' + s;
+    const decoded: string[] = [];
+    let i = 0;
+    while (i < encoded.length) {
+      const j = encoded.indexOf('#', i);
+      const len = parseInt(encoded.slice(i, j));
+      decoded.push(encoded.slice(j + 1, j + 1 + len));
+      i = j + 1 + len;
+    }
+    return decoded;
+  },
+
+  'shortest-distance-to-character': (s: unknown, c: unknown) => {
+    const str = s as string, ch = c as string;
+    const n = str.length;
+    const ans = new Array<number>(n).fill(Infinity);
+    let prev = -Infinity;
+    for (let i = 0; i < n; i++) {
+      if (str[i] === ch) prev = i;
+      ans[i] = i - prev;
+    }
+    prev = Infinity;
+    for (let i = n - 1; i >= 0; i--) {
+      if (str[i] === ch) prev = i;
+      ans[i] = Math.min(ans[i]!, prev - i);
+    }
+    return ans;
+  },
+
+  'utf-8-validation': (data: unknown) => {
+    const bytes = data as number[];
+    let i = 0;
+    while (i < bytes.length) {
+      const b = bytes[i]! & 0xFF;
+      let count: number;
+      if ((b & 0x80) === 0) count = 0;
+      else if ((b & 0xE0) === 0xC0) count = 1;
+      else if ((b & 0xF0) === 0xE0) count = 2;
+      else if ((b & 0xF8) === 0xF0) count = 3;
+      else return false;
+      i++;
+      for (let j = 0; j < count; j++, i++) {
+        if (i >= bytes.length || (bytes[i]! & 0xC0) !== 0x80) return false;
+      }
+    }
+    return true;
+  },
+
+  'range-addition': (n: unknown, updates: unknown) => {
+    const size = n as number;
+    const ops = updates as number[][];
+    const diff = new Array<number>(size + 1).fill(0);
+    for (const [start, end, inc] of ops) {
+      diff[start!]! += inc!;
+      diff[end! + 1]! -= inc!;
+    }
+    const res: number[] = [];
+    let sum = 0;
+    for (let i = 0; i < size; i++) {
+      sum += diff[i]!;
+      res.push(sum);
+    }
+    return res;
+  },
+
 };
