@@ -16540,4 +16540,64 @@ def minimumDeletions(s):
             deletions += 1
     return deletions
 `,
+
+  'minimum-path-cost-in-a-grid': `def minPathCost(grid, moveCost):
+    g = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    mc = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (moveCost.to_py() if hasattr(moveCost, 'to_py') else moveCost)]
+    m, n = len(g), len(g[0])
+    dp = [v for v in g[0]]
+    for r in range(m - 1):
+        ndp = [float('inf')] * n
+        for c in range(n):
+            val = g[r][c]
+            for c2 in range(n):
+                cost = dp[c] + mc[val][c2] + g[r + 1][c2]
+                if cost < ndp[c2]:
+                    ndp[c2] = cost
+        dp = ndp
+    return min(dp)
+`,
+
+  'count-ways-group-overlapping-ranges': `def countWays(ranges):
+    MOD = 10**9 + 7
+    r = sorted([list(x.to_py() if hasattr(x, 'to_py') else x) for x in (ranges.to_py() if hasattr(ranges, 'to_py') else ranges)], key=lambda x: x[0])
+    components = 0
+    max_end = -1
+    for s, e in r:
+        if s > max_end:
+            components += 1
+            max_end = e
+        elif e > max_end:
+            max_end = e
+    return pow(2, components, MOD)
+`,
+
+  'take-gifts-from-the-richest-pile': `def pickGifts(gifts, k):
+    import math
+    g = list(gifts.to_py() if hasattr(gifts, 'to_py') else gifts)
+    k = int(k)
+    for _ in range(k):
+        max_idx = g.index(max(g))
+        g[max_idx] = math.isqrt(g[max_idx])
+    return sum(g)
+`,
+
+  'find-all-good-indices': `def goodIndices(nums, k):
+    a = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    K = int(k)
+    n = len(a)
+    dec = [1] * n
+    inc = [1] * n
+    for i in range(1, n):
+        if a[i] <= a[i-1]:
+            dec[i] = dec[i-1] + 1
+    for i in range(n-2, -1, -1):
+        if a[i] <= a[i+1]:
+            inc[i] = inc[i+1] + 1
+    res = []
+    for i in range(K, n - K):
+        if dec[i-1] >= K and inc[i+1] >= K:
+            res.append(i)
+    return res
+`,
 };

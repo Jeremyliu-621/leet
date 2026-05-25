@@ -16791,4 +16791,60 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return deletions;
   },
 
+  'minimum-path-cost-in-a-grid': (grid: unknown, moveCost: unknown) => {
+    const g = (grid as number[][]);
+    const mc = (moveCost as number[][]);
+    const m = g.length, n = g[0]!.length;
+    let dp = g[0]!.map(v => v);
+    for (let r = 0; r < m - 1; r++) {
+      const ndp = new Array(n).fill(Infinity);
+      for (let c = 0; c < n; c++) {
+        const val = g[r]![c]!;
+        for (let c2 = 0; c2 < n; c2++) {
+          const cost = dp[c]! + mc[val]![c2]! + g[r + 1]![c2]!;
+          if (cost < ndp[c2]!) ndp[c2] = cost;
+        }
+      }
+      dp = ndp;
+    }
+    return Math.min(...dp);
+  },
+
+  'count-ways-group-overlapping-ranges': (ranges: unknown) => {
+    const MOD = 1_000_000_007n;
+    const r = (ranges as number[][]).slice().sort((a, b) => a[0]! - b[0]!);
+    let components = 0, maxEnd = -1;
+    for (const [s, e] of r) {
+      if (s! > maxEnd) { components++; maxEnd = e!; }
+      else if (e! > maxEnd) { maxEnd = e!; }
+    }
+    let ans = 1n;
+    for (let i = 0; i < components; i++) ans = (ans * 2n) % MOD;
+    return Number(ans);
+  },
+
+  'take-gifts-from-the-richest-pile': (gifts: unknown, k: unknown) => {
+    const g = (gifts as number[]).slice();
+    const steps = k as number;
+    for (let i = 0; i < steps; i++) {
+      let maxIdx = 0;
+      for (let j = 1; j < g.length; j++) if (g[j]! > g[maxIdx]!) maxIdx = j;
+      g[maxIdx] = Math.floor(Math.sqrt(g[maxIdx]!));
+    }
+    return g.reduce((a, b) => a + b, 0);
+  },
+
+  'find-all-good-indices': (nums: unknown, k: unknown) => {
+    const a = nums as number[], K = k as number, n = a.length;
+    const dec = new Array(n).fill(1);
+    const inc = new Array(n).fill(1);
+    for (let i = 1; i < n; i++) if (a[i]! <= a[i - 1]!) dec[i] = dec[i - 1]! + 1;
+    for (let i = n - 2; i >= 0; i--) if (a[i]! <= a[i + 1]!) inc[i] = inc[i + 1]! + 1;
+    const res: number[] = [];
+    for (let i = K; i < n - K; i++) {
+      if (dec[i - 1]! >= K && inc[i + 1]! >= K) res.push(i);
+    }
+    return res;
+  },
+
 };

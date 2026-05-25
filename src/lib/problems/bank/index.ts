@@ -1270,6 +1270,10 @@ import { problem as minimumCostToMakeValidParentheses } from './minimum-cost-to-
 import { problem as minimumScoreOfPath } from './minimum-score-of-path';
 import { problem as countOperationsToObtainZeroIi } from './count-operations-to-obtain-zero-ii';
 import { problem as minimumDeletionsToBalanceParentheses } from './minimum-deletions-to-balance-parentheses';
+import { problem as minimumPathCostInAGrid } from './minimum-path-cost-in-a-grid';
+import { problem as countWaysGroupOverlappingRanges } from './count-ways-group-overlapping-ranges';
+import { problem as takeGiftsFromTheRichestPile } from './take-gifts-from-the-richest-pile';
+import { problem as findAllGoodIndices } from './find-all-good-indices';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2588,4 +2592,8 @@ export const problems: readonly Problem[] = [
   minimumScoreOfPath,
   countOperationsToObtainZeroIi,
   minimumDeletionsToBalanceParentheses,
+  minimumPathCostInAGrid,
+  countWaysGroupOverlappingRanges,
+  takeGiftsFromTheRichestPile,
+  findAllGoodIndices,
 ];
