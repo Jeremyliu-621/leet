@@ -7104,4 +7104,111 @@ def maxSubarraySumCircular(nums):
         total += n
     return max(max_sum, total - min_sum)
 `,
+  'unique-email-addresses': `def numUniqueEmails(emails):
+    def normalize(e):
+        local, dom = e.split('@')
+        local = local.split('+')[0].replace('.', '')
+        return local + '@' + dom
+    return len(set(normalize(e) for e in emails))
+`,
+  'reverse-words-in-string-iii': `def reverseWords(s):
+    return ' '.join(w[::-1] for w in s.split(' '))
+`,
+  'count-binary-substrings': `def countBinarySubstrings(s):
+    ans, prev, curr = 0, 0, 1
+    for i in range(1, len(s)):
+        if s[i] == s[i-1]:
+            curr += 1
+        else:
+            prev = curr
+            curr = 1
+        if prev >= curr:
+            ans += 1
+    return ans
+`,
+  'shortest-unsorted-continuous-subarray': `def findUnsortedSubarray(nums):
+    s = sorted(nums)
+    l, r = 0, len(nums) - 1
+    while l <= r and nums[l] == s[l]:
+        l += 1
+    while r >= l and nums[r] == s[r]:
+        r -= 1
+    return 0 if l > r else r - l + 1
+`,
+  'max-chunks-to-make-sorted': `def maxChunksToSorted(arr):
+    max_so_far = count = 0
+    for i, v in enumerate(arr):
+        max_so_far = max(max_so_far, v)
+        if max_so_far == i:
+            count += 1
+    return count
+`,
+  'champagne-tower': `def champagneTower(poured, query_row, query_glass):
+    tower = [[0.0] * (query_row + 2) for _ in range(query_row + 2)]
+    tower[0][0] = poured
+    for r in range(query_row):
+        for g in range(r + 1):
+            excess = tower[r][g] - 1
+            if excess > 0:
+                tower[r][g] = 1
+                tower[r+1][g] += excess / 2
+                tower[r+1][g+1] += excess / 2
+    return min(1.0, tower[query_row][query_glass])
+`,
+  'minimum-remove-to-make-valid-parentheses': `def minRemoveToMakeValid(s):
+    to_remove = set()
+    stack = []
+    for i, ch in enumerate(s):
+        if ch == '(':
+            stack.append(i)
+        elif ch == ')':
+            if stack:
+                stack.pop()
+            else:
+                to_remove.add(i)
+    to_remove.update(stack)
+    return ''.join(ch for i, ch in enumerate(s) if i not in to_remove)
+`,
+  'bitwise-and-of-numbers-range': `def rangeBitwiseAnd(left, right):
+    shift = 0
+    while left != right:
+        left >>= 1
+        right >>= 1
+        shift += 1
+    return left << shift
+`,
+  'number-of-enclaves': `def numEnclaves(grid):
+    m, n = len(grid), len(grid[0])
+    def dfs(r, c):
+        if r < 0 or r >= m or c < 0 or c >= n or not grid[r][c]:
+            return
+        grid[r][c] = 0
+        for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:
+            dfs(r+dr, c+dc)
+    for r in range(m):
+        dfs(r, 0); dfs(r, n-1)
+    for c in range(n):
+        dfs(0, c); dfs(m-1, c)
+    return sum(cell for row in grid for cell in row)
+`,
+  'jump-game-iv': `def minJumps(arr):
+    from collections import defaultdict, deque
+    n = len(arr)
+    if n == 1:
+        return 0
+    graph = defaultdict(list)
+    for i, v in enumerate(arr):
+        graph[v].append(i)
+    visited = {0}
+    q = deque([(0, 0)])
+    while q:
+        i, steps = q.popleft()
+        for j in [i-1, i+1] + graph.pop(arr[i], []):
+            if j == n - 1:
+                return steps + 1
+            if 0 <= j < n and j not in visited:
+                visited.add(j)
+                q.append((j, steps+1))
+    return -1
+`,
 };

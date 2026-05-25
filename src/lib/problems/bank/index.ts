@@ -139,6 +139,12 @@ import { problem as countWordsWithGivenPrefix } from './count-words-with-given-p
 import { problem as largestOddNumberInString } from './largest-odd-number-in-string';
 import { problem as firstLetterToAppearTwice } from './first-letter-to-appear-twice';
 import { problem as countAsterisks } from './count-asterisks';
+import { problem as uniqueEmailAddresses } from './unique-email-addresses';
+import { problem as reverseWordsInStringIii } from './reverse-words-in-string-iii';
+import { problem as countBinarySubstrings } from './count-binary-substrings';
+// arrays — medium (additional)
+import { problem as shortestUnsortedContinuousSubarray } from './shortest-unsorted-continuous-subarray';
+import { problem as maxChunksToMakeSorted } from './max-chunks-to-make-sorted';
 // strings — medium (additional)
 import { problem as integerToRoman } from './integer-to-roman';
 import { problem as reverseOnlyLetters } from './reverse-only-letters';
@@ -337,6 +343,7 @@ import { problem as evaluateRpn } from './evaluate-rpn';
 import { problem as minStack } from './min-stack';
 import { problem as maximumNestingDepth } from './maximum-nesting-depth';
 // stack — medium
+import { problem as minimumRemoveToMakeValidParentheses } from './minimum-remove-to-make-valid-parentheses';
 import { problem as onlineStockSpan } from './online-stock-span';
 import { problem as simplifyPath } from './simplify-path';
 import { problem as nextGreaterElementII } from './next-greater-element-ii';
@@ -395,6 +402,7 @@ import { problem as nthTribonacciNumber } from './nth-tribonacci-number';
 import { problem as fractionToRecurringDecimal } from './fraction-to-recurring-decimal';
 import { problem as integerToEnglishWords } from './integer-to-english-words';
 // math — medium
+import { problem as bitwiseAndOfNumbersRange } from './bitwise-and-of-numbers-range';
 import { problem as minimumMovesEqualArray } from './minimum-moves-equal-array';
 import { problem as multiplyStrings } from './multiply-strings';
 import { problem as waterAndJug } from './water-and-jug';
@@ -432,6 +440,7 @@ import { problem as minCostClimbingStairs } from './min-cost-climbing-stairs';
 import { problem as countingBits } from './counting-bits';
 import { problem as bestTimeBuySell } from './best-time-buy-sell';
 // dynamic-programming — medium
+import { problem as champagneTower } from './champagne-tower';
 import { problem as stoneGame } from './stone-game';
 import { problem as longestStringChain } from './longest-string-chain';
 import { problem as houseRobber } from './house-robber';
@@ -520,6 +529,7 @@ import { problem as surroundedRegions } from './surrounded-regions';
 import { problem as graphValidTree } from './graph-valid-tree';
 import { problem as zeroOneMatrix } from './01-matrix';
 // graph — medium
+import { problem as numberOfEnclaves } from './number-of-enclaves';
 import { problem as numberOfIslands } from './number-of-islands';
 import { problem as courseSchedule } from './course-schedule';
 import { problem as maxAreaOfIsland } from './max-area-of-island';
@@ -536,6 +546,7 @@ import { problem as allPathsSourceTarget } from './all-paths-source-target';
 import { problem as minimumHeightTrees } from './minimum-height-trees';
 import { problem as findEventualSafeStates } from './find-eventual-safe-states';
 // graph — hard
+import { problem as jumpGameIV } from './jump-game-iv';
 import { problem as wordLadder } from './word-ladder';
 import { problem as alienDictionary } from './alien-dictionary';
 import { problem as criticalConnections } from './critical-connections';
@@ -738,6 +749,8 @@ export const problems: readonly Problem[] = [
   gameOfLife,
   missingRanges,
   queueReconstructionByHeight,
+  shortestUnsortedContinuousSubarray,
+  maxChunksToMakeSorted,
   // strings — easy
   makeStringGreat,
   minimumStringLength,
@@ -760,6 +773,9 @@ export const problems: readonly Problem[] = [
   largestOddNumberInString,
   firstLetterToAppearTwice,
   countAsterisks,
+  uniqueEmailAddresses,
+  reverseWordsInStringIii,
+  countBinarySubstrings,
   reverseOnlyLetters,
   backspaceStringCompare,
   vowelTally,
@@ -958,6 +974,7 @@ export const problems: readonly Problem[] = [
   minStack,
   maximumNestingDepth,
   // stack — medium
+  minimumRemoveToMakeValidParentheses,
   validateStackSequences,
   pattern132,
   onlineStockSpan,
@@ -1046,6 +1063,7 @@ export const problems: readonly Problem[] = [
   fractionToRecurringDecimal,
   integerToEnglishWords,
   // math — medium
+  bitwiseAndOfNumbersRange,
   minimumMovesEqualArray,
   multiplyStrings,
   waterAndJug,
@@ -1077,6 +1095,7 @@ export const problems: readonly Problem[] = [
   countingBits,
   bestTimeBuySell,
   // dynamic-programming — medium
+  champagneTower,
   stoneGame,
   longestStringChain,
   houseRobber,
@@ -1138,6 +1157,7 @@ export const problems: readonly Problem[] = [
   numberOfProvinces,
   findIfPathExists,
   // graph — medium
+  numberOfEnclaves,
   shortestPathBinaryMatrix,
   accountsMerge,
   wordSearch,
@@ -1161,6 +1181,7 @@ export const problems: readonly Problem[] = [
   findEventualSafeStates,
   jumpGameIII,
   // graph — hard
+  jumpGameIV,
   wordLadder,
   alienDictionary,
   criticalConnections,

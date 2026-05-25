@@ -7694,4 +7694,104 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Math.max(maxSum, total - minSum);
   },
 
+  'unique-email-addresses': (...args: unknown[]) => {
+    const emails = args[0] as string[];
+    const normalize = (e: string) => {
+      const [local, dom] = e.split('@') as [string, string];
+      return local.split('+')[0]!.replace(/\./g, '') + '@' + dom;
+    };
+    return new Set(emails.map(normalize)).size;
+  },
+
+  'reverse-words-in-string-iii': (...args: unknown[]) => {
+    const s = args[0] as string;
+    return s.split(' ').map((w: string) => w.split('').reverse().join('')).join(' ');
+  },
+
+  'count-binary-substrings': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let ans = 0, prev = 0, curr = 1;
+    for (let i = 1; i < s.length; i++) {
+      if (s[i] === s[i - 1]) { curr++; } else { prev = curr; curr = 1; }
+      if (prev >= curr) ans++;
+    }
+    return ans;
+  },
+
+  'shortest-unsorted-continuous-subarray': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const sorted = [...nums].sort((a, b) => a - b);
+    let l = 0, r = nums.length - 1;
+    while (l <= r && nums[l] === sorted[l]) l++;
+    while (r >= l && nums[r] === sorted[r]) r--;
+    return l > r ? 0 : r - l + 1;
+  },
+
+  'max-chunks-to-make-sorted': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    let max = 0, count = 0;
+    for (let i = 0; i < arr.length; i++) { max = Math.max(max, arr[i]!); if (max === i) count++; }
+    return count;
+  },
+
+  'champagne-tower': (...args: unknown[]) => {
+    const poured = args[0] as number, qRow = args[1] as number, qGlass = args[2] as number;
+    const tower: number[][] = Array.from({ length: qRow + 2 }, () => new Array(qRow + 2).fill(0));
+    tower[0]![0] = poured;
+    for (let r = 0; r <= qRow; r++) {
+      for (let g = 0; g <= r; g++) {
+        const excess = tower[r]![g]! - 1;
+        if (excess > 0) { tower[r]![g] = 1; tower[r+1]![g]! += excess/2; tower[r+1]![g+1]! += excess/2; }
+      }
+    }
+    return Math.min(1, tower[qRow]![qGlass]!);
+  },
+
+  'minimum-remove-to-make-valid-parentheses': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const toRemove = new Set<number>(); const stack: number[] = [];
+    for (let i = 0; i < s.length; i++) {
+      if (s[i] === '(') stack.push(i);
+      else if (s[i] === ')') { if (stack.length) stack.pop(); else toRemove.add(i); }
+    }
+    stack.forEach(i => toRemove.add(i));
+    return s.split('').filter((_, i) => !toRemove.has(i)).join('');
+  },
+
+  'bitwise-and-of-numbers-range': (...args: unknown[]) => {
+    let left = args[0] as number, right = args[1] as number, shift = 0;
+    while (left !== right) { left >>= 1; right >>= 1; shift++; }
+    return left << shift;
+  },
+
+  'number-of-enclaves': (...args: unknown[]) => {
+    const grid = (args[0] as number[][]).map(r => [...r]);
+    const m = grid.length, n = grid[0]!.length;
+    const dfs = (r: number, c: number): void => {
+      if (r < 0 || r >= m || c < 0 || c >= n || !grid[r]![c]) return;
+      grid[r]![c] = 0;
+      [[1,0],[-1,0],[0,1],[0,-1]].forEach(([dr, dc]) => dfs(r + dr!, c + dc!));
+    };
+    for (let r = 0; r < m; r++) { dfs(r, 0); dfs(r, n - 1); }
+    for (let c = 0; c < n; c++) { dfs(0, c); dfs(m - 1, c); }
+    return grid.flat().reduce((s, v) => s + v, 0);
+  },
+
+  'jump-game-iv': (...args: unknown[]) => {
+    const arr = args[0] as number[]; const n = arr.length;
+    if (n === 1) return 0;
+    const graph = new Map<number, number[]>();
+    for (let i = 0; i < n; i++) { const v = arr[i]!; if (!graph.has(v)) graph.set(v, []); graph.get(v)!.push(i); }
+    const visited = new Set<number>([0]); const q: [number, number][] = [[0, 0]];
+    while (q.length) {
+      const [i, steps] = q.shift()!;
+      const sameVal = graph.get(arr[i]!) ?? []; graph.delete(arr[i]!);
+      for (const j of [i-1, i+1, ...sameVal]) {
+        if (j === n - 1) return steps + 1;
+        if (j >= 0 && j < n && !visited.has(j)) { visited.add(j); q.push([j, steps+1]); }
+      }
+    }
+    return -1;
+  },
+
 };
