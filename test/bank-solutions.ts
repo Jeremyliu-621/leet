@@ -8193,4 +8193,39 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return res;
   },
 
+  'largest-local-values-matrix': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const n = grid.length;
+    const res: number[][] = [];
+    for (let i = 0; i < n - 2; i++) {
+      const row: number[] = [];
+      for (let j = 0; j < n - 2; j++) {
+        let mx = 0;
+        for (let r = i; r < i + 3; r++)
+          for (let c = j; c < j + 3; c++)
+            mx = Math.max(mx, grid[r]![c]!);
+        row.push(mx);
+      }
+      res.push(row);
+    }
+    return res;
+  },
+
+  'percentage-letter-in-string': (...args: unknown[]) => {
+    const s = args[0] as string, letter = args[1] as string;
+    let count = 0;
+    for (const c of s) if (c === letter) count++;
+    return Math.floor(count / s.length * 100);
+  },
+
+  'number-of-weak-characters': (...args: unknown[]) => {
+    const properties = (args[0] as number[][]).slice().sort((a, b) => b[0]! - a[0]! || a[1]! - b[1]!);
+    let maxDef = 0, count = 0;
+    for (const [, d] of properties) {
+      if (d! < maxDef) count++;
+      maxDef = Math.max(maxDef, d!);
+    }
+    return count;
+  },
+
 };

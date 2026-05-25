@@ -7641,4 +7641,37 @@ def minTimeToVisitAllPoints(points):
         total += max(abs(points[i][0] - points[i-1][0]), abs(points[i][1] - points[i-1][1]))
     return total
 `,
+
+  'largest-local-values-matrix': `
+def largestLocal(grid):
+    grid = [list(row) for row in grid]
+    n = len(grid)
+    res = []
+    for i in range(n - 2):
+        row = []
+        for j in range(n - 2):
+            mx = 0
+            for r in range(i, i + 3):
+                for c in range(j, j + 3):
+                    mx = max(mx, grid[r][c])
+            row.append(mx)
+        res.append(row)
+    return res
+`,
+
+  'percentage-letter-in-string': `
+def percentageLetter(s, letter):
+    return s.count(letter) * 100 // len(s)
+`,
+
+  'number-of-weak-characters': `
+def numberOfWeakCharacters(properties):
+    properties = sorted(properties, key=lambda x: (-x[0], x[1]))
+    max_def = count = 0
+    for _, d in properties:
+        if d < max_def:
+            count += 1
+        max_def = max(max_def, d)
+    return count
+`,
 };

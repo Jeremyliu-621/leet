@@ -658,6 +658,9 @@ import { problem as maximumAscendingSubarraySum } from './maximum-ascending-suba
 import { problem as minimumConsecutiveCardsPickup } from './minimum-consecutive-cards-pickup';
 import { problem as divisorGame } from './divisor-game';
 import { problem as minimumTimeVisitingAllPoints } from './minimum-time-visiting-all-points';
+import { problem as largestLocalValuesMatrix } from './largest-local-values-matrix';
+import { problem as percentageLetterInString } from './percentage-letter-in-string';
+import { problem as numberOfWeakCharacters } from './number-of-weak-characters';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1311,4 +1314,10 @@ export const problems: readonly Problem[] = [
   minimumConsecutiveCardsPickup,
   // math — easy (new)
   divisorGame,
+  // arrays — easy (new)
+  largestLocalValuesMatrix,
+  // strings — easy (new)
+  percentageLetterInString,
+  // arrays — medium (new)
+  numberOfWeakCharacters,
 ];
