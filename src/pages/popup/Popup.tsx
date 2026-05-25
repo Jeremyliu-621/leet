@@ -29,6 +29,12 @@ const PROBLEM_TITLE_BY_ID: ReadonlyMap<string, { title: string; difficulty: Diff
   ALL_PROBLEMS.map((p) => [p.id, { title: p.title, difficulty: p.difficulty }]),
 );
 
+const BANK_SIZE_BY_DIFF: Readonly<Record<Difficulty, number>> = {
+  easy: ALL_PROBLEMS.filter((p) => p.difficulty === 'easy').length,
+  medium: ALL_PROBLEMS.filter((p) => p.difficulty === 'medium').length,
+  hard: ALL_PROBLEMS.filter((p) => p.difficulty === 'hard').length,
+};
+
 const BANK_SIZE_BY_TAG: Readonly<Record<ProblemTag, number>> = (() => {
   const counts: Partial<Record<ProblemTag, number>> = {};
   for (const p of ALL_PROBLEMS) {
@@ -593,9 +599,6 @@ function SolveBreakdown({ stats }: { stats: SolvedStats }) {
   if (stats.total === 0) return null;
   const pct = Math.round((stats.total / BANK_SIZE) * 100);
 
-  // Max count across difficulties — used to size the mini bars.
-  const maxDiff = Math.max(1, ...DIFFICULTIES.map((d) => stats.byDifficulty[d]));
-
   // Tags the user has actually solved, sorted by count descending, capped at 5.
   const activeTags: Array<{ tag: ProblemTag; count: number }> = PROBLEM_TAGS.flatMap((tag) => {
     const count = stats.byTag[tag] ?? 0;
@@ -616,12 +619,13 @@ function SolveBreakdown({ stats }: { stats: SolvedStats }) {
       <div className="mt-2 space-y-1">
         {DIFFICULTIES.map((d) => {
           const count = stats.byDifficulty[d];
-          const widthPct = count === 0 ? 0 : Math.max(4, Math.round((count / maxDiff) * 100));
+          const total = BANK_SIZE_BY_DIFF[d];
+          const widthPct = count === 0 ? 0 : Math.max(4, Math.round((count / total) * 100));
           return (
             <div
               key={d}
               className="flex items-center gap-2"
-              aria-label={`${DIFF_LABEL[d]}: ${count}`}
+              aria-label={`${DIFF_LABEL[d]}: ${count} of ${total} solved`}
             >
               <span className="w-7 font-mono text-[9px] text-faint">{DIFF_LABEL[d]}</span>
               <div className="flex flex-1 items-center gap-1.5">
@@ -631,8 +635,8 @@ function SolveBreakdown({ stats }: { stats: SolvedStats }) {
                     style={{ width: `${widthPct}%` }}
                   />
                 </div>
-                <span className="w-4 text-right font-mono text-[9px] text-muted tabular-nums">
-                  {count}
+                <span className="w-12 text-right font-mono text-[9px] text-muted tabular-nums">
+                  {count}/{total}
                 </span>
               </div>
             </div>
