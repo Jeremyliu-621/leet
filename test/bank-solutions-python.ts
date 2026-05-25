@@ -7994,6 +7994,89 @@ def partitionString(s):
     return parts
 `,
 
+  'ugly-number-ii': `def nthUglyNumber(n):
+    dp = [1]
+    i2 = i3 = i5 = 0
+    for _ in range(1, n):
+        nx = min(dp[i2] * 2, dp[i3] * 3, dp[i5] * 5)
+        dp.append(nx)
+        if nx == dp[i2] * 2:
+            i2 += 1
+        if nx == dp[i3] * 3:
+            i3 += 1
+        if nx == dp[i5] * 5:
+            i5 += 1
+    return dp[n - 1]
+`,
+
+  'delete-node-in-bst': `def deleteNode(root, key):
+    if root is None:
+        return None
+    if key < root.val:
+        root.left = deleteNode(root.left, key)
+    elif key > root.val:
+        root.right = deleteNode(root.right, key)
+    else:
+        if root.left is None:
+            return root.right
+        if root.right is None:
+            return root.left
+        s = root.right
+        while s.left:
+            s = s.left
+        root.val = s.val
+        root.right = deleteNode(root.right, s.val)
+    return root
+`,
+
+  'insert-into-bst': `def insertIntoBST(root, val):
+    if root is None:
+        return TreeNode(val)
+    if val < root.val:
+        root.left = insertIntoBST(root.left, val)
+    else:
+        root.right = insertIntoBST(root.right, val)
+    return root
+`,
+
+  'minimum-cost-connect-points': `def minCostConnectPoints(points):
+    n = len(points)
+    in_mst = [False] * n
+    dist = [float('inf')] * n
+    dist[0] = 0
+    res = 0
+    for _ in range(n):
+        u = -1
+        for j in range(n):
+            if not in_mst[j] and (u == -1 or dist[j] < dist[u]):
+                u = j
+        in_mst[u] = True
+        res += dist[u]
+        for v in range(n):
+            if not in_mst[v]:
+                d = abs(points[u][0] - points[v][0]) + abs(points[u][1] - points[v][1])
+                if d < dist[v]:
+                    dist[v] = d
+    return res
+`,
+
+  'number-of-visible-people-in-queue': `def canSeePersonsCount(heights):
+    heights = list(heights)
+    n = len(heights)
+    ans = [0] * n
+    st = []
+    for i in range(n - 1, -1, -1):
+        cnt = 0
+        while st and st[-1] < heights[i]:
+            st.pop()
+            cnt += 1
+        if st:
+            cnt += 1
+        ans[i] = cnt
+        st.append(heights[i])
+    return ans
+`,
+
   'combination-sum-iv': `
 def combinationSum4(nums, target):
     nums = list(nums)

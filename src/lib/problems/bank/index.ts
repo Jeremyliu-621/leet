@@ -684,6 +684,11 @@ import { problem as binaryWatch } from './binary-watch';
 import { problem as minimumAddMakeValidParentheses } from './minimum-add-make-valid-parentheses';
 import { problem as palindromicSubstrings } from './palindromic-substrings';
 import { problem as partitionString } from './partition-string';
+import { problem as uglyNumberII } from './ugly-number-ii';
+import { problem as deleteNodeInBst } from './delete-node-in-bst';
+import { problem as minimumCostConnectPoints } from './minimum-cost-connect-points';
+import { problem as numberOfVisiblePeopleInQueue } from './number-of-visible-people-in-queue';
+import { problem as insertIntoBst } from './insert-into-bst';
 import { problem as combinationSumIv } from './combination-sum-iv';
 
 export const problems: readonly Problem[] = [
@@ -1375,6 +1380,15 @@ export const problems: readonly Problem[] = [
   minimumAddMakeValidParentheses,
   palindromicSubstrings,
   partitionString,
+  // math + dp — medium (new)
+  uglyNumberII,
+  // tree — medium (new)
+  deleteNodeInBst,
+  insertIntoBst,
+  // heap — medium (new)
+  minimumCostConnectPoints,
+  // stack — medium (new)
+  numberOfVisiblePeopleInQueue,
   // dp — medium (new)
   combinationSumIv,
 ];

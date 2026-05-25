@@ -8533,6 +8533,106 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return parts;
   },
 
+  'ugly-number-ii': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const dp = [1]; let i2 = 0, i3 = 0, i5 = 0;
+    for (let i = 1; i < n; i++) {
+      const nx = Math.min(dp[i2]! * 2, dp[i3]! * 3, dp[i5]! * 5);
+      dp.push(nx);
+      if (nx === dp[i2]! * 2) i2++;
+      if (nx === dp[i3]! * 3) i3++;
+      if (nx === dp[i5]! * 5) i5++;
+    }
+    return dp[n - 1]!;
+  },
+
+  'delete-node-in-bst': (...args: unknown[]) => {
+    const del = (n: _TN | null, key: number): _TN | null => {
+      if (!n) return null;
+      if (key < n.v) { n.l = del(n.l, key); }
+      else if (key > n.v) { n.r = del(n.r, key); }
+      else {
+        if (!n.l) return n.r;
+        if (!n.r) return n.l;
+        let s = n.r; while (s.l) s = s.l;
+        n.v = s.v;
+        n.r = del(n.r, s.v);
+      }
+      return n;
+    };
+    return _treeToArr(del(_buildTree(args[0] as (number | null)[]), args[1] as number));
+  },
+
+  'insert-into-bst': (...args: unknown[]) => {
+    const ins = (n: _TN | null, val: number): _TN => {
+      if (!n) return { v: val, l: null, r: null };
+      if (val < n.v) n.l = ins(n.l, val);
+      else n.r = ins(n.r, val);
+      return n;
+    };
+    return _treeToArr(ins(_buildTree(args[0] as (number | null)[]), args[1] as number));
+  },
+
+  'deleteNodeRunner': (...args: unknown[]) => {
+    const del = (n: _TN | null, key: number): _TN | null => {
+      if (!n) return null;
+      if (key < n.v) { n.l = del(n.l, key); }
+      else if (key > n.v) { n.r = del(n.r, key); }
+      else {
+        if (!n.l) return n.r;
+        if (!n.r) return n.l;
+        let s = n.r; while (s.l) s = s.l;
+        n.v = s.v;
+        n.r = del(n.r, s.v);
+      }
+      return n;
+    };
+    return _treeToArr(del(_buildTree(args[0] as (number | null)[]), args[1] as number));
+  },
+
+  'insertIntoBSTRunner': (...args: unknown[]) => {
+    const ins = (n: _TN | null, val: number): _TN => {
+      if (!n) return { v: val, l: null, r: null };
+      if (val < n.v) n.l = ins(n.l, val);
+      else n.r = ins(n.r, val);
+      return n;
+    };
+    return _treeToArr(ins(_buildTree(args[0] as (number | null)[]), args[1] as number));
+  },
+
+  'minimum-cost-connect-points': (...args: unknown[]) => {
+    const points = args[0] as number[][];
+    const n = points.length;
+    const inMST = new Array<boolean>(n).fill(false);
+    const dist = new Array<number>(n).fill(Infinity);
+    dist[0] = 0; let res = 0;
+    for (let i = 0; i < n; i++) {
+      let u = -1;
+      for (let j = 0; j < n; j++) if (!inMST[j] && (u === -1 || dist[j]! < dist[u]!)) u = j;
+      inMST[u] = true; res += dist[u]!;
+      for (let v = 0; v < n; v++) {
+        if (!inMST[v]) {
+          const d = Math.abs(points[u]![0]! - points[v]![0]!) + Math.abs(points[u]![1]! - points[v]![1]!);
+          if (d < dist[v]!) dist[v] = d;
+        }
+      }
+    }
+    return res;
+  },
+
+  'number-of-visible-people-in-queue': (...args: unknown[]) => {
+    const heights = args[0] as number[];
+    const n = heights.length, ans = new Array<number>(n).fill(0), st: number[] = [];
+    for (let i = n - 1; i >= 0; i--) {
+      let cnt = 0;
+      while (st.length && st[st.length - 1]! < heights[i]!) { st.pop(); cnt++; }
+      if (st.length) cnt++;
+      ans[i] = cnt;
+      st.push(heights[i]!);
+    }
+    return ans;
+  },
+
   'combination-sum-iv': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const target = args[1] as number;
