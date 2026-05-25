@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 524 problems; 1843 tests; growing toward 530+.
+**Current focus:** Bank at 540 problems; 1888 tests; growing toward 550+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing bank toward 530+; more medium/hard problems. Browser-zoom QA (L).
+**Next up:** Continue growing bank toward 550+; more easy/medium/hard problems. Browser-zoom QA (L).
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -287,6 +287,9 @@ Still pending:
 - [x] **400-problem milestone** — determine-if-string-halves-alike + check-two-strings-almost-equivalent + rearrange-characters-to-make-target + divide-string-into-groups + count-vowel-substrings + count-of-matches-in-tournament + minimum-sum-mountain-triplet (merged)
 - [x] merge-sorted-array (easy/arrays, preamble) + minimum-moves-equal-array (medium/math) + multiply-strings (medium/math+strings) + count-triplets-xor (medium/arrays+math) + water-and-jug (medium/math) + find-center-of-star-graph (easy/graph); bank at 444; 1603 tests
 - [x] validate-stack-sequences + 132-pattern (stack/medium) + frequency-of-most-frequent-element (sliding-window/medium) + find-common-characters + counting-words-with-given-prefix + find-words-formed-by-characters (strings/easy) + minimum-rounds-to-complete-tasks + minimum-steps-make-anagram (hash-map/medium) + number-of-laser-beams (arrays/medium) + minimum-number-of-moves-seat (arrays/easy); bank merged to 488; 1735 tests
+- [x] check-prefix-string + sum-digits-string-convert + maximum-number-of-string-pairs + count-pairs-sum-less-than-target + neither-minimum-nor-maximum + find-winners + count-number-of-texts + count-vowel-strings-in-range + count-fair-pairs + minimum-average-difference; bank at 498; 1843 tests
+- [x] find-kth-positive + minimum-length-string-operations + largest-integer-digit-swaps; bank at 533; 1867 tests
+- [x] unique-morse-code-words + number-of-good-pairs + check-if-array-sorted-rotated + maximum-product-difference + replace-words + minimum-time-difference + string-to-integer-atoi; bank at 540; 1888 tests. Marketing site updated to 540.
 
 ---
 
