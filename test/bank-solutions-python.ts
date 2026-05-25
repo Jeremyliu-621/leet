@@ -13742,4 +13742,206 @@ def validPartition(nums):
                 dp[i] = True
     return dp[n]
 `,
+
+  'paint-fence': `
+def numWays(n, k):
+    if n == 1:
+        return k
+    same = k
+    diff = k * (k - 1)
+    for _ in range(3, n + 1):
+        same, diff = diff, (k - 1) * (same + diff)
+    return same + diff
+`,
+
+  'minimum-insertion-steps-palindrome': `
+def minInsertions(s):
+    n = len(s)
+    rev = s[::-1]
+    dp = [[0] * (n + 1) for _ in range(n + 1)]
+    for i in range(1, n + 1):
+        for j in range(1, n + 1):
+            if s[i-1] == rev[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    return n - dp[n][n]
+`,
+
+  'longest-subarray-abs-diff-limit': `
+from collections import deque
+def longestSubarrayWithLimit(nums, limit):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    max_dq = deque()
+    min_dq = deque()
+    left = 0
+    res = 0
+    for right in range(len(nums)):
+        while max_dq and nums[max_dq[-1]] <= nums[right]:
+            max_dq.pop()
+        while min_dq and nums[min_dq[-1]] >= nums[right]:
+            min_dq.pop()
+        max_dq.append(right)
+        min_dq.append(right)
+        while nums[max_dq[0]] - nums[min_dq[0]] > limit:
+            left += 1
+            if max_dq[0] < left: max_dq.popleft()
+            if min_dq[0] < left: min_dq.popleft()
+        res = max(res, right - left + 1)
+    return res
+`,
+
+  'maximum-sum-two-non-overlapping-subarrays': `
+def maxSumTwoNoOverlap(nums, firstLen, secondLen):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i+1] = prefix[i] + nums[i]
+    def s(l, r): return prefix[r+1] - prefix[l]
+    res = 0
+    max_first = 0
+    for i in range(firstLen - 1, n - secondLen):
+        max_first = max(max_first, s(i - firstLen + 1, i))
+        res = max(res, max_first + s(i + 1, i + secondLen))
+    max_second = 0
+    for i in range(secondLen - 1, n - firstLen):
+        max_second = max(max_second, s(i - secondLen + 1, i))
+        res = max(res, max_second + s(i + 1, i + firstLen))
+    return res
+`,
+
+  'number-of-closed-islands': `
+def closedIsland(grid):
+    grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    rows, cols = len(grid), len(grid[0])
+    def flood(r, c):
+        if r < 0 or r >= rows or c < 0 or c >= cols or grid[r][c] != 0:
+            return
+        grid[r][c] = 1
+        flood(r+1,c); flood(r-1,c); flood(r,c+1); flood(r,c-1)
+    for r in range(rows):
+        flood(r, 0); flood(r, cols-1)
+    for c in range(cols):
+        flood(0, c); flood(rows-1, c)
+    count = 0
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == 0:
+                flood(r, c)
+                count += 1
+    return count
+`,
+
+  'destination-city': `
+def destCity(paths):
+    paths = list(paths.to_py()) if hasattr(paths, 'to_py') else list(paths)
+    sources = set()
+    for p in paths:
+        p = list(p.to_py()) if hasattr(p, 'to_py') else list(p)
+        sources.add(p[0])
+    for p in paths:
+        p = list(p.to_py()) if hasattr(p, 'to_py') else list(p)
+        if p[1] not in sources:
+            return p[1]
+    return ''
+`,
+
+  'find-winner-tictactoe': `
+def tictactoe(moves):
+    moves = list(moves.to_py()) if hasattr(moves, 'to_py') else list(moves)
+    rowA = [0]*3; colA = [0]*3; diagA = 0; antiA = 0
+    rowB = [0]*3; colB = [0]*3; diagB = 0; antiB = 0
+    for i, m in enumerate(moves):
+        m = list(m.to_py()) if hasattr(m, 'to_py') else list(m)
+        r, c = m[0], m[1]
+        if i % 2 == 0:
+            rowA[r] += 1; colA[c] += 1
+            if r == c: diagA += 1
+            if r + c == 2: antiA += 1
+            if 3 in (rowA[r], colA[c], diagA, antiA): return 'A'
+        else:
+            rowB[r] += 1; colB[c] += 1
+            if r == c: diagB += 1
+            if r + c == 2: antiB += 1
+            if 3 in (rowB[r], colB[c], diagB, antiB): return 'B'
+    return 'Draw' if len(moves) == 9 else 'Pending'
+`,
+
+  'maximum-eaten-apples': `
+import heapq
+def eatenApples(apples, days):
+    apples = list(apples.to_py()) if hasattr(apples, 'to_py') else list(apples)
+    days = list(days.to_py()) if hasattr(days, 'to_py') else list(days)
+    n = len(apples)
+    heap = []
+    eaten = 0
+    day = 0
+    while day < n or heap:
+        if day < n and apples[day] > 0:
+            heapq.heappush(heap, (day + days[day], apples[day]))
+        while heap and heap[0][0] <= day:
+            heapq.heappop(heap)
+        if heap:
+            expiry, count = heapq.heappop(heap)
+            eaten += 1
+            if count > 1:
+                heapq.heappush(heap, (expiry, count - 1))
+        day += 1
+    return eaten
+`,
+
+  'split-array-fibonacci': `
+def splitIntoFibonacci(num):
+    MAX = 2**31 - 1
+    result = []
+    def bt(start, seq):
+        if start == len(num) and len(seq) >= 3:
+            return True
+        for end in range(start + 1, len(num) + 1):
+            sub = num[start:end]
+            if len(sub) > 1 and sub[0] == '0':
+                break
+            n = int(sub)
+            if n > MAX:
+                break
+            if len(seq) >= 2:
+                expected = seq[-2] + seq[-1]
+                if n < expected:
+                    continue
+                if n > expected:
+                    break
+            seq.append(n)
+            if bt(end, seq):
+                return True
+            seq.pop()
+        return False
+    bt(0, result)
+    return result
+`,
+
+  'maximum-score-performing-multiplication': `
+def maximumScore(nums, multipliers):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    multipliers = list(multipliers.to_py()) if hasattr(multipliers, 'to_py') else list(multipliers)
+    n, m = len(nums), len(multipliers)
+    dp = [[-float('inf')] * (m + 1) for _ in range(m + 1)]
+    dp[0][0] = 0
+    for k in range(m):
+        for i in range(k + 1):
+            j = k - i
+            if dp[i][j] == -float('inf'):
+                continue
+            cur = dp[i][j]
+            if dp[i+1][j] < cur + nums[i] * multipliers[k]:
+                dp[i+1][j] = cur + nums[i] * multipliers[k]
+            if dp[i][j+1] < cur + nums[n-1-j] * multipliers[k]:
+                dp[i][j+1] = cur + nums[n-1-j] * multipliers[k]
+    res = -float('inf')
+    for i in range(m + 1):
+        j = m - i
+        if dp[i][j] > res:
+            res = dp[i][j]
+    return res
+`,
 };

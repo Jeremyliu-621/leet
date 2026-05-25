@@ -1124,6 +1124,16 @@ import { problem as pseudoPalindromicPaths } from './pseudo-palindromic-paths';
 import { problem as numberOfNodesSameLabel } from './number-of-nodes-same-label';
 import { problem as minimumCostTreeLeafValues } from './minimum-cost-tree-leaf-values';
 import { problem as validPartitionArray } from './valid-partition-array';
+import { problem as paintFence } from './paint-fence';
+import { problem as minimumInsertionStepsPalindrome } from './minimum-insertion-steps-palindrome';
+import { problem as longestSubarrayAbsDiffLimit } from './longest-subarray-abs-diff-limit';
+import { problem as maximumSumTwoNonOverlappingSubarrays } from './maximum-sum-two-non-overlapping-subarrays';
+import { problem as numberOfClosedIslands } from './number-of-closed-islands';
+import { problem as destinationCity } from './destination-city';
+import { problem as findWinnerTictactoe } from './find-winner-tictactoe';
+import { problem as maximumEatenApples } from './maximum-eaten-apples';
+import { problem as splitArrayFibonacci } from './split-array-fibonacci';
+import { problem as maximumScorePerformingMultiplication } from './maximum-score-performing-multiplication';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2296,4 +2306,14 @@ export const problems: readonly Problem[] = [
   numberOfNodesSameLabel,
   minimumCostTreeLeafValues,
   validPartitionArray,
+  paintFence,
+  minimumInsertionStepsPalindrome,
+  longestSubarrayAbsDiffLimit,
+  maximumSumTwoNonOverlappingSubarrays,
+  numberOfClosedIslands,
+  destinationCity,
+  findWinnerTictactoe,
+  maximumEatenApples,
+  splitArrayFibonacci,
+  maximumScorePerformingMultiplication,
 ];

@@ -14096,4 +14096,212 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[n];
   },
 
+  'paint-fence': (n: unknown, k: unknown) => {
+    const ni = n as number, ki = k as number;
+    if (ni === 1) return ki;
+    let same = ki, diff = ki * (ki - 1);
+    for (let i = 3; i <= ni; i++) {
+      const newSame = diff;
+      const newDiff = (ki - 1) * (same + diff);
+      same = newSame;
+      diff = newDiff;
+    }
+    return same + diff;
+  },
+
+  'minimum-insertion-steps-palindrome': (s: unknown) => {
+    const str = s as string;
+    const n = str.length;
+    const rev = str.split('').reverse().join('');
+    const dp: number[][] = Array.from({ length: n + 1 }, () => new Array(n + 1).fill(0));
+    for (let i = 1; i <= n; i++) {
+      for (let j = 1; j <= n; j++) {
+        if (str[i - 1] === rev[j - 1]) {
+          dp[i]![j] = dp[i - 1]![j - 1]! + 1;
+        } else {
+          dp[i]![j] = Math.max(dp[i - 1]![j]!, dp[i]![j - 1]!);
+        }
+      }
+    }
+    return n - dp[n]![n]!;
+  },
+
+  'longest-subarray-abs-diff-limit': (nums: unknown, limit: unknown) => {
+    const arr = nums as number[], lim = limit as number;
+    const maxDeque: number[] = [], minDeque: number[] = [];
+    let left = 0, res = 0;
+    for (let right = 0; right < arr.length; right++) {
+      while (maxDeque.length && arr[maxDeque[maxDeque.length - 1]!]! <= arr[right]!) maxDeque.pop();
+      while (minDeque.length && arr[minDeque[minDeque.length - 1]!]! >= arr[right]!) minDeque.pop();
+      maxDeque.push(right);
+      minDeque.push(right);
+      while (arr[maxDeque[0]!]! - arr[minDeque[0]!]! > lim) {
+        left++;
+        if (maxDeque[0]! < left) maxDeque.shift();
+        if (minDeque[0]! < left) minDeque.shift();
+      }
+      res = Math.max(res, right - left + 1);
+    }
+    return res;
+  },
+
+  'maximum-sum-two-non-overlapping-subarrays': (nums: unknown, firstLen: unknown, secondLen: unknown) => {
+    const arr = nums as number[], fl = firstLen as number, sl = secondLen as number;
+    const n = arr.length;
+    const prefix = new Array(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + arr[i]!;
+    const sum = (l: number, r: number) => prefix[r + 1] - prefix[l];
+    let res = 0;
+    // first before second
+    let maxFirst = 0;
+    for (let i = fl - 1; i <= n - sl - 1; i++) {
+      maxFirst = Math.max(maxFirst, sum(i - fl + 1, i));
+      res = Math.max(res, maxFirst + sum(i + 1, i + sl));
+    }
+    // second before first
+    let maxSecond = 0;
+    for (let i = sl - 1; i <= n - fl - 1; i++) {
+      maxSecond = Math.max(maxSecond, sum(i - sl + 1, i));
+      res = Math.max(res, maxSecond + sum(i + 1, i + fl));
+    }
+    return res;
+  },
+
+  'number-of-closed-islands': (grid: unknown) => {
+    const g = (grid as number[][]).map(r => [...r]);
+    const rows = g.length, cols = g[0]!.length;
+    const flood = (r: number, c: number) => {
+      if (r < 0 || r >= rows || c < 0 || c >= cols || g[r]![c] !== 0) return;
+      g[r]![c] = 1;
+      flood(r + 1, c); flood(r - 1, c); flood(r, c + 1); flood(r, c - 1);
+    };
+    for (let r = 0; r < rows; r++) { flood(r, 0); flood(r, cols - 1); }
+    for (let c = 0; c < cols; c++) { flood(0, c); flood(rows - 1, c); }
+    let count = 0;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        if (g[r]![c] === 0) { flood(r, c); count++; }
+      }
+    }
+    return count;
+  },
+
+  'destination-city': (paths: unknown) => {
+    const p = paths as string[][];
+    const sources = new Set(p.map(pair => pair[0]!));
+    for (const pair of p) {
+      if (!sources.has(pair[1]!)) return pair[1]!;
+    }
+    return '';
+  },
+
+  'find-winner-tictactoe': (moves: unknown) => {
+    const m = moves as number[][];
+    const rowA = [0, 0, 0], colA = [0, 0, 0];
+    const rowB = [0, 0, 0], colB = [0, 0, 0];
+    let diagA = 0, antiA = 0, diagB = 0, antiB = 0;
+    for (let i = 0; i < m.length; i++) {
+      const [r, c] = [m[i]![0]!, m[i]![1]!];
+      if (i % 2 === 0) {
+        rowA[r]!++; colA[c]!++;
+        if (r === c) diagA++;
+        if (r + c === 2) antiA++;
+        if (rowA[r] === 3 || colA[c] === 3 || diagA === 3 || antiA === 3) return 'A';
+      } else {
+        rowB[r]!++; colB[c]!++;
+        if (r === c) diagB++;
+        if (r + c === 2) antiB++;
+        if (rowB[r] === 3 || colB[c] === 3 || diagB === 3 || antiB === 3) return 'B';
+      }
+    }
+    return m.length === 9 ? 'Draw' : 'Pending';
+  },
+
+  'maximum-eaten-apples': (apples: unknown, days: unknown) => {
+    const ap = apples as number[], dy = days as number[];
+    const n = ap.length;
+    const heap: [number, number][] = [];
+    const push = (item: [number, number]) => {
+      heap.push(item);
+      let i = heap.length - 1;
+      while (i > 0) {
+        const p = (i - 1) >> 1;
+        if (heap[p]![0] > heap[i]![0]) { [heap[p], heap[i]] = [heap[i]!, heap[p]!]; i = p; } else break;
+      }
+    };
+    const pop = () => {
+      const top = heap[0]!;
+      const last = heap.pop()!;
+      if (heap.length) { heap[0] = last; let i = 0;
+        while (true) { let min = i; const l = 2*i+1, r = 2*i+2;
+          if (l < heap.length && heap[l]![0] < heap[min]![0]) min = l;
+          if (r < heap.length && heap[r]![0] < heap[min]![0]) min = r;
+          if (min === i) break; [heap[i], heap[min]] = [heap[min]!, heap[i]!]; i = min; } }
+      return top;
+    };
+    let eaten = 0;
+    for (let day = 0; day < n || heap.length > 0; day++) {
+      if (day < n && ap[day]! > 0) push([day + dy[day]!, ap[day]!]);
+      while (heap.length && heap[0]![0] <= day) pop();
+      if (heap.length) {
+        const top = pop();
+        eaten++;
+        if (top[1] > 1) push([top[0], top[1] - 1]);
+      }
+    }
+    return eaten;
+  },
+
+  'split-array-fibonacci': (num: unknown) => {
+    const s = num as string;
+    const MAX = 2 ** 31 - 1;
+    const result: number[] = [];
+    const bt = (start: number, seq: number[]): boolean => {
+      if (start === s.length && seq.length >= 3) return true;
+      for (let end = start + 1; end <= s.length; end++) {
+        const sub = s.slice(start, end);
+        if (sub.length > 1 && sub[0] === '0') break;
+        const n = parseInt(sub, 10);
+        if (n > MAX) break;
+        if (seq.length >= 2) {
+          const expected = seq[seq.length - 2]! + seq[seq.length - 1]!;
+          if (n < expected) continue;
+          if (n > expected) break;
+        }
+        seq.push(n);
+        if (bt(end, seq)) return true;
+        seq.pop();
+      }
+      return false;
+    };
+    bt(0, result);
+    return result;
+  },
+
+  'maximum-score-performing-multiplication': (nums: unknown, multipliers: unknown) => {
+    const arr = nums as number[], mult = multipliers as number[];
+    const n = arr.length, m = mult.length;
+    const dp: number[][] = Array.from({ length: m + 1 }, () => new Array(m + 1).fill(-Infinity));
+    dp[0]![0] = 0;
+    for (let k = 0; k < m; k++) {
+      for (let i = 0; i <= k; i++) {
+        const j = k - i;
+        if (dp[i]![j] === -Infinity) continue;
+        const cur = dp[i]![j]!;
+        // take from left
+        if (dp[i + 1]![j] === undefined) dp[i + 1]![j] = -Infinity;
+        dp[i + 1]![j] = Math.max(dp[i + 1]![j]!, cur + arr[i]! * mult[k]!);
+        // take from right
+        if (dp[i]![j + 1] === undefined) dp[i]![j + 1] = -Infinity;
+        dp[i]![j + 1] = Math.max(dp[i]![j + 1]!, cur + arr[n - 1 - j]! * mult[k]!);
+      }
+    }
+    let res = -Infinity;
+    for (let i = 0; i <= m; i++) {
+      const j = m - i;
+      if (dp[i]![j] !== undefined && dp[i]![j]! > res) res = dp[i]![j]!;
+    }
+    return res;
+  },
+
 };
