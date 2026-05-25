@@ -4939,6 +4939,46 @@ def deserialize(data):
     return count
 `,
 
+  'find-kth-positive': `def findKthPositive(arr, k):
+    missing = 0
+    i = 0
+    num = 1
+    while True:
+        if i < len(arr) and arr[i] == num:
+            i += 1
+        else:
+            missing += 1
+            if missing == k:
+                return num
+        num += 1
+`,
+
+  'minimum-length-string-operations': `def minLength(s):
+    stack = []
+    for c in s:
+        if stack and ((stack[-1] == 'A' and c == 'B') or (stack[-1] == 'C' and c == 'D')):
+            stack.pop()
+        else:
+            stack.append(c)
+    return len(stack)
+`,
+
+  'largest-integer-digit-swaps': `def largestInteger(num):
+    digits = [int(d) for d in str(num)]
+    odds = sorted((d for d in digits if d % 2 == 1), reverse=True)
+    evens = sorted((d for d in digits if d % 2 == 0), reverse=True)
+    oi = ei = 0
+    result = []
+    for d in digits:
+        if d % 2 == 1:
+            result.append(odds[oi])
+            oi += 1
+        else:
+            result.append(evens[ei])
+            ei += 1
+    return int(''.join(map(str, result)))
+`,
+
   'count-fair-pairs': `def countFairPairs(nums, lower, upper):
     nums = sorted(nums)
     def count_le(limit):

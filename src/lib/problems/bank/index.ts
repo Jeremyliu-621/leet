@@ -166,6 +166,9 @@ import { problem as maximumNumberOfStringPairs } from './maximum-number-of-strin
 import { problem as countPairsSumLessThanTarget } from './count-pairs-sum-less-than-target';
 import { problem as neitherMinimumNorMaximum } from './neither-minimum-nor-maximum';
 import { problem as countVowelStringsInRange } from './count-vowel-strings-in-range';
+import { problem as findKthPositive } from './find-kth-positive';
+import { problem as minimumLengthStringOperations } from './minimum-length-string-operations';
+import { problem as largestIntegerDigitSwaps } from './largest-integer-digit-swaps';
 // strings — medium
 import { problem as zigzagConversion } from './zigzag-conversion';
 import { problem as implementTrie } from './implement-trie';
@@ -760,6 +763,9 @@ export const problems: readonly Problem[] = [
   countPairsSumLessThanTarget,
   neitherMinimumNorMaximum,
   countVowelStringsInRange,
+  findKthPositive,
+  minimumLengthStringOperations,
+  largestIntegerDigitSwaps,
   // strings — medium
   implementTrie,
   customSortString,

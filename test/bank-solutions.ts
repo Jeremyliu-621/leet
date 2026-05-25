@@ -5570,6 +5570,32 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return count;
   },
+  'find-kth-positive': (...args: unknown[]) => {
+    const arr = args[0] as number[], k = args[1] as number;
+    let missing = 0, i = 0;
+    for (let num = 1; ; num++) {
+      if (i < arr.length && arr[i] === num) { i++; continue; }
+      if (++missing === k) return num;
+    }
+  },
+  'minimum-length-string-operations': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const stack: string[] = [];
+    for (const c of s) {
+      const top = stack[stack.length - 1];
+      if ((top === 'A' && c === 'B') || (top === 'C' && c === 'D')) stack.pop();
+      else stack.push(c);
+    }
+    return stack.length;
+  },
+  'largest-integer-digit-swaps': (...args: unknown[]) => {
+    const num = args[0] as number;
+    const digits = String(num).split('').map(Number);
+    const odds = digits.filter((d) => d % 2 === 1).sort((a, b) => b - a);
+    const evens = digits.filter((d) => d % 2 === 0).sort((a, b) => b - a);
+    let oi = 0, ei = 0;
+    return +digits.map((d) => (d % 2 === 1 ? odds[oi++]! : evens[ei++]!)).join('');
+  },
   'count-fair-pairs': (...args: unknown[]) => {
     const nums = [...(args[0] as number[])].sort((a, b) => a - b);
     const lower = args[1] as number, upper = args[2] as number;

@@ -65,6 +65,7 @@ describe('problem selector', () => {
       'number-of-students-eating-lunch',
       'make-string-great',
       'minimum-string-length',
+      'minimum-length-string-operations',
     ] })).toBeUndefined();
   });
 
