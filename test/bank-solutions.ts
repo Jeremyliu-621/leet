@@ -18224,4 +18224,56 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return res + 2 * open;
   },
 
+  'longest-subarray-of-1s-after-deleting-one-element': (nums: unknown) => {
+    const arr = nums as number[];
+    let left = 0, zeros = 0, ans = 0;
+    for (let right = 0; right < arr.length; right++) {
+      if (arr[right] === 0) zeros++;
+      while (zeros > 1) {
+        if (arr[left] === 0) zeros--;
+        left++;
+      }
+      ans = Math.max(ans, right - left);
+    }
+    return ans;
+  },
+
+  'count-number-of-nice-subarrays': (nums: unknown, k: unknown) => {
+    const arr = nums as number[], K = k as number;
+    function atMost(limit: number): number {
+      let left = 0, count = 0, result = 0;
+      for (let right = 0; right < arr.length; right++) {
+        if (arr[right]! % 2 === 1) count++;
+        while (count > limit) {
+          if (arr[left]! % 2 === 1) count--;
+          left++;
+        }
+        result += right - left + 1;
+      }
+      return result;
+    }
+    return atMost(K) - atMost(K - 1);
+  },
+
+  'maximum-length-of-a-concatenated-string-with-unique-characters': (arr: unknown) => {
+    const strings = arr as string[];
+    let result = 0;
+    function dfs(idx: number, mask: number, len: number): void {
+      result = Math.max(result, len);
+      for (let i = idx; i < strings.length; i++) {
+        let m = 0, valid = true;
+        for (const c of strings[i]!) {
+          const bit = 1 << (c.charCodeAt(0) - 97);
+          if (m & bit) { valid = false; break; }
+          m |= bit;
+        }
+        if (valid && (mask & m) === 0) {
+          dfs(i + 1, mask | m, len + strings[i]!.length);
+        }
+      }
+    }
+    dfs(0, 0, 0);
+    return result;
+  },
+
 };

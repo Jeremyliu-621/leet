@@ -1363,6 +1363,9 @@ import { problem as predictWinner } from './predict-winner';
 import { problem as canIWin } from './can-i-win';
 import { problem as optimalDivision } from './optimal-division';
 import { problem as minimumInsertionsToBalanceParentheses } from './minimum-insertions-to-balance-parentheses';
+import { problem as longestSubarrayOf1sAfterDeletingOneElement } from './longest-subarray-of-1s-after-deleting-one-element';
+import { problem as countNumberOfNiceSubarrays } from './count-number-of-nice-subarrays';
+import { problem as maximumLengthOfAConcatenatedStringWithUniqueCharacters } from './maximum-length-of-a-concatenated-string-with-unique-characters';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2774,4 +2777,7 @@ export const problems: readonly Problem[] = [
   canIWin,
   optimalDivision,
   minimumInsertionsToBalanceParentheses,
+  longestSubarrayOf1sAfterDeletingOneElement,
+  countNumberOfNiceSubarrays,
+  maximumLengthOfAConcatenatedStringWithUniqueCharacters,
 ];

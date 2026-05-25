@@ -18087,5 +18087,54 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
                 res += 1
         i += 1
     return res + 2 * open_count
+  'longest-subarray-of-1s-after-deleting-one-element': `def longestSubarray(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    left = 0
+    zeros = 0
+    ans = 0
+    for right in range(len(nums)):
+        if nums[right] == 0:
+            zeros += 1
+        while zeros > 1:
+            if nums[left] == 0:
+                zeros -= 1
+            left += 1
+        ans = max(ans, right - left)
+    return ans
 `,
-};
+
+  'count-number-of-nice-subarrays': `def numberOfSubarrays(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    k = int(k)
+    def at_most(limit):
+        left = count = result = 0
+        for right in range(len(nums)):
+            if nums[right] % 2 == 1:
+                count += 1
+            while count > limit:
+                if nums[left] % 2 == 1:
+                    count -= 1
+                left += 1
+            result += right - left + 1
+        return result
+    return at_most(k) - at_most(k - 1)
+`,
+
+  'maximum-length-of-a-concatenated-string-with-unique-characters': `def maxLength(arr):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    result = [0]
+    def dfs(idx, mask, length):
+        result[0] = max(result[0], length)
+        for i in range(idx, len(arr)):
+            m = 0
+            valid = True
+            for c in arr[i]:
+                bit = 1 << (ord(c) - ord('a'))
+                if m & bit:
+                    valid = False
+                    break
+                m |= bit
+            if valid and (mask & m) == 0:
+                dfs(i + 1, mask | m, length + len(arr[i]))
+    dfs(0, 0, 0)
+    return result[0]
