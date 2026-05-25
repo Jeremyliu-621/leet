@@ -74,6 +74,7 @@ describe('problem selector', () => {
       'next-greater-element-i',
       'remove-outermost-parentheses',
       'remove-all-adjacent-duplicates-in-string',
+      'minimum-string-length-after-removing-substrings',
     ] })).toBeUndefined();
   });
 

@@ -17073,6 +17073,70 @@ def minimumDeletions(s):
     return lo
 `,
 
+  'maximum-number-of-events-that-can-be-attended': `def maxEvents(events):
+    import heapq
+    evs = sorted([list(e.to_py() if hasattr(e, 'to_py') else e) for e in (events.to_py() if hasattr(events, 'to_py') else events)], key=lambda x: x[0])
+    max_day = max(e[1] for e in evs)
+    heap = []
+    idx = 0
+    count = 0
+    for day in range(1, max_day + 1):
+        while idx < len(evs) and evs[idx][0] <= day:
+            heapq.heappush(heap, evs[idx][1])
+            idx += 1
+        while heap and heap[0] < day:
+            heapq.heappop(heap)
+        if heap:
+            heapq.heappop(heap)
+            count += 1
+    return count
+`,
+
+  'median-of-two-sorted-arrays': `def findMedianSortedArrays(nums1, nums2):
+    nums1 = list(nums1.to_py() if hasattr(nums1, 'to_py') else nums1)
+    nums2 = list(nums2.to_py() if hasattr(nums2, 'to_py') else nums2)
+    if len(nums1) > len(nums2):
+        nums1, nums2 = nums2, nums1
+    m, n = len(nums1), len(nums2)
+    half = (m + n + 1) // 2
+    lo, hi = 0, m
+    while lo <= hi:
+        i = (lo + hi) // 2
+        j = half - i
+        l1 = nums1[i-1] if i > 0 else float('-inf')
+        r1 = nums1[i] if i < m else float('inf')
+        l2 = nums2[j-1] if j > 0 else float('-inf')
+        r2 = nums2[j] if j < n else float('inf')
+        if l1 <= r2 and l2 <= r1:
+            if (m + n) % 2 == 1:
+                return float(max(l1, l2))
+            return (max(l1, l2) + min(r1, r2)) / 2
+        elif l1 > r2:
+            hi = i - 1
+        else:
+            lo = i + 1
+    return 0.0
+`,
+
+  'number-of-subsequences-that-satisfy-the-given-sum-condition': `def numSubseq(nums, target):
+    nums = sorted(list(nums.to_py() if hasattr(nums, 'to_py') else nums))
+    target = int(target)
+    MOD = 10**9 + 7
+    n = len(nums)
+    pow2 = [1] * n
+    for i in range(1, n):
+        pow2[i] = pow2[i-1] * 2 % MOD
+    lo, hi = 0, n - 1
+    ans = 0
+    while lo <= hi:
+        if nums[lo] + nums[hi] <= target:
+            ans = (ans + pow2[hi - lo]) % MOD
+            lo += 1
+        else:
+            hi -= 1
+    return ans
+`,
+
   'find-players-with-zero-or-one-losses': `def findWinners(matches):
     matches = [list(m.to_py() if hasattr(m, 'to_py') else m) for m in (matches.to_py() if hasattr(matches, 'to_py') else matches)]
     losses = {}
@@ -17490,6 +17554,7 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
     return odds <= k <= len(s)
 `,
 
+
   'push-dominoes': `def pushDominoes(dominoes):
     n = len(dominoes)
     forces = [0] * n
@@ -17649,5 +17714,132 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
         idx = bisect.bisect_right(prices, q) - 1
         result.append(its[idx][1] if idx >= 0 else 0)
     return result
+`,
+
+  'remove-duplicate-letters': `def removeDuplicateLetters(s):
+    last = {c: i for i, c in enumerate(s)}
+    stack = []
+    in_stack = set()
+    for i, c in enumerate(s):
+        if c in in_stack:
+            continue
+        while stack and stack[-1] > c and last[stack[-1]] > i:
+            in_stack.discard(stack.pop())
+        stack.append(c)
+        in_stack.add(c)
+    return ''.join(stack)
+`,
+
+  'best-time-to-buy-and-sell-stock-iv': `def maxProfit(k, prices):
+    k = int(k)
+    prices = list(prices.to_py() if hasattr(prices, 'to_py') else prices)
+    n = len(prices)
+    if n == 0 or k == 0:
+        return 0
+    if k >= n // 2:
+        return sum(max(0, prices[i] - prices[i-1]) for i in range(1, n))
+    buy = [-float('inf')] * (k + 1)
+    sell = [0] * (k + 1)
+    for p in prices:
+        for j in range(k, 0, -1):
+            buy[j] = max(buy[j], sell[j-1] - p)
+            sell[j] = max(sell[j], buy[j] + p)
+    return sell[k]
+`,
+
+  'shortest-path-with-alternating-colors': `def shortestAlternatingColors(n, redEdges, blueEdges):
+    n = int(n)
+    redEdges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (redEdges.to_py() if hasattr(redEdges, 'to_py') else redEdges)]
+    blueEdges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (blueEdges.to_py() if hasattr(blueEdges, 'to_py') else blueEdges)]
+    from collections import deque
+    adj = [[[], []] for _ in range(n)]
+    for u, v in redEdges:
+        adj[u][0].append(v)
+    for u, v in blueEdges:
+        adj[u][1].append(v)
+    dist = [-1] * n
+    visited = [[False, False] for _ in range(n)]
+    visited[0][0] = visited[0][1] = True
+    dist[0] = 0
+    q = deque([(0, 0), (0, 1)])
+    step = 1
+    while q:
+        for _ in range(len(q)):
+            node, color = q.popleft()
+            nc = 1 - color
+            for nxt in adj[node][nc]:
+                if not visited[nxt][nc]:
+                    visited[nxt][nc] = True
+                    if dist[nxt] == -1:
+                        dist[nxt] = step
+                    q.append((nxt, nc))
+        step += 1
+    return dist
+`,
+
+  'minimum-swaps-to-make-sequences-increasing': `def minSwap(nums1, nums2):
+    nums1 = list(nums1.to_py() if hasattr(nums1, 'to_py') else nums1)
+    nums2 = list(nums2.to_py() if hasattr(nums2, 'to_py') else nums2)
+    keep, swap = 0, 1
+    for i in range(1, len(nums1)):
+        nk = ns = float('inf')
+        if nums1[i] > nums1[i-1] and nums2[i] > nums2[i-1]:
+            nk = min(nk, keep)
+            ns = min(ns, swap + 1)
+        if nums1[i] > nums2[i-1] and nums2[i] > nums1[i-1]:
+            nk = min(nk, swap)
+            ns = min(ns, keep + 1)
+        keep, swap = nk, ns
+    return min(keep, swap)
+`,
+
+  'array-of-doubled-pairs': `def canReorderDoubled(changed):
+    changed = list(changed.to_py() if hasattr(changed, 'to_py') else changed)
+    from collections import Counter
+    cnt = Counter(changed)
+    for x in sorted(cnt, key=abs):
+        if cnt[x] == 0:
+            continue
+        doubled = 2 * x
+        if doubled == x:
+            if cnt[x] % 2 != 0:
+                return False
+            cnt[x] = 0
+            continue
+        if cnt[doubled] < cnt[x]:
+            return False
+        cnt[doubled] -= cnt[x]
+        cnt[x] = 0
+    return True
+`,
+
+  'count-vowel-permutation': `def countVowelPermutation(n):
+    MOD = 10**9 + 7
+    n = int(n)
+    a = e = i = o = u = 1
+    for _ in range(n - 1):
+        a, e, i, o, u = (e + i + u) % MOD, (a + i) % MOD, (e + o) % MOD, i % MOD, (i + o) % MOD
+    return (a + e + i + o + u) % MOD
+`,
+
+  'longest-ideal-subsequence': `def longestIdealString(s, k):
+    k = int(k)
+    dp = [0] * 26
+    for c in s:
+        idx = ord(c) - ord('a')
+        best = max(dp[max(0, idx - k):min(26, idx + k + 1)])
+        dp[idx] = best + 1
+    return max(dp)
+`,
+
+  'minimum-string-length-after-removing-substrings': `def minLength(s):
+    stack = []
+    for c in s:
+        if stack and ((stack[-1] == 'A' and c == 'B') or (stack[-1] == 'C' and c == 'D')):
+            stack.pop()
+        else:
+            stack.append(c)
+    return len(stack)
+
 `,
 };

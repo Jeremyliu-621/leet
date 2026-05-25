@@ -17294,6 +17294,55 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return lo;
   },
 
+  'maximum-number-of-events-that-can-be-attended': (events: unknown) => {
+    const evs = [...(events as number[][])].sort((a, b) => a[0]! - b[0]!);
+    const maxDay = Math.max(...evs.map(e => e[1]!));
+    let idx = 0, count = 0;
+    const heap: number[] = [];
+    for (let day = 1; day <= maxDay; day++) {
+      while (idx < evs.length && evs[idx]![0]! <= day) {
+        const end = evs[idx]![1]!;
+        let lo = 0, hi = heap.length;
+        while (lo < hi) { const mid = (lo + hi) >> 1; if (heap[mid]! < end) lo = mid + 1; else hi = mid; }
+        heap.splice(lo, 0, end);
+        idx++;
+      }
+      while (heap.length > 0 && heap[0]! < day) heap.shift();
+      if (heap.length > 0) { heap.shift(); count++; }
+    }
+    return count;
+  },
+
+  'median-of-two-sorted-arrays': (nums1: unknown, nums2: unknown) => {
+    let a = [...(nums1 as number[])], b = [...(nums2 as number[])];
+    if (a.length > b.length) [a, b] = [b, a];
+    const m = a.length, n = b.length;
+    const half = Math.floor((m + n + 1) / 2);
+    let lo = 0, hi = m;
+    while (lo <= hi) {
+      const i = (lo + hi) >> 1, j = half - i;
+      const l1 = i > 0 ? a[i - 1]! : -Infinity, r1 = i < m ? a[i]! : Infinity;
+      const l2 = j > 0 ? b[j - 1]! : -Infinity, r2 = j < n ? b[j]! : Infinity;
+      if (l1 <= r2 && l2 <= r1) {
+        return (m + n) % 2 === 1 ? Math.max(l1, l2) : (Math.max(l1, l2) + Math.min(r1, r2)) / 2;
+      } else if (l1 > r2) hi = i - 1; else lo = i + 1;
+    }
+    return 0;
+  },
+
+  'number-of-subsequences-that-satisfy-the-given-sum-condition': (nums: unknown, target: unknown) => {
+    const a = [...(nums as number[])].sort((x, y) => x - y);
+    const t = target as number, MOD = 1_000_000_007n;
+    const n = a.length;
+    const pow2 = Array.from({ length: n }, (_, i) => (2n ** BigInt(i)) % MOD);
+    let lo = 0, hi = n - 1, ans = 0n;
+    while (lo <= hi) {
+      if (a[lo]! + a[hi]! <= t) { ans = (ans + pow2[hi - lo]!) % MOD; lo++; }
+      else hi--;
+    }
+    return Number(ans);
+  },
+
   'maximum-value-at-given-index-in-bounded-array': (n: unknown, index: unknown, maxSum: unknown) => {
     const N = n as number, idx = index as number, ms = maxSum as number;
     function sumAtPeak(v: bigint, len: bigint): bigint {
@@ -17630,6 +17679,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return odds <= K && K <= str.length;
   },
 
+
   'push-dominoes': (dominoes: unknown) => {
     const s = dominoes as string;
     const n = s.length;
@@ -17800,6 +17850,143 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       while (lo < hi) { const mid = (lo + hi) >> 1; if (prices[mid]! <= q) lo = mid + 1; else hi = mid; }
       return lo === 0 ? 0 : its[lo - 1]![1];
     });
+  },
+
+  'remove-duplicate-letters': (s: unknown) => {
+    const str = s as string;
+    const last: Record<string, number> = {};
+    for (let i = 0; i < str.length; i++) last[str[i]!] = i;
+    const stack: string[] = [], inStack = new Set<string>();
+    for (let i = 0; i < str.length; i++) {
+      const c = str[i]!;
+      if (inStack.has(c)) continue;
+      while (stack.length && stack[stack.length - 1]! > c && last[stack[stack.length - 1]!]! > i)
+        inStack.delete(stack.pop()!);
+      stack.push(c); inStack.add(c);
+    }
+    return stack.join('');
+  },
+
+  'best-time-to-buy-and-sell-stock-iv': (k: unknown, prices: unknown) => {
+    const K = k as number, p = prices as number[];
+    const n = p.length;
+    if (n === 0 || K === 0) return 0;
+    if (K >= n / 2) {
+      let profit = 0;
+      for (let i = 1; i < n; i++) profit += Math.max(0, p[i]! - p[i - 1]!);
+      return profit;
+    }
+    const buy = Array(K + 1).fill(-Infinity);
+    const sell = Array(K + 1).fill(0);
+    for (const price of p)
+      for (let j = K; j >= 1; j--) {
+        buy[j] = Math.max(buy[j], sell[j - 1] - price);
+        sell[j] = Math.max(sell[j], buy[j] + price);
+      }
+    return sell[K];
+  },
+
+  'shortest-path-with-alternating-colors': (n: unknown, redEdges: unknown, blueEdges: unknown) => {
+    const N = n as number;
+    const adj: number[][][] = Array.from({ length: N }, () => [[], []]);
+    for (const e of redEdges as number[][]) adj[e[0]!]![0]!.push(e[1]!);
+    for (const e of blueEdges as number[][]) adj[e[0]!]![1]!.push(e[1]!);
+    const dist = Array(N).fill(-1);
+    const visited: boolean[][] = Array.from({ length: N }, () => [false, false]);
+    visited[0]![0] = visited[0]![1] = true;
+    dist[0] = 0;
+    const q: number[][] = [[0, 0], [0, 1]];
+    let step = 1;
+    while (q.length) {
+      const size = q.length;
+      for (let i = 0; i < size; i++) {
+        const [node, color] = q.shift()!;
+        const nc = 1 - color!;
+        for (const next of adj[node!]![nc]!) {
+          if (!visited[next]![nc]) {
+            visited[next]![nc] = true;
+            if (dist[next] === -1) dist[next] = step;
+            q.push([next, nc]);
+          }
+        }
+      }
+      step++;
+    }
+    return dist;
+  },
+
+  'minimum-swaps-to-make-sequences-increasing': (nums1: unknown, nums2: unknown) => {
+    const a = nums1 as number[], b = nums2 as number[];
+    let keep = 0, swap = 1;
+    for (let i = 1; i < a.length; i++) {
+      let nk = Infinity, ns = Infinity;
+      if (a[i]! > a[i - 1]! && b[i]! > b[i - 1]!) {
+        nk = Math.min(nk, keep); ns = Math.min(ns, swap + 1);
+      }
+      if (a[i]! > b[i - 1]! && b[i]! > a[i - 1]!) {
+        nk = Math.min(nk, swap); ns = Math.min(ns, keep + 1);
+      }
+      keep = nk; swap = ns;
+    }
+    return Math.min(keep, swap);
+  },
+
+  'array-of-doubled-pairs': (changed: unknown) => {
+    const arr = changed as number[];
+    const cnt = new Map<number, number>();
+    for (const x of arr) cnt.set(x, (cnt.get(x) ?? 0) + 1);
+    const keys = [...cnt.keys()].sort((a, b) => Math.abs(a) - Math.abs(b));
+    for (const x of keys) {
+      if (!cnt.get(x)) continue;
+      const doubled = 2 * x;
+      if (doubled === x) { if (cnt.get(x)! % 2 !== 0) return false; cnt.set(x, 0); continue; }
+      if ((cnt.get(doubled) ?? 0) < cnt.get(x)!) return false;
+      cnt.set(doubled, cnt.get(doubled)! - cnt.get(x)!);
+      cnt.set(x, 0);
+    }
+    return true;
+  },
+
+  'count-vowel-permutation': (n: unknown) => {
+    const MOD = 1_000_000_007n;
+    let a = 1n, e = 1n, i = 1n, o = 1n, u = 1n;
+    for (let step = 1; step < (n as number); step++) {
+      [a, e, i, o, u] = [
+        (e + i + u) % MOD,
+        (a + i) % MOD,
+        (e + o) % MOD,
+        i % MOD,
+        (i + o) % MOD,
+      ];
+    }
+    return Number((a + e + i + o + u) % MOD);
+  },
+
+  'longest-ideal-subsequence': (s: unknown, k: unknown) => {
+    const str = s as string, K = k as number;
+    const dp = new Array(26).fill(0);
+    for (const c of str) {
+      const idx = c.charCodeAt(0) - 97;
+      let best = 0;
+      for (let j = Math.max(0, idx - K); j <= Math.min(25, idx + K); j++) {
+        best = Math.max(best, dp[j] as number);
+      }
+      dp[idx] = best + 1;
+    }
+    return Math.max(...(dp as number[]));
+  },
+
+  'minimum-string-length-after-removing-substrings': (s: unknown) => {
+    const stack: string[] = [];
+    for (const c of s as string) {
+      if (stack.length > 0 && ((stack[stack.length - 1] === 'A' && c === 'B') || (stack[stack.length - 1] === 'C' && c === 'D'))) {
+        stack.pop();
+      } else {
+        stack.push(c);
+      }
+    }
+    return stack.length;
+
   },
 
 };
