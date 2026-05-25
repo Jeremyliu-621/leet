@@ -18763,4 +18763,122 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
                 ans = max(ans, dfs(r, c))
     return ans
 `,
+
+  'convert-sorted-array-to-bst': `def sortedArrayToBST(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    def build(l, r):
+        if l > r:
+            return None
+        mid = (l + r) // 2
+        node = [nums[mid], None, None]
+        node[1] = build(l, mid - 1)
+        node[2] = build(mid + 1, r)
+        return node
+    def to_arr(node):
+        if node is None:
+            return []
+        result = []
+        q = [node]
+        while q:
+            n = q.pop(0)
+            if n is None:
+                result.append(None)
+            else:
+                result.append(n[0])
+                q.append(n[1])
+                q.append(n[2])
+        while result and result[-1] is None:
+            result.pop()
+        return result
+    return to_arr(build(0, len(nums) - 1))
+`,
+
+  'trim-a-binary-search-tree': `def trimBST(root, low, high):
+    root = list(root.to_py() if hasattr(root, 'to_py') else root)
+    low = int(low)
+    high = int(high)
+    def build(arr):
+        if not arr or arr[0] is None:
+            return None
+        node = [arr[0], None, None]
+        q = [node]
+        i = 1
+        while q and i < len(arr):
+            n = q.pop(0)
+            if i < len(arr) and arr[i] is not None:
+                n[1] = [arr[i], None, None]
+                q.append(n[1])
+            i += 1
+            if i < len(arr) and arr[i] is not None:
+                n[2] = [arr[i], None, None]
+                q.append(n[2])
+            i += 1
+        return node
+    def trim(node):
+        if node is None:
+            return None
+        if node[0] < low:
+            return trim(node[2])
+        if node[0] > high:
+            return trim(node[1])
+        node[1] = trim(node[1])
+        node[2] = trim(node[2])
+        return node
+    def to_arr(node):
+        if node is None:
+            return []
+        result = []
+        q = [node]
+        while q:
+            n = q.pop(0)
+            if n is None:
+                result.append(None)
+            else:
+                result.append(n[0])
+                q.append(n[1])
+                q.append(n[2])
+        while result and result[-1] is None:
+            result.pop()
+        return result
+    return to_arr(trim(build(root)))
+`,
+
+  'finding-users-active-minutes': `def findingUsersActiveMinutes(logs, k):
+    logs = [list(log.to_py() if hasattr(log, 'to_py') else log) for log in (logs.to_py() if hasattr(logs, 'to_py') else logs)]
+    k = int(k)
+    uam = {}
+    for log in logs:
+        uid, t = log[0], log[1]
+        if uid not in uam:
+            uam[uid] = set()
+        uam[uid].add(t)
+    ans = [0] * k
+    for s in uam.values():
+        if len(s) <= k:
+            ans[len(s) - 1] += 1
+    return ans
+`,
+
+  'day-of-the-year': `def dayOfYear(date):
+    date = str(date)
+    y, m, d = int(date[:4]), int(date[5:7]), int(date[8:])
+    leap = (y % 4 == 0 and y % 100 != 0) or y % 400 == 0
+    days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    total = d + sum(days[:m-1])
+    if leap and m > 2:
+        total += 1
+    return total
+`,
+
+  'type-of-triangle': `def triangleType(nums):
+    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else list(nums))
+    a, b, c = nums[0], nums[1], nums[2]
+    if a + b <= c:
+        return "none"
+    if a == c:
+        return "equilateral"
+    if a == b or b == c:
+        return "isosceles"
+    return "scalene"
+`,
 };

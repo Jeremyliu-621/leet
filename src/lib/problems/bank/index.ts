@@ -1407,6 +1407,11 @@ import { problem as movePiecesToObtainAString } from './move-pieces-to-obtain-a-
 import { problem as greatestCommonDivisorOfStrings } from './greatest-common-divisor-of-strings';
 import { problem as maximumDistanceInArrays } from './maximum-distance-in-arrays';
 import { problem as pathWithMaximumGold } from './path-with-maximum-gold';
+import { problem as convertSortedArrayToBST } from './convert-sorted-array-to-bst';
+import { problem as trimABinarySearchTree } from './trim-a-binary-search-tree';
+import { problem as findingUsersActiveMinutes } from './finding-users-active-minutes';
+import { problem as dayOfTheYear } from './day-of-the-year';
+import { problem as typeOfTriangle } from './type-of-triangle';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2862,4 +2867,9 @@ export const problems: readonly Problem[] = [
   greatestCommonDivisorOfStrings,
   maximumDistanceInArrays,
   pathWithMaximumGold,
+  convertSortedArrayToBST,
+  trimABinarySearchTree,
+  findingUsersActiveMinutes,
+  dayOfTheYear,
+  typeOfTriangle,
 ];

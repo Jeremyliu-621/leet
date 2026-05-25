@@ -18831,4 +18831,57 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'convert-sorted-array-to-bst': (nums: unknown) => {
+    const arr = nums as number[];
+    function build(l: number, r: number): _TN | null {
+      if (l > r) return null;
+      const mid = (l + r) >> 1;
+      return { v: arr[mid]!, l: build(l, mid - 1), r: build(mid + 1, r) };
+    }
+    return _treeToArr(build(0, arr.length - 1));
+  },
+
+  'trim-a-binary-search-tree': (root: unknown, low: unknown, high: unknown) => {
+    const lo = low as number, hi = high as number;
+    function trim(node: _TN | null): _TN | null {
+      if (!node) return null;
+      if (node.v < lo) return trim(node.r);
+      if (node.v > hi) return trim(node.l);
+      node.l = trim(node.l);
+      node.r = trim(node.r);
+      return node;
+    }
+    return _treeToArr(trim(_buildTree(root as (number | null)[])));
+  },
+
+  'finding-users-active-minutes': (logs: unknown, k: unknown) => {
+    const uam = new Map<number, Set<number>>();
+    for (const [id, t] of logs as [number, number][]) {
+      if (!uam.has(id)) uam.set(id, new Set());
+      uam.get(id)!.add(t);
+    }
+    const ans = new Array(k as number).fill(0);
+    for (const s of uam.values()) if (s.size <= (k as number)) ans[s.size - 1]++;
+    return ans;
+  },
+
+  'day-of-the-year': (date: unknown) => {
+    const parts = (date as string).split('-').map(Number);
+    const y = parts[0]!, m = parts[1]!, d = parts[2]!;
+    const leap = (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;
+    const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    let sum = d;
+    for (let i = 0; i < m - 1; i++) sum += days[i]!;
+    if (leap && m > 2) sum++;
+    return sum;
+  },
+
+  'type-of-triangle': (nums: unknown) => {
+    const a = ([...(nums as number[])]).sort((x, y) => x - y);
+    if (a[0]! + a[1]! <= a[2]!) return 'none';
+    if (a[0] === a[2]) return 'equilateral';
+    if (a[0] === a[1] || a[1] === a[2]) return 'isosceles';
+    return 'scalene';
+  },
+
 };
