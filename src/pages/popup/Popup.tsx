@@ -107,6 +107,11 @@ interface PopupData {
  */
 export function Popup() {
   const [data, setData] = useState<PopupData | null>(null);
+  const [now, setNow] = useState(Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 30_000);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -345,12 +350,12 @@ export function Popup() {
                       // Outside extension context — silently ignore.
                     }
                   }}
-                  aria-label={`Visit ${token.domain} (${minutesLeft(token)} minutes left)`}
+                  aria-label={`Visit ${token.domain} (${minutesLeft(token, now)} minutes left)`}
                   className="flex w-full items-center justify-between border border-border bg-surface px-3 py-2 text-xs transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
                 >
                   <span className="truncate font-mono text-text">{token.domain}</span>
                   <span className="ml-2 shrink-0 font-mono text-muted tabular-nums">
-                    {minutesLeft(token)}m left
+                    {minutesLeft(token, now)}m left
                   </span>
                 </button>
               </li>
