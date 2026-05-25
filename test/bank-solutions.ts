@@ -17679,4 +17679,99 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return odds <= K && K <= str.length;
   },
 
+  'remove-duplicate-letters': (s: unknown) => {
+    const str = s as string;
+    const last: Record<string, number> = {};
+    for (let i = 0; i < str.length; i++) last[str[i]!] = i;
+    const stack: string[] = [], inStack = new Set<string>();
+    for (let i = 0; i < str.length; i++) {
+      const c = str[i]!;
+      if (inStack.has(c)) continue;
+      while (stack.length && stack[stack.length - 1]! > c && last[stack[stack.length - 1]!]! > i)
+        inStack.delete(stack.pop()!);
+      stack.push(c); inStack.add(c);
+    }
+    return stack.join('');
+  },
+
+  'best-time-to-buy-and-sell-stock-iv': (k: unknown, prices: unknown) => {
+    const K = k as number, p = prices as number[];
+    const n = p.length;
+    if (n === 0 || K === 0) return 0;
+    if (K >= n / 2) {
+      let profit = 0;
+      for (let i = 1; i < n; i++) profit += Math.max(0, p[i]! - p[i - 1]!);
+      return profit;
+    }
+    const buy = Array(K + 1).fill(-Infinity);
+    const sell = Array(K + 1).fill(0);
+    for (const price of p)
+      for (let j = K; j >= 1; j--) {
+        buy[j] = Math.max(buy[j], sell[j - 1] - price);
+        sell[j] = Math.max(sell[j], buy[j] + price);
+      }
+    return sell[K];
+  },
+
+  'shortest-path-with-alternating-colors': (n: unknown, redEdges: unknown, blueEdges: unknown) => {
+    const N = n as number;
+    const adj: number[][][] = Array.from({ length: N }, () => [[], []]);
+    for (const e of redEdges as number[][]) adj[e[0]!]![0]!.push(e[1]!);
+    for (const e of blueEdges as number[][]) adj[e[0]!]![1]!.push(e[1]!);
+    const dist = Array(N).fill(-1);
+    const visited: boolean[][] = Array.from({ length: N }, () => [false, false]);
+    visited[0]![0] = visited[0]![1] = true;
+    dist[0] = 0;
+    const q: number[][] = [[0, 0], [0, 1]];
+    let step = 1;
+    while (q.length) {
+      const size = q.length;
+      for (let i = 0; i < size; i++) {
+        const [node, color] = q.shift()!;
+        const nc = 1 - color!;
+        for (const next of adj[node!]![nc]!) {
+          if (!visited[next]![nc]) {
+            visited[next]![nc] = true;
+            if (dist[next] === -1) dist[next] = step;
+            q.push([next, nc]);
+          }
+        }
+      }
+      step++;
+    }
+    return dist;
+  },
+
+  'minimum-swaps-to-make-sequences-increasing': (nums1: unknown, nums2: unknown) => {
+    const a = nums1 as number[], b = nums2 as number[];
+    let keep = 0, swap = 1;
+    for (let i = 1; i < a.length; i++) {
+      let nk = Infinity, ns = Infinity;
+      if (a[i]! > a[i - 1]! && b[i]! > b[i - 1]!) {
+        nk = Math.min(nk, keep); ns = Math.min(ns, swap + 1);
+      }
+      if (a[i]! > b[i - 1]! && b[i]! > a[i - 1]!) {
+        nk = Math.min(nk, swap); ns = Math.min(ns, keep + 1);
+      }
+      keep = nk; swap = ns;
+    }
+    return Math.min(keep, swap);
+  },
+
+  'array-of-doubled-pairs': (changed: unknown) => {
+    const arr = changed as number[];
+    const cnt = new Map<number, number>();
+    for (const x of arr) cnt.set(x, (cnt.get(x) ?? 0) + 1);
+    const keys = [...cnt.keys()].sort((a, b) => Math.abs(a) - Math.abs(b));
+    for (const x of keys) {
+      if (!cnt.get(x)) continue;
+      const doubled = 2 * x;
+      if (doubled === x) { if (cnt.get(x)! % 2 !== 0) return false; cnt.set(x, 0); continue; }
+      if ((cnt.get(doubled) ?? 0) < cnt.get(x)!) return false;
+      cnt.set(doubled, cnt.get(doubled)! - cnt.get(x)!);
+      cnt.set(x, 0);
+    }
+    return true;
+  },
+
 };

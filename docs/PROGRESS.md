@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1277 problems; 4074 tests green.
+**Current focus:** Bank at 1282 problems; 4074+ tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems; UI/UX polish; Options/popup improvements.
 
@@ -363,6 +363,7 @@ Still pending:
 - [x] **3 more classic problems (Batch 28)** — time-needed-to-buy-tickets (arrays/easy, formula), number-of-subarrays-with-bounded-maximum (sliding-window/medium, two-pointer dp), kth-smallest-element-in-bst (tree/medium, inorder traversal with BST preamble); bank at **1265**; 4023 tests.
 - [x] **3 more classic problems (Batch 29)** — find-minimum-in-rotated-sorted-array (binary-search/medium), search-in-rotated-sorted-array (binary-search/medium), minimum-number-of-days-to-make-m-bouquets (binary-search/medium, feasibility check); bank at **1268**; 4032 tests.
 - [x] **10 more classic problems (Batch 19-local)** — walls-and-gates (graph/medium, multi-source BFS), making-a-large-island (graph/hard, DFS island labeling), increasing-order-search-tree (tree/easy, in-order flattening), next-greater-node-in-linked-list (stack/medium, monotonic stack), longest-cycle-in-graph (graph/hard, timestamp DFS), maximum-subarray-min-product (stack/medium, prefix sum + monotonic stack + BigInt MOD), steps-to-make-array-nondecreasing (stack/medium, DP+monotonic stack), count-substrings-that-differ-by-one-character (strings/medium, diagonal traversal), minimum-operations-to-move-balls (arrays/easy, two-pass O(n)), maximum-area-of-piece-of-cake (arrays/medium, sort+max-gap, BigInt MOD); bank at **1277**; 4074 tests. Also merged remote batch 28 (15 more problems).
+- [x] **4 more classic problems (Batch 30)** — split-array-into-consecutive-subsequences (arrays+hash-map/medium, greedy freq+end maps), restore-the-array-from-adjacent-pairs (arrays+hash-map/medium, adjacency list + endpoint traversal), monotone-increasing-digits (math/medium, right-to-left decrement + fill 9s), construct-k-palindrome-strings (strings+hash-map/medium, oddCount ≤ k ≤ s.length); bank at **1272**; 4044 tests.
 
 ---
 

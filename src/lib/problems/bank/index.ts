@@ -1327,6 +1327,11 @@ import { problem as constructKPalindromeStrings } from './construct-k-palindrome
 import { problem as maximumNumberOfEventsThatCanBeAttended } from './maximum-number-of-events-that-can-be-attended';
 import { problem as medianOfTwoSortedArrays } from './median-of-two-sorted-arrays';
 import { problem as numberOfSubsequencesThatSatisfyTheGivenSumCondition } from './number-of-subsequences-that-satisfy-the-given-sum-condition';
+import { problem as removeDuplicateLetters } from './remove-duplicate-letters';
+import { problem as bestTimeToBuyAndSellStockIv } from './best-time-to-buy-and-sell-stock-iv';
+import { problem as shortestPathWithAlternatingColors } from './shortest-path-with-alternating-colors';
+import { problem as minimumSwapsToMakeSequencesIncreasing } from './minimum-swaps-to-make-sequences-increasing';
+import { problem as arrayOfDoubledPairs } from './array-of-doubled-pairs';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2702,4 +2707,9 @@ export const problems: readonly Problem[] = [
   maximumNumberOfEventsThatCanBeAttended,
   medianOfTwoSortedArrays,
   numberOfSubsequencesThatSatisfyTheGivenSumCondition,
+  removeDuplicateLetters,
+  bestTimeToBuyAndSellStockIv,
+  shortestPathWithAlternatingColors,
+  minimumSwapsToMakeSequencesIncreasing,
+  arrayOfDoubledPairs,
 ];
