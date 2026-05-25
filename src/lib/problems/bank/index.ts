@@ -1500,6 +1500,11 @@ import { problem as myCalendarThree } from './my-calendar-iii';
 import { problem as designTwitter } from './design-twitter';
 import { problem as zigzagIterator } from './zigzag-iterator';
 import { problem as secondMinimumTimeToReachDestination } from './second-minimum-time-to-reach-destination';
+import { problem as pathSumII } from './path-sum-ii';
+import { problem as constructBinaryTreeFromInorderAndPostorderTraversal } from './construct-binary-tree-from-inorder-and-postorder-traversal';
+import { problem as maximumNumberOfRemovableCharacters } from './maximum-number-of-removable-characters';
+import { problem as minimumSumOfSquaredDifference } from './minimum-sum-of-squared-difference';
+import { problem as findTheKthLargestIntegerInArray } from './find-the-kth-largest-integer-in-array';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3048,4 +3053,9 @@ export const problems: readonly Problem[] = [
   designTwitter,
   zigzagIterator,
   secondMinimumTimeToReachDestination,
+  pathSumII,
+  constructBinaryTreeFromInorderAndPostorderTraversal,
+  maximumNumberOfRemovableCharacters,
+  minimumSumOfSquaredDifference,
+  findTheKthLargestIntegerInArray,
 ];

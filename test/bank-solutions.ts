@@ -20222,4 +20222,126 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dist2[n]!;
   },
 
+  'path-sum-ii': (rootArr: unknown, targetSum: unknown) => {
+    class TreeNode {
+      val: number; left: TreeNode | null = null; right: TreeNode | null = null;
+      constructor(v: number) { this.val = v; }
+    }
+    function fromArray(a: (number | null)[]): TreeNode | null {
+      if (!a || a.length === 0) return null;
+      const root = new TreeNode(a[0]!);
+      const queue: TreeNode[] = [root];
+      let i = 1;
+      while (queue.length > 0 && i < a.length) {
+        const node = queue.shift()!;
+        if (a[i] !== null && a[i] !== undefined) { node.left = new TreeNode(a[i]!); queue.push(node.left); }
+        i++;
+        if (i < a.length && a[i] !== null && a[i] !== undefined) { node.right = new TreeNode(a[i]!); queue.push(node.right); }
+        i++;
+      }
+      return root;
+    }
+    const root = fromArray(rootArr as (number | null)[]);
+    const target = targetSum as number;
+    const result: number[][] = [];
+    function dfs(node: TreeNode | null, rem: number, path: number[]): void {
+      if (!node) return;
+      path.push(node.val);
+      if (!node.left && !node.right && rem === node.val) result.push([...path]);
+      else { dfs(node.left, rem - node.val, path); dfs(node.right, rem - node.val, path); }
+      path.pop();
+    }
+    dfs(root, target, []);
+    result.sort((a, b) => {
+      for (let i = 0; i < Math.min(a.length, b.length); i++) { if (a[i] !== b[i]) return a[i]! - b[i]!; }
+      return a.length - b.length;
+    });
+    return result;
+  },
+
+  'construct-binary-tree-from-inorder-and-postorder-traversal': (inorder: unknown, postorder: unknown) => {
+    class TreeNode {
+      val: number; left: TreeNode | null = null; right: TreeNode | null = null;
+      constructor(v: number) { this.val = v; }
+    }
+    function toArray(root: TreeNode | null): (number | null)[] {
+      if (!root) return [];
+      const result: (number | null)[] = [];
+      const queue: (TreeNode | null)[] = [root];
+      while (queue.length > 0) {
+        const node = queue.shift()!;
+        if (node === null) { result.push(null); continue; }
+        result.push(node.val);
+        queue.push(node.left ?? null);
+        queue.push(node.right ?? null);
+      }
+      while (result.length > 0 && result[result.length - 1] === null) result.pop();
+      return result;
+    }
+    const ino = inorder as number[];
+    const post = postorder as number[];
+    const map = new Map<number, number>(ino.map((v, i) => [v, i]));
+    function build(inL: number, inR: number, poL: number, poR: number): TreeNode | null {
+      if (inL > inR) return null;
+      const rootVal = post[poR]!;
+      const rootIdx = map.get(rootVal)!;
+      const leftLen = rootIdx - inL;
+      const node = new TreeNode(rootVal);
+      node.left = build(inL, rootIdx - 1, poL, poL + leftLen - 1);
+      node.right = build(rootIdx + 1, inR, poL + leftLen, poR - 1);
+      return node;
+    }
+    return toArray(build(0, ino.length - 1, 0, post.length - 1));
+  },
+
+  'maximum-number-of-removable-characters': (s: unknown, p: unknown, removable: unknown) => {
+    const sv = s as string, pv = p as string, rem = removable as number[];
+    function isSubseq(k: number): boolean {
+      const removed = new Set(rem.slice(0, k));
+      let j = 0;
+      for (let i = 0; i < sv.length && j < pv.length; i++) {
+        if (!removed.has(i) && sv[i] === pv[j]) j++;
+      }
+      return j === pv.length;
+    }
+    let lo = 0, hi = rem.length;
+    while (lo < hi) {
+      const mid = (lo + hi + 1) >> 1;
+      if (isSubseq(mid)) lo = mid; else hi = mid - 1;
+    }
+    return lo;
+  },
+
+  'minimum-sum-of-squared-difference': (nums1: unknown, nums2: unknown, k1: unknown, k2: unknown) => {
+    const n1 = nums1 as number[], n2 = nums2 as number[];
+    const diff = n1.map((v, i) => Math.abs(v - n2[i]!));
+    let k = (k1 as number) + (k2 as number);
+    diff.sort((a, b) => b - a);
+    let lo = 0, hi = diff[0] ?? 0;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      const cost = diff.reduce((s, d) => s + Math.max(0, d - mid), 0);
+      if (cost <= k) hi = mid; else lo = mid + 1;
+    }
+    const T = lo;
+    const costUsed = diff.reduce((s, d) => s + Math.max(0, d - T), 0);
+    let remaining = k - costUsed;
+    let sum = 0;
+    for (const d of diff) {
+      const clamped = Math.min(d, T);
+      if (remaining > 0 && clamped === T && T > 0) { sum += (T - 1) * (T - 1); remaining--; }
+      else sum += clamped * clamped;
+    }
+    return sum;
+  },
+
+  'find-the-kth-largest-integer-in-array': (nums: unknown, k: unknown) => {
+    const arr = [...(nums as string[])];
+    arr.sort((a, b) => {
+      if (a.length !== b.length) return b.length - a.length;
+      return b > a ? 1 : b < a ? -1 : 0;
+    });
+    return arr[(k as number) - 1]!;
+  },
+
 };

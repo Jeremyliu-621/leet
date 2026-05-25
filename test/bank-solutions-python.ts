@@ -20242,4 +20242,106 @@ def secondMinimum(n, edges, time, change):
                 q.append((nei, nxt))
     return dist2[n]
 `,
+
+  'path-sum-ii': `def pathSumRunner(arr, targetSum):
+    from collections import deque
+    raw_list = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
+    a = [int(v) if isinstance(v, (int, float)) else None for v in raw_list]
+    if not a or a[0] is None: return []
+    class TreeNode:
+        def __init__(self, val): self.val = val; self.left = None; self.right = None
+    root = TreeNode(a[0]); q = deque([root]); i = 1
+    while q and i < len(a):
+        node = q.popleft()
+        if i < len(a) and a[i] is not None: node.left = TreeNode(a[i]); q.append(node.left)
+        i += 1
+        if i < len(a) and a[i] is not None: node.right = TreeNode(a[i]); q.append(node.right)
+        i += 1
+    target = int(targetSum)
+    result = []
+    def dfs(node, rem, path):
+        if not node: return
+        path.append(node.val)
+        if not node.left and not node.right and rem == node.val:
+            result.append(list(path))
+        else:
+            dfs(node.left, rem - node.val, path)
+            dfs(node.right, rem - node.val, path)
+        path.pop()
+    dfs(root, target, [])
+    result.sort()
+    return result
+`,
+
+  'construct-binary-tree-from-inorder-and-postorder-traversal': `def buildFromInorderPostorderRunner(inorder, postorder):
+    ino = list(inorder); post = list(postorder)
+    class TreeNode:
+        def __init__(self, val): self.val = val; self.left = None; self.right = None
+    def to_array(root):
+        if not root: return []
+        result = []; queue = [root]
+        while queue:
+            node = queue.pop(0)
+            if node is None: result.append(None); continue
+            result.append(node.val); queue.append(node.left); queue.append(node.right)
+        while result and result[-1] is None: result.pop()
+        return result
+    idx_map = {v: i for i, v in enumerate(ino)}
+    def build(in_l, in_r, po_l, po_r):
+        if in_l > in_r: return None
+        root_val = post[po_r]; root_idx = idx_map[root_val]; left_len = root_idx - in_l
+        node = TreeNode(root_val)
+        node.left = build(in_l, root_idx - 1, po_l, po_l + left_len - 1)
+        node.right = build(root_idx + 1, in_r, po_l + left_len, po_r - 1)
+        return node
+    return to_array(build(0, len(ino) - 1, 0, len(post) - 1))
+`,
+
+  'maximum-number-of-removable-characters': `def maximumRemovals(s, p, removable):
+    sv = str(s); pv = str(p)
+    rem_list = list(int(x) for x in (removable.to_py() if hasattr(removable, 'to_py') else removable))
+    def is_subseq(k):
+        removed = set(rem_list[:k])
+        j = 0
+        for i in range(len(sv)):
+            if i not in removed and j < len(pv) and sv[i] == pv[j]:
+                j += 1
+        return j == len(pv)
+    lo, hi = 0, len(rem_list)
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if is_subseq(mid): lo = mid
+        else: hi = mid - 1
+    return lo
+`,
+
+  'minimum-sum-of-squared-difference': `def minSumSquareDiff(nums1, nums2, k1, k2):
+    n1 = list(int(x) for x in (nums1.to_py() if hasattr(nums1, 'to_py') else nums1))
+    n2 = list(int(x) for x in (nums2.to_py() if hasattr(nums2, 'to_py') else nums2))
+    diff = sorted([abs(a - b) for a, b in zip(n1, n2)], reverse=True)
+    k = int(k1) + int(k2)
+    lo, hi = 0, diff[0] if diff else 0
+    while lo < hi:
+        mid = (lo + hi) // 2
+        cost = sum(max(0, d - mid) for d in diff)
+        if cost <= k: hi = mid
+        else: lo = mid + 1
+    T = lo
+    cost_used = sum(max(0, d - T) for d in diff)
+    remaining = k - cost_used
+    total = 0
+    for d in diff:
+        clamped = min(d, T)
+        if remaining > 0 and clamped == T and T > 0:
+            total += (T - 1) ** 2; remaining -= 1
+        else:
+            total += clamped ** 2
+    return total
+`,
+
+  'find-the-kth-largest-integer-in-array': `def kthLargestNumber(nums, k):
+    arr = [str(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else list(nums))]
+    arr.sort(key=lambda x: (len(x), x), reverse=True)
+    return arr[int(k) - 1]
+`,
 };
