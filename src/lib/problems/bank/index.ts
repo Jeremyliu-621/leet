@@ -672,6 +672,9 @@ import { problem as minimumSwapsGroupAllOnes } from './minimum-swaps-group-all-o
 import { problem as kDiffPairsInArray } from './k-diff-pairs-in-array';
 import { problem as handOfStraights } from './hand-of-straights';
 import { problem as minimumDominoRotations } from './minimum-domino-rotations';
+import { problem as furthestBuildingLadders } from './furthest-building-ladders';
+import { problem as ipo } from './ipo';
+import { problem as relativeSortArray } from './relative-sort-array';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1344,4 +1347,10 @@ export const problems: readonly Problem[] = [
   kDiffPairsInArray,
   handOfStraights,
   minimumDominoRotations,
+  // heap — medium (new)
+  furthestBuildingLadders,
+  // heap — hard (new)
+  ipo,
+  // arrays — easy (new)
+  relativeSortArray,
 ];

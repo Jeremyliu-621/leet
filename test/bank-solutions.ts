@@ -8372,4 +8372,48 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return [...f1.values()].sort((a, b) => a - b).join() === [...f2.values()].sort((a, b) => a - b).join();
   },
 
+  'furthest-building-ladders': (...args: unknown[]) => {
+    const heights = args[0] as number[], bricks = args[1] as number, ladders = args[2] as number;
+    let b = bricks;
+    const heap: number[] = [];
+    const push = (x: number) => { heap.push(x); let i = heap.length - 1; while (i > 0) { const p = (i - 1) >> 1; if (heap[p]! > heap[i]!) { [heap[p], heap[i]] = [heap[i]!, heap[p]!]; i = p; } else break; } };
+    const pop = () => { const top = heap[0]!; const last = heap.pop()!; if (heap.length > 0) { heap[0] = last; let i = 0; while (true) { const l = 2 * i + 1, r = 2 * i + 2; let best = i; if (l < heap.length && heap[l]! < heap[best]!) best = l; if (r < heap.length && heap[r]! < heap[best]!) best = r; if (best === i) break; [heap[i], heap[best]] = [heap[best]!, heap[i]!]; i = best; } } return top; };
+    for (let i = 0; i < heights.length - 1; i++) {
+      const diff = heights[i + 1]! - heights[i]!;
+      if (diff <= 0) continue;
+      push(diff);
+      if (heap.length > ladders) {
+        b -= pop();
+        if (b < 0) return i;
+      }
+    }
+    return heights.length - 1;
+  },
+
+  'ipo': (...args: unknown[]) => {
+    let k = args[0] as number, w = args[1] as number;
+    const profits = args[2] as number[], capital = args[3] as number[];
+    const projects = profits.map((p, i) => [capital[i]!, p] as [number, number]).sort((a, b) => a[0] - b[0]);
+    const heap: number[] = [];
+    const push = (x: number) => { heap.push(x); let i = heap.length - 1; while (i > 0) { const p = (i - 1) >> 1; if (heap[p]! < heap[i]!) { [heap[p], heap[i]] = [heap[i]!, heap[p]!]; i = p; } else break; } };
+    const pop = () => { const top = heap[0]!; const last = heap.pop()!; if (heap.length > 0) { heap[0] = last; let i = 0; while (true) { const l = 2 * i + 1, r = 2 * i + 2; let best = i; if (l < heap.length && heap[l]! > heap[best]!) best = l; if (r < heap.length && heap[r]! > heap[best]!) best = r; if (best === i) break; [heap[i], heap[best]] = [heap[best]!, heap[i]!]; i = best; } } return top; };
+    let j = 0;
+    for (let i = 0; i < k; i++) {
+      while (j < projects.length && projects[j]![0] <= w) push(projects[j++]![1]);
+      if (heap.length === 0) break;
+      w += pop();
+    }
+    return w;
+  },
+
+  'relative-sort-array': (...args: unknown[]) => {
+    const arr1 = [...(args[0] as number[])], arr2 = args[1] as number[];
+    const rank = new Map(arr2.map((v, i) => [v, i]));
+    return arr1.sort((a, b) => {
+      const ra = rank.has(a) ? rank.get(a)! : 1000 + a;
+      const rb = rank.has(b) ? rank.get(b)! : 1000 + b;
+      return ra - rb;
+    });
+  },
+
 };

@@ -7822,4 +7822,48 @@ def minDominoRotations(tops, bottoms):
     c1, c2 = Counter(word1), Counter(word2)
     return set(c1.keys()) == set(c2.keys()) and sorted(c1.values()) == sorted(c2.values())
 `,
+
+  'furthest-building-ladders': `
+def furthestBuilding(heights, bricks, ladders):
+    import heapq
+    heights = list(heights)
+    heap = []
+    b = bricks
+    for i in range(len(heights) - 1):
+        diff = heights[i+1] - heights[i]
+        if diff <= 0:
+            continue
+        heapq.heappush(heap, diff)
+        if len(heap) > ladders:
+            b -= heapq.heappop(heap)
+            if b < 0:
+                return i
+    return len(heights) - 1
+`,
+
+  'ipo': `
+def findMaximizedCapital(k, w, profits, capital):
+    import heapq
+    profits = list(profits)
+    capital = list(capital)
+    projects = sorted(zip(capital, profits))
+    max_heap = []
+    j = 0
+    for _ in range(k):
+        while j < len(projects) and projects[j][0] <= w:
+            heapq.heappush(max_heap, -projects[j][1])
+            j += 1
+        if not max_heap:
+            break
+        w += -heapq.heappop(max_heap)
+    return w
+`,
+
+  'relative-sort-array': `
+def relativeSortArray(arr1, arr2):
+    arr1 = list(arr1)
+    arr2 = list(arr2)
+    rank = {v: i for i, v in enumerate(arr2)}
+    return sorted(arr1, key=lambda x: rank[x] if x in rank else 1000 + x)
+`,
 };
