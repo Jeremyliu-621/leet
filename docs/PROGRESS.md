@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1385 problems; 4404 tests green.
+**Current focus:** Bank at 1390 problems; 4419 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue adding classic problems (Batch 43+); UI/UX polish; Options/popup improvements.
+**Next up:** Continue adding classic problems (Batch 43+); UI/UX polish; draggable splitter; options improvements.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
