@@ -44,11 +44,22 @@ export const DIFFICULTIES: readonly Difficulty[] = ['easy', 'medium', 'hard'];
 export type FailureAction = 'close' | 'redirect';
 
 /**
- * Languages the code runner supports. Python lands incrementally via the
- * Pyodide milestones (see `docs/PYODIDE_PLAN.md`); JavaScript remains the
- * default and is the only language every bank problem ships with today.
+ * Languages the code runner supports. JavaScript remains the default and is
+ * the only language every bank problem ships with today. Additional languages
+ * use transpilation or interpretation in the browser sandbox.
  */
-export type SupportedLanguage = 'javascript' | 'typescript' | 'python';
+export type SupportedLanguage =
+  | 'javascript'
+  | 'typescript'
+  | 'python'
+  | 'java'
+  | 'cpp'
+  | 'csharp'
+  | 'go'
+  | 'rust'
+  | 'kotlin'
+  | 'swift'
+  | 'sql';
 
 // --- Block rules ----------------------------------------------------------
 

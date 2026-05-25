@@ -116,24 +116,33 @@ type RunMode = 'run' | 'submit';
 /** Seconds deducted from the challenge timer per revealed hint. */
 const HINT_COST_SECONDS = 60;
 
+/** All languages that could potentially be available, in display order. */
+const ALL_EXTRA_LANGUAGES: SupportedLanguage[] = [
+  'python', 'java', 'cpp', 'csharp', 'go', 'rust', 'kotlin', 'swift', 'sql',
+];
+
 /** Languages available for a given problem, in display order. */
 function availableLanguagesFor(problem: Problem): SupportedLanguage[] {
   // TypeScript uses the JS starter code (TS is a superset of JS), so it is
   // always available regardless of whether the problem ships a separate TS
-  // starter. Python requires an explicit starter.
+  // starter. Other languages require an explicit starter in the problem.
   const langs: SupportedLanguage[] = ['javascript', 'typescript'];
-  if (problem.starterCode.python) {
-    langs.push('python');
+  for (const lang of ALL_EXTRA_LANGUAGES) {
+    if (problem.starterCode[lang]) {
+      langs.push(lang);
+    }
   }
   return langs;
 }
 
 /** Returns the starter code for a given language, falling back to JS. */
 function starterCodeFor(problem: Problem, language: SupportedLanguage): string {
-  if (language === 'python' && problem.starterCode.python) {
-    return problem.starterCode.python;
+  if (language === 'typescript') {
+    // TypeScript uses the JS starter — it is valid TypeScript.
+    return problem.starterCode.javascript;
   }
-  // TypeScript uses the JS starter — it is valid TypeScript.
+  const starter = problem.starterCode[language];
+  if (starter) return starter;
   return problem.starterCode.javascript;
 }
 
@@ -326,15 +335,15 @@ export function Challenge() {
       }
 
       // Pick the user's preferred language if the problem supports it.
-      // TypeScript is always available (uses JS starter). Python requires an
-      // explicit starter in the problem definition.
+      // TypeScript is always available (uses JS starter). Other languages
+      // require an explicit starter in the problem definition.
       const preferred = prefs.preferredLanguage;
-      const initialLanguage: SupportedLanguage =
-        preferred === 'python' && problem.starterCode.python
-          ? 'python'
-          : preferred === 'typescript'
-          ? 'typescript'
-          : 'javascript';
+      let initialLanguage: SupportedLanguage = 'javascript';
+      if (preferred === 'typescript') {
+        initialLanguage = 'typescript';
+      } else if (preferred !== 'javascript' && problem.starterCode[preferred]) {
+        initialLanguage = preferred;
+      }
       const initialStarter = starterCodeFor(problem, initialLanguage);
 
       // Restore any in-progress draft from a previous session.
