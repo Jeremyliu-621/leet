@@ -252,7 +252,7 @@ export function Popup() {
 
   if (data === null) {
     return (
-      <main className="min-w-[340px] bg-bg p-5 text-text">
+      <main className="min-w-[340px] overflow-x-hidden bg-bg p-5 text-text">
         <p className="font-mono text-[10px] text-faint">Loading…</p>
       </main>
     );
@@ -265,7 +265,7 @@ export function Popup() {
       : `Block ${data.currentDomain}`;
 
   return (
-    <main className="min-w-[340px] bg-bg p-5 text-text">
+    <main className="min-w-[340px] overflow-x-hidden bg-bg p-5 text-text">
       <header className="flex items-baseline justify-between">
         <h1 className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">LeetLock</h1>
         <span className="font-mono text-[10px] text-faint" aria-label="Today's date">
@@ -497,7 +497,7 @@ function StreakHeatmap({ history }: { history: readonly StreakDay[] }) {
   return (
     <section className="mt-4" aria-label="Solve activity heatmap">
       <h2 className="font-mono text-[9px] uppercase tracking-widest text-faint">Activity</h2>
-      <div className="mt-2 flex gap-0.5" role="grid" aria-label="Last 12 weeks">
+      <div className="mt-2 flex gap-0.5 overflow-x-auto" role="grid" aria-label="Last 12 weeks">
         {columns.map((col, wi) => (
           <div key={wi} className="flex flex-col gap-0.5" role="row">
             {col.map(({ date, count }) => (
