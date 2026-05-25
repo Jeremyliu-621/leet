@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1322 problems; 4263 tests green.
+**Current focus:** Bank at 1331 problems; 4278 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue adding classic problems (Batch 37+); UI/UX polish; Options/popup improvements.
+**Next up:** Continue adding classic problems (Batch 38+); UI/UX polish; Options/popup improvements.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -375,6 +375,7 @@ Still pending:
 - [x] **4 more classic problems (Batch 36)** — number-of-ways-to-arrive-at-destination (graph+dp/medium, Dijkstra + count paths mod 1e9+7), reorder-routes-to-make-all-paths-lead-to-city-zero (graph/medium, BFS counting forward edges), maximum-length-of-pair-chain (dp/medium, greedy sort by right endpoint), count-servers-that-communicate (arrays/medium, row+col counts); marketing site updated to 1,320+; also merged remote Batch 36 (count-the-number-of-fair-pairs, find-if-array-can-be-sorted, construct-string-with-repeat-limit, count-ways-to-select-buildings, power-of-heroes); bank at **1322**; 4263 tests.
 - [x] **12 more classic problems (Batch 36-remote)** — nim-game (math/easy), palindrome-permutation (strings+hash-map/easy), remove-element (arrays+two-pointers/easy), water-bottles (math/easy), distribute-candies (hash-map+arrays/easy), count-prime-set-bits (math/easy), verifying-alien-dictionary (strings+hash-map/easy), rectangle-area (math/medium, union of two rectangles), encode-decode-strings (strings/medium, length-prefix encoding), shortest-distance-to-character (arrays+two-pointers/easy, two-pass), utf-8-validation (math/medium, bit parsing), range-addition (arrays/medium, difference array); bank at **1313**; 4236 tests. Marketing site updated to 1,320+.
 - [x] **5 more classic problems (Batch 34-local)** — count-the-number-of-fair-pairs (arrays+binary-search/medium, sort+two-pointer countAtMost), find-if-array-can-be-sorted (arrays/medium, popcount grouping+prevMax check), construct-string-with-repeat-limit (strings+heap/medium, greedy freq array desc), count-ways-to-select-buildings (strings+dp/medium, prefix-ones 010/101 pattern), power-of-heroes (arrays+math/hard, sort+running weighted sum BigInt mod); bank at **1318**; 4251 tests.
+- [x] **5 more classic problems (Batch 37)** — valid-palindrome (strings/easy, two-pointer alphanumeric), peak-index-in-mountain-array (binary-search/easy, O(log n) binary search), two-keys-keyboard (math+dp/medium, prime factorization sum), bag-of-tokens (arrays+two-pointers/medium, greedy sort+two-pointer), find-the-k-weakest-rows-in-a-matrix (arrays+binary-search/easy, sort by soldier count); bank at **1331**; 4278 tests.
 
 ---
 
