@@ -740,6 +740,7 @@ import { problem as findWordsContainingCharacter } from './find-words-containing
 import { problem as countGoodNumbers } from './count-good-numbers';
 import { problem as maximumSumExactlyKElements } from './maximum-sum-exactly-k-elements';
 import { problem as minimumCommonValue } from './minimum-common-value';
+import { problem as findPivotInteger } from './find-pivot-integer';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1528,4 +1529,6 @@ export const problems: readonly Problem[] = [
   minimumCommonValue,
   // math — medium (new)
   countGoodNumbers,
+  // math — easy (new)
+  findPivotInteger,
 ];

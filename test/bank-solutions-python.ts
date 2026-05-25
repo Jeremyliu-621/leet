@@ -8822,4 +8822,12 @@ def getCommon(nums1, nums2):
             j += 1
     return -1
 `,
+
+  'find-pivot-integer': `
+def findPivot(n):
+    import math
+    s = n * (n + 1) // 2
+    x = int(math.isqrt(s))
+    return x if x * x == s else -1
+`,
 };

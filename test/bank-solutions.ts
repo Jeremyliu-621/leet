@@ -9290,4 +9290,11 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return -1;
   },
 
+  'find-pivot-integer': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const s = n * (n + 1) / 2;
+    const x = Math.floor(Math.sqrt(s));
+    return x * x === s ? x : -1;
+  },
+
 };
