@@ -63,6 +63,7 @@ describe('problem selector', () => {
       'daily-temperatures', 'evaluate-rpn', 'min-stack', 'implement-queue-using-stacks',
       'maximum-nesting-depth',
       'number-of-students-eating-lunch',
+      'number-of-students-unable-to-eat-lunch',
       'make-string-great',
       'minimum-string-length',
       'minimum-length-string-operations',

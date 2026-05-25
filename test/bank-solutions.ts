@@ -9651,4 +9651,80 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return [...freq.entries()].filter(([, c]) => c === max).map(([v]) => v).sort((a, b) => a - b);
   },
 
+  'final-value-after-operations': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    let x = 0;
+    for (const op of ops) x += op.includes('+') ? 1 : -1;
+    return x;
+  },
+
+  'find-original-array-from-doubled': (...args: unknown[]) => {
+    const changed = [...(args[0] as number[])].sort((a, b) => a - b);
+    const freq = new Map<number, number>();
+    for (const n of changed) freq.set(n, (freq.get(n) ?? 0) + 1);
+    const result: number[] = [];
+    for (const n of changed) {
+      if ((freq.get(n) ?? 0) === 0) continue;
+      freq.set(n, freq.get(n)! - 1);
+      const d = n * 2;
+      if ((freq.get(d) ?? 0) === 0) return [];
+      freq.set(d, freq.get(d)! - 1);
+      result.push(n);
+    }
+    return result;
+  },
+
+  'number-of-students-unable-to-eat-lunch': (...args: unknown[]) => {
+    const students = [...(args[0] as number[])];
+    const sandwiches = args[1] as number[];
+    const cnt = [0, 0];
+    for (const s of students) cnt[s]!++;
+    for (const sand of sandwiches) {
+      if (cnt[sand] === 0) return cnt[0]! + cnt[1]!;
+      cnt[sand]!--;
+    }
+    return 0;
+  },
+
+  'maximum-number-of-words-found-in-sentences': (...args: unknown[]) => {
+    const sentences = args[0] as string[];
+    return Math.max(...sentences.map(s => s.split(' ').length));
+  },
+
+  'capitalize-the-title': (...args: unknown[]) => {
+    const title = args[0] as string;
+    return title.split(' ').map(w =>
+      w.length <= 2 ? w.toLowerCase() : w[0]!.toUpperCase() + w.slice(1).toLowerCase()
+    ).join(' ');
+  },
+
+  'hamming-distance': (...args: unknown[]) => {
+    let xor = ((args[0] as number) ^ (args[1] as number)) >>> 0;
+    let count = 0;
+    while (xor) { count += xor & 1; xor >>>= 1; }
+    return count;
+  },
+
+  'single-number-iii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let xor = 0;
+    for (const n of nums) xor ^= n;
+    const bit = xor & (-xor);
+    let a = 0;
+    for (const n of nums) if (n & bit) a ^= n;
+    return [a, xor ^ a].sort((x, y) => x - y);
+  },
+
+  'minimum-operations-to-make-array-increasing': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    let ops = 0;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i]! <= nums[i - 1]!) {
+        ops += nums[i - 1]! + 1 - nums[i]!;
+        nums[i] = nums[i - 1]! + 1;
+      }
+    }
+    return ops;
+  },
+
 };

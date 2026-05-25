@@ -9247,4 +9247,90 @@ def findMode(root):
     max_count = max(freq.values())
     return sorted(v for v, c in freq.items() if c == max_count)
 `,
+
+  'final-value-after-operations': `
+def finalValueAfterOperations(ops):
+    ops = list(ops)
+    x = 0
+    for op in ops:
+        x += 1 if '+' in op else -1
+    return x
+`,
+
+  'find-original-array-from-doubled': `
+def findOriginalArray(changed):
+    from collections import Counter
+    changed = sorted(list(changed))
+    freq = Counter(changed)
+    result = []
+    for n in changed:
+        if freq[n] == 0:
+            continue
+        freq[n] -= 1
+        d = n * 2
+        if freq[d] == 0:
+            return []
+        freq[d] -= 1
+        result.append(n)
+    return result
+`,
+
+  'number-of-students-unable-to-eat-lunch': `
+def countStudents(students, sandwiches):
+    students = list(students)
+    sandwiches = list(sandwiches)
+    cnt = [students.count(0), students.count(1)]
+    for sand in sandwiches:
+        if cnt[sand] == 0:
+            return cnt[0] + cnt[1]
+        cnt[sand] -= 1
+    return 0
+`,
+
+  'maximum-number-of-words-found-in-sentences': `
+def mostWordsFound(sentences):
+    sentences = list(sentences)
+    return max(len(s.split()) for s in sentences)
+`,
+
+  'capitalize-the-title': `
+def capitalizeTitle(title):
+    result = []
+    for w in title.split():
+        if len(w) <= 2:
+            result.append(w.lower())
+        else:
+            result.append(w[0].upper() + w[1:].lower())
+    return ' '.join(result)
+`,
+
+  'hamming-distance': `
+def hammingDistance(x, y):
+    return bin(x ^ y).count('1')
+`,
+
+  'single-number-iii': `
+def singleNumberIII(nums):
+    nums = list(nums)
+    xor = 0
+    for n in nums:
+        xor ^= n
+    bit = xor & (-xor)
+    a = 0
+    for n in nums:
+        if n & bit:
+            a ^= n
+    return sorted([a, xor ^ a])
+`,
+
+  'minimum-operations-to-make-array-increasing': `
+def minOperations(nums):
+    nums = list(nums)
+    ops = 0
+    for i in range(1, len(nums)):
+        if nums[i] <= nums[i - 1]:
+            ops += nums[i - 1] + 1 - nums[i]
+            nums[i] = nums[i - 1] + 1
+    return ops
+`,
 };

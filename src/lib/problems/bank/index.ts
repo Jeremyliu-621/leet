@@ -774,6 +774,15 @@ import { problem as firstBadVersion } from './first-bad-version';
 import { problem as numberOfSegmentsInString } from './number-of-segments-in-string';
 import { problem as findModeBst } from './find-mode-bst';
 
+import { problem as finalValueAfterOperations } from './final-value-after-operations';
+import { problem as findOriginalArrayFromDoubled } from './find-original-array-from-doubled';
+import { problem as numberOfStudentsUnableToEatLunch } from './number-of-students-unable-to-eat-lunch';
+import { problem as maximumNumberOfWordsFoundInSentences } from './maximum-number-of-words-found-in-sentences';
+import { problem as capitalizeTheTitle } from './capitalize-the-title';
+import { problem as hammingDistance } from './hamming-distance';
+import { problem as singleNumberIII } from './single-number-iii';
+import { problem as minimumOperationsMakeArrayIncreasing } from './minimum-operations-to-make-array-increasing';
+
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -1594,4 +1603,20 @@ export const problems: readonly Problem[] = [
   firstBadVersion,
   numberOfSegmentsInString,
   findModeBst,
+
+  // strings + arrays — easy (new)
+  finalValueAfterOperations,
+  // arrays + hash-map — medium (new)
+  findOriginalArrayFromDoubled,
+  // arrays + queue — easy (new)
+  numberOfStudentsUnableToEatLunch,
+  // arrays + strings — easy (new)
+  maximumNumberOfWordsFoundInSentences,
+  capitalizeTheTitle,
+  // math — easy (new)
+  hammingDistance,
+  // arrays + math — medium (new)
+  singleNumberIII,
+  // arrays + math — easy (new)
+  minimumOperationsMakeArrayIncreasing,
 ];
