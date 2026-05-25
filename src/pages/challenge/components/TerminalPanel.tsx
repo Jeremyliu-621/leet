@@ -575,7 +575,7 @@ function TestResultCard({ verdict }: { verdict: TestVerdict }) {
           {verdict.status === 'pass' ? 'PASS' : verdict.status === 'fail' ? 'FAIL' : 'ERROR'}
         </span>
         <span className="font-mono text-[10px] text-faint">{label}</span>
-        {verdict.status === 'pass' && verdict.durationMs !== undefined && (
+        {(verdict.status === 'pass' || verdict.status === 'fail') && verdict.durationMs !== undefined && (
           <span className="font-mono text-[10px] text-faint tabular-nums ml-2">
             {verdict.durationMs}ms
           </span>
@@ -614,6 +614,7 @@ function TestResultCard({ verdict }: { verdict: TestVerdict }) {
             <div className="flex items-start gap-1">
               <span className="text-faint shrink-0">Error:</span>
               <span className="text-text break-all">{verdict.error}</span>
+              <CopyButton value={verdict.error} />
             </div>
           )}
           {verdict.logs.length > 0 && (
