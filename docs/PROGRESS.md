@@ -8,8 +8,8 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 574 problems; 1990 tests; growing toward 600+.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (1990 tests passing).
+**Current focus:** Bank at 589 problems; 2026 tests; growing toward 600+.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (2026 tests passing).
 **Next up:** Continue growing bank toward 600+; more easy/medium/hard problems. Browser-zoom QA (L).
 
 **Pyodide rollout status — COMPLETE:**
@@ -293,6 +293,8 @@ Still pending:
 - [x] minimum-deletions-char-frequencies + bulls-and-cows + minimum-sum-four-digit-number + count-pairs-absolute-difference-k + find-closest-number-to-zero + count-asterisks + count-even-numbers + count-segments-in-string + find-repeated-dna-sequences + widest-vertical-area + convert-1d-array-into-2d-array + check-if-all-chars-equal-occurrences + find-the-pivot-integer + maximum-sum-circular-subarray; bank at 555; 1933 tests.
 - [x] number-of-distinct-averages + find-positive-integer-with-negative + sum-of-squares-special-elements + minimum-operations-make-array-empty; bank at 568; 1975 tests. Marketing site updated to 568.
 - [x] **6 more new problems** — candy (arrays/hard), minimum-falling-path-sum (dp/medium), count-nice-subarrays (sliding-window/medium), split-linked-list-in-parts (linked-list/medium), time-based-key-value-store (hash-map+bs/medium); fixed Python findAnagrams mismatch; 1990 tests; bank at 574.
+- [x] **5 more new problems** — minimum-cost-for-tickets (dp/medium), stone-game-ii (dp/medium), maximum-width-ramp (arrays/hard), check-if-array-pairs-divisible-by-k (arrays+hash-map/medium), find-k-th-smallest-pair-distance (binary-search+sliding-window/hard); bank at 584 tests.
+- [x] **5 more new problems** — valid-triangle-number (arrays+two-pointers/medium), max-number-k-sum-pairs (arrays+hash-map/medium), minimum-time-rope-colorful (arrays+two-pointers/medium), shortest-bridge (graph/hard), number-of-subsequences-target-sum (arrays+two-pointers/medium); 2026 tests; bank at 589.
 
 ---
 
