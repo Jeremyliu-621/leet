@@ -14288,10 +14288,8 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
         const j = k - i;
         if (dp[i]![j] === -Infinity) continue;
         const cur = dp[i]![j]!;
-        // take from left
         if (dp[i + 1]![j] === undefined) dp[i + 1]![j] = -Infinity;
         dp[i + 1]![j] = Math.max(dp[i + 1]![j]!, cur + arr[i]! * mult[k]!);
-        // take from right
         if (dp[i]![j + 1] === undefined) dp[i]![j + 1] = -Infinity;
         dp[i]![j + 1] = Math.max(dp[i]![j + 1]!, cur + arr[n - 1 - j]! * mult[k]!);
       }
@@ -14302,6 +14300,214 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       if (dp[i]![j] !== undefined && dp[i]![j]! > res) res = dp[i]![j]!;
     }
     return res;
+  },
+
+  'cherry-pickup': (grid: unknown) => {
+    const g = grid as number[][];
+    const n = g.length;
+    const NEG_INF = -Infinity;
+    let dp: number[][] = Array.from({ length: n }, () => new Array(n).fill(NEG_INF));
+    dp[0]![0] = g[0]![0]!;
+    for (let t = 1; t < 2 * n - 1; t++) {
+      const ndp: number[][] = Array.from({ length: n }, () => new Array(n).fill(NEG_INF));
+      const lo = Math.max(0, t - (n - 1)), hi = Math.min(n - 1, t);
+      for (let r1 = lo; r1 <= hi; r1++) {
+        const c1 = t - r1;
+        if (g[r1]![c1] === -1) continue;
+        for (let r2 = r1; r2 <= hi; r2++) {
+          const c2 = t - r2;
+          if (g[r2]![c2] === -1) continue;
+          let best = NEG_INF;
+          for (const [d1, d2] of [[0, 0], [0, 1], [1, 0], [1, 1]]) {
+            const pr1 = r1 - d1!, pr2 = r2 - d2!;
+            if (pr1 >= 0 && pr2 >= 0 && dp[pr1]![pr2] !== NEG_INF) {
+              best = Math.max(best, dp[pr1]![pr2]!);
+            }
+          }
+          if (best === NEG_INF) continue;
+          let cherries = g[r1]![c1]!;
+          if (r1 !== r2) cherries += g[r2]![c2]!;
+          ndp[r1]![r2] = best + cherries;
+        }
+      }
+      dp = ndp;
+    }
+    const ans = dp[n - 1]![n - 1]!;
+    return ans === NEG_INF ? 0 : Math.max(0, ans);
+  },
+
+  'count-ways-build-good-string': (low: unknown, high: unknown, zero: unknown, one: unknown) => {
+    const lo = low as number, hi = high as number, z = zero as number, o = one as number;
+    const MOD = 1_000_000_007;
+    const dp = new Array(hi + 1).fill(0);
+    dp[0] = 1;
+    let ans = 0;
+    for (let i = 1; i <= hi; i++) {
+      if (i >= z) dp[i] = (dp[i] + dp[i - z]) % MOD;
+      if (i >= o) dp[i] = (dp[i] + dp[i - o]) % MOD;
+      if (i >= lo) ans = (ans + dp[i]) % MOD;
+    }
+    return ans;
+  },
+
+  'profitable-schemes': (n: unknown, minProfit: unknown, group: unknown, profit: unknown) => {
+    const N = n as number, mp = minProfit as number;
+    const grp = group as number[], prf = profit as number[];
+    const MOD = 1_000_000_007;
+    const dp: number[][] = Array.from({ length: N + 1 }, () => new Array(mp + 1).fill(0));
+    dp[0]![0] = 1;
+    for (let i = 0; i < grp.length; i++) {
+      const g = grp[i]!, p = prf[i]!;
+      for (let w = N; w >= g; w--) {
+        for (let j = mp; j >= 0; j--) {
+          const np = Math.min(j + p, mp);
+          dp[w]![np] = (dp[w]![np]! + dp[w - g]![j]!) % MOD;
+        }
+      }
+    }
+    let ans = 0;
+    for (let w = 0; w <= N; w++) ans = (ans + dp[w]![mp]!) % MOD;
+    return ans;
+  },
+
+  'count-square-submatrices': (matrix: unknown) => {
+    const m = (matrix as number[][]).map(r => [...r]);
+    let ans = 0;
+    for (let i = 0; i < m.length; i++) {
+      for (let j = 0; j < m[0]!.length; j++) {
+        if (m[i]![j] === 1 && i > 0 && j > 0) {
+          m[i]![j] = Math.min(m[i - 1]![j]!, m[i]![j - 1]!, m[i - 1]![j - 1]!) + 1;
+        }
+        ans += m[i]![j]!;
+      }
+    }
+    return ans;
+  },
+
+  'freedom-trail': (ring: unknown, key: unknown) => {
+    const r = ring as string, k = key as string;
+    const n = r.length;
+    const pos: Record<string, number[]> = {};
+    for (let i = 0; i < n; i++) {
+      if (!pos[r[i]!]) pos[r[i]!] = [];
+      pos[r[i]!]!.push(i);
+    }
+    let dp = new Array(n).fill(Infinity);
+    dp[0] = 0;
+    for (let j = 0; j < k.length; j++) {
+      const ndp = new Array(n).fill(Infinity);
+      for (const nxt of pos[k[j]!]!) {
+        for (let cur = 0; cur < n; cur++) {
+          if (dp[cur] === Infinity) continue;
+          const diff = Math.abs(cur - nxt);
+          const steps = Math.min(diff, n - diff);
+          ndp[nxt] = Math.min(ndp[nxt], dp[cur] + steps + 1);
+        }
+      }
+      dp = ndp;
+    }
+    return Math.min(...dp);
+  },
+
+  'guess-number-higher-or-lower-ii': (n: unknown) => {
+    const N = n as number;
+    const dp: number[][] = Array.from({ length: N + 2 }, () => new Array(N + 2).fill(0));
+    for (let len = 2; len <= N; len++) {
+      for (let i = 1; i <= N - len + 1; i++) {
+        const j = i + len - 1;
+        dp[i]![j] = Infinity;
+        for (let k = i; k <= j; k++) {
+          const cost = k + Math.max(k > i ? dp[i]![k - 1]! : 0, k < j ? dp[k + 1]![j]! : 0);
+          dp[i]![j] = Math.min(dp[i]![j]!, cost);
+        }
+      }
+    }
+    return dp[1]![N]!;
+  },
+
+  'remove-palindromic-subsequences': (s: unknown) => {
+    const str = s as string;
+    if (str === '') return 0;
+    let l = 0, r = str.length - 1;
+    while (l < r) {
+      if (str[l] !== str[r]) return 2;
+      l++; r--;
+    }
+    return 1;
+  },
+
+  'check-array-formation': (arr: unknown, pieces: unknown) => {
+    const a = arr as number[], ps = pieces as number[][];
+    const map: Record<number, number[]> = {};
+    for (const p of ps) map[p[0]!] = p;
+    let i = 0;
+    while (i < a.length) {
+      const piece = map[a[i]!];
+      if (!piece) return false;
+      for (let j = 0; j < piece.length; j++) {
+        if (a[i + j] !== piece[j]) return false;
+      }
+      i += piece.length;
+    }
+    return true;
+  },
+
+  'minimum-falling-path-sum-ii': (grid: unknown) => {
+    const g = grid as number[][];
+    const n = g.length;
+    let dp = [...g[0]!];
+    for (let i = 1; i < n; i++) {
+      let min1 = Infinity, min2 = Infinity, minIdx = -1;
+      for (let j = 0; j < n; j++) {
+        if (dp[j]! < min1) { min2 = min1; min1 = dp[j]!; minIdx = j; }
+        else if (dp[j]! < min2) { min2 = dp[j]!; }
+      }
+      const ndp = new Array(n);
+      for (let j = 0; j < n; j++) {
+        ndp[j] = g[i]![j]! + (j === minIdx ? min2 : min1);
+      }
+      dp = ndp;
+    }
+    return Math.min(...dp);
+  },
+
+  'scramble-string': (s1: unknown, s2: unknown) => {
+    const a = s1 as string, b = s2 as string;
+    const memo: Record<string, boolean> = {};
+    const solve = (x: string, y: string): boolean => {
+      if (x === y) return true;
+      const key = x + '#' + y;
+      if (key in memo) return memo[key]!;
+      const n = x.length;
+      const cnt = new Array(26).fill(0);
+      for (let i = 0; i < n; i++) {
+        cnt[x.charCodeAt(i) - 97]!++;
+        cnt[y.charCodeAt(i) - 97]!--;
+      }
+      if (cnt.some(c => c !== 0)) return (memo[key] = false);
+      for (let i = 1; i < n; i++) {
+        if ((solve(x.slice(0, i), y.slice(0, i)) && solve(x.slice(i), y.slice(i))) ||
+            (solve(x.slice(0, i), y.slice(n - i)) && solve(x.slice(i), y.slice(0, n - i)))) {
+          return (memo[key] = true);
+        }
+      }
+      return (memo[key] = false);
+    };
+    return solve(a, b);
+  },
+
+  'predict-the-winner': (nums: unknown) => {
+    const a = nums as number[];
+    const n = a.length;
+    const dp: number[][] = Array.from({ length: n }, () => new Array(n).fill(0));
+    for (let i = 0; i < n; i++) dp[i]![i] = a[i]!;
+    for (let len = 2; len <= n; len++) {
+      for (let i = 0; i <= n - len; i++) {
+        const j = i + len - 1;
+        dp[i]![j] = Math.max(a[i]! - dp[i + 1]![j]!, a[j]! - dp[i]![j - 1]!);
+      }
+    }
+    return dp[0]![n - 1]! >= 0;
   },
 
 };

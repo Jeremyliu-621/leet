@@ -13944,4 +13944,197 @@ def maximumScore(nums, multipliers):
             res = dp[i][j]
     return res
 `,
+
+  'cherry-pickup': `
+def cherryPickup(grid):
+    grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    n = len(grid)
+    NEG_INF = float('-inf')
+    dp = [[NEG_INF] * n for _ in range(n)]
+    dp[0][0] = grid[0][0]
+    for t in range(1, 2 * n - 1):
+        ndp = [[NEG_INF] * n for _ in range(n)]
+        lo = max(0, t - (n - 1))
+        hi = min(n - 1, t)
+        for r1 in range(lo, hi + 1):
+            c1 = t - r1
+            if grid[r1][c1] == -1:
+                continue
+            for r2 in range(r1, hi + 1):
+                c2 = t - r2
+                if grid[r2][c2] == -1:
+                    continue
+                best = NEG_INF
+                for d1, d2 in [(0,0),(0,1),(1,0),(1,1)]:
+                    pr1, pr2 = r1 - d1, r2 - d2
+                    if pr1 >= 0 and pr2 >= 0 and dp[pr1][pr2] != NEG_INF:
+                        best = max(best, dp[pr1][pr2])
+                if best == NEG_INF:
+                    continue
+                cherries = grid[r1][c1]
+                if r1 != r2:
+                    cherries += grid[r2][c2]
+                ndp[r1][r2] = best + cherries
+        dp = ndp
+    ans = dp[n-1][n-1]
+    return max(0, ans) if ans != NEG_INF else 0
+`,
+
+  'count-ways-build-good-string': `
+def countGoodStrings(low, high, zero, one):
+    MOD = 10**9 + 7
+    dp = [0] * (high + 1)
+    dp[0] = 1
+    ans = 0
+    for i in range(1, high + 1):
+        if i >= zero:
+            dp[i] = (dp[i] + dp[i - zero]) % MOD
+        if i >= one:
+            dp[i] = (dp[i] + dp[i - one]) % MOD
+        if i >= low:
+            ans = (ans + dp[i]) % MOD
+    return ans
+`,
+
+  'profitable-schemes': `
+def profitableSchemes(n, minProfit, group, profit):
+    group = list(group.to_py()) if hasattr(group, 'to_py') else list(group)
+    profit = list(profit.to_py()) if hasattr(profit, 'to_py') else list(profit)
+    MOD = 10**9 + 7
+    dp = [[0] * (minProfit + 1) for _ in range(n + 1)]
+    dp[0][0] = 1
+    for i in range(len(group)):
+        g, p = group[i], profit[i]
+        for w in range(n, g - 1, -1):
+            for j in range(minProfit, -1, -1):
+                np_val = min(j + p, minProfit)
+                dp[w][np_val] = (dp[w][np_val] + dp[w - g][j]) % MOD
+    return sum(dp[w][minProfit] for w in range(n + 1)) % MOD
+`,
+
+  'count-square-submatrices': `
+def countSquares(matrix):
+    matrix = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (matrix.to_py() if hasattr(matrix, 'to_py') else matrix)]
+    ans = 0
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+            if matrix[i][j] == 1 and i > 0 and j > 0:
+                matrix[i][j] = min(matrix[i-1][j], matrix[i][j-1], matrix[i-1][j-1]) + 1
+            ans += matrix[i][j]
+    return ans
+`,
+
+  'freedom-trail': `
+def findRotateSteps(ring, key):
+    n = len(ring)
+    pos = {}
+    for i, c in enumerate(ring):
+        pos.setdefault(c, []).append(i)
+    dp = [float('inf')] * n
+    dp[0] = 0
+    for c in key:
+        ndp = [float('inf')] * n
+        for nxt in pos[c]:
+            for cur in range(n):
+                if dp[cur] == float('inf'):
+                    continue
+                diff = abs(cur - nxt)
+                steps = min(diff, n - diff)
+                ndp[nxt] = min(ndp[nxt], dp[cur] + steps + 1)
+        dp = ndp
+    return min(dp)
+`,
+
+  'guess-number-higher-or-lower-ii': `
+def getMoneyAmount(n):
+    dp = [[0] * (n + 2) for _ in range(n + 2)]
+    for length in range(2, n + 1):
+        for i in range(1, n - length + 2):
+            j = i + length - 1
+            dp[i][j] = float('inf')
+            for k in range(i, j + 1):
+                cost = k + max(dp[i][k-1] if k > i else 0, dp[k+1][j] if k < j else 0)
+                dp[i][j] = min(dp[i][j], cost)
+    return dp[1][n]
+`,
+
+  'remove-palindromic-subsequences': `
+def removePalindromeSub(s):
+    if not s:
+        return 0
+    if s == s[::-1]:
+        return 1
+    return 2
+`,
+
+  'check-array-formation': `
+def canFormArray(arr, pieces):
+    arr = list(arr.to_py()) if hasattr(arr, 'to_py') else list(arr)
+    pieces = [list(p.to_py()) if hasattr(p, 'to_py') else list(p) for p in (pieces.to_py() if hasattr(pieces, 'to_py') else pieces)]
+    mp = {p[0]: p for p in pieces}
+    i = 0
+    while i < len(arr):
+        if arr[i] not in mp:
+            return False
+        piece = mp[arr[i]]
+        for j in range(len(piece)):
+            if arr[i + j] != piece[j]:
+                return False
+        i += len(piece)
+    return True
+`,
+
+  'minimum-falling-path-sum-ii': `
+def minFallingPathSumII(grid):
+    grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    n = len(grid)
+    dp = grid[0][:]
+    for i in range(1, n):
+        min1 = min2 = float('inf')
+        min_idx = -1
+        for j in range(n):
+            if dp[j] < min1:
+                min2 = min1
+                min1 = dp[j]
+                min_idx = j
+            elif dp[j] < min2:
+                min2 = dp[j]
+        ndp = [0] * n
+        for j in range(n):
+            ndp[j] = grid[i][j] + (min2 if j == min_idx else min1)
+        dp = ndp
+    return min(dp)
+`,
+
+  'scramble-string': `
+def isScramble(s1, s2):
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def solve(a, b):
+        if a == b:
+            return True
+        if sorted(a) != sorted(b):
+            return False
+        n = len(a)
+        for i in range(1, n):
+            if (solve(a[:i], b[:i]) and solve(a[i:], b[i:])) or \
+               (solve(a[:i], b[n-i:]) and solve(a[i:], b[:n-i])):
+                return True
+        return False
+    return solve(s1, s2)
+`,
+
+  'predict-the-winner': `
+def predictTheWinner(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums)
+    dp = [[0] * n for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = nums[i]
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            dp[i][j] = max(nums[i] - dp[i+1][j], nums[j] - dp[i][j-1])
+    return dp[0][n-1] >= 0
+`,
 };

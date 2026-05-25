@@ -1134,6 +1134,17 @@ import { problem as findWinnerTictactoe } from './find-winner-tictactoe';
 import { problem as maximumEatenApples } from './maximum-eaten-apples';
 import { problem as splitArrayFibonacci } from './split-array-fibonacci';
 import { problem as maximumScorePerformingMultiplication } from './maximum-score-performing-multiplication';
+import { problem as cherryPickup } from './cherry-pickup';
+import { problem as countWaysBuildGoodString } from './count-ways-build-good-string';
+import { problem as profitableSchemes } from './profitable-schemes';
+import { problem as countSquareSubmatrices } from './count-square-submatrices';
+import { problem as freedomTrail } from './freedom-trail';
+import { problem as guessNumberHigherOrLowerII } from './guess-number-higher-or-lower-ii';
+import { problem as removePalindromicSubsequences } from './remove-palindromic-subsequences';
+import { problem as checkArrayFormation } from './check-array-formation';
+import { problem as minimumFallingPathSumII } from './minimum-falling-path-sum-ii';
+import { problem as scrambleString } from './scramble-string';
+import { problem as predictTheWinner } from './predict-the-winner';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2316,4 +2327,15 @@ export const problems: readonly Problem[] = [
   maximumEatenApples,
   splitArrayFibonacci,
   maximumScorePerformingMultiplication,
+  cherryPickup,
+  countWaysBuildGoodString,
+  profitableSchemes,
+  countSquareSubmatrices,
+  freedomTrail,
+  guessNumberHigherOrLowerII,
+  removePalindromicSubsequences,
+  checkArrayFormation,
+  minimumFallingPathSumII,
+  scrambleString,
+  predictTheWinner,
 ];
