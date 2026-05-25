@@ -30,7 +30,7 @@ const TOTAL_BY_DIFF: Record<Difficulty, number> = {
   hard: ALL_PROBLEMS.filter((p) => p.difficulty === 'hard').length,
 };
 
-type SortKey = 'default' | 'title-asc' | 'diff-asc' | 'diff-desc';
+type SortKey = 'default' | 'title-asc' | 'diff-asc' | 'diff-desc' | 'unsolved-first';
 
 /** Opens the challenge page for a specific problem in a new tab. */
 function openProblemInChallenge(problemId: string): void {
@@ -89,6 +89,13 @@ export function ProblemBrowserSection() {
     }
     if (sortKey === 'diff-desc') {
       return [...base].sort((a, b) => DIFF_ORDER[b.difficulty] - DIFF_ORDER[a.difficulty]);
+    }
+    if (sortKey === 'unsolved-first') {
+      return [...base].sort((a, b) => {
+        const aSolved = solvedIds.has(a.id) ? 1 : 0;
+        const bSolved = solvedIds.has(b.id) ? 1 : 0;
+        return aSolved - bSolved;
+      });
     }
     return base;
   }, [diffFilter, tagFilter, query, unsolvedOnly, sortKey, solvedIds]);
@@ -196,6 +203,7 @@ export function ProblemBrowserSection() {
               ].join(' ')}
             >
               <option value="default">default</option>
+              <option value="unsolved-first">unsolved first</option>
               <option value="title-asc">title A→Z</option>
               <option value="diff-asc">easy → hard</option>
               <option value="diff-desc">hard → easy</option>
