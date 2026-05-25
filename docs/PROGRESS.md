@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1361 problems; 4338 tests green.
+**Current focus:** Bank at 1371 problems; 4353 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue adding classic problems (Batch 40+); UI/UX polish; Options/popup improvements.
+**Next up:** Continue adding classic problems (Batch 41+); UI/UX polish; Options/popup improvements.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -381,6 +381,7 @@ Still pending:
 - [x] **4 more classic problems (Batch 37-local)** — my-calendar-ii (arrays/medium, double-booked interval tracking), task-scheduler-ii (arrays+hash-map/medium, greedy last-day map), swapping-nodes-in-a-linked-list (linked-list+two-pointers/medium, k-th from front/back value swap), move-pieces-to-obtain-a-string (strings+two-pointers/medium, L/R movement constraint check); TerminalPanel Test Results tab now shows animated run-count badge (X/Y passing); marketing site updated to 1,330+; bank at **1348**; 4302+ tests.
 - [x] **3 more classic problems (Batch 38-local)** — greatest-common-divisor-of-strings (strings+math/easy, concatenation check + gcd length), maximum-distance-in-arrays (arrays/medium, two-pass running min/max from different arrays), path-with-maximum-gold (backtracking/medium, DFS with cell zeroing); bank at **1351**; 4323 tests.
 - [x] **5 more classic problems (Batch 39)** — convert-sorted-array-to-bst (tree/easy, midpoint recursion balanced BST), trim-a-binary-search-tree (tree+binary-search/medium, recursive prune out-of-range), finding-users-active-minutes (hash-map/medium, unique-minute Set per user), day-of-the-year (math+strings/easy, leap-year day formula), type-of-triangle (math/easy, sort+classify equilateral/isosceles/scalene/none); bank at **1361**; 4338 tests.
+- [x] **5 more classic problems (Batch 40)** — maximum-enemy-forts-that-can-be-captured (arrays+two-pointers/easy, scan non-zero pairs counting zeros between), minimum-amount-of-time-to-collect-garbage (arrays/medium, per-type travel to last occurrence), check-if-array-is-sorted-and-rotated (arrays/easy, count drops ≤1), nodes-between-critical-points (linked-list/medium, find min/max gap between critical point indices), number-after-a-double-reversal (math/easy, true iff num==0 or num%10!=0); bank at **1371**; 4353 tests.
 
 ---
 
