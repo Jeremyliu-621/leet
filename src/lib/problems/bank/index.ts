@@ -1291,6 +1291,11 @@ import { problem as grumpyBookstoreOwner } from './grumpy-bookstore-owner';
 import { problem as mostStonesRemovedWithSameRowOrColumn } from './most-stones-removed-with-same-row-or-column';
 import { problem as longestSubsequenceWithLimitedSum } from './longest-subsequence-with-limited-sum';
 import { problem as minimumNumberOfArrowsToBurstBalloons } from './minimum-number-of-arrows-to-burst-balloons';
+import { problem as findLargestValueEachTreeRow } from './find-largest-value-each-tree-row';
+import { problem as findBottomLeftTreeValue } from './find-bottom-left-tree-value';
+import { problem as mostStonesRemovedSameRowOrColumn } from './most-stones-removed-same-row-or-column';
+import { problem as countUnreachablePairsOfNodes } from './count-unreachable-pairs-of-nodes';
+import { problem as myCalendarI } from './my-calendar-i';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2630,4 +2635,9 @@ export const problems: readonly Problem[] = [
   mostStonesRemovedWithSameRowOrColumn,
   longestSubsequenceWithLimitedSum,
   minimumNumberOfArrowsToBurstBalloons,
+  findLargestValueEachTreeRow,
+  findBottomLeftTreeValue,
+  mostStonesRemovedSameRowOrColumn,
+  countUnreachablePairsOfNodes,
+  myCalendarI,
 ];

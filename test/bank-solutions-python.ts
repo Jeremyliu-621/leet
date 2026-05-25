@@ -16873,4 +16873,96 @@ def minimumDeletions(s):
             end = pts[i][1]
     return arrows
 `,
+
+  'find-largest-value-each-tree-row': `def largestValues(root):
+    if not root:
+        return []
+    result = []
+    queue = [root]
+    while queue:
+        level_max = float('-inf')
+        for _ in range(len(queue)):
+            node = queue.pop(0)
+            if node.val > level_max:
+                level_max = node.val
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        result.append(level_max)
+    return result
+`,
+
+  'find-bottom-left-tree-value': `def findBottomLeftValue(root):
+    ans = root.val
+    queue = [root]
+    while queue:
+        ans = queue[0].val
+        for _ in range(len(queue)):
+            node = queue.pop(0)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+    return ans
+`,
+
+  'most-stones-removed-same-row-or-column': `def removeStones(stones):
+    stones = [list(s.to_py() if hasattr(s, 'to_py') else s) for s in (stones.to_py() if hasattr(stones, 'to_py') else stones)]
+    parent = {}
+    def find(x):
+        parent.setdefault(x, x)
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    def union(a, b):
+        a, b = find(a), find(b)
+        if a != b:
+            parent[a] = b
+    for r, c in stones:
+        union(r, c + 10001)
+    stone_roots = set(find(r) for r, _ in stones)
+    return len(stones) - len(stone_roots)
+`,
+
+  'count-unreachable-pairs-of-nodes': `def countPairs(n, edges):
+    n = int(n)
+    adj = [[] for _ in range(n)]
+    for a, b in (edges.to_py() if hasattr(edges, 'to_py') else edges):
+        adj[int(a)].append(int(b))
+        adj[int(b)].append(int(a))
+    visited = [False] * n
+    ans = 0
+    remaining = n
+    for i in range(n):
+        if not visited[i]:
+            size = 0
+            stack = [i]
+            visited[i] = True
+            while stack:
+                node = stack.pop()
+                size += 1
+                for nxt in adj[node]:
+                    if not visited[nxt]:
+                        visited[nxt] = True
+                        stack.append(nxt)
+            remaining -= size
+            ans += size * remaining
+    return ans
+`,
+
+  'my-calendar-i': `def myCalendarI(bookings):
+    raw = bookings.to_py() if hasattr(bookings, 'to_py') else bookings
+    bs = [list(b.to_py() if hasattr(b, 'to_py') else b) for b in raw]
+    accepted = []
+    result = []
+    for s, e in bs:
+        overlap = any(s < ae and a_s < e for a_s, ae in accepted)
+        if not overlap:
+            accepted.append([s, e])
+            result.append(True)
+        else:
+            result.append(False)
+    return result
+`,
 };

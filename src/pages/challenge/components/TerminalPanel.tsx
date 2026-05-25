@@ -172,7 +172,7 @@ type TerminalEntry =
   | { type: 'stdout'; text: string }
   | { type: 'stderr'; text: string }
   | { type: 'pass'; testIndex: number; input: string; durationMs?: number }
-  | { type: 'fail'; testIndex: number; input: string; expected: string; actual: string }
+  | { type: 'fail'; testIndex: number; input: string; expected: string; actual: string; rawExpected: unknown; rawActual: unknown }
   | { type: 'error'; testIndex: number; input: string; error: string }
   | { type: 'summary'; outcome: string; passed: number; total: number; durationMs?: number };
 
@@ -235,6 +235,8 @@ function buildEntries(result: JudgeResult, mode: 'run' | 'submit'): TerminalEntr
         input: verdict.input,
         expected: displayValue(verdict.expected),
         actual: displayValue(verdict.actual),
+        rawExpected: verdict.expected,
+        rawActual: verdict.actual,
       });
     } else {
       entries.push({
@@ -317,6 +319,8 @@ function TerminalEntry({ entry }: { entry: TerminalEntry }) {
             <span className="text-faint shrink-0">Actual:</span>
             <ValueDisplay value={entry.actual} />
           </div>
+          <ArrayDiffHint expected={entry.rawExpected} actual={entry.rawActual} />
+          <StringDiffHint expected={entry.rawExpected} actual={entry.rawActual} />
         </div>
       );
     case 'error':

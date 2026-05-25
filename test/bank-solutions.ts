@@ -16989,6 +16989,88 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'find-largest-value-each-tree-row': (arr: unknown) => {
+    const root = _buildTree(arr as (number | null)[]);
+    if (!root) return [];
+    const result: number[] = [];
+    const q: _TN[] = [root];
+    while (q.length) {
+      let max = -Infinity;
+      const len = q.length;
+      for (let i = 0; i < len; i++) {
+        const n = q.shift()!;
+        if (n.v > max) max = n.v;
+        if (n.l) q.push(n.l);
+        if (n.r) q.push(n.r);
+      }
+      result.push(max);
+    }
+    return result;
+  },
+
+  'find-bottom-left-tree-value': (arr: unknown) => {
+    const root = _buildTree(arr as (number | null)[]);
+    if (!root) return -1;
+    let ans = root.v;
+    const q: _TN[] = [root];
+    while (q.length) {
+      ans = q[0]!.v;
+      const len = q.length;
+      for (let i = 0; i < len; i++) {
+        const n = q.shift()!;
+        if (n.l) q.push(n.l);
+        if (n.r) q.push(n.r);
+      }
+    }
+    return ans;
+  },
+
+  'most-stones-removed-same-row-or-column': (stones: unknown) => {
+    const ss = stones as number[][];
+    const parent = new Map<number, number>();
+    function find(x: number): number {
+      if (!parent.has(x)) parent.set(x, x);
+      if (parent.get(x) !== x) parent.set(x, find(parent.get(x)!));
+      return parent.get(x)!;
+    }
+    function union(a: number, b: number): void {
+      a = find(a); b = find(b);
+      if (a !== b) parent.set(a, b);
+    }
+    for (const [r, c] of ss) union(r!, c! + 10001);
+    const stoneRoots = new Set<number>();
+    for (const [r] of ss) stoneRoots.add(find(r!));
+    return ss.length - stoneRoots.size;
+  },
+
+  'count-unreachable-pairs-of-nodes': (n: unknown, edges: unknown) => {
+    const N = n as number;
+    const adj: number[][] = Array.from({ length: N }, () => []);
+    for (const edge of edges as number[][]) {
+      const a = edge[0]!, b = edge[1]!;
+      adj[a]!.push(b); adj[b]!.push(a);
+    }
+    const visited = new Uint8Array(N);
+    let ans = 0, remaining = N;
+    for (let i = 0; i < N; i++) {
+      if (!visited[i]) {
+        let size = 0;
+        const stack = [i];
+        visited[i] = 1;
+        while (stack.length) {
+          const node = stack.pop()!;
+          size++;
+          for (const next of adj[node]!) {
+            if (!visited[next]) { visited[next] = 1; stack.push(next); }
+          }
+        }
+        remaining -= size;
+        ans += size * remaining;
+      }
+    }
+    return ans;
+  },
+
   'count-ways-to-split-array': (nums: unknown) => {
     const a = nums as number[];
     const total = a.reduce((s, v) => s + v, 0);
@@ -17079,6 +17161,21 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       if (p[i]![0]! > end) { arrows++; end = p[i]![1]!; }
     }
     return arrows;
+  },
+
+  'my-calendar-i': (bookings: unknown) => {
+    const bs = bookings as number[][];
+    const accepted: number[][] = [];
+    const result: boolean[] = [];
+    for (const [s, e] of bs) {
+      let overlaps = false;
+      for (const [as_, ae] of accepted) {
+        if (s! < ae! && as_! < e!) { overlaps = true; break; }
+      }
+      if (!overlaps) { accepted.push([s!, e!]); result.push(true); }
+      else result.push(false);
+    }
+    return result;
   },
 
 };
