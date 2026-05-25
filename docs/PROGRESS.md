@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 900 problems; 2971 tests green.
+**Current focus:** Bank at 923 problems; 3037 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing bank beyond 900; UI/UX polish, accessibility.
+**Next up:** Continue growing bank toward 950; UI/UX polish, accessibility.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -319,6 +319,7 @@ Still pending:
 - [x] **11 more problems** — find-the-index-of-first-occurrence, integer-replacement, number-of-smooth-descent-periods, maximum-matrix-sum, count-nodes-with-highest-score, find-right-interval, circular-sentence, minimum-garden-perimeter, group-people-given-group-size, count-number-of-bad-pairs, minimum-changes-to-make-binary-string-beautiful; bank at 840; 2791 tests.
 - [x] **9 more problems** — remove-all-occurrences-of-substring, minimum-time-to-complete-trips, minimum-speed-to-arrive-on-time, sum-of-beauty-in-the-array, find-all-possible-recipes, take-k-of-each-character-from-left-and-right, minimum-operations-xor-equal-k, maximum-odd-binary-number, minimum-equal-sum-two-arrays; bank at 849; 2818 tests.
 - [x] **🎉 850-problem milestone** — find-score-of-array-after-marking, count-complete-day-pairs, check-if-matrix-is-x-matrix; bank at 852; 2827 tests.
+- [x] **22 more problems** (batches 9-10) — first-unique-character-in-string, long-pressed-name, remove-outermost-parentheses, maximum-nesting-depth-of-parentheses, next-greater-element-i, find-and-replace-pattern, largest-3-same-digit-number-in-string, count-number-of-consistent-strings, make-the-string-great, find-target-indices-after-sorting-array, number-of-employees-who-met-the-target, intersection-of-two-arrays-ii, largest-subarray-length-k, minimum-time-to-type-word, check-if-one-string-swap-can-make-strings-equal, number-of-different-integers-in-string, check-if-array-is-good, count-the-digits-that-divide-the-number, find-the-difference-of-two-arrays, longest-continuous-increasing-subsequence, find-numbers-with-even-number-of-digits, count-nice-pairs-in-an-array; bank at 923; 3037 tests.
 - [x] **37 more problems** (batches 6-8) — count-zero-filled-subarrays, check-whether-two-string-arrays-equal, minimum-flips-make-or-b-equal-c, make-array-zero-subtracting-equal-amounts, find-all-groups-farmland, merge-triplets-form-target, replace-elements-greatest-right, destroy-asteroids, largest-number-after-digit-swaps-parity, maximum-count-positive-negative, find-original-array-prefix-xor, separate-digits-array, number-of-pairs-interchangeable-rectangles, optimal-partition-string, unique-length-three-palindromic-subsequences, bitwise-xor-all-pairings, number-rectangles-largest-square, maximize-number-subsequences, number-ways-buy-pens-pencils, sum-digits-string-after-convert, smallest-value-rearranged-number, removing-stars-from-string, find-the-peaks, minimum-penalty-for-a-shop, apply-operations-to-array, kth-distinct-string-array, count-elements-strictly-smaller-greater, largest-positive-integer-exists-negative, check-if-number-equal-digit-count-value, decode-xor-array, maximum-split-positive-even-integers, minimum-average-smallest-largest, count-tested-devices-after-test-runs, number-subarrays-gcd-equal-k, find-subsequence-length-k-largest-sum, minimum-absolute-sum-difference, find-k-beauty-of-number; **🎉 900-problem milestone**; bank at 900; 2971 tests.
 
 ---
