@@ -23,6 +23,13 @@ const DIFF_COLORS: Record<Difficulty, string> = {
   hard: 'text-faint',
 };
 
+// Module-level totals — computed once since ALL_PROBLEMS is a static constant.
+const TOTAL_BY_DIFF: Record<Difficulty, number> = {
+  easy: ALL_PROBLEMS.filter((p) => p.difficulty === 'easy').length,
+  medium: ALL_PROBLEMS.filter((p) => p.difficulty === 'medium').length,
+  hard: ALL_PROBLEMS.filter((p) => p.difficulty === 'hard').length,
+};
+
 type SortKey = 'default' | 'title-asc' | 'diff-asc' | 'diff-desc';
 
 /** Opens the challenge page for a specific problem in a new tab. */
@@ -89,20 +96,19 @@ export function ProblemBrowserSection() {
   const visibleProblems = filtered.slice(0, visibleCount);
   const hasMore = visibleCount < filtered.length;
 
-  const solvedCount = filtered.filter((p) => solvedIds.has(p.id)).length;
+  const solvedCount = useMemo(
+    () => filtered.filter((p) => solvedIds.has(p.id)).length,
+    [filtered, solvedIds],
+  );
 
-  const totalByDiff: Record<Difficulty, number> = {
-    easy: ALL_PROBLEMS.filter((p) => p.difficulty === 'easy').length,
-    medium: ALL_PROBLEMS.filter((p) => p.difficulty === 'medium').length,
-    hard: ALL_PROBLEMS.filter((p) => p.difficulty === 'hard').length,
-  };
-  const solvedByDiff: Record<Difficulty, number> = {
-    easy: ALL_PROBLEMS.filter((p) => p.difficulty === 'easy' && solvedIds.has(p.id)).length,
-    medium: ALL_PROBLEMS.filter(
-      (p) => p.difficulty === 'medium' && solvedIds.has(p.id),
-    ).length,
-    hard: ALL_PROBLEMS.filter((p) => p.difficulty === 'hard' && solvedIds.has(p.id)).length,
-  };
+  const solvedByDiff = useMemo<Record<Difficulty, number>>(
+    () => ({
+      easy: ALL_PROBLEMS.filter((p) => p.difficulty === 'easy' && solvedIds.has(p.id)).length,
+      medium: ALL_PROBLEMS.filter((p) => p.difficulty === 'medium' && solvedIds.has(p.id)).length,
+      hard: ALL_PROBLEMS.filter((p) => p.difficulty === 'hard' && solvedIds.has(p.id)).length,
+    }),
+    [solvedIds],
+  );
 
   const totalByTag = useMemo(() => {
     const counts: Partial<Record<ProblemTag, number>> = {};
@@ -146,7 +152,7 @@ export function ProblemBrowserSection() {
           <div key={d} className="text-xs">
             <span className={`font-mono ${DIFF_COLORS[d]}`}>{d}</span>
             <span className="ml-1.5 font-mono text-faint tabular-nums">
-              {solvedByDiff[d]}/{totalByDiff[d]}
+              {solvedByDiff[d]}/{TOTAL_BY_DIFF[d]}
             </span>
           </div>
         ))}
@@ -205,7 +211,7 @@ export function ProblemBrowserSection() {
           <div className="flex flex-wrap gap-1.5" role="group" aria-label="Filter by difficulty">
             {(['all', ...DIFFICULTIES] as const).map((d) => {
               const selected = diffFilter === d;
-              const count = d === 'all' ? ALL_PROBLEMS.length : totalByDiff[d];
+              const count = d === 'all' ? ALL_PROBLEMS.length : TOTAL_BY_DIFF[d];
               return (
                 <button
                   key={d}
