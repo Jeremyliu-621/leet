@@ -7515,4 +7515,67 @@ def sortString(s):
                 freq[c] -= 1
     return ''.join(result)
 `,
+
+  'car-pooling': `def carPooling(trips, capacity):
+    diff = [0] * 1001
+    for n, f, t in trips:
+        diff[f] += n
+        diff[t] -= n
+    cur = 0
+    for d in diff:
+        cur += d
+        if cur > capacity:
+            return False
+    return True
+`,
+
+  'most-profit-assigning-work': `def maxProfitAssignment(difficulty, profit, worker):
+    import bisect
+    jobs = sorted(zip(difficulty, profit))
+    max_profit = [0]
+    for _, p in jobs:
+        max_profit.append(max(max_profit[-1], p))
+    total = 0
+    for w in worker:
+        idx = bisect.bisect_right(jobs, (w, float('inf')))
+        total += max_profit[idx]
+    return total
+`,
+
+  'fruit-into-baskets': `def totalFruit(fruits):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    l = ans = 0
+    for r, f in enumerate(fruits):
+        freq[f] += 1
+        while len(freq) > 2:
+            freq[fruits[l]] -= 1
+            if freq[fruits[l]] == 0:
+                del freq[fruits[l]]
+            l += 1
+        ans = max(ans, r - l + 1)
+    return ans
+`,
+
+  'minimum-swaps-string-balanced': `def minSwaps(s):
+    b = m = 0
+    for c in s:
+        b += 1 if c == '[' else -1
+        if b < 0:
+            m += 1
+            b = 0
+    return (m + 1) // 2
+`,
+
+  'sum-of-subarray-ranges': `def subArrayRanges(nums):
+    res = 0
+    n = len(nums)
+    for i in range(n):
+        mn = mx = nums[i]
+        for j in range(i, n):
+            mn = min(mn, nums[j])
+            mx = max(mx, nums[j])
+            res += mx - mn
+    return res
+`,
 };

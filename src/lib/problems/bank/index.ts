@@ -153,6 +153,11 @@ import { problem as validTriangleNumber } from './valid-triangle-number';
 import { problem as maxNumberKSumPairs } from './max-number-k-sum-pairs';
 import { problem as minimumTimeRopeColorful } from './minimum-time-rope-colorful';
 import { problem as numberOfSubsequencesTargetSum } from './number-of-subsequences-target-sum';
+import { problem as carPooling } from './car-pooling';
+import { problem as mostProfitAssigningWork } from './most-profit-assigning-work';
+import { problem as fruitIntoBaskets } from './fruit-into-baskets';
+import { problem as minimumSwapsStringBalanced } from './minimum-swaps-string-balanced';
+import { problem as sumOfSubarrayRanges } from './sum-of-subarray-ranges';
 // arrays — medium (additional)
 import { problem as shortestUnsortedContinuousSubarray } from './shortest-unsorted-continuous-subarray';
 import { problem as maxChunksToMakeSorted } from './max-chunks-to-make-sorted';
@@ -780,6 +785,10 @@ export const problems: readonly Problem[] = [
   maxNumberKSumPairs,
   minimumTimeRopeColorful,
   numberOfSubsequencesTargetSum,
+  carPooling,
+  fruitIntoBaskets,
+  minimumSwapsStringBalanced,
+  sumOfSubarrayRanges,
   shortestUnsortedContinuousSubarray,
   maxChunksToMakeSorted,
   // strings — easy
@@ -996,6 +1005,7 @@ export const problems: readonly Problem[] = [
   kokoEatingBananas,
   findPeakElement,
   countRectanglesContainingPoint,
+  mostProfitAssigningWork,
   // binary-search — hard
   findKthSmallestPairDistance,
   findMinRotatedII,

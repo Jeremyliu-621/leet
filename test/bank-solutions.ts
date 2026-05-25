@@ -8078,4 +8078,64 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'car-pooling': (...args: unknown[]) => {
+    const trips = args[0] as [number, number, number][], capacity = args[1] as number;
+    const diff = new Array(1001).fill(0);
+    for (const [n, f, t] of trips) { diff[f] += n; diff[t] -= n; }
+    let cur = 0;
+    for (const d of diff) { cur += d; if (cur > capacity) return false; }
+    return true;
+  },
+
+  'most-profit-assigning-work': (...args: unknown[]) => {
+    const difficulty = args[0] as number[], profit = args[1] as number[], worker = args[2] as number[];
+    const jobs = difficulty.map((d, i) => [d, profit[i]!] as [number, number]).sort((a, b) => a[0] - b[0]);
+    const maxP: number[] = [0];
+    for (const [, p] of jobs) maxP.push(Math.max(maxP[maxP.length - 1]!, p));
+    let total = 0;
+    for (const w of worker) {
+      let lo = 0, hi = jobs.length;
+      while (lo < hi) { const m = (lo + hi) >> 1; if (jobs[m]![0] <= w) lo = m + 1; else hi = m; }
+      total += maxP[lo]!;
+    }
+    return total;
+  },
+
+  'fruit-into-baskets': (...args: unknown[]) => {
+    const fruits = args[0] as number[];
+    const freq = new Map<number, number>();
+    let l = 0, ans = 0;
+    for (let r = 0; r < fruits.length; r++) {
+      freq.set(fruits[r]!, (freq.get(fruits[r]!) ?? 0) + 1);
+      while (freq.size > 2) {
+        const f = fruits[l++]!;
+        freq.set(f, freq.get(f)! - 1);
+        if (freq.get(f) === 0) freq.delete(f);
+      }
+      ans = Math.max(ans, r - l + 1);
+    }
+    return ans;
+  },
+
+  'minimum-swaps-string-balanced': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let b = 0, m = 0;
+    for (const c of s) { b += c === '[' ? 1 : -1; if (b < 0) { m++; b = 0; } }
+    return Math.ceil(m / 2);
+  },
+
+  'sum-of-subarray-ranges': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let res = 0;
+    for (let i = 0; i < nums.length; i++) {
+      let mn = nums[i]!, mx = nums[i]!;
+      for (let j = i; j < nums.length; j++) {
+        mn = Math.min(mn, nums[j]!);
+        mx = Math.max(mx, nums[j]!);
+        res += mx - mn;
+      }
+    }
+    return res;
+  },
+
 };
