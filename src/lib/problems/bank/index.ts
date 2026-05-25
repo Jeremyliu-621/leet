@@ -1383,6 +1383,10 @@ import { problem as findIfArrayCanBeSorted } from './find-if-array-can-be-sorted
 import { problem as constructStringWithRepeatLimit } from './construct-string-with-repeat-limit';
 import { problem as countWaysToSelectBuildings } from './count-ways-to-select-buildings';
 import { problem as powerOfHeroes } from './power-of-heroes';
+import { problem as numberOfWaysToArriveAtDestination } from './number-of-ways-to-arrive-at-destination';
+import { problem as reorderRoutesToMakeAllPathsLeadToCityZero } from './reorder-routes-to-make-all-paths-lead-to-city-zero';
+import { problem as maximumLengthOfPairChain } from './maximum-length-of-pair-chain';
+import { problem as countServersThatCommunicate } from './count-servers-that-communicate';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2814,4 +2818,8 @@ export const problems: readonly Problem[] = [
   constructStringWithRepeatLimit,
   countWaysToSelectBuildings,
   powerOfHeroes,
+  numberOfWaysToArriveAtDestination,
+  reorderRoutesToMakeAllPathsLeadToCityZero,
+  maximumLengthOfPairChain,
+  countServersThatCommunicate,
 ];

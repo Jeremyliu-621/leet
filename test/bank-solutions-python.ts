@@ -18122,6 +18122,85 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
     return at_most(k) - at_most(k - 1)
 `,
 
+  'number-of-ways-to-arrive-at-destination': `def countPaths(n, roads):
+    import heapq
+    n = int(n)
+    MOD = 10**9 + 7
+    edges = list(roads.to_py() if hasattr(roads, 'to_py') else roads)
+    adj = [[] for _ in range(n)]
+    for e in edges:
+        u, v, t = int(e[0]), int(e[1]), int(e[2])
+        adj[u].append((v, t))
+        adj[v].append((u, t))
+    dist = [float('inf')] * n
+    ways = [0] * n
+    dist[0] = 0
+    ways[0] = 1
+    pq = [(0, 0)]
+    while pq:
+        d, u = heapq.heappop(pq)
+        if d > dist[u]:
+            continue
+        for v, t in adj[u]:
+            nd = d + t
+            if nd < dist[v]:
+                dist[v] = nd
+                ways[v] = ways[u]
+                heapq.heappush(pq, (nd, v))
+            elif nd == dist[v]:
+                ways[v] = (ways[v] + ways[u]) % MOD
+    return ways[n - 1]
+`,
+
+  'reorder-routes-to-make-all-paths-lead-to-city-zero': `def minReorder(n, connections):
+    from collections import deque
+    n = int(n)
+    conns = list(connections.to_py() if hasattr(connections, 'to_py') else connections)
+    adj = [[] for _ in range(n)]
+    for e in conns:
+        a, b = int(e[0]), int(e[1])
+        adj[a].append((b, 1))
+        adj[b].append((a, 0))
+    visited = [False] * n
+    q = deque([0])
+    visited[0] = True
+    count = 0
+    while q:
+        u = q.popleft()
+        for v, cost in adj[u]:
+            if not visited[v]:
+                visited[v] = True
+                count += cost
+                q.append(v)
+    return count
+`,
+
+  'maximum-length-of-pair-chain': `def findLongestChain(pairs):
+    raw = pairs.to_py() if hasattr(pairs, 'to_py') else list(pairs)
+    p = sorted([[int(x[0]), int(x[1])] for x in raw], key=lambda x: x[1])
+    count = 1
+    right = p[0][1]
+    for i in range(1, len(p)):
+        if p[i][0] > right:
+            count += 1
+            right = p[i][1]
+    return count
+`,
+
+  'count-servers-that-communicate': `def countServers(grid):
+    raw = grid.to_py() if hasattr(grid, 'to_py') else list(grid)
+    g = [[int(x) for x in row] for row in raw]
+    m, n = len(g), len(g[0])
+    row_count = [sum(g[r]) for r in range(m)]
+    col_count = [sum(g[r][c] for r in range(m)) for c in range(n)]
+    ans = 0
+    for r in range(m):
+        for c in range(n):
+            if g[r][c] == 1 and (row_count[r] > 1 or col_count[c] > 1):
+                ans += 1
+    return ans
+`,
+
   'maximum-length-of-a-concatenated-string-with-unique-characters': `def maxLength(arr):
     arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
     result = [0]

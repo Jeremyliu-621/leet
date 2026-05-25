@@ -18255,6 +18255,78 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return atMost(K) - atMost(K - 1);
   },
 
+  'number-of-ways-to-arrive-at-destination': (n: unknown, roads: unknown) => {
+    const N = n as number;
+    const edges = roads as number[][];
+    const MOD = 1_000_000_007;
+    const adj: [number, number][][] = Array.from({ length: N }, () => []);
+    for (const edge of edges) {
+      const [u, v, t] = edge as [number, number, number];
+      adj[u]!.push([v, t]);
+      adj[v]!.push([u, t]);
+    }
+    const dist = new Array<number>(N).fill(Infinity);
+    const ways = new Array<number>(N).fill(0);
+    dist[0] = 0; ways[0] = 1;
+    const pq: [number, number][] = [[0, 0]];
+    while (pq.length) {
+      pq.sort((a, b) => a[0]! - b[0]!);
+      const [d, u] = pq.shift()!;
+      if (d > dist[u]!) continue;
+      for (const [v, t] of adj[u]!) {
+        const nd = d + t;
+        if (nd < dist[v]!) { dist[v] = nd; ways[v] = ways[u]!; pq.push([nd, v]); }
+        else if (nd === dist[v]) ways[v] = (ways[v]! + ways[u]!) % MOD;
+      }
+    }
+    return ways[N - 1];
+  },
+
+  'reorder-routes-to-make-all-paths-lead-to-city-zero': (n: unknown, connections: unknown) => {
+    const N = n as number;
+    const conns = connections as number[][];
+    const adj: [number, number][][] = Array.from({ length: N }, () => []);
+    for (const conn of conns) {
+      const [a, b] = conn as [number, number];
+      adj[a]!.push([b, 1]);
+      adj[b]!.push([a, 0]);
+    }
+    const visited = new Array<boolean>(N).fill(false);
+    const queue = [0]; visited[0] = true;
+    let count = 0;
+    while (queue.length) {
+      const u = queue.shift()!;
+      for (const [v, cost] of adj[u]!) {
+        if (!visited[v]) { visited[v] = true; count += cost; queue.push(v); }
+      }
+    }
+    return count;
+  },
+
+  'maximum-length-of-pair-chain': (pairs: unknown) => {
+    const p = (pairs as number[][]).slice().sort((a, b) => a[1]! - b[1]!);
+    let count = 1, right = p[0]![1]!;
+    for (let i = 1; i < p.length; i++) {
+      if (p[i]![0]! > right) { count++; right = p[i]![1]!; }
+    }
+    return count;
+  },
+
+  'count-servers-that-communicate': (grid: unknown) => {
+    const g = grid as number[][];
+    const m = g.length, n = g[0]!.length;
+    const rowCount = new Array<number>(m).fill(0);
+    const colCount = new Array<number>(n).fill(0);
+    for (let r = 0; r < m; r++)
+      for (let c = 0; c < n; c++)
+        if (g[r]![c] === 1) { rowCount[r]!++; colCount[c]!++; }
+    let ans = 0;
+    for (let r = 0; r < m; r++)
+      for (let c = 0; c < n; c++)
+        if (g[r]![c] === 1 && (rowCount[r]! > 1 || colCount[c]! > 1)) ans++;
+    return ans;
+  },
+
   'maximum-length-of-a-concatenated-string-with-unique-characters': (arr: unknown) => {
     const strings = arr as string[];
     let result = 0;
