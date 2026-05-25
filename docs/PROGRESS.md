@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1234 problems; 3957 tests green.
+**Current focus:** Bank at 1249 problems; 3975 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems; UI/UX polish; Options/popup improvements.
 
@@ -353,6 +353,8 @@ Still pending:
 - [x] **5 more classic problems (Batch 20)** — partition-array-into-three-parts-with-equal-sum (arrays/easy), second-largest-digit-in-string (strings/easy), number-of-operations-to-make-network-connected (graph/medium), maximize-number-of-tasks-you-can-assign (arrays+binary-search/hard), minimum-consecutive-cards-to-pick-up (hash-map/medium); bank at **1223**; 3939 tests.
 - [x] **3 more classic problems (Batch 21)** — lexicographically-smallest-palindrome (strings/easy), minimum-operations-to-make-binary-array-elements-equal-to-one-ii (arrays/medium), closest-prime-numbers-in-range (math/medium); bank at **1226**; 3948 tests.
 - [x] **3 more classic problems (Batch 22)** — sum-of-subarray-minimums (stack/medium), maximum-xor-for-each-query (arrays/medium), count-ways-to-split-array (arrays/medium); bank at **1234** (with remote merges); 3957 tests.
+- [x] **3 more classic problems (Batch 23)** — maximum-subarray-sum-with-one-deletion (dp/medium), number-of-sub-arrays-size-k-average-threshold (sliding-window/medium), grumpy-bookstore-owner (sliding-window/medium); bank at **1237**; 3966 tests.
+- [x] **3 more classic problems (Batch 24)** — most-stones-removed-with-same-row-or-column (graph/medium), longest-subsequence-with-limited-sum (arrays/easy), minimum-number-of-arrows-to-burst-balloons (arrays/medium); bank at **1249** (with remote merges); 3975 tests.
 
 ---
 
