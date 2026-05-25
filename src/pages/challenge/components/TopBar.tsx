@@ -9,6 +9,8 @@ interface TopBarProps {
   practiceMode?: boolean;
   /** URL to navigate back to settings (problem browser). Only shown in practice mode. */
   settingsHref?: string;
+  /** The domain being unlocked in gate mode (e.g. 'youtube.com'). */
+  targetDomain?: string | null;
 }
 
 /** Formats seconds into MM:SS. */
@@ -27,7 +29,7 @@ function formatUnlockDuration(minutes: number): string {
   return m === 0 ? `${h}h` : `${h}h ${m}m`;
 }
 
-export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, settingsHref }: TopBarProps) {
+export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, settingsHref, targetDomain }: TopBarProps) {
   const isLow = secondsLeft <= 60 && secondsLeft > 0;
   const isCritical = secondsLeft <= 30 && secondsLeft > 0;
   const isExpired = secondsLeft <= 0;
@@ -62,7 +64,11 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
         </span>
         <span className="hidden sm:inline-block h-4 w-px bg-border" aria-hidden="true" />
         <span className="hidden sm:inline-block font-mono text-[10px] text-faint uppercase tracking-wider">
-          {practiceMode ? 'practice mode' : 'solve to unlock'}
+          {practiceMode
+            ? 'practice mode'
+            : targetDomain
+              ? `unlock ${targetDomain}`
+              : 'solve to unlock'}
         </span>
       </div>
 

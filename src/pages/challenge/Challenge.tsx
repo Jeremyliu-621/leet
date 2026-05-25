@@ -956,7 +956,7 @@ export function Challenge() {
 
   return (
     <div className="flex h-full flex-col overflow-hidden bg-bg text-text">
-      <TopBar secondsLeft={secondsLeft} prefs={prefs} streak={streak} practiceMode={!targetUrl.current} settingsHref={settingsHref} />
+      <TopBar secondsLeft={secondsLeft} prefs={prefs} streak={streak} practiceMode={!targetUrl.current} settingsHref={settingsHref} targetDomain={domain.current} />
 
       {/* No-target banner — informational only, does not block usage */}
       {!targetUrl.current && <NoTargetBanner />}
