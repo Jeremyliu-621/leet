@@ -16741,4 +16741,49 @@ def minimumDeletions(s):
             best = [primes[i-1], primes[i]]
     return best
 `,
+
+  'sum-of-subarray-minimums': `def sumSubarrayMins(arr):
+    MOD = 10**9 + 7
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    n = len(arr)
+    stack = []
+    left = [-1] * n
+    right = [n] * n
+    for i in range(n):
+        while stack and arr[stack[-1]] >= arr[i]:
+            right[stack.pop()] = i
+        left[i] = stack[-1] if stack else -1
+        stack.append(i)
+    ans = 0
+    for i in range(n):
+        ans = (ans + (i - left[i]) * (right[i] - i) * arr[i]) % MOD
+    return ans
+`,
+
+  'maximum-xor-for-each-query': `def getMaximumXor(nums, maximumBit):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    bits = int(maximumBit)
+    n = len(nums)
+    max_k = (1 << bits) - 1
+    ans = [0] * n
+    xor_sum = 0
+    for v in nums:
+        xor_sum ^= v
+    for i in range(n):
+        ans[i] = xor_sum ^ max_k
+        xor_sum ^= nums[n - 1 - i]
+    return ans
+`,
+
+  'count-ways-to-split-array': `def waysToSplitArray(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    total = sum(nums)
+    prefix = 0
+    ans = 0
+    for i in range(len(nums) - 1):
+        prefix += nums[i]
+        if prefix >= total - prefix:
+            ans += 1
+    return ans
+`,
 };

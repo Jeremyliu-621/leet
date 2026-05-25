@@ -1282,6 +1282,9 @@ import { problem as minimumConsecutiveCardsToPick } from './minimum-consecutive-
 import { problem as lexicographicallySmallestPalindrome } from './lexicographically-smallest-palindrome';
 import { problem as minimumOperationsBinaryArrayEqualToOneII } from './minimum-operations-to-make-binary-array-elements-equal-to-one-ii';
 import { problem as closestPrimeNumbersInRange } from './closest-prime-numbers-in-range';
+import { problem as sumOfSubarrayMinimums } from './sum-of-subarray-minimums';
+import { problem as maximumXorForEachQuery } from './maximum-xor-for-each-query';
+import { problem as countWaysToSplitArray } from './count-ways-to-split-array';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2612,4 +2615,7 @@ export const problems: readonly Problem[] = [
   lexicographicallySmallestPalindrome,
   minimumOperationsBinaryArrayEqualToOneII,
   closestPrimeNumbersInRange,
+  sumOfSubarrayMinimums,
+  maximumXorForEachQuery,
+  countWaysToSplitArray,
 ];

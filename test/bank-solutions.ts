@@ -16955,4 +16955,49 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best;
   },
 
+  'sum-of-subarray-minimums': (arr: unknown) => {
+    const a = arr as number[];
+    const MOD = 1_000_000_007n;
+    const n = a.length;
+    const stack: number[] = [];
+    const left = new Array(n).fill(-1);
+    const right = new Array(n).fill(n);
+    for (let i = 0; i < n; i++) {
+      while (stack.length && a[stack[stack.length - 1]!]! >= a[i]!) {
+        right[stack.pop()!] = i;
+      }
+      left[i] = stack.length ? stack[stack.length - 1]! : -1;
+      stack.push(i);
+    }
+    let ans = 0n;
+    for (let i = 0; i < n; i++) {
+      ans = (ans + BigInt(i - left[i]!) * BigInt(right[i]! - i) * BigInt(a[i]!)) % MOD;
+    }
+    return Number(ans);
+  },
+
+  'maximum-xor-for-each-query': (nums: unknown, maximumBit: unknown) => {
+    const a = nums as number[], bits = maximumBit as number;
+    const n = a.length, maxK = (1 << bits) - 1;
+    const ans = new Array(n);
+    let xorSum = 0;
+    for (const v of a) xorSum ^= v;
+    for (let i = 0; i < n; i++) {
+      ans[i] = xorSum ^ maxK;
+      xorSum ^= a[n - 1 - i]!;
+    }
+    return ans;
+  },
+
+  'count-ways-to-split-array': (nums: unknown) => {
+    const a = nums as number[];
+    const total = a.reduce((s, v) => s + v, 0);
+    let prefix = 0, ans = 0;
+    for (let i = 0; i < a.length - 1; i++) {
+      prefix += a[i]!;
+      if (prefix >= total - prefix) ans++;
+    }
+    return ans;
+  },
+
 };
