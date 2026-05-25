@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1467 problems; 4689 tests green.
+**Current focus:** Bank at 1472 problems; 4704 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank (Batch 54+); marketing site stat update at 1500.
+**Next up:** Continue growing problem bank (Batch 55+); marketing site stat update at 1500.
 
 ### UI/UX polish (2026-05-25)
 - **Back-to-settings link in practice mode**: TopBar now shows "← settings" link back to Options/problem browser when in practice mode (no blocked target URL). settingsHref computed via chrome.runtime.getURL.
@@ -26,8 +26,11 @@ Added 5 problems: `day-of-the-week` (math/easy), `guess-number-higher-or-lower` 
 ### Batch 53-local (2026-05-25)
 Added 5 problems: `final-prices-with-a-special-discount-in-a-shop` (stack/easy, monotonic stack), `buildings-with-an-ocean-view` (stack/medium, right-to-left max scan), `remove-nodes-from-linked-list` (linked-list+stack/medium, monotonic stack), `find-polygon-with-the-largest-perimeter` (math/medium, greedy prefix sum), `minimum-deletions-to-make-character-frequencies-unique` (hash-map/medium, greedy freq decrement). Bank at **1467**; 4689 tests.
 
+### Batch 54 (2026-05-25)
+Added 5 problems: `matrix-cells-in-distance-order` (arrays/easy, sort by Manhattan distance), `broken-calculator` (math/medium, work backwards), `count-days-without-meetings` (arrays/medium, merge intervals), `string-compression-iii` (strings/medium, max-9 runs), `strange-printer-ii` (graph/hard, Kahn's toposort on color bbox DAG). Also resolved merge conflicts keeping all content from concurrent Batch 52/53 agents. Bank at **1472**; 4704 tests.
+
 ### Batch 53 + orphaned Batch 52 (2026-05-25)
-Added 5 Batch 53 problems: `convert-sorted-list-to-binary-search-tree` (tree/medium), `contains-duplicate-iii` (sliding-window/hard, bucket sort), `make-array-strictly-increasing` (dynamic-programming/hard, DP map), `encode-and-decode-tinyurl` (hash-map/medium, counter-based), `course-schedule-iv` (graph/medium, Floyd-Warshall). Also registered 5 orphaned Batch 52 problems that had `.ts` files but were missing from index.ts + bank-solutions.ts: `three-sum-smaller`, `most-common-word`, `student-attendance-record-ii`, `permutation-sequence`, `maximum-sum-obtained-of-any-permutation`. Bank at **1462**; 4674 tests.
+Added 5 Batch 53 problems: `convert-sorted-list-to-binary-search-tree` (tree/medium), `contains-duplicate-iii` (sliding-window/hard, bucket sort), `make-array-strictly-increasing` (dynamic-programming/hard, DP map), `encode-and-decode-tinyurl` (hash-map/medium, counter-based), `course-schedule-iv` (graph/medium, Floyd-Warshall). Also added 5 more Batch 53 problems from parallel agent: `final-prices-with-a-special-discount-in-a-shop` (stack/easy), `buildings-with-an-ocean-view` (stack/medium), `remove-nodes-from-linked-list` (linked-list/medium), `find-polygon-with-the-largest-perimeter` (math/medium), `minimum-deletions-to-make-character-frequencies-unique` (hash-map/medium). Also registered 5 orphaned Batch 52 problems: `three-sum-smaller`, `most-common-word`, `student-attendance-record-ii`, `permutation-sequence`, `maximum-sum-obtained-of-any-permutation`. Bank at **1467**; 4689 tests.
 
 ### Batch 52-local (2026-05-25)
 Added 5 problems: `longest-univalue-path` (tree/medium, DFS edge-counting with global max), `add-one-row-to-tree` (tree/medium, BFS to d−1 then insert row + `__toArray__` return), `even-odd-tree` (tree/medium, BFS level-order parity + ordering check), `sort-integers-by-number-of-1-bits` (arrays/easy, sort by popcount then value), `minimum-operations-to-make-array-equal` (math/medium, closed-form floor(n²/4)). Bank at **1452**; 4644 tests.
