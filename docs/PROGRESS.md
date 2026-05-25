@@ -8,8 +8,8 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 589 problems; 2026 tests; growing toward 600+.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (2026 tests passing).
+**Current focus:** Bank at 594+ problems; 2044 tests; growing toward 600+.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (2044 tests passing).
 **Next up:** Continue growing bank toward 600+; more easy/medium/hard problems. Browser-zoom QA (L).
 
 **Pyodide rollout status — COMPLETE:**
@@ -295,6 +295,7 @@ Still pending:
 - [x] **6 more new problems** — candy (arrays/hard), minimum-falling-path-sum (dp/medium), count-nice-subarrays (sliding-window/medium), split-linked-list-in-parts (linked-list/medium), time-based-key-value-store (hash-map+bs/medium); fixed Python findAnagrams mismatch; 1990 tests; bank at 574.
 - [x] **5 more new problems** — minimum-cost-for-tickets (dp/medium), stone-game-ii (dp/medium), maximum-width-ramp (arrays/hard), check-if-array-pairs-divisible-by-k (arrays+hash-map/medium), find-k-th-smallest-pair-distance (binary-search+sliding-window/hard); bank at 584 tests.
 - [x] **5 more new problems** — valid-triangle-number (arrays+two-pointers/medium), max-number-k-sum-pairs (arrays+hash-map/medium), minimum-time-rope-colorful (arrays+two-pointers/medium), shortest-bridge (graph/hard), number-of-subsequences-target-sum (arrays+two-pointers/medium); 2026 tests; bank at 589.
+- [x] **5 more new problems** — car-pooling (arrays/medium), most-profit-assigning-work (binary-search/medium), fruit-into-baskets (sliding-window/medium), minimum-swaps-string-balanced (arrays/medium), sum-of-subarray-ranges (arrays+stack/medium); 2044 tests; bank at 594+.
 
 ---
 
