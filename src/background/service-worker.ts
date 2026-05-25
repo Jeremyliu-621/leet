@@ -116,10 +116,13 @@ async function failChallenge(
     }
     return { ok: true };
   }
-  const url =
-    request.redirectUrl && request.redirectUrl.trim().length > 0
-      ? request.redirectUrl
-      : chrome.runtime.getURL('src/pages/blocked/index.html');
+  let url: string;
+  if (request.redirectUrl && request.redirectUrl.trim().length > 0) {
+    url = request.redirectUrl;
+  } else {
+    const base = chrome.runtime.getURL('src/pages/blocked/index.html');
+    url = request.domain ? `${base}?domain=${encodeURIComponent(request.domain)}` : base;
+  }
   await chrome.tabs.update(tabId, { url });
   return { ok: true };
 }

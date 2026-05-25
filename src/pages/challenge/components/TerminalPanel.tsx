@@ -336,7 +336,7 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
         >
           {/* Running indicator */}
           {result === undefined && (
-            <div className="text-faint animate-pulse">
+            <div role="status" className="text-faint animate-pulse">
               <span className="mr-1">$</span> Running...
             </div>
           )}
@@ -362,7 +362,7 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
           className="p-3 space-y-2"
         >
           {result === undefined && (
-            <div className="text-faint animate-pulse font-mono text-xs">Running tests...</div>
+            <div role="status" className="text-faint animate-pulse font-mono text-xs">Running tests...</div>
           )}
           {result === null && (
             <div className="text-faint font-mono text-xs">
