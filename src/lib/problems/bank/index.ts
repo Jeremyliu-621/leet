@@ -1262,6 +1262,14 @@ import { problem as numberOfWaysToDivideALongCorridor } from './number-of-ways-t
 import { problem as deleteOperationForTwoStrings } from './delete-operation-for-two-strings';
 import { problem as productOfArrayExceptSelf } from './product-of-array-except-self';
 import { problem as minimumMovesToEqualArrayElements } from './minimum-moves-to-equal-array-elements';
+import { problem as smallestDivisorGivenThreshold } from './smallest-divisor-given-threshold';
+import { problem as additiveNumber } from './additive-number';
+import { problem as uniquePathsIii } from './unique-paths-iii';
+import { problem as raceCar } from './race-car';
+import { problem as minimumCostToMakeValidParentheses } from './minimum-cost-to-make-valid-parentheses';
+import { problem as minimumScoreOfPath } from './minimum-score-of-path';
+import { problem as countOperationsToObtainZeroIi } from './count-operations-to-obtain-zero-ii';
+import { problem as minimumDeletionsToBalanceParentheses } from './minimum-deletions-to-balance-parentheses';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2572,4 +2580,12 @@ export const problems: readonly Problem[] = [
   deleteOperationForTwoStrings,
   productOfArrayExceptSelf,
   minimumMovesToEqualArrayElements,
+  smallestDivisorGivenThreshold,
+  additiveNumber,
+  uniquePathsIii,
+  raceCar,
+  minimumCostToMakeValidParentheses,
+  minimumScoreOfPath,
+  countOperationsToObtainZeroIi,
+  minimumDeletionsToBalanceParentheses,
 ];

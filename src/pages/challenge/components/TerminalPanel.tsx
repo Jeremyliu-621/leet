@@ -93,6 +93,79 @@ function ArrayDiffHint({ expected, actual }: { expected: unknown; actual: unknow
   );
 }
 
+/**
+ * Computes a human-readable string diff hint for two string values.
+ * Returns null when no hint is applicable (not strings, or equal).
+ * Exported for unit testing; rendering is separate.
+ */
+export function computeStringDiff(
+  expected: unknown,
+  actual: unknown,
+): { type: 'length-only'; label: string } | { type: 'char-diff'; charIndex: number; expectedChar: string; actualChar: string; lenNote: string } | null {
+  if (typeof expected !== 'string' || typeof actual !== 'string') return null;
+  if (expected === actual) return null;
+
+  const minLen = Math.min(expected.length, actual.length);
+  let firstDiff = -1;
+  for (let i = 0; i < minLen; i++) {
+    if (expected[i] !== actual[i]) {
+      firstDiff = i;
+      break;
+    }
+  }
+
+  const lenNote =
+    expected.length !== actual.length
+      ? ` · length ${actual.length} vs ${expected.length}`
+      : '';
+
+  if (firstDiff === -1) {
+    // Strings agree up to the shorter one's end; only length differs.
+    const diff = Math.abs(actual.length - expected.length);
+    const label =
+      actual.length > expected.length
+        ? `actual is ${diff} char${diff !== 1 ? 's' : ''} longer`
+        : `actual is ${diff} char${diff !== 1 ? 's' : ''} shorter`;
+    return { type: 'length-only', label };
+  }
+
+  return {
+    type: 'char-diff',
+    charIndex: firstDiff,
+    expectedChar: expected[firstDiff] ?? '',
+    actualChar: actual[firstDiff] ?? '',
+    lenNote,
+  };
+}
+
+/**
+ * Shows a concise diff hint when expected and actual are both strings.
+ * Highlights the first diverging character position for quick debugging.
+ */
+function StringDiffHint({ expected, actual }: { expected: unknown; actual: unknown }) {
+  const diff = computeStringDiff(expected, actual);
+  if (!diff) return null;
+
+  if (diff.type === 'length-only') {
+    return (
+      <div className="pl-4 text-[10px] text-faint tabular-nums" aria-label={`String diff: ${diff.label}`}>
+        ↳ {diff.label}
+      </div>
+    );
+  }
+
+  const label = `first diff at char ${diff.charIndex}: expected '${diff.expectedChar}' · got '${diff.actualChar}'${diff.lenNote}`;
+  return (
+    <div className="pl-4 text-[10px] text-faint tabular-nums" aria-label={`String diff: ${label}`}>
+      ↳ char {diff.charIndex}: expected{' '}
+      <span className="text-muted">'{diff.expectedChar}'</span>
+      {' · '}got{' '}
+      <span className="text-muted">'{diff.actualChar}'</span>
+      {diff.lenNote}
+    </div>
+  );
+}
+
 /** Terminal entry types for the output log. */
 type TerminalEntry =
   | { type: 'system'; text: string }
@@ -487,9 +560,10 @@ function TestResultCard({ verdict }: { verdict: TestVerdict }) {
       {expanded && (
         <div className="border-t border-border px-3 py-2 space-y-1 font-mono text-xs">
           {verdict.input && (
-            <div>
-              <span className="text-faint">Input: </span>
-              <span className="text-muted">{verdict.input}</span>
+            <div className="flex items-start gap-1">
+              <span className="text-faint shrink-0">Input: </span>
+              <span className="text-muted break-all">{verdict.input}</span>
+              <CopyButton value={verdict.input} />
             </div>
           )}
           {verdict.status === 'fail' && (
@@ -505,6 +579,7 @@ function TestResultCard({ verdict }: { verdict: TestVerdict }) {
                 <CopyButton value={displayValue(verdict.actual)} />
               </div>
               <ArrayDiffHint expected={verdict.expected} actual={verdict.actual} />
+              <StringDiffHint expected={verdict.expected} actual={verdict.actual} />
             </>
           )}
           {verdict.status === 'error' && (

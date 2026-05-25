@@ -16223,6 +16223,55 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dist[m-1]![n-1]!;
   },
 
+  'smallest-divisor-given-threshold': (nums: unknown, threshold: unknown) => {
+    const ns = nums as number[], k = threshold as number;
+    let lo = 1, hi = Math.max(...ns);
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (ns.reduce((a, n) => a + Math.ceil(n / mid), 0) <= k) hi = mid;
+      else lo = mid + 1;
+    }
+    return lo;
+  },
+
+  'additive-number': (num: unknown) => {
+    const s = num as string, n = s.length;
+    function check(a: string, b: string, rest: string): boolean {
+      const sum = String(BigInt(a) + BigInt(b));
+      if (rest === sum) return true;
+      if (!rest.startsWith(sum)) return false;
+      return check(b, sum, rest.slice(sum.length));
+    }
+    for (let i = 1; i <= Math.floor(n / 2); i++) {
+      for (let j = i + 1; j < n; j++) {
+        const a = s.slice(0, i), b = s.slice(i, j);
+        if ((a.length > 1 && a[0] === '0') || (b.length > 1 && b[0] === '0')) continue;
+        if (check(a, b, s.slice(j))) return true;
+      }
+    }
+    return false;
+  },
+
+  'unique-paths-iii': (grid: unknown) => {
+    const g = (grid as number[][]).map(r => [...r]);
+    const m = g.length, n = g[0]!.length;
+    let startR = 0, startC = 0, total = 0;
+    for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) {
+      if (g[r]![c] !== -1) total++;
+      if (g[r]![c] === 1) { startR = r; startC = c; }
+    }
+    let count = 0;
+    function dfs(r: number, c: number, rem: number) {
+      if (r < 0 || r >= m || c < 0 || c >= n || g[r]![c] === -1) return;
+      if (g[r]![c] === 2) { if (rem === 1) count++; return; }
+      const orig = g[r]![c]!; g[r]![c] = -1;
+      for (const [dr, dc] of [[-1,0],[1,0],[0,-1],[0,1]] as [number,number][]) dfs(r+dr, c+dc, rem-1);
+      g[r]![c] = orig;
+    }
+    dfs(startR, startC, total);
+    return count;
+  },
+
   'max-sum-of-rectangle-no-larger-than-k': (matrix: unknown, k: unknown) => {
     const mat = matrix as number[][], kk = k as number;
     const m = mat.length, n = mat[0]!.length;
@@ -16676,6 +16725,70 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const arr = nums as number[];
     const min = Math.min(...arr);
     return arr.reduce((sum, v) => sum + v - min, 0);
+  },
+
+  'race-car': (target: unknown) => {
+    const t = target as number;
+    const dp = new Array<number>(t + 1).fill(Infinity);
+    dp[0] = 0;
+    for (let v = 1; v <= t; v++) {
+      for (let k = 1; (1 << k) - 1 < 2 * v; k++) {
+        const reach = (1 << k) - 1;
+        if (reach === v) dp[v] = Math.min(dp[v]??Infinity, k);
+        else if (reach > v) dp[v] = Math.min(dp[v]??Infinity, k + 1 + (dp[reach - v]??Infinity));
+        else { for (let j = 0; j < k; j++) dp[v] = Math.min(dp[v]??Infinity, k+1+j+1+(dp[v-reach+(1<<j)-1]??Infinity)); }
+      }
+    }
+    return dp[t]!;
+  },
+
+  'minimum-cost-to-make-valid-parentheses': (s: unknown) => {
+    let open = 0, close = 0;
+    for (const c of s as string) {
+      if (c === '(') open++; else if (open > 0) open--; else close++;
+    }
+    return open + close;
+  },
+
+  'minimum-score-of-path': (n: unknown, roads: unknown) => {
+    const N = n as number, rs = roads as number[][];
+    const adj: [number, number][][] = Array.from({ length: N + 1 }, () => []);
+    for (const [a, b, d] of rs as [number,number,number][]) {
+      adj[a]!.push([b, d]); adj[b]!.push([a, d]);
+    }
+    const visited = new Uint8Array(N + 1);
+    const queue: number[] = [1]; visited[1] = 1;
+    let minD = Infinity, head = 0;
+    while (head < queue.length) {
+      const node = queue[head++]!;
+      for (const [next, dist] of adj[node]!) {
+        minD = Math.min(minD, dist);
+        if (!visited[next]) { visited[next] = 1; queue.push(next); }
+      }
+    }
+    return minD;
+  },
+
+  'count-operations-to-obtain-zero-ii': (nums: unknown, x: unknown) => {
+    const ns = nums as number[], target = ns.reduce((a, b) => a + b, 0) - (x as number);
+    if (target < 0) return -1;
+    if (target === 0) return ns.length;
+    let maxLen = -1, sum = 0, l = 0;
+    for (let r = 0; r < ns.length; r++) {
+      sum += (ns[r] ?? 0);
+      while (sum > target) sum -= (ns[l++] ?? 0);
+      if (sum === target) maxLen = Math.max(maxLen, r - l + 1);
+    }
+    return maxLen === -1 ? -1 : ns.length - maxLen;
+  },
+
+  'minimum-deletions-to-balance-parentheses': (s: unknown) => {
+    let bCount = 0, deletions = 0;
+    for (const c of s as string) {
+      if (c === 'b') bCount++;
+      else if (bCount > 0) { bCount--; deletions++; }
+    }
+    return deletions;
   },
 
 };

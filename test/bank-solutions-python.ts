@@ -15927,6 +15927,60 @@ def allPossibleFBT(n):
     return dist[m-1][n-1]
 `,
 
+  'smallest-divisor-given-threshold': `
+def smallestDivisor(nums, threshold):
+    lo, hi = 1, max(nums)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if sum((n + mid - 1) // mid for n in nums) <= threshold:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'additive-number': `
+def isAdditiveNumber(num):
+    n = len(num)
+    for i in range(1, n):
+        for j in range(i + 1, n):
+            a_str, b_str = num[:i], num[i:j]
+            if (len(a_str) > 1 and a_str[0] == '0') or (len(b_str) > 1 and b_str[0] == '0'):
+                continue
+            a, b = int(a_str), int(b_str)
+            pos = j
+            while pos < n:
+                c = a + b
+                c_str = str(c)
+                if not num[pos:].startswith(c_str):
+                    break
+                pos += len(c_str)
+                a, b = b, c
+            if pos == n:
+                return True
+    return False
+`,
+
+  'unique-paths-iii': `
+def uniquePathsIII(grid):
+    m, n = len(grid), len(grid[0])
+    total = sum(grid[r][c] != -1 for r in range(m) for c in range(n))
+    sr, sc = next((r, c) for r in range(m) for c in range(n) if grid[r][c] == 1)
+    def dfs(r, c, remaining):
+        if grid[r][c] == 2:
+            return 1 if remaining == 1 else 0
+        orig = grid[r][c]
+        grid[r][c] = -1
+        res = 0
+        for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n and grid[nr][nc] != -1:
+                res += dfs(nr, nc, remaining - 1)
+        grid[r][c] = orig
+        return res
+    return dfs(sr, sc, total)
+`,
+
   'max-sum-of-rectangle-no-larger-than-k': `def maxSumSubmatrix(matrix, k):
     import bisect
     raw = matrix.to_py() if hasattr(matrix, 'to_py') else list(matrix)
@@ -16396,5 +16450,94 @@ def allPossibleFBT(n):
         color[node] = 2
         return True
     return dfs(src)
+`,
+
+  'race-car': `
+def racecar(target):
+    dp = [float('inf')] * (target + 1)
+    dp[0] = 0
+    for v in range(1, target + 1):
+        k = 1
+        while (1 << k) - 1 < 2 * v:
+            reach = (1 << k) - 1
+            if reach == v:
+                dp[v] = min(dp[v], k)
+            elif reach > v:
+                dp[v] = min(dp[v], k + 1 + dp[reach - v])
+            else:
+                for j in range(k):
+                    back = (1 << j) - 1
+                    dp[v] = min(dp[v], k + 1 + j + 1 + dp[v - reach + back])
+            k += 1
+    return dp[target]
+`,
+
+  'minimum-cost-to-make-valid-parentheses': `
+def minAddToMakeValid(s):
+    open_count = 0
+    close_count = 0
+    for c in s:
+        if c == '(':
+            open_count += 1
+        elif open_count > 0:
+            open_count -= 1
+        else:
+            close_count += 1
+    return open_count + close_count
+`,
+
+  'minimum-score-of-path': `
+def minScore(n, roads):
+    from collections import defaultdict, deque
+    adj = defaultdict(list)
+    for a, b, d in roads:
+        adj[a].append((b, d))
+        adj[b].append((a, d))
+    visited = set()
+    queue = deque([1])
+    visited.add(1)
+    min_dist = float('inf')
+    while queue:
+        node = queue.popleft()
+        for neighbor, dist in adj[node]:
+            min_dist = min(min_dist, dist)
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)
+    return min_dist
+`,
+
+  'count-operations-to-obtain-zero-ii': `
+def minOperations(nums, x):
+    total = sum(nums)
+    target = total - x
+    if target < 0:
+        return -1
+    if target == 0:
+        return len(nums)
+    max_len = -1
+    cur_sum = 0
+    l = 0
+    for r in range(len(nums)):
+        cur_sum += nums[r]
+        while cur_sum > target and l <= r:
+            cur_sum -= nums[l]
+            l += 1
+        if cur_sum == target:
+            max_len = max(max_len, r - l + 1)
+    return len(nums) - max_len if max_len != -1 else -1
+`,
+
+  'minimum-deletions-to-balance-parentheses': `
+def minimumDeletions(s):
+    b_count = 0
+    deletions = 0
+    for c in s:
+        if c == 'b':
+            b_count += 1
+        elif b_count > 0:
+            b_count -= 1
+            deletions += 1
+    return deletions
 `,
 };
