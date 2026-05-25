@@ -7718,4 +7718,54 @@ def minSwaps(data):
         min_zeros = min(min_zeros, zeros)
     return min_zeros
 `,
+
+  'k-diff-pairs-in-array': `
+def findPairs(nums, k):
+    if k < 0:
+        return 0
+    from collections import Counter
+    freq = Counter(nums)
+    count = 0
+    for n, f in freq.items():
+        if k == 0:
+            if f > 1:
+                count += 1
+        elif n + k in freq:
+            count += 1
+    return count
+`,
+
+  'hand-of-straights': `
+def isNStraightHand(hand, groupSize):
+    from collections import Counter
+    if len(hand) % groupSize != 0:
+        return False
+    freq = Counter(hand)
+    for k in sorted(freq):
+        cnt = freq[k]
+        if cnt > 0:
+            for i in range(groupSize):
+                if freq[k + i] < cnt:
+                    return False
+                freq[k + i] -= cnt
+    return True
+`,
+
+  'minimum-domino-rotations': `
+def minDominoRotations(tops, bottoms):
+    tops = list(tops)
+    bottoms = list(bottoms)
+    def check(x):
+        rt = rb = 0
+        for i in range(len(tops)):
+            if tops[i] != x and bottoms[i] != x:
+                return float('inf')
+            elif tops[i] != x:
+                rt += 1
+            elif bottoms[i] != x:
+                rb += 1
+        return min(rt, rb)
+    res = min(check(tops[0]), check(bottoms[0]))
+    return res if res != float('inf') else -1
+`,
 };

@@ -8267,4 +8267,51 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return min;
   },
 
+  'k-diff-pairs-in-array': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    if (k < 0) return 0;
+    const freq = new Map<number, number>();
+    for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+    let count = 0;
+    for (const [n, f] of freq) {
+      if (k === 0) { if (f > 1) count++; }
+      else if (freq.has(n + k)) count++;
+    }
+    return count;
+  },
+
+  'hand-of-straights': (...args: unknown[]) => {
+    const hand = args[0] as number[], groupSize = args[1] as number;
+    if (hand.length % groupSize !== 0) return false;
+    const freq = new Map<number, number>();
+    for (const c of hand) freq.set(c, (freq.get(c) ?? 0) + 1);
+    const keys = [...freq.keys()].sort((a, b) => a - b);
+    for (const key of keys) {
+      const cnt = freq.get(key)!;
+      if (cnt > 0) {
+        for (let i = 0; i < groupSize; i++) {
+          const cur = freq.get(key + i);
+          if (!cur || cur < cnt) return false;
+          freq.set(key + i, cur - cnt);
+        }
+      }
+    }
+    return true;
+  },
+
+  'minimum-domino-rotations': (...args: unknown[]) => {
+    const tops = args[0] as number[], bottoms = args[1] as number[];
+    const check = (x: number) => {
+      let rt = 0, rb = 0;
+      for (let i = 0; i < tops.length; i++) {
+        if (tops[i]! !== x && bottoms[i]! !== x) return Infinity;
+        else if (tops[i]! !== x) rt++;
+        else if (bottoms[i]! !== x) rb++;
+      }
+      return Math.min(rt, rb);
+    };
+    const res = Math.min(check(tops[0]!), check(bottoms[0]!));
+    return res === Infinity ? -1 : res;
+  },
+
 };

@@ -664,6 +664,9 @@ import { problem as numberOfWeakCharacters } from './number-of-weak-characters';
 import { problem as arithmeticSlices } from './arithmetic-slices';
 import { problem as maximumNumberVowelsSubstring } from './maximum-number-vowels-substring';
 import { problem as minimumSwapsGroupAllOnes } from './minimum-swaps-group-all-ones';
+import { problem as kDiffPairsInArray } from './k-diff-pairs-in-array';
+import { problem as handOfStraights } from './hand-of-straights';
+import { problem as minimumDominoRotations } from './minimum-domino-rotations';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1327,4 +1330,8 @@ export const problems: readonly Problem[] = [
   minimumSwapsGroupAllOnes,
   // strings + sliding-window — medium
   maximumNumberVowelsSubstring,
+  // arrays + hash-map — medium (new)
+  kDiffPairsInArray,
+  handOfStraights,
+  minimumDominoRotations,
 ];
