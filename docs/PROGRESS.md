@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1087 problems; 3526 tests green.
+**Current focus:** Bank at 1093 problems (10 unique new: russian-doll-envelopes, binary-tree-cameras, linked-list-cycle-ii, add-two-numbers-ii, maximum-performance-of-team, minimum-interval-to-include-each-query, minimum-number-of-taps, online-election, count-of-range-sum, design-linked-list); 3556 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems; UI/UX polish; Options/popup improvements.
 
