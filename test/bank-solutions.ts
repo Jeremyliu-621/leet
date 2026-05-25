@@ -9209,7 +9209,85 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       const no = Math.max(odd, even - x);
       even = ne; odd = no;
     }
-    return even
+    return even;
+  },
+
+  'count-hills-valleys': (...args: unknown[]) => {
+    const raw = args[0] as number[];
+    const nums: number[] = [raw[0]!];
+    for (let i = 1; i < raw.length; i++) if (raw[i] !== raw[i - 1]) nums.push(raw[i]!);
+    let count = 0;
+    for (let i = 1; i < nums.length - 1; i++) {
+      if (nums[i]! > nums[i - 1]! && nums[i]! > nums[i + 1]!) count++;
+      else if (nums[i]! < nums[i - 1]! && nums[i]! < nums[i + 1]!) count++;
+    }
+    return count;
+  },
+
+  'find-all-lonely-numbers': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+    const res: number[] = [];
+    for (const [n, c] of freq) {
+      if (c === 1 && !freq.has(n - 1) && !freq.has(n + 1)) res.push(n);
+    }
+    return res.sort((a, b) => a - b);
+  },
+
+  'count-prefixes-of-given-string': (...args: unknown[]) => {
+    const words = args[0] as string[], s = args[1] as string;
+    return words.filter(w => s.startsWith(w)).length;
+  },
+
+  'minimum-number-game': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const arr: number[] = [];
+    for (let i = 0; i < nums.length; i += 2) {
+      arr.push(nums[i + 1]!, nums[i]!);
+    }
+    return arr;
+  },
+
+  'find-words-containing-character': (...args: unknown[]) => {
+    const words = args[0] as string[], x = args[1] as string;
+    return words.reduce<number[]>((acc, w, i) => { if (w.includes(x)) acc.push(i); return acc; }, []);
+  },
+
+  'count-good-numbers': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const MOD = 1_000_000_007n;
+    const modpow = (base: bigint, exp: bigint, mod: bigint): bigint => {
+      let result = 1n;
+      base %= mod;
+      while (exp > 0n) {
+        if (exp & 1n) result = result * base % mod;
+        base = base * base % mod;
+        exp >>= 1n;
+      }
+      return result;
+    };
+    const nb = BigInt(n);
+    const even = (nb + 1n) / 2n;
+    const odd = nb / 2n;
+    return Number(modpow(5n, even, MOD) * modpow(4n, odd, MOD) % MOD);
+  },
+
+  'maximum-sum-exactly-k-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const m = Math.max(...nums);
+    return k * m + (k * (k - 1)) / 2;
+  },
+
+  'minimum-common-value': (...args: unknown[]) => {
+    const nums1 = args[0] as number[], nums2 = args[1] as number[];
+    let i = 0, j = 0;
+    while (i < nums1.length && j < nums2.length) {
+      if (nums1[i] === nums2[j]) return nums1[i]!;
+      else if (nums1[i]! < nums2[j]!) i++;
+      else j++;
+    }
+    return -1;
   },
 
 };

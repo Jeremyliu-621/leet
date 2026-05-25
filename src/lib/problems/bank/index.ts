@@ -732,6 +732,14 @@ import { problem as countSubarraysFixedBounds } from './count-subarrays-fixed-bo
 import { problem as amountOfTimeForBinaryTreeToBeInfected } from './amount-of-time-for-binary-tree-to-be-infected';
 import { problem as countCollisionsOnRoad } from './count-collisions-on-road';
 import { problem as maximumAlternatingSubsequenceSum } from './maximum-alternating-subsequence-sum';
+import { problem as countHillsValleys } from './count-hills-valleys';
+import { problem as findAllLonelyNumbers } from './find-all-lonely-numbers';
+import { problem as countPrefixesOfGivenString } from './count-prefixes-of-given-string';
+import { problem as minimumNumberGame } from './minimum-number-game';
+import { problem as findWordsContainingCharacter } from './find-words-containing-character';
+import { problem as countGoodNumbers } from './count-good-numbers';
+import { problem as maximumSumExactlyKElements } from './maximum-sum-exactly-k-elements';
+import { problem as minimumCommonValue } from './minimum-common-value';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1506,4 +1514,18 @@ export const problems: readonly Problem[] = [
   countCollisionsOnRoad,
   // arrays + dp — medium (new)
   maximumAlternatingSubsequenceSum,
+  // arrays — easy (new)
+  countHillsValleys,
+  findAllLonelyNumbers,
+  // strings — easy (new)
+  countPrefixesOfGivenString,
+  findWordsContainingCharacter,
+  // arrays + heap — easy (new)
+  minimumNumberGame,
+  // arrays + math — easy (new)
+  maximumSumExactlyKElements,
+  // arrays + two-pointers — easy (new)
+  minimumCommonValue,
+  // math — medium (new)
+  countGoodNumbers,
 ];

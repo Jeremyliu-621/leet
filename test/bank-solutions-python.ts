@@ -8744,4 +8744,82 @@ def maxAlternatingSum(nums):
         even, odd = ne, no
     return even
 `,
+
+  'count-hills-valleys': `
+def countHillValley(nums):
+    nums = list(nums)
+    deduped = [nums[0]]
+    for i in range(1, len(nums)):
+        if nums[i] != nums[i - 1]:
+            deduped.append(nums[i])
+    count = 0
+    for i in range(1, len(deduped) - 1):
+        if deduped[i] > deduped[i - 1] and deduped[i] > deduped[i + 1]:
+            count += 1
+        elif deduped[i] < deduped[i - 1] and deduped[i] < deduped[i + 1]:
+            count += 1
+    return count
+`,
+
+  'find-all-lonely-numbers': `
+def findLonely(nums):
+    from collections import Counter
+    freq = Counter(nums)
+    res = []
+    for n, c in freq.items():
+        if c == 1 and (n - 1) not in freq and (n + 1) not in freq:
+            res.append(n)
+    return sorted(res)
+`,
+
+  'count-prefixes-of-given-string': `
+def countPrefixes(words, s):
+    words = list(words)
+    return sum(1 for w in words if s.startswith(w))
+`,
+
+  'minimum-number-game': `
+def numberGame(nums):
+    nums = sorted(nums)
+    arr = []
+    for i in range(0, len(nums), 2):
+        arr.append(nums[i + 1])
+        arr.append(nums[i])
+    return arr
+`,
+
+  'find-words-containing-character': `
+def findWordsContaining(words, x):
+    words = list(words)
+    return [i for i, w in enumerate(words) if x in w]
+`,
+
+  'count-good-numbers': `
+def countGoodNumbers(n):
+    MOD = 10 ** 9 + 7
+    even = (n + 1) // 2
+    odd = n // 2
+    return pow(5, even, MOD) * pow(4, odd, MOD) % MOD
+`,
+
+  'maximum-sum-exactly-k-elements': `
+def maximizeSum(nums, k):
+    nums = list(nums)
+    m = max(nums)
+    return k * m + k * (k - 1) // 2
+`,
+
+  'minimum-common-value': `
+def getCommon(nums1, nums2):
+    nums1, nums2 = list(nums1), list(nums2)
+    i = j = 0
+    while i < len(nums1) and j < len(nums2):
+        if nums1[i] == nums2[j]:
+            return nums1[i]
+        elif nums1[i] < nums2[j]:
+            i += 1
+        else:
+            j += 1
+    return -1
+`,
 };
