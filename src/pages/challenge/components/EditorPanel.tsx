@@ -461,14 +461,29 @@ export function EditorPanel({
     [onSubmit],
   );
 
+  const [showShortcuts, setShowShortcuts] = useState(false);
+
+  // Two-step give-up confirmation: first click arms it, second click fires.
+  const [giveUpArmed, setGiveUpArmed] = useState(false);
+  const giveUpTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const handleGiveUpClick = useCallback(() => {
+    if (!onGiveUp) return;
+    if (giveUpArmed) {
+      if (giveUpTimerRef.current) clearTimeout(giveUpTimerRef.current);
+      setGiveUpArmed(false);
+      onGiveUp();
+    } else {
+      setGiveUpArmed(true);
+      giveUpTimerRef.current = setTimeout(() => setGiveUpArmed(false), 3000);
+    }
+  }, [onGiveUp, giveUpArmed]);
+
   const handleGiveUpKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      if ((e.key === 'Enter' || e.key === ' ') && onGiveUp) onGiveUp();
+      if (e.key === 'Enter' || e.key === ' ') handleGiveUpClick();
     },
-    [onGiveUp],
+    [handleGiveUpClick],
   );
-
-  const [showShortcuts, setShowShortcuts] = useState(false);
 
   // Line / column state — updated on every selection change.
   const [cursorPos, setCursorPos] = useState<{ line: number; col: number }>({ line: 1, col: 1 });
@@ -610,13 +625,19 @@ export function EditorPanel({
             {showGiveUp && onGiveUp && (
               <button
                 type="button"
-                onClick={onGiveUp}
+                onClick={handleGiveUpClick}
                 onKeyDown={handleGiveUpKeyDown}
                 disabled={isRunning}
-                aria-label="Give up on this challenge"
-                className="rounded-sm border border-border px-3 py-1.5 font-mono text-[11px] text-faint transition-colors hover:border-border-strong hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent disabled:cursor-not-allowed disabled:opacity-40"
+                aria-label={giveUpArmed ? 'Confirm: give up on this challenge' : 'Give up on this challenge'}
+                className={[
+                  'rounded-sm border px-3 py-1.5 font-mono text-[11px] transition-colors',
+                  'focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent disabled:cursor-not-allowed disabled:opacity-40',
+                  giveUpArmed
+                    ? 'border-border-strong text-text hover:border-accent'
+                    : 'border-border text-faint hover:border-border-strong hover:text-muted',
+                ].join(' ')}
               >
-                give up
+                {giveUpArmed ? 'confirm?' : 'give up'}
               </button>
             )}
 
