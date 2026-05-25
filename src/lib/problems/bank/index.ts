@@ -146,6 +146,9 @@ import { problem as countBinarySubstrings } from './count-binary-substrings';
 import { problem as splitStringBalance } from './split-string-balance';
 // arrays — hard (additional)
 import { problem as candy } from './candy';
+import { problem as maximumWidthRamp } from './maximum-width-ramp';
+// arrays — medium (additional)
+import { problem as checkIfArrayPairsDivisibleByK } from './check-if-array-pairs-divisible-by-k';
 // arrays — medium (additional)
 import { problem as shortestUnsortedContinuousSubarray } from './shortest-unsorted-continuous-subarray';
 import { problem as maxChunksToMakeSorted } from './max-chunks-to-make-sorted';
@@ -337,6 +340,7 @@ import { problem as kokoEatingBananas } from './koko-eating-bananas';
 import { problem as findPeakElement } from './find-peak-element';
 import { problem as countRectanglesContainingPoint } from './count-number-of-rectangles';
 // binary-search — hard
+import { problem as findKthSmallestPairDistance } from './find-k-th-smallest-pair-distance';
 import { problem as findMinRotatedII } from './find-min-rotated-ii';
 import { problem as medianTwoSortedArrays } from './median-two-sorted-arrays';
 import { problem as splitArrayLargestSum } from './split-array-largest-sum';
@@ -451,6 +455,8 @@ import { problem as minCostClimbingStairs } from './min-cost-climbing-stairs';
 import { problem as countingBits } from './counting-bits';
 import { problem as bestTimeBuySell } from './best-time-buy-sell';
 // dynamic-programming — medium
+import { problem as minimumCostForTickets } from './minimum-cost-for-tickets';
+import { problem as stoneGameII } from './stone-game-ii';
 import { problem as minimumFallingPathSum } from './minimum-falling-path-sum';
 import { problem as champagneTower } from './champagne-tower';
 import { problem as stoneGame } from './stone-game';
@@ -763,6 +769,7 @@ export const problems: readonly Problem[] = [
   gameOfLife,
   missingRanges,
   queueReconstructionByHeight,
+  checkIfArrayPairsDivisibleByK,
   shortestUnsortedContinuousSubarray,
   maxChunksToMakeSorted,
   // strings — easy
@@ -979,6 +986,7 @@ export const problems: readonly Problem[] = [
   findPeakElement,
   countRectanglesContainingPoint,
   // binary-search — hard
+  findKthSmallestPairDistance,
   findMinRotatedII,
   medianTwoSortedArrays,
   splitArrayLargestSum,
@@ -1098,6 +1106,7 @@ export const problems: readonly Problem[] = [
   maximumSwap,
   robotBoundedInCircle,
   // arrays — hard
+  maximumWidthRamp,
   candy,
   nQueens,
   firstMissingPositive,
@@ -1117,6 +1126,8 @@ export const problems: readonly Problem[] = [
   countingBits,
   bestTimeBuySell,
   // dynamic-programming — medium
+  minimumCostForTickets,
+  stoneGameII,
   minimumFallingPathSum,
   champagneTower,
   stoneGame,

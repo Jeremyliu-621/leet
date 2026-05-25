@@ -7911,4 +7911,70 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return results;
   },
 
+  'minimum-cost-for-tickets': (...args: unknown[]) => {
+    const days = args[0] as number[], costs = args[1] as number[];
+    const daySet = new Set(days);
+    const dp = new Array(366).fill(0);
+    for (let i = 1; i <= 365; i++) {
+      if (!daySet.has(i)) { dp[i] = dp[i-1]; }
+      else { dp[i] = Math.min(dp[i-1] + costs[0]!, dp[Math.max(0,i-7)] + costs[1]!, dp[Math.max(0,i-30)] + costs[2]!); }
+    }
+    return dp[365];
+  },
+
+  'stone-game-ii': (...args: unknown[]) => {
+    const piles = args[0] as number[];
+    const n = piles.length;
+    const suf = new Array(n+1).fill(0);
+    for (let i = n-1; i >= 0; i--) suf[i] = suf[i+1] + piles[i]!;
+    const memo = new Map<number, number>();
+    const dp = (i: number, m: number): number => {
+      if (i >= n) return 0;
+      if (2*m >= n-i) return suf[i];
+      const k = i*200+m;
+      if (memo.has(k)) return memo.get(k)!;
+      let best = 0;
+      for (let x = 1; x <= 2*m; x++) best = Math.max(best, suf[i] - dp(i+x, Math.max(m,x)));
+      memo.set(k, best);
+      return best;
+    };
+    return dp(0, 1);
+  },
+
+  'maximum-width-ramp': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const st: number[] = [];
+    for (let i = 0; i < nums.length; i++) if (!st.length || nums[i]! < nums[st[st.length-1]!]!) st.push(i);
+    let ans = 0;
+    for (let j = nums.length-1; j >= 0; j--) {
+      while (st.length && nums[st[st.length-1]!]! <= nums[j]!) ans = Math.max(ans, j - st.pop()!);
+    }
+    return ans;
+  },
+
+  'check-if-array-pairs-divisible-by-k': (...args: unknown[]) => {
+    const arr = args[0] as number[], k = args[1] as number;
+    const freq = new Array(k).fill(0);
+    for (const x of arr) freq[((x % k) + k) % k]++;
+    if (freq[0] % 2 !== 0) return false;
+    for (let r = 1; r <= Math.floor(k / 2); r++) {
+      if (r === k - r) { if (freq[r] % 2 !== 0) return false; }
+      else if (freq[r] !== freq[k-r]) return false;
+    }
+    return true;
+  },
+
+  'find-k-th-smallest-pair-distance': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const k = args[1] as number, n = nums.length;
+    let lo = 0, hi = nums[n-1]! - nums[0]!;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      let cnt = 0, l = 0;
+      for (let r = 0; r < n; r++) { while (nums[r]! - nums[l]! > mid) l++; cnt += r - l; }
+      if (cnt >= k) hi = mid; else lo = mid + 1;
+    }
+    return lo;
+  },
+
 };

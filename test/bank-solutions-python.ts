@@ -7327,4 +7327,76 @@ def maxProduct(nums):
             results.append(arr[idx][1] if idx >= 0 else '')
     return results
 `,
+  'minimum-cost-for-tickets': `def mincostTickets(days, costs):
+    day_set = set(days)
+    dp = [0] * 366
+    for i in range(1, 366):
+        if i not in day_set:
+            dp[i] = dp[i-1]
+        else:
+            dp[i] = min(
+                dp[i-1] + costs[0],
+                dp[max(0, i-7)] + costs[1],
+                dp[max(0, i-30)] + costs[2]
+            )
+    return dp[365]
+`,
+  'stone-game-ii': `def stoneGameII(piles):
+    from functools import lru_cache
+    n = len(piles)
+    suf = [0] * (n + 1)
+    for i in range(n-1, -1, -1):
+        suf[i] = suf[i+1] + piles[i]
+    @lru_cache(maxsize=None)
+    def dp(i, m):
+        if i >= n:
+            return 0
+        if 2*m >= n-i:
+            return suf[i]
+        return max(suf[i] - dp(i+x, max(m,x)) for x in range(1, 2*m+1))
+    return dp(0, 1)
+`,
+  'maximum-width-ramp': `def maxWidthRamp(nums):
+    st = []
+    for i, v in enumerate(nums):
+        if not st or v < nums[st[-1]]:
+            st.append(i)
+    ans = 0
+    for j in range(len(nums)-1, -1, -1):
+        while st and nums[st[-1]] <= nums[j]:
+            ans = max(ans, j - st.pop())
+    return ans
+`,
+  'check-if-array-pairs-divisible-by-k': `def canArrange(arr, k):
+    freq = [0] * k
+    for x in arr:
+        freq[x % k % k] += 1
+    if freq[0] % 2 != 0:
+        return False
+    for r in range(1, k // 2 + 1):
+        if r == k - r:
+            if freq[r] % 2 != 0:
+                return False
+        elif freq[r] != freq[k-r]:
+            return False
+    return True
+`,
+  'find-k-th-smallest-pair-distance': `def smallestDistancePair(nums, k):
+    import bisect
+    nums.sort()
+    n = len(nums)
+    lo, hi = 0, nums[-1] - nums[0]
+    while lo < hi:
+        mid = (lo + hi) // 2
+        cnt = l = 0
+        for r in range(n):
+            while nums[r] - nums[l] > mid:
+                l += 1
+            cnt += r - l
+        if cnt >= k:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
 };
