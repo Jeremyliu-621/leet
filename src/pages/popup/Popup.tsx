@@ -489,14 +489,15 @@ function StreakHeatmap({ history }: { history: readonly StreakDay[] }) {
   return (
     <section className="mt-4" aria-label="Solve activity heatmap">
       <h2 className="font-mono text-[9px] uppercase tracking-widest text-faint">Activity</h2>
-      <div className="mt-2 flex gap-0.5 overflow-x-auto" role="grid" aria-label="Last 12 weeks">
+      <div
+        className="mt-2 flex gap-0.5 overflow-x-auto"
+        aria-label="Last 12 weeks of solve activity"
+      >
         {columns.map((col, wi) => (
-          <div key={wi} className="flex flex-col gap-0.5" role="row">
+          <div key={wi} className="flex flex-col gap-0.5" aria-hidden="true">
             {col.map(({ date, count }) => (
               <div
                 key={date}
-                role="gridcell"
-                aria-label={`${date}: ${count} solve${count !== 1 ? 's' : ''}`}
                 title={`${date}: ${count} solve${count !== 1 ? 's' : ''}`}
                 className={`h-2 w-2 rounded-[1px] ${cellClass(count)}`}
               />
@@ -504,6 +505,11 @@ function StreakHeatmap({ history }: { history: readonly StreakDay[] }) {
           </div>
         ))}
       </div>
+      {/* Screen-reader summary of activity range */}
+      <p className="sr-only">
+        {cells.filter((c) => c.count > 0).length} active days in the last 12 weeks.{' '}
+        Total solves: {cells.reduce((s, c) => s + c.count, 0)}.
+      </p>
     </section>
   );
 }
@@ -596,6 +602,7 @@ function RecentSolvesList({ solves }: { solves: readonly RecentSolve[] }) {
   function timeAgo(ts: number): string {
     const diff = Date.now() - ts;
     const mins = Math.floor(diff / 60_000);
+    if (mins < 1) return 'just now';
     if (mins < 60) return `${mins}m ago`;
     const hrs = Math.floor(diff / 3_600_000);
     if (hrs < 24) return `${hrs}h ago`;
