@@ -8066,5 +8066,16 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return Number(ans);
   },
+  'increasing-decreasing-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const freq = new Array(26).fill(0);
+    for (const c of s) freq[c.charCodeAt(0) - 97]!++;
+    let result = '';
+    while (result.length < s.length) {
+      for (let i = 0; i < 26; i++) if (freq[i]! > 0) { result += String.fromCharCode(97 + i); freq[i]!--; }
+      for (let i = 25; i >= 0; i--) if (freq[i]! > 0) { result += String.fromCharCode(97 + i); freq[i]!--; }
+    }
+    return result;
+  },
 
 };

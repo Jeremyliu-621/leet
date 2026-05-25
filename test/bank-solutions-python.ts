@@ -7499,4 +7499,20 @@ def maxProduct(nums):
             r -= 1
     return ans
 `,
+  'increasing-decreasing-string': `
+def sortString(s):
+    from collections import Counter
+    freq = Counter(s)
+    result = []
+    while sum(freq.values()) > 0:
+        for c in 'abcdefghijklmnopqrstuvwxyz':
+            if freq[c] > 0:
+                result.append(c)
+                freq[c] -= 1
+        for c in 'zyxwvutsrqponmlkjihgfedcba':
+            if freq[c] > 0:
+                result.append(c)
+                freq[c] -= 1
+    return ''.join(result)
+`,
 };

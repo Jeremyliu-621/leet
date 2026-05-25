@@ -189,6 +189,7 @@ import { problem as findKthPositive } from './find-kth-positive';
 import { problem as minimumLengthStringOperations } from './minimum-length-string-operations';
 import { problem as largestIntegerDigitSwaps } from './largest-integer-digit-swaps';
 import { problem as uniqueMorseCodeWords } from './unique-morse-code-words';
+import { problem as increasingDecreasingString } from './increasing-decreasing-string';
 import { problem as numberOfGoodPairs } from './number-of-good-pairs';
 import { problem as checkIfArraySortedRotated } from './check-if-array-sorted-rotated';
 import { problem as maximumProductDifference } from './maximum-product-difference';
@@ -837,6 +838,7 @@ export const problems: readonly Problem[] = [
   minimumLengthStringOperations,
   largestIntegerDigitSwaps,
   uniqueMorseCodeWords,
+  increasingDecreasingString,
   numberOfGoodPairs,
   checkIfArraySortedRotated,
   maximumProductDifference,
