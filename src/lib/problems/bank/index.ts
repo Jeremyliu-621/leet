@@ -1352,6 +1352,9 @@ import { problem as reducingDishes } from './reducing-dishes';
 import { problem as minimumNumberOfSwapsToMakeStringBalanced } from './minimum-number-of-swaps-to-make-string-balanced';
 import { problem as numberOfSubstringsContainingAllThreeCharacters } from './number-of-substrings-containing-all-three-characters';
 import { problem as maximumScoreFromRemovingSubstrings } from './maximum-score-from-removing-substrings';
+import { problem as minimumDeletionsToMakeStringBalanced } from './minimum-deletions-to-make-string-balanced';
+import { problem as minimumDifferenceBetweenLargestAndSmallestValueInThreeMoves } from './minimum-difference-between-largest-and-smallest-value-in-three-moves';
+import { problem as shortestSubarrayToBeRemovedToMakeArraySorted } from './shortest-subarray-to-be-removed-to-make-array-sorted';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2752,4 +2755,7 @@ export const problems: readonly Problem[] = [
   minimumNumberOfSwapsToMakeStringBalanced,
   numberOfSubstringsContainingAllThreeCharacters,
   maximumScoreFromRemovingSubstrings,
+  minimumDeletionsToMakeStringBalanced,
+  minimumDifferenceBetweenLargestAndSmallestValueInThreeMoves,
+  shortestSubarrayToBeRemovedToMakeArraySorted,
 ];

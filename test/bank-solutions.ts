@@ -18060,6 +18060,40 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'minimum-deletions-to-make-string-balanced': (s: unknown) => {
+    let bCount = 0, dp = 0;
+    for (const c of s as string) {
+      if (c === 'b') bCount++;
+      else dp = Math.min(dp + 1, bCount);
+    }
+    return dp;
+  },
+
+  'minimum-difference-between-largest-and-smallest-value-in-three-moves': (nums: unknown) => {
+    const arr = [...(nums as number[])].sort((a, b) => a - b);
+    const n = arr.length;
+    if (n <= 4) return 0;
+    let res = Infinity;
+    for (let i = 0; i <= 3; i++) res = Math.min(res, arr[n - 1 - (3 - i)]! - arr[i]!);
+    return res;
+  },
+
+  'shortest-subarray-to-be-removed-to-make-array-sorted': (arr: unknown) => {
+    const a = arr as number[];
+    const n = a.length;
+    let right = n - 1;
+    while (right > 0 && a[right]! >= a[right - 1]!) right--;
+    if (right === 0) return 0;
+    let res = right;
+    let left = 0;
+    while (left < right && (left === 0 || a[left]! >= a[left - 1]!)) {
+      while (right < n && a[right]! < a[left]!) right++;
+      res = Math.min(res, right - left - 1);
+      left++;
+    }
+    return res;
+  },
+
   'maximum-score-from-removing-substrings': (s: unknown, x: unknown, y: unknown) => {
     function remove(str: string, first: string, second: string, val: number): [string, number] {
       const stack: string[] = [];

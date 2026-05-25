@@ -17919,6 +17919,43 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
     return ans
 `,
 
+  'minimum-deletions-to-make-string-balanced': `def minimumDeletions(s):
+    b_count = dp = 0
+    for c in s:
+        if c == 'b':
+            b_count += 1
+        else:
+            dp = min(dp + 1, b_count)
+    return dp
+`,
+
+  'minimum-difference-between-largest-and-smallest-value-in-three-moves': `def minDifference(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    if n <= 4:
+        return 0
+    nums.sort()
+    return min(nums[n - 1 - (3 - i)] - nums[i] for i in range(4))
+`,
+
+  'shortest-subarray-to-be-removed-to-make-array-sorted': `def findLengthOfShortestSubarray(arr):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    n = len(arr)
+    right = n - 1
+    while right > 0 and arr[right] >= arr[right - 1]:
+        right -= 1
+    if right == 0:
+        return 0
+    res = right
+    left = 0
+    while left < right and (left == 0 or arr[left] >= arr[left - 1]):
+        while right < n and arr[right] < arr[left]:
+            right += 1
+        res = min(res, right - left - 1)
+        left += 1
+    return res
+`,
+
   'maximum-score-from-removing-substrings': `def maximumGain(s, x, y):
     x, y = int(x), int(y)
     def remove(t, first, second, val):
