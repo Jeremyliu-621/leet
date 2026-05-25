@@ -1420,6 +1420,9 @@ import { problem as numberAfterDoubleReversal } from './number-after-a-double-re
 import { problem as dominoAndTrominoTiling } from './domino-and-tromino-tiling';
 import { problem as numberOfLinesToWriteString } from './number-of-lines-to-write-string';
 import { problem as findTheMinimumAndMaximumNumberOfNodesBetweenCriticalPoints } from './find-the-minimum-and-maximum-number-of-nodes-between-critical-points';
+import { problem as binaryTreeInorderTraversal } from './binary-tree-inorder-traversal';
+import { problem as binaryTreePreorderTraversal } from './binary-tree-preorder-traversal';
+import { problem as binaryTreePostorderTraversal } from './binary-tree-postorder-traversal';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2888,4 +2891,7 @@ export const problems: readonly Problem[] = [
   dominoAndTrominoTiling,
   numberOfLinesToWriteString,
   findTheMinimumAndMaximumNumberOfNodesBetweenCriticalPoints,
+  binaryTreeInorderTraversal,
+  binaryTreePreorderTraversal,
+  binaryTreePostorderTraversal,
 ];

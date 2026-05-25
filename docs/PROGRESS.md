@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1371 problems; 4353 tests green.
+**Current focus:** Bank at 1374 problems; 4362 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems (Batch 41+); UI/UX polish; Options/popup improvements.
 
@@ -382,6 +382,7 @@ Still pending:
 - [x] **3 more classic problems (Batch 38-local)** — greatest-common-divisor-of-strings (strings+math/easy, concatenation check + gcd length), maximum-distance-in-arrays (arrays/medium, two-pass running min/max from different arrays), path-with-maximum-gold (backtracking/medium, DFS with cell zeroing); bank at **1351**; 4323 tests.
 - [x] **5 more classic problems (Batch 39)** — convert-sorted-array-to-bst (tree/easy, midpoint recursion balanced BST), trim-a-binary-search-tree (tree+binary-search/medium, recursive prune out-of-range), finding-users-active-minutes (hash-map/medium, unique-minute Set per user), day-of-the-year (math+strings/easy, leap-year day formula), type-of-triangle (math/easy, sort+classify equilateral/isosceles/scalene/none); bank at **1361**; 4338 tests.
 - [x] **5 more classic problems (Batch 40)** — maximum-enemy-forts-that-can-be-captured (arrays+two-pointers/easy, scan non-zero pairs counting zeros between), minimum-amount-of-time-to-collect-garbage (arrays/medium, per-type travel to last occurrence), check-if-array-is-sorted-and-rotated (arrays/easy, count drops ≤1), nodes-between-critical-points (linked-list/medium, find min/max gap between critical point indices), number-after-a-double-reversal (math/easy, true iff num==0 or num%10!=0); bank at **1371**; 4353 tests.
+- [x] **3 more classic problems (Batch 39-local)** — domino-and-tromino-tiling (dp/medium, f(n)=2f(n-1)+f(n-3) mod 1e9+7), number-of-lines-to-write-string (strings+arrays/easy, greedy line packing), find-the-minimum-and-maximum-number-of-nodes-between-critical-points (linked-list/medium, scan critical points min-consecutive/max-span gap); bank at **1374**; 4362 tests.
 
 ---
 

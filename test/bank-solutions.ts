@@ -18980,4 +18980,43 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return [minDist, maxDist];
   },
 
+  'binary-tree-inorder-traversal': (root: unknown) => {
+    const arr = root as (number | null)[];
+    const result: number[] = [];
+    function inorder(node: _TN | null): void {
+      if (!node) return;
+      inorder(node.l);
+      result.push(node.v);
+      inorder(node.r);
+    }
+    inorder(_buildTree(arr));
+    return result;
+  },
+
+  'binary-tree-preorder-traversal': (root: unknown) => {
+    const arr = root as (number | null)[];
+    const result: number[] = [];
+    function preorder(node: _TN | null): void {
+      if (!node) return;
+      result.push(node.v);
+      preorder(node.l);
+      preorder(node.r);
+    }
+    preorder(_buildTree(arr));
+    return result;
+  },
+
+  'binary-tree-postorder-traversal': (root: unknown) => {
+    const arr = root as (number | null)[];
+    const result: number[] = [];
+    function postorder(node: _TN | null): void {
+      if (!node) return;
+      postorder(node.l);
+      postorder(node.r);
+      result.push(node.v);
+    }
+    postorder(_buildTree(arr));
+    return result;
+  },
+
 };

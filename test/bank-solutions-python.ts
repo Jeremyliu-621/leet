@@ -18983,4 +18983,40 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
     max_dist = criticals[-1] - criticals[0]
     return [min_dist, max_dist]
 `,
+
+  'binary-tree-inorder-traversal': `def inorderTraversal(root):
+    result = []
+    def helper(node):
+        if not node:
+            return
+        helper(node.left)
+        result.append(node.val)
+        helper(node.right)
+    helper(root)
+    return result
+`,
+
+  'binary-tree-preorder-traversal': `def preorderTraversal(root):
+    result = []
+    def helper(node):
+        if not node:
+            return
+        result.append(node.val)
+        helper(node.left)
+        helper(node.right)
+    helper(root)
+    return result
+`,
+
+  'binary-tree-postorder-traversal': `def postorderTraversal(root):
+    result = []
+    def helper(node):
+        if not node:
+            return
+        helper(node.left)
+        helper(node.right)
+        result.append(node.val)
+    helper(root)
+    return result
+`,
 };
