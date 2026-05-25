@@ -701,6 +701,11 @@ import { problem as mostFrequentEvenElement } from './most-frequent-even-element
 import { problem as findFirstPalindromicString } from './find-first-palindromic-string';
 import { problem as minimumNumberOperationsMakeArrayEmpty } from './minimum-number-operations-make-array-empty';
 import { problem as maximumDifferenceBetweenNodeAndAncestor } from './maximum-difference-between-node-and-ancestor';
+import { problem as jumpGameVI } from './jump-game-vi';
+import { problem as longestSubarrayMaxBitwiseAnd } from './longest-subarray-max-bitwise-and';
+import { problem as maximumEventsCanAttend } from './maximum-events-can-attend';
+import { problem as countNodesEqualAverageSubtree } from './count-nodes-equal-average-subtree';
+import { problem as maximumLevelSumBinaryTree } from './maximum-level-sum-binary-tree';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1424,4 +1429,13 @@ export const problems: readonly Problem[] = [
   minimumNumberOperationsMakeArrayEmpty,
   // tree — medium (new)
   maximumDifferenceBetweenNodeAndAncestor,
+  // dp + sliding-window — medium (new)
+  jumpGameVI,
+  // arrays — medium (new)
+  longestSubarrayMaxBitwiseAnd,
+  // heap — medium (new)
+  maximumEventsCanAttend,
+  // tree — medium (new)
+  countNodesEqualAverageSubtree,
+  maximumLevelSumBinaryTree,
 ];

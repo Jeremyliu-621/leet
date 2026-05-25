@@ -8772,4 +8772,77 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'jump-game-vi': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const dp = [nums[0]!]; const dq: number[] = [0];
+    for (let i = 1; i < nums.length; i++) {
+      while (dq.length && dq[0]! < i - k) dq.shift();
+      dp[i] = nums[i]! + dp[dq[0]!]!;
+      while (dq.length && dp[dq[dq.length - 1]!]! <= dp[i]!) dq.pop();
+      dq.push(i);
+    }
+    return dp[nums.length - 1]!;
+  },
+
+  'longest-subarray-max-bitwise-and': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const mx = Math.max(...nums);
+    let ans = 0, cur = 0;
+    for (const x of nums) { if (x === mx) { cur++; ans = Math.max(ans, cur); } else cur = 0; }
+    return ans;
+  },
+
+  'maximum-events-can-attend': (...args: unknown[]) => {
+    const events = (args[0] as number[][]).map(e => [...e]).sort((a, b) => a[0]! - b[0]!);
+    const heap: number[] = [];
+    let i = 0, day = 0, ans = 0;
+    while (i < events.length || heap.length > 0) {
+      if (heap.length === 0) day = events[i]![0]!;
+      while (i < events.length && events[i]![0]! <= day) {
+        heap.push(events[i]![1]!);
+        heap.sort((a, b) => a - b);
+        i++;
+      }
+      while (heap.length > 0 && heap[0]! < day) heap.shift();
+      if (heap.length > 0) { heap.shift(); ans++; }
+      day++;
+    }
+    return ans;
+  },
+
+  'count-nodes-equal-average-subtree': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const root = _buildTree(arr);
+    let ans = 0;
+    const dfs = (n: _TN | null): [number, number] => {
+      if (!n) return [0, 0];
+      const [ls, lc] = dfs(n.l); const [rs, rc] = dfs(n.r);
+      const s = n.v + ls + rs, c = 1 + lc + rc;
+      if (Math.floor(s / c) === n.v) ans++;
+      return [s, c];
+    };
+    dfs(root);
+    return ans;
+  },
+
+  'maximum-level-sum-binary-tree': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const root = _buildTree(arr);
+    if (!root) return 1;
+    let level = 1, ans = 1, mx = -Infinity;
+    const q: (_TN | null)[] = [root];
+    while (q.length) {
+      const n = q.length; let s = 0;
+      for (let i = 0; i < n; i++) {
+        const nd = q.shift()!;
+        s += nd.v;
+        if (nd.l) q.push(nd.l);
+        if (nd.r) q.push(nd.r);
+      }
+      if (s > mx) { mx = s; ans = level; }
+      level++;
+    }
+    return ans;
+  },
+
 };

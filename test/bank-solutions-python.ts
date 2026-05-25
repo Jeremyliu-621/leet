@@ -8226,4 +8226,101 @@ def maxAncestorDiff(root):
     dfs(root, root.val, root.val)
     return ans
 `,
+
+  'jump-game-vi': `
+from collections import deque
+def maxResult(nums, k):
+    nums = list(nums)
+    n = len(nums)
+    dp = [0] * n
+    dp[0] = nums[0]
+    dq = deque([0])
+    for i in range(1, n):
+        while dq and dq[0] < i - k:
+            dq.popleft()
+        dp[i] = nums[i] + dp[dq[0]]
+        while dq and dp[dq[-1]] <= dp[i]:
+            dq.pop()
+        dq.append(i)
+    return dp[n - 1]
+`,
+
+  'longest-subarray-max-bitwise-and': `
+def longestSubarray(nums):
+    nums = list(nums)
+    mx = max(nums)
+    ans = cur = 0
+    for x in nums:
+        if x == mx:
+            cur += 1
+            ans = max(ans, cur)
+        else:
+            cur = 0
+    return ans
+`,
+
+  'maximum-events-can-attend': `
+import heapq
+def maxEvents(events):
+    events = sorted([list(e) for e in events], key=lambda x: x[0])
+    heap = []
+    i = 0
+    n = len(events)
+    day = 0
+    ans = 0
+    while i < n or heap:
+        if not heap:
+            day = events[i][0]
+        while i < n and events[i][0] <= day:
+            heapq.heappush(heap, events[i][1])
+            i += 1
+        while heap and heap[0] < day:
+            heapq.heappop(heap)
+        if heap:
+            heapq.heappop(heap)
+            ans += 1
+        day += 1
+    return ans
+`,
+
+  'count-nodes-equal-average-subtree': `
+def averageOfSubtree(root):
+    ans = [0]
+    def dfs(node):
+        if node is None:
+            return 0, 0
+        ls, lc = dfs(node.left)
+        rs, rc = dfs(node.right)
+        s = node.val + ls + rs
+        c = 1 + lc + rc
+        if s // c == node.val:
+            ans[0] += 1
+        return s, c
+    dfs(root)
+    return ans[0]
+`,
+
+  'maximum-level-sum-binary-tree': `
+from collections import deque
+def maxLevelSum(root):
+    level = 1
+    ans = 1
+    mx = float('-inf')
+    q = deque([root])
+    while q:
+        n = len(q)
+        s = 0
+        for _ in range(n):
+            nd = q.popleft()
+            s += nd.val
+            if nd.left:
+                q.append(nd.left)
+            if nd.right:
+                q.append(nd.right)
+        if s > mx:
+            mx = s
+            ans = level
+        level += 1
+    return ans
+`,
 };
