@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 617 problems; 2122 tests; growing past 600.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (2122 tests passing).
-**Next up:** Continue growing bank; more medium/hard problems. Browser-zoom QA (L).
+**Current focus:** Bank at 620 problems; 2131 tests; growing past 650.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (2131 tests passing).
+**Next up:** Continue growing bank; more medium/hard problems; draggable splitter QA at high zoom.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -298,6 +298,8 @@ Still pending:
 - [x] **5 more new problems** — car-pooling (arrays/medium), most-profit-assigning-work (binary-search/medium), fruit-into-baskets (sliding-window/medium), minimum-swaps-string-balanced (arrays/medium), sum-of-subarray-ranges (arrays+stack/medium); 2044 tests; bank at 594+.
 - [x] **🎉 600-problem milestone** — reverse-words-in-string-iii, maximum-product-adjacent-elements, split-string-balance, increasing-decreasing-string, students-unable-to-eat-lunch, create-target-array-given-order, maximum-ascending-subarray-sum, minimum-consecutive-cards-pickup, divisor-game, minimum-time-visiting-all-points, largest-local-values-matrix, percentage-letter-in-string, number-of-weak-characters; 2071 tests; bank at 600.
 - [x] **17 more new problems** — arithmetic-slices, max-vowels-substring, min-swaps-group-all-ones, k-diff-pairs, hand-of-straights, min-domino-rotations, furthest-building-ladders, ipo, relative-sort-array, permutations-ii, letter-tile-possibilities, different-ways-add-parentheses (plus 5 from remote: maximize-confusion-exam, sum-of-all-subset-xor, continuous-subarray-sum, equal-row-column-pairs, determine-if-two-strings-close); 2122 tests; bank at 617.
+- [x] **3 more problems** — integer-break (dp/medium), min-cost-move-chips (math/easy), binary-watch (math/easy); 2131 tests; bank at 620.
+- [x] **Browser-zoom QA** — popup `overflow-x-hidden` + heatmap `overflow-x-auto` to prevent horizontal scroll at 150%/200% zoom.
 
 ---
 
