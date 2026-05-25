@@ -865,6 +865,16 @@ import { problem as findTriangularSum } from './find-triangular-sum';
 import { problem as twoFurthestHousesDifferentColors } from './two-furthest-houses-different-colors';
 import { problem as countLatticePointsCircle } from './count-lattice-points-circle';
 import { problem as nearestExitMaze } from './nearest-exit-maze';
+import { problem as climbingStairsKSteps } from './climbing-stairs-k-steps';
+import { problem as maximumXorTwoNumbers } from './maximum-xor-two-numbers';
+import { problem as removeStonesToMinimizeTotal } from './remove-stones-to-minimize-total';
+import { problem as maximizeHappinessOfSelectedChildren } from './maximize-happiness-of-selected-children';
+import { problem as findTheMaximumAchievableNumber } from './find-the-maximum-achievable-number';
+import { problem as partitionArrayMaximumDifference } from './partition-array-maximum-difference';
+import { problem as removeDuplicatesFromSortedListII } from './remove-duplicates-from-sorted-list-ii';
+import { problem as countNumberOfHomogenousSubstrings } from './count-number-of-homogenous-substrings';
+import { problem as stoneGameVI } from './stone-game-vi';
+import { problem as countSpecialQuadruplets } from './count-special-quadruplets';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1778,4 +1788,14 @@ export const problems: readonly Problem[] = [
   twoFurthestHousesDifferentColors,
   countLatticePointsCircle,
   nearestExitMaze,
+  climbingStairsKSteps,
+  maximumXorTwoNumbers,
+  removeStonesToMinimizeTotal,
+  maximizeHappinessOfSelectedChildren,
+  findTheMaximumAchievableNumber,
+  partitionArrayMaximumDifference,
+  removeDuplicatesFromSortedListII,
+  countNumberOfHomogenousSubstrings,
+  stoneGameVI,
+  countSpecialQuadruplets,
 ];

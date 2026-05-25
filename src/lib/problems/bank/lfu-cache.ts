@@ -1,58 +1,5 @@
 import type { Problem } from '../types';
 
-const JS_PREAMBLE = `
-function lfuCacheRunner(capacity, operations) {
-  const keyMap = new Map(); // key -> { value, freq }
-  const freqMap = new Map(); // freq -> Map of keys (insertion-ordered for LRU)
-  let minFreq = 0;
-  const results = [];
-
-  function incrementFreq(key) {
-    const entry = keyMap.get(key);
-    const oldFreq = entry.freq;
-    entry.freq += 1;
-    const newFreq = entry.freq;
-    freqMap.get(oldFreq).delete(key);
-    if (freqMap.get(oldFreq).size === 0) {
-      freqMap.delete(oldFreq);
-      if (minFreq === oldFreq) minFreq = newFreq;
-    }
-    if (!freqMap.has(newFreq)) freqMap.set(newFreq, new Map());
-    freqMap.get(newFreq).set(key, true);
-  }
-
-  for (const op of operations) {
-    if (op[0] === 'get') {
-      const key = op[1];
-      if (!keyMap.has(key)) { results.push(-1); continue; }
-      incrementFreq(key);
-      results.push(keyMap.get(key).value);
-    } else {
-      const key = op[1];
-      const value = op[2];
-      if (capacity <= 0) { results.push(null); continue; }
-      if (keyMap.has(key)) {
-        keyMap.get(key).value = value;
-        incrementFreq(key);
-      } else {
-        if (keyMap.size >= capacity) {
-          const lruBucket = freqMap.get(minFreq);
-          const evictKey = lruBucket.keys().next().value;
-          lruBucket.delete(evictKey);
-          if (lruBucket.size === 0) freqMap.delete(minFreq);
-          keyMap.delete(evictKey);
-        }
-        keyMap.set(key, { value, freq: 1 });
-        if (!freqMap.has(1)) freqMap.set(1, new Map());
-        freqMap.get(1).set(key, true);
-        minFreq = 1;
-      }
-    }
-  }
-  return results.filter(r => r !== null);
-}
-`.trim();
-
 export const problem: Problem = {
   id: 'lfu-cache',
   title: 'LFU Cache',
@@ -84,7 +31,6 @@ The LFU cache evicts the least frequently used key when capacity is exceeded. If
   ],
   functionName: 'lfuCache',
   params: ['capacity', 'operations'],
-  preamble: { javascript: JS_PREAMBLE },
   starterCode: {
     javascript: `function lfuCache(capacity, operations) {
 

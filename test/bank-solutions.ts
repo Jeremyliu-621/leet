@@ -10708,6 +10708,132 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       }
     }
     return -1;
+  'climbing-stairs-k-steps': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const k = args[1] as number;
+    const MOD = 1_000_000_007;
+    const dp = new Array<number>(n + 1).fill(0);
+    dp[0] = 1;
+    for (let i = 1; i <= n; i++) {
+      for (let j = 1; j <= Math.min(k, i); j++) {
+        dp[i] = ((dp[i] ?? 0) + (dp[i - j] ?? 0)) % MOD;
+      }
+    }
+    return dp[n];
+  },
+
+  'maximum-xor-two-numbers': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let max = 0;
+    for (let i = 0; i < nums.length; i++) {
+      for (let j = i; j < nums.length; j++) {
+        max = Math.max(max, (nums[i] as number) ^ (nums[j] as number));
+      }
+    }
+    return max;
+  },
+
+  'remove-stones-to-minimize-total': (...args: unknown[]) => {
+    const piles = [...(args[0] as number[])];
+    const k = args[1] as number;
+    for (let op = 0; op < k; op++) {
+      piles.sort((a, b) => b - a);
+      piles[0] = Math.ceil((piles[0] as number) / 2);
+    }
+    return piles.reduce((a, b) => a + b, 0);
+  },
+
+  'maximize-happiness-of-selected-children': (...args: unknown[]) => {
+    const happiness = [...(args[0] as number[])];
+    const k = args[1] as number;
+    happiness.sort((a, b) => b - a);
+    let total = 0;
+    for (let i = 0; i < k; i++) {
+      total += Math.max(0, (happiness[i] as number) - i);
+    }
+    return total;
+  },
+
+  'find-the-maximum-achievable-number': (...args: unknown[]) => {
+    const num = args[0] as number;
+    const t = args[1] as number;
+    return num + 2 * t;
+  },
+
+  'partition-array-maximum-difference': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    const k = args[1] as number;
+    nums.sort((a, b) => a - b);
+    let groups = 1;
+    let start = nums[0] as number;
+    for (let i = 1; i < nums.length; i++) {
+      if ((nums[i] as number) - start > k) {
+        groups++;
+        start = nums[i] as number;
+      }
+    }
+    return groups;
+  },
+
+  'remove-duplicates-from-sorted-list-ii': (...args: unknown[]) => {
+    const head = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const v of head) freq.set(v, (freq.get(v) ?? 0) + 1);
+    return head.filter(v => freq.get(v) === 1);
+  },
+
+  'count-number-of-homogenous-substrings': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const MOD = 1_000_000_007;
+    let ans = 0;
+    let cnt = 1;
+    for (let i = 1; i <= s.length; i++) {
+      if (i < s.length && s[i] === s[i - 1]) {
+        cnt++;
+      } else {
+        ans = (ans + Math.floor(cnt * (cnt + 1) / 2)) % MOD;
+        cnt = 1;
+      }
+    }
+    return ans;
+  },
+
+  'stone-game-vi': (...args: unknown[]) => {
+    const aliceValues = args[0] as number[];
+    const bobValues = args[1] as number[];
+    const n = aliceValues.length;
+    const stones = Array.from({ length: n }, (_, i) => i);
+    stones.sort((a, b) =>
+      ((bobValues[b] as number) + (aliceValues[b] as number)) -
+      ((bobValues[a] as number) + (aliceValues[a] as number)),
+    );
+    let alice = 0;
+    let bob = 0;
+    for (let i = 0; i < n; i++) {
+      if (i % 2 === 0) alice += aliceValues[stones[i] as number] as number;
+      else bob += bobValues[stones[i] as number] as number;
+    }
+    if (alice > bob) return 1;
+    if (bob > alice) return -1;
+    return 0;
+  },
+
+  'count-special-quadruplets': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    let count = 0;
+    for (let a = 0; a < n - 3; a++) {
+      for (let b = a + 1; b < n - 2; b++) {
+        for (let c = b + 1; c < n - 1; c++) {
+          for (let d = c + 1; d < n; d++) {
+            if ((nums[a] as number) + (nums[b] as number) + (nums[c] as number) === (nums[d] as number)) {
+              count++;
+            }
+          }
+        }
+      }
+    }
+    return count;
   },
 
 };

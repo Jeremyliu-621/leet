@@ -10184,6 +10184,7 @@ def checkArithmeticSubarrays(nums, l, r):
     return result
 `,
 
+
   'check-valid-matrix': `
 def checkValid(matrix):
     n = len(matrix)
@@ -10350,5 +10351,88 @@ def nearestExit(maze, entrance):
             maze[nr][nc] = '+'
             q.append((nr, nc, steps+1))
     return -1
+  'climbing-stairs-k-steps': `def climbStairsK(n: int, k: int) -> int:
+    MOD = 10**9 + 7
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    for i in range(1, n + 1):
+        for j in range(1, min(k, i) + 1):
+            dp[i] = (dp[i] + dp[i - j]) % MOD
+    return dp[n]
+`,
+  'maximum-xor-two-numbers': `def findMaximumXOR(nums: list[int]) -> int:
+    max_xor = 0
+    for i in range(len(nums)):
+        for j in range(i, len(nums)):
+            max_xor = max(max_xor, nums[i] ^ nums[j])
+    return max_xor
+`,
+  'remove-stones-to-minimize-total': `def minStoneSum(piles: list[int], k: int) -> int:
+    import heapq
+    heap = [-p for p in piles]
+    heapq.heapify(heap)
+    for _ in range(k):
+        largest = -heapq.heappop(heap)
+        heapq.heappush(heap, -(largest - largest // 2))
+    return -sum(heap)
+`,
+  'maximize-happiness-of-selected-children': `def maximumHappinessSum(happiness: list[int], k: int) -> int:
+    happiness = sorted(happiness, reverse=True)
+    total = 0
+    for i in range(k):
+        total += max(0, happiness[i] - i)
+    return total
+`,
+  'find-the-maximum-achievable-number': `def theMaximumAchievableX(num: int, t: int) -> int:
+    return num + 2 * t
+`,
+  'partition-array-maximum-difference': `def partitionArray(nums: list[int], k: int) -> int:
+    nums = sorted(nums)
+    groups = 1
+    start = nums[0]
+    for i in range(1, len(nums)):
+        if nums[i] - start > k:
+            groups += 1
+            start = nums[i]
+    return groups
+`,
+  'remove-duplicates-from-sorted-list-ii': `def deleteDuplicatesII(head: list[int]) -> list[int]:
+    from collections import Counter
+    freq = Counter(head)
+    return [v for v in head if freq[v] == 1]
+`,
+  'count-number-of-homogenous-substrings': `def countHomogenous(s: str) -> int:
+    MOD = 10**9 + 7
+    ans = 0
+    cnt = 1
+    for i in range(1, len(s) + 1):
+        if i < len(s) and s[i] == s[i - 1]:
+            cnt += 1
+        else:
+            ans = (ans + cnt * (cnt + 1) // 2) % MOD
+            cnt = 1
+    return ans
+`,
+  'stone-game-vi': `def stoneGameVI(aliceValues: list[int], bobValues: list[int]) -> int:
+    n = len(aliceValues)
+    stones = sorted(range(n), key=lambda i: -(aliceValues[i] + bobValues[i]))
+    alice = sum(aliceValues[stones[i]] for i in range(0, n, 2))
+    bob = sum(bobValues[stones[i]] for i in range(1, n, 2))
+    if alice > bob:
+        return 1
+    elif bob > alice:
+        return -1
+    return 0
+`,
+  'count-special-quadruplets': `def countQuadruplets(nums: list[int]) -> int:
+    n = len(nums)
+    count = 0
+    for a in range(n - 3):
+        for b in range(a + 1, n - 2):
+            for c in range(b + 1, n - 1):
+                for d in range(c + 1, n):
+                    if nums[a] + nums[b] + nums[c] == nums[d]:
+                        count += 1
+    return count
 `,
 };
