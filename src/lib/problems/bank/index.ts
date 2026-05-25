@@ -681,6 +681,9 @@ import { problem as differentWaysAddParentheses } from './different-ways-add-par
 import { problem as integerBreak } from './integer-break';
 import { problem as minimumCostMoveChips } from './minimum-cost-move-chips';
 import { problem as binaryWatch } from './binary-watch';
+import { problem as minimumAddMakeValidParentheses } from './minimum-add-make-valid-parentheses';
+import { problem as palindromicSubstrings } from './palindromic-substrings';
+import { problem as partitionString } from './partition-string';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1367,4 +1370,8 @@ export const problems: readonly Problem[] = [
   integerBreak,
   minimumCostMoveChips,
   binaryWatch,
+  // strings — medium (new)
+  minimumAddMakeValidParentheses,
+  palindromicSubstrings,
+  partitionString,
 ];

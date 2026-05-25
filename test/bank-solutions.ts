@@ -8501,4 +8501,36 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return times;
   },
 
+  'minimum-add-make-valid-parentheses': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let open = 0, close = 0;
+    for (const c of s) {
+      if (c === '(') open++;
+      else if (open > 0) open--;
+      else close++;
+    }
+    return open + close;
+  },
+
+  'palindromic-substrings': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let count = 0;
+    for (let center = 0; center < 2 * s.length - 1; center++) {
+      let l = center >> 1, r = l + (center & 1);
+      while (l >= 0 && r < s.length && s[l] === s[r]) { count++; l--; r++; }
+    }
+    return count;
+  },
+
+  'partition-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let parts = 1;
+    const seen = new Set<string>();
+    for (const c of s) {
+      if (seen.has(c)) { parts++; seen.clear(); }
+      seen.add(c);
+    }
+    return parts;
+  },
+
 };

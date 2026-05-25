@@ -7955,4 +7955,42 @@ def readBinaryWatch(turnedOn):
                 times.append(f'{h}:{m:02d}')
     return times
 `,
+
+  'minimum-add-make-valid-parentheses': `
+def minAddToMakeValid(s):
+    open_count = close_count = 0
+    for c in s:
+        if c == '(':
+            open_count += 1
+        elif open_count > 0:
+            open_count -= 1
+        else:
+            close_count += 1
+    return open_count + close_count
+`,
+
+  'palindromic-substrings': `
+def countSubstrings(s):
+    count = 0
+    for center in range(2 * len(s) - 1):
+        l = center // 2
+        r = l + (center % 2)
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            count += 1
+            l -= 1
+            r += 1
+    return count
+`,
+
+  'partition-string': `
+def partitionString(s):
+    parts = 1
+    seen = set()
+    for c in s:
+        if c in seen:
+            parts += 1
+            seen = set()
+        seen.add(c)
+    return parts
+`,
 };
