@@ -8671,4 +8671,77 @@ def deepestLeavesSum(root):
                 q.append(nd.right)
     return level_sum
 `,
+
+  'count-subarrays-fixed-bounds': `
+def countSubarrays(nums, minK, maxK):
+    nums = list(nums)
+    min_pos = max_pos = bad_pos = -1
+    ans = 0
+    for i, x in enumerate(nums):
+        if x < minK or x > maxK:
+            bad_pos = i
+        if x == minK:
+            min_pos = i
+        if x == maxK:
+            max_pos = i
+        ans += max(0, min(min_pos, max_pos) - bad_pos)
+    return ans
+`,
+
+  'amount-of-time-for-binary-tree-to-be-infected': `
+from collections import defaultdict, deque
+def amountOfTime(root, start):
+    adj = defaultdict(list)
+    def build(node):
+        if not node:
+            return
+        if node.left:
+            adj[node.val].append(node.left.val)
+            adj[node.left.val].append(node.val)
+            build(node.left)
+        if node.right:
+            adj[node.val].append(node.right.val)
+            adj[node.right.val].append(node.val)
+            build(node.right)
+    build(root)
+    visited = {start}
+    q = deque([start])
+    ans = 0
+    while q:
+        nxt = []
+        for _ in range(len(q)):
+            u = q.popleft()
+            for v in adj[u]:
+                if v not in visited:
+                    visited.add(v)
+                    nxt.append(v)
+        if nxt:
+            ans += 1
+            q.extend(nxt)
+    return ans
+`,
+
+  'count-collisions-on-road': `
+def countCollisions(directions):
+    s = list(directions)
+    n = len(s)
+    l = 0
+    while l < n and s[l] == 'L':
+        l += 1
+    r = n - 1
+    while r >= 0 and s[r] == 'R':
+        r -= 1
+    return sum(1 for c in s[l:r+1] if c != 'S')
+`,
+
+  'maximum-alternating-subsequence-sum': `
+def maxAlternatingSum(nums):
+    nums = list(nums)
+    even = odd = 0
+    for x in nums:
+        ne = max(even, odd + x)
+        no = max(odd, even - x)
+        even, odd = ne, no
+    return even
+`,
 };

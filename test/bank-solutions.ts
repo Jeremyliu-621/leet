@@ -9157,4 +9157,59 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return levelSum;
   },
 
+  'count-subarrays-fixed-bounds': (...args: unknown[]) => {
+    const nums = args[0] as number[], minK = args[1] as number, maxK = args[2] as number;
+    let minPos = -1, maxPos = -1, badPos = -1, ans = 0;
+    for (let i = 0; i < nums.length; i++) {
+      if (nums[i]! < minK || nums[i]! > maxK) badPos = i;
+      if (nums[i] === minK) minPos = i;
+      if (nums[i] === maxK) maxPos = i;
+      ans += Math.max(0, Math.min(minPos, maxPos) - badPos);
+    }
+    return ans;
+  },
+
+  'amount-of-time-for-binary-tree-to-be-infected': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[], start = args[1] as number;
+    const root = _buildTree(arr);
+    const adj = new Map<number, number[]>();
+    const build = (n: _TN | null) => {
+      if (!n) return;
+      if (!adj.has(n.v)) adj.set(n.v, []);
+      if (n.l) { adj.get(n.v)!.push(n.l.v); if (!adj.has(n.l.v)) adj.set(n.l.v, []); adj.get(n.l.v)!.push(n.v); build(n.l); }
+      if (n.r) { adj.get(n.v)!.push(n.r.v); if (!adj.has(n.r.v)) adj.set(n.r.v, []); adj.get(n.r.v)!.push(n.v); build(n.r); }
+    };
+    build(root);
+    const visited = new Set<number>([start]);
+    let q = [start], ans = 0;
+    while (q.length) {
+      const next: number[] = [];
+      for (const u of q) for (const v of (adj.get(u) ?? [])) if (!visited.has(v)) { visited.add(v); next.push(v); }
+      if (next.length) ans++;
+      q = next;
+    }
+    return ans;
+  },
+
+  'count-collisions-on-road': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let l = 0, r = s.length - 1;
+    while (l < s.length && s[l] === 'L') l++;
+    while (r >= 0 && s[r] === 'R') r--;
+    let ans = 0;
+    for (let i = l; i <= r; i++) if (s[i] !== 'S') ans++;
+    return ans;
+  },
+
+  'maximum-alternating-subsequence-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let even = 0, odd = 0;
+    for (const x of nums) {
+      const ne = Math.max(even, odd + x);
+      const no = Math.max(odd, even - x);
+      even = ne; odd = no;
+    }
+    return even
+  },
+
 };

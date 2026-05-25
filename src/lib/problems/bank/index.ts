@@ -723,16 +723,15 @@ import { problem as sortedArrayToBst } from './sorted-array-to-bst';
 import { problem as countSortedVowelStrings } from './count-sorted-vowel-strings';
 import { problem as exclusiveTimeOfFunctions } from './exclusive-time-of-functions';
 import { problem as robotReturnToOrigin } from './robot-return-to-origin';
-// math — medium (new)
 import { problem as factorialTrailingZeroes } from './factorial-trailing-zeroes';
-// dp + math — medium (new)
 import { problem as uniqueBinarySearchTrees } from './unique-binary-search-trees';
-// arrays — medium (new)
 import { problem as nonDecreasingArray } from './non-decreasing-array';
-// dp + arrays — hard (new)
 import { problem as bestTimeBuySellIII } from './best-time-buy-sell-iii';
-// tree — medium (new)
 import { problem as deepestLeavesSum } from './deepest-leaves-sum';
+import { problem as countSubarraysFixedBounds } from './count-subarrays-fixed-bounds';
+import { problem as amountOfTimeForBinaryTreeToBeInfected } from './amount-of-time-for-binary-tree-to-be-infected';
+import { problem as countCollisionsOnRoad } from './count-collisions-on-road';
+import { problem as maximumAlternatingSubsequenceSum } from './maximum-alternating-subsequence-sum';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1499,4 +1498,12 @@ export const problems: readonly Problem[] = [
   cheapestFlightsWithinKStops,
   // tree + binary-search — easy (new)
   sortedArrayToBst,
+  // arrays + sliding-window — hard (new)
+  countSubarraysFixedBounds,
+  // tree + graph — medium (new)
+  amountOfTimeForBinaryTreeToBeInfected,
+  // arrays + stack — medium (new)
+  countCollisionsOnRoad,
+  // arrays + dp — medium (new)
+  maximumAlternatingSubsequenceSum,
 ];
