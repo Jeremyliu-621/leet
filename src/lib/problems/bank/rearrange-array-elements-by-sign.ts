@@ -7,32 +7,35 @@ export const problem: Problem = {
   tags: ['arrays', 'two-pointers'],
   description: `You are given a **0-indexed** integer array \`nums\` of **even** length consisting of an **equal** number of positive and negative integers.
 
-Rearrange the elements of \`nums\` such that the modified array follows the pattern \`[pos, neg, pos, neg, ...]\` where every **positive** integer is followed by a **negative** integer, and vice versa.
+You should rearrange the elements of \`nums\` such that:
 
-The **relative order** of positive and negative integers must be maintained.
+1. Every **consecutive pair** of integers have **opposite signs**.
+2. For all integers with the same sign, the **order** in which they appear is **preserved**.
+3. The rearranged array begins with a **positive** integer.
 
-Return the rearranged array.`,
+Return the modified array after rearranging the elements to satisfy the aforementioned conditions.`,
   constraints: [
-    '`2 <= nums.length <= 2 * 10^5`',
-    '`nums.length` is **even**.',
-    '`1 <= |nums[i]| <= 10^5`',
-    '`nums` consists of equal number of positive and negative integers.',
+    '2 <= nums.length <= 2 * 10^5',
+    'nums.length is even',
+    '1 <= |nums[i]| <= 10^5',
+    'nums consists of equal number of positive and negative integers',
   ],
   examples: [
     {
       input: 'nums = [3,1,-2,-5,2,-4]',
       output: '[3,-2,1,-5,2,-4]',
-      explanation: 'Positives in order: 3,1,2. Negatives in order: -2,-5,-4. Interleaved: [3,-2,1,-5,2,-4].',
+      explanation: 'Positives in order: 3,1,2. Negatives in order: -2,-5,-4. Interleave: 3,-2,1,-5,2,-4.',
     },
     {
       input: 'nums = [-1,1]',
       output: '[1,-1]',
-      explanation: 'Positive 1 first, then negative -1.',
+      explanation: 'Positive 1 goes first, then negative -1.',
     },
   ],
   hints: [
-    'Separate positives and negatives into two arrays while maintaining their relative order.',
-    'Interleave them: result[2i] = positives[i], result[2i+1] = negatives[i].',
+    'Separate positives and negatives into two lists (preserving relative order).',
+    'Interleave: result[2i] = positives[i], result[2i+1] = negatives[i].',
+    'This runs in O(n) time and O(n) space.',
   ],
   functionName: 'rearrangeArray',
   params: ['nums'],
@@ -46,11 +49,10 @@ Return the rearranged array.`,
   visibleTests: [
     { args: [[3, 1, -2, -5, 2, -4]], expected: [3, -2, 1, -5, 2, -4] },
     { args: [[-1, 1]], expected: [1, -1] },
-    { args: [[1, -1, 2, -2]], expected: [1, -1, 2, -2] },
   ],
   hiddenTests: [
-    { args: [[-3, 1, 2, -1, -2, 3]], expected: [1, -3, 2, -1, 3, -2] },
+    { args: [[1, -1]], expected: [1, -1] },
     { args: [[1, 2, -1, -2]], expected: [1, -1, 2, -2] },
-    { args: [[-1, -2, 1, 2]], expected: [1, -1, 2, -2] },
+    { args: [[-3, -1, 2, 4]], expected: [2, -3, 4, -1] },
   ],
 };

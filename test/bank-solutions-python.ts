@@ -10978,4 +10978,31 @@ def nearestExit(maze, entrance):
         best = max(best, right - left)
     return best
 `,
+
+  'minimum-vertices-to-reach-all-nodes': `def findSmallestSetOfVertices(n: int, edges: list[list[int]]) -> list[int]:
+    has_incoming = set(to for _, to in edges)
+    return [i for i in range(n) if i not in has_incoming]
+`,
+
+  'count-odd-numbers-in-interval-range': `def countOdds(low: int, high: int) -> int:
+    def count_odds_up_to(n):
+        return (n + 1) // 2
+    return count_odds_up_to(high) - count_odds_up_to(low - 1)
+`,
+
+  'make-sum-divisible-by-p': `def minSubarray(nums: list[int], p: int) -> int:
+    target = sum(nums) % p
+    if target == 0:
+        return 0
+    last_seen = {0: -1}
+    prefix = 0
+    best = len(nums)
+    for i, v in enumerate(nums):
+        prefix = (prefix + v) % p
+        need = (prefix - target + p) % p
+        if need in last_seen:
+            best = min(best, i - last_seen[need])
+        last_seen[prefix] = i
+    return best if best < len(nums) else -1
+`,
 };

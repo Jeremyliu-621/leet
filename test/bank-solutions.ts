@@ -11513,4 +11513,41 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best;
   },
 
+  'minimum-vertices-to-reach-all-nodes': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const hasIncoming = new Set<number>();
+    for (const [, to] of edges) hasIncoming.add(to as number);
+    const result: number[] = [];
+    for (let i = 0; i < n; i++) {
+      if (!hasIncoming.has(i)) result.push(i);
+    }
+    return result;
+  },
+
+  'count-odd-numbers-in-interval-range': (...args: unknown[]) => {
+    const low = args[0] as number;
+    const high = args[1] as number;
+    const countOdds = (n: number) => Math.floor((n + 1) / 2);
+    return countOdds(high) - countOdds(low - 1);
+  },
+
+  'make-sum-divisible-by-p': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const p = args[1] as number;
+    const target = nums.reduce((s, v) => (s + (v as number)) % p, 0);
+    if (target === 0) return 0;
+    const lastSeen = new Map<number, number>([[0, -1]]);
+    let prefix = 0;
+    let best = nums.length;
+    for (let i = 0; i < nums.length; i++) {
+      prefix = (prefix + (nums[i] as number)) % p;
+      const need = (prefix - target + p) % p;
+      const j = lastSeen.get(need);
+      if (j !== undefined) best = Math.min(best, i - j);
+      lastSeen.set(prefix, i);
+    }
+    return best === nums.length ? -1 : best;
+  },
+
 };

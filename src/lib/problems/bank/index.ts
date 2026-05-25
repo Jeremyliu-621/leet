@@ -922,6 +922,9 @@ import { problem as minimumTimeToCollectAllApples } from './minimum-time-to-coll
 import { problem as findPrefixCommonArrayOfTwoArrays } from './find-prefix-common-array-of-two-arrays';
 import { problem as minimumTimeToCollectGarbage } from './minimum-time-to-collect-garbage';
 import { problem as longestSubarrayOfOnesAfterDeleting } from './longest-subarray-of-ones-after-deleting';
+import { problem as minimumVerticesToReachAllNodes } from './minimum-vertices-to-reach-all-nodes';
+import { problem as countOddNumbersInIntervalRange } from './count-odd-numbers-in-interval-range';
+import { problem as makeSumDivisibleByP } from './make-sum-divisible-by-p';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1892,4 +1895,7 @@ export const problems: readonly Problem[] = [
   findPrefixCommonArrayOfTwoArrays,
   minimumTimeToCollectGarbage,
   longestSubarrayOfOnesAfterDeleting,
+  minimumVerticesToReachAllNodes,
+  countOddNumbersInIntervalRange,
+  makeSumDivisibleByP,
 ];
