@@ -9689,4 +9689,109 @@ def oddString(words):
         if len(v) == 1:
             return v[0]
 `,
+
+  'best-time-buy-sell-transaction-fee': `
+def maxProfit(prices, fee):
+    prices = list(prices)
+    cash, hold = 0, -prices[0]
+    for p in prices[1:]:
+        cash = max(cash, hold + p - fee)
+        hold = max(hold, cash - p)
+    return cash
+`,
+
+  'maximal-rectangle': `
+def maximalRectangle(matrix):
+    matrix = [list(row) for row in matrix]
+    if not matrix or not matrix[0]:
+        return 0
+    cols = len(matrix[0])
+    heights = [0] * cols
+    max_area = 0
+    def largest_rect(h):
+        stack, area = [], 0
+        for i in range(len(h) + 1):
+            cur = 0 if i == len(h) else h[i]
+            while stack and h[stack[-1]] > cur:
+                height = h[stack.pop()]
+                width = i if not stack else i - stack[-1] - 1
+                area = max(area, height * width)
+            stack.append(i)
+        return area
+    for row in matrix:
+        for c in range(cols):
+            heights[c] = heights[c] + 1 if row[c] == '1' else 0
+        max_area = max(max_area, largest_rect(heights))
+    return max_area
+`,
+
+  'stone-game-iii': `
+def stoneGameIII(stoneValue):
+    stoneValue = list(stoneValue)
+    n = len(stoneValue)
+    dp = [float('-inf')] * (n + 1)
+    dp[n] = 0
+    for i in range(n - 1, -1, -1):
+        s = 0
+        for k in range(1, 4):
+            if i + k > n:
+                break
+            s += stoneValue[i + k - 1]
+            dp[i] = max(dp[i], s - dp[i + k])
+    if dp[0] > 0:
+        return 'Alice'
+    elif dp[0] < 0:
+        return 'Bob'
+    return 'Tie'
+`,
+
+  'maximum-profit-job-scheduling': `
+def jobScheduling(startTime, endTime, profit):
+    import bisect
+    startTime = list(startTime)
+    endTime = list(endTime)
+    profit = list(profit)
+    jobs = sorted(zip(endTime, startTime, profit))
+    ends = [j[0] for j in jobs]
+    dp = [0] * (len(jobs) + 1)
+    for i, (end, start, p) in enumerate(jobs):
+        j = bisect.bisect_right(ends, start)
+        dp[i + 1] = max(dp[i], p + dp[j])
+    return dp[len(jobs)]
+`,
+
+  'count-of-smaller-numbers-after-self': `
+def countSmaller(nums):
+    nums = list(nums)
+    counts = [0] * len(nums)
+    sorted_arr = []
+    import bisect
+    for i in range(len(nums) - 1, -1, -1):
+        pos = bisect.bisect_left(sorted_arr, nums[i])
+        counts[i] = pos
+        sorted_arr.insert(pos, nums[i])
+    return counts
+`,
+
+  'k-th-symbol-in-grammar': `
+def kthGrammar(n, k):
+    flips = 0
+    while k > 1:
+        if k % 2 == 0:
+            flips += 1
+        k = (k + 1) // 2
+    return flips % 2
+`,
+
+  'longest-substring-without-repeating': `
+def lengthOfLongestSubstring(s):
+    last_seen = {}
+    left = best = 0
+    for right, c in enumerate(s):
+        if c in last_seen and last_seen[c] >= left:
+            left = last_seen[c] + 1
+        last_seen[c] = right
+        best = max(best, right - left + 1)
+    return best
+`,
 };

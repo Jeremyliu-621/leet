@@ -816,6 +816,13 @@ import { problem as percentagesOfLetter } from './percentages-of-letter';
 import { problem as maximumBagsFullCapacity } from './maximum-bags-full-capacity';
 import { problem as findSubsequenceOfLengthK } from './find-subsequence-of-length-k';
 import { problem as oddStringDifference } from './odd-string-difference';
+import { problem as bestTimeBuySellTransactionFee } from './best-time-buy-sell-transaction-fee';
+import { problem as maximalRectangle } from './maximal-rectangle';
+import { problem as stoneGameIII } from './stone-game-iii';
+import { problem as maximumProfitJobScheduling } from './maximum-profit-job-scheduling';
+import { problem as countOfSmallerNumbersAfterSelf } from './count-of-smaller-numbers-after-self';
+import { problem as kThSymbolInGrammar } from './k-th-symbol-in-grammar';
+import { problem as longestSubstringWithoutRepeating } from './longest-substring-without-repeating';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1679,4 +1686,11 @@ export const problems: readonly Problem[] = [
   maximumBagsFullCapacity,
   findSubsequenceOfLengthK,
   oddStringDifference,
+  bestTimeBuySellTransactionFee,
+  maximalRectangle,
+  stoneGameIII,
+  maximumProfitJobScheduling,
+  countOfSmallerNumbersAfterSelf,
+  kThSymbolInGrammar,
+  longestSubstringWithoutRepeating,
 ];

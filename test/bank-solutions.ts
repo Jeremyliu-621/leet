@@ -10052,4 +10052,117 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return [...m.values()].find(v => v.length === 1)![0];
   },
 
+  'best-time-buy-sell-transaction-fee': (...args: unknown[]) => {
+    const prices = args[0] as number[], fee = args[1] as number;
+    let cash = 0, hold = -prices[0]!;
+    for (let i = 1; i < prices.length; i++) {
+      cash = Math.max(cash, hold + prices[i]! - fee);
+      hold = Math.max(hold, cash - prices[i]!);
+    }
+    return cash;
+  },
+
+  'maximal-rectangle': (...args: unknown[]) => {
+    const matrix = args[0] as string[][];
+    if (!matrix.length || !matrix[0]!.length) return 0;
+    const rows = matrix.length, cols = matrix[0]!.length;
+    const heights = new Array<number>(cols).fill(0);
+    let maxArea = 0;
+    function largestRectHistogram(h: number[]): number {
+      const stack: number[] = [];
+      let area = 0;
+      for (let i = 0; i <= h.length; i++) {
+        const cur = i === h.length ? 0 : h[i]!;
+        while (stack.length && h[stack[stack.length - 1]!]! > cur) {
+          const height = h[stack.pop()!]!;
+          const width = stack.length === 0 ? i : i - stack[stack.length - 1]! - 1;
+          area = Math.max(area, height * width);
+        }
+        stack.push(i);
+      }
+      return area;
+    }
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        heights[c] = matrix[r]![c] === '1' ? heights[c]! + 1 : 0;
+      }
+      maxArea = Math.max(maxArea, largestRectHistogram(heights));
+    }
+    return maxArea;
+  },
+
+  'stone-game-iii': (...args: unknown[]) => {
+    const stoneValue = args[0] as number[];
+    const n = stoneValue.length;
+    const dp = new Array<number>(n + 1).fill(-Infinity);
+    dp[n] = 0;
+    for (let i = n - 1; i >= 0; i--) {
+      let sum = 0;
+      for (let k = 1; k <= 3 && i + k <= n; k++) {
+        sum += stoneValue[i + k - 1]!;
+        dp[i] = Math.max(dp[i]!, sum - dp[i + k]!);
+      }
+    }
+    return dp[0]! > 0 ? 'Alice' : dp[0]! < 0 ? 'Bob' : 'Tie';
+  },
+
+  'maximum-profit-job-scheduling': (...args: unknown[]) => {
+    const startTime = args[0] as number[], endTime = args[1] as number[], profit = args[2] as number[];
+    const n = startTime.length;
+    const jobs = Array.from({ length: n }, (_, i) => [endTime[i]!, startTime[i]!, profit[i]!] as [number, number, number]);
+    jobs.sort((a, b) => a[0] - b[0]);
+    const ends = jobs.map(j => j[0]);
+    const dp = new Array<number>(n + 1).fill(0);
+    for (let i = 0; i < n; i++) {
+      const [, start, p] = jobs[i]!;
+      let lo = 0, hi = i;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (ends[mid]! <= start) lo = mid + 1; else hi = mid;
+      }
+      dp[i + 1] = Math.max(dp[i]!, p + dp[lo]!);
+    }
+    return dp[n]!;
+  },
+
+  'count-of-smaller-numbers-after-self': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const counts = new Array<number>(nums.length).fill(0);
+    const sorted: number[] = [];
+    function bisectLeft(arr: number[], val: number): number {
+      let lo = 0, hi = arr.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (arr[mid]! < val) lo = mid + 1; else hi = mid; }
+      return lo;
+    }
+    for (let i = nums.length - 1; i >= 0; i--) {
+      const pos = bisectLeft(sorted, nums[i]!);
+      counts[i] = pos;
+      sorted.splice(pos, 0, nums[i]!);
+    }
+    return counts;
+  },
+
+  'k-th-symbol-in-grammar': (...args: unknown[]) => {
+    let k = args[1] as number;
+    let flips = 0;
+    while (k > 1) {
+      if (k % 2 === 0) flips++;
+      k = Math.ceil(k / 2);
+    }
+    return flips % 2;
+  },
+
+  'longest-substring-without-repeating': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const map = new Map<string, number>();
+    let left = 0, best = 0;
+    for (let right = 0; right < s.length; right++) {
+      const c = s[right]!;
+      if (map.has(c) && map.get(c)! >= left) left = map.get(c)! + 1;
+      map.set(c, right);
+      best = Math.max(best, right - left + 1);
+    }
+    return best;
+  },
+
 };
