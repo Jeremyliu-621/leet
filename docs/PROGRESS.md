@@ -8,8 +8,8 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 661 problems; 2236 tests; growing past 700.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (2236 tests passing).
+**Current focus:** Bank at 668 problems; 2257 tests; growing past 700.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (2257 tests passing).
 **Next up:** Continue growing bank; more medium/hard problems.
 
 **Pyodide rollout status — COMPLETE:**
@@ -303,6 +303,7 @@ Still pending:
 - [x] **7 more problems** — ugly-number-ii, delete-node-in-bst, insert-into-bst, min-cost-connect-points, visible-people-queue, minimum-add-make-valid-parentheses, palindromic-substrings, partition-string; polished 6 easy problems; 2155 tests; bank at 627.
 - [x] **14 more problems** — valid-parentheses, evaluate-reverse-polish-notation, move-zeroes, merge-strings-alternately, uncrossed-lines, course-schedule-iii, buy-two-chocolates, most-frequent-even-element, find-first-palindromic-string, minimum-ops-make-array-empty, max-diff-between-node-ancestor, combination-sum-iv; 2191 tests; bank at 641.
 - [x] **20 more problems** — jump-game-vi, longest-subarray-max-bitwise-and, maximum-events-can-attend, count-nodes-equal-average-subtree, maximum-level-sum-binary-tree, k-radius-subarray-averages, number-of-ways-select-buildings, total-appeal-of-string, find-city-smallest-number-neighbors, minimum-fuel-cost-report-capital (+ 10 from remote: minimum-distance-value, min-ops-make-array-alternating, redistribute-chars-equal, check-completeness-bst, max-twin-sum-linked-list, etc.); 2236 tests; bank at 661.
+- [x] **7 more problems** — robot-return-to-origin (strings/easy), count-sorted-vowel-strings (dp/medium), maximum-product-of-word-lengths (arrays+math/medium), exclusive-time-of-functions (stack/medium), as-far-from-land-as-possible (graph/medium), cheapest-flights-within-k-stops (graph/medium), sorted-array-to-bst (tree+binary-search/easy, preamble); 2257 tests; bank at 668.
 
 ---
 
