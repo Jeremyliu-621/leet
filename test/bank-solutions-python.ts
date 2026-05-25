@@ -14469,4 +14469,181 @@ def maxProductWordLengths(words):
 `,
 
 
+  'sliding-window-median': `
+def medianSlidingWindow(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    k = int(k)
+    result = []
+    for i in range(len(nums) - k + 1):
+        window = sorted(nums[i:i+k])
+        mid = k // 2
+        if k % 2 == 1:
+            result.append(window[mid])
+        else:
+            result.append((window[mid-1] + window[mid]) / 2)
+    return result
+`,
+
+  'minimum-difficulty-of-job-schedule': `
+def minDifficulty(jobDifficulty, d):
+    jobDifficulty = list(jobDifficulty.to_py()) if hasattr(jobDifficulty, 'to_py') else list(jobDifficulty)
+    d = int(d)
+    n = len(jobDifficulty)
+    if n < d: return -1
+    INF = float('inf')
+    dp = [INF] * n
+    mx = 0
+    for i in range(n): mx = max(mx, jobDifficulty[i]); dp[i] = mx
+    for day in range(2, d + 1):
+        ndp = [INF] * n
+        for i in range(day - 1, n):
+            mx = 0
+            for j in range(i, day - 2, -1):
+                mx = max(mx, jobDifficulty[j])
+                if dp[j-1] < INF: ndp[i] = min(ndp[i], dp[j-1] + mx)
+        dp = ndp
+    return dp[n-1]
+`,
+
+  'tallest-billboard': `
+def tallestBillboard(rods):
+    rods = list(rods.to_py()) if hasattr(rods, 'to_py') else list(rods)
+    S = sum(rods)
+    dp = [-1] * (S + 1)
+    dp[0] = 0
+    for r in rods:
+        curr = dp[:]
+        for d in range(S + 1):
+            if curr[d] < 0: continue
+            if d + r <= S: dp[d + r] = max(dp[d + r], curr[d] + r)
+            if d >= r: dp[d - r] = max(dp[d - r], curr[d])
+            else: dp[r - d] = max(dp[r - d], curr[d] + r - d)
+    return dp[0]
+`,
+
+  'concatenated-words': `
+def findAllConcatenatedWordsInADict(words):
+    words = list(words.to_py()) if hasattr(words, 'to_py') else list(words)
+    word_set = set(words)
+    def can_form(word):
+        n = len(word)
+        dp = [False] * (n + 1); dp[0] = True
+        for i in range(1, n + 1):
+            for j in range(i):
+                if not dp[j]: continue
+                sub = word[j:i]
+                if sub != word and sub in word_set: dp[i] = True; break
+        return dp[n]
+    return sorted([w for w in words if w and can_form(w)])
+`,
+
+  'max-value-of-equation': `
+from collections import deque
+def findMaxValueOfEquation(points, k):
+    points = [list(p.to_py()) if hasattr(p, 'to_py') else list(p) for p in (points.to_py() if hasattr(points, 'to_py') else points)]
+    k = int(k)
+    dq = deque()  # (yi-xi, xi)
+    ans = float('-inf')
+    for xj, yj in points:
+        while dq and xj - dq[0][1] > k: dq.popleft()
+        if dq: ans = max(ans, dq[0][0] + xj + yj)
+        while dq and dq[-1][0] <= yj - xj: dq.pop()
+        dq.append((yj - xj, xj))
+    return ans
+`,
+
+  'number-of-music-playlists': `
+def numMusicPlaylists(n, goal, k):
+    n = int(n); goal = int(goal); k = int(k)
+    MOD = 10**9 + 7
+    dp = [[0] * (n + 1) for _ in range(goal + 1)]
+    dp[0][0] = 1
+    for i in range(1, goal + 1):
+        for j in range(1, n + 1):
+            dp[i][j] = (dp[i][j] + dp[i-1][j-1] * (n - j + 1)) % MOD
+            if j > k: dp[i][j] = (dp[i][j] + dp[i-1][j] * (j - k)) % MOD
+    return dp[goal][n]
+`,
+
+  'minimum-number-of-removals-to-make-mountain-array': `
+def minimumMountainRemovals(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums)
+    lis = [1] * n; lds = [1] * n
+    for i in range(1, n):
+        for j in range(i):
+            if nums[j] < nums[i]: lis[i] = max(lis[i], lis[j] + 1)
+    for i in range(n - 2, -1, -1):
+        for j in range(n - 1, i, -1):
+            if nums[j] < nums[i]: lds[i] = max(lds[i], lds[j] + 1)
+    max_mtn = 0
+    for i in range(1, n - 1):
+        if lis[i] > 1 and lds[i] > 1: max_mtn = max(max_mtn, lis[i] + lds[i] - 1)
+    return n - max_mtn
+`,
+
+  'count-different-palindromic-subsequences': `
+def countPalindromicSubsequences(s):
+    MOD = 10**9 + 7
+    n = len(s)
+    dp = [[0] * n for _ in range(n)]
+    for i in range(n): dp[i][i] = 1
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            for c in 'abcd':
+                l, r = i, j
+                while l <= j and s[l] != c: l += 1
+                while r >= i and s[r] != c: r -= 1
+                if l > j or r < i: continue
+                if l == r: dp[i][j] = (dp[i][j] + 1) % MOD
+                elif l + 1 == r: dp[i][j] = (dp[i][j] + 2) % MOD
+                else: dp[i][j] = (dp[i][j] + dp[l+1][r-1] + 2) % MOD
+    return dp[0][n-1]
+`,
+
+  'painting-the-walls': `
+def paintWalls(cost, time):
+    cost = list(cost.to_py()) if hasattr(cost, 'to_py') else list(cost)
+    time = list(time.to_py()) if hasattr(time, 'to_py') else list(time)
+    n = len(cost)
+    dp = [float('inf')] * (n + 1); dp[0] = 0
+    for i in range(n):
+        for j in range(n, -1, -1):
+            dp[j] = min(dp[j], dp[max(0, j - time[i] - 1)] + cost[i])
+    return dp[n]
+`,
+
+  'shortest-path-to-get-all-keys': `
+from collections import deque
+def shortestPathAllKeys(grid):
+    grid = list(grid.to_py()) if hasattr(grid, 'to_py') else list(grid)
+    grid = [str(row) for row in grid]
+    m, n = len(grid), len(grid[0])
+    num_keys = 0; sr = sc = 0
+    for r in range(m):
+        for c in range(n):
+            ch = grid[r][c]
+            if ch == '@': sr, sc = r, c
+            elif 'a' <= ch <= 'f': num_keys += 1
+    if num_keys == 0: return 0
+    all_keys = (1 << num_keys) - 1
+    visited = set()
+    q = deque([(sr, sc, 0, 0)])
+    visited.add((sr, sc, 0))
+    while q:
+        r, c, keys, dist = q.popleft()
+        if keys == all_keys: return dist
+        for dr, dc in ((0,1),(0,-1),(1,0),(-1,0)):
+            nr, nc = r + dr, c + dc
+            if not (0 <= nr < m and 0 <= nc < n): continue
+            cell = grid[nr][nc]
+            if cell == '#': continue
+            if 'A' <= cell <= 'F' and not (keys & (1 << (ord(cell) - 65))): continue
+            nkeys = keys | (1 << (ord(cell) - 97)) if 'a' <= cell <= 'f' else keys
+            if (nr, nc, nkeys) not in visited:
+                visited.add((nr, nc, nkeys))
+                q.append((nr, nc, nkeys, dist + 1))
+    return -1
+`,
 };

@@ -14828,5 +14828,191 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best;
   },
 
+  'sliding-window-median': (nums: unknown, k: unknown) => {
+    const arr = nums as number[], kk = k as number;
+    const result: number[] = [];
+    for (let i = 0; i <= arr.length - kk; i++) {
+      const window = arr.slice(i, i + kk).sort((a, b) => a - b);
+      const mid = kk >> 1;
+      result.push(kk % 2 === 1 ? window[mid]! : (window[mid - 1]! + window[mid]!) / 2);
+    }
+    return result;
+  },
+
+  'minimum-difficulty-of-job-schedule': (jobDifficulty: unknown, d: unknown) => {
+    const jobs = jobDifficulty as number[], days = d as number;
+    const n = jobs.length;
+    if (n < days) return -1;
+    const INF = Infinity;
+    let dp = new Array(n).fill(INF);
+    // base: 1 day
+    let maxSoFar = 0;
+    for (let i = 0; i < n; i++) { maxSoFar = Math.max(maxSoFar, jobs[i]!); dp[i] = maxSoFar; }
+    for (let day = 2; day <= days; day++) {
+      const ndp = new Array(n).fill(INF);
+      for (let i = day - 1; i < n; i++) {
+        let mx = 0;
+        for (let j = i; j >= day - 1; j--) {
+          mx = Math.max(mx, jobs[j]!);
+          if (dp[j - 1] < INF) ndp[i] = Math.min(ndp[i], dp[j - 1] + mx);
+        }
+      }
+      dp = ndp;
+    }
+    return dp[n - 1]!;
+  },
+
+  'tallest-billboard': (rods: unknown) => {
+    const r = rods as number[];
+    const S = r.reduce((a, b) => a + b, 0);
+    const dp = new Array(S + 1).fill(-1);
+    dp[0] = 0;
+    for (const rod of r) {
+      const curr = [...dp];
+      for (let d = 0; d <= S; d++) {
+        if (curr[d]! < 0) continue;
+        // add to taller side
+        if (d + rod <= S) dp[d + rod] = Math.max(dp[d + rod]!, curr[d]! + rod);
+        // add to shorter side
+        if (d >= rod) dp[d - rod] = Math.max(dp[d - rod]!, curr[d]!);
+        else dp[rod - d] = Math.max(dp[rod - d]!, curr[d]! + rod - d);
+      }
+    }
+    return dp[0]!;
+  },
+
+  'concatenated-words': (words: unknown) => {
+    const ws = words as string[];
+    const wordSet = new Set(ws);
+    function canForm(word: string): boolean {
+      const n = word.length;
+      const dp = new Array(n + 1).fill(false);
+      dp[0] = true;
+      for (let i = 1; i <= n; i++) {
+        for (let j = 0; j < i; j++) {
+          if (!dp[j]) continue;
+          const sub = word.slice(j, i);
+          if (sub !== word && wordSet.has(sub)) { dp[i] = true; break; }
+        }
+      }
+      return dp[n];
+    }
+    return ws.filter(w => w.length > 0 && canForm(w)).sort();
+  },
+
+  'max-value-of-equation': (points: unknown, k: unknown) => {
+    const pts = points as number[][], kk = k as number;
+    const deq: [number, number][] = []; // [yi-xi, xi]
+    let ans = -Infinity;
+    for (const pt of pts) {
+      const xj = pt[0]!, yj = pt[1]!;
+      while (deq.length && xj - deq[0]![1] > kk) deq.shift();
+      if (deq.length) ans = Math.max(ans, deq[0]![0] + xj + yj);
+      while (deq.length && deq[deq.length - 1]![0] <= yj - xj) deq.pop();
+      deq.push([yj - xj, xj]);
+    }
+    return ans;
+  },
+
+  'number-of-music-playlists': (n: unknown, goal: unknown, k: unknown) => {
+    const N = n as number, G = goal as number, K = k as number;
+    const MOD = 1_000_000_007;
+    const dp: number[][] = Array.from({ length: G + 1 }, () => new Array(N + 1).fill(0));
+    dp[0]![0] = 1;
+    for (let i = 1; i <= G; i++) {
+      for (let j = 1; j <= N; j++) {
+        dp[i]![j] = (dp[i]![j]! + dp[i - 1]![j - 1]! * (N - j + 1)) % MOD;
+        if (j > K) dp[i]![j] = (dp[i]![j]! + dp[i - 1]![j]! * (j - K)) % MOD;
+      }
+    }
+    return dp[G]![N]!;
+  },
+
+  'minimum-number-of-removals-to-make-mountain-array': (nums: unknown) => {
+    const arr = nums as number[];
+    const n = arr.length;
+    const lis = new Array(n).fill(1);
+    const lds = new Array(n).fill(1);
+    for (let i = 1; i < n; i++)
+      for (let j = 0; j < i; j++)
+        if (arr[j]! < arr[i]!) lis[i] = Math.max(lis[i]!, lis[j]! + 1);
+    for (let i = n - 2; i >= 0; i--)
+      for (let j = n - 1; j > i; j--)
+        if (arr[j]! < arr[i]!) lds[i] = Math.max(lds[i]!, lds[j]! + 1);
+    let maxMtn = 0;
+    for (let i = 1; i < n - 1; i++)
+      if (lis[i]! > 1 && lds[i]! > 1) maxMtn = Math.max(maxMtn, lis[i]! + lds[i]! - 1);
+    return n - maxMtn;
+  },
+
+  'count-different-palindromic-subsequences': (s: unknown) => {
+    const str = s as string;
+    const MOD = 1_000_000_007;
+    const n = str.length;
+    const dp: number[][] = Array.from({ length: n }, () => new Array(n).fill(0));
+    for (let i = 0; i < n; i++) dp[i]![i] = 1;
+    for (let len = 2; len <= n; len++) {
+      for (let i = 0; i <= n - len; i++) {
+        const j = i + len - 1;
+        for (const c of 'abcd') {
+          let l = i, r = j;
+          while (l <= j && str[l] !== c) l++;
+          while (r >= i && str[r] !== c) r--;
+          if (l > j || r < i) continue;
+          if (l === r) { dp[i]![j] = (dp[i]![j]! + 1) % MOD; }
+          else if (l + 1 === r) { dp[i]![j] = (dp[i]![j]! + 2) % MOD; }
+          else { dp[i]![j] = (dp[i]![j]! + dp[l + 1]![r - 1]! + 2) % MOD; }
+        }
+      }
+    }
+    return dp[0]![n - 1]!;
+  },
+
+  'painting-the-walls': (cost: unknown, time: unknown) => {
+    const c = cost as number[], t = time as number[];
+    const n = c.length;
+    const dp = new Array(n + 1).fill(Infinity);
+    dp[0] = 0;
+    for (let i = 0; i < n; i++) {
+      for (let j = n; j >= 0; j--) {
+        dp[j] = Math.min(dp[j], dp[Math.max(0, j - t[i]! - 1)] + c[i]!);
+      }
+    }
+    return dp[n]!;
+  },
+
+  'shortest-path-to-get-all-keys': (grid: unknown) => {
+    const g = grid as string[];
+    const m = g.length, n = g[0]!.length;
+    let numKeys = 0, sr = 0, sc = 0;
+    for (let r = 0; r < m; r++)
+      for (let c = 0; c < n; c++) {
+        const ch = g[r]![c]!;
+        if (ch === '@') { sr = r; sc = c; }
+        else if (ch >= 'a' && ch <= 'f') numKeys++;
+      }
+    if (numKeys === 0) return 0;
+    const allKeys = (1 << numKeys) - 1;
+    const visited = new Set<string>();
+    const q: [number, number, number, number][] = [[sr, sc, 0, 0]];
+    visited.add(`${sr},${sc},0`);
+    const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+    while (q.length) {
+      const [r, c, keys, dist] = q.shift()!;
+      if (keys === allKeys) return dist;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr!, nc = c + dc!;
+        if (nr < 0 || nr >= m || nc < 0 || nc >= n) continue;
+        const cell = g[nr]![nc]!;
+        if (cell === '#') continue;
+        if (cell >= 'A' && cell <= 'F' && !(keys & (1 << (cell.charCodeAt(0) - 65)))) continue;
+        let nkeys = keys;
+        if (cell >= 'a' && cell <= 'f') nkeys |= (1 << (cell.charCodeAt(0) - 97));
+        const state = `${nr},${nc},${nkeys}`;
+        if (!visited.has(state)) { visited.add(state); q.push([nr, nc, nkeys, dist + 1]); }
+      }
+    }
+    return -1;
+  },
 
 };

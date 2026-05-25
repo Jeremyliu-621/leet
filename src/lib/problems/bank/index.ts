@@ -1164,6 +1164,16 @@ import { problem as countSubIslands } from './count-sub-islands';
 import { problem as maximumProfitAssignment } from './maximum-profit-assignment';
 import { problem as longestPalindromicSubstring } from './longest-palindromic-substring';
 import { problem as maxProductWordLengths } from './max-product-word-lengths';
+import { problem as slidingWindowMedian } from './sliding-window-median';
+import { problem as minimumDifficultyJobSchedule } from './minimum-difficulty-of-job-schedule';
+import { problem as tallestBillboard } from './tallest-billboard';
+import { problem as concatenatedWords } from './concatenated-words';
+import { problem as maxValueOfEquation } from './max-value-of-equation';
+import { problem as numberOfMusicPlaylists } from './number-of-music-playlists';
+import { problem as minimumRemovals } from './minimum-number-of-removals-to-make-mountain-array';
+import { problem as countDifferentPalindromicSubsequences } from './count-different-palindromic-subsequences';
+import { problem as paintingTheWalls } from './painting-the-walls';
+import { problem as shortestPathAllKeys } from './shortest-path-to-get-all-keys';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2376,4 +2386,14 @@ export const problems: readonly Problem[] = [
   maximumProfitAssignment,
   longestPalindromicSubstring,
   maxProductWordLengths,
+  slidingWindowMedian,
+  minimumDifficultyJobSchedule,
+  tallestBillboard,
+  concatenatedWords,
+  maxValueOfEquation,
+  numberOfMusicPlaylists,
+  minimumRemovals,
+  countDifferentPalindromicSubsequences,
+  paintingTheWalls,
+  shortestPathAllKeys,
 ];
