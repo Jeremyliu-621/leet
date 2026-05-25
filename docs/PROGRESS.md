@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1249 problems; 3975 tests green.
+**Current focus:** Bank at 1254 problems; 3990 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems; UI/UX polish; Options/popup improvements.
 
@@ -355,6 +355,9 @@ Still pending:
 - [x] **3 more classic problems (Batch 22)** — sum-of-subarray-minimums (stack/medium), maximum-xor-for-each-query (arrays/medium), count-ways-to-split-array (arrays/medium); bank at **1234** (with remote merges); 3957 tests.
 - [x] **3 more classic problems (Batch 23)** — maximum-subarray-sum-with-one-deletion (dp/medium), number-of-sub-arrays-size-k-average-threshold (sliding-window/medium), grumpy-bookstore-owner (sliding-window/medium); bank at **1237**; 3966 tests.
 - [x] **3 more classic problems (Batch 24)** — most-stones-removed-with-same-row-or-column (graph/medium), longest-subsequence-with-limited-sum (arrays/easy), minimum-number-of-arrows-to-burst-balloons (arrays/medium); bank at **1249** (with remote merges); 3975 tests.
+- [x] **TerminalPanel diff hints in Terminal tab** — Terminal tab now shows `ArrayDiffHint` + `StringDiffHint` on fail entries (stored raw expected/actual alongside stringified); previously only Test Results tab showed diff hints.
+- [x] **Marketing site stats updated** — all three "1,100+" stat locations updated to "1,200+".
+- [x] **5 more classic problems (Batch 25)** — find-largest-value-each-tree-row (tree/medium, BFS max per level), find-bottom-left-tree-value (tree/medium, BFS leftmost last row), most-stones-removed-same-row-or-column (graph/medium, Union-Find), count-unreachable-pairs-of-nodes (graph/medium, DFS component counting), my-calendar-i (arrays+binary-search/medium, interval overlap); bank at **1254**; 3990 tests.
 
 ---
 
