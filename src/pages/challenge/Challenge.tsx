@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import type { SupportedLanguage, SubmissionRecord, UserPreferences } from '../../lib/types';
 import type { Problem } from '../../lib/problems/types';
 import type { JudgeResult } from '../../lib/judge';
@@ -225,6 +225,7 @@ function SolvedStandaloneScreen({
   elapsedSec,
   language,
   related,
+  settingsHref,
 }: {
   problemTitle: string;
   difficulty: string;
@@ -232,6 +233,7 @@ function SolvedStandaloneScreen({
   elapsedSec: number;
   language: SupportedLanguage;
   related: readonly RelatedProblem[];
+  settingsHref?: string;
 }) {
   const challengeBase = window.location.pathname;
 
@@ -304,7 +306,7 @@ function SolvedStandaloneScreen({
         </div>
       )}
 
-      <div className="flex gap-3">
+      <div className="flex flex-wrap justify-center gap-3">
         <button
           type="button"
           onClick={() => window.location.assign(challengeBase)}
@@ -312,6 +314,14 @@ function SolvedStandaloneScreen({
         >
           Try another
         </button>
+        {settingsHref && (
+          <a
+            href={settingsHref}
+            className="rounded-sm border border-border px-5 py-2 font-mono text-xs text-muted transition-colors hover:border-border-strong hover:text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+          >
+            Browse problems
+          </a>
+        )}
         <button
           type="button"
           onClick={() => window.close()}
@@ -346,6 +356,16 @@ export function Challenge() {
   // is in flight. The beforeunload handler skips its prompt while this is set
   // so the user doesn't see "Leave site?" right after solving correctly.
   const isResolvingRef = useRef(false);
+
+  // In practice mode (no target URL), compute a link back to the settings/options page.
+  const settingsHref = useMemo(() => {
+    if (targetUrl.current) return undefined;
+    try {
+      return chrome.runtime.getURL('src/pages/options/index.html');
+    } catch {
+      return undefined;
+    }
+  }, []);
 
   // Page-level state machine.
   const [pageState, setPageState] = useState<PageState>({ status: 'loading' });
@@ -923,6 +943,7 @@ export function Challenge() {
         elapsedSec={pageState.elapsedSec}
         language={pageState.language}
         related={pageState.related}
+        settingsHref={settingsHref}
       />
     );
   }
@@ -935,7 +956,7 @@ export function Challenge() {
 
   return (
     <div className="flex h-full flex-col overflow-hidden bg-bg text-text">
-      <TopBar secondsLeft={secondsLeft} prefs={prefs} streak={streak} practiceMode={!targetUrl.current} />
+      <TopBar secondsLeft={secondsLeft} prefs={prefs} streak={streak} practiceMode={!targetUrl.current} settingsHref={settingsHref} />
 
       {/* No-target banner — informational only, does not block usage */}
       {!targetUrl.current && <NoTargetBanner />}

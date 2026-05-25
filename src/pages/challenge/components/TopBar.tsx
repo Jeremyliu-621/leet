@@ -7,6 +7,8 @@ interface TopBarProps {
   streak: number;
   /** True when there is no blocked target URL — standalone practice mode. */
   practiceMode?: boolean;
+  /** URL to navigate back to settings (problem browser). Only shown in practice mode. */
+  settingsHref?: string;
 }
 
 /** Formats seconds into MM:SS. */
@@ -25,7 +27,7 @@ function formatUnlockDuration(minutes: number): string {
   return m === 0 ? `${h}h` : `${h}h ${m}m`;
 }
 
-export function TopBar({ secondsLeft, prefs, streak, practiceMode = false }: TopBarProps) {
+export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, settingsHref }: TopBarProps) {
   const isLow = secondsLeft <= 60 && secondsLeft > 0;
   const isCritical = secondsLeft <= 30 && secondsLeft > 0;
   const isExpired = secondsLeft <= 0;
@@ -37,6 +39,21 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false }: Top
     >
       {/* Wordmark */}
       <div className="flex items-center gap-3">
+        {settingsHref && (
+          <a
+            href={settingsHref}
+            className="hidden sm:inline-flex items-center gap-1 font-mono text-[10px] text-faint uppercase tracking-wider transition-colors hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+            aria-label="Back to settings"
+          >
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+              <path d="M7 5H3M3 5L5.5 2.5M3 5L5.5 7.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            settings
+          </a>
+        )}
+        {settingsHref && (
+          <span className="hidden sm:inline-block h-4 w-px bg-border" aria-hidden="true" />
+        )}
         <span
           className="font-mono text-sm font-bold tracking-[0.2em] text-accent uppercase"
           aria-label="LeetLock"
