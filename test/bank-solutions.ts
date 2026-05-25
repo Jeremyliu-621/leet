@@ -9992,4 +9992,27 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return [...nums.filter(x => x !== 0), ...nums.filter(x => x === 0)];
   },
 
+  'minimum-moves-to-seat': (...args: unknown[]) => {
+    const seats = [...(args[0] as number[])].sort((a, b) => a - b);
+    const students = [...(args[1] as number[])].sort((a, b) => a - b);
+    return seats.reduce((s, v, i) => s + Math.abs(v - students[i]!), 0);
+  },
+
+  'rings-and-rods': (...args: unknown[]) => {
+    const rings = args[0] as string;
+    const rods = new Map<string, Set<string>>();
+    for (let i = 0; i < rings.length; i += 2) {
+      const c = rings[i]!, r = rings[i + 1]!;
+      if (!rods.has(r)) rods.set(r, new Set());
+      rods.get(r)!.add(c);
+    }
+    return [...rods.values()].filter(s => s.size === 3).length;
+  },
+
+  'find-gcd-of-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+    return gcd(Math.min(...nums), Math.max(...nums));
+  },
+
 };

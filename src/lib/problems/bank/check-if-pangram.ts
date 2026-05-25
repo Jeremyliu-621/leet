@@ -4,19 +4,19 @@ export const problem: Problem = {
   id: 'check-if-pangram',
   title: 'Check if the Sentence Is Pangram',
   difficulty: 'easy',
-  tags: ['strings'],
+  tags: ['strings', 'hash-map'],
   description: `A **pangram** is a sentence where every letter of the English alphabet appears at least once.
 
 Given a string \`sentence\` containing only lowercase English letters, return \`true\` if \`sentence\` is a pangram, or \`false\` otherwise.`,
   constraints: [
     '1 <= sentence.length <= 1000',
-    'sentence consists of lowercase English letters',
+    'sentence consists of lowercase English letters.',
   ],
   examples: [
     {
       input: 'sentence = "thequickbrownfoxjumpsoverthelazydog"',
       output: 'true',
-      explanation: 'The sentence contains every letter of the alphabet.',
+      explanation: 'Contains every letter from a to z.',
     },
     {
       input: 'sentence = "leetcode"',
@@ -24,24 +24,24 @@ Given a string \`sentence\` containing only lowercase English letters, return \`
     },
   ],
   hints: [
-    'Use a Set to collect all distinct characters in the sentence.',
-    'After iterating, check if the set size equals 26.',
+    'Level 1: Count distinct characters in the sentence.',
+    'Level 2: Use a Set. If its size is 26, every letter appears at least once.',
+    'Level 3: return new Set(sentence).size === 26;',
   ],
   functionName: 'checkIfPangram',
   params: ['sentence'],
   starterCode: {
-    javascript: 'function checkIfPangram(sentence) {\n  \n}\n',
-    python: 'def checkIfPangram(sentence):\n    pass\n',
+    javascript: 'function checkIfPangram(sentence) {\n  // your code here\n}\n',
+    python: 'def checkIfPangram(sentence):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: ['thequickbrownfoxjumpsoverthelazydog'], expected: true },
     { args: ['leetcode'], expected: false },
-    { args: ['abcdefghijklmnopqrstuvwxyz'], expected: true },
   ],
   hiddenTests: [
-    { args: ['a'], expected: false },
-    { args: ['thequickbrownfoxjumpsoverthelazydo'], expected: false },
+    { args: ['abcdefghijklmnopqrstuvwxyz'], expected: true },
+    { args: ['abcdefghijklmnopqrstuvwxy'], expected: false },
     { args: ['aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz'], expected: true },
-    { args: ['packmyboxwithfivedozenliquorjugs'], expected: true },
+    { args: ['hello'], expected: false },
   ],
 };

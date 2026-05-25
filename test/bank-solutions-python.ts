@@ -9614,4 +9614,29 @@ def applyOperations(nums):
             nums[i + 1] = 0
     return [x for x in nums if x != 0] + [x for x in nums if x == 0]
 `,
+
+  'minimum-moves-to-seat': `
+def minMovesToSeat(seats, students):
+    seats = sorted(seats)
+    students = sorted(students)
+    return sum(abs(s - t) for s, t in zip(seats, students))
+`,
+
+  'rings-and-rods': `
+def countPoints(rings):
+    rods = {}
+    for i in range(0, len(rings), 2):
+        c, r = rings[i], rings[i+1]
+        if r not in rods:
+            rods[r] = set()
+        rods[r].add(c)
+    return sum(1 for s in rods.values() if len(s) == 3)
+`,
+
+  'find-gcd-of-array': `
+def findGCD(nums):
+    nums = list(nums)
+    from math import gcd
+    return gcd(min(nums), max(nums))
+`,
 };

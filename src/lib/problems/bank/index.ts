@@ -808,6 +808,9 @@ import { problem as baseballGame } from './baseball-game';
 import { problem as findChampionGraph } from './find-champion-graph';
 import { problem as countDigits } from './count-digits';
 import { problem as applyOperations } from './apply-operations';
+import { problem as minimumMovesToSeat } from './minimum-moves-to-seat';
+import { problem as ringsAndRods } from './rings-and-rods';
+import { problem as findGcdOfArray } from './find-gcd-of-array';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1663,4 +1666,7 @@ export const problems: readonly Problem[] = [
   findChampionGraph,
   countDigits,
   applyOperations,
+  minimumMovesToSeat,
+  ringsAndRods,
+  findGcdOfArray,
 ];
