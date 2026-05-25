@@ -304,6 +304,7 @@ Still pending:
 - [x] **14 more problems** — valid-parentheses, evaluate-reverse-polish-notation, move-zeroes, merge-strings-alternately, uncrossed-lines, course-schedule-iii, buy-two-chocolates, most-frequent-even-element, find-first-palindromic-string, minimum-ops-make-array-empty, max-diff-between-node-ancestor, combination-sum-iv; 2191 tests; bank at 641.
 - [x] **20 more problems** — jump-game-vi, longest-subarray-max-bitwise-and, maximum-events-can-attend, count-nodes-equal-average-subtree, maximum-level-sum-binary-tree, k-radius-subarray-averages, number-of-ways-select-buildings, total-appeal-of-string, find-city-smallest-number-neighbors, minimum-fuel-cost-report-capital (+ 10 from remote: minimum-distance-value, min-ops-make-array-alternating, redistribute-chars-equal, check-completeness-bst, max-twin-sum-linked-list, etc.); 2236 tests; bank at 661.
 - [x] **7 more problems** — robot-return-to-origin (strings/easy), count-sorted-vowel-strings (dp/medium), maximum-product-of-word-lengths (arrays+math/medium), exclusive-time-of-functions (stack/medium), as-far-from-land-as-possible (graph/medium), cheapest-flights-within-k-stops (graph/medium), sorted-array-to-bst (tree+binary-search/easy, preamble); 2257 tests; bank at 668.
+- [x] **5 more problems** — factorial-trailing-zeroes, unique-binary-search-trees, non-decreasing-array, best-time-buy-sell-iii, deepest-leaves-sum; bank at 673; growing past 700.
 
 ---
 

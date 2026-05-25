@@ -9095,4 +9095,66 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return _treeToArr(build(0, nums.length - 1));
   },
 
+  'factorial-trailing-zeroes': (...args: unknown[]) => {
+    let n = args[0] as number;
+    let count = 0;
+    while (n >= 5) { n = Math.floor(n / 5); count += n; }
+    return count;
+  },
+
+  'unique-binary-search-trees': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const dp = new Array(n + 1).fill(0);
+    dp[0] = 1; dp[1] = 1;
+    for (let i = 2; i <= n; i++) {
+      for (let j = 1; j <= i; j++) dp[i] += dp[j - 1]! * dp[i - j]!;
+    }
+    return dp[n]!;
+  },
+
+  'non-decreasing-array': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    let count = 0;
+    for (let i = 0; i < nums.length - 1; i++) {
+      if (nums[i]! > nums[i + 1]!) {
+        count++;
+        if (count > 1) return false;
+        if (i > 0 && nums[i - 1]! > nums[i + 1]!) nums[i + 1] = nums[i]!;
+        else nums[i] = nums[i + 1]!;
+      }
+    }
+    return true;
+  },
+
+  'best-time-buy-sell-iii': (...args: unknown[]) => {
+    const prices = args[0] as number[];
+    let buy1 = -Infinity, sell1 = 0, buy2 = -Infinity, sell2 = 0;
+    for (const p of prices) {
+      buy1 = Math.max(buy1, -p);
+      sell1 = Math.max(sell1, buy1 + p);
+      buy2 = Math.max(buy2, sell1 - p);
+      sell2 = Math.max(sell2, buy2 + p);
+    }
+    return sell2;
+  },
+
+  'deepest-leaves-sum': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const root = _buildTree(arr);
+    if (!root) return 0;
+    const q: (_TN | null)[] = [root];
+    let levelSum = 0;
+    while (q.length) {
+      const n = q.length;
+      levelSum = 0;
+      for (let i = 0; i < n; i++) {
+        const nd = q.shift()!;
+        levelSum += nd.v;
+        if (nd.l) q.push(nd.l);
+        if (nd.r) q.push(nd.r);
+      }
+    }
+    return levelSum;
+  },
+
 };

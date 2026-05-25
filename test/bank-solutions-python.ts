@@ -8599,4 +8599,76 @@ def sortedArrayToBST(nums):
         return node
     return build(0, len(nums) - 1)
 `,
+
+  'factorial-trailing-zeroes': `
+def trailingZeroes(n):
+    count = 0
+    while n >= 5:
+        n //= 5
+        count += n
+    return count
+`,
+
+  'unique-binary-search-trees': `
+def numTrees(n):
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    if n >= 1:
+        dp[1] = 1
+    for i in range(2, n + 1):
+        for j in range(1, i + 1):
+            dp[i] += dp[j - 1] * dp[i - j]
+    return dp[n]
+`,
+
+  'non-decreasing-array': `
+def checkPossibility(nums):
+    nums = list(nums)
+    count = 0
+    for i in range(len(nums) - 1):
+        if nums[i] > nums[i + 1]:
+            count += 1
+            if count > 1:
+                return False
+            if i > 0 and nums[i - 1] > nums[i + 1]:
+                nums[i + 1] = nums[i]
+            else:
+                nums[i] = nums[i + 1]
+    return True
+`,
+
+  'best-time-buy-sell-iii': `
+def maxProfitIII(prices):
+    prices = list(prices)
+    buy1 = float('-inf')
+    sell1 = 0
+    buy2 = float('-inf')
+    sell2 = 0
+    for p in prices:
+        buy1 = max(buy1, -p)
+        sell1 = max(sell1, buy1 + p)
+        buy2 = max(buy2, sell1 - p)
+        sell2 = max(sell2, buy2 + p)
+    return sell2
+`,
+
+  'deepest-leaves-sum': `
+def deepestLeavesSum(root):
+    from collections import deque
+    if not root:
+        return 0
+    q = deque([root])
+    level_sum = 0
+    while q:
+        n = len(q)
+        level_sum = 0
+        for _ in range(n):
+            nd = q.popleft()
+            level_sum += nd.val
+            if nd.left:
+                q.append(nd.left)
+            if nd.right:
+                q.append(nd.right)
+    return level_sum
+`,
 };

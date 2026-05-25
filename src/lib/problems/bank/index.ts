@@ -723,6 +723,16 @@ import { problem as sortedArrayToBst } from './sorted-array-to-bst';
 import { problem as countSortedVowelStrings } from './count-sorted-vowel-strings';
 import { problem as exclusiveTimeOfFunctions } from './exclusive-time-of-functions';
 import { problem as robotReturnToOrigin } from './robot-return-to-origin';
+// math — medium (new)
+import { problem as factorialTrailingZeroes } from './factorial-trailing-zeroes';
+// dp + math — medium (new)
+import { problem as uniqueBinarySearchTrees } from './unique-binary-search-trees';
+// arrays — medium (new)
+import { problem as nonDecreasingArray } from './non-decreasing-array';
+// dp + arrays — hard (new)
+import { problem as bestTimeBuySellIII } from './best-time-buy-sell-iii';
+// tree — medium (new)
+import { problem as deepestLeavesSum } from './deepest-leaves-sum';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1189,6 +1199,7 @@ export const problems: readonly Problem[] = [
   fractionToRecurringDecimal,
   integerToEnglishWords,
   // math — medium
+  factorialTrailingZeroes,
   bitwiseAndOfNumbersRange,
   minimumMovesEqualArray,
   multiplyStrings,
@@ -1249,7 +1260,9 @@ export const problems: readonly Problem[] = [
   bestTimeBuySellCooldown,
   longestArithmeticSubsequence,
   minimumCostTickets,
+  uniqueBinarySearchTrees,
   // dynamic-programming — hard
+  bestTimeBuySellIII,
   wordBreakII,
   decodeWaysII,
   longestPalindromicSubsequence,
@@ -1368,6 +1381,7 @@ export const problems: readonly Problem[] = [
   pathSumIII,
   houseRobberIII,
   maximumWidthBinaryTree,
+  deepestLeavesSum,
   // tree — hard
   binaryTreeMaxPathSum,
   serializeBinaryTree,
@@ -1386,6 +1400,7 @@ export const problems: readonly Problem[] = [
   // strings — easy (new)
   percentageLetterInString,
   // arrays — medium (new)
+  nonDecreasingArray,
   numberOfWeakCharacters,
   arithmeticSlices,
   minimumSwapsGroupAllOnes,
