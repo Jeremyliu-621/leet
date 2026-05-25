@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1438 problems; 4602 tests green.
+**Current focus:** Bank at 1443 problems; 4617 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank (Batch 51+); marketing site stat update at 1500.
+**Next up:** Continue growing problem bank (Batch 52+); marketing site stat update at 1500.
 
 ### UI/UX polish (2026-05-25)
 - **Back-to-settings link in practice mode**: TopBar now shows "← settings" link back to Options/problem browser when in practice mode (no blocked target URL). settingsHref computed via chrome.runtime.getURL.
@@ -22,6 +22,9 @@
 
 ### Batch 48 (2026-05-25)
 Added 5 problems: `day-of-the-week` (math/easy), `guess-number-higher-or-lower` (binary-search/easy), `largest-triangle-area` (math/easy), `minimum-value-to-get-positive-step-sum` (arrays/easy), `number-of-rectangles-that-can-form-largest-square` (arrays/easy). Skipped 4 originally requested problems that already existed in the bank; substituted equivalent-difficulty originals.
+
+### Batch 51 (2026-05-25)
+Added 5 problems from this local session: `path-sum-ii` (tree/medium, DFS backtracking with sorted runner), `construct-binary-tree-from-inorder-and-postorder-traversal` (tree/medium, index map + recursive left/right split), `maximum-number-of-removable-characters` (binary-search/medium, binary search on k + O(n) subsequence check), `minimum-sum-of-squared-difference` (arrays/medium, binary search on threshold T + leftover ops), `find-the-kth-largest-integer-in-array` (arrays/strings/medium, sort by length then lex). Bank at **1443**; 4617 tests.
 
 ### Batch 49 (2026-05-25)
 Added 5 problems: `watering-plants` (arrays/easy, greedy river walk simulation), `logger-rate-limiter` (hash-map/easy, map message→last_timestamp, allow if diff ≥ 10), `bst-from-preorder` (tree/medium, BST insertion from preorder traversal, level-order output), `balance-a-binary-search-tree` (tree/medium, in-order collect + sorted-array→BST rebuild), `maximum-sum-bst-in-binary-tree` (tree/hard, post-order DFS returning isBST+min+max+sum tuple, track global max). Bank at **1430**; 4575 tests.
