@@ -19211,4 +19211,74 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
             count += 1
     return count
 `,
+
+  'design-hashset': `def myHashSetRunner(ops, vals):
+    ops_list = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    vals_list = list(vals.to_py() if hasattr(vals, 'to_py') else vals)
+    s = set()
+    results = []
+    for op, val in zip(ops_list, vals_list):
+        if op == 'add':
+            s.add(int(val))
+            results.append(None)
+        elif op == 'remove':
+            s.discard(int(val))
+            results.append(None)
+        elif op == 'contains':
+            results.append(int(val) in s)
+    return results
+`,
+
+  'design-parking-system': `def parkingSystemRunner(ops, vals):
+    ops_list = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    vals_list = [list(v.to_py() if hasattr(v, 'to_py') else v) for v in (vals.to_py() if hasattr(vals, 'to_py') else vals)]
+    init = vals_list[0]
+    counts = [0, int(init[0]), int(init[1]), int(init[2])]
+    results = []
+    for op, val in zip(ops_list, vals_list):
+        if op == 'addCar':
+            t = int(val[0])
+            if counts[t] > 0:
+                counts[t] -= 1
+                results.append(True)
+            else:
+                results.append(False)
+        else:
+            results.append(None)
+    return results
+`,
+
+  'defuse-the-bomb': `def decrypt(code, k):
+    code = list(code.to_py() if hasattr(code, 'to_py') else code)
+    k = int(k)
+    n = len(code)
+    res = [0] * n
+    if k == 0:
+        return res
+    for i in range(n):
+        s = 0
+        for j in range(1, abs(k) + 1):
+            if k > 0:
+                s += code[(i + j) % n]
+            else:
+                s += code[(i - j) % n]
+        res[i] = s
+    return res
+`,
+
+  'check-if-sentence-is-pangram': `def checkIfPangram(sentence):
+    return len(set(str(sentence))) >= 26
+`,
+
+  'find-the-student-that-will-replace-the-chalk': `def chalkReplacer(chalk, k):
+    chalk = list(chalk.to_py() if hasattr(chalk, 'to_py') else chalk)
+    k = int(k)
+    total = sum(chalk)
+    rem = k % total
+    for i, c in enumerate(chalk):
+        if rem < c:
+            return i
+        rem -= c
+    return 0
+`,
 };

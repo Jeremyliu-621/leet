@@ -1439,6 +1439,11 @@ import { problem as numberOfRectanglesThatCanFormTheLargestSquare } from './numb
 import { problem as determineIfStringHalvesAreAlike } from './determine-if-string-halves-are-alike';
 import { problem as divideAStringIntoGroupsOfSizeK } from './divide-a-string-into-groups-of-size-k';
 import { problem as countIntegersWithEvenDigitSum } from './count-integers-with-even-digit-sum';
+import { problem as designHashset } from './design-hashset';
+import { problem as designParkingSystem } from './design-parking-system';
+import { problem as defuseTheBomb } from './defuse-the-bomb';
+import { problem as checkIfSentenceIsPangram } from './check-if-sentence-is-pangram';
+import { problem as findTheStudentThatWillReplaceTheChalk } from './find-the-student-that-will-replace-the-chalk';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2926,4 +2931,9 @@ export const problems: readonly Problem[] = [
   determineIfStringHalvesAreAlike,
   divideAStringIntoGroupsOfSizeK,
   countIntegersWithEvenDigitSum,
+  designHashset,
+  designParkingSystem,
+  defuseTheBomb,
+  checkIfSentenceIsPangram,
+  findTheStudentThatWillReplaceTheChalk,
 ];

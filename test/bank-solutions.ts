@@ -19193,4 +19193,65 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  'design-hashset': (ops: unknown, vals: unknown) => {
+    const opArr = ops as string[], valArr = vals as number[];
+    const set = new Set<number>();
+    return opArr.map((op, i) => {
+      if (op === 'add') { set.add(valArr[i]!); return null; }
+      if (op === 'remove') { set.delete(valArr[i]!); return null; }
+      if (op === 'contains') return set.has(valArr[i]!);
+      return null;
+    });
+  },
+
+  'design-parking-system': (ops: unknown, vals: unknown) => {
+    const opArr = ops as string[];
+    const valArr = vals as number[][];
+    const [big, medium, small] = valArr[0]!;
+    const counts = [0, big, medium, small] as number[];
+    return opArr.map((op, i) => {
+      if (op === 'addCar') {
+        const t = valArr[i]![0]!;
+        if (counts[t]! > 0) { counts[t]!--; return true; }
+        return false;
+      }
+      return null;
+    });
+  },
+
+  'defuse-the-bomb': (code: unknown, k: unknown) => {
+    const c = code as number[];
+    const kk = k as number;
+    const n = c.length;
+    const res = new Array(n).fill(0) as number[];
+    if (kk === 0) return res;
+    for (let i = 0; i < n; i++) {
+      let s = 0;
+      for (let j = 1; j <= Math.abs(kk); j++) {
+        const idx = kk > 0 ? (i + j) % n : (i - j + n) % n;
+        s += c[idx]!;
+      }
+      res[i] = s;
+    }
+    return res;
+  },
+
+  'check-if-sentence-is-pangram': (sentence: unknown) => {
+    const s = sentence as string;
+    const seen = new Set<string>();
+    for (const c of s) seen.add(c);
+    return seen.size >= 26;
+  },
+
+  'find-the-student-that-will-replace-the-chalk': (chalk: unknown, k: unknown) => {
+    const c = chalk as number[];
+    const total = c.reduce((a, b) => a + b, 0);
+    let rem = (k as number) % total;
+    for (let i = 0; i < c.length; i++) {
+      if (rem < c[i]!) return i;
+      rem -= c[i]!;
+    }
+    return 0;
+  },
+
 };
