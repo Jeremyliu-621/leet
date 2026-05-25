@@ -19136,4 +19136,31 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
             results.append(len(q) == 0)
     return results
 `,
+
+  'sum-of-nodes-with-even-valued-grandparent': `def sumEvenGrandparent(root):
+    total = 0
+    def dfs(node, parent_val, grandparent_val):
+        nonlocal total
+        if not node:
+            return
+        if grandparent_val != -1 and grandparent_val % 2 == 0:
+            total += node.val
+        dfs(node.left, node.val, parent_val)
+        dfs(node.right, node.val, parent_val)
+    dfs(root, -1, -1)
+    return total
+`,
+
+  'flip-equivalent-binary-trees': `def flipEquiv(root1, root2):
+    def equiv(a, b):
+        if not a and not b:
+            return True
+        if not a or not b:
+            return False
+        if a.val != b.val:
+            return False
+        return (equiv(a.left, b.left) and equiv(a.right, b.right)) or \
+               (equiv(a.left, b.right) and equiv(a.right, b.left))
+    return equiv(root1, root2)
+`,
 };

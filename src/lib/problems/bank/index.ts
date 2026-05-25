@@ -1432,6 +1432,8 @@ import { problem as uglyNumber } from './ugly-number';
 import { problem as lemonadeChange } from './lemonade-change';
 import { problem as mostFrequentSubtreeSum } from './most-frequent-subtree-sum';
 import { problem as implementStackUsingQueues } from './implement-stack-using-queues';
+import { problem as sumOfNodesWithEvenValuedGrandparent } from './sum-of-nodes-with-even-valued-grandparent';
+import { problem as flipEquivalentBinaryTrees } from './flip-equivalent-binary-trees';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2912,4 +2914,6 @@ export const problems: readonly Problem[] = [
   lemonadeChange,
   mostFrequentSubtreeSum,
   implementStackUsingQueues,
+  sumOfNodesWithEvenValuedGrandparent,
+  flipEquivalentBinaryTrees,
 ];

@@ -19116,4 +19116,30 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     });
   },
 
+  'sum-of-nodes-with-even-valued-grandparent': (root: unknown) => {
+    let sum = 0;
+    function dfs(node: _TN | null, parent: number, grandparent: number): void {
+      if (!node) return;
+      if (grandparent % 2 === 0) sum += node.v;
+      dfs(node.l, node.v, parent);
+      dfs(node.r, node.v, parent);
+    }
+    dfs(_buildTree((root as (number | null)[])), -1, -1);
+    return sum;
+  },
+
+  'flip-equivalent-binary-trees': (root1: unknown, root2: unknown) => {
+    function equiv(a: _TN | null, b: _TN | null): boolean {
+      if (!a && !b) return true;
+      if (!a || !b) return false;
+      if (a.v !== b.v) return false;
+      return (equiv(a.l, b.l) && equiv(a.r, b.r)) ||
+             (equiv(a.l, b.r) && equiv(a.r, b.l));
+    }
+    return equiv(
+      _buildTree((root1 as (number | null)[])),
+      _buildTree((root2 as (number | null)[]))
+    );
+  },
+
 };
