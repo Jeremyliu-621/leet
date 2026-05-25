@@ -18884,4 +18884,57 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return 'scalene';
   },
 
+  'maximum-enemy-forts-that-can-be-captured': (forts: unknown) => {
+    const f = forts as number[];
+    let ans = 0, prev = -1;
+    for (let i = 0; i < f.length; i++) {
+      if (f[i] !== 0) {
+        if (prev !== -1 && f[i] !== f[prev]) ans = Math.max(ans, i - prev - 1);
+        prev = i;
+      }
+    }
+    return ans;
+  },
+
+  'minimum-amount-of-time-to-collect-garbage': (garbage: unknown, travel: unknown) => {
+    const g = garbage as string[], t = travel as number[];
+    let ans = 0;
+    for (const type of ['M', 'P', 'G']) {
+      let travelCost = 0, lastTravel = 0;
+      for (let i = 0; i < g.length; i++) {
+        if (i > 0) lastTravel += t[i - 1]!;
+        const cnt = g[i]!.split('').filter(c => c === type).length;
+        if (cnt > 0) { ans += cnt; travelCost = lastTravel; }
+      }
+      ans += travelCost;
+    }
+    return ans;
+  },
+
+  'check-if-array-is-sorted-and-rotated': (nums: unknown) => {
+    const a = nums as number[], n = a.length;
+    let drops = 0;
+    for (let i = 0; i < n; i++) if (a[i]! > a[(i + 1) % n]!) drops++;
+    return drops <= 1;
+  },
+
+  'nodes-between-critical-points': (head: unknown) => {
+    const arr = head as number[];
+    const crit: number[] = [];
+    for (let i = 1; i < arr.length - 1; i++) {
+      if ((arr[i]! > arr[i-1]! && arr[i]! > arr[i+1]!) ||
+          (arr[i]! < arr[i-1]! && arr[i]! < arr[i+1]!))
+        crit.push(i);
+    }
+    if (crit.length < 2) return [-1, -1];
+    let minD = Infinity;
+    for (let i = 1; i < crit.length; i++) minD = Math.min(minD, crit[i]! - crit[i-1]!);
+    return [minD, crit[crit.length - 1]! - crit[0]!];
+  },
+
+  'number-after-a-double-reversal': (num: unknown) => {
+    const n = num as number;
+    return n === 0 || n % 10 !== 0;
+  },
+
 };

@@ -1412,6 +1412,11 @@ import { problem as trimABinarySearchTree } from './trim-a-binary-search-tree';
 import { problem as findingUsersActiveMinutes } from './finding-users-active-minutes';
 import { problem as dayOfTheYear } from './day-of-the-year';
 import { problem as typeOfTriangle } from './type-of-triangle';
+import { problem as maximumEnemyForts } from './maximum-enemy-forts-that-can-be-captured';
+import { problem as minimumAmountTimeToCollectGarbage } from './minimum-amount-of-time-to-collect-garbage';
+import { problem as checkIfArraySortedAndRotated } from './check-if-array-is-sorted-and-rotated';
+import { problem as nodesBetweenCriticalPoints } from './nodes-between-critical-points';
+import { problem as numberAfterDoubleReversal } from './number-after-a-double-reversal';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2872,4 +2877,9 @@ export const problems: readonly Problem[] = [
   findingUsersActiveMinutes,
   dayOfTheYear,
   typeOfTriangle,
+  maximumEnemyForts,
+  minimumAmountTimeToCollectGarbage,
+  checkIfArraySortedAndRotated,
+  nodesBetweenCriticalPoints,
+  numberAfterDoubleReversal,
 ];

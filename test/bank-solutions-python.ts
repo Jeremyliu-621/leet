@@ -18881,4 +18881,59 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
         return "isosceles"
     return "scalene"
 `,
+
+  'maximum-enemy-forts-that-can-be-captured': `def captureForts(forts):
+    forts = list(forts.to_py() if hasattr(forts, 'to_py') else forts)
+    ans = 0
+    prev = -1
+    for i, v in enumerate(forts):
+        if v != 0:
+            if prev != -1 and v != forts[prev]:
+                ans = max(ans, i - prev - 1)
+            prev = i
+    return ans
+`,
+
+  'minimum-amount-of-time-to-collect-garbage': `def garbageCollection(garbage, travel):
+    garbage = [str(g) for g in (garbage.to_py() if hasattr(garbage, 'to_py') else garbage)]
+    travel = list(travel.to_py() if hasattr(travel, 'to_py') else travel)
+    ans = 0
+    for t in ['M', 'P', 'G']:
+        travel_cost = 0
+        last_travel = 0
+        for i, g in enumerate(garbage):
+            if i > 0:
+                last_travel += travel[i - 1]
+            cnt = g.count(t)
+            if cnt > 0:
+                ans += cnt
+                travel_cost = last_travel
+        ans += travel_cost
+    return ans
+`,
+
+  'check-if-array-is-sorted-and-rotated': `def check(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    drops = sum(1 for i in range(n) if nums[i] > nums[(i + 1) % n])
+    return drops <= 1
+`,
+
+  'nodes-between-critical-points': `def nodesBetweenCriticalPoints(head):
+    arr = list(head.to_py() if hasattr(head, 'to_py') else head)
+    crit = []
+    for i in range(1, len(arr) - 1):
+        if (arr[i] > arr[i-1] and arr[i] > arr[i+1]) or \
+           (arr[i] < arr[i-1] and arr[i] < arr[i+1]):
+            crit.append(i)
+    if len(crit) < 2:
+        return [-1, -1]
+    min_d = min(crit[i] - crit[i-1] for i in range(1, len(crit)))
+    return [min_d, crit[-1] - crit[0]]
+`,
+
+  'number-after-a-double-reversal': `def isSameAfterReversals(num):
+    num = int(num)
+    return num == 0 or num % 10 != 0
+`,
 };
