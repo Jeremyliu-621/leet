@@ -11677,4 +11677,105 @@ def countNicePairs(nums):
         ans = (ans + cnt * (cnt - 1) // 2) % MOD
     return ans
 `,
+
+  'check-if-string-is-prefix-of-array': `
+def isPrefixString(s, words):
+    built = ''
+    for w in words:
+        built += str(w)
+        if built == s:
+            return True
+        if len(built) >= len(s):
+            return False
+    return False
+`,
+
+  'remove-trailing-zeros-from-string': `
+def removeTrailingZeros(num):
+    return str(num).rstrip('0')
+`,
+
+  'rearrange-spaces-between-words': `
+def reorderSpaces(text):
+    total_spaces = text.count(' ')
+    words = text.split()
+    if len(words) == 1:
+        return words[0] + ' ' * total_spaces
+    between = total_spaces // (len(words) - 1)
+    trailing = total_spaces % (len(words) - 1)
+    return (' ' * between).join(words) + ' ' * trailing
+`,
+
+  'split-a-string-in-balanced-strings': `
+def balancedStringSplit(s):
+    count = 0
+    balance = 0
+    for c in s:
+        balance += 1 if c == 'R' else -1
+        if balance == 0:
+            count += 1
+    return count
+`,
+
+  'find-greatest-common-divisor-of-array': `
+def findGCD(nums):
+    from math import gcd
+    nums_list = [int(x) for x in nums]
+    return gcd(min(nums_list), max(nums_list))
+`,
+
+  'remove-all-adjacent-duplicates-in-string': `
+def removeDuplicates(s):
+    stack = []
+    for c in s:
+        if stack and stack[-1] == c:
+            stack.pop()
+        else:
+            stack.append(c)
+    return ''.join(stack)
+`,
+
+  'semi-ordered-permutation': `
+def semiOrderedPermutation(nums):
+    nums_list = [int(x) for x in nums]
+    n = len(nums_list)
+    pos1 = nums_list.index(1)
+    posN = nums_list.index(n)
+    return pos1 + (n - 1 - posN) - (1 if pos1 > posN else 0)
+`,
+
+  'calculate-delayed-arrival-time': `
+def findDelayedArrivalTime(arrivalTime, delayedTime):
+    return (int(arrivalTime) + int(delayedTime)) % 24
+`,
+
+  'check-if-numbers-are-ascending-in-sentence': `
+def areNumbersAscending(s):
+    nums = [int(t) for t in s.split() if t.isdigit()]
+    return all(nums[i] > nums[i-1] for i in range(1, len(nums)))
+`,
+
+  'find-xor-beauty-of-array': `
+def xorBeauty(nums):
+    result = 0
+    for x in nums:
+        result ^= int(x)
+    return result
+`,
+
+  'number-of-words-that-can-be-typed': `
+def canBeTypedWords(text, brokenLetters):
+    broken = set(brokenLetters)
+    count = 0
+    for word in text.split():
+        if not any(c in broken for c in word):
+            count += 1
+    return count
+`,
+
+  'number-of-common-factors': `
+def commonFactors(a, b):
+    a, b = int(a), int(b)
+    return sum(1 for i in range(1, min(a, b) + 1) if a % i == 0 and b % i == 0)
+`,
 };

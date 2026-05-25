@@ -12207,4 +12207,105 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(ans);
   },
 
+  'check-if-string-is-prefix-of-array': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const words = args[1] as string[];
+    let built = '';
+    for (const w of words) {
+      built += w;
+      if (built === s) return true;
+      if (built.length >= s.length) return false;
+    }
+    return false;
+  },
+
+  'remove-trailing-zeros-from-string': (...args: unknown[]) => {
+    const num = args[0] as string;
+    return num.replace(/0+$/, '');
+  },
+
+  'rearrange-spaces-between-words': (...args: unknown[]) => {
+    const text = args[0] as string;
+    const totalSpaces = text.split('').filter(c => c === ' ').length;
+    const words = text.trim().split(/\s+/);
+    if (words.length === 1) return words[0] + ' '.repeat(totalSpaces);
+    const between = Math.floor(totalSpaces / (words.length - 1));
+    const trailing = totalSpaces % (words.length - 1);
+    return words.join(' '.repeat(between)) + ' '.repeat(trailing);
+  },
+
+  'split-a-string-in-balanced-strings': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let count = 0, balance = 0;
+    for (const c of s) {
+      balance += c === 'R' ? 1 : -1;
+      if (balance === 0) count++;
+    }
+    return count;
+  },
+
+  'find-greatest-common-divisor-of-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+    return gcd(Math.min(...nums), Math.max(...nums));
+  },
+
+  'remove-all-adjacent-duplicates-in-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const stack: string[] = [];
+    for (const c of s) {
+      if (stack.length > 0 && stack[stack.length - 1] === c) {
+        stack.pop();
+      } else {
+        stack.push(c);
+      }
+    }
+    return stack.join('');
+  },
+
+  'semi-ordered-permutation': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const pos1 = nums.indexOf(1);
+    const posN = nums.indexOf(n);
+    return pos1 + (n - 1 - posN) - (pos1 > posN ? 1 : 0);
+  },
+
+  'calculate-delayed-arrival-time': (...args: unknown[]) => {
+    const arrivalTime = args[0] as number;
+    const delayedTime = args[1] as number;
+    return (arrivalTime + delayedTime) % 24;
+  },
+
+  'check-if-numbers-are-ascending-in-sentence': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const nums = s.split(' ').filter(t => /^\d+$/.test(t)).map(Number);
+    for (let i = 1; i < nums.length; i++) {
+      if ((nums[i] as number) <= (nums[i - 1] as number)) return false;
+    }
+    return true;
+  },
+
+  'find-xor-beauty-of-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return nums.reduce((acc, n) => acc ^ n, 0);
+  },
+
+  'number-of-words-that-can-be-typed': (...args: unknown[]) => {
+    const text = args[0] as string;
+    const brokenLetters = args[1] as string;
+    const broken = new Set(brokenLetters);
+    return text.split(' ').filter(word => ![...word].some(c => broken.has(c))).length;
+  },
+
+  'number-of-common-factors': (...args: unknown[]) => {
+    const a = args[0] as number;
+    const b = args[1] as number;
+    let count = 0;
+    for (let i = 1; i <= Math.min(a, b); i++) {
+      if (a % i === 0 && b % i === 0) count++;
+    }
+    return count;
+  },
+
 };

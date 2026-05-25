@@ -984,6 +984,18 @@ import { problem as findTheDifferenceOfTwoArrays } from './find-the-difference-o
 import { problem as longestContinuousIncreasingSubsequence } from './longest-continuous-increasing-subsequence';
 import { problem as findNumbersWithEvenNumberOfDigits } from './find-numbers-with-even-number-of-digits';
 import { problem as countNicePairsInAnArray } from './count-nice-pairs-in-an-array';
+import { problem as checkIfStringIsPrefixOfArray } from './check-if-string-is-prefix-of-array';
+import { problem as removeTrailingZerosFromString } from './remove-trailing-zeros-from-string';
+import { problem as rearrangeSpacesBetweenWords } from './rearrange-spaces-between-words';
+import { problem as splitAStringInBalancedStrings } from './split-a-string-in-balanced-strings';
+import { problem as findGreatestCommonDivisorOfArray } from './find-greatest-common-divisor-of-array';
+import { problem as removeAllAdjacentDuplicatesInString } from './remove-all-adjacent-duplicates-in-string';
+import { problem as semiOrderedPermutation } from './semi-ordered-permutation';
+import { problem as calculateDelayedArrivalTime } from './calculate-delayed-arrival-time';
+import { problem as checkIfNumbersAreAscendingInSentence } from './check-if-numbers-are-ascending-in-sentence';
+import { problem as findXorBeautyOfArray } from './find-xor-beauty-of-array';
+import { problem as numberOfWordsThatCanBeTyped } from './number-of-words-that-can-be-typed';
+import { problem as numberOfCommonFactors } from './number-of-common-factors';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2016,4 +2028,16 @@ export const problems: readonly Problem[] = [
   longestContinuousIncreasingSubsequence,
   findNumbersWithEvenNumberOfDigits,
   countNicePairsInAnArray,
+  checkIfStringIsPrefixOfArray,
+  removeTrailingZerosFromString,
+  rearrangeSpacesBetweenWords,
+  splitAStringInBalancedStrings,
+  findGreatestCommonDivisorOfArray,
+  removeAllAdjacentDuplicatesInString,
+  semiOrderedPermutation,
+  calculateDelayedArrivalTime,
+  checkIfNumbersAreAscendingInSentence,
+  findXorBeautyOfArray,
+  numberOfWordsThatCanBeTyped,
+  numberOfCommonFactors,
 ];

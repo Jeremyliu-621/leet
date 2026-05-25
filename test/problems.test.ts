@@ -73,6 +73,7 @@ describe('problem selector', () => {
       'baseball-game',
       'next-greater-element-i',
       'remove-outermost-parentheses',
+      'remove-all-adjacent-duplicates-in-string',
     ] })).toBeUndefined();
   });
 
