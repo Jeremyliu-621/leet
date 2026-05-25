@@ -1105,6 +1105,15 @@ import { problem as movingAverageFromDataStream } from './moving-average-from-da
 import { problem as designAddAndSearchWords } from './design-add-and-search-words';
 import { problem as serializeDeserializeBST } from './serialize-deserialize-bst';
 import { problem as designCircularQueue } from './design-circular-queue';
+import { problem as bestMeetingPoint } from './best-meeting-point';
+import { problem as longestSubarrayOnesAfterDelete } from './longest-subarray-ones-after-delete';
+import { problem as reversePairs } from './reverse-pairs';
+import { problem as minimumCostCutCake } from './minimum-cost-cut-cake';
+import { problem as spiralMatrixIII } from './spiral-matrix-iii';
+import { problem as textJustification } from './text-justification';
+import { problem as minimumOperationsMakeArrayContinuous } from './minimum-operations-make-array-continuous';
+import { problem as arithmeticSubarrays } from './arithmetic-subarrays';
+import { problem as minimumScorePath } from './minimum-score-path';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2258,4 +2267,13 @@ export const problems: readonly Problem[] = [
   designAddAndSearchWords,
   serializeDeserializeBST,
   designCircularQueue,
+  bestMeetingPoint,
+  longestSubarrayOnesAfterDelete,
+  reversePairs,
+  minimumCostCutCake,
+  spiralMatrixIII,
+  textJustification,
+  minimumOperationsMakeArrayContinuous,
+  arithmeticSubarrays,
+  minimumScorePath,
 ];

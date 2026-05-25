@@ -13292,6 +13292,170 @@ def deserialize(data):
     return bt(float('-inf'), float('inf'))
 `,
 
+  'best-meeting-point': `
+def minTotalDistance(grid):
+    grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    rows, cols = [], []
+    for r in range(len(grid)):
+        for c in range(len(grid[0])):
+            if grid[r][c]:
+                rows.append(r); cols.append(c)
+    def total(arr):
+        arr = sorted(arr)
+        med = arr[len(arr)//2]
+        return sum(abs(x-med) for x in arr)
+    return total(rows) + total(cols)
+`,
+
+  'longest-subarray-ones-after-delete': `
+def longestSubarray(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    lo = zeros = best = 0
+    for hi in range(len(nums)):
+        if nums[hi] == 0: zeros += 1
+        while zeros > 1:
+            if nums[lo] == 0: zeros -= 1
+            lo += 1
+        best = max(best, hi - lo)
+    return best
+`,
+
+  'reverse-pairs': `
+def reversePairs(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    count = [0]
+    def merge(arr):
+        if len(arr) <= 1: return arr
+        mid = len(arr)//2
+        left = merge(arr[:mid])
+        right = merge(arr[mid:])
+        j = 0
+        for x in left:
+            while j < len(right) and x > 2*right[j]:
+                j += 1
+            count[0] += j
+        merged = []
+        a = b = 0
+        while a < len(left) and b < len(right):
+            if left[a] <= right[b]: merged.append(left[a]); a+=1
+            else: merged.append(right[b]); b+=1
+        return merged + left[a:] + right[b:]
+    merge(nums)
+    return count[0]
+`,
+
+  'minimum-cost-cut-cake': `
+def minCostCutCake(n, cuts):
+    cuts = sorted(list(cuts.to_py()) if hasattr(cuts, 'to_py') else list(cuts))
+    arr = [0] + cuts + [n]
+    m = len(arr)
+    dp = [[0]*m for _ in range(m)]
+    for length in range(2, m):
+        for i in range(m - length):
+            j = i + length
+            dp[i][j] = float('inf')
+            for k in range(i+1, j):
+                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j] + arr[j] - arr[i])
+    return dp[0][m-1]
+`,
+
+  'spiral-matrix-iii': `
+def spiralMatrixIII(rows, cols, rStart, cStart):
+    result = []
+    r, c = rStart, cStart
+    dirs = [(0,1),(1,0),(0,-1),(-1,0)]
+    di, steps = 0, 1
+    result.append([r, c])
+    while len(result) < rows * cols:
+        for _ in range(2):
+            dr, dc = dirs[di % 4]
+            for _ in range(steps):
+                r += dr; c += dc
+                if 0 <= r < rows and 0 <= c < cols:
+                    result.append([r, c])
+            di += 1
+        steps += 1
+    return result
+`,
+
+  'text-justification': `
+def fullJustify(words, maxWidth):
+    words = list(words.to_py()) if hasattr(words, 'to_py') else list(words)
+    lines = []
+    cur, cur_len = [], 0
+    for w in words:
+        if cur_len + len(w) + len(cur) > maxWidth:
+            lines.append(cur); cur, cur_len = [], 0
+        cur.append(w); cur_len += len(w)
+    lines.append(cur)
+    result = []
+    for i, line in enumerate(lines):
+        if i == len(lines)-1 or len(line) == 1:
+            s = ' '.join(line)
+            result.append(s + ' '*(maxWidth-len(s)))
+        else:
+            total = maxWidth - sum(len(w) for w in line)
+            gaps = len(line) - 1
+            base, extra = divmod(total, gaps)
+            s = line[0]
+            for j in range(1, len(line)):
+                s += ' '*(base + (1 if j <= extra else 0)) + line[j]
+            result.append(s)
+    return result
+`,
+
+  'minimum-operations-make-array-continuous': `
+import bisect
+def minOperations(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums)
+    uniq = sorted(set(nums))
+    best = 0
+    j = 0
+    for i in range(len(uniq)):
+        while j < len(uniq) and uniq[j] <= uniq[i] + n - 1:
+            j += 1
+        best = max(best, j - i)
+    return n - best
+`,
+
+  'arithmetic-subarrays': `
+def checkArithmeticSubarrays(nums, l, r):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    l = list(l.to_py()) if hasattr(l, 'to_py') else list(l)
+    r = list(r.to_py()) if hasattr(r, 'to_py') else list(r)
+    result = []
+    for li, ri in zip(l, r):
+        sub = sorted(nums[li:ri+1])
+        if len(sub) < 2:
+            result.append(True); continue
+        d = sub[1] - sub[0]
+        result.append(all(sub[j]-sub[j-1]==d for j in range(1, len(sub))))
+    return result
+`,
+
+  'minimum-score-path': `
+def minScore(n, roads):
+    roads = [list(r) for r in (roads.to_py() if hasattr(roads, 'to_py') else roads)]
+    from collections import defaultdict
+    adj = defaultdict(list)
+    for a, b, d in roads:
+        adj[a].append((b, d))
+        adj[b].append((a, d))
+    ans = float('inf')
+    visited = set()
+    stack = [1]
+    while stack:
+        u = stack.pop()
+        if u in visited: continue
+        visited.add(u)
+        for v, d in adj[u]:
+            ans = min(ans, d)
+            if v not in visited:
+                stack.append(v)
+    return ans
+`,
+
   'design-circular-queue': `
 def circularQueueRunner(k, ops, args):
     arr = [0] * int(k)

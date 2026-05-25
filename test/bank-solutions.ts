@@ -13695,6 +13695,156 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return inOrder(deserializeBST(root ? preOrder(root) : ''));
   },
 
+  'best-meeting-point': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const rows: number[] = [], cols: number[] = [];
+    for (let r = 0; r < grid.length; r++)
+      for (let c = 0; c < grid[0]!.length; c++)
+        if (grid[r]![c]) { rows.push(r); cols.push(c); }
+    const median = (arr: number[]) => arr[Math.floor(arr.length / 2)]!;
+    const sum = (arr: number[], med: number) => arr.reduce((a, v) => a + Math.abs(v - med), 0);
+    const sortedRows = [...rows].sort((a, b) => a - b);
+    const sortedCols = [...cols].sort((a, b) => a - b);
+    return sum(sortedRows, median(sortedRows)) + sum(sortedCols, median(sortedCols));
+  },
+
+  'longest-subarray-ones-after-delete': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let lo = 0, zeros = 0, best = 0;
+    for (let hi = 0; hi < nums.length; hi++) {
+      if (nums[hi] === 0) zeros++;
+      while (zeros > 1) { if (nums[lo++] === 0) zeros--; }
+      best = Math.max(best, hi - lo);
+    }
+    return best;
+  },
+
+  'reverse-pairs': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    let count = 0;
+    const merge = (arr: number[]): number[] => {
+      if (arr.length <= 1) return arr;
+      const mid = arr.length >> 1;
+      const left = merge(arr.slice(0, mid));
+      const right = merge(arr.slice(mid));
+      let j = 0;
+      for (let i = 0; i < left.length; i++) {
+        while (j < right.length && left[i]! > 2 * right[j]!) j++;
+        count += j;
+      }
+      const merged: number[] = [];
+      let a = 0, b = 0;
+      while (a < left.length && b < right.length) {
+        if (left[a]! <= right[b]!) merged.push(left[a++]!);
+        else merged.push(right[b++]!);
+      }
+      return [...merged, ...left.slice(a), ...right.slice(b)];
+    };
+    merge(nums);
+    return count;
+  },
+
+  'minimum-cost-cut-cake': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const cuts = [...(args[1] as number[])].sort((a, b) => a - b);
+    const arr = [0, ...cuts, n];
+    const m = arr.length;
+    const dp: number[][] = Array.from({ length: m }, () => new Array(m).fill(0));
+    for (let len = 2; len < m; len++) {
+      for (let i = 0; i + len < m; i++) {
+        const j = i + len;
+        dp[i]![j] = Infinity;
+        for (let k = i + 1; k < j; k++) {
+          dp[i]![j] = Math.min(dp[i]![j]!, dp[i]![k]! + dp[k]![j]! + arr[j]! - arr[i]!);
+        }
+      }
+    }
+    return dp[0]![m - 1];
+  },
+
+  'spiral-matrix-iii': (...args: unknown[]) => {
+    const rows = args[0] as number, cols = args[1] as number;
+    let r = args[2] as number, c = args[3] as number;
+    const result: number[][] = [];
+    const dirs = [[0,1],[1,0],[0,-1],[-1,0]];
+    let di = 0, steps = 1;
+    result.push([r, c]);
+    while (result.length < rows * cols) {
+      for (let t = 0; t < 2; t++) {
+        const [dr, dc] = dirs[di % 4]!;
+        for (let s = 0; s < steps; s++) {
+          r += dr!; c += dc!;
+          if (r >= 0 && r < rows && c >= 0 && c < cols) result.push([r, c]);
+        }
+        di++;
+      }
+      steps++;
+    }
+    return result;
+  },
+
+  'text-justification': (...args: unknown[]) => {
+    const words = args[0] as string[], maxWidth = args[1] as number;
+    const lines: string[][] = [];
+    let cur: string[] = [], curLen = 0;
+    for (const w of words) {
+      if (curLen + w.length + cur.length > maxWidth) { lines.push(cur); cur = []; curLen = 0; }
+      cur.push(w); curLen += w.length;
+    }
+    lines.push(cur);
+    return lines.map((line, i) => {
+      if (i === lines.length - 1 || line.length === 1) {
+        const s = line.join(' ');
+        return s + ' '.repeat(maxWidth - s.length);
+      }
+      const totalSpaces = maxWidth - line.reduce((a, w) => a + w.length, 0);
+      const gaps = line.length - 1;
+      const base = Math.floor(totalSpaces / gaps), extra = totalSpaces % gaps;
+      return line.reduce((acc, w, j) => {
+        if (j === 0) return w;
+        const sp = base + (j <= extra ? 1 : 0);
+        return acc + ' '.repeat(sp) + w;
+      });
+    });
+  },
+
+  'minimum-operations-make-array-continuous': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const uniq = [...new Set(nums)].sort((a, b) => a - b);
+    let best = 0, j = 0;
+    for (let i = 0; i < uniq.length; i++) {
+      while (j < uniq.length && uniq[j]! <= uniq[i]! + n - 1) j++;
+      best = Math.max(best, j - i);
+    }
+    return n - best;
+  },
+
+  'arithmetic-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[], l = args[1] as number[], r = args[2] as number[];
+    return l.map((li, i) => {
+      const sub = nums.slice(li, r[i]! + 1).sort((a, b) => a - b);
+      if (sub.length < 2) return true;
+      const d = sub[1]! - sub[0]!;
+      return sub.every((v, j) => j === 0 || v - sub[j - 1]! === d);
+    });
+  },
+
+  'minimum-score-path': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const roads = args[1] as number[][];
+    const adj: Array<Array<[number, number]>> = Array.from({ length: n + 1 }, () => []);
+    for (const road of roads) { const a = road[0]!, b = road[1]!, d = road[2]!; adj[a]!.push([b, d]); adj[b]!.push([a, d]); }
+    let ans = Infinity;
+    const visited = new Set<number>();
+    const dfs = (u: number) => {
+      visited.add(u);
+      for (const [v, d] of adj[u]!) { ans = Math.min(ans, d); if (!visited.has(v)) dfs(v); }
+    };
+    dfs(1);
+    return ans;
+  },
+
   'design-circular-queue': (...args: unknown[]) => {
     const k = args[0] as number, ops = args[1] as string[], opArgs = args[2] as number[][];
     const arr = new Array(k);
