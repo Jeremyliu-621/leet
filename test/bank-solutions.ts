@@ -18620,4 +18620,37 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return rows.slice(0, k as number).map(r => r[1]);
   },
 
+  'separate-black-and-white-balls': (s: unknown) => {
+    const str = s as string;
+    let zeros = 0, result = 0;
+    for (let i = 0; i < str.length; i++) {
+      if (str[i] === '0') {
+        result += i - zeros;
+        zeros++;
+      }
+    }
+    return result;
+  },
+
+  'minimum-number-of-steps-to-make-two-strings-anagram': (s: unknown, t: unknown) => {
+    const sStr = s as string, tStr = t as string;
+    const count = new Array<number>(26).fill(0);
+    for (const c of sStr) count[c.charCodeAt(0) - 97]!++;
+    for (const c of tStr) count[c.charCodeAt(0) - 97]!--;
+    return count.reduce((acc, v) => acc + Math.max(0, -v), 0);
+  },
+
+  'find-the-prefix-common-array-of-two-arrays': (A: unknown, B: unknown) => {
+    const arrA = A as number[], arrB = B as number[];
+    const freq = new Array<number>(arrA.length + 1).fill(0);
+    const result: number[] = [];
+    let common = 0;
+    for (let i = 0; i < arrA.length; i++) {
+      if (++freq[arrA[i]!]! === 2) common++;
+      if (++freq[arrB[i]!]! === 2) common++;
+      result.push(common);
+    }
+    return result;
+  },
+
 };

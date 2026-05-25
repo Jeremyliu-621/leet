@@ -18524,4 +18524,44 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
     rows = sorted(range(len(mat)), key=lambda i: (sum(mat[i]), i))
     return rows[:k]
 `,
+
+  'separate-black-and-white-balls': `def minimumSteps(s):
+    s = str(s)
+    zeros = 0
+    result = 0
+    for i, c in enumerate(s):
+        if c == '0':
+            result += i - zeros
+            zeros += 1
+    return result
+`,
+
+  'minimum-number-of-steps-to-make-two-strings-anagram': `def minSteps(s, t):
+    s = str(s)
+    t = str(t)
+    count = [0] * 26
+    for c in s:
+        count[ord(c) - ord('a')] += 1
+    for c in t:
+        count[ord(c) - ord('a')] -= 1
+    return sum(max(0, -v) for v in count)
+`,
+
+  'find-the-prefix-common-array-of-two-arrays': `def findThePrefixCommonArray(A, B):
+    A = list(A.to_py() if hasattr(A, 'to_py') else A)
+    B = list(B.to_py() if hasattr(B, 'to_py') else B)
+    n = len(A)
+    freq = [0] * (n + 1)
+    result = []
+    common = 0
+    for i in range(n):
+        freq[A[i]] += 1
+        if freq[A[i]] == 2:
+            common += 1
+        freq[B[i]] += 1
+        if freq[B[i]] == 2:
+            common += 1
+        result.append(common)
+    return result
+`,
 };

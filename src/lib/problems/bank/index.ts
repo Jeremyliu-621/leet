@@ -1392,6 +1392,9 @@ import { problem as peakIndexInMountainArray } from './peak-index-in-mountain-ar
 import { problem as twoKeysKeyboard } from './two-keys-keyboard';
 import { problem as bagOfTokens } from './bag-of-tokens';
 import { problem as findTheKWeakestRowsInAMatrix } from './find-the-k-weakest-rows-in-a-matrix';
+import { problem as separateBlackAndWhiteBalls } from './separate-black-and-white-balls';
+import { problem as minimumNumberOfStepsToMakeTwoStringsAnagram } from './minimum-number-of-steps-to-make-two-strings-anagram';
+import { problem as findThePrefixCommonArrayOfTwoArrays } from './find-the-prefix-common-array-of-two-arrays';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2832,4 +2835,7 @@ export const problems: readonly Problem[] = [
   twoKeysKeyboard,
   bagOfTokens,
   findTheKWeakestRowsInAMatrix,
+  separateBlackAndWhiteBalls,
+  minimumNumberOfStepsToMakeTwoStringsAnagram,
+  findThePrefixCommonArrayOfTwoArrays,
 ];
