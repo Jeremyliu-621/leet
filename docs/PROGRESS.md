@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 600 problems; 2071 tests; milestone reached!
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (2071 tests passing).
-**Next up:** Continue growing bank beyond 600; more medium/hard problems. Browser-zoom QA (L).
+**Current focus:** Bank at 617 problems; 2122 tests; growing past 600.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (2122 tests passing).
+**Next up:** Continue growing bank; more medium/hard problems. Browser-zoom QA (L).
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -297,6 +297,7 @@ Still pending:
 - [x] **5 more new problems** — valid-triangle-number (arrays+two-pointers/medium), max-number-k-sum-pairs (arrays+hash-map/medium), minimum-time-rope-colorful (arrays+two-pointers/medium), shortest-bridge (graph/hard), number-of-subsequences-target-sum (arrays+two-pointers/medium); 2026 tests; bank at 589.
 - [x] **5 more new problems** — car-pooling (arrays/medium), most-profit-assigning-work (binary-search/medium), fruit-into-baskets (sliding-window/medium), minimum-swaps-string-balanced (arrays/medium), sum-of-subarray-ranges (arrays+stack/medium); 2044 tests; bank at 594+.
 - [x] **🎉 600-problem milestone** — reverse-words-in-string-iii, maximum-product-adjacent-elements, split-string-balance, increasing-decreasing-string, students-unable-to-eat-lunch, create-target-array-given-order, maximum-ascending-subarray-sum, minimum-consecutive-cards-pickup, divisor-game, minimum-time-visiting-all-points, largest-local-values-matrix, percentage-letter-in-string, number-of-weak-characters; 2071 tests; bank at 600.
+- [x] **17 more new problems** — arithmetic-slices, max-vowels-substring, min-swaps-group-all-ones, k-diff-pairs, hand-of-straights, min-domino-rotations, furthest-building-ladders, ipo, relative-sort-array, permutations-ii, letter-tile-possibilities, different-ways-add-parentheses (plus 5 from remote: maximize-confusion-exam, sum-of-all-subset-xor, continuous-subarray-sum, equal-row-column-pairs, determine-if-two-strings-close); 2122 tests; bank at 617.
 
 ---
 
