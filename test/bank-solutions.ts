@@ -18342,6 +18342,36 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
+  'count-the-number-of-fair-pairs': (nums: unknown, lower: unknown, upper: unknown) => {
+    const arr = (nums as number[]).slice().sort((a, b) => a - b);
+    const countAtMost = (limit: number) => {
+      let l = 0, r = arr.length - 1, cnt = 0;
+      while (l < r) {
+        if (arr[l]! + arr[r]! <= limit) { cnt += r - l; l++; }
+        else r--;
+      }
+      return cnt;
+    };
+    return countAtMost(upper as number) - countAtMost((lower as number) - 1);
+  },
+
+  'find-if-array-can-be-sorted': (nums: unknown) => {
+    const arr = nums as number[];
+    const popcount = (n: number) => { let c = 0; while (n) { c += n & 1; n >>= 1; } return c; };
+    let prevMax = -Infinity, i = 0;
+    while (i < arr.length) {
+      let j = i;
+      const bits = popcount(arr[i]!);
+      let gMin = arr[i]!, gMax = arr[i]!;
+      while (j < arr.length && popcount(arr[j]!) === bits) {
+        gMin = Math.min(gMin, arr[j]!); gMax = Math.max(gMax, arr[j]!); j++;
+      }
+      if (gMin < prevMax) return false;
+      prevMax = gMax; i = j;
+    }
+    return true;
+  },
+
   'rectangle-area': (ax1: unknown, ay1: unknown, ax2: unknown, ay2: unknown, bx1: unknown, by1: unknown, bx2: unknown, by2: unknown) => {
     const A = (ax2 as number - (ax1 as number)) * (ay2 as number - (ay1 as number));
     const B = (bx2 as number - (bx1 as number)) * (by2 as number - (by1 as number));
@@ -18382,6 +18412,45 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'construct-string-with-repeat-limit': (s: unknown, repeatLimit: unknown) => {
+    const str = s as string, limit = repeatLimit as number;
+    const freq = new Array(26).fill(0);
+    for (const c of str) freq[c.charCodeAt(0) - 97]++;
+    const res: string[] = [];
+    let i = 25;
+    while (i >= 0) {
+      if (freq[i] === 0) { i--; continue; }
+      const take = Math.min(freq[i]!, limit);
+      res.push(String.fromCharCode(97 + i).repeat(take));
+      freq[i]! -= take;
+      if (freq[i]! > 0) {
+        let j = i - 1;
+        while (j >= 0 && freq[j] === 0) j--;
+        if (j < 0) break;
+        res.push(String.fromCharCode(97 + j));
+        freq[j]!--;
+      }
+    }
+    return res.join('');
+  },
+
+  'count-ways-to-select-buildings': (s: unknown) => {
+    const str = s as string;
+    const n = str.length;
+    const ones = new Array(n + 1).fill(0);
+    for (let i = 0; i < n; i++) ones[i + 1] = ones[i] + (str[i] === '1' ? 1 : 0);
+    const totalOnes = ones[n];
+    let ans = 0;
+    for (let j = 1; j < n - 1; j++) {
+      const onesBefore = ones[j]!, zerosBefore = j - onesBefore;
+      const onesAfter = totalOnes - ones[j + 1]!;
+      const zerosAfter = (n - j - 1) - onesAfter;
+      if (str[j] === '1') ans += zerosBefore * zerosAfter;
+      else ans += onesBefore * onesAfter;
+    }
+    return ans;
+  },
+
   'utf-8-validation': (data: unknown) => {
     const bytes = data as number[];
     let i = 0;
@@ -18416,6 +18485,17 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       res.push(sum);
     }
     return res;
+  },
+
+  'power-of-heroes': (nums: unknown) => {
+    const MOD = 1_000_000_007n;
+    const arr = (nums as number[]).slice().sort((a, b) => a - b).map(BigInt);
+    let ans = 0n, s = 0n;
+    for (const x of arr) {
+      ans = (ans + x * x * (s + x)) % MOD;
+      s = (2n * s + x) % MOD;
+    }
+    return Number(ans);
   },
 
 };

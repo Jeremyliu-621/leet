@@ -1378,6 +1378,11 @@ import { problem as encodeDecodeStrings } from './encode-decode-strings';
 import { problem as shortestDistanceToCharacter } from './shortest-distance-to-character';
 import { problem as utf8Validation } from './utf-8-validation';
 import { problem as rangeAddition } from './range-addition';
+import { problem as countTheNumberOfFairPairs } from './count-the-number-of-fair-pairs';
+import { problem as findIfArrayCanBeSorted } from './find-if-array-can-be-sorted';
+import { problem as constructStringWithRepeatLimit } from './construct-string-with-repeat-limit';
+import { problem as countWaysToSelectBuildings } from './count-ways-to-select-buildings';
+import { problem as powerOfHeroes } from './power-of-heroes';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2804,4 +2809,9 @@ export const problems: readonly Problem[] = [
   shortestDistanceToCharacter,
   utf8Validation,
   rangeAddition,
+  countTheNumberOfFairPairs,
+  findIfArrayCanBeSorted,
+  constructStringWithRepeatLimit,
+  countWaysToSelectBuildings,
+  powerOfHeroes,
 ];

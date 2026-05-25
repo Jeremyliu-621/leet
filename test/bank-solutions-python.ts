@@ -18289,4 +18289,94 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
         res.append(s)
     return res
 `,
+
+  'count-the-number-of-fair-pairs': `def countFairPairs(nums, lower, upper):
+    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else list(nums))
+    lower, upper = int(lower), int(upper)
+    def count_at_most(limit):
+        l, r, cnt = 0, len(nums) - 1, 0
+        while l < r:
+            if nums[l] + nums[r] <= limit:
+                cnt += r - l
+                l += 1
+            else:
+                r -= 1
+        return cnt
+    return count_at_most(upper) - count_at_most(lower - 1)
+`,
+
+  'find-if-array-can-be-sorted': `def canSortArray(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    prev_max = float('-inf')
+    i = 0
+    while i < len(nums):
+        bits = bin(nums[i]).count('1')
+        g_min = g_max = nums[i]
+        j = i
+        while j < len(nums) and bin(nums[j]).count('1') == bits:
+            g_min = min(g_min, nums[j])
+            g_max = max(g_max, nums[j])
+            j += 1
+        if g_min < prev_max:
+            return False
+        prev_max = g_max
+        i = j
+    return True
+`,
+
+  'construct-string-with-repeat-limit': `def repeatLimitedString(s, repeatLimit):
+    limit = int(repeatLimit)
+    from collections import Counter
+    freq = [0] * 26
+    for c in s:
+        freq[ord(c) - ord('a')] += 1
+    res = []
+    i = 25
+    while i >= 0:
+        if freq[i] == 0:
+            i -= 1
+            continue
+        take = min(freq[i], limit)
+        res.append(chr(ord('a') + i) * take)
+        freq[i] -= take
+        if freq[i] > 0:
+            j = i - 1
+            while j >= 0 and freq[j] == 0:
+                j -= 1
+            if j < 0:
+                break
+            res.append(chr(ord('a') + j))
+            freq[j] -= 1
+    return ''.join(res)
+`,
+
+  'count-ways-to-select-buildings': `def countWays(s):
+    n = len(s)
+    ones = [0] * (n + 1)
+    for i in range(n):
+        ones[i + 1] = ones[i] + (1 if s[i] == '1' else 0)
+    total_ones = ones[n]
+    ans = 0
+    for j in range(1, n - 1):
+        ones_before = ones[j]
+        zeros_before = j - ones_before
+        ones_after = total_ones - ones[j + 1]
+        zeros_after = (n - j - 1) - ones_after
+        if s[j] == '1':
+            ans += zeros_before * zeros_after
+        else:
+            ans += ones_before * ones_after
+    return ans
+`,
+
+  'power-of-heroes': `def sumOfPower(nums):
+    MOD = 10 ** 9 + 7
+    arr = sorted(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    ans = 0
+    s = 0
+    for x in arr:
+        ans = (ans + x * x * (s + x)) % MOD
+        s = (2 * s + x) % MOD
+    return ans
+`,
 };
