@@ -17213,4 +17213,74 @@ def minimumDeletions(s):
             ans = dp[x]
     return ans
 `,
+
+  'number-of-subarrays-with-bounded-maximum': `def numSubarrayBoundedMax(nums, left, right):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    L = int(left)
+    R = int(right)
+    def at_most(b):
+        count = cur = 0
+        for v in nums:
+            cur = cur + 1 if v <= b else 0
+            count += cur
+        return count
+    return at_most(R) - at_most(L - 1)
+`,
+
+  'split-array-into-consecutive-subsequences': `def isPossible(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    freq = {}
+    end = {}
+    for v in nums:
+        freq[v] = freq.get(v, 0) + 1
+    for v in nums:
+        if not freq.get(v):
+            continue
+        freq[v] -= 1
+        if end.get(v):
+            end[v] -= 1
+            end[v + 1] = end.get(v + 1, 0) + 1
+        elif freq.get(v + 1) and freq.get(v + 2):
+            freq[v + 1] -= 1
+            freq[v + 2] -= 1
+            end[v + 3] = end.get(v + 3, 0) + 1
+        else:
+            return False
+    return True
+`,
+
+  'restore-the-array-from-adjacent-pairs': `def restoreArray(adjacentPairs):
+    pairs = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in (adjacentPairs.to_py() if hasattr(adjacentPairs, 'to_py') else adjacentPairs)]
+    adj = {}
+    for a, b in pairs:
+        adj.setdefault(a, []).append(b)
+        adj.setdefault(b, []).append(a)
+    start = next(k for k, v in adj.items() if len(v) == 1)
+    n = len(pairs) + 1
+    res = [start]
+    for i in range(1, n):
+        nbrs = adj[res[i - 1]]
+        res.append(nbrs[0] if nbrs[0] != res[i - 2] else nbrs[1])
+    return res
+`,
+
+  'monotone-increasing-digits': `def monotoneIncreasingDigits(n):
+    d = list(str(n))
+    mark = len(d)
+    for i in range(len(d) - 1, 0, -1):
+        if d[i - 1] > d[i]:
+            mark = i
+            d[i - 1] = str(int(d[i - 1]) - 1)
+    for i in range(mark, len(d)):
+        d[i] = '9'
+    return int(''.join(d))
+`,
+
+  'construct-k-palindrome-strings': `def canConstruct(k, s):
+    from collections import Counter
+    k = int(k)
+    freq = Counter(s)
+    odds = sum(1 for v in freq.values() if v % 2 == 1)
+    return odds <= k <= len(s)
+`,
 };

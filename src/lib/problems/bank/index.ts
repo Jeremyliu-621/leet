@@ -1310,6 +1310,10 @@ import { problem as kthSmallestElementInBst } from './kth-smallest-element-in-bs
 import { problem as findMinimumInRotatedSortedArray } from './find-minimum-in-rotated-sorted-array';
 import { problem as searchInRotatedSortedArray } from './search-in-rotated-sorted-array';
 import { problem as minimumNumberOfDaysToMakeMBouquets } from './minimum-number-of-days-to-make-m-bouquets';
+import { problem as splitArrayIntoConsecutiveSubsequences } from './split-array-into-consecutive-subsequences';
+import { problem as restoreTheArrayFromAdjacentPairs } from './restore-the-array-from-adjacent-pairs';
+import { problem as monotoneIncreasingDigits } from './monotone-increasing-digits';
+import { problem as constructKPalindromeStrings } from './construct-k-palindrome-strings';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2668,4 +2672,8 @@ export const problems: readonly Problem[] = [
   findMinimumInRotatedSortedArray,
   searchInRotatedSortedArray,
   minimumNumberOfDaysToMakeMBouquets,
+  splitArrayIntoConsecutiveSubsequences,
+  restoreTheArrayFromAdjacentPairs,
+  monotoneIncreasingDigits,
+  constructKPalindromeStrings,
 ];

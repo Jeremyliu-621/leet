@@ -17385,4 +17385,73 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'number-of-subarrays-with-bounded-maximum': (nums: unknown, left: unknown, right: unknown) => {
+    const a = nums as number[], L = left as number, R = right as number;
+    function atMost(b: number): number {
+      let count = 0, cur = 0;
+      for (const v of a) { cur = v <= b ? cur + 1 : 0; count += cur; }
+      return count;
+    }
+    return atMost(R) - atMost(L - 1);
+  },
+
+  'split-array-into-consecutive-subsequences': (nums: unknown) => {
+    const a = nums as number[];
+    const freq = new Map<number, number>();
+    const end = new Map<number, number>();
+    for (const v of a) freq.set(v, (freq.get(v) ?? 0) + 1);
+    for (const v of a) {
+      if (!freq.get(v)) continue;
+      freq.set(v, freq.get(v)! - 1);
+      if (end.get(v)) {
+        end.set(v, end.get(v)! - 1);
+        end.set(v + 1, (end.get(v + 1) ?? 0) + 1);
+      } else if (freq.get(v + 1) && freq.get(v + 2)) {
+        freq.set(v + 1, freq.get(v + 1)! - 1);
+        freq.set(v + 2, freq.get(v + 2)! - 1);
+        end.set(v + 3, (end.get(v + 3) ?? 0) + 1);
+      } else return false;
+    }
+    return true;
+  },
+
+  'restore-the-array-from-adjacent-pairs': (adjacentPairs: unknown) => {
+    const pairs = adjacentPairs as number[][];
+    const adj = new Map<number, number[]>();
+    for (const pair of pairs) {
+      const a = pair[0]!, b = pair[1]!;
+      if (!adj.has(a)) adj.set(a, []);
+      if (!adj.has(b)) adj.set(b, []);
+      adj.get(a)!.push(b);
+      adj.get(b)!.push(a);
+    }
+    let start = 0;
+    for (const [k, v] of adj) { if (v.length === 1) { start = k; break; } }
+    const n = pairs.length + 1;
+    const res: number[] = [start];
+    for (let i = 1; i < n; i++) {
+      const nbrs = adj.get(res[i - 1]!)!;
+      res.push(nbrs[0] === res[i - 2] ? nbrs[1]! : nbrs[0]!);
+    }
+    return res;
+  },
+
+  'monotone-increasing-digits': (n: unknown) => {
+    const d = (n as number).toString().split('').map(Number);
+    let mark = d.length;
+    for (let i = d.length - 1; i > 0; i--) {
+      if (d[i - 1]! > d[i]!) { mark = i; d[i - 1]!--; }
+    }
+    for (let i = mark; i < d.length; i++) d[i] = 9;
+    return parseInt(d.join(''));
+  },
+
+  'construct-k-palindrome-strings': (k: unknown, s: unknown) => {
+    const str = s as string, K = k as number;
+    const freq: Record<string, number> = {};
+    for (const c of str) freq[c] = (freq[c] ?? 0) + 1;
+    const odds = Object.values(freq).filter(v => v % 2 === 1).length;
+    return odds <= K && K <= str.length;
+  },
+
 };

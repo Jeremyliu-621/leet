@@ -4,10 +4,10 @@ export const problem: Problem = {
   id: 'number-of-subarrays-with-bounded-maximum',
   title: 'Number of Subarrays with Bounded Maximum',
   difficulty: 'medium',
-  tags: ['sliding-window'],
-  description: `Given an integer array \`nums\` and two integers \`left\` and \`right\`, return the number of contiguous non-empty subarrays such that the value of the maximum array element in that subarray is in the range \`[left, right]\`.
+  tags: ['arrays', 'two-pointers'],
+  description: `Given an integer array \`nums\` and two integers \`left\` and \`right\`, return the **number of contiguous non-empty subarrays** such that the value of the maximum array element in that subarray is in the range \`[left, right]\`.
 
-The test cases are generated so that the answer will fit in a **32-bit** integer.`,
+**Approach:** A subarray's max is in \`[left, right]\` = count of subarrays with max ≤ right − count of subarrays with max ≤ left−1. For "max ≤ bound", the count is the sum over all elements of the length of the current valid run.`,
   constraints: [
     '1 <= nums.length <= 10^5',
     '0 <= nums[i] <= 10^9',
@@ -17,31 +17,46 @@ The test cases are generated so that the answer will fit in a **32-bit** integer
     {
       input: 'nums = [2,1,4,3], left = 2, right = 3',
       output: '3',
-      explanation: 'Valid subarrays: [2], [2,1], [3] — each has max in [2,3].',
+      explanation: 'Subarrays with max in [2,3]: [2], [2,1], [3]. Subarray [4] and those containing 4 are excluded.',
     },
     {
       input: 'nums = [2,9,2,5,6], left = 2, right = 8',
       output: '7',
     },
+    {
+      input: 'nums = [1,2,3], left = 1, right = 2',
+      output: '3',
+    },
   ],
   hints: [
-    'Track the last index where nums[i] > right (call it `lo`) and last index where nums[i] >= left (call it `hi`).',
-    'For each index i, if nums[i] > right, reset both pointers. Otherwise, the count of valid subarrays ending at i is max(0, hi - lo).',
+    'count(max ≤ bound) = for each index i, count consecutive valid elements ending at i (reset to 0 when nums[i] > bound).',
+    'Answer = count(max ≤ right) − count(max ≤ left−1).',
+    '```js\nfunction atMost(nums, b) {\n  let count = 0, cur = 0;\n  for (const v of nums) {\n    cur = v <= b ? cur + 1 : 0;\n    count += cur;\n  }\n  return count;\n}\nreturn atMost(nums, right) - atMost(nums, left - 1);\n```',
   ],
   functionName: 'numSubarrayBoundedMax',
   params: ['nums', 'left', 'right'],
   starterCode: {
-    javascript: 'function numSubarrayBoundedMax(nums, left, right) {\n\n}\n',
-    python: 'def numSubarrayBoundedMax(nums, left, right):\n    pass\n',
+    javascript: `function numSubarrayBoundedMax(nums, left, right) {
+  // return count of subarrays with max in [left, right]
+
+}`,
+    python: `def numSubarrayBoundedMax(nums: list, left: int, right: int) -> int:
+    # return count of subarrays with max in [left, right]
+    pass
+`,
   },
   visibleTests: [
-    { args: [[2, 1, 4, 3], 2, 3], expected: 3 },
-    { args: [[2, 9, 2, 5, 6], 2, 8], expected: 7 },
+    { args: [[2,1,4,3], 2, 3], expected: 3 },
+    { args: [[2,9,2,5,6], 2, 8], expected: 7 },
+    { args: [[1,2,3], 1, 2], expected: 3 },
   ],
   hiddenTests: [
-    { args: [[1, 3, 5, 2, 7, 5], 3, 5], expected: 9 },
     { args: [[1], 1, 1], expected: 1 },
     { args: [[5], 1, 4], expected: 0 },
-    { args: [[1, 2, 3], 2, 2], expected: 2 },
+    { args: [[1,2,3,4,5], 2, 4], expected: 9 },
+    { args: [[1,1,1,1], 1, 1], expected: 10 },
+    { args: [[3,2,1], 1, 3], expected: 6 },
+    { args: [[1, 3, 5, 2, 7, 5], 3, 5], expected: 9 },
+    { args: [[1,2,3], 2, 2], expected: 2 },
   ],
 };
