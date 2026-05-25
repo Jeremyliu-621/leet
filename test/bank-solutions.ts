@@ -21144,4 +21144,53 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return processed === colors.size;
   },
 
+  'maximize-greatness-of-an-array': (nums: unknown) => {
+    const a = [...(nums as number[])].sort((x, y) => x - y);
+    let i = 0;
+    for (let j = 0; j < a.length; j++) {
+      if (a[j]! > a[i]!) i++;
+    }
+    return i;
+  },
+
+  'neighboring-bitwise-xor': (derived: unknown) => {
+    const d = derived as number[];
+    return d.reduce((xor, v) => xor ^ v, 0) === 0;
+  },
+
+  'minimize-xor': (num1: unknown, num2: unknown) => {
+    const n1 = num1 as number;
+    const n2 = num2 as number;
+    const popcount = (n: number) => { let c = 0; while (n > 0) { c += n & 1; n >>>= 1; } return c; };
+    let k = popcount(n2);
+    let x = 0;
+    for (let bit = 30; bit >= 0 && k > 0; bit--) {
+      if (n1 & (1 << bit)) { x |= (1 << bit); k--; }
+    }
+    for (let bit = 0; bit <= 30 && k > 0; bit++) {
+      if (!(x & (1 << bit))) { x |= (1 << bit); k--; }
+    }
+    return x;
+  },
+
+  'find-the-maximum-number-of-marked-indices': (nums: unknown) => {
+    const a = [...(nums as number[])].sort((x, y) => x - y);
+    const n = a.length;
+    let left = 0;
+    for (let right = Math.floor(n / 2); right < n; right++) {
+      if (2 * a[left]! <= a[right]!) left++;
+    }
+    return left * 2;
+  },
+
+  'minimize-maximum-of-array': (nums: unknown) => {
+    const a = nums as number[];
+    let sum = 0, ans = 0;
+    for (let i = 0; i < a.length; i++) {
+      sum += a[i]!;
+      ans = Math.max(ans, Math.ceil(sum / (i + 1)));
+    }
+    return ans;
+  },
+
 };

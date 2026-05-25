@@ -1535,12 +1535,16 @@ import { problem as brokenCalculator } from './broken-calculator';
 import { problem as countDaysWithoutMeetings } from './count-days-without-meetings';
 import { problem as stringCompressionIII } from './string-compression-iii';
 import { problem as strangePrinterII } from './strange-printer-ii';
-// batch 53
 import { problem as kthSmallestInSortedMatrix } from './kth-smallest-in-sorted-matrix';
 import { problem as theSkylineProblem } from './the-skyline-problem';
 import { problem as islandPerimeter } from './island-perimeter';
 import { problem as matrixChainMultiplication } from './matrix-chain-multiplication';
 import { problem as binarySearchTreeIterator } from './binary-search-tree-iterator';
+import { problem as maximizeGreatnessOfAnArray } from './maximize-greatness-of-an-array';
+import { problem as neighboringBitwiseXor } from './neighboring-bitwise-xor';
+import { problem as minimizeXor } from './minimize-xor';
+import { problem as findTheMaximumNumberOfMarkedIndices } from './find-the-maximum-number-of-marked-indices';
+import { problem as minimizeMaximumOfArray } from './minimize-maximum-of-array';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3129,4 +3133,9 @@ export const problems: readonly Problem[] = [
   islandPerimeter,
   matrixChainMultiplication,
   binarySearchTreeIterator,
+  maximizeGreatnessOfAnArray,
+  neighboringBitwiseXor,
+  minimizeXor,
+  findTheMaximumNumberOfMarkedIndices,
+  minimizeMaximumOfArray,
 ];

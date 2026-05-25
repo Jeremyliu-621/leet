@@ -21019,4 +21019,54 @@ def secondMinimum(n, edges, time, change):
                 queue.append(dep)
     return processed == len(colors)
 `,
+
+  'maximize-greatness-of-an-array': `def maximizeGreatness(nums):
+    a = sorted(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    i = 0
+    for j in range(len(a)):
+        if a[j] > a[i]:
+            i += 1
+    return i
+`,
+
+  'neighboring-bitwise-xor': `def doesValidArrayExist(derived):
+    d = list(int(x) for x in (derived.to_py() if hasattr(derived, 'to_py') else derived))
+    xor = 0
+    for v in d:
+        xor ^= v
+    return xor == 0
+`,
+
+  'minimize-xor': `def minimizeXor(num1, num2):
+    n1 = int(num1); n2 = int(num2)
+    k = bin(n2).count('1')
+    x = 0
+    for bit in range(30, -1, -1):
+        if k <= 0: break
+        if n1 & (1 << bit):
+            x |= (1 << bit); k -= 1
+    for bit in range(31):
+        if k <= 0: break
+        if not (x & (1 << bit)):
+            x |= (1 << bit); k -= 1
+    return x
+`,
+
+  'find-the-maximum-number-of-marked-indices': `def maxNumOfMarkedIndices(nums):
+    a = sorted(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    n = len(a); left = 0
+    for right in range(n // 2, n):
+        if 2 * a[left] <= a[right]:
+            left += 1
+    return left * 2
+`,
+
+  'minimize-maximum-of-array': `def minimizeArrayValue(nums):
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    total = 0; ans = 0
+    for i, v in enumerate(a):
+        total += v
+        ans = max(ans, -(-total // (i + 1)))  # ceiling division
+    return ans
+`,
 };
