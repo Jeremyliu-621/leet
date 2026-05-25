@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1310 problems; 4176 tests green.
+**Current focus:** Bank at 1301 problems; 4200 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue adding classic problems (Batch 33+); UI/UX polish; Options/popup improvements.
+**Next up:** Continue adding classic problems (Batch 36+); UI/UX polish; Options/popup improvements.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -371,6 +371,7 @@ Still pending:
 - [x] **3 more classic problems (Batch 32-local)** — minimum-number-of-swaps-to-make-string-balanced (strings+two-pointers/medium, unmatched closing brackets / 2), number-of-substrings-containing-all-three-characters (strings+sliding-window/medium, track last-seen positions), maximum-score-from-removing-substrings (strings+stack/medium, greedy order + two-pass stack); bank at **1304**; 4158 tests.
 - [x] **3 more classic problems (Batch 33)** — minimum-deletions-to-make-string-balanced (strings+dp/medium, O(n) scan bCount/dp), minimum-difference-between-largest-smallest-three-moves (arrays/medium, sort + 4-window min), shortest-subarray-to-remove-to-make-array-sorted (arrays+two-pointers/medium, prefix/suffix + two-pointer merge); bank at **1307**; 4167 tests.
 - [x] **3 more classic problems (Batch 34)** — minimum-health-to-beat-the-game (arrays/medium, greedy armor on max), check-if-string-contains-all-binary-codes-of-size-k (strings+hash-map/medium, sliding window + set), longest-nice-substring (strings/easy, divide-and-conquer on missing-case chars); bank at **1310**; 4176 tests.
+- [x] **3 more classic problems (Batch 35)** — longest-subarray-of-1s-after-deleting-one-element (sliding-window/medium, window with at most 1 zero, answer = size−1), count-number-of-nice-subarrays (sliding-window/medium, exactly k = atMost(k)−atMost(k−1)), maximum-length-of-a-concatenated-string-with-unique-characters (backtracking/medium, bitmask DFS); also merged remote Batch 35 (minimum-add-to-make-parentheses-valid, predict-winner, can-i-win, optimal-division, minimum-insertions-to-balance-parentheses); bank at **1301**; 4200 tests.
 
 ---
 
