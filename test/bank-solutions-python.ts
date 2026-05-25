@@ -10183,4 +10183,53 @@ def checkArithmeticSubarrays(nums, l, r):
         result.append(all(sub[j] - sub[j-1] == d for j in range(1, len(sub))))
     return result
 `,
+
+  'check-valid-matrix': `
+def checkValid(matrix):
+    n = len(matrix)
+    def ok(arr):
+        return len(set(arr)) == n and all(1 <= v <= n for v in arr)
+    for row in matrix:
+        if not ok(row): return False
+    for j in range(n):
+        if not ok([matrix[i][j] for i in range(n)]): return False
+    return True
+`,
+
+  'count-max-frequency-elements': `
+def maxFrequencyElements(nums):
+    from collections import Counter
+    freq = Counter(nums)
+    max_f = max(freq.values())
+    return sum(f for f in freq.values() if f == max_f)
+`,
+
+  'minimum-difference-after-k-removals': `
+def minimumDifference(nums, k):
+    nums = sorted(nums)
+    return min(nums[i+k-1] - nums[i] for i in range(len(nums)-k+1))
+`,
+
+  'number-of-valid-clock-times': `
+def countTime(time):
+    cnt = 0
+    for h in range(24):
+        for m in range(60):
+            s = f"{h:02d}:{m:02d}"
+            if all(c == '?' or c == s[i] for i, c in enumerate(time)):
+                cnt += 1
+    return cnt
+`,
+
+  'calculate-money-in-bank': `
+def totalMoney(n):
+    total = 0
+    week = 0
+    for d in range(n):
+        dow = d % 7
+        if dow == 0:
+            week += 1
+        total += week + dow
+    return total
+`,
 };

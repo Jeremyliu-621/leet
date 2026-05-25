@@ -850,6 +850,11 @@ import { problem as maximizeSumKElements } from './maximize-sum-k-elements';
 import { problem as checkIfAcronym } from './check-if-acronym';
 import { problem as countPairsAbsoluteDiffK } from './count-pairs-absolute-diff-k';
 import { problem as numberOfArithmeticSubarrays } from './number-of-arithmetic-subarrays';
+import { problem as checkValidMatrix } from './check-valid-matrix';
+import { problem as countMaxFrequencyElements } from './count-max-frequency-elements';
+import { problem as minimumDifferenceAfterKRemovals } from './minimum-difference-after-k-removals';
+import { problem as numberOfValidClockTimes } from './number-of-valid-clock-times';
+import { problem as calculateMoneyInBank } from './calculate-money-in-bank';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1748,4 +1753,9 @@ export const problems: readonly Problem[] = [
   checkIfAcronym,
   countPairsAbsoluteDiffK,
   numberOfArithmeticSubarrays,
+  checkValidMatrix,
+  countMaxFrequencyElements,
+  minimumDifferenceAfterKRemovals,
+  numberOfValidClockTimes,
+  calculateMoneyInBank,
 ];

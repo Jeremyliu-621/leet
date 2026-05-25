@@ -10557,4 +10557,48 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     });
   },
 
+  'check-valid-matrix': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const n = matrix.length;
+    const ok = (arr: number[]) => new Set(arr).size === n && arr.every(v => v >= 1 && v <= n);
+    return matrix.every(ok) && Array.from({ length: n }, (_, j) => matrix.map(r => r[j]!)).every(ok);
+  },
+
+  'count-max-frequency-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+    const max = Math.max(...freq.values());
+    return [...freq.values()].filter(f => f === max).reduce((a, b) => a + b, 0);
+  },
+
+  'minimum-difference-after-k-removals': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const k = args[1] as number;
+    let min = Infinity;
+    for (let i = 0; i + k - 1 < nums.length; i++) min = Math.min(min, nums[i + k - 1]! - nums[i]!);
+    return min;
+  },
+
+  'number-of-valid-clock-times': (...args: unknown[]) => {
+    const time = args[0] as string;
+    let cnt = 0;
+    for (let h = 0; h < 24; h++) for (let m = 0; m < 60; m++) {
+      const s = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+      if ([...time].every((c, i) => c === '?' || c === s[i])) cnt++;
+    }
+    return cnt;
+  },
+
+  'calculate-money-in-bank': (...args: unknown[]) => {
+    const n = args[0] as number;
+    let total = 0, week = 0;
+    for (let d = 0; d < n; d++) {
+      const dow = d % 7;
+      if (dow === 0) week++;
+      total += week + dow;
+    }
+    return total;
+  },
+
 };
