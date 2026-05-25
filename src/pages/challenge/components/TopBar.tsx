@@ -5,6 +5,8 @@ interface TopBarProps {
   secondsLeft: number;
   prefs: UserPreferences | null;
   streak: number;
+  /** True when there is no blocked target URL — standalone practice mode. */
+  practiceMode?: boolean;
 }
 
 /** Formats seconds into MM:SS. */
@@ -23,7 +25,7 @@ function formatUnlockDuration(minutes: number): string {
   return m === 0 ? `${h}h` : `${h}h ${m}m`;
 }
 
-export function TopBar({ secondsLeft, prefs, streak }: TopBarProps) {
+export function TopBar({ secondsLeft, prefs, streak, practiceMode = false }: TopBarProps) {
   const isLow = secondsLeft <= 60 && secondsLeft > 0;
   const isCritical = secondsLeft <= 30 && secondsLeft > 0;
   const isExpired = secondsLeft <= 0;
@@ -43,7 +45,7 @@ export function TopBar({ secondsLeft, prefs, streak }: TopBarProps) {
         </span>
         <span className="hidden sm:inline-block h-4 w-px bg-border" aria-hidden="true" />
         <span className="hidden sm:inline-block font-mono text-[10px] text-faint uppercase tracking-wider">
-          solve to unlock
+          {practiceMode ? 'practice mode' : 'solve to unlock'}
         </span>
       </div>
 
