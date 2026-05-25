@@ -711,6 +711,11 @@ import { problem as minimumOperationsMakeArrayAlternating } from './minimum-oper
 import { problem as redistributeCharactersMakeAllStringsEqual } from './redistribute-characters-make-all-strings-equal';
 import { problem as checkCompletenessBinaryTree } from './check-completeness-binary-tree';
 import { problem as maximumTwinSumLinkedList } from './maximum-twin-sum-linked-list';
+import { problem as kRadiusSubarrayAverages } from './k-radius-subarray-averages';
+import { problem as numberOfWaysSelectBuildings } from './number-of-ways-select-buildings';
+import { problem as findCitySmallestNumberNeighbors } from './find-city-smallest-number-neighbors';
+import { problem as totalAppealOfString } from './total-appeal-of-string';
+import { problem as minimumFuelCostReportCapital } from './minimum-fuel-cost-report-capital';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1453,4 +1458,13 @@ export const problems: readonly Problem[] = [
   checkCompletenessBinaryTree,
   // linked-list — medium (new)
   maximumTwinSumLinkedList,
+  // arrays + sliding-window — medium (new)
+  kRadiusSubarrayAverages,
+  // strings + dp — medium/hard (new)
+  numberOfWaysSelectBuildings,
+  totalAppealOfString,
+  // graph — medium (new)
+  findCitySmallestNumberNeighbors,
+  // tree + graph — medium (new)
+  minimumFuelCostReportCapital,
 ];

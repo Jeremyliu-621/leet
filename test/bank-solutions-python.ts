@@ -8396,4 +8396,93 @@ def pairSum(head):
     n = len(vals)
     return max(vals[i] + vals[n-1-i] for i in range(n // 2))
 `,
+
+  'k-radius-subarray-averages': `
+def getAverages(nums, k):
+    nums = list(nums)
+    n = len(nums)
+    w = 2 * k + 1
+    avgs = [-1] * n
+    if w > n:
+        return avgs
+    s = sum(nums[:w])
+    avgs[k] = s // w
+    for i in range(k + 1, n - k):
+        s += nums[i + k] - nums[i - k - 1]
+        avgs[i] = s // w
+    return avgs
+`,
+
+  'number-of-ways-select-buildings': `
+def numberOfWays(s):
+    c0 = c1 = c01 = c10 = ans = 0
+    for ch in s:
+        if ch == '0':
+            c10 += c1
+            ans += c01
+            c0 += 1
+        else:
+            c01 += c0
+            ans += c10
+            c1 += 1
+    return ans
+`,
+
+  'find-city-smallest-number-neighbors': `
+def findTheCity(n, edges, distanceThreshold):
+    INF = float('inf')
+    dist = [[INF] * n for _ in range(n)]
+    for i in range(n):
+        dist[i][i] = 0
+    for u, v, w in edges:
+        dist[u][v] = w
+        dist[v][u] = w
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if dist[i][k] + dist[k][j] < dist[i][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+    ans = -1
+    min_n = n + 1
+    for i in range(n):
+        cnt = sum(1 for j in range(n) if j != i and dist[i][j] <= distanceThreshold)
+        if cnt <= min_n:
+            min_n = cnt
+            ans = i
+    return ans
+`,
+
+  'total-appeal-of-string': `
+def appealSum(s):
+    last = {}
+    dp = ans = 0
+    for i, c in enumerate(s):
+        dp += i - last.get(c, -1)
+        ans += dp
+        last[c] = i
+    return ans
+`,
+
+  'minimum-fuel-cost-report-capital': `
+import sys
+sys.setrecursionlimit(200000)
+def minimumFuelCost(roads, seats):
+    n = len(roads) + 1
+    adj = [[] for _ in range(n)]
+    for u, v in roads:
+        adj[u].append(v)
+        adj[v].append(u)
+    ans = [0]
+    def dfs(u, p):
+        sz = 1
+        for v in adj[u]:
+            if v != p:
+                sz += dfs(v, u)
+        if u != 0:
+            import math
+            ans[0] += math.ceil(sz / seats)
+        return sz
+    dfs(0, -1)
+    return ans[0]
+`,
 };

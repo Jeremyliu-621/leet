@@ -8904,4 +8904,76 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return max;
   },
 
+  'k-radius-subarray-averages': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const n = nums.length, w = 2 * k + 1;
+    const avgs = new Array(n).fill(-1);
+    if (w > n) return avgs;
+    let sum = 0;
+    for (let i = 0; i < w; i++) sum += nums[i]!;
+    avgs[k] = Math.floor(sum / w);
+    for (let i = k + 1; i < n - k; i++) {
+      sum += nums[i + k]! - nums[i - k - 1]!;
+      avgs[i] = Math.floor(sum / w);
+    }
+    return avgs;
+  },
+
+  'number-of-ways-select-buildings': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let c0 = 0, c1 = 0, c01 = 0, c10 = 0, ans = 0;
+    for (const ch of s) {
+      if (ch === '0') { c10 += c1; ans += c01; c0++; }
+      else { c01 += c0; ans += c10; c1++; }
+    }
+    return ans;
+  },
+
+  'find-city-smallest-number-neighbors': (...args: unknown[]) => {
+    const n = args[0] as number, edges = args[1] as number[][], dt = args[2] as number;
+    const INF = Infinity;
+    const dist: number[][] = Array.from({ length: n }, (_, i) =>
+      Array.from({ length: n }, (_, j) => (i === j ? 0 : INF)));
+    for (const e of edges) { const [u, v, w] = [e[0]!, e[1]!, e[2]!]; dist[u]![v] = w; dist[v]![u] = w; }
+    for (let k = 0; k < n; k++)
+      for (let i = 0; i < n; i++)
+        for (let j = 0; j < n; j++)
+          if (dist[i]![k]! + dist[k]![j]! < dist[i]![j]!) dist[i]![j] = dist[i]![k]! + dist[k]![j]!;
+    let ans = -1, minN = n + 1;
+    for (let i = 0; i < n; i++) {
+      let cnt = 0;
+      for (let j = 0; j < n; j++) if (j !== i && dist[i]![j]! <= dt) cnt++;
+      if (cnt <= minN) { minN = cnt; ans = i; }
+    }
+    return ans;
+  },
+
+  'total-appeal-of-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const last = new Map<string, number>();
+    let dp = 0, ans = 0;
+    for (let i = 0; i < s.length; i++) {
+      dp += i - (last.get(s[i]!) ?? -1);
+      ans += dp;
+      last.set(s[i]!, i);
+    }
+    return ans;
+  },
+
+  'minimum-fuel-cost-report-capital': (...args: unknown[]) => {
+    const roads = args[0] as number[][], seats = args[1] as number;
+    const n = roads.length + 1;
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const e of roads) { const [u, v] = [e[0]!, e[1]!]; adj[u]!.push(v); adj[v]!.push(u); }
+    let ans = 0;
+    const dfs = (u: number, p: number): number => {
+      let sz = 1;
+      for (const v of adj[u]!) if (v !== p) sz += dfs(v, u);
+      if (u !== 0) ans += Math.ceil(sz / seats);
+      return sz;
+    };
+    dfs(0, -1);
+    return ans;
+  },
+
 };
