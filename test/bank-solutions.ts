@@ -18040,4 +18040,50 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return res;
   },
 
+  'minimum-number-of-swaps-to-make-string-balanced': (s: unknown) => {
+    let open = 0, unmatched = 0;
+    for (const c of s as string) {
+      if (c === '[') open++;
+      else if (open > 0) open--;
+      else unmatched++;
+    }
+    return Math.ceil(unmatched / 2);
+  },
+
+  'number-of-substrings-containing-all-three-characters': (s: unknown) => {
+    const last = [-1, -1, -1];
+    let ans = 0;
+    for (let i = 0; i < (s as string).length; i++) {
+      last[(s as string).charCodeAt(i) - 97] = i;
+      ans += Math.min(last[0]!, last[1]!, last[2]!) + 1;
+    }
+    return ans;
+  },
+
+  'maximum-score-from-removing-substrings': (s: unknown, x: unknown, y: unknown) => {
+    function remove(str: string, first: string, second: string, val: number): [string, number] {
+      const stack: string[] = [];
+      let score = 0;
+      for (const c of str) {
+        if (stack.length > 0 && stack[stack.length - 1] === first && c === second) {
+          stack.pop();
+          score += val;
+        } else {
+          stack.push(c);
+        }
+      }
+      return [stack.join(''), score];
+    }
+    const X = x as number, Y = y as number;
+    if (X >= Y) {
+      const [s1, s1Score] = remove(s as string, 'a', 'b', X);
+      const [, s2Score] = remove(s1, 'b', 'a', Y);
+      return s1Score + s2Score;
+    } else {
+      const [s1, s1Score] = remove(s as string, 'b', 'a', Y);
+      const [, s2Score] = remove(s1, 'a', 'b', X);
+      return s1Score + s2Score;
+    }
+  },
+
 };

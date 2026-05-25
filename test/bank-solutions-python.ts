@@ -17895,4 +17895,48 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
                 res = i
     return res
 `,
+
+  'minimum-number-of-swaps-to-make-string-balanced': `def minimumSwaps(s):
+    import math
+    open_count = 0
+    unmatched = 0
+    for c in s:
+        if c == '[':
+            open_count += 1
+        elif open_count > 0:
+            open_count -= 1
+        else:
+            unmatched += 1
+    return math.ceil(unmatched / 2)
+`,
+
+  'number-of-substrings-containing-all-three-characters': `def numberOfSubstrings(s):
+    last = [-1, -1, -1]
+    ans = 0
+    for i, c in enumerate(s):
+        last[ord(c) - ord('a')] = i
+        ans += min(last) + 1
+    return ans
+`,
+
+  'maximum-score-from-removing-substrings': `def maximumGain(s, x, y):
+    x, y = int(x), int(y)
+    def remove(t, first, second, val):
+        stack = []
+        score = 0
+        for c in t:
+            if stack and stack[-1] == first and c == second:
+                stack.pop()
+                score += val
+            else:
+                stack.append(c)
+        return ''.join(stack), score
+    if x >= y:
+        s, s1 = remove(s, 'a', 'b', x)
+        s, s2 = remove(s, 'b', 'a', y)
+    else:
+        s, s1 = remove(s, 'b', 'a', y)
+        s, s2 = remove(s, 'a', 'b', x)
+    return s1 + s2
+`,
 };

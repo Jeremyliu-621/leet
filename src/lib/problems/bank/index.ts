@@ -1349,6 +1349,9 @@ import { problem as totalHammingDistance } from './total-hamming-distance';
 import { problem as maximumNumberOfOccurrencesOfASubstring } from './maximum-number-of-occurrences-of-a-substring';
 import { problem as longestHappyPrefix } from './longest-happy-prefix';
 import { problem as reducingDishes } from './reducing-dishes';
+import { problem as minimumNumberOfSwapsToMakeStringBalanced } from './minimum-number-of-swaps-to-make-string-balanced';
+import { problem as numberOfSubstringsContainingAllThreeCharacters } from './number-of-substrings-containing-all-three-characters';
+import { problem as maximumScoreFromRemovingSubstrings } from './maximum-score-from-removing-substrings';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2746,4 +2749,7 @@ export const problems: readonly Problem[] = [
   maximumNumberOfOccurrencesOfASubstring,
   longestHappyPrefix,
   reducingDishes,
+  minimumNumberOfSwapsToMakeStringBalanced,
+  numberOfSubstringsContainingAllThreeCharacters,
+  maximumScoreFromRemovingSubstrings,
 ];
