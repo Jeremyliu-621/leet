@@ -1324,6 +1324,9 @@ import { problem as splitArrayIntoConsecutiveSubsequences } from './split-array-
 import { problem as restoreTheArrayFromAdjacentPairs } from './restore-the-array-from-adjacent-pairs';
 import { problem as monotoneIncreasingDigits } from './monotone-increasing-digits';
 import { problem as constructKPalindromeStrings } from './construct-k-palindrome-strings';
+import { problem as maximumNumberOfEventsThatCanBeAttended } from './maximum-number-of-events-that-can-be-attended';
+import { problem as medianOfTwoSortedArrays } from './median-of-two-sorted-arrays';
+import { problem as numberOfSubsequencesThatSatisfyTheGivenSumCondition } from './number-of-subsequences-that-satisfy-the-given-sum-condition';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2696,4 +2699,7 @@ export const problems: readonly Problem[] = [
   restoreTheArrayFromAdjacentPairs,
   monotoneIncreasingDigits,
   constructKPalindromeStrings,
+  maximumNumberOfEventsThatCanBeAttended,
+  medianOfTwoSortedArrays,
+  numberOfSubsequencesThatSatisfyTheGivenSumCondition,
 ];

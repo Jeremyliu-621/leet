@@ -17294,6 +17294,55 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return lo;
   },
 
+  'maximum-number-of-events-that-can-be-attended': (events: unknown) => {
+    const evs = [...(events as number[][])].sort((a, b) => a[0]! - b[0]!);
+    const maxDay = Math.max(...evs.map(e => e[1]!));
+    let idx = 0, count = 0;
+    const heap: number[] = [];
+    for (let day = 1; day <= maxDay; day++) {
+      while (idx < evs.length && evs[idx]![0]! <= day) {
+        const end = evs[idx]![1]!;
+        let lo = 0, hi = heap.length;
+        while (lo < hi) { const mid = (lo + hi) >> 1; if (heap[mid]! < end) lo = mid + 1; else hi = mid; }
+        heap.splice(lo, 0, end);
+        idx++;
+      }
+      while (heap.length > 0 && heap[0]! < day) heap.shift();
+      if (heap.length > 0) { heap.shift(); count++; }
+    }
+    return count;
+  },
+
+  'median-of-two-sorted-arrays': (nums1: unknown, nums2: unknown) => {
+    let a = [...(nums1 as number[])], b = [...(nums2 as number[])];
+    if (a.length > b.length) [a, b] = [b, a];
+    const m = a.length, n = b.length;
+    const half = Math.floor((m + n + 1) / 2);
+    let lo = 0, hi = m;
+    while (lo <= hi) {
+      const i = (lo + hi) >> 1, j = half - i;
+      const l1 = i > 0 ? a[i - 1]! : -Infinity, r1 = i < m ? a[i]! : Infinity;
+      const l2 = j > 0 ? b[j - 1]! : -Infinity, r2 = j < n ? b[j]! : Infinity;
+      if (l1 <= r2 && l2 <= r1) {
+        return (m + n) % 2 === 1 ? Math.max(l1, l2) : (Math.max(l1, l2) + Math.min(r1, r2)) / 2;
+      } else if (l1 > r2) hi = i - 1; else lo = i + 1;
+    }
+    return 0;
+  },
+
+  'number-of-subsequences-that-satisfy-the-given-sum-condition': (nums: unknown, target: unknown) => {
+    const a = [...(nums as number[])].sort((x, y) => x - y);
+    const t = target as number, MOD = 1_000_000_007n;
+    const n = a.length;
+    const pow2 = Array.from({ length: n }, (_, i) => (2n ** BigInt(i)) % MOD);
+    let lo = 0, hi = n - 1, ans = 0n;
+    while (lo <= hi) {
+      if (a[lo]! + a[hi]! <= t) { ans = (ans + pow2[hi - lo]!) % MOD; lo++; }
+      else hi--;
+    }
+    return Number(ans);
+  },
+
   'maximum-value-at-given-index-in-bounded-array': (n: unknown, index: unknown, maxSum: unknown) => {
     const N = n as number, idx = index as number, ms = maxSum as number;
     function sumAtPeak(v: bigint, len: bigint): bigint {
