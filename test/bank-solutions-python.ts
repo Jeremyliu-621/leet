@@ -6977,4 +6977,70 @@ def myAtoi(s):
         i += 1
     return sign * result
 `,
+  'minimum-sum-four-digit-number': `
+def minimumSum(num):
+    digits = sorted(int(d) for d in str(num))
+    return digits[0] * 10 + digits[1] * 10 + digits[2] + digits[3]
+`,
+  'count-pairs-absolute-difference-k': `
+def countKDifference(nums, k):
+    count = 0
+    freq = {}
+    for n in nums:
+        count += freq.get(n - k, 0) + freq.get(n + k, 0)
+        freq[n] = freq.get(n, 0) + 1
+    return count
+`,
+  'find-closest-number-to-zero': `
+def findClosestNumber(nums):
+    best = nums[0]
+    for n in nums:
+        if abs(n) < abs(best) or (abs(n) == abs(best) and n > best):
+            best = n
+    return best
+`,
+  'minimum-deletions-char-frequencies': `def minDeletions(s):
+    from collections import Counter
+    freq = sorted(Counter(s).values(), reverse=True)
+    used = set()
+    deletions = 0
+    for f in freq:
+        while f > 0 and f in used:
+            f -= 1
+            deletions += 1
+        if f > 0:
+            used.add(f)
+    return deletions
+`,
+  'bulls-and-cows': `def getHint(secret, guess):
+    bulls = 0
+    secret_freq = {}
+    guess_freq = {}
+    for s, g in zip(secret, guess):
+        if s == g:
+            bulls += 1
+        else:
+            secret_freq[s] = secret_freq.get(s, 0) + 1
+            guess_freq[g] = guess_freq.get(g, 0) + 1
+    cows = sum(min(guess_freq.get(d, 0), secret_freq.get(d, 0)) for d in guess_freq)
+    return f"{bulls}A{cows}B"
+`,
+  'first-letter-to-appear-twice': `def repeatedCharacter(s):
+    seen = set()
+    for ch in s:
+        if ch in seen:
+            return ch
+        seen.add(ch)
+    return ''
+`,
+  'count-asterisks': `def countAsterisks(s):
+    count = 0
+    inside = False
+    for ch in s:
+        if ch == '|':
+            inside = not inside
+        elif ch == '*' and not inside:
+            count += 1
+    return count
+`,
 };

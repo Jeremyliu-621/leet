@@ -137,6 +137,8 @@ import { problem as removeTrailingZeros } from './remove-trailing-zeros';
 import { problem as reversePrefixOfWord } from './reverse-prefix-of-word';
 import { problem as countWordsWithGivenPrefix } from './count-words-with-given-prefix';
 import { problem as largestOddNumberInString } from './largest-odd-number-in-string';
+import { problem as firstLetterToAppearTwice } from './first-letter-to-appear-twice';
+import { problem as countAsterisks } from './count-asterisks';
 // strings — medium (additional)
 import { problem as integerToRoman } from './integer-to-roman';
 import { problem as reverseOnlyLetters } from './reverse-only-letters';
@@ -176,6 +178,11 @@ import { problem as maximumProductDifference } from './maximum-product-differenc
 import { problem as replaceWords } from './replace-words';
 import { problem as minimumTimeDifference } from './minimum-time-difference';
 import { problem as stringToIntegerAtoi } from './string-to-integer-atoi';
+import { problem as minimumDeletionsCharFrequencies } from './minimum-deletions-char-frequencies';
+import { problem as bullsAndCows } from './bulls-and-cows';
+import { problem as minimumSumFourDigitNumber } from './minimum-sum-four-digit-number';
+import { problem as countPairsAbsoluteDifferenceK } from './count-pairs-absolute-difference-k';
+import { problem as findClosestNumberToZero } from './find-closest-number-to-zero';
 // strings — medium
 import { problem as zigzagConversion } from './zigzag-conversion';
 import { problem as implementTrie } from './implement-trie';
@@ -743,6 +750,8 @@ export const problems: readonly Problem[] = [
   reversePrefixOfWord,
   countWordsWithGivenPrefix,
   largestOddNumberInString,
+  firstLetterToAppearTwice,
+  countAsterisks,
   reverseOnlyLetters,
   backspaceStringCompare,
   vowelTally,
@@ -777,7 +786,12 @@ export const problems: readonly Problem[] = [
   numberOfGoodPairs,
   checkIfArraySortedRotated,
   maximumProductDifference,
+  minimumSumFourDigitNumber,
+  countPairsAbsoluteDifferenceK,
+  findClosestNumberToZero,
   // strings — medium
+  minimumDeletionsCharFrequencies,
+  bullsAndCows,
   replaceWords,
   minimumTimeDifference,
   stringToIntegerAtoi,

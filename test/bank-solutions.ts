@@ -7538,4 +7538,90 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return sign * result;
   },
 
+  'minimum-sum-four-digit-number': (...args: unknown[]) => {
+    const num = args[0] as number;
+    const digits = String(num).split('').map(Number).sort((a, b) => a - b);
+    return digits[0]! * 10 + digits[1]! * 10 + digits[2]! + digits[3]!;
+  },
+  'count-pairs-absolute-difference-k': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    let count = 0;
+    const freq = new Map<number, number>();
+    for (const n of nums) {
+      count += (freq.get(n - k) ?? 0) + (freq.get(n + k) ?? 0);
+      freq.set(n, (freq.get(n) ?? 0) + 1);
+    }
+    return count;
+  },
+  'find-closest-number-to-zero': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let best = nums[0]!;
+    for (const n of nums) {
+      if (Math.abs(n) < Math.abs(best) || (Math.abs(n) === Math.abs(best) && n > best)) best = n;
+    }
+    return best;
+  },
+  // --- strings / hash-map --------------------------------------------------
+  'minimum-deletions-char-frequencies': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const freq: Record<string, number> = {};
+    for (const ch of s) freq[ch] = (freq[ch] ?? 0) + 1;
+    const freqs = Object.values(freq).sort((a, b) => b - a);
+    const used = new Set<number>();
+    let deletions = 0;
+    for (let f of freqs) {
+      while (f > 0 && used.has(f)) {
+        f--;
+        deletions++;
+      }
+      if (f > 0) used.add(f);
+    }
+    return deletions;
+  },
+
+  'bulls-and-cows': (...args: unknown[]) => {
+    const secret = args[0] as string;
+    const guess = args[1] as string;
+    let bulls = 0;
+    const secretFreq: Record<string, number> = {};
+    const guessFreq: Record<string, number> = {};
+    for (let i = 0; i < secret.length; i++) {
+      if (secret[i] === guess[i]) {
+        bulls++;
+      } else {
+        secretFreq[secret[i]!] = (secretFreq[secret[i]!] ?? 0) + 1;
+        guessFreq[guess[i]!] = (guessFreq[guess[i]!] ?? 0) + 1;
+      }
+    }
+    let cows = 0;
+    for (const d of Object.keys(guessFreq)) {
+      cows += Math.min(guessFreq[d]!, secretFreq[d] ?? 0);
+    }
+    return `${bulls}A${cows}B`;
+  },
+
+  'first-letter-to-appear-twice': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const seen = new Set<string>();
+    for (const ch of s) {
+      if (seen.has(ch)) return ch;
+      seen.add(ch);
+    }
+    return '';
+  },
+
+  'count-asterisks': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let count = 0;
+    let inside = false;
+    for (const ch of s) {
+      if (ch === '|') {
+        inside = !inside;
+      } else if (ch === '*' && !inside) {
+        count++;
+      }
+    }
+    return count;
+  },
+
 };
