@@ -19019,4 +19019,50 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'minimum-hours-of-training': (initialEnergy: unknown, initialExperience: unknown, energy: unknown, experience: unknown) => {
+    let initE = initialEnergy as number;
+    const initX = initialExperience as number;
+    const ene = energy as number[];
+    const exp = experience as number[];
+    let hours = 0;
+    const totalE = ene.reduce((a, b) => a + b, 0) + 1;
+    if (initE < totalE) { hours += totalE - initE; initE = totalE; }
+    void initE;
+    let cur = initX;
+    for (let i = 0; i < exp.length; i++) {
+      if (cur <= exp[i]!) { hours += exp[i]! - cur + 1; cur = exp[i]! + 1; }
+      cur += exp[i]!;
+    }
+    return hours;
+  },
+
+  'number-of-pairs-of-strings-with-concatenation-equal-to-target': (nums: unknown, target: unknown) => {
+    const arr = nums as string[];
+    const tgt = target as string;
+    let count = 0;
+    for (let i = 0; i < arr.length; i++)
+      for (let j = 0; j < arr.length; j++)
+        if (i !== j && arr[i]! + arr[j]! === tgt) count++;
+    return count;
+  },
+
+  'sum-of-beauty-of-all-substrings': (s: unknown) => {
+    const str = s as string;
+    let ans = 0;
+    for (let i = 0; i < str.length; i++) {
+      const freq = new Array(26).fill(0) as number[];
+      for (let j = i; j < str.length; j++) {
+        freq[str.charCodeAt(j) - 97]!++;
+        const vals = freq.filter(v => v > 0);
+        ans += Math.max(...vals) - Math.min(...vals);
+      }
+    }
+    return ans;
+  },
+
+  'maximum-number-of-words-you-can-type': (text: unknown, brokenLetters: unknown) => {
+    const broken = new Set((brokenLetters as string).split(''));
+    return (text as string).split(' ').filter(w => ![...w].some(c => broken.has(c))).length;
+  },
+
 };

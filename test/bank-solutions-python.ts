@@ -19019,4 +19019,54 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
     helper(root)
     return result
 `,
+
+  'minimum-hours-of-training': `def minNumberOfHours(initialEnergy, initialExperience, energy, experience):
+    energy = list(energy.to_py() if hasattr(energy, 'to_py') else energy)
+    experience = list(experience.to_py() if hasattr(experience, 'to_py') else experience)
+    init_e = int(initialEnergy)
+    init_x = int(initialExperience)
+    hours = 0
+    total_e = sum(energy) + 1
+    if init_e < total_e:
+        hours += total_e - init_e
+        init_e = total_e
+    cur = init_x
+    for exp in experience:
+        if cur <= exp:
+            hours += exp - cur + 1
+            cur = exp + 1
+        cur += exp
+    return hours
+`,
+
+  'number-of-pairs-of-strings-with-concatenation-equal-to-target': `def numOfPairs(nums, target):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    target = str(target)
+    count = 0
+    n = len(nums)
+    for i in range(n):
+        for j in range(n):
+            if i != j and nums[i] + nums[j] == target:
+                count += 1
+    return count
+`,
+
+  'sum-of-beauty-of-all-substrings': `def beautySum(s):
+    s = str(s)
+    ans = 0
+    for i in range(len(s)):
+        freq = [0] * 26
+        for j in range(i, len(s)):
+            freq[ord(s[j]) - ord('a')] += 1
+            vals = [v for v in freq if v > 0]
+            ans += max(vals) - min(vals)
+    return ans
+`,
+
+  'maximum-number-of-words-you-can-type': `def canBeTypedWords(text, brokenLetters):
+    text = str(text)
+    broken = set(str(brokenLetters))
+    words = text.split(' ')
+    return sum(1 for w in words if not any(c in broken for c in w))
+`,
 };

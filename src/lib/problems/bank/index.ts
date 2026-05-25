@@ -1423,6 +1423,11 @@ import { problem as findTheMinimumAndMaximumNumberOfNodesBetweenCriticalPoints }
 import { problem as binaryTreeInorderTraversal } from './binary-tree-inorder-traversal';
 import { problem as binaryTreePreorderTraversal } from './binary-tree-preorder-traversal';
 import { problem as binaryTreePostorderTraversal } from './binary-tree-postorder-traversal';
+import { problem as minimumHoursOfTraining } from './minimum-hours-of-training';
+import { problem as largestNumberAfterDigitSwapsByParity } from './largest-number-after-digit-swaps-by-parity';
+import { problem as numberOfPairsOfStringsWithConcatenationEqualToTarget } from './number-of-pairs-of-strings-with-concatenation-equal-to-target';
+import { problem as sumOfBeautyOfAllSubstrings } from './sum-of-beauty-of-all-substrings';
+import { problem as maximumNumberOfWordsYouCanType } from './maximum-number-of-words-you-can-type';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2894,4 +2899,9 @@ export const problems: readonly Problem[] = [
   binaryTreeInorderTraversal,
   binaryTreePreorderTraversal,
   binaryTreePostorderTraversal,
+  minimumHoursOfTraining,
+  largestNumberAfterDigitSwapsByParity,
+  numberOfPairsOfStringsWithConcatenationEqualToTarget,
+  sumOfBeautyOfAllSubstrings,
+  maximumNumberOfWordsYouCanType,
 ];
