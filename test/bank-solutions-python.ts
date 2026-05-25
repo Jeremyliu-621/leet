@@ -21385,4 +21385,34 @@ def secondMinimum(n, edges, time, change):
             hi = mid
     return round(lo, 5)
 `,
+
+  'longest-even-odd-subarray-with-threshold': `def longestAlternatingSubarray(nums, threshold):
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    t = int(threshold)
+    n = len(a); ans = 0; i = 0
+    while i < n:
+        if a[i] % 2 != 0 or a[i] > t:
+            i += 1; continue
+        start = i; i += 1
+        while i < n and a[i] <= t and a[i] % 2 == (i - start) % 2:
+            i += 1
+        ans = max(ans, i - start)
+    return ans
+`,
+
+  'find-the-value-of-the-partition': `def findValueOfPartition(nums):
+    a = sorted(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    return min(a[i + 1] - a[i] for i in range(len(a) - 1))
+`,
+
+  'clear-digits': `def clearDigits(s):
+    stack = []
+    for c in (s if isinstance(s, str) else str(s)):
+        if c.isdigit():
+            if stack:
+                stack.pop()
+        else:
+            stack.append(c)
+    return ''.join(stack)
+`,
 };

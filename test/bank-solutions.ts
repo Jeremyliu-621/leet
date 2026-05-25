@@ -21424,7 +21424,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
-  // batch 56
   'arithmetic-slices-ii-subsequence': (nums: unknown) => {
     const a = nums as number[];
     const n = a.length;
@@ -21550,6 +21549,40 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       else hi = mid;
     }
     return parseFloat(lo.toFixed(5));
+  },
+
+  'longest-even-odd-subarray-with-threshold': (nums: unknown, threshold: unknown) => {
+    const a = nums as number[];
+    const t = threshold as number;
+    const n = a.length;
+    let ans = 0;
+    let i = 0;
+    while (i < n) {
+      if (a[i]! % 2 !== 0 || a[i]! > t) { i++; continue; }
+      const start = i;
+      i++;
+      while (i < n && a[i]! <= t && a[i]! % 2 === (i - start) % 2) i++;
+      ans = Math.max(ans, i - start);
+    }
+    return ans;
+  },
+
+  'find-the-value-of-the-partition': (nums: unknown) => {
+    const sorted = [...(nums as number[])].sort((a, b) => a - b);
+    let min = Infinity;
+    for (let i = 0; i < sorted.length - 1; i++) {
+      min = Math.min(min, sorted[i + 1]! - sorted[i]!);
+    }
+    return min;
+  },
+
+  'clear-digits': (s: unknown) => {
+    const stack: string[] = [];
+    for (const c of s as string) {
+      if (c >= '0' && c <= '9') stack.pop();
+      else stack.push(c);
+    }
+    return stack.join('');
   },
 
 };

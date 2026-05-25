@@ -1560,7 +1560,6 @@ import { problem as sortTheJumbledNumbers } from './sort-the-jumbled-numbers';
 import { problem as minimumOperationsToMakeArrayAlternating } from './minimum-operations-to-make-array-alternating';
 import { problem as maximumTotalImportanceOfRoads } from './maximum-total-importance-of-roads';
 import { problem as smallestSubarraysWithMaximumBitwiseOr } from './smallest-subarrays-with-maximum-bitwise-or';
-// batch 56
 import { problem as arithmeticSlicesIISubsequence } from './arithmetic-slices-ii-subsequence';
 import { problem as maxDotProductOfTwoSubsequences } from './max-dot-product-of-two-subsequences';
 import { problem as numberOfSquarefulArrays } from './number-of-squareful-arrays';
@@ -1568,6 +1567,9 @@ import { problem as sellingPiecesOfWood } from './selling-pieces-of-wood';
 import { problem as numberOfDiceRollsWithTargetSum } from './number-of-dice-rolls-with-target-sum';
 import { problem as countAllValidPickupAndDeliveryOptions } from './count-all-valid-pickup-and-delivery-options';
 import { problem as maximumAverageSubarrayII } from './maximum-average-subarray-ii';
+import { problem as longestEvenOddSubarrayWithThreshold } from './longest-even-odd-subarray-with-threshold';
+import { problem as findTheValueOfThePartition } from './find-the-value-of-the-partition';
+import { problem as clearDigits } from './clear-digits';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3183,4 +3185,7 @@ export const problems: readonly Problem[] = [
   numberOfDiceRollsWithTargetSum,
   countAllValidPickupAndDeliveryOptions,
   maximumAverageSubarrayII,
+  longestEvenOddSubarrayWithThreshold,
+  findTheValueOfThePartition,
+  clearDigits,
 ];
