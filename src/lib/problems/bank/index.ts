@@ -1417,6 +1417,9 @@ import { problem as minimumAmountTimeToCollectGarbage } from './minimum-amount-o
 import { problem as checkIfArraySortedAndRotated } from './check-if-array-is-sorted-and-rotated';
 import { problem as nodesBetweenCriticalPoints } from './nodes-between-critical-points';
 import { problem as numberAfterDoubleReversal } from './number-after-a-double-reversal';
+import { problem as dominoAndTrominoTiling } from './domino-and-tromino-tiling';
+import { problem as numberOfLinesToWriteString } from './number-of-lines-to-write-string';
+import { problem as findTheMinimumAndMaximumNumberOfNodesBetweenCriticalPoints } from './find-the-minimum-and-maximum-number-of-nodes-between-critical-points';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2882,4 +2885,7 @@ export const problems: readonly Problem[] = [
   checkIfArraySortedAndRotated,
   nodesBetweenCriticalPoints,
   numberAfterDoubleReversal,
+  dominoAndTrominoTiling,
+  numberOfLinesToWriteString,
+  findTheMinimumAndMaximumNumberOfNodesBetweenCriticalPoints,
 ];

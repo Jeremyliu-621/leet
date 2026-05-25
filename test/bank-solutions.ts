@@ -18937,4 +18937,47 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return n === 0 || n % 10 !== 0;
   },
 
+  'domino-and-tromino-tiling': (n: unknown) => {
+    const MOD = 1_000_000_007n;
+    const num = n as number;
+    if (num === 1) return 1;
+    if (num === 2) return 2;
+    const dp = new Array<bigint>(num + 1).fill(0n);
+    dp[0] = 1n; dp[1] = 1n; dp[2] = 2n;
+    for (let i = 3; i <= num; i++) {
+      dp[i] = (2n * dp[i - 1]! + dp[i - 3]!) % MOD;
+    }
+    return Number(dp[num]!);
+  },
+
+  'number-of-lines-to-write-string': (widths: unknown, s: unknown) => {
+    const w = widths as number[], str = s as string;
+    let lines = 1, cur = 0;
+    for (const c of str) {
+      const pw = w[c.charCodeAt(0) - 97]!;
+      if (cur + pw > 100) { lines++; cur = pw; }
+      else cur += pw;
+    }
+    return [lines, cur];
+  },
+
+  'find-the-minimum-and-maximum-number-of-nodes-between-critical-points': (head: unknown) => {
+    const arr = head as number[];
+    if (arr.length < 3) return [-1, -1];
+    const criticals: number[] = [];
+    for (let i = 1; i < arr.length - 1; i++) {
+      const prev = arr[i - 1]!, curr = arr[i]!, next = arr[i + 1]!;
+      if ((curr > prev && curr > next) || (curr < prev && curr < next)) {
+        criticals.push(i);
+      }
+    }
+    if (criticals.length < 2) return [-1, -1];
+    let minDist = Infinity;
+    for (let i = 1; i < criticals.length; i++) {
+      minDist = Math.min(minDist, criticals[i]! - criticals[i - 1]!);
+    }
+    const maxDist = criticals[criticals.length - 1]! - criticals[0]!;
+    return [minDist, maxDist];
+  },
+
 };

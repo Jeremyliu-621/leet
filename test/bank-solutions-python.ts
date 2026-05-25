@@ -18936,4 +18936,51 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
     num = int(num)
     return num == 0 or num % 10 != 0
 `,
+
+  'domino-and-tromino-tiling': `def numTilings(n):
+    n = int(n)
+    MOD = 10**9 + 7
+    if n == 1:
+        return 1
+    if n == 2:
+        return 2
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    dp[1] = 1
+    dp[2] = 2
+    for i in range(3, n + 1):
+        dp[i] = (2 * dp[i-1] + dp[i-3]) % MOD
+    return dp[n]
+`,
+
+  'number-of-lines-to-write-string': `def numberOfLines(widths, s):
+    widths = list(widths.to_py() if hasattr(widths, 'to_py') else widths)
+    s = str(s)
+    lines = 1
+    cur = 0
+    for c in s:
+        pw = widths[ord(c) - ord('a')]
+        if cur + pw > 100:
+            lines += 1
+            cur = pw
+        else:
+            cur += pw
+    return [lines, cur]
+`,
+
+  'find-the-minimum-and-maximum-number-of-nodes-between-critical-points': `def nodesBetweenCriticalPointsRunner(head):
+    arr = list(head.to_py() if hasattr(head, 'to_py') else head)
+    if len(arr) < 3:
+        return [-1, -1]
+    criticals = []
+    for i in range(1, len(arr) - 1):
+        prev, curr, nxt = arr[i-1], arr[i], arr[i+1]
+        if (curr > prev and curr > nxt) or (curr < prev and curr < nxt):
+            criticals.append(i)
+    if len(criticals) < 2:
+        return [-1, -1]
+    min_dist = min(criticals[i] - criticals[i-1] for i in range(1, len(criticals)))
+    max_dist = criticals[-1] - criticals[0]
+    return [min_dist, max_dist]
+`,
 };
