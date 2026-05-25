@@ -1519,6 +1519,11 @@ import { problem as containsDuplicateIII } from './contains-duplicate-iii';
 import { problem as makeArrayStrictlyIncreasing } from './make-array-strictly-increasing';
 import { problem as encodeAndDecodeTinyurl } from './encode-and-decode-tinyurl';
 import { problem as courseScheduleIV } from './course-schedule-iv';
+import { problem as threeSumSmaller } from './three-sum-smaller';
+import { problem as mostCommonWord } from './most-common-word';
+import { problem as studentAttendanceRecordII } from './student-attendance-record-ii';
+import { problem as permutationSequence } from './permutation-sequence';
+import { problem as maximumSumObtainedOfAnyPermutation } from './maximum-sum-obtained-of-any-permutation';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3086,4 +3091,9 @@ export const problems: readonly Problem[] = [
   makeArrayStrictlyIncreasing,
   encodeAndDecodeTinyurl,
   courseScheduleIV,
+  threeSumSmaller,
+  mostCommonWord,
+  studentAttendanceRecordII,
+  permutationSequence,
+  maximumSumObtainedOfAnyPermutation,
 ];
