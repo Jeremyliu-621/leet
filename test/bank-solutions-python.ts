@@ -4929,6 +4929,47 @@ def deserialize(data):
     return -1
 `,
 
+  'count-vowel-strings-in-range': `def vowelStringsInRange(words, left, right):
+    vowels = set('aeiou')
+    count = 0
+    for i in range(left, right + 1):
+        w = words[i]
+        if w[0] in vowels and w[-1] in vowels:
+            count += 1
+    return count
+`,
+
+  'count-fair-pairs': `def countFairPairs(nums, lower, upper):
+    nums = sorted(nums)
+    def count_le(limit):
+        lo, hi, c = 0, len(nums) - 1, 0
+        while lo < hi:
+            if nums[lo] + nums[hi] <= limit:
+                c += hi - lo
+                lo += 1
+            else:
+                hi -= 1
+        return c
+    return count_le(upper) - count_le(lower - 1)
+`,
+
+  'minimum-average-difference': `def minimumAverageDifference(nums):
+    n = len(nums)
+    total = sum(nums)
+    prefix = 0
+    min_diff = float('inf')
+    ans = 0
+    for i in range(n):
+        prefix += nums[i]
+        left = prefix // (i + 1)
+        right = (total - prefix) // (n - i - 1) if i < n - 1 else 0
+        diff = abs(left - right)
+        if diff < min_diff:
+            min_diff = diff
+            ans = i
+    return ans
+`,
+
   'concatenation-of-array': `def getConcatenation(nums):
     return list(nums) + list(nums)
 `,

@@ -5560,6 +5560,43 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     for (const n of nums) if (n !== min && n !== max) return n;
     return -1;
   },
+  'count-vowel-strings-in-range': (...args: unknown[]) => {
+    const words = args[0] as string[], left = args[1] as number, right = args[2] as number;
+    const vowels = new Set('aeiou');
+    let count = 0;
+    for (let i = left; i <= right; i++) {
+      const w = words[i]!;
+      if (vowels.has(w[0]!) && vowels.has(w[w.length - 1]!)) count++;
+    }
+    return count;
+  },
+  'count-fair-pairs': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const lower = args[1] as number, upper = args[2] as number;
+    function countLE(limit: number): number {
+      let lo = 0, hi = nums.length - 1, c = 0;
+      while (lo < hi) {
+        if (nums[lo]! + nums[hi]! <= limit) { c += hi - lo; lo++; }
+        else hi--;
+      }
+      return c;
+    }
+    return countLE(upper) - countLE(lower - 1);
+  },
+  'minimum-average-difference': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    let total = nums.reduce((a, b) => a + b, 0);
+    let prefix = 0, minDiff = Infinity, ans = 0;
+    for (let i = 0; i < n; i++) {
+      prefix += nums[i]!;
+      const left = Math.floor(prefix / (i + 1));
+      const right = i === n - 1 ? 0 : Math.floor((total - prefix) / (n - i - 1));
+      const diff = Math.abs(left - right);
+      if (diff < minDiff) { minDiff = diff; ans = i; }
+    }
+    return ans;
+  },
   'concatenation-of-array': (...args: unknown[]) => {
     const nums = args[0] as number[];
     return [...nums, ...nums];

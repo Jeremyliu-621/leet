@@ -77,6 +77,8 @@ import { problem as flippingAnImage } from './flipping-an-image';
 import { problem as countGoodTriplets } from './count-good-triplets';
 import { problem as matrixBlockSum } from './matrix-block-sum';
 // arrays — medium
+import { problem as countFairPairs } from './count-fair-pairs';
+import { problem as minimumAverageDifference } from './minimum-average-difference';
 import { problem as rangeSumQuery2D } from './range-sum-query-2d';
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
 import { problem as setMatrixZeroes } from './set-matrix-zeroes';
@@ -163,6 +165,7 @@ import { problem as sumDigitsStringConvert } from './sum-digits-string-convert';
 import { problem as maximumNumberOfStringPairs } from './maximum-number-of-string-pairs';
 import { problem as countPairsSumLessThanTarget } from './count-pairs-sum-less-than-target';
 import { problem as neitherMinimumNorMaximum } from './neither-minimum-nor-maximum';
+import { problem as countVowelStringsInRange } from './count-vowel-strings-in-range';
 // strings — medium
 import { problem as zigzagConversion } from './zigzag-conversion';
 import { problem as implementTrie } from './implement-trie';
@@ -660,6 +663,8 @@ export const problems: readonly Problem[] = [
   sortArrayByParityII,
   numberOfArithmeticTriplets,
   // arrays — medium
+  countFairPairs,
+  minimumAverageDifference,
   rearrangeArrayElementsBySign,
   numberOfZeroFilledSubarrays,
   rangeSumQuery2D,
@@ -754,6 +759,7 @@ export const problems: readonly Problem[] = [
   maximumNumberOfStringPairs,
   countPairsSumLessThanTarget,
   neitherMinimumNorMaximum,
+  countVowelStringsInRange,
   // strings — medium
   implementTrie,
   customSortString,
