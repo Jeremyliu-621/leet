@@ -8,8 +8,8 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 620 problems; 2131 tests; growing past 650.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (2131 tests passing).
+**Current focus:** Bank at 627 problems; 2155 tests; growing past 650.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (2155 tests passing).
 **Next up:** Continue growing bank; more medium/hard problems; draggable splitter QA at high zoom.
 
 **Pyodide rollout status — COMPLETE:**
@@ -300,6 +300,7 @@ Still pending:
 - [x] **17 more new problems** — arithmetic-slices, max-vowels-substring, min-swaps-group-all-ones, k-diff-pairs, hand-of-straights, min-domino-rotations, furthest-building-ladders, ipo, relative-sort-array, permutations-ii, letter-tile-possibilities, different-ways-add-parentheses (plus 5 from remote: maximize-confusion-exam, sum-of-all-subset-xor, continuous-subarray-sum, equal-row-column-pairs, determine-if-two-strings-close); 2122 tests; bank at 617.
 - [x] **3 more problems** — integer-break (dp/medium), min-cost-move-chips (math/easy), binary-watch (math/easy); 2131 tests; bank at 620.
 - [x] **Browser-zoom QA** — popup `overflow-x-hidden` + heatmap `overflow-x-auto` to prevent horizontal scroll at 150%/200% zoom.
+- [x] **7 more problems** — ugly-number-ii, delete-node-in-bst, insert-into-bst, min-cost-connect-points, visible-people-queue, minimum-add-make-valid-parentheses, palindromic-substrings, partition-string; polished 6 easy problems; 2155 tests; bank at 627.
 
 ---
 
