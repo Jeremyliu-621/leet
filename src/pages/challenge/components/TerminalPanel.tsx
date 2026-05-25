@@ -276,9 +276,13 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
     <div className="flex flex-col" role="region" aria-label="Terminal output">
       {/* Tab bar */}
       <div className="flex items-center justify-between border-b border-border bg-surface">
-        <div className="flex">
+        <div role="tablist" aria-label="Terminal panels" className="flex">
           <button
             type="button"
+            role="tab"
+            aria-selected={activeTab === 'output'}
+            aria-controls="terminal-panel-output"
+            id="terminal-tab-output"
             onClick={() => setActiveTab('output')}
             className={[
               'px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest transition-colors',
@@ -291,6 +295,10 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
           </button>
           <button
             type="button"
+            role="tab"
+            aria-selected={activeTab === 'testcases'}
+            aria-controls="terminal-panel-testcases"
+            id="terminal-tab-testcases"
             onClick={() => setActiveTab('testcases')}
             className={[
               'px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest transition-colors',
@@ -319,77 +327,87 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
         className="overflow-y-auto bg-bg font-mono text-xs leading-relaxed"
         style={{ minHeight: '120px', maxHeight: '280px' }}
       >
-        {activeTab === 'output' ? (
-          <div className="p-3 space-y-1">
-            {/* Running indicator */}
-            {result === undefined && (
-              <div className="text-faint animate-pulse">
-                <span className="mr-1">$</span> Running...
-              </div>
-            )}
+        <div
+          id="terminal-panel-output"
+          role="tabpanel"
+          aria-labelledby="terminal-tab-output"
+          hidden={activeTab !== 'output'}
+          className="p-3 space-y-1"
+        >
+          {/* Running indicator */}
+          {result === undefined && (
+            <div className="text-faint animate-pulse">
+              <span className="mr-1">$</span> Running...
+            </div>
+          )}
 
-            {/* Empty state */}
-            {allEntries.length === 0 && result !== undefined && (
-              <div className="text-faint">
-                <span className="mr-1">$</span> Run your code to see output here
-              </div>
-            )}
+          {/* Empty state */}
+          {allEntries.length === 0 && result !== undefined && (
+            <div className="text-faint">
+              <span className="mr-1">$</span> Run your code to see output here
+            </div>
+          )}
 
-            {/* History entries */}
-            {allEntries.map((entry, i) => (
-              <TerminalEntry key={i} entry={entry} />
-            ))}
-          </div>
-        ) : (
-          <div className="p-3 space-y-2">
-            {result === undefined && (
-              <div className="text-faint animate-pulse font-mono text-xs">Running tests...</div>
-            )}
-            {result === null && (
-              <div className="text-faint font-mono text-xs">
-                No test results yet. Click Run or Submit.
-              </div>
-            )}
-            {result && result.verdicts.length > 0 && (
-              <>
-                {/* Summary */}
-                <div className="flex items-center gap-3 pb-2 border-b border-border">
-                  <span
-                    className={`font-mono text-xs font-semibold uppercase ${
-                      result.outcome === 'accepted' ? 'text-accent' : 'text-text'
-                    }`}
-                  >
-                    {OUTCOME_LABELS[result.outcome] ?? result.outcome}
-                  </span>
-                  <span className="font-mono text-xs text-muted">
-                    {result.passed}/{result.total} passed
-                  </span>
-                  {result.totalDurationMs !== undefined && (
-                    <span className="font-mono text-xs text-faint tabular-nums">
-                      {result.totalDurationMs}ms
-                    </span>
-                  )}
-                </div>
+          {/* History entries */}
+          {allEntries.map((entry, i) => (
+            <TerminalEntry key={i} entry={entry} />
+          ))}
+        </div>
 
-                {/* Individual test results — key includes passed count so cards
-                    reset their expand state when a new result arrives */}
-                {result.verdicts.map((verdict) => (
-                  <TestResultCard key={`${result.passed}-${verdict.index}`} verdict={verdict} />
-                ))}
-              </>
-            )}
-            {result && result.verdicts.length === 0 && result.message && (
-              <div className="space-y-2">
-                <div className="font-mono text-xs font-semibold text-text uppercase">
+        <div
+          id="terminal-panel-testcases"
+          role="tabpanel"
+          aria-labelledby="terminal-tab-testcases"
+          hidden={activeTab !== 'testcases'}
+          className="p-3 space-y-2"
+        >
+          {result === undefined && (
+            <div className="text-faint animate-pulse font-mono text-xs">Running tests...</div>
+          )}
+          {result === null && (
+            <div className="text-faint font-mono text-xs">
+              No test results yet. Click Run or Submit.
+            </div>
+          )}
+          {result && result.verdicts.length > 0 && (
+            <>
+              {/* Summary */}
+              <div className="flex items-center gap-3 pb-2 border-b border-border">
+                <span
+                  className={`font-mono text-xs font-semibold uppercase ${
+                    result.outcome === 'accepted' ? 'text-accent' : 'text-text'
+                  }`}
+                >
                   {OUTCOME_LABELS[result.outcome] ?? result.outcome}
-                </div>
-                <pre className="font-mono text-xs text-muted whitespace-pre-wrap">
-                  {result.message}
-                </pre>
+                </span>
+                <span className="font-mono text-xs text-muted">
+                  {result.passed}/{result.total} passed
+                </span>
+                {result.totalDurationMs !== undefined && (
+                  <span className="font-mono text-xs text-faint tabular-nums">
+                    {result.totalDurationMs}ms
+                  </span>
+                )}
               </div>
-            )}
-          </div>
-        )}
+
+              {/* Individual test results — key includes passed count so cards
+                  reset their expand state when a new result arrives */}
+              {result.verdicts.map((verdict) => (
+                <TestResultCard key={`${result.passed}-${verdict.index}`} verdict={verdict} />
+              ))}
+            </>
+          )}
+          {result && result.verdicts.length === 0 && result.message && (
+            <div className="space-y-2">
+              <div className="font-mono text-xs font-semibold text-text uppercase">
+                {OUTCOME_LABELS[result.outcome] ?? result.outcome}
+              </div>
+              <pre className="font-mono text-xs text-muted whitespace-pre-wrap">
+                {result.message}
+              </pre>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
