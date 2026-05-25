@@ -30,9 +30,9 @@ export const problem: Problem = {
     },
   ],
   hints: [
-    'If any value appears more than k times, return -1.',
-    'Precompute cost of each valid bitmask of size n/k: max-min of distinct elements in that mask.',
-    'dp[mask] = min incompatibility for the subset of indices in mask. Build up by adding valid subsets.',
+    'If any value appears more than k times, return -1 immediately.',
+    'Precompute the cost of each valid bitmask of size n/k: elements must all be distinct, cost = max - min.',
+    'dp[mask] = min incompatibility for the subset of indices in mask. Build up by adding valid subsets of the complement.',
   ],
   functionName: 'minimumIncompatibility',
   params: ['nums', 'k'],

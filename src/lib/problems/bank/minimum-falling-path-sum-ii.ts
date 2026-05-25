@@ -27,6 +27,7 @@ A **falling path with non-zero shifts** is a choice of exactly one element from 
   hints: [
     'Track the two smallest values (and their column indices) from the previous row.',
     'For each cell in the current row, add the smallest previous value if the column differs, otherwise the second smallest.',
+    'Only two values from the previous row ever matter: the global minimum and the second minimum (for the case where current column == min column).',
   ],
   functionName: 'minFallingPathSumII',
   params: ['grid'],

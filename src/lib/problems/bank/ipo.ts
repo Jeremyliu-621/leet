@@ -36,6 +36,8 @@ The answer is guaranteed to fit in a 32-bit signed integer.`,
   ],
   hints: [
     'Sort projects by capital requirement. Use a max-heap of available profits. For each of k iterations, add all newly affordable projects to the heap, then pick the most profitable.',
+    'Greedy: always pick the highest-profit affordable project. This is optimal because profit is additive and we want to maximize capital at each step.',
+    'Use a pointer into the capital-sorted array. At each iteration, advance the pointer and push profits while capital[ptr] <= w. Pop the max-heap for the best profit.',
   ],
   functionName: 'findMaximizedCapital',
   params: ['k', 'w', 'profits', 'capital'],

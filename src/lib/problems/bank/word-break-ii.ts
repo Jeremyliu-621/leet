@@ -32,6 +32,7 @@ The same word in the dictionary may be reused multiple times in the segmentation
   hints: [
     'Use memoized backtracking: from each position, try all words that match the prefix. If you reach the end, you found a valid sentence.',
     'Memoize with a Map from start index to list of suffixes to avoid recomputation.',
+    'Key insight: memo[i] stores all completions of s[i..n-1]. Build by recursion; if s[i..i+len-1] is in the dict and memo[i+len] exists, prepend the word to each suffix.',
   ],
   functionName: 'wordBreak',
   params: ['s', 'wordDict'],

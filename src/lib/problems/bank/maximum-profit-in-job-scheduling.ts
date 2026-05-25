@@ -31,7 +31,7 @@ export const problem: Problem = {
     },
   ],
   hints: [
-    'Sort jobs by endTime. dp[i] = max profit considering first i jobs (sorted by end).',
+    'Sort jobs by end time. dp[i] = max profit considering first i jobs (sorted by end).',
     'For job i: skip (dp[i-1]) or take it. Binary search for last job ending <= startTime[i].',
     'dp[i] = max(dp[i-1], dp[found] + profit[i]).',
   ],

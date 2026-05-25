@@ -29,9 +29,9 @@ Each robot must be assigned to exactly one factory. The distance traveled by rob
     },
   ],
   hints: [
-    'Sort both robot[] and factory[] by position. Non-crossing assignments are always optimal.',
+    'Sort robots and factories by position. Non-crossing assignments are always optimal.',
     'Flatten factory: factory at pos with limit l becomes l individual slots at the same pos.',
-    'dp[i][j] = min cost for first i robots using first j slots. Answer is dp[n][m].',
+    'dp[i][j] = min cost for first i robots using first j slots. dp[i][j] = min(dp[i][j-1], dp[i-1][j-1] + dist). Answer is dp[n][m].',
   ],
   functionName: 'minimumTotalDistance',
   params: ['robot', 'factory'],
