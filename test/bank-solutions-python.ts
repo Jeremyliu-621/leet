@@ -19408,4 +19408,38 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
 
     return count_up_to(high) - count_up_to(low - 1)
 `,
+
+  'maximum-depth-binary-tree': `def maxDepth(root):
+    if root is None:
+        return 0
+    return 1 + max(maxDepth(root.left), maxDepth(root.right))
+`,
+
+  'minimum-absolute-difference-in-bst': `def getMinimumDifference(root):
+    prev = [None]
+    min_diff = [float('inf')]
+    def inorder(node):
+        if node is None:
+            return
+        inorder(node.left)
+        if prev[0] is not None:
+            min_diff[0] = min(min_diff[0], node.val - prev[0])
+        prev[0] = node.val
+        inorder(node.right)
+    inorder(root)
+    return min_diff[0]
+`,
+
+  'pascals-triangle-ii': `def getRow(rowIndex):
+    rowIndex = int(rowIndex)
+    row = [1]
+    for i in range(rowIndex):
+        j = len(row) - 1
+        while j >= 1:
+            row[j] = row[j] + row[j - 1]
+            j -= 1
+        row.append(1)
+    return row
+`,
+
 };

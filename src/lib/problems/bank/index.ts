@@ -1453,6 +1453,9 @@ import { problem as findScoreOfArrayAfterMarkingElements } from './find-score-of
 import { problem as elementsAppearingMoreThan25Percent } from './elements-appearing-more-than-25-percent';
 import { problem as makeStringASubsequenceUsingCyclicIncrements } from './make-string-a-subsequence-using-cyclic-increments';
 import { problem as numberOfBeautifulIntegersInRange } from './number-of-beautiful-integers-in-range';
+import { problem as maximumDepthBinaryTreeNew } from './maximum-depth-binary-tree';
+import { problem as minimumAbsoluteDifferenceInBst } from './minimum-absolute-difference-in-bst';
+import { problem as pascalsTriangleIi } from './pascals-triangle-ii';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2954,4 +2957,7 @@ export const problems: readonly Problem[] = [
   elementsAppearingMoreThan25Percent,
   makeStringASubsequenceUsingCyclicIncrements,
   numberOfBeautifulIntegersInRange,
+  maximumDepthBinaryTreeNew,
+  minimumAbsoluteDifferenceInBst,
+  pascalsTriangleIi,
 ];

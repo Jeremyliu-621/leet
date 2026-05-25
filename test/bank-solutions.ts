@@ -19381,4 +19381,36 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return countUpTo(high as number) - countUpTo((low as number) - 1);
   },
 
+  'maximum-depth-binary-tree': (...args: unknown[]) => {
+    const d = (n: _TN | null): number => n ? 1 + Math.max(d(n.l), d(n.r)) : 0;
+    return d(_buildTree(args[0] as (number | null)[]));
+  },
+
+  'minimum-absolute-difference-in-bst': (...args: unknown[]) => {
+    const tree = _buildTree(args[0] as (number | null)[]);
+    let prev: number | null = null;
+    let minDiff = Infinity;
+    function inorder(n: _TN | null): void {
+      if (!n) return;
+      inorder(n.l);
+      if (prev !== null) minDiff = Math.min(minDiff, n.v - prev);
+      prev = n.v;
+      inorder(n.r);
+    }
+    inorder(tree);
+    return minDiff;
+  },
+
+  'pascals-triangle-ii': (...args: unknown[]) => {
+    const rowIndex = args[0] as number;
+    const row: number[] = [1];
+    for (let i = 0; i < rowIndex; i++) {
+      for (let j = row.length - 1; j >= 1; j--) {
+        row[j] = row[j]! + row[j - 1]!;
+      }
+      row.push(1);
+    }
+    return row;
+  },
+
 };
