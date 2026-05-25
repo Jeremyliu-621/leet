@@ -12144,4 +12144,170 @@ def findTheArrayConcVal(nums):
         val += nums_list[l]
     return val
 `,
+
+  'sort-array-by-increasing-frequency': `
+def frequencySort(nums):
+    from collections import Counter
+    nums_list = [int(x) for x in nums]
+    freq = Counter(nums_list)
+    return sorted(nums_list, key=lambda x: (freq[x], -x))
+`,
+
+  'find-all-k-distant-indices': `
+def findKDistantIndices(nums, key, k):
+    nums_list = [int(x) for x in nums]
+    key, k = int(key), int(k)
+    res = []
+    for i in range(len(nums_list)):
+        for j in range(len(nums_list)):
+            if nums_list[j] == key and abs(i - j) <= k:
+                res.append(i)
+                break
+    return res
+`,
+
+  'number-of-beautiful-pairs': `
+def countBeautifulPairs(nums):
+    from math import gcd
+    nums_list = [int(x) for x in nums]
+    count = 0
+    for i in range(len(nums_list)):
+        first = int(str(nums_list[i])[0])
+        for j in range(i + 1, len(nums_list)):
+            last = nums_list[j] % 10
+            if gcd(first, last) == 1:
+                count += 1
+    return count
+`,
+
+  'split-string-by-separator': `
+def splitWordsBySeparator(words, separator):
+    words_list = list(words)
+    result = []
+    for w in words_list:
+        for part in str(w).split(separator):
+            if part:
+                result.append(part)
+    return result
+`,
+
+  'count-vowel-strings-in-ranges': `
+def vowelStrings(words, queries):
+    words_list = list(words)
+    vowels = set('aeiou')
+    pre = [0]
+    for w in words_list:
+        w = str(w)
+        pre.append(pre[-1] + (1 if w[0] in vowels and w[-1] in vowels else 0))
+    result = []
+    for q in queries:
+        q_list = [int(x) for x in q]
+        result.append(pre[q_list[1] + 1] - pre[q_list[0]])
+    return result
+`,
+
+  'number-of-even-odd-bits': `
+def evenOddBit(n):
+    n = int(n)
+    even = odd = 0
+    pos = 0
+    while n > 0:
+        if n & 1:
+            if pos % 2 == 0:
+                even += 1
+            else:
+                odd += 1
+        n >>= 1
+        pos += 1
+    return [even, odd]
+`,
+
+  'average-value-of-even-numbers-divisible-by-three': `
+def averageValue(nums):
+    nums_list = [int(x) for x in nums]
+    evens = [n for n in nums_list if n % 6 == 0]
+    return sum(evens) // len(evens) if evens else 0
+`,
+
+  'count-prefix-suffix-pairs': `
+def countPrefixSuffixPairs(words):
+    words_list = [str(w) for w in words]
+    count = 0
+    for i in range(len(words_list)):
+        for j in range(i + 1, len(words_list)):
+            if words_list[j].startswith(words_list[i]) and words_list[j].endswith(words_list[i]):
+                count += 1
+    return count
+`,
+
+  'minimum-cost-of-buying-candies-with-discount': `
+def minimumCost(cost):
+    cost_list = sorted([int(x) for x in cost], reverse=True)
+    return sum(v for i, v in enumerate(cost_list) if (i + 1) % 3 != 0)
+`,
+
+  'find-original-array-from-prefix-xor': `
+def findArray(pref):
+    pref_list = [int(x) for x in pref]
+    arr = [pref_list[0]]
+    for i in range(1, len(pref_list)):
+        arr.append(pref_list[i - 1] ^ pref_list[i])
+    return arr
+`,
+
+  'total-distance-traveled': `
+def distanceTraveled(mainTank, additionalTank):
+    main, extra = int(mainTank), int(additionalTank)
+    dist = 0
+    while main >= 5:
+        dist += 50
+        main -= 5
+        if extra > 0:
+            main += 1
+            extra -= 1
+    dist += main * 10
+    return dist
+`,
+
+  'delete-characters-to-make-fancy-string': `
+def makeFancyString(s):
+    res = []
+    for c in s:
+        if len(res) >= 2 and res[-1] == c and res[-2] == c:
+            continue
+        res.append(c)
+    return ''.join(res)
+`,
+
+  'three-consecutive-odds': `
+def threeConsecutiveOdds(arr):
+    arr_list = [int(x) for x in arr]
+    count = 0
+    for n in arr_list:
+        if n % 2 == 1:
+            count += 1
+            if count >= 3:
+                return True
+        else:
+            count = 0
+    return False
+`,
+
+  'count-equal-and-divisible-pairs-in-array': `
+def countPairs(nums, k):
+    nums_list = [int(x) for x in nums]
+    k = int(k)
+    count = 0
+    for i in range(len(nums_list)):
+        for j in range(i + 1, len(nums_list)):
+            if nums_list[i] == nums_list[j] and (i * j) % k == 0:
+                count += 1
+    return count
+`,
+
+  'minimum-changes-to-make-alternating-binary-string': `
+def minOperations(s):
+    mis = sum(1 for i, c in enumerate(s) if c != '01'[i % 2])
+    return min(mis, len(s) - mis)
+`,
 };

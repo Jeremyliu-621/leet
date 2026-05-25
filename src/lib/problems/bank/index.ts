@@ -1026,6 +1026,21 @@ import { problem as countNumberOfDistinctIntegersAfterReverseOperations } from '
 import { problem as mostFrequentNumberFollowingKey } from './most-frequent-number-following-key';
 import { problem as minimumDifferenceBetweenHighestAndLowestOfKScores } from './minimum-difference-between-highest-and-lowest-of-k-scores';
 import { problem as findTheArrayConcVal } from './find-the-array-concat-val';
+import { problem as sortArrayByIncreasingFrequency } from './sort-array-by-increasing-frequency';
+import { problem as findAllKDistantIndices } from './find-all-k-distant-indices';
+import { problem as numberOfBeautifulPairs } from './number-of-beautiful-pairs';
+import { problem as splitStringBySeparator } from './split-string-by-separator';
+import { problem as countVowelStringsInRanges } from './count-vowel-strings-in-ranges';
+import { problem as numberOfEvenOddBits } from './number-of-even-odd-bits';
+import { problem as averageValueOfEvenNumbersDivisibleByThree } from './average-value-of-even-numbers-divisible-by-three';
+import { problem as countPrefixSuffixPairs } from './count-prefix-suffix-pairs';
+import { problem as minimumCostOfBuyingCandiesWithDiscount } from './minimum-cost-of-buying-candies-with-discount';
+import { problem as findOriginalArrayFromPrefixXor } from './find-original-array-from-prefix-xor';
+import { problem as totalDistanceTraveled } from './total-distance-traveled';
+import { problem as deleteCharactersToMakeFancyString } from './delete-characters-to-make-fancy-string';
+import { problem as threeConsecutiveOdds } from './three-consecutive-odds';
+import { problem as countEqualAndDivisiblePairsInArray } from './count-equal-and-divisible-pairs-in-array';
+import { problem as minimumChangesToMakeAlternatingBinaryString } from './minimum-changes-to-make-alternating-binary-string';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2100,4 +2115,19 @@ export const problems: readonly Problem[] = [
   mostFrequentNumberFollowingKey,
   minimumDifferenceBetweenHighestAndLowestOfKScores,
   findTheArrayConcVal,
+  sortArrayByIncreasingFrequency,
+  findAllKDistantIndices,
+  numberOfBeautifulPairs,
+  splitStringBySeparator,
+  countVowelStringsInRanges,
+  numberOfEvenOddBits,
+  averageValueOfEvenNumbersDivisibleByThree,
+  countPrefixSuffixPairs,
+  minimumCostOfBuyingCandiesWithDiscount,
+  findOriginalArrayFromPrefixXor,
+  totalDistanceTraveled,
+  deleteCharactersToMakeFancyString,
+  threeConsecutiveOdds,
+  countEqualAndDivisiblePairsInArray,
+  minimumChangesToMakeAlternatingBinaryString,
 ];

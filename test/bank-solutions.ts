@@ -12634,4 +12634,149 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return val;
   },
 
+  'sort-array-by-increasing-frequency': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq: Record<number, number> = {};
+    for (const n of nums) freq[n] = (freq[n] ?? 0) + 1;
+    return [...nums].sort((a, b) => freq[a] !== freq[b] ? (freq[a] as number) - (freq[b] as number) : b - a);
+  },
+
+  'find-all-k-distant-indices': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const key = args[1] as number;
+    const k = args[2] as number;
+    const res: number[] = [];
+    for (let i = 0; i < nums.length; i++) {
+      for (let j = 0; j < nums.length; j++) {
+        if (nums[j] === key && Math.abs(i - j) <= k) { res.push(i); break; }
+      }
+    }
+    return res;
+  },
+
+  'number-of-beautiful-pairs': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+    let count = 0;
+    for (let i = 0; i < nums.length; i++) {
+      const first = +(String(nums[i] as number)[0] as string);
+      for (let j = i + 1; j < nums.length; j++) {
+        const last = (nums[j] as number) % 10;
+        if (gcd(first, last) === 1) count++;
+      }
+    }
+    return count;
+  },
+
+  'split-string-by-separator': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const separator = args[1] as string;
+    return words.flatMap((w) => w.split(separator)).filter((p) => p.length > 0);
+  },
+
+  'count-vowel-strings-in-ranges': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const queries = args[1] as number[][];
+    const vowels = new Set('aeiou');
+    const pre = [0];
+    for (const w of words) {
+      pre.push((pre[pre.length - 1] as number) + (vowels.has(w[0] as string) && vowels.has(w[w.length - 1] as string) ? 1 : 0));
+    }
+    return queries.map((q) => (pre[(q[1] as number) + 1] as number) - (pre[q[0] as number] as number));
+  },
+
+  'number-of-even-odd-bits': (...args: unknown[]) => {
+    let n = args[0] as number;
+    let even = 0, odd = 0;
+    for (let pos = 0; n > 0; pos++, n >>= 1) {
+      if (n & 1) { if (pos % 2 === 0) even++; else odd++; }
+    }
+    return [even, odd];
+  },
+
+  'average-value-of-even-numbers-divisible-by-three': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const evens = nums.filter((n) => n % 6 === 0);
+    if (evens.length === 0) return 0;
+    return Math.floor(evens.reduce((a, b) => a + b, 0) / evens.length);
+  },
+
+  'count-prefix-suffix-pairs': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    let count = 0;
+    for (let i = 0; i < words.length; i++) {
+      for (let j = i + 1; j < words.length; j++) {
+        if ((words[j] as string).startsWith(words[i] as string) && (words[j] as string).endsWith(words[i] as string)) count++;
+      }
+    }
+    return count;
+  },
+
+  'minimum-cost-of-buying-candies-with-discount': (...args: unknown[]) => {
+    const cost = [...(args[0] as number[])].sort((a, b) => b - a);
+    let total = 0;
+    for (let i = 0; i < cost.length; i++) if ((i + 1) % 3 !== 0) total += cost[i] as number;
+    return total;
+  },
+
+  'find-original-array-from-prefix-xor': (...args: unknown[]) => {
+    const pref = args[0] as number[];
+    const arr = [pref[0] as number];
+    for (let i = 1; i < pref.length; i++) arr.push((pref[i - 1] as number) ^ (pref[i] as number));
+    return arr;
+  },
+
+  'total-distance-traveled': (...args: unknown[]) => {
+    let main = args[0] as number;
+    let extra = args[1] as number;
+    let dist = 0;
+    while (main >= 5) {
+      dist += 50;
+      main -= 5;
+      if (extra > 0) { main++; extra--; }
+    }
+    dist += main * 10;
+    return dist;
+  },
+
+  'delete-characters-to-make-fancy-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let res = '';
+    for (const c of s) {
+      const n = res.length;
+      if (n >= 2 && res[n - 1] === c && res[n - 2] === c) continue;
+      res += c;
+    }
+    return res;
+  },
+
+  'three-consecutive-odds': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    let count = 0;
+    for (const n of arr) {
+      if (n % 2 === 1) { if (++count >= 3) return true; }
+      else count = 0;
+    }
+    return false;
+  },
+
+  'count-equal-and-divisible-pairs-in-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let count = 0;
+    for (let i = 0; i < nums.length; i++) {
+      for (let j = i + 1; j < nums.length; j++) {
+        if (nums[i] === nums[j] && (i * j) % k === 0) count++;
+      }
+    }
+    return count;
+  },
+
+  'minimum-changes-to-make-alternating-binary-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let mis = 0;
+    for (let i = 0; i < s.length; i++) if (s[i] !== '01'[i % 2]) mis++;
+    return Math.min(mis, s.length - mis);
+  },
+
 };
