@@ -16098,4 +16098,199 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'best-sightseeing-pair': (values: unknown) => {
+    const vals = values as number[];
+    let maxLeft = vals[0]! + 0;
+    let ans = 0;
+    for (let j = 1; j < vals.length; j++) {
+      ans = Math.max(ans, maxLeft + vals[j]! - j);
+      maxLeft = Math.max(maxLeft, vals[j]! + j);
+    }
+    return ans;
+  },
+
+  'find-longest-substring-vowels-even': (s: unknown) => {
+    const str = s as string;
+    const vowels = 'aeiou';
+    const first = new Map<number, number>();
+    first.set(0, -1);
+    let state = 0, ans = 0;
+    for (let i = 0; i < str.length; i++) {
+      const bit = vowels.indexOf(str[i]!);
+      if (bit !== -1) state ^= (1 << bit);
+      if (first.has(state)) ans = Math.max(ans, i - first.get(state)!);
+      else first.set(state, i);
+    }
+    return ans;
+  },
+
+  'reverse-substrings-between-parentheses': (s: unknown) => {
+    const str = s as string;
+    const stack: string[] = [''];
+    for (const c of str) {
+      if (c === '(') stack.push('');
+      else if (c === ')') {
+        const top = stack.pop()!;
+        stack[stack.length - 1] += top.split('').reverse().join('');
+      } else {
+        stack[stack.length - 1] += c;
+      }
+    }
+    return stack[0]!;
+  },
+
+  'design-stack-with-increment': (maxSize: unknown, ops: unknown) => {
+    const max = maxSize as number;
+    const operations = ops as Array<[string, ...number[]]>;
+    const stack: number[] = [];
+    const inc: number[] = [];
+    const results: number[] = [];
+    for (const op of operations) {
+      if (op[0] === 'push') {
+        if (stack.length < max) { stack.push(op[1]!); inc.push(0); }
+      } else if (op[0] === 'pop') {
+        if (stack.length === 0) {
+          results.push(-1);
+        } else {
+          const extra = inc.pop()!;
+          const val = stack.pop()! + extra;
+          if (inc.length > 0) inc[inc.length - 1]! += extra;
+          results.push(val);
+        }
+      } else if (op[0] === 'increment') {
+        const k = Math.min(op[1]!, stack.length);
+        if (k > 0) inc[k - 1]! += op[2]!;
+      }
+    }
+    return results;
+  },
+
+  'minimum-number-of-frogs-croaking': (croakOfFrogs: unknown) => {
+    const s = croakOfFrogs as string;
+    const order = 'croak';
+    const cnt = new Map<string, number>();
+    for (const c of order) cnt.set(c, 0);
+    let frogs = 0, ans = 0;
+    for (const c of s) {
+      if (!cnt.has(c)) return -1;
+      cnt.set(c, cnt.get(c)! + 1);
+      const idx = order.indexOf(c);
+      if (idx > 0) {
+        const prev = order[idx - 1]!;
+        if (cnt.get(prev)! < cnt.get(c)!) return -1;
+      }
+      if (c === 'c') { frogs++; ans = Math.max(ans, frogs); }
+      if (c === 'k') frogs--;
+    }
+    return frogs !== 0 ? -1 : ans;
+  },
+
+  'shortest-path-visiting-all-nodes': (graph: unknown) => {
+    const g = graph as number[][];
+    const n = g.length;
+    const full = (1 << n) - 1;
+    const visited: boolean[][] = Array.from({length: n}, () => new Array(1 << n).fill(false));
+    const queue: [number, number, number][] = [];
+    for (let i = 0; i < n; i++) {
+      const mask = 1 << i;
+      visited[i]![mask] = true;
+      if (mask === full) return 0;
+      queue.push([i, mask, 0]);
+    }
+    let head = 0;
+    while (head < queue.length) {
+      const [node, mask, dist] = queue[head++]!;
+      for (const next of g[node]!) {
+        const newMask = mask | (1 << next);
+        if (newMask === full) return dist + 1;
+        if (!visited[next]![newMask]) {
+          visited[next]![newMask] = true;
+          queue.push([next, newMask, dist + 1]);
+        }
+      }
+    }
+    return -1;
+  },
+
+  'minimum-number-of-work-sessions': (tasks: unknown, sessionTime: unknown) => {
+    const ts = tasks as number[];
+    const st = sessionTime as number;
+    const n = ts.length;
+    const fullMask = (1 << n) - 1;
+    const memo = new Map<number, number>();
+    function dp(done: number, remaining: number): number {
+      if (done === fullMask) return 0;
+      const key = done * 16 + remaining;
+      if (memo.has(key)) return memo.get(key)!;
+      let best = Infinity;
+      for (let i = 0; i < n; i++) {
+        if (done & (1 << i)) continue;
+        const t = ts[i]!;
+        const res = t <= remaining
+          ? dp(done | (1 << i), remaining - t)
+          : 1 + dp(done | (1 << i), st - t);
+        if (res < best) best = res;
+      }
+      memo.set(key, best);
+      return best;
+    }
+    return 1 + dp(0, st);
+  },
+
+  'minimize-product-sum': (nums1: unknown, nums2: unknown) => {
+    const a = [...(nums1 as number[])].sort((x, y) => x - y);
+    const b = [...(nums2 as number[])].sort((x, y) => y - x);
+    return a.reduce((sum, v, i) => sum + v * b[i]!, 0);
+  },
+
+  'count-range-sum': (nums: unknown, lower: unknown, upper: unknown) => {
+    const arr = nums as number[];
+    const lo = lower as number, hi = upper as number;
+    const prefix: number[] = [0];
+    for (const n of arr) prefix.push(prefix[prefix.length - 1]! + n);
+    let count = 0;
+    const tmp = new Array<number>(prefix.length);
+    function mergeSort(l: number, r: number): void {
+      if (r - l <= 1) return;
+      const mid = (l + r) >> 1;
+      mergeSort(l, mid);
+      mergeSort(mid, r);
+      let j = mid, k = mid;
+      for (let i = l; i < mid; i++) {
+        while (j < r && prefix[j]! - prefix[i]! < lo) j++;
+        while (k < r && prefix[k]! - prefix[i]! <= hi) k++;
+        count += k - j;
+      }
+      let p = l, q = mid, t = l;
+      while (p < mid && q < r) tmp[t++] = prefix[p]! <= prefix[q]! ? prefix[p++]! : prefix[q++]!;
+      while (p < mid) tmp[t++] = prefix[p++]!;
+      while (q < r) tmp[t++] = prefix[q++]!;
+      for (let i = l; i < r; i++) prefix[i] = tmp[i]!;
+    }
+    mergeSort(0, prefix.length);
+    return count;
+  },
+
+  'all-paths-from-source-lead-to-destination': (n: unknown, edges: unknown, source: unknown, destination: unknown) => {
+    const N = n as number;
+    const edgeList = edges as [number, number][];
+    const src = source as number, dst = destination as number;
+    const graph: number[][] = Array.from({length: N}, () => []);
+    for (const [a, b] of edgeList) graph[a]!.push(b);
+    if (graph[dst]!.length > 0) return false;
+    const color = new Array<number>(N).fill(0);
+    function dfs(node: number): boolean {
+      if (color[node] === 1) return false;
+      if (color[node] === 2) return true;
+      if (graph[node]!.length === 0) return node === dst;
+      color[node] = 1;
+      for (const next of graph[node]!) {
+        if (!dfs(next)) return false;
+      }
+      color[node] = 2;
+      return true;
+    }
+    return dfs(src);
+  },
+
 };

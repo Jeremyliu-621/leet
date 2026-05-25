@@ -1227,6 +1227,16 @@ import { problem as maxSumOfRectangleNoLargerThanK } from './max-sum-of-rectangl
 import { problem as countUniqueCharactersOfAllSubstrings } from './count-unique-characters-of-all-substrings';
 import { problem as zumaGame } from './zuma-game';
 import { problem as findLongestValidObstacleCourse } from './find-longest-valid-obstacle-course';
+import { problem as bestSightseeingPair } from './best-sightseeing-pair';
+import { problem as findLongestSubstringVowelsEven } from './find-longest-substring-vowels-even';
+import { problem as reverseSubstringsBetweenParentheses } from './reverse-substrings-between-parentheses';
+import { problem as designStackWithIncrement } from './design-stack-with-increment';
+import { problem as minimumNumberOfFrogsCroaking } from './minimum-number-of-frogs-croaking';
+import { problem as shortestPathVisitingAllNodes } from './shortest-path-visiting-all-nodes';
+import { problem as minimumNumberOfWorkSessions } from './minimum-number-of-work-sessions';
+import { problem as minimizeProductSum } from './minimize-product-sum';
+import { problem as countRangeSum } from './count-range-sum';
+import { problem as allPathsFromSourceLeadToDestination } from './all-paths-from-source-lead-to-destination';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2502,4 +2512,14 @@ export const problems: readonly Problem[] = [
   countUniqueCharactersOfAllSubstrings,
   zumaGame,
   findLongestValidObstacleCourse,
+  bestSightseeingPair,
+  findLongestSubstringVowelsEven,
+  reverseSubstringsBetweenParentheses,
+  designStackWithIncrement,
+  minimumNumberOfFrogsCroaking,
+  shortestPathVisitingAllNodes,
+  minimumNumberOfWorkSessions,
+  minimizeProductSum,
+  countRangeSum,
+  allPathsFromSourceLeadToDestination,
 ];

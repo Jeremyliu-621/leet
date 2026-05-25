@@ -15712,4 +15712,209 @@ def allPossibleFBT(n):
         result.append(pos + 1)
     return result
 `,
+
+  'best-sightseeing-pair': `def maxScoreSightseeingPair(values):
+    raw = values.to_py() if hasattr(values, 'to_py') else list(values)
+    vals = [int(v) for v in raw]
+    max_left = vals[0] + 0
+    ans = 0
+    for j in range(1, len(vals)):
+        ans = max(ans, max_left + vals[j] - j)
+        max_left = max(max_left, vals[j] + j)
+    return ans
+`,
+
+  'find-longest-substring-vowels-even': `def findTheLongestSubstring(s):
+    s = str(s)
+    vowels = 'aeiou'
+    first = {0: -1}
+    state = 0
+    ans = 0
+    for i, c in enumerate(s):
+        bit = vowels.find(c)
+        if bit != -1:
+            state ^= (1 << bit)
+        if state in first:
+            ans = max(ans, i - first[state])
+        else:
+            first[state] = i
+    return ans
+`,
+
+  'reverse-substrings-between-parentheses': `def reverseParentheses(s):
+    s = str(s)
+    stack = ['']
+    for c in s:
+        if c == '(':
+            stack.append('')
+        elif c == ')':
+            top = stack.pop()
+            stack[-1] += top[::-1]
+        else:
+            stack[-1] += c
+    return stack[0]
+`,
+
+  'design-stack-with-increment': `def customStackOps(maxSize, ops):
+    max_size = int(maxSize)
+    raw_ops = ops.to_py() if hasattr(ops, 'to_py') else list(ops)
+    stack = []
+    inc = []
+    results = []
+    for op in raw_ops:
+        if op[0] == 'push':
+            if len(stack) < max_size:
+                stack.append(int(op[1]))
+                inc.append(0)
+        elif op[0] == 'pop':
+            if not stack:
+                results.append(-1)
+            else:
+                extra = inc.pop()
+                val = stack.pop() + extra
+                if inc:
+                    inc[-1] += extra
+                results.append(val)
+        elif op[0] == 'increment':
+            k = min(int(op[1]), len(stack))
+            if k > 0:
+                inc[k - 1] += int(op[2])
+    return results
+`,
+
+  'minimum-number-of-frogs-croaking': `def minNumberOfFrogs(croakOfFrogs):
+    s = str(croakOfFrogs)
+    order = 'croak'
+    cnt = {c: 0 for c in order}
+    frogs = 0
+    ans = 0
+    for c in s:
+        if c not in cnt:
+            return -1
+        cnt[c] += 1
+        idx = order.index(c)
+        if idx > 0:
+            prev = order[idx - 1]
+            if cnt[prev] < cnt[c]:
+                return -1
+        if c == 'c':
+            frogs += 1
+            ans = max(ans, frogs)
+        if c == 'k':
+            frogs -= 1
+    return -1 if frogs != 0 else ans
+`,
+
+  'shortest-path-visiting-all-nodes': `def shortestPathLength(graph):
+    from collections import deque
+    raw = graph.to_py() if hasattr(graph, 'to_py') else [list(x) for x in graph]
+    g = [list(row) for row in raw]
+    n = len(g)
+    full = (1 << n) - 1
+    visited = [[False] * (1 << n) for _ in range(n)]
+    queue = deque()
+    for i in range(n):
+        mask = 1 << i
+        visited[i][mask] = True
+        if mask == full:
+            return 0
+        queue.append((i, mask, 0))
+    while queue:
+        node, mask, dist = queue.popleft()
+        for nxt in g[node]:
+            new_mask = mask | (1 << nxt)
+            if new_mask == full:
+                return dist + 1
+            if not visited[nxt][new_mask]:
+                visited[nxt][new_mask] = True
+                queue.append((nxt, new_mask, dist + 1))
+    return -1
+`,
+
+  'minimum-number-of-work-sessions': `def minSessions(tasks, sessionTime):
+    from functools import lru_cache
+    raw = tasks.to_py() if hasattr(tasks, 'to_py') else list(tasks)
+    ts = [int(v) for v in raw]
+    st = int(sessionTime)
+    n = len(ts)
+    full_mask = (1 << n) - 1
+    @lru_cache(maxsize=None)
+    def dp(done, remaining):
+        if done == full_mask:
+            return 0
+        best = float('inf')
+        for i in range(n):
+            if done & (1 << i):
+                continue
+            t = ts[i]
+            if t <= remaining:
+                res = dp(done | (1 << i), remaining - t)
+            else:
+                res = 1 + dp(done | (1 << i), st - t)
+            best = min(best, res)
+        return best
+    return 1 + dp(0, st)
+`,
+
+  'minimize-product-sum': `def minProductSum(nums1, nums2):
+    raw1 = nums1.to_py() if hasattr(nums1, 'to_py') else list(nums1)
+    raw2 = nums2.to_py() if hasattr(nums2, 'to_py') else list(nums2)
+    a = sorted([int(v) for v in raw1])
+    b = sorted([int(v) for v in raw2], reverse=True)
+    return sum(a[i] * b[i] for i in range(len(a)))
+`,
+
+  'count-range-sum': `def countRangeSum(nums, lower, upper):
+    raw = nums.to_py() if hasattr(nums, 'to_py') else list(nums)
+    arr = [int(v) for v in raw]
+    lo, hi = int(lower), int(upper)
+    prefix = [0]
+    for n in arr:
+        prefix.append(prefix[-1] + n)
+    count = [0]
+    def merge_sort(l, r):
+        if r - l <= 1:
+            return
+        mid = (l + r) // 2
+        merge_sort(l, mid)
+        merge_sort(mid, r)
+        j = k = mid
+        for i in range(l, mid):
+            while j < r and prefix[j] - prefix[i] < lo:
+                j += 1
+            while k < r and prefix[k] - prefix[i] <= hi:
+                k += 1
+            count[0] += k - j
+        prefix[l:r] = sorted(prefix[l:r])
+    merge_sort(0, len(prefix))
+    return count[0]
+`,
+
+  'all-paths-from-source-lead-to-destination': `def leadsToDestination(n, edges, source, destination):
+    n = int(n)
+    raw = edges.to_py() if hasattr(edges, 'to_py') else [list(e) for e in edges]
+    edge_list = [[int(e[0]), int(e[1])] for e in raw]
+    src = int(source)
+    dst = int(destination)
+    graph = [[] for _ in range(n)]
+    for a, b in edge_list:
+        graph[a].append(b)
+    if graph[dst]:
+        return False
+    color = [0] * n
+    def dfs(node):
+        if color[node] == 1:
+            return False
+        if color[node] == 2:
+            return True
+        if not graph[node]:
+            return node == dst
+        color[node] = 1
+        for nxt in graph[node]:
+            if not dfs(nxt):
+                return False
+        color[node] = 2
+        return True
+    return dfs(src)
+`,
 };
