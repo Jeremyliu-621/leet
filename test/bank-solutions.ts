@@ -9620,4 +9620,35 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return arr.every((_, i) => i < 2 || arr[i]! - arr[i - 1]! === d);
   },
 
+  'first-bad-version': (...args: unknown[]) => {
+    const n = args[0] as number, firstBad = args[1] as number;
+    const isBadVersion = (v: number) => v >= firstBad;
+    let lo = 1, hi = n;
+    while (lo < hi) {
+      const mid = lo + Math.floor((hi - lo) / 2);
+      if (isBadVersion(mid)) hi = mid; else lo = mid + 1;
+    }
+    return lo;
+  },
+
+  'number-of-segments-in-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    return s.trim().split(/\s+/).filter(w => w.length > 0).length;
+  },
+
+  'find-mode-bst': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const root = _buildTree(arr);
+    const freq = new Map<number, number>();
+    const dfs = (n: _TN | null) => {
+      if (!n) return;
+      freq.set(n.v, (freq.get(n.v) ?? 0) + 1);
+      dfs(n.l); dfs(n.r);
+    };
+    dfs(root);
+    if (freq.size === 0) return [];
+    const max = Math.max(...freq.values());
+    return [...freq.entries()].filter(([, c]) => c === max).map(([v]) => v).sort((a, b) => a - b);
+  },
+
 };

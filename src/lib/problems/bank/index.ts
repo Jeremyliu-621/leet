@@ -770,6 +770,9 @@ import { problem as nthDigit } from './nth-digit';
 import { problem as findTheWinner } from './find-the-winner';
 import { problem as countNegativeNumbers } from './count-negative-numbers';
 import { problem as canMakeArithmeticProgression } from './can-make-arithmetic-progression';
+import { problem as firstBadVersion } from './first-bad-version';
+import { problem as numberOfSegmentsInString } from './number-of-segments-in-string';
+import { problem as findModeBst } from './find-mode-bst';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1588,4 +1591,7 @@ export const problems: readonly Problem[] = [
   findTheWinner,
   countNegativeNumbers,
   canMakeArithmeticProgression,
+  firstBadVersion,
+  numberOfSegmentsInString,
+  findModeBst,
 ];

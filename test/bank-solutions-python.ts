@@ -9213,4 +9213,38 @@ def canMakeArithmeticProgression(arr):
     d = arr[1] - arr[0]
     return all(arr[i] - arr[i - 1] == d for i in range(2, len(arr)))
 `,
+
+  'first-bad-version': `
+def firstBadVersion(n, is_bad_version):
+    lo, hi = 1, n
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if is_bad_version(mid):
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'number-of-segments-in-string': `
+def countSegments(s):
+    return len(s.split())
+`,
+
+  'find-mode-bst': `
+from collections import Counter
+def findMode(root):
+    freq = Counter()
+    def dfs(node):
+        if not node:
+            return
+        freq[node.val] += 1
+        dfs(node.left)
+        dfs(node.right)
+    dfs(root)
+    if not freq:
+        return []
+    max_count = max(freq.values())
+    return sorted(v for v, c in freq.items() if c == max_count)
+`,
 };
