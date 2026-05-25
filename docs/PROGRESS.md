@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1348 problems; 4302+ tests green.
+**Current focus:** Bank at 1351 problems; 4323 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems (Batch 39+); UI/UX polish; Options/popup improvements.
 
@@ -379,6 +379,7 @@ Still pending:
 - [x] **3 more classic problems (Batch 37-local)** — separate-black-and-white-balls (strings+two-pointers/medium, count inversion-cost scanning left), minimum-number-of-steps-to-make-two-strings-anagram (strings+hash-map/medium, freq diff then sum negatives), find-the-prefix-common-array-of-two-arrays (arrays+hash-map/medium, freq hits 2 = common); bank at **1334**; 4287 tests.
 - [x] **5 more classic problems (Batch 38)** — last-stone-weight-ii (dp/medium, 0/1 knapsack partition minimize |sum1−sum2|), divide-two-integers (math/medium, BigInt bit-shifting without * / %), longest-harmonious-subsequence (arrays+hash-map/easy, freq map count k + k+1 pairs), buddy-strings (strings/easy, swap two identical or exactly-2-diff-positions), beautiful-subsets (arrays+backtracking/medium, sort+backtrack+freq-map no two elements differ by k); fixed beautiful-subsets expected for [1..5] k=1 to 12 (not 8); bank at **1344**; 4302 tests.
 - [x] **4 more classic problems (Batch 37-local)** — my-calendar-ii (arrays/medium, double-booked interval tracking), task-scheduler-ii (arrays+hash-map/medium, greedy last-day map), swapping-nodes-in-a-linked-list (linked-list+two-pointers/medium, k-th from front/back value swap), move-pieces-to-obtain-a-string (strings+two-pointers/medium, L/R movement constraint check); TerminalPanel Test Results tab now shows animated run-count badge (X/Y passing); marketing site updated to 1,330+; bank at **1348**; 4302+ tests.
+- [x] **3 more classic problems (Batch 38-local)** — greatest-common-divisor-of-strings (strings+math/easy, concatenation check + gcd length), maximum-distance-in-arrays (arrays/medium, two-pass running min/max from different arrays), path-with-maximum-gold (backtracking/medium, DFS with cell zeroing); bank at **1351**; 4323 tests.
 
 ---
 
