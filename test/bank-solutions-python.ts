@@ -575,8 +575,15 @@ export const pythonSolutions: Record<string, string> = {
             min_v = v
     return [max_v, min_v]
 `,
-  'reverse-string': `def reverseString(s):
-    return s[::-1]
+  'reverse-string': `
+def reverseString(s):
+    s = list(s.to_py() if hasattr(s, 'to_py') else s)
+    l, r = 0, len(s) - 1
+    while l < r:
+        s[l], s[r] = s[r], s[l]
+        l += 1
+        r -= 1
+    return s
 `,
   'count-good-pairs': `def countGoodPairs(nums):
     from collections import defaultdict

@@ -701,8 +701,13 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
 
   // --- strings (batch 5) ---------------------------------------------------
   'reverse-string': (...args: unknown[]) => {
-    const s = args[0] as string;
-    return s.split('').reverse().join('');
+    const s = [...(args[0] as string[])];
+    let l = 0, r = s.length - 1;
+    while (l < r) {
+      [s[l], s[r]] = [s[r]!, s[l]!];
+      l++; r--;
+    }
+    return s;
   },
 
   // --- hash-map (batch 5) --------------------------------------------------

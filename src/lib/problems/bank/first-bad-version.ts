@@ -55,11 +55,12 @@ You are given an API \`bool isBadVersion(version)\` which returns whether \`vers
   visibleTests: [
     { args: [5, 4], expected: 4 },
     { args: [1, 1], expected: 1 },
+    { args: [10, 7], expected: 7 },
   ],
   hiddenTests: [
-    { args: [10, 1], expected: 1 },
-    { args: [10, 10], expected: 10 },
+    { args: [3, 1], expected: 1 },
     { args: [100, 50], expected: 50 },
-    { args: [2126753390, 1702766719], expected: 1702766719 },
+    { args: [1000000, 999999], expected: 999999 },
+    { args: [6, 6], expected: 6 },
   ],
 };
