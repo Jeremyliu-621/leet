@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1427 problems; 4530 tests green.
+**Current focus:** Bank at 1420 problems; 4545 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue adding classic problems (Batch 46+); UI/UX polish; draggable splitter; options improvements.
+**Next up:** Continue adding classic problems (Batch 49+); UI/UX polish; draggable splitter; options improvements.
+
+### Batch 48 (2026-05-25)
+Added 5 problems: `day-of-the-week` (math/easy), `guess-number-higher-or-lower` (binary-search/easy), `largest-triangle-area` (math/easy), `minimum-value-to-get-positive-step-sum` (arrays/easy), `number-of-rectangles-that-can-form-largest-square` (arrays/easy). Skipped 4 originally requested problems that already existed in the bank; substituted equivalent-difficulty originals.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
