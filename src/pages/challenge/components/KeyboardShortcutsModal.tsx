@@ -46,6 +46,13 @@ const SECTIONS: ShortcutSection[] = [
       { keys: ['⌘⌥]', 'Ctrl+⇧]'], description: 'Unfold block' },
     ],
   },
+  {
+    heading: 'Layout',
+    rows: [
+      { keys: ['← →', 'Arrow keys'], description: 'Resize panels (focus splitter first)' },
+      { keys: ['Home', 'End'], description: 'Snap panel to min / max width' },
+    ],
+  },
 ];
 
 interface Props {
@@ -55,10 +62,20 @@ interface Props {
 export function KeyboardShortcutsModal({ onClose }: Props) {
   const dialogRef = useRef<HTMLDivElement>(null);
 
-  // Close on Escape.
+  // Close on Escape; trap Tab focus inside the dialog.
   useEffect(() => {
+    const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     function onKeyDown(e: KeyboardEvent) {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') { onClose(); return; }
+      if (e.key !== 'Tab' || !dialogRef.current) return;
+      const focusable = Array.from(dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE));
+      if (focusable.length === 0) return;
+      const first = focusable[0]!, last = focusable[focusable.length - 1]!;
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
     }
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
