@@ -1355,6 +1355,9 @@ import { problem as maximumScoreFromRemovingSubstrings } from './maximum-score-f
 import { problem as minimumDeletionsToMakeStringBalanced } from './minimum-deletions-to-make-string-balanced';
 import { problem as minimumDifferenceBetweenLargestAndSmallestValueInThreeMoves } from './minimum-difference-between-largest-and-smallest-value-in-three-moves';
 import { problem as shortestSubarrayToBeRemovedToMakeArraySorted } from './shortest-subarray-to-be-removed-to-make-array-sorted';
+import { problem as minimumHealthToBeatTheGame } from './minimum-health-to-beat-the-game';
+import { problem as checkIfStringContainsAllBinaryCodesOfSizeK } from './check-if-string-contains-all-binary-codes-of-size-k';
+import { problem as longestNiceSubstring } from './longest-nice-substring';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2758,4 +2761,7 @@ export const problems: readonly Problem[] = [
   minimumDeletionsToMakeStringBalanced,
   minimumDifferenceBetweenLargestAndSmallestValueInThreeMoves,
   shortestSubarrayToBeRemovedToMakeArraySorted,
+  minimumHealthToBeatTheGame,
+  checkIfStringContainsAllBinaryCodesOfSizeK,
+  longestNiceSubstring,
 ];

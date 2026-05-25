@@ -18120,4 +18120,39 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
   },
 
+  'minimum-health-to-beat-the-game': (damage: unknown, armor: unknown) => {
+    const dmg = damage as number[];
+    const total = dmg.reduce((a, b) => a + b, 0);
+    const maxDmg = Math.max(...dmg);
+    const savings = Math.min(maxDmg - 1, armor as number);
+    return total - savings + 1;
+  },
+
+  'check-if-string-contains-all-binary-codes-of-size-k': (s: unknown, k: unknown) => {
+    const str = s as string, K = k as number;
+    const required = 1 << K;
+    const seen = new Set<string>();
+    for (let i = K; i <= str.length; i++) {
+      seen.add(str.slice(i - K, i));
+      if (seen.size === required) return true;
+    }
+    return false;
+  },
+
+  'longest-nice-substring': (s: unknown) => {
+    function solve(str: string): string {
+      if (str.length < 2) return '';
+      for (let i = 0; i < str.length; i++) {
+        const c = str[i]!;
+        if (!str.includes(c.toUpperCase()) || !str.includes(c.toLowerCase())) {
+          const l = solve(str.slice(0, i));
+          const r = solve(str.slice(i + 1));
+          return l.length >= r.length ? l : r;
+        }
+      }
+      return str;
+    }
+    return solve(s as string);
+  },
+
 };

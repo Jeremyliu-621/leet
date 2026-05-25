@@ -17976,4 +17976,37 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
         s, s2 = remove(s, 'a', 'b', x)
     return s1 + s2
 `,
+
+  'minimum-health-to-beat-the-game': `def minimumHealth(damage, armor):
+    damage = list(damage.to_py() if hasattr(damage, 'to_py') else damage)
+    armor = int(armor)
+    total = sum(damage)
+    max_dmg = max(damage)
+    savings = min(max_dmg - 1, armor)
+    return total - savings + 1
+`,
+
+  'check-if-string-contains-all-binary-codes-of-size-k': `def hasAllCodes(s, k):
+    k = int(k)
+    required = 1 << k
+    seen = set()
+    for i in range(k, len(s) + 1):
+        seen.add(s[i - k:i])
+        if len(seen) == required:
+            return True
+    return False
+`,
+
+  'longest-nice-substring': `def longestNiceSubstring(s):
+    def solve(t):
+        if len(t) < 2:
+            return ''
+        for i, c in enumerate(t):
+            if c.upper() not in t or c.lower() not in t:
+                l = solve(t[:i])
+                r = solve(t[i + 1:])
+                return l if len(l) >= len(r) else r
+        return t
+    return solve(s)
+`,
 };
