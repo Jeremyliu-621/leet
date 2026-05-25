@@ -183,6 +183,14 @@ import { problem as bullsAndCows } from './bulls-and-cows';
 import { problem as minimumSumFourDigitNumber } from './minimum-sum-four-digit-number';
 import { problem as countPairsAbsoluteDifferenceK } from './count-pairs-absolute-difference-k';
 import { problem as findClosestNumberToZero } from './find-closest-number-to-zero';
+import { problem as checkIfAllCharsHaveEqualOccurrences } from './check-if-all-chars-have-equal-occurrences';
+import { problem as countEvenNumbers } from './count-even-numbers';
+import { problem as countSegmentsInString } from './count-segments-in-string';
+import { problem as findRepeatedDnaSequences } from './find-repeated-dna-sequences';
+import { problem as widestVerticalArea } from './widest-vertical-area';
+import { problem as convert1dArrayInto2dArray } from './convert-1d-array-into-2d-array';
+import { problem as findThePivotInteger } from './find-the-pivot-integer';
+import { problem as maximumSumCircularSubarray } from './maximum-sum-circular-subarray';
 // strings — medium
 import { problem as zigzagConversion } from './zigzag-conversion';
 import { problem as implementTrie } from './implement-trie';
@@ -789,7 +797,15 @@ export const problems: readonly Problem[] = [
   minimumSumFourDigitNumber,
   countPairsAbsoluteDifferenceK,
   findClosestNumberToZero,
+  checkIfAllCharsHaveEqualOccurrences,
+  countEvenNumbers,
+  countSegmentsInString,
+  widestVerticalArea,
+  convert1dArrayInto2dArray,
+  findThePivotInteger,
   // strings — medium
+  findRepeatedDnaSequences,
+  maximumSumCircularSubarray,
   minimumDeletionsCharFrequencies,
   bullsAndCows,
   replaceWords,

@@ -7623,5 +7623,75 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return count;
   },
+  'count-even-numbers': (...args: unknown[]) => {
+    const num = args[0] as number;
+    let count = 0;
+    for (let i = 1; i <= num; i++) {
+      let sum = 0, n = i;
+      while (n > 0) { sum += n % 10; n = Math.floor(n / 10); }
+      if (sum % 2 === 0) count++;
+    }
+    return count;
+  },
+  'count-segments-in-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let count = 0;
+    for (let i = 0; i < s.length; i++) {
+      if (s[i] !== ' ' && (i === 0 || s[i - 1] === ' ')) count++;
+    }
+    return count;
+  },
+  'find-repeated-dna-sequences': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const seen = new Map<string, number>();
+    const result: string[] = [];
+    for (let i = 0; i <= s.length - 10; i++) {
+      const sub = s.slice(i, i + 10);
+      const cnt = (seen.get(sub) ?? 0) + 1;
+      seen.set(sub, cnt);
+      if (cnt === 2) result.push(sub);
+    }
+    return result.sort();
+  },
+  'widest-vertical-area': (...args: unknown[]) => {
+    const points = args[0] as number[][];
+    const xs = points.map(p => p[0]!).sort((a, b) => a - b);
+    let maxGap = 0;
+    for (let i = 1; i < xs.length; i++) maxGap = Math.max(maxGap, xs[i]! - xs[i - 1]!);
+    return maxGap;
+  },
+  'convert-1d-array-into-2d-array': (...args: unknown[]) => {
+    const original = args[0] as number[], m = args[1] as number, n = args[2] as number;
+    if (original.length !== m * n) return [];
+    const result: number[][] = [];
+    for (let i = 0; i < m; i++) result.push(original.slice(i * n, (i + 1) * n));
+    return result;
+  },
+  'check-if-all-chars-have-equal-occurrences': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const freq: Record<string, number> = {};
+    for (const c of s) freq[c] = (freq[c] ?? 0) + 1;
+    const vals = Object.values(freq);
+    return vals.every(f => f === vals[0]);
+  },
+  'find-the-pivot-integer': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const x = Math.sqrt(n * (n + 1) / 2);
+    return Number.isInteger(x) ? x : -1;
+  },
+  'maximum-sum-circular-subarray': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    if (nums.every(n => n < 0)) return Math.max(...nums);
+    let maxSum = -Infinity, curMax = 0, total = 0;
+    let minSum = Infinity, curMin = 0;
+    for (const n of nums) {
+      curMax = Math.max(n, curMax + n);
+      maxSum = Math.max(maxSum, curMax);
+      curMin = Math.min(n, curMin + n);
+      minSum = Math.min(minSum, curMin);
+      total += n;
+    }
+    return Math.max(maxSum, total - minSum);
+  },
 
 };

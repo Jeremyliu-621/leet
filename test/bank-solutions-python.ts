@@ -7043,4 +7043,65 @@ def findClosestNumber(nums):
             count += 1
     return count
 `,
+  'count-even-numbers': `
+def countEven(num):
+    count = 0
+    for i in range(1, num + 1):
+        if sum(int(d) for d in str(i)) % 2 == 0:
+            count += 1
+    return count
+`,
+  'count-segments-in-string': `
+def countSegments(s):
+    return len(s.split())
+`,
+  'find-repeated-dna-sequences': `
+def findRepeatedDnaSequences(s):
+    from collections import Counter
+    counts = Counter(s[i:i+10] for i in range(len(s) - 9))
+    return sorted(k for k, v in counts.items() if v > 1)
+`,
+  'widest-vertical-area': `
+def maxWidthOfVerticalArea(points):
+    xs = sorted(int(p[0]) for p in points)
+    return max(xs[i+1] - xs[i] for i in range(len(xs) - 1)) if len(xs) > 1 else 0
+`,
+  'convert-1d-array-into-2d-array': `
+def construct2DArray(original, m, n):
+    if hasattr(original, 'to_py'):
+        original = list(original.to_py())
+    else:
+        original = list(original)
+    if len(original) != m * n:
+        return []
+    return [original[i*n:(i+1)*n] for i in range(m)]
+`,
+  'check-if-all-chars-have-equal-occurrences': `
+def areOccurrencesEqual(s):
+    from collections import Counter
+    freq = set(Counter(s).values())
+    return len(freq) == 1
+`,
+  'find-the-pivot-integer': `
+def pivotInteger(n):
+    import math
+    x = math.isqrt(n * (n + 1) // 2)
+    return x if x * x == n * (n + 1) // 2 else -1
+`,
+  'maximum-sum-circular-subarray': `
+def maxSubarraySumCircular(nums):
+    nums = list(nums)
+    if all(n < 0 for n in nums):
+        return max(nums)
+    max_sum = cur_max = float('-inf')
+    min_sum = cur_min = float('inf')
+    total = 0
+    for n in nums:
+        cur_max = max(n, cur_max + n)
+        max_sum = max(max_sum, cur_max)
+        cur_min = min(n, cur_min + n)
+        min_sum = min(min_sum, cur_min)
+        total += n
+    return max(max_sum, total - min_sum)
+`,
 };
