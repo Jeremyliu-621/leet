@@ -678,6 +678,9 @@ import { problem as relativeSortArray } from './relative-sort-array';
 import { problem as permutationsII } from './permutations-ii';
 import { problem as letterTilePossibilities } from './letter-tile-possibilities';
 import { problem as differentWaysAddParentheses } from './different-ways-add-parentheses';
+import { problem as integerBreak } from './integer-break';
+import { problem as minimumCostMoveChips } from './minimum-cost-move-chips';
+import { problem as binaryWatch } from './binary-watch';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1360,4 +1363,8 @@ export const problems: readonly Problem[] = [
   permutationsII,
   letterTilePossibilities,
   differentWaysAddParentheses,
+  // math + dp — medium/easy (new)
+  integerBreak,
+  minimumCostMoveChips,
+  binaryWatch,
 ];

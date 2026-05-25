@@ -7926,4 +7926,33 @@ def diffWaysToComputeRunner(expr):
         return results
     return sorted(compute(expr))
 `,
+
+  'integer-break': `
+def integerBreak(n):
+    dp = [0] * (n + 1)
+    dp[1] = 1
+    for i in range(2, n + 1):
+        for j in range(1, i):
+            dp[i] = max(dp[i], max(j, dp[j]) * max(i - j, dp[i - j]))
+    return dp[n]
+`,
+
+  'minimum-cost-move-chips': `
+def minCostToMoveChips(position):
+    position = list(position)
+    even = sum(1 for p in position if p % 2 == 0)
+    odd = sum(1 for p in position if p % 2 != 0)
+    return min(even, odd)
+`,
+
+  'binary-watch': `
+def readBinaryWatch(turnedOn):
+    times = []
+    for h in range(12):
+        for m in range(60):
+            bits = bin(h).count('1') + bin(m).count('1')
+            if bits == turnedOn:
+                times.append(f'{h}:{m:02d}')
+    return times
+`,
 };

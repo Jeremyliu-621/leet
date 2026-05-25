@@ -8470,4 +8470,35 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return compute(expression).sort((a, b) => a - b);
   },
 
+  'integer-break': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const dp = new Array(n + 1).fill(0);
+    dp[1] = 1;
+    for (let i = 2; i <= n; i++) {
+      for (let j = 1; j < i; j++) {
+        dp[i] = Math.max(dp[i]!, Math.max(j, dp[j]!) * Math.max(i - j, dp[i - j]!));
+      }
+    }
+    return dp[n];
+  },
+
+  'minimum-cost-move-chips': (...args: unknown[]) => {
+    const position = args[0] as number[];
+    let even = 0, odd = 0;
+    for (const p of position) { if (p % 2 === 0) even++; else odd++; }
+    return Math.min(even, odd);
+  },
+
+  'binary-watch': (...args: unknown[]) => {
+    const turnedOn = args[0] as number;
+    const times: string[] = [];
+    for (let h = 0; h < 12; h++) {
+      for (let m = 0; m < 60; m++) {
+        const bits = (h.toString(2) + m.toString(2)).split('').filter(c => c === '1').length;
+        if (bits === turnedOn) times.push(h + ':' + m.toString().padStart(2, '0'));
+      }
+    }
+    return times;
+  },
+
 };
