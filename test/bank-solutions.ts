@@ -7977,4 +7977,94 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return lo;
   },
 
+  'valid-triangle-number': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    let cnt = 0;
+    for (let k = nums.length - 1; k >= 2; k--) {
+      let l = 0, r = k - 1;
+      while (l < r) {
+        if (nums[l]! + nums[r]! > nums[k]!) { cnt += r - l; r--; } else l++;
+      }
+    }
+    return cnt;
+  },
+
+  'max-number-k-sum-pairs': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const freq = new Map<number, number>();
+    let cnt = 0;
+    for (const n of nums) {
+      const c = k - n;
+      if ((freq.get(c) ?? 0) > 0) { cnt++; freq.set(c, freq.get(c)! - 1); }
+      else freq.set(n, (freq.get(n) ?? 0) + 1);
+    }
+    return cnt;
+  },
+
+  'minimum-time-rope-colorful': (...args: unknown[]) => {
+    const colors = args[0] as string, neededTime = args[1] as number[];
+    let res = 0, i = 0;
+    while (i < colors.length) {
+      let j = i, groupMax = 0, groupSum = 0;
+      while (j < colors.length && colors[j] === colors[i]) {
+        groupMax = Math.max(groupMax, neededTime[j]!);
+        groupSum += neededTime[j]!;
+        j++;
+      }
+      res += groupSum - groupMax;
+      i = j;
+    }
+    return res;
+  },
+
+  'shortest-bridge': (...args: unknown[]) => {
+    const grid = (args[0] as number[][]).map(r => [...r]);
+    const n = grid.length;
+    const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+    const queue: [number, number][] = [];
+    let found = false;
+    const dfs = (r: number, c: number) => {
+      if (r < 0 || r >= n || c < 0 || c >= n || grid[r]![c] !== 1) return;
+      grid[r]![c] = 2;
+      queue.push([r, c]);
+      for (const [dr, dc] of dirs) dfs(r + dr!, c + dc!);
+    };
+    outer: for (let r = 0; r < n; r++) {
+      for (let c = 0; c < n; c++) {
+        if (grid[r]![c] === 1) { dfs(r, c); found = true; break outer; }
+      }
+    }
+    if (!found) return -1;
+    let dist = 0;
+    while (queue.length) {
+      const size = queue.length;
+      for (let i = 0; i < size; i++) {
+        const [r, c] = queue.shift()!;
+        for (const [dr, dc] of dirs) {
+          const nr = r + dr!, nc = c + dc!;
+          if (nr < 0 || nr >= n || nc < 0 || nc >= n || grid[nr]![nc] === 2) continue;
+          if (grid[nr]![nc] === 1) return dist;
+          grid[nr]![nc] = 2;
+          queue.push([nr, nc]);
+        }
+      }
+      dist++;
+    }
+    return dist;
+  },
+
+  'number-of-subsequences-target-sum': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const target = args[1] as number;
+    const MOD = 1_000_000_007n;
+    const n = nums.length;
+    const pow2: bigint[] = Array(n).fill(1n);
+    for (let i = 1; i < n; i++) pow2[i] = pow2[i-1]! * 2n % MOD;
+    let ans = 0n, l = 0, r = n - 1;
+    while (l <= r) {
+      if (nums[l]! + nums[r]! <= target) { ans = (ans + pow2[r-l]!) % MOD; l++; } else r--;
+    }
+    return Number(ans);
+  },
+
 };

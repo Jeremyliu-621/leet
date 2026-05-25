@@ -7399,4 +7399,104 @@ def maxProduct(nums):
             lo = mid + 1
     return lo
 `,
+
+  'valid-triangle-number': `def triangleNumber(nums):
+    nums.sort()
+    cnt = 0
+    for k in range(len(nums) - 1, 1, -1):
+        l, r = 0, k - 1
+        while l < r:
+            if nums[l] + nums[r] > nums[k]:
+                cnt += r - l
+                r -= 1
+            else:
+                l += 1
+    return cnt
+`,
+
+  'max-number-k-sum-pairs': `def maxOperations(nums, k):
+    from collections import Counter
+    freq = Counter()
+    cnt = 0
+    for n in nums:
+        c = k - n
+        if freq[c] > 0:
+            cnt += 1
+            freq[c] -= 1
+        else:
+            freq[n] += 1
+    return cnt
+`,
+
+  'minimum-time-rope-colorful': `def minCost(colors, neededTime):
+    res = i = 0
+    while i < len(colors):
+        j = i
+        group_max = group_sum = 0
+        while j < len(colors) and colors[j] == colors[i]:
+            group_max = max(group_max, neededTime[j])
+            group_sum += neededTime[j]
+            j += 1
+        res += group_sum - group_max
+        i = j
+    return res
+`,
+
+  'shortest-bridge': `def shortestBridge(grid):
+    from collections import deque
+    n = len(grid)
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    queue = deque()
+    found = False
+
+    def dfs(r, c):
+        if r < 0 or r >= n or c < 0 or c >= n or grid[r][c] != 1:
+            return
+        grid[r][c] = 2
+        queue.append((r, c))
+        for dr, dc in dirs:
+            dfs(r + dr, c + dc)
+
+    for r in range(n):
+        if found:
+            break
+        for c in range(n):
+            if grid[r][c] == 1:
+                dfs(r, c)
+                found = True
+                break
+
+    dist = 0
+    while queue:
+        for _ in range(len(queue)):
+            r, c = queue.popleft()
+            for dr, dc in dirs:
+                nr, nc = r + dr, c + dc
+                if nr < 0 or nr >= n or nc < 0 or nc >= n or grid[nr][nc] == 2:
+                    continue
+                if grid[nr][nc] == 1:
+                    return dist
+                grid[nr][nc] = 2
+                queue.append((nr, nc))
+        dist += 1
+    return dist
+`,
+
+  'number-of-subsequences-target-sum': `def numSubseq(nums, target):
+    MOD = 10**9 + 7
+    nums.sort()
+    n = len(nums)
+    pow2 = [1] * n
+    for i in range(1, n):
+        pow2[i] = pow2[i-1] * 2 % MOD
+    ans = l = 0
+    r = n - 1
+    while l <= r:
+        if nums[l] + nums[r] <= target:
+            ans = (ans + pow2[r - l]) % MOD
+            l += 1
+        else:
+            r -= 1
+    return ans
+`,
 };

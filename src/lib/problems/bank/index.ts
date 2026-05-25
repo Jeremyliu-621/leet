@@ -149,6 +149,10 @@ import { problem as candy } from './candy';
 import { problem as maximumWidthRamp } from './maximum-width-ramp';
 // arrays — medium (additional)
 import { problem as checkIfArrayPairsDivisibleByK } from './check-if-array-pairs-divisible-by-k';
+import { problem as validTriangleNumber } from './valid-triangle-number';
+import { problem as maxNumberKSumPairs } from './max-number-k-sum-pairs';
+import { problem as minimumTimeRopeColorful } from './minimum-time-rope-colorful';
+import { problem as numberOfSubsequencesTargetSum } from './number-of-subsequences-target-sum';
 // arrays — medium (additional)
 import { problem as shortestUnsortedContinuousSubarray } from './shortest-unsorted-continuous-subarray';
 import { problem as maxChunksToMakeSorted } from './max-chunks-to-make-sorted';
@@ -565,6 +569,7 @@ import { problem as allPathsSourceTarget } from './all-paths-source-target';
 import { problem as minimumHeightTrees } from './minimum-height-trees';
 import { problem as findEventualSafeStates } from './find-eventual-safe-states';
 // graph — hard
+import { problem as shortestBridge } from './shortest-bridge';
 import { problem as jumpGameIV } from './jump-game-iv';
 import { problem as wordLadder } from './word-ladder';
 import { problem as alienDictionary } from './alien-dictionary';
@@ -770,6 +775,10 @@ export const problems: readonly Problem[] = [
   missingRanges,
   queueReconstructionByHeight,
   checkIfArrayPairsDivisibleByK,
+  validTriangleNumber,
+  maxNumberKSumPairs,
+  minimumTimeRopeColorful,
+  numberOfSubsequencesTargetSum,
   shortestUnsortedContinuousSubarray,
   maxChunksToMakeSorted,
   // strings — easy
@@ -1216,6 +1225,7 @@ export const problems: readonly Problem[] = [
   findEventualSafeStates,
   jumpGameIII,
   // graph — hard
+  shortestBridge,
   jumpGameIV,
   wordLadder,
   alienDictionary,
