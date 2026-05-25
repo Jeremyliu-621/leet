@@ -12569,4 +12569,128 @@ def minOperations(nums, k):
     k = int(k)
     return sum(1 for x in nums_list if x < k)
 `,
+
+  'maximum-subarray': `
+def maxSubArray(nums):
+    nums_list = [int(x) for x in nums]
+    best = cur = nums_list[0]
+    for n in nums_list[1:]:
+        cur = max(n, cur + n)
+        best = max(best, cur)
+    return best
+`,
+
+  'meeting-rooms': `
+def canAttendMeetings(intervals):
+    intervals_list = [list(iv) for iv in intervals]
+    if not intervals_list:
+        return True
+    intervals_list.sort(key=lambda x: x[0])
+    for i in range(1, len(intervals_list)):
+        if intervals_list[i][0] < intervals_list[i-1][1]:
+            return False
+    return True
+`,
+
+  'brick-wall': `
+def leastBricks(wall):
+    wall_list = [list(row) for row in wall]
+    from collections import defaultdict
+    edges = defaultdict(int)
+    for row in wall_list:
+        pos = 0
+        for brick in row[:-1]:
+            pos += brick
+            edges[pos] += 1
+    if not edges:
+        return len(wall_list)
+    return len(wall_list) - max(edges.values())
+`,
+
+  'number-of-longest-increasing-subsequence': `
+def findNumberOfLIS(nums):
+    nums_list = [int(x) for x in nums]
+    n = len(nums_list)
+    dp = [1] * n
+    cnt = [1] * n
+    for i in range(n):
+        for j in range(i):
+            if nums_list[j] < nums_list[i]:
+                if dp[j] + 1 > dp[i]:
+                    dp[i] = dp[j] + 1
+                    cnt[i] = cnt[j]
+                elif dp[j] + 1 == dp[i]:
+                    cnt[i] += cnt[j]
+    max_len = max(dp)
+    return sum(cnt[i] for i in range(n) if dp[i] == max_len)
+`,
+
+  'kth-smallest-element-in-sorted-matrix': `
+def kthSmallest(matrix, k):
+    matrix_list = [[int(x) for x in row] for row in matrix]
+    k = int(k)
+    n = len(matrix_list)
+    lo, hi = matrix_list[0][0], matrix_list[n-1][n-1]
+    while lo < hi:
+        mid = (lo + hi) // 2
+        count = 0
+        col = n - 1
+        for row in range(n):
+            while col >= 0 and matrix_list[row][col] > mid:
+                col -= 1
+            count += col + 1
+        if count < k:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+`,
+
+  'minimum-knight-moves': `
+def minKnightMoves(x, y):
+    x, y = abs(int(x)), abs(int(y))
+    if x == 0 and y == 0:
+        return 0
+    from collections import deque
+    queue = deque([(0, 0, 0)])
+    visited = {(0, 0)}
+    moves = [(1,2),(2,1),(2,-1),(1,-2),(-1,-2),(-2,-1),(-2,1),(-1,2)]
+    while queue:
+        cx, cy, steps = queue.popleft()
+        for dx, dy in moves:
+            nx, ny = cx + dx, cy + dy
+            if nx == x and ny == y:
+                return steps + 1
+            if (nx, ny) not in visited and nx >= -2 and ny >= -2 and nx <= x + 2 and ny <= y + 2:
+                visited.add((nx, ny))
+                queue.append((nx, ny, steps + 1))
+    return -1
+`,
+
+  'palindrome-pairs': `
+def palindromePairs(words):
+    words = list(words)
+    def is_palin(s):
+        return s == s[::-1]
+    n = len(words)
+    res = []
+    for i in range(n):
+        for j in range(n):
+            if i != j and is_palin(words[i] + words[j]):
+                res.append([i, j])
+    res.sort()
+    return res
+`,
+
+  'search-suggestions-system': `
+def suggestedProducts(products, searchWord):
+    products = sorted(products)
+    searchWord = str(searchWord)
+    result = []
+    for i in range(1, len(searchWord) + 1):
+        prefix = searchWord[:i]
+        matches = [p for p in products if p.startswith(prefix)][:3]
+        result.append(matches)
+    return result
+`,
 };

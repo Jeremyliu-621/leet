@@ -1062,6 +1062,14 @@ import { problem as numberOfStudentsDoingHomeworkAtAGivenTime } from './number-o
 import { problem as findTheXorOfNumbersWhichAppearTwice } from './find-the-xor-of-numbers-which-appear-twice';
 import { problem as minimumSumMountainTripletII } from './minimum-sum-mountain-triplet-ii';
 import { problem as minimumOperationsToExceedThresholdValueI } from './minimum-operations-to-exceed-threshold-value-i';
+import { problem as maximumSubarray } from './maximum-subarray';
+import { problem as meetingRooms } from './meeting-rooms';
+import { problem as brickWall } from './brick-wall';
+import { problem as numberOfLongestIncreasingSubsequence } from './number-of-longest-increasing-subsequence';
+import { problem as kthSmallestElementInSortedMatrix } from './kth-smallest-element-in-sorted-matrix';
+import { problem as minimumKnightMoves } from './minimum-knight-moves';
+import { problem as palindromePairs } from './palindrome-pairs';
+import { problem as searchSuggestionsSystem } from './search-suggestions-system';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2172,4 +2180,12 @@ export const problems: readonly Problem[] = [
   findTheXorOfNumbersWhichAppearTwice,
   minimumSumMountainTripletII,
   minimumOperationsToExceedThresholdValueI,
+  maximumSubarray,
+  meetingRooms,
+  brickWall,
+  numberOfLongestIncreasingSubsequence,
+  kthSmallestElementInSortedMatrix,
+  minimumKnightMoves,
+  palindromePairs,
+  searchSuggestionsSystem,
 ];
