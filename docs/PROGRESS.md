@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1430 problems; 4575 tests green.
+**Current focus:** Bank at 1435 problems; 4590 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank (Batch 50+); marketing site stat update at 1500.
+**Next up:** Continue growing problem bank (Batch 51+); marketing site stat update at 1500.
 
 ### UI/UX polish (2026-05-25)
 - **Back-to-settings link in practice mode**: TopBar now shows "← settings" link back to Options/problem browser when in practice mode (no blocked target URL). settingsHref computed via chrome.runtime.getURL.
@@ -422,6 +422,8 @@ Still pending:
 - [x] **5 more classic problems (Batch 47-local)** — successful-pairs-of-spells-and-potions (binary-search/medium, sort+binary-search per spell), minimum-operations-to-reduce-x-to-zero (sliding-window/medium, longest subarray = total−x), largest-submatrix-with-rearrangements (arrays/medium, column heights+sort), subtree-of-another-tree (tree/easy, isSameTree+DFS), maximum-product-of-splitted-binary-tree (tree+dp/medium, DFS maximize s×(total−s) mod 1e9+7); bank at **1425**; 4560 tests.
 - [x] **Challenge UX polish** — TopBar shows "← settings" back link in practice mode; "Browse problems" button on solved-standalone screen; target domain in subtitle ("unlock youtube.com") in gate mode; NoTargetBanner text unified with header terminology; HintsSection shows "All hints revealed." after last hint; difficulty+tag filter pills restored with static counts.
 - [x] **Batch 49** — watering-plants (arrays/easy), logger-rate-limiter (hash-map/easy), bst-from-preorder (tree/medium), balance-a-binary-search-tree (tree/medium), maximum-sum-bst-in-binary-tree (tree/hard); bank at **1430**; 4575 tests.
+- [x] **Batch 50** — stock-price-fluctuation (heap/medium, dual-heap or sorted map with timestamp corrections), minimum-replacements-to-sort-array (arrays/hard, greedy right-to-left ceiling division), largest-color-value-in-directed-graph (graph/hard, Kahn's BFS + DP color counts, return -1 on cycle), string-without-aaa-or-bbb (strings/medium, greedy always-write-more-frequent), count-the-hidden-sequences (arrays/medium, prefix-sum spread formula); bank at **1435**; 4590 tests.
+- [x] **perf(options)**: Hoisted `totalByDiff` to a module-level constant (was re-computed 3×1430 iterations per render). Wrapped `solvedByDiff` and `solvedCount` in useMemo with [solvedIds] dep.
 
 ---
 
