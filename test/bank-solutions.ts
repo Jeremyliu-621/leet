@@ -12443,4 +12443,17 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return max;
   },
 
+  'categorize-box-according-to-criteria': (...args: unknown[]) => {
+    const length = args[0] as number;
+    const width = args[1] as number;
+    const height = args[2] as number;
+    const mass = args[3] as number;
+    const bulk = length >= 10000 || width >= 10000 || height >= 10000 || length * width * height >= 1_000_000_000;
+    const heavy = mass >= 100;
+    if (bulk && heavy) return 'Both';
+    if (bulk) return 'Bulk';
+    if (heavy) return 'Heavy';
+    return 'Neither';
+  },
+
 };

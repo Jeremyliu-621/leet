@@ -11920,4 +11920,18 @@ def maxVowels(s, k):
         max_count = max(max_count, count)
     return max_count
 `,
+
+  'categorize-box-according-to-criteria': `
+def categorizeBox(length, width, height, mass):
+    l, w, h, m = int(length), int(width), int(height), int(mass)
+    bulk = l >= 10000 or w >= 10000 or h >= 10000 or l * w * h >= 10**9
+    heavy = m >= 100
+    if bulk and heavy:
+        return 'Both'
+    if bulk:
+        return 'Bulk'
+    if heavy:
+        return 'Heavy'
+    return 'Neither'
+`,
 };

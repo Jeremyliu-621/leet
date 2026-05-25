@@ -1010,6 +1010,7 @@ import { problem as countTotalNumberOfColoredCells } from './count-total-number-
 import { problem as differenceBetweenElementSumAndDigitSumOfArray } from './difference-between-element-sum-and-digit-sum-of-array';
 import { problem as minimumLengthOfStringAfterDeletingSimilarEnds } from './minimum-length-of-string-after-deleting-similar-ends';
 import { problem as maximumNumberOfVowelsInSubstringOfGivenLength } from './maximum-number-of-vowels-in-substring-of-given-length';
+import { problem as categorizeBoxAccordingToCriteria } from './categorize-box-according-to-criteria';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2068,4 +2069,5 @@ export const problems: readonly Problem[] = [
   differenceBetweenElementSumAndDigitSumOfArray,
   minimumLengthOfStringAfterDeletingSimilarEnds,
   maximumNumberOfVowelsInSubstringOfGivenLength,
+  categorizeBoxAccordingToCriteria,
 ];
