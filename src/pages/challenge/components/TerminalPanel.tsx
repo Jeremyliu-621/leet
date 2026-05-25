@@ -174,7 +174,7 @@ type TerminalEntry =
   | { type: 'pass'; testIndex: number; input: string; durationMs?: number }
   | { type: 'fail'; testIndex: number; input: string; expected: string; actual: string; rawExpected: unknown; rawActual: unknown }
   | { type: 'error'; testIndex: number; input: string; error: string }
-  | { type: 'summary'; outcome: string; passed: number; total: number; durationMs?: number };
+  | { type: 'summary'; outcome: string; passed: number; total: number; durationMs?: number; mode: 'run' | 'submit' };
 
 function displayValue(v: unknown): string {
   if (v === undefined) return 'undefined';
@@ -209,6 +209,7 @@ function buildEntries(result: JudgeResult, mode: 'run' | 'submit'): TerminalEntr
       passed: result.passed,
       total: result.total,
       durationMs: result.totalDurationMs,
+      mode,
     });
     return entries;
   }
@@ -255,6 +256,7 @@ function buildEntries(result: JudgeResult, mode: 'run' | 'submit'): TerminalEntr
     passed: result.passed,
     total: result.total,
     durationMs: result.totalDurationMs,
+    mode,
   });
 
   return entries;
@@ -267,6 +269,12 @@ const OUTCOME_LABELS: Record<string, string> = {
   timeout: 'TIME LIMIT EXCEEDED',
   'compile-error': 'COMPILE ERROR',
 };
+
+/** Returns the human-readable outcome label, accounting for run vs submit context. */
+function outcomeLabel(outcome: string, mode: 'run' | 'submit'): string {
+  if (outcome === 'accepted' && mode === 'run') return 'TESTS PASSED';
+  return OUTCOME_LABELS[outcome] ?? outcome.toUpperCase();
+}
 
 interface TerminalPanelProps {
   /** null = no run yet; undefined = running in progress */
@@ -337,7 +345,7 @@ function TerminalEntry({ entry }: { entry: TerminalEntry }) {
       const isAccepted = entry.outcome === 'accepted';
       return (
         <div className={`py-1 ${isAccepted ? 'text-accent font-bold' : 'text-text font-semibold'}`}>
-          {OUTCOME_LABELS[entry.outcome] ?? entry.outcome.toUpperCase()}
+          {outcomeLabel(entry.outcome, entry.mode)}
           <span className="text-muted font-normal ml-3">
             {entry.passed}/{entry.total} passed
           </span>
@@ -506,7 +514,7 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
                     result.outcome === 'accepted' ? 'text-accent' : 'text-text'
                   }`}
                 >
-                  {OUTCOME_LABELS[result.outcome] ?? result.outcome}
+                  {outcomeLabel(result.outcome, mode)}
                 </span>
                 <span className="font-mono text-xs text-muted">
                   {result.passed}/{result.total} passed
@@ -514,6 +522,11 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
                 {result.totalDurationMs !== undefined && (
                   <span className="font-mono text-xs text-faint tabular-nums">
                     {result.totalDurationMs}ms
+                  </span>
+                )}
+                {result.outcome === 'accepted' && mode === 'run' && (
+                  <span className="font-mono text-[10px] text-faint ml-auto">
+                    submit to run all tests
                   </span>
                 )}
               </div>
@@ -528,7 +541,7 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
           {result && result.verdicts.length === 0 && result.message && (
             <div className="space-y-2">
               <div className="font-mono text-xs font-semibold text-text uppercase">
-                {OUTCOME_LABELS[result.outcome] ?? result.outcome}
+                {outcomeLabel(result.outcome, mode)}
               </div>
               <pre className="font-mono text-xs text-muted whitespace-pre-wrap">
                 {result.message}

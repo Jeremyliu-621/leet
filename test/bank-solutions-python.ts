@@ -20126,4 +20126,120 @@ def distanceK(root, target, k):
     spread = max_val - min_val
     return max(0, (upper - lower) - spread + 1)
 `,
+
+  'my-calendar-iii': `def myCalendarThree(bookings):
+    def conv(x):
+        return list(x.to_py() if hasattr(x, 'to_py') else x)
+    bookings = conv(bookings)
+    events = {}
+    results = []
+    for b in bookings:
+        b = conv(b)
+        start, end = int(b[0]), int(b[1])
+        events[start] = events.get(start, 0) + 1
+        events[end] = events.get(end, 0) - 1
+        cur = 0
+        mx = 0
+        for k in sorted(events.keys()):
+            cur += events[k]
+            if cur > mx:
+                mx = cur
+        results.append(mx)
+    return results
+`,
+
+  'design-twitter': `def designTwitter(actions, args):
+    def conv(x):
+        return list(x.to_py() if hasattr(x, 'to_py') else x)
+    actions = conv(actions)
+    args = conv(args)
+    results = [None]
+    timer = [0]
+    tweets = {}
+    following = {}
+
+    def get_following(uid):
+        if uid not in following:
+            following[uid] = set()
+        return following[uid]
+
+    def get_tweets(uid):
+        if uid not in tweets:
+            tweets[uid] = []
+        return tweets[uid]
+
+    for i in range(1, len(actions)):
+        action = str(actions[i])
+        a = conv(args[i])
+        if action == 'postTweet':
+            uid, tid = int(a[0]), int(a[1])
+            get_tweets(uid).append({'tweetId': tid, 'time': timer[0]})
+            timer[0] += 1
+            results.append(None)
+        elif action == 'getNewsFeed':
+            uid = int(a[0])
+            feed = list(get_tweets(uid))
+            for fid in get_following(uid):
+                if fid != uid:
+                    feed.extend(get_tweets(fid))
+            feed.sort(key=lambda x: -x['time'])
+            results.append([t['tweetId'] for t in feed[:10]])
+        elif action == 'follow':
+            get_following(int(a[0])).add(int(a[1]))
+            results.append(None)
+        elif action == 'unfollow':
+            get_following(int(a[0])).discard(int(a[1]))
+            results.append(None)
+    return results
+`,
+
+  'zigzag-iterator': `def zigzagIterator(v1, v2):
+    def conv(x):
+        return list(x.to_py() if hasattr(x, 'to_py') else x)
+    v1 = conv(v1)
+    v2 = conv(v2)
+    result = []
+    i, j = 0, 0
+    while i < len(v1) and j < len(v2):
+        result.append(v1[i]); i += 1
+        result.append(v2[j]); j += 1
+    while i < len(v1):
+        result.append(v1[i]); i += 1
+    while j < len(v2):
+        result.append(v2[j]); j += 1
+    return result
+`,
+
+  'second-minimum-time-to-reach-destination': `from collections import deque
+def secondMinimum(n, edges, time, change):
+    def conv(x):
+        return list(x.to_py() if hasattr(x, 'to_py') else x)
+    n = int(n)
+    edges = [conv(e) for e in conv(edges)]
+    time = int(time)
+    change = int(change)
+    adj = [[] for _ in range(n + 1)]
+    for u, v in edges:
+        adj[int(u)].append(int(v))
+        adj[int(v)].append(int(u))
+    INF = float('inf')
+    dist1 = [INF] * (n + 1)
+    dist2 = [INF] * (n + 1)
+    dist1[1] = 0
+    q = deque([(1, 0)])
+    while q:
+        node, arr = q.popleft()
+        period = arr // change
+        leave = arr if period % 2 == 0 else (period + 1) * change
+        nxt = leave + time
+        for nei in adj[node]:
+            if nxt < dist1[nei]:
+                dist2[nei] = dist1[nei]
+                dist1[nei] = nxt
+                q.append((nei, nxt))
+            elif nxt > dist1[nei] and nxt < dist2[nei]:
+                dist2[nei] = nxt
+                q.append((nei, nxt))
+    return dist2[n]
+`,
 };

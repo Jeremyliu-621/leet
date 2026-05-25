@@ -19999,8 +19999,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return maxSum;
   },
 
-  // --- batch 50 -----------------------------------------------------------
-
   'stock-price-fluctuation': (...args: unknown[]) => {
     const updates = args[0] as number[][];
     const queries = args[1] as string[];
@@ -20106,6 +20104,122 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const spread = maxVal - minVal;
     const range = upper - lower;
     return Math.max(0, range - spread + 1);
+  },
+
+  'my-calendar-iii': (...args: unknown[]) => {
+    const bookings = args[0] as [number, number][];
+    const events = new Map<number, number>();
+    const results: number[] = [];
+    for (const [start, end] of bookings) {
+      events.set(start, (events.get(start) ?? 0) + 1);
+      events.set(end, (events.get(end) ?? 0) - 1);
+      let cur = 0, max = 0;
+      for (const k of [...events.keys()].sort((a, b) => a - b)) {
+        cur += events.get(k)!;
+        if (cur > max) max = cur;
+      }
+      results.push(max);
+    }
+    return results;
+  },
+
+  'design-twitter': (...args: unknown[]) => {
+    const actions = args[0] as string[];
+    const actionArgs = args[1] as unknown[][];
+    const results: (null | number[])[] = [null];
+    let time = 0;
+    const tweets = new Map<number, { tweetId: number; time: number }[]>();
+    const following = new Map<number, Set<number>>();
+
+    function getFollowing(userId: number): Set<number> {
+      if (!following.has(userId)) following.set(userId, new Set());
+      return following.get(userId)!;
+    }
+
+    function getTweets(userId: number) {
+      if (!tweets.has(userId)) tweets.set(userId, []);
+      return tweets.get(userId)!;
+    }
+
+    for (let i = 1; i < actions.length; i++) {
+      const action = actions[i]!;
+      const a = actionArgs[i] as number[];
+      if (action === 'postTweet') {
+        getTweets(a[0]!).push({ tweetId: a[1]!, time: time++ });
+        results.push(null);
+      } else if (action === 'getNewsFeed') {
+        const userId = a[0]!;
+        // Include own tweets + tweets from followed users (excluding self to avoid duplicates)
+        const feed: { tweetId: number; time: number }[] = [...getTweets(userId)];
+        for (const followeeId of getFollowing(userId)) {
+          if (followeeId !== userId) feed.push(...getTweets(followeeId));
+        }
+        feed.sort((x, y) => y.time - x.time);
+        results.push(feed.slice(0, 10).map(t => t.tweetId));
+      } else if (action === 'follow') {
+        getFollowing(a[0]!).add(a[1]!);
+        results.push(null);
+      } else if (action === 'unfollow') {
+        getFollowing(a[0]!).delete(a[1]!);
+        results.push(null);
+      }
+    }
+    return results;
+  },
+
+  'zigzag-iterator': (...args: unknown[]) => {
+    const v1 = args[0] as unknown[];
+    const v2 = args[1] as unknown[];
+    const result: unknown[] = [];
+    let i = 0, j = 0;
+    while (i < v1.length && j < v2.length) {
+      result.push(v1[i++]);
+      result.push(v2[j++]);
+    }
+    while (i < v1.length) result.push(v1[i++]);
+    while (j < v2.length) result.push(v2[j++]);
+    return result;
+  },
+
+  'second-minimum-time-to-reach-destination': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as [number, number][];
+    const time = args[2] as number;
+    const change = args[3] as number;
+
+    const adj: number[][] = Array.from({ length: n + 1 }, () => []);
+    for (const [u, v] of edges) {
+      adj[u]!.push(v);
+      adj[v]!.push(u);
+    }
+
+    // BFS tracking two shortest arrival times per node
+    const dist1 = new Array<number>(n + 1).fill(Infinity);
+    const dist2 = new Array<number>(n + 1).fill(Infinity);
+    dist1[1] = 0;
+    const queue: [number, number][] = [[1, 0]]; // [node, arrival_time]
+
+    while (queue.length > 0) {
+      const [node, arrTime] = queue.shift()!;
+
+      // Apply traffic light wait: if in red phase, wait for next green
+      const period = Math.floor(arrTime / change);
+      let leaveTime = arrTime;
+      if (period % 2 === 1) leaveTime = (period + 1) * change;
+      const nextTime = leaveTime + time;
+
+      for (const nei of adj[node]!) {
+        if (nextTime < dist1[nei]!) {
+          dist2[nei] = dist1[nei]!;
+          dist1[nei] = nextTime;
+          queue.push([nei, nextTime]);
+        } else if (nextTime > dist1[nei]! && nextTime < dist2[nei]!) {
+          dist2[nei] = nextTime;
+          queue.push([nei, nextTime]);
+        }
+      }
+    }
+    return dist2[n]!;
   },
 
 };
