@@ -19999,4 +19999,113 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return maxSum;
   },
 
+  // --- batch 50 -----------------------------------------------------------
+
+  'stock-price-fluctuation': (...args: unknown[]) => {
+    const updates = args[0] as number[][];
+    const queries = args[1] as string[];
+    const priceMap = new Map<number, number>();
+    let latestTime = 0;
+    for (const [t, p] of updates) {
+      priceMap.set(t!, p!);
+      if (t! > latestTime) latestTime = t!;
+    }
+    const values = Array.from(priceMap.values());
+    const current = priceMap.get(latestTime)!;
+    const maximum = Math.max(...values);
+    const minimum = Math.min(...values);
+    return queries.map((q) => {
+      if (q === 'current') return current;
+      if (q === 'maximum') return maximum;
+      return minimum;
+    });
+  },
+
+  'minimum-replacements-to-sort-array': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    const n = nums.length;
+    let ops = 0;
+    for (let i = n - 2; i >= 0; i--) {
+      if (nums[i]! > nums[i + 1]!) {
+        const k = Math.ceil(nums[i]! / nums[i + 1]!);
+        ops += k - 1;
+        nums[i] = Math.floor(nums[i]! / k);
+      }
+    }
+    return ops;
+  },
+
+  'largest-color-value-in-directed-graph': (...args: unknown[]) => {
+    const colors = args[0] as string;
+    const edges = args[1] as number[][];
+    const n = colors.length;
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    const indegree = new Array<number>(n).fill(0);
+    for (const [u, v] of edges) {
+      adj[u!]!.push(v!);
+      indegree[v!]!++;
+    }
+    // dp[node][color] = max count of that color on any path ending at node
+    const dp: number[][] = Array.from({ length: n }, () => new Array<number>(26).fill(0));
+    const queue: number[] = [];
+    for (let i = 0; i < n; i++) {
+      if (indegree[i] === 0) queue.push(i);
+    }
+    let processed = 0;
+    let ans = 0;
+    while (queue.length) {
+      const u = queue.shift()!;
+      processed++;
+      dp[u]![colors.charCodeAt(u) - 97]!++;
+      for (const c of dp[u]!) ans = Math.max(ans, c);
+      for (const v of adj[u]!) {
+        for (let c = 0; c < 26; c++) {
+          dp[v]![c] = Math.max(dp[v]![c]!, dp[u]![c]!);
+        }
+        if (--indegree[v]! === 0) queue.push(v);
+      }
+    }
+    return processed < n ? -1 : ans;
+  },
+
+  'string-without-aaa-or-bbb': (...args: unknown[]) => {
+    let a = args[0] as number;
+    let b = args[1] as number;
+    const res: string[] = [];
+    while (a > 0 || b > 0) {
+      if (a > b) {
+        res.push('a');
+        a--;
+        if (a > b && a > 0) { res.push('a'); a--; }
+        if (b > 0) { res.push('b'); b--; }
+      } else if (b > a) {
+        res.push('b');
+        b--;
+        if (b > a && b > 0) { res.push('b'); b--; }
+        if (a > 0) { res.push('a'); a--; }
+      } else {
+        res.push('a'); a--;
+        if (b > 0) { res.push('b'); b--; }
+      }
+    }
+    return res.join('');
+  },
+
+  'count-the-hidden-sequences': (...args: unknown[]) => {
+    const differences = args[0] as number[];
+    const lower = args[1] as number;
+    const upper = args[2] as number;
+    let cur = 0;
+    let minVal = 0;
+    let maxVal = 0;
+    for (const d of differences) {
+      cur += d;
+      if (cur < minVal) minVal = cur;
+      if (cur > maxVal) maxVal = cur;
+    }
+    const spread = maxVal - minVal;
+    const range = upper - lower;
+    return Math.max(0, range - spread + 1);
+  },
+
 };

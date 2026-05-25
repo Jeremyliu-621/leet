@@ -1491,6 +1491,12 @@ import { problem as loggerRateLimiter } from './logger-rate-limiter';
 import { problem as bstFromPreorder } from './bst-from-preorder';
 import { problem as balanceABinarySearchTree } from './balance-a-binary-search-tree';
 import { problem as maximumSumBstInBinaryTree } from './maximum-sum-bst-in-binary-tree';
+// batch 50
+import { problem as stockPriceFluctuation } from './stock-price-fluctuation';
+import { problem as minimumReplacementsToSortArray } from './minimum-replacements-to-sort-array';
+import { problem as largestColorValueInDirectedGraph } from './largest-color-value-in-directed-graph';
+import { problem as stringWithoutAaaOrBbb } from './string-without-aaa-or-bbb';
+import { problem as countTheHiddenSequences } from './count-the-hidden-sequences';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3030,4 +3036,10 @@ export const problems: readonly Problem[] = [
   bstFromPreorder,
   balanceABinarySearchTree,
   maximumSumBstInBinaryTree,
+  // batch 50
+  stockPriceFluctuation,
+  minimumReplacementsToSortArray,
+  largestColorValueInDirectedGraph,
+  stringWithoutAaaOrBbb,
+  countTheHiddenSequences,
 ];

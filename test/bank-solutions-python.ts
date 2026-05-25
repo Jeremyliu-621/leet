@@ -20017,4 +20017,113 @@ def distanceK(root, target, k):
     dfs(root)
     return max_sum[0]
 `,
+
+  'stock-price-fluctuation': `def stockPriceFluctuation(updates, queries):
+    price_map = {}
+    latest_time = 0
+    for t, p in updates:
+        price_map[t] = p
+        if t > latest_time:
+            latest_time = t
+    values = list(price_map.values())
+    current = price_map[latest_time]
+    maximum = max(values)
+    minimum = min(values)
+    result = []
+    for q in queries:
+        if q == 'current':
+            result.append(current)
+        elif q == 'maximum':
+            result.append(maximum)
+        else:
+            result.append(minimum)
+    return result
+`,
+
+  'minimum-replacements-to-sort-array': `def minimumReplacement(nums):
+    import math
+    n = len(nums)
+    nums = list(nums)
+    ops = 0
+    for i in range(n - 2, -1, -1):
+        if nums[i] > nums[i + 1]:
+            k = math.ceil(nums[i] / nums[i + 1])
+            ops += k - 1
+            nums[i] = nums[i] // k
+    return ops
+`,
+
+  'largest-color-value-in-directed-graph': `def largestPathValue(colors, edges):
+    from collections import deque
+    n = len(colors)
+    adj = [[] for _ in range(n)]
+    indegree = [0] * n
+    for u, v in edges:
+        adj[u].append(v)
+        indegree[v] += 1
+    dp = [[0] * 26 for _ in range(n)]
+    queue = deque()
+    for i in range(n):
+        if indegree[i] == 0:
+            queue.append(i)
+    processed = 0
+    ans = 0
+    while queue:
+        u = queue.popleft()
+        processed += 1
+        dp[u][ord(colors[u]) - ord('a')] += 1
+        ans = max(ans, max(dp[u]))
+        for v in adj[u]:
+            for c in range(26):
+                if dp[u][c] > dp[v][c]:
+                    dp[v][c] = dp[u][c]
+            indegree[v] -= 1
+            if indegree[v] == 0:
+                queue.append(v)
+    return -1 if processed < n else ans
+`,
+
+  'string-without-aaa-or-bbb': `def strWithout3a3b(a, b):
+    res = []
+    while a > 0 or b > 0:
+        if a > b:
+            res.append('a')
+            a -= 1
+            if a > b and a > 0:
+                res.append('a')
+                a -= 1
+            if b > 0:
+                res.append('b')
+                b -= 1
+        elif b > a:
+            res.append('b')
+            b -= 1
+            if b > a and b > 0:
+                res.append('b')
+                b -= 1
+            if a > 0:
+                res.append('a')
+                a -= 1
+        else:
+            res.append('a')
+            a -= 1
+            if b > 0:
+                res.append('b')
+                b -= 1
+    return ''.join(res)
+`,
+
+  'count-the-hidden-sequences': `def numberOfArrays(differences, lower, upper):
+    cur = 0
+    min_val = 0
+    max_val = 0
+    for d in differences:
+        cur += d
+        if cur < min_val:
+            min_val = cur
+        if cur > max_val:
+            max_val = cur
+    spread = max_val - min_val
+    return max(0, (upper - lower) - spread + 1)
+`,
 };
