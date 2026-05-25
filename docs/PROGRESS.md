@@ -8,12 +8,15 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1420 problems; 4545 tests green.
+**Current focus:** Bank at 1425 problems; 4560 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems (Batch 49+); UI/UX polish; draggable splitter; options improvements.
 
 ### Batch 48 (2026-05-25)
 Added 5 problems: `day-of-the-week` (math/easy), `guess-number-higher-or-lower` (binary-search/easy), `largest-triangle-area` (math/easy), `minimum-value-to-get-positive-step-sum` (arrays/easy), `number-of-rectangles-that-can-form-largest-square` (arrays/easy). Skipped 4 originally requested problems that already existed in the bank; substituted equivalent-difficulty originals.
+
+### Batch 47-local (2026-05-25)
+Added 5 problems: `successful-pairs-of-spells-and-potions` (binary-search/medium, sort potions + binary search per spell), `minimum-operations-to-reduce-x-to-zero` (sliding-window/medium, longest subarray sum = total−x), `largest-submatrix-with-rearrangements` (arrays/medium, column heights + sort per row), `subtree-of-another-tree` (tree/easy, isSameTree helper + DFS), `maximum-product-of-splitted-binary-tree` (tree+dp/medium, total sum DFS maximize s×(total−s) mod 1e9+7); bank at **1425**; 4560 tests.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -404,6 +407,8 @@ Still pending:
 - [x] **5 more classic problems (Batch 47)** — intersection-of-two-arrays (hash-map/easy, set intersection sorted), climbing-stairs-memo (dp/easy, memoized recursion), count-vowels-in-string (strings/easy, vowel set scan), percentage-of-letter (strings/easy, floor(count/len*100)), reverse-words-in-string (strings+two-pointers/medium, trim+split+reverse); bank at **1427**; 4530 tests.
 - [x] **Challenge TopBar practice mode** — `practiceMode` prop shows "practice mode" subtitle instead of "solve to unlock" when no target URL is present.
 - [x] **Popup UX** — recent solves are now clickable buttons that open the specific problem in challenge; active unlock domains are clickable to navigate to the site.
+- [x] **5 more classic problems (Batch 48-remote)** — day-of-the-week (math/easy), guess-number-higher-or-lower (binary-search/easy), largest-triangle-area (math/easy), minimum-value-to-get-positive-step-sum (arrays/easy), number-of-rectangles-that-can-form-largest-square (arrays/easy); bank at ~1420; 4545 tests.
+- [x] **5 more classic problems (Batch 47-local)** — successful-pairs-of-spells-and-potions (binary-search/medium, sort+binary-search per spell), minimum-operations-to-reduce-x-to-zero (sliding-window/medium, longest subarray = total−x), largest-submatrix-with-rearrangements (arrays/medium, column heights+sort), subtree-of-another-tree (tree/easy, isSameTree+DFS), maximum-product-of-splitted-binary-tree (tree+dp/medium, DFS maximize s×(total−s) mod 1e9+7); bank at **1425**; 4560 tests.
 
 ---
 
