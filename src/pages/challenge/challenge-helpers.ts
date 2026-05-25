@@ -40,6 +40,15 @@ export function extractDomain(url: string): string | null {
 }
 
 /**
+ * Parses a `?problem=<id>` param for deep-linking to a specific problem.
+ * Returns the id string, or null if absent or empty.
+ */
+export function parseProblemIdParam(search: string): string | null {
+  const id = new URLSearchParams(search).get('problem');
+  return id && id.trim().length > 0 ? id.trim() : null;
+}
+
+/**
  * Formats a seconds count as MM:SS (zero-padded).
  * Clamps negative input to zero.
  *

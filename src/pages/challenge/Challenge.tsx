@@ -4,12 +4,12 @@ import type { Problem } from '../../lib/problems/types';
 import type { JudgeResult } from '../../lib/judge';
 import type { ChallengeFailureReason } from '../../lib/messaging/runtime';
 import { getValue, updateValue } from '../../lib/storage';
-import { pickChallengeProblem } from '../../lib/problems';
+import { pickChallengeProblem, getProblemById, filterProblems } from '../../lib/problems';
 import { runTests, warmPython, runCustomArgs } from '../../lib/judge';
 import type { CustomTestStatus } from '../../lib/judge';
 import { DEFAULT_PREFERENCES } from '../../lib/storage/defaults';
 import { resolveTheme } from '../../lib/theme';
-import { parseTargetParam, extractDomain } from './challenge-helpers';
+import { parseTargetParam, extractDomain, parseProblemIdParam } from './challenge-helpers';
 import { TopBar } from './components/TopBar';
 import { ProblemPanel } from './components/ProblemPanel';
 import { EditorPanel } from './components/EditorPanel';
@@ -155,6 +155,12 @@ function starterCodeFor(problem: Problem, language: SupportedLanguage): string {
   return problem.starterCode.javascript;
 }
 
+interface RelatedProblem {
+  id: string;
+  title: string;
+  difficulty: string;
+}
+
 type PageState =
   | { status: 'loading' }
   | { status: 'no-problem' }
@@ -167,6 +173,7 @@ type PageState =
       /** Elapsed wall-clock seconds (total limit minus remaining). */
       elapsedSec: number;
       language: SupportedLanguage;
+      related: readonly RelatedProblem[];
     };
 
 // ---------------------------------------------------------------------------
@@ -217,13 +224,17 @@ function SolvedStandaloneScreen({
   attempts,
   elapsedSec,
   language,
+  related,
 }: {
   problemTitle: string;
   difficulty: string;
   attempts: number;
   elapsedSec: number;
   language: SupportedLanguage;
+  related: readonly RelatedProblem[];
 }) {
+  const challengeBase = window.location.pathname;
+
   return (
     <div className="flex h-full flex-col items-center justify-center gap-8 bg-bg px-8 text-center">
       <div className="space-y-3">
@@ -272,10 +283,31 @@ function SolvedStandaloneScreen({
         </div>
       </div>
 
+      {related.length > 0 && (
+        <div className="w-full max-w-sm space-y-2">
+          <p className="font-mono text-[9px] uppercase tracking-widest text-faint text-left">
+            Practice next
+          </p>
+          <ul className="space-y-1">
+            {related.map((p) => (
+              <li key={p.id}>
+                <a
+                  href={`${challengeBase}?problem=${encodeURIComponent(p.id)}`}
+                  className="flex items-center justify-between border border-border bg-surface px-3 py-2 text-xs transition-colors hover:bg-surface-2 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+                >
+                  <span className="text-text truncate">{p.title}</span>
+                  <span className="ml-2 shrink-0 font-mono text-faint capitalize">{p.difficulty}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <div className="flex gap-3">
         <button
           type="button"
-          onClick={() => window.location.reload()}
+          onClick={() => window.location.assign(challengeBase)}
           className="rounded-sm border border-accent bg-accent px-5 py-2 font-mono text-xs font-bold text-on-accent transition-opacity hover:opacity-90 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
         >
           Try another
@@ -414,7 +446,11 @@ export function Challenge() {
 
       if (cancelled) return;
 
-      const problem = pickChallengeProblem(prefs, { excludeIds: recentIds });
+      // Support ?problem=<id> deep-link to load a specific problem directly.
+      const deepLinkId = parseProblemIdParam(window.location.search);
+      const problem = deepLinkId
+        ? (getProblemById(deepLinkId) ?? pickChallengeProblem(prefs, { excludeIds: recentIds }))
+        : pickChallengeProblem(prefs, { excludeIds: recentIds });
       if (!problem) {
         setPageState({ status: 'no-problem' });
         return;
@@ -687,6 +723,14 @@ export function Challenge() {
           window.location.href = targetUrl.current;
         } else {
           // No target (standalone/practice mode) — show a "try another" screen.
+          // Pick up to 3 related problems from the same tags (excluding the just-solved one).
+          const relatedCandidates = filterProblems({ tags: problem.tags, excludeIds: [problem.id] });
+          const related: RelatedProblem[] = [];
+          const shuffled = [...relatedCandidates].sort(() => Math.random() - 0.5);
+          for (const p of shuffled) {
+            related.push({ id: p.id, title: p.title, difficulty: p.difficulty });
+            if (related.length >= 3) break;
+          }
           setPageState({
             status: 'solved-standalone',
             problemTitle: problem.title,
@@ -694,6 +738,7 @@ export function Challenge() {
             attempts: attempts + 1,
             elapsedSec: Math.max(0, prefs.challengeTimeLimitSec - secondsLeft),
             language,
+            related,
           });
         }
       } else {
@@ -876,6 +921,7 @@ export function Challenge() {
         attempts={pageState.attempts}
         elapsedSec={pageState.elapsedSec}
         language={pageState.language}
+        related={pageState.related}
       />
     );
   }
