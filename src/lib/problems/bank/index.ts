@@ -169,6 +169,13 @@ import { problem as countVowelStringsInRange } from './count-vowel-strings-in-ra
 import { problem as findKthPositive } from './find-kth-positive';
 import { problem as minimumLengthStringOperations } from './minimum-length-string-operations';
 import { problem as largestIntegerDigitSwaps } from './largest-integer-digit-swaps';
+import { problem as uniqueMorseCodeWords } from './unique-morse-code-words';
+import { problem as numberOfGoodPairs } from './number-of-good-pairs';
+import { problem as checkIfArraySortedRotated } from './check-if-array-sorted-rotated';
+import { problem as maximumProductDifference } from './maximum-product-difference';
+import { problem as replaceWords } from './replace-words';
+import { problem as minimumTimeDifference } from './minimum-time-difference';
+import { problem as stringToIntegerAtoi } from './string-to-integer-atoi';
 // strings — medium
 import { problem as zigzagConversion } from './zigzag-conversion';
 import { problem as implementTrie } from './implement-trie';
@@ -766,7 +773,14 @@ export const problems: readonly Problem[] = [
   findKthPositive,
   minimumLengthStringOperations,
   largestIntegerDigitSwaps,
+  uniqueMorseCodeWords,
+  numberOfGoodPairs,
+  checkIfArraySortedRotated,
+  maximumProductDifference,
   // strings — medium
+  replaceWords,
+  minimumTimeDifference,
+  stringToIntegerAtoi,
   implementTrie,
   customSortString,
   generateParentheses,

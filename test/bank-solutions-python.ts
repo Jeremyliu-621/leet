@@ -6911,4 +6911,70 @@ def matrixBlockSum(mat, k):
             ans[i][j] = prefix[r2+1][c2+1] - prefix[r1][c2+1] - prefix[r2+1][c1] + prefix[r1][c1]
     return ans
 `,
+  'unique-morse-code-words': `
+def uniqueMorseRepresentations(words):
+    MORSE = [".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."]
+    transforms = set()
+    for word in words:
+        transforms.add("".join(MORSE[ord(c) - ord('a')] for c in word))
+    return len(transforms)
+`,
+  'number-of-good-pairs': `
+def numIdenticalPairs(nums):
+    count = 0
+    freq = {}
+    for n in nums:
+        count += freq.get(n, 0)
+        freq[n] = freq.get(n, 0) + 1
+    return count
+`,
+  'check-if-array-sorted-rotated': `
+def check(nums):
+    n = len(nums)
+    descents = 0
+    for i in range(n):
+        if nums[i] > nums[(i + 1) % n]:
+            descents += 1
+    return descents <= 1
+`,
+  'maximum-product-difference': `
+def maxProductDifference(nums):
+    nums = sorted(nums)
+    return nums[-1] * nums[-2] - nums[0] * nums[1]
+`,
+  'replace-words': `
+def replaceWords(dictionary, sentence):
+    root_set = set(dictionary)
+    def replace(word):
+        for i in range(1, len(word) + 1):
+            if word[:i] in root_set:
+                return word[:i]
+        return word
+    return " ".join(replace(w) for w in sentence.split())
+`,
+  'minimum-time-difference': `
+def findMinDifference(timePoints):
+    minutes = sorted(int(t[:2]) * 60 + int(t[3:]) for t in timePoints)
+    min_diff = 1440 - minutes[-1] + minutes[0]
+    for i in range(1, len(minutes)):
+        min_diff = min(min_diff, minutes[i] - minutes[i-1])
+    return min_diff
+`,
+  'string-to-integer-atoi': `
+def myAtoi(s):
+    INT_MAX, INT_MIN = 2147483647, -2147483648
+    i, sign, result = 0, 1, 0
+    while i < len(s) and s[i] == ' ':
+        i += 1
+    if i < len(s) and s[i] in ('+', '-'):
+        sign = -1 if s[i] == '-' else 1
+        i += 1
+    while i < len(s) and s[i].isdigit():
+        d = int(s[i])
+        if result > (INT_MAX - d) // 10:
+            return INT_MAX if sign == 1 else INT_MIN
+        result = result * 10 + d
+        i += 1
+    return sign * result
+`,
 };

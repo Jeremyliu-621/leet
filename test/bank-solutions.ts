@@ -7468,5 +7468,74 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       return count;
     });
   },
+  'unique-morse-code-words': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const MORSE = ['.-','-...','-.-.','-..','.','..-.','--.','....','..','.---','-.-','.-..','--','-.','---','.--.','--.-','.-.','...','-','..-','...-','.--','-..-','-.--','--..'];
+    const transforms = new Set<string>();
+    for (const word of words) {
+      transforms.add(word.split('').map(c => MORSE[c.charCodeAt(0) - 97]!).join(''));
+    }
+    return transforms.size;
+  },
+  'number-of-good-pairs': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let count = 0;
+    const freq = new Map<number, number>();
+    for (const n of nums) {
+      count += freq.get(n) ?? 0;
+      freq.set(n, (freq.get(n) ?? 0) + 1);
+    }
+    return count;
+  },
+  'check-if-array-sorted-rotated': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    let descents = 0;
+    for (let i = 0; i < n; i++) {
+      if (nums[i]! > nums[(i + 1) % n]!) descents++;
+    }
+    return descents <= 1;
+  },
+  'maximum-product-difference': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    return nums[nums.length - 1]! * nums[nums.length - 2]! - nums[0]! * nums[1]!;
+  },
+  'replace-words': (...args: unknown[]) => {
+    const dictionary = args[0] as string[], sentence = args[1] as string;
+    const rootSet = new Set(dictionary);
+    return sentence.split(' ').map(word => {
+      for (let i = 1; i <= word.length; i++) {
+        if (rootSet.has(word.slice(0, i))) return word.slice(0, i);
+      }
+      return word;
+    }).join(' ');
+  },
+  'minimum-time-difference': (...args: unknown[]) => {
+    const timePoints = args[0] as string[];
+    const minutes = timePoints.map(t => {
+      const parts = t.split(':');
+      return Number(parts[0]) * 60 + Number(parts[1]);
+    }).sort((a, b) => a - b);
+    let min = 1440 - minutes[minutes.length - 1]! + minutes[0]!;
+    for (let i = 1; i < minutes.length; i++) min = Math.min(min, minutes[i]! - minutes[i - 1]!);
+    return min;
+  },
+  'string-to-integer-atoi': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const INT_MAX = 2147483647, INT_MIN = -2147483648;
+    let i = 0, sign = 1, result = 0;
+    while (i < s.length && s[i] === ' ') i++;
+    if (i < s.length && (s[i] === '+' || s[i] === '-')) {
+      sign = s[i] === '-' ? -1 : 1;
+      i++;
+    }
+    while (i < s.length && s[i]! >= '0' && s[i]! <= '9') {
+      const d = s[i]!.charCodeAt(0) - 48;
+      if (result > Math.floor((INT_MAX - d) / 10)) return sign === 1 ? INT_MAX : INT_MIN;
+      result = result * 10 + d;
+      i++;
+    }
+    return sign * result;
+  },
 
 };
