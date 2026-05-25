@@ -285,6 +285,7 @@ import { problem as timeBasedKeyValueStore } from './time-based-key-value-store'
 import { problem as fourSumII } from './four-sum-ii';
 import { problem as maxPointsOnLine } from './max-points-on-line';
 import { problem as lruCache } from './lru-cache';
+import { problem as lfuCache } from './lfu-cache';
 
 // two-pointers — hard
 import { problem as trappingRainWater } from './trapping-rain-water';
@@ -587,12 +588,15 @@ import { problem as alienDictionary } from './alien-dictionary';
 import { problem as criticalConnections } from './critical-connections';
 import { problem as longestIncreasingPathMatrix } from './longest-increasing-path-matrix';
 import { problem as minimumGeneticMutation } from './minimum-genetic-mutation';
+import { problem as busRoutes } from './bus-routes';
 import { problem as sudokuSolver } from './sudoku-solver';
 import { problem as combinations } from './combinations';
 import { problem as wordSearchII } from './word-search-ii';
 import { problem as letterCasePermutation } from './letter-case-permutation';
 import { problem as beautifulArrangement } from './beautiful-arrangement';
+import { problem as beautifulArrangementII } from './beautiful-arrangement-ii';
 import { problem as expressionAddOperators } from './expression-add-operators';
+import { problem as maxScoreWordsFormed } from './maximum-score-words-formed';
 
 // tree — easy (additional)
 import { problem as balancedBinaryTree } from './balanced-binary-tree';
@@ -674,6 +678,7 @@ import { problem as handOfStraights } from './hand-of-straights';
 import { problem as minimumDominoRotations } from './minimum-domino-rotations';
 import { problem as furthestBuildingLadders } from './furthest-building-ladders';
 import { problem as ipo } from './ipo';
+import { problem as smallestRangeCoveringKLists } from './smallest-range-covering-k-lists';
 import { problem as relativeSortArray } from './relative-sort-array';
 import { problem as permutationsII } from './permutations-ii';
 import { problem as letterTilePossibilities } from './letter-tile-possibilities';
@@ -835,6 +840,11 @@ import { problem as mergeSimilarItems } from './merge-similar-items';
 import { problem as countGoodRectangles } from './count-good-rectangles';
 import { problem as maximumPopulationYear } from './maximum-population-year';
 import { problem as findKthBitNthBinaryString } from './find-kth-bit-nth-binary-string';
+import { problem as countOperationsToObtainZero } from './count-operations-to-obtain-zero';
+import { problem as designUndergroundSystem } from './design-underground-system';
+import { problem as sortVowelsInAString } from './sort-vowels-in-a-string';
+import { problem as minimumTimeToRepairCars } from './minimum-time-to-repair-cars';
+import { problem as numberOfMatchingSubsequences } from './number-of-matching-subsequences';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1118,6 +1128,7 @@ export const problems: readonly Problem[] = [
   fourSumII,
   maxPointsOnLine,
   lruCache,
+  lfuCache,
   // two-pointers — hard
   trappingRainWater,
   fourSum,
@@ -1438,6 +1449,7 @@ export const problems: readonly Problem[] = [
   criticalConnections,
   longestIncreasingPathMatrix,
   minimumGeneticMutation,
+  busRoutes,
   // graph + backtracking — hard
   wordSearchII,
   // arrays + backtracking — hard
@@ -1445,6 +1457,9 @@ export const problems: readonly Problem[] = [
   // arrays + backtracking — medium
   combinations,
   beautifulArrangement,
+  beautifulArrangementII,
+  // backtracking — hard
+  maxScoreWordsFormed,
   // strings + backtracking — hard
   expressionAddOperators,
   // strings + backtracking — medium
@@ -1519,6 +1534,7 @@ export const problems: readonly Problem[] = [
   furthestBuildingLadders,
   // heap — hard (new)
   ipo,
+  smallestRangeCoveringKLists,
   // arrays — easy (new)
   relativeSortArray,
   // backtracking — medium (new)
@@ -1717,4 +1733,9 @@ export const problems: readonly Problem[] = [
   countGoodRectangles,
   maximumPopulationYear,
   findKthBitNthBinaryString,
+  countOperationsToObtainZero,
+  designUndergroundSystem,
+  sortVowelsInAString,
+  minimumTimeToRepairCars,
+  numberOfMatchingSubsequences,
 ];

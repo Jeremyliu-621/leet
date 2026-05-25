@@ -9910,4 +9910,223 @@ def findKthBit(n, k):
         return '1' if bit == '0' else '0'
     return f(n, k)
 `,
+
+  'count-operations-to-obtain-zero': `
+def countOperations(num1, num2):
+    count = 0
+    while num1 > 0 and num2 > 0:
+        if num1 >= num2:
+            num1 -= num2
+        else:
+            num2 -= num1
+        count += 1
+    return count
+`,
+
+  'design-underground-system': `
+def undergroundSystem(operations):
+    check_ins = {}
+    routes = {}
+    results = []
+    for op in operations:
+        if op[0] == 'checkIn':
+            check_ins[op[1]] = (op[2], op[3])
+        elif op[0] == 'checkOut':
+            start_station, start_time = check_ins.pop(op[1])
+            key = (start_station, op[2])
+            total, count = routes.get(key, (0, 0))
+            routes[key] = (total + op[3] - start_time, count + 1)
+        else:
+            key = (op[1], op[2])
+            total, count = routes[key]
+            results.append(total / count)
+    return results
+`,
+
+  'sort-vowels-in-a-string': `
+def sortVowels(s):
+    vowels = set('aeiouAEIOU')
+    extracted = sorted(c for c in s if c in vowels)
+    idx = 0
+    result = []
+    for c in s:
+        if c in vowels:
+            result.append(extracted[idx])
+            idx += 1
+        else:
+            result.append(c)
+    return ''.join(result)
+`,
+
+  'minimum-time-to-repair-cars': `
+def repairCars(ranks, cars):
+    import math
+    lo, hi = 1, min(ranks) * cars * cars
+    while lo < hi:
+        mid = (lo + hi) // 2
+        total = sum(int(math.sqrt(mid / r)) for r in ranks)
+        if total >= cars:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'number-of-matching-subsequences': `
+def numMatchingSubseq(s, words):
+    def is_subseq(w):
+        i = 0
+        for c in s:
+            if i < len(w) and c == w[i]:
+                i += 1
+        return i == len(w)
+    return sum(1 for w in words if is_subseq(w))
+`,
+
+  'lfu-cache': `
+def lfuCache(capacity, operations):
+    from collections import OrderedDict
+    key_map = {}
+    freq_map = {}
+    min_freq = 0
+    results = []
+
+    def increment_freq(key):
+        nonlocal min_freq
+        value, freq = key_map[key]
+        key_map[key] = [value, freq + 1]
+        freq_map[freq].pop(key)
+        if not freq_map[freq]:
+            del freq_map[freq]
+            if min_freq == freq:
+                min_freq = freq + 1
+        freq_map.setdefault(freq + 1, OrderedDict())[key] = True
+
+    for op in operations:
+        if op[0] == 'get':
+            key = op[1]
+            if key not in key_map:
+                results.append(-1)
+                continue
+            increment_freq(key)
+            results.append(key_map[key][0])
+        else:
+            key, value = op[1], op[2]
+            if capacity <= 0:
+                continue
+            if key in key_map:
+                key_map[key][0] = value
+                increment_freq(key)
+            else:
+                if len(key_map) >= capacity:
+                    evict_key, _ = freq_map[min_freq].popitem(last=False)
+                    if not freq_map[min_freq]:
+                        del freq_map[min_freq]
+                    del key_map[evict_key]
+                key_map[key] = [value, 1]
+                freq_map.setdefault(1, OrderedDict())[key] = True
+                min_freq = 1
+    return results
+`,
+
+  'smallest-range-covering-k-lists': `
+def smallestRange(nums):
+    import heapq
+    heap = []
+    cur_max = float('-inf')
+    for i, lst in enumerate(nums):
+        heapq.heappush(heap, (lst[0], i, 0))
+        if lst[0] > cur_max:
+            cur_max = lst[0]
+    range_start = heap[0][0]
+    range_end = cur_max
+    while True:
+        min_val, list_idx, elem_idx = heapq.heappop(heap)
+        if cur_max - min_val < range_end - range_start or (cur_max - min_val == range_end - range_start and min_val < range_start):
+            range_start = min_val
+            range_end = cur_max
+        next_idx = elem_idx + 1
+        if next_idx >= len(nums[list_idx]):
+            break
+        next_val = nums[list_idx][next_idx]
+        if next_val > cur_max:
+            cur_max = next_val
+        heapq.heappush(heap, (next_val, list_idx, next_idx))
+    return [range_start, range_end]
+`,
+
+  'bus-routes': `
+def numBusesToDestination(routes, source, target):
+    from collections import defaultdict, deque
+    if source == target:
+        return 0
+    stop_to_buses = defaultdict(list)
+    for i, route in enumerate(routes):
+        for stop in route:
+            stop_to_buses[stop].append(i)
+    visited_buses = set()
+    visited_stops = {source}
+    queue = deque([source])
+    buses = 1
+    while queue:
+        next_stops = []
+        for _ in range(len(queue)):
+            stop = queue.popleft()
+            for bus_idx in stop_to_buses[stop]:
+                if bus_idx in visited_buses:
+                    continue
+                visited_buses.add(bus_idx)
+                for s in routes[bus_idx]:
+                    if s == target:
+                        return buses
+                    if s not in visited_stops:
+                        visited_stops.add(s)
+                        next_stops.append(s)
+        queue = deque(next_stops)
+        buses += 1
+    return -1
+`,
+
+  'beautiful-arrangement-ii': `
+def constructArray(n, k):
+    result = []
+    lo, hi = 1, k + 1
+    while lo <= hi:
+        result.append(lo)
+        lo += 1
+        if lo <= hi:
+            result.append(hi)
+            hi -= 1
+    for i in range(k + 2, n + 1):
+        result.append(i)
+    return result
+`,
+
+  'maximum-score-words-formed': `
+def maxScoreWords(words, letters, score):
+    available = [0] * 26
+    for c in letters:
+        available[ord(c) - ord('a')] += 1
+    best = 0
+    n = len(words)
+    for mask in range(1, 1 << n):
+        used = [0] * 26
+        total = 0
+        valid = True
+        for i in range(n):
+            if not (mask & (1 << i)):
+                continue
+            for c in words[i]:
+                idx = ord(c) - ord('a')
+                used[idx] += 1
+                total += score[idx]
+                if used[idx] > available[idx]:
+                    valid = False
+                    break
+            if not valid:
+                break
+        if valid and total > best:
+            best = total
+    return best
+`,
 };

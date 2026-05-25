@@ -10254,4 +10254,266 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return f(n, k);
   },
 
+  'count-operations-to-obtain-zero': (...args: unknown[]) => {
+    let num1 = args[0] as number;
+    let num2 = args[1] as number;
+    let count = 0;
+    while (num1 > 0 && num2 > 0) {
+      if (num1 >= num2) num1 -= num2; else num2 -= num1;
+      count++;
+    }
+    return count;
+  },
+
+  'design-underground-system': (...args: unknown[]) => {
+    const operations = args[0] as unknown[][];
+    const checkIns = new Map<number, [string, number]>();
+    const routes = new Map<string, [number, number]>();
+    const results: number[] = [];
+    for (const op of operations) {
+      if (op[0] === 'checkIn') {
+        checkIns.set(op[1] as number, [op[2] as string, op[3] as number]);
+      } else if (op[0] === 'checkOut') {
+        const [startStation, startTime] = checkIns.get(op[1] as number)!;
+        const key = `${startStation}|${op[2] as string}`;
+        const prev = routes.get(key) ?? [0, 0];
+        routes.set(key, [prev[0] + (op[3] as number) - startTime, prev[1] + 1]);
+        checkIns.delete(op[1] as number);
+      } else {
+        const key = `${op[1] as string}|${op[2] as string}`;
+        const [total, count] = routes.get(key)!;
+        results.push(total / count);
+      }
+    }
+    return results;
+  },
+
+  'sort-vowels-in-a-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const vowels = new Set('aeiouAEIOU');
+    const extracted: string[] = [];
+    for (const c of s) if (vowels.has(c)) extracted.push(c);
+    extracted.sort((a, b) => a.charCodeAt(0) - b.charCodeAt(0));
+    let idx = 0;
+    return s.split('').map(c => vowels.has(c) ? extracted[idx++]! : c).join('');
+  },
+
+  'minimum-time-to-repair-cars': (...args: unknown[]) => {
+    const ranks = args[0] as number[];
+    const cars = args[1] as number;
+    let lo = 1n, hi = BigInt(Math.min(...ranks)) * BigInt(cars) * BigInt(cars);
+    while (lo < hi) {
+      const mid = (lo + hi) / 2n;
+      let total = 0;
+      for (const r of ranks) total += Math.floor(Math.sqrt(Number(mid) / r));
+      if (total >= cars) hi = mid; else lo = mid + 1n;
+    }
+    return Number(lo);
+  },
+
+  'number-of-matching-subsequences': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const words = args[1] as string[];
+    function isSubseq(w: string): boolean {
+      let i = 0;
+      for (const c of s) { if (i < w.length && c === w[i]) i++; }
+      return i === w.length;
+    }
+    return words.filter(isSubseq).length;
+  },
+
+  'lfu-cache': (...args: unknown[]) => {
+    const capacity = args[0] as number;
+    const operations = args[1] as (string | number)[][];
+    const keyMap = new Map<number, { value: number; freq: number }>();
+    const freqMap = new Map<number, Map<number, boolean>>();
+    let minFreq = 0;
+    const results: number[] = [];
+
+    function incrementFreq(key: number): void {
+      const entry = keyMap.get(key)!;
+      const oldFreq = entry.freq;
+      entry.freq += 1;
+      const newFreq = entry.freq;
+      freqMap.get(oldFreq)!.delete(key);
+      if (freqMap.get(oldFreq)!.size === 0) {
+        freqMap.delete(oldFreq);
+        if (minFreq === oldFreq) minFreq = newFreq;
+      }
+      if (!freqMap.has(newFreq)) freqMap.set(newFreq, new Map());
+      freqMap.get(newFreq)!.set(key, true);
+    }
+
+    for (const op of operations) {
+      if (op[0] === 'get') {
+        const key = op[1] as number;
+        if (!keyMap.has(key)) { results.push(-1); continue; }
+        incrementFreq(key);
+        results.push(keyMap.get(key)!.value);
+      } else {
+        const key = op[1] as number;
+        const value = op[2] as number;
+        if (capacity <= 0) continue;
+        if (keyMap.has(key)) {
+          keyMap.get(key)!.value = value;
+          incrementFreq(key);
+        } else {
+          if (keyMap.size >= capacity) {
+            const lruBucket = freqMap.get(minFreq)!;
+            const evictKey = lruBucket.keys().next().value as number;
+            lruBucket.delete(evictKey);
+            if (lruBucket.size === 0) freqMap.delete(minFreq);
+            keyMap.delete(evictKey);
+          }
+          keyMap.set(key, { value, freq: 1 });
+          if (!freqMap.has(1)) freqMap.set(1, new Map());
+          freqMap.get(1)!.set(key, true);
+          minFreq = 1;
+        }
+      }
+    }
+    return results;
+  },
+
+  'smallest-range-covering-k-lists': (...args: unknown[]) => {
+    const nums = args[0] as number[][];
+    const heap: [number, number, number][] = [];
+    let curMax = -Infinity;
+
+    function heapPush(item: [number, number, number]): void {
+      heap.push(item);
+      if (item[0] > curMax) curMax = item[0];
+      let i = heap.length - 1;
+      while (i > 0) {
+        const parent = (i - 1) >> 1;
+        if (heap[parent]![0] > heap[i]![0]) {
+          [heap[parent], heap[i]] = [heap[i]!, heap[parent]!];
+          i = parent;
+        } else break;
+      }
+    }
+
+    function heapPop(): [number, number, number] {
+      const top = heap[0]!;
+      const last = heap.pop()!;
+      if (heap.length > 0) {
+        heap[0] = last;
+        let i = 0;
+        while (true) {
+          const l = 2 * i + 1, r = 2 * i + 2;
+          let smallest = i;
+          if (l < heap.length && heap[l]![0] < heap[smallest]![0]) smallest = l;
+          if (r < heap.length && heap[r]![0] < heap[smallest]![0]) smallest = r;
+          if (smallest === i) break;
+          [heap[i], heap[smallest]] = [heap[smallest]!, heap[i]!];
+          i = smallest;
+        }
+      }
+      return top;
+    }
+
+    for (let i = 0; i < nums.length; i++) {
+      heapPush([nums[i]![0]!, i, 0]);
+    }
+
+    let rangeStart = heap[0]![0];
+    let rangeEnd = curMax;
+
+    while (true) {
+      const [minVal, listIdx, elemIdx] = heapPop();
+      if (curMax - minVal < rangeEnd - rangeStart || (curMax - minVal === rangeEnd - rangeStart && minVal < rangeStart)) {
+        rangeStart = minVal;
+        rangeEnd = curMax;
+      }
+      const nextIdx = elemIdx + 1;
+      if (nextIdx >= nums[listIdx]!.length) break;
+      const nextVal = nums[listIdx]![nextIdx]!;
+      if (nextVal > curMax) curMax = nextVal;
+      heapPush([nextVal, listIdx, nextIdx]);
+    }
+
+    return [rangeStart, rangeEnd];
+  },
+
+  'bus-routes': (...args: unknown[]) => {
+    const routes = args[0] as number[][];
+    const source = args[1] as number;
+    const target = args[2] as number;
+    if (source === target) return 0;
+
+    const stopToBuses = new Map<number, number[]>();
+    for (let i = 0; i < routes.length; i++) {
+      for (const stop of routes[i]!) {
+        if (!stopToBuses.has(stop)) stopToBuses.set(stop, []);
+        stopToBuses.get(stop)!.push(i);
+      }
+    }
+
+    const visitedBuses = new Set<number>();
+    const visitedStops = new Set<number>([source]);
+    let queue: number[] = [source];
+    let buses = 1;
+
+    while (queue.length > 0) {
+      const nextStops: number[] = [];
+      for (const stop of queue) {
+        for (const busIdx of (stopToBuses.get(stop) ?? [])) {
+          if (visitedBuses.has(busIdx)) continue;
+          visitedBuses.add(busIdx);
+          for (const s of routes[busIdx]!) {
+            if (s === target) return buses;
+            if (!visitedStops.has(s)) {
+              visitedStops.add(s);
+              nextStops.push(s);
+            }
+          }
+        }
+      }
+      queue = nextStops;
+      buses++;
+    }
+    return -1;
+  },
+
+  'beautiful-arrangement-ii': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const k = args[1] as number;
+    const result: number[] = [];
+    let lo = 1, hi = k + 1;
+    while (lo <= hi) {
+      result.push(lo++);
+      if (lo <= hi) result.push(hi--);
+    }
+    for (let i = k + 2; i <= n; i++) result.push(i);
+    return result;
+  },
+
+  'maximum-score-words-formed': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const letters = args[1] as string[];
+    const score = args[2] as number[];
+    const available = new Array<number>(26).fill(0);
+    for (const c of letters) available[c.charCodeAt(0) - 97]!++;
+
+    let best = 0;
+    const n = words.length;
+    for (let mask = 1; mask < (1 << n); mask++) {
+      const used = new Array<number>(26).fill(0);
+      let total = 0;
+      let valid = true;
+      for (let i = 0; i < n; i++) {
+        if (!(mask & (1 << i))) continue;
+        for (const c of words[i]!) {
+          const idx = c.charCodeAt(0) - 97;
+          used[idx]!++;
+          total += score[idx]!;
+          if (used[idx]! > available[idx]!) { valid = false; break; }
+        }
+        if (!valid) break;
+      }
+      if (valid && total > best) best = total;
+    }
+    return best;
+  },
+
 };
