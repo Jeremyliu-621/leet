@@ -11400,4 +11400,117 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
+  'determine-color-of-chessboard-square': (...args: unknown[]) => {
+    const coords = args[0] as string;
+    const col = coords.charCodeAt(0) - 96;
+    const row = parseInt(coords[1]!, 10);
+    return (col + row) % 2 !== 0;
+  },
+
+  'faulty-keyboard': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let result = '';
+    let reversed = false;
+    for (const c of s) {
+      if (c === 'i') {
+        reversed = !reversed;
+      } else {
+        result = reversed ? c + result : result + c;
+      }
+    }
+    return reversed ? result.split('').reverse().join('') : result;
+  },
+
+  'sum-multiples': (...args: unknown[]) => {
+    const n = args[0] as number;
+    let sum = 0;
+    for (let i = 1; i <= n; i++) {
+      if (i % 3 === 0 || i % 5 === 0 || i % 7 === 0) sum += i;
+    }
+    return sum;
+  },
+
+  'count-beautiful-pairs': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+    let count = 0;
+    for (let i = 0; i < nums.length; i++) {
+      for (let j = i + 1; j < nums.length; j++) {
+        const first = parseInt(String(nums[i] as number)[0]!, 10);
+        const last = (nums[j] as number) % 10;
+        if (gcd(first, last) === 1) count++;
+      }
+    }
+    return count;
+  },
+
+  'minimum-time-to-collect-all-apples': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const hasApple = args[2] as boolean[];
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const [a, b] of edges) {
+      adj[a as number]!.push(b as number);
+      adj[b as number]!.push(a as number);
+    }
+    function dfs(node: number, parent: number): number {
+      let time = 0;
+      for (const child of adj[node]!) {
+        if (child === parent) continue;
+        const childTime = dfs(child, node);
+        if (childTime > 0 || (hasApple[child] as boolean)) {
+          time += childTime + 2;
+        }
+      }
+      return time;
+    }
+    return dfs(0, -1);
+  },
+
+  'find-prefix-common-array-of-two-arrays': (...args: unknown[]) => {
+    const A = args[0] as number[];
+    const B = args[1] as number[];
+    const n = A.length;
+    const cnt = new Array<number>(n + 1).fill(0);
+    const result: number[] = [];
+    let common = 0;
+    for (let i = 0; i < n; i++) {
+      if (++cnt[A[i] as number]! === 2) common++;
+      if (++cnt[B[i] as number]! === 2) common++;
+      result.push(common);
+    }
+    return result;
+  },
+
+  'minimum-time-to-collect-garbage': (...args: unknown[]) => {
+    const garbage = args[0] as string[];
+    const travel = args[1] as number[];
+    let total = 0;
+    for (const g of garbage) total += g.length;
+    for (const type of ['M', 'P', 'G']) {
+      let lastIdx = -1;
+      for (let i = garbage.length - 1; i >= 0; i--) {
+        if ((garbage[i] as string).includes(type)) { lastIdx = i; break; }
+      }
+      if (lastIdx > 0) {
+        for (let i = 0; i < lastIdx; i++) total += travel[i] as number;
+      }
+    }
+    return total;
+  },
+
+  'longest-subarray-of-ones-after-deleting': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let left = 0, zeros = 0, best = 0;
+    for (let right = 0; right < nums.length; right++) {
+      if ((nums[right] as number) === 0) zeros++;
+      while (zeros > 1) {
+        if ((nums[left] as number) === 0) zeros--;
+        left++;
+      }
+      best = Math.max(best, right - left);
+    }
+    return best;
+  },
+
 };

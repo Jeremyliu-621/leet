@@ -10883,4 +10883,99 @@ def nearestExit(maze, entrance):
                 return False
     return True
 `,
+
+  'determine-color-of-chessboard-square': `def squareIsWhite(coordinates: str) -> bool:
+    col = ord(coordinates[0]) - ord('a') + 1
+    row = int(coordinates[1])
+    return (col + row) % 2 != 0
+`,
+
+  'faulty-keyboard': `def finalString(s: str) -> str:
+    result = []
+    for c in s:
+        if c == 'i':
+            result.reverse()
+        else:
+            result.append(c)
+    return ''.join(result)
+`,
+
+  'sum-multiples': `def sumOfMultiples(n: int) -> int:
+    return sum(i for i in range(1, n + 1) if i % 3 == 0 or i % 5 == 0 or i % 7 == 0)
+`,
+
+  'count-beautiful-pairs': `def countBeautifulPairs(nums: list[int]) -> int:
+    from math import gcd
+    count = 0
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            first = int(str(nums[i])[0])
+            last = nums[j] % 10
+            if gcd(first, last) == 1:
+                count += 1
+    return count
+`,
+
+  'minimum-time-to-collect-all-apples': `def minTime(n: int, edges: list[list[int]], hasApple: list[bool]) -> int:
+    from collections import defaultdict
+    adj = defaultdict(list)
+    for a, b in edges:
+        adj[a].append(b)
+        adj[b].append(a)
+    def dfs(node, parent):
+        time = 0
+        for child in adj[node]:
+            if child == parent:
+                continue
+            child_time = dfs(child, node)
+            if child_time > 0 or hasApple[child]:
+                time += child_time + 2
+        return time
+    return dfs(0, -1)
+`,
+
+  'find-prefix-common-array-of-two-arrays': `def findThePrefixCommonArray(A: list[int], B: list[int]) -> list[int]:
+    n = len(A)
+    cnt = [0] * (n + 1)
+    result = []
+    common = 0
+    for i in range(n):
+        cnt[A[i]] += 1
+        if cnt[A[i]] == 2:
+            common += 1
+        cnt[B[i]] += 1
+        if cnt[B[i]] == 2:
+            common += 1
+        result.append(common)
+    return result
+`,
+
+  'minimum-time-to-collect-garbage': `def garbageCollection(garbage: list[str], travel: list[int]) -> int:
+    total = sum(len(g) for g in garbage)
+    prefix = [0] * len(garbage)
+    for i in range(1, len(garbage)):
+        prefix[i] = prefix[i-1] + travel[i-1]
+    for t in 'MPG':
+        last = -1
+        for i in range(len(garbage) - 1, -1, -1):
+            if t in garbage[i]:
+                last = i
+                break
+        if last > 0:
+            total += prefix[last]
+    return total
+`,
+
+  'longest-subarray-of-ones-after-deleting': `def longestSubarray(nums: list[int]) -> int:
+    left = zeros = best = 0
+    for right in range(len(nums)):
+        if nums[right] == 0:
+            zeros += 1
+        while zeros > 1:
+            if nums[left] == 0:
+                zeros -= 1
+            left += 1
+        best = max(best, right - left)
+    return best
+`,
 };

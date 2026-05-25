@@ -914,6 +914,14 @@ import { problem as minimumEqualSumTwoArrays } from './minimum-equal-sum-two-arr
 import { problem as findScoreOfArrayAfterMarking } from './find-score-of-array-after-marking';
 import { problem as countCompleteDayPairs } from './count-complete-day-pairs';
 import { problem as checkIfMatrixIsXMatrix } from './check-if-matrix-is-x-matrix';
+import { problem as determineColorOfChessboardSquare } from './determine-color-of-chessboard-square';
+import { problem as faultyKeyboard } from './faulty-keyboard';
+import { problem as sumMultiples } from './sum-multiples';
+import { problem as countBeautifulPairs } from './count-beautiful-pairs';
+import { problem as minimumTimeToCollectAllApples } from './minimum-time-to-collect-all-apples';
+import { problem as findPrefixCommonArrayOfTwoArrays } from './find-prefix-common-array-of-two-arrays';
+import { problem as minimumTimeToCollectGarbage } from './minimum-time-to-collect-garbage';
+import { problem as longestSubarrayOfOnesAfterDeleting } from './longest-subarray-of-ones-after-deleting';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1876,4 +1884,12 @@ export const problems: readonly Problem[] = [
   findScoreOfArrayAfterMarking,
   countCompleteDayPairs,
   checkIfMatrixIsXMatrix,
+  determineColorOfChessboardSquare,
+  faultyKeyboard,
+  sumMultiples,
+  countBeautifulPairs,
+  minimumTimeToCollectAllApples,
+  findPrefixCommonArrayOfTwoArrays,
+  minimumTimeToCollectGarbage,
+  longestSubarrayOfOnesAfterDeleting,
 ];
