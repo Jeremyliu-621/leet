@@ -9639,4 +9639,54 @@ def findGCD(nums):
     from math import gcd
     return gcd(min(nums), max(nums))
 `,
+
+  'keep-multiplying-found-values': `
+def findFinalValue(nums, original):
+    s = set(nums)
+    while original in s:
+        original *= 2
+    return original
+`,
+
+  'percentages-of-letter': `
+def percentageLetter(s, letter):
+    return int(s.count(letter) / len(s) * 100)
+`,
+
+  'maximum-bags-full-capacity': `
+def maximumBags(capacity, rocks, additionalRocks):
+    capacity = list(capacity)
+    rocks = list(rocks)
+    rem = sorted(c - r for c, r in zip(capacity, rocks))
+    bags = 0
+    for r in rem:
+        if r <= additionalRocks:
+            additionalRocks -= r
+            bags += 1
+        else:
+            break
+    return bags
+`,
+
+  'find-subsequence-of-length-k': `
+def maxSubsequence(nums, k):
+    nums = list(nums)
+    idx = sorted(range(len(nums)), key=lambda i: -nums[i])[:k]
+    idx.sort()
+    return [nums[i] for i in idx]
+`,
+
+  'odd-string-difference': `
+def oddString(words):
+    words = list(words)
+    def diff(w):
+        return tuple(ord(w[i+1]) - ord(w[i]) for i in range(len(w)-1))
+    from collections import defaultdict
+    m = defaultdict(list)
+    for w in words:
+        m[diff(w)].append(w)
+    for v in m.values():
+        if len(v) == 1:
+            return v[0]
+`,
 };

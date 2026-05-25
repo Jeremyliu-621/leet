@@ -10015,4 +10015,41 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return gcd(Math.min(...nums), Math.max(...nums));
   },
 
+  'keep-multiplying-found-values': (...args: unknown[]) => {
+    const s = new Set(args[0] as number[]);
+    let v = args[1] as number;
+    while (s.has(v)) v *= 2;
+    return v;
+  },
+
+  'percentages-of-letter': (...args: unknown[]) => {
+    const [s, letter] = args as [string, string];
+    return Math.floor(s.split('').filter(c => c === letter).length / s.length * 100);
+  },
+
+  'maximum-bags-full-capacity': (...args: unknown[]) => {
+    const capacity = args[0] as number[], rocks = args[1] as number[];
+    let additional = args[2] as number;
+    const rem = capacity.map((c, i) => c - rocks[i]!).sort((a, b) => a - b);
+    let bags = 0;
+    for (const r of rem) {
+      if (r <= additional) { additional -= r; bags++; } else break;
+    }
+    return bags;
+  },
+
+  'find-subsequence-of-length-k': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const idx = [...nums.keys()].sort((a, b) => nums[b]! - nums[a]!).slice(0, k).sort((a, b) => a - b);
+    return idx.map(i => nums[i]!);
+  },
+
+  'odd-string-difference': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const diff = (w: string) => w.slice(1).split('').map((c, i) => c.charCodeAt(0) - w.charCodeAt(i)).join(',');
+    const m = new Map<string, string[]>();
+    for (const w of words) { const k = diff(w); m.set(k, [...(m.get(k) ?? []), w]); }
+    return [...m.values()].find(v => v.length === 1)![0];
+  },
+
 };

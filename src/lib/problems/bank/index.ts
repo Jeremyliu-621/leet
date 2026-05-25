@@ -811,6 +811,11 @@ import { problem as applyOperations } from './apply-operations';
 import { problem as minimumMovesToSeat } from './minimum-moves-to-seat';
 import { problem as ringsAndRods } from './rings-and-rods';
 import { problem as findGcdOfArray } from './find-gcd-of-array';
+import { problem as keepMultiplyingFoundValues } from './keep-multiplying-found-values';
+import { problem as percentagesOfLetter } from './percentages-of-letter';
+import { problem as maximumBagsFullCapacity } from './maximum-bags-full-capacity';
+import { problem as findSubsequenceOfLengthK } from './find-subsequence-of-length-k';
+import { problem as oddStringDifference } from './odd-string-difference';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1669,4 +1674,9 @@ export const problems: readonly Problem[] = [
   minimumMovesToSeat,
   ringsAndRods,
   findGcdOfArray,
+  keepMultiplyingFoundValues,
+  percentagesOfLetter,
+  maximumBagsFullCapacity,
+  findSubsequenceOfLengthK,
+  oddStringDifference,
 ];
