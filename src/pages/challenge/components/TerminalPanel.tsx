@@ -375,9 +375,9 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
       const entries = buildEntries(result, mode);
       setHistory((prev) => [...prev, entries]);
       prevResultRef.current = result;
-      // Auto-switch to test results on submit failure so the user immediately
+      // Auto-switch to test results on any failure so the user immediately
       // sees the first failing test expanded.
-      if (mode === 'submit' && result.outcome !== 'accepted' && result.verdicts.length > 0) {
+      if (result.outcome !== 'accepted' && result.verdicts.length > 0) {
         setActiveTab('testcases');
       }
     }

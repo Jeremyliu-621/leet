@@ -120,6 +120,17 @@ export function ProblemBrowserSection() {
     return counts as Record<ProblemTag, number>;
   }, []);
 
+  const solvedByTag = useMemo(() => {
+    const counts: Partial<Record<ProblemTag, number>> = {};
+    for (const p of ALL_PROBLEMS) {
+      if (!solvedIds.has(p.id)) continue;
+      for (const t of p.tags) {
+        counts[t] = (counts[t] ?? 0) + 1;
+      }
+    }
+    return counts as Record<ProblemTag, number>;
+  }, [solvedIds]);
+
   const handlePractice = useCallback((problemId: string) => {
     openProblemInChallenge(problemId);
   }, []);
@@ -251,13 +262,16 @@ export function ProblemBrowserSection() {
           <div className="flex flex-wrap gap-1.5" role="group" aria-label="Filter by tag">
             {(['all', ...PROBLEM_TAGS] as const).map((t) => {
               const selected = tagFilter === t;
-              const count = t === 'all' ? ALL_PROBLEMS.length : (totalByTag[t] ?? 0);
+              const total = t === 'all' ? ALL_PROBLEMS.length : (totalByTag[t] ?? 0);
+              const solved = t === 'all' ? solvedIds.size : (solvedByTag[t] ?? 0);
+              const showSolved = solvedIds.size > 0 && solved > 0;
               return (
                 <button
                   key={t}
                   type="button"
                   onClick={() => setTagFilter(t)}
                   aria-pressed={selected}
+                  aria-label={showSolved ? `${t}: ${solved} of ${total} solved` : `${t}: ${total} problems`}
                   className={[
                     'rounded-sm border px-2 py-0.5 font-mono text-[9px] transition-colors',
                     'focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent',
@@ -266,7 +280,10 @@ export function ProblemBrowserSection() {
                       : 'border-border bg-surface-2 text-faint hover:border-border-strong hover:text-muted',
                   ].join(' ')}
                 >
-                  {t} <span className="opacity-60">{count}</span>
+                  {t}{' '}
+                  <span className="opacity-60">
+                    {showSolved ? `${solved}/${total}` : total}
+                  </span>
                 </button>
               );
             })}
