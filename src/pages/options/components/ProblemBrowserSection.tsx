@@ -104,6 +104,16 @@ export function ProblemBrowserSection() {
     hard: ALL_PROBLEMS.filter((p) => p.difficulty === 'hard' && solvedIds.has(p.id)).length,
   };
 
+  const totalByTag = useMemo(() => {
+    const counts: Partial<Record<ProblemTag, number>> = {};
+    for (const p of ALL_PROBLEMS) {
+      for (const t of p.tags) {
+        counts[t] = (counts[t] ?? 0) + 1;
+      }
+    }
+    return counts as Record<ProblemTag, number>;
+  }, []);
+
   const handlePractice = useCallback((problemId: string) => {
     openProblemInChallenge(problemId);
   }, []);
@@ -195,6 +205,7 @@ export function ProblemBrowserSection() {
           <div className="flex flex-wrap gap-1.5" role="group" aria-label="Filter by difficulty">
             {(['all', ...DIFFICULTIES] as const).map((d) => {
               const selected = diffFilter === d;
+              const count = d === 'all' ? ALL_PROBLEMS.length : totalByDiff[d];
               return (
                 <button
                   key={d}
@@ -209,7 +220,7 @@ export function ProblemBrowserSection() {
                       : 'border-border bg-surface-2 text-muted hover:border-border-strong hover:text-text',
                   ].join(' ')}
                 >
-                  {d}
+                  {d} <span className="opacity-60">{count}</span>
                 </button>
               );
             })}
@@ -234,6 +245,7 @@ export function ProblemBrowserSection() {
           <div className="flex flex-wrap gap-1.5" role="group" aria-label="Filter by tag">
             {(['all', ...PROBLEM_TAGS] as const).map((t) => {
               const selected = tagFilter === t;
+              const count = t === 'all' ? ALL_PROBLEMS.length : (totalByTag[t] ?? 0);
               return (
                 <button
                   key={t}
@@ -248,7 +260,7 @@ export function ProblemBrowserSection() {
                       : 'border-border bg-surface-2 text-faint hover:border-border-strong hover:text-muted',
                   ].join(' ')}
                 >
-                  {t}
+                  {t} <span className="opacity-60">{count}</span>
                 </button>
               );
             })}
