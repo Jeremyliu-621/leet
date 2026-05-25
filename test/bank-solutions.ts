@@ -17630,4 +17630,176 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return odds <= K && K <= str.length;
   },
 
+  'push-dominoes': (dominoes: unknown) => {
+    const s = dominoes as string;
+    const n = s.length;
+    const forces = new Array<number>(n).fill(0);
+    let f = 0;
+    for (let i = 0; i < n; i++) {
+      if (s[i] === 'R') f = n;
+      else if (s[i] === 'L') f = 0;
+      else f = Math.max(f - 1, 0);
+      forces[i]! += f;
+    }
+    f = 0;
+    for (let i = n - 1; i >= 0; i--) {
+      if (s[i] === 'L') f = n;
+      else if (s[i] === 'R') f = 0;
+      else f = Math.max(f - 1, 0);
+      forces[i]! -= f;
+    }
+    return forces.map(x => x > 0 ? 'R' : x < 0 ? 'L' : '.').join('');
+  },
+
+  'largest-merge-of-two-strings': (word1: unknown, word2: unknown) => {
+    let w1 = word1 as string, w2 = word2 as string;
+    let result = '';
+    let i = 0, j = 0;
+    while (i < w1.length && j < w2.length) {
+      if (w1.slice(i) >= w2.slice(j)) result += w1[i++];
+      else result += w2[j++];
+    }
+    return result + w1.slice(i) + w2.slice(j);
+  },
+
+  'remove-covered-intervals': (intervals: unknown) => {
+    const arr = (intervals as number[][]).slice().sort((a, b) => a[0] !== b[0] ? a[0]! - b[0]! : b[1]! - a[1]!);
+    let count = 0, maxRight = 0;
+    for (const [, b] of arr) {
+      if (b! > maxRight) { count++; maxRight = b!; }
+    }
+    return count;
+  },
+
+  'minimize-array-value': (nums: unknown) => {
+    const arr = nums as number[];
+    let prefix = 0, ans = 0;
+    for (let i = 0; i < arr.length; i++) {
+      prefix += arr[i]!;
+      ans = Math.max(ans, Math.ceil(prefix / (i + 1)));
+    }
+    return ans;
+  },
+
+  'validate-ip-address': (queryIP: unknown) => {
+    const ip = queryIP as string;
+    if (ip.includes('.')) {
+      const parts = ip.split('.');
+      if (parts.length !== 4) return 'Neither';
+      for (const p of parts) {
+        if (!p || p.length > 3) return 'Neither';
+        if (p.length > 1 && p[0] === '0') return 'Neither';
+        if (!/^\d+$/.test(p)) return 'Neither';
+        if (parseInt(p) > 255) return 'Neither';
+      }
+      return 'IPv4';
+    } else if (ip.includes(':')) {
+      const parts = ip.split(':');
+      if (parts.length !== 8) return 'Neither';
+      for (const p of parts) {
+        if (p.length < 1 || p.length > 4) return 'Neither';
+        if (!/^[0-9a-fA-F]+$/.test(p)) return 'Neither';
+      }
+      return 'IPv6';
+    }
+    return 'Neither';
+  },
+
+  'maximum-sum-hourglass': (grid: unknown) => {
+    const g = grid as number[][];
+    const m = g.length, n = g[0]!.length;
+    let best = 0;
+    for (let r = 1; r < m - 1; r++) {
+      for (let c = 1; c < n - 1; c++) {
+        const s = g[r-1]![c-1]! + g[r-1]![c]! + g[r-1]![c+1]!
+                + g[r]![c]!
+                + g[r+1]![c-1]! + g[r+1]![c]! + g[r+1]![c+1]!;
+        if (s > best) best = s;
+      }
+    }
+    return best;
+  },
+
+  'reverse-odd-levels-binary-tree': (arr: unknown) => {
+    type N = { val: number; left: N | null; right: N | null };
+    const a = arr as (number | null)[];
+    if (!a.length) return [];
+    const root: N = { val: a[0]!, left: null, right: null };
+    const queue: N[] = [root];
+    let i = 1;
+    while (queue.length && i < a.length) {
+      const node = queue.shift()!;
+      if (a[i] != null) { node.left = { val: a[i]!, left: null, right: null }; queue.push(node.left); }
+      i++;
+      if (i < a.length && a[i] != null) { node.right = { val: a[i]!, left: null, right: null }; queue.push(node.right); }
+      i++;
+    }
+    const dfs = (left: N | null, right: N | null, level: number): void => {
+      if (!left || !right) return;
+      if (level % 2 === 1) { const tmp = left.val; left.val = right.val; right.val = tmp; }
+      dfs(left.left, right.right, level + 1);
+      dfs(left.right, right.left, level + 1);
+    };
+    dfs(root.left, root.right, 1);
+    const res: (number | null)[] = [];
+    const q: (N | null)[] = [root];
+    while (q.length) {
+      const node = q.shift()!;
+      if (!node) { res.push(null); continue; }
+      res.push(node.val);
+      q.push(node.left ?? null); q.push(node.right ?? null);
+    }
+    while (res.length && res[res.length - 1] === null) res.pop();
+    return res;
+  },
+
+  'find-closest-node-to-given-two-nodes': (edges: unknown, node1: unknown, node2: unknown) => {
+    const e = edges as number[], n1 = node1 as number, n2 = node2 as number;
+    const n = e.length;
+    const getDist = (start: number) => {
+      const d = new Array<number>(n).fill(-1);
+      let cur = start, dist = 0;
+      while (cur !== -1 && d[cur] === -1) { d[cur] = dist++; cur = e[cur]!; }
+      return d;
+    };
+    const d1 = getDist(n1), d2 = getDist(n2);
+    let ans = -1, minDist = Infinity;
+    for (let i = 0; i < n; i++) {
+      if (d1[i] !== -1 && d2[i] !== -1) {
+        const md = Math.max(d1[i]!, d2[i]!);
+        if (md < minDist) { minDist = md; ans = i; }
+      }
+    }
+    return ans;
+  },
+
+  'number-of-flowers-in-full-bloom': (flowers: unknown, people: unknown) => {
+    const fl = flowers as number[][], pp = people as number[];
+    const starts = fl.map(f => f[0]!).sort((a, b) => a - b);
+    const ends = fl.map(f => f[1]!).sort((a, b) => a - b);
+    const upperBound = (arr: number[], target: number) => {
+      let lo = 0, hi = arr.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (arr[mid]! <= target) lo = mid + 1; else hi = mid; }
+      return lo;
+    };
+    const lowerBound = (arr: number[], target: number) => {
+      let lo = 0, hi = arr.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (arr[mid]! < target) lo = mid + 1; else hi = mid; }
+      return lo;
+    };
+    return pp.map(t => upperBound(starts, t) - lowerBound(ends, t));
+  },
+
+  'most-beautiful-item-for-each-query': (items: unknown, queries: unknown) => {
+    const its = (items as number[][]).map(x => [x[0]!, x[1]!] as [number, number]);
+    its.sort((a, b) => a[0] - b[0]);
+    for (let i = 1; i < its.length; i++) its[i]![1] = Math.max(its[i]![1], its[i-1]![1]);
+    const prices = its.map(x => x[0]);
+    return (queries as number[]).map(q => {
+      let lo = 0, hi = prices.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (prices[mid]! <= q) lo = mid + 1; else hi = mid; }
+      return lo === 0 ? 0 : its[lo - 1]![1];
+    });
+  },
+
 };

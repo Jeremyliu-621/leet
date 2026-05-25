@@ -17489,4 +17489,165 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
     odds = sum(1 for v in freq.values() if v % 2 == 1)
     return odds <= k <= len(s)
 `,
+
+  'push-dominoes': `def pushDominoes(dominoes):
+    n = len(dominoes)
+    forces = [0] * n
+    f = 0
+    for i in range(n):
+        if dominoes[i] == 'R': f = n
+        elif dominoes[i] == 'L': f = 0
+        else: f = max(f - 1, 0)
+        forces[i] += f
+    f = 0
+    for i in range(n - 1, -1, -1):
+        if dominoes[i] == 'L': f = n
+        elif dominoes[i] == 'R': f = 0
+        else: f = max(f - 1, 0)
+        forces[i] -= f
+    return ''.join('R' if x > 0 else 'L' if x < 0 else '.' for x in forces)
+`,
+
+  'largest-merge-of-two-strings': `def largestMerge(word1, word2):
+    result = []
+    i, j = 0, 0
+    while i < len(word1) and j < len(word2):
+        if word1[i:] >= word2[j:]:
+            result.append(word1[i]); i += 1
+        else:
+            result.append(word2[j]); j += 1
+    result.append(word1[i:])
+    result.append(word2[j:])
+    return ''.join(result)
+`,
+
+  'remove-covered-intervals': `def removeCoveredIntervals(intervals):
+    raw = intervals.to_py() if hasattr(intervals, 'to_py') else list(intervals)
+    arr = [list(x.to_py() if hasattr(x, 'to_py') else x) for x in raw]
+    arr.sort(key=lambda x: (x[0], -x[1]))
+    count, max_right = 0, 0
+    for a, b in arr:
+        if b > max_right:
+            count += 1
+            max_right = b
+    return count
+`,
+
+  'minimize-array-value': `def minimizeArrayValue(nums):
+    raw = nums.to_py() if hasattr(nums, 'to_py') else list(nums)
+    arr = [int(x) for x in raw]
+    prefix, ans = 0, 0
+    for i, x in enumerate(arr):
+        prefix += x
+        ans = max(ans, (prefix + i) // (i + 1))
+    return ans
+`,
+
+  'validate-ip-address': `def validIPAddress(queryIP):
+    if '.' in queryIP:
+        parts = queryIP.split('.')
+        if len(parts) != 4:
+            return 'Neither'
+        for p in parts:
+            if not p or len(p) > 3:
+                return 'Neither'
+            if len(p) > 1 and p[0] == '0':
+                return 'Neither'
+            if not p.isdigit():
+                return 'Neither'
+            if int(p) > 255:
+                return 'Neither'
+        return 'IPv4'
+    elif ':' in queryIP:
+        parts = queryIP.split(':')
+        if len(parts) != 8:
+            return 'Neither'
+        valid_hex = set('0123456789abcdefABCDEF')
+        for p in parts:
+            if not 1 <= len(p) <= 4:
+                return 'Neither'
+            if not all(c in valid_hex for c in p):
+                return 'Neither'
+        return 'IPv6'
+    return 'Neither'
+`,
+
+  'maximum-sum-hourglass': `def maxSum(grid):
+    raw = grid.to_py() if hasattr(grid, 'to_py') else list(grid)
+    g = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in raw]
+    m, n = len(g), len(g[0])
+    best = 0
+    for r in range(1, m - 1):
+        for c in range(1, n - 1):
+            s = (g[r-1][c-1] + g[r-1][c] + g[r-1][c+1]
+                 + g[r][c]
+                 + g[r+1][c-1] + g[r+1][c] + g[r+1][c+1])
+            best = max(best, s)
+    return best
+`,
+
+  'reverse-odd-levels-binary-tree': `def reverseOddLevelsRunner(arr):
+    root = __from_array__(arr)
+    def dfs(left, right, level):
+        if left is None or right is None:
+            return
+        if level % 2 == 1:
+            left.val, right.val = right.val, left.val
+        dfs(left.left, right.right, level + 1)
+        dfs(left.right, right.left, level + 1)
+    if root:
+        dfs(root.left, root.right, 1)
+    return __to_array__(root)
+`,
+
+  'find-closest-node-to-given-two-nodes': `def closestMeetingNode(edges, node1, node2):
+    raw = edges.to_py() if hasattr(edges, 'to_py') else list(edges)
+    e = [int(x) for x in raw]
+    n = len(e)
+    def get_dist(start):
+        d = [-1] * n
+        cur, dist = start, 0
+        while cur != -1 and d[cur] == -1:
+            d[cur] = dist
+            dist += 1
+            cur = e[cur]
+        return d
+    d1, d2 = get_dist(int(node1)), get_dist(int(node2))
+    ans, min_dist = -1, float('inf')
+    for i in range(n):
+        if d1[i] != -1 and d2[i] != -1:
+            md = max(d1[i], d2[i])
+            if md < min_dist:
+                min_dist = md
+                ans = i
+    return ans
+`,
+
+  'number-of-flowers-in-full-bloom': `def fullBloomFlowers(flowers, people):
+    import bisect
+    raw_fl = flowers.to_py() if hasattr(flowers, 'to_py') else list(flowers)
+    fl = [list(x.to_py() if hasattr(x, 'to_py') else x) for x in raw_fl]
+    raw_pp = people.to_py() if hasattr(people, 'to_py') else list(people)
+    pp = [int(x) for x in raw_pp]
+    starts = sorted(int(f[0]) for f in fl)
+    ends = sorted(int(f[1]) for f in fl)
+    return [bisect.bisect_right(starts, t) - bisect.bisect_left(ends, t) for t in pp]
+`,
+
+  'most-beautiful-item-for-each-query': `def maximumBeauty(items, queries):
+    import bisect
+    raw_it = items.to_py() if hasattr(items, 'to_py') else list(items)
+    its = [list(x.to_py() if hasattr(x, 'to_py') else x) for x in raw_it]
+    its.sort(key=lambda x: x[0])
+    for i in range(1, len(its)):
+        its[i][1] = max(its[i][1], its[i-1][1])
+    prices = [x[0] for x in its]
+    raw_q = queries.to_py() if hasattr(queries, 'to_py') else list(queries)
+    qq = [int(x) for x in raw_q]
+    result = []
+    for q in qq:
+        idx = bisect.bisect_right(prices, q) - 1
+        result.append(its[idx][1] if idx >= 0 else 0)
+    return result
+`,
 };

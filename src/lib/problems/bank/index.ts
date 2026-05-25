@@ -1324,6 +1324,16 @@ import { problem as splitArrayIntoConsecutiveSubsequences } from './split-array-
 import { problem as restoreTheArrayFromAdjacentPairs } from './restore-the-array-from-adjacent-pairs';
 import { problem as monotoneIncreasingDigits } from './monotone-increasing-digits';
 import { problem as constructKPalindromeStrings } from './construct-k-palindrome-strings';
+import { problem as pushDominoes } from './push-dominoes';
+import { problem as largestMergeOfTwoStrings } from './largest-merge-of-two-strings';
+import { problem as removeCoveredIntervals } from './remove-covered-intervals';
+import { problem as minimizeArrayValue } from './minimize-array-value';
+import { problem as validateIpAddress } from './validate-ip-address';
+import { problem as maximumSumHourglass } from './maximum-sum-hourglass';
+import { problem as reverseOddLevelsBinaryTree } from './reverse-odd-levels-binary-tree';
+import { problem as findClosestNodeToGivenTwoNodes } from './find-closest-node-to-given-two-nodes';
+import { problem as numberOfFlowersInFullBloom } from './number-of-flowers-in-full-bloom';
+import { problem as mostBeautifulItemForEachQuery } from './most-beautiful-item-for-each-query';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2696,4 +2706,14 @@ export const problems: readonly Problem[] = [
   restoreTheArrayFromAdjacentPairs,
   monotoneIncreasingDigits,
   constructKPalindromeStrings,
+  pushDominoes,
+  largestMergeOfTwoStrings,
+  removeCoveredIntervals,
+  minimizeArrayValue,
+  validateIpAddress,
+  maximumSumHourglass,
+  reverseOddLevelsBinaryTree,
+  findClosestNodeToGivenTwoNodes,
+  numberOfFlowersInFullBloom,
+  mostBeautifulItemForEachQuery,
 ];
