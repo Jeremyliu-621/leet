@@ -1448,6 +1448,11 @@ import { problem as greatestEnglishLetterInUpperAndLowerCase } from './greatest-
 import { problem as reformatTheString } from './reformat-the-string';
 import { problem as findNUniqueIntegersSumUpToZero } from './find-n-unique-integers-sum-up-to-zero';
 import { problem as checkArrayFormationThroughConcatenation } from './check-array-formation-through-concatenation';
+import { problem as minimizeStringLength } from './minimize-string-length';
+import { problem as findScoreOfArrayAfterMarkingElements } from './find-score-of-array-after-marking-elements';
+import { problem as elementsAppearingMoreThan25Percent } from './elements-appearing-more-than-25-percent';
+import { problem as makeStringASubsequenceUsingCyclicIncrements } from './make-string-a-subsequence-using-cyclic-increments';
+import { problem as numberOfBeautifulIntegersInRange } from './number-of-beautiful-integers-in-range';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2944,4 +2949,9 @@ export const problems: readonly Problem[] = [
   reformatTheString,
   findNUniqueIntegersSumUpToZero,
   checkArrayFormationThroughConcatenation,
+  minimizeStringLength,
+  findScoreOfArrayAfterMarkingElements,
+  elementsAppearingMoreThan25Percent,
+  makeStringASubsequenceUsingCyclicIncrements,
+  numberOfBeautifulIntegersInRange,
 ];

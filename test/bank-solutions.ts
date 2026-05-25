@@ -19312,4 +19312,73 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
+  'minimize-string-length': (s: unknown) => new Set(s as string).size,
+
+  'find-score-of-array-after-marking-elements': (nums: unknown) => {
+    const arr = nums as number[];
+    const n = arr.length;
+    const indexed = arr.map((v, i) => [v, i] as [number, number]);
+    indexed.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    const marked = new Array(n).fill(false) as boolean[];
+    let score = 0;
+    for (const [v, i] of indexed) {
+      if (!marked[i]) {
+        score += v;
+        marked[i] = true;
+        if (i > 0) marked[i - 1] = true;
+        if (i < n - 1) marked[i + 1] = true;
+      }
+    }
+    return score;
+  },
+
+  'elements-appearing-more-than-25-percent': (arr: unknown) => {
+    const a = arr as number[];
+    const n = a.length;
+    const threshold = Math.floor(n / 4);
+    for (let i = 0; i < n - threshold; i++) {
+      if (a[i] === a[i + threshold]) return a[i];
+    }
+    return a[n - 1]!;
+  },
+
+  'make-string-a-subsequence-using-cyclic-increments': (str1: unknown, str2: unknown) => {
+    const s1 = str1 as string, s2 = str2 as string;
+    let j = 0;
+    for (let i = 0; i < s1.length && j < s2.length; i++) {
+      const c1 = s1.charCodeAt(i) - 97;
+      const c2 = s2.charCodeAt(j) - 97;
+      if (c1 === c2 || (c1 + 1) % 26 === c2) j++;
+    }
+    return j === s2.length;
+  },
+
+  'number-of-beautiful-integers-in-range': (low: unknown, high: unknown, k: unknown) => {
+    const kk = k as number;
+    function countUpTo(n: number): number {
+      if (n <= 0) return 0;
+      const digits = String(n).split('').map(Number);
+      const len = digits.length;
+      const memo = new Map<string, number>();
+      function dp(pos: number, tight: boolean, diff: number, rem: number, started: boolean): number {
+        if (pos === len) return (started && diff === 0 && rem === 0) ? 1 : 0;
+        const key = `${pos},${tight ? 1 : 0},${diff},${rem},${started ? 1 : 0}`;
+        if (memo.has(key)) return memo.get(key)!;
+        const limit = tight ? digits[pos]! : 9;
+        let res = 0;
+        for (let d = 0; d <= limit; d++) {
+          const nt = tight && d === limit;
+          const ns = started || d > 0;
+          const nd = ns ? diff + (d % 2 === 0 ? 1 : -1) : 0;
+          const nr = ns ? (rem * 10 + d) % kk : 0;
+          res += dp(pos + 1, nt, nd, nr, ns);
+        }
+        memo.set(key, res);
+        return res;
+      }
+      return dp(0, true, 0, 0, false);
+    }
+    return countUpTo(high as number) - countUpTo((low as number) - 1);
+  },
+
 };

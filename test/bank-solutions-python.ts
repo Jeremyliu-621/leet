@@ -19331,4 +19331,81 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
     return True
 `,
 
+  'minimize-string-length': `def minimizedStringLength(s):
+    return len(set(str(s)))
+`,
+
+  'find-score-of-array-after-marking-elements': `def findScore(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    indexed = sorted(enumerate(nums), key=lambda x: (x[1], x[0]))
+    marked = [False] * n
+    score = 0
+    for i, v in indexed:
+        if not marked[i]:
+            score += v
+            marked[i] = True
+            if i > 0:
+                marked[i - 1] = True
+            if i < n - 1:
+                marked[i + 1] = True
+    return score
+`,
+
+  'elements-appearing-more-than-25-percent': `def findSpecialInteger(arr):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    n = len(arr)
+    threshold = n // 4
+    for i in range(n - threshold):
+        if arr[i] == arr[i + threshold]:
+            return arr[i]
+    return arr[-1]
+`,
+
+  'make-string-a-subsequence-using-cyclic-increments': `def canMakeSubsequence(str1, str2):
+    str1 = str(str1)
+    str2 = str(str2)
+    j = 0
+    for i in range(len(str1)):
+        if j == len(str2):
+            break
+        c1 = ord(str1[i]) - ord('a')
+        c2 = ord(str2[j]) - ord('a')
+        if c1 == c2 or (c1 + 1) % 26 == c2:
+            j += 1
+    return j == len(str2)
+`,
+
+  'number-of-beautiful-integers-in-range': `def numberOfBeautifulIntegers(low, high, k):
+    from functools import lru_cache
+    low = int(low)
+    high = int(high)
+    k = int(k)
+
+    def count_up_to(n):
+        if n <= 0:
+            return 0
+        digits = [int(d) for d in str(n)]
+        le = len(digits)
+
+        @lru_cache(maxsize=None)
+        def dp(pos, tight, diff, rem, started):
+            if pos == le:
+                return 1 if (started and diff == 0 and rem == 0) else 0
+            limit = digits[pos] if tight else 9
+            res = 0
+            for d in range(0, limit + 1):
+                nt = tight and d == limit
+                ns = started or d > 0
+                nd = diff + (1 if d % 2 == 0 else -1) if ns else 0
+                nr = (rem * 10 + d) % k if ns else 0
+                res += dp(pos + 1, nt, nd, nr, ns)
+            return res
+
+        result = dp(0, True, 0, 0, False)
+        dp.cache_clear()
+        return result
+
+    return count_up_to(high) - count_up_to(low - 1)
+`,
 };
