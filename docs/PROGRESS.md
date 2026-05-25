@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 594+ problems; 2044 tests; growing toward 600+.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (2044 tests passing).
-**Next up:** Continue growing bank toward 600+; more easy/medium/hard problems. Browser-zoom QA (L).
+**Current focus:** Bank at 600 problems; 2071 tests; milestone reached!
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (2071 tests passing).
+**Next up:** Continue growing bank beyond 600; more medium/hard problems. Browser-zoom QA (L).
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -296,6 +296,7 @@ Still pending:
 - [x] **5 more new problems** — minimum-cost-for-tickets (dp/medium), stone-game-ii (dp/medium), maximum-width-ramp (arrays/hard), check-if-array-pairs-divisible-by-k (arrays+hash-map/medium), find-k-th-smallest-pair-distance (binary-search+sliding-window/hard); bank at 584 tests.
 - [x] **5 more new problems** — valid-triangle-number (arrays+two-pointers/medium), max-number-k-sum-pairs (arrays+hash-map/medium), minimum-time-rope-colorful (arrays+two-pointers/medium), shortest-bridge (graph/hard), number-of-subsequences-target-sum (arrays+two-pointers/medium); 2026 tests; bank at 589.
 - [x] **5 more new problems** — car-pooling (arrays/medium), most-profit-assigning-work (binary-search/medium), fruit-into-baskets (sliding-window/medium), minimum-swaps-string-balanced (arrays/medium), sum-of-subarray-ranges (arrays+stack/medium); 2044 tests; bank at 594+.
+- [x] **🎉 600-problem milestone** — reverse-words-in-string-iii, maximum-product-adjacent-elements, split-string-balance, increasing-decreasing-string, students-unable-to-eat-lunch, create-target-array-given-order, maximum-ascending-subarray-sum, minimum-consecutive-cards-pickup, divisor-game, minimum-time-visiting-all-points, largest-local-values-matrix, percentage-letter-in-string, number-of-weak-characters; 2071 tests; bank at 600.
 
 ---
 
