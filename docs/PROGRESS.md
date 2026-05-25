@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1262 problems; 4014 tests green.
+**Current focus:** Bank at 1265 problems; 4023 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems; UI/UX polish; Options/popup improvements.
 
@@ -360,6 +360,7 @@ Still pending:
 - [x] **5 more classic problems (Batch 25)** — find-largest-value-each-tree-row (tree/medium, BFS max per level), find-bottom-left-tree-value (tree/medium, BFS leftmost last row), most-stones-removed-same-row-or-column (graph/medium, Union-Find), count-unreachable-pairs-of-nodes (graph/medium, DFS component counting), my-calendar-i (arrays+binary-search/medium, interval overlap); bank at **1254**; 3990 tests.
 - [x] **3 more classic problems (Batch 26)** — find-players-with-zero-or-one-losses (hash-map/medium), count-unreachable-pairs-after-removing-vertices (graph/medium, Union-Find), maximum-value-at-given-index-in-bounded-array (binary-search/medium, BigInt for overflow safety); bank at **1257**; 3999 tests.
 - [x] **5 more classic problems (Batch 27)** — minimum-area-rectangle (arrays+hash-map/medium, diagonal O(n^2)), minimum-operations-to-halve-array-sum (heap/medium, greedy), maximum-binary-string-after-change (strings/medium, single-zero placement), circular-array-loop (arrays+two-pointers/medium, Floyd's + direction guard), longest-arithmetic-subsequence-of-given-difference (dp+hash-map/medium, O(n)); bank at **1262**; 4014 tests.
+- [x] **3 more classic problems (Batch 28)** — time-needed-to-buy-tickets (arrays/easy, formula), number-of-subarrays-with-bounded-maximum (sliding-window/medium, two-pointer dp), kth-smallest-element-in-bst (tree/medium, inorder traversal with BST preamble); bank at **1265**; 4023 tests.
 
 ---
 
