@@ -12308,4 +12308,139 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  'sum-of-all-odd-length-subarrays': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    let total = 0;
+    for (let start = 0; start < arr.length; start++) {
+      for (let len = 1; start + len <= arr.length; len += 2) {
+        for (let i = start; i < start + len; i++) total += (arr[i] as number);
+      }
+    }
+    return total;
+  },
+
+  'count-of-integers-with-odd-digit-sum': (...args: unknown[]) => {
+    const num = args[0] as number;
+    let count = 0;
+    for (let i = 1; i <= num; i++) {
+      const s = String(i).split('').reduce((a, d) => a + +d, 0);
+      if (s % 2 === 1) count++;
+    }
+    return count;
+  },
+
+  'replace-all-digits-with-characters': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let res = '';
+    for (let i = 0; i < s.length; i++) {
+      if (i % 2 === 0) res += s[i];
+      else res += String.fromCharCode(s.charCodeAt(i - 1) + parseInt(s[i] as string));
+    }
+    return res;
+  },
+
+  'minimum-moves-to-convert-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let count = 0;
+    let i = 0;
+    while (i < s.length) {
+      if (s[i] === 'X') { count++; i += 3; }
+      else i++;
+    }
+    return count;
+  },
+
+  'minimum-recolors-to-get-k-consecutive-black-blocks': (...args: unknown[]) => {
+    const blocks = args[0] as string;
+    const k = args[1] as number;
+    let whites = 0;
+    for (let i = 0; i < k; i++) if (blocks[i] === 'W') whites++;
+    let min = whites;
+    for (let i = k; i < blocks.length; i++) {
+      if (blocks[i] === 'W') whites++;
+      if (blocks[i - k] === 'W') whites--;
+      min = Math.min(min, whites);
+    }
+    return min;
+  },
+
+  'convert-the-temperature': (...args: unknown[]) => {
+    const celsius = args[0] as number;
+    return [celsius + 273.15, celsius * 1.80 + 32.00];
+  },
+
+  'sorting-the-sentence': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const words = s.split(' ');
+    words.sort((a, b) => +(a[a.length - 1] as string) - +(b[b.length - 1] as string));
+    return words.map(w => w.slice(0, -1)).join(' ');
+  },
+
+  'find-the-maximum-divisibility-score': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const divisors = args[1] as number[];
+    let bestScore = -1, bestDiv = Infinity;
+    for (const d of divisors) {
+      const score = nums.filter(n => n % d === 0).length;
+      if (score > bestScore || (score === bestScore && d < bestDiv)) {
+        bestScore = score; bestDiv = d;
+      }
+    }
+    return bestDiv;
+  },
+
+  'minimum-amount-of-time-to-fill-cups': (...args: unknown[]) => {
+    const amount = args[0] as number[];
+    const sum = amount.reduce((a, b) => a + b, 0);
+    return Math.max(Math.max(...amount), Math.ceil(sum / 2));
+  },
+
+  'append-characters-to-string-to-make-subsequence': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const t = args[1] as string;
+    let j = 0;
+    for (let i = 0; i < s.length && j < t.length; i++) {
+      if (s[i] === t[j]) j++;
+    }
+    return t.length - j;
+  },
+
+  'count-total-number-of-colored-cells': (...args: unknown[]) => {
+    const n = args[0] as number;
+    return 2 * n * n - 2 * n + 1;
+  },
+
+  'difference-between-element-sum-and-digit-sum-of-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const elementSum = nums.reduce((a, b) => a + b, 0);
+    const digitSum = nums.flatMap(n => String(n).split('')).reduce((a, d) => a + +d, 0);
+    return Math.abs(elementSum - digitSum);
+  },
+
+  'minimum-length-of-string-after-deleting-similar-ends': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let left = 0, right = s.length - 1;
+    while (left < right && s[left] === s[right]) {
+      const c = s[left];
+      while (left <= right && s[left] === c) left++;
+      while (left <= right && s[right] === c) right--;
+    }
+    return right - left + 1;
+  },
+
+  'maximum-number-of-vowels-in-substring-of-given-length': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    const vowels = new Set('aeiou');
+    let count = 0;
+    for (let i = 0; i < k; i++) if (vowels.has(s[i] as string)) count++;
+    let max = count;
+    for (let i = k; i < s.length; i++) {
+      if (vowels.has(s[i] as string)) count++;
+      if (vowels.has(s[i - k] as string)) count--;
+      max = Math.max(max, count);
+    }
+    return max;
+  },
+
 };

@@ -11778,4 +11778,146 @@ def commonFactors(a, b):
     a, b = int(a), int(b)
     return sum(1 for i in range(1, min(a, b) + 1) if a % i == 0 and b % i == 0)
 `,
+
+  'sum-of-all-odd-length-subarrays': `
+def sumOddLengthSubarrays(arr):
+    arr_list = [int(x) for x in arr]
+    total = 0
+    n = len(arr_list)
+    for start in range(n):
+        for length in range(1, n - start + 1, 2):
+            total += sum(arr_list[start:start + length])
+    return total
+`,
+
+  'count-of-integers-with-odd-digit-sum': `
+def countOdd(num):
+    count = 0
+    for i in range(1, int(num) + 1):
+        if sum(int(d) for d in str(i)) % 2 == 1:
+            count += 1
+    return count
+`,
+
+  'replace-all-digits-with-characters': `
+def replaceDigits(s):
+    res = []
+    for i, c in enumerate(s):
+        if i % 2 == 0:
+            res.append(c)
+        else:
+            res.append(chr(ord(res[-1]) + int(c)))
+    return ''.join(res)
+`,
+
+  'minimum-moves-to-convert-string': `
+def minimumMoves(s):
+    count = 0
+    i = 0
+    while i < len(s):
+        if s[i] == 'X':
+            count += 1
+            i += 3
+        else:
+            i += 1
+    return count
+`,
+
+  'minimum-recolors-to-get-k-consecutive-black-blocks': `
+def minimumRecolors(blocks, k):
+    k = int(k)
+    whites = sum(1 for c in blocks[:k] if c == 'W')
+    min_w = whites
+    for i in range(k, len(blocks)):
+        if blocks[i] == 'W':
+            whites += 1
+        if blocks[i - k] == 'W':
+            whites -= 1
+        min_w = min(min_w, whites)
+    return min_w
+`,
+
+  'convert-the-temperature': `
+def convertTemperature(celsius):
+    celsius = float(celsius)
+    return [celsius + 273.15, celsius * 1.80 + 32.00]
+`,
+
+  'sorting-the-sentence': `
+def sortSentence(s):
+    words = s.split()
+    words.sort(key=lambda w: int(w[-1]))
+    return ' '.join(w[:-1] for w in words)
+`,
+
+  'find-the-maximum-divisibility-score': `
+def maxDivScore(nums, divisors):
+    nums_list = [int(x) for x in nums]
+    div_list = [int(x) for x in divisors]
+    best_score = -1
+    best_div = float('inf')
+    for d in div_list:
+        score = sum(1 for n in nums_list if n % d == 0)
+        if score > best_score or (score == best_score and d < best_div):
+            best_score = score
+            best_div = d
+    return best_div
+`,
+
+  'minimum-amount-of-time-to-fill-cups': `
+def fillCups(amount):
+    amount_list = [int(x) for x in amount]
+    total = sum(amount_list)
+    return max(max(amount_list), (total + 1) // 2)
+`,
+
+  'append-characters-to-string-to-make-subsequence': `
+def appendCharacters(s, t):
+    j = 0
+    for i in range(len(s)):
+        if j < len(t) and s[i] == t[j]:
+            j += 1
+    return len(t) - j
+`,
+
+  'count-total-number-of-colored-cells': `
+def coloredCells(n):
+    n = int(n)
+    return 2 * n * n - 2 * n + 1
+`,
+
+  'difference-between-element-sum-and-digit-sum-of-array': `
+def differenceOfSum(nums):
+    nums_list = [int(x) for x in nums]
+    element_sum = sum(nums_list)
+    digit_sum = sum(int(d) for n in nums_list for d in str(n))
+    return abs(element_sum - digit_sum)
+`,
+
+  'minimum-length-of-string-after-deleting-similar-ends': `
+def minimumLength(s):
+    left, right = 0, len(s) - 1
+    while left < right and s[left] == s[right]:
+        c = s[left]
+        while left <= right and s[left] == c:
+            left += 1
+        while left <= right and s[right] == c:
+            right -= 1
+    return right - left + 1
+`,
+
+  'maximum-number-of-vowels-in-substring-of-given-length': `
+def maxVowels(s, k):
+    k = int(k)
+    vowels = set('aeiou')
+    count = sum(1 for c in s[:k] if c in vowels)
+    max_count = count
+    for i in range(k, len(s)):
+        if s[i] in vowels:
+            count += 1
+        if s[i - k] in vowels:
+            count -= 1
+        max_count = max(max_count, count)
+    return max_count
+`,
 };

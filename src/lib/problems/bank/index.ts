@@ -996,6 +996,20 @@ import { problem as checkIfNumbersAreAscendingInSentence } from './check-if-numb
 import { problem as findXorBeautyOfArray } from './find-xor-beauty-of-array';
 import { problem as numberOfWordsThatCanBeTyped } from './number-of-words-that-can-be-typed';
 import { problem as numberOfCommonFactors } from './number-of-common-factors';
+import { problem as sumOfAllOddLengthSubarrays } from './sum-of-all-odd-length-subarrays';
+import { problem as countOfIntegersWithOddDigitSum } from './count-of-integers-with-odd-digit-sum';
+import { problem as replaceAllDigitsWithCharacters } from './replace-all-digits-with-characters';
+import { problem as minimumMovesToConvertString } from './minimum-moves-to-convert-string';
+import { problem as minimumRecolorsToGetKConsecutiveBlackBlocks } from './minimum-recolors-to-get-k-consecutive-black-blocks';
+import { problem as convertTheTemperature } from './convert-the-temperature';
+import { problem as sortingTheSentence } from './sorting-the-sentence';
+import { problem as findTheMaximumDivisibilityScore } from './find-the-maximum-divisibility-score';
+import { problem as minimumAmountOfTimeToFillCups } from './minimum-amount-of-time-to-fill-cups';
+import { problem as appendCharactersToStringToMakeSubsequence } from './append-characters-to-string-to-make-subsequence';
+import { problem as countTotalNumberOfColoredCells } from './count-total-number-of-colored-cells';
+import { problem as differenceBetweenElementSumAndDigitSumOfArray } from './difference-between-element-sum-and-digit-sum-of-array';
+import { problem as minimumLengthOfStringAfterDeletingSimilarEnds } from './minimum-length-of-string-after-deleting-similar-ends';
+import { problem as maximumNumberOfVowelsInSubstringOfGivenLength } from './maximum-number-of-vowels-in-substring-of-given-length';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2040,4 +2054,18 @@ export const problems: readonly Problem[] = [
   findXorBeautyOfArray,
   numberOfWordsThatCanBeTyped,
   numberOfCommonFactors,
+  sumOfAllOddLengthSubarrays,
+  countOfIntegersWithOddDigitSum,
+  replaceAllDigitsWithCharacters,
+  minimumMovesToConvertString,
+  minimumRecolorsToGetKConsecutiveBlackBlocks,
+  convertTheTemperature,
+  sortingTheSentence,
+  findTheMaximumDivisibilityScore,
+  minimumAmountOfTimeToFillCups,
+  appendCharactersToStringToMakeSubsequence,
+  countTotalNumberOfColoredCells,
+  differenceBetweenElementSumAndDigitSumOfArray,
+  minimumLengthOfStringAfterDeletingSimilarEnds,
+  maximumNumberOfVowelsInSubstringOfGivenLength,
 ];
