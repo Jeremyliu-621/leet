@@ -20815,6 +20815,8 @@ def secondMinimum(n, edges, time, change):
         if f > 0:
             used.add(f)
     return deletions
+`,
+
   'kth-smallest-in-sorted-matrix': `def kthSmallest(matrix, k):
     matrix = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (matrix.to_py() if hasattr(matrix, 'to_py') else matrix)]
     n = len(matrix)
