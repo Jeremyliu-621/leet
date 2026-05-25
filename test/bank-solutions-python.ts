@@ -20343,5 +20343,82 @@ def secondMinimum(n, edges, time, change):
     arr = [str(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else list(nums))]
     arr.sort(key=lambda x: (len(x), x), reverse=True)
     return arr[int(k) - 1]
+
+`,
+
+  'trapping-rain-water-ii': `def trapRainWaterII(heightMap):
+    import heapq
+    m = len(heightMap)
+    n = len(heightMap[0]) if m > 0 else 0
+    if m < 3 or n < 3:
+        return 0
+    visited = [[False] * n for _ in range(m)]
+    heap = []
+    for r in range(m):
+        for c in range(n):
+            if r == 0 or r == m - 1 or c == 0 or c == n - 1:
+                heapq.heappush(heap, (heightMap[r][c], r, c))
+                visited[r][c] = True
+    water = 0
+    dirs = [(-1,0),(1,0),(0,-1),(0,1)]
+    while heap:
+        h, r, c = heapq.heappop(heap)
+        for dr, dc in dirs:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n and not visited[nr][nc]:
+                visited[nr][nc] = True
+                nh = heightMap[nr][nc]
+                if nh < h:
+                    water += h - nh
+                heapq.heappush(heap, (max(h, nh), nr, nc))
+    return water
+`,
+
+  'minimum-number-of-pushes-to-type-word-ii': `def minimumPushes(word):
+    from collections import Counter
+    freq = sorted(Counter(word).values(), reverse=True)
+    total = 0
+    for i, f in enumerate(freq):
+        total += f * (i // 8 + 1)
+    return total
+`,
+
+  'maximize-win-from-two-segments': `def maximizeWin(prizePositions, k):
+    n = len(prizePositions)
+    best = [0] * n
+    ans = 0
+    l = 0
+    for r in range(n):
+        while prizePositions[r] - prizePositions[l] > k:
+            l += 1
+        window_size = r - l + 1
+        best[r] = max(best[r - 1], window_size) if r > 0 else window_size
+        # Binary search for largest j with prizePositions[j] <= prizePositions[r] - k - 1
+        lo, hi, j = 0, r - 1, -1
+        limit = prizePositions[r] - k - 1
+        while lo <= hi:
+            mid = (lo + hi) // 2
+            if prizePositions[mid] <= limit:
+                j = mid
+                lo = mid + 1
+            else:
+                hi = mid - 1
+        ans = max(ans, window_size + (best[j] if j >= 0 else 0))
+    return ans
+`,
+
+  'minimum-swaps-to-group-all-ones-together-ii': `def minSwaps(nums):
+    n = len(nums)
+    k = sum(nums)
+    if k == 0:
+        return 0
+    window_ones = sum(nums[:k])
+    max_ones = window_ones
+    for i in range(1, n):
+        window_ones += nums[(i + k - 1) % n]
+        window_ones -= nums[(i - 1) % n]
+        if window_ones > max_ones:
+            max_ones = window_ones
+    return k - max_ones
 `,
 };

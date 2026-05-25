@@ -20344,4 +20344,125 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return arr[(k as number) - 1]!;
   },
 
+  'trapping-rain-water-ii': (...args: unknown[]) => {
+    const heightMap = args[0] as number[][];
+    const m = heightMap.length;
+    const n = heightMap[0]!.length;
+    if (m < 3 || n < 3) return 0;
+    // Min-heap simulation using sorted array
+    type Cell = { h: number; r: number; c: number };
+    const heap: Cell[] = [];
+    const visited: boolean[][] = Array.from({ length: m }, () => new Array(n).fill(false));
+    const push = (cell: Cell) => {
+      heap.push(cell);
+      let i = heap.length - 1;
+      while (i > 0) {
+        const parent = (i - 1) >> 1;
+        if (heap[parent]!.h <= heap[i]!.h) break;
+        [heap[parent], heap[i]] = [heap[i]!, heap[parent]!];
+        i = parent;
+      }
+    };
+    const pop = (): Cell => {
+      const top = heap[0]!;
+      const last = heap.pop()!;
+      if (heap.length > 0) {
+        heap[0] = last;
+        let i = 0;
+        while (true) {
+          const l = 2 * i + 1, r = 2 * i + 2;
+          let smallest = i;
+          if (l < heap.length && heap[l]!.h < heap[smallest]!.h) smallest = l;
+          if (r < heap.length && heap[r]!.h < heap[smallest]!.h) smallest = r;
+          if (smallest === i) break;
+          [heap[i], heap[smallest]] = [heap[smallest]!, heap[i]!];
+          i = smallest;
+        }
+      }
+      return top;
+    };
+    for (let r = 0; r < m; r++) {
+      for (let c = 0; c < n; c++) {
+        if (r === 0 || r === m - 1 || c === 0 || c === n - 1) {
+          push({ h: heightMap[r]![c]!, r, c });
+          visited[r]![c] = true;
+        }
+      }
+    }
+    let water = 0;
+    const dirs = [[-1,0],[1,0],[0,-1],[0,1]];
+    while (heap.length > 0) {
+      const { h, r, c } = pop();
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr!, nc = c + dc!;
+        if (nr < 0 || nr >= m || nc < 0 || nc >= n || visited[nr]![nc]) continue;
+        visited[nr]![nc] = true;
+        const nh = heightMap[nr]![nc]!;
+        if (nh < h) water += h - nh;
+        push({ h: Math.max(h, nh), r: nr, c: nc });
+      }
+    }
+    return water;
+  },
+
+  'minimum-number-of-pushes-to-type-word-ii': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const freq = new Array(26).fill(0);
+    for (const ch of word) freq[ch.charCodeAt(0) - 97]++;
+    const sorted = freq.filter(f => f > 0).sort((a, b) => b - a);
+    let total = 0;
+    for (let i = 0; i < sorted.length; i++) {
+      total += sorted[i]! * (Math.floor(i / 8) + 1);
+    }
+    return total;
+  },
+
+  'maximize-win-from-two-segments': (...args: unknown[]) => {
+    const prizePositions = args[0] as number[];
+    const k = args[1] as number;
+    const n = prizePositions.length;
+    const best = new Array(n).fill(0); // best[i] = max prizes in a single window with right index <= i
+    let ans = 0;
+    let l = 0;
+    for (let r = 0; r < n; r++) {
+      while (prizePositions[r]! - prizePositions[l]! > k) l++;
+      const windowSize = r - l + 1;
+      best[r] = r > 0 ? Math.max(best[r - 1]!, windowSize) : windowSize;
+      // Find rightmost index j where prizePositions[j] < prizePositions[r] - k
+      // (so that a segment ending at prizePositions[j] doesn't overlap with current segment starting at prizePositions[r]-k)
+      // Binary search for largest j with prizePositions[j] < prizePositions[l] - 0 (i.e., prizePositions[j] + k < prizePositions[r])
+      // More precisely: two segments don't overlap if right end of first < left end of second
+      // Left end of current window (right end at r) = prizePositions[r] - k
+      // We want prizePositions[j] + k < prizePositions[r] - k? No — we want prizePositions[j2] + k < prizePositions[l]
+      // where l is left of current window. But we track best[j] as max window up to index j.
+      // Find largest j with prizePositions[j] + k < prizePositions[l] * (prizePositions[r] - k)
+      // Actually find last index j where prizePositions[j] <= prizePositions[r] - k - 1
+      let lo = 0, hi = r - 1, j = -1;
+      const limit = prizePositions[r]! - k - 1;
+      while (lo <= hi) {
+        const mid = (lo + hi) >> 1;
+        if (prizePositions[mid]! <= limit) { j = mid; lo = mid + 1; }
+        else hi = mid - 1;
+      }
+      ans = Math.max(ans, windowSize + (j >= 0 ? best[j]! : 0));
+    }
+    return ans;
+  },
+
+  'minimum-swaps-to-group-all-ones-together-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const k = nums.reduce((s, x) => s + x, 0);
+    if (k === 0) return 0;
+    let windowOnes = 0;
+    for (let i = 0; i < k; i++) windowOnes += nums[i % n]!;
+    let maxOnes = windowOnes;
+    for (let i = 1; i < n; i++) {
+      windowOnes += nums[(i + k - 1) % n]!;
+      windowOnes -= nums[(i - 1) % n]!;
+      if (windowOnes > maxOnes) maxOnes = windowOnes;
+    }
+    return k - maxOnes;
+  },
+
 };

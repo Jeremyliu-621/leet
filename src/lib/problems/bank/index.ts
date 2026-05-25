@@ -1505,6 +1505,10 @@ import { problem as constructBinaryTreeFromInorderAndPostorderTraversal } from '
 import { problem as maximumNumberOfRemovableCharacters } from './maximum-number-of-removable-characters';
 import { problem as minimumSumOfSquaredDifference } from './minimum-sum-of-squared-difference';
 import { problem as findTheKthLargestIntegerInArray } from './find-the-kth-largest-integer-in-array';
+import { problem as trappingRainWaterII } from './trapping-rain-water-ii';
+import { problem as minimumNumberOfPushesToTypeWordII } from './minimum-number-of-pushes-to-type-word-ii';
+import { problem as maximizeWinFromTwoSegments } from './maximize-win-from-two-segments';
+import { problem as minimumSwapsToGroupAllOnesTogether } from './minimum-swaps-to-group-all-ones-together-ii';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3058,4 +3062,8 @@ export const problems: readonly Problem[] = [
   maximumNumberOfRemovableCharacters,
   minimumSumOfSquaredDifference,
   findTheKthLargestIntegerInArray,
+  trappingRainWaterII,
+  minimumNumberOfPushesToTypeWordII,
+  maximizeWinFromTwoSegments,
+  minimumSwapsToGroupAllOnesTogether,
 ];
