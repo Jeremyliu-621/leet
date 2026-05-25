@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1115 problems; 3613 tests green.
+**Current focus:** Bank at 1125 problems; 3643 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems; UI/UX polish; Options/popup improvements.
 
@@ -323,6 +323,7 @@ Still pending:
 - [x] **10 more from parallel session** — russian-doll-envelopes, binary-tree-cameras, linked-list-cycle-ii, add-two-numbers-ii, maximum-performance-of-team, minimum-interval-to-include-each-query, minimum-number-of-taps, online-election, count-of-range-sum, design-linked-list; bank at **1096**; 3556 tests.
 - [x] **9 more classic problems (Batch 8)** — maximum-product-subarray, delete-and-earn, minimum-time-collect-apples, xor-queries-of-subarray, sequential-digits, count-sub-islands, maximum-profit-assignment, longest-palindromic-substring, max-product-word-lengths; bank at **1105**; 3583 tests.
 - [x] **10 classic hard problems (Batch 9)** — sliding-window-median, minimum-difficulty-of-job-schedule, tallest-billboard, concatenated-words, max-value-of-equation, number-of-music-playlists, minimum-number-of-removals-to-make-mountain-array, count-different-palindromic-subsequences, painting-the-walls, shortest-path-to-get-all-keys; bank at **1115**; 3613 tests.
+- [x] **10 more classic hard problems (Batch 10)** — stone-game-vii, stone-game-v, maximum-sum-three-non-overlapping-subarrays, minimum-cost-to-merge-stones, palindrome-partitioning-iii, maximum-height-by-stacking-cuboids, minimum-number-of-days-to-eat-n-oranges, best-team-with-no-conflicts, number-of-ways-to-form-target-given-dictionary, minimum-xor-sum-of-two-arrays; bank at **1125**; 3643 tests.
 - [x] **10 more problems + 1** (in previous session) — find-all-duplicates-in-array, check-if-word-occurs-as-prefix, count-subarrays-score-less-than-k, excel-sheet-column-number, jump-game-vii, longest-square-streak, maximum-beauty-array-after-applying-operation, maximum-product-after-k-increments, pairs-of-songs-divisible-60, find-all-duplicates (bank at 830); 2758 tests.
 - [x] **11 more problems** — find-the-index-of-first-occurrence, integer-replacement, number-of-smooth-descent-periods, maximum-matrix-sum, count-nodes-with-highest-score, find-right-interval, circular-sentence, minimum-garden-perimeter, group-people-given-group-size, count-number-of-bad-pairs, minimum-changes-to-make-binary-string-beautiful; bank at 840; 2791 tests.
 - [x] **9 more problems** — remove-all-occurrences-of-substring, minimum-time-to-complete-trips, minimum-speed-to-arrive-on-time, sum-of-beauty-in-the-array, find-all-possible-recipes, take-k-of-each-character-from-left-and-right, minimum-operations-xor-equal-k, maximum-odd-binary-number, minimum-equal-sum-two-arrays; bank at 849; 2818 tests.
