@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 761 problems; 2554 tests green.
+**Current focus:** Bank at 783 problems; 2620 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing bank toward 800; UI/UX polish, accessibility, marketing site update.
 
@@ -312,6 +312,7 @@ Still pending:
 - [x] **🎉 700-problem milestone!** — arrange-coins, nth-digit, find-the-winner (Josephus), count-negative-numbers, can-make-arithmetic-progression; 2398 tests; bank at 700+.
 - [x] **21 more problems** (batches 8-9, remote merge) — design-hashmap, contiguous-array, shifting-letters, convert-bst-to-greater-tree, distribute-coins-binary-tree, flip-columns-for-maximum-equal-rows, delete-columns-sorted-iii, minimum-bit-flips, smallest-even-multiple, special-array-greater-equal, count-pairs-two-arrays, convert-time-hhmm, find-players-zero-losses, check-distances-fair-nodes, minimum-rounds-complete-tasks, largest-combination-bitwise-and + remote: final-value-after-operations, find-original-array-doubled, etc.; bank at 741; 2494 tests.
 - [x] **20 more problems** (batch 10, remote merge) — best-time-buy-sell-transaction-fee, maximal-rectangle, stone-game-iii, maximum-profit-job-scheduling, count-of-smaller-numbers-after-self, k-th-symbol-in-grammar, longest-substring-without-repeating + remote: sort-the-people, baseball-game, find-champion-graph, count-digits, apply-operations, minimum-moves-to-seat, rings-and-rods, find-gcd-of-array, keep-multiplying-found-values, percentages-of-letter, maximum-bags-full-capacity, find-subsequence-of-length-k, odd-string-difference; bank at 761; 2554 tests.
+- [x] **22 more problems** (batch 11, remote merge) — count-operations-to-obtain-zero, design-underground-system, sort-vowels-in-a-string, minimum-time-to-repair-cars, number-of-matching-subsequences, beautiful-arrangement-ii, lfu-cache, smallest-range-covering-k-lists, bus-routes, maximum-score-words-formed + remote: decompress-run-length-encoding, check-almost-equivalent-strings, minimum-value-positive-steps, check-if-all-as-before-bs, check-if-word-equals-summation, ways-to-buy-pens-pencils, check-array-sorted-rotated, interpret-string, merge-similar-items, count-good-rectangles, maximum-population-year, find-kth-bit-nth-binary-string; bank at 783; 2620 tests.
 
 ---
 
