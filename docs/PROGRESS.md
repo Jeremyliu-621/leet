@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1482 problems; 4734 tests green.
+**Current focus:** Bank at 1487 problems; 4749 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank (Batch 55+); marketing site stat update at 1500.
+**Next up:** Continue growing problem bank (Batch 56+); marketing site stat update at 1500 (13 more problems needed).
+
+### Batch 55 (2026-05-25)
+Added 5 problems: `alternating-groups-ii` (sliding-window/medium, duplicate-array circular window), `count-of-connected-components` (graph/medium, Union-Find with path compression + rank), `longest-non-decreasing-subarray-from-two-arrays` (dp/medium, rolling DP checking 4 transition cases), `report-spam-message` (hash-map/easy, set-based banned lookup ≥2), `distribute-elements-into-two-arrays-ii` (arrays/hard, O(n²) greaterCount). Bank at **1487**; 4749 tests.
 
 ### UI/UX polish (2026-05-25)
 - **Back-to-settings link in practice mode**: TopBar now shows "← settings" link back to Options/problem browser when in practice mode (no blocked target URL). settingsHref computed via chrome.runtime.getURL.
