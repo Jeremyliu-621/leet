@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1185 problems; 3829 tests green.
+**Current focus:** Bank at 1192 problems; 3850 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems; UI/UX polish; Options/popup improvements.
 
@@ -347,6 +347,7 @@ Still pending:
 - [x] **9 more classic problems (Batch 15)** — knight-probability-in-chessboard (medium/dp), minimum-distance-bst-nodes (easy/tree), second-minimum-node-binary-tree (easy/tree), meeting-rooms-iii (hard/heap), minimum-obstacle-removal-to-reach-corner (hard/graph), max-sum-of-rectangle-no-larger-than-k (hard/arrays+binary-search), count-unique-characters-of-all-substrings (hard/strings+math), zuma-game (hard/dp+backtracking), find-longest-valid-obstacle-course (hard/binary-search+dp); bank at **1166**; 3772 tests.
 - [x] **10 more classic problems (Batch 16)** — best-sightseeing-pair (medium/arrays+dp), find-longest-substring-vowels-even (medium/hash-map+strings), reverse-substrings-between-parentheses (medium/stack+strings), design-stack-with-increment (medium/stack+arrays), minimum-number-of-frogs-croaking (medium/strings+hash-map), shortest-path-visiting-all-nodes (hard/graph+dp), minimum-number-of-work-sessions (medium/dp+backtracking), minimize-product-sum (medium/arrays+math), count-range-sum (hard/arrays+binary-search), all-paths-from-source-lead-to-destination (medium/graph); bank at **1176**; 3802 tests.
 - [x] **9 more classic problems (Batch 17)** — jump-game-v (dp/medium), word-subsets (strings/medium), max-chunks-to-make-sorted-ii (arrays/hard), count-ways-to-place-houses (dp/medium), stone-game-viii (dp/medium), stone-game-ix (math/medium), maximum-score-removing-stones (math/medium), number-of-atoms (strings/hard), find-all-people-with-secret (graph/hard); bank at **1185**; 3829 tests.
+- [x] **7 more classic problems (Batch 18)** — plates-between-candles (arrays/medium), minimum-cost-to-make-all-characters-equal (strings/medium), maximum-consecutive-floors-without-special-floors (arrays/medium), minimum-moves-to-reach-target-score (math/medium), maximum-segment-sum-after-removals (arrays/hard), prime-palindrome (math/medium), car-fleet-ii (stack/hard); bank at **1192**; 3850 tests.
 
 ---
 
