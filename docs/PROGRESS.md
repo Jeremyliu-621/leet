@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1472 problems; 4704 tests green.
+**Current focus:** Bank at 1477 problems; 4719 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank (Batch 55+); marketing site stat update at 1500.
 
@@ -19,6 +19,12 @@
 - **Practice mode banner clarified**: NoTargetBanner text changed from "Standalone mode — no blocked site detected" to "Practice mode — solving here won't grant site access", consistent with header "practice mode" label.
 - **All hints revealed message**: HintsSection now shows "All hints revealed." after the last hint is shown.
 - **Target domain in header**: TopBar subtitle shows "unlock youtube.com" instead of generic "solve to unlock" when gate mode is active and domain is known.
+
+### Batch 53-remote (2026-05-25)
+Added 5 problems: `kth-smallest-in-sorted-matrix` (heap+binary-search/medium, binary search on value range with column-walk count), `the-skyline-problem` (heap/hard, sweep-line with sorted active heights), `island-perimeter` (arrays/easy, count exposed edges), `matrix-chain-multiplication` (dp/hard, classic MCOP interval DP), `binary-search-tree-iterator` (tree/medium, stack-based lazy in-order traversal). Bank at **1477**; 4719 tests.
+
+### fix(test): repair merge conflict artifacts (2026-05-25)
+Fixed missing closing backtick+comma after `minimum-deletions` entry in `bank-solutions-python.ts`; removed duplicate Batch 52 solution block (87 lines) from `bank-solutions.ts` introduced by rebase merge.
 
 ### Batch 52 (2026-05-25)
 Added 5 problems: `three-sum-smaller` (two-pointers/medium, sort + two-pointer count), `most-common-word` (strings/easy, regex strip + hash-map frequency), `student-attendance-record-ii` (dp/hard, 6-state DP counting valid length-n records mod 1e9+7), `permutation-sequence` (math/hard, factorial number system to find k-th permutation directly), `maximum-sum-obtained-of-any-permutation` (arrays/medium, difference array range coverage + greedy assignment). Bank at **1452**; 4644 tests.
