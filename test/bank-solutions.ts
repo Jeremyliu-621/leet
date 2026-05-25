@@ -8646,4 +8646,75 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[target];
   },
 
+  'valid-parentheses': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const stack: string[] = [];
+    const map: Record<string, string> = { ')': '(', ']': '[', '}': '{' };
+    for (const c of s) {
+      if ('([{'.includes(c)) stack.push(c);
+      else if (stack.pop() !== map[c]) return false;
+    }
+    return stack.length === 0;
+  },
+
+  'evaluate-reverse-polish-notation': (...args: unknown[]) => {
+    const tokens = args[0] as string[];
+    const stack: number[] = [];
+    for (const t of tokens) {
+      if (['+', '-', '*', '/'].includes(t)) {
+        const b = stack.pop()!, a = stack.pop()!;
+        if (t === '+') stack.push(a + b);
+        else if (t === '-') stack.push(a - b);
+        else if (t === '*') stack.push(a * b);
+        else stack.push(Math.trunc(a / b));
+      } else stack.push(parseInt(t));
+    }
+    return stack[0];
+  },
+
+  'move-zeroes': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let pos = 0;
+    for (const n of nums) { if (n !== 0) nums[pos++] = n; }
+    while (pos < nums.length) nums[pos++] = 0;
+    return nums;
+  },
+
+  'merge-strings-alternately': (...args: unknown[]) => {
+    const word1 = args[0] as string, word2 = args[1] as string;
+    let result = '';
+    let i = 0;
+    while (i < word1.length || i < word2.length) {
+      if (i < word1.length) result += word1[i];
+      if (i < word2.length) result += word2[i];
+      i++;
+    }
+    return result;
+  },
+
+  'uncrossed-lines': (...args: unknown[]) => {
+    const nums1 = args[0] as number[], nums2 = args[1] as number[];
+    const m = nums1.length, n = nums2.length;
+    const dp: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+    for (let i = 1; i <= m; i++)
+      for (let j = 1; j <= n; j++)
+        if (nums1[i - 1] === nums2[j - 1]) dp[i]![j] = dp[i - 1]![j - 1]! + 1;
+        else dp[i]![j] = Math.max(dp[i - 1]![j]!, dp[i]![j - 1]!);
+    return dp[m]![n];
+  },
+
+  'course-schedule-iii': (...args: unknown[]) => {
+    const courses = (args[0] as number[][]).map(c => [...c]);
+    courses.sort((a, b) => a[1]! - b[1]!);
+    const heap: number[] = [];
+    let time = 0;
+    for (const [d, end] of courses) {
+      time += d!;
+      heap.push(d!);
+      heap.sort((a, b) => b - a);
+      if (time > end!) { time -= heap.shift()!; }
+    }
+    return heap.length;
+  },
+
 };

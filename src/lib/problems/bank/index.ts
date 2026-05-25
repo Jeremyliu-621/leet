@@ -690,6 +690,12 @@ import { problem as minimumCostConnectPoints } from './minimum-cost-connect-poin
 import { problem as numberOfVisiblePeopleInQueue } from './number-of-visible-people-in-queue';
 import { problem as insertIntoBst } from './insert-into-bst';
 import { problem as combinationSumIv } from './combination-sum-iv';
+import { problem as validParentheses } from './valid-parentheses';
+import { problem as evaluateReversePolishNotation } from './evaluate-reverse-polish-notation';
+import { problem as moveZeroes } from './move-zeroes';
+import { problem as mergeStringsAlternately } from './merge-strings-alternately';
+import { problem as uncrossedLines } from './uncrossed-lines';
+import { problem as courseScheduleIII } from './course-schedule-iii';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1391,4 +1397,16 @@ export const problems: readonly Problem[] = [
   numberOfVisiblePeopleInQueue,
   // dp — medium (new)
   combinationSumIv,
+  // stack — easy (new)
+  validParentheses,
+  // stack — medium (new)
+  evaluateReversePolishNotation,
+  // arrays — easy (new)
+  moveZeroes,
+  // strings — easy (new)
+  mergeStringsAlternately,
+  // dp — medium (new)
+  uncrossedLines,
+  // heap — medium (new)
+  courseScheduleIII,
 ];

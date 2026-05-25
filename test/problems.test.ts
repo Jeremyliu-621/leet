@@ -67,6 +67,7 @@ describe('problem selector', () => {
       'minimum-string-length',
       'minimum-length-string-operations',
       'students-unable-to-eat-lunch',
+      'valid-parentheses',
     ] })).toBeUndefined();
   });
 

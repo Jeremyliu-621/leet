@@ -8088,4 +8088,87 @@ def combinationSum4(nums, target):
                 dp[i] += dp[i - n]
     return dp[target]
 `,
+
+  'valid-parentheses': `
+def isValid(s):
+    stack = []
+    mapping = {')': '(', ']': '[', '}': '{'}
+    for c in s:
+        if c in '([{':
+            stack.append(c)
+        elif not stack or stack.pop() != mapping[c]:
+            return False
+    return len(stack) == 0
+`,
+
+  'evaluate-reverse-polish-notation': `
+def evalRPN(tokens):
+    stack = []
+    tokens = list(tokens)
+    for t in tokens:
+        if t in ('+', '-', '*', '/'):
+            b, a = stack.pop(), stack.pop()
+            if t == '+': stack.append(a + b)
+            elif t == '-': stack.append(a - b)
+            elif t == '*': stack.append(a * b)
+            else: stack.append(int(a / b))
+        else:
+            stack.append(int(t))
+    return stack[0]
+`,
+
+  'move-zeroes': `
+def moveZeroes(nums):
+    nums = list(nums)
+    pos = 0
+    for n in nums:
+        if n != 0:
+            nums[pos] = n
+            pos += 1
+    while pos < len(nums):
+        nums[pos] = 0
+        pos += 1
+    return nums
+`,
+
+  'merge-strings-alternately': `
+def mergeAlternately(word1, word2):
+    result = []
+    i = 0
+    while i < len(word1) or i < len(word2):
+        if i < len(word1):
+            result.append(word1[i])
+        if i < len(word2):
+            result.append(word2[i])
+        i += 1
+    return ''.join(result)
+`,
+
+  'uncrossed-lines': `
+def maxUncrossedLines(nums1, nums2):
+    nums1, nums2 = list(nums1), list(nums2)
+    m, n = len(nums1), len(nums2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if nums1[i-1] == nums2[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    return dp[m][n]
+`,
+
+  'course-schedule-iii': `
+def scheduleCourse(courses):
+    courses = sorted([[d, e] for d, e in courses], key=lambda x: x[1])
+    heap = []
+    time = 0
+    for d, end in courses:
+        time += d
+        heap.append(d)
+        heap.sort(reverse=True)
+        if time > end:
+            time -= heap.pop(0)
+    return len(heap)
+`,
 };
