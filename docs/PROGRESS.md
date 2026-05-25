@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1144 problems; 3700 tests green.
+**Current focus:** Bank at 1149 problems; 3721 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems; UI/UX polish; Options/popup improvements.
 
@@ -342,6 +342,7 @@ Still pending:
 - [x] **Challenge page UX improvements** — array diff hints in TerminalPanel (shows index + length diff when expected/actual diverge); inline copy buttons on problem examples; Enter-key submit in CustomTestPanel; blocked-page "Try another challenge" button threading targetUrl through fail-challenge message.
 - [x] **Marketing site stats updated** — 1,100+ problems in all three stat locations.
 - [x] **9 new classic medium/hard problems (Batch 12)** — dota2-senate (medium/strings+stack), time-needed-to-inform-all-employees (medium/graph+tree), minesweeper (medium/graph+arrays), minimum-score-triangulation (medium/dp), score-after-flipping-matrix (medium/arrays), beautiful-array (hard/arrays+dp), recover-binary-search-tree (hard/tree), find-duplicate-subtrees (medium/tree+hash-map), all-possible-full-binary-trees (medium/tree+dp); bank at **1144**; 3700 tests.
+- [x] **8 new classic problems (Batch 13)** — cherry-pickup-ii (hard/dp), detonate-maximum-bombs (medium/graph), stone-game-vii (medium/dp), design-browser-history (medium/stack), knight-dialer (medium/dp), paint-house-iii (hard/dp), maximize-distance-to-closest-person (medium/arrays), minimum-number-of-vertices (medium/graph); bank at **1149**; 3721 tests.
 
 ---
 
