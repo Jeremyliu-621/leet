@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1383 problems; 4398 tests green.
+**Current focus:** Bank at 1385 problems; 4404 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems (Batch 43+); UI/UX polish; Options/popup improvements.
 
@@ -385,7 +385,8 @@ Still pending:
 - [x] **3 more classic problems (Batch 39-local)** — domino-and-tromino-tiling (dp/medium, f(n)=2f(n-1)+f(n-3) mod 1e9+7), number-of-lines-to-write-string (strings+arrays/easy, greedy line packing), find-the-minimum-and-maximum-number-of-nodes-between-critical-points (linked-list/medium, scan critical points min-consecutive/max-span gap); bank at **1374**; 4362 tests.
 - [x] **3 more classic problems (Batch 41-tree)** — binary-tree-inorder-traversal (tree/easy, iterative stack-based), binary-tree-preorder-traversal (tree/easy, iterative stack-based), binary-tree-postorder-traversal (tree/easy, iterative reverse-preorder); bank at **1377**; 4371 tests.
 - [x] **5 more classic problems (Batch 41)** — minimum-hours-of-training (arrays/medium, greedy energy+experience top-up), largest-number-after-digit-swaps-by-parity (arrays/easy, swap same-parity maximally), number-of-pairs-of-strings-with-concatenation-equal-to-target (strings+arrays/medium, O(n²) concat check), sum-of-beauty-of-all-substrings (strings/medium, O(n²) freq max−min), maximum-number-of-words-you-can-type (strings+hash-map/easy, broken letter set filter); bank at **1382**; 4386 tests.
-- [x] **4 more classic problems (Batch 42)** — ugly-number (math/easy, divide by 2/3/5 until 1), lemonade-change (arrays/easy, greedy coin change), most-frequent-subtree-sum (tree+hash-map/medium, DFS subtree sum freq count), implement-stack-using-queues (stack/easy, rotate-on-push single-queue); bank at **1383** (note: rebase merged with remote batches); 4398 tests.
+- [x] **4 more classic problems (Batch 42)** — ugly-number (math/easy, divide by 2/3/5 until 1), lemonade-change (arrays/easy, greedy coin change), most-frequent-subtree-sum (tree+hash-map/medium, DFS subtree sum freq count), implement-stack-using-queues (stack/easy, rotate-on-push single-queue); bank at **1383**; 4398 tests.
+- [x] **2 more classic problems (Batch 42-local)** — sum-of-nodes-with-even-valued-grandparent (tree/medium, DFS passing parent+grandparent values), flip-equivalent-binary-trees (tree/medium, recursive same-or-flipped subtrees); bank at **1385**; 4404 tests.
 
 ---
 
