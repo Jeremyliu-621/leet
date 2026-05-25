@@ -12087,4 +12087,124 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return hours.filter(h => h >= target).length;
   },
 
+  'intersection-of-two-arrays-ii': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const freq = new Map<number, number>();
+    for (const n of nums1) freq.set(n, (freq.get(n) ?? 0) + 1);
+    const result: number[] = [];
+    for (const n of nums2) {
+      const cnt = freq.get(n) ?? 0;
+      if (cnt > 0) { result.push(n); freq.set(n, cnt - 1); }
+    }
+    return result.sort((a, b) => a - b);
+  },
+
+  'largest-subarray-length-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let bestStart = 0;
+    for (let i = 1; i <= nums.length - k; i++) {
+      if ((nums[i] as number) > (nums[bestStart] as number)) bestStart = i;
+    }
+    return nums.slice(bestStart, bestStart + k);
+  },
+
+  'minimum-time-to-type-word': (...args: unknown[]) => {
+    const word = args[0] as string;
+    let time = 0;
+    let cur = 0;
+    for (const c of word) {
+      const next = c.charCodeAt(0) - 97;
+      const diff = Math.abs(next - cur);
+      time += Math.min(diff, 26 - diff) + 1;
+      cur = next;
+    }
+    return time;
+  },
+
+  'check-if-one-string-swap-can-make-strings-equal': (...args: unknown[]) => {
+    const s1 = args[0] as string;
+    const s2 = args[1] as string;
+    const diffs: number[] = [];
+    for (let i = 0; i < s1.length; i++) {
+      if (s1[i] !== s2[i]) diffs.push(i);
+    }
+    if (diffs.length === 0) return true;
+    if (diffs.length !== 2) return false;
+    const [i, j] = diffs;
+    return s1[i!] === s2[j!] && s1[j!] === s2[i!];
+  },
+
+  'number-of-different-integers-in-string': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const set = new Set<string>();
+    const groups = word.replace(/[a-z]+/g, ' ').trim().split(/\s+/).filter(Boolean);
+    for (const g of groups) set.add(g.replace(/^0+/, '') || '0');
+    return set.size;
+  },
+
+  'check-if-array-is-good': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const n = nums[nums.length - 1]!;
+    if (nums.length !== n + 1) return false;
+    if (nums[nums.length - 2] !== n) return false;
+    for (let i = 0; i < n - 1; i++) {
+      if (nums[i] !== i + 1) return false;
+    }
+    return true;
+  },
+
+  'count-the-digits-that-divide-the-number': (...args: unknown[]) => {
+    const num = args[0] as number;
+    let count = 0;
+    for (const c of String(num)) {
+      const d = Number(c);
+      if (d !== 0 && num % d === 0) count++;
+    }
+    return count;
+  },
+
+  'find-the-difference-of-two-arrays': (...args: unknown[]) => {
+    const s1 = new Set(args[0] as number[]);
+    const s2 = new Set(args[1] as number[]);
+    const diff1 = [...s1].filter(n => !s2.has(n)).sort((a, b) => a - b);
+    const diff2 = [...s2].filter(n => !s1.has(n)).sort((a, b) => a - b);
+    return [diff1, diff2];
+  },
+
+  'longest-continuous-increasing-subsequence': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let max = 1, cur = 1;
+    for (let i = 1; i < nums.length; i++) {
+      if ((nums[i] as number) > (nums[i - 1] as number)) {
+        cur++; max = Math.max(max, cur);
+      } else {
+        cur = 1;
+      }
+    }
+    return max;
+  },
+
+  'find-numbers-with-even-number-of-digits': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return nums.filter(n => String(n).length % 2 === 0).length;
+  },
+
+  'count-nice-pairs-in-an-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const MOD = 1_000_000_007n;
+    const rev = (n: number) => Number(String(n).split('').reverse().join(''));
+    const freq = new Map<number, number>();
+    for (const n of nums) {
+      const d = n - rev(n);
+      freq.set(d, (freq.get(d) ?? 0) + 1);
+    }
+    let ans = 0n;
+    for (const cnt of freq.values()) {
+      ans = (ans + BigInt(cnt) * BigInt(cnt - 1) / 2n) % MOD;
+    }
+    return Number(ans);
+  },
+
 };

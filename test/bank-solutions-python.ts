@@ -11565,4 +11565,116 @@ def numberOfEmployeesWhoMetTarget(hours, target):
     return sum(1 for h in hours if int(h) >= t)
 `,
 
+  'intersection-of-two-arrays-ii': `
+def intersect(nums1, nums2):
+    from collections import Counter
+    n1 = Counter(int(x) for x in nums1)
+    result = []
+    for x in nums2:
+        v = int(x)
+        if n1.get(v, 0) > 0:
+            result.append(v)
+            n1[v] -= 1
+    return sorted(result)
+`,
+
+  'largest-subarray-length-k': `
+def largestSubarray(nums, k):
+    k = int(k)
+    n_list = [int(x) for x in nums]
+    best = 0
+    for i in range(1, len(n_list) - k + 1):
+        if n_list[i] > n_list[best]:
+            best = i
+    return n_list[best:best+k]
+`,
+
+  'minimum-time-to-type-word': `
+def minTimeToType(word):
+    time = 0
+    cur = 0
+    for c in str(word):
+        nxt = ord(c) - 97
+        diff = abs(nxt - cur)
+        time += min(diff, 26 - diff) + 1
+        cur = nxt
+    return time
+`,
+
+  'check-if-one-string-swap-can-make-strings-equal': `
+def areAlmostEqual(s1, s2):
+    diffs = [i for i in range(len(s1)) if s1[i] != s2[i]]
+    if len(diffs) == 0:
+        return True
+    if len(diffs) != 2:
+        return False
+    i, j = diffs
+    return s1[i] == s2[j] and s1[j] == s2[i]
+`,
+
+  'number-of-different-integers-in-string': `
+def numDifferentIntegers(word):
+    import re
+    groups = re.findall(r'\\d+', word)
+    return len(set(str(int(g)) for g in groups))
+`,
+
+  'check-if-array-is-good': `
+def isGood(nums):
+    arr = sorted(int(x) for x in nums)
+    n = arr[-1]
+    if len(arr) != n + 1:
+        return False
+    if arr[-2] != n:
+        return False
+    for i in range(n - 1):
+        if arr[i] != i + 1:
+            return False
+    return True
+`,
+
+  'count-the-digits-that-divide-the-number': `
+def countDigits(num):
+    n = int(num)
+    return sum(1 for c in str(n) if int(c) != 0 and n % int(c) == 0)
+`,
+
+  'find-the-difference-of-two-arrays': `
+def findDifference(nums1, nums2):
+    s1 = set(int(x) for x in nums1)
+    s2 = set(int(x) for x in nums2)
+    return [sorted(s1 - s2), sorted(s2 - s1)]
+`,
+
+  'longest-continuous-increasing-subsequence': `
+def findLengthOfLCIS(nums):
+    n_list = [int(x) for x in nums]
+    max_len = 1
+    cur = 1
+    for i in range(1, len(n_list)):
+        if n_list[i] > n_list[i-1]:
+            cur += 1
+            max_len = max(max_len, cur)
+        else:
+            cur = 1
+    return max_len
+`,
+
+  'find-numbers-with-even-number-of-digits': `
+def findNumbers(nums):
+    return sum(1 for x in nums if len(str(int(x))) % 2 == 0)
+`,
+
+  'count-nice-pairs-in-an-array': `
+def countNicePairs(nums):
+    MOD = 10**9 + 7
+    def rev(n):
+        return int(str(int(n))[::-1])
+    from collections import Counter
+    freq = Counter(int(x) - rev(int(x)) for x in nums)
+    ans = 0
+    for cnt in freq.values():
+        ans = (ans + cnt * (cnt - 1) // 2) % MOD
+    return ans
+`,
 };

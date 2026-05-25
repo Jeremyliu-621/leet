@@ -973,6 +973,17 @@ import { problem as countNumberOfConsistentStrings } from './count-number-of-con
 import { problem as makeTheStringGreat } from './make-the-string-great';
 import { problem as findTargetIndicesAfterSortingArray } from './find-target-indices-after-sorting-array';
 import { problem as numberOfEmployeesWhoMetTheTarget } from './number-of-employees-who-met-the-target';
+import { problem as intersectionOfTwoArraysIi } from './intersection-of-two-arrays-ii';
+import { problem as largestSubarrayLengthK } from './largest-subarray-length-k';
+import { problem as minimumTimeToTypeWord } from './minimum-time-to-type-word';
+import { problem as checkIfOneStringSwapCanMakeStringsEqual } from './check-if-one-string-swap-can-make-strings-equal';
+import { problem as numberOfDifferentIntegersInString } from './number-of-different-integers-in-string';
+import { problem as checkIfArrayIsGood } from './check-if-array-is-good';
+import { problem as countTheDigitsThatDivideTheNumber } from './count-the-digits-that-divide-the-number';
+import { problem as findTheDifferenceOfTwoArrays } from './find-the-difference-of-two-arrays';
+import { problem as longestContinuousIncreasingSubsequence } from './longest-continuous-increasing-subsequence';
+import { problem as findNumbersWithEvenNumberOfDigits } from './find-numbers-with-even-number-of-digits';
+import { problem as countNicePairsInAnArray } from './count-nice-pairs-in-an-array';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1994,4 +2005,15 @@ export const problems: readonly Problem[] = [
   makeTheStringGreat,
   findTargetIndicesAfterSortingArray,
   numberOfEmployeesWhoMetTheTarget,
+  intersectionOfTwoArraysIi,
+  largestSubarrayLengthK,
+  minimumTimeToTypeWord,
+  checkIfOneStringSwapCanMakeStringsEqual,
+  numberOfDifferentIntegersInString,
+  checkIfArrayIsGood,
+  countTheDigitsThatDivideTheNumber,
+  findTheDifferenceOfTwoArrays,
+  longestContinuousIncreasingSubsequence,
+  findNumbersWithEvenNumberOfDigits,
+  countNicePairsInAnArray,
 ];
