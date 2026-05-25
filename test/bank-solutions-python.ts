@@ -10129,4 +10129,58 @@ def maxScoreWords(words, letters, score):
             best = total
     return best
 `,
+
+  'largest-positive-integer-with-negative': `
+def findMaxK(nums):
+    nums = list(nums)
+    s = set(nums)
+    ans = -1
+    for n in nums:
+        if n > 0 and -n in s:
+            ans = max(ans, n)
+    return ans
+`,
+
+  'maximize-sum-k-elements': `
+def largestSumAfterKNegations(nums, k):
+    nums = sorted(nums, key=abs)
+    for i in range(len(nums) - 1, -1, -1):
+        if nums[i] < 0 and k > 0:
+            nums[i] = -nums[i]
+            k -= 1
+    if k % 2 == 1:
+        nums[0] = -nums[0]
+    return sum(nums)
+`,
+
+  'check-if-acronym': `
+def isAcronym(words, s):
+    words = list(words)
+    return ''.join(w[0] for w in words) == s
+`,
+
+  'count-pairs-absolute-diff-k': `
+def countKDifference(nums, k):
+    nums = list(nums)
+    cnt = 0
+    n = len(nums)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if abs(nums[i] - nums[j]) == k:
+                cnt += 1
+    return cnt
+`,
+
+  'number-of-arithmetic-subarrays': `
+def checkArithmeticSubarrays(nums, l, r):
+    nums = list(nums)
+    l = list(l)
+    r = list(r)
+    result = []
+    for li, ri in zip(l, r):
+        sub = sorted(nums[li:ri+1])
+        d = sub[1] - sub[0]
+        result.append(all(sub[j] - sub[j-1] == d for j in range(1, len(sub))))
+    return result
+`,
 };

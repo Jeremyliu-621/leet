@@ -10516,4 +10516,45 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best;
   },
 
+  'largest-positive-integer-with-negative': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const s = new Set(nums);
+    let ans = -1;
+    for (const n of nums) if (n > 0 && s.has(-n)) ans = Math.max(ans, n);
+    return ans;
+  },
+
+  'maximize-sum-k-elements': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => Math.abs(a) - Math.abs(b));
+    let k = args[1] as number;
+    for (let i = nums.length - 1; i >= 0 && k > 0; i--) {
+      if (nums[i]! < 0) { nums[i] = -nums[i]!; k--; }
+    }
+    if (k % 2 === 1) nums[0] = -nums[0]!;
+    return nums.reduce((a, b) => a + b, 0);
+  },
+
+  'check-if-acronym': (...args: unknown[]) => {
+    const words = args[0] as string[], s = args[1] as string;
+    return words.map(w => w[0]).join('') === s;
+  },
+
+  'count-pairs-absolute-diff-k': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    let cnt = 0;
+    for (let i = 0; i < nums.length; i++)
+      for (let j = i + 1; j < nums.length; j++)
+        if (Math.abs(nums[i]! - nums[j]!) === k) cnt++;
+    return cnt;
+  },
+
+  'number-of-arithmetic-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[], l = args[1] as number[], r = args[2] as number[];
+    return l.map((li, i) => {
+      const sub = [...nums.slice(li, r[i]! + 1)].sort((a, b) => a - b);
+      const d = sub[1]! - sub[0]!;
+      return sub.every((_, j) => j === 0 || sub[j]! - sub[j - 1]! === d);
+    });
+  },
+
 };

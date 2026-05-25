@@ -845,6 +845,11 @@ import { problem as designUndergroundSystem } from './design-underground-system'
 import { problem as sortVowelsInAString } from './sort-vowels-in-a-string';
 import { problem as minimumTimeToRepairCars } from './minimum-time-to-repair-cars';
 import { problem as numberOfMatchingSubsequences } from './number-of-matching-subsequences';
+import { problem as largestPositiveIntegerWithNegative } from './largest-positive-integer-with-negative';
+import { problem as maximizeSumKElements } from './maximize-sum-k-elements';
+import { problem as checkIfAcronym } from './check-if-acronym';
+import { problem as countPairsAbsoluteDiffK } from './count-pairs-absolute-diff-k';
+import { problem as numberOfArithmeticSubarrays } from './number-of-arithmetic-subarrays';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1738,4 +1743,9 @@ export const problems: readonly Problem[] = [
   sortVowelsInAString,
   minimumTimeToRepairCars,
   numberOfMatchingSubsequences,
+  largestPositiveIntegerWithNegative,
+  maximizeSumKElements,
+  checkIfAcronym,
+  countPairsAbsoluteDiffK,
+  numberOfArithmeticSubarrays,
 ];
