@@ -5506,6 +5506,32 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return count;
   },
+  'check-prefix-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const words = args[1] as string[];
+    let built = '';
+    for (const w of words) {
+      built += w;
+      if (built === s) return true;
+      if (built.length >= s.length) return false;
+    }
+    return false;
+  },
+  'sum-digits-string-convert': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    let numStr = '';
+    for (const c of s) numStr += (c.charCodeAt(0) - 96).toString();
+    let num = 0;
+    for (const d of numStr) num += +d;
+    for (let i = 1; i < k; i++) {
+      let next = 0;
+      let tmp = num;
+      while (tmp > 0) { next += tmp % 10; tmp = Math.floor(tmp / 10); }
+      num = next;
+    }
+    return num;
+  },
   'concatenation-of-array': (...args: unknown[]) => {
     const nums = args[0] as number[];
     return [...nums, ...nums];

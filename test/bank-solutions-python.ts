@@ -4876,6 +4876,25 @@ def deserialize(data):
     return count
 `,
 
+  'check-prefix-string': `def isPrefixString(s, words):
+    built = ''
+    for w in words:
+        built += w
+        if built == s:
+            return True
+        if len(built) >= len(s):
+            return False
+    return False
+`,
+
+  'sum-digits-string-convert': `def getLucky(s, k):
+    num_str = ''.join(str(ord(c) - 96) for c in s)
+    total = sum(int(d) for d in num_str)
+    for _ in range(k - 1):
+        total = sum(int(d) for d in str(total))
+    return total
+`,
+
   'concatenation-of-array': `def getConcatenation(nums):
     return list(nums) + list(nums)
 `,

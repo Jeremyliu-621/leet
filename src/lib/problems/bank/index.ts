@@ -153,6 +153,8 @@ import { problem as checkTwoStringsAlmostEquivalent } from './check-two-strings-
 import { problem as rearrangeCharactersToMakeTarget } from './rearrange-characters-to-make-target';
 import { problem as divideStringIntoGroups } from './divide-string-into-groups';
 import { problem as countVowelSubstrings } from './count-vowel-substrings';
+import { problem as checkPrefixString } from './check-prefix-string';
+import { problem as sumDigitsStringConvert } from './sum-digits-string-convert';
 // strings — medium
 import { problem as zigzagConversion } from './zigzag-conversion';
 import { problem as implementTrie } from './implement-trie';
@@ -727,6 +729,8 @@ export const problems: readonly Problem[] = [
   rearrangeCharactersToMakeTarget,
   divideStringIntoGroups,
   countVowelSubstrings,
+  checkPrefixString,
+  sumDigitsStringConvert,
   // strings — medium
   implementTrie,
   customSortString,
