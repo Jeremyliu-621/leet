@@ -799,6 +799,10 @@ import { problem as smallestEvenMultiple } from './smallest-even-multiple';
 import { problem as specialArrayGreaterEqual } from './special-array-greater-equal';
 import { problem as countPairsTwoArrays } from './count-pairs-two-arrays';
 import { problem as convertTimeHhmm } from './convert-time-hhmm';
+import { problem as findPlayersZeroLosses } from './find-players-zero-losses';
+import { problem as checkDistancesFairNodes } from './check-distances-fair-nodes';
+import { problem as minimumRoundsCompleteTasks } from './minimum-rounds-complete-tasks';
+import { problem as largestCombinationBitwiseAnd } from './largest-combination-bitwise-and';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1645,4 +1649,8 @@ export const problems: readonly Problem[] = [
   specialArrayGreaterEqual,
   countPairsTwoArrays,
   convertTimeHhmm,
+  findPlayersZeroLosses,
+  checkDistancesFairNodes,
+  minimumRoundsCompleteTasks,
+  largestCombinationBitwiseAnd,
 ];

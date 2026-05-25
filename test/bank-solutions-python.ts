@@ -9508,4 +9508,54 @@ def convertTime(current, correct):
         d %= step
     return ops
 `,
+
+  'find-players-zero-losses': `
+def findWinners(matches):
+    matches = [list(m) for m in matches]
+    from collections import defaultdict
+    losses = defaultdict(int)
+    for w, l in matches:
+        if w not in losses:
+            losses[w] = 0
+        losses[l] += 1
+    no_loss = sorted(p for p, cnt in losses.items() if cnt == 0)
+    one_loss = sorted(p for p, cnt in losses.items() if cnt == 1)
+    return [no_loss, one_loss]
+`,
+
+  'check-distances-fair-nodes': `
+def checkDistances(s, distance):
+    distance = list(distance)
+    first = {}
+    for i, c in enumerate(s):
+        if c not in first:
+            first[c] = i
+        else:
+            if i - first[c] - 1 != distance[ord(c) - ord('a')]:
+                return False
+    return True
+`,
+
+  'minimum-rounds-complete-tasks': `
+def minimumRounds(tasks):
+    tasks = list(tasks)
+    from collections import Counter
+    freq = Counter(tasks)
+    rounds = 0
+    for f in freq.values():
+        if f == 1:
+            return -1
+        rounds += (f + 2) // 3
+    return rounds
+`,
+
+  'largest-combination-bitwise-and': `
+def largestCombination(candidates):
+    candidates = list(candidates)
+    best = 0
+    for bit in range(24):
+        cnt = sum(1 for c in candidates if c & (1 << bit))
+        best = max(best, cnt)
+    return best
+`,
 };

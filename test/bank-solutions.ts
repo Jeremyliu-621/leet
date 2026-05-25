@@ -9897,4 +9897,56 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ops;
   },
 
+  'find-players-zero-losses': (...args: unknown[]) => {
+    const matches = args[0] as number[][];
+    const losses = new Map<number, number>();
+    for (const m of matches) {
+      const w = m[0]!, l = m[1]!;
+      if (!losses.has(w)) losses.set(w, 0);
+      losses.set(l, (losses.get(l) ?? 0) + 1);
+    }
+    const noLoss: number[] = [], oneLoss: number[] = [];
+    for (const [p, cnt] of losses) {
+      if (cnt === 0) noLoss.push(p);
+      else if (cnt === 1) oneLoss.push(p);
+    }
+    return [noLoss.sort((a, b) => a - b), oneLoss.sort((a, b) => a - b)];
+  },
+
+  'check-distances-fair-nodes': (...args: unknown[]) => {
+    const s = args[0] as string, distance = args[1] as number[];
+    const first = new Map<string, number>();
+    for (let i = 0; i < s.length; i++) {
+      const c = s[i]!;
+      if (!first.has(c)) { first.set(c, i); }
+      else {
+        if (i - first.get(c)! - 1 !== distance[c.charCodeAt(0) - 97]!) return false;
+      }
+    }
+    return true;
+  },
+
+  'minimum-rounds-complete-tasks': (...args: unknown[]) => {
+    const tasks = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const t of tasks) freq.set(t, (freq.get(t) ?? 0) + 1);
+    let rounds = 0;
+    for (const f of freq.values()) {
+      if (f === 1) return -1;
+      rounds += Math.ceil(f / 3);
+    }
+    return rounds;
+  },
+
+  'largest-combination-bitwise-and': (...args: unknown[]) => {
+    const candidates = args[0] as number[];
+    let best = 0;
+    for (let bit = 0; bit < 24; bit++) {
+      let cnt = 0;
+      for (const c of candidates) if (c & (1 << bit)) cnt++;
+      best = Math.max(best, cnt);
+    }
+    return best;
+  },
+
 };
