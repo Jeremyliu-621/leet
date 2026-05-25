@@ -10215,4 +10215,43 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return drops <= 1;
   },
 
+  'interpret-string': (...args: unknown[]) => {
+    return (args[0] as string).replace(/\(al\)/g, 'al').replace(/\(\)/g, 'o');
+  },
+
+  'merge-similar-items': (...args: unknown[]) => {
+    const items1 = args[0] as number[][], items2 = args[1] as number[][];
+    const m = new Map<number, number>();
+    for (const [v, w] of [...items1, ...items2]) m.set(v!, (m.get(v!) ?? 0) + w!);
+    return [...m].sort((a, b) => a[0] - b[0]);
+  },
+
+  'count-good-rectangles': (...args: unknown[]) => {
+    const rects = args[0] as number[][];
+    const sides = rects.map(([l, w]) => Math.min(l!, w!));
+    const mx = Math.max(...sides);
+    return sides.filter(s => s === mx).length;
+  },
+
+  'maximum-population-year': (...args: unknown[]) => {
+    const logs = args[0] as number[][];
+    const diff = new Array(101).fill(0);
+    for (const [b, d] of logs) { diff[b! - 1950]!++; diff[d! - 1950]!--; }
+    let mx = 0, yr = 1950, cur = 0;
+    for (let i = 0; i < 101; i++) { cur += diff[i]!; if (cur > mx) { mx = cur; yr = i + 1950; } }
+    return yr;
+  },
+
+  'find-kth-bit-nth-binary-string': (...args: unknown[]) => {
+    const [n, k] = args as [number, number];
+    function f(n: number, k: number): string {
+      if (n === 1) return '0';
+      const mid = 1 << (n - 1);
+      if (k === mid) return '1';
+      if (k < mid) return f(n - 1, k);
+      return f(n - 1, (1 << n) - k) === '0' ? '1' : '0';
+    }
+    return f(n, k);
+  },
+
 };

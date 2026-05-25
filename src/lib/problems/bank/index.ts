@@ -830,6 +830,11 @@ import { problem as checkIfAllAsBeforeBs } from './check-if-all-as-before-bs';
 import { problem as checkIfWordEqualsSummation } from './check-if-word-equals-summation';
 import { problem as waysToBuyPensPencils } from './ways-to-buy-pens-pencils';
 import { problem as checkArraySortedRotated } from './check-array-sorted-rotated';
+import { problem as interpretString } from './interpret-string';
+import { problem as mergeSimilarItems } from './merge-similar-items';
+import { problem as countGoodRectangles } from './count-good-rectangles';
+import { problem as maximumPopulationYear } from './maximum-population-year';
+import { problem as findKthBitNthBinaryString } from './find-kth-bit-nth-binary-string';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1707,4 +1712,9 @@ export const problems: readonly Problem[] = [
   checkIfWordEqualsSummation,
   waysToBuyPensPencils,
   checkArraySortedRotated,
+  interpretString,
+  mergeSimilarItems,
+  countGoodRectangles,
+  maximumPopulationYear,
+  findKthBitNthBinaryString,
 ];

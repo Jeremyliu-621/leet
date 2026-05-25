@@ -9856,4 +9856,58 @@ def check(nums):
     drops = sum(1 for i in range(n) if nums[i] > nums[(i+1) % n])
     return drops <= 1
 `,
+
+  'interpret-string': `
+def interpret(command):
+    return command.replace('(al)', 'al').replace('()', 'o')
+`,
+
+  'merge-similar-items': `
+def mergeSimilarItems(items1, items2):
+    items1 = [list(x) for x in items1]
+    items2 = [list(x) for x in items2]
+    from collections import defaultdict
+    m = defaultdict(int)
+    for v, w in items1 + items2:
+        m[v] += w
+    return sorted([v, w] for v, w in m.items())
+`,
+
+  'count-good-rectangles': `
+def countGoodRectangles(rectangles):
+    rectangles = [list(r) for r in rectangles]
+    sides = [min(l, w) for l, w in rectangles]
+    mx = max(sides)
+    return sum(1 for s in sides if s == mx)
+`,
+
+  'maximum-population-year': `
+def maximumPopulation(logs):
+    logs = [list(l) for l in logs]
+    diff = [0] * 101
+    for b, d in logs:
+        diff[b - 1950] += 1
+        diff[d - 1950] -= 1
+    mx, yr, cur = 0, 1950, 0
+    for i in range(101):
+        cur += diff[i]
+        if cur > mx:
+            mx, yr = cur, i + 1950
+    return yr
+`,
+
+  'find-kth-bit-nth-binary-string': `
+def findKthBit(n, k):
+    def f(n, k):
+        if n == 1:
+            return '0'
+        mid = 1 << (n - 1)
+        if k == mid:
+            return '1'
+        if k < mid:
+            return f(n - 1, k)
+        bit = f(n - 1, (1 << n) - k)
+        return '1' if bit == '0' else '0'
+    return f(n, k)
+`,
 };
