@@ -63,6 +63,7 @@ const FIRST_RUN_SUGGESTIONS: readonly string[] = [
 ];
 
 interface RecentSolve {
+  problemId: string;
   title: string;
   difficulty: Difficulty;
   solvedAt: number;
@@ -128,6 +129,7 @@ export function Popup() {
         const meta = PROBLEM_TITLE_BY_ID.get(record.problemId);
         if (meta)
           recentSolves.push({
+            problemId: record.problemId,
             title: meta.title,
             difficulty: meta.difficulty,
             solvedAt: record.solvedAt,
@@ -628,21 +630,39 @@ function RecentSolvesList({ solves }: { solves: readonly RecentSolve[] }) {
     return `${Math.floor(diff / 86_400_000)}d ago`;
   }
 
+  function openProblem(problemId: string): void {
+    try {
+      const base = chrome.runtime.getURL('src/pages/challenge/index.html');
+      void chrome.tabs.create({ url: `${base}?problem=${encodeURIComponent(problemId)}` });
+    } catch {
+      // Outside extension context — silently ignore.
+    }
+  }
+
   const DIFF_ABBR: Record<Difficulty, string> = { easy: 'E', medium: 'M', hard: 'H' };
 
   return (
     <section className="mt-4 border-t border-border pt-4" aria-label="Recent solves">
       <h2 className="font-mono text-[9px] uppercase tracking-widest text-faint">Recent</h2>
-      <ul className="mt-2 space-y-1">
+      <ul className="mt-2 space-y-0.5">
         {solves.map((s, i) => (
-          <li key={i} className="flex items-center gap-2">
-            <span className="shrink-0 font-mono text-[9px] text-faint w-3">
-              {DIFF_ABBR[s.difficulty]}
-            </span>
-            <span className="flex-1 truncate font-mono text-[10px] text-muted">{s.title}</span>
-            <span className="shrink-0 font-mono text-[9px] text-faint tabular-nums">
-              {timeAgo(s.solvedAt)}
-            </span>
+          <li key={i}>
+            <button
+              type="button"
+              onClick={() => openProblem(s.problemId)}
+              aria-label={`Practice ${s.title} again`}
+              className="group flex w-full items-center gap-2 rounded-sm px-1 py-0.5 text-left transition-colors hover:bg-surface focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+            >
+              <span className="shrink-0 font-mono text-[9px] text-faint w-3">
+                {DIFF_ABBR[s.difficulty]}
+              </span>
+              <span className="flex-1 truncate font-mono text-[10px] text-muted group-hover:text-text transition-colors">
+                {s.title}
+              </span>
+              <span className="shrink-0 font-mono text-[9px] text-faint tabular-nums">
+                {timeAgo(s.solvedAt)}
+              </span>
+            </button>
           </li>
         ))}
       </ul>
