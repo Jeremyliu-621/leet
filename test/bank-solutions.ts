@@ -9297,4 +9297,93 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return x * x === s ? x : -1;
   },
 
+  'compare-version-numbers': (...args: unknown[]) => {
+    const v1 = args[0] as string, v2 = args[1] as string;
+    const a = v1.split('.'), b = v2.split('.');
+    const n = Math.max(a.length, b.length);
+    for (let i = 0; i < n; i++) {
+      const x = +(a[i] ?? 0), y = +(b[i] ?? 0);
+      if (x < y) return -1;
+      if (x > y) return 1;
+    }
+    return 0;
+  },
+
+  'open-the-lock': (...args: unknown[]) => {
+    const deadends = args[0] as string[], target = args[1] as string;
+    const dead = new Set(deadends);
+    if (dead.has('0000')) return -1;
+    if (target === '0000') return 0;
+    const vis = new Set(dead);
+    vis.add('0000');
+    let q = ['0000'], steps = 0;
+    while (q.length) {
+      const next: string[] = [];
+      steps++;
+      for (const s of q) {
+        for (let i = 0; i < 4; i++) {
+          for (const d of [1, -1]) {
+            const ns = s.split('');
+            ns[i] = String((+ns[i]! + d + 10) % 10);
+            const t = ns.join('');
+            if (t === target) return steps;
+            if (!vis.has(t)) { vis.add(t); next.push(t); }
+          }
+        }
+      }
+      q = next;
+    }
+    return -1;
+  },
+
+  'diagonal-traverse': (...args: unknown[]) => {
+    const mat = args[0] as number[][];
+    const m = mat.length, n = mat[0]!.length;
+    const res: number[] = [];
+    for (let d = 0; d < m + n - 1; d++) {
+      const tmp: number[] = [];
+      for (let r = Math.max(0, d - n + 1); r <= Math.min(d, m - 1); r++) tmp.push(mat[r]![d - r]!);
+      if (d % 2 === 0) tmp.reverse();
+      res.push(...tmp);
+    }
+    return res;
+  },
+
+  'reshape-the-matrix': (...args: unknown[]) => {
+    const mat = args[0] as number[][], r = args[1] as number, c = args[2] as number;
+    const flat = mat.flat();
+    if (flat.length !== r * c) return mat;
+    const res: number[][] = [];
+    for (let i = 0; i < r; i++) res.push(flat.slice(i * c, (i + 1) * c));
+    return res;
+  },
+
+  'find-town-judge': (...args: unknown[]) => {
+    const n = args[0] as number, trust = args[1] as number[][];
+    const s = new Array(n + 1).fill(0);
+    for (const [a, b] of trust) { s[a as number]--; s[b as number]++; }
+    for (let i = 1; i <= n; i++) if (s[i] === n - 1) return i;
+    return -1;
+  },
+
+  'possible-bipartition': (...args: unknown[]) => {
+    const n = args[0] as number, dislikes = args[1] as number[][];
+    const adj: number[][] = Array.from({ length: n + 1 }, () => []);
+    for (const [a, b] of dislikes) { adj[a as number]!.push(b as number); adj[b as number]!.push(a as number); }
+    const color = new Int8Array(n + 1).fill(-1);
+    for (let s = 1; s <= n; s++) {
+      if (color[s] !== -1) continue;
+      color[s] = 0;
+      const q = [s];
+      while (q.length) {
+        const u = q.shift()!;
+        for (const v of adj[u]!) {
+          if (color[v] === -1) { color[v] = (1 - color[u]!) as 0 | 1; q.push(v); }
+          else if (color[v] === color[u]) return false;
+        }
+      }
+    }
+    return true;
+  },
+
 };

@@ -741,6 +741,12 @@ import { problem as countGoodNumbers } from './count-good-numbers';
 import { problem as maximumSumExactlyKElements } from './maximum-sum-exactly-k-elements';
 import { problem as minimumCommonValue } from './minimum-common-value';
 import { problem as findPivotInteger } from './find-pivot-integer';
+import { problem as compareVersionNumbers } from './compare-version-numbers';
+import { problem as openTheLock } from './open-the-lock';
+import { problem as diagonalTraverse } from './diagonal-traverse';
+import { problem as reshapeTheMatrix } from './reshape-the-matrix';
+import { problem as findTownJudge } from './find-town-judge';
+import { problem as possibleBipartition } from './possible-bipartition';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1529,6 +1535,11 @@ export const problems: readonly Problem[] = [
   minimumCommonValue,
   // math — medium (new)
   countGoodNumbers,
-  // math — easy (new)
   findPivotInteger,
+  compareVersionNumbers,
+  openTheLock,
+  diagonalTraverse,
+  reshapeTheMatrix,
+  findTownJudge,
+  possibleBipartition,
 ];

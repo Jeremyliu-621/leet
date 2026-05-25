@@ -8830,4 +8830,112 @@ def findPivot(n):
     x = int(math.isqrt(s))
     return x if x * x == s else -1
 `,
+
+  'compare-version-numbers': `
+def compareVersion(version1, version2):
+    a = version1.split('.')
+    b = version2.split('.')
+    n = max(len(a), len(b))
+    for i in range(n):
+        x = int(a[i]) if i < len(a) else 0
+        y = int(b[i]) if i < len(b) else 0
+        if x < y:
+            return -1
+        if x > y:
+            return 1
+    return 0
+`,
+
+  'open-the-lock': `
+from collections import deque
+def openLock(deadends, target):
+    dead = set(deadends)
+    if '0000' in dead:
+        return -1
+    if target == '0000':
+        return 0
+    vis = set(dead)
+    vis.add('0000')
+    q = deque(['0000'])
+    steps = 0
+    while q:
+        steps += 1
+        for _ in range(len(q)):
+            s = q.popleft()
+            for i in range(4):
+                for d in (1, -1):
+                    ns = list(s)
+                    ns[i] = str((int(ns[i]) + d) % 10)
+                    t = ''.join(ns)
+                    if t == target:
+                        return steps
+                    if t not in vis:
+                        vis.add(t)
+                        q.append(t)
+    return -1
+`,
+
+  'diagonal-traverse': `
+def findDiagonalOrder(mat):
+    mat = [list(row) for row in mat]
+    m, n = len(mat), len(mat[0])
+    res = []
+    for d in range(m + n - 1):
+        tmp = []
+        r_min = max(0, d - n + 1)
+        r_max = min(d, m - 1)
+        for r in range(r_min, r_max + 1):
+            tmp.append(mat[r][d - r])
+        if d % 2 == 0:
+            tmp.reverse()
+        res.extend(tmp)
+    return res
+`,
+
+  'reshape-the-matrix': `
+def matrixReshape(mat, r, c):
+    mat = [list(row) for row in mat]
+    flat = [x for row in mat for x in row]
+    if len(flat) != r * c:
+        return mat
+    return [[flat[i * c + j] for j in range(c)] for i in range(r)]
+`,
+
+  'find-town-judge': `
+def findJudge(n, trust):
+    trust = list(trust)
+    s = [0] * (n + 1)
+    for a, b in trust:
+        s[a] -= 1
+        s[b] += 1
+    for i in range(1, n + 1):
+        if s[i] == n - 1:
+            return i
+    return -1
+`,
+
+  'possible-bipartition': `
+from collections import deque
+def possibleBipartition(n, dislikes):
+    dislikes = list(dislikes)
+    adj = [[] for _ in range(n + 1)]
+    for a, b in dislikes:
+        adj[a].append(b)
+        adj[b].append(a)
+    color = [-1] * (n + 1)
+    for s in range(1, n + 1):
+        if color[s] != -1:
+            continue
+        color[s] = 0
+        q = deque([s])
+        while q:
+            u = q.popleft()
+            for v in adj[u]:
+                if color[v] == -1:
+                    color[v] = 1 - color[u]
+                    q.append(v)
+                elif color[v] == color[u]:
+                    return False
+    return True
+`,
 };
