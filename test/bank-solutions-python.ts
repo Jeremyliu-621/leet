@@ -20815,6 +20815,128 @@ def secondMinimum(n, edges, time, change):
         if f > 0:
             used.add(f)
     return deletions
+  'kth-smallest-in-sorted-matrix': `def kthSmallest(matrix, k):
+    matrix = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (matrix.to_py() if hasattr(matrix, 'to_py') else matrix)]
+    n = len(matrix)
+    lo, hi = matrix[0][0], matrix[n - 1][n - 1]
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        count = 0
+        col = n - 1
+        for row in range(n):
+            while col >= 0 and matrix[row][col] > mid:
+                col -= 1
+            count += col + 1
+        if count < k:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+`,
+
+  'the-skyline-problem': `def getSkyline(buildings):
+    raw = buildings.to_py() if hasattr(buildings, 'to_py') else list(buildings)
+    bldgs = [list(b.to_py() if hasattr(b, 'to_py') else b) for b in raw]
+    events = []
+    for b in bldgs:
+        l, r, h = int(b[0]), int(b[1]), int(b[2])
+        events.append((l, -h))
+        events.append((r, h))
+    events.sort()
+    result = []
+    active = [0]
+    prev_max = 0
+    for x, h in events:
+        if h < 0:
+            active.append(-h)
+            active.sort(reverse=True)
+        else:
+            active.remove(h)
+        cur_max = active[0]
+        if cur_max != prev_max:
+            result.append([x, cur_max])
+            prev_max = cur_max
+    return result
+`,
+
+  'island-perimeter': `def islandPerimeter(grid):
+    raw = grid.to_py() if hasattr(grid, 'to_py') else list(grid)
+    rows_list = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in raw]
+    rows = len(rows_list)
+    cols = len(rows_list[0]) if rows > 0 else 0
+    perimeter = 0
+    for i in range(rows):
+        for j in range(cols):
+            if rows_list[i][j] == 1:
+                perimeter += 4
+                if j + 1 < cols and rows_list[i][j + 1] == 1:
+                    perimeter -= 2
+                if i + 1 < rows and rows_list[i + 1][j] == 1:
+                    perimeter -= 2
+    return perimeter
+`,
+
+  'matrix-chain-multiplication': `def matrixChainOrder(dims):
+    dims = list(int(x) for x in (dims.to_py() if hasattr(dims, 'to_py') else dims))
+    n = len(dims) - 1
+    if n <= 1:
+        return 0
+    dp = [[0] * (n + 1) for _ in range(n + 1)]
+    for length in range(2, n + 1):
+        for i in range(1, n - length + 2):
+            j = i + length - 1
+            dp[i][j] = float('inf')
+            for k in range(i, j):
+                cost = dp[i][k] + dp[k + 1][j] + dims[i - 1] * dims[k] * dims[j]
+                if cost < dp[i][j]:
+                    dp[i][j] = cost
+    return dp[1][n]
+`,
+
+  'binary-search-tree-iterator': `def bstIteratorRunner(ops, vals, tree_arr):
+    class TreeNode:
+        def __init__(self, val=0, left=None, right=None):
+            self.val = val; self.left = left; self.right = right
+    def from_array(raw):
+        raw_list = list(raw.to_py() if hasattr(raw, 'to_py') else raw)
+        a = [int(v) if isinstance(v, (int, float)) else None for v in raw_list]
+        if not a or a[0] is None: return None
+        root = TreeNode(a[0]); queue = [root]; i = 1
+        while queue and i < len(a):
+            node = queue.pop(0)
+            if i < len(a) and a[i] is not None: node.left = TreeNode(a[i]); queue.append(node.left)
+            i += 1
+            if i < len(a) and a[i] is not None: node.right = TreeNode(a[i]); queue.append(node.right)
+            i += 1
+        return root
+    class BSTIterator:
+        def __init__(self, root):
+            self.stack = []
+            self._push_left(root)
+        def _push_left(self, node):
+            while node:
+                self.stack.append(node)
+                node = node.left
+        def next(self):
+            node = self.stack.pop()
+            self._push_left(node.right)
+            return node.val
+        def hasNext(self):
+            return len(self.stack) > 0
+    tree_arr_list = list(tree_arr.to_py() if hasattr(tree_arr, 'to_py') else tree_arr)
+    root = from_array(tree_arr_list)
+    ops_list = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    iterator = BSTIterator(root)
+    result = []
+    for op in ops_list:
+        if op == 'next':
+            result.append(iterator.next())
+        elif op == 'hasNext':
+            result.append(iterator.hasNext())
+        else:
+            result.append(None)
+    return result
+
 `,
 
   'matrix-cells-in-distance-order': `def matrixCellsInDistanceOrder(rows, cols, rCenter, cCenter):

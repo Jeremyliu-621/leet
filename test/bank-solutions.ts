@@ -20619,7 +20619,246 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
 
   'minimum-operations-to-make-array-equal': (n: unknown) => {
     const k = n as number;
-    return Math.floor(k * k / 4);
+    return Math.floor(k * k / 4);  },
+  'three-sum-smaller': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    const target = args[1] as number;
+    nums.sort((a, b) => a - b);
+    let count = 0;
+    for (let i = 0; i < nums.length - 2; i++) {
+      let l = i + 1;
+      let r = nums.length - 1;
+      while (l < r) {
+        if (nums[i]! + nums[l]! + nums[r]! < target) {
+          count += r - l;
+          l++;
+        } else {
+          r--;
+        }
+      }
+    }
+    return count;
+  },
+
+  'most-common-word': (...args: unknown[]) => {
+    const paragraph = args[0] as string;
+    const banned = new Set((args[1] as string[]));
+    const words = paragraph.toLowerCase().replace(/[!?',;.]/g, ' ').split(/\s+/).filter(w => w.length > 0);
+    const freq = new Map<string, number>();
+    for (const w of words) {
+      if (!banned.has(w)) freq.set(w, (freq.get(w) ?? 0) + 1);
+    }
+    let best = '';
+    let bestCount = 0;
+    for (const [w, c] of freq) {
+      if (c > bestCount) { bestCount = c; best = w; }
+    }
+    return best;
+  },
+
+  'student-attendance-record-ii': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const MOD = 1_000_000_007n;
+    // dp[a][l] = count of valid sequences with a absences and l trailing lates
+    // a in {0,1}, l in {0,1,2}
+    let dp = [[1n, 0n, 0n], [0n, 0n, 0n]] as bigint[][];
+    for (let i = 0; i < n; i++) {
+      const ndp = [[0n, 0n, 0n], [0n, 0n, 0n]] as bigint[][];
+      // Append P: resets l to 0, a unchanged
+      for (let a = 0; a <= 1; a++) {
+        for (let l = 0; l <= 2; l++) {
+          ndp[a]![0] = (ndp[a]![0]! + dp[a]![l]!) % MOD;
+        }
+      }
+      // Append L: l increases by 1 (invalid if l was 2)
+      for (let a = 0; a <= 1; a++) {
+        for (let l = 0; l <= 1; l++) {
+          ndp[a]![l + 1] = (ndp[a]![l + 1]! + dp[a]![l]!) % MOD;
+        }
+      }
+      // Append A: a increases by 1 (invalid if a was 1), l resets to 0
+      for (let l = 0; l <= 2; l++) {
+        ndp[1]![0] = (ndp[1]![0]! + dp[0]![l]!) % MOD;
+      }
+      dp = ndp;
+    }
+    let total = 0n;
+    for (let a = 0; a <= 1; a++) {
+      for (let l = 0; l <= 2; l++) {
+        total = (total + dp[a]![l]!) % MOD;
+      }
+    }
+    return Number(total);
+  },
+
+  'permutation-sequence': (...args: unknown[]) => {
+    const n = args[0] as number;
+    let k = args[1] as number;
+    const fact = [1];
+    for (let i = 1; i <= n; i++) fact.push(fact[i - 1]! * i);
+    const digits = Array.from({ length: n }, (_, i) => i + 1);
+    k--; // convert to 0-indexed
+    let result = '';
+    for (let i = n; i >= 1; i--) {
+      const idx = Math.floor(k / fact[i - 1]!);
+      result += digits[idx];
+      digits.splice(idx, 1);
+      k %= fact[i - 1]!;
+    }
+    return result;
+  },
+
+  'maximum-sum-obtained-of-any-permutation': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const requests = args[1] as number[][];
+    const MOD = 1_000_000_007n;
+    const n = nums.length;
+    const diff = new Array(n + 1).fill(0) as number[];
+    for (const [l, r] of requests) {
+      diff[l!]!++;
+      if (r! + 1 <= n) diff[r! + 1]!--;
+    }
+    // prefix sum to get counts
+    const counts: number[] = [];
+    let cur = 0;
+    for (let i = 0; i < n; i++) {
+      cur += diff[i]!;
+      counts.push(cur);
+    }
+    counts.sort((a, b) => b - a);
+    const sortedNums = [...nums].sort((a, b) => b - a);
+    let ans = 0n;
+    for (let i = 0; i < n; i++) {
+      ans = (ans + BigInt(sortedNums[i]!) * BigInt(counts[i]!)) % MOD;
+    }
+    return Number(ans);
+  },
+
+  // batch 53
+  'kth-smallest-in-sorted-matrix': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const k = args[1] as number;
+    const n = matrix.length;
+    let lo = matrix[0]![0]!;
+    let hi = matrix[n - 1]![n - 1]!;
+    while (lo < hi) {
+      const mid = lo + ((hi - lo) >> 1);
+      // count elements <= mid using sorted property (start top-right)
+      let count = 0;
+      let col = n - 1;
+      for (let row = 0; row < n; row++) {
+        while (col >= 0 && matrix[row]![col]! > mid) col--;
+        count += col + 1;
+      }
+      if (count < k) lo = mid + 1;
+      else hi = mid;
+    }
+    return lo;
+  },
+
+  'the-skyline-problem': (...args: unknown[]) => {
+    const buildings = args[0] as number[][];
+    const events: [number, number][] = [];
+    for (const [l, r, h] of buildings) {
+      events.push([l!, -h!]); // negative height = start
+      events.push([r!, h!]);  // positive height = end
+    }
+    // Sort: by x; at same x, start events (more negative) come first, taller starts first
+    events.sort((a, b) => a[0]! !== b[0]! ? a[0]! - b[0]! : a[1]! - b[1]!);
+    const result: number[][] = [];
+    const activeHeights: number[] = [0];
+    let prevMax = 0;
+    for (const [x, h] of events) {
+      if (h! < 0) {
+        activeHeights.push(-h!);
+        activeHeights.sort((a, b) => b - a);
+      } else {
+        const idx = activeHeights.indexOf(h!);
+        if (idx !== -1) activeHeights.splice(idx, 1);
+      }
+      const curMax = activeHeights[0]!;
+      if (curMax !== prevMax) {
+        result.push([x!, curMax]);
+        prevMax = curMax;
+      }
+    }
+    return result;
+  },
+
+  'island-perimeter': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const rows = grid.length;
+    const cols = grid[0]!.length;
+    let perimeter = 0;
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        if (grid[i]![j] === 1) {
+          perimeter += 4;
+          if (j + 1 < cols && grid[i]![j + 1] === 1) perimeter -= 2;
+          if (i + 1 < rows && grid[i + 1]![j] === 1) perimeter -= 2;
+        }
+      }
+    }
+    return perimeter;
+  },
+
+  'matrix-chain-multiplication': (...args: unknown[]) => {
+    const dims = args[0] as number[];
+    const n = dims.length - 1;
+    if (n <= 1) return 0;
+    const dp: number[][] = Array.from({ length: n + 1 }, () => new Array(n + 1).fill(0));
+    for (let len = 2; len <= n; len++) {
+      for (let i = 1; i <= n - len + 1; i++) {
+        const j = i + len - 1;
+        dp[i]![j] = Infinity;
+        for (let kk = i; kk < j; kk++) {
+          const cost = dp[i]![kk]! + dp[kk + 1]![j]! + dims[i - 1]! * dims[kk]! * dims[j]!;
+          if (cost < dp[i]![j]!) dp[i]![j] = cost;
+        }
+      }
+    }
+    return dp[1]![n]!;
+  },
+
+  'binary-search-tree-iterator': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const treeArr = args[2] as (number | null)[];
+    interface TN { val: number; left: TN | null; right: TN | null }
+    function buildTree(arr: (number | null)[]): TN | null {
+      if (!arr.length || arr[0] === null || arr[0] === undefined) return null;
+      const root: TN = { val: arr[0]!, left: null, right: null };
+      const q: TN[] = [root];
+      let i = 1;
+      while (q.length && i < arr.length) {
+        const node = q.shift()!;
+        if (i < arr.length && arr[i] !== null && arr[i] !== undefined) {
+          node.left = { val: arr[i]!, left: null, right: null };
+          q.push(node.left);
+        }
+        i++;
+        if (i < arr.length && arr[i] !== null && arr[i] !== undefined) {
+          node.right = { val: arr[i]!, left: null, right: null };
+          q.push(node.right);
+        }
+        i++;
+      }
+      return root;
+    }
+    const root = buildTree(treeArr);
+    const stack: TN[] = [];
+    function pushLeft(node: TN | null) {
+      while (node) { stack.push(node); node = node.left; }
+    }
+    pushLeft(root);
+    return ops.map(op => {
+      if (op === 'next') {
+        const node = stack.pop()!;
+        pushLeft(node.right);
+        return node.val;
+      }
+      if (op === 'hasNext') return stack.length > 0;
+      return null;
+    });
   },
 
   'convert-sorted-list-to-binary-search-tree': (...args: unknown[]) => {

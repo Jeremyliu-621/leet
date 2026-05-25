@@ -1519,6 +1519,7 @@ import { problem as containsDuplicateIII } from './contains-duplicate-iii';
 import { problem as makeArrayStrictlyIncreasing } from './make-array-strictly-increasing';
 import { problem as encodeAndDecodeTinyurl } from './encode-and-decode-tinyurl';
 import { problem as courseScheduleIV } from './course-schedule-iv';
+// batch 52
 import { problem as threeSumSmaller } from './three-sum-smaller';
 import { problem as mostCommonWord } from './most-common-word';
 import { problem as studentAttendanceRecordII } from './student-attendance-record-ii';
@@ -1534,6 +1535,12 @@ import { problem as brokenCalculator } from './broken-calculator';
 import { problem as countDaysWithoutMeetings } from './count-days-without-meetings';
 import { problem as stringCompressionIII } from './string-compression-iii';
 import { problem as strangePrinterII } from './strange-printer-ii';
+// batch 53
+import { problem as kthSmallestInSortedMatrix } from './kth-smallest-in-sorted-matrix';
+import { problem as theSkylineProblem } from './the-skyline-problem';
+import { problem as islandPerimeter } from './island-perimeter';
+import { problem as matrixChainMultiplication } from './matrix-chain-multiplication';
+import { problem as binarySearchTreeIterator } from './binary-search-tree-iterator';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3101,6 +3108,7 @@ export const problems: readonly Problem[] = [
   makeArrayStrictlyIncreasing,
   encodeAndDecodeTinyurl,
   courseScheduleIV,
+// batch 52
   threeSumSmaller,
   mostCommonWord,
   studentAttendanceRecordII,
@@ -3116,4 +3124,9 @@ export const problems: readonly Problem[] = [
   countDaysWithoutMeetings,
   stringCompressionIII,
   strangePrinterII,
+  kthSmallestInSortedMatrix,
+  theSkylineProblem,
+  islandPerimeter,
+  matrixChainMultiplication,
+  binarySearchTreeIterator,
 ];
