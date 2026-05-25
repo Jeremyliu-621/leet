@@ -21292,4 +21292,50 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 55
+  'implement-strstr': (...args: unknown[]) => {
+    const haystack = args[0] as string;
+    const needle = args[1] as string;
+    if (needle.length === 0) return 0;
+    for (let i = 0; i <= haystack.length - needle.length; i++) {
+      if (haystack.slice(i, i + needle.length) === needle) return i;
+    }
+    return -1;
+  },
+
+  'repeated-string-match': (...args: unknown[]) => {
+    const a = args[0] as string;
+    const b = args[1] as string;
+    const minReps = Math.ceil(b.length / a.length);
+    for (let k = minReps; k <= minReps + 1; k++) {
+      if (a.repeat(k).includes(b)) return k;
+    }
+    return -1;
+  },
+
+  'pass-the-pillow': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const time = args[1] as number;
+    const cycle = 2 * (n - 1);
+    const t = time % cycle;
+    return t < n ? t + 1 : cycle - t + 1;
+  },
+
+  'number-of-changing-keys': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let count = 0;
+    for (let i = 1; i < s.length; i++) {
+      if (s[i]!.toLowerCase() !== s[i - 1]!.toLowerCase()) count++;
+    }
+    return count;
+  },
+
+  'maximum-repeating-substring': (...args: unknown[]) => {
+    const sequence = args[0] as string;
+    const word = args[1] as string;
+    let k = 0;
+    while (sequence.includes(word.repeat(k + 1))) k++;
+    return k;
+  },
+
 };

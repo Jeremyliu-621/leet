@@ -1550,6 +1550,12 @@ import { problem as countOfConnectedComponents } from './count-of-connected-comp
 import { problem as longestNonDecreasingSubarrayFromTwoArrays } from './longest-non-decreasing-subarray-from-two-arrays';
 import { problem as reportSpamMessage } from './report-spam-message';
 import { problem as distributeElementsIntoTwoArraysII } from './distribute-elements-into-two-arrays-ii';
+// batch 55
+import { problem as implementStrstr } from './implement-strstr';
+import { problem as repeatedStringMatch } from './repeated-string-match';
+import { problem as passThePillow } from './pass-the-pillow';
+import { problem as numberOfChangingKeys } from './number-of-changing-keys';
+import { problem as maximumRepeatingSubstring } from './maximum-repeating-substring';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3148,4 +3154,9 @@ export const problems: readonly Problem[] = [
   longestNonDecreasingSubarrayFromTwoArrays,
   reportSpamMessage,
   distributeElementsIntoTwoArraysII,
+  implementStrstr,
+  repeatedStringMatch,
+  passThePillow,
+  numberOfChangingKeys,
+  maximumRepeatingSubstring,
 ];

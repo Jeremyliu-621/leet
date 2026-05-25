@@ -21155,4 +21155,45 @@ def secondMinimum(n, edges, time, change):
         ans = max(ans, -(-total // (i + 1)))  # ceiling division
     return ans
 `,
+
+  'implement-strstr': `def strStr(haystack, needle):
+    if not needle:
+        return 0
+    for i in range(len(haystack) - len(needle) + 1):
+        if haystack[i:i + len(needle)] == needle:
+            return i
+    return -1
+`,
+
+  'repeated-string-match': `def repeatedStringMatch(a, b):
+    import math
+    min_reps = math.ceil(len(b) / len(a))
+    for k in range(min_reps, min_reps + 2):
+        if b in a * k:
+            return k
+    return -1
+`,
+
+  'pass-the-pillow': `def passThePillow(n, time):
+    cycle = 2 * (n - 1)
+    t = time % cycle
+    if t < n:
+        return t + 1
+    return cycle - t + 1
+`,
+
+  'number-of-changing-keys': `def countKeyChanges(s):
+    count = 0
+    for i in range(1, len(s)):
+        if s[i].lower() != s[i - 1].lower():
+            count += 1
+    return count
+`,
+
+  'maximum-repeating-substring': `def maxRepeating(sequence, word):
+    k = 0
+    while word * (k + 1) in sequence:
+        k += 1
+    return k
+`,
 };
