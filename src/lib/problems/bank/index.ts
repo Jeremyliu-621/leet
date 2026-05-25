@@ -143,6 +143,8 @@ import { problem as firstLetterToAppearTwice } from './first-letter-to-appear-tw
 import { problem as countAsterisks } from './count-asterisks';
 import { problem as uniqueEmailAddresses } from './unique-email-addresses';
 import { problem as countBinarySubstrings } from './count-binary-substrings';
+// arrays — hard (additional)
+import { problem as candy } from './candy';
 // arrays — medium (additional)
 import { problem as shortestUnsortedContinuousSubarray } from './shortest-unsorted-continuous-subarray';
 import { problem as maxChunksToMakeSorted } from './max-chunks-to-make-sorted';
@@ -257,6 +259,8 @@ import { problem as longestConsecutiveSequence } from './longest-consecutive-seq
 import { problem as findAllAnagramsInString } from './find-all-anagrams-in-string';
 import { problem as maximumErasureValue } from './maximum-erasure-value';
 import { problem as maxSumPairEqualDigits } from './max-sum-of-pair-with-equal-sum-of-digits';
+// hash-map — medium (binary-search)
+import { problem as timeBasedKeyValueStore } from './time-based-key-value-store';
 // hash-map — hard
 import { problem as fourSumII } from './four-sum-ii';
 import { problem as maxPointsOnLine } from './max-points-on-line';
@@ -289,6 +293,7 @@ import { problem as maxConsecutiveFlips } from './max-consecutive-flips';
 import { problem as countSubarraysBoundedMax } from './count-subarrays-bounded-max';
 
 // sliding-window — medium
+import { problem as countNiceSubarrays } from './count-nice-subarrays';
 import { problem as frequencyOfMostFrequentElement } from './frequency-of-most-frequent-element';
 import { problem as minimumSizeSubarraySum } from './minimum-size-subarray-sum';
 import { problem as atMostKDistinct } from './at-most-k-distinct';
@@ -444,6 +449,7 @@ import { problem as minCostClimbingStairs } from './min-cost-climbing-stairs';
 import { problem as countingBits } from './counting-bits';
 import { problem as bestTimeBuySell } from './best-time-buy-sell';
 // dynamic-programming — medium
+import { problem as minimumFallingPathSum } from './minimum-falling-path-sum';
 import { problem as champagneTower } from './champagne-tower';
 import { problem as stoneGame } from './stone-game';
 import { problem as longestStringChain } from './longest-string-chain';
@@ -506,6 +512,7 @@ import { problem as middleOfLinkedList } from './middle-of-linked-list';
 import { problem as palindromeLinkedList } from './palindrome-linked-list';
 import { problem as intersectionTwoLinkedLists } from './intersection-two-linked-lists';
 // linked-list — medium
+import { problem as splitLinkedListInParts } from './split-linked-list-in-parts';
 import { problem as removeNthFromEnd } from './remove-nth-from-end';
 import { problem as oddEvenLinkedList } from './odd-even-linked-list';
 import { problem as addTwoNumbers } from './add-two-numbers';
@@ -892,6 +899,7 @@ export const problems: readonly Problem[] = [
   maximumErasureValue,
   longestWordInDictionary,
   maxSumPairEqualDigits,
+  timeBasedKeyValueStore,
   // hash-map — hard
   fourSumII,
   maxPointsOnLine,
@@ -923,6 +931,7 @@ export const problems: readonly Problem[] = [
   maxConsecutiveFlips,
   countSubarraysBoundedMax,
   // sliding-window — medium
+  countNiceSubarrays,
   frequencyOfMostFrequentElement,
   maxConsecutiveOnesIII,
   maximumVowels,
@@ -1085,6 +1094,7 @@ export const problems: readonly Problem[] = [
   maximumSwap,
   robotBoundedInCircle,
   // arrays — hard
+  candy,
   nQueens,
   firstMissingPositive,
   jumpGameII,
@@ -1103,6 +1113,7 @@ export const problems: readonly Problem[] = [
   countingBits,
   bestTimeBuySell,
   // dynamic-programming — medium
+  minimumFallingPathSum,
   champagneTower,
   stoneGame,
   longestStringChain,
@@ -1146,6 +1157,7 @@ export const problems: readonly Problem[] = [
   palindromeLinkedList,
   intersectionTwoLinkedLists,
   // linked-list — medium
+  splitLinkedListInParts,
   removeNthFromEnd,
   oddEvenLinkedList,
   addTwoNumbers,

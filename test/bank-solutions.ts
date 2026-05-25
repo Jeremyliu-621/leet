@@ -7827,4 +7827,76 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return -1;
   },
 
+  'candy': (...args: unknown[]) => {
+    const ratings = args[0] as number[];
+    const n = ratings.length;
+    const c = new Array(n).fill(1);
+    for (let i = 1; i < n; i++) if ((ratings[i] ?? 0) > (ratings[i-1] ?? 0)) c[i] = (c[i-1] as number) + 1;
+    for (let i = n-2; i >= 0; i--) if ((ratings[i] ?? 0) > (ratings[i+1] ?? 0)) c[i] = Math.max(c[i] as number, (c[i+1] as number) + 1);
+    return c.reduce((a, b) => a + b, 0);
+  },
+
+  'minimum-falling-path-sum': (...args: unknown[]) => {
+    const matrix = (args[0] as number[][]).map(r => [...r]);
+    for (let i = 1; i < matrix.length; i++) {
+      for (let j = 0; j < matrix[i]!.length; j++) {
+        const prev = [matrix[i-1]![j]!];
+        if (j > 0) prev.push(matrix[i-1]![j-1]!);
+        if (j < matrix[i]!.length - 1) prev.push(matrix[i-1]![j+1]!);
+        matrix[i]![j]! += Math.min(...prev);
+      }
+    }
+    return Math.min(...matrix[matrix.length - 1]!);
+  },
+
+  'count-nice-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const atMost = (x: number) => {
+      let l = 0, odds = 0, res = 0;
+      for (let r = 0; r < nums.length; r++) {
+        odds += nums[r]! % 2;
+        while (odds > x) odds -= nums[l++]! % 2;
+        res += r - l + 1;
+      }
+      return res;
+    };
+    return atMost(k) - atMost(k - 1);
+  },
+
+  'split-linked-list-in-parts': (...args: unknown[]) => {
+    const head = args[0] as number[], k = args[1] as number;
+    const n = head.length, base = Math.floor(n / k), extra = n % k;
+    const res: number[][] = [];
+    let i = 0;
+    for (let p = 0; p < k; p++) {
+      const size = base + (p < extra ? 1 : 0);
+      res.push(head.slice(i, i + size));
+      i += size;
+    }
+    return res;
+  },
+
+  'time-based-key-value-store': (...args: unknown[]) => {
+    const ops = args[0] as string[], opArgs = args[1] as unknown[][];
+    const store = new Map<string, [number, string][]>();
+    const results: (string | null)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!, a = opArgs[i]!;
+      if (op === 'TimeMap') { results.push(null); }
+      else if (op === 'set') {
+        const [k, v, t] = a as [string, string, number];
+        if (!store.has(k)) store.set(k, []);
+        store.get(k)!.push([t, v]);
+        results.push(null);
+      } else {
+        const [k, t] = a as [string, number];
+        const arr = store.get(k) ?? [];
+        let lo = 0, hi = arr.length - 1, res = '';
+        while (lo <= hi) { const mid = (lo + hi) >> 1; if (arr[mid]![0] <= t) { res = arr[mid]![1]; lo = mid + 1; } else hi = mid - 1; }
+        results.push(res);
+      }
+    }
+    return results;
+  },
+
 };

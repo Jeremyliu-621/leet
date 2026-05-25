@@ -966,7 +966,7 @@ export const pythonSolutions: Record<string, string> = {
     return best
 `,
 
-  'find-all-anagrams-in-string': `def findAllAnagrams(s, p):
+  'find-all-anagrams-in-string': `def findAnagrams(s, p):
     from collections import Counter
     p_freq = Counter(p)
     w_freq = Counter()
@@ -7246,5 +7246,71 @@ def minOperations(nums):
             return -1
         ops += math.ceil(f / 3)
     return ops
+`,
+  'candy': `def candy(ratings):
+    n = len(ratings)
+    c = [1] * n
+    for i in range(1, n):
+        if ratings[i] > ratings[i-1]:
+            c[i] = c[i-1] + 1
+    for i in range(n-2, -1, -1):
+        if ratings[i] > ratings[i+1]:
+            c[i] = max(c[i], c[i+1] + 1)
+    return sum(c)
+`,
+  'minimum-falling-path-sum': `def minFallingPathSum(matrix):
+    matrix = [row[:] for row in matrix]
+    for i in range(1, len(matrix)):
+        for j in range(len(matrix[i])):
+            prev = [matrix[i-1][j]]
+            if j > 0: prev.append(matrix[i-1][j-1])
+            if j < len(matrix[i])-1: prev.append(matrix[i-1][j+1])
+            matrix[i][j] += min(prev)
+    return min(matrix[-1])
+`,
+  'count-nice-subarrays': `def numberOfSubarrays(nums, k):
+    def at_most(x):
+        l = odds = res = 0
+        for r in range(len(nums)):
+            odds += nums[r] % 2
+            while odds > x:
+                odds -= nums[l] % 2
+                l += 1
+            res += r - l + 1
+        return res
+    return at_most(k) - at_most(k - 1)
+`,
+  'split-linked-list-in-parts': `def splitListToParts(head, k):
+    n = len(head)
+    base, extra = divmod(n, k)
+    res, i = [], 0
+    for p in range(k):
+        size = base + (1 if p < extra else 0)
+        res.append(head[i:i+size])
+        i += size
+    return res
+`,
+  'time-based-key-value-store': `def timeMap(ops, args):
+    import bisect
+    store = {}
+    results = []
+    for op, a in zip(ops, args):
+        if op == 'TimeMap':
+            results.append(None)
+        elif op == 'set':
+            k, v, t = a
+            if k not in store:
+                store[k] = []
+            store[k].append((t, v))
+            results.append(None)
+        else:
+            k, t = a
+            if k not in store:
+                results.append('')
+                continue
+            arr = store[k]
+            idx = bisect.bisect_right(arr, (t, chr(127))) - 1
+            results.append(arr[idx][1] if idx >= 0 else '')
+    return results
 `,
 };
