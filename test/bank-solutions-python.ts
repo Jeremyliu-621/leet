@@ -16828,4 +16828,49 @@ def minimumDeletions(s):
         max_extra = max(max_extra, extra)
     return base + max_extra
 `,
+
+  'most-stones-removed-with-same-row-or-column': `def removeStones(stones):
+    stones = [list(s.to_py() if hasattr(s, 'to_py') else s) for s in (stones.to_py() if hasattr(stones, 'to_py') else stones)]
+    parent = {}
+    def find(x):
+        if x not in parent:
+            parent[x] = x
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    def union(a, b):
+        pa, pb = find(a), find(b)
+        if pa != pb:
+            parent[pa] = pb
+    for r, c in stones:
+        union(r, ~c)
+    roots = set(find(r) for r, _ in stones)
+    return len(stones) - len(roots)
+`,
+
+  'longest-subsequence-with-limited-sum': `def answerQueries(nums, queries):
+    import bisect
+    nums = sorted(list(nums.to_py() if hasattr(nums, 'to_py') else nums))
+    queries = list(queries.to_py() if hasattr(queries, 'to_py') else queries)
+    prefix = [0]
+    for v in nums:
+        prefix.append(prefix[-1] + v)
+    result = []
+    for q in queries:
+        idx = bisect.bisect_right(prefix, q) - 1
+        result.append(idx)
+    return result
+`,
+
+  'minimum-number-of-arrows-to-burst-balloons': `def findMinArrowShots(points):
+    pts = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in (points.to_py() if hasattr(points, 'to_py') else points)]
+    pts.sort(key=lambda x: x[1])
+    arrows = 1
+    end = pts[0][1]
+    for i in range(1, len(pts)):
+        if pts[i][0] > end:
+            arrows += 1
+            end = pts[i][1]
+    return arrows
+`,
 };

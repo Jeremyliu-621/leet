@@ -17040,4 +17040,45 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return base + maxExtra;
   },
 
+  'most-stones-removed-with-same-row-or-column': (stones: unknown) => {
+    const s = stones as number[][];
+    const parent = new Map<number, number>();
+    function find(x: number): number {
+      if (!parent.has(x)) parent.set(x, x);
+      if (parent.get(x) !== x) parent.set(x, find(parent.get(x)!));
+      return parent.get(x)!;
+    }
+    function union(a: number, b: number) {
+      const pa = find(a), pb = find(b);
+      if (pa !== pb) parent.set(pa, pb);
+    }
+    for (const [r, c] of s) union(r!, ~c!);
+    const roots = new Set<number>();
+    for (const [r] of s) roots.add(find(r!));
+    return s.length - roots.size;
+  },
+
+  'longest-subsequence-with-limited-sum': (nums: unknown, queries: unknown) => {
+    const a = [...(nums as number[])].sort((x, y) => x - y);
+    const prefix = [0];
+    for (const v of a) prefix.push(prefix[prefix.length - 1]! + v);
+    return (queries as number[]).map(q => {
+      let lo = 0, hi = prefix.length - 1;
+      while (lo < hi) {
+        const mid = (lo + hi + 1) >> 1;
+        if (prefix[mid]! <= q) lo = mid; else hi = mid - 1;
+      }
+      return lo;
+    });
+  },
+
+  'minimum-number-of-arrows-to-burst-balloons': (points: unknown) => {
+    const p = [...(points as number[][])].sort((a, b) => a[1]! - b[1]!);
+    let arrows = 1, end = p[0]![1]!;
+    for (let i = 1; i < p.length; i++) {
+      if (p[i]![0]! > end) { arrows++; end = p[i]![1]!; }
+    }
+    return arrows;
+  },
+
 };

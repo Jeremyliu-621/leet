@@ -1288,6 +1288,9 @@ import { problem as countWaysToSplitArray } from './count-ways-to-split-array';
 import { problem as maximumSubarraySumWithOneDeletion } from './maximum-subarray-sum-with-one-deletion';
 import { problem as numberOfSubArraysSizeKAverageThreshold } from './number-of-sub-arrays-size-k-average-threshold';
 import { problem as grumpyBookstoreOwner } from './grumpy-bookstore-owner';
+import { problem as mostStonesRemovedWithSameRowOrColumn } from './most-stones-removed-with-same-row-or-column';
+import { problem as longestSubsequenceWithLimitedSum } from './longest-subsequence-with-limited-sum';
+import { problem as minimumNumberOfArrowsToBurstBalloons } from './minimum-number-of-arrows-to-burst-balloons';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2624,4 +2627,7 @@ export const problems: readonly Problem[] = [
   maximumSubarraySumWithOneDeletion,
   numberOfSubArraysSizeKAverageThreshold,
   grumpyBookstoreOwner,
+  mostStonesRemovedWithSameRowOrColumn,
+  longestSubsequenceWithLimitedSum,
+  minimumNumberOfArrowsToBurstBalloons,
 ];
