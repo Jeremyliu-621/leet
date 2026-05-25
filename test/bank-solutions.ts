@@ -5627,6 +5627,42 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     for (const n of nums) count[n] = (count[n] ?? 0) + 1;
     return Object.entries(count).filter(([, v]) => v === 1).reduce((s, [k]) => s + +k, 0);
   },
+  'find-winners': (...args: unknown[]) => {
+    const matches = args[0] as number[][];
+    const losses = new Map<number, number>();
+    for (const m of matches) {
+      const w = m[0]!, l = m[1]!;
+      if (!losses.has(w)) losses.set(w, 0);
+      losses.set(l, (losses.get(l) ?? 0) + 1);
+    }
+    const zero: number[] = [], one: number[] = [];
+    for (const [p, lc] of losses) {
+      if (lc === 0) zero.push(p);
+      else if (lc === 1) one.push(p);
+    }
+    return [zero.sort((a, b) => a - b), one.sort((a, b) => a - b)];
+  },
+  'count-number-of-texts': (...args: unknown[]) => {
+    const pressedKeys = args[0] as string;
+    const MOD = 1_000_000_007n;
+    const n = pressedKeys.length;
+    const dp = new Array<bigint>(n + 1).fill(0n);
+    dp[0] = 1n;
+    for (let i = 1; i <= n; i++) {
+      const c = pressedKeys[i - 1]!;
+      dp[i] = dp[i - 1]!;
+      if (i >= 2 && pressedKeys[i - 2] === c) {
+        dp[i] = (dp[i]! + dp[i - 2]!) % MOD;
+        if (i >= 3 && pressedKeys[i - 3] === c) {
+          dp[i] = (dp[i]! + dp[i - 3]!) % MOD;
+          if ((c === '7' || c === '9') && i >= 4 && pressedKeys[i - 4] === c) {
+            dp[i] = (dp[i]! + dp[i - 4]!) % MOD;
+          }
+        }
+      }
+    }
+    return Number(dp[n]!);
+  },
 
   'word-pattern': (...args: unknown[]) => {
     const pattern = args[0] as string, s = args[1] as string;

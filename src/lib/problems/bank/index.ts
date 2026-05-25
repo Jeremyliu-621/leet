@@ -211,6 +211,7 @@ import { problem as ransomNote } from './ransom-note';
 import { problem as isomorphicStrings } from './isomorphic-strings';
 import { problem as wordPattern } from './word-pattern';
 import { problem as sumOfUniqueElements } from './sum-of-unique-elements';
+import { problem as findWinners } from './find-winners';
 // hash-map — medium
 import { problem as letterCombinationsPhone } from './letter-combinations-phone';
 import { problem as groupAnagrams } from './group-anagrams';
@@ -442,6 +443,7 @@ import { problem as longestSubarrayAfterDeleting } from './longest-subarray-afte
 import { problem as reverseVowels } from './reverse-vowels';
 import { problem as fizzBuzz } from './fizz-buzz';
 import { problem as luckyNumbersInMatrix } from './lucky-numbers-in-matrix';
+import { problem as countNumberOfTexts } from './count-number-of-texts';
 // dynamic-programming — hard
 import { problem as wordBreakII } from './word-break-ii';
 import { problem as decodeWaysII } from './decode-ways-ii';
@@ -682,6 +684,7 @@ export const problems: readonly Problem[] = [
   findDisappearedNumbers,
   minimumAbsoluteDifference,
   luckyNumbersInMatrix,
+  countNumberOfTexts,
   gasStation,
   maxSubarrayCircular,
   checkSortedRotated,
@@ -797,6 +800,7 @@ export const problems: readonly Problem[] = [
   isomorphicStrings,
   wordPattern,
   sumOfUniqueElements,
+  findWinners,
   // hash-map — medium
   minimumRoundsToCompleteTasks,
   minimumStepsMakeAnagram,

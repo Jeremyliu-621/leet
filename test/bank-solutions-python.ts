@@ -4987,6 +4987,35 @@ def deserialize(data):
     return sum(k for k, v in c.items() if v == 1)
 `,
 
+  'find-winners': `def findWinners(matches):
+    from collections import defaultdict
+    losses = defaultdict(int)
+    for w, l in matches:
+        if w not in losses:
+            losses[w] = 0
+        losses[l] += 1
+    zero = sorted(p for p, lc in losses.items() if lc == 0)
+    one = sorted(p for p, lc in losses.items() if lc == 1)
+    return [zero, one]
+`,
+
+  'count-number-of-texts': `def countTexts(pressedKeys):
+    MOD = 10**9 + 7
+    n = len(pressedKeys)
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    for i in range(1, n + 1):
+        c = pressedKeys[i - 1]
+        dp[i] = dp[i - 1]
+        if i >= 2 and pressedKeys[i - 2] == c:
+            dp[i] = (dp[i] + dp[i - 2]) % MOD
+            if i >= 3 and pressedKeys[i - 3] == c:
+                dp[i] = (dp[i] + dp[i - 3]) % MOD
+                if c in '79' and i >= 4 and pressedKeys[i - 4] == c:
+                    dp[i] = (dp[i] + dp[i - 4]) % MOD
+    return dp[n]
+`,
+
   'word-pattern': `def wordPattern(pattern, s):
     words = s.split()
     if len(pattern) != len(words):
