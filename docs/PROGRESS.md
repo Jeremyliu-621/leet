@@ -8,9 +8,15 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1487 problems; 4749 tests green.
+**Current focus:** Bank at 1492 problems; 4764 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank (Batch 56+); marketing site stat update at 1500 (13 more problems needed).
+**Next up:** Continue growing problem bank (Batch 56+); marketing site stat update at 1500 (8 more problems needed).
+
+### Batch 55-local (2026-05-25)
+Added 5 problems: `implement-strstr` (strings/easy, sliding window index match), `repeated-string-match` (strings/medium, ceil reps + 1 check), `pass-the-pillow` (math/easy, 2(n-1) cycle formula), `number-of-changing-keys` (strings/easy, case-insensitive adjacent diff count), `maximum-repeating-substring` (strings/easy, greedy extend repeat). Also merged Batch 56 (10 problems from parallel agents): `maximize-greatness-of-an-array`, `neighboring-bitwise-xor`, `minimize-xor`, `find-the-maximum-number-of-marked-indices`, `minimize-maximum-of-array`. Bank at **1492**; 4764 tests.
+
+### popup: live countdown (2026-05-25)
+Active unlock countdown timers in the popup now refresh every 30 seconds via a `setInterval`, so "Xm left" ticks down without reopening.
 
 ### Batch 55 (2026-05-25)
 Added 5 problems: `alternating-groups-ii` (sliding-window/medium, duplicate-array circular window), `count-of-connected-components` (graph/medium, Union-Find with path compression + rank), `longest-non-decreasing-subarray-from-two-arrays` (dp/medium, rolling DP checking 4 transition cases), `report-spam-message` (hash-map/easy, set-based banned lookup ≥2), `distribute-elements-into-two-arrays-ii` (arrays/hard, O(n²) greaterCount). Bank at **1487**; 4749 tests.
