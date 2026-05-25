@@ -15402,6 +15402,168 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return dp[n]!;
   },
+  'cherry-pickup-ii': (grid: unknown) => {
+    const g = grid as number[][];
+    const rows = g.length, cols = g[0]!.length;
+    const INF = -Infinity;
+    let dp: number[][] = Array.from({ length: cols }, () => new Array(cols).fill(INF));
+    dp[0]![cols - 1] = g[0]![0]! + (cols > 1 ? g[0]![cols - 1]! : 0);
+    for (let r = 1; r < rows; r++) {
+      const ndp: number[][] = Array.from({ length: cols }, () => new Array(cols).fill(INF));
+      for (let c1 = 0; c1 < cols; c1++) {
+        for (let c2 = c1; c2 < cols; c2++) {
+          if (dp[c1]![c2]! === INF) continue;
+          for (let d1 = -1; d1 <= 1; d1++) {
+            for (let d2 = -1; d2 <= 1; d2++) {
+              const nc1 = c1 + d1, nc2 = c2 + d2;
+              if (nc1 < 0 || nc1 >= cols || nc2 < 0 || nc2 >= cols || nc1 > nc2) continue;
+              const cherries = g[r]![nc1]! + (nc1 === nc2 ? 0 : g[r]![nc2]!);
+              ndp[nc1]![nc2] = Math.max(ndp[nc1]![nc2]!, dp[c1]![c2]! + cherries);
+            }
+          }
+        }
+      }
+      dp = ndp;
+    }
+    let ans = 0;
+    for (let c1 = 0; c1 < cols; c1++)
+      for (let c2 = c1; c2 < cols; c2++)
+        if (dp[c1]![c2]! > ans) ans = dp[c1]![c2]!;
+    return ans;
+  },
+
+  'detonate-maximum-bombs': (bombs: unknown) => {
+    const b = bombs as number[][];
+    const n = b.length;
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (let i = 0; i < n; i++) {
+      const [x1, y1, r1] = b[i]!;
+      for (let j = 0; j < n; j++) {
+        if (i === j) continue;
+        const [x2, y2] = b[j]!;
+        const dist2 = (x1! - x2!) ** 2 + (y1! - y2!) ** 2;
+        if (dist2 <= r1! * r1!) adj[i]!.push(j);
+      }
+    }
+    const bfs = (start: number): number => {
+      const vis = new Set([start]);
+      const queue = [start];
+      while (queue.length) {
+        const cur = queue.shift()!;
+        for (const nb of adj[cur]!) {
+          if (!vis.has(nb)) { vis.add(nb); queue.push(nb); }
+        }
+      }
+      return vis.size;
+    };
+    let best = 0;
+    for (let i = 0; i < n; i++) best = Math.max(best, bfs(i));
+    return best;
+  },
+
+  'design-browser-history': (homepage: unknown, ops: unknown) => {
+    const url0 = homepage as string;
+    const operations = ops as ([string, string] | [string, number])[];
+    const back: string[] = [];
+    const fwd: string[] = [];
+    let cur = url0;
+    const results: string[] = [];
+    for (const op of operations) {
+      if (op[0] === 'visit') {
+        back.push(cur);
+        fwd.length = 0;
+        cur = op[1] as string;
+      } else if (op[0] === 'back') {
+        const steps = op[1] as number;
+        for (let i = 0; i < steps && back.length > 0; i++) {
+          fwd.push(cur);
+          cur = back.pop()!;
+        }
+        results.push(cur);
+      } else {
+        const steps = op[1] as number;
+        for (let i = 0; i < steps && fwd.length > 0; i++) {
+          back.push(cur);
+          cur = fwd.pop()!;
+        }
+        results.push(cur);
+      }
+    }
+    return results;
+  },
+
+  'knight-dialer': (n: unknown) => {
+    const MOD = 1_000_000_007n;
+    const moves: number[][] = [[4,6],[6,8],[7,9],[4,8],[0,3,9],[],[0,1,7],[2,6],[1,3],[2,4]];
+    let dp = new Array(10).fill(1n);
+    for (let step = 1; step < (n as number); step++) {
+      const ndp = new Array(10).fill(0n);
+      for (let d = 0; d <= 9; d++) {
+        for (const nb of moves[d]!) ndp[d] = (ndp[d]! + dp[nb]!) % MOD;
+      }
+      dp = ndp;
+    }
+    return Number(dp.reduce((a, b) => (a + b) % MOD, 0n));
+  },
+
+  'paint-house-iii': (houses: unknown, cost: unknown, m: unknown, n: unknown, target: unknown) => {
+    const h = houses as number[], c = cost as number[][], M = m as number, N = n as number, T = target as number;
+    const INF = 1e9;
+    const dp: number[][][] = Array.from({ length: M }, () =>
+      Array.from({ length: N }, () => new Array(T + 1).fill(INF))
+    );
+    if (h[0] !== 0) {
+      if (h[0]! - 1 < N) dp[0]![h[0]! - 1]![1] = 0;
+    } else {
+      for (let j = 0; j < N; j++) dp[0]![j]![1] = c[0]![j]!;
+    }
+    for (let i = 1; i < M; i++) {
+      const colorStart = h[i] !== 0 ? h[i]! - 1 : 0;
+      const colorEnd = h[i] !== 0 ? h[i]! - 1 : N - 1;
+      for (let j = colorStart; j <= colorEnd; j++) {
+        const paintCost = h[i] !== 0 ? 0 : c[i]![j]!;
+        for (let k = 1; k <= Math.min(i + 1, T); k++) {
+          if (dp[i - 1]![j]![k] !== INF)
+            dp[i]![j]![k] = Math.min(dp[i]![j]![k]!, dp[i - 1]![j]![k]! + paintCost);
+          if (k > 1) {
+            for (let pj = 0; pj < N; pj++) {
+              if (pj !== j && dp[i - 1]![pj]![k - 1]! !== INF)
+                dp[i]![j]![k] = Math.min(dp[i]![j]![k]!, dp[i - 1]![pj]![k - 1]! + paintCost);
+            }
+          }
+        }
+      }
+    }
+    let ans = INF;
+    for (let j = 0; j < N; j++) ans = Math.min(ans, dp[M - 1]![j]![T]!);
+    return ans === INF ? -1 : ans;
+  },
+
+  'maximize-distance-to-closest-person': (seats: unknown) => {
+    const s = seats as number[];
+    const n = s.length;
+    let best = 0, prev = -1;
+    for (let i = 0; i < n; i++) {
+      if (s[i] === 1) {
+        if (prev === -1) best = Math.max(best, i);
+        else best = Math.max(best, Math.floor((i - prev) / 2));
+        prev = i;
+      }
+    }
+    if (prev !== n - 1) best = Math.max(best, n - 1 - prev);
+    return best;
+  },
+
+  'minimum-number-of-vertices': (n: unknown, edges: unknown) => {
+    const N = n as number;
+    const E = edges as number[][];
+    const hasIncoming = new Set<number>();
+    for (const e of E) hasIncoming.add(e[1]!);
+    const result: number[] = [];
+    for (let i = 0; i < N; i++) if (!hasIncoming.has(i)) result.push(i);
+    return result;
+  },
+
 
   'dota2-senate': (senate: unknown) => {
     const s = senate as string;

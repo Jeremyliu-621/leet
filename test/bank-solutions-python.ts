@@ -14468,6 +14468,172 @@ def maxProductWordLengths(words):
     return best
 `,
 
+  'cherry-pickup-ii': `
+def cherryPickup(grid):
+    grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    rows, cols = len(grid), len(grid[0])
+    NEG_INF = float('-inf')
+    dp = [[NEG_INF] * cols for _ in range(cols)]
+    dp[0][cols - 1] = grid[0][0] + (grid[0][cols - 1] if cols > 1 else 0)
+    for r in range(1, rows):
+        ndp = [[NEG_INF] * cols for _ in range(cols)]
+        for c1 in range(cols):
+            for c2 in range(c1, cols):
+                if dp[c1][c2] == NEG_INF:
+                    continue
+                for d1 in (-1, 0, 1):
+                    for d2 in (-1, 0, 1):
+                        nc1, nc2 = c1 + d1, c2 + d2
+                        if nc1 < 0 or nc1 >= cols or nc2 < 0 or nc2 >= cols or nc1 > nc2:
+                            continue
+                        cherries = grid[r][nc1] + (0 if nc1 == nc2 else grid[r][nc2])
+                        ndp[nc1][nc2] = max(ndp[nc1][nc2], dp[c1][c2] + cherries)
+        dp = ndp
+    ans = 0
+    for c1 in range(cols):
+        for c2 in range(c1, cols):
+            if dp[c1][c2] > ans:
+                ans = dp[c1][c2]
+    return ans
+`,
+
+  'detonate-maximum-bombs': `
+def maximumDetonation(bombs):
+    bombs = [list(b.to_py()) if hasattr(b, 'to_py') else list(b) for b in (bombs.to_py() if hasattr(bombs, 'to_py') else bombs)]
+    n = len(bombs)
+    adj = [[] for _ in range(n)]
+    for i in range(n):
+        x1, y1, r1 = bombs[i]
+        for j in range(n):
+            if i == j:
+                continue
+            x2, y2, _ = bombs[j]
+            if (x1 - x2) ** 2 + (y1 - y2) ** 2 <= r1 * r1:
+                adj[i].append(j)
+    def bfs(start):
+        vis = {start}
+        queue = [start]
+        for cur in queue:
+            for nb in adj[cur]:
+                if nb not in vis:
+                    vis.add(nb)
+                    queue.append(nb)
+        return len(vis)
+    return max(bfs(i) for i in range(n))
+`,
+
+  'stone-game-vii': `
+def stoneGameVII(stones):
+    stones = list(stones.to_py()) if hasattr(stones, 'to_py') else list(stones)
+    n = len(stones)
+    prefix = [0] * (n + 1)
+    for i, x in enumerate(stones):
+        prefix[i + 1] = prefix[i] + x
+    def rng(i, j):
+        return prefix[j + 1] - prefix[i]
+    dp = [[0] * n for _ in range(n)]
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            dp[i][j] = max(rng(i + 1, j) - dp[i + 1][j], rng(i, j - 1) - dp[i][j - 1])
+    return dp[0][n - 1]
+`,
+
+  'design-browser-history': `
+def browserHistory(homepage, ops):
+    ops = list(ops.to_py()) if hasattr(ops, 'to_py') else list(ops)
+    back_stack = []
+    fwd_stack = []
+    cur = str(homepage)
+    results = []
+    for op in ops:
+        op = list(op.to_py()) if hasattr(op, 'to_py') else list(op)
+        action = op[0]
+        if action == 'visit':
+            back_stack.append(cur)
+            fwd_stack.clear()
+            cur = op[1]
+        elif action == 'back':
+            steps = int(op[1])
+            for _ in range(min(steps, len(back_stack))):
+                fwd_stack.append(cur)
+                cur = back_stack.pop()
+            results.append(cur)
+        else:  # forward
+            steps = int(op[1])
+            for _ in range(min(steps, len(fwd_stack))):
+                back_stack.append(cur)
+                cur = fwd_stack.pop()
+            results.append(cur)
+    return results
+`,
+
+  'knight-dialer': `
+def knightDialer(n):
+    MOD = 10 ** 9 + 7
+    moves = [[4,6],[6,8],[7,9],[4,8],[0,3,9],[],[0,1,7],[2,6],[1,3],[2,4]]
+    dp = [1] * 10
+    for _ in range(n - 1):
+        ndp = [0] * 10
+        for d in range(10):
+            for nb in moves[d]:
+                ndp[d] = (ndp[d] + dp[nb]) % MOD
+        dp = ndp
+    return sum(dp) % MOD
+`,
+
+  'paint-house-iii': `
+def minCost(houses, cost, m, n, target):
+    houses = list(houses.to_py()) if hasattr(houses, 'to_py') else list(houses)
+    cost = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (cost.to_py() if hasattr(cost, 'to_py') else cost)]
+    INF = float('inf')
+    dp = [[[INF] * (target + 1) for _ in range(n)] for _ in range(m)]
+    if houses[0] != 0:
+        dp[0][houses[0] - 1][1] = 0
+    else:
+        for j in range(n):
+            dp[0][j][1] = cost[0][j]
+    for i in range(1, m):
+        color_range = [houses[i] - 1] if houses[i] != 0 else range(n)
+        for j in color_range:
+            paint = 0 if houses[i] != 0 else cost[i][j]
+            for k in range(1, min(i + 2, target + 1)):
+                if dp[i-1][j][k] != INF:
+                    dp[i][j][k] = min(dp[i][j][k], dp[i-1][j][k] + paint)
+                if k > 1:
+                    for pj in range(n):
+                        if pj != j and dp[i-1][pj][k-1] != INF:
+                            dp[i][j][k] = min(dp[i][j][k], dp[i-1][pj][k-1] + paint)
+    ans = min(dp[m-1][j][target] for j in range(n))
+    return -1 if ans == INF else ans
+`,
+
+  'maximize-distance-to-closest-person': `
+def maxDistToClosest(seats):
+    seats = list(seats.to_py()) if hasattr(seats, 'to_py') else list(seats)
+    n = len(seats)
+    best = prev = -1
+    for i in range(n):
+        if seats[i] == 1:
+            if prev == -1:
+                best = max(best, i)
+            else:
+                best = max(best, (i - prev) // 2)
+            prev = i
+    if prev != n - 1:
+        best = max(best, n - 1 - prev)
+    return best
+`,
+
+  'minimum-number-of-vertices': `
+def findSmallestSetOfVertices(n, edges):
+    edges = [list(e.to_py()) if hasattr(e, 'to_py') else list(e) for e in (edges.to_py() if hasattr(edges, 'to_py') else edges)]
+    has_incoming = set()
+    for e in edges:
+        has_incoming.add(e[1])
+    return [i for i in range(n) if i not in has_incoming]
+`,
+
 
   'sliding-window-median': `
 def medianSlidingWindow(nums, k):
@@ -14645,20 +14811,6 @@ def shortestPathAllKeys(grid):
                 visited.add((nr, nc, nkeys))
                 q.append((nr, nc, nkeys, dist + 1))
     return -1
-`,
-
-  'stone-game-vii': `
-def stoneGameVII(stoneValue):
-    stoneValue = list(stoneValue.to_py()) if hasattr(stoneValue, 'to_py') else list(stoneValue)
-    n = len(stoneValue)
-    prefix = [0] * (n + 1)
-    for i in range(n): prefix[i+1] = prefix[i] + stoneValue[i]
-    dp = [[0]*n for _ in range(n)]
-    for length in range(2, n+1):
-        for i in range(n - length + 1):
-            j = i + length - 1
-            dp[i][j] = max(prefix[j+1]-prefix[i+1]-dp[i+1][j], prefix[j]-prefix[i]-dp[i][j-1])
-    return dp[0][n-1]
 `,
 
   'stone-game-v': `

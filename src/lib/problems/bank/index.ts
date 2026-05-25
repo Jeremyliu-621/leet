@@ -1174,7 +1174,6 @@ import { problem as minimumRemovals } from './minimum-number-of-removals-to-make
 import { problem as countDifferentPalindromicSubsequences } from './count-different-palindromic-subsequences';
 import { problem as paintingTheWalls } from './painting-the-walls';
 import { problem as shortestPathAllKeys } from './shortest-path-to-get-all-keys';
-import { problem as stoneGameVii } from './stone-game-vii';
 import { problem as stoneGameV } from './stone-game-v';
 import { problem as maximumSumThreeNonOverlappingSubarrays } from './maximum-sum-three-non-overlapping-subarrays';
 import { problem as minimumCostToMergeStones } from './minimum-cost-to-merge-stones';
@@ -1194,7 +1193,6 @@ import { problem as minimumTotalDistanceTraveled } from './minimum-total-distanc
 import { problem as minimumIncompatibility } from './minimum-incompatibility';
 import { problem as fairDistributionOfCookies } from './fair-distribution-of-cookies';
 import { problem as maximumProfitInJobScheduling } from './maximum-profit-in-job-scheduling';
-// new classic problems
 import { problem as dota2Senate } from './dota2-senate';
 import { problem as timeNeededToInformAllEmployees } from './time-needed-to-inform-all-employees';
 import { problem as minesweeper } from './minesweeper';
@@ -1204,6 +1202,14 @@ import { problem as beautifulArray } from './beautiful-array';
 import { problem as recoverBinarySearchTree } from './recover-binary-search-tree';
 import { problem as findDuplicateSubtrees } from './find-duplicate-subtrees';
 import { problem as allPossibleFullBinaryTrees } from './all-possible-full-binary-trees';
+import { problem as cherryPickupII } from './cherry-pickup-ii';
+import { problem as detonateMaximumBombs } from './detonate-maximum-bombs';
+import { problem as stoneGameVII } from './stone-game-vii';
+import { problem as designBrowserHistory } from './design-browser-history';
+import { problem as knightDialer } from './knight-dialer';
+import { problem as paintHouseIII } from './paint-house-iii';
+import { problem as maximizeDistanceToClosestPerson } from './maximize-distance-to-closest-person';
+import { problem as minimumNumberOfVertices } from './minimum-number-of-vertices';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2426,7 +2432,6 @@ export const problems: readonly Problem[] = [
   countDifferentPalindromicSubsequences,
   paintingTheWalls,
   shortestPathAllKeys,
-  stoneGameVii,
   stoneGameV,
   maximumSumThreeNonOverlappingSubarrays,
   minimumCostToMergeStones,
@@ -2446,7 +2451,6 @@ export const problems: readonly Problem[] = [
   minimumIncompatibility,
   fairDistributionOfCookies,
   maximumProfitInJobScheduling,
-  // new classic problems
   dota2Senate,
   timeNeededToInformAllEmployees,
   minesweeper,
@@ -2456,4 +2460,12 @@ export const problems: readonly Problem[] = [
   recoverBinarySearchTree,
   findDuplicateSubtrees,
   allPossibleFullBinaryTrees,
+  cherryPickupII,
+  detonateMaximumBombs,
+  stoneGameVII,
+  designBrowserHistory,
+  knightDialer,
+  paintHouseIII,
+  maximizeDistanceToClosestPerson,
+  minimumNumberOfVertices,
 ];

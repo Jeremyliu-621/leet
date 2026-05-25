@@ -130,14 +130,9 @@ Return a **sorted array of the root values** of the duplicate subtrees (one repr
     },
   ],
   hiddenTests: [
-    // Single node — no duplicates
     { args: [[1]], expected: [] },
-    // Two different leaves
     { args: [[1, 2, 3]], expected: [] },
-    // Three identical leaves
     { args: [[1, 2, 3, 4, 4, 4]], expected: [4] },
-    // Deep duplicate: [0,0,0,0,null,null,0,null,null,null,0]
-    // Simplify: a tree where leaf 0 appears multiple times
     { args: [[0, 0, 0, 0, null, null, 0]], expected: [0] },
   ],
 };
