@@ -1428,6 +1428,10 @@ import { problem as largestNumberAfterDigitSwapsByParity } from './largest-numbe
 import { problem as numberOfPairsOfStringsWithConcatenationEqualToTarget } from './number-of-pairs-of-strings-with-concatenation-equal-to-target';
 import { problem as sumOfBeautyOfAllSubstrings } from './sum-of-beauty-of-all-substrings';
 import { problem as maximumNumberOfWordsYouCanType } from './maximum-number-of-words-you-can-type';
+import { problem as uglyNumber } from './ugly-number';
+import { problem as lemonadeChange } from './lemonade-change';
+import { problem as mostFrequentSubtreeSum } from './most-frequent-subtree-sum';
+import { problem as implementStackUsingQueues } from './implement-stack-using-queues';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2904,4 +2908,8 @@ export const problems: readonly Problem[] = [
   numberOfPairsOfStringsWithConcatenationEqualToTarget,
   sumOfBeautyOfAllSubstrings,
   maximumNumberOfWordsYouCanType,
+  uglyNumber,
+  lemonadeChange,
+  mostFrequentSubtreeSum,
+  implementStackUsingQueues,
 ];

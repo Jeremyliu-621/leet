@@ -75,6 +75,7 @@ describe('problem selector', () => {
       'remove-outermost-parentheses',
       'remove-all-adjacent-duplicates-in-string',
       'minimum-string-length-after-removing-substrings',
+      'implement-stack-using-queues',
     ] })).toBeUndefined();
   });
 

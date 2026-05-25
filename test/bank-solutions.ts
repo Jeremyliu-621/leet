@@ -19065,4 +19065,55 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return (text as string).split(' ').filter(w => ![...w].some(c => broken.has(c))).length;
   },
 
+  'ugly-number': (n: unknown) => {
+    let x = n as number;
+    if (x <= 0) return false;
+    for (const f of [2, 3, 5]) while (x % f === 0) x = Math.floor(x / f);
+    return x === 1;
+  },
+
+  'lemonade-change': (bills: unknown) => {
+    const b = bills as number[];
+    let five = 0, ten = 0;
+    for (const bill of b) {
+      if (bill === 5) { five++; }
+      else if (bill === 10) { if (five === 0) return false; five--; ten++; }
+      else { if (ten > 0 && five > 0) { ten--; five--; } else if (five >= 3) { five -= 3; } else return false; }
+    }
+    return true;
+  },
+
+  'most-frequent-subtree-sum': (arr: unknown) => {
+    const a = arr as (number | null)[];
+    if (!a || a.length === 0) return [];
+    if (a[0] == null) return [];
+    const root = _buildTree(a);
+    const freq = new Map<number, number>();
+    function dfs(node: _TN | null): number {
+      if (!node) return 0;
+      const s = node.v + dfs(node.l) + dfs(node.r);
+      freq.set(s, (freq.get(s) ?? 0) + 1);
+      return s;
+    }
+    dfs(root);
+    const max = Math.max(...freq.values());
+    return [...freq.entries()].filter(([, v]) => v === max).map(([k]) => k).sort((a, b) => a - b);
+  },
+
+  'implement-stack-using-queues': (ops: unknown, vals: unknown) => {
+    const opArr = ops as string[], valArr = vals as number[];
+    const q: number[] = [];
+    return opArr.map((op, i) => {
+      if (op === 'push') {
+        q.push(valArr[i]!);
+        for (let k = 0; k < q.length - 1; k++) q.push(q.shift()!);
+        return null;
+      }
+      if (op === 'pop') return q.shift() ?? null;
+      if (op === 'top') return q[0] ?? null;
+      if (op === 'empty') return q.length === 0;
+      return null;
+    });
+  },
+
 };

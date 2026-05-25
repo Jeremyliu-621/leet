@@ -19069,4 +19069,71 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
     words = text.split(' ')
     return sum(1 for w in words if not any(c in broken for c in w))
 `,
+
+  'ugly-number': `def isUgly(n):
+    if n <= 0:
+        return False
+    for f in [2, 3, 5]:
+        while n % f == 0:
+            n //= f
+    return n == 1
+`,
+
+  'lemonade-change': `def lemonadeChange(bills):
+    bills_list = list(bills.to_py() if hasattr(bills, 'to_py') else bills)
+    five = ten = 0
+    for bill in bills_list:
+        if bill == 5:
+            five += 1
+        elif bill == 10:
+            if five == 0:
+                return False
+            five -= 1
+            ten += 1
+        else:
+            if ten > 0 and five > 0:
+                ten -= 1; five -= 1
+            elif five >= 3:
+                five -= 3
+            else:
+                return False
+    return True
+`,
+
+  'most-frequent-subtree-sum': `def findFrequentTreeSum(root):
+    from collections import Counter
+    freq = Counter()
+    def dfs(node):
+        if not node:
+            return 0
+        s = node.val + dfs(node.left) + dfs(node.right)
+        freq[s] += 1
+        return s
+    dfs(root)
+    if not freq:
+        return []
+    max_freq = max(freq.values())
+    return sorted(k for k, v in freq.items() if v == max_freq)
+`,
+
+  'implement-stack-using-queues': `def myStackRunner(ops, vals):
+    ops_list = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    vals_list = list(vals.to_py() if hasattr(vals, 'to_py') else vals)
+    from collections import deque
+    q = deque()
+    results = []
+    for op, val in zip(ops_list, vals_list):
+        if op == 'push':
+            q.append(val)
+            for _ in range(len(q) - 1):
+                q.append(q.popleft())
+            results.append(None)
+        elif op == 'pop':
+            results.append(q.popleft())
+        elif op == 'top':
+            results.append(q[0])
+        elif op == 'empty':
+            results.append(len(q) == 0)
+    return results
+`,
 };
