@@ -946,6 +946,22 @@ import { problem as maximizeNumberOfSubsequencesInAString } from './maximize-num
 import { problem as numberOfWaysToBuyPensAndPencils } from './number-of-ways-to-buy-pens-and-pencils';
 import { problem as sumOfDigitsOfStringAfterConvert } from './sum-of-digits-of-string-after-convert';
 import { problem as smallestValueOfRearrangedNumber } from './smallest-value-of-rearranged-number';
+import { problem as removingStarsFromString } from './removing-stars-from-string';
+import { problem as findThePeaks } from './find-the-peaks';
+import { problem as minimumPenaltyForAShop } from './minimum-penalty-for-a-shop';
+import { problem as applyOperationsToAnArray } from './apply-operations-to-an-array';
+import { problem as kthDistinctStringInArray } from './kth-distinct-string-in-array';
+import { problem as countElementsWithStrictlySmallerAndGreater } from './count-elements-with-strictly-smaller-and-greater';
+import { problem as largestPositiveIntegerThatExistsWithNegative } from './largest-positive-integer-that-exists-with-negative';
+import { problem as checkIfNumberHasEqualDigitCountAndDigitValue } from './check-if-number-has-equal-digit-count-and-digit-value';
+import { problem as decodeXorArray } from './decode-xor-array';
+import { problem as maximumSplitOfPositiveEvenIntegers } from './maximum-split-of-positive-even-integers';
+import { problem as minimumAverageOfSmallestAndLargestElements } from './minimum-average-of-smallest-and-largest-elements';
+import { problem as countTestedDevicesAfterTestRuns } from './count-tested-devices-after-test-runs';
+import { problem as numberOfSubarraysWithGcdEqualToK } from './number-of-subarrays-with-gcd-equal-to-k';
+import { problem as findSubsequenceOfLengthKWithLargestSum } from './find-subsequence-of-length-k-with-largest-sum';
+import { problem as minimumAbsoluteSumDifference } from './minimum-absolute-sum-difference';
+import { problem as findTheKBeautyOfANumber } from './find-the-k-beauty-of-a-number';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1940,4 +1956,20 @@ export const problems: readonly Problem[] = [
   numberOfWaysToBuyPensAndPencils,
   sumOfDigitsOfStringAfterConvert,
   smallestValueOfRearrangedNumber,
+  removingStarsFromString,
+  findThePeaks,
+  minimumPenaltyForAShop,
+  applyOperationsToAnArray,
+  kthDistinctStringInArray,
+  countElementsWithStrictlySmallerAndGreater,
+  largestPositiveIntegerThatExistsWithNegative,
+  checkIfNumberHasEqualDigitCountAndDigitValue,
+  decodeXorArray,
+  maximumSplitOfPositiveEvenIntegers,
+  minimumAverageOfSmallestAndLargestElements,
+  countTestedDevicesAfterTestRuns,
+  numberOfSubarraysWithGcdEqualToK,
+  findSubsequenceOfLengthKWithLargestSum,
+  minimumAbsoluteSumDifference,
+  findTheKBeautyOfANumber,
 ];

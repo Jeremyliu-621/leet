@@ -11244,4 +11244,192 @@ def smallestNumber(num):
     digits = sorted(str(-n), reverse=True)
     return -int(''.join(digits))
 `,
+
+  'removing-stars-from-string': `
+def removeStars(s):
+    stack = []
+    for c in s:
+        if c == '*':
+            stack.pop()
+        else:
+            stack.append(c)
+    return ''.join(stack)
+`,
+
+  'find-the-peaks': `
+def findPeaks(mountain):
+    m = [int(x) for x in mountain]
+    result = []
+    for i in range(1, len(m) - 1):
+        if m[i] > m[i-1] and m[i] > m[i+1]:
+            result.append(i)
+    return result
+`,
+
+  'minimum-penalty-for-a-shop': `
+def bestClosingTime(customers):
+    penalty = sum(1 for c in customers if c == 'Y')
+    min_penalty = penalty
+    best_hour = 0
+    for i, c in enumerate(customers):
+        if c == 'Y':
+            penalty -= 1
+        else:
+            penalty += 1
+        if penalty < min_penalty:
+            min_penalty = penalty
+            best_hour = i + 1
+    return best_hour
+`,
+
+  'apply-operations-to-an-array': `
+def applyOperations(nums):
+    arr = [int(x) for x in nums]
+    n = len(arr)
+    for i in range(n - 1):
+        if arr[i] == arr[i+1]:
+            arr[i] *= 2
+            arr[i+1] = 0
+    result = [x for x in arr if x != 0]
+    result += [0] * (n - len(result))
+    return result
+`,
+
+  'kth-distinct-string-in-array': `
+def kthDistinct(arr, k):
+    from collections import Counter
+    a = [str(x) for x in arr]
+    count = Counter(a)
+    cnt = 0
+    for s in a:
+        if count[s] == 1:
+            cnt += 1
+            if cnt == k:
+                return s
+    return ''
+`,
+
+  'count-elements-with-strictly-smaller-and-greater': `
+def countElements(nums):
+    m = [int(x) for x in nums]
+    mn, mx = min(m), max(m)
+    return sum(1 for x in m if mn < x < mx)
+`,
+
+  'largest-positive-integer-that-exists-with-negative': `
+def findMaxK(nums):
+    s = set(int(x) for x in nums)
+    result = -1
+    for x in s:
+        if x > 0 and -x in s:
+            result = max(result, x)
+    return result
+`,
+
+  'check-if-number-has-equal-digit-count-and-digit-value': `
+def digitCount(num):
+    for i, c in enumerate(num):
+        if num.count(str(i)) != int(c):
+            return False
+    return True
+`,
+
+  'decode-xor-array': `
+def decode(encoded, first):
+    result = [first]
+    for e in encoded:
+        result.append(result[-1] ^ int(e))
+    return result
+`,
+
+  'maximum-split-of-positive-even-integers': `
+def maximumEvenSplit(finalSum):
+    n = int(finalSum)
+    if n % 2 == 1:
+        return []
+    result = []
+    cur = 2
+    while cur * 2 < n:
+        result.append(cur)
+        n -= cur
+        cur += 2
+    result.append(n)
+    return result
+`,
+
+  'minimum-average-of-smallest-and-largest-elements': `
+def minimumAverage(nums):
+    s = sorted(int(x) for x in nums)
+    n = len(s)
+    result = float('inf')
+    for i in range(n // 2):
+        result = min(result, (s[i] + s[n-1-i]) / 2)
+    return result
+`,
+
+  'count-tested-devices-after-test-runs': `
+def countTestedDevices(batteryPercentages):
+    count = 0
+    for b in batteryPercentages:
+        if int(b) - count > 0:
+            count += 1
+    return count
+`,
+
+  'number-of-subarrays-with-gcd-equal-to-k': `
+def subarrayGCD(nums, k):
+    from math import gcd
+    n_list = [int(x) for x in nums]
+    n = len(n_list)
+    count = 0
+    for i in range(n):
+        g = n_list[i]
+        for j in range(i, n):
+            g = gcd(g, n_list[j])
+            if g == k:
+                count += 1
+            elif g < k:
+                break
+    return count
+`,
+
+  'find-subsequence-of-length-k-with-largest-sum': `
+def maxSubsequence(nums, k):
+    n_list = list(enumerate(int(x) for x in nums))
+    n_list.sort(key=lambda x: -x[1])
+    selected = sorted(n_list[:k], key=lambda x: x[0])
+    return [v for _, v in selected]
+`,
+
+  'minimum-absolute-sum-difference': `
+def minAbsoluteSumDiff(nums1, nums2):
+    import bisect
+    MOD = 10**9 + 7
+    n1 = [int(x) for x in nums1]
+    n2 = [int(x) for x in nums2]
+    n = len(n1)
+    sorted1 = sorted(n1)
+    total = sum(abs(a - b) for a, b in zip(n1, n2))
+    max_gain = 0
+    for a, b in zip(n1, n2):
+        diff = abs(a - b)
+        idx = bisect.bisect_left(sorted1, b)
+        for j in [idx - 1, idx]:
+            if 0 <= j < n:
+                best_diff = abs(sorted1[j] - b)
+                max_gain = max(max_gain, diff - best_diff)
+    return (total - max_gain) % MOD
+`,
+
+  'find-the-k-beauty-of-a-number': `
+def divisorSubstrings(num, k):
+    n = int(num)
+    s = str(n)
+    count = 0
+    for i in range(len(s) - k + 1):
+        sub = int(s[i:i+k])
+        if sub != 0 and n % sub == 0:
+            count += 1
+    return count
+`,
 };

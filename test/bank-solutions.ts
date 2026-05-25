@@ -11782,4 +11782,187 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return -Number(digits.join(''));
   },
 
+  'removing-stars-from-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const stack: string[] = [];
+    for (const c of s) {
+      if (c === '*') stack.pop();
+      else stack.push(c);
+    }
+    return stack.join('');
+  },
+
+  'find-the-peaks': (...args: unknown[]) => {
+    const mountain = args[0] as number[];
+    const result: number[] = [];
+    for (let i = 1; i < mountain.length - 1; i++) {
+      if ((mountain[i] as number) > (mountain[i - 1] as number) &&
+          (mountain[i] as number) > (mountain[i + 1] as number))
+        result.push(i);
+    }
+    return result;
+  },
+
+  'minimum-penalty-for-a-shop': (...args: unknown[]) => {
+    const customers = args[0] as string;
+    let penalty = [...customers].filter(c => c === 'Y').length;
+    let minPenalty = penalty, bestHour = 0;
+    for (let i = 0; i < customers.length; i++) {
+      if (customers[i] === 'Y') penalty--;
+      else penalty++;
+      if (penalty < minPenalty) { minPenalty = penalty; bestHour = i + 1; }
+    }
+    return bestHour;
+  },
+
+  'apply-operations-to-an-array': (...args: unknown[]) => {
+    const arr = (args[0] as number[]).slice();
+    for (let i = 0; i < arr.length - 1; i++) {
+      if (arr[i] === arr[i + 1]) { arr[i] = (arr[i] as number) * 2; arr[i + 1] = 0; }
+    }
+    return [...arr.filter(x => x !== 0), ...arr.filter(x => x === 0)];
+  },
+
+  'kth-distinct-string-in-array': (...args: unknown[]) => {
+    const arr = args[0] as string[];
+    const k = args[1] as number;
+    const count = new Map<string, number>();
+    for (const s of arr) count.set(s, (count.get(s) ?? 0) + 1);
+    let cnt = 0;
+    for (const s of arr) {
+      if (count.get(s) === 1 && ++cnt === k) return s;
+    }
+    return '';
+  },
+
+  'count-elements-with-strictly-smaller-and-greater': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const min = Math.min(...nums), max = Math.max(...nums);
+    return nums.filter(x => x > min && x < max).length;
+  },
+
+  'largest-positive-integer-that-exists-with-negative': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const s = new Set(nums);
+    let result = -1;
+    for (const x of s) {
+      if ((x as number) > 0 && s.has(-(x as number)))
+        result = Math.max(result, x as number);
+    }
+    return result;
+  },
+
+  'check-if-number-has-equal-digit-count-and-digit-value': (...args: unknown[]) => {
+    const num = args[0] as string;
+    for (let i = 0; i < num.length; i++) {
+      const count = [...num].filter(c => c === String(i)).length;
+      if (count !== Number(num[i])) return false;
+    }
+    return true;
+  },
+
+  'decode-xor-array': (...args: unknown[]) => {
+    const encoded = args[0] as number[];
+    const first = args[1] as number;
+    const result = [first];
+    for (const e of encoded) result.push((result[result.length - 1] as number) ^ (e as number));
+    return result;
+  },
+
+  'maximum-split-of-positive-even-integers': (...args: unknown[]) => {
+    let finalSum = args[0] as number;
+    if (finalSum % 2 === 1) return [];
+    const result: number[] = [];
+    let cur = 2;
+    while (cur * 2 < finalSum) {
+      result.push(cur);
+      finalSum -= cur;
+      cur += 2;
+    }
+    result.push(finalSum);
+    return result;
+  },
+
+  'minimum-average-of-smallest-and-largest-elements': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const n = nums.length;
+    let min = Infinity;
+    for (let i = 0; i < Math.floor(n / 2); i++) {
+      min = Math.min(min, ((nums[i] as number) + (nums[n - 1 - i] as number)) / 2);
+    }
+    return min;
+  },
+
+  'count-tested-devices-after-test-runs': (...args: unknown[]) => {
+    const batteryPercentages = args[0] as number[];
+    let count = 0;
+    for (const b of batteryPercentages) {
+      if ((b as number) - count > 0) count++;
+    }
+    return count;
+  },
+
+  'number-of-subarrays-with-gcd-equal-to-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
+    let count = 0;
+    for (let i = 0; i < nums.length; i++) {
+      let g = nums[i] as number;
+      for (let j = i; j < nums.length; j++) {
+        g = gcd(g, nums[j] as number);
+        if (g === k) count++;
+        else if (g < k) break;
+      }
+    }
+    return count;
+  },
+
+  'find-subsequence-of-length-k-with-largest-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const indexed = nums.map((v, i) => [v as number, i] as [number, number]);
+    indexed.sort((a, b) => b[0] - a[0]);
+    return indexed.slice(0, k)
+      .sort((a, b) => a[1] - b[1])
+      .map(([v]) => v);
+  },
+
+  'minimum-absolute-sum-difference': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const MOD = 1e9 + 7;
+    const n = nums1.length;
+    const sorted = [...nums1].sort((a, b) => (a as number) - (b as number)) as number[];
+    const closest = (target: number) => {
+      let lo = 0, hi = sorted.length - 1, best = Infinity;
+      while (lo <= hi) {
+        const mid = (lo + hi) >> 1;
+        best = Math.min(best, Math.abs(sorted[mid]! - target));
+        if (sorted[mid]! < target) lo = mid + 1;
+        else hi = mid - 1;
+      }
+      return best;
+    };
+    let totalSum = 0, maxGain = 0;
+    for (let i = 0; i < n; i++) {
+      const diff = Math.abs((nums1[i] as number) - (nums2[i] as number));
+      totalSum += diff;
+      maxGain = Math.max(maxGain, diff - closest(nums2[i] as number));
+    }
+    return (totalSum - maxGain) % MOD;
+  },
+
+  'find-the-k-beauty-of-a-number': (...args: unknown[]) => {
+    const num = args[0] as number;
+    const k = args[1] as number;
+    const s = String(num);
+    let count = 0;
+    for (let i = 0; i <= s.length - k; i++) {
+      const sub = Number(s.slice(i, i + k));
+      if (sub !== 0 && num % sub === 0) count++;
+    }
+    return count;
+  },
+
 };
