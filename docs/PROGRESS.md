@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1283 problems; 4107 tests green.
+**Current focus:** Bank at 1298 problems; 4137 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems; UI/UX polish; Options/popup improvements.
 
@@ -366,6 +366,7 @@ Still pending:
 - [x] **4 more classic problems (Batch 30)** — split-array-into-consecutive-subsequences (arrays+hash-map/medium, greedy freq+end maps), restore-the-array-from-adjacent-pairs (arrays+hash-map/medium, adjacency list + endpoint traversal), monotone-increasing-digits (math/medium, right-to-left decrement + fill 9s), construct-k-palindrome-strings (strings+hash-map/medium, oddCount ≤ k ≤ s.length); bank at **1272**; 4044 tests.
 - [x] **5 more classic problems (Batch 31-remote)** — remove-duplicate-letters (stack/medium, monotone stack greedy), best-time-to-buy-and-sell-stock-iv (dp/hard, O(kn) buy/sell DP), shortest-path-with-alternating-colors (graph/medium, BFS color state), minimum-swaps-to-make-sequences-increasing (dp/medium, keep/swap DP transitions), array-of-doubled-pairs (arrays+hash-map/medium, sort by abs + greedy count); bank at **1282**; 4098 tests.
 - [x] **3 more classic problems (Batch 31-local)** — count-vowel-permutation (dp/medium, 5-state transition mod 10^9+7), longest-ideal-subsequence (dp/medium, O(26n) dp by char index), minimum-string-length-after-removing-substrings (strings+stack/easy, stack collapse AB/CD); bank at **1283**; 4107 tests.
+- [x] **10 more classic problems (Batch 30-local)** — push-dominoes (arrays/medium, force propagation), largest-merge-of-two-strings (strings/medium, greedy suffix comparison), remove-covered-intervals (arrays/medium, sort+max-right), minimize-array-value (arrays/medium, prefix average ceiling), validate-ip-address (strings/medium, split+regex), maximum-sum-hourglass (arrays/medium, 3×3 scan), reverse-odd-levels-binary-tree (tree/medium, symmetric DFS swap), find-closest-node-to-given-two-nodes (graph/medium, functional graph BFS), number-of-flowers-in-full-bloom (binary-search/medium, sorted starts/ends), most-beautiful-item-for-each-query (arrays+binary-search/medium, sorted prefix-max beauty); bank at **1298**; 4137 tests.
 
 ---
 
