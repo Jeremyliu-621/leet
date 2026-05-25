@@ -320,14 +320,24 @@ export function Popup() {
         ) : (
           <ul className="mt-2 space-y-1.5">
             {data.activeUnlocks.slice(0, 4).map((token) => (
-              <li
-                key={token.domain}
-                className="flex items-center justify-between border border-border bg-surface px-3 py-2 text-xs"
-              >
-                <span className="truncate font-mono text-text">{token.domain}</span>
-                <span className="ml-2 shrink-0 font-mono text-muted tabular-nums">
-                  {minutesLeft(token)}m left
-                </span>
+              <li key={token.domain}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    try {
+                      void chrome.tabs.create({ url: `https://${token.domain}` });
+                    } catch {
+                      // Outside extension context — silently ignore.
+                    }
+                  }}
+                  aria-label={`Visit ${token.domain} (${minutesLeft(token)} minutes left)`}
+                  className="flex w-full items-center justify-between border border-border bg-surface px-3 py-2 text-xs transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+                >
+                  <span className="truncate font-mono text-text">{token.domain}</span>
+                  <span className="ml-2 shrink-0 font-mono text-muted tabular-nums">
+                    {minutesLeft(token)}m left
+                  </span>
+                </button>
               </li>
             ))}
           </ul>
