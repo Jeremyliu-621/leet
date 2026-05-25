@@ -652,6 +652,12 @@ import { problem as numberOfWaysArriveDestination } from './number-of-ways-arriv
 import { problem as minimumCostCutStick } from './minimum-cost-cut-stick';
 import { problem as kthMissingPositiveNumber } from './kth-missing-positive-number';
 import { problem as strangePrinter } from './strange-printer';
+import { problem as studentsUnableToEatLunch } from './students-unable-to-eat-lunch';
+import { problem as createTargetArrayGivenOrder } from './create-target-array-given-order';
+import { problem as maximumAscendingSubarraySum } from './maximum-ascending-subarray-sum';
+import { problem as minimumConsecutiveCardsPickup } from './minimum-consecutive-cards-pickup';
+import { problem as divisorGame } from './divisor-game';
+import { problem as minimumTimeVisitingAllPoints } from './minimum-time-visiting-all-points';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1296,4 +1302,13 @@ export const problems: readonly Problem[] = [
   binaryTreeMaxPathSum,
   serializeBinaryTree,
   verticalOrderTraversal,
+  // arrays — easy (new batch)
+  studentsUnableToEatLunch,
+  createTargetArrayGivenOrder,
+  maximumAscendingSubarraySum,
+  minimumTimeVisitingAllPoints,
+  // arrays — medium (new)
+  minimumConsecutiveCardsPickup,
+  // math — easy (new)
+  divisorGame,
 ];

@@ -7578,4 +7578,67 @@ def sortString(s):
             res += mx - mn
     return res
 `,
+
+  'students-unable-to-eat-lunch': `
+def countStudents(students, sandwiches):
+    students = list(students)
+    sandwiches = list(sandwiches)
+    i = 0
+    while i < len(sandwiches):
+        if sandwiches[i] in students:
+            students.remove(sandwiches[i])
+            i += 1
+        else:
+            break
+    return len(students)
+`,
+
+  'create-target-array-given-order': `
+def createTargetArray(nums, index):
+    nums = list(nums)
+    index = list(index)
+    target = []
+    for i in range(len(nums)):
+        target.insert(index[i], nums[i])
+    return target
+`,
+
+  'maximum-ascending-subarray-sum': `
+def maxAscendingSum(nums):
+    nums = list(nums)
+    max_sum = cur = nums[0]
+    for i in range(1, len(nums)):
+        if nums[i] > nums[i-1]:
+            cur += nums[i]
+        else:
+            max_sum = max(max_sum, cur)
+            cur = nums[i]
+    return max(max_sum, cur)
+`,
+
+  'minimum-consecutive-cards-pickup': `
+def minimumCardPickup(cards):
+    cards = list(cards)
+    last = {}
+    min_len = float('inf')
+    for i, c in enumerate(cards):
+        if c in last:
+            min_len = min(min_len, i - last[c] + 1)
+        last[c] = i
+    return min_len if min_len != float('inf') else -1
+`,
+
+  'divisor-game': `
+def divisorGame(n):
+    return n % 2 == 0
+`,
+
+  'minimum-time-visiting-all-points': `
+def minTimeToVisitAllPoints(points):
+    points = [list(p) for p in points]
+    total = 0
+    for i in range(1, len(points)):
+        total += max(abs(points[i][0] - points[i-1][0]), abs(points[i][1] - points[i-1][1]))
+    return total
+`,
 };

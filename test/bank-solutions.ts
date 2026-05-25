@@ -8101,6 +8101,61 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return total;
   },
 
+  'students-unable-to-eat-lunch': (...args: unknown[]) => {
+    const students = [...(args[0] as number[])];
+    const sandwiches = args[1] as number[];
+    let i = 0;
+    while (i < sandwiches.length) {
+      const idx = students.indexOf(sandwiches[i]!);
+      if (idx === -1) break;
+      students.splice(idx, 1);
+      i++;
+    }
+    return students.length;
+  },
+
+  'create-target-array-given-order': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const index = args[1] as number[];
+    const target: number[] = [];
+    for (let i = 0; i < nums.length; i++) target.splice(index[i]!, 0, nums[i]!);
+    return target;
+  },
+
+  'maximum-ascending-subarray-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let max = 0, cur = nums[0]!;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i]! > nums[i - 1]!) cur += nums[i]!;
+      else { max = Math.max(max, cur); cur = nums[i]!; }
+    }
+    return Math.max(max, cur);
+  },
+
+  'minimum-consecutive-cards-pickup': (...args: unknown[]) => {
+    const cards = args[0] as number[];
+    const last = new Map<number, number>();
+    let min = Infinity;
+    for (let i = 0; i < cards.length; i++) {
+      if (last.has(cards[i]!)) min = Math.min(min, i - last.get(cards[i]!)! + 1);
+      last.set(cards[i]!, i);
+    }
+    return min === Infinity ? -1 : min;
+  },
+
+  'divisor-game': (...args: unknown[]) => {
+    return (args[0] as number) % 2 === 0;
+  },
+
+  'minimum-time-visiting-all-points': (...args: unknown[]) => {
+    const points = args[0] as number[][];
+    let total = 0;
+    for (let i = 1; i < points.length; i++) {
+      total += Math.max(Math.abs(points[i]![0]! - points[i - 1]![0]!), Math.abs(points[i]![1]! - points[i - 1]![1]!));
+    }
+    return total;
+  },
+
   'fruit-into-baskets': (...args: unknown[]) => {
     const fruits = args[0] as number[];
     const freq = new Map<number, number>();

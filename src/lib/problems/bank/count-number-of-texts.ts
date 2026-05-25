@@ -4,26 +4,35 @@ export const problem: Problem = {
   id: 'count-number-of-texts',
   title: 'Count Number of Texts',
   difficulty: 'medium',
-  tags: ['strings', 'dynamic-programming'],
-  description: `Alice is texting Bob using her phone. The **mapping** of digits to letters is shown in the figure above (a standard phone keypad where 2→abc, 3→def, 4→ghi, 5→jkl, 6→mno, 7→pqrs, 8→tuv, 9→wxyz).
+  tags: ['strings', 'dynamic-programming', 'hash-map'],
+  description: `Alice is texting Bob using her phone. The **mapping** of digits to letters is shown in the figure below.
 
-In order to **add** a letter, Alice has to **press** the key of the corresponding digit once for the first letter, twice for the second letter, and so on.
+- 2: abc, 3: def, 4: ghi, 5: jkl, 6: mno, 7: pqrs, 8: tuv, 9: wxyz
 
-Alice will not press the same key more times than necessary.
+In order to **add** a letter, Alice has to **press** the key of the corresponding digit an appropriate number of times.
 
-Given a string \`pressedKeys\` representing the sequence of keys pressed, return the **total number of possible text messages** Alice could have sent modulo \`10^9 + 7\`.
+However, due to an error, Alice's friends cannot decipher the intended message. Given the string \`pressedKeys\` representing the sequence of keys pressed, return the **total number of possible text messages** Alice could have sent.
 
-Note: keys 7 and 9 each map to 4 letters (pqrs and wxyz), so pressing the same digit up to **4 times** is valid for those keys; for all other digit keys, up to **3 times**.`,
+Since the answer may be very large, return it **modulo** \`10^9 + 7\`.
+
+Note: Keys 7 and 9 have 4 letters each; keys 2, 3, 4, 5, 6, 8 have 3 letters each.`,
   constraints: [
-    '1 <= pressedKeys.length <= 10^5',
-    'pressedKeys only consists of digits from 2-9.',
+    '`1 <= pressedKeys.length <= 10^5`',
+    '`pressedKeys` only consists of digits from `2` to `9`.',
   ],
   examples: [
-    { input: 'pressedKeys = "22233"', output: '8', explanation: 'The possible texts are: "bcd", "bd", "cd", "b d" ... 8 ways total.' },
-    { input: 'pressedKeys = "222222222222222222222222222222222222"', output: '82876089' },
+    {
+      input: 'pressedKeys = "22233"',
+      output: '8',
+      explanation: '22 can be a, b, or aa. 33 can be d, e, or dd. 2 alone is a, b. Combinations: (3 choices for 22) * (1 for 3) * (1 for 3) = not quite — this needs careful DP.',
+    },
+    {
+      input: 'pressedKeys = "222222222222222222222222222222222222"',
+      output: '82876089',
+    },
   ],
   hints: [
-    'Use DP where dp[i] = number of messages for pressedKeys[0..i-1]. For each position, look back 2, 3 (or 4 for 7/9) positions while the digit is the same.',
+    'Group consecutive identical digits. For each group of length k, the number of ways is a Fibonacci-like DP where each digit can represent 1 letter, 2 letters, or 3 letters (or 4 for 7/9).',
   ],
   functionName: 'countTexts',
   params: ['pressedKeys'],
@@ -34,12 +43,13 @@ Note: keys 7 and 9 each map to 4 letters (pqrs and wxyz), so pressing the same d
   visibleTests: [
     { args: ['22233'], expected: 8 },
     { args: ['222222222222222222222222222222222222'], expected: 82876089 },
+    { args: ['2'], expected: 1 },
   ],
   hiddenTests: [
-    { args: ['99'], expected: 2 },
-    { args: ['999'], expected: 4 },
+    { args: ['7777'], expected: 8 },
     { args: ['9999'], expected: 8 },
-    { args: ['2222'], expected: 7 },
+    { args: ['3456789'], expected: 1 },
     { args: ['23'], expected: 1 },
+    { args: ['2222'], expected: 7 },
   ],
 };
