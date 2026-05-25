@@ -13,6 +13,8 @@ import { getValue } from '../../../lib/storage';
 
 const ALL_PROBLEMS = getAllProblems();
 
+const PAGE_SIZE = 50;
+
 const DIFF_COLORS: Record<Difficulty, string> = {
   easy: 'text-text',
   medium: 'text-muted',
@@ -25,6 +27,7 @@ export function ProblemBrowserSection() {
   const [tagFilter, setTagFilter] = useState<ProblemTag | 'all'>('all');
   const [search, setSearch] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -39,6 +42,11 @@ export function ProblemBrowserSection() {
     };
   }, [isOpen]);
 
+  // Reset pagination when filters or search change.
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [diffFilter, tagFilter, search]);
+
   const query = search.trim().toLowerCase();
 
   const filtered = ALL_PROBLEMS.filter((p) => {
@@ -47,6 +55,9 @@ export function ProblemBrowserSection() {
     if (query && !p.title.toLowerCase().includes(query)) return false;
     return true;
   });
+
+  const visibleProblems = filtered.slice(0, visibleCount);
+  const hasMore = visibleCount < filtered.length;
 
   const solvedCount = filtered.filter((p) => solvedIds.has(p.id)).length;
 
@@ -163,38 +174,54 @@ export function ProblemBrowserSection() {
             {filtered.length === 0 ? (
               <li className="py-4 text-center font-mono text-xs text-faint">no problems match</li>
             ) : (
-              filtered.map((p) => {
-                const solved = solvedIds.has(p.id);
-                const primaryTag = p.tags[0] ?? '';
-                return (
-                  <li
-                    key={p.id}
-                    className={`flex items-center gap-3 rounded-sm px-2 py-1.5 ${
-                      solved ? 'bg-surface' : ''
-                    }`}
-                  >
-                    {/* Solved indicator */}
-                    <span
-                      className={`shrink-0 font-mono text-[10px] tabular-nums ${
-                        solved ? 'text-accent' : 'text-border-strong'
+              <>
+                {visibleProblems.map((p) => {
+                  const solved = solvedIds.has(p.id);
+                  const primaryTag = p.tags[0] ?? '';
+                  return (
+                    <li
+                      key={p.id}
+                      className={`flex items-center gap-3 rounded-sm px-2 py-1.5 ${
+                        solved ? 'bg-surface' : ''
                       }`}
-                      aria-label={solved ? 'Solved' : 'Not solved'}
                     >
-                      {solved ? '✓' : '·'}
-                    </span>
-                    {/* Title */}
-                    <span className="flex-1 truncate text-xs text-text">{p.title}</span>
-                    {/* Primary tag */}
-                    <span className="shrink-0 font-mono text-[9px] text-faint">{primaryTag}</span>
-                    {/* Difficulty */}
-                    <span
-                      className={`shrink-0 w-12 text-right font-mono text-[9px] ${DIFF_COLORS[p.difficulty]}`}
+                      {/* Solved indicator */}
+                      <span
+                        className={`shrink-0 font-mono text-[10px] tabular-nums ${
+                          solved ? 'text-accent' : 'text-border-strong'
+                        }`}
+                        aria-label={solved ? 'Solved' : 'Not solved'}
+                      >
+                        {solved ? '✓' : '·'}
+                      </span>
+                      {/* Title */}
+                      <span className="flex-1 truncate text-xs text-text">{p.title}</span>
+                      {/* Primary tag */}
+                      <span className="shrink-0 font-mono text-[9px] text-faint">{primaryTag}</span>
+                      {/* Difficulty */}
+                      <span
+                        className={`shrink-0 w-12 text-right font-mono text-[9px] ${DIFF_COLORS[p.difficulty]}`}
+                      >
+                        {p.difficulty}
+                      </span>
+                    </li>
+                  );
+                })}
+                {hasMore && (
+                  <li className="pt-2 pb-1 text-center">
+                    <button
+                      type="button"
+                      onClick={() => setVisibleCount((n) => n + PAGE_SIZE)}
+                      className="font-mono text-[10px] text-faint hover:text-muted transition-colors focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
                     >
-                      {p.difficulty}
-                    </span>
+                      show {Math.min(PAGE_SIZE, filtered.length - visibleCount)} more
+                      <span className="text-border-strong ml-1">
+                        ({filtered.length - visibleCount} remaining)
+                      </span>
+                    </button>
                   </li>
-                );
-              })
+                )}
+              </>
             )}
           </ul>
         </div>

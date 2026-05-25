@@ -32,14 +32,6 @@ const LANGUAGE_OPTIONS: ReadonlyArray<{ value: SupportedLanguage; label: string 
   { value: 'javascript', label: 'JS' },
   { value: 'typescript', label: 'TS' },
   { value: 'python', label: 'Py' },
-  { value: 'java', label: 'Java' },
-  { value: 'cpp', label: 'C++' },
-  { value: 'csharp', label: 'C#' },
-  { value: 'go', label: 'Go' },
-  { value: 'rust', label: 'Rust' },
-  { value: 'kotlin', label: 'Kt' },
-  { value: 'swift', label: 'Swift' },
-  { value: 'sql', label: 'SQL' },
 ];
 
 const KEYMAP_OPTIONS: ReadonlyArray<{ value: EditorKeymap; label: string }> = [
