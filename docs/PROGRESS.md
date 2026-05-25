@@ -20,6 +20,15 @@
 - **All hints revealed message**: HintsSection now shows "All hints revealed." after the last hint is shown.
 - **Target domain in header**: TopBar subtitle shows "unlock youtube.com" instead of generic "solve to unlock" when gate mode is active and domain is known.
 
+### Batch 52 (2026-05-25)
+Added 5 problems: `three-sum-smaller` (two-pointers/medium, sort + two-pointer count), `most-common-word` (strings/easy, regex strip + hash-map frequency), `student-attendance-record-ii` (dp/hard, 6-state DP counting valid length-n records mod 1e9+7), `permutation-sequence` (math/hard, factorial number system to find k-th permutation directly), `maximum-sum-obtained-of-any-permutation` (arrays/medium, difference array range coverage + greedy assignment). Bank at **1452**; 4644 tests.
+
+### UI/UX improvements (2026-05-25)
+- **Tag progress bars in SolveBreakdown**: popup now shows `solved/total` progress bars per tag instead of simple count pills, with BANK_SIZE_BY_TAG hoisted as module-level constant.
+- **Tag pills in problem browser show solved/total**: tag filter pills in problem browser show `solved/total` (e.g., `arrays 95/450`) when user has solved any problems in that tag.
+- **Terminal auto-switches to test results on run failure**: previously only triggered on submit failures; now any execution failure auto-switches to the test results tab.
+- **Month labels on activity heatmap**: popup heatmap now shows abbreviated month names above columns where a new month begins.
+
 ### Batch 48 (2026-05-25)
 Added 5 problems: `day-of-the-week` (math/easy), `guess-number-higher-or-lower` (binary-search/easy), `largest-triangle-area` (math/easy), `minimum-value-to-get-positive-step-sum` (arrays/easy), `number-of-rectangles-that-can-form-largest-square` (arrays/easy). Skipped 4 originally requested problems that already existed in the bank; substituted equivalent-difficulty originals.
 
