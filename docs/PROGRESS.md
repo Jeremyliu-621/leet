@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1435 problems; 4590 tests green.
+**Current focus:** Bank at 1438 problems; 4602 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank (Batch 51+); marketing site stat update at 1500.
 
@@ -424,6 +424,8 @@ Still pending:
 - [x] **Batch 49** — watering-plants (arrays/easy), logger-rate-limiter (hash-map/easy), bst-from-preorder (tree/medium), balance-a-binary-search-tree (tree/medium), maximum-sum-bst-in-binary-tree (tree/hard); bank at **1430**; 4575 tests.
 - [x] **Batch 50** — stock-price-fluctuation (heap/medium, dual-heap or sorted map with timestamp corrections), minimum-replacements-to-sort-array (arrays/hard, greedy right-to-left ceiling division), largest-color-value-in-directed-graph (graph/hard, Kahn's BFS + DP color counts, return -1 on cycle), string-without-aaa-or-bbb (strings/medium, greedy always-write-more-frequent), count-the-hidden-sequences (arrays/medium, prefix-sum spread formula); bank at **1435**; 4590 tests.
 - [x] **perf(options)**: Hoisted `totalByDiff` to a module-level constant (was re-computed 3×1430 iterations per render). Wrapped `solvedByDiff` and `solvedCount` in useMemo with [solvedIds] dep.
+- [x] **fix(terminal): "TESTS PASSED" in run mode** — TerminalPanel summary now shows "TESTS PASSED" (not "ACCEPTED") when run mode succeeds; Test Results tab also shows "submit to run all tests" hint in that state; `mode` threaded through summary entry type.
+- [x] **Batch 51** — my-calendar-iii (hard/arrays+binary-search, difference array k-booking), design-twitter (medium/hash-map, news-feed multi-source merge top-10), zigzag-iterator (medium/arrays, alternating two-array traversal), second-minimum-time-to-reach-destination (medium/graph, BFS tracking two shortest arrival times with traffic light delays); bank at **1438**; 4602 tests.
 
 ---
 
