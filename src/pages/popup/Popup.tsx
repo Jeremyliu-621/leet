@@ -32,6 +32,14 @@ const LANGUAGE_OPTIONS: ReadonlyArray<{ value: SupportedLanguage; label: string 
   { value: 'javascript', label: 'JS' },
   { value: 'typescript', label: 'TS' },
   { value: 'python', label: 'Py' },
+  { value: 'java', label: 'Java' },
+  { value: 'cpp', label: 'C++' },
+  { value: 'csharp', label: 'C#' },
+  { value: 'go', label: 'Go' },
+  { value: 'rust', label: 'Rust' },
+  { value: 'kotlin', label: 'Kt' },
+  { value: 'swift', label: 'Swift' },
+  { value: 'sql', label: 'SQL' },
 ];
 
 const KEYMAP_OPTIONS: ReadonlyArray<{ value: EditorKeymap; label: string }> = [
@@ -396,7 +404,7 @@ export function Popup() {
         <p className="mb-2 font-mono text-[9px] uppercase tracking-widest text-faint">
           Default language
         </p>
-        <div className="flex items-center gap-1">
+        <div className="flex flex-wrap items-center gap-1">
           {LANGUAGE_OPTIONS.map((opt) => {
             const selected = data.preferredLanguage === opt.value;
             return (
@@ -409,8 +417,8 @@ export function Popup() {
                 onClick={() => void handleLanguageChange(opt.value)}
                 className={
                   selected
-                    ? 'flex-1 border border-border-strong bg-surface-2 px-3 py-1.5 font-mono text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
-                    : 'flex-1 border border-border bg-bg px-3 py-1.5 font-mono text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+                    ? 'border border-border-strong bg-surface-2 px-2 py-1 font-mono text-[10px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+                    : 'border border-border bg-bg px-2 py-1 font-mono text-[10px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
                 }
               >
                 {opt.label}

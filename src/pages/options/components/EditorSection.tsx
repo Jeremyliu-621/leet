@@ -28,6 +28,14 @@ const LANGUAGE_OPTIONS: { value: SupportedLanguage; label: string; description: 
     label: 'Python',
     description: 'Runs via Pyodide (WebAssembly CPython, bundled). ~1–2 s first-boot.',
   },
+  { value: 'java', label: 'Java', description: 'Available for problems with Java starter code.' },
+  { value: 'cpp', label: 'C++', description: 'Available for problems with C++ starter code.' },
+  { value: 'csharp', label: 'C#', description: 'Available for problems with C# starter code.' },
+  { value: 'go', label: 'Go', description: 'Available for problems with Go starter code.' },
+  { value: 'rust', label: 'Rust', description: 'Available for problems with Rust starter code.' },
+  { value: 'kotlin', label: 'Kotlin', description: 'Available for problems with Kotlin starter code.' },
+  { value: 'swift', label: 'Swift', description: 'Available for problems with Swift starter code.' },
+  { value: 'sql', label: 'SQL', description: 'Available for problems with SQL starter code.' },
 ];
 
 const KEYMAP_OPTIONS: { value: EditorKeymap; label: string; description: string }[] = [
