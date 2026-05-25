@@ -8228,4 +8228,43 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  'arithmetic-slices': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let count = 0, cur = 0;
+    for (let i = 2; i < nums.length; i++) {
+      if (nums[i]! - nums[i - 1]! === nums[i - 1]! - nums[i - 2]!) { cur++; count += cur; }
+      else cur = 0;
+    }
+    return count;
+  },
+
+  'maximum-number-vowels-substring': (...args: unknown[]) => {
+    const s = args[0] as string, k = args[1] as number;
+    const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+    let cnt = 0;
+    for (let i = 0; i < k; i++) if (vowels.has(s[i]!)) cnt++;
+    let max = cnt;
+    for (let i = k; i < s.length; i++) {
+      if (vowels.has(s[i]!)) cnt++;
+      if (vowels.has(s[i - k]!)) cnt--;
+      max = Math.max(max, cnt);
+    }
+    return max;
+  },
+
+  'minimum-swaps-group-all-ones': (...args: unknown[]) => {
+    const data = args[0] as number[];
+    const k = data.reduce((s, x) => s + x, 0);
+    if (k === 0 || k === data.length) return 0;
+    let zeros = 0;
+    for (let i = 0; i < k; i++) if (data[i]! === 0) zeros++;
+    let min = zeros;
+    for (let i = k; i < data.length; i++) {
+      if (data[i]! === 0) zeros++;
+      if (data[i - k]! === 0) zeros--;
+      min = Math.min(min, zeros);
+    }
+    return min;
+  },
+
 };

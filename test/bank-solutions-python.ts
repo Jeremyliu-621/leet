@@ -7674,4 +7674,48 @@ def numberOfWeakCharacters(properties):
         max_def = max(max_def, d)
     return count
 `,
+
+  'arithmetic-slices': `
+def numberOfArithmeticSlices(nums):
+    nums = list(nums)
+    count = cur = 0
+    for i in range(2, len(nums)):
+        if nums[i] - nums[i-1] == nums[i-1] - nums[i-2]:
+            cur += 1
+            count += cur
+        else:
+            cur = 0
+    return count
+`,
+
+  'maximum-number-vowels-substring': `
+def maxVowels(s, k):
+    vowels = set('aeiou')
+    cnt = sum(1 for c in s[:k] if c in vowels)
+    max_cnt = cnt
+    for i in range(k, len(s)):
+        if s[i] in vowels:
+            cnt += 1
+        if s[i - k] in vowels:
+            cnt -= 1
+        max_cnt = max(max_cnt, cnt)
+    return max_cnt
+`,
+
+  'minimum-swaps-group-all-ones': `
+def minSwaps(data):
+    data = list(data)
+    k = sum(data)
+    if k == 0 or k == len(data):
+        return 0
+    zeros = data[:k].count(0)
+    min_zeros = zeros
+    for i in range(k, len(data)):
+        if data[i] == 0:
+            zeros += 1
+        if data[i - k] == 0:
+            zeros -= 1
+        min_zeros = min(min_zeros, zeros)
+    return min_zeros
+`,
 };

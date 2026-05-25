@@ -661,6 +661,9 @@ import { problem as minimumTimeVisitingAllPoints } from './minimum-time-visiting
 import { problem as largestLocalValuesMatrix } from './largest-local-values-matrix';
 import { problem as percentageLetterInString } from './percentage-letter-in-string';
 import { problem as numberOfWeakCharacters } from './number-of-weak-characters';
+import { problem as arithmeticSlices } from './arithmetic-slices';
+import { problem as maximumNumberVowelsSubstring } from './maximum-number-vowels-substring';
+import { problem as minimumSwapsGroupAllOnes } from './minimum-swaps-group-all-ones';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1320,4 +1323,8 @@ export const problems: readonly Problem[] = [
   percentageLetterInString,
   // arrays — medium (new)
   numberOfWeakCharacters,
+  arithmeticSlices,
+  minimumSwapsGroupAllOnes,
+  // strings + sliding-window — medium
+  maximumNumberVowelsSubstring,
 ];
