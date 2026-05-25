@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1218 problems; 3924 tests green.
+**Current focus:** Bank at 1223 problems; 3939 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems; UI/UX polish; Options/popup improvements.
 
@@ -350,6 +350,7 @@ Still pending:
 - [x] **7 more classic problems (Batch 18)** — plates-between-candles (arrays/medium), minimum-cost-to-make-all-characters-equal (strings/medium), maximum-consecutive-floors-without-special-floors (arrays/medium), minimum-moves-to-reach-target-score (math/medium), maximum-segment-sum-after-removals (arrays/hard), prime-palindrome (math/medium), car-fleet-ii (stack/hard); bank at **1192**; 3850 tests.
 - [x] **9 more classic problems (Batch 17-local)** — advantage-shuffle (arrays/medium), longest-repeating-character-replacement (sliding-window/medium), subarrays-with-k-different-integers (sliding-window/hard), binary-subarrays-with-sum (hash-map/medium), reduce-array-size-to-the-half (hash-map/medium), number-of-ways-to-divide-a-long-corridor (math/hard), delete-operation-for-two-strings (dp/medium), product-of-array-except-self (arrays/medium), minimum-moves-to-equal-array-elements (math/medium); bank at **1200**; 3877 tests.
 - [x] **4 more classic problems (Batch 19)** — minimum-path-cost-in-a-grid (dp/medium), count-ways-group-overlapping-ranges (math/medium), take-gifts-from-the-richest-pile (heap/easy), find-all-good-indices (arrays/medium); bank at **1218**; 3924 tests. Also added remote Batch 18-local (race-car, minimum-cost-to-make-valid-parentheses, minimum-score-of-path, count-operations-to-obtain-zero-ii, minimum-deletions-to-balance-parentheses, smallest-divisor-given-threshold, additive-number, unique-paths-iii).
+- [x] **5 more classic problems (Batch 20)** — partition-array-into-three-parts-with-equal-sum (arrays/easy), second-largest-digit-in-string (strings/easy), number-of-operations-to-make-network-connected (graph/medium), maximize-number-of-tasks-you-can-assign (arrays+binary-search/hard), minimum-consecutive-cards-to-pick-up (hash-map/medium); bank at **1223**; 3939 tests.
 
 ---
 
