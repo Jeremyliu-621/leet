@@ -1550,12 +1550,16 @@ import { problem as countOfConnectedComponents } from './count-of-connected-comp
 import { problem as longestNonDecreasingSubarrayFromTwoArrays } from './longest-non-decreasing-subarray-from-two-arrays';
 import { problem as reportSpamMessage } from './report-spam-message';
 import { problem as distributeElementsIntoTwoArraysII } from './distribute-elements-into-two-arrays-ii';
-// batch 55
 import { problem as implementStrstr } from './implement-strstr';
 import { problem as repeatedStringMatch } from './repeated-string-match';
 import { problem as passThePillow } from './pass-the-pillow';
 import { problem as numberOfChangingKeys } from './number-of-changing-keys';
 import { problem as maximumRepeatingSubstring } from './maximum-repeating-substring';
+import { problem as deleteGreatestValueInEachRow } from './delete-greatest-value-in-each-row';
+import { problem as sortTheJumbledNumbers } from './sort-the-jumbled-numbers';
+import { problem as minimumOperationsToMakeArrayAlternating } from './minimum-operations-to-make-array-alternating';
+import { problem as maximumTotalImportanceOfRoads } from './maximum-total-importance-of-roads';
+import { problem as smallestSubarraysWithMaximumBitwiseOr } from './smallest-subarrays-with-maximum-bitwise-or';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3159,4 +3163,9 @@ export const problems: readonly Problem[] = [
   passThePillow,
   numberOfChangingKeys,
   maximumRepeatingSubstring,
+  deleteGreatestValueInEachRow,
+  sortTheJumbledNumbers,
+  minimumOperationsToMakeArrayAlternating,
+  maximumTotalImportanceOfRoads,
+  smallestSubarraysWithMaximumBitwiseOr,
 ];

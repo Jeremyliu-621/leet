@@ -21292,7 +21292,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
-  // batch 55
   'implement-strstr': (...args: unknown[]) => {
     const haystack = args[0] as string;
     const needle = args[1] as string;
@@ -21336,6 +21335,93 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     let k = 0;
     while (sequence.includes(word.repeat(k + 1))) k++;
     return k;
+  },
+
+  'delete-greatest-value-in-each-row': (grid: unknown) => {
+    const g = (grid as number[][]).map(row => [...row].sort((a, b) => a - b));
+    const m = g.length, n = g[0]!.length;
+    let ans = 0;
+    for (let j = 0; j < n; j++) {
+      let max = 0;
+      for (let i = 0; i < m; i++) max = Math.max(max, g[i]![j]!);
+      ans += max;
+    }
+    return ans;
+  },
+
+  'sort-the-jumbled-numbers': (mapping: unknown, nums: unknown) => {
+    const mp = mapping as number[];
+    const ns = nums as number[];
+    const mapped = (n: number) => {
+      const s = n.toString();
+      let r = 0, mult = 1;
+      for (let i = s.length - 1; i >= 0; i--) {
+        r += mp[+s[i]!]! * mult;
+        mult *= 10;
+      }
+      return r;
+    };
+    return ns
+      .map((n, i) => [mapped(n), i, n] as [number, number, number])
+      .sort((a, b) => a[0]! - b[0]! || a[1]! - b[1]!)
+      .map(([, , n]) => n);
+  },
+
+  'minimum-operations-to-make-array-alternating': (nums: unknown) => {
+    const a = nums as number[];
+    const n = a.length;
+    const even = new Map<number, number>();
+    const odd = new Map<number, number>();
+    for (let i = 0; i < n; i++) {
+      const m = i % 2 === 0 ? even : odd;
+      m.set(a[i]!, (m.get(a[i]!) ?? 0) + 1);
+    }
+    const top2 = (m: Map<number, number>): [[number, number], [number, number]] => {
+      let v1 = -1, f1 = 0, v2 = -1, f2 = 0;
+      for (const [v, f] of m) {
+        if (f > f1) { v2 = v1; f2 = f1; v1 = v; f1 = f; }
+        else if (f > f2) { v2 = v; f2 = f; }
+      }
+      return [[v1, f1], [v2, f2]];
+    };
+    const [[v1e, f1e], [, f2e]] = top2(even);
+    const [[v1o, f1o], [, f2o]] = top2(odd);
+    const ec = Math.ceil(n / 2), oc = Math.floor(n / 2);
+    if (v1e !== v1o) return (ec - f1e) + (oc - f1o);
+    return Math.min((ec - f1e) + (oc - f2o), (ec - f2e) + (oc - f1o));
+  },
+
+  'maximum-total-importance-of-roads': (n: unknown, roads: unknown) => {
+    const size = n as number;
+    const degree = new Array<number>(size).fill(0);
+    for (const [u, v] of roads as number[][]) {
+      degree[u!]!++;
+      degree[v!]!++;
+    }
+    degree.sort((a, b) => a - b);
+    let total = 0;
+    for (let i = 0; i < size; i++) total += degree[i]! * (i + 1);
+    return total;
+  },
+
+  'smallest-subarrays-with-maximum-bitwise-or': (nums: unknown) => {
+    const a = nums as number[];
+    const n = a.length;
+    const nxt: number[][] = Array.from({ length: 30 }, () => new Array(n + 1).fill(n));
+    for (let b = 0; b < 30; b++) {
+      for (let i = n - 1; i >= 0; i--) {
+        nxt[b]![i] = (a[i]! >> b) & 1 ? i : nxt[b]![i + 1]!;
+      }
+    }
+    const ans: number[] = [];
+    for (let i = 0; i < n; i++) {
+      let maxRight = i;
+      for (let b = 0; b < 30; b++) {
+        if (nxt[b]![i]! < n) maxRight = Math.max(maxRight, nxt[b]![i]!);
+      }
+      ans.push(maxRight - i + 1);
+    }
+    return ans;
   },
 
 };

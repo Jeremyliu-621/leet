@@ -21196,4 +21196,66 @@ def secondMinimum(n, edges, time, change):
         k += 1
     return k
 `,
+
+  'delete-greatest-value-in-each-row': `def deleteGreatestValue(grid):
+    g = grid.to_py() if hasattr(grid, 'to_py') else grid
+    rows = [sorted(int(x) for x in row) for row in g]
+    return sum(max(rows[i][j] for i in range(len(rows))) for j in range(len(rows[0])))
+`,
+
+  'sort-the-jumbled-numbers': `def sortJumbled(mapping, nums):
+    mp = list(int(x) for x in (mapping.to_py() if hasattr(mapping, 'to_py') else mapping))
+    ns = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    def mapped(n):
+        s = str(n)
+        return int(''.join(str(mp[int(d)]) for d in s))
+    return sorted(ns, key=mapped)
+`,
+
+  'minimum-operations-to-make-array-alternating': `def minimumOperations(nums):
+    from collections import Counter
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    n = len(a)
+    even = Counter(a[i] for i in range(0, n, 2))
+    odd = Counter(a[i] for i in range(1, n, 2))
+    ec = (n + 1) // 2; oc = n // 2
+    def top2(c):
+        s = sorted(c.items(), key=lambda x: -x[1])
+        v1, f1 = s[0] if s else (-1, 0)
+        v2, f2 = s[1] if len(s) > 1 else (-1, 0)
+        return (v1, f1), (v2, f2)
+    (v1e, f1e), (_, f2e) = top2(even)
+    (v1o, f1o), (_, f2o) = top2(odd)
+    if v1e != v1o:
+        return (ec - f1e) + (oc - f1o)
+    return min((ec - f1e) + (oc - f2o), (ec - f2e) + (oc - f1o))
+`,
+
+  'maximum-total-importance-of-roads': `def maximumImportance(n, roads):
+    n = int(n)
+    r = roads.to_py() if hasattr(roads, 'to_py') else roads
+    degree = [0] * n
+    for edge in r:
+        u, v = int(edge[0]), int(edge[1])
+        degree[u] += 1; degree[v] += 1
+    degree.sort()
+    return sum(degree[i] * (i + 1) for i in range(n))
+`,
+
+  'smallest-subarrays-with-maximum-bitwise-or': `def smallestSubarrays(nums):
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    n = len(a)
+    nxt = [[n] * (n + 1) for _ in range(30)]
+    for b in range(30):
+        for i in range(n - 1, -1, -1):
+            nxt[b][i] = i if (a[i] >> b) & 1 else nxt[b][i + 1]
+    ans = []
+    for i in range(n):
+        max_right = i
+        for b in range(30):
+            if nxt[b][i] < n:
+                max_right = max(max_right, nxt[b][i])
+        ans.append(max_right - i + 1)
+    return ans
+`,
 };
