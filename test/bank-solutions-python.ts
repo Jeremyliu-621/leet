@@ -20744,4 +20744,76 @@ def secondMinimum(n, edges, time, change):
                     reach[i][j] = True
     return [reach[u][v] for u, v in queries]
 `,
+
+  'final-prices-with-a-special-discount-in-a-shop': `def finalPrices(prices):
+    p = list(int(x) for x in (prices.to_py() if hasattr(prices, 'to_py') else prices))
+    stack = []
+    for i in range(len(p)):
+        while stack and p[stack[-1]] >= p[i]:
+            p[stack.pop()] -= p[i]
+        stack.append(i)
+    return p
+`,
+
+  'buildings-with-an-ocean-view': `def findBuildings(heights):
+    h = list(int(x) for x in (heights.to_py() if hasattr(heights, 'to_py') else heights))
+    result = []; max_right = 0
+    for i in range(len(h) - 1, -1, -1):
+        if h[i] > max_right:
+            result.append(i); max_right = h[i]
+    return result[::-1]
+`,
+
+  'remove-nodes-from-linked-list': `def removeNodesRunner(arr):
+    class ListNode:
+        def __init__(self, val=0, next=None):
+            self.val = val; self.next = next
+    def from_array(raw):
+        raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+        dummy = ListNode(); cur = dummy
+        for v in raw_list:
+            cur.next = ListNode(int(v)); cur = cur.next
+        return dummy.next
+    def to_array(head):
+        res = []
+        while head:
+            res.append(head.val); head = head.next
+        return res
+    head = from_array(arr)
+    stack = []
+    cur = head
+    while cur:
+        while stack and stack[-1].val < cur.val:
+            stack.pop()
+        stack.append(cur); cur = cur.next
+    for i in range(len(stack) - 1):
+        stack[i].next = stack[i + 1]
+    if stack:
+        stack[-1].next = None
+    return to_array(stack[0] if stack else None)
+`,
+
+  'find-polygon-with-the-largest-perimeter': `def largestPerimeter(nums):
+    a = sorted(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    total = 0; ans = -1
+    for v in a:
+        if total > v: ans = total + v
+        total += v
+    return ans
+`,
+
+  'minimum-deletions-to-make-character-frequencies-unique': `def minDeletions(s):
+    sv = str(s)
+    freq = [0] * 26
+    for c in sv:
+        freq[ord(c) - 97] += 1
+    sorted_freq = sorted((f for f in freq if f > 0), reverse=True)
+    used = set(); deletions = 0
+    for f in sorted_freq:
+        while f > 0 and f in used:
+            f -= 1; deletions += 1
+        if f > 0:
+            used.add(f)
+    return deletions
+`,
 };

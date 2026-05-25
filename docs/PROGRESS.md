@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1462 problems; 4674 tests green.
+**Current focus:** Bank at 1467 problems; 4689 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank (Batch 54+); marketing site stat update at 1500.
 
@@ -23,8 +23,14 @@
 ### Batch 48 (2026-05-25)
 Added 5 problems: `day-of-the-week` (math/easy), `guess-number-higher-or-lower` (binary-search/easy), `largest-triangle-area` (math/easy), `minimum-value-to-get-positive-step-sum` (arrays/easy), `number-of-rectangles-that-can-form-largest-square` (arrays/easy). Skipped 4 originally requested problems that already existed in the bank; substituted equivalent-difficulty originals.
 
+### Batch 53-local (2026-05-25)
+Added 5 problems: `final-prices-with-a-special-discount-in-a-shop` (stack/easy, monotonic stack), `buildings-with-an-ocean-view` (stack/medium, right-to-left max scan), `remove-nodes-from-linked-list` (linked-list+stack/medium, monotonic stack), `find-polygon-with-the-largest-perimeter` (math/medium, greedy prefix sum), `minimum-deletions-to-make-character-frequencies-unique` (hash-map/medium, greedy freq decrement). Bank at **1467**; 4689 tests.
+
 ### Batch 53 + orphaned Batch 52 (2026-05-25)
 Added 5 Batch 53 problems: `convert-sorted-list-to-binary-search-tree` (tree/medium), `contains-duplicate-iii` (sliding-window/hard, bucket sort), `make-array-strictly-increasing` (dynamic-programming/hard, DP map), `encode-and-decode-tinyurl` (hash-map/medium, counter-based), `course-schedule-iv` (graph/medium, Floyd-Warshall). Also registered 5 orphaned Batch 52 problems that had `.ts` files but were missing from index.ts + bank-solutions.ts: `three-sum-smaller`, `most-common-word`, `student-attendance-record-ii`, `permutation-sequence`, `maximum-sum-obtained-of-any-permutation`. Bank at **1462**; 4674 tests.
+
+### Batch 52-local (2026-05-25)
+Added 5 problems: `longest-univalue-path` (tree/medium, DFS edge-counting with global max), `add-one-row-to-tree` (tree/medium, BFS to d−1 then insert row + `__toArray__` return), `even-odd-tree` (tree/medium, BFS level-order parity + ordering check), `sort-integers-by-number-of-1-bits` (arrays/easy, sort by popcount then value), `minimum-operations-to-make-array-equal` (math/medium, closed-form floor(n²/4)). Bank at **1452**; 4644 tests.
 
 ### Batch 51 (2026-05-25)
 Added 5 problems from this local session: `path-sum-ii` (tree/medium, DFS backtracking with sorted runner), `construct-binary-tree-from-inorder-and-postorder-traversal` (tree/medium, index map + recursive left/right split), `maximum-number-of-removable-characters` (binary-search/medium, binary search on k + O(n) subsequence check), `minimum-sum-of-squared-difference` (arrays/medium, binary search on threshold T + leftover ops), `find-the-kth-largest-integer-in-array` (arrays/strings/medium, sort by length then lex). Bank at **1443**; 4617 tests.

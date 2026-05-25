@@ -20812,4 +20812,64 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(ans);
   },
 
+  'final-prices-with-a-special-discount-in-a-shop': (prices: unknown) => {
+    const p = [...(prices as number[])];
+    const stack: number[] = [];
+    for (let i = 0; i < p.length; i++) {
+      while (stack.length > 0 && p[stack[stack.length - 1]!]! >= p[i]!) {
+        p[stack.pop()!]! -= p[i]!;
+      }
+      stack.push(i);
+    }
+    return p;
+  },
+
+  'buildings-with-an-ocean-view': (heights: unknown) => {
+    const h = heights as number[];
+    const result: number[] = [];
+    let maxRight = 0;
+    for (let i = h.length - 1; i >= 0; i--) {
+      if (h[i]! > maxRight) {
+        result.push(i);
+        maxRight = h[i]!;
+      }
+    }
+    return result.reverse();
+  },
+
+  'remove-nodes-from-linked-list': (arr: unknown) => {
+    const a = arr as number[];
+    const stack: number[] = [];
+    for (const v of a) {
+      while (stack.length > 0 && stack[stack.length - 1]! < v) stack.pop();
+      stack.push(v);
+    }
+    return stack;
+  },
+
+  'find-polygon-with-the-largest-perimeter': (nums: unknown) => {
+    const a = [...(nums as number[])].sort((x, y) => x - y);
+    let sum = 0;
+    let ans = -1;
+    for (const v of a) {
+      if (sum > v) ans = sum + v;
+      sum += v;
+    }
+    return ans;
+  },
+
+  'minimum-deletions-to-make-character-frequencies-unique': (s: unknown) => {
+    const str = s as string;
+    const freq = new Array(26).fill(0);
+    for (const c of str) freq[c.charCodeAt(0) - 97]++;
+    const sorted = freq.filter(f => f > 0).sort((a, b) => b - a);
+    const used = new Set<number>();
+    let deletions = 0;
+    for (let f of sorted) {
+      while (f > 0 && used.has(f)) { f--; deletions++; }
+      if (f > 0) used.add(f);
+    }
+    return deletions;
+  },
+
 };

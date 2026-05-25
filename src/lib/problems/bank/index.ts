@@ -1524,6 +1524,11 @@ import { problem as mostCommonWord } from './most-common-word';
 import { problem as studentAttendanceRecordII } from './student-attendance-record-ii';
 import { problem as permutationSequence } from './permutation-sequence';
 import { problem as maximumSumObtainedOfAnyPermutation } from './maximum-sum-obtained-of-any-permutation';
+import { problem as finalPricesWithASpecialDiscountInAShop } from './final-prices-with-a-special-discount-in-a-shop';
+import { problem as buildingsWithAnOceanView } from './buildings-with-an-ocean-view';
+import { problem as removeNodesFromLinkedList } from './remove-nodes-from-linked-list';
+import { problem as findPolygonWithTheLargestPerimeter } from './find-polygon-with-the-largest-perimeter';
+import { problem as minimumDeletionsToMakeCharacterFrequenciesUnique } from './minimum-deletions-to-make-character-frequencies-unique';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3096,4 +3101,9 @@ export const problems: readonly Problem[] = [
   studentAttendanceRecordII,
   permutationSequence,
   maximumSumObtainedOfAnyPermutation,
+  finalPricesWithASpecialDiscountInAShop,
+  buildingsWithAnOceanView,
+  removeNodesFromLinkedList,
+  findPolygonWithTheLargestPerimeter,
+  minimumDeletionsToMakeCharacterFrequenciesUnique,
 ];

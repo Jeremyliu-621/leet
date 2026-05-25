@@ -76,6 +76,7 @@ describe('problem selector', () => {
       'remove-all-adjacent-duplicates-in-string',
       'minimum-string-length-after-removing-substrings',
       'implement-stack-using-queues',
+      'final-prices-with-a-special-discount-in-a-shop',
     ] })).toBeUndefined();
   });
 
