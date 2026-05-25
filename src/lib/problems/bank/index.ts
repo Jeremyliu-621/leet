@@ -911,6 +911,9 @@ import { problem as takeKOfEachCharacterFromLeftAndRight } from './take-k-of-eac
 import { problem as minimumOperationsToMakeArrayXorEqualK } from './minimum-operations-to-make-array-xor-equal-k';
 import { problem as maximumOddBinaryNumber } from './maximum-odd-binary-number';
 import { problem as minimumEqualSumTwoArrays } from './minimum-equal-sum-two-arrays';
+import { problem as findScoreOfArrayAfterMarking } from './find-score-of-array-after-marking';
+import { problem as countCompleteDayPairs } from './count-complete-day-pairs';
+import { problem as checkIfMatrixIsXMatrix } from './check-if-matrix-is-x-matrix';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1870,4 +1873,7 @@ export const problems: readonly Problem[] = [
   minimumOperationsToMakeArrayXorEqualK,
   maximumOddBinaryNumber,
   minimumEqualSumTwoArrays,
+  findScoreOfArrayAfterMarking,
+  countCompleteDayPairs,
+  checkIfMatrixIsXMatrix,
 ];

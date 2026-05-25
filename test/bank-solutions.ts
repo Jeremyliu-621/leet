@@ -11357,4 +11357,47 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Math.max(min1, min2);
   },
 
+  'find-score-of-array-after-marking': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const indexed = nums.map((v, i) => [v, i] as [number, number]).sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    const marked = new Array<boolean>(n).fill(false);
+    let score = 0;
+    for (const [v, i] of indexed) {
+      if (!marked[i]) {
+        score += v;
+        marked[i] = true;
+        if (i > 0) marked[i - 1] = true;
+        if (i < n - 1) marked[i + 1] = true;
+      }
+    }
+    return score;
+  },
+
+  'count-complete-day-pairs': (...args: unknown[]) => {
+    const hours = args[0] as number[];
+    const freq = new Array<number>(24).fill(0);
+    let count = 0;
+    for (const h of hours) {
+      const r = h % 24;
+      count += (freq[(24 - r) % 24] ?? 0);
+      freq[r] = (freq[r] ?? 0) + 1;
+    }
+    return count;
+  },
+
+  'check-if-matrix-is-x-matrix': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const n = grid.length;
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) {
+        const onDiag = i === j || i + j === n - 1;
+        const v = (grid[i] as number[])[j] as number;
+        if (onDiag && v === 0) return false;
+        if (!onDiag && v !== 0) return false;
+      }
+    }
+    return true;
+  },
+
 };

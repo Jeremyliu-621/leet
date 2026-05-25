@@ -10845,4 +10845,42 @@ def nearestExit(maze, entrance):
         return -1
     return max(min1, min2)
 `,
+
+  'find-score-of-array-after-marking': `def findScore(nums: list[int]) -> int:
+    n = len(nums)
+    indexed = sorted(range(n), key=lambda i: (nums[i], i))
+    marked = [False] * n
+    score = 0
+    for i in indexed:
+        if not marked[i]:
+            score += nums[i]
+            marked[i] = True
+            if i > 0:
+                marked[i - 1] = True
+            if i < n - 1:
+                marked[i + 1] = True
+    return score
+`,
+
+  'count-complete-day-pairs': `def countCompleteDayPairs(hours: list[int]) -> int:
+    freq = [0] * 24
+    count = 0
+    for h in hours:
+        r = h % 24
+        count += freq[(24 - r) % 24]
+        freq[r] += 1
+    return count
+`,
+
+  'check-if-matrix-is-x-matrix': `def checkXMatrix(grid: list[list[int]]) -> bool:
+    n = len(grid)
+    for i in range(n):
+        for j in range(n):
+            on_diag = (i == j) or (i + j == n - 1)
+            if on_diag and grid[i][j] == 0:
+                return False
+            if not on_diag and grid[i][j] != 0:
+                return False
+    return True
+`,
 };
