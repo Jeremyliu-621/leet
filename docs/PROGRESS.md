@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1477 problems; 4719 tests green.
+**Current focus:** Bank at 1482 problems; 4734 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank (Batch 55+); marketing site stat update at 1500.
 
@@ -37,6 +37,9 @@ Added 5 problems: `three-sum-smaller` (two-pointers/medium, sort + two-pointer c
 
 ### Batch 48 (2026-05-25)
 Added 5 problems: `day-of-the-week` (math/easy), `guess-number-higher-or-lower` (binary-search/easy), `largest-triangle-area` (math/easy), `minimum-value-to-get-positive-step-sum` (arrays/easy), `number-of-rectangles-that-can-form-largest-square` (arrays/easy). Skipped 4 originally requested problems that already existed in the bank; substituted equivalent-difficulty originals.
+
+### Batch 54-local (2026-05-25)
+Added 5 problems: `maximize-greatness-of-an-array` (arrays/medium, two-pointer greedy on sorted), `neighboring-bitwise-xor` (arrays/medium, XOR parity check), `minimize-xor` (math/medium, greedy bit assignment), `find-the-maximum-number-of-marked-indices` (arrays/medium, sort+two-pointer), `minimize-maximum-of-array` (arrays/medium, max prefix ceiling average). Bank at **1482**; 4734 tests.
 
 ### Batch 53-local (2026-05-25)
 Added 5 problems: `final-prices-with-a-special-discount-in-a-shop` (stack/easy, monotonic stack), `buildings-with-an-ocean-view` (stack/medium, right-to-left max scan), `remove-nodes-from-linked-list` (linked-list+stack/medium, monotonic stack), `find-polygon-with-the-largest-perimeter` (math/medium, greedy prefix sum), `minimum-deletions-to-make-character-frequencies-unique` (hash-map/medium, greedy freq decrement). Bank at **1467**; 4689 tests.
