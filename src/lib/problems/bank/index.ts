@@ -684,6 +684,7 @@ import { problem as binaryWatch } from './binary-watch';
 import { problem as minimumAddMakeValidParentheses } from './minimum-add-make-valid-parentheses';
 import { problem as palindromicSubstrings } from './palindromic-substrings';
 import { problem as partitionString } from './partition-string';
+import { problem as combinationSumIv } from './combination-sum-iv';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1374,4 +1375,6 @@ export const problems: readonly Problem[] = [
   minimumAddMakeValidParentheses,
   palindromicSubstrings,
   partitionString,
+  // dp — medium (new)
+  combinationSumIv,
 ];

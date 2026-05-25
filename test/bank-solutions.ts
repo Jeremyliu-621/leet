@@ -8533,4 +8533,17 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return parts;
   },
 
+  'combination-sum-iv': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    const dp = new Array(target + 1).fill(0);
+    dp[0] = 1;
+    for (let i = 1; i <= target; i++) {
+      for (const n of nums) {
+        if (n <= i) dp[i] += dp[i - n];
+      }
+    }
+    return dp[target];
+  },
+
 };
