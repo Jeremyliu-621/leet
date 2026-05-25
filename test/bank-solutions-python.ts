@@ -19163,4 +19163,52 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
                (equiv(a.left, b.right) and equiv(a.right, b.left))
     return equiv(root1, root2)
 `,
+
+  'count-vowel-substrings-of-a-string': `def countVowelSubstrings(word):
+    word = str(word)
+    vowels = set('aeiou')
+    count = 0
+    for i in range(len(word)):
+        seen = set()
+        for j in range(i, len(word)):
+            if word[j] not in vowels:
+                break
+            seen.add(word[j])
+            if len(seen) == 5:
+                count += 1
+    return count
+`,
+
+  'number-of-rectangles-that-can-form-the-largest-square': `def countGoodRectangles(rectangles):
+    rectangles = list(rectangles.to_py() if hasattr(rectangles, 'to_py') else rectangles)
+    mins = [min(r[0], r[1]) for r in rectangles]
+    max_len = max(mins)
+    return sum(1 for m in mins if m == max_len)
+`,
+
+  'determine-if-string-halves-are-alike': `def halvesAreAlike(s):
+    s = str(s)
+    vowels = set('aeiouAEIOU')
+    h = len(s) // 2
+    return sum(1 for c in s[:h] if c in vowels) == sum(1 for c in s[h:] if c in vowels)
+`,
+
+  'divide-a-string-into-groups-of-size-k': `def divideString(s, k, fill):
+    s = str(s)
+    k = int(k)
+    fill = str(fill)
+    rem = len(s) % k
+    if rem:
+        s += fill * (k - rem)
+    return [s[i:i+k] for i in range(0, len(s), k)]
+`,
+
+  'count-integers-with-even-digit-sum': `def countEven(num):
+    num = int(num)
+    count = 0
+    for i in range(1, num + 1):
+        if sum(int(d) for d in str(i)) % 2 == 0:
+            count += 1
+    return count
+`,
 };

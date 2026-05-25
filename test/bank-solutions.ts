@@ -19142,4 +19142,55 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     );
   },
 
+  'count-vowel-substrings-of-a-string': (word: unknown) => {
+    const v = new Set(['a', 'e', 'i', 'o', 'u']);
+    let count = 0;
+    const str = word as string;
+    for (let i = 0; i < str.length; i++) {
+      const seen = new Set<string>();
+      for (let j = i; j < str.length; j++) {
+        if (!v.has(str[j]!)) break;
+        seen.add(str[j]!);
+        if (seen.size === 5) count++;
+      }
+    }
+    return count;
+  },
+
+  'number-of-rectangles-that-can-form-the-largest-square': (rectangles: unknown) => {
+    const rects = rectangles as number[][];
+    const mins = rects.map(([l, w]) => Math.min(l!, w!));
+    const maxLen = Math.max(...mins);
+    return mins.filter(m => m === maxLen).length;
+  },
+
+  'determine-if-string-halves-are-alike': (s: unknown) => {
+    const str = s as string;
+    const vowels = new Set('aeiouAEIOU');
+    const count = (half: string) => [...half].filter(c => vowels.has(c)).length;
+    const h = str.length >> 1;
+    return count(str.slice(0, h)) === count(str.slice(h));
+  },
+
+  'divide-a-string-into-groups-of-size-k': (s: unknown, k: unknown, fill: unknown) => {
+    let str = s as string;
+    const size = k as number;
+    const fillChar = fill as string;
+    const rem = str.length % size;
+    if (rem) str += fillChar.repeat(size - rem);
+    const result: string[] = [];
+    for (let i = 0; i < str.length; i += size) result.push(str.slice(i, i + size));
+    return result;
+  },
+
+  'count-integers-with-even-digit-sum': (num: unknown) => {
+    const n = num as number;
+    let count = 0;
+    for (let i = 1; i <= n; i++) {
+      const s = String(i).split('').reduce((a, c) => a + Number(c), 0);
+      if (s % 2 === 0) count++;
+    }
+    return count;
+  },
+
 };

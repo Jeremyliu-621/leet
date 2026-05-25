@@ -1434,6 +1434,11 @@ import { problem as mostFrequentSubtreeSum } from './most-frequent-subtree-sum';
 import { problem as implementStackUsingQueues } from './implement-stack-using-queues';
 import { problem as sumOfNodesWithEvenValuedGrandparent } from './sum-of-nodes-with-even-valued-grandparent';
 import { problem as flipEquivalentBinaryTrees } from './flip-equivalent-binary-trees';
+import { problem as countVowelSubstringsOfAString } from './count-vowel-substrings-of-a-string';
+import { problem as numberOfRectanglesThatCanFormTheLargestSquare } from './number-of-rectangles-that-can-form-the-largest-square';
+import { problem as determineIfStringHalvesAreAlike } from './determine-if-string-halves-are-alike';
+import { problem as divideAStringIntoGroupsOfSizeK } from './divide-a-string-into-groups-of-size-k';
+import { problem as countIntegersWithEvenDigitSum } from './count-integers-with-even-digit-sum';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2916,4 +2921,9 @@ export const problems: readonly Problem[] = [
   implementStackUsingQueues,
   sumOfNodesWithEvenValuedGrandparent,
   flipEquivalentBinaryTrees,
+  countVowelSubstringsOfAString,
+  numberOfRectanglesThatCanFormTheLargestSquare,
+  determineIfStringHalvesAreAlike,
+  divideAStringIntoGroupsOfSizeK,
+  countIntegersWithEvenDigitSum,
 ];
