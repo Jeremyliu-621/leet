@@ -55,7 +55,7 @@ export function HintsSection({ hints, onReveal, costLabel }: HintsSectionProps) 
         </div>
       )}
 
-      {remaining > 0 && (
+      {remaining > 0 ? (
         <button
           type="button"
           onClick={handleReveal}
@@ -64,7 +64,9 @@ export function HintsSection({ hints, onReveal, costLabel }: HintsSectionProps) 
           {shown === 0 ? `Reveal hint 1 of ${hints.length}` : `Reveal next hint (${next} of ${hints.length})`}
           {costLabel ? <span className="ml-2 text-faint">· −{costLabel}</span> : null}
         </button>
-      )}
+      ) : shown > 0 ? (
+        <p className="mt-3 font-mono text-[10px] text-faint text-center">All hints revealed.</p>
+      ) : null}
     </section>
   );
 }

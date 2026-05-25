@@ -205,7 +205,7 @@ function NoTargetBanner() {
     <div className="shrink-0 border-b border-border bg-surface px-5 py-2">
       <p className="font-mono text-[10px] text-faint flex items-center gap-2">
         <span className="inline-block h-1.5 w-1.5 rounded-full bg-faint" aria-hidden="true" />
-        Standalone mode — no blocked site detected
+        Practice mode — no blocked site. Solving here won't grant access to any site.
       </p>
     </div>
   );
