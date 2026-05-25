@@ -936,6 +936,16 @@ import { problem as destroyAsteroids } from './destroy-asteroids';
 import { problem as largestNumberAfterDigitSwapsByParity } from './largest-number-after-digit-swaps-by-parity';
 import { problem as maximumCountOfPositiveAndNegative } from './maximum-count-of-positive-and-negative';
 import { problem as findTheOriginalArrayOfPrefixXor } from './find-the-original-array-of-prefix-xor';
+import { problem as separateDigitsInArray } from './separate-digits-in-array';
+import { problem as numberOfPairsOfInterchangeableRectangles } from './number-of-pairs-of-interchangeable-rectangles';
+import { problem as optimalPartitionOfString } from './optimal-partition-of-string';
+import { problem as uniqueLengthThreePalindromicSubsequences } from './unique-length-three-palindromic-subsequences';
+import { problem as bitwiseXorOfAllPairings } from './bitwise-xor-of-all-pairings';
+import { problem as numberOfRectanglesCanFormLargestSquare } from './number-of-rectangles-can-form-largest-square';
+import { problem as maximizeNumberOfSubsequencesInAString } from './maximize-number-of-subsequences-in-a-string';
+import { problem as numberOfWaysToBuyPensAndPencils } from './number-of-ways-to-buy-pens-and-pencils';
+import { problem as sumOfDigitsOfStringAfterConvert } from './sum-of-digits-of-string-after-convert';
+import { problem as smallestValueOfRearrangedNumber } from './smallest-value-of-rearranged-number';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1920,4 +1930,14 @@ export const problems: readonly Problem[] = [
   largestNumberAfterDigitSwapsByParity,
   maximumCountOfPositiveAndNegative,
   findTheOriginalArrayOfPrefixXor,
+  separateDigitsInArray,
+  numberOfPairsOfInterchangeableRectangles,
+  optimalPartitionOfString,
+  uniqueLengthThreePalindromicSubsequences,
+  bitwiseXorOfAllPairings,
+  numberOfRectanglesCanFormLargestSquare,
+  maximizeNumberOfSubsequencesInAString,
+  numberOfWaysToBuyPensAndPencils,
+  sumOfDigitsOfStringAfterConvert,
+  smallestValueOfRearrangedNumber,
 ];

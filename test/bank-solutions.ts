@@ -11665,4 +11665,121 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return pref.map((v, i) => (i === 0 ? v : v ^ (pref[i - 1] as number)));
   },
 
+  'separate-digits-in-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const result: number[] = [];
+    for (const n of nums) {
+      for (const d of String(n)) result.push(Number(d));
+    }
+    return result;
+  },
+
+  'number-of-pairs-of-interchangeable-rectangles': (...args: unknown[]) => {
+    const rectangles = args[0] as number[][];
+    const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
+    const map = new Map<string, number>();
+    for (const r of rectangles) {
+      const g = gcd(r[0] as number, r[1] as number);
+      const key = `${(r[0] as number) / g}/${(r[1] as number) / g}`;
+      map.set(key, (map.get(key) ?? 0) + 1);
+    }
+    let count = 0;
+    for (const c of map.values()) count += c * (c - 1) / 2;
+    return count;
+  },
+
+  'optimal-partition-of-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let count = 0;
+    const seen = new Set<string>();
+    for (const c of s) {
+      if (seen.has(c)) { count++; seen.clear(); }
+      seen.add(c);
+    }
+    return count + 1;
+  },
+
+  'unique-length-three-palindromic-subsequences': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let count = 0;
+    const chars = new Set(s);
+    for (const c of chars) {
+      const first = s.indexOf(c);
+      const last = s.lastIndexOf(c);
+      if (first < last) {
+        count += new Set(s.slice(first + 1, last)).size;
+      }
+    }
+    return count;
+  },
+
+  'bitwise-xor-of-all-pairings': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    let result = 0;
+    if (nums2.length % 2 === 1) for (const x of nums1) result ^= x;
+    if (nums1.length % 2 === 1) for (const x of nums2) result ^= x;
+    return result;
+  },
+
+  'number-of-rectangles-can-form-largest-square': (...args: unknown[]) => {
+    const rectangles = args[0] as number[][];
+    let best = 0, count = 0;
+    for (const r of rectangles) {
+      const side = Math.min(r[0] as number, r[1] as number);
+      if (side > best) { best = side; count = 1; }
+      else if (side === best) count++;
+    }
+    return count;
+  },
+
+  'maximize-number-of-subsequences-in-a-string': (...args: unknown[]) => {
+    const text = args[0] as string;
+    const pattern = args[1] as string;
+    const a = pattern[0] as string, b = pattern[1] as string;
+    let base = 0, cntA = 0;
+    for (const c of text) {
+      if (c === b) base += cntA;
+      if (c === a) cntA++;
+    }
+    const countA = [...text].filter(c => c === a).length;
+    const countB = [...text].filter(c => c === b).length;
+    return base + Math.max(countA, countB);
+  },
+
+  'number-of-ways-to-buy-pens-and-pencils': (...args: unknown[]) => {
+    const total = args[0] as number;
+    const cost1 = args[1] as number;
+    const cost2 = args[2] as number;
+    let ways = 0;
+    for (let pens = 0; pens * cost1 <= total; pens++) {
+      ways += Math.floor((total - pens * cost1) / cost2) + 1;
+    }
+    return ways;
+  },
+
+  'sum-of-digits-of-string-after-convert': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    let str = '';
+    for (const c of s) str += String(c.charCodeAt(0) - 96);
+    let num = [...str].reduce((sum, d) => sum + Number(d), 0);
+    for (let i = 1; i < k; i++) {
+      num = [...String(num)].reduce((sum, d) => sum + Number(d), 0);
+    }
+    return num;
+  },
+
+  'smallest-value-of-rearranged-number': (...args: unknown[]) => {
+    const num = args[0] as number;
+    if (num === 0) return 0;
+    if (num > 0) {
+      const digits = String(num).split('').sort();
+      const first = digits.findIndex(d => d !== '0');
+      return Number([digits[first], ...digits.slice(0, first), ...digits.slice(first + 1)].join(''));
+    }
+    const digits = String(-num).split('').sort().reverse();
+    return -Number(digits.join(''));
+  },
+
 };

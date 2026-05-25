@@ -11124,4 +11124,124 @@ def findArray(pref):
         result.append(pref[i] ^ pref[i - 1])
     return result
 `,
+
+  'separate-digits-in-array': `
+def separateDigits(nums):
+    result = []
+    for n in nums:
+        for d in str(int(n)):
+            result.append(int(d))
+    return result
+`,
+
+  'number-of-pairs-of-interchangeable-rectangles': `
+def interchangeableRectangles(rectangles):
+    from math import gcd
+    from collections import Counter
+    ratios = Counter()
+    for rect in rectangles:
+        w, h = int(rect[0]), int(rect[1])
+        g = gcd(w, h)
+        ratios[(w // g, h // g)] += 1
+    return sum(c * (c - 1) // 2 for c in ratios.values())
+`,
+
+  'optimal-partition-of-string': `
+def partitionString(s):
+    count = 0
+    seen = set()
+    for c in s:
+        if c in seen:
+            count += 1
+            seen = {c}
+        else:
+            seen.add(c)
+    return count + 1
+`,
+
+  'unique-length-three-palindromic-subsequences': `
+def countPalindromicSubsequence(s):
+    count = 0
+    for c in set(s):
+        first = s.index(c)
+        last = len(s) - 1 - s[::-1].index(c)
+        if first < last:
+            count += len(set(s[first + 1:last]))
+    return count
+`,
+
+  'bitwise-xor-of-all-pairings': `
+def xorAllNums(nums1, nums2):
+    n1, n2 = list(nums1), list(nums2)
+    result = 0
+    if len(n2) % 2 == 1:
+        for x in n1:
+            result ^= int(x)
+    if len(n1) % 2 == 1:
+        for x in n2:
+            result ^= int(x)
+    return result
+`,
+
+  'number-of-rectangles-can-form-largest-square': `
+def countGoodRectangles(rectangles):
+    best = 0
+    count = 0
+    for rect in rectangles:
+        side = min(int(rect[0]), int(rect[1]))
+        if side > best:
+            best = side
+            count = 1
+        elif side == best:
+            count += 1
+    return count
+`,
+
+  'maximize-number-of-subsequences-in-a-string': `
+def maximumSubsequenceCount(text, pattern):
+    a, b = pattern[0], pattern[1]
+    base = 0
+    cnt_a = 0
+    for c in text:
+        if c == b:
+            base += cnt_a
+        if c == a:
+            cnt_a += 1
+    count_a = sum(1 for c in text if c == a)
+    count_b = sum(1 for c in text if c == b)
+    return base + max(count_a, count_b)
+`,
+
+  'number-of-ways-to-buy-pens-and-pencils': `
+def waysToBuyPensPencils(total, cost1, cost2):
+    ways = 0
+    pens = 0
+    while pens * cost1 <= total:
+        ways += (total - pens * cost1) // cost2 + 1
+        pens += 1
+    return ways
+`,
+
+  'sum-of-digits-of-string-after-convert': `
+def getLucky(s, k):
+    num_str = ''.join(str(ord(c) - 96) for c in s)
+    val = sum(int(d) for d in num_str)
+    for _ in range(k - 1):
+        val = sum(int(d) for d in str(val))
+    return val
+`,
+
+  'smallest-value-of-rearranged-number': `
+def smallestNumber(num):
+    n = int(num)
+    if n == 0:
+        return 0
+    if n > 0:
+        digits = sorted(str(n))
+        for i, d in enumerate(digits):
+            if d != '0':
+                return int(d + ''.join(digits[:i]) + ''.join(digits[i + 1:]))
+    digits = sorted(str(-n), reverse=True)
+    return -int(''.join(digits))
+`,
 };
