@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1307 problems; 4167 tests green.
+**Current focus:** Bank at 1301 problems; 4191 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems (Batch 33+); UI/UX polish; Options/popup improvements.
 
@@ -369,7 +369,8 @@ Still pending:
 - [x] **10 more classic problems (Batch 30-local)** — push-dominoes (arrays/medium, force propagation), largest-merge-of-two-strings (strings/medium, greedy suffix comparison), remove-covered-intervals (arrays/medium, sort+max-right), minimize-array-value (arrays/medium, prefix average ceiling), validate-ip-address (strings/medium, split+regex), maximum-sum-hourglass (arrays/medium, 3×3 scan), reverse-odd-levels-binary-tree (tree/medium, symmetric DFS swap), find-closest-node-to-given-two-nodes (graph/medium, functional graph BFS), number-of-flowers-in-full-bloom (binary-search/medium, sorted starts/ends), most-beautiful-item-for-each-query (arrays+binary-search/medium, sorted prefix-max beauty); bank at **1298**; 4137 tests.
 - [x] **5 more classic problems (Batch 32-remote)** — total-hamming-distance (math/medium, bitwise population count per bit), maximum-number-of-occurrences-of-a-substring (strings+sliding-window/medium, only minSize matters), longest-happy-prefix (strings+dp/medium, KMP failure function), reducing-dishes (dp/hard, greedy sort desc + running sum), find-closest-node-to-given-two-nodes merged with remote (graph/medium); bank at **1287**; 4149 tests.
 - [x] **3 more classic problems (Batch 32-local)** — minimum-number-of-swaps-to-make-string-balanced (strings+two-pointers/medium, unmatched closing brackets / 2), number-of-substrings-containing-all-three-characters (strings+sliding-window/medium, track last-seen positions), maximum-score-from-removing-substrings (strings+stack/medium, greedy order + two-pass stack); bank at **1304**; 4158 tests.
-- [x] **3 more classic problems (Batch 33)** — minimum-deletions-to-make-string-balanced (strings+dp/medium, O(n) scan bCount/dp), minimum-difference-between-largest-smallest-three-moves (arrays/medium, sort + 4-window min), shortest-subarray-to-remove-to-make-array-sorted (arrays+two-pointers/medium, prefix/suffix + two-pointer merge); bank at **1307**; 4167 tests.
+- [x] **3 more classic problems (Batch 33-remote)** — minimum-deletions-to-make-string-balanced (strings+dp/medium, O(n) scan bCount/dp), minimum-difference-between-largest-smallest-three-moves (arrays/medium, sort + 4-window min), shortest-subarray-to-remove-to-make-array-sorted (arrays+two-pointers/medium, prefix/suffix + two-pointer merge); bank at **1307**; 4167 tests.
+- [x] **5 more classic problems (Batch 33-local)** — minimum-add-to-make-parentheses-valid (stack/medium, open+close greedy), predict-winner (dp/medium, minimax interval DP), can-i-win (dp/medium, bitmask memoization), optimal-division (math/medium, always wrap tail in denominator for n≥3), minimum-insertions-to-balance-parentheses (stack/medium, each '(' needs '))' with lookahead greedy); bank at **1301**; 4191 tests.
 
 ---
 
