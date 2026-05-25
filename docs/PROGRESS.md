@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1076 problems; 3493 tests green.
+**Current focus:** Bank at 1087 problems; 3526 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems; UI/UX polish; Options/popup improvements.
 
@@ -319,6 +319,7 @@ Still pending:
 - [x] **10 more classic problems** — arithmetic-subarrays, best-meeting-point, longest-subarray-ones-after-delete, minimum-cost-cut-cake, minimum-operations-make-array-continuous, minimum-score-path, reverse-pairs, spiral-matrix-iii, text-justification; bank at **1056**; 3433 tests.
 - [x] **10 more classic problems (Batch 5)** — maximum-points-from-cards, minimum-ascii-delete-sum, sum-of-distances-in-tree, couples-holding-hands, falling-squares, constrained-subsequence-sum, pseudo-palindromic-paths, number-of-nodes-same-label, minimum-cost-tree-leaf-values, valid-partition-array; bank at **1066**; 3463 tests.
 - [x] **10 more classic problems (Batch 6)** — paint-fence, minimum-insertion-steps-palindrome, longest-subarray-abs-diff-limit, maximum-sum-two-non-overlapping-subarrays, number-of-closed-islands, destination-city, find-winner-tictactoe, maximum-eaten-apples, split-array-fibonacci, maximum-score-performing-multiplication; bank at **1076**; 3493 tests.
+- [x] **11 more classic problems (Batch 7)** — cherry-pickup, count-ways-build-good-string, profitable-schemes, count-square-submatrices, freedom-trail, guess-number-higher-or-lower-ii, remove-palindromic-subsequences, check-array-formation, minimum-falling-path-sum-ii, scramble-string, predict-the-winner; bank at **1087**; 3526 tests.
 - [x] **10 more problems + 1** (in previous session) — find-all-duplicates-in-array, check-if-word-occurs-as-prefix, count-subarrays-score-less-than-k, excel-sheet-column-number, jump-game-vii, longest-square-streak, maximum-beauty-array-after-applying-operation, maximum-product-after-k-increments, pairs-of-songs-divisible-60, find-all-duplicates (bank at 830); 2758 tests.
 - [x] **11 more problems** — find-the-index-of-first-occurrence, integer-replacement, number-of-smooth-descent-periods, maximum-matrix-sum, count-nodes-with-highest-score, find-right-interval, circular-sentence, minimum-garden-perimeter, group-people-given-group-size, count-number-of-bad-pairs, minimum-changes-to-make-binary-string-beautiful; bank at 840; 2791 tests.
 - [x] **9 more problems** — remove-all-occurrences-of-substring, minimum-time-to-complete-trips, minimum-speed-to-arrive-on-time, sum-of-beauty-in-the-array, find-all-possible-recipes, take-k-of-each-character-from-left-and-right, minimum-operations-xor-equal-k, maximum-odd-binary-number, minimum-equal-sum-two-arrays; bank at 849; 2818 tests.
