@@ -1089,6 +1089,14 @@ import { problem as stoneGameIV } from './stone-game-iv';
 import { problem as minimumRefuelingStops } from './minimum-refueling-stops';
 import { problem as snapshotArray } from './snapshot-array';
 import { problem as insertDeleteGetrandom } from './insert-delete-getrandom';
+import { problem as paintHouseII } from './paint-house-ii';
+import { problem as minimumMovesEqualArrayII } from './minimum-moves-equal-array-ii';
+import { problem as frogJump } from './frog-jump';
+import { problem as kInversePairsArray } from './k-inverse-pairs-array';
+import { problem as minimumCostHireKWorkers } from './minimum-cost-to-hire-k-workers';
+import { problem as randomPickWithWeight } from './random-pick-with-weight';
+import { problem as findInMountainArray } from './find-in-mountain-array';
+import { problem as findDuplicateNumberII } from './find-duplicate-number-ii';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2226,4 +2234,12 @@ export const problems: readonly Problem[] = [
   minimumRefuelingStops,
   snapshotArray,
   insertDeleteGetrandom,
+  paintHouseII,
+  minimumMovesEqualArrayII,
+  frogJump,
+  kInversePairsArray,
+  minimumCostHireKWorkers,
+  randomPickWithWeight,
+  findInMountainArray,
+  findDuplicateNumberII,
 ];

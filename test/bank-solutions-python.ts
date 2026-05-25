@@ -13052,6 +13052,140 @@ def snapshotArrayRunner(length, ops, args):
     return result
 `,
 
+  'paint-house-ii': `
+def minCostII(costs):
+    costs = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (costs.to_py() if hasattr(costs, 'to_py') else costs)]
+    k = len(costs[0])
+    prev = costs[0][:]
+    for i in range(1, len(costs)):
+        min1, min2, min_idx = float('inf'), float('inf'), -1
+        for j in range(k):
+            if prev[j] < min1:
+                min2, min1, min_idx = min1, prev[j], j
+            elif prev[j] < min2:
+                min2 = prev[j]
+        prev = [costs[i][j] + (min2 if j == min_idx else min1) for j in range(k)]
+    return min(prev)
+`,
+
+  'minimum-moves-equal-array-ii': `
+def minMoves2(nums):
+    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else list(nums))
+    median = nums[len(nums) // 2]
+    return sum(abs(x - median) for x in nums)
+`,
+
+  'frog-jump': `
+def canCross(stones):
+    stones = list(stones.to_py()) if hasattr(stones, 'to_py') else list(stones)
+    stone_set = set(stones)
+    dp = {s: set() for s in stones}
+    dp[0].add(0)
+    for stone in stones:
+        for k in dp[stone]:
+            for nxt in [k-1, k, k+1]:
+                if nxt > 0 and stone + nxt in stone_set:
+                    dp[stone + nxt].add(nxt)
+    return len(dp[stones[-1]]) > 0
+`,
+
+  'k-inverse-pairs-array': `
+def kInversePairs(n, k):
+    MOD = 10**9 + 7
+    dp = [0] * (k + 1)
+    dp[0] = 1
+    for i in range(1, n + 1):
+        ndp = [0] * (k + 1)
+        prefix = 0
+        for j in range(k + 1):
+            prefix += dp[j]
+            if j >= i:
+                prefix -= dp[j - i]
+            prefix %= MOD
+            ndp[j] = prefix
+        dp = ndp
+    return dp[k]
+`,
+
+  'minimum-cost-to-hire-k-workers': `
+import heapq
+def mincostToHireWorkers(quality, wage, k):
+    quality = list(quality.to_py()) if hasattr(quality, 'to_py') else list(quality)
+    wage = list(wage.to_py()) if hasattr(wage, 'to_py') else list(wage)
+    workers = sorted(zip(wage, quality), key=lambda x: x[0]/x[1])
+    heap = []
+    q_sum = 0
+    res = float('inf')
+    for w, q in workers:
+        heapq.heappush(heap, -q)
+        q_sum += q
+        if len(heap) > k:
+            q_sum += heapq.heappop(heap)
+        if len(heap) == k:
+            res = min(res, (w / q) * q_sum)
+    return res
+`,
+
+  'random-pick-with-weight': `
+import random, bisect
+def randomPickWeightRunner(w, picks):
+    w = list(w.to_py()) if hasattr(w, 'to_py') else list(w)
+    picks = list(picks.to_py()) if hasattr(picks, 'to_py') else list(picks)
+    prefix = []
+    s = 0
+    for wi in w:
+        s += wi
+        prefix.append(s)
+    result = []
+    for _ in picks:
+        r = random.random() * s
+        result.append(bisect.bisect_left(prefix, r))
+    return result
+`,
+
+  'find-in-mountain-array': `
+def findInMountainArray(mountainArr, target):
+    arr = list(mountainArr.to_py()) if hasattr(mountainArr, 'to_py') else list(mountainArr)
+    n = len(arr)
+    lo, hi = 0, n - 1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if arr[mid] < arr[mid+1]:
+            lo = mid + 1
+        else:
+            hi = mid
+    peak = lo
+    lo, hi = 0, peak
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if arr[mid] == target: return mid
+        elif arr[mid] < target: lo = mid + 1
+        else: hi = mid - 1
+    lo, hi = peak + 1, n - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if arr[mid] == target: return mid
+        elif arr[mid] > target: lo = mid + 1
+        else: hi = mid - 1
+    return -1
+`,
+
+  'find-duplicate-number-ii': `
+def findDuplicateFloyd(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    slow = fast = nums[0]
+    while True:
+        slow = nums[slow]
+        fast = nums[nums[fast]]
+        if slow == fast:
+            break
+    slow = nums[0]
+    while slow != fast:
+        slow = nums[slow]
+        fast = nums[fast]
+    return slow
+`,
+
   'insert-delete-getrandom': `
 import random
 def insertDeleteGetRandomRunner(ops, args):

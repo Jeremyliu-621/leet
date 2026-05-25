@@ -13458,6 +13458,128 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     });
   },
 
+  'paint-house-ii': (...args: unknown[]) => {
+    const costs = args[0] as number[][];
+    const k = costs[0]!.length;
+    let prev = [...costs[0]!];
+    for (let i = 1; i < costs.length; i++) {
+      let min1 = Infinity, min2 = Infinity, minIdx = -1;
+      for (let j = 0; j < k; j++) {
+        if (prev[j]! < min1) { min2 = min1; min1 = prev[j]!; minIdx = j; }
+        else if (prev[j]! < min2) min2 = prev[j]!;
+      }
+      const cur = new Array(k);
+      for (let j = 0; j < k; j++) cur[j] = costs[i]![j]! + (j === minIdx ? min2 : min1);
+      prev = cur;
+    }
+    return Math.min(...prev);
+  },
+
+  'minimum-moves-equal-array-ii': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const median = nums[Math.floor(nums.length / 2)]!;
+    return nums.reduce((acc, n) => acc + Math.abs(n - median), 0);
+  },
+
+  'frog-jump': (...args: unknown[]) => {
+    const stones = args[0] as number[];
+    const stoneSet = new Set(stones);
+    const dp = new Map<number, Set<number>>();
+    for (const s of stones) dp.set(s, new Set());
+    dp.get(0)!.add(0);
+    for (const stone of stones) {
+      for (const k of dp.get(stone)!) {
+        for (const next of [k - 1, k, k + 1]) {
+          if (next > 0 && stoneSet.has(stone + next)) dp.get(stone + next)!.add(next);
+        }
+      }
+    }
+    return dp.get(stones[stones.length - 1]!)!.size > 0;
+  },
+
+  'k-inverse-pairs-array': (...args: unknown[]) => {
+    const n = args[0] as number, k = args[1] as number;
+    const MOD = 1_000_000_007;
+    let dp = new Array(k + 1).fill(0);
+    dp[0] = 1;
+    for (let i = 1; i <= n; i++) {
+      const ndp = new Array(k + 1).fill(0);
+      let prefix = 0;
+      for (let j = 0; j <= k; j++) {
+        prefix += dp[j]!;
+        if (j >= i) prefix -= dp[j - i]!;
+        prefix = ((prefix % MOD) + MOD) % MOD;
+        ndp[j] = prefix;
+      }
+      dp = ndp;
+    }
+    return dp[k];
+  },
+
+  'minimum-cost-to-hire-k-workers': (...args: unknown[]) => {
+    const quality = args[0] as number[], wage = args[1] as number[], k = args[2] as number;
+    const workers = quality.map((q, i) => [wage[i]! / q, q] as [number, number]);
+    workers.sort((a, b) => a[0] - b[0]);
+    const heap: number[] = [];
+    const pushH = (v: number) => {
+      heap.push(v); let i = heap.length - 1;
+      while (i > 0) { const p = (i - 1) >> 1; if (heap[p]! >= heap[i]!) break; [heap[p], heap[i]] = [heap[i]!, heap[p]!]; i = p; }
+    };
+    const popH = () => {
+      const top = heap[0]!; const last = heap.pop()!;
+      if (heap.length) {
+        heap[0] = last; let i = 0;
+        while (true) { let m = i, l = 2*i+1, r = 2*i+2;
+          if (l < heap.length && heap[l]! > heap[m]!) m = l;
+          if (r < heap.length && heap[r]! > heap[m]!) m = r;
+          if (m === i) break; [heap[i], heap[m]] = [heap[m]!, heap[i]!]; i = m; }
+      }
+      return top;
+    };
+    let qSum = 0, res = Infinity;
+    for (const [ratio, q] of workers) {
+      pushH(q); qSum += q;
+      if (heap.length > k) { qSum -= popH(); }
+      if (heap.length === k) res = Math.min(res, ratio * qSum);
+    }
+    return res;
+  },
+
+  'random-pick-with-weight': (...args: unknown[]) => {
+    const w = args[0] as number[], picks = args[1] as number[];
+    const prefix: number[] = [];
+    let sum = 0;
+    for (const wi of w) { sum += wi; prefix.push(sum); }
+    return picks.map(() => {
+      const r = Math.random() * sum;
+      let lo = 0, hi = prefix.length - 1;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (prefix[mid]! < r) lo = mid + 1; else hi = mid; }
+      return lo;
+    });
+  },
+
+  'find-in-mountain-array': (...args: unknown[]) => {
+    const arr = args[0] as number[], target = args[1] as number;
+    const n = arr.length;
+    let lo = 0, hi = n - 1;
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (arr[mid]! < arr[mid + 1]!) lo = mid + 1; else hi = mid; }
+    const peak = lo;
+    lo = 0; hi = peak;
+    while (lo <= hi) { const mid = (lo + hi) >> 1; if (arr[mid] === target) return mid; if (arr[mid]! < target) lo = mid + 1; else hi = mid - 1; }
+    lo = peak + 1; hi = n - 1;
+    while (lo <= hi) { const mid = (lo + hi) >> 1; if (arr[mid] === target) return mid; if (arr[mid]! > target) lo = mid + 1; else hi = mid - 1; }
+    return -1;
+  },
+
+  'find-duplicate-number-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let slow = nums[0]!, fast = nums[0]!;
+    do { slow = nums[slow]!; fast = nums[nums[fast]!]!; } while (slow !== fast);
+    slow = nums[0]!;
+    while (slow !== fast) { slow = nums[slow]!; fast = nums[fast]!; }
+    return slow;
+  },
+
   'insert-delete-getrandom': (...args: unknown[]) => {
     const ops = args[0] as string[];
     const opArgs = (args[1] as number[][]) || [];
