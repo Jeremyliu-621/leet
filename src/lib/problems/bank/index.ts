@@ -860,6 +860,11 @@ import { problem as chalkReplacer } from './chalk-replacer';
 import { problem as splitWithMinimumSum } from './split-with-minimum-sum';
 import { problem as maxDifferenceIncreasingElements } from './max-difference-increasing-elements';
 import { problem as longestNiceSubarray } from './longest-nice-subarray';
+import { problem as interchangeableRectangles } from './interchangeable-rectangles';
+import { problem as findTriangularSum } from './find-triangular-sum';
+import { problem as twoFurthestHousesDifferentColors } from './two-furthest-houses-different-colors';
+import { problem as countLatticePointsCircle } from './count-lattice-points-circle';
+import { problem as nearestExitMaze } from './nearest-exit-maze';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1768,4 +1773,9 @@ export const problems: readonly Problem[] = [
   splitWithMinimumSum,
   maxDifferenceIncreasingElements,
   longestNiceSubarray,
+  interchangeableRectangles,
+  findTriangularSum,
+  twoFurthestHousesDifferentColors,
+  countLatticePointsCircle,
+  nearestExitMaze,
 ];

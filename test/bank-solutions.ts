@@ -10652,4 +10652,62 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'interchangeable-rectangles': (...args: unknown[]) => {
+    const rectangles = args[0] as number[][];
+    const gcd = (a: number, b: number): number => b ? gcd(b, a % b) : a;
+    const m = new Map<string, number>();
+    for (const [w, h] of rectangles) {
+      const g = gcd(w!, h!);
+      const k = `${w! / g}:${h! / g}`;
+      m.set(k, (m.get(k) ?? 0) + 1);
+    }
+    let ans = 0;
+    for (const c of m.values()) ans += c * (c - 1) / 2;
+    return ans;
+  },
+
+  'find-triangular-sum': (...args: unknown[]) => {
+    let nums = [...(args[0] as number[])];
+    while (nums.length > 1) nums = nums.slice(0, -1).map((_, i) => (nums[i]! + nums[i + 1]!) % 10);
+    return nums[0];
+  },
+
+  'two-furthest-houses-different-colors': (...args: unknown[]) => {
+    const colors = args[0] as number[];
+    const n = colors.length;
+    let ans = 0;
+    for (let j = n - 1; j > 0; j--) if (colors[0] !== colors[j]) { ans = j; break; }
+    for (let i = 0; i < n - 1; i++) if (colors[i] !== colors[n - 1]) { ans = Math.max(ans, n - 1 - i); break; }
+    return ans;
+  },
+
+  'count-lattice-points-circle': (...args: unknown[]) => {
+    const circles = args[0] as number[][];
+    const s = new Set<string>();
+    for (const [cx, cy, r] of circles)
+      for (let x = cx! - r!; x <= cx! + r!; x++)
+        for (let y = cy! - r!; y <= cy! + r!; y++)
+          if ((x - cx!) ** 2 + (y - cy!) ** 2 <= r! ** 2) s.add(`${x},${y}`);
+    return s.size;
+  },
+
+  'nearest-exit-maze': (...args: unknown[]) => {
+    const maze = (args[0] as string[][]).map(r => [...r]);
+    const [er, ec] = args[1] as number[];
+    const m = maze.length, n = maze[0]!.length;
+    const q: [number, number, number][] = [[er!, ec!, 0]];
+    maze[er!]![ec!] = '+';
+    while (q.length) {
+      const [r, c, steps] = q.shift()!;
+      for (const [dr, dc] of [[-1, 0], [1, 0], [0, -1], [0, 1]] as [number, number][]) {
+        const nr = r + dr, nc = c + dc;
+        if (nr < 0 || nr >= m || nc < 0 || nc >= n || maze[nr]![nc] === '+') continue;
+        if (nr === 0 || nr === m - 1 || nc === 0 || nc === n - 1) return steps + 1;
+        maze[nr]![nc] = '+';
+        q.push([nr, nc, steps + 1]);
+      }
+    }
+    return -1;
+  },
+
 };

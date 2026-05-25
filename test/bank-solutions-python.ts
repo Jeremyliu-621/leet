@@ -10285,4 +10285,70 @@ def longestNiceSubarray(nums):
         ans = max(ans, r - l + 1)
     return ans
 `,
+
+  'interchangeable-rectangles': `
+from math import gcd
+def interchangeableRectangles(rectangles):
+    from collections import Counter
+    counts = Counter()
+    for w, h in rectangles:
+        g = gcd(w, h)
+        counts[(w//g, h//g)] += 1
+    return sum(c*(c-1)//2 for c in counts.values())
+`,
+
+  'find-triangular-sum': `
+def triangularSum(nums):
+    nums = list(nums)
+    while len(nums) > 1:
+        nums = [(nums[i] + nums[i+1]) % 10 for i in range(len(nums)-1)]
+    return nums[0]
+`,
+
+  'two-furthest-houses-different-colors': `
+def maxDistance(colors):
+    n = len(colors)
+    ans = 0
+    for j in range(n-1, 0, -1):
+        if colors[0] != colors[j]:
+            ans = j
+            break
+    for i in range(n-1):
+        if colors[i] != colors[n-1]:
+            ans = max(ans, n-1-i)
+            break
+    return ans
+`,
+
+  'count-lattice-points-circle': `
+def countLatticePoints(circles):
+    points = set()
+    for cx, cy, r in circles:
+        for x in range(cx-r, cx+r+1):
+            for y in range(cy-r, cy+r+1):
+                if (x-cx)**2 + (y-cy)**2 <= r**2:
+                    points.add((x, y))
+    return len(points)
+`,
+
+  'nearest-exit-maze': `
+from collections import deque
+def nearestExit(maze, entrance):
+    maze = [list(row) for row in maze]
+    m, n = len(maze), len(maze[0])
+    er, ec = entrance
+    q = deque([(er, ec, 0)])
+    maze[er][ec] = '+'
+    while q:
+        r, c, steps = q.popleft()
+        for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
+            nr, nc = r+dr, c+dc
+            if nr < 0 or nr >= m or nc < 0 or nc >= n or maze[nr][nc] == '+':
+                continue
+            if nr == 0 or nr == m-1 or nc == 0 or nc == n-1:
+                return steps+1
+            maze[nr][nc] = '+'
+            q.append((nr, nc, steps+1))
+    return -1
+`,
 };
