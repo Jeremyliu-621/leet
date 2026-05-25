@@ -20421,4 +20421,88 @@ def secondMinimum(n, edges, time, change):
             max_ones = window_ones
     return k - max_ones
 `,
+
+  'three-sum-smaller': `def threeSumSmaller(nums, target):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    nums.sort()
+    count = 0
+    n = len(nums)
+    for i in range(n - 2):
+        l, r = i + 1, n - 1
+        while l < r:
+            if nums[i] + nums[l] + nums[r] < target:
+                count += r - l
+                l += 1
+            else:
+                r -= 1
+    return count
+`,
+
+  'most-common-word': `def mostCommonWord(paragraph, banned):
+    import re
+    from collections import Counter
+    banned_set = set(banned.to_py() if hasattr(banned, 'to_py') else banned)
+    words = re.findall(r'[a-z]+', paragraph.lower())
+    freq = Counter(w for w in words if w not in banned_set)
+    return max(freq, key=freq.get)
+`,
+
+  'student-attendance-record-ii': `def checkRecord(n):
+    MOD = 10**9 + 7
+    dp = [[0]*3 for _ in range(2)]
+    dp[0][0] = 1
+    for _ in range(n):
+        ndp = [[0]*3 for _ in range(2)]
+        for a in range(2):
+            for l in range(3):
+                v = dp[a][l]
+                if v == 0:
+                    continue
+                ndp[a][0] = (ndp[a][0] + v) % MOD
+                if l < 2:
+                    ndp[a][l+1] = (ndp[a][l+1] + v) % MOD
+                if a < 1:
+                    ndp[1][0] = (ndp[1][0] + v) % MOD
+        dp = ndp
+    return sum(dp[a][l] for a in range(2) for l in range(3)) % MOD
+`,
+
+  'permutation-sequence': `def getPermutation(n, k):
+    from math import factorial
+    digits = list(range(1, n + 1))
+    k -= 1
+    result = []
+    for i in range(n, 0, -1):
+        f = factorial(i - 1)
+        idx = k // f
+        result.append(str(digits[idx]))
+        digits.pop(idx)
+        k %= f
+    return ''.join(result)
+`,
+
+  'maximum-sum-obtained-of-any-permutation': `def maxSumRangeQuery(nums, requests):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    raw_req = requests.to_py() if hasattr(requests, 'to_py') else list(requests)
+    reqs = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in raw_req]
+    MOD = 10**9 + 7
+    n = len(nums)
+    diff = [0] * (n + 1)
+    for lr in reqs:
+        l, r = int(lr[0]), int(lr[1])
+        diff[l] += 1
+        if r + 1 <= n:
+            diff[r + 1] -= 1
+    counts = []
+    cur = 0
+    for i in range(n):
+        cur += diff[i]
+        counts.append(cur)
+    counts.sort(reverse=True)
+    nums.sort(reverse=True)
+    ans = 0
+    for i in range(n):
+        ans = (ans + nums[i] * counts[i]) % MOD
+    return ans
+`,
 };
