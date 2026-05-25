@@ -9167,4 +9167,50 @@ def checkPerfectNumber(num):
         i += 1
     return total == num
 `,
+
+  'arrange-coins': `
+def arrangeCoins(n):
+    import math
+    return int((-1 + math.sqrt(1 + 8 * n)) / 2)
+`,
+
+  'nth-digit': `
+def findNthDigit(n):
+    d, cnt, start = 1, 9, 1
+    while n > d * cnt:
+        n -= d * cnt
+        d += 1
+        cnt *= 10
+        start *= 10
+    num = start + (n - 1) // d
+    return int(str(num)[(n - 1) % d])
+`,
+
+  'find-the-winner': `
+def findTheWinner(n, k):
+    pos = 0
+    for i in range(2, n + 1):
+        pos = (pos + k) % i
+    return pos + 1
+`,
+
+  'count-negative-numbers': `
+def countNegatives(grid):
+    grid = [list(row) for row in grid]
+    r, c, cnt = 0, len(grid[0]) - 1, 0
+    while r < len(grid) and c >= 0:
+        if grid[r][c] < 0:
+            cnt += len(grid) - r
+            c -= 1
+        else:
+            r += 1
+    return cnt
+`,
+
+  'can-make-arithmetic-progression': `
+def canMakeArithmeticProgression(arr):
+    arr = sorted(arr)
+    d = arr[1] - arr[0]
+    return all(arr[i] - arr[i - 1] == d for i in range(2, len(arr)))
+`,
 };

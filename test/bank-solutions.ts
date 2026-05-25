@@ -9584,4 +9584,40 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return sum === num;
   },
 
+  'arrange-coins': (...args: unknown[]) => {
+    const n = args[0] as number;
+    return Math.floor((-1 + Math.sqrt(1 + 8 * n)) / 2);
+  },
+
+  'nth-digit': (...args: unknown[]) => {
+    let n = args[0] as number;
+    let d = 1, cnt = 9, start = 1;
+    while (n > d * cnt) { n -= d * cnt; d++; cnt *= 10; start *= 10; }
+    const num = start + Math.floor((n - 1) / d);
+    return +String(num)[(n - 1) % d]!;
+  },
+
+  'find-the-winner': (...args: unknown[]) => {
+    const n = args[0] as number, k = args[1] as number;
+    let pos = 0;
+    for (let i = 2; i <= n; i++) pos = (pos + k) % i;
+    return pos + 1;
+  },
+
+  'count-negative-numbers': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    let r = 0, c = grid[0]!.length - 1, cnt = 0;
+    while (r < grid.length && c >= 0) {
+      if (grid[r]![c]! < 0) { cnt += grid.length - r; c--; }
+      else r++;
+    }
+    return cnt;
+  },
+
+  'can-make-arithmetic-progression': (...args: unknown[]) => {
+    const arr = [...(args[0] as number[])].sort((a, b) => a - b);
+    const d = arr[1]! - arr[0]!;
+    return arr.every((_, i) => i < 2 || arr[i]! - arr[i - 1]! === d);
+  },
+
 };

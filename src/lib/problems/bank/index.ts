@@ -765,6 +765,11 @@ import { problem as licenseKeyFormatting } from './license-key-formatting';
 import { problem as keyboardRow } from './keyboard-row';
 import { problem as longestUncommonSubsequenceI } from './longest-uncommon-subsequence-i';
 import { problem as perfectNumber } from './perfect-number';
+import { problem as arrangeCoins } from './arrange-coins';
+import { problem as nthDigit } from './nth-digit';
+import { problem as findTheWinner } from './find-the-winner';
+import { problem as countNegativeNumbers } from './count-negative-numbers';
+import { problem as canMakeArithmeticProgression } from './can-make-arithmetic-progression';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1578,4 +1583,9 @@ export const problems: readonly Problem[] = [
   keyboardRow,
   longestUncommonSubsequenceI,
   perfectNumber,
+  arrangeCoins,
+  nthDigit,
+  findTheWinner,
+  countNegativeNumbers,
+  canMakeArithmeticProgression,
 ];
