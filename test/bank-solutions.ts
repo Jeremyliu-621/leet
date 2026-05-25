@@ -7826,6 +7826,18 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return -1;
   },
+  'split-string-balance': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let count = 0, balance = 0;
+    for (const c of s) { balance += c === 'R' ? 1 : -1; if (balance === 0) count++; }
+    return count;
+  },
+  'maximum-product-adjacent-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let max = -Infinity;
+    for (let i = 0; i < nums.length - 1; i++) max = Math.max(max, nums[i]! * nums[i + 1]!);
+    return max;
+  },
 
   'candy': (...args: unknown[]) => {
     const ratings = args[0] as number[];

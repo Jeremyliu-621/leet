@@ -7247,6 +7247,20 @@ def minOperations(nums):
         ops += math.ceil(f / 3)
     return ops
 `,
+  'split-string-balance': `
+def balancedStringSplit(s):
+    count = balance = 0
+    for c in s:
+        balance += 1 if c == 'R' else -1
+        if balance == 0:
+            count += 1
+    return count
+`,
+  'maximum-product-adjacent-elements': `
+def maxProduct(nums):
+    nums = list(nums)
+    return max(nums[i] * nums[i+1] for i in range(len(nums)-1))
+`,
   'candy': `def candy(ratings):
     n = len(ratings)
     c = [1] * n

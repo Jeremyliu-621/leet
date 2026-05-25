@@ -5,45 +5,38 @@ export const problem: Problem = {
   title: 'Count Number of Homogenous Substrings',
   difficulty: 'medium',
   tags: ['strings', 'math'],
-  description: `Given a string \`s\`, return the number of **homogenous** substrings of \`s\`. Since the answer may be too large, return it **modulo** \`10^9 + 7\`.
+  description: `A string is **homogenous** if all of its characters are the same (e.g., \`"aa"\`, \`"b"\`, \`"ccc"\`).
 
-A string is **homogenous** if all the characters of the string are the same.
+Given a string \`s\`, return the number of homogenous substrings of \`s\` modulo \`10^9 + 7\`.
 
 A **substring** is a contiguous sequence of characters within a string.`,
   constraints: [
-    '`1 <= s.length <= 10^5`',
-    '`s` consists of lowercase letters.',
+    '1 <= s.length <= 10^5',
+    's consists of lowercase English letters only',
   ],
   examples: [
     {
       input: 's = "abbcccaa"',
       output: '13',
-      explanation: 'Homogenous substrings: "a"×2, "b"×1, "bb"×1, "c"×1, "cc"×1, "ccc"×1, "a"×2, "aa"×1 = 2+3+6+2 = 13.',
+      explanation:
+        'Runs: "a"→1 (1 substring), "bb"→2 (3 substrings), "ccc"→3 (6 substrings), "aa"→2 (3 substrings). Total = 1+3+6+3 = 13.',
     },
     {
       input: 's = "xy"',
       output: '2',
-      explanation: '"x" and "y" are the only homogenous substrings.',
+      explanation: 'Each character forms one run of length 1: 1+1 = 2.',
     },
     {
       input: 's = "zzzzz"',
       output: '15',
-      explanation: 'A run of 5 identical chars contributes 5*6/2 = 15 homogenous substrings.',
+      explanation: 'One run of length 5: 5*6/2 = 15.',
     },
-  ],
-  hints: [
-    'Count consecutive runs of the same character.',
-    'A run of length k contributes k*(k+1)/2 homogenous substrings.',
-    'Sum contributions of all runs modulo 10^9+7.',
   ],
   functionName: 'countHomogenous',
   params: ['s'],
   starterCode: {
-    javascript: `function countHomogenous(s) {
-
-}`,
-    python: `def countHomogenous(s):
-    pass`,
+    javascript: 'function countHomogenous(s) {\n  \n}\n',
+    python: 'def countHomogenous(s):\n    pass\n',
   },
   visibleTests: [
     { args: ['abbcccaa'], expected: 13 },
@@ -52,9 +45,13 @@ A **substring** is a contiguous sequence of characters within a string.`,
   ],
   hiddenTests: [
     { args: ['a'], expected: 1 },
-    { args: ['aaa'], expected: 6 },
     { args: ['aab'], expected: 4 },
-    { args: ['abcde'], expected: 5 },
-    { args: ['aaabbb'], expected: 12 },
+    { args: ['abcd'], expected: 4 },
+    { args: ['aaaaaa'], expected: 21 },
+    { args: ['aabb'], expected: 6 },
+  ],
+  hints: [
+    'Group consecutive identical characters into runs. For a run of length k, add k*(k+1)/2 to the answer.',
+    'Remember to take the result modulo 10^9 + 7.',
   ],
 };

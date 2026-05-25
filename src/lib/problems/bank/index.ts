@@ -143,6 +143,7 @@ import { problem as firstLetterToAppearTwice } from './first-letter-to-appear-tw
 import { problem as countAsterisks } from './count-asterisks';
 import { problem as uniqueEmailAddresses } from './unique-email-addresses';
 import { problem as countBinarySubstrings } from './count-binary-substrings';
+import { problem as splitStringBalance } from './split-string-balance';
 // arrays — hard (additional)
 import { problem as candy } from './candy';
 // arrays — medium (additional)
@@ -184,6 +185,7 @@ import { problem as uniqueMorseCodeWords } from './unique-morse-code-words';
 import { problem as numberOfGoodPairs } from './number-of-good-pairs';
 import { problem as checkIfArraySortedRotated } from './check-if-array-sorted-rotated';
 import { problem as maximumProductDifference } from './maximum-product-difference';
+import { problem as maximumProductAdjacentElements } from './maximum-product-adjacent-elements';
 import { problem as replaceWords } from './replace-words';
 import { problem as minimumTimeDifference } from './minimum-time-difference';
 import { problem as stringToIntegerAtoi } from './string-to-integer-atoi';
@@ -822,6 +824,7 @@ export const problems: readonly Problem[] = [
   numberOfGoodPairs,
   checkIfArraySortedRotated,
   maximumProductDifference,
+  maximumProductAdjacentElements,
   minimumSumFourDigitNumber,
   countPairsAbsoluteDifferenceK,
   findClosestNumberToZero,
@@ -831,6 +834,7 @@ export const problems: readonly Problem[] = [
   widestVerticalArea,
   convert1dArrayInto2dArray,
   findThePivotInteger,
+  splitStringBalance,
   // strings — medium
   findRepeatedDnaSequences,
   maximumSumCircularSubarray,
