@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 840 problems; 2791 tests green.
+**Current focus:** Bank at 852 problems; 2827 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing bank toward 850+; UI/UX polish, accessibility.
+**Next up:** Continue growing bank toward 900; UI/UX polish, accessibility.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -317,6 +317,8 @@ Still pending:
 - [x] **17 more problems** — climbing-stairs-k-steps, maximum-xor-two-numbers, remove-stones-to-minimize-total, maximize-happiness-of-selected-children, find-the-maximum-achievable-number, partition-array-maximum-difference, remove-duplicates-from-sorted-list-ii, count-number-of-homogenous-substrings, stone-game-vi, count-special-quadruplets (remote), alternating-digit-sum, count-ways-to-build-good-string, divide-players-into-teams-of-equal-skill, maximum-number-of-pairs-in-array, minimize-maximum-pair-sum-in-array, minimum-operations-to-exceed-threshold-value-ii, number-of-ways-to-split-array; bank at 820; 2731 tests.
 - [x] **10 more problems + 1** (in previous session) — find-all-duplicates-in-array, check-if-word-occurs-as-prefix, count-subarrays-score-less-than-k, excel-sheet-column-number, jump-game-vii, longest-square-streak, maximum-beauty-array-after-applying-operation, maximum-product-after-k-increments, pairs-of-songs-divisible-60, find-all-duplicates (bank at 830); 2758 tests.
 - [x] **11 more problems** — find-the-index-of-first-occurrence, integer-replacement, number-of-smooth-descent-periods, maximum-matrix-sum, count-nodes-with-highest-score, find-right-interval, circular-sentence, minimum-garden-perimeter, group-people-given-group-size, count-number-of-bad-pairs, minimum-changes-to-make-binary-string-beautiful; bank at 840; 2791 tests.
+- [x] **9 more problems** — remove-all-occurrences-of-substring, minimum-time-to-complete-trips, minimum-speed-to-arrive-on-time, sum-of-beauty-in-the-array, find-all-possible-recipes, take-k-of-each-character-from-left-and-right, minimum-operations-xor-equal-k, maximum-odd-binary-number, minimum-equal-sum-two-arrays; bank at 849; 2818 tests.
+- [x] **🎉 850-problem milestone** — find-score-of-array-after-marking, count-complete-day-pairs, check-if-matrix-is-x-matrix; bank at 852; 2827 tests.
 
 ---
 
