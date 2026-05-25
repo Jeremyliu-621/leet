@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1402 problems; 4455 tests green.
+**Current focus:** Bank at 1407 problems; 4470 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems (Batch 46+); UI/UX polish; draggable splitter; options improvements.
 
@@ -393,6 +393,7 @@ Still pending:
 - [x] **2 more classic problems (Batch 44)** — find-n-unique-integers-sum-up-to-zero (arrays+math/easy, [1..n-1,-(sum)] canonical form), check-array-formation-through-concatenation (arrays+hash-map/easy, first-element map + consecutive match); bank at **1399**; 4446 tests.
 - [x] **Problem browser UX** — "unsolved only" toggle filter hides solved problems; per-row "→" button (hover-revealed) deep-links to challenge page with `?problem=<id>`; openProblemInChallenge helper gracefully ignores non-extension context.
 - [x] **3 more classic problems (Batch 45)** — maximum-depth-binary-tree (tree/easy, DFS max(left,right)+1), minimum-absolute-difference-in-bst (tree+binary-search/easy, in-order traversal min adjacent diff), pascals-triangle-ii (arrays+math/easy, in-place row update right-to-left); bank at **1402**; 4455 tests.
+- [x] **5 more classic problems (Batch 45-remote)** — minimize-string-length (strings/easy, unique chars), find-score-of-array-after-marking-elements (arrays/medium, sort+mark greedy), elements-appearing-more-than-25-percent (arrays/easy, stride check), make-string-a-subsequence-using-cyclic-increments (strings/medium, greedy cyclic match), number-of-beautiful-integers-in-range (math/hard, digit DP even−odd diff + k modular); bank at **1407**; 4470 tests.
 
 ---
 
