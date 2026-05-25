@@ -8,8 +8,8 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 704 problems; 2383 tests. Past the 700 milestone!
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green.
+**Current focus:** Bank at 714+ problems; 2398 tests. Past the 700 milestone!
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (2398 tests passing).
 **Next up:** Continue growing bank; improve UI/UX.
 
 **Pyodide rollout status — COMPLETE:**
@@ -308,6 +308,8 @@ Still pending:
 - [x] **8 more problems** — count-hills-valleys, find-lonely-numbers, count-prefixes-of-given-string, minimum-number-game, find-words-containing-character, count-good-numbers, maximum-sum-k-elements, minimum-common-value; 2281 tests; bank at 678.
 - [x] **4 more problems** (rebase resolved) — count-subarrays-fixed-bounds, amount-of-time-binary-tree-infected, count-collisions-on-road, maximum-alternating-subsequence-sum; bank at 683.
 - [x] **6 more problems** — compare-version-numbers (strings/medium), open-the-lock (graph/medium), diagonal-traverse (arrays/medium), reshape-the-matrix (arrays/easy), find-town-judge (graph/easy), possible-bipartition (graph/medium); 2329 tests; bank at 690+.
+- [x] **6 more problems** — two-sum-ii (two-pointers), set-mismatch (arrays), maximum-gap (arrays), array-partition (arrays), power-of-two (math), sum-of-left-leaves (tree); 2356 tests; bank at 697+.
+- [x] **🎉 700-problem milestone!** — arrange-coins, nth-digit, find-the-winner (Josephus), count-negative-numbers, can-make-arithmetic-progression; 2398 tests; bank at 700+.
 
 ---
 
