@@ -10232,4 +10232,57 @@ def totalMoney(n):
         total += week + dow
     return total
 `,
+
+  'score-of-string': `
+def scoreOfString(s):
+    return sum(abs(ord(s[i]) - ord(s[i-1])) for i in range(1, len(s)))
+`,
+
+  'chalk-replacer': `
+def chalkReplacer(chalk, k):
+    chalk = list(chalk)
+    total = sum(chalk)
+    k %= total
+    for i, c in enumerate(chalk):
+        if k < c:
+            return i
+        k -= c
+    return 0
+`,
+
+  'split-with-minimum-sum': `
+def splitNum(num):
+    d = sorted(int(c) for c in str(num))
+    n1, n2, p = 0, 0, 1
+    for i in range(len(d) - 1, -1, -2):
+        n1 += d[i] * p
+        if i - 1 >= 0:
+            n2 += d[i-1] * p
+        p *= 10
+    return n1 + n2
+`,
+
+  'max-difference-increasing-elements': `
+def maximumDifference(nums):
+    min_val = nums[0]
+    max_diff = -1
+    for j in range(1, len(nums)):
+        if nums[j] > min_val:
+            max_diff = max(max_diff, nums[j] - min_val)
+        else:
+            min_val = nums[j]
+    return max_diff
+`,
+
+  'longest-nice-subarray': `
+def longestNiceSubarray(nums):
+    l, used, ans = 0, 0, 1
+    for r in range(len(nums)):
+        while used & nums[r]:
+            used ^= nums[l]
+            l += 1
+        used |= nums[r]
+        ans = max(ans, r - l + 1)
+    return ans
+`,
 };

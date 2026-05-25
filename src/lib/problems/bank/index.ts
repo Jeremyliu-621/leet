@@ -855,6 +855,11 @@ import { problem as countMaxFrequencyElements } from './count-max-frequency-elem
 import { problem as minimumDifferenceAfterKRemovals } from './minimum-difference-after-k-removals';
 import { problem as numberOfValidClockTimes } from './number-of-valid-clock-times';
 import { problem as calculateMoneyInBank } from './calculate-money-in-bank';
+import { problem as scoreOfString } from './score-of-string';
+import { problem as chalkReplacer } from './chalk-replacer';
+import { problem as splitWithMinimumSum } from './split-with-minimum-sum';
+import { problem as maxDifferenceIncreasingElements } from './max-difference-increasing-elements';
+import { problem as longestNiceSubarray } from './longest-nice-subarray';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1758,4 +1763,9 @@ export const problems: readonly Problem[] = [
   minimumDifferenceAfterKRemovals,
   numberOfValidClockTimes,
   calculateMoneyInBank,
+  scoreOfString,
+  chalkReplacer,
+  splitWithMinimumSum,
+  maxDifferenceIncreasingElements,
+  longestNiceSubarray,
 ];

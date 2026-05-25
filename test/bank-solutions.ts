@@ -10601,4 +10601,55 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return total;
   },
 
+  'score-of-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let score = 0;
+    for (let i = 1; i < s.length; i++) score += Math.abs(s.charCodeAt(i) - s.charCodeAt(i - 1));
+    return score;
+  },
+
+  'chalk-replacer': (...args: unknown[]) => {
+    const chalk = args[0] as number[], k_in = args[1] as number;
+    const sum = chalk.reduce((a, b) => a + b, 0);
+    let k = k_in % sum;
+    for (let i = 0; i < chalk.length; i++) {
+      if (k < chalk[i]!) return i;
+      k -= chalk[i]!;
+    }
+    return 0;
+  },
+
+  'split-with-minimum-sum': (...args: unknown[]) => {
+    const num = args[0] as number;
+    const d = String(num).split('').map(Number).sort((a, b) => a - b);
+    let n1 = 0, n2 = 0, p = 1;
+    for (let i = d.length - 1; i >= 0; i -= 2) {
+      n1 += d[i]! * p;
+      if (i - 1 >= 0) n2 += d[i - 1]! * p;
+      p *= 10;
+    }
+    return n1 + n2;
+  },
+
+  'max-difference-increasing-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let min = nums[0]!, max = -1;
+    for (let j = 1; j < nums.length; j++) {
+      if (nums[j]! > min) max = Math.max(max, nums[j]! - min);
+      else min = nums[j]!;
+    }
+    return max;
+  },
+
+  'longest-nice-subarray': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let l = 0, used = 0, ans = 1;
+    for (let r = 0; r < nums.length; r++) {
+      while (used & nums[r]!) used ^= nums[l++]!;
+      used |= nums[r]!;
+      ans = Math.max(ans, r - l + 1);
+    }
+    return ans;
+  },
+
 };
