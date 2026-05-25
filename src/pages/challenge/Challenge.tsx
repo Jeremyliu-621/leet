@@ -39,14 +39,11 @@ const SPLITTER_STEP = 2;
 function DraggableSplitter({ onDrag, onDragEnd, containerRef, currentPct }: SplitterProps) {
   const isDraggingRef = useRef(false);
 
-  const handlePointerDown = useCallback(
-    (e: React.PointerEvent<HTMLDivElement>) => {
-      e.preventDefault();
-      isDraggingRef.current = true;
-      (e.target as HTMLDivElement).setPointerCapture(e.pointerId);
-    },
-    [],
-  );
+  const handlePointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    isDraggingRef.current = true;
+    (e.target as HTMLDivElement).setPointerCapture(e.pointerId);
+  }, []);
 
   const handlePointerMove = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
@@ -76,9 +73,13 @@ function DraggableSplitter({ onDrag, onDragEnd, containerRef, currentPct }: Spli
       let delta = 0;
       if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') delta = -SPLITTER_STEP;
       else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') delta = SPLITTER_STEP;
-      else if (e.key === 'Home') { onDragEnd(PANEL_MIN_PCT); return; }
-      else if (e.key === 'End') { onDragEnd(PANEL_MAX_PCT); return; }
-      else return;
+      else if (e.key === 'Home') {
+        onDragEnd(PANEL_MIN_PCT);
+        return;
+      } else if (e.key === 'End') {
+        onDragEnd(PANEL_MAX_PCT);
+        return;
+      } else return;
       e.preventDefault();
       const next = Math.min(PANEL_MAX_PCT, Math.max(PANEL_MIN_PCT, currentPct + delta));
       onDragEnd(next);
@@ -118,7 +119,15 @@ const HINT_COST_SECONDS = 60;
 
 /** All languages that could potentially be available, in display order. */
 const ALL_EXTRA_LANGUAGES: SupportedLanguage[] = [
-  'python', 'java', 'cpp', 'csharp', 'go', 'rust', 'kotlin', 'swift', 'sql',
+  'python',
+  'java',
+  'cpp',
+  'csharp',
+  'go',
+  'rust',
+  'kotlin',
+  'swift',
+  'sql',
 ];
 
 /** Languages available for a given problem, in display order. */
@@ -193,7 +202,14 @@ function SolvedStandaloneScreen({ problemTitle }: { problemTitle: string }) {
       <div className="space-y-3">
         <div className="inline-flex items-center justify-center h-12 w-12 rounded-full border border-accent mb-2">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-accent" />
+            <path
+              d="M5 13l4 4L19 7"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-accent"
+            />
           </svg>
         </div>
         <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-faint">Accepted</p>
@@ -237,9 +253,7 @@ function SolvedStandaloneScreen({ problemTitle }: { problemTitle: string }) {
 export function Challenge() {
   // Parse target URL once — stable reference.
   const targetUrl = useRef<string | null>(parseTargetParam(window.location.search));
-  const domain = useRef<string | null>(
-    targetUrl.current ? extractDomain(targetUrl.current) : null,
-  );
+  const domain = useRef<string | null>(targetUrl.current ? extractDomain(targetUrl.current) : null);
   // True once a programmatic navigation (accepted → target, or failure → SW)
   // is in flight. The beforeunload handler skips its prompt while this is set
   // so the user doesn't see "Leave site?" right after solving correctly.
@@ -297,10 +311,7 @@ export function Challenge() {
 
   // Fullscreen editor mode — hides the problem panel so the editor takes full width.
   const [isEditorFullscreen, setIsEditorFullscreen] = useState(false);
-  const handleToggleFullscreen = useCallback(
-    () => setIsEditorFullscreen((v) => !v),
-    [],
-  );
+  const handleToggleFullscreen = useCallback(() => setIsEditorFullscreen((v) => !v), []);
 
   // Ref for the two-column container — used by DraggableSplitter to compute
   // pointer positions as a fraction of the container width.
@@ -405,35 +416,32 @@ export function Challenge() {
   // Countdown timer
   // -------------------------------------------------------------------------
 
-  const handleFail = useCallback(
-    async (reason: ChallengeFailureReason, prefs: UserPreferences) => {
-      // The SW is about to close or redirect this tab — suppress the
-      // beforeunload prompt that would otherwise interrupt that navigation.
-      isResolvingRef.current = true;
+  const handleFail = useCallback(async (reason: ChallengeFailureReason, prefs: UserPreferences) => {
+    // The SW is about to close or redirect this tab — suppress the
+    // beforeunload prompt that would otherwise interrupt that navigation.
+    isResolvingRef.current = true;
 
-      let tabId: number | undefined;
-      try {
-        const tab = await chrome.tabs.getCurrent();
-        tabId = tab?.id;
-      } catch {
-        // Not in an extension context — silently skip.
-      }
+    let tabId: number | undefined;
+    try {
+      const tab = await chrome.tabs.getCurrent();
+      tabId = tab?.id;
+    } catch {
+      // Not in an extension context — silently skip.
+    }
 
-      try {
-        await chrome.runtime.sendMessage({
-          type: 'leetlock/fail-challenge',
-          domain: domain.current ?? '',
-          reason,
-          failureAction: prefs.failureAction,
-          redirectUrl: prefs.redirectUrl,
-          tabId,
-        });
-      } catch {
-        // Service worker not yet implemented (Phase 5) — ignore for now.
-      }
-    },
-    [],
-  );
+    try {
+      await chrome.runtime.sendMessage({
+        type: 'leetlock/fail-challenge',
+        domain: domain.current ?? '',
+        reason,
+        failureAction: prefs.failureAction,
+        redirectUrl: prefs.redirectUrl,
+        tabId,
+      });
+    } catch {
+      // Service worker not yet implemented (Phase 5) — ignore for now.
+    }
+  }, []);
 
   // Block accidental tab-close / refresh while a challenge is in progress.
   // The browser shows its generic "Leave site?" confirmation; if the user

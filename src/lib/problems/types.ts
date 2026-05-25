@@ -46,7 +46,11 @@ export interface Problem {
    * Starter code skeleton per language. JavaScript is **required**. Additional
    * languages are optional and added problem-by-problem.
    */
-  starterCode: Readonly<{ javascript: string; python?: string } & Partial<Record<Exclude<SupportedLanguage, 'javascript' | 'python'>, string>>>;
+  starterCode: Readonly<
+    { javascript: string; python?: string } & Partial<
+      Record<Exclude<SupportedLanguage, 'javascript' | 'python'>, string>
+    >
+  >;
   /** Tests shown to the user and run by the "Run" button. */
   visibleTests: readonly TestCase[];
   /** Tests hidden from the user and run only by the "Submit" button. */

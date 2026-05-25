@@ -83,7 +83,14 @@ export interface RunTestsOptions {
  * happens as JS. This is the pragmatic approach for browser-sandboxed execution.
  */
 const JS_COMPILED_LANGUAGES = new Set([
-  'java', 'cpp', 'csharp', 'go', 'rust', 'kotlin', 'swift', 'sql',
+  'java',
+  'cpp',
+  'csharp',
+  'go',
+  'rust',
+  'kotlin',
+  'swift',
+  'sql',
 ] as const);
 
 /**
@@ -153,9 +160,7 @@ export async function runTests(options: RunTestsOptions): Promise<JudgeResult> {
 
   const lang: 'javascript' | 'python' = rawLang === 'python' ? 'python' : 'javascript';
   const preamble =
-    lang === 'python'
-      ? options.problem.preamble?.python
-      : options.problem.preamble?.javascript;
+    lang === 'python' ? options.problem.preamble?.python : options.problem.preamble?.javascript;
   const request: RunRequest = {
     type: 'run',
     requestId,
@@ -237,8 +242,7 @@ export async function runCustomArgs(options: {
     execCode = transpiled.code;
   }
 
-  const execLang: 'javascript' | 'python' =
-    options.language === 'python' ? 'python' : 'javascript';
+  const execLang: 'javascript' | 'python' = options.language === 'python' ? 'python' : 'javascript';
   const request: RunRequest = {
     type: 'run',
     requestId,

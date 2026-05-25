@@ -24,7 +24,11 @@ function displayValue(v: unknown): string {
 /** Builds terminal entries from a JudgeResult. */
 function buildEntries(result: JudgeResult, mode: 'run' | 'submit'): TerminalEntry[] {
   const entries: TerminalEntry[] = [];
-  const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  const timestamp = new Date().toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  });
 
   entries.push({
     type: 'system',
@@ -106,21 +110,19 @@ interface TerminalPanelProps {
 function TerminalEntry({ entry }: { entry: TerminalEntry }) {
   switch (entry.type) {
     case 'system':
-      return (
-        <div className="text-faint select-text">
-          {entry.text}
-        </div>
-      );
+      return <div className="text-faint select-text">{entry.text}</div>;
     case 'stdout':
       return (
         <div className="text-muted select-text pl-2 border-l-2 border-border">
-          <span className="text-faint mr-2">stdout</span>{entry.text}
+          <span className="text-faint mr-2">stdout</span>
+          {entry.text}
         </div>
       );
     case 'stderr':
       return (
         <div className="text-text select-text pl-2 border-l-2 border-border-strong">
-          <span className="text-faint mr-2">stderr</span>{entry.text}
+          <span className="text-faint mr-2">stderr</span>
+          {entry.text}
         </div>
       );
     case 'pass':
@@ -147,7 +149,7 @@ function TerminalEntry({ entry }: { entry: TerminalEntry }) {
             <span className="text-muted">{entry.expected}</span>
           </div>
           <div className="pl-4">
-            <span className="text-faint">Actual:   </span>
+            <span className="text-faint">Actual: </span>
             <span className="text-text">{entry.actual}</span>
           </div>
         </div>
@@ -287,7 +289,9 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
               <div className="text-faint animate-pulse font-mono text-xs">Running tests...</div>
             )}
             {result === null && (
-              <div className="text-faint font-mono text-xs">No test results yet. Click Run or Submit.</div>
+              <div className="text-faint font-mono text-xs">
+                No test results yet. Click Run or Submit.
+              </div>
             )}
             {result && result.verdicts.length > 0 && (
               <>
@@ -321,7 +325,9 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
                 <div className="font-mono text-xs font-semibold text-text uppercase">
                   {OUTCOME_LABELS[result.outcome] ?? result.outcome}
                 </div>
-                <pre className="font-mono text-xs text-muted whitespace-pre-wrap">{result.message}</pre>
+                <pre className="font-mono text-xs text-muted whitespace-pre-wrap">
+                  {result.message}
+                </pre>
               </div>
             )}
           </div>
@@ -392,7 +398,9 @@ function TestResultCard({ verdict }: { verdict: TestVerdict }) {
             <div className="border-t border-border pt-1 mt-1">
               <span className="text-faint text-[10px] uppercase">Console Output</span>
               {verdict.logs.map((log, i) => (
-                <div key={i} className="text-muted pl-2">{log}</div>
+                <div key={i} className="text-muted pl-2">
+                  {log}
+                </div>
               ))}
             </div>
           )}

@@ -23,21 +23,33 @@ function displayResult(result: CustomTestStatus): React.ReactNode {
   if (result.status === 'idle') return null;
   if (result.status === 'running') {
     return (
-      <div className="mt-3 font-mono text-xs text-faint animate-pulse" role="status" aria-live="polite">
+      <div
+        className="mt-3 font-mono text-xs text-faint animate-pulse"
+        role="status"
+        aria-live="polite"
+      >
         Running...
       </div>
     );
   }
   if (result.status === 'timeout') {
     return (
-      <div className="mt-3 rounded border border-border bg-surface-2 px-3 py-2" role="status" aria-live="polite">
+      <div
+        className="mt-3 rounded border border-border bg-surface-2 px-3 py-2"
+        role="status"
+        aria-live="polite"
+      >
         <span className="font-mono text-xs font-semibold text-text">TIME LIMIT EXCEEDED</span>
       </div>
     );
   }
   if (result.status === 'error') {
     return (
-      <div className="mt-3 rounded border border-border bg-surface-2 px-3 py-2 space-y-1" role="status" aria-live="polite">
+      <div
+        className="mt-3 rounded border border-border bg-surface-2 px-3 py-2 space-y-1"
+        role="status"
+        aria-live="polite"
+      >
         <span className="font-mono text-[10px] uppercase tracking-wider text-faint">Error</span>
         <code className="block font-mono text-xs text-muted">{result.message}</code>
       </div>
@@ -45,11 +57,17 @@ function displayResult(result: CustomTestStatus): React.ReactNode {
   }
   // ok
   return (
-    <div className="mt-3 rounded border border-border bg-surface-2 px-3 py-2 space-y-1" role="status" aria-live="polite">
+    <div
+      className="mt-3 rounded border border-border bg-surface-2 px-3 py-2 space-y-1"
+      role="status"
+      aria-live="polite"
+    >
       <div className="flex items-baseline gap-2">
         <span className="font-mono text-[10px] uppercase tracking-wider text-faint">Output</span>
         {result.durationMs !== undefined && (
-          <span className="font-mono text-[10px] text-faint tabular-nums">{result.durationMs} ms</span>
+          <span className="font-mono text-[10px] text-faint tabular-nums">
+            {result.durationMs} ms
+          </span>
         )}
       </div>
       <code className="block font-mono text-xs text-accent font-medium">{result.output}</code>
@@ -161,8 +179,20 @@ export function CustomTestPanel({ params, onRun, result }: CustomTestPanelProps)
             className="mt-3 inline-flex items-center gap-1.5 rounded-sm border border-border px-3 py-1.5 font-mono text-[11px] text-muted transition-all hover:border-border-strong hover:text-text hover:bg-surface-2 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent disabled:cursor-not-allowed disabled:opacity-40"
           >
             {isRunning && (
-              <svg className="h-3 w-3 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" strokeOpacity="0.25" />
+              <svg
+                className="h-3 w-3 animate-spin"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  strokeOpacity="0.25"
+                />
                 <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
               </svg>
             )}

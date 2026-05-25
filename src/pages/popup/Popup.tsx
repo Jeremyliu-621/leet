@@ -134,7 +134,12 @@ export function Popup() {
         if (seenIds.has(record.problemId)) continue;
         seenIds.add(record.problemId);
         const meta = PROBLEM_TITLE_BY_ID.get(record.problemId);
-        if (meta) recentSolves.push({ title: meta.title, difficulty: meta.difficulty, solvedAt: record.solvedAt });
+        if (meta)
+          recentSolves.push({
+            title: meta.title,
+            difficulty: meta.difficulty,
+            solvedAt: record.solvedAt,
+          });
         if (recentSolves.length >= 5) break;
       }
 
@@ -343,11 +348,7 @@ export function Popup() {
         </button>
       </section>
 
-      <section
-        className="mt-5 border-t border-border pt-4"
-        role="radiogroup"
-        aria-label="Theme"
-      >
+      <section className="mt-5 border-t border-border pt-4" role="radiogroup" aria-label="Theme">
         <p className="mb-2 font-mono text-[9px] uppercase tracking-widest text-faint">Theme</p>
         <div className="flex items-center gap-1">
           {THEME_OPTIONS.map((opt) => {
@@ -617,9 +618,13 @@ function RecentSolvesList({ solves }: { solves: readonly RecentSolve[] }) {
       <ul className="mt-2 space-y-1">
         {solves.map((s, i) => (
           <li key={i} className="flex items-center gap-2">
-            <span className="shrink-0 font-mono text-[9px] text-faint w-3">{DIFF_ABBR[s.difficulty]}</span>
+            <span className="shrink-0 font-mono text-[9px] text-faint w-3">
+              {DIFF_ABBR[s.difficulty]}
+            </span>
             <span className="flex-1 truncate font-mono text-[10px] text-muted">{s.title}</span>
-            <span className="shrink-0 font-mono text-[9px] text-faint tabular-nums">{timeAgo(s.solvedAt)}</span>
+            <span className="shrink-0 font-mono text-[9px] text-faint tabular-nums">
+              {timeAgo(s.solvedAt)}
+            </span>
           </li>
         ))}
       </ul>

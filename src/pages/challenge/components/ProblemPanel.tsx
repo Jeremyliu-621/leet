@@ -96,13 +96,13 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
                       <span className="font-mono text-[10px] uppercase tracking-wider text-faint w-14 shrink-0">
                         Output
                       </span>
-                      <code className="font-mono text-xs text-text break-all">{example.output}</code>
+                      <code className="font-mono text-xs text-text break-all">
+                        {example.output}
+                      </code>
                     </div>
                     {example.explanation && (
                       <div className="border-t border-border pt-2 mt-1">
-                        <p className="text-xs leading-relaxed text-muted">
-                          {example.explanation}
-                        </p>
+                        <p className="text-xs leading-relaxed text-muted">{example.explanation}</p>
                       </div>
                     )}
                   </div>
@@ -126,7 +126,10 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
             <ul className="space-y-1.5" aria-label="Problem constraints">
               {constraints.map((constraint, i) => (
                 <li key={i} className="flex gap-2.5">
-                  <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-border-strong" aria-hidden="true" />
+                  <span
+                    className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-border-strong"
+                    aria-hidden="true"
+                  />
                   <span className="font-mono text-xs leading-relaxed text-muted">{constraint}</span>
                 </li>
               ))}

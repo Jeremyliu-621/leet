@@ -117,7 +117,12 @@ export function KeyboardShortcutsModal({ onClose }: Props) {
             className="flex items-center justify-center h-6 w-6 rounded-sm text-faint transition-colors hover:text-muted hover:bg-surface-2 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
           >
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-              <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <path
+                d="M1 1l10 10M11 1L1 11"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
             </svg>
           </button>
         </div>
@@ -132,17 +137,12 @@ export function KeyboardShortcutsModal({ onClose }: Props) {
               <table className="w-full border-collapse" role="table">
                 <tbody>
                   {section.rows.map((row) => (
-                    <tr
-                      key={row.description}
-                      className="border-b border-border/30 last:border-0"
-                    >
+                    <tr key={row.description} className="border-b border-border/30 last:border-0">
                       <td className="py-1.5 pr-4 align-middle">
                         <span className="flex flex-wrap gap-1">
                           {row.keys.map((k, i) => (
                             <span key={k} className="flex items-center gap-1">
-                              {i > 0 && (
-                                <span className="font-mono text-[9px] text-faint">/</span>
-                              )}
+                              {i > 0 && <span className="font-mono text-[9px] text-faint">/</span>}
                               <kbd className="inline-flex items-center rounded border border-border bg-surface-2 px-1.5 py-0.5 font-mono text-[10px] leading-none text-muted shadow-sm">
                                 {k}
                               </kbd>
@@ -164,7 +164,11 @@ export function KeyboardShortcutsModal({ onClose }: Props) {
         {/* Footer hint */}
         <div className="border-t border-border px-5 py-3">
           <p className="font-mono text-[10px] text-faint">
-            Press <kbd className="inline rounded border border-border bg-surface-2 px-1 font-mono text-[10px] shadow-sm">Esc</kbd> to close
+            Press{' '}
+            <kbd className="inline rounded border border-border bg-surface-2 px-1 font-mono text-[10px] shadow-sm">
+              Esc
+            </kbd>{' '}
+            to close
           </p>
         </div>
       </div>

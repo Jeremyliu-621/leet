@@ -33,15 +33,31 @@ const LANGUAGE_OPTIONS: { value: SupportedLanguage; label: string; description: 
   { value: 'csharp', label: 'C#', description: 'Available for problems with C# starter code.' },
   { value: 'go', label: 'Go', description: 'Available for problems with Go starter code.' },
   { value: 'rust', label: 'Rust', description: 'Available for problems with Rust starter code.' },
-  { value: 'kotlin', label: 'Kotlin', description: 'Available for problems with Kotlin starter code.' },
-  { value: 'swift', label: 'Swift', description: 'Available for problems with Swift starter code.' },
+  {
+    value: 'kotlin',
+    label: 'Kotlin',
+    description: 'Available for problems with Kotlin starter code.',
+  },
+  {
+    value: 'swift',
+    label: 'Swift',
+    description: 'Available for problems with Swift starter code.',
+  },
   { value: 'sql', label: 'SQL', description: 'Available for problems with SQL starter code.' },
 ];
 
 const KEYMAP_OPTIONS: { value: EditorKeymap; label: string; description: string }[] = [
   { value: 'default', label: 'Default', description: 'Standard browser key bindings.' },
-  { value: 'vim', label: 'Vim', description: 'Full modal vim bindings via @replit/codemirror-vim.' },
-  { value: 'emacs', label: 'Emacs', description: 'Emacs bindings (Ctrl-A/E, M-f/b, Ctrl-K, etc.) via @replit/codemirror-emacs.' },
+  {
+    value: 'vim',
+    label: 'Vim',
+    description: 'Full modal vim bindings via @replit/codemirror-vim.',
+  },
+  {
+    value: 'emacs',
+    label: 'Emacs',
+    description: 'Emacs bindings (Ctrl-A/E, M-f/b, Ctrl-K, etc.) via @replit/codemirror-emacs.',
+  },
 ];
 
 export function EditorSection({ prefs, onChange }: EditorSectionProps) {
@@ -143,12 +159,7 @@ export function EditorSection({ prefs, onChange }: EditorSectionProps) {
           htmlFor={indentId}
           help="Spaces inserted by the Tab key. 2 is the JavaScript community default; Python conventionally uses 4."
         >
-          <div
-            id={indentId}
-            role="radiogroup"
-            aria-label="Indent size"
-            className="flex gap-2"
-          >
+          <div id={indentId} role="radiogroup" aria-label="Indent size" className="flex gap-2">
             {INDENT_OPTIONS.map(({ value, label }) => {
               const selected = (prefs.editorIndentSize ?? 2) === value;
               const inputId = `${uid}-indent-${value}`;

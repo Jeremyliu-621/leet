@@ -55,7 +55,9 @@ export function TopBar({ secondsLeft, prefs, streak }: TopBarProps) {
             className="hidden sm:flex items-center gap-1.5 rounded-sm border border-border px-2.5 py-1"
             aria-label={`${streak} day streak`}
           >
-            <span className="font-mono text-[10px] text-faint uppercase tracking-wider">streak</span>
+            <span className="font-mono text-[10px] text-faint uppercase tracking-wider">
+              streak
+            </span>
             <span className="font-mono text-sm font-semibold text-text tabular-nums">{streak}</span>
           </div>
         )}
@@ -66,7 +68,9 @@ export function TopBar({ secondsLeft, prefs, streak }: TopBarProps) {
             className="hidden sm:flex items-center gap-1.5 rounded-sm border border-border px-2.5 py-1"
             aria-label={`Unlock reward: ${prefs.unlockDurationMin} minutes`}
           >
-            <span className="font-mono text-[10px] text-faint uppercase tracking-wider">unlock</span>
+            <span className="font-mono text-[10px] text-faint uppercase tracking-wider">
+              unlock
+            </span>
             <span className="font-mono text-sm font-medium text-muted tabular-nums">
               {formatUnlockDuration(prefs.unlockDurationMin)}
             </span>
@@ -80,10 +84,10 @@ export function TopBar({ secondsLeft, prefs, streak }: TopBarProps) {
             isExpired
               ? 'border-accent bg-accent/10'
               : isCritical
-              ? 'border-border-strong bg-surface-2'
-              : isLow
-              ? 'border-border-strong'
-              : 'border-border',
+                ? 'border-border-strong bg-surface-2'
+                : isLow
+                  ? 'border-border-strong'
+                  : 'border-border',
           ].join(' ')}
           aria-label={`Time remaining: ${formatTime(secondsLeft)}`}
           aria-live="off"

@@ -134,19 +134,30 @@ const LANGUAGE_SHORT: Readonly<Record<SupportedLanguage, string>> = {
 
 function languageExtension(language: SupportedLanguage) {
   switch (language) {
-    case 'python': return python();
-    case 'typescript': return javascript({ typescript: true });
-    case 'java': return java();
-    case 'cpp': return cpp();
-    case 'rust': return rust();
-    case 'sql': return sql();
-    case 'go': return go();
+    case 'python':
+      return python();
+    case 'typescript':
+      return javascript({ typescript: true });
+    case 'java':
+      return java();
+    case 'cpp':
+      return cpp();
+    case 'rust':
+      return rust();
+    case 'sql':
+      return sql();
+    case 'go':
+      return go();
     // Kotlin and Swift don't have official CodeMirror extensions — use Java
     // syntax highlighting as a reasonable approximation for both.
-    case 'kotlin': return java();
-    case 'swift': return java();
-    case 'csharp': return java();
-    default: return javascript();
+    case 'kotlin':
+      return java();
+    case 'swift':
+      return java();
+    case 'csharp':
+      return java();
+    default:
+      return javascript();
   }
 }
 
@@ -339,7 +350,9 @@ export function EditorPanel({
           // Tab inserts spaces — respects indent size.
           indentWithTab,
         ]),
-        themeCompartmentRef.current.of(resolvedTheme === 'light' ? leetlockEditorThemeLight : leetlockEditorThemeDark),
+        themeCompartmentRef.current.of(
+          resolvedTheme === 'light' ? leetlockEditorThemeLight : leetlockEditorThemeDark,
+        ),
         // Font size goes through its own Compartment so it can be reconfigured
         // live when the user adjusts it in Settings without rebuilding the editor.
         fontSizeCompartmentRef.current.of(fontSizeTheme(fontSize)),
@@ -390,7 +403,7 @@ export function EditorPanel({
     view.dispatch({
       changes: { from: 0, to: view.state.doc.length, insert: resetCode.content },
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resetCode?.version]);
 
   // Swap the language extension when `language` changes.
@@ -407,9 +420,7 @@ export function EditorPanel({
     const view = viewRef.current;
     if (!view) return;
     view.dispatch({
-      effects: keymapCompartmentRef.current.reconfigure(
-        modalKeymapExtension(editorKeymap),
-      ),
+      effects: keymapCompartmentRef.current.reconfigure(modalKeymapExtension(editorKeymap)),
     });
   }, [editorKeymap]);
 
@@ -467,7 +478,11 @@ export function EditorPanel({
       {/* Language label / selector + fullscreen toggle */}
       <div className="flex shrink-0 items-center justify-between border-b border-border px-3 py-1.5">
         {showLanguageSelector ? (
-          <div role="radiogroup" aria-label="Code language" className="flex items-center gap-0.5 overflow-x-auto scrollbar-none">
+          <div
+            role="radiogroup"
+            aria-label="Code language"
+            className="flex items-center gap-0.5 overflow-x-auto scrollbar-none"
+          >
             {availableLanguages.map((lang) => {
               const selected = lang === language;
               return (
@@ -531,19 +546,12 @@ export function EditorPanel({
         aria-label={`Code editor — ${LANGUAGE_LABEL[language]}`}
         className="min-h-0 flex-1 overflow-hidden"
       >
-        <div
-          ref={editorContainerRef}
-          className="h-full w-full"
-        />
+        <div ref={editorContainerRef} className="h-full w-full" />
       </div>
 
       {/* Terminal region — resizable with drag handle */}
       <div className="shrink-0 border-t border-border" aria-hidden="true" />
-      <div
-        className="shrink-0 overflow-hidden"
-        role="region"
-        aria-label="Terminal output"
-      >
+      <div className="shrink-0 overflow-hidden" role="region" aria-label="Terminal output">
         <TerminalPanel result={verdict} mode={verdictMode} />
       </div>
 
@@ -556,10 +564,14 @@ export function EditorPanel({
           {/* Left: status info */}
           <div className="flex items-center gap-3 font-mono text-[10px] text-faint">
             <span aria-hidden="true" className="hidden md:flex items-center gap-1.5">
-              <kbd className="rounded border border-border bg-surface-2 px-1 py-px text-[9px]">⌘↵</kbd>
+              <kbd className="rounded border border-border bg-surface-2 px-1 py-px text-[9px]">
+                ⌘↵
+              </kbd>
               <span>run</span>
               <span className="text-border-strong mx-0.5">·</span>
-              <kbd className="rounded border border-border bg-surface-2 px-1 py-px text-[9px]">⌘⇧↵</kbd>
+              <kbd className="rounded border border-border bg-surface-2 px-1 py-px text-[9px]">
+                ⌘⇧↵
+              </kbd>
               <span>submit</span>
             </span>
             {attemptsRemaining !== null && attemptsRemaining < Infinity && (
@@ -604,8 +616,20 @@ export function EditorPanel({
               className="inline-flex items-center gap-1.5 rounded-sm border border-border px-4 py-1.5 font-mono text-[11px] font-medium text-muted transition-all hover:border-border-strong hover:text-text hover:bg-surface-2 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent disabled:cursor-not-allowed disabled:opacity-40"
             >
               {isRunning && verdictMode === 'run' && (
-                <svg className="h-3 w-3 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" strokeOpacity="0.25" />
+                <svg
+                  className="h-3 w-3 animate-spin"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    strokeOpacity="0.25"
+                  />
                   <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                 </svg>
               )}
@@ -622,8 +646,20 @@ export function EditorPanel({
               className="inline-flex items-center gap-1.5 rounded-sm bg-accent px-4 py-1.5 font-mono text-[11px] font-bold text-on-accent transition-opacity hover:opacity-90 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent disabled:cursor-not-allowed disabled:opacity-40"
             >
               {isRunning && verdictMode === 'submit' && (
-                <svg className="h-3 w-3 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" strokeOpacity="0.25" />
+                <svg
+                  className="h-3 w-3 animate-spin"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    strokeOpacity="0.25"
+                  />
                   <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                 </svg>
               )}

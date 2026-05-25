@@ -50,25 +50,43 @@ export function SubmissionsPanel({ submissions, onRestore }: SubmissionsPanelPro
             {submissions.length}
           </span>
         </div>
-        <span className="font-mono text-[10px] text-faint" aria-hidden="true">{open ? '▲' : '▼'}</span>
+        <span className="font-mono text-[10px] text-faint" aria-hidden="true">
+          {open ? '▲' : '▼'}
+        </span>
       </button>
 
       {open && (
         <div className="overflow-x-auto px-4 pb-3" role="region" aria-label="Submission history">
-          <table className="w-full min-w-[360px] font-mono text-xs" aria-label="Submission history table">
+          <table
+            className="w-full min-w-[360px] font-mono text-xs"
+            aria-label="Submission history table"
+          >
             <thead>
               <tr className="border-b border-border text-left text-[10px] uppercase tracking-widest text-faint">
-                <th scope="col" className="pb-1.5 pr-3 font-normal">#</th>
-                <th scope="col" className="pb-1.5 pr-3 font-normal">Result</th>
-                <th scope="col" className="pb-1.5 pr-3 font-normal">Tests</th>
-                <th scope="col" className="pb-1.5 pr-3 font-normal">Time</th>
-                <th scope="col" className="pb-1.5 pr-3 font-normal text-right">At</th>
+                <th scope="col" className="pb-1.5 pr-3 font-normal">
+                  #
+                </th>
+                <th scope="col" className="pb-1.5 pr-3 font-normal">
+                  Result
+                </th>
+                <th scope="col" className="pb-1.5 pr-3 font-normal">
+                  Tests
+                </th>
+                <th scope="col" className="pb-1.5 pr-3 font-normal">
+                  Time
+                </th>
+                <th scope="col" className="pb-1.5 pr-3 font-normal text-right">
+                  At
+                </th>
                 {onRestore && <th scope="col" className="pb-1.5 font-normal" />}
               </tr>
             </thead>
             <tbody>
               {[...submissions].reverse().map((s) => (
-                <tr key={s.attempt} className="border-b border-border/50 last:border-0 hover:bg-surface-2/50 transition-colors">
+                <tr
+                  key={s.attempt}
+                  className="border-b border-border/50 last:border-0 hover:bg-surface-2/50 transition-colors"
+                >
                   <td className="py-1.5 pr-3 text-faint tabular-nums">{s.attempt}</td>
                   <td className={`py-1.5 pr-3 ${OUTCOME_CLASS[s.outcome]}`}>
                     {OUTCOME_LABEL[s.outcome]}
@@ -79,7 +97,9 @@ export function SubmissionsPanel({ submissions, onRestore }: SubmissionsPanelPro
                   <td className="py-1.5 pr-3 text-faint tabular-nums">
                     {s.durationMs !== undefined ? `${s.durationMs} ms` : '—'}
                   </td>
-                  <td className="py-1.5 pr-3 text-right text-faint tabular-nums">{formatTime(s.timestamp)}</td>
+                  <td className="py-1.5 pr-3 text-right text-faint tabular-nums">
+                    {formatTime(s.timestamp)}
+                  </td>
                   {onRestore && (
                     <td className="py-1.5">
                       {s.code && (
