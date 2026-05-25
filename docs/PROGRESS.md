@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1430 problems; 4575 tests green; UI/UX polish pass complete.
+**Current focus:** Bank at 1430 problems; 4575 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank (Batch 49+); marketing site stat update at 1500.
+**Next up:** Continue growing problem bank (Batch 50+); marketing site stat update at 1500.
 
 ### UI/UX polish (2026-05-25)
 - **Back-to-settings link in practice mode**: TopBar now shows "← settings" link back to Options/problem browser when in practice mode (no blocked target URL). settingsHref computed via chrome.runtime.getURL.
@@ -22,6 +22,9 @@
 
 ### Batch 48 (2026-05-25)
 Added 5 problems: `day-of-the-week` (math/easy), `guess-number-higher-or-lower` (binary-search/easy), `largest-triangle-area` (math/easy), `minimum-value-to-get-positive-step-sum` (arrays/easy), `number-of-rectangles-that-can-form-largest-square` (arrays/easy). Skipped 4 originally requested problems that already existed in the bank; substituted equivalent-difficulty originals.
+
+### Batch 49 (2026-05-25)
+Added 5 problems: `watering-plants` (arrays/easy, greedy river walk simulation), `logger-rate-limiter` (hash-map/easy, map message→last_timestamp, allow if diff ≥ 10), `bst-from-preorder` (tree/medium, BST insertion from preorder traversal, level-order output), `balance-a-binary-search-tree` (tree/medium, in-order collect + sorted-array→BST rebuild), `maximum-sum-bst-in-binary-tree` (tree/hard, post-order DFS returning isBST+min+max+sum tuple, track global max). Bank at **1430**; 4575 tests.
 
 ### Batch 47-local (2026-05-25)
 Added 5 problems: `successful-pairs-of-spells-and-potions` (binary-search/medium, sort potions + binary search per spell), `minimum-operations-to-reduce-x-to-zero` (sliding-window/medium, longest subarray sum = total−x), `largest-submatrix-with-rearrangements` (arrays/medium, column heights + sort per row), `subtree-of-another-tree` (tree/easy, isSameTree helper + DFS), `maximum-product-of-splitted-binary-tree` (tree+dp/medium, total sum DFS maximize s×(total−s) mod 1e9+7); bank at **1425**; 4560 tests.
