@@ -9727,4 +9727,16 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ops;
   },
 
+  'rank-transform-array': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const sorted = [...new Set(arr)].sort((a, b) => a - b);
+    const rank = new Map(sorted.map((v, i) => [v, i + 1]));
+    return arr.map(x => rank.get(x));
+  },
+
+  'final-value-operations': (...args: unknown[]) => {
+    const operations = args[0] as string[];
+    return operations.reduce((x, op) => op.includes('++') ? x + 1 : x - 1, 0);
+  },
+
 };

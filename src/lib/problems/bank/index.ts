@@ -782,6 +782,8 @@ import { problem as capitalizeTheTitle } from './capitalize-the-title';
 import { problem as hammingDistance } from './hamming-distance';
 import { problem as singleNumberIII } from './single-number-iii';
 import { problem as minimumOperationsMakeArrayIncreasing } from './minimum-operations-to-make-array-increasing';
+import { problem as rankTransformArray } from './rank-transform-array';
+import { problem as finalValueOperations } from './final-value-operations';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1603,20 +1605,14 @@ export const problems: readonly Problem[] = [
   firstBadVersion,
   numberOfSegmentsInString,
   findModeBst,
-
-  // strings + arrays — easy (new)
   finalValueAfterOperations,
-  // arrays + hash-map — medium (new)
   findOriginalArrayFromDoubled,
-  // arrays + queue — easy (new)
   numberOfStudentsUnableToEatLunch,
-  // arrays + strings — easy (new)
   maximumNumberOfWordsFoundInSentences,
   capitalizeTheTitle,
-  // math — easy (new)
   hammingDistance,
-  // arrays + math — medium (new)
   singleNumberIII,
-  // arrays + math — easy (new)
   minimumOperationsMakeArrayIncreasing,
+  rankTransformArray,
+  finalValueOperations,
 ];

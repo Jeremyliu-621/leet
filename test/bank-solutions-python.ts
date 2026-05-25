@@ -9333,4 +9333,16 @@ def minOperations(nums):
             nums[i] = nums[i - 1] + 1
     return ops
 `,
+
+  'rank-transform-array': `
+def arrayRankTransform(arr):
+    sorted_unique = sorted(set(arr))
+    rank = {v: i + 1 for i, v in enumerate(sorted_unique)}
+    return [rank[x] for x in arr]
+`,
+
+  'final-value-operations': `
+def finalValueAfterOperations(operations):
+    return sum(1 if '++' in op else -1 for op in operations)
+`,
 };
