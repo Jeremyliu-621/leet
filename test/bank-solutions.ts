@@ -13571,6 +13571,149 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return -1;
   },
 
+  'basic-calculator-ii': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const stack: number[] = [];
+    let num = 0, op = '+';
+    for (let i = 0; i < s.length; i++) {
+      const c = s[i]!;
+      if (c >= '0' && c <= '9') num = num * 10 + +c;
+      if ((c === '+' || c === '-' || c === '*' || c === '/') || i === s.length - 1) {
+        if (op === '+') stack.push(num);
+        else if (op === '-') stack.push(-num);
+        else if (op === '*') stack.push(stack.pop()! * num);
+        else stack.push(Math.trunc(stack.pop()! / num));
+        op = c; num = 0;
+      }
+    }
+    return stack.reduce((a, b) => a + b, 0);
+  },
+
+  'maximum-binary-tree': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    type N = { val: number; left: N | null; right: N | null };
+    const build = (arr: number[]): N | null => {
+      if (!arr.length) return null;
+      const mi = arr.indexOf(Math.max(...arr));
+      return { val: arr[mi]!, left: build(arr.slice(0, mi)), right: build(arr.slice(mi + 1)) };
+    };
+    const toArray = (node: N | null): (number | null)[] => {
+      if (!node) return [];
+      const res: (number | null)[] = [];
+      const q: (N | null)[] = [node];
+      while (q.length) { const n = q.shift()!; if (n) { res.push(n.val); q.push(n.left); q.push(n.right); } else res.push(null); }
+      while (res.length && res[res.length - 1] === null) res.pop();
+      return res;
+    };
+    return toArray(build(nums));
+  },
+
+  'next-greater-element-iii': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const d = n.toString().split('').map(Number);
+    let i = d.length - 2;
+    while (i >= 0 && d[i]! >= d[i + 1]!) i--;
+    if (i < 0) return -1;
+    let j = d.length - 1;
+    while (d[j]! <= d[i]!) j--;
+    [d[i], d[j]] = [d[j]!, d[i]!];
+    d.splice(i + 1, d.length - i - 1, ...d.slice(i + 1).reverse());
+    const result = parseInt(d.join(''), 10);
+    return result > 2147483647 ? -1 : result;
+  },
+
+  'number-of-digit-one': (...args: unknown[]) => {
+    let n = args[0] as number, count = 0;
+    for (let factor = 1; factor <= n; factor *= 10) {
+      const d = Math.floor(n / factor) % 10;
+      const higher = Math.floor(n / (factor * 10));
+      const lower = n % factor;
+      if (d === 0) count += higher * factor;
+      else if (d === 1) count += higher * factor + lower + 1;
+      else count += (higher + 1) * factor;
+    }
+    return count;
+  },
+
+  'moving-average-from-data-stream': (...args: unknown[]) => {
+    const size = args[0] as number, vals = args[1] as number[];
+    const queue: number[] = [];
+    let sum = 0;
+    return vals.map(v => {
+      queue.push(v); sum += v;
+      if (queue.length > size) sum -= queue.shift()!;
+      return sum / queue.length;
+    });
+  },
+
+  'design-add-and-search-words': (...args: unknown[]) => {
+    const ops = args[0] as string[], opArgs = args[1] as string[][];
+    const trie: Record<string, unknown> = {};
+    const add = (word: string) => {
+      let node = trie;
+      for (const c of word) { if (!node[c]) node[c] = {}; node = node[c] as Record<string, unknown>; }
+      node['$'] = true;
+    };
+    const search = (word: string, node: Record<string, unknown> = trie): boolean => {
+      for (let i = 0; i < word.length; i++) {
+        const c = word[i]!;
+        if (c === '.') return Object.keys(node).filter(k => k !== '$').some(k => search(word.slice(i + 1), node[k] as Record<string, unknown>));
+        if (!node[c]) return false;
+        node = node[c] as Record<string, unknown>;
+      }
+      return !!node['$'];
+    };
+    return ops.map((op, i) => {
+      if (op === 'addWord') { add(opArgs[i]![0]!); return null; }
+      if (op === 'search') return search(opArgs[i]![0]!);
+      return null;
+    });
+  },
+
+  'serialize-deserialize-bst': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    type Node = { val: number; left: Node | null; right: Node | null };
+    const build = (arr: number[]): Node | null => {
+      if (!arr.length) return null;
+      const mid = Math.floor(arr.length / 2);
+      return { val: arr[mid]!, left: build(arr.slice(0, mid)), right: build(arr.slice(mid + 1)) };
+    };
+    const inOrder = (node: Node | null): number[] => !node ? [] : [...inOrder(node.left), node.val, ...inOrder(node.right)];
+    const preOrder = (n: Node | null): string => !n ? '' : [n.val.toString(), ...(n.left ? [preOrder(n.left)] : []), ...(n.right ? [preOrder(n.right)] : [])].join(',');
+    const deserializeBST = (s: string): Node | null => {
+      if (!s) return null;
+      const vals = s.split(',').map(Number);
+      let idx = 0;
+      const bt = (min: number, max: number): Node | null => {
+        if (idx >= vals.length || vals[idx]! < min || vals[idx]! > max) return null;
+        const v = vals[idx++]!;
+        return { val: v, left: bt(min, v - 1), right: bt(v + 1, max) };
+      };
+      return bt(-Infinity, Infinity);
+    };
+    const root = build(nums);
+    return inOrder(deserializeBST(root ? preOrder(root) : ''));
+  },
+
+  'design-circular-queue': (...args: unknown[]) => {
+    const k = args[0] as number, ops = args[1] as string[], opArgs = args[2] as number[][];
+    const arr = new Array(k);
+    let head = 0, size = 0;
+    const enQueue = (v: number) => { if (size === k) return false; arr[(head + size) % k] = v; size++; return true; };
+    const deQueue = () => { if (size === 0) return false; head = (head + 1) % k; size--; return true; };
+    const Front = () => size === 0 ? -1 : arr[head];
+    const Rear = () => size === 0 ? -1 : arr[(head + size - 1) % k];
+    return ops.map((op, i) => {
+      if (op === 'enQueue') return enQueue(opArgs[i]![0]!);
+      if (op === 'deQueue') return deQueue();
+      if (op === 'Front') return Front();
+      if (op === 'Rear') return Rear();
+      if (op === 'isEmpty') return size === 0;
+      if (op === 'isFull') return size === k;
+      return null;
+    });
+  },
+
   'find-duplicate-number-ii': (...args: unknown[]) => {
     const nums = args[0] as number[];
     let slow = nums[0]!, fast = nums[0]!;

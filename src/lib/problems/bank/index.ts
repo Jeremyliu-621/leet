@@ -1097,6 +1097,14 @@ import { problem as minimumCostHireKWorkers } from './minimum-cost-to-hire-k-wor
 import { problem as randomPickWithWeight } from './random-pick-with-weight';
 import { problem as findInMountainArray } from './find-in-mountain-array';
 import { problem as findDuplicateNumberII } from './find-duplicate-number-ii';
+import { problem as basicCalculatorII } from './basic-calculator-ii';
+import { problem as maximumBinaryTree } from './maximum-binary-tree';
+import { problem as nextGreaterElementIII } from './next-greater-element-iii';
+import { problem as numberOfDigitOne } from './number-of-digit-one';
+import { problem as movingAverageFromDataStream } from './moving-average-from-data-stream';
+import { problem as designAddAndSearchWords } from './design-add-and-search-words';
+import { problem as serializeDeserializeBST } from './serialize-deserialize-bst';
+import { problem as designCircularQueue } from './design-circular-queue';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2242,4 +2250,12 @@ export const problems: readonly Problem[] = [
   randomPickWithWeight,
   findInMountainArray,
   findDuplicateNumberII,
+  basicCalculatorII,
+  maximumBinaryTree,
+  nextGreaterElementIII,
+  numberOfDigitOne,
+  movingAverageFromDataStream,
+  designAddAndSearchWords,
+  serializeDeserializeBST,
+  designCircularQueue,
 ];

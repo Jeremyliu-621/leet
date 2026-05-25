@@ -13170,6 +13170,155 @@ def findInMountainArray(mountainArr, target):
     return -1
 `,
 
+  'basic-calculator-ii': `
+def calculateII(s):
+    stack = []
+    num = 0
+    op = '+'
+    for i, c in enumerate(s):
+        if c.isdigit():
+            num = num * 10 + int(c)
+        if c in '+-*/' or i == len(s) - 1:
+            if op == '+': stack.append(num)
+            elif op == '-': stack.append(-num)
+            elif op == '*': stack.append(stack.pop() * num)
+            elif op == '/': stack.append(int(stack.pop() / num))
+            op = c
+            num = 0
+    return sum(stack)
+`,
+
+  'maximum-binary-tree': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+def constructMaximumBinaryTree(nums):
+    if not nums: return None
+    mi = nums.index(max(nums))
+    node = TreeNode(nums[mi])
+    node.left = constructMaximumBinaryTree(nums[:mi])
+    node.right = constructMaximumBinaryTree(nums[mi+1:])
+    return node
+`,
+
+  'next-greater-element-iii': `
+def nextGreaterElementIII(n):
+    d = list(str(n))
+    i = len(d) - 2
+    while i >= 0 and d[i] >= d[i+1]:
+        i -= 1
+    if i < 0: return -1
+    j = len(d) - 1
+    while d[j] <= d[i]:
+        j -= 1
+    d[i], d[j] = d[j], d[i]
+    d[i+1:] = d[i+1:][::-1]
+    result = int(''.join(d))
+    return -1 if result > 2**31 - 1 else result
+`,
+
+  'number-of-digit-one': `
+def countDigitOne(n):
+    count = 0
+    factor = 1
+    while factor <= n:
+        d = (n // factor) % 10
+        higher = n // (factor * 10)
+        lower = n % factor
+        if d == 0: count += higher * factor
+        elif d == 1: count += higher * factor + lower + 1
+        else: count += (higher + 1) * factor
+        factor *= 10
+    return count
+`,
+
+  'moving-average-from-data-stream': `
+from collections import deque
+def movingAverageRunner(size, vals):
+    vals = list(vals.to_py()) if hasattr(vals, 'to_py') else list(vals)
+    q = deque()
+    s = 0
+    result = []
+    for v in vals:
+        q.append(v); s += v
+        if len(q) > size: s -= q.popleft()
+        result.append(s / len(q))
+    return result
+`,
+
+  'design-add-and-search-words': `
+def wordDictionaryRunner(ops, args):
+    trie = {}
+    def add(word):
+        node = trie
+        for c in word:
+            if c not in node: node[c] = {}
+            node = node[c]
+        node['$'] = True
+    def search(word, node=None):
+        if node is None: node = trie
+        for i, c in enumerate(word):
+            if c == '.':
+                return any(search(word[i+1:], node[k]) for k in node if k != '$')
+            if c not in node: return False
+            node = node[c]
+        return '$' in node
+    result = []
+    for op, a in zip(ops, args):
+        if op == 'addWord': add(a[0]); result.append(None)
+        elif op == 'search': result.append(search(a[0]))
+        else: result.append(None)
+    return result
+`,
+
+  'serialize-deserialize-bst': `
+def serialize(root):
+    def pre(node):
+        if not node: return []
+        return [str(node.val)] + pre(node.left) + pre(node.right)
+    return ','.join(pre(root))
+def deserialize(data):
+    if not data: return None
+    vals = list(map(int, data.split(',')))
+    idx = [0]
+    def bt(mn, mx):
+        if idx[0] >= len(vals) or vals[idx[0]] < mn or vals[idx[0]] > mx:
+            return None
+        v = vals[idx[0]]; idx[0] += 1
+        node = TreeNode(v)
+        node.left = bt(mn, v-1)
+        node.right = bt(v+1, mx)
+        return node
+    return bt(float('-inf'), float('inf'))
+`,
+
+  'design-circular-queue': `
+def circularQueueRunner(k, ops, args):
+    arr = [0] * int(k)
+    head = size = 0
+    k = int(k)
+    def enQueue(v):
+        nonlocal size
+        if size == k: return False
+        arr[(head + size) % k] = v; size += 1; return True
+    def deQueue():
+        nonlocal head, size
+        if size == 0: return False
+        head = (head + 1) % k; size -= 1; return True
+    def Front(): return -1 if size == 0 else arr[head]
+    def Rear(): return -1 if size == 0 else arr[(head + size - 1) % k]
+    result = []
+    for op, a in zip(ops, args):
+        if op == 'enQueue': result.append(enQueue(a[0]))
+        elif op == 'deQueue': result.append(deQueue())
+        elif op == 'Front': result.append(Front())
+        elif op == 'Rear': result.append(Rear())
+        elif op == 'isEmpty': result.append(size == 0)
+        elif op == 'isFull': result.append(size == k)
+        else: result.append(None)
+    return result
+`,
+
   'find-duplicate-number-ii': `
 def findDuplicateFloyd(nums):
     nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
