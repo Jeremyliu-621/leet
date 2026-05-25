@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 754 problems; 2533 tests green. Past 750 milestone!
+**Current focus:** Bank at 761 problems; 2554 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing bank toward 800; UI/UX polish, accessibility, marketing site update.
 
@@ -310,6 +310,8 @@ Still pending:
 - [x] **6 more problems** — compare-version-numbers (strings/medium), open-the-lock (graph/medium), diagonal-traverse (arrays/medium), reshape-the-matrix (arrays/easy), find-town-judge (graph/easy), possible-bipartition (graph/medium); 2329 tests; bank at 690+.
 - [x] **6 more problems** — two-sum-ii (two-pointers), set-mismatch (arrays), maximum-gap (arrays), array-partition (arrays), power-of-two (math), sum-of-left-leaves (tree); 2356 tests; bank at 697+.
 - [x] **🎉 700-problem milestone!** — arrange-coins, nth-digit, find-the-winner (Josephus), count-negative-numbers, can-make-arithmetic-progression; 2398 tests; bank at 700+.
+- [x] **21 more problems** (batches 8-9, remote merge) — design-hashmap, contiguous-array, shifting-letters, convert-bst-to-greater-tree, distribute-coins-binary-tree, flip-columns-for-maximum-equal-rows, delete-columns-sorted-iii, minimum-bit-flips, smallest-even-multiple, special-array-greater-equal, count-pairs-two-arrays, convert-time-hhmm, find-players-zero-losses, check-distances-fair-nodes, minimum-rounds-complete-tasks, largest-combination-bitwise-and + remote: final-value-after-operations, find-original-array-doubled, etc.; bank at 741; 2494 tests.
+- [x] **20 more problems** (batch 10, remote merge) — best-time-buy-sell-transaction-fee, maximal-rectangle, stone-game-iii, maximum-profit-job-scheduling, count-of-smaller-numbers-after-self, k-th-symbol-in-grammar, longest-substring-without-repeating + remote: sort-the-people, baseball-game, find-champion-graph, count-digits, apply-operations, minimum-moves-to-seat, rings-and-rods, find-gcd-of-array, keep-multiplying-found-values, percentages-of-letter, maximum-bags-full-capacity, find-subsequence-of-length-k, odd-string-difference; bank at 761; 2554 tests.
 
 ---
 
