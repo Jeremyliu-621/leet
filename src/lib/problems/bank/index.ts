@@ -71,6 +71,11 @@ import { problem as sortArrayByParityII } from './sort-array-by-parity-ii';
 import { problem as numberOfArithmeticTriplets } from './number-of-arithmetic-triplets';
 import { problem as countEqualAndDivisiblePairs } from './count-equal-and-divisible-pairs';
 import { problem as countElementsWithMaximumFrequency } from './count-elements-with-maximum-frequency';
+import { problem as xorOperationInAnArray } from './xor-operation-in-an-array';
+import { problem as getMaximumInGeneratedArray } from './get-maximum-in-generated-array';
+import { problem as flippingAnImage } from './flipping-an-image';
+import { problem as countGoodTriplets } from './count-good-triplets';
+import { problem as matrixBlockSum } from './matrix-block-sum';
 // arrays — medium
 import { problem as rangeSumQuery2D } from './range-sum-query-2d';
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
@@ -530,6 +535,7 @@ import { problem as leafSimilarTrees } from './leaf-similar-trees';
 import { problem as twoSumIVBST } from './two-sum-iv-bst';
 import { problem as binaryTreeTilt } from './binary-tree-tilt';
 import { problem as averageOfLevels } from './average-of-levels';
+import { problem as rangeSumOfBST } from './range-sum-of-bst';
 // tree — medium
 import { problem as binaryTreePruning } from './binary-tree-pruning';
 import { problem as countCompleteTreeNodes } from './count-complete-tree-nodes';
@@ -641,6 +647,11 @@ export const problems: readonly Problem[] = [
   sortEvenOddIndices,
   countEqualAndDivisiblePairs,
   countElementsWithMaximumFrequency,
+  xorOperationInAnArray,
+  getMaximumInGeneratedArray,
+  flippingAnImage,
+  countGoodTriplets,
+  matrixBlockSum,
   singleNumber,
   toeplitzMatrix,
   transposeMatrix,
@@ -1124,6 +1135,7 @@ export const problems: readonly Problem[] = [
   twoSumIVBST,
   binaryTreeTilt,
   averageOfLevels,
+  rangeSumOfBST,
   // tree — medium
   binaryTreePruning,
   countCompleteTreeNodes,

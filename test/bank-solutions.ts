@@ -7273,6 +7273,85 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'range-sum-of-bst': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const low = args[1] as number, high = args[2] as number;
+    interface TN { val: number; left: TN | null; right: TN | null; }
+    function build(a: (number | null)[]): TN | null {
+      if (!a || a.length === 0 || a[0] == null) return null;
+      const root: TN = { val: a[0]!, left: null, right: null };
+      const q: TN[] = [root]; let i = 1;
+      while (q.length > 0 && i < a.length) {
+        const node = q.shift()!;
+        if (a[i] != null) { node.left = { val: a[i]!, left: null, right: null }; q.push(node.left); }
+        i++;
+        if (i < a.length && a[i] != null) { node.right = { val: a[i]!, left: null, right: null }; q.push(node.right); }
+        i++;
+      }
+      return root;
+    }
+    function sum(node: TN | null): number {
+      if (!node) return 0;
+      let s = 0;
+      if (node.val >= low && node.val <= high) s += node.val;
+      if (node.val > low) s += sum(node.left);
+      if (node.val < high) s += sum(node.right);
+      return s;
+    }
+    return sum(build(arr));
+  },
+
+  'xor-operation-in-an-array': (...args: unknown[]) => {
+    const n = args[0] as number, start = args[1] as number;
+    let res = 0;
+    for (let i = 0; i < n; i++) res ^= (start + 2 * i);
+    return res;
+  },
+
+  'get-maximum-in-generated-array': (...args: unknown[]) => {
+    const n = args[0] as number;
+    if (n === 0) return 0;
+    const nums = [0, 1];
+    for (let i = 2; i <= n; i++) {
+      nums[i] = i % 2 === 0 ? nums[i / 2]! : nums[(i - 1) / 2]! + nums[(i + 1) / 2]!;
+    }
+    return Math.max(...nums);
+  },
+
+  'flipping-an-image': (...args: unknown[]) => {
+    const image = args[0] as number[][];
+    return image.map(row => [...row].reverse().map(b => b ^ 1));
+  },
+
+  'count-good-triplets': (...args: unknown[]) => {
+    const arr = args[0] as number[], a = args[1] as number, b = args[2] as number, c = args[3] as number;
+    let count = 0;
+    for (let i = 0; i < arr.length; i++)
+      for (let j = i + 1; j < arr.length; j++)
+        for (let k = j + 1; k < arr.length; k++)
+          if (Math.abs(arr[i]! - arr[j]!) <= a && Math.abs(arr[j]! - arr[k]!) <= b && Math.abs(arr[i]! - arr[k]!) <= c)
+            count++;
+    return count;
+  },
+
+  'matrix-block-sum': (...args: unknown[]) => {
+    const mat = args[0] as number[][], k = args[1] as number;
+    const m = mat.length, n = mat[0]!.length;
+    const prefix: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+    for (let i = 1; i <= m; i++)
+      for (let j = 1; j <= n; j++)
+        prefix[i]![j] = mat[i - 1]![j - 1]! + prefix[i - 1]![j]! + prefix[i]![j - 1]! - prefix[i - 1]![j - 1]!;
+    const ans: number[][] = Array.from({ length: m }, () => new Array(n).fill(0));
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        const r1 = Math.max(0, i - k), c1 = Math.max(0, j - k);
+        const r2 = Math.min(m - 1, i + k), c2 = Math.min(n - 1, j + k);
+        ans[i]![j] = prefix[r2 + 1]![c2 + 1]! - prefix[r1]![c2 + 1]! - prefix[r2 + 1]![c1]! + prefix[r1]![c1]!;
+      }
+    }
+    return ans;
+  },
+
   'count-number-of-rectangles': (...args: unknown[]) => {
     const rectangles = args[0] as number[][], points = args[1] as number[][];
     const byHeight: number[][] = Array.from({ length: 101 }, () => []);

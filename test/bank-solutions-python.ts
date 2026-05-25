@@ -6701,4 +6701,104 @@ def countRectangles(rectangles, points):
         result.append(count)
     return result
 `,
+
+  'range-sum-of-bst': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def __from_array__(raw):
+    raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i]); queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i]); queue.append(node.right)
+        i += 1
+    return root
+
+def rangeSumBSTRunner(arr, low, high):
+    return rangeSumBST(__from_array__(arr), low, high)
+
+def rangeSumBST(root, low, high):
+    if not root:
+        return 0
+    s = root.val if low <= root.val <= high else 0
+    if root.val > low:
+        s += rangeSumBST(root.left, low, high)
+    if root.val < high:
+        s += rangeSumBST(root.right, low, high)
+    return s
+`,
+
+  'xor-operation-in-an-array': `
+def xorOperation(n, start):
+    res = 0
+    for i in range(n):
+        res ^= (start + 2 * i)
+    return res
+`,
+
+  'get-maximum-in-generated-array': `
+def getMaximumGenerated(n):
+    if n == 0:
+        return 0
+    nums = [0, 1]
+    for i in range(2, n + 1):
+        if i % 2 == 0:
+            nums.append(nums[i // 2])
+        else:
+            nums.append(nums[i // 2] + nums[i // 2 + 1])
+    return max(nums)
+`,
+
+  'flipping-an-image': `
+def flipAndInvertImage(image):
+    if hasattr(image, 'to_py'):
+        rows = [list(row.to_py()) for row in image]
+    else:
+        rows = [list(row) for row in image]
+    return [[(b ^ 1) for b in reversed(row)] for row in rows]
+`,
+
+  'count-good-triplets': `
+def countGoodTriplets(arr, a, b, c):
+    arr = list(arr)
+    count = 0
+    n = len(arr)
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if abs(arr[i]-arr[j]) <= a and abs(arr[j]-arr[k]) <= b and abs(arr[i]-arr[k]) <= c:
+                    count += 1
+    return count
+`,
+
+  'matrix-block-sum': `
+def matrixBlockSum(mat, k):
+    if hasattr(mat, 'to_py'):
+        mat = [list(row.to_py()) for row in mat]
+    else:
+        mat = [list(row) for row in mat]
+    m, n = len(mat), len(mat[0])
+    prefix = [[0]*(n+1) for _ in range(m+1)]
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            prefix[i][j] = mat[i-1][j-1] + prefix[i-1][j] + prefix[i][j-1] - prefix[i-1][j-1]
+    ans = [[0]*n for _ in range(m)]
+    for i in range(m):
+        for j in range(n):
+            r1, c1 = max(0, i-k), max(0, j-k)
+            r2, c2 = min(m-1, i+k), min(n-1, j+k)
+            ans[i][j] = prefix[r2+1][c2+1] - prefix[r1][c2+1] - prefix[r2+1][c1] + prefix[r1][c1]
+    return ans
+`,
 };
