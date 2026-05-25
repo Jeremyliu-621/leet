@@ -696,6 +696,11 @@ import { problem as moveZeroes } from './move-zeroes';
 import { problem as mergeStringsAlternately } from './merge-strings-alternately';
 import { problem as uncrossedLines } from './uncrossed-lines';
 import { problem as courseScheduleIII } from './course-schedule-iii';
+import { problem as buyTwoChocolates } from './buy-two-chocolates';
+import { problem as mostFrequentEvenElement } from './most-frequent-even-element';
+import { problem as findFirstPalindromicString } from './find-first-palindromic-string';
+import { problem as minimumNumberOperationsMakeArrayEmpty } from './minimum-number-operations-make-array-empty';
+import { problem as maximumDifferenceBetweenNodeAndAncestor } from './maximum-difference-between-node-and-ancestor';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1409,4 +1414,14 @@ export const problems: readonly Problem[] = [
   uncrossedLines,
   // heap — medium (new)
   courseScheduleIII,
+  // arrays + math — easy (new)
+  buyTwoChocolates,
+  // arrays + hash-map — easy (new)
+  mostFrequentEvenElement,
+  // strings — easy (new)
+  findFirstPalindromicString,
+  // arrays + hash-map — medium (new)
+  minimumNumberOperationsMakeArrayEmpty,
+  // tree — medium (new)
+  maximumDifferenceBetweenNodeAndAncestor,
 ];

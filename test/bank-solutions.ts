@@ -8717,4 +8717,59 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return heap.length;
   },
 
+  'buy-two-chocolates': (...args: unknown[]) => {
+    const prices = [...(args[0] as number[])];
+    const money = args[1] as number;
+    prices.sort((a, b) => a - b);
+    const sum = prices[0]! + prices[1]!;
+    return sum <= money ? money - sum : money;
+  },
+
+  'most-frequent-even-element': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const n of nums) if (n % 2 === 0) freq.set(n, (freq.get(n) ?? 0) + 1);
+    let best = -1, bestFreq = 0;
+    for (const [n, f] of freq) {
+      if (f > bestFreq || (f === bestFreq && n < best)) { best = n; bestFreq = f; }
+    }
+    return best;
+  },
+
+  'find-first-palindromic-string': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    for (const w of words) {
+      let l = 0, r = w.length - 1, ok = true;
+      while (l < r) { if (w[l] !== w[r]) { ok = false; break; } l++; r--; }
+      if (ok) return w;
+    }
+    return '';
+  },
+
+  'minimum-number-operations-make-array-empty': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+    let ops = 0;
+    for (const f of freq.values()) {
+      if (f === 1) return -1;
+      ops += Math.ceil(f / 3);
+    }
+    return ops;
+  },
+
+  'maximum-difference-between-node-and-ancestor': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    let ans = 0;
+    const dfs = (node: _TN | null, mn: number, mx: number) => {
+      if (!node) return;
+      ans = Math.max(ans, Math.abs(mn - node.v), Math.abs(mx - node.v));
+      const nm = Math.min(mn, node.v), nx = Math.max(mx, node.v);
+      dfs(node.l, nm, nx);
+      dfs(node.r, nm, nx);
+    };
+    if (root) dfs(root, root.v, root.v);
+    return ans;
+  },
+
 };

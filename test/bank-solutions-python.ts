@@ -8171,4 +8171,59 @@ def scheduleCourse(courses):
             time -= heap.pop(0)
     return len(heap)
 `,
+
+  'buy-two-chocolates': `
+def buyChoco(prices, money):
+    prices = sorted(prices)
+    s = prices[0] + prices[1]
+    return money - s if s <= money else money
+`,
+
+  'most-frequent-even-element': `
+def mostFrequentEven(nums):
+    from collections import Counter
+    freq = Counter(n for n in nums if n % 2 == 0)
+    if not freq:
+        return -1
+    best_freq = max(freq.values())
+    return min(n for n, f in freq.items() if f == best_freq)
+`,
+
+  'find-first-palindromic-string': `
+def firstPalindrome(words):
+    words = list(words)
+    for w in words:
+        if w == w[::-1]:
+            return w
+    return ''
+`,
+
+  'minimum-number-operations-make-array-empty': `
+def minOperations(nums):
+    from collections import Counter
+    import math
+    freq = Counter(nums)
+    ops = 0
+    for f in freq.values():
+        if f == 1:
+            return -1
+        ops += math.ceil(f / 3)
+    return ops
+`,
+
+  'maximum-difference-between-node-and-ancestor': `
+def maxAncestorDiff(root):
+    ans = 0
+    def dfs(node, mn, mx):
+        nonlocal ans
+        if node is None:
+            return
+        ans = max(ans, abs(mn - node.val), abs(mx - node.val))
+        nm = min(mn, node.val)
+        nx = max(mx, node.val)
+        dfs(node.left, nm, nx)
+        dfs(node.right, nm, nx)
+    dfs(root, root.val, root.val)
+    return ans
+`,
 };
