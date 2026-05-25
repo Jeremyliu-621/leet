@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1422 problems; 4515 tests green.
+**Current focus:** Bank at 1427 problems; 4530 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems (Batch 46+); UI/UX polish; draggable splitter; options improvements.
 
@@ -398,6 +398,9 @@ Still pending:
 - [x] **Problem browser UX (sort + random)** — sort dropdown (default / title A→Z / easy→hard / hard→easy) added next to search; "⚂ random" button opens a random problem from the current filtered set; both wired to reset pagination; sort uses useMemo for efficiency.
 - [x] **Fix reverse-string + first-bad-version** — reverse-string updated to char-array in-place swap spec (two-pointers tag); first-bad-version test cases aligned to spec.
 - [x] **5 more classic problems (Batch 45-local)** — cousins-in-binary-tree (tree/easy, BFS depth+parent check), all-nodes-distance-k-in-binary-tree (tree+graph/medium, parent map + BFS), open-lock (graph/medium, BFS on 4-digit state space), maximize-sum-after-k-negations (arrays+math/easy, greedy sort negate negatives), remove-duplicates-from-sorted-list (linked-list/easy, single-pass dedup); bank at **1409**; 4476 tests.
+- [x] **5 more classic problems (Batch 47)** — intersection-of-two-arrays (hash-map/easy, set intersection sorted), climbing-stairs-memo (dp/easy, memoized recursion), count-vowels-in-string (strings/easy, vowel set scan), percentage-of-letter (strings/easy, floor(count/len*100)), reverse-words-in-string (strings+two-pointers/medium, trim+split+reverse); bank at **1427**; 4530 tests.
+- [x] **Challenge TopBar practice mode** — `practiceMode` prop shows "practice mode" subtitle instead of "solve to unlock" when no target URL is present.
+- [x] **Popup UX** — recent solves are now clickable buttons that open the specific problem in challenge; active unlock domains are clickable to navigate to the site.
 
 ---
 
