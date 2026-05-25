@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1265 problems; 4023 tests green.
+**Current focus:** Bank at 1268 problems; 4032 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems; UI/UX polish; Options/popup improvements.
 
@@ -361,6 +361,7 @@ Still pending:
 - [x] **3 more classic problems (Batch 26)** — find-players-with-zero-or-one-losses (hash-map/medium), count-unreachable-pairs-after-removing-vertices (graph/medium, Union-Find), maximum-value-at-given-index-in-bounded-array (binary-search/medium, BigInt for overflow safety); bank at **1257**; 3999 tests.
 - [x] **5 more classic problems (Batch 27)** — minimum-area-rectangle (arrays+hash-map/medium, diagonal O(n^2)), minimum-operations-to-halve-array-sum (heap/medium, greedy), maximum-binary-string-after-change (strings/medium, single-zero placement), circular-array-loop (arrays+two-pointers/medium, Floyd's + direction guard), longest-arithmetic-subsequence-of-given-difference (dp+hash-map/medium, O(n)); bank at **1262**; 4014 tests.
 - [x] **3 more classic problems (Batch 28)** — time-needed-to-buy-tickets (arrays/easy, formula), number-of-subarrays-with-bounded-maximum (sliding-window/medium, two-pointer dp), kth-smallest-element-in-bst (tree/medium, inorder traversal with BST preamble); bank at **1265**; 4023 tests.
+- [x] **3 more classic problems (Batch 29)** — find-minimum-in-rotated-sorted-array (binary-search/medium), search-in-rotated-sorted-array (binary-search/medium), minimum-number-of-days-to-make-m-bouquets (binary-search/medium, feasibility check); bank at **1268**; 4032 tests.
 
 ---
 
