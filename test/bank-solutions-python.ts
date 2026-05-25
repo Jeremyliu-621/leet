@@ -16786,4 +16786,46 @@ def minimumDeletions(s):
             ans += 1
     return ans
 `,
+
+  'maximum-subarray-sum-with-one-deletion': `def maximumSum(arr):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    n = len(arr)
+    dp0 = [0] * n
+    dp1 = [float('-inf')] * n
+    dp0[0] = arr[0]
+    for i in range(1, n):
+        dp0[i] = max(arr[i], dp0[i-1] + arr[i])
+        dp1[i] = max(dp0[i-1], dp1[i-1] + arr[i])
+    return max(max(dp0), max(dp1))
+`,
+
+  'number-of-sub-arrays-size-k-average-threshold': `def numOfSubarrays(arr, k, threshold):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    K = int(k)
+    T = int(threshold)
+    window_sum = sum(arr[:K])
+    count = 1 if window_sum >= K * T else 0
+    for i in range(K, len(arr)):
+        window_sum += arr[i] - arr[i - K]
+        if window_sum >= K * T:
+            count += 1
+    return count
+`,
+
+  'grumpy-bookstore-owner': `def maxSatisfied(customers, grumpy, minutes):
+    customers = list(customers.to_py() if hasattr(customers, 'to_py') else customers)
+    grumpy = list(grumpy.to_py() if hasattr(grumpy, 'to_py') else grumpy)
+    minutes = int(minutes)
+    n = len(customers)
+    base = sum(customers[i] for i in range(n) if not grumpy[i])
+    extra = sum(customers[i] for i in range(minutes) if grumpy[i])
+    max_extra = extra
+    for i in range(minutes, n):
+        if grumpy[i]:
+            extra += customers[i]
+        if grumpy[i - minutes]:
+            extra -= customers[i - minutes]
+        max_extra = max(max_extra, extra)
+    return base + max_extra
+`,
 };

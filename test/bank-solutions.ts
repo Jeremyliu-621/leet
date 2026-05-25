@@ -17000,4 +17000,44 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'maximum-subarray-sum-with-one-deletion': (arr: unknown) => {
+    const a = arr as number[];
+    const n = a.length;
+    const dp0 = new Array(n), dp1 = new Array(n);
+    dp0[0] = a[0]; dp1[0] = -Infinity;
+    for (let i = 1; i < n; i++) {
+      dp0[i] = Math.max(a[i]!, dp0[i - 1]! + a[i]!);
+      dp1[i] = Math.max(dp0[i - 1]!, dp1[i - 1]! + a[i]!);
+    }
+    return Math.max(...dp0, ...dp1);
+  },
+
+  'number-of-sub-arrays-size-k-average-threshold': (arr: unknown, k: unknown, threshold: unknown) => {
+    const a = arr as number[], K = k as number, T = threshold as number;
+    let sum = 0;
+    for (let i = 0; i < K; i++) sum += a[i]!;
+    let count = sum >= K * T ? 1 : 0;
+    for (let i = K; i < a.length; i++) {
+      sum += a[i]! - a[i - K]!;
+      if (sum >= K * T) count++;
+    }
+    return count;
+  },
+
+  'grumpy-bookstore-owner': (customers: unknown, grumpy: unknown, minutes: unknown) => {
+    const c = customers as number[], g = grumpy as number[], m = minutes as number;
+    const n = c.length;
+    let base = 0;
+    for (let i = 0; i < n; i++) if (!g[i]) base += c[i]!;
+    let extra = 0;
+    for (let i = 0; i < m; i++) if (g[i]) extra += c[i]!;
+    let maxExtra = extra;
+    for (let i = m; i < n; i++) {
+      if (g[i]) extra += c[i]!;
+      if (g[i - m]) extra -= c[i - m]!;
+      maxExtra = Math.max(maxExtra, extra);
+    }
+    return base + maxExtra;
+  },
+
 };

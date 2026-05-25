@@ -1285,6 +1285,9 @@ import { problem as closestPrimeNumbersInRange } from './closest-prime-numbers-i
 import { problem as sumOfSubarrayMinimums } from './sum-of-subarray-minimums';
 import { problem as maximumXorForEachQuery } from './maximum-xor-for-each-query';
 import { problem as countWaysToSplitArray } from './count-ways-to-split-array';
+import { problem as maximumSubarraySumWithOneDeletion } from './maximum-subarray-sum-with-one-deletion';
+import { problem as numberOfSubArraysSizeKAverageThreshold } from './number-of-sub-arrays-size-k-average-threshold';
+import { problem as grumpyBookstoreOwner } from './grumpy-bookstore-owner';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2618,4 +2621,7 @@ export const problems: readonly Problem[] = [
   sumOfSubarrayMinimums,
   maximumXorForEachQuery,
   countWaysToSplitArray,
+  maximumSubarraySumWithOneDeletion,
+  numberOfSubArraysSizeKAverageThreshold,
+  grumpyBookstoreOwner,
 ];
