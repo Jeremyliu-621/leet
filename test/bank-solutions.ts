@@ -9456,4 +9456,44 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'two-sum-ii': (...args: unknown[]) => {
+    const numbers = args[0] as number[], target = args[1] as number;
+    let l = 0, r = numbers.length - 1;
+    while (l < r) {
+      const s = numbers[l]! + numbers[r]!;
+      if (s === target) return [l + 1, r + 1];
+      if (s < target) l++; else r--;
+    }
+    return [-1, -1];
+  },
+
+  'set-mismatch': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const cnt = new Array(nums.length + 1).fill(0);
+    for (const x of nums) cnt[x as number]++;
+    let dup = -1, miss = -1;
+    for (let i = 1; i <= nums.length; i++) {
+      if (cnt[i] === 2) dup = i;
+      if (cnt[i] === 0) miss = i;
+    }
+    return [dup, miss];
+  },
+
+  'maximum-gap': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    if (nums.length < 2) return 0;
+    nums.sort((a, b) => a - b);
+    let max = 0;
+    for (let i = 1; i < nums.length; i++) max = Math.max(max, nums[i]! - nums[i - 1]!);
+    return max;
+  },
+
+  'array-partition': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    nums.sort((a, b) => a - b);
+    let sum = 0;
+    for (let i = 0; i < nums.length; i += 2) sum += nums[i]!;
+    return sum;
+  },
+
 };

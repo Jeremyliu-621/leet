@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 691 problems; growing past 700.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing bank; more medium/hard problems.
+**Current focus:** Bank at 700+ problems; 2341 tests; growing past 700.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (2341 tests passing).
+**Next up:** Continue growing bank; improve UI/UX.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -306,6 +306,8 @@ Still pending:
 - [x] **7 more problems** — robot-return-to-origin (strings/easy), count-sorted-vowel-strings (dp/medium), maximum-product-of-word-lengths (arrays+math/medium), exclusive-time-of-functions (stack/medium), as-far-from-land-as-possible (graph/medium), cheapest-flights-within-k-stops (graph/medium), sorted-array-to-bst (tree+binary-search/easy, preamble); 2257 tests; bank at 665.
 - [x] **5 more problems** — factorial-trailing-zeroes, unique-binary-search-trees, non-decreasing-array, best-time-buy-sell-iii, deepest-leaves-sum; bank at 673; growing past 700.
 - [x] **8 more problems** — count-hills-valleys, find-lonely-numbers, count-prefixes-of-given-string, minimum-number-game, find-words-containing-character, count-good-numbers, maximum-sum-k-elements, minimum-common-value; 2281 tests; bank at 678.
+- [x] **4 more problems** (rebase resolved) — count-subarrays-fixed-bounds, amount-of-time-binary-tree-infected, count-collisions-on-road, maximum-alternating-subsequence-sum; bank at 683.
+- [x] **6 more problems** — compare-version-numbers (strings/medium), open-the-lock (graph/medium), diagonal-traverse (arrays/medium), reshape-the-matrix (arrays/easy), find-town-judge (graph/easy), possible-bipartition (graph/medium); 2329 tests; bank at 690+.
 
 ---
 

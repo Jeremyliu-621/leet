@@ -752,6 +752,10 @@ import { problem as maximumLengthSubarrayPositiveProduct } from './maximum-lengt
 import { problem as minimumDaysToMakeMBouquets } from './minimum-days-to-make-m-bouquets';
 import { problem as findResultantArrayAfterRemovingAnagrams } from './find-resultant-array-after-removing-anagrams';
 import { problem as longestZigZagPathBinaryTree } from './longest-zigzag-path-binary-tree';
+import { problem as twoSumII } from './two-sum-ii';
+import { problem as setMismatch } from './set-mismatch';
+import { problem as maximumGap } from './maximum-gap';
+import { problem as arrayPartition } from './array-partition';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1552,4 +1556,8 @@ export const problems: readonly Problem[] = [
   possibleBipartition,
   findResultantArrayAfterRemovingAnagrams,
   longestZigZagPathBinaryTree,
+  twoSumII,
+  setMismatch,
+  maximumGap,
+  arrayPartition,
 ];

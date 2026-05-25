@@ -9020,4 +9020,49 @@ def longestZigZag(root):
     dfs(root)
     return ans[0]
 `,
+
+  'two-sum-ii': `
+def twoSumII(numbers, target):
+    numbers = list(numbers)
+    l, r = 0, len(numbers) - 1
+    while l < r:
+        s = numbers[l] + numbers[r]
+        if s == target:
+            return [l + 1, r + 1]
+        elif s < target:
+            l += 1
+        else:
+            r -= 1
+    return [-1, -1]
+`,
+
+  'set-mismatch': `
+def findErrorNums(nums):
+    nums = list(nums)
+    n = len(nums)
+    cnt = [0] * (n + 1)
+    for x in nums:
+        cnt[x] += 1
+    dup = miss = -1
+    for i in range(1, n + 1):
+        if cnt[i] == 2:
+            dup = i
+        if cnt[i] == 0:
+            miss = i
+    return [dup, miss]
+`,
+
+  'maximum-gap': `
+def maximumGap(nums):
+    nums = sorted(nums)
+    if len(nums) < 2:
+        return 0
+    return max(nums[i] - nums[i - 1] for i in range(1, len(nums)))
+`,
+
+  'array-partition': `
+def arrayPairSum(nums):
+    nums = sorted(nums)
+    return sum(nums[i] for i in range(0, len(nums), 2))
+`,
 };
