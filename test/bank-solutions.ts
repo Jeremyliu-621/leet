@@ -9761,4 +9761,102 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best;
   },
 
+  'design-hashmap': (...args: unknown[]) => {
+    const ops = args[0] as string[], vals = args[1] as number[][];
+    const data = new Map<number, number>();
+    const results: (number | null)[] = [null];
+    for (let i = 1; i < ops.length; i++) {
+      if (ops[i] === 'put') { data.set(vals[i]![0]!, vals[i]![1]!); results.push(null); }
+      else if (ops[i] === 'get') { results.push(data.has(vals[i]![0]!) ? data.get(vals[i]![0]!)! : -1); }
+      else { data.delete(vals[i]![0]!); results.push(null); }
+    }
+    return results;
+  },
+
+  'contiguous-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const map = new Map<number, number>([[0, -1]]);
+    let sum = 0, ans = 0;
+    for (let i = 0; i < nums.length; i++) {
+      sum += nums[i] === 0 ? -1 : 1;
+      if (map.has(sum)) ans = Math.max(ans, i - map.get(sum)!);
+      else map.set(sum, i);
+    }
+    return ans;
+  },
+
+  'shifting-letters': (...args: unknown[]) => {
+    const s = args[0] as string, shifts = args[1] as number[];
+    const n = s.length;
+    const suffix = [...shifts];
+    for (let i = n - 2; i >= 0; i--) suffix[i] = (suffix[i]! + suffix[i + 1]!) % 26;
+    return [...s].map((c, i) => String.fromCharCode((c.charCodeAt(0) - 97 + suffix[i]!) % 26 + 97)).join('');
+  },
+
+  'convert-bst-to-greater-tree': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const root = _buildTree(arr);
+    let sum = 0;
+    const dfs = (n: _TN | null) => {
+      if (!n) return;
+      dfs(n.r);
+      sum += n.v;
+      n.v = sum;
+      dfs(n.l);
+    };
+    dfs(root);
+    const toArr = (n: _TN | null): (number | null)[] => {
+      if (!n) return [];
+      const res: (number | null)[] = [], q: (_TN | null)[] = [n];
+      while (q.length) {
+        const node = q.shift()!;
+        if (!node) { res.push(null); continue; }
+        res.push(node.v);
+        q.push(node.l); q.push(node.r);
+      }
+      while (res.length && res[res.length - 1] === null) res.pop();
+      return res;
+    };
+    return toArr(root);
+  },
+
+  'distribute-coins-binary-tree': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const root = _buildTree(arr);
+    let moves = 0;
+    const dfs = (n: _TN | null): number => {
+      if (!n) return 0;
+      const l = dfs(n.l), r = dfs(n.r);
+      moves += Math.abs(l) + Math.abs(r);
+      return n.v + l + r - 1;
+    };
+    dfs(root);
+    return moves;
+  },
+
+  'flip-columns-for-maximum-equal-rows': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const freq = new Map<string, number>();
+    for (const row of matrix) {
+      const flip = row[0] === 1;
+      const key = row.map(v => flip ? 1 - v : v).join('');
+      freq.set(key, (freq.get(key) ?? 0) + 1);
+    }
+    return Math.max(...freq.values());
+  },
+
+  'delete-columns-sorted-iii': (...args: unknown[]) => {
+    const strs = args[0] as string[];
+    const n = strs[0]!.length;
+    const dp = new Array(n).fill(1);
+    for (let j = 1; j < n; j++) {
+      for (let i = 0; i < j; i++) {
+        if (strs.every((_s, k) => strs[k]![i]! <= strs[k]![j]!)) {
+          dp[j] = Math.max(dp[j]!, dp[i]! + 1);
+        }
+      }
+    }
+    return n - Math.max(...dp);
+  },
+
 };

@@ -773,6 +773,13 @@ import { problem as canMakeArithmeticProgression } from './can-make-arithmetic-p
 import { problem as firstBadVersion } from './first-bad-version';
 import { problem as numberOfSegmentsInString } from './number-of-segments-in-string';
 import { problem as findModeBst } from './find-mode-bst';
+import { problem as designHashmap } from './design-hashmap';
+import { problem as contiguousArray } from './contiguous-array';
+import { problem as shiftingLetters } from './shifting-letters';
+import { problem as convertBstToGreaterTree } from './convert-bst-to-greater-tree';
+import { problem as distributeCoinsBinaryTree } from './distribute-coins-binary-tree';
+import { problem as flipColumnsForMaximumEqualRows } from './flip-columns-for-maximum-equal-rows';
+import { problem as deleteColumnsSortedIII } from './delete-columns-sorted-iii';
 
 import { problem as finalValueAfterOperations } from './final-value-after-operations';
 import { problem as findOriginalArrayFromDoubled } from './find-original-array-from-doubled';
@@ -1621,4 +1628,11 @@ export const problems: readonly Problem[] = [
   twoCityScheduling,
   checkIfStraightLine,
   binaryGap,
+  designHashmap,
+  contiguousArray,
+  shiftingLetters,
+  convertBstToGreaterTree,
+  distributeCoinsBinaryTree,
+  flipColumnsForMaximumEqualRows,
+  deleteColumnsSortedIII,
 ];

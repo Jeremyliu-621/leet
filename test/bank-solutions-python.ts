@@ -9374,4 +9374,94 @@ def binaryGap(n):
     return best
 `,
 
+  'design-hashmap': `
+def designHashMapRunner(ops, vals):
+    ops = list(ops)
+    vals = [list(v) for v in vals]
+    data = {}
+    results = [None]
+    for i in range(1, len(ops)):
+        if ops[i] == 'put':
+            data[vals[i][0]] = vals[i][1]
+            results.append(None)
+        elif ops[i] == 'get':
+            results.append(data.get(vals[i][0], -1))
+        else:
+            data.pop(vals[i][0], None)
+            results.append(None)
+    return results
+`,
+
+  'contiguous-array': `
+def findMaxLength(nums):
+    nums = list(nums)
+    mp = {0: -1}
+    total = ans = 0
+    for i, n in enumerate(nums):
+        total += -1 if n == 0 else 1
+        if total in mp:
+            ans = max(ans, i - mp[total])
+        else:
+            mp[total] = i
+    return ans
+`,
+
+  'shifting-letters': `
+def shiftingLetters(s, shifts):
+    shifts = list(shifts)
+    n = len(shifts)
+    for i in range(n - 2, -1, -1):
+        shifts[i] = (shifts[i] + shifts[i + 1]) % 26
+    return ''.join(chr((ord(c) - ord('a') + shifts[i]) % 26 + ord('a')) for i, c in enumerate(s))
+`,
+
+  'convert-bst-to-greater-tree': `
+def convertBST(root):
+    total = [0]
+    def dfs(node):
+        if not node:
+            return
+        dfs(node.right)
+        total[0] += node.val
+        node.val = total[0]
+        dfs(node.left)
+    dfs(root)
+    return root
+`,
+
+  'distribute-coins-binary-tree': `
+def distributeCoins(root):
+    moves = [0]
+    def dfs(node):
+        if not node:
+            return 0
+        l, r = dfs(node.left), dfs(node.right)
+        moves[0] += abs(l) + abs(r)
+        return node.val + l + r - 1
+    dfs(root)
+    return moves[0]
+`,
+
+  'flip-columns-for-maximum-equal-rows': `
+def maxEqualRowsAfterFlips(matrix):
+    matrix = [list(row) for row in matrix]
+    from collections import Counter
+    def normalize(row):
+        if row[0] == 1:
+            return tuple(1 - x for x in row)
+        return tuple(row)
+    return max(Counter(normalize(row) for row in matrix).values())
+`,
+
+  'delete-columns-sorted-iii': `
+def minDeletionSize(strs):
+    strs = list(strs)
+    n = len(strs[0])
+    dp = [1] * n
+    for j in range(1, n):
+        for i in range(j):
+            if all(strs[k][i] <= strs[k][j] for k in range(len(strs))):
+                dp[j] = max(dp[j], dp[i] + 1)
+    return n - max(dp)
+`,
 };
