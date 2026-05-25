@@ -1274,6 +1274,11 @@ import { problem as minimumPathCostInAGrid } from './minimum-path-cost-in-a-grid
 import { problem as countWaysGroupOverlappingRanges } from './count-ways-group-overlapping-ranges';
 import { problem as takeGiftsFromTheRichestPile } from './take-gifts-from-the-richest-pile';
 import { problem as findAllGoodIndices } from './find-all-good-indices';
+import { problem as partitionArrayIntoThreePartsWithEqualSum } from './partition-array-into-three-parts-with-equal-sum';
+import { problem as secondLargestDigitInString } from './second-largest-digit-in-string';
+import { problem as numberOfOperationsToMakeNetworkConnected } from './number-of-operations-to-make-network-connected';
+import { problem as maximizeNumberOfTasksYouCanAssign } from './maximize-number-of-tasks-you-can-assign';
+import { problem as minimumConsecutiveCardsToPick } from './minimum-consecutive-cards-to-pick-up';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2596,4 +2601,9 @@ export const problems: readonly Problem[] = [
   countWaysGroupOverlappingRanges,
   takeGiftsFromTheRichestPile,
   findAllGoodIndices,
+  partitionArrayIntoThreePartsWithEqualSum,
+  secondLargestDigitInString,
+  numberOfOperationsToMakeNetworkConnected,
+  maximizeNumberOfTasksYouCanAssign,
+  minimumConsecutiveCardsToPick,
 ];

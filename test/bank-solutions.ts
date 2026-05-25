@@ -16847,4 +16847,78 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return res;
   },
 
+  'partition-array-into-three-parts-with-equal-sum': (arr: unknown) => {
+    const a = arr as number[];
+    const total = a.reduce((s, v) => s + v, 0);
+    if (total % 3 !== 0) return false;
+    const target = total / 3;
+    let parts = 0, sum = 0;
+    for (const v of a) {
+      sum += v;
+      if (sum === target) { parts++; sum = 0; }
+    }
+    return parts >= 3;
+  },
+
+  'second-largest-digit-in-string': (s: unknown) => {
+    const str = s as string;
+    const digits = new Set<number>();
+    for (const c of str) if (c >= '0' && c <= '9') digits.add(parseInt(c));
+    const sorted = [...digits].sort((a, b) => b - a);
+    return sorted.length >= 2 ? sorted[1]! : -1;
+  },
+
+  'number-of-operations-to-make-network-connected': (n: unknown, connections: unknown) => {
+    const N = n as number;
+    const edges = connections as number[][];
+    if (edges.length < N - 1) return -1;
+    const parent = Array.from({length: N}, (_, i) => i);
+    function find(x: number): number { return parent[x] === x ? x : (parent[x] = find(parent[x]!)); }
+    let components = N;
+    for (const [a, b] of edges) {
+      const pa = find(a!), pb = find(b!);
+      if (pa !== pb) { parent[pa] = pb; components--; }
+    }
+    return components - 1;
+  },
+
+  'maximize-number-of-tasks-you-can-assign': (tasks: unknown, workers: unknown, pills: unknown, strength: unknown) => {
+    const t = [...(tasks as number[])].sort((a, b) => a - b);
+    const w = [...(workers as number[])].sort((a, b) => a - b);
+    const P = pills as number, S = strength as number;
+    const m = w.length;
+    function canDo(k: number): boolean {
+      const subT = t.slice(0, k);
+      const subW = w.slice(m - k);
+      let p = P;
+      const deque: number[] = [];
+      let wi = k - 1;
+      for (let i = k - 1; i >= 0; i--) {
+        while (wi >= 0 && subW[wi]! + S >= subT[i]!) deque.unshift(subW[wi--]!);
+        if (deque.length === 0) return false;
+        if (deque[deque.length - 1]! >= subT[i]!) deque.pop();
+        else { if (p === 0) return false; deque.shift(); p--; }
+      }
+      return true;
+    }
+    let lo = 0, hi = Math.min(t.length, m);
+    while (lo < hi) {
+      const mid = (lo + hi + 1) >> 1;
+      if (canDo(mid)) lo = mid; else hi = mid - 1;
+    }
+    return lo;
+  },
+
+  'minimum-consecutive-cards-to-pick-up': (cards: unknown) => {
+    const c = cards as number[];
+    const last = new Map<number, number>();
+    let ans = Infinity;
+    for (let i = 0; i < c.length; i++) {
+      const v = c[i]!;
+      if (last.has(v)) ans = Math.min(ans, i - last.get(v)! + 1);
+      last.set(v, i);
+    }
+    return ans === Infinity ? -1 : ans;
+  },
+
 };

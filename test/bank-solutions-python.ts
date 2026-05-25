@@ -16600,4 +16600,97 @@ def minimumDeletions(s):
             res.append(i)
     return res
 `,
+
+  'partition-array-into-three-parts-with-equal-sum': `def canThreePartsEqualSum(arr):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    total = sum(arr)
+    if total % 3 != 0:
+        return False
+    target = total // 3
+    parts = 0
+    cur = 0
+    for v in arr:
+        cur += v
+        if cur == target:
+            parts += 1
+            cur = 0
+    return parts >= 3
+`,
+
+  'second-largest-digit-in-string': `def secondHighest(s):
+    digits = set()
+    for c in str(s):
+        if c.isdigit():
+            digits.add(int(c))
+    sorted_d = sorted(digits, reverse=True)
+    return sorted_d[1] if len(sorted_d) >= 2 else -1
+`,
+
+  'number-of-operations-to-make-network-connected': `def makeConnected(n, connections):
+    n = int(n)
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (connections.to_py() if hasattr(connections, 'to_py') else connections)]
+    if len(edges) < n - 1:
+        return -1
+    parent = list(range(n))
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    components = n
+    for a, b in edges:
+        pa, pb = find(a), find(b)
+        if pa != pb:
+            parent[pa] = pb
+            components -= 1
+    return components - 1
+`,
+
+  'maximize-number-of-tasks-you-can-assign': `def maxTaskAssign(tasks, workers, pills, strength):
+    from collections import deque
+    t = sorted(list(tasks.to_py() if hasattr(tasks, 'to_py') else tasks))
+    w = sorted(list(workers.to_py() if hasattr(workers, 'to_py') else workers))
+    P = int(pills)
+    S = int(strength)
+    m = len(w)
+    def can_do(k):
+        sub_t = t[:k]
+        sub_w = w[m - k:]
+        p = P
+        dq = deque()
+        wi = k - 1
+        for i in range(k - 1, -1, -1):
+            while wi >= 0 and sub_w[wi] + S >= sub_t[i]:
+                dq.appendleft(sub_w[wi])
+                wi -= 1
+            if not dq:
+                return False
+            if dq[-1] >= sub_t[i]:
+                dq.pop()
+            else:
+                if p == 0:
+                    return False
+                dq.popleft()
+                p -= 1
+        return True
+    lo, hi = 0, min(len(t), m)
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_do(mid):
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'minimum-consecutive-cards-to-pick-up': `def minimumCardPickup(cards):
+    cards = list(cards.to_py() if hasattr(cards, 'to_py') else cards)
+    last = {}
+    ans = float('inf')
+    for i, v in enumerate(cards):
+        if v in last:
+            ans = min(ans, i - last[v] + 1)
+        last[v] = i
+    return ans if ans != float('inf') else -1
+`,
 };
