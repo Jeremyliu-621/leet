@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 510 problems; 1801 tests; growing toward 520+.
+**Current focus:** Bank at 512 problems, 1807 tests; added check-prefix-string, sum-digits-string-convert; deleted 2 duplicate files.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing bank toward 520+; more medium/hard problems. Browser-zoom QA (L).
+**Next up:** Continue growing bank toward 530+; more medium/hard problems. Browser-zoom QA (L).
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
