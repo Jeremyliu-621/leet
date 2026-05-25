@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1397 problems; 4440 tests green.
+**Current focus:** Bank at 1399 problems; 4446 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems (Batch 44+); UI/UX polish; draggable splitter; options improvements.
 
@@ -390,6 +390,7 @@ Still pending:
 - [x] **5 more classic problems (Batch 42-remote)** — count-vowel-substrings-of-a-string (strings/easy, O(n²) inner break), number-of-rectangles-that-can-form-the-largest-square (arrays/easy, min-side max count), determine-if-string-halves-are-alike (strings/easy, vowel count halves), divide-a-string-into-groups-of-size-k (strings/easy, pad + chunk), count-integers-with-even-digit-sum (math/easy, O(n) digit sum parity); bank at **1390**; 4419 tests.
 - [x] **5 more classic problems (Batch 43)** — design-hashset (hash-map/easy, boolean array implementation), design-parking-system (arrays/easy, three-counter spot tracker), defuse-the-bomb (arrays+sliding-window/easy, circular sum by k), check-if-sentence-is-pangram (strings+hash-map/easy, 26 unique letters), find-the-student-that-will-replace-the-chalk (arrays+binary-search/medium, modular prefix sum); bank at **1395**; 4434 tests.
 - [x] **2 more classic problems (Batch 43-local)** — greatest-english-letter-in-upper-and-lower-case (strings+hash-map/easy, scan Z→A for both-case presence), reformat-the-string (strings/easy, interleave letters/digits canonical order); bank at **1397**; 4440 tests.
+- [x] **2 more classic problems (Batch 44)** — find-n-unique-integers-sum-up-to-zero (arrays+math/easy, [1..n-1,-(sum)] canonical form), check-array-formation-through-concatenation (arrays+hash-map/easy, first-element map + consecutive match); bank at **1399**; 4446 tests.
 
 ---
 
