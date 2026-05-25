@@ -15715,6 +15715,139 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result.sort((a, b) => a - b);
   },
 
+  'path-with-minimum-effort': (heights: unknown) => {
+    const h = heights as number[][];
+    const m = h.length, n = h[0]!.length;
+    const dist: number[][] = Array.from({ length: m }, () => new Array(n).fill(Infinity));
+    dist[0]![0] = 0;
+    const heap: [number, number, number][] = [[0, 0, 0]];
+    const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+    while (heap.length) {
+      heap.sort((a, b) => a[0]! - b[0]!);
+      const [eff, r, c] = heap.shift()!;
+      if (r === m - 1 && c === n - 1) return eff;
+      if (eff > dist[r]![c]!) continue;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr!, nc = c + dc!;
+        if (nr < 0 || nr >= m || nc < 0 || nc >= n) continue;
+        const ne = Math.max(eff, Math.abs(h[r]![c]! - h[nr]![nc]!));
+        if (ne < dist[nr]![nc]!) { dist[nr]![nc] = ne; heap.push([ne, nr, nc]); }
+      }
+    }
+    return 0;
+  },
+
+  'path-with-maximum-probability': (n: unknown, edges: unknown, succProb: unknown, start: unknown, end: unknown) => {
+    const N = n as number, E = edges as number[][], P = succProb as number[];
+    const S = start as number, T = end as number;
+    const prob = new Array(N).fill(0);
+    prob[S] = 1;
+    for (let iter = 0; iter < N - 1; iter++) {
+      let updated = false;
+      for (let j = 0; j < E.length; j++) {
+        const u = E[j]![0]!, v = E[j]![1]!, p = P[j]!;
+        if (prob[u]! * p > prob[v]!) { prob[v] = prob[u]! * p; updated = true; }
+        if (prob[v]! * p > prob[u]!) { prob[u] = prob[v]! * p; updated = true; }
+      }
+      if (!updated) break;
+    }
+    return prob[T]!;
+  },
+
+  'video-stitching': (clips: unknown, time: unknown) => {
+    const c = (clips as number[][]).slice().sort((a, b) => a[0]! - b[0]!);
+    const t = time as number;
+    let count = 0, end = 0, farthest = 0, i = 0;
+    while (end < t) {
+      while (i < c.length && c[i]![0]! <= end) { farthest = Math.max(farthest, c[i]![1]!); i++; }
+      if (farthest === end) return -1;
+      end = farthest;
+      count++;
+    }
+    return count;
+  },
+
+  'subarray-sums-divisible-by-k': (nums: unknown, k: unknown) => {
+    const a = nums as number[], kk = k as number;
+    const counts = new Map<number, number>([[0, 1]]);
+    let prefix = 0, result = 0;
+    for (const num of a) {
+      prefix = ((prefix + num) % kk + kk) % kk;
+      result += counts.get(prefix) ?? 0;
+      counts.set(prefix, (counts.get(prefix) ?? 0) + 1);
+    }
+    return result;
+  },
+
+  'sum-of-even-numbers-after-queries': (nums: unknown, queries: unknown) => {
+    const a = (nums as number[]).slice();
+    const q = queries as number[][];
+    let evenSum = a.reduce((s, x) => s + (x % 2 === 0 ? x : 0), 0);
+    const result: number[] = [];
+    for (const row of q) {
+      const val = row[0]!, idx = row[1]!;
+      if (a[idx]! % 2 === 0) evenSum -= a[idx]!;
+      a[idx] = a[idx]! + val;
+      if (a[idx]! % 2 === 0) evenSum += a[idx]!;
+      result.push(evenSum);
+    }
+    return result;
+  },
+
+  'average-waiting-time': (customers: unknown) => {
+    const c = customers as number[][];
+    let time = 0, total = 0;
+    for (const [arrival, duration] of c) {
+      time = Math.max(time, arrival!) + duration!;
+      total += time - arrival!;
+    }
+    return total / c.length;
+  },
+
+  'sort-an-array': (nums: unknown) => {
+    const a = (nums as number[]).slice();
+    const merge = (l: number[], r: number[]): number[] => {
+      const res: number[] = [];
+      let i = 0, j = 0;
+      while (i < l.length && j < r.length) {
+        if (l[i]! <= r[j]!) res.push(l[i++]!); else res.push(r[j++]!);
+      }
+      return res.concat(l.slice(i)).concat(r.slice(j));
+    };
+    const sort = (arr: number[]): number[] => {
+      if (arr.length <= 1) return arr;
+      const mid = Math.floor(arr.length / 2);
+      return merge(sort(arr.slice(0, mid)), sort(arr.slice(mid)));
+    };
+    return sort(a);
+  },
+
+  'sliding-puzzle': (board: unknown) => {
+    const goal = '123450';
+    const start = (board as number[][]).flat().join('');
+    const neighbors = [[1,3],[0,2,4],[1,5],[0,4],[1,3,5],[2,4]];
+    if (start === goal) return 0;
+    const queue = [start];
+    const visited = new Set([start]);
+    let steps = 0;
+    while (queue.length) {
+      steps++;
+      const size = queue.length;
+      for (let i = 0; i < size; i++) {
+        const state = queue.shift()!;
+        const pos = state.indexOf('0');
+        for (const nb of neighbors[pos]!) {
+          const arr = state.split('');
+          [arr[pos], arr[nb]] = [arr[nb]!, arr[pos]!];
+          const next = arr.join('');
+          if (next === goal) return steps;
+          if (!visited.has(next)) { visited.add(next); queue.push(next); }
+        }
+      }
+    }
+    return -1;
+  },
+
   'all-possible-full-binary-trees': (n: unknown) => {
     const num = n as number;
     const memo = new Map<number, _TN[]>();

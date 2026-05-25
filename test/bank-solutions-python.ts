@@ -15333,6 +15333,156 @@ def findDuplicateSubtrees(root):
     return result
 `,
 
+  'path-with-minimum-effort': `
+def minimumEffortPath(heights):
+    heights = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (heights.to_py() if hasattr(heights, 'to_py') else heights)]
+    import heapq
+    m, n = len(heights), len(heights[0])
+    dist = [[float('inf')] * n for _ in range(m)]
+    dist[0][0] = 0
+    heap = [(0, 0, 0)]
+    while heap:
+        eff, r, c = heapq.heappop(heap)
+        if r == m - 1 and c == n - 1:
+            return eff
+        if eff > dist[r][c]:
+            continue
+        for dr, dc in ((0,1),(0,-1),(1,0),(-1,0)):
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n:
+                ne = max(eff, abs(heights[r][c] - heights[nr][nc]))
+                if ne < dist[nr][nc]:
+                    dist[nr][nc] = ne
+                    heapq.heappush(heap, (ne, nr, nc))
+    return 0
+`,
+
+  'path-with-maximum-probability': `
+def maxProbability(n, edges, succProb, start, end):
+    edges = list(edges.to_py()) if hasattr(edges, 'to_py') else list(edges)
+    edges = [list(e.to_py()) if hasattr(e, 'to_py') else list(e) for e in edges]
+    succProb = list(succProb.to_py()) if hasattr(succProb, 'to_py') else list(succProb)
+    prob = [0.0] * n
+    prob[start] = 1.0
+    for _ in range(n - 1):
+        updated = False
+        for j, (u, v) in enumerate(edges):
+            p = succProb[j]
+            if prob[u] * p > prob[v]:
+                prob[v] = prob[u] * p
+                updated = True
+            if prob[v] * p > prob[u]:
+                prob[u] = prob[v] * p
+                updated = True
+        if not updated:
+            break
+    return prob[end]
+`,
+
+  'video-stitching': `
+def videoStitching(clips, time):
+    clips = [list(c.to_py()) if hasattr(c, 'to_py') else list(c) for c in (clips.to_py() if hasattr(clips, 'to_py') else clips)]
+    clips.sort()
+    count, end, farthest, i = 0, 0, 0, 0
+    while end < time:
+        while i < len(clips) and clips[i][0] <= end:
+            farthest = max(farthest, clips[i][1])
+            i += 1
+        if farthest == end:
+            return -1
+        end = farthest
+        count += 1
+    return count
+`,
+
+  'subarray-sums-divisible-by-k': `
+def subarraysDivByK(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    from collections import defaultdict
+    counts = defaultdict(int)
+    counts[0] = 1
+    prefix = 0
+    result = 0
+    for num in nums:
+        prefix = (prefix + num) % k
+        result += counts[prefix]
+        counts[prefix] += 1
+    return result
+`,
+
+  'sum-of-even-numbers-after-queries': `
+def sumEvenAfterQueries(nums, queries):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    queries = [list(q.to_py()) if hasattr(q, 'to_py') else list(q) for q in (queries.to_py() if hasattr(queries, 'to_py') else queries)]
+    even_sum = sum(x for x in nums if x % 2 == 0)
+    result = []
+    for val, idx in queries:
+        if nums[idx] % 2 == 0:
+            even_sum -= nums[idx]
+        nums[idx] += val
+        if nums[idx] % 2 == 0:
+            even_sum += nums[idx]
+        result.append(even_sum)
+    return result
+`,
+
+  'average-waiting-time': `
+def averageWaitingTime(customers):
+    customers = [list(c.to_py()) if hasattr(c, 'to_py') else list(c) for c in (customers.to_py() if hasattr(customers, 'to_py') else customers)]
+    time = 0
+    total = 0
+    for arrival, duration in customers:
+        time = max(time, arrival) + duration
+        total += time - arrival
+    return total / len(customers)
+`,
+
+  'sort-an-array': `
+def sortArray(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    def merge(l, r):
+        res = []
+        i = j = 0
+        while i < len(l) and j < len(r):
+            if l[i] <= r[j]:
+                res.append(l[i]); i += 1
+            else:
+                res.append(r[j]); j += 1
+        return res + l[i:] + r[j:]
+    def sort(arr):
+        if len(arr) <= 1:
+            return arr
+        mid = len(arr) // 2
+        return merge(sort(arr[:mid]), sort(arr[mid:]))
+    return sort(nums)
+`,
+
+  'sliding-puzzle': `
+def slidingPuzzle(board):
+    board = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (board.to_py() if hasattr(board, 'to_py') else board)]
+    goal = '123450'
+    start = ''.join(str(x) for row in board for x in row)
+    neighbors = [[1,3],[0,2,4],[1,5],[0,4],[1,3,5],[2,4]]
+    if start == goal:
+        return 0
+    from collections import deque
+    queue = deque([(start, 0)])
+    visited = {start}
+    while queue:
+        state, steps = queue.popleft()
+        pos = state.index('0')
+        for nb in neighbors[pos]:
+            arr = list(state)
+            arr[pos], arr[nb] = arr[nb], arr[pos]
+            nxt = ''.join(arr)
+            if nxt == goal:
+                return steps + 1
+            if nxt not in visited:
+                visited.add(nxt)
+                queue.append((nxt, steps + 1))
+    return -1
+`,
+
   'all-possible-full-binary-trees': `
 def allPossibleFBT(n):
     memo = {}

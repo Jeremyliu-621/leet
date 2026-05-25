@@ -1210,6 +1210,14 @@ import { problem as knightDialer } from './knight-dialer';
 import { problem as paintHouseIII } from './paint-house-iii';
 import { problem as maximizeDistanceToClosestPerson } from './maximize-distance-to-closest-person';
 import { problem as minimumNumberOfVertices } from './minimum-number-of-vertices';
+import { problem as pathWithMinimumEffort } from './path-with-minimum-effort';
+import { problem as pathWithMaximumProbability } from './path-with-maximum-probability';
+import { problem as videoStitching } from './video-stitching';
+import { problem as subarraysDivByK } from './subarray-sums-divisible-by-k';
+import { problem as sumEvenAfterQueries } from './sum-of-even-numbers-after-queries';
+import { problem as averageWaitingTime } from './average-waiting-time';
+import { problem as sortAnArray } from './sort-an-array';
+import { problem as slidingPuzzle } from './sliding-puzzle';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2468,4 +2476,12 @@ export const problems: readonly Problem[] = [
   paintHouseIII,
   maximizeDistanceToClosestPerson,
   minimumNumberOfVertices,
+  pathWithMinimumEffort,
+  pathWithMaximumProbability,
+  videoStitching,
+  subarraysDivByK,
+  sumEvenAfterQueries,
+  averageWaitingTime,
+  sortAnArray,
+  slidingPuzzle,
 ];
