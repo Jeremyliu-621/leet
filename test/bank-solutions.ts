@@ -15848,6 +15848,139 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return -1;
   },
 
+  'jump-game-v': (arr: unknown, d: unknown) => {
+    const a = arr as number[], dist = d as number;
+    const n = a.length;
+    const dp = new Array(n).fill(1);
+    const order = Array.from({length: n}, (_, i) => i).sort((x, y) => a[x]! - a[y]!);
+    for (const i of order) {
+      for (let j = i + 1; j <= Math.min(i + dist, n - 1); j++) {
+        if (a[j]! >= a[i]!) break;
+        dp[i] = Math.max(dp[i]!, 1 + dp[j]!);
+      }
+      for (let j = i - 1; j >= Math.max(i - dist, 0); j--) {
+        if (a[j]! >= a[i]!) break;
+        dp[i] = Math.max(dp[i]!, 1 + dp[j]!);
+      }
+    }
+    return Math.max(...dp);
+  },
+
+  'word-subsets': (words1: unknown, words2: unknown) => {
+    const w1 = words1 as string[], w2 = words2 as string[];
+    const maxFreq = new Array(26).fill(0);
+    for (const w of w2) {
+      const freq = new Array(26).fill(0);
+      for (const c of w) freq[c.charCodeAt(0) - 97]++;
+      for (let i = 0; i < 26; i++) if (freq[i]! > maxFreq[i]!) maxFreq[i] = freq[i];
+    }
+    return w1.filter(w => {
+      const freq = new Array(26).fill(0);
+      for (const c of w) freq[c.charCodeAt(0) - 97]++;
+      return maxFreq.every((v: number, i: number) => freq[i]! >= v);
+    });
+  },
+
+  'max-chunks-to-make-sorted-ii': (arr: unknown) => {
+    const a = arr as number[];
+    const stack: number[] = [];
+    for (const num of a) {
+      let maxVal = num;
+      while (stack.length && stack[stack.length - 1]! > num) maxVal = Math.max(maxVal, stack.pop()!);
+      stack.push(maxVal);
+    }
+    return stack.length;
+  },
+
+  'count-ways-to-place-houses': (n: unknown) => {
+    const MOD = 1_000_000_007n;
+    let a = 1n, b = 0n;
+    for (let i = 0; i < (n as number); i++) [a, b] = [(a + b) % MOD, a % MOD];
+    const total = (a + b) % MOD;
+    return Number(total * total % MOD);
+  },
+
+  'stone-game-viii': (stones: unknown) => {
+    const s = stones as number[];
+    const n = s.length;
+    const prefix = [...s];
+    for (let i = 1; i < n; i++) prefix[i] = prefix[i]! + prefix[i - 1]!;
+    let dp = prefix[n - 1]!;
+    for (let i = n - 2; i >= 1; i--) dp = Math.max(prefix[i]! - dp, dp);
+    return dp;
+  },
+
+  'stone-game-ix': (stones: unknown) => {
+    const s = stones as number[];
+    const cnt = [0, 0, 0];
+    for (const x of s) cnt[x % 3]!++;
+    if (cnt[0]! % 2 === 0) return cnt[1]! > 0 && cnt[2]! > 0;
+    return Math.abs(cnt[1]! - cnt[2]!) > 2;
+  },
+
+  'maximum-score-removing-stones': (a: unknown, b: unknown, c: unknown) => {
+    const aa = a as number, bb = b as number, cc = c as number;
+    const total = aa + bb + cc;
+    const maxV = Math.max(aa, bb, cc);
+    return maxV >= total - maxV ? total - maxV : Math.floor(total / 2);
+  },
+
+  'number-of-atoms': (formula: unknown) => {
+    const f = formula as string;
+    let i = 0;
+    const stack: Map<string, number>[] = [new Map()];
+    while (i < f.length) {
+      if (f[i] === '(') {
+        stack.push(new Map()); i++;
+      } else if (f[i] === ')') {
+        i++;
+        let num = 0;
+        while (i < f.length && f[i]! >= '0' && f[i]! <= '9') { num = num * 10 + Number(f[i]); i++; }
+        if (num === 0) num = 1;
+        const top = stack.pop()!;
+        const parent = stack[stack.length - 1]!;
+        for (const [elem, cnt] of top) parent.set(elem, (parent.get(elem) ?? 0) + cnt * num);
+      } else {
+        let elem = f[i++]!;
+        while (i < f.length && f[i]! >= 'a' && f[i]! <= 'z') elem += f[i++];
+        let num = 0;
+        while (i < f.length && f[i]! >= '0' && f[i]! <= '9') { num = num * 10 + Number(f[i]); i++; }
+        if (num === 0) num = 1;
+        const top = stack[stack.length - 1]!;
+        top.set(elem, (top.get(elem) ?? 0) + num);
+      }
+    }
+    const map = stack[0]!;
+    return [...map.keys()].sort().map(e => e + (map.get(e)! > 1 ? map.get(e) : '')).join('');
+  },
+
+  'find-all-people-with-secret': (n: unknown, meetings: unknown, firstPerson: unknown) => {
+    const N = n as number, fp = firstPerson as number;
+    const mtgs = (meetings as number[][]).map(m => [m[0]!, m[1]!, m[2]!] as [number, number, number]);
+    const parent = Array.from({length: N}, (_, idx) => idx);
+    const rank = new Array(N).fill(0);
+    const find = (x: number): number => { if (parent[x] !== x) parent[x] = find(parent[x]!); return parent[x]!; };
+    const union = (x: number, y: number) => {
+      const px = find(x), py = find(y);
+      if (px === py) return;
+      if (rank[px]! < rank[py]!) parent[px] = py;
+      else if (rank[px]! > rank[py]!) parent[py] = px;
+      else { parent[py] = px; rank[px]!++; }
+    };
+    union(0, fp);
+    mtgs.sort((a, b) => a[2] - b[2]);
+    let i = 0;
+    while (i < mtgs.length) {
+      let j = i;
+      while (j < mtgs.length && mtgs[j]![2] === mtgs[i]![2]) j++;
+      const group: number[] = [];
+      for (let k = i; k < j; k++) { union(mtgs[k]![0], mtgs[k]![1]); group.push(mtgs[k]![0], mtgs[k]![1]); }
+      for (const p of group) if (find(p) !== find(0)) { parent[p] = p; rank[p] = 0; }
+      i = j;
+    }
+    return Array.from({length: N}, (_, idx) => idx).filter(p => find(p) === find(0));
+  },
+
   'all-possible-full-binary-trees': (n: unknown) => {
     const num = n as number;
     const memo = new Map<number, _TN[]>();

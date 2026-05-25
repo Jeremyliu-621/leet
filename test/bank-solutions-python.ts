@@ -15483,6 +15483,183 @@ def slidingPuzzle(board):
     return -1
 `,
 
+  'jump-game-v': `
+def maxJumps(arr, d):
+    arr = list(arr.to_py()) if hasattr(arr, 'to_py') else list(arr)
+    n = len(arr)
+    dp = [1] * n
+    order = sorted(range(n), key=lambda i: arr[i])
+    for i in order:
+        j = i + 1
+        while j <= min(i + d, n - 1):
+            if arr[j] >= arr[i]:
+                break
+            dp[i] = max(dp[i], 1 + dp[j])
+            j += 1
+        j = i - 1
+        while j >= max(i - d, 0):
+            if arr[j] >= arr[i]:
+                break
+            dp[i] = max(dp[i], 1 + dp[j])
+            j -= 1
+    return max(dp)
+`,
+
+  'word-subsets': `
+def wordSubsets(words1, words2):
+    words1 = list(words1.to_py()) if hasattr(words1, 'to_py') else list(words1)
+    words2 = list(words2.to_py()) if hasattr(words2, 'to_py') else list(words2)
+    from collections import Counter
+    max_freq = Counter()
+    for w in words2:
+        freq = Counter(w)
+        for c, cnt in freq.items():
+            if cnt > max_freq[c]:
+                max_freq[c] = cnt
+    result = []
+    for w in words1:
+        freq = Counter(w)
+        if all(freq[c] >= cnt for c, cnt in max_freq.items()):
+            result.append(w)
+    return result
+`,
+
+  'max-chunks-to-make-sorted-ii': `
+def maxChunksToSorted(arr):
+    arr = list(arr.to_py()) if hasattr(arr, 'to_py') else list(arr)
+    stack = []
+    for num in arr:
+        max_val = num
+        while stack and stack[-1] > num:
+            max_val = max(max_val, stack.pop())
+        stack.append(max_val)
+    return len(stack)
+`,
+
+  'count-ways-to-place-houses': `
+def countWays(n):
+    MOD = 10**9 + 7
+    a, b = 1, 0
+    for _ in range(n):
+        a, b = (a + b) % MOD, a % MOD
+    total = (a + b) % MOD
+    return total * total % MOD
+`,
+
+  'stone-game-viii': `
+def stoneGameVIII(stones):
+    stones = list(stones.to_py()) if hasattr(stones, 'to_py') else list(stones)
+    n = len(stones)
+    prefix = stones[:]
+    for i in range(1, n):
+        prefix[i] += prefix[i - 1]
+    dp = prefix[-1]
+    for i in range(n - 2, 0, -1):
+        dp = max(prefix[i] - dp, dp)
+    return dp
+`,
+
+  'stone-game-ix': `
+def stoneGameIX(stones):
+    stones = list(stones.to_py()) if hasattr(stones, 'to_py') else list(stones)
+    cnt = [0, 0, 0]
+    for x in stones:
+        cnt[x % 3] += 1
+    if cnt[0] % 2 == 0:
+        return cnt[1] > 0 and cnt[2] > 0
+    return abs(cnt[1] - cnt[2]) > 2
+`,
+
+  'maximum-score-removing-stones': `
+def maximumScore(a, b, c):
+    total = a + b + c
+    max_v = max(a, b, c)
+    if max_v >= total - max_v:
+        return total - max_v
+    return total // 2
+`,
+
+  'number-of-atoms': `
+def countOfAtoms(formula):
+    from collections import defaultdict
+    stack = [defaultdict(int)]
+    i, n = 0, len(formula)
+    while i < n:
+        if formula[i] == '(':
+            stack.append(defaultdict(int))
+            i += 1
+        elif formula[i] == ')':
+            i += 1
+            num = 0
+            while i < n and formula[i].isdigit():
+                num = num * 10 + int(formula[i])
+                i += 1
+            if num == 0:
+                num = 1
+            top = stack.pop()
+            for elem, cnt in top.items():
+                stack[-1][elem] += cnt * num
+        elif formula[i].isupper():
+            elem = formula[i]
+            i += 1
+            while i < n and formula[i].islower():
+                elem += formula[i]
+                i += 1
+            num = 0
+            while i < n and formula[i].isdigit():
+                num = num * 10 + int(formula[i])
+                i += 1
+            if num == 0:
+                num = 1
+            stack[-1][elem] += num
+    result = []
+    for elem in sorted(stack[0].keys()):
+        cnt = stack[0][elem]
+        result.append(elem + (str(cnt) if cnt > 1 else ''))
+    return ''.join(result)
+`,
+
+  'find-all-people-with-secret': `
+def findAllPeople(n, meetings, firstPerson):
+    meetings = [list(m.to_py()) if hasattr(m, 'to_py') else list(m) for m in (meetings.to_py() if hasattr(meetings, 'to_py') else meetings)]
+    parent = list(range(n))
+    rank = [0] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(x, y):
+        px, py = find(x), find(y)
+        if px == py:
+            return
+        if rank[px] < rank[py]:
+            parent[px] = py
+        elif rank[px] > rank[py]:
+            parent[py] = px
+        else:
+            parent[py] = px
+            rank[px] += 1
+    union(0, firstPerson)
+    meetings.sort(key=lambda m: m[2])
+    i = 0
+    while i < len(meetings):
+        j = i
+        while j < len(meetings) and meetings[j][2] == meetings[i][2]:
+            j += 1
+        group = []
+        for k in range(i, j):
+            union(meetings[k][0], meetings[k][1])
+            group.append(meetings[k][0])
+            group.append(meetings[k][1])
+        for p in group:
+            if find(p) != find(0):
+                parent[p] = p
+                rank[p] = 0
+        i = j
+    return [p for p in range(n) if find(p) == find(0)]
+`,
+
   'all-possible-full-binary-trees': `
 def allPossibleFBT(n):
     memo = {}

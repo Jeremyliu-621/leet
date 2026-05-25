@@ -1237,6 +1237,15 @@ import { problem as minimumNumberOfWorkSessions } from './minimum-number-of-work
 import { problem as minimizeProductSum } from './minimize-product-sum';
 import { problem as countRangeSum } from './count-range-sum';
 import { problem as allPathsFromSourceLeadToDestination } from './all-paths-from-source-lead-to-destination';
+import { problem as jumpGameV } from './jump-game-v';
+import { problem as wordSubsets } from './word-subsets';
+import { problem as maxChunksToMakeSortedII } from './max-chunks-to-make-sorted-ii';
+import { problem as countWaysToPlaceHouses } from './count-ways-to-place-houses';
+import { problem as stoneGameVIII } from './stone-game-viii';
+import { problem as stoneGameIX } from './stone-game-ix';
+import { problem as maximumScoreRemovingStones } from './maximum-score-removing-stones';
+import { problem as numberOfAtoms } from './number-of-atoms';
+import { problem as findAllPeopleWithSecret } from './find-all-people-with-secret';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2522,4 +2531,13 @@ export const problems: readonly Problem[] = [
   minimizeProductSum,
   countRangeSum,
   allPathsFromSourceLeadToDestination,
+  jumpGameV,
+  wordSubsets,
+  maxChunksToMakeSortedII,
+  countWaysToPlaceHouses,
+  stoneGameVIII,
+  stoneGameIX,
+  maximumScoreRemovingStones,
+  numberOfAtoms,
+  findAllPeopleWithSecret,
 ];
