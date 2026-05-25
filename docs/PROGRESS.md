@@ -6,11 +6,11 @@
 
 ---
 
-**Last updated:** 2026-05-24
+**Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 498 problems; added 4 hash-map/tree problems (unique-occurrences, find-lucky, min-index-sum, two-sum-iv-bst); 1747 tests.
+**Current focus:** Bank at 505 problems; 1765 tests. Added 'Try another →' standalone solved screen, editor indent-size (2/4 spaces) setting + line/column indicator. All H/M LEETCODE_PARITY gaps closed. Marketing site updated.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Reach 500+ milestone; continue adding across all tags.
+**Next up:** Continue growing bank toward 520+; more medium/hard problems. Browser-zoom QA (L).
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
