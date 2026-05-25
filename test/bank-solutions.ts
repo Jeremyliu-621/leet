@@ -9386,4 +9386,74 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
+  'flip-string-to-monotone-increasing': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let flips = 0, ones = 0;
+    for (const c of s) {
+      if (c === '1') ones++;
+      else flips = Math.min(flips + 1, ones);
+    }
+    return flips;
+  },
+
+  'maximum-length-subarray-positive-product': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let pos = 0, neg = 0, ans = 0;
+    for (const n of nums) {
+      if (n === 0) { pos = 0; neg = 0; }
+      else if (n > 0) { pos = pos + 1; neg = neg > 0 ? neg + 1 : 0; }
+      else { [pos, neg] = [neg > 0 ? neg + 1 : 0, pos + 1]; }
+      ans = Math.max(ans, pos);
+    }
+    return ans;
+  },
+
+  'minimum-days-to-make-m-bouquets': (...args: unknown[]) => {
+    const bloomDay = args[0] as number[], m = args[1] as number, k = args[2] as number;
+    if (m * k > bloomDay.length) return -1;
+    const canMake = (day: number): boolean => {
+      let bouquets = 0, streak = 0;
+      for (const b of bloomDay) {
+        if (b <= day) { streak++; if (streak === k) { bouquets++; streak = 0; } }
+        else streak = 0;
+      }
+      return bouquets >= m;
+    };
+    let lo = 1, hi = Math.max(...bloomDay);
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (canMake(mid)) hi = mid; else lo = mid + 1;
+    }
+    return lo;
+  },
+
+  'find-resultant-array-after-removing-anagrams': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const sorted = (s: string) => s.split('').sort().join('');
+    const stack: string[] = [];
+    for (const w of words) {
+      if (stack.length === 0 || sorted(stack[stack.length - 1]!) !== sorted(w)) {
+        stack.push(w);
+      }
+    }
+    return stack;
+  },
+
+  'longest-zigzag-path-binary-tree': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const root = _buildTree(arr);
+    let ans = 0;
+    const dfs = (node: _TN | null): [number, number] => {
+      if (!node) return [-1, -1];
+      const [, lr] = dfs(node.l);
+      const [rl] = dfs(node.r);
+      const goLeft = lr + 1;
+      const goRight = rl + 1;
+      ans = Math.max(ans, goLeft, goRight);
+      return [goLeft, goRight];
+    };
+    dfs(root);
+    return ans;
+  },
+
 };

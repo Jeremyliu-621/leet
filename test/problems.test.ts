@@ -68,6 +68,7 @@ describe('problem selector', () => {
       'minimum-length-string-operations',
       'students-unable-to-eat-lunch',
       'valid-parentheses',
+      'find-resultant-array-after-removing-anagrams',
     ] })).toBeUndefined();
   });
 

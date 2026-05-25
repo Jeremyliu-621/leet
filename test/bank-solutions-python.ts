@@ -8938,4 +8938,86 @@ def possibleBipartition(n, dislikes):
                     return False
     return True
 `,
+
+  'flip-string-to-monotone-increasing': `
+def minFlipsMonoIncr(s):
+    flips = ones = 0
+    for c in s:
+        if c == '1':
+            ones += 1
+        else:
+            flips = min(flips + 1, ones)
+    return flips
+`,
+
+  'maximum-length-subarray-positive-product': `
+def getMaxLen(nums):
+    nums = list(nums)
+    pos = neg = ans = 0
+    for n in nums:
+        if n == 0:
+            pos = neg = 0
+        elif n > 0:
+            pos = pos + 1
+            neg = neg + 1 if neg > 0 else 0
+        else:
+            pos, neg = (neg + 1 if neg > 0 else 0), pos + 1
+        ans = max(ans, pos)
+    return ans
+`,
+
+  'minimum-days-to-make-m-bouquets': `
+def minDays(bloomDay, m, k):
+    bloomDay = list(bloomDay)
+    n = len(bloomDay)
+    if m * k > n:
+        return -1
+    def can_make(day):
+        bouquets = streak = 0
+        for b in bloomDay:
+            if b <= day:
+                streak += 1
+                if streak == k:
+                    bouquets += 1
+                    streak = 0
+            else:
+                streak = 0
+        return bouquets >= m
+    lo, hi = 1, max(bloomDay)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if can_make(mid):
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'find-resultant-array-after-removing-anagrams': `
+def removeAnagrams(words):
+    words = list(words)
+    def sorted_word(w):
+        return tuple(sorted(w))
+    stack = []
+    for w in words:
+        if not stack or sorted_word(stack[-1]) != sorted_word(w):
+            stack.append(w)
+    return stack
+`,
+
+  'longest-zigzag-path-binary-tree': `
+def longestZigZag(root):
+    ans = [0]
+    def dfs(node):
+        if not node:
+            return -1, -1
+        ll, lr = dfs(node.left)
+        rl, rr = dfs(node.right)
+        go_left = lr + 1
+        go_right = rl + 1
+        ans[0] = max(ans[0], go_left, go_right)
+        return go_left, go_right
+    dfs(root)
+    return ans[0]
+`,
 };

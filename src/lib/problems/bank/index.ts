@@ -747,6 +747,11 @@ import { problem as diagonalTraverse } from './diagonal-traverse';
 import { problem as reshapeTheMatrix } from './reshape-the-matrix';
 import { problem as findTownJudge } from './find-town-judge';
 import { problem as possibleBipartition } from './possible-bipartition';
+import { problem as flipStringToMonotoneIncreasing } from './flip-string-to-monotone-increasing';
+import { problem as maximumLengthSubarrayPositiveProduct } from './maximum-length-subarray-positive-product';
+import { problem as minimumDaysToMakeMBouquets } from './minimum-days-to-make-m-bouquets';
+import { problem as findResultantArrayAfterRemovingAnagrams } from './find-resultant-array-after-removing-anagrams';
+import { problem as longestZigZagPathBinaryTree } from './longest-zigzag-path-binary-tree';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1105,6 +1110,7 @@ export const problems: readonly Problem[] = [
   continuousSubarraySum,
   equalRowColumnPairs,
   determineIfTwoStringsClose,
+  minimumDaysToMakeMBouquets,
   // binary-search — hard
   findKthSmallestPairDistance,
   findMinRotatedII,
@@ -1275,6 +1281,8 @@ export const problems: readonly Problem[] = [
   longestArithmeticSubsequence,
   minimumCostTickets,
   uniqueBinarySearchTrees,
+  flipStringToMonotoneIncreasing,
+  maximumLengthSubarrayPositiveProduct,
   // dynamic-programming — hard
   bestTimeBuySellIII,
   wordBreakII,
@@ -1542,4 +1550,6 @@ export const problems: readonly Problem[] = [
   reshapeTheMatrix,
   findTownJudge,
   possibleBipartition,
+  findResultantArrayAfterRemovingAnagrams,
+  longestZigZagPathBinaryTree,
 ];
