@@ -10838,6 +10838,17 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  'find-all-duplicates-in-array': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice();
+    const result: number[] = [];
+    for (let i = 0; i < nums.length; i++) {
+      const idx = Math.abs(nums[i] as number) - 1;
+      if ((nums[idx] as number) < 0) result.push(idx + 1);
+      else nums[idx] = -(nums[idx] as number);
+    }
+    return result.sort((a, b) => a - b);
+  },
+
   'alternating-digit-sum': (...args: unknown[]) => {
     const n = args[0] as number;
     const digits = String(n).split('').map(Number);
@@ -10925,6 +10936,117 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       if (prefix >= total - prefix) count++;
     }
     return count;
+  },
+
+  'check-if-word-occurs-as-prefix': (...args: unknown[]) => {
+    const sentence = args[0] as string;
+    const searchWord = args[1] as string;
+    const words = sentence.split(' ');
+    for (let i = 0; i < words.length; i++) {
+      if ((words[i] as string).startsWith(searchWord)) return i + 1;
+    }
+    return -1;
+  },
+
+  'count-subarrays-score-less-than-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let ans = 0;
+    let sum = 0;
+    let left = 0;
+    for (let right = 0; right < nums.length; right++) {
+      sum += nums[right] as number;
+      while (sum * (right - left + 1) >= k) {
+        sum -= nums[left] as number;
+        left++;
+      }
+      ans += right - left + 1;
+    }
+    return ans;
+  },
+
+  'excel-sheet-column-number': (...args: unknown[]) => {
+    const columnTitle = args[0] as string;
+    let result = 0;
+    for (const ch of columnTitle) {
+      result = result * 26 + (ch.charCodeAt(0) - 64);
+    }
+    return result;
+  },
+
+  'jump-game-vii': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const minJump = args[1] as number;
+    const maxJump = args[2] as number;
+    const n = s.length;
+    const reach = new Array<boolean>(n).fill(false);
+    reach[0] = true;
+    let windowCount = 0;
+    for (let i = 1; i < n; i++) {
+      if (i - minJump >= 0 && reach[i - minJump]) windowCount++;
+      if (i - maxJump - 1 >= 0 && reach[i - maxJump - 1]) windowCount--;
+      if (s[i] === '0' && windowCount > 0) reach[i] = true;
+    }
+    return reach[n - 1];
+  },
+
+  'longest-square-streak': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const set = new Set(nums);
+    let best = -1;
+    for (const n of set) {
+      let cur = n;
+      let len = 1;
+      while (set.has(cur * cur)) {
+        cur = cur * cur;
+        len++;
+      }
+      if (len >= 2) best = Math.max(best, len);
+    }
+    return best;
+  },
+
+  'maximum-beauty-array-after-applying-operation': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const k = args[1] as number;
+    let best = 1;
+    let left = 0;
+    for (let right = 1; right < nums.length; right++) {
+      while ((nums[right] as number) - (nums[left] as number) > 2 * k) left++;
+      best = Math.max(best, right - left + 1);
+    }
+    return best;
+  },
+
+  'maximum-product-after-k-increments': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const k = args[1] as number;
+    const MOD = 1_000_000_007n;
+    for (let op = 0; op < k; op++) {
+      nums[0] = (nums[0] as number) + 1;
+      let j = 0;
+      while (j + 1 < nums.length && (nums[j] as number) > (nums[j + 1] as number)) {
+        const tmp = nums[j] as number;
+        nums[j] = nums[j + 1] as number;
+        nums[j + 1] = tmp;
+        j++;
+      }
+    }
+    let prod = 1n;
+    for (const v of nums) prod = (prod * BigInt(v as number)) % MOD;
+    return Number(prod);
+  },
+
+  'pairs-of-songs-total-divisible-60': (...args: unknown[]) => {
+    const time = args[0] as number[];
+    const cnt = new Array<number>(60).fill(0);
+    let ans = 0;
+    for (const t of time) {
+      const r = t % 60;
+      ans += (cnt[(60 - r) % 60] ?? 0);
+      cnt[r] = (cnt[r] ?? 0) + 1;
+    }
+    return ans;
   },
 
 };

@@ -10437,6 +10437,17 @@ def nearestExit(maze, entrance):
                         count += 1
     return count
 `,
+  'find-all-duplicates-in-array': `def findDuplicates(nums: list[int]) -> list[int]:
+    nums = list(nums)
+    result = []
+    for i in range(len(nums)):
+        idx = abs(nums[i]) - 1
+        if nums[idx] < 0:
+            result.append(idx + 1)
+        else:
+            nums[idx] = -nums[idx]
+    return sorted(result)
+`,
   'alternating-digit-sum': `def alternateDigitSum(n: int) -> int:
     digits = [int(c) for c in str(n)]
     return sum(d if i % 2 == 0 else -d for i, d in enumerate(digits))
@@ -10498,5 +10509,86 @@ def nearestExit(maze, entrance):
         if prefix >= total - prefix:
             count += 1
     return count
+`,
+  'check-if-word-occurs-as-prefix': `def isPrefixOfWord(sentence: str, searchWord: str) -> int:
+    for i, word in enumerate(sentence.split(), 1):
+        if word.startswith(searchWord):
+            return i
+    return -1
+`,
+  'count-subarrays-score-less-than-k': `def countSubarrays(nums: list[int], k: int) -> int:
+    ans = left = 0
+    total = 0
+    for right in range(len(nums)):
+        total += nums[right]
+        while total * (right - left + 1) >= k:
+            total -= nums[left]
+            left += 1
+        ans += right - left + 1
+    return ans
+`,
+  'excel-sheet-column-number': `def titleToNumber(columnTitle: str) -> int:
+    result = 0
+    for ch in columnTitle:
+        result = result * 26 + (ord(ch) - 64)
+    return result
+`,
+  'jump-game-vii': `def canReach(s: str, minJump: int, maxJump: int) -> bool:
+    n = len(s)
+    reach = [False] * n
+    reach[0] = True
+    window_count = 0
+    for i in range(1, n):
+        if i - minJump >= 0 and reach[i - minJump]:
+            window_count += 1
+        if i - maxJump - 1 >= 0 and reach[i - maxJump - 1]:
+            window_count -= 1
+        if s[i] == '0' and window_count > 0:
+            reach[i] = True
+    return reach[n - 1]
+`,
+  'longest-square-streak': `def longestSquareStreak(nums: list[int]) -> int:
+    num_set = set(nums)
+    best = -1
+    for n in num_set:
+        cur, length = n, 1
+        while cur * cur in num_set:
+            cur = cur * cur
+            length += 1
+        if length >= 2:
+            best = max(best, length)
+    return best
+`,
+  'maximum-beauty-array-after-applying-operation': `def maximumBeauty(nums: list[int], k: int) -> int:
+    nums = sorted(nums)
+    best = 1
+    left = 0
+    for right in range(1, len(nums)):
+        while nums[right] - nums[left] > 2 * k:
+            left += 1
+        best = max(best, right - left + 1)
+    return best
+`,
+  'maximum-product-after-k-increments': `def maximumProduct(nums: list[int], k: int) -> int:
+    import heapq
+    MOD = 10**9 + 7
+    heap = list(nums)
+    heapq.heapify(heap)
+    for _ in range(k):
+        x = heapq.heappop(heap)
+        heapq.heappush(heap, x + 1)
+    result = 1
+    for v in heap:
+        result = (result * v) % MOD
+    return result
+`,
+  'pairs-of-songs-total-divisible-60': `def numPairsDivisibleBy60(time: list[int]) -> int:
+    cnt = [0] * 60
+    ans = 0
+    for t in time:
+        r = t % 60
+        ans += cnt[(60 - r) % 60]
+        cnt[r] += 1
+    return ans
 `,
 };

@@ -875,6 +875,15 @@ import { problem as removeDuplicatesFromSortedListII } from './remove-duplicates
 import { problem as countNumberOfHomogenousSubstrings } from './count-number-of-homogenous-substrings';
 import { problem as stoneGameVI } from './stone-game-vi';
 import { problem as countSpecialQuadruplets } from './count-special-quadruplets';
+import { problem as findAllDuplicatesInArray } from './find-all-duplicates-in-array';
+import { problem as checkIfWordOccursAsPrefix } from './check-if-word-occurs-as-prefix';
+import { problem as countSubarraysScoreLessThanK } from './count-subarrays-score-less-than-k';
+import { problem as excelSheetColumnNumber } from './excel-sheet-column-number';
+import { problem as jumpGameVII } from './jump-game-vii';
+import { problem as longestSquareStreak } from './longest-square-streak';
+import { problem as maximumBeautyArrayAfterApplyingOperation } from './maximum-beauty-array-after-applying-operation';
+import { problem as maximumProductAfterKIncrements } from './maximum-product-after-k-increments';
+import { problem as pairsOfSongsTotalDivisibleBy60 } from './pairs-of-songs-total-divisible-60';
 import { problem as alternatingDigitSum } from './alternating-digit-sum';
 import { problem as countWaysToBuildGoodString } from './count-ways-to-build-good-string';
 import { problem as dividePlayersIntoTeamsOfEqualSkill } from './divide-players-into-teams-of-equal-skill';
@@ -1805,6 +1814,15 @@ export const problems: readonly Problem[] = [
   countNumberOfHomogenousSubstrings,
   stoneGameVI,
   countSpecialQuadruplets,
+  findAllDuplicatesInArray,
+  checkIfWordOccursAsPrefix,
+  countSubarraysScoreLessThanK,
+  excelSheetColumnNumber,
+  jumpGameVII,
+  longestSquareStreak,
+  maximumBeautyArrayAfterApplyingOperation,
+  maximumProductAfterKIncrements,
+  pairsOfSongsTotalDivisibleBy60,
   alternatingDigitSum,
   countWaysToBuildGoodString,
   dividePlayersIntoTeamsOfEqualSkill,
