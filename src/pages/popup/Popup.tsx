@@ -492,6 +492,8 @@ export function Popup() {
   );
 }
 
+const MONTH_ABBR = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
 /** Grayscale contribution grid — last 12 weeks of solve activity. */
 function StreakHeatmap({ history }: { history: readonly StreakDay[] }) {
   const WEEKS = 12;
@@ -501,8 +503,7 @@ function StreakHeatmap({ history }: { history: readonly StreakDay[] }) {
   const lookup = new Map<string, number>(history.map((d) => [d.date, d.solved]));
 
   // Collect WEEKS × 7 days ending today, starting from the most recent Monday.
-  const cells: Array<{ date: string; count: number }> = [];
-  // Start from WEEKS * 7 days ago.
+  const cells: Array<{ date: string; count: number; month: number; day: number }> = [];
   const start = new Date(today);
   start.setDate(today.getDate() - (WEEKS * 7 - 1));
 
@@ -510,13 +511,26 @@ function StreakHeatmap({ history }: { history: readonly StreakDay[] }) {
     const d = new Date(start);
     d.setDate(start.getDate() + i);
     const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-    cells.push({ date: key, count: lookup.get(key) ?? 0 });
+    cells.push({ date: key, count: lookup.get(key) ?? 0, month: d.getMonth(), day: d.getDate() });
   }
 
   // Split into columns of 7 days.
-  const columns: Array<Array<{ date: string; count: number }>> = [];
+  const columns: Array<Array<{ date: string; count: number; month: number; day: number }>> = [];
   for (let w = 0; w < WEEKS; w++) {
     columns.push(cells.slice(w * 7, w * 7 + 7));
+  }
+
+  // Compute month label for each column: show abbreviated month name when the
+  // first day of a new month falls within this column.
+  const monthLabels: (string | null)[] = columns.map((col) => {
+    for (const cell of col) {
+      if (cell.day === 1) return MONTH_ABBR[cell.month] ?? null;
+    }
+    return null;
+  });
+  // Always show the first column's month.
+  if (monthLabels[0] === null) {
+    monthLabels[0] = MONTH_ABBR[columns[0]?.[0]?.month ?? 0] ?? null;
   }
 
   function cellClass(count: number): string {
@@ -529,21 +543,31 @@ function StreakHeatmap({ history }: { history: readonly StreakDay[] }) {
   return (
     <section className="mt-4" aria-label="Solve activity heatmap">
       <h2 className="font-mono text-[9px] uppercase tracking-widest text-faint">Activity</h2>
-      <div
-        className="mt-2 flex gap-0.5 overflow-x-auto"
-        aria-label="Last 12 weeks of solve activity"
-      >
-        {columns.map((col, wi) => (
-          <div key={wi} className="flex flex-col gap-0.5" aria-hidden="true">
-            {col.map(({ date, count }) => (
-              <div
-                key={date}
-                title={`${date}: ${count} solve${count !== 1 ? 's' : ''}`}
-                className={`h-2 w-2 rounded-[1px] ${cellClass(count)}`}
-              />
-            ))}
-          </div>
-        ))}
+      <div className="mt-2 overflow-x-auto">
+        {/* Month labels row */}
+        <div className="flex gap-0.5 mb-0.5" aria-hidden="true">
+          {columns.map((_, wi) => (
+            <div key={wi} className="w-2 shrink-0">
+              {monthLabels[wi] ? (
+                <span className="font-mono text-[7px] leading-none text-faint">{monthLabels[wi]}</span>
+              ) : null}
+            </div>
+          ))}
+        </div>
+        {/* Cell grid */}
+        <div className="flex gap-0.5" aria-label="Last 12 weeks of solve activity">
+          {columns.map((col, wi) => (
+            <div key={wi} className="flex flex-col gap-0.5" aria-hidden="true">
+              {col.map(({ date, count }) => (
+                <div
+                  key={date}
+                  title={`${date}: ${count} solve${count !== 1 ? 's' : ''}`}
+                  className={`h-2 w-2 rounded-[1px] ${cellClass(count)}`}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
       {/* Screen-reader summary of activity range */}
       <p className="sr-only">
