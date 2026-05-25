@@ -8323,4 +8323,77 @@ def maxLevelSum(root):
         level += 1
     return ans
 `,
+
+  'minimum-distance-value': `
+def findTheDistanceValue(arr1, arr2, d):
+    arr1, arr2 = list(arr1), list(arr2)
+    count = 0
+    for a in arr1:
+        if all(abs(a - b) > d for b in arr2):
+            count += 1
+    return count
+`,
+
+  'minimum-operations-make-array-alternating': `
+def minimumOperations(nums):
+    from collections import Counter
+    nums = list(nums)
+    n = len(nums)
+    if n == 1:
+        return 0
+    def top_two(arr):
+        freq = Counter(arr)
+        sorted_items = sorted(freq.items(), key=lambda x: -x[1])
+        first = sorted_items[0] if sorted_items else (0, 0)
+        second = sorted_items[1] if len(sorted_items) > 1 else (0, 0)
+        return first, second
+    even = [nums[i] for i in range(0, n, 2)]
+    odd = [nums[i] for i in range(1, n, 2)]
+    (ev1, ef1), (ev2, ef2) = top_two(even)
+    (ov1, of1), (ov2, of2) = top_two(odd)
+    if ev1 != ov1:
+        return n - (ef1 + of1)
+    return n - max(ef1 + of2, ef2 + of1)
+`,
+
+  'redistribute-characters-make-all-strings-equal': `
+def makeEqual(words):
+    from collections import Counter
+    words = list(words)
+    n = len(words)
+    freq = Counter()
+    for w in words:
+        freq.update(w)
+    return all(v % n == 0 for v in freq.values())
+`,
+
+  'check-completeness-binary-tree': `
+def isCompleteTree(root):
+    from collections import deque
+    if not root:
+        return True
+    q = deque([root])
+    seen_null = False
+    while q:
+        node = q.popleft()
+        if node is None:
+            seen_null = True
+        else:
+            if seen_null:
+                return False
+            q.append(node.left)
+            q.append(node.right)
+    return True
+`,
+
+  'maximum-twin-sum-linked-list': `
+def pairSum(head):
+    vals = []
+    cur = head
+    while cur:
+        vals.append(cur.val)
+        cur = cur.next
+    n = len(vals)
+    return max(vals[i] + vals[n-1-i] for i in range(n // 2))
+`,
 };

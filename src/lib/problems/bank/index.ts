@@ -706,6 +706,11 @@ import { problem as longestSubarrayMaxBitwiseAnd } from './longest-subarray-max-
 import { problem as maximumEventsCanAttend } from './maximum-events-can-attend';
 import { problem as countNodesEqualAverageSubtree } from './count-nodes-equal-average-subtree';
 import { problem as maximumLevelSumBinaryTree } from './maximum-level-sum-binary-tree';
+import { problem as minimumDistanceValue } from './minimum-distance-value';
+import { problem as minimumOperationsMakeArrayAlternating } from './minimum-operations-make-array-alternating';
+import { problem as redistributeCharactersMakeAllStringsEqual } from './redistribute-characters-make-all-strings-equal';
+import { problem as checkCompletenessBinaryTree } from './check-completeness-binary-tree';
+import { problem as maximumTwinSumLinkedList } from './maximum-twin-sum-linked-list';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1438,4 +1443,14 @@ export const problems: readonly Problem[] = [
   // tree — medium (new)
   countNodesEqualAverageSubtree,
   maximumLevelSumBinaryTree,
+  // arrays — easy (new)
+  minimumDistanceValue,
+  // arrays + hash-map — medium (new)
+  minimumOperationsMakeArrayAlternating,
+  // strings — easy (new)
+  redistributeCharactersMakeAllStringsEqual,
+  // tree — medium (new)
+  checkCompletenessBinaryTree,
+  // linked-list — medium (new)
+  maximumTwinSumLinkedList,
 ];

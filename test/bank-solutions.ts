@@ -8845,4 +8845,63 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'minimum-distance-value': (...args: unknown[]) => {
+    const arr1 = args[0] as number[], arr2 = args[1] as number[], d = args[2] as number;
+    let count = 0;
+    for (const a of arr1) {
+      if (arr2.every(b => Math.abs(a - b) > d)) count++;
+    }
+    return count;
+  },
+
+  'minimum-operations-make-array-alternating': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    if (n === 1) return 0;
+    const topTwo = (arr: number[]): [[number, number], [number, number]] => {
+      const freq = new Map<number, number>();
+      for (const v of arr) freq.set(v, (freq.get(v) ?? 0) + 1);
+      const sorted = [...freq.entries()].sort((a, b) => b[1] - a[1]);
+      return [sorted[0] ?? [0, 0], sorted[1] ?? [0, 0]] as [[number, number], [number, number]];
+    };
+    const even: number[] = [], odd: number[] = [];
+    for (let i = 0; i < n; i++) (i % 2 === 0 ? even : odd).push(nums[i]!);
+    const [[ev1, ef1], [, ef2]] = topTwo(even);
+    const [[ov1, of1], [, of2]] = topTwo(odd);
+    if (ev1 !== ov1) return n - (ef1 + of1);
+    return n - Math.max(ef1 + of2, ef2 + of1);
+  },
+
+  'redistribute-characters-make-all-strings-equal': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const n = words.length;
+    const freq = new Map<string, number>();
+    for (const w of words) for (const c of w) freq.set(c, (freq.get(c) ?? 0) + 1);
+    return [...freq.values()].every(f => f % n === 0);
+  },
+
+  'check-completeness-binary-tree': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    if (!root) return true;
+    const q: (_TN | null)[] = [root];
+    let seenNull = false;
+    while (q.length) {
+      const node = q.shift()!;
+      if (!node) { seenNull = true; continue; }
+      if (seenNull) return false;
+      q.push(node.l ?? null, node.r ?? null);
+    }
+    return true;
+  },
+
+  'maximum-twin-sum-linked-list': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const n = arr.length;
+    let max = 0;
+    for (let l = 0, r = n - 1; l < r; l++, r--) {
+      max = Math.max(max, arr[l]! + arr[r]!);
+    }
+    return max;
+  },
+
 };
