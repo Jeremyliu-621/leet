@@ -4,7 +4,7 @@
  * Self-contained: loads its own `solvedProblems` from storage.
  */
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { SectionCard } from './SectionCard';
 import { getAllProblems } from '../../../lib/problems';
 import type { Difficulty, ProblemTag, SolvedProblemRecord } from '../../../lib/types';
@@ -15,11 +15,15 @@ const ALL_PROBLEMS = getAllProblems();
 
 const PAGE_SIZE = 50;
 
+const DIFF_ORDER: Record<Difficulty, number> = { easy: 0, medium: 1, hard: 2 };
+
 const DIFF_COLORS: Record<Difficulty, string> = {
   easy: 'text-text',
   medium: 'text-muted',
   hard: 'text-faint',
 };
+
+type SortKey = 'default' | 'title-asc' | 'diff-asc' | 'diff-desc';
 
 /** Opens the challenge page for a specific problem in a new tab. */
 function openProblemInChallenge(problemId: string): void {
@@ -37,6 +41,7 @@ export function ProblemBrowserSection() {
   const [tagFilter, setTagFilter] = useState<ProblemTag | 'all'>('all');
   const [search, setSearch] = useState('');
   const [unsolvedOnly, setUnsolvedOnly] = useState(false);
+  const [sortKey, setSortKey] = useState<SortKey>('default');
   const [isOpen, setIsOpen] = useState(false);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
@@ -53,20 +58,33 @@ export function ProblemBrowserSection() {
     };
   }, [isOpen]);
 
-  // Reset pagination when filters or search change.
+  // Reset pagination when filters, search, or sort change.
   useEffect(() => {
     setVisibleCount(PAGE_SIZE);
-  }, [diffFilter, tagFilter, search, unsolvedOnly]);
+  }, [diffFilter, tagFilter, search, unsolvedOnly, sortKey]);
 
   const query = search.trim().toLowerCase();
 
-  const filtered = ALL_PROBLEMS.filter((p) => {
-    if (diffFilter !== 'all' && p.difficulty !== diffFilter) return false;
-    if (tagFilter !== 'all' && !p.tags.includes(tagFilter)) return false;
-    if (query && !p.title.toLowerCase().includes(query)) return false;
-    if (unsolvedOnly && solvedIds.has(p.id)) return false;
-    return true;
-  });
+  const filtered = useMemo(() => {
+    const base = ALL_PROBLEMS.filter((p) => {
+      if (diffFilter !== 'all' && p.difficulty !== diffFilter) return false;
+      if (tagFilter !== 'all' && !p.tags.includes(tagFilter)) return false;
+      if (query && !p.title.toLowerCase().includes(query)) return false;
+      if (unsolvedOnly && solvedIds.has(p.id)) return false;
+      return true;
+    });
+
+    if (sortKey === 'title-asc') {
+      return [...base].sort((a, b) => a.title.localeCompare(b.title));
+    }
+    if (sortKey === 'diff-asc') {
+      return [...base].sort((a, b) => DIFF_ORDER[a.difficulty] - DIFF_ORDER[b.difficulty]);
+    }
+    if (sortKey === 'diff-desc') {
+      return [...base].sort((a, b) => DIFF_ORDER[b.difficulty] - DIFF_ORDER[a.difficulty]);
+    }
+    return base;
+  }, [diffFilter, tagFilter, query, unsolvedOnly, sortKey, solvedIds]);
 
   const visibleProblems = filtered.slice(0, visibleCount);
   const hasMore = visibleCount < filtered.length;
@@ -120,19 +138,36 @@ export function ProblemBrowserSection() {
 
       {isOpen && (
         <div className="mt-4 space-y-3">
-          {/* Search input */}
-          <input
-            type="search"
-            placeholder="Search problems…"
-            value={search}
-            onChange={(e) => setSearch(e.currentTarget.value)}
-            aria-label="Search problems by title"
-            className={[
-              'w-full rounded-sm border border-border bg-surface-2 px-3 py-1.5',
-              'font-mono text-xs text-text placeholder:text-faint',
-              'focus:border-border-strong focus:outline-none',
-            ].join(' ')}
-          />
+          {/* Search + sort row */}
+          <div className="flex gap-2">
+            <input
+              type="search"
+              placeholder="Search problems…"
+              value={search}
+              onChange={(e) => setSearch(e.currentTarget.value)}
+              aria-label="Search problems by title"
+              className={[
+                'min-w-0 flex-1 rounded-sm border border-border bg-surface-2 px-3 py-1.5',
+                'font-mono text-xs text-text placeholder:text-faint',
+                'focus:border-border-strong focus:outline-none',
+              ].join(' ')}
+            />
+            <select
+              value={sortKey}
+              onChange={(e) => setSortKey(e.currentTarget.value as SortKey)}
+              aria-label="Sort problems"
+              className={[
+                'shrink-0 rounded-sm border border-border bg-surface-2 px-2 py-1.5',
+                'font-mono text-[10px] text-muted',
+                'focus:border-border-strong focus:outline-none',
+              ].join(' ')}
+            >
+              <option value="default">default</option>
+              <option value="title-asc">title A→Z</option>
+              <option value="diff-asc">easy → hard</option>
+              <option value="diff-desc">hard → easy</option>
+            </select>
+          </div>
 
           {/* Difficulty filter tabs */}
           <div className="flex flex-wrap gap-1.5" role="group" aria-label="Filter by difficulty">
