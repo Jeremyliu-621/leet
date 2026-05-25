@@ -1456,6 +1456,16 @@ import { problem as numberOfBeautifulIntegersInRange } from './number-of-beautif
 import { problem as maximumDepthBinaryTreeNew } from './maximum-depth-binary-tree';
 import { problem as minimumAbsoluteDifferenceInBst } from './minimum-absolute-difference-in-bst';
 import { problem as pascalsTriangleIi } from './pascals-triangle-ii';
+import { problem as superEggDrop } from './super-egg-drop';
+import { problem as maximumScoreSplicedArray } from './maximum-score-spliced-array';
+import { problem as countIncreasingQuadruplets } from './count-increasing-quadruplets';
+import { problem as waysToMakeFairArray } from './ways-to-make-fair-array';
+import { problem as minimumInitialEnergyToFinishTasks } from './minimum-initial-energy-to-finish-tasks';
+import { problem as constructTargetArrayWithMultipleSums } from './construct-target-array-with-multiple-sums';
+import { problem as minimizeMaximumDifferenceOfPairs } from './minimize-maximum-difference-of-pairs';
+import { problem as minimumNumberOfKeypresses } from './minimum-number-of-keypresses';
+import { problem as longestSubarrayAtMostKFrequency } from './longest-subarray-at-most-k-frequency';
+import { problem as minimumDeletionsToMakeStringKSpecial } from './minimum-deletions-to-make-string-k-special';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2960,4 +2970,14 @@ export const problems: readonly Problem[] = [
   maximumDepthBinaryTreeNew,
   minimumAbsoluteDifferenceInBst,
   pascalsTriangleIi,
+  superEggDrop,
+  maximumScoreSplicedArray,
+  countIncreasingQuadruplets,
+  waysToMakeFairArray,
+  minimumInitialEnergyToFinishTasks,
+  constructTargetArrayWithMultipleSums,
+  minimizeMaximumDifferenceOfPairs,
+  minimumNumberOfKeypresses,
+  longestSubarrayAtMostKFrequency,
+  minimumDeletionsToMakeStringKSpecial,
 ];

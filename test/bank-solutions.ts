@@ -19413,4 +19413,144 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return row;
   },
 
+  'super-egg-drop': (k: unknown, n: unknown) => {
+    const kk = k as number, nn = n as number;
+    const dp = new Array(kk + 1).fill(0) as number[];
+    let m = 0;
+    while (dp[kk]! < nn) {
+      m++;
+      for (let j = kk; j >= 1; j--) {
+        dp[j] = dp[j - 1]! + dp[j]! + 1;
+      }
+    }
+    return m;
+  },
+
+  'maximum-score-spliced-array': (nums1: unknown, nums2: unknown) => {
+    const a = nums1 as number[], b = nums2 as number[];
+    const sumA = a.reduce((s, x) => s + x, 0);
+    let maxGain = 0, cur = 0;
+    for (let i = 0; i < a.length; i++) {
+      cur = Math.max(0, cur + b[i]! - a[i]!);
+      maxGain = Math.max(maxGain, cur);
+    }
+    return sumA + maxGain;
+  },
+
+  'count-increasing-quadruplets': (nums: unknown) => {
+    const a = nums as number[];
+    const n = a.length;
+    let ans = 0;
+    for (let k = 1; k < n - 1; k++) {
+      let lc = 0;
+      for (let j = 0; j < k; j++) {
+        if (a[j]! > a[k]!) {
+          let rc = 0;
+          for (let l = k + 1; l < n; l++) {
+            if (a[l]! > a[j]!) rc++;
+          }
+          ans += lc * rc;
+        }
+        if (a[j]! < a[k]!) lc++;
+      }
+    }
+    return ans;
+  },
+
+  'ways-to-make-fair-array': (nums: unknown) => {
+    const a = nums as number[];
+    const n = a.length;
+    let evenSum = 0, oddSum = 0;
+    for (let i = 0; i < n; i++) { if (i % 2 === 0) evenSum += a[i]!; else oddSum += a[i]!; }
+    let prefEven = 0, prefOdd = 0, result = 0;
+    for (let i = 0; i < n; i++) {
+      const curIsEven = i % 2 === 0;
+      const suffEven = evenSum - prefEven - (curIsEven ? a[i]! : 0);
+      const suffOdd = oddSum - prefOdd - (!curIsEven ? a[i]! : 0);
+      if (prefEven + suffOdd === prefOdd + suffEven) result++;
+      if (curIsEven) prefEven += a[i]!; else prefOdd += a[i]!;
+    }
+    return result;
+  },
+
+  'minimum-initial-energy-to-finish-tasks': (tasks: unknown) => {
+    const t = (tasks as number[][]).slice().sort((a, b) => (b[1]! - b[0]!) - (a[1]! - a[0]!));
+    let energy = 0, ans = 0;
+    for (const [actual, min] of t) {
+      if (energy < min!) { ans += min! - energy; energy = min!; }
+      energy -= actual!;
+    }
+    return ans;
+  },
+
+  'construct-target-array-with-multiple-sums': (target: unknown) => {
+    const arr = (target as number[]).slice();
+    if (arr.length === 1) return arr[0] === 1;
+    let total = arr.reduce((a, b) => a + b, 0);
+    while (true) {
+      arr.sort((a, b) => b - a);
+      const mx = arr[0]!;
+      if (mx === 1) return true;
+      const rest = total - mx;
+      if (rest < 1 || mx <= rest) return false;
+      if (rest === 1) return true;
+      const nv = mx % rest;
+      if (nv === 0) return false;
+      total = total - mx + nv;
+      arr[0] = nv;
+    }
+  },
+
+  'minimize-maximum-difference-of-pairs': (nums: unknown, p: unknown) => {
+    const a = (nums as number[]).slice().sort((x, y) => x - y);
+    const pp = p as number;
+    if (pp === 0) return 0;
+    const n = a.length;
+    const ok = (d: number) => {
+      let c = 0, i = 0;
+      while (i < n - 1) { if (a[i + 1]! - a[i]! <= d) { c++; i += 2; } else i++; }
+      return c >= pp;
+    };
+    let lo = 0, hi = a[n - 1]! - a[0]!;
+    while (lo < hi) { const m = (lo + hi) >> 1; if (ok(m)) hi = m; else lo = m + 1; }
+    return lo;
+  },
+
+  'minimum-number-of-keypresses': (s: unknown) => {
+    const freq = new Array(26).fill(0) as number[];
+    for (const c of s as string) freq[(c.charCodeAt(0) - 97)]!++;
+    freq.sort((a, b) => b - a);
+    let total = 0;
+    for (let i = 0; i < 26 && freq[i]! > 0; i++) total += freq[i]! * (Math.floor(i / 9) + 1);
+    return total;
+  },
+
+  'longest-subarray-at-most-k-frequency': (nums: unknown, k: unknown) => {
+    const a = nums as number[], kk = k as number;
+    const freq = new Map<number, number>();
+    let l = 0, ans = 0;
+    for (let r = 0; r < a.length; r++) {
+      freq.set(a[r]!, (freq.get(a[r]!) ?? 0) + 1);
+      while (freq.get(a[r]!)! > kk) { freq.set(a[l]!, freq.get(a[l]!)! - 1); l++; }
+      ans = Math.max(ans, r - l + 1);
+    }
+    return ans;
+  },
+
+  'minimum-deletions-to-make-string-k-special': (word: unknown, k: unknown) => {
+    const kk = k as number;
+    const freq = new Array(26).fill(0) as number[];
+    for (const c of word as string) freq[(c.charCodeAt(0) - 97)]!++;
+    const f = freq.filter(x => x > 0).sort((a, b) => a - b);
+    const n = f.length;
+    let mn = Infinity, ps = 0;
+    for (let i = 0; i < n; i++) {
+      let d = ps;
+      for (let j = i; j < n; j++) d += Math.max(0, f[j]! - f[i]! - kk);
+      mn = Math.min(mn, d);
+      ps += f[i]!;
+    }
+    return n === 0 ? 0 : mn;
+  },
+
 };

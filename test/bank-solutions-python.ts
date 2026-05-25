@@ -19442,4 +19442,164 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
     return row
 `,
 
+  'super-egg-drop': `def superEggDrop(k: int, n: int) -> int:
+    k = int(k)
+    n = int(n)
+    dp = [0] * (k + 1)
+    m = 0
+    while dp[k] < n:
+        m += 1
+        for j in range(k, 0, -1):
+            dp[j] = dp[j - 1] + dp[j] + 1
+    return m
+`,
+
+  'maximum-score-spliced-array': `def maximumsSplicedArray(nums1: list[int], nums2: list[int]) -> int:
+    a = list(nums1.to_py() if hasattr(nums1, 'to_py') else nums1)
+    b = list(nums2.to_py() if hasattr(nums2, 'to_py') else nums2)
+    def kadane(base, other):
+        s = sum(base)
+        gain = cur = 0
+        for x, y in zip(base, other):
+            cur = max(0, cur + y - x)
+            gain = max(gain, cur)
+        return s + gain
+    return max(kadane(a, b), kadane(b, a))
+`,
+
+  'count-increasing-quadruplets': `def countQuadruplets(nums: list[int]) -> int:
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    ans = 0
+    for k in range(1, n - 1):
+        lc = 0
+        for j in range(k):
+            if nums[j] > nums[k]:
+                rc = sum(1 for l in range(k + 1, n) if nums[l] > nums[j])
+                ans += lc * rc
+            if nums[j] < nums[k]:
+                lc += 1
+    return ans
+`,
+
+  'ways-to-make-fair-array': `def waysToMakeFair(nums: list[int]) -> int:
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    eS = sum(nums[i] for i in range(n) if i % 2 == 0)
+    oS = sum(nums[i] for i in range(n) if i % 2 == 1)
+    pE = pO = res = 0
+    for i in range(n):
+        sE = eS - pE - (nums[i] if i % 2 == 0 else 0)
+        sO = oS - pO - (nums[i] if i % 2 == 1 else 0)
+        if pE + sO == pO + sE:
+            res += 1
+        if i % 2 == 0:
+            pE += nums[i]
+        else:
+            pO += nums[i]
+    return res
+`,
+
+  'minimum-initial-energy-to-finish-tasks': `def minimumEffort(tasks: list[list[int]]) -> int:
+    tasks_list = [[int(t[0]), int(t[1])] for t in tasks]
+    tasks_list.sort(key=lambda t: t[1] - t[0], reverse=True)
+    e = 0
+    ans = 0
+    for act, mn in tasks_list:
+        if e < mn:
+            ans += mn - e
+            e = mn
+        e -= act
+    return ans
+`,
+
+  'construct-target-array-with-multiple-sums': `def isPossible(target: list[int]) -> bool:
+    arr = list(target.to_py() if hasattr(target, 'to_py') else target)
+    total = sum(arr)
+    while True:
+        arr.sort(reverse=True)
+        mx = arr[0]
+        rest = total - mx
+        if mx == 1:
+            return True
+        if rest < 1 or mx <= rest:
+            return False
+        if rest == 1:
+            return True
+        nv = mx % rest
+        if nv == 0:
+            return False
+        total = total - mx + nv
+        arr[0] = nv
+`,
+
+  'minimize-maximum-difference-of-pairs': `def minimizeMax(nums: list[int], p: int) -> int:
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    p = int(p)
+    nums.sort()
+    n = len(nums)
+    def ok(d):
+        c = i = 0
+        while i < n - 1:
+            if nums[i + 1] - nums[i] <= d:
+                c += 1
+                i += 2
+            else:
+                i += 1
+        return c >= p
+    lo, hi = 0, nums[-1] - nums[0]
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if ok(mid):
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'minimum-number-of-keypresses': `def minimumKeypresses(s: str) -> int:
+    s = str(s)
+    freq = [0] * 26
+    for c in s:
+        freq[ord(c) - ord('a')] += 1
+    freq.sort(reverse=True)
+    total = 0
+    for i in range(26):
+        if freq[i] == 0:
+            break
+        total += freq[i] * (i // 9 + 1)
+    return total
+`,
+
+  'longest-subarray-at-most-k-frequency': `def maxSubarrayLength(nums: list[int], k: int) -> int:
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    k = int(k)
+    freq = {}
+    l = ans = 0
+    for r in range(len(nums)):
+        freq[nums[r]] = freq.get(nums[r], 0) + 1
+        while freq[nums[r]] > k:
+            freq[nums[l]] -= 1
+            l += 1
+        ans = max(ans, r - l + 1)
+    return ans
+`,
+
+  'minimum-deletions-to-make-string-k-special': `def minimumDeletions(word: str, k: int) -> int:
+    word = str(word)
+    k = int(k)
+    freq = [0] * 26
+    for c in word:
+        freq[ord(c) - ord('a')] += 1
+    f = sorted(v for v in freq if v > 0)
+    mn = float('inf')
+    ps = 0
+    for i in range(len(f)):
+        d = ps
+        for j in range(i, len(f)):
+            d += max(0, f[j] - f[i] - k)
+        mn = min(mn, d)
+        ps += f[i]
+    return mn if mn != float('inf') else 0
+`,
 };
