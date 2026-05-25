@@ -10165,4 +10165,26 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best;
   },
 
+  'decompress-run-length-encoding': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const res: number[] = [];
+    for (let i = 0; i < nums.length; i += 2)
+      for (let j = 0; j < nums[i]!; j++) res.push(nums[i + 1]!);
+    return res;
+  },
+
+  'check-almost-equivalent-strings': (...args: unknown[]) => {
+    const [word1, word2] = args as [string, string];
+    const freq = (w: string) => { const m = new Map<string, number>(); for (const c of w) m.set(c, (m.get(c) ?? 0) + 1); return m; };
+    const m1 = freq(word1), m2 = freq(word2);
+    return 'abcdefghijklmnopqrstuvwxyz'.split('').every(c => Math.abs((m1.get(c) ?? 0) - (m2.get(c) ?? 0)) <= 3);
+  },
+
+  'minimum-value-positive-steps': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let s = 0, mn = Infinity;
+    for (const n of nums) { s += n; mn = Math.min(mn, s); }
+    return Math.max(1, 1 - mn);
+  },
+
 };

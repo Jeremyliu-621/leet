@@ -823,6 +823,9 @@ import { problem as maximumProfitJobScheduling } from './maximum-profit-job-sche
 import { problem as countOfSmallerNumbersAfterSelf } from './count-of-smaller-numbers-after-self';
 import { problem as kThSymbolInGrammar } from './k-th-symbol-in-grammar';
 import { problem as longestSubstringWithoutRepeating } from './longest-substring-without-repeating';
+import { problem as decompressRunLengthEncoding } from './decompress-run-length-encoding';
+import { problem as checkAlmostEquivalentStrings } from './check-almost-equivalent-strings';
+import { problem as minimumValuePositiveSteps } from './minimum-value-positive-steps';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1693,4 +1696,7 @@ export const problems: readonly Problem[] = [
   countOfSmallerNumbersAfterSelf,
   kThSymbolInGrammar,
   longestSubstringWithoutRepeating,
+  decompressRunLengthEncoding,
+  checkAlmostEquivalentStrings,
+  minimumValuePositiveSteps,
 ];

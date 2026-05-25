@@ -9794,4 +9794,30 @@ def lengthOfLongestSubstring(s):
         best = max(best, right - left + 1)
     return best
 `,
+
+  'decompress-run-length-encoding': `
+def decompressRLElist(nums):
+    nums = list(nums)
+    res = []
+    for i in range(0, len(nums), 2):
+        res.extend([nums[i+1]] * nums[i])
+    return res
+`,
+
+  'check-almost-equivalent-strings': `
+def checkAlmostEquivalent(word1, word2):
+    from collections import Counter
+    c1, c2 = Counter(word1), Counter(word2)
+    return all(abs(c1.get(c, 0) - c2.get(c, 0)) <= 3 for c in 'abcdefghijklmnopqrstuvwxyz')
+`,
+
+  'minimum-value-positive-steps': `
+def minStartValue(nums):
+    nums = list(nums)
+    s, mn = 0, float('inf')
+    for n in nums:
+        s += n
+        mn = min(mn, s)
+    return max(1, 1 - mn)
+`,
 };
