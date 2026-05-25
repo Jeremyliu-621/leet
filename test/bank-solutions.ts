@@ -14302,6 +14302,18 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return res;
   },
 
+  'russian-doll-envelopes': (envelopes: unknown) => {
+    const env = (envelopes as number[][]).map(e => [...e]);
+    env.sort((a, b) => a[0] !== b[0] ? a[0]! - b[0]! : b[1]! - a[1]!);
+    const tails: number[] = [];
+    for (const [, h] of env) {
+      let lo = 0, hi = tails.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (tails[mid]! < h!) lo = mid + 1; else hi = mid; }
+      tails[lo] = h!;
+    }
+    return tails.length;
+  },
+
   'cherry-pickup': (grid: unknown) => {
     const g = grid as number[][];
     const n = g.length;
@@ -14508,6 +14520,184 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       }
     }
     return dp[0]![n - 1]! >= 0;
+  },
+  'binary-tree-cameras': (arr: unknown) => {
+    const a = arr as (number | null)[];
+    const root = _buildTree(a);
+    if (!root) return 0;
+    let cameras = 0;
+    function dfs(node: _TN | null): number {
+      if (!node) return 1;
+      const left = dfs(node.l);
+      const right = dfs(node.r);
+      if (left === 0 || right === 0) { cameras++; return 2; }
+      if (left === 2 || right === 2) return 1;
+      return 0;
+    }
+    if (dfs(root) === 0) cameras++;
+    return cameras;
+  },
+
+  'linked-list-cycle-ii': (vals: unknown, pos: unknown) => {
+    const arr = vals as number[], p = pos as number;
+    if (!arr.length) return -1;
+    // Use index-based cycle simulation instead of pointer juggling
+    if (p < 0) return -1; // no cycle
+    const n = arr.length;
+    // Floyd's on indices
+    let slow = 0, fast = 0;
+    let found = false;
+    for (let step = 0; step < n * 2; step++) {
+      slow = slow + 1 < n ? slow + 1 : p;
+      fast = fast + 1 < n ? fast + 1 : p;
+      fast = fast + 1 < n ? fast + 1 : p;
+      if (slow === fast) { found = true; break; }
+    }
+    if (!found) return -1;
+    let entry = 0;
+    while (entry !== slow) {
+      entry = entry + 1 < n ? entry + 1 : p;
+      slow = slow + 1 < n ? slow + 1 : p;
+    }
+    return entry;
+  },
+
+  'add-two-numbers-ii': (l1: unknown, l2: unknown) => {
+    const s1 = [...(l1 as number[])], s2 = [...(l2 as number[])];
+    const result: number[] = [];
+    let carry = 0;
+    while (s1.length > 0 || s2.length > 0 || carry > 0) {
+      const sum = (s1.pop() ?? 0) + (s2.pop() ?? 0) + carry;
+      carry = Math.floor(sum / 10);
+      result.unshift(sum % 10);
+    }
+    return result;
+  },
+
+  'maximum-performance-of-team': (_n: unknown, speed: unknown, efficiency: unknown, k: unknown) => {
+    const spd = speed as number[], eff = efficiency as number[], kk = k as number;
+    const MOD = 1_000_000_007n;
+    const engineers = eff.map((e, i) => [e, spd[i]!]).sort((a, b) => b[0]! - a[0]!);
+    const heap: number[] = [];
+    let speedSum = 0n, best = 0n;
+    for (const [e, s] of engineers) {
+      heap.push(s!); heap.sort((a, b) => a - b);
+      speedSum += BigInt(s!);
+      if (heap.length > kk) speedSum -= BigInt(heap.shift()!);
+      const perf = speedSum * BigInt(e!);
+      if (perf > best) best = perf;
+    }
+    return Number(best % MOD);
+  },
+
+  'minimum-interval-to-include-each-query': (intervals: unknown, queries: unknown) => {
+    const ivs = (intervals as number[][]).map(iv => [...iv]).sort((a, b) => a[0]! - b[0]!);
+    const qs = queries as number[];
+    const indexed = qs.map((q, i) => [q, i]).sort((a, b) => a[0]! - b[0]!);
+    const ans = new Array(qs.length).fill(-1);
+    // Simple O(n*m) for correctness in tests
+    for (const [q, qi] of indexed) {
+      let best = Infinity;
+      for (const [l, r] of ivs) {
+        if (l! <= q! && q! <= r!) best = Math.min(best, r! - l! + 1);
+      }
+      ans[qi as number] = best === Infinity ? -1 : best;
+    }
+    return ans;
+  },
+
+  'minimum-number-of-taps-to-open-to-water-a-garden': (n: unknown, ranges: unknown) => {
+    const nn = n as number, rng = ranges as number[];
+    const maxReach = new Array(nn + 1).fill(0);
+    for (let i = 0; i <= nn; i++) {
+      const left = Math.max(0, i - rng[i]!);
+      const right = Math.min(nn, i + rng[i]!);
+      if (maxReach[left]! < right) maxReach[left] = right;
+    }
+    let taps = 0, curEnd = 0, nextEnd = 0;
+    for (let i = 0; i <= nn; i++) {
+      if (i > nextEnd) return -1;
+      if (maxReach[i]! > nextEnd) nextEnd = maxReach[i]!;
+      if (i === curEnd && i < nn) { taps++; curEnd = nextEnd; }
+    }
+    return taps;
+  },
+
+  'online-election': (persons: unknown, times: unknown, queries: unknown) => {
+    const ps = persons as number[], ts = times as number[], qs = queries as number[];
+    const votes = new Map<number, number>();
+    const leaders: number[] = [];
+    let leader = -1;
+    for (const p of ps) {
+      votes.set(p, (votes.get(p) ?? 0) + 1);
+      if (leader === -1 || votes.get(p)! >= votes.get(leader)!) leader = p;
+      leaders.push(leader);
+    }
+    return qs.map(t => {
+      let lo = 0, hi = ts.length - 1;
+      while (lo < hi) { const mid = (lo + hi + 1) >> 1; if (ts[mid]! <= t) lo = mid; else hi = mid - 1; }
+      return leaders[lo]!;
+    });
+  },
+
+  'count-of-range-sum': (nums: unknown, lower: unknown, upper: unknown) => {
+    const arr = nums as number[], lo = lower as number, hi = upper as number;
+    const n = arr.length;
+    const prefix = new Array(n + 1).fill(0n);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + BigInt(arr[i]!);
+    const loBig = BigInt(lo), hiBig = BigInt(hi);
+    let count = 0;
+    function ms(a: bigint[]): bigint[] {
+      if (a.length <= 1) return a;
+      const mid = a.length >> 1;
+      const left = ms(a.slice(0, mid)), right = ms(a.slice(mid));
+      let j = 0, k = 0;
+      for (const r of right) {
+        while (j < left.length && left[j]! < r - hiBig) j++;
+        while (k < left.length && left[k]! <= r - loBig) k++;
+        count += k - j;
+      }
+      return [...left, ...right].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
+    }
+    ms([...prefix]);
+    return count;
+  },
+
+  'design-linked-list': (ops: unknown, args: unknown) => {
+    const opArr = ops as string[], argArr = args as number[][];
+    interface Node { val: number; next: Node | null }
+    const sentinel: Node = { val: 0, next: null };
+    let size = 0;
+    function get(i: number): number {
+      if (i < 0 || i >= size) return -1;
+      let cur = sentinel.next!;
+      for (let j = 0; j < i; j++) cur = cur.next!;
+      return cur.val;
+    }
+    function addAtIndex(i: number, v: number) {
+      if (i > size) return;
+      i = Math.max(0, i);
+      let prev: Node = sentinel;
+      for (let j = 0; j < i; j++) prev = prev.next!;
+      prev.next = { val: v, next: prev.next };
+      size++;
+    }
+    function deleteAtIndex(i: number) {
+      if (i < 0 || i >= size) return;
+      let prev: Node = sentinel;
+      for (let j = 0; j < i; j++) prev = prev.next!;
+      prev.next = prev.next!.next;
+      size--;
+    }
+    return opArr.map((op, i) => {
+      const a = argArr[i]!;
+      if (op === 'addAtHead') { addAtIndex(0, a[0]!); return null; }
+      if (op === 'addAtTail') { addAtIndex(size, a[0]!); return null; }
+      if (op === 'addAtIndex') { addAtIndex(a[0]!, a[1]!); return null; }
+      if (op === 'deleteAtIndex') { deleteAtIndex(a[0]!); return null; }
+      if (op === 'get') return get(a[0]!);
+      return null;
+    });
   },
 
 };

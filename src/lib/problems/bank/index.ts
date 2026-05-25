@@ -1145,6 +1145,16 @@ import { problem as checkArrayFormation } from './check-array-formation';
 import { problem as minimumFallingPathSumII } from './minimum-falling-path-sum-ii';
 import { problem as scrambleString } from './scramble-string';
 import { problem as predictTheWinner } from './predict-the-winner';
+import { problem as russianDollEnvelopes } from './russian-doll-envelopes';
+import { problem as binaryTreeCameras } from './binary-tree-cameras';
+import { problem as linkedListCycleII } from './linked-list-cycle-ii';
+import { problem as addTwoNumbersII } from './add-two-numbers-ii';
+import { problem as maximumPerformanceOfTeam } from './maximum-performance-of-team';
+import { problem as minimumIntervalToIncludeEachQuery } from './minimum-interval-to-include-each-query';
+import { problem as minimumNumberOfTapsToWaterAGarden } from './minimum-number-of-taps-to-open-to-water-a-garden';
+import { problem as onlineElection } from './online-election';
+import { problem as countOfRangeSum } from './count-of-range-sum';
+import { problem as designLinkedList } from './design-linked-list';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2338,4 +2348,14 @@ export const problems: readonly Problem[] = [
   minimumFallingPathSumII,
   scrambleString,
   predictTheWinner,
+  russianDollEnvelopes,
+  binaryTreeCameras,
+  linkedListCycleII,
+  addTwoNumbersII,
+  maximumPerformanceOfTeam,
+  minimumIntervalToIncludeEachQuery,
+  minimumNumberOfTapsToWaterAGarden,
+  onlineElection,
+  countOfRangeSum,
+  designLinkedList,
 ];

@@ -14137,4 +14137,191 @@ def predictTheWinner(nums):
             dp[i][j] = max(nums[i] - dp[i+1][j], nums[j] - dp[i][j-1])
     return dp[0][n-1] >= 0
 `,
+
+  'russian-doll-envelopes': `
+import bisect
+def maxEnvelopes(envelopes):
+    envs = list(envelopes.to_py()) if hasattr(envelopes, 'to_py') else list(envelopes)
+    envs = [list(e.to_py()) if hasattr(e, 'to_py') else list(e) for e in envs]
+    envs.sort(key=lambda x: (x[0], -x[1]))
+    tails = []
+    for _, h in envs:
+        pos = bisect.bisect_left(tails, h)
+        if pos == len(tails):
+            tails.append(h)
+        else:
+            tails[pos] = h
+    return len(tails)
+`,
+
+  'binary-tree-cameras': `
+def minCameraCover(root):
+    cameras = 0
+    def dfs(node):
+        nonlocal cameras
+        if node is None: return 1
+        left = dfs(node.left); right = dfs(node.right)
+        if left == 0 or right == 0: cameras += 1; return 2
+        if left == 2 or right == 2: return 1
+        return 0
+    if dfs(root) == 0: cameras += 1
+    return cameras
+`,
+
+  'linked-list-cycle-ii': `
+def detectCycle(vals, pos):
+    vals = list(vals.to_py()) if hasattr(vals, 'to_py') else list(vals)
+    pos = int(pos)
+    if not vals: return -1
+    class Node:
+        def __init__(self, v): self.val = v; self.next = None
+    nodes = [Node(v) for v in vals]
+    for i in range(len(nodes) - 1): nodes[i].next = nodes[i + 1]
+    if 0 <= pos < len(nodes): nodes[-1].next = nodes[pos]
+    slow = fast = nodes[0]
+    while True:
+        slow = slow.next
+        if not fast.next or not fast.next.next: return -1
+        fast = fast.next.next
+        if slow is fast: break
+    entry = nodes[0]
+    while entry is not slow: entry = entry.next; slow = slow.next
+    return nodes.index(entry)
+`,
+
+  'add-two-numbers-ii': `
+def addTwoNumbers(l1, l2):
+    s1 = list(l1.to_py()) if hasattr(l1, 'to_py') else list(l1)
+    s2 = list(l2.to_py()) if hasattr(l2, 'to_py') else list(l2)
+    result = []; carry = 0
+    while s1 or s2 or carry:
+        d1 = s1.pop() if s1 else 0
+        d2 = s2.pop() if s2 else 0
+        total = d1 + d2 + carry
+        carry, digit = divmod(total, 10)
+        result.insert(0, digit)
+    return result
+`,
+
+  'maximum-performance-of-team': `
+import heapq
+def maxPerformance(n, speed, efficiency, k):
+    speed = list(speed.to_py()) if hasattr(speed, 'to_py') else list(speed)
+    efficiency = list(efficiency.to_py()) if hasattr(efficiency, 'to_py') else list(efficiency)
+    k = int(k); MOD = 10**9 + 7
+    engineers = sorted(zip(efficiency, speed), reverse=True)
+    min_heap = []; speed_sum = 0; best = 0
+    for eff, spd in engineers:
+        heapq.heappush(min_heap, spd); speed_sum += spd
+        if len(min_heap) > k: speed_sum -= heapq.heappop(min_heap)
+        best = max(best, speed_sum * eff)
+    return best % MOD
+`,
+
+  'minimum-interval-to-include-each-query': `
+import heapq
+def minInterval(intervals, queries):
+    intervals = [list(iv.to_py()) if hasattr(iv, 'to_py') else list(iv) for iv in (intervals.to_py() if hasattr(intervals, 'to_py') else intervals)]
+    queries = list(queries.to_py()) if hasattr(queries, 'to_py') else list(queries)
+    intervals.sort()
+    indexed = sorted(enumerate(queries), key=lambda x: x[1])
+    ans = [-1] * len(queries)
+    min_heap = []; j = 0
+    for qi, q in indexed:
+        while j < len(intervals) and intervals[j][0] <= q:
+            l, r = intervals[j]; heapq.heappush(min_heap, (r - l + 1, r)); j += 1
+        while min_heap and min_heap[0][1] < q: heapq.heappop(min_heap)
+        if min_heap: ans[qi] = min_heap[0][0]
+    return ans
+`,
+
+  'minimum-number-of-taps-to-open-to-water-a-garden': `
+def minTaps(n, ranges):
+    n = int(n)
+    ranges = list(ranges.to_py()) if hasattr(ranges, 'to_py') else list(ranges)
+    max_reach = [0] * (n + 1)
+    for i in range(n + 1):
+        left = max(0, i - ranges[i]); right = min(n, i + ranges[i])
+        max_reach[left] = max(max_reach[left], right)
+    taps = cur_end = next_end = 0
+    for i in range(n + 1):
+        if i > next_end: return -1
+        next_end = max(next_end, max_reach[i])
+        if i == cur_end and i < n: taps += 1; cur_end = next_end
+    return taps
+`,
+
+  'online-election': `
+import bisect
+def topVotedCandidate(persons, times, queries):
+    persons = list(persons.to_py()) if hasattr(persons, 'to_py') else list(persons)
+    times = list(times.to_py()) if hasattr(times, 'to_py') else list(times)
+    queries = list(queries.to_py()) if hasattr(queries, 'to_py') else list(queries)
+    votes = {}; leaders = []; leader = -1
+    for p in persons:
+        votes[p] = votes.get(p, 0) + 1
+        if leader == -1 or votes[p] >= votes[leader]: leader = p
+        leaders.append(leader)
+    result = []
+    for t in queries:
+        idx = bisect.bisect_right(times, t) - 1
+        result.append(leaders[idx])
+    return result
+`,
+
+  'count-of-range-sum': `
+def countRangeSum(nums, lower, upper):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    lower = int(lower); upper = int(upper)
+    prefix = [0] * (len(nums) + 1)
+    for i, v in enumerate(nums): prefix[i+1] = prefix[i] + v
+    count = 0
+    def merge_sort(arr):
+        nonlocal count
+        if len(arr) <= 1: return arr
+        mid = len(arr) // 2
+        left = merge_sort(arr[:mid]); right = merge_sort(arr[mid:])
+        j = k = 0
+        for r in right:
+            while j < len(left) and left[j] < r - upper: j += 1
+            while k < len(left) and left[k] <= r - lower: k += 1
+            count += k - j
+        return sorted(left + right)
+    merge_sort(prefix)
+    return count
+`,
+
+  'design-linked-list': `
+def simulateLinkedList(ops, args):
+    ops = list(ops.to_py()) if hasattr(ops, 'to_py') else list(ops)
+    args = [list(a.to_py()) if hasattr(a, 'to_py') else list(a) for a in (args.to_py() if hasattr(args, 'to_py') else args)]
+    class Node:
+        def __init__(self, v): self.val = v; self.next = None
+    head = Node(0); size = 0
+    def get(i):
+        if i < 0 or i >= size: return -1
+        cur = head.next
+        for _ in range(i): cur = cur.next
+        return cur.val
+    def add_at_index(i, v):
+        nonlocal size
+        if i > size: return
+        i = max(0, i); prev = head
+        for _ in range(i): prev = prev.next
+        node = Node(v); node.next = prev.next; prev.next = node; size += 1
+    def delete_at_index(i):
+        nonlocal size
+        if i < 0 or i >= size: return
+        prev = head
+        for _ in range(i): prev = prev.next
+        prev.next = prev.next.next; size -= 1
+    result = []
+    for op, a in zip(ops, args):
+        if op == 'addAtHead': add_at_index(0, a[0]); result.append(None)
+        elif op == 'addAtTail': add_at_index(size, a[0]); result.append(None)
+        elif op == 'addAtIndex': add_at_index(a[0], a[1]); result.append(None)
+        elif op == 'deleteAtIndex': delete_at_index(a[0]); result.append(None)
+        elif op == 'get': result.append(get(a[0]))
+    return result
+`,
 };

@@ -7,13 +7,18 @@ export const problem: Problem = {
   tags: ['dynamic-programming', 'strings'],
   description: `We can scramble a string \`s\` to get a string \`t\` using the following algorithm:
 
-1. If the length of the string is \`1\`, stop.
-2. If the length of the string is \`> 1\`, do the following:
-   - Split the string into two non-empty substrings at a random index, i.e., if the string is \`s\`, divide it to \`x\` and \`y\` where \`s = x + y\`.
-   - **Randomly** decide to swap the two substrings or to keep them in the same order. i.e., after this step, \`s\` may become \`s = x + y\` or \`s = y + x\`.
-   - Apply step 1 recursively on each of the two substrings \`x\` and \`y\`.
+1. If the string has length 1, stop.
+2. Split the string into two non-empty substrings at a random index \`i\` (not necessarily the same every time).
+3. Randomly decide to **swap** the two substrings or keep them in the same order.
+4. Recursively apply steps 1–3 on each substring.
 
-Given two strings \`s1\` and \`s2\` of **the same length**, return \`true\` if \`s2\` is a scrambled string of \`s1\`, otherwise, return \`false\`.`,
+Given two strings \`s1\` and \`s2\` of **the same length**, return \`true\` if \`s2\` is a scrambled string of \`s1\`, or \`false\` otherwise.
+
+**DP approach:** \`dp[i][j][len]\` = can \`s1[i..i+len-1]\` be scrambled to \`s2[j..j+len-1]\`? For each split point \`k\`:
+- No swap: \`dp[i][j][k] && dp[i+k][j+k][len-k]\`
+- Swap: \`dp[i][j+len-k][k] && dp[i+k][j][len-k]\`
+
+Use memoization to avoid recomputation.`,
   constraints: [
     's1.length == s2.length',
     '1 <= s1.length <= 30',
@@ -23,7 +28,7 @@ Given two strings \`s1\` and \`s2\` of **the same length**, return \`true\` if \
     {
       input: 's1 = "great", s2 = "rgeat"',
       output: 'true',
-      explanation: 'Scramble "great" -> split into "gr"+"eat", swap -> "eat"+"gr", then scramble "eat"->"ate" is not needed. One valid split: "gr"+"eat" → "r"+"g"+"eat" → "rgeat".',
+      explanation: '"great" → split as "gr"|"eat" → swap → "eat"|"gr" → scramble "gr": split "g"|"r" → swap → "rg", giving "rgeat".',
     },
     {
       input: 's1 = "abcde", s2 = "caebd"',
@@ -35,15 +40,15 @@ Given two strings \`s1\` and \`s2\` of **the same length**, return \`true\` if \
     },
   ],
   hints: [
-    'Use memoized recursion: isScramble(a, b).',
-    'First check if they have the same character frequencies — if not, return false.',
-    'Try every split point i: either a[0..i] matches b[0..i] and a[i..] matches b[i..], or a[0..i] matches b[n-i..] and a[i..] matches b[0..n-i].',
+    'Use 3D memoization: `memo[i][j][len]` where `i` is the start in s1, `j` is the start in s2, and `len` is the length of the substring.',
+    'For each possible split position k (1 to len-1), check both the no-swap case and the swap case. Base case: if the substrings are equal, return true.',
+    'As an optimization, first check if the two substrings have the same character frequencies — if not, they cannot be scrambles of each other.',
   ],
   functionName: 'isScramble',
   params: ['s1', 's2'],
   starterCode: {
     javascript: 'function isScramble(s1, s2) {\n\n}\n',
-    python: 'def isScramble(s1, s2):\n    pass\n',
+    python: 'def isScramble(s1: str, s2: str) -> bool:\n    pass\n',
   },
   visibleTests: [
     { args: ['great', 'rgeat'], expected: true },
@@ -54,6 +59,9 @@ Given two strings \`s1\` and \`s2\` of **the same length**, return \`true\` if \
     { args: ['a', 'b'], expected: false },
     { args: ['ab', 'ba'], expected: true },
     { args: ['abc', 'bca'], expected: true },
+    { args: ['abc', 'cab'], expected: true },
+    { args: ['abb', 'bba'], expected: true },
     { args: ['great', 'great'], expected: true },
+    { args: ['ab', 'ab'], expected: true },
   ],
 };
