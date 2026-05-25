@@ -17218,6 +17218,82 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'time-needed-to-buy-tickets': (tickets: unknown, k: unknown) => {
+    const t = tickets as number[], ki = k as number;
+    return t.reduce((sum, v, i) => sum + Math.min(v, i <= ki ? t[ki]! : t[ki]! - 1), 0);
+  },
+
+  'kth-smallest-element-in-bst': (arr: unknown, k: unknown) => {
+    const nodes = arr as (number | null)[];
+    const K = k as number;
+    if (!nodes || nodes.length === 0) return null;
+    class TreeNode { constructor(public val: number, public left: TreeNode | null = null, public right: TreeNode | null = null) {} }
+    const root = new TreeNode(nodes[0]!);
+    const queue: TreeNode[] = [root];
+    let i = 1;
+    while (queue.length > 0 && i < nodes.length) {
+      const node = queue.shift()!;
+      if (nodes[i] !== null && nodes[i] !== undefined) { node.left = new TreeNode(nodes[i]!); queue.push(node.left); }
+      i++;
+      if (i < nodes.length && nodes[i] !== null && nodes[i] !== undefined) { node.right = new TreeNode(nodes[i]!); queue.push(node.right); }
+      i++;
+    }
+    let count = 0, result = 0;
+    function inorder(node: TreeNode | null): void {
+      if (!node) return;
+      inorder(node.left);
+      count++;
+      if (count === K) result = node.val;
+      inorder(node.right);
+    }
+    inorder(root);
+    return result;
+  },
+
+  'find-minimum-in-rotated-sorted-array': (nums: unknown) => {
+    const a = nums as number[];
+    let lo = 0, hi = a.length - 1;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (a[mid]! > a[hi]!) lo = mid + 1; else hi = mid;
+    }
+    return a[lo]!;
+  },
+
+  'search-in-rotated-sorted-array': (nums: unknown, target: unknown) => {
+    const a = nums as number[], t = target as number;
+    let lo = 0, hi = a.length - 1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (a[mid] === t) return mid;
+      if (a[lo]! <= a[mid]!) {
+        if (a[lo]! <= t && t < a[mid]!) hi = mid - 1; else lo = mid + 1;
+      } else {
+        if (a[mid]! < t && t <= a[hi]!) lo = mid + 1; else hi = mid - 1;
+      }
+    }
+    return -1;
+  },
+
+  'minimum-number-of-days-to-make-m-bouquets': (bloomDay: unknown, m: unknown, k: unknown) => {
+    const bd = bloomDay as number[], M = m as number, K = k as number;
+    if (bd.length < M * K) return -1;
+    function canMake(day: number): boolean {
+      let bouquets = 0, consecutive = 0;
+      for (const d of bd) {
+        if (d <= day) { consecutive++; if (consecutive === K) { bouquets++; consecutive = 0; } }
+        else consecutive = 0;
+      }
+      return bouquets >= M;
+    }
+    let lo = 1, hi = Math.max(...bd);
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (canMake(mid)) hi = mid; else lo = mid + 1;
+    }
+    return lo;
+  },
+
   'maximum-value-at-given-index-in-bounded-array': (n: unknown, index: unknown, maxSum: unknown) => {
     const N = n as number, idx = index as number, ms = maxSum as number;
     function sumAtPeak(v: bigint, len: bigint): bigint {
@@ -17421,6 +17497,137 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     let maxW = Math.max(vc[0]! - 0, (w as number) - vc[vc.length-1]!);
     for (let i = 1; i < vc.length; i++) maxW = Math.max(maxW, vc[i]! - vc[i-1]!);
     return Number(BigInt(maxH) * BigInt(maxW) % MOD);
+  },
+
+  'minimum-area-rectangle': (points: unknown) => {
+    const pts = points as number[][];
+    const set = new Set(pts.map(([x, y]) => `${x},${y}`));
+    let min = Infinity;
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        const [x1, y1] = pts[i]!, [x2, y2] = pts[j]!;
+        if (x1 !== x2 && y1 !== y2 && set.has(`${x1},${y2}`) && set.has(`${x2},${y1}`))
+          min = Math.min(min, Math.abs(x2! - x1!) * Math.abs(y2! - y1!));
+      }
+    }
+    return min === Infinity ? 0 : min;
+  },
+
+  'minimum-operations-to-halve-array-sum': (nums: unknown) => {
+    const total = (nums as number[]).reduce((a, b) => a + b, 0);
+    let need = total / 2, reduced = 0, ops = 0;
+    const arr = [...(nums as number[])];
+    while (reduced < need) {
+      arr.sort((a, b) => b - a);
+      arr[0] = arr[0]! / 2;
+      reduced += arr[0]!;
+      ops++;
+    }
+    return ops;
+  },
+
+  'maximum-binary-string-after-change': (binary: unknown) => {
+    const s = binary as string;
+    const firstZero = s.indexOf('0');
+    if (firstZero === -1) return s;
+    const zeros = [...s].filter(c => c === '0').length;
+    return '1'.repeat(firstZero + zeros - 1) + '0' + '1'.repeat(s.length - firstZero - zeros);
+  },
+
+  'circular-array-loop': (nums: unknown) => {
+    const a = nums as number[];
+    const n = a.length;
+    const nxt = (i: number) => ((i + a[i]!) % n + n) % n;
+    for (let i = 0; i < n; i++) {
+      let s = i, f = i;
+      while (a[s]! * a[nxt(s)]! > 0 && a[f]! * a[nxt(nxt(f))]! > 0) {
+        s = nxt(s);
+        f = nxt(nxt(f));
+        if (s === f) return nxt(s) !== s;
+      }
+    }
+    return false;
+  },
+
+  'longest-arithmetic-subsequence-of-given-difference': (arr: unknown, difference: unknown) => {
+    const a = arr as number[], d = difference as number;
+    const dp = new Map<number, number>();
+    let ans = 1;
+    for (const x of a) {
+      const prev = dp.get(x - d) ?? 0;
+      dp.set(x, prev + 1);
+      ans = Math.max(ans, prev + 1);
+    }
+    return ans;
+  },
+
+  'number-of-subarrays-with-bounded-maximum': (nums: unknown, left: unknown, right: unknown) => {
+    const a = nums as number[], L = left as number, R = right as number;
+    function atMost(b: number): number {
+      let count = 0, cur = 0;
+      for (const v of a) { cur = v <= b ? cur + 1 : 0; count += cur; }
+      return count;
+    }
+    return atMost(R) - atMost(L - 1);
+  },
+
+  'split-array-into-consecutive-subsequences': (nums: unknown) => {
+    const a = nums as number[];
+    const freq = new Map<number, number>();
+    const end = new Map<number, number>();
+    for (const v of a) freq.set(v, (freq.get(v) ?? 0) + 1);
+    for (const v of a) {
+      if (!freq.get(v)) continue;
+      freq.set(v, freq.get(v)! - 1);
+      if (end.get(v)) {
+        end.set(v, end.get(v)! - 1);
+        end.set(v + 1, (end.get(v + 1) ?? 0) + 1);
+      } else if (freq.get(v + 1) && freq.get(v + 2)) {
+        freq.set(v + 1, freq.get(v + 1)! - 1);
+        freq.set(v + 2, freq.get(v + 2)! - 1);
+        end.set(v + 3, (end.get(v + 3) ?? 0) + 1);
+      } else return false;
+    }
+    return true;
+  },
+
+  'restore-the-array-from-adjacent-pairs': (adjacentPairs: unknown) => {
+    const pairs = adjacentPairs as number[][];
+    const adj = new Map<number, number[]>();
+    for (const pair of pairs) {
+      const a = pair[0]!, b = pair[1]!;
+      if (!adj.has(a)) adj.set(a, []);
+      if (!adj.has(b)) adj.set(b, []);
+      adj.get(a)!.push(b);
+      adj.get(b)!.push(a);
+    }
+    let start = 0;
+    for (const [k, v] of adj) { if (v.length === 1) { start = k; break; } }
+    const n = pairs.length + 1;
+    const res: number[] = [start];
+    for (let i = 1; i < n; i++) {
+      const nbrs = adj.get(res[i - 1]!)!;
+      res.push(nbrs[0] === res[i - 2] ? nbrs[1]! : nbrs[0]!);
+    }
+    return res;
+  },
+
+  'monotone-increasing-digits': (n: unknown) => {
+    const d = (n as number).toString().split('').map(Number);
+    let mark = d.length;
+    for (let i = d.length - 1; i > 0; i--) {
+      if (d[i - 1]! > d[i]!) { mark = i; d[i - 1]!--; }
+    }
+    for (let i = mark; i < d.length; i++) d[i] = 9;
+    return parseInt(d.join(''));
+  },
+
+  'construct-k-palindrome-strings': (k: unknown, s: unknown) => {
+    const str = s as string, K = k as number;
+    const freq: Record<string, number> = {};
+    for (const c of str) freq[c] = (freq[c] ?? 0) + 1;
+    const odds = Object.values(freq).filter(v => v % 2 === 1).length;
+    return odds <= K && K <= str.length;
   },
 
 };

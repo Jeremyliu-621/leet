@@ -16966,6 +16966,113 @@ def minimumDeletions(s):
     return result
 `,
 
+  'time-needed-to-buy-tickets': `def timeRequiredToBuy(tickets, k):
+    tickets = list(tickets.to_py() if hasattr(tickets, 'to_py') else tickets)
+    k = int(k)
+    total = 0
+    for i, v in enumerate(tickets):
+        if i <= k:
+            total += min(v, tickets[k])
+        else:
+            total += min(v, tickets[k] - 1)
+    return total
+`,
+
+  'kth-smallest-element-in-bst': `def kthSmallestRunner(arr, k):
+    raw = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
+    k = int(k)
+    class TreeNode:
+        def __init__(self, val=0, left=None, right=None):
+            self.val = val; self.left = left; self.right = right
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i])
+            queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i])
+            queue.append(node.right)
+        i += 1
+    result = [0]
+    count = [0]
+    def inorder(node):
+        if not node:
+            return
+        inorder(node.left)
+        count[0] += 1
+        if count[0] == k:
+            result[0] = node.val
+        inorder(node.right)
+    inorder(root)
+    return result[0]
+`,
+
+  'find-minimum-in-rotated-sorted-array': `def findMin(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    lo, hi = 0, len(nums) - 1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if nums[mid] > nums[hi]:
+            lo = mid + 1
+        else:
+            hi = mid
+    return nums[lo]
+`,
+
+  'search-in-rotated-sorted-array': `def search(nums, target):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    target = int(target)
+    lo, hi = 0, len(nums) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if nums[mid] == target:
+            return mid
+        if nums[lo] <= nums[mid]:
+            if nums[lo] <= target < nums[mid]:
+                hi = mid - 1
+            else:
+                lo = mid + 1
+        else:
+            if nums[mid] < target <= nums[hi]:
+                lo = mid + 1
+            else:
+                hi = mid - 1
+    return -1
+`,
+
+  'minimum-number-of-days-to-make-m-bouquets': `def minDays(bloomDay, m, k):
+    bloomDay = list(bloomDay.to_py() if hasattr(bloomDay, 'to_py') else bloomDay)
+    m, k = int(m), int(k)
+    if len(bloomDay) < m * k:
+        return -1
+    def can_make(day):
+        bouquets = consecutive = 0
+        for d in bloomDay:
+            if d <= day:
+                consecutive += 1
+                if consecutive == k:
+                    bouquets += 1
+                    consecutive = 0
+            else:
+                consecutive = 0
+        return bouquets >= m
+    lo, hi = 1, max(bloomDay)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if can_make(mid):
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
   'find-players-with-zero-or-one-losses': `def findWinners(matches):
     matches = [list(m.to_py() if hasattr(m, 'to_py') else m) for m in (matches.to_py() if hasattr(matches, 'to_py') else matches)]
     losses = {}
@@ -17240,5 +17347,146 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
     for i in range(1, len(vc)):
         max_w = max(max_w, vc[i] - vc[i-1])
     return (max_h * max_w) % MOD
+`,
+
+  'minimum-area-rectangle': `def minAreaRect(points):
+    pts = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in (points.to_py() if hasattr(points, 'to_py') else points)]
+    point_set = set((p[0], p[1]) for p in pts)
+    min_area = float('inf')
+    n = len(pts)
+    for i in range(n):
+        for j in range(i + 1, n):
+            x1, y1 = pts[i][0], pts[i][1]
+            x2, y2 = pts[j][0], pts[j][1]
+            if x1 != x2 and y1 != y2:
+                if (x1, y2) in point_set and (x2, y1) in point_set:
+                    area = abs(x2 - x1) * abs(y2 - y1)
+                    if area < min_area:
+                        min_area = area
+    return 0 if min_area == float('inf') else min_area
+`,
+
+  'minimum-operations-to-halve-array-sum': `def halveArray(nums):
+    import heapq
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    total = sum(nums)
+    need = total / 2
+    reduced = 0
+    ops = 0
+    heap = [-x for x in nums]
+    heapq.heapify(heap)
+    while reduced < need:
+        val = -heapq.heappop(heap)
+        half = val / 2
+        reduced += half
+        heapq.heappush(heap, -half)
+        ops += 1
+    return ops
+`,
+
+  'maximum-binary-string-after-change': `def maximumBinaryString(binary):
+    first_zero = binary.find('0')
+    if first_zero == -1:
+        return binary
+    zeros = binary.count('0')
+    n = len(binary)
+    return '1' * (first_zero + zeros - 1) + '0' + '1' * (n - first_zero - zeros)
+`,
+
+  'circular-array-loop': `def circularArrayLoop(nums):
+    n = len(nums)
+    def nxt(i):
+        return (i + nums[i]) % n
+    for i in range(n):
+        s, f = i, i
+        while nums[s] * nums[nxt(s)] > 0 and nums[f] * nums[nxt(nxt(f))] > 0:
+            s = nxt(s)
+            f = nxt(nxt(f))
+            if s == f:
+                return nxt(s) != s
+    return False
+`,
+
+  'longest-arithmetic-subsequence-of-given-difference': `def longestSubsequence(arr, difference):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    d = int(difference)
+    dp = {}
+    ans = 1
+    for x in arr:
+        prev = dp.get(x - d, 0)
+        dp[x] = prev + 1
+        if dp[x] > ans:
+            ans = dp[x]
+    return ans
+`,
+
+  'number-of-subarrays-with-bounded-maximum': `def numSubarrayBoundedMax(nums, left, right):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    L = int(left)
+    R = int(right)
+    def at_most(b):
+        count = cur = 0
+        for v in nums:
+            cur = cur + 1 if v <= b else 0
+            count += cur
+        return count
+    return at_most(R) - at_most(L - 1)
+`,
+
+  'split-array-into-consecutive-subsequences': `def isPossible(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    freq = {}
+    end = {}
+    for v in nums:
+        freq[v] = freq.get(v, 0) + 1
+    for v in nums:
+        if not freq.get(v):
+            continue
+        freq[v] -= 1
+        if end.get(v):
+            end[v] -= 1
+            end[v + 1] = end.get(v + 1, 0) + 1
+        elif freq.get(v + 1) and freq.get(v + 2):
+            freq[v + 1] -= 1
+            freq[v + 2] -= 1
+            end[v + 3] = end.get(v + 3, 0) + 1
+        else:
+            return False
+    return True
+`,
+
+  'restore-the-array-from-adjacent-pairs': `def restoreArray(adjacentPairs):
+    pairs = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in (adjacentPairs.to_py() if hasattr(adjacentPairs, 'to_py') else adjacentPairs)]
+    adj = {}
+    for a, b in pairs:
+        adj.setdefault(a, []).append(b)
+        adj.setdefault(b, []).append(a)
+    start = next(k for k, v in adj.items() if len(v) == 1)
+    n = len(pairs) + 1
+    res = [start]
+    for i in range(1, n):
+        nbrs = adj[res[i - 1]]
+        res.append(nbrs[0] if nbrs[0] != res[i - 2] else nbrs[1])
+    return res
+`,
+
+  'monotone-increasing-digits': `def monotoneIncreasingDigits(n):
+    d = list(str(n))
+    mark = len(d)
+    for i in range(len(d) - 1, 0, -1):
+        if d[i - 1] > d[i]:
+            mark = i
+            d[i - 1] = str(int(d[i - 1]) - 1)
+    for i in range(mark, len(d)):
+        d[i] = '9'
+    return int(''.join(d))
+`,
+
+  'construct-k-palindrome-strings': `def canConstruct(k, s):
+    from collections import Counter
+    k = int(k)
+    freq = Counter(s)
+    odds = sum(1 for v in freq.values() if v % 2 == 1)
+    return odds <= k <= len(s)
 `,
 };

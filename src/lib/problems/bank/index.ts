@@ -1309,6 +1309,21 @@ import { problem as stepsToMakeArrayNondecreasing } from './steps-to-make-array-
 import { problem as countSubstringsDifferByOne } from './count-substrings-that-differ-by-one-character';
 import { problem as minimumOperationsToMoveBalls } from './minimum-operations-to-move-balls';
 import { problem as maximumAreaOfPieceOfCake } from './maximum-area-of-piece-of-cake';
+import { problem as minimumAreaRectangle } from './minimum-area-rectangle';
+import { problem as minimumOperationsToHalveArraySum } from './minimum-operations-to-halve-array-sum';
+import { problem as maximumBinaryStringAfterChange } from './maximum-binary-string-after-change';
+import { problem as circularArrayLoop } from './circular-array-loop';
+import { problem as longestArithmeticSubsequenceOfGivenDifference } from './longest-arithmetic-subsequence-of-given-difference';
+import { problem as timeNeededToBuyTickets } from './time-needed-to-buy-tickets';
+import { problem as numberOfSubarraysWithBoundedMaximum } from './number-of-subarrays-with-bounded-maximum';
+import { problem as kthSmallestElementInBst } from './kth-smallest-element-in-bst';
+import { problem as findMinimumInRotatedSortedArray } from './find-minimum-in-rotated-sorted-array';
+import { problem as searchInRotatedSortedArray } from './search-in-rotated-sorted-array';
+import { problem as minimumNumberOfDaysToMakeMBouquets } from './minimum-number-of-days-to-make-m-bouquets';
+import { problem as splitArrayIntoConsecutiveSubsequences } from './split-array-into-consecutive-subsequences';
+import { problem as restoreTheArrayFromAdjacentPairs } from './restore-the-array-from-adjacent-pairs';
+import { problem as monotoneIncreasingDigits } from './monotone-increasing-digits';
+import { problem as constructKPalindromeStrings } from './construct-k-palindrome-strings';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2666,4 +2681,19 @@ export const problems: readonly Problem[] = [
   countSubstringsDifferByOne,
   minimumOperationsToMoveBalls,
   maximumAreaOfPieceOfCake,
+  minimumAreaRectangle,
+  minimumOperationsToHalveArraySum,
+  maximumBinaryStringAfterChange,
+  circularArrayLoop,
+  longestArithmeticSubsequenceOfGivenDifference,
+  timeNeededToBuyTickets,
+  numberOfSubarraysWithBoundedMaximum,
+  kthSmallestElementInBst,
+  findMinimumInRotatedSortedArray,
+  searchInRotatedSortedArray,
+  minimumNumberOfDaysToMakeMBouquets,
+  splitArrayIntoConsecutiveSubsequences,
+  restoreTheArrayFromAdjacentPairs,
+  monotoneIncreasingDigits,
+  constructKPalindromeStrings,
 ];
