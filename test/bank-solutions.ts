@@ -17236,4 +17236,191 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return lo;
   },
 
+  'walls-and-gates': (rooms: unknown) => {
+    const grid = (rooms as number[][]).map(row => [...row]);
+    const INF = 2147483647;
+    const m = grid.length, n = grid[0]!.length;
+    const q: [number, number][] = [];
+    for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) if (grid[i]![j] === 0) q.push([i, j]);
+    const dirs = [[0,1],[0,-1],[1,0],[-1,0]] as const;
+    let head = 0;
+    while (head < q.length) {
+      const [r, c] = q[head++]!;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr, nc = c + dc;
+        if (nr >= 0 && nr < m && nc >= 0 && nc < n && grid[nr]![nc] === INF) {
+          grid[nr]![nc] = grid[r]![c]! + 1;
+          q.push([nr, nc]);
+        }
+      }
+    }
+    return grid;
+  },
+
+  'making-a-large-island': (grid: unknown) => {
+    const g = (grid as number[][]).map(row => [...row]);
+    const n = g.length;
+    const islandSize = new Map<number, number>();
+    let islandId = 2;
+    const dfs = (r: number, c: number, id: number): number => {
+      if (r < 0 || r >= n || c < 0 || c >= n || g[r]![c] !== 1) return 0;
+      g[r]![c] = id;
+      return 1 + dfs(r+1,c,id) + dfs(r-1,c,id) + dfs(r,c+1,id) + dfs(r,c-1,id);
+    };
+    for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+      if (g[i]![j] === 1) { islandSize.set(islandId, dfs(i, j, islandId)); islandId++; }
+    }
+    let res = Math.max(0, ...[...islandSize.values()]);
+    const dirs = [[0,1],[0,-1],[1,0],[-1,0]] as const;
+    for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+      if (g[i]![j] === 0) {
+        const seen = new Set<number>();
+        let size = 1;
+        for (const [dr, dc] of dirs) {
+          const nr = i+dr, nc = j+dc;
+          if (nr >= 0 && nr < n && nc >= 0 && nc < n) {
+            const id = g[nr]![nc]!;
+            if (id > 1 && !seen.has(id)) { seen.add(id); size += islandSize.get(id) ?? 0; }
+          }
+        }
+        res = Math.max(res, size);
+      }
+    }
+    return res;
+  },
+
+  'increasing-order-search-tree': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    if (!arr || arr.length === 0 || arr[0] == null) return [];
+    type TNode = { val: number; left: TNode | null; right: TNode | null };
+    const mkNode = (v: number): TNode => ({ val: v, left: null, right: null });
+    const root = mkNode(arr[0] as number);
+    const queue: TNode[] = [root];
+    let i = 1;
+    while (queue.length && i < arr.length) {
+      const node = queue.shift()!;
+      if (i < arr.length && arr[i] != null) { node.left = mkNode(arr[i] as number); queue.push(node.left); }
+      i++;
+      if (i < arr.length && arr[i] != null) { node.right = mkNode(arr[i] as number); queue.push(node.right); }
+      i++;
+    }
+    const vals: number[] = [];
+    const inorder = (n: TNode | null) => { if (!n) return; inorder(n.left); vals.push(n.val); inorder(n.right); };
+    inorder(root);
+    const result: (number | null)[] = [];
+    for (let k = 0; k < vals.length - 1; k++) result.push(vals[k]!, null);
+    result.push(vals[vals.length - 1]!);
+    return result;
+  },
+
+  'next-greater-node-in-linked-list': (arr: unknown) => {
+    const a = arr as number[];
+    const result = new Array(a.length).fill(0);
+    const stack: number[] = [];
+    for (let i = 0; i < a.length; i++) {
+      while (stack.length && (a[stack[stack.length-1]!] ?? 0) < (a[i] ?? 0)) result[stack.pop()!] = a[i]!;
+      stack.push(i);
+    }
+    return result;
+  },
+
+  'longest-cycle-in-graph': (edges: unknown) => {
+    const e = edges as number[];
+    const n = e.length;
+    const visitTime = new Array<number>(n).fill(-1);
+    let ans = -1, globalTime = 0;
+    for (let i = 0; i < n; i++) {
+      if (visitTime[i] !== -1) continue;
+      const startTime = globalTime;
+      let cur = i;
+      while (cur !== -1 && visitTime[cur] === -1) { visitTime[cur] = globalTime++; cur = e[cur]!; }
+      if (cur !== -1 && visitTime[cur]! >= startTime) ans = Math.max(ans, globalTime - visitTime[cur]!);
+    }
+    return ans;
+  },
+
+  'maximum-subarray-min-product': (nums: unknown) => {
+    const MOD = 1_000_000_007n;
+    const arr = nums as number[];
+    const n = arr.length;
+    const a = arr.map(BigInt);
+    const prefix = new Array<bigint>(n + 1).fill(0n);
+    for (let i = 0; i < n; i++) prefix[i+1] = prefix[i]! + a[i]!;
+    const left = new Array<number>(n).fill(-1);
+    const right = new Array<number>(n).fill(n);
+    const stack: number[] = [];
+    for (let i = 0; i < n; i++) {
+      while (stack.length && a[stack[stack.length-1]!]! >= a[i]!) stack.pop();
+      left[i] = stack.length ? stack[stack.length-1]! : -1;
+      stack.push(i);
+    }
+    stack.length = 0;
+    for (let i = n-1; i >= 0; i--) {
+      while (stack.length && a[stack[stack.length-1]!]! > a[i]!) stack.pop();
+      right[i] = stack.length ? stack[stack.length-1]! : n;
+      stack.push(i);
+    }
+    let ans = 0n;
+    for (let i = 0; i < n; i++) {
+      const l = left[i]! + 1, r = right[i]!;
+      const val = a[i]! * (prefix[r]! - prefix[l]!);
+      if (val > ans) ans = val;
+    }
+    return Number(ans % MOD);
+  },
+
+  'steps-to-make-array-nondecreasing': (nums: unknown) => {
+    const arr = nums as number[];
+    const n = arr.length;
+    const dp = new Array<number>(n).fill(0);
+    const stack: number[] = [];
+    let ans = 0;
+    for (let i = 0; i < n; i++) {
+      let maxSteps = 0;
+      while (stack.length && arr[stack[stack.length-1]!]! <= arr[i]!) maxSteps = Math.max(maxSteps, dp[stack.pop()!]!);
+      if (stack.length > 0) { dp[i] = Math.max(maxSteps + 1, 1); ans = Math.max(ans, dp[i]!); }
+      stack.push(i);
+    }
+    return ans;
+  },
+
+  'count-substrings-that-differ-by-one-character': (s: unknown, t: unknown) => {
+    const ss = s as string, tt = t as string;
+    const m = ss.length, n = tt.length;
+    let count = 0;
+    const along = (si: number, ti: number) => {
+      let prev = 0, cur = 0;
+      while (si < m && ti < n) {
+        if (ss[si] !== tt[ti]) { prev = cur + 1; cur = 0; } else cur++;
+        count += prev;
+        si++; ti++;
+      }
+    };
+    for (let i = 0; i < m; i++) along(i, 0);
+    for (let j = 1; j < n; j++) along(0, j);
+    return count;
+  },
+
+  'minimum-operations-to-move-balls': (boxes: unknown) => {
+    const b = boxes as string;
+    const n = b.length;
+    const result = new Array<number>(n).fill(0);
+    let balls = 0, ops = 0;
+    for (let i = 0; i < n; i++) { result[i]! += ops; balls += b[i] === '1' ? 1 : 0; ops += balls; }
+    balls = 0; ops = 0;
+    for (let i = n-1; i >= 0; i--) { result[i]! += ops; balls += b[i] === '1' ? 1 : 0; ops += balls; }
+    return result;
+  },
+
+  'maximum-area-of-piece-of-cake': (h: unknown, w: unknown, hCuts: unknown, vCuts: unknown) => {
+    const MOD = 1_000_000_007n;
+    const hc = [...(hCuts as number[])].sort((a,b)=>a-b);
+    const vc = [...(vCuts as number[])].sort((a,b)=>a-b);
+    let maxH = Math.max(hc[0]! - 0, (h as number) - hc[hc.length-1]!);
+    for (let i = 1; i < hc.length; i++) maxH = Math.max(maxH, hc[i]! - hc[i-1]!);
+    let maxW = Math.max(vc[0]! - 0, (w as number) - vc[vc.length-1]!);
+    for (let i = 1; i < vc.length; i++) maxW = Math.max(maxW, vc[i]! - vc[i-1]!);
+    return Number(BigInt(maxH) * BigInt(maxW) % MOD);
+  },
+
 };

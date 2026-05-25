@@ -17019,4 +17019,226 @@ def minimumDeletions(s):
             hi = mid - 1
     return lo
 `,
+
+  'walls-and-gates': `
+def wallsAndGates(rooms):
+    rooms = [list(row) for row in rooms]
+    INF = 2147483647
+    m, n = len(rooms), len(rooms[0])
+    from collections import deque
+    q = deque()
+    for i in range(m):
+        for j in range(n):
+            if rooms[i][j] == 0:
+                q.append((i, j))
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    while q:
+        r, c = q.popleft()
+        for dr, dc in dirs:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < m and 0 <= nc < n and rooms[nr][nc] == INF:
+                rooms[nr][nc] = rooms[r][c] + 1
+                q.append((nr, nc))
+    return rooms
+`,
+
+  'making-a-large-island': `
+def largestIsland(grid):
+    grid = [list(row) for row in grid]
+    n = len(grid)
+    island_size = {}
+    island_id = 2
+    def dfs(r, c, iid):
+        if r < 0 or r >= n or c < 0 or c >= n or grid[r][c] != 1:
+            return 0
+        grid[r][c] = iid
+        return 1 + dfs(r+1,c,iid) + dfs(r-1,c,iid) + dfs(r,c+1,iid) + dfs(r,c-1,iid)
+    for i in range(n):
+        for j in range(n):
+            if grid[i][j] == 1:
+                island_size[island_id] = dfs(i, j, island_id)
+                island_id += 1
+    res = max(island_size.values(), default=0)
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    for i in range(n):
+        for j in range(n):
+            if grid[i][j] == 0:
+                seen = set()
+                size = 1
+                for dr, dc in dirs:
+                    nr, nc = i+dr, j+dc
+                    if 0 <= nr < n and 0 <= nc < n and grid[nr][nc] > 1:
+                        iid = grid[nr][nc]
+                        if iid not in seen:
+                            seen.add(iid)
+                            size += island_size.get(iid, 0)
+                res = max(res, size)
+    return res
+`,
+
+  'increasing-order-search-tree': `
+def increasingBSTRunner(arr):
+    converted = []
+    for x in arr:
+        if x is None or (hasattr(x, 'typeof') and x.typeof == 'object' and x == None):
+            converted.append(None)
+        else:
+            try:
+                converted.append(int(x))
+            except Exception:
+                converted.append(None)
+    root = __from_array__(converted)
+    vals = []
+    def inorder(n):
+        if not n: return
+        inorder(n.left)
+        vals.append(n.val)
+        inorder(n.right)
+    inorder(root)
+    if not vals:
+        return []
+    dummy = TreeNode(0)
+    cur = dummy
+    for v in vals:
+        cur.right = TreeNode(v)
+        cur = cur.right
+    return __to_array__(dummy.right)
+`,
+
+  'next-greater-node-in-linked-list': `
+def nextLargerNodesRunner(arr):
+    arr = list(arr)
+    n = len(arr)
+    result = [0] * n
+    stack = []
+    for i in range(n):
+        while stack and arr[stack[-1]] < arr[i]:
+            result[stack.pop()] = arr[i]
+        stack.append(i)
+    return result
+`,
+
+  'longest-cycle-in-graph': `
+def longestCycle(edges):
+    edges = list(edges)
+    n = len(edges)
+    visit_time = [-1] * n
+    ans = -1
+    global_time = 0
+    for i in range(n):
+        if visit_time[i] != -1:
+            continue
+        start_time = global_time
+        cur = i
+        while cur != -1 and visit_time[cur] == -1:
+            visit_time[cur] = global_time
+            global_time += 1
+            cur = edges[cur]
+        if cur != -1 and visit_time[cur] >= start_time:
+            ans = max(ans, global_time - visit_time[cur])
+    return ans
+`,
+
+  'maximum-subarray-min-product': `
+def maxSumMinProduct(nums):
+    MOD = 10**9 + 7
+    nums = list(nums)
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i+1] = prefix[i] + nums[i]
+    left = [-1] * n
+    right = [n] * n
+    stack = []
+    for i in range(n):
+        while stack and nums[stack[-1]] >= nums[i]:
+            stack.pop()
+        left[i] = stack[-1] if stack else -1
+        stack.append(i)
+    stack = []
+    for i in range(n-1, -1, -1):
+        while stack and nums[stack[-1]] > nums[i]:
+            stack.pop()
+        right[i] = stack[-1] if stack else n
+        stack.append(i)
+    ans = 0
+    for i in range(n):
+        l, r = left[i] + 1, right[i]
+        val = nums[i] * (prefix[r] - prefix[l])
+        if val > ans:
+            ans = val
+    return ans % MOD
+`,
+
+  'steps-to-make-array-nondecreasing': `
+def totalSteps(nums):
+    nums = list(nums)
+    n = len(nums)
+    dp = [0] * n
+    stack = []
+    ans = 0
+    for i in range(n):
+        max_steps = 0
+        while stack and nums[stack[-1]] <= nums[i]:
+            max_steps = max(max_steps, dp[stack.pop()])
+        if stack:
+            dp[i] = max(max_steps + 1, 1)
+            ans = max(ans, dp[i])
+        stack.append(i)
+    return ans
+`,
+
+  'count-substrings-that-differ-by-one-character': `
+def countSubstrings(s, t):
+    m, n = len(s), len(t)
+    count = 0
+    def along(si, ti):
+        nonlocal count
+        prev, cur = 0, 0
+        while si < m and ti < n:
+            if s[si] != t[ti]:
+                prev = cur + 1
+                cur = 0
+            else:
+                cur += 1
+            count += prev
+            si += 1
+            ti += 1
+    for i in range(m):
+        along(i, 0)
+    for j in range(1, n):
+        along(0, j)
+    return count
+`,
+
+  'minimum-operations-to-move-balls': `
+def minOperations(boxes):
+    n = len(boxes)
+    result = [0] * n
+    balls = ops = 0
+    for i in range(n):
+        result[i] += ops
+        balls += int(boxes[i])
+        ops += balls
+    balls = ops = 0
+    for i in range(n-1, -1, -1):
+        result[i] += ops
+        balls += int(boxes[i])
+        ops += balls
+    return result
+`,
+
+  'maximum-area-of-piece-of-cake': `
+def maxArea(h, w, horizontalCuts, verticalCuts):
+    MOD = 10**9 + 7
+    hc = sorted(horizontalCuts)
+    vc = sorted(verticalCuts)
+    max_h = max(hc[0], h - hc[-1])
+    for i in range(1, len(hc)):
+        max_h = max(max_h, hc[i] - hc[i-1])
+    max_w = max(vc[0], w - vc[-1])
+    for i in range(1, len(vc)):
+        max_w = max(max_w, vc[i] - vc[i-1])
+    return (max_h * max_w) % MOD
+`,
 };

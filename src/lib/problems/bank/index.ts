@@ -1299,6 +1299,16 @@ import { problem as myCalendarI } from './my-calendar-i';
 import { problem as findPlayersWithZeroOrOneLosses } from './find-players-with-zero-or-one-losses';
 import { problem as countUnreachablePairsAfterRemovingVertices } from './count-unreachable-pairs-after-removing-vertices';
 import { problem as maximumValueAtGivenIndexInBoundedArray } from './maximum-value-at-given-index-in-bounded-array';
+import { problem as wallsAndGates } from './walls-and-gates';
+import { problem as makingALargeIsland } from './making-a-large-island';
+import { problem as increasingOrderSearchTree } from './increasing-order-search-tree';
+import { problem as nextGreaterNodeInLinkedList } from './next-greater-node-in-linked-list';
+import { problem as longestCycleInGraph } from './longest-cycle-in-graph';
+import { problem as maximumSubarrayMinProduct } from './maximum-subarray-min-product';
+import { problem as stepsToMakeArrayNondecreasing } from './steps-to-make-array-nondecreasing';
+import { problem as countSubstringsDifferByOne } from './count-substrings-that-differ-by-one-character';
+import { problem as minimumOperationsToMoveBalls } from './minimum-operations-to-move-balls';
+import { problem as maximumAreaOfPieceOfCake } from './maximum-area-of-piece-of-cake';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2646,4 +2656,14 @@ export const problems: readonly Problem[] = [
   findPlayersWithZeroOrOneLosses,
   countUnreachablePairsAfterRemovingVertices,
   maximumValueAtGivenIndexInBoundedArray,
+  wallsAndGates,
+  makingALargeIsland,
+  increasingOrderSearchTree,
+  nextGreaterNodeInLinkedList,
+  longestCycleInGraph,
+  maximumSubarrayMinProduct,
+  stepsToMakeArrayNondecreasing,
+  countSubstringsDifferByOne,
+  minimumOperationsToMoveBalls,
+  maximumAreaOfPieceOfCake,
 ];
