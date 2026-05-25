@@ -16965,4 +16965,58 @@ def minimumDeletions(s):
             result.append(False)
     return result
 `,
+
+  'find-players-with-zero-or-one-losses': `def findWinners(matches):
+    matches = [list(m.to_py() if hasattr(m, 'to_py') else m) for m in (matches.to_py() if hasattr(matches, 'to_py') else matches)]
+    losses = {}
+    for w, l in matches:
+        if w not in losses:
+            losses[w] = 0
+        losses[l] = losses.get(l, 0) + 1
+    zero = sorted(p for p, c in losses.items() if c == 0)
+    one = sorted(p for p, c in losses.items() if c == 1)
+    return [zero, one]
+`,
+
+  'count-unreachable-pairs-after-removing-vertices': `def countPairs(n, edges):
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (edges.to_py() if hasattr(edges, 'to_py') else edges)]
+    parent = list(range(n))
+    size = [1] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    for a, b in edges:
+        pa, pb = find(a), find(b)
+        if pa != pb:
+            parent[pa] = pb
+            size[pb] += size[pa]
+    ans = 0
+    remaining = n
+    for i in range(n):
+        if find(i) == i:
+            sz = size[i]
+            ans += sz * (remaining - sz)
+            remaining -= sz
+    return ans
+`,
+
+  'maximum-value-at-given-index-in-bounded-array': `def maxValue(n, index, maxSum):
+    def sum_at_peak(v, length):
+        if length == 0:
+            return 0
+        if length >= v:
+            return v * (v + 1) // 2 + (length - v)
+        return v * length - length * (length - 1) // 2
+    lo, hi = 1, maxSum
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        total = sum_at_peak(mid, index + 1) + sum_at_peak(mid, n - index) - mid
+        if total <= maxSum:
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
 };

@@ -1296,6 +1296,9 @@ import { problem as findBottomLeftTreeValue } from './find-bottom-left-tree-valu
 import { problem as mostStonesRemovedSameRowOrColumn } from './most-stones-removed-same-row-or-column';
 import { problem as countUnreachablePairsOfNodes } from './count-unreachable-pairs-of-nodes';
 import { problem as myCalendarI } from './my-calendar-i';
+import { problem as findPlayersWithZeroOrOneLosses } from './find-players-with-zero-or-one-losses';
+import { problem as countUnreachablePairsAfterRemovingVertices } from './count-unreachable-pairs-after-removing-vertices';
+import { problem as maximumValueAtGivenIndexInBoundedArray } from './maximum-value-at-given-index-in-bounded-array';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2640,4 +2643,7 @@ export const problems: readonly Problem[] = [
   mostStonesRemovedSameRowOrColumn,
   countUnreachablePairsOfNodes,
   myCalendarI,
+  findPlayersWithZeroOrOneLosses,
+  countUnreachablePairsAfterRemovingVertices,
+  maximumValueAtGivenIndexInBoundedArray,
 ];

@@ -17178,4 +17178,62 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'find-players-with-zero-or-one-losses': (matches: unknown) => {
+    const m = matches as number[][];
+    const losses = new Map<number, number>();
+    for (const [w, l] of m) {
+      if (!losses.has(w!)) losses.set(w!, 0);
+      losses.set(l!, (losses.get(l!) ?? 0) + 1);
+    }
+    const zero: number[] = [], one: number[] = [];
+    for (const [p, cnt] of losses) {
+      if (cnt === 0) zero.push(p);
+      else if (cnt === 1) one.push(p);
+    }
+    zero.sort((a, b) => a - b);
+    one.sort((a, b) => a - b);
+    return [zero, one];
+  },
+
+  'count-unreachable-pairs-after-removing-vertices': (n: unknown, edges: unknown) => {
+    const N = n as number;
+    const e = edges as number[][];
+    const parent = Array.from({ length: N }, (_, i) => i);
+    const size = new Array<number>(N).fill(1);
+    function find(x: number): number {
+      return parent[x] === x ? x : (parent[x] = find(parent[x]!));
+    }
+    for (const [a, b] of e) {
+      const pa = find(a!), pb = find(b!);
+      if (pa !== pb) { parent[pa] = pb; size[pb]! += size[pa]!; }
+    }
+    let ans = 0, remaining = N;
+    for (let i = 0; i < N; i++) {
+      if (find(i) === i) {
+        const sz = size[i]!;
+        ans += sz * (remaining - sz);
+        remaining -= sz;
+      }
+    }
+    return ans;
+  },
+
+  'maximum-value-at-given-index-in-bounded-array': (n: unknown, index: unknown, maxSum: unknown) => {
+    const N = n as number, idx = index as number, ms = maxSum as number;
+    function sumAtPeak(v: bigint, len: bigint): bigint {
+      if (len === 0n) return 0n;
+      if (len >= v) return (v * (v + 1n)) / 2n + (len - v);
+      return v * len - (len * (len - 1n)) / 2n;
+    }
+    const cap = BigInt(ms);
+    let lo = 1, hi = ms;
+    while (lo < hi) {
+      const mid = Math.floor((lo + hi + 1) / 2);
+      const bm = BigInt(mid);
+      const total = sumAtPeak(bm, BigInt(idx + 1)) + sumAtPeak(bm, BigInt(N - idx)) - bm;
+      if (total <= cap) lo = mid; else hi = mid - 1;
+    }
+    return lo;
+  },
+
 };
