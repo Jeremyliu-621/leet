@@ -10187,4 +10187,32 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Math.max(1, 1 - mn);
   },
 
+  'check-if-all-as-before-bs': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let seenB = false;
+    for (const c of s) { if (c === 'b') seenB = true; else if (seenB) return false; }
+    return true;
+  },
+
+  'check-if-word-equals-summation': (...args: unknown[]) => {
+    const [fw, sw, tw] = args as [string, string, string];
+    const toNum = (w: string) => parseInt(w.split('').map(c => c.charCodeAt(0) - 97).join(''));
+    return toNum(fw) + toNum(sw) === toNum(tw);
+  },
+
+  'ways-to-buy-pens-pencils': (...args: unknown[]) => {
+    const [total, cost1, cost2] = args as [number, number, number];
+    let ans = 0;
+    for (let x = 0; x * cost1 <= total; x++) ans += Math.floor((total - x * cost1) / cost2) + 1;
+    return ans;
+  },
+
+  'check-array-sorted-rotated': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    let drops = 0;
+    for (let i = 0; i < n; i++) if (nums[i]! > nums[(i + 1) % n]!) drops++;
+    return drops <= 1;
+  },
+
 };

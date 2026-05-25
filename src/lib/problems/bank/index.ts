@@ -826,6 +826,10 @@ import { problem as longestSubstringWithoutRepeating } from './longest-substring
 import { problem as decompressRunLengthEncoding } from './decompress-run-length-encoding';
 import { problem as checkAlmostEquivalentStrings } from './check-almost-equivalent-strings';
 import { problem as minimumValuePositiveSteps } from './minimum-value-positive-steps';
+import { problem as checkIfAllAsBeforeBs } from './check-if-all-as-before-bs';
+import { problem as checkIfWordEqualsSummation } from './check-if-word-equals-summation';
+import { problem as waysToBuyPensPencils } from './ways-to-buy-pens-pencils';
+import { problem as checkArraySortedRotated } from './check-array-sorted-rotated';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1699,4 +1703,8 @@ export const problems: readonly Problem[] = [
   decompressRunLengthEncoding,
   checkAlmostEquivalentStrings,
   minimumValuePositiveSteps,
+  checkIfAllAsBeforeBs,
+  checkIfWordEqualsSummation,
+  waysToBuyPensPencils,
+  checkArraySortedRotated,
 ];

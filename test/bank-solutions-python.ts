@@ -9820,4 +9820,40 @@ def minStartValue(nums):
         mn = min(mn, s)
     return max(1, 1 - mn)
 `,
+
+  'check-if-all-as-before-bs': `
+def checkString(s):
+    seen_b = False
+    for c in s:
+        if c == 'b':
+            seen_b = True
+        elif seen_b:
+            return False
+    return True
+`,
+
+  'check-if-word-equals-summation': `
+def isSumEqual(firstWord, secondWord, targetWord):
+    def to_num(w):
+        return int(''.join(str(ord(c) - ord('a')) for c in w))
+    return to_num(firstWord) + to_num(secondWord) == to_num(targetWord)
+`,
+
+  'ways-to-buy-pens-pencils': `
+def waysToBuyPensPencils(total, cost1, cost2):
+    ans = 0
+    x = 0
+    while x * cost1 <= total:
+        ans += (total - x * cost1) // cost2 + 1
+        x += 1
+    return ans
+`,
+
+  'check-array-sorted-rotated': `
+def check(nums):
+    nums = list(nums)
+    n = len(nums)
+    drops = sum(1 for i in range(n) if nums[i] > nums[(i+1) % n])
+    return drops <= 1
+`,
 };
