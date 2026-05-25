@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 568 problems; 1975 tests; growing toward 600+.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing bank toward 550+; more easy/medium/hard problems. Browser-zoom QA (L).
+**Current focus:** Bank at 574 problems; 1990 tests; growing toward 600+.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (1990 tests passing).
+**Next up:** Continue growing bank toward 600+; more easy/medium/hard problems. Browser-zoom QA (L).
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -291,7 +291,8 @@ Still pending:
 - [x] find-kth-positive + minimum-length-string-operations + largest-integer-digit-swaps; bank at 533; 1867 tests
 - [x] unique-morse-code-words + number-of-good-pairs + check-if-array-sorted-rotated + maximum-product-difference + replace-words + minimum-time-difference + string-to-integer-atoi; bank at 540; 1888 tests. Marketing site updated to 540.
 - [x] minimum-deletions-char-frequencies + bulls-and-cows + minimum-sum-four-digit-number + count-pairs-absolute-difference-k + find-closest-number-to-zero + count-asterisks + count-even-numbers + count-segments-in-string + find-repeated-dna-sequences + widest-vertical-area + convert-1d-array-into-2d-array + check-if-all-chars-equal-occurrences + find-the-pivot-integer + maximum-sum-circular-subarray; bank at 555; 1933 tests.
-- [x] number-of-distinct-averages + find-positive-integer-with-negative + sum-of-squares-special-elements + minimum-operations-make-array-empty + reverse-words-in-string-iii + (re-registered: sum-of-squares, unique-email-addresses, count-binary-substrings, shortest-unsorted-continuous-subarray, max-chunks-to-make-sorted, champagne-tower, minimum-remove-to-make-valid-parentheses, bitwise-and-of-numbers-range, number-of-enclaves, jump-game-iv); bank at 568; 1975 tests. Marketing site updated to 568.
+- [x] number-of-distinct-averages + find-positive-integer-with-negative + sum-of-squares-special-elements + minimum-operations-make-array-empty; bank at 568; 1975 tests. Marketing site updated to 568.
+- [x] **6 more new problems** — candy (arrays/hard), minimum-falling-path-sum (dp/medium), count-nice-subarrays (sliding-window/medium), split-linked-list-in-parts (linked-list/medium), time-based-key-value-store (hash-map+bs/medium); fixed Python findAnagrams mismatch; 1990 tests; bank at 574.
 
 ---
 
