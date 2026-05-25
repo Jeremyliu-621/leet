@@ -17650,4 +17650,33 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
         cnt[x] = 0
     return True
 `,
+
+  'count-vowel-permutation': `def countVowelPermutation(n):
+    MOD = 10**9 + 7
+    n = int(n)
+    a = e = i = o = u = 1
+    for _ in range(n - 1):
+        a, e, i, o, u = (e + i + u) % MOD, (a + i) % MOD, (e + o) % MOD, i % MOD, (i + o) % MOD
+    return (a + e + i + o + u) % MOD
+`,
+
+  'longest-ideal-subsequence': `def longestIdealString(s, k):
+    k = int(k)
+    dp = [0] * 26
+    for c in s:
+        idx = ord(c) - ord('a')
+        best = max(dp[max(0, idx - k):min(26, idx + k + 1)])
+        dp[idx] = best + 1
+    return max(dp)
+`,
+
+  'minimum-string-length-after-removing-substrings': `def minLength(s):
+    stack = []
+    for c in s:
+        if stack and ((stack[-1] == 'A' and c == 'B') or (stack[-1] == 'C' and c == 'D')):
+            stack.pop()
+        else:
+            stack.append(c)
+    return len(stack)
+`,
 };

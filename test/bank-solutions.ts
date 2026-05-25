@@ -17774,4 +17774,45 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
+  'count-vowel-permutation': (n: unknown) => {
+    const MOD = 1_000_000_007n;
+    let a = 1n, e = 1n, i = 1n, o = 1n, u = 1n;
+    for (let step = 1; step < (n as number); step++) {
+      [a, e, i, o, u] = [
+        (e + i + u) % MOD,
+        (a + i) % MOD,
+        (e + o) % MOD,
+        i % MOD,
+        (i + o) % MOD,
+      ];
+    }
+    return Number((a + e + i + o + u) % MOD);
+  },
+
+  'longest-ideal-subsequence': (s: unknown, k: unknown) => {
+    const str = s as string, K = k as number;
+    const dp = new Array(26).fill(0);
+    for (const c of str) {
+      const idx = c.charCodeAt(0) - 97;
+      let best = 0;
+      for (let j = Math.max(0, idx - K); j <= Math.min(25, idx + K); j++) {
+        best = Math.max(best, dp[j] as number);
+      }
+      dp[idx] = best + 1;
+    }
+    return Math.max(...(dp as number[]));
+  },
+
+  'minimum-string-length-after-removing-substrings': (s: unknown) => {
+    const stack: string[] = [];
+    for (const c of s as string) {
+      if (stack.length > 0 && ((stack[stack.length - 1] === 'A' && c === 'B') || (stack[stack.length - 1] === 'C' && c === 'D'))) {
+        stack.pop();
+      } else {
+        stack.push(c);
+      }
+    }
+    return stack.length;
+  },
+
 };

@@ -1332,6 +1332,9 @@ import { problem as bestTimeToBuyAndSellStockIv } from './best-time-to-buy-and-s
 import { problem as shortestPathWithAlternatingColors } from './shortest-path-with-alternating-colors';
 import { problem as minimumSwapsToMakeSequencesIncreasing } from './minimum-swaps-to-make-sequences-increasing';
 import { problem as arrayOfDoubledPairs } from './array-of-doubled-pairs';
+import { problem as countVowelPermutation } from './count-vowel-permutation';
+import { problem as longestIdealSubsequence } from './longest-ideal-subsequence';
+import { problem as minimumStringLengthAfterRemovingSubstrings } from './minimum-string-length-after-removing-substrings';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2712,4 +2715,7 @@ export const problems: readonly Problem[] = [
   shortestPathWithAlternatingColors,
   minimumSwapsToMakeSequencesIncreasing,
   arrayOfDoubledPairs,
+  countVowelPermutation,
+  longestIdealSubsequence,
+  minimumStringLengthAfterRemovingSubstrings,
 ];
