@@ -19609,4 +19609,136 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
         ps += f[i]
     return mn if mn != float('inf') else 0
 `,
+
+  'cousins-in-binary-tree': `def isCousinsRunner(arr, x, y):
+    from collections import deque
+    raw = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
+    vals = [int(v) if isinstance(v, (int, float)) else None for v in raw]
+    x, y = int(x), int(y)
+
+    class TreeNode:
+        def __init__(self, val): self.val = val; self.left = None; self.right = None
+
+    if not vals: return False
+    root = TreeNode(vals[0])
+    q = deque([root]); i = 1
+    while q and i < len(vals):
+        node = q.popleft()
+        if i < len(vals) and vals[i] is not None:
+            node.left = TreeNode(vals[i]); q.append(node.left)
+        i += 1
+        if i < len(vals) and vals[i] is not None:
+            node.right = TreeNode(vals[i]); q.append(node.right)
+        i += 1
+
+    return isCousins(root, x, y)
+
+def isCousins(root, x, y):
+    xd = xp = yd = yp = None
+    def dfs(node, depth, parent):
+        nonlocal xd, xp, yd, yp
+        if not node: return
+        if node.val == x: xd, xp = depth, parent
+        if node.val == y: yd, yp = depth, parent
+        dfs(node.left, depth+1, node)
+        dfs(node.right, depth+1, node)
+    dfs(root, 0, None)
+    return xd == yd and xp is not yp
+`,
+
+  'all-nodes-distance-k-in-binary-tree': `def distanceKRunner(arr, target, k):
+    from collections import deque
+    raw = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
+    vals = [int(v) if isinstance(v, (int, float)) else None for v in raw]
+    target, k = int(target), int(k)
+
+    class TreeNode:
+        def __init__(self, val): self.val = val; self.left = None; self.right = None
+
+    if not vals: return []
+    root = TreeNode(vals[0])
+    q = deque([root]); i = 1
+    while q and i < len(vals):
+        node = q.popleft()
+        if i < len(vals) and vals[i] is not None:
+            node.left = TreeNode(vals[i]); q.append(node.left)
+        i += 1
+        if i < len(vals) and vals[i] is not None:
+            node.right = TreeNode(vals[i]); q.append(node.right)
+        i += 1
+
+    def find_node(node, val):
+        if not node: return None
+        if node.val == val: return node
+        return find_node(node.left, val) or find_node(node.right, val)
+
+    target_node = find_node(root, target)
+    return sorted(distanceK(root, target_node, k))
+
+def distanceK(root, target, k):
+    parent = {}
+    def build_parent(node, par):
+        if not node: return
+        if par: parent[node] = par
+        build_parent(node.left, node)
+        build_parent(node.right, node)
+    build_parent(root, None)
+    visited = {target}
+    queue = [target]
+    dist = 0
+    while dist < k and queue:
+        nxt = []
+        for node in queue:
+            for nb in [node.left, node.right, parent.get(node)]:
+                if nb and nb not in visited:
+                    visited.add(nb); nxt.append(nb)
+        queue = nxt; dist += 1
+    return [n.val for n in queue]
+`,
+
+  'open-lock': `def openLock(deadends, target):
+    deadends = list(deadends.to_py() if hasattr(deadends, 'to_py') else deadends)
+    target = str(target)
+    dead = set(deadends)
+    if '0000' in dead: return -1
+    if target == '0000': return 0
+    visited = {'0000'}
+    queue = ['0000']
+    steps = 0
+    while queue:
+        steps += 1
+        nxt = []
+        for state in queue:
+            for i in range(4):
+                d = int(state[i])
+                for delta in [1, -1]:
+                    nd = (d + delta) % 10
+                    ns = state[:i] + str(nd) + state[i+1:]
+                    if ns == target: return steps
+                    if ns not in visited and ns not in dead:
+                        visited.add(ns); nxt.append(ns)
+        queue = nxt
+    return -1
+`,
+
+  'maximize-sum-of-array-after-k-negations': `def largestSumAfterKNegations(nums, k):
+    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    k = int(k)
+    for i in range(len(nums)):
+        if k > 0 and nums[i] < 0:
+            nums[i] = -nums[i]; k -= 1
+    if k % 2 == 1:
+        nums.sort(); nums[0] = -nums[0]
+    return sum(nums)
+`,
+
+  'remove-duplicates-from-sorted-list': `def deleteDuplicates(head):
+    head = list(head.to_py() if hasattr(head, 'to_py') else head)
+    if not head: return []
+    result = [head[0]]
+    for i in range(1, len(head)):
+        if head[i] != head[i-1]:
+            result.append(head[i])
+    return result
+`,
 };

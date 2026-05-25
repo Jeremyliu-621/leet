@@ -1466,6 +1466,11 @@ import { problem as minimizeMaximumDifferenceOfPairs } from './minimize-maximum-
 import { problem as minimumNumberOfKeypresses } from './minimum-number-of-keypresses';
 import { problem as longestSubarrayAtMostKFrequency } from './longest-subarray-at-most-k-frequency';
 import { problem as minimumDeletionsToMakeStringKSpecial } from './minimum-deletions-to-make-string-k-special';
+import { problem as cousinsInBinaryTree } from './cousins-in-binary-tree';
+import { problem as allNodesDistanceKInBinaryTree } from './all-nodes-distance-k-in-binary-tree';
+import { problem as openLock } from './open-lock';
+import { problem as maximizeSumOfArrayAfterKNegations } from './maximize-sum-of-array-after-k-negations';
+import { problem as removeDuplicatesFromSortedList } from './remove-duplicates-from-sorted-list';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2980,4 +2985,9 @@ export const problems: readonly Problem[] = [
   minimumNumberOfKeypresses,
   longestSubarrayAtMostKFrequency,
   minimumDeletionsToMakeStringKSpecial,
+  cousinsInBinaryTree,
+  allNodesDistanceKInBinaryTree,
+  openLock,
+  maximizeSumOfArrayAfterKNegations,
+  removeDuplicatesFromSortedList,
 ];

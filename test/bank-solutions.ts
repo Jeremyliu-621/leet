@@ -19558,4 +19558,132 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return n === 0 ? 0 : mn;
   },
 
+  'cousins-in-binary-tree': (arr: unknown, x: unknown, y: unknown) => {
+    class TreeNode {
+      val: number; left: TreeNode | null = null; right: TreeNode | null = null;
+      constructor(val: number) { this.val = val; }
+    }
+    function fromArray(a: (number | null)[]): TreeNode | null {
+      if (!a || a.length === 0) return null;
+      const root = new TreeNode(a[0]!);
+      const queue: TreeNode[] = [root];
+      let i = 1;
+      while (queue.length > 0 && i < a.length) {
+        const node = queue.shift()!;
+        if (a[i] !== null && a[i] !== undefined) { node.left = new TreeNode(a[i]!); queue.push(node.left); }
+        i++;
+        if (i < a.length && a[i] !== null && a[i] !== undefined) { node.right = new TreeNode(a[i]!); queue.push(node.right); }
+        i++;
+      }
+      return root;
+    }
+    const root = fromArray(arr as (number | null)[]);
+    const xv = x as number, yv = y as number;
+    let xDepth = -1, xParent: TreeNode | null = null, yDepth = -1, yParent: TreeNode | null = null;
+    function dfs(node: TreeNode | null, depth: number, parent: TreeNode | null): void {
+      if (!node) return;
+      if (node.val === xv) { xDepth = depth; xParent = parent; }
+      if (node.val === yv) { yDepth = depth; yParent = parent; }
+      dfs(node.left, depth + 1, node);
+      dfs(node.right, depth + 1, node);
+    }
+    dfs(root, 0, null);
+    return xDepth === yDepth && xParent !== yParent;
+  },
+
+  'all-nodes-distance-k-in-binary-tree': (arr: unknown, target: unknown, k: unknown) => {
+    class TreeNode {
+      val: number; left: TreeNode | null = null; right: TreeNode | null = null;
+      constructor(val: number) { this.val = val; }
+    }
+    function fromArray(a: (number | null)[]): TreeNode | null {
+      if (!a || a.length === 0) return null;
+      const root = new TreeNode(a[0]!);
+      const queue: TreeNode[] = [root];
+      let i = 1;
+      while (queue.length > 0 && i < a.length) {
+        const node = queue.shift()!;
+        if (a[i] !== null && a[i] !== undefined) { node.left = new TreeNode(a[i]!); queue.push(node.left); }
+        i++;
+        if (i < a.length && a[i] !== null && a[i] !== undefined) { node.right = new TreeNode(a[i]!); queue.push(node.right); }
+        i++;
+      }
+      return root;
+    }
+    function findNode(node: TreeNode | null, val: number): TreeNode | null {
+      if (!node) return null;
+      if (node.val === val) return node;
+      return findNode(node.left, val) ?? findNode(node.right, val);
+    }
+    const root = fromArray(arr as (number | null)[]);
+    const targetNode = findNode(root, target as number);
+    const kk = k as number;
+    const parent = new Map<TreeNode, TreeNode>();
+    function buildParent(node: TreeNode | null, par: TreeNode | null): void {
+      if (!node) return;
+      if (par) parent.set(node, par);
+      buildParent(node.left, node);
+      buildParent(node.right, node);
+    }
+    buildParent(root, null);
+    const visited = new Set<TreeNode>([targetNode!]);
+    let queue: TreeNode[] = [targetNode!];
+    let dist = 0;
+    while (dist < kk && queue.length > 0) {
+      const next: TreeNode[] = [];
+      for (const node of queue) {
+        const neighbors = [node.left, node.right, parent.get(node) ?? null];
+        for (const nb of neighbors) {
+          if (nb && !visited.has(nb)) { visited.add(nb); next.push(nb); }
+        }
+      }
+      queue = next;
+      dist++;
+    }
+    return queue.map(n => n.val).sort((a, b) => a - b);
+  },
+
+  'open-lock': (deadends: unknown, target: unknown) => {
+    const dead = new Set(deadends as string[]);
+    const tgt = target as string;
+    if (dead.has('0000')) return -1;
+    if (tgt === '0000') return 0;
+    const visited = new Set<string>(['0000']);
+    let queue: string[] = ['0000'];
+    let steps = 0;
+    while (queue.length > 0) {
+      steps++;
+      const next: string[] = [];
+      for (const state of queue) {
+        for (let i = 0; i < 4; i++) {
+          const d = parseInt(state[i]!);
+          for (const delta of [1, -1]) {
+            const nd = ((d + delta) + 10) % 10;
+            const ns = state.slice(0, i) + nd + state.slice(i + 1);
+            if (ns === tgt) return steps;
+            if (!visited.has(ns) && !dead.has(ns)) { visited.add(ns); next.push(ns); }
+          }
+        }
+      }
+      queue = next;
+    }
+    return -1;
+  },
+
+  'maximize-sum-of-array-after-k-negations': (nums: unknown, k: unknown) => {
+    const arr = [...(nums as number[])].sort((a, b) => a - b);
+    let kk = k as number;
+    for (let i = 0; i < arr.length && kk > 0 && arr[i]! < 0; i++, kk--) arr[i] = -arr[i]!;
+    if (kk % 2 === 1) { arr.sort((a, b) => a - b); arr[0] = -arr[0]!; }
+    return arr.reduce((s, v) => s + v, 0);
+  },
+
+  'remove-duplicates-from-sorted-list': (head: unknown) => {
+    const h = head as number[];
+    if (!h || h.length === 0) return [];
+    const result: number[] = [h[0]!];
+    for (let i = 1; i < h.length; i++) { if (h[i] !== h[i - 1]) result.push(h[i]!); }
+    return result;
+  },
+
 };

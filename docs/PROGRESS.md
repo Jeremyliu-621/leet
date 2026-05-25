@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1417 problems; 4500 tests green.
+**Current focus:** Bank at 1422 problems; 4515 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems (Batch 46+); UI/UX polish; draggable splitter; options improvements.
 
@@ -397,6 +397,7 @@ Still pending:
 - [x] **10 more classic problems (Batch 46)** — super-egg-drop (hard DP, inverse floor-counting 1D rolling array), maximum-score-spliced-array (medium DP, Kadane on difference array), count-increasing-quadruplets (hard DP, O(n³) left-count × right-count per inversion pair), ways-to-make-fair-array (medium arrays, prefix/suffix even+odd sums), minimum-initial-energy-to-finish-tasks (medium greedy, sort desc by min−actual), construct-target-array-with-multiple-sums (hard simulation, reverse modulo shrink), minimize-maximum-difference-of-pairs (medium binary-search, greedy feasibility), minimum-number-of-keypresses (medium strings, sort freq desc × floor(i/9)+1), longest-subarray-at-most-k-frequency (medium sliding-window, Map freq shrink), minimum-deletions-to-make-string-k-special (medium strings, O(26²) sorted freq scan); bank at **1417**; 4500 tests.
 - [x] **Problem browser UX (sort + random)** — sort dropdown (default / title A→Z / easy→hard / hard→easy) added next to search; "⚂ random" button opens a random problem from the current filtered set; both wired to reset pagination; sort uses useMemo for efficiency.
 - [x] **Fix reverse-string + first-bad-version** — reverse-string updated to char-array in-place swap spec (two-pointers tag); first-bad-version test cases aligned to spec.
+- [x] **5 more classic problems (Batch 45-local)** — cousins-in-binary-tree (tree/easy, BFS depth+parent check), all-nodes-distance-k-in-binary-tree (tree+graph/medium, parent map + BFS), open-lock (graph/medium, BFS on 4-digit state space), maximize-sum-after-k-negations (arrays+math/easy, greedy sort negate negatives), remove-duplicates-from-sorted-list (linked-list/easy, single-pass dedup); bank at **1409**; 4476 tests.
 
 ---
 
