@@ -200,6 +200,16 @@ export function Popup() {
     }
   }
 
+  function handlePracticeNow(): void {
+    try {
+      void chrome.tabs.create({
+        url: chrome.runtime.getURL('src/pages/challenge/index.html'),
+      });
+    } catch {
+      // Outside an extension context — silently ignore.
+    }
+  }
+
   async function handleThemeChange(next: ThemePreference): Promise<void> {
     if (!data || data.theme === next) return;
     applyTheme(next);
@@ -331,13 +341,22 @@ export function Popup() {
         >
           {blockLabel}
         </button>
-        <button
-          type="button"
-          onClick={handleOpenSettings}
-          className="w-full border border-border bg-bg px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-surface focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
-        >
-          Open settings
-        </button>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={handlePracticeNow}
+            className="flex-1 border border-accent bg-accent px-3 py-2 text-xs font-semibold text-on-accent transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+          >
+            Practice now
+          </button>
+          <button
+            type="button"
+            onClick={handleOpenSettings}
+            className="flex-1 border border-border bg-bg px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-surface focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+          >
+            Settings
+          </button>
+        </div>
       </section>
 
       <section className="mt-5 border-t border-border pt-4" role="radiogroup" aria-label="Theme">
