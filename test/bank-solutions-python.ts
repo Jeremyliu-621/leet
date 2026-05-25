@@ -18721,4 +18721,46 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
         j += 1
     return True
 `,
+
+  'greatest-common-divisor-of-strings': `def gcdOfStrings(str1, str2):
+    str1 = str(str1)
+    str2 = str(str2)
+    if str1 + str2 != str2 + str1:
+        return ''
+    from math import gcd
+    return str1[:gcd(len(str1), len(str2))]
+`,
+
+  'maximum-distance-in-arrays': `def maxDistance(arrays):
+    arrays = [list(arr.to_py() if hasattr(arr, 'to_py') else arr) for arr in (arrays.to_py() if hasattr(arrays, 'to_py') else arrays)]
+    min_val = arrays[0][0]
+    max_val = arrays[0][-1]
+    result = 0
+    for i in range(1, len(arrays)):
+        first = arrays[i][0]
+        last = arrays[i][-1]
+        result = max(result, abs(last - min_val), abs(max_val - first))
+        min_val = min(min_val, first)
+        max_val = max(max_val, last)
+    return result
+`,
+
+  'path-with-maximum-gold': `def getMaximumGold(grid):
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    m, n = len(grid), len(grid[0])
+    def dfs(r, c):
+        if r < 0 or r >= m or c < 0 or c >= n or grid[r][c] == 0:
+            return 0
+        val = grid[r][c]
+        grid[r][c] = 0
+        best = val + max(dfs(r+1,c), dfs(r-1,c), dfs(r,c+1), dfs(r,c-1))
+        grid[r][c] = val
+        return best
+    ans = 0
+    for r in range(m):
+        for c in range(n):
+            if grid[r][c] > 0:
+                ans = max(ans, dfs(r, c))
+    return ans
+`,
 };

@@ -1404,6 +1404,9 @@ import { problem as myCalendarIi } from './my-calendar-ii';
 import { problem as taskSchedulerIi } from './task-scheduler-ii';
 import { problem as swappingNodesInALinkedList } from './swapping-nodes-in-a-linked-list';
 import { problem as movePiecesToObtainAString } from './move-pieces-to-obtain-a-string';
+import { problem as greatestCommonDivisorOfStrings } from './greatest-common-divisor-of-strings';
+import { problem as maximumDistanceInArrays } from './maximum-distance-in-arrays';
+import { problem as pathWithMaximumGold } from './path-with-maximum-gold';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2856,4 +2859,7 @@ export const problems: readonly Problem[] = [
   taskSchedulerIi,
   swappingNodesInALinkedList,
   movePiecesToObtainAString,
+  greatestCommonDivisorOfStrings,
+  maximumDistanceInArrays,
+  pathWithMaximumGold,
 ];

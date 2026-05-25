@@ -18791,4 +18791,44 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count - 1;
   },
 
+  'greatest-common-divisor-of-strings': (str1: unknown, str2: unknown) => {
+    const s1 = str1 as string, s2 = str2 as string;
+    if (s1 + s2 !== s2 + s1) return '';
+    const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+    return s1.substring(0, gcd(s1.length, s2.length));
+  },
+
+  'maximum-distance-in-arrays': (arrays: unknown) => {
+    const arrs = arrays as number[][];
+    let minVal = arrs[0]![0]!;
+    let maxVal = arrs[0]![arrs[0]!.length - 1]!;
+    let result = 0;
+    for (let i = 1; i < arrs.length; i++) {
+      const first = arrs[i]![0]!;
+      const last = arrs[i]![arrs[i]!.length - 1]!;
+      result = Math.max(result, Math.abs(last - minVal), Math.abs(maxVal - first));
+      minVal = Math.min(minVal, first);
+      maxVal = Math.max(maxVal, last);
+    }
+    return result;
+  },
+
+  'path-with-maximum-gold': (grid: unknown) => {
+    const g = grid as number[][];
+    const m = g.length, n = g[0]!.length;
+    let ans = 0;
+    function dfs(r: number, c: number): number {
+      if (r < 0 || r >= m || c < 0 || c >= n || g[r]![c] === 0) return 0;
+      const val = g[r]![c]!;
+      g[r]![c] = 0;
+      const best = val + Math.max(dfs(r+1,c), dfs(r-1,c), dfs(r,c+1), dfs(r,c-1));
+      g[r]![c] = val;
+      return best;
+    }
+    for (let r = 0; r < m; r++)
+      for (let c = 0; c < n; c++)
+        if (g[r]![c]! > 0) ans = Math.max(ans, dfs(r, c));
+    return ans;
+  },
+
 };
