@@ -12779,4 +12779,235 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Math.min(mis, s.length - mis);
   },
 
+  'rotate-function': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const total = nums.reduce((a, b) => a + b, 0);
+    let f = 0;
+    for (let i = 0; i < n; i++) f += i * (nums[i] as number);
+    let max = f;
+    for (let k = 1; k < n; k++) {
+      f = f + total - n * (nums[n - k] as number);
+      max = Math.max(max, f);
+    }
+    return max;
+  },
+
+  'maximum-sum-of-distinct-subarrays-with-length-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const freq = new Map<number, number>();
+    let sum = 0, max = 0;
+    for (let r = 0; r < nums.length; r++) {
+      const rv = nums[r] as number;
+      freq.set(rv, (freq.get(rv) ?? 0) + 1);
+      sum += rv;
+      if (r >= k) {
+        const lv = nums[r - k] as number;
+        sum -= lv;
+        const lf = (freq.get(lv) ?? 0) - 1;
+        if (lf === 0) freq.delete(lv); else freq.set(lv, lf);
+      }
+      if (r >= k - 1 && freq.size === k) max = Math.max(max, sum);
+    }
+    return max;
+  },
+
+  'find-the-sum-of-encrypted-integers': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return nums.reduce((s, n) => {
+      const str = String(n);
+      const maxD = str.split('').reduce((m, c) => Math.max(m, +c), 0);
+      return s + Number(String(maxD).repeat(str.length));
+    }, 0);
+  },
+
+  'maximum-number-of-weeks-for-which-you-can-work': (...args: unknown[]) => {
+    const milestones = args[0] as number[];
+    const total = milestones.reduce((a, b) => a + b, 0);
+    const max = Math.max(...milestones);
+    const rest = total - max;
+    return max <= rest + 1 ? total : 2 * rest + 1;
+  },
+
+  'count-complete-subarrays-in-an-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const total = new Set(nums).size;
+    let count = 0;
+    for (let l = 0; l < nums.length; l++) {
+      const seen = new Set<number>();
+      for (let r = l; r < nums.length; r++) {
+        seen.add(nums[r] as number);
+        if (seen.size === total) count++;
+      }
+    }
+    return count;
+  },
+
+  'count-subarrays-where-max-element-appears-at-least-k-times': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const M = Math.max(...nums);
+    const positions: number[] = [];
+    let count = 0;
+    for (let r = 0; r < nums.length; r++) {
+      if ((nums[r] as number) === M) positions.push(r);
+      if (positions.length >= k) count += (positions[positions.length - k] as number) + 1;
+    }
+    return count;
+  },
+
+  'minimum-index-of-a-valid-split': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const freq: Record<number, number> = {};
+    for (const x of nums) freq[x] = (freq[x] ?? 0) + 1;
+    let dom = 0, maxF = 0;
+    for (const [k, v] of Object.entries(freq)) { if (v > maxF) { maxF = v; dom = +k; } }
+    const total = maxF;
+    let leftFreq = 0;
+    for (let i = 0; i < n - 1; i++) {
+      if ((nums[i] as number) === dom) leftFreq++;
+      const rightFreq = total - leftFreq;
+      if (leftFreq * 2 > i + 1 && rightFreq * 2 > n - i - 1) return i;
+    }
+    return -1;
+  },
+
+  'last-moment-before-ants-fall-off-a-plank': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const left = args[1] as number[];
+    const right = args[2] as number[];
+    const ml = left.length ? Math.max(...left) : 0;
+    const mr = right.length ? Math.max(...right.map(p => n - p)) : 0;
+    return Math.max(ml, mr);
+  },
+
+  'check-if-two-chessboard-squares-have-same-color': (...args: unknown[]) => {
+    const c1 = args[0] as string;
+    const c2 = args[1] as string;
+    const col1 = c1.charCodeAt(0) - 96, row1 = parseInt(c1[1] as string);
+    const col2 = c2.charCodeAt(0) - 96, row2 = parseInt(c2[1] as string);
+    return (col1 + row1 + col2 + row2) % 2 === 0;
+  },
+
+  'count-number-of-teams': (...args: unknown[]) => {
+    const rating = args[0] as number[];
+    const n = rating.length;
+    let count = 0;
+    for (let j = 1; j < n - 1; j++) {
+      let ls = 0, ll = 0, rs = 0, rl = 0;
+      for (let i = 0; i < j; i++) {
+        if ((rating[i] as number) < (rating[j] as number)) ls++;
+        else if ((rating[i] as number) > (rating[j] as number)) ll++;
+      }
+      for (let kk = j + 1; kk < n; kk++) {
+        if ((rating[kk] as number) > (rating[j] as number)) rl++;
+        else if ((rating[kk] as number) < (rating[j] as number)) rs++;
+      }
+      count += ls * rl + ll * rs;
+    }
+    return count;
+  },
+
+  'remove-colored-pieces-if-both-neighbors-are-same-color': (...args: unknown[]) => {
+    const colors = args[0] as string;
+    let alice = 0, bob = 0;
+    for (let i = 1; i < colors.length - 1; i++) {
+      if (colors[i] === 'A' && colors[i - 1] === 'A' && colors[i + 1] === 'A') alice++;
+      if (colors[i] === 'B' && colors[i - 1] === 'B' && colors[i + 1] === 'B') bob++;
+    }
+    return alice > bob;
+  },
+
+  'longest-alternating-subarray': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let ans = -1;
+    for (let i = 0; i < nums.length - 1; i++) {
+      if ((nums[i + 1] as number) - (nums[i] as number) !== 1) continue;
+      let len = 2;
+      for (let j = i + 2; j < nums.length; j++) {
+        const r = j - i;
+        const expected = r % 2 === 1 ? 1 : -1;
+        if ((nums[j] as number) - (nums[j - 1] as number) === expected) len++;
+        else break;
+      }
+      ans = Math.max(ans, len);
+    }
+    return ans;
+  },
+
+  'divisible-and-non-divisible-sums-difference': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const m = args[1] as number;
+    let num1 = 0, num2 = 0;
+    for (let i = 1; i <= n; i++) { if (i % m === 0) num2 += i; else num1 += i; }
+    return num1 - num2;
+  },
+
+  'minimum-element-after-replacement-with-digit-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return Math.min(...nums.map(n => String(n).split('').reduce((s, d) => s + parseInt(d), 0)));
+  },
+
+  'pick-gifts': (...args: unknown[]) => {
+    const gifts = [...(args[0] as number[])];
+    const k = args[1] as number;
+    for (let i = 0; i < k; i++) {
+      const maxVal = Math.max(...gifts);
+      const idx = gifts.indexOf(maxVal);
+      gifts[idx] = Math.floor(Math.sqrt(maxVal));
+    }
+    return gifts.reduce((a, b) => a + b, 0);
+  },
+
+  'minimum-operations-to-make-array-xor-equal-to-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const xorAll = nums.reduce((x, n) => x ^ n, 0);
+    return (xorAll ^ k).toString(2).split('').filter(b => b === '1').length;
+  },
+
+  'maximum-count-of-positive-integer-and-negative-integer': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const pos = nums.filter(n => n > 0).length;
+    const neg = nums.filter(n => n < 0).length;
+    return Math.max(pos, neg);
+  },
+
+  'number-of-students-doing-homework-at-a-given-time': (...args: unknown[]) => {
+    const startTime = args[0] as number[];
+    const endTime = args[1] as number[];
+    const queryTime = args[2] as number;
+    return startTime.filter((s, i) => s <= queryTime && (endTime[i] as number) >= queryTime).length;
+  },
+
+  'find-the-xor-of-numbers-which-appear-twice': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq: Record<number, number> = {};
+    for (const n of nums) freq[n] = (freq[n] ?? 0) + 1;
+    return Object.entries(freq).reduce((x, [k, v]) => v === 2 ? x ^ +k : x, 0);
+  },
+
+  'minimum-sum-mountain-triplet-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const prefMin = Array<number>(n).fill(Infinity);
+    const sufMin = Array<number>(n).fill(Infinity);
+    for (let i = 1; i < n; i++) prefMin[i] = Math.min(prefMin[i - 1] as number, nums[i - 1] as number);
+    for (let i = n - 2; i >= 0; i--) sufMin[i] = Math.min(sufMin[i + 1] as number, nums[i + 1] as number);
+    let ans = Infinity;
+    for (let j = 1; j < n - 1; j++) {
+      const pmin = prefMin[j] as number, smin = sufMin[j] as number, v = nums[j] as number;
+      if (pmin < v && smin < v) ans = Math.min(ans, pmin + v + smin);
+    }
+    return ans === Infinity ? -1 : ans;
+  },
+
+  'minimum-operations-to-exceed-threshold-value-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    return nums.filter(x => x < k).length;
+  },
+
 };

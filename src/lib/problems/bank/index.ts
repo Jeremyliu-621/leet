@@ -1041,6 +1041,27 @@ import { problem as deleteCharactersToMakeFancyString } from './delete-character
 import { problem as threeConsecutiveOdds } from './three-consecutive-odds';
 import { problem as countEqualAndDivisiblePairsInArray } from './count-equal-and-divisible-pairs-in-array';
 import { problem as minimumChangesToMakeAlternatingBinaryString } from './minimum-changes-to-make-alternating-binary-string';
+import { problem as rotateFunction } from './rotate-function';
+import { problem as maximumSumOfDistinctSubarraysWithLengthK } from './maximum-sum-of-distinct-subarrays-with-length-k';
+import { problem as findTheSumOfEncryptedIntegers } from './find-the-sum-of-encrypted-integers';
+import { problem as maximumNumberOfWeeksForWhichYouCanWork } from './maximum-number-of-weeks-for-which-you-can-work';
+import { problem as countCompleteSubarraysInAnArray } from './count-complete-subarrays-in-an-array';
+import { problem as countSubarraysWhereMaxElementAppearsAtLeastKTimes } from './count-subarrays-where-max-element-appears-at-least-k-times';
+import { problem as minimumIndexOfAValidSplit } from './minimum-index-of-a-valid-split';
+import { problem as lastMomentBeforeAntsFallOffAPlank } from './last-moment-before-ants-fall-off-a-plank';
+import { problem as checkIfTwoChessboardSquaresHaveSameColor } from './check-if-two-chessboard-squares-have-same-color';
+import { problem as countNumberOfTeams } from './count-number-of-teams';
+import { problem as removeColoredPiecesIfBothNeighborsAreSameColor } from './remove-colored-pieces-if-both-neighbors-are-same-color';
+import { problem as longestAlternatingSubarray } from './longest-alternating-subarray';
+import { problem as divisibleAndNonDivisibleSumsDifference } from './divisible-and-non-divisible-sums-difference';
+import { problem as minimumElementAfterReplacementWithDigitSum } from './minimum-element-after-replacement-with-digit-sum';
+import { problem as pickGifts } from './pick-gifts';
+import { problem as minimumOperationsToMakeArrayXorEqualToK } from './minimum-operations-to-make-array-xor-equal-to-k';
+import { problem as maximumCountOfPositiveIntegerAndNegativeInteger } from './maximum-count-of-positive-integer-and-negative-integer';
+import { problem as numberOfStudentsDoingHomeworkAtAGivenTime } from './number-of-students-doing-homework-at-a-given-time';
+import { problem as findTheXorOfNumbersWhichAppearTwice } from './find-the-xor-of-numbers-which-appear-twice';
+import { problem as minimumSumMountainTripletII } from './minimum-sum-mountain-triplet-ii';
+import { problem as minimumOperationsToExceedThresholdValueI } from './minimum-operations-to-exceed-threshold-value-i';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2130,4 +2151,25 @@ export const problems: readonly Problem[] = [
   threeConsecutiveOdds,
   countEqualAndDivisiblePairsInArray,
   minimumChangesToMakeAlternatingBinaryString,
+  rotateFunction,
+  maximumSumOfDistinctSubarraysWithLengthK,
+  findTheSumOfEncryptedIntegers,
+  maximumNumberOfWeeksForWhichYouCanWork,
+  countCompleteSubarraysInAnArray,
+  countSubarraysWhereMaxElementAppearsAtLeastKTimes,
+  minimumIndexOfAValidSplit,
+  lastMomentBeforeAntsFallOffAPlank,
+  checkIfTwoChessboardSquaresHaveSameColor,
+  countNumberOfTeams,
+  removeColoredPiecesIfBothNeighborsAreSameColor,
+  longestAlternatingSubarray,
+  divisibleAndNonDivisibleSumsDifference,
+  minimumElementAfterReplacementWithDigitSum,
+  pickGifts,
+  minimumOperationsToMakeArrayXorEqualToK,
+  maximumCountOfPositiveIntegerAndNegativeInteger,
+  numberOfStudentsDoingHomeworkAtAGivenTime,
+  findTheXorOfNumbersWhichAppearTwice,
+  minimumSumMountainTripletII,
+  minimumOperationsToExceedThresholdValueI,
 ];

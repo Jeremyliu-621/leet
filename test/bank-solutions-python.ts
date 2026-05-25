@@ -12310,4 +12310,263 @@ def minOperations(s):
     mis = sum(1 for i, c in enumerate(s) if c != '01'[i % 2])
     return min(mis, len(s) - mis)
 `,
+
+  'rotate-function': `
+def maxRotateFunction(nums):
+    nums_list = [int(x) for x in nums]
+    n = len(nums_list)
+    total = sum(nums_list)
+    f = sum(i * nums_list[i] for i in range(n))
+    max_f = f
+    for k in range(1, n):
+        f = f + total - n * nums_list[n - k]
+        max_f = max(max_f, f)
+    return max_f
+`,
+
+  'maximum-sum-of-distinct-subarrays-with-length-k': `
+def maximumSubarraySum(nums, k):
+    nums_list = [int(x) for x in nums]
+    k = int(k)
+    from collections import defaultdict
+    freq = defaultdict(int)
+    s = 0
+    max_s = 0
+    for r in range(len(nums_list)):
+        freq[nums_list[r]] += 1
+        s += nums_list[r]
+        if r >= k:
+            l = nums_list[r - k]
+            s -= l
+            freq[l] -= 1
+            if freq[l] == 0:
+                del freq[l]
+        if r >= k - 1 and len(freq) == k:
+            max_s = max(max_s, s)
+    return max_s
+`,
+
+  'find-the-sum-of-encrypted-integers': `
+def sumOfEncryptedInt(nums):
+    total = 0
+    for n in nums:
+        n = int(n)
+        s = str(n)
+        max_d = max(int(c) for c in s)
+        total += int(str(max_d) * len(s))
+    return total
+`,
+
+  'maximum-number-of-weeks-for-which-you-can-work': `
+def numberOfWeeks(milestones):
+    milestones = [int(x) for x in milestones]
+    total = sum(milestones)
+    mx = max(milestones)
+    rest = total - mx
+    return total if mx <= rest + 1 else 2 * rest + 1
+`,
+
+  'count-complete-subarrays-in-an-array': `
+def countCompleteSubarrays(nums):
+    nums_list = [int(x) for x in nums]
+    total = len(set(nums_list))
+    count = 0
+    for l in range(len(nums_list)):
+        seen = set()
+        for r in range(l, len(nums_list)):
+            seen.add(nums_list[r])
+            if len(seen) == total:
+                count += 1
+    return count
+`,
+
+  'count-subarrays-where-max-element-appears-at-least-k-times': `
+def countSubarrays(nums, k):
+    nums_list = [int(x) for x in nums]
+    k = int(k)
+    M = max(nums_list)
+    positions = []
+    count = 0
+    for r in range(len(nums_list)):
+        if nums_list[r] == M:
+            positions.append(r)
+        if len(positions) >= k:
+            count += positions[len(positions) - k] + 1
+    return count
+`,
+
+  'minimum-index-of-a-valid-split': `
+def minimumIndex(nums):
+    nums_list = [int(x) for x in nums]
+    n = len(nums_list)
+    from collections import Counter
+    freq = Counter(nums_list)
+    dom, total = max(freq.items(), key=lambda x: x[1])
+    left_freq = 0
+    for i in range(n - 1):
+        if nums_list[i] == dom:
+            left_freq += 1
+        right_freq = total - left_freq
+        if left_freq * 2 > i + 1 and right_freq * 2 > n - i - 1:
+            return i
+    return -1
+`,
+
+  'last-moment-before-ants-fall-off-a-plank': `
+def getLastMoment(n, left, right):
+    n = int(n)
+    left_list = [int(x) for x in left] if hasattr(left, '__iter__') else []
+    right_list = [int(x) for x in right] if hasattr(right, '__iter__') else []
+    ml = max(left_list) if left_list else 0
+    mr = max(n - p for p in right_list) if right_list else 0
+    return max(ml, mr)
+`,
+
+  'check-if-two-chessboard-squares-have-same-color': `
+def checkTwoChessboards(coordinate1, coordinate2):
+    col1 = ord(coordinate1[0]) - 96
+    row1 = int(coordinate1[1])
+    col2 = ord(coordinate2[0]) - 96
+    row2 = int(coordinate2[1])
+    return (col1 + row1 + col2 + row2) % 2 == 0
+`,
+
+  'count-number-of-teams': `
+def numTeams(rating):
+    rating = [int(x) for x in rating]
+    n = len(rating)
+    count = 0
+    for j in range(1, n - 1):
+        ls = ll = rs = rl = 0
+        for i in range(j):
+            if rating[i] < rating[j]: ls += 1
+            elif rating[i] > rating[j]: ll += 1
+        for k in range(j + 1, n):
+            if rating[k] > rating[j]: rl += 1
+            elif rating[k] < rating[j]: rs += 1
+        count += ls * rl + ll * rs
+    return count
+`,
+
+  'remove-colored-pieces-if-both-neighbors-are-same-color': `
+def winnerOfGame(colors):
+    alice = bob = 0
+    for i in range(1, len(colors) - 1):
+        if colors[i] == 'A' and colors[i-1] == 'A' and colors[i+1] == 'A':
+            alice += 1
+        if colors[i] == 'B' and colors[i-1] == 'B' and colors[i+1] == 'B':
+            bob += 1
+    return alice > bob
+`,
+
+  'longest-alternating-subarray': `
+def alternatingSubarray(nums):
+    nums_list = [int(x) for x in nums]
+    ans = -1
+    for i in range(len(nums_list) - 1):
+        if nums_list[i+1] - nums_list[i] != 1:
+            continue
+        length = 2
+        for j in range(i + 2, len(nums_list)):
+            r = j - i
+            expected = 1 if r % 2 == 1 else -1
+            if nums_list[j] - nums_list[j-1] == expected:
+                length += 1
+            else:
+                break
+        ans = max(ans, length)
+    return ans
+`,
+
+  'divisible-and-non-divisible-sums-difference': `
+def differenceOfSums(n, m):
+    n, m = int(n), int(m)
+    num1 = num2 = 0
+    for i in range(1, n + 1):
+        if i % m == 0:
+            num2 += i
+        else:
+            num1 += i
+    return num1 - num2
+`,
+
+  'minimum-element-after-replacement-with-digit-sum': `
+def minElement(nums):
+    nums_list = [int(x) for x in nums]
+    return min(sum(int(d) for d in str(n)) for n in nums_list)
+`,
+
+  'pick-gifts': `
+def pickGifts(gifts, k):
+    import math
+    gifts = [int(x) for x in gifts]
+    k = int(k)
+    for _ in range(k):
+        max_val = max(gifts)
+        idx = gifts.index(max_val)
+        gifts[idx] = int(math.floor(math.sqrt(max_val)))
+    return sum(gifts)
+`,
+
+  'minimum-operations-to-make-array-xor-equal-to-k': `
+def minOperations(nums, k):
+    nums_list = [int(x) for x in nums]
+    k = int(k)
+    xor_all = 0
+    for n in nums_list:
+        xor_all ^= n
+    return bin(xor_all ^ k).count('1')
+`,
+
+  'maximum-count-of-positive-integer-and-negative-integer': `
+def maximumCount(nums):
+    nums_list = [int(x) for x in nums]
+    pos = sum(1 for n in nums_list if n > 0)
+    neg = sum(1 for n in nums_list if n < 0)
+    return max(pos, neg)
+`,
+
+  'number-of-students-doing-homework-at-a-given-time': `
+def busyStudent(startTime, endTime, queryTime):
+    start = [int(x) for x in startTime]
+    end = [int(x) for x in endTime]
+    q = int(queryTime)
+    return sum(1 for i in range(len(start)) if start[i] <= q <= end[i])
+`,
+
+  'find-the-xor-of-numbers-which-appear-twice': `
+def duplicateNumbersXOR(nums):
+    nums_list = [int(x) for x in nums]
+    from collections import Counter
+    freq = Counter(nums_list)
+    result = 0
+    for n, c in freq.items():
+        if c == 2:
+            result ^= n
+    return result
+`,
+
+  'minimum-sum-mountain-triplet-ii': `
+def minimumSumMountainTriplet(nums):
+    nums_list = [int(x) for x in nums]
+    n = len(nums_list)
+    pref_min = [float('inf')] * n
+    suf_min = [float('inf')] * n
+    for i in range(1, n):
+        pref_min[i] = min(pref_min[i-1], nums_list[i-1])
+    for i in range(n-2, -1, -1):
+        suf_min[i] = min(suf_min[i+1], nums_list[i+1])
+    ans = float('inf')
+    for j in range(1, n-1):
+        if pref_min[j] < nums_list[j] and suf_min[j] < nums_list[j]:
+            ans = min(ans, pref_min[j] + nums_list[j] + suf_min[j])
+    return ans if ans != float('inf') else -1
+`,
+
+  'minimum-operations-to-exceed-threshold-value-i': `
+def minOperations(nums, k):
+    nums_list = [int(x) for x in nums]
+    k = int(k)
+    return sum(1 for x in nums_list if x < k)
+`,
 };
