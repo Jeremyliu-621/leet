@@ -26,6 +26,8 @@ The greatest common divisor of two numbers is the largest positive integer that 
   ],
   hints: [
     'Find the min and max of the array, then compute GCD using the Euclidean algorithm.',
+    'The Euclidean algorithm: gcd(a, b) = gcd(b, a % b), with base case gcd(a, 0) = a.',
+    'In Python, use `math.gcd(min(nums), max(nums))`. In JavaScript, implement a recursive gcd function.',
   ],
   functionName: 'findGCD',
   params: ['nums'],

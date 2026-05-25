@@ -25,6 +25,8 @@ The digit sum of a positive integer is the sum of all its digits.`,
   ],
   hints: [
     'For each number from 1 to num, sum its digits and check if the sum is odd.',
+    'Extract digits by converting the number to a string and summing `parseInt(d)` for each character.',
+    'Numbers alternate between odd and even digit sums roughly every other number, but multi-digit numbers (like 19→10→even) break the pattern — brute force is simplest here.',
   ],
   functionName: 'countOdd',
   params: ['num'],

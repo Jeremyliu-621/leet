@@ -34,6 +34,8 @@ Return the number of **colored cells** at the end of \`n\` minutes.`,
   ],
   hints: [
     'The pattern follows the formula 2n² - 2n + 1 (for n ≥ 1). Notice that each step adds 4*(step-1) new cells.',
+    'After minute 1: 1 cell. Each subsequent minute adds 4*(n-1) cells. Total = 1 + 4*(1+2+...+(n-1)) = 1 + 4*n*(n-1)/2.',
+    'Simplify: 1 + 2*n*(n-1) = 2n² - 2n + 1. This is O(1) — no loop needed.',
   ],
   functionName: 'coloredCells',
   params: ['n'],

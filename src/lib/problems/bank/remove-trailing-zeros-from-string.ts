@@ -25,6 +25,8 @@ export const problem: Problem = {
   ],
   hints: [
     'Find the last non-zero character and slice from the beginning to that index + 1.',
+    'In JavaScript: use `num.replace(/0+$/, \'\')`. In Python: use `num.rstrip(\'0\')`.',
+    'Be careful not to remove all characters — the input is guaranteed to have at least one non-zero digit.',
   ],
   functionName: 'removeTrailingZeros',
   params: ['num'],

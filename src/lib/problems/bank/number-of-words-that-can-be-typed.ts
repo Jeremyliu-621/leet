@@ -30,6 +30,8 @@ Return the **number of words** in \`text\` you can fully type using this keyboar
   ],
   hints: [
     'Put broken letters into a Set. For each word, check if any of its characters are in the set.',
+    'A word can be typed only if none of its characters appear in brokenLetters.',
+    'Split text by spaces to get words. Use `.some()` / `any()` to test if a word contains a broken letter.',
   ],
   functionName: 'canBeTypedWords',
   params: ['text', 'brokenLetters'],

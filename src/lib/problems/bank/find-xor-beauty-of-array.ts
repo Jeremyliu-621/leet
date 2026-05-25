@@ -30,6 +30,8 @@ Note that \`|\` denotes the bitwise OR operator.`,
   ],
   hints: [
     'For i==j, nums[i]|nums[j]=nums[i]. For i<j, both (i,j) and (j,i) are included, so they cancel out via XOR. The answer is simply XOR of all elements.',
+    'XOR has the property that a ⊕ a = 0. So any pair (i,j) where i < j contributes (nums[i]|nums[j]) twice — which cancels out.',
+    'The answer is `nums.reduce((acc, n) => acc ^ n, 0)`. The OR pairs for i < j cancel, leaving only the diagonal (i == j) terms.',
   ],
   functionName: 'xorBeauty',
   params: ['nums'],

@@ -31,6 +31,8 @@ Given a shuffled sentence \`s\` containing no more than 9 words, reconstruct and
   ],
   hints: [
     'Split the sentence by spaces. Sort the tokens by the last character (the digit). Strip the digit from each token and join.',
+    'Each token ends in a digit 1–9 indicating its original position. Parse that digit to sort.',
+    'After sorting, remove the last character from each token (the position digit) and join with spaces.',
   ],
   functionName: 'sortSentence',
   params: ['s'],

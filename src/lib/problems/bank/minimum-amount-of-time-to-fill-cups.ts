@@ -33,6 +33,8 @@ Return the **minimum** number of seconds needed to fill up all the cups.`,
   ],
   hints: [
     'The answer is max(max(amount), ceil(sum(amount) / 2)). The dominant cup type sets a lower bound; pairing optimally gives another lower bound.',
+    'If one type has more cups needed than all others combined, you\'ll have to fill it alone some of the time: lower bound is max(amount).',
+    'Otherwise, pair the two most-needed types each second. Total time = ceil(total / 2) since each second fills 2 cups.',
   ],
   functionName: 'fillCups',
   params: ['amount'],

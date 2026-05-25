@@ -32,6 +32,8 @@ Return the **minimum** number of operations needed such that there is at least o
   ],
   hints: [
     'Use a sliding window of size k. Count white blocks in the window. The answer is the minimum count across all windows.',
+    'Initialize the window count for the first k characters. Then slide: add the new right character and remove the old left character.',
+    'You need at least `min(whites in window)` recolors. Track the minimum across all windows of size k.',
   ],
   functionName: 'minimumRecolors',
   params: ['blocks', 'k'],

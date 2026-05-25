@@ -31,6 +31,8 @@ A **move** converts **any three consecutive characters** to \`'O'\`. Return the 
   ],
   hints: [
     'Greedily: scan left to right. When you find an \'X\', perform a move starting at that index (covering the next 3 positions) and skip ahead 3.',
+    'Don\'t simulate the conversions — just count. Whenever index i has \'X\', increment count and advance i by 3.',
+    'The greedy is optimal: converting the leftmost X first is never worse than any other choice.',
   ],
   functionName: 'minimumMoves',
   params: ['s'],

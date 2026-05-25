@@ -31,6 +31,8 @@ Return the **absolute** difference between the element sum and digit sum of \`nu
   ],
   hints: [
     'Sum all elements for elementSum. For digitSum, convert each number to a string and sum each digit. Return |elementSum - digitSum|.',
+    'For a number like 15: element contribution is 15, digit contribution is 1+5=6. The difference 15-6=9 comes from the positional value of the tens digit.',
+    'In fact, elementSum ≥ digitSum is always true (each number ≥ sum of its own digits), so `|x-y|` = `x-y`. But using `Math.abs` is safer.',
   ],
   functionName: 'differenceOfSum',
   params: ['nums'],

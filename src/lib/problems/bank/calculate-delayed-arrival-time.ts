@@ -28,6 +28,8 @@ Note that the time in this problem is in **24-hour format**.`,
   ],
   hints: [
     'Simply compute (arrivalTime + delayedTime) % 24.',
+    'The modulo operation handles midnight wraparound: 24 % 24 = 0.',
+    'No special casing needed. The formula works for all valid inputs, including when the sum is exactly 24.',
   ],
   functionName: 'findDelayedArrivalTime',
   params: ['arrivalTime', 'delayedTime'],

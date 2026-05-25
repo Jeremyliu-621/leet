@@ -29,6 +29,8 @@ export const problem: Problem = {
   ],
   hints: [
     'Compute isBulk = any dim ≥ 10^4 or volume ≥ 10^9. Compute isHeavy = mass ≥ 100. Combine to pick the category.',
+    'Four cases: both → "Both", only bulk → "Bulk", only heavy → "Heavy", neither → "Neither".',
+    'Watch out for integer overflow when computing volume: 10^5 × 10^5 × 10^5 = 10^15, which overflows 32-bit integers. Use BigInt or check ≥ 10^9 with regular JS numbers (safe up to 2^53).',
   ],
   functionName: 'categorizeBox',
   params: ['length', 'width', 'height', 'mass'],

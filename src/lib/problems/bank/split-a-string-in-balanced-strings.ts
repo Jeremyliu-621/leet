@@ -36,6 +36,8 @@ Return the **maximum** number of balanced strings you can obtain.`,
   ],
   hints: [
     'Use a counter: increment on R, decrement on L. Each time the counter hits 0, you have a balanced substring.',
+    'You want to maximize the count, so cut the string as soon as balance reaches 0 — don\'t wait for a longer balanced prefix.',
+    'The greedy approach is optimal here: every time balance hits 0, it\'s always beneficial to count that as a completed substring.',
   ],
   functionName: 'balancedStringSplit',
   params: ['s'],

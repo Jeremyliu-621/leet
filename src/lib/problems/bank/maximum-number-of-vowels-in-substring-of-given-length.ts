@@ -32,6 +32,8 @@ export const problem: Problem = {
   ],
   hints: [
     'Use a sliding window of size k. Count vowels in the initial window, then slide right by adding the new char and removing the leftmost char.',
+    'Initialize count by scanning s[0..k-1]. Then for i from k to n-1: if s[i] is a vowel, count++; if s[i-k] is a vowel, count--.',
+    'Vowels: a, e, i, o, u. Use a Set for O(1) lookup. Track `max = Math.max(max, count)` at each step.',
   ],
   functionName: 'maxVowels',
   params: ['s', 'k'],

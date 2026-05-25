@@ -33,6 +33,8 @@ Return \`true\` if so, or \`false\` otherwise.`,
   ],
   hints: [
     'Split the sentence by spaces, then filter tokens that are numeric. Check if they are strictly increasing.',
+    'To check if a token is numeric: `/^\\d+$/`.test(token) or in Python: `token.isdigit()`.',
+    'Keep a `prev` variable. For each number found, if it is ≤ prev, return false. Update prev and continue.',
   ],
   functionName: 'areNumbersAscending',
   params: ['s'],

@@ -37,6 +37,8 @@ Return the **minimum length** of \`s\` after performing the above operation any 
   ],
   hints: [
     'Use two pointers left and right. While s[left] == s[right] and they don\'t cross, advance past all same characters on both ends.',
+    'When s[left] == s[right]: save the character c = s[left]. Advance left while s[left] == c (include runs). Advance right while s[right] == c (include runs).',
+    'The remaining string is s[left..right] (inclusive). Its length is `max(0, right - left + 1)`. Stop when s[left] ≠ s[right] or left ≥ right.',
   ],
   functionName: 'minimumLength',
   params: ['s'],

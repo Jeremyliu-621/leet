@@ -30,6 +30,8 @@ Return \`true\` if \`s\` is a prefix string of \`words\`, or \`false\` otherwise
   ],
   hints: [
     'Concatenate words one by one. If the concatenation equals s, return true. If it exceeds s length, return false.',
+    'Use a running string variable. After each word is appended, compare its length to s.length to short-circuit early.',
+    'Edge case: if you exhaust all words and the concatenation still doesn\'t equal s, return false.',
   ],
   functionName: 'isPrefixString',
   params: ['s', 'words'],

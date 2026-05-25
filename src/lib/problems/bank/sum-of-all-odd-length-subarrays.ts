@@ -31,6 +31,8 @@ A subarray is a contiguous subsequence of the array.`,
   ],
   hints: [
     'Iterate over all starting indices and odd lengths. Add each subarray\'s sum to the total.',
+    'Outer loop: `start` from 0 to n-1. Inner loop: `len` = 1, 3, 5, ... while start+len ≤ n. Sum `arr[start..start+len]`.',
+    'Alternatively, each element arr[i] contributes to several subarrays. Its contribution count = floor((k+1)/2) where k = (i+1)*(n-i) subarray count.',
   ],
   functionName: 'sumOddLengthSubarrays',
   params: ['arr'],

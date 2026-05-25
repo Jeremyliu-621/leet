@@ -35,6 +35,8 @@ Return the resulting string after the operation.
   ],
   hints: [
     'Iterate through odd indices. Replace s[i] with the character at code s[i-1].charCodeAt(0) + parseInt(s[i]).',
+    'In JavaScript: `String.fromCharCode(s.charCodeAt(i-1) + parseInt(s[i]))`. In Python: `chr(ord(prev_char) + int(digit))`.',
+    'Build the result character by character: even indices are copied as-is; odd indices are computed from the preceding letter.',
   ],
   functionName: 'replaceDigits',
   params: ['s'],

@@ -28,6 +28,8 @@ Return the final string after all such duplicate removals have been made. It can
   ],
   hints: [
     'Use a stack. For each character, if the stack top equals it, pop; otherwise push.',
+    'After processing all characters, the remaining stack contents (joined) form the result.',
+    'This is a classic stack problem. Time complexity is O(n). Consider: what characters remain after all cancellations?',
   ],
   functionName: 'removeDuplicates',
   params: ['s'],

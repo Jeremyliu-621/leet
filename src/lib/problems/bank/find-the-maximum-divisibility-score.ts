@@ -33,6 +33,8 @@ Return the integer \`divisors[i]\` with the **maximum** divisibility score. If t
   ],
   hints: [
     'For each divisor, count how many nums are divisible by it. Track the max score and the corresponding minimum divisor.',
+    'On a tie (same score), take the smaller divisor value. Iterate divisors and use `score > best || (score == best && d < bestDiv)` to update.',
+    'Time complexity: O(n × m) where n = len(nums) and m = len(divisors). This is fine given the constraints.',
   ],
   functionName: 'maxDivScore',
   params: ['nums', 'divisors'],

@@ -30,6 +30,8 @@ Return \`ans\`. Answers within \`10^-5\` of the actual answer will be accepted.`
   ],
   hints: [
     'Apply the formulas directly. Return [celsius + 273.15, celsius * 1.80 + 32.00].',
+    'Kelvin absolute zero is 0K = -273.15°C, hence Kelvin = Celsius + 273.15.',
+    'Fahrenheit = Celsius × 9/5 + 32. Since 9/5 = 1.8, Fahrenheit = Celsius * 1.8 + 32.',
   ],
   functionName: 'convertTemperature',
   params: ['celsius'],

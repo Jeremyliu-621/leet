@@ -1,6 +1,58 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import type { JudgeResult, TestVerdict } from '../../../lib/judge';
 
+const TRUNCATE_AT = 160;
+
+/** Truncates a string for compact display. */
+function truncate(s: string): { text: string; truncated: boolean } {
+  if (s.length <= TRUNCATE_AT) return { text: s, truncated: false };
+  return { text: s.slice(0, TRUNCATE_AT) + '…', truncated: true };
+}
+
+/** One-line copy button using the Clipboard API. */
+function CopyButton({ value }: { value: string }) {
+  const [copied, setCopied] = useState(false);
+  const handleCopy = useCallback(() => {
+    void navigator.clipboard.writeText(value).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    });
+  }, [value]);
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      aria-label="Copy to clipboard"
+      className="ml-1 text-faint hover:text-muted transition-colors align-middle"
+      style={{ fontSize: '9px', letterSpacing: '0.05em' }}
+    >
+      {copied ? '✓' : 'copy'}
+    </button>
+  );
+}
+
+/** Expandable value display with truncation. */
+function ValueDisplay({ value }: { value: string }) {
+  const { text, truncated } = truncate(value);
+  const [expanded, setExpanded] = useState(false);
+  if (!truncated) {
+    return <span className="text-muted break-all">{value}</span>;
+  }
+  return (
+    <>
+      <span className="text-muted break-all">{expanded ? value : text}</span>
+      <button
+        type="button"
+        onClick={() => setExpanded((v) => !v)}
+        className="ml-1 text-faint hover:text-muted transition-colors"
+        style={{ fontSize: '9px' }}
+      >
+        {expanded ? 'less' : `+${value.length - TRUNCATE_AT} chars`}
+      </button>
+    </>
+  );
+}
+
 /** Terminal entry types for the output log. */
 type TerminalEntry =
   | { type: 'system'; text: string }
@@ -142,15 +194,15 @@ function TerminalEntry({ entry }: { entry: TerminalEntry }) {
           <div>
             <span className="text-text font-semibold">FAIL</span>
             <span className="text-faint ml-2">Test {entry.testIndex + 1}</span>
-            {entry.input && <span className="text-muted ml-2">({entry.input})</span>}
+            {entry.input && <span className="text-muted ml-2">({truncate(entry.input).text})</span>}
           </div>
-          <div className="pl-4">
-            <span className="text-faint">Expected: </span>
-            <span className="text-muted">{entry.expected}</span>
+          <div className="pl-4 flex items-start gap-1">
+            <span className="text-faint shrink-0">Expected:</span>
+            <ValueDisplay value={entry.expected} />
           </div>
-          <div className="pl-4">
-            <span className="text-faint">Actual: </span>
-            <span className="text-text">{entry.actual}</span>
+          <div className="pl-4 flex items-start gap-1">
+            <span className="text-faint shrink-0">Actual:</span>
+            <ValueDisplay value={entry.actual} />
           </div>
         </div>
       );
@@ -384,20 +436,22 @@ function TestResultCard({ verdict }: { verdict: TestVerdict }) {
           )}
           {verdict.status === 'fail' && (
             <>
-              <div>
-                <span className="text-faint">Expected: </span>
-                <span className="text-muted">{displayValue(verdict.expected)}</span>
+              <div className="flex items-start gap-1">
+                <span className="text-faint shrink-0">Expected:</span>
+                <ValueDisplay value={displayValue(verdict.expected)} />
+                <CopyButton value={displayValue(verdict.expected)} />
               </div>
-              <div>
-                <span className="text-faint">Actual: </span>
-                <span className="text-text">{displayValue(verdict.actual)}</span>
+              <div className="flex items-start gap-1">
+                <span className="text-faint shrink-0">Actual:</span>
+                <ValueDisplay value={displayValue(verdict.actual)} />
+                <CopyButton value={displayValue(verdict.actual)} />
               </div>
             </>
           )}
           {verdict.status === 'error' && (
-            <div>
-              <span className="text-faint">Error: </span>
-              <span className="text-text">{verdict.error}</span>
+            <div className="flex items-start gap-1">
+              <span className="text-faint shrink-0">Error:</span>
+              <span className="text-text break-all">{verdict.error}</span>
             </div>
           )}
           {verdict.logs.length > 0 && (

@@ -31,6 +31,8 @@ Return the **minimum** number of swaps to make \`nums\` semi-ordered.`,
   ],
   hints: [
     'Find the index of 1 (pos1) and the index of n (posN). Moves for 1 = pos1, moves for n = (n-1-posN). If pos1 > posN, subtract 1 (they cross).',
+    'Moving 1 to position 0 requires pos1 left-swaps. Moving n to position (n-1) requires (n-1-posN) right-swaps.',
+    'The -1 correction applies when pos1 > posN because 1 and n have to pass each other, which saves one swap.',
   ],
   functionName: 'semiOrderedPermutation',
   params: ['nums'],
