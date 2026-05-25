@@ -1550,6 +1550,11 @@ import { problem as countOfConnectedComponents } from './count-of-connected-comp
 import { problem as longestNonDecreasingSubarrayFromTwoArrays } from './longest-non-decreasing-subarray-from-two-arrays';
 import { problem as reportSpamMessage } from './report-spam-message';
 import { problem as distributeElementsIntoTwoArraysII } from './distribute-elements-into-two-arrays-ii';
+import { problem as arithmeticSlicesIISubsequence } from './arithmetic-slices-ii-subsequence';
+import { problem as maxDotProductOfTwoSubsequences } from './max-dot-product-of-two-subsequences';
+import { problem as numberOfSquarefulArrays } from './number-of-squareful-arrays';
+import { problem as countAllValidPickupAndDeliveryOptions } from './count-all-valid-pickup-and-delivery-options';
+import { problem as maximumAverageSubarrayII } from './maximum-average-subarray-ii';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3148,4 +3153,9 @@ export const problems: readonly Problem[] = [
   longestNonDecreasingSubarrayFromTwoArrays,
   reportSpamMessage,
   distributeElementsIntoTwoArraysII,
+  arithmeticSlicesIISubsequence,
+  maxDotProductOfTwoSubsequences,
+  numberOfSquarefulArrays,
+  countAllValidPickupAndDeliveryOptions,
+  maximumAverageSubarrayII,
 ];

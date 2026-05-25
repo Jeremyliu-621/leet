@@ -21292,4 +21292,93 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'arithmetic-slices-ii-subsequence': (nums: unknown) => {
+    const a = nums as number[];
+    const n = a.length;
+    const dp: Map<number, number>[] = Array.from({ length: n }, () => new Map());
+    let ans = 0;
+    for (let j = 1; j < n; j++) {
+      for (let i = 0; i < j; i++) {
+        const d = a[j]! - a[i]!;
+        const c = dp[i]!.get(d) ?? 0;
+        ans += c;
+        dp[j]!.set(d, (dp[j]!.get(d) ?? 0) + c + 1);
+      }
+    }
+    return ans;
+  },
+
+  'max-dot-product-of-two-subsequences': (nums1: unknown, nums2: unknown) => {
+    const a = nums1 as number[], b = nums2 as number[];
+    const m = a.length, n = b.length;
+    const dp: number[][] = Array.from({ length: m }, () => new Array(n).fill(-Infinity));
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        const prod = a[i]! * b[j]!;
+        dp[i]![j] = prod;
+        if (i > 0 && j > 0 && dp[i - 1]![j - 1]! > 0) {
+          dp[i]![j] = Math.max(dp[i]![j]!, dp[i - 1]![j - 1]! + prod);
+        }
+        if (i > 0) dp[i]![j] = Math.max(dp[i]![j]!, dp[i - 1]![j]!);
+        if (j > 0) dp[i]![j] = Math.max(dp[i]![j]!, dp[i]![j - 1]!);
+      }
+    }
+    return dp[m - 1]![n - 1]!;
+  },
+
+  'number-of-squareful-arrays': (nums: unknown) => {
+    const a = [...(nums as number[])].sort((x, y) => x - y);
+    const n = a.length;
+    const isSquare = (x: number) => { const s = Math.sqrt(x); return Number.isInteger(s) && s * s === x; };
+    const used = new Array<boolean>(n).fill(false);
+    let count = 0;
+    const bt = (len: number, last: number) => {
+      if (len === n) { count++; return; }
+      for (let i = 0; i < n; i++) {
+        if (used[i]) continue;
+        if (i > 0 && a[i] === a[i - 1] && !used[i - 1]) continue;
+        if (len > 0 && !isSquare(last + a[i]!)) continue;
+        used[i] = true;
+        bt(len + 1, a[i]!);
+        used[i] = false;
+      }
+    };
+    bt(0, -1);
+    return count;
+  },
+
+  'count-all-valid-pickup-and-delivery-options': (n: unknown) => {
+    const MOD = 1_000_000_007n;
+    let dp = 1n;
+    for (let i = 2; i <= (n as number); i++) {
+      dp = dp * BigInt(i) * BigInt(2 * i - 1) % MOD;
+    }
+    return Number(dp);
+  },
+
+  'maximum-average-subarray-ii': (nums: unknown, k: unknown) => {
+    const a = nums as number[], kk = k as number;
+    const n = a.length;
+    let lo = Math.min(...a), hi = Math.max(...a);
+    const check = (mid: number) => {
+      const adj = a.map(v => v - mid);
+      let windowSum = adj.slice(0, kk).reduce((s, v) => s + v, 0);
+      if (windowSum >= 0) return true;
+      let prevSum = 0, minPrevSum = 0;
+      for (let i = kk; i < n; i++) {
+        windowSum += adj[i]!;
+        prevSum += adj[i - kk]!;
+        minPrevSum = Math.min(minPrevSum, prevSum);
+        if (windowSum - minPrevSum >= 0) return true;
+      }
+      return false;
+    };
+    for (let iter = 0; iter < 100; iter++) {
+      const mid = (lo + hi) / 2;
+      if (check(mid)) lo = mid;
+      else hi = mid;
+    }
+    return parseFloat(lo.toFixed(5));
+  },
+
 };

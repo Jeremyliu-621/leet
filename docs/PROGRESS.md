@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1487 problems; 4749 tests green.
+**Current focus:** Bank at 1492 problems; 4764 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank (Batch 56+); marketing site stat update at 1500 (13 more problems needed).
+**Next up:** Continue growing problem bank (Batch 57+); marketing site stat update at 1500 (8 more problems needed).
+
+### Batch 56 (2026-05-25)
+Added 5 problems: `arithmetic-slices-ii-subsequence` (dp/hard, O(n²) DP with per-index difference maps; also fixed pre-existing wrong expected values), `max-dot-product-of-two-subsequences` (dp/hard, 2D DP maximizing dot product of non-empty subsequences), `number-of-squareful-arrays` (dp/hard, backtracking with duplicate pruning and perfect-square adjacency check), `count-all-valid-pickup-and-delivery-options` (dp/hard, dp[i]=dp[i-1]*i*(2i-1) mod 1e9+7), `maximum-average-subarray-ii` (binary-search+sliding-window/hard, binary search on answer with O(n) feasibility check). Bank at **1492**; 4764 tests.
 
 ### Batch 55 (2026-05-25)
 Added 5 problems: `alternating-groups-ii` (sliding-window/medium, duplicate-array circular window), `count-of-connected-components` (graph/medium, Union-Find with path compression + rank), `longest-non-decreasing-subarray-from-two-arrays` (dp/medium, rolling DP checking 4 transition cases), `report-spam-message` (hash-map/easy, set-based banned lookup ≥2), `distribute-elements-into-two-arrays-ii` (arrays/hard, O(n²) greaterCount). Bank at **1487**; 4749 tests.

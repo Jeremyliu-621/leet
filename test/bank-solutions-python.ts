@@ -21155,4 +21155,98 @@ def secondMinimum(n, edges, time, change):
         ans = max(ans, -(-total // (i + 1)))  # ceiling division
     return ans
 `,
+
+  'arithmetic-slices-ii-subsequence': `def numberOfArithmeticSlices(nums):
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    n = len(a)
+    dp = [dict() for _ in range(n)]
+    ans = 0
+    for j in range(1, n):
+        for i in range(j):
+            d = a[j] - a[i]
+            c = dp[i].get(d, 0)
+            ans += c
+            dp[j][d] = dp[j].get(d, 0) + c + 1
+    return ans
+`,
+
+  'max-dot-product-of-two-subsequences': `def maxDotProduct(nums1, nums2):
+    a = list(int(x) for x in (nums1.to_py() if hasattr(nums1, 'to_py') else nums1))
+    b = list(int(x) for x in (nums2.to_py() if hasattr(nums2, 'to_py') else nums2))
+    m, n = len(a), len(b)
+    dp = [[float('-inf')] * n for _ in range(m)]
+    for i in range(m):
+        for j in range(n):
+            prod = a[i] * b[j]
+            dp[i][j] = prod
+            if i > 0 and j > 0 and dp[i-1][j-1] > 0:
+                dp[i][j] = max(dp[i][j], dp[i-1][j-1] + prod)
+            if i > 0:
+                dp[i][j] = max(dp[i][j], dp[i-1][j])
+            if j > 0:
+                dp[i][j] = max(dp[i][j], dp[i][j-1])
+    return dp[m-1][n-1]
+`,
+
+  'number-of-squareful-arrays': `def numSquarefulPerms(nums):
+    import math
+    a = sorted(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    n = len(a)
+    def is_square(x):
+        if x < 0: return False
+        s = int(math.isqrt(x))
+        return s * s == x
+    used = [False] * n
+    count = [0]
+    def bt(length, last):
+        if length == n:
+            count[0] += 1
+            return
+        for i in range(n):
+            if used[i]: continue
+            if i > 0 and a[i] == a[i-1] and not used[i-1]: continue
+            if length > 0 and not is_square(last + a[i]): continue
+            used[i] = True
+            bt(length + 1, a[i])
+            used[i] = False
+    bt(0, -1)
+    return count[0]
+`,
+
+  'count-all-valid-pickup-and-delivery-options': `def countOrders(n):
+    n = int(n)
+    MOD = 10**9 + 7
+    dp = 1
+    for i in range(2, n + 1):
+        dp = dp * i * (2 * i - 1) % MOD
+    return dp
+`,
+
+  'maximum-average-subarray-ii': `def findMaxAverage(nums, k):
+    a = list(float(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    k = int(k)
+    n = len(a)
+    lo, hi = min(a), max(a)
+    def check(mid):
+        adj = [v - mid for v in a]
+        window_sum = sum(adj[:k])
+        if window_sum >= 0:
+            return True
+        prev_sum = 0.0
+        min_prev_sum = 0.0
+        for i in range(k, n):
+            window_sum += adj[i]
+            prev_sum += adj[i - k]
+            min_prev_sum = min(min_prev_sum, prev_sum)
+            if window_sum - min_prev_sum >= 0:
+                return True
+        return False
+    for _ in range(100):
+        mid = (lo + hi) / 2
+        if check(mid):
+            lo = mid
+        else:
+            hi = mid
+    return round(lo, 5)
+`,
 };
