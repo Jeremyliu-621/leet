@@ -8,8 +8,8 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 700+ problems; 2341 tests; growing past 700.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (2341 tests passing).
+**Current focus:** Bank at 704 problems; 2383 tests. Past the 700 milestone!
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing bank; improve UI/UX.
 
 **Pyodide rollout status — COMPLETE:**

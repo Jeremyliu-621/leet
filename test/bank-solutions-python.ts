@@ -9065,4 +9065,106 @@ def arrayPairSum(nums):
     nums = sorted(nums)
     return sum(nums[i] for i in range(0, len(nums), 2))
 `,
+
+  'power-of-four': `
+def isPowerOfFour(n):
+    if n <= 0:
+        return False
+    if n & (n - 1) != 0:
+        return False
+    return n & 0xAAAAAAAA == 0
+`,
+
+  'valid-palindrome-ii': `
+def validPalindrome(s):
+    def is_palin(l, r):
+        while l < r:
+            if s[l] != s[r]:
+                return False
+            l += 1; r -= 1
+        return True
+    l, r = 0, len(s) - 1
+    while l < r:
+        if s[l] != s[r]:
+            return is_palin(l + 1, r) or is_palin(l, r - 1)
+        l += 1; r -= 1
+    return True
+`,
+
+  'bulb-switcher': `
+import math
+def bulbSwitch(n):
+    return int(math.isqrt(n))
+`,
+
+  'self-dividing-numbers': `
+def selfDividingNumbers(left, right):
+    result = []
+    for n in range(left, right + 1):
+        x = n
+        ok = True
+        while x > 0:
+            d = x % 10
+            if d == 0 or n % d != 0:
+                ok = False
+                break
+            x //= 10
+        if ok:
+            result.append(n)
+    return result
+`,
+
+  'student-attendance-record-i': `
+def checkRecord(s):
+    return s.count('A') < 2 and 'LLL' not in s
+`,
+
+  'license-key-formatting': `
+def licenseKeyFormatting(s, k):
+    s = s.replace('-', '').upper()
+    result = []
+    i = len(s)
+    while i > 0:
+        result.append(s[max(0, i - k):i])
+        i -= k
+    return '-'.join(reversed(result))
+`,
+
+  'keyboard-row': `
+def findWords(words):
+    words = list(words)
+    rows = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm']
+    row_of = {}
+    for r, row in enumerate(rows):
+        for c in row:
+            row_of[c] = r
+    result = []
+    for w in words:
+        r = row_of[w[0].lower()]
+        if all(row_of[c.lower()] == r for c in w):
+            result.append(w)
+    return result
+`,
+
+  'longest-uncommon-subsequence-i': `
+def findLUSlength(a, b):
+    if a == b:
+        return -1
+    return max(len(a), len(b))
+`,
+
+  'perfect-number': `
+def checkPerfectNumber(num):
+    if num <= 1:
+        return False
+    total = 1
+    i = 2
+    while i * i <= num:
+        if num % i == 0:
+            total += i
+            if i != num // i:
+                total += num // i
+        i += 1
+    return total == num
+`,
 };

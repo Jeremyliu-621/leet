@@ -756,6 +756,15 @@ import { problem as twoSumII } from './two-sum-ii';
 import { problem as setMismatch } from './set-mismatch';
 import { problem as maximumGap } from './maximum-gap';
 import { problem as arrayPartition } from './array-partition';
+import { problem as powerOfFour } from './power-of-four';
+import { problem as validPalindromeII } from './valid-palindrome-ii';
+import { problem as bulbSwitcher } from './bulb-switcher';
+import { problem as selfDividingNumbers } from './self-dividing-numbers';
+import { problem as studentAttendanceRecordI } from './student-attendance-record-i';
+import { problem as licenseKeyFormatting } from './license-key-formatting';
+import { problem as keyboardRow } from './keyboard-row';
+import { problem as longestUncommonSubsequenceI } from './longest-uncommon-subsequence-i';
+import { problem as perfectNumber } from './perfect-number';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1560,4 +1569,13 @@ export const problems: readonly Problem[] = [
   setMismatch,
   maximumGap,
   arrayPartition,
+  powerOfFour,
+  validPalindromeII,
+  bulbSwitcher,
+  selfDividingNumbers,
+  studentAttendanceRecordI,
+  licenseKeyFormatting,
+  keyboardRow,
+  longestUncommonSubsequenceI,
+  perfectNumber,
 ];

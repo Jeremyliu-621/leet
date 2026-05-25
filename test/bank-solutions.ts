@@ -9496,4 +9496,92 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return sum;
   },
 
+  'power-of-four': (...args: unknown[]) => {
+    const n = args[0] as number;
+    if (n <= 0) return false;
+    if ((n & (n - 1)) !== 0) return false;
+    return (n & 0xAAAAAAAA) === 0;
+  },
+
+  'valid-palindrome-ii': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const isPalin = (l: number, r: number) => {
+      while (l < r) { if (s[l++] !== s[r--]) return false; }
+      return true;
+    };
+    let l = 0, r = s.length - 1;
+    while (l < r) {
+      if (s[l] !== s[r]) return isPalin(l + 1, r) || isPalin(l, r - 1);
+      l++; r--;
+    }
+    return true;
+  },
+
+  'bulb-switcher': (...args: unknown[]) => {
+    const n = args[0] as number;
+    return Math.floor(Math.sqrt(n));
+  },
+
+  'self-dividing-numbers': (...args: unknown[]) => {
+    const left = args[0] as number, right = args[1] as number;
+    const result: number[] = [];
+    for (let n = left; n <= right; n++) {
+      let x = n, ok = true;
+      while (x > 0) {
+        const d = x % 10;
+        if (d === 0 || n % d !== 0) { ok = false; break; }
+        x = Math.floor(x / 10);
+      }
+      if (ok) result.push(n);
+    }
+    return result;
+  },
+
+  'student-attendance-record-i': (...args: unknown[]) => {
+    const s = args[0] as string;
+    return (s.split('A').length - 1) < 2 && !s.includes('LLL');
+  },
+
+  'license-key-formatting': (...args: unknown[]) => {
+    const s = (args[0] as string).replace(/-/g, '').toUpperCase();
+    const k = args[1] as number;
+    const result: string[] = [];
+    let i = s.length;
+    while (i > 0) {
+      result.unshift(s.slice(Math.max(0, i - k), i));
+      i -= k;
+    }
+    return result.join('-');
+  },
+
+  'keyboard-row': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const rows = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm'];
+    const rowOf = new Map<string, number>();
+    for (let r = 0; r < rows.length; r++) for (const c of rows[r]!) rowOf.set(c, r);
+    return words.filter(w => {
+      const r = rowOf.get(w[0]!.toLowerCase());
+      return [...w].every(c => rowOf.get(c.toLowerCase()) === r);
+    });
+  },
+
+  'longest-uncommon-subsequence-i': (...args: unknown[]) => {
+    const a = args[0] as string, b = args[1] as string;
+    if (a === b) return -1;
+    return Math.max(a.length, b.length);
+  },
+
+  'perfect-number': (...args: unknown[]) => {
+    const num = args[0] as number;
+    if (num <= 1) return false;
+    let sum = 1;
+    for (let i = 2; i * i <= num; i++) {
+      if (num % i === 0) {
+        sum += i;
+        if (i !== num / i) sum += num / i;
+      }
+    }
+    return sum === num;
+  },
+
 };
