@@ -10591,4 +10591,136 @@ def nearestExit(maze, entrance):
         cnt[r] += 1
     return ans
 `,
+
+  'find-the-index-of-first-occurrence': `def strStr(haystack: str, needle: str) -> int:
+    return haystack.find(needle)
+`,
+
+  'integer-replacement': `def integerReplacement(n: int) -> int:
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def solve(x):
+        if x == 1:
+            return 0
+        if x % 2 == 0:
+            return 1 + solve(x // 2)
+        return 1 + min(solve(x + 1), solve(x - 1))
+    return solve(n)
+`,
+
+  'number-of-smooth-descent-periods': `def getDescentPeriods(prices: list[int]) -> int:
+    ans = 1
+    run = 1
+    for i in range(1, len(prices)):
+        if prices[i] == prices[i - 1] - 1:
+            run += 1
+        else:
+            run = 1
+        ans += run
+    return ans
+`,
+
+  'maximum-matrix-sum': `def maxMatrixSum(matrix: list[list[int]]) -> int:
+    total = 0
+    neg_count = 0
+    min_abs = float('inf')
+    for row in matrix:
+        for val in row:
+            total += abs(val)
+            if val < 0:
+                neg_count += 1
+            min_abs = min(min_abs, abs(val))
+    if neg_count % 2 == 0:
+        return total
+    return total - 2 * min_abs
+`,
+
+  'count-nodes-with-highest-score': `def countHighestScoreNodes(parents: list[int]) -> int:
+    n = len(parents)
+    children = [[] for _ in range(n)]
+    for i in range(1, n):
+        children[parents[i]].append(i)
+    sub = [1] * n
+    order = []
+    stack = [0]
+    while stack:
+        node = stack.pop()
+        order.append(node)
+        for c in children[node]:
+            stack.append(c)
+    for node in reversed(order):
+        for c in children[node]:
+            sub[node] += sub[c]
+    max_score = 0
+    count = 0
+    for x in range(n):
+        ch = children[x]
+        L = sub[ch[0]] if len(ch) > 0 else 0
+        R = sub[ch[1]] if len(ch) > 1 else 0
+        U = n - sub[x]
+        score = (L or 1) * (R or 1) * (U or 1)
+        if score > max_score:
+            max_score = score
+            count = 1
+        elif score == max_score:
+            count += 1
+    return count
+`,
+
+  'find-right-interval': `def findRightInterval(intervals: list[list[int]]) -> list[int]:
+    import bisect
+    starts = sorted((iv[0], i) for i, iv in enumerate(intervals))
+    starts_vals = [s[0] for s in starts]
+    result = []
+    for iv in intervals:
+        end = iv[1]
+        idx = bisect.bisect_left(starts_vals, end)
+        result.append(starts[idx][1] if idx < len(starts) else -1)
+    return result
+`,
+
+  'circular-sentence': `def isCircularSentence(sentence: str) -> bool:
+    words = sentence.split()
+    n = len(words)
+    for i in range(n):
+        if words[i][-1] != words[(i + 1) % n][0]:
+            return False
+    return True
+`,
+
+  'minimum-garden-perimeter': `def minimumPerimeter(neededApples: int) -> int:
+    lo, hi = 1, 100000
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if 2 * mid * (mid + 1) * (2 * mid + 1) >= neededApples:
+            hi = mid
+        else:
+            lo = mid + 1
+    return 8 * lo
+`,
+
+  'group-people-given-group-size': `def groupThePeople(groupSizes: list[int]) -> list[list[int]]:
+    from collections import defaultdict
+    buckets = defaultdict(list)
+    result = []
+    for i, size in enumerate(groupSizes):
+        buckets[size].append(i)
+        if len(buckets[size]) == size:
+            result.append(list(buckets[size]))
+            buckets[size] = []
+    return result
+`,
+
+  'count-number-of-bad-pairs': `def countBadPairs(nums: list[int]) -> int:
+    from collections import Counter
+    freq = Counter(v - i for i, v in enumerate(nums))
+    good = sum(c * (c - 1) // 2 for c in freq.values())
+    n = len(nums)
+    return n * (n - 1) // 2 - good
+`,
+
+  'minimum-changes-to-make-binary-string-beautiful': `def minOperations(s: str) -> int:
+    count = sum(1 for i, c in enumerate(s) if c != ('0' if i % 2 == 0 else '1'))
+    return min(count, len(s) - count)
+`,
 };

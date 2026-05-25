@@ -891,6 +891,17 @@ import { problem as maximumNumberOfPairsInArray } from './maximum-number-of-pair
 import { problem as minimizeMaximumPairSumInArray } from './minimize-maximum-pair-sum-in-array';
 import { problem as minimumOperationsToExceedThresholdValueII } from './minimum-operations-to-exceed-threshold-value-ii';
 import { problem as numberOfWaysToSplitArray } from './number-of-ways-to-split-array';
+import { problem as findTheIndexOfFirstOccurrence } from './find-the-index-of-first-occurrence';
+import { problem as integerReplacement } from './integer-replacement';
+import { problem as numberOfSmoothDescentPeriods } from './number-of-smooth-descent-periods';
+import { problem as maximumMatrixSum } from './maximum-matrix-sum';
+import { problem as countNodesWithHighestScore } from './count-nodes-with-highest-score';
+import { problem as findRightInterval } from './find-right-interval';
+import { problem as circularSentence } from './circular-sentence';
+import { problem as minimumGardenPerimeter } from './minimum-garden-perimeter';
+import { problem as groupPeopleGivenGroupSize } from './group-people-given-group-size';
+import { problem as countNumberOfBadPairs } from './count-number-of-bad-pairs';
+import { problem as minimumChangesToMakeBinaryStringBeautiful } from './minimum-changes-to-make-binary-string-beautiful';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1830,4 +1841,15 @@ export const problems: readonly Problem[] = [
   minimizeMaximumPairSumInArray,
   minimumOperationsToExceedThresholdValueII,
   numberOfWaysToSplitArray,
+  findTheIndexOfFirstOccurrence,
+  integerReplacement,
+  numberOfSmoothDescentPeriods,
+  maximumMatrixSum,
+  countNodesWithHighestScore,
+  findRightInterval,
+  circularSentence,
+  minimumGardenPerimeter,
+  groupPeopleGivenGroupSize,
+  countNumberOfBadPairs,
+  minimumChangesToMakeBinaryStringBeautiful,
 ];

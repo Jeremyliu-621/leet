@@ -11049,4 +11049,170 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'find-the-index-of-first-occurrence': (...args: unknown[]) => {
+    const haystack = args[0] as string;
+    const needle = args[1] as string;
+    return haystack.indexOf(needle);
+  },
+
+  'integer-replacement': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const memo = new Map<number, number>();
+    function solve(x: number): number {
+      if (x === 1) return 0;
+      if (memo.has(x)) return memo.get(x)!;
+      let res: number;
+      if (x % 2 === 0) {
+        res = 1 + solve(x / 2);
+      } else {
+        res = 1 + Math.min(solve(x + 1), solve(x - 1));
+      }
+      memo.set(x, res);
+      return res;
+    }
+    return solve(n);
+  },
+
+  'number-of-smooth-descent-periods': (...args: unknown[]) => {
+    const prices = args[0] as number[];
+    let ans = 0;
+    let run = 1;
+    for (let i = 1; i < prices.length; i++) {
+      if ((prices[i] as number) === (prices[i - 1] as number) - 1) {
+        run++;
+      } else {
+        run = 1;
+      }
+      ans += run;
+    }
+    return ans + 1;
+  },
+
+  'maximum-matrix-sum': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    let total = 0;
+    let negCount = 0;
+    let minAbs = Infinity;
+    for (const row of matrix) {
+      for (const val of row) {
+        total += Math.abs(val);
+        if (val < 0) negCount++;
+        minAbs = Math.min(minAbs, Math.abs(val));
+      }
+    }
+    if (negCount % 2 === 0) return total;
+    return total - 2 * minAbs;
+  },
+
+  'count-nodes-with-highest-score': (...args: unknown[]) => {
+    const parents = args[0] as number[];
+    const n = parents.length;
+    const children: number[][] = Array.from({ length: n }, () => []);
+    for (let i = 1; i < n; i++) children[parents[i] as number]!.push(i);
+    const sub = new Array<number>(n).fill(1);
+    const order: number[] = [];
+    const stk = [0];
+    while (stk.length) {
+      const node = stk.pop()!;
+      order.push(node);
+      for (const c of children[node]!) stk.push(c);
+    }
+    for (let i = order.length - 1; i >= 0; i--) {
+      const node = order[i]!;
+      for (const c of children[node]!) sub[node]! += sub[c]!;
+    }
+    let maxScore = 0n;
+    let count = 0;
+    for (let x = 0; x < n; x++) {
+      const ch = children[x]!;
+      const L = ch[0] !== undefined ? BigInt(sub[ch[0]]!) : 0n;
+      const R = ch[1] !== undefined ? BigInt(sub[ch[1]]!) : 0n;
+      const U = BigInt(n) - BigInt(sub[x]!);
+      const score = (L || 1n) * (R || 1n) * (U || 1n);
+      if (score > maxScore) { maxScore = score; count = 1; }
+      else if (score === maxScore) count++;
+    }
+    return count;
+  },
+
+  'find-right-interval': (...args: unknown[]) => {
+    const intervals = args[0] as number[][];
+    const starts = intervals.map((iv, i) => [iv[0], i] as [number, number]);
+    starts.sort((a, b) => a[0] - b[0]);
+    const result: number[] = [];
+    for (const iv of intervals) {
+      const end = iv[1] as number;
+      let lo = 0, hi = starts.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if ((starts[mid]![0] as number) < end) lo = mid + 1;
+        else hi = mid;
+      }
+      result.push(lo < starts.length ? (starts[lo]![1] as number) : -1);
+    }
+    return result;
+  },
+
+  'circular-sentence': (...args: unknown[]) => {
+    const sentence = args[0] as string;
+    const words = sentence.split(' ');
+    for (let i = 0; i < words.length; i++) {
+      const cur = words[i]!;
+      const next = words[(i + 1) % words.length]!;
+      if (cur[cur.length - 1] !== next[0]) return false;
+    }
+    return true;
+  },
+
+  'minimum-garden-perimeter': (...args: unknown[]) => {
+    const neededApples = args[0] as number;
+    let lo = 1, hi = 100000;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (2 * mid * (mid + 1) * (2 * mid + 1) >= neededApples) hi = mid;
+      else lo = mid + 1;
+    }
+    return 8 * lo;
+  },
+
+  'group-people-given-group-size': (...args: unknown[]) => {
+    const groupSizes = args[0] as number[];
+    const buckets = new Map<number, number[]>();
+    const result: number[][] = [];
+    for (let i = 0; i < groupSizes.length; i++) {
+      const size = groupSizes[i] as number;
+      if (!buckets.has(size)) buckets.set(size, []);
+      const bucket = buckets.get(size)!;
+      bucket.push(i);
+      if (bucket.length === size) {
+        result.push([...bucket]);
+        buckets.set(size, []);
+      }
+    }
+    return result;
+  },
+
+  'count-number-of-bad-pairs': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    let goodPairs = 0;
+    for (let i = 0; i < nums.length; i++) {
+      const key = (nums[i] as number) - i;
+      const cnt = freq.get(key) ?? 0;
+      goodPairs += cnt;
+      freq.set(key, cnt + 1);
+    }
+    const n = nums.length;
+    return (n * (n - 1)) / 2 - goodPairs;
+  },
+
+  'minimum-changes-to-make-binary-string-beautiful': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let count = 0;
+    for (let i = 0; i < s.length; i++) {
+      if (s[i] !== (i % 2 === 0 ? '0' : '1')) count++;
+    }
+    return Math.min(count, s.length - count);
+  },
+
 };
