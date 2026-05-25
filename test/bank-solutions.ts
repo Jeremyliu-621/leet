@@ -15198,4 +15198,209 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[(1 << n) - 1]!;
   },
 
+  'number-of-ways-to-rearrange-sticks-with-k-sticks-visible': (n: unknown, k: unknown) => {
+    const nn = n as number, kk = k as number;
+    const MOD = 1_000_000_007n;
+    const dp: bigint[][] = Array.from({ length: nn + 1 }, () => new Array(kk + 1).fill(0n));
+    dp[0]![0] = 1n;
+    for (let i = 1; i <= nn; i++) {
+      for (let j = 1; j <= Math.min(i, kk); j++) {
+        dp[i]![j] = (dp[i - 1]![j - 1]! + BigInt(i - 1) * dp[i - 1]![j]!) % MOD;
+      }
+    }
+    return Number(dp[nn]![kk]!);
+  },
+
+  'number-of-ways-to-stay-in-same-place-after-some-steps': (steps: unknown, arrLen: unknown) => {
+    const s = steps as number, al = arrLen as number;
+    const MOD = 1_000_000_007;
+    const maxPos = Math.min(al - 1, Math.floor(s / 2));
+    let dp = new Array(maxPos + 1).fill(0);
+    dp[0] = 1;
+    for (let step = 0; step < s; step++) {
+      const ndp = new Array(maxPos + 1).fill(0);
+      for (let i = 0; i <= maxPos; i++) {
+        ndp[i] = dp[i]!;
+        if (i > 0) ndp[i] = (ndp[i]! + dp[i - 1]!) % MOD;
+        if (i < maxPos) ndp[i] = (ndp[i]! + dp[i + 1]!) % MOD;
+      }
+      dp = ndp;
+    }
+    return dp[0]!;
+  },
+
+  'minimum-score-triangulation-of-polygon': (values: unknown) => {
+    const v = values as number[];
+    const n = v.length;
+    const dp: number[][] = Array.from({ length: n }, () => new Array(n).fill(0));
+    for (let length = 2; length < n; length++) {
+      for (let i = 0; i <= n - length - 1; i++) {
+        const j = i + length;
+        dp[i]![j] = Infinity;
+        for (let k = i + 1; k < j; k++) {
+          dp[i]![j] = Math.min(dp[i]![j]!, dp[i]![k]! + dp[k]![j]! + v[i]! * v[k]! * v[j]!);
+        }
+      }
+    }
+    return dp[0]![n - 1]!;
+  },
+
+  'minimum-cost-to-make-array-equal': (nums: unknown, cost: unknown) => {
+    const a = nums as number[], c = cost as number[];
+    function totalCost(target: number): number {
+      return a.reduce((sum, x, i) => sum + Math.abs(x - target) * c[i]!, 0);
+    }
+    let lo = Math.min(...a), hi = Math.max(...a);
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (totalCost(mid) <= totalCost(mid + 1)) {
+        hi = mid;
+      } else {
+        lo = mid + 1;
+      }
+    }
+    return totalCost(lo);
+  },
+
+  'maximum-number-of-achievable-transfer-requests': (n: unknown, requests: unknown) => {
+    const reqs = requests as number[][];
+    const m = reqs.length;
+    let best = 0;
+    for (let mask = 0; mask < (1 << m); mask++) {
+      const balance = new Array(n as number).fill(0);
+      let count = 0;
+      for (let i = 0; i < m; i++) {
+        if (mask & (1 << i)) {
+          balance[reqs[i]![0]!]!--;
+          balance[reqs[i]![1]!]!++;
+          count++;
+        }
+      }
+      if (balance.every(b => b === 0)) best = Math.max(best, count);
+    }
+    return best;
+  },
+
+  'maximum-elegance-of-k-length-subsequence': (items: unknown, k: unknown) => {
+    const its = (items as number[][]).slice().sort((a, b) => b[0]! - a[0]!);
+    const kk = k as number;
+    let totalProfit = 0;
+    let distinctCount = 0;
+    const seen = new Set<number>();
+    const stack: number[] = [];
+    for (let i = 0; i < kk; i++) {
+      const [profit, cat] = its[i]!;
+      totalProfit += profit!;
+      if (!seen.has(cat!)) { seen.add(cat!); distinctCount++; }
+      else stack.push(profit!);
+    }
+    let ans = totalProfit + distinctCount * distinctCount;
+    for (let i = kk; i < its.length; i++) {
+      const [profit, cat] = its[i]!;
+      if (!seen.has(cat!) && stack.length > 0) {
+        seen.add(cat!);
+        distinctCount++;
+        totalProfit -= stack.pop()!;
+        totalProfit += profit!;
+        ans = Math.max(ans, totalProfit + distinctCount * distinctCount);
+      }
+    }
+    return ans;
+  },
+
+  'minimum-total-distance-traveled': (robot: unknown, factory: unknown) => {
+    const robots = (robot as number[]).slice().sort((a, b) => a - b);
+    const facs = (factory as number[][]).slice().sort((a, b) => a[0]! - b[0]!);
+    const flat: number[] = [];
+    for (const [pos, limit] of facs) {
+      for (let i = 0; i < limit!; i++) flat.push(pos!);
+    }
+    const n = robots.length, m = flat.length;
+    const INF = Number.MAX_SAFE_INTEGER;
+    const dp: number[][] = Array.from({ length: n + 1 }, () => new Array(m + 1).fill(INF));
+    for (let j = 0; j <= m; j++) dp[0]![j] = 0;
+    for (let i = 1; i <= n; i++) {
+      for (let j = i; j <= m; j++) {
+        dp[i]![j] = dp[i]![j - 1]!;
+        if (dp[i - 1]![j - 1]! < INF) {
+          dp[i]![j] = Math.min(dp[i]![j]!, dp[i - 1]![j - 1]! + Math.abs(robots[i - 1]! - flat[j - 1]!));
+        }
+      }
+    }
+    return dp[n]![m]!;
+  },
+
+  'minimum-incompatibility': (nums: unknown, k: unknown) => {
+    const a = nums as number[];
+    const kk = k as number;
+    const n = a.length;
+    const sz = n / kk;
+    const cnt = new Map<number, number>();
+    for (const x of a) cnt.set(x, (cnt.get(x) ?? 0) + 1);
+    if (Math.max(...cnt.values()) > kk) return -1;
+    const full = (1 << n) - 1;
+    const subsetCost = new Map<number, number>();
+    for (let mask = 1; mask <= full; mask++) {
+      if (mask.toString(2).split('').filter(c => c === '1').length !== sz) continue;
+      const elems = [];
+      for (let i = 0; i < n; i++) if (mask & (1 << i)) elems.push(a[i]!);
+      if (new Set(elems).size !== sz) continue;
+      subsetCost.set(mask, Math.max(...elems) - Math.min(...elems));
+    }
+    const INF = Number.MAX_SAFE_INTEGER;
+    const dp = new Array(1 << n).fill(INF);
+    dp[0] = 0;
+    for (let mask = 0; mask <= full; mask++) {
+      if (dp[mask] === INF) continue;
+      const comp = full ^ mask;
+      for (let sub = comp; sub > 0; sub = (sub - 1) & comp) {
+        if (subsetCost.has(sub) && dp[mask | sub] > dp[mask]! + subsetCost.get(sub)!) {
+          dp[mask | sub] = dp[mask]! + subsetCost.get(sub)!;
+        }
+      }
+    }
+    return dp[full] === INF ? -1 : dp[full]!;
+  },
+
+  'fair-distribution-of-cookies': (cookies: unknown, k: unknown) => {
+    const bags = cookies as number[];
+    const kk = k as number;
+    const children = new Array(kk).fill(0);
+    let ans = Infinity;
+    function bt(i: number, curMax: number) {
+      if (curMax >= ans) return;
+      if (i === bags.length) { ans = curMax; return; }
+      const seen = new Set<number>();
+      for (let j = 0; j < kk; j++) {
+        if (seen.has(children[j]!)) continue;
+        seen.add(children[j]!);
+        children[j]! += bags[i]!;
+        bt(i + 1, Math.max(curMax, children[j]!));
+        children[j]! -= bags[i]!;
+      }
+    }
+    bt(0, 0);
+    return ans;
+  },
+
+  'maximum-profit-in-job-scheduling': (startTime: unknown, endTime: unknown, profit: unknown) => {
+    const s = startTime as number[], e = endTime as number[], p = profit as number[];
+    const n = s.length;
+    const jobs = Array.from({ length: n }, (_, i) => [s[i]!, e[i]!, p[i]!]);
+    jobs.sort((a, b) => a[1]! - b[1]!);
+    const dp = new Array(n + 1).fill(0);
+    const endTimes = [0, ...jobs.map(j => j[1]!)];
+    for (let i = 1; i <= n; i++) {
+      const [si, , pi] = jobs[i - 1]!;
+      let left = 0, right = i - 1;
+      while (left < right) {
+        const mid = (left + right + 1) >> 1;
+        if (endTimes[mid]! <= si!) left = mid;
+        else right = mid - 1;
+      }
+      dp[i] = Math.max(dp[i - 1]!, dp[left]! + pi!);
+    }
+    return dp[n]!;
+  },
+
 };

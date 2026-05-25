@@ -14817,4 +14817,214 @@ def minimumXORSum(nums1, nums2):
                 dp[nxt] = min(dp[nxt], dp[mask] + (nums1[i] ^ nums2[j]))
     return dp[(1 << n) - 1]
 `,
+
+  'number-of-ways-to-rearrange-sticks-with-k-sticks-visible': `
+def rearrangeSticks(n, k):
+    MOD = 10**9 + 7
+    dp = [[0] * (k + 1) for _ in range(n + 1)]
+    dp[0][0] = 1
+    for i in range(1, n + 1):
+        for j in range(1, min(i, k) + 1):
+            dp[i][j] = (dp[i-1][j-1] + (i - 1) * dp[i-1][j]) % MOD
+    return dp[n][k]
+`,
+
+  'number-of-ways-to-stay-in-same-place-after-some-steps': `
+def numWays(steps, arrLen):
+    MOD = 10**9 + 7
+    max_pos = min(arrLen - 1, steps // 2)
+    dp = [0] * (max_pos + 1)
+    dp[0] = 1
+    for _ in range(steps):
+        ndp = [0] * (max_pos + 1)
+        for i in range(max_pos + 1):
+            ndp[i] = dp[i]
+            if i > 0:
+                ndp[i] = (ndp[i] + dp[i-1]) % MOD
+            if i < max_pos:
+                ndp[i] = (ndp[i] + dp[i+1]) % MOD
+        dp = ndp
+    return dp[0]
+`,
+
+  'minimum-score-triangulation-of-polygon': `
+def minScoreTriangulation(values):
+    values = list(values.to_py()) if hasattr(values, 'to_py') else list(values)
+    n = len(values)
+    dp = [[0] * n for _ in range(n)]
+    for length in range(2, n):
+        for i in range(n - length):
+            j = i + length
+            dp[i][j] = float('inf')
+            for k in range(i + 1, j):
+                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j] + values[i] * values[k] * values[j])
+    return dp[0][n-1]
+`,
+
+  'minimum-cost-to-make-array-equal': `
+def minCost(nums, cost):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    cost = list(cost.to_py()) if hasattr(cost, 'to_py') else list(cost)
+    def total(v):
+        return sum(abs(nums[i] - v) * cost[i] for i in range(len(nums)))
+    lo, hi = min(nums), max(nums)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if total(mid) <= total(mid + 1):
+            hi = mid
+        else:
+            lo = mid + 1
+    return total(lo)
+`,
+
+  'maximum-number-of-achievable-transfer-requests': `
+def maximumRequests(n, requests):
+    requests = list(requests.to_py()) if hasattr(requests, 'to_py') else list(requests)
+    requests = [[int(x) for x in r] for r in requests]
+    m = len(requests)
+    best = 0
+    for mask in range(1 << m):
+        balance = [0] * n
+        count = 0
+        for i in range(m):
+            if mask & (1 << i):
+                balance[requests[i][0]] -= 1
+                balance[requests[i][1]] += 1
+                count += 1
+        if all(b == 0 for b in balance):
+            best = max(best, count)
+    return best
+`,
+
+  'maximum-elegance-of-k-length-subsequence': `
+def findMaximumElegance(items, k):
+    items = list(items.to_py()) if hasattr(items, 'to_py') else list(items)
+    items = [[int(x) for x in row] for row in items]
+    items.sort(key=lambda x: -x[0])
+    total_profit = 0
+    distinct_count = 0
+    seen = set()
+    stack = []
+    for i in range(k):
+        profit, cat = items[i]
+        total_profit += profit
+        if cat not in seen:
+            seen.add(cat)
+            distinct_count += 1
+        else:
+            stack.append(profit)
+    ans = total_profit + distinct_count * distinct_count
+    for i in range(k, len(items)):
+        profit, cat = items[i]
+        if cat not in seen and stack:
+            seen.add(cat)
+            distinct_count += 1
+            total_profit -= stack.pop()
+            total_profit += profit
+            ans = max(ans, total_profit + distinct_count * distinct_count)
+    return ans
+`,
+
+  'minimum-total-distance-traveled': `
+def minimumTotalDistance(robot, factory):
+    robot = list(robot.to_py()) if hasattr(robot, 'to_py') else list(robot)
+    factory = list(factory.to_py()) if hasattr(factory, 'to_py') else list(factory)
+    factory = [[int(x) for x in row] for row in factory]
+    robot = sorted([int(x) for x in robot])
+    factory.sort(key=lambda x: x[0])
+    flat = []
+    for pos, limit in factory:
+        for _ in range(limit):
+            flat.append(pos)
+    n, m = len(robot), len(flat)
+    INF = float('inf')
+    dp = [[INF] * (m + 1) for _ in range(n + 1)]
+    for j in range(m + 1):
+        dp[0][j] = 0
+    for i in range(1, n + 1):
+        for j in range(i, m + 1):
+            dp[i][j] = dp[i][j - 1]
+            if dp[i - 1][j - 1] < INF:
+                dp[i][j] = min(dp[i][j], dp[i - 1][j - 1] + abs(robot[i - 1] - flat[j - 1]))
+    return dp[n][m]
+`,
+
+  'minimum-incompatibility': `
+def minimumIncompatibility(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    nums = [int(x) for x in nums]
+    n = len(nums)
+    sz = n // k
+    from collections import Counter
+    cnt = Counter(nums)
+    if max(cnt.values()) > k:
+        return -1
+    full = (1 << n) - 1
+    subset_cost = {}
+    for mask in range(1, 1 << n):
+        if bin(mask).count('1') != sz:
+            continue
+        elems = [nums[i] for i in range(n) if mask & (1 << i)]
+        if len(set(elems)) != sz:
+            continue
+        subset_cost[mask] = max(elems) - min(elems)
+    INF = float('inf')
+    dp = [INF] * (1 << n)
+    dp[0] = 0
+    for mask in range(0, 1 << n):
+        if dp[mask] == INF:
+            continue
+        comp = full ^ mask
+        sub = comp
+        while sub > 0:
+            if sub in subset_cost and dp[mask | sub] > dp[mask] + subset_cost[sub]:
+                dp[mask | sub] = dp[mask] + subset_cost[sub]
+            sub = (sub - 1) & comp
+    return dp[full] if dp[full] != INF else -1
+`,
+
+  'fair-distribution-of-cookies': `
+def distributeCookies(cookies, k):
+    cookies = list(cookies.to_py()) if hasattr(cookies, 'to_py') else list(cookies)
+    cookies = [int(x) for x in cookies]
+    cookies.sort(reverse=True)
+    children = [0] * k
+    ans = [float('inf')]
+    def bt(i, cur_max):
+        if cur_max >= ans[0]:
+            return
+        if i == len(cookies):
+            ans[0] = cur_max
+            return
+        seen = set()
+        for j in range(k):
+            if children[j] in seen:
+                continue
+            seen.add(children[j])
+            children[j] += cookies[i]
+            bt(i + 1, max(cur_max, children[j]))
+            children[j] -= cookies[i]
+    bt(0, 0)
+    return ans[0]
+`,
+
+  'maximum-profit-in-job-scheduling': `
+def jobScheduling(startTime, endTime, profit):
+    startTime = list(startTime.to_py()) if hasattr(startTime, 'to_py') else list(startTime)
+    endTime = list(endTime.to_py()) if hasattr(endTime, 'to_py') else list(endTime)
+    profit = list(profit.to_py()) if hasattr(profit, 'to_py') else list(profit)
+    startTime = [int(x) for x in startTime]
+    endTime = [int(x) for x in endTime]
+    profit = [int(x) for x in profit]
+    import bisect
+    n = len(startTime)
+    jobs = sorted(zip(startTime, endTime, profit), key=lambda x: x[1])
+    dp = [0] * (n + 1)
+    end_times = [0] + [jobs[i][1] for i in range(n)]
+    for i in range(1, n + 1):
+        s, e, p = jobs[i - 1]
+        idx = bisect.bisect_right(end_times, s, 0, i) - 1
+        dp[i] = max(dp[i - 1], dp[idx] + p)
+    return dp[n]
+`,
 };

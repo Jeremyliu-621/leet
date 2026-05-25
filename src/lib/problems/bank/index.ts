@@ -1184,6 +1184,16 @@ import { problem as minimumDaysToEatOranges } from './minimum-number-of-days-to-
 import { problem as bestTeamWithNoConflicts } from './best-team-with-no-conflicts';
 import { problem as numberOfWaysToFormTarget } from './number-of-ways-to-form-target-given-dictionary';
 import { problem as minimumXorSumOfTwoArrays } from './minimum-xor-sum-of-two-arrays';
+import { problem as numberOfWaysToRearrangeSticksWithKSticksVisible } from './number-of-ways-to-rearrange-sticks-with-k-sticks-visible';
+import { problem as numberOfWaysToStayInSamePlaceAfterSomeSteps } from './number-of-ways-to-stay-in-same-place-after-some-steps';
+import { problem as minimumScoreTriangulationOfPolygon } from './minimum-score-triangulation-of-polygon';
+import { problem as minimumCostToMakeArrayEqual } from './minimum-cost-to-make-array-equal';
+import { problem as maximumNumberOfAchievableTransferRequests } from './maximum-number-of-achievable-transfer-requests';
+import { problem as maximumEleganceOfKLengthSubsequence } from './maximum-elegance-of-k-length-subsequence';
+import { problem as minimumTotalDistanceTraveled } from './minimum-total-distance-traveled';
+import { problem as minimumIncompatibility } from './minimum-incompatibility';
+import { problem as fairDistributionOfCookies } from './fair-distribution-of-cookies';
+import { problem as maximumProfitInJobScheduling } from './maximum-profit-in-job-scheduling';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2416,4 +2426,14 @@ export const problems: readonly Problem[] = [
   bestTeamWithNoConflicts,
   numberOfWaysToFormTarget,
   minimumXorSumOfTwoArrays,
+  numberOfWaysToRearrangeSticksWithKSticksVisible,
+  numberOfWaysToStayInSamePlaceAfterSomeSteps,
+  minimumScoreTriangulationOfPolygon,
+  minimumCostToMakeArrayEqual,
+  maximumNumberOfAchievableTransferRequests,
+  maximumEleganceOfKLengthSubsequence,
+  minimumTotalDistanceTraveled,
+  minimumIncompatibility,
+  fairDistributionOfCookies,
+  maximumProfitInJobScheduling,
 ];
