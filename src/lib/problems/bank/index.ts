@@ -1253,6 +1253,15 @@ import { problem as minimumMovesToReachTargetScore } from './minimum-moves-to-re
 import { problem as maximumSegmentSumAfterRemovals } from './maximum-segment-sum-after-removals';
 import { problem as primePalindrome } from './prime-palindrome';
 import { problem as carFleetII } from './car-fleet-ii';
+import { problem as advantageShuffle } from './advantage-shuffle';
+import { problem as longestRepeatingCharacterReplacement } from './longest-repeating-character-replacement';
+import { problem as subarraysWithKDifferentIntegers } from './subarrays-with-k-different-integers';
+import { problem as binarySubarraysWithSum } from './binary-subarrays-with-sum';
+import { problem as reduceArraySizeToTheHalf } from './reduce-array-size-to-the-half';
+import { problem as numberOfWaysToDivideALongCorridor } from './number-of-ways-to-divide-a-long-corridor';
+import { problem as deleteOperationForTwoStrings } from './delete-operation-for-two-strings';
+import { problem as productOfArrayExceptSelf } from './product-of-array-except-self';
+import { problem as minimumMovesToEqualArrayElements } from './minimum-moves-to-equal-array-elements';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2554,4 +2563,13 @@ export const problems: readonly Problem[] = [
   maximumSegmentSumAfterRemovals,
   primePalindrome,
   carFleetII,
+  advantageShuffle,
+  longestRepeatingCharacterReplacement,
+  subarraysWithKDifferentIntegers,
+  binarySubarraysWithSum,
+  reduceArraySizeToTheHalf,
+  numberOfWaysToDivideALongCorridor,
+  deleteOperationForTwoStrings,
+  productOfArrayExceptSelf,
+  minimumMovesToEqualArrayElements,
 ];

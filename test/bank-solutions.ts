@@ -14928,23 +14928,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[G]![N]!;
   },
 
-  'minimum-number-of-removals-to-make-mountain-array': (nums: unknown) => {
-    const arr = nums as number[];
-    const n = arr.length;
-    const lis = new Array(n).fill(1);
-    const lds = new Array(n).fill(1);
-    for (let i = 1; i < n; i++)
-      for (let j = 0; j < i; j++)
-        if (arr[j]! < arr[i]!) lis[i] = Math.max(lis[i]!, lis[j]! + 1);
-    for (let i = n - 2; i >= 0; i--)
-      for (let j = n - 1; j > i; j--)
-        if (arr[j]! < arr[i]!) lds[i] = Math.max(lds[i]!, lds[j]! + 1);
-    let maxMtn = 0;
-    for (let i = 1; i < n - 1; i++)
-      if (lis[i]! > 1 && lds[i]! > 1) maxMtn = Math.max(maxMtn, lis[i]! + lds[i]! - 1);
-    return n - maxMtn;
-  },
-
   'count-different-palindromic-subsequences': (s: unknown) => {
     const str = s as string;
     const MOD = 1_000_000_007;
@@ -16547,6 +16530,152 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       return true;
     }
     return dfs(src);
+  },
+
+  'advantage-shuffle': (nums1: unknown, nums2: unknown) => {
+    const a = [...(nums1 as number[])].sort((x, y) => x - y);
+    const b = nums2 as number[];
+    const indexed = b.map((v, i) => [v, i] as [number, number]).sort((x, y) => y[0] - x[0]);
+    const result = new Array<number>(b.length);
+    let lo = 0, hi = a.length - 1;
+    for (const [target, idx] of indexed) {
+      if (a[hi]! > target) result[idx] = a[hi--]!;
+      else result[idx] = a[lo++]!;
+    }
+    return result;
+  },
+
+  'longest-repeating-character-replacement': (s: unknown, k: unknown) => {
+    const str = s as string;
+    const maxK = k as number;
+    const freq = new Array(26).fill(0);
+    let maxFreq = 0, ans = 0, left = 0;
+    for (let right = 0; right < str.length; right++) {
+      const c = str.charCodeAt(right) - 65;
+      freq[c]++;
+      maxFreq = Math.max(maxFreq, freq[c]!);
+      while (right - left + 1 - maxFreq > maxK) {
+        freq[str.charCodeAt(left) - 65]--;
+        left++;
+      }
+      ans = Math.max(ans, right - left + 1);
+    }
+    return ans;
+  },
+
+  'subarrays-with-k-different-integers': (nums: unknown, k: unknown) => {
+    const arr = nums as number[];
+    const K = k as number;
+    function atMost(limit: number): number {
+      const cnt = new Map<number, number>();
+      let res = 0, left = 0;
+      for (let right = 0; right < arr.length; right++) {
+        cnt.set(arr[right]!, (cnt.get(arr[right]!) ?? 0) + 1);
+        while (cnt.size > limit) {
+          const lv = arr[left++]!;
+          cnt.set(lv, cnt.get(lv)! - 1);
+          if (cnt.get(lv) === 0) cnt.delete(lv);
+        }
+        res += right - left + 1;
+      }
+      return res;
+    }
+    return atMost(K) - atMost(K - 1);
+  },
+
+  'binary-subarrays-with-sum': (nums: unknown, goal: unknown) => {
+    const arr = nums as number[];
+    const g = goal as number;
+    const cnt = new Map<number, number>();
+    cnt.set(0, 1);
+    let prefix = 0, ans = 0;
+    for (const n of arr) {
+      prefix += n;
+      ans += cnt.get(prefix - g) ?? 0;
+      cnt.set(prefix, (cnt.get(prefix) ?? 0) + 1);
+    }
+    return ans;
+  },
+
+  'reduce-array-size-to-the-half': (arr: unknown) => {
+    const a = arr as number[];
+    const freq = new Map<number, number>();
+    for (const v of a) freq.set(v, (freq.get(v) ?? 0) + 1);
+    const freqs = [...freq.values()].sort((x, y) => y - x);
+    const target = Math.ceil(a.length / 2);
+    let removed = 0, setSize = 0;
+    for (const f of freqs) {
+      removed += f;
+      setSize++;
+      if (removed >= target) return setSize;
+    }
+    return setSize;
+  },
+
+  'minimum-number-of-removals-to-make-mountain-array': (nums: unknown) => {
+    const arr = nums as number[];
+    const n = arr.length;
+    const lis = new Array(n).fill(1);
+    const lds = new Array(n).fill(1);
+    for (let i = 1; i < n; i++) {
+      for (let j = 0; j < i; j++) {
+        if (arr[j]! < arr[i]!) lis[i] = Math.max(lis[i]!, lis[j]! + 1);
+      }
+    }
+    for (let i = n - 2; i >= 0; i--) {
+      for (let j = n - 1; j > i; j--) {
+        if (arr[j]! < arr[i]!) lds[i] = Math.max(lds[i]!, lds[j]! + 1);
+      }
+    }
+    let best = 0;
+    for (let i = 1; i < n - 1; i++) {
+      if (lis[i]! > 1 && lds[i]! > 1) best = Math.max(best, lis[i]! + lds[i]! - 1);
+    }
+    return n - best;
+  },
+
+  'number-of-ways-to-divide-a-long-corridor': (corridor: unknown) => {
+    const s = corridor as string;
+    const MOD = 1000000007n;
+    const seats: number[] = [];
+    for (let i = 0; i < s.length; i++) if (s[i] === 'S') seats.push(i);
+    if (seats.length === 0 || seats.length % 2 !== 0) return 0;
+    let ways = 1n;
+    for (let i = 2; i < seats.length; i += 2) {
+      ways = (ways * BigInt(seats[i]! - seats[i - 1]!)) % MOD;
+    }
+    return Number(ways);
+  },
+
+  'delete-operation-for-two-strings': (word1: unknown, word2: unknown) => {
+    const w1 = word1 as string, w2 = word2 as string;
+    const m = w1.length, n = w2.length;
+    const dp: number[][] = Array.from({length: m + 1}, () => new Array(n + 1).fill(0));
+    for (let i = 1; i <= m; i++) {
+      for (let j = 1; j <= n; j++) {
+        dp[i]![j] = w1[i - 1] === w2[j - 1]
+          ? dp[i - 1]![j - 1]! + 1
+          : Math.max(dp[i - 1]![j]!, dp[i]![j - 1]!);
+      }
+    }
+    return m + n - 2 * dp[m]![n]!;
+  },
+
+  'product-of-array-except-self': (nums: unknown) => {
+    const arr = nums as number[];
+    const n = arr.length;
+    const result = new Array(n).fill(1);
+    let prefix = 1;
+    for (let i = 0; i < n; i++) { result[i] = prefix; prefix *= arr[i]!; }
+    let suffix = 1;
+    for (let i = n - 1; i >= 0; i--) { result[i] *= suffix; suffix *= arr[i]!; }
+    return result.map((v: number) => v === 0 ? 0 : v);
+  },
+
+  'minimum-moves-to-equal-array-elements': (nums: unknown) => {
+    const arr = nums as number[];
+    const min = Math.min(...arr);
+    return arr.reduce((sum, v) => sum + v - min, 0);
   },
 
 };

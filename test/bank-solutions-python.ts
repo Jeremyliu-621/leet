@@ -14731,23 +14731,6 @@ def numMusicPlaylists(n, goal, k):
     return dp[goal][n]
 `,
 
-  'minimum-number-of-removals-to-make-mountain-array': `
-def minimumMountainRemovals(nums):
-    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
-    n = len(nums)
-    lis = [1] * n; lds = [1] * n
-    for i in range(1, n):
-        for j in range(i):
-            if nums[j] < nums[i]: lis[i] = max(lis[i], lis[j] + 1)
-    for i in range(n - 2, -1, -1):
-        for j in range(n - 1, i, -1):
-            if nums[j] < nums[i]: lds[i] = max(lds[i], lds[j] + 1)
-    max_mtn = 0
-    for i in range(1, n - 1):
-        if lis[i] > 1 and lds[i] > 1: max_mtn = max(max_mtn, lis[i] + lds[i] - 1)
-    return n - max_mtn
-`,
-
   'count-different-palindromic-subsequences': `
 def countPalindromicSubsequences(s):
     MOD = 10**9 + 7
@@ -16229,6 +16212,162 @@ def allPossibleFBT(n):
         prefix[l:r] = sorted(prefix[l:r])
     merge_sort(0, len(prefix))
     return count[0]
+`,
+
+  'advantage-shuffle': `def advantageCount(nums1, nums2):
+    raw1 = nums1.to_py() if hasattr(nums1, 'to_py') else list(nums1)
+    raw2 = nums2.to_py() if hasattr(nums2, 'to_py') else list(nums2)
+    a = sorted([int(v) for v in raw1])
+    b = [(int(v), i) for i, v in enumerate(raw2)]
+    b.sort(key=lambda x: -x[0])
+    result = [0] * len(a)
+    lo, hi = 0, len(a) - 1
+    for target, idx in b:
+        if a[hi] > target:
+            result[idx] = a[hi]
+            hi -= 1
+        else:
+            result[idx] = a[lo]
+            lo += 1
+    return result
+`,
+
+  'longest-repeating-character-replacement': `def characterReplacement(s, k):
+    s = str(s)
+    k = int(k)
+    freq = [0] * 26
+    max_freq = 0
+    ans = 0
+    left = 0
+    for right in range(len(s)):
+        c = ord(s[right]) - ord('A')
+        freq[c] += 1
+        max_freq = max(max_freq, freq[c])
+        while (right - left + 1 - max_freq) > k:
+            freq[ord(s[left]) - ord('A')] -= 1
+            left += 1
+        ans = max(ans, right - left + 1)
+    return ans
+`,
+
+  'subarrays-with-k-different-integers': `def subarraysWithKDistinct(nums, k):
+    raw = nums.to_py() if hasattr(nums, 'to_py') else list(nums)
+    arr = [int(v) for v in raw]
+    k = int(k)
+    from collections import defaultdict
+    def at_most(limit):
+        cnt = defaultdict(int)
+        res = left = 0
+        for right, v in enumerate(arr):
+            cnt[v] += 1
+            while len(cnt) > limit:
+                cnt[arr[left]] -= 1
+                if cnt[arr[left]] == 0:
+                    del cnt[arr[left]]
+                left += 1
+            res += right - left + 1
+        return res
+    return at_most(k) - at_most(k - 1)
+`,
+
+  'binary-subarrays-with-sum': `def numSubarraysWithSum(nums, goal):
+    raw = nums.to_py() if hasattr(nums, 'to_py') else list(nums)
+    arr = [int(v) for v in raw]
+    g = int(goal)
+    from collections import defaultdict
+    cnt = defaultdict(int)
+    cnt[0] = 1
+    prefix = ans = 0
+    for n in arr:
+        prefix += n
+        ans += cnt[prefix - g]
+        cnt[prefix] += 1
+    return ans
+`,
+
+  'reduce-array-size-to-the-half': `def minSetSize(arr):
+    raw = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
+    a = [int(v) for v in raw]
+    from collections import Counter
+    freq = sorted(Counter(a).values(), reverse=True)
+    target = (len(a) + 1) // 2
+    removed = set_size = 0
+    for f in freq:
+        removed += f
+        set_size += 1
+        if removed >= target:
+            return set_size
+    return set_size
+`,
+
+  'minimum-number-of-removals-to-make-mountain-array': `def minimumMountainRemovals(nums):
+    raw = nums.to_py() if hasattr(nums, 'to_py') else list(nums)
+    arr = [int(v) for v in raw]
+    n = len(arr)
+    lis = [1] * n
+    lds = [1] * n
+    for i in range(1, n):
+        for j in range(i):
+            if arr[j] < arr[i]:
+                lis[i] = max(lis[i], lis[j] + 1)
+    for i in range(n - 2, -1, -1):
+        for j in range(n - 1, i, -1):
+            if arr[j] < arr[i]:
+                lds[i] = max(lds[i], lds[j] + 1)
+    best = 0
+    for i in range(1, n - 1):
+        if lis[i] > 1 and lds[i] > 1:
+            best = max(best, lis[i] + lds[i] - 1)
+    return n - best
+`,
+
+  'number-of-ways-to-divide-a-long-corridor': `def numberOfWays(corridor):
+    s = str(corridor)
+    MOD = 10**9 + 7
+    seats = [i for i, c in enumerate(s) if c == 'S']
+    if not seats or len(seats) % 2 != 0:
+        return 0
+    ways = 1
+    for i in range(2, len(seats), 2):
+        ways = (ways * (seats[i] - seats[i - 1])) % MOD
+    return ways
+`,
+
+  'delete-operation-for-two-strings': `def minDistance(word1, word2):
+    w1 = str(word1)
+    w2 = str(word2)
+    m, n = len(w1), len(w2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if w1[i-1] == w2[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    return m + n - 2 * dp[m][n]
+`,
+
+  'product-of-array-except-self': `def productExceptSelf(nums):
+    raw = nums.to_py() if hasattr(nums, 'to_py') else list(nums)
+    arr = [int(v) for v in raw]
+    n = len(arr)
+    result = [1] * n
+    prefix = 1
+    for i in range(n):
+        result[i] = prefix
+        prefix *= arr[i]
+    suffix = 1
+    for i in range(n - 1, -1, -1):
+        result[i] *= suffix
+        suffix *= arr[i]
+    return result
+`,
+
+  'minimum-moves-to-equal-array-elements': `def minMoves(nums):
+    raw = nums.to_py() if hasattr(nums, 'to_py') else list(nums)
+    arr = [int(v) for v in raw]
+    mn = min(arr)
+    return sum(v - mn for v in arr)
 `,
 
   'all-paths-from-source-lead-to-destination': `def leadsToDestination(n, edges, source, destination):
