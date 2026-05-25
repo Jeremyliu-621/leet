@@ -11965,4 +11965,126 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  'first-unique-character-in-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const freq: Record<string, number> = {};
+    for (const c of s) freq[c] = (freq[c] ?? 0) + 1;
+    for (let i = 0; i < s.length; i++) {
+      if (freq[s[i]!] === 1) return i;
+    }
+    return -1;
+  },
+
+  'long-pressed-name': (...args: unknown[]) => {
+    const name = args[0] as string;
+    const typed = args[1] as string;
+    let i = 0, j = 0;
+    while (j < typed.length) {
+      if (i < name.length && name[i] === typed[j]) { i++; j++; }
+      else if (j > 0 && typed[j] === typed[j - 1]) { j++; }
+      else return false;
+    }
+    return i === name.length;
+  },
+
+  'remove-outermost-parentheses': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let depth = 0;
+    let result = '';
+    for (const c of s) {
+      if (c === '(') { if (depth > 0) result += c; depth++; }
+      else { depth--; if (depth > 0) result += c; }
+    }
+    return result;
+  },
+
+  'maximum-nesting-depth-of-parentheses': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let depth = 0, max = 0;
+    for (const c of s) {
+      if (c === '(') { depth++; max = Math.max(max, depth); }
+      else if (c === ')') depth--;
+    }
+    return max;
+  },
+
+  'next-greater-element-i': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const map = new Map<number, number>();
+    const stack: number[] = [];
+    for (const n of nums2) {
+      while (stack.length && stack[stack.length - 1]! < n) {
+        map.set(stack.pop()!, n);
+      }
+      stack.push(n);
+    }
+    return nums1.map(n => map.get(n) ?? -1);
+  },
+
+  'find-and-replace-pattern': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const pattern = args[1] as string;
+    const matches = (word: string) => {
+      const w2p = new Map<string, string>();
+      const p2w = new Map<string, string>();
+      for (let i = 0; i < word.length; i++) {
+        const wc = word[i]!, pc = pattern[i]!;
+        if (w2p.has(wc) && w2p.get(wc) !== pc) return false;
+        if (p2w.has(pc) && p2w.get(pc) !== wc) return false;
+        w2p.set(wc, pc);
+        p2w.set(pc, wc);
+      }
+      return true;
+    };
+    return words.filter(matches);
+  },
+
+  'largest-3-same-digit-number-in-string': (...args: unknown[]) => {
+    const num = args[0] as string;
+    let best = '';
+    for (let i = 0; i <= num.length - 3; i++) {
+      if (num[i] === num[i + 1] && num[i] === num[i + 2]) {
+        const triple = num.slice(i, i + 3);
+        if (triple > best) best = triple;
+      }
+    }
+    return best;
+  },
+
+  'count-number-of-consistent-strings': (...args: unknown[]) => {
+    const allowed = new Set((args[0] as string).split(''));
+    const words = args[1] as string[];
+    return words.filter(w => [...w].every(c => allowed.has(c))).length;
+  },
+
+  'make-the-string-great': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const stack: string[] = [];
+    for (const c of s) {
+      if (stack.length && Math.abs(stack[stack.length - 1]!.charCodeAt(0) - c.charCodeAt(0)) === 32) {
+        stack.pop();
+      } else {
+        stack.push(c);
+      }
+    }
+    return stack.join('');
+  },
+
+  'find-target-indices-after-sorting-array': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const target = args[1] as number;
+    const result: number[] = [];
+    for (let i = 0; i < nums.length; i++) {
+      if (nums[i] === target) result.push(i);
+    }
+    return result;
+  },
+
+  'number-of-employees-who-met-the-target': (...args: unknown[]) => {
+    const hours = args[0] as number[];
+    const target = args[1] as number;
+    return hours.filter(h => h >= target).length;
+  },
+
 };

@@ -4,12 +4,15 @@ export const problem: Problem = {
   id: 'determine-color-of-chessboard-square',
   title: 'Determine Color of a Chessboard Square',
   difficulty: 'easy',
-  tags: ['math', 'strings'],
-  description: `You are given \`coordinates\`, a string that represents the coordinates of a square on a chessboard. Below is a chessboard for reference.
+  tags: ['strings', 'math'],
+  description: `You are given \`coordinates\`, a string that represents the coordinates of a square on an 8x8 chessboard. Below is a chess diagram:
+
+- Columns are labeled 'a' through 'h' (left to right).
+- Rows are labeled '1' through '8' (bottom to top).
 
 Return \`true\` if the square is white, and \`false\` if the square is black.
 
-The coordinate will always represent a valid chessboard square. The coordinate will always have the letter first, and the number second.`,
+The square named "a1" is black.`,
   constraints: [
     'coordinates.length == 2',
     '\'a\' <= coordinates[0] <= \'h\'',
@@ -19,7 +22,7 @@ The coordinate will always represent a valid chessboard square. The coordinate w
     {
       input: 'coordinates = "a1"',
       output: 'false',
-      explanation: '"a1" is a black square (bottom-left corner).',
+      explanation: '"a1" is a black square on a standard chessboard.',
     },
     {
       input: 'coordinates = "h3"',
@@ -33,9 +36,8 @@ The coordinate will always represent a valid chessboard square. The coordinate w
     },
   ],
   hints: [
-    'Convert the column letter to a number (a=1, b=2, ..., h=8).',
-    'A square is white if (col + row) is even, and black if (col + row) is odd.',
-    'Wait — actually check the convention: a1 is black means (1+1)=2 is even → black.',
+    'A square is white when (column_index + row) is odd.',
+    'Use the character code of the column letter plus the digit to check parity.',
   ],
   functionName: 'squareIsWhite',
   params: ['coordinates'],
@@ -53,8 +55,8 @@ The coordinate will always represent a valid chessboard square. The coordinate w
   ],
   hiddenTests: [
     { args: ['a2'], expected: true },
+    { args: ['b1'], expected: true },
     { args: ['h8'], expected: false },
     { args: ['d4'], expected: false },
-    { args: ['e5'], expected: false },
   ],
 };

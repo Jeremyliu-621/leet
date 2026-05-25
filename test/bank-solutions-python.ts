@@ -11432,4 +11432,137 @@ def divisorSubstrings(num, k):
             count += 1
     return count
 `,
+
+  'first-unique-character-in-string': `
+def firstUniqChar(s):
+    from collections import Counter
+    freq = Counter(s)
+    for i, c in enumerate(s):
+        if freq[c] == 1:
+            return i
+    return -1
+`,
+
+  'long-pressed-name': `
+def isLongPressedName(name, typed):
+    i = 0
+    j = 0
+    while j < len(typed):
+        if i < len(name) and name[i] == typed[j]:
+            i += 1
+            j += 1
+        elif j > 0 and typed[j] == typed[j-1]:
+            j += 1
+        else:
+            return False
+    return i == len(name)
+`,
+
+  'remove-outermost-parentheses': `
+def removeOuterParentheses(s):
+    depth = 0
+    result = []
+    for c in s:
+        if c == '(':
+            if depth > 0:
+                result.append(c)
+            depth += 1
+        else:
+            depth -= 1
+            if depth > 0:
+                result.append(c)
+    return ''.join(result)
+`,
+
+  'maximum-nesting-depth-of-parentheses': `
+def maxDepth(s):
+    depth = 0
+    max_depth = 0
+    for c in s:
+        if c == '(':
+            depth += 1
+            max_depth = max(max_depth, depth)
+        elif c == ')':
+            depth -= 1
+    return max_depth
+`,
+
+  'next-greater-element-i': `
+def nextGreaterElement(nums1, nums2):
+    n1 = [int(x) for x in nums1]
+    n2 = [int(x) for x in nums2]
+    nge = {}
+    stack = []
+    for n in n2:
+        while stack and stack[-1] < n:
+            nge[stack.pop()] = n
+        stack.append(n)
+    return [nge.get(x, -1) for x in n1]
+`,
+
+  'find-and-replace-pattern': `
+def findAndReplacePattern(words, pattern):
+    p = str(pattern)
+    result = []
+    for word in words:
+        w = str(word)
+        w2p = {}
+        p2w = {}
+        match = True
+        for wc, pc in zip(w, p):
+            if w2p.get(wc, pc) != pc or p2w.get(pc, wc) != wc:
+                match = False
+                break
+            w2p[wc] = pc
+            p2w[pc] = wc
+        if match:
+            result.append(w)
+    return result
+`,
+
+  'largest-3-same-digit-number-in-string': `
+def largestGoodInteger(num):
+    best = ''
+    for i in range(len(num) - 2):
+        if num[i] == num[i+1] == num[i+2]:
+            triple = num[i:i+3]
+            if triple > best:
+                best = triple
+    return best
+`,
+
+  'count-number-of-consistent-strings': `
+def countConsistentStrings(allowed, words):
+    allowed_set = set(str(allowed))
+    count = 0
+    for word in words:
+        if all(c in allowed_set for c in str(word)):
+            count += 1
+    return count
+`,
+
+  'make-the-string-great': `
+def makeGood(s):
+    stack = []
+    for c in s:
+        if stack and abs(ord(stack[-1]) - ord(c)) == 32:
+            stack.pop()
+        else:
+            stack.append(c)
+    return ''.join(stack)
+`,
+
+  'find-target-indices-after-sorting-array': `
+def targetIndices(nums, target):
+    t = int(target)
+    arr = sorted(int(x) for x in nums)
+    return [i for i, v in enumerate(arr) if v == t]
+`,
+
+  'number-of-employees-who-met-the-target': `
+def numberOfEmployeesWhoMetTarget(hours, target):
+    t = int(target)
+    return sum(1 for h in hours if int(h) >= t)
+`,
+
 };

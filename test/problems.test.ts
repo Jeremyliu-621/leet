@@ -71,6 +71,8 @@ describe('problem selector', () => {
       'valid-parentheses',
       'find-resultant-array-after-removing-anagrams',
       'baseball-game',
+      'next-greater-element-i',
+      'remove-outermost-parentheses',
     ] })).toBeUndefined();
   });
 

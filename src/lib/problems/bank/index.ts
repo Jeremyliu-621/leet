@@ -962,6 +962,17 @@ import { problem as numberOfSubarraysWithGcdEqualToK } from './number-of-subarra
 import { problem as findSubsequenceOfLengthKWithLargestSum } from './find-subsequence-of-length-k-with-largest-sum';
 import { problem as minimumAbsoluteSumDifference } from './minimum-absolute-sum-difference';
 import { problem as findTheKBeautyOfANumber } from './find-the-k-beauty-of-a-number';
+import { problem as firstUniqueCharacterInString } from './first-unique-character-in-string';
+import { problem as longPressedName } from './long-pressed-name';
+import { problem as removeOutermostParentheses } from './remove-outermost-parentheses';
+import { problem as maximumNestingDepthOfParentheses } from './maximum-nesting-depth-of-parentheses';
+import { problem as nextGreaterElementI } from './next-greater-element-i';
+import { problem as findAndReplacePattern } from './find-and-replace-pattern';
+import { problem as largest3SameDigitNumberInString } from './largest-3-same-digit-number-in-string';
+import { problem as countNumberOfConsistentStrings } from './count-number-of-consistent-strings';
+import { problem as makeTheStringGreat } from './make-the-string-great';
+import { problem as findTargetIndicesAfterSortingArray } from './find-target-indices-after-sorting-array';
+import { problem as numberOfEmployeesWhoMetTheTarget } from './number-of-employees-who-met-the-target';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1972,4 +1983,15 @@ export const problems: readonly Problem[] = [
   findSubsequenceOfLengthKWithLargestSum,
   minimumAbsoluteSumDifference,
   findTheKBeautyOfANumber,
+  firstUniqueCharacterInString,
+  longPressedName,
+  removeOutermostParentheses,
+  maximumNestingDepthOfParentheses,
+  nextGreaterElementI,
+  findAndReplacePattern,
+  largest3SameDigitNumberInString,
+  countNumberOfConsistentStrings,
+  makeTheStringGreat,
+  findTargetIndicesAfterSortingArray,
+  numberOfEmployeesWhoMetTheTarget,
 ];
