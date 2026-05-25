@@ -8,9 +8,18 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1497 problems; 4779 tests green.
+**Current focus:** Bank at 1502 problems; 4794 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank (Batch 56+); marketing site stat update at 1500 (3 more problems needed).
+**Next up:** Continue growing problem bank (Batch 58+); continue UI/UX polish.
+
+### 🎉 1,500-problem milestone (2026-05-25)
+Marketing site updated to "1,500+" in all three locations. Bank at **1502** problems; 4794 tests.
+
+### fix(terminal): UX polish (2026-05-25)
+TestResultCard now shows `durationMs` for FAIL verdicts (alongside the existing PASS timing), so users can gauge proximity to TLE. Runtime-error cards gain a copy button for the error message to ease debugging.
+
+### Batch 56 (2026-05-25)
+Added 5 problems from parallel agent: `arithmetic-slices-ii-subsequence` (dp/hard), `max-dot-product-of-two-subsequences` (dp/hard), `number-of-squareful-arrays` (backtracking/hard), `selling-pieces-of-wood` (dp/hard), `number-of-dice-rolls-with-target-sum` (dp/medium).
 
 ### Batch 55-local-2 (2026-05-25)
 Added 5 problems: `delete-greatest-value-in-each-row` (arrays/easy, sort rows + column maxes), `sort-the-jumbled-numbers` (arrays/medium, mapped digit stable sort), `minimum-operations-to-make-array-alternating` (arrays+hash-map/medium, top-2 freq greedy), `maximum-total-importance-of-roads` (arrays+graph/medium, sort degrees assign 1..n), `smallest-subarrays-with-maximum-bitwise-or` (arrays+sliding-window/medium, per-bit next-occurrence scan). Bank at **1497**; 4779 tests.
@@ -472,6 +481,9 @@ Still pending:
 - [x] **fix(terminal): "TESTS PASSED" in run mode** — TerminalPanel summary now shows "TESTS PASSED" (not "ACCEPTED") when run mode succeeds; Test Results tab also shows "submit to run all tests" hint in that state; `mode` threaded through summary entry type.
 - [x] **Batch 51** — my-calendar-iii (hard/arrays+binary-search, difference array k-booking), design-twitter (medium/hash-map, news-feed multi-source merge top-10), zigzag-iterator (medium/arrays, alternating two-array traversal), second-minimum-time-to-reach-destination (medium/graph, BFS tracking two shortest arrival times with traffic light delays); bank at **1438**; 4602 tests.
 - [x] **Batch 51 continued** — path-sum-ii (tree/medium, DFS backtracking sorted), construct-binary-tree-from-inorder-and-postorder-traversal (tree/medium, index-map + recursive split), maximum-number-of-removable-characters (binary-search/medium, binary search on k + subsequence check), minimum-sum-of-squared-difference (arrays/medium, binary search on threshold), find-the-kth-largest-integer-in-array (arrays/medium, sort by length+lex), trapping-rain-water-ii (heap/hard, BFS min-heap boundary), minimum-number-of-pushes-to-type-word-ii (math/medium, freq sort + slot assignment), maximize-win-from-two-segments (sliding-window/medium, two-pass DP+binary-search), minimum-swaps-to-group-all-ones-together-ii (sliding-window/medium, circular doubled-array window); bank at **1447**; 4629 tests.
+- [x] **Batch 52-57 (remote + local)** — 55+ new problems across all tags (see section notes above); bank at **1502**; 4794 tests.
+- [x] **🎉 1,500-problem milestone** — marketing site updated to "1,500+" in all 3 stat locations.
+- [x] **fix(terminal): FAIL timing + error copy** — TestResultCard shows `durationMs` for FAIL verdicts; runtime-error cards gain a copy button for the error message.
 
 ---
 
