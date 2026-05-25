@@ -1444,6 +1444,8 @@ import { problem as designParkingSystem } from './design-parking-system';
 import { problem as defuseTheBomb } from './defuse-the-bomb';
 import { problem as checkIfSentenceIsPangram } from './check-if-sentence-is-pangram';
 import { problem as findTheStudentThatWillReplaceTheChalk } from './find-the-student-that-will-replace-the-chalk';
+import { problem as greatestEnglishLetterInUpperAndLowerCase } from './greatest-english-letter-in-upper-and-lower-case';
+import { problem as reformatTheString } from './reformat-the-string';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2936,4 +2938,6 @@ export const problems: readonly Problem[] = [
   defuseTheBomb,
   checkIfSentenceIsPangram,
   findTheStudentThatWillReplaceTheChalk,
+  greatestEnglishLetterInUpperAndLowerCase,
+  reformatTheString,
 ];

@@ -19254,4 +19254,32 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return 0;
   },
 
+  'greatest-english-letter-in-upper-and-lower-case': (s: unknown) => {
+    const set = new Set(s as string);
+    for (let c = 90; c >= 65; c--) {
+      const upper = String.fromCharCode(c);
+      const lower = String.fromCharCode(c + 32);
+      if (set.has(upper) && set.has(lower)) return upper;
+    }
+    return '';
+  },
+
+  'reformat-the-string': (s: unknown) => {
+    const str = s as string;
+    const letters: string[] = [];
+    const digits: string[] = [];
+    for (const ch of str) {
+      if (ch >= '0' && ch <= '9') digits.push(ch);
+      else letters.push(ch);
+    }
+    if (Math.abs(letters.length - digits.length) > 1) return '';
+    const [first, second] = letters.length >= digits.length ? [letters, digits] : [digits, letters];
+    let result = '';
+    for (let i = 0; i < first.length; i++) {
+      result += first[i];
+      if (i < second.length) result += second[i];
+    }
+    return result;
+  },
+
 };

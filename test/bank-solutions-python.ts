@@ -19281,4 +19281,28 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
         rem -= c
     return 0
 `,
+
+  'greatest-english-letter-in-upper-and-lower-case': `def greatestLetter(s):
+    chars = set(s)
+    for c in range(ord('Z'), ord('A') - 1, -1):
+        upper = chr(c)
+        lower = chr(c + 32)
+        if upper in chars and lower in chars:
+            return upper
+    return ''
+`,
+
+  'reformat-the-string': `def reformat(s):
+    letters = [ch for ch in s if ch.isalpha()]
+    digits = [ch for ch in s if ch.isdigit()]
+    if abs(len(letters) - len(digits)) > 1:
+        return ''
+    first, second = (letters, digits) if len(letters) >= len(digits) else (digits, letters)
+    result = []
+    for i in range(len(first)):
+        result.append(first[i])
+        if i < len(second):
+            result.append(second[i])
+    return ''.join(result)
+`,
 };
