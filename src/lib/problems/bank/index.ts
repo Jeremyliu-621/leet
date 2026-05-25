@@ -1307,6 +1307,9 @@ import { problem as longestArithmeticSubsequenceOfGivenDifference } from './long
 import { problem as timeNeededToBuyTickets } from './time-needed-to-buy-tickets';
 import { problem as numberOfSubarraysWithBoundedMaximum } from './number-of-subarrays-with-bounded-maximum';
 import { problem as kthSmallestElementInBst } from './kth-smallest-element-in-bst';
+import { problem as findMinimumInRotatedSortedArray } from './find-minimum-in-rotated-sorted-array';
+import { problem as searchInRotatedSortedArray } from './search-in-rotated-sorted-array';
+import { problem as minimumNumberOfDaysToMakeMBouquets } from './minimum-number-of-days-to-make-m-bouquets';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2662,4 +2665,7 @@ export const problems: readonly Problem[] = [
   timeNeededToBuyTickets,
   numberOfSubarraysWithBoundedMaximum,
   kthSmallestElementInBst,
+  findMinimumInRotatedSortedArray,
+  searchInRotatedSortedArray,
+  minimumNumberOfDaysToMakeMBouquets,
 ];

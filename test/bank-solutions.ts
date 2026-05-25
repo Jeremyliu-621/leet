@@ -17261,6 +17261,50 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'find-minimum-in-rotated-sorted-array': (nums: unknown) => {
+    const a = nums as number[];
+    let lo = 0, hi = a.length - 1;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (a[mid]! > a[hi]!) lo = mid + 1; else hi = mid;
+    }
+    return a[lo]!;
+  },
+
+  'search-in-rotated-sorted-array': (nums: unknown, target: unknown) => {
+    const a = nums as number[], t = target as number;
+    let lo = 0, hi = a.length - 1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (a[mid] === t) return mid;
+      if (a[lo]! <= a[mid]!) {
+        if (a[lo]! <= t && t < a[mid]!) hi = mid - 1; else lo = mid + 1;
+      } else {
+        if (a[mid]! < t && t <= a[hi]!) lo = mid + 1; else hi = mid - 1;
+      }
+    }
+    return -1;
+  },
+
+  'minimum-number-of-days-to-make-m-bouquets': (bloomDay: unknown, m: unknown, k: unknown) => {
+    const bd = bloomDay as number[], M = m as number, K = k as number;
+    if (bd.length < M * K) return -1;
+    function canMake(day: number): boolean {
+      let bouquets = 0, consecutive = 0;
+      for (const d of bd) {
+        if (d <= day) { consecutive++; if (consecutive === K) { bouquets++; consecutive = 0; } }
+        else consecutive = 0;
+      }
+      return bouquets >= M;
+    }
+    let lo = 1, hi = Math.max(...bd);
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (canMake(mid)) hi = mid; else lo = mid + 1;
+    }
+    return lo;
+  },
+
   'maximum-value-at-given-index-in-bounded-array': (n: unknown, index: unknown, maxSum: unknown) => {
     const N = n as number, idx = index as number, ms = maxSum as number;
     function sumAtPeak(v: bigint, len: bigint): bigint {

@@ -17030,6 +17030,65 @@ def minimumDeletions(s):
     return result[0]
 `,
 
+  'find-minimum-in-rotated-sorted-array': `def findMin(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    lo, hi = 0, len(nums) - 1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if nums[mid] > nums[hi]:
+            lo = mid + 1
+        else:
+            hi = mid
+    return nums[lo]
+`,
+
+  'search-in-rotated-sorted-array': `def search(nums, target):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    target = int(target)
+    lo, hi = 0, len(nums) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if nums[mid] == target:
+            return mid
+        if nums[lo] <= nums[mid]:
+            if nums[lo] <= target < nums[mid]:
+                hi = mid - 1
+            else:
+                lo = mid + 1
+        else:
+            if nums[mid] < target <= nums[hi]:
+                lo = mid + 1
+            else:
+                hi = mid - 1
+    return -1
+`,
+
+  'minimum-number-of-days-to-make-m-bouquets': `def minDays(bloomDay, m, k):
+    bloomDay = list(bloomDay.to_py() if hasattr(bloomDay, 'to_py') else bloomDay)
+    m, k = int(m), int(k)
+    if len(bloomDay) < m * k:
+        return -1
+    def can_make(day):
+        bouquets = consecutive = 0
+        for d in bloomDay:
+            if d <= day:
+                consecutive += 1
+                if consecutive == k:
+                    bouquets += 1
+                    consecutive = 0
+            else:
+                consecutive = 0
+        return bouquets >= m
+    lo, hi = 1, max(bloomDay)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if can_make(mid):
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
   'find-players-with-zero-or-one-losses': `def findWinners(matches):
     matches = [list(m.to_py() if hasattr(m, 'to_py') else m) for m in (matches.to_py() if hasattr(matches, 'to_py') else matches)]
     losses = {}
