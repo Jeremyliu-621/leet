@@ -18570,4 +18570,54 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(ans);
   },
 
+  'valid-palindrome': (s: unknown) => {
+    const str = s as string;
+    const isAlnum = (c: string) => /[a-zA-Z0-9]/.test(c);
+    let l = 0, r = str.length - 1;
+    while (l < r) {
+      while (l < r && !isAlnum(str[l]!)) l++;
+      while (l < r && !isAlnum(str[r]!)) r--;
+      if (str[l]!.toLowerCase() !== str[r]!.toLowerCase()) return false;
+      l++; r--;
+    }
+    return true;
+  },
+
+  'peak-index-in-mountain-array': (arr: unknown) => {
+    const a = arr as number[];
+    let l = 0, r = a.length - 1;
+    while (l < r) {
+      const mid = (l + r) >> 1;
+      if (a[mid]! < a[mid + 1]!) l = mid + 1;
+      else r = mid;
+    }
+    return l;
+  },
+
+  'two-keys-keyboard': (n: unknown) => {
+    let num = n as number, res = 0;
+    for (let p = 2; p <= num; p++) {
+      while (num % p === 0) { res += p; num = Math.floor(num / p); }
+    }
+    return res;
+  },
+
+  'bag-of-tokens': (tokens: unknown, power: unknown) => {
+    const arr = (tokens as number[]).slice().sort((a, b) => a - b);
+    let pwr = power as number, lo = 0, hi = arr.length - 1, points = 0, max = 0;
+    while (lo <= hi) {
+      if (pwr >= arr[lo]!) { pwr -= arr[lo++]!; max = Math.max(max, ++points); }
+      else if (points > 0) { pwr += arr[hi--]!; points--; }
+      else break;
+    }
+    return max;
+  },
+
+  'find-the-k-weakest-rows-in-a-matrix': (mat: unknown, k: unknown) => {
+    const m = mat as number[][];
+    const rows = m.map((row, i) => [row.reduce((s, v) => s + v, 0), i] as [number, number]);
+    rows.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    return rows.slice(0, k as number).map(r => r[1]);
+  },
+
 };

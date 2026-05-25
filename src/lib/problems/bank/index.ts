@@ -1387,6 +1387,11 @@ import { problem as numberOfWaysToArriveAtDestination } from './number-of-ways-t
 import { problem as reorderRoutesToMakeAllPathsLeadToCityZero } from './reorder-routes-to-make-all-paths-lead-to-city-zero';
 import { problem as maximumLengthOfPairChain } from './maximum-length-of-pair-chain';
 import { problem as countServersThatCommunicate } from './count-servers-that-communicate';
+import { problem as validPalindrome } from './valid-palindrome';
+import { problem as peakIndexInMountainArray } from './peak-index-in-mountain-array';
+import { problem as twoKeysKeyboard } from './two-keys-keyboard';
+import { problem as bagOfTokens } from './bag-of-tokens';
+import { problem as findTheKWeakestRowsInAMatrix } from './find-the-k-weakest-rows-in-a-matrix';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2822,4 +2827,9 @@ export const problems: readonly Problem[] = [
   reorderRoutesToMakeAllPathsLeadToCityZero,
   maximumLengthOfPairChain,
   countServersThatCommunicate,
+  validPalindrome,
+  peakIndexInMountainArray,
+  twoKeysKeyboard,
+  bagOfTokens,
+  findTheKWeakestRowsInAMatrix,
 ];

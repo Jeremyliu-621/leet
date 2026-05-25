@@ -18458,4 +18458,70 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
         s = (2 * s + x) % MOD
     return ans
 `,
+
+  'valid-palindrome': `def isPalindrome(s):
+    l, r = 0, len(s) - 1
+    while l < r:
+        while l < r and not s[l].isalnum():
+            l += 1
+        while l < r and not s[r].isalnum():
+            r -= 1
+        if s[l].lower() != s[r].lower():
+            return False
+        l += 1
+        r -= 1
+    return True
+`,
+
+  'peak-index-in-mountain-array': `def peakIndexInMountainArray(arr):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    l, r = 0, len(arr) - 1
+    while l < r:
+        mid = (l + r) // 2
+        if arr[mid] < arr[mid + 1]:
+            l = mid + 1
+        else:
+            r = mid
+    return l
+`,
+
+  'two-keys-keyboard': `def minSteps(n):
+    n = int(n)
+    res = 0
+    p = 2
+    while p <= n:
+        while n % p == 0:
+            res += p
+            n //= p
+        p += 1
+    return res
+`,
+
+  'bag-of-tokens': `def bagOfTokensScore(tokens, power):
+    tokens = sorted(tokens.to_py() if hasattr(tokens, 'to_py') else list(tokens))
+    power = int(power)
+    lo, hi = 0, len(tokens) - 1
+    points = 0
+    max_points = 0
+    while lo <= hi:
+        if power >= tokens[lo]:
+            power -= tokens[lo]
+            lo += 1
+            points += 1
+            max_points = max(max_points, points)
+        elif points > 0:
+            power += tokens[hi]
+            hi -= 1
+            points -= 1
+        else:
+            break
+    return max_points
+`,
+
+  'find-the-k-weakest-rows-in-a-matrix': `def kWeakestRows(mat, k):
+    mat = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (mat.to_py() if hasattr(mat, 'to_py') else mat)]
+    k = int(k)
+    rows = sorted(range(len(mat)), key=lambda i: (sum(mat[i]), i))
+    return rows[:k]
+`,
 };
