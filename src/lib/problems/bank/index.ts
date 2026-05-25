@@ -69,6 +69,8 @@ import { problem as partitionArrayAccordingToGivenPivot } from './partition-arra
 import { problem as sortEvenOddIndices } from './sort-even-odd-indices';
 import { problem as sortArrayByParityII } from './sort-array-by-parity-ii';
 import { problem as numberOfArithmeticTriplets } from './number-of-arithmetic-triplets';
+import { problem as countEqualAndDivisiblePairs } from './count-equal-and-divisible-pairs';
+import { problem as countElementsWithMaximumFrequency } from './count-elements-with-maximum-frequency';
 // arrays — medium
 import { problem as rangeSumQuery2D } from './range-sum-query-2d';
 import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
@@ -109,6 +111,9 @@ import { problem as missingRanges } from './missing-ranges';
 import { problem as queueReconstructionByHeight } from './queue-reconstruction-by-height';
 
 // strings — easy
+import { problem as makeStringGreat } from './make-string-great';
+import { problem as minimumStringLength } from './minimum-string-length';
+import { problem as maximumScoreAfterSplittingString } from './maximum-score-after-splitting-string';
 import { problem as findCommonCharacters } from './find-common-characters';
 import { problem as countingWordsWithGivenPrefix } from './counting-words-with-given-prefix';
 import { problem as addBinary } from './add-binary';
@@ -305,6 +310,7 @@ import { problem as sumSubarrayMinimums } from './sum-subarray-minimums';
 import { problem as removeKDigits } from './remove-k-digits';
 
 // math — easy
+import { problem as sumOfMultiples } from './sum-of-multiples';
 import { problem as numberOfSteps } from './number-of-steps';
 import { problem as findTheDifference } from './find-the-difference';
 import { problem as hammingWeight } from './hamming-weight';
@@ -625,6 +631,8 @@ export const problems: readonly Problem[] = [
   numberOfEmployeesCanMeet,
   partitionArrayAccordingToGivenPivot,
   sortEvenOddIndices,
+  countEqualAndDivisiblePairs,
+  countElementsWithMaximumFrequency,
   singleNumber,
   toeplitzMatrix,
   transposeMatrix,
@@ -679,6 +687,9 @@ export const problems: readonly Problem[] = [
   missingRanges,
   queueReconstructionByHeight,
   // strings — easy
+  makeStringGreat,
+  minimumStringLength,
+  maximumScoreAfterSplittingString,
   findCommonCharacters,
   countingWordsWithGivenPrefix,
   addBinary,
@@ -904,6 +915,7 @@ export const problems: readonly Problem[] = [
   // binary-search — easy (new)
   kthMissingPositiveNumber,
   // math — easy
+  sumOfMultiples,
   numberOfSteps,
   findTheDifference,
   fizzBuzz,

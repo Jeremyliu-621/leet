@@ -7132,4 +7132,69 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'count-equal-and-divisible-pairs': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    let count = 0;
+    for (let i = 0; i < nums.length; i++)
+      for (let j = i + 1; j < nums.length; j++)
+        if (nums[i] === nums[j] && (i * j) % k === 0) count++;
+    return count;
+  },
+
+  'count-elements-with-maximum-frequency': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+    const maxFreq = Math.max(...freq.values());
+    let total = 0;
+    for (const f of freq.values()) if (f === maxFreq) total += f;
+    return total;
+  },
+
+  'make-string-great': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const stack: string[] = [];
+    for (const c of s) {
+      if (stack.length > 0 && Math.abs(stack[stack.length - 1]!.charCodeAt(0) - c.charCodeAt(0)) === 32) {
+        stack.pop();
+      } else {
+        stack.push(c);
+      }
+    }
+    return stack.join('');
+  },
+
+  'minimum-string-length': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const stack: string[] = [];
+    for (const c of s) {
+      const top = stack[stack.length - 1];
+      if ((top === 'A' && c === 'B') || (top === 'C' && c === 'D')) {
+        stack.pop();
+      } else {
+        stack.push(c);
+      }
+    }
+    return stack.length;
+  },
+
+  'sum-of-multiples': (...args: unknown[]) => {
+    const n = args[0] as number;
+    let sum = 0;
+    for (let i = 1; i <= n; i++) if (i % 3 === 0 || i % 5 === 0 || i % 7 === 0) sum += i;
+    return sum;
+  },
+
+  'maximum-score-after-splitting-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let best = 0;
+    for (let i = 1; i < s.length; i++) {
+      let score = 0;
+      for (let j = 0; j < i; j++) if (s[j] === '0') score++;
+      for (let j = i; j < s.length; j++) if (s[j] === '1') score++;
+      best = Math.max(best, score);
+    }
+    return best;
+  },
+
 };

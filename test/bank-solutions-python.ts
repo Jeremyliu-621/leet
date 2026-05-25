@@ -6544,4 +6544,60 @@ def averageOfLevels(root):
         result.append(level_sum / n)
     return result
 `,
+
+  'count-equal-and-divisible-pairs': `
+def countPairs(nums, k):
+    nums = list(nums)
+    count = 0
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            if nums[i] == nums[j] and (i * j) % k == 0:
+                count += 1
+    return count
+`,
+
+  'count-elements-with-maximum-frequency': `
+def maxFrequencyElements(nums):
+    nums = list(nums)
+    from collections import Counter
+    freq = Counter(nums)
+    max_freq = max(freq.values())
+    return sum(f for f in freq.values() if f == max_freq)
+`,
+
+  'make-string-great': `
+def makeGood(s):
+    stack = []
+    for c in s:
+        if stack and abs(ord(stack[-1]) - ord(c)) == 32:
+            stack.pop()
+        else:
+            stack.append(c)
+    return ''.join(stack)
+`,
+
+  'minimum-string-length': `
+def minLength(s):
+    stack = []
+    for c in s:
+        if stack and ((stack[-1] == 'A' and c == 'B') or (stack[-1] == 'C' and c == 'D')):
+            stack.pop()
+        else:
+            stack.append(c)
+    return len(stack)
+`,
+
+  'sum-of-multiples': `
+def sumOfMultiples(n):
+    return sum(i for i in range(1, n + 1) if i % 3 == 0 or i % 5 == 0 or i % 7 == 0)
+`,
+
+  'maximum-score-after-splitting-string': `
+def maxScore(s):
+    best = 0
+    for i in range(1, len(s)):
+        score = s[:i].count('0') + s[i:].count('1')
+        best = max(best, score)
+    return best
+`,
 };

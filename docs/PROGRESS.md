@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 505 problems; 1765 tests. Added 'Try another →' standalone solved screen, editor indent-size (2/4 spaces) setting + line/column indicator. All H/M LEETCODE_PARITY gaps closed. Marketing site updated.
+**Current focus:** Bank at 510 problems; 1801 tests; growing toward 520+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing bank toward 520+; more medium/hard problems. Browser-zoom QA (L).
 
