@@ -21258,4 +21258,94 @@ def secondMinimum(n, edges, time, change):
         ans.append(max_right - i + 1)
     return ans
 `,
+
+  'arithmetic-slices-ii-subsequence': `def countArithmeticSlices(nums):
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    n = len(a)
+    dp = [{} for _ in range(n)]
+    count = 0
+    for i in range(n):
+        for j in range(i):
+            d = a[i] - a[j]
+            prev = dp[j].get(d, 0)
+            count += prev
+            dp[i][d] = dp[i].get(d, 0) + prev + 1
+    return count
+`,
+
+  'max-dot-product-of-two-subsequences': `def maxDotProduct(nums1, nums2):
+    a = list(int(x) for x in (nums1.to_py() if hasattr(nums1, 'to_py') else nums1))
+    b = list(int(x) for x in (nums2.to_py() if hasattr(nums2, 'to_py') else nums2))
+    m, n = len(a), len(b)
+    dp = [[float('-inf')] * n for _ in range(m)]
+    for i in range(m):
+        for j in range(n):
+            prod = a[i] * b[j]
+            dp[i][j] = prod
+            if i > 0 and j > 0 and dp[i-1][j-1] > 0:
+                dp[i][j] = max(dp[i][j], dp[i-1][j-1] + prod)
+            if i > 0:
+                dp[i][j] = max(dp[i][j], dp[i-1][j])
+            if j > 0:
+                dp[i][j] = max(dp[i][j], dp[i][j-1])
+    return dp[m-1][n-1]
+`,
+
+  'number-of-squareful-arrays': `def numSquarefulPerms(nums):
+    import math
+    a = sorted(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    n = len(a)
+    used = [False] * n
+    count = [0]
+    def is_square(x):
+        s = int(math.isqrt(x))
+        return s * s == x
+    def bt(path):
+        if len(path) == n:
+            count[0] += 1
+            return
+        for i in range(n):
+            if used[i]: continue
+            if i > 0 and a[i] == a[i-1] and not used[i-1]: continue
+            if path and not is_square(path[-1] + a[i]): continue
+            used[i] = True
+            path.append(a[i])
+            bt(path)
+            path.pop()
+            used[i] = False
+    bt([])
+    return count[0]
+`,
+
+  'selling-pieces-of-wood': `def sellingWood(m, n, prices):
+    m = int(m); n = int(n)
+    p = prices.to_py() if hasattr(prices, 'to_py') else prices
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for item in p:
+        h, w, price = int(item[0]), int(item[1]), int(item[2])
+        dp[h][w] = max(dp[h][w], price)
+    for h in range(1, m + 1):
+        for w in range(1, n + 1):
+            for i in range(1, h):
+                dp[h][w] = max(dp[h][w], dp[i][w] + dp[h-i][w])
+            for j in range(1, w):
+                dp[h][w] = max(dp[h][w], dp[h][j] + dp[h][w-j])
+    return dp[m][n]
+`,
+
+  'number-of-dice-rolls-with-target-sum': `def numRollsToTarget(n, k, target):
+    n = int(n); k = int(k); target = int(target)
+    MOD = 10**9 + 7
+    dp = [0] * (target + 1)
+    dp[0] = 1
+    for _ in range(n):
+        nxt = [0] * (target + 1)
+        for s in range(target + 1):
+            if dp[s] == 0: continue
+            for f in range(1, k + 1):
+                if s + f <= target:
+                    nxt[s + f] = (nxt[s + f] + dp[s]) % MOD
+        dp = nxt
+    return dp[target]
+`,
 };

@@ -21424,4 +21424,98 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 56
+  'arithmetic-slices-ii-subsequence': (nums: unknown) => {
+    const a = nums as number[];
+    const n = a.length;
+    const dp: Map<number, number>[] = Array.from({ length: n }, () => new Map());
+    let count = 0;
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < i; j++) {
+        const d = a[i]! - a[j]!;
+        const prev = dp[j]!.get(d) ?? 0;
+        count += prev;
+        dp[i]!.set(d, (dp[i]!.get(d) ?? 0) + prev + 1);
+      }
+    }
+    return count;
+  },
+
+  'max-dot-product-of-two-subsequences': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const m = nums1.length, n = nums2.length;
+    const dp: number[][] = Array.from({ length: m }, () => new Array(n).fill(-Infinity));
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        const prod = nums1[i]! * nums2[j]!;
+        dp[i]![j] = prod;
+        if (i > 0 && j > 0 && dp[i - 1]![j - 1]! > 0) {
+          dp[i]![j] = Math.max(dp[i]![j]!, dp[i - 1]![j - 1]! + prod);
+        }
+        if (i > 0) dp[i]![j] = Math.max(dp[i]![j]!, dp[i - 1]![j]!);
+        if (j > 0) dp[i]![j] = Math.max(dp[i]![j]!, dp[i]![j - 1]!);
+      }
+    }
+    return dp[m - 1]![n - 1]!;
+  },
+
+  'number-of-squareful-arrays': (nums: unknown) => {
+    const a = [...(nums as number[])].sort((x, y) => x - y);
+    const n = a.length;
+    const isSquare = (x: number) => { const s = Math.floor(Math.sqrt(x)); return s * s === x; };
+    const used = new Array(n).fill(false);
+    let count = 0;
+    function bt(path: number[]) {
+      if (path.length === n) { count++; return; }
+      for (let i = 0; i < n; i++) {
+        if (used[i]) continue;
+        if (i > 0 && a[i] === a[i - 1] && !used[i - 1]) continue;
+        if (path.length > 0 && !isSquare(path[path.length - 1]! + a[i]!)) continue;
+        used[i] = true;
+        path.push(a[i]!);
+        bt(path);
+        path.pop();
+        used[i] = false;
+      }
+    }
+    bt([]);
+    return count;
+  },
+
+  'selling-pieces-of-wood': (...args: unknown[]) => {
+    const m = args[0] as number;
+    const n = args[1] as number;
+    const prices = args[2] as number[][];
+    const dp: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+    for (const row of prices) { const h = row[0]!, w = row[1]!, p = row[2]!; dp[h]![w] = Math.max(dp[h]![w]!, p); }
+    for (let h = 1; h <= m; h++) {
+      for (let w = 1; w <= n; w++) {
+        for (let i = 1; i < h; i++) dp[h]![w] = Math.max(dp[h]![w]!, dp[i]![w]! + dp[h - i]![w]!);
+        for (let j = 1; j < w; j++) dp[h]![w] = Math.max(dp[h]![w]!, dp[h]![j]! + dp[h]![w - j]!);
+      }
+    }
+    return dp[m]![n]!;
+  },
+
+  'number-of-dice-rolls-with-target-sum': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const k = args[1] as number;
+    const target = args[2] as number;
+    const MOD = 1_000_000_007;
+    let dp = new Array(target + 1).fill(0);
+    dp[0] = 1;
+    for (let i = 0; i < n; i++) {
+      const next = new Array(target + 1).fill(0);
+      for (let s = 0; s <= target; s++) {
+        if (dp[s] === 0) continue;
+        for (let f = 1; f <= k && s + f <= target; f++) {
+          next[s + f] = (next[s + f] + dp[s]) % MOD;
+        }
+      }
+      dp = next;
+    }
+    return dp[target];
+  },
+
 };
