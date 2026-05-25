@@ -15505,4 +15505,211 @@ def allPossibleFBT(n):
         return result
     return gen(n)
 `,
+
+  // ── Batch 14 ──────────────────────────────────────────────────────────────
+  'knight-probability-in-chessboard': `def knightProbability(n, k, row, column):
+    n = int(n); k = int(k); row = int(row); column = int(column)
+    dp = [[0.0]*n for _ in range(n)]
+    dp[row][column] = 1.0
+    moves = [(-2,-1),(-2,1),(-1,-2),(-1,2),(1,-2),(1,2),(2,-1),(2,1)]
+    for _ in range(k):
+        new_dp = [[0.0]*n for _ in range(n)]
+        for r in range(n):
+            for c in range(n):
+                if dp[r][c] > 0:
+                    for dr, dc in moves:
+                        nr, nc = r+dr, c+dc
+                        if 0 <= nr < n and 0 <= nc < n:
+                            new_dp[nr][nc] += dp[r][c] / 8
+        dp = new_dp
+    return sum(dp[r][c] for r in range(n) for c in range(n))
+`,
+
+  'minimum-distance-bst-nodes': `def minDiffInBST(root):
+    prev = [None]
+    min_diff = [float('inf')]
+    def inorder(node):
+        if not node: return
+        inorder(node.left)
+        if prev[0] is not None:
+            min_diff[0] = min(min_diff[0], node.val - prev[0])
+        prev[0] = node.val
+        inorder(node.right)
+    inorder(root)
+    return min_diff[0]
+`,
+
+  'second-minimum-node-binary-tree': `def findSecondMinimumValue(root):
+    min_val = root.val
+    second = [float('inf')]
+    def dfs(node):
+        if not node: return
+        if node.val > min_val and node.val < second[0]:
+            second[0] = node.val
+        elif node.val == min_val:
+            dfs(node.left)
+            dfs(node.right)
+    dfs(root)
+    return second[0] if second[0] != float('inf') else -1
+`,
+
+  'meeting-rooms-iii': `def mostBooked(n, meetings):
+    import heapq
+    n = int(n)
+    raw = meetings.to_py() if hasattr(meetings, 'to_py') else list(meetings)
+    meet = [[int(x) for x in (m.to_py() if hasattr(m, 'to_py') else list(m))] for m in raw]
+    meet.sort()
+    free = list(range(n))
+    heapq.heapify(free)
+    busy = []
+    count = [0] * n
+    for start, end in meet:
+        while busy and busy[0][0] <= start:
+            end_time, room = heapq.heappop(busy)
+            heapq.heappush(free, room)
+        if free:
+            room = heapq.heappop(free)
+            heapq.heappush(busy, (end, room))
+        else:
+            prev_end, room = heapq.heappop(busy)
+            heapq.heappush(busy, (prev_end + (end - start), room))
+        count[room] += 1
+    return count.index(max(count))
+`,
+
+  'minimum-obstacle-removal-to-reach-corner': `def minimumObstacles(grid):
+    from collections import deque
+    raw = grid.to_py() if hasattr(grid, 'to_py') else list(grid)
+    g = [[int(v) for v in (row.to_py() if hasattr(row, 'to_py') else list(row))] for row in raw]
+    m, n = len(g), len(g[0])
+    dist = [[float('inf')]*n for _ in range(m)]
+    dist[0][0] = 0
+    dq = deque([(0, 0, 0)])
+    while dq:
+        obs, r, c = dq.popleft()
+        if obs > dist[r][c]: continue
+        if r == m-1 and c == n-1:
+            return obs
+        for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < m and 0 <= nc < n:
+                new_obs = obs + g[nr][nc]
+                if new_obs < dist[nr][nc]:
+                    dist[nr][nc] = new_obs
+                    if g[nr][nc] == 0:
+                        dq.appendleft((new_obs, nr, nc))
+                    else:
+                        dq.append((new_obs, nr, nc))
+    return dist[m-1][n-1]
+`,
+
+  'max-sum-of-rectangle-no-larger-than-k': `def maxSumSubmatrix(matrix, k):
+    import bisect
+    raw = matrix.to_py() if hasattr(matrix, 'to_py') else list(matrix)
+    mat = [[int(v) for v in (row.to_py() if hasattr(row, 'to_py') else list(row))] for row in raw]
+    k = int(k)
+    m, n = len(mat), len(mat[0])
+    ans = float('-inf')
+    for c1 in range(n):
+        row_sum = [0] * m
+        for c2 in range(c1, n):
+            for r in range(m):
+                row_sum[r] += mat[r][c2]
+            sorted_prefix = [0]
+            prefix = 0
+            for s in row_sum:
+                prefix += s
+                idx = bisect.bisect_left(sorted_prefix, prefix - k)
+                if idx < len(sorted_prefix):
+                    ans = max(ans, prefix - sorted_prefix[idx])
+                bisect.insort(sorted_prefix, prefix)
+    return ans
+`,
+
+  'count-unique-characters-of-all-substrings': `def uniqueLetterString(s):
+    from collections import defaultdict
+    s = str(s)
+    MOD = 10**9 + 7
+    index = defaultdict(list)
+    for i, c in enumerate(s):
+        index[c].append(i)
+    ans = 0
+    for positions in index.values():
+        pos = [-1] + positions + [len(s)]
+        for i in range(1, len(pos)-1):
+            ans += (pos[i] - pos[i-1]) * (pos[i+1] - pos[i])
+    return ans % MOD
+`,
+
+  'zuma-game': `def findMinStep(board, hand):
+    from collections import Counter
+    board = str(board)
+    hand = str(hand)
+    hand_count = Counter(hand)
+
+    def clean(s):
+        changed = True
+        while changed:
+            changed = False
+            i = 0
+            ns = ''
+            while i < len(s):
+                j = i
+                while j < len(s) and s[j] == s[i]:
+                    j += 1
+                if j - i < 3:
+                    ns += s[i:j]
+                else:
+                    changed = True
+                i = j
+            s = ns
+        return s
+
+    memo = {}
+    def dp(b, hc_tuple):
+        b = clean(b)
+        if not b:
+            return 0
+        key = (b, hc_tuple)
+        if key in memo:
+            return memo[key]
+        hc = dict(hc_tuple)
+        best = float('inf')
+        i = 0
+        while i < len(b):
+            j = i
+            while j < len(b) and b[j] == b[i]:
+                j += 1
+            color = b[i]
+            cnt = j - i
+            need = 3 - cnt
+            if hc.get(color, 0) >= need:
+                hc[color] -= need
+                rest = dp(b[:i] + b[j:], tuple(sorted(hc.items())))
+                hc[color] += need
+                if rest != -1:
+                    best = min(best, need + rest)
+            i = j
+        res = best if best != float('inf') else -1
+        memo[key] = res
+        return res
+
+    return dp(board, tuple(sorted(hand_count.items())))
+`,
+
+  'find-longest-valid-obstacle-course': `def longestObstacleCourseAtEachPosition(obstacles):
+    import bisect
+    raw = obstacles.to_py() if hasattr(obstacles, 'to_py') else list(obstacles)
+    obs = [int(v) for v in raw]
+    tails = []
+    result = []
+    for x in obs:
+        pos = bisect.bisect_right(tails, x)
+        if pos == len(tails):
+            tails.append(x)
+        else:
+            tails[pos] = x
+        result.append(pos + 1)
+    return result
+`,
 };

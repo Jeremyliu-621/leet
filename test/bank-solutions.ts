@@ -15872,4 +15872,230 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     );
   },
 
+  // ── Batch 14 ──────────────────────────────────────────────────────────────
+  'knight-probability-in-chessboard': (n: unknown, k: unknown, row: unknown, column: unknown) => {
+    const size = n as number, steps = k as number, r0 = row as number, c0 = column as number;
+    let dp: number[][] = Array.from({length: size}, () => new Array(size).fill(0));
+    dp[r0]![c0] = 1;
+    const moves = [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]];
+    for (let s = 0; s < steps; s++) {
+      const newDp: number[][] = Array.from({length: size}, () => new Array(size).fill(0));
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          if (dp[r]![c]! > 0) {
+            for (const [dr, dc] of moves) {
+              const nr = r + dr!, nc = c + dc!;
+              if (nr >= 0 && nr < size && nc >= 0 && nc < size) {
+                newDp[nr]![nc]! += dp[r]![c]! / 8;
+              }
+            }
+          }
+        }
+      }
+      dp = newDp;
+    }
+    return dp.reduce((s, row) => s + row.reduce((a, b) => a + b, 0), 0);
+  },
+
+  'minimum-distance-bst-nodes': (arr: unknown) => {
+    const root = _buildTree(arr as (number | null)[]);
+    let prev: number | null = null, minDiff = Infinity;
+    function inorder(node: _TN | null): void {
+      if (!node) return;
+      inorder(node.l);
+      if (prev !== null) minDiff = Math.min(minDiff, node.v - prev);
+      prev = node.v;
+      inorder(node.r);
+    }
+    inorder(root);
+    return minDiff;
+  },
+
+  'second-minimum-node-binary-tree': (arr: unknown) => {
+    const root = _buildTree(arr as (number | null)[]);
+    if (!root) return -1;
+    const minVal = root.v;
+    let second = Infinity;
+    function dfs(node: _TN | null): void {
+      if (!node) return;
+      if (node.v > minVal && node.v < second) { second = node.v; }
+      else if (node.v === minVal) { dfs(node.l); dfs(node.r); }
+    }
+    dfs(root);
+    return second === Infinity ? -1 : second;
+  },
+
+  'meeting-rooms-iii': (n: unknown, meetings: unknown) => {
+    const numRooms = n as number;
+    const meet = (meetings as number[][]).map(m => [...m]).sort((a, b) => a[0]! - b[0]!);
+    const free: number[] = Array.from({length: numRooms}, (_, i) => i);
+    const busy: [number, number][] = [];
+    const count = new Array(numRooms).fill(0);
+    for (const [start, end] of meet) {
+      const toFree: [number, number][] = [];
+      const stillBusy: [number, number][] = [];
+      for (const b of busy) {
+        if (b[0]! <= start!) toFree.push(b);
+        else stillBusy.push(b);
+      }
+      busy.length = 0;
+      busy.push(...stillBusy);
+      for (const [, room] of toFree) {
+        let pos = free.length;
+        while (pos > 0 && free[pos-1]! > room) pos--;
+        free.splice(pos, 0, room);
+      }
+      if (free.length > 0) {
+        const room = free.shift()!;
+        busy.push([end!, room]);
+        count[room]++;
+      } else {
+        busy.sort((a, b) => a[0]! - b[0]! || a[1]! - b[1]!);
+        const [prevEnd, room] = busy.shift()!;
+        busy.push([prevEnd! + (end! - start!), room]);
+        count[room]!++;
+      }
+    }
+    return count.indexOf(Math.max(...count));
+  },
+
+  'minimum-obstacle-removal-to-reach-corner': (grid: unknown) => {
+    const g = grid as number[][];
+    const m = g.length, n = g[0]!.length;
+    const dist: number[][] = Array.from({length: m}, () => new Array(n).fill(Infinity));
+    dist[0]![0] = 0;
+    const deque: [number, number, number][] = [[0, 0, 0]];
+    while (deque.length > 0) {
+      const [obs, r, c] = deque.shift()!;
+      if (obs > dist[r]![c]!) continue;
+      if (r === m-1 && c === n-1) return obs;
+      for (const [dr, dc] of [[-1,0],[1,0],[0,-1],[0,1]]) {
+        const nr = r + dr!, nc = c + dc!;
+        if (nr >= 0 && nr < m && nc >= 0 && nc < n) {
+          const newObs = obs + g[nr]![nc]!;
+          if (newObs < dist[nr]![nc]!) {
+            dist[nr]![nc] = newObs;
+            if (g[nr]![nc] === 0) deque.unshift([newObs, nr, nc]);
+            else deque.push([newObs, nr, nc]);
+          }
+        }
+      }
+    }
+    return dist[m-1]![n-1]!;
+  },
+
+  'max-sum-of-rectangle-no-larger-than-k': (matrix: unknown, k: unknown) => {
+    const mat = matrix as number[][], kk = k as number;
+    const m = mat.length, n = mat[0]!.length;
+    let ans = -Infinity;
+    for (let c1 = 0; c1 < n; c1++) {
+      const rowSum = new Array(m).fill(0);
+      for (let c2 = c1; c2 < n; c2++) {
+        for (let r = 0; r < m; r++) rowSum[r] += mat[r]![c2]!;
+        const sorted: number[] = [0];
+        let prefix = 0;
+        for (const s of rowSum) {
+          prefix += s;
+          const target = prefix - kk;
+          let lo = 0, hi = sorted.length;
+          while (lo < hi) {
+            const mid = (lo + hi) >> 1;
+            if (sorted[mid]! >= target) hi = mid; else lo = mid + 1;
+          }
+          if (lo < sorted.length) ans = Math.max(ans, prefix - sorted[lo]!);
+          let pos = 0;
+          while (pos < sorted.length && sorted[pos]! < prefix) pos++;
+          sorted.splice(pos, 0, prefix);
+        }
+      }
+    }
+    return ans;
+  },
+
+  'count-unique-characters-of-all-substrings': (s: unknown) => {
+    const str = s as string;
+    const MOD = 1000000007n;
+    const index = new Map<string, number[]>();
+    for (let i = 0; i < str.length; i++) {
+      const c = str[i]!;
+      if (!index.has(c)) index.set(c, []);
+      index.get(c)!.push(i);
+    }
+    let ans = 0n;
+    for (const positions of index.values()) {
+      const pos = [-1, ...positions, str.length];
+      for (let i = 1; i < pos.length - 1; i++) {
+        ans += BigInt(pos[i]! - pos[i-1]!) * BigInt(pos[i+1]! - pos[i]!);
+      }
+    }
+    return Number(ans % MOD);
+  },
+
+  'zuma-game': (board: unknown, hand: unknown) => {
+    const boardStr = board as string, handStr = hand as string;
+    const handCount = new Map<string, number>();
+    for (const c of handStr) handCount.set(c, (handCount.get(c) ?? 0) + 1);
+
+    function clean(s: string): string {
+      let changed = true;
+      while (changed) {
+        changed = false;
+        let i = 0, ns = '';
+        while (i < s.length) {
+          let j = i;
+          while (j < s.length && s[j] === s[i]) j++;
+          if (j - i < 3) ns += s.slice(i, j);
+          else changed = true;
+          i = j;
+        }
+        s = ns;
+      }
+      return s;
+    }
+
+    const memo = new Map<string, number>();
+    function dp(b: string, hc: Map<string, number>): number {
+      b = clean(b);
+      if (b.length === 0) return 0;
+      const key = b + '|' + [...hc.entries()].sort().join(',');
+      if (memo.has(key)) return memo.get(key)!;
+      let best = Infinity;
+      let i = 0;
+      while (i < b.length) {
+        let j = i;
+        while (j < b.length && b[j] === b[i]) j++;
+        const color = b[i]!, cnt = j - i, need = 3 - cnt;
+        if ((hc.get(color) ?? 0) >= need) {
+          hc.set(color, (hc.get(color) ?? 0) - need);
+          const rest = dp(b.slice(0, i) + b.slice(j), hc);
+          hc.set(color, (hc.get(color) ?? 0) + need);
+          if (rest !== -1) best = Math.min(best, need + rest);
+        }
+        i = j;
+      }
+      const result = best === Infinity ? -1 : best;
+      memo.set(key, result);
+      return result;
+    }
+
+    return dp(boardStr, handCount);
+  },
+
+  'find-longest-valid-obstacle-course': (obstacles: unknown) => {
+    const obs = obstacles as number[];
+    const tails: number[] = [];
+    const result: number[] = [];
+    for (const x of obs) {
+      let lo = 0, hi = tails.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (tails[mid]! <= x) lo = mid + 1; else hi = mid;
+      }
+      if (lo === tails.length) tails.push(x);
+      else tails[lo] = x;
+      result.push(lo + 1);
+    }
+    return result;
+  },
+
 };

@@ -1218,6 +1218,15 @@ import { problem as sumEvenAfterQueries } from './sum-of-even-numbers-after-quer
 import { problem as averageWaitingTime } from './average-waiting-time';
 import { problem as sortAnArray } from './sort-an-array';
 import { problem as slidingPuzzle } from './sliding-puzzle';
+import { problem as knightProbabilityInChessboard } from './knight-probability-in-chessboard';
+import { problem as minimumDistanceBstNodes } from './minimum-distance-bst-nodes';
+import { problem as secondMinimumNodeBinaryTree } from './second-minimum-node-binary-tree';
+import { problem as meetingRoomsIII } from './meeting-rooms-iii';
+import { problem as minimumObstacleRemovalToReachCorner } from './minimum-obstacle-removal-to-reach-corner';
+import { problem as maxSumOfRectangleNoLargerThanK } from './max-sum-of-rectangle-no-larger-than-k';
+import { problem as countUniqueCharactersOfAllSubstrings } from './count-unique-characters-of-all-substrings';
+import { problem as zumaGame } from './zuma-game';
+import { problem as findLongestValidObstacleCourse } from './find-longest-valid-obstacle-course';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2484,4 +2493,13 @@ export const problems: readonly Problem[] = [
   averageWaitingTime,
   sortAnArray,
   slidingPuzzle,
+  knightProbabilityInChessboard,
+  minimumDistanceBstNodes,
+  secondMinimumNodeBinaryTree,
+  meetingRoomsIII,
+  minimumObstacleRemovalToReachCorner,
+  maxSumOfRectangleNoLargerThanK,
+  countUniqueCharactersOfAllSubstrings,
+  zumaGame,
+  findLongestValidObstacleCourse,
 ];
