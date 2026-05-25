@@ -19741,4 +19741,42 @@ def distanceK(root, target, k):
             result.append(head[i])
     return result
 `,
+
+  'intersection-of-two-arrays': `def intersection(nums1, nums2):
+    s = set(nums1)
+    result = set()
+    for n in nums2:
+        if n in s:
+            result.add(n)
+    return sorted(result)
+`,
+
+  'climbing-stairs-memo': `def climbStairs(n):
+    memo = {}
+    def climb(k):
+        if k <= 1:
+            return 1
+        if k in memo:
+            return memo[k]
+        v = climb(k - 1) + climb(k - 2)
+        memo[k] = v
+        return v
+    return climb(int(n))
+`,
+
+  'count-vowels-in-string': `def countVowels(s):
+    vowels = set('aeiouAEIOU')
+    return sum(1 for c in str(s) if c in vowels)
+`,
+
+  'percentage-of-letter': `def percentageLetter(s, letter):
+    s = str(s)
+    letter = str(letter)
+    count = s.count(letter)
+    return count * 100 // len(s)
+`,
+
+  'reverse-words-in-string': `def reverseWords(s):
+    return ' '.join(reversed(str(s).split()))
+`,
 };

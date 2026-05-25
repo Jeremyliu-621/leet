@@ -19686,4 +19686,44 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'intersection-of-two-arrays': (nums1: unknown, nums2: unknown) => {
+    const s = new Set(nums1 as number[]);
+    const result = new Set<number>();
+    for (const n of nums2 as number[]) {
+      if (s.has(n)) result.add(n);
+    }
+    return [...result].sort((a, b) => a - b);
+  },
+
+  'climbing-stairs-memo': (n: unknown) => {
+    const memo = new Map<number, number>();
+    function climb(k: number): number {
+      if (k <= 1) return 1;
+      if (memo.has(k)) return memo.get(k)!;
+      const v = climb(k - 1) + climb(k - 2);
+      memo.set(k, v);
+      return v;
+    }
+    return climb(n as number);
+  },
+
+  'count-vowels-in-string': (s: unknown) => {
+    const vowels = new Set(['a','e','i','o','u','A','E','I','O','U']);
+    let count = 0;
+    for (const c of s as string) if (vowels.has(c)) count++;
+    return count;
+  },
+
+  'percentage-of-letter': (s: unknown, letter: unknown) => {
+    const str = s as string;
+    const l = letter as string;
+    let count = 0;
+    for (const c of str) if (c === l) count++;
+    return Math.floor(count / str.length * 100);
+  },
+
+  'reverse-words-in-string': (s: unknown) => {
+    return (s as string).trim().split(/\s+/).reverse().join(' ');
+  },
+
 };

@@ -1471,6 +1471,11 @@ import { problem as allNodesDistanceKInBinaryTree } from './all-nodes-distance-k
 import { problem as openLock } from './open-lock';
 import { problem as maximizeSumOfArrayAfterKNegations } from './maximize-sum-of-array-after-k-negations';
 import { problem as removeDuplicatesFromSortedList } from './remove-duplicates-from-sorted-list';
+import { problem as intersectionOfTwoArrays } from './intersection-of-two-arrays';
+import { problem as climbingStairsMemo } from './climbing-stairs-memo';
+import { problem as countVowelsInString } from './count-vowels-in-string';
+import { problem as percentageOfLetter } from './percentage-of-letter';
+import { problem as reverseWordsInString } from './reverse-words-in-string';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2990,4 +2995,9 @@ export const problems: readonly Problem[] = [
   openLock,
   maximizeSumOfArrayAfterKNegations,
   removeDuplicatesFromSortedList,
+  intersectionOfTwoArrays,
+  climbingStairsMemo,
+  countVowelsInString,
+  percentageOfLetter,
+  reverseWordsInString,
 ];
