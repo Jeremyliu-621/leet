@@ -20872,4 +20872,124 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return deletions;
   },
 
+  'matrix-cells-in-distance-order': (...args: unknown[]) => {
+    const rows = args[0] as number;
+    const cols = args[1] as number;
+    const rCenter = args[2] as number;
+    const cCenter = args[3] as number;
+    const cells: number[][] = [];
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        cells.push([r, c]);
+      }
+    }
+    cells.sort((a, b) => {
+      const da = Math.abs(a[0]! - rCenter) + Math.abs(a[1]! - cCenter);
+      const db = Math.abs(b[0]! - rCenter) + Math.abs(b[1]! - cCenter);
+      if (da !== db) return da - db;
+      if (a[0]! !== b[0]!) return a[0]! - b[0]!;
+      return a[1]! - b[1]!;
+    });
+    return cells;
+  },
+
+  'broken-calculator': (...args: unknown[]) => {
+    let startValue = args[0] as number;
+    let target = args[1] as number;
+    let ops = 0;
+    while (target > startValue) {
+      if (target % 2 === 1) {
+        target++;
+      } else {
+        target = target / 2;
+      }
+      ops++;
+    }
+    return ops + (startValue - target);
+  },
+
+  'count-days-without-meetings': (...args: unknown[]) => {
+    const days = args[0] as number;
+    const meetings = (args[1] as number[][]).slice();
+    if (meetings.length === 0) return days;
+    meetings.sort((a, b) => a[0]! - b[0]!);
+    const merged: number[][] = [];
+    for (const m of meetings) {
+      if (merged.length === 0 || m[0]! > merged[merged.length - 1]![1]! + 1) {
+        merged.push([m[0]!, m[1]!]);
+      } else {
+        merged[merged.length - 1]![1] = Math.max(merged[merged.length - 1]![1]!, m[1]!);
+      }
+    }
+    let covered = 0;
+    for (const [s, e] of merged) covered += e! - s! + 1;
+    return days - covered;
+  },
+
+  'string-compression-iii': (...args: unknown[]) => {
+    const word = args[0] as string;
+    let result = '';
+    let i = 0;
+    while (i < word.length) {
+      const ch = word[i]!;
+      let count = 0;
+      while (i < word.length && word[i] === ch && count < 9) {
+        count++;
+        i++;
+      }
+      result += count.toString() + ch;
+    }
+    return result;
+  },
+
+  'strange-printer-ii': (...args: unknown[]) => {
+    const targetGrid = args[0] as number[][];
+    const m = targetGrid.length;
+    const n = targetGrid[0]!.length;
+    const colors = new Set<number>();
+    for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) colors.add(targetGrid[r]![c]!);
+    // For each color find bounding box
+    const bbox = new Map<number, [number, number, number, number]>();
+    for (const color of colors) bbox.set(color, [m, n, -1, -1]);
+    for (let r = 0; r < m; r++) {
+      for (let c = 0; c < n; c++) {
+        const color = targetGrid[r]![c]!;
+        const b = bbox.get(color)!;
+        b[0] = Math.min(b[0], r);
+        b[1] = Math.min(b[1], c);
+        b[2] = Math.max(b[2], r);
+        b[3] = Math.max(b[3], c);
+      }
+    }
+    // Build dependency graph: color A -> color B means B must be painted after A
+    const graph = new Map<number, Set<number>>();
+    const inDegree = new Map<number, number>();
+    for (const color of colors) { graph.set(color, new Set()); inDegree.set(color, 0); }
+    for (const [color, [r1, c1, r2, c2]] of bbox) {
+      for (let r = r1; r <= r2; r++) {
+        for (let c = c1; c <= c2; c++) {
+          const cell = targetGrid[r]![c]!;
+          if (cell !== color && !graph.get(color)!.has(cell)) {
+            graph.get(color)!.add(cell);
+            inDegree.set(cell, (inDegree.get(cell) ?? 0) + 1);
+          }
+        }
+      }
+    }
+    // Topological sort (Kahn's)
+    const queue: number[] = [];
+    for (const [color, deg] of inDegree) if (deg === 0) queue.push(color);
+    let processed = 0;
+    while (queue.length > 0) {
+      const cur = queue.shift()!;
+      processed++;
+      for (const dep of graph.get(cur)!) {
+        const newDeg = inDegree.get(dep)! - 1;
+        inDegree.set(dep, newDeg);
+        if (newDeg === 0) queue.push(dep);
+      }
+    }
+    return processed === colors.size;
+  },
+
 };

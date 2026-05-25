@@ -20816,4 +20816,83 @@ def secondMinimum(n, edges, time, change):
             used.add(f)
     return deletions
 `,
+
+  'matrix-cells-in-distance-order': `def matrixCellsInDistanceOrder(rows, cols, rCenter, cCenter):
+    cells = [[r, c] for r in range(rows) for c in range(cols)]
+    cells.sort(key=lambda x: (abs(x[0] - rCenter) + abs(x[1] - cCenter), x[0], x[1]))
+    return cells
+`,
+
+  'broken-calculator': `def brokenCalc(startValue, target):
+    ops = 0
+    while target > startValue:
+        if target % 2 == 1:
+            target += 1
+        else:
+            target //= 2
+        ops += 1
+    return ops + (startValue - target)
+`,
+
+  'count-days-without-meetings': `def countDays(days, meetings):
+    sorted_meetings = sorted(meetings, key=lambda x: x[0])
+    merged = []
+    for item in sorted_meetings:
+        s, e = item[0], item[1]
+        if merged and s <= merged[-1][1] + 1:
+            merged[-1][1] = max(merged[-1][1], e)
+        else:
+            merged.append([s, e])
+    covered = sum(item[1] - item[0] + 1 for item in merged)
+    return days - covered
+`,
+
+  'string-compression-iii': `def compressedString(word):
+    result = []
+    i = 0
+    while i < len(word):
+        ch = word[i]
+        count = 0
+        while i < len(word) and word[i] == ch and count < 9:
+            count += 1
+            i += 1
+        result.append(str(count) + ch)
+    return ''.join(result)
+`,
+
+  'strange-printer-ii': `def isPrintable(targetGrid):
+    from collections import deque
+    m, n = len(targetGrid), len(targetGrid[0])
+    colors = set(targetGrid[r][c] for r in range(m) for c in range(n))
+    bbox = {}
+    for color in colors:
+        bbox[color] = [m, n, -1, -1]
+    for r in range(m):
+        for c in range(n):
+            color = targetGrid[r][c]
+            b = bbox[color]
+            b[0] = min(b[0], r)
+            b[1] = min(b[1], c)
+            b[2] = max(b[2], r)
+            b[3] = max(b[3], c)
+    graph = {color: set() for color in colors}
+    in_degree = {color: 0 for color in colors}
+    for color, (r1, c1, r2, c2) in bbox.items():
+        for r in range(r1, r2 + 1):
+            for c in range(c1, c2 + 1):
+                cell = targetGrid[r][c]
+                if cell != color and cell not in graph[color]:
+                    graph[color].add(cell)
+                    in_degree[cell] += 1
+    queue = deque(color for color in colors if in_degree[color] == 0)
+    processed = 0
+    while queue:
+        cur = queue.popleft()
+        processed += 1
+        for dep in graph[cur]:
+            in_degree[dep] -= 1
+            if in_degree[dep] == 0:
+                queue.append(dep)
+    return processed == len(colors)
+`,
 };

@@ -1529,6 +1529,11 @@ import { problem as buildingsWithAnOceanView } from './buildings-with-an-ocean-v
 import { problem as removeNodesFromLinkedList } from './remove-nodes-from-linked-list';
 import { problem as findPolygonWithTheLargestPerimeter } from './find-polygon-with-the-largest-perimeter';
 import { problem as minimumDeletionsToMakeCharacterFrequenciesUnique } from './minimum-deletions-to-make-character-frequencies-unique';
+import { problem as matrixCellsInDistanceOrder } from './matrix-cells-in-distance-order';
+import { problem as brokenCalculator } from './broken-calculator';
+import { problem as countDaysWithoutMeetings } from './count-days-without-meetings';
+import { problem as stringCompressionIII } from './string-compression-iii';
+import { problem as strangePrinterII } from './strange-printer-ii';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3106,4 +3111,9 @@ export const problems: readonly Problem[] = [
   removeNodesFromLinkedList,
   findPolygonWithTheLargestPerimeter,
   minimumDeletionsToMakeCharacterFrequenciesUnique,
+  matrixCellsInDistanceOrder,
+  brokenCalculator,
+  countDaysWithoutMeetings,
+  stringCompressionIII,
+  strangePrinterII,
 ];
