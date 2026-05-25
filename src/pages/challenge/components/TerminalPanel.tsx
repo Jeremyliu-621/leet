@@ -198,6 +198,11 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
       const entries = buildEntries(result, mode);
       setHistory((prev) => [...prev, entries]);
       prevResultRef.current = result;
+      // Auto-switch to test results on submit failure so the user immediately
+      // sees the first failing test expanded.
+      if (mode === 'submit' && result.outcome !== 'accepted' && result.verdicts.length > 0) {
+        setActiveTab('testcases');
+      }
     }
   }, [result, mode]);
 
@@ -314,9 +319,10 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
                   )}
                 </div>
 
-                {/* Individual test results */}
+                {/* Individual test results — key includes passed count so cards
+                    reset their expand state when a new result arrives */}
                 {result.verdicts.map((verdict) => (
-                  <TestResultCard key={verdict.index} verdict={verdict} />
+                  <TestResultCard key={`${result.passed}-${verdict.index}`} verdict={verdict} />
                 ))}
               </>
             )}
@@ -339,7 +345,7 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
 
 /** Compact test result card for the Test Results tab. */
 function TestResultCard({ verdict }: { verdict: TestVerdict }) {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(verdict.status !== 'pass');
   const label = `Test ${verdict.index + 1}`;
 
   return (
@@ -359,7 +365,7 @@ function TestResultCard({ verdict }: { verdict: TestVerdict }) {
         </span>
         <span className="font-mono text-[10px] text-faint">{label}</span>
         {verdict.status === 'pass' && verdict.durationMs !== undefined && (
-          <span className="ml-auto font-mono text-[10px] text-faint tabular-nums">
+          <span className="font-mono text-[10px] text-faint tabular-nums ml-2">
             {verdict.durationMs}ms
           </span>
         )}
