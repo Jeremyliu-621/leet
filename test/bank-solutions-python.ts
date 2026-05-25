@@ -16693,4 +16693,52 @@ def minimumDeletions(s):
         last[v] = i
     return ans if ans != float('inf') else -1
 `,
+
+  'lexicographically-smallest-palindrome': `def makeSmallestPalindrome(s):
+    a = list(str(s))
+    l, r = 0, len(a) - 1
+    while l < r:
+        if a[l] < a[r]:
+            a[r] = a[l]
+        else:
+            a[l] = a[r]
+        l += 1
+        r -= 1
+    return ''.join(a)
+`,
+
+  'minimum-operations-to-make-binary-array-elements-equal-to-one-ii': `def minOperations(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    flips = 0
+    for v in nums:
+        if (v + flips) % 2 == 0:
+            flips += 1
+    return flips
+`,
+
+  'closest-prime-numbers-in-range': `def closestPrimes(left, right):
+    lo = int(left)
+    hi = int(right)
+    not_prime = bytearray(hi + 1)
+    not_prime[0] = not_prime[1] = 1
+    i = 2
+    while i * i <= hi:
+        if not not_prime[i]:
+            j = i * i
+            while j <= hi:
+                not_prime[j] = 1
+                j += i
+        i += 1
+    primes = [i for i in range(lo, hi + 1) if not not_prime[i]]
+    if len(primes) < 2:
+        return [-1, -1]
+    best = [-1, -1]
+    min_gap = float('inf')
+    for i in range(1, len(primes)):
+        gap = primes[i] - primes[i-1]
+        if gap < min_gap:
+            min_gap = gap
+            best = [primes[i-1], primes[i]]
+    return best
+`,
 };

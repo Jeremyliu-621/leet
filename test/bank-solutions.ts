@@ -16921,4 +16921,38 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans === Infinity ? -1 : ans;
   },
 
+  'lexicographically-smallest-palindrome': (s: unknown) => {
+    const a = (s as string).split('');
+    let l = 0, r = a.length - 1;
+    while (l < r) {
+      if (a[l]! < a[r]!) a[r] = a[l]!;
+      else a[l] = a[r]!;
+      l++; r--;
+    }
+    return a.join('');
+  },
+
+  'minimum-operations-to-make-binary-array-elements-equal-to-one-ii': (nums: unknown) => {
+    const a = nums as number[];
+    let flips = 0;
+    for (const v of a) if ((v + flips) % 2 === 0) flips++;
+    return flips;
+  },
+
+  'closest-prime-numbers-in-range': (left: unknown, right: unknown) => {
+    const lo = left as number, hi = right as number;
+    const notPrime = new Uint8Array(hi + 1);
+    notPrime[0] = notPrime[1] = 1;
+    for (let i = 2; i * i <= hi; i++) if (!notPrime[i]) for (let j = i * i; j <= hi; j += i) notPrime[j] = 1;
+    const primes: number[] = [];
+    for (let i = lo; i <= hi; i++) if (!notPrime[i]) primes.push(i);
+    if (primes.length < 2) return [-1, -1];
+    let best = [-1, -1] as number[], minGap = Infinity;
+    for (let i = 1; i < primes.length; i++) {
+      const gap = primes[i]! - primes[i - 1]!;
+      if (gap < minGap) { minGap = gap; best = [primes[i - 1]!, primes[i]!]; }
+    }
+    return best;
+  },
+
 };

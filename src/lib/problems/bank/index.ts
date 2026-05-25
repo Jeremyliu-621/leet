@@ -1279,6 +1279,9 @@ import { problem as secondLargestDigitInString } from './second-largest-digit-in
 import { problem as numberOfOperationsToMakeNetworkConnected } from './number-of-operations-to-make-network-connected';
 import { problem as maximizeNumberOfTasksYouCanAssign } from './maximize-number-of-tasks-you-can-assign';
 import { problem as minimumConsecutiveCardsToPick } from './minimum-consecutive-cards-to-pick-up';
+import { problem as lexicographicallySmallestPalindrome } from './lexicographically-smallest-palindrome';
+import { problem as minimumOperationsBinaryArrayEqualToOneII } from './minimum-operations-to-make-binary-array-elements-equal-to-one-ii';
+import { problem as closestPrimeNumbersInRange } from './closest-prime-numbers-in-range';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2606,4 +2609,7 @@ export const problems: readonly Problem[] = [
   numberOfOperationsToMakeNetworkConnected,
   maximizeNumberOfTasksYouCanAssign,
   minimumConsecutiveCardsToPick,
+  lexicographicallySmallestPalindrome,
+  minimumOperationsBinaryArrayEqualToOneII,
+  closestPrimeNumbersInRange,
 ];
