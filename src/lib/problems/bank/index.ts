@@ -155,6 +155,9 @@ import { problem as divideStringIntoGroups } from './divide-string-into-groups';
 import { problem as countVowelSubstrings } from './count-vowel-substrings';
 import { problem as checkPrefixString } from './check-prefix-string';
 import { problem as sumDigitsStringConvert } from './sum-digits-string-convert';
+import { problem as maximumNumberOfStringPairs } from './maximum-number-of-string-pairs';
+import { problem as countPairsSumLessThanTarget } from './count-pairs-sum-less-than-target';
+import { problem as neitherMinimumNorMaximum } from './neither-minimum-nor-maximum';
 // strings — medium
 import { problem as zigzagConversion } from './zigzag-conversion';
 import { problem as implementTrie } from './implement-trie';
@@ -731,6 +734,9 @@ export const problems: readonly Problem[] = [
   countVowelSubstrings,
   checkPrefixString,
   sumDigitsStringConvert,
+  maximumNumberOfStringPairs,
+  countPairsSumLessThanTarget,
+  neitherMinimumNorMaximum,
   // strings — medium
   implementTrie,
   customSortString,

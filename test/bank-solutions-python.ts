@@ -4895,6 +4895,40 @@ def deserialize(data):
     return total
 `,
 
+  'maximum-number-of-string-pairs': `def maximumNumberOfStringPairs(words):
+    seen = set()
+    pairs = 0
+    for w in words:
+        rev = w[::-1]
+        if rev in seen:
+            pairs += 1
+        else:
+            seen.add(w)
+    return pairs
+`,
+
+  'count-pairs-sum-less-than-target': `def countPairs(nums, target):
+    nums = sorted(nums)
+    lo, hi, count = 0, len(nums) - 1, 0
+    while lo < hi:
+        if nums[lo] + nums[hi] < target:
+            count += hi - lo
+            lo += 1
+        else:
+            hi -= 1
+    return count
+`,
+
+  'neither-minimum-nor-maximum': `def findNonMinOrMax(nums):
+    if len(nums) < 3:
+        return -1
+    mn, mx = min(nums), max(nums)
+    for n in nums:
+        if n != mn and n != mx:
+            return n
+    return -1
+`,
+
   'concatenation-of-array': `def getConcatenation(nums):
     return list(nums) + list(nums)
 `,

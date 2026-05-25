@@ -5532,6 +5532,34 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return num;
   },
+  'maximum-number-of-string-pairs': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const seen = new Set<string>();
+    let pairs = 0;
+    for (const w of words) {
+      const rev = w.split('').reverse().join('');
+      if (seen.has(rev)) pairs++;
+      else seen.add(w);
+    }
+    return pairs;
+  },
+  'count-pairs-sum-less-than-target': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const target = args[1] as number;
+    let lo = 0, hi = nums.length - 1, count = 0;
+    while (lo < hi) {
+      if (nums[lo]! + nums[hi]! < target) { count += hi - lo; lo++; }
+      else hi--;
+    }
+    return count;
+  },
+  'neither-minimum-nor-maximum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    if (nums.length < 3) return -1;
+    const min = Math.min(...nums), max = Math.max(...nums);
+    for (const n of nums) if (n !== min && n !== max) return n;
+    return -1;
+  },
   'concatenation-of-array': (...args: unknown[]) => {
     const nums = args[0] as number[];
     return [...nums, ...nums];
