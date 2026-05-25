@@ -15981,6 +15981,129 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Array.from({length: N}, (_, idx) => idx).filter(p => find(p) === find(0));
   },
 
+  'plates-between-candles': (s: unknown, queries: unknown) => {
+    const str = s as string;
+    const n = str.length;
+    const prefix = new Array(n + 1).fill(0);
+    const leftCandle = new Array(n).fill(-1);
+    const rightCandle = new Array(n).fill(-1);
+    for (let i = 0; i < n; i++) {
+      prefix[i + 1] = prefix[i]! + (str[i] === '*' ? 1 : 0);
+      leftCandle[i] = str[i] === '|' ? i : (i > 0 ? leftCandle[i - 1]! : -1);
+    }
+    for (let i = n - 1; i >= 0; i--) {
+      rightCandle[i] = str[i] === '|' ? i : (i < n - 1 ? rightCandle[i + 1]! : -1);
+    }
+    const qs = queries as number[][];
+    return qs.map(([l, r]) => {
+      const lc = rightCandle[l!]!, rc = leftCandle[r!]!;
+      if (lc === -1 || rc === -1 || lc >= rc) return 0;
+      return prefix[rc]! - prefix[lc]!;
+    });
+  },
+
+  'minimum-cost-to-make-all-characters-equal': (s: unknown) => {
+    const str = s as string;
+    const n = str.length;
+    let cost = 0;
+    for (let i = 1; i < n; i++) {
+      if (str[i] !== str[i - 1]) cost += Math.min(i, n - i);
+    }
+    return cost;
+  },
+
+  'maximum-consecutive-floors-without-special-floors': (bottom: unknown, top: unknown, special: unknown) => {
+    const b = bottom as number, t = top as number;
+    const sp = (special as number[]).filter(x => x >= b && x <= t).sort((a, c) => a - c);
+    if (sp.length === 0) return t - b + 1;
+    let maxGap = sp[0]! - b;
+    for (let i = 1; i < sp.length; i++) maxGap = Math.max(maxGap, sp[i]! - sp[i - 1]! - 1);
+    maxGap = Math.max(maxGap, t - sp[sp.length - 1]!);
+    return maxGap;
+  },
+
+  'minimum-moves-to-reach-target-score': (target: unknown, maxDoubles: unknown) => {
+    let t = target as number, d = maxDoubles as number;
+    let moves = 0;
+    while (t > 1 && d > 0) {
+      if (t % 2 === 1) { t--; moves++; }
+      else { t /= 2; moves++; d--; }
+    }
+    return moves + (t - 1);
+  },
+
+  'maximum-segment-sum-after-removals': (nums: unknown, removeQueries: unknown) => {
+    const a = nums as number[], rq = removeQueries as number[];
+    const n = a.length;
+    const parent = Array.from({length: n + 1}, (_, i) => i);
+    const segSum = new Array(n + 1).fill(0);
+    const present = new Array(n).fill(false);
+    const ans = new Array(n).fill(0);
+    const find = (x: number): number => { if (parent[x] !== x) parent[x] = find(parent[x]!); return parent[x]!; };
+    const union = (x: number, y: number) => {
+      const px = find(x), py = find(y);
+      if (px !== py) { parent[px] = py; segSum[py] = (segSum[py]! + segSum[px]!); }
+    };
+    let maxSum = 0;
+    for (let i = n - 1; i >= 0; i--) {
+      ans[i] = maxSum;
+      const idx = rq[i]!;
+      present[idx] = true;
+      segSum[idx] = a[idx]!;
+      if (idx > 0 && present[idx - 1]) union(idx, idx - 1);
+      if (idx < n - 1 && present[idx + 1]) union(idx, idx + 1);
+      maxSum = Math.max(maxSum, segSum[find(idx)]!);
+    }
+    return ans;
+  },
+
+  'prime-palindrome': (n: unknown) => {
+    const num = n as number;
+    const isPrime = (x: number) => {
+      if (x < 2) return false;
+      if (x === 2) return true;
+      if (x % 2 === 0) return false;
+      for (let i = 3; i * i <= x; i += 2) if (x % i === 0) return false;
+      return true;
+    };
+    if (num <= 2) return 2;
+    if (num <= 3) return 3;
+    if (num <= 5) return 5;
+    if (num <= 7) return 7;
+    if (num <= 11) return 11;
+    for (let len = 1; len <= 9; len += 2) {
+      const half = Math.ceil(len / 2);
+      const start = Math.pow(10, half - 1);
+      const end = Math.pow(10, half);
+      for (let firstHalf = start; firstHalf < end; firstHalf++) {
+        const s = String(firstHalf);
+        const pal = Number(s + s.slice(0, len - half).split('').reverse().join(''));
+        if (pal >= num && isPrime(pal)) return pal;
+      }
+    }
+    return -1;
+  },
+
+  'car-fleet-ii': (cars: unknown) => {
+    const c = cars as number[][];
+    const n = c.length;
+    const ans = new Array(n).fill(-1);
+    const stack: number[] = [];
+    for (let i = n - 1; i >= 0; i--) {
+      const [pos, spd] = [c[i]![0]!, c[i]![1]!];
+      while (stack.length) {
+        const j = stack[stack.length - 1]!;
+        const [jpos, jspd] = [c[j]![0]!, c[j]![1]!];
+        if (spd <= jspd) { stack.pop(); continue; }
+        const t = (jpos - pos) / (spd - jspd);
+        if (ans[j] === -1 || t <= ans[j]) { ans[i] = t; break; }
+        stack.pop();
+      }
+      stack.push(i);
+    }
+    return ans;
+  },
+
   'all-possible-full-binary-trees': (n: unknown) => {
     const num = n as number;
     const memo = new Map<number, _TN[]>();

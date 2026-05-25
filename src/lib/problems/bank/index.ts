@@ -1246,6 +1246,13 @@ import { problem as stoneGameIX } from './stone-game-ix';
 import { problem as maximumScoreRemovingStones } from './maximum-score-removing-stones';
 import { problem as numberOfAtoms } from './number-of-atoms';
 import { problem as findAllPeopleWithSecret } from './find-all-people-with-secret';
+import { problem as platesBetweenCandles } from './plates-between-candles';
+import { problem as minimumCostToMakeAllCharactersEqual } from './minimum-cost-to-make-all-characters-equal';
+import { problem as maximumConsecutiveFloorsWithoutSpecialFloors } from './maximum-consecutive-floors-without-special-floors';
+import { problem as minimumMovesToReachTargetScore } from './minimum-moves-to-reach-target-score';
+import { problem as maximumSegmentSumAfterRemovals } from './maximum-segment-sum-after-removals';
+import { problem as primePalindrome } from './prime-palindrome';
+import { problem as carFleetII } from './car-fleet-ii';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2540,4 +2547,11 @@ export const problems: readonly Problem[] = [
   maximumScoreRemovingStones,
   numberOfAtoms,
   findAllPeopleWithSecret,
+  platesBetweenCandles,
+  minimumCostToMakeAllCharactersEqual,
+  maximumConsecutiveFloorsWithoutSpecialFloors,
+  minimumMovesToReachTargetScore,
+  maximumSegmentSumAfterRemovals,
+  primePalindrome,
+  carFleetII,
 ];

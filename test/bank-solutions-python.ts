@@ -15660,6 +15660,170 @@ def findAllPeople(n, meetings, firstPerson):
     return [p for p in range(n) if find(p) == find(0)]
 `,
 
+  'plates-between-candles': `
+def platesBetweenCandles(s, queries):
+    queries = [list(q.to_py()) if hasattr(q, 'to_py') else list(q) for q in (queries.to_py() if hasattr(queries, 'to_py') else queries)]
+    n = len(s)
+    prefix = [0] * (n + 1)
+    left_candle = [-1] * n
+    right_candle = [-1] * n
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + (1 if s[i] == '*' else 0)
+        if s[i] == '|':
+            left_candle[i] = i
+        elif i > 0:
+            left_candle[i] = left_candle[i - 1]
+    for i in range(n - 1, -1, -1):
+        if s[i] == '|':
+            right_candle[i] = i
+        elif i < n - 1:
+            right_candle[i] = right_candle[i + 1]
+    result = []
+    for q in queries:
+        l, r = q[0], q[1]
+        lc = right_candle[l]
+        rc = left_candle[r]
+        if lc == -1 or rc == -1 or lc >= rc:
+            result.append(0)
+        else:
+            result.append(prefix[rc] - prefix[lc])
+    return result
+`,
+
+  'minimum-cost-to-make-all-characters-equal': `
+def minimumCost(s):
+    n = len(s)
+    cost = 0
+    for i in range(1, n):
+        if s[i] != s[i - 1]:
+            cost += min(i, n - i)
+    return cost
+`,
+
+  'maximum-consecutive-floors-without-special-floors': `
+def maxConsecutive(bottom, top, special):
+    special = sorted(x for x in (list(special.to_py()) if hasattr(special, 'to_py') else list(special)) if bottom <= x <= top)
+    if not special:
+        return top - bottom + 1
+    max_gap = special[0] - bottom
+    for i in range(1, len(special)):
+        max_gap = max(max_gap, special[i] - special[i - 1] - 1)
+    max_gap = max(max_gap, top - special[-1])
+    return max_gap
+`,
+
+  'minimum-moves-to-reach-target-score': `
+def minMoves(target, maxDoubles):
+    moves = 0
+    while target > 1 and maxDoubles > 0:
+        if target % 2 == 1:
+            target -= 1
+            moves += 1
+        else:
+            target //= 2
+            moves += 1
+            maxDoubles -= 1
+    return moves + (target - 1)
+`,
+
+  'maximum-segment-sum-after-removals': `
+def maximumSegmentSum(nums, removeQueries):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    removeQueries = list(removeQueries.to_py()) if hasattr(removeQueries, 'to_py') else list(removeQueries)
+    n = len(nums)
+    parent = list(range(n + 1))
+    seg_sum = [0] * (n + 1)
+    present = [False] * n
+    ans = [0] * n
+    max_sum = 0
+
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    def union(x, y):
+        px, py = find(x), find(y)
+        if px != py:
+            parent[px] = py
+            seg_sum[py] += seg_sum[px]
+
+    for i in range(n - 1, -1, -1):
+        ans[i] = max_sum
+        idx = removeQueries[i]
+        present[idx] = True
+        seg_sum[idx] = nums[idx]
+        if idx > 0 and present[idx - 1]:
+            union(idx, idx - 1)
+        if idx < n - 1 and present[idx + 1]:
+            union(idx, idx + 1)
+        cur_sum = seg_sum[find(idx)]
+        if cur_sum > max_sum:
+            max_sum = cur_sum
+    return ans
+`,
+
+  'prime-palindrome': `
+def primePalindrome(n):
+    def is_prime(x):
+        if x < 2:
+            return False
+        if x == 2:
+            return True
+        if x % 2 == 0:
+            return False
+        i = 3
+        while i * i <= x:
+            if x % i == 0:
+                return False
+            i += 2
+        return True
+
+    def is_palin(x):
+        s = str(x)
+        return s == s[::-1]
+
+    small = [2, 3, 5, 7, 11]
+    for p in small:
+        if p >= n:
+            return p
+
+    for length in range(1, 10, 2):
+        half = (length + 1) // 2
+        start = 10 ** (half - 1)
+        end = 10 ** half
+        for first_half in range(start, end):
+            s = str(first_half)
+            pal = int(s + s[:length - half][::-1])
+            if pal >= n and is_prime(pal):
+                return pal
+    return -1
+`,
+
+  'car-fleet-ii': `
+def getCollisionTimes(cars):
+    cars = [list(c.to_py()) if hasattr(c, 'to_py') else list(c) for c in (cars.to_py() if hasattr(cars, 'to_py') else cars)]
+    n = len(cars)
+    ans = [-1.0] * n
+    stack = []
+    for i in range(n - 1, -1, -1):
+        pos, spd = cars[i][0], cars[i][1]
+        while stack:
+            j = stack[-1]
+            jpos, jspd = cars[j][0], cars[j][1]
+            if spd <= jspd:
+                stack.pop()
+                continue
+            t = (jpos - pos) / (spd - jspd)
+            if ans[j] < 0 or t <= ans[j]:
+                ans[i] = t
+                break
+            stack.pop()
+        stack.append(i)
+    return ans
+`,
+
   'all-possible-full-binary-trees': `
 def allPossibleFBT(n):
     memo = {}
