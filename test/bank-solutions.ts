@@ -20465,4 +20465,161 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return k - maxOnes;
   },
 
+  'longest-univalue-path': (rootArr: unknown) => {
+    class TreeNode {
+      val: number; left: TreeNode | null = null; right: TreeNode | null = null;
+      constructor(v: number) { this.val = v; }
+    }
+    function fromArray(a: (number | null)[]): TreeNode | null {
+      if (!a || a.length === 0) return null;
+      const root = new TreeNode(a[0]!);
+      const queue: TreeNode[] = [root];
+      let i = 1;
+      while (queue.length > 0 && i < a.length) {
+        const node = queue.shift()!;
+        if (a[i] !== null && a[i] !== undefined) { node.left = new TreeNode(a[i]!); queue.push(node.left); }
+        i++;
+        if (i < a.length && a[i] !== null && a[i] !== undefined) { node.right = new TreeNode(a[i]!); queue.push(node.right); }
+        i++;
+      }
+      return root;
+    }
+    const root = fromArray(rootArr as (number | null)[]);
+    let ans = 0;
+    function dfs(node: TreeNode | null): number {
+      if (!node) return 0;
+      const l = dfs(node.left);
+      const r = dfs(node.right);
+      const leftPath = node.left && node.left.val === node.val ? l + 1 : 0;
+      const rightPath = node.right && node.right.val === node.val ? r + 1 : 0;
+      ans = Math.max(ans, leftPath + rightPath);
+      return Math.max(leftPath, rightPath);
+    }
+    dfs(root);
+    return ans;
+  },
+
+  'add-one-row-to-tree': (rootArr: unknown, val: unknown, depth: unknown) => {
+    class TreeNode {
+      val: number; left: TreeNode | null = null; right: TreeNode | null = null;
+      constructor(v: number) { this.val = v; }
+    }
+    function fromArray(a: (number | null)[]): TreeNode | null {
+      if (!a || a.length === 0) return null;
+      const root = new TreeNode(a[0]!);
+      const queue: TreeNode[] = [root];
+      let i = 1;
+      while (queue.length > 0 && i < a.length) {
+        const node = queue.shift()!;
+        if (a[i] !== null && a[i] !== undefined) { node.left = new TreeNode(a[i]!); queue.push(node.left); }
+        i++;
+        if (i < a.length && a[i] !== null && a[i] !== undefined) { node.right = new TreeNode(a[i]!); queue.push(node.right); }
+        i++;
+      }
+      return root;
+    }
+    function toArray(root: TreeNode | null): (number | null)[] {
+      if (!root) return [];
+      const result: (number | null)[] = [];
+      const queue: (TreeNode | null)[] = [root];
+      while (queue.length > 0) {
+        const node = queue.shift()!;
+        if (node === null) { result.push(null); continue; }
+        result.push(node.val);
+        queue.push(node.left ?? null);
+        queue.push(node.right ?? null);
+      }
+      while (result.length > 0 && result[result.length - 1] === null) result.pop();
+      return result;
+    }
+    const v = val as number;
+    const d = depth as number;
+    let root = fromArray(rootArr as (number | null)[]);
+    if (d === 1) {
+      const newRoot = new TreeNode(v);
+      newRoot.left = root;
+      return toArray(newRoot);
+    }
+    const queue: TreeNode[] = root ? [root] : [];
+    let level = 1;
+    while (queue.length > 0) {
+      if (level === d - 1) {
+        for (const node of queue) {
+          const newLeft = new TreeNode(v);
+          newLeft.left = node.left;
+          node.left = newLeft;
+          const newRight = new TreeNode(v);
+          newRight.right = node.right;
+          node.right = newRight;
+        }
+        break;
+      }
+      const next: TreeNode[] = [];
+      for (const node of queue) {
+        if (node.left) next.push(node.left);
+        if (node.right) next.push(node.right);
+      }
+      queue.splice(0, queue.length, ...next);
+      level++;
+    }
+    return toArray(root);
+  },
+
+  'even-odd-tree': (rootArr: unknown) => {
+    class TreeNode {
+      val: number; left: TreeNode | null = null; right: TreeNode | null = null;
+      constructor(v: number) { this.val = v; }
+    }
+    function fromArray(a: (number | null)[]): TreeNode | null {
+      if (!a || a.length === 0) return null;
+      const root = new TreeNode(a[0]!);
+      const queue: TreeNode[] = [root];
+      let i = 1;
+      while (queue.length > 0 && i < a.length) {
+        const node = queue.shift()!;
+        if (a[i] !== null && a[i] !== undefined) { node.left = new TreeNode(a[i]!); queue.push(node.left); }
+        i++;
+        if (i < a.length && a[i] !== null && a[i] !== undefined) { node.right = new TreeNode(a[i]!); queue.push(node.right); }
+        i++;
+      }
+      return root;
+    }
+    const root = fromArray(rootArr as (number | null)[]);
+    if (!root) return false;
+    const queue: TreeNode[] = [root];
+    let level = 0;
+    while (queue.length > 0) {
+      const size = queue.length;
+      let prev = level % 2 === 0 ? -Infinity : Infinity;
+      for (let i = 0; i < size; i++) {
+        const node = queue.shift()!;
+        if (level % 2 === 0) {
+          if (node.val % 2 === 0 || node.val <= prev) return false;
+        } else {
+          if (node.val % 2 !== 0 || node.val >= prev) return false;
+        }
+        prev = node.val;
+        if (node.left) queue.push(node.left);
+        if (node.right) queue.push(node.right);
+      }
+      level++;
+    }
+    return true;
+  },
+
+  'sort-integers-by-number-of-1-bits': (arr: unknown) => {
+    const a = [...(arr as number[])];
+    const popcount = (n: number) => { let c = 0; while (n > 0) { c += n & 1; n >>= 1; } return c; };
+    a.sort((x, y) => {
+      const diff = popcount(x) - popcount(y);
+      return diff !== 0 ? diff : x - y;
+    });
+    return a;
+  },
+
+  'minimum-operations-to-make-array-equal': (n: unknown) => {
+    const k = n as number;
+    return Math.floor(k * k / 4);
+  },
+
 };

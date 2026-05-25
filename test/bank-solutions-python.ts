@@ -20505,4 +20505,122 @@ def secondMinimum(n, edges, time, change):
         ans = (ans + nums[i] * counts[i]) % MOD
     return ans
 `,
+
+  'longest-univalue-path': `def longestUnivaluePathRunner(arr):
+    class TreeNode:
+        def __init__(self, val=0, left=None, right=None):
+            self.val = val; self.left = left; self.right = right
+    def from_array(raw):
+        raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+        a = [int(v) if isinstance(v, (int, float)) else None for v in raw_list]
+        if not a or a[0] is None: return None
+        root = TreeNode(a[0]); queue = [root]; i = 1
+        while queue and i < len(a):
+            node = queue.pop(0)
+            if i < len(a) and a[i] is not None: node.left = TreeNode(a[i]); queue.append(node.left)
+            i += 1
+            if i < len(a) and a[i] is not None: node.right = TreeNode(a[i]); queue.append(node.right)
+            i += 1
+        return root
+    root = from_array(arr)
+    ans = [0]
+    def dfs(node):
+        if not node: return 0
+        l = dfs(node.left); r = dfs(node.right)
+        left_path = l + 1 if node.left and node.left.val == node.val else 0
+        right_path = r + 1 if node.right and node.right.val == node.val else 0
+        ans[0] = max(ans[0], left_path + right_path)
+        return max(left_path, right_path)
+    dfs(root)
+    return ans[0]
+`,
+
+  'add-one-row-to-tree': `def addOneRowRunner(arr, val, depth):
+    class TreeNode:
+        def __init__(self, val=0, left=None, right=None):
+            self.val = val; self.left = left; self.right = right
+    def from_array(raw):
+        raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+        a = [int(v) if isinstance(v, (int, float)) else None for v in raw_list]
+        if not a or a[0] is None: return None
+        root = TreeNode(a[0]); queue = [root]; i = 1
+        while queue and i < len(a):
+            node = queue.pop(0)
+            if i < len(a) and a[i] is not None: node.left = TreeNode(a[i]); queue.append(node.left)
+            i += 1
+            if i < len(a) and a[i] is not None: node.right = TreeNode(a[i]); queue.append(node.right)
+            i += 1
+        return root
+    def to_array(root):
+        if not root: return []
+        result = []; queue = [root]
+        while queue:
+            node = queue.pop(0)
+            if node is None: result.append(None); continue
+            result.append(node.val); queue.append(node.left); queue.append(node.right)
+        while result and result[-1] is None: result.pop()
+        return result
+    v = int(val); d = int(depth)
+    root = from_array(arr)
+    if d == 1:
+        new_root = TreeNode(v); new_root.left = root
+        return to_array(new_root)
+    queue = [root] if root else []; level = 1
+    while queue:
+        if level == d - 1:
+            for node in queue:
+                new_left = TreeNode(v); new_left.left = node.left; node.left = new_left
+                new_right = TreeNode(v); new_right.right = node.right; node.right = new_right
+            break
+        next_q = []
+        for node in queue:
+            if node.left: next_q.append(node.left)
+            if node.right: next_q.append(node.right)
+        queue = next_q; level += 1
+    return to_array(root)
+`,
+
+  'even-odd-tree': `def isEvenOddTreeRunner(arr):
+    class TreeNode:
+        def __init__(self, val=0, left=None, right=None):
+            self.val = val; self.left = left; self.right = right
+    def from_array(raw):
+        raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+        a = [int(v) if isinstance(v, (int, float)) else None for v in raw_list]
+        if not a or a[0] is None: return None
+        root = TreeNode(a[0]); queue = [root]; i = 1
+        while queue and i < len(a):
+            node = queue.pop(0)
+            if i < len(a) and a[i] is not None: node.left = TreeNode(a[i]); queue.append(node.left)
+            i += 1
+            if i < len(a) and a[i] is not None: node.right = TreeNode(a[i]); queue.append(node.right)
+            i += 1
+        return root
+    root = from_array(arr)
+    if not root: return False
+    queue = [root]; level = 0
+    while queue:
+        size = len(queue); prev = float('-inf') if level % 2 == 0 else float('inf')
+        for _ in range(size):
+            node = queue.pop(0)
+            if level % 2 == 0:
+                if node.val % 2 == 0 or node.val <= prev: return False
+            else:
+                if node.val % 2 != 0 or node.val >= prev: return False
+            prev = node.val
+            if node.left: queue.append(node.left)
+            if node.right: queue.append(node.right)
+        level += 1
+    return True
+`,
+
+  'sort-integers-by-number-of-1-bits': `def sortByBits(arr):
+    a = list(int(x) for x in (arr.to_py() if hasattr(arr, 'to_py') else arr))
+    a.sort(key=lambda x: (bin(x).count('1'), x))
+    return a
+`,
+
+  'minimum-operations-to-make-array-equal': `def minOperations(n):
+    return int(n) * int(n) // 4
+`,
 };

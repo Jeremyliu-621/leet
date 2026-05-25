@@ -1509,6 +1509,11 @@ import { problem as trappingRainWaterII } from './trapping-rain-water-ii';
 import { problem as minimumNumberOfPushesToTypeWordII } from './minimum-number-of-pushes-to-type-word-ii';
 import { problem as maximizeWinFromTwoSegments } from './maximize-win-from-two-segments';
 import { problem as minimumSwapsToGroupAllOnesTogether } from './minimum-swaps-to-group-all-ones-together-ii';
+import { problem as longestUnivaluePath } from './longest-univalue-path';
+import { problem as addOneRowToTree } from './add-one-row-to-tree';
+import { problem as evenOddTree } from './even-odd-tree';
+import { problem as sortIntegersByNumberOf1Bits } from './sort-integers-by-number-of-1-bits';
+import { problem as minimumOperationsToMakeArrayEqual } from './minimum-operations-to-make-array-equal';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3066,4 +3071,9 @@ export const problems: readonly Problem[] = [
   minimumNumberOfPushesToTypeWordII,
   maximizeWinFromTwoSegments,
   minimumSwapsToGroupAllOnesTogether,
+  longestUnivaluePath,
+  addOneRowToTree,
+  evenOddTree,
+  sortIntegersByNumberOf1Bits,
+  minimumOperationsToMakeArrayEqual,
 ];
