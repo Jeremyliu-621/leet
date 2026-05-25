@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 540 problems; 1888 tests; growing toward 550+.
+**Current focus:** Bank at 568 problems; 1975 tests; growing toward 600+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing bank toward 550+; more easy/medium/hard problems. Browser-zoom QA (L).
 
@@ -290,6 +290,8 @@ Still pending:
 - [x] check-prefix-string + sum-digits-string-convert + maximum-number-of-string-pairs + count-pairs-sum-less-than-target + neither-minimum-nor-maximum + find-winners + count-number-of-texts + count-vowel-strings-in-range + count-fair-pairs + minimum-average-difference; bank at 498; 1843 tests
 - [x] find-kth-positive + minimum-length-string-operations + largest-integer-digit-swaps; bank at 533; 1867 tests
 - [x] unique-morse-code-words + number-of-good-pairs + check-if-array-sorted-rotated + maximum-product-difference + replace-words + minimum-time-difference + string-to-integer-atoi; bank at 540; 1888 tests. Marketing site updated to 540.
+- [x] minimum-deletions-char-frequencies + bulls-and-cows + minimum-sum-four-digit-number + count-pairs-absolute-difference-k + find-closest-number-to-zero + count-asterisks + count-even-numbers + count-segments-in-string + find-repeated-dna-sequences + widest-vertical-area + convert-1d-array-into-2d-array + check-if-all-chars-equal-occurrences + find-the-pivot-integer + maximum-sum-circular-subarray; bank at 555; 1933 tests.
+- [x] number-of-distinct-averages + find-positive-integer-with-negative + sum-of-squares-special-elements + minimum-operations-make-array-empty + reverse-words-in-string-iii + (re-registered: sum-of-squares, unique-email-addresses, count-binary-substrings, shortest-unsorted-continuous-subarray, max-chunks-to-make-sorted, champagne-tower, minimum-remove-to-make-valid-parentheses, bitwise-and-of-numbers-range, number-of-enclaves, jump-game-iv); bank at 568; 1975 tests. Marketing site updated to 568.
 
 ---
 
