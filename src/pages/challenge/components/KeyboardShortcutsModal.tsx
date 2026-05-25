@@ -20,18 +20,21 @@ const SECTIONS: ShortcutSection[] = [
     ],
   },
   {
-    heading: 'Editor',
+    heading: 'Editing',
     rows: [
-      { keys: ['Tab'], description: 'Indent (2 spaces)' },
+      { keys: ['Tab'], description: 'Indent / accept completion' },
+      { keys: ['⇧Tab', 'Shift+Tab'], description: 'Dedent' },
+      { keys: ['⌘/', 'Ctrl+/'], description: 'Toggle line comment' },
+      { keys: ['⌘⇧D', 'Ctrl+⇧D'], description: 'Duplicate line' },
       { keys: ['⌘Z', 'Ctrl+Z'], description: 'Undo' },
       { keys: ['⌘⇧Z', 'Ctrl+Y'], description: 'Redo' },
-      { keys: ['⌘/', 'Ctrl+/'], description: 'Toggle line comment' },
-      { keys: ['⌘F', 'Ctrl+F'], description: 'Find / replace' },
     ],
   },
   {
-    heading: 'Selection',
+    heading: 'Navigation',
     rows: [
+      { keys: ['⌘F', 'Ctrl+F'], description: 'Find / replace' },
+      { keys: ['⌘G', 'Ctrl+G'], description: 'Go to next match' },
       { keys: ['⌘D', 'Ctrl+D'], description: 'Select next occurrence' },
       { keys: ['Alt+Click'], description: 'Add cursor' },
     ],
@@ -80,7 +83,7 @@ export function KeyboardShortcutsModal({ onClose }: Props) {
         aria-modal="true"
         aria-labelledby="shortcuts-title"
         tabIndex={-1}
-        className="relative max-h-[80vh] w-full max-w-sm overflow-y-auto rounded border border-border bg-surface shadow-xl outline-none"
+        className="relative max-h-[80vh] w-full max-w-md overflow-y-auto rounded-card border border-border bg-surface shadow-2xl outline-none"
       >
         {/* Header */}
         <div className="flex items-center justify-between border-b border-border px-5 py-3.5">
@@ -94,9 +97,11 @@ export function KeyboardShortcutsModal({ onClose }: Props) {
             type="button"
             onClick={onClose}
             aria-label="Close shortcuts"
-            className="rounded-sm p-1 text-faint transition-colors hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+            className="flex items-center justify-center h-6 w-6 rounded-sm text-faint transition-colors hover:text-muted hover:bg-surface-2 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
           >
-            ✕
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
           </button>
         </div>
 
@@ -112,7 +117,7 @@ export function KeyboardShortcutsModal({ onClose }: Props) {
                   {section.rows.map((row) => (
                     <tr
                       key={row.description}
-                      className="border-b border-border/50 last:border-0"
+                      className="border-b border-border/30 last:border-0"
                     >
                       <td className="py-1.5 pr-4 align-middle">
                         <span className="flex flex-wrap gap-1">
@@ -121,7 +126,7 @@ export function KeyboardShortcutsModal({ onClose }: Props) {
                               {i > 0 && (
                                 <span className="font-mono text-[9px] text-faint">/</span>
                               )}
-                              <kbd className="inline-flex items-center rounded border border-border bg-surface-2 px-1.5 py-0.5 font-mono text-[10px] leading-none text-muted">
+                              <kbd className="inline-flex items-center rounded border border-border bg-surface-2 px-1.5 py-0.5 font-mono text-[10px] leading-none text-muted shadow-sm">
                                 {k}
                               </kbd>
                             </span>
@@ -142,7 +147,7 @@ export function KeyboardShortcutsModal({ onClose }: Props) {
         {/* Footer hint */}
         <div className="border-t border-border px-5 py-3">
           <p className="font-mono text-[10px] text-faint">
-            Press <kbd className="inline rounded border border-border bg-surface-2 px-1 font-mono text-[10px]">Esc</kbd> to close
+            Press <kbd className="inline rounded border border-border bg-surface-2 px-1 font-mono text-[10px] shadow-sm">Esc</kbd> to close
           </p>
         </div>
       </div>

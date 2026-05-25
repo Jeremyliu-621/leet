@@ -178,9 +178,10 @@ function NoProblemScreen() {
 
 function NoTargetBanner() {
   return (
-    <div className="shrink-0 border-b border-border bg-surface-2 px-5 py-2.5">
-      <p className="font-mono text-[10px] text-faint">
-        No blocked site detected — running in standalone mode.
+    <div className="shrink-0 border-b border-border bg-surface px-5 py-2">
+      <p className="font-mono text-[10px] text-faint flex items-center gap-2">
+        <span className="inline-block h-1.5 w-1.5 rounded-full bg-faint" aria-hidden="true" />
+        Standalone mode — no blocked site detected
       </p>
     </div>
   );
@@ -188,34 +189,29 @@ function NoTargetBanner() {
 
 function SolvedStandaloneScreen({ problemTitle }: { problemTitle: string }) {
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-6 bg-bg px-8 text-center">
-      <div className="space-y-2">
-        <p className="font-mono text-xs uppercase tracking-widest text-faint">Accepted</p>
+    <div className="flex h-full flex-col items-center justify-center gap-8 bg-bg px-8 text-center">
+      <div className="space-y-3">
+        <div className="inline-flex items-center justify-center h-12 w-12 rounded-full border border-accent mb-2">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-accent" />
+          </svg>
+        </div>
+        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-faint">Accepted</p>
         <h1 className="text-lg font-semibold text-text">{problemTitle}</h1>
-        <p className="text-xs text-muted">Challenge complete.</p>
+        <p className="text-xs text-muted">Challenge complete. Well done.</p>
       </div>
       <div className="flex gap-3">
         <button
           type="button"
           onClick={() => window.location.reload()}
-          className={[
-            'rounded-sm border border-accent bg-accent px-4 py-2',
-            'font-mono text-xs font-medium text-on-accent',
-            'hover:opacity-90 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent',
-            'transition-opacity',
-          ].join(' ')}
+          className="rounded-sm border border-accent bg-accent px-5 py-2 font-mono text-xs font-bold text-on-accent transition-opacity hover:opacity-90 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
         >
-          Try another →
+          Try another
         </button>
         <button
           type="button"
           onClick={() => window.close()}
-          className={[
-            'rounded-sm border border-border px-4 py-2',
-            'font-mono text-xs text-muted',
-            'hover:border-border-strong hover:text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent',
-            'transition-colors',
-          ].join(' ')}
+          className="rounded-sm border border-border px-5 py-2 font-mono text-xs text-muted transition-colors hover:border-border-strong hover:text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
         >
           Close
         </button>

@@ -13,8 +13,6 @@ interface ProblemPanelProps {
 
 /** Maps difficulty to Tailwind classes for the pill label. */
 function difficultyClasses(difficulty: Difficulty): string {
-  // Pure grayscale — only contrast differentiates difficulty.
-  // easy → faint, medium → muted, hard → text (all uppercase mono).
   switch (difficulty) {
     case 'easy':
       return 'text-faint border-faint';
@@ -40,12 +38,12 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
     >
       <div className="px-6 pb-8 pt-6">
         {/* Title row */}
-        <div className="mb-4 flex flex-wrap items-baseline gap-3">
+        <div className="mb-3 flex flex-wrap items-center gap-3">
           <h1 className="text-base font-semibold leading-snug text-text">{title}</h1>
           {/* Difficulty pill */}
           <span
             className={[
-              'inline-block rounded-sm border px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-widest',
+              'inline-block rounded-sm border px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest',
               difficultyClasses(difficulty),
             ].join(' ')}
             aria-label={`Difficulty: ${difficulty}`}
@@ -61,7 +59,7 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
               <span
                 key={tag}
                 role="listitem"
-                className="inline-block rounded-sm border border-border px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-faint"
+                className="inline-block rounded-sm border border-border bg-surface-2 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-faint"
               >
                 {tag}
               </span>
@@ -69,7 +67,7 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
           </div>
         )}
 
-        {/* Description — markdown (GFM); plain text still renders cleanly. */}
+        {/* Description */}
         <div className="mb-6">
           <ProblemDescription markdown={description} />
         </div>
@@ -84,26 +82,28 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
               {examples.map((example, i) => (
                 <div
                   key={i}
-                  className="rounded-card border border-border bg-surface-2 px-4 py-3"
+                  className="rounded-card border border-border bg-surface px-4 py-3"
                   aria-label={`Example ${i + 1}`}
                 >
-                  <div className="space-y-1.5">
-                    <div className="flex flex-wrap gap-x-2 gap-y-1">
-                      <span className="font-mono text-[10px] uppercase tracking-wider text-faint">
+                  <div className="space-y-2">
+                    <div className="flex flex-wrap gap-x-3 gap-y-1">
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-faint w-14 shrink-0">
                         Input
                       </span>
-                      <code className="font-mono text-xs text-text">{example.input}</code>
+                      <code className="font-mono text-xs text-text break-all">{example.input}</code>
                     </div>
-                    <div className="flex flex-wrap gap-x-2 gap-y-1">
-                      <span className="font-mono text-[10px] uppercase tracking-wider text-faint">
+                    <div className="flex flex-wrap gap-x-3 gap-y-1">
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-faint w-14 shrink-0">
                         Output
                       </span>
-                      <code className="font-mono text-xs text-text">{example.output}</code>
+                      <code className="font-mono text-xs text-text break-all">{example.output}</code>
                     </div>
                     {example.explanation && (
-                      <p className="pt-1 text-xs leading-relaxed text-muted">
-                        {example.explanation}
-                      </p>
+                      <div className="border-t border-border pt-2 mt-1">
+                        <p className="text-xs leading-relaxed text-muted">
+                          {example.explanation}
+                        </p>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -126,7 +126,7 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
             <ul className="space-y-1.5" aria-label="Problem constraints">
               {constraints.map((constraint, i) => (
                 <li key={i} className="flex gap-2.5">
-                  <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-faint" aria-hidden="true" />
+                  <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-border-strong" aria-hidden="true" />
                   <span className="font-mono text-xs leading-relaxed text-muted">{constraint}</span>
                 </li>
               ))}
