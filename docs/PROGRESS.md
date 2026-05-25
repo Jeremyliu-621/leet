@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1331 problems; 4278 tests green.
+**Current focus:** Bank at 1334 problems; 4287 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue adding classic problems (Batch 38+); UI/UX polish; Options/popup improvements.
 
@@ -376,6 +376,7 @@ Still pending:
 - [x] **12 more classic problems (Batch 36-remote)** — nim-game (math/easy), palindrome-permutation (strings+hash-map/easy), remove-element (arrays+two-pointers/easy), water-bottles (math/easy), distribute-candies (hash-map+arrays/easy), count-prime-set-bits (math/easy), verifying-alien-dictionary (strings+hash-map/easy), rectangle-area (math/medium, union of two rectangles), encode-decode-strings (strings/medium, length-prefix encoding), shortest-distance-to-character (arrays+two-pointers/easy, two-pass), utf-8-validation (math/medium, bit parsing), range-addition (arrays/medium, difference array); bank at **1313**; 4236 tests. Marketing site updated to 1,320+.
 - [x] **5 more classic problems (Batch 34-local)** — count-the-number-of-fair-pairs (arrays+binary-search/medium, sort+two-pointer countAtMost), find-if-array-can-be-sorted (arrays/medium, popcount grouping+prevMax check), construct-string-with-repeat-limit (strings+heap/medium, greedy freq array desc), count-ways-to-select-buildings (strings+dp/medium, prefix-ones 010/101 pattern), power-of-heroes (arrays+math/hard, sort+running weighted sum BigInt mod); bank at **1318**; 4251 tests.
 - [x] **5 more classic problems (Batch 37)** — valid-palindrome (strings/easy, two-pointer alphanumeric), peak-index-in-mountain-array (binary-search/easy, O(log n) binary search), two-keys-keyboard (math+dp/medium, prime factorization sum), bag-of-tokens (arrays+two-pointers/medium, greedy sort+two-pointer), find-the-k-weakest-rows-in-a-matrix (arrays+binary-search/easy, sort by soldier count); bank at **1331**; 4278 tests.
+- [x] **3 more classic problems (Batch 37-local)** — separate-black-and-white-balls (strings+two-pointers/medium, count inversion-cost scanning left), minimum-number-of-steps-to-make-two-strings-anagram (strings+hash-map/medium, freq diff then sum negatives), find-the-prefix-common-array-of-two-arrays (arrays+hash-map/medium, freq hits 2 = common); bank at **1334**; 4287 tests.
 
 ---
 
