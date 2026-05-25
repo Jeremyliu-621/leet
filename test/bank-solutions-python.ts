@@ -10723,4 +10723,126 @@ def nearestExit(maze, entrance):
     count = sum(1 for i, c in enumerate(s) if c != ('0' if i % 2 == 0 else '1'))
     return min(count, len(s) - count)
 `,
+
+  'remove-all-occurrences-of-substring': `def removeOccurrences(s: str, part: str) -> str:
+    while part in s:
+        s = s[:s.index(part)] + s[s.index(part) + len(part):]
+    return s
+`,
+
+  'minimum-time-to-complete-trips': `def minimumTime(time: list[int], totalTrips: int) -> int:
+    lo, hi = 1, min(time) * totalTrips
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if sum(mid // t for t in time) >= totalTrips:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'minimum-speed-to-arrive-on-time': `def minSpeedOnTime(dist: list[int], hour: float) -> int:
+    import math
+    n = len(dist)
+    if n - 1 >= hour:
+        return -1
+    def can_arrive(speed):
+        t = sum(math.ceil(d / speed) for d in dist[:-1])
+        t += dist[-1] / speed
+        return t <= hour + 1e-9
+    lo, hi = 1, 10_000_000
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if can_arrive(mid):
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo if can_arrive(lo) else -1
+`,
+
+  'sum-of-beauty-in-the-array': `def sumOfBeauties(nums: list[int]) -> int:
+    n = len(nums)
+    pref_max = [0] * n
+    suf_min = [0] * n
+    pref_max[0] = nums[0]
+    for i in range(1, n):
+        pref_max[i] = max(pref_max[i-1], nums[i])
+    suf_min[n-1] = nums[n-1]
+    for i in range(n-2, -1, -1):
+        suf_min[i] = min(suf_min[i+1], nums[i])
+    ans = 0
+    for i in range(1, n-1):
+        if pref_max[i-1] < nums[i] < suf_min[i+1]:
+            ans += 2
+        elif nums[i-1] < nums[i] < nums[i+1]:
+            ans += 1
+    return ans
+`,
+
+  'find-all-possible-recipes': `def findAllRecipes(recipes: list[str], ingredients: list[list[str]], supplies: list[str]) -> list[str]:
+    from collections import defaultdict, deque
+    in_degree = {}
+    dependents = defaultdict(list)
+    recipe_set = set(recipes)
+    for r, ings in zip(recipes, ingredients):
+        in_degree[r] = len(ings)
+        for ing in ings:
+            dependents[ing].append(r)
+    queue = deque(supplies)
+    result = []
+    while queue:
+        item = queue.popleft()
+        for dep in dependents[item]:
+            in_degree[dep] -= 1
+            if in_degree[dep] == 0:
+                queue.append(dep)
+                if dep in recipe_set:
+                    result.append(dep)
+    return result
+`,
+
+  'take-k-of-each-character-from-left-and-right': `def takeCharacters(s: str, k: int) -> int:
+    total = [s.count(c) for c in 'abc']
+    if any(t < k for t in total):
+        return -1
+    if k == 0:
+        return 0
+    win = [0, 0, 0]
+    best = 0
+    left = 0
+    for right in range(len(s)):
+        win[ord(s[right]) - ord('a')] += 1
+        while any(total[i] - win[i] < k for i in range(3)):
+            win[ord(s[left]) - ord('a')] -= 1
+            left += 1
+        best = max(best, right - left + 1)
+    return len(s) - best
+`,
+
+  'minimum-operations-to-make-array-xor-equal-k': `def minOperations(nums: list[int], k: int) -> int:
+    xor_all = 0
+    for v in nums:
+        xor_all ^= v
+    return bin(xor_all ^ k).count('1')
+`,
+
+  'maximum-odd-binary-number': `def maximumOddBinaryNumber(s: str) -> str:
+    ones = s.count('1')
+    zeros = len(s) - ones
+    return '1' * (ones - 1) + '0' * zeros + '1'
+`,
+
+  'minimum-equal-sum-two-arrays': `def minSum(nums1: list[int], nums2: list[int]) -> int:
+    s1 = sum(nums1)
+    s2 = sum(nums2)
+    z1 = nums1.count(0)
+    z2 = nums2.count(0)
+    min1 = s1 + z1
+    min2 = s2 + z2
+    if z1 == 0 and min1 < min2:
+        return -1
+    if z2 == 0 and min2 < min1:
+        return -1
+    return max(min1, min2)
+`,
 };

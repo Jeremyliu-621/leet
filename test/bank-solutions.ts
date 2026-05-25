@@ -11215,4 +11215,146 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Math.min(count, s.length - count);
   },
 
+  'remove-all-occurrences-of-substring': (...args: unknown[]) => {
+    let s = args[0] as string;
+    const part = args[1] as string;
+    while (s.includes(part)) {
+      const idx = s.indexOf(part);
+      s = s.slice(0, idx) + s.slice(idx + part.length);
+    }
+    return s;
+  },
+
+  'minimum-time-to-complete-trips': (...args: unknown[]) => {
+    const time = args[0] as number[];
+    const totalTrips = args[1] as number;
+    const canDo = (t: number) => time.reduce((sum, ti) => sum + Math.floor(t / ti), 0) >= totalTrips;
+    let lo = 1, hi = Math.min(...time) * totalTrips;
+    while (lo < hi) {
+      const mid = Math.floor((lo + hi) / 2);
+      if (canDo(mid)) hi = mid;
+      else lo = mid + 1;
+    }
+    return lo;
+  },
+
+  'minimum-speed-to-arrive-on-time': (...args: unknown[]) => {
+    const dist = args[0] as number[];
+    const hour = args[1] as number;
+    const n = dist.length;
+    if (n - 1 >= hour) return -1;
+    const canArrive = (speed: number) => {
+      let t = 0;
+      for (let i = 0; i < n - 1; i++) t += Math.ceil((dist[i] as number) / speed);
+      t += (dist[n - 1] as number) / speed;
+      return t <= hour + 1e-9;
+    };
+    let lo = 1, hi = 10_000_000;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (canArrive(mid)) hi = mid;
+      else lo = mid + 1;
+    }
+    return canArrive(lo) ? lo : -1;
+  },
+
+  'sum-of-beauty-in-the-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const prefMax = new Array<number>(n).fill(0);
+    const sufMin = new Array<number>(n).fill(0);
+    prefMax[0] = nums[0] as number;
+    for (let i = 1; i < n; i++) prefMax[i] = Math.max(prefMax[i - 1]!, nums[i] as number);
+    sufMin[n - 1] = nums[n - 1] as number;
+    for (let i = n - 2; i >= 0; i--) sufMin[i] = Math.min(sufMin[i + 1]!, nums[i] as number);
+    let ans = 0;
+    for (let i = 1; i < n - 1; i++) {
+      const v = nums[i] as number;
+      if ((prefMax[i - 1]!) < v && v < (sufMin[i + 1]!)) ans += 2;
+      else if ((nums[i - 1] as number) < v && v < (nums[i + 1] as number)) ans += 1;
+    }
+    return ans;
+  },
+
+  'find-all-possible-recipes': (...args: unknown[]) => {
+    const recipes = args[0] as string[];
+    const ingredients = args[1] as string[][];
+    const supplies = args[2] as string[];
+    const inDegree = new Map<string, number>();
+    const dependents = new Map<string, string[]>();
+    const recipeSet = new Set(recipes);
+    for (let i = 0; i < recipes.length; i++) {
+      const r = recipes[i]!;
+      inDegree.set(r, (ingredients[i] as string[]).length);
+      for (const ing of ingredients[i] as string[]) {
+        if (!dependents.has(ing)) dependents.set(ing, []);
+        dependents.get(ing)!.push(r);
+      }
+    }
+    const queue: string[] = [...supplies];
+    const result: string[] = [];
+    while (queue.length) {
+      const item = queue.shift()!;
+      for (const dep of dependents.get(item) ?? []) {
+        const nd = (inDegree.get(dep) ?? 0) - 1;
+        inDegree.set(dep, nd);
+        if (nd === 0) {
+          queue.push(dep);
+          if (recipeSet.has(dep)) result.push(dep);
+        }
+      }
+    }
+    return result;
+  },
+
+  'take-k-of-each-character-from-left-and-right': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    const total = [0, 0, 0];
+    for (const c of s) total[c.charCodeAt(0) - 97]!++;
+    if (total[0]! < k || total[1]! < k || total[2]! < k) return -1;
+    if (k === 0) return 0;
+    const win = [0, 0, 0];
+    let best = 0;
+    let left = 0;
+    for (let right = 0; right < s.length; right++) {
+      win[s.charCodeAt(right) - 97]!++;
+      while (total[0]! - win[0]! < k || total[1]! - win[1]! < k || total[2]! - win[2]! < k) {
+        win[s.charCodeAt(left) - 97]!--;
+        left++;
+      }
+      best = Math.max(best, right - left + 1);
+    }
+    return s.length - best;
+  },
+
+  'minimum-operations-to-make-array-xor-equal-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const xorAll = nums.reduce((acc, v) => acc ^ (v as number), 0);
+    const diff = xorAll ^ k;
+    return diff.toString(2).split('').filter(b => b === '1').length;
+  },
+
+  'maximum-odd-binary-number': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const ones = s.split('').filter(c => c === '1').length;
+    const zeros = s.length - ones;
+    return '1'.repeat(ones - 1) + '0'.repeat(zeros) + '1';
+  },
+
+  'minimum-equal-sum-two-arrays': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const sum1 = nums1.reduce((a, v) => a + (v as number), 0);
+    const sum2 = nums2.reduce((a, v) => a + (v as number), 0);
+    const z1 = nums1.filter(v => v === 0).length;
+    const z2 = nums2.filter(v => v === 0).length;
+    const min1 = sum1 + z1;
+    const min2 = sum2 + z2;
+    if (z1 === 0 && min1 < min2) return -1;
+    if (z2 === 0 && min2 < min1) return -1;
+    return Math.max(min1, min2);
+  },
+
 };

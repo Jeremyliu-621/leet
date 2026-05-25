@@ -902,6 +902,15 @@ import { problem as minimumGardenPerimeter } from './minimum-garden-perimeter';
 import { problem as groupPeopleGivenGroupSize } from './group-people-given-group-size';
 import { problem as countNumberOfBadPairs } from './count-number-of-bad-pairs';
 import { problem as minimumChangesToMakeBinaryStringBeautiful } from './minimum-changes-to-make-binary-string-beautiful';
+import { problem as removeAllOccurrencesOfSubstring } from './remove-all-occurrences-of-substring';
+import { problem as minimumTimeToCompleteTrips } from './minimum-time-to-complete-trips';
+import { problem as minimumSpeedToArriveOnTime } from './minimum-speed-to-arrive-on-time';
+import { problem as sumOfBeautyInTheArray } from './sum-of-beauty-in-the-array';
+import { problem as findAllPossibleRecipes } from './find-all-possible-recipes';
+import { problem as takeKOfEachCharacterFromLeftAndRight } from './take-k-of-each-character-from-left-and-right';
+import { problem as minimumOperationsToMakeArrayXorEqualK } from './minimum-operations-to-make-array-xor-equal-k';
+import { problem as maximumOddBinaryNumber } from './maximum-odd-binary-number';
+import { problem as minimumEqualSumTwoArrays } from './minimum-equal-sum-two-arrays';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1852,4 +1861,13 @@ export const problems: readonly Problem[] = [
   groupPeopleGivenGroupSize,
   countNumberOfBadPairs,
   minimumChangesToMakeBinaryStringBeautiful,
+  removeAllOccurrencesOfSubstring,
+  minimumTimeToCompleteTrips,
+  minimumSpeedToArriveOnTime,
+  sumOfBeautyInTheArray,
+  findAllPossibleRecipes,
+  takeKOfEachCharacterFromLeftAndRight,
+  minimumOperationsToMakeArrayXorEqualK,
+  maximumOddBinaryNumber,
+  minimumEqualSumTwoArrays,
 ];
