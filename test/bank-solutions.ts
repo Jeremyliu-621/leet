@@ -9949,4 +9949,47 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best;
   },
 
+  'sort-the-people': (...args: unknown[]) => {
+    const names = args[0] as string[], heights = args[1] as number[];
+    return names.map((n, i) => [n, heights[i]!] as [string, number])
+      .sort((a, b) => b[1] - a[1])
+      .map(p => p[0]);
+  },
+
+  'baseball-game': (...args: unknown[]) => {
+    const ops = args[0] as string[], s: number[] = [];
+    for (const o of ops) {
+      if (o === '+') s.push(s[s.length - 1]! + s[s.length - 2]!);
+      else if (o === 'D') s.push(s[s.length - 1]! * 2);
+      else if (o === 'C') s.pop();
+      else s.push(+o);
+    }
+    return s.reduce((a, b) => a + b, 0);
+  },
+
+  'find-champion-graph': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const n = grid.length;
+    for (let i = 0; i < n; i++) {
+      if (grid[i]!.reduce((s, v) => s + v, 0) === n - 1) return i;
+    }
+    return -1;
+  },
+
+  'count-digits': (...args: unknown[]) => {
+    const num = args[0] as number;
+    let n = num, c = 0;
+    while (n > 0) { const d = n % 10; if (d !== 0 && num % d === 0) c++; n = Math.floor(n / 10); }
+    return c;
+  },
+
+  'apply-operations': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    const n = nums.length;
+    for (let i = 0; i < n - 1; i++) {
+      if (nums[i] && nums[i] === nums[i + 1]) { nums[i]! *= 2; nums[i + 1] = 0; }
+    }
+    return [...nums.filter(x => x !== 0), ...nums.filter(x => x === 0)];
+  },
+
 };

@@ -70,6 +70,7 @@ describe('problem selector', () => {
       'students-unable-to-eat-lunch',
       'valid-parentheses',
       'find-resultant-array-after-removing-anagrams',
+      'baseball-game',
     ] })).toBeUndefined();
   });
 

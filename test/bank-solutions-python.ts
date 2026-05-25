@@ -9558,4 +9558,60 @@ def largestCombination(candidates):
         best = max(best, cnt)
     return best
 `,
+
+  'sort-the-people': `
+def sortPeople(names, heights):
+    names = list(names)
+    heights = list(heights)
+    paired = sorted(zip(heights, names), reverse=True)
+    return [name for _, name in paired]
+`,
+
+  'baseball-game': `
+def calPoints(ops):
+    ops = list(ops)
+    stack = []
+    for o in ops:
+        if o == '+':
+            stack.append(stack[-1] + stack[-2])
+        elif o == 'D':
+            stack.append(stack[-1] * 2)
+        elif o == 'C':
+            stack.pop()
+        else:
+            stack.append(int(o))
+    return sum(stack)
+`,
+
+  'find-champion-graph': `
+def findChampion(grid):
+    grid = [list(row) for row in grid]
+    n = len(grid)
+    for i in range(n):
+        if sum(grid[i]) == n - 1:
+            return i
+    return -1
+`,
+
+  'count-digits': `
+def countDigits(num):
+    n, c = num, 0
+    while n > 0:
+        d = n % 10
+        if d != 0 and num % d == 0:
+            c += 1
+        n //= 10
+    return c
+`,
+
+  'apply-operations': `
+def applyOperations(nums):
+    nums = list(nums)
+    n = len(nums)
+    for i in range(n - 1):
+        if nums[i] != 0 and nums[i] == nums[i + 1]:
+            nums[i] *= 2
+            nums[i + 1] = 0
+    return [x for x in nums if x != 0] + [x for x in nums if x == 0]
+`,
 };

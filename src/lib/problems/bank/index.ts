@@ -803,6 +803,11 @@ import { problem as findPlayersZeroLosses } from './find-players-zero-losses';
 import { problem as checkDistancesFairNodes } from './check-distances-fair-nodes';
 import { problem as minimumRoundsCompleteTasks } from './minimum-rounds-complete-tasks';
 import { problem as largestCombinationBitwiseAnd } from './largest-combination-bitwise-and';
+import { problem as sortThePeople } from './sort-the-people';
+import { problem as baseballGame } from './baseball-game';
+import { problem as findChampionGraph } from './find-champion-graph';
+import { problem as countDigits } from './count-digits';
+import { problem as applyOperations } from './apply-operations';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1653,4 +1658,9 @@ export const problems: readonly Problem[] = [
   checkDistancesFairNodes,
   minimumRoundsCompleteTasks,
   largestCombinationBitwiseAnd,
+  sortThePeople,
+  baseballGame,
+  findChampionGraph,
+  countDigits,
+  applyOperations,
 ];
