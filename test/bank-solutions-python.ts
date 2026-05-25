@@ -12693,4 +12693,195 @@ def suggestedProducts(products, searchWord):
         result.append(matches)
     return result
 `,
+
+  'array-nesting': `
+def arrayNesting(nums):
+    nums_list = [int(x) for x in nums]
+    n = len(nums_list)
+    visited = [False] * n
+    best = 0
+    for i in range(n):
+        if not visited[i]:
+            size, j = 0, i
+            while not visited[j]:
+                visited[j] = True
+                j = nums_list[j]
+                size += 1
+            best = max(best, size)
+    return best
+`,
+
+  'evaluate-division': `
+def calcEquation(equations, values, queries):
+    from collections import defaultdict, deque
+    equations = [list(eq) for eq in equations]
+    values = [float(v) for v in values]
+    queries = [list(q) for q in queries]
+    graph = defaultdict(list)
+    for (a, b), v in zip(equations, values):
+        graph[a].append((b, v))
+        graph[b].append((a, 1.0 / v))
+    def bfs(src, dst):
+        if src not in graph or dst not in graph:
+            return -1.0
+        if src == dst:
+            return 1.0
+        q = deque([(src, 1.0)])
+        visited = {src}
+        while q:
+            node, prod = q.popleft()
+            for nb, w in graph[node]:
+                if nb == dst:
+                    return prod * w
+                if nb not in visited:
+                    visited.add(nb)
+                    q.append((nb, prod * w))
+        return -1.0
+    return [bfs(c, d) for c, d in queries]
+`,
+
+  'out-of-boundary-paths': `
+def findPaths(m, n, maxMove, startRow, startColumn):
+    m, n, maxMove = int(m), int(n), int(maxMove)
+    startRow, startColumn = int(startRow), int(startColumn)
+    MOD = 10**9 + 7
+    dp = [[0]*n for _ in range(m)]
+    dp[startRow][startColumn] = 1
+    ans = 0
+    for _ in range(maxMove):
+        nxt = [[0]*n for _ in range(m)]
+        for i in range(m):
+            for j in range(n):
+                if dp[i][j] == 0:
+                    continue
+                for di, dj in [(-1,0),(1,0),(0,-1),(0,1)]:
+                    ni, nj = i+di, j+dj
+                    if ni < 0 or ni >= m or nj < 0 or nj >= n:
+                        ans = (ans + dp[i][j]) % MOD
+                    else:
+                        nxt[ni][nj] = (nxt[ni][nj] + dp[i][j]) % MOD
+        dp = nxt
+    return ans
+`,
+
+  'maximum-ice-cream-bars': `
+def maxIceCream(costs, coins):
+    costs_list = sorted(int(x) for x in costs)
+    coins = int(coins)
+    count = 0
+    for c in costs_list:
+        if coins >= c:
+            coins -= c
+            count += 1
+        else:
+            break
+    return count
+`,
+
+  'count-numbers-with-unique-digits': `
+def countNumbersWithUniqueDigits(n):
+    n = int(n)
+    if n == 0:
+        return 1
+    ans, avail, unique_count = 10, 9, 9
+    for i in range(2, min(n, 10) + 1):
+        unique_count *= avail
+        ans += unique_count
+        avail -= 1
+    return ans
+`,
+
+  'minimum-cost-to-cut-stick': `
+def minCost(n, cuts):
+    n = int(n)
+    c = sorted([0] + [int(x) for x in cuts] + [n])
+    m = len(c)
+    dp = [[0]*m for _ in range(m)]
+    for length in range(2, m):
+        for i in range(m - length):
+            j = i + length
+            dp[i][j] = float('inf')
+            for k in range(i+1, j):
+                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j] + c[j] - c[i])
+    return dp[0][m-1]
+`,
+
+  'find-minimum-in-rotated-sorted-array-ii': `
+def findMin(nums):
+    nums_list = [int(x) for x in nums]
+    lo, hi = 0, len(nums_list) - 1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if nums_list[mid] < nums_list[hi]:
+            hi = mid
+        elif nums_list[mid] > nums_list[hi]:
+            lo = mid + 1
+        else:
+            hi -= 1
+    return nums_list[lo]
+`,
+
+  'search-in-rotated-sorted-array-ii': `
+def search(nums, target):
+    nums_list = [int(x) for x in nums]
+    target = int(target)
+    lo, hi = 0, len(nums_list) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if nums_list[mid] == target:
+            return True
+        if nums_list[lo] == nums_list[mid]:
+            lo += 1
+            continue
+        if nums_list[lo] <= nums_list[mid]:
+            if nums_list[lo] <= target < nums_list[mid]:
+                hi = mid - 1
+            else:
+                lo = mid + 1
+        else:
+            if nums_list[mid] < target <= nums_list[hi]:
+                lo = mid + 1
+            else:
+                hi = mid - 1
+    return False
+`,
+
+  'distinct-subsequences': `
+def numDistinct(s, t):
+    s, t = str(s), str(t)
+    m, n = len(s), len(t)
+    dp = [[0]*(n+1) for _ in range(m+1)]
+    for i in range(m+1):
+        dp[i][0] = 1
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            dp[i][j] = dp[i-1][j] + (dp[i-1][j-1] if s[i-1] == t[j-1] else 0)
+    return dp[m][n]
+`,
+
+  'minimum-window-subsequence': `
+def minWindow(s1, s2):
+    s1, s2 = str(s1), str(s2)
+    best = ''
+    lo = 0
+    while lo < len(s1):
+        i, j = lo, 0
+        while i < len(s1) and j < len(s2):
+            if s1[i] == s2[j]:
+                j += 1
+            i += 1
+        if j < len(s2):
+            break
+        hi = i - 1
+        j = len(s2) - 1
+        while j >= 0:
+            if s1[hi] == s2[j]:
+                j -= 1
+            hi -= 1
+        win = s1[hi+1:i]
+        if not best or len(win) < len(best):
+            best = win
+        lo = hi + 2
+    return best
+`,
 };

@@ -933,7 +933,6 @@ import { problem as findAllGroupsOfFarmland } from './find-all-groups-of-farmlan
 import { problem as mergeTripletsToFormTargetTriplet } from './merge-triplets-to-form-target-triplet';
 import { problem as replaceElementsWithGreatestOnRight } from './replace-elements-with-greatest-on-right';
 import { problem as destroyAsteroids } from './destroy-asteroids';
-import { problem as largestNumberAfterDigitSwapsByParity } from './largest-number-after-digit-swaps-by-parity';
 import { problem as maximumCountOfPositiveAndNegative } from './maximum-count-of-positive-and-negative';
 import { problem as findTheOriginalArrayOfPrefixXor } from './find-the-original-array-of-prefix-xor';
 import { problem as separateDigitsInArray } from './separate-digits-in-array';
@@ -1070,6 +1069,16 @@ import { problem as kthSmallestElementInSortedMatrix } from './kth-smallest-elem
 import { problem as minimumKnightMoves } from './minimum-knight-moves';
 import { problem as palindromePairs } from './palindrome-pairs';
 import { problem as searchSuggestionsSystem } from './search-suggestions-system';
+import { problem as arrayNesting } from './array-nesting';
+import { problem as evaluateDivision } from './evaluate-division';
+import { problem as outOfBoundaryPaths } from './out-of-boundary-paths';
+import { problem as maximumIceCreamBars } from './maximum-ice-cream-bars';
+import { problem as countNumbersWithUniqueDigits } from './count-numbers-with-unique-digits';
+import { problem as minimumCostToCutStick } from './minimum-cost-to-cut-stick';
+import { problem as findMinimumRotatedSortedArrayII } from './find-minimum-in-rotated-sorted-array-ii';
+import { problem as searchRotatedSortedArrayII } from './search-in-rotated-sorted-array-ii';
+import { problem as distinctSubsequences } from './distinct-subsequences';
+import { problem as minimumWindowSubsequence } from './minimum-window-subsequence';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2051,7 +2060,6 @@ export const problems: readonly Problem[] = [
   mergeTripletsToFormTargetTriplet,
   replaceElementsWithGreatestOnRight,
   destroyAsteroids,
-  largestNumberAfterDigitSwapsByParity,
   maximumCountOfPositiveAndNegative,
   findTheOriginalArrayOfPrefixXor,
   separateDigitsInArray,
@@ -2188,4 +2196,14 @@ export const problems: readonly Problem[] = [
   minimumKnightMoves,
   palindromePairs,
   searchSuggestionsSystem,
+  arrayNesting,
+  evaluateDivision,
+  outOfBoundaryPaths,
+  maximumIceCreamBars,
+  countNumbersWithUniqueDigits,
+  minimumCostToCutStick,
+  findMinimumRotatedSortedArrayII,
+  searchRotatedSortedArrayII,
+  distinctSubsequences,
+  minimumWindowSubsequence,
 ];

@@ -13123,4 +13123,164 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'array-nesting': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const visited = new Array<boolean>(nums.length).fill(false);
+    let best = 0;
+    for (let i = 0; i < nums.length; i++) {
+      if (!visited[i]) {
+        let size = 0, j = i;
+        while (!visited[j]) { visited[j] = true; j = nums[j]!; size++; }
+        best = Math.max(best, size);
+      }
+    }
+    return best;
+  },
+
+  'evaluate-division': (...args: unknown[]) => {
+    const equations = args[0] as string[][];
+    const values = args[1] as number[];
+    const queries = args[2] as string[][];
+    const graph = new Map<string, [string, number][]>();
+    for (let i = 0; i < equations.length; i++) {
+      const [a, b] = equations[i]!;
+      const v = values[i]!;
+      if (!graph.has(a!)) graph.set(a!, []);
+      if (!graph.has(b!)) graph.set(b!, []);
+      graph.get(a!)!.push([b!, v]);
+      graph.get(b!)!.push([a!, 1 / v]);
+    }
+    const bfs = (src: string, dst: string): number => {
+      if (!graph.has(src) || !graph.has(dst)) return -1;
+      if (src === dst) return 1;
+      const queue: [string, number][] = [[src, 1]];
+      const visited = new Set([src]);
+      while (queue.length) {
+        const [node, prod] = queue.shift()!;
+        for (const [nb, w] of graph.get(node)!) {
+          if (nb === dst) return prod * w;
+          if (!visited.has(nb)) { visited.add(nb); queue.push([nb, prod * w]); }
+        }
+      }
+      return -1;
+    };
+    return queries.map(([c, d]) => bfs(c!, d!));
+  },
+
+  'out-of-boundary-paths': (...args: unknown[]) => {
+    const m = args[0] as number, n = args[1] as number, maxMove = args[2] as number;
+    const startRow = args[3] as number, startCol = args[4] as number;
+    const MOD = 1_000_000_007;
+    let dp = Array.from({ length: m }, () => new Array<number>(n).fill(0));
+    dp[startRow]![startCol] = 1;
+    let ans = 0;
+    for (let step = 0; step < maxMove; step++) {
+      const next = Array.from({ length: m }, () => new Array<number>(n).fill(0));
+      for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+          if (!dp[i]![j]) continue;
+          for (const [di, dj] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) {
+            const ni = i + di!, nj = j + dj!;
+            if (ni < 0 || ni >= m || nj < 0 || nj >= n) { ans = (ans + dp[i]![j]!) % MOD; }
+            else next[ni]![nj] = (next[ni]![nj]! + dp[i]![j]!) % MOD;
+          }
+        }
+      }
+      dp = next;
+    }
+    return ans;
+  },
+
+  'maximum-ice-cream-bars': (...args: unknown[]) => {
+    const costs = [...(args[0] as number[])].sort((a, b) => a - b);
+    let coins = args[1] as number, count = 0;
+    for (const c of costs) { if (coins >= c) { coins -= c; count++; } else break; }
+    return count;
+  },
+
+  'count-numbers-with-unique-digits': (...args: unknown[]) => {
+    const n = args[0] as number;
+    if (n === 0) return 1;
+    let ans = 10, avail = 9, uniqueCount = 9;
+    for (let i = 2; i <= Math.min(n, 10); i++) {
+      uniqueCount *= avail; ans += uniqueCount; avail--;
+    }
+    return ans;
+  },
+
+  'minimum-cost-to-cut-stick': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const cuts = [...(args[1] as number[]), 0, n].sort((a, b) => a - b);
+    const m = cuts.length;
+    const dp = Array.from({ length: m }, () => new Array<number>(m).fill(0));
+    for (let len = 2; len < m; len++) {
+      for (let i = 0; i + len < m; i++) {
+        const j = i + len;
+        dp[i]![j] = Infinity;
+        for (let k = i + 1; k < j; k++) {
+          dp[i]![j] = Math.min(dp[i]![j]!, dp[i]![k]! + dp[k]![j]! + cuts[j]! - cuts[i]!);
+        }
+      }
+    }
+    return dp[0]![m - 1]!;
+  },
+
+  'find-minimum-in-rotated-sorted-array-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let lo = 0, hi = nums.length - 1;
+    while (lo < hi) {
+      const mid = lo + Math.floor((hi - lo) / 2);
+      if (nums[mid]! < nums[hi]!) hi = mid;
+      else if (nums[mid]! > nums[hi]!) lo = mid + 1;
+      else hi--;
+    }
+    return nums[lo]!;
+  },
+
+  'search-in-rotated-sorted-array-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    let lo = 0, hi = nums.length - 1;
+    while (lo <= hi) {
+      const mid = lo + Math.floor((hi - lo) / 2);
+      if (nums[mid] === target) return true;
+      if (nums[lo] === nums[mid]) { lo++; continue; }
+      if (nums[lo]! <= nums[mid]!) {
+        if (nums[lo]! <= target && target < nums[mid]!) hi = mid - 1;
+        else lo = mid + 1;
+      } else {
+        if (nums[mid]! < target && target <= nums[hi]!) lo = mid + 1;
+        else hi = mid - 1;
+      }
+    }
+    return false;
+  },
+
+  'distinct-subsequences': (...args: unknown[]) => {
+    const s = args[0] as string, t = args[1] as string;
+    const m = s.length, n = t.length;
+    const dp = Array.from({ length: m + 1 }, () => new Array<number>(n + 1).fill(0));
+    for (let i = 0; i <= m; i++) dp[i]![0] = 1;
+    for (let i = 1; i <= m; i++)
+      for (let j = 1; j <= n; j++)
+        dp[i]![j] = dp[i - 1]![j]! + (s[i - 1] === t[j - 1] ? dp[i - 1]![j - 1]! : 0);
+    return dp[m]![n]!;
+  },
+
+  'minimum-window-subsequence': (...args: unknown[]) => {
+    const s1 = args[0] as string, s2 = args[1] as string;
+    let best = '', lo = 0;
+    while (lo < s1.length) {
+      let i = lo, j = 0;
+      while (i < s1.length && j < s2.length) { if (s1[i] === s2[j]) j++; i++; }
+      if (j < s2.length) break;
+      let hi = i - 1; j = s2.length - 1;
+      while (j >= 0) { if (s1[hi] === s2[j]) j--; hi--; }
+      const win = s1.slice(hi + 1, i);
+      if (!best || win.length < best.length) best = win;
+      lo = hi + 2;
+    }
+    return best;
+  },
+
 };
