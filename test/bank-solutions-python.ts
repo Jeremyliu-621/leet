@@ -7866,4 +7866,64 @@ def relativeSortArray(arr1, arr2):
     rank = {v: i for i, v in enumerate(arr2)}
     return sorted(arr1, key=lambda x: rank[x] if x in rank else 1000 + x)
 `,
+
+  'permutations-ii': `
+def permuteUniqueRunner(arr):
+    arr = list(arr)
+    def permuteUnique(nums):
+        nums = sorted(nums)
+        result = []
+        used = [False] * len(nums)
+        def bt(cur):
+            if len(cur) == len(nums):
+                result.append(cur[:])
+                return
+            for i in range(len(nums)):
+                if used[i]:
+                    continue
+                if i > 0 and nums[i] == nums[i-1] and not used[i-1]:
+                    continue
+                used[i] = True
+                cur.append(nums[i])
+                bt(cur)
+                used[i] = False
+                cur.pop()
+        bt([])
+        return result
+    return sorted(permuteUnique(arr))
+`,
+
+  'letter-tile-possibilities': `
+def numTilePossibilities(tiles):
+    freq = [0] * 26
+    for c in tiles:
+        freq[ord(c) - 65] += 1
+    def bt():
+        count = 0
+        for i in range(26):
+            if freq[i] > 0:
+                count += 1
+                freq[i] -= 1
+                count += bt()
+                freq[i] += 1
+        return count
+    return bt()
+`,
+
+  'different-ways-add-parentheses': `
+def diffWaysToComputeRunner(expr):
+    def compute(e):
+        results = []
+        for i, c in enumerate(e):
+            if c in '+-*':
+                for l in compute(e[:i]):
+                    for r in compute(e[i+1:]):
+                        if c == '+': results.append(l + r)
+                        elif c == '-': results.append(l - r)
+                        else: results.append(l * r)
+        if not results:
+            results.append(int(e))
+        return results
+    return sorted(compute(expr))
+`,
 };

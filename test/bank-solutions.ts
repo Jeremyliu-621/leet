@@ -8416,4 +8416,58 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     });
   },
 
+  'permutations-ii': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const res: number[][] = [];
+    const used = new Array(nums.length).fill(false);
+    function bt(cur: number[]) {
+      if (cur.length === nums.length) { res.push([...cur]); return; }
+      for (let i = 0; i < nums.length; i++) {
+        if (used[i]) continue;
+        if (i > 0 && nums[i] === nums[i - 1] && !used[i - 1]) continue;
+        used[i] = true; cur.push(nums[i]!);
+        bt(cur);
+        used[i] = false; cur.pop();
+      }
+    }
+    bt([]);
+    return res.sort((a, b) => { for (let i = 0; i < Math.min(a.length, b.length); i++) if (a[i] !== b[i]) return a[i]! - b[i]!; return 0; });
+  },
+
+  'letter-tile-possibilities': (...args: unknown[]) => {
+    const tiles = args[0] as string;
+    const freq = new Array(26).fill(0);
+    for (const c of tiles) freq[c.charCodeAt(0) - 65]!++;
+    function bt(): number {
+      let count = 0;
+      for (let i = 0; i < 26; i++) {
+        if (freq[i]! > 0) { count++; freq[i]!--; count += bt(); freq[i]!++; }
+      }
+      return count;
+    }
+    return bt();
+  },
+
+  'different-ways-add-parentheses': (...args: unknown[]) => {
+    const expression = args[0] as string;
+    function compute(expr: string): number[] {
+      const results: number[] = [];
+      for (let i = 0; i < expr.length; i++) {
+        const c = expr[i]!;
+        if (c === '+' || c === '-' || c === '*') {
+          const left = compute(expr.slice(0, i));
+          const right = compute(expr.slice(i + 1));
+          for (const l of left) for (const r of right) {
+            if (c === '+') results.push(l + r);
+            else if (c === '-') results.push(l - r);
+            else results.push(l * r);
+          }
+        }
+      }
+      if (results.length === 0) results.push(parseInt(expr));
+      return results;
+    }
+    return compute(expression).sort((a, b) => a - b);
+  },
+
 };

@@ -675,6 +675,9 @@ import { problem as minimumDominoRotations } from './minimum-domino-rotations';
 import { problem as furthestBuildingLadders } from './furthest-building-ladders';
 import { problem as ipo } from './ipo';
 import { problem as relativeSortArray } from './relative-sort-array';
+import { problem as permutationsII } from './permutations-ii';
+import { problem as letterTilePossibilities } from './letter-tile-possibilities';
+import { problem as differentWaysAddParentheses } from './different-ways-add-parentheses';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1353,4 +1356,8 @@ export const problems: readonly Problem[] = [
   ipo,
   // arrays — easy (new)
   relativeSortArray,
+  // backtracking — medium (new)
+  permutationsII,
+  letterTilePossibilities,
+  differentWaysAddParentheses,
 ];
