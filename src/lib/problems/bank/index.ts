@@ -15,6 +15,7 @@ import { problem as shuffleTheArray } from './shuffle-the-array';
 import { problem as countItemsMatchingRule } from './count-items-matching-rule';
 import { problem as summaryRanges } from './summary-ranges';
 import { problem as findMaxMin } from './find-max-min';
+import { problem as findPositiveIntegerWithNegative } from './find-positive-integer-with-negative';
 import { problem as findPivotIndex } from './find-pivot-index';
 import { problem as maxConsecutiveOnes } from './max-consecutive-ones';
 import { problem as plusOne } from './plus-one';
@@ -118,6 +119,7 @@ import { problem as missingRanges } from './missing-ranges';
 import { problem as queueReconstructionByHeight } from './queue-reconstruction-by-height';
 
 // strings — easy
+import { problem as reverseWordsInStringIII } from './reverse-words-in-string-iii';
 import { problem as makeStringGreat } from './make-string-great';
 import { problem as minimumStringLength } from './minimum-string-length';
 import { problem as maximumScoreAfterSplittingString } from './maximum-score-after-splitting-string';
@@ -140,7 +142,6 @@ import { problem as largestOddNumberInString } from './largest-odd-number-in-str
 import { problem as firstLetterToAppearTwice } from './first-letter-to-appear-twice';
 import { problem as countAsterisks } from './count-asterisks';
 import { problem as uniqueEmailAddresses } from './unique-email-addresses';
-import { problem as reverseWordsInStringIii } from './reverse-words-in-string-iii';
 import { problem as countBinarySubstrings } from './count-binary-substrings';
 // arrays — medium (additional)
 import { problem as shortestUnsortedContinuousSubarray } from './shortest-unsorted-continuous-subarray';
@@ -197,6 +198,7 @@ import { problem as widestVerticalArea } from './widest-vertical-area';
 import { problem as convert1dArrayInto2dArray } from './convert-1d-array-into-2d-array';
 import { problem as findThePivotInteger } from './find-the-pivot-integer';
 import { problem as maximumSumCircularSubarray } from './maximum-sum-circular-subarray';
+import { problem as numberOfDistinctAverages } from './number-of-distinct-averages';
 // strings — medium
 import { problem as zigzagConversion } from './zigzag-conversion';
 import { problem as implementTrie } from './implement-trie';
@@ -225,6 +227,7 @@ import { problem as firstUniqueChar } from './first-unique-char';
 import { problem as findWordsFromChars } from './word-pattern-ii';
 import { problem as jewelsAndStones } from './jewels-and-stones';
 import { problem as minimumOperationsAlternating } from './minimum-operations-alternating';
+import { problem as minimumOperationsMakeArrayEmpty } from './minimum-operations-make-array-empty';
 import { problem as maximumNumberOfBalloons } from './maximum-number-of-balloons';
 import { problem as countCharacters } from './count-characters';
 import { problem as uniqueNumberOfOccurrences } from './unique-number-of-occurrences';
@@ -382,6 +385,7 @@ import { problem as reverseBits } from './reverse-bits';
 import { problem as countAndSay } from './count-and-say';
 import { problem as fibonacciNumber } from './fibonacci-number';
 import { problem as sumOfSquares } from './sum-of-squares';
+import { problem as sumOfSquaresSpecialElements } from './sum-of-squares-special-elements';
 import { problem as climbingStairs } from './climbing-stairs';
 import { problem as romanToInteger } from './roman-to-integer';
 import { problem as palindromeNumber } from './palindrome-number';
@@ -639,6 +643,7 @@ export const problems: readonly Problem[] = [
   countItemsMatchingRule,
   summaryRanges,
   findMaxMin,
+  findPositiveIntegerWithNegative,
   findPivotIndex,
   maxConsecutiveOnes,
   plusOne,
@@ -752,6 +757,7 @@ export const problems: readonly Problem[] = [
   shortestUnsortedContinuousSubarray,
   maxChunksToMakeSorted,
   // strings — easy
+  reverseWordsInStringIII,
   makeStringGreat,
   minimumStringLength,
   maximumScoreAfterSplittingString,
@@ -774,7 +780,6 @@ export const problems: readonly Problem[] = [
   firstLetterToAppearTwice,
   countAsterisks,
   uniqueEmailAddresses,
-  reverseWordsInStringIii,
   countBinarySubstrings,
   reverseOnlyLetters,
   backspaceStringCompare,
@@ -822,6 +827,7 @@ export const problems: readonly Problem[] = [
   // strings — medium
   findRepeatedDnaSequences,
   maximumSumCircularSubarray,
+  numberOfDistinctAverages,
   minimumDeletionsCharFrequencies,
   bullsAndCows,
   replaceWords,
@@ -855,6 +861,7 @@ export const problems: readonly Problem[] = [
   findWordsFromChars,
   jewelsAndStones,
   minimumOperationsAlternating,
+  minimumOperationsMakeArrayEmpty,
   maximumNumberOfBalloons,
   countCharacters,
   findWordsFormedByCharacters,
@@ -1043,6 +1050,7 @@ export const problems: readonly Problem[] = [
   countAndSay,
   fibonacciNumber,
   sumOfSquares,
+  sumOfSquaresSpecialElements,
   climbingStairs,
   romanToInteger,
   palindromeNumber,

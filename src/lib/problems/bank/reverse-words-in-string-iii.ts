@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'reverse-words-in-string-iii',
   title: 'Reverse Words in a String III',
   difficulty: 'easy',
-  tags: ['strings'],
+  tags: ['strings', 'two-pointers'],
   description: `Given a string \`s\`, reverse the order of characters in each word within a sentence while still preserving whitespace and initial word order.
 
 Words in \`s\` are separated by a single space. The string does not contain any leading or trailing spaces.`,
@@ -38,35 +38,15 @@ Words in \`s\` are separated by a single space. The string does not contain any 
     python: 'def reverseWords(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [
-    {
-      args: ["Let's take LeetCode contest"],
-      expected: "s'teL ekat edoCteeL tsetnoc",
-    },
-    {
-      args: ['Mr Ding'],
-      expected: 'rM gniD',
-    },
-    {
-      args: ['hello world'],
-      expected: 'olleh dlrow',
-    },
+    { args: ["Let's take LeetCode contest"], expected: "s'teL ekat edoCteeL tsetnoc" },
+    { args: ['Mr Ding'], expected: 'rM gniD' },
+    { args: ['hello world'], expected: 'olleh dlrow' },
   ],
   hiddenTests: [
-    {
-      args: ['a'],
-      expected: 'a',
-    },
-    {
-      args: ['abc def ghi'],
-      expected: 'cba fed ihg',
-    },
-    {
-      args: ['racecar'],
-      expected: 'racecar',
-    },
-    {
-      args: ['one two three four five'],
-      expected: 'eno owt eerht ruof evif',
-    },
+    { args: ['a'], expected: 'a' },
+    { args: ['abc def ghi'], expected: 'cba fed ihg' },
+    { args: ['I love coding'], expected: 'I evol gnidoc' },
+    { args: ['racecar'], expected: 'racecar' },
+    { args: ['one two three four five'], expected: 'eno owt eerht ruof evif' },
   ],
 };

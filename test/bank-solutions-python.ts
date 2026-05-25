@@ -7211,4 +7211,40 @@ def maxSubarraySumCircular(nums):
                 q.append((j, steps+1))
     return -1
 `,
+  'number-of-distinct-averages': `
+def distinctAverages(nums):
+    nums = sorted(nums)
+    sums = set()
+    for i in range(len(nums) // 2):
+        sums.add(nums[i] + nums[-(i+1)])
+    return len(sums)
+`,
+  'find-positive-integer-with-negative': `
+def findMaxK(nums):
+    s = set(nums)
+    result = -1
+    for n in nums:
+        if n > 0 and -n in s:
+            if n > result:
+                result = n
+    return result
+`,
+  'sum-of-squares-special-elements': `
+def sumOfSquares(nums):
+    nums = list(nums)
+    n = len(nums)
+    return sum(nums[i-1] ** 2 for i in range(1, n+1) if n % i == 0)
+`,
+  'minimum-operations-make-array-empty': `
+def minOperations(nums):
+    from collections import Counter
+    import math
+    freq = Counter(nums)
+    ops = 0
+    for f in freq.values():
+        if f == 1:
+            return -1
+        ops += math.ceil(f / 3)
+    return ops
+`,
 };

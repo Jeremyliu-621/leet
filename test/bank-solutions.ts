@@ -7561,6 +7561,17 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return best;
   },
+  'find-positive-integer-with-negative': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const set = new Set(nums);
+    let result = -1;
+    for (const n of nums) {
+      if (n > 0 && set.has(-n)) {
+        if (n > result) result = n;
+      }
+    }
+    return result;
+  },
   // --- strings / hash-map --------------------------------------------------
   'minimum-deletions-char-frequencies': (...args: unknown[]) => {
     const s = args[0] as string;
@@ -7693,7 +7704,30 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return Math.max(maxSum, total - minSum);
   },
-
+  'number-of-distinct-averages': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const sums = new Set<number>();
+    for (let i = 0; i < nums.length / 2; i++) sums.add(nums[i]! + nums[nums.length - 1 - i]!);
+    return sums.size;
+  },
+  'sum-of-squares-special-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    let sum = 0;
+    for (let i = 1; i <= n; i++) if (n % i === 0) sum += nums[i - 1]! ** 2;
+    return sum;
+  },
+  'minimum-operations-make-array-empty': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+    let ops = 0;
+    for (const [, f] of freq) {
+      if (f === 1) return -1;
+      ops += Math.ceil(f / 3);
+    }
+    return ops;
+  },
   'unique-email-addresses': (...args: unknown[]) => {
     const emails = args[0] as string[];
     const normalize = (e: string) => {
@@ -7702,7 +7736,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     };
     return new Set(emails.map(normalize)).size;
   },
-
   'reverse-words-in-string-iii': (...args: unknown[]) => {
     const s = args[0] as string;
     return s.split(' ').map((w: string) => w.split('').reverse().join('')).join(' ');
