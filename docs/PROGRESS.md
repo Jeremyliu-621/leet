@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1492 problems; 4764 tests green.
+**Current focus:** Bank at 1497 problems; 4779 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank (Batch 56+); marketing site stat update at 1500 (8 more problems needed).
+**Next up:** Continue growing problem bank (Batch 56+); marketing site stat update at 1500 (3 more problems needed).
+
+### Batch 55-local-2 (2026-05-25)
+Added 5 problems: `delete-greatest-value-in-each-row` (arrays/easy, sort rows + column maxes), `sort-the-jumbled-numbers` (arrays/medium, mapped digit stable sort), `minimum-operations-to-make-array-alternating` (arrays+hash-map/medium, top-2 freq greedy), `maximum-total-importance-of-roads` (arrays+graph/medium, sort degrees assign 1..n), `smallest-subarrays-with-maximum-bitwise-or` (arrays+sliding-window/medium, per-bit next-occurrence scan). Bank at **1497**; 4779 tests.
 
 ### Batch 55-local (2026-05-25)
 Added 5 problems: `implement-strstr` (strings/easy, sliding window index match), `repeated-string-match` (strings/medium, ceil reps + 1 check), `pass-the-pillow` (math/easy, 2(n-1) cycle formula), `number-of-changing-keys` (strings/easy, case-insensitive adjacent diff count), `maximum-repeating-substring` (strings/easy, greedy extend repeat). Also merged Batch 56 (10 problems from parallel agents): `maximize-greatness-of-an-array`, `neighboring-bitwise-xor`, `minimize-xor`, `find-the-maximum-number-of-marked-indices`, `minimize-maximum-of-array`. Bank at **1492**; 4764 tests.
