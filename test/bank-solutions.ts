@@ -17223,17 +17223,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return t.reduce((sum, v, i) => sum + Math.min(v, i <= ki ? t[ki]! : t[ki]! - 1), 0);
   },
 
-  'number-of-subarrays-with-bounded-maximum': (nums: unknown, left: unknown, right: unknown) => {
-    const a = nums as number[], lo = left as number, hi = right as number;
-    let count = 0, lastOver = -1, lastIn = -1;
-    for (let i = 0; i < a.length; i++) {
-      if (a[i]! > hi) { lastOver = i; lastIn = i; }
-      else if (a[i]! >= lo) lastIn = i;
-      count += Math.max(0, lastIn - lastOver);
-    }
-    return count;
-  },
-
   'kth-smallest-element-in-bst': (arr: unknown, k: unknown) => {
     const nodes = arr as (number | null)[];
     const K = k as number;

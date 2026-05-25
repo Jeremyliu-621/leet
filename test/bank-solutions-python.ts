@@ -16978,22 +16978,6 @@ def minimumDeletions(s):
     return total
 `,
 
-  'number-of-subarrays-with-bounded-maximum': `def numSubarrayBoundedMax(nums, left, right):
-    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
-    left, right = int(left), int(right)
-    count = 0
-    last_over = -1
-    last_in = -1
-    for i, v in enumerate(nums):
-        if v > right:
-            last_over = i
-            last_in = i
-        elif v >= left:
-            last_in = i
-        count += max(0, last_in - last_over)
-    return count
-`,
-
   'kth-smallest-element-in-bst': `def kthSmallestRunner(arr, k):
     raw = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
     arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
