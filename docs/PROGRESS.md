@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1443 problems; 4617 tests green.
+**Current focus:** Bank at 1447 problems; 4629 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank (Batch 52+); marketing site stat update at 1500.
 
@@ -429,6 +429,7 @@ Still pending:
 - [x] **perf(options)**: Hoisted `totalByDiff` to a module-level constant (was re-computed 3×1430 iterations per render). Wrapped `solvedByDiff` and `solvedCount` in useMemo with [solvedIds] dep.
 - [x] **fix(terminal): "TESTS PASSED" in run mode** — TerminalPanel summary now shows "TESTS PASSED" (not "ACCEPTED") when run mode succeeds; Test Results tab also shows "submit to run all tests" hint in that state; `mode` threaded through summary entry type.
 - [x] **Batch 51** — my-calendar-iii (hard/arrays+binary-search, difference array k-booking), design-twitter (medium/hash-map, news-feed multi-source merge top-10), zigzag-iterator (medium/arrays, alternating two-array traversal), second-minimum-time-to-reach-destination (medium/graph, BFS tracking two shortest arrival times with traffic light delays); bank at **1438**; 4602 tests.
+- [x] **Batch 51 continued** — path-sum-ii (tree/medium, DFS backtracking sorted), construct-binary-tree-from-inorder-and-postorder-traversal (tree/medium, index-map + recursive split), maximum-number-of-removable-characters (binary-search/medium, binary search on k + subsequence check), minimum-sum-of-squared-difference (arrays/medium, binary search on threshold), find-the-kth-largest-integer-in-array (arrays/medium, sort by length+lex), trapping-rain-water-ii (heap/hard, BFS min-heap boundary), minimum-number-of-pushes-to-type-word-ii (math/medium, freq sort + slot assignment), maximize-win-from-two-segments (sliding-window/medium, two-pass DP+binary-search), minimum-swaps-to-group-all-ones-together-ii (sliding-window/medium, circular doubled-array window); bank at **1447**; 4629 tests.
 
 ---
 
