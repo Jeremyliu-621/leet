@@ -20984,6 +20984,92 @@ def secondMinimum(n, edges, time, change):
     return ''.join(result)
 `,
 
+  'alternating-groups-ii': `def numberOfAlternatingGroups(colors, k):
+    n = len(colors)
+    if k == 1:
+        return n
+    doubled = colors + colors
+    count = 0
+    run = 1
+    for i in range(1, n + k - 1):
+        if doubled[i] != doubled[i - 1]:
+            run += 1
+        else:
+            run = 1
+        if i >= k - 1:
+            start = i - k + 1
+            if start < n and run >= k:
+                count += 1
+    return count
+`,
+
+  'count-of-connected-components': `def countComponents(n, edges):
+    parent = list(range(n))
+    rank = [0] * n
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    def union(x, y):
+        px, py = find(x), find(y)
+        if px == py:
+            return
+        if rank[px] < rank[py]:
+            parent[px] = py
+        elif rank[px] > rank[py]:
+            parent[py] = px
+        else:
+            parent[py] = px
+            rank[px] += 1
+    for u, v in edges:
+        union(u, v)
+    return len(set(find(i) for i in range(n)))
+`,
+
+  'longest-non-decreasing-subarray-from-two-arrays': `def maxNonDecreasingLength(nums1, nums2):
+    n = len(nums1)
+    if n == 0:
+        return 0
+    dp1 = dp2 = ans = 1
+    for i in range(1, n):
+        new1 = new2 = 1
+        if nums1[i - 1] <= nums1[i]:
+            new1 = max(new1, dp1 + 1)
+        if nums2[i - 1] <= nums1[i]:
+            new1 = max(new1, dp2 + 1)
+        if nums1[i - 1] <= nums2[i]:
+            new2 = max(new2, dp1 + 1)
+        if nums2[i - 1] <= nums2[i]:
+            new2 = max(new2, dp2 + 1)
+        dp1 = new1
+        dp2 = new2
+        ans = max(ans, dp1, dp2)
+    return ans
+`,
+
+  'report-spam-message': `def reportSpam(message, bannedWords):
+    banned = set(bannedWords)
+    count = sum(1 for word in message if word in banned)
+    return count >= 2
+`,
+
+  'distribute-elements-into-two-arrays-ii': `def resultArray(nums):
+    arr1 = [nums[0]]
+    arr2 = [nums[1]]
+    def greater_count(arr, val):
+        return sum(1 for x in arr if x > val)
+    for i in range(2, len(nums)):
+        gc1 = greater_count(arr1, nums[i])
+        gc2 = greater_count(arr2, nums[i])
+        if gc1 > gc2:
+            arr1.append(nums[i])
+        elif gc2 > gc1:
+            arr2.append(nums[i])
+        else:
+            arr1.append(nums[i])
+    return arr1 + arr2
+`,
+
   'strange-printer-ii': `def isPrintable(targetGrid):
     from collections import deque
     m, n = len(targetGrid), len(targetGrid[0])

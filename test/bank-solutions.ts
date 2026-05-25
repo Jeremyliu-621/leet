@@ -21094,6 +21094,105 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'alternating-groups-ii': (...args: unknown[]) => {
+    const colors = args[0] as number[];
+    const k = args[1] as number;
+    const n = colors.length;
+    if (k === 1) return n;
+    const doubled = [...colors, ...colors];
+    let count = 0;
+    let run = 1;
+    for (let i = 1; i < n + k - 1; i++) {
+      if (doubled[i] !== doubled[i - 1]) {
+        run++;
+      } else {
+        run = 1;
+      }
+      if (i >= k - 1) {
+        const start = i - k + 1;
+        if (start < n && run >= k) {
+          count++;
+        }
+      }
+    }
+    return count;
+  },
+
+  'count-of-connected-components': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const rank = new Array(n).fill(0) as number[];
+    function find(x: number): number {
+      if (parent[x] !== x) parent[x] = find(parent[x]!);
+      return parent[x]!;
+    }
+    function union(x: number, y: number) {
+      const px = find(x);
+      const py = find(y);
+      if (px === py) return;
+      if (rank[px]! < rank[py]!) parent[px] = py;
+      else if (rank[px]! > rank[py]!) parent[py] = px;
+      else { parent[py] = px; rank[px]!++; }
+    }
+    for (const [u, v] of edges) union(u!, v!);
+    const roots = new Set<number>();
+    for (let i = 0; i < n; i++) roots.add(find(i));
+    return roots.size;
+  },
+
+  'longest-non-decreasing-subarray-from-two-arrays': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const n = nums1.length;
+    if (n === 0) return 0;
+    let dp1 = 1;
+    let dp2 = 1;
+    let ans = 1;
+    for (let i = 1; i < n; i++) {
+      let new1 = 1;
+      let new2 = 1;
+      if (nums1[i - 1]! <= nums1[i]!) new1 = Math.max(new1, dp1 + 1);
+      if (nums2[i - 1]! <= nums1[i]!) new1 = Math.max(new1, dp2 + 1);
+      if (nums1[i - 1]! <= nums2[i]!) new2 = Math.max(new2, dp1 + 1);
+      if (nums2[i - 1]! <= nums2[i]!) new2 = Math.max(new2, dp2 + 1);
+      dp1 = new1;
+      dp2 = new2;
+      ans = Math.max(ans, dp1, dp2);
+    }
+    return ans;
+  },
+
+  'report-spam-message': (...args: unknown[]) => {
+    const message = args[0] as string[];
+    const bannedWords = args[1] as string[];
+    const banned = new Set(bannedWords);
+    let count = 0;
+    for (const word of message) {
+      if (banned.has(word)) count++;
+    }
+    return count >= 2;
+  },
+
+  'distribute-elements-into-two-arrays-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const arr1: number[] = [nums[0]!];
+    const arr2: number[] = [nums[1]!];
+    function greaterCount(arr: number[], val: number): number {
+      let count = 0;
+      for (const x of arr) if (x > val) count++;
+      return count;
+    }
+    for (let i = 2; i < nums.length; i++) {
+      const gc1 = greaterCount(arr1, nums[i]!);
+      const gc2 = greaterCount(arr2, nums[i]!);
+      if (gc1 > gc2) arr1.push(nums[i]!);
+      else if (gc2 > gc1) arr2.push(nums[i]!);
+      else arr1.push(nums[i]!);
+    }
+    return [...arr1, ...arr2];
+  },
+
   'strange-printer-ii': (...args: unknown[]) => {
     const targetGrid = args[0] as number[][];
     const m = targetGrid.length;

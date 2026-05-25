@@ -1545,6 +1545,11 @@ import { problem as neighboringBitwiseXor } from './neighboring-bitwise-xor';
 import { problem as minimizeXor } from './minimize-xor';
 import { problem as findTheMaximumNumberOfMarkedIndices } from './find-the-maximum-number-of-marked-indices';
 import { problem as minimizeMaximumOfArray } from './minimize-maximum-of-array';
+import { problem as alternatingGroupsII } from './alternating-groups-ii';
+import { problem as countOfConnectedComponents } from './count-of-connected-components';
+import { problem as longestNonDecreasingSubarrayFromTwoArrays } from './longest-non-decreasing-subarray-from-two-arrays';
+import { problem as reportSpamMessage } from './report-spam-message';
+import { problem as distributeElementsIntoTwoArraysII } from './distribute-elements-into-two-arrays-ii';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3138,4 +3143,9 @@ export const problems: readonly Problem[] = [
   minimizeXor,
   findTheMaximumNumberOfMarkedIndices,
   minimizeMaximumOfArray,
+  alternatingGroupsII,
+  countOfConnectedComponents,
+  longestNonDecreasingSubarrayFromTwoArrays,
+  reportSpamMessage,
+  distributeElementsIntoTwoArraysII,
 ];
