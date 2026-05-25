@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1390 problems; 4419 tests green.
+**Current focus:** Bank at 1395 problems; 4434 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue adding classic problems (Batch 43+); UI/UX polish; draggable splitter; options improvements.
+**Next up:** Continue adding classic problems (Batch 44+); UI/UX polish; draggable splitter; options improvements.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -387,6 +387,8 @@ Still pending:
 - [x] **5 more classic problems (Batch 41)** — minimum-hours-of-training (arrays/medium, greedy energy+experience top-up), largest-number-after-digit-swaps-by-parity (arrays/easy, swap same-parity maximally), number-of-pairs-of-strings-with-concatenation-equal-to-target (strings+arrays/medium, O(n²) concat check), sum-of-beauty-of-all-substrings (strings/medium, O(n²) freq max−min), maximum-number-of-words-you-can-type (strings+hash-map/easy, broken letter set filter); bank at **1382**; 4386 tests.
 - [x] **4 more classic problems (Batch 42)** — ugly-number (math/easy, divide by 2/3/5 until 1), lemonade-change (arrays/easy, greedy coin change), most-frequent-subtree-sum (tree+hash-map/medium, DFS subtree sum freq count), implement-stack-using-queues (stack/easy, rotate-on-push single-queue); bank at **1383**; 4398 tests.
 - [x] **2 more classic problems (Batch 42-local)** — sum-of-nodes-with-even-valued-grandparent (tree/medium, DFS passing parent+grandparent values), flip-equivalent-binary-trees (tree/medium, recursive same-or-flipped subtrees); bank at **1385**; 4404 tests.
+- [x] **5 more classic problems (Batch 42-remote)** — count-vowel-substrings-of-a-string (strings/easy, O(n²) inner break), number-of-rectangles-that-can-form-the-largest-square (arrays/easy, min-side max count), determine-if-string-halves-are-alike (strings/easy, vowel count halves), divide-a-string-into-groups-of-size-k (strings/easy, pad + chunk), count-integers-with-even-digit-sum (math/easy, O(n) digit sum parity); bank at **1390**; 4419 tests.
+- [x] **5 more classic problems (Batch 43)** — design-hashset (hash-map/easy, boolean array implementation), design-parking-system (arrays/easy, three-counter spot tracker), defuse-the-bomb (arrays+sliding-window/easy, circular sum by k), check-if-sentence-is-pangram (strings+hash-map/easy, 26 unique letters), find-the-student-that-will-replace-the-chalk (arrays+binary-search/medium, modular prefix sum); bank at **1395**; 4434 tests.
 
 ---
 
