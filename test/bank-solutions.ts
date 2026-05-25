@@ -10708,6 +10708,8 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       }
     }
     return -1;
+  },
+
   'climbing-stairs-k-steps': (...args: unknown[]) => {
     const n = args[0] as number;
     const k = args[1] as number;
@@ -10832,6 +10834,95 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
           }
         }
       }
+    }
+    return count;
+  },
+
+  'alternating-digit-sum': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const digits = String(n).split('').map(Number);
+    return digits.reduce((sum, d, i) => sum + (i % 2 === 0 ? d : -d), 0);
+  },
+
+  'count-ways-to-build-good-string': (...args: unknown[]) => {
+    const low = args[0] as number;
+    const high = args[1] as number;
+    const zero = args[2] as number;
+    const one = args[3] as number;
+    const MOD = 1_000_000_007;
+    const dp = new Array<number>(high + 1).fill(0);
+    dp[0] = 1;
+    let ans = low === 0 ? 1 : 0;
+    for (let i = 1; i <= high; i++) {
+      if (i >= zero) dp[i] = ((dp[i] ?? 0) + (dp[i - zero] ?? 0)) % MOD;
+      if (i >= one) dp[i] = ((dp[i] ?? 0) + (dp[i - one] ?? 0)) % MOD;
+      if (i >= low) ans = (ans + (dp[i] ?? 0)) % MOD;
+    }
+    return ans;
+  },
+
+  'divide-players-into-teams-of-equal-skill': (...args: unknown[]) => {
+    const skill = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const n = skill.length;
+    const target = (skill[0] as number) + (skill[n - 1] as number);
+    let chemistry = 0;
+    for (let i = 0; i < n / 2; i++) {
+      const a = skill[i] as number;
+      const b = skill[n - 1 - i] as number;
+      if (a + b !== target) return -1;
+      chemistry += a * b;
+    }
+    return chemistry;
+  },
+
+  'maximum-number-of-pairs-in-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const v of nums) freq.set(v, (freq.get(v) ?? 0) + 1);
+    let pairs = 0;
+    for (const cnt of freq.values()) pairs += Math.floor(cnt / 2);
+    return [pairs, nums.length - pairs * 2];
+  },
+
+  'minimize-maximum-pair-sum-in-array': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const n = nums.length;
+    let max = 0;
+    for (let i = 0; i < n / 2; i++) {
+      max = Math.max(max, (nums[i] as number) + (nums[n - 1 - i] as number));
+    }
+    return max;
+  },
+
+  'minimum-operations-to-exceed-threshold-value-ii': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const k = args[1] as number;
+    let ops = 0;
+    while (nums.length >= 2 && (nums[0] as number) < k) {
+      const x = nums.shift() as number;
+      const y = nums.shift() as number;
+      const newVal = x * 2 + y;
+      let lo = 0;
+      let hi = nums.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if ((nums[mid] as number) < newVal) lo = mid + 1;
+        else hi = mid;
+      }
+      nums.splice(lo, 0, newVal);
+      ops++;
+    }
+    return ops;
+  },
+
+  'number-of-ways-to-split-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const total = nums.reduce((s, v) => s + v, 0);
+    let prefix = 0;
+    let count = 0;
+    for (let i = 0; i < nums.length - 1; i++) {
+      prefix += nums[i] as number;
+      if (prefix >= total - prefix) count++;
     }
     return count;
   },

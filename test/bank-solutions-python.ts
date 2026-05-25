@@ -10351,6 +10351,8 @@ def nearestExit(maze, entrance):
             maze[nr][nc] = '+'
             q.append((nr, nc, steps+1))
     return -1
+`,
+
   'climbing-stairs-k-steps': `def climbStairsK(n: int, k: int) -> int:
     MOD = 10**9 + 7
     dp = [0] * (n + 1)
@@ -10433,6 +10435,68 @@ def nearestExit(maze, entrance):
                 for d in range(c + 1, n):
                     if nums[a] + nums[b] + nums[c] == nums[d]:
                         count += 1
+    return count
+`,
+  'alternating-digit-sum': `def alternateDigitSum(n: int) -> int:
+    digits = [int(c) for c in str(n)]
+    return sum(d if i % 2 == 0 else -d for i, d in enumerate(digits))
+`,
+  'count-ways-to-build-good-string': `def countGoodStrings(low: int, high: int, zero: int, one: int) -> int:
+    MOD = 10**9 + 7
+    dp = [0] * (high + 1)
+    dp[0] = 1
+    ans = 1 if low == 0 else 0
+    for i in range(1, high + 1):
+        if i >= zero:
+            dp[i] = (dp[i] + dp[i - zero]) % MOD
+        if i >= one:
+            dp[i] = (dp[i] + dp[i - one]) % MOD
+        if i >= low:
+            ans = (ans + dp[i]) % MOD
+    return ans
+`,
+  'divide-players-into-teams-of-equal-skill': `def dividePlayers(skill: list[int]) -> int:
+    skill = sorted(skill)
+    n = len(skill)
+    target = skill[0] + skill[-1]
+    chemistry = 0
+    for i in range(n // 2):
+        if skill[i] + skill[n - 1 - i] != target:
+            return -1
+        chemistry += skill[i] * skill[n - 1 - i]
+    return chemistry
+`,
+  'maximum-number-of-pairs-in-array': `def numberOfPairs(nums: list[int]) -> list[int]:
+    from collections import Counter
+    freq = Counter(nums)
+    pairs = sum(c // 2 for c in freq.values())
+    return [pairs, len(nums) - pairs * 2]
+`,
+  'minimize-maximum-pair-sum-in-array': `def minPairSum(nums: list[int]) -> int:
+    nums = sorted(nums)
+    n = len(nums)
+    return max(nums[i] + nums[n - 1 - i] for i in range(n // 2))
+`,
+  'minimum-operations-to-exceed-threshold-value-ii': `def minOperations(nums: list[int], k: int) -> int:
+    import heapq
+    heap = list(nums)
+    heapq.heapify(heap)
+    ops = 0
+    while heap[0] < k:
+        x = heapq.heappop(heap)
+        y = heapq.heappop(heap)
+        heapq.heappush(heap, x * 2 + y)
+        ops += 1
+    return ops
+`,
+  'number-of-ways-to-split-array': `def waysToSplitArray(nums: list[int]) -> int:
+    total = sum(nums)
+    prefix = 0
+    count = 0
+    for i in range(len(nums) - 1):
+        prefix += nums[i]
+        if prefix >= total - prefix:
+            count += 1
     return count
 `,
 };

@@ -875,6 +875,13 @@ import { problem as removeDuplicatesFromSortedListII } from './remove-duplicates
 import { problem as countNumberOfHomogenousSubstrings } from './count-number-of-homogenous-substrings';
 import { problem as stoneGameVI } from './stone-game-vi';
 import { problem as countSpecialQuadruplets } from './count-special-quadruplets';
+import { problem as alternatingDigitSum } from './alternating-digit-sum';
+import { problem as countWaysToBuildGoodString } from './count-ways-to-build-good-string';
+import { problem as dividePlayersIntoTeamsOfEqualSkill } from './divide-players-into-teams-of-equal-skill';
+import { problem as maximumNumberOfPairsInArray } from './maximum-number-of-pairs-in-array';
+import { problem as minimizeMaximumPairSumInArray } from './minimize-maximum-pair-sum-in-array';
+import { problem as minimumOperationsToExceedThresholdValueII } from './minimum-operations-to-exceed-threshold-value-ii';
+import { problem as numberOfWaysToSplitArray } from './number-of-ways-to-split-array';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1798,4 +1805,11 @@ export const problems: readonly Problem[] = [
   countNumberOfHomogenousSubstrings,
   stoneGameVI,
   countSpecialQuadruplets,
+  alternatingDigitSum,
+  countWaysToBuildGoodString,
+  dividePlayersIntoTeamsOfEqualSkill,
+  maximumNumberOfPairsInArray,
+  minimizeMaximumPairSumInArray,
+  minimumOperationsToExceedThresholdValueII,
+  numberOfWaysToSplitArray,
 ];
