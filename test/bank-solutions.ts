@@ -9739,4 +9739,26 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return operations.reduce((x, op) => op.includes('++') ? x + 1 : x - 1, 0);
   },
 
+  'two-city-scheduling': (...args: unknown[]) => {
+    const costs = [...(args[0] as number[][])].sort((a, b) => (a[0]! - a[1]!) - (b[0]! - b[1]!));
+    const n = costs.length / 2;
+    return costs.reduce((s, c, i) => s + (i < n ? c[0]! : c[1]!), 0);
+  },
+
+  'check-if-straight-line': (...args: unknown[]) => {
+    const c = args[0] as number[][];
+    const [x1, y1] = c[0]!;
+    const [x2, y2] = c[1]!;
+    return c.every(([x, y]) => (y2! - y1!) * (x! - x1!) === (y! - y1!) * (x2! - x1!));
+  },
+
+  'binary-gap': (...args: unknown[]) => {
+    let n = args[0] as number, last = -1, best = 0, pos = 0;
+    while (n) {
+      if (n & 1) { if (last >= 0) best = Math.max(best, pos - last); last = pos; }
+      n >>>= 1; pos++;
+    }
+    return best;
+  },
+
 };

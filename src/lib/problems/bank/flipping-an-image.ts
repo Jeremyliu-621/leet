@@ -4,19 +4,16 @@ export const problem: Problem = {
   id: 'flipping-an-image',
   title: 'Flipping an Image',
   difficulty: 'easy',
-  tags: ['arrays', 'two-pointers'],
+  tags: ['arrays'],
   description: `Given an \`n x n\` binary matrix \`image\`, flip the image **horizontally**, then invert it, and return the resulting image.
 
-To flip an image horizontally means that each row of the image is reversed.
-- For example, flipping \`[1,1,0]\` horizontally results in \`[0,1,1]\`.
+To flip horizontally means to reverse each row: \`[1, 1, 0]\` becomes \`[0, 1, 1]\`.
 
-To invert an image means that each \`0\` is replaced by \`1\`, and each \`1\` is replaced by \`0\`.
-- For example, inverting \`[0,1,1]\` results in \`[1,0,0]\`.`,
+To invert means to replace each \`0\` with \`1\` and each \`1\` with \`0\`: \`[0, 1, 1]\` becomes \`[1, 0, 0]\`.`,
   constraints: [
-    '`n == image.length`',
-    '`n == image[i].length`',
-    '`1 <= n <= 20`',
-    '`image[i][j]` is either `0` or `1`.',
+    'n == image.length == image[i].length',
+    '1 <= n <= 20',
+    'images[i][j] is either 0 or 1.',
   ],
   examples: [
     {
@@ -30,13 +27,15 @@ To invert an image means that each \`0\` is replaced by \`1\`, and each \`1\` is
     },
   ],
   hints: [
-    'Reverse each row, then flip each bit. Or do both in one pass using two pointers.',
+    'Level 1: For each row, reverse it, then XOR each element with 1.',
+    'Level 2: Reversing and inverting can be combined: use two-pointer and XOR with 1.',
+    'Level 3: return image.map(row=>row.slice().reverse().map(x=>x^1));',
   ],
   functionName: 'flipAndInvertImage',
   params: ['image'],
   starterCode: {
-    javascript: 'function flipAndInvertImage(image) {\n  \n}\n',
-    python: 'def flipAndInvertImage(image):\n    pass\n',
+    javascript: 'function flipAndInvertImage(image) {\n  // your code here\n}\n',
+    python: 'def flipAndInvertImage(image):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: [[[1, 1, 0], [1, 0, 1], [0, 0, 0]]], expected: [[1, 0, 0], [0, 1, 0], [1, 1, 1]] },

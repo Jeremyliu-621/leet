@@ -9345,4 +9345,33 @@ def arrayRankTransform(arr):
 def finalValueAfterOperations(operations):
     return sum(1 if '++' in op else -1 for op in operations)
 `,
+
+  'two-city-scheduling': `
+def twoCitySchedCost(costs):
+    costs = sorted(list(costs), key=lambda c: c[0] - c[1])
+    n = len(costs) // 2
+    return sum(costs[i][0] if i < n else costs[i][1] for i in range(len(costs)))
+`,
+
+  'check-if-straight-line': `
+def checkStraightLine(coordinates):
+    coordinates = [list(p) for p in coordinates]
+    x1, y1 = coordinates[0]
+    x2, y2 = coordinates[1]
+    return all((y2 - y1) * (p[0] - x1) == (p[1] - y1) * (x2 - x1) for p in coordinates)
+`,
+
+  'binary-gap': `
+def binaryGap(n):
+    last, best, pos = -1, 0, 0
+    while n:
+        if n & 1:
+            if last >= 0:
+                best = max(best, pos - last)
+            last = pos
+        n >>= 1
+        pos += 1
+    return best
+`,
+
 };

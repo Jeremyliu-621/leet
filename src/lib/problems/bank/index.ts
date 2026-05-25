@@ -784,6 +784,9 @@ import { problem as singleNumberIII } from './single-number-iii';
 import { problem as minimumOperationsMakeArrayIncreasing } from './minimum-operations-to-make-array-increasing';
 import { problem as rankTransformArray } from './rank-transform-array';
 import { problem as finalValueOperations } from './final-value-operations';
+import { problem as twoCityScheduling } from './two-city-scheduling';
+import { problem as checkIfStraightLine } from './check-if-straight-line';
+import { problem as binaryGap } from './binary-gap';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1615,4 +1618,7 @@ export const problems: readonly Problem[] = [
   minimumOperationsMakeArrayIncreasing,
   rankTransformArray,
   finalValueOperations,
+  twoCityScheduling,
+  checkIfStraightLine,
+  binaryGap,
 ];
