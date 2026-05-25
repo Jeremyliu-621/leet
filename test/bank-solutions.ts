@@ -11550,4 +11550,119 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best === nums.length ? -1 : best;
   },
 
+  'count-zero-filled-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let ans = 0, run = 0;
+    for (const x of nums) {
+      if (x === 0) { run++; ans += run; }
+      else { run = 0; }
+    }
+    return ans;
+  },
+
+  'check-whether-two-string-arrays-equal': (...args: unknown[]) => {
+    const word1 = args[0] as string[];
+    const word2 = args[1] as string[];
+    return word1.join('') === word2.join('');
+  },
+
+  'minimum-flips-to-make-a-or-b-equal-c': (...args: unknown[]) => {
+    let a = args[0] as number;
+    let b = args[1] as number;
+    let c = args[2] as number;
+    let flips = 0;
+    while (a || b || c) {
+      const ca = a & 1, cb = b & 1, cc = c & 1;
+      if (cc === 1) {
+        if (ca === 0 && cb === 0) flips++;
+      } else {
+        flips += ca + cb;
+      }
+      a >>= 1; b >>= 1; c >>= 1;
+    }
+    return flips;
+  },
+
+  'make-array-zero-by-subtracting-equal-amounts': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return new Set(nums.filter(x => x > 0)).size;
+  },
+
+  'find-all-groups-of-farmland': (...args: unknown[]) => {
+    const land = args[0] as number[][];
+    const m = land.length, n = land[0]!.length;
+    const result: number[][] = [];
+    for (let r = 0; r < m; r++) {
+      for (let c = 0; c < n; c++) {
+        if (land[r]![c] === 1) {
+          let r2 = r, c2 = c;
+          while (r2 + 1 < m && land[r2 + 1]![c] === 1) r2++;
+          while (c2 + 1 < n && land[r]![c2 + 1] === 1) c2++;
+          result.push([r, c, r2, c2]);
+          for (let i = r; i <= r2; i++)
+            for (let j = c; j <= c2; j++)
+              land[i]![j] = 0;
+        }
+      }
+    }
+    return result;
+  },
+
+  'merge-triplets-to-form-target-triplet': (...args: unknown[]) => {
+    const triplets = args[0] as number[][];
+    const target = args[1] as number[];
+    const merged = [0, 0, 0];
+    for (const t of triplets) {
+      if ((t[0] as number) <= (target[0] as number) &&
+          (t[1] as number) <= (target[1] as number) &&
+          (t[2] as number) <= (target[2] as number)) {
+        for (let i = 0; i < 3; i++) merged[i] = Math.max(merged[i]!, t[i] as number);
+      }
+    }
+    return merged[0] === target[0] && merged[1] === target[1] && merged[2] === target[2];
+  },
+
+  'replace-elements-with-greatest-on-right': (...args: unknown[]) => {
+    const arr = (args[0] as number[]).slice();
+    let maxRight = -1;
+    for (let i = arr.length - 1; i >= 0; i--) {
+      const tmp = arr[i] as number;
+      arr[i] = maxRight;
+      maxRight = Math.max(maxRight, tmp);
+    }
+    return arr;
+  },
+
+  'destroy-asteroids': (...args: unknown[]) => {
+    let mass = args[0] as number;
+    const asteroids = (args[1] as number[]).slice().sort((a, b) => a - b);
+    for (const a of asteroids) {
+      if (mass < a) return false;
+      mass += a;
+    }
+    return true;
+  },
+
+  'largest-number-after-digit-swaps-by-parity': (...args: unknown[]) => {
+    const num = args[0] as number;
+    const digits = String(num).split('').map(Number);
+    const odds = digits.filter(d => d % 2 === 1).sort((a, b) => b - a);
+    const evens = digits.filter(d => d % 2 === 0).sort((a, b) => b - a);
+    let oi = 0, ei = 0;
+    const result = digits.map(d => (d % 2 === 1 ? odds[oi++] : evens[ei++]) as number);
+    return Number(result.join(''));
+  },
+
+  'maximum-count-of-positive-and-negative': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const neg = nums.filter(x => x < 0).length;
+    const pos = nums.filter(x => x > 0).length;
+    return Math.max(neg, pos);
+  },
+
+  'find-the-original-array-of-prefix-xor': (...args: unknown[]) => {
+    const pref = args[0] as number[];
+    return pref.map((v, i) => (i === 0 ? v : v ^ (pref[i - 1] as number)));
+  },
+
 };

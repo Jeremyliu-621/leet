@@ -11005,4 +11005,123 @@ def nearestExit(maze, entrance):
         last_seen[prefix] = i
     return best if best < len(nums) else -1
 `,
+
+  'count-zero-filled-subarrays': `
+def zeroFilledSubarray(nums):
+    ans = 0
+    run = 0
+    for x in nums:
+        if x == 0:
+            run += 1
+            ans += run
+        else:
+            run = 0
+    return ans
+`,
+
+  'check-whether-two-string-arrays-equal': `
+def arrayStringsAreEqual(word1, word2):
+    return ''.join(word1) == ''.join(word2)
+`,
+
+  'minimum-flips-to-make-a-or-b-equal-c': `
+def minFlips(a, b, c):
+    flips = 0
+    while a or b or c:
+        ca, cb, cc = a & 1, b & 1, c & 1
+        if cc == 1:
+            if ca == 0 and cb == 0:
+                flips += 1
+        else:
+            flips += ca + cb
+        a >>= 1
+        b >>= 1
+        c >>= 1
+    return flips
+`,
+
+  'make-array-zero-by-subtracting-equal-amounts': `
+def minimumOperations(nums):
+    return len(set(x for x in nums if x > 0))
+`,
+
+  'find-all-groups-of-farmland': `
+def findFarmland(land):
+    m, n = len(land), len(land[0])
+    result = []
+    for r in range(m):
+        for c in range(n):
+            if land[r][c] == 1:
+                r2, c2 = r, c
+                while r2 + 1 < m and land[r2 + 1][c] == 1:
+                    r2 += 1
+                while c2 + 1 < n and land[r][c2 + 1] == 1:
+                    c2 += 1
+                result.append([r, c, r2, c2])
+                for i in range(r, r2 + 1):
+                    for j in range(c, c2 + 1):
+                        land[i][j] = 0
+    return result
+`,
+
+  'merge-triplets-to-form-target-triplet': `
+def mergeTriplets(triplets, target):
+    t0, t1, t2 = target[0], target[1], target[2]
+    m0, m1, m2 = 0, 0, 0
+    for t in triplets:
+        if t[0] <= t0 and t[1] <= t1 and t[2] <= t2:
+            m0 = max(m0, t[0])
+            m1 = max(m1, t[1])
+            m2 = max(m2, t[2])
+    return m0 == t0 and m1 == t1 and m2 == t2
+`,
+
+  'replace-elements-with-greatest-on-right': `
+def replaceElements(arr):
+    max_right = -1
+    for i in range(len(arr) - 1, -1, -1):
+        arr[i], max_right = max_right, max(max_right, arr[i])
+    return arr
+`,
+
+  'destroy-asteroids': `
+def asteroidsDestroyed(mass, asteroids):
+    for a in sorted(asteroids):
+        if mass < a:
+            return False
+        mass += a
+    return True
+`,
+
+  'largest-number-after-digit-swaps-by-parity': `
+def largestInteger(num):
+    digits = [int(d) for d in str(num)]
+    odds = sorted([d for d in digits if d % 2 == 1], reverse=True)
+    evens = sorted([d for d in digits if d % 2 == 0], reverse=True)
+    oi = ei = 0
+    result = []
+    for d in digits:
+        if d % 2 == 1:
+            result.append(odds[oi])
+            oi += 1
+        else:
+            result.append(evens[ei])
+            ei += 1
+    return int(''.join(map(str, result)))
+`,
+
+  'maximum-count-of-positive-and-negative': `
+def maximumCount(nums):
+    neg = sum(1 for x in nums if x < 0)
+    pos = sum(1 for x in nums if x > 0)
+    return max(neg, pos)
+`,
+
+  'find-the-original-array-of-prefix-xor': `
+def findArray(pref):
+    result = [pref[0]]
+    for i in range(1, len(pref)):
+        result.append(pref[i] ^ pref[i - 1])
+    return result
+`,
 };

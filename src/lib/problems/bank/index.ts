@@ -925,6 +925,17 @@ import { problem as longestSubarrayOfOnesAfterDeleting } from './longest-subarra
 import { problem as minimumVerticesToReachAllNodes } from './minimum-vertices-to-reach-all-nodes';
 import { problem as countOddNumbersInIntervalRange } from './count-odd-numbers-in-interval-range';
 import { problem as makeSumDivisibleByP } from './make-sum-divisible-by-p';
+import { problem as countZeroFilledSubarrays } from './count-zero-filled-subarrays';
+import { problem as checkWhetherTwoStringArraysEqual } from './check-whether-two-string-arrays-equal';
+import { problem as minimumFlipsToMakeAOrBEqualC } from './minimum-flips-to-make-a-or-b-equal-c';
+import { problem as makeArrayZeroBySubtractingEqualAmounts } from './make-array-zero-by-subtracting-equal-amounts';
+import { problem as findAllGroupsOfFarmland } from './find-all-groups-of-farmland';
+import { problem as mergeTripletsToFormTargetTriplet } from './merge-triplets-to-form-target-triplet';
+import { problem as replaceElementsWithGreatestOnRight } from './replace-elements-with-greatest-on-right';
+import { problem as destroyAsteroids } from './destroy-asteroids';
+import { problem as largestNumberAfterDigitSwapsByParity } from './largest-number-after-digit-swaps-by-parity';
+import { problem as maximumCountOfPositiveAndNegative } from './maximum-count-of-positive-and-negative';
+import { problem as findTheOriginalArrayOfPrefixXor } from './find-the-original-array-of-prefix-xor';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1898,4 +1909,15 @@ export const problems: readonly Problem[] = [
   minimumVerticesToReachAllNodes,
   countOddNumbersInIntervalRange,
   makeSumDivisibleByP,
+  countZeroFilledSubarrays,
+  checkWhetherTwoStringArraysEqual,
+  minimumFlipsToMakeAOrBEqualC,
+  makeArrayZeroBySubtractingEqualAmounts,
+  findAllGroupsOfFarmland,
+  mergeTripletsToFormTargetTriplet,
+  replaceElementsWithGreatestOnRight,
+  destroyAsteroids,
+  largestNumberAfterDigitSwapsByParity,
+  maximumCountOfPositiveAndNegative,
+  findTheOriginalArrayOfPrefixXor,
 ];
