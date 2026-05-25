@@ -9,42 +9,45 @@ export const problem: Problem = {
 
 Your task is to find the smallest possible length of a (contiguous) subarray of \`nums\` that has the same degree as \`nums\`.`,
   constraints: [
-    '`nums.length` will be between 1 and 50,000.',
-    '`nums[i]` will be an integer between 0 and 49,999.',
+    '1 <= nums.length <= 50000',
+    '0 <= nums[i] <= 49999',
   ],
   examples: [
     {
       input: 'nums = [1,2,2,3,1]',
       output: '2',
-      explanation: 'The degree of the array is 2, achieved by elements 1 and 2. The shortest subarray with degree 2 is [2,2] (length 2), covering element 2 from index 1 to index 2.',
+      explanation:
+        'The degree is 2 (both 1 and 2 appear twice). The shortest subarray with degree 2 is [2,2], which has length 2.',
     },
     {
-      input: 'nums = [1,3,2,1,2,3,1,2]',
+      input: 'nums = [1,2,2,3,1,4,2]',
       output: '6',
-      explanation: 'The degree is 3 (element 1 and element 2 each appear 3 times). For element 1: indices 0–6, length 7. For element 2: indices 2–7, length 6. Answer is 6.',
+      explanation:
+        'The degree is 3 because 2 appears 3 times. The shortest subarray containing all three 2s spans indices 1–6, giving length 6.',
     },
   ],
   hints: [
-    'In one pass, record the count, first occurrence index, and last occurrence index for each element.',
-    'The length of the shortest subarray containing all occurrences of element `x` is `last[x] - first[x] + 1`.',
-    'Among all elements that achieve the maximum frequency, return the minimum of those lengths.',
+    'Level 1: Track three things for each unique value: its frequency, its first occurrence index, and its last occurrence index.',
+    'Level 2: Find the maximum frequency (the degree). Then, for every value that achieves that frequency, compute last[v] - first[v] + 1. Return the minimum of those lengths.',
+    'Level 3: const freq={},first={},last={};for(let i=0;i<nums.length;i++){const v=nums[i];freq[v]=(freq[v]||0)+1;if(first[v]===undefined)first[v]=i;last[v]=i;}const deg=Math.max(...Object.values(freq));let ans=nums.length;for(const v in freq){if(freq[v]===deg)ans=Math.min(ans,last[v]-first[v]+1);}return ans;',
   ],
   functionName: 'findShortestSubArray',
   params: ['nums'],
   starterCode: {
-    javascript: `function findShortestSubArray(nums) {
-
-}`,
-    python: `def findShortestSubArray(nums):
-    pass`,
+    javascript:
+      'function findShortestSubArray(nums) {\n  // your code here\n}\n',
+    python:
+      'def findShortestSubArray(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: [[1, 2, 2, 3, 1]], expected: 2 },
-    { args: [[1, 3, 2, 1, 2, 3, 1, 2]], expected: 6 },
+    { args: [[1, 2, 2, 3, 1, 4, 2]], expected: 6 },
   ],
   hiddenTests: [
     { args: [[1]], expected: 1 },
     { args: [[1, 2, 3]], expected: 1 },
-    { args: [[2, 1, 1, 2, 1, 3, 3, 3, 1, 3, 1, 3, 2]], expected: 7 },
+    { args: [[3, 3, 3, 1]], expected: 3 },
+    { args: [[2, 1, 1, 2, 1, 3, 3, 3]], expected: 3 },
+    { args: [[2, 2, 2, 2, 1]], expected: 4 },
   ],
 };

@@ -5,54 +5,57 @@ export const problem: Problem = {
   title: 'Increasing Decreasing String',
   difficulty: 'easy',
   tags: ['strings', 'hash-map'],
-  description: `You are given a string \`s\`. Reorder it using the following algorithm:
+  description: `You are given a string \`s\`. Reorder the string using the following algorithm:
 
-1. Pick the **smallest** character from \`s\` and append it to the result.
-2. Pick the **smallest** character from \`s\` that is larger than the last appended character, and append it.
-3. Repeat step 2 until no more characters can be picked; then go to step 4.
-4. Pick the **largest** character from \`s\` and append it.
-5. Pick the **largest** character from \`s\` that is smaller than the last appended character, and append it.
-6. Repeat step 5 until no more characters can be picked; then go back to step 1.
+1. Pick the **smallest** character from \`s\` and **append** it to the result.
+2. Pick the **smallest** character from \`s\` which is greater than the last appended character and append it.
+3. Repeat step 2 until you cannot pick more characters.
+4. Pick the **largest** character from \`s\` and **append** it.
+5. Pick the **largest** character from \`s\` which is smaller than the last appended character and append it.
+6. Repeat step 5 until you cannot pick more characters.
+7. Repeat the steps from step 1 to 6 until you pick all the characters from \`s\`.
 
-Repeat the entire process until all characters from \`s\` have been appended to the result.
+In each step, if the smallest or largest character appears more than once you can pick any occurrence and append it to the result.
 
-Return the resulting string.`,
+Return the result string after sorting \`s\` with this algorithm.`,
   constraints: [
-    '`1 <= s.length <= 500`',
-    '`s` consists of lowercase English letters.',
+    '1 <= s.length <= 500',
+    's consists of only lowercase English letters.',
   ],
   examples: [
     {
       input: 's = "aaaabbbbcccc"',
       output: '"abccbaabccba"',
       explanation:
-        'Pass 1 (ascending): pick a, b, c → "abc". Pass 2 (descending): pick c, b, a → "cba". Repeat for remaining characters: "abc" then "cba". Result: "abccbaabccba".',
+        'Counts: a=4, b=4, c=4. Ascending pass: a,b,c. Descending pass: c,b,a. Repeated twice → "abccbaabccba".',
     },
     {
       input: 's = "rat"',
       output: '"art"',
-      explanation: 'Only one ascending pass is needed: pick a, r, t → "art".',
+      explanation:
+        'Counts: r=1, a=1, t=1. One ascending pass picks a, r, t. No characters remain. Result = "art".',
     },
   ],
   hints: [
-    'Count character frequencies. Repeatedly sweep a→z (picking each available character once), then z→a, until all characters are used.',
+    'Level 1: Use a frequency array of size 26. In each round, sweep a–z picking available characters (ascending pass), then sweep z–a picking available characters (descending pass). Repeat until all characters are picked.',
+    'Level 2: Keep a count array cnt[26]. Each pass: forward loop i=0..25, if cnt[i]>0 append char and decrement. Then backward loop i=25..0, if cnt[i]>0 append char and decrement. Stop when total characters exhausted.',
+    "Level 3: const cnt=new Array(26).fill(0);for(const c of s)cnt[c.charCodeAt(0)-97]++;let res='';while(res.length<s.length){for(let i=0;i<26;i++)if(cnt[i]>0){res+=String.fromCharCode(97+i);cnt[i]--;}for(let i=25;i>=0;i--)if(cnt[i]>0){res+=String.fromCharCode(97+i);cnt[i]--;}}return res;",
   ],
   functionName: 'sortString',
   params: ['s'],
   starterCode: {
-    javascript: 'function sortString(s) {\n  \n}\n',
-    python: 'def sortString(s):\n    pass\n',
+    javascript: 'function sortString(s) {\n  // your code here\n}\n',
+    python: 'def sortString(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [
     { args: ['aaaabbbbcccc'], expected: 'abccbaabccba' },
     { args: ['rat'], expected: 'art' },
-    { args: ['abcabc'], expected: 'abccba' },
   ],
   hiddenTests: [
-    { args: ['abcd'], expected: 'abcd' },
-    { args: ['aabb'], expected: 'abba' },
-    { args: ['z'], expected: 'z' },
-    { args: ['ba'], expected: 'ab' },
-    { args: ['abcabc'], expected: 'abccba' },
+    { args: ['a'], expected: 'a' },
+    { args: ['aab'], expected: 'aba' },
+    { args: ['abc'], expected: 'abc' },
+    { args: ['aabbcc'], expected: 'abccba' },
+    { args: ['zyx'], expected: 'xyz' },
   ],
 };
