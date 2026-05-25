@@ -9859,4 +9859,42 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return n - Math.max(...dp);
   },
 
+  'minimum-bit-flips': (...args: unknown[]) => {
+    let x = ((args[0] as number) ^ (args[1] as number)) >>> 0, c = 0;
+    while (x) { c += x & 1; x >>>= 1; }
+    return c;
+  },
+
+  'smallest-even-multiple': (...args: unknown[]) => {
+    const n = args[0] as number;
+    return n % 2 === 0 ? n : 2 * n;
+  },
+
+  'special-array-greater-equal': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    for (let x = 0; x <= n; x++) {
+      if (nums.filter(v => v >= x).length === x) return x;
+    }
+    return -1;
+  },
+
+  'count-pairs-two-arrays': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const target = args[1] as number;
+    let l = 0, r = nums.length - 1, cnt = 0;
+    while (l < r) {
+      if (nums[l]! + nums[r]! < target) { cnt += r - l; l++; }
+      else r--;
+    }
+    return cnt;
+  },
+
+  'convert-time-hhmm': (...args: unknown[]) => {
+    const toMin = (s: string) => +s.slice(0, 2) * 60 + +s.slice(3);
+    let d = toMin(args[1] as string) - toMin(args[0] as string), ops = 0;
+    for (const step of [60, 15, 5, 1]) { ops += Math.floor(d / step); d %= step; }
+    return ops;
+  },
+
 };

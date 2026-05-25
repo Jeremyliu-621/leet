@@ -794,6 +794,11 @@ import { problem as finalValueOperations } from './final-value-operations';
 import { problem as twoCityScheduling } from './two-city-scheduling';
 import { problem as checkIfStraightLine } from './check-if-straight-line';
 import { problem as binaryGap } from './binary-gap';
+import { problem as minimumBitFlips } from './minimum-bit-flips';
+import { problem as smallestEvenMultiple } from './smallest-even-multiple';
+import { problem as specialArrayGreaterEqual } from './special-array-greater-equal';
+import { problem as countPairsTwoArrays } from './count-pairs-two-arrays';
+import { problem as convertTimeHhmm } from './convert-time-hhmm';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -1635,4 +1640,9 @@ export const problems: readonly Problem[] = [
   distributeCoinsBinaryTree,
   flipColumnsForMaximumEqualRows,
   deleteColumnsSortedIII,
+  minimumBitFlips,
+  smallestEvenMultiple,
+  specialArrayGreaterEqual,
+  countPairsTwoArrays,
+  convertTimeHhmm,
 ];

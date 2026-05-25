@@ -9464,4 +9464,48 @@ def minDeletionSize(strs):
                 dp[j] = max(dp[j], dp[i] + 1)
     return n - max(dp)
 `,
+
+  'minimum-bit-flips': `
+def minBitFlips(start, goal):
+    return bin(start ^ goal).count('1')
+`,
+
+  'smallest-even-multiple': `
+def smallestEvenMultiple(n):
+    return n if n % 2 == 0 else 2 * n
+`,
+
+  'special-array-greater-equal': `
+def specialArray(nums):
+    n = len(nums)
+    for x in range(n + 1):
+        if sum(1 for v in nums if v >= x) == x:
+            return x
+    return -1
+`,
+
+  'count-pairs-two-arrays': `
+def countPairs(nums, target):
+    nums = sorted(nums)
+    l, r, cnt = 0, len(nums) - 1, 0
+    while l < r:
+        if nums[l] + nums[r] < target:
+            cnt += r - l
+            l += 1
+        else:
+            r -= 1
+    return cnt
+`,
+
+  'convert-time-hhmm': `
+def convertTime(current, correct):
+    def to_min(s):
+        return int(s[:2]) * 60 + int(s[3:])
+    d = to_min(correct) - to_min(current)
+    ops = 0
+    for step in [60, 15, 5, 1]:
+        ops += d // step
+        d %= step
+    return ops
+`,
 };
