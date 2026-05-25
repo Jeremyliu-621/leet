@@ -14324,4 +14324,149 @@ def simulateLinkedList(ops, args):
         elif op == 'get': result.append(get(a[0]))
     return result
 `,
+  'maximum-product-subarray': `
+def maxProduct(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    max_p = min_p = res = nums[0]
+    for n in nums[1:]:
+        candidates = (n, max_p * n, min_p * n)
+        max_p = max(candidates)
+        min_p = min(candidates)
+        res = max(res, max_p)
+    return res
+`,
+
+  'delete-and-earn': `
+def deleteAndEarn(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    max_val = max(nums)
+    total = [0] * (max_val + 1)
+    for n in nums:
+        total[n] += n
+    prev2 = prev1 = 0
+    for i in range(max_val + 1):
+        cur = max(prev1, prev2 + total[i])
+        prev2 = prev1
+        prev1 = cur
+    return prev1
+`,
+
+  'minimum-time-collect-apples': `
+def minTime(n, edges, hasApple):
+    import sys
+    sys.setrecursionlimit(200000)
+    edges = [list(e.to_py()) if hasattr(e, 'to_py') else list(e) for e in (edges.to_py() if hasattr(edges, 'to_py') else edges)]
+    hasApple = list(hasApple.to_py()) if hasattr(hasApple, 'to_py') else list(hasApple)
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    def dfs(node, parent):
+        time = 0
+        for child in adj[node]:
+            if child == parent:
+                continue
+            ct = dfs(child, node)
+            if ct > 0 or hasApple[child]:
+                time += ct + 2
+        return time
+    return dfs(0, -1)
+`,
+
+  'xor-queries-of-subarray': `
+def xorQueries(arr, queries):
+    arr = list(arr.to_py()) if hasattr(arr, 'to_py') else list(arr)
+    queries = [list(q.to_py()) if hasattr(q, 'to_py') else list(q) for q in (queries.to_py() if hasattr(queries, 'to_py') else queries)]
+    prefix = [0]
+    for n in arr:
+        prefix.append(prefix[-1] ^ n)
+    return [prefix[r + 1] ^ prefix[l] for l, r in queries]
+`,
+
+  'sequential-digits': `
+def sequentialDigits(low, high):
+    result = []
+    for start in range(1, 10):
+        num = 0
+        for d in range(start, 10):
+            num = num * 10 + d
+            if low <= num <= high:
+                result.append(num)
+    return sorted(result)
+`,
+
+  'count-sub-islands': `
+def countSubIslands(grid1, grid2):
+    grid1 = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid1.to_py() if hasattr(grid1, 'to_py') else grid1)]
+    grid2 = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid2.to_py() if hasattr(grid2, 'to_py') else grid2)]
+    m, n = len(grid1), len(grid1[0])
+    count = 0
+    def dfs(i, j):
+        if i < 0 or i >= m or j < 0 or j >= n or grid2[i][j] != 1:
+            return True
+        grid2[i][j] = 0
+        ok = grid1[i][j] == 1
+        ok = dfs(i - 1, j) and ok
+        ok = dfs(i + 1, j) and ok
+        ok = dfs(i, j - 1) and ok
+        ok = dfs(i, j + 1) and ok
+        return ok
+    for i in range(m):
+        for j in range(n):
+            if grid2[i][j] == 1 and dfs(i, j):
+                count += 1
+    return count
+`,
+
+  'maximum-profit-assignment': `
+def maxProfitAssignment(difficulty, profit, worker):
+    difficulty = list(difficulty.to_py()) if hasattr(difficulty, 'to_py') else list(difficulty)
+    profit = list(profit.to_py()) if hasattr(profit, 'to_py') else list(profit)
+    worker = list(worker.to_py()) if hasattr(worker, 'to_py') else list(worker)
+    jobs = sorted(zip(difficulty, profit))
+    worker.sort()
+    total = best = k = 0
+    for w in worker:
+        while k < len(jobs) and jobs[k][0] <= w:
+            best = max(best, jobs[k][1])
+            k += 1
+        total += best
+    return total
+`,
+
+  'longest-palindromic-substring': `
+def longestPalindrome(s):
+    start, max_len = 0, 0
+    def expand(l, r):
+        nonlocal start, max_len
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            l -= 1
+            r += 1
+        if r - l - 1 > max_len:
+            max_len = r - l - 1
+            start = l + 1
+    for i in range(len(s)):
+        expand(i, i)
+        expand(i, i + 1)
+    return s[start:start + max_len]
+`,
+
+  'max-product-word-lengths': `
+def maxProductWordLengths(words):
+    words = list(words.to_py()) if hasattr(words, 'to_py') else list(words)
+    masks = []
+    for w in words:
+        mask = 0
+        for c in w:
+            mask |= (1 << (ord(c) - ord('a')))
+        masks.append(mask)
+    best = 0
+    for i in range(len(words) - 1):
+        for j in range(i + 1, len(words)):
+            if masks[i] & masks[j] == 0:
+                best = max(best, len(words[i]) * len(words[j]))
+    return best
+`,
+
+
 };

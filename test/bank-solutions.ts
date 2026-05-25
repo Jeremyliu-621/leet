@@ -14700,4 +14700,133 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     });
   },
 
+  'maximum-product-subarray': (nums: unknown) => {
+    const a = nums as number[];
+    let maxP = a[0]!, minP = a[0]!, res = a[0]!;
+    for (let i = 1; i < a.length; i++) {
+      const t = maxP;
+      maxP = Math.max(a[i]!, maxP * a[i]!, minP * a[i]!);
+      minP = Math.min(a[i]!, t * a[i]!, minP * a[i]!);
+      res = Math.max(res, maxP);
+    }
+    return res;
+  },
+
+  'delete-and-earn': (nums: unknown) => {
+    const a = nums as number[];
+    const maxVal = Math.max(...a);
+    const sum = new Array(maxVal + 1).fill(0);
+    for (const n of a) sum[n] += n;
+    let prev2 = 0, prev1 = 0;
+    for (let i = 0; i <= maxVal; i++) {
+      const cur = Math.max(prev1, prev2 + sum[i]);
+      prev2 = prev1;
+      prev1 = cur;
+    }
+    return prev1;
+  },
+
+  'minimum-time-collect-apples': (n: unknown, edges: unknown, hasApple: unknown) => {
+    const N = n as number;
+    const E = edges as number[][];
+    const H = hasApple as boolean[];
+    const adj: number[][] = Array.from({ length: N }, () => []);
+    for (const e of E) { adj[e[0]!]!.push(e[1]!); adj[e[1]!]!.push(e[0]!); }
+    const dfs = (node: number, parent: number): number => {
+      let time = 0;
+      for (const child of adj[node]!) {
+        if (child === parent) continue;
+        const ct = dfs(child, node);
+        if (ct > 0 || H[child]) time += ct + 2;
+      }
+      return time;
+    };
+    return dfs(0, -1);
+  },
+
+  'xor-queries-of-subarray': (arr: unknown, queries: unknown) => {
+    const a = arr as number[], q = queries as number[][];
+    const prefix = [0];
+    for (const n of a) prefix.push(prefix[prefix.length - 1]! ^ n);
+    return q.map(([l, r]) => prefix[r! + 1]! ^ prefix[l!]!);
+  },
+
+  'sequential-digits': (low: unknown, high: unknown) => {
+    const lo = low as number, hi = high as number;
+    const result: number[] = [];
+    for (let start = 1; start <= 9; start++) {
+      let num = 0;
+      for (let d = start; d <= 9; d++) {
+        num = num * 10 + d;
+        if (num >= lo && num <= hi) result.push(num);
+      }
+    }
+    return result.sort((a, b) => a - b);
+  },
+
+  'count-sub-islands': (grid1: unknown, grid2: unknown) => {
+    const g1 = (grid1 as number[][]).map(r => [...r]);
+    const g2 = (grid2 as number[][]).map(r => [...r]);
+    const m = g1.length, n = g1[0]!.length;
+    let count = 0;
+    const dfs = (i: number, j: number): boolean => {
+      if (i < 0 || i >= m || j < 0 || j >= n || g2[i]![j] !== 1) return true;
+      g2[i]![j] = 0;
+      let ok = g1[i]![j] === 1;
+      ok = dfs(i - 1, j) && ok;
+      ok = dfs(i + 1, j) && ok;
+      ok = dfs(i, j - 1) && ok;
+      ok = dfs(i, j + 1) && ok;
+      return ok;
+    };
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        if (g2[i]![j] === 1 && dfs(i, j)) count++;
+      }
+    }
+    return count;
+  },
+
+  'maximum-profit-assignment': (difficulty: unknown, profit: unknown, worker: unknown) => {
+    const d = difficulty as number[], p = profit as number[], w = [...(worker as number[])].sort((a, b) => a - b);
+    const jobs = d.map((di, i) => [di, p[i]!] as [number, number]).sort((a, b) => a[0] - b[0]);
+    let total = 0, best = 0, k = 0;
+    for (const wi of w) {
+      while (k < jobs.length && jobs[k]![0] <= wi) { best = Math.max(best, jobs[k]![1]); k++; }
+      total += best;
+    }
+    return total;
+  },
+
+  'longest-palindromic-substring': (s: unknown) => {
+    const str = s as string;
+    let start = 0, maxLen = 0;
+    const expand = (l: number, r: number) => {
+      while (l >= 0 && r < str.length && str[l] === str[r]) { l--; r++; }
+      if (r - l - 1 > maxLen) { maxLen = r - l - 1; start = l + 1; }
+    };
+    for (let i = 0; i < str.length; i++) {
+      expand(i, i);
+      expand(i, i + 1);
+    }
+    return str.slice(start, start + maxLen);
+  },
+
+  'max-product-word-lengths': (words: unknown) => {
+    const ws = words as string[];
+    const masks = ws.map(w => {
+      let mask = 0;
+      for (const c of w) mask |= (1 << (c.charCodeAt(0) - 97));
+      return mask;
+    });
+    let best = 0;
+    for (let i = 0; i < ws.length - 1; i++) {
+      for (let j = i + 1; j < ws.length; j++) {
+        if ((masks[i]! & masks[j]!) === 0) best = Math.max(best, ws[i]!.length * ws[j]!.length);
+      }
+    }
+    return best;
+  },
+
+
 };

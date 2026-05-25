@@ -1155,6 +1155,15 @@ import { problem as minimumNumberOfTapsToWaterAGarden } from './minimum-number-o
 import { problem as onlineElection } from './online-election';
 import { problem as countOfRangeSum } from './count-of-range-sum';
 import { problem as designLinkedList } from './design-linked-list';
+import { problem as maximumProductSubarray } from './maximum-product-subarray';
+import { problem as deleteAndEarn } from './delete-and-earn';
+import { problem as minimumTimeCollectApples } from './minimum-time-collect-apples';
+import { problem as xorQueriesOfSubarray } from './xor-queries-of-subarray';
+import { problem as sequentialDigits } from './sequential-digits';
+import { problem as countSubIslands } from './count-sub-islands';
+import { problem as maximumProfitAssignment } from './maximum-profit-assignment';
+import { problem as longestPalindromicSubstring } from './longest-palindromic-substring';
+import { problem as maxProductWordLengths } from './max-product-word-lengths';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2358,4 +2367,13 @@ export const problems: readonly Problem[] = [
   onlineElection,
   countOfRangeSum,
   designLinkedList,
+  maximumProductSubarray,
+  deleteAndEarn,
+  minimumTimeCollectApples,
+  xorQueriesOfSubarray,
+  sequentialDigits,
+  countSubIslands,
+  maximumProfitAssignment,
+  longestPalindromicSubstring,
+  maxProductWordLengths,
 ];
