@@ -19779,4 +19779,64 @@ def distanceK(root, target, k):
   'reverse-words-in-string': `def reverseWords(s):
     return ' '.join(reversed(str(s).split()))
 `,
+
+  'day-of-the-week': `def dayOfTheWeek(day, month, year):
+    from datetime import date
+    return date(int(year), int(month), int(day)).strftime('%A')
+`,
+
+  'guess-number-higher-or-lower': `def guessNumber(n, pick):
+    n = int(n)
+    pick = int(pick)
+    def guess(num):
+        if num > pick: return -1
+        if num < pick: return 1
+        return 0
+    lo, hi = 1, n
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        r = guess(mid)
+        if r == 0:
+            return mid
+        elif r == -1:
+            hi = mid - 1
+        else:
+            lo = mid + 1
+    return -1
+`,
+
+  'largest-triangle-area': `def largestTriangleArea(points):
+    pts = [[int(c) for c in list(row.to_py() if hasattr(row, 'to_py') else row)] for row in list(points.to_py() if hasattr(points, 'to_py') else points)]
+    best = 0
+    n = len(pts)
+    for i in range(n):
+        for j in range(i+1, n):
+            for k in range(j+1, n):
+                x1,y1 = pts[i]
+                x2,y2 = pts[j]
+                x3,y3 = pts[k]
+                area = 0.5 * abs(x1*(y2-y3) + x2*(y3-y1) + x3*(y1-y2))
+                if area > best:
+                    best = area
+    return best
+`,
+
+  'minimum-value-to-get-positive-step-sum': `def minStartValue(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    nums = [int(x) for x in nums]
+    min_sum = 0
+    cur = 0
+    for n in nums:
+        cur += n
+        if cur < min_sum:
+            min_sum = cur
+    return max(1, 1 - min_sum)
+`,
+
+  'number-of-rectangles-that-can-form-largest-square': `def countGoodRectangles(rectangles):
+    rects = [[int(c) for c in list(row.to_py() if hasattr(row, 'to_py') else row)] for row in list(rectangles.to_py() if hasattr(rectangles, 'to_py') else rectangles)]
+    mins = [min(r[0], r[1]) for r in rects]
+    max_len = max(mins)
+    return sum(1 for m in mins if m == max_len)
+`,
 };

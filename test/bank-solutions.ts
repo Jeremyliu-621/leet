@@ -19726,4 +19726,58 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return (s as string).trim().split(/\s+/).reverse().join(' ');
   },
 
+  'day-of-the-week': (...args: unknown[]) => {
+    const day = args[0] as number, month = args[1] as number, year = args[2] as number;
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    return days[new Date(year, month - 1, day).getDay()];
+  },
+
+  'guess-number-higher-or-lower': (...args: unknown[]) => {
+    const n = args[0] as number, pick = args[1] as number;
+    const guess = (num: number) => num > pick ? -1 : num < pick ? 1 : 0;
+    let lo = 1, hi = n;
+    while (lo <= hi) {
+      const mid = lo + Math.floor((hi - lo) / 2);
+      const r = guess(mid);
+      if (r === 0) return mid;
+      if (r === -1) hi = mid - 1;
+      else lo = mid + 1;
+    }
+    return -1;
+  },
+
+  'largest-triangle-area': (...args: unknown[]) => {
+    const points = args[0] as number[][];
+    let max = 0;
+    for (let i = 0; i < points.length; i++) {
+      for (let j = i + 1; j < points.length; j++) {
+        for (let k = j + 1; k < points.length; k++) {
+          const [x1, y1] = points[i]!;
+          const [x2, y2] = points[j]!;
+          const [x3, y3] = points[k]!;
+          const area = 0.5 * Math.abs(x1! * (y2! - y3!) + x2! * (y3! - y1!) + x3! * (y1! - y2!));
+          if (area > max) max = area;
+        }
+      }
+    }
+    return max;
+  },
+
+  'minimum-value-to-get-positive-step-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let minSum = 0, cur = 0;
+    for (const n of nums) {
+      cur += n;
+      if (cur < minSum) minSum = cur;
+    }
+    return Math.max(1, 1 - minSum);
+  },
+
+  'number-of-rectangles-that-can-form-largest-square': (...args: unknown[]) => {
+    const rects = args[0] as number[][];
+    const mins = rects.map(r => Math.min(r[0]!, r[1]!));
+    const maxLen = Math.max(...mins);
+    return mins.filter(m => m === maxLen).length;
+  },
+
 };

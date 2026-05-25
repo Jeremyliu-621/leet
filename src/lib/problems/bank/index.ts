@@ -1476,6 +1476,11 @@ import { problem as climbingStairsMemo } from './climbing-stairs-memo';
 import { problem as countVowelsInString } from './count-vowels-in-string';
 import { problem as percentageOfLetter } from './percentage-of-letter';
 import { problem as reverseWordsInString } from './reverse-words-in-string';
+import { problem as dayOfTheWeek } from './day-of-the-week';
+import { problem as guessNumberHigherOrLower } from './guess-number-higher-or-lower';
+import { problem as largestTriangleArea } from './largest-triangle-area';
+import { problem as minimumValueToGetPositiveStepSum } from './minimum-value-to-get-positive-step-sum';
+import { problem as numberOfRectanglesThatCanFormLargestSquare } from './number-of-rectangles-that-can-form-largest-square';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3000,4 +3005,9 @@ export const problems: readonly Problem[] = [
   countVowelsInString,
   percentageOfLetter,
   reverseWordsInString,
+  dayOfTheWeek,
+  guessNumberHigherOrLower,
+  largestTriangleArea,
+  minimumValueToGetPositiveStepSum,
+  numberOfRectanglesThatCanFormLargestSquare,
 ];
