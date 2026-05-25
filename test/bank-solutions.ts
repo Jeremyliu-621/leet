@@ -18155,4 +18155,73 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return solve(s as string);
   },
 
+  'minimum-add-to-make-parentheses-valid': (s: unknown) => {
+    const str = s as string;
+    let open = 0, close = 0;
+    for (const c of str) {
+      if (c === '(') open++;
+      else if (open > 0) open--;
+      else close++;
+    }
+    return open + close;
+  },
+
+  'predict-winner': (nums: unknown) => {
+    const arr = nums as number[];
+    const n = arr.length;
+    const dp = Array.from({ length: n }, () => [...arr]);
+    for (let len = 2; len <= n; len++) {
+      for (let i = 0; i <= n - len; i++) {
+        const j = i + len - 1;
+        dp[i]![j] = Math.max(arr[i]! - dp[i + 1]![j]!, arr[j]! - dp[i]![j - 1]!);
+      }
+    }
+    return dp[0]![n - 1]! >= 0;
+  },
+
+  'can-i-win': (maxChoosableInteger: unknown, desiredTotal: unknown) => {
+    const max = maxChoosableInteger as number;
+    const target = desiredTotal as number;
+    if (target <= 0) return true;
+    const sum = max * (max + 1) / 2;
+    if (sum < target) return false;
+    const memo = new Map<number, boolean>();
+    const canWin = (mask: number, total: number): boolean => {
+      if (memo.has(mask)) return memo.get(mask)!;
+      for (let i = 1; i <= max; i++) {
+        if ((mask >> i) & 1) continue;
+        if (total + i >= target || !canWin(mask | (1 << i), total + i)) {
+          memo.set(mask, true);
+          return true;
+        }
+      }
+      memo.set(mask, false);
+      return false;
+    };
+    return canWin(0, 0);
+  },
+
+  'optimal-division': (nums: unknown) => {
+    const arr = nums as number[];
+    if (arr.length === 1) return `${arr[0]}`;
+    if (arr.length === 2) return `${arr[0]}/${arr[1]}`;
+    return `${arr[0]}/(${arr.slice(1).join('/')})`;
+  },
+
+  'minimum-insertions-to-balance-parentheses': (s: unknown) => {
+    const str = s as string;
+    let open = 0, res = 0;
+    for (let i = 0; i < str.length; i++) {
+      if (str[i] === '(') {
+        open++;
+      } else {
+        if (i + 1 < str.length && str[i + 1] === ')') i++;
+        else res++;
+        if (open > 0) open--;
+        else res++;
+      }
+    }
+    return res + 2 * open;
+  },
+
 };

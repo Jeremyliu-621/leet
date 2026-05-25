@@ -18009,4 +18009,83 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
         return t
     return solve(s)
 `,
+
+  'minimum-add-to-make-parentheses-valid': `def minAddToMakeValid(s):
+    open_count = 0
+    close_count = 0
+    for c in s:
+        if c == '(':
+            open_count += 1
+        elif open_count > 0:
+            open_count -= 1
+        else:
+            close_count += 1
+    return open_count + close_count
+`,
+
+  'predict-winner': `def predictTheWinner(nums):
+    raw = nums.to_py() if hasattr(nums, 'to_py') else list(nums)
+    arr = [int(x) for x in raw]
+    n = len(arr)
+    dp = [arr[:] for _ in range(n)]
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            dp[i][j] = max(arr[i] - dp[i+1][j], arr[j] - dp[i][j-1])
+    return dp[0][n-1] >= 0
+`,
+
+  'can-i-win': `def canIWin(maxChoosableInteger, desiredTotal):
+    target = int(desiredTotal)
+    max_i = int(maxChoosableInteger)
+    if target <= 0:
+        return True
+    total_sum = max_i * (max_i + 1) // 2
+    if total_sum < target:
+        return False
+    memo = {}
+    def can_win(mask, total):
+        if mask in memo:
+            return memo[mask]
+        for i in range(1, max_i + 1):
+            if (mask >> i) & 1:
+                continue
+            if total + i >= target or not can_win(mask | (1 << i), total + i):
+                memo[mask] = True
+                return True
+        memo[mask] = False
+        return False
+    return can_win(0, 0)
+`,
+
+  'optimal-division': `def optimalDivision(nums):
+    raw = nums.to_py() if hasattr(nums, 'to_py') else list(nums)
+    arr = [int(x) for x in raw]
+    if len(arr) == 1:
+        return str(arr[0])
+    if len(arr) == 2:
+        return f"{arr[0]}/{arr[1]}"
+    inner = '/'.join(str(x) for x in arr[1:])
+    return f"{arr[0]}/({inner})"
+`,
+
+  'minimum-insertions-to-balance-parentheses': `def minInsertions(s):
+    open_count = 0
+    res = 0
+    i = 0
+    while i < len(s):
+        if s[i] == '(':
+            open_count += 1
+        else:
+            if i + 1 < len(s) and s[i+1] == ')':
+                i += 1
+            else:
+                res += 1
+            if open_count > 0:
+                open_count -= 1
+            else:
+                res += 1
+        i += 1
+    return res + 2 * open_count
+`,
 };

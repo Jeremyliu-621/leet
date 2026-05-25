@@ -1358,6 +1358,11 @@ import { problem as shortestSubarrayToBeRemovedToMakeArraySorted } from './short
 import { problem as minimumHealthToBeatTheGame } from './minimum-health-to-beat-the-game';
 import { problem as checkIfStringContainsAllBinaryCodesOfSizeK } from './check-if-string-contains-all-binary-codes-of-size-k';
 import { problem as longestNiceSubstring } from './longest-nice-substring';
+import { problem as minimumAddToMakeParenthesesValid } from './minimum-add-to-make-parentheses-valid';
+import { problem as predictWinner } from './predict-winner';
+import { problem as canIWin } from './can-i-win';
+import { problem as optimalDivision } from './optimal-division';
+import { problem as minimumInsertionsToBalanceParentheses } from './minimum-insertions-to-balance-parentheses';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2764,4 +2769,9 @@ export const problems: readonly Problem[] = [
   minimumHealthToBeatTheGame,
   checkIfStringContainsAllBinaryCodesOfSizeK,
   longestNiceSubstring,
+  minimumAddToMakeParenthesesValid,
+  predictWinner,
+  canIWin,
+  optimalDivision,
+  minimumInsertionsToBalanceParentheses,
 ];
