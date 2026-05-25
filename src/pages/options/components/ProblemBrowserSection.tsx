@@ -4,7 +4,7 @@
  * Self-contained: loads its own `solvedProblems` from storage.
  */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { SectionCard } from './SectionCard';
 import { getAllProblems } from '../../../lib/problems';
 import type { Difficulty, ProblemTag, SolvedProblemRecord } from '../../../lib/types';
@@ -21,11 +21,22 @@ const DIFF_COLORS: Record<Difficulty, string> = {
   hard: 'text-faint',
 };
 
+/** Opens the challenge page for a specific problem in a new tab. */
+function openProblemInChallenge(problemId: string): void {
+  try {
+    const base = chrome.runtime.getURL('src/pages/challenge/index.html');
+    void chrome.tabs.create({ url: `${base}?problem=${encodeURIComponent(problemId)}` });
+  } catch {
+    // Not in extension context — silently ignore (e.g. preview mode).
+  }
+}
+
 export function ProblemBrowserSection() {
   const [solvedIds, setSolvedIds] = useState<ReadonlySet<string>>(new Set());
   const [diffFilter, setDiffFilter] = useState<Difficulty | 'all'>('all');
   const [tagFilter, setTagFilter] = useState<ProblemTag | 'all'>('all');
   const [search, setSearch] = useState('');
+  const [unsolvedOnly, setUnsolvedOnly] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
@@ -45,7 +56,7 @@ export function ProblemBrowserSection() {
   // Reset pagination when filters or search change.
   useEffect(() => {
     setVisibleCount(PAGE_SIZE);
-  }, [diffFilter, tagFilter, search]);
+  }, [diffFilter, tagFilter, search, unsolvedOnly]);
 
   const query = search.trim().toLowerCase();
 
@@ -53,6 +64,7 @@ export function ProblemBrowserSection() {
     if (diffFilter !== 'all' && p.difficulty !== diffFilter) return false;
     if (tagFilter !== 'all' && !p.tags.includes(tagFilter)) return false;
     if (query && !p.title.toLowerCase().includes(query)) return false;
+    if (unsolvedOnly && solvedIds.has(p.id)) return false;
     return true;
   });
 
@@ -73,6 +85,10 @@ export function ProblemBrowserSection() {
     ).length,
     hard: ALL_PROBLEMS.filter((p) => p.difficulty === 'hard' && solvedIds.has(p.id)).length,
   };
+
+  const handlePractice = useCallback((problemId: string) => {
+    openProblemInChallenge(problemId);
+  }, []);
 
   return (
     <SectionCard
@@ -140,6 +156,21 @@ export function ProblemBrowserSection() {
                 </button>
               );
             })}
+            {/* Unsolved-only toggle */}
+            <button
+              type="button"
+              onClick={() => setUnsolvedOnly((v) => !v)}
+              aria-pressed={unsolvedOnly}
+              className={[
+                'ml-auto rounded-sm border px-2.5 py-1 font-mono text-[10px] transition-colors',
+                'focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent',
+                unsolvedOnly
+                  ? 'border-accent bg-accent text-on-accent'
+                  : 'border-border bg-surface-2 text-muted hover:border-border-strong hover:text-text',
+              ].join(' ')}
+            >
+              unsolved only
+            </button>
           </div>
 
           {/* Tag filter tabs */}
@@ -181,7 +212,7 @@ export function ProblemBrowserSection() {
                   return (
                     <li
                       key={p.id}
-                      className={`flex items-center gap-3 rounded-sm px-2 py-1.5 ${
+                      className={`group flex items-center gap-3 rounded-sm px-2 py-1.5 ${
                         solved ? 'bg-surface' : ''
                       }`}
                     >
@@ -204,6 +235,15 @@ export function ProblemBrowserSection() {
                       >
                         {p.difficulty}
                       </span>
+                      {/* Practice button — appears on hover */}
+                      <button
+                        type="button"
+                        onClick={() => handlePractice(p.id)}
+                        aria-label={`Practice ${p.title}`}
+                        className="shrink-0 rounded-sm border border-border bg-surface-2 px-1.5 py-0.5 font-mono text-[9px] text-faint opacity-0 transition-opacity group-hover:opacity-100 hover:border-border-strong hover:text-muted focus:opacity-100 focus:outline focus:outline-2 focus:outline-offset-1 focus:outline-accent"
+                      >
+                        →
+                      </button>
                     </li>
                   );
                 })}
