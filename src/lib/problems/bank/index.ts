@@ -1345,6 +1345,10 @@ import { problem as arrayOfDoubledPairs } from './array-of-doubled-pairs';
 import { problem as countVowelPermutation } from './count-vowel-permutation';
 import { problem as longestIdealSubsequence } from './longest-ideal-subsequence';
 import { problem as minimumStringLengthAfterRemovingSubstrings } from './minimum-string-length-after-removing-substrings';
+import { problem as totalHammingDistance } from './total-hamming-distance';
+import { problem as maximumNumberOfOccurrencesOfASubstring } from './maximum-number-of-occurrences-of-a-substring';
+import { problem as longestHappyPrefix } from './longest-happy-prefix';
+import { problem as reducingDishes } from './reducing-dishes';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2738,4 +2742,8 @@ export const problems: readonly Problem[] = [
   countVowelPermutation,
   longestIdealSubsequence,
   minimumStringLengthAfterRemovingSubstrings,
+  totalHammingDistance,
+  maximumNumberOfOccurrencesOfASubstring,
+  longestHappyPrefix,
+  reducingDishes,
 ];

@@ -17665,29 +17665,6 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
     return __to_array__(root)
 `,
 
-  'find-closest-node-to-given-two-nodes': `def closestMeetingNode(edges, node1, node2):
-    raw = edges.to_py() if hasattr(edges, 'to_py') else list(edges)
-    e = [int(x) for x in raw]
-    n = len(e)
-    def get_dist(start):
-        d = [-1] * n
-        cur, dist = start, 0
-        while cur != -1 and d[cur] == -1:
-            d[cur] = dist
-            dist += 1
-            cur = e[cur]
-        return d
-    d1, d2 = get_dist(int(node1)), get_dist(int(node2))
-    ans, min_dist = -1, float('inf')
-    for i in range(n):
-        if d1[i] != -1 and d2[i] != -1:
-            md = max(d1[i], d2[i])
-            if md < min_dist:
-                min_dist = md
-                ans = i
-    return ans
-`,
-
   'number-of-flowers-in-full-bloom': `def fullBloomFlowers(flowers, people):
     import bisect
     raw_fl = flowers.to_py() if hasattr(flowers, 'to_py') else list(flowers)
@@ -17841,5 +17818,81 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
             stack.append(c)
     return len(stack)
 
+`,
+
+  'total-hamming-distance': `def totalHammingDistance(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    total = 0
+    n = len(nums)
+    for i in range(32):
+        ones = sum((x >> i) & 1 for x in nums)
+        total += ones * (n - ones)
+    return total
+`,
+
+  'maximum-number-of-occurrences-of-a-substring': `def maxFreq(s, maxLetters, minSize, maxSize):
+    s = str(s)
+    maxLetters, minSize = int(maxLetters), int(minSize)
+    from collections import defaultdict
+    count = defaultdict(int)
+    res = 0
+    for i in range(len(s) - minSize + 1):
+        sub = s[i:i+minSize]
+        if len(set(sub)) <= maxLetters:
+            count[sub] += 1
+            res = max(res, count[sub])
+    return res
+`,
+
+  'longest-happy-prefix': `def longestPrefix(s):
+    n = len(s)
+    lps = [0] * n
+    length = 0
+    i = 1
+    while i < n:
+        if s[i] == s[length]:
+            length += 1
+            lps[i] = length
+            i += 1
+        elif length:
+            length = lps[length - 1]
+        else:
+            lps[i] = 0
+            i += 1
+    return s[:lps[n-1]]
+`,
+
+  'reducing-dishes': `def maxSatisfaction(satisfaction):
+    satisfaction = sorted(satisfaction.to_py() if hasattr(satisfaction, 'to_py') else satisfaction, reverse=True)
+    total = curr = 0
+    for s in satisfaction:
+        curr += s
+        if curr <= 0:
+            break
+        total += curr
+    return total
+`,
+
+  'find-closest-node-to-given-two-nodes': `def closestMeetingNode(edges, node1, node2):
+    edges = list(edges.to_py() if hasattr(edges, 'to_py') else edges)
+    node1, node2 = int(node1), int(node2)
+    n = len(edges)
+    def get_dist(start):
+        d = [-1] * n
+        cur, step = start, 0
+        while cur != -1 and d[cur] == -1:
+            d[cur] = step
+            step += 1
+            cur = edges[cur]
+        return d
+    d1, d2 = get_dist(node1), get_dist(node2)
+    res, best = -1, float('inf')
+    for i in range(n):
+        if d1[i] != -1 and d2[i] != -1:
+            mx = max(d1[i], d2[i])
+            if mx < best:
+                best = mx
+                res = i
+    return res
 `,
 };

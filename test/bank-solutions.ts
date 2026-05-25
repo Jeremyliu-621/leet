@@ -17803,26 +17803,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return res;
   },
 
-  'find-closest-node-to-given-two-nodes': (edges: unknown, node1: unknown, node2: unknown) => {
-    const e = edges as number[], n1 = node1 as number, n2 = node2 as number;
-    const n = e.length;
-    const getDist = (start: number) => {
-      const d = new Array<number>(n).fill(-1);
-      let cur = start, dist = 0;
-      while (cur !== -1 && d[cur] === -1) { d[cur] = dist++; cur = e[cur]!; }
-      return d;
-    };
-    const d1 = getDist(n1), d2 = getDist(n2);
-    let ans = -1, minDist = Infinity;
-    for (let i = 0; i < n; i++) {
-      if (d1[i] !== -1 && d2[i] !== -1) {
-        const md = Math.max(d1[i]!, d2[i]!);
-        if (md < minDist) { minDist = md; ans = i; }
-      }
-    }
-    return ans;
-  },
-
   'number-of-flowers-in-full-bloom': (flowers: unknown, people: unknown) => {
     const fl = flowers as number[][], pp = people as number[];
     const starts = fl.map(f => f[0]!).sort((a, b) => a - b);
@@ -17987,6 +17967,77 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return stack.length;
 
+  },
+
+  'total-hamming-distance': (nums: unknown) => {
+    const a = nums as number[];
+    let total = 0;
+    const n = a.length;
+    for (let i = 0; i < 32; i++) {
+      let ones = 0;
+      for (const x of a) ones += (x >> i) & 1;
+      total += ones * (n - ones);
+    }
+    return total;
+  },
+
+  'maximum-number-of-occurrences-of-a-substring': (s: unknown, maxLetters: unknown, minSize: unknown, _maxSize: unknown) => {
+    const str = s as string, ml = maxLetters as number, ms = minSize as number;
+    const count = new Map<string, number>();
+    let res = 0;
+    for (let i = 0; i <= str.length - ms; i++) {
+      const sub = str.substring(i, i + ms);
+      if (new Set(sub).size <= ml) {
+        const c = (count.get(sub) ?? 0) + 1;
+        count.set(sub, c);
+        res = Math.max(res, c);
+      }
+    }
+    return res;
+  },
+
+  'longest-happy-prefix': (s: unknown) => {
+    const str = s as string;
+    const n = str.length;
+    const lps = Array(n).fill(0);
+    let len = 0, i = 1;
+    while (i < n) {
+      if (str[i] === str[len]) { lps[i++] = ++len; }
+      else if (len) { len = lps[len - 1]!; }
+      else { lps[i++] = 0; }
+    }
+    return str.slice(0, lps[n - 1]!);
+  },
+
+  'reducing-dishes': (satisfaction: unknown) => {
+    const arr = [...(satisfaction as number[])].sort((a, b) => b - a);
+    let total = 0, curr = 0;
+    for (const s of arr) {
+      curr += s;
+      if (curr <= 0) break;
+      total += curr;
+    }
+    return total;
+  },
+
+  'find-closest-node-to-given-two-nodes': (edges: unknown, node1: unknown, node2: unknown) => {
+    const e = edges as number[], n1 = node1 as number, n2 = node2 as number;
+    const n = e.length;
+    const getDist = (start: number) => {
+      const d = Array(n).fill(-1);
+      let cur = start, step = 0;
+      while (cur !== -1 && d[cur] === -1) { d[cur] = step++; cur = e[cur]!; }
+      return d;
+    };
+    const d1 = getDist(n1), d2 = getDist(n2);
+    let res = -1, best = Infinity;
+    for (let i = 0; i < n; i++) {
+      if (d1[i] !== -1 && d2[i] !== -1) {
+        const mx = Math.max(d1[i]!, d2[i]!);
+        if (mx < best) { best = mx; res = i; }
+      }
+    }
+    return res;
   },
 
 };
