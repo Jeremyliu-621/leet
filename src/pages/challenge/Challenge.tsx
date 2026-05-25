@@ -391,7 +391,30 @@ export function Challenge() {
 
       if (cancelled) return;
 
-      const problem = pickChallengeProblem(prefs);
+      // Exclude the last 10 solved problems so the same problem is not
+      // served twice in close succession. The progressive-relaxation logic
+      // in pickChallengeProblem handles the case where the exclusion list
+      // drains the eligible pool.
+      let recentIds: readonly string[] = [];
+      try {
+        const solved = await getValue('solvedProblems');
+        const seenSet = new Set<string>();
+        const recent: string[] = [];
+        for (const record of [...solved].reverse()) {
+          if (!seenSet.has(record.problemId)) {
+            seenSet.add(record.problemId);
+            recent.push(record.problemId);
+            if (recent.length >= 10) break;
+          }
+        }
+        recentIds = recent;
+      } catch {
+        /* storage unavailable — proceed without exclusions */
+      }
+
+      if (cancelled) return;
+
+      const problem = pickChallengeProblem(prefs, { excludeIds: recentIds });
       if (!problem) {
         setPageState({ status: 'no-problem' });
         return;
