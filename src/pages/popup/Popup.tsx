@@ -22,11 +22,20 @@ import { getAllProblems } from '../../lib/problems';
 import { computeSolvedStats } from './popup-helpers';
 import type { SolvedStats } from './popup-helpers';
 
-const BANK_SIZE = getAllProblems().length;
+const ALL_PROBLEMS = getAllProblems();
+const BANK_SIZE = ALL_PROBLEMS.length;
 
 const PROBLEM_TITLE_BY_ID: ReadonlyMap<string, { title: string; difficulty: Difficulty }> = new Map(
-  getAllProblems().map((p) => [p.id, { title: p.title, difficulty: p.difficulty }]),
+  ALL_PROBLEMS.map((p) => [p.id, { title: p.title, difficulty: p.difficulty }]),
 );
+
+const BANK_SIZE_BY_TAG: Readonly<Record<ProblemTag, number>> = (() => {
+  const counts: Partial<Record<ProblemTag, number>> = {};
+  for (const p of ALL_PROBLEMS) {
+    for (const t of p.tags) counts[t] = (counts[t] ?? 0) + 1;
+  }
+  return counts as Record<ProblemTag, number>;
+})();
 
 const LANGUAGE_OPTIONS: ReadonlyArray<{ value: SupportedLanguage; label: string }> = [
   { value: 'javascript', label: 'JS' },
@@ -607,19 +616,33 @@ function SolveBreakdown({ stats }: { stats: SolvedStats }) {
         })}
       </div>
 
-      {/* Top tags */}
+      {/* Top tags with solved/total */}
       {activeTags.length > 0 && (
-        <div className="mt-3 flex flex-wrap gap-1">
-          {activeTags.map(({ tag, count }) => (
-            <span
-              key={tag}
-              className="inline-flex items-center gap-1 rounded-sm border border-border bg-surface px-1.5 py-0.5"
-              aria-label={`${tag}: ${count} solved`}
-            >
-              <span className="font-mono text-[9px] text-muted">{tag}</span>
-              <span className="font-mono text-[9px] text-faint tabular-nums">{count}</span>
-            </span>
-          ))}
+        <div className="mt-3 space-y-1">
+          {activeTags.map(({ tag, count }) => {
+            const total = BANK_SIZE_BY_TAG[tag] ?? 1;
+            const widthPct = Math.max(2, Math.round((count / total) * 100));
+            return (
+              <div
+                key={tag}
+                className="flex items-center gap-2"
+                aria-label={`${tag}: ${count} of ${total} solved`}
+              >
+                <span className="w-20 shrink-0 font-mono text-[9px] text-faint truncate">{tag}</span>
+                <div className="flex flex-1 items-center gap-1.5">
+                  <div className="h-1 flex-1 rounded-full bg-surface">
+                    <div
+                      className="h-1 rounded-full bg-border-strong transition-all"
+                      style={{ width: `${widthPct}%` }}
+                    />
+                  </div>
+                  <span className="w-12 text-right font-mono text-[9px] text-faint tabular-nums">
+                    {count}/{total}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
         </div>
       )}
     </section>
