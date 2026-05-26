@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1897** problems; 5979 tests green. Batch 79 complete (15 problems total). Streak reminder in popup.
+**Current focus:** Bank at **1902** problems; 5994 tests green. Batch 81 complete (2 hard DP problems).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 80); further UX polish; marketing site stat update.
+**Next up:** Continued bank growth (batch 82); further UX polish; marketing site stat update.
+
+### feat(bank): add batch 81 — 2 new problems (shortest-path, strings, dp) (2026-05-26)
+Added 2 hard problems: `minimum-cost-to-reach-destination-in-time` (hard/shortest-path+dp, DP on (time,node) states minimizing passing fees with time budget), `total-appeal-of-a-string` (hard/strings+dp, contribution counting via last-occurrence tracking). Bank at **1902**; 5994 tests.
 
 ### feat(popup): streak-at-risk reminder + batch 79 expansion (2026-05-26)
 Added streak reminder in popup (shows "Solve a problem today to keep your N-day streak" when user has streak but hasn't solved today). Added 12 more batch 79 problems: binary-search (divide-chocolate, find-the-smallest-divisor-given-a-threshold, magnetic-force-between-two-balls, nth-magical-number), two-pointers (get-equal-substrings-within-budget, longest-equal-subarray, three-sum-with-multiplicity), dp (new-21-game, shortest-common-supersequence, stickers-to-spell-word), design (design-exam-room, design-authentication-manager). Bank at **1897**; 5979 tests.
