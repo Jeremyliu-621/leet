@@ -31312,4 +31312,17 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ops;
   },
 
+  'maximum-average-subarray-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let sum = 0;
+    for (let i = 0; i < k; i++) sum += nums[i]!;
+    let max = sum;
+    for (let i = k; i < nums.length; i++) {
+      sum += nums[i]! - nums[i - k]!;
+      if (sum > max) max = sum;
+    }
+    return max / k;
+  },
+
 };

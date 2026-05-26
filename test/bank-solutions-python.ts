@@ -30782,4 +30782,15 @@ def countFairPairs(nums, lower, upper):
     return count
 `,
 
+  'maximum-average-subarray-i': `
+def findMaxAverage(nums, k):
+    s = sum(nums[:k])
+    mx = s
+    for i in range(k, len(nums)):
+        s += nums[i] - nums[i - k]
+        if s > mx:
+            mx = s
+    return mx / k
+`,
+
 };
