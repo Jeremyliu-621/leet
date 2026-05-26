@@ -28554,6 +28554,114 @@ def countGoodArrays(n, m, k):
     return comb_mod(n - 1, k, MOD) * m % MOD * pow(m - 1, diff, MOD) % MOD
 `,
 
+  // batch 80
+  'find-the-safest-path-in-a-grid': `
+from collections import deque
+def maximumSafenessFactor(grid):
+    n = len(grid)
+    dist = [[float('inf')] * n for _ in range(n)]
+    q = deque()
+    for i in range(n):
+        for j in range(n):
+            if grid[i][j] == 1:
+                dist[i][j] = 0
+                q.append((i, j))
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    while q:
+        r, c = q.popleft()
+        for dr, dc in dirs:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < n and 0 <= nc < n and dist[nr][nc] == float('inf'):
+                dist[nr][nc] = dist[r][c] + 1
+                q.append((nr, nc))
+    def ok(k):
+        if dist[0][0] < k or dist[n-1][n-1] < k:
+            return False
+        seen = [[False]*n for _ in range(n)]
+        seen[0][0] = True
+        bq = deque([(0,0)])
+        while bq:
+            r, c = bq.popleft()
+            if r == n-1 and c == n-1:
+                return True
+            for dr, dc in dirs:
+                nr, nc = r+dr, c+dc
+                if 0 <= nr < n and 0 <= nc < n and not seen[nr][nc] and dist[nr][nc] >= k:
+                    seen[nr][nc] = True
+                    bq.append((nr, nc))
+        return False
+    lo, hi = 0, 2*n
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if ok(mid):
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'divide-nodes-into-the-maximum-number-of-groups': `
+from collections import deque
+def magnificentSets(n, edges):
+    adj = [[] for _ in range(n+1)]
+    for a, b in edges:
+        adj[a].append(b)
+        adj[b].append(a)
+    color = [-1] * (n+1)
+    comp = [-1] * (n+1)
+    cid = 0
+    for s in range(1, n+1):
+        if color[s] != -1:
+            continue
+        q = deque([s])
+        color[s] = 0
+        comp[s] = cid
+        while q:
+            u = q.popleft()
+            for v in adj[u]:
+                if color[v] == -1:
+                    color[v] = color[u] ^ 1
+                    comp[v] = cid
+                    q.append(v)
+                elif color[v] == color[u]:
+                    return -1
+        cid += 1
+    def bfs_depth(start):
+        d = [-1] * (n+1)
+        d[start] = 0
+        q = deque([start])
+        mx = 0
+        while q:
+            u = q.popleft()
+            for v in adj[u]:
+                if d[v] == -1:
+                    d[v] = d[u] + 1
+                    mx = max(mx, d[v])
+                    q.append(v)
+        return mx
+    by_comp = [[] for _ in range(cid)]
+    for u in range(1, n+1):
+        by_comp[comp[u]].append(u)
+    ans = 0
+    for nodes in by_comp:
+        best = max(bfs_depth(s) + 1 for s in nodes)
+        ans += best
+    return ans
+`,
+
+  'range-sum-of-sorted-subarray-sums': `
+def rangeSum(nums, n, left, right):
+    MOD = 10**9 + 7
+    sums = []
+    for i in range(n):
+        s = 0
+        for j in range(i, n):
+            s += nums[j]
+            sums.append(s)
+    sums.sort()
+    return sum(sums[left-1:right]) % MOD
+`,
+
   // batch 79
   'ternary-expression-parser': `
 def parseTernary(expression: str) -> str:

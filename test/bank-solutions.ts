@@ -29143,6 +29143,108 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(ans);
   },
 
+  // batch 80
+  'find-the-safest-path-in-a-grid': (...args: unknown[]) => {
+    const [grid] = args as [number[][]];
+    const n = grid.length;
+    const dist = Array.from({length: n}, () => new Array<number>(n).fill(Infinity));
+    const q: [number, number][] = [];
+    for (let i = 0; i < n; i++)
+      for (let j = 0; j < n; j++)
+        if (grid[i]![j] === 1) { dist[i]![j] = 0; q.push([i, j]); }
+    const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+    let head = 0;
+    while (head < q.length) {
+      const [r, c] = q[head++]!;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr!, nc = c + dc!;
+        if (nr >= 0 && nr < n && nc >= 0 && nc < n && dist[nr]![nc] === Infinity) {
+          dist[nr]![nc] = dist[r]![c]! + 1;
+          q.push([nr, nc]);
+        }
+      }
+    }
+    function ok(k: number): boolean {
+      if (dist[0]![0]! < k || dist[n-1]![n-1]! < k) return false;
+      const seen = Array.from({length: n}, () => new Array<boolean>(n).fill(false));
+      seen[0]![0] = true;
+      const bq: [number, number][] = [[0, 0]];
+      let bh = 0;
+      while (bh < bq.length) {
+        const [r, c] = bq[bh++]!;
+        if (r === n-1 && c === n-1) return true;
+        for (const [dr, dc] of dirs) {
+          const nr = r + dr!, nc = c + dc!;
+          if (nr >= 0 && nr < n && nc >= 0 && nc < n && !seen[nr]![nc] && dist[nr]![nc]! >= k) {
+            seen[nr]![nc] = true;
+            bq.push([nr, nc]);
+          }
+        }
+      }
+      return false;
+    }
+    let lo = 0, hi = 2 * n;
+    while (lo < hi) { const mid = (lo + hi + 1) >> 1; if (ok(mid)) lo = mid; else hi = mid - 1; }
+    return lo;
+  },
+
+  'divide-nodes-into-the-maximum-number-of-groups': (...args: unknown[]) => {
+    const [n, edges] = args as [number, number[][]];
+    const adj: number[][] = Array.from({length: n+1}, () => []);
+    for (const [a, b] of edges) { adj[a as number]!.push(b as number); adj[b as number]!.push(a as number); }
+    const color = new Array<number>(n+1).fill(-1);
+    const comp = new Array<number>(n+1).fill(-1);
+    let cid = 0;
+    for (let s = 1; s <= n; s++) {
+      if (color[s] !== -1) continue;
+      const q = [s]; color[s] = 0; comp[s] = cid;
+      let head = 0;
+      while (head < q.length) {
+        const u = q[head++]!;
+        for (const v of adj[u]!) {
+          if (color[v] === -1) { color[v] = color[u]! ^ 1; comp[v] = cid; q.push(v); }
+          else if (color[v] === color[u]) return -1;
+        }
+      }
+      cid++;
+    }
+    function bfsDepth(start: number): number {
+      const d = new Array<number>(n+1).fill(-1); d[start] = 0;
+      const q = [start]; let bh = 0, max = 0;
+      while (bh < q.length) {
+        const u = q[bh++]!;
+        for (const v of adj[u]!) {
+          if (d[v] === -1) { d[v] = d[u]! + 1; max = Math.max(max, d[v]); q.push(v); }
+        }
+      }
+      return max;
+    }
+    const byComp: number[][] = Array.from({length: cid}, () => []);
+    for (let u = 1; u <= n; u++) byComp[comp[u]!]!.push(u);
+    let ans = 0;
+    for (const nodes of byComp) {
+      let best = 0;
+      for (const s of nodes) best = Math.max(best, bfsDepth(s) + 1);
+      ans += best;
+    }
+    return ans;
+  },
+
+  'range-sum-of-sorted-subarray-sums': (...args: unknown[]) => {
+    const [nums, , left, right] = args as [number[], number, number, number];
+    const MOD = BigInt(1_000_000_007);
+    const n = nums.length;
+    const sums: number[] = [];
+    for (let i = 0; i < n; i++) {
+      let s = 0;
+      for (let j = i; j < n; j++) { s += nums[j]!; sums.push(s); }
+    }
+    sums.sort((a, b) => a - b);
+    let total = 0n;
+    for (let k = left - 1; k < right; k++) total = (total + BigInt(sums[k]!)) % MOD;
+    return Number(total);
+  },
+
   // batch 79
   'ternary-expression-parser': (...args: unknown[]) => {
     const [expression] = args as [string];

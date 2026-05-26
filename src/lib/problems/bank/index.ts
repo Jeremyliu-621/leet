@@ -2018,6 +2018,10 @@ import { problem as shortestCommonSupersequence } from './shortest-common-supers
 import { problem as stickersToSpellWord } from './stickers-to-spell-word';
 import { problem as designExamRoom } from './design-exam-room';
 import { problem as designAuthenticationManager } from './design-authentication-manager';
+// batch 80 — shortest-path, union-find, arrays
+import { problem as findTheSafestPathInAGrid } from './find-the-safest-path-in-a-grid';
+import { problem as divideNodesIntoTheMaximumNumberOfGroups } from './divide-nodes-into-the-maximum-number-of-groups';
+import { problem as rangeSumOfSortedSubarraySums } from './range-sum-of-sorted-subarray-sums';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4072,4 +4076,8 @@ export const problems: readonly Problem[] = [
   stickersToSpellWord,
   designExamRoom,
   designAuthenticationManager,
+  // batch 80 — shortest-path, union-find, arrays
+  findTheSafestPathInAGrid,
+  divideNodesIntoTheMaximumNumberOfGroups,
+  rangeSumOfSortedSubarraySums,
 ];
