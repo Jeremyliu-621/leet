@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1554 problems; 4950 tests green.
+**Current focus:** Bank at 1564 problems; 5007 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1600; further UX polish.
+
+### Batch 58 (2026-05-26)
+Added 10 problems: `max-consecutive-ones-ii` (arrays/medium, sliding-window flip-one-zero), `length-of-longest-fibonacci-subsequence` (dp/medium, O(n²) pair DP), `detect-squares` (design/medium, point-count + x→ys map), `grid-game` (arrays/medium, two-robot prefix sum), `maximum-white-tiles-covered-by-carpet` (arrays/medium, sort + binary search + prefix), `minimum-operations-to-make-all-array-elements-equal` (arrays/medium, sorted prefix sum + binary search), `reverse-words-in-a-string-ii` (strings/medium, two-step in-place reversal), `count-subarrays-with-median` (arrays/hard, balance freq map), `maximum-sum-queries` (arrays/hard, monotone stack + binary search), `find-the-longest-equal-subarray` (arrays/medium, sliding-window per-value positions). JS + Python solutions for all. Bank at **1564**; 5007 tests.
 
 ### a11y: motion-safe: prefix on all animations (2026-05-26)
 Added `motion-safe:` to all `animate-spin` and `animate-pulse` instances so they respect `prefers-reduced-motion: reduce`. Affects: TopBar timer pulse, EditorPanel run/submit spinners, TerminalPanel running-state pulse, CustomTestPanel spinners. State still communicated without motion.
