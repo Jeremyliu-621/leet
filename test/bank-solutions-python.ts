@@ -25878,6 +25878,62 @@ def findPeakGrid(mat):
             lo = mid + 1
     return [-1, -1]
 `,
+  // batch 72-local
+  'reorder-data-in-log-files': `
+def reorderLogFiles(logs):
+    if hasattr(logs, 'to_py'):
+        logs = list(logs.to_py())
+    logs = [str(x) for x in logs]
+    letters = []
+    digits = []
+    for log in logs:
+        parts = log.split(' ', 1)
+        if parts[1][0].isdigit():
+            digits.append(log)
+        else:
+            letters.append(log)
+    letters.sort(key=lambda log: (log.split(' ', 1)[1], log.split(' ', 1)[0]))
+    return letters + digits
+`,
+
+  'minimum-one-bit-operations-to-make-integers-zero': `
+def minimumOneBitOperations(n):
+    result = n
+    n >>= 1
+    while n > 0:
+        result ^= n
+        n >>= 1
+    return result
+`,
+
+  'longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit': `
+from collections import deque
+def longestSubarray(nums, limit):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    nums = [int(x) for x in nums]
+    limit = int(limit)
+    max_q = deque()
+    min_q = deque()
+    left = 0
+    ans = 0
+    for right, val in enumerate(nums):
+        while max_q and nums[max_q[-1]] <= val:
+            max_q.pop()
+        max_q.append(right)
+        while min_q and nums[min_q[-1]] >= val:
+            min_q.pop()
+        min_q.append(right)
+        while nums[max_q[0]] - nums[min_q[0]] > limit:
+            left += 1
+            if max_q[0] < left:
+                max_q.popleft()
+            if min_q[0] < left:
+                min_q.popleft()
+        ans = max(ans, right - left + 1)
+    return ans
+`,
+
 
   'check-completeness-of-a-binary-tree': `
 def isCompleteTree(root):

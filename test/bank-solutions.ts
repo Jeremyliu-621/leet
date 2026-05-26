@@ -26820,4 +26820,63 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     });
   },
 
+  // batch 72-local
+  'reorder-data-in-log-files': (...args: unknown[]) => {
+    const logs = args[0] as string[];
+    const letters: string[] = [];
+    const digits: string[] = [];
+    for (const log of logs) {
+      const spaceIdx = log.indexOf(' ');
+      const rest = log.slice(spaceIdx + 1);
+      if (rest[0]! >= '0' && rest[0]! <= '9') {
+        digits.push(log);
+      } else {
+        letters.push(log);
+      }
+    }
+    letters.sort((a, b) => {
+      const aSpace = a.indexOf(' ');
+      const bSpace = b.indexOf(' ');
+      const aContent = a.slice(aSpace + 1);
+      const bContent = b.slice(bSpace + 1);
+      if (aContent !== bContent) return aContent < bContent ? -1 : 1;
+      const aId = a.slice(0, aSpace);
+      const bId = b.slice(0, bSpace);
+      return aId < bId ? -1 : aId > bId ? 1 : 0;
+    });
+    return [...letters, ...digits];
+  },
+
+  'minimum-one-bit-operations-to-make-integers-zero': (...args: unknown[]) => {
+    let n = args[0] as number;
+    let result = n;
+    while (n > 0) {
+      n >>= 1;
+      result ^= n;
+    }
+    return result;
+  },
+
+  'longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const limit = args[1] as number;
+    const maxQ: number[] = [];
+    const minQ: number[] = [];
+    let left = 0;
+    let ans = 0;
+    for (let right = 0; right < nums.length; right++) {
+      while (maxQ.length > 0 && nums[maxQ[maxQ.length - 1]!]! <= nums[right]!) maxQ.pop();
+      maxQ.push(right);
+      while (minQ.length > 0 && nums[minQ[minQ.length - 1]!]! >= nums[right]!) minQ.pop();
+      minQ.push(right);
+      while (nums[maxQ[0]!]! - nums[minQ[0]!]! > limit) {
+        left++;
+        if (maxQ[0]! < left) maxQ.shift();
+        if (minQ[0]! < left) minQ.shift();
+      }
+      ans = Math.max(ans, right - left + 1);
+    }
+    return ans;
+  },
+
 };

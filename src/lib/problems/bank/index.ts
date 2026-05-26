@@ -1901,6 +1901,10 @@ import { problem as minimumSecondsToEqualizeACircularArray } from './minimum-sec
 import { problem as movementOfRobots } from './movement-of-robots';
 import { problem as numberOfWaysOfCuttingAPizza } from './number-of-ways-of-cutting-a-pizza';
 import { problem as frequencyTracker } from './frequency-tracker';
+// batch 72-local
+import { problem as reorderDataInLogFiles } from './reorder-data-in-log-files';
+import { problem as minimumOneBitOperations } from './minimum-one-bit-operations-to-make-integers-zero';
+import { problem as longestContinuousSubarrayAbsDiff } from './longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3839,4 +3843,8 @@ export const problems: readonly Problem[] = [
   movementOfRobots,
   numberOfWaysOfCuttingAPizza,
   frequencyTracker,
+  // batch 72-local
+  reorderDataInLogFiles,
+  minimumOneBitOperations,
+  longestContinuousSubarrayAbsDiff,
 ];
