@@ -30985,6 +30985,63 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // --- batch 94 -----------------------------------------------------------
+  'rotated-digits': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const diff = new Set([2, 5, 6, 9]);
+    const invalid = new Set([3, 4, 7]);
+    let count = 0;
+    for (let i = 1; i <= n; i++) {
+      let good = false, valid = true;
+      for (const c of String(i)) {
+        const d = +c;
+        if (invalid.has(d)) { valid = false; break; }
+        if (diff.has(d)) good = true;
+      }
+      if (valid && good) count++;
+    }
+    return count;
+  },
+
+  'rabbits-in-forest': (...args: unknown[]) => {
+    const answers = args[0] as number[];
+    const cnt = new Map<number, number>();
+    for (const a of answers) cnt.set(a, (cnt.get(a) ?? 0) + 1);
+    let total = 0;
+    for (const [k, v] of cnt) total += Math.ceil(v / (k + 1)) * (k + 1);
+    return total;
+  },
+
+  'smallest-string-starting-from-leaf': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    interface TN { v: number; l: TN | null; r: TN | null }
+    function build(a: (number | null)[]): TN | null {
+      if (!a.length || a[0] == null) return null;
+      const root: TN = { v: a[0], l: null, r: null };
+      const q: TN[] = [root]; let i = 1;
+      while (q.length && i < a.length) {
+        const node = q.shift()!;
+        if (i < a.length && a[i] != null) { node.l = { v: a[i]!, l: null, r: null }; q.push(node.l); } i++;
+        if (i < a.length && a[i] != null) { node.r = { v: a[i]!, l: null, r: null }; q.push(node.r); } i++;
+      }
+      return root;
+    }
+    let best = '{';
+    const path: string[] = [];
+    function dfs(node: TN | null): void {
+      if (!node) return;
+      path.push(String.fromCharCode(97 + node.v));
+      if (!node.l && !node.r) {
+        const s = path.slice().reverse().join('');
+        if (s < best) best = s;
+      }
+      dfs(node.l); dfs(node.r);
+      path.pop();
+    }
+    dfs(build(arr));
+    return best;
+  },
+
   // --- batch 93 -----------------------------------------------------------
   'valid-perfect-square': (...args: unknown[]) => {
     const num = args[0] as number;
@@ -31044,6 +31101,82 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       const curr = colors[i]!;
       const next = colors[(i + 1) % n]!;
       if (prev !== curr && curr !== next) count++;
+    }
+    return count;
+  },
+
+  'prime-subtraction-operation': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    // Sieve of Eratosthenes up to 1000
+    const isPrime = new Array<boolean>(1001).fill(true);
+    isPrime[0] = isPrime[1] = false;
+    for (let i = 2; i * i <= 1000; i++) {
+      if (isPrime[i]) for (let j = i * i; j <= 1000; j += i) isPrime[j] = false;
+    }
+    const primes: number[] = [];
+    for (let i = 2; i <= 1000; i++) if (isPrime[i]) primes.push(i);
+    let prev = 0;
+    for (const x of nums) {
+      // Find largest prime p <= x - prev - 1 using binary search
+      const limit = x - prev - 1;
+      let lo = 0, hi = primes.length - 1, best = -1;
+      while (lo <= hi) {
+        const mid = (lo + hi) >> 1;
+        if (primes[mid]! <= limit) { best = primes[mid]!; lo = mid + 1; }
+        else hi = mid - 1;
+      }
+      const after = best >= 0 ? x - best : x;
+      if (after <= prev) return false;
+      prev = after;
+    }
+    return true;
+  },
+
+  'find-the-longest-semi-repetitive-subarray': (...args: unknown[]) => {
+    const s = args[0] as number[];
+    let left = 0, pairs = 0, maxLen = 1;
+    for (let right = 1; right < s.length; right++) {
+      if (s[right] === s[right - 1]) pairs++;
+      while (pairs > 1) {
+        if (s[left] === s[left + 1]) pairs--;
+        left++;
+      }
+      maxLen = Math.max(maxLen, right - left + 1);
+    }
+    return maxLen;
+  },
+
+  'count-number-of-fair-pairs': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    const lower = args[1] as number;
+    const upper = args[2] as number;
+    nums.sort((a, b) => a - b);
+    const n = nums.length;
+    // lowerBound: first index >= target in nums[start..n-1]
+    function lowerBound(start: number, target: number): number {
+      let lo = start, hi = n;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (nums[mid]! < target) lo = mid + 1;
+        else hi = mid;
+      }
+      return lo;
+    }
+    // upperBound: first index > target in nums[start..n-1]
+    function upperBound(start: number, target: number): number {
+      let lo = start, hi = n;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (nums[mid]! <= target) lo = mid + 1;
+        else hi = mid;
+      }
+      return lo;
+    }
+    let count = 0;
+    for (let i = 0; i < n - 1; i++) {
+      const lo = lowerBound(i + 1, lower - nums[i]!);
+      const hi = upperBound(i + 1, upper - nums[i]!);
+      count += hi - lo;
     }
     return count;
   },
