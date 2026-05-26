@@ -371,7 +371,6 @@ import { problem as nextGreaterElement } from './next-greater-element';
 import { problem as dailyTemperatures } from './daily-temperatures';
 import { problem as evaluateRpn } from './evaluate-rpn';
 import { problem as minStack } from './min-stack';
-import { problem as maxStack } from './max-stack';
 import { problem as maximumNestingDepth } from './maximum-nesting-depth';
 // stack — medium
 import { problem as minimumRemoveToMakeValidParentheses } from './minimum-remove-to-make-valid-parentheses';
@@ -1641,6 +1640,14 @@ import { problem as maximumPrimeDifference } from './maximum-prime-difference';
 // batch 62 (local)
 import { problem as findTheMinimumNumberOfFibonacciNumbersWhoseSumIsK } from './find-the-minimum-number-of-fibonacci-numbers-whose-sum-is-k';
 import { problem as countPairsOfSimilarStrings } from './count-pairs-of-similar-strings';
+import { problem as numberOfBeautifulSubarrays } from './number-of-beautiful-subarrays';
+import { problem as zeroArrayTransformationI } from './zero-array-transformation-i';
+import { problem as maximumBuildingHeight } from './maximum-building-height';
+import { problem as countNumberOfSpecialIntegers } from './count-number-of-special-integers';
+import { problem as divideIntervalsIntoMinimumNumberOfGroups } from './divide-intervals-into-minimum-number-of-groups';
+import { problem as minimumNumberOfMovesToMakePalindrome } from './minimum-number-of-moves-to-make-palindrome';
+import { problem as nodeWithHighestEdgeScore } from './node-with-highest-edge-score';
+import { problem as minimumNumberOfGroupsToCreateAValidAssignment } from './minimum-number-of-groups-to-create-a-valid-assignment';
 import { problem as maximumDifferenceBetweenIncreasingElements } from './maximum-difference-between-increasing-elements';
 import { problem as longestPathWithDifferentAdjacentCharacters } from './longest-path-with-different-adjacent-characters';
 import { problem as incrementSubmatricesByOne } from './increment-submatrices-by-one';
@@ -1680,13 +1687,6 @@ import { problem as numberOfIncreasingPathsInAGrid } from './number-of-increasin
 import { problem as minimumTimeToVisitACellInAGrid } from './minimum-time-to-visit-a-cell-in-a-grid';
 import { problem as numberOfBeautifulSubsets } from './number-of-beautiful-subsets';
 import { problem as maximumNumberOfFishInAGrid } from './maximum-number-of-fish-in-a-grid';
-
-// batch 64
-import { problem as minimumCostValidPathInGrid } from './minimum-cost-valid-path-in-grid';
-import { problem as decreaseElementsToMakeArrayZigzag } from './decrease-elements-to-make-array-zigzag';
-import { problem as maximalNetworkRank } from './maximal-network-rank';
-import { problem as minimumTapsToOpenToWaterAGarden } from './minimum-taps-to-open-to-water-a-garden';
-import { problem as putMarblesInBags } from './put-marbles-in-bags';
 
 // batch 58
 import { problem as maxConsecutiveOnesII } from './max-consecutive-ones-ii';
@@ -1739,13 +1739,6 @@ import { problem as sparseMatrixMultiplication } from './sparse-matrix-multiplic
 import { problem as maximumDepthNAryTree } from './maximum-depth-n-ary-tree';
 import { problem as nAryTreeLevelOrderTraversal } from './n-ary-tree-level-order-traversal';
 import { problem as nAryTreePreorderTraversal } from './n-ary-tree-preorder-traversal';
-// batch 64
-import { problem as shiftTwoDGrid } from './shift-2d-grid';
-import { problem as findAndReplaceInString } from './find-and-replace-in-string';
-import { problem as checkWhetherTwoStringsAlmostEquivalent } from './check-whether-two-strings-are-almost-equivalent';
-import { problem as minimumSwapsBinaryStringAlternating } from './minimum-number-of-swaps-to-make-the-binary-string-alternating';
-import { problem as maximumNonOverlappingSubarraysTarget } from './maximum-number-of-non-overlapping-subarrays-with-sum-equals-target';
-import { problem as findMinimumPossibleSumBeautifulArray } from './find-the-minimum-possible-sum-of-a-beautiful-array';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -2121,7 +2114,6 @@ export const problems: readonly Problem[] = [
   dailyTemperatures,
   evaluateRpn,
   minStack,
-  maxStack,
   maximumNestingDepth,
   // stack — medium
   minimumRemoveToMakeValidParentheses,
@@ -3433,6 +3425,14 @@ export const problems: readonly Problem[] = [
   // batch 62 (local)
   findTheMinimumNumberOfFibonacciNumbersWhoseSumIsK,
   countPairsOfSimilarStrings,
+  numberOfBeautifulSubarrays,
+  zeroArrayTransformationI,
+  maximumBuildingHeight,
+  countNumberOfSpecialIntegers,
+  divideIntervalsIntoMinimumNumberOfGroups,
+  minimumNumberOfMovesToMakePalindrome,
+  nodeWithHighestEdgeScore,
+  minimumNumberOfGroupsToCreateAValidAssignment,
   maximumDifferenceBetweenIncreasingElements,
   longestPathWithDifferentAdjacentCharacters,
   incrementSubmatricesByOne,
@@ -3521,17 +3521,4 @@ export const problems: readonly Problem[] = [
   swapAdjacentInLrString,
   nextGreaterElementIV,
   minimumNumberOfOperationsToMakeArraysSimilar,
-  // batch 64
-  minimumCostValidPathInGrid,
-  decreaseElementsToMakeArrayZigzag,
-  maximalNetworkRank,
-  minimumTapsToOpenToWaterAGarden,
-  putMarblesInBags,
-  // batch 65
-  shiftTwoDGrid,
-  findAndReplaceInString,
-  checkWhetherTwoStringsAlmostEquivalent,
-  minimumSwapsBinaryStringAlternating,
-  maximumNonOverlappingSubarraysTarget,
-  findMinimumPossibleSumBeautifulArray,
 ];

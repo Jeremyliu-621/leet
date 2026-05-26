@@ -23545,189 +23545,143 @@ def secondMinimum(n, edges, time, change):
             last = i
     return last - first
 `,
-  'minimum-cost-valid-path-in-grid': `def minCost(grid):
-    import heapq
-    m, n = len(grid), len(grid[0])
-    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
-    dist = [[float('inf')] * n for _ in range(m)]
-    dist[0][0] = 0
-    heap = [(0, 0, 0)]
-    while heap:
-        cost, r, c = heapq.heappop(heap)
-        if cost > dist[r][c]:
-            continue
-        if r == m - 1 and c == n - 1:
-            return cost
-        for d, (dr, dc) in enumerate(dirs):
-            nr, nc = r + dr, c + dc
-            if 0 <= nr < m and 0 <= nc < n:
-                edge_cost = 0 if grid[r][c] == d + 1 else 1
-                new_cost = cost + edge_cost
-                if new_cost < dist[nr][nc]:
-                    dist[nr][nc] = new_cost
-                    heapq.heappush(heap, (new_cost, nr, nc))
-    return dist[m-1][n-1]
-`,
 
-  'decrease-elements-to-make-array-zigzag': `def movesToMakeZigzag(nums):
-    ans = [0, 0]
-    for i in range(len(nums)):
-        neighbors = []
-        if i > 0:
-            neighbors.append(nums[i - 1])
-        if i < len(nums) - 1:
-            neighbors.append(nums[i + 1])
-        min_neighbor = min(neighbors) if neighbors else float('inf')
-        ans[i % 2] += max(0, nums[i] - min_neighbor + 1)
-    return min(ans)
-`,
-
-  'maximal-network-rank': `def maximalNetworkRank(n, roads):
-    degree = [0] * n
-    connected = set()
-    for a, b in roads:
-        degree[a] += 1
-        degree[b] += 1
-        connected.add((min(a, b), max(a, b)))
-    ans = 0
-    for i in range(n):
-        for j in range(i + 1, n):
-            rank = degree[i] + degree[j] - (1 if (i, j) in connected else 0)
-            ans = max(ans, rank)
-    return ans
-`,
-
-  'minimum-taps-to-open-to-water-a-garden': `def minTaps(n, ranges):
-    max_reach = [0] * (n + 1)
-    for i in range(n + 1):
-        left = max(0, i - ranges[i])
-        right = min(n, i + ranges[i])
-        max_reach[left] = max(max_reach[left], right)
-    curr_end = next_end = taps = 0
-    for i in range(n):
-        next_end = max(next_end, max_reach[i])
-        if i == curr_end:
-            if next_end == curr_end:
-                return -1
-            curr_end = next_end
-            taps += 1
-    return taps
-`,
-
-  'put-marbles-in-bags': `def putMarbles(weights, k):
-    pair_sums = sorted(weights[i] + weights[i+1] for i in range(len(weights) - 1))
-    return sum(pair_sums[-(i+1)] - pair_sums[i] for i in range(k - 1))
-`,
-
-
-  'max-stack': `def maxStackRunner(ops, args):
-    stack = []
-    max_stk = []
-    result = []
-    for op, a in zip(ops, args):
-        if op == 'push':
-            x = a[0]
-            stack.append(x)
-            max_stk.append(max(x, max_stk[-1]) if max_stk else x)
-            result.append(None)
-        elif op == 'pop':
-            val = stack.pop()
-            max_stk.pop()
-            result.append(val)
-        elif op == 'top':
-            result.append(stack[-1])
-        elif op == 'peekMax':
-            result.append(max_stk[-1])
-        elif op == 'popMax':
-            mx = max_stk[-1]
-            buf = []
-            while stack[-1] != mx:
-                buf.append(stack.pop())
-                max_stk.pop()
-            stack.pop()
-            max_stk.pop()
-            result.append(mx)
-            for v in reversed(buf):
-                stack.append(v)
-                max_stk.append(max(v, max_stk[-1]) if max_stk else v)
-        else:
-            result.append(None)
-    return result
-`,
-
-  'shift-2d-grid': `def shiftGrid(grid, k):
-    m, n = len(grid), len(grid[0])
-    total = m * n
-    flat = [grid[i][j] for i in range(m) for j in range(n)]
-    shift = k % total
-    rotated = flat[total - shift:] + flat[:total - shift]
-    return [rotated[i * n:(i + 1) * n] for i in range(m)]
-`,
-
-  'find-and-replace-in-string': `def findReplaceString(s, indices, sources, targets):
-    replacements = {}
-    for idx, src, tgt in zip(indices, sources, targets):
-        if s[idx:idx + len(src)] == src:
-            replacements[idx] = (len(src), tgt)
-    result = []
-    i = 0
-    while i < len(s):
-        if i in replacements:
-            length, tgt = replacements[i]
-            result.append(tgt)
-            i += length
-        else:
-            result.append(s[i])
-            i += 1
-    return ''.join(result)
-`,
-
-  'check-whether-two-strings-are-almost-equivalent': `def checkAlmostEquivalent(word1, word2):
-    from collections import Counter
-    c1, c2 = Counter(word1), Counter(word2)
-    all_chars = set(c1) | set(c2)
-    return all(abs(c1[ch] - c2[ch]) <= 3 for ch in all_chars)
-`,
-
-  'minimum-number-of-swaps-to-make-the-binary-string-alternating': `def minSwaps(s):
-    ones = s.count('1')
-    zeros = len(s) - ones
-    if abs(ones - zeros) > 1:
-        return -1
-    def count_swaps(start):
-        mismatches = 0
-        for i, c in enumerate(s):
-            expected = start if i % 2 == 0 else ('1' if start == '0' else '0')
-            if c != expected:
-                mismatches += 1
-        return mismatches // 2
-    if ones > zeros:
-        return count_swaps('1')
-    if zeros > ones:
-        return count_swaps('0')
-    return min(count_swaps('0'), count_swaps('1'))
-`,
-
-  'maximum-number-of-non-overlapping-subarrays-with-sum-equals-target': `def maxNonOverlapping(nums, target):
-    seen = {0}
-    prefix = 0
+  'number-of-beautiful-subarrays': `def beautifulSubarrays(nums):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    freq[0] = 1
+    xor = 0
     count = 0
-    for num in nums:
-        prefix += num
-        if prefix - target in seen:
-            count += 1
-            seen = {prefix}
-        else:
-            seen.add(prefix)
+    for n in nums:
+        xor ^= n
+        count += freq[xor]
+        freq[xor] += 1
     return count
 `,
 
-  'find-the-minimum-possible-sum-of-a-beautiful-array': `def minimumPossibleSum(n, target):
-    MOD = 10**9 + 7
-    take = min(n, target // 2)
-    part1 = take * (take + 1) // 2
-    remaining = n - take
-    part2 = target * remaining + remaining * (remaining - 1) // 2
-    return (part1 + part2) % MOD
+  'zero-array-transformation-i': `def isZeroArray(nums, queries):
+    n = len(nums)
+    diff = [0] * (n + 1)
+    queries = [[int(q[0]), int(q[1])] for q in queries]
+    for l, r in queries:
+        diff[l] += 1
+        diff[r + 1] -= 1
+    coverage = 0
+    for i in range(n):
+        coverage += diff[i]
+        if coverage < nums[i]:
+            return False
+    return True
+`,
+
+  'maximum-building-height': `def maxBuilding(n, restrictions):
+    n = int(n)
+    restrictions = [[int(r[0]), int(r[1])] for r in restrictions]
+    restrictions.append([1, 0])
+    restrictions.sort()
+    m = len(restrictions)
+    for i in range(1, m):
+        restrictions[i][1] = min(restrictions[i][1], restrictions[i-1][1] + restrictions[i][0] - restrictions[i-1][0])
+    for i in range(m - 2, -1, -1):
+        restrictions[i][1] = min(restrictions[i][1], restrictions[i+1][1] + restrictions[i+1][0] - restrictions[i][0])
+    ans = 0
+    for i in range(1, m):
+        id1, h1 = restrictions[i-1]
+        id2, h2 = restrictions[i]
+        ans = max(ans, (h1 + h2 + id2 - id1) // 2)
+    last_id, last_h = restrictions[-1]
+    ans = max(ans, last_h + n - last_id)
+    return ans
+`,
+
+  'count-number-of-special-integers': `def countSpecialNumbers(n):
+    s = str(n)
+    length = len(s)
+    ans = 0
+    p = 9
+    for d in range(1, length):
+        ans += p
+        p *= (10 - d)
+    used = set()
+    for i, ch in enumerate(s):
+        digit = int(ch)
+        start = 1 if i == 0 else 0
+        for d in range(start, digit):
+            if d not in used:
+                remaining = length - i - 1
+                count = 1
+                avail = 10 - (i + 1)
+                for j in range(remaining):
+                    count *= (avail - j)
+                ans += count
+        if digit in used:
+            break
+        used.add(digit)
+        if i == length - 1:
+            ans += 1
+    return ans
+`,
+
+  'divide-intervals-into-minimum-number-of-groups': `def minGroups(intervals):
+    import heapq
+    intervals = sorted([[int(iv[0]), int(iv[1])] for iv in intervals])
+    heap = []
+    for iv in intervals:
+        l, r = iv[0], iv[1]
+        if heap and heap[0] < l:
+            heapq.heappop(heap)
+        heapq.heappush(heap, r)
+    return len(heap)
+`,
+
+  'minimum-number-of-moves-to-make-palindrome': `def minMovesToMakePalindrome(s):
+    s = list(s)
+    cost = 0
+    l, r = 0, len(s) - 1
+    while l < r:
+        if s[l] == s[r]:
+            l += 1
+            r -= 1
+        else:
+            j = r - 1
+            while j > l and s[j] != s[l]:
+                j -= 1
+            if j == l:
+                cost += 1
+                l += 1
+            else:
+                for k in range(j, r):
+                    s[k], s[k+1] = s[k+1], s[k]
+                    cost += 1
+                l += 1
+                r -= 1
+    return cost
+`,
+
+  'node-with-highest-edge-score': `def edgeScore(edges):
+    n = len(edges)
+    score = [0] * n
+    for i, e in enumerate(edges):
+        score[int(e)] += i
+    return score.index(max(score))
+`,
+
+  'minimum-number-of-groups-to-create-a-valid-assignment': `def minGroupsForValidAssignment(balls):
+    from collections import Counter
+    import math
+    freqs = list(Counter(balls).values())
+    min_f = min(freqs)
+    for x in range(min_f, 0, -1):
+        total = 0
+        valid = True
+        for f in freqs:
+            N = math.ceil(f / (x + 1))
+            if N * x > f:
+                valid = False
+                break
+            total += N
+        if valid:
+            return total
+    return len(balls)
 `,
 };
