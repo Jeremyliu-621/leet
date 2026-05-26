@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1711 problems; 5415 tests green.
+**Current focus:** Bank at 1715 problems; 5430 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1750; UX polish (browser-zoom QA, accessibility improvements).
+
+### Batch 67-local (2026-05-26)
+Added 5 new problems: `number-of-ways-to-select-buildings` (medium/strings+dp, 010/101 subsequence count), `maximum-fruits-harvested-after-at-most-k-steps` (hard/arrays+sliding-window, reachable range), `count-unique-chars-of-all-substrings` (hard/strings+dp, prev/next same-char contribution), `minimum-money-required-before-transactions` (hard/arrays+math, worst-case ordering), `count-subarrays-with-fixed-bounds` (hard/arrays+sliding-window, jbad/jmin/jmax tracking). JS + Python solutions for all. Bank at **1715**; 5430 tests.
 
 ### Batch 69 (2026-05-26)
 Added 4 new problems: `merge-nodes-in-between-zeros` (medium/linked-list, accumulate sums between zeros), `reachable-nodes-with-restrictions` (medium/graph, BFS from 0 avoiding restricted nodes), `minimum-number-of-k-consecutive-bit-flips` (hard/sliding-window, greedy difference array), `minimum-size-subarray-in-infinite-array` (medium/sliding-window, prefix-sum + double array). JS + Python solutions for all. Bank at **1711**; 5415 tests.
