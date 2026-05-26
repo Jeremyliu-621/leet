@@ -22134,4 +22134,106 @@ def secondMinimum(n, edges, time, change):
         return -1
     return max(min1, min2)
 `,
+
+  'minimum-number-of-operations-to-make-array-continuous': `def minOperations(nums):
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    n = len(a)
+    unique = sorted(set(a))
+    max_fit = 0
+    right = 0
+    for left in range(len(unique)):
+        while right < len(unique) and unique[right] <= unique[left] + n - 1:
+            right += 1
+        max_fit = max(max_fit, right - left)
+    return n - max_fit
+`,
+
+  'pacific-atlantic-water-flow': `def pacificAtlantic(heights):
+    from collections import deque
+    h = heights.to_py() if hasattr(heights, 'to_py') else heights
+    grid = [[list(row.to_py() if hasattr(row, 'to_py') else row) for row in h]]
+    grid = [list(int(x) for x in (row.to_py() if hasattr(row, 'to_py') else row)) for row in h]
+    m, n = len(grid), len(grid[0])
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    def bfs(starts):
+        visited = [[False]*n for _ in range(m)]
+        q = deque(starts)
+        for r, c in starts:
+            visited[r][c] = True
+        while q:
+            r, c = q.popleft()
+            for dr, dc in dirs:
+                nr, nc = r+dr, c+dc
+                if 0 <= nr < m and 0 <= nc < n and not visited[nr][nc] and grid[nr][nc] >= grid[r][c]:
+                    visited[nr][nc] = True
+                    q.append((nr, nc))
+        return visited
+    pac_starts = [(r, 0) for r in range(m)] + [(0, c) for c in range(n)]
+    atl_starts = [(r, n-1) for r in range(m)] + [(m-1, c) for c in range(n)]
+    pac = bfs(pac_starts)
+    atl = bfs(atl_starts)
+    return [[r, c] for r in range(m) for c in range(n) if pac[r][c] and atl[r][c]]
+`,
+
+  'critical-connections-in-a-network': `def criticalConnections(n, connections):
+    ni = int(n)
+    conns = [(int(u), int(v)) for u, v in (connections.to_py() if hasattr(connections, 'to_py') else connections)]
+    from collections import defaultdict
+    adj = defaultdict(list)
+    for u, v in conns:
+        adj[u].append(v)
+        adj[v].append(u)
+    disc = [-1] * ni
+    low = [0] * ni
+    bridges = []
+    timer = [0]
+    def dfs(u, parent):
+        disc[u] = low[u] = timer[0]
+        timer[0] += 1
+        for v in adj[u]:
+            if disc[v] == -1:
+                dfs(v, u)
+                low[u] = min(low[u], low[v])
+                if low[v] > disc[u]:
+                    bridges.append([u, v])
+            elif v != parent:
+                low[u] = min(low[u], disc[v])
+    import sys
+    sys.setrecursionlimit(200000)
+    for i in range(ni):
+        if disc[i] == -1:
+            dfs(i, -1)
+    return sorted(bridges)
+`,
+
+  'minimum-cost-to-cut-a-stick': `def minCost(n, cuts):
+    ni = int(n)
+    cuts_list = sorted(int(x) for x in (cuts.to_py() if hasattr(cuts, 'to_py') else cuts))
+    c = [0] + cuts_list + [ni]
+    length = len(c)
+    dp = [[0]*length for _ in range(length)]
+    for gap in range(2, length):
+        for i in range(length - gap):
+            j = i + gap
+            dp[i][j] = float('inf')
+            for k in range(i+1, j):
+                cost = dp[i][k] + dp[k][j] + c[j] - c[i]
+                if cost < dp[i][j]:
+                    dp[i][j] = cost
+    return dp[0][length-1]
+`,
+
+  'largest-rectangle-in-histogram': `def largestRectangleArea(heights):
+    h = list(int(x) for x in (heights.to_py() if hasattr(heights, 'to_py') else heights))
+    stack = []
+    max_area = 0
+    h.append(0)
+    for i in range(len(h)):
+        while stack and h[stack[-1]] > h[i]:
+            height = h[stack.pop()]
+            width = i if not stack else i - stack[-1] - 1
+            max_area = max(max_area, height * width)
+        stack.append(i)
+    return max_area
+`,
 };

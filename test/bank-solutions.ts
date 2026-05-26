@@ -22370,4 +22370,116 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Math.max(min1, min2);
   },
 
+  // batch 60
+  'minimum-number-of-operations-to-make-array-continuous': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const unique = [...new Set(nums)].sort((a, b) => a - b);
+    let maxFit = 0;
+    let right = 0;
+    for (let left = 0; left < unique.length; left++) {
+      while (right < unique.length && unique[right]! <= unique[left]! + n - 1) {
+        right++;
+      }
+      maxFit = Math.max(maxFit, right - left);
+    }
+    return n - maxFit;
+  },
+
+  'pacific-atlantic-water-flow': (...args: unknown[]) => {
+    const heights = args[0] as number[][];
+    const m = heights.length;
+    const n = heights[0]!.length;
+    const dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+    const bfs = (starts: [number, number][]) => {
+      const visited = Array.from({ length: m }, () => new Array(n).fill(false)) as boolean[][];
+      const queue: [number, number][] = [...starts];
+      for (const [r, c] of starts) visited[r]![c] = true;
+      while (queue.length) {
+        const [r, c] = queue.shift()!;
+        for (const [dr, dc] of dirs) {
+          const nr = r + dr!, nc = c + dc!;
+          if (nr >= 0 && nr < m && nc >= 0 && nc < n && !visited[nr]![nc] && heights[nr]![nc]! >= heights[r]![c]!) {
+            visited[nr]![nc] = true;
+            queue.push([nr, nc]);
+          }
+        }
+      }
+      return visited;
+    };
+    const pacStarts: [number, number][] = [];
+    const atlStarts: [number, number][] = [];
+    for (let r = 0; r < m; r++) { pacStarts.push([r, 0]); atlStarts.push([r, n - 1]); }
+    for (let c = 0; c < n; c++) { pacStarts.push([0, c]); atlStarts.push([m - 1, c]); }
+    const pac = bfs(pacStarts);
+    const atl = bfs(atlStarts);
+    const result: number[][] = [];
+    for (let r = 0; r < m; r++) {
+      for (let c = 0; c < n; c++) {
+        if (pac[r]![c] && atl[r]![c]) result.push([r, c]);
+      }
+    }
+    return result;
+  },
+
+  'critical-connections-in-a-network': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const connections = args[1] as number[][];
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const edge of connections) { const u = edge[0]!, v = edge[1]!; adj[u]!.push(v); adj[v]!.push(u); }
+    const disc: number[] = new Array(n).fill(-1);
+    const low: number[] = new Array(n).fill(0);
+    const bridges: number[][] = [];
+    let timer = 0;
+    const dfs = (u: number, parent: number) => {
+      disc[u] = low[u] = timer++;
+      for (const v of adj[u]!) {
+        if (disc[v] === -1) {
+          dfs(v, u);
+          low[u] = Math.min(low[u]!, low[v]!);
+          if (low[v]! > disc[u]!) bridges.push([u, v]);
+        } else if (v !== parent) {
+          low[u] = Math.min(low[u]!, disc[v]!);
+        }
+      }
+    };
+    for (let i = 0; i < n; i++) if (disc[i] === -1) dfs(i, -1);
+    return bridges.sort((a, b) => a[0]! - b[0]! || a[1]! - b[1]!);
+  },
+
+  'minimum-cost-to-cut-a-stick': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const cuts = args[1] as number[];
+    const c = [0, ...cuts.sort((a, b) => a - b), n];
+    const len = c.length;
+    const dp: number[][] = Array.from({ length: len }, () => new Array(len).fill(0));
+    for (let gap = 2; gap < len; gap++) {
+      for (let i = 0; i + gap < len; i++) {
+        const j = i + gap;
+        dp[i]![j] = Infinity;
+        for (let k = i + 1; k < j; k++) {
+          const cost = dp[i]![k]! + dp[k]![j]! + c[j]! - c[i]!;
+          if (cost < dp[i]![j]!) dp[i]![j] = cost;
+        }
+      }
+    }
+    return dp[0]![len - 1]!;
+  },
+
+  'largest-rectangle-in-histogram': (...args: unknown[]) => {
+    const heights = args[0] as number[];
+    const stack: number[] = [];
+    let maxArea = 0;
+    const h = [...heights, 0];
+    for (let i = 0; i < h.length; i++) {
+      while (stack.length && h[stack[stack.length - 1]!]! > h[i]!) {
+        const height = h[stack.pop()!]!;
+        const width = stack.length === 0 ? i : i - stack[stack.length - 1]! - 1;
+        maxArea = Math.max(maxArea, height * width);
+      }
+      stack.push(i);
+    }
+    return maxArea;
+  },
+
 };

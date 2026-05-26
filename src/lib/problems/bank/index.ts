@@ -1619,6 +1619,12 @@ import { problem as vowelsOfAllSubstrings } from './vowels-of-all-substrings';
 import { problem as removingMinimumNumberOfMagicBeans } from './removing-minimum-number-of-magic-beans';
 import { problem as findTheLongestEqualSubarray } from './find-the-longest-equal-subarray';
 import { problem as minimumEqualSumOfTwoArraysAfterReplacingZeros } from './minimum-equal-sum-of-two-arrays-after-replacing-zeros';
+// batch 60
+import { problem as minimumNumberOfOperationsToMakeArrayContinuous } from './minimum-number-of-operations-to-make-array-continuous';
+import { problem as pacificAtlanticWaterFlow } from './pacific-atlantic-water-flow';
+import { problem as criticalConnectionsInANetwork } from './critical-connections-in-a-network';
+import { problem as minimumCostToCutAStick } from './minimum-cost-to-cut-a-stick';
+import { problem as largestRectangleInHistogram } from './largest-rectangle-in-histogram';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3284,4 +3290,10 @@ export const problems: readonly Problem[] = [
   removingMinimumNumberOfMagicBeans,
   findTheLongestEqualSubarray,
   minimumEqualSumOfTwoArraysAfterReplacingZeros,
+  // batch 60
+  minimumNumberOfOperationsToMakeArrayContinuous,
+  pacificAtlanticWaterFlow,
+  criticalConnectionsInANetwork,
+  minimumCostToCutAStick,
+  largestRectangleInHistogram,
 ];
