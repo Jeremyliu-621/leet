@@ -22848,4 +22848,101 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     });
   },
 
+  'seat-reservation-manager': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const operations = args[1] as string[];
+    const operandArgs = args[2] as (number | null)[];
+    const heap: number[] = [];
+    const push = (v: number) => {
+      heap.push(v);
+      let i = heap.length - 1;
+      while (i > 0) {
+        const p = (i - 1) >> 1;
+        if (heap[p]! <= heap[i]!) break;
+        [heap[p], heap[i]] = [heap[i]!, heap[p]!];
+        i = p;
+      }
+    };
+    const pop = () => {
+      const top = heap[0];
+      const last = heap.pop()!;
+      if (heap.length > 0) {
+        heap[0] = last;
+        let i = 0;
+        while (true) {
+          const l = 2 * i + 1, r = 2 * i + 2;
+          let s = i;
+          if (l < heap.length && heap[l]! < heap[s]!) s = l;
+          if (r < heap.length && heap[r]! < heap[s]!) s = r;
+          if (s === i) break;
+          [heap[i], heap[s]] = [heap[s]!, heap[i]!];
+          i = s;
+        }
+      }
+      return top;
+    };
+    for (let i = 1; i <= n; i++) push(i);
+    const results: number[] = [];
+    for (let op = 0; op < operations.length; op++) {
+      if (operations[op] === 'reserve') results.push(pop()!);
+      else push(operandArgs[op] as number);
+    }
+    return results;
+  },
+
+  'subarray-sum-divisible-by-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const count = new Map<number, number>();
+    count.set(0, 1);
+    let prefix = 0, ans = 0;
+    for (const num of nums) {
+      prefix += num;
+      const rem = ((prefix % k) + k) % k;
+      ans += count.get(rem) ?? 0;
+      count.set(rem, (count.get(rem) ?? 0) + 1);
+    }
+    return ans;
+  },
+
+  'find-the-winner-of-circular-game': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const k = args[1] as number;
+    let pos = 0;
+    for (let i = 2; i <= n; i++) pos = (pos + k) % i;
+    return pos + 1;
+  },
+
+  'minimum-path-cost-in-grid': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const moveCost = args[1] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    let dp = [...grid[0]!];
+    for (let r = 1; r < m; r++) {
+      const newDp: number[] = new Array(n).fill(Infinity);
+      for (let c1 = 0; c1 < n; c1++) {
+        const costs = moveCost[grid[r - 1]![c1]!]!;
+        for (let c2 = 0; c2 < n; c2++) {
+          const val = dp[c1]! + costs[c2]! + grid[r]![c2]!;
+          if (val < newDp[c2]!) newDp[c2] = val;
+        }
+      }
+      dp = newDp;
+    }
+    return Math.min(...dp);
+  },
+
+  'maximum-distance-between-a-pair-of-values': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const n1 = nums1.length, n2 = nums2.length;
+    let i = 0, j = 0, ans = 0;
+    while (i < n1 && j < n1 && j < n2) {
+      if (nums1[i]! <= nums2[j]!) { ans = Math.max(ans, j - i); j++; }
+      else if (i < j) { i++; }
+      else { i++; j++; }
+    }
+    return ans;
+  },
+
 };

@@ -22570,4 +22570,71 @@ def secondMinimum(n, edges, time, change):
     return result
 `,
 
+  'seat-reservation-manager': `def seatReservationManager(n, operations, operandArgs):
+    import heapq
+    n = int(n)
+    ops = list(operations.to_py() if hasattr(operations, 'to_py') else operations)
+    op_args = list(operandArgs.to_py() if hasattr(operandArgs, 'to_py') else operandArgs)
+    heap = list(range(1, n + 1))
+    heapq.heapify(heap)
+    results = []
+    for i, op in enumerate(ops):
+        if op == 'reserve':
+            results.append(heapq.heappop(heap))
+        else:
+            seat = int(op_args[i]) if op_args[i] is not None else 0
+            heapq.heappush(heap, seat)
+    return results
+`,
+
+  'subarray-sum-divisible-by-k': `def subarraysDivByK(nums, k):
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    k = int(k)
+    count = {0: 1}
+    prefix = 0; ans = 0
+    for num in a:
+        prefix += num
+        rem = prefix % k
+        if rem < 0: rem += k
+        ans += count.get(rem, 0)
+        count[rem] = count.get(rem, 0) + 1
+    return ans
+`,
+
+  'find-the-winner-of-circular-game': `def findTheWinner(n, k):
+    n = int(n); k = int(k)
+    pos = 0
+    for i in range(2, n + 1):
+        pos = (pos + k) % i
+    return pos + 1
+`,
+
+  'minimum-path-cost-in-grid': `def minPathCost(grid, moveCost):
+    g = [list(int(x) for x in (row.to_py() if hasattr(row, 'to_py') else row)) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    mc = [list(int(x) for x in (row.to_py() if hasattr(row, 'to_py') else row)) for row in (moveCost.to_py() if hasattr(moveCost, 'to_py') else moveCost)]
+    m, n = len(g), len(g[0])
+    dp = g[0][:]
+    for r in range(1, m):
+        new_dp = [float('inf')] * n
+        for c1 in range(n):
+            costs = mc[g[r-1][c1]]
+            for c2 in range(n):
+                val = dp[c1] + costs[c2] + g[r][c2]
+                if val < new_dp[c2]: new_dp[c2] = val
+        dp = new_dp
+    return min(dp)
+`,
+
+  'maximum-distance-between-a-pair-of-values': `def maxDistance(nums1, nums2):
+    a1 = list(int(x) for x in (nums1.to_py() if hasattr(nums1, 'to_py') else nums1))
+    a2 = list(int(x) for x in (nums2.to_py() if hasattr(nums2, 'to_py') else nums2))
+    n1, n2 = len(a1), len(a2)
+    i = j = 0; ans = 0
+    while i < n1 and j < n1 and j < n2:
+        if a1[i] <= a2[j]: ans = max(ans, j - i); j += 1
+        elif i < j: i += 1
+        else: i += 1; j += 1
+    return ans
+`,
+
 };

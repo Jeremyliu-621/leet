@@ -1654,6 +1654,12 @@ import { problem as minimumOperationsToMakeAllArrayElementsEqual } from './minim
 import { problem as reverseWordsInAStringII } from './reverse-words-in-a-string-ii';
 import { problem as countSubarraysWithMedian } from './count-subarrays-with-median';
 import { problem as maximumSumQueries } from './maximum-sum-queries';
+// batch 62 (local)
+import { problem as seatReservationManager } from './seat-reservation-manager';
+import { problem as subarrayDivByK } from './subarray-sum-divisible-by-k';
+import { problem as findTheWinnerOfCircularGame } from './find-the-winner-of-circular-game';
+import { problem as minimumPathCostInGrid } from './minimum-path-cost-in-grid';
+import { problem as maximumDistanceBetweenAPairOfValues } from './maximum-distance-between-a-pair-of-values';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3353,4 +3359,10 @@ export const problems: readonly Problem[] = [
   reverseWordsInAStringII,
   countSubarraysWithMedian,
   maximumSumQueries,
+  // batch 62 (local)
+  seatReservationManager,
+  subarrayDivByK,
+  findTheWinnerOfCircularGame,
+  minimumPathCostInGrid,
+  maximumDistanceBetweenAPairOfValues,
 ];
