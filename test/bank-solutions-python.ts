@@ -23205,4 +23205,66 @@ def secondMinimum(n, edges, time, change):
     return ans
 `,
 
+  'count-consistent-strings': `def countConsistentStrings(allowed, words):
+    words_list = list(words.to_py() if hasattr(words, 'to_py') else words)
+    allowed_str = str(allowed)
+    s = set(allowed_str)
+    return sum(1 for w in words_list if all(c in s for c in str(w)))
+`,
+
+  'max-points-you-can-obtain-from-cards': `def maxScore(cardPoints, k):
+    cards = list(int(x) for x in (cardPoints.to_py() if hasattr(cardPoints, 'to_py') else cardPoints))
+    k = int(k)
+    n = len(cards)
+    total = sum(cards)
+    if k == n: return total
+    win = n - k
+    curr = sum(cards[:win])
+    min_win = curr
+    for i in range(win, n):
+        curr += cards[i] - cards[i - win]
+        if curr < min_win: min_win = curr
+    return total - min_win
+`,
+
+  'number-of-steps-to-reduce-number-in-binary-representation-to-one': `def numSteps(s):
+    arr = [int(c) for c in str(s)]
+    steps = 0
+    while len(arr) > 1:
+        if arr[-1] == 0:
+            arr.pop()
+        else:
+            carry = 1
+            i = len(arr) - 1
+            while i >= 0 and carry:
+                total = arr[i] + carry
+                arr[i] = total % 2
+                carry = total >> 1
+                i -= 1
+            if carry:
+                arr.insert(0, 1)
+        steps += 1
+    return steps
+`,
+
+  'minimum-score-by-changing-two-elements': `def minimizeSum(nums):
+    a = sorted(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    n = len(a)
+    if n <= 2: return 0
+    return min(a[n-1] - a[2], a[n-2] - a[1], a[n-3] - a[0])
+`,
+
+  'sqrtx': `def mySqrt(x):
+    x = int(x)
+    if x < 2: return x
+    lo, hi = 1, x // 2
+    while lo <= hi:
+        mid = (lo + hi) >> 1
+        sq = mid * mid
+        if sq == x: return mid
+        elif sq < x: lo = mid + 1
+        else: hi = mid - 1
+    return hi
+`,
+
 };

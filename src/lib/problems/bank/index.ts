@@ -1694,6 +1694,12 @@ import { problem as countSpecialCharactersI } from './count-special-characters-i
 import { problem as maximumJumpsToReachLastIndex } from './maximum-jumps-to-reach-last-index';
 import { problem as minimumOperationsToMakeArrayEqualII } from './minimum-operations-to-make-array-equal-ii';
 import { problem as minimumCostForCuttingCakeI } from './minimum-cost-for-cutting-cake-i';
+// batch 63 (local)
+import { problem as countConsistentStrings } from './count-consistent-strings';
+import { problem as maxPointsFromCards } from './max-points-you-can-obtain-from-cards';
+import { problem as numStepsBinaryToOne } from './number-of-steps-to-reduce-number-in-binary-representation-to-one';
+import { problem as minimizeSumTwoChanges } from './minimum-score-by-changing-two-elements';
+import { problem as sqrtX } from './sqrtx';
 // batch 62 (local)
 import { problem as seatReservationManager } from './seat-reservation-manager';
 import { problem as subarrayDivByK } from './subarray-sum-divisible-by-k';
@@ -3457,4 +3463,10 @@ export const problems: readonly Problem[] = [
   minimumTimeToVisitACellInAGrid,
   numberOfBeautifulSubsets,
   maximumNumberOfFishInAGrid,
+  // batch 63 (local)
+  countConsistentStrings,
+  maxPointsFromCards,
+  numStepsBinaryToOne,
+  minimizeSumTwoChanges,
+  sqrtX,
 ];

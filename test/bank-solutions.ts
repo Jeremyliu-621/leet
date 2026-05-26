@@ -23652,4 +23652,69 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'count-consistent-strings': (...args: unknown[]) => {
+    const allowed = args[0] as string;
+    const words = args[1] as string[];
+    const s = new Set(allowed);
+    return words.filter(w => [...w].every(c => s.has(c))).length;
+  },
+
+  'max-points-you-can-obtain-from-cards': (...args: unknown[]) => {
+    const cards = args[0] as number[];
+    const k = args[1] as number;
+    const n = cards.length;
+    const total = cards.reduce((a, b) => a + b, 0);
+    if (k === n) return total;
+    const win = n - k;
+    let curr = cards.slice(0, win).reduce((a, b) => a + b, 0);
+    let minWin = curr;
+    for (let i = win; i < n; i++) {
+      curr += cards[i]! - cards[i - win]!;
+      if (curr < minWin) minWin = curr;
+    }
+    return total - minWin;
+  },
+
+  'number-of-steps-to-reduce-number-in-binary-representation-to-one': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let arr = [...s].map(Number);
+    let steps = 0;
+    while (arr.length > 1) {
+      if (arr[arr.length - 1] === 0) {
+        arr.pop();
+      } else {
+        let carry = 1;
+        for (let i = arr.length - 1; i >= 0 && carry; i--) {
+          const sum = arr[i]! + carry;
+          arr[i] = sum % 2;
+          carry = sum >> 1;
+        }
+        if (carry) arr.unshift(1);
+      }
+      steps++;
+    }
+    return steps;
+  },
+
+  'minimum-score-by-changing-two-elements': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const n = nums.length;
+    if (n <= 2) return 0;
+    return Math.min(nums[n - 1]! - nums[2]!, nums[n - 2]! - nums[1]!, nums[n - 3]! - nums[0]!);
+  },
+
+  'sqrtx': (...args: unknown[]) => {
+    const x = args[0] as number;
+    if (x < 2) return x;
+    let lo = 1, hi = Math.floor(x / 2);
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      const sq = mid * mid;
+      if (sq === x) return mid;
+      if (sq < x) lo = mid + 1;
+      else hi = mid - 1;
+    }
+    return hi;
+  },
+
 };
