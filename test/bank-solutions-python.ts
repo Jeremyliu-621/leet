@@ -29369,5 +29369,253 @@ def kthSmallest(matrix, k):
     return lo
 `,
 
+  // batch 83
+
+  'count-palindromes': `
+def countPalindromes(s):
+    MOD = 10**9 + 7
+    n = len(s)
+    if n < 5:
+        return 0
+    digits = [int(c) for c in s]
+    lp = [[0]*10 for _ in range(10)]
+    ls = [0]*10
+    rp = [[0]*10 for _ in range(10)]
+    rs = [0]*10
+    for i in range(n-1, 2, -1):
+        d = digits[i]
+        for b in range(10):
+            rp[d][b] = (rp[d][b] + rs[b]) % MOD
+        rs[d] += 1
+    for i in range(2):
+        d = digits[i]
+        for a in range(10):
+            lp[a][d] = (lp[a][d] + ls[a]) % MOD
+        ls[d] += 1
+    ans = 0
+    for k in range(2, n-2):
+        for x in range(10):
+            for y in range(10):
+                ans = (ans + lp[x][y] * rp[y][x]) % MOD
+        if k < n-3:
+            dk = digits[k]
+            for a in range(10):
+                lp[a][dk] = (lp[a][dk] + ls[a]) % MOD
+            ls[dk] += 1
+            dk1 = digits[k+1]
+            rs[dk1] -= 1
+            for b in range(10):
+                rp[dk1][b] = (rp[dk1][b] - rs[b]) % MOD
+    return ans
+`,
+
+  'longest-duplicate-substring': `
+def longestDupSubstring(s):
+    n = len(s)
+    best = ""
+    lo, hi = 1, n - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        seen = set()
+        found = ""
+        for i in range(n - mid + 1):
+            sub = s[i:i+mid]
+            if sub in seen:
+                found = sub
+                break
+            seen.add(sub)
+        if found:
+            best = found
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return best
+`,
+
+  'shortest-palindrome': `
+def shortestPalindrome(s):
+    if not s:
+        return s
+    t = s + "#" + s[::-1]
+    fail = [0] * len(t)
+    for i in range(1, len(t)):
+        j = fail[i-1]
+        while j > 0 and t[i] != t[j]:
+            j = fail[j-1]
+        if t[i] == t[j]:
+            j += 1
+        fail[i] = j
+    k = fail[-1]
+    return s[k:][::-1] + s
+`,
+
+  'sum-of-prefix-scores-of-strings': `
+def sumPrefixScores(words):
+    from collections import defaultdict
+    prefix_count = defaultdict(int)
+    for w in words:
+        for i in range(1, len(w)+1):
+            prefix_count[w[:i]] += 1
+    result = []
+    for w in words:
+        score = sum(prefix_count[w[:i]] for i in range(1, len(w)+1))
+        result.append(score)
+    return result
+`,
+
+  'filling-bookcase-shelves': `
+def minHeightShelves(books, shelfWidth):
+    n = len(books)
+    dp = [float('inf')] * (n + 1)
+    dp[0] = 0
+    for i in range(1, n + 1):
+        w = h = 0
+        for j in range(i, 0, -1):
+            w += books[j-1][0]
+            if w > shelfWidth:
+                break
+            h = max(h, books[j-1][1])
+            dp[i] = min(dp[i], dp[j-1] + h)
+    return dp[n]
+`,
+
+  'maximum-length-of-repeated-subarray': `
+def findLength(nums1, nums2):
+    m, n = len(nums1), len(nums2)
+    ans = 0
+    dp = [0] * (n + 1)
+    for i in range(1, m + 1):
+        for j in range(n, 0, -1):
+            if nums1[i-1] == nums2[j-1]:
+                dp[j] = dp[j-1] + 1
+                ans = max(ans, dp[j])
+            else:
+                dp[j] = 0
+    return ans
+`,
+
+  'minimum-number-of-taps-to-water-garden': `
+def minTaps(n, ranges):
+    reach = [0] * (n + 1)
+    for i in range(n + 1):
+        l = max(0, i - ranges[i])
+        r = min(n, i + ranges[i])
+        reach[l] = max(reach[l], r)
+    taps = cur = far = 0
+    for i in range(n + 1):
+        if i > far:
+            return -1
+        if i > cur:
+            taps += 1
+            cur = far
+        far = max(far, reach[i])
+    return taps
+`,
+
+  'number-of-ways-to-paint-n-3-grid': `
+def numOfWays(n):
+    MOD = 10**9 + 7
+    aba, abc = 6, 6
+    for _ in range(n - 1):
+        aba, abc = (3*aba + 2*abc) % MOD, (2*aba + 2*abc) % MOD
+    return (aba + abc) % MOD
+`,
+
+  'frog-position-after-t-seconds': `
+def frogPosition(n, edges, t, target):
+    from collections import defaultdict
+    adj = defaultdict(list)
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    ans = [0.0]
+    def dfs(node, parent, time, prob):
+        unvisited = [nb for nb in adj[node] if nb != parent]
+        if node == target:
+            if time == t or (time < t and not unvisited):
+                ans[0] = prob
+            return
+        if time >= t or not unvisited:
+            return
+        for nb in unvisited:
+            dfs(nb, node, time+1, prob / len(unvisited))
+    dfs(1, -1, 0, 1.0)
+    return ans[0]
+`,
+
+  'loud-and-rich': `
+def loudAndRich(richer, quiet):
+    n = len(quiet)
+    adj = [[] for _ in range(n)]
+    for a, b in richer:
+        adj[b].append(a)
+    ans = [-1] * n
+    def dfs(x):
+        if ans[x] != -1:
+            return ans[x]
+        ans[x] = x
+        for r in adj[x]:
+            c = dfs(r)
+            if quiet[c] < quiet[ans[x]]:
+                ans[x] = c
+        return ans[x]
+    for i in range(n):
+        dfs(i)
+    return ans
+`,
+
+  'count-restricted-paths': `
+def countRestrictedPaths(n, edges):
+    import heapq
+    MOD = 10**9 + 7
+    adj = [[] for _ in range(n+1)]
+    for u, v, w in edges:
+        adj[u].append((v, w))
+        adj[v].append((u, w))
+    dist = [float('inf')] * (n+1)
+    dist[n] = 0
+    pq = [(0, n)]
+    while pq:
+        d, u = heapq.heappop(pq)
+        if d > dist[u]:
+            continue
+        for v, w in adj[u]:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                heapq.heappush(pq, (dist[v], v))
+    memo = {}
+    def dp(u):
+        if u == n:
+            return 1
+        if u in memo:
+            return memo[u]
+        cnt = 0
+        for v, _ in adj[u]:
+            if dist[v] < dist[u]:
+                cnt = (cnt + dp(v)) % MOD
+        memo[u] = cnt
+        return cnt
+    return dp(1)
+`,
+
+  'flower-planting-no-adjacent': `
+def gardenNoAdjRunner(n, paths):
+    adj = [[] for _ in range(n+1)]
+    for u, v in paths:
+        adj[u].append(v)
+        adj[v].append(u)
+    color = [0] * (n+1)
+    for i in range(1, n+1):
+        used = {color[nb] for nb in adj[i]}
+        for c in range(1, 5):
+            if c not in used:
+                color[i] = c
+                break
+    for i in range(1, n+1):
+        for nb in adj[i]:
+            if color[i] == color[nb]:
+                return False
+    return True
+`,
 
 };

@@ -29925,5 +29925,232 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return lo;
   },
 
+  // batch 83
+
+  'count-palindromes': (...args: unknown[]) => {
+    const [s] = args as [string];
+    const MOD = 1_000_000_007n;
+    const n = s.length;
+    if (n < 5) return 0;
+    const digits = s.split('').map(Number);
+    const lp: bigint[][] = Array.from({length:10}, () => new Array(10).fill(0n));
+    const ls: bigint[] = new Array(10).fill(0n);
+    const rp: bigint[][] = Array.from({length:10}, () => new Array(10).fill(0n));
+    const rs: bigint[] = new Array(10).fill(0n);
+    for (let i = n-1; i >= 3; i--) {
+      const d = digits[i]!;
+      for (let b = 0; b < 10; b++) rp[d]![b] = (rp[d]![b]! + rs[b]!) % MOD;
+      rs[d] = rs[d]! + 1n;
+    }
+    for (let i = 0; i <= 1; i++) {
+      const d = digits[i]!;
+      for (let a = 0; a < 10; a++) lp[a]![d] = (lp[a]![d]! + ls[a]!) % MOD;
+      ls[d] = ls[d]! + 1n;
+    }
+    let ans = 0n;
+    for (let k = 2; k <= n-3; k++) {
+      for (let x = 0; x < 10; x++) for (let y = 0; y < 10; y++)
+        ans = (ans + lp[x]![y]! * rp[y]![x]!) % MOD;
+      if (k < n-3) {
+        const dk = digits[k]!;
+        for (let a = 0; a < 10; a++) lp[a]![dk] = (lp[a]![dk]! + ls[a]!) % MOD;
+        ls[dk] = ls[dk]! + 1n;
+        const dk1 = digits[k+1]!;
+        rs[dk1] = rs[dk1]! - 1n;
+        for (let b = 0; b < 10; b++) rp[dk1]![b] = (rp[dk1]![b]! - rs[b]! + MOD) % MOD;
+      }
+    }
+    return Number(ans);
+  },
+
+  'longest-duplicate-substring': (...args: unknown[]) => {
+    const [s] = args as [string];
+    const n = s.length;
+    let lo = 1, hi = n - 1, best = '';
+    const hasdup = (len: number): string => {
+      const seen = new Set<string>();
+      for (let i = 0; i + len <= n; i++) {
+        const sub = s.slice(i, i + len);
+        if (seen.has(sub)) return sub;
+        seen.add(sub);
+      }
+      return '';
+    };
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      const res = hasdup(mid);
+      if (res) { best = res; lo = mid + 1; }
+      else hi = mid - 1;
+    }
+    return best;
+  },
+
+  'shortest-palindrome': (...args: unknown[]) => {
+    const [s] = args as [string];
+    if (!s) return '';
+    const t = s + '#' + s.split('').reverse().join('');
+    const fail = new Array(t.length).fill(0);
+    for (let i = 1; i < t.length; i++) {
+      let j = fail[i-1];
+      while (j > 0 && t[i] !== t[j]) j = fail[j-1];
+      if (t[i] === t[j]) j++;
+      fail[i] = j;
+    }
+    const k = fail[t.length - 1];
+    return s.slice(k).split('').reverse().join('') + s;
+  },
+
+  'sum-of-prefix-scores-of-strings': (...args: unknown[]) => {
+    const [words] = args as [string[]];
+    const prefixCount = new Map<string, number>();
+    for (const w of words)
+      for (let i = 1; i <= w.length; i++)
+        prefixCount.set(w.slice(0, i), (prefixCount.get(w.slice(0, i)) ?? 0) + 1);
+    return words.map(w => {
+      let score = 0;
+      for (let i = 1; i <= w.length; i++) score += prefixCount.get(w.slice(0, i)) ?? 0;
+      return score;
+    });
+  },
+
+  'filling-bookcase-shelves': (...args: unknown[]) => {
+    const [books, shelfWidth] = args as [number[][], number];
+    const n = books.length;
+    const dp = new Array(n + 1).fill(Infinity);
+    dp[0] = 0;
+    for (let i = 1; i <= n; i++) {
+      let w = 0, h = 0;
+      for (let j = i; j >= 1; j--) {
+        w += books[j-1]![0]!;
+        if (w > shelfWidth) break;
+        h = Math.max(h, books[j-1]![1]!);
+        dp[i] = Math.min(dp[i], dp[j-1] + h);
+      }
+    }
+    return dp[n];
+  },
+
+  'maximum-length-of-repeated-subarray': (...args: unknown[]) => {
+    const [nums1, nums2] = args as [number[], number[]];
+    const m = nums1.length, n = nums2.length;
+    let ans = 0;
+    const dp: number[] = new Array(n + 1).fill(0);
+    for (let i = 1; i <= m; i++) {
+      for (let j = n; j >= 1; j--) {
+        dp[j] = nums1[i-1] === nums2[j-1] ? (dp[j-1] ?? 0) + 1 : 0;
+        ans = Math.max(ans, dp[j]!);
+      }
+    }
+    return ans;
+  },
+
+  'minimum-number-of-taps-to-water-garden': (...args: unknown[]) => {
+    const [n, ranges] = args as [number, number[]];
+    const reach = new Array(n + 1).fill(0);
+    for (let i = 0; i <= n; i++) {
+      const l = Math.max(0, i - ranges[i]!);
+      const r = Math.min(n, i + ranges[i]!);
+      reach[l] = Math.max(reach[l]!, r);
+    }
+    let taps = 0, cur = 0, far = 0;
+    for (let i = 0; i <= n; i++) {
+      if (i > far) return -1;
+      if (i > cur) { taps++; cur = far; }
+      far = Math.max(far, reach[i]!);
+    }
+    return taps;
+  },
+
+  'number-of-ways-to-paint-n-3-grid': (...args: unknown[]) => {
+    const [n] = args as [number];
+    const MOD = 1_000_000_007n;
+    let aba = 6n, abc = 6n;
+    for (let i = 1; i < n; i++) {
+      const newAba = (3n * aba + 2n * abc) % MOD;
+      const newAbc = (2n * aba + 2n * abc) % MOD;
+      aba = newAba; abc = newAbc;
+    }
+    return Number((aba + abc) % MOD);
+  },
+
+  'frog-position-after-t-seconds': (...args: unknown[]) => {
+    const [n, edges, t, target] = args as [number, number[][], number, number];
+    const adj: number[][] = Array.from({length: n+1}, () => []);
+    for (const e of edges) { const u = e[0]!, v = e[1]!; adj[u]!.push(v); adj[v]!.push(u); }
+    let ans = 0;
+    const dfs = (node: number, parent: number, time: number, prob: number) => {
+      const unvisited = adj[node]!.filter(nb => nb !== parent);
+      if (node === target) {
+        if (time === t || (time < t && unvisited.length === 0)) ans = prob;
+        return;
+      }
+      if (time >= t || unvisited.length === 0) return;
+      for (const nb of unvisited) dfs(nb, node, time+1, prob / unvisited.length);
+    };
+    dfs(1, -1, 0, 1);
+    return ans;
+  },
+
+  'loud-and-rich': (...args: unknown[]) => {
+    const [richer, quiet] = args as [number[][], number[]];
+    const n = quiet.length;
+    const adj: number[][] = Array.from({length: n}, () => []);
+    for (const e of richer) { const a = e[0]!, b = e[1]!; adj[b]!.push(a); }
+    const ans: number[] = new Array(n).fill(-1);
+    const dfs = (x: number): number => {
+      if (ans[x] !== -1) return ans[x]!;
+      ans[x] = x;
+      for (const richer_person of adj[x]!) {
+        const candidate = dfs(richer_person);
+        if (quiet[candidate]! < quiet[ans[x]!]!) ans[x] = candidate;
+      }
+      return ans[x]!;
+    };
+    for (let i = 0; i < n; i++) dfs(i);
+    return ans;
+  },
+
+  'count-restricted-paths': (...args: unknown[]) => {
+    const [n, edges] = args as [number, number[][]];
+    const MOD = 1_000_000_007;
+    const adj: [number, number][][] = Array.from({length: n+1}, () => []);
+    for (const e of edges) { const u=e[0]!, v=e[1]!, w=e[2]!; adj[u]!.push([v, w]); adj[v]!.push([u, w]); }
+    const dist = new Array(n+1).fill(Infinity);
+    dist[n] = 0;
+    const pq: [number, number][] = [[0, n]];
+    while (pq.length) {
+      pq.sort((a,b) => a[0]-b[0]);
+      const [d, u] = pq.shift()!;
+      if (d > dist[u]!) continue;
+      for (const [v, w] of adj[u]!) {
+        if (dist[u]! + w < dist[v]!) { dist[v] = dist[u]! + w; pq.push([dist[v]!, v]); }
+      }
+    }
+    const memo = new Array(n+1).fill(-1);
+    const dp = (u: number): number => {
+      if (u === n) return 1;
+      if (memo[u] !== -1) return memo[u]!;
+      let cnt = 0;
+      for (const [v] of adj[u]!) {
+        if (dist[v]! < dist[u]!) cnt = (cnt + dp(v)) % MOD;
+      }
+      return (memo[u] = cnt);
+    };
+    return dp(1);
+  },
+
+  'flower-planting-no-adjacent': (...args: unknown[]) => {
+    const [n, paths] = args as [number, number[][]];
+    const adj: number[][] = Array.from({length: n+1}, () => []);
+    for (const e of paths) { const u = e[0]!, v = e[1]!; adj[u]!.push(v); adj[v]!.push(u); }
+    const color = new Array(n+1).fill(0);
+    for (let i = 1; i <= n; i++) {
+      const used = new Set(adj[i]!.map(nb => color[nb]));
+      for (let c = 1; c <= 4; c++) { if (!used.has(c)) { color[i] = c; break; } }
+    }
+    for (let i = 1; i <= n; i++)
+      for (const nb of adj[i]!) if (color[i] === color[nb]) return false;
+    return true;
+  },
 
 };

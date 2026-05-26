@@ -2035,6 +2035,19 @@ import { problem as minimumScoreOfAPathBetweenTwoCities } from './minimum-score-
 import { problem as maximumProbabilityOfSuccess } from './maximum-probability-of-success';
 import { problem as minimumFuelCostToReportToTheCapital } from './minimum-fuel-cost-to-report-to-the-capital';
 import { problem as minimumOperationsToMakeTheArrayAlternating } from './minimum-operations-to-make-the-array-alternating';
+// batch 83 — strings, dp, graph
+import { problem as countPalindromes } from './count-palindromes';
+import { problem as flowerPlantingNoAdjacent } from './flower-planting-no-adjacent';
+import { problem as longestDupSubstring } from './longest-duplicate-substring';
+import { problem as shortestPalindrome } from './shortest-palindrome';
+import { problem as sumPrefixScores } from './sum-of-prefix-scores-of-strings';
+import { problem as fillingBookcaseShelves } from './filling-bookcase-shelves';
+import { problem as maximumLengthRepeatedSubarray } from './maximum-length-of-repeated-subarray';
+import { problem as minimumTapsToWaterGarden } from './minimum-number-of-taps-to-water-garden';
+import { problem as numberOfWaysToPaintN3Grid } from './number-of-ways-to-paint-n-3-grid';
+import { problem as frogPositionAfterTSeconds } from './frog-position-after-t-seconds';
+import { problem as loudAndRich } from './loud-and-rich';
+import { problem as countRestrictedPaths } from './count-restricted-paths';
 // batch 80 (cont.) — backtracking, heap, linked-list, simulation
 import { problem as allPathsSourceToTargetBacktrack } from './all-paths-source-to-target-backtrack';
 import { problem as factorCombinations } from './factor-combinations';
@@ -4130,6 +4143,19 @@ export const problems: readonly Problem[] = [
   maximumProbabilityOfSuccess,
   minimumFuelCostToReportToTheCapital,
   minimumOperationsToMakeTheArrayAlternating,
+  // batch 83 — strings, dp, graph
+  countPalindromes,
+  flowerPlantingNoAdjacent,
+  longestDupSubstring,
+  shortestPalindrome,
+  sumPrefixScores,
+  fillingBookcaseShelves,
+  maximumLengthRepeatedSubarray,
+  minimumTapsToWaterGarden,
+  numberOfWaysToPaintN3Grid,
+  frogPositionAfterTSeconds,
+  loudAndRich,
+  countRestrictedPaths,
   // batch 80 (cont.) — backtracking, heap, linked-list, simulation
   allPathsSourceToTargetBacktrack,
   factorCombinations,
