@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1852** problems; 5856 tests green. Marketing site at 1,850+. All problems have ≥3 hints.
+**Current focus:** Bank at **1856** problems; 5856 tests green. Marketing site at 1,856+. All problems have ≥3 hints.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Update marketing site stats to 1,850+; UX polish (CodeMirror QoL, accessibility); light-mode QA; more bank growth.
+**Next up:** Bank growth (background agent adding BIT/simulation/shortest-path); continued UX polish.
+
+### feat(editor): terminal UX — collapsible + resizable + auto-expand (2026-05-26)
+Added drag-to-resize terminal panel (80px–480px) with a horizontal resize handle above the terminal; hid the resize handle when collapsed for a cleaner UI. Added collapse toggle button (▲/▼) in terminal tab bar — collapses body so the editor gains full height. When a run/submit result arrives while the terminal is collapsed, it auto-expands so the user sees the output. Arrow keys on the focused resize handle adjust height in 20px steps. Added `↑ ↓` row to the keyboard shortcuts modal. Marketing site stats updated to 1,856+.
 
 ### feat(bank): add batch 76 — 14 problems (union-find, heap, DP, graph, design) (2026-05-26)
 5 new problem files + 9 orphan registrations. New: `remove-max-edges-graph-traversable` (hard/union-find, dual-DSU Alice+Bob), `exam-room` (medium/simulation, sorted-seat greedy), `checking-edge-length-limited-paths` (hard/union-find, offline sort+DSU), `last-day-still-cross` (hard/union-find+binary-search, binary-search+BFS), `minimum-cost-walk-weighted-graph` (medium/union-find, AND of all edges in component). Orphans: `maximum-average-pass-ratio` (medium/heap), `count-good-meals` (medium/hash-map), `rank-teams-by-votes` (medium/simulation), `minimum-refueling-stops` (hard/heap), `minimum-space-wasted-k-resizing` (medium/dp), `maximum-tasks-assign` (hard/binary-search), `maximum-total-beauty-gardens` (hard/binary-search), `maximum-xor-two-numbers-array` (medium/hash-map), `design-graph-shortest-path` (hard/graph+dijkstra). Fixed beauty-of-gardens solution bug (already-complete gardens misclassified). Bank at **1852**; 5856 tests.
