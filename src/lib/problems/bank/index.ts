@@ -1613,6 +1613,12 @@ import { problem as minimumNumberOfMovesToSeat } from './minimum-number-of-moves
 import { problem as numberOfSeniorCitizens } from './number-of-senior-citizens';
 import { problem as maximumNumberOfGroupsWithIncreasingLength } from './maximum-number-of-groups-with-increasing-length';
 import { problem as makeIntegerBeautiful } from './make-integer-beautiful';
+// batch 58 (local)
+import { problem as minimumTimeToBuyTickets } from './minimum-time-to-buy-tickets';
+import { problem as vowelsOfAllSubstrings } from './vowels-of-all-substrings';
+import { problem as removingMinimumNumberOfMagicBeans } from './removing-minimum-number-of-magic-beans';
+import { problem as findTheLongestEqualSubarray } from './find-the-longest-equal-subarray';
+import { problem as minimumEqualSumOfTwoArraysAfterReplacingZeros } from './minimum-equal-sum-of-two-arrays-after-replacing-zeros';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3266,9 +3272,16 @@ export const problems: readonly Problem[] = [
   numberOfSeniorCitizens,
   maximumNumberOfGroupsWithIncreasingLength,
   makeIntegerBeautiful,
+  // batch 59 (remote)
   nextClosestTime,
   employeeFreeTime,
   maximumSumOf3NonOverlappingSubarrays,
   dominoTrominoTiling,
   splitArrayWithSameAverage,
+  // batch 58 (local)
+  minimumTimeToBuyTickets,
+  vowelsOfAllSubstrings,
+  removingMinimumNumberOfMagicBeans,
+  findTheLongestEqualSubarray,
+  minimumEqualSumOfTwoArraysAfterReplacingZeros,
 ];

@@ -22298,4 +22298,76 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(ops);
   },
 
+  // batch 58 (local)
+  'minimum-time-to-buy-tickets': (tickets: unknown, k: unknown) => {
+    const t = tickets as number[];
+    const ki = k as number;
+    let time = 0;
+    for (let i = 0; i < t.length; i++) {
+      if (i <= ki) time += Math.min(t[i]!, t[ki]!);
+      else time += Math.min(t[i]!, t[ki]! - 1);
+    }
+    return time;
+  },
+
+  'vowels-of-all-substrings': (word: unknown) => {
+    const w = word as string;
+    const n = w.length;
+    const MOD = 1_000_000_007n;
+    const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+    let ans = 0n;
+    for (let i = 0; i < n; i++) {
+      if (vowels.has(w[i]!)) {
+        ans = (ans + BigInt(i + 1) * BigInt(n - i)) % MOD;
+      }
+    }
+    return Number(ans);
+  },
+
+  'removing-minimum-number-of-magic-beans': (beans: unknown) => {
+    const b = [...(beans as number[])].sort((a, c) => a - c);
+    const n = b.length;
+    let total = 0n;
+    for (const x of b) total += BigInt(x);
+    let ans = total;
+    for (let i = 0; i < n; i++) {
+      const cost = total - BigInt(b[i]!) * BigInt(n - i);
+      if (cost < ans) ans = cost;
+    }
+    return Number(ans);
+  },
+
+  'find-the-longest-equal-subarray': (nums: unknown, k: unknown) => {
+    const a = nums as number[];
+    const ki = k as number;
+    const positions = new Map<number, number[]>();
+    for (let i = 0; i < a.length; i++) {
+      if (!positions.has(a[i]!)) positions.set(a[i]!, []);
+      positions.get(a[i]!)!.push(i);
+    }
+    let ans = 0;
+    for (const pos of positions.values()) {
+      let left = 0;
+      for (let right = 0; right < pos.length; right++) {
+        while (pos[right]! - pos[left]! - (right - left) > ki) left++;
+        ans = Math.max(ans, right - left + 1);
+      }
+    }
+    return ans;
+  },
+
+  'minimum-equal-sum-of-two-arrays-after-replacing-zeros': (nums1: unknown, nums2: unknown) => {
+    const a = nums1 as number[];
+    const b = nums2 as number[];
+    let sum1 = 0, zeros1 = 0;
+    for (const x of a) { sum1 += x; if (x === 0) zeros1++; }
+    let sum2 = 0, zeros2 = 0;
+    for (const x of b) { sum2 += x; if (x === 0) zeros2++; }
+    const min1 = sum1 + zeros1;
+    const min2 = sum2 + zeros2;
+    if (zeros1 === 0 && min1 < min2) return -1;
+    if (zeros2 === 0 && min2 < min1) return -1;
+    return Math.max(min1, min2);
+  },
+
 };

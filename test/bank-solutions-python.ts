@@ -22066,4 +22066,72 @@ def secondMinimum(n, edges, time, change):
         pow10 *= 10
     return ops
 `,
+
+  // batch 58 (local)
+  'minimum-time-to-buy-tickets': `def timeRequiredToBuy(tickets, k):
+    t = list(int(x) for x in (tickets.to_py() if hasattr(tickets, 'to_py') else tickets))
+    ki = int(k)
+    time = 0
+    for i, val in enumerate(t):
+        if i <= ki:
+            time += min(val, t[ki])
+        else:
+            time += min(val, t[ki] - 1)
+    return time
+`,
+
+  'vowels-of-all-substrings': `def countVowels(word):
+    w = str(word)
+    n = len(w)
+    MOD = 10**9 + 7
+    vowels = set('aeiou')
+    ans = 0
+    for i, c in enumerate(w):
+        if c in vowels:
+            ans = (ans + (i + 1) * (n - i)) % MOD
+    return ans
+`,
+
+  'removing-minimum-number-of-magic-beans': `def minimumRemoval(beans):
+    b = sorted(int(x) for x in (beans.to_py() if hasattr(beans, 'to_py') else beans))
+    n = len(b)
+    total = sum(b)
+    ans = total
+    for i in range(n):
+        cost = total - b[i] * (n - i)
+        if cost < ans:
+            ans = cost
+    return ans
+`,
+
+  'find-the-longest-equal-subarray': `def longestEqualSubarray(nums, k):
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    ki = int(k)
+    from collections import defaultdict
+    positions = defaultdict(list)
+    for i, v in enumerate(a):
+        positions[v].append(i)
+    ans = 0
+    for pos in positions.values():
+        left = 0
+        for right in range(len(pos)):
+            while pos[right] - pos[left] - (right - left) > ki:
+                left += 1
+            ans = max(ans, right - left + 1)
+    return ans
+`,
+
+  'minimum-equal-sum-of-two-arrays-after-replacing-zeros': `def minSum(nums1, nums2):
+    a = list(int(x) for x in (nums1.to_py() if hasattr(nums1, 'to_py') else nums1))
+    b = list(int(x) for x in (nums2.to_py() if hasattr(nums2, 'to_py') else nums2))
+    zeros1 = a.count(0)
+    zeros2 = b.count(0)
+    min1 = sum(a) + zeros1
+    min2 = sum(b) + zeros2
+    if zeros1 == 0 and min1 < min2:
+        return -1
+    if zeros2 == 0 and min2 < min1:
+        return -1
+    return max(min1, min2)
+`,
 };
