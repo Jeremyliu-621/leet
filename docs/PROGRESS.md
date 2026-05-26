@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1971** problems; 6201 tests green. Batches 88–89 merged (local + remote). InlineText component, a11y fixes, site stats updated to 1,970+.
+**Current focus:** Bank at **1974** problems; 6201 tests green. Batch 90 complete (3 problems: math, greedy, hash-map).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 90); UI/UX polish.
+**Next up:** Continued bank growth (batch 91); UI/UX polish.
+
+### feat(bank): add batch 90 — sum-of-square-numbers, mice-and-cheese, maximum-size-subarray-sum-equals-k (2026-05-26)
+Added 3 problems: `sum-of-square-numbers` (easy/math, Fermat two-square theorem, √c iteration), `mice-and-cheese` (medium/greedy, delta-sort to maximize k assignments), `maximum-size-subarray-sum-equals-k` (medium/hash-map, prefix sum + first-seen map for O(n)). Corrected 5 wrong hidden test expected values via brute-force verification. Bank at **1974**; 6201 tests.
 
 ### merge: batches 88–89 local + remote (2026-05-26)
 Local batch 88: `check-if-there-is-a-valid-partition-for-the-array` (medium/dp), `reverse-nodes-in-even-length-groups` (medium/linked-list), `minimum-difference-in-sums-after-removal-of-elements` (hard/heap); `InlineText` component for backtick inline code; site stats to 1,950+.

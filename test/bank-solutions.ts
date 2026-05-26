@@ -30706,4 +30706,43 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ops;
   },
 
+  // --- batch 90 -----------------------------------------------------------
+  'sum-of-square-numbers': (...args: unknown[]) => {
+    const c = args[0] as number;
+    for (let a = 0; a * a <= c; a++) {
+      const b2 = c - a * a;
+      const b = Math.round(Math.sqrt(b2));
+      if (b * b === b2) return true;
+    }
+    return false;
+  },
+
+  'mice-and-cheese': (...args: unknown[]) => {
+    const [reward1, reward2, k] = args as [number[], number[], number];
+    const n = reward1.length;
+    let base = 0;
+    const deltas: number[] = [];
+    for (let i = 0; i < n; i++) {
+      base += reward2[i]!;
+      deltas.push(reward1[i]! - reward2[i]!);
+    }
+    deltas.sort((a, b) => b - a);
+    let total = base;
+    for (let i = 0; i < k; i++) total += deltas[i]!;
+    return total;
+  },
+
+  'maximum-size-subarray-sum-equals-k': (...args: unknown[]) => {
+    const [nums, k] = args as [number[], number];
+    const map = new Map<number, number>([[0, -1]]);
+    let prefix = 0, maxLen = 0;
+    for (let j = 0; j < nums.length; j++) {
+      prefix += nums[j]!;
+      const target = prefix - k;
+      if (map.has(target)) maxLen = Math.max(maxLen, j - map.get(target)!);
+      if (!map.has(prefix)) map.set(prefix, j);
+    }
+    return maxLen;
+  },
+
 };
