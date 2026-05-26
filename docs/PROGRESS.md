@@ -6,15 +6,11 @@
 
 ---
 
-**Last updated:** 2026-05-24
-**Current phase:** Phase 13 — Post-MVP polish · Pyodide rollout
-**Current focus:** **Pyodide rollout complete (M1–M7).** Every bank problem is Python-capable end-to-end;
-warm-on-mount hides the cold-boot; Options "About" surfaces first-boot ms + run count.
-**Build status:** 🟢 `npm run build` + `npm run test` green (297 unit tests across 21 files) +
-18/18 Playwright e2e against real Chromium (incl. `e2e/python-flow.spec.ts`).
-**Next up:** Vim keymap toggle (`@replit/codemirror-vim` Compartment + popup toggle), draggable
-splitter between problem and editor panels, hints for the remaining 13 problems (11/24 enriched),
-address logged a11y findings (text-faint contrast, one `aria-prohibited-attr`).
+**Last updated:** 2026-05-26
+**Current phase:** Phase 12 — Polish, tests, CI (finishing up) → Phase 13
+**Current focus:** Edge-case sweep complete (28 new tests; 325 total). Next: grow problem bank to 50+ then tackle vim keymap toggle.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (325 tests across 22 files).
+**Next up:** Grow the problem bank to 50+ verified problems across more tags/difficulties.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -151,7 +147,7 @@ address logged a11y findings (text-faint contrast, one `aria-prohibited-attr`).
 ## Phase 12 — Polish, tests, CI 🟡
 
 - [x] Accessibility baseline — axe-core/playwright integration in `e2e/a11y.spec.ts` audits all 4 surfaces; passes (no critical violations). Known logged findings for next polish pass: color-contrast on `text-faint` microlabels across all surfaces (design-system tradeoff), and one `aria-prohibited-attr` on the challenge page.
-- [ ] Edge-case sweep across all `src/lib` modules
+- [x] Edge-case sweep across all `src/lib` modules — 28 new tests in `test/edge-cases.test.ts` covering unlock tokens, blocking matcher, and streak (empty inputs, boundary expiry, case normalisation, history cap, same-day multi-solve); 325 tests total
 - [x] Integration tests for core flows — `reconcile()` extracted, fake-chrome covers DNR + alarms + runtime, 18 SW integration tests in `test/sw-reconcile.test.ts`
 - [x] GitHub Actions CI: typecheck + test + build (artifacts uploaded for 14 days)
 - [x] **Playwright load-extension smoke test — 4 tests in `e2e/extension.spec.ts` exercise the SW, popup, options, and challenge pages against real Chromium with `dist/` loaded as an unpacked extension. Caught and fixed a real bug — CRXJS was shipping unmodified `./main.tsx` references for web-accessible HTML (see `DECISIONS.md` D15).**
