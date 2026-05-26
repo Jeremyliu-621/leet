@@ -31514,10 +31514,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return max / k;
   },
 
-<<<<<<< HEAD
   // batch 95
-=======
->>>>>>> origin/main
   'di-string-match': (...args: unknown[]) => {
     const s = args[0] as string;
     const n = s.length;
@@ -31559,7 +31556,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return maxIdx;
   },
 
-<<<<<<< HEAD
   // batch 97
   '4sum': (...args: unknown[]) => {
     const [numsRaw, target] = args as [number[], number];
@@ -31600,8 +31596,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return ans;
   },
-=======
->>>>>>> origin/main
 
   'find-longest-awesome-substring': (...args: unknown[]) => {
     const s = args[0] as string;

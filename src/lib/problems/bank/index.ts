@@ -2161,10 +2161,6 @@ import { problem as minimumLengthOfAnagramConcatenation } from './minimum-length
 import { problem as countOfMatchesInTournament } from './count-of-matches-in-tournament';
 import { problem as findWinnerOnATicTacToeGame } from './find-winner-on-a-tic-tac-toe-game';
 import { problem as sortFeaturesByPopularity } from './sort-features-by-popularity';
-<<<<<<< HEAD
-=======
-// batch 94 — math/easy, math+hash-map/medium, tree/medium
->>>>>>> origin/main
 import { problem as rotatedDigits } from './rotated-digits';
 import { problem as rabbitsInForest } from './rabbits-in-forest';
 import { problem as smallestStringStartingFromLeaf } from './smallest-string-starting-from-leaf';
@@ -2176,12 +2172,9 @@ import { problem as maximumAverageSubarrayI } from './maximum-average-subarray-i
 import { problem as diStringMatch } from './di-string-match';
 import { problem as shortestDistanceToACharacter } from './shortest-distance-to-a-character';
 import { problem as largestNumberAtLeastTwiceOfOthers } from './largest-number-at-least-twice-of-others';
-<<<<<<< HEAD
 // batch 97 — two-pointers, stack
 import { problem as fourSumVariant } from './4sum';
 import { problem as dailyTemperaturesVariant } from './monotonic-stack-daily-temperatures';
-=======
->>>>>>> origin/main
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4380,10 +4373,6 @@ export const problems: readonly Problem[] = [
   countOfMatchesInTournament,
   findWinnerOnATicTacToeGame,
   sortFeaturesByPopularity,
-<<<<<<< HEAD
-=======
-  // batch 94 — math/easy, math+hash-map/medium, tree/medium
->>>>>>> origin/main
   rotatedDigits,
   rabbitsInForest,
   smallestStringStartingFromLeaf,
@@ -4395,10 +4384,7 @@ export const problems: readonly Problem[] = [
   diStringMatch,
   shortestDistanceToACharacter,
   largestNumberAtLeastTwiceOfOthers,
-<<<<<<< HEAD
   // batch 97 — two-pointers, stack
   fourSumVariant,
   dailyTemperaturesVariant,
-=======
->>>>>>> origin/main
 ];
