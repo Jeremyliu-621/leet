@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1715 problems; 5430 tests green.
+**Current focus:** Bank at 1723 problems; 5457 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank toward 1750; UX polish (browser-zoom QA, accessibility improvements).
+**Next up:** Update marketing site to 1700+; continue growing problem bank toward 1750; UX polish.
+
+### Batch 69-local (2026-05-26)
+Added 9 new problems: `image-smoother` (easy/arrays, 3×3 box filter floor-average), `complex-number-multiplication` (medium/strings+math, (a+bi)(c+di) formula), `number-of-boomerangs` (medium/hash-map+math, equidistant ordered pairs), `find-duplicate-file-in-system` (medium/strings+hash-map, content-to-path grouping), `poor-pigs` (hard/math+dp, (rounds+1)^pigs >= buckets), `strobogrammatic-number` (easy/strings+math, two-pointer pair validation), `fraction-addition-and-subtraction` (medium/strings+math, gcd cross-multiply), `longest-zigzag-path-in-binary-tree` (medium/tree+dp, DFS direction tracking), `find-the-duplicate-subtrees` (medium/tree+hash-map, post-order serialization). Also fixed duplicate import of `minimum-replacements-to-sort-array`. JS + Python solutions for all. Bank at **1723**; 5457 tests.
 
 ### Batch 67-local (2026-05-26)
 Added 5 new problems: `number-of-ways-to-select-buildings` (medium/strings+dp, 010/101 subsequence count), `maximum-fruits-harvested-after-at-most-k-steps` (hard/arrays+sliding-window, reachable range), `count-unique-chars-of-all-substrings` (hard/strings+dp, prev/next same-char contribution), `minimum-money-required-before-transactions` (hard/arrays+math, worst-case ordering), `count-subarrays-with-fixed-bounds` (hard/arrays+sliding-window, jbad/jmin/jmax tracking). JS + Python solutions for all. Bank at **1715**; 5430 tests.
