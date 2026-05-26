@@ -2153,18 +2153,15 @@ import { problem as maximizeScoreAfterNOperations } from './maximize-score-after
 import { problem as primeSubtractionOperation } from './prime-subtraction-operation';
 import { problem as findTheLongestSemiRepetitiveSubarray } from './find-the-longest-semi-repetitive-subarray';
 import { problem as countNumberOfFairPairs } from './count-number-of-fair-pairs';
-<<<<<<< HEAD
 // batch 93 — strings/hard, arrays+math+union-find/hard, strings+hash-map/medium
 import { problem as findLongestAwesomeSubstring } from './find-longest-awesome-substring';
 import { problem as greatestCommonDivisorTraversal } from './greatest-common-divisor-traversal';
 import { problem as minimumLengthOfAnagramConcatenation } from './minimum-length-of-anagram-concatenation';
-// batch 94 — math/easy, math+hash-map/medium, tree/medium
-=======
 // batch 94 — math, simulation, arrays+hash-map, tree
 import { problem as countOfMatchesInTournament } from './count-of-matches-in-tournament';
 import { problem as findWinnerOnATicTacToeGame } from './find-winner-on-a-tic-tac-toe-game';
 import { problem as sortFeaturesByPopularity } from './sort-features-by-popularity';
->>>>>>> origin/main
+// batch 94 — math/easy, math+hash-map/medium, tree/medium
 import { problem as rotatedDigits } from './rotated-digits';
 import { problem as rabbitsInForest } from './rabbits-in-forest';
 import { problem as smallestStringStartingFromLeaf } from './smallest-string-starting-from-leaf';
@@ -2172,17 +2169,10 @@ import { problem as smallestStringStartingFromLeaf } from './smallest-string-sta
 import { problem as findLargestValueInEachTreeRow } from './find-largest-value-in-each-tree-row';
 // batch 94 — sliding-window
 import { problem as maximumAverageSubarrayI } from './maximum-average-subarray-i';
-<<<<<<< HEAD
 // batch 95 — arrays/strings
 import { problem as diStringMatch } from './di-string-match';
 import { problem as shortestDistanceToACharacter } from './shortest-distance-to-a-character';
 import { problem as largestNumberAtLeastTwiceOfOthers } from './largest-number-at-least-twice-of-others';
-=======
-// batch 93 — strings/hard, arrays+math+union-find/hard, strings+hash-map/medium
-import { problem as findLongestAwesomeSubstring } from './find-longest-awesome-substring';
-import { problem as greatestCommonDivisorTraversal } from './greatest-common-divisor-traversal';
-import { problem as minimumLengthOfAnagramConcatenation } from './minimum-length-of-anagram-concatenation';
->>>>>>> origin/main
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4373,18 +4363,15 @@ export const problems: readonly Problem[] = [
   primeSubtractionOperation,
   findTheLongestSemiRepetitiveSubarray,
   countNumberOfFairPairs,
-<<<<<<< HEAD
   // batch 93 — strings/hard, arrays+math+union-find/hard, strings+hash-map/medium
   findLongestAwesomeSubstring,
   greatestCommonDivisorTraversal,
   minimumLengthOfAnagramConcatenation,
-  // batch 94 — math/easy, math+hash-map/medium, tree/medium
-=======
   // batch 94 — math, simulation, arrays+hash-map, tree
   countOfMatchesInTournament,
   findWinnerOnATicTacToeGame,
   sortFeaturesByPopularity,
->>>>>>> origin/main
+  // batch 94 — math/easy, math+hash-map/medium, tree/medium
   rotatedDigits,
   rabbitsInForest,
   smallestStringStartingFromLeaf,
@@ -4392,15 +4379,8 @@ export const problems: readonly Problem[] = [
   findLargestValueInEachTreeRow,
   // batch 94 — sliding-window
   maximumAverageSubarrayI,
-<<<<<<< HEAD
   // batch 95 — arrays/strings
   diStringMatch,
   shortestDistanceToACharacter,
   largestNumberAtLeastTwiceOfOthers,
-=======
-  // batch 93 — strings/hard, arrays+math+union-find/hard, strings+hash-map/medium
-  findLongestAwesomeSubstring,
-  greatestCommonDivisorTraversal,
-  minimumLengthOfAnagramConcatenation,
->>>>>>> origin/main
 ];

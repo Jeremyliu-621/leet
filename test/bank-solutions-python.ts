@@ -30982,7 +30982,6 @@ def findMaxAverage(nums, k):
     return mx / k
 `,
 
-<<<<<<< HEAD
   'di-string-match': `
 def diStringMatch(s):
     n = len(s)
@@ -31028,8 +31027,7 @@ def dominantIndex(nums):
     return max_idx
 `,
 
-=======
->>>>>>> origin/main
+
   'find-longest-awesome-substring': `
 def longestAwesome(s):
     seen = [-2] * (1 << 10)
