@@ -112,11 +112,11 @@ def buildTree(arr):
     { args: [[1], 1], expected: 0 },
   ],
   hiddenTests: [
-    { args: [[1, 2, 3, 4, 5, 6, 7], 3], expected: 6 },
-    { args: [[1, 2, null, 3, null, null, null, 4], 3], expected: 1 },
+    { args: [[1, 2, 3, 4, 5, 6, 7], 3], expected: 2 },
+    { args: [[1, 2, null, 3, null, null, null, 4], 3], expected: 0 },
     { args: [[1, 2, 3], 1], expected: 0 },
     { args: [[1, 2, 3], 2], expected: 1 },
-    { args: [[1, 2, 3, 4, null, null, 5], 3], expected: 2 },
+    { args: [[1, 2, 3, 4, null, null, 5], 3], expected: 0 },
     { args: [[1, 2, 3, 4, 5, 6, 7], 2], expected: 2 },
   ],
 };

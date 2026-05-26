@@ -2083,6 +2083,17 @@ import { problem as countElementsWithSmallerAndGreaterElement } from './count-el
 import { problem as splitTheArray } from './split-the-array';
 import { problem as findTheScoreOfAllPrefixesOfAnArray } from './find-the-score-of-all-prefixes-of-an-array';
 import { problem as shortestCycleInAGraph } from './shortest-cycle-in-a-graph';
+// batch 88-remote — dp, graph, strings, sliding-window, tree, math
+import { problem as countSubarraysExactlyKDistinct } from './count-subarrays-exactly-k-distinct';
+import { problem as weightedJobScheduling } from './weighted-job-scheduling';
+import { problem as parallelCourses } from './parallel-courses';
+import { problem as parallelCoursesII } from './parallel-courses-ii';
+import { problem as findAllOccurrencesZAlgorithm } from './find-all-occurrences-z-algorithm';
+import { problem as gridCountPathsMod } from './grid-count-paths-mod';
+import { problem as maxSumSubmatrix } from './max-sum-submatrix';
+import { problem as maximumProductSubarrayLengthK } from './maximum-product-subarray-length-k';
+import { problem as nextGreaterElementDistances } from './next-greater-element-distances';
+import { problem as numberGoodLeafNodePairs } from './number-good-leaf-node-pairs';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4202,4 +4213,15 @@ export const problems: readonly Problem[] = [
   splitTheArray,
   findTheScoreOfAllPrefixesOfAnArray,
   shortestCycleInAGraph,
+  // batch 88-remote — dp, graph, strings, sliding-window, tree, math
+  countSubarraysExactlyKDistinct,
+  weightedJobScheduling,
+  parallelCourses,
+  parallelCoursesII,
+  findAllOccurrencesZAlgorithm,
+  gridCountPathsMod,
+  maxSumSubmatrix,
+  maximumProductSubarrayLengthK,
+  nextGreaterElementDistances,
+  numberGoodLeafNodePairs,
 ];

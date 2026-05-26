@@ -29734,4 +29734,230 @@ def findShortestCycle(n: int, edges: list) -> int:
     return -1 if ans == float('inf') else ans
 `,
 
+  'count-subarrays-exactly-k-distinct': `
+def subarraysWithKDistinct(nums: list, k: int) -> int:
+    def at_most(k):
+        freq = {}
+        left = 0
+        total = 0
+        for right in range(len(nums)):
+            v = int(nums[right])
+            freq[v] = freq.get(v, 0) + 1
+            while len(freq) > k:
+                lv = int(nums[left])
+                freq[lv] -= 1
+                if freq[lv] == 0:
+                    del freq[lv]
+                left += 1
+            total += right - left + 1
+        return total
+    return at_most(k) - at_most(k - 1)
+`,
+
+  'weighted-job-scheduling': `
+import bisect
+def jobScheduling(startTime: list, endTime: list, profit: list) -> int:
+    n = len(list(startTime))
+    jobs = sorted(zip(list(endTime), list(startTime), list(profit)))
+    dp = [0] * (n + 1)
+    ends = [0] + [j[0] for j in jobs]
+    for i in range(1, n + 1):
+        end_i, start_i, profit_i = jobs[i - 1]
+        j = bisect.bisect_right(ends, start_i, 0, i) - 1
+        dp[i] = max(dp[i - 1], profit_i + dp[j])
+    return dp[n]
+`,
+
+  'parallel-courses': `
+from collections import deque
+def minimumSemesters(n: int, relations: list) -> int:
+    indegree = [0] * (n + 1)
+    adj = [[] for _ in range(n + 1)]
+    for r in relations:
+        u, v = int(r[0]), int(r[1])
+        adj[u].append(v)
+        indegree[v] += 1
+    q = deque()
+    for i in range(1, n + 1):
+        if indegree[i] == 0:
+            q.append(i)
+    semesters = 0
+    processed = 0
+    while q:
+        semesters += 1
+        for _ in range(len(q)):
+            u = q.popleft()
+            processed += 1
+            for v in adj[u]:
+                indegree[v] -= 1
+                if indegree[v] == 0:
+                    q.append(v)
+    return semesters if processed == n else -1
+`,
+
+  'parallel-courses-ii': `
+def minNumberOfSemesters(n: int, relations: list, k: int) -> int:
+    prereq = [0] * n
+    for r in relations:
+        u, v = int(r[0]), int(r[1])
+        prereq[v] |= (1 << u)
+    INF = float('inf')
+    dp = [INF] * (1 << n)
+    dp[0] = 0
+    for mask in range(1 << n):
+        if dp[mask] == INF:
+            continue
+        avail = 0
+        for i in range(n):
+            if not (mask >> i & 1) and (prereq[i] & mask) == prereq[i]:
+                avail |= (1 << i)
+        sub = avail
+        while sub:
+            if bin(sub).count('1') <= k:
+                dp[mask | sub] = min(dp[mask | sub], dp[mask] + 1)
+            sub = (sub - 1) & avail
+    return dp[(1 << n) - 1]
+`,
+
+  'find-all-occurrences-z-algorithm': `
+def findAllOccurrences(text: str, pattern: str) -> list:
+    if not pattern or not text:
+        return []
+    s = pattern + '#' + text
+    n = len(s)
+    z = [0] * n
+    l, r = 0, 0
+    for i in range(1, n):
+        if i < r:
+            z[i] = min(r - i, z[i - l])
+        while i + z[i] < n and s[z[i]] == s[i + z[i]]:
+            z[i] += 1
+        if i + z[i] > r:
+            l, r = i, i + z[i]
+    m = len(pattern)
+    result = []
+    for i in range(m + 1, n):
+        if z[i] >= m:
+            result.append(i - m - 1)
+    return result
+`,
+
+  'grid-count-paths-mod': `
+def countPaths(grid: list) -> int:
+    MOD = 10 ** 9 + 7
+    g = [[int(v) for v in row] for row in grid]
+    m, n = len(g), len(g[0])
+    dp = [[0] * n for _ in range(m)]
+    dp[0][0] = 1
+    for i in range(m):
+        for j in range(n):
+            if i == 0 and j == 0:
+                continue
+            if g[i][j] == 1:
+                continue
+            top = dp[i-1][j] if i > 0 else 0
+            left = dp[i][j-1] if j > 0 else 0
+            dp[i][j] = (top + left) % MOD
+    return dp[m-1][n-1]
+`,
+
+  'max-sum-submatrix': `
+def maxSumSubmatrix(matrix: list) -> int:
+    mat = [[int(v) for v in row] for row in matrix]
+    m, n = len(mat), len(mat[0])
+    best = float('-inf')
+    for top in range(m):
+        col_sum = [0] * n
+        for bot in range(top, m):
+            for c in range(n):
+                col_sum[c] += mat[bot][c]
+            cur = col_sum[0]
+            run = col_sum[0]
+            for c in range(1, n):
+                run = max(col_sum[c], run + col_sum[c])
+                cur = max(cur, run)
+            best = max(best, cur)
+    return best
+`,
+
+  'maximum-product-subarray-length-k': `
+def maxProductSubarrayK(nums: list, k: int) -> int:
+    arr = list(nums)
+    n = len(arr)
+    best = float('-inf')
+    for i in range(n - k + 1):
+        prod = 1
+        for j in range(i, i + k):
+            prod *= arr[j]
+        best = max(best, prod)
+    return best
+`,
+
+  'next-greater-element-distances': `
+def nextGreaterDistances(nums: list) -> list:
+    arr = list(nums)
+    n = len(arr)
+    result = [-1] * n
+    stack = []
+    for i in range(n):
+        while stack and arr[i] > arr[stack[-1]]:
+            j = stack.pop()
+            result[j] = i - j
+        stack.append(i)
+    return result
+`,
+
+  'number-good-leaf-node-pairs': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def __from_array__(arr):
+    if hasattr(arr, 'to_py'):
+        raw = arr.to_py()
+    else:
+        raw = list(arr)
+    arr2 = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
+    if not arr2 or arr2[0] is None:
+        return None
+    root = TreeNode(arr2[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr2):
+        node = queue.pop(0)
+        if i < len(arr2) and arr2[i] is not None:
+            node.left = TreeNode(arr2[i]); queue.append(node.left)
+        i += 1
+        if i < len(arr2) and arr2[i] is not None:
+            node.right = TreeNode(arr2[i]); queue.append(node.right)
+        i += 1
+    return root
+
+def countPairs(root_arr, distance: int) -> int:
+    root = __from_array__(root_arr)
+    count = 0
+    def dfs(node):
+        nonlocal count
+        if not node:
+            return []
+        if not node.left and not node.right:
+            return [0]
+        left = dfs(node.left)
+        right = dfs(node.right)
+        for l in left:
+            for r in right:
+                if l + r + 2 <= distance:
+                    count += 1
+        merged = []
+        for d in left:
+            if d + 1 < distance:
+                merged.append(d + 1)
+        for d in right:
+            if d + 1 < distance:
+                merged.append(d + 1)
+        return merged
+    dfs(root)
+    return count
+`,
+
 };

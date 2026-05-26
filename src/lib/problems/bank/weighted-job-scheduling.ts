@@ -60,8 +60,8 @@ Each job can be selected at most once.
   hiddenTests: [
     { args: [[1, 3], [3, 5], [10, 20]], expected: 30 },
     { args: [[1, 2], [2, 3], [10, 20]], expected: 30 },
-    { args: [[1, 2], [3, 4], [10, 5]], expected: 15 },
-    { args: [[6, 3, 1], [7, 8, 5], [1, 20, 30]], expected: 50 },
+    { args: [[1, 2], [3, 4], [10, 5]], expected: 10 },
+    { args: [[6, 3, 1], [7, 8, 5], [1, 20, 30]], expected: 31 },
     { args: [[1, 2, 3], [4, 6, 5], [50, 30, 20]], expected: 50 },
     { args: [[1, 2, 3, 4], [3, 5, 10, 6], [20, 20, 100, 70]], expected: 120 },
   ],
