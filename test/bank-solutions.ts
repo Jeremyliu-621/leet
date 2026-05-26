@@ -30310,4 +30310,55 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'split-the-array': (...args: unknown[]) => {
+    const [nums] = args as [number[]];
+    const freq = new Map<number, number>();
+    for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+    for (const c of freq.values()) if (c > 2) return false;
+    return true;
+  },
+
+  'find-the-score-of-all-prefixes-of-an-array': (...args: unknown[]) => {
+    const [nums] = args as [number[]];
+    const ans: number[] = [];
+    let maxSoFar = 0;
+    let prefixSum = 0;
+    for (const x of nums) {
+      maxSoFar = Math.max(maxSoFar, x);
+      prefixSum += x + maxSoFar;
+      ans.push(prefixSum);
+    }
+    return ans;
+  },
+
+  'shortest-cycle-in-a-graph': (...args: unknown[]) => {
+    const [n, edges] = args as [number, number[][]];
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const e of edges) {
+      const u = e[0]!, v = e[1]!;
+      adj[u]!.push(v);
+      adj[v]!.push(u);
+    }
+    let ans = Infinity;
+    for (let start = 0; start < n; start++) {
+      const dist = new Array<number>(n).fill(-1);
+      const parent = new Array<number>(n).fill(-1);
+      dist[start] = 0;
+      const queue = [start];
+      for (let qi = 0; qi < queue.length; qi++) {
+        const u = queue[qi]!;
+        for (const v of adj[u]!) {
+          if (dist[v] === -1) {
+            dist[v] = dist[u]! + 1;
+            parent[v] = u;
+            queue.push(v);
+          } else if (parent[u] !== v) {
+            ans = Math.min(ans, dist[u]! + dist[v]! + 1);
+          }
+        }
+      }
+    }
+    return ans === Infinity ? -1 : ans;
+  },
+
 };

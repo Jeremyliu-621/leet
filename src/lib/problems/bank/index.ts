@@ -2083,6 +2083,10 @@ import { problem as countElementsWithSmallerAndGreaterElement } from './count-el
 import { problem as checkIfThereIsAValidPartitionForTheArray } from './check-if-there-is-a-valid-partition-for-the-array';
 import { problem as reverseNodesInEvenLengthGroups } from './reverse-nodes-in-even-length-groups';
 import { problem as minimumDifferenceInSumsAfterRemovalOfElements } from './minimum-difference-in-sums-after-removal-of-elements';
+// batch 88 — arrays, graph
+import { problem as splitTheArray } from './split-the-array';
+import { problem as findTheScoreOfAllPrefixesOfAnArray } from './find-the-score-of-all-prefixes-of-an-array';
+import { problem as shortestCycleInAGraph } from './shortest-cycle-in-a-graph';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4199,8 +4203,10 @@ export const problems: readonly Problem[] = [
   maximizeTheProfitAsTheSalesman,
   checkIfStringIsAnAcronymOfWords,
   countElementsWithSmallerAndGreaterElement,
-  // batch 88 — arrays/dp, linked-list, arrays/heap
   checkIfThereIsAValidPartitionForTheArray,
   reverseNodesInEvenLengthGroups,
   minimumDifferenceInSumsAfterRemovalOfElements,
+  splitTheArray,
+  findTheScoreOfAllPrefixesOfAnArray,
+  shortestCycleInAGraph,
 ];
