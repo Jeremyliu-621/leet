@@ -21,6 +21,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   preferredLanguage: 'javascript',
   editorKeymap: 'default',
   editorTabSize: 2,
+  splitRatio: 0.42,
 };
 
 /**

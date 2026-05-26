@@ -11,6 +11,7 @@ import { parseTargetParam, extractDomain } from './challenge-helpers';
 import { TopBar } from './components/TopBar';
 import { ProblemPanel } from './components/ProblemPanel';
 import { EditorPanel } from './components/EditorPanel';
+import { DraggableSplitter } from './components/DraggableSplitter';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -123,6 +124,9 @@ export function Challenge() {
   const [editorKeymap, setEditorKeymap] = useState<EditorKeymap>(DEFAULT_PREFERENCES.editorKeymap);
   const [editorTabSize, setEditorTabSize] = useState<2 | 4>(DEFAULT_PREFERENCES.editorTabSize);
 
+  // Panel split ratio (left panel fraction of total width, in [0.2, 0.8]).
+  const [splitRatio, setSplitRatio] = useState(DEFAULT_PREFERENCES.splitRatio);
+
   // -------------------------------------------------------------------------
   // Load prefs + pick problem (once on mount)
   // -------------------------------------------------------------------------
@@ -164,6 +168,7 @@ export function Challenge() {
       setEditorFontSize(prefs.editorFontSize);
       setEditorKeymap(prefs.editorKeymap);
       setEditorTabSize(prefs.editorTabSize);
+      setSplitRatio(prefs.splitRatio);
       setPageState({ status: 'ready', problem, prefs });
 
       // Warm Pyodide while the user is reading the problem, so the first
@@ -426,6 +431,21 @@ export function Challenge() {
     })();
   }, []);
 
+  // Split ratio — real-time update (no persistence on every mouse move).
+  const handleSplitRatioChange = useCallback((ratio: number) => {
+    setSplitRatio(ratio);
+  }, []);
+
+  // Commit split ratio to storage when dragging ends.
+  const handleSplitRatioCommit = useCallback((ratio: number) => {
+    setSplitRatio(ratio);
+    void (async () => {
+      try {
+        await updateValue('userPreferences', (curr) => ({ ...curr, splitRatio: ratio }));
+      } catch { /* storage unavailable */ }
+    })();
+  }, []);
+
   // -------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------
@@ -452,23 +472,34 @@ export function Challenge() {
       {!targetUrl.current && <NoTargetBanner />}
 
       {/*
-       * Two-column layout:
-       *   - Left (problem panel): 5 parts, min-w-0 so text wraps correctly.
-       *   - Right (editor panel): 7 parts.
-       * Stacks vertically below ~900px via flex-col on narrow viewports.
+       * Two-column layout with a draggable splitter on lg+ viewports.
+       *   - Left (problem panel): controlled by splitRatio (e.g. 42%).
+       *   - Splitter: 9px drag handle, visible only on lg+.
+       *   - Right (editor panel): takes the remaining space.
+       * Stacks vertically below lg via flex-col on narrow viewports.
        */}
       <main
+        data-split-container
         className="min-h-0 flex-1 flex flex-col lg:flex-row overflow-hidden"
         aria-label="Challenge workspace"
       >
         {/* Problem panel — scrollable independently */}
-        <div className="flex flex-col overflow-hidden border-border lg:border-r lg:w-5/12 max-lg:border-b max-lg:max-h-[45vh]">
+        <div
+          className="flex flex-col overflow-hidden max-lg:border-b max-lg:max-h-[45vh] lg:shrink-0"
+          style={{ flexBasis: `${splitRatio * 100}%` }}
+        >
           <ProblemPanel
             problem={problem}
             hintCostLabel="1 min"
             onHintRevealed={() => setSecondsLeft((s) => Math.max(0, s - HINT_COST_SECONDS))}
           />
         </div>
+
+        {/* Draggable splitter — only visible on lg+ */}
+        <DraggableSplitter
+          onRatioChange={handleSplitRatioChange}
+          onRatioCommit={handleSplitRatioCommit}
+        />
 
         {/* Editor panel — fixed, no scroll on the outer shell */}
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden">

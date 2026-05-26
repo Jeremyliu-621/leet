@@ -169,6 +169,11 @@ export interface UserPreferences {
   editorKeymap: EditorKeymap;
   /** Number of spaces per indent level in the editor. */
   editorTabSize: 2 | 4;
+  /**
+   * Fraction of the two-column layout occupied by the left (problem) panel, in [0.2, 0.8].
+   * Only applies on large viewports (lg+) where the layout is horizontal.
+   */
+  splitRatio: number;
 }
 
 /** Theme options exposed in the UI. */
