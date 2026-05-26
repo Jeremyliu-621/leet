@@ -2153,7 +2153,10 @@ import { problem as maximizeScoreAfterNOperations } from './maximize-score-after
 import { problem as primeSubtractionOperation } from './prime-subtraction-operation';
 import { problem as findTheLongestSemiRepetitiveSubarray } from './find-the-longest-semi-repetitive-subarray';
 import { problem as countNumberOfFairPairs } from './count-number-of-fair-pairs';
-// batch 94 — math/easy, math+hash-map/medium, tree/medium
+// batch 94 — math, simulation, arrays+hash-map, tree
+import { problem as countOfMatchesInTournament } from './count-of-matches-in-tournament';
+import { problem as findWinnerOnATicTacToeGame } from './find-winner-on-a-tic-tac-toe-game';
+import { problem as sortFeaturesByPopularity } from './sort-features-by-popularity';
 import { problem as rotatedDigits } from './rotated-digits';
 import { problem as rabbitsInForest } from './rabbits-in-forest';
 import { problem as smallestStringStartingFromLeaf } from './smallest-string-starting-from-leaf';
@@ -4351,7 +4354,10 @@ export const problems: readonly Problem[] = [
   primeSubtractionOperation,
   findTheLongestSemiRepetitiveSubarray,
   countNumberOfFairPairs,
-  // batch 94 — math/easy, math+hash-map/medium, tree/medium
+  // batch 94 — math, simulation, arrays+hash-map, tree
+  countOfMatchesInTournament,
+  findWinnerOnATicTacToeGame,
+  sortFeaturesByPopularity,
   rotatedDigits,
   rabbitsInForest,
   smallestStringStartingFromLeaf,

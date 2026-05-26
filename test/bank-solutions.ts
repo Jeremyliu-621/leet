@@ -31458,6 +31458,49 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ops;
   },
 
+  // batch 94
+  'count-of-matches-in-tournament': (...args: unknown[]) => {
+    const [n] = args as [number];
+    return n - 1;
+  },
+
+  'find-winner-on-a-tic-tac-toe-game': (...args: unknown[]) => {
+    const [movesRaw] = args as [number[][]];
+    const moves = movesRaw.map(m => [m[0]!, m[1]!]);
+    const rows = [0, 0, 0], cols = [0, 0, 0];
+    let diag = 0, anti = 0;
+    for (let i = 0; i < moves.length; i++) {
+      const [r, c] = moves[i]!;
+      const v = i % 2 === 0 ? 1 : -1;
+      rows[r!]! += v; cols[c!]! += v;
+      if (r === c) diag += v;
+      if (r! + c! === 2) anti += v;
+    }
+    for (let k = 0; k < 3; k++) {
+      if (Math.abs(rows[k]!) === 3) return rows[k]! > 0 ? 'A' : 'B';
+      if (Math.abs(cols[k]!) === 3) return cols[k]! > 0 ? 'A' : 'B';
+    }
+    if (Math.abs(diag) === 3) return diag > 0 ? 'A' : 'B';
+    if (Math.abs(anti) === 3) return anti > 0 ? 'A' : 'B';
+    return moves.length === 9 ? 'Draw' : 'Pending';
+  },
+
+  'sort-features-by-popularity': (...args: unknown[]) => {
+    const [features, responses] = args as [string[], string[]];
+    const count = new Map<string, number>();
+    for (const f of features) count.set(f, 0);
+    for (const r of responses) {
+      const words = new Set(r.split(' '));
+      for (const f of features) {
+        if (words.has(f)) count.set(f, (count.get(f) ?? 0) + 1);
+      }
+    }
+    return features
+      .map((f, i) => [f, i] as [string, number])
+      .sort((a, b) => (count.get(b[0])! - count.get(a[0])!) || (a[1] - b[1]))
+      .map(([f]) => f);
+  },
+
   'maximum-average-subarray-i': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const k = args[1] as number;
