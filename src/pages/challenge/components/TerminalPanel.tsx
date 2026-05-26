@@ -483,6 +483,36 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
     prevResultRef.current = null;
   }, []);
 
+  const [copied, setCopied] = useState(false);
+  const handleCopyOutput = useCallback(() => {
+    const all = history.flat();
+    if (all.length === 0) return;
+    const lines = all.map((e) => {
+      switch (e.type) {
+        case 'system': return e.text;
+        case 'stdout': return `stdout: ${e.text}`;
+        case 'stderr': return `stderr: ${e.text}`;
+        case 'pass':   return `PASS  Test ${e.testIndex + 1}${e.input ? ` (${e.input})` : ''}${e.durationMs !== undefined ? ` ${e.durationMs}ms` : ''}`;
+        case 'fail':
+          return [
+            `FAIL  Test ${e.testIndex + 1}${e.input ? ` (${e.input})` : ''}`,
+            `  Expected: ${e.expected}`,
+            `  Actual:   ${e.actual}`,
+          ].join('\n');
+        case 'error':
+          return [`ERROR Test ${e.testIndex + 1}`, `  ${e.error}`].join('\n');
+        case 'summary': {
+          const label = e.outcome === 'accepted' && e.mode === 'run' ? 'TESTS PASSED' : (OUTCOME_LABELS[e.outcome] ?? e.outcome.toUpperCase());
+          return `${label}  ${e.passed}/${e.total} passed${e.durationMs !== undefined ? ` ${e.durationMs}ms` : ''}`;
+        }
+      }
+    });
+    void navigator.clipboard.writeText(lines.join('\n')).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    });
+  }, [history]);
+
   const allEntries = history.flat();
 
   return (
@@ -539,6 +569,17 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
           </button>
         </div>
         <div className="flex items-center gap-0.5 mr-1">
+          {allEntries.length > 0 && (
+            <button
+              type="button"
+              onClick={handleCopyOutput}
+              className="px-2 py-1 font-mono text-[9px] uppercase tracking-wider text-faint hover:text-muted transition-colors"
+              title="Copy terminal output"
+              aria-label="Copy terminal output to clipboard"
+            >
+              {copied ? '✓' : 'copy'}
+            </button>
+          )}
           <button
             type="button"
             onClick={handleClear}
