@@ -24,7 +24,7 @@ function displayResult(result: CustomTestStatus): React.ReactNode {
   if (result.status === 'running') {
     return (
       <div
-        className="mt-3 font-mono text-xs text-faint animate-pulse"
+        className="mt-3 font-mono text-xs text-faint motion-safe:animate-pulse"
         role="status"
         aria-live="polite"
       >
@@ -183,7 +183,7 @@ export function CustomTestPanel({ params, onRun, result }: CustomTestPanelProps)
           >
             {isRunning && (
               <svg
-                className="h-3 w-3 animate-spin"
+                className="h-3 w-3 motion-safe:animate-spin"
                 viewBox="0 0 24 24"
                 fill="none"
                 aria-hidden="true"

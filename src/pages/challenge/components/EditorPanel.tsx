@@ -681,7 +681,7 @@ export function EditorPanel({
             >
               {isRunning && verdictMode === 'run' && (
                 <svg
-                  className="h-3 w-3 animate-spin"
+                  className="h-3 w-3 motion-safe:animate-spin"
                   viewBox="0 0 24 24"
                   fill="none"
                   aria-hidden="true"
@@ -711,7 +711,7 @@ export function EditorPanel({
             >
               {isRunning && verdictMode === 'submit' && (
                 <svg
-                  className="h-3 w-3 animate-spin"
+                  className="h-3 w-3 motion-safe:animate-spin"
                   viewBox="0 0 24 24"
                   fill="none"
                   aria-hidden="true"

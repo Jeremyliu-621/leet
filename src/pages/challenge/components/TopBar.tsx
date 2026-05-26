@@ -122,7 +122,7 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
             className={[
               'font-mono text-sm font-bold tabular-nums',
               isExpired ? 'text-accent' : isLow ? 'text-text' : 'text-muted',
-              isCritical ? 'animate-pulse' : '',
+              isCritical ? 'motion-safe:animate-pulse' : '',
             ]
               .filter(Boolean)
               .join(' ')}

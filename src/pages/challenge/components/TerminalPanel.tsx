@@ -461,7 +461,7 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
             Test Results
             {/* Count badge: shows X/Y when a result exists; animated dots while running */}
             {result === undefined ? (
-              <span className="tabular-nums animate-pulse" aria-hidden="true">···</span>
+              <span className="tabular-nums motion-safe:animate-pulse" aria-hidden="true">···</span>
             ) : result != null ? (
               <span
                 className={`tabular-nums ${result.outcome === 'accepted' ? 'text-accent' : ''}`}
@@ -498,7 +498,7 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
         >
           {/* Running indicator */}
           {result === undefined && (
-            <div role="status" className="text-faint animate-pulse">
+            <div role="status" className="text-faint motion-safe:animate-pulse">
               <span className="mr-1">$</span> Running...
             </div>
           )}
@@ -524,7 +524,7 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
           className="p-3 space-y-2"
         >
           {result === undefined && (
-            <div role="status" className="text-faint animate-pulse font-mono text-xs">Running tests...</div>
+            <div role="status" className="text-faint motion-safe:animate-pulse font-mono text-xs">Running tests...</div>
           )}
           {result === null && (
             <div className="text-faint font-mono text-xs">
