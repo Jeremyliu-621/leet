@@ -30951,4 +30951,38 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return maxLen;
   },
 
+  'maximum-number-of-consecutive-values-you-can-make': (...args: unknown[]) => {
+    const coins = [...(args[0] as number[])];
+    coins.sort((a, b) => a - b);
+    let reach = 0;
+    for (const c of coins) {
+      if (c > reach + 1) break;
+      reach += c;
+    }
+    return reach + 1;
+  },
+
+  'determine-if-two-events-have-conflict': (...args: unknown[]) => {
+    const [event1, event2] = args as [string[], string[]];
+    return event1[0]! <= event2[1]! && event2[0]! <= event1[1]!;
+  },
+
+  'number-of-people-that-can-be-seen-in-a-grid': (...args: unknown[]) => {
+    const heights = [...(args[0] as number[])];
+    const n = heights.length;
+    const ans = new Array<number>(n).fill(0);
+    const stack: number[] = [];
+    for (let i = n - 1; i >= 0; i--) {
+      let count = 0;
+      while (stack.length && stack[stack.length - 1]! < heights[i]!) {
+        stack.pop();
+        count++;
+      }
+      if (stack.length) count++;
+      ans[i] = count;
+      stack.push(heights[i]!);
+    }
+    return ans;
+  },
+
 };
