@@ -24866,7 +24866,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const colBest = new Array<number>(n).fill(0);
     const dp = Array.from({ length: m }, () => new Array<number>(n).fill(1));
 
-    // collect all (value, row, col) and sort by value
     const cells: Array<[number, number, number]> = [];
     for (let i = 0; i < m; i++) {
       for (let j = 0; j < n; j++) {
@@ -24878,16 +24877,13 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     let ans = 1;
     let idx = 0;
     while (idx < cells.length) {
-      // collect group with same value
       let end = idx;
       while (end < cells.length && cells[end]![0] === cells[idx]![0]) end++;
       const group = cells.slice(idx, end);
-      // compute dp for each cell in group
       for (const [, r, c] of group) {
         dp[r]![c] = Math.max(rowBest[r]!, colBest[c]!) + 1;
         ans = Math.max(ans, dp[r]![c]!);
       }
-      // update row/col best after processing group
       for (const [, r, c] of group) {
         rowBest[r] = Math.max(rowBest[r]!, dp[r]![c]!);
         colBest[c] = Math.max(colBest[c]!, dp[r]![c]!);
@@ -24910,6 +24906,35 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     let ops = 0;
     for (const v of flat) ops += Math.abs(v - median) / xv;
     return ops;
+  },
+
+  'count-subarrays-with-fixed-bounds': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const minK = args[1] as number;
+    const maxK = args[2] as number;
+    let lastBad = -1, lastMin = -1, lastMax = -1;
+    let count = 0;
+    for (let i = 0; i < nums.length; i++) {
+      const v = nums[i] as number;
+      if (v < minK || v > maxK) lastBad = i;
+      if (v === minK) lastMin = i;
+      if (v === maxK) lastMax = i;
+      count += Math.max(0, Math.min(lastMin, lastMax) - lastBad);
+    }
+    return count;
+  },
+
+  // batch 67 (local)
+  'maximum-difference-in-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let minSoFar = nums[0] as number;
+    let maxDiff = -1;
+    for (let i = 1; i < nums.length; i++) {
+      const v = nums[i] as number;
+      if (v > minSoFar) maxDiff = Math.max(maxDiff, v - minSoFar);
+      else minSoFar = Math.min(minSoFar, v);
+    }
+    return maxDiff;
   },
 
   'minimum-moves-to-make-array-complementary': (nums: unknown, limit: unknown): unknown => {
@@ -24990,10 +25015,26 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'number-of-ways-to-select-buildings': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let c0 = 0, c1 = 0, c01 = 0, c10 = 0, ans = 0;
+    for (const ch of s) {
+      if (ch === '0') {
+        ans += c01;
+        c10 += c1;
+        c0++;
+      } else {
+        ans += c10;
+        c01 += c0;
+        c1++;
+      }
+    }
+    return ans;
+  },
+
   'find-longest-special-substring-that-occurs-thrice-i': (...args: unknown[]) => {
     const s = args[0] as string;
     const n = s.length;
-    // For each char, collect run lengths
     const runs = new Map<string, number[]>();
     let i = 0;
     while (i < n) {
@@ -25007,7 +25048,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     let best = -1;
     for (const [, lengths] of runs) {
       lengths.sort((a, b) => b - a);
-      // For each candidate length, count occurrences across all runs
       for (let len = lengths[0] ?? 0; len >= 1; len--) {
         let count = 0;
         for (const r of lengths) {
@@ -25321,6 +25361,66 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
         flip[i] = 1;
         flips++;
         ans++;
+      }
+    }
+    return ans;
+  },
+
+  'maximum-fruits-harvested-after-at-most-k-steps': (...args: unknown[]) => {
+    const fruits = args[0] as number[][];
+    const startPos = args[1] as number;
+    const k = args[2] as number;
+    const n = fruits.length;
+    if (n === 0) return 0;
+    const prefix = new Array(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + fruits[i]![1]!;
+    const canReach = (l: number, r: number): boolean => {
+      const L = fruits[l]![0]!;
+      const R = fruits[r]![0]!;
+      if (R <= startPos) return startPos - L <= k;
+      if (L >= startPos) return R - startPos <= k;
+      return Math.min(2 * (R - startPos) + (startPos - L), 2 * (startPos - L) + (R - startPos)) <= k;
+    };
+    let ans = 0, left = 0;
+    for (let right = 0; right < n; right++) {
+      while (left <= right && !canReach(left, right)) left++;
+      if (left <= right) ans = Math.max(ans, prefix[right + 1]! - prefix[left]!);
+    }
+    return ans;
+  },
+
+  'count-unique-chars-of-all-substrings': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const prev = new Array(n).fill(-1);
+    const next = new Array(n).fill(n);
+    const last = new Map<string, number>();
+    for (let i = 0; i < n; i++) {
+      if (last.has(s[i]!)) prev[i] = last.get(s[i]!)!;
+      last.set(s[i]!, i);
+    }
+    last.clear();
+    for (let i = n - 1; i >= 0; i--) {
+      if (last.has(s[i]!)) next[i] = last.get(s[i]!)!;
+      last.set(s[i]!, i);
+    }
+    let ans = 0;
+    for (let i = 0; i < n; i++) ans += (i - prev[i]!) * (next[i]! - i);
+    return ans;
+  },
+
+  'minimum-money-required-before-transactions': (...args: unknown[]) => {
+    const transactions = args[0] as number[][];
+    let totalLoss = 0;
+    for (const [cost, cashback] of transactions) {
+      if (cost! > cashback!) totalLoss += cost! - cashback!;
+    }
+    let ans = 0;
+    for (const [cost, cashback] of transactions) {
+      if (cost! > cashback!) {
+        ans = Math.max(ans, totalLoss + cashback!);
+      } else {
+        ans = Math.max(ans, totalLoss + cost!);
       }
     }
     return ans;

@@ -24437,6 +24437,25 @@ def secondMinimum(n, edges, time, change):
     return sum(abs(v - median) // x for v in flat)
 `,
 
+  'count-subarrays-with-fixed-bounds': `def countSubarrays(nums, minK, maxK):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    else:
+        nums = list(nums)
+    last_bad = last_min = last_max = -1
+    count = 0
+    for i, v in enumerate(nums):
+        v = int(v)
+        if v < minK or v > maxK:
+            last_bad = i
+        if v == minK:
+            last_min = i
+        if v == maxK:
+            last_max = i
+        count += max(0, min(last_min, last_max) - last_bad)
+    return count
+`,
+
   'minimum-moves-to-make-array-complementary': `def minMoves(nums, limit):
     n = len(nums)
     diff = [0] * (2 * limit + 2)
@@ -24684,6 +24703,7 @@ def secondMinimum(n, edges, time, change):
     return max(dp[1:])
 `,
 
+  // batch 69
   'merge-nodes-in-between-zeros': `def mergeNodes(head):
     dummy = ListNode(0)
     tail = dummy
@@ -24758,4 +24778,87 @@ def secondMinimum(n, edges, time, change):
             min_len = min(min_len, r - l + 1)
     return -1 if min_len == float('inf') else min_len + full_loops * n
 `,
+
+  // batch 67 (local)
+  'number-of-ways-to-select-buildings': `
+def numberOfWays(s):
+    c0 = c1 = c01 = c10 = ans = 0
+    for ch in str(s):
+        if ch == '0':
+            ans += c01
+            c10 += c1
+            c0 += 1
+        else:
+            ans += c10
+            c01 += c0
+            c1 += 1
+    return ans
+`,
+
+  'maximum-fruits-harvested-after-at-most-k-steps': `
+def maxTotalFruits(fruits, startPos, k):
+    if hasattr(fruits, 'to_py'):
+        raw = fruits.to_py()
+        fruits_list = [[int(raw[i][0]), int(raw[i][1])] for i in range(len(raw))]
+    else:
+        fruits_list = [[int(row[0]), int(row[1])] for row in fruits]
+    n = len(fruits_list)
+    if n == 0:
+        return 0
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + fruits_list[i][1]
+    def can_reach(l, r):
+        L, R = fruits_list[l][0], fruits_list[r][0]
+        if R <= startPos:
+            return startPos - L <= k
+        if L >= startPos:
+            return R - startPos <= k
+        return min(2 * (R - startPos) + (startPos - L),
+                   2 * (startPos - L) + (R - startPos)) <= k
+    ans = 0
+    left = 0
+    for right in range(n):
+        while left <= right and not can_reach(left, right):
+            left += 1
+        if left <= right:
+            ans = max(ans, prefix[right + 1] - prefix[left])
+    return ans
+`,
+
+  'count-unique-chars-of-all-substrings': `
+def uniqueLetterString(s):
+    n = len(s)
+    prev = [-1] * n
+    nxt = [n] * n
+    last = {}
+    for i in range(n):
+        if s[i] in last:
+            prev[i] = last[s[i]]
+        last[s[i]] = i
+    last = {}
+    for i in range(n - 1, -1, -1):
+        if s[i] in last:
+            nxt[i] = last[s[i]]
+        last[s[i]] = i
+    return sum((i - prev[i]) * (nxt[i] - i) for i in range(n))
+`,
+
+  'minimum-money-required-before-transactions': `
+def minimumMoney(transactions):
+    if hasattr(transactions, 'to_py'):
+        raw = transactions.to_py()
+        txns = [[int(raw[i][0]), int(raw[i][1])] for i in range(len(raw))]
+    else:
+        txns = [[int(row[0]), int(row[1])] for row in transactions]
+    total_loss = sum(max(0, c - b) for c, b in txns)
+    ans = 0
+    for c, b in txns:
+        if c > b:
+            ans = max(ans, total_loss + b)
+        else:
+            ans = max(ans, total_loss + c)
+    return ans
+`,
+
 };

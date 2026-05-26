@@ -1625,6 +1625,12 @@ import { problem as maximumStrongPairXorI } from './maximum-strong-pair-xor-i';
 import { problem as extraCharactersInAString } from './extra-characters-in-a-string';
 import { problem as kthLargestSumInABinaryTree } from './kth-largest-sum-in-a-binary-tree';
 import { problem as sumOfMatrixAfterQueries } from './sum-of-matrix-after-queries';
+// batch 67 (local)
+import { problem as countSubarraysWithFixedBounds } from './count-subarrays-with-fixed-bounds';
+import { problem as numberOfWaysToSelectBuildings } from './number-of-ways-to-select-buildings';
+import { problem as maximumFruitsHarvestedAfterAtMostKSteps } from './maximum-fruits-harvested-after-at-most-k-steps';
+import { problem as countUniqueCharsOfAllSubstrings } from './count-unique-chars-of-all-substrings';
+import { problem as minimumMoneyRequiredBeforeTransactions } from './minimum-money-required-before-transactions';
 // batch 66 (local)
 import { problem as findIfPathExistsInGraph } from './find-if-path-exists-in-graph';
 import { problem as longestSubarrayOfOnesAfterDeletingOneElement } from './longest-subarray-of-ones-after-deleting-one-element';
@@ -3481,6 +3487,12 @@ export const problems: readonly Problem[] = [
   extraCharactersInAString,
   kthLargestSumInABinaryTree,
   sumOfMatrixAfterQueries,
+  // batch 67 (local)
+  countSubarraysWithFixedBounds,
+  numberOfWaysToSelectBuildings,
+  maximumFruitsHarvestedAfterAtMostKSteps,
+  countUniqueCharsOfAllSubstrings,
+  minimumMoneyRequiredBeforeTransactions,
   // batch 66 (local)
   findIfPathExistsInGraph,
   longestSubarrayOfOnesAfterDeletingOneElement,
