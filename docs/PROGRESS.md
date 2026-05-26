@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1655 problems; 5253 tests green.
+**Current focus:** Bank at 1668 problems; 5268 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1700; UX polish (a11y, terminal UX).
+
+### Batch 66 (2026-05-26)
+Added 5 problems: `soup-servings` (medium/dp+math, memoized top-down DP; returns 1.0 for n≥4800), `minimum-number-of-rabbits` (medium/hash-map+math, frequency count + ceiling group formula), `the-maze-ii` (medium/graph, Dijkstra ball-rolling with step distances), `maximum-vacation-days` (hard/dp+graph, week-by-week DP through flight adjacency), `grid-illumination` (hard/hash-map, 4 direction count maps + 9-cell teardown). Also added missing JS+Python reference solutions for batch 64 remote problems (`minimum-taps-to-open-to-water-a-garden`, `put-marbles-in-bags`, and 3 others). Bank at **1668**; 5268 tests.
 
 ### Batch 65-local (2026-05-26)
 Added 5 problems: `count-pairs-that-form-a-complete-day-ii` (medium/arrays+math, same mod-24 freq approach), `kth-largest-element-in-a-stream` (easy/heap, design with sorted binary-insert), `check-if-the-sentence-is-pangram` (easy/strings, Set size >= 26), `count-number-of-ways-to-place-houses` (medium/dp, Fibonacci^2 mod 10^9+7), `count-ways-to-group-overlapping-ranges` (medium/arrays+math, merge intervals → 2^k). Bank at **1655**; 5253 tests.
