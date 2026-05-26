@@ -25859,5 +25859,204 @@ def distinctNames(ideas):
     return count
 `,
 
+  // batch 71
+  'find-peak-element-ii': `
+def findPeakGrid(mat):
+    m, n = len(mat), len(mat[0])
+    lo, hi = 0, n - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        max_row = max(range(m), key=lambda r: mat[r][mid])
+        val = mat[max_row][mid]
+        left = mat[max_row][mid - 1] if mid > 0 else -1
+        right = mat[max_row][mid + 1] if mid < n - 1 else -1
+        if val > left and val > right:
+            return [max_row, mid]
+        elif left > right:
+            hi = mid - 1
+        else:
+            lo = mid + 1
+    return [-1, -1]
+`,
+
+  'check-completeness-of-a-binary-tree': `
+def isCompleteTree(root):
+    if not root:
+        return False
+    from collections import deque
+    arr = root.to_py() if hasattr(root, 'to_py') else list(root)
+    n = len(arr)
+    seen_null = False
+    q = deque([0])
+    while q:
+        i = q.popleft()
+        if i >= n or not isinstance(arr[i], int):
+            seen_null = True
+            continue
+        if seen_null:
+            return False
+        q.append(2 * i + 1)
+        q.append(2 * i + 2)
+    return True
+`,
+
+  'all-ancestors-of-a-node-in-a-dag': `
+def getAncestors(n, edges):
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+    ancestors = [set() for _ in range(n)]
+    def dfs(node, anc):
+        for child in adj[node]:
+            if anc not in ancestors[child]:
+                ancestors[child].add(anc)
+                dfs(child, anc)
+    for i in range(n):
+        dfs(i, i)
+    return [sorted(a) for a in ancestors]
+`,
+
+  'number-of-nodes-in-subtree-with-same-label': `
+def countSubTrees(n, edges, labels):
+    from collections import defaultdict
+    adj = defaultdict(list)
+    for a, b in edges:
+        adj[a].append(b); adj[b].append(a)
+    ans = [0] * n
+    def dfs(node, parent):
+        cnt = [0] * 26
+        cnt[ord(labels[node]) - ord('a')] += 1
+        for child in adj[node]:
+            if child == parent:
+                continue
+            child_cnt = dfs(child, node)
+            for i in range(26):
+                cnt[i] += child_cnt[i]
+        ans[node] = cnt[ord(labels[node]) - ord('a')]
+        return cnt
+    dfs(0, -1)
+    return ans
+`,
+
+  'determine-if-cell-is-reachable-at-given-time': `
+def isReachableAtTime(sx, sy, fx, fy, t):
+    d = max(abs(fx - sx), abs(fy - sy))
+    if d == 0:
+        return t != 1
+    return t >= d
+`,
+
+  'sum-in-a-matrix': `
+def matrixSum(nums):
+    mat = [sorted(list(row), reverse=True) for row in nums]
+    return sum(max(mat[i][j] for i in range(len(mat))) for j in range(len(mat[0])))
+`,
+
+  'maximum-product-of-two-elements-in-an-array': `
+def maxProduct(nums):
+    a = sorted(list(nums), reverse=True)
+    return (a[0] - 1) * (a[1] - 1)
+`,
+
+  'largest-substring-between-two-equal-characters': `
+def maxLengthBetweenEqualCharacters(s):
+    first = {}
+    ans = -1
+    for i, c in enumerate(s):
+        if c in first:
+            ans = max(ans, i - first[c] - 1)
+        else:
+            first[c] = i
+    return ans
+`,
+
+  'destroy-sequential-targets': `
+def destroyTargets(nums, space):
+    from collections import defaultdict
+    groups = defaultdict(lambda: [0, float('inf')])
+    for v in nums:
+        r = v % space
+        groups[r][0] += 1
+        groups[r][1] = min(groups[r][1], v)
+    best_count, best_min = 0, float('inf')
+    for count, min_val in groups.values():
+        if count > best_count or (count == best_count and min_val < best_min):
+            best_count, best_min = count, min_val
+    return best_min
+`,
+
+  'minimize-result-by-adding-parentheses-to-expression': `
+def minimizeResult(expression):
+    plus = expression.index('+')
+    num1, num2 = expression[:plus], expression[plus+1:]
+    best = float('inf'); best_str = ''
+    for i in range(len(num1)):
+        for j in range(1, len(num2) + 1):
+            left = int(num1[:i]) if num1[:i] else 1
+            inner = int(num1[i:]) + int(num2[:j])
+            right = int(num2[j:]) if num2[j:] else 1
+            val = left * inner * right
+            if val < best:
+                best = val
+                best_str = f"{num1[:i]}({num1[i:]}+{num2[:j]}){num2[j:]}"
+    return best_str
+`,
+
+  'minimum-sum-of-a-k-avoiding-array': `
+def minimumSum(n, k):
+    picked = set()
+    total = 0; count = 0; i = 1
+    while count < n:
+        if k - i not in picked:
+            picked.add(i)
+            total += i
+            count += 1
+        i += 1
+    return total
+`,
+
+  'count-ways-to-build-rooms-in-an-ant-colony': `
+def waysToBuildRooms(prevRoom):
+    MOD = 10**9 + 7
+    n = len(prevRoom)
+    children = [[] for _ in range(n)]
+    for i in range(1, n):
+        children[prevRoom[i]].append(i)
+    size = [1] * n
+    order = []
+    stack = [0]
+    while stack:
+        node = stack.pop()
+        order.append(node)
+        for c in children[node]:
+            stack.append(c)
+    for node in reversed(order):
+        for c in children[node]:
+            size[node] += size[c]
+    fact = 1
+    for i in range(1, n + 1):
+        fact = fact * i % MOD
+    ans = fact
+    for s in size:
+        ans = ans * pow(s, MOD - 2, MOD) % MOD
+    return ans
+`,
+
+  'length-of-the-longest-alphabetical-continuous-substring': `
+def longestContinuousSubstring(s):
+    ans = cur = 1
+    for i in range(1, len(s)):
+        if ord(s[i]) == ord(s[i-1]) + 1:
+            cur += 1
+            ans = max(ans, cur)
+        else:
+            cur = 1
+    return ans
+`,
+
+  'number-of-strings-that-appear-as-substrings-in-word': `
+def numOfStrings(patterns, word):
+    return sum(1 for p in patterns if p in word)
+`,
 
 };
