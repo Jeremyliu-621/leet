@@ -478,6 +478,15 @@ export function EditorPanel({
   );
 
   const [showShortcuts, setShowShortcuts] = useState(false);
+  const [codeCopied, setCodeCopied] = useState(false);
+  const handleCopyCode = useCallback(() => {
+    const code = viewRef.current?.state.doc.toString() ?? '';
+    if (!code) return;
+    void navigator.clipboard.writeText(code).then(() => {
+      setCodeCopied(true);
+      setTimeout(() => setCodeCopied(false), 1500);
+    });
+  }, []);
 
   // Global `?` shortcut — opens the shortcuts modal unless the user is typing
   // in a text input or the code editor itself.
@@ -655,8 +664,17 @@ export function EditorPanel({
           </span>
         )}
 
-        {/* Right controls: shortcuts button + fullscreen toggle */}
+        {/* Right controls: copy code + shortcuts button + fullscreen toggle */}
         <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={handleCopyCode}
+            aria-label="Copy code to clipboard"
+            title="Copy code"
+            className="rounded-sm border border-transparent px-1.5 py-0.5 font-mono text-[10px] text-faint transition-colors hover:border-border hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+          >
+            {codeCopied ? '✓' : 'copy'}
+          </button>
           <button
             type="button"
             onClick={() => setShowShortcuts(true)}
