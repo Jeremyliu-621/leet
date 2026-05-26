@@ -2132,6 +2132,10 @@ import { problem as numberOfPeopleThatCanBeSeenInAGrid } from './number-of-peopl
 import { problem as alternatingGroupsI } from './alternating-groups-i';
 import { problem as longestBinarySubsequenceLessThanOrEqualToK } from './longest-binary-subsequence-less-than-or-equal-to-k';
 import { problem as minimumTimeToCompleteAllTasks } from './minimum-time-to-complete-all-tasks';
+// batch 93 — strings/hard, arrays+math+union-find/hard, strings+hash-map/medium
+import { problem as findLongestAwesomeSubstring } from './find-longest-awesome-substring';
+import { problem as greatestCommonDivisorTraversal } from './greatest-common-divisor-traversal';
+import { problem as minimumLengthOfAnagramConcatenation } from './minimum-length-of-anagram-concatenation';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4301,4 +4305,8 @@ export const problems: readonly Problem[] = [
   alternatingGroupsI,
   longestBinarySubsequenceLessThanOrEqualToK,
   minimumTimeToCompleteAllTasks,
+  // batch 93 — strings/hard, arrays+math+union-find/hard, strings+hash-map/medium
+  findLongestAwesomeSubstring,
+  greatestCommonDivisorTraversal,
+  minimumLengthOfAnagramConcatenation,
 ];

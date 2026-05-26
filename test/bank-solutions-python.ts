@@ -30502,4 +30502,96 @@ def findMinimumTime(tasks):
     return sum(run)
 `,
 
+  'find-longest-awesome-substring': `
+def longestAwesome(s):
+    seen = [-2] * (1 << 10)
+    seen[0] = -1
+    mask = 0
+    ans = 0
+    for i, c in enumerate(s):
+        mask ^= 1 << (ord(c) - 48)
+        if seen[mask] != -2:
+            ans = max(ans, i - seen[mask])
+        else:
+            seen[mask] = i
+        for d in range(10):
+            t = mask ^ (1 << d)
+            if seen[t] != -2:
+                ans = max(ans, i - seen[t])
+    return ans
+`,
+
+  'greatest-common-divisor-traversal': `
+def canTraverseAllPairs(nums):
+    n = len(nums)
+    if n == 1:
+        return True
+    if any(x == 1 for x in nums):
+        return False
+    parent = list(range(n))
+    rank = [0] * n
+
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    def union(x, y):
+        rx, ry = find(x), find(y)
+        if rx == ry:
+            return
+        if rank[rx] < rank[ry]:
+            parent[rx] = ry
+        elif rank[rx] > rank[ry]:
+            parent[ry] = rx
+        else:
+            parent[ry] = rx
+            rank[rx] += 1
+
+    prime_to_idx = {}
+    for i in range(n):
+        x = nums[i]
+        p = 2
+        while p * p <= x:
+            if x % p == 0:
+                if p in prime_to_idx:
+                    union(i, prime_to_idx[p])
+                else:
+                    prime_to_idx[p] = i
+                while x % p == 0:
+                    x //= p
+            p += 1
+        if x > 1:
+            if x in prime_to_idx:
+                union(i, prime_to_idx[x])
+            else:
+                prime_to_idx[x] = i
+
+    root = find(0)
+    return all(find(i) == root for i in range(n))
+`,
+
+  'minimum-length-of-anagram-concatenation': `
+def minAnagramLength(s):
+    n = len(s)
+    for k in range(1, n + 1):
+        if n % k != 0:
+            continue
+        target = [0] * 26
+        for i in range(k):
+            target[ord(s[i]) - 97] += 1
+        valid = True
+        for p in range(1, n // k):
+            cur = [0] * 26
+            for i in range(p * k, (p + 1) * k):
+                cur[ord(s[i]) - 97] += 1
+            if cur != target:
+                valid = False
+                break
+        if valid:
+            return k
+    return n
+`,
+
 };
