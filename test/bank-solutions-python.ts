@@ -28072,4 +28072,231 @@ def minCostReachAll(n, edges):
     return [-1 if d == float('inf') else d for d in dist]
 `,
 
+  'minimum-operations-to-make-all-array-elements-equal-to-one': `
+from math import gcd
+def minOperations(nums):
+    n = len(nums)
+    ones = nums.count(1)
+    if ones > 0:
+        return n - ones
+    min_len = float('inf')
+    for i in range(n):
+        g = nums[i]
+        for j in range(i + 1, n):
+            g = gcd(g, nums[j])
+            if g == 1:
+                min_len = min(min_len, j - i + 1)
+                break
+    return -1 if min_len == float('inf') else (min_len - 1) + (n - 1)
+`,
+
+  'find-indices-with-index-and-value-difference-ii': `
+def findIndices(nums, indexDiff, valueDiff):
+    min_idx = max_idx = 0
+    for j in range(len(nums)):
+        i = j - indexDiff
+        if i >= 0:
+            if nums[i] < nums[min_idx]:
+                min_idx = i
+            if nums[i] > nums[max_idx]:
+                max_idx = i
+            if nums[j] - nums[min_idx] >= valueDiff:
+                return [min_idx, j]
+            if nums[max_idx] - nums[j] >= valueDiff:
+                return [max_idx, j]
+    return [-1, -1]
+`,
+
+  'minimum-absolute-difference-queries': `
+def minDifference(nums, queries):
+    MAX_VAL = 100
+    n = len(nums)
+    prefix = [[0] * (n + 1) for _ in range(MAX_VAL + 1)]
+    for i, x in enumerate(nums):
+        for v in range(1, MAX_VAL + 1):
+            prefix[v][i + 1] = prefix[v][i] + (1 if x == v else 0)
+    result = []
+    for l, r in queries:
+        prev = -1
+        min_diff = float('inf')
+        for v in range(1, MAX_VAL + 1):
+            if prefix[v][r + 1] - prefix[v][l] > 0:
+                if prev != -1:
+                    min_diff = min(min_diff, v - prev)
+                prev = v
+        result.append(-1 if min_diff == float('inf') else min_diff)
+    return result
+`,
+
+  'minimum-cost-for-cutting-cake-ii': `
+def minimumCost(m, n, horizontalCut, verticalCut):
+    h = sorted(horizontalCut, reverse=True)
+    v = sorted(verticalCut, reverse=True)
+    hi = vi = 0
+    h_pieces = v_pieces = 1
+    total = 0
+    while hi < len(h) or vi < len(v):
+        hv = h[hi] if hi < len(h) else -1
+        vv = v[vi] if vi < len(v) else -1
+        if hv >= vv:
+            total += hv * v_pieces
+            h_pieces += 1
+            hi += 1
+        else:
+            total += vv * h_pieces
+            v_pieces += 1
+            vi += 1
+    return total
+`,
+
+  'find-number-of-ways-to-place-people': `
+def numberOfPairs(points):
+    pts = sorted([[p[0], p[1]] for p in points], key=lambda p: (p[0], -p[1]))
+    count = 0
+    for i in range(len(pts)):
+        max_y = float('-inf')
+        xi, yi = pts[i]
+        for j in range(i + 1, len(pts)):
+            xj, yj = pts[j]
+            if xj >= xi and yj <= yi:
+                if yj > max_y:
+                    count += 1
+                    max_y = yj
+    return count
+`,
+
+  'find-the-k-sum-of-an-array': `
+def kSum(nums, k):
+    from heapq import heappush, heappop
+    max_sum = sum(x for x in nums if x > 0)
+    abs_nums = sorted(abs(x) for x in nums)
+    heap = [(0, 0)]
+    ans = 0
+    for _ in range(k):
+        red, i = heappop(heap)
+        ans = max_sum - red
+        if i < len(abs_nums):
+            heappush(heap, (red + abs_nums[i], i + 1))
+            if i > 0:
+                heappush(heap, (red - abs_nums[i - 1] + abs_nums[i], i + 1))
+    return ans
+`,
+
+  'minimum-time-to-visit-disappearing-nodes': `
+def minimumTime(n, edges, disappear):
+    from heapq import heappush, heappop
+    adj = [[] for _ in range(n)]
+    for u, v, w in edges:
+        adj[u].append((v, w))
+        adj[v].append((u, w))
+    dist = [float('inf')] * n
+    dist[0] = 0
+    pq = [(0, 0)]
+    while pq:
+        d, u = heappop(pq)
+        if d > dist[u]:
+            continue
+        for v, w in adj[u]:
+            nd = d + w
+            if nd < disappear[v] and nd < dist[v]:
+                dist[v] = nd
+                heappush(pq, (nd, v))
+    return [-1 if d == float('inf') else d for d in dist]
+`,
+
+  'count-beautiful-substrings-i': `
+def beautifulSubstrings(s, k):
+    vowels = set('aeiou')
+    count = 0
+    for i in range(len(s)):
+        v = c = 0
+        for j in range(i, len(s)):
+            if s[j] in vowels:
+                v += 1
+            else:
+                c += 1
+            if v == c and (j - i + 1) % k == 0:
+                count += 1
+    return count
+`,
+
+  'sort-transformed-array': `
+def sortTransformed(nums, a, b, c):
+    f = lambda x: a * x * x + b * x + c
+    res = [0] * len(nums)
+    lo, hi = 0, len(nums) - 1
+    idx = len(nums) - 1 if a >= 0 else 0
+    while lo <= hi:
+        fl, fr = f(nums[lo]), f(nums[hi])
+        if a >= 0:
+            if fl >= fr:
+                res[idx] = fl; lo += 1
+            else:
+                res[idx] = fr; hi -= 1
+            idx -= 1
+        else:
+            if fl <= fr:
+                res[idx] = fl; lo += 1
+            else:
+                res[idx] = fr; hi -= 1
+            idx += 1
+    return res
+`,
+
+  'check-if-parentheses-string-can-be-valid': `
+def canBeValid(s, locked):
+    if len(s) % 2 != 0:
+        return False
+    lo = hi = 0
+    for i in range(len(s)):
+        if locked[i] == '1':
+            d = 1 if s[i] == '(' else -1
+            lo += d; hi += d
+        else:
+            lo -= 1; hi += 1
+        if hi < 0:
+            return False
+        if lo < 0:
+            lo = 0
+    return lo == 0
+`,
+
+  'find-the-number-of-distinct-colors-among-the-balls': `
+def queryResults(limit, queries):
+    ball_color = {}
+    color_count = {}
+    distinct = 0
+    result = []
+    for x, y in queries:
+        prev = ball_color.get(x)
+        if prev is not None and prev != y:
+            color_count[prev] -= 1
+            if color_count[prev] == 0:
+                del color_count[prev]
+                distinct -= 1
+        if prev != y:
+            ball_color[x] = y
+            color_count[y] = color_count.get(y, 0) + 1
+            if color_count[y] == 1:
+                distinct += 1
+        result.append(distinct)
+    return result
+`,
+
+  'count-the-number-of-arrays-with-k-matching-adjacent-elements': `
+def countGoodArrays(n, m, k):
+    MOD = 10**9 + 7
+    # C(n-1, k) * m * (m-1)^(n-1-k)
+    def comb_mod(n, r, mod):
+        if r < 0 or r > n:
+            return 0
+        num = den = 1
+        for i in range(r):
+            num = num * (n - i) % mod
+            den = den * (i + 1) % mod
+        return num * pow(den, mod - 2, mod) % mod
+    diff = n - 1 - k
+    return comb_mod(n - 1, k, MOD) * m % MOD * pow(m - 1, diff, MOD) % MOD
+`,
+
 };

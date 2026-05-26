@@ -28672,4 +28672,243 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dist.map(d => d === Infinity ? -1 : d);
   },
 
+  // batch 78
+  'minimum-operations-to-make-all-array-elements-equal-to-one': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+    const ones = nums.filter(x => x === 1).length;
+    if (ones > 0) return n - ones;
+    let minLen = Infinity;
+    for (let i = 0; i < n; i++) {
+      let g = nums[i]!;
+      for (let j = i + 1; j < n; j++) {
+        g = gcd(g, nums[j]!);
+        if (g === 1) { minLen = Math.min(minLen, j - i + 1); break; }
+      }
+    }
+    return minLen === Infinity ? -1 : (minLen - 1) + (n - 1);
+  },
+
+  'find-indices-with-index-and-value-difference-ii': (...args: unknown[]) => {
+    const [nums, indexDiff, valueDiff] = args as [number[], number, number];
+    let minIdx = 0, maxIdx = 0;
+    for (let j = 0; j < nums.length; j++) {
+      const i = j - indexDiff;
+      if (i >= 0) {
+        if (nums[i]! < nums[minIdx]!) minIdx = i;
+        if (nums[i]! > nums[maxIdx]!) maxIdx = i;
+      }
+      if (i >= 0) {
+        if (nums[j]! - nums[minIdx]! >= valueDiff) return [minIdx, j];
+        if (nums[maxIdx]! - nums[j]! >= valueDiff) return [maxIdx, j];
+      }
+    }
+    return [-1, -1];
+  },
+
+  'minimum-absolute-difference-queries': (...args: unknown[]) => {
+    const [nums, queries] = args as [number[], number[][]];
+    const MAX_VAL = 100;
+    const prefix: number[][] = Array.from({length: MAX_VAL + 1}, () => new Array(nums.length + 1).fill(0));
+    for (let i = 0; i < nums.length; i++)
+      for (let v = 1; v <= MAX_VAL; v++)
+        prefix[v]![i + 1] = prefix[v]![i]! + (nums[i] === v ? 1 : 0);
+    return queries.map(([l, r]) => {
+      let prev = -1, minDiff = Infinity;
+      for (let v = 1; v <= MAX_VAL; v++) {
+        if (prefix[v]![r! + 1]! - prefix[v]![l!]! > 0) {
+          if (prev !== -1) minDiff = Math.min(minDiff, v - prev);
+          prev = v;
+        }
+      }
+      return minDiff === Infinity ? -1 : minDiff;
+    });
+  },
+
+  'minimum-cost-for-cutting-cake-ii': (...args: unknown[]) => {
+    const [, , hCut, vCut] = args as [number, number, number[], number[]];
+    const h = [...hCut].sort((a, b) => b - a);
+    const v = [...vCut].sort((a, b) => b - a);
+    let hi = 0, vi = 0, hPieces = 1, vPieces = 1, total = 0;
+    while (hi < h.length || vi < v.length) {
+      const hv = h[hi] ?? -1, vv = v[vi] ?? -1;
+      if (hv >= vv) { total += hv * vPieces; hPieces++; hi++; }
+      else { total += vv * hPieces; vPieces++; vi++; }
+    }
+    return total;
+  },
+
+  'find-number-of-ways-to-place-people': (...args: unknown[]) => {
+    const points = args[0] as number[][];
+    points.sort((a, b) => a[0] !== b[0] ? a[0]! - b[0]! : b[1]! - a[1]!);
+    let count = 0;
+    for (let i = 0; i < points.length; i++) {
+      let maxY = -Infinity;
+      for (let j = i + 1; j < points.length; j++) {
+        const [xi, yi] = points[i]!;
+        const [xj, yj] = points[j]!;
+        if (xj! >= xi! && yj! <= yi!) {
+          if (yj! > maxY) { count++; maxY = yj!; }
+        }
+      }
+    }
+    return count;
+  },
+
+  'find-the-k-sum-of-an-array': (...args: unknown[]) => {
+    const [nums, k] = args as [number[], number];
+    let maxSum = 0;
+    for (const x of nums) if (x > 0) maxSum += x;
+    const abs = nums.map(x => Math.abs(x)).sort((a, b) => a - b);
+    // min-heap: [reduction, index]
+    const heap: [number, number][] = [[0, 0]];
+    const push = (val: [number, number]) => {
+      heap.push(val);
+      let i = heap.length - 1;
+      while (i > 0) {
+        const p = (i - 1) >> 1;
+        if (heap[p]![0] > heap[i]![0]) { [heap[p], heap[i]] = [heap[i]!, heap[p]!]; i = p; } else break;
+      }
+    };
+    const pop = () => {
+      const top = heap[0]!;
+      const last = heap.pop()!;
+      if (heap.length > 0) {
+        heap[0] = last;
+        let i = 0;
+        while (true) {
+          const l = 2*i+1, r = 2*i+2;
+          let s = i;
+          if (l < heap.length && heap[l]![0] < heap[s]![0]) s = l;
+          if (r < heap.length && heap[r]![0] < heap[s]![0]) s = r;
+          if (s !== i) { [heap[s], heap[i]] = [heap[i]!, heap[s]!]; i = s; } else break;
+        }
+      }
+      return top;
+    };
+    let ans = 0;
+    for (let t = 0; t < k; t++) {
+      const [red, i] = pop();
+      ans = maxSum - red;
+      if (i < abs.length) {
+        push([red + abs[i]!, i + 1]);
+        if (i > 0) push([red - abs[i-1]! + abs[i]!, i + 1]);
+      }
+    }
+    return ans;
+  },
+
+  'minimum-time-to-visit-disappearing-nodes': (...args: unknown[]) => {
+    const [n, edges, disappear] = args as [number, number[][], number[]];
+    const adj: [number, number][][] = Array.from({length: n}, () => []);
+    for (const e of edges) { adj[e[0]!]!.push([e[1]!, e[2]!]); adj[e[1]!]!.push([e[0]!, e[2]!]); }
+    const dist = new Array<number>(n).fill(Infinity);
+    dist[0] = 0;
+    const pq: [number, number][] = [[0, 0]];
+    while (pq.length > 0) {
+      pq.sort((a, b) => a[0]! - b[0]!);
+      const [d, u] = pq.shift()!;
+      if (d > dist[u]!) continue;
+      for (const [v, w] of adj[u]!) {
+        const nd = d + w;
+        if (nd < disappear[v]! && nd < dist[v]!) {
+          dist[v] = nd;
+          pq.push([nd, v]);
+        }
+      }
+    }
+    return dist.map(d => d === Infinity ? -1 : d);
+  },
+
+  'count-beautiful-substrings-i': (...args: unknown[]) => {
+    const [s, k] = args as [string, number];
+    const vowels = new Set(['a','e','i','o','u']);
+    let count = 0;
+    for (let i = 0; i < s.length; i++) {
+      let v = 0, c = 0;
+      for (let j = i; j < s.length; j++) {
+        if (vowels.has(s[j]!)) v++; else c++;
+        if (v === c && (j - i + 1) % k === 0) count++;
+      }
+    }
+    return count;
+  },
+
+  'sort-transformed-array': (...args: unknown[]) => {
+    const [nums, a, b, c] = args as [number[], number, number, number];
+    const f = (x: number) => a*x*x + b*x + c;
+    const res = new Array<number>(nums.length);
+    let lo = 0, hi = nums.length - 1, idx = a >= 0 ? nums.length - 1 : 0;
+    while (lo <= hi) {
+      const fl = f(nums[lo]!), fr = f(nums[hi]!);
+      if (a >= 0) { if (fl >= fr) { res[idx--] = fl; lo++; } else { res[idx--] = fr; hi--; } }
+      else { if (fl <= fr) { res[idx++] = fl; lo++; } else { res[idx++] = fr; hi--; } }
+    }
+    return res;
+  },
+
+  'check-if-parentheses-string-can-be-valid': (...args: unknown[]) => {
+    const [s, locked] = args as [string, string];
+    if (s.length % 2 !== 0) return false;
+    let lo = 0, hi = 0;
+    for (let i = 0; i < s.length; i++) {
+      if (locked[i] === '1') { const d = s[i] === '(' ? 1 : -1; lo += d; hi += d; }
+      else { lo--; hi++; }
+      if (hi < 0) return false;
+      if (lo < 0) lo = 0;
+    }
+    return lo === 0;
+  },
+
+  'find-the-number-of-distinct-colors-among-the-balls': (...args: unknown[]) => {
+    const [, queries] = args as [number, number[][]];
+    const ballColor = new Map<number, number>();
+    const colorCount = new Map<number, number>();
+    let distinct = 0;
+    const result: number[] = [];
+    for (const q of queries) {
+      const x = q[0]!, y = q[1]!;
+      const prev = ballColor.get(x);
+      if (prev !== undefined && prev !== y) {
+        const cnt = colorCount.get(prev)! - 1;
+        if (cnt === 0) { colorCount.delete(prev); distinct--; } else colorCount.set(prev, cnt);
+      }
+      if (prev !== y) {
+        ballColor.set(x, y);
+        const cnt = (colorCount.get(y) ?? 0) + 1;
+        if (cnt === 1) distinct++;
+        colorCount.set(y, cnt);
+      }
+      result.push(distinct);
+    }
+    return result;
+  },
+
+  'count-the-number-of-arrays-with-k-matching-adjacent-elements': (...args: unknown[]) => {
+    const [n, m, k] = args as [number, number, number];
+    const MOD = 1_000_000_007n;
+    const bn = BigInt(n), bm = BigInt(m), bk = BigInt(k);
+    const size = n;
+    const fact = new Array<bigint>(size + 1);
+    const inv = new Array<bigint>(size + 1);
+    fact[0] = 1n;
+    for (let i = 1; i <= size; i++) fact[i] = fact[i-1]! * BigInt(i) % MOD;
+    const modpow = (base: bigint, exp: bigint, mod: bigint): bigint => {
+      let r = 1n;
+      base = base % mod;
+      while (exp > 0n) { if (exp & 1n) r = r * base % mod; base = base * base % mod; exp >>= 1n; }
+      return r;
+    };
+    inv[size] = modpow(fact[size]!, MOD - 2n, MOD);
+    for (let i = size - 1; i >= 0; i--) inv[i] = inv[i+1]! * BigInt(i+1) % MOD;
+    const comb = (nn: bigint, rr: bigint): bigint => {
+      if (rr < 0n || rr > nn) return 0n;
+      return fact[Number(nn)]! * inv[Number(rr)]! % MOD * inv[Number(nn - rr)]! % MOD;
+    };
+    const diff = bn - 1n - bk;
+    const ans = comb(bn - 1n, bk) * bm % MOD * modpow(bm - 1n, diff, MOD) % MOD;
+    return Number(ans);
+  },
+
 };

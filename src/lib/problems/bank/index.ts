@@ -1988,6 +1988,19 @@ import { problem as shortestPathToFood } from './shortest-path-to-food';
 import { problem as minimumJumpsToReachHome } from './minimum-jumps-to-reach-home';
 import { problem as allPairsShortestPath } from './all-pairs-shortest-path';
 import { problem as minimumCostToReachAllNodes } from './minimum-cost-to-reach-all-nodes';
+// batch 78 — arrays, strings, math, graph
+import { problem as minimumOperationsMakeAllArrayElementsEqualToOne } from './minimum-operations-to-make-all-array-elements-equal-to-one';
+import { problem as findIndicesWithIndexAndValueDifferenceII } from './find-indices-with-index-and-value-difference-ii';
+import { problem as minimumAbsoluteDifferenceQueries } from './minimum-absolute-difference-queries';
+import { problem as minimumCostForCuttingCakeII } from './minimum-cost-for-cutting-cake-ii';
+import { problem as findNumberOfWaysToPlacePeople } from './find-number-of-ways-to-place-people';
+import { problem as findTheKSumOfAnArray } from './find-the-k-sum-of-an-array';
+import { problem as minimumTimeToVisitDisappearingNodes } from './minimum-time-to-visit-disappearing-nodes';
+import { problem as countBeautifulSubstringsI } from './count-beautiful-substrings-i';
+import { problem as sortTransformedArray } from './sort-transformed-array';
+import { problem as checkIfParenthesesStringCanBeValid } from './check-if-parentheses-string-can-be-valid';
+import { problem as findTheNumberOfDistinctColorsAmongTheBalls } from './find-the-number-of-distinct-colors-among-the-balls';
+import { problem as countTheNumberOfArraysWithKMatchingAdjacentElements } from './count-the-number-of-arrays-with-k-matching-adjacent-elements';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4012,4 +4025,17 @@ export const problems: readonly Problem[] = [
   minimumJumpsToReachHome,
   allPairsShortestPath,
   minimumCostToReachAllNodes,
+  // batch 78 — arrays, strings, math, graph
+  minimumOperationsMakeAllArrayElementsEqualToOne,
+  findIndicesWithIndexAndValueDifferenceII,
+  minimumAbsoluteDifferenceQueries,
+  minimumCostForCuttingCakeII,
+  findNumberOfWaysToPlacePeople,
+  findTheKSumOfAnArray,
+  minimumTimeToVisitDisappearingNodes,
+  countBeautifulSubstringsI,
+  sortTransformedArray,
+  checkIfParenthesesStringCanBeValid,
+  findTheNumberOfDistinctColorsAmongTheBalls,
+  countTheNumberOfArraysWithKMatchingAdjacentElements,
 ];
