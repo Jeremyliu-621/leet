@@ -31166,4 +31166,72 @@ def dailyTemperatures(temperatures):
     return ans
 `,
 
+  'find-longest-balanced-binary-substring': `
+def findTheLongestBalancedSubstring(s):
+    best = 0
+    i = 0
+    while i < len(s):
+        zeros = 0
+        while i < len(s) and s[i] == '0':
+            zeros += 1
+            i += 1
+        ones = 0
+        while i < len(s) and s[i] == '1':
+            ones += 1
+            i += 1
+        if zeros > 0 and ones > 0:
+            best = max(best, 2 * min(zeros, ones))
+    return best
+`,
+
+  'matrix-diagonal-sum-variant': `
+def diagonalSumVariant(mat):
+    mat = [list(row) for row in (mat.to_py() if hasattr(mat, 'to_py') else mat)]
+    n = len(mat)
+    total = 0
+    for i in range(n):
+        total += mat[i][i]
+        total += mat[i][n - 1 - i]
+    if n % 2 == 1:
+        mid = n // 2
+        total -= mat[mid][mid]
+    return total
+`,
+
+  'max-number-of-k-sum-pairs': `
+def maxOperations(nums, k):
+    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else list(nums))
+    ops = 0
+    l, r = 0, len(nums) - 1
+    while l < r:
+        s = nums[l] + nums[r]
+        if s == k:
+            ops += 1
+            l += 1
+            r -= 1
+        elif s < k:
+            l += 1
+        else:
+            r -= 1
+    return ops
+`,
+
+  'count-subarrays-max-element-k-times': `
+def countSubarrays(nums, k):
+    nums = nums.to_py() if hasattr(nums, 'to_py') else list(nums)
+    max_val = max(nums)
+    result = 0
+    count = 0
+    l = 0
+    for r in range(len(nums)):
+        if nums[r] == max_val:
+            count += 1
+        while count >= k:
+            result += len(nums) - r
+            if nums[l] == max_val:
+                count -= 1
+            l += 1
+    return result
+`,
+
 };

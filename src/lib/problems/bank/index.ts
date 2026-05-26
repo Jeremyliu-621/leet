@@ -2175,6 +2175,11 @@ import { problem as largestNumberAtLeastTwiceOfOthers } from './largest-number-a
 // batch 97 — two-pointers, stack
 import { problem as fourSumVariant } from './4sum';
 import { problem as dailyTemperaturesVariant } from './monotonic-stack-daily-temperatures';
+// batch 99 — strings/easy, arrays/easy, arrays/medium, sliding-window/medium
+import { problem as findLongestBalancedBinarySubstring } from './find-longest-balanced-binary-substring';
+import { problem as matrixDiagonalSumVariant } from './matrix-diagonal-sum-variant';
+import { problem as maxNumberOfKSumPairs } from './max-number-of-k-sum-pairs';
+import { problem as countSubarraysMaxElementKTimes } from './count-subarrays-max-element-k-times';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4387,4 +4392,9 @@ export const problems: readonly Problem[] = [
   // batch 97 — two-pointers, stack
   fourSumVariant,
   dailyTemperaturesVariant,
+  // batch 99 — strings/easy, arrays/easy, arrays/medium, sliding-window/medium
+  findLongestBalancedBinarySubstring,
+  matrixDiagonalSumVariant,
+  maxNumberOfKSumPairs,
+  countSubarraysMaxElementKTimes,
 ];

@@ -31669,4 +31669,70 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return n;
   },
 
+  'find-longest-balanced-binary-substring': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let best = 0;
+    let i = 0;
+    while (i < s.length) {
+      // count run of zeros
+      let zeros = 0;
+      while (i < s.length && s[i] === '0') { zeros++; i++; }
+      // count run of ones
+      let ones = 0;
+      while (i < s.length && s[i] === '1') { ones++; i++; }
+      if (zeros > 0 && ones > 0) {
+        best = Math.max(best, 2 * Math.min(zeros, ones));
+      }
+    }
+    return best;
+  },
+
+  'matrix-diagonal-sum-variant': (...args: unknown[]) => {
+    const mat = args[0] as number[][];
+    const n = mat.length;
+    let sum = 0;
+    for (let i = 0; i < n; i++) {
+      sum += mat[i]![i]!;
+      sum += mat[i]![n - 1 - i]!;
+    }
+    if (n % 2 === 1) {
+      const mid = Math.floor(n / 2);
+      sum -= mat[mid]![mid]!;
+    }
+    return sum;
+  },
+
+  'max-number-of-k-sum-pairs': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const k = args[1] as number;
+    let ops = 0;
+    let l = 0;
+    let r = nums.length - 1;
+    while (l < r) {
+      const s = nums[l]! + nums[r]!;
+      if (s === k) { ops++; l++; r--; }
+      else if (s < k) { l++; }
+      else { r--; }
+    }
+    return ops;
+  },
+
+  'count-subarrays-max-element-k-times': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const maxVal = Math.max(...nums);
+    let result = 0;
+    let count = 0;
+    let l = 0;
+    for (let r = 0; r < nums.length; r++) {
+      if (nums[r] === maxVal) count++;
+      while (count >= k) {
+        result += nums.length - r;
+        if (nums[l] === maxVal) count--;
+        l++;
+      }
+    }
+    return result;
+  },
+
 };
