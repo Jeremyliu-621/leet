@@ -1631,6 +1631,12 @@ import { problem as pacificAtlanticWaterFlow } from './pacific-atlantic-water-fl
 import { problem as criticalConnectionsInANetwork } from './critical-connections-in-a-network';
 import { problem as minimumCostToCutAStick } from './minimum-cost-to-cut-a-stick';
 import { problem as largestRectangleInHistogram } from './largest-rectangle-in-histogram';
+// batch 61
+import { problem as kClosestPointsToOrigin } from './k-closest-points-to-origin';
+import { problem as findAllAnagramsInAString } from './find-all-anagrams-in-a-string';
+import { problem as longestPalindrome } from './longest-palindrome';
+import { problem as reverseWordsInAString } from './reverse-words-in-a-string';
+import { problem as countPrimes } from './count-primes';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3308,4 +3314,10 @@ export const problems: readonly Problem[] = [
   criticalConnectionsInANetwork,
   minimumCostToCutAStick,
   largestRectangleInHistogram,
+  // batch 61
+  kClosestPointsToOrigin,
+  findAllAnagramsInAString,
+  longestPalindrome,
+  reverseWordsInAString,
+  countPrimes,
 ];

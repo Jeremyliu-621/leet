@@ -22525,4 +22525,66 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return maxArea;
   },
 
+  'k-closest-points-to-origin': (...args: unknown[]) => {
+    const points = args[0] as number[][];
+    const k = args[1] as number;
+    const sorted = [...points].sort((a, b) => (a[0]! ** 2 + a[1]! ** 2) - (b[0]! ** 2 + b[1]! ** 2));
+    return sorted.slice(0, k);
+  },
+
+  'find-all-anagrams-in-a-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const p = args[1] as string;
+    const result: number[] = [];
+    if (p.length > s.length) return result;
+    const pCount = new Array(26).fill(0);
+    const wCount = new Array(26).fill(0);
+    const a = 'a'.charCodeAt(0);
+    for (let i = 0; i < p.length; i++) {
+      pCount[p.charCodeAt(i) - a]!++;
+      wCount[s.charCodeAt(i) - a]!++;
+    }
+    if (pCount.join() === wCount.join()) result.push(0);
+    for (let i = p.length; i < s.length; i++) {
+      wCount[s.charCodeAt(i) - a]!++;
+      wCount[s.charCodeAt(i - p.length) - a]!--;
+      if (pCount.join() === wCount.join()) result.push(i - p.length + 1);
+    }
+    return result;
+  },
+
+  'longest-palindrome': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const freq = new Map<string, number>();
+    for (const c of s) freq.set(c, (freq.get(c) ?? 0) + 1);
+    let length = 0;
+    let hasOdd = false;
+    for (const count of freq.values()) {
+      length += Math.floor(count / 2) * 2;
+      if (count % 2 === 1) hasOdd = true;
+    }
+    return hasOdd ? length + 1 : length;
+  },
+
+  'reverse-words-in-a-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    return s.trim().split(/\s+/).reverse().join(' ');
+  },
+
+  'count-primes': (...args: unknown[]) => {
+    const n = args[0] as number;
+    if (n < 2) return 0;
+    const isPrime = new Uint8Array(n).fill(1);
+    isPrime[0] = 0;
+    isPrime[1] = 0;
+    for (let i = 2; i * i < n; i++) {
+      if (isPrime[i]) {
+        for (let j = i * i; j < n; j += i) isPrime[j] = 0;
+      }
+    }
+    let count = 0;
+    for (let i = 2; i < n; i++) if (isPrime[i]) count++;
+    return count;
+  },
+
 };

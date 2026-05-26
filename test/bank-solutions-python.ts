@@ -22280,4 +22280,67 @@ def secondMinimum(n, edges, time, change):
         stack.append(i)
     return max_area
 `,
+
+  'k-closest-points-to-origin': `def kClosest(points, k):
+    pts = points.to_py() if hasattr(points, 'to_py') else list(points)
+    ki = int(k)
+    pts_list = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in pts]
+    pts_list.sort(key=lambda p: p[0]**2 + p[1]**2)
+    return pts_list[:ki]
+`,
+
+  'find-all-anagrams-in-a-string': `def findAnagrams(s, p):
+    s = str(s)
+    p = str(p)
+    result = []
+    if len(p) > len(s):
+        return result
+    p_count = [0] * 26
+    w_count = [0] * 26
+    for c in p:
+        p_count[ord(c) - ord('a')] += 1
+    for c in s[:len(p)]:
+        w_count[ord(c) - ord('a')] += 1
+    if p_count == w_count:
+        result.append(0)
+    for i in range(len(p), len(s)):
+        w_count[ord(s[i]) - ord('a')] += 1
+        w_count[ord(s[i - len(p)]) - ord('a')] -= 1
+        if p_count == w_count:
+            result.append(i - len(p) + 1)
+    return result
+`,
+
+  'longest-palindrome': `def longestPalindrome(s):
+    s = str(s)
+    from collections import Counter
+    freq = Counter(s)
+    length = 0
+    has_odd = False
+    for count in freq.values():
+        length += (count // 2) * 2
+        if count % 2 == 1:
+            has_odd = True
+    return length + 1 if has_odd else length
+`,
+
+  'reverse-words-in-a-string': `def reverseWords(s):
+    s = str(s)
+    return ' '.join(reversed(s.split()))
+`,
+
+  'count-primes': `def countPrimes(n):
+    n = int(n)
+    if n < 2:
+        return 0
+    is_prime = [True] * n
+    is_prime[0] = is_prime[1] = False
+    i = 2
+    while i * i < n:
+        if is_prime[i]:
+            for j in range(i * i, n, i):
+                is_prime[j] = False
+        i += 1
+    return sum(is_prime)
+`,
 };
