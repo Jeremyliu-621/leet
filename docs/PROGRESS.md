@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13+ — Post-MVP polish
-**Current focus:** Draggable splitter shipped. Next: fullscreen-editor toggle.
+**Current focus:** Fullscreen toggle shipped. Next: custom test-case input drawer.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green (430 tests across 22 files).
-**Next up:** Fullscreen-editor toggle (hide the problem panel, editor takes full width).
+**Next up:** Custom test-case input drawer ("Testcase" tab below the editor).
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -173,7 +173,7 @@ Still pending:
 - [ ] **Python support via Pyodide** — research deliverable landing in `docs/PYODIDE_PLAN.md`; then execute the phased plan
 - [x] Editor settings popover — font size (12–20px), vim keymap toggle, tab-size (2/4 spaces) — gear icon in EditorPanel toolbar, persisted via updateValue
 - [x] Draggable splitter between problem and editor panels (+ persist splitRatio in prefs)
-- [ ] Fullscreen-editor toggle (after splitter)
+- [x] Fullscreen-editor toggle — gear toolbar button hides problem panel; session-only state
 - [ ] Custom test-case input drawer ("Testcase" tab)
 - [ ] Submission history + per-submit stats (runtime, attempts)
 - [ ] Streak heatmap, time-saved, settings import/export
