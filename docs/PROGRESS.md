@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1987** problems; 6270 tests green. Batches 91–92 complete.
+**Current focus:** Bank at **1993** problems; 6300 tests green. Batches 91–93 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 93); UI/UX polish.
+**Next up:** Continued bank growth (batch 94); UI/UX polish.
+
+### feat(bank): merge batches 92a+92b — prime-subtraction, semi-repetitive-subarray, fair-pairs integrated (2026-05-26)
+Merged local batch 92 (prime-subtraction-operation, find-the-longest-semi-repetitive-subarray, count-number-of-fair-pairs) with remote batch 92 (alternating-groups-i, count-vowel-substrings, min-cost-move-chips, string-compression-ii, build-array-stack-ops) and remote batch 93 (valid-perfect-square, insertion-sort-list, maximize-score-after-n-ops). All 6300 tests green. Bank at **1993**.
 
 ### feat(bank): add batch 92 — alternating-groups-i, longest-binary-subsequence-≤-k, minimum-time-complete-tasks (2026-05-26)
 Added 3 problems: `alternating-groups-i` (easy/arrays, modular-index circular triple count), `longest-binary-subsequence-less-than-or-equal-to-k` (medium/strings+dp, right-to-left greedy — zeros always included, ones included if running value ≤ k), `minimum-time-to-complete-all-tasks` (hard/arrays, sort-by-end + right-fill boolean run array). Fixed wrong expected values in several hidden tests by manual algorithm trace. Bank at **1987**; 6270 tests.
