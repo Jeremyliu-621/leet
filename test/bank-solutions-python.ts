@@ -30616,4 +30616,131 @@ def findMinimumTime(tasks):
     return sum(run)
 `,
 
+  'count-vowel-substrings-of-a-word': `
+def countVowelSubstringsOfAWord(word):
+    vowels = set('aeiou')
+    count = 0
+    for i in range(len(word)):
+        seen = set()
+        for j in range(i, len(word)):
+            if word[j] not in vowels:
+                break
+            seen.add(word[j])
+            if len(seen) == 5:
+                count += 1
+    return count
+`,
+
+  'minimum-cost-to-move-chips': `
+def minCostToMoveChips(position):
+    position = list(position)
+    odd = sum(1 for p in position if p % 2 == 1)
+    even = sum(1 for p in position if p % 2 == 0)
+    return min(odd, even)
+`,
+
+  'string-compression-ii': `
+def getLengthOfOptimalCompression(s, k):
+    n = len(s)
+    dp = [[n] * (k + 1) for _ in range(n + 1)]
+    dp[0][0] = 0
+
+    def rle_len(cnt):
+        if cnt == 0: return 0
+        if cnt == 1: return 1
+        if cnt < 10: return 2
+        if cnt < 100: return 3
+        return 4
+
+    for i in range(1, n + 1):
+        for j in range(k + 1):
+            if j > 0:
+                dp[i][j] = min(dp[i][j], dp[i-1][j-1])
+            same = diff = 0
+            for l in range(i, 0, -1):
+                if s[l-1] == s[i-1]:
+                    same += 1
+                else:
+                    diff += 1
+                if diff > j:
+                    break
+                dp[i][j] = min(dp[i][j], dp[l-1][j-diff] + rle_len(same))
+    return dp[n][k]
+`,
+
+  'build-an-array-with-stack-operations': `
+def buildArray(target, n):
+    target = list(target)
+    target_set = set(target)
+    ops = []
+    for i in range(1, n + 1):
+        ops.append('Push')
+        if i not in target_set:
+            ops.append('Pop')
+        if i == target[-1]:
+            break
+    return ops
+`,
+
+  'prime-subtraction-operation': `
+def primeSubOperation(nums):
+    def sieve(n):
+        is_prime = [True] * (n + 1)
+        is_prime[0] = is_prime[1] = False
+        i = 2
+        while i * i <= n:
+            if is_prime[i]:
+                j = i * i
+                while j <= n:
+                    is_prime[j] = False
+                    j += i
+            i += 1
+        return [x for x in range(2, n + 1) if is_prime[x]]
+
+    import bisect
+    primes = sieve(1000)
+    prev = 0
+    for x in nums:
+        limit = x - prev - 1
+        idx = bisect.bisect_right(primes, limit) - 1
+        if idx >= 0:
+            after = x - primes[idx]
+        else:
+            after = x
+        if after <= prev:
+            return False
+        prev = after
+    return True
+`,
+
+  'find-the-longest-semi-repetitive-subarray': `
+def longestSemiRepetitiveSubarray(s):
+    s = list(s)
+    left = 0
+    pairs = 0
+    max_len = 1
+    for right in range(1, len(s)):
+        if s[right] == s[right - 1]:
+            pairs += 1
+        while pairs > 1:
+            if s[left] == s[left + 1]:
+                pairs -= 1
+            left += 1
+        max_len = max(max_len, right - left + 1)
+    return max_len
+`,
+
+  'count-number-of-fair-pairs': `
+def countFairPairs(nums, lower, upper):
+    import bisect
+    nums = sorted(nums)
+    n = len(nums)
+    count = 0
+    for i in range(n - 1):
+        lo = bisect.bisect_left(nums, lower - nums[i], i + 1, n)
+        hi = bisect.bisect_right(nums, upper - nums[i], i + 1, n)
+        count += hi - lo
+    return count
+`,
+
 };

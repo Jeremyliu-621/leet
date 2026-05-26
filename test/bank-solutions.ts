@@ -31105,6 +31105,82 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  'prime-subtraction-operation': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    // Sieve of Eratosthenes up to 1000
+    const isPrime = new Array<boolean>(1001).fill(true);
+    isPrime[0] = isPrime[1] = false;
+    for (let i = 2; i * i <= 1000; i++) {
+      if (isPrime[i]) for (let j = i * i; j <= 1000; j += i) isPrime[j] = false;
+    }
+    const primes: number[] = [];
+    for (let i = 2; i <= 1000; i++) if (isPrime[i]) primes.push(i);
+    let prev = 0;
+    for (const x of nums) {
+      // Find largest prime p <= x - prev - 1 using binary search
+      const limit = x - prev - 1;
+      let lo = 0, hi = primes.length - 1, best = -1;
+      while (lo <= hi) {
+        const mid = (lo + hi) >> 1;
+        if (primes[mid]! <= limit) { best = primes[mid]!; lo = mid + 1; }
+        else hi = mid - 1;
+      }
+      const after = best >= 0 ? x - best : x;
+      if (after <= prev) return false;
+      prev = after;
+    }
+    return true;
+  },
+
+  'find-the-longest-semi-repetitive-subarray': (...args: unknown[]) => {
+    const s = args[0] as number[];
+    let left = 0, pairs = 0, maxLen = 1;
+    for (let right = 1; right < s.length; right++) {
+      if (s[right] === s[right - 1]) pairs++;
+      while (pairs > 1) {
+        if (s[left] === s[left + 1]) pairs--;
+        left++;
+      }
+      maxLen = Math.max(maxLen, right - left + 1);
+    }
+    return maxLen;
+  },
+
+  'count-number-of-fair-pairs': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    const lower = args[1] as number;
+    const upper = args[2] as number;
+    nums.sort((a, b) => a - b);
+    const n = nums.length;
+    // lowerBound: first index >= target in nums[start..n-1]
+    function lowerBound(start: number, target: number): number {
+      let lo = start, hi = n;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (nums[mid]! < target) lo = mid + 1;
+        else hi = mid;
+      }
+      return lo;
+    }
+    // upperBound: first index > target in nums[start..n-1]
+    function upperBound(start: number, target: number): number {
+      let lo = start, hi = n;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (nums[mid]! <= target) lo = mid + 1;
+        else hi = mid;
+      }
+      return lo;
+    }
+    let count = 0;
+    for (let i = 0; i < n - 1; i++) {
+      const lo = lowerBound(i + 1, lower - nums[i]!);
+      const hi = upperBound(i + 1, upper - nums[i]!);
+      count += hi - lo;
+    }
+    return count;
+  },
+
   'longest-binary-subsequence-less-than-or-equal-to-k': (...args: unknown[]) => {
     const s = args[0] as string;
     const k = args[1] as number;
@@ -31139,6 +31215,74 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     let total = 0;
     for (let i = 0; i < run.length; i++) total += run[i]!;
     return total;
+  },
+
+  'count-vowel-substrings-of-a-word': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+    let count = 0;
+    for (let i = 0; i < word.length; i++) {
+      const seen = new Set<string>();
+      for (let j = i; j < word.length; j++) {
+        if (!vowels.has(word[j]!)) break;
+        seen.add(word[j]!);
+        if (seen.size === 5) count++;
+      }
+    }
+    return count;
+  },
+
+  'minimum-cost-to-move-chips': (...args: unknown[]) => {
+    const position = args[0] as number[];
+    let odd = 0, even = 0;
+    for (const p of position) {
+      if (p % 2 === 0) even++;
+      else odd++;
+    }
+    return Math.min(odd, even);
+  },
+
+  'string-compression-ii': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    const n = s.length;
+    const dp: number[][] = Array.from({ length: n + 1 }, () =>
+      new Array<number>(k + 1).fill(n)
+    );
+    dp[0]![0] = 0;
+    const rleLen = (cnt: number): number => {
+      if (cnt === 0) return 0;
+      if (cnt === 1) return 1;
+      if (cnt < 10) return 2;
+      if (cnt < 100) return 3;
+      return 4;
+    };
+    for (let i = 1; i <= n; i++) {
+      for (let j = 0; j <= k; j++) {
+        if (j > 0) dp[i]![j] = Math.min(dp[i]![j]!, dp[i - 1]![j - 1]!);
+        let same = 0, diff = 0;
+        for (let l = i; l >= 1; l--) {
+          if (s[l - 1] === s[i - 1]) same++;
+          else diff++;
+          if (diff > j) break;
+          dp[i]![j] = Math.min(dp[i]![j]!, dp[l - 1]![j - diff]! + rleLen(same));
+        }
+      }
+    }
+    return dp[n]![k]!;
+  },
+
+  'build-an-array-with-stack-operations': (...args: unknown[]) => {
+    const target = args[0] as number[];
+    const n = args[1] as number;
+    const ops: string[] = [];
+    const set = new Set(target);
+    for (let i = 1; i <= n; i++) {
+      ops.push('Push');
+      if (!set.has(i)) ops.push('Pop');
+      if (i === target[target.length - 1]) break;
+    }
+    return ops;
   },
 
 };

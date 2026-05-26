@@ -2132,10 +2132,19 @@ import { problem as numberOfPeopleThatCanBeSeenInAGrid } from './number-of-peopl
 import { problem as alternatingGroupsI } from './alternating-groups-i';
 import { problem as longestBinarySubsequenceLessThanOrEqualToK } from './longest-binary-subsequence-less-than-or-equal-to-k';
 import { problem as minimumTimeToCompleteAllTasks } from './minimum-time-to-complete-all-tasks';
+// batch 92 — design, strings, greedy, math, dp, stack
+import { problem as countVowelSubstringsOfAWord } from './count-vowel-substrings-of-a-word';
+import { problem as minimumCostToMoveChips } from './minimum-cost-to-move-chips';
+import { problem as stringCompressionII } from './string-compression-ii';
+import { problem as buildAnArrayWithStackOperations } from './build-an-array-with-stack-operations';
 // batch 93 — math/easy, linked-list/medium, dp/hard
 import { problem as validPerfectSquare } from './valid-perfect-square';
 import { problem as insertionSortList } from './insertion-sort-list';
 import { problem as maximizeScoreAfterNOperations } from './maximize-score-after-n-operations';
+// batch 92 (remote) — arrays/math/binary-search, arrays/sliding-window, arrays/binary-search/two-pointers
+import { problem as primeSubtractionOperation } from './prime-subtraction-operation';
+import { problem as findTheLongestSemiRepetitiveSubarray } from './find-the-longest-semi-repetitive-subarray';
+import { problem as countNumberOfFairPairs } from './count-number-of-fair-pairs';
 // batch 94 — math/easy, math+hash-map/medium, tree/medium
 import { problem as rotatedDigits } from './rotated-digits';
 import { problem as rabbitsInForest } from './rabbits-in-forest';
@@ -4309,10 +4318,19 @@ export const problems: readonly Problem[] = [
   alternatingGroupsI,
   longestBinarySubsequenceLessThanOrEqualToK,
   minimumTimeToCompleteAllTasks,
+  // batch 92 — design, strings, greedy, math, dp, stack
+  countVowelSubstringsOfAWord,
+  minimumCostToMoveChips,
+  stringCompressionII,
+  buildAnArrayWithStackOperations,
   // batch 93 — math/easy, linked-list/medium, dp/hard
   validPerfectSquare,
   insertionSortList,
   maximizeScoreAfterNOperations,
+  // batch 92 (remote)
+  primeSubtractionOperation,
+  findTheLongestSemiRepetitiveSubarray,
+  countNumberOfFairPairs,
   // batch 94 — math/easy, math+hash-map/medium, tree/medium
   rotatedDigits,
   rabbitsInForest,
