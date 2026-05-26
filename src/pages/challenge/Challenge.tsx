@@ -798,20 +798,13 @@ export function Challenge() {
           window.location.href = targetUrl.current;
         } else {
           // No target (standalone/practice mode) — show a "try another" screen.
-          // Pick up to 3 related problems from the same tags (excluding the just-solved one).
-          const relatedCandidates = filterProblems({ tags: problem.tags, excludeIds: [problem.id] });
-          const related: RelatedProblem[] = [];
-          const shuffled = [...relatedCandidates].sort(() => Math.random() - 0.5);
-          for (const p of shuffled) {
-            related.push({ id: p.id, title: p.title, difficulty: p.difficulty });
-            if (related.length >= 3) break;
-          }
-
           // Determine personal best from prior solve records.
           let isPersonalBest = true;
           let prevBestSec: number | null = null;
+          let solvedIds = new Set<string>();
           try {
             const solved = await getValue('solvedProblems');
+            solvedIds = new Set(solved.map((r) => r.problemId));
             const prevSolves = solved.filter((r) => r.problemId === problem.id && r.durationMs > 0);
             if (prevSolves.length > 0) {
               const bestPrevMs = Math.min(...prevSolves.map((r) => r.durationMs));
@@ -821,6 +814,15 @@ export function Challenge() {
           } catch {
             /* storage unavailable */
           }
+
+          // Pick up to 3 related problems — unsolved problems from the same tags first.
+          const relatedCandidates = filterProblems({ tags: problem.tags, excludeIds: [problem.id] });
+          const shuffled = [...relatedCandidates].sort(() => Math.random() - 0.5);
+          // Sort so unsolved come before already-solved, preserving random order within each group.
+          shuffled.sort((a, b) => (solvedIds.has(a.id) ? 1 : 0) - (solvedIds.has(b.id) ? 1 : 0));
+          const related: RelatedProblem[] = shuffled
+            .slice(0, 3)
+            .map((p) => ({ id: p.id, title: p.title, difficulty: p.difficulty }));
 
           setPageState({
             status: 'solved-standalone',
