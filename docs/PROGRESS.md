@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1856** problems; 5856 tests green. Marketing site at 1,856+. All problems have ≥3 hints.
+**Current focus:** Bank at **1870** problems; 5898 tests green. BIT/simulation/shortest-path tags boosted.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Bank growth (background agent adding BIT/simulation/shortest-path); continued UX polish.
+**Next up:** Continued bank growth; UX polish; marketing site stats update to 1,870+.
+
+### feat(bank): add batch 77 — 12 new problems (BIT, simulation, shortest-path) (2026-05-26)
+Added 12 new problems targeting underrepresented tags. BIT (6 entries — 4 new files + 2 previously-orphaned files registered): `count-inversions` (medium), `range-sum-query-2d-mutable` (hard), `count-smaller-before-self-bit` (medium, prefix-query scanning left-to-right), `number-of-pairs-satisfying-inequality-bit` (hard, BIT with a[i]=nums1[i]-nums2[i] transform), `range-update-point-query-bit` (medium, difference-array BIT), `create-target-array-using-bit` (hard, splice simulation). Simulation (4 new): `robot-collisions` (hard, stack-based health resolution), `spiral-matrix-iv` (medium, layer-by-layer fill with boundary vars), `text-editor-simulation` (medium, two-stack cursor model), `atm-machine-simulation` (medium, greedy dispensing with rollback on failure). Shortest-path (4 new): `shortest-path-to-food` (medium, BFS in char grid), `minimum-jumps-to-reach-home` (medium, BFS with (pos,lastBack) state), `all-pairs-shortest-path` (medium, Floyd-Warshall), `minimum-cost-to-reach-all-nodes` (medium, Dijkstra returning full distance array). Bank at **1870**; 5898 tests.
 
 ### feat(editor): terminal UX — collapsible + resizable + auto-expand (2026-05-26)
 Added drag-to-resize terminal panel (80px–480px) with a horizontal resize handle above the terminal; hid the resize handle when collapsed for a cleaner UI. Added collapse toggle button (▲/▼) in terminal tab bar — collapses body so the editor gains full height. When a run/submit result arrives while the terminal is collapsed, it auto-expands so the user sees the output. Arrow keys on the focused resize handle adjust height in 20px steps. Added `↑ ↓` row to the keyboard shortcuts modal. Marketing site stats updated to 1,856+.
