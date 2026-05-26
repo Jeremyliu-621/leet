@@ -8,12 +8,12 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1502 problems; 4794 tests green.
+**Current focus:** Bank at 1504 problems; 4800 tests green. 🎉 1,500+ milestone reached!
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank (Batch 58+); continue UI/UX polish.
+**Next up:** Continue growing problem bank toward 1,600; UI/UX polish; further parity improvements.
 
-### 🎉 1,500-problem milestone (2026-05-25)
-Marketing site updated to "1,500+" in all three locations. Bank at **1502** problems; 4794 tests.
+### 🎉 1,500-problem milestone + 2 more (2026-05-25)
+Added `count-all-valid-pickup-and-delivery-options` (dp/hard, mod dp n×(2n-1)) and `maximum-average-subarray-ii` (binary-search/hard, 100-iter float bisect). Marketing site updated to "1,500+" in all three locations. Refactored fragile easy+stack exclusion list in `problems.test.ts` to exclude all bank IDs — maintenance-free as bank grows. Bank at **1504** problems; 4800 tests.
 
 ### fix(terminal): UX polish (2026-05-25)
 TestResultCard now shows `durationMs` for FAIL verdicts (alongside the existing PASS timing), so users can gauge proximity to TLE. Runtime-error cards gain a copy button for the error message to ease debugging.
