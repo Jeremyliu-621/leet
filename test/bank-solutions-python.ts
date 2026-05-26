@@ -29369,6 +29369,114 @@ def kthSmallest(matrix, k):
     return lo
 `,
 
+  // batch 89 — arrays, strings, hash-map, math, graph
+  'minimum-rounds-to-complete-all-tasks': `
+import math
+from collections import Counter
+def minimumRounds(tasks):
+    freq = Counter(tasks)
+    result = 0
+    for cnt in freq.values():
+        if cnt == 1:
+            return -1
+        result += math.ceil(cnt / 3)
+    return result
+`,
+
+  'longest-palindrome-by-concatenating-two-letter-words': `
+from collections import Counter
+def longestPalindrome(words):
+    count = Counter(words)
+    result = 0
+    has_center = False
+    visited = set()
+    for w, cnt in count.items():
+        if w in visited:
+            continue
+        rev = w[1] + w[0]
+        if w == rev:
+            result += (cnt // 2) * 4
+            if cnt % 2 == 1:
+                has_center = True
+        else:
+            visited.add(rev)
+            pairs = min(cnt, count.get(rev, 0))
+            result += pairs * 4
+    if has_center:
+        result += 2
+    return result
+`,
+
+  'maximum-product-difference-between-two-pairs': `
+def maxProductDifference(nums):
+    nums = sorted(nums)
+    return nums[-1] * nums[-2] - nums[0] * nums[1]
+`,
+
+  'minimum-bit-flips-to-convert-number': `
+def minBitFlips(start, goal):
+    return bin(start ^ goal).count('1')
+`,
+
+  'min-number-of-flips-to-convert-binary-matrix-to-zero-matrix': `
+from collections import deque
+def minFlips(mat):
+    m, n = len(mat), len(mat[0])
+    start = 0
+    for i in range(m):
+        for j in range(n):
+            if mat[i][j]:
+                start |= 1 << (i * n + j)
+    if start == 0:
+        return 0
+    queue = deque([start])
+    visited = {start}
+    steps = 0
+    dirs = [(0,0),(-1,0),(1,0),(0,-1),(0,1)]
+    while queue:
+        steps += 1
+        for _ in range(len(queue)):
+            state = queue.popleft()
+            for i in range(m):
+                for j in range(n):
+                    nxt = state
+                    for di, dj in dirs:
+                        ni, nj = i + di, j + dj
+                        if 0 <= ni < m and 0 <= nj < n:
+                            nxt ^= 1 << (ni * n + nj)
+                    if nxt == 0:
+                        return steps
+                    if nxt not in visited:
+                        visited.add(nxt)
+                        queue.append(nxt)
+    return -1
+`,
+
+  'determine-if-two-strings-are-close': `
+def closeStrings(word1, word2):
+    word1, word2 = str(word1), str(word2)
+    if len(word1) != len(word2):
+        return False
+    freq1 = [0] * 26
+    freq2 = [0] * 26
+    for c in word1:
+        freq1[ord(c) - 97] += 1
+    for c in word2:
+        freq2[ord(c) - 97] += 1
+    for i in range(26):
+        if (freq1[i] == 0) != (freq2[i] == 0):
+            return False
+    return sorted(freq1) == sorted(freq2)
+`,
+
+  'maximum-xor-after-operations': `
+def maximumXOR(nums):
+    result = 0
+    for x in nums:
+        result |= x
+    return result
+`,
+
   // batch 83
 
   'count-palindromes': `
@@ -29689,6 +29797,145 @@ def countElements(nums: list) -> int:
     return sum(1 for x in nums if mn < x < mx)
 `,
 
+  'split-the-array': `
+def isPossibleToSplit(nums: list) -> bool:
+    from collections import Counter
+    freq = Counter(nums)
+    return all(c <= 2 for c in freq.values())
+`,
+
+  'find-the-score-of-all-prefixes-of-an-array': `
+def findPrefixScore(nums: list) -> list:
+    ans = []
+    max_so_far = 0
+    prefix_sum = 0
+    for x in nums:
+        max_so_far = max(max_so_far, x)
+        prefix_sum += x + max_so_far
+        ans.append(prefix_sum)
+    return ans
+`,
+
+  'shortest-cycle-in-a-graph': `
+from collections import deque
+def findShortestCycle(n: int, edges: list) -> int:
+    adj = [[] for _ in range(n)]
+    for e in edges:
+        u, v = int(e[0]), int(e[1])
+        adj[u].append(v)
+        adj[v].append(u)
+    ans = float('inf')
+    for start in range(n):
+        dist = [-1] * n
+        parent = [-1] * n
+        dist[start] = 0
+        q = deque([start])
+        while q:
+            u = q.popleft()
+            for v in adj[u]:
+                if dist[v] == -1:
+                    dist[v] = dist[u] + 1
+                    parent[v] = u
+                    q.append(v)
+                elif parent[u] != v:
+                    ans = min(ans, dist[u] + dist[v] + 1)
+    return -1 if ans == float('inf') else ans
+`,
+
+  // batch 90 — arrays, strings, hash-map, math, graph, tree
+  'count-common-words-with-one-occurrence': `
+from collections import Counter
+def countWords(words1, words2):
+    c1 = Counter(words1)
+    c2 = Counter(words2)
+    return sum(1 for w in c1 if c1[w] == 1 and c2.get(w, 0) == 1)
+`,
+
+  'find-three-consecutive-integers-that-sum-to-a-given-number': `
+def sumOfThree(num):
+    if num % 3 != 0:
+        return []
+    n = num // 3
+    return [n - 1, n, n + 1]
+`,
+
+  'equal-row-and-column-pairs': `
+def equalPairs(grid):
+    from collections import Counter
+    n = len(grid)
+    row_counts = Counter(tuple(row) for row in grid)
+    result = 0
+    for j in range(n):
+        col = tuple(grid[i][j] for i in range(n))
+        result += row_counts[col]
+    return result
+`,
+
+  'number-of-laser-beams-in-a-bank': `
+def numberOfBeams(bank):
+    counts = [row.count('1') for row in bank if '1' in row]
+    return sum(counts[i] * counts[i+1] for i in range(len(counts)-1))
+`,
+
+  'check-if-all-as-appears-before-all-bs': `
+def checkString(s):
+    return 'ba' not in s
+`,
+
+  'count-nodes-with-the-highest-score': `
+def countHighestScoreNodes(parents):
+    n = len(parents)
+    children = [[] for _ in range(n)]
+    for i in range(1, n):
+        children[parents[i]].append(i)
+    sub = [0] * n
+    def dfs(v):
+        sub[v] = 1
+        for c in children[v]:
+            dfs(c)
+            sub[v] += sub[c]
+    dfs(0)
+    max_score = 0
+    count = 0
+    for v in range(n):
+        score = 1
+        for c in children[v]:
+            score *= sub[c]
+        above = n - sub[v]
+        if above > 0:
+            score *= above
+        if score > max_score:
+            max_score = score
+            count = 1
+        elif score == max_score:
+            count += 1
+    return count
+`,
+
+  'maximum-number-of-points-from-grid-queries': `
+import heapq
+def maxPoints(grid, queries):
+    m, n = len(grid), len(grid[0])
+    sorted_q = sorted(enumerate(queries), key=lambda x: x[1])
+    res = [0] * len(queries)
+    vis = [[False]*n for _ in range(m)]
+    vis[0][0] = True
+    heap = [(grid[0][0], 0, 0)]
+    cnt = 0
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    for orig_idx, q in sorted_q:
+        while heap and heap[0][0] < q:
+            v, r, c = heapq.heappop(heap)
+            cnt += 1
+            for dr, dc in dirs:
+                nr, nc = r+dr, c+dc
+                if 0 <= nr < m and 0 <= nc < n and not vis[nr][nc]:
+                    vis[nr][nc] = True
+                    heapq.heappush(heap, (grid[nr][nc], nr, nc))
+        res[orig_idx] = cnt
+    return res
+`,
+
   'check-if-there-is-a-valid-partition-for-the-array': `
 def validPartition(nums: list) -> bool:
     n = len(nums)
@@ -29878,51 +30125,6 @@ def bestRotation(nums):
             min_bad = bad
             ans = k
     return ans
-`,
-
-  'split-the-array': `
-def isPossibleToSplit(nums: list) -> bool:
-    from collections import Counter
-    freq = Counter(nums)
-    return all(c <= 2 for c in freq.values())
-`,
-
-  'find-the-score-of-all-prefixes-of-an-array': `
-def findPrefixScore(nums: list) -> list:
-    ans = []
-    max_so_far = 0
-    prefix_sum = 0
-    for x in nums:
-        max_so_far = max(max_so_far, x)
-        prefix_sum += x + max_so_far
-        ans.append(prefix_sum)
-    return ans
-`,
-
-  'shortest-cycle-in-a-graph': `
-from collections import deque
-def findShortestCycle(n: int, edges: list) -> int:
-    adj = [[] for _ in range(n)]
-    for e in edges:
-        u, v = int(e[0]), int(e[1])
-        adj[u].append(v)
-        adj[v].append(u)
-    ans = float('inf')
-    for start in range(n):
-        dist = [-1] * n
-        parent = [-1] * n
-        dist[start] = 0
-        q = deque([start])
-        while q:
-            u = q.popleft()
-            for v in adj[u]:
-                if dist[v] == -1:
-                    dist[v] = dist[u] + 1
-                    parent[v] = u
-                    q.append(v)
-                elif parent[u] != v:
-                    ans = min(ans, dist[u] + dist[v] + 1)
-    return -1 if ans == float('inf') else ans
 `,
 
   // batch 89
@@ -30181,6 +30383,80 @@ def minOperationsNonDecreasing(nums):
 `,
 
   // batch 90
+  'sum-of-square-numbers': `
+import math
+def judgeSquareSum(c: int) -> bool:
+    a = 0
+    while a * a <= c:
+        b2 = c - a * a
+        b = round(math.sqrt(b2))
+        if b * b == b2:
+            return True
+        a += 1
+    return False
+`,
+
+  'mice-and-cheese': `
+def miceAndCheese(reward1, reward2, k):
+    reward1 = list(reward1)
+    reward2 = list(reward2)
+    n = len(reward1)
+    base = sum(reward2)
+    deltas = sorted([reward1[i] - reward2[i] for i in range(n)], reverse=True)
+    return base + sum(deltas[:k])
+`,
+
+  'maximum-size-subarray-sum-equals-k': `
+def maxSubArrayLen(nums, k):
+    nums = list(nums)
+    first_seen = {0: -1}
+    prefix = 0
+    max_len = 0
+    for j, v in enumerate(nums):
+        prefix += v
+        target = prefix - k
+        if target in first_seen:
+            max_len = max(max_len, j - first_seen[target])
+        if prefix not in first_seen:
+            first_seen[prefix] = j
+    return max_len
+`,
+
+  'maximum-number-of-consecutive-values-you-can-make': `
+def getMaximumConsecutive(coins):
+    coins = sorted(coins)
+    reach = 0
+    for c in coins:
+        if c > reach + 1:
+            break
+        reach += c
+    return reach + 1
+`,
+
+  'determine-if-two-events-have-conflict': `
+def haveConflict(event1, event2):
+    return event1[0] <= event2[1] and event2[0] <= event1[1]
+`,
+
+  'number-of-people-that-can-be-seen-in-a-grid': `
+def canSeePersonsCount(heights):
+    heights = list(heights)
+    n = len(heights)
+    ans = [0] * n
+    stack = []
+    for i in range(n - 1, -1, -1):
+        count = 0
+        while stack and stack[-1] < heights[i]:
+            stack.pop()
+            count += 1
+        if stack:
+            count += 1
+        ans[i] = count
+        stack.append(heights[i])
+    return ans
+`,
+
+  // batch 92
   'alternating-groups-i': `
 def numberOfAlternatingGroups(colors):
     n = len(colors)

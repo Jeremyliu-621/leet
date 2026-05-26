@@ -8,9 +8,15 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1971** problems; 6201 tests green. Batches 88–89 merged (local + remote). InlineText component, a11y fixes, site stats updated to 1,970+.
+**Current focus:** Bank at **1977** problems; 6219 tests green. Batch 91 complete (3 problems: greedy, strings, monotonic-stack).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 90); UI/UX polish.
+**Next up:** Continued bank growth (batch 92); UI/UX polish.
+
+### feat(bank): add batch 91 — maximum-consecutive-values, two-events-conflict, visible-people-queue (2026-05-26)
+Added 3 problems: `maximum-number-of-consecutive-values-you-can-make` (medium/arrays+math, sort+reach greedy), `determine-if-two-events-have-conflict` (easy/strings, lexicographic interval overlap), `number-of-people-that-can-be-seen-in-a-grid` (medium/arrays+stack, monotonic-stack right-to-left). Bank at **1977**; 6219 tests.
+
+### feat(bank): add batch 89 — 7 problems (arrays, strings, hash-map, math, graph) (2026-05-26)
+Added 7 problems: `minimum-rounds-to-complete-all-tasks` (medium/arrays+hash-map, ceil(freq/3) rounds), `longest-palindrome-by-concatenating-two-letter-words` (medium/strings+hash-map, paired reverse words + palindromic-word center), `maximum-product-difference-between-two-pairs` (easy/arrays, sorted top-2 minus bottom-2), `minimum-bit-flips-to-convert-number` (easy/math, popcount of XOR), `min-number-of-flips-to-convert-binary-matrix-to-zero-matrix` (hard/graph+simulation, BFS on bitmask state space), `determine-if-two-strings-are-close` (medium/strings+hash-map, same char set + same freq multiset), `maximum-xor-after-operations` (medium/arrays+math, bitwise OR of all elements). Bank at **1958**; tests green.
 
 ### merge: batches 88–89 local + remote (2026-05-26)
 Local batch 88: `check-if-there-is-a-valid-partition-for-the-array` (medium/dp), `reverse-nodes-in-even-length-groups` (medium/linked-list), `minimum-difference-in-sums-after-removal-of-elements` (hard/heap); `InlineText` component for backtick inline code; site stats to 1,950+.

@@ -2079,21 +2079,34 @@ import { problem as shiftingLettersII } from './shifting-letters-ii';
 import { problem as maximizeTheProfitAsTheSalesman } from './maximize-the-profit-as-the-salesman';
 import { problem as checkIfStringIsAnAcronymOfWords } from './check-if-string-is-an-acronym-of-words';
 import { problem as countElementsWithSmallerAndGreaterElement } from './count-elements-with-smaller-and-greater-element';
-import { problem as checkIfThereIsAValidPartitionForTheArray } from './check-if-there-is-a-valid-partition-for-the-array';
-import { problem as reverseNodesInEvenLengthGroups } from './reverse-nodes-in-even-length-groups';
-import { problem as minimumDifferenceInSumsAfterRemovalOfElements } from './minimum-difference-in-sums-after-removal-of-elements';
-import { problem as findTheClosestPalindrome } from './find-the-closest-palindrome';
-import { problem as numberOfSubarraysWithLcmEqualToK } from './number-of-subarrays-with-lcm-equal-to-k';
-import { problem as smallestRotationWithHighestScore } from './smallest-rotation-with-highest-score';
-// batch 90 — arrays/easy, strings/medium, arrays/hard
-import { problem as alternatingGroupsI } from './alternating-groups-i';
-import { problem as longestBinarySubsequenceLessThanOrEqualToK } from './longest-binary-subsequence-less-than-or-equal-to-k';
-import { problem as minimumTimeToCompleteAllTasks } from './minimum-time-to-complete-all-tasks';
-// batch 88 (remote) — arrays, graph
+// batch 88 — arrays, graph
 import { problem as splitTheArray } from './split-the-array';
 import { problem as findTheScoreOfAllPrefixesOfAnArray } from './find-the-score-of-all-prefixes-of-an-array';
 import { problem as shortestCycleInAGraph } from './shortest-cycle-in-a-graph';
-// batch 89 (remote) — monotonic-stack, string, sliding-window, dp, tree, graph
+import { problem as checkIfThereIsAValidPartitionForTheArray } from './check-if-there-is-a-valid-partition-for-the-array';
+import { problem as reverseNodesInEvenLengthGroups } from './reverse-nodes-in-even-length-groups';
+import { problem as minimumDifferenceInSumsAfterRemovalOfElements } from './minimum-difference-in-sums-after-removal-of-elements';
+// batch 89 — arrays, strings, hash-map, math, graph
+import { problem as minimumRoundsToCompleteAllTasks } from './minimum-rounds-to-complete-all-tasks';
+import { problem as longestPalindromeByConcat } from './longest-palindrome-by-concatenating-two-letter-words';
+import { problem as maximumProductDifferenceBetweenTwoPairs } from './maximum-product-difference-between-two-pairs';
+import { problem as minimumBitFlipsToConvertNumber } from './minimum-bit-flips-to-convert-number';
+import { problem as minFlipsToBinaryZeroMatrix } from './min-number-of-flips-to-convert-binary-matrix-to-zero-matrix';
+import { problem as determineIfTwoStringsAreClose } from './determine-if-two-strings-are-close';
+import { problem as maximumXorAfterOperations } from './maximum-xor-after-operations';
+// batch 90 — arrays, strings, hash-map, math, graph, tree
+import { problem as countCommonWordsWithOneOccurrence } from './count-common-words-with-one-occurrence';
+import { problem as findThreeConsecutiveIntegersThatSumToAGivenNumber } from './find-three-consecutive-integers-that-sum-to-a-given-number';
+import { problem as equalRowAndColumnPairs } from './equal-row-and-column-pairs';
+import { problem as numberOfLaserBeamsInABank } from './number-of-laser-beams-in-a-bank';
+import { problem as checkIfAllAsAppearsBeforeAllBs } from './check-if-all-as-appears-before-all-bs';
+import { problem as countNodesWithTheHighestScore } from './count-nodes-with-the-highest-score';
+import { problem as maximumNumberOfPointsFromGridQueries } from './maximum-number-of-points-from-grid-queries';
+// batch 91 — math/strings, arrays/math ×2
+import { problem as findTheClosestPalindrome } from './find-the-closest-palindrome';
+import { problem as numberOfSubarraysWithLcmEqualToK } from './number-of-subarrays-with-lcm-equal-to-k';
+import { problem as smallestRotationWithHighestScore } from './smallest-rotation-with-highest-score';
+// batch 87 remote — monotonic-stack, string, sliding-window, dp, tree, graph
 import { problem as nextGreaterElementDistances } from './next-greater-element-distances';
 import { problem as findAllOccurrencesZAlgorithm } from './find-all-occurrences-z-algorithm';
 import { problem as zAlgorithmLongestPrefixSuffix } from './z-algorithm-longest-prefix-suffix';
@@ -2107,6 +2120,18 @@ import { problem as maxSumSubmatrix } from './max-sum-submatrix';
 import { problem as numberGoodLeafNodePairs } from './number-good-leaf-node-pairs';
 import { problem as treeNodeProductOfChildren } from './tree-node-product-of-children';
 import { problem as minimumOperationsNonDecreasing } from './minimum-operations-to-make-array-non-decreasing';
+// batch 90 — math, greedy, hash-map
+import { problem as sumOfSquareNumbers } from './sum-of-square-numbers';
+import { problem as miceAndCheese } from './mice-and-cheese';
+import { problem as maximumSizeSubarraySumEqualsK } from './maximum-size-subarray-sum-equals-k';
+// batch 91 — greedy, strings, monotonic-stack
+import { problem as maximumNumberOfConsecutiveValuesYouCanMake } from './maximum-number-of-consecutive-values-you-can-make';
+import { problem as determineIfTwoEventsHaveConflict } from './determine-if-two-events-have-conflict';
+import { problem as numberOfPeopleThatCanBeSeenInAGrid } from './number-of-people-that-can-be-seen-in-a-grid';
+// batch 92 — arrays/easy, strings/medium, arrays/hard
+import { problem as alternatingGroupsI } from './alternating-groups-i';
+import { problem as longestBinarySubsequenceLessThanOrEqualToK } from './longest-binary-subsequence-less-than-or-equal-to-k';
+import { problem as minimumTimeToCompleteAllTasks } from './minimum-time-to-complete-all-tasks';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4222,22 +4247,35 @@ export const problems: readonly Problem[] = [
   maximizeTheProfitAsTheSalesman,
   checkIfStringIsAnAcronymOfWords,
   countElementsWithSmallerAndGreaterElement,
-  checkIfThereIsAValidPartitionForTheArray,
-  reverseNodesInEvenLengthGroups,
-  minimumDifferenceInSumsAfterRemovalOfElements,
-  // batch 89 — math/strings, arrays/math ×2
-  findTheClosestPalindrome,
-  numberOfSubarraysWithLcmEqualToK,
-  smallestRotationWithHighestScore,
-  // batch 90 — arrays/easy, strings/medium, arrays/hard
-  alternatingGroupsI,
-  longestBinarySubsequenceLessThanOrEqualToK,
-  minimumTimeToCompleteAllTasks,
-  // batch 88 (remote) — arrays, graph
+  // batch 88 — arrays, graph
   splitTheArray,
   findTheScoreOfAllPrefixesOfAnArray,
   shortestCycleInAGraph,
-  // batch 89 (remote) — monotonic-stack, string, sliding-window, dp, tree, graph
+  // batch 89 — arrays, strings, hash-map, math, graph
+  minimumRoundsToCompleteAllTasks,
+  longestPalindromeByConcat,
+  maximumProductDifferenceBetweenTwoPairs,
+  minimumBitFlipsToConvertNumber,
+  minFlipsToBinaryZeroMatrix,
+  determineIfTwoStringsAreClose,
+  maximumXorAfterOperations,
+  // batch 90 — arrays, strings, hash-map, math, graph, tree
+  countCommonWordsWithOneOccurrence,
+  findThreeConsecutiveIntegersThatSumToAGivenNumber,
+  equalRowAndColumnPairs,
+  numberOfLaserBeamsInABank,
+  checkIfAllAsAppearsBeforeAllBs,
+  countNodesWithTheHighestScore,
+  maximumNumberOfPointsFromGridQueries,
+  // batch 88 remote — arrays/dp, linked-list, arrays/heap
+  checkIfThereIsAValidPartitionForTheArray,
+  reverseNodesInEvenLengthGroups,
+  minimumDifferenceInSumsAfterRemovalOfElements,
+  // batch 91 — math/strings, arrays/math ×2
+  findTheClosestPalindrome,
+  numberOfSubarraysWithLcmEqualToK,
+  smallestRotationWithHighestScore,
+  // batch 87 remote — monotonic-stack, string, sliding-window, dp, tree, graph
   nextGreaterElementDistances,
   findAllOccurrencesZAlgorithm,
   zAlgorithmLongestPrefixSuffix,
@@ -4251,4 +4289,16 @@ export const problems: readonly Problem[] = [
   numberGoodLeafNodePairs,
   treeNodeProductOfChildren,
   minimumOperationsNonDecreasing,
+  // batch 90
+  sumOfSquareNumbers,
+  miceAndCheese,
+  maximumSizeSubarraySumEqualsK,
+  // batch 91
+  maximumNumberOfConsecutiveValuesYouCanMake,
+  determineIfTwoEventsHaveConflict,
+  numberOfPeopleThatCanBeSeenInAGrid,
+  // batch 92 — arrays/easy, strings/medium, arrays/hard
+  alternatingGroupsI,
+  longestBinarySubsequenceLessThanOrEqualToK,
+  minimumTimeToCompleteAllTasks,
 ];
