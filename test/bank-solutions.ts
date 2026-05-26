@@ -30985,6 +30985,63 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // --- batch 94 -----------------------------------------------------------
+  'rotated-digits': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const diff = new Set([2, 5, 6, 9]);
+    const invalid = new Set([3, 4, 7]);
+    let count = 0;
+    for (let i = 1; i <= n; i++) {
+      let good = false, valid = true;
+      for (const c of String(i)) {
+        const d = +c;
+        if (invalid.has(d)) { valid = false; break; }
+        if (diff.has(d)) good = true;
+      }
+      if (valid && good) count++;
+    }
+    return count;
+  },
+
+  'rabbits-in-forest': (...args: unknown[]) => {
+    const answers = args[0] as number[];
+    const cnt = new Map<number, number>();
+    for (const a of answers) cnt.set(a, (cnt.get(a) ?? 0) + 1);
+    let total = 0;
+    for (const [k, v] of cnt) total += Math.ceil(v / (k + 1)) * (k + 1);
+    return total;
+  },
+
+  'smallest-string-starting-from-leaf': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    interface TN { v: number; l: TN | null; r: TN | null }
+    function build(a: (number | null)[]): TN | null {
+      if (!a.length || a[0] == null) return null;
+      const root: TN = { v: a[0], l: null, r: null };
+      const q: TN[] = [root]; let i = 1;
+      while (q.length && i < a.length) {
+        const node = q.shift()!;
+        if (i < a.length && a[i] != null) { node.l = { v: a[i]!, l: null, r: null }; q.push(node.l); } i++;
+        if (i < a.length && a[i] != null) { node.r = { v: a[i]!, l: null, r: null }; q.push(node.r); } i++;
+      }
+      return root;
+    }
+    let best = '{';
+    const path: string[] = [];
+    function dfs(node: TN | null): void {
+      if (!node) return;
+      path.push(String.fromCharCode(97 + node.v));
+      if (!node.l && !node.r) {
+        const s = path.slice().reverse().join('');
+        if (s < best) best = s;
+      }
+      dfs(node.l); dfs(node.r);
+      path.pop();
+    }
+    dfs(build(arr));
+    return best;
+  },
+
   // --- batch 93 -----------------------------------------------------------
   'valid-perfect-square': (...args: unknown[]) => {
     const num = args[0] as number;

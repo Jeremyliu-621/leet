@@ -30457,6 +30457,68 @@ def canSeePersonsCount(heights):
     return ans
 `,
 
+  // batch 94
+  'rotated-digits': `
+def rotatedDigits(n):
+    diff = {2, 5, 6, 9}
+    invalid = {3, 4, 7}
+    count = 0
+    for i in range(1, n + 1):
+        digits = [int(c) for c in str(i)]
+        if any(d in invalid for d in digits):
+            continue
+        if any(d in diff for d in digits):
+            count += 1
+    return count
+`,
+
+  'rabbits-in-forest': `
+from collections import Counter
+def numRabbits(answers):
+    cnt = Counter(answers)
+    total = 0
+    for k, v in cnt.items():
+        group_size = k + 1
+        total += -(-v // group_size) * group_size
+    return total
+`,
+
+  'smallest-string-starting-from-leaf': `
+def smallestFromLeaf(root):
+    raw = list(root)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
+    if not arr or arr[0] is None:
+        return ''
+    class TN:
+        def __init__(self, v): self.v = v; self.l = self.r = None
+    def build(a):
+        if not a or a[0] is None: return None
+        r = TN(a[0])
+        q = [r]; i = 1
+        while q and i < len(a):
+            node = q.pop(0)
+            if i < len(a) and a[i] is not None:
+                node.l = TN(a[i]); q.append(node.l)
+            i += 1
+            if i < len(a) and a[i] is not None:
+                node.r = TN(a[i]); q.append(node.r)
+            i += 1
+        return r
+    best = ['{']
+    path = []
+    def dfs(node):
+        if not node: return
+        path.append(chr(97 + node.v))
+        if not node.l and not node.r:
+            s = ''.join(reversed(path))
+            if s < best[0]:
+                best[0] = s
+        dfs(node.l); dfs(node.r)
+        path.pop()
+    dfs(build(arr))
+    return best[0]
+`,
+
   // batch 93
   'valid-perfect-square': `
 def isPerfectSquare(num):

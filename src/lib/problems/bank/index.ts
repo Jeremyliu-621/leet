@@ -2136,6 +2136,10 @@ import { problem as minimumTimeToCompleteAllTasks } from './minimum-time-to-comp
 import { problem as validPerfectSquare } from './valid-perfect-square';
 import { problem as insertionSortList } from './insertion-sort-list';
 import { problem as maximizeScoreAfterNOperations } from './maximize-score-after-n-operations';
+// batch 94 — math/easy, math+hash-map/medium, tree/medium
+import { problem as rotatedDigits } from './rotated-digits';
+import { problem as rabbitsInForest } from './rabbits-in-forest';
+import { problem as smallestStringStartingFromLeaf } from './smallest-string-starting-from-leaf';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4309,4 +4313,8 @@ export const problems: readonly Problem[] = [
   validPerfectSquare,
   insertionSortList,
   maximizeScoreAfterNOperations,
+  // batch 94 — math/easy, math+hash-map/medium, tree/medium
+  rotatedDigits,
+  rabbitsInForest,
+  smallestStringStartingFromLeaf,
 ];

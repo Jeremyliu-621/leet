@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1987** problems; 6270 tests green. Batches 91–92 complete.
+**Current focus:** Bank at **1990** problems; 6279 tests green. Batches 91–93 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 93); UI/UX polish.
+**Next up:** Continued bank growth (batch 94); UI/UX polish.
+
+### feat(bank): add batch 93 — valid-perfect-square, insertion-sort-list, maximize-score-n-ops (2026-05-26)
+Added 3 problems: `valid-perfect-square` (easy/math+binary-search, binary search for x²=num without sqrt), `insertion-sort-list` (medium/linked-list, O(n²) insertion sort with dummy-head pattern, array-based interface), `maximize-score-after-n-operations` (hard/dp, bitmask DP with precomputed GCD table, O(4^n·n²) for n≤7). Bank at **1990**; 6279 tests.
 
 ### feat(bank): add batch 92 — alternating-groups-i, longest-binary-subsequence-≤-k, minimum-time-complete-tasks (2026-05-26)
 Added 3 problems: `alternating-groups-i` (easy/arrays, modular-index circular triple count), `longest-binary-subsequence-less-than-or-equal-to-k` (medium/strings+dp, right-to-left greedy — zeros always included, ones included if running value ≤ k), `minimum-time-to-complete-all-tasks` (hard/arrays, sort-by-end + right-fill boolean run array). Fixed wrong expected values in several hidden tests by manual algorithm trace. Bank at **1987**; 6270 tests.
