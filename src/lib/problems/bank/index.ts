@@ -1678,7 +1678,6 @@ import { problem as minimumNumberOfOperationsToMakeArrayContinuous } from './min
 import { problem as pacificAtlanticWaterFlow } from './pacific-atlantic-water-flow';
 import { problem as criticalConnectionsInANetwork } from './critical-connections-in-a-network';
 import { problem as minimumCostToCutAStick } from './minimum-cost-to-cut-a-stick';
-import { problem as largestRectangleInHistogram } from './largest-rectangle-in-histogram';
 // batch 61
 import { problem as kClosestPointsToOrigin } from './k-closest-points-to-origin';
 import { problem as findAllAnagramsInAString } from './find-all-anagrams-in-a-string';
@@ -2086,6 +2085,24 @@ import { problem as minimumDifferenceInSumsAfterRemovalOfElements } from './mini
 import { problem as findTheClosestPalindrome } from './find-the-closest-palindrome';
 import { problem as numberOfSubarraysWithLcmEqualToK } from './number-of-subarrays-with-lcm-equal-to-k';
 import { problem as smallestRotationWithHighestScore } from './smallest-rotation-with-highest-score';
+// batch 88 (remote) — arrays, graph
+import { problem as splitTheArray } from './split-the-array';
+import { problem as findTheScoreOfAllPrefixesOfAnArray } from './find-the-score-of-all-prefixes-of-an-array';
+import { problem as shortestCycleInAGraph } from './shortest-cycle-in-a-graph';
+// batch 89 (remote) — monotonic-stack, string, sliding-window, dp, tree, graph
+import { problem as nextGreaterElementDistances } from './next-greater-element-distances';
+import { problem as findAllOccurrencesZAlgorithm } from './find-all-occurrences-z-algorithm';
+import { problem as zAlgorithmLongestPrefixSuffix } from './z-algorithm-longest-prefix-suffix';
+import { problem as countSubarraysExactlyKDistinct } from './count-subarrays-exactly-k-distinct';
+import { problem as maximumProductSubarrayLengthK } from './maximum-product-subarray-length-k';
+import { problem as weightedJobScheduling } from './weighted-job-scheduling';
+import { problem as parallelCourses } from './parallel-courses';
+import { problem as parallelCoursesII } from './parallel-courses-ii';
+import { problem as gridCountPathsMod } from './grid-count-paths-mod';
+import { problem as maxSumSubmatrix } from './max-sum-submatrix';
+import { problem as numberGoodLeafNodePairs } from './number-good-leaf-node-pairs';
+import { problem as treeNodeProductOfChildren } from './tree-node-product-of-children';
+import { problem as minimumOperationsNonDecreasing } from './minimum-operations-to-make-array-non-decreasing';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -3809,7 +3826,6 @@ export const problems: readonly Problem[] = [
   pacificAtlanticWaterFlow,
   criticalConnectionsInANetwork,
   minimumCostToCutAStick,
-  largestRectangleInHistogram,
   // batch 61
   kClosestPointsToOrigin,
   findAllAnagramsInAString,
@@ -4202,12 +4218,29 @@ export const problems: readonly Problem[] = [
   maximizeTheProfitAsTheSalesman,
   checkIfStringIsAnAcronymOfWords,
   countElementsWithSmallerAndGreaterElement,
-  // batch 88 — arrays/dp, linked-list, arrays/heap
   checkIfThereIsAValidPartitionForTheArray,
   reverseNodesInEvenLengthGroups,
   minimumDifferenceInSumsAfterRemovalOfElements,
-  // batch 89 — math/strings, arrays/math, arrays/math
+  // batch 89 — math/strings, arrays/math ×2
   findTheClosestPalindrome,
   numberOfSubarraysWithLcmEqualToK,
   smallestRotationWithHighestScore,
+  // batch 88 (remote) — arrays, graph
+  splitTheArray,
+  findTheScoreOfAllPrefixesOfAnArray,
+  shortestCycleInAGraph,
+  // batch 89 (remote) — monotonic-stack, string, sliding-window, dp, tree, graph
+  nextGreaterElementDistances,
+  findAllOccurrencesZAlgorithm,
+  zAlgorithmLongestPrefixSuffix,
+  countSubarraysExactlyKDistinct,
+  maximumProductSubarrayLengthK,
+  weightedJobScheduling,
+  parallelCourses,
+  parallelCoursesII,
+  gridCountPathsMod,
+  maxSumSubmatrix,
+  numberGoodLeafNodePairs,
+  treeNodeProductOfChildren,
+  minimumOperationsNonDecreasing,
 ];

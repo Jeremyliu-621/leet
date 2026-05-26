@@ -8,12 +8,15 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1951** problems; 6147 tests green. Batch 88 complete (3 problems: arrays/dp, linked-list, arrays/heap). InlineText component added for backtick inline code in constraints/explanations. Site stats updated to 1,950+.
+**Current focus:** Bank at **1970+** problems; tests green. Batches 88–89 merged (local + remote). InlineText component, a11y fixes, site stats 1,950+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 89 bank growth; UI/UX polish.
+**Next up:** Continued bank growth (batch 90); UI/UX polish.
 
-### feat(bank): add batch 88 — 3 problems (arrays/dp, linked-list, arrays/heap) (2026-05-26)
-Added 3 problems: `check-if-there-is-a-valid-partition-for-the-array` (medium/dp, `dp[i]` = can first `i` elements form valid partition; 3 transitions), `reverse-nodes-in-even-length-groups` (medium/linked-list, group-by-size with reversal when actual length is even), `minimum-difference-in-sums-after-removal-of-elements` (hard/arrays+heap, sliding max-heap prefMin + sliding min-heap suffMax, answer = min over split points). Also: `InlineText` component in ProblemPanel renders backtick-inline code in constraints and example explanations. Marketing site updated to 1,950+. Bank at **1951**; 6147 tests.
+### merge: batches 88–89 local + remote (2026-05-26)
+Local batch 88: `check-if-there-is-a-valid-partition-for-the-array` (medium/dp), `reverse-nodes-in-even-length-groups` (medium/linked-list), `minimum-difference-in-sums-after-removal-of-elements` (hard/heap); `InlineText` component for backtick inline code; site stats to 1,950+.
+Remote batch 88: `split-the-array` (easy/arrays+hash-map), `find-the-score-of-all-prefixes-of-an-array` (medium/arrays), `shortest-cycle-in-a-graph` (medium/graph); a11y: aria-live verdict announcements + focus restoration on modal close.
+Local batch 89: `find-the-closest-palindrome` (hard/math+strings), `number-of-subarrays-with-lcm-equal-to-k` (medium/arrays+math), `smallest-rotation-with-highest-score` (hard/arrays+math).
+Remote batch 89: 13 problems — next-greater-element-distances, find-all-occurrences-z-algorithm, z-algorithm-longest-prefix-suffix, count-subarrays-exactly-k-distinct, maximum-product-subarray-length-k, weighted-job-scheduling, parallel-courses, parallel-courses-ii, grid-count-paths-mod, max-sum-submatrix, number-good-leaf-node-pairs, tree-node-product-of-children, minimum-operations-non-decreasing.
 
 ### feat(bank): add batch 87 — 3 problems (dp, strings, arrays) (2026-05-26)
 Added 3 problems: `maximize-the-profit-as-the-salesman` (medium/dp, weighted interval scheduling with DP sweep), `check-if-string-is-an-acronym-of-words` (easy/strings, first-char matching), `count-elements-with-smaller-and-greater-element` (easy/arrays, min/max filtering). Bank at **1948**; 6138 tests.

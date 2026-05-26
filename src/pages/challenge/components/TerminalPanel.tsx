@@ -548,8 +548,20 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
 
   const allEntries = history.flat();
 
+  // Build a screen-reader announcement whenever a new verdict arrives.
+  const verdictAnnouncement =
+    result != null && result !== undefined
+      ? `${outcomeLabel(result.outcome, mode)}: ${result.passed} of ${result.total} tests passed.`
+      : result === undefined
+        ? 'Running tests…'
+        : null;
+
   return (
     <div className="flex flex-col" role="region" aria-label="Terminal output">
+      {/* Screen-reader live region — announces verdict changes without disrupting visual flow. */}
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        {verdictAnnouncement}
+      </div>
       {/* Tab bar */}
       <div className="flex items-center justify-between border-b border-border bg-surface">
         <div ref={tabListRef} role="tablist" aria-label="Terminal panels" className="flex">

@@ -67,6 +67,9 @@ interface Props {
 
 export function KeyboardShortcutsModal({ onClose }: Props) {
   const dialogRef = useRef<HTMLDivElement>(null);
+  // Store the element that had focus before the dialog opened so we can
+  // restore it when the dialog closes (WCAG 2.1 SC 3.2.1 / focus management).
+  const returnFocusRef = useRef<HTMLElement | null>(null);
 
   // Close on Escape; trap Tab focus inside the dialog.
   useEffect(() => {
@@ -87,9 +90,13 @@ export function KeyboardShortcutsModal({ onClose }: Props) {
     return () => document.removeEventListener('keydown', onKeyDown);
   }, [onClose]);
 
-  // Focus the dialog on mount so keyboard users can immediately interact.
+  // Focus the dialog on mount, and restore focus to the opener on unmount.
   useEffect(() => {
+    returnFocusRef.current = document.activeElement as HTMLElement | null;
     dialogRef.current?.focus();
+    return () => {
+      returnFocusRef.current?.focus();
+    };
   }, []);
 
   return (

@@ -1065,7 +1065,10 @@ export function Challenge() {
           className={`flex flex-col overflow-hidden border-border lg:border-r max-lg:border-b max-lg:max-h-[45vh] max-lg:!w-full${isEditorFullscreen ? ' hidden' : ''}`}
           style={{ width: `${panelPct}%` }}
         >
+          {/* key={problem.id} remounts ProblemPanel on problem change, scrolling to top
+              and resetting hint-reveal state. */}
           <ProblemPanel
+            key={problem.id}
             problem={problem}
             hintCostLabel="1 min"
             onHintRevealed={() => setSecondsLeft((s) => Math.max(0, s - HINT_COST_SECONDS))}
