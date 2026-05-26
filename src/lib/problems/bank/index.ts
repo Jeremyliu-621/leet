@@ -1584,6 +1584,9 @@ import { problem as splitMessageBasedOnLimit } from './split-message-based-on-li
 import { problem as longestWordInDictDeleting } from './longest-word-in-dict-deleting';
 import { problem as countAllValidPickupAndDeliveryOptions } from './count-all-valid-pickup-and-delivery-options';
 import { problem as maximumAverageSubarrayII } from './maximum-average-subarray-ii';
+import { problem as longestEvenOddSubarrayWithThreshold } from './longest-even-odd-subarray-with-threshold';
+import { problem as findTheValueOfThePartition } from './find-the-value-of-the-partition';
+import { problem as clearDigits } from './clear-digits';
 // batch 57 (local)
 import { problem as sumOfDigitsInBaseK } from './sum-of-digits-in-base-k';
 import { problem as countSymmetricIntegers } from './count-symmetric-integers';
@@ -3223,6 +3226,9 @@ export const problems: readonly Problem[] = [
   longestWordInDictDeleting,
   countAllValidPickupAndDeliveryOptions,
   maximumAverageSubarrayII,
+  longestEvenOddSubarrayWithThreshold,
+  findTheValueOfThePartition,
+  clearDigits,
   // batch 57 (local)
   sumOfDigitsInBaseK,
   countSymmetricIntegers,
