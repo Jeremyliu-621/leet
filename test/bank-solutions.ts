@@ -23854,6 +23854,70 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 65 (local)
+  'count-pairs-that-form-a-complete-day-ii': (...args: unknown[]) => {
+    const hours = args[0] as number[];
+    const freq = new Array<number>(24).fill(0);
+    let ans = 0;
+    for (const h of hours) {
+      const rem = h % 24;
+      ans += freq[(24 - rem) % 24]!;
+      freq[rem]!++;
+    }
+    return ans;
+  },
+
+  'kth-largest-element-in-a-stream': (...args: unknown[]) => {
+    const operations = args[0] as string[];
+    const argsList = args[1] as unknown[][];
+    const results: (number | null)[] = [];
+    let K = 0;
+    let sorted: number[] = [];
+    for (let i = 0; i < operations.length; i++) {
+      const op = operations[i]!;
+      const arg = argsList[i]!;
+      if (op === 'KthLargest') {
+        K = arg[0] as number;
+        const nums = arg[1] as number[];
+        sorted = [...(nums ?? [])].sort((a, b) => a - b);
+        results.push(null);
+      } else {
+        const val = arg[0] as number;
+        let lo = 0, hi = sorted.length;
+        while (lo < hi) { const mid = (lo + hi) >> 1; if (sorted[mid]! < val) lo = mid + 1; else hi = mid; }
+        sorted.splice(lo, 0, val);
+        results.push(sorted[sorted.length - K]!);
+      }
+    }
+    return results;
+  },
+
+  'check-if-the-sentence-is-pangram': (...args: unknown[]) => {
+    return new Set(args[0] as string).size >= 26;
+  },
+
+  'count-number-of-ways-to-place-houses': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const MOD = 1_000_000_007n;
+    let a = 1n, b = 2n;
+    for (let i = 2; i <= n; i++) [a, b] = [b, (a + b) % MOD];
+    return Number(b * b % MOD);
+  },
+
+  'count-ways-to-group-overlapping-ranges': (...args: unknown[]) => {
+    const ranges = (args[0] as number[][]).map(r => [...r] as [number, number]);
+    ranges.sort((a, b) => a[0] - b[0]);
+    const MOD = 1_000_000_007n;
+    let components = 0, maxEnd = -Infinity;
+    for (const [l, r] of ranges) {
+      if (l! > maxEnd) components++;
+      maxEnd = Math.max(maxEnd, r!);
+    }
+    let ans = 1n;
+    for (let i = 0; i < components; i++) ans = ans * 2n % MOD;
+    return Number(ans);
+  },
+
   // batch 64 (local)
   'number-of-wonderful-substrings': (...args: unknown[]) => {
     const word = args[0] as string;

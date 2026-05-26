@@ -1625,6 +1625,12 @@ import { problem as maximumStrongPairXorI } from './maximum-strong-pair-xor-i';
 import { problem as extraCharactersInAString } from './extra-characters-in-a-string';
 import { problem as kthLargestSumInABinaryTree } from './kth-largest-sum-in-a-binary-tree';
 import { problem as sumOfMatrixAfterQueries } from './sum-of-matrix-after-queries';
+// batch 65 (local)
+import { problem as countPairsThatFormACompleteDayIi } from './count-pairs-that-form-a-complete-day-ii';
+import { problem as kthLargestElementInAStream } from './kth-largest-element-in-a-stream';
+import { problem as checkIfTheSentenceIsPangram } from './check-if-the-sentence-is-pangram';
+import { problem as countNumberOfWaysToPlaceHouses } from './count-number-of-ways-to-place-houses';
+import { problem as countWaysToGroupOverlappingRanges } from './count-ways-to-group-overlapping-ranges';
 // batch 64 (local)
 import { problem as numberOfWonderfulSubstrings } from './number-of-wonderful-substrings';
 import { problem as designANumberContainerSystem } from './design-a-number-container-system';
@@ -3410,6 +3416,12 @@ export const problems: readonly Problem[] = [
   extraCharactersInAString,
   kthLargestSumInABinaryTree,
   sumOfMatrixAfterQueries,
+  // batch 65 (local)
+  countPairsThatFormACompleteDayIi,
+  kthLargestElementInAStream,
+  checkIfTheSentenceIsPangram,
+  countNumberOfWaysToPlaceHouses,
+  countWaysToGroupOverlappingRanges,
   // batch 64 (local)
   numberOfWonderfulSubstrings,
   designANumberContainerSystem,

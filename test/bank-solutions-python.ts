@@ -23357,6 +23357,66 @@ def secondMinimum(n, edges, time, change):
     return ops
 `,
 
+  // batch 65 (local)
+  'count-pairs-that-form-a-complete-day-ii': `def countCompleteDayPairs(hours):
+    hours = list(int(x) for x in (hours.to_py() if hasattr(hours, 'to_py') else hours))
+    freq = [0] * 24
+    ans = 0
+    for h in hours:
+        rem = h % 24
+        ans += freq[(24 - rem) % 24]
+        freq[rem] += 1
+    return ans
+`,
+
+  'kth-largest-element-in-a-stream': `def kthLargest(operations, args):
+    import bisect
+    ops = list(operations.to_py() if hasattr(operations, 'to_py') else operations)
+    args_list = [list(a.to_py() if hasattr(a, 'to_py') else a) for a in (args.to_py() if hasattr(args, 'to_py') else args)]
+    results = []
+    K = 0
+    sorted_arr = []
+    for i, op in enumerate(ops):
+        arg = args_list[i]
+        if op == 'KthLargest':
+            K = int(arg[0])
+            nums = list(arg[1].to_py() if hasattr(arg[1], 'to_py') else arg[1]) if len(arg) > 1 and arg[1] is not None else []
+            sorted_arr = sorted(int(x) for x in nums)
+            results.append(None)
+        else:
+            val = int(arg[0])
+            bisect.insort(sorted_arr, val)
+            results.append(sorted_arr[-K])
+    return results
+`,
+
+  'check-if-the-sentence-is-pangram': `def checkIfPangram(sentence):
+    sentence = str(sentence)
+    return len(set(sentence)) >= 26
+`,
+
+  'count-number-of-ways-to-place-houses': `def countHousePlacements(n):
+    n = int(n)
+    MOD = 10**9 + 7
+    a, b = 1, 2
+    for _ in range(2, n + 1):
+        a, b = b, (a + b) % MOD
+    return b * b % MOD
+`,
+
+  'count-ways-to-group-overlapping-ranges': `def countWays(ranges):
+    ranges = [[int(x) for x in r] for r in (ranges.to_py() if hasattr(ranges, 'to_py') else ranges)]
+    ranges.sort(key=lambda r: r[0])
+    MOD = 10**9 + 7
+    components = 0
+    max_end = float('-inf')
+    for l, r in ranges:
+        if l > max_end:
+            components += 1
+        max_end = max(max_end, r)
+    return pow(2, components, MOD)
+`,
+
   // batch 64 (local)
   'number-of-wonderful-substrings': `def wonderfulSubstrings(word):
     word = str(word)
