@@ -76,7 +76,7 @@ export function ProblemBrowserSection() {
     const base = ALL_PROBLEMS.filter((p) => {
       if (diffFilter !== 'all' && p.difficulty !== diffFilter) return false;
       if (tagFilter !== 'all' && !p.tags.includes(tagFilter)) return false;
-      if (query && !p.title.toLowerCase().includes(query) && !p.tags.some((t) => t.includes(query))) return false;
+      if (query && !p.title.toLowerCase().includes(query) && !p.id.includes(query) && !p.tags.some((t) => t.includes(query))) return false;
       if (unsolvedOnly && solvedIds.has(p.id)) return false;
       return true;
     });
