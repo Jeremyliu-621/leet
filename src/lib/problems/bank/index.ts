@@ -1648,6 +1648,29 @@ import { problem as minimumOperationsToMakeAllArrayElementsEqual } from './minim
 import { problem as reverseWordsInAStringII } from './reverse-words-in-a-string-ii';
 import { problem as countSubarraysWithMedian } from './count-subarrays-with-median';
 import { problem as maximumSumQueries } from './maximum-sum-queries';
+// batch 58 (new problems)
+import { problem as findSubarraysWithEqualSum } from './find-subarrays-with-equal-sum';
+import { problem as bestPokerHand } from './best-poker-hand';
+import { problem as countIncremovableSubarrays } from './count-incremovable-subarrays';
+import { problem as stepByStepDirections } from './step-by-step-directions';
+import { problem as minimumNumberOfFoodBuckets } from './minimum-number-of-food-buckets';
+import { problem as superUglyNumber } from './super-ugly-number';
+import { problem as rewardTopKStudents } from './reward-top-k-students';
+import { problem as countSubarraysWithScoreLessThanK } from './count-subarrays-with-score-less-than-k';
+import { problem as maximumNumberOfJumpsToReachLastIndex } from './maximum-number-of-jumps-to-reach-last-index';
+import { problem as minimumNumberOfCoinsForFruits } from './minimum-number-of-coins-for-fruits';
+// batch 59 (new problems)
+import { problem as freqStack } from './freq-stack';
+import { problem as minimumCostToEqualizeArray } from './minimum-cost-to-equalize-array';
+import { problem as maximumTotalDamage } from './maximum-total-damage';
+import { problem as specialArrayII } from './special-array-ii';
+import { problem as findMaximumLengthValidSubsequence } from './find-maximum-length-valid-subsequence';
+import { problem as countSubmatricesAllOnes } from './count-submatrices-all-ones';
+import { problem as minimumLengthOfStringAfterOperations } from './minimum-length-of-string-after-operations';
+import { problem as countSpecialCharactersI } from './count-special-characters-i';
+import { problem as maximumJumpsToReachLastIndex } from './maximum-jumps-to-reach-last-index';
+import { problem as minimumOperationsToMakeArrayEqualII } from './minimum-operations-to-make-array-equal-ii';
+import { problem as minimumCostForCuttingCakeI } from './minimum-cost-for-cutting-cake-i';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3341,4 +3364,27 @@ export const problems: readonly Problem[] = [
   reverseWordsInAStringII,
   countSubarraysWithMedian,
   maximumSumQueries,
+  // batch 58 (new problems)
+  findSubarraysWithEqualSum,
+  bestPokerHand,
+  countIncremovableSubarrays,
+  stepByStepDirections,
+  minimumNumberOfFoodBuckets,
+  superUglyNumber,
+  rewardTopKStudents,
+  countSubarraysWithScoreLessThanK,
+  maximumNumberOfJumpsToReachLastIndex,
+  minimumNumberOfCoinsForFruits,
+  // batch 59 (new problems)
+  freqStack,
+  minimumCostToEqualizeArray,
+  maximumTotalDamage,
+  specialArrayII,
+  findMaximumLengthValidSubsequence,
+  countSubmatricesAllOnes,
+  minimumLengthOfStringAfterOperations,
+  countSpecialCharactersI,
+  maximumJumpsToReachLastIndex,
+  minimumOperationsToMakeArrayEqualII,
+  minimumCostForCuttingCakeI,
 ];

@@ -36,7 +36,7 @@ import {
   completionKeymap,
 } from '@codemirror/autocomplete';
 import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/search';
-import { vim } from '@replit/codemirror-vim';
+import { vim, getCM } from '@replit/codemirror-vim';
 import { emacs } from '@replit/codemirror-emacs';
 import { leetlockEditorThemeDark, leetlockEditorThemeLight } from '../codemirror-theme';
 import type { JudgeResult } from '../../../lib/judge';
@@ -515,6 +515,29 @@ export function EditorPanel({
     [availableLanguages, onLanguageChange],
   );
 
+  // Vim mode indicator — tracks NORMAL / INSERT / VISUAL / REPLACE so users
+  // can see the current modal state without watching the cursor shape.
+  const [vimMode, setVimMode] = useState<string | null>(null);
+  useEffect(() => {
+    if (editorKeymap !== 'vim') {
+      setVimMode(null);
+      return;
+    }
+    const view = viewRef.current;
+    if (!view) return;
+    const cm = getCM(view);
+    if (!cm) return;
+    setVimMode('normal');
+    const handler = (info: { mode: string; subMode?: string }) => {
+      const label = info.subMode ? `${info.mode} (${info.subMode})` : info.mode;
+      setVimMode(label);
+    };
+    cm.on('vim-mode-change', handler);
+    return () => {
+      cm.off('vim-mode-change', handler);
+    };
+  }, [editorKeymap]);
+
   const showLanguageSelector = availableLanguages.length > 1;
 
   return (
@@ -627,6 +650,17 @@ export function EditorPanel({
                 className="rounded border border-border px-1.5 py-0.5 text-[10px]"
               >
                 {attemptsRemaining} left
+              </span>
+            )}
+            {/* Vim mode indicator — shows NORMAL/INSERT/VISUAL when vim keymap is active */}
+            {vimMode !== null && (
+              <span
+                aria-live="polite"
+                aria-atomic="true"
+                aria-label={`Vim mode: ${vimMode}`}
+                className="uppercase tracking-widest font-semibold"
+              >
+                {vimMode}
               </span>
             )}
             {/* Line / column indicator — mirrors every major IDE */}

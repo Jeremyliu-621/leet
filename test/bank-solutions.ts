@@ -22763,4 +22763,377 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     });
   },
 
+
+  'find-subarrays-with-equal-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const seen = new Set<number>();
+    for (let i = 0; i < nums.length - 1; i++) {
+      const s = nums[i]! + nums[i + 1]!;
+      if (seen.has(s)) return true;
+      seen.add(s);
+    }
+    return false;
+  },
+
+  'best-poker-hand': (...args: unknown[]) => {
+    const ranks = args[0] as number[];
+    const suits = args[1] as string[];
+    if (new Set(suits).size === 1) return 'Flush';
+    const freq = new Map<number, number>();
+    for (const r of ranks) freq.set(r, (freq.get(r) ?? 0) + 1);
+    const max = Math.max(...freq.values());
+    if (max >= 3) return 'Three of a Kind';
+    if (max === 2) return 'Pair';
+    return 'High Card';
+  },
+
+
+  'count-incremovable-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    function isStrictlyIncreasing(arr: number[], l: number, r: number): boolean {
+      for (let i = l; i < r; i++) {
+        if (arr[i]! >= arr[i + 1]!) return false;
+      }
+      return true;
+    }
+    let count = 0;
+    for (let l = 0; l < n; l++) {
+      for (let r = l; r < n; r++) {
+        const left = isStrictlyIncreasing(nums, 0, l - 1);
+        const right = isStrictlyIncreasing(nums, r + 1, n - 1);
+        const border = l === 0 || r === n - 1 || nums[l - 1]! < nums[r + 1]!;
+        if (left && right && border) count++;
+      }
+    }
+    return count;
+  },
+
+  'step-by-step-directions': (...args: unknown[]) => {
+    interface TNode { val: number; left: TNode | null; right: TNode | null; }
+    const arr = args[0] as (number | null)[];
+    const s = args[1] as number;
+    const t = args[2] as number;
+    if (!arr || arr.length === 0) return '';
+    const root: TNode = { val: arr[0] as number, left: null, right: null };
+    const queue: TNode[] = [root];
+    let i = 1;
+    while (queue.length > 0 && i < arr.length) {
+      const node = queue.shift()!;
+      if (arr[i] !== null && arr[i] !== undefined) {
+        node.left = { val: arr[i] as number, left: null, right: null };
+        queue.push(node.left);
+      }
+      i++;
+      if (i < arr.length && arr[i] !== null && arr[i] !== undefined) {
+        node.right = { val: arr[i] as number, left: null, right: null };
+        queue.push(node.right);
+      }
+      i++;
+    }
+    function findPath(node: TNode | null, target: number, path: string[]): boolean {
+      if (!node) return false;
+      if (node.val === target) return true;
+      path.push('L');
+      if (findPath(node.left, target, path)) return true;
+      path.pop();
+      path.push('R');
+      if (findPath(node.right, target, path)) return true;
+      path.pop();
+      return false;
+    }
+    const pathS: string[] = [];
+    const pathT: string[] = [];
+    findPath(root, s, pathS);
+    findPath(root, t, pathT);
+    let k = 0;
+    while (k < pathS.length && k < pathT.length && pathS[k] === pathT[k]) k++;
+    return 'U'.repeat(pathS.length - k) + pathT.slice(k).join('');
+  },
+
+  'minimum-number-of-food-buckets': (...args: unknown[]) => {
+    const street = args[0] as string;
+    const s = street.split('');
+    let count = 0;
+    let i = 0;
+    while (i < s.length) {
+      if (s[i] === 'H') {
+        if (i + 1 < s.length && s[i + 1] === '.') {
+          // Place bucket at i+1; it serves H[i] and also H[i+2] if present
+          s[i + 1] = 'B';
+          count++;
+          i += 3; // skip current H, bucket, and the next H (served by this bucket)
+        } else if (i - 1 >= 0 && s[i - 1] === '.') {
+          s[i - 1] = 'B';
+          count++;
+          i++;
+        } else {
+          return -1;
+        }
+      } else {
+        i++;
+      }
+    }
+    return count;
+  },
+
+  'super-ugly-number': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const primes = args[1] as number[];
+    const dp = new Array(n).fill(0);
+    dp[0] = 1;
+    const pointers = new Array(primes.length).fill(0);
+    for (let i = 1; i < n; i++) {
+      const candidates = primes.map((p, j) => p * dp[pointers[j]!]!);
+      const minVal = Math.min(...candidates);
+      dp[i] = minVal;
+      for (let j = 0; j < primes.length; j++) {
+        if (candidates[j] === minVal) pointers[j]!++;
+      }
+    }
+    return dp[n - 1];
+  },
+
+  'reward-top-k-students': (...args: unknown[]) => {
+    const positiveFeedback = args[0] as string[];
+    const negativeFeedback = args[1] as string[];
+    const report = args[2] as string[];
+    const studentId = args[3] as number[];
+    const k = args[4] as number;
+    const posSet = new Set(positiveFeedback);
+    const negSet = new Set(negativeFeedback);
+    const scores: [number, number][] = studentId.map((id, i) => {
+      let score = 0;
+      for (const word of report[i]!.split(' ')) {
+        if (posSet.has(word)) score += 3;
+        else if (negSet.has(word)) score -= 1;
+      }
+      return [id, score];
+    });
+    scores.sort((a, b) => b[1] - a[1] || a[0] - b[0]);
+    return scores.slice(0, k).map(x => x[0]);
+  },
+
+  'count-subarrays-with-score-less-than-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let count = 0, sum = 0, left = 0;
+    for (let right = 0; right < nums.length; right++) {
+      sum += nums[right]!;
+      while (sum * (right - left + 1) >= k) {
+        sum -= nums[left]!;
+        left++;
+      }
+      count += right - left + 1;
+    }
+    return count;
+  },
+
+  'maximum-number-of-jumps-to-reach-last-index': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    const n = nums.length;
+    const dp = new Array(n).fill(-1);
+    dp[0] = 0;
+    for (let j = 1; j < n; j++) {
+      for (let i = 0; i < j; i++) {
+        if (dp[i] !== -1 && Math.abs(nums[i]! - nums[j]!) <= target) {
+          dp[j] = Math.max(dp[j], dp[i] + 1);
+        }
+      }
+    }
+    return dp[n - 1];
+  },
+
+  'minimum-number-of-coins-for-fruits': (...args: unknown[]) => {
+    const prices = args[0] as number[];
+    const n = prices.length;
+    const dp = new Array(n + 2).fill(0);
+    for (let i = n; i >= 1; i--) {
+      const free_end = Math.min(n + 1, i + i + 1);
+      let minNext = Infinity;
+      for (let j = i + 1; j <= free_end; j++) {
+        minNext = Math.min(minNext, dp[j]!);
+      }
+      dp[i] = prices[i - 1]! + (minNext === Infinity ? 0 : minNext);
+    }
+    return dp[1];
+  },
+
+  'freq-stack': (...args: unknown[]) => {
+    const ops = args[0] as string[], vals = args[1] as unknown[][];
+    const freq = new Map<number, number>();
+    const group = new Map<number, number[]>();
+    let maxFreq = 0;
+    return ops.map((op, i) => {
+      if (op === 'FreqStack') return null;
+      if (op === 'push') {
+        const v = (vals[i] as number[])[0]!;
+        const f = (freq.get(v) ?? 0) + 1;
+        freq.set(v, f);
+        if (!group.has(f)) group.set(f, []);
+        group.get(f)!.push(v);
+        if (f > maxFreq) maxFreq = f;
+        return null;
+      }
+      const val = group.get(maxFreq)!.pop()!;
+      freq.set(val, maxFreq - 1);
+      if (!group.get(maxFreq)!.length) maxFreq--;
+      return val;
+    });
+  },
+
+  'minimum-cost-to-equalize-array': (...args: unknown[]) => {
+    const nums = args[0] as number[], cost1 = args[1] as number, cost2 = args[2] as number;
+    const MOD = 1_000_000_007;
+    const n = nums.length;
+    if (n === 1) return 0;
+    const maxVal = Math.max(...nums);
+    const minVal = Math.min(...nums);
+    const totalDiff = nums.reduce((s, v) => s + maxVal - v, 0);
+    const maxDiff = maxVal - minVal;
+    if (2 * cost1 <= cost2) {
+      return (cost1 * totalDiff) % MOD;
+    }
+    let best = Infinity;
+    for (let extra = 0; extra <= n; extra++) {
+      const total = totalDiff + extra * n;
+      const curMaxD = maxDiff + extra;
+      const op2count = Math.floor((total - Math.max(0, 2 * curMaxD - total)) / 2);
+      const op1count = total - 2 * op2count;
+      const c = op2count * cost2 + op1count * cost1;
+      best = Math.min(best, c);
+    }
+    return best % MOD;
+  },
+
+  'maximum-total-damage': (...args: unknown[]) => {
+    const power = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const p of power) freq.set(p, (freq.get(p) ?? 0) + p);
+    const vals = [...freq.keys()].sort((a, b) => a - b);
+    const sums = vals.map(v => freq.get(v)!);
+    const n = vals.length;
+    const dp = new Array(n).fill(0);
+    dp[0] = sums[0]!;
+    for (let i = 1; i < n; i++) {
+      let j = i - 1;
+      while (j >= 0 && vals[i]! - vals[j]! <= 2) j--;
+      const take = (j >= 0 ? dp[j]! : 0) + sums[i]!;
+      dp[i] = Math.max(dp[i - 1]!, take);
+    }
+    return dp[n - 1]!;
+  },
+
+  'special-array-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[], queries = args[1] as number[][];
+    const n = nums.length;
+    const prefix = new Array(n).fill(0);
+    for (let i = 1; i < n; i++) {
+      prefix[i] = prefix[i - 1]! + ((nums[i]! % 2) === (nums[i - 1]! % 2) ? 1 : 0);
+    }
+    return queries.map(([l, r]) => prefix[r!]! === prefix[l!]!);
+  },
+
+  'find-maximum-length-valid-subsequence': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const allEven = nums.filter(n => n % 2 === 0).length;
+    const allOdd = nums.filter(n => n % 2 !== 0).length;
+    const dp = [0, 0];
+    let best = 0;
+    for (const n of nums) {
+      const p = n % 2;
+      const np = 1 - p;
+      dp[p] = dp[np]! + 1;
+      best = Math.max(best, dp[p]!);
+    }
+    return Math.max(allEven, allOdd, best);
+  },
+
+  'count-submatrices-all-ones': (...args: unknown[]) => {
+    const mat = args[0] as number[][];
+    const m = mat.length, n = mat[0]!.length;
+    const h = Array.from({ length: m }, () => new Array(n).fill(0));
+    let total = 0;
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        h[i]![j] = mat[i]![j] === 0 ? 0 : (i === 0 ? 1 : h[i - 1]![j]! + 1);
+      }
+      for (let j = 0; j < n; j++) {
+        let minH = h[i]![j]!;
+        for (let k = j; k >= 0; k--) {
+          minH = Math.min(minH, h[i]![k]!);
+          total += minH;
+        }
+      }
+    }
+    return total;
+  },
+
+  'minimum-length-of-string-after-operations': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const freq = new Map<string, number>();
+    for (const c of s) freq.set(c, (freq.get(c) ?? 0) + 1);
+    let total = 0;
+    for (const count of freq.values()) {
+      total += count % 2 === 0 ? 2 : 1;
+    }
+    return total;
+  },
+
+  'count-special-characters-i': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const lower = new Set<string>(), upper = new Set<string>();
+    for (const c of word) {
+      if (c >= 'a' && c <= 'z') lower.add(c);
+      else upper.add(c.toLowerCase());
+    }
+    let count = 0;
+    for (const c of lower) if (upper.has(c)) count++;
+    return count;
+  },
+
+  'maximum-jumps-to-reach-last-index': (...args: unknown[]) => {
+    const nums = args[0] as number[], target = args[1] as number;
+    const n = nums.length;
+    const dp = new Array(n).fill(-1);
+    dp[0] = 0;
+    for (let j = 1; j < n; j++) {
+      for (let i = 0; i < j; i++) {
+        if (dp[i] !== -1 && Math.abs(nums[i]! - nums[j]!) <= target) {
+          dp[j] = Math.max(dp[j]!, dp[i]! + 1);
+        }
+      }
+    }
+    return dp[n - 1]!;
+  },
+
+  'minimum-operations-to-make-array-equal-ii': (...args: unknown[]) => {
+    const nums1 = args[0] as number[], nums2 = args[1] as number[], k = args[2] as number;
+    if (k === 0) return nums1.every((v, i) => v === nums2[i]) ? 0 : -1;
+    let pos = 0, neg = 0;
+    for (let i = 0; i < nums1.length; i++) {
+      const d = nums1[i]! - nums2[i]!;
+      if (d % k !== 0) return -1;
+      if (d > 0) pos += d / k;
+      else neg -= d / k;
+    }
+    return pos === neg ? pos : -1;
+  },
+
+  'minimum-cost-for-cutting-cake-i': (...args: unknown[]) => {
+    const [_m, _n, horizontalCut, verticalCut] = args as [number, number, number[], number[]];
+    const cuts: { cost: number; type: 'h' | 'v' }[] = [];
+    for (const c of horizontalCut) cuts.push({ cost: c, type: 'h' });
+    for (const c of verticalCut) cuts.push({ cost: c, type: 'v' });
+    cuts.sort((a, b) => b.cost - a.cost);
+    let h = 1, v = 1, total = 0;
+    for (const cut of cuts) {
+      if (cut.type === 'h') { total += cut.cost * v; h++; }
+      else { total += cut.cost * h; v++; }
+    }
+    return total;
+  },
+
+
 };

@@ -22496,4 +22496,317 @@ def secondMinimum(n, edges, time, change):
     return result
 `,
 
+
+
+  'find-subarrays-with-equal-sum': `def findSubarrays(nums):
+    seen = set()
+    for i in range(len(nums) - 1):
+        s = nums[i] + nums[i + 1]
+        if s in seen:
+            return True
+        seen.add(s)
+    return False
+`,
+
+  'best-poker-hand': `def bestHand(ranks, suits):
+    if len(set(suits)) == 1:
+        return 'Flush'
+    from collections import Counter
+    freq = Counter(ranks)
+    max_freq = max(freq.values())
+    if max_freq >= 3:
+        return 'Three of a Kind'
+    if max_freq == 2:
+        return 'Pair'
+    return 'High Card'
+`,
+
+
+  'count-incremovable-subarrays': `def incremovableSubarrayCount(nums):
+    n = len(nums)
+    def is_strictly_increasing(l, r):
+        for i in range(l, r):
+            if nums[i] >= nums[i + 1]:
+                return False
+        return True
+    count = 0
+    for l in range(n):
+        for r in range(l, n):
+            left_ok = is_strictly_increasing(0, l - 1)
+            right_ok = is_strictly_increasing(r + 1, n - 1)
+            border_ok = l == 0 or r == n - 1 or nums[l - 1] < nums[r + 1]
+            if left_ok and right_ok and border_ok:
+                count += 1
+    return count
+`,
+
+  'step-by-step-directions': `def getDirectionsImpl(root, s, t):
+    def find_path(node, target, path):
+        if not node:
+            return False
+        if node.val == target:
+            return True
+        path.append('L')
+        if find_path(node.left, target, path):
+            return True
+        path.pop()
+        path.append('R')
+        if find_path(node.right, target, path):
+            return True
+        path.pop()
+        return False
+    path_s = []
+    path_t = []
+    find_path(root, s, path_s)
+    find_path(root, t, path_t)
+    k = 0
+    while k < len(path_s) and k < len(path_t) and path_s[k] == path_t[k]:
+        k += 1
+    return 'U' * (len(path_s) - k) + ''.join(path_t[k:])
+`,
+
+  'minimum-number-of-food-buckets': `def minimumBuckets(street):
+    s = list(street)
+    count = 0
+    i = 0
+    while i < len(s):
+        if s[i] == 'H':
+            if i + 1 < len(s) and s[i + 1] == '.':
+                s[i + 1] = 'B'
+                count += 1
+                i += 3
+            elif i - 1 >= 0 and s[i - 1] == '.':
+                s[i - 1] = 'B'
+                count += 1
+                i += 1
+            else:
+                return -1
+        else:
+            i += 1
+    return count
+`,
+
+  'super-ugly-number': `def nthSuperUglyNumber(n, primes):
+    dp = [0] * n
+    dp[0] = 1
+    pointers = [0] * len(primes)
+    for i in range(1, n):
+        candidates = [primes[j] * dp[pointers[j]] for j in range(len(primes))]
+        min_val = min(candidates)
+        dp[i] = min_val
+        for j in range(len(primes)):
+            if candidates[j] == min_val:
+                pointers[j] += 1
+    return dp[n - 1]
+`,
+
+  'reward-top-k-students': `def topStudents(positive_feedback, negative_feedback, report, student_id, k):
+    pos_set = set(positive_feedback)
+    neg_set = set(negative_feedback)
+    scores = []
+    for i, sid in enumerate(student_id):
+        score = 0
+        for word in report[i].split():
+            if word in pos_set:
+                score += 3
+            elif word in neg_set:
+                score -= 1
+        scores.append((sid, score))
+    scores.sort(key=lambda x: (-x[1], x[0]))
+    return [x[0] for x in scores[:k]]
+`,
+
+  'count-subarrays-with-score-less-than-k': `def countSubarrays(nums, k):
+    count = 0
+    total = 0
+    left = 0
+    for right in range(len(nums)):
+        total += nums[right]
+        while total * (right - left + 1) >= k:
+            total -= nums[left]
+            left += 1
+        count += right - left + 1
+    return count
+`,
+
+  'maximum-number-of-jumps-to-reach-last-index': `def maximumJumps(nums, target):
+    n = len(nums)
+    dp = [-1] * n
+    dp[0] = 0
+    for j in range(1, n):
+        for i in range(j):
+            if dp[i] != -1 and abs(nums[i] - nums[j]) <= target:
+                dp[j] = max(dp[j], dp[i] + 1)
+    return dp[n - 1]
+`,
+
+  'minimum-number-of-coins-for-fruits': `def minimumCoins(prices):
+    n = len(prices)
+    dp = [0] * (n + 2)
+    for i in range(n, 0, -1):
+        free_end = min(n + 1, i + i + 1)
+        min_next = min(dp[i + 1:free_end + 1]) if i + 1 <= free_end else 0
+        dp[i] = prices[i - 1] + min_next
+    return dp[1]
+`,
+
+  'freq-stack': `def freqStack(ops, vals):
+    freq = {}
+    group = {}
+    max_freq = 0
+    result = []
+    for op, val in zip(ops, vals):
+        if op == 'FreqStack':
+            result.append(None)
+        elif op == 'push':
+            v = val[0]
+            f = freq.get(v, 0) + 1
+            freq[v] = f
+            if f > max_freq:
+                max_freq = f
+            if f not in group:
+                group[f] = []
+            group[f].append(v)
+            result.append(None)
+        else:
+            v = group[max_freq].pop()
+            if not group[max_freq]:
+                max_freq -= 1
+            freq[v] -= 1
+            result.append(v)
+    return result
+`,
+
+  'minimum-cost-to-equalize-array': `def minCostToEqualizeArray(nums, cost1, cost2):
+    MOD = 10**9 + 7
+    n = len(nums)
+    if n == 1:
+        return 0
+    max_val = max(nums)
+    min_val = min(nums)
+    total_diff = sum(max_val - v for v in nums)
+    max_diff = max_val - min_val
+    if 2 * cost1 <= cost2:
+        return (cost1 * total_diff) % MOD
+    best = float('inf')
+    for extra in range(n + 1):
+        total = total_diff + extra * n
+        cur_max_d = max_diff + extra
+        op2 = (total - max(0, 2 * cur_max_d - total)) // 2
+        op1 = total - 2 * op2
+        best = min(best, op2 * cost2 + op1 * cost1)
+    return best % MOD
+`,
+
+  'maximum-total-damage': `def maximumTotalDamage(power):
+    from collections import Counter
+    freq = Counter(power)
+    vals = sorted(freq.keys())
+    sums = [v * freq[v] for v in vals]
+    n = len(vals)
+    dp = [0] * n
+    dp[0] = sums[0]
+    for i in range(1, n):
+        j = i - 1
+        while j >= 0 and vals[i] - vals[j] <= 2:
+            j -= 1
+        take = (dp[j] if j >= 0 else 0) + sums[i]
+        dp[i] = max(dp[i-1], take)
+    return dp[n-1]
+`,
+
+  'special-array-ii': `def isArraySpecial(nums, queries):
+    n = len(nums)
+    prefix = [0] * n
+    for i in range(1, n):
+        prefix[i] = prefix[i-1] + (1 if nums[i] % 2 == nums[i-1] % 2 else 0)
+    return [prefix[r] == prefix[l] for l, r in queries]
+`,
+
+  'find-maximum-length-valid-subsequence': `def maximumLength(nums):
+    all_even = sum(1 for n in nums if n % 2 == 0)
+    all_odd = sum(1 for n in nums if n % 2 != 0)
+    dp = [0, 0]
+    best = 0
+    for n in nums:
+        p = n % 2
+        dp[p] = dp[1 - p] + 1
+        best = max(best, dp[p])
+    return max(all_even, all_odd, best)
+`,
+
+  'count-submatrices-all-ones': `def numSubmat(mat):
+    m, n = len(mat), len(mat[0])
+    h = [[0]*n for _ in range(m)]
+    total = 0
+    for i in range(m):
+        for j in range(n):
+            h[i][j] = 0 if mat[i][j] == 0 else (1 if i == 0 else h[i-1][j] + 1)
+        for j in range(n):
+            min_h = h[i][j]
+            for k in range(j, -1, -1):
+                min_h = min(min_h, h[i][k])
+                total += min_h
+    return total
+`,
+
+  'minimum-length-of-string-after-operations': `def minimumLength(s):
+    from collections import Counter
+    freq = Counter(s)
+    return sum(2 if count % 2 == 0 else 1 for count in freq.values())
+`,
+
+  'count-special-characters-i': `def numberOfSpecialChars(word):
+    lower = set()
+    upper = set()
+    for c in word:
+        if c.islower():
+            lower.add(c)
+        else:
+            upper.add(c.lower())
+    return sum(1 for c in lower if c in upper)
+`,
+
+  'maximum-jumps-to-reach-last-index': `def maximumJumps(nums, target):
+    n = len(nums)
+    dp = [-1] * n
+    dp[0] = 0
+    for j in range(1, n):
+        for i in range(j):
+            if dp[i] != -1 and abs(nums[i] - nums[j]) <= target:
+                dp[j] = max(dp[j], dp[i] + 1)
+    return dp[n - 1]
+`,
+
+  'minimum-operations-to-make-array-equal-ii': `def minOperations(nums1, nums2, k):
+    n1 = list(nums1)
+    n2 = list(nums2)
+    if k == 0:
+        return 0 if n1 == n2 else -1
+    pos, neg = 0, 0
+    for a, b in zip(n1, n2):
+        d = a - b
+        if d % k != 0:
+            return -1
+        if d > 0:
+            pos += d // k
+        else:
+            neg -= d // k
+    return pos if pos == neg else -1
+`,
+
+  'minimum-cost-for-cutting-cake-i': `def minimumCost(m, n, horizontalCut, verticalCut):
+    cuts = [('h', c) for c in horizontalCut] + [('v', c) for c in verticalCut]
+    cuts.sort(key=lambda x: -x[1])
+    h, v, total = 1, 1, 0
+    for t, cost in cuts:
+        if t == 'h':
+            total += cost * v
+            h += 1
+        else:
+            total += cost * h
+            v += 1
+    return total
+`,
+
 };
