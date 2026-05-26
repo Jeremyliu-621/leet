@@ -1500,6 +1500,7 @@ import { problem as zigzagIterator } from './zigzag-iterator';
 import { problem as secondMinimumTimeToReachDestination } from './second-minimum-time-to-reach-destination';
 import { problem as pathSumII } from './path-sum-ii';
 import { problem as constructBinaryTreeFromInorderAndPostorderTraversal } from './construct-binary-tree-from-inorder-and-postorder-traversal';
+import { problem as constructBinaryTreeFromPreorderAndInorderTraversal } from './construct-binary-tree-from-preorder-and-inorder-traversal';
 import { problem as maximumNumberOfRemovableCharacters } from './maximum-number-of-removable-characters';
 import { problem as minimumSumOfSquaredDifference } from './minimum-sum-of-squared-difference';
 import { problem as findTheKthLargestIntegerInArray } from './find-the-kth-largest-integer-in-array';
@@ -3739,6 +3740,7 @@ export const problems: readonly Problem[] = [
   secondMinimumTimeToReachDestination,
   pathSumII,
   constructBinaryTreeFromInorderAndPostorderTraversal,
+  constructBinaryTreeFromPreorderAndInorderTraversal,
   maximumNumberOfRemovableCharacters,
   minimumSumOfSquaredDifference,
   findTheKthLargestIntegerInArray,

@@ -20285,6 +20285,30 @@ def secondMinimum(n, edges, time, change):
     return to_array(build(0, len(ino) - 1, 0, len(post) - 1))
 `,
 
+  'construct-binary-tree-from-preorder-and-inorder-traversal': `def buildFromPreorderInorderRunner(preorder, inorder):
+    pre = list(preorder); ino = list(inorder)
+    class TreeNode:
+        def __init__(self, val): self.val = val; self.left = None; self.right = None
+    def to_array(root):
+        if not root: return []
+        result = []; queue = [root]
+        while queue:
+            node = queue.pop(0)
+            if node is None: result.append(None); continue
+            result.append(node.val); queue.append(node.left); queue.append(node.right)
+        while result and result[-1] is None: result.pop()
+        return result
+    idx_map = {v: i for i, v in enumerate(ino)}
+    def build(pre_l, pre_r, in_l, in_r):
+        if pre_l > pre_r: return None
+        root_val = pre[pre_l]; in_index = idx_map[root_val]; left_len = in_index - in_l
+        node = TreeNode(root_val)
+        node.left = build(pre_l + 1, pre_l + left_len, in_l, in_index - 1)
+        node.right = build(pre_l + left_len + 1, pre_r, in_index + 1, in_r)
+        return node
+    return to_array(build(0, len(pre) - 1, 0, len(ino) - 1))
+`,
+
   'maximum-number-of-removable-characters': `def maximumRemovals(s, p, removable):
     sv = str(s); pv = str(p)
     rem_list = list(int(x) for x in (removable.to_py() if hasattr(removable, 'to_py') else removable))

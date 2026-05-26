@@ -20367,6 +20367,25 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return toArray(build(0, ino.length - 1, 0, post.length - 1));
   },
 
+  'construct-binary-tree-from-preorder-and-inorder-traversal': (preorder: unknown, inorder: unknown) => {
+    const pre = preorder as number[];
+    const ino = inorder as number[];
+    if (!pre.length) return [];
+    const map = new Map<number, number>(ino.map((v, i) => [v, i]));
+    function build(preL: number, preR: number, inL: number, inR: number): _TN | null {
+      if (preL > preR) return null;
+      const rootVal = pre[preL]!;
+      const inIndex = map.get(rootVal)!;
+      const leftLen = inIndex - inL;
+      return {
+        v: rootVal,
+        l: build(preL + 1, preL + leftLen, inL, inIndex - 1),
+        r: build(preL + leftLen + 1, preR, inIndex + 1, inR),
+      };
+    }
+    return _treeToArr(build(0, pre.length - 1, 0, ino.length - 1));
+  },
+
   'maximum-number-of-removable-characters': (s: unknown, p: unknown, removable: unknown) => {
     const sv = s as string, pv = p as string, rem = removable as number[];
     function isSubseq(k: number): boolean {
