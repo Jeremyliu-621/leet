@@ -6,11 +6,14 @@
 
 ---
 
-**Last updated:** 2026-05-25
+**Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1504 problems; 4800 tests green. 🎉 1,500+ milestone reached!
+**Current focus:** Bank at 1508 problems; 4809 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank toward 1,600; UI/UX polish; further parity improvements.
+**Next up:** Continue growing problem bank; UI/UX polish, accessibility, draggable splitter improvements.
+
+### Batch 56-local (2026-05-26)
+Added 3 problems: `longest-even-odd-subarray-with-threshold` (arrays+sliding-window/easy, O(n) even-start alternating window), `find-the-value-of-the-partition` (arrays+math/medium, sort + min adjacent gap), `clear-digits` (strings+stack/easy, stack-based digit removal). Bank at **1508**; 4809 tests.
 
 ### 🎉 1,500-problem milestone + 2 more (2026-05-25)
 Added `count-all-valid-pickup-and-delivery-options` (dp/hard, mod dp n×(2n-1)) and `maximum-average-subarray-ii` (binary-search/hard, 100-iter float bisect). Marketing site updated to "1,500+" in all three locations. Refactored fragile easy+stack exclusion list in `problems.test.ts` to exclude all bank IDs — maintenance-free as bank grows. Bank at **1504** problems; 4800 tests.
