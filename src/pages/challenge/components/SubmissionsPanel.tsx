@@ -13,7 +13,7 @@ const OUTCOME_LABEL: Readonly<Record<SubmissionRecord['outcome'], string>> = {
   accepted: 'Accepted',
   'wrong-answer': 'Wrong Answer',
   'runtime-error': 'Runtime Error',
-  timeout: 'Time Limit',
+  timeout: 'Time Limit Exceeded',
 };
 
 const OUTCOME_CLASS: Readonly<Record<SubmissionRecord['outcome'], string>> = {
@@ -25,7 +25,21 @@ const OUTCOME_CLASS: Readonly<Record<SubmissionRecord['outcome'], string>> = {
 
 function formatTime(ms: number): string {
   const d = new Date(ms);
-  return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  const now = new Date();
+  const isToday =
+    d.getFullYear() === now.getFullYear() &&
+    d.getMonth() === now.getMonth() &&
+    d.getDate() === now.getDate();
+  const yesterday = new Date(now);
+  yesterday.setDate(now.getDate() - 1);
+  const isYesterday =
+    d.getFullYear() === yesterday.getFullYear() &&
+    d.getMonth() === yesterday.getMonth() &&
+    d.getDate() === yesterday.getDate();
+  const time = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  if (isToday) return time;
+  if (isYesterday) return `yesterday ${time}`;
+  return `${d.toLocaleDateString([], { month: 'short', day: 'numeric' })} ${time}`;
 }
 
 export function SubmissionsPanel({ submissions, onRestore }: SubmissionsPanelProps) {
