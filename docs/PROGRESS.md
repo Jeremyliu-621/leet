@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1921** problems; 6051 tests green. Batch 80 (cont.) complete — 14 new problems (backtracking, heap, linked-list, simulation).
+**Current focus:** Bank at **1926** problems; 6072 tests green. Batch 83 complete (7 problems: backtracking, simulation, dp, linked-list).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 83); further UX polish; marketing site stat update.
+**Next up:** Continued bank growth (batch 84); marketing site stat update to 1,925+.
+
+### feat(bank): add batch 83 — 7 problems (backtracking, simulation, dp, linked-list) (2026-05-26)
+Added 7 problems: `letter-combinations-of-a-phone-number` (medium/backtracking, DFS digit mapping), `design-tic-tac-toe` (medium/simulation, O(1) row/col/diag counters), `battleships-in-a-board` (medium/simulation, top-left corner count), `ones-and-zeroes` (medium/dp, 2D 0/1 knapsack), `best-time-to-buy-and-sell-stock-with-cooldown` (medium/dp, hold/sold/rest state machine), `insert-delete-getrandom-o1` (medium/simulation+hash-map, O(1) with array+map swap-delete), `convert-binary-number-in-linked-list-to-integer` (easy/linked-list, bit accumulation). Bank at **1926**; 6072 tests.
 
 ### feat(bank): batch 80 (cont.) — 14 new problems (backtracking, heap, linked-list, simulation) (2026-05-26)
 Added: `all-paths-source-to-target-backtrack` (grid path count with memoization), `factor-combinations` (backtracking factorizations), `find-all-increasing-subsequences` (non-descending subsequences, deduplicated), `generalized-abbreviation` (2^n abbreviations via backtracking), `maximum-cpu-load` (sweep + heap), `maximum-events-attended-with-k-events` (DP one-day attendance model: sort by end, s_p < s_i), `merge-k-sorted-arrays`, `sort-nearly-sorted-array` (heap window), `interleave-two-linked-lists`, `segregate-even-odd-linked-list`, `linked-list-decimal-value`, `bowling-game-score`, `ball-through-inclined-grid`, `token-bucket-rate-limiter`. Also: committed keyboard shortcuts modal update (move-line/delete-line), a11y fixes (aria-prohibited-attr). Bank at **1921**; 6051 tests.
