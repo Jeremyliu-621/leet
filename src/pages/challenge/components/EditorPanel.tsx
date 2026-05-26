@@ -681,29 +681,31 @@ export function EditorPanel({
         <div ref={editorContainerRef} className="h-full w-full" />
       </div>
 
-      {/* Terminal resize handle — drag up/down to resize the terminal panel */}
-      <div
-        role="separator"
-        aria-orientation="horizontal"
-        aria-label="Resize terminal panel"
-        tabIndex={0}
-        className="group relative h-1 shrink-0 cursor-row-resize bg-border transition-colors hover:bg-border-strong focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
-        onPointerDown={handleTerminalResizePointerDown}
-        onPointerMove={handleTerminalResizePointerMove}
-        onPointerUp={handleTerminalResizePointerUp}
-        onKeyDown={(e) => {
-          if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            setTerminalHeight((h) => Math.min(TERMINAL_MAX_PX, h + TERMINAL_RESIZE_STEP_PX));
-          } else if (e.key === 'ArrowDown') {
-            e.preventDefault();
-            setTerminalHeight((h) => Math.max(TERMINAL_MIN_PX, h - TERMINAL_RESIZE_STEP_PX));
-          }
-        }}
-      >
-        <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-border-strong opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
-      </div>
-      <div className={`shrink-0 overflow-hidden${terminalCollapsed ? '' : ''}`} role="region" aria-label="Terminal output">
+      {/* Terminal resize handle — hidden when terminal is collapsed */}
+      {!terminalCollapsed && (
+        <div
+          role="separator"
+          aria-orientation="horizontal"
+          aria-label="Resize terminal panel"
+          tabIndex={0}
+          className="group relative h-1 shrink-0 cursor-row-resize bg-border transition-colors hover:bg-border-strong focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+          onPointerDown={handleTerminalResizePointerDown}
+          onPointerMove={handleTerminalResizePointerMove}
+          onPointerUp={handleTerminalResizePointerUp}
+          onKeyDown={(e) => {
+            if (e.key === 'ArrowUp') {
+              e.preventDefault();
+              setTerminalHeight((h) => Math.min(TERMINAL_MAX_PX, h + TERMINAL_RESIZE_STEP_PX));
+            } else if (e.key === 'ArrowDown') {
+              e.preventDefault();
+              setTerminalHeight((h) => Math.max(TERMINAL_MIN_PX, h - TERMINAL_RESIZE_STEP_PX));
+            }
+          }}
+        >
+          <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-border-strong opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
+        </div>
+      )}
+      <div className="shrink-0 overflow-hidden" role="region" aria-label="Terminal output">
         <TerminalPanel
           result={verdict}
           mode={verdictMode}
