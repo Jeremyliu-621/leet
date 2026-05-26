@@ -30422,4 +30422,147 @@ def maxSubArrayLen(nums, k):
     return max_len
 `,
 
+  // batch 92
+  'eliminate-maximum-number-of-monsters': `
+def eliminateMaximum(dist, speed):
+    import math
+    dist = list(dist)
+    speed = list(speed)
+    times = sorted(math.ceil(d / s) for d, s in zip(dist, speed))
+    for k, t in enumerate(times):
+        if t <= k:
+            return k
+    return len(dist)
+`,
+
+  'decoded-string-at-index': `
+def decodeAtIndex(s, k):
+    size = 0
+    for c in s:
+        if c.isdigit():
+            size *= int(c)
+        else:
+            size += 1
+    cur = k
+    for i in range(len(s) - 1, -1, -1):
+        c = s[i]
+        cur %= size
+        if cur == 0 and c.isalpha():
+            return c
+        if c.isdigit():
+            size //= int(c)
+        else:
+            size -= 1
+    return ''
+`,
+
+  'maximum-bags-with-full-capacity-of-rocks': `
+def maximumBags(capacity, rocks, additionalRocks):
+    capacity = list(capacity)
+    rocks = list(rocks)
+    remaining = sorted(c - r for c, r in zip(capacity, rocks))
+    count = 0
+    for r in remaining:
+        if additionalRocks >= r:
+            additionalRocks -= r
+            count += 1
+        else:
+            break
+    return count
+`,
+
+  'count-of-interesting-subarrays': `
+def countInterestingSubarrays(nums, modulo, k):
+    nums = list(nums)
+    prefix_count = {0: 1}
+    count = 0
+    prefix = 0
+    for num in nums:
+        if num % modulo == k:
+            prefix += 1
+        prefix %= modulo
+        target = (prefix - k + modulo) % modulo
+        count += prefix_count.get(target, 0)
+        prefix_count[prefix] = prefix_count.get(prefix, 0) + 1
+    return count
+`,
+
+  'minimum-number-of-visited-cells-in-a-grid': `
+def minimumVisitedCells(grid):
+    from collections import deque
+    grid = [list(row) for row in grid]
+    m, n = len(grid), len(grid[0])
+    dist = [[-1] * n for _ in range(m)]
+    dist[0][0] = 1
+    row_uf = [list(range(n + 1)) for _ in range(m)]
+    col_uf = [list(range(m + 1)) for _ in range(n)]
+    def row_find(r, c):
+        while row_uf[r][c] != c:
+            row_uf[r][c] = row_uf[r][row_uf[r][c]]
+            c = row_uf[r][c]
+        return c
+    def col_find(c, r):
+        while col_uf[c][r] != r:
+            col_uf[c][r] = col_uf[c][col_uf[c][r]]
+            r = col_uf[c][r]
+        return r
+    row_uf[0][0] = 1
+    col_uf[0][0] = 1
+    queue = deque([(0, 0)])
+    while queue:
+        r, c = queue.popleft()
+        d = dist[r][c]
+        g = grid[r][c]
+        max_c = min(c + g, n - 1)
+        max_r = min(r + g, m - 1)
+        nc = row_find(r, c + 1)
+        while nc <= max_c:
+            dist[r][nc] = d + 1
+            queue.append((r, nc))
+            row_uf[r][nc] = nc + 1
+            col_uf[nc][r] = r + 1
+            nc = row_find(r, nc + 1)
+        nr = col_find(c, r + 1)
+        while nr <= max_r:
+            dist[nr][c] = d + 1
+            queue.append((nr, c))
+            col_uf[c][nr] = nr + 1
+            row_uf[nr][c] = c + 1
+            nr = col_find(c, nr + 1)
+    return dist[m-1][n-1]
+`,
+
+  'form-largest-integer-with-digits-that-add-up-to-target': `
+def largestNumber(cost, target):
+    cost = list(cost)
+    NEG_INF = float('-inf')
+    dp = [NEG_INF] * (target + 1)
+    dp[0] = 0
+    for j in range(1, target + 1):
+        for d in range(9):
+            if j >= cost[d] and dp[j - cost[d]] != NEG_INF:
+                dp[j] = max(dp[j], dp[j - cost[d]] + 1)
+    if dp[target] < 0:
+        return '0'
+    result = []
+    rem = target
+    while rem > 0:
+        for d in range(8, -1, -1):
+            if rem >= cost[d] and dp[rem - cost[d]] == dp[rem] - 1:
+                result.append(str(d + 1))
+                rem -= cost[d]
+                break
+    return ''.join(result)
+`,
+
+  'destroying-asteroids': `
+def asteroidsDestroyed(mass, asteroids):
+    asteroids = sorted(asteroids)
+    for a in asteroids:
+        if mass < a:
+            return False
+        mass += a
+    return True
+`,
+
 };

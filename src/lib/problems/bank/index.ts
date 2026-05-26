@@ -2106,6 +2106,14 @@ import { problem as maximumNumberOfPointsFromGridQueries } from './maximum-numbe
 import { problem as findTheClosestPalindrome } from './find-the-closest-palindrome';
 import { problem as numberOfSubarraysWithLcmEqualToK } from './number-of-subarrays-with-lcm-equal-to-k';
 import { problem as smallestRotationWithHighestScore } from './smallest-rotation-with-highest-score';
+// batch 92 — greedy/math, strings/math, greedy, hash-map, graph/UF, DP, greedy
+import { problem as eliminateMaximumNumberOfMonsters } from './eliminate-maximum-number-of-monsters';
+import { problem as decodedStringAtIndex } from './decoded-string-at-index';
+import { problem as maximumBagsWithFullCapacityOfRocks } from './maximum-bags-with-full-capacity-of-rocks';
+import { problem as countOfInterestingSubarrays } from './count-of-interesting-subarrays';
+import { problem as minimumNumberOfVisitedCellsInAGrid } from './minimum-number-of-visited-cells-in-a-grid';
+import { problem as formLargestIntegerWithDigitsThatAddUpToTarget } from './form-largest-integer-with-digits-that-add-up-to-target';
+import { problem as destroyingAsteroids } from './destroying-asteroids';
 // batch 87 remote — monotonic-stack, string, sliding-window, dp, tree, graph
 import { problem as nextGreaterElementDistances } from './next-greater-element-distances';
 import { problem as findAllOccurrencesZAlgorithm } from './find-all-occurrences-z-algorithm';
@@ -4267,6 +4275,14 @@ export const problems: readonly Problem[] = [
   findTheClosestPalindrome,
   numberOfSubarraysWithLcmEqualToK,
   smallestRotationWithHighestScore,
+  // batch 92 — greedy/math, strings/math, greedy, hash-map, graph/UF, DP, greedy
+  eliminateMaximumNumberOfMonsters,
+  decodedStringAtIndex,
+  maximumBagsWithFullCapacityOfRocks,
+  countOfInterestingSubarrays,
+  minimumNumberOfVisitedCellsInAGrid,
+  formLargestIntegerWithDigitsThatAddUpToTarget,
+  destroyingAsteroids,
   // batch 87 remote — monotonic-stack, string, sliding-window, dp, tree, graph
   nextGreaterElementDistances,
   findAllOccurrencesZAlgorithm,
