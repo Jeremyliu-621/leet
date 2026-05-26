@@ -26337,4 +26337,104 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return res;
   },
 
+  // batch 71-local
+  'minimize-deviation-in-array': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).map(x => x % 2 === 1 ? x * 2 : x);
+    let mn = Math.min(...nums);
+    nums.sort((a, b) => b - a);
+    let ans = nums[0]! - mn;
+    while (nums[0]! % 2 === 0) {
+      const mx = nums.shift()!;
+      const half = mx / 2;
+      mn = Math.min(mn, half);
+      let i = 0;
+      while (i < nums.length && nums[i]! > half) i++;
+      nums.splice(i, 0, half);
+      ans = Math.min(ans, nums[0]! - mn);
+    }
+    return ans;
+  },
+
+  'prison-cells-after-n-days': (...args: unknown[]) => {
+    let cells = args[0] as number[];
+    let n = args[1] as number;
+    const seen = new Map<string, number>();
+    const step = (c: number[]) => {
+      const r = new Array(8).fill(0) as number[];
+      for (let i = 1; i < 7; i++) r[i] = c[i - 1] === c[i + 1] ? 1 : 0;
+      return r;
+    };
+    let day = 0;
+    while (day < n) {
+      const key = cells.join(',');
+      if (seen.has(key)) {
+        const cycleStart = seen.get(key)!;
+        const cycleLen = day - cycleStart;
+        const remaining = (n - day) % cycleLen;
+        for (let i = 0; i < remaining; i++) cells = step(cells);
+        return cells;
+      }
+      seen.set(key, day);
+      cells = step(cells);
+      day++;
+    }
+    return cells;
+  },
+
+  'all-ancestors-of-a-node-in-a-directed-acyclic-graph': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const children: number[][] = Array.from({ length: n }, () => []);
+    for (const e of edges) children[e[0] as number]!.push(e[1] as number);
+    const result: number[][] = Array.from({ length: n }, () => []);
+    const dfs = (node: number, ancestor: number) => {
+      for (const child of children[node]!) {
+        const childList = result[child]!;
+        const last = childList[childList.length - 1];
+        if (childList.length === 0 || last !== ancestor) {
+          childList.push(ancestor);
+          dfs(child, ancestor);
+        }
+      }
+    };
+    for (let i = 0; i < n; i++) dfs(i, i);
+    return result;
+  },
+
+  'delete-nodes-and-return-forest': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const toDelete = new Set(args[1] as number[]);
+    const roots: number[] = [];
+    const dfs = (idx: number, parentDeleted: boolean): void => {
+      if (idx >= arr.length || arr[idx] === -1) return;
+      const val = arr[idx]!;
+      const isDeleted = toDelete.has(val);
+      if (parentDeleted && !isDeleted) roots.push(val);
+      dfs(2 * idx + 1, isDeleted);
+      dfs(2 * idx + 2, isDeleted);
+    };
+    dfs(0, true);
+    return roots.sort((a, b) => a - b);
+  },
+
+  'naming-a-company': (...args: unknown[]) => {
+    const ideas = args[0] as string[];
+    const sets: Set<string>[] = Array.from({ length: 26 }, () => new Set<string>());
+    for (const idea of ideas) {
+      const idx = idea.charCodeAt(0) - 97;
+      sets[idx]!.add(idea.slice(1));
+    }
+    let count = 0;
+    for (let i = 0; i < 25; i++) {
+      for (let j = i + 1; j < 26; j++) {
+        let common = 0;
+        for (const s of sets[i]!) {
+          if (sets[j]!.has(s)) common++;
+        }
+        count += 2 * (sets[i]!.size - common) * (sets[j]!.size - common);
+      }
+    }
+    return count;
+  },
+
 };

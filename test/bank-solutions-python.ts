@@ -25753,4 +25753,111 @@ def minimumFinishTime(tires, changeTime, numLaps):
   'find-indices-of-stable-mountains': `def stableMountains(height, threshold):
     return [i for i in range(1, len(height)) if height[i - 1] > threshold]
 `,
+  // batch 71-local
+  'minimize-deviation-in-array': `
+import heapq
+def minimumDeviation(nums):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    nums = [int(x) for x in nums]
+    nums = [x * 2 if x % 2 == 1 else x for x in nums]
+    mn = min(nums)
+    heap = [-x for x in nums]
+    heapq.heapify(heap)
+    ans = -heap[0] - mn
+    while (-heap[0]) % 2 == 0:
+        mx = -heapq.heappop(heap)
+        mn = min(mn, mx // 2)
+        heapq.heappush(heap, -(mx // 2))
+        ans = min(ans, -heap[0] - mn)
+    return ans
+`,
+
+  'prison-cells-after-n-days': `
+def prisonAfterNDays(cells, n):
+    if hasattr(cells, 'to_py'):
+        cells = list(cells.to_py())
+    cells = [int(x) for x in cells]
+    n = int(n)
+    def step(c):
+        return [0] + [1 if c[i-1] == c[i+1] else 0 for i in range(1, 7)] + [0]
+    seen = {}
+    day = 0
+    while day < n:
+        key = tuple(cells)
+        if key in seen:
+            cycle_len = day - seen[key]
+            remaining = (n - day) % cycle_len
+            for _ in range(remaining):
+                cells = step(cells)
+            return cells
+        seen[key] = day
+        cells = step(cells)
+        day += 1
+    return cells
+`,
+
+  'all-ancestors-of-a-node-in-a-directed-acyclic-graph': `
+def getAncestors(n, edges):
+    n = int(n)
+    if hasattr(edges, 'to_py'):
+        raw = edges.to_py()
+        edges = [[int(raw[i][0]), int(raw[i][1])] for i in range(len(raw))]
+    else:
+        edges = [[int(e[0]), int(e[1])] for e in edges]
+    children = [[] for _ in range(n)]
+    for u, v in edges:
+        children[u].append(v)
+    result = [[] for _ in range(n)]
+    def dfs(node, ancestor):
+        for child in children[node]:
+            if not result[child] or result[child][-1] != ancestor:
+                result[child].append(ancestor)
+                dfs(child, ancestor)
+    for i in range(n):
+        dfs(i, i)
+    return result
+`,
+
+  'delete-nodes-and-return-forest': `
+def delNodes(root, to_delete):
+    if hasattr(root, 'to_py'):
+        arr = list(root.to_py())
+    else:
+        arr = list(root)
+    arr = [int(v) for v in arr]
+    if hasattr(to_delete, 'to_py'):
+        to_delete = list(to_delete.to_py())
+    to_delete = set(int(v) for v in to_delete)
+    roots = []
+    def dfs(idx, parent_deleted):
+        if idx >= len(arr) or arr[idx] == -1:
+            return
+        val = arr[idx]
+        is_deleted = val in to_delete
+        if parent_deleted and not is_deleted:
+            roots.append(val)
+        dfs(2 * idx + 1, is_deleted)
+        dfs(2 * idx + 2, is_deleted)
+    dfs(0, True)
+    return sorted(roots)
+`,
+
+  'naming-a-company': `
+def distinctNames(ideas):
+    if hasattr(ideas, 'to_py'):
+        ideas = list(ideas.to_py())
+    ideas = [str(x) for x in ideas]
+    sets = [set() for _ in range(26)]
+    for idea in ideas:
+        sets[ord(idea[0]) - ord('a')].add(idea[1:])
+    count = 0
+    for i in range(25):
+        for j in range(i + 1, 26):
+            common = len(sets[i] & sets[j])
+            count += 2 * (len(sets[i]) - common) * (len(sets[j]) - common)
+    return count
+`,
+
+
 };

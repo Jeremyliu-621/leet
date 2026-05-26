@@ -1874,6 +1874,12 @@ import { problem as checkCompletenessBinaryTreeNew } from './check-completeness-
 import { problem as earliestFullBloom } from './earliest-possible-day-of-full-bloom';
 import { problem as longestObstacleCourse } from './find-the-longest-valid-obstacle-course-at-each-position';
 import { problem as minimumTimeFinishRace } from './minimum-time-to-finish-the-race';
+// batch 71-local
+import { problem as minimizeDeviationInArray } from './minimize-deviation-in-array';
+import { problem as prisonCellsAfterNDays } from './prison-cells-after-n-days';
+import { problem as allAncestorsDAG } from './all-ancestors-of-a-node-in-a-directed-acyclic-graph';
+import { problem as deleteNodesReturnForest } from './delete-nodes-and-return-forest';
+import { problem as namingACompany } from './naming-a-company';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3786,4 +3792,10 @@ export const problems: readonly Problem[] = [
   checkDistancesBetweenSameLetters,
   findMissingAndRepeatedValues,
   findIndicesOfStableMountains,
+  // batch 71-local
+  minimizeDeviationInArray,
+  prisonCellsAfterNDays,
+  allAncestorsDAG,
+  deleteNodesReturnForest,
+  namingACompany,
 ];

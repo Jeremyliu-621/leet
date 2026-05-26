@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1766** problems; 5586 tests green.
+**Current focus:** Bank at **1771** problems; 5586 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1800; UX polish.
+
+### Batch 71-local (2026-05-26)
+Added 5 new problems: `minimize-deviation-in-array` (hard/heap+math, multiply-odd-then-halve-max greedy), `prison-cells-after-n-days` (medium/arrays+simulation, cycle detection in 8-bit automaton), `all-ancestors-of-a-node-in-a-directed-acyclic-graph` (medium/graph, DFS from each node as ancestor), `delete-nodes-and-return-forest` (medium/tree, post-order DFS with parent-deleted flag), `naming-a-company` (hard/strings+hash-map, 26×26 suffix set pair counting). JS + Python solutions for all. Bank at **1771**; 5586 tests.
 
 ### feat(site): 18 topic categories + tag list (2026-05-26)
 Marketing site updated: Topic categories stat updated from 14 → 18 (union-find, binary-indexed-tree, simulation, shortest-path added). Tag list in stats section now includes all 18 tags. Feature block updated to mention "union-find, and more".
