@@ -60,6 +60,7 @@ import { AccountabilitySection } from './components/AccountabilitySection';
 import { PendingChangesSection } from './components/PendingChangesSection';
 import { SyncStatusSection } from './components/SyncStatusSection';
 import { ResetSection } from './components/ResetSection';
+import { ImportExportSection } from './components/ImportExportSection';
 import { AboutSection } from './components/AboutSection';
 import { VerifyModal } from './components/VerifyModal';
 
@@ -777,7 +778,10 @@ export function Options() {
             onReset={handleReset(d)}
           />
 
-          {/* 13. About — bundled-Pyodide reassurance + boot-time stat */}
+          {/* 13. Import / Export */}
+          <ImportExportSection />
+
+          {/* 14. About — bundled-Pyodide reassurance + boot-time stat */}
           <AboutSection />
         </main>
       </div>

@@ -57,6 +57,10 @@ interface PopupData {
   recentSubmissions: SubmissionRecord[];
   /** Last 28 days of streak history for the activity heatmap. */
   heatmapDays: StreakDay[];
+  /** Total wall-clock milliseconds spent solving (across all time). */
+  totalSolvedMs: number;
+  /** Total number of accepted submissions ever. */
+  totalSolves: number;
 }
 
 /**
@@ -114,6 +118,13 @@ export function Popup() {
         heatmapDays.push(historyMap.get(dateStr) ?? { date: dateStr, solved: 0, failed: 0 });
       }
 
+      // Time-saved / time-invested metric: sum durationMs across all accepted solves.
+      const totalSolvedMs = (solved as SolvedProblemRecord[]).reduce(
+        (sum: number, r: SolvedProblemRecord) => sum + (r.durationMs ?? 0),
+        0,
+      );
+      const totalSolves = (solved as SolvedProblemRecord[]).length;
+
       setData({
         streak,
         activeUnlocks: pruneTokens(tokens),
@@ -126,6 +137,8 @@ export function Popup() {
         editorKeymap: prefs.editorKeymap,
         recentSubmissions: submissions.slice(0, 5),
         heatmapDays,
+        totalSolvedMs,
+        totalSolves,
       });
     }
 
@@ -230,6 +243,13 @@ export function Popup() {
         <Stat label="Today" value={data.solvedToday} sub="solves" />
         <Stat label="Unlocks" value={data.activeUnlocks.length} sub="active" />
       </section>
+
+      {data.totalSolves > 0 && (
+        <p className="mt-2 font-mono text-[10px] text-faint" aria-label="Time invested solving">
+          {formatSolveTime(data.totalSolvedMs)} invested · {data.totalSolves} solve
+          {data.totalSolves === 1 ? '' : 's'} all time
+        </p>
+      )}
 
       {/* Activity heatmap — 28-day grid (4 rows of 7) */}
       <section className="mt-4" aria-label="28-day activity heatmap">
@@ -450,6 +470,16 @@ function Stat({ label, value, sub }: { label: string; value: number; sub: string
 
 function minutesLeft(token: UnlockToken, now: number = Date.now()): number {
   return Math.max(0, Math.ceil((token.expiresAt - now) / 60_000));
+}
+
+/** Format total milliseconds as a human-readable duration (e.g. "3h 12m" or "45m"). */
+function formatSolveTime(ms: number): string {
+  const totalSec = Math.floor(ms / 1000);
+  const hours = Math.floor(totalSec / 3600);
+  const mins = Math.floor((totalSec % 3600) / 60);
+  if (hours > 0) return `${hours}h ${mins}m`;
+  if (mins > 0) return `${mins}m`;
+  return `${totalSec}s`;
 }
 
 async function safeGet<K extends Parameters<typeof getValue>[0]>(
