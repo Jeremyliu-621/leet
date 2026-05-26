@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1902** problems; 5994 tests green. Batch 81 complete (2 hard DP problems).
+**Current focus:** Bank at **1907** problems; 6009 tests green. Batch 82 complete (5 problems: BIT, shortest-path, tree, arrays).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 82); further UX polish; marketing site stat update.
+**Next up:** Continued bank growth (batch 83); further UX polish; marketing site stat update.
+
+### feat(bank): add batch 82 — 5 problems (BIT, shortest-path, tree, arrays) (2026-05-26)
+Added 5 problems: `booking-concert-tickets-in-groups` (hard/BIT+simulation, BIT prefix-sum for scatter capacity + linear gather), `minimum-score-of-a-path-between-two-cities` (medium/shortest-path, min edge in BFS component), `path-with-maximum-probability` (medium/shortest-path, Dijkstra max-probability), `minimum-fuel-cost-to-report-to-the-capital` (medium/tree+dp, post-order subtree-size ceil), `minimum-operations-to-make-the-array-alternating` (medium/arrays+hash-map, top-2 frequency greedy). Also: added binary-indexed-tree tag to reverse-pairs. Bank at **1907**; 6009 tests.
 
 ### feat(bank): add batch 81 — 2 new problems (shortest-path, strings, dp) (2026-05-26)
 Added 2 hard problems: `minimum-cost-to-reach-destination-in-time` (hard/shortest-path+dp, DP on (time,node) states minimizing passing fees with time budget), `total-appeal-of-a-string` (hard/strings+dp, contribution counting via last-occurrence tracking). Bank at **1902**; 5994 tests.
