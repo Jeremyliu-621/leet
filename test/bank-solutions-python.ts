@@ -30620,4 +30620,65 @@ def buildArray(target, n):
     return ops
 `,
 
+  'prime-subtraction-operation': `
+def primeSubOperation(nums):
+    def sieve(n):
+        is_prime = [True] * (n + 1)
+        is_prime[0] = is_prime[1] = False
+        i = 2
+        while i * i <= n:
+            if is_prime[i]:
+                j = i * i
+                while j <= n:
+                    is_prime[j] = False
+                    j += i
+            i += 1
+        return [x for x in range(2, n + 1) if is_prime[x]]
+
+    import bisect
+    primes = sieve(1000)
+    prev = 0
+    for x in nums:
+        limit = x - prev - 1
+        idx = bisect.bisect_right(primes, limit) - 1
+        if idx >= 0:
+            after = x - primes[idx]
+        else:
+            after = x
+        if after <= prev:
+            return False
+        prev = after
+    return True
+`,
+
+  'find-the-longest-semi-repetitive-subarray': `
+def longestSemiRepetitiveSubarray(s):
+    s = list(s)
+    left = 0
+    pairs = 0
+    max_len = 1
+    for right in range(1, len(s)):
+        if s[right] == s[right - 1]:
+            pairs += 1
+        while pairs > 1:
+            if s[left] == s[left + 1]:
+                pairs -= 1
+            left += 1
+        max_len = max(max_len, right - left + 1)
+    return max_len
+`,
+
+  'count-number-of-fair-pairs': `
+def countFairPairs(nums, lower, upper):
+    import bisect
+    nums = sorted(nums)
+    n = len(nums)
+    count = 0
+    for i in range(n - 1):
+        lo = bisect.bisect_left(nums, lower - nums[i], i + 1, n)
+        hi = bisect.bisect_right(nums, upper - nums[i], i + 1, n)
+        count += hi - lo
+    return count
+`,
+
 };

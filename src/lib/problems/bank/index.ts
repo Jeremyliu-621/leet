@@ -2141,6 +2141,10 @@ import { problem as buildAnArrayWithStackOperations } from './build-an-array-wit
 import { problem as validPerfectSquare } from './valid-perfect-square';
 import { problem as insertionSortList } from './insertion-sort-list';
 import { problem as maximizeScoreAfterNOperations } from './maximize-score-after-n-operations';
+// batch 92 — arrays/math/binary-search, arrays/sliding-window, arrays/binary-search/two-pointers
+import { problem as primeSubtractionOperation } from './prime-subtraction-operation';
+import { problem as findTheLongestSemiRepetitiveSubarray } from './find-the-longest-semi-repetitive-subarray';
+import { problem as countNumberOfFairPairs } from './count-number-of-fair-pairs';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4319,4 +4323,8 @@ export const problems: readonly Problem[] = [
   validPerfectSquare,
   insertionSortList,
   maximizeScoreAfterNOperations,
+  // batch 92
+  primeSubtractionOperation,
+  findTheLongestSemiRepetitiveSubarray,
+  countNumberOfFairPairs,
 ];
