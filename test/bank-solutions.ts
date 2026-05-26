@@ -26853,6 +26853,10 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     while (n > 0) {
       n >>= 1;
       result ^= n;
+    }
+    return result;
+  },
+
   // batch 72
   'walking-robot-simulation': (...args: unknown[]) => {
     const commands = args[0] as number[];
@@ -26914,6 +26918,10 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
         if (minQ[0]! < left) minQ.shift();
       }
       ans = Math.max(ans, right - left + 1);
+    }
+    return ans;
+  },
+
   'maximum-number-of-alloys': (...args: unknown[]) => {
     const k = args[1] as number;
     const budget = args[2] as number;
