@@ -22370,6 +22370,91 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Math.max(min1, min2);
   },
 
+  // batch 61 (local)
+  'check-if-every-row-and-column-contains-all-numbers': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const n = matrix.length;
+    for (let r = 0; r < n; r++) {
+      if (new Set(matrix[r]).size !== n) return false;
+    }
+    for (let c = 0; c < n; c++) {
+      if (new Set(matrix.map(row => row[c])).size !== n) return false;
+    }
+    return true;
+  },
+
+  'maximum-strong-pair-xor-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let max = 0;
+    for (let i = 0; i < nums.length; i++) {
+      for (let j = i; j < nums.length; j++) {
+        if (Math.abs(nums[i]! - nums[j]!) <= Math.min(nums[i]!, nums[j]!)) {
+          max = Math.max(max, nums[i]! ^ nums[j]!);
+        }
+      }
+    }
+    return max;
+  },
+
+  'extra-characters-in-a-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const dict = new Set(args[1] as string[]);
+    const n = s.length;
+    const dp = new Array(n + 1).fill(0);
+    for (let i = 1; i <= n; i++) {
+      dp[i] = dp[i - 1]! + 1;
+      for (let j = 0; j < i; j++) {
+        if (dict.has(s.slice(j, i))) dp[i] = Math.min(dp[i]!, dp[j]!);
+      }
+    }
+    return dp[n]!;
+  },
+
+  'kth-largest-sum-in-a-binary-tree': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    const k = args[1] as number;
+    const sums: number[] = [];
+    const queue: (_TN | null)[] = root ? [root] : [];
+    while (queue.length) {
+      const size = queue.length;
+      let levelSum = 0;
+      for (let i = 0; i < size; i++) {
+        const node = queue.shift()!;
+        if (node) {
+          levelSum += node.v;
+          if (node.l) queue.push(node.l);
+          if (node.r) queue.push(node.r);
+        }
+      }
+      sums.push(levelSum);
+    }
+    if (k > sums.length) return -1;
+    sums.sort((a, b) => b - a);
+    return sums[k - 1]!;
+  },
+
+  'sum-of-matrix-after-queries': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const queries = args[1] as number[][];
+    const setRows = new Set<number>(), setCols = new Set<number>();
+    let total = 0;
+    for (let i = queries.length - 1; i >= 0; i--) {
+      const [type, idx, val] = queries[i]!;
+      if (type === 0) {
+        if (!setRows.has(idx!)) {
+          total += val! * (n - setCols.size);
+          setRows.add(idx!);
+        }
+      } else {
+        if (!setCols.has(idx!)) {
+          total += val! * (n - setRows.size);
+          setCols.add(idx!);
+        }
+      }
+    }
+    return total;
+  },
+
   // batch 59 (local)
   'count-substrings-starting-and-ending-with-given-character': (s: unknown, c: unknown) => {
     const cnt = (s as string).split('').filter(x => x === (c as string)).length;
@@ -23135,5 +23220,139 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return total;
   },
 
+
+  'seat-reservation-manager': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const operations = args[1] as string[];
+    const operandArgs = args[2] as (number | null)[];
+    const heap: number[] = [];
+    const push = (v: number) => {
+      heap.push(v);
+      let i = heap.length - 1;
+      while (i > 0) {
+        const p = (i - 1) >> 1;
+        if (heap[p]! <= heap[i]!) break;
+        [heap[p], heap[i]] = [heap[i]!, heap[p]!];
+        i = p;
+      }
+    };
+    const pop = () => {
+      const top = heap[0];
+      const last = heap.pop()!;
+      if (heap.length > 0) {
+        heap[0] = last;
+        let i = 0;
+        while (true) {
+          const l = 2 * i + 1, r = 2 * i + 2;
+          let s = i;
+          if (l < heap.length && heap[l]! < heap[s]!) s = l;
+          if (r < heap.length && heap[r]! < heap[s]!) s = r;
+          if (s === i) break;
+          [heap[i], heap[s]] = [heap[s]!, heap[i]!];
+          i = s;
+        }
+      }
+      return top;
+    };
+    for (let i = 1; i <= n; i++) push(i);
+    const results: number[] = [];
+    for (let op = 0; op < operations.length; op++) {
+      if (operations[op] === 'reserve') results.push(pop()!);
+      else push(operandArgs[op] as number);
+    }
+    return results;
+  },
+
+  'subarray-sum-divisible-by-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const count = new Map<number, number>();
+    count.set(0, 1);
+    let prefix = 0, ans = 0;
+    for (const num of nums) {
+      prefix += num;
+      const rem = ((prefix % k) + k) % k;
+      ans += count.get(rem) ?? 0;
+      count.set(rem, (count.get(rem) ?? 0) + 1);
+    }
+    return ans;
+  },
+
+  'find-the-winner-of-circular-game': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const k = args[1] as number;
+    let pos = 0;
+    for (let i = 2; i <= n; i++) pos = (pos + k) % i;
+    return pos + 1;
+  },
+
+  'minimum-path-cost-in-grid': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const moveCost = args[1] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    let dp = [...grid[0]!];
+    for (let r = 1; r < m; r++) {
+      const newDp: number[] = new Array(n).fill(Infinity);
+      for (let c1 = 0; c1 < n; c1++) {
+        const costs = moveCost[grid[r - 1]![c1]!]!;
+        for (let c2 = 0; c2 < n; c2++) {
+          const val = dp[c1]! + costs[c2]! + grid[r]![c2]!;
+          if (val < newDp[c2]!) newDp[c2] = val;
+        }
+      }
+      dp = newDp;
+    }
+    return Math.min(...dp);
+  },
+
+  'maximum-distance-between-a-pair-of-values': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const n1 = nums1.length, n2 = nums2.length;
+    let i = 0, j = 0, ans = 0;
+    while (i < n1 && j < n1 && j < n2) {
+      if (nums1[i]! <= nums2[j]!) { ans = Math.max(ans, j - i); j++; }
+      else if (i < j) { i++; }
+      else { i++; j++; }
+    }
+    return ans;
+  },
+
+  // batch 62
+  'maximum-number-of-points-with-cost': (...args: unknown[]) => {
+    const points = args[0] as number[][];
+    const m = points.length, n = points[0]!.length;
+    let dp = [...points[0]!];
+    for (let i = 1; i < m; i++) {
+      const left = new Array(n).fill(0) as number[];
+      const right = new Array(n).fill(0) as number[];
+      left[0] = dp[0]! + 0;
+      for (let j = 1; j < n; j++) left[j] = Math.max(left[j - 1]!, dp[j]! + j);
+      right[n - 1] = dp[n - 1]! - (n - 1);
+      for (let j = n - 2; j >= 0; j--) right[j] = Math.max(right[j + 1]!, dp[j]! - j);
+      dp = points[i]!.map((v, j) => v + Math.max(left[j]! - j, right[j]! + j));
+    }
+    return Math.max(...dp);
+  },
+  'find-three-consecutive-integers-that-sum-to-given-number': (...args: unknown[]) => {
+    const num = args[0] as number;
+    if (num % 3 !== 0) return [];
+    const n = num / 3;
+    return [n - 1, n, n + 1];
+  },
+  'minimum-sum-of-four-digit-number-after-splitting-digits': (...args: unknown[]) => {
+    const num = args[0] as number;
+    const d = String(num).split('').map(Number).sort((a, b) => a - b);
+    return (d[0]! * 10 + d[2]!) + (d[1]! * 10 + d[3]!);
+  },
+  'k-items-with-the-maximum-sum': (...args: unknown[]) => {
+    const numOnes = args[0] as number;
+    const numZeros = args[1] as number;
+    const k = args[3] as number;
+    const ones = Math.min(k, numOnes);
+    const zeros = Math.min(k - ones, numZeros);
+    const negones = k - ones - zeros;
+    return ones - negones;
+  },
 
 };

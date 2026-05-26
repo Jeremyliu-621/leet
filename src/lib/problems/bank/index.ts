@@ -1619,6 +1619,12 @@ import { problem as vowelsOfAllSubstrings } from './vowels-of-all-substrings';
 import { problem as removingMinimumNumberOfMagicBeans } from './removing-minimum-number-of-magic-beans';
 import { problem as findTheLongestEqualSubarray } from './find-the-longest-equal-subarray';
 import { problem as minimumEqualSumOfTwoArraysAfterReplacingZeros } from './minimum-equal-sum-of-two-arrays-after-replacing-zeros';
+// batch 61 (local)
+import { problem as checkIfEveryRowAndColumnContainsAllNumbers } from './check-if-every-row-and-column-contains-all-numbers';
+import { problem as maximumStrongPairXorI } from './maximum-strong-pair-xor-i';
+import { problem as extraCharactersInAString } from './extra-characters-in-a-string';
+import { problem as kthLargestSumInABinaryTree } from './kth-largest-sum-in-a-binary-tree';
+import { problem as sumOfMatrixAfterQueries } from './sum-of-matrix-after-queries';
 // batch 59 (local)
 import { problem as countSubstringsStartingAndEndingWithGivenCharacter } from './count-substrings-starting-and-ending-with-given-character';
 import { problem as minimumNumberOfChangesToMakeBinaryStringBeautiful } from './minimum-number-of-changes-to-make-binary-string-beautiful';
@@ -1637,12 +1643,17 @@ import { problem as findAllAnagramsInAString } from './find-all-anagrams-in-a-st
 import { problem as longestPalindrome } from './longest-palindrome';
 import { problem as reverseWordsInAString } from './reverse-words-in-a-string';
 import { problem as countPrimes } from './count-primes';
+// batch 62
+import { problem as gridGame } from './grid-game';
+import { problem as maximumNumberOfPointsWithCost } from './maximum-number-of-points-with-cost';
+import { problem as findThreeConsecutiveIntegersThatSumToGivenNumber } from './find-three-consecutive-integers-that-sum-to-given-number';
+import { problem as minimumSumOfFourDigitNumberAfterSplittingDigits } from './minimum-sum-of-four-digit-number-after-splitting-digits';
+import { problem as kItemsWithTheMaximumSum } from './k-items-with-the-maximum-sum';
 
 // batch 58
 import { problem as maxConsecutiveOnesII } from './max-consecutive-ones-ii';
 import { problem as lengthOfLongestFibonacciSubsequence } from './length-of-longest-fibonacci-subsequence';
 import { problem as detectSquares } from './detect-squares';
-import { problem as gridGame } from './grid-game';
 import { problem as maximumWhiteTilesCoveredByCarpet } from './maximum-white-tiles-covered-by-carpet';
 import { problem as minimumOperationsToMakeAllArrayElementsEqual } from './minimum-operations-to-make-all-array-elements-equal';
 import { problem as reverseWordsInAStringII } from './reverse-words-in-a-string-ii';
@@ -1671,6 +1682,12 @@ import { problem as countSpecialCharactersI } from './count-special-characters-i
 import { problem as maximumJumpsToReachLastIndex } from './maximum-jumps-to-reach-last-index';
 import { problem as minimumOperationsToMakeArrayEqualII } from './minimum-operations-to-make-array-equal-ii';
 import { problem as minimumCostForCuttingCakeI } from './minimum-cost-for-cutting-cake-i';
+// batch 62 (local)
+import { problem as seatReservationManager } from './seat-reservation-manager';
+import { problem as subarrayDivByK } from './subarray-sum-divisible-by-k';
+import { problem as findTheWinnerOfCircularGame } from './find-the-winner-of-circular-game';
+import { problem as minimumPathCostInGrid } from './minimum-path-cost-in-grid';
+import { problem as maximumDistanceBetweenAPairOfValues } from './maximum-distance-between-a-pair-of-values';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3336,6 +3353,12 @@ export const problems: readonly Problem[] = [
   removingMinimumNumberOfMagicBeans,
   findTheLongestEqualSubarray,
   minimumEqualSumOfTwoArraysAfterReplacingZeros,
+  // batch 61 (local)
+  checkIfEveryRowAndColumnContainsAllNumbers,
+  maximumStrongPairXorI,
+  extraCharactersInAString,
+  kthLargestSumInABinaryTree,
+  sumOfMatrixAfterQueries,
   // batch 59 (local)
   countSubstringsStartingAndEndingWithGivenCharacter,
   minimumNumberOfChangesToMakeBinaryStringBeautiful,
@@ -3387,4 +3410,15 @@ export const problems: readonly Problem[] = [
   maximumJumpsToReachLastIndex,
   minimumOperationsToMakeArrayEqualII,
   minimumCostForCuttingCakeI,
+  // batch 62 (local)
+  seatReservationManager,
+  subarrayDivByK,
+  findTheWinnerOfCircularGame,
+  minimumPathCostInGrid,
+  maximumDistanceBetweenAPairOfValues,
+  // batch 62
+  maximumNumberOfPointsWithCost,
+  findThreeConsecutiveIntegersThatSumToGivenNumber,
+  minimumSumOfFourDigitNumberAfterSplittingDigits,
+  kItemsWithTheMaximumSum,
 ];

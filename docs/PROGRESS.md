@@ -8,9 +8,18 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1564 problems; 5007 tests green.
+**Current focus:** Bank at 1574 problems; 5037 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1600; further UX polish.
+
+### Batch 62-local (2026-05-26)
+Added 5 medium problems: `seat-reservation-manager` (min-heap design, simulate reserve/unreserve ops), `subarray-sum-divisible-by-k` (prefix sum + hash map, handles negatives via `((rem%k)+k)%k`), `find-the-winner-of-circular-game` (Josephus O(n) DP recurrence), `minimum-path-cost-in-grid` (row-by-row DP with moveCost table indexed by cell value), `maximum-distance-between-a-pair-of-values` (two-pointer with `j<n1 && j<n2` bounds). JS + Python solutions for all. Bank at **1574**; 5037 tests.
+
+### Batch 61-local (2026-05-26)
+Added 5 problems: `check-if-every-row-and-column-contains-all-numbers` (easy/arrays, row+col set dedup), `maximum-strong-pair-xor-i` (easy/arrays+math, O(n²) pair XOR with |x-y|≤min(x,y) guard), `extra-characters-in-a-string` (medium/dp+strings, O(n²) DP with dict set lookup), `kth-largest-sum-in-a-binary-tree` (medium/tree+heap, BFS level sums + sort, with preamble), `sum-of-matrix-after-queries` (medium/arrays+hash-map, reverse-order row/col query with set tracking). Bank at **1569**; 5022 tests.
+
+### Batch 59-local (2026-05-26)
+Added 5 easy problems: `count-substrings-starting-and-ending-with-given-character` (strings+math, count formula n+n*(n-1)/2), `minimum-number-of-changes-to-make-binary-string-beautiful` (strings, pair mismatch count), `distribute-money-to-maximum-children` (math, greedy 8-dollar distribution with no-4 guard), `check-if-strings-can-be-made-equal-with-operations` (strings, even/odd parity multiset equality), `count-days-spent-together` (strings+math, day-of-year conversion + overlap). Fixed test case for `0110` (expected 2 not 1). Bank at **1559**; 4965 tests.
 
 ### Batch 58 (2026-05-26)
 Added 10 problems: `max-consecutive-ones-ii` (arrays/medium, sliding-window flip-one-zero), `length-of-longest-fibonacci-subsequence` (dp/medium, O(n²) pair DP), `detect-squares` (design/medium, point-count + x→ys map), `grid-game` (arrays/medium, two-robot prefix sum), `maximum-white-tiles-covered-by-carpet` (arrays/medium, sort + binary search + prefix), `minimum-operations-to-make-all-array-elements-equal` (arrays/medium, sorted prefix sum + binary search), `reverse-words-in-a-string-ii` (strings/medium, two-step in-place reversal), `count-subarrays-with-median` (arrays/hard, balance freq map), `maximum-sum-queries` (arrays/hard, monotone stack + binary search), `find-the-longest-equal-subarray` (arrays/medium, sliding-window per-value positions). JS + Python solutions for all. Bank at **1564**; 5007 tests.

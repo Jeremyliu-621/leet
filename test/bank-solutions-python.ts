@@ -22135,6 +22135,80 @@ def secondMinimum(n, edges, time, change):
     return max(min1, min2)
 `,
 
+  // batch 61 (local)
+  'check-if-every-row-and-column-contains-all-numbers': `def checkValid(matrix):
+    matrix = matrix.to_py() if hasattr(matrix, 'to_py') else matrix
+    grid = [list(int(x) for x in (row.to_py() if hasattr(row, 'to_py') else row)) for row in matrix]
+    n = len(grid)
+    for row in grid:
+        if len(set(row)) != n:
+            return False
+    for c in range(n):
+        if len(set(grid[r][c] for r in range(n))) != n:
+            return False
+    return True
+`,
+
+  'maximum-strong-pair-xor-i': `def maximumStrongPairXor(nums):
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    max_xor = 0
+    for i in range(len(a)):
+        for j in range(i, len(a)):
+            if abs(a[i] - a[j]) <= min(a[i], a[j]):
+                max_xor = max(max_xor, a[i] ^ a[j])
+    return max_xor
+`,
+
+  'extra-characters-in-a-string': `def minExtraChar(s, dictionary):
+    d = set(dictionary.to_py() if hasattr(dictionary, 'to_py') else dictionary)
+    n = len(s)
+    dp = [0] * (n + 1)
+    for i in range(1, n + 1):
+        dp[i] = dp[i - 1] + 1
+        for j in range(i):
+            if s[j:i] in d:
+                dp[i] = min(dp[i], dp[j])
+    return dp[n]
+`,
+
+  'kth-largest-sum-in-a-binary-tree': `def kthLargestLevelSum(root, k):
+    from collections import deque
+    ki = int(k)
+    sums = []
+    if root is None:
+        return -1
+    q = deque([root])
+    while q:
+        level_sum = 0
+        for _ in range(len(q)):
+            node = q.popleft()
+            level_sum += int(node.val)
+            if node.left: q.append(node.left)
+            if node.right: q.append(node.right)
+        sums.append(level_sum)
+    if ki > len(sums):
+        return -1
+    sums.sort(reverse=True)
+    return sums[ki - 1]
+`,
+
+  'sum-of-matrix-after-queries': `def matrixSumQueries(n, queries):
+    ni = int(n)
+    qs = [(int(q[0]), int(q[1]), int(q[2])) for q in (queries.to_py() if hasattr(queries, 'to_py') else queries)]
+    set_rows, set_cols = set(), set()
+    total = 0
+    for t, idx, val in reversed(qs):
+        if t == 0:
+            if idx not in set_rows:
+                total += val * (ni - len(set_cols))
+                set_rows.add(idx)
+        else:
+            if idx not in set_cols:
+                total += val * (ni - len(set_rows))
+                set_cols.add(idx)
+    return total
+`,
+
   // batch 59 (local)
   'count-substrings-starting-and-ending-with-given-character': `def countSubstrings(s, c):
     cnt = s.count(c)
@@ -22809,4 +22883,109 @@ def secondMinimum(n, edges, time, change):
     return total
 `,
 
+  'seat-reservation-manager': `def seatReservationManager(n, operations, operandArgs):
+    import heapq
+    n = int(n)
+    ops = list(operations.to_py() if hasattr(operations, 'to_py') else operations)
+    op_args = list(operandArgs.to_py() if hasattr(operandArgs, 'to_py') else operandArgs)
+    heap = list(range(1, n + 1))
+    heapq.heapify(heap)
+    results = []
+    for i, op in enumerate(ops):
+        if op == 'reserve':
+            results.append(heapq.heappop(heap))
+        else:
+            seat = int(op_args[i]) if op_args[i] is not None else 0
+            heapq.heappush(heap, seat)
+    return results
+`,
+
+  'subarray-sum-divisible-by-k': `def subarraysDivByK(nums, k):
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    k = int(k)
+    count = {0: 1}
+    prefix = 0; ans = 0
+    for num in a:
+        prefix += num
+        rem = prefix % k
+        if rem < 0: rem += k
+        ans += count.get(rem, 0)
+        count[rem] = count.get(rem, 0) + 1
+    return ans
+`,
+
+  'find-the-winner-of-circular-game': `def findTheWinner(n, k):
+    n = int(n); k = int(k)
+    pos = 0
+    for i in range(2, n + 1):
+        pos = (pos + k) % i
+    return pos + 1
+`,
+
+  'minimum-path-cost-in-grid': `def minPathCost(grid, moveCost):
+    g = [list(int(x) for x in (row.to_py() if hasattr(row, 'to_py') else row)) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    mc = [list(int(x) for x in (row.to_py() if hasattr(row, 'to_py') else row)) for row in (moveCost.to_py() if hasattr(moveCost, 'to_py') else moveCost)]
+    m, n = len(g), len(g[0])
+    dp = g[0][:]
+    for r in range(1, m):
+        new_dp = [float('inf')] * n
+        for c1 in range(n):
+            costs = mc[g[r-1][c1]]
+            for c2 in range(n):
+                val = dp[c1] + costs[c2] + g[r][c2]
+                if val < new_dp[c2]: new_dp[c2] = val
+        dp = new_dp
+    return min(dp)
+`,
+
+  'maximum-distance-between-a-pair-of-values': `def maxDistance(nums1, nums2):
+    a1 = list(int(x) for x in (nums1.to_py() if hasattr(nums1, 'to_py') else nums1))
+    a2 = list(int(x) for x in (nums2.to_py() if hasattr(nums2, 'to_py') else nums2))
+    n1, n2 = len(a1), len(a2)
+    i = j = 0; ans = 0
+    while i < n1 and j < n1 and j < n2:
+        if a1[i] <= a2[j]: ans = max(ans, j - i); j += 1
+        elif i < j: i += 1
+        else: i += 1; j += 1
+    return ans
+`,
+
+  // batch 62
+  'maximum-number-of-points-with-cost': `def maxPoints(points):
+    m, n = len(points), len(points[0])
+    dp = list(points[0])
+    for i in range(1, m):
+        left = [0] * n
+        right = [0] * n
+        left[0] = dp[0] + 0
+        for j in range(1, n):
+            left[j] = max(left[j-1], dp[j] + j)
+        right[n-1] = dp[n-1] - (n-1)
+        for j in range(n-2, -1, -1):
+            right[j] = max(right[j+1], dp[j] - j)
+        dp = [points[i][j] + max(left[j] - j, right[j] + j) for j in range(n)]
+    return max(dp)
+`,
+
+  'find-three-consecutive-integers-that-sum-to-given-number': `def sumOfThree(num):
+    num = int(num)
+    if num % 3 != 0:
+        return []
+    n = num // 3
+    return [n - 1, n, n + 1]
+`,
+
+  'minimum-sum-of-four-digit-number-after-splitting-digits': `def minimumSum(num):
+    num = int(num)
+    d = sorted(int(ch) for ch in str(num))
+    return (d[0] * 10 + d[2]) + (d[1] * 10 + d[3])
+`,
+
+  'k-items-with-the-maximum-sum': `def kItemsWithMaximumSum(numOnes, numZeros, numNegOnes, k):
+    numOnes, numZeros, numNegOnes, k = int(numOnes), int(numZeros), int(numNegOnes), int(k)
+    ones = min(k, numOnes)
+    zeros = min(k - ones, numZeros)
+    negones = k - ones - zeros
+    return ones - negones
+`,
 };
