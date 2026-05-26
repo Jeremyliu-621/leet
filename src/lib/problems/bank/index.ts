@@ -1739,6 +1739,15 @@ import { problem as campusBikesProblem } from './campus-bikes';
 import { problem as escapeTheGhosts } from './escape-the-ghosts';
 import { problem as maximumValueOfKCoinsFromPiles } from './maximum-value-of-k-coins-from-piles';
 import { problem as parallelCoursesIII } from './parallel-courses-iii';
+// batch 69
+import { problem as findScoreOfArrayAfterMarkingAllElements } from './find-score-of-an-array-after-marking-all-elements';
+import { problem as countZeroRequestServers } from './count-zero-request-servers';
+import { problem as maximumScoreAfterApplyingOperationsOnTree } from './maximum-score-after-applying-operations-on-a-tree';
+import { problem as countingWordsWithAGivenPrefix } from './counting-words-with-a-given-prefix';
+import { problem as earliestMomentEveryoneBecameFriends } from './earliest-moment-everyone-became-friends';
+import { problem as minimumWeightedSubgraphWithRequiredPaths } from './minimum-weighted-subgraph-with-the-required-paths';
+import { problem as longestPathInDirectedAcyclicGraph } from './longest-path-in-a-directed-acyclic-graph';
+import { problem as countGoodTripletsInAnArray } from './count-good-triplets-in-an-array';
 
 // batch 58
 import { problem as maxConsecutiveOnesII } from './max-consecutive-ones-ii';
@@ -3692,4 +3701,12 @@ export const problems: readonly Problem[] = [
   fractionAdditionAndSubtraction,
   longestZigZagPathInBinaryTree,
   findTheDuplicateSubtrees,
+  findScoreOfArrayAfterMarkingAllElements,
+  countZeroRequestServers,
+  maximumScoreAfterApplyingOperationsOnTree,
+  countingWordsWithAGivenPrefix,
+  earliestMomentEveryoneBecameFriends,
+  minimumWeightedSubgraphWithRequiredPaths,
+  longestPathInDirectedAcyclicGraph,
+  countGoodTripletsInAnArray,
 ];

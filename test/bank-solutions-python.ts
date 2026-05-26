@@ -25035,4 +25035,206 @@ def minimumMoney(transactions):
     serialize(root_node)
     return sorted(result, key=lambda x: int(x[0]) if x and x[0] is not None else 0)
 `,
+  'find-score-of-an-array-after-marking-all-elements': `def findScore(nums):
+    n = len(nums)
+    marked = [False] * n
+    order = sorted(range(n), key=lambda i: (nums[i], i))
+    score = 0
+    for i in order:
+        if marked[i]:
+            continue
+        score += nums[i]
+        marked[i] = True
+        if i > 0:
+            marked[i - 1] = True
+        if i < n - 1:
+            marked[i + 1] = True
+    return score
+`,
+
+  'count-zero-request-servers': `def countServers(n, logs, x, queries):
+    from collections import defaultdict
+    logs_sorted = sorted(logs, key=lambda l: l[1])
+    m = len(queries)
+    idx_order = sorted(range(m), key=lambda i: queries[i])
+    result = [0] * m
+    freq = defaultdict(int)
+    left = 0
+    right = 0
+    for qi in idx_order:
+        q = queries[qi]
+        lo, hi = q - x, q
+        while right < len(logs_sorted) and logs_sorted[right][1] <= hi:
+            srv = logs_sorted[right][0]
+            freq[srv] += 1
+            right += 1
+        while left < right and logs_sorted[left][1] < lo:
+            srv = logs_sorted[left][0]
+            freq[srv] -= 1
+            if freq[srv] == 0:
+                del freq[srv]
+            left += 1
+        result[qi] = n - len(freq)
+    return result
+`,
+
+  'maximum-score-after-applying-operations-on-a-tree': `def maximumScoreAfterOperations(edges, values):
+    from collections import defaultdict
+    n = len(values)
+    adj = defaultdict(list)
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    total = sum(values)
+    def dfs(node, parent):
+        children_cost0 = 0
+        children_cost1 = 0
+        is_leaf = True
+        for child in adj[node]:
+            if child == parent:
+                continue
+            is_leaf = False
+            c0, c1 = dfs(child, node)
+            children_cost0 += c0
+            children_cost1 += c1
+        if is_leaf:
+            return values[node], 0
+        dp1 = 0
+        dp0 = min(values[node] + children_cost1, children_cost0)
+        return dp0, dp1
+    min_kept, _ = dfs(0, -1)
+    return total - min_kept
+`,
+
+  'counting-words-with-a-given-prefix': `def prefixCount(words, pref):
+    return sum(1 for w in words if w.startswith(pref))
+`,
+
+  'earliest-moment-everyone-became-friends': `def earliestAcq(logs, n):
+    logs_sorted = sorted(logs, key=lambda l: l[0])
+    parent = list(range(n))
+    rank = [0] * n
+    components = n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(x, y):
+        px, py = find(x), find(y)
+        if px == py:
+            return False
+        if rank[px] < rank[py]:
+            parent[px] = py
+        elif rank[px] > rank[py]:
+            parent[py] = px
+        else:
+            parent[py] = px
+            rank[px] += 1
+        return True
+    for t, x, y in logs_sorted:
+        if union(x, y):
+            components -= 1
+            if components == 1:
+                return t
+    return -1
+`,
+
+  'minimum-weighted-subgraph-with-the-required-paths': `def minimumWeight(n, edges, src1, src2, dest):
+    import heapq
+    INF = float('inf')
+    fwd = [[] for _ in range(n)]
+    rev = [[] for _ in range(n)]
+    for u, v, w in edges:
+        fwd[u].append((v, w))
+        rev[v].append((u, w))
+    def dijkstra(start, graph):
+        dist = [INF] * n
+        dist[start] = 0
+        heap = [(0, start)]
+        while heap:
+            d, u = heapq.heappop(heap)
+            if d > dist[u]:
+                continue
+            for v, w in graph[u]:
+                nd = dist[u] + w
+                if nd < dist[v]:
+                    dist[v] = nd
+                    heapq.heappush(heap, (nd, v))
+        return dist
+    d1 = dijkstra(src1, fwd)
+    d2 = dijkstra(src2, fwd)
+    dd = dijkstra(dest, rev)
+    ans = INF
+    for m in range(n):
+        if d1[m] < INF and d2[m] < INF and dd[m] < INF:
+            ans = min(ans, d1[m] + d2[m] + dd[m])
+    return -1 if ans == INF else ans
+`,
+
+  'longest-path-in-a-directed-acyclic-graph': `def longestPath(edges, n, s):
+    from collections import deque
+    indegree = [0] * n
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+        indegree[v] += 1
+    dp = [1] * n
+    queue = deque(i for i in range(n) if indegree[i] == 0)
+    ans = 1
+    while queue:
+        u = queue.popleft()
+        for v in adj[u]:
+            if ord(s[v]) == ord(s[u]) + 1:
+                dp[v] = max(dp[v], dp[u] + 1)
+                ans = max(ans, dp[v])
+            indegree[v] -= 1
+            if indegree[v] == 0:
+                queue.append(v)
+    return ans
+`,
+
+  'count-good-triplets-in-an-array': `def goodTriplets(nums1, nums2):
+    n = len(nums1)
+    pos_in_b = [0] * n
+    for i, v in enumerate(nums2):
+        pos_in_b[v] = i
+    seq = [pos_in_b[v] for v in nums1]
+    bit = [0] * (n + 1)
+    def update(i):
+        i += 1
+        while i <= n:
+            bit[i] += 1
+            i += i & -i
+    def query(i):
+        i += 1
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & -i
+        return s
+    left_smaller = [0] * n
+    for j in range(n):
+        left_smaller[j] = query(seq[j] - 1) if seq[j] > 0 else 0
+        update(seq[j])
+    bit2 = [0] * (n + 1)
+    def update2(i):
+        i += 1
+        while i <= n:
+            bit2[i] += 1
+            i += i & -i
+    def query2(i):
+        i += 1
+        s = 0
+        while i > 0:
+            s += bit2[i]
+            i -= i & -i
+        return s
+    right_larger = [0] * n
+    for j in range(n - 1, -1, -1):
+        right_larger[j] = (n - 1 - j) - query2(seq[j])
+        update2(seq[j])
+    return sum(left_smaller[j] * right_larger[j] for j in range(n))
+`,
+
 };

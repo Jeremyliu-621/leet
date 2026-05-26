@@ -17,7 +17,11 @@ export type ProblemTag =
   | 'linked-list'
   | 'graph'
   | 'tree'
-  | 'backtracking';
+  | 'backtracking'
+  | 'union-find'
+  | 'binary-indexed-tree'
+  | 'simulation'
+  | 'shortest-path';
 
 /** Every tag, in canonical display order. */
 export const PROBLEM_TAGS: readonly ProblemTag[] = [
@@ -35,6 +39,10 @@ export const PROBLEM_TAGS: readonly ProblemTag[] = [
   'graph',
   'tree',
   'backtracking',
+  'union-find',
+  'binary-indexed-tree',
+  'simulation',
+  'shortest-path',
 ];
 
 /** Every difficulty, easiest first. */

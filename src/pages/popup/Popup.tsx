@@ -90,6 +90,7 @@ interface PopupData {
   activeUnlocks: UnlockToken[];
   solvedToday: number;
   solvedStats: SolvedStats;
+  totalSolvedMs: number;
   recentSolves: readonly RecentSolve[];
   currentDomain: string | null;
   alreadyBlocked: boolean;
@@ -161,6 +162,15 @@ function RadioGroup<T extends string | number>({
   );
 }
 
+function formatSolveTime(ms: number): string {
+  const totalSec = Math.floor(ms / 1000);
+  const hours = Math.floor(totalSec / 3600);
+  const mins = Math.floor((totalSec % 3600) / 60);
+  if (hours > 0) return `${hours}h ${mins}m`;
+  if (mins > 0) return `${mins}m`;
+  return `${totalSec}s`;
+}
+
 /**
  * Toolbar popup. Shows the streak, today's solves, active unlocks, and lets
  * the user block the current site in one click, switch theme + editor font
@@ -224,6 +234,11 @@ export function Popup() {
           .map((rule) => rule.pattern.toLowerCase()),
       );
 
+      const totalSolvedMs = solved.reduce(
+        (acc: number, r: SolvedProblemRecord) => acc + r.durationMs,
+        0,
+      );
+
       if (cancelled) return;
       setData({
         streak,
@@ -231,6 +246,7 @@ export function Popup() {
         activeUnlocks: pruneTokens(tokens),
         solvedToday,
         solvedStats: computeSolvedStats(solved),
+        totalSolvedMs,
         recentSolves,
         currentDomain,
         alreadyBlocked,
@@ -365,7 +381,7 @@ export function Popup() {
       </section>
 
       <StreakHeatmap history={data.streakHistory} />
-      <SolveBreakdown stats={data.solvedStats} />
+      <SolveBreakdown stats={data.solvedStats} totalSolvedMs={data.totalSolvedMs} />
       <RecentSolvesList solves={data.recentSolves} />
 
       {data.blockedDomains.size === 0 && (
@@ -641,7 +657,7 @@ function Stat({ label, value, sub }: { label: string; value: number; sub: string
 }
 
 /** Compact difficulty + top-tag breakdown for the popup. */
-function SolveBreakdown({ stats }: { stats: SolvedStats }) {
+function SolveBreakdown({ stats, totalSolvedMs }: { stats: SolvedStats; totalSolvedMs: number }) {
   if (stats.total === 0) return null;
   const pct = Math.round((stats.total / BANK_SIZE) * 100);
 
@@ -659,6 +675,7 @@ function SolveBreakdown({ stats }: { stats: SolvedStats }) {
     <section className="mt-4 border-t border-border pt-4" aria-label="Solved problem breakdown">
       <h2 className="font-mono text-[9px] uppercase tracking-widest text-faint">
         Breakdown · {stats.total}/{BANK_SIZE} solved ({pct}%)
+        {totalSolvedMs > 0 && ` · ${formatSolveTime(totalSolvedMs)} invested`}
       </h2>
 
       {/* Difficulty mini bars */}

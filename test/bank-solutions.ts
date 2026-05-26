@@ -25320,6 +25320,52 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'find-score-of-an-array-after-marking-all-elements': (nums: unknown): unknown => {
+    const arr = nums as number[];
+    const n = arr.length;
+    const marked = new Array<boolean>(n).fill(false);
+    const order = Array.from({ length: n }, (_, i) => i);
+    order.sort((a, b) => arr[a]! !== arr[b]! ? arr[a]! - arr[b]! : a - b);
+    let score = 0;
+    for (const i of order) {
+      if (marked[i]) continue;
+      score += arr[i]!;
+      marked[i] = true;
+      if (i > 0) marked[i - 1] = true;
+      if (i < n - 1) marked[i + 1] = true;
+    }
+    return score;
+  },
+
+  'count-zero-request-servers': (n: unknown, logs: unknown, x: unknown, queries: unknown): unknown => {
+    const nv = n as number;
+    const logArr = (logs as [number, number][]).slice().sort((a, b) => a[1]! - b[1]!);
+    const xv = x as number;
+    const qs = queries as number[];
+    const m = qs.length;
+    const idxOrder = Array.from({ length: m }, (_, i) => i).sort((a, b) => qs[a]! - qs[b]!);
+    const result = new Array<number>(m).fill(0);
+    const freq = new Map<number, number>();
+    let left = 0, right = 0;
+    for (const qi of idxOrder) {
+      const q = qs[qi]!;
+      const lo = q - xv, hi = q;
+      while (right < logArr.length && logArr[right]![1] <= hi) {
+        const srv = logArr[right]![0];
+        freq.set(srv, (freq.get(srv) ?? 0) + 1);
+        right++;
+      }
+      while (left < right && logArr[left]![1] < lo) {
+        const srv = logArr[left]![0];
+        const cnt = freq.get(srv)! - 1;
+        if (cnt === 0) freq.delete(srv); else freq.set(srv, cnt);
+        left++;
+      }
+      result[qi] = nv - freq.size;
+    }
+    return result;
+  },
+
   'reachable-nodes-with-restrictions': (...args: unknown[]) => {
     const n = args[0] as number;
     const edges = args[1] as number[][];
@@ -25466,6 +25512,145 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'maximum-score-after-applying-operations-on-a-tree': (edges: unknown, values: unknown): unknown => {
+    const edgeArr = edges as [number, number][];
+    const vals = values as number[];
+    const n = vals.length;
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const [u, v] of edgeArr) {
+      adj[u]!.push(v);
+      adj[v]!.push(u);
+    }
+    const total = vals.reduce((s, v) => s + v, 0);
+    // dp(node, parent): returns [cost if this subtree must protect internally, cost if ancestor protects]
+    // cost = sum of values NOT operated (kept)
+    function dfs(node: number, parent: number): [number, number] {
+      let childrenCost0 = 0; // sum of dp[child][0]
+      let childrenCost1 = 0; // sum of dp[child][1]
+      let isLeaf = true;
+      for (const child of adj[node]!) {
+        if (child === parent) continue;
+        isLeaf = false;
+        const [c0, c1] = dfs(child, node);
+        childrenCost0 += c0;
+        childrenCost1 += c1;
+      }
+      if (isLeaf) {
+        // dp[leaf][0] = vals[leaf] (must keep leaf), dp[leaf][1] = 0
+        return [vals[node]!, 0];
+      }
+      // dp[node][1] = 0 (ancestor protects, zero everything in subtree)
+      const dp1 = 0;
+      // dp[node][0] = min(keep node: vals[node] + childrenCost1, zero node: childrenCost0)
+      const dp0 = Math.min(vals[node]! + childrenCost1, childrenCost0);
+      return [dp0, dp1];
+    }
+    const [minKept] = dfs(0, -1);
+    return total - minKept;
+  },
+
+  'counting-words-with-a-given-prefix': (words: unknown, pref: unknown): unknown => {
+    const ws = words as string[];
+    const p = pref as string;
+    return ws.filter(w => w.startsWith(p)).length;
+  },
+
+  'earliest-moment-everyone-became-friends': (logs: unknown, n: unknown): unknown => {
+    const logArr = (logs as [number, number, number][]).slice().sort((a, b) => a[0]! - b[0]!);
+    const nv = n as number;
+    const parent = Array.from({ length: nv }, (_, i) => i);
+    const rank = new Array<number>(nv).fill(0);
+    let components = nv;
+    function find(x: number): number {
+      if (parent[x] !== x) parent[x] = find(parent[x]!);
+      return parent[x]!;
+    }
+    function union(x: number, y: number): boolean {
+      const px = find(x), py = find(y);
+      if (px === py) return false;
+      if (rank[px]! < rank[py]!) parent[px] = py;
+      else if (rank[px]! > rank[py]!) parent[py] = px;
+      else { parent[py] = px; rank[px]!++; }
+      return true;
+    }
+    for (const [t, x, y] of logArr) {
+      if (union(x, y)) {
+        components--;
+        if (components === 1) return t;
+      }
+    }
+    return -1;
+  },
+
+  'minimum-weighted-subgraph-with-the-required-paths': (n: unknown, edges: unknown, src1: unknown, src2: unknown, dest: unknown): unknown => {
+    const nv = n as number;
+    const edgeArr = edges as [number, number, number][];
+    const s1 = src1 as number, s2 = src2 as number, d = dest as number;
+    const INF = Number.MAX_SAFE_INTEGER;
+    // Build adjacency lists
+    const fwd: [number, number][][] = Array.from({ length: nv }, () => []);
+    const rev: [number, number][][] = Array.from({ length: nv }, () => []);
+    for (const [u, v, w] of edgeArr) {
+      fwd[u]!.push([v, w]);
+      rev[v]!.push([u, w]);
+    }
+    function dijkstra(start: number, graph: [number, number][][]): number[] {
+      const dist = new Array<number>(nv).fill(INF);
+      dist[start] = 0;
+      // Min-heap via sorted array (n<=10^5, use simple priority queue)
+      const heap: [number, number][] = [[0, start]];
+      while (heap.length) {
+        heap.sort((a, b) => a[0]! - b[0]!);
+        const [dd, u] = heap.shift()!;
+        if (dd > dist[u]!) continue;
+        for (const [v, w] of graph[u]!) {
+          if (dist[u]! + w < dist[v]!) {
+            dist[v] = dist[u]! + w;
+            heap.push([dist[v]!, v]);
+          }
+        }
+      }
+      return dist;
+    }
+    const d1 = dijkstra(s1, fwd);
+    const d2 = dijkstra(s2, fwd);
+    const dd = dijkstra(d, rev);
+    let ans = INF;
+    for (let m = 0; m < nv; m++) {
+      if (d1[m] !== INF && d2[m] !== INF && dd[m] !== INF) {
+        ans = Math.min(ans, d1[m]! + d2[m]! + dd[m]!);
+      }
+    }
+    return ans === INF ? -1 : ans;
+  },
+
+  'longest-path-in-a-directed-acyclic-graph': (edges: unknown, n: unknown, s: unknown): unknown => {
+    const nv = n as number;
+    const edgeArr = edges as [number, number][];
+    const str = s as string;
+    const indegree = new Array<number>(nv).fill(0);
+    const adj: number[][] = Array.from({ length: nv }, () => []);
+    for (const [u, v] of edgeArr) {
+      adj[u]!.push(v);
+      indegree[v]!++;
+    }
+    const dp = new Array<number>(nv).fill(1);
+    const queue: number[] = [];
+    for (let i = 0; i < nv; i++) if (indegree[i] === 0) queue.push(i);
+    let ans = 1;
+    while (queue.length) {
+      const u = queue.shift()!;
+      for (const v of adj[u]!) {
+        if (str.charCodeAt(v) === str.charCodeAt(u) + 1) {
+          dp[v] = Math.max(dp[v]!, dp[u]! + 1);
+          ans = Math.max(ans, dp[v]!);
+        }
+        if (--indegree[v]! === 0) queue.push(v);
+      }
+    }
+    return ans;
+  },
+
   'minimum-size-subarray-in-infinite-array': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const target = args[1] as number;
@@ -25577,6 +25762,46 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     };
     serialize(root);
     return result.map(n => _treeToArr(n)).sort((a, b) => (a[0] as number) - (b[0] as number));
+  },
+
+  'count-good-triplets-in-an-array': (nums1: unknown, nums2: unknown): unknown => {
+    const a = nums1 as number[];
+    const b = nums2 as number[];
+    const n = a.length;
+    const posInB = new Array<number>(n);
+    for (let i = 0; i < n; i++) posInB[b[i]!] = i;
+    const seq = a.map(v => posInB[v]!);
+    const bit = new Array<number>(n + 1).fill(0);
+    function update(i: number): void {
+      for (let x = i + 1; x <= n; x += x & -x) bit[x]!++;
+    }
+    function query(i: number): number {
+      let s = 0;
+      for (let x = i + 1; x > 0; x -= x & -x) s += bit[x]!;
+      return s;
+    }
+    const leftSmaller = new Array<number>(n).fill(0);
+    for (let j = 0; j < n; j++) {
+      leftSmaller[j] = query(seq[j]! - 1);
+      update(seq[j]!);
+    }
+    const bit2 = new Array<number>(n + 1).fill(0);
+    function update2(i: number): void {
+      for (let x = i + 1; x <= n; x += x & -x) bit2[x]!++;
+    }
+    function query2(i: number): number {
+      let s = 0;
+      for (let x = i + 1; x > 0; x -= x & -x) s += bit2[x]!;
+      return s;
+    }
+    const rightLarger = new Array<number>(n).fill(0);
+    for (let j = n - 1; j >= 0; j--) {
+      rightLarger[j] = (n - 1 - j) - query2(seq[j]!);
+      update2(seq[j]!);
+    }
+    let ans = 0;
+    for (let j = 0; j < n; j++) ans += leftSmaller[j]! * rightLarger[j]!;
+    return ans;
   },
 
 };
