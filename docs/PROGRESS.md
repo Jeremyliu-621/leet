@@ -8,11 +8,14 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1736 problems; 5496 tests green.
+**Current focus:** Bank at 1745 problems; 5535 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1750; UX polish.
 
-### Batch 70 (2026-05-26)
+### Batch 70 (2026-05-26) — this session
+Added 8 new problems: `cells-in-a-range-on-an-excel-sheet` (easy/strings, column+row nested loop), `make-two-arrays-equal-by-reversing-subarrays` (easy/arrays+hash-map, frequency equality), `count-pairs-of-similar-words` (easy/hash-map, canonical char-set key), `construct-the-rectangle` (easy/math, sqrt factorization), `minimum-number-of-buckets-required` (medium/strings, greedy right-first bucket placement), `apply-discount-every-n-items` (easy/arrays, 1-indexed modulo), `sum-game` (medium/math, parity + diff formula), `find-the-k-th-lucky-number` (easy/math, binary-digit-to-4/7 mapping). JS + Python solutions for all. Bank at **1745**; 5535 tests.
+
+### Batch 70 (2026-05-26) — remote
 Added 5 new problems: `find-the-longest-balanced-substring-of-a-binary-string` (easy/strings, run-length consecutive 0/1 pairing), `largest-palindromic-number` (medium/strings+hash-map, pair-frequency greedy from 9 down), `count-words-obtained-after-adding-a-letter` (medium/strings+hash-map, bitmask subtraction lookup), `minimum-number-of-flips-to-make-binary-string-alternating` (medium/strings+sliding-window, doubled-string window mismatch count), `total-cost-to-hire-k-workers` (medium/heap+two-pointers, dual min-heap + lo/hi pointer expansion). JS + Python solutions for all. Bank at **1736**; 5496 tests.
 
 ### Batch 69 (this session, 2026-05-26)
