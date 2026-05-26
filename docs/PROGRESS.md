@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2035** problems; 6399 tests green. Batches 92–99 + 2K milestone + remote merges complete.
+**Current focus:** Bank at **2038** problems; 6408 tests green. Batches 92–99 + batch 96 tree/stack + 2K milestone + remote merges complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continued bank growth (batch 100+); UI/UX polish.
+
+### feat(bank): add batch 96 — remove-all-adjacent-duplicates-in-string-ii, average-of-subtree, cousins-in-binary-tree-ii (2026-05-26)
+Added 3 problems: `remove-all-adjacent-duplicates-in-string-ii` (medium/stack+strings, (char,count) stack; pop when count==k), `average-of-subtree` (easy/tree, post-order DFS returning [sum,count]; integer-division equality check), `cousins-in-binary-tree-ii` (medium/tree, BFS sets each child's value to levelSum−siblingSum). Bank at **2038**; 6408 tests.
 
 ### feat(bank): add batch 99 — find-longest-balanced-binary-substring, matrix-diagonal-sum-variant, max-number-of-k-sum-pairs, count-subarrays-max-element-k-times (2026-05-26)
 Added 4 problems: `find-longest-balanced-binary-substring` (easy/strings, run-scan pairing zeros/ones), `matrix-diagonal-sum-variant` (easy/arrays, both diagonals minus center for odd n), `max-number-of-k-sum-pairs` (medium/two-pointers, sort + two-pointer k-sum pair counting), `count-subarrays-max-element-k-times` (medium/sliding-window, two-pointer count subarrays with global max ≥k times). Bank at **2034**; 6399 tests.
