@@ -24793,4 +24793,110 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ops;
   },
 
+  // batch 68
+  'count-the-number-of-good-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const freq = new Map<number, number>();
+    let pairs = 0;
+    let left = 0;
+    let result = 0;
+    for (let right = 0; right < nums.length; right++) {
+      const val = nums[right] ?? 0;
+      pairs += freq.get(val) ?? 0;
+      freq.set(val, (freq.get(val) ?? 0) + 1);
+      while (pairs >= k) {
+        result += nums.length - right;
+        const lval = nums[left] ?? 0;
+        freq.set(lval, (freq.get(lval) ?? 0) - 1);
+        pairs -= freq.get(lval) ?? 0;
+        left++;
+      }
+    }
+    return result;
+  },
+
+  'maximum-strictly-increasing-cells-in-a-matrix': (...args: unknown[]) => {
+    const mat = args[0] as number[][];
+    const m = mat.length;
+    const n = mat[0]?.length ?? 0;
+    const rowBest = new Array<number>(m).fill(0);
+    const colBest = new Array<number>(n).fill(0);
+    const dp = Array.from({ length: m }, () => new Array<number>(n).fill(1));
+
+    // collect all (value, row, col) and sort by value
+    const cells: Array<[number, number, number]> = [];
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        cells.push([mat[i]?.[j] ?? 0, i, j]);
+      }
+    }
+    cells.sort((a, b) => a[0]! - b[0]!);
+
+    let ans = 1;
+    let idx = 0;
+    while (idx < cells.length) {
+      // collect group with same value
+      let end = idx;
+      while (end < cells.length && cells[end]![0] === cells[idx]![0]) end++;
+      const group = cells.slice(idx, end);
+      // compute dp for each cell in group
+      for (const [, r, c] of group) {
+        dp[r]![c] = Math.max(rowBest[r]!, colBest[c]!) + 1;
+        ans = Math.max(ans, dp[r]![c]!);
+      }
+      // update row/col best after processing group
+      for (const [, r, c] of group) {
+        rowBest[r] = Math.max(rowBest[r]!, dp[r]![c]!);
+        colBest[c] = Math.max(colBest[c]!, dp[r]![c]!);
+      }
+      idx = end;
+    }
+    return ans;
+  },
+
+  'find-longest-special-substring-that-occurs-thrice-i': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    // For each char, collect run lengths
+    const runs = new Map<string, number[]>();
+    let i = 0;
+    while (i < n) {
+      let j = i;
+      while (j < n && s[j] === s[i]) j++;
+      const ch = s[i]!;
+      if (!runs.has(ch)) runs.set(ch, []);
+      runs.get(ch)!.push(j - i);
+      i = j;
+    }
+    let best = -1;
+    for (const [, lengths] of runs) {
+      lengths.sort((a, b) => b - a);
+      // For each candidate length, count occurrences across all runs
+      for (let len = lengths[0] ?? 0; len >= 1; len--) {
+        let count = 0;
+        for (const r of lengths) {
+          if (r < len) break;
+          count += r - len + 1;
+          if (count >= 3) break;
+        }
+        if (count >= 3) {
+          best = Math.max(best, len);
+          break;
+        }
+      }
+    }
+    return best;
+  },
+
+  'minimum-operations-to-make-array-values-equal-to-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    for (const v of nums) {
+      if (v < k) return -1;
+    }
+    const distinct = new Set(nums.filter(v => v > k));
+    return distinct.size;
+  },
+
 };

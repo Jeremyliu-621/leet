@@ -1786,6 +1786,11 @@ import { problem as maximumSumAlmostUniqueSubarray } from './maximum-sum-of-almo
 import { problem as splitArrayMaxSubarrays } from './split-array-into-maximum-number-of-subarrays';
 import { problem as minOperationsArrayXorK } from './minimum-number-of-operations-to-make-array-xor-equal-to-k';
 import { problem as maximumAlternatingSubarraySum } from './maximum-alternating-subarray-sum';
+// batch 68
+import { problem as countTheNumberOfGoodSubarrays } from './count-the-number-of-good-subarrays';
+import { problem as maximumStrictlyIncreasingCellsInMatrix } from './maximum-strictly-increasing-cells-in-a-matrix';
+import { problem as findLongestSpecialSubstringThriceI } from './find-longest-special-substring-that-occurs-thrice-i';
+import { problem as minimumOperationsToMakeArrayValuesEqualToK } from './minimum-operations-to-make-array-values-equal-to-k';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3613,4 +3618,9 @@ export const problems: readonly Problem[] = [
   splitArrayMaxSubarrays,
   minOperationsArrayXorK,
   maximumAlternatingSubarraySum,
+  // batch 68
+  countTheNumberOfGoodSubarrays,
+  maximumStrictlyIncreasingCellsInMatrix,
+  findLongestSpecialSubstringThriceI,
+  minimumOperationsToMakeArrayValuesEqualToK,
 ];

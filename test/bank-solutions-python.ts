@@ -24316,4 +24316,79 @@ def secondMinimum(n, edges, time, change):
     part2 = target * remaining + remaining * (remaining - 1) // 2
     return (part1 + part2) % MOD
 `,
+
+  'count-the-number-of-good-subarrays': `def countGood(nums, k):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    pairs = 0
+    left = 0
+    result = 0
+    for right in range(len(nums)):
+        pairs += freq[nums[right]]
+        freq[nums[right]] += 1
+        while pairs >= k:
+            result += len(nums) - right
+            freq[nums[left]] -= 1
+            pairs -= freq[nums[left]]
+            left += 1
+    return result
+`,
+
+  'maximum-strictly-increasing-cells-in-a-matrix': `def maxIncreasingCells(mat):
+    m, n = len(mat), len(mat[0])
+    row_best = [0] * m
+    col_best = [0] * n
+    dp = [[1] * n for _ in range(m)]
+    cells = sorted((mat[i][j], i, j) for i in range(m) for j in range(n))
+    ans = 1
+    idx = 0
+    while idx < len(cells):
+        end = idx
+        while end < len(cells) and cells[end][0] == cells[idx][0]:
+            end += 1
+        group = cells[idx:end]
+        for val, r, c in group:
+            dp[r][c] = max(row_best[r], col_best[c]) + 1
+            ans = max(ans, dp[r][c])
+        for val, r, c in group:
+            row_best[r] = max(row_best[r], dp[r][c])
+            col_best[c] = max(col_best[c], dp[r][c])
+        idx = end
+    return ans
+`,
+
+  'find-longest-special-substring-that-occurs-thrice-i': `def maximumLength(s):
+    from collections import defaultdict
+    runs = defaultdict(list)
+    i = 0
+    while i < len(s):
+        j = i
+        while j < len(s) and s[j] == s[i]:
+            j += 1
+        runs[s[i]].append(j - i)
+        i = j
+    best = -1
+    for ch, lengths in runs.items():
+        lengths.sort(reverse=True)
+        max_len = lengths[0] if lengths else 0
+        for length in range(max_len, 0, -1):
+            count = 0
+            for r in lengths:
+                if r < length:
+                    break
+                count += r - length + 1
+                if count >= 3:
+                    break
+            if count >= 3:
+                best = max(best, length)
+                break
+    return best
+`,
+
+  'minimum-operations-to-make-array-values-equal-to-k': `def minOperations(nums, k):
+    for v in nums:
+        if v < k:
+            return -1
+    return len(set(v for v in nums if v > k))
+`,
 };
