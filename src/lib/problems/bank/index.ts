@@ -2149,6 +2149,8 @@ import { problem as countNumberOfFairPairs } from './count-number-of-fair-pairs'
 import { problem as rotatedDigits } from './rotated-digits';
 import { problem as rabbitsInForest } from './rabbits-in-forest';
 import { problem as smallestStringStartingFromLeaf } from './smallest-string-starting-from-leaf';
+// 2000-milestone — tree/medium
+import { problem as findLargestValueInEachTreeRow } from './find-largest-value-in-each-tree-row';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4335,4 +4337,6 @@ export const problems: readonly Problem[] = [
   rotatedDigits,
   rabbitsInForest,
   smallestStringStartingFromLeaf,
+  // 2000-milestone — tree/medium
+  findLargestValueInEachTreeRow,
 ];
