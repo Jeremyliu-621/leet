@@ -2161,6 +2161,10 @@ import { problem as smallestStringStartingFromLeaf } from './smallest-string-sta
 import { problem as findLargestValueInEachTreeRow } from './find-largest-value-in-each-tree-row';
 // batch 94 — sliding-window
 import { problem as maximumAverageSubarrayI } from './maximum-average-subarray-i';
+// batch 95 — arrays/strings
+import { problem as diStringMatch } from './di-string-match';
+import { problem as shortestDistanceToACharacter } from './shortest-distance-to-a-character';
+import { problem as largestNumberAtLeastTwiceOfOthers } from './largest-number-at-least-twice-of-others';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4359,4 +4363,8 @@ export const problems: readonly Problem[] = [
   findLargestValueInEachTreeRow,
   // batch 94 — sliding-window
   maximumAverageSubarrayI,
+  // batch 95 — arrays/strings
+  diStringMatch,
+  shortestDistanceToACharacter,
+  largestNumberAtLeastTwiceOfOthers,
 ];

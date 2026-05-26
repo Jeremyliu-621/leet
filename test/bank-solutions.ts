@@ -31471,4 +31471,45 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return max / k;
   },
 
+  'di-string-match': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const res: number[] = [];
+    let lo = 0, hi = n;
+    for (const c of s) {
+      if (c === 'I') { res.push(lo); lo++; }
+      else { res.push(hi); hi--; }
+    }
+    res.push(lo);
+    return res;
+  },
+
+  'shortest-distance-to-a-character': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const c = args[1] as string;
+    const n = s.length;
+    const ans = new Array<number>(n).fill(Infinity);
+    let prev = -Infinity;
+    for (let i = 0; i < n; i++) {
+      if (s[i] === c) prev = i;
+      if (isFinite(prev)) ans[i] = i - prev;
+    }
+    let next = Infinity;
+    for (let i = n - 1; i >= 0; i--) {
+      if (s[i] === c) next = i;
+      if (isFinite(next)) ans[i] = Math.min(ans[i]!, next - i);
+    }
+    return ans;
+  },
+
+  'largest-number-at-least-twice-of-others': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const maxVal = Math.max(...nums);
+    const maxIdx = nums.indexOf(maxVal);
+    for (let i = 0; i < nums.length; i++) {
+      if (i !== maxIdx && 2 * nums[i]! > maxVal) return -1;
+    }
+    return maxIdx;
+  },
+
 };
