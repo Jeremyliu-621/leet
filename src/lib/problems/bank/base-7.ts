@@ -15,6 +15,8 @@ export const problem: Problem = {
   ],
   hints: [
     'Repeatedly divide by 7 and collect remainders. Handle the negative sign separately. Return "0" for zero.',
+    'Store the sign, work with Math.abs(n). While n > 0: push n % 7 to a result array, then n = Math.floor(n/7). Reverse and join, prepend \'-\' if negative.',
+    'if(!n)return\'0\';let s=n<0?\'-\':\'\',r=\'\';n=Math.abs(n);while(n){r=(n%7)+r;n=Math.floor(n/7);}return s+r;',
   ],
   functionName: 'convertToBase7',
   params: ['num'],
