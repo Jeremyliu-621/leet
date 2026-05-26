@@ -30041,5 +30041,259 @@ def minimumDifference(nums: list) -> int:
     return ans
 `,
 
+  // batch 89
+  'next-greater-element-distances': `
+def nextGreaterDistances(nums):
+    n = len(nums)
+    result = [-1] * n
+    stack = []
+    for i in range(n):
+        while stack and nums[stack[-1]] < nums[i]:
+            j = stack.pop()
+            result[j] = i - j
+        stack.append(i)
+    return result
+`,
+
+  'find-all-occurrences-z-algorithm': `
+def findAllOccurrences(text, pattern):
+    s = pattern + '#' + text
+    n = len(s)
+    z = [0] * n
+    l = r = 0
+    for i in range(1, n):
+        if i < r:
+            z[i] = min(r - i, z[i - l])
+        while i + z[i] < n and s[z[i]] == s[i + z[i]]:
+            z[i] += 1
+        if i + z[i] > r:
+            l, r = i, i + z[i]
+    plen = len(pattern)
+    return [i - plen - 1 for i in range(plen + 1, n) if z[i] >= plen]
+`,
+
+  'z-algorithm-longest-prefix-suffix': `
+def longestPrefixSuffix(s):
+    n = len(s)
+    if n == 0:
+        return 0
+    pi = [0] * n
+    k = 0
+    for i in range(1, n):
+        while k > 0 and s[k] != s[i]:
+            k = pi[k - 1]
+        if s[k] == s[i]:
+            k += 1
+        pi[i] = k
+    return pi[-1]
+`,
+
+  'count-subarrays-exactly-k-distinct': `
+def subarraysWithKDistinct(nums, k):
+    def at_most(limit):
+        count = left = 0
+        freq = {}
+        for right, v in enumerate(nums):
+            freq[v] = freq.get(v, 0) + 1
+            while len(freq) > limit:
+                lv = nums[left]
+                freq[lv] -= 1
+                if freq[lv] == 0:
+                    del freq[lv]
+                left += 1
+            count += right - left + 1
+        return count
+    return at_most(k) - at_most(k - 1)
+`,
+
+  'maximum-product-subarray-length-k': `
+def maxProductSubarrayK(nums, k):
+    best = float('-inf')
+    for i in range(len(nums) - k + 1):
+        prod = 1
+        for j in range(i, i + k):
+            prod *= nums[j]
+        best = max(best, prod)
+    return best
+`,
+
+  'weighted-job-scheduling': `
+import bisect
+def jobScheduling(startTime, endTime, profit):
+    jobs = sorted(zip(endTime, startTime, profit))
+    ends = [j[0] for j in jobs]
+    dp = [0] * (len(jobs) + 1)
+    for i, (end, start, p) in enumerate(jobs, 1):
+        j = bisect.bisect_right(ends, start, 0, i - 1)
+        dp[i] = max(dp[i - 1], dp[j] + p)
+    return dp[-1]
+`,
+
+  'parallel-courses': `
+from collections import deque
+def minimumSemesters(n, relations):
+    in_deg = [0] * (n + 1)
+    adj = [[] for _ in range(n + 1)]
+    for u, v in relations:
+        adj[u].append(v)
+        in_deg[v] += 1
+    q = deque(i for i in range(1, n + 1) if in_deg[i] == 0)
+    semesters = processed = 0
+    while q:
+        semesters += 1
+        for _ in range(len(q)):
+            u = q.popleft()
+            processed += 1
+            for v in adj[u]:
+                in_deg[v] -= 1
+                if in_deg[v] == 0:
+                    q.append(v)
+    return semesters if processed == n else -1
+`,
+
+  'parallel-courses-ii': `
+def minNumberOfSemesters(n, relations, k):
+    prereqs = [0] * n
+    for x, y in relations:
+        prereqs[y] |= (1 << x)
+    INF = float('inf')
+    dp = [INF] * (1 << n)
+    dp[0] = 0
+    for mask in range(1 << n):
+        if dp[mask] == INF:
+            continue
+        avail = 0
+        for i in range(n):
+            if not (mask >> i & 1) and (prereqs[i] & mask) == prereqs[i]:
+                avail |= (1 << i)
+        sub = avail
+        while sub:
+            bits = bin(sub).count('1')
+            if bits <= k:
+                nxt = mask | sub
+                if dp[nxt] > dp[mask] + 1:
+                    dp[nxt] = dp[mask] + 1
+            sub = (sub - 1) & avail
+    return dp[(1 << n) - 1]
+`,
+
+  'grid-count-paths-mod': `
+def countPaths(grid):
+    MOD = 10**9 + 7
+    m, n = len(grid), len(grid[0])
+    dp = [[0]*n for _ in range(m)]
+    dp[0][0] = 1
+    for i in range(m):
+        for j in range(n):
+            if i == 0 and j == 0:
+                continue
+            if grid[i][j] == 1:
+                dp[i][j] = 0
+                continue
+            top = dp[i-1][j] if i > 0 else 0
+            left = dp[i][j-1] if j > 0 else 0
+            dp[i][j] = (top + left) % MOD
+    return dp[m-1][n-1]
+`,
+
+  'max-sum-submatrix': `
+def maxSumSubmatrix(matrix):
+    m, n = len(matrix), len(matrix[0])
+    ans = float('-inf')
+    for top in range(m):
+        col_sum = [0] * n
+        for bot in range(top, m):
+            for j in range(n):
+                col_sum[j] += matrix[bot][j]
+            # Kadane's
+            cur = max_sub = float('-inf')
+            for v in col_sum:
+                cur = max(v, cur + v)
+                max_sub = max(max_sub, cur)
+            ans = max(ans, max_sub)
+    return ans
+`,
+
+  'number-good-leaf-node-pairs': `
+def countPairsRunner(arr, distance):
+    raw_list = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
+    a = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    class TreeNode:
+        def __init__(self, v): self.v = v; self.l = self.r = None
+    def build(arr2):
+        if not arr2 or arr2[0] is None: return None
+        root = TreeNode(arr2[0])
+        q = [root]; i = 1
+        while q and i < len(arr2):
+            node = q.pop(0)
+            if i < len(arr2) and arr2[i] is not None:
+                node.l = TreeNode(arr2[i]); q.append(node.l)
+            i += 1
+            if i < len(arr2) and arr2[i] is not None:
+                node.r = TreeNode(arr2[i]); q.append(node.r)
+            i += 1
+        return root
+    count = [0]
+    def dfs(node):
+        if not node: return []
+        if not node.l and not node.r: return [0]
+        left = [d+1 for d in dfs(node.l)]
+        right = [d+1 for d in dfs(node.r)]
+        for l in left:
+            for r in right:
+                if l + r <= distance:
+                    count[0] += 1
+        return [d for d in left + right if d < distance]
+    dfs(build(a))
+    return count[0]
+`,
+
+  'tree-node-product-of-children': `
+def maximumProductSplitRunner(arr):
+    MOD = 10**9 + 7
+    raw_list = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
+    a = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    class TreeNode:
+        def __init__(self, v): self.v = v; self.l = self.r = None
+    def build(arr2):
+        if not arr2 or arr2[0] is None: return None
+        root = TreeNode(arr2[0])
+        q = [root]; i = 1
+        while q and i < len(arr2):
+            node = q.pop(0)
+            if i < len(arr2) and arr2[i] is not None:
+                node.l = TreeNode(arr2[i]); q.append(node.l)
+            i += 1
+            if i < len(arr2) and arr2[i] is not None:
+                node.r = TreeNode(arr2[i]); q.append(node.r)
+            i += 1
+        return root
+    def total_sum(node):
+        if not node: return 0
+        return node.v + total_sum(node.l) + total_sum(node.r)
+    root = build(a)
+    total = total_sum(root)
+    best = [0]
+    def dfs(node):
+        if not node: return 0
+        s = node.v + dfs(node.l) + dfs(node.r)
+        prod = (s * (total - s)) % MOD
+        if prod > best[0]: best[0] = prod
+        return s
+    dfs(root)
+    return best[0]
+`,
+
+  'minimum-operations-to-make-array-non-decreasing': `
+def minOperationsNonDecreasing(nums):
+    ops = 0
+    prev = nums[0] if nums else 0
+    for i in range(1, len(nums)):
+        if nums[i] < prev:
+            ops += prev - nums[i]
+        else:
+            prev = nums[i]
+    return ops
+`,
 
 };
