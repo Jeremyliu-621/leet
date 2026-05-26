@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import type { SupportedLanguage, SubmissionRecord, UserPreferences } from '../../lib/types';
 import type { Problem } from '../../lib/problems/types';
 import type { JudgeResult } from '../../lib/judge';
-import type { ChallengeFailureReason } from '../../lib/messaging/runtime';
+import type { ChallengeFailureReason, FailChallengeRequest } from '../../lib/messaging/runtime';
 import { getValue, updateValue } from '../../lib/storage';
 import { pickChallengeProblem, getProblemById, filterProblems } from '../../lib/problems';
 import { runTests, warmPython, runCustomArgs } from '../../lib/judge';
@@ -581,8 +581,7 @@ export function Challenge() {
 
   // Block accidental tab-close / refresh while a challenge is in progress.
   // The browser shows its generic "Leave site?" confirmation; if the user
-  // confirms, the tab closes (silent give-up — a future polish item is to
-  // also dispatch a fail-challenge in pagehide so the streak takes the hit).
+  // confirms, the tab closes.
   useEffect(() => {
     if (pageState.status !== 'ready') return;
     function onBeforeUnload(event: BeforeUnloadEvent): void {
@@ -594,6 +593,32 @@ export function Challenge() {
     window.addEventListener('beforeunload', onBeforeUnload);
     return () => window.removeEventListener('beforeunload', onBeforeUnload);
   }, [pageState.status]);
+
+  // When the tab is actually torn down (pagehide with persisted=false), record
+  // streak damage so force-closing mid-challenge counts as a give-up.
+  useEffect(() => {
+    if (pageState.status !== 'ready') return;
+    const { prefs } = pageState;
+    function onPageHide(event: PageTransitionEvent): void {
+      // persisted=true means the page entered the BF cache — not closing.
+      if (event.persisted) return;
+      // Already handled by solve/give-up/timeout — don't double-record.
+      if (isResolvingRef.current) return;
+      // Fire-and-forget; the SW records streak damage then tries the tab
+      // action (which will fail gracefully since the tab is already gone).
+      const msg: FailChallengeRequest = {
+        type: 'leetlock/fail-challenge',
+        domain: domain.current ?? '',
+        reason: 'gave-up',
+        failureAction: prefs.failureAction,
+        redirectUrl: prefs.redirectUrl,
+        targetUrl: targetUrl.current ?? undefined,
+      };
+      chrome.runtime.sendMessage(msg).catch(() => { /* tab or SW already gone */ });
+    }
+    window.addEventListener('pagehide', onPageHide);
+    return () => window.removeEventListener('pagehide', onPageHide);
+  }, [pageState]);
 
   useEffect(() => {
     if (pageState.status !== 'ready') return;
