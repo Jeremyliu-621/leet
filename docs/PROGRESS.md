@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2001** problems; 6315 tests green. Batches 92–94 + 2K milestone complete.
+**Current focus:** Bank at **2009** problems; 6345 tests green. Batches 94–95 merged.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 95); UI/UX polish.
+**Next up:** Continued bank growth (batch 96+); UI/UX polish.
 
 ### feat(bank): add batch 94 — maximum-average-subarray-i (2026-05-26)
 Added `maximum-average-subarray-i` (easy/sliding-window, fixed-size k window tracking max sum). JS and Python reference solutions added. Bank at **2001**; 6315 tests.
