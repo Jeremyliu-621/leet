@@ -12,6 +12,9 @@
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1600; further UX polish.
 
+### Batch 59-local (2026-05-26)
+Added 5 easy problems: `count-substrings-starting-and-ending-with-given-character` (strings+math, count formula n+n*(n-1)/2), `minimum-number-of-changes-to-make-binary-string-beautiful` (strings, pair mismatch count), `distribute-money-to-maximum-children` (math, greedy 8-dollar distribution with no-4 guard), `check-if-strings-can-be-made-equal-with-operations` (strings, even/odd parity multiset equality), `count-days-spent-together` (strings+math, day-of-year conversion + overlap). Fixed test case for `0110` (expected 2 not 1). Bank at **1559**; 4965 tests.
+
 ### Batch 58 (2026-05-26)
 Added 10 problems: `max-consecutive-ones-ii` (arrays/medium, sliding-window flip-one-zero), `length-of-longest-fibonacci-subsequence` (dp/medium, O(n²) pair DP), `detect-squares` (design/medium, point-count + x→ys map), `grid-game` (arrays/medium, two-robot prefix sum), `maximum-white-tiles-covered-by-carpet` (arrays/medium, sort + binary search + prefix), `minimum-operations-to-make-all-array-elements-equal` (arrays/medium, sorted prefix sum + binary search), `reverse-words-in-a-string-ii` (strings/medium, two-step in-place reversal), `count-subarrays-with-median` (arrays/hard, balance freq map), `maximum-sum-queries` (arrays/hard, monotone stack + binary search), `find-the-longest-equal-subarray` (arrays/medium, sliding-window per-value positions). JS + Python solutions for all. Bank at **1564**; 5007 tests.
 
