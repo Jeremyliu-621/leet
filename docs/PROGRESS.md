@@ -10,7 +10,10 @@
 **Current phase:** Phase 13 — Post-MVP polish
 **Current focus:** Bank at 1745 problems; 5535 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank toward 1750; UX polish.
+**Next up:** Continue growing problem bank toward 1750+; UX polish.
+
+### Batch 68+69-local backfill (2026-05-26)
+Added 14 previously deferred problems from batch-68 and batch-69-local sessions: `best-time-to-buy-and-sell-stock-iii` (hard/arrays+dp, at-most-2-transactions state machine), `find-the-duplicate-number` (medium/arrays+two-pointers, Floyd's cycle detection), `maximum-difference-in-array` (easy/arrays, min-so-far scan), `longest-subarray-with-at-most-k-frequency` (medium/arrays+sliding-window+hash-map), `count-pairs-in-two-arrays` (medium/arrays+binary-search, diff-array sort + bisect), `image-smoother` (easy/arrays, 3×3 box filter floor-average), `complex-number-multiplication` (medium/strings+math, (a+bi)(c+di) formula), `number-of-boomerangs` (medium/hash-map+math, equidistant ordered pairs), `find-duplicate-file-in-system` (medium/strings+hash-map, content-to-path grouping), `poor-pigs` (hard/math, (rounds+1)^pigs >= buckets), `strobogrammatic-number` (easy/strings+math, two-pointer pair validation), `fraction-addition-and-subtraction` (medium/strings+math, gcd cross-multiply), `longest-zigzag-path-in-binary-tree` (medium/tree+dp, DFS direction tracking), `find-the-duplicate-subtrees` (medium/tree+hash-map, post-order serialization). JS + Python solutions for all. Bank at **1741**; 5511 tests.
 
 ### Batch 70 (2026-05-26) — this session
 Added 8 new problems: `cells-in-a-range-on-an-excel-sheet` (easy/strings, column+row nested loop), `make-two-arrays-equal-by-reversing-subarrays` (easy/arrays+hash-map, frequency equality), `count-pairs-of-similar-words` (easy/hash-map, canonical char-set key), `construct-the-rectangle` (easy/math, sqrt factorization), `minimum-number-of-buckets-required` (medium/strings, greedy right-first bucket placement), `apply-discount-every-n-items` (easy/arrays, 1-indexed modulo), `sum-game` (medium/math, parity + diff formula), `find-the-k-th-lucky-number` (easy/math, binary-digit-to-4/7 mapping). JS + Python solutions for all. Bank at **1745**; 5535 tests.
