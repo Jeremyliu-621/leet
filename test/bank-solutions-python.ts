@@ -25218,4 +25218,117 @@ def minimumMoney(transactions):
     return sum(left_smaller[j] * right_larger[j] for j in range(n))
 `,
 
+  'find-the-longest-balanced-substring-of-a-binary-string': `
+def findTheLongestBalancedSubstring(s):
+    ans = 0
+    i = 0
+    while i < len(s):
+        zeros = 0
+        ones = 0
+        while i < len(s) and s[i] == '0':
+            zeros += 1; i += 1
+        while i < len(s) and s[i] == '1':
+            ones += 1; i += 1
+        ans = max(ans, 2 * min(zeros, ones))
+    return ans
+`,
+
+  'largest-palindromic-number': `
+def largestPalindromic(num):
+    freq = [0] * 10
+    for c in num:
+        freq[int(c)] += 1
+    half = ''
+    for d in range(9, -1, -1):
+        half += str(d) * (freq[d] // 2)
+    if not half:
+        for d in range(9, -1, -1):
+            if freq[d] > 0:
+                return str(d)
+        return '0'
+    stripped = half.lstrip('0')
+    if not stripped:
+        center = ''
+        for d in range(9, -1, -1):
+            if freq[d] % 2 == 1:
+                center = str(d); break
+        return center if center else '0'
+    center = ''
+    for d in range(9, -1, -1):
+        if freq[d] % 2 == 1:
+            center = str(d); break
+    return stripped + center + stripped[::-1]
+`,
+
+  'count-words-obtained-after-adding-a-letter': `
+def wordCount(startWords, targetWords):
+    start_set = set()
+    for w in startWords:
+        mask = 0
+        for c in w:
+            mask |= 1 << (ord(c) - ord('a'))
+        start_set.add(mask)
+    count = 0
+    for w in targetWords:
+        mask = 0
+        for c in w:
+            mask |= 1 << (ord(c) - ord('a'))
+        for i in range(26):
+            if mask & (1 << i):
+                if (mask ^ (1 << i)) in start_set:
+                    count += 1; break
+    return count
+`,
+
+  'minimum-number-of-flips-to-make-binary-string-alternating': `
+def minFlips(s):
+    n = len(s)
+    doubled = s + s
+    diff01 = 0
+    diff10 = 0
+    for i in range(n):
+        c = int(doubled[i])
+        if c != i % 2: diff01 += 1
+        if c != (i + 1) % 2: diff10 += 1
+    ans = min(diff01, diff10)
+    for i in range(n, 2 * n):
+        add = int(doubled[i])
+        remove = int(doubled[i - n])
+        if add != i % 2: diff01 += 1
+        if remove != (i - n) % 2: diff01 -= 1
+        if add != (i + 1) % 2: diff10 += 1
+        if remove != (i - n + 1) % 2: diff10 -= 1
+        ans = min(ans, diff01, diff10)
+    return ans
+`,
+
+  'total-cost-to-hire-k-workers': `
+import heapq
+def totalCost(costs, k, candidates):
+    left_heap = []
+    right_heap = []
+    lo = 0
+    hi = len(costs) - 1
+    for i in range(candidates):
+        if lo <= hi:
+            heapq.heappush(left_heap, (costs[lo], lo)); lo += 1
+    for i in range(candidates):
+        if lo <= hi:
+            heapq.heappush(right_heap, (costs[hi], hi)); hi -= 1
+    total = 0
+    for _ in range(k):
+        l = left_heap[0] if left_heap else (float('inf'), float('inf'))
+        r = right_heap[0] if right_heap else (float('inf'), float('inf'))
+        if l[0] < r[0] or (l[0] == r[0] and l[1] < r[1]):
+            cost, _ = heapq.heappop(left_heap)
+            total += cost
+            if lo <= hi:
+                heapq.heappush(left_heap, (costs[lo], lo)); lo += 1
+        else:
+            cost, _ = heapq.heappop(right_heap)
+            total += cost
+            if lo <= hi:
+                heapq.heappush(right_heap, (costs[hi], hi)); hi -= 1
+    return total
+`,
 };

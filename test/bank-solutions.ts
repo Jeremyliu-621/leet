@@ -25758,4 +25758,130 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'find-the-longest-balanced-substring-of-a-binary-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let ans = 0;
+    let i = 0;
+    while (i < s.length) {
+      let zeros = 0;
+      let ones = 0;
+      while (i < s.length && s[i] === '0') { zeros++; i++; }
+      while (i < s.length && s[i] === '1') { ones++; i++; }
+      ans = Math.max(ans, 2 * Math.min(zeros, ones));
+    }
+    return ans;
+  },
+
+  'largest-palindromic-number': (...args: unknown[]) => {
+    const num = args[0] as string;
+    const freq = new Array(10).fill(0);
+    for (const c of num) freq[parseInt(c)]++;
+    let half = '';
+    for (let d = 9; d >= 0; d--) {
+      half += String(d).repeat(Math.floor(freq[d] / 2));
+    }
+    if (half === '') {
+      // no pairs — just the single largest digit
+      for (let d = 9; d >= 0; d--) {
+        if (freq[d] > 0) return String(d);
+      }
+      return '0';
+    }
+    // strip leading zeros from half
+    const stripped = half.replace(/^0+/, '');
+    if (stripped === '') {
+      // all pairs are zeros — find single center if any non-zero, else just "0"
+      let center = '';
+      for (let d = 9; d >= 0; d--) {
+        if (freq[d] % 2 === 1) { center = String(d); break; }
+      }
+      return center !== '' ? center : '0';
+    }
+    let center = '';
+    for (let d = 9; d >= 0; d--) {
+      if (freq[d] % 2 === 1) { center = String(d); break; }
+    }
+    const rev = stripped.split('').reverse().join('');
+    return stripped + center + rev;
+  },
+
+  'count-words-obtained-after-adding-a-letter': (...args: unknown[]) => {
+    const startWords = args[0] as string[];
+    const targetWords = args[1] as string[];
+    const startSet = new Set<number>();
+    for (const w of startWords) {
+      let mask = 0;
+      for (const c of w) mask |= 1 << (c.charCodeAt(0) - 97);
+      startSet.add(mask);
+    }
+    let count = 0;
+    for (const w of targetWords) {
+      let mask = 0;
+      for (const c of w) mask |= 1 << (c.charCodeAt(0) - 97);
+      for (let i = 0; i < 26; i++) {
+        if (mask & (1 << i)) {
+          if (startSet.has(mask ^ (1 << i))) { count++; break; }
+        }
+      }
+    }
+    return count;
+  },
+
+  'minimum-number-of-flips-to-make-binary-string-alternating': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const doubled = s + s;
+    let diff01 = 0; // mismatches vs "010101..."
+    let diff10 = 0; // mismatches vs "101010..."
+    for (let i = 0; i < n; i++) {
+      const c = parseInt(doubled[i]!);
+      if (c !== i % 2) diff01++;
+      if (c !== (i + 1) % 2) diff10++;
+    }
+    let ans = Math.min(diff01, diff10);
+    for (let i = n; i < 2 * n; i++) {
+      const add = parseInt(doubled[i]!);
+      const remove = parseInt(doubled[i - n]!);
+      if (add !== i % 2) diff01++;
+      if (remove !== (i - n) % 2) diff01--;
+      if (add !== (i + 1) % 2) diff10++;
+      if (remove !== (i - n + 1) % 2) diff10--;
+      ans = Math.min(ans, diff01, diff10);
+    }
+    return ans;
+  },
+
+  'total-cost-to-hire-k-workers': (...args: unknown[]) => {
+    const costs = args[0] as number[];
+    const k = args[1] as number;
+    const candidates = args[2] as number;
+    const cmp = (a: [number, number], b: [number, number]) =>
+      a[0] !== b[0] ? a[0] - b[0] : a[1] - b[1];
+    const heapPush = (h: [number, number][], v: [number, number]) => {
+      h.push(v); h.sort(cmp);
+    };
+    const heapPop = (h: [number, number][]): [number, number] => h.shift()!;
+    const left: [number, number][] = [];
+    const right: [number, number][] = [];
+    let lo = 0;
+    let hi = costs.length - 1;
+    for (let i = 0; i < candidates && lo <= hi; i++, lo++) heapPush(left, [costs[lo]!, lo]);
+    for (let i = 0; i < candidates && lo <= hi; i++, hi--) heapPush(right, [costs[hi]!, hi]);
+    let total = 0;
+    for (let i = 0; i < k; i++) {
+      const lTop: [number, number] = left.length > 0 ? left[0]! : [Infinity, Infinity];
+      const rTop: [number, number] = right.length > 0 ? right[0]! : [Infinity, Infinity];
+      if (lTop[0] < rTop[0] || (lTop[0] === rTop[0] && lTop[1] < rTop[1])) {
+        const [cost] = heapPop(left);
+        total += cost;
+        if (lo <= hi) { heapPush(left, [costs[lo]!, lo]); lo++; }
+      } else {
+        const [cost] = heapPop(right);
+        total += cost;
+        if (lo <= hi) { heapPush(right, [costs[hi]!, hi]); hi--; }
+      }
+    }
+    return total;
+  },
+
 };

@@ -1835,6 +1835,12 @@ import { problem as strobogrammaticNumber } from './strobogrammatic-number';
 import { problem as fractionAdditionAndSubtraction } from './fraction-addition-and-subtraction';
 import { problem as longestZigZagPathInBinaryTree } from './longest-zigzag-path-in-binary-tree';
 import { problem as findTheDuplicateSubtrees } from './find-the-duplicate-subtrees';
+// batch 70
+import { problem as findTheLongestBalancedSubstringOfABinaryString } from './find-the-longest-balanced-substring-of-a-binary-string';
+import { problem as largestPalindromicNumber } from './largest-palindromic-number';
+import { problem as countWordsObtainedAfterAddingALetter } from './count-words-obtained-after-adding-a-letter';
+import { problem as minimumNumberOfFlipsBinaryStringAlternating } from './minimum-number-of-flips-to-make-binary-string-alternating';
+import { problem as totalCostToHireKWorkers } from './total-cost-to-hire-k-workers';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3709,4 +3715,10 @@ export const problems: readonly Problem[] = [
   minimumWeightedSubgraphWithRequiredPaths,
   longestPathInDirectedAcyclicGraph,
   countGoodTripletsInAnArray,
+  // batch 70
+  findTheLongestBalancedSubstringOfABinaryString,
+  largestPalindromicNumber,
+  countWordsObtainedAfterAddingALetter,
+  minimumNumberOfFlipsBinaryStringAlternating,
+  totalCostToHireKWorkers,
 ];
