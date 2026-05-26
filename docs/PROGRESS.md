@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1535 problems; 4893 tests green. Accessibility + UX polish pass complete.
+**Current focus:** Bank at 1539 problems; 4905 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1600; further UX polish.
+
+### Batch 57-local (2026-05-26)
+Added 4 problems: `minimum-number-of-moves-to-seat` (arrays/easy, sort+pair), `number-of-senior-citizens` (strings/easy, pos 11-12 age parse), `maximum-number-of-groups-with-increasing-length` (arrays/medium, binary search on m), `make-integer-beautiful` (math/medium, greedy round-up BigInt). Also merged Batch 57-remote (8 problems from concurrent agent: `sum-of-digits-in-base-k`, `count-symmetric-integers`, `minimum-number-of-pushes-to-type-word-i`, `divide-array-into-groups-of-size-k`, `count-subarrays-of-length-three-with-a-condition`, `minimum-operations-to-make-array-divisible-by-three`, `find-the-punishment-number-of-integers`, `minimum-additions-to-make-valid-string`). Bank at **1539**; 4905 tests.
 
 ### Batch 58 + accessibility/UX pass (2026-05-26)
 Added 5 problems: `maximum-total-reward-using-operations-i` (dp/medium, bitset DP), `minimum-array-end` (arrays/medium, bit fill), `maximum-number-of-moves-in-a-grid` (dp/medium, column-BFS), `minimum-cost-to-convert-string-i` (graph/medium, Floyd-Warshall), `ways-to-split-array-into-three-subarrays` (binary-search/medium, prefix sums + two binary searches). Also: `fix(challenge)` pagehide streak damage on force-close; `a11y(terminal)` tablist arrow-key nav with proper tabIndex management; `a11y(popup)` RadioGroup component with arrow-key navigation and tabIndex for all 4 radiogroups; removed stale "Phase 5" dev comment. Bank at **1535**; 4893 tests.
