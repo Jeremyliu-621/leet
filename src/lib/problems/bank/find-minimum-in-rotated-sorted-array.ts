@@ -41,6 +41,14 @@ You must write an algorithm that runs in \`O(log n)\` time.`,
   hints: [
     'If nums[mid] > nums[right], the minimum is in the right half.',
     'Otherwise the minimum is in the left half (including mid).',
+    `\`\`\`js
+let lo = 0, hi = nums.length-1;
+while (lo < hi) {
+  const mid = (lo+hi)>>1;
+  if (nums[mid] > nums[hi]) lo = mid+1;
+  else hi = mid;
+}
+return nums[lo];\`\`\``
   ],
   functionName: 'findMin',
   params: ['nums'],

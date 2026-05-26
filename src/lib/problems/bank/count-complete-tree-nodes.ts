@@ -73,6 +73,13 @@ Design an algorithm that runs in less than \`O(n)\` time complexity.`,
   hints: [
     'Compute the height going left and right. If equal, the tree is perfect and has `2^h - 1` nodes. Otherwise recurse on both subtrees.',
     'This yields O(log^2 n) time — each level does O(log n) work to measure heights.',
+    `\`\`\`js
+if (!root) return 0;
+let lo = root, hi = root, lh = 0, rh = 0;
+while (lo) { lh++; lo = lo.left; }
+while (hi) { rh++; hi = hi.right; }
+if (lh === rh) return (1 << lh) - 1;
+return 1 + countNodes(root.left) + countNodes(root.right);\`\`\``
   ],
   functionName: 'countNodesRunner',
   params: ['arr'],

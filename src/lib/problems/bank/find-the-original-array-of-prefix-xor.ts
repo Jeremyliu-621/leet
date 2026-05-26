@@ -31,6 +31,10 @@ It can be proven that the answer is **unique**.`,
   hints: [
     'arr[0] = pref[0].',
     'For i > 0, arr[i] = pref[i] XOR pref[i-1], because XORing pref[i-1] cancels all terms before i.',
+    `\`\`\`js
+const arr = [pref[0]];
+for (let i=1; i<pref.length; i++) arr.push(pref[i]^pref[i-1]);
+return arr;\`\`\``
   ],
   functionName: 'findArray',
   params: ['pref'],

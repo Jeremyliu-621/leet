@@ -39,6 +39,16 @@ Result: 7
   hints: [
     'Sort by value (with index as tiebreaker), then iterate: if not marked, add value and mark neighbors.',
     'Use a boolean array to track marked indices.',
+    `\`\`\`js
+const idx = nums.map((_,i)=>[nums[i],i]).sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
+const marked = new Set();
+let score = 0;
+for (const [v,i] of idx) {
+  if (marked.has(i)) continue;
+  score += v;
+  marked.add(i-1); marked.add(i); marked.add(i+1);
+}
+return score;\`\`\``
   ],
   starterCode: {
     javascript: `function findScore(nums) {

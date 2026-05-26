@@ -31,6 +31,17 @@ Return the number of nice pairs of indices. Since that number can be too large, 
   hints: [
     'The condition simplifies to nums[i]-rev(nums[i]) == nums[j]-rev(nums[j]).',
     'Group elements by their diff value, then count pairs in each group: C(n,2)=n*(n-1)/2.',
+    `\`\`\`js
+const rev = n => Number(String(n).split('').reverse().join(''));
+const freq = {};
+const MOD = 1e9+7;
+for (const n of nums) {
+  const diff = n - rev(n);
+  freq[diff] = (freq[diff]||0)+1;
+}
+let ans = 0;
+for (const cnt of Object.values(freq)) ans = (ans + cnt*(cnt-1)/2) % MOD;
+return ans;\`\`\``
   ],
   functionName: 'countNicePairs',
   params: ['nums'],

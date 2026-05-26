@@ -30,6 +30,14 @@ Return the number of **valid splits** in \`nums\`.`,
   hints: [
     'Compute the total sum, then scan with a running prefix sum.',
     'At each index i (except last), check if prefix >= total - prefix.',
+    `\`\`\`js
+const total = nums.reduce((a,b)=>a+b, BigInt ? BigInt(0) : 0);
+let left = 0, count = 0;
+for (let i = 0; i < nums.length-1; i++) {
+  left += nums[i];
+  if (left >= total - left) count++;
+}
+return count;\`\`\``
   ],
   functionName: 'waysToSplitArray',
   params: ['nums'],

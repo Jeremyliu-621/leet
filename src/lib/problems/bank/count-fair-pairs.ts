@@ -23,6 +23,17 @@ A pair \`(i, j)\` is **fair** if:
   hints: [
     'Sort the array, then for each i use binary search (or two pointers) to count j > i where lower - nums[i] <= nums[j] <= upper - nums[i].',
     'Equivalently: count pairs with sum <= upper minus pairs with sum <= lower-1.',
+    `\`\`\`js
+nums.sort((a,b)=>a-b);
+function countBelow(limit) {
+  let cnt=0, l=0, r=nums.length-1;
+  while(l<r){
+    if(nums[l]+nums[r]<=limit){cnt+=r-l;l++;}
+    else r--;
+  }
+  return cnt;
+}
+return countBelow(upper) - countBelow(lower-1);\`\`\``
   ],
   functionName: 'countFairPairs',
   params: ['nums', 'lower', 'upper'],

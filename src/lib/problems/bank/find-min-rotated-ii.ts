@@ -31,6 +31,15 @@ You must decrease the overall operation steps as much as possible.`,
   hints: [
     'Use binary search with a twist: when nums[mid] === nums[right], you cannot determine which half is sorted, so just decrement right by 1.',
     'When nums[mid] < nums[right], the minimum is in the left half (including mid). Otherwise it is in the right half.',
+    `\`\`\`js
+let lo = 0, hi = nums.length-1;
+while (lo < hi) {
+  const mid = (lo+hi)>>1;
+  if (nums[mid] > nums[hi]) lo = mid+1;
+  else if (nums[mid] < nums[hi]) hi = mid;
+  else hi--;  // can't tell which half — shrink right
+}
+return nums[lo];\`\`\``
   ],
   functionName: 'findMin',
   params: ['nums'],

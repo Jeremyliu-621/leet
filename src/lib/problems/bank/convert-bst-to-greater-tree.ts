@@ -112,6 +112,17 @@ As a reminder, a *binary search tree* is a tree that satisfies these constraints
   hints: [
     'Do a reverse in-order traversal (right → node → left) to visit nodes in decreasing order.',
     'Maintain a running suffix sum and add it to each node\'s value.',
+    `\`\`\`js
+let acc = 0;
+function dfs(node) {
+  if (!node) return;
+  dfs(node.right);
+  acc += node.val;
+  node.val = acc;
+  dfs(node.left);
+}
+dfs(root);
+return root;\`\`\``
   ],
   functionName: 'convertBSTRunner',
   params: ['root'],

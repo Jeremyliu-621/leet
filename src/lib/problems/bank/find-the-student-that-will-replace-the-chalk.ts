@@ -29,6 +29,14 @@ Given integer array \`chalk\` and integer \`k\` (initial chalk count), return th
   hints: [
     'After complete rounds, only `k % sum(chalk)` chalk remains.',
     'Then walk through the array and find the first student who needs more than what\'s left.',
+    `\`\`\`js
+const total = chalk.reduce((a,b)=>a+b,0);
+let rem = k % total;
+for (let i=0; i<chalk.length; i++) {
+  if (rem < chalk[i]) return i;
+  rem -= chalk[i];
+}
+return 0;\`\`\``
   ],
   starterCode: {
     javascript: `function chalkReplacer(chalk, k) {

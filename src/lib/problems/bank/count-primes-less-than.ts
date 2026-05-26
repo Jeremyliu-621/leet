@@ -17,6 +17,11 @@ export const problem: Problem = {
   hints: [
     'Use the Sieve of Eratosthenes: create a boolean array of size n, mark all multiples of each prime as composite.',
     'Start from 2, and for each number still marked prime, mark all its multiples (starting from p*p) as not prime.',
+    `\`\`\`js
+const sieve = new Uint8Array(n).fill(1);
+sieve[0] = sieve[1] = 0;
+for (let i = 2; i*i < n; i++) if (sieve[i]) for (let j=i*i; j<n; j+=i) sieve[j]=0;
+return sieve.reduce((a,b)=>a+b,0);\`\`\``
   ],
   functionName: 'countPrimes',
   params: ['n'],

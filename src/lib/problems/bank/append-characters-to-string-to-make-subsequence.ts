@@ -34,6 +34,10 @@ A **subsequence** is a string that can be derived from another string by deletin
   hints: [
     'Use two pointers: one on s, one on t. Advance both when s[i] == t[j], else advance only s pointer.',
     'When s is exhausted, the remaining characters in t (from j to end) are what must be appended.',
+    `\`\`\`js
+let j = 0;
+for (const c of s) if (j < t.length && c === t[j]) j++;
+return t.length - j;\`\`\``
   ],
   functionName: 'appendCharacters',
   params: ['s', 't'],

@@ -31,6 +31,14 @@ Given an integer \`num\`, convert it to a Roman numeral.`,
   hints: [
     'Build a table of (value, symbol) pairs in descending order, including the subtractive combinations: 1000→M, 900→CM, 500→D, 400→CD, 100→C, 90→XC, 50→L, 40→XL, 10→X, 9→IX, 5→V, 4→IV, 1→I.',
     'Greedily subtract the largest value that fits into `num`, appending the corresponding symbol each time.',
+    `\`\`\`js
+const vals = [1000,900,500,400,100,90,50,40,10,9,5,4,1];
+const syms = ['M','CM','D','CD','C','XC','L','XL','X','IX','V','IV','I'];
+let res = '';
+for (let i = 0; i < vals.length; i++) {
+  while (num >= vals[i]) { res += syms[i]; num -= vals[i]; }
+}
+return res;\`\`\``
   ],
   functionName: 'intToRoman',
   params: ['num'],

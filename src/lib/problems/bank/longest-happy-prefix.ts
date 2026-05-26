@@ -34,6 +34,16 @@ Given a string \`s\`, return the **longest happy prefix** of \`s\`. Return an em
   hints: [
     'Compute the KMP LPS (longest proper prefix-suffix) array for `s`. The last value `lps[n-1]` is the length of the longest happy prefix.',
     '```js\nconst n = s.length;\nconst lps = Array(n).fill(0);\nlet len = 0, i = 1;\nwhile (i < n) {\n  if (s[i] === s[len]) { lps[i++] = ++len; }\n  else if (len) { len = lps[len-1]; }\n  else { lps[i++] = 0; }\n}\nreturn s.slice(0, lps[n-1]);\n```',
+    `\`\`\`js
+// KMP failure function — prefix[i] = length of longest proper prefix that is also suffix
+const n = s.length, prefix = new Array(n).fill(0);
+let len = 0, i = 1;
+while (i < n) {
+  if (s[i] === s[len]) { prefix[i++] = ++len; }
+  else if (len) { len = prefix[len-1]; }
+  else { prefix[i++] = 0; }
+}
+return s.slice(0, prefix[n-1]);\`\`\``
   ],
   functionName: 'longestPrefix',
   params: ['s'],

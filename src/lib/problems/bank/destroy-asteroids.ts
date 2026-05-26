@@ -30,6 +30,13 @@ Return \`true\` if **all** asteroids can be destroyed, \`false\` otherwise.`,
   hints: [
     'Sort the asteroids — you want to eat the smallest ones first to grow.',
     'Greedily absorb in increasing order; stop if you cannot absorb the next one.',
+    `\`\`\`js
+nums.sort((a,b)=>a-b);
+for (const asteroid of nums) {
+  if (mass < asteroid) return false;
+  mass += asteroid;
+}
+return true;\`\`\``
   ],
   functionName: 'asteroidsDestroyed',
   params: ['mass', 'asteroids'],

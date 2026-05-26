@@ -31,6 +31,17 @@ Formally, given a pattern, a word matches the pattern if there is a bijection fr
   hints: [
     'For each word, check if there\'s a bijection to the pattern.',
     'Use two maps: one for word→pattern char and one for pattern→word char.',
+    `\`\`\`js
+function matches(word, pattern) {
+  const w2p = {}, p2w = {};
+  for (let i=0; i<word.length; i++) {
+    const w=word[i], p=pattern[i];
+    if ((w2p[w]??p)!==p || (p2w[p]??w)!==w) return false;
+    w2p[w]=p; p2w[p]=w;
+  }
+  return true;
+}
+return words.filter(w => matches(w, pattern));\`\`\``
   ],
   functionName: 'findAndReplacePattern',
   params: ['words', 'pattern'],

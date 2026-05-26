@@ -36,6 +36,15 @@ You may assume that the input string is always valid; there are no extra white s
   hints: [
     'Use a stack. When you see \'[\', push the current string and repeat count.',
     'When you see \']\', pop and build the repeated string.',
+    `\`\`\`js
+const stack = []; let cur = '', k = 0;
+for (const c of s) {
+  if (/\\d/.test(c)) { k = k*10+Number(c); }
+  else if (c === '[') { stack.push([cur, k]); cur=''; k=0; }
+  else if (c === ']') { const [prev, n] = stack.pop(); cur = prev + cur.repeat(n); }
+  else cur += c;
+}
+return cur;\`\`\``
   ],
   functionName: 'decodeString',
   params: ['s'],

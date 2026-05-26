@@ -29,6 +29,14 @@ Return the **maximum number of points** you can earn by applying the above opera
   hints: [
     'Build a sum array: sum[i] = total points earned if you take all elements equal to i.',
     'This reduces to House Robber: you cannot take both sum[i] and sum[i+1].',
+    `\`\`\`js
+const sum = new Array(Math.max(...nums)+1).fill(0);
+for (const n of nums) sum[n] += n;
+let prev = 0, cur = sum[0];
+for (let i = 1; i < sum.length; i++) {
+  [prev, cur] = [cur, Math.max(cur, prev + sum[i])];
+}
+return cur;\`\`\``
   ],
   functionName: 'deleteAndEarn',
   params: ['nums'],

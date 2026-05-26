@@ -31,6 +31,14 @@ An integer \`a\` is closer to \`x\` than integer \`b\` if:
   hints: [
     'Binary search for the left boundary of the k-element window. Search in [0, arr.length - k].',
     'At index mid, compare `x - arr[mid]` vs `arr[mid + k] - x`. If the left distance is greater, move the window right (lo = mid + 1), otherwise move left (hi = mid).',
+    `\`\`\`js
+let lo = 0, hi = arr.length - k;
+while (lo < hi) {
+  const mid = (lo+hi)>>1;
+  if (x - arr[mid] > arr[mid+k] - x) lo = mid+1;
+  else hi = mid;
+}
+return arr.slice(lo, lo+k);\`\`\``
   ],
   functionName: 'findClosestElements',
   params: ['arr', 'k', 'x'],

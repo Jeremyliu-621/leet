@@ -78,6 +78,18 @@ export const problem: Problem = {
   hints: [
     'Use BFS level-order traversal. The sum of the last level is the answer.',
     'Alternatively, use DFS tracking the maximum depth seen so far. Accumulate the sum at the deepest level, resetting when a deeper level is found.',
+    `\`\`\`js
+let maxDepth = 0, sum = 0;
+function dfs(node, depth) {
+  if (!node) return;
+  if (!node.left && !node.right) {
+    if (depth > maxDepth) { maxDepth = depth; sum = node.val; }
+    else if (depth === maxDepth) sum += node.val;
+  }
+  dfs(node.left, depth+1); dfs(node.right, depth+1);
+}
+dfs(root, 0);
+return sum;\`\`\``
   ],
   functionName: 'deepestLeavesSumRunner',
   params: ['root'],

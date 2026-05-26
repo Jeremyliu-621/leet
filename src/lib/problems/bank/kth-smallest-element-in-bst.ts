@@ -88,6 +88,16 @@ Trees are represented as level-order (BFS) arrays where \`null\` indicates a mis
   hints: [
     'BST inorder traversal (left → root → right) visits nodes in sorted order.',
     'Count down k as you visit nodes; return when counter reaches 0.',
+    `\`\`\`js
+let k_rem = k, ans;
+function inorder(node) {
+  if (!node || k_rem===0) return;
+  inorder(node.left);
+  if (--k_rem === 0) ans = node.val;
+  inorder(node.right);
+}
+inorder(root);
+return ans;\`\`\``
   ],
   functionName: 'kthSmallestRunner',
   params: ['root', 'k'],

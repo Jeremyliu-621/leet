@@ -18,6 +18,14 @@ export const problem: Problem = {
   hints: [
     'Track the two smallest values seen so far: `first` and `second`. If you find a value larger than both, return true.',
     'Initialize first = second = Infinity. If nums[i] <= first, update first. Else if nums[i] <= second, update second. Else return true.',
+    `\`\`\`js
+let first = Infinity, second = Infinity;
+for (const n of nums) {
+  if (n <= first) first = n;
+  else if (n <= second) second = n;
+  else return true;
+}
+return false;\`\`\``
   ],
   functionName: 'increasingTriplet',
   params: ['nums'],

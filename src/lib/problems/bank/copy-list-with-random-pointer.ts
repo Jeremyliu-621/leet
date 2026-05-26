@@ -84,6 +84,13 @@ The input/output uses an array \`[[val, randomIndex], ...]\` where \`randomIndex
   hints: [
     'Use a hash map to map each original node to its copy. In a first pass, create all new nodes. In a second pass, wire up `next` and `random` pointers using the map.',
     'Alternatively, interleave copied nodes with original nodes (e.g., 1→1\'→2→2\'→...), set random pointers using `orig.random.next`, then separate the two lists.',
+    `\`\`\`js
+const map = new Map();
+let cur = head;
+while (cur) { map.set(cur, { val: cur.val, next: null, random: null }); cur=cur.next; }
+cur = head;
+while (cur) { if(cur.next) map.get(cur).next=map.get(cur.next); if(cur.random) map.get(cur).random=map.get(cur.random); cur=cur.next; }
+return map.get(head) || null;\`\`\``
   ],
   functionName: 'copyRandomListRunner',
   params: ['arr'],
