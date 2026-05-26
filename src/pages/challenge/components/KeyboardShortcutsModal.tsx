@@ -49,8 +49,9 @@ const SECTIONS: ShortcutSection[] = [
   {
     heading: 'Layout',
     rows: [
-      { keys: ['← →', 'Arrow keys'], description: 'Resize panels (focus splitter first)' },
+      { keys: ['← →', 'Arrow keys'], description: 'Resize problem / editor panels (focus splitter)' },
       { keys: ['Home', 'End'], description: 'Snap panel to min / max width' },
+      { keys: ['↑ ↓', 'Arrow keys'], description: 'Resize terminal height (focus terminal handle)' },
       { keys: ['?'], description: 'Open this shortcuts modal' },
     ],
   },
