@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1828** problems; 5772 tests green. Marketing site at 1,825+. All problems have ≥3 hints.
+**Current focus:** Bank at **1838** problems; 5802 tests green. Marketing site at 1,825+. All problems have ≥3 hints.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank problems; UX polish (CodeMirror QoL, accessibility); light-mode QA.
+**Next up:** UX polish (CodeMirror QoL, accessibility); light-mode QA; more bank growth.
+
+### feat(bank): add batch 74 — 10 new problems (BIT, union-find, shortest-path, simulation) (2026-05-26)
+Added 10 problems targeting underrepresented tags: `range-sum-query-mutable` (medium/BIT, BIT point update + prefix sum), `count-of-smaller-numbers-after-self-bit` (hard/BIT, coordinate-compress + BIT right-to-left), `create-sorted-array-through-instructions` (hard/BIT, BIT insertion cost tracking mod 1e9+7), `rank-transform-of-an-array` (easy/arrays, sorted-unique rank mapping), `similar-string-groups` (hard/union-find+strings, DSU on 0/2-diff string pairs), `the-maze` (medium/shortest-path+graph, BFS with wall-rolling stops), `minimum-time-to-remove-all-cars` (hard/dp, prefix/suffix DP), `process-restricted-friend-requests` (medium/union-find, DSU + restriction check before merge), `design-food-rating-system` (medium/simulation+heap, lazy-deletion max-heap design), `first-day-you-have-been-in-all-rooms` (medium/dp+simulation, 2*dp[i-1]-dp[nv]+2 formula mod 1e9+7). Bank at **1838** problems; 5802 tests.
 
 ### feat(ux): Practice-next solved indicators + site update to 1,825+ (2026-05-26)
 Added `solved: boolean` to `RelatedProblem` interface in Challenge.tsx; "Practice next" section now shows ✓/· prefix on each suggested problem so users see which adjacent problems they have already completed. Marketing site updated from 1,800+ → 1,825+ in all three stat locations.
