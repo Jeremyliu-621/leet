@@ -24025,4 +24025,91 @@ def secondMinimum(n, edges, time, change):
     return result
 `,
 
+  'find-all-numbers-disappeared-in-array': `def findDisappearedNumbers(nums):
+    seen = set(nums)
+    return [i for i in range(1, len(nums) + 1) if i not in seen]
+`,
+
+  'kth-largest-element-in-array': `def findKthLargest(nums, k):
+    return sorted(nums, reverse=True)[k - 1]
+`,
+
+  'best-time-to-buy-and-sell-stock-ii': `def maxProfit(prices):
+    profit = 0
+    for i in range(1, len(prices)):
+        if prices[i] > prices[i - 1]:
+            profit += prices[i] - prices[i - 1]
+    return profit
+`,
+
+  'count-good-nodes-in-binary-tree': `def goodNodes(root):
+    def to_int(x):
+        try: return int(x)
+        except: return None
+    def build(arr):
+        converted = [to_int(x) for x in arr]
+        if not converted or converted[0] is None:
+            return None
+        class N:
+            def __init__(self, v): self.val = v; self.left = None; self.right = None
+        r = N(converted[0])
+        q = [r]
+        i = 1
+        while q and i < len(converted):
+            node = q.pop(0)
+            if i < len(converted) and converted[i] is not None:
+                node.left = N(converted[i]); q.append(node.left)
+            i += 1
+            if i < len(converted) and converted[i] is not None:
+                node.right = N(converted[i]); q.append(node.right)
+            i += 1
+        return r
+    arr = list(root) if hasattr(root, '__iter__') else [root]
+    tree = build(arr)
+    count = [0]
+    def dfs(node, max_so_far):
+        if not node: return
+        if node.val >= max_so_far: count[0] += 1
+        dfs(node.left, max(max_so_far, node.val))
+        dfs(node.right, max(max_so_far, node.val))
+    dfs(tree, float('-inf'))
+    return count[0]
+`,
+
+  'minimum-depth-of-binary-tree': `def minDepth(root):
+    def to_int(x):
+        try: return int(x)
+        except: return None
+    def build(arr):
+        converted = [to_int(x) for x in arr]
+        if not converted or converted[0] is None:
+            return None
+        class N:
+            def __init__(self, v): self.val = v; self.left = None; self.right = None
+        r = N(converted[0])
+        q = [r]
+        i = 1
+        while q and i < len(converted):
+            node = q.pop(0)
+            if i < len(converted) and converted[i] is not None:
+                node.left = N(converted[i]); q.append(node.left)
+            i += 1
+            if i < len(converted) and converted[i] is not None:
+                node.right = N(converted[i]); q.append(node.right)
+            i += 1
+        return r
+    arr = list(root) if hasattr(root, '__iter__') else [root]
+    if not arr or (len(arr) == 1 and arr[0] is None):
+        return 0
+    tree = build(arr)
+    if not tree: return 0
+    def min_d(node):
+        if not node: return float('inf')
+        if not node.left and not node.right: return 1
+        if not node.left: return 1 + min_d(node.right)
+        if not node.right: return 1 + min_d(node.left)
+        return 1 + min(min_d(node.left), min_d(node.right))
+    result = min_d(tree)
+    return result if result != float('inf') else 0
+`,
 };

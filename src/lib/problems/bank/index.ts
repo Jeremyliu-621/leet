@@ -1687,6 +1687,12 @@ import { problem as removeColoredPieces } from './remove-colored-pieces';
 import { problem as swapAdjacentInLrString } from './swap-adjacent-in-lr-string';
 import { problem as nextGreaterElementIV } from './next-greater-element-iv';
 import { problem as minimumNumberOfOperationsToMakeArraysSimilar } from './minimum-number-of-operations-to-make-arrays-similar';
+// batch 66
+import { problem as findAllNumbersDisappearedInArray } from './find-all-numbers-disappeared-in-array';
+import { problem as kthLargestElementInArray } from './kth-largest-element-in-array';
+import { problem as bestTimeToBuyAndSellStockII } from './best-time-to-buy-and-sell-stock-ii';
+import { problem as countGoodNodesInBinaryTree } from './count-good-nodes-in-binary-tree';
+import { problem as minimumDepthOfBinaryTree } from './minimum-depth-of-binary-tree';
 // batch 62
 import { problem as gridGame } from './grid-game';
 import { problem as maximumNumberOfPointsWithCost } from './maximum-number-of-points-with-cost';
@@ -3571,4 +3577,10 @@ export const problems: readonly Problem[] = [
   theMazeII,
   maximumVacationDays,
   gridIllumination,
+  // batch 66
+  findAllNumbersDisappearedInArray,
+  kthLargestElementInArray,
+  bestTimeToBuyAndSellStockII,
+  countGoodNodesInBinaryTree,
+  minimumDepthOfBinaryTree,
 ];

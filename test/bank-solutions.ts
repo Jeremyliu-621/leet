@@ -24529,4 +24529,59 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'find-all-numbers-disappeared-in-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const seen = new Set(nums);
+    const out: number[] = [];
+    for (let i = 1; i <= nums.length; i++) {
+      if (!seen.has(i)) out.push(i);
+    }
+    return out;
+  },
+
+  'kth-largest-element-in-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const sorted = [...nums].sort((a, b) => b - a);
+    return sorted[k - 1];
+  },
+
+  'best-time-to-buy-and-sell-stock-ii': (...args: unknown[]) => {
+    const prices = args[0] as number[];
+    let profit = 0;
+    for (let i = 1; i < prices.length; i++) {
+      if ((prices[i] as number) > (prices[i - 1] as number)) {
+        profit += (prices[i] as number) - (prices[i - 1] as number);
+      }
+    }
+    return profit;
+  },
+
+  'count-good-nodes-in-binary-tree': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    let count = 0;
+    const dfs = (node: _TN | null, maxSoFar: number) => {
+      if (!node) return;
+      if (node.v >= maxSoFar) count++;
+      const newMax = Math.max(maxSoFar, node.v);
+      dfs(node.l, newMax);
+      dfs(node.r, newMax);
+    };
+    dfs(root, -Infinity);
+    return count;
+  },
+
+  'minimum-depth-of-binary-tree': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    if (!root) return 0;
+    const minD = (node: _TN | null): number => {
+      if (!node) return Infinity;
+      if (!node.l && !node.r) return 1;
+      if (!node.l) return 1 + minD(node.r);
+      if (!node.r) return 1 + minD(node.l);
+      return 1 + Math.min(minD(node.l), minD(node.r));
+    };
+    return minD(root);
+  },
+
 };
