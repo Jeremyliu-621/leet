@@ -1656,6 +1656,12 @@ import { problem as findThreeConsecutiveIntegersThatSumToGivenNumber } from './f
 import { problem as minimumSumOfFourDigitNumberAfterSplittingDigits } from './minimum-sum-of-four-digit-number-after-splitting-digits';
 import { problem as kItemsWithTheMaximumSum } from './k-items-with-the-maximum-sum';
 
+// batch 63
+import { problem as numberOfIncreasingPathsInAGrid } from './number-of-increasing-paths-in-a-grid';
+import { problem as minimumTimeToVisitACellInAGrid } from './minimum-time-to-visit-a-cell-in-a-grid';
+import { problem as numberOfBeautifulSubsets } from './number-of-beautiful-subsets';
+import { problem as maximumNumberOfFishInAGrid } from './maximum-number-of-fish-in-a-grid';
+
 // batch 58
 import { problem as maxConsecutiveOnesII } from './max-consecutive-ones-ii';
 import { problem as lengthOfLongestFibonacciSubsequence } from './length-of-longest-fibonacci-subsequence';
@@ -1694,6 +1700,13 @@ import { problem as subarrayDivByK } from './subarray-sum-divisible-by-k';
 import { problem as findTheWinnerOfCircularGame } from './find-the-winner-of-circular-game';
 import { problem as minimumPathCostInGrid } from './minimum-path-cost-in-grid';
 import { problem as maximumDistanceBetweenAPairOfValues } from './maximum-distance-between-a-pair-of-values';
+
+// batch 62
+import { problem as groupShiftedStrings } from './group-shifted-strings';
+import { problem as sparseMatrixMultiplication } from './sparse-matrix-multiplication';
+import { problem as maximumDepthNAryTree } from './maximum-depth-n-ary-tree';
+import { problem as nAryTreeLevelOrderTraversal } from './n-ary-tree-level-order-traversal';
+import { problem as nAryTreePreorderTraversal } from './n-ary-tree-preorder-traversal';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3433,4 +3446,15 @@ export const problems: readonly Problem[] = [
   findThreeConsecutiveIntegersThatSumToGivenNumber,
   minimumSumOfFourDigitNumberAfterSplittingDigits,
   kItemsWithTheMaximumSum,
+  // batch 62 (this session)
+  groupShiftedStrings,
+  sparseMatrixMultiplication,
+  maximumDepthNAryTree,
+  nAryTreeLevelOrderTraversal,
+  nAryTreePreorderTraversal,
+  // batch 63
+  numberOfIncreasingPathsInAGrid,
+  minimumTimeToVisitACellInAGrid,
+  numberOfBeautifulSubsets,
+  maximumNumberOfFishInAGrid,
 ];

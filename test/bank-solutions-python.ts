@@ -23063,4 +23063,146 @@ def secondMinimum(n, edges, time, change):
     negones = k - ones - zeros
     return ones - negones
 `,
+
+  'group-shifted-strings': `def groupStrings(strings):
+    from collections import defaultdict
+    groups = defaultdict(list)
+    for s in strings:
+        if len(s) == 1:
+            key = ''
+        else:
+            key = ','.join(str((ord(s[i+1]) - ord(s[i]) + 26) % 26) for i in range(len(s) - 1))
+        groups[key].append(s)
+    result = [sorted(g) for g in groups.values()]
+    result.sort(key=lambda g: g[0])
+    return result
+`,
+
+  'sparse-matrix-multiplication': `def multiply(mat1, mat2):
+    m = len(mat1)
+    k = len(mat1[0])
+    n = len(mat2[0])
+    result = [[0] * n for _ in range(m)]
+    for i in range(m):
+        for p in range(k):
+            if mat1[i][p] != 0:
+                for j in range(n):
+                    result[i][j] += mat1[i][p] * mat2[p][j]
+    return result
+`,
+
+  'maximum-depth-n-ary-tree': `def maxDepth(root):
+    if not root:
+        return 0
+    if not root.children:
+        return 1
+    return 1 + max(maxDepth(c) for c in root.children)
+`,
+
+  'n-ary-tree-level-order-traversal': `def levelOrder(root):
+    if not root:
+        return []
+    from collections import deque
+    result = []
+    queue = deque([root])
+    while queue:
+        level = []
+        for _ in range(len(queue)):
+            node = queue.popleft()
+            level.append(node.val)
+            for child in node.children:
+                queue.append(child)
+        result.append(level)
+    return result
+`,
+
+  'n-ary-tree-preorder-traversal': `def preorder(root):
+    if not root:
+        return []
+    result = []
+    stack = [root]
+    while stack:
+        node = stack.pop()
+        result.append(node.val)
+        for child in reversed(node.children):
+            stack.append(child)
+    return result
+`,
+
+  'number-of-increasing-paths-in-a-grid': `def countPaths(grid):
+    MOD = 10**9 + 7
+    m, n = len(grid), len(grid[0])
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dfs(r, c):
+        cnt = 1
+        for dr, dc in ((0,1),(0,-1),(1,0),(-1,0)):
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n and grid[nr][nc] > grid[r][c]:
+                cnt = (cnt + dfs(nr, nc)) % MOD
+        return cnt
+    return sum(dfs(r, c) for r in range(m) for c in range(n)) % MOD
+`,
+
+  'minimum-time-to-visit-a-cell-in-a-grid': `def minimumTime(grid):
+    import heapq
+    m, n = len(grid), len(grid[0])
+    if grid[0][1] > 1 and grid[1][0] > 1:
+        return -1
+    dist = [[float('inf')] * n for _ in range(m)]
+    dist[0][0] = 0
+    heap = [(0, 0, 0)]
+    while heap:
+        t, r, c = heapq.heappop(heap)
+        if t > dist[r][c]:
+            continue
+        if r == m - 1 and c == n - 1:
+            return t
+        for dr, dc in ((0,1),(0,-1),(1,0),(-1,0)):
+            nr, nc = r + dr, c + dc
+            if not (0 <= nr < m and 0 <= nc < n):
+                continue
+            arrive = t + 1
+            wait = (grid[nr][nc] - arrive) % 2 if grid[nr][nc] > arrive else 0
+            nt = max(arrive, grid[nr][nc]) + wait
+            if nt < dist[nr][nc]:
+                dist[nr][nc] = nt
+                heapq.heappush(heap, (nt, nr, nc))
+    return -1
+`,
+
+  'number-of-beautiful-subsets': `def beautifulSubsets(nums, k):
+    nums = sorted(nums)
+    from collections import defaultdict
+    freq = defaultdict(int)
+    ans = [0]
+    def bt(idx):
+        if idx == len(nums):
+            ans[0] += 1
+            return
+        bt(idx + 1)
+        if freq[nums[idx] - k] == 0:
+            freq[nums[idx]] += 1
+            bt(idx + 1)
+            freq[nums[idx]] -= 1
+    bt(0)
+    return ans[0] - 1
+`,
+
+  'maximum-number-of-fish-in-a-grid': `def findMaxFish(grid):
+    m, n = len(grid), len(grid[0])
+    visited = [[False] * n for _ in range(m)]
+    def dfs(r, c):
+        if r < 0 or r >= m or c < 0 or c >= n or visited[r][c] or grid[r][c] == 0:
+            return 0
+        visited[r][c] = True
+        return grid[r][c] + dfs(r+1,c) + dfs(r-1,c) + dfs(r,c+1) + dfs(r,c-1)
+    ans = 0
+    for r in range(m):
+        for c in range(n):
+            if grid[r][c] > 0:
+                ans = max(ans, dfs(r, c))
+    return ans
+`,
+
 };

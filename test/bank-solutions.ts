@@ -23438,4 +23438,218 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ones - negones;
   },
 
+  'group-shifted-strings': (strings: unknown) => {
+    const strs = strings as string[];
+    const map = new Map<string, string[]>();
+    for (const s of strs) {
+      const key = s.length === 1
+        ? ''
+        : s.slice(1).split('').map((c, i) => ((c.charCodeAt(0) - s.charCodeAt(i) + 26) % 26).toString()).join(',');
+      const group = map.get(key) ?? [];
+      group.push(s);
+      map.set(key, group);
+    }
+    return [...map.values()].map(g => g.sort()).sort((a, b) => a[0]!.localeCompare(b[0]!));
+  },
+
+  'sparse-matrix-multiplication': (mat1: unknown, mat2: unknown) => {
+    const a = mat1 as number[][];
+    const b = mat2 as number[][];
+    const m = a.length;
+    const k = a[0]!.length;
+    const n = b[0]!.length;
+    const result: number[][] = Array.from({ length: m }, () => new Array<number>(n).fill(0));
+    for (let i = 0; i < m; i++) {
+      for (let p = 0; p < k; p++) {
+        if (a[i]![p] !== 0) {
+          for (let j = 0; j < n; j++) {
+            result[i]![j]! += a[i]![p]! * b[p]![j]!;
+          }
+        }
+      }
+    }
+    return result;
+  },
+
+  'maximum-depth-n-ary-tree': (root: unknown) => {
+    if (root === null || root === undefined) return 0;
+    interface NAryNode { val: number; children: NAryNode[] }
+    function buildNAry(arr: (number | null)[]): NAryNode | null {
+      if (!arr || arr.length === 0) return null;
+      const r: NAryNode = { val: arr[0] as number, children: [] };
+      const queue: NAryNode[] = [r];
+      let i = 2;
+      while (i < arr.length && queue.length > 0) {
+        const node = queue.shift()!;
+        while (i < arr.length && arr[i] !== null) {
+          const child: NAryNode = { val: arr[i] as number, children: [] };
+          node.children.push(child);
+          queue.push(child);
+          i++;
+        }
+        i++;
+      }
+      return r;
+    }
+    function depth(node: NAryNode | null): number {
+      if (!node) return 0;
+      if (node.children.length === 0) return 1;
+      return 1 + Math.max(...node.children.map(depth));
+    }
+    const tree = buildNAry(root as (number | null)[]);
+    return depth(tree);
+  },
+
+  'n-ary-tree-level-order-traversal': (root: unknown) => {
+    if (root === null || root === undefined) return [];
+    interface NAryNode { val: number; children: NAryNode[] }
+    function buildNAry(arr: (number | null)[]): NAryNode | null {
+      if (!arr || arr.length === 0) return null;
+      const r: NAryNode = { val: arr[0] as number, children: [] };
+      const queue: NAryNode[] = [r];
+      let i = 2;
+      while (i < arr.length && queue.length > 0) {
+        const node = queue.shift()!;
+        while (i < arr.length && arr[i] !== null) {
+          const child: NAryNode = { val: arr[i] as number, children: [] };
+          node.children.push(child);
+          queue.push(child);
+          i++;
+        }
+        i++;
+      }
+      return r;
+    }
+    const tree = buildNAry(root as (number | null)[]);
+    if (!tree) return [];
+    const result: number[][] = [];
+    const queue: NAryNode[] = [tree];
+    while (queue.length > 0) {
+      const size = queue.length;
+      const level: number[] = [];
+      for (let i = 0; i < size; i++) {
+        const node = queue.shift()!;
+        level.push(node.val);
+        for (const child of node.children) queue.push(child);
+      }
+      result.push(level);
+    }
+    return result;
+  },
+
+  'n-ary-tree-preorder-traversal': (root: unknown) => {
+    if (root === null || root === undefined) return [];
+    interface NAryNode { val: number; children: NAryNode[] }
+    function buildNAry(arr: (number | null)[]): NAryNode | null {
+      if (!arr || arr.length === 0) return null;
+      const r: NAryNode = { val: arr[0] as number, children: [] };
+      const queue: NAryNode[] = [r];
+      let i = 2;
+      while (i < arr.length && queue.length > 0) {
+        const node = queue.shift()!;
+        while (i < arr.length && arr[i] !== null) {
+          const child: NAryNode = { val: arr[i] as number, children: [] };
+          node.children.push(child);
+          queue.push(child);
+          i++;
+        }
+        i++;
+      }
+      return r;
+    }
+    const tree = buildNAry(root as (number | null)[]);
+    if (!tree) return [];
+    const result: number[] = [];
+    const stack: NAryNode[] = [tree];
+    while (stack.length > 0) {
+      const node = stack.pop()!;
+      result.push(node.val);
+      for (let i = node.children.length - 1; i >= 0; i--) {
+        stack.push(node.children[i]!);
+      }
+    }
+    return result;
+  },
+
+  'number-of-increasing-paths-in-a-grid': (grid: unknown) => {
+    const g = grid as number[][];
+    const MOD = 1_000_000_007;
+    const m = g.length, n = g[0]!.length;
+    const dp: number[][] = Array.from({ length: m }, () => new Array(n).fill(0));
+    const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+    const dfs = (r: number, c: number): number => {
+      if (dp[r]![c]) return dp[r]![c]!;
+      let cnt = 1;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr!, nc = c + dc!;
+        if (nr >= 0 && nr < m && nc >= 0 && nc < n && g[nr]![nc]! > g[r]![c]!) {
+          cnt = (cnt + dfs(nr, nc)) % MOD;
+        }
+      }
+      dp[r]![c] = cnt;
+      return cnt;
+    };
+    let ans = 0;
+    for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) ans = (ans + dfs(r, c)) % MOD;
+    return ans;
+  },
+
+  'minimum-time-to-visit-a-cell-in-a-grid': (grid: unknown) => {
+    const g = grid as number[][];
+    const m = g.length, n = g[0]!.length;
+    if (g[0]![1]! > 1 && g[1]![0]! > 1) return -1;
+    const dist: number[][] = Array.from({ length: m }, () => new Array(n).fill(Infinity));
+    dist[0]![0] = 0;
+    const heap: [number, number, number][] = [[0, 0, 0]];
+    const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+    while (heap.length) {
+      heap.sort((a, b) => a[0] - b[0]);
+      const [t, r, c] = heap.shift()!;
+      if (t > dist[r]![c]!) continue;
+      if (r === m - 1 && c === n - 1) return t;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr!, nc = c + dc!;
+        if (nr < 0 || nr >= m || nc < 0 || nc >= n) continue;
+        const arrive = t + 1;
+        const wait = g[nr]![nc]! > arrive ? (g[nr]![nc]! - arrive) % 2 : 0;
+        const nt = Math.max(arrive, g[nr]![nc]!) + wait;
+        if (nt < dist[nr]![nc]!) { dist[nr]![nc] = nt; heap.push([nt, nr, nc]); }
+      }
+    }
+    return -1;
+  },
+
+  'number-of-beautiful-subsets': (nums: unknown, k: unknown) => {
+    const a = [...(nums as number[])].sort((x, y) => x - y);
+    const kk = k as number;
+    const freq = new Map<number, number>();
+    let ans = 0;
+    const bt = (idx: number) => {
+      if (idx === a.length) { ans++; return; }
+      bt(idx + 1);
+      if (!freq.get(a[idx]! - kk)) {
+        freq.set(a[idx]!, (freq.get(a[idx]!) ?? 0) + 1);
+        bt(idx + 1);
+        const newFreq = freq.get(a[idx]!)! - 1;
+        if (newFreq === 0) freq.delete(a[idx]!); else freq.set(a[idx]!, newFreq);
+      }
+    };
+    bt(0);
+    return ans - 1;
+  },
+
+  'maximum-number-of-fish-in-a-grid': (grid: unknown) => {
+    const g = grid as number[][];
+    const m = g.length, n = g[0]!.length;
+    const visited = Array.from({ length: m }, () => new Array(n).fill(false)) as boolean[][];
+    const dfs = (r: number, c: number): number => {
+      if (r < 0 || r >= m || c < 0 || c >= n || visited[r]![c] || g[r]![c] === 0) return 0;
+      visited[r]![c] = true;
+      return g[r]![c]! + dfs(r+1,c) + dfs(r-1,c) + dfs(r,c+1) + dfs(r,c-1);
+    };
+    let ans = 0;
+    for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) if (g[r]![c]! > 0) ans = Math.max(ans, dfs(r, c));
+    return ans;
+  },
+
 };
