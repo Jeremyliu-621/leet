@@ -24675,6 +24675,48 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number((part1 + part2) % MOD);
   },
 
+  'max-stack': (ops: unknown, args: unknown): unknown => {
+    const operations = ops as string[];
+    const argsList = args as number[][];
+    const mainStack: number[] = [];
+    const maxStack: number[] = [];
+    const results: (number | null)[] = [];
+    for (let i = 0; i < operations.length; i++) {
+      const op = operations[i]!;
+      const a = argsList[i] ?? [];
+      if (op === 'push') {
+        const x = a[0]!;
+        mainStack.push(x);
+        maxStack.push(Math.max(x, maxStack.length ? maxStack[maxStack.length - 1]! : x));
+        results.push(null);
+      } else if (op === 'pop') {
+        maxStack.pop();
+        results.push(mainStack.pop()!);
+      } else if (op === 'top') {
+        results.push(mainStack[mainStack.length - 1]!);
+      } else if (op === 'peekMax') {
+        results.push(maxStack[maxStack.length - 1]!);
+      } else if (op === 'popMax') {
+        const max = maxStack[maxStack.length - 1]!;
+        const buf: number[] = [];
+        while (mainStack[mainStack.length - 1]! !== max) {
+          maxStack.pop();
+          buf.push(mainStack.pop()!);
+        }
+        maxStack.pop();
+        mainStack.pop();
+        for (const v of buf.reverse()) {
+          mainStack.push(v);
+          maxStack.push(Math.max(v, maxStack.length ? maxStack[maxStack.length - 1]! : v));
+        }
+        results.push(max);
+      } else {
+        results.push(null);
+      }
+    }
+    return results;
+  },
+
   // batch 66 (local)
   'find-the-k-or-of-an-array': (...args: unknown[]) => {
     const nums = args[0] as number[];

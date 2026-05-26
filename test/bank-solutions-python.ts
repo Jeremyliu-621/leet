@@ -24317,6 +24317,40 @@ def secondMinimum(n, edges, time, change):
     return (part1 + part2) % MOD
 `,
 
+  'max-stack': `def maxStackRunner(ops, args):
+    main_stack = []
+    max_stack = []
+    results = []
+    for op, a in zip(ops, args):
+        if op == 'push':
+            x = a[0]
+            main_stack.append(x)
+            max_stack.append(max(x, max_stack[-1] if max_stack else x))
+            results.append(None)
+        elif op == 'pop':
+            max_stack.pop()
+            results.append(main_stack.pop())
+        elif op == 'top':
+            results.append(main_stack[-1])
+        elif op == 'peekMax':
+            results.append(max_stack[-1])
+        elif op == 'popMax':
+            mx = max_stack[-1]
+            buf = []
+            while main_stack[-1] != mx:
+                max_stack.pop()
+                buf.append(main_stack.pop())
+            max_stack.pop()
+            main_stack.pop()
+            for v in reversed(buf):
+                main_stack.append(v)
+                max_stack.append(max(v, max_stack[-1] if max_stack else v))
+            results.append(mx)
+        else:
+            results.append(None)
+    return results
+`,
+
   'count-the-number-of-good-subarrays': `def countGood(nums, k):
     from collections import defaultdict
     freq = defaultdict(int)

@@ -1792,6 +1792,7 @@ import { problem as checkWhetherTwoStringsAlmostEquivalent } from './check-wheth
 import { problem as minimumSwapsBinaryStringAlternating } from './minimum-number-of-swaps-to-make-the-binary-string-alternating';
 import { problem as maximumNonOverlappingSubarraysTarget } from './maximum-number-of-non-overlapping-subarrays-with-sum-equals-target';
 import { problem as findMinimumPossibleSumBeautifulArray } from './find-the-minimum-possible-sum-of-a-beautiful-array';
+import { problem as maxStackProblem } from './max-stack';
 // batch 67
 import { problem as findTheKOrOfAnArray } from './find-the-k-or-of-an-array';
 import { problem as minimumOperationsToSatisfyConditions } from './minimum-number-of-operations-to-satisfy-conditions';
@@ -3623,6 +3624,7 @@ export const problems: readonly Problem[] = [
   minimumSwapsBinaryStringAlternating,
   maximumNonOverlappingSubarraysTarget,
   findMinimumPossibleSumBeautifulArray,
+  maxStackProblem,
   // batch 67
   findTheKOrOfAnArray,
   minimumOperationsToSatisfyConditions,
