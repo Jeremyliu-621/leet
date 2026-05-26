@@ -30382,4 +30382,44 @@ def minOperationsNonDecreasing(nums):
     return ops
 `,
 
+  // batch 90
+  'sum-of-square-numbers': `
+import math
+def judgeSquareSum(c: int) -> bool:
+    a = 0
+    while a * a <= c:
+        b2 = c - a * a
+        b = round(math.sqrt(b2))
+        if b * b == b2:
+            return True
+        a += 1
+    return False
+`,
+
+  'mice-and-cheese': `
+def miceAndCheese(reward1, reward2, k):
+    reward1 = list(reward1)
+    reward2 = list(reward2)
+    n = len(reward1)
+    base = sum(reward2)
+    deltas = sorted([reward1[i] - reward2[i] for i in range(n)], reverse=True)
+    return base + sum(deltas[:k])
+`,
+
+  'maximum-size-subarray-sum-equals-k': `
+def maxSubArrayLen(nums, k):
+    nums = list(nums)
+    first_seen = {0: -1}
+    prefix = 0
+    max_len = 0
+    for j, v in enumerate(nums):
+        prefix += v
+        target = prefix - k
+        if target in first_seen:
+            max_len = max(max_len, j - first_seen[target])
+        if prefix not in first_seen:
+            first_seen[prefix] = j
+    return max_len
+`,
+
 };
