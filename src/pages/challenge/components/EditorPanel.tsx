@@ -489,6 +489,32 @@ export function EditorPanel({
   const [cursorPos, setCursorPos] = useState<{ line: number; col: number }>({ line: 1, col: 1 });
   const setCursorPosRef = useRef(setCursorPos);
 
+  const langContainerRef = useRef<HTMLDivElement>(null);
+  const handleLangKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLButtonElement>) => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      e.preventDefault();
+      const container = langContainerRef.current;
+      if (!container) return;
+      const buttons = Array.from(
+        container.querySelectorAll<HTMLButtonElement>('button[role="radio"]'),
+      );
+      const idx = buttons.indexOf(e.currentTarget);
+      if (idx === -1) return;
+      const next =
+        e.key === 'ArrowRight'
+          ? buttons[(idx + 1) % buttons.length]
+          : buttons[(idx - 1 + buttons.length) % buttons.length];
+      if (!next) return;
+      const nextLang = availableLanguages[buttons.indexOf(next)];
+      if (nextLang) {
+        onLanguageChange(nextLang);
+        next.focus();
+      }
+    },
+    [availableLanguages, onLanguageChange],
+  );
+
   const showLanguageSelector = availableLanguages.length > 1;
 
   return (
@@ -497,6 +523,7 @@ export function EditorPanel({
       <div className="flex shrink-0 items-center justify-between border-b border-border px-3 py-1.5">
         {showLanguageSelector ? (
           <div
+            ref={langContainerRef}
             role="radiogroup"
             aria-label="Code language"
             className="flex items-center gap-0.5 overflow-x-auto scrollbar-none"
@@ -510,9 +537,11 @@ export function EditorPanel({
                   role="radio"
                   aria-checked={selected}
                   aria-label={`Switch to ${LANGUAGE_LABEL[lang]}`}
+                  tabIndex={selected ? 0 : -1}
                   onClick={() => {
                     if (!selected) onLanguageChange(lang);
                   }}
+                  onKeyDown={handleLangKeyDown}
                   className={
                     selected
                       ? 'whitespace-nowrap rounded-sm border border-border-strong bg-surface-2 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent'

@@ -8,12 +8,9 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1549 problems; 4935 tests green.
+**Current focus:** Bank at 1544 problems; 4920 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1600; further UX polish.
-
-### Batch 58-local (2026-05-26)
-Added 5 problems: `minimum-time-to-buy-tickets` (arrays/easy, capped rounds formula), `vowels-of-all-substrings` (strings+math/medium, O(n) positional contribution), `removing-minimum-number-of-magic-beans` (arrays/medium, sort + BigInt sweep), `find-the-longest-equal-subarray` (arrays+sliding-window/medium, per-value position window), `minimum-equal-sum-of-two-arrays-after-replacing-zeros` (arrays+math/medium, min-sum feasibility). Bank at **1549**; 4935 tests.
 
 ### Batch 59 (2026-05-26)
 Added 5 problems: `next-closest-time` (strings/medium, brute-force all 4^4 digit combos), `employee-free-time` (arrays+heap/hard, flatten+merge intervals→gaps), `maximum-sum-of-3-non-overlapping-subarrays` (arrays+dp/hard, sliding window+left/right argmax arrays), `domino-tromino-tiling` (dp/medium, dp[i]=2*dp[i-1]+dp[i-3]), `split-array-with-same-average` (arrays+dp/hard, meet-in-the-middle). JS + Python solutions for all. Bank at **1544**; 4908+ tests.
