@@ -34,8 +34,8 @@ It is guaranteed that the given relations form a DAG (no cycles).
     },
     {
       input: 'n = 5, relations = [[2,1],[3,0],[4,1],[4,0]], k = 2',
-      output: '4',
-      explanation: 'Semester 1: {2,3}, Semester 2: {4}, Semester 3: {1}, Semester 4: {0}. Total 4.',
+      output: '3',
+      explanation: 'Semester 1: {2,4}, Semester 2: {1,3}, Semester 3: {0}. Total 3 semesters.',
     },
     {
       input: 'n = 4, relations = [], k = 2',
@@ -60,16 +60,21 @@ It is guaranteed that the given relations form a DAG (no cycles).
   },
   visibleTests: [
     { args: [4, [[2, 1], [3, 0]], 2], expected: 2 },
-    { args: [5, [[2, 1], [3, 0], [4, 1], [4, 0]], 2], expected: 4 },
+    { args: [5, [[2, 1], [3, 0], [4, 1], [4, 0]], 2], expected: 3 },
     { args: [4, [], 2], expected: 2 },
     { args: [1, [], 1], expected: 1 },
   ],
   hiddenTests: [
-    { args: [3, [[0, 1], [1, 2]], 2], expected: 2 },
+    // chain 0→1→2: must be 3 semesters regardless of k
+    { args: [3, [[0, 1], [1, 2]], 2], expected: 3 },
     { args: [3, [[0, 1], [1, 2]], 1], expected: 3 },
+    // two independent chains of length 2, k=1: 4 semesters
     { args: [4, [[0, 1], [2, 3]], 1], expected: 4 },
+    // two independent chains of length 2, k=2: take both roots, then both ends → 2 semesters
     { args: [4, [[0, 1], [2, 3]], 2], expected: 2 },
+    // 6 independent courses, k=2: 3 semesters
     { args: [6, [], 2], expected: 3 },
+    // single prereq chain of 2, k=1: 2 semesters
     { args: [2, [[0, 1]], 1], expected: 2 },
   ],
 };
