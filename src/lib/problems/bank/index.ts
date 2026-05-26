@@ -273,7 +273,6 @@ import { problem as wordPattern } from './word-pattern';
 import { problem as sumOfUniqueElements } from './sum-of-unique-elements';
 import { problem as findWinners } from './find-winners';
 // hash-map — medium
-import { problem as letterCombinationsPhone } from './letter-combinations-phone';
 import { problem as groupAnagrams } from './group-anagrams';
 import { problem as topKFrequentElements } from './top-k-frequent-elements';
 import { problem as longestConsecutiveSequence } from './longest-consecutive-sequence';
@@ -1089,7 +1088,6 @@ import { problem as wiggleSortII } from './wiggle-sort-ii';
 import { problem as stoneGameIV } from './stone-game-iv';
 import { problem as minimumRefuelingStops } from './minimum-refueling-stops';
 import { problem as snapshotArray } from './snapshot-array';
-import { problem as insertDeleteGetrandom } from './insert-delete-getrandom';
 import { problem as paintHouseII } from './paint-house-ii';
 import { problem as minimumMovesEqualArrayII } from './minimum-moves-equal-array-ii';
 import { problem as frogJump } from './frog-jump';
@@ -2025,6 +2023,14 @@ import { problem as rangeSumOfSortedSubarraySums } from './range-sum-of-sorted-s
 // batch 81 — shortest-path, strings, dp
 import { problem as minimumCostToReachDestinationInTime } from './minimum-cost-to-reach-destination-in-time';
 import { problem as totalAppealOfAString } from './total-appeal-of-a-string';
+// batch 83 — backtracking, simulation, dp, linked-list
+import { problem as letterCombinationsOfAPhoneNumber } from './letter-combinations-of-a-phone-number';
+import { problem as designTicTacToe } from './design-tic-tac-toe';
+import { problem as battleshipsInABoard } from './battleships-in-a-board';
+import { problem as onesAndZeroes } from './ones-and-zeroes';
+import { problem as bestTimeToBuyAndSellStockWithCooldown } from './best-time-to-buy-and-sell-stock-with-cooldown';
+import { problem as insertDeleteGetRandomO1 } from './insert-delete-getrandom-o1';
+import { problem as convertBinaryNumberInLinkedListToInteger } from './convert-binary-number-in-linked-list-to-integer';
 // batch 82 — BIT, shortest-path, tree, arrays
 import { problem as bookingConcertTicketsInGroups } from './booking-concert-tickets-in-groups';
 import { problem as minimumScoreOfAPathBetweenTwoCities } from './minimum-score-of-a-path-between-two-cities';
@@ -2316,7 +2322,6 @@ export const problems: readonly Problem[] = [
   minimumRoundsToCompleteTasks,
   minimumStepsMakeAnagram,
   topKFrequentWords,
-  letterCombinationsPhone,
   groupAnagrams,
   topKFrequentElements,
   longestConsecutiveSequence,
@@ -3182,7 +3187,6 @@ export const problems: readonly Problem[] = [
   stoneGameIV,
   minimumRefuelingStops,
   snapshotArray,
-  insertDeleteGetrandom,
   paintHouseII,
   minimumMovesEqualArrayII,
   frogJump,
@@ -4107,6 +4111,14 @@ export const problems: readonly Problem[] = [
   // batch 81 — shortest-path, strings, dp
   minimumCostToReachDestinationInTime,
   totalAppealOfAString,
+  // batch 83 — backtracking, simulation, dp, linked-list
+  letterCombinationsOfAPhoneNumber,
+  designTicTacToe,
+  battleshipsInABoard,
+  onesAndZeroes,
+  bestTimeToBuyAndSellStockWithCooldown,
+  insertDeleteGetRandomO1,
+  convertBinaryNumberInLinkedListToInteger,
   // batch 82 — BIT, shortest-path, tree, arrays
   bookingConcertTicketsInGroups,
   minimumScoreOfAPathBetweenTwoCities,

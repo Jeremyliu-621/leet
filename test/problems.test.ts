@@ -101,7 +101,7 @@ describe('problem selector', () => {
     expect(ids).toContain('subsets');
     expect(ids).toContain('subsets-ii');
     expect(ids).toContain('combination-sum');
-    expect(ids).toContain('letter-combinations-phone');
+    expect(ids).toContain('letter-combinations-of-a-phone-number');
     expect(ids).toContain('generate-parentheses');
     expect(ids).toContain('sudoku-solver');
   });

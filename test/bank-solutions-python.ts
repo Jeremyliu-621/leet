@@ -321,22 +321,6 @@ export const pythonSolutions: Record<string, string> = {
         stack.append(i)
     return answer
 `,
-  'letter-combinations-phone': `def letterCombinations(digits):
-    if not digits:
-        return []
-    mapping = {'2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl',
-               '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'}
-    result = []
-    def bt(idx, cur):
-        if idx == len(digits):
-            result.append(cur)
-            return
-        for ch in mapping[digits[idx]]:
-            bt(idx + 1, cur + ch)
-    bt(0, '')
-    return result
-`,
-
   'subsets': `def subsets(nums):
     nums = sorted(nums)
     result = []
@@ -28555,6 +28539,104 @@ def countGoodArrays(n, m, k):
 `,
 
   // batch 81
+  // batch 83
+  'letter-combinations-of-a-phone-number': `
+def letterCombinations(digits: str) -> list:
+    if not digits:
+        return []
+    mapping = {'2':'abc','3':'def','4':'ghi','5':'jkl','6':'mno','7':'pqrs','8':'tuv','9':'wxyz'}
+    res = []
+    def bt(i, cur):
+        if i == len(digits):
+            res.append(cur)
+            return
+        for c in mapping[digits[i]]:
+            bt(i + 1, cur + c)
+    bt(0, '')
+    return res
+`,
+  'design-tic-tac-toe': `
+def ticTacToe(n: int, moves: list) -> int:
+    rows = [[0]*n for _ in range(2)]
+    cols = [[0]*n for _ in range(2)]
+    diags = [0, 0]
+    anti = [0, 0]
+    for row, col, player in moves:
+        p = player - 1
+        rows[p][row] += 1
+        cols[p][col] += 1
+        if row == col:
+            diags[p] += 1
+        if row + col == n - 1:
+            anti[p] += 1
+        if rows[p][row] == n or cols[p][col] == n or diags[p] == n or anti[p] == n:
+            return player
+    return 0
+`,
+  'battleships-in-a-board': `
+def countBattleships(board: list) -> int:
+    count = 0
+    for r in range(len(board)):
+        for c in range(len(board[0])):
+            if board[r][c] == 'X' and (r == 0 or board[r-1][c] != 'X') and (c == 0 or board[r][c-1] != 'X'):
+                count += 1
+    return count
+`,
+  'ones-and-zeroes': `
+def findMaxForm(strs: list, m: int, n: int) -> int:
+    dp = [[0]*(n+1) for _ in range(m+1)]
+    for s in strs:
+        zeros = s.count('0')
+        ones = len(s) - zeros
+        for i in range(m, zeros-1, -1):
+            for j in range(n, ones-1, -1):
+                dp[i][j] = max(dp[i][j], dp[i-zeros][j-ones] + 1)
+    return dp[m][n]
+`,
+  'best-time-to-buy-and-sell-stock-with-cooldown': `
+def maxProfitCooldown(prices: list) -> int:
+    hold, sold, rest = float('-inf'), 0, 0
+    for p in prices:
+        hold, sold, rest = max(hold, rest - p), hold + p, max(rest, sold)
+    return max(sold, rest)
+`,
+  'insert-delete-getrandom-o1': `
+import random
+def insertDeleteGetRandom(operations: list) -> list:
+    idx_map = {}
+    vals = []
+    results = []
+    for op, val in operations:
+        if op == 'insert':
+            if val in idx_map:
+                results.append(False)
+            else:
+                idx_map[val] = len(vals)
+                vals.append(val)
+                results.append(True)
+        elif op == 'remove':
+            if val not in idx_map:
+                results.append(False)
+            else:
+                i = idx_map[val]
+                last = vals[-1]
+                vals[i] = last
+                idx_map[last] = i
+                vals.pop()
+                del idx_map[val]
+                results.append(True)
+        else:
+            results.append(vals[random.randint(0, len(vals)-1)])
+    return results
+`,
+  'convert-binary-number-in-linked-list-to-integer': `
+def getDecimalValue(head: list) -> int:
+    val = 0
+    for bit in head:
+        val = val * 2 + bit
+    return val
+`,
+
   'minimum-cost-to-reach-destination-in-time': `
 def minCost(maxTime, edges, passingFees):
     n = len(passingFees)

@@ -388,19 +388,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return a;
   },
 
-  'letter-combinations-phone': (...args: unknown[]) => {
-    const digits = args[0] as string;
-    if (!digits) return [];
-    const map: Record<string, string> = { '2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl', '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz' };
-    const result: string[] = [];
-    const bt = (idx: number, cur: string): void => {
-      if (idx === digits.length) { result.push(cur); return; }
-      for (const ch of map[digits[idx]!]!) bt(idx + 1, cur + ch);
-    };
-    bt(0, '');
-    return result;
-  },
-
   'subsets': (...args: unknown[]) => {
     const nums = [...(args[0] as number[])].sort((a, b) => a - b);
     const result: number[][] = [];
@@ -29141,6 +29128,98 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const diff = bn - 1n - bk;
     const ans = comb(bn - 1n, bk) * bm % MOD * modpow(bm - 1n, diff, MOD) % MOD;
     return Number(ans);
+  },
+
+  // batch 83
+  'letter-combinations-of-a-phone-number': (...args: unknown[]) => {
+    const [digits] = args as [string];
+    if (!digits.length) return [];
+    const map: Record<string, string> = {2:'abc',3:'def',4:'ghi',5:'jkl',6:'mno',7:'pqrs',8:'tuv',9:'wxyz'};
+    const res: string[] = [];
+    function bt(i: number, cur: string) {
+      if (i === digits.length) { res.push(cur); return; }
+      for (const c of map[digits[i]!]!) bt(i + 1, cur + c);
+    }
+    bt(0, '');
+    return res;
+  },
+  'design-tic-tac-toe': (...args: unknown[]) => {
+    const [n, moves] = args as [number, number[][]];
+    const rows = Array.from({length:2}, () => new Array<number>(n).fill(0));
+    const cols = Array.from({length:2}, () => new Array<number>(n).fill(0));
+    const diags = [0, 0], antiDiags = [0, 0];
+    for (const [row, col, player] of moves) {
+      const p = (player as number) - 1;
+      rows[p]![row as number]!++;
+      cols[p]![col as number]!++;
+      if (row === col) diags[p]!++;
+      if ((row as number) + (col as number) === n - 1) antiDiags[p]!++;
+      if (rows[p]![row as number] === n || cols[p]![col as number] === n || diags[p] === n || antiDiags[p] === n)
+        return player;
+    }
+    return 0;
+  },
+  'battleships-in-a-board': (...args: unknown[]) => {
+    const [board] = args as [string[][]];
+    let count = 0;
+    for (let r = 0; r < board.length; r++)
+      for (let c = 0; c < board[0]!.length; c++)
+        if (board[r]![c] === 'X' && (r === 0 || board[r-1]![c] !== 'X') && (c === 0 || board[r]![c-1] !== 'X'))
+          count++;
+    return count;
+  },
+  'ones-and-zeroes': (...args: unknown[]) => {
+    const [strs, m, n] = args as [string[], number, number];
+    const dp = Array.from({length: m+1}, () => new Array<number>(n+1).fill(0));
+    for (const s of strs) {
+      const zeros = s.split('').filter(c => c === '0').length;
+      const ones = s.length - zeros;
+      for (let i = m; i >= zeros; i--)
+        for (let j = n; j >= ones; j--)
+          dp[i]![j] = Math.max(dp[i]![j]!, dp[i-zeros]![j-ones]! + 1);
+    }
+    return dp[m]![n]!;
+  },
+  'best-time-to-buy-and-sell-stock-with-cooldown': (...args: unknown[]) => {
+    const [prices] = args as [number[]];
+    let hold = -Infinity, sold = 0, rest = 0;
+    for (const p of prices) {
+      const prevHold = hold, prevSold = sold, prevRest = rest;
+      hold = Math.max(prevHold, prevRest - p);
+      sold = prevHold + p;
+      rest = Math.max(prevRest, prevSold);
+    }
+    return Math.max(sold, rest);
+  },
+  'insert-delete-getrandom-o1': (...args: unknown[]) => {
+    const [operations] = args as [[string, number][]];
+    const map = new Map<number, number>();
+    const vals: number[] = [];
+    return operations.map(([op, val]) => {
+      if (op === 'insert') {
+        if (map.has(val)) return false;
+        map.set(val, vals.length);
+        vals.push(val);
+        return true;
+      } else if (op === 'remove') {
+        if (!map.has(val)) return false;
+        const idx = map.get(val)!;
+        const last = vals[vals.length - 1]!;
+        vals[idx] = last;
+        map.set(last, idx);
+        vals.pop();
+        map.delete(val);
+        return true;
+      } else {
+        return vals[Math.floor(Math.random() * vals.length)];
+      }
+    });
+  },
+  'convert-binary-number-in-linked-list-to-integer': (...args: unknown[]) => {
+    const [head] = args as [number[]];
+    let val = 0;
+    for (const bit of head) val = val * 2 + bit;
+    return val;
   },
 
   // batch 81
