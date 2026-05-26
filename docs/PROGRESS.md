@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13+ — Post-MVP polish
-**Current focus:** Problem bank grown to 59 problems (430 tests, all passing). Next: add hints to the remaining problems, then editor settings popover.
+**Current focus:** All 59 problems have 3+ hints. Next: editor settings popover (font size, vim keymap, tab size).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green (430 tests across 22 files).
-**Next up:** Add hints to the 35 new problems that currently have no hints.
+**Next up:** Editor settings popover — font size, vim keymap toggle, tab-size selector.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -169,7 +169,7 @@ Shipped after v0.1.0:
 
 Still pending:
 - [x] Grow the problem bank to 50+ then 100+ verified problems across more tags / difficulties (59 problems, 430 tests)
-- [ ] Add hints to the remaining 35 new problems (all need at least 3 hints each)
+- [x] Add hints to all 59 problems — every problem now has at least 3 hints
 - [ ] **Python support via Pyodide** — research deliverable landing in `docs/PYODIDE_PLAN.md`; then execute the phased plan
 - [ ] Editor settings popover — font size, vim keymap toggle (`@replit/codemirror-vim`), tab-size
 - [ ] Draggable splitter between problem and editor panels (+ persist width in prefs)
