@@ -30985,6 +30985,33 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // 2000-milestone
+  'find-largest-value-in-each-tree-row': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    interface TN { v: number; l: TN | null; r: TN | null }
+    function build(a: (number | null)[]): TN | null {
+      if (!a.length || a[0] == null) return null;
+      const root: TN = { v: a[0], l: null, r: null };
+      const q: TN[] = [root]; let i = 1;
+      while (q.length && i < a.length) {
+        const node = q.shift()!;
+        if (i < a.length && a[i] != null) { node.l = { v: a[i]!, l: null, r: null }; q.push(node.l); } i++;
+        if (i < a.length && a[i] != null) { node.r = { v: a[i]!, l: null, r: null }; q.push(node.r); } i++;
+      }
+      return root;
+    }
+    const root = build(arr);
+    if (!root) return [];
+    const res: number[] = [];
+    const q2: TN[] = [root];
+    while (q2.length) {
+      const len = q2.length; let mx = -Infinity;
+      for (let i = 0; i < len; i++) { const n = q2.shift()!; mx = Math.max(mx, n.v); if (n.l) q2.push(n.l); if (n.r) q2.push(n.r); }
+      res.push(mx);
+    }
+    return res;
+  },
+
   // --- batch 94 -----------------------------------------------------------
   'rotated-digits': (...args: unknown[]) => {
     const n = args[0] as number;
@@ -31326,6 +31353,19 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       .map((f, i) => [f, i] as [string, number])
       .sort((a, b) => (count.get(b[0])! - count.get(a[0])!) || (a[1] - b[1]))
       .map(([f]) => f);
+  },
+
+  'maximum-average-subarray-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let sum = 0;
+    for (let i = 0; i < k; i++) sum += nums[i]!;
+    let max = sum;
+    for (let i = k; i < nums.length; i++) {
+      sum += nums[i]! - nums[i - k]!;
+      if (sum > max) max = sum;
+    }
+    return max / k;
   },
 
 };

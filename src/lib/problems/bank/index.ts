@@ -2152,6 +2152,10 @@ import { problem as sortFeaturesByPopularity } from './sort-features-by-populari
 import { problem as rotatedDigits } from './rotated-digits';
 import { problem as rabbitsInForest } from './rabbits-in-forest';
 import { problem as smallestStringStartingFromLeaf } from './smallest-string-starting-from-leaf';
+// 2000-milestone — tree/medium
+import { problem as findLargestValueInEachTreeRow } from './find-largest-value-in-each-tree-row';
+// batch 94 — sliding-window
+import { problem as maximumAverageSubarrayI } from './maximum-average-subarray-i';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4341,4 +4345,8 @@ export const problems: readonly Problem[] = [
   rotatedDigits,
   rabbitsInForest,
   smallestStringStartingFromLeaf,
+  // 2000-milestone — tree/medium
+  findLargestValueInEachTreeRow,
+  // batch 94 — sliding-window
+  maximumAverageSubarrayI,
 ];

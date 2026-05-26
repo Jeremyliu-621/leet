@@ -30457,6 +30457,45 @@ def canSeePersonsCount(heights):
     return ans
 `,
 
+  // 2000-milestone
+  'find-largest-value-in-each-tree-row': `
+from collections import deque
+def largestValues(root):
+    raw = list(root)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
+    if not arr or arr[0] is None:
+        return []
+    class TN:
+        def __init__(self, v): self.v = v; self.l = self.r = None
+    def build(a):
+        if not a or a[0] is None: return None
+        r = TN(a[0])
+        q = deque([r]); i = 1
+        while q and i < len(a):
+            node = q.popleft()
+            if i < len(a) and a[i] is not None:
+                node.l = TN(a[i]); q.append(node.l)
+            i += 1
+            if i < len(a) and a[i] is not None:
+                node.r = TN(a[i]); q.append(node.r)
+            i += 1
+        return r
+    root_node = build(arr)
+    if not root_node: return []
+    res = []
+    q = deque([root_node])
+    while q:
+        level_len = len(q)
+        mx = float('-inf')
+        for _ in range(level_len):
+            node = q.popleft()
+            mx = max(mx, node.v)
+            if node.l: q.append(node.l)
+            if node.r: q.append(node.r)
+        res.append(mx)
+    return res
+`,
+
   // batch 94
   'rotated-digits': `
 def rotatedDigits(n):
@@ -30787,6 +30826,17 @@ def sortFeatures(features, responses):
             if f in words:
                 count[f] += 1
     return sorted(features, key=lambda f: -count[f])
+`,
+
+  'maximum-average-subarray-i': `
+def findMaxAverage(nums, k):
+    s = sum(nums[:k])
+    mx = s
+    for i in range(k, len(nums)):
+        s += nums[i] - nums[i - k]
+        if s > mx:
+            mx = s
+    return mx / k
 `,
 
 };
