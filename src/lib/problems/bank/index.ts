@@ -1942,6 +1942,11 @@ import { problem as largestComponentSizeByCommonFactor } from './largest-compone
 import { problem as reachableNodesInSubdividedGraph } from './reachable-nodes-in-subdivided-graph';
 import { problem as wiggleSort } from './wiggle-sort';
 import { problem as candyCrush } from './candy-crush';
+// batch 75 (orphan registration)
+import { problem as shortestPathInGridWithObstaclesElimination } from './shortest-path-in-grid-with-obstacles-elimination';
+import { problem as regionsCutBySlashes } from './regions-cut-by-slashes';
+import { problem as findLatestGroupOfSizeM } from './find-latest-group-of-size-m';
+import { problem as sentenceSimilarityII } from './sentence-similarity-ii';
 // batch 74
 import { problem as rangeSumQueryMutable } from './range-sum-query-mutable';
 import { problem as countOfSmallerNumbersAfterSelfBit } from './count-of-smaller-numbers-after-self-bit';
@@ -3931,6 +3936,11 @@ export const problems: readonly Problem[] = [
   reachableNodesInSubdividedGraph,
   wiggleSort,
   candyCrush,
+  // batch 75 (orphan registration)
+  shortestPathInGridWithObstaclesElimination,
+  regionsCutBySlashes,
+  findLatestGroupOfSizeM,
+  sentenceSimilarityII,
   // batch 74
   rangeSumQueryMutable,
   countOfSmallerNumbersAfterSelfBit,

@@ -27895,4 +27895,130 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(dp[n-1]);
   },
 
+  // batch 75
+  'shortest-path-in-grid-with-obstacles-elimination': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const k = args[1] as number;
+    const m = grid.length, n = grid[0]!.length;
+    if (m === 1 && n === 1) return 0;
+    // BFS: state = [row, col, obstacles_remaining]
+    const visited = Array.from({ length: m }, () =>
+      Array.from({ length: n }, () => new Array(k + 1).fill(false))
+    );
+    const queue: [number, number, number, number][] = [[0, 0, k, 0]];
+    visited[0]![0]![k] = true;
+    const dirs = [[1,0],[-1,0],[0,1],[0,-1]];
+    while (queue.length > 0) {
+      const [r, c, rem, steps] = queue.shift()!;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr!, nc = c + dc!;
+        if (nr < 0 || nr >= m || nc < 0 || nc >= n) continue;
+        const newRem = rem - grid[nr]![nc]!;
+        if (newRem < 0) continue;
+        if (nr === m - 1 && nc === n - 1) return steps + 1;
+        if (!visited[nr]![nc]![newRem]) {
+          visited[nr]![nc]![newRem] = true;
+          queue.push([nr, nc, newRem, steps + 1]);
+        }
+      }
+    }
+    return -1;
+  },
+
+  'regions-cut-by-slashes': (...args: unknown[]) => {
+    const grid = args[0] as string[];
+    const n = grid.length;
+    const size = n * 3;
+    const g: number[][] = Array.from({ length: size }, () => new Array(size).fill(0));
+    for (let r = 0; r < n; r++) {
+      for (let c = 0; c < n; c++) {
+        const ch = grid[r]![c];
+        if (ch === '/') {
+          g[r*3+2]![c*3+0] = 1;
+          g[r*3+1]![c*3+1] = 1;
+          g[r*3+0]![c*3+2] = 1;
+        } else if (ch === '\\') {
+          g[r*3+0]![c*3+0] = 1;
+          g[r*3+1]![c*3+1] = 1;
+          g[r*3+2]![c*3+2] = 1;
+        }
+      }
+    }
+    let regions = 0;
+    for (let r = 0; r < size; r++) {
+      for (let c = 0; c < size; c++) {
+        if (g[r]![c] === 0) {
+          // BFS flood fill
+          regions++;
+          const q: [number, number][] = [[r, c]];
+          g[r]![c] = 1;
+          while (q.length > 0) {
+            const [cr, cc] = q.shift()!;
+            for (const [dr, dc] of [[1,0],[-1,0],[0,1],[0,-1]]) {
+              const nr = cr + dr!, nc = cc + dc!;
+              if (nr >= 0 && nr < size && nc >= 0 && nc < size && g[nr]![nc] === 0) {
+                g[nr]![nc] = 1;
+                q.push([nr, nc]);
+              }
+            }
+          }
+        }
+      }
+    }
+    return regions;
+  },
+
+  'find-latest-group-of-size-m': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const m = args[1] as number;
+    const n = arr.length;
+    if (m === n) return n;
+    // Track group lengths via left[] and right[] endpoint spans
+    const left = new Array(n + 2).fill(0);
+    const right = new Array(n + 2).fill(0);
+    // count[len] = number of groups of that length currently
+    const count = new Array(n + 2).fill(0);
+    let ans = -1;
+    for (let step = 0; step < n; step++) {
+      const pos = arr[step]!;
+      let newLen = 1;
+      const lLen = right[pos - 1]!;
+      const rLen = left[pos + 1]!;
+      newLen += lLen + rLen;
+      // Remove old groups
+      if (lLen > 0) count[lLen]--;
+      if (rLen > 0) count[rLen]--;
+      count[newLen]++;
+      // Update endpoint spans
+      left[pos - lLen] = newLen;
+      right[pos + rLen] = newLen;
+      left[pos] = newLen;
+      right[pos] = newLen;
+      if (count[m]! > 0) ans = step + 1;
+    }
+    return ans;
+  },
+
+  'sentence-similarity-ii': (...args: unknown[]) => {
+    const s1 = args[0] as string[];
+    const s2 = args[1] as string[];
+    const pairs = args[2] as string[][];
+    if (s1.length !== s2.length) return false;
+    const parent = new Map<string, string>();
+    function find(x: string): string {
+      if (!parent.has(x)) parent.set(x, x);
+      if (parent.get(x) !== x) parent.set(x, find(parent.get(x)!));
+      return parent.get(x)!;
+    }
+    function union(a: string, b: string) {
+      const ra = find(a), rb = find(b);
+      if (ra !== rb) parent.set(ra, rb);
+    }
+    for (const [a, b] of pairs) union(a!, b!);
+    for (let i = 0; i < s1.length; i++) {
+      if (s1[i] !== s2[i] && find(s1[i]!) !== find(s2[i]!)) return false;
+    }
+    return true;
+  },
+
 };

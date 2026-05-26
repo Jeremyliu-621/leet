@@ -27260,4 +27260,116 @@ def firstDayBeenInAllRooms(nextVisit):
     return dp[n-1]
 `,
 
+  // batch 75
+  'shortest-path-in-grid-with-obstacles-elimination': `
+def shortestPath(grid, k):
+    from collections import deque
+    m, n = len(grid), len(grid[0])
+    if m == 1 and n == 1:
+        return 0
+    visited = [[[False]*(k+1) for _ in range(n)] for _ in range(m)]
+    queue = deque([(0, 0, k, 0)])
+    visited[0][0][k] = True
+    dirs = [(1,0),(-1,0),(0,1),(0,-1)]
+    while queue:
+        r, c, rem, steps = queue.popleft()
+        for dr, dc in dirs:
+            nr, nc = r+dr, c+dc
+            if not (0 <= nr < m and 0 <= nc < n):
+                continue
+            new_rem = rem - grid[nr][nc]
+            if new_rem < 0:
+                continue
+            if nr == m-1 and nc == n-1:
+                return steps + 1
+            if not visited[nr][nc][new_rem]:
+                visited[nr][nc][new_rem] = True
+                queue.append((nr, nc, new_rem, steps+1))
+    return -1
+`,
+
+  'regions-cut-by-slashes': `
+def regionsBySlashes(grid):
+    n = len(grid)
+    size = n * 3
+    g = [[0]*size for _ in range(size)]
+    for r in range(n):
+        for c in range(n):
+            ch = grid[r][c]
+            if ch == '/':
+                g[r*3+2][c*3+0] = 1
+                g[r*3+1][c*3+1] = 1
+                g[r*3+0][c*3+2] = 1
+            elif ch == '\\\\':
+                g[r*3+0][c*3+0] = 1
+                g[r*3+1][c*3+1] = 1
+                g[r*3+2][c*3+2] = 1
+    regions = 0
+    from collections import deque
+    for r in range(size):
+        for c in range(size):
+            if g[r][c] == 0:
+                regions += 1
+                q = deque([(r, c)])
+                g[r][c] = 1
+                while q:
+                    cr, cc = q.popleft()
+                    for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:
+                        nr, nc = cr+dr, cc+dc
+                        if 0 <= nr < size and 0 <= nc < size and g[nr][nc] == 0:
+                            g[nr][nc] = 1
+                            q.append((nr, nc))
+    return regions
+`,
+
+  'find-latest-group-of-size-m': `
+def findLatestStep(arr, m):
+    n = len(arr)
+    if m == n:
+        return n
+    left = [0] * (n + 2)
+    right = [0] * (n + 2)
+    count = [0] * (n + 2)
+    ans = -1
+    for step, pos in enumerate(arr):
+        l_len = right[pos - 1]
+        r_len = left[pos + 1]
+        new_len = 1 + l_len + r_len
+        if l_len > 0:
+            count[l_len] -= 1
+        if r_len > 0:
+            count[r_len] -= 1
+        count[new_len] += 1
+        left[pos - l_len] = new_len
+        right[pos + r_len] = new_len
+        left[pos] = new_len
+        right[pos] = new_len
+        if count[m] > 0:
+            ans = step + 1
+    return ans
+`,
+
+  'sentence-similarity-ii': `
+def areSentencesSimilarTwo(sentence1, sentence2, similarPairs):
+    if len(sentence1) != len(sentence2):
+        return False
+    parent = {}
+    def find(x):
+        if x not in parent:
+            parent[x] = x
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    def union(a, b):
+        ra, rb = find(a), find(b)
+        if ra != rb:
+            parent[ra] = rb
+    for a, b in similarPairs:
+        union(a, b)
+    for w1, w2 in zip(sentence1, sentence2):
+        if w1 != w2 and find(w1) != find(w2):
+            return False
+    return True
+`,
+
 };
