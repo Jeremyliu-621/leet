@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1970+** problems; tests green. Batches 88–89 merged (local + remote). InlineText component, a11y fixes, site stats 1,950+.
+**Current focus:** Bank at **1971** problems; 6201 tests green. Batches 88–89 merged (local + remote). InlineText component, a11y fixes, site stats updated to 1,970+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continued bank growth (batch 90); UI/UX polish.
 
