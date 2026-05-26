@@ -72,6 +72,24 @@ const components: Components = {
   h3: ({ children }: { children?: ReactNode }) => (
     <h4 className="text-sm font-semibold text-text">{children}</h4>
   ),
+  table: ({ children }: { children?: ReactNode }) => (
+    <div className="overflow-x-auto">
+      <table className="w-full border-collapse font-mono text-xs text-text">{children}</table>
+    </div>
+  ),
+  thead: ({ children }: { children?: ReactNode }) => (
+    <thead className="border-b border-border">{children}</thead>
+  ),
+  tbody: ({ children }: { children?: ReactNode }) => <tbody>{children}</tbody>,
+  tr: ({ children }: { children?: ReactNode }) => (
+    <tr className="border-b border-border last:border-0">{children}</tr>
+  ),
+  th: ({ children }: { children?: ReactNode }) => (
+    <th className="px-3 py-1.5 text-left font-semibold text-muted">{children}</th>
+  ),
+  td: ({ children }: { children?: ReactNode }) => (
+    <td className="px-3 py-1.5 text-text">{children}</td>
+  ),
 };
 
 /**
