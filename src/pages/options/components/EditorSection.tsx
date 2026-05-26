@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import type { EditorKeymap, SupportedLanguage, UserPreferences } from '../../../lib/types';
+import type { EditorKeymap, SupportedLanguage, ThemePreference, UserPreferences } from '../../../lib/types';
 import { SectionCard } from './SectionCard';
 import { FormField } from './FormField';
 
@@ -10,6 +10,12 @@ interface EditorSectionProps {
 
 const FONT_MIN = 11;
 const FONT_MAX = 20;
+
+const THEME_OPTIONS: ReadonlyArray<{ value: ThemePreference; label: string; description: string }> = [
+  { value: 'dark', label: 'Dark', description: 'Dark background, light text. Default.' },
+  { value: 'light', label: 'Light', description: 'Light background, dark text.' },
+  { value: 'system', label: 'System', description: 'Follows your OS dark/light mode setting.' },
+];
 
 const INDENT_OPTIONS: ReadonlyArray<{ value: 2 | 4; label: string }> = [
   { value: 2, label: '2 spaces' },
@@ -50,14 +56,52 @@ export function EditorSection({ prefs, onChange }: EditorSectionProps) {
   const languageId = `${uid}-language`;
   const keymapId = `${uid}-keymap`;
   const indentId = `${uid}-indent`;
+  const themeId = `${uid}-theme`;
 
   return (
     <SectionCard
       label="Editor"
-      description="CodeMirror editor appearance and key bindings. Changes apply immediately on the next challenge."
+      description="Appearance, key bindings, and language defaults. Changes apply immediately."
       id="section-editor"
     >
       <div className="space-y-5">
+        {/* Theme */}
+        <FormField
+          label="Theme"
+          htmlFor={themeId}
+          help="Controls the colour scheme across all LeetLock pages."
+        >
+          <div id={themeId} role="radiogroup" aria-label="UI theme" className="flex gap-2">
+            {THEME_OPTIONS.map(({ value, label, description }) => {
+              const selected = (prefs.theme ?? 'dark') === value;
+              const inputId = `${uid}-theme-${value}`;
+              return (
+                <label
+                  key={value}
+                  htmlFor={inputId}
+                  title={description}
+                  className={`flex cursor-pointer items-center gap-2 rounded-sm border px-3 py-2 transition-colors ${
+                    selected
+                      ? 'border-border-strong bg-surface-2'
+                      : 'border-border hover:border-border-strong'
+                  }`}
+                >
+                  <input
+                    id={inputId}
+                    type="radio"
+                    name={`${uid}-theme`}
+                    value={value}
+                    checked={selected}
+                    onChange={() => onChange({ theme: value })}
+                    className="accent-accent"
+                  />
+                  <span className="font-mono text-xs text-text">{label}</span>
+                </label>
+              );
+            })}
+          </div>
+        </FormField>
+
         {/* Font size */}
         <FormField
           label="Font size (px)"

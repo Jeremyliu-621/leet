@@ -35,6 +35,7 @@ import {
   setValue,
   updateValue,
 } from '../../lib/storage';
+import { applyTheme } from '../../lib/theme';
 import { DEFAULT_PREFERENCES } from '../../lib/storage/defaults';
 import { verifySecret } from '../../lib/crypto';
 import {
@@ -168,6 +169,11 @@ export function Options() {
       cancelled = true;
     };
   }, []);
+
+  // Apply theme changes live so the settings page itself reflects the new theme.
+  useEffect(() => {
+    if (data?.prefs.theme) applyTheme(data.prefs.theme);
+  }, [data?.prefs.theme]);
 
   // ---------------------------------------------------------------------------
   // Helpers
