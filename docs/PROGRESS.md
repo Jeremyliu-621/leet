@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1642 problems; 5214 tests green.
+**Current focus:** Bank at 1649 problems; 5235 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank toward 1700; UX polish (vim mode indicator, a11y, terminal UX).
+**Next up:** Continue growing problem bank toward 1700; marketing site update to 1,600+ at milestone.
+
+### Batch 65 + UX polish (2026-05-26)
+Added 7 problems: `max-stack` (medium/stack, dual-stack popMax buffer), `shift-2d-grid` (easy/arrays, circular shift), `find-and-replace-in-string` (medium/strings, simultaneous replacements), `check-whether-two-strings-are-almost-equivalent` (easy/strings+hash-map, |freq diff|≤3), `minimum-number-of-swaps-to-make-the-binary-string-alternating` (medium/strings+math), `maximum-number-of-non-overlapping-subarrays-with-sum-equals-target` (medium/arrays+hash-map, greedy prefix sum), `find-the-minimum-possible-sum-of-a-beautiful-array` (medium/math, BigInt closed-form). UX: submissions timestamp now shows today/yesterday/date context; TLE label fixed to "Time Limit Exceeded"; challenge tab title includes difficulty prefix [E/M/H]. Bank at **1649**; 5235 tests.
 
 ### Batch 64 (2026-05-26)
 Added 5 problems: `minimum-cost-valid-path-in-grid` (hard/graph, 0-1 BFS Dijkstra), `decrease-elements-to-make-array-zigzag` (medium/arrays, two-strategy greedy), `maximal-network-rank` (medium/graph, degree + connected set), `minimum-taps-to-open-to-water-a-garden` (hard/arrays+dp, greedy interval cover), `put-marbles-in-bags` (hard/arrays, sort adjacent pair sums, top/bottom k-1 diff). JS + Python solutions for all. Bank at **1642**; 5214 tests.
