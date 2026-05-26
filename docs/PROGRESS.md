@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1637 problems; 5199 tests green.
+**Current focus:** Bank at 1642 problems; 5214 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1700; UX polish (vim mode indicator, a11y, terminal UX).
+
+### Batch 64 (2026-05-26)
+Added 5 problems: `minimum-cost-valid-path-in-grid` (hard/graph, 0-1 BFS Dijkstra), `decrease-elements-to-make-array-zigzag` (medium/arrays, two-strategy greedy), `maximal-network-rank` (medium/graph, degree + connected set), `minimum-taps-to-open-to-water-a-garden` (hard/arrays+dp, greedy interval cover), `put-marbles-in-bags` (hard/arrays, sort adjacent pair sums, top/bottom k-1 diff). JS + Python solutions for all. Bank at **1642**; 5214 tests.
 
 ### Batch 63-local-2 (2026-05-26)
 Added 5 problems: `two-best-non-overlapping-events` (medium/arrays+binary-search, sort by end + prefix max + bisect), `minimum-lines-to-represent-a-line-chart` (medium/arrays+math, sort + cross-multiply slopes via BigInt), `number-of-common-divisors` (easy/math, gcd + O(sqrt) divisor count), `first-completely-painted-row-or-column` (medium/arrays+hash-map, position map + row/col max index), `maximum-prime-difference` (medium/arrays+math, first/last prime index). JS + Python solutions for all. Bank at **1637**; 5199 tests.
