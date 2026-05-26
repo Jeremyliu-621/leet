@@ -31714,6 +31714,8 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     gain(root);
     return ans;
+  },
+
   'check-if-array-sorted-and-rotated': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const n = nums.length;
