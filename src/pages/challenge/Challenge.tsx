@@ -309,6 +309,8 @@ export function Challenge() {
     setVerdictMode('submit');
     setVerdict(undefined); // undefined = in-flight sentinel
 
+    const submitStartMs = Date.now();
+
     try {
       const result = await runTests({
         code,
@@ -318,6 +320,28 @@ export function Challenge() {
         timeoutMs: 6000,
       });
       setVerdict(result);
+
+      // Record this submission attempt to history (fire-and-forget).
+      const durationMs = Date.now() - submitStartMs;
+      const record = {
+        submittedAt: Date.now(),
+        problemId: problem.id,
+        problemTitle: problem.title,
+        outcome: result.outcome,
+        passed: result.passed,
+        total: result.total,
+        durationMs,
+        language,
+      };
+      void (async () => {
+        try {
+          await updateValue('submissionHistory', (curr) => {
+            const next = [record, ...curr];
+            // Cap at 500 entries.
+            return next.length > 500 ? next.slice(0, 500) : next;
+          });
+        } catch { /* storage unavailable */ }
+      })();
 
       if (result.outcome === 'accepted') {
         // About to navigate back to the target — suppress the beforeunload prompt.

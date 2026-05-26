@@ -10,6 +10,7 @@ import type {
   EditorKeymap,
   SolvedProblemRecord,
   StreakSummary,
+  SubmissionRecord,
   ThemePreference,
   UnlockToken,
 } from '../../lib/types';
@@ -51,6 +52,8 @@ interface PopupData {
   theme: ThemePreference;
   editorFontSize: number;
   editorKeymap: EditorKeymap;
+  /** Last 5 submission attempts, newest first. */
+  recentSubmissions: SubmissionRecord[];
 }
 
 /**
@@ -65,13 +68,14 @@ export function Popup() {
     let cancelled = false;
 
     async function init() {
-      const [streak, tokens, solved, blockedRules, prefs, tabs] = await Promise.all([
+      const [streak, tokens, solved, blockedRules, prefs, tabs, submissions] = await Promise.all([
         safeGet('streakSummary'),
         safeGet('unlockTokens'),
         safeGet('solvedProblems'),
         safeGet('blockedRules'),
         safeGet('userPreferences'),
         safeQueryActiveTab(),
+        safeGet('submissionHistory'),
       ]);
 
       const url = tabs?.[0]?.url ?? null;
@@ -104,6 +108,7 @@ export function Popup() {
         theme: prefs.theme,
         editorFontSize: prefs.editorFontSize,
         editorKeymap: prefs.editorKeymap,
+        recentSubmissions: submissions.slice(0, 5),
       });
     }
 
@@ -208,6 +213,32 @@ export function Popup() {
         <Stat label="Today" value={data.solvedToday} sub="solves" />
         <Stat label="Unlocks" value={data.activeUnlocks.length} sub="active" />
       </section>
+
+      {data.recentSubmissions.length > 0 && (
+        <section className="mt-4" aria-label="Recent submissions">
+          <h2 className="font-mono text-[10px] uppercase tracking-widest text-faint">
+            Recent submissions
+          </h2>
+          <ul className="mt-2 space-y-1">
+            {data.recentSubmissions.map((sub, i) => (
+              <li
+                key={`${sub.submittedAt}-${i}`}
+                className="flex items-center justify-between gap-2"
+              >
+                <span className="truncate font-mono text-[11px] text-muted" title={sub.problemTitle}>
+                  {sub.problemTitle}
+                </span>
+                <span
+                  className={`shrink-0 font-mono text-[11px] font-medium ${sub.outcome === 'accepted' ? 'text-text' : 'text-faint'}`}
+                  aria-label={sub.outcome}
+                >
+                  {sub.outcome === 'accepted' ? 'pass' : 'fail'}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {data.blockedDomains.size === 0 && (
         <section className="mt-5" aria-label="Quick start">

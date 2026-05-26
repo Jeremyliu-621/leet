@@ -7,6 +7,7 @@ import type {
   SolvedProblemRecord,
   StreakDay,
   StreakSummary,
+  SubmissionRecord,
   UnlockToken,
   UserPreferences,
 } from '../types';
@@ -23,6 +24,8 @@ export interface StorageSchema {
   unlockTokens: UnlockToken[];
   solvedProblems: SolvedProblemRecord[];
   streakHistory: StreakDay[];
+  /** Per-submit attempt log, capped at 500 entries (local storage only). */
+  submissionHistory: SubmissionRecord[];
 }
 
 export type StorageKey = keyof StorageSchema;
@@ -45,4 +48,5 @@ export const STORAGE_AREAS: Readonly<Record<StorageKey, StorageAreaName>> = {
   unlockTokens: 'local',
   solvedProblems: 'local',
   streakHistory: 'local',
+  submissionHistory: 'local',
 };

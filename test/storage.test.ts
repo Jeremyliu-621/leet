@@ -83,6 +83,26 @@ describe('storage store', () => {
     expect(localKeys).not.toContain('userPreferences');
   });
 
+  it('submissionHistory defaults to an empty array and routes to local storage', async () => {
+    expect(await getValue('submissionHistory')).toEqual([]);
+    expect(STORAGE_AREAS.submissionHistory).toBe('local');
+  });
+
+  it('submissionHistory can be updated with updateValue', async () => {
+    const record = {
+      submittedAt: 1000,
+      problemId: 'two-sum',
+      problemTitle: 'Two Sum',
+      outcome: 'accepted' as const,
+      passed: 5,
+      total: 5,
+      durationMs: 120,
+      language: 'javascript' as const,
+    };
+    await updateValue('submissionHistory', () => [record]);
+    expect(await getValue('submissionHistory')).toEqual([record]);
+  });
+
   it('throws a clear error when chrome.storage is unavailable', async () => {
     uninstallFakeChrome();
     await expect(getValue('blockedRules')).rejects.toThrow(/chrome\.storage is unavailable/);

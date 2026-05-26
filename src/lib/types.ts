@@ -82,6 +82,24 @@ export interface SolvedProblemRecord {
   domain: string;
 }
 
+// --- Submission history ---------------------------------------------------
+
+/** One submission attempt — recorded on every Submit click, pass or fail. */
+export interface SubmissionRecord {
+  /** ISO 8601 timestamp. */
+  submittedAt: number;
+  problemId: string;
+  problemTitle: string;
+  outcome: 'accepted' | 'wrong-answer' | 'runtime-error' | 'timeout' | 'compile-error';
+  /** Number of test cases passed. */
+  passed: number;
+  /** Total test cases. */
+  total: number;
+  /** Wall-clock duration of the submission run in ms. */
+  durationMs: number;
+  language: SupportedLanguage;
+}
+
 // --- Streaks --------------------------------------------------------------
 
 export interface StreakDay {
