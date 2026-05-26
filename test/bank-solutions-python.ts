@@ -29333,4 +29333,41 @@ def pairSum(head):
     return max(head[i] + head[n - 1 - i] for i in range(n // 2))
 `,
 
+  // batch 85 — union-find, heap
+  'number-of-connected-components-in-an-undirected-graph': `
+def countComponents(n, edges):
+    parent = list(range(n))
+    rank = [0] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    count = n
+    for a, b in edges:
+        pa, pb = find(a), find(b)
+        if pa != pb:
+            if rank[pa] < rank[pb]: parent[pa] = pb
+            elif rank[pa] > rank[pb]: parent[pb] = pa
+            else: parent[pb] = pa; rank[pa] += 1
+            count -= 1
+    return count
+`,
+
+  'kth-smallest-element-in-a-sorted-matrix': `
+import bisect
+def kthSmallest(matrix, k):
+    n = len(matrix)
+    lo, hi = matrix[0][0], matrix[-1][-1]
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        count = sum(bisect.bisect_right(row, mid) for row in matrix)
+        if count >= k:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+
 };

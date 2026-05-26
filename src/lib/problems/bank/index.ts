@@ -2056,6 +2056,9 @@ import { problem as minimumNumberOfCoinsToBeAdded } from './minimum-number-of-co
 // batch 84 cont. — simulation, backtracking, linked-list
 import { problem as splittingAStringIntoDescendingConsecutiveValues } from './splitting-a-string-into-descending-consecutive-values';
 import { problem as deleteTheMiddleNodeOfALinkedList } from './delete-the-middle-node-of-a-linked-list';
+// batch 85 — union-find, heap
+import { problem as numberOfConnectedComponentsInAnUndirectedGraph } from './number-of-connected-components-in-an-undirected-graph';
+import { problem as kthSmallestElementInASortedMatrix } from './kth-smallest-element-in-a-sorted-matrix';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4148,4 +4151,7 @@ export const problems: readonly Problem[] = [
   // batch 84 cont. — simulation, backtracking, linked-list
   splittingAStringIntoDescendingConsecutiveValues,
   deleteTheMiddleNodeOfALinkedList,
+  // batch 85 — union-find, heap
+  numberOfConnectedComponentsInAnUndirectedGraph,
+  kthSmallestElementInASortedMatrix,
 ];

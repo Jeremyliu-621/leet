@@ -29889,4 +29889,41 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return max;
   },
 
+  // batch 85 — union-find, heap
+  'number-of-connected-components-in-an-undirected-graph': (...args: unknown[]) => {
+    const [n, edges] = args as [number, number[][]];
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const rank = new Array(n).fill(0);
+    function find(x: number): number { return parent[x] === x ? x : (parent[x] = find(parent[x]!)); }
+    let count = n;
+    for (const [a, b] of edges) {
+      const pa = find(a!), pb = find(b!);
+      if (pa !== pb) {
+        if (rank[pa]! < rank[pb]!) parent[pa] = pb;
+        else if (rank[pa]! > rank[pb]!) parent[pb] = pa;
+        else { parent[pb] = pa; rank[pa]!++; }
+        count--;
+      }
+    }
+    return count;
+  },
+
+  'kth-smallest-element-in-a-sorted-matrix': (...args: unknown[]) => {
+    const [matrix, k] = args as [number[][], number];
+    const n = matrix.length;
+    let lo = matrix[0]![0]!, hi = matrix[n - 1]![n - 1]!;
+    while (lo < hi) {
+      const mid = lo + Math.floor((hi - lo) / 2);
+      let count = 0;
+      for (let r = 0; r < n; r++) {
+        let l = 0, rr = n;
+        while (l < rr) { const m2 = (l + rr) >> 1; matrix[r]![m2]! <= mid ? (l = m2 + 1) : (rr = m2); }
+        count += l;
+      }
+      if (count >= k) hi = mid; else lo = mid + 1;
+    }
+    return lo;
+  },
+
+
 };
