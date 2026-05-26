@@ -1925,6 +1925,18 @@ import { problem as satisfiabilityOfEqualityEquations } from './satisfiability-o
 import { problem as pourWater } from './pour-water';
 import { problem as bricksFallingWhenHit } from './bricks-falling-when-hit';
 // batch 73 — new problems
+import { problem as numberOfDistinctIslands } from './number-of-distinct-islands';
+import { problem as wordLadderII } from './word-ladder-ii';
+import { problem as cutOffTreesForGolfEvent } from './cut-off-trees-for-golf-event';
+import { problem as networkBecomesIdle } from './network-becomes-idle';
+import { problem as smallestStringWithSwaps } from './smallest-string-with-swaps';
+import { problem as removeBoxes } from './remove-boxes';
+import { problem as escapeTheSpreadingFire } from './escape-the-spreading-fire';
+import { problem as minimizeMalwareSpread } from './minimize-malware-spread';
+import { problem as numberOfGoodPaths } from './number-of-good-paths';
+import { problem as longestSubstringWithAtLeastKRepeating } from './longest-substring-with-at-least-k-repeating';
+import { problem as countBattleshipsInABoard } from './count-battleships-in-a-board';
+import { problem as detectCyclesIn2dGrid } from './detect-cycles-in-2d-grid';
 import { problem as redundantConnectionII } from './redundant-connection-ii';
 import { problem as largestComponentSizeByCommonFactor } from './largest-component-size-by-common-factor';
 import { problem as reachableNodesInSubdividedGraph } from './reachable-nodes-in-subdivided-graph';
@@ -3891,6 +3903,18 @@ export const problems: readonly Problem[] = [
   pourWater,
   bricksFallingWhenHit,
   // batch 73
+  numberOfDistinctIslands,
+  wordLadderII,
+  cutOffTreesForGolfEvent,
+  networkBecomesIdle,
+  smallestStringWithSwaps,
+  removeBoxes,
+  escapeTheSpreadingFire,
+  minimizeMalwareSpread,
+  numberOfGoodPaths,
+  longestSubstringWithAtLeastKRepeating,
+  countBattleshipsInABoard,
+  detectCyclesIn2dGrid,
   redundantConnectionII,
   largestComponentSizeByCommonFactor,
   reachableNodesInSubdividedGraph,

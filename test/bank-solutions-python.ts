@@ -26675,4 +26675,345 @@ def candyCrush(board):
     return board
 `,
 
+  'number-of-distinct-islands': `
+def numDistinctIslands(grid):
+    grid = [list(row) for row in grid]
+    m, n = len(grid), len(grid[0])
+    shapes = set()
+    def dfs(r, c, r0, c0, shape):
+        if r < 0 or r >= m or c < 0 or c >= n or not grid[r][c]:
+            return
+        grid[r][c] = 0
+        shape.append((r - r0, c - c0))
+        for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:
+            dfs(r+dr, c+dc, r0, c0, shape)
+    for r in range(m):
+        for c in range(n):
+            if grid[r][c]:
+                shape = []
+                dfs(r, c, r, c, shape)
+                shapes.add(tuple(sorted(shape)))
+    return len(shapes)
+`,
+
+  'word-ladder-ii': `
+def findLadders(beginWord, endWord, wordList):
+    from collections import defaultdict
+    word_set = set(wordList)
+    if endWord not in word_set:
+        return []
+    parents = defaultdict(set)
+    curr = {beginWord}
+    found = False
+    while curr and not found:
+        for w in curr:
+            word_set.discard(w)
+        nxt = set()
+        for word in curr:
+            arr = list(word)
+            for i in range(len(arr)):
+                orig = arr[i]
+                for c in 'abcdefghijklmnopqrstuvwxyz':
+                    arr[i] = c
+                    neigh = ''.join(arr)
+                    if neigh in word_set:
+                        parents[neigh].add(word)
+                        nxt.add(neigh)
+                        if neigh == endWord:
+                            found = True
+                arr[i] = orig
+        curr = nxt
+    if not found:
+        return []
+    result = []
+    def dfs(word, path):
+        if word == beginWord:
+            result.append(list(reversed(path)))
+            return
+        for parent in parents[word]:
+            path.append(parent)
+            dfs(parent, path)
+            path.pop()
+    dfs(endWord, [endWord])
+    result.sort()
+    return result
+`,
+
+  'cut-off-trees-for-golf-event': `
+def cutOffTree(forest):
+    from collections import deque
+    forest = [list(row) for row in forest]
+    m, n = len(forest), len(forest[0])
+    trees = sorted((forest[r][c], r, c) for r in range(m) for c in range(n) if forest[r][c] > 1)
+    def bfs(sr, sc, tr, tc):
+        if sr == tr and sc == tc:
+            return 0
+        visited = {(sr, sc)}
+        q = deque([(sr, sc, 0)])
+        while q:
+            r, c, steps = q.popleft()
+            for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:
+                nr, nc = r+dr, c+dc
+                if 0 <= nr < m and 0 <= nc < n and forest[nr][nc] and (nr,nc) not in visited:
+                    if nr == tr and nc == tc:
+                        return steps + 1
+                    visited.add((nr, nc))
+                    q.append((nr, nc, steps+1))
+        return -1
+    total, cr, cc = 0, 0, 0
+    for _, tr, tc in trees:
+        steps = bfs(cr, cc, tr, tc)
+        if steps == -1:
+            return -1
+        total += steps
+        cr, cc = tr, tc
+    return total
+`,
+
+  'network-becomes-idle': `
+def networkBecomesIdle(edges, patience):
+    from collections import deque
+    n = len(patience)
+    graph = [[] for _ in range(n)]
+    for u, v in edges:
+        graph[u].append(v)
+        graph[v].append(u)
+    dist = [-1] * n
+    dist[0] = 0
+    q = deque([0])
+    while q:
+        u = q.popleft()
+        for v in graph[u]:
+            if dist[v] == -1:
+                dist[v] = dist[u] + 1
+                q.append(v)
+    ans = 0
+    for i in range(1, n):
+        rt = 2 * dist[i]
+        p = patience[i]
+        last_resend = (rt - 1) // p * p
+        idle = last_resend + rt + 1
+        ans = max(ans, idle)
+    return ans
+`,
+
+  'smallest-string-with-swaps': `
+def smallestStringWithSwaps(s, pairs):
+    n = len(s)
+    parent = list(range(n))
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    for a, b in pairs:
+        pa, pb = find(a), find(b)
+        if pa != pb:
+            parent[pa] = pb
+    from collections import defaultdict
+    groups = defaultdict(list)
+    for i in range(n):
+        groups[find(i)].append(i)
+    res = list(s)
+    for indices in groups.values():
+        chars = sorted(s[i] for i in indices)
+        for i, idx in enumerate(sorted(indices)):
+            res[idx] = chars[i]
+    return ''.join(res)
+`,
+
+  'remove-boxes': `
+def removeBoxes(boxes):
+    from functools import lru_cache
+    n = len(boxes)
+    @lru_cache(maxsize=None)
+    def dp(l, r, k):
+        if l > r:
+            return 0
+        res = (k + 1) * (k + 1) + dp(l + 1, r, 0)
+        for m in range(l + 1, r + 1):
+            if boxes[m] == boxes[l]:
+                res = max(res, dp(l + 1, m - 1, 0) + dp(m, r, k + 1))
+        return res
+    return dp(0, n - 1, 0)
+`,
+
+  'escape-the-spreading-fire': `
+def maximumMinutes(grid):
+    from collections import deque
+    m, n = len(grid), len(grid[0])
+    dirs = [(1,0),(-1,0),(0,1),(0,-1)]
+    fire_dist = [[float('inf')]*n for _ in range(m)]
+    fq = deque()
+    for r in range(m):
+        for c in range(n):
+            if grid[r][c] == 1:
+                fire_dist[r][c] = 0
+                fq.append((r, c))
+    while fq:
+        r, c = fq.popleft()
+        for dr, dc in dirs:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < m and 0 <= nc < n and grid[nr][nc] != 2 and fire_dist[nr][nc] == float('inf'):
+                fire_dist[nr][nc] = fire_dist[r][c] + 1
+                fq.append((nr, nc))
+    def can_escape(t):
+        if fire_dist[0][0] <= t:
+            return False
+        dist = [[-1]*n for _ in range(m)]
+        dist[0][0] = t
+        q = deque([(0, 0)])
+        while q:
+            r, c = q.popleft()
+            d = dist[r][c]
+            for dr, dc in dirs:
+                nr, nc = r+dr, c+dc
+                if nr < 0 or nr >= m or nc < 0 or nc >= n or grid[nr][nc] == 2 or dist[nr][nc] != -1:
+                    continue
+                nd = d + 1
+                if nr == m-1 and nc == n-1:
+                    if nd <= fire_dist[nr][nc]:
+                        return True
+                    continue
+                if nd >= fire_dist[nr][nc]:
+                    continue
+                dist[nr][nc] = nd
+                q.append((nr, nc))
+        return False
+    if not can_escape(0):
+        return -1
+    lo, hi = 0, m * n
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_escape(mid):
+            lo = mid
+        else:
+            hi = mid - 1
+    return 10**9 if lo >= m * n else lo
+`,
+
+  'minimize-malware-spread': `
+def minMalwareSpread(graph, initial):
+    initial = sorted(initial)
+    n = len(graph)
+    parent = list(range(n))
+    size = [1] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(a, b):
+        a, b = find(a), find(b)
+        if a == b:
+            return
+        if size[a] < size[b]:
+            a, b = b, a
+        parent[b] = a
+        size[a] += size[b]
+    for i in range(n):
+        for j in range(i+1, n):
+            if graph[i][j]:
+                union(i, j)
+    comp_count = {}
+    for node in initial:
+        root = find(node)
+        comp_count[root] = comp_count.get(root, 0) + 1
+    best_node = initial[0]
+    best_save = -1
+    for node in initial:
+        root = find(node)
+        if comp_count[root] == 1:
+            saved = size[root]
+            if saved > best_save or (saved == best_save and node < best_node):
+                best_save = saved
+                best_node = node
+    return best_node
+`,
+
+  'number-of-good-paths': `
+def numberOfGoodPaths(vals, edges):
+    n = len(vals)
+    parent = list(range(n))
+    cnt = [1] * n
+    max_val = vals[:]
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(a, b):
+        a, b = find(a), find(b)
+        if a == b:
+            return 0
+        new_paths = 0
+        if max_val[a] == max_val[b]:
+            new_paths = cnt[a] * cnt[b]
+            cnt[a] += cnt[b]
+        elif max_val[a] < max_val[b]:
+            cnt[a] = cnt[b]
+            max_val[a] = max_val[b]
+        parent[b] = a
+        return new_paths
+    sorted_edges = sorted(edges, key=lambda e: max(vals[e[0]], vals[e[1]]))
+    ans = n
+    for u, v in sorted_edges:
+        ans += union(u, v)
+    return ans
+`,
+
+  'longest-substring-with-at-least-k-repeating': `
+def longestSubstring(s, k):
+    def solve(left, right):
+        if right - left < k:
+            return 0
+        freq = {}
+        for i in range(left, right):
+            freq[s[i]] = freq.get(s[i], 0) + 1
+        for i in range(left, right):
+            if freq[s[i]] < k:
+                return max(solve(left, i), solve(i+1, right))
+        return right - left
+    return solve(0, len(s))
+`,
+
+  'count-battleships-in-a-board': `
+def countBattleships(board):
+    m, n = len(board), len(board[0])
+    count = 0
+    for i in range(m):
+        for j in range(n):
+            if board[i][j] == 'X':
+                if (i == 0 or board[i-1][j] != 'X') and (j == 0 or board[i][j-1] != 'X'):
+                    count += 1
+    return count
+`,
+
+  'detect-cycles-in-2d-grid': `
+def containsCycle(grid):
+    m, n = len(grid), len(grid[0])
+    visited = [[False]*n for _ in range(m)]
+    def dfs(r, c, pr, pc, val):
+        if visited[r][c]:
+            return True
+        visited[r][c] = True
+        for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:
+            nr, nc = r+dr, c+dc
+            if nr < 0 or nr >= m or nc < 0 or nc >= n:
+                continue
+            if nr == pr and nc == pc:
+                continue
+            if grid[nr][nc] != val:
+                continue
+            if dfs(nr, nc, r, c, val):
+                return True
+        return False
+    for r in range(m):
+        for c in range(n):
+            if not visited[r][c]:
+                if dfs(r, c, -1, -1, grid[r][c]):
+                    return True
+    return False
+`,
+
 };

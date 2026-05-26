@@ -27310,4 +27310,361 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'number-of-distinct-islands': function (...args: unknown[]) {
+    const grid = (args[0] as number[][]).map((r) => [...r]);
+    const m = grid.length, n = grid[0]!.length;
+    const shapes = new Set<string>();
+    const dirs: [number, number][] = [[1,0],[-1,0],[0,1],[0,-1]];
+    function dfs(r: number, c: number, r0: number, c0: number, shape: [number,number][]) {
+      if (r < 0 || r >= m || c < 0 || c >= n || !grid[r]![c]) return;
+      grid[r]![c] = 0;
+      shape.push([r - r0, c - c0]);
+      for (const [dr, dc] of dirs) dfs(r + dr, c + dc, r0, c0, shape);
+    }
+    for (let r = 0; r < m; r++) {
+      for (let c = 0; c < n; c++) {
+        if (grid[r]![c]) {
+          const shape: [number,number][] = [];
+          dfs(r, c, r, c, shape);
+          shape.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+          shapes.add(JSON.stringify(shape));
+        }
+      }
+    }
+    return shapes.size;
+  },
+
+  'word-ladder-ii': function (...args: unknown[]) {
+    const beginWord = args[0] as string;
+    const endWord = args[1] as string;
+    const wordList = args[2] as string[];
+    const wordSet = new Set(wordList);
+    if (!wordSet.has(endWord)) return [];
+    const parents = new Map<string, Set<string>>();
+    let curr = new Set([beginWord]);
+    let found = false;
+    while (curr.size && !found) {
+      for (const w of curr) wordSet.delete(w);
+      const next = new Set<string>();
+      for (const word of curr) {
+        const arr = word.split('');
+        for (let i = 0; i < arr.length; i++) {
+          const orig = arr[i]!;
+          for (let code = 97; code <= 122; code++) {
+            arr[i] = String.fromCharCode(code);
+            const neigh = arr.join('');
+            if (wordSet.has(neigh)) {
+              if (!parents.has(neigh)) parents.set(neigh, new Set());
+              parents.get(neigh)!.add(word);
+              next.add(neigh);
+              if (neigh === endWord) found = true;
+            }
+          }
+          arr[i] = orig;
+        }
+      }
+      curr = next;
+    }
+    if (!found) return [];
+    const result: string[][] = [];
+    function dfs(word: string, path: string[]) {
+      if (word === beginWord) { result.push([...path].reverse()); return; }
+      for (const parent of (parents.get(word) ?? [])) {
+        path.push(parent);
+        dfs(parent, path);
+        path.pop();
+      }
+    }
+    dfs(endWord, [endWord]);
+    result.sort((a, b) => a.join(',') < b.join(',') ? -1 : 1);
+    return result;
+  },
+
+  'cut-off-trees-for-golf-event': function (...args: unknown[]) {
+    const forest = (args[0] as number[][]).map((r) => [...r]);
+    const m = forest.length, n = forest[0]!.length;
+    const trees: [number, number, number][] = [];
+    for (let r = 0; r < m; r++)
+      for (let c = 0; c < n; c++)
+        if (forest[r]![c]! > 1) trees.push([forest[r]![c]!, r, c]);
+    trees.sort((a, b) => a[0] - b[0]);
+    const dirs: [number, number][] = [[1,0],[-1,0],[0,1],[0,-1]];
+    function bfs(sr: number, sc: number, tr: number, tc: number): number {
+      if (sr === tr && sc === tc) return 0;
+      const visited = new Set([`${sr},${sc}`]);
+      const queue: [number, number, number][] = [[sr, sc, 0]];
+      let qi = 0;
+      while (qi < queue.length) {
+        const [r, c, steps] = queue[qi++]!;
+        for (const [dr, dc] of dirs) {
+          const nr = r + dr, nc = c + dc;
+          const key = `${nr},${nc}`;
+          if (nr < 0 || nr >= m || nc < 0 || nc >= n || !forest[nr]![nc] || visited.has(key)) continue;
+          if (nr === tr && nc === tc) return steps + 1;
+          visited.add(key);
+          queue.push([nr, nc, steps + 1]);
+        }
+      }
+      return -1;
+    }
+    let total = 0, cr = 0, cc = 0;
+    for (const [, tr, tc] of trees) {
+      const steps = bfs(cr, cc, tr, tc);
+      if (steps === -1) return -1;
+      total += steps;
+      cr = tr; cc = tc;
+    }
+    return total;
+  },
+
+  'network-becomes-idle': (...args: unknown[]) => {
+    const edges = args[0] as [number, number][];
+    const patience = args[1] as number[];
+    const n = patience.length;
+    const graph: number[][] = Array.from({length: n}, () => []);
+    for (const [u, v] of edges) { graph[u]!.push(v); graph[v]!.push(u); }
+    const dist = new Array(n).fill(-1);
+    dist[0] = 0;
+    const queue = [0];
+    let qi = 0;
+    while (qi < queue.length) {
+      const u = queue[qi++]!;
+      for (const v of graph[u]!) {
+        if (dist[v] === -1) { dist[v] = dist[u]! + 1; queue.push(v); }
+      }
+    }
+    let ans = 0;
+    for (let i = 1; i < n; i++) {
+      const rt = 2 * dist[i]!;
+      const p = patience[i]!;
+      const lastResend = Math.floor((rt - 1) / p) * p;
+      const idle = lastResend + rt + 1;
+      if (idle > ans) ans = idle;
+    }
+    return ans;
+  },
+
+  'smallest-string-with-swaps': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const pairs = args[1] as [number, number][];
+    const n = s.length;
+    const parent = Array.from({length: n}, (_, i) => i);
+    function find(x: number): number { return parent[x] === x ? x : (parent[x] = find(parent[x]!)); }
+    for (const [a, b] of pairs) {
+      const pa = find(a), pb = find(b);
+      if (pa !== pb) parent[pa] = pb;
+    }
+    const groups = new Map<number, number[]>();
+    for (let i = 0; i < n; i++) {
+      const root = find(i);
+      if (!groups.has(root)) groups.set(root, []);
+      groups.get(root)!.push(i);
+    }
+    const res = s.split('');
+    for (const indices of groups.values()) {
+      const chars = indices.map(i => s[i]!).sort();
+      indices.sort((a, b) => a - b);
+      for (let i = 0; i < indices.length; i++) res[indices[i]!] = chars[i]!;
+    }
+    return res.join('');
+  },
+
+  'remove-boxes': (...args: unknown[]) => {
+    const boxes = args[0] as number[];
+    const n = boxes.length;
+    const memo: number[][][] = Array.from({length: n}, () =>
+      Array.from({length: n}, () => new Array(n).fill(-1))
+    );
+    function dp(l: number, r: number, k: number): number {
+      if (l > r) return 0;
+      if (memo[l]![r]![k] !== -1) return memo[l]![r]![k]!;
+      let res = (k + 1) * (k + 1) + dp(l + 1, r, 0);
+      for (let m = l + 1; m <= r; m++) {
+        if (boxes[m] === boxes[l]) {
+          res = Math.max(res, dp(l + 1, m - 1, 0) + dp(m, r, k + 1));
+        }
+      }
+      memo[l]![r]![k] = res;
+      return res;
+    }
+    return dp(0, n - 1, 0);
+  },
+
+  'escape-the-spreading-fire': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    const dirs = [[1,0],[-1,0],[0,1],[0,-1]];
+    // BFS from all fire cells to get fireDist
+    const fireDist = Array.from({length: m}, () => new Array(n).fill(Infinity));
+    const fireQueue: [number, number][] = [];
+    for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) if (grid[r]![c] === 1) { fireDist[r]![c] = 0; fireQueue.push([r, c]); }
+    let fqi = 0;
+    while (fqi < fireQueue.length) {
+      const [r, c] = fireQueue[fqi++]!;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr!, nc = c + dc!;
+        if (nr >= 0 && nr < m && nc >= 0 && nc < n && grid[nr]![nc] !== 2 && fireDist[nr]![nc] === Infinity) {
+          fireDist[nr]![nc] = fireDist[r]![c]! + 1;
+          fireQueue.push([nr, nc]);
+        }
+      }
+    }
+    // Check if waiting `t` minutes is feasible
+    function canEscape(t: number): boolean {
+      const dist = Array.from({length: m}, () => new Array(n).fill(-1));
+      if (fireDist[0]![0]! <= t) return false;
+      dist[0]![0] = t;
+      const queue: [number, number][] = [[0, 0]];
+      let qi = 0;
+      while (qi < queue.length) {
+        const [r, c] = queue[qi++]!;
+        const d = dist[r]![c]!;
+        for (const [dr, dc] of dirs) {
+          const nr = r + dr!, nc = c + dc!;
+          if (nr < 0 || nr >= m || nc < 0 || nc >= n || grid[nr]![nc] === 2 || dist[nr]![nc] !== -1) continue;
+          const nd = d + 1;
+          if (nr === m - 1 && nc === n - 1) { if (nd <= fireDist[nr]![nc]!) return true; continue; }
+          if (nd >= fireDist[nr]![nc]!) continue;
+          dist[nr]![nc] = nd;
+          queue.push([nr, nc]);
+        }
+      }
+      return false;
+    }
+    if (!canEscape(0)) return -1;
+    let lo = 0, hi = m * n;
+    while (lo < hi) {
+      const mid = (lo + hi + 1) >> 1;
+      if (canEscape(mid)) lo = mid; else hi = mid - 1;
+    }
+    return lo >= m * n ? 1000000000 : lo;
+  },
+
+  'minimize-malware-spread': (...args: unknown[]) => {
+    const graph = args[0] as number[][];
+    const initial = (args[1] as number[]).slice().sort((a, b) => a - b);
+    const n = graph.length;
+    const parent = Array.from({length: n}, (_, i) => i);
+    const size = new Array(n).fill(1);
+    function find(x: number): number { return parent[x] === x ? x : (parent[x] = find(parent[x]!)); }
+    function union(a: number, b: number) {
+      a = find(a); b = find(b);
+      if (a === b) return;
+      if (size[a]! < size[b]!) { const t = a; a = b; b = t; }
+      parent[b] = a; size[a]! += size[b]!;
+    }
+    for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) if (graph[i]![j]) union(i, j);
+    // For each component, count how many initial nodes it has
+    const compCount = new Map<number, number>();
+    for (const node of initial) {
+      const root = find(node);
+      compCount.set(root, (compCount.get(root) ?? 0) + 1);
+    }
+    let bestNode = initial[0]!;
+    let bestSave = -1;
+    for (const node of initial) {
+      const root = find(node);
+      if (compCount.get(root) === 1) {
+        const saved = size[root]!;
+        if (saved > bestSave || (saved === bestSave && node < bestNode)) {
+          bestSave = saved; bestNode = node;
+        }
+      }
+    }
+    return bestNode;
+  },
+
+  'number-of-good-paths': (...args: unknown[]) => {
+    const vals = args[0] as number[];
+    const edges = args[1] as [number, number][];
+    const n = vals.length;
+    const parent = Array.from({length: n}, (_, i) => i);
+    // count of nodes with max-val in component
+    const cnt = new Array(n).fill(1);
+    const maxVal = vals.slice();
+    function find(x: number): number { return parent[x] === x ? x : (parent[x] = find(parent[x]!)); }
+    function union(a: number, b: number): number {
+      a = find(a); b = find(b);
+      if (a === b) return 0;
+      let newPaths = 0;
+      if (maxVal[a]! === maxVal[b]!) { newPaths = cnt[a]! * cnt[b]!; cnt[a]! += cnt[b]!; }
+      else if (maxVal[a]! < maxVal[b]!) { cnt[a] = cnt[b]!; maxVal[a] = maxVal[b]!; }
+      parent[b] = a;
+      return newPaths;
+    }
+    // Sort edges by max value of endpoints
+    const sortedEdges = edges.slice().sort((e1, e2) => Math.max(vals[e1[0]]!, vals[e1[1]]!) - Math.max(vals[e2[0]]!, vals[e2[1]]!));
+    let ans = n; // each node is a good path by itself
+    for (const [u, v] of sortedEdges) {
+      if (Math.max(vals[u]!, vals[v]!) !== Math.max(vals[find(u)]!, vals[find(v)]!)) {
+        // need to update maxVal tracking - simpler: just union with val check
+      }
+      ans += union(u, v);
+    }
+    return ans;
+  },
+
+  'longest-substring-with-at-least-k-repeating': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    function solve(left: number, right: number): number {
+      if (right - left < k) return 0;
+      const freq = new Map<string, number>();
+      for (let i = left; i < right; i++) {
+        const c = s[i]!;
+        freq.set(c, (freq.get(c) ?? 0) + 1);
+      }
+      for (let i = left; i < right; i++) {
+        if (freq.get(s[i]!)! < k) {
+          return Math.max(solve(left, i), solve(i + 1, right));
+        }
+      }
+      return right - left;
+    }
+    return solve(0, s.length);
+  },
+
+  'count-battleships-in-a-board': (...args: unknown[]) => {
+    const board = args[0] as string[][];
+    const m = board.length, n = board[0]!.length;
+    let count = 0;
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        if (board[i]![j] === 'X') {
+          if ((i === 0 || board[i-1]![j] !== 'X') && (j === 0 || board[i]![j-1] !== 'X')) {
+            count++;
+          }
+        }
+      }
+    }
+    return count;
+  },
+
+  'detect-cycles-in-2d-grid': (...args: unknown[]) => {
+    const grid = args[0] as string[][];
+    const m = grid.length, n = grid[0]!.length;
+    const visited = Array.from({length: m}, () => new Array(n).fill(false));
+    const dirs = [[1,0],[-1,0],[0,1],[0,-1]];
+    function dfs(r: number, c: number, pr: number, pc: number, val: string): boolean {
+      if (visited[r]![c]) return true;
+      visited[r]![c] = true;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr!, nc = c + dc!;
+        if (nr < 0 || nr >= m || nc < 0 || nc >= n) continue;
+        if (nr === pr && nc === pc) continue;
+        if (grid[nr]![nc] !== val) continue;
+        if (dfs(nr, nc, r, c, val)) return true;
+      }
+      return false;
+    }
+    for (let r = 0; r < m; r++) {
+      for (let c = 0; c < n; c++) {
+        if (!visited[r]![c]) {
+          if (dfs(r, c, -1, -1, grid[r]![c]!)) return true;
+        }
+      }
+    }
+    return false;
+  },
+
 };
