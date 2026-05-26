@@ -30310,4 +30310,83 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'find-the-closest-palindrome': (...args: unknown[]) => {
+    const n = args[0] as string;
+    const L = n.length;
+    const isOdd = L % 2 === 1;
+    const half = n.slice(0, Math.ceil(L / 2));
+    const halfBig = BigInt(half);
+    const nBig = BigInt(n);
+
+    function makePal(h: bigint): bigint {
+      const s = h.toString();
+      const mirror = isOdd
+        ? s.slice(0, s.length - 1).split('').reverse().join('')
+        : s.split('').reverse().join('');
+      return BigInt(s + mirror);
+    }
+
+    const candidates: bigint[] = [
+      makePal(halfBig),
+      makePal(halfBig - 1n),
+      makePal(halfBig + 1n),
+      10n ** BigInt(L - 1) - 1n,
+      10n ** BigInt(L) + 1n,
+    ];
+
+    let best: bigint | null = null;
+    for (const c of candidates) {
+      if (c === nBig || c < 0n) continue;
+      const dist = c > nBig ? c - nBig : nBig - c;
+      if (best === null) { best = c; continue; }
+      const bestDist = best > nBig ? best - nBig : nBig - best;
+      if (dist < bestDist || (dist === bestDist && c < best)) best = c;
+    }
+    return best!.toString();
+  },
+
+  'number-of-subarrays-with-lcm-equal-to-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    function gcd(a: number, b: number): number { while (b) { [a, b] = [b, a % b]; } return a; }
+    function lcm(a: number, b: number): number { return a / gcd(a, b) * b; }
+    let count = 0;
+    for (let i = 0; i < nums.length; i++) {
+      let l = nums[i]!;
+      for (let j = i; j < nums.length; j++) {
+        l = lcm(l, nums[j]!);
+        if (l === k) count++;
+        if (l > k) break;
+      }
+    }
+    return count;
+  },
+
+  'smallest-rotation-with-highest-score': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const diff = new Array<number>(n + 1).fill(0);
+    for (let i = 0; i < n; i++) {
+      const v = nums[i]!;
+      if (v === 0) continue;
+      const lo = (i - v + 1 + n) % n;
+      const hi = i;
+      if (lo <= hi) {
+        diff[lo]!++;
+        diff[hi + 1]!--;
+      } else {
+        diff[0]!++;
+        diff[hi + 1]!--;
+        diff[lo]!++;
+        diff[n]!--;
+      }
+    }
+    let bad = 0, minBad = Infinity, ans = 0;
+    for (let k = 0; k < n; k++) {
+      bad += diff[k]!;
+      if (bad < minBad) { minBad = bad; ans = k; }
+    }
+    return ans;
+  },
+
 };

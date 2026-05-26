@@ -2083,6 +2083,9 @@ import { problem as countElementsWithSmallerAndGreaterElement } from './count-el
 import { problem as checkIfThereIsAValidPartitionForTheArray } from './check-if-there-is-a-valid-partition-for-the-array';
 import { problem as reverseNodesInEvenLengthGroups } from './reverse-nodes-in-even-length-groups';
 import { problem as minimumDifferenceInSumsAfterRemovalOfElements } from './minimum-difference-in-sums-after-removal-of-elements';
+import { problem as findTheClosestPalindrome } from './find-the-closest-palindrome';
+import { problem as numberOfSubarraysWithLcmEqualToK } from './number-of-subarrays-with-lcm-equal-to-k';
+import { problem as smallestRotationWithHighestScore } from './smallest-rotation-with-highest-score';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4203,4 +4206,8 @@ export const problems: readonly Problem[] = [
   checkIfThereIsAValidPartitionForTheArray,
   reverseNodesInEvenLengthGroups,
   minimumDifferenceInSumsAfterRemovalOfElements,
+  // batch 89 — math/strings, arrays/math, arrays/math
+  findTheClosestPalindrome,
+  numberOfSubarraysWithLcmEqualToK,
+  smallestRotationWithHighestScore,
 ];
