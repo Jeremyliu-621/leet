@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1731 problems; 5481 tests green.
+**Current focus:** Bank at 1736 problems; 5496 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1750; UX polish.
+
+### Batch 70 (2026-05-26)
+Added 5 new problems: `find-the-longest-balanced-substring-of-a-binary-string` (easy/strings, run-length consecutive 0/1 pairing), `largest-palindromic-number` (medium/strings+hash-map, pair-frequency greedy from 9 down), `count-words-obtained-after-adding-a-letter` (medium/strings+hash-map, bitmask subtraction lookup), `minimum-number-of-flips-to-make-binary-string-alternating` (medium/strings+sliding-window, doubled-string window mismatch count), `total-cost-to-hire-k-workers` (medium/heap+two-pointers, dual min-heap + lo/hi pointer expansion). JS + Python solutions for all. Bank at **1736**; 5496 tests.
 
 ### Batch 69 (this session, 2026-05-26)
 Added 8 new problems: `find-score-of-an-array-after-marking-all-elements` (medium/heap+simulation, greedy mark-and-score), `count-zero-request-servers` (hard/sliding-window, sort+two-pointer server counts), `maximum-score-after-applying-operations-on-a-tree` (medium/tree+dp, minimize kept nodes covering all root-to-leaf paths), `counting-words-with-a-given-prefix` (easy/strings, startsWith filter), `earliest-moment-everyone-became-friends` (medium/union-find, sort+DSU), `minimum-weighted-subgraph-with-the-required-paths` (hard/graph+dijkstra, 3×Dijkstra + meeting-point sweep), `longest-path-in-a-directed-acyclic-graph` (medium/dp+graph, toposort + consecutive-char DP), `count-good-triplets-in-an-array` (hard/binary-indexed-tree, permutation mapping + BIT left-smaller/right-larger). Also added new ProblemTags: `union-find`, `binary-indexed-tree`, `simulation`, `shortest-path`. JS + Python solutions for all. Bank at **1731**; 5481 tests.
