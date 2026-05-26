@@ -26259,4 +26259,82 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return 2;
   },
 
+  // batch 71
+  'maximum-product-of-two-elements-in-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const sorted = [...nums].sort((a, b) => b - a);
+    return ((sorted[0] ?? 0) - 1) * ((sorted[1] ?? 0) - 1);
+  },
+
+  'find-the-highest-altitude': (...args: unknown[]) => {
+    const gain = args[0] as number[];
+    let alt = 0;
+    let max = 0;
+    for (const g of gain) {
+      alt += g;
+      if (alt > max) max = alt;
+    }
+    return max;
+  },
+
+  'find-the-array-concatenation-value': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let l = 0;
+    let r = nums.length - 1;
+    let val = 0;
+    while (l < r) {
+      val += parseInt(`${nums[l] ?? 0}${nums[r] ?? 0}`, 10);
+      l++;
+      r--;
+    }
+    if (l === r) val += nums[l] ?? 0;
+    return val;
+  },
+
+  'running-sum-of-1d-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let s = 0;
+    return nums.map(n => (s += n, s));
+  },
+
+  'check-distances-between-same-letters': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const distance = args[1] as number[];
+    const first = new Array(26).fill(-1) as number[];
+    for (let i = 0; i < s.length; i++) {
+      const c = s.charCodeAt(i) - 97;
+      if ((first[c] ?? -1) === -1) {
+        first[c] = i;
+      } else if (i - (first[c] ?? 0) - 1 !== (distance[c] ?? 0)) {
+        return false;
+      }
+    }
+    return true;
+  },
+
+  'find-missing-and-repeated-values': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const flat = grid.flat();
+    const n2 = flat.length;
+    const cnt = new Array(n2 + 1).fill(0) as number[];
+    for (const v of flat) cnt[v] = (cnt[v] ?? 0) + 1;
+    let a = 0;
+    let b = 0;
+    for (let i = 1; i <= n2; i++) {
+      if ((cnt[i] ?? 0) === 2) a = i;
+      if ((cnt[i] ?? 0) === 0) b = i;
+    }
+    return [a, b];
+  },
+
+  'find-indices-of-stable-mountains': (...args: unknown[]) => {
+    const height = args[0] as number[];
+    const threshold = args[1] as number;
+    const res: number[] = [];
+    for (let i = 1; i < height.length; i++) {
+      if ((height[i - 1] ?? 0) > threshold) res.push(i);
+    }
+    return res;
+  },
+
 };

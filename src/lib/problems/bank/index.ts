@@ -1754,6 +1754,14 @@ import { problem as maximumCoinsYouCanGet } from './maximum-coins-you-can-get';
 import { problem as numberOfIslandsII } from './number-of-islands-ii';
 import { problem as findTheCelebrity } from './find-the-celebrity';
 import { problem as minimumNumberOfDaysToDisconnectIsland } from './minimum-number-of-days-to-disconnect-island';
+// batch 71
+import { problem as maximumProductOfTwoElementsInArray } from './maximum-product-of-two-elements-in-array';
+import { problem as findTheHighestAltitude } from './find-the-highest-altitude';
+import { problem as findTheArrayConcatenationValue } from './find-the-array-concatenation-value';
+import { problem as runningSumOf1dArray } from './running-sum-of-1d-array';
+import { problem as checkDistancesBetweenSameLetters } from './check-distances-between-same-letters';
+import { problem as findMissingAndRepeatedValues } from './find-missing-and-repeated-values';
+import { problem as findIndicesOfStableMountains } from './find-indices-of-stable-mountains';
 
 // batch 58
 import { problem as maxConsecutiveOnesII } from './max-consecutive-ones-ii';
@@ -3770,4 +3778,12 @@ export const problems: readonly Problem[] = [
   numberOfIslandsII,
   findTheCelebrity,
   minimumNumberOfDaysToDisconnectIsland,
+  // batch 71
+  maximumProductOfTwoElementsInArray,
+  findTheHighestAltitude,
+  findTheArrayConcatenationValue,
+  runningSumOf1dArray,
+  checkDistancesBetweenSameLetters,
+  findMissingAndRepeatedValues,
+  findIndicesOfStableMountains,
 ];

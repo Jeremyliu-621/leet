@@ -25688,4 +25688,69 @@ def minimumFinishTime(tires, changeTime, numLaps):
     return 2
 `,
 
+  // batch 71
+  'maximum-product-of-two-elements-in-array': `def maxProduct(nums):
+    nums_sorted = sorted(nums, reverse=True)
+    return (nums_sorted[0] - 1) * (nums_sorted[1] - 1)
+`,
+
+  'find-the-highest-altitude': `def largestAltitude(gain):
+    alt = 0
+    max_alt = 0
+    for g in gain:
+        alt += g
+        if alt > max_alt:
+            max_alt = alt
+    return max_alt
+`,
+
+  'find-the-array-concatenation-value': `def findTheArrayConcVal(nums):
+    l, r = 0, len(nums) - 1
+    val = 0
+    while l < r:
+        val += int(str(nums[l]) + str(nums[r]))
+        l += 1; r -= 1
+    if l == r:
+        val += nums[l]
+    return val
+`,
+
+  'running-sum-of-1d-array': `def runningSum(nums):
+    result = []
+    s = 0
+    for n in nums:
+        s += n
+        result.append(s)
+    return result
+`,
+
+  'check-distances-between-same-letters': `def checkDistances(s, distance):
+    first = {}
+    for i, c in enumerate(s):
+        idx = ord(c) - ord('a')
+        if idx not in first:
+            first[idx] = i
+        elif i - first[idx] - 1 != distance[idx]:
+            return False
+    return True
+`,
+
+  'find-missing-and-repeated-values': `def findMissingAndRepeatedValues(grid):
+    flat = [v for row in grid for v in row]
+    n2 = len(flat)
+    cnt = [0] * (n2 + 1)
+    for v in flat:
+        cnt[v] += 1
+    a = b = 0
+    for i in range(1, n2 + 1):
+        if cnt[i] == 2:
+            a = i
+        elif cnt[i] == 0:
+            b = i
+    return [a, b]
+`,
+
+  'find-indices-of-stable-mountains': `def stableMountains(height, threshold):
+    return [i for i in range(1, len(height)) if height[i - 1] > threshold]
+`,
 };
