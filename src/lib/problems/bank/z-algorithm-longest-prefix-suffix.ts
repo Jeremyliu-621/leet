@@ -66,7 +66,7 @@ This is the core computation of the **KMP failure function** (also called the pr
     { args: ['aabaab'], expected: 3 },
     { args: ['abacaba'], expected: 3 },
     { args: ['abcabcabc'], expected: 6 },
-    { args: ['abacabab'], expected: 4 },
+    { args: ['abacabab'], expected: 2 },
     { args: ['aabaabaab'], expected: 6 },
   ],
 };

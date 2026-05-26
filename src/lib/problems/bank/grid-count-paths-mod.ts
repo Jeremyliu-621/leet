@@ -69,7 +69,7 @@ There are **2** paths: right→right→down→down and down→down→right→rig
     { args: [[[0, 0], [0, 0]]], expected: 2 },
     { args: [[[0, 0, 0], [0, 0, 0], [0, 0, 0]]], expected: 6 },
     { args: [[[0, 0, 0, 0]]], expected: 1 },
-    { args: [[[0, 0, 1], [0, 0, 0], [0, 0, 0]]], expected: 3 },
+    { args: [[[0, 0, 1], [0, 0, 0], [0, 0, 0]]], expected: 5 },
     { args: [[[0, 0, 0], [1, 1, 0], [0, 0, 0]]], expected: 1 },
     { args: [[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]], expected: 10 },
   ],
