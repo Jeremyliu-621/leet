@@ -24684,4 +24684,78 @@ def secondMinimum(n, edges, time, change):
     return max(dp[1:])
 `,
 
+  'merge-nodes-in-between-zeros': `def mergeNodes(head):
+    dummy = ListNode(0)
+    tail = dummy
+    cur = head.next
+    s = 0
+    while cur is not None:
+        if cur.val == 0:
+            tail.next = ListNode(s)
+            tail = tail.next
+            s = 0
+        else:
+            s += cur.val
+        cur = cur.next
+    return dummy.next
+`,
+
+  'reachable-nodes-with-restrictions': `def reachableNodes(n, edges, restricted):
+    blocked = set(restricted)
+    adj = [[] for _ in range(n)]
+    for a, b in edges:
+        adj[a].append(b)
+        adj[b].append(a)
+    count = 0
+    visited = {0}
+    queue = [0]
+    while queue:
+        node = queue.pop()
+        count += 1
+        for nb in adj[node]:
+            if nb not in visited and nb not in blocked:
+                visited.add(nb)
+                queue.append(nb)
+    return count
+`,
+
+  'minimum-number-of-k-consecutive-bit-flips': `def minKBitFlips(nums, k):
+    n = len(nums)
+    flip = [0] * n
+    flips = 0
+    ans = 0
+    for i in range(n):
+        if i >= k:
+            flips -= flip[i - k]
+        if (nums[i] + flips) % 2 == 0:
+            if i + k > n:
+                return -1
+            flip[i] = 1
+            flips += 1
+            ans += 1
+    return ans
+`,
+
+  'minimum-size-subarray-in-infinite-array': `def minSizeSubarray(nums, target):
+    n = len(nums)
+    total = sum(nums)
+    if total == 0:
+        return -1
+    full_loops = target // total
+    rem = target % total
+    if rem == 0:
+        return full_loops * n
+    double = nums + nums
+    min_len = float('inf')
+    s = 0
+    l = 0
+    for r in range(len(double)):
+        s += double[r]
+        while s > rem:
+            s -= double[l]
+            l += 1
+        if s == rem:
+            min_len = min(min_len, r - l + 1)
+    return -1 if min_len == float('inf') else min_len + full_loops * n
+`,
 };

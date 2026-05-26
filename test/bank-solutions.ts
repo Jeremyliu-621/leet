@@ -25263,4 +25263,86 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Math.max(...dp.slice(1));
   },
 
+  // batch 69
+  'merge-nodes-in-between-zeros': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const result: number[] = [];
+    let sum = 0;
+    for (let i = 1; i < arr.length; i++) {
+      const v = arr[i] ?? 0;
+      if (v === 0) {
+        result.push(sum);
+        sum = 0;
+      } else {
+        sum += v;
+      }
+    }
+    return result;
+  },
+
+  'reachable-nodes-with-restrictions': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const restricted = args[2] as number[];
+    const blocked = new Set(restricted);
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const [a, b] of edges) {
+      (adj[a ?? 0] ?? []).push(b ?? 0);
+      (adj[b ?? 0] ?? []).push(a ?? 0);
+    }
+    let count = 0;
+    const visited = new Set<number>();
+    const queue = [0];
+    visited.add(0);
+    while (queue.length > 0) {
+      const node = queue.shift()!;
+      count++;
+      for (const nb of (adj[node] ?? [])) {
+        if (!visited.has(nb) && !blocked.has(nb)) {
+          visited.add(nb);
+          queue.push(nb);
+        }
+      }
+    }
+    return count;
+  },
+
+  'minimum-number-of-k-consecutive-bit-flips': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const n = nums.length;
+    const flip = new Array(n).fill(0) as number[];
+    let flips = 0, ans = 0;
+    for (let i = 0; i < n; i++) {
+      if (i >= k) flips -= flip[i - k] ?? 0;
+      if (((nums[i] ?? 0) + flips) % 2 === 0) {
+        if (i + k > n) return -1;
+        (flip[i] as unknown as number);
+        flip[i] = 1;
+        flips++;
+        ans++;
+      }
+    }
+    return ans;
+  },
+
+  'minimum-size-subarray-in-infinite-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    const n = nums.length;
+    const total = nums.reduce((a, b) => a + b, 0);
+    if (total === 0) return -1;
+    const fullLoops = Math.floor(target / total);
+    const rem = target % total;
+    if (rem === 0) return fullLoops * n;
+    const double = [...nums, ...nums];
+    let minLen = Infinity, sum = 0, l = 0;
+    for (let r = 0; r < double.length; r++) {
+      sum += double[r] ?? 0;
+      while (sum > rem) sum -= double[l++] ?? 0;
+      if (sum === rem) minLen = Math.min(minLen, r - l + 1);
+    }
+    return minLen === Infinity ? -1 : minLen + fullLoops * n;
+  },
+
 };

@@ -1805,6 +1805,11 @@ import { problem as countTheNumberOfGoodSubarrays } from './count-the-number-of-
 import { problem as maximumStrictlyIncreasingCellsInMatrix } from './maximum-strictly-increasing-cells-in-a-matrix';
 import { problem as findLongestSpecialSubstringThriceI } from './find-longest-special-substring-that-occurs-thrice-i';
 import { problem as minimumOperationsToMakeArrayValuesEqualToK } from './minimum-operations-to-make-array-values-equal-to-k';
+// batch 69
+import { problem as mergeNodesBetweenZeros } from './merge-nodes-in-between-zeros';
+import { problem as reachableNodesWithRestrictions } from './reachable-nodes-with-restrictions';
+import { problem as minKConsecutiveBitFlips } from './minimum-number-of-k-consecutive-bit-flips';
+import { problem as minSizeSubarrayInfiniteArray } from './minimum-size-subarray-in-infinite-array';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3650,4 +3655,9 @@ export const problems: readonly Problem[] = [
   escapeTheGhosts,
   maximumValueOfKCoinsFromPiles,
   parallelCoursesIII,
+  // batch 69
+  mergeNodesBetweenZeros,
+  reachableNodesWithRestrictions,
+  minKConsecutiveBitFlips,
+  minSizeSubarrayInfiniteArray,
 ];
