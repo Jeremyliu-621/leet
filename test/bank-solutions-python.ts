@@ -23903,6 +23903,117 @@ def secondMinimum(n, edges, time, change):
 `,
 
   // batch 64 (remote)
+
+  'find-the-k-or-of-an-array': `def findKOr(nums, k):
+    result = 0
+    for bit in range(31):
+        count = sum(1 for n in nums if n & (1 << bit))
+        if count >= k:
+            result |= 1 << bit
+    return result
+`,
+
+  'minimum-number-of-operations-to-satisfy-conditions': `def minimumOperations(grid):
+    m = len(grid)
+    n = len(grid[0]) if grid else 0
+    dp = [0] * 10
+    for c in range(n):
+        cnt = [0] * 10
+        for r in range(m):
+            cnt[grid[r][c]] += 1
+        cost = [m - cnt[d] for d in range(10)]
+        # Find two smallest in dp
+        min1, min2, min_idx = float('inf'), float('inf'), -1
+        for d in range(10):
+            if dp[d] < min1:
+                min2 = min1
+                min1 = dp[d]
+                min_idx = d
+            elif dp[d] < min2:
+                min2 = dp[d]
+        new_dp = [0] * 10
+        for d in range(10):
+            best = 0 if c == 0 else (min2 if d == min_idx else min1)
+            new_dp[d] = cost[d] + best
+        dp = new_dp
+    return min(dp)
+`,
+
+  'maximum-sum-of-almost-unique-subarray': `def maxSum(nums, m, k):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    window_sum = 0
+    distinct = 0
+    best = 0
+    for i, v in enumerate(nums):
+        freq[v] += 1
+        if freq[v] == 1:
+            distinct += 1
+        window_sum += v
+        if i >= k:
+            left = nums[i - k]
+            window_sum -= left
+            freq[left] -= 1
+            if freq[left] == 0:
+                del freq[left]
+                distinct -= 1
+        if i >= k - 1 and distinct >= m:
+            best = max(best, window_sum)
+    return best
+`,
+
+  'split-array-into-maximum-number-of-subarrays': `def maxSubarrays(nums):
+    total_and = nums[0]
+    for n in nums[1:]:
+        total_and &= n
+    count = 0
+    run = (1 << 30) - 1 + (1 << 30)
+    for n in nums:
+        run &= n
+        if run == total_and:
+            count += 1
+            run = (1 << 30) - 1 + (1 << 30)
+    return max(1, count)
+`,
+
+  'minimum-number-of-operations-to-make-array-xor-equal-to-k': `def minOperations(nums, k):
+    xor_all = 0
+    for n in nums:
+        xor_all ^= n
+    diff = xor_all ^ k
+    return bin(diff).count('1')
+`,
+
+  'maximum-alternating-subarray-sum': `def alternatingSubarraySum(nums):
+    pos = float('-inf')
+    neg = float('-inf')
+    best = float('-inf')
+    for n in nums:
+        new_pos = max(n, (neg + n) if neg != float('-inf') else n)
+        new_neg = (pos - n) if pos != float('-inf') else float('-inf')
+        pos = new_pos
+        neg = new_neg
+        best = max(best, pos)
+    return best
+`,
+
+  'minimum-replacements-to-sort-the-array': `def minimumReplacement(nums):
+    import math
+    if not nums:
+        return 0
+    ops = 0
+    bound = nums[-1]
+    for i in range(len(nums) - 2, -1, -1):
+        v = nums[i]
+        if v > bound:
+            pieces = math.ceil(v / bound)
+            ops += pieces - 1
+            bound = v // pieces
+        else:
+            bound = v
+    return ops
+`,
+
   'minimum-cost-valid-path-in-grid': `def minCost(grid):
     import heapq
     m, n = len(grid), len(grid[0])
@@ -23914,7 +24025,7 @@ def secondMinimum(n, edges, time, change):
         cost, r, c = heapq.heappop(heap)
         if cost > dist[r][c]:
             continue
-        if r == m-1 and c == n-1:
+        if r == m - 1 and c == n - 1:
             return cost
         for d, (dr, dc) in enumerate(dirs):
             nr, nc = r + dr, c + dc
@@ -23936,6 +24047,14 @@ def secondMinimum(n, edges, time, change):
             neighbors.append(nums[i-1])
         if i < n-1:
             neighbors.append(nums[i+1])
+
+    ans = [0, 0]
+    for i in range(len(nums)):
+        neighbors = []
+        if i > 0:
+            neighbors.append(nums[i - 1])
+        if i < len(nums) - 1:
+            neighbors.append(nums[i + 1])
         min_neighbor = min(neighbors) if neighbors else float('inf')
         ans[i % 2] += max(0, nums[i] - min_neighbor + 1)
     return min(ans)
@@ -23947,11 +24066,11 @@ def secondMinimum(n, edges, time, change):
     for a, b in roads:
         degree[a] += 1
         degree[b] += 1
-        connected.add((min(a,b), max(a,b)))
+        connected.add((min(a, b), max(a, b)))
     ans = 0
     for i in range(n):
-        for j in range(i+1, n):
-            rank = degree[i] + degree[j] - (1 if (i,j) in connected else 0)
+        for j in range(i + 1, n):
+            rank = degree[i] + degree[j] - (1 if (i, j) in connected else 0)
             ans = max(ans, rank)
     return ans
 `,
@@ -23972,6 +24091,15 @@ def secondMinimum(n, edges, time, change):
                 return -1
             taps += 1
             curr_end = furthest
+
+    curr_end = next_end = taps = 0
+    for i in range(n):
+        next_end = max(next_end, max_reach[i])
+        if i == curr_end:
+            if next_end == curr_end:
+                return -1
+            curr_end = next_end
+            taps += 1
     return taps
 `,
 
@@ -24111,5 +24239,81 @@ def secondMinimum(n, edges, time, change):
         return 1 + min(min_d(node.left), min_d(node.right))
     result = min_d(tree)
     return result if result != float('inf') else 0
+`,
+
+  'shift-2d-grid': `def shiftGrid(grid, k):
+    m, n = len(grid), len(grid[0])
+    total = m * n
+    flat = [grid[i][j] for i in range(m) for j in range(n)]
+    shift = k % total
+    rotated = flat[total - shift:] + flat[:total - shift]
+    return [rotated[i * n:(i + 1) * n] for i in range(m)]
+`,
+
+  'find-and-replace-in-string': `def findReplaceString(s, indices, sources, targets):
+    replacements = {}
+    for idx, src, tgt in zip(indices, sources, targets):
+        if s[idx:idx + len(src)] == src:
+            replacements[idx] = (len(src), tgt)
+    result = []
+    i = 0
+    while i < len(s):
+        if i in replacements:
+            length, tgt = replacements[i]
+            result.append(tgt)
+            i += length
+        else:
+            result.append(s[i])
+            i += 1
+    return ''.join(result)
+`,
+
+  'check-whether-two-strings-are-almost-equivalent': `def checkAlmostEquivalent(word1, word2):
+    from collections import Counter
+    c1, c2 = Counter(word1), Counter(word2)
+    all_chars = set(c1) | set(c2)
+    return all(abs(c1[ch] - c2[ch]) <= 3 for ch in all_chars)
+`,
+
+  'minimum-number-of-swaps-to-make-the-binary-string-alternating': `def minSwaps(s):
+    ones = s.count('1')
+    zeros = len(s) - ones
+    if abs(ones - zeros) > 1:
+        return -1
+    def count_swaps(start):
+        mismatches = 0
+        for i, c in enumerate(s):
+            expected = start if i % 2 == 0 else ('1' if start == '0' else '0')
+            if c != expected:
+                mismatches += 1
+        return mismatches // 2
+    if ones > zeros:
+        return count_swaps('1')
+    if zeros > ones:
+        return count_swaps('0')
+    return min(count_swaps('0'), count_swaps('1'))
+`,
+
+  'maximum-number-of-non-overlapping-subarrays-with-sum-equals-target': `def maxNonOverlapping(nums, target):
+    seen = {0}
+    prefix = 0
+    count = 0
+    for num in nums:
+        prefix += num
+        if prefix - target in seen:
+            count += 1
+            seen = {prefix}
+        else:
+            seen.add(prefix)
+    return count
+`,
+
+  'find-the-minimum-possible-sum-of-a-beautiful-array': `def minimumPossibleSum(n, target):
+    MOD = 10**9 + 7
+    take = min(n, target // 2)
+    part1 = take * (take + 1) // 2
+    remaining = n - take
+    part2 = target * remaining + remaining * (remaining - 1) // 2
+    return (part1 + part2) % MOD
 `,
 };

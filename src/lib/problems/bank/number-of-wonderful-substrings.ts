@@ -33,7 +33,7 @@ Given a string \`word\` that consists of the first ten lowercase English letters
     },
   ],
   hints: [
-    'Represent the parity of each letter\'s frequency as a bitmask over 10 bits (bit k = parity of letter k).',
+    "Represent the parity of each letter's frequency as a bitmask over 10 bits (bit k = parity of letter k).",
     'Compute a prefix XOR mask as you scan left to right.',
     'Substrings with all-even counts: prefix[r] == prefix[l-1] (same mask).',
     'Substrings with exactly one odd count: prefix[r] == prefix[l-1] XOR (1 << k) for some k.',

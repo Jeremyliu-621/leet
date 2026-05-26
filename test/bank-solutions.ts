@@ -24361,7 +24361,8 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return balls.length;
   },
 
-  // batch 66
+
+  // batch 66 (origin)
   'soup-servings': (n: unknown) => {
     const N = n as number;
     if (N >= 4800) return 1.0;
@@ -24440,48 +24441,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       dp = ndp;
     }
     return Math.max(0, ...dp.filter(x => x !== -Infinity));
-  },
-
-  'minimum-taps-to-open-to-water-a-garden': (n: unknown, ranges: unknown) => {
-    const nn = n as number;
-    const rng = ranges as number[];
-    // Convert to jump game: maxReach[i] = max right end reachable if we are at position i
-    const maxReach = new Array(nn + 1).fill(0) as number[];
-    for (let i = 0; i <= nn; i++) {
-      const left = Math.max(0, i - rng[i]!);
-      const right = Math.min(nn, i + rng[i]!);
-      maxReach[left] = Math.max(maxReach[left]!, right);
-    }
-    let taps = 0, currEnd = 0, furthest = 0;
-    for (let i = 0; i < nn; i++) {
-      furthest = Math.max(furthest, maxReach[i]!);
-      if (i === currEnd) {
-        if (furthest <= currEnd) return -1;
-        taps++;
-        currEnd = furthest;
-      }
-    }
-    return taps;
-  },
-
-  'put-marbles-in-bags': (weights: unknown, k: unknown) => {
-    const w = weights as number[];
-    const kk = k as number;
-    const n = w.length;
-    if (kk === 1 || kk === n) return 0;
-    // Build pair sums for all n-1 adjacent pairs
-    const pairSums: number[] = [];
-    for (let i = 0; i < n - 1; i++) {
-      pairSums.push(w[i]! + w[i + 1]!);
-    }
-    pairSums.sort((a, b) => a - b);
-    // Pick k-1 boundaries; min score uses smallest, max uses largest
-    let minScore = 0, maxScore = 0;
-    for (let i = 0; i < kk - 1; i++) {
-      minScore += pairSums[i]!;
-      maxScore += pairSums[n - 1 - 1 - i]!;
-    }
-    return maxScore - minScore;
   },
 
   'grid-illumination': (_n: unknown, lamps: unknown, queries: unknown) => {
@@ -24582,6 +24541,256 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       return 1 + Math.min(minD(node.l), minD(node.r));
     };
     return minD(root);
+  },
+
+  'minimum-taps-to-open-to-water-a-garden': (n: unknown, ranges: unknown) => {
+    const nn = n as number;
+    const rng = ranges as number[];
+    const maxReach = new Array(nn + 1).fill(0) as number[];
+    for (let i = 0; i <= nn; i++) {
+      const left = Math.max(0, i - rng[i]!);
+      const right = Math.min(nn, i + rng[i]!);
+      maxReach[left] = Math.max(maxReach[left]!, right);
+    }
+    let taps = 0, currEnd = 0, furthest = 0;
+    for (let i = 0; i < nn; i++) {
+      furthest = Math.max(furthest, maxReach[i]!);
+      if (i === currEnd) {
+        if (furthest <= currEnd) return -1;
+        taps++;
+        currEnd = furthest;
+      }
+    }
+    return taps;
+  },
+
+  'put-marbles-in-bags': (weights: unknown, k: unknown) => {
+    const w = weights as number[];
+    const kk = k as number;
+    const n = w.length;
+    if (kk === 1 || kk === n) return 0;
+    const pairSums: number[] = [];
+    for (let i = 0; i < n - 1; i++) pairSums.push(w[i]! + w[i + 1]!);
+    pairSums.sort((a, b) => a - b);
+    let minScore = 0, maxScore = 0;
+    for (let i = 0; i < kk - 1; i++) {
+      minScore += pairSums[i]!;
+      maxScore += pairSums[n - 1 - 1 - i]!;
+    }
+    return maxScore - minScore;
+  },
+
+  // batch 65 (backfill)
+  'shift-2d-grid': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const k = args[1] as number;
+    const m = grid.length;
+    const n = (grid[0] ?? []).length;
+    const total = m * n;
+    const flat: number[] = [];
+    for (const row of grid) for (const v of row) flat.push(v);
+    const shift = k % total;
+    const rotated = [...flat.slice(total - shift), ...flat.slice(0, total - shift)];
+    const result: number[][] = [];
+    for (let i = 0; i < m; i++) result.push(rotated.slice(i * n, i * n + n) as number[]);
+    return result;
+  },
+
+  'find-and-replace-in-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const indices = args[1] as number[];
+    const sources = args[2] as string[];
+    const targets = args[3] as string[];
+    const replacements = new Map<number, [number, string]>();
+    for (let i = 0; i < indices.length; i++) {
+      const idx = indices[i] ?? 0;
+      const src = sources[i] ?? '';
+      const tgt = targets[i] ?? '';
+      if (s.slice(idx, idx + src.length) === src) replacements.set(idx, [src.length, tgt]);
+    }
+    let result = '';
+    let i = 0;
+    while (i < s.length) {
+      if (replacements.has(i)) {
+        const [len, tgt] = replacements.get(i)!;
+        result += tgt;
+        i += len;
+      } else { result += s[i]; i++; }
+    }
+    return result;
+  },
+
+  'check-whether-two-strings-are-almost-equivalent': (...args: unknown[]) => {
+    const word1 = args[0] as string;
+    const word2 = args[1] as string;
+    const freq: Record<string, number> = {};
+    for (const c of word1) freq[c] = (freq[c] ?? 0) + 1;
+    for (const c of word2) freq[c] = (freq[c] ?? 0) - 1;
+    return Object.values(freq).every(v => Math.abs(v) <= 3);
+  },
+
+  'minimum-number-of-swaps-to-make-the-binary-string-alternating': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const ones = [...s].filter(c => c === '1').length;
+    const zeros = s.length - ones;
+    if (Math.abs(ones - zeros) > 1) return -1;
+    const countSwaps = (startChar: string): number => {
+      let mismatches = 0;
+      for (let i = 0; i < s.length; i++) {
+        const expected = i % 2 === 0 ? startChar : startChar === '0' ? '1' : '0';
+        if (s[i] !== expected) mismatches++;
+      }
+      return mismatches / 2;
+    };
+    if (ones > zeros) return countSwaps('1');
+    if (zeros > ones) return countSwaps('0');
+    return Math.min(countSwaps('0'), countSwaps('1'));
+  },
+
+  'maximum-number-of-non-overlapping-subarrays-with-sum-equals-target': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    const seen = new Set<number>();
+    seen.add(0);
+    let prefix = 0;
+    let count = 0;
+    for (const num of nums) {
+      prefix += num;
+      if (seen.has(prefix - target)) { count++; seen.clear(); seen.add(prefix); }
+      else seen.add(prefix);
+    }
+    return count;
+  },
+
+  'find-the-minimum-possible-sum-of-a-beautiful-array': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const target = args[1] as number;
+    const MOD = BigInt(1e9 + 7);
+    const bigN = BigInt(n);
+    const bigTarget = BigInt(target);
+    const take = BigInt(Math.min(n, Math.floor(target / 2)));
+    const part1 = (take * (take + 1n)) / 2n;
+    const remaining = bigN - take;
+    const part2 = bigTarget * remaining + (remaining * (remaining - 1n)) / 2n;
+    return Number((part1 + part2) % MOD);
+  },
+
+  // batch 66 (local)
+  'find-the-k-or-of-an-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let result = 0;
+    for (let bit = 0; bit < 31; bit++) {
+      let count = 0;
+      for (const n of nums) if (n & (1 << bit)) count++;
+      if (count >= k) result |= 1 << bit;
+    }
+    return result;
+  },
+
+  'minimum-number-of-operations-to-satisfy-conditions': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length;
+    const n = (grid[0] ?? []).length;
+    let dp = new Array<number>(10).fill(0);
+    for (let c = 0; c < n; c++) {
+      const cnt = new Array<number>(10).fill(0);
+      for (let r = 0; r < m; r++) { const dv = (grid[r] ?? [])[c] ?? 0; cnt[dv] = (cnt[dv] ?? 0) + 1; }
+      const cost = cnt.map(v => m - v);
+      let min1 = Infinity, min2 = Infinity, minIdx = -1;
+      for (let d = 0; d < 10; d++) {
+        const val = dp[d] ?? Infinity;
+        if (val < min1) { min2 = min1; min1 = val; minIdx = d; }
+        else if (val < min2) { min2 = val; }
+      }
+      const newDp = new Array<number>(10).fill(0);
+      for (let d = 0; d < 10; d++) {
+        const best = c === 0 ? 0 : (d === minIdx ? min2 : min1);
+        newDp[d] = (cost[d] ?? 0) + best;
+      }
+      dp = newDp;
+    }
+    return Math.min(...dp);
+  },
+
+  'maximum-sum-of-almost-unique-subarray': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const m = args[1] as number;
+    const k = args[2] as number;
+    const freqMap = new Map<number, number>();
+    let windowSum = 0;
+    let distinct = 0;
+    let best = 0;
+    for (let i = 0; i < nums.length; i++) {
+      const right = nums[i] ?? 0;
+      freqMap.set(right, (freqMap.get(right) ?? 0) + 1);
+      if ((freqMap.get(right) ?? 0) === 1) distinct++;
+      windowSum += right;
+      if (i >= k) {
+        const left = nums[i - k] ?? 0;
+        windowSum -= left;
+        freqMap.set(left, (freqMap.get(left) ?? 0) - 1);
+        if ((freqMap.get(left) ?? 0) === 0) { freqMap.delete(left); distinct--; }
+      }
+      if (i >= k - 1 && distinct >= m) best = Math.max(best, windowSum);
+    }
+    return best;
+  },
+
+  'split-array-into-maximum-number-of-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const allOnes = (1 << 30) - 1 + (1 << 30);
+    const totalAnd = nums.reduce((a, b) => a & b, allOnes);
+    let count = 0;
+    let run = allOnes;
+    for (const n of nums) {
+      run &= n;
+      if (run === totalAnd) { count++; run = allOnes; }
+    }
+    return Math.max(1, count);
+  },
+
+  'minimum-number-of-operations-to-make-array-xor-equal-to-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const xorAll = nums.reduce((a, b) => a ^ b, 0);
+    let diff = xorAll ^ k;
+    let cnt = 0;
+    while (diff) { cnt += diff & 1; diff >>>= 1; }
+    return cnt;
+  },
+
+  'maximum-alternating-subarray-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let pos = -Infinity;
+    let neg = -Infinity;
+    let best = -Infinity;
+    for (const n of nums) {
+      const newPos = Math.max(n, neg === -Infinity ? n : neg + n);
+      const newNeg = pos === -Infinity ? -Infinity : pos - n;
+      pos = newPos;
+      neg = newNeg;
+      best = Math.max(best, pos);
+    }
+    return best;
+  },
+
+  'minimum-replacements-to-sort-the-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    if (nums.length === 0) return 0;
+    let ops = 0;
+    let bound = nums[nums.length - 1] ?? 1;
+    for (let i = nums.length - 2; i >= 0; i--) {
+      const v = nums[i] ?? 0;
+      if (v > bound) {
+        const pieces = Math.ceil(v / bound);
+        ops += pieces - 1;
+        bound = Math.floor(v / pieces);
+      } else {
+        bound = v;
+      }
+    }
+    return ops;
   },
 
 };
