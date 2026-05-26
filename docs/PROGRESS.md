@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1926** problems; 6072 tests green. Batch 83 complete (7 problems: backtracking, simulation, dp, linked-list).
+**Current focus:** Bank at **1928** problems; 6078 tests green. Batch 84 complete (2 problems: two-pointers, math).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 84); marketing site stat update to 1,925+.
+**Next up:** Continued bank growth (batch 85); UI/UX polish (light mode, accessibility, draggable splitter).
+
+### feat(bank): add batch 84 — 2 problems (two-pointers, math) (2026-05-26)
+Added 2 problems: `maximum-score-of-a-good-subarray` (hard/arrays+two-pointers+binary-search, expand from k greedily keeping higher minimum), `minimum-number-of-coins-to-be-added` (medium/arrays+math, greedy reach extension with sorted coins). Bank at **1928**; 6078 tests.
 
 ### feat(bank): add batch 83 — 7 problems (backtracking, simulation, dp, linked-list) (2026-05-26)
 Added 7 problems: `letter-combinations-of-a-phone-number` (medium/backtracking, DFS digit mapping), `design-tic-tac-toe` (medium/simulation, O(1) row/col/diag counters), `battleships-in-a-board` (medium/simulation, top-left corner count), `ones-and-zeroes` (medium/dp, 2D 0/1 knapsack), `best-time-to-buy-and-sell-stock-with-cooldown` (medium/dp, hold/sold/rest state machine), `insert-delete-getrandom-o1` (medium/simulation+hash-map, O(1) with array+map swap-delete), `convert-binary-number-in-linked-list-to-integer` (easy/linked-list, bit accumulation). Bank at **1926**; 6072 tests.

@@ -29214,4 +29214,40 @@ def tokenBucket(capacity, refillRate, requests):
     return result
 `,
 
+  'maximum-score-of-a-good-subarray': `
+def maximumScore(nums: list, k: int) -> int:
+    n = len(nums)
+    l = r = k
+    min_val = nums[k]
+    score = nums[k]
+    while l > 0 or r < n - 1:
+        if l == 0:
+            r += 1
+        elif r == n - 1:
+            l -= 1
+        elif nums[l - 1] >= nums[r + 1]:
+            l -= 1
+        else:
+            r += 1
+        min_val = min(min_val, nums[l], nums[r])
+        score = max(score, min_val * (r - l + 1))
+    return score
+`,
+
+  'minimum-number-of-coins-to-be-added': `
+def minimumAddedCoins(coins: list, target: int) -> int:
+    sorted_coins = sorted(coins)
+    reach = 0
+    count = 0
+    i = 0
+    while reach < target:
+        if i < len(sorted_coins) and sorted_coins[i] <= reach + 1:
+            reach += sorted_coins[i]
+            i += 1
+        else:
+            reach += reach + 1
+            count += 1
+    return count
+`,
+
 };

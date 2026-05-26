@@ -2052,6 +2052,9 @@ import { problem as linkedListDecimalValue } from './linked-list-decimal-value';
 import { problem as bowlingGameScore } from './bowling-game-score';
 import { problem as ballThroughInclinedGrid } from './ball-through-inclined-grid';
 import { problem as tokenBucketRateLimiter } from './token-bucket-rate-limiter';
+// batch 84 — two-pointers, math
+import { problem as maximumScoreOfAGoodSubarray } from './maximum-score-of-a-good-subarray';
+import { problem as minimumNumberOfCoinsToBeAdded } from './minimum-number-of-coins-to-be-added';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4140,4 +4143,7 @@ export const problems: readonly Problem[] = [
   bowlingGameScore,
   ballThroughInclinedGrid,
   tokenBucketRateLimiter,
+  // batch 84 — two-pointers, math
+  maximumScoreOfAGoodSubarray,
+  minimumNumberOfCoinsToBeAdded,
 ];

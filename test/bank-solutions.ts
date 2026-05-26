@@ -29775,4 +29775,35 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     });
   },
 
+  'maximum-score-of-a-good-subarray': (...args: unknown[]) => {
+    const [nums, k] = args as [number[], number];
+    const n = nums.length;
+    let l = k, r = k;
+    let min = nums[k]!;
+    let score = nums[k]!;
+    while (l > 0 || r < n - 1) {
+      if (l === 0) { r++; }
+      else if (r === n - 1) { l--; }
+      else if (nums[l - 1]! >= nums[r + 1]!) { l--; }
+      else { r++; }
+      min = Math.min(min, nums[l]!, nums[r]!);
+      score = Math.max(score, min * (r - l + 1));
+    }
+    return score;
+  },
+
+  'minimum-number-of-coins-to-be-added': (...args: unknown[]) => {
+    const [coins, target] = args as [number[], number];
+    const sorted = [...coins].sort((a, b) => a - b);
+    let reach = 0, count = 0, i = 0;
+    while (reach < target) {
+      if (i < sorted.length && sorted[i]! <= reach + 1) {
+        reach += sorted[i]!; i++;
+      } else {
+        reach += reach + 1; count++;
+      }
+    }
+    return count;
+  },
+
 };
