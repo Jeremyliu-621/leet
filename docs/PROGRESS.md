@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1907** problems; 6009 tests green. Batch 82 complete (5 problems: BIT, shortest-path, tree, arrays).
+**Current focus:** Bank at **1921** problems; 6051 tests green. Batch 80 (cont.) complete — 14 new problems (backtracking, heap, linked-list, simulation).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continued bank growth (batch 83); further UX polish; marketing site stat update.
+
+### feat(bank): batch 80 (cont.) — 14 new problems (backtracking, heap, linked-list, simulation) (2026-05-26)
+Added: `all-paths-source-to-target-backtrack` (grid path count with memoization), `factor-combinations` (backtracking factorizations), `find-all-increasing-subsequences` (non-descending subsequences, deduplicated), `generalized-abbreviation` (2^n abbreviations via backtracking), `maximum-cpu-load` (sweep + heap), `maximum-events-attended-with-k-events` (DP one-day attendance model: sort by end, s_p < s_i), `merge-k-sorted-arrays`, `sort-nearly-sorted-array` (heap window), `interleave-two-linked-lists`, `segregate-even-odd-linked-list`, `linked-list-decimal-value`, `bowling-game-score`, `ball-through-inclined-grid`, `token-bucket-rate-limiter`. Also: committed keyboard shortcuts modal update (move-line/delete-line), a11y fixes (aria-prohibited-attr). Bank at **1921**; 6051 tests.
 
 ### feat(bank): add batch 82 — 5 problems (BIT, shortest-path, tree, arrays) (2026-05-26)
 Added 5 problems: `booking-concert-tickets-in-groups` (hard/BIT+simulation, BIT prefix-sum for scatter capacity + linear gather), `minimum-score-of-a-path-between-two-cities` (medium/shortest-path, min edge in BFS component), `path-with-maximum-probability` (medium/shortest-path, Dijkstra max-probability), `minimum-fuel-cost-to-report-to-the-capital` (medium/tree+dp, post-order subtree-size ceil), `minimum-operations-to-make-the-array-alternating` (medium/arrays+hash-map, top-2 frequency greedy). Also: added binary-indexed-tree tag to reverse-pairs. Bank at **1907**; 6009 tests.
