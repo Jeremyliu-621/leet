@@ -23267,6 +23267,7 @@ def secondMinimum(n, edges, time, change):
     return hi
 `,
 
+  // batch 63 (remote)
   'design-hit-counter': `def hitCounter(operations, args):
     results = []
     timestamps = []
@@ -23354,5 +23355,87 @@ def secondMinimum(n, edges, time, change):
         if diff > 0:
             ops += diff // 2
     return ops
+`,
+
+  // batch 63 (local)
+  'two-best-non-overlapping-events': `def maxTwoEvents(events):
+    events = [[int(x) for x in e] for e in (events.to_py() if hasattr(events, 'to_py') else events)]
+    events.sort(key=lambda e: e[1])
+    n = len(events)
+    pref = [0] * n
+    pref[0] = events[0][2]
+    for i in range(1, n):
+        pref[i] = max(pref[i-1], events[i][2])
+    ans = pref[-1]
+    import bisect
+    ends = [e[1] for e in events]
+    for i in range(n):
+        start = events[i][0]
+        j = bisect.bisect_left(ends, start) - 1
+        if j >= 0:
+            ans = max(ans, events[i][2] + pref[j])
+    return ans
+`,
+
+  'minimum-lines-to-represent-a-line-chart': `def minimumLines(stockPrices):
+    sp = sorted([[int(p[0]), int(p[1])] for p in (stockPrices.to_py() if hasattr(stockPrices, 'to_py') else stockPrices)], key=lambda p: p[0])
+    n = len(sp)
+    if n <= 1:
+        return 0
+    lines = 1
+    for i in range(2, n):
+        x1, y1 = sp[i-2]
+        x2, y2 = sp[i-1]
+        x3, y3 = sp[i]
+        if (y2 - y1) * (x3 - x2) != (y3 - y2) * (x2 - x1):
+            lines += 1
+    return lines
+`,
+
+  'number-of-common-divisors': `def commonDivisors(a, b):
+    a, b = int(a), int(b)
+    from math import gcd
+    g = gcd(a, b)
+    count = 0
+    i = 1
+    while i * i <= g:
+        if g % i == 0:
+            count += 1
+            if i != g // i:
+                count += 1
+        i += 1
+    return count
+`,
+
+  'first-completely-painted-row-or-column': `def firstCompleteIndex(arr, mat):
+    arr = list(int(x) for x in (arr.to_py() if hasattr(arr, 'to_py') else arr))
+    mat = [[int(v) for v in row] for row in (mat.to_py() if hasattr(mat, 'to_py') else mat)]
+    pos = {arr[i]: i for i in range(len(arr))}
+    m, n = len(mat), len(mat[0])
+    ans = float('inf')
+    for r in range(m):
+        ans = min(ans, max(pos[mat[r][c]] for c in range(n)))
+    for c in range(n):
+        ans = min(ans, max(pos[mat[r][c]] for r in range(m)))
+    return ans
+`,
+
+  'maximum-prime-difference': `def maximumPrimeDifference(nums):
+    nums = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    def is_prime(n):
+        if n < 2: return False
+        if n < 4: return True
+        if n % 2 == 0 or n % 3 == 0: return False
+        i = 5
+        while i * i <= n:
+            if n % i == 0 or n % (i + 2) == 0: return False
+            i += 6
+        return True
+    first, last = -1, -1
+    for i, v in enumerate(nums):
+        if is_prime(v):
+            if first == -1: first = i
+            last = i
+    return last - first
 `,
 };

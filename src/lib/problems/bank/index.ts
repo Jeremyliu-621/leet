@@ -1625,6 +1625,12 @@ import { problem as maximumStrongPairXorI } from './maximum-strong-pair-xor-i';
 import { problem as extraCharactersInAString } from './extra-characters-in-a-string';
 import { problem as kthLargestSumInABinaryTree } from './kth-largest-sum-in-a-binary-tree';
 import { problem as sumOfMatrixAfterQueries } from './sum-of-matrix-after-queries';
+// batch 63 (local)
+import { problem as twoBestNonOverlappingEvents } from './two-best-non-overlapping-events';
+import { problem as minimumLinesToRepresentALineChart } from './minimum-lines-to-represent-a-line-chart';
+import { problem as numberOfCommonDivisors } from './number-of-common-divisors';
+import { problem as firstCompletelyPaintedRowOrColumn } from './first-completely-painted-row-or-column';
+import { problem as maximumPrimeDifference } from './maximum-prime-difference';
 // batch 62 (local)
 import { problem as findTheMinimumNumberOfFibonacciNumbersWhoseSumIsK } from './find-the-minimum-number-of-fibonacci-numbers-whose-sum-is-k';
 import { problem as countPairsOfSimilarStrings } from './count-pairs-of-similar-strings';
@@ -3390,6 +3396,12 @@ export const problems: readonly Problem[] = [
   extraCharactersInAString,
   kthLargestSumInABinaryTree,
   sumOfMatrixAfterQueries,
+  // batch 63 (local)
+  twoBestNonOverlappingEvents,
+  minimumLinesToRepresentALineChart,
+  numberOfCommonDivisors,
+  firstCompletelyPaintedRowOrColumn,
+  maximumPrimeDifference,
   // batch 62 (local)
   findTheMinimumNumberOfFibonacciNumbersWhoseSumIsK,
   countPairsOfSimilarStrings,

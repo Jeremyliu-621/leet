@@ -23717,7 +23717,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return hi;
   },
 
-  // batch 63
+  // batch 63 (remote)
   'design-hit-counter': (...args: unknown[]) => {
     const operations = args[0] as string[];
     const argsList = args[1] as (number[] | [])[];
@@ -23795,6 +23795,28 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 63 (local)
+  'two-best-non-overlapping-events': (...args: unknown[]) => {
+    const events = (args[0] as number[][]).map((e) => [...e] as [number, number, number]);
+    events.sort((a, b) => a[1] - b[1]);
+    const n = events.length;
+    const prefMax: number[] = new Array(n);
+    prefMax[0] = events[0]![2]!;
+    for (let i = 1; i < n; i++) prefMax[i] = Math.max(prefMax[i - 1]!, events[i]![2]!);
+    let ans = prefMax[n - 1]!;
+    for (let i = 0; i < n; i++) {
+      const start = events[i]![0]!;
+      let lo = 0, hi = i - 1, best = -1;
+      while (lo <= hi) {
+        const mid = (lo + hi) >> 1;
+        if (events[mid]![1]! < start) { best = mid; lo = mid + 1; }
+        else hi = mid - 1;
+      }
+      if (best >= 0) ans = Math.max(ans, events[i]![2]! + prefMax[best]!);
+    }
+    return ans;
+  },
+
   'minimum-number-of-operations-to-make-arrays-similar': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const target = args[1] as number[];
@@ -23812,6 +23834,74 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       if (diff > 0) ops += diff / 2;
     }
     return ops;
+  },
+
+  'minimum-lines-to-represent-a-line-chart': (...args: unknown[]) => {
+    const stockPrices = (args[0] as number[][]).map((p) => [...p] as [number, number]);
+    stockPrices.sort((a, b) => a[0] - b[0]);
+    const n = stockPrices.length;
+    if (n <= 1) return 0;
+    let lines = 1;
+    for (let i = 2; i < n; i++) {
+      const [x1, y1] = stockPrices[i - 2]!;
+      const [x2, y2] = stockPrices[i - 1]!;
+      const [x3, y3] = stockPrices[i]!;
+      const lhs = BigInt(y2! - y1!) * BigInt(x3! - x2!);
+      const rhs = BigInt(y3! - y2!) * BigInt(x2! - x1!);
+      if (lhs !== rhs) lines++;
+    }
+    return lines;
+  },
+
+  'number-of-common-divisors': (...args: unknown[]) => {
+    let a = args[0] as number;
+    let b = args[1] as number;
+    while (b) { const t = b; b = a % b; a = t; }
+    const g = a;
+    let count = 0;
+    for (let i = 1; i * i <= g; i++) {
+      if (g % i === 0) { count++; if (i !== g / i) count++; }
+    }
+    return count;
+  },
+
+  'first-completely-painted-row-or-column': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const mat = args[1] as number[][];
+    const m = mat.length;
+    const n = mat[0]!.length;
+    const pos = new Map<number, number>();
+    for (let i = 0; i < arr.length; i++) pos.set(arr[i]!, i);
+    let ans = Infinity;
+    for (let r = 0; r < m; r++) {
+      let maxIdx = 0;
+      for (let c = 0; c < n; c++) maxIdx = Math.max(maxIdx, pos.get(mat[r]![c]!)!);
+      ans = Math.min(ans, maxIdx);
+    }
+    for (let c = 0; c < n; c++) {
+      let maxIdx = 0;
+      for (let r = 0; r < m; r++) maxIdx = Math.max(maxIdx, pos.get(mat[r]![c]!)!);
+      ans = Math.min(ans, maxIdx);
+    }
+    return ans;
+  },
+
+  'maximum-prime-difference': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    function isPrime(n: number): boolean {
+      if (n < 2) return false;
+      if (n < 4) return true;
+      if (n % 2 === 0 || n % 3 === 0) return false;
+      for (let i = 5; i * i <= n; i += 6) {
+        if (n % i === 0 || n % (i + 2) === 0) return false;
+      }
+      return true;
+    }
+    let first = -1, last = -1;
+    for (let i = 0; i < nums.length; i++) {
+      if (isPrime(nums[i]!)) { if (first === -1) first = i; last = i; }
+    }
+    return last - first;
   },
 
 };
