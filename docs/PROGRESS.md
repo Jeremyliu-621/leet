@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1948** problems; 6138 tests green. Batch 87 complete (3 problems: dp, strings, arrays).
+**Current focus:** Bank at **1951** problems; 6147 tests green. Batch 88 complete (3 problems: arrays, graph).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 88); UI/UX polish.
+**Next up:** Continued bank growth (batch 89); UI/UX polish.
+
+### feat(bank): add batch 88 — 3 problems (arrays, graph) (2026-05-26)
+Added 3 problems: `split-the-array` (easy/arrays+hash-map, max-frequency ≤ 2 check), `find-the-score-of-all-prefixes-of-an-array` (medium/arrays, running max + prefix sum accumulation), `shortest-cycle-in-a-graph` (medium/graph, BFS from each node tracking parent to detect back edges). Bank at **1951**; 6147 tests.
 
 ### feat(bank): add batch 87 — 3 problems (dp, strings, arrays) (2026-05-26)
 Added 3 problems: `maximize-the-profit-as-the-salesman` (medium/dp, weighted interval scheduling with DP sweep), `check-if-string-is-an-acronym-of-words` (easy/strings, first-char matching), `count-elements-with-smaller-and-greater-element` (easy/arrays, min/max filtering). Bank at **1948**; 6138 tests.

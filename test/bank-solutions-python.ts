@@ -29689,4 +29689,49 @@ def countElements(nums: list) -> int:
     return sum(1 for x in nums if mn < x < mx)
 `,
 
+  'split-the-array': `
+def isPossibleToSplit(nums: list) -> bool:
+    from collections import Counter
+    freq = Counter(nums)
+    return all(c <= 2 for c in freq.values())
+`,
+
+  'find-the-score-of-all-prefixes-of-an-array': `
+def findPrefixScore(nums: list) -> list:
+    ans = []
+    max_so_far = 0
+    prefix_sum = 0
+    for x in nums:
+        max_so_far = max(max_so_far, x)
+        prefix_sum += x + max_so_far
+        ans.append(prefix_sum)
+    return ans
+`,
+
+  'shortest-cycle-in-a-graph': `
+from collections import deque
+def findShortestCycle(n: int, edges: list) -> int:
+    adj = [[] for _ in range(n)]
+    for e in edges:
+        u, v = int(e[0]), int(e[1])
+        adj[u].append(v)
+        adj[v].append(u)
+    ans = float('inf')
+    for start in range(n):
+        dist = [-1] * n
+        parent = [-1] * n
+        dist[start] = 0
+        q = deque([start])
+        while q:
+            u = q.popleft()
+            for v in adj[u]:
+                if dist[v] == -1:
+                    dist[v] = dist[u] + 1
+                    parent[v] = u
+                    q.append(v)
+                elif parent[u] != v:
+                    ans = min(ans, dist[u] + dist[v] + 1)
+    return -1 if ans == float('inf') else ans
+`,
+
 };

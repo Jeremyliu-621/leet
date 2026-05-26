@@ -2080,6 +2080,10 @@ import { problem as shiftingLettersII } from './shifting-letters-ii';
 import { problem as maximizeTheProfitAsTheSalesman } from './maximize-the-profit-as-the-salesman';
 import { problem as checkIfStringIsAnAcronymOfWords } from './check-if-string-is-an-acronym-of-words';
 import { problem as countElementsWithSmallerAndGreaterElement } from './count-elements-with-smaller-and-greater-element';
+// batch 88 — arrays, graph
+import { problem as splitTheArray } from './split-the-array';
+import { problem as findTheScoreOfAllPrefixesOfAnArray } from './find-the-score-of-all-prefixes-of-an-array';
+import { problem as shortestCycleInAGraph } from './shortest-cycle-in-a-graph';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4196,4 +4200,8 @@ export const problems: readonly Problem[] = [
   maximizeTheProfitAsTheSalesman,
   checkIfStringIsAnAcronymOfWords,
   countElementsWithSmallerAndGreaterElement,
+  // batch 88 — arrays, graph
+  splitTheArray,
+  findTheScoreOfAllPrefixesOfAnArray,
+  shortestCycleInAGraph,
 ];
