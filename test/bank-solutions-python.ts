@@ -23438,4 +23438,78 @@ def secondMinimum(n, edges, time, change):
             last = i
     return last - first
 `,
+  'minimum-cost-valid-path-in-grid': `def minCost(grid):
+    import heapq
+    m, n = len(grid), len(grid[0])
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    dist = [[float('inf')] * n for _ in range(m)]
+    dist[0][0] = 0
+    heap = [(0, 0, 0)]
+    while heap:
+        cost, r, c = heapq.heappop(heap)
+        if cost > dist[r][c]:
+            continue
+        if r == m - 1 and c == n - 1:
+            return cost
+        for d, (dr, dc) in enumerate(dirs):
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n:
+                edge_cost = 0 if grid[r][c] == d + 1 else 1
+                new_cost = cost + edge_cost
+                if new_cost < dist[nr][nc]:
+                    dist[nr][nc] = new_cost
+                    heapq.heappush(heap, (new_cost, nr, nc))
+    return dist[m-1][n-1]
+`,
+
+  'decrease-elements-to-make-array-zigzag': `def movesToMakeZigzag(nums):
+    ans = [0, 0]
+    for i in range(len(nums)):
+        neighbors = []
+        if i > 0:
+            neighbors.append(nums[i - 1])
+        if i < len(nums) - 1:
+            neighbors.append(nums[i + 1])
+        min_neighbor = min(neighbors) if neighbors else float('inf')
+        ans[i % 2] += max(0, nums[i] - min_neighbor + 1)
+    return min(ans)
+`,
+
+  'maximal-network-rank': `def maximalNetworkRank(n, roads):
+    degree = [0] * n
+    connected = set()
+    for a, b in roads:
+        degree[a] += 1
+        degree[b] += 1
+        connected.add((min(a, b), max(a, b)))
+    ans = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            rank = degree[i] + degree[j] - (1 if (i, j) in connected else 0)
+            ans = max(ans, rank)
+    return ans
+`,
+
+  'minimum-taps-to-open-to-water-a-garden': `def minTaps(n, ranges):
+    max_reach = [0] * (n + 1)
+    for i in range(n + 1):
+        left = max(0, i - ranges[i])
+        right = min(n, i + ranges[i])
+        max_reach[left] = max(max_reach[left], right)
+    curr_end = next_end = taps = 0
+    for i in range(n):
+        next_end = max(next_end, max_reach[i])
+        if i == curr_end:
+            if next_end == curr_end:
+                return -1
+            curr_end = next_end
+            taps += 1
+    return taps
+`,
+
+  'put-marbles-in-bags': `def putMarbles(weights, k):
+    pair_sums = sorted(weights[i] + weights[i+1] for i in range(len(weights) - 1))
+    return sum(pair_sums[-(i+1)] - pair_sums[i] for i in range(k - 1))
+`,
+
 };

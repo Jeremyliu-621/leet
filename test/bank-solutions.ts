@@ -23795,6 +23795,64 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'minimum-cost-valid-path-in-grid': (grid: unknown) => {
+    const g = grid as number[][];
+    const m = g.length, n = g[0]!.length;
+    const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+    const dist: number[][] = Array.from({length: m}, () => new Array(n).fill(Infinity));
+    dist[0]![0] = 0;
+    const heap: [number,number,number][] = [[0,0,0]];
+    while (heap.length) {
+      heap.sort((a,b) => a[0]! - b[0]!);
+      const [cost, r, c] = heap.shift()!;
+      if (cost! > dist[r!]![c!]!) continue;
+      if (r === m-1 && c === n-1) return cost;
+      for (let d = 0; d < 4; d++) {
+        const nr = r! + dirs[d]![0]!, nc = c! + dirs[d]![1]!;
+        if (nr < 0 || nr >= m || nc < 0 || nc >= n) continue;
+        const edgeCost = g[r!]![c!]! === d + 1 ? 0 : 1;
+        const newCost = cost! + edgeCost;
+        if (newCost < dist[nr]![nc]!) {
+          dist[nr]![nc] = newCost;
+          heap.push([newCost, nr, nc]);
+        }
+      }
+    }
+    return dist[m-1]![n-1]!;
+  },
+
+  'decrease-elements-to-make-array-zigzag': (nums: unknown) => {
+    const a = nums as number[];
+    const ans = [0, 0];
+    for (let i = 0; i < a.length; i++) {
+      let minNeighbor = Infinity;
+      if (i > 0) minNeighbor = Math.min(minNeighbor, a[i-1]!);
+      if (i < a.length-1) minNeighbor = Math.min(minNeighbor, a[i+1]!);
+      ans[i % 2]! += Math.max(0, a[i]! - minNeighbor + 1);
+    }
+    return Math.min(ans[0]!, ans[1]!);
+  },
+
+  'maximal-network-rank': (n: unknown, roads: unknown) => {
+    const nn = n as number;
+    const r = roads as number[][];
+    const degree = new Array(nn).fill(0);
+    const connected = new Set<string>();
+    for (const [a, b] of r) {
+      degree[a!]!++;
+      degree[b!]!++;
+      connected.add(`${Math.min(a!,b!)},${Math.max(a!,b!)}`);
+    }
+    let ans = 0;
+    for (let i = 0; i < nn; i++) {
+      for (let j = i+1; j < nn; j++) {
+        const rank = degree[i]! + degree[j]! - (connected.has(`${i},${j}`) ? 1 : 0);
+        ans = Math.max(ans, rank);
+      }
+    }
+    return ans;
+  },
+
   // batch 63 (local)
   'two-best-non-overlapping-events': (...args: unknown[]) => {
     const events = (args[0] as number[][]).map((e) => [...e] as [number, number, number]);
@@ -23902,6 +23960,38 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       if (isPrime(nums[i]!)) { if (first === -1) first = i; last = i; }
     }
     return last - first;
+  },
+
+  'minimum-taps-to-open-to-water-a-garden': (n: unknown, ranges: unknown) => {
+    const nn = n as number;
+    const r = ranges as number[];
+    const maxReach = new Array(nn+1).fill(0);
+    for (let i = 0; i <= nn; i++) {
+      const left = Math.max(0, i - r[i]!);
+      const right = Math.min(nn, i + r[i]!);
+      maxReach[left] = Math.max(maxReach[left]!, right);
+    }
+    let currEnd = 0, nextEnd = 0, taps = 0;
+    for (let i = 0; i < nn; i++) {
+      nextEnd = Math.max(nextEnd, maxReach[i]!);
+      if (i === currEnd) {
+        if (nextEnd === currEnd) return -1;
+        currEnd = nextEnd;
+        taps++;
+      }
+    }
+    return taps;
+  },
+
+  'put-marbles-in-bags': (weights: unknown, k: unknown) => {
+    const w = weights as number[];
+    const kk = k as number;
+    const pairSums: number[] = [];
+    for (let i = 0; i < w.length - 1; i++) pairSums.push(w[i]! + w[i+1]!);
+    pairSums.sort((a, b) => a - b);
+    let diff = 0;
+    for (let i = 0; i < kk - 1; i++) diff += pairSums[pairSums.length - 1 - i]! - pairSums[i]!;
+    return diff;
   },
 
 };
