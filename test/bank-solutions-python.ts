@@ -30926,7 +30926,7 @@ def countFairPairs(nums, lower, upper):
     return count
 `,
 
-  // batch 94
+  // batch 94 (remote)
   'count-of-matches-in-tournament': `
 def numberOfMatches(n: int) -> int:
     return n - 1
@@ -31166,6 +31166,85 @@ def dailyTemperatures(temperatures):
     return ans
 `,
 
+  'check-if-array-sorted-and-rotated': `
+def check(nums):
+    n = len(nums)
+    count = 0
+    for i in range(n):
+        if nums[i] > nums[(i + 1) % n]:
+            count += 1
+    return count <= 1
+`,
+
+  'find-all-lonely-numbers-in-array': `
+def findLonely(nums):
+    from collections import Counter
+    freq = Counter(nums)
+    result = []
+    for x in nums:
+        if freq[x] == 1 and (x - 1) not in freq and (x + 1) not in freq:
+            result.append(x)
+    return sorted(result)
+`,
+
+  'check-if-all-characters-have-equal-number-of-occurrences': `
+def areOccurrencesEqual(s):
+    from collections import Counter
+    freq = Counter(s)
+    vals = list(freq.values())
+    return all(v == vals[0] for v in vals)
+`,
+
+  // batch 95 — tree problems
+  'range-sum-bst': `
+def rangeSumBST(root, low: int, high: int) -> int:
+    if not root:
+        return 0
+    total = root.val if low <= root.val <= high else 0
+    if root.val > low:
+        total += rangeSumBST(root.left, low, high)
+    if root.val < high:
+        total += rangeSumBST(root.right, low, high)
+    return total
+`,
+
+  'delete-node-in-a-bst': `
+def deleteNode(root, key: int):
+    if not root:
+        return None
+    if key < root.val:
+        root.left = deleteNode(root.left, key)
+    elif key > root.val:
+        root.right = deleteNode(root.right, key)
+    else:
+        if not root.left:
+            return root.right
+        if not root.right:
+            return root.left
+        successor = root.right
+        while successor.left:
+            successor = successor.left
+        root.val = successor.val
+        root.right = deleteNode(root.right, successor.val)
+    return root
+`,
+
+  'binary-tree-maximum-path-sum': `
+def maxPathSum(root) -> int:
+    ans = float('-inf')
+    def gain(node):
+        nonlocal ans
+        if not node:
+            return 0
+        left = max(0, gain(node.left))
+        right = max(0, gain(node.right))
+        ans = max(ans, node.val + left + right)
+        return node.val + max(left, right)
+    gain(root)
+    return ans
+`,
+
+  // batch 99 — strings/easy, arrays/easy, arrays/medium, sliding-window/medium
   'find-longest-balanced-binary-substring': `
 def findTheLongestBalancedSubstring(s):
     best = 0

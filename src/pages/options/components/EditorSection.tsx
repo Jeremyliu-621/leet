@@ -217,6 +217,29 @@ export function EditorSection({ prefs, onChange }: EditorSectionProps) {
           </div>
         </FormField>
 
+        {/* Word wrap */}
+        <FormField
+          label="Word wrap"
+          htmlFor={`${uid}-word-wrap`}
+          help="Wrap long lines at the editor boundary. Toggle is also available in the editor header."
+        >
+          <label
+            htmlFor={`${uid}-word-wrap`}
+            className="inline-flex cursor-pointer items-center gap-2"
+          >
+            <input
+              id={`${uid}-word-wrap`}
+              type="checkbox"
+              checked={prefs.editorWordWrap ?? true}
+              onChange={(e) => onChange({ editorWordWrap: e.target.checked })}
+              className="accent-accent"
+            />
+            <span className="font-mono text-xs text-text">
+              {(prefs.editorWordWrap ?? true) ? 'On' : 'Off'}
+            </span>
+          </label>
+        </FormField>
+
         {/* Keymap */}
         <FormField
           label="Key bindings"

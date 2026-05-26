@@ -31458,7 +31458,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ops;
   },
 
-  // batch 94
+  // batch 94 (remote)
   'count-of-matches-in-tournament': (...args: unknown[]) => {
     const [n] = args as [number];
     return n - 1;
@@ -31669,6 +31669,83 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return n;
   },
 
+  // batch 95 — tree problems
+  'range-sum-bst': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    const low = args[1] as number;
+    const high = args[2] as number;
+    function dfs(node: _TN | null): number {
+      if (!node) return 0;
+      let sum = (node.v >= low && node.v <= high) ? node.v : 0;
+      if (node.v > low) sum += dfs(node.l);
+      if (node.v < high) sum += dfs(node.r);
+      return sum;
+    }
+    return dfs(root);
+  },
+
+  'delete-node-in-a-bst': (...args: unknown[]) => {
+    const key = args[1] as number;
+    function del(node: _TN | null, k: number): _TN | null {
+      if (!node) return null;
+      if (k < node.v) { node.l = del(node.l, k); return node; }
+      if (k > node.v) { node.r = del(node.r, k); return node; }
+      if (!node.l) return node.r;
+      if (!node.r) return node.l;
+      let successor = node.r;
+      while (successor.l) successor = successor.l;
+      const succVal = successor.v;
+      node.v = succVal;
+      node.r = del(node.r, succVal);
+      return node;
+    }
+    return _treeToArr(del(_buildTree(args[0] as (number | null)[]), key));
+  },
+
+  'binary-tree-maximum-path-sum': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    let ans = -Infinity;
+    function gain(node: _TN | null): number {
+      if (!node) return 0;
+      const left = Math.max(0, gain(node.l));
+      const right = Math.max(0, gain(node.r));
+      ans = Math.max(ans, node.v + left + right);
+      return node.v + Math.max(left, right);
+    }
+    gain(root);
+    return ans;
+  },
+
+  'check-if-array-sorted-and-rotated': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    let count = 0;
+    for (let i = 0; i < n; i++) {
+      if (nums[i]! > nums[(i + 1) % n]!) count++;
+    }
+    return count <= 1;
+  },
+
+  'find-all-lonely-numbers-in-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const x of nums) freq.set(x, (freq.get(x) ?? 0) + 1);
+    const result: number[] = [];
+    for (const x of nums) {
+      if (freq.get(x) === 1 && !freq.has(x - 1) && !freq.has(x + 1)) result.push(x);
+    }
+    return result.sort((a, b) => a - b);
+  },
+
+  'check-if-all-characters-have-equal-number-of-occurrences': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const freq = new Map<string, number>();
+    for (const c of s) freq.set(c, (freq.get(c) ?? 0) + 1);
+    const vals = [...freq.values()];
+    return vals.every(v => v === vals[0]);
+  },
+
+  // batch 99 — strings/easy, arrays/easy, arrays/medium, sliding-window/medium
   'find-longest-balanced-binary-substring': (...args: unknown[]) => {
     const s = args[0] as string;
     let best = 0;

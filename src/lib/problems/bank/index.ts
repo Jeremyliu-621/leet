@@ -2166,15 +2166,23 @@ import { problem as rabbitsInForest } from './rabbits-in-forest';
 import { problem as smallestStringStartingFromLeaf } from './smallest-string-starting-from-leaf';
 // 2000-milestone — tree/medium
 import { problem as findLargestValueInEachTreeRow } from './find-largest-value-in-each-tree-row';
-// batch 94 — sliding-window
+// batch 94 (remote) — sliding-window
 import { problem as maximumAverageSubarrayI } from './maximum-average-subarray-i';
-// batch 95 — arrays/strings
+// batch 95 (remote) — arrays/strings
 import { problem as diStringMatch } from './di-string-match';
 import { problem as shortestDistanceToACharacter } from './shortest-distance-to-a-character';
 import { problem as largestNumberAtLeastTwiceOfOthers } from './largest-number-at-least-twice-of-others';
-// batch 97 — two-pointers, stack
+// batch 97 (remote) — two-pointers, stack
 import { problem as fourSumVariant } from './4sum';
 import { problem as dailyTemperaturesVariant } from './monotonic-stack-daily-temperatures';
+// batch 95 — tree/easy, tree/medium, tree/hard
+import { problem as rangeSumBst } from './range-sum-bst';
+import { problem as deleteNodeInABst } from './delete-node-in-a-bst';
+import { problem as binaryTreeMaximumPathSum } from './binary-tree-maximum-path-sum';
+// batch 96 — arrays/easy, arrays+hash-map/easy, strings+hash-map/easy
+import { problem as checkIfArraySortedAndRotatedB96 } from './check-if-array-sorted-and-rotated';
+import { problem as findAllLonelyNumbersInArray } from './find-all-lonely-numbers-in-array';
+import { problem as checkIfAllCharactersHaveEqualNumberOfOccurrences } from './check-if-all-characters-have-equal-number-of-occurrences';
 // batch 99 — strings/easy, arrays/easy, arrays/medium, sliding-window/medium
 import { problem as findLongestBalancedBinarySubstring } from './find-longest-balanced-binary-substring';
 import { problem as matrixDiagonalSumVariant } from './matrix-diagonal-sum-variant';
@@ -4383,15 +4391,23 @@ export const problems: readonly Problem[] = [
   smallestStringStartingFromLeaf,
   // 2000-milestone — tree/medium
   findLargestValueInEachTreeRow,
-  // batch 94 — sliding-window
+  // batch 94 (remote) — sliding-window
   maximumAverageSubarrayI,
-  // batch 95 — arrays/strings
+  // batch 95 (remote) — arrays/strings
   diStringMatch,
   shortestDistanceToACharacter,
   largestNumberAtLeastTwiceOfOthers,
-  // batch 97 — two-pointers, stack
+  // batch 97 (remote) — two-pointers, stack
   fourSumVariant,
   dailyTemperaturesVariant,
+  // batch 95 — tree/easy, tree/medium, tree/hard
+  rangeSumBst,
+  deleteNodeInABst,
+  binaryTreeMaximumPathSum,
+  // batch 96 — arrays/easy, arrays+hash-map/easy, strings+hash-map/easy
+  checkIfArraySortedAndRotatedB96,
+  findAllLonelyNumbersInArray,
+  checkIfAllCharactersHaveEqualNumberOfOccurrences,
   // batch 99 — strings/easy, arrays/easy, arrays/medium, sliding-window/medium
   findLongestBalancedBinarySubstring,
   matrixDiagonalSumVariant,
