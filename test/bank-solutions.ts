@@ -26137,6 +26137,58 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'check-if-it-is-a-good-array': (nums: unknown): unknown => {
+    const arr = nums as number[];
+    const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+    return arr.reduce((g, v) => gcd(g, v)) === 1;
+  },
+
+  'maximum-coins-you-can-get': (piles: unknown): unknown => {
+    const p = (piles as number[]).slice().sort((a, b) => b - a);
+    const n = p.length / 3;
+    let ans = 0;
+    for (let i = 1; i <= 2 * n - 1; i += 2) ans += p[i]!;
+    return ans;
+  },
+
+  'number-of-islands-ii': (m: unknown, n: unknown, positions: unknown): unknown => {
+    const rows = m as number, cols = n as number;
+    const pos = positions as [number, number][];
+    const parent = new Array<number>(rows * cols).fill(-1);
+    const rank = new Array<number>(rows * cols).fill(0);
+    function find(x: number): number {
+      if (parent[x] !== x) parent[x] = find(parent[x]!);
+      return parent[x]!;
+    }
+    function union(a: number, b: number): boolean {
+      const pa = find(a), pb = find(b);
+      if (pa === pb) return false;
+      if (rank[pa]! < rank[pb]!) parent[pa] = pb;
+      else if (rank[pa]! > rank[pb]!) parent[pb] = pa;
+      else { parent[pb] = pa; rank[pa]!++; }
+      return true;
+    }
+    let count = 0;
+    const dirs = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+    const result: number[] = [];
+    for (const [r, c] of pos) {
+      const idx = r * cols + c;
+      if (parent[idx] === -1) {
+        parent[idx] = idx;
+        count++;
+        for (const [dr, dc] of dirs) {
+          const nr = r + dr!, nc = c + dc!;
+          if (nr >= 0 && nr < rows && nc >= 0 && nc < cols) {
+            const nidx = nr * cols + nc;
+            if (parent[nidx] !== -1 && union(idx, nidx)) count--;
+          }
+        }
+      }
+      result.push(count);
+    }
+    return result;
+  },
+
   'minimum-time-to-finish-the-race': (...args: unknown[]) => {
     const tires = args[0] as number[][];
     const changeTime = args[1] as number;
@@ -26164,6 +26216,47 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       }
     }
     return dp[numLaps];
+  },
+
+  'find-the-celebrity': (knows: unknown): unknown => {
+    const k = knows as number[][];
+    const n = k.length;
+    let candidate = 0;
+    for (let i = 1; i < n; i++) {
+      if (k[candidate]![i] === 1) candidate = i;
+    }
+    for (let i = 0; i < n; i++) {
+      if (i === candidate) continue;
+      if (k[candidate]![i] === 1 || k[i]![candidate] !== 1) return -1;
+    }
+    return candidate;
+  },
+
+  'minimum-number-of-days-to-disconnect-island': (grid: unknown): unknown => {
+    const g = (grid as number[][]).map(r => [...r]);
+    const m = g.length, n = g[0]!.length;
+    function countIslands(board: number[][]): number {
+      const visited = Array.from({ length: m }, () => new Array(n).fill(false));
+      let count = 0;
+      function dfs(r: number, c: number): void {
+        if (r < 0 || r >= m || c < 0 || c >= n || visited[r]![c] || board[r]![c] === 0) return;
+        visited[r]![c] = true;
+        dfs(r-1, c); dfs(r+1, c); dfs(r, c-1); dfs(r, c+1);
+      }
+      for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) {
+        if (!visited[i]![j] && board[i]![j] === 1) { dfs(i, j); count++; }
+      }
+      return count;
+    }
+    if (countIslands(g) !== 1) return 0;
+    for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) {
+      if (g[i]![j] === 1) {
+        g[i]![j] = 0;
+        if (countIslands(g) !== 1) return 1;
+        g[i]![j] = 1;
+      }
+    }
+    return 2;
   },
 
 };

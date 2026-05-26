@@ -25593,5 +25593,99 @@ def minimumFinishTime(tires, changeTime, numLaps):
     return dp[numLaps]
 `,
 
+  'check-if-it-is-a-good-array': `def isGoodArray(nums):
+    from math import gcd
+    from functools import reduce
+    return reduce(gcd, nums) == 1
+`,
+
+  'maximum-coins-you-can-get': `def maxCoins(piles):
+    p = sorted(piles, reverse=True)
+    n = len(p) // 3
+    return sum(p[i] for i in range(1, 2 * n, 2))
+`,
+
+  'number-of-islands-ii': `def numIslands2(m, n, positions):
+    parent = [-1] * (m * n)
+    rank = [0] * (m * n)
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(a, b):
+        pa, pb = find(a), find(b)
+        if pa == pb:
+            return False
+        if rank[pa] < rank[pb]:
+            pa, pb = pb, pa
+        parent[pb] = pa
+        if rank[pa] == rank[pb]:
+            rank[pa] += 1
+        return True
+    count = 0
+    result = []
+    dirs = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    for r, c in positions:
+        idx = r * n + c
+        if parent[idx] == -1:
+            parent[idx] = idx
+            count += 1
+            for dr, dc in dirs:
+                nr, nc = r + dr, c + dc
+                if 0 <= nr < m and 0 <= nc < n:
+                    nidx = nr * n + nc
+                    if parent[nidx] != -1 and union(idx, nidx):
+                        count -= 1
+        result.append(count)
+    return result
+`,
+
+  'find-the-celebrity': `def findCelebrity(knows):
+    n = len(knows)
+    candidate = 0
+    for i in range(1, n):
+        if knows[candidate][i] == 1:
+            candidate = i
+    for i in range(n):
+        if i == candidate:
+            continue
+        if knows[candidate][i] == 1 or knows[i][candidate] != 1:
+            return -1
+    return candidate
+`,
+
+  'minimum-number-of-days-to-disconnect-island': `def minDays(grid):
+    from collections import deque
+    m, n = len(grid), len(grid[0])
+    def count_islands(board):
+        visited = [[False] * n for _ in range(m)]
+        count = 0
+        for i in range(m):
+            for j in range(n):
+                if not visited[i][j] and board[i][j] == 1:
+                    queue = deque([(i, j)])
+                    visited[i][j] = True
+                    while queue:
+                        r, c = queue.popleft()
+                        for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                            nr, nc = r + dr, c + dc
+                            if 0 <= nr < m and 0 <= nc < n and not visited[nr][nc] and board[nr][nc] == 1:
+                                visited[nr][nc] = True
+                                queue.append((nr, nc))
+                    count += 1
+        return count
+    g = [[grid[i][j] for j in range(n)] for i in range(m)]
+    if count_islands(g) != 1:
+        return 0
+    for i in range(m):
+        for j in range(n):
+            if g[i][j] == 1:
+                g[i][j] = 0
+                if count_islands(g) != 1:
+                    return 1
+                g[i][j] = 1
+    return 2
+`,
 
 };

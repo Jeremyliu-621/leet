@@ -1748,6 +1748,12 @@ import { problem as earliestMomentEveryoneBecameFriends } from './earliest-momen
 import { problem as minimumWeightedSubgraphWithRequiredPaths } from './minimum-weighted-subgraph-with-the-required-paths';
 import { problem as longestPathInDirectedAcyclicGraph } from './longest-path-in-a-directed-acyclic-graph';
 import { problem as countGoodTripletsInAnArray } from './count-good-triplets-in-an-array';
+// batch 70
+import { problem as checkIfItIsAGoodArray } from './check-if-it-is-a-good-array';
+import { problem as maximumCoinsYouCanGet } from './maximum-coins-you-can-get';
+import { problem as numberOfIslandsII } from './number-of-islands-ii';
+import { problem as findTheCelebrity } from './find-the-celebrity';
+import { problem as minimumNumberOfDaysToDisconnectIsland } from './minimum-number-of-days-to-disconnect-island';
 
 // batch 58
 import { problem as maxConsecutiveOnesII } from './max-consecutive-ones-ii';
@@ -3759,4 +3765,9 @@ export const problems: readonly Problem[] = [
   earliestFullBloom,
   longestObstacleCourse,
   minimumTimeFinishRace,
+  checkIfItIsAGoodArray,
+  maximumCoinsYouCanGet,
+  numberOfIslandsII,
+  findTheCelebrity,
+  minimumNumberOfDaysToDisconnectIsland,
 ];
