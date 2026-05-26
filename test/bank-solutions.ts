@@ -24620,6 +24620,31 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'campus-bikes': (...args: unknown[]) => {
+    const workers = args[0] as number[][];
+    const bikes = args[1] as number[][];
+    const triples: [number, number, number][] = [];
+    for (let w = 0; w < workers.length; w++) {
+      for (let b = 0; b < bikes.length; b++) {
+        const dist = Math.abs(workers[w]![0]! - bikes[b]![0]!) + Math.abs(workers[w]![1]! - bikes[b]![1]!);
+        triples.push([dist, w, b]);
+      }
+    }
+    triples.sort((a, b) => a[0] !== b[0] ? a[0] - b[0] : a[1] !== b[1] ? a[1] - b[1] : a[2] - b[2]);
+    const assignedWorker = new Set<number>();
+    const assignedBike = new Set<number>();
+    const result = new Array(workers.length).fill(-1) as number[];
+    for (const [, w, b] of triples) {
+      if (!assignedWorker.has(w) && !assignedBike.has(b)) {
+        result[w] = b;
+        assignedWorker.add(w);
+        assignedBike.add(b);
+      }
+      if (assignedWorker.size === workers.length) break;
+    }
+    return result;
+  },
+
   'check-whether-two-strings-are-almost-equivalent': (...args: unknown[]) => {
     const word1 = args[0] as string;
     const word2 = args[1] as string;
@@ -24660,6 +24685,78 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       else seen.add(prefix);
     }
     return count;
+  },
+
+  'count-the-number-of-complete-components': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const parent = Array.from({ length: n }, (_, i) => i) as number[];
+    const rank = new Array(n).fill(0) as number[];
+    const find = (x: number): number => {
+      if (parent[x] !== x) parent[x] = find(parent[x]!);
+      return parent[x]!;
+    };
+    for (const [u, v] of edges) {
+      const pu = find(u!), pv = find(v!);
+      if (pu !== pv) {
+        if (rank[pu]! < rank[pv]!) parent[pu] = pv;
+        else if (rank[pu]! > rank[pv]!) parent[pv] = pu;
+        else { parent[pv] = pu; rank[pu]!++; }
+      }
+    }
+    const nodeCount = new Map<number, number>();
+    const edgeCount = new Map<number, number>();
+    for (let i = 0; i < n; i++) {
+      const p = find(i);
+      nodeCount.set(p, (nodeCount.get(p) ?? 0) + 1);
+    }
+    for (const [u] of edges) {
+      const p = find(u!);
+      edgeCount.set(p, (edgeCount.get(p) ?? 0) + 1);
+    }
+    let count = 0;
+    for (const [p, nc] of nodeCount) {
+      const ec = edgeCount.get(p) ?? 0;
+      if (ec === nc * (nc - 1) / 2) count++;
+    }
+    return count;
+  },
+
+  'design-memory-allocator': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const ops = args[1] as number[][];
+    const mem = new Array(n).fill(0) as number[];
+    const results: number[] = [];
+    for (const op of ops) {
+      const type = op[0]!, a = op[1]!, b = op[2]!;
+      if (type === 0) {
+        let start = -1;
+        for (let i = 0; i <= n - a; i++) {
+          let ok = true;
+          for (let j = i; j < i + a; j++) { if (mem[j] !== 0) { ok = false; break; } }
+          if (ok) { start = i; break; }
+        }
+        if (start === -1) { results.push(-1); continue; }
+        for (let i = start; i < start + a; i++) mem[i] = b;
+        results.push(start);
+      } else {
+        let freed = 0;
+        for (let i = 0; i < n; i++) { if (mem[i] === a) { mem[i] = 0; freed++; } }
+        results.push(freed);
+      }
+    }
+    return results;
+  },
+
+  'escape-the-ghosts': (...args: unknown[]) => {
+    const ghosts = args[0] as number[][];
+    const target = args[1] as number[];
+    const playerDist = Math.abs(target[0]!) + Math.abs(target[1]!);
+    for (const g of ghosts) {
+      const ghostDist = Math.abs(target[0]! - g[0]!) + Math.abs(target[1]! - g[1]!);
+      if (ghostDist <= playerDist) return false;
+    }
+    return true;
   },
 
   'find-the-minimum-possible-sum-of-a-beautiful-array': (...args: unknown[]) => {
@@ -25111,196 +25208,53 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return distinct.size;
   },
 
-  'minimum-array-length-after-pair-removals': (nums: unknown): unknown => {
-    const arr = nums as number[];
-    const n = arr.length;
-    // Count max frequency
+  'minimum-array-length-after-pair-removals': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
     const freq = new Map<number, number>();
-    for (const v of arr) freq.set(v, (freq.get(v) ?? 0) + 1);
-    let maxFreq = 0;
-    for (const f of freq.values()) if (f > maxFreq) maxFreq = f;
-    if (maxFreq > n / 2) return 2 * maxFreq - n;
+    for (const v of nums) freq.set(v, (freq.get(v) ?? 0) + 1);
+    const maxFreq = Math.max(...freq.values());
+    if (maxFreq > Math.floor(n / 2)) return 2 * maxFreq - n;
     return n % 2;
   },
 
-  'count-the-number-of-complete-components': (n: unknown, edges: unknown): unknown => {
-    const nv = n as number;
-    const edgeList = edges as [number, number][];
-    const parent = Array.from({ length: nv }, (_, i) => i);
-    const rank = new Array<number>(nv).fill(0);
-    const find = (x: number): number => {
-      if (parent[x] !== x) parent[x] = find(parent[x]!);
-      return parent[x]!;
-    };
-    const union = (a: number, b: number) => {
-      const pa = find(a), pb = find(b);
-      if (pa === pb) return;
-      if (rank[pa]! < rank[pb]!) parent[pa] = pb;
-      else if (rank[pa]! > rank[pb]!) parent[pb] = pa;
-      else { parent[pb] = pa; rank[pa]!++; }
-    };
-    for (const [a, b] of edgeList) union(a, b);
-    // Count nodes and edges per component root
-    const nodeCount = new Map<number, number>();
-    const edgeCount = new Map<number, number>();
-    for (let i = 0; i < nv; i++) {
-      const root = find(i);
-      nodeCount.set(root, (nodeCount.get(root) ?? 0) + 1);
-    }
-    for (const [a, b] of edgeList) {
-      const root = find(a);
-      edgeCount.set(root, (edgeCount.get(root) ?? 0) + 1);
-      void b;
-    }
-    let complete = 0;
-    for (const [root, k] of nodeCount) {
-      const e = edgeCount.get(root) ?? 0;
-      if (e === k * (k - 1) / 2) complete++;
-    }
-    return complete;
-  },
-
-  'design-memory-allocator': (n: unknown, ops: unknown): unknown => {
-    const size = n as number;
-    const operations = ops as [number, number, number][];
-    const mem = new Array<number>(size).fill(0);
-    const results: number[] = [];
-    for (const [type, a, b] of operations) {
-      if (type === 0) {
-        // allocate(size=a, mID=b)
-        let start = -1;
-        let run = 0;
-        for (let i = 0; i <= size; i++) {
-          if (i < size && mem[i] === 0) {
-            run++;
-            if (run === a) { start = i - a + 1; break; }
-          } else {
-            run = 0;
-          }
-        }
-        if (start !== -1) {
-          for (let i = start; i < start + a; i++) mem[i] = b;
-        }
-        results.push(start);
-      } else {
-        // freeMemory(mID=a)
-        let count = 0;
-        for (let i = 0; i < size; i++) {
-          if (mem[i] === a) { mem[i] = 0; count++; }
-        }
-        results.push(count);
-      }
-    }
-    return results;
-  },
-
-  'campus-bikes': (workers: unknown, bikes: unknown): unknown => {
-    const ws = workers as [number, number][];
-    const bs = bikes as [number, number][];
-    const n = ws.length;
-    const m = bs.length;
-    // Precompute distances
-    const dist = Array.from({ length: n }, (_, wi) =>
-      Array.from({ length: m }, (_, bi) =>
-        Math.abs(ws[wi]![0] - bs[bi]![0]) + Math.abs(ws[wi]![1] - bs[bi]![1])
-      )
-    );
-    // DP with bitmask over bikes assigned: dp[bikeMask] = min cost assigning first popcount(bikeMask) workers
-    // to the bikes in bikeMask. For each state, the next worker to assign is popcount(bikeMask).
-    const dp = new Array<number>(1 << m).fill(Infinity);
-    const parent = new Array<number>(1 << m).fill(-1);
-    dp[0] = 0;
-    const result = new Array<number>(n).fill(-1);
-    let finalMask = -1;
-    for (let mask = 0; mask < (1 << m); mask++) {
-      if (dp[mask] === Infinity) continue;
-      // Count assigned workers so far
-      let assigned = 0;
-      let tmp = mask;
-      while (tmp) { assigned += tmp & 1; tmp >>= 1; }
-      if (assigned === n) { finalMask = mask; break; }
-      const wi = assigned; // next worker to assign
-      for (let bi = 0; bi < m; bi++) {
-        if (mask & (1 << bi)) continue;
-        const newMask = mask | (1 << bi);
-        const newCost = dp[mask]! + dist[wi]![bi]!;
-        if (newCost < dp[newMask]!) {
-          dp[newMask] = newCost;
-          parent[newMask] = bi;
+  'maximum-value-of-k-coins-from-piles': (...args: unknown[]) => {
+    const piles = args[0] as number[][];
+    const k = args[1] as number;
+    const dp = new Array(k + 1).fill(0) as number[];
+    for (const pile of piles) {
+      const prefix = [0] as number[];
+      for (const v of pile) prefix.push(prefix[prefix.length - 1]! + v);
+      for (let j = k; j >= 0; j--) {
+        for (let take = 1; take <= Math.min(pile.length, j); take++) {
+          dp[j] = Math.max(dp[j]!, dp[j - take]! + prefix[take]!);
         }
       }
     }
-    // Find best final mask
-    let bestCost = Infinity;
-    for (let mask = 0; mask < (1 << m); mask++) {
-      let cnt = 0; let t = mask; while (t) { cnt += t & 1; t >>= 1; }
-      if (cnt === n && dp[mask]! < bestCost) { bestCost = dp[mask]!; finalMask = mask; }
-    }
-    // Reconstruct
-    let curMask = finalMask;
-    let wi = n - 1;
-    while (curMask !== 0 && wi >= 0) {
-      const bi = parent[curMask]!;
-      result[wi] = bi;
-      curMask ^= (1 << bi);
-      wi--;
-    }
-    return result;
+    return dp[k]!;
   },
 
-  'escape-the-ghosts': (ghosts: unknown, target: unknown): unknown => {
-    const gs = ghosts as [number, number][];
-    const tgt = target as [number, number];
-    const myDist = Math.abs(tgt[0]) + Math.abs(tgt[1]);
-    for (const [gx, gy] of gs) {
-      const ghostDist = Math.abs(gx - tgt[0]) + Math.abs(gy - tgt[1]);
-      if (ghostDist <= myDist) return false;
-    }
-    return true;
-  },
-
-  'maximum-value-of-k-coins-from-piles': (piles: unknown, k: unknown): unknown => {
-    const ps = piles as number[][];
-    const kv = k as number;
-    // dp[j] = max value using exactly j coins from piles processed so far
-    const dp = new Array<number>(kv + 1).fill(0);
-    for (const pile of ps) {
-      // Prefix sums of this pile
-      const prefix = [0];
-      for (const coin of pile) prefix.push(prefix[prefix.length - 1]! + coin);
-      // Iterate j in reverse to avoid reuse
-      for (let j = kv; j >= 0; j--) {
-        for (let t = 1; t <= Math.min(pile.length, j); t++) {
-          const val = dp[j - t]! + prefix[t]!;
-          if (val > dp[j]!) dp[j] = val;
-        }
+  'parallel-courses-iii': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const relations = args[1] as number[][];
+    const time = args[2] as number[];
+    const inDeg = new Array(n + 1).fill(0) as number[];
+    const graph = Array.from({ length: n + 1 }, () => [] as number[]);
+    for (const [u, v] of relations) { graph[u!]!.push(v!); inDeg[v!]!++; }
+    const finish = new Array(n + 1).fill(0) as number[];
+    for (let i = 1; i <= n; i++) finish[i] = time[i - 1]!;
+    const q: number[] = [];
+    for (let i = 1; i <= n; i++) { if (inDeg[i] === 0) q.push(i); }
+    let ans = 0;
+    while (q.length) {
+      const u = q.shift()!;
+      ans = Math.max(ans, finish[u]!);
+      for (const v of graph[u]!) {
+        finish[v] = Math.max(finish[v]!, finish[u]! + time[v - 1]!);
+        if (--inDeg[v]! === 0) q.push(v);
       }
     }
-    return dp[kv]!;
-  },
-
-  'parallel-courses-iii': (n: unknown, relations: unknown, time: unknown): unknown => {
-    const nv = n as number;
-    const rels = relations as [number, number][];
-    const times = time as number[];
-    const adj: number[][] = Array.from({ length: nv + 1 }, () => []);
-    const indegree = new Array<number>(nv + 1).fill(0);
-    for (const [u, v] of rels) {
-      adj[u]!.push(v);
-      indegree[v]!++;
-    }
-    const dp = new Array<number>(nv + 1).fill(0);
-    for (let i = 1; i <= nv; i++) dp[i] = times[i - 1]!;
-    const queue: number[] = [];
-    for (let i = 1; i <= nv; i++) if (indegree[i] === 0) queue.push(i);
-    while (queue.length) {
-      const u = queue.shift()!;
-      for (const v of adj[u]!) {
-        if (dp[u]! + times[v - 1]! > dp[v]!) dp[v] = dp[u]! + times[v - 1]!;
-        if (--indegree[v]! === 0) queue.push(v);
-      }
-    }
-    return Math.max(...dp.slice(1));
+    return ans;
   },
 
   // batch 69

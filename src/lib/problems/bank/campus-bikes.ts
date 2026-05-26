@@ -33,8 +33,8 @@ The Manhattan distance between two points \`p1\` and \`p2\` is \`|p1.x - p2.x| +
     },
     {
       input: 'workers = [[0,0],[2,1]], bikes = [[1,2],[3,3]]',
-      output: '[0,1]',
-      explanation: 'Assign w0→b0 (distance 3) and w1→b1 (distance 3), total = 6. The alternative w0→b1, w1→b0 has total 8.',
+      output: '[1,0]',
+      explanation: 'Distances: (w0,b0)=3, (w0,b1)=6, (w1,b0)=2, (w1,b1)=3. Sorted: (2,w1,b0),(3,w0,b0),(3,w1,b1),(6,w0,b1). Assign w1→b0 first, then w0→b1.',
     },
   ],
   hints: [
@@ -52,13 +52,12 @@ The Manhattan distance between two points \`p1\` and \`p2\` is \`|p1.x - p2.x| +
     pass`,
   },
   visibleTests: [
-    { args: [[[0, 0], [1, 1]], [[2, 0], [1, 0]]], expected: [0, 1] },
-    // Both [0,1] and [1,0] have total distance 3; algorithm assigns w0 to first-available min-cost bike
-    { args: [[[0, 0], [2, 1]], [[1, 2], [3, 3]]], expected: [0, 1] },
+    { args: [[[0, 0], [1, 1]], [[2, 0], [1, 0]]], expected: [1, 0] },
+    { args: [[[0, 0], [2, 1]], [[1, 2], [3, 3]]], expected: [1, 0] },
   ],
   hiddenTests: [
     { args: [[[0, 0]], [[1, 1]]], expected: [0] },
-    { args: [[[0, 0], [0, 1]], [[0, 2], [0, 3]]], expected: [0, 1] },
+    { args: [[[0, 0], [0, 1]], [[0, 2], [0, 3]]], expected: [1, 0] },
     { args: [[[1, 1]], [[0, 0], [2, 2]]], expected: [0] },
     { args: [[[0, 0], [1, 0], [2, 0]], [[3, 0], [0, 1], [1, 1]]], expected: [1, 2, 0] },
     { args: [[[0, 0], [0, 1]], [[1, 0], [0, 0], [0, 1]]], expected: [1, 2] },

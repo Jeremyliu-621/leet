@@ -24268,6 +24268,97 @@ def secondMinimum(n, edges, time, change):
     return ''.join(result)
 `,
 
+  'campus-bikes': `def campusBikes(workers, bikes):
+    workers = [list(w.to_py() if hasattr(w, 'to_py') else w) for w in workers]
+    bikes = [list(b.to_py() if hasattr(b, 'to_py') else b) for b in bikes]
+    triples = []
+    for wi, w in enumerate(workers):
+        for bi, b in enumerate(bikes):
+            dist = abs(w[0] - b[0]) + abs(w[1] - b[1])
+            triples.append((dist, wi, bi))
+    triples.sort()
+    assigned_w = set()
+    assigned_b = set()
+    result = [-1] * len(workers)
+    for dist, wi, bi in triples:
+        if wi not in assigned_w and bi not in assigned_b:
+            result[wi] = bi
+            assigned_w.add(wi)
+            assigned_b.add(bi)
+        if len(assigned_w) == len(workers):
+            break
+    return result
+`,
+
+  'count-the-number-of-complete-components': `def countCompleteComponents(n, edges):
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in edges]
+    parent = list(range(n))
+    rank = [0] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(x, y):
+        px, py = find(x), find(y)
+        if px == py: return
+        if rank[px] < rank[py]: px, py = py, px
+        parent[py] = px
+        if rank[px] == rank[py]: rank[px] += 1
+    for u, v in edges:
+        union(int(u), int(v))
+    from collections import defaultdict
+    node_count = defaultdict(int)
+    edge_count = defaultdict(int)
+    for i in range(n):
+        node_count[find(i)] += 1
+    for u, v in edges:
+        edge_count[find(int(u))] += 1
+    count = 0
+    for p, nc in node_count.items():
+        ec = edge_count[p]
+        if ec == nc * (nc - 1) // 2:
+            count += 1
+    return count
+`,
+
+  'design-memory-allocator': `def memoryAllocator(n, ops):
+    ops = [list(o.to_py() if hasattr(o, 'to_py') else o) for o in ops]
+    mem = [0] * n
+    results = []
+    for op in ops:
+        t, a, b = int(op[0]), int(op[1]), int(op[2])
+        if t == 0:
+            start = -1
+            for i in range(n - a + 1):
+                if all(mem[i+j] == 0 for j in range(a)):
+                    start = i
+                    break
+            if start == -1:
+                results.append(-1)
+            else:
+                for i in range(start, start + a):
+                    mem[i] = b
+                results.append(start)
+        else:
+            freed = sum(1 for i in range(n) if mem[i] == a)
+            for i in range(n):
+                if mem[i] == a: mem[i] = 0
+            results.append(freed)
+    return results
+`,
+
+  'escape-the-ghosts': `def escapeGhosts(ghosts, target):
+    ghosts = [list(g.to_py() if hasattr(g, 'to_py') else g) for g in ghosts]
+    target = list(target.to_py() if hasattr(target, 'to_py') else target)
+    player_dist = abs(target[0]) + abs(target[1])
+    for g in ghosts:
+        ghost_dist = abs(target[0] - g[0]) + abs(target[1] - g[1])
+        if ghost_dist <= player_dist:
+            return False
+    return True
+`,
+
   'check-whether-two-strings-are-almost-equivalent': `def checkAlmostEquivalent(word1, word2):
     from collections import Counter
     c1, c2 = Counter(word1), Counter(word2)
@@ -24557,128 +24648,18 @@ def secondMinimum(n, edges, time, change):
     return n % 2
 `,
 
-  'count-the-number-of-complete-components': `def countCompleteComponents(n, edges):
-    parent = list(range(n))
-    rank = [0] * n
-    def find(x):
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-    def union(a, b):
-        pa, pb = find(a), find(b)
-        if pa == pb:
-            return
-        if rank[pa] < rank[pb]:
-            pa, pb = pb, pa
-        parent[pb] = pa
-        if rank[pa] == rank[pb]:
-            rank[pa] += 1
-    for a, b in edges:
-        union(a, b)
-    node_count = {}
-    edge_count = {}
-    for i in range(n):
-        root = find(i)
-        node_count[root] = node_count.get(root, 0) + 1
-    for a, b in edges:
-        root = find(a)
-        edge_count[root] = edge_count.get(root, 0) + 1
-    result = 0
-    for root, k in node_count.items():
-        e = edge_count.get(root, 0)
-        if e == k * (k - 1) // 2:
-            result += 1
-    return result
-`,
-
-  'design-memory-allocator': `def memoryAllocator(n, ops):
-    mem = [0] * n
-    results = []
-    for op in ops:
-        type_, a, b = op[0], op[1], op[2]
-        if type_ == 0:
-            start = -1
-            run = 0
-            for i in range(n + 1):
-                if i < n and mem[i] == 0:
-                    run += 1
-                    if run == a:
-                        start = i - a + 1
-                        break
-                else:
-                    run = 0
-            if start != -1:
-                for i in range(start, start + a):
-                    mem[i] = b
-            results.append(start)
-        else:
-            count = sum(1 for i in range(n) if mem[i] == a)
-            for i in range(n):
-                if mem[i] == a:
-                    mem[i] = 0
-            results.append(count)
-    return results
-`,
-
-  'campus-bikes': `def campusBikes(workers, bikes):
-    n = len(workers)
-    m = len(bikes)
-    dist = [[abs(wx - bx) + abs(wy - by) for bx, by in bikes] for wx, wy in workers]
-    INF = float('inf')
-    dp = [INF] * (1 << m)
-    parent = [-1] * (1 << m)
-    dp[0] = 0
-    for mask in range(1 << m):
-        if dp[mask] == INF:
-            continue
-        assigned = bin(mask).count('1')
-        if assigned == n:
-            break
-        wi = assigned
-        for bi in range(m):
-            if mask & (1 << bi):
-                continue
-            new_mask = mask | (1 << bi)
-            new_cost = dp[mask] + dist[wi][bi]
-            if new_cost < dp[new_mask]:
-                dp[new_mask] = new_cost
-                parent[new_mask] = bi
-    best_cost = INF
-    final_mask = -1
-    for mask in range(1 << m):
-        if bin(mask).count('1') == n and dp[mask] < best_cost:
-            best_cost = dp[mask]
-            final_mask = mask
-    result = [-1] * n
-    cur_mask = final_mask
-    wi = n - 1
-    while cur_mask != 0 and wi >= 0:
-        bi = parent[cur_mask]
-        result[wi] = bi
-        cur_mask ^= (1 << bi)
-        wi -= 1
-    return result
-`,
-
-  'escape-the-ghosts': `def escapeGhosts(ghosts, target):
-    my_dist = abs(target[0]) + abs(target[1])
-    for gx, gy in ghosts:
-        ghost_dist = abs(gx - target[0]) + abs(gy - target[1])
-        if ghost_dist <= my_dist:
-            return False
-    return True
-`,
-
   'maximum-value-of-k-coins-from-piles': `def maxValueOfCoins(piles, k):
+    piles = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in (piles.to_py() if hasattr(piles, 'to_py') else piles)]
+    piles = [[int(v) for v in p] for p in piles]
+    k = int(k)
     dp = [0] * (k + 1)
     for pile in piles:
         prefix = [0]
-        for coin in pile:
-            prefix.append(prefix[-1] + coin)
+        for v in pile:
+            prefix.append(prefix[-1] + v)
         for j in range(k, -1, -1):
-            for t in range(1, min(len(pile), j) + 1):
-                dp[j] = max(dp[j], dp[j - t] + prefix[t])
+            for take in range(1, min(len(pile), j) + 1):
+                dp[j] = max(dp[j], dp[j - take] + prefix[take])
     return dp[k]
 `,
 
