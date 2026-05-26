@@ -25063,6 +25063,7 @@ def minimumMoney(transactions):
     serialize(root_node)
     return sorted(result, key=lambda x: int(x[0]) if x and x[0] is not None else 0)
 `,
+
   'find-score-of-an-array-after-marking-all-elements': `def findScore(nums):
     n = len(nums)
     marked = [False] * n
@@ -25465,4 +25466,132 @@ def totalCost(costs, k, candidates):
         result += '4' if ((k >> i) & 1) == 0 else '7'
     return result
 `,
+
+  'find-median-from-data-stream': `
+import bisect
+def medianFinder(ops, vals):
+    if hasattr(ops, 'to_py'):
+        ops = list(ops.to_py())
+    if hasattr(vals, 'to_py'):
+        raw = vals.to_py()
+        vals = [list(row) if hasattr(row, '__iter__') else row for row in raw]
+    lower = []
+    upper = []
+    import heapq
+    result = []
+    for op, v in zip(ops, vals):
+        if op == 'addNum':
+            num = int(v[0]) if v else 0
+            heapq.heappush(lower, -num)
+            heapq.heappush(upper, -heapq.heappop(lower))
+            if len(upper) > len(lower):
+                heapq.heappush(lower, -heapq.heappop(upper))
+            result.append(None)
+        else:
+            if len(lower) == len(upper):
+                result.append((-lower[0] + upper[0]) / 2)
+            else:
+                result.append(float(-lower[0]))
+    return result
+`,
+
+  'check-completeness-of-binary-tree': `
+from collections import deque
+def isCompleteTree(root):
+    if hasattr(root, 'to_py'):
+        arr = list(root.to_py())
+    else:
+        arr = list(root)
+    arr = [int(v) if v is not None else -1 for v in arr]
+    if not arr:
+        return True
+    queue = deque([0])
+    seen_null = False
+    while queue:
+        idx = queue.popleft()
+        left = 2 * idx + 1
+        right = 2 * idx + 2
+        lval = arr[left] if left < len(arr) else -1
+        rval = arr[right] if right < len(arr) else -1
+        if lval == -1:
+            seen_null = True
+        else:
+            if seen_null:
+                return False
+            queue.append(left)
+        if rval == -1:
+            seen_null = True
+        else:
+            if seen_null:
+                return False
+            queue.append(right)
+    return True
+`,
+
+  'earliest-possible-day-of-full-bloom': `
+def earliestFullBloom(plantTime, growTime):
+    if hasattr(plantTime, 'to_py'):
+        plantTime = list(plantTime.to_py())
+    if hasattr(growTime, 'to_py'):
+        growTime = list(growTime.to_py())
+    plantTime = [int(v) for v in plantTime]
+    growTime = [int(v) for v in growTime]
+    order = sorted(range(len(plantTime)), key=lambda i: -growTime[i])
+    day = 0
+    ans = 0
+    for i in order:
+        day += plantTime[i]
+        ans = max(ans, day + growTime[i])
+    return ans
+`,
+
+  'find-the-longest-valid-obstacle-course-at-each-position': `
+import bisect
+def longestObstacleCourseAtEachPosition(obstacles):
+    if hasattr(obstacles, 'to_py'):
+        obstacles = list(obstacles.to_py())
+    obstacles = [int(v) for v in obstacles]
+    tails = []
+    result = []
+    for v in obstacles:
+        pos = bisect.bisect_right(tails, v)
+        if pos == len(tails):
+            tails.append(v)
+        else:
+            tails[pos] = v
+        result.append(pos + 1)
+    return result
+`,
+
+  'minimum-time-to-finish-the-race': `
+def minimumFinishTime(tires, changeTime, numLaps):
+    if hasattr(tires, 'to_py'):
+        raw = tires.to_py()
+        tires = [[int(raw[i][0]), int(raw[i][1])] for i in range(len(raw))]
+    else:
+        tires = [[int(row[0]), int(row[1])] for row in tires]
+    changeTime = int(changeTime)
+    numLaps = int(numLaps)
+    MAX_LAPS = 17
+    best = [float('inf')] * (MAX_LAPS + 1)
+    for f, r in tires:
+        lap_time = f
+        total = f
+        for j in range(1, MAX_LAPS + 1):
+            best[j] = min(best[j], total)
+            lap_time = lap_time * r
+            total += lap_time
+            if lap_time > changeTime + f:
+                break
+    dp = [float('inf')] * (numLaps + 1)
+    dp[0] = -changeTime
+    for i in range(1, numLaps + 1):
+        for j in range(1, min(i, MAX_LAPS) + 1):
+            if best[j] == float('inf'):
+                continue
+            dp[i] = min(dp[i], dp[i - j] + changeTime + best[j])
+    return dp[numLaps]
+`,
+
+
 };

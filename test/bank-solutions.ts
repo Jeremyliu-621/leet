@@ -25873,16 +25873,13 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       half += String(d).repeat(Math.floor(freq[d] / 2));
     }
     if (half === '') {
-      // no pairs — just the single largest digit
       for (let d = 9; d >= 0; d--) {
         if (freq[d] > 0) return String(d);
       }
       return '0';
     }
-    // strip leading zeros from half
     const stripped = half.replace(/^0+/, '');
     if (stripped === '') {
-      // all pairs are zeros — find single center if any non-zero, else just "0"
       let center = '';
       for (let d = 9; d >= 0; d--) {
         if (freq[d] % 2 === 1) { center = String(d); break; }
@@ -25939,8 +25936,8 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const s = args[0] as string;
     const n = s.length;
     const doubled = s + s;
-    let diff01 = 0; // mismatches vs "010101..."
-    let diff10 = 0; // mismatches vs "101010..."
+    let diff01 = 0;
+    let diff10 = 0;
     for (let i = 0; i < n; i++) {
       const c = parseInt(doubled[i]!);
       if (c !== i % 2) diff01++;
@@ -26037,6 +26034,136 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       result += ((k >> i) & 1) === 0 ? '4' : '7';
     }
     return result;
+  },
+
+  // batch 68-local
+  'find-median-from-data-stream': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const vals = args[1] as unknown[][];
+    const lower: number[] = [];
+    const upper: number[] = [];
+    const insertSorted = (arr: number[], val: number, asc: boolean) => {
+      let lo = 0, hi = arr.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (asc ? arr[mid]! < val : arr[mid]! > val) lo = mid + 1;
+        else hi = mid;
+      }
+      arr.splice(lo, 0, val);
+    };
+    const result: (null | number)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      if (ops[i] === 'addNum') {
+        const num = (vals[i] as number[])[0] as number;
+        if (lower.length === 0 || num <= lower[0]!) {
+          insertSorted(lower, num, false);
+        } else {
+          insertSorted(upper, num, true);
+        }
+        if (lower.length > upper.length + 1) {
+          insertSorted(upper, lower.shift()!, true);
+        } else if (upper.length > lower.length) {
+          insertSorted(lower, upper.shift()!, false);
+        }
+        result.push(null);
+      } else {
+        if (lower.length === upper.length) {
+          result.push((lower[0]! + upper[0]!) / 2);
+        } else {
+          result.push(lower[0]!);
+        }
+      }
+    }
+    return result;
+  },
+
+  'check-completeness-of-binary-tree': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    if (arr.length === 0) return true;
+    const queue: number[] = [0];
+    let seenNull = false;
+    while (queue.length > 0) {
+      const idx = queue.shift()!;
+      const left = 2 * idx + 1;
+      const right = 2 * idx + 2;
+      const leftVal = left < arr.length ? arr[left] : -1;
+      const rightVal = right < arr.length ? arr[right] : -1;
+      if (leftVal === undefined || leftVal === null || leftVal === -1) {
+        seenNull = true;
+      } else {
+        if (seenNull) return false;
+        queue.push(left);
+      }
+      if (rightVal === undefined || rightVal === null || rightVal === -1) {
+        seenNull = true;
+      } else {
+        if (seenNull) return false;
+        queue.push(right);
+      }
+    }
+    return true;
+  },
+
+  'earliest-possible-day-of-full-bloom': (...args: unknown[]) => {
+    const plantTime = args[0] as number[];
+    const growTime = args[1] as number[];
+    const n = plantTime.length;
+    const order = Array.from({ length: n }, (_, i) => i);
+    order.sort((a, b) => growTime[b]! - growTime[a]!);
+    let day = 0, ans = 0;
+    for (const i of order) {
+      day += plantTime[i]!;
+      ans = Math.max(ans, day + growTime[i]!);
+    }
+    return ans;
+  },
+
+  'find-the-longest-valid-obstacle-course-at-each-position': (...args: unknown[]) => {
+    const obstacles = args[0] as number[];
+    const n = obstacles.length;
+    const tails: number[] = [];
+    const result: number[] = [];
+    for (let i = 0; i < n; i++) {
+      const v = obstacles[i]!;
+      let lo = 0, hi = tails.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (tails[mid]! <= v) lo = mid + 1;
+        else hi = mid;
+      }
+      tails[lo] = v;
+      result.push(lo + 1);
+    }
+    return result;
+  },
+
+  'minimum-time-to-finish-the-race': (...args: unknown[]) => {
+    const tires = args[0] as number[][];
+    const changeTime = args[1] as number;
+    const numLaps = args[2] as number;
+    const maxLapsOnOneTire = 17;
+    const best = new Array(maxLapsOnOneTire + 1).fill(Infinity) as number[];
+    for (const [f, r] of tires) {
+      const fi = f as number;
+      const ri = r as number;
+      let lapTime = fi;
+      let total = fi;
+      for (let j = 1; j <= maxLapsOnOneTire; j++) {
+        best[j] = Math.min(best[j]!, total);
+        lapTime = lapTime * ri;
+        total += lapTime;
+        if (lapTime > changeTime + fi) break;
+      }
+    }
+    const dp = new Array(numLaps + 1).fill(Infinity) as number[];
+    dp[0] = -changeTime;
+    for (let i = 1; i <= numLaps; i++) {
+      for (let j = 1; j <= Math.min(i, maxLapsOnOneTire); j++) {
+        if (best[j] === Infinity) continue;
+        dp[i] = Math.min(dp[i]!, (dp[i - j] ?? Infinity) + changeTime + best[j]!);
+      }
+    }
+    return dp[numLaps];
   },
 
 };

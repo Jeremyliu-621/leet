@@ -1854,6 +1854,12 @@ import { problem as minimumNumberOfBucketsRequired } from './minimum-number-of-b
 import { problem as applyDiscountEveryNItems } from './apply-discount-every-n-items';
 import { problem as sumGame } from './sum-game';
 import { problem as findTheKthLuckyNumber } from './find-the-k-th-lucky-number';
+// batch 68-local
+import { problem as findMedianFromDataStream } from './find-median-from-data-stream';
+import { problem as checkCompletenessBinaryTreeNew } from './check-completeness-of-binary-tree';
+import { problem as earliestFullBloom } from './earliest-possible-day-of-full-bloom';
+import { problem as longestObstacleCourse } from './find-the-longest-valid-obstacle-course-at-each-position';
+import { problem as minimumTimeFinishRace } from './minimum-time-to-finish-the-race';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3747,4 +3753,10 @@ export const problems: readonly Problem[] = [
   applyDiscountEveryNItems,
   sumGame,
   findTheKthLuckyNumber,
+  // batch 68-local
+  findMedianFromDataStream,
+  checkCompletenessBinaryTreeNew,
+  earliestFullBloom,
+  longestObstacleCourse,
+  minimumTimeFinishRace,
 ];
