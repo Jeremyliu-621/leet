@@ -36,6 +36,13 @@ Return \`true\` if it is possible to obtain \`target\` as an element of \`triple
   hints: [
     'Discard any triplet that exceeds target in any component — it can only hurt.',
     'Take the element-wise max of remaining triplets. If equal to target, return true.',
+    `\`\`\`js
+function mergeTriplets(triplets, target) {
+  const [a,b,c] = target;
+  const valid = triplets.filter(([x,y,z])=>x<=a&&y<=b&&z<=c);
+  const merged = valid.reduce(([mx,my,mz],[x,y,z])=>[Math.max(mx,x),Math.max(my,y),Math.max(mz,z)],[0,0,0]);
+  return merged[0]===a&&merged[1]===b&&merged[2]===c;
+}\`\`\``,
   ],
   functionName: 'mergeTriplets',
   params: ['triplets', 'target'],

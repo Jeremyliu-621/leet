@@ -38,6 +38,18 @@ For this problem, you are given both \`n\` and \`pick\` directly. Return the num
   hints: [
     'Use binary search. Repeatedly guess the midpoint of your search range.',
     'If `guess(mid) === 0`, you found the answer. If `guess(mid) === -1`, search the lower half. If `guess(mid) === 1`, search the upper half.',
+    `\`\`\`js
+var guessGame = function(guess) {
+  return function(n) {
+    let lo = 1, hi = n;
+    while (lo <= hi) {
+      const mid = lo + Math.floor((hi-lo)/2);
+      const r = guess(mid);
+      if (r === 0) return mid;
+      if (r === -1) hi = mid-1; else lo = mid+1;
+    }
+  };
+};\`\`\``,
   ],
   functionName: 'guessNumber',
   params: ['n', 'pick'],

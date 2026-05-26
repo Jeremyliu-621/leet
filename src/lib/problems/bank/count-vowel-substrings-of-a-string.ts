@@ -29,6 +29,20 @@ Given a string \`word\`, return *the number of **vowel substrings** in* \`word\`
   hints: [
     'Check every substring: if it contains only vowels and all 5 distinct vowels, count it.',
     '```js\nfunction countVowelSubstrings(word) {\n  const v = new Set(["a","e","i","o","u"]);\n  let count = 0;\n  for (let i = 0; i < word.length; i++) {\n    const seen = new Set();\n    for (let j = i; j < word.length; j++) {\n      if (!v.has(word[j])) break;\n      seen.add(word[j]);\n      if (seen.size === 5) count++;\n    }\n  }\n  return count;\n}\n```',
+    `\`\`\`js
+function countVowelSubstrings(word) {
+  const vowels = new Set("aeiou");
+  let count = 0;
+  for (let i = 0; i < word.length; i++) {
+    const seen = new Set();
+    for (let j = i; j < word.length; j++) {
+      if (!vowels.has(word[j])) break;
+      seen.add(word[j]);
+      if (seen.size === 5) count++;
+    }
+  }
+  return count;
+}\`\`\``,
   ],
   functionName: 'countVowelSubstrings',
   params: ['word'],

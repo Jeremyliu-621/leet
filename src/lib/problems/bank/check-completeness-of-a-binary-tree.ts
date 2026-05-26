@@ -29,6 +29,16 @@ The tree is given as a level-order array where \`null\` represents a missing nod
   hints: [
     'Use BFS (level-order traversal). Once you encounter a null node, all subsequent nodes in the queue must also be null.',
     'Add both children (even null ones) to the queue. If you see a null child followed by a non-null node, the tree is not complete.',
+    `\`\`\`js
+const q = [root];
+let seenNull = false;
+while (q.length) {
+  const node = q.shift();
+  if (!node) { seenNull = true; continue; }
+  if (seenNull) return false;
+  q.push(node.left, node.right);
+}
+return true;\`\`\``,
   ],
   functionName: 'isCompleteTree',
   params: ['root'],

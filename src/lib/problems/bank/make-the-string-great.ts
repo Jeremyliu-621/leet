@@ -39,6 +39,16 @@ Return the string after making it good. The answer will be unique.`,
   hints: [
     'Use a stack. For each character, if the top of the stack is the same letter in the opposite case, pop it. Otherwise push.',
     'Two characters are opposite case if their ASCII values differ by 32.',
+    `\`\`\`js
+function makeGood(s) {
+  const stack = [];
+  for (const c of s) {
+    if (stack.length && stack[stack.length-1].toLowerCase()===c.toLowerCase() && stack[stack.length-1]!==c)
+      stack.pop();
+    else stack.push(c);
+  }
+  return stack.join("");
+}\`\`\``,
   ],
   functionName: 'makeGood',
   params: ['s'],

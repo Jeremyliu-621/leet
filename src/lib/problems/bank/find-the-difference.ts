@@ -28,6 +28,13 @@ export const problem: Problem = {
   hints: [
     'Use a frequency map: count occurrences in both strings and find the character with an extra count in t.',
     'Alternatively, XOR all characters in both strings. The result is the added character.',
+    `\`\`\`js
+function findTheDifference(s, t) {
+  let xor = 0;
+  for (const c of s) xor ^= c.charCodeAt(0);
+  for (const c of t) xor ^= c.charCodeAt(0);
+  return String.fromCharCode(xor);
+}\`\`\``,
   ],
   functionName: 'findTheDifference',
   params: ['s', 't'],

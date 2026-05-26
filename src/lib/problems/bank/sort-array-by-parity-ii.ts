@@ -30,6 +30,15 @@ Return **any** answer array that satisfies this condition.`,
   hints: [
     'Collect even numbers and odd numbers separately, then interleave them.',
     'Place evens at indices 0, 2, 4, ... and odds at indices 1, 3, 5, ...',
+    `\`\`\`js
+function sortArrayByParityII(nums) {
+  const res=new Array(nums.length);
+  let e=0,o=1;
+  for(const n of nums){
+    if(n%2===0){res[e]=n;e+=2;}else{res[o]=n;o+=2;}
+  }
+  return res;
+}\`\`\``,
   ],
   functionName: 'sortArrayByParityII',
   params: ['nums'],

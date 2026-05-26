@@ -25,6 +25,15 @@ export const problem: Problem = {
   hints: [
     'Iterate through each character and check if it is in the set {"a","e","i","o","u","A","E","I","O","U"}.',
     'A simple includes check or a Set lookup works well here.',
+    `\`\`\`js
+function countVowels(word) {
+  // Each vowel at index i contributes (i+1)*(n-i) times across all substrings
+  const vowels = new Set("aeiou");
+  let res = 0, n = word.length;
+  for (let i = 0; i < n; i++)
+    if (vowels.has(word[i])) res += (i+1)*(n-i);
+  return res;
+}\`\`\``,
   ],
   functionName: 'countVowels',
   params: ['s'],

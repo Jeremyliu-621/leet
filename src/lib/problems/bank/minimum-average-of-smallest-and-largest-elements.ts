@@ -32,6 +32,15 @@ Return the **minimum** element of \`averages\`.`,
   hints: [
     'Sort nums. Take pairs (nums[0],nums[n-1]), (nums[1],nums[n-2]), etc.',
     'Compute average of each pair and return the minimum.',
+    `\`\`\`js
+function minimumAverage(nums) {
+  nums.sort((a,b)=>a-b);
+  let minAvg = Infinity;
+  const n = nums.length;
+  for (let i = 0; i < n/2; i++)
+    minAvg = Math.min(minAvg, (nums[i]+nums[n-1-i])/2);
+  return minAvg;
+}\`\`\``,
   ],
   functionName: 'minimumAverage',
   params: ['nums'],

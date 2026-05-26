@@ -33,6 +33,14 @@ Return the number of **distinct** averages computed.`,
   hints: [
     'Sort the array. Then pair the smallest with the largest: nums[0]+nums[n-1], nums[1]+nums[n-2], etc.',
     'Two averages are distinct iff their sums are distinct. Store sums in a Set and return its size.',
+    `\`\`\`js
+function distinctAverages(nums) {
+  nums.sort((a,b)=>a-b);
+  const seen = new Set();
+  let l=0,r=nums.length-1;
+  while(l<r){seen.add(nums[l]+nums[r]);l++;r--;}
+  return seen.size;
+}\`\`\``,
   ],
   functionName: 'distinctAverages',
   params: ['nums'],

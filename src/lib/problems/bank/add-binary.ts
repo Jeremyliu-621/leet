@@ -24,6 +24,13 @@ export const problem: Problem = {
   hints: [
     'Work from right to left, tracking a carry. At each position sum the two bits plus carry; the result bit is `sum % 2` and the new carry is `Math.floor(sum / 2)`.',
     'Use two pointers `i = a.length - 1` and `j = b.length - 1`. Build the result string and reverse it at the end.',
+    `\`\`\`js
+function addBinary(a, b) {
+  return (BigInt("0b"+a) + BigInt("0b"+b)).toString(2);
+}
+// Or manual: i=a.length-1,j=b.length-1,carry=0,res=[]
+// while i>=0||j>=0||carry: sum=(a[i--]|0)+(b[j--]|0)+carry; res.push(sum%2); carry=sum>>1
+// return res.reverse().join("")\`\`\``,
   ],
   functionName: 'addBinary',
   params: ['a', 'b'],

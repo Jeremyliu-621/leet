@@ -36,6 +36,12 @@ Two integers are considered the same if their decimal representations **without 
   hints: [
     'Extract digit-groups and normalize by removing leading zeros (e.g., "001" → "1").',
     'Use a Set to count distinct normalized integers.',
+    `\`\`\`js
+function numDifferentIntegers(word) {
+  const nums = word.match(/\\d+/g)||[];
+  // strip leading zeros before comparing
+  return new Set(nums.map(s=>s.replace(/^0+/,"")||"0")).size;
+}\`\`\``,
   ],
   functionName: 'numDifferentIntegers',
   params: ['word'],

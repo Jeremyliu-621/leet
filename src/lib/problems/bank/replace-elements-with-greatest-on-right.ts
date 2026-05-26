@@ -27,6 +27,16 @@ After doing so, return the array.`,
   hints: [
     'Traverse right to left, keeping track of the current max.',
     'At each position, swap the current element with the tracked max, then update the max.',
+    `\`\`\`js
+function replaceElements(arr) {
+  let maxRight=-1;
+  for(let i=arr.length-1;i>=0;i--){
+    const newMax=Math.max(maxRight,arr[i]);
+    arr[i]=maxRight;
+    maxRight=newMax;
+  }
+  return arr;
+}\`\`\``,
   ],
   functionName: 'replaceElements',
   params: ['arr'],

@@ -30,6 +30,11 @@ Return the answer in an array.`,
   hints: [
     'Sort a copy of the array. For each element, the number of smaller elements equals its first occurrence index in the sorted array.',
     'Use a hash map to store the result for each unique value after sorting to avoid recomputation.',
+    `\`\`\`js
+function smallerNumbersThanCurrent(nums) {
+  const sorted = [...nums].sort((a,b)=>a-b);
+  return nums.map(n => sorted.indexOf(n)); // O(n²); optimize with Map
+}\`\`\``,
   ],
   functionName: 'smallerNumbersThanCurrent',
   params: ['nums'],

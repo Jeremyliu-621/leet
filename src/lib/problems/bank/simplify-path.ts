@@ -31,6 +31,15 @@ The canonical path should:
   hints: [
     'Split the path by `"/"`. For each part: skip empty strings and `"."`, pop the stack for `".."`, otherwise push the part onto the stack.',
     'Join the stack with `"/"` and prepend `"/"`. If the stack is empty, return `"/"`.',
+    `\`\`\`js
+function simplifyPath(path) {
+  const stack=[];
+  for(const p of path.split("/")){
+    if(p===".."){ stack.pop(); }
+    else if(p&&p!==".") stack.push(p);
+  }
+  return "/"+stack.join("/");
+}\`\`\``,
   ],
   functionName: 'simplifyPath',
   params: ['path'],

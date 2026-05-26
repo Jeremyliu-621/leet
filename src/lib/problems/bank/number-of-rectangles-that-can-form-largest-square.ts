@@ -36,6 +36,11 @@ Return the **number** of rectangles from which you can make a square with side l
   hints: [
     'For each rectangle, the largest square you can cut has side length `Math.min(l, w)`.',
     'Find the maximum of all `Math.min(l, w)` values, then count how many rectangles achieve that maximum.',
+    `\`\`\`js
+function countGoodRectangles(rectangles) {
+  const maxLen = Math.max(...rectangles.map(([l,w])=>Math.min(l,w)));
+  return rectangles.filter(([l,w])=>Math.min(l,w)>=maxLen).length;
+}\`\`\``,
   ],
   functionName: 'countGoodRectangles',
   params: ['rectangles'],

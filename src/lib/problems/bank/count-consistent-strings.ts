@@ -30,6 +30,11 @@ Return the number of **consistent** strings in the array \`words\`.`,
   hints: [
     'Build a Set from the allowed string for O(1) lookup.',
     'For each word, check every character against the set. If all pass, count it.',
+    `\`\`\`js
+function countConsistentStrings(allowed, words) {
+  const set = new Set(allowed);
+  return words.filter(w => [...w].every(c => set.has(c))).length;
+}\`\`\``,
   ],
   functionName: 'countConsistentStrings',
   params: ['allowed', 'words'],

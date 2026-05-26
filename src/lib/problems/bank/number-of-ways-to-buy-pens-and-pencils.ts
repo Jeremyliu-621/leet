@@ -27,6 +27,12 @@ Return the **number of distinct orders** you can make buying **non-negative** nu
   hints: [
     'Iterate over all possible numbers of pens (0 to total/cost1).',
     'For each pen count p, the number of pencil options is floor((total - p*cost1) / cost2) + 1.',
+    `\`\`\`js
+function waysToBuyPensPencils(total, cost1, cost2) {
+  let ways=0;
+  for(let p=0;p*cost1<=total;p++) ways+=Math.floor((total-p*cost1)/cost2)+1;
+  return ways;
+}\`\`\``,
   ],
   functionName: 'waysToBuyPensPencils',
   params: ['total', 'cost1', 'cost2'],

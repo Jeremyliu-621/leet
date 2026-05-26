@@ -35,6 +35,10 @@ Given an array of operations \`ops\`, where \`ops[i]\` is one of the four operat
   hints: [
     'Check if each operation contains "+" or "-".',
     'Count the increments minus the decrements.',
+    `\`\`\`js
+function finalValueAfterOperations(operations) {
+  return operations.reduce((x, op) => op.includes("+") ? x+1 : x-1, 0);
+}\`\`\``,
   ],
   functionName: 'finalValueAfterOperations',
   params: ['ops'],

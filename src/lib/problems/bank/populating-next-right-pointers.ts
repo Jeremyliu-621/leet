@@ -27,6 +27,19 @@ Implement a function \`connectTree(arr)\` that takes the BFS array representatio
   hints: [
     'Use BFS level order traversal. For each level, connect adjacent nodes using `next` pointers.',
     'With O(1) extra space: use the established `next` pointers from the previous level to traverse and connect the next level.',
+    `\`\`\`js
+// BFS level-order: for each node at level, set node.next = next node in queue
+let queue=[root];
+while(queue.length){
+  const n=queue.length;
+  for(let i=0;i<n;i++){
+    const node=queue[i];
+    node.next=(i<n-1?queue[i+1]:null);
+    if(node.left)queue.push(node.left);
+    if(node.right)queue.push(node.right);
+  }
+  queue=queue.slice(n);
+}\`\`\``,
   ],
   functionName: 'connectTree',
   params: ['arr'],

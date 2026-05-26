@@ -70,6 +70,16 @@ export const problem: Problem = {
   hints: [
     'Use a dummy node pointing to head. Iterate with a `prev` pointer; when `prev.next.val === val`, skip that node by setting `prev.next = prev.next.next`. Otherwise advance `prev`.',
     'Return `dummy.next`.',
+    `\`\`\`js
+function removeElements(head, val) {
+  const dummy={next:head};
+  let curr=dummy;
+  while(curr.next){
+    if(curr.next.val===val)curr.next=curr.next.next;
+    else curr=curr.next;
+  }
+  return dummy.next;
+}\`\`\``,
   ],
   functionName: 'removeElementsRunner',
   params: ['head', 'val'],

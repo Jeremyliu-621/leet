@@ -30,6 +30,11 @@ You are given a 2D integer array \`edges\` where each \`edges[i] = [ui, vi]\` in
   hints: [
     'The center appears in every edge.',
     'Just check the first two edges: the center is the common node between them.',
+    `\`\`\`js
+function findCenter(edges) {
+  // center appears in both edges[0] and edges[1]
+  return edges[0].find(v => edges[1].includes(v));
+}\`\`\``,
   ],
   functionName: 'findCenter',
   params: ['edges'],

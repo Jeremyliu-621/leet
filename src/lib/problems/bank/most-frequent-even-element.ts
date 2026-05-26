@@ -32,6 +32,17 @@ If there is a tie, return the **smallest** one. If there is no such element, ret
   hints: [
     'Count the frequency of each even number using a hash map.',
     'Track the maximum frequency and the smallest element with that frequency.',
+    `\`\`\`js
+function mostFrequentEven(nums) {
+  const freq = {};
+  for (const n of nums) if(n%2===0) freq[n]=(freq[n]||0)+1;
+  let best = -1, maxF = 0;
+  for (const [k,v] of Object.entries(freq)) {
+    const n = Number(k);
+    if (v>maxF || (v===maxF && n<best)) { maxF=v; best=n; }
+  }
+  return best;
+}\`\`\``,
   ],
   functionName: 'mostFrequentEven',
   params: ['nums'],

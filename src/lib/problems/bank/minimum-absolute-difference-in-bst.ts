@@ -85,6 +85,18 @@ export const problem: Problem = {
   hints: [
     'BST inorder traversal yields values in sorted order.',
     'The minimum difference must occur between two consecutive values in inorder sequence — track the previous node value and compute the difference at each step.',
+    `\`\`\`js
+// In-order traversal (sorted); track previous value, compute adjacent diff
+let prev = null, minDiff = Infinity;
+function inOrder(node) {
+  if (!node) return;
+  inOrder(node.left);
+  if (prev !== null) minDiff = Math.min(minDiff, node.val - prev);
+  prev = node.val;
+  inOrder(node.right);
+}
+inOrder(root);
+return minDiff;\`\`\``,
   ],
   functionName: 'getMinimumDifferenceRunner',
   params: ['root'],

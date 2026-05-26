@@ -30,6 +30,14 @@ Return the integer \`num1 - num2\`.`,
   hints: [
     'Iterate from 1 to n and add each number to num1 or num2 based on divisibility by m.',
     'Return num1 - num2.',
+    `\`\`\`js
+function differenceOfSums(n, m) {
+  let num1 = 0, num2 = 0;
+  for (let i = 1; i <= n; i++) {
+    if (i % m !== 0) num1 += i; else num2 += i;
+  }
+  return num1 - num2;
+}\`\`\``,
   ],
   functionName: 'differenceOfSums',
   params: ['n', 'm'],

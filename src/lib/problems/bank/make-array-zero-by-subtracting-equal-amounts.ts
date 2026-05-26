@@ -27,6 +27,10 @@ Return the **minimum** number of operations to make every element equal to \`0\`
   hints: [
     'Each operation removes the current minimum positive value.',
     'The answer equals the number of distinct positive values.',
+    `\`\`\`js
+function minimumOperations(nums) {
+  return new Set(nums.filter(n=>n>0)).size;
+}\`\`\``,
   ],
   functionName: 'minimumOperations',
   params: ['nums'],

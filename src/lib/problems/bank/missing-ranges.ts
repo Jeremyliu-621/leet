@@ -33,6 +33,18 @@ A range \`[a, b]\` is represented as \`"a->b"\` if \`a < b\`, or \`"a"\` if \`a 
   hints: [
     'Iterate through gaps: before the first element, between consecutive elements, and after the last element.',
     'For each gap [start, end], if start === end output "start", otherwise output "start->end".',
+    `\`\`\`js
+function findMissingRanges(nums, lower, upper) {
+  const res = [];
+  const addRange = (lo, hi) => {
+    if (lo > hi) return;
+    res.push(lo===hi ? String(lo) : \`\${lo}->\${hi}\`);
+  };
+  addRange(lower, (nums[0]??upper+1)-1);
+  for (let i=1; i<nums.length; i++) addRange(nums[i-1]+1, nums[i]-1);
+  addRange((nums[nums.length-1]??lower-1)+1, upper);
+  return res;
+}\`\`\``,
   ],
   functionName: 'findMissingRanges',
   params: ['nums', 'lower', 'upper'],

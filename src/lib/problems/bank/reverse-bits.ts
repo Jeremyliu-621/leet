@@ -26,6 +26,12 @@ export const problem: Problem = {
   hints: [
     'Iterate through all 32 bits. For each bit, shift the result left and OR in the least significant bit of n, then shift n right.',
     '```js\nlet result = 0;\nfor (let i = 0; i < 32; i++) {\n  result = (result * 2 + (n & 1)) >>> 0;\n  n = Math.floor(n / 2);\n}\nreturn result >>> 0;\n```',
+    `\`\`\`js
+function reverseBits(n) {
+  let result=0;
+  for(let i=0;i<32;i++){result=(result*2)+(n&1);n>>=1;}
+  return result>>>0;
+}\`\`\``,
   ],
   functionName: 'reverseBits',
   params: ['n'],

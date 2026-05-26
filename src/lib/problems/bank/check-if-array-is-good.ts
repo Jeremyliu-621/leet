@@ -34,6 +34,14 @@ A **permutation** of integers represents a sequence containing each element exac
   hints: [
     'Sort the array. A good array sorted looks like [1,2,3,...,n-1,n,n].',
     'Alternatively: check that n = max(nums), n appears twice, and 1..n-1 each appear once.',
+    `\`\`\`js
+function isGood(nums) {
+  nums.sort((a,b) => a-b);
+  const n = nums.length - 1; // expected max
+  if (nums[n] !== nums[n-1]) return false; // last two must be equal (both == n)
+  for (let i = 0; i < n-1; i++) if (nums[i] !== i+1) return false;
+  return true;
+}\`\`\``,
   ],
   functionName: 'isGood',
   params: ['nums'],

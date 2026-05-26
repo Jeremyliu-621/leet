@@ -36,6 +36,13 @@ Given the string \`s\`, the size of each group \`k\` and the character \`fill\`,
   hints: [
     'Pad s with fill characters until its length is divisible by k, then split into groups of k.',
     '```js\nfunction divideString(s, k, fill) {\n  const rem = s.length % k;\n  if (rem) s += fill.repeat(k - rem);\n  const result = [];\n  for (let i = 0; i < s.length; i += k) result.push(s.slice(i, i+k));\n  return result;\n}\n```',
+    `\`\`\`js
+function divideString(s, k, fill) {
+  while (s.length % k !== 0) s += fill;
+  const res = [];
+  for (let i = 0; i < s.length; i += k) res.push(s.slice(i, i+k));
+  return res;
+}\`\`\``,
   ],
   functionName: 'divideString',
   params: ['s', 'k', 'fill'],

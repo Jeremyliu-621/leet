@@ -33,6 +33,16 @@ A point is inside a rectangle if \`0 <= xj <= li\` and \`0 <= yj <= hi\`. Points
   hints: [
     'Since heights are at most 100, group rectangles by height. For each point (x, y), count rectangles with h >= y and l >= x.',
     'For each height h, keep sorted list of lengths. Use binary search to find how many lengths >= x.',
+    `\`\`\`js
+// For each pair of points at same y (or use height threshold + binary search)
+// Sort l by height desc; for each query h find all l with height>=h, binary search width>=w
+const sorted = [...l].sort((a,b) => b[1]-a[1] || b[0]-a[0]);
+const res = [];
+const ws = [];
+let qi = 0;
+for (const [h,w] of sorted) ws.push(w);
+// binary search sorted ws for count >= minW
+return res;\`\`\``,
   ],
   functionName: 'countRectangles',
   params: ['rectangles', 'points'],

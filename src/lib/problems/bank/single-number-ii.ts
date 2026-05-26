@@ -20,6 +20,16 @@ You must implement a solution with linear runtime complexity and use only consta
   hints: [
     'Track two bit masks `ones` and `twos`. For each number: `ones = (ones ^ n) & ~twos`, then `twos = (twos ^ n) & ~ones`.',
     '`ones` holds bits that have appeared once mod 3; `twos` holds bits that have appeared twice mod 3. After processing all numbers, `ones` is the answer.',
+    `\`\`\`js
+function singleNumber(nums) {
+  let ones=0,twos=0;
+  for(const n of nums){
+    ones=(ones^n)&~twos;
+    twos=(twos^n)&~ones;
+  }
+  return ones;
+}
+// Or: count bits mod 3 — each bit of the single number has count%3===1\`\`\``,
   ],
   functionName: 'singleNumber',
   params: ['nums'],

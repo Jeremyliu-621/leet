@@ -34,6 +34,16 @@ If the index is on the left edge of the array, then the left sum is \`0\` (no el
   hints: [
     'Compute the total sum, then iterate left to right maintaining a running left sum.',
     'At each index, the right sum = total - leftSum - nums[i]. Check if leftSum equals rightSum.',
+    `\`\`\`js
+function pivotIndex(nums) {
+  let total = nums.reduce((a,b)=>a+b,0);
+  let left = 0;
+  for (let i = 0; i < nums.length; i++) {
+    if (left === total - left - nums[i]) return i;
+    left += nums[i];
+  }
+  return -1;
+}\`\`\``,
   ],
   functionName: 'pivotIndex',
   params: ['nums'],

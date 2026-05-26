@@ -32,6 +32,15 @@ The **mapped value** of an integer is the new integer obtained by replacing each
   hints: [
     'For each number, compute its mapped value by replacing each digit using mapping[].',
     'Use a stable sort keyed by the mapped value.',
+    `\`\`\`js
+function sortJumbled(mapping, nums) {
+  function mapped(n){
+    return Number(n===0?mapping[0]:String(n).split("").map(d=>mapping[Number(d)]).join(""));
+  }
+  const indexed=nums.map((v,i)=>[v,i,mapped(v)]);
+  indexed.sort((a,b)=>a[2]-b[2]||a[1]-b[1]);
+  return indexed.map(([v])=>v);
+}\`\`\``,
   ],
   functionName: 'sortJumbled',
   params: ['mapping', 'nums'],

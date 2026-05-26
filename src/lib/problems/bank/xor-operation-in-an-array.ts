@@ -28,6 +28,12 @@ Return *the bitwise XOR of all elements of* \`nums\`.`,
   hints: [
     'Build the array nums[i] = start + 2*i for i in 0..n-1.',
     'Return the XOR of all elements using the ^ operator.',
+    `\`\`\`js
+function xorOperation(n, start) {
+  let res=0;
+  for(let i=0;i<n;i++) res^=(start+2*i);
+  return res;
+}\`\`\``,
   ],
   functionName: 'xorOperation',
   params: ['n', 'start'],

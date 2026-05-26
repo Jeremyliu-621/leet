@@ -27,6 +27,10 @@ Return the **minimum** element in \`nums\` after all replacements.`,
   hints: [
     'For each number, compute the sum of its digits by repeatedly taking mod 10 and dividing by 10.',
     'Return the minimum digit sum across all elements.',
+    `\`\`\`js
+function minElement(nums) {
+  return Math.min(...nums.map(n => String(n).split("").reduce((a,c)=>a+Number(c),0)));
+}\`\`\``,
   ],
   functionName: 'minElement',
   params: ['nums'],

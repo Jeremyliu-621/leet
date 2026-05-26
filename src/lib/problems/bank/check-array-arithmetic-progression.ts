@@ -27,6 +27,14 @@ Given an array of numbers \`arr\`, return \`true\` if the array can be rearrange
   hints: [
     'Sort the array first.',
     'After sorting, check that all consecutive differences are equal.',
+    `\`\`\`js
+function canMakeArithmeticProgression(arr) {
+  arr.sort((a,b) => a-b);
+  const d = arr[1] - arr[0];
+  for (let i = 2; i < arr.length; i++)
+    if (arr[i] - arr[i-1] !== d) return false;
+  return true;
+}\`\`\``,
   ],
   functionName: 'canMakeArithmeticProgression',
   params: ['arr'],

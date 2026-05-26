@@ -17,6 +17,16 @@ export const problem: Problem = {
   hints: [
     'Expand around center: for each position i, expand outward checking s[l] == s[r].',
     'Try both odd-length (center at i) and even-length (center between i and i+1) palindromes.',
+    `\`\`\`js
+function longestPalindrome(s) {
+  let best = "";
+  function expand(l, r) {
+    while (l>=0 && r<s.length && s[l]===s[r]) { l--; r++; }
+    if (r-l-1 > best.length) best = s.slice(l+1,r);
+  }
+  for (let i = 0; i < s.length; i++) { expand(i,i); expand(i,i+1); }
+  return best;
+}\`\`\``,
   ],
   functionName: 'longestPalindrome',
   params: ['s'],

@@ -33,6 +33,11 @@ Return the number of unique **arithmetic triplets**.`,
   hints: [
     'Put all values in a Set. For each number n, check if n+diff and n+2*diff are also in the set.',
     'Since nums is strictly increasing, each found triplet is unique.',
+    `\`\`\`js
+function arithmeticTriplets(nums, diff) {
+  const set = new Set(nums);
+  return nums.filter(n => set.has(n+diff) && set.has(n+2*diff)).length;
+}\`\`\``,
   ],
   functionName: 'arithmeticTriplets',
   params: ['nums', 'diff'],

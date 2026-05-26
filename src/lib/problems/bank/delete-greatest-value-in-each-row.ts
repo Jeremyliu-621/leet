@@ -34,6 +34,17 @@ Return the answer after performing the operations.`,
   hints: [
     'Sort each row in ascending order.',
     'For each column (from right to left in sorted rows), take the maximum across all rows and add it to the answer.',
+    `\`\`\`js
+function deleteGreatestValue(grid) {
+  for (const row of grid) row.sort((a,b)=>a-b);
+  let ans = 0;
+  for (let j = grid[0].length-1; j >= 0; j--) {
+    let colMax = 0;
+    for (const row of grid) colMax = Math.max(colMax, row[j]);
+    ans += colMax;
+  }
+  return ans;
+}\`\`\``,
   ],
   functionName: 'deleteGreatestValue',
   params: ['grid'],

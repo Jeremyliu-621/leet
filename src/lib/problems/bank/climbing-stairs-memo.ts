@@ -24,6 +24,17 @@ Implement the solution using **memoization** (top-down dynamic programming).`,
   hints: [
     'Define `climbStairs(n) = climbStairs(n-1) + climbStairs(n-2)` with base cases `climbStairs(0) = 1`, `climbStairs(1) = 1`.',
     'Cache results in a map so each subproblem is solved only once.',
+    `\`\`\`js
+function climbStairs(n) {
+  const memo = {};
+  function dp(i) {
+    if (i <= 1) return 1;
+    if (i in memo) return memo[i];
+    return memo[i] = dp(i-1) + dp(i-2);
+  }
+  return dp(n);
+}
+// Or iterative: let a=1,b=1; for i in 2..n: [a,b]=[b,a+b]; return b\`\`\``,
   ],
   functionName: 'climbStairs',
   params: ['n'],

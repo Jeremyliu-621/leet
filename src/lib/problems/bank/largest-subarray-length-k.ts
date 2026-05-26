@@ -28,6 +28,13 @@ A subarray \`a\` is larger than subarray \`b\` if, at the first position where t
   hints: [
     'The largest subarray of length k starts at the index of the maximum element among nums[0..n-k].',
     'Find the index of the maximum value in nums[0] through nums[n-k], then return the slice of length k starting there.',
+    `\`\`\`js
+function largestSubarray(nums, k) {
+  let bestStart = 0;
+  for (let i = 1; i <= nums.length-k; i++)
+    if (nums[i] > nums[bestStart]) bestStart = i;
+  return nums.slice(bestStart, bestStart+k);
+}\`\`\``,
   ],
   functionName: 'largestSubarray',
   params: ['nums', 'k'],

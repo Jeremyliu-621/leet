@@ -68,6 +68,15 @@ Given the \`head\` of a linked list with even length, return the **maximum twin 
   hints: [
     'Collect all values into an array, then use two pointers from both ends.',
     'Alternatively: find the middle with slow/fast pointers, reverse the second half, then iterate both halves simultaneously.',
+    `\`\`\`js
+// Convert to array, then sum [i] + [n-1-i] for i in 0..n/2-1
+const vals = [];
+let node = head;
+while (node) { vals.push(node.val); node=node.next; }
+const n = vals.length;
+let best = 0;
+for (let i = 0; i < n/2; i++) best = Math.max(best, vals[i]+vals[n-1-i]);
+return best;\`\`\``,
   ],
   functionName: 'pairSumRunner',
   params: ['head'],

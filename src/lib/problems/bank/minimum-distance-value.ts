@@ -27,6 +27,16 @@ The distance value is defined as the number of elements \`arr1[i]\` such that th
   hints: [
     'For each element in arr1, check if there is any element in arr2 within distance d.',
     'Sort arr2 and use binary search to find if any element is within [arr1[i]-d, arr1[i]+d].',
+    `\`\`\`js
+function findTheDistanceValue(arr1, arr2, d) {
+  arr2.sort((a,b)=>a-b);
+  function noClose(v) {
+    let lo=0,hi=arr2.length-1;
+    while(lo<=hi){const mid=(lo+hi)>>1;const diff=Math.abs(arr2[mid]-v);if(diff<=d)return false;if(arr2[mid]<v)lo=mid+1;else hi=mid-1;}
+    return true;
+  }
+  return arr1.filter(noClose).length;
+}\`\`\``,
   ],
   functionName: 'findTheDistanceValue',
   params: ['arr1', 'arr2', 'd'],

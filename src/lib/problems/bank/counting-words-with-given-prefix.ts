@@ -30,6 +30,10 @@ A **prefix** of a string \`s\` is any leading contiguous substring of \`s\`.`,
   hints: [
     'Use String.startsWith (JS) or str.startswith (Python) to check the prefix.',
     'Count all words that match.',
+    `\`\`\`js
+function prefixCount(words, pref) {
+  return words.filter(w => w.startsWith(pref)).length;
+}\`\`\``,
   ],
   functionName: 'prefixCount',
   params: ['words', 'pref'],

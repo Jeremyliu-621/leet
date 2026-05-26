@@ -49,6 +49,10 @@ Implement \`ParkingSystem\`:
   hints: [
     'Just maintain three counters — one for each car type.',
     'When addCar(type) is called, check if the count for that type > 0. If yes, decrement and return true; else return false.',
+    `\`\`\`js
+// Track remaining spots per type in an array [0, big, medium, small]
+const spots = [0, big, medium, small];
+// addCar(type): if spots[type]>0: spots[type]--; return true; else return false\`\`\``,
   ],
   starterCode: {
     javascript: JS_PREAMBLE.trim(),

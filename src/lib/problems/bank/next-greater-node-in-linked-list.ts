@@ -30,6 +30,15 @@ Return an integer array \`answer\` where \`answer[i]\` is the value of the next 
   hints: [
     'Convert the linked list to an array first.',
     'Use a monotonic decreasing stack: for each element, pop elements from the stack that are smaller, setting their answer to the current element.',
+    `\`\`\`js
+// Convert list to array, then apply monotonic stack
+const vals = [], stack = [], res = [];
+let node = head; while (node) { vals.push(node.val); node=node.next; }
+for (let i = 0; i < vals.length; i++) {
+  while (stack.length && vals[stack[stack.length-1]]<vals[i]) res[stack.pop()]=vals[i];
+  stack.push(i); res[i]=0;
+}
+return res;\`\`\``,
   ],
   functionName: 'nextLargerNodesRunner',
   params: ['arr'],

@@ -36,6 +36,18 @@ For example, \`"aabcccccaaa"\` compresses to \`"a2bc5a3"\`, which has length **7
   hints: [
     'Walk through the string tracking the current character and its run length. Each time the character changes (or end of string), write the character and the count (if > 1) to a result buffer.',
     'The count itself may be multi-digit (e.g., 12 → "12" = 2 extra chars), so use `toString()` and add its length.',
+    `\`\`\`js
+function compress(chars) {
+  let write=0,i=0;
+  while(i<chars.length){
+    let j=i;
+    while(j<chars.length&&chars[j]===chars[i]) j++;
+    chars[write++]=chars[i];
+    if(j-i>1) for(const c of String(j-i)) chars[write++]=c;
+    i=j;
+  }
+  return write;
+}\`\`\``,
   ],
   functionName: 'compress',
   params: ['s'],

@@ -26,6 +26,13 @@ export const problem: Problem = {
   hints: [
     'Use a sliding window of size k.',
     'Check if window sum >= k * threshold (avoids floating point).',
+    `\`\`\`js
+function numOfSubarrays(arr, k, threshold) {
+  const target = k*threshold;
+  let sum=arr.slice(0,k).reduce((a,b)=>a+b,0), count=sum>=target?1:0;
+  for(let i=k;i<arr.length;i++){sum+=arr[i]-arr[i-k];if(sum>=target)count++;}
+  return count;
+}\`\`\``,
   ],
   functionName: 'numOfSubarrays',
   params: ['arr', 'k', 'threshold'],

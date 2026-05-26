@@ -32,6 +32,12 @@ Return the rearranged array.`,
   hints: [
     'Collect all elements less than pivot into array "less", equal to pivot into "equal", greater into "greater".',
     'Concatenate: [...less, ...equal, ...greater]. This preserves relative order and runs in O(n).',
+    `\`\`\`js
+function pivotArray(nums, pivot) {
+  const less=[],equal=[],greater=[];
+  for(const n of nums){if(n<pivot)less.push(n);else if(n===pivot)equal.push(n);else greater.push(n);}
+  return [...less,...equal,...greater];
+}\`\`\``,
   ],
   functionName: 'pivotArray',
   params: ['nums', 'pivot'],

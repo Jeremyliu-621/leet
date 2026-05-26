@@ -86,6 +86,20 @@ export const problem: Problem = {
   hints: [
     'This is standard BFS level-order traversal, but with one extra step: reverse the result array at the end.',
     'Alternatively, prepend each level to the front of the result instead of appending.',
+    `\`\`\`js
+// BFS level-order, then reverse result
+const res = [], q = [root];
+while (q.length) {
+  const n = q.length, lvl = [];
+  for (let i = 0; i < n; i++) {
+    const node = q.shift();
+    lvl.push(node.val);
+    if (node.left) q.push(node.left);
+    if (node.right) q.push(node.right);
+  }
+  res.push(lvl);
+}
+return res.reverse();\`\`\``,
   ],
   functionName: 'levelOrderBottomRunner',
   params: ['root'],

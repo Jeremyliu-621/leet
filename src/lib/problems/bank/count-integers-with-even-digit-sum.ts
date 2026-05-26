@@ -28,6 +28,15 @@ The **digit sum** of a positive integer is the sum of all its digits.
   hints: [
     'For each number from 1 to num, sum its digits and check parity.',
     '```js\nfunction countEven(num) {\n  let count = 0;\n  for (let i = 1; i <= num; i++) {\n    const s = String(i).split("").reduce((a,c)=>a+Number(c),0);\n    if (s%2===0) count++;\n  }\n  return count;\n}\n```',
+    `\`\`\`js
+function countEven(num) {
+  let count = 0;
+  for (let n = 1; n <= num; n++) {
+    const s = String(n).split("").reduce((a,c)=>a+Number(c),0);
+    if (s % 2 === 0) count++;
+  }
+  return count;
+}\`\`\``,
   ],
   functionName: 'countEven',
   params: ['num'],

@@ -25,6 +25,13 @@ export const problem: Problem = {
   hints: [
     'Count the frequency of each character. Then check that all frequency values are the same.',
     'Once you have the frequency map, collect the set of distinct frequency values. The answer is true if and only if that set has size 1.',
+    `\`\`\`js
+function areOccurrencesEqual(s) {
+  const freq = {};
+  for (const c of s) freq[c] = (freq[c]||0) + 1;
+  const vals = Object.values(freq);
+  return vals.every(v => v === vals[0]);
+}\`\`\``,
   ],
   functionName: 'areOccurrencesEqual',
   params: ['s'],

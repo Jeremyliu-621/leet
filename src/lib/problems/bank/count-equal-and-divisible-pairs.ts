@@ -26,6 +26,14 @@ export const problem: Problem = {
   hints: [
     'Try all pairs (i, j) with i < j.',
     'Check both conditions: nums[i] == nums[j] and (i * j) % k == 0.',
+    `\`\`\`js
+function countPairs(nums, k) {
+  let count = 0;
+  for (let i = 0; i < nums.length; i++)
+    for (let j = i+1; j < nums.length; j++)
+      if (nums[i] === nums[j] && (i*j) % k === 0) count++;
+  return count;
+}\`\`\``,
   ],
   functionName: 'countPairs',
   params: ['nums', 'k'],

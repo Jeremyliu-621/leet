@@ -32,6 +32,17 @@ Return the resulting array.`,
   hints: [
     'Apply operations left to right first.',
     'Then collect non-zero elements, append the zeros at the end.',
+    `\`\`\`js
+function applyOperations(nums) {
+  for (let i = 0; i < nums.length - 1; i++) {
+    if (nums[i] === nums[i+1]) { nums[i] *= 2; nums[i+1] = 0; }
+  }
+  // move zeros to end (two-pointer stable)
+  let k = 0;
+  for (const v of nums) if (v !== 0) nums[k++] = v;
+  while (k < nums.length) nums[k++] = 0;
+  return nums;
+}\`\`\``,
   ],
   functionName: 'applyOperations',
   params: ['nums'],

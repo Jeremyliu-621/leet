@@ -29,6 +29,11 @@ Return the **total number of matches** played in the tournament until one team w
   hints: [
     'Simulate the rounds: keep halving n (with bye for odd) until n === 1.',
     'Or observe: every match eliminates exactly one team. To go from n teams to 1 winner, exactly n−1 eliminations (matches) are needed.',
+    `\`\`\`js
+function numberOfMatches(n) {
+  return n - 1; // every match eliminates exactly one team
+}
+// Or simulate: let matches=0; while(n>1): if n%2===0: matches+=n/2,n=n/2; else: matches+=(n-1)/2,n=(n-1)/2+1; return matches\`\`\``,
   ],
   functionName: 'numberOfMatches',
   params: ['n'],

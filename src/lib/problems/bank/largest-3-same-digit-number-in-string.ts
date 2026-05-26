@@ -35,6 +35,14 @@ Return the **maximum good** integer as a **string** or return an empty string \`
   hints: [
     'Slide a window of size 3 and check if all three characters are the same.',
     'Track the maximum such substring found.',
+    `\`\`\`js
+function largestGoodInteger(num) {
+  let best = "";
+  for (let i = 0; i <= num.length-3; i++)
+    if (num[i]===num[i+1] && num[i+1]===num[i+2] && num.slice(i,i+3)>best)
+      best = num.slice(i,i+3);
+  return best;
+}\`\`\``,
   ],
   functionName: 'largestGoodInteger',
   params: ['num'],

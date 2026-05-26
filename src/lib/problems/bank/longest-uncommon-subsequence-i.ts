@@ -20,6 +20,11 @@ An **uncommon subsequence** between two strings is a string that is a subsequenc
   hints: [
     'If the strings are equal, they share all subsequences, so there is no uncommon one.',
     'If they differ, the longer string itself is not a subsequence of the shorter one (or they are different lengths). Return max(len(a), len(b)).',
+    `\`\`\`js
+function findLUSlength(a, b) {
+  if (a === b) return -1;
+  return Math.max(a.length, b.length);
+}\`\`\``,
   ],
   functionName: 'findLUSlength',
   params: ['a', 'b'],

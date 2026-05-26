@@ -28,6 +28,15 @@ If there are fewer than \`k\` characters left, reverse all of them. If there are
   hints: [
     'Iterate with step 2k. For each block, reverse s[i..i+k-1].',
     'Handle the case where fewer than k characters remain.',
+    `\`\`\`js
+function reverseStr(s, k) {
+  const a=s.split("");
+  for(let i=0;i<a.length;i+=2*k){
+    let l=i,r=Math.min(i+k-1,a.length-1);
+    while(l<r){[a[l],a[r]]=[a[r],a[l]];l++;r--;}
+  }
+  return a.join("");
+}\`\`\``,
   ],
   functionName: 'reverseStr',
   params: ['s', 'k'],

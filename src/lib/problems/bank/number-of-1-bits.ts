@@ -29,6 +29,13 @@ export const problem: Problem = {
   hints: [
     'Check the lowest bit with `n & 1`, add it to the count, then shift right: `n >>>= 1`. Repeat until `n === 0`.',
     'Faster: `n & (n - 1)` clears the lowest set bit. Count how many times you can do this before `n` becomes 0.',
+    `\`\`\`js
+function hammingWeight(n) {
+  let count = 0;
+  while (n) { count += n&1; n >>>= 1; }
+  return count;
+}
+// Or: n.toString(2).split("").filter(b=>b==="1").length\`\`\``,
   ],
   functionName: 'hammingWeight',
   params: ['n'],

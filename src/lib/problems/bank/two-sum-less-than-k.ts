@@ -28,6 +28,16 @@ If no such pair exists, return \`-1\`.`,
   hints: [
     'Sort the array, then use two pointers (lo at start, hi at end).',
     'If nums[lo] + nums[hi] < k, record the sum and advance lo. Otherwise retreat hi.',
+    `\`\`\`js
+function twoSumLessThanK(nums, k) {
+  nums.sort((a,b)=>a-b);
+  let l=0,r=nums.length-1,best=-1;
+  while(l<r){
+    const s=nums[l]+nums[r];
+    if(s<k){best=Math.max(best,s);l++;}else r--;
+  }
+  return best;
+}\`\`\``,
   ],
   functionName: 'twoSumLessThanK',
   params: ['nums', 'k'],

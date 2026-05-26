@@ -25,6 +25,14 @@ export const problem: Problem = {
   hints: [
     'Track the current best answer. For each number, compare its absolute value to the current best. If equal absolute value, prefer the positive one.',
     'Sort-based: sort by (abs(x), -x) ascending, return the first element.',
+    `\`\`\`js
+function findClosestNumber(nums) {
+  let best = nums[0];
+  for (const n of nums)
+    if (Math.abs(n) < Math.abs(best) || (Math.abs(n) === Math.abs(best) && n > best))
+      best = n;
+  return best;
+}\`\`\``,
   ],
   functionName: 'findClosestNumber',
   params: ['nums'],

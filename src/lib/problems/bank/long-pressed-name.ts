@@ -27,6 +27,15 @@ You examine the \`typed\` string. Return \`true\` if it is possible that it was 
   hints: [
     'Use two pointers i (name) and j (typed).',
     'If name[i]==typed[j], advance both. Else if typed[j]==typed[j-1] (long press), advance j. Otherwise return false.',
+    `\`\`\`js
+function isLongPressedName(name, typed) {
+  let i = 0;
+  for (let j = 0; j < typed.length; j++) {
+    if (i < name.length && typed[j] === name[i]) i++;
+    else if (j === 0 || typed[j] !== typed[j-1]) return false;
+  }
+  return i === name.length;
+}\`\`\``,
   ],
   functionName: 'isLongPressedName',
   params: ['name', 'typed'],

@@ -28,6 +28,16 @@ Return that integer.`,
   hints: [
     'Since arr is sorted, every element that appears > 25% must span at least n/4 consecutive positions.',
     'Check candidates at indices n/4, n/2, 3n/4. Use binary search to count occurrences, or just check if arr[i] == arr[i + n/4].',
+    `\`\`\`js
+function findSpecialValue(arr) {
+  const threshold = arr.length / 4;
+  for (const v of arr) {
+    // binary search leftmost and rightmost
+    const lo = arr.indexOf(v);
+    const hi = arr.lastIndexOf(v);
+    if (hi - lo + 1 > threshold) return v;
+  }
+}\`\`\``,
   ],
   starterCode: {
     javascript: `function findSpecialInteger(arr) {

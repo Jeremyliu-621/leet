@@ -14,6 +14,13 @@ export const problem: Problem = {
   hints: [
     'Group digits by length: 1-digit (1-9, 9 numbers), 2-digit (10-99, 90 numbers), etc.',
     'Find which group n falls into, then find the exact number and digit within that number.',
+    `\`\`\`js
+function findNthDigit(n) {
+  let digits=1, start=1, count=9;
+  while (n>digits*count) { n-=digits*count; digits++; start*=10; count*=10; }
+  const num = start + Math.floor((n-1)/digits);
+  return Number(String(num)[((n-1)%digits)]);
+}\`\`\``,
   ],
   functionName: 'findNthDigit',
   params: ['n'],

@@ -69,6 +69,19 @@ export const problem: Problem = {
   hints: [
     'Find the length `n` and form a cycle by connecting the tail to the head. The effective rotation is `k % n`. The new tail is at position `n - k % n - 1`.',
     'Traverse to position `n - k % n - 1`, save `newHead = cur.next`, break the cycle (`cur.next = null`), and return `newHead`.',
+    `\`\`\`js
+function rotateRight(head, k) {
+  if(!head||!head.next||k===0) return head;
+  let len=1,tail=head;
+  while(tail.next){tail=tail.next;len++;}
+  tail.next=head; // make circular
+  k=k%len;
+  let newTail=head;
+  for(let i=0;i<len-k-1;i++) newTail=newTail.next;
+  const newHead=newTail.next;
+  newTail.next=null;
+  return newHead;
+}\`\`\``,
   ],
   functionName: 'rotateRightRunner',
   params: ['head', 'k'],

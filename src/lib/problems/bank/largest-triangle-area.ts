@@ -32,6 +32,17 @@ Use the shoelace formula for triangle area:
   hints: [
     'Try all combinations of 3 points from the array.',
     'For each triple, compute the area using the shoelace formula and track the maximum.',
+    `\`\`\`js
+function largestTriangleArea(points) {
+  let best = 0;
+  for (let i = 0; i < points.length; i++)
+    for (let j = i+1; j < points.length; j++)
+      for (let k = j+1; k < points.length; k++) {
+        const [x1,y1]= points[i],[x2,y2]=points[j],[x3,y3]=points[k];
+        best = Math.max(best, 0.5*Math.abs(x1*(y2-y3)+x2*(y3-y1)+x3*(y1-y2)));
+      }
+  return best;
+}\`\`\``,
   ],
   functionName: 'largestTriangleArea',
   params: ['points'],

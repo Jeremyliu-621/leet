@@ -34,6 +34,15 @@ It is guaranteed that the operation is always possible — \`s\` does not start 
   hints: [
     'Use a stack: push non-digit chars; when you see a digit, pop the top non-digit char.',
     'Join the stack to get the result.',
+    `\`\`\`js
+function clearDigits(s) {
+  const stack = [];
+  for (const c of s) {
+    if (c >= "0" && c <= "9") stack.pop();
+    else stack.push(c);
+  }
+  return stack.join("");
+}\`\`\``,
   ],
   functionName: 'clearDigits',
   params: ['s'],

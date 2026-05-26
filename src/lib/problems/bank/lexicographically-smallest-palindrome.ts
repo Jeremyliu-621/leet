@@ -26,6 +26,16 @@ Return the **lexicographically smallest** palindrome that can be made using the 
   hints: [
     'Use two pointers from both ends.',
     'At each pair, replace the larger character with the smaller one.',
+    `\`\`\`js
+function makeSmallestPalindrome(s) {
+  const a = s.split("");
+  let l = 0, r = a.length-1;
+  while (l < r) {
+    if (a[l] !== a[r]) { const m = a[l]<a[r] ? a[l] : a[r]; a[l]=m; a[r]=m; }
+    l++; r--;
+  }
+  return a.join("");
+}\`\`\``,
   ],
   functionName: 'makeSmallestPalindrome',
   params: ['s'],

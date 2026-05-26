@@ -28,6 +28,12 @@ Return an index mapping array \`mapping\` from \`nums1\` to \`nums2\` where \`ma
   hints: [
     'Build a hash map from value to index in `nums2`. For each element in `nums1`, look up its index in the map.',
     'If there are duplicates, store lists of indices and pop one off per lookup to ensure correctness.',
+    `\`\`\`js
+function anagramMappings(nums1, nums2) {
+  const pos = {};
+  nums2.forEach((v,i) => pos[v] = i);
+  return nums1.map(v => pos[v]);
+}\`\`\``,
   ],
   functionName: 'anagramMappings',
   params: ['nums1', 'nums2'],

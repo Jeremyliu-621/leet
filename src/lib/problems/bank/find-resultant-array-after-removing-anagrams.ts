@@ -30,6 +30,14 @@ Return \`words\` after performing all operations. It can be shown that selecting
   hints: [
     'Use a stack. For each word, if the top of the stack is an anagram, skip the current word (it would be removed). Otherwise, push it.',
     'Two strings are anagrams if they have the same character frequencies.',
+    `\`\`\`js
+function removeAnagrams(words) {
+  function key(s) { return s.split("").sort().join(""); }
+  const res = [words[0]];
+  for (let i = 1; i < words.length; i++)
+    if (key(words[i]) !== key(words[i-1])) res.push(words[i]);
+  return res;
+}\`\`\``,
   ],
   functionName: 'removeAnagrams',
   params: ['words'],

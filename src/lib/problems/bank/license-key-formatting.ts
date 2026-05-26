@@ -30,6 +30,16 @@ Return the reformatted license key.`,
   hints: [
     'Remove dashes and convert to uppercase.',
     'Compute the size of the first group as len % k (or k if len % k == 0).',
+    `\`\`\`js
+function licenseKeyFormatting(s, k) {
+  const clean = s.replace(/-/g,"").toUpperCase();
+  const parts = [];
+  const first = clean.length % k || k;
+  let i = 0;
+  if (first) { parts.push(clean.slice(0,first)); i=first; }
+  while (i < clean.length) { parts.push(clean.slice(i,i+k)); i+=k; }
+  return parts.join("-");
+}\`\`\``,
   ],
   functionName: 'licenseKeyFormatting',
   params: ['s', 'k'],

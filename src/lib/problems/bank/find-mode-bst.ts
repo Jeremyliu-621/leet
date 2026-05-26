@@ -79,6 +79,18 @@ Assume a BST is defined as follows:
   hints: [
     'Do an in-order traversal (sorted order) and track current value, current count, and max count.',
     'When you see a new value, reset current count. Update modes when current count equals max count.',
+    `\`\`\`js
+// In-order traversal; track current run length
+let prev = null, curCount = 0, maxCount = 0, modes = [];
+function inOrder(node) {
+  if (!node) return;
+  inOrder(node.left);
+  curCount = (node.val === prev) ? curCount+1 : 1;
+  if (curCount > maxCount) { maxCount = curCount; modes = [node.val]; }
+  else if (curCount === maxCount) modes.push(node.val);
+  prev = node.val;
+  inOrder(node.right);
+}\`\`\``,
   ],
   functionName: 'findModeRunner',
   params: ['root'],

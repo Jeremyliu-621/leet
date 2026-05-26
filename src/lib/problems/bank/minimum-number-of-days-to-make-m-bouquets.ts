@@ -34,6 +34,21 @@ To make a bouquet, you need to use \`k\` **adjacent** bloomed flowers from the g
   hints: [
     'Binary search on the answer (day). The feasibility check is monotone.',
     'For a given day d, count consecutive bloomed flowers; each run of ≥k gives floor(run/k) bouquets.',
+    `\`\`\`js
+function minDays(bloomDay, m, k) {
+  if (m*k > bloomDay.length) return -1;
+  function feasible(day) {
+    let bouquets=0, flowers=0;
+    for (const d of bloomDay) {
+      if (d<=day) { flowers++; if(flowers===k){bouquets++;flowers=0;} }
+      else flowers=0;
+    }
+    return bouquets>=m;
+  }
+  let lo=1,hi=Math.max(...bloomDay);
+  while(lo<hi){const mid=(lo+hi)>>1;feasible(mid)?hi=mid:lo=mid+1;}
+  return lo;
+}\`\`\``,
   ],
   functionName: 'minDays',
   params: ['bloomDay', 'm', 'k'],

@@ -26,6 +26,13 @@ Given \`n\`, return the value of T(n).`,
   hints: [
     'Use three variables to track the previous three values and update them iteratively.',
     'T(0)=0, T(1)=1, T(2)=1; for n≥3: next = a+b+c, then shift.',
+    `\`\`\`js
+function tribonacci(n) {
+  if (n===0) return 0; if (n<=2) return 1;
+  let a=0,b=1,c=1;
+  for (let i=3;i<=n;i++) [a,b,c]=[b,c,a+b+c];
+  return c;
+}\`\`\``,
   ],
   functionName: 'tribonacci',
   params: ['n'],

@@ -85,6 +85,20 @@ Answers within \`10^-5\` of the actual answer will be accepted.
   hints: [
     'Use BFS (level-order traversal): process one full level at a time.',
     'For each level, sum all node values and divide by the count of nodes at that level.',
+    `\`\`\`js
+// BFS: push root, for each level collect values, compute average
+let res = [], queue = [root];
+while (queue.length) {
+  const n = queue.length, lvl = [];
+  for (let i = 0; i < n; i++) {
+    const node = queue.shift();
+    lvl.push(node.val);
+    if (node.left) queue.push(node.left);
+    if (node.right) queue.push(node.right);
+  }
+  res.push(lvl.reduce((a,b)=>a+b,0)/lvl.length);
+}
+return res;\`\`\``,
   ],
   functionName: 'averageOfLevelsRunner',
   params: ['root'],

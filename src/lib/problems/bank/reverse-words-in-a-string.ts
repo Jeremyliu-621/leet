@@ -36,6 +36,10 @@ Return a string of the words in reverse order concatenated by a single space.
   hints: [
     'Split the string on whitespace, filter out empty strings (from multiple/leading/trailing spaces), then reverse the resulting array.',
     'Join the reversed array with a single space.',
+    `\`\`\`js
+function reverseWords(s) {
+  return s.trim().split(/\\s+/).reverse().join(" ");
+}\`\`\``,
   ],
   functionName: 'reverseWords',
   params: ['s'],

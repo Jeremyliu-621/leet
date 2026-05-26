@@ -30,6 +30,12 @@ Return \`true\` if you can make every string in \`words\` equal using **any** nu
   hints: [
     'Count the total frequency of each character across all strings.',
     'Each character must be evenly distributable across all strings (i.e., its count must be divisible by words.length).',
+    `\`\`\`js
+function makeEqual(words) {
+  const freq={};
+  for(const w of words) for(const c of w) freq[c]=(freq[c]||0)+1;
+  return Object.values(freq).every(v=>v%words.length===0);
+}\`\`\``,
   ],
   functionName: 'makeEqual',
   params: ['words'],

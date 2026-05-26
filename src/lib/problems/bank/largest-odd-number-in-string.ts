@@ -34,6 +34,12 @@ A **substring** is a contiguous sequence of characters within a string.
   hints: [
     'A number is odd if and only if its last digit is odd.',
     'Scan from right to left. The first odd digit you encounter gives you the answer: return the prefix of `num` ending at that index.',
+    `\`\`\`js
+function largestOddNumber(num) {
+  for (let i = num.length-1; i >= 0; i--)
+    if (Number(num[i]) % 2 === 1) return num.slice(0,i+1);
+  return "";
+}\`\`\``,
   ],
   functionName: 'largestOddNumber',
   params: ['num'],

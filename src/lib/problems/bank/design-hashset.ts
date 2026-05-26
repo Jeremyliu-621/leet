@@ -61,6 +61,12 @@ Implement \`MyHashSet\`:
   hints: [
     'Use a boolean array of size 10^6 + 1 — each index represents a key.',
     'Alternatively, use chaining: an array of buckets where each bucket is a list of keys.',
+    `\`\`\`js
+// Use a boolean array of size 1e6+1
+const set = new Array(1000001).fill(false);
+// add(k): set[k]=true
+// contains(k): return set[k]
+// remove(k): set[k]=false\`\`\``,
   ],
   starterCode: {
     javascript: JS_PREAMBLE.trim(),

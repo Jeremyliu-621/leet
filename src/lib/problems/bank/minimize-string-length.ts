@@ -34,6 +34,10 @@ Return the **minimum** possible length of \`s\` after any number of operations.
   hints: [
     'What is the minimum number of characters we can leave? At least one of each distinct character.',
     'We can always reduce to exactly the number of distinct characters — the answer is just `new Set(s).size`.',
+    `\`\`\`js
+function minimizedStringLength(s) {
+  return new Set(s).size;
+}\`\`\``,
   ],
   starterCode: {
     javascript: `function minimizedStringLength(s) {

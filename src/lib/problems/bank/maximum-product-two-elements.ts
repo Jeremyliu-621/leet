@@ -30,6 +30,11 @@ export const problem: Problem = {
   hints: [
     'The product (a-1)*(b-1) is maximized when a and b are the two largest values in the array.',
     'Find the two largest values in one pass (or sort).',
+    `\`\`\`js
+function maxProduct(nums) {
+  nums.sort((a,b)=>b-a);
+  return (nums[0]-1)*(nums[1]-1);
+}\`\`\``,
   ],
   functionName: 'maxProduct',
   params: ['nums'],

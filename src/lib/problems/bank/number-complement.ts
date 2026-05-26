@@ -16,6 +16,12 @@ export const problem: Problem = {
   hints: [
     'Find the highest set bit in num to build a mask of all 1s the same length, then XOR num with that mask.',
     'For example, 5 = 101, mask = 111 = 7. 5 XOR 7 = 010 = 2.',
+    `\`\`\`js
+function findComplement(num) {
+  let mask = 1;
+  while (mask <= num) mask <<= 1;
+  return (mask-1) ^ num;
+}\`\`\``,
   ],
   functionName: 'findComplement',
   params: ['num'],

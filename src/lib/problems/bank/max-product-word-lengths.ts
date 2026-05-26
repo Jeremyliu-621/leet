@@ -31,6 +31,15 @@ export const problem: Problem = {
   hints: [
     'Represent each word as a bitmask of 26 bits, one per letter.',
     'Two words share no letters if and only if (mask[i] & mask[j]) === 0.',
+    `\`\`\`js
+function maxProduct(words) {
+  const masks = words.map(w => [...w].reduce((m,c)=>m|(1<<(c.charCodeAt(0)-97)),0));
+  let best = 0;
+  for (let i = 0; i < words.length; i++)
+    for (let j = i+1; j < words.length; j++)
+      if ((masks[i]&masks[j])===0) best=Math.max(best,words[i].length*words[j].length);
+  return best;
+}\`\`\``,
   ],
   functionName: 'maxProductWordLengths',
   params: ['words'],

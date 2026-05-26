@@ -29,6 +29,14 @@ export const problem: Problem = {
   hints: [
     'For each pair of distinct indices i,j check if nums[i]+nums[j] === target. O(n²) is fine.',
     '```js\nfunction numOfPairs(nums, target) {\n  let count = 0;\n  for (let i = 0; i < nums.length; i++)\n    for (let j = 0; j < nums.length; j++)\n      if (i !== j && nums[i] + nums[j] === target) count++;\n  return count;\n}\n```',
+    `\`\`\`js
+function numOfPairs(nums, target) {
+  let count=0;
+  for(let i=0;i<nums.length;i++)
+    for(let j=0;j<nums.length;j++)
+      if(i!==j && nums[i]+nums[j]===target) count++;
+  return count;
+}\`\`\``,
   ],
   functionName: 'numOfPairs',
   params: ['nums', 'target'],

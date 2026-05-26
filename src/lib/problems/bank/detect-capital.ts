@@ -24,6 +24,12 @@ Given a string \`word\`, return \`true\` if the usage of capitals in it is right
   hints: [
     'Check if all characters are uppercase, all are lowercase, or only the first is uppercase.',
     'Count the number of uppercase letters. Valid if count == word.length (all caps), count == 0 (no caps), or count == 1 and the first letter is uppercase.',
+    `\`\`\`js
+function detectCapitalUse(word) {
+  return word === word.toUpperCase() ||
+         word === word.toLowerCase() ||
+         word[0] === word[0].toUpperCase() && word.slice(1) === word.slice(1).toLowerCase();
+}\`\`\``,
   ],
   functionName: 'detectCapitalUse',
   params: ['word'],

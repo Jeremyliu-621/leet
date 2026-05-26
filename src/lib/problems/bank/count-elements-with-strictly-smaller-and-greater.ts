@@ -30,6 +30,11 @@ export const problem: Problem = {
   hints: [
     'Find the minimum and maximum of the array.',
     'Count elements strictly between min and max.',
+    `\`\`\`js
+function countElements(nums) {
+  const mn = Math.min(...nums), mx = Math.max(...nums);
+  return nums.filter(n => n > mn && n < mx).length;
+}\`\`\``,
   ],
   functionName: 'countElements',
   params: ['nums'],

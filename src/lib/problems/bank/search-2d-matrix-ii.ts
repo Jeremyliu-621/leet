@@ -31,6 +31,15 @@ export const problem: Problem = {
   hints: [
     'Start at the top-right corner. If the current element equals target, return true. If it is greater than target, move left. If it is less, move down.',
     'This eliminates one row or column at each step, giving O(m + n) time.',
+    `\`\`\`js
+function searchMatrix(matrix, target) {
+  let r=0, c=matrix[0].length-1;
+  while(r<matrix.length && c>=0){
+    if(matrix[r][c]===target) return true;
+    if(matrix[r][c]>target) c--; else r++;
+  }
+  return false;
+}\`\`\``,
   ],
   functionName: 'searchMatrix',
   params: ['matrix', 'target'],

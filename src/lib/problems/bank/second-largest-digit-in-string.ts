@@ -27,6 +27,11 @@ An **alphanumeric** string is a string consisting of lowercase English letters a
   hints: [
     'Collect all distinct digits from the string.',
     'Return the second largest, or -1 if fewer than 2 distinct digits exist.',
+    `\`\`\`js
+function secondHighest(s) {
+  const digits=[...new Set(s.match(/\\d/g)||[])].map(Number).sort((a,b)=>b-a);
+  return digits.length>=2?digits[1]:-1;
+}\`\`\``,
   ],
   functionName: 'secondHighest',
   params: ['s'],

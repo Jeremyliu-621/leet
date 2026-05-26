@@ -83,6 +83,15 @@ export const problem: Problem = {
   hints: [
     'Use BST properties: if node.val < low, only the right subtree can contain values in range; if node.val > high, only the left subtree can.',
     'If low <= node.val <= high, add node.val and recurse both subtrees.',
+    `\`\`\`js
+function rangeSumBST(root, low, high) {
+  if(!root) return 0;
+  let sum=0;
+  if(root.val>=low&&root.val<=high) sum+=root.val;
+  if(root.val>low) sum+=rangeSumBST(root.left,low,high);
+  if(root.val<high) sum+=rangeSumBST(root.right,low,high);
+  return sum;
+}\`\`\``,
   ],
   functionName: 'rangeSumBSTRunner',
   params: ['root', 'low', 'high'],

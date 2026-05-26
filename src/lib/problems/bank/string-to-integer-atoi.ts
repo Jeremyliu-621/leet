@@ -38,6 +38,19 @@ If no digits are read (after skipping whitespace and an optional sign), return \
   hints: [
     'Use a state machine (or sequential if-checks): skip spaces → read sign → read digits → clamp.',
     'After collecting digits, clamp: if result > 2^31 - 1 return 2147483647; if result < -2^31 return -2147483648. Detect overflow early by comparing to 214748364 before adding the next digit.',
+    `\`\`\`js
+function myAtoi(s) {
+  s=s.trimStart();
+  let sign=1,i=0,result=0;
+  const INT_MAX=2**31-1,INT_MIN=-(2**31);
+  if(s[0]==="-"){sign=-1;i++;}else if(s[0]==="+")i++;
+  while(i<s.length&&s[i]>="0"&&s[i]<="9"){
+    result=result*10+Number(s[i++]);
+    if(sign*result>INT_MAX)return INT_MAX;
+    if(sign*result<INT_MIN)return INT_MIN;
+  }
+  return sign*result;
+}\`\`\``,
   ],
   functionName: 'myAtoi',
   params: ['s'],

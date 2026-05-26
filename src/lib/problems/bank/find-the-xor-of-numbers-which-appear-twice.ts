@@ -33,6 +33,14 @@ Return the bitwise \`XOR\` of all numbers that appear **twice** in the array, or
   hints: [
     'Use a hash map to count frequencies of each number.',
     'XOR together all numbers with frequency 2.',
+    `\`\`\`js
+function duplicateNumbersXOR(nums) {
+  const freq = {};
+  for (const n of nums) freq[n] = (freq[n]||0)+1;
+  return Object.entries(freq)
+    .filter(([,c])=>c===2)
+    .reduce((xor,[k])=>xor^Number(k), 0);
+}\`\`\``,
   ],
   functionName: 'duplicateNumbersXOR',
   params: ['nums'],

@@ -38,6 +38,12 @@ Note that there may be **multiple** seats or students in the **same** position a
   hints: [
     'Sort both arrays. The optimal assignment pairs the i-th smallest seat with the i-th smallest student.',
     'The total cost is the sum of absolute differences after sorting both arrays.',
+    `\`\`\`js
+function minMovesToSeat(seats, students) {
+  seats.sort((a,b)=>a-b);
+  students.sort((a,b)=>a-b);
+  return seats.reduce((sum,s,i)=>sum+Math.abs(s-students[i]),0);
+}\`\`\``,
   ],
   functionName: 'minMovesToSeat',
   params: ['seats', 'students'],

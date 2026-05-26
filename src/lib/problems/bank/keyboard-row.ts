@@ -24,6 +24,11 @@ The keyboard rows are:
   hints: [
     'Build a map from each character to its row number.',
     'A word qualifies if all its characters map to the same row.',
+    `\`\`\`js
+function findWords(words) {
+  const rows = ["qwertyuiop","asdfghjkl","zxcvbnm"].map(r=>new Set(r));
+  return words.filter(w => rows.some(row => [...w.toLowerCase()].every(c=>row.has(c))));
+}\`\`\``,
   ],
   functionName: 'findWords',
   params: ['words'],

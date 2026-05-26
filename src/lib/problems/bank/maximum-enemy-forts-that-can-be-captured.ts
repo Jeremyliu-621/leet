@@ -37,6 +37,19 @@ Return the **maximum** number of enemy forts that the army can capture. If the a
   hints: [
     'Scan for pairs (1, -1) or (-1, 1). Count zeros between each such pair.',
     '```js\nfunction captureForts(forts) {\n  let ans = 0, prev = -1;\n  for (let i = 0; i < forts.length; i++) {\n    if (forts[i] !== 0) {\n      if (prev !== -1 && forts[i] !== forts[prev])\n        ans = Math.max(ans, i - prev - 1);\n      prev = i;\n    }\n  }\n  return ans;\n}\n```',
+    `\`\`\`js
+function captureForts(forts) {
+  let best = 0;
+  for (let i = 0; i < forts.length; i++) {
+    if (forts[i] !== 1 && forts[i] !== -1) continue;
+    for (let j = i+1; j < forts.length; j++) {
+      if (forts[j] === 0) continue;
+      if (forts[j] === -forts[i]) best = Math.max(best, j-i-1);
+      break;
+    }
+  }
+  return best;
+}\`\`\``,
   ],
   functionName: 'captureForts',
   params: ['forts'],

@@ -25,6 +25,10 @@ export const problem: Problem = {
   hints: [
     'Count occurrences of `letter` in `s`.',
     'Return `Math.floor(count / s.length * 100)` (JS) or `count * 100 // len(s)` (Python).',
+    `\`\`\`js
+function percentageLetter(s, letter) {
+  return Math.floor(s.split("").filter(c=>c===letter).length/s.length*100);
+}\`\`\``,
   ],
   functionName: 'percentageLetter',
   params: ['s', 'letter'],

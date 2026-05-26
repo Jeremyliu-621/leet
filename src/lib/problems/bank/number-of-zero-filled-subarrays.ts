@@ -32,6 +32,12 @@ A **subarray** is a contiguous non-empty sequence of elements within an array.`,
   hints: [
     'Track the current run of consecutive zeros. A run of length k contributes k*(k+1)/2 subarrays.',
     'Scan left to right: when you see a 0, increment the run counter; otherwise reset it to 0.',
+    `\`\`\`js
+function zeroFilledSubarray(nums) {
+  let res=0,run=0;
+  for(const n of nums){run=n===0?run+1:0;res+=run;}
+  return res;
+}\`\`\``,
   ],
   functionName: 'zeroFilledSubarray',
   params: ['nums'],

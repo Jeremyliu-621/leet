@@ -25,6 +25,13 @@ export const problem: Problem = {
   hints: [
     'Count the frequency of each character using a hash map.',
     'Check that all frequency values are equal (e.g., convert to a Set and verify its size is 1).',
+    `\`\`\`js
+function areOccurrencesEqual(s) {
+  const freq = {};
+  for (const c of s) freq[c] = (freq[c]||0) + 1;
+  const vals = Object.values(freq);
+  return vals.every(v => v === vals[0]);
+}\`\`\``,
   ],
   functionName: 'areOccurrencesEqual',
   params: ['s'],

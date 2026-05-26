@@ -33,6 +33,12 @@ Return the minimum positive value of \`startValue\` such that the step by step s
   hints: [
     'Track the prefix sum as you scan left to right. The minimum startValue is determined by the most negative prefix sum you encounter.',
     'If the minimum prefix sum is `minSum`, then startValue = max(1, 1 - minSum).',
+    `\`\`\`js
+function minStartValue(nums) {
+  let minPrefix = 0, prefix = 0;
+  for (const n of nums) { prefix+=n; minPrefix=Math.min(minPrefix,prefix); }
+  return Math.max(1, 1-minPrefix);
+}\`\`\``,
   ],
   functionName: 'minStartValue',
   params: ['nums'],

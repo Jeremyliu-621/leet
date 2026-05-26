@@ -30,6 +30,10 @@ You must implement a solution with a linear runtime complexity and use only cons
   hints: [
     'XOR of a number with itself is 0. XOR of a number with 0 is the number itself.',
     'XOR all elements together. Every pair cancels out, leaving the single element.',
+    `\`\`\`js
+function singleNumber(nums) {
+  return nums.reduce((xor,n)=>xor^n,0);
+}\`\`\``,
   ],
   functionName: 'singleNumber',
   params: ['nums'],

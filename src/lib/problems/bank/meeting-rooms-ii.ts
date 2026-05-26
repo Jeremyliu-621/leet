@@ -27,6 +27,17 @@ A meeting occupies a room from \`start_i\` (inclusive) to \`end_i\` (exclusive),
   hints: [
     'Sort start times and end times separately. Use two pointers: if the next start time is before the current earliest end time, allocate a new room; otherwise, reuse a room.',
     'Track the maximum of `i - j + 1` (rooms allocated minus rooms freed) over all meeting indices `i`.',
+    `\`\`\`js
+function minMeetingRooms(intervals) {
+  const starts = intervals.map(i=>i[0]).sort((a,b)=>a-b);
+  const ends = intervals.map(i=>i[1]).sort((a,b)=>a-b);
+  let rooms = 0, endPtr = 0;
+  for (let i = 0; i < starts.length; i++) {
+    if (starts[i] < ends[endPtr]) rooms++;
+    else endPtr++;
+  }
+  return rooms;
+}\`\`\``,
   ],
   functionName: 'minMeetingRooms',
   params: ['intervals'],

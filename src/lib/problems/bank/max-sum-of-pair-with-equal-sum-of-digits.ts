@@ -27,6 +27,18 @@ Return *the **maximum** value of* \`nums[i] + nums[j]\` *that you can obtain ove
   hints: [
     'Group numbers by their digit sum. For each group, the maximum pair sum is the sum of the two largest numbers.',
     'Only keep the top 2 numbers per digit sum group to save memory.',
+    `\`\`\`js
+function maximumSum(nums) {
+  const digitSum = n => String(n).split("").reduce((a,c)=>a+Number(c),0);
+  const groups = {};
+  let best = -1;
+  for (const n of nums) {
+    const k = digitSum(n);
+    if (k in groups) { best = Math.max(best, groups[k]+n); groups[k] = Math.max(groups[k],n); }
+    else groups[k] = n;
+  }
+  return best;
+}\`\`\``,
   ],
   functionName: 'maximumSum',
   params: ['nums'],

@@ -25,6 +25,12 @@ You must do this by modifying the input array **in-place** with O(1) extra memor
   hints: [
     'Use two pointers — one at the start, one at the end. Swap, then move them toward each other.',
     'Continue until the pointers cross.',
+    `\`\`\`js
+function reverseString(s) {
+  let l=0,r=s.length-1;
+  while(l<r){[s[l],s[r]]=[s[r],s[l]];l++;r--;}
+  // modifies in place
+}\`\`\``,
   ],
   functionName: 'reverseString',
   params: ['s'],

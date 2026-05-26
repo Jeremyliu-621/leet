@@ -18,6 +18,16 @@ export const problem: Problem = {
   hints: [
     'Use two pointers from both ends.',
     'When characters differ, try deleting either the left or right character and check if the remaining substring is a palindrome.',
+    `\`\`\`js
+function validPalindrome(s) {
+  function isPalin(l,r){while(l<r){if(s[l]!==s[r])return false;l++;r--;}return true;}
+  let l=0,r=s.length-1;
+  while(l<r){
+    if(s[l]!==s[r]) return isPalin(l+1,r)||isPalin(l,r-1);
+    l++;r--;
+  }
+  return true;
+}\`\`\``,
   ],
   functionName: 'validPalindrome',
   params: ['s'],

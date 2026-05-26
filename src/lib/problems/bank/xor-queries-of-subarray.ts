@@ -29,6 +29,12 @@ Return an array containing the result for the given \`queries\`.`,
   hints: [
     'Build a prefix XOR array: prefix[i] = arr[0] XOR ... XOR arr[i-1].',
     'XOR from l to r = prefix[r+1] XOR prefix[l].',
+    `\`\`\`js
+function xorQueries(arr, queries) {
+  const prefix=[0];
+  for(const v of arr) prefix.push(prefix[prefix.length-1]^v);
+  return queries.map(([l,r])=>prefix[r+1]^prefix[l]);
+}\`\`\``,
   ],
   functionName: 'xorQueries',
   params: ['arr', 'queries'],

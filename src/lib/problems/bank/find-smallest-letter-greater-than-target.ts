@@ -37,6 +37,12 @@ If no character is greater, wrap around and return the **first** character in \`
   hints: [
     'Binary search for the leftmost position where letters[mid] > target.',
     'If no such position exists (all letters ≤ target), return letters[0] (wrap around).',
+    `\`\`\`js
+function nextGreatestLetter(letters, target) {
+  for (const c of letters) if (c > target) return c;
+  return letters[0]; // wrap around
+}
+// Binary search: lo=0,hi=letters.length; find first letters[mid]>target\`\`\``,
   ],
   functionName: 'nextGreatestLetter',
   params: ['letters', 'target'],

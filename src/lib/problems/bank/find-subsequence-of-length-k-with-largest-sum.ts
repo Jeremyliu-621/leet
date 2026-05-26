@@ -30,6 +30,14 @@ A **subsequence** is an array that can be derived from another array by deleting
   hints: [
     'Sort by value descending to find the top k elements.',
     'Then sort the selected elements by their original indices to maintain order.',
+    `\`\`\`js
+function maxSubsequence(nums, k) {
+  const indexed = nums.map((v,i)=>[v,i]);
+  indexed.sort((a,b)=>b[0]-a[0]);
+  const top = indexed.slice(0,k);
+  top.sort((a,b)=>a[1]-b[1]);
+  return top.map(([v])=>v);
+}\`\`\``,
   ],
   functionName: 'maxSubsequence',
   params: ['nums', 'k'],

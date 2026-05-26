@@ -31,6 +31,13 @@ Return the number of devices that will be tested.`,
   hints: [
     'Track the count of already-tested devices.',
     'Device i is tested if batteryPercentages[i] - count > 0.',
+    `\`\`\`js
+function countTestedDevices(batteryPercentages) {
+  let tested = 0;
+  for (const b of batteryPercentages)
+    if (b - tested > 0) tested++;
+  return tested;
+}\`\`\``,
   ],
   functionName: 'countTestedDevices',
   params: ['batteryPercentages'],

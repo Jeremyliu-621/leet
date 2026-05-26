@@ -34,6 +34,13 @@ A rotation of an array \`[a[0], a[1], ..., a[n-1]]\` produces the array \`[a[k],
   hints: [
     'A sorted-then-rotated array has at most one "descent" — a position where nums[i] > nums[i+1]. Count these descents (treating the array as circular so you also compare the last element to the first).',
     'If the number of descents is 0 or 1, the array is a valid sorted rotation.',
+    `\`\`\`js
+function check(nums) {
+  let drops = 0, n = nums.length;
+  for (let i = 0; i < n; i++)
+    if (nums[i] > nums[(i+1)%n]) drops++;
+  return drops <= 1;
+}\`\`\``,
   ],
   functionName: 'check',
   params: ['nums'],

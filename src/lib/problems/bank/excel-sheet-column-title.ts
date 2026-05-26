@@ -29,6 +29,16 @@ AB -> 28
   hints: [
     'This is base-26 conversion, but with A=1 instead of A=0. Before extracting each digit, subtract 1 to shift to 0-indexed (0–25).',
     'Loop: `result = String.fromCharCode(65 + (columnNumber - 1) % 26) + result; columnNumber = Math.floor((columnNumber - 1) / 26);` until columnNumber is 0.',
+    `\`\`\`js
+function convertToTitle(columnNumber) {
+  let res = "";
+  while (columnNumber > 0) {
+    columnNumber--;
+    res = String.fromCharCode(65 + columnNumber % 26) + res;
+    columnNumber = Math.floor(columnNumber / 26);
+  }
+  return res;
+}\`\`\``,
   ],
   functionName: 'convertToTitle',
   params: ['columnNumber'],

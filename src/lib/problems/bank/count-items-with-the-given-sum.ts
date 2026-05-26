@@ -29,6 +29,14 @@ The **frequency** of an element is the number of occurrences of that element in 
   hints: [
     'Count the frequency of each element.',
     'Find the maximum frequency, then sum up counts of all elements with that frequency.',
+    `\`\`\`js
+// count max-frequency elements
+function maxFrequencyElements(nums) {
+  const freq = {};
+  for (const n of nums) freq[n] = (freq[n]||0)+1;
+  const maxF = Math.max(...Object.values(freq));
+  return Object.values(freq).filter(f => f===maxF).reduce((a,b)=>a+b,0);
+}\`\`\``,
   ],
   functionName: 'maxFrequencyElements',
   params: ['nums'],

@@ -89,6 +89,17 @@ Trees are given as BFS level-order arrays with \`null\` for missing nodes.`,
   hints: [
     'Use BFS. Once you encounter a null child, all subsequent nodes in the BFS order must also be null.',
     'If you see a non-null node after a null, the tree is not complete.',
+    `\`\`\`js
+// BFS; once you see null, all remaining must also be null
+const q = [root];
+let seenNull = false;
+while (q.length) {
+  const node = q.shift();
+  if (!node) { seenNull = true; continue; }
+  if (seenNull) return false;
+  q.push(node.left, node.right);
+}
+return true;\`\`\``,
   ],
   functionName: 'isCompleteTreeRunner',
   params: ['root'],

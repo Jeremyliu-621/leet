@@ -37,6 +37,14 @@ Ties are broken by row (ascending), then by column (ascending).`,
   hints: [
     'Collect all [r, c] pairs and sort them by Manhattan distance from (rCenter, cCenter).',
     'Break ties by row ascending, then column ascending.',
+    `\`\`\`js
+function allCellsDistOrder(rows, cols, rCenter, cCenter) {
+  const cells = [];
+  for (let r = 0; r < rows; r++)
+    for (let c = 0; c < cols; c++)
+      cells.push([r,c]);
+  return cells.sort((a,b)=>(Math.abs(a[0]-rCenter)+Math.abs(a[1]-cCenter))-(Math.abs(b[0]-rCenter)+Math.abs(b[1]-cCenter)));
+}\`\`\``,
   ],
   functionName: 'matrixCellsInDistanceOrder',
   params: ['rows', 'cols', 'rCenter', 'cCenter'],

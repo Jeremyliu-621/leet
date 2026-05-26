@@ -30,6 +30,16 @@ Return an array \`answer\` where \`answer[i]\` is the answer to the ith query.`,
   hints: [
     'k = (all ones of length maximumBit) XOR (current XOR of remaining nums).',
     'For each query, XOR with the element being removed to update the running XOR.',
+    `\`\`\`js
+function getMaximumXor(nums, maximumBit) {
+  const mask = (1 << maximumBit) - 1;
+  let xorAll = nums.reduce((a,b)=>a^b,0);
+  return nums.map((_,i,a) => {
+    const ans = xorAll ^ mask; // flip all bits within maximumBit
+    xorAll ^= a[a.length-1-i]; // remove last element from XOR
+    return ans;
+  });
+}\`\`\``,
   ],
   functionName: 'getMaximumXor',
   params: ['nums', 'maximumBit'],

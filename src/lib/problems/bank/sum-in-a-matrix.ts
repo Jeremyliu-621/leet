@@ -31,6 +31,17 @@ Return *the final score*.`,
   hints: [
     'Sort each row in descending order. Then, for column j, take the max across all rows.',
     'The answer is the sum of column maxima (after sorting rows descending): sum over j of max(nums[i][j] for all i).',
+    `\`\`\`js
+function matrixSum(nums) {
+  for(const row of nums) row.sort((a,b)=>b-a);
+  let score=0;
+  for(let j=0;j<nums[0].length;j++){
+    let colMax=0;
+    for(const row of nums) colMax=Math.max(colMax,row[j]);
+    score+=colMax;
+  }
+  return score;
+}\`\`\``,
   ],
   functionName: 'matrixSum',
   params: ['nums'],

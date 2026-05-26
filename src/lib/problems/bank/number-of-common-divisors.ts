@@ -26,6 +26,16 @@ An integer \`x\` is a **common divisor** of \`a\` and \`b\` if \`x\` divides bot
   hints: [
     'Every common divisor of a and b divides gcd(a, b).',
     'Count the divisors of gcd(a, b) in O(sqrt(gcd)) time.',
+    `\`\`\`js
+function commonDivisors(a, b) {
+  function gcd(x,y){return y?gcd(y,x%y):x;}
+  const g = gcd(a,b);
+  let count=0;
+  for (let i=1;i*i<=g;i++) {
+    if(g%i===0){count++;if(i!==g/i)count++;}
+  }
+  return count;
+}\`\`\``,
   ],
   functionName: 'commonDivisors',
   params: ['a', 'b'],

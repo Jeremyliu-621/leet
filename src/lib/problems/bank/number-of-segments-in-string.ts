@@ -21,6 +21,11 @@ A **segment** is defined as a contiguous sequence of **non-space characters**.`,
   hints: [
     'Split by spaces and count non-empty strings.',
     'Or count positions where s[i] != " " and (i == 0 or s[i-1] == " ").',
+    `\`\`\`js
+function countSegments(s) {
+  return s.trim().split(/\\s+/).filter(Boolean).length;
+}
+// Edge case: if s is all spaces, return 0\`\`\``,
   ],
   functionName: 'countSegments',
   params: ['s'],

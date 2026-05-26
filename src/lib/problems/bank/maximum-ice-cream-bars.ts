@@ -33,6 +33,17 @@ Return the **maximum** number of ice cream bars the boy can buy with \`coins\` c
   hints: [
     'Sort the costs array in ascending order.',
     'Greedily buy the cheapest bars first until you run out of coins.',
+    `\`\`\`js
+function maxIceCream(costs, coins) {
+  costs.sort((a,b)=>a-b);
+  let count = 0;
+  for (const c of costs) {
+    if (coins < c) break;
+    coins -= c;
+    count++;
+  }
+  return count;
+}\`\`\``,
   ],
   functionName: 'maxIceCream',
   params: ['costs', 'coins'],

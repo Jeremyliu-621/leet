@@ -31,6 +31,11 @@ A string is **palindromic** if it reads the same forward and backward.`,
   hints: [
     'Check each string with two pointers from both ends.',
     'Return the first word where all mirrored characters match.',
+    `\`\`\`js
+function firstPalindrome(words) {
+  function isPalin(s) { return s === s.split("").reverse().join(""); }
+  return words.find(isPalin) ?? "";
+}\`\`\``,
   ],
   functionName: 'firstPalindrome',
   params: ['words'],

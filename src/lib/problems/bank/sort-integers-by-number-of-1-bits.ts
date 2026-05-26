@@ -25,6 +25,11 @@ Return the sorted array.`,
   hints: [
     'Sort with a custom comparator: first by popcount (number of set bits), then by numeric value to break ties.',
     'Use bit tricks to count set bits: repeatedly extract the lowest bit with `n & 1` and shift right, or use `n.toString(2).split("0").join("").length`.',
+    `\`\`\`js
+function sortByBits(arr) {
+  const popcount=n=>n.toString(2).split("").filter(b=>b==="1").length;
+  return arr.sort((a,b)=>popcount(a)-popcount(b)||a-b);
+}\`\`\``,
   ],
   functionName: 'sortByBits',
   params: ['arr'],

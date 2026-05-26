@@ -30,6 +30,15 @@ Return the **maximum** value of \`F(0), F(1), ..., F(n - 1)\`.`,
   hints: [
     'Note that F(k) - F(k-1) = sum(nums) - n * nums[n-k]. Use this recurrence instead of recomputing from scratch.',
     'Compute F(0) first, then use the relation F(k) = F(k-1) + sum(nums) - n * nums[n-k] to compute each subsequent value in O(1).',
+    `\`\`\`js
+function maxRotateFunction(nums) {
+  const n=nums.length;
+  const total=nums.reduce((a,b)=>a+b,0);
+  let f0=nums.reduce((s,v,i)=>s+i*v,0);
+  let best=f0;
+  for(let k=1;k<n;k++){f0=f0+total-n*nums[n-k];best=Math.max(best,f0);}
+  return best;
+}\`\`\``,
   ],
   functionName: 'maxRotateFunction',
   params: ['nums'],

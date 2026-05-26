@@ -35,6 +35,16 @@ A **substring** is a contiguous sequence of characters in a string.`,
   hints: [
     'Convert num to a string and slide a window of size k.',
     'For each window, parse as an integer (skip zeros) and check if it divides num.',
+    `\`\`\`js
+function divisorSubstrings(num, k) {
+  const s = String(num);
+  let count = 0;
+  for (let i = 0; i <= s.length-k; i++) {
+    const sub = Number(s.slice(i, i+k));
+    if (sub !== 0 && num % sub === 0) count++;
+  }
+  return count;
+}\`\`\``,
   ],
   functionName: 'divisorSubstrings',
   params: ['num', 'k'],

@@ -27,6 +27,16 @@ A **substring** is a contiguous sequence of characters within a string.`,
   hints: [
     'Record the first occurrence index of each character.',
     'For each character, if seen before, the substring length between them is current_index - first_index - 1.',
+    `\`\`\`js
+function maxLengthBetweenEqualCharacters(s) {
+  const first = {};
+  let best = -1;
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] in first) best = Math.max(best, i - first[s[i]] - 1);
+    else first[s[i]] = i;
+  }
+  return best;
+}\`\`\``,
   ],
   functionName: 'maxLengthBetweenEqualCharacters',
   params: ['s'],

@@ -36,6 +36,18 @@ Return the **minimum** number of minutes needed to pick up all the garbage.
   hints: [
     'For each garbage type, count total chars (pick time) plus travel from 0 to the last index containing that type.',
     '```js\nfunction garbageCollection(garbage, travel) {\n  let ans = 0;\n  for (const type of ["M","P","G"]) {\n    let travelCost = 0, lastTravel = 0;\n    for (let i = 0; i < garbage.length; i++) {\n      if (i > 0) lastTravel += travel[i - 1];\n      const cnt = garbage[i].split("").filter(c => c === type).length;\n      if (cnt > 0) { ans += cnt; travelCost = lastTravel; }\n    }\n    ans += travelCost;\n  }\n  return ans;\n}\n```',
+    `\`\`\`js
+function garbageCollection(garbage, travel) {
+  const prefix = [0];
+  for (const t of travel) prefix.push(prefix[prefix.length-1]+t);
+  let total = 0;
+  for (const type of ["M","P","G"]) {
+    let lastIdx = -1;
+    garbage.forEach((g,i)=>{ if(g.includes(type)) lastIdx=i; });
+    total += prefix[lastIdx] + garbage.slice(0,lastIdx+1).reduce((a,g)=>a+g.split("").filter(c=>c===type).length,0);
+  }
+  return total;
+}\`\`\``,
   ],
   functionName: 'garbageCollection',
   params: ['garbage', 'travel'],

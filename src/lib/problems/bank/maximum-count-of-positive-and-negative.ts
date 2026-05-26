@@ -35,6 +35,12 @@ export const problem: Problem = {
   hints: [
     'Count elements less than 0 and elements greater than 0.',
     'Since the array is sorted, binary search can find the boundaries efficiently.',
+    `\`\`\`js
+function maximumCount(nums) {
+  const neg = nums.filter(n=>n<0).length;
+  const pos = nums.filter(n=>n>0).length;
+  return Math.max(neg, pos);
+}\`\`\``,
   ],
   functionName: 'maximumCount',
   params: ['nums'],

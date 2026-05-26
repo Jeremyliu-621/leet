@@ -21,6 +21,15 @@ Return the \`k\`th **positive** integer that is **missing** from this array.`,
   hints: [
     'Iterate through positive integers 1, 2, 3, ... and count those not in arr. Return when you reach the kth missing.',
     'Binary search: at index i, the number of missing integers is arr[i] - (i+1). Find the last index where count < k.',
+    `\`\`\`js
+function findKthPositive(arr, k) {
+  const set = new Set(arr);
+  let count = 0;
+  for (let n = 1; ; n++) {
+    if (!set.has(n)) { count++; if (count === k) return n; }
+  }
+}
+// Binary search: lo=0,hi=arr.length; missing(mid)=arr[mid]-(mid+1); find first mid where missing>=k\`\`\``,
   ],
   functionName: 'findKthPositive',
   params: ['arr', 'k'],

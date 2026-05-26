@@ -33,6 +33,13 @@ Return the **pivot integer** \`x\`. If no such integer exists, return \`-1\`. It
   hints: [
     'The sum from 1 to x is x*(x+1)/2. The sum from x to n is n*(n+1)/2 - x*(x-1)/2. Setting these equal gives x² = n*(n+1)/2.',
     'So x = sqrt(n*(n+1)/2). If x is a positive integer ≤ n, return it; otherwise return -1.',
+    `\`\`\`js
+function pivotInteger(n) {
+  // x*(x+1)/2 = total - x*(x-1)/2  =>  x^2 = n*(n+1)/2
+  const total = n*(n+1)/2;
+  const x = Math.round(Math.sqrt(total));
+  return x*x === total ? x : -1;
+}\`\`\``,
   ],
   functionName: 'pivotInteger',
   params: ['n'],

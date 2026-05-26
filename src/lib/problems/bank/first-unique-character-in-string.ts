@@ -30,6 +30,13 @@ export const problem: Problem = {
   hints: [
     'Count the frequency of each character using a hash map.',
     'Then scan left to right and return the first index with frequency 1.',
+    `\`\`\`js
+function firstUniqChar(s) {
+  const freq = {};
+  for (const c of s) freq[c] = (freq[c]||0)+1;
+  for (let i = 0; i < s.length; i++) if (freq[s[i]] === 1) return i;
+  return -1;
+}\`\`\``,
   ],
   functionName: 'firstUniqChar',
   params: ['s'],

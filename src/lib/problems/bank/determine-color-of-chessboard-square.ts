@@ -38,6 +38,12 @@ The square named "a1" is black.`,
   hints: [
     'A square is white when (column_index + row) is odd.',
     'Use the character code of the column letter plus the digit to check parity.',
+    `\`\`\`js
+function squareIsWhite(coordinates) {
+  // col char: a=0,b=1,...h=7; row char: 1-8
+  // white if (col + row) is odd
+  return (coordinates.charCodeAt(0) + Number(coordinates[1])) % 2 === 1;
+}\`\`\``,
   ],
   functionName: 'squareIsWhite',
   params: ['coordinates'],

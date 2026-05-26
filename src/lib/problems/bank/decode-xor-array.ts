@@ -33,6 +33,12 @@ Return the original array \`arr\`. It can be proved that the answer exists and i
   hints: [
     'arr[i] = encoded[i-1] XOR arr[i-1] for i >= 1.',
     'Start from first and build the array iteratively.',
+    `\`\`\`js
+function decode(encoded, first) {
+  const arr = [first];
+  for (const e of encoded) arr.push(arr[arr.length-1] ^ e);
+  return arr;
+}\`\`\``,
   ],
   functionName: 'decode',
   params: ['encoded', 'first'],

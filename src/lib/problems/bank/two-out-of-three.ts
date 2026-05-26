@@ -30,6 +30,13 @@ export const problem: Problem = {
   hints: [
     'For each value, count how many of the three arrays contain it (using sets to deduplicate within each array).',
     'Collect values with a count ≥ 2.',
+    `\`\`\`js
+function twoOutOfThree(nums1, nums2, nums3) {
+  const count={};
+  for(const arr of [nums1,nums2,nums3])
+    for(const n of new Set(arr)) count[n]=(count[n]||0)+1;
+  return Object.entries(count).filter(([,v])=>v>=2).map(([k])=>Number(k));
+}\`\`\``,
   ],
   functionName: 'twoOutOfThree',
   params: ['nums1', 'nums2', 'nums3'],

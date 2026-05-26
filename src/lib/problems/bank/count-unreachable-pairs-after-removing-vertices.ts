@@ -30,6 +30,19 @@ Return the number of **pairs** of different nodes that are **unreachable** from 
   hints: [
     'Find all connected components using Union-Find.',
     'For each component of size s, it contributes s × (remaining nodes) unreachable pairs.',
+    `\`\`\`js
+// Build adjacency list, DFS/BFS to find component sizes
+// For each component of size s, it contributes s * (total - s) pairs (but halve at end)
+const adj = Array.from({length: n}, ()=>[]);
+for (const [u,v] of edges) { adj[u].push(v); adj[v].push(u); }
+const vis = new Array(n).fill(false);
+const sizes = [];
+for (let i = 0; i < n; i++) {
+  if (!vis[i]) { /* BFS to find component size */ sizes.push(size); }
+}
+let res = 0n, rem = BigInt(n);
+for (const s of sizes) { rem -= BigInt(s); res += BigInt(s) * rem; }
+return Number(res);\`\`\``,
   ],
   functionName: 'countPairs',
   params: ['n', 'edges'],

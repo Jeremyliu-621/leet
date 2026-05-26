@@ -26,6 +26,17 @@ Letters are **case sensitive**, so \`"Aa"\` is not considered a palindrome.`,
   hints: [
     'Count the frequency of each character. A character with an even count can be fully used. A character with an odd count can contribute `count - 1` characters (making it even), plus one character can go in the middle.',
     'If any character has an odd count, add 1 to the total for the center position.',
+    `\`\`\`js
+function longestPalindrome(s) {
+  const freq = {};
+  for (const c of s) freq[c] = (freq[c]||0)+1;
+  let len = 0, hasOdd = false;
+  for (const v of Object.values(freq)) {
+    len += v - (v%2);
+    if (v%2===1) hasOdd=true;
+  }
+  return len + (hasOdd ? 1 : 0);
+}\`\`\``,
   ],
   functionName: 'longestPalindrome',
   params: ['s'],

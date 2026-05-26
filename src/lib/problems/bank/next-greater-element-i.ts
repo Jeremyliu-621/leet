@@ -33,6 +33,16 @@ Return an array \`ans\` of length \`nums1.length\` such that \`ans[i]\` is the n
   hints: [
     'Use a monotonic decreasing stack on nums2 to build a next-greater map.',
     'Then for each element in nums1, look up the map.',
+    `\`\`\`js
+function nextGreaterElement(nums1, nums2) {
+  const nextGreater = {};
+  const stack = [];
+  for (const n of nums2) {
+    while (stack.length && stack[stack.length-1]<n) nextGreater[stack.pop()]=n;
+    stack.push(n);
+  }
+  return nums1.map(n => nextGreater[n]??-1);
+}\`\`\``,
   ],
   functionName: 'nextGreaterElement',
   params: ['nums1', 'nums2'],

@@ -32,6 +32,19 @@ The values in the two lists should be returned in **increasing** order.`,
   hints: [
     'Track loss counts in a map. Initialize winners to 0 losses if not already there.',
     'Filter players into two lists based on their loss count.',
+    `\`\`\`js
+function findWinners(matches) {
+  const losses = new Map();
+  for (const [w,l] of matches) {
+    if (!losses.has(w)) losses.set(w, 0);
+    losses.set(l, (losses.get(l)||0)+1);
+  }
+  const zero=[], one=[];
+  for (const [p,lc] of losses) {
+    if (lc === 0) zero.push(p); else if (lc === 1) one.push(p);
+  }
+  return [zero.sort((a,b)=>a-b), one.sort((a,b)=>a-b)];
+}\`\`\``,
   ],
   functionName: 'findWinners',
   params: ['matches'],

@@ -23,6 +23,12 @@ export const problem: Problem = {
   hints: [
     'Simulate the process: while the number has more than one digit, sum its digits and repeat.',
     'There is an O(1) math trick — the answer is the digital root, which for a positive number equals `num % 9` (or 9 when that is 0). For 0 the answer is 0.',
+    `\`\`\`js
+function addDigits(num) {
+  if (num === 0) return 0;
+  return 1 + (num - 1) % 9; // digital root formula
+}
+// Or: while num>=10: num=String(num).split("").reduce((a,c)=>a+Number(c),0); return num\`\`\``,
   ],
   functionName: 'addDigits',
   params: ['num'],

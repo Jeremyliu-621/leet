@@ -33,6 +33,13 @@ Return the positive integer \`k\`. If there is no such integer, return \`-1\`.`,
   hints: [
     'Store all numbers in a set.',
     'For each positive x, check if -x is also in the set.',
+    `\`\`\`js
+function findMaxK(nums) {
+  const set = new Set(nums);
+  let best = -1;
+  for (const n of nums) if (n > 0 && set.has(-n)) best = Math.max(best, n);
+  return best;
+}\`\`\``,
   ],
   functionName: 'findMaxK',
   params: ['nums'],

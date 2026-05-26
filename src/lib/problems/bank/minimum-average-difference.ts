@@ -25,6 +25,20 @@ Return the index with the **minimum average difference**. If there is a tie, ret
   hints: [
     'Compute the prefix sum once. At each index, left average = prefix[i+1] / (i+1), right average = (total - prefix[i+1]) / (n-i-1).',
     'Track the minimum difference and the first index achieving it.',
+    `\`\`\`js
+function minimumAverageDifference(nums) {
+  const n = nums.length;
+  const total = nums.reduce((a,b)=>a+b,0);
+  let leftSum = 0, bestIdx = 0, bestDiff = Infinity;
+  for (let i = 0; i < n; i++) {
+    leftSum += nums[i];
+    const leftAvg = Math.floor(leftSum/(i+1));
+    const rightAvg = i===n-1?0:Math.floor((total-leftSum)/(n-i-1));
+    const diff = Math.abs(leftAvg-rightAvg);
+    if (diff < bestDiff) { bestDiff=diff; bestIdx=i; }
+  }
+  return bestIdx;
+}\`\`\``,
   ],
   functionName: 'minimumAverageDifference',
   params: ['nums'],

@@ -32,6 +32,15 @@ Note that after backspacing an empty text, the text will continue empty.`,
   hints: [
     'Simulate the typing: build the final string by iterating characters. When you see `#`, pop the last character from the stack (if any).',
     'Compare the two resulting strings.',
+    `\`\`\`js
+function backspaceCompare(s, t) {
+  function process(str) {
+    const stack = [];
+    for (const c of str) c === "#" ? stack.pop() : stack.push(c);
+    return stack.join("");
+  }
+  return process(s) === process(t);
+}\`\`\``,
   ],
   functionName: 'backspaceCompare',
   params: ['s', 't'],

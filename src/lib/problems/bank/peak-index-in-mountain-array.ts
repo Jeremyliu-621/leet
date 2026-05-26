@@ -34,6 +34,12 @@ Your solution must run in \`O(log n)\` time complexity.
   hints: [
     'Binary search: if arr[mid] < arr[mid+1], the peak lies to the right.',
     '```js\nfunction peakIndexInMountainArray(arr) {\n  let l = 0, r = arr.length - 1;\n  while (l < r) {\n    const mid = (l + r) >> 1;\n    if (arr[mid] < arr[mid + 1]) l = mid + 1;\n    else r = mid;\n  }\n  return l;\n}\n```',
+    `\`\`\`js
+function peakIndexInMountainArray(arr) {
+  let lo=1,hi=arr.length-2;
+  while(lo<hi){const mid=(lo+hi)>>1;arr[mid]<arr[mid+1]?lo=mid+1:hi=mid;}
+  return lo;
+}\`\`\``,
   ],
   functionName: 'peakIndexInMountainArray',
   params: ['arr'],

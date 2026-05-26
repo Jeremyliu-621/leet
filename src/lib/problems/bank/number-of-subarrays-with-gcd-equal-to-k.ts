@@ -30,6 +30,16 @@ The **greatest common divisor of an array** is the largest integer that evenly d
   hints: [
     'For each starting index i, compute the running gcd extending to the right.',
     'Since gcd can only decrease as we extend, break early when gcd < k.',
+    `\`\`\`js
+function subarrayGCD(nums, k) {
+  function gcd(a,b){return b?gcd(b,a%b):a;}
+  let count=0;
+  for(let i=0;i<nums.length;i++){
+    let g=nums[i];
+    for(let j=i;j<nums.length;j++){g=gcd(g,nums[j]);if(g===k)count++;if(g<k)break;}
+  }
+  return count;
+}\`\`\``,
   ],
   functionName: 'subarrayGCD',
   params: ['nums', 'k'],

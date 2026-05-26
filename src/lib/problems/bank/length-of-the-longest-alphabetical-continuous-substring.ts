@@ -29,6 +29,16 @@ Given a string \`s\` consisting of lowercase letters only, return the **length o
   hints: [
     'Scan left to right, extending the current run when s[i] == s[i-1] + 1 (consecutive characters).',
     'Track the current run length and the maximum seen so far.',
+    `\`\`\`js
+function longestContinuousSubstring(s) {
+  let best = 1, cur = 1;
+  for (let i = 1; i < s.length; i++) {
+    if (s.charCodeAt(i) === s.charCodeAt(i-1)+1) cur++;
+    else cur = 1;
+    best = Math.max(best, cur);
+  }
+  return best;
+}\`\`\``,
   ],
   functionName: 'longestContinuousSubstring',
   params: ['s'],

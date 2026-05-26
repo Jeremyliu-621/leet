@@ -28,6 +28,15 @@ Return the string after rearranging the spaces.`,
   hints: [
     'Count total spaces (S) and extract words (n).',
     'If n==1, append all spaces at the end. Otherwise S//(n-1) between each pair, S%(n-1) trailing.',
+    `\`\`\`js
+function reorderSpaces(text) {
+  const words=text.trim().split(/\\s+/);
+  const totalSpaces=(text.match(/ /g)||[]).length;
+  if(words.length===1) return words[0]+" ".repeat(totalSpaces);
+  const spaceBetween=Math.floor(totalSpaces/(words.length-1));
+  const extra=totalSpaces%(words.length-1);
+  return words.join(" ".repeat(spaceBetween))+" ".repeat(extra);
+}\`\`\``,
   ],
   functionName: 'reorderSpaces',
   params: ['text'],

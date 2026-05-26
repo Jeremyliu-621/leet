@@ -35,6 +35,10 @@ Return the number of passengers who are **strictly more than 60 years old**.`,
   hints: [
     'The age is encoded at positions 11 and 12 (0-indexed) of each string.',
     'Parse the two-character substring as a number and check if it is strictly greater than 60.',
+    `\`\`\`js
+function countSeniors(details) {
+  return details.filter(d => Number(d.slice(11,13)) > 60).length;
+}\`\`\``,
   ],
   functionName: 'countSeniors',
   params: ['details'],

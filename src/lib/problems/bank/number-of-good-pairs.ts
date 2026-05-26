@@ -31,6 +31,12 @@ A pair \`(i, j)\` is called **good** if \`nums[i] == nums[j]\` and \`i < j\`.`,
   hints: [
     'For each number, count how many times it has appeared before the current position. Each previous occurrence forms a good pair with the current index.',
     'Use a frequency map. When you encounter nums[i], the number of new good pairs formed is count[nums[i]], then increment count[nums[i]].',
+    `\`\`\`js
+function numIdenticalPairs(nums) {
+  const freq={};
+  for(const n of nums) freq[n]=(freq[n]||0)+1;
+  return Object.values(freq).reduce((s,c)=>s+c*(c-1)/2,0);
+}\`\`\``,
   ],
   functionName: 'numIdenticalPairs',
   params: ['nums'],

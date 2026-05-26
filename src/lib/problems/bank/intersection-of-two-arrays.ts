@@ -24,6 +24,11 @@ export const problem: Problem = {
   hints: [
     'Use a Set for `nums1`. Then check which elements of `nums2` are in the set.',
     'Add matching elements to a result Set to deduplicate, then convert to a sorted array.',
+    `\`\`\`js
+function intersection(nums1, nums2) {
+  const s = new Set(nums2);
+  return [...new Set(nums1.filter(v => s.has(v)))];
+}\`\`\``,
   ],
   functionName: 'intersection',
   params: ['nums1', 'nums2'],

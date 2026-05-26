@@ -35,6 +35,14 @@ Return the \`sentence\` after the replacement.`,
   hints: [
     'For each word in the sentence, check all prefixes starting from the shortest. The first prefix found in the dictionary replaces the word.',
     'Store the dictionary in a Set for O(1) lookups. For each word, iterate prefix lengths from 1 to word.length and return on first match.',
+    `\`\`\`js
+function replaceWords(dictionary, sentence) {
+  const roots=new Set(dictionary);
+  return sentence.split(" ").map(word=>{
+    for(let i=1;i<=word.length;i++) if(roots.has(word.slice(0,i))) return word.slice(0,i);
+    return word;
+  }).join(" ");
+}\`\`\``,
   ],
   functionName: 'replaceWords',
   params: ['dictionary', 'sentence'],

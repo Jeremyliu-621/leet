@@ -35,6 +35,11 @@ Return an array of results for \`"pop"\`, \`"peek"\`, and \`"empty"\` operations
   hints: [
     'Use two stacks: `inbox` for pushes and `outbox` for pops. When `outbox` is empty and you need to pop/peek, pour all elements from `inbox` into `outbox` (reverses their order).',
     'This gives amortized O(1) per operation — each element moves at most twice total.',
+    `\`\`\`js
+// Two stacks: inbox (push) and outbox (pop/peek)
+// Transfer inbox→outbox only when outbox is empty
+// push: inbox.push(x)
+// pop/peek: if outbox empty, while inbox.length: outbox.push(inbox.pop()); return outbox.pop/top\`\`\``,
   ],
   functionName: 'queueOps',
   params: ['operations', 'values'],

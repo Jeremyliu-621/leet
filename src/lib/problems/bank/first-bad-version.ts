@@ -41,6 +41,18 @@ You are given an API \`bool isBadVersion(version)\` which returns whether \`vers
   hints: [
     'Binary search: if isBadVersion(mid) is true, the first bad is at mid or earlier.',
     'If isBadVersion(mid) is false, the first bad is after mid.',
+    `\`\`\`js
+function solution(isBadVersion) {
+  return function(n) {
+    let lo = 1, hi = n;
+    while (lo < hi) {
+      const mid = lo + Math.floor((hi-lo)/2);
+      if (isBadVersion(mid)) hi = mid;
+      else lo = mid+1;
+    }
+    return lo;
+  };
+}\`\`\``,
   ],
   functionName: 'firstBadVersionRunner',
   params: ['n', 'firstBad'],

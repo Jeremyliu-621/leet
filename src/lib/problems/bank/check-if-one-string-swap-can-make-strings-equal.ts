@@ -28,6 +28,16 @@ Return \`true\` if it is possible to make both strings equal by performing **at 
   hints: [
     'Find all positions where s1[i] != s2[i]. There should be 0 or 2 such positions.',
     'If 2 positions, check that swapping those in s1 gives s2.',
+    `\`\`\`js
+function areAlmostEqual(s1, s2) {
+  const diffs = [];
+  for (let i = 0; i < s1.length; i++)
+    if (s1[i] !== s2[i]) diffs.push(i);
+  if (diffs.length === 0) return true;
+  if (diffs.length !== 2) return false;
+  const [a, b] = diffs;
+  return s1[a] === s2[b] && s1[b] === s2[a];
+}\`\`\``,
   ],
   functionName: 'areAlmostEqual',
   params: ['s1', 's2'],

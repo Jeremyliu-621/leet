@@ -27,6 +27,14 @@ Pick any \`k\` students from the array. Return the **minimum** possible differen
   hints: [
     'Sort the array. The optimal k elements must be consecutive in the sorted order.',
     'Slide a window of size k and track min(arr[i+k-1] - arr[i]).',
+    `\`\`\`js
+function minimumDifference(nums, k) {
+  nums.sort((a,b)=>a-b);
+  let best = Infinity;
+  for (let i = 0; i <= nums.length-k; i++)
+    best = Math.min(best, nums[i+k-1]-nums[i]);
+  return best;
+}\`\`\``,
   ],
   functionName: 'minimumDifference',
   params: ['nums', 'k'],

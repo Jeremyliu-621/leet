@@ -31,6 +31,17 @@ A **subsequence** is an array that can be derived from another array by deleting
   hints: [
     'Sort nums to greedily take smallest elements first.',
     'Build prefix sums. For each query, binary-search for the largest prefix ≤ query.',
+    `\`\`\`js
+function answerQueries(nums, queries) {
+  nums.sort((a,b)=>a-b);
+  const prefix = [0];
+  for (const n of nums) prefix.push(prefix[prefix.length-1]+n);
+  return queries.map(q => {
+    let lo=0,hi=prefix.length-1;
+    while(lo<hi){const mid=(lo+hi+1)>>1;prefix[mid]<=q?lo=mid:hi=mid-1;}
+    return lo;
+  });
+}\`\`\``,
   ],
   functionName: 'answerQueries',
   params: ['nums', 'queries'],

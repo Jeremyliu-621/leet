@@ -33,6 +33,15 @@ export const problem: Problem = {
   hints: [
     'For each element x, check how many times x+k and x-k have appeared before. Use a frequency map.',
     'Alternatively, a nested loop O(n²) is fine for n ≤ 200.',
+    `\`\`\`js
+function countKDifference(nums, k) {
+  let count = 0;
+  for (let i = 0; i < nums.length; i++)
+    for (let j = i+1; j < nums.length; j++)
+      if (Math.abs(nums[i]-nums[j]) === k) count++;
+  return count;
+}
+// O(n) with freq map: for each num, check num+k in map\`\`\``,
   ],
   functionName: 'countKDifference',
   params: ['nums', 'k'],

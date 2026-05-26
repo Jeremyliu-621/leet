@@ -25,6 +25,11 @@ export const problem: Problem = {
   hints: [
     'The product (nums[i]-1)*(nums[j]-1) is maximized when both nums[i] and nums[j] are as large as possible.',
     'Sort the array and use the two largest elements.',
+    `\`\`\`js
+function maxProduct(nums) {
+  nums.sort((a,b)=>b-a);
+  return (nums[0]-1)*(nums[1]-1);
+}\`\`\``,
   ],
   functionName: 'maxProduct',
   params: ['nums'],

@@ -25,6 +25,13 @@ export const problem: Problem = {
   hints: [
     'Use two pointers: one to track the position to place the next non-zero element, one to scan.',
     'First pass: copy all non-zero elements to the front. Second pass: fill the rest with zeros.',
+    `\`\`\`js
+function moveZeroes(nums) {
+  let k = 0;
+  for (let i = 0; i < nums.length; i++) if(nums[i]!==0) nums[k++]=nums[i];
+  while (k < nums.length) nums[k++] = 0;
+  // return nums; (in-place)
+}\`\`\``,
   ],
   functionName: 'moveZeroes',
   params: ['nums'],

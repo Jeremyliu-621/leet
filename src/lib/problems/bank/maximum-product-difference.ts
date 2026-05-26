@@ -29,6 +29,12 @@ Return the **maximum** such product difference.`,
   hints: [
     'To maximize (a*b) - (c*d), you want a and b to be as large as possible and c and d to be as small as possible.',
     'Sort the array. The answer is (nums[n-1] * nums[n-2]) - (nums[0] * nums[1]).',
+    `\`\`\`js
+function maxProductDifference(nums) {
+  nums.sort((a,b)=>a-b);
+  const n = nums.length;
+  return nums[n-1]*nums[n-2] - nums[0]*nums[1];
+}\`\`\``,
   ],
   functionName: 'maxProductDifference',
   params: ['nums'],

@@ -30,6 +30,10 @@ A **prefix** of a string is any leading contiguous substring of that string.`,
   hints: [
     'Use `String.startsWith()` (JS) or `str.startswith()` (Python) to check each word.',
     'Count how many words satisfy `s.startsWith(word)`.',
+    `\`\`\`js
+function countPrefixes(words, s) {
+  return words.filter(w => s.startsWith(w)).length;
+}\`\`\``,
   ],
   functionName: 'countPrefixes',
   params: ['words', 's'],

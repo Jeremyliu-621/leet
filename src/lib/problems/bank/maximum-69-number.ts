@@ -32,6 +32,10 @@ Return the maximum number you can get by changing **at most** one digit (\`6\` b
   hints: [
     'To maximize the number, change the most significant 6 (the leftmost one) to 9.',
     'Convert to string, replace the first occurrence of "6" with "9", convert back to integer.',
+    `\`\`\`js
+function maximum69Number(num) {
+  return Number(String(num).replace("6","9"));
+}\`\`\``,
   ],
   functionName: 'maximum69Number',
   params: ['num'],

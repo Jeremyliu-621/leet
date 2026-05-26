@@ -29,6 +29,22 @@ Return the positive integer array \`ans = [num1, num2]\`. If there are multiple 
   hints: [
     'Use a sieve to find all primes up to right.',
     'Collect primes in [left, right] and scan adjacent pairs for the minimum gap.',
+    `\`\`\`js
+function closestPrimes(left, right) {
+  function isPrime(n) {
+    if (n < 2) return false;
+    for (let i = 2; i*i <= n; i++) if (n%i===0) return false;
+    return true;
+  }
+  let prev = -1, best = [-1,-1], gap = Infinity;
+  for (let n = left; n <= right; n++) {
+    if (isPrime(n)) {
+      if (prev !== -1 && n-prev < gap) { gap = n-prev; best = [prev,n]; }
+      prev = n;
+    }
+  }
+  return best;
+}\`\`\``,
   ],
   functionName: 'closestPrimes',
   params: ['left', 'right'],

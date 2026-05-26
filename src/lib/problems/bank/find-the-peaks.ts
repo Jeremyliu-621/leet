@@ -31,6 +31,13 @@ Return an array that consists of indices of **peaks** in the given array in **an
   hints: [
     'Iterate through indices 1 to n-2.',
     'Check if mountain[i] > mountain[i-1] AND mountain[i] > mountain[i+1].',
+    `\`\`\`js
+function findPeaks(mountain) {
+  const peaks = [];
+  for (let i = 1; i < mountain.length-1; i++)
+    if (mountain[i] > mountain[i-1] && mountain[i] > mountain[i+1]) peaks.push(i);
+  return peaks;
+}\`\`\``,
   ],
   functionName: 'findPeaks',
   params: ['mountain'],

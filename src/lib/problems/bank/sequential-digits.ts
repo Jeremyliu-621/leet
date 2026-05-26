@@ -16,6 +16,18 @@ Return a **sorted** list of all the integers in the range \`[low, high]\` inclus
   hints: [
     'Generate all sequential-digit numbers: for each starting digit d (1-9), extend right (d,d+1,d+2,...) until you reach 9.',
     'Collect those in [low, high] and sort.',
+    `\`\`\`js
+function sequentialDigits(low, high) {
+  const res=[];
+  const queue=Array.from({length:9},(_,i)=>i+1);
+  while(queue.length){
+    const n=queue.shift();
+    if(n>=low&&n<=high) res.push(n);
+    const last=n%10;
+    if(last<9) queue.push(n*10+last+1);
+  }
+  return res.sort((a,b)=>a-b);
+}\`\`\``,
   ],
   functionName: 'sequentialDigits',
   params: ['low', 'high'],

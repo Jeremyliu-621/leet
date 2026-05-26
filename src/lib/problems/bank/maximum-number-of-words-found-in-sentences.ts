@@ -32,6 +32,10 @@ Return the **maximum number of words** that appear in a single sentence.`,
   hints: [
     'Count words in each sentence by counting spaces and adding 1.',
     'Return the maximum count.',
+    `\`\`\`js
+function mostWordsFound(sentences) {
+  return Math.max(...sentences.map(s => s.split(" ").length));
+}\`\`\``,
   ],
   functionName: 'mostWordsFound',
   params: ['sentences'],

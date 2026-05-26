@@ -25,6 +25,15 @@ export const problem: Problem = {
   hints: [
     'Convert every time string to total minutes from midnight: hours * 60 + minutes.',
     'Sort the minute values. The minimum difference is either between consecutive values or wraps around (1440 - last + first). Check both.',
+    `\`\`\`js
+function findMinDifference(timePoints) {
+  const mins = timePoints.map(t => {
+    const [h,m]=t.split(":").map(Number); return h*60+m;
+  }).sort((a,b)=>a-b);
+  let best = 1440 - mins[mins.length-1] + mins[0]; // wrap
+  for (let i = 1; i < mins.length; i++) best = Math.min(best, mins[i]-mins[i-1]);
+  return best;
+}\`\`\``,
   ],
   functionName: 'findMinDifference',
   params: ['timePoints'],

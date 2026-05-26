@@ -26,6 +26,14 @@ An integer \`x\` is a common factor of \`a\` and \`b\` if \`x\` divides both \`a
   hints: [
     'Iterate from 1 to min(a, b). Count each i where a % i == 0 and b % i == 0.',
     'Alternatively, compute GCD(a, b) and count divisors of the GCD.',
+    `\`\`\`js
+function commonFactors(a, b) {
+  function gcd(x,y){return y?gcd(y,x%y):x;}
+  const g=gcd(a,b);
+  let c=0;
+  for(let i=1;i<=g;i++) if(g%i===0)c++;
+  return c;
+}\`\`\``,
   ],
   functionName: 'commonFactors',
   params: ['a', 'b'],

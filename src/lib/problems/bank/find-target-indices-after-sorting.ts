@@ -33,6 +33,13 @@ Return a list of the target indices of \`nums\` after sorting \`nums\` in **non-
   hints: [
     'Sort a copy of the array, then collect all indices where the value equals target.',
     'Alternatively: count elements less than target (= starting index) and elements equal to target (= count of indices).',
+    `\`\`\`js
+function targetIndices(nums, target) {
+  nums.sort((a,b)=>a-b);
+  const res = [];
+  for (let i = 0; i < nums.length; i++) if (nums[i]===target) res.push(i);
+  return res;
+}\`\`\``,
   ],
   functionName: 'targetIndices',
   params: ['nums', 'target'],

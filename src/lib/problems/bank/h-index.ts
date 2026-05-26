@@ -27,6 +27,14 @@ The **h-index** is defined as the maximum value of \`h\` such that the given res
   hints: [
     'Sort citations in descending order. The h-index is the largest `h` such that `citations[h-1] >= h`.',
     'Iterate with index `i` (0-based): if `citations[i] >= i+1`, h could be at least `i+1`. Return the largest such `i+1`.',
+    `\`\`\`js
+function hIndex(citations) {
+  citations.sort((a,b)=>b-a);
+  let h = 0;
+  for (let i = 0; i < citations.length; i++)
+    if (citations[i] >= i+1) h = i+1; else break;
+  return h;
+}\`\`\``,
   ],
   functionName: 'hIndex',
   params: ['citations'],

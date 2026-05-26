@@ -37,6 +37,17 @@ Return the string \`comp\`.`,
   hints: [
     'Scan left to right. For each position, count consecutive same characters but cap at 9.',
     'Append count.toString() + char to the result, then advance the index by the count.',
+    `\`\`\`js
+function compressedString(word) {
+  let res="",i=0;
+  while(i<word.length){
+    let j=i,cnt=0;
+    while(j<word.length&&word[j]===word[i]&&cnt<9){j++;cnt++;}
+    res+=cnt+word[i];
+    i=j;
+  }
+  return res;
+}\`\`\``,
   ],
   functionName: 'compressedString',
   params: ['word'],

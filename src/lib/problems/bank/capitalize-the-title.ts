@@ -36,6 +36,13 @@ Return the **capitalized** \`title\`.`,
   hints: [
     'Split by spaces, then process each word based on its length.',
     'Join back with spaces.',
+    `\`\`\`js
+function capitalizeTitle(title) {
+  return title.split(" ").map(w =>
+    w.length <= 2 ? w.toLowerCase()
+                  : w[0].toUpperCase() + w.slice(1).toLowerCase()
+  ).join(" ");
+}\`\`\``,
   ],
   functionName: 'capitalizeTitle',
   params: ['title'],

@@ -75,6 +75,12 @@ Implement the \`MyHashMap\` class:
   hints: [
     'For a simple implementation, use an array of size 10^6+1 initialized to -1.',
     'For a more efficient approach, use an array of buckets with linked lists (chaining).',
+    `\`\`\`js
+// Use an array of size 1e6+1 as direct-address table
+const map = new Array(1000001).fill(-1);
+// put(k,v): map[k]=v
+// get(k): return map[k]
+// remove(k): map[k]=-1\`\`\``,
   ],
   functionName: 'designHashMapRunner',
   params: ['ops', 'vals'],

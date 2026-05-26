@@ -40,6 +40,19 @@ Output: 2
   hints: [
     'Since paths can revisit nodes, the answer is the minimum edge weight in the connected component containing both node 1 and node n.',
     'BFS/DFS from node 1; track all reachable nodes. The answer is the min edge weight in the component.',
+    `\`\`\`js
+// The answer is the minimum edge weight reachable from node 0 (which connects to node n-1)
+// BFS/DFS from 0 on undirected graph; minimum edge weight encountered
+const adj = Array.from({length: n}, ()=>[]);
+for (const [u,v,w] of edges) { adj[u].push([v,w]); adj[v].push([u,w]); }
+const vis = new Array(n).fill(false);
+const q = [0]; vis[0]=true;
+let minW = Infinity;
+while (q.length) {
+  const u=q.shift();
+  for (const [v,w] of adj[u]) { minW=Math.min(minW,w); if(!vis[v]){vis[v]=true;q.push(v);} }
+}
+return minW;\`\`\``,
   ],
   functionName: 'minScore',
   params: ['n', 'roads'],

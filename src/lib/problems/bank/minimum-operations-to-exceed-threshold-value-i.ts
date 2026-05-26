@@ -31,6 +31,10 @@ Return the **minimum** number of operations required so that all elements of the
   hints: [
     'Count the number of elements strictly less than k.',
     'That count is the minimum number of deletions needed.',
+    `\`\`\`js
+function minOperations(nums, k) {
+  return nums.filter(n => n < k).length;
+}\`\`\``,
   ],
   functionName: 'minOperations',
   params: ['nums', 'k'],

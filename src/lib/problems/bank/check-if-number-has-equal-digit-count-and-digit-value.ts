@@ -28,6 +28,15 @@ Return \`true\` if for **every** index \`i\` in the range \`0 <= i < n\`, the di
   hints: [
     'Count how many times each digit 0-9 appears in num.',
     'Check if count[i] == int(num[i]) for each i.',
+    `\`\`\`js
+function digitCount(num) {
+  const s = String(num);
+  const freq = {};
+  for (const c of s) freq[c] = (freq[c]||0)+1;
+  for (let i = 0; i < s.length; i++)
+    if ((freq[i]||0) !== Number(s[i])) return false;
+  return true;
+}\`\`\``,
   ],
   functionName: 'digitCount',
   params: ['num'],

@@ -36,6 +36,14 @@ There may be **duplicates** in the original array.
   hints: [
     'Count "drops" where nums[i] > nums[(i+1) % n]. A valid rotated sorted array has at most 1 drop.',
     '```js\nfunction check(nums) {\n  const n = nums.length;\n  let drops = 0;\n  for (let i = 0; i < n; i++)\n    if (nums[i] > nums[(i + 1) % n]) drops++;\n  return drops <= 1;\n}\n```',
+    `\`\`\`js
+function check(nums) {
+  let drops = 0;
+  const n = nums.length;
+  for (let i = 0; i < n; i++)
+    if (nums[i] > nums[(i+1)%n]) drops++;
+  return drops <= 1;
+}\`\`\``,
   ],
   functionName: 'check',
   params: ['nums'],

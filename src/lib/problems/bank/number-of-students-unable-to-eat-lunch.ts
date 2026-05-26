@@ -36,6 +36,13 @@ Return the number of students that are unable to eat.`,
   hints: [
     'Count the number of students who prefer each type.',
     'Process sandwiches in order; if no student wants the current top, stop.',
+    `\`\`\`js
+function countStudents(students, sandwiches) {
+  const cnt=[0,0];
+  for(const s of students) cnt[s]++;
+  for(const s of sandwiches){if(cnt[s]===0)return cnt[1-s];cnt[s]--;}
+  return 0;
+}\`\`\``,
   ],
   functionName: 'countStudents',
   params: ['students', 'sandwiches'],

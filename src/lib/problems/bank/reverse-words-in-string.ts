@@ -36,6 +36,10 @@ Return a string of the words in reverse order concatenated by a **single space**
   hints: [
     'Split the string on whitespace, filter out empty strings, then reverse and join with a single space.',
     'In JS: `s.trim().split(/\\s+/).reverse().join(" ")`. In Python: `" ".join(reversed(s.split()))`.',
+    `\`\`\`js
+function reverseWords(s) {
+  return s.trim().split(/\\s+/).reverse().join(" ");
+}\`\`\``,
   ],
   functionName: 'reverseWords',
   params: ['s'],

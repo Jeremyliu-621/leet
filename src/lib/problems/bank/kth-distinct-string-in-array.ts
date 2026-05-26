@@ -35,6 +35,14 @@ Note that the strings are considered in the **order** in which they appear in th
   hints: [
     'Count occurrences of each string.',
     'Iterate in order and collect strings with count = 1; return the kth one.',
+    `\`\`\`js
+function kthDistinct(arr, k) {
+  const freq = {};
+  for (const s of arr) freq[s] = (freq[s]||0)+1;
+  let count = 0;
+  for (const s of arr) if (freq[s]===1 && ++count===k) return s;
+  return "";
+}\`\`\``,
   ],
   functionName: 'kthDistinct',
   params: ['arr', 'k'],

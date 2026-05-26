@@ -32,6 +32,11 @@ A word can be typed if **none** of its letters appear in \`brokenLetters\`.`,
   hints: [
     'Split text into words; for each word, check if any character is in the broken set.',
     '```js\nfunction canBeTypedWords(text, brokenLetters) {\n  const broken = new Set(brokenLetters);\n  return text.split(" ").filter(w => ![...w].some(c => broken.has(c))).length;\n}\n```',
+    `\`\`\`js
+function canBeTypedWords(text, brokenLetters) {
+  const broken = new Set(brokenLetters);
+  return text.split(" ").filter(w => [...w].every(c=>!broken.has(c))).length;
+}\`\`\``,
   ],
   functionName: 'canBeTypedWords',
   params: ['text', 'brokenLetters'],

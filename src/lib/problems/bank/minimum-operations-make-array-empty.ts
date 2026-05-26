@@ -39,6 +39,17 @@ Return the **minimum** number of operations required to make the array empty, or
   hints: [
     'Count the frequency of each value. For each frequency `f`: if `f === 1`, return -1. Otherwise use `Math.ceil(f / 3)` operations.',
     '`ceil(f/3)` in integer math: `Math.ceil(f/3)` or equivalently `Math.floor((f+2)/3)`. For `f % 3 === 1` you split into groups of 2+2; for `f % 3 === 2` you use one pair plus triples for the rest.',
+    `\`\`\`js
+function minOperations(nums) {
+  const freq = {};
+  for (const n of nums) freq[n]=(freq[n]||0)+1;
+  let ops = 0;
+  for (const cnt of Object.values(freq)) {
+    if (cnt===1) return -1;
+    ops += Math.ceil(cnt/3); // prefer groups of 3, fill with 2s
+  }
+  return ops;
+}\`\`\``,
   ],
   functionName: 'minOperations',
   params: ['nums'],

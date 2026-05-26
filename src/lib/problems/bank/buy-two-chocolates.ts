@@ -30,6 +30,12 @@ Return the amount of money you will have leftover after buying the two chocolate
   hints: [
     'Sort prices. The minimum sum of two chocolates is prices[0] + prices[1].',
     'If this sum is within your budget, return money - sum. Otherwise return money.',
+    `\`\`\`js
+function buyChoco(prices, money) {
+  prices.sort((a,b) => a-b);
+  const cost = prices[0] + prices[1];
+  return cost > money ? money : money - cost;
+}\`\`\``,
   ],
   functionName: 'buyChoco',
   params: ['prices', 'money'],

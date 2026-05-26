@@ -80,6 +80,11 @@ export const problem: Problem = {
   hints: [
     'Use DFS: the depth of a node is 1 + max(depth(left), depth(right)). Base case: null → 0.',
     'Alternatively use BFS: count the number of levels in the queue.',
+    `\`\`\`js
+function maxDepth(root) {
+  if (!root) return 0;
+  return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
+}\`\`\``,
   ],
   functionName: 'maxDepthRunner',
   params: ['root'],

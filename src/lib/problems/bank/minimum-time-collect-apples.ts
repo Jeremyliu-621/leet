@@ -33,6 +33,20 @@ The edges of the undirected tree are given in the array \`edges\`, where \`edges
   hints: [
     'DFS from root 0. For each subtree rooted at child c, if the subtree contains any apple (or c itself has an apple), you must spend 2 seconds on the edge to c.',
     'Accumulate the cost from all subtrees that need visiting.',
+    `\`\`\`js
+// DFS: for each subtree, cost = sum of children costs + (2 if subtree has apples)
+const adj = Array.from({length: n}, ()=>[]);
+for (const [u,v] of edges) { adj[u].push(v); adj[v].push(u); }
+function dfs(node, parent) {
+  let cost = 0;
+  for (const nb of adj[node]) {
+    if (nb===parent) continue;
+    const sub = dfs(nb, node);
+    if (sub > 0 || hasApple[nb]) cost += sub + 2;
+  }
+  return cost;
+}
+return dfs(0,-1);\`\`\``,
   ],
   functionName: 'minTime',
   params: ['n', 'edges', 'hasApple'],

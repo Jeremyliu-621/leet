@@ -22,6 +22,15 @@ Given two integers \`left\` and \`right\`, return a list of all the **self-divid
   hints: [
     'For each number, extract each digit and check if the number is divisible by that digit.',
     'If any digit is 0 or the number is not divisible by the digit, skip it.',
+    `\`\`\`js
+function selfDividingNumbers(left, right) {
+  function isSelfDiv(n){
+    return !String(n).includes("0") && String(n).split("").every(d=>n%Number(d)===0);
+  }
+  const res=[];
+  for(let n=left;n<=right;n++) if(isSelfDiv(n)) res.push(n);
+  return res;
+}\`\`\``,
   ],
   functionName: 'selfDividingNumbers',
   params: ['left', 'right'],

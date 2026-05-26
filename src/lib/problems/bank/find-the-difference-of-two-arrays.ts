@@ -30,6 +30,11 @@ Note that the integers in the lists may be returned in **any** order.`,
   hints: [
     'Use two Sets. Compute the set difference in both directions.',
     'Return sorted lists for consistency.',
+    `\`\`\`js
+function findDifference(nums1, nums2) {
+  const s1 = new Set(nums1), s2 = new Set(nums2);
+  return [[...s1].filter(v=>!s2.has(v)), [...s2].filter(v=>!s1.has(v))];
+}\`\`\``,
   ],
   functionName: 'findDifference',
   params: ['nums1', 'nums2'],

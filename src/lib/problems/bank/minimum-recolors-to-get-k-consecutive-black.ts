@@ -33,6 +33,18 @@ Return the **minimum** number of operations needed such that there is at least o
   hints: [
     'Use a sliding window of size k. For each window, count white blocks (the number of recolors needed).',
     'Return the minimum count across all windows.',
+    `\`\`\`js
+function minimumRecolors(blocks, k) {
+  let whites = 0;
+  for (let i = 0; i < k; i++) if (blocks[i]==="W") whites++;
+  let best = whites;
+  for (let i = k; i < blocks.length; i++) {
+    if (blocks[i]==="W") whites++;
+    if (blocks[i-k]==="W") whites--;
+    best = Math.min(best, whites);
+  }
+  return best;
+}\`\`\``,
   ],
   functionName: 'minimumRecolors',
   params: ['blocks', 'k'],

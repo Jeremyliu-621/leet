@@ -27,6 +27,16 @@ Return the **minimum** number of consecutive cards you have to pick up to contai
   hints: [
     'Track the last index where each card value was seen.',
     'For each card, if its value was seen before, update the minimum window (current - last + 1).',
+    `\`\`\`js
+function minimumCardPickup(cards) {
+  const last = new Map();
+  let best = Infinity;
+  for (let i = 0; i < cards.length; i++) {
+    if (last.has(cards[i])) best = Math.min(best, i - last.get(cards[i]) + 1);
+    last.set(cards[i], i);
+  }
+  return best === Infinity ? -1 : best;
+}\`\`\``,
   ],
   functionName: 'minimumCardPickup',
   params: ['cards'],

@@ -33,6 +33,16 @@ Given arrays \`students\` (preferences) and \`sandwiches\` (stack, index 0 = top
   hints: [
     'Count how many students prefer each type. Iterate through the sandwich stack: if the top sandwich has no matching preference left, all remaining students are stuck.',
     'This avoids simulating the queue rotation entirely.',
+    `\`\`\`js
+function countStudents(students, sandwiches) {
+  const cnt = [0,0];
+  for(const s of students) cnt[s]++;
+  for(const s of sandwiches) {
+    if(cnt[s]===0) return cnt[1-s];
+    cnt[s]--;
+  }
+  return 0;
+}\`\`\``,
   ],
   functionName: 'countStudents',
   params: ['students', 'sandwiches'],

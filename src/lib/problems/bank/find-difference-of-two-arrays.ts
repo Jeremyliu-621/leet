@@ -30,6 +30,11 @@ You may return the lists in **any order**.`,
   hints: [
     'Convert each array to a Set. The answer[0] is elements in set1 not in set2, and vice versa.',
     'Sort each sub-array for a deterministic result.',
+    `\`\`\`js
+function findDifference(nums1, nums2) {
+  const s1 = new Set(nums1), s2 = new Set(nums2);
+  return [[...s1].filter(v => !s2.has(v)), [...s2].filter(v => !s1.has(v))];
+}\`\`\``,
   ],
   functionName: 'findDifference',
   params: ['nums1', 'nums2'],

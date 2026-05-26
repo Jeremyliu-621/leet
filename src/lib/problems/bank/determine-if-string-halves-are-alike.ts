@@ -32,6 +32,14 @@ Return \`true\` *if* \`a\` *and* \`b\` *are **alike***. Otherwise, return \`fals
   hints: [
     'Count vowels in s[0..n/2-1] and s[n/2..n-1]. Return whether counts are equal.',
     '```js\nfunction halvesAreAlike(s) {\n  const v = new Set("aeiouAEIOU");\n  const count = c => [...c].filter(x => v.has(x)).length;\n  const h = s.length >> 1;\n  return count(s.slice(0, h)) === count(s.slice(h));\n}\n```',
+    `\`\`\`js
+function halvesAreAlike(s) {
+  const vowels = new Set("aeiouAEIOU");
+  const half = s.length / 2;
+  let a = 0, b = 0;
+  for (let i = 0; i < half; i++) { if (vowels.has(s[i])) a++; if (vowels.has(s[half+i])) b++; }
+  return a === b;
+}\`\`\``,
   ],
   functionName: 'halvesAreAlike',
   params: ['s'],

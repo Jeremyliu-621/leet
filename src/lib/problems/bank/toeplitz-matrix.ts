@@ -29,6 +29,13 @@ A matrix is **Toeplitz** if every diagonal from top-left to bottom-right has the
   hints: [
     'For each cell (i, j) where i > 0 and j > 0, check that matrix[i][j] === matrix[i-1][j-1].',
     'If any cell fails this check, return false. Otherwise return true.',
+    `\`\`\`js
+function isToeplitzMatrix(matrix) {
+  for(let r=1;r<matrix.length;r++)
+    for(let c=1;c<matrix[0].length;c++)
+      if(matrix[r][c]!==matrix[r-1][c-1]) return false;
+  return true;
+}\`\`\``,
   ],
   functionName: 'isToeplitzMatrix',
   params: ['matrix'],

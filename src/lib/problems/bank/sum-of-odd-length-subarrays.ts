@@ -32,6 +32,18 @@ A subarray is a contiguous subsequence of the array.`,
   hints: [
     'Iterate over all subarray lengths that are odd (1, 3, 5, ...). For each length, iterate over all starting positions and sum the elements.',
     'For a smarter O(n) approach: each element arr[i] is counted in multiple subarrays. Count how many odd-length subarrays include position i.',
+    `\`\`\`js
+function sumOddLengthSubarrays(arr) {
+  let sum=0;
+  const n=arr.length;
+  for(let i=0;i<n;i++){
+    // count how many subarrays include arr[i] with odd length
+    const left=i+1,right=n-i;
+    sum+=arr[i]*Math.ceil(left/2)*Math.ceil(right/2);
+    sum+=arr[i]*Math.floor(left/2)*Math.floor(right/2);
+  }
+  return sum;
+}\`\`\``,
   ],
   functionName: 'sumOddLengthSubarrays',
   params: ['arr'],

@@ -26,6 +26,12 @@ Return the **minimum** possible sum of \`new1\` and \`new2\`.`,
   hints: [
     'Sort the four digits. To minimize the sum, the two smallest digits should be the tens digits of the two numbers.',
     'With sorted digits [d0,d1,d2,d3], the minimum sum is d0*10 + d1*10 + d2 + d3.',
+    `\`\`\`js
+function minimumSum(num) {
+  const d = String(num).split("").map(Number).sort((a,b)=>a-b);
+  // pair smallest with third smallest to minimize carry
+  return (10*d[0]+d[2]) + (10*d[1]+d[3]);
+}\`\`\``,
   ],
   functionName: 'minimumSum',
   params: ['num'],

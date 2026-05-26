@@ -32,6 +32,16 @@ Return the merged string.`,
   hints: [
     'Use a single index and iterate while either string has characters left.',
     'At each step, append the character from word1 (if available), then from word2 (if available).',
+    `\`\`\`js
+function mergeAlternately(word1, word2) {
+  let res = "", i = 0;
+  while (i < word1.length || i < word2.length) {
+    if (i < word1.length) res += word1[i];
+    if (i < word2.length) res += word2[i];
+    i++;
+  }
+  return res;
+}\`\`\``,
   ],
   functionName: 'mergeAlternately',
   params: ['word1', 'word2'],
