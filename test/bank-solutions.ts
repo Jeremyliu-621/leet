@@ -30223,4 +30223,91 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return nums.filter(x => x > min && x < max).length;
   },
 
+  'check-if-there-is-a-valid-partition-for-the-array': (...args: unknown[]) => {
+    const [nums] = args as [number[]];
+    const n = nums.length;
+    const dp = new Array<boolean>(n + 1).fill(false);
+    dp[0] = true;
+    for (let i = 2; i <= n; i++) {
+      if (nums[i - 1] === nums[i - 2]) dp[i] = dp[i] || dp[i - 2]!;
+      if (i >= 3) {
+        if (nums[i - 1] === nums[i - 2] && nums[i - 2] === nums[i - 3]) dp[i] = dp[i] || dp[i - 3]!;
+        if (nums[i - 1] === nums[i - 2]! + 1 && nums[i - 2] === nums[i - 3]! + 1) dp[i] = dp[i] || dp[i - 3]!;
+      }
+    }
+    return dp[n]!;
+  },
+
+  'reverse-nodes-in-even-length-groups': (...args: unknown[]) => {
+    const [arr] = args as [number[]];
+    if (!arr || arr.length === 0) return [];
+    // Build linked list
+    class LN { val: number; next: LN | null; constructor(v: number) { this.val = v; this.next = null; } }
+    const head = new LN(arr[0]!);
+    let cur: LN = head;
+    for (let i = 1; i < arr.length; i++) { cur.next = new LN(arr[i]!); cur = cur.next; }
+    // Process groups
+    let prev: LN = head; // head is group 1 (odd), always unchanged
+    for (let groupSize = 2; prev && prev.next; groupSize++) {
+      let node: LN | null = prev.next;
+      let count = 0;
+      let tmp: LN | null = node;
+      while (tmp && count < groupSize) { tmp = tmp.next; count++; }
+      if (count % 2 === 0) {
+        // Reverse count nodes starting at node; prev is before group
+        const tail = node!;
+        let prevNode: LN | null = null;
+        let currNode: LN | null = node;
+        for (let i = 0; i < count; i++) {
+          const nxt: LN | null = currNode!.next;
+          currNode!.next = prevNode;
+          prevNode = currNode;
+          currNode = nxt;
+        }
+        prev.next = prevNode;
+        tail.next = currNode;
+        prev = tail;
+      } else {
+        for (let i = 0; i < count; i++) prev = prev.next!;
+      }
+    }
+    // Convert to array
+    const result: number[] = [];
+    let p: LN | null = head;
+    while (p) { result.push(p.val); p = p.next; }
+    return result;
+  },
+
+  'minimum-difference-in-sums-after-removal-of-elements': (...args: unknown[]) => {
+    const [nums] = args as [number[]];
+    const n = nums.length / 3;
+    const prefMin: number[] = [];
+    const w1: number[] = [];
+    let s1 = 0;
+    for (let i = 0; i < 2 * n; i++) {
+      w1.push(nums[i]!);
+      w1.sort((a, b) => a - b);
+      s1 += nums[i]!;
+      if (w1.length > n) { s1 -= w1.pop()!; }
+      if (w1.length === n) prefMin[i + 1] = s1;
+    }
+    const suffMax: number[] = [];
+    const w2: number[] = [];
+    let s2 = 0;
+    for (let i = 3 * n - 1; i >= n; i--) {
+      w2.push(nums[i]!);
+      w2.sort((a, b) => b - a);
+      s2 += nums[i]!;
+      if (w2.length > n) { s2 -= w2.pop()!; }
+      if (w2.length === n) suffMax[i] = s2;
+    }
+    let ans = Infinity;
+    for (let m = n; m <= 2 * n; m++) {
+      if (prefMin[m] !== undefined && suffMax[m] !== undefined) {
+        ans = Math.min(ans, prefMin[m]! - suffMax[m]!);
+      }
+    }
+    return ans;
+  },
+
 };

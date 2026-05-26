@@ -2080,6 +2080,9 @@ import { problem as shiftingLettersII } from './shifting-letters-ii';
 import { problem as maximizeTheProfitAsTheSalesman } from './maximize-the-profit-as-the-salesman';
 import { problem as checkIfStringIsAnAcronymOfWords } from './check-if-string-is-an-acronym-of-words';
 import { problem as countElementsWithSmallerAndGreaterElement } from './count-elements-with-smaller-and-greater-element';
+import { problem as checkIfThereIsAValidPartitionForTheArray } from './check-if-there-is-a-valid-partition-for-the-array';
+import { problem as reverseNodesInEvenLengthGroups } from './reverse-nodes-in-even-length-groups';
+import { problem as minimumDifferenceInSumsAfterRemovalOfElements } from './minimum-difference-in-sums-after-removal-of-elements';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4196,4 +4199,8 @@ export const problems: readonly Problem[] = [
   maximizeTheProfitAsTheSalesman,
   checkIfStringIsAnAcronymOfWords,
   countElementsWithSmallerAndGreaterElement,
+  // batch 88 — arrays/dp, linked-list, arrays/heap
+  checkIfThereIsAValidPartitionForTheArray,
+  reverseNodesInEvenLengthGroups,
+  minimumDifferenceInSumsAfterRemovalOfElements,
 ];
