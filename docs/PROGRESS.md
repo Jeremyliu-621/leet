@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1984** problems; 6252 tests green. Batches 89–91 complete.
+**Current focus:** Bank at **1987** problems; 6270 tests green. Batches 91–92 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 92); UI/UX polish.
+**Next up:** Continued bank growth (batch 93); UI/UX polish.
+
+### feat(bank): add batch 92 — alternating-groups-i, longest-binary-subsequence-≤-k, minimum-time-complete-tasks (2026-05-26)
+Added 3 problems: `alternating-groups-i` (easy/arrays, modular-index circular triple count), `longest-binary-subsequence-less-than-or-equal-to-k` (medium/strings+dp, right-to-left greedy — zeros always included, ones included if running value ≤ k), `minimum-time-to-complete-all-tasks` (hard/arrays, sort-by-end + right-fill boolean run array). Fixed wrong expected values in several hidden tests by manual algorithm trace. Bank at **1987**; 6270 tests.
 
 ### feat(bank): add batch 91 — maximum-consecutive-values, two-events-conflict, visible-people-queue (2026-05-26)
 Added 3 problems: `maximum-number-of-consecutive-values-you-can-make` (medium/arrays+math, sort+reach greedy), `determine-if-two-events-have-conflict` (easy/strings, lexicographic interval overlap), `number-of-people-that-can-be-seen-in-a-grid` (medium/arrays+stack, monotonic-stack right-to-left). Bank at **1977**; 6219 tests.
