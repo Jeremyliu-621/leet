@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1723 problems; 5457 tests green.
+**Current focus:** Bank at 1731 problems; 5481 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Update marketing site to 1700+; continue growing problem bank toward 1750; UX polish.
+**Next up:** Continue growing problem bank toward 1750; UX polish.
+
+### Batch 69 (this session, 2026-05-26)
+Added 8 new problems: `find-score-of-an-array-after-marking-all-elements` (medium/heap+simulation, greedy mark-and-score), `count-zero-request-servers` (hard/sliding-window, sort+two-pointer server counts), `maximum-score-after-applying-operations-on-a-tree` (medium/tree+dp, minimize kept nodes covering all root-to-leaf paths), `counting-words-with-a-given-prefix` (easy/strings, startsWith filter), `earliest-moment-everyone-became-friends` (medium/union-find, sort+DSU), `minimum-weighted-subgraph-with-the-required-paths` (hard/graph+dijkstra, 3×Dijkstra + meeting-point sweep), `longest-path-in-a-directed-acyclic-graph` (medium/dp+graph, toposort + consecutive-char DP), `count-good-triplets-in-an-array` (hard/binary-indexed-tree, permutation mapping + BIT left-smaller/right-larger). Also added new ProblemTags: `union-find`, `binary-indexed-tree`, `simulation`, `shortest-path`. JS + Python solutions for all. Bank at **1731**; 5481 tests.
 
 ### Batch 69-local (2026-05-26)
 Added 9 new problems: `image-smoother` (easy/arrays, 3×3 box filter floor-average), `complex-number-multiplication` (medium/strings+math, (a+bi)(c+di) formula), `number-of-boomerangs` (medium/hash-map+math, equidistant ordered pairs), `find-duplicate-file-in-system` (medium/strings+hash-map, content-to-path grouping), `poor-pigs` (hard/math+dp, (rounds+1)^pigs >= buckets), `strobogrammatic-number` (easy/strings+math, two-pointer pair validation), `fraction-addition-and-subtraction` (medium/strings+math, gcd cross-multiply), `longest-zigzag-path-in-binary-tree` (medium/tree+dp, DFS direction tracking), `find-the-duplicate-subtrees` (medium/tree+hash-map, post-order serialization). Also fixed duplicate import of `minimum-replacements-to-sort-array`. JS + Python solutions for all. Bank at **1723**; 5457 tests.
