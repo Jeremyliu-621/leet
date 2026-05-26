@@ -28283,6 +28283,261 @@ def queryResults(limit, queries):
     return result
 `,
 
+  // batch 79
+  'divide-chocolate': `
+def maximizeSweetness(sweetness, k):
+    lo, hi = min(sweetness), sum(sweetness)
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        pieces, cur = 0, 0
+        for s in sweetness:
+            cur += s
+            if cur >= mid:
+                pieces += 1
+                cur = 0
+        if pieces >= k + 1:
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'find-the-smallest-divisor-given-a-threshold': `
+def smallestDivisor(nums, threshold):
+    import math
+    lo, hi = 1, max(nums)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        total = sum(math.ceil(x / mid) for x in nums)
+        if total <= threshold:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'magnetic-force-between-two-balls': `
+def maxDistance(position, m):
+    position = sorted([p for p in position])
+    def can_place(d):
+        count, last = 1, position[0]
+        for p in position[1:]:
+            if p - last >= d:
+                count += 1
+                last = p
+        return count >= m
+    lo, hi = 1, position[-1] - position[0]
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_place(mid):
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'nth-magical-number': `
+def nthMagicalNumber(n, a, b):
+    from math import gcd
+    MOD = 10**9 + 7
+    lcm = a * b // gcd(a, b)
+    lo, hi = 0, n * min(a, b)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        cnt = mid // a + mid // b - mid // lcm
+        if cnt >= n:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo % MOD
+`,
+
+  'get-equal-substrings-within-budget': `
+def equalSubstring(s, t, maxCost):
+    left = cost = result = 0
+    for right in range(len(s)):
+        cost += abs(ord(s[right]) - ord(t[right]))
+        while cost > maxCost:
+            cost -= abs(ord(s[left]) - ord(t[left]))
+            left += 1
+        result = max(result, right - left + 1)
+    return result
+`,
+
+  'longest-equal-subarray': `
+def longestEqualSubarray(nums, k):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    left = max_freq = 0
+    for right, val in enumerate(nums):
+        freq[val] += 1
+        max_freq = max(max_freq, freq[val])
+        if (right - left + 1) - max_freq > k:
+            freq[nums[left]] -= 1
+            left += 1
+    return max_freq
+`,
+
+  'three-sum-with-multiplicity': `
+def threeSumMulti(arr, target):
+    MOD = 10**9 + 7
+    arr.sort()
+    count = 0
+    for i in range(len(arr) - 2):
+        j, k = i + 1, len(arr) - 1
+        while j < k:
+            s = arr[i] + arr[j] + arr[k]
+            if s == target:
+                if arr[j] == arr[k]:
+                    n = k - j + 1
+                    count += n * (n - 1) // 2
+                    break
+                else:
+                    cnt_j = cnt_k = 1
+                    while j + cnt_j < k and arr[j + cnt_j] == arr[j]:
+                        cnt_j += 1
+                    while k - cnt_k > j and arr[k - cnt_k] == arr[k]:
+                        cnt_k += 1
+                    count += cnt_j * cnt_k
+                    j += cnt_j
+                    k -= cnt_k
+            elif s < target:
+                j += 1
+            else:
+                k -= 1
+    return count % MOD
+`,
+
+  'new-21-game': `
+def new21Game(n, k, maxPts):
+    if k == 0 or n >= k + maxPts - 1:
+        return 1.0
+    dp = [0.0] * (n + 1)
+    dp[0] = 1.0
+    window_sum = 1.0
+    result = 0.0
+    for i in range(1, n + 1):
+        dp[i] = window_sum / maxPts
+        if i < k:
+            window_sum += dp[i]
+        else:
+            result += dp[i]
+        if i >= maxPts:
+            window_sum -= dp[i - maxPts]
+    return result
+`,
+
+  'shortest-common-supersequence': `
+def shortestCommonSupersequence(str1, str2):
+    m, n = len(str1), len(str2)
+    dp = [[i + j for j in range(n + 1)] for i in range(m + 1)]
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if str1[i-1] == str2[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + 1
+    chars = []
+    i, j = m, n
+    while i > 0 and j > 0:
+        if str1[i-1] == str2[j-1]:
+            chars.append(str1[i-1])
+            i -= 1
+            j -= 1
+        elif dp[i-1][j] < dp[i][j-1]:
+            chars.append(str1[i-1])
+            i -= 1
+        else:
+            chars.append(str2[j-1])
+            j -= 1
+    while i > 0:
+        chars.append(str1[i-1])
+        i -= 1
+    while j > 0:
+        chars.append(str2[j-1])
+        j -= 1
+    return ''.join(reversed(chars))
+`,
+
+  'stickers-to-spell-word': `
+def minStickers(stickers, target):
+    from collections import Counter
+    n = len(target)
+    dp = [-1] * (1 << n)
+    dp[0] = 0
+    for state in range(1 << n):
+        if dp[state] == -1:
+            continue
+        for sticker in stickers:
+            cnt = Counter(sticker)
+            used = Counter()
+            next_state = state
+            for i in range(n):
+                if not (state >> i & 1):
+                    c = target[i]
+                    if used[c] < cnt[c]:
+                        used[c] += 1
+                        next_state |= 1 << i
+            if dp[next_state] == -1 or dp[next_state] > dp[state] + 1:
+                dp[next_state] = dp[state] + 1
+    return dp[(1 << n) - 1]
+`,
+
+  'design-exam-room': `
+def examRoom(operations, args):
+    import bisect
+    results = []
+    seats = []
+    n = 0
+    for op, arg in zip(operations, args):
+        if op == 'ExamRoom':
+            n = arg[0]
+            seats.clear()
+            results.append(None)
+        elif op == 'seat':
+            if not seats:
+                bisect.insort(seats, 0)
+                results.append(0)
+                continue
+            best_dist, best_seat = seats[0], 0
+            for j in range(1, len(seats)):
+                d = (seats[j] - seats[j-1]) // 2
+                if d > best_dist:
+                    best_dist, best_seat = d, seats[j-1] + d
+            if n - 1 - seats[-1] > best_dist:
+                best_seat = n - 1
+            bisect.insort(seats, best_seat)
+            results.append(best_seat)
+        else:
+            seats.remove(arg[0])
+            results.append(None)
+    return results
+`,
+
+  'design-authentication-manager': `
+def authManager(operations, args):
+    results = []
+    time_to_live = 0
+    token_map = {}
+    for op, arg in zip(operations, args):
+        if op == 'AuthenticationManager':
+            time_to_live = arg[0]
+            token_map.clear()
+            results.append(None)
+        elif op == 'generate':
+            token_map[arg[0]] = arg[1] + time_to_live
+            results.append(None)
+        elif op == 'renew':
+            token_id, current_time = arg[0], arg[1]
+            if token_id in token_map and token_map[token_id] > current_time:
+                token_map[token_id] = current_time + time_to_live
+            results.append(None)
+        else:
+            current_time = arg[0]
+            results.append(sum(1 for exp in token_map.values() if exp > current_time))
+    return results
+`,
+
   'count-the-number-of-arrays-with-k-matching-adjacent-elements': `
 def countGoodArrays(n, m, k):
     MOD = 10**9 + 7

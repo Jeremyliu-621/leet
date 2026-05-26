@@ -2005,6 +2005,19 @@ import { problem as countTheNumberOfArraysWithKMatchingAdjacentElements } from '
 import { problem as ternaryExpressionParser } from './ternary-expression-parser';
 import { problem as countAllPossibleRoutes } from './count-all-possible-routes';
 import { problem as minimumOperationsMakeArrayKIncreasing } from './minimum-operations-to-make-array-k-increasing';
+// batch 79 — binary-search, two-pointers, dp, design
+import { problem as divideChocolate } from './divide-chocolate';
+import { problem as findTheSmallestDivisorGivenAThreshold } from './find-the-smallest-divisor-given-a-threshold';
+import { problem as magneticForceBetweenTwoBalls } from './magnetic-force-between-two-balls';
+import { problem as nthMagicalNumber } from './nth-magical-number';
+import { problem as getEqualSubstringsWithinBudget } from './get-equal-substrings-within-budget';
+import { problem as longestEqualSubarray } from './longest-equal-subarray';
+import { problem as threeSumWithMultiplicity } from './three-sum-with-multiplicity';
+import { problem as new21Game } from './new-21-game';
+import { problem as shortestCommonSupersequence } from './shortest-common-supersequence';
+import { problem as stickersToSpellWord } from './stickers-to-spell-word';
+import { problem as designExamRoom } from './design-exam-room';
+import { problem as designAuthenticationManager } from './design-authentication-manager';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4046,4 +4059,17 @@ export const problems: readonly Problem[] = [
   ternaryExpressionParser,
   countAllPossibleRoutes,
   minimumOperationsMakeArrayKIncreasing,
+  // batch 79 — binary-search, two-pointers, dp, design
+  divideChocolate,
+  findTheSmallestDivisorGivenAThreshold,
+  magneticForceBetweenTwoBalls,
+  nthMagicalNumber,
+  getEqualSubstringsWithinBudget,
+  longestEqualSubarray,
+  threeSumWithMultiplicity,
+  new21Game,
+  shortestCommonSupersequence,
+  stickersToSpellWord,
+  designExamRoom,
+  designAuthenticationManager,
 ];

@@ -28885,6 +28885,238 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  // batch 79
+  'divide-chocolate': (...args: unknown[]) => {
+    const [sweetness, k] = args as [number[], number];
+    let lo = Math.min(...sweetness), hi = sweetness.reduce((a, b) => a + b, 0);
+    while (lo < hi) {
+      const mid = Math.floor((lo + hi + 1) / 2);
+      let pieces = 0, cur = 0;
+      for (const s of sweetness) { cur += s; if (cur >= mid) { pieces++; cur = 0; } }
+      if (pieces >= k + 1) lo = mid; else hi = mid - 1;
+    }
+    return lo;
+  },
+
+  'find-the-smallest-divisor-given-a-threshold': (...args: unknown[]) => {
+    const [nums, threshold] = args as [number[], number];
+    let lo = 1, hi = Math.max(...nums);
+    while (lo < hi) {
+      const mid = Math.floor((lo + hi) / 2);
+      const sum = nums.reduce((acc, x) => acc + Math.ceil(x / mid), 0);
+      if (sum <= threshold) hi = mid; else lo = mid + 1;
+    }
+    return lo;
+  },
+
+  'magnetic-force-between-two-balls': (...args: unknown[]) => {
+    const [position, m] = args as [number[], number];
+    position.sort((a, b) => a - b);
+    const canPlace = (d: number) => {
+      let count = 1, last = position[0]!;
+      for (let i = 1; i < position.length; i++) {
+        if (position[i]! - last >= d) { count++; last = position[i]!; }
+      }
+      return count >= m;
+    };
+    let lo = 1, hi = position[position.length - 1]! - position[0]!;
+    while (lo < hi) {
+      const mid = Math.floor((lo + hi + 1) / 2);
+      if (canPlace(mid)) lo = mid; else hi = mid - 1;
+    }
+    return lo;
+  },
+
+  'nth-magical-number': (...args: unknown[]) => {
+    const [n, a, b] = args as [number, number, number];
+    function gcd(x: number, y: number): number { while (y) { [x, y] = [y, x % y]; } return x; }
+    const lcm = a * b / gcd(a, b);
+    const an = BigInt(a), bn = BigInt(b), lcmn = BigInt(lcm), Nn = BigInt(n);
+    let lo = 0n, hi = Nn * BigInt(Math.min(a, b));
+    while (lo < hi) {
+      const mid = (lo + hi) / 2n;
+      const cnt = mid / an + mid / bn - mid / lcmn;
+      if (cnt >= Nn) hi = mid; else lo = mid + 1n;
+    }
+    return Number(lo % 1_000_000_007n);
+  },
+
+  'get-equal-substrings-within-budget': (...args: unknown[]) => {
+    const [s, t, maxCost] = args as [string, string, number];
+    let left = 0, cost = 0, result = 0;
+    for (let right = 0; right < s.length; right++) {
+      cost += Math.abs(s.charCodeAt(right) - t.charCodeAt(right));
+      while (cost > maxCost) { cost -= Math.abs(s.charCodeAt(left) - t.charCodeAt(left)); left++; }
+      result = Math.max(result, right - left + 1);
+    }
+    return result;
+  },
+
+  'longest-equal-subarray': (...args: unknown[]) => {
+    const [nums, k] = args as [number[], number];
+    const freq = new Map<number, number>();
+    let left = 0, maxFreq = 0;
+    for (let right = 0; right < nums.length; right++) {
+      const val = nums[right]!;
+      freq.set(val, (freq.get(val) ?? 0) + 1);
+      maxFreq = Math.max(maxFreq, freq.get(val)!);
+      if ((right - left + 1) - maxFreq > k) {
+        const lv = nums[left]!;
+        freq.set(lv, (freq.get(lv) ?? 0) - 1);
+        left++;
+      }
+    }
+    return maxFreq;
+  },
+
+  'three-sum-with-multiplicity': (...args: unknown[]) => {
+    const [arr, target] = args as [number[], number];
+    const MOD = 1000000007;
+    arr.sort((a, b) => a - b);
+    let count = 0;
+    for (let i = 0; i < arr.length - 2; i++) {
+      let j = i + 1, k = arr.length - 1;
+      while (j < k) {
+        const s = arr[i]! + arr[j]! + arr[k]!;
+        if (s === target) {
+          if (arr[j] === arr[k]) {
+            const n = k - j + 1;
+            count = (count + n * (n - 1) / 2) % MOD;
+            break;
+          } else {
+            let cntJ = 1, cntK = 1;
+            while (j + cntJ < k && arr[j + cntJ] === arr[j]) cntJ++;
+            while (k - cntK > j && arr[k - cntK] === arr[k]) cntK++;
+            count = (count + cntJ * cntK) % MOD;
+            j += cntJ; k -= cntK;
+          }
+        } else if (s < target) j++;
+        else k--;
+      }
+    }
+    return count;
+  },
+
+  'new-21-game': (...args: unknown[]) => {
+    const [n, k, maxPts] = args as [number, number, number];
+    if (k === 0 || n >= k + maxPts - 1) return 1.0;
+    const dp = new Array<number>(n + 1).fill(0);
+    dp[0] = 1.0;
+    let windowSum = 1.0, result = 0.0;
+    for (let i = 1; i <= n; i++) {
+      dp[i] = windowSum / maxPts;
+      if (i < k) windowSum += dp[i]!;
+      else result += dp[i]!;
+      if (i >= maxPts) windowSum -= dp[i - maxPts]!;
+    }
+    return result;
+  },
+
+  'shortest-common-supersequence': (...args: unknown[]) => {
+    const [str1, str2] = args as [string, string];
+    const m = str1.length, n = str2.length;
+    const dp: number[][] = Array.from({length: m + 1}, (_, i) =>
+      Array.from({length: n + 1}, (_, j) => i + j));
+    for (let i = 1; i <= m; i++) {
+      for (let j = 1; j <= n; j++) {
+        if (str1[i-1] === str2[j-1]) dp[i]![j] = dp[i-1]![j-1]! + 1;
+        else dp[i]![j] = Math.min(dp[i-1]![j]!, dp[i]![j-1]!) + 1;
+      }
+    }
+    const chars: string[] = [];
+    let i = m, j = n;
+    while (i > 0 && j > 0) {
+      if (str1[i-1] === str2[j-1]) { chars.push(str1[i-1]!); i--; j--; }
+      else if (dp[i-1]![j]! < dp[i]![j-1]!) { chars.push(str1[i-1]!); i--; }
+      else { chars.push(str2[j-1]!); j--; }
+    }
+    while (i > 0) { chars.push(str1[i-1]!); i--; }
+    while (j > 0) { chars.push(str2[j-1]!); j--; }
+    return chars.reverse().join('');
+  },
+
+  'stickers-to-spell-word': (...args: unknown[]) => {
+    const [stickers, target] = args as [string[], string];
+    const n = target.length;
+    const dp = new Array<number>(1 << n).fill(-1);
+    dp[0] = 0;
+    for (let state = 0; state < (1 << n); state++) {
+      if (dp[state] === -1) continue;
+      for (const sticker of stickers) {
+        const cnt = new Array<number>(26).fill(0);
+        for (const c of sticker) cnt[c.charCodeAt(0) - 97]!++;
+        let nextState = state;
+        const used = new Array<number>(26).fill(0);
+        for (let ki = 0; ki < n; ki++) {
+          if (!(state >> ki & 1)) {
+            const ci = target.charCodeAt(ki) - 97;
+            if (used[ci]! < cnt[ci]!) { used[ci]!++; nextState |= 1 << ki; }
+          }
+        }
+        if (dp[nextState] === -1 || dp[nextState]! > dp[state]! + 1) {
+          dp[nextState] = dp[state]! + 1;
+        }
+      }
+    }
+    return dp[(1 << n) - 1]!;
+  },
+
+  'design-exam-room': (...args: unknown[]) => {
+    const [operations, argsList] = args as [string[], unknown[][]];
+    const results: unknown[] = [];
+    let n = 0;
+    const seats: number[] = [];
+    function insert(p: number) {
+      let lo = 0, hi = seats.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (seats[mid]! < p) lo = mid + 1; else hi = mid; }
+      seats.splice(lo, 0, p);
+    }
+    for (let idx = 0; idx < operations.length; idx++) {
+      const op = operations[idx]!, arg = argsList[idx]! as number[];
+      if (op === 'ExamRoom') {
+        n = arg[0]!; seats.length = 0; results.push(null);
+      } else if (op === 'seat') {
+        if (seats.length === 0) { insert(0); results.push(0); continue; }
+        let bestDist = seats[0]!, bestSeat = 0;
+        for (let j = 1; j < seats.length; j++) {
+          const d = Math.floor((seats[j]! - seats[j-1]!) / 2);
+          if (d > bestDist) { bestDist = d; bestSeat = seats[j-1]! + d; }
+        }
+        if (n - 1 - seats[seats.length - 1]! > bestDist) bestSeat = n - 1;
+        insert(bestSeat); results.push(bestSeat);
+      } else {
+        seats.splice(seats.indexOf(arg[0]!), 1); results.push(null);
+      }
+    }
+    return results;
+  },
+
+  'design-authentication-manager': (...args: unknown[]) => {
+    const [operations, argsList] = args as [string[], unknown[][]];
+    const results: unknown[] = [];
+    let timeToLive = 0;
+    const tokenMap = new Map<string, number>();
+    for (let idx = 0; idx < operations.length; idx++) {
+      const op = operations[idx]!, arg = argsList[idx]! as (string | number)[];
+      if (op === 'AuthenticationManager') {
+        timeToLive = arg[0] as number; tokenMap.clear(); results.push(null);
+      } else if (op === 'generate') {
+        tokenMap.set(arg[0] as string, (arg[1] as number) + timeToLive); results.push(null);
+      } else if (op === 'renew') {
+        const tokenId = arg[0] as string, currentTime = arg[1] as number;
+        const expiry = tokenMap.get(tokenId);
+        if (expiry !== undefined && expiry > currentTime) tokenMap.set(tokenId, currentTime + timeToLive);
+        results.push(null);
+      } else {
+        const currentTime = arg[0] as number;
+        let count = 0;
+        for (const [, expiry] of tokenMap) { if (expiry > currentTime) count++; }
+        results.push(count);
+      }
+    }
+    return results;
+  },
+
   'count-the-number-of-arrays-with-k-matching-adjacent-elements': (...args: unknown[]) => {
     const [n, m, k] = args as [number, number, number];
     const MOD = 1_000_000_007n;
