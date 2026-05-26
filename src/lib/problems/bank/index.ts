@@ -2183,6 +2183,9 @@ import { problem as binaryTreeMaximumPathSum } from './binary-tree-maximum-path-
 import { problem as checkIfArraySortedAndRotatedB96 } from './check-if-array-sorted-and-rotated';
 import { problem as findAllLonelyNumbersInArray } from './find-all-lonely-numbers-in-array';
 import { problem as checkIfAllCharactersHaveEqualNumberOfOccurrences } from './check-if-all-characters-have-equal-number-of-occurrences';
+// batch 97 — two-pointers, stack
+import { problem as fourSumVariant } from './4sum';
+import { problem as dailyTemperaturesVariant } from './monotonic-stack-daily-temperatures';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
