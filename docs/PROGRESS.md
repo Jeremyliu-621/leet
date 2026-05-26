@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1675 problems; 5313 tests green.
+**Current focus:** Bank at 1688 problems; 5352 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1700; marketing site update at 1,700+ milestone.
+
+### Batch 67 (2026-05-26)
+Merged batch 66 (local): 6 new problems from deferred stash — `find-the-k-or-of-an-array` (easy/math), `minimum-number-of-operations-to-satisfy-conditions` (medium/dp), `maximum-sum-of-almost-unique-subarray` (medium/sliding-window), `split-array-into-maximum-number-of-subarrays` (medium/arrays), `minimum-number-of-operations-to-make-array-xor-equal-to-k` (easy/math), `maximum-alternating-subarray-sum` (medium/dp). Also backfilled 8 missing JS+Python solutions for batches 64-65. Bank at **1688**; 5352 tests.
 
 ### Batch 66-local (2026-05-26)
 Added 5 problems: `find-if-path-exists-in-graph` (easy/graph, BFS), `longest-subarray-of-ones-after-deleting-one-element` (medium/sliding-window, at-most-one-0), `check-if-array-pairs-are-divisible-by-k` (medium/arrays+math, remainder pairing), `maximum-beauty-of-an-array-after-applying-operation` (medium/arrays+sliding-window, sort+2k window), `rearrange-characters-to-make-target-string` (easy/strings+hash-map, min freq floor-div). Bank at **1670**; 5298 tests.
