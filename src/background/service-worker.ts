@@ -85,6 +85,7 @@ async function grantUnlock(request: GrantUnlockRequest): Promise<RuntimeResponse
   // -> reconcile() path is async and the challenge page's navigation races
   // the stale rule, bouncing back into a fresh challenge.
   await reconcile(now);
+  void updateBadge(nextSolved, now);
   return { ok: true, token };
 }
 
@@ -160,6 +161,24 @@ async function openChallenge(
   return { ok: true };
 }
 
+// --- Badge: show today's solve count on the extension icon ---------------
+
+async function updateBadge(
+  solved: readonly SolvedProblemRecord[] = [],
+  now = Date.now(),
+): Promise<void> {
+  const todayStart = new Date(now);
+  todayStart.setHours(0, 0, 0, 0);
+  const count = solved.filter((r) => r.solvedAt >= todayStart.getTime()).length;
+  const text = count > 0 ? String(count > 99 ? '99+' : count) : '';
+  try {
+    await chrome.action.setBadgeBackgroundColor({ color: '#4A4A4A' });
+    await chrome.action.setBadgeText({ text });
+  } catch {
+    // Badge API unavailable (e.g. in test environments).
+  }
+}
+
 // --- webNavigation: catch SPA history-state changes ----------------------
 
 const recentRedirects = new Map<number, { url: string; at: number }>();
@@ -196,10 +215,12 @@ chrome.tabs.onRemoved.addListener((tabId) => {
 chrome.runtime.onInstalled.addListener(() => {
   console.info('[LeetLock] installed / updated');
   void reconcile();
+  void getValue('solvedProblems').then((s) => updateBadge(s));
 });
 
 chrome.runtime.onStartup.addListener(() => {
   void reconcile();
+  void getValue('solvedProblems').then((s) => updateBadge(s));
 });
 
 chrome.alarms.onAlarm.addListener((alarm) => {
@@ -218,6 +239,10 @@ chrome.storage.onChanged.addListener((changes, _area) => {
   ];
   if (triggers.some((key) => Object.prototype.hasOwnProperty.call(changes, key))) {
     void reconcile();
+  }
+  if (Object.prototype.hasOwnProperty.call(changes, 'solvedProblems')) {
+    const next = changes['solvedProblems']?.newValue as readonly SolvedProblemRecord[] | undefined;
+    void updateBadge(next ?? []);
   }
 });
 
