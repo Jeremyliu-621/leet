@@ -23994,4 +23994,50 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return diff;
   },
 
+  'max-stack': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as number[][];
+    const stack: number[] = [];
+    const maxStk: number[] = [];
+    const result: (number | null)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i] ?? '';
+      const a = opArgs[i] ?? [];
+      if (op === 'push') {
+        const x = a[0] ?? 0;
+        stack.push(x);
+        const prevMax = maxStk[maxStk.length - 1];
+        maxStk.push(prevMax !== undefined ? Math.max(x, prevMax) : x);
+        result.push(null);
+      } else if (op === 'pop') {
+        const val = stack.pop() ?? null;
+        maxStk.pop();
+        result.push(val);
+      } else if (op === 'top') {
+        result.push(stack[stack.length - 1] ?? null);
+      } else if (op === 'peekMax') {
+        result.push(maxStk[maxStk.length - 1] ?? null);
+      } else if (op === 'popMax') {
+        const mx = maxStk[maxStk.length - 1] ?? 0;
+        const buf: number[] = [];
+        while (stack[stack.length - 1] !== mx) {
+          buf.push(stack.pop()!);
+          maxStk.pop();
+        }
+        stack.pop();
+        maxStk.pop();
+        result.push(mx);
+        for (let j = buf.length - 1; j >= 0; j--) {
+          const v = buf[j]!;
+          stack.push(v);
+          const prevMax = maxStk[maxStk.length - 1];
+          maxStk.push(prevMax !== undefined ? Math.max(v, prevMax) : v);
+        }
+      } else {
+        result.push(null);
+      }
+    }
+    return result;
+  },
+
 };

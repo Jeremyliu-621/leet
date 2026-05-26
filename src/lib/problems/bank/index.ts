@@ -371,6 +371,7 @@ import { problem as nextGreaterElement } from './next-greater-element';
 import { problem as dailyTemperatures } from './daily-temperatures';
 import { problem as evaluateRpn } from './evaluate-rpn';
 import { problem as minStack } from './min-stack';
+import { problem as maxStack } from './max-stack';
 import { problem as maximumNestingDepth } from './maximum-nesting-depth';
 // stack — medium
 import { problem as minimumRemoveToMakeValidParentheses } from './minimum-remove-to-make-valid-parentheses';
@@ -2107,6 +2108,7 @@ export const problems: readonly Problem[] = [
   dailyTemperatures,
   evaluateRpn,
   minStack,
+  maxStack,
   maximumNestingDepth,
   // stack — medium
   minimumRemoveToMakeValidParentheses,

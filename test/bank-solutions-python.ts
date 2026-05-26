@@ -23512,4 +23512,39 @@ def secondMinimum(n, edges, time, change):
     return sum(pair_sums[-(i+1)] - pair_sums[i] for i in range(k - 1))
 `,
 
+
+  'max-stack': `def maxStackRunner(ops, args):
+    stack = []
+    max_stk = []
+    result = []
+    for op, a in zip(ops, args):
+        if op == 'push':
+            x = a[0]
+            stack.append(x)
+            max_stk.append(max(x, max_stk[-1]) if max_stk else x)
+            result.append(None)
+        elif op == 'pop':
+            val = stack.pop()
+            max_stk.pop()
+            result.append(val)
+        elif op == 'top':
+            result.append(stack[-1])
+        elif op == 'peekMax':
+            result.append(max_stk[-1])
+        elif op == 'popMax':
+            mx = max_stk[-1]
+            buf = []
+            while stack[-1] != mx:
+                buf.append(stack.pop())
+                max_stk.pop()
+            stack.pop()
+            max_stk.pop()
+            result.append(mx)
+            for v in reversed(buf):
+                stack.append(v)
+                max_stk.append(max(v, max_stk[-1]) if max_stk else v)
+        else:
+            result.append(None)
+    return result
+`,
 };
