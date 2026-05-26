@@ -40,6 +40,7 @@ export function SubmissionsPanel({ submissions, onRestore }: SubmissionsPanelPro
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
+        aria-controls="submissions-panel-body"
         className="flex w-full items-center justify-between px-4 py-2 text-left transition-colors hover:bg-surface-2"
       >
         <div className="flex items-center gap-2">
@@ -56,7 +57,7 @@ export function SubmissionsPanel({ submissions, onRestore }: SubmissionsPanelPro
       </button>
 
       {open && (
-        <div className="overflow-x-auto px-4 pb-3" role="region" aria-label="Submission history">
+        <div id="submissions-panel-body" className="overflow-x-auto px-4 pb-3" role="region" aria-label="Submission history">
           <table
             className="w-full min-w-[360px] font-mono text-xs"
             aria-label="Submission history table"

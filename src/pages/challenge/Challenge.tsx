@@ -760,7 +760,7 @@ export function Challenge() {
             attempts: attempts + 1,
           });
         } catch {
-          // SW not yet wired (Phase 6) — continue to redirect anyway.
+          // SW may be transiently unavailable — redirect still proceeds.
         }
 
         // Brief pause so the user sees their "Accepted" verdict before navigating.
