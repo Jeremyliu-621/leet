@@ -367,19 +367,25 @@ const TERMINAL_TABS: ReadonlyArray<'output' | 'testcases'> = ['output', 'testcas
 
 export function TerminalPanel({ result, mode }: TerminalPanelProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const tabListRef = useRef<HTMLDivElement>(null);
   const [history, setHistory] = useState<TerminalEntry[][]>([]);
   const [activeTab, setActiveTab] = useState<'output' | 'testcases'>('output');
   const prevResultRef = useRef<JudgeResult | null | undefined>(null);
 
   const handleTabKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowDown' && e.key !== 'ArrowLeft' && e.key !== 'ArrowUp') return;
+      e.preventDefault();
       const idx = TERMINAL_TABS.indexOf(activeTab);
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-        e.preventDefault();
-        setActiveTab(TERMINAL_TABS[(idx + 1) % TERMINAL_TABS.length]!);
-      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-        e.preventDefault();
-        setActiveTab(TERMINAL_TABS[(idx - 1 + TERMINAL_TABS.length) % TERMINAL_TABS.length]!);
+      const nextIdx =
+        e.key === 'ArrowRight' || e.key === 'ArrowDown'
+          ? (idx + 1) % TERMINAL_TABS.length
+          : (idx - 1 + TERMINAL_TABS.length) % TERMINAL_TABS.length;
+      setActiveTab(TERMINAL_TABS[nextIdx]!);
+      const tabList = tabListRef.current;
+      if (tabList) {
+        const buttons = tabList.querySelectorAll<HTMLButtonElement>('button[role="tab"]');
+        buttons[nextIdx]?.focus();
       }
     },
     [activeTab],
@@ -417,7 +423,7 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
     <div className="flex flex-col" role="region" aria-label="Terminal output">
       {/* Tab bar */}
       <div className="flex items-center justify-between border-b border-border bg-surface">
-        <div role="tablist" aria-label="Terminal panels" className="flex">
+        <div ref={tabListRef} role="tablist" aria-label="Terminal panels" className="flex">
           <button
             type="button"
             role="tab"
