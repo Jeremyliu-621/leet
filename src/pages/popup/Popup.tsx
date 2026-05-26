@@ -400,7 +400,10 @@ export function Popup() {
           <p className="mt-2 text-xs text-muted">None.</p>
         ) : (
           <ul className="mt-2 space-y-1.5">
-            {data.activeUnlocks.slice(0, 4).map((token) => (
+            {data.activeUnlocks.slice(0, 4).map((token) => {
+              const pctLeft = Math.max(0, Math.min(100, ((token.expiresAt - now) / token.durationMs) * 100));
+              const minsLeft = minutesLeft(token, now);
+              return (
               <li key={token.domain}>
                 <button
                   type="button"
@@ -411,16 +414,25 @@ export function Popup() {
                       // Outside extension context — silently ignore.
                     }
                   }}
-                  aria-label={`Visit ${token.domain} (${minutesLeft(token, now)} minutes left)`}
-                  className="flex w-full items-center justify-between border border-border bg-surface px-3 py-2 text-xs transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+                  aria-label={`Visit ${token.domain} (${minsLeft} minutes left)`}
+                  className="relative flex w-full flex-col overflow-hidden border border-border bg-surface px-3 pb-1 pt-2 text-xs transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
                 >
-                  <span className="truncate font-mono text-text">{token.domain}</span>
-                  <span className="ml-2 shrink-0 font-mono text-muted tabular-nums">
-                    {minutesLeft(token, now)}m left
-                  </span>
+                  <div className="flex items-center justify-between">
+                    <span className="truncate font-mono text-text">{token.domain}</span>
+                    <span className="ml-2 shrink-0 font-mono text-muted tabular-nums">
+                      {minsLeft}m left
+                    </span>
+                  </div>
+                  <div className="mt-1.5 h-px w-full bg-surface-2" aria-hidden="true">
+                    <div
+                      className="h-px bg-border-strong transition-all duration-1000"
+                      style={{ width: `${pctLeft}%` }}
+                    />
+                  </div>
                 </button>
               </li>
-            ))}
+              );
+            })}
             {data.activeUnlocks.length > 4 && (
               <li className="font-mono text-[10px] text-faint px-1">
                 +{data.activeUnlocks.length - 4} more · see Settings
