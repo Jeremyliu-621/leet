@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1649 problems; 5235 tests green.
+**Current focus:** Bank at 1654 problems; 5250 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank toward 1700; marketing site update to 1,600+ at milestone.
+**Next up:** Continue growing problem bank toward 1700; UX polish (a11y, terminal UX).
+
+### Batch 64-local (2026-05-26)
+Added 5 problems: `number-of-wonderful-substrings` (medium/strings+hash-map, XOR prefix bitmask over 10 chars), `design-a-number-container-system` (medium/hash-map, sorted bisect index list), `continuous-subarrays` (medium/arrays+sliding-window, dual monotone deques), `count-pairs-that-form-a-complete-day-i` (easy/arrays+math, freq-map mod-24 complement), `substring-with-largest-variance` (hard/arrays+dp, Kadane over all 650 char pairs). JS + Python solutions. Bank at **1654**; 5250 tests.
 
 ### Batch 65 + UX polish (2026-05-26)
 Added 7 problems: `max-stack` (medium/stack, dual-stack popMax buffer), `shift-2d-grid` (easy/arrays, circular shift), `find-and-replace-in-string` (medium/strings, simultaneous replacements), `check-whether-two-strings-are-almost-equivalent` (easy/strings+hash-map, |freq diff|≤3), `minimum-number-of-swaps-to-make-the-binary-string-alternating` (medium/strings+math), `maximum-number-of-non-overlapping-subarrays-with-sum-equals-target` (medium/arrays+hash-map, greedy prefix sum), `find-the-minimum-possible-sum-of-a-beautiful-array` (medium/math, BigInt closed-form). UX: submissions timestamp now shows today/yesterday/date context; TLE label fixed to "Time Limit Exceeded"; challenge tab title includes difficulty prefix [E/M/H]. Bank at **1649**; 5235 tests.
