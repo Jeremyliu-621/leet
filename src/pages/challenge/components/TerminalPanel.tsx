@@ -23,7 +23,7 @@ function CopyButton({ value }: { value: string }) {
       type="button"
       onClick={handleCopy}
       aria-label="Copy to clipboard"
-      className="ml-1 text-faint hover:text-muted transition-colors align-middle"
+      className="ml-1 text-faint hover:text-muted transition-colors align-middle focus:outline-none focus-visible:ring-1 focus-visible:ring-accent focus-visible:rounded-sm"
       style={{ fontSize: '9px', letterSpacing: '0.05em' }}
     >
       {copied ? '✓' : 'copy'}
@@ -44,7 +44,7 @@ function ValueDisplay({ value }: { value: string }) {
       <button
         type="button"
         onClick={() => setExpanded((v) => !v)}
-        className="ml-1 text-faint hover:text-muted transition-colors"
+        className="ml-1 text-faint hover:text-muted transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-accent focus-visible:rounded-sm"
         style={{ fontSize: '9px' }}
       >
         {expanded ? 'less' : `+${value.length - TRUNCATE_AT} chars`}
@@ -601,7 +601,7 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
             <button
               type="button"
               onClick={handleCopyOutput}
-              className="px-2 py-1 font-mono text-[9px] uppercase tracking-wider text-faint hover:text-muted transition-colors"
+              className="px-2 py-1 font-mono text-[9px] uppercase tracking-wider text-faint hover:text-muted transition-colors focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent"
               title="Copy terminal output"
               aria-label="Copy terminal output to clipboard"
             >
@@ -611,7 +611,7 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
           <button
             type="button"
             onClick={handleClear}
-            className="px-2 py-1 font-mono text-[9px] uppercase tracking-wider text-faint hover:text-muted transition-colors"
+            className="px-2 py-1 font-mono text-[9px] uppercase tracking-wider text-faint hover:text-muted transition-colors focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent"
             title="Clear terminal"
             aria-label="Clear terminal output"
           >
@@ -752,7 +752,7 @@ function TestResultCard({ verdict, autoExpand }: { verdict: TestVerdict; autoExp
       <button
         type="button"
         onClick={() => setExpanded((e) => !e)}
-        className="flex w-full items-center gap-2 px-3 py-2 text-left"
+        className="flex w-full items-center gap-2 px-3 py-2 text-left focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-accent"
         aria-expanded={expanded}
       >
         <span
