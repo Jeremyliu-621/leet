@@ -1860,6 +1860,20 @@ import { problem as findTheDuplicateNumber } from './find-the-duplicate-number';
 import { problem as maximumDifferenceInArray } from './maximum-difference-in-array';
 import { problem as longestSubarrayWithAtMostKFrequency } from './longest-subarray-with-at-most-k-frequency';
 import { problem as countPairsInTwoArrays } from './count-pairs-in-two-arrays';
+// batch 71
+import { problem as findPeakElementII } from './find-peak-element-ii';
+import { problem as checkCompletenessOfBinaryTree } from './check-completeness-of-a-binary-tree';
+import { problem as allAncestorsOfNodeInDag } from './all-ancestors-of-a-node-in-a-dag';
+import { problem as numberOfNodesInSubtreeWithSameLabel } from './number-of-nodes-in-subtree-with-same-label';
+import { problem as determineIfCellIsReachableAtGivenTime } from './determine-if-cell-is-reachable-at-given-time';
+import { problem as sumInAMatrix } from './sum-in-a-matrix';
+import { problem as largestSubstringBetweenTwoEqualCharacters } from './largest-substring-between-two-equal-characters';
+import { problem as destroySequentialTargets } from './destroy-sequential-targets';
+import { problem as minimizeResultByAddingParentheses } from './minimize-result-by-adding-parentheses-to-expression';
+import { problem as minimumSumOfKAvoidingArray } from './minimum-sum-of-a-k-avoiding-array';
+import { problem as countWaysToBuildRoomsInAntColony } from './count-ways-to-build-rooms-in-an-ant-colony';
+import { problem as lengthOfLongestAlphabeticalContinuousSubstring } from './length-of-the-longest-alphabetical-continuous-substring';
+import { problem as numberOfStringsThatAppearAsSubstrings } from './number-of-strings-that-appear-as-substrings-in-word';
 import { problem as cellsInARangeOnAnExcelSheet } from './cells-in-a-range-on-an-excel-sheet';
 import { problem as makeTwoArraysEqualByReversingSubarrays } from './make-two-arrays-equal-by-reversing-subarrays';
 import { problem as countPairsOfSimilarWords } from './count-pairs-of-similar-words';
@@ -3809,4 +3823,17 @@ export const problems: readonly Problem[] = [
   maximumCandiesAllocatedToKChildren,
   numberOfRestrictedPaths,
   minimumSwapsToSortAnArray,
+  findPeakElementII,
+  checkCompletenessOfBinaryTree,
+  allAncestorsOfNodeInDag,
+  numberOfNodesInSubtreeWithSameLabel,
+  determineIfCellIsReachableAtGivenTime,
+  sumInAMatrix,
+  largestSubstringBetweenTwoEqualCharacters,
+  destroySequentialTargets,
+  minimizeResultByAddingParentheses,
+  minimumSumOfKAvoidingArray,
+  countWaysToBuildRoomsInAntColony,
+  lengthOfLongestAlphabeticalContinuousSubstring,
+  numberOfStringsThatAppearAsSubstrings,
 ];

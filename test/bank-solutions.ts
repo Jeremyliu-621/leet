@@ -26104,6 +26104,47 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
+  // batch 71
+  'find-peak-element-ii': (...args: unknown[]) => {
+    const mat = args[0] as number[][];
+    const m = mat.length, n = mat[0]!.length;
+    let lo = 0, hi = n - 1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      let maxRow = 0;
+      for (let i = 1; i < m; i++) {
+        if ((mat[i]![mid] as number) > (mat[maxRow]![mid] as number)) maxRow = i;
+      }
+      const val = mat[maxRow]![mid] as number;
+      const left = mid > 0 ? (mat[maxRow]![mid - 1] as number) : -1;
+      const right = mid < n - 1 ? (mat[maxRow]![mid + 1] as number) : -1;
+      if (val > left && val > right) return [maxRow, mid];
+      else if (left > right) hi = mid - 1;
+      else lo = mid + 1;
+    }
+    return [-1, -1];
+  },
+
+  'check-completeness-of-a-binary-tree': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    if (!arr || arr.length === 0) return false;
+    const queue: number[] = [0];
+    let seenNull = false;
+    while (queue.length > 0) {
+      const i = queue.shift()!;
+      const left = 2 * i + 1, right = 2 * i + 2;
+      const lv = left < arr.length ? arr[left] : null;
+      const rv = right < arr.length ? arr[right] : null;
+      if (lv === null) seenNull = true;
+      else if (seenNull) return false;
+      else queue.push(left);
+      if (rv === null) seenNull = true;
+      else if (seenNull) return false;
+      else queue.push(right);
+    }
+    return true;
+  },
+
   'earliest-possible-day-of-full-bloom': (...args: unknown[]) => {
     const plantTime = args[0] as number[];
     const growTime = args[1] as number[];
@@ -26380,6 +26421,85 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'all-ancestors-of-a-node-in-a-dag': (n: unknown, edges: unknown): unknown => {
+    const nn = n as number;
+    const edgeArr = edges as number[][];
+    const adj: number[][] = Array.from({ length: nn }, () => []);
+    for (const [from, to] of edgeArr) adj[from!]!.push(to!);
+    const ancestors: Set<number>[] = Array.from({ length: nn }, () => new Set<number>());
+    const dfs = (node: number, anc: number) => {
+      for (const child of adj[node]!) {
+        if (!ancestors[child]!.has(anc)) {
+          ancestors[child]!.add(anc);
+          dfs(child, anc);
+        }
+      }
+    };
+    for (let i = 0; i < nn; i++) dfs(i, i);
+    return ancestors.map(s => [...s].sort((a, b) => a - b));
+  },
+
+  'number-of-nodes-in-subtree-with-same-label': (n: unknown, edges: unknown, labels: unknown): unknown => {
+    const nn = n as number;
+    const edgeArr = edges as number[][];
+    const lbl = labels as string;
+    const adj: number[][] = Array.from({ length: nn }, () => []);
+    for (const [a, b] of edgeArr) { adj[a!]!.push(b!); adj[b!]!.push(a!); }
+    const ans = new Array<number>(nn).fill(0);
+    const dfs = (node: number, parent: number): number[] => {
+      const cnt = new Array<number>(26).fill(0);
+      const charIdx = lbl.charCodeAt(node) - 97;
+      cnt[charIdx] = (cnt[charIdx] ?? 0) + 1;
+      for (const child of adj[node]!) {
+        if (child === parent) continue;
+        const childCnt = dfs(child, node);
+        for (let i = 0; i < 26; i++) cnt[i]! += childCnt[i]!;
+      }
+      ans[node] = cnt[lbl.charCodeAt(node) - 97]!;
+      return cnt;
+    };
+    dfs(0, -1);
+    return ans;
+  },
+
+  'determine-if-cell-is-reachable-at-given-time': (...args: unknown[]) => {
+    const [sx, sy, fx, fy, t] = args as [number, number, number, number, number];
+    const d = Math.max(Math.abs(fx - sx), Math.abs(fy - sy));
+    if (d === 0) return t !== 1;
+    return t >= d;
+  },
+
+  'sum-in-a-matrix': (...args: unknown[]) => {
+    const nums = args[0] as number[][];
+    for (const row of nums) row.sort((a, b) => b - a);
+    let score = 0;
+    const cols = nums[0]!.length;
+    for (let j = 0; j < cols; j++) {
+      let mx = 0;
+      for (const row of nums) mx = Math.max(mx, row[j] as number);
+      score += mx;
+    }
+    return score;
+  },
+
+  'maximum-product-of-two-elements-in-an-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    nums.sort((a, b) => b - a);
+    return (nums[0]! - 1) * (nums[1]! - 1);
+  },
+
+  'largest-substring-between-two-equal-characters': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const first = new Map<string, number>();
+    let ans = -1;
+    for (let i = 0; i < s.length; i++) {
+      const c = s[i]!;
+      if (first.has(c)) ans = Math.max(ans, i - first.get(c)! - 1);
+      else first.set(c, i);
+    }
+    return ans;
+  },
+
   'prison-cells-after-n-days': (...args: unknown[]) => {
     let cells = args[0] as number[];
     let n = args[1] as number;
@@ -26532,6 +26652,111 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       swaps += cycleLen - 1;
     }
     return swaps;
+  },
+
+  'destroy-sequential-targets': (...args: unknown[]) => {
+    const nums = args[0] as number[], space = args[1] as number;
+    const groups = new Map<number, [number, number]>(); // remainder → [count, minVal]
+    for (const v of nums) {
+      const r = v % space;
+      if (!groups.has(r)) groups.set(r, [0, v]);
+      const g = groups.get(r)!;
+      g[0]++;
+      g[1] = Math.min(g[1], v);
+    }
+    let bestCount = 0, bestMin = Infinity;
+    for (const [, [count, minVal]] of groups) {
+      if (count > bestCount || (count === bestCount && minVal < bestMin)) {
+        bestCount = count; bestMin = minVal;
+      }
+    }
+    return bestMin;
+  },
+
+  'minimize-result-by-adding-parentheses-to-expression': (...args: unknown[]) => {
+    const expr = args[0] as string;
+    const plus = expr.indexOf('+');
+    const num1 = expr.slice(0, plus), num2 = expr.slice(plus + 1);
+    let best = Infinity, bestStr = '';
+    for (let i = 0; i < num1.length; i++) {
+      for (let j = 1; j <= num2.length; j++) {
+        const left = num1.slice(0, i) || '1';
+        const inner1 = num1.slice(i);
+        const inner2 = num2.slice(0, j);
+        const right = num2.slice(j) || '1';
+        const val = parseInt(left) * (parseInt(inner1) + parseInt(inner2)) * parseInt(right);
+        if (val < best) {
+          best = val;
+          const ls = num1.slice(0, i), rs = num2.slice(j);
+          bestStr = `${ls}(${inner1}+${inner2})${rs}`;
+        }
+      }
+    }
+    return bestStr;
+  },
+
+  'minimum-sum-of-a-k-avoiding-array': (...args: unknown[]) => {
+    const [n, k] = args as [number, number];
+    const picked = new Set<number>();
+    let sum = 0, count = 0, i = 1;
+    while (count < n) {
+      if (!picked.has(k - i)) {
+        picked.add(i);
+        sum += i;
+        count++;
+      }
+      i++;
+    }
+    return sum;
+  },
+
+  'count-ways-to-build-rooms-in-an-ant-colony': (...args: unknown[]) => {
+    const prevRoom = args[0] as number[];
+    const MOD = 1_000_000_007n;
+    const nn = prevRoom.length;
+    const children: number[][] = Array.from({ length: nn }, () => []);
+    for (let i = 1; i < nn; i++) children[prevRoom[i]!]!.push(i);
+    const size = new Array<number>(nn).fill(1);
+    const order: number[] = [];
+    const stack = [0];
+    while (stack.length) {
+      const node = stack.pop()!;
+      order.push(node);
+      for (const c of children[node]!) stack.push(c);
+    }
+    for (let i = order.length - 1; i >= 0; i--) {
+      const node = order[i]!;
+      for (const c of children[node]!) size[node]! += size[c]!;
+    }
+    const bigMod = (a: bigint, b: bigint, m: bigint): bigint => {
+      let r = 1n; a %= m;
+      while (b > 0n) { if (b & 1n) r = r * a % m; a = a * a % m; b >>= 1n; }
+      return r;
+    };
+    let ans = 1n;
+    let fact = 1n;
+    for (let i = 1; i <= nn; i++) fact = fact * BigInt(i) % MOD;
+    ans = fact;
+    for (let i = 0; i < nn; i++) ans = ans * bigMod(BigInt(size[i]!), MOD - 2n, MOD) % MOD;
+    return Number(ans);
+  },
+
+  'length-of-the-longest-alphabetical-continuous-substring': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let ans = 1, cur = 1;
+    for (let i = 1; i < s.length; i++) {
+      if (s.charCodeAt(i) === s.charCodeAt(i - 1) + 1) {
+        ans = Math.max(ans, ++cur);
+      } else {
+        cur = 1;
+      }
+    }
+    return ans;
+  },
+
+  'number-of-strings-that-appear-as-substrings-in-word': (...args: unknown[]) => {
+    const patterns = args[0] as string[], word = args[1] as string;
+    return patterns.filter(p => word.includes(p)).length;
   },
 
 };

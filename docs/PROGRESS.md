@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1771** problems; 5586 tests green.
+**Current focus:** Bank at **1785** problems; 5640 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1800; UX polish.
+
+### Batch 71 (our, 2026-05-26)
+Added 13 new problems (14 registered; `maximum-product-of-two-elements-in-an-array` duplicate of upstream `...-in-array`): `find-peak-element-ii` (medium/binary-search, O(m log n) 2D peak), `check-completeness-of-a-binary-tree` (medium/tree, BFS null-gap on array), `all-ancestors-of-a-node-in-a-dag` (medium/graph+dp, DFS from each node), `number-of-nodes-in-subtree-with-same-label` (medium/tree+hash-map), `determine-if-cell-is-reachable-at-given-time` (medium/math, Chebyshev distance), `sum-in-a-matrix` (medium/arrays, sort-rows then column maxes), `largest-substring-between-two-equal-characters` (easy/strings), `destroy-sequential-targets` (medium/arrays+hash-map, modulo groups), `minimize-result-by-adding-parentheses-to-expression` (medium/strings+math), `minimum-sum-of-a-k-avoiding-array` (medium/arrays+math), `count-ways-to-build-rooms-in-an-ant-colony` (hard/tree+dp+math), `length-of-the-longest-alphabetical-continuous-substring` (medium/strings), `number-of-strings-that-appear-as-substrings-in-word` (easy/strings). Fixed Pyodide JsNull vs None check (use isinstance(x, int)) for Python solutions with null array elements. Bank at **1785**; 5640 tests.
 
 ### Batch 71-local (2026-05-26)
 Added 5 new problems: `minimize-deviation-in-array` (hard/heap+math, multiply-odd-then-halve-max greedy), `prison-cells-after-n-days` (medium/arrays+simulation, cycle detection in 8-bit automaton), `all-ancestors-of-a-node-in-a-directed-acyclic-graph` (medium/graph, DFS from each node as ancestor), `delete-nodes-and-return-forest` (medium/tree, post-order DFS with parent-deleted flag), `naming-a-company` (hard/strings+hash-map, 26×26 suffix set pair counting). JS + Python solutions for all. Bank at **1771**; 5586 tests.
