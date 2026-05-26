@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1706 problems; 5403 tests green.
+**Current focus:** Bank at 1711 problems; 5415 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank toward 1750; marketing site update at 1,700+ milestone.
+**Next up:** Continue growing problem bank toward 1750; UX polish (browser-zoom QA, accessibility improvements).
+
+### Batch 69 (2026-05-26)
+Added 4 new problems: `merge-nodes-in-between-zeros` (medium/linked-list, accumulate sums between zeros), `reachable-nodes-with-restrictions` (medium/graph, BFS from 0 avoiding restricted nodes), `minimum-number-of-k-consecutive-bit-flips` (hard/sliding-window, greedy difference array), `minimum-size-subarray-in-infinite-array` (medium/sliding-window, prefix-sum + double array). JS + Python solutions for all. Bank at **1711**; 5415 tests.
 
 ### Batch 67+68 backfill (2026-05-26)
 Registered 14 previously orphaned problems (files existed on disk but weren't imported in index.ts):
