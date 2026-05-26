@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1793** problems; 5667 tests green.
+**Current focus:** Bank at **1807** problems; 5709 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank toward 1800; UX polish; marketing site refresh.
+**Next up:** Continue growing problem bank toward 1900; update marketing site to 1,800+; batch 73+.
+
+### merge: batch 71 (5 new) + remote batch 71-72 integration (2026-05-26)
+Merged our batch-71 (5 new problems: `find-the-city-with-smallest-number-of-neighbors-at-a-threshold-distance`, `maximum-candies-allocated-to-k-children`, `number-of-restricted-paths-from-first-to-last-node`, `minimum-swaps-to-sort-an-array`, `minimum-replacements-to-sort-the-array`) with remote concurrent additions. Bank at **1807**; 5709 tests.
 
 ### Batch 71 + terminal UX (2026-05-26)
 Added 6 new problems: `find-the-good-days-to-rob-bank` (medium/arrays+dp), `frequency-tracker` (medium/hash-map, design with dual-map O(1)), `minimum-extra-characters-in-a-string` (medium/strings+dp), `minimum-seconds-to-equalize-a-circular-array` (medium/arrays+math), `movement-of-robots` (medium/arrays+math, pass-through collision trick with BigInt pairwise prefix sum), `number-of-ways-of-cutting-a-pizza` (hard/arrays+dp, 2D prefix sum + memoized DP). Terminal UX: only the first failing test auto-expands (not all), scroll-to-top when auto-switching to test-results tab on failure. Marketing site stats updated to 1,750+. Bank at **1793**; 5658 tests.
