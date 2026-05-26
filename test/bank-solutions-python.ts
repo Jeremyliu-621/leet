@@ -25860,4 +25860,86 @@ def distinctNames(ideas):
 `,
 
 
+  'find-the-city-with-smallest-number-of-neighbors-at-a-threshold-distance': `def findTheCity(n, edges, distanceThreshold):
+    INF = float('inf')
+    dist = [[INF] * n for _ in range(n)]
+    for i in range(n):
+        dist[i][i] = 0
+    for u, v, w in edges:
+        dist[u][v] = min(dist[u][v], w)
+        dist[v][u] = min(dist[v][u], w)
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if dist[i][k] + dist[k][j] < dist[i][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+    ans, min_count = 0, INF
+    for i in range(n):
+        count = sum(1 for j in range(n) if i != j and dist[i][j] <= distanceThreshold)
+        if count <= min_count:
+            min_count = count
+            ans = i
+    return ans
+`,
+
+  'maximum-candies-allocated-to-k-children': `def maximumCandies(candies, k):
+    lo, hi = 0, max(candies)
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        total = sum(p // mid for p in candies)
+        if total >= k:
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'number-of-restricted-paths-from-first-to-last-node': `def countRestrictedPaths(n, edges):
+    import heapq
+    MOD = 10**9 + 7
+    adj = [[] for _ in range(n + 1)]
+    for u, v, w in edges:
+        adj[u].append((v, w))
+        adj[v].append((u, w))
+    dist = [float('inf')] * (n + 1)
+    dist[n] = 0
+    pq = [(0, n)]
+    while pq:
+        d, u = heapq.heappop(pq)
+        if d > dist[u]:
+            continue
+        for v, w in adj[u]:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                heapq.heappush(pq, (dist[v], v))
+    order = sorted(range(1, n + 1), key=lambda x: dist[x])
+    dp = [0] * (n + 1)
+    dp[n] = 1
+    for u in order:
+        for v, _ in adj[u]:
+            if dist[v] < dist[u]:
+                dp[u] = (dp[u] + dp[v]) % MOD
+    return dp[1]
+`,
+
+  'minimum-swaps-to-sort-an-array': `def minSwaps(nums):
+    n = len(nums)
+    sorted_nums = sorted(nums)
+    pos = {v: i for i, v in enumerate(sorted_nums)}
+    visited = [False] * n
+    swaps = 0
+    arr = list(nums)
+    for i in range(n):
+        if visited[i] or pos[arr[i]] == i:
+            continue
+        cycle_len = 0
+        j = i
+        while not visited[j]:
+            visited[j] = True
+            j = pos[arr[j]]
+            cycle_len += 1
+        swaps += cycle_len - 1
+    return swaps
+`,
+
 };

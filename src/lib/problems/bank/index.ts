@@ -1880,6 +1880,12 @@ import { problem as prisonCellsAfterNDays } from './prison-cells-after-n-days';
 import { problem as allAncestorsDAG } from './all-ancestors-of-a-node-in-a-directed-acyclic-graph';
 import { problem as deleteNodesReturnForest } from './delete-nodes-and-return-forest';
 import { problem as namingACompany } from './naming-a-company';
+// batch 71
+import { problem as minimumReplacementsToSortTheArray } from './minimum-replacements-to-sort-the-array';
+import { problem as findTheCityWithSmallestNeighbors } from './find-the-city-with-smallest-number-of-neighbors-at-a-threshold-distance';
+import { problem as maximumCandiesAllocatedToKChildren } from './maximum-candies-allocated-to-k-children';
+import { problem as numberOfRestrictedPaths } from './number-of-restricted-paths-from-first-to-last-node';
+import { problem as minimumSwapsToSortAnArray } from './minimum-swaps-to-sort-an-array';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3798,4 +3804,9 @@ export const problems: readonly Problem[] = [
   allAncestorsDAG,
   deleteNodesReturnForest,
   namingACompany,
+  minimumReplacementsToSortTheArray,
+  findTheCityWithSmallestNeighbors,
+  maximumCandiesAllocatedToKChildren,
+  numberOfRestrictedPaths,
+  minimumSwapsToSortAnArray,
 ];

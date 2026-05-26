@@ -26355,6 +26355,31 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'find-the-city-with-smallest-number-of-neighbors-at-a-threshold-distance': (n: unknown, edges: unknown, distanceThreshold: unknown): unknown => {
+    const size = n as number;
+    const threshold = distanceThreshold as number;
+    const dist = Array.from({ length: size }, (_, i) =>
+      Array.from({ length: size }, (__, j) => (i === j ? 0 : Infinity))
+    );
+    for (const e of edges as number[][]) {
+      const u = e[0]!, v = e[1]!, w = e[2]!;
+      dist[u]![v] = Math.min(dist[u]![v]!, w);
+      dist[v]![u] = Math.min(dist[v]![u]!, w);
+    }
+    for (let k = 0; k < size; k++)
+      for (let i = 0; i < size; i++)
+        for (let j = 0; j < size; j++)
+          if (dist[i]![k]! + dist[k]![j]! < dist[i]![j]!)
+            dist[i]![j] = dist[i]![k]! + dist[k]![j]!;
+    let ans = 0, minCount = Infinity;
+    for (let i = 0; i < size; i++) {
+      let count = 0;
+      for (let j = 0; j < size; j++) if (i !== j && dist[i]![j]! <= threshold) count++;
+      if (count <= minCount) { minCount = count; ans = i; }
+    }
+    return ans;
+  },
+
   'prison-cells-after-n-days': (...args: unknown[]) => {
     let cells = args[0] as number[];
     let n = args[1] as number;
@@ -26435,6 +26460,78 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       }
     }
     return count;
+  },
+
+  'maximum-candies-allocated-to-k-children': (candies: unknown, k: unknown): unknown => {
+    const piles = candies as number[];
+    const children = k as number;
+    let lo = 0, hi = Math.max(...piles);
+    while (lo < hi) {
+      const mid = (lo + hi + 1) >> 1;
+      const total = piles.reduce((s, p) => s + Math.floor(p / mid), 0);
+      if (total >= children) lo = mid;
+      else hi = mid - 1;
+    }
+    return lo;
+  },
+
+  'number-of-restricted-paths-from-first-to-last-node': (n: unknown, edges: unknown): unknown => {
+    const MOD = 1_000_000_007n;
+    const size = n as number;
+    const edgeList = edges as number[][];
+    const adj: [number, number][][] = Array.from({ length: size + 1 }, () => []);
+    for (const e of edgeList) {
+      const u = e[0]!, v = e[1]!, w = e[2]!;
+      adj[u]!.push([v, w]);
+      adj[v]!.push([u, w]);
+    }
+    const dist = new Array(size + 1).fill(Infinity);
+    dist[size] = 0;
+    const pq: [number, number][] = [[0, size]];
+    while (pq.length) {
+      pq.sort((a, b) => a[0]! - b[0]!);
+      const [d, u] = pq.shift()!;
+      if (d > dist[u]!) continue;
+      for (const [v, w] of adj[u]!) {
+        if (dist[u]! + w < dist[v]!) {
+          dist[v] = dist[u]! + w;
+          pq.push([dist[v]!, v]);
+        }
+      }
+    }
+    const order = Array.from({ length: size }, (_, i) => i + 1).sort((a, b) => dist[a]! - dist[b]!);
+    const dp = new Array(size + 1).fill(0n);
+    dp[size] = 1n;
+    for (const u of order) {
+      for (const [v] of adj[u]!) {
+        if (dist[v]! < dist[u]!) {
+          dp[u] = (dp[u]! + dp[v]!) % MOD;
+        }
+      }
+    }
+    return Number(dp[1]!);
+  },
+
+  'minimum-swaps-to-sort-an-array': (nums: unknown): unknown => {
+    const arr = nums as number[];
+    const n = arr.length;
+    const sorted = arr.slice().sort((a, b) => a - b);
+    const pos = new Map<number, number>();
+    for (let i = 0; i < n; i++) pos.set(sorted[i]!, i);
+    const visited = new Array(n).fill(false);
+    let swaps = 0;
+    for (let i = 0; i < n; i++) {
+      if (visited[i] || pos.get(arr[i]!) === i) continue;
+      let cycleLen = 0;
+      let j = i;
+      while (!visited[j]) {
+        visited[j] = true;
+        j = pos.get(arr[j]!)!;
+        cycleLen++;
+      }
+      swaps += cycleLen - 1;
+    }
+    return swaps;
   },
 
 };
