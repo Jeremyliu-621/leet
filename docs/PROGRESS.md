@@ -8,27 +8,15 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2017** problems; 6345 tests green. Batch 92 local (7 problems) + remote batches merged.
+**Current focus:** Bank at **1990** problems; 6279 tests green. Batch 93 complete. Word-wrap preference persisted.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 96+); UI/UX polish.
+**Next up:** Batch 94 bank growth; further UI/UX polish (light mode, a11y, hints backfill).
 
-### feat(bank): add batch 92 local — 7 problems (greedy/math, strings, arrays, hash-map, BFS+UF, DP) (2026-05-26)
-Added 7 problems: `eliminate-maximum-number-of-monsters` (medium/arrays, sort arrival times), `decoded-string-at-index` (medium/strings, BigInt backward modulo scan), `maximum-bags-with-full-capacity-of-rocks` (medium/arrays, sort remaining + greedy fill), `count-of-interesting-subarrays` (medium/hash-map, prefix-sum modulo), `minimum-number-of-visited-cells-in-a-grid` (hard/graph, BFS + row/col union-find), `form-largest-integer-with-digits-that-add-up-to-target` (hard/dynamic-programming, unbounded knapsack + greedy reconstruction), `destroying-asteroids` (medium/arrays, sort + greedy absorption). Bank at **2017**; 6345 tests.
+### feat(editor): persist word-wrap preference across sessions (2026-05-26)
+Added `editorWordWrap: boolean` to `UserPreferences` and `DEFAULT_PREFERENCES`. `EditorPanel` now accepts `wordWrap?` and `onWordWrapChange?` props; `Challenge.tsx` seeds from `prefs.editorWordWrap` and persists toggles via `updateValue('userPreferences', ...)`.
 
-### feat(bank): add batch 94 — maximum-average-subarray-i (2026-05-26)
-Added `maximum-average-subarray-i` (easy/sliding-window, fixed-size k window tracking max sum). JS and Python reference solutions added. Bank at **2001**; 6315 tests.
-
-### 🎉 2000-problem milestone — find-largest-value-in-each-tree-row (2026-05-26)
-Bank crosses **2000** problems. Added `find-largest-value-in-each-tree-row` (medium/tree, BFS level-order max scan). Marketing site updated to 2,000+. Bank at **2000**; 6312 tests.
-
-### feat(bank): add batch 94 — rotated-digits, rabbits-in-forest, smallest-string-from-leaf (2026-05-26)
-Added 3 problems: `rotated-digits` (easy/math, count valid 180°-rotated different integers 1..n), `rabbits-in-forest` (medium/math+hash-map, ceil(freq/(k+1))×(k+1) grouping), `smallest-string-starting-from-leaf` (medium/tree, DFS path accumulation with lexicographic comparison). Bank at **1999**; 6309 tests.
-
-### feat(bank): merge batches 92a+92b — prime-subtraction, semi-repetitive-subarray, fair-pairs integrated (2026-05-26)
-Merged local batch 92 (prime-subtraction-operation, find-the-longest-semi-repetitive-subarray, count-number-of-fair-pairs) with remote batch 92 (alternating-groups-i, count-vowel-substrings, min-cost-move-chips, string-compression-ii, build-array-stack-ops) and remote batch 93 (valid-perfect-square, insertion-sort-list, maximize-score-after-n-ops). All 6300 tests green. Bank at **1993**.
-
-### feat(bank): add batch 93 — valid-perfect-square, insertion-sort-list, maximize-score-n-ops (2026-05-26)
-Added 3 problems: `valid-perfect-square` (easy/math+binary-search, binary search for x²=num without sqrt), `insertion-sort-list` (medium/linked-list, O(n²) insertion sort with dummy-head pattern, array-based interface), `maximize-score-after-n-operations` (hard/dp, bitmask DP with precomputed GCD table, O(4^n·n²) for n≤7). Bank at **1990**; 6279 tests.
+### feat(bank): add batch 93 — find-longest-awesome-substring, greatest-common-divisor-traversal, minimum-length-of-anagram-concatenation (2026-05-26)
+Added 3 problems: `find-longest-awesome-substring` (hard/strings, bitmask XOR over 10 digit parities), `greatest-common-divisor-traversal` (hard/arrays+math+union-find, prime-factor DSU), `minimum-length-of-anagram-concatenation` (medium/strings+hash-map, divisor enumeration + 26-char freq check). Bank at **1990**; 6279 tests.
 
 ### feat(bank): add batch 92 — alternating-groups-i, longest-binary-subsequence-≤-k, minimum-time-complete-tasks (2026-05-26)
 Added 3 problems: `alternating-groups-i` (easy/arrays, modular-index circular triple count), `longest-binary-subsequence-less-than-or-equal-to-k` (medium/strings+dp, right-to-left greedy — zeros always included, ones included if running value ≤ k), `minimum-time-to-complete-all-tasks` (hard/arrays, sort-by-end + right-fill boolean run array). Fixed wrong expected values in several hidden tests by manual algorithm trace. Bank at **1987**; 6270 tests.

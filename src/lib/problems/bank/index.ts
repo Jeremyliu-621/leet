@@ -2164,6 +2164,10 @@ import { problem as smallestStringStartingFromLeaf } from './smallest-string-sta
 import { problem as findLargestValueInEachTreeRow } from './find-largest-value-in-each-tree-row';
 // batch 94 — sliding-window
 import { problem as maximumAverageSubarrayI } from './maximum-average-subarray-i';
+// batch 93 — strings/hard, arrays+math+union-find/hard, strings+hash-map/medium
+import { problem as findLongestAwesomeSubstring } from './find-longest-awesome-substring';
+import { problem as greatestCommonDivisorTraversal } from './greatest-common-divisor-traversal';
+import { problem as minimumLengthOfAnagramConcatenation } from './minimum-length-of-anagram-concatenation';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4365,4 +4369,8 @@ export const problems: readonly Problem[] = [
   findLargestValueInEachTreeRow,
   // batch 94 — sliding-window
   maximumAverageSubarrayI,
+  // batch 93 — strings/hard, arrays+math+union-find/hard, strings+hash-map/medium
+  findLongestAwesomeSubstring,
+  greatestCommonDivisorTraversal,
+  minimumLengthOfAnagramConcatenation,
 ];
