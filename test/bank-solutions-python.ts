@@ -31164,28 +31164,6 @@ def dailyTemperatures(temperatures):
             ans[j] = i - j
         stack.append(i)
     return ans
-  'check-if-array-sorted-and-rotated': `
-def check(nums):
-    n = len(nums)
-    count = 0
-    for i in range(n):
-        if nums[i] > nums[(i + 1) % n]:
-            count += 1
-    return count <= 1
-`,
-
-  'monotonic-stack-daily-temperatures': `
-def dailyTemperatures(temperatures):
-    temperatures = list(temperatures)
-    n = len(temperatures)
-    ans = [0] * n
-    stack = []
-    for i in range(n):
-        while stack and temperatures[i] > temperatures[stack[-1]]:
-            j = stack.pop()
-            ans[j] = i - j
-        stack.append(i)
-    return ans
 `,
 
   'check-if-array-sorted-and-rotated': `
