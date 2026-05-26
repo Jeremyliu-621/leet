@@ -1638,6 +1638,17 @@ import { problem as longestPalindrome } from './longest-palindrome';
 import { problem as reverseWordsInAString } from './reverse-words-in-a-string';
 import { problem as countPrimes } from './count-primes';
 
+// batch 58
+import { problem as maxConsecutiveOnesII } from './max-consecutive-ones-ii';
+import { problem as lengthOfLongestFibonacciSubsequence } from './length-of-longest-fibonacci-subsequence';
+import { problem as detectSquares } from './detect-squares';
+import { problem as gridGame } from './grid-game';
+import { problem as maximumWhiteTilesCoveredByCarpet } from './maximum-white-tiles-covered-by-carpet';
+import { problem as minimumOperationsToMakeAllArrayElementsEqual } from './minimum-operations-to-make-all-array-elements-equal';
+import { problem as reverseWordsInAStringII } from './reverse-words-in-a-string-ii';
+import { problem as countSubarraysWithMedian } from './count-subarrays-with-median';
+import { problem as maximumSumQueries } from './maximum-sum-queries';
+
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -3320,4 +3331,14 @@ export const problems: readonly Problem[] = [
   longestPalindrome,
   reverseWordsInAString,
   countPrimes,
+  // batch 58
+  maxConsecutiveOnesII,
+  lengthOfLongestFibonacciSubsequence,
+  detectSquares,
+  gridGame,
+  maximumWhiteTilesCoveredByCarpet,
+  minimumOperationsToMakeAllArrayElementsEqual,
+  reverseWordsInAStringII,
+  countSubarraysWithMedian,
+  maximumSumQueries,
 ];

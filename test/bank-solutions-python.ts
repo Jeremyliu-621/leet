@@ -22343,4 +22343,157 @@ def secondMinimum(n, edges, time, change):
         i += 1
     return sum(is_prime)
 `,
+
+  'max-consecutive-ones-ii': `def findMaxConsecutiveOnes(nums):
+    left = 0; last_zero = -1; ans = 0
+    for right, v in enumerate(nums):
+        if v == 0:
+            left = last_zero + 1
+            last_zero = right
+        ans = max(ans, right - left + 1)
+    return ans
+`,
+
+  'length-of-longest-fibonacci-subsequence': `def lenLongestFibSubseq(arr):
+    idx = {v: i for i, v in enumerate(arr)}
+    n = len(arr)
+    dp = [[2] * n for _ in range(n)]
+    ans = 0
+    for j in range(n):
+        for i in range(j):
+            diff = arr[j] - arr[i]
+            if diff < arr[i] and diff in idx:
+                k = idx[diff]
+                dp[i][j] = dp[k][i] + 1
+                ans = max(ans, dp[i][j])
+    return ans if ans >= 3 else 0
+`,
+
+  'detect-squares': `def detect_squares_sim(ops, args_list):
+    from collections import defaultdict
+    point_count = defaultdict(int)
+    x_to_ys = defaultdict(set)
+    result = [None]
+    def add(p):
+        key = (p[0], p[1])
+        point_count[key] += 1
+        x_to_ys[p[0]].add(p[1])
+    def count(p):
+        px, py = p[0], p[1]
+        res = 0
+        for y2 in x_to_ys[px]:
+            if y2 == py:
+                continue
+            side = y2 - py
+            for x2 in [px + side, px - side]:
+                c1 = point_count[(x2, py)]
+                c2 = point_count[(x2, y2)]
+                c3 = point_count[(px, y2)]
+                res += c1 * c2 * c3
+        return res
+    for i in range(1, len(ops)):
+        if ops[i] == 'add':
+            add(args_list[i])
+            result.append(None)
+        else:
+            result.append(count(args_list[i]))
+    return result
+`,
+
+  'grid-game': `def gridGame(grid):
+    n = len(grid[0])
+    top_sum = sum(grid[0])
+    top_prefix = 0; bottom_prefix = 0; ans = float('inf')
+    for k in range(n):
+        top_prefix += grid[0][k]
+        top_right = top_sum - top_prefix
+        second = max(top_right, bottom_prefix)
+        ans = min(ans, second)
+        bottom_prefix += grid[1][k]
+    return ans
+`,
+
+  'maximum-white-tiles-covered-by-carpet': `def maximumWhiteTiles(tiles, carpetLen):
+    import bisect
+    t = sorted(tiles, key=lambda x: x[0])
+    n = len(t)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + (t[i][1] - t[i][0] + 1)
+    ans = 0
+    starts = [tile[0] for tile in t]
+    for i in range(n):
+        end = t[i][0] + carpetLen - 1
+        j = bisect.bisect_right(starts, end) - 1
+        if j < i:
+            ans = max(ans, min(carpetLen, t[i][1] - t[i][0] + 1))
+            continue
+        full = prefix[j + 1] - prefix[i]
+        partial = min(end - t[j][0] + 1, t[j][1] - t[j][0] + 1)
+        covered = full - (t[j][1] - t[j][0] + 1) + partial
+        ans = max(ans, covered)
+    return ans
+`,
+
+  'minimum-operations-to-make-all-array-elements-equal': `def minOperations(nums, queries):
+    import bisect
+    sorted_nums = sorted(nums)
+    n = len(sorted_nums)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + sorted_nums[i]
+    result = []
+    for q in queries:
+        lo = bisect.bisect_left(sorted_nums, q)
+        left_cost = q * lo - prefix[lo]
+        right_cost = (prefix[n] - prefix[lo]) - q * (n - lo)
+        result.append(left_cost + right_cost)
+    return result
+`,
+
+  'reverse-words-in-a-string-ii': `def reverseWords(s):
+    s = list(s.to_py() if hasattr(s, 'to_py') else s)
+    def rev(l, r):
+        while l < r:
+            s[l], s[r] = s[r], s[l]
+            l += 1; r -= 1
+    rev(0, len(s) - 1)
+    start = 0
+    for i in range(len(s) + 1):
+        if i == len(s) or s[i] == ' ':
+            rev(start, i - 1)
+            start = i + 1
+    return s
+`,
+
+  'count-subarrays-with-median': `def countSubarrays(nums, k):
+    from collections import defaultdict
+    ki = list(nums).index(k)
+    left_freq = defaultdict(int)
+    left_freq[0] = 1
+    bal = 0
+    for i in range(ki - 1, -1, -1):
+        bal += 1 if nums[i] > k else -1
+        left_freq[bal] += 1
+    ans = left_freq[0] + left_freq[1]
+    bal = 0
+    for j in range(ki + 1, len(nums)):
+        bal += 1 if nums[j] > k else -1
+        ans += left_freq[-bal] + left_freq[-bal + 1]
+    return ans
+`,
+
+  'maximum-sum-queries': `def maximumSumQueries(nums1, nums2, queries):
+    n = len(nums1)
+    pairs = [(nums1[i], nums2[i], nums1[i] + nums2[i]) for i in range(n)]
+    result = []
+    for xi, yi in queries:
+        best = -1
+        for n1, n2, s in pairs:
+            if n1 >= xi and n2 >= yi:
+                best = max(best, s)
+        result.append(best)
+    return result
+`,
+
 };

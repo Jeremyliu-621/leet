@@ -22587,4 +22587,180 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+
+  'max-consecutive-ones-ii': (nums: unknown) => {
+    const a = nums as number[];
+    let left = 0, lastZero = -1, ans = 0;
+    for (let right = 0; right < a.length; right++) {
+      if (a[right] === 0) {
+        left = lastZero + 1;
+        lastZero = right;
+      }
+      ans = Math.max(ans, right - left + 1);
+    }
+    return ans;
+  },
+
+  'length-of-longest-fibonacci-subsequence': (arr: unknown) => {
+    const a = arr as number[];
+    const idx = new Map<number, number>();
+    a.forEach((v, i) => idx.set(v, i));
+    const n = a.length;
+    const dp: number[][] = Array.from({ length: n }, () => new Array(n).fill(2));
+    let ans = 0;
+    for (let j = 0; j < n; j++) {
+      for (let i = 0; i < j; i++) {
+        const diff = a[j]! - a[i]!;
+        if (diff < a[i]! && idx.has(diff)) {
+          const k = idx.get(diff)!;
+          dp[i]![j] = dp[k]![i]! + 1;
+          ans = Math.max(ans, dp[i]![j]!);
+        }
+      }
+    }
+    return ans >= 3 ? ans : 0;
+  },
+
+  'detect-squares': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const argsArr = args[1] as number[][];
+    const pointCount = new Map<string, number>();
+    const xToYs = new Map<number, Set<number>>();
+    const add = (p: number[]) => {
+      const key = `${p[0]},${p[1]}`;
+      pointCount.set(key, (pointCount.get(key) ?? 0) + 1);
+      if (!xToYs.has(p[0]!)) xToYs.set(p[0]!, new Set());
+      xToYs.get(p[0]!)!.add(p[1]!);
+    };
+    const count = (p: number[]) => {
+      const [px, py] = p as [number, number];
+      let res = 0;
+      const ys = xToYs.get(px);
+      if (!ys) return 0;
+      for (const y2 of ys) {
+        if (y2 === py) continue;
+        const side = y2 - py;
+        for (const x2 of [px + side, px - side]) {
+          const c1 = pointCount.get(`${x2},${py}`) ?? 0;
+          const c2 = pointCount.get(`${x2},${y2}`) ?? 0;
+          const c3 = pointCount.get(`${px},${y2}`) ?? 0;
+          res += c1 * c2 * c3;
+        }
+      }
+      return res;
+    };
+    const result: (null | number)[] = [null];
+    for (let i = 1; i < ops.length; i++) {
+      if (ops[i] === 'add') { add(argsArr[i] as number[]); result.push(null); }
+      else result.push(count(argsArr[i] as number[]));
+    }
+    return result;
+  },
+
+  'grid-game': (grid: unknown) => {
+    const g = grid as number[][];
+    const n = g[0]!.length;
+    const topSum = g[0]!.reduce((a, b) => a + b, 0);
+    let topPrefix = 0, bottomPrefix = 0, ans = Infinity;
+    for (let k = 0; k < n; k++) {
+      topPrefix += g[0]![k]!;
+      const topRight = topSum - topPrefix;
+      const second = Math.max(topRight, bottomPrefix);
+      ans = Math.min(ans, second);
+      bottomPrefix += g[1]![k]!;
+    }
+    return ans;
+  },
+
+  'maximum-white-tiles-covered-by-carpet': (tiles: unknown, carpetLen: unknown) => {
+    const t = (tiles as number[][]).slice().sort((a, b) => a[0]! - b[0]!);
+    const cl = carpetLen as number;
+    const n = t.length;
+    const prefix = new Array(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + (t[i]![1]! - t[i]![0]! + 1);
+    let ans = 0;
+    for (let i = 0; i < n; i++) {
+      const end = t[i]![0]! + cl - 1;
+      let lo = i, hi = n - 1, j = i - 1;
+      while (lo <= hi) {
+        const mid = (lo + hi) >> 1;
+        if (t[mid]![0]! <= end) { j = mid; lo = mid + 1; } else hi = mid - 1;
+      }
+      if (j < i) { ans = Math.max(ans, Math.min(cl, t[i]![1]! - t[i]![0]! + 1)); continue; }
+      const tileLen = t[j]![1]! - t[j]![0]! + 1;
+      const partial = Math.min(end - t[j]![0]! + 1, tileLen);
+      const covered = prefix[j + 1]! - prefix[i]! - tileLen + partial;
+      ans = Math.max(ans, covered);
+    }
+    return ans;
+  },
+
+  'minimum-operations-to-make-all-array-elements-equal': (nums: unknown, queries: unknown) => {
+    const sorted = (nums as number[]).slice().sort((a, b) => a - b);
+    const n = sorted.length;
+    const prefix = new Array(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + sorted[i]!;
+    const result: number[] = [];
+    for (const q of queries as number[]) {
+      let lo = 0, hi = n;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (sorted[mid]! < q) lo = mid + 1; else hi = mid;
+      }
+      const leftSum = prefix[lo]!;
+      const rightSum = prefix[n]! - prefix[lo]!;
+      const cost = q * lo - leftSum + rightSum - q * (n - lo);
+      result.push(cost);
+    }
+    return result;
+  },
+
+  'reverse-words-in-a-string-ii': (s: unknown) => {
+    const arr = s as string[];
+    const rev = (l: number, r: number) => {
+      while (l < r) { [arr[l], arr[r]] = [arr[r]!, arr[l]!]; l++; r--; }
+    };
+    rev(0, arr.length - 1);
+    let start = 0;
+    for (let i = 0; i <= arr.length; i++) {
+      if (i === arr.length || arr[i] === ' ') { rev(start, i - 1); start = i + 1; }
+    }
+    return arr;
+  },
+
+  'count-subarrays-with-median': (nums: unknown, k: unknown) => {
+    const a = nums as number[];
+    const kk = k as number;
+    const ki = a.indexOf(kk);
+    const leftFreq = new Map<number, number>();
+    leftFreq.set(0, 1);
+    let bal = 0;
+    for (let i = ki - 1; i >= 0; i--) {
+      bal += a[i]! > kk ? 1 : -1;
+      leftFreq.set(bal, (leftFreq.get(bal) ?? 0) + 1);
+    }
+    bal = 0;
+    let ans = (leftFreq.get(0) ?? 0) + (leftFreq.get(1) ?? 0);
+    for (let j = ki + 1; j < a.length; j++) {
+      bal += a[j]! > kk ? 1 : -1;
+      ans += (leftFreq.get(-bal) ?? 0) + (leftFreq.get(-bal + 1) ?? 0);
+    }
+    return ans;
+  },
+
+  'maximum-sum-queries': (nums1: unknown, nums2: unknown, queries: unknown) => {
+    const a = nums1 as number[];
+    const b = nums2 as number[];
+    const q = queries as number[][];
+    const n = a.length;
+    const pairs = a.map((v, i) => [v, b[i]!, v + b[i]!] as [number, number, number]);
+    return q.map(([xi, yi]) => {
+      let best = -1;
+      for (let j = 0; j < n; j++) {
+        if (pairs[j]![0]! >= xi! && pairs[j]![1]! >= yi!) best = Math.max(best, pairs[j]![2]!);
+      }
+      return best;
+    });
+  },
+
 };
