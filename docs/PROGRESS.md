@@ -8,12 +8,15 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1632 problems; 5184 tests green.
+**Current focus:** Bank at 1637 problems; 5199 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1700; UX polish (vim mode indicator, a11y, terminal UX).
 
+### Batch 63-local-2 (2026-05-26)
+Added 5 problems: `two-best-non-overlapping-events` (medium/arrays+binary-search, sort by end + prefix max + bisect), `minimum-lines-to-represent-a-line-chart` (medium/arrays+math, sort + cross-multiply slopes via BigInt), `number-of-common-divisors` (easy/math, gcd + O(sqrt) divisor count), `first-completely-painted-row-or-column` (medium/arrays+hash-map, position map + row/col max index), `maximum-prime-difference` (medium/arrays+math, first/last prime index). JS + Python solutions for all. Bank at **1637**; 5199 tests.
+
 ### Batch 63-local (2026-05-26)
-Added 5 problems: `count-consistent-strings` (easy/strings, Set-based allowed-char filter), `max-points-you-can-obtain-from-cards` (medium/sliding-window, minimize un-taken middle window), `number-of-steps-to-reduce-number-in-binary-representation-to-one` (medium/strings+math, simulate carry-based binary reduction), `minimum-score-by-changing-two-elements` (medium/math+greedy, sort + try 3 strip-edge combos), `sqrtx` (easy/binary-search, integer sqrt). JS + Python solutions for all. Bank at **1627**; 5169 tests.
+Added 5 problems: `count-consistent-strings` (easy/strings, Set-based allowed-char filter), `max-points-you-can-obtain-from-cards` (medium/sliding-window, minimize un-taken middle window), `number-of-steps-to-reduce-number-in-binary-representation-to-one` (medium/strings+math, simulate carry-based binary reduction), `minimum-score-by-changing-two-elements` (medium/math+greedy, sort + try 3 strip-edge combos), `sqrtx` (easy/binary-search, integer sqrt). JS + Python solutions for all. Bank at **1632**; 5184 tests.
 
 ### Batch 62 — 5 new problems (2026-05-26)
 Added 5 problems: `group-shifted-strings` (medium/strings+hash-map, shift-delta canonical key), `sparse-matrix-multiplication` (medium/arrays, skip-zero sparse optimization), `maximum-depth-n-ary-tree` (easy/tree, DFS recursive with N-ary runner preamble), `n-ary-tree-level-order-traversal` (medium/tree, BFS level-collection with N-ary runner preamble), `n-ary-tree-preorder-traversal` (easy/tree+stack, iterative stack with reverse-children push, N-ary runner preamble). Also committed 4 problems from a prior incomplete session (batch 63): `number-of-increasing-paths-in-a-grid`, `minimum-time-to-visit-a-cell-in-a-grid`, `number-of-beautiful-subsets`, `maximum-number-of-fish-in-a-grid` — fixed bugs: inverted parity in wait formula (Dijkstra); wrong expected value in number-of-beautiful-subsets. JS + Python solutions for all. Bank at **1622**; 5139 tests.
