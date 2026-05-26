@@ -58,11 +58,20 @@ Each job can be selected at most once.
     { args: [[1], [2], [100]], expected: 100 },
   ],
   hiddenTests: [
+    // start=1,end=3 and start=3,end=5: start[1]=3 >= end[0]=3, non-overlapping → 30
     { args: [[1, 3], [3, 5], [10, 20]], expected: 30 },
+    // start=1,end=2 and start=2,end=3: non-overlapping → 30
     { args: [[1, 2], [2, 3], [10, 20]], expected: 30 },
-    { args: [[1, 2], [3, 4], [10, 5]], expected: 15 },
-    { args: [[6, 3, 1], [7, 8, 5], [1, 20, 30]], expected: 50 },
-    { args: [[1, 2, 3], [4, 6, 5], [50, 30, 20]], expected: 50 },
+    // start=1,end=5 and start=3,end=8: 3 < 5, they overlap → best is max(10,5)=10
+    { args: [[1, 3], [2, 8], [10, 5]], expected: 10 },
+    // three non-overlapping jobs: (1,4,20),(5,8,30),(6,7,1) → sorted by end: (1,4,20),(6,7,1),(5,8,30)
+    // job0→20, job1 start=6>4 → 20+1=21, job2 start=5>4 → take 20+30=50 or 21. Best=50
+    { args: [[1, 6, 5], [4, 7, 8], [20, 1, 30]], expected: 50 },
+    // (1,3,50),(2,5,30),(4,10,20): sorted by end: (1,3,50),(2,5,30),(4,10,20)
+    // job0→50; job1 start=2<3 → overlap with job0, take alone=30 or skip=50. dp=max(50,30)=50
+    // job2 start=4<5 → overlap with job1. But start=4>=end[0]=3: non-overlap with job0! dp=max(50, 50+20)=70
+    { args: [[1, 2, 4], [3, 5, 10], [50, 30, 20]], expected: 70 },
+    // original problem's example extended
     { args: [[1, 2, 3, 4], [3, 5, 10, 6], [20, 20, 100, 70]], expected: 120 },
   ],
 };
