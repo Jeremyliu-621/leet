@@ -380,6 +380,19 @@ export function Popup() {
         <Stat label="Unlocks" value={data.activeUnlocks.length} sub="active" />
       </section>
 
+      {data.streak.current > 0 &&
+        data.solvedToday === 0 &&
+        data.streak.lastSolvedDate !== null &&
+        data.streak.lastSolvedDate !== localDateString() && (
+          <p
+            className="mt-2 font-mono text-[9px] text-muted"
+            role="status"
+            aria-live="polite"
+          >
+            Solve a problem today to keep your {data.streak.current}-day streak.
+          </p>
+        )}
+
       <StreakHeatmap history={data.streakHistory} />
       <SolveBreakdown stats={data.solvedStats} totalSolvedMs={data.totalSolvedMs} />
       <RecentSolvesList solves={data.recentSolves} />

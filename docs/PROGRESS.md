@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1885** problems; 5943 tests green. Batch 79 complete.
+**Current focus:** Bank at **1897** problems; 5979 tests green. Batch 79 complete (15 problems total). Streak reminder in popup.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth; UX polish; marketing site stat update (1,885+).
+**Next up:** Continued bank growth (batch 80); further UX polish; marketing site stat update.
+
+### feat(popup): streak-at-risk reminder + batch 79 expansion (2026-05-26)
+Added streak reminder in popup (shows "Solve a problem today to keep your N-day streak" when user has streak but hasn't solved today). Added 12 more batch 79 problems: binary-search (divide-chocolate, find-the-smallest-divisor-given-a-threshold, magnetic-force-between-two-balls, nth-magical-number), two-pointers (get-equal-substrings-within-budget, longest-equal-subarray, three-sum-with-multiplicity), dp (new-21-game, shortest-common-supersequence, stickers-to-spell-word), design (design-exam-room, design-authentication-manager). Bank at **1897**; 5979 tests.
 
 ### feat(bank): add batch 79 — 3 new problems (DP, stack, binary-search) (2026-05-26)
 Added 3 new problems: `ternary-expression-parser` (medium/strings+stack, right-to-left stack evaluation of nested ternaries), `count-all-possible-routes` (hard/dynamic-programming, memoized DFS with fuel budget, mod 10^9+7), `minimum-operations-to-make-array-k-increasing` (hard/dynamic-programming+binary-search, group by index mod k + LNDS via patience sort). Also: cleaned Pyodide-internal paths from Python error tracebacks (`cleanPythonTraceback` in python-worker.js), added copy-output button to TerminalPanel tab bar. Bank at **1885**; 5943 tests.
