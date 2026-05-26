@@ -29936,4 +29936,110 @@ def maxPoints(grid, queries):
     return res
 `,
 
+  'check-if-there-is-a-valid-partition-for-the-array': `
+def validPartition(nums: list) -> bool:
+    n = len(nums)
+    dp = [False] * (n + 1)
+    dp[0] = True
+    for i in range(2, n + 1):
+        if nums[i - 1] == nums[i - 2]:
+            dp[i] = dp[i] or dp[i - 2]
+        if i >= 3:
+            if nums[i - 1] == nums[i - 2] == nums[i - 3]:
+                dp[i] = dp[i] or dp[i - 3]
+            if nums[i - 1] == nums[i - 2] + 1 == nums[i - 3] + 2:
+                dp[i] = dp[i] or dp[i - 3]
+    return dp[n]
+`,
+
+  'reverse-nodes-in-even-length-groups': `
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+def reverseEvenLengthGroupsRunner(arr):
+    arr = list(arr)
+    if not arr:
+        return []
+    head = ListNode(arr[0])
+    cur = head
+    for v in arr[1:]:
+        cur.next = ListNode(v)
+        cur = cur.next
+
+    prev = head  # group 1 has size 1 (odd), unchanged
+    group_size = 2
+    while prev and prev.next:
+        node = prev.next
+        count = 0
+        tmp = node
+        while tmp and count < group_size:
+            tmp = tmp.next
+            count += 1
+        if count % 2 == 0:
+            tail = node
+            prev_node = None
+            curr_node = node
+            for _ in range(count):
+                nxt = curr_node.next
+                curr_node.next = prev_node
+                prev_node = curr_node
+                curr_node = nxt
+            prev.next = prev_node
+            tail.next = curr_node
+            prev = tail
+        else:
+            for _ in range(count):
+                prev = prev.next
+        group_size += 1
+
+    result = []
+    p = head
+    while p:
+        result.append(p.val)
+        p = p.next
+    return result
+`,
+
+  'minimum-difference-in-sums-after-removal-of-elements': `
+import heapq
+
+def minimumDifference(nums: list) -> int:
+    nums = list(nums)
+    total = len(nums)
+    n = total // 3
+
+    # prefMin[i] = min sum of n elements from nums[0..i-1]
+    pref_min = {}
+    max_heap = []  # store negatives for max-heap simulation
+    s1 = 0
+    for i in range(2 * n):
+        heapq.heappush(max_heap, -nums[i])
+        s1 += nums[i]
+        if len(max_heap) > n:
+            s1 += heapq.heappop(max_heap)  # pop largest (stored as negative)
+        if len(max_heap) == n:
+            pref_min[i + 1] = s1
+
+    # suffMax[i] = max sum of n elements from nums[i..3n-1]
+    suff_max = {}
+    min_heap = []
+    s2 = 0
+    for i in range(3 * n - 1, n - 1, -1):
+        heapq.heappush(min_heap, nums[i])
+        s2 += nums[i]
+        if len(min_heap) > n:
+            s2 -= heapq.heappop(min_heap)
+        if len(min_heap) == n:
+            suff_max[i] = s2
+
+    ans = float('inf')
+    for m in range(n, 2 * n + 1):
+        if m in pref_min and m in suff_max:
+            ans = min(ans, pref_min[m] - suff_max[m])
+    return ans
+`,
+
+
 };

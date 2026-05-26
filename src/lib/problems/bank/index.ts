@@ -2083,6 +2083,9 @@ import { problem as countElementsWithSmallerAndGreaterElement } from './count-el
 import { problem as splitTheArray } from './split-the-array';
 import { problem as findTheScoreOfAllPrefixesOfAnArray } from './find-the-score-of-all-prefixes-of-an-array';
 import { problem as shortestCycleInAGraph } from './shortest-cycle-in-a-graph';
+import { problem as checkIfThereIsAValidPartitionForTheArray } from './check-if-there-is-a-valid-partition-for-the-array';
+import { problem as reverseNodesInEvenLengthGroups } from './reverse-nodes-in-even-length-groups';
+import { problem as minimumDifferenceInSumsAfterRemovalOfElements } from './minimum-difference-in-sums-after-removal-of-elements';
 // batch 89 — arrays, strings, hash-map, math, graph
 import { problem as minimumRoundsToCompleteAllTasks } from './minimum-rounds-to-complete-all-tasks';
 import { problem as longestPalindromeByConcat } from './longest-palindrome-by-concatenating-two-letter-words';
@@ -4234,4 +4237,8 @@ export const problems: readonly Problem[] = [
   checkIfAllAsAppearsBeforeAllBs,
   countNodesWithTheHighestScore,
   maximumNumberOfPointsFromGridQueries,
+  // batch 88 remote — arrays/dp, linked-list, arrays/heap
+  checkIfThereIsAValidPartitionForTheArray,
+  reverseNodesInEvenLengthGroups,
+  minimumDifferenceInSumsAfterRemovalOfElements,
 ];
