@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1508 problems; 4809 tests green.
+**Current focus:** Bank at ~1523 problems; 4839 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank; UI/UX polish, accessibility, draggable splitter improvements.
+**Next up:** Continue growing problem bank toward 1600; UI/UX polish, accessibility, draggable splitter improvements.
+
+### Batch 57 (2026-05-26)
+Added 15 problems: `convert-binary-linked-list` (easy), `diagonal-traverse-ii` (medium), `design-circular-deque` (medium), `beautiful-towers-i` (medium), `maximum-tastiness-candy-basket` (medium, binary search), `shortest-subarray-sum-at-least-k` (hard, monotone deque), `substring-with-concatenation-of-all-words` (hard, sliding window), `minimum-people-to-teach` (medium), `punishment-number-of-integer` (medium, backtracking), `minimum-cost-to-separate-sentence-into-rows` (medium, DP), `maximum-running-time-of-n-computers` (hard, BigInt binary search), `count-strictly-increasing-subarrays` (medium, sliding window), `minimum-score-path-between-two-cities` (medium, BFS), `split-message-based-on-limit` (hard), `longest-word-in-dict-deleting` (medium, two-pointers). JS + Python solutions for all. Bank at **~1523**; 4839 tests.
 
 ### Batch 56-local (2026-05-26)
 Added 3 problems: `longest-even-odd-subarray-with-threshold` (arrays+sliding-window/easy, O(n) even-start alternating window), `find-the-value-of-the-partition` (arrays+math/medium, sort + min adjacent gap), `clear-digits` (strings+stack/easy, stack-based digit removal). Bank at **1508**; 4809 tests.
