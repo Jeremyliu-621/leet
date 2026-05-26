@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1688 problems; 5352 tests green.
+**Current focus:** Bank at 1692 problems; 5361 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1700; marketing site update at 1,700+ milestone.
+
+### Batch 68 (2026-05-26)
+Added 6 problems: `best-time-to-buy-and-sell-stock-iii` (hard/arrays+dp, at-most-2-transactions state machine), `find-the-duplicate-number` (medium/arrays+two-pointers, Floyd's cycle detection), `count-subarrays-with-fixed-bounds` (hard/arrays+sliding-window, three-pointer), `maximum-difference-in-array` (easy/arrays, min-so-far scan), `longest-subarray-with-at-most-k-frequency` (medium/arrays+sliding-window+hash-map), `count-pairs-in-two-arrays` (medium/arrays+binary-search, diff-array sort + bisect). Fixed 5 wrong expected values. Bank at **1692**; 5361 tests.
 
 ### Batch 67 (2026-05-26)
 Merged batch 66 (local): 6 new problems from deferred stash — `find-the-k-or-of-an-array` (easy/math), `minimum-number-of-operations-to-satisfy-conditions` (medium/dp), `maximum-sum-of-almost-unique-subarray` (medium/sliding-window), `split-array-into-maximum-number-of-subarrays` (medium/arrays), `minimum-number-of-operations-to-make-array-xor-equal-to-k` (easy/math), `maximum-alternating-subarray-sum` (medium/dp). Also backfilled 8 missing JS+Python solutions for batches 64-65. Bank at **1688**; 5352 tests.
