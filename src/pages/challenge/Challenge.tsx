@@ -159,6 +159,7 @@ interface RelatedProblem {
   id: string;
   title: string;
   difficulty: string;
+  solved: boolean;
 }
 
 type PageState =
@@ -318,10 +319,16 @@ function SolvedStandaloneScreen({
               <li key={p.id}>
                 <a
                   href={`${challengeBase}?problem=${encodeURIComponent(p.id)}`}
-                  className="flex items-center justify-between border border-border bg-surface px-3 py-2 text-xs transition-colors hover:bg-surface-2 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+                  className="flex items-center gap-2 border border-border bg-surface px-3 py-2 text-xs transition-colors hover:bg-surface-2 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
                 >
-                  <span className="text-text truncate">{p.title}</span>
-                  <span className="ml-2 shrink-0 font-mono text-faint capitalize">{p.difficulty}</span>
+                  <span
+                    className={`shrink-0 font-mono text-[10px] ${p.solved ? 'text-accent' : 'text-border-strong'}`}
+                    aria-label={p.solved ? 'Solved' : 'Not solved'}
+                  >
+                    {p.solved ? '✓' : '·'}
+                  </span>
+                  <span className="flex-1 truncate text-text">{p.title}</span>
+                  <span className="shrink-0 font-mono text-faint capitalize">{p.difficulty}</span>
                 </a>
               </li>
             ))}
@@ -822,7 +829,7 @@ export function Challenge() {
           shuffled.sort((a, b) => (solvedIds.has(a.id) ? 1 : 0) - (solvedIds.has(b.id) ? 1 : 0));
           const related: RelatedProblem[] = shuffled
             .slice(0, 3)
-            .map((p) => ({ id: p.id, title: p.title, difficulty: p.difficulty }));
+            .map((p) => ({ id: p.id, title: p.title, difficulty: p.difficulty, solved: solvedIds.has(p.id) }));
 
           setPageState({
             status: 'solved-standalone',
