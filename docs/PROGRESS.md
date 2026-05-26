@@ -8,11 +8,14 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2023** problems; 6363 tests green. Batches 92–95 + 2K milestone + word-wrap persist + remote merges complete.
+**Current focus:** Bank at **2026** problems; 6378 tests green. Batches 92–95 + 2K milestone + remote merges complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continued bank growth (batch 96+); UI/UX polish.
 
-### feat(bank): add batch 95 — di-string-match, shortest-distance-to-char, largest-num-twice-others (2026-05-26)
+### feat(bank): add batch 95 — range-sum-bst, delete-node-in-a-bst, binary-tree-maximum-path-sum (2026-05-26)
+Added 3 tree problems: `range-sum-bst` (easy/tree, DFS leveraging BST ordering to skip irrelevant subtrees), `delete-node-in-a-bst` (medium/tree, inorder-successor replacement for two-child deletion), `binary-tree-maximum-path-sum` (hard/tree, gain-function DFS with global max tracking). Bank at **2026**; 6378 tests.
+
+### feat(bank): add batch 95 (remote) — di-string-match, shortest-distance-to-char, largest-num-twice-others (2026-05-26)
 Added 3 problems: `di-string-match` (easy/arrays+math+two-pointers, lo/hi two-pointer I/D permutation), `shortest-distance-to-a-character` (easy/arrays+strings+two-pointers, two-pass O(n) left/right scan), `largest-number-at-least-twice-of-others` (easy/arrays, max dominance 2× check). Bank at **2004**; 6354 tests.
 
 ### feat(bank): add batch 94 — count-of-matches, find-winner-tictactoe, sort-features (2026-05-26)
