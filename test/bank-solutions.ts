@@ -28021,4 +28021,349 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
+  // batch 76
+  'remove-max-number-of-edges-to-keep-graph-fully-traversable': (...args: unknown[]) => {
+    const [n, edges] = args as [number, number[][]];
+    function makeDSU(sz: number) {
+      const parent = Array.from({length: sz+1}, (_,i) => i) as number[];
+      const rank = new Array<number>(sz+1).fill(0);
+      let comps = sz;
+      function find(x: number): number {
+        if (parent[x] !== x) parent[x] = find(parent[x] as number);
+        return parent[x] as number;
+      }
+      function union(a: number, b: number): boolean {
+        const ra = find(a), rb = find(b);
+        if (ra === rb) return false;
+        const rra = rank[ra] as number, rrb = rank[rb] as number;
+        if (rra < rrb) parent[ra] = rb;
+        else if (rra > rrb) parent[rb] = ra;
+        else { parent[rb] = ra; rank[ra] = rra + 1; }
+        comps--;
+        return true;
+      }
+      return { find, union, connected: () => comps === 1 };
+    }
+    const alice = makeDSU(n), bob = makeDSU(n);
+    let removed = 0;
+    for (const e of edges) {
+      if (e[0] === 3) {
+        const a = alice.union(e[1]!, e[2]!), b = bob.union(e[1]!, e[2]!);
+        if (!a && !b) removed++;
+      }
+    }
+    for (const e of edges) {
+      if (e[0] === 1) { if (!alice.union(e[1]!, e[2]!)) removed++; }
+      else if (e[0] === 2) { if (!bob.union(e[1]!, e[2]!)) removed++; }
+    }
+    if (!alice.connected() || !bob.connected()) return -1;
+    return removed;
+  },
+
+  'exam-room': (...args: unknown[]) => {
+    const [ops] = args as [Array<[string, number[]]>];
+    let n = 0;
+    const seated: number[] = [];
+    function seat(): number {
+      if (seated.length === 0) { seated.push(0); return 0; }
+      let best = 0, bestDist: number = seated[0]!;
+      for (let i = 1; i < seated.length; i++) {
+        const dist = Math.floor(((seated[i]!) - (seated[i-1]!)) / 2);
+        if (dist > bestDist) { bestDist = dist; best = Math.floor(((seated[i-1]!) + (seated[i]!)) / 2); }
+      }
+      if (n - 1 - (seated[seated.length-1]!) > bestDist) best = n - 1;
+      let idx = 0;
+      while (idx < seated.length && (seated[idx]!) < best) idx++;
+      seated.splice(idx, 0, best);
+      return best;
+    }
+    const results: (number | null)[] = [];
+    for (const [op, opArgs] of ops) {
+      if (op === 'ExamRoom') { n = opArgs[0]!; results.push(null); }
+      else if (op === 'seat') { results.push(seat()); }
+      else { seated.splice(seated.indexOf(opArgs[0]!), 1); results.push(null); }
+    }
+    return results;
+  },
+
+  'checking-existence-of-edge-length-limited-paths': (...args: unknown[]) => {
+    const [n, edgeList, queries] = args as [number, number[][], number[][]];
+    const parent = Array.from({length: n}, (_,i) => i);
+    const rank = new Array(n).fill(0);
+    const parent2 = parent as number[];
+    const rank2 = rank as number[];
+    function find(x: number): number {
+      if (parent2[x] !== x) parent2[x] = find(parent2[x] as number);
+      return parent2[x] as number;
+    }
+    function union(a: number, b: number) {
+      const ra = find(a), rb = find(b);
+      if (ra === rb) return;
+      if ((rank2[ra] as number) < (rank2[rb] as number)) parent2[ra] = rb;
+      else if ((rank2[ra] as number) > (rank2[rb] as number)) parent2[rb] = ra;
+      else { parent2[rb] = ra; rank2[ra] = (rank2[ra] as number) + 1; }
+    }
+    const sortedEdges = [...edgeList].sort((a,b) => (a[2] as number)-(b[2] as number));
+    const indexed = queries.map((q,i) => [...q, i]).sort((a,b) => (a[2] as number)-(b[2] as number));
+    const ans = new Array(queries.length);
+    let ei = 0;
+    for (const row of indexed) {
+      const [p, q, limit, idx] = row as [number, number, number, number];
+      while (ei < sortedEdges.length && (sortedEdges[ei]![2] as number) < limit) {
+        union(sortedEdges[ei]![0] as number, sortedEdges[ei]![1] as number); ei++;
+      }
+      ans[idx] = find(p) === find(q);
+    }
+    return ans;
+  },
+
+  'last-day-where-you-can-still-cross': (...args: unknown[]) => {
+    const [row, col, cells] = args as [number, number, number[][]];
+    function canCross(day: number): boolean {
+      const flooded = new Set<number>();
+      for (let i = 0; i < day; i++) flooded.add((cells[i]![0]!-1)*col + (cells[i]![1]!-1));
+      const queue: number[][] = [];
+      for (let c = 0; c < col; c++) {
+        if (!flooded.has(c)) { queue.push([0, c]); flooded.add(c); }
+      }
+      let qi = 0;
+      while (qi < queue.length) {
+        const row2 = queue[qi++]!; const r = row2[0]!, c2 = row2[1]!;
+        if (r === row-1) return true;
+        for (const delta of [[1,0],[-1,0],[0,1],[0,-1]]) {
+          const nr = r+(delta[0]!), nc = c2+(delta[1]!);
+          if (nr < 0 || nr >= row || nc < 0 || nc >= col) continue;
+          const key = nr*col+nc;
+          if (!flooded.has(key)) { flooded.add(key); queue.push([nr, nc]); }
+        }
+      }
+      return false;
+    }
+    let lo = 0, hi = row*col;
+    while (lo < hi) {
+      const mid = Math.floor((lo+hi+1)/2);
+      if (canCross(mid)) lo = mid; else hi = mid-1;
+    }
+    return lo;
+  },
+
+  'minimum-cost-walk-in-weighted-graph': (...args: unknown[]) => {
+    const [n, edges, queries] = args as [number, number[][], number[][]];
+    const parent = Array.from({length: n}, (_,i) => i);
+    const rank = new Array(n).fill(0);
+    const andCost = new Array(n).fill((1<<17)-1);
+    const p2 = parent as number[], r2 = rank as number[], ac = andCost as number[];
+    function find(x: number): number {
+      if (p2[x] !== x) p2[x] = find(p2[x] as number);
+      return p2[x] as number;
+    }
+    function union(a: number, b: number, w: number) {
+      const ra = find(a), rb = find(b);
+      ac[ra] = (ac[ra] as number) & w; ac[rb] = (ac[rb] as number) & w;
+      if (ra === rb) return;
+      if ((r2[ra] as number) < (r2[rb] as number)) { p2[ra] = rb; ac[rb] = (ac[rb] as number) & (ac[ra] as number); }
+      else if ((r2[ra] as number) > (r2[rb] as number)) { p2[rb] = ra; ac[ra] = (ac[ra] as number) & (ac[rb] as number); }
+      else { p2[rb] = ra; ac[ra] = (ac[ra] as number) & (ac[rb] as number); r2[ra] = (r2[ra] as number) + 1; }
+    }
+    for (const e of edges) union(e[0]!, e[1]!, e[2]!);
+    return queries.map(q => find(q[0]!) !== find(q[1]!) ? -1 : ac[find(q[0]!)]!);
+  },
+
+  'maximum-average-pass-ratio': (...args: unknown[]) => {
+    const [classes, extraStudents] = args as [number[][], number];
+    const gain = (p: number, t: number) => (p+1)/(t+1) - p/t;
+    const heap: [number, number, number][] = classes.map(([p,t]) => [gain(p!,t!), p!, t!]);
+    const siftDown = (i: number) => {
+      while (true) {
+        let largest = i;
+        const l = 2*i+1, r = 2*i+2;
+        if (l < heap.length && heap[l]![0] > heap[largest]![0]) largest = l;
+        if (r < heap.length && heap[r]![0] > heap[largest]![0]) largest = r;
+        if (largest === i) break;
+        [heap[i], heap[largest]] = [heap[largest]!, heap[i]!]; i = largest;
+      }
+    };
+    for (let i = Math.floor(heap.length/2)-1; i >= 0; i--) siftDown(i);
+    for (let k = 0; k < extraStudents; k++) {
+      const [, p, t] = heap[0]!;
+      heap[0] = [gain(p+1, t+1), p+1, t+1];
+      siftDown(0);
+    }
+    return heap.map(([,p,t]) => p/t).sort((a,b) => a-b).reduce((s,r) => s+r, 0) / classes.length;
+  },
+
+  'count-good-meals': (...args: unknown[]) => {
+    const [deliciousness] = args as [number[]];
+    const MOD = 1_000_000_007;
+    const freq = new Map<number, number>();
+    let count = 0;
+    for (const d of deliciousness) {
+      for (let p = 0; p <= 21; p++) {
+        const target = (1 << p) - d;
+        if (freq.has(target)) count = (count + freq.get(target)!) % MOD;
+      }
+      freq.set(d, (freq.get(d) ?? 0) + 1);
+    }
+    return count;
+  },
+
+  'rank-teams-by-votes': (...args: unknown[]) => {
+    const [votes] = args as [string[]];
+    const teams = [...votes[0]!];
+    const m = teams.length;
+    const counts: Record<string, number[]> = {};
+    for (const t of teams) counts[t] = new Array(m).fill(0);
+    for (const vote of votes) for (let i = 0; i < m; i++) { const arr = counts[vote[i]!]!; arr[i] = (arr[i] ?? 0) + 1; }
+    teams.sort((a, b) => {
+      for (let i = 0; i < m; i++) if (counts[a]![i] !== counts[b]![i]) return counts[b]![i]! - counts[a]![i]!;
+      return a < b ? -1 : 1;
+    });
+    return teams.join('');
+  },
+
+  'minimum-number-of-refueling-stops': (...args: unknown[]) => {
+    const [target, startFuel, stations] = args as [number, number, number[][]];
+    const heap: number[] = [];
+    const push = (v: number) => {
+      heap.push(v);
+      let i = heap.length-1;
+      while (i > 0) { const p = Math.floor((i-1)/2); if (heap[p]! < heap[i]!) { [heap[p], heap[i]] = [heap[i]!, heap[p]!]; i = p; } else break; }
+    };
+    const pop = () => {
+      const top = heap[0]!; const last = heap.pop()!;
+      if (heap.length > 0) {
+        heap[0] = last;
+        let i = 0;
+        while (true) {
+          let lg = i; const l = 2*i+1, r = 2*i+2;
+          if (l < heap.length && heap[l]! > heap[lg]!) lg = l;
+          if (r < heap.length && heap[r]! > heap[lg]!) lg = r;
+          if (lg === i) break;
+          [heap[i], heap[lg]] = [heap[lg]!, heap[i]!]; i = lg;
+        }
+      }
+      return top;
+    };
+    let fuel = startFuel, stops = 0, prev = 0;
+    for (const station of stations) {
+      const pos = station[0]!, f = station[1]!;
+      fuel -= pos-prev;
+      while (fuel < 0 && heap.length > 0) { fuel += pop(); stops++; }
+      if (fuel < 0) return -1;
+      push(f); prev = pos;
+    }
+    fuel -= target-prev;
+    while (fuel < 0 && heap.length > 0) { fuel += pop(); stops++; }
+    return fuel < 0 ? -1 : stops;
+  },
+
+  'minimum-total-space-wasted-with-k-resizing-operations': (...args: unknown[]) => {
+    const [nums, k] = args as [number[], number];
+    const n = nums.length;
+    const waste: number[][] = Array.from({length: n}, () => new Array(n).fill(0));
+    for (let i = 0; i < n; i++) {
+      let maxV = 0, sum = 0;
+      for (let j = i; j < n; j++) { maxV = Math.max(maxV, nums[j]!); sum += nums[j]!; waste[i]![j] = maxV*(j-i+1)-sum; }
+    }
+    const INF = Infinity;
+    const dp: number[][] = Array.from({length: n}, () => new Array(k+1).fill(INF));
+    for (let j = 0; j < n; j++) dp[j]![0] = waste[0]![j]!;
+    for (let seg = 1; seg <= k; seg++)
+      for (let j = seg; j < n; j++)
+        for (let l = seg-1; l < j; l++)
+          if (dp[l]![seg-1] !== INF) dp[j]![seg] = Math.min(dp[j]![seg]!, dp[l]![seg-1]!+waste[l+1]![j]!);
+    return Math.min(...dp[n-1]!);
+  },
+
+  'maximum-number-of-tasks-you-can-assign': (...args: unknown[]) => {
+    const [tasks, workers, pills, strength] = args as [number[], number[], number, number];
+    const st = [...tasks].sort((a,b) => a-b);
+    const sw = [...workers].sort((a,b) => a-b);
+    const n = st.length, m = sw.length;
+    function canDo(k: number): boolean {
+      const avail = sw.slice(m-k);
+      let pillsLeft = pills;
+      for (let ti = k-1; ti >= 0; ti--) {
+        const task = st[ti]!;
+        if (avail.length > 0 && avail[avail.length-1]! >= task) { avail.pop(); }
+        else if (pillsLeft > 0) {
+          let lo = 0, hi = avail.length;
+          while (lo < hi) { const mid = Math.floor((lo+hi)/2); if (avail[mid]!+strength >= task) hi = mid; else lo = mid+1; }
+          if (lo >= avail.length) return false;
+          avail.splice(lo, 1); pillsLeft--;
+        } else return false;
+      }
+      return true;
+    }
+    let lo = 0, hi = Math.min(n, m);
+    while (lo < hi) { const mid = Math.floor((lo+hi+1)/2); if (canDo(mid)) lo = mid; else hi = mid-1; }
+    return lo;
+  },
+
+  'maximum-total-beauty-of-gardens': (...args: unknown[]) => {
+    const [flowers, newFlowers, target, full, partial] = args as [number[], number, number, number, number];
+    const sorted = [...flowers].sort((a,b) => a-b);
+    const n = sorted.length;
+    // nc = number of gardens with flowers < target (incomplete)
+    let nc = n;
+    while (nc > 0 && sorted[nc-1]! >= target) nc--;
+    const alreadyComplete = n - nc;
+    // prefix sums only over the nc incomplete gardens
+    const prefix = new Array(nc+1).fill(0) as number[];
+    for (let i = 0; i < nc; i++) prefix[i+1] = prefix[i]! + sorted[i]!;
+    const costForV = (v: number, incompleteCnt: number) => {
+      let lo = 0, hi = incompleteCnt;
+      while (lo < hi) { const mid = Math.floor((lo+hi)/2); if (sorted[mid]! < v) lo = mid+1; else hi = mid; }
+      return v*lo - prefix[lo]!;
+    };
+    let ans = alreadyComplete * full;
+    let costFull = 0;
+    for (let k = 0; k <= nc; k++) {
+      if (k > 0) { costFull += target - sorted[nc-k]!; if (costFull > newFlowers) break; }
+      const seedsLeft = newFlowers - costFull;
+      const incompleteCnt = nc - k;
+      const totalComplete = alreadyComplete + k;
+      if (incompleteCnt === 0) { ans = Math.max(ans, totalComplete*full); continue; }
+      let vLo: number = sorted[0]!, vHi = target-1;
+      while (vLo < vHi) { const vMid = Math.floor((vLo+vHi+1)/2); if (costForV(vMid, incompleteCnt) <= seedsLeft) vLo = vMid; else vHi = vMid-1; }
+      ans = Math.max(ans, totalComplete*full + vLo*partial);
+    }
+    return ans;
+  },
+
+  'maximum-xor-of-two-numbers-in-an-array': (...args: unknown[]) => {
+    const [nums] = args as [number[]];
+    let ans = 0, mask = 0;
+    for (let i = 30; i >= 0; i--) {
+      mask |= (1 << i);
+      const prefixes = new Set(nums.map(n => n & mask));
+      const candidate = ans | (1 << i);
+      for (const p of prefixes) { if (prefixes.has(p ^ candidate)) { ans = candidate; break; } }
+    }
+    return ans;
+  },
+
+  'design-graph-with-shortest-path-calculator': (...args: unknown[]) => {
+    const [n, edges, ops] = args as [number, number[][], Array<[string, number[]]>];
+    const adj: [number,number][][] = Array.from({length: n}, () => []);
+    for (const e of edges) adj[e[0]!]!.push([e[1]!, e[2]!]);
+    const dijkstra = (src: number, dst: number) => {
+      const dist = new Array<number>(n).fill(Infinity); dist[src] = 0;
+      const pq: [number,number][] = [[0, src]];
+      while (pq.length > 0) {
+        pq.sort((a,b) => a[0]-b[0]);
+        const [d, u] = pq.shift()!;
+        if (d > dist[u]!) continue;
+        for (const [v, w] of adj[u]!) if (dist[u]!+w < dist[v]!) { dist[v] = dist[u]!+w; pq.push([dist[v], v]); }
+      }
+      return dist[dst] === Infinity ? -1 : dist[dst]!;
+    };
+    const results: (number|null)[] = [];
+    for (const [op, opArgs] of ops) {
+      if (op === 'addEdge') { adj[opArgs[0]!]!.push([opArgs[1]!, opArgs[2]!]); results.push(null); }
+      else results.push(dijkstra(opArgs[0]!, opArgs[1]!));
+    }
+    return results;
+  },
+
 };

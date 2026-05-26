@@ -1942,6 +1942,21 @@ import { problem as largestComponentSizeByCommonFactor } from './largest-compone
 import { problem as reachableNodesInSubdividedGraph } from './reachable-nodes-in-subdivided-graph';
 import { problem as wiggleSort } from './wiggle-sort';
 import { problem as candyCrush } from './candy-crush';
+// batch 76
+import { problem as removeMaxNumberOfEdgesToKeepGraphFullyTraversable } from './remove-max-number-of-edges-to-keep-graph-fully-traversable';
+import { problem as examRoom } from './exam-room';
+import { problem as checkingExistenceOfEdgeLengthLimitedPaths } from './checking-existence-of-edge-length-limited-paths';
+import { problem as lastDayWhereYouCanStillCross } from './last-day-where-you-can-still-cross';
+import { problem as minimumCostWalkInWeightedGraph } from './minimum-cost-walk-in-weighted-graph';
+import { problem as maximumAveragePassRatio } from './maximum-average-pass-ratio';
+import { problem as countGoodMeals } from './count-good-meals';
+import { problem as rankTeamsByVotes } from './rank-teams-by-votes';
+import { problem as minimumNumberOfRefuelingStops } from './minimum-number-of-refueling-stops';
+import { problem as minimumTotalSpaceWastedWithKResizingOperations } from './minimum-total-space-wasted-with-k-resizing-operations';
+import { problem as maximumNumberOfTasksYouCanAssign } from './maximum-number-of-tasks-you-can-assign';
+import { problem as maximumTotalBeautyOfGardens } from './maximum-total-beauty-of-gardens';
+import { problem as maximumXorOfTwoNumbersInAnArray } from './maximum-xor-of-two-numbers-in-an-array';
+import { problem as designGraphWithShortestPathCalculator } from './design-graph-with-shortest-path-calculator';
 // batch 75 (orphan registration)
 import { problem as shortestPathInGridWithObstaclesElimination } from './shortest-path-in-grid-with-obstacles-elimination';
 import { problem as regionsCutBySlashes } from './regions-cut-by-slashes';
@@ -3936,6 +3951,21 @@ export const problems: readonly Problem[] = [
   reachableNodesInSubdividedGraph,
   wiggleSort,
   candyCrush,
+  // batch 76
+  removeMaxNumberOfEdgesToKeepGraphFullyTraversable,
+  examRoom,
+  checkingExistenceOfEdgeLengthLimitedPaths,
+  lastDayWhereYouCanStillCross,
+  minimumCostWalkInWeightedGraph,
+  maximumAveragePassRatio,
+  countGoodMeals,
+  rankTeamsByVotes,
+  minimumNumberOfRefuelingStops,
+  minimumTotalSpaceWastedWithKResizingOperations,
+  maximumNumberOfTasksYouCanAssign,
+  maximumTotalBeautyOfGardens,
+  maximumXorOfTwoNumbersInAnArray,
+  designGraphWithShortestPathCalculator,
   // batch 75 (orphan registration)
   shortestPathInGridWithObstaclesElimination,
   regionsCutBySlashes,

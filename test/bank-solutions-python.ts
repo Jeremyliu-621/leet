@@ -27372,4 +27372,355 @@ def areSentencesSimilarTwo(sentence1, sentence2, similarPairs):
     return True
 `,
 
+  // batch 76
+  'remove-max-number-of-edges-to-keep-graph-fully-traversable': `
+def maxNumEdgesToRemove(n, edges):
+    def make_dsu(n):
+        parent = list(range(n + 1))
+        rank = [0] * (n + 1)
+        count = [n]
+        def find(x):
+            if parent[x] != x:
+                parent[x] = find(parent[x])
+            return parent[x]
+        def union(a, b):
+            ra, rb = find(a), find(b)
+            if ra == rb: return False
+            if rank[ra] < rank[rb]: parent[ra] = rb
+            elif rank[ra] > rank[rb]: parent[rb] = ra
+            else: parent[rb] = ra; rank[ra] += 1
+            count[0] -= 1
+            return True
+        return find, union, lambda: count[0] == 1
+    fa, ua, ca = make_dsu(n)
+    fb, ub, cb = make_dsu(n)
+    removed = 0
+    for t, u, v in edges:
+        if t == 3:
+            a = ua(u, v); b = ub(u, v)
+            if not a and not b: removed += 1
+    for t, u, v in edges:
+        if t == 1:
+            if not ua(u, v): removed += 1
+        elif t == 2:
+            if not ub(u, v): removed += 1
+    if not ca() or not cb(): return -1
+    return removed
+`,
+
+  'exam-room': `
+def examRoomOps(ops):
+    import bisect
+    state = {'n': 0, 'seated': []}
+    def seat():
+        seated = state['seated']
+        n = state['n']
+        if not seated:
+            bisect.insort(seated, 0)
+            return 0
+        best, best_dist = 0, seated[0]
+        for i in range(1, len(seated)):
+            dist = (seated[i] - seated[i-1]) // 2
+            mid = (seated[i-1] + seated[i]) // 2
+            if dist > best_dist:
+                best_dist = dist
+                best = mid
+        if n - 1 - seated[-1] > best_dist:
+            best = n - 1
+        bisect.insort(seated, best)
+        return best
+    def leave(p):
+        state['seated'].remove(p)
+    results = []
+    for op, args in ops:
+        if op == 'ExamRoom':
+            state['n'] = args[0]
+            results.append(None)
+        elif op == 'seat':
+            results.append(seat())
+        else:
+            leave(args[0])
+            results.append(None)
+    return results
+`,
+
+  'checking-existence-of-edge-length-limited-paths': `
+def distanceLimitedPathsExist(n, edgeList, queries):
+    parent = list(range(n))
+    rank = [0] * n
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    def union(a, b):
+        ra, rb = find(a), find(b)
+        if ra == rb: return
+        if rank[ra] < rank[rb]: parent[ra] = rb
+        elif rank[ra] > rank[rb]: parent[rb] = ra
+        else: parent[rb] = ra; rank[ra] += 1
+    sorted_edges = sorted(edgeList, key=lambda e: e[2])
+    indexed = sorted(enumerate(queries), key=lambda x: x[1][2])
+    ans = [False] * len(queries)
+    ei = 0
+    for orig_i, (p, q, limit) in indexed:
+        while ei < len(sorted_edges) and sorted_edges[ei][2] < limit:
+            union(sorted_edges[ei][0], sorted_edges[ei][1])
+            ei += 1
+        ans[orig_i] = find(p) == find(q)
+    return ans
+`,
+
+  'last-day-where-you-can-still-cross': `
+def latestDayToCross(row, col, cells):
+    from collections import deque
+    def can_cross(day):
+        flooded = set()
+        for i in range(day):
+            r, c = cells[i]
+            flooded.add((r-1)*col + (c-1))
+        queue = deque()
+        for c in range(col):
+            if c not in flooded:
+                queue.append((0, c))
+                flooded.add(c)
+        while queue:
+            r, c = queue.popleft()
+            if r == row - 1: return True
+            for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:
+                nr, nc = r+dr, c+dc
+                if 0 <= nr < row and 0 <= nc < col:
+                    key = nr*col + nc
+                    if key not in flooded:
+                        flooded.add(key)
+                        queue.append((nr, nc))
+        return False
+    lo, hi = 0, row * col
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_cross(mid): lo = mid
+        else: hi = mid - 1
+    return lo
+`,
+
+  'minimum-cost-walk-in-weighted-graph': `
+def minimumCost(n, edges, queries):
+    parent = list(range(n))
+    rank = [0] * n
+    and_cost = [(1 << 17) - 1] * n
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    def union(a, b, w):
+        ra, rb = find(a), find(b)
+        and_cost[ra] &= w
+        and_cost[rb] &= w
+        if ra == rb: return
+        if rank[ra] < rank[rb]:
+            parent[ra] = rb; and_cost[rb] &= and_cost[ra]
+        elif rank[ra] > rank[rb]:
+            parent[rb] = ra; and_cost[ra] &= and_cost[rb]
+        else:
+            parent[rb] = ra; and_cost[ra] &= and_cost[rb]; rank[ra] += 1
+    for u, v, w in edges:
+        union(u, v, w)
+    result = []
+    for s, t in queries:
+        if find(s) != find(t): result.append(-1)
+        else: result.append(and_cost[find(s)])
+    return result
+`,
+
+  'maximum-average-pass-ratio': `
+def maxAverageRatio(classes, extraStudents):
+    import heapq
+    def gain(p, t): return (p+1)/(t+1) - p/t
+    heap = [(-gain(p, t), p, t) for p, t in classes]
+    heapq.heapify(heap)
+    for _ in range(extraStudents):
+        g, p, t = heapq.heappop(heap)
+        heapq.heappush(heap, (-gain(p+1, t+1), p+1, t+1))
+    return sum(p/t for _, p, t in heap) / len(classes)
+`,
+
+  'count-good-meals': `
+def countPairs(deliciousness):
+    MOD = 10**9 + 7
+    freq = {}
+    count = 0
+    for d in deliciousness:
+        for p in range(22):
+            target = (1 << p) - d
+            if target in freq:
+                count = (count + freq[target]) % MOD
+        freq[d] = freq.get(d, 0) + 1
+    return count
+`,
+
+  'rank-teams-by-votes': `
+def rankTeams(votes):
+    teams = list(votes[0])
+    m = len(teams)
+    counts = {t: [0]*m for t in teams}
+    for vote in votes:
+        for i, t in enumerate(vote):
+            counts[t][i] += 1
+    teams.sort(key=lambda t: ([-c for c in counts[t]], t))
+    return ''.join(teams)
+`,
+
+  'minimum-number-of-refueling-stops': `
+def minRefuelStops(target, startFuel, stations):
+    import heapq
+    heap = []
+    fuel = startFuel
+    stops = 0
+    prev = 0
+    for pos, f in stations:
+        fuel -= pos - prev
+        while fuel < 0 and heap:
+            fuel -= heapq.heappop(heap)
+            stops += 1
+        if fuel < 0: return -1
+        heapq.heappush(heap, -f)
+        prev = pos
+    fuel -= target - prev
+    while fuel < 0 and heap:
+        fuel -= heapq.heappop(heap)
+        stops += 1
+    return -1 if fuel < 0 else stops
+`,
+
+  'minimum-total-space-wasted-with-k-resizing-operations': `
+def minSpaceWastedKResizing(nums, k):
+    n = len(nums)
+    waste = [[0]*n for _ in range(n)]
+    for i in range(n):
+        max_val = 0; total = 0
+        for j in range(i, n):
+            max_val = max(max_val, nums[j]); total += nums[j]
+            waste[i][j] = max_val * (j-i+1) - total
+    INF = float('inf')
+    dp = [[INF]*(k+1) for _ in range(n)]
+    for j in range(n): dp[j][0] = waste[0][j]
+    for seg in range(1, k+1):
+        for j in range(seg, n):
+            for l in range(seg-1, j):
+                if dp[l][seg-1] != INF:
+                    dp[j][seg] = min(dp[j][seg], dp[l][seg-1] + waste[l+1][j])
+    return min(dp[n-1])
+`,
+
+  'maximum-number-of-tasks-you-can-assign': `
+def maxTaskAssign(tasks, workers, pills, strength):
+    tasks = sorted(tasks)
+    workers = sorted(workers)
+    n, m = len(tasks), len(workers)
+    def can_do(k):
+        avail = list(workers[m-k:])
+        pills_left = pills
+        for ti in range(k-1, -1, -1):
+            task = tasks[ti]
+            if avail and avail[-1] >= task:
+                avail.pop()
+            elif pills_left > 0:
+                lo2, hi2 = 0, len(avail)
+                while lo2 < hi2:
+                    mid2 = (lo2 + hi2) // 2
+                    if avail[mid2] + strength >= task: hi2 = mid2
+                    else: lo2 = mid2 + 1
+                if lo2 >= len(avail): return False
+                avail.pop(lo2); pills_left -= 1
+            else:
+                return False
+        return True
+    lo, hi = 0, min(n, m)
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_do(mid): lo = mid
+        else: hi = mid - 1
+    return lo
+`,
+
+  'maximum-total-beauty-of-gardens': `
+def maximumBeauty(flowers, newFlowers, target, full, partial):
+    flowers = sorted(flowers)
+    n = len(flowers)
+    nc = n
+    while nc > 0 and flowers[nc-1] >= target:
+        nc -= 1
+    already_complete = n - nc
+    prefix = [0] * (nc + 1)
+    for i in range(nc): prefix[i+1] = prefix[i] + flowers[i]
+    def cost_for_v(v, incomplete_cnt):
+        lo, hi = 0, incomplete_cnt
+        while lo < hi:
+            mid = (lo + hi) // 2
+            if flowers[mid] < v: lo = mid + 1
+            else: hi = mid
+        return v * lo - prefix[lo]
+    ans = already_complete * full
+    cost_full = 0
+    for k in range(nc + 1):
+        if k > 0:
+            cost_full += target - flowers[nc - k]
+            if cost_full > newFlowers: break
+        seeds_left = newFlowers - cost_full
+        incomplete_cnt = nc - k
+        total_complete = already_complete + k
+        if incomplete_cnt == 0:
+            ans = max(ans, total_complete * full)
+            continue
+        v_lo, v_hi = flowers[0], target - 1
+        while v_lo < v_hi:
+            v_mid = (v_lo + v_hi + 1) // 2
+            if cost_for_v(v_mid, incomplete_cnt) <= seeds_left: v_lo = v_mid
+            else: v_hi = v_mid - 1
+        ans = max(ans, total_complete * full + v_lo * partial)
+    return ans
+`,
+
+  'maximum-xor-of-two-numbers-in-an-array': `
+def findMaximumXOR(nums):
+    ans = 0
+    mask = 0
+    for i in range(30, -1, -1):
+        mask |= (1 << i)
+        prefixes = set(n & mask for n in nums)
+        candidate = ans | (1 << i)
+        for p in prefixes:
+            if p ^ candidate in prefixes:
+                ans = candidate
+                break
+    return ans
+`,
+
+  'design-graph-with-shortest-path-calculator': `
+def designGraph(n, edges, ops):
+    from heapq import heappush, heappop
+    adj = [[] for _ in range(n)]
+    for frm, to, cost in edges:
+        adj[frm].append((to, cost))
+    def dijkstra(src, dst):
+        dist = [float('inf')] * n
+        dist[src] = 0
+        pq = [(0, src)]
+        while pq:
+            d, u = heappop(pq)
+            if d > dist[u]: continue
+            for v, w in adj[u]:
+                if dist[u] + w < dist[v]:
+                    dist[v] = dist[u] + w
+                    heappush(pq, (dist[v], v))
+        return dist[dst] if dist[dst] != float('inf') else -1
+    results = []
+    for op, args in ops:
+        if op == 'addEdge':
+            adj[args[0]].append((args[1], args[2]))
+            results.append(None)
+        else:
+            results.append(dijkstra(args[0], args[1]))
+    return results
+`,
+
 };
