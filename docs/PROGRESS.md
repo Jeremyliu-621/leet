@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2026** problems; 6363 tests green. Batches 92–95 + 2K milestone + word-wrap persist + remote merges complete.
+**Current focus:** Bank at **2023** problems; 6363 tests green. Batches 92–95 + 2K milestone + word-wrap persist + remote merges complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continued bank growth (batch 96+); UI/UX polish.
 
