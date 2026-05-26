@@ -1625,6 +1625,12 @@ import { problem as maximumStrongPairXorI } from './maximum-strong-pair-xor-i';
 import { problem as extraCharactersInAString } from './extra-characters-in-a-string';
 import { problem as kthLargestSumInABinaryTree } from './kth-largest-sum-in-a-binary-tree';
 import { problem as sumOfMatrixAfterQueries } from './sum-of-matrix-after-queries';
+// batch 62 (local)
+import { problem as findTheMinimumNumberOfFibonacciNumbersWhoseSumIsK } from './find-the-minimum-number-of-fibonacci-numbers-whose-sum-is-k';
+import { problem as countPairsOfSimilarStrings } from './count-pairs-of-similar-strings';
+import { problem as maximumDifferenceBetweenIncreasingElements } from './maximum-difference-between-increasing-elements';
+import { problem as longestPathWithDifferentAdjacentCharacters } from './longest-path-with-different-adjacent-characters';
+import { problem as incrementSubmatricesByOne } from './increment-submatrices-by-one';
 // batch 59 (local)
 import { problem as countSubstringsStartingAndEndingWithGivenCharacter } from './count-substrings-starting-and-ending-with-given-character';
 import { problem as minimumNumberOfChangesToMakeBinaryStringBeautiful } from './minimum-number-of-changes-to-make-binary-string-beautiful';
@@ -3359,6 +3365,12 @@ export const problems: readonly Problem[] = [
   extraCharactersInAString,
   kthLargestSumInABinaryTree,
   sumOfMatrixAfterQueries,
+  // batch 62 (local)
+  findTheMinimumNumberOfFibonacciNumbersWhoseSumIsK,
+  countPairsOfSimilarStrings,
+  maximumDifferenceBetweenIncreasingElements,
+  longestPathWithDifferentAdjacentCharacters,
+  incrementSubmatricesByOne,
   // batch 59 (local)
   countSubstringsStartingAndEndingWithGivenCharacter,
   minimumNumberOfChangesToMakeBinaryStringBeautiful,

@@ -22135,6 +22135,81 @@ def secondMinimum(n, edges, time, change):
     return max(min1, min2)
 `,
 
+  // batch 62 (local)
+  'find-the-minimum-number-of-fibonacci-numbers-whose-sum-is-k': `def findMinFibonacciNumbers(k):
+    ki = int(k)
+    fibs = [1, 1]
+    while fibs[-1] < ki:
+        fibs.append(fibs[-1] + fibs[-2])
+    count = 0
+    while ki > 0:
+        i = len(fibs) - 1
+        while fibs[i] > ki:
+            i -= 1
+        ki -= fibs[i]
+        count += 1
+    return count
+`,
+
+  'count-pairs-of-similar-strings': `def similarPairs(words):
+    words = words.to_py() if hasattr(words, 'to_py') else words
+    from collections import Counter
+    freq = Counter(''.join(sorted(set(w))) for w in words)
+    return sum(c * (c - 1) // 2 for c in freq.values())
+`,
+
+  'maximum-difference-between-increasing-elements': `def maximumDifference(nums):
+    nums = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    min_so_far = nums[0]
+    max_diff = -1
+    for i in range(1, len(nums)):
+        if nums[i] > min_so_far:
+            max_diff = max(max_diff, nums[i] - min_so_far)
+        else:
+            min_so_far = min(min_so_far, nums[i])
+    return max_diff
+`,
+
+  'longest-path-with-different-adjacent-characters': `def longestPath(parent, s):
+    parent = list(int(x) for x in (parent.to_py() if hasattr(parent, 'to_py') else parent))
+    n = len(parent)
+    children = [[] for _ in range(n)]
+    for i in range(1, n):
+        children[parent[i]].append(i)
+    ans = [1]
+    def dfs(u):
+        top1, top2 = 0, 0
+        for v in children[u]:
+            length = dfs(v)
+            if s[v] == s[u]:
+                continue
+            if length > top1:
+                top2, top1 = top1, length
+            elif length > top2:
+                top2 = length
+        ans[0] = max(ans[0], 1 + top1 + top2)
+        return 1 + top1
+    dfs(0)
+    return ans[0]
+`,
+
+  'increment-submatrices-by-one': `def rangeAddQueries(n, queries):
+    ni = int(n)
+    qs = [(int(q[0]), int(q[1]), int(q[2]), int(q[3])) for q in (queries.to_py() if hasattr(queries, 'to_py') else queries)]
+    d = [[0] * (ni + 1) for _ in range(ni + 1)]
+    for r1, c1, r2, c2 in qs:
+        d[r1][c1] += 1
+        if c2 + 1 <= ni: d[r1][c2 + 1] -= 1
+        if r2 + 1 <= ni: d[r2 + 1][c1] -= 1
+        if r2 + 1 <= ni and c2 + 1 <= ni: d[r2 + 1][c2 + 1] += 1
+    mat = [[0] * ni for _ in range(ni)]
+    for r in range(ni):
+        for c in range(ni):
+            d[r][c] += (d[r-1][c] if r > 0 else 0) + (d[r][c-1] if c > 0 else 0) - (d[r-1][c-1] if r > 0 and c > 0 else 0)
+            mat[r][c] = d[r][c]
+    return mat
+`,
+
   // batch 61 (local)
   'check-if-every-row-and-column-contains-all-numbers': `def checkValid(matrix):
     matrix = matrix.to_py() if hasattr(matrix, 'to_py') else matrix

@@ -22370,6 +22370,89 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Math.max(min1, min2);
   },
 
+  // batch 62 (local)
+  'find-the-minimum-number-of-fibonacci-numbers-whose-sum-is-k': (...args: unknown[]) => {
+    let k = args[0] as number;
+    const fibs = [1, 1];
+    while (fibs[fibs.length - 1]! < k) fibs.push(fibs[fibs.length - 1]! + fibs[fibs.length - 2]!);
+    let count = 0;
+    while (k > 0) {
+      let i = fibs.length - 1;
+      while (fibs[i]! > k) i--;
+      k -= fibs[i]!;
+      count++;
+    }
+    return count;
+  },
+
+  'count-pairs-of-similar-strings': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const freq = new Map<string, number>();
+    for (const w of words) {
+      const key = [...new Set(w)].sort().join('');
+      freq.set(key, (freq.get(key) ?? 0) + 1);
+    }
+    let pairs = 0;
+    for (const cnt of freq.values()) pairs += cnt * (cnt - 1) / 2;
+    return pairs;
+  },
+
+  'maximum-difference-between-increasing-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let minSoFar = nums[0]!;
+    let maxDiff = -1;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i]! > minSoFar) {
+        maxDiff = Math.max(maxDiff, nums[i]! - minSoFar);
+      } else {
+        minSoFar = Math.min(minSoFar, nums[i]!);
+      }
+    }
+    return maxDiff;
+  },
+
+  'longest-path-with-different-adjacent-characters': (...args: unknown[]) => {
+    const parent = args[0] as number[];
+    const s = args[1] as string;
+    const n = parent.length;
+    const children: number[][] = Array.from({ length: n }, () => []);
+    for (let i = 1; i < n; i++) children[parent[i]!]!.push(i);
+    let ans = 1;
+    function dfs(u: number): number {
+      let top1 = 0, top2 = 0;
+      for (const v of children[u]!) {
+        const len = dfs(v);
+        if (s[v] === s[u]) continue;
+        if (len > top1) { top2 = top1; top1 = len; }
+        else if (len > top2) top2 = len;
+      }
+      ans = Math.max(ans, 1 + top1 + top2);
+      return 1 + top1;
+    }
+    dfs(0);
+    return ans;
+  },
+
+  'increment-submatrices-by-one': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const queries = args[1] as number[][];
+    const d = Array.from({ length: n + 1 }, () => new Array(n + 1).fill(0)) as number[][];
+    for (const [r1, c1, r2, c2] of queries) {
+      d[r1!]![c1!]!++;
+      if (c2! + 1 <= n) d[r1!]![c2! + 1]!--;
+      if (r2! + 1 <= n) d[r2! + 1]![c1!]!--;
+      if (r2! + 1 <= n && c2! + 1 <= n) d[r2! + 1]![c2! + 1]!++;
+    }
+    const mat = Array.from({ length: n }, () => new Array(n).fill(0)) as number[][];
+    for (let r = 0; r < n; r++) {
+      for (let c = 0; c < n; c++) {
+        d[r]![c]! += (r > 0 ? d[r - 1]![c]! : 0) + (c > 0 ? d[r]![c - 1]! : 0) - (r > 0 && c > 0 ? d[r - 1]![c - 1]! : 0);
+        mat[r]![c] = d[r]![c]!;
+      }
+    }
+    return mat;
+  },
+
   // batch 61 (local)
   'check-if-every-row-and-column-contains-all-numbers': (...args: unknown[]) => {
     const matrix = args[0] as number[][];
