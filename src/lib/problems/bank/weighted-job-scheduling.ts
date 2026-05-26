@@ -62,8 +62,8 @@ Each job can be selected at most once.
     { args: [[1, 3], [3, 5], [10, 20]], expected: 30 },
     // start=1,end=2 and start=2,end=3: non-overlapping → 30
     { args: [[1, 2], [2, 3], [10, 20]], expected: 30 },
-    // start=1,end=5 and start=3,end=8: 3 < 5, they overlap → best is max(10,5)=10
-    { args: [[1, 3], [2, 8], [10, 5]], expected: 10 },
+    // start=1,end=2 and start=3,end=8: start[1]=3 >= end[0]=2, non-overlapping → 15
+    { args: [[1, 3], [2, 8], [10, 5]], expected: 15 },
     // three non-overlapping jobs: (1,4,20),(5,8,30),(6,7,1) → sorted by end: (1,4,20),(6,7,1),(5,8,30)
     // job0→20, job1 start=6>4 → 20+1=21, job2 start=5>4 → take 20+30=50 or 21. Best=50
     { args: [[1, 6, 5], [4, 7, 8], [20, 1, 30]], expected: 50 },

@@ -2086,6 +2086,20 @@ import { problem as minimumDifferenceInSumsAfterRemovalOfElements } from './mini
 import { problem as splitTheArray } from './split-the-array';
 import { problem as findTheScoreOfAllPrefixesOfAnArray } from './find-the-score-of-all-prefixes-of-an-array';
 import { problem as shortestCycleInAGraph } from './shortest-cycle-in-a-graph';
+// batch 89 — monotonic-stack, string, sliding-window, dp, tree, graph
+import { problem as nextGreaterElementDistances } from './next-greater-element-distances';
+import { problem as findAllOccurrencesZAlgorithm } from './find-all-occurrences-z-algorithm';
+import { problem as zAlgorithmLongestPrefixSuffix } from './z-algorithm-longest-prefix-suffix';
+import { problem as countSubarraysExactlyKDistinct } from './count-subarrays-exactly-k-distinct';
+import { problem as maximumProductSubarrayLengthK } from './maximum-product-subarray-length-k';
+import { problem as weightedJobScheduling } from './weighted-job-scheduling';
+import { problem as parallelCourses } from './parallel-courses';
+import { problem as parallelCoursesII } from './parallel-courses-ii';
+import { problem as gridCountPathsMod } from './grid-count-paths-mod';
+import { problem as maxSumSubmatrix } from './max-sum-submatrix';
+import { problem as numberGoodLeafNodePairs } from './number-good-leaf-node-pairs';
+import { problem as treeNodeProductOfChildren } from './tree-node-product-of-children';
+import { problem as minimumOperationsNonDecreasing } from './minimum-operations-to-make-array-non-decreasing';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4207,4 +4221,18 @@ export const problems: readonly Problem[] = [
   splitTheArray,
   findTheScoreOfAllPrefixesOfAnArray,
   shortestCycleInAGraph,
+  // batch 89 — monotonic-stack, string, sliding-window, dp, tree, graph
+  nextGreaterElementDistances,
+  findAllOccurrencesZAlgorithm,
+  zAlgorithmLongestPrefixSuffix,
+  countSubarraysExactlyKDistinct,
+  maximumProductSubarrayLengthK,
+  weightedJobScheduling,
+  parallelCourses,
+  parallelCoursesII,
+  gridCountPathsMod,
+  maxSumSubmatrix,
+  numberGoodLeafNodePairs,
+  treeNodeProductOfChildren,
+  minimumOperationsNonDecreasing,
 ];

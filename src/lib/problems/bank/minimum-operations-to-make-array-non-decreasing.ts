@@ -61,7 +61,7 @@ Return the total number of increment operations needed.
   ],
   hiddenTests: [
     { args: [[1, 1, 1]], expected: 0 },
-    { args: [[3, 1, 2]], expected: 2 },
+    { args: [[3, 1, 2]], expected: 3 },
     { args: [[5, 4, 3, 2, 1]], expected: 10 },
     { args: [[1, 5, 2, 3]], expected: 5 },
     { args: [[0, 0, 0]], expected: 0 },

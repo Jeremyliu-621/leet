@@ -30361,4 +30361,270 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans === Infinity ? -1 : ans;
   },
 
+  // --- batch 89 -----------------------------------------------------------
+  'next-greater-element-distances': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const result = new Array<number>(n).fill(-1);
+    const stack: number[] = [];
+    for (let i = 0; i < n; i++) {
+      while (stack.length > 0 && nums[stack[stack.length - 1]!]! < nums[i]!) {
+        const j = stack.pop()!;
+        result[j] = i - j;
+      }
+      stack.push(i);
+    }
+    return result;
+  },
+
+  'find-all-occurrences-z-algorithm': (...args: unknown[]) => {
+    const [text, pattern] = args as [string, string];
+    const s = pattern + '#' + text;
+    const n = s.length;
+    const z = new Array<number>(n).fill(0);
+    let l = 0, r = 0;
+    for (let i = 1; i < n; i++) {
+      if (i < r) z[i] = Math.min(r - i, z[i - l]!);
+      while (i + z[i]! < n && s[z[i]!] === s[i + z[i]!]) z[i]!++;
+      if (i + z[i]! > r) { l = i; r = i + z[i]!; }
+    }
+    const result: number[] = [];
+    const pLen = pattern.length;
+    for (let i = pLen + 1; i < n; i++) {
+      if (z[i]! >= pLen) result.push(i - pLen - 1);
+    }
+    return result;
+  },
+
+  'z-algorithm-longest-prefix-suffix': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    if (n === 0) return 0;
+    const pi = new Array<number>(n).fill(0);
+    let k = 0;
+    for (let i = 1; i < n; i++) {
+      while (k > 0 && s[k] !== s[i]) k = pi[k - 1]!;
+      if (s[k] === s[i]) k++;
+      pi[i] = k;
+    }
+    return pi[n - 1]!;
+  },
+
+  'count-subarrays-exactly-k-distinct': (...args: unknown[]) => {
+    const [nums, k] = args as [number[], number];
+    function atMost(limit: number): number {
+      let count = 0, left = 0;
+      const freq = new Map<number, number>();
+      for (let right = 0; right < nums.length; right++) {
+        const v = nums[right]!;
+        freq.set(v, (freq.get(v) ?? 0) + 1);
+        while (freq.size > limit) {
+          const lv = nums[left++]!;
+          const c = freq.get(lv)! - 1;
+          if (c === 0) freq.delete(lv); else freq.set(lv, c);
+        }
+        count += right - left + 1;
+      }
+      return count;
+    }
+    return atMost(k) - atMost(k - 1);
+  },
+
+  'maximum-product-subarray-length-k': (...args: unknown[]) => {
+    const [nums, k] = args as [number[], number];
+    let maxProd = -Infinity;
+    for (let i = 0; i <= nums.length - k; i++) {
+      let prod = 1;
+      for (let j = i; j < i + k; j++) prod *= nums[j]!;
+      if (prod > maxProd) maxProd = prod;
+    }
+    return maxProd;
+  },
+
+  'weighted-job-scheduling': (...args: unknown[]) => {
+    const [startTime, endTime, profit] = args as [number[], number[], number[]];
+    const n = startTime.length;
+    type Job = [number, number, number];
+    const jobs: Job[] = Array.from({ length: n }, (_, i) => [startTime[i]!, endTime[i]!, profit[i]!]);
+    jobs.sort((a, b) => a[1] - b[1]);
+    const dp = new Array<number>(n + 1).fill(0);
+    for (let i = 1; i <= n; i++) {
+      const [start, , p] = jobs[i - 1]!;
+      // find last job j (1-indexed) where jobs[j-1][1] <= start
+      let lo = 0, hi = i - 1;
+      while (lo < hi) {
+        const mid = (lo + hi + 1) >> 1;
+        if (jobs[mid - 1]![1] <= start) lo = mid; else hi = mid - 1;
+      }
+      dp[i] = Math.max(dp[i - 1]!, dp[lo]! + p);
+    }
+    return dp[n]!;
+  },
+
+  'parallel-courses': (...args: unknown[]) => {
+    const [n, relations] = args as [number, number[][]];
+    const inDeg = new Array<number>(n + 1).fill(0);
+    const adj: number[][] = Array.from({ length: n + 1 }, () => []);
+    for (const [u, v] of relations) {
+      adj[u!]!.push(v!);
+      inDeg[v!]!++;
+    }
+    const queue: number[] = [];
+    for (let i = 1; i <= n; i++) if (inDeg[i] === 0) queue.push(i);
+    let semesters = 0, processed = 0;
+    while (queue.length > 0) {
+      semesters++;
+      const nextQueue: number[] = [];
+      for (const u of queue) {
+        processed++;
+        for (const v of adj[u]!) {
+          inDeg[v]!--;
+          if (inDeg[v] === 0) nextQueue.push(v);
+        }
+      }
+      queue.length = 0;
+      queue.push(...nextQueue);
+    }
+    return processed === n ? semesters : -1;
+  },
+
+  'parallel-courses-ii': (...args: unknown[]) => {
+    const [n, relations, k] = args as [number, number[][], number];
+    const prereqs = new Array<number>(n).fill(0);
+    for (const [x, y] of relations) prereqs[y!]! |= (1 << x!);
+    const INF = 1e9;
+    const dp = new Array<number>(1 << n).fill(INF);
+    dp[0] = 0;
+    for (let mask = 0; mask < (1 << n); mask++) {
+      if (dp[mask] === INF) continue;
+      let avail = 0;
+      for (let i = 0; i < n; i++) {
+        if (!(mask & (1 << i)) && (prereqs[i]! & mask) === prereqs[i]!) avail |= (1 << i);
+      }
+      // enumerate all subsets of avail
+      for (let sub = avail; sub > 0; sub = (sub - 1) & avail) {
+        let bits = 0, tmp = sub;
+        while (tmp) { bits++; tmp &= tmp - 1; }
+        if (bits <= k) {
+          const nxt = mask | sub;
+          if (dp[nxt]! > dp[mask]! + 1) dp[nxt] = dp[mask]! + 1;
+        }
+      }
+    }
+    return dp[(1 << n) - 1]!;
+  },
+
+  'grid-count-paths-mod': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const MOD = 1_000_000_007;
+    const m = grid.length, nc = grid[0]!.length;
+    const dp = Array.from({ length: m }, () => new Array<number>(nc).fill(0));
+    dp[0]![0] = 1;
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < nc; j++) {
+        if (i === 0 && j === 0) continue;
+        if (grid[i]![j] === 1) { dp[i]![j] = 0; continue; }
+        const fromTop = i > 0 ? dp[i - 1]![j]! : 0;
+        const fromLeft = j > 0 ? dp[i]![j - 1]! : 0;
+        dp[i]![j] = (fromTop + fromLeft) % MOD;
+      }
+    }
+    return dp[m - 1]![nc - 1]!;
+  },
+
+  'max-sum-submatrix': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const m = matrix.length, nc = matrix[0]!.length;
+    let ans = -Infinity;
+    for (let top = 0; top < m; top++) {
+      const colSum = new Array<number>(nc).fill(0);
+      for (let bot = top; bot < m; bot++) {
+        for (let j = 0; j < nc; j++) colSum[j]! += matrix[bot]![j]!;
+        let cur = 0, maxSub = -Infinity;
+        for (const v of colSum) {
+          cur = Math.max(v, cur + v);
+          if (cur > maxSub) maxSub = cur;
+        }
+        if (maxSub > ans) ans = maxSub;
+      }
+    }
+    return ans;
+  },
+
+  'number-good-leaf-node-pairs': (...args: unknown[]) => {
+    const [rawArr, distance] = args as [(number | null)[], number];
+    interface TN { v: number; l: TN | null; r: TN | null }
+    function build(a: (number | null)[]): TN | null {
+      if (!a.length || a[0] == null) return null;
+      const root: TN = { v: a[0], l: null, r: null };
+      const q: TN[] = [root];
+      let i = 1;
+      while (q.length && i < a.length) {
+        const node = q.shift()!;
+        if (i < a.length && a[i] != null) { node.l = { v: a[i]!, l: null, r: null }; q.push(node.l); }
+        i++;
+        if (i < a.length && a[i] != null) { node.r = { v: a[i]!, l: null, r: null }; q.push(node.r); }
+        i++;
+      }
+      return root;
+    }
+    let count = 0;
+    function dfs(node: TN | null): number[] {
+      if (!node) return [];
+      if (!node.l && !node.r) return [0];
+      const left = dfs(node.l).map((d: number) => d + 1);
+      const right = dfs(node.r).map((d: number) => d + 1);
+      for (const l of left) for (const r of right) if (l + r <= distance) count++;
+      return [...left, ...right].filter((d: number) => d < distance);
+    }
+    dfs(build(rawArr));
+    return count;
+  },
+
+  'tree-node-product-of-children': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const MOD = 1_000_000_007n;
+    interface TN { v: number; l: TN | null; r: TN | null }
+    function build(a: (number | null)[]): TN | null {
+      if (!a.length || a[0] == null) return null;
+      const root: TN = { v: a[0], l: null, r: null };
+      const q: TN[] = [root];
+      let i = 1;
+      while (q.length && i < a.length) {
+        const node = q.shift()!;
+        if (i < a.length && a[i] != null) { node.l = { v: a[i]!, l: null, r: null }; q.push(node.l); }
+        i++;
+        if (i < a.length && a[i] != null) { node.r = { v: a[i]!, l: null, r: null }; q.push(node.r); }
+        i++;
+      }
+      return root;
+    }
+    const root = build(arr);
+    function sumAll(node: TN | null): number {
+      if (!node) return 0;
+      return node.v + sumAll(node.l) + sumAll(node.r);
+    }
+    const total = BigInt(sumAll(root));
+    let best = 0n;
+    function dfs(node: TN | null): number {
+      if (!node) return 0;
+      const s = node.v + dfs(node.l) + dfs(node.r);
+      const prod = (BigInt(s) * (total - BigInt(s))) % MOD;
+      if (prod > best) best = prod;
+      return s;
+    }
+    dfs(root);
+    return Number(best);
+  },
+
+  'minimum-operations-to-make-array-non-decreasing': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let ops = 0, prev = nums[0] ?? 0;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i]! < prev) { ops += prev - nums[i]!; }
+      else { prev = nums[i]!; }
+    }
+    return ops;
+  },
+
 };
