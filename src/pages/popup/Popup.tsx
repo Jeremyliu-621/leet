@@ -786,8 +786,8 @@ function RecentSolvesList({ solves }: { solves: readonly RecentSolve[] }) {
     <section className="mt-4 border-t border-border pt-4" aria-label="Recent solves">
       <h2 className="font-mono text-[9px] uppercase tracking-widest text-faint">Recent</h2>
       <ul className="mt-2 space-y-0.5">
-        {solves.map((s, i) => (
-          <li key={i}>
+        {solves.map((s) => (
+          <li key={s.problemId}>
             <button
               type="button"
               onClick={() => openProblem(s.problemId)}
