@@ -9,6 +9,7 @@ import {
 import { recordFail, recordSolve } from '../lib/streak/streak';
 import { RECONCILE_ALARM, reconcile } from './reconcile';
 import type { SolvedProblemRecord, UnlockToken } from '../lib/types';
+import { isSupportedLanguage } from '../lib/types';
 import type {
   FailChallengeRequest,
   GrantUnlockRequest,
@@ -67,7 +68,7 @@ async function grantUnlock(request: GrantUnlockRequest): Promise<RuntimeResponse
     solvedAt: now,
     durationMs: request.solveDurationMs ?? 0,
     attempts: request.attempts ?? 0,
-    language: 'javascript',
+    language: isSupportedLanguage(request.language) ? request.language : 'javascript',
     domain: token.domain,
   };
   const nextSolved = [...solvedHistory, record].slice(-MAX_SOLVED_HISTORY);

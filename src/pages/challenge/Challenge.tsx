@@ -731,6 +731,8 @@ export function Challenge() {
             domain: domain.current ?? '',
             problemId: problem.id,
             durationMs: prefs.unlockDurationMin * 60 * 1000,
+            language,
+            attempts: attempts + 1,
           });
         } catch {
           // SW not yet wired (Phase 6) — continue to redirect anyway.

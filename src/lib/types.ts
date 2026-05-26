@@ -61,6 +61,14 @@ export type SupportedLanguage =
   | 'swift'
   | 'sql';
 
+const SUPPORTED_LANGUAGE_SET = new Set<string>([
+  'javascript', 'typescript', 'python', 'java', 'cpp', 'csharp', 'go', 'rust', 'kotlin', 'swift', 'sql',
+]);
+
+export function isSupportedLanguage(value: unknown): value is SupportedLanguage {
+  return typeof value === 'string' && SUPPORTED_LANGUAGE_SET.has(value);
+}
+
 // --- Block rules ----------------------------------------------------------
 
 export type BlockRuleKind = 'domain' | 'url';

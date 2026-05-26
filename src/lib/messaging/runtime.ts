@@ -17,6 +17,8 @@ export interface GrantUnlockRequest {
   solveDurationMs?: number;
   /** Number of failed submissions before the passing one; optional. */
   attempts?: number;
+  /** The language the user solved in; validated by the SW before persisting. */
+  language?: string;
 }
 
 export interface GrantUnlockResponse {
