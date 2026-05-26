@@ -31714,6 +31714,33 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     gain(root);
     return ans;
+  'check-if-array-sorted-and-rotated': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    let count = 0;
+    for (let i = 0; i < n; i++) {
+      if (nums[i]! > nums[(i + 1) % n]!) count++;
+    }
+    return count <= 1;
+  },
+
+  'find-all-lonely-numbers-in-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const x of nums) freq.set(x, (freq.get(x) ?? 0) + 1);
+    const result: number[] = [];
+    for (const x of nums) {
+      if (freq.get(x) === 1 && !freq.has(x - 1) && !freq.has(x + 1)) result.push(x);
+    }
+    return result.sort((a, b) => a - b);
+  },
+
+  'check-if-all-characters-have-equal-number-of-occurrences': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const freq = new Map<string, number>();
+    for (const c of s) freq.set(c, (freq.get(c) ?? 0) + 1);
+    const vals = [...freq.values()];
+    return vals.every(v => v === vals[0]);
   },
 
 };

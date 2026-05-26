@@ -31164,6 +31164,33 @@ def dailyTemperatures(temperatures):
             ans[j] = i - j
         stack.append(i)
     return ans
+  'check-if-array-sorted-and-rotated': `
+def check(nums):
+    n = len(nums)
+    count = 0
+    for i in range(n):
+        if nums[i] > nums[(i + 1) % n]:
+            count += 1
+    return count <= 1
+`,
+
+  'find-all-lonely-numbers-in-array': `
+def findLonely(nums):
+    from collections import Counter
+    freq = Counter(nums)
+    result = []
+    for x in nums:
+        if freq[x] == 1 and (x - 1) not in freq and (x + 1) not in freq:
+            result.append(x)
+    return sorted(result)
+`,
+
+  'check-if-all-characters-have-equal-number-of-occurrences': `
+def areOccurrencesEqual(s):
+    from collections import Counter
+    freq = Counter(s)
+    vals = list(freq.values())
+    return all(v == vals[0] for v in vals)
 `,
 
   // batch 95 — tree problems

@@ -2179,6 +2179,10 @@ import { problem as dailyTemperaturesVariant } from './monotonic-stack-daily-tem
 import { problem as rangeSumBst } from './range-sum-bst';
 import { problem as deleteNodeInABst } from './delete-node-in-a-bst';
 import { problem as binaryTreeMaximumPathSum } from './binary-tree-maximum-path-sum';
+// batch 96 — arrays/easy, arrays+hash-map/easy, strings+hash-map/easy
+import { problem as checkIfArraySortedAndRotatedB96 } from './check-if-array-sorted-and-rotated';
+import { problem as findAllLonelyNumbersInArray } from './find-all-lonely-numbers-in-array';
+import { problem as checkIfAllCharactersHaveEqualNumberOfOccurrences } from './check-if-all-characters-have-equal-number-of-occurrences';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4395,4 +4399,8 @@ export const problems: readonly Problem[] = [
   rangeSumBst,
   deleteNodeInABst,
   binaryTreeMaximumPathSum,
+  // batch 96 — arrays/easy, arrays+hash-map/easy, strings+hash-map/easy
+  checkIfArraySortedAndRotatedB96,
+  findAllLonelyNumbersInArray,
+  checkIfAllCharactersHaveEqualNumberOfOccurrences,
 ];
