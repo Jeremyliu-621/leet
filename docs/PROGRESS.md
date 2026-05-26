@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1654 problems; 5250 tests green.
+**Current focus:** Bank at 1658 problems; 5238 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1700; UX polish (a11y, terminal UX).
+
+### Batch 63 (2026-05-26)
+Added 8 problems: `count-number-of-special-integers` (medium/math+dp, digit DP over same-length numbers), `divide-intervals-into-minimum-number-of-groups` (medium/arrays+heap, sweep line), `maximum-building-height` (hard/arrays+math, forward+backward restriction propagation), `minimum-number-of-groups-to-create-a-valid-assignment` (medium/arrays+hash-map, frequency grouping with ceil formula), `minimum-number-of-moves-to-make-palindrome` (hard/strings+two-pointers, greedy bubble sort toward palindrome), `node-with-highest-edge-score` (easy/graph+hash-map, weighted in-degree sum), `number-of-beautiful-subarrays` (medium/arrays+hash-map, XOR prefix count), `zero-array-transformation-i` (medium/arrays+two-pointers, difference array coverage check). JS + Python solutions with Pyodide proxy fixes. Bank at **1658**; 5238 tests.
 
 ### Batch 64-local (2026-05-26)
 Added 5 problems: `number-of-wonderful-substrings` (medium/strings+hash-map, XOR prefix bitmask over 10 chars), `design-a-number-container-system` (medium/hash-map, sorted bisect index list), `continuous-subarrays` (medium/arrays+sliding-window, dual monotone deques), `count-pairs-that-form-a-complete-day-i` (easy/arrays+math, freq-map mod-24 complement), `substring-with-largest-variance` (hard/arrays+dp, Kadane over all 650 char pairs). JS + Python solutions. Bank at **1654**; 5250 tests.
