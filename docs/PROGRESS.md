@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2000** problems; 6312 tests green. Batches 92–94 + 2K milestone complete.
+**Current focus:** Bank at **2001** problems; 6315 tests green. Batches 92–94 + 2K milestone complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continued bank growth (batch 95); UI/UX polish.
+
+### feat(bank): add batch 94 — maximum-average-subarray-i (2026-05-26)
+Added `maximum-average-subarray-i` (easy/sliding-window, fixed-size k window tracking max sum). JS and Python reference solutions added. Bank at **2001**; 6315 tests.
 
 ### 🎉 2000-problem milestone — find-largest-value-in-each-tree-row (2026-05-26)
 Bank crosses **2000** problems. Added `find-largest-value-in-each-tree-row` (medium/tree, BFS level-order max scan). Marketing site updated to 2,000+. Bank at **2000**; 6312 tests.
