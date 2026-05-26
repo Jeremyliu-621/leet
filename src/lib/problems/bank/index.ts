@@ -2132,6 +2132,10 @@ import { problem as numberOfPeopleThatCanBeSeenInAGrid } from './number-of-peopl
 import { problem as alternatingGroupsI } from './alternating-groups-i';
 import { problem as longestBinarySubsequenceLessThanOrEqualToK } from './longest-binary-subsequence-less-than-or-equal-to-k';
 import { problem as minimumTimeToCompleteAllTasks } from './minimum-time-to-complete-all-tasks';
+// batch 93 — math/easy, linked-list/medium, dp/hard
+import { problem as validPerfectSquare } from './valid-perfect-square';
+import { problem as insertionSortList } from './insertion-sort-list';
+import { problem as maximizeScoreAfterNOperations } from './maximize-score-after-n-operations';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4301,4 +4305,8 @@ export const problems: readonly Problem[] = [
   alternatingGroupsI,
   longestBinarySubsequenceLessThanOrEqualToK,
   minimumTimeToCompleteAllTasks,
+  // batch 93 — math/easy, linked-list/medium, dp/hard
+  validPerfectSquare,
+  insertionSortList,
+  maximizeScoreAfterNOperations,
 ];

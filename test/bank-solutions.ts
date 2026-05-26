@@ -30985,6 +30985,55 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // --- batch 93 -----------------------------------------------------------
+  'valid-perfect-square': (...args: unknown[]) => {
+    const num = args[0] as number;
+    let lo = 1, hi = num;
+    while (lo <= hi) {
+      const mid = Math.floor((lo + hi) / 2);
+      const sq = mid * mid;
+      if (sq === num) return true;
+      if (sq < num) lo = mid + 1;
+      else hi = mid - 1;
+    }
+    return false;
+  },
+
+  'insertion-sort-list': (...args: unknown[]) => {
+    const arr = [...(args[0] as number[])];
+    for (let i = 1; i < arr.length; i++) {
+      const key = arr[i]!;
+      let j = i - 1;
+      while (j >= 0 && arr[j]! > key) { arr[j + 1] = arr[j]!; j--; }
+      arr[j + 1] = key;
+    }
+    return arr;
+  },
+
+  'maximize-score-after-n-operations': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const m = nums.length;
+    const gcd = (a: number, b: number): number => b ? gcd(b, a % b) : a;
+    const g: number[][] = Array.from({length: m}, (_, i) =>
+      Array.from({length: m}, (_, j) => gcd(nums[i]!, nums[j]!)));
+    const dp = new Array<number>(1 << m).fill(0);
+    for (let mask = 0; mask < (1 << m); mask++) {
+      let bits = 0;
+      for (let b = mask; b; b &= b - 1) bits++;
+      if (bits % 2 !== 0) continue;
+      const op = bits / 2 + 1;
+      for (let i = 0; i < m; i++) {
+        if (mask & (1 << i)) continue;
+        for (let j = i + 1; j < m; j++) {
+          if (mask & (1 << j)) continue;
+          const nm = mask | (1 << i) | (1 << j);
+          dp[nm] = Math.max(dp[nm]!, dp[mask]! + op * g[i]![j]!);
+        }
+      }
+    }
+    return dp[(1 << m) - 1]!;
+  },
+
   // --- batch 92 -----------------------------------------------------------
   'alternating-groups-i': (...args: unknown[]) => {
     const colors = args[0] as number[];

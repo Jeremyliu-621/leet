@@ -30457,6 +30457,58 @@ def canSeePersonsCount(heights):
     return ans
 `,
 
+  // batch 93
+  'valid-perfect-square': `
+def isPerfectSquare(num):
+    lo, hi = 1, num
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        sq = mid * mid
+        if sq == num:
+            return True
+        if sq < num:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return False
+`,
+
+  'insertion-sort-list': `
+def insertionSortList(head):
+    arr = list(head)
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+    return arr
+`,
+
+  'maximize-score-after-n-operations': `
+from math import gcd
+def maxScore(nums):
+    nums = list(nums)
+    m = len(nums)
+    g = [[gcd(nums[i], nums[j]) for j in range(m)] for i in range(m)]
+    dp = [0] * (1 << m)
+    for mask in range(1 << m):
+        bits = bin(mask).count('1')
+        if bits % 2 != 0:
+            continue
+        op = bits // 2 + 1
+        for i in range(m):
+            if mask & (1 << i):
+                continue
+            for j in range(i + 1, m):
+                if mask & (1 << j):
+                    continue
+                nm = mask | (1 << i) | (1 << j)
+                dp[nm] = max(dp[nm], dp[mask] + op * g[i][j])
+    return dp[(1 << m) - 1]
+`,
+
   // batch 92
   'alternating-groups-i': `
 def numberOfAlternatingGroups(colors):
