@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1539 problems; 4905 tests green.
+**Current focus:** Bank at 1544 problems; 4908+ tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1600; further UX polish.
+
+### Batch 59 (2026-05-26)
+Added 5 problems: `next-closest-time` (strings/medium, brute-force all 4^4 digit combos), `employee-free-time` (arrays+heap/hard, flatten+merge intervals→gaps), `maximum-sum-of-3-non-overlapping-subarrays` (arrays+dp/hard, sliding window+left/right argmax arrays), `domino-tromino-tiling` (dp/medium, dp[i]=2*dp[i-1]+dp[i-3]), `split-array-with-same-average` (arrays+dp/hard, meet-in-the-middle). JS + Python solutions for all. Bank at **1544**; 4908+ tests.
 
 ### Batch 57-local (2026-05-26)
 Added 4 problems: `minimum-number-of-moves-to-seat` (arrays/easy, sort+pair), `number-of-senior-citizens` (strings/easy, pos 11-12 age parse), `maximum-number-of-groups-with-increasing-length` (arrays/medium, binary search on m), `make-integer-beautiful` (math/medium, greedy round-up BigInt). Also merged Batch 57-remote (8 problems from concurrent agent: `sum-of-digits-in-base-k`, `count-symmetric-integers`, `minimum-number-of-pushes-to-type-word-i`, `divide-array-into-groups-of-size-k`, `count-subarrays-of-length-three-with-a-condition`, `minimum-operations-to-make-array-divisible-by-three`, `find-the-punishment-number-of-integers`, `minimum-additions-to-make-valid-string`). Bank at **1539**; 4905 tests.
