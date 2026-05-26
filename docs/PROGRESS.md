@@ -7,10 +7,10 @@
 ---
 
 **Last updated:** 2026-05-26
-**Current phase:** Phase 12 — Polish, tests, CI (finishing up) → Phase 13
-**Current focus:** Edge-case sweep complete (28 new tests; 325 total). Next: grow problem bank to 50+ then tackle vim keymap toggle.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (325 tests across 22 files).
-**Next up:** Grow the problem bank to 50+ verified problems across more tags/difficulties.
+**Current phase:** Phase 13+ — Post-MVP polish
+**Current focus:** Problem bank grown to 59 problems (430 tests, all passing). Next: add hints to the remaining problems, then editor settings popover.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (430 tests across 22 files).
+**Next up:** Add hints to the 35 new problems that currently have no hints.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -168,8 +168,8 @@ Shipped after v0.1.0:
 - [x] **Real-Chrome e2e** — `e2e/extension.spec.ts`, `block-flow.spec.ts`, `solve-flow.spec.ts`, `user-bug.spec.ts`, `screenshots.spec.ts`, `a11y.spec.ts` — 17 tests total
 
 Still pending:
-- [ ] Grow the problem bank to 50+ then 100+ verified problems across more tags / difficulties
-- [ ] Add hints to the remaining 21 problems
+- [x] Grow the problem bank to 50+ then 100+ verified problems across more tags / difficulties (59 problems, 430 tests)
+- [ ] Add hints to the remaining 35 new problems (all need at least 3 hints each)
 - [ ] **Python support via Pyodide** — research deliverable landing in `docs/PYODIDE_PLAN.md`; then execute the phased plan
 - [ ] Editor settings popover — font size, vim keymap toggle (`@replit/codemirror-vim`), tab-size
 - [ ] Draggable splitter between problem and editor panels (+ persist width in prefs)
@@ -212,3 +212,8 @@ Still pending:
   pending changes (with live countdown), sync status, and reset. Full cooldown-deferral and
   password-gate logic wired in the Options.tsx orchestrator. Also fixed a pre-existing
   Popup.tsx TS2322 type error (Awaited<ReturnType<...>> -> Promise<StorageSchema[K]>).
+- 2026-05-26: Problem bank grown from 24 to 59 problems (35 new). Covers arrays, strings,
+  hash-map, two-pointers, sliding-window, binary-search, stack, and math tags across easy+medium.
+  All problems have JS + Python starter code, hints, visible tests, and hidden tests. Reference
+  solutions verified (JS + Python) — 430 tests, all passing. Fixed -0 normalization in
+  product-except-self; corrected expected values in group-anagrams, min-stack, and three-sum.
