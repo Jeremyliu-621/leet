@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13+ — Post-MVP polish
-**Current focus:** Custom testcase drawer shipped. Next: submission history + per-submit stats.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green (430 tests across 22 files).
-**Next up:** Submission history + per-submit stats (runtime, attempts) stored in chrome.storage.
+**Current focus:** Submission history shipped. Next: streak heatmap, time-saved, settings import/export.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green (432 tests across 22 files).
+**Next up:** Streak heatmap in the popup + time-saved metric.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -175,7 +175,7 @@ Still pending:
 - [x] Draggable splitter between problem and editor panels (+ persist splitRatio in prefs)
 - [x] Fullscreen-editor toggle — gear toolbar button hides problem panel; session-only state
 - [x] Custom test-case input drawer — "Testcase" / "Result" tabs below editor; JSON args input; actual output shown
-- [ ] Submission history + per-submit stats (runtime, attempts)
+- [x] Submission history + per-submit stats — SubmissionRecord in local storage (capped 500), last 5 shown in popup
 - [ ] Streak heatmap, time-saved, settings import/export
 - [ ] Marketing site iteration + Vercel deployment
 - [ ] Address logged a11y findings (text-faint contrast on microlabels, one `aria-prohibited-attr`)
