@@ -76,7 +76,7 @@ export function ProblemBrowserSection() {
     const base = ALL_PROBLEMS.filter((p) => {
       if (diffFilter !== 'all' && p.difficulty !== diffFilter) return false;
       if (tagFilter !== 'all' && !p.tags.includes(tagFilter)) return false;
-      if (query && !p.title.toLowerCase().includes(query)) return false;
+      if (query && !p.title.toLowerCase().includes(query) && !p.tags.some((t) => t.includes(query))) return false;
       if (unsolvedOnly && solvedIds.has(p.id)) return false;
       return true;
     });
@@ -182,10 +182,10 @@ export function ProblemBrowserSection() {
           <div className="flex gap-2">
             <input
               type="search"
-              placeholder="Search problems…"
+              placeholder="Search by title or tag…"
               value={search}
               onChange={(e) => setSearch(e.currentTarget.value)}
-              aria-label="Search problems by title"
+              aria-label="Search problems by title or tag"
               className={[
                 'min-w-0 flex-1 rounded-sm border border-border bg-surface-2 px-3 py-1.5',
                 'font-mono text-xs text-text placeholder:text-faint',
