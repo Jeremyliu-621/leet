@@ -29177,6 +29177,122 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return total;
   },
 
+  // batch 82
+  'booking-concert-tickets-in-groups': (...args: unknown[]) => {
+    const [n, m, operations] = args as [number, number, [string, number, number][]];
+    const avail = new Array<number>(n).fill(m);
+    const bit = new Array<number>(n + 1).fill(0);
+    for (let i = 0; i < n; i++) for (let j = i + 1; j <= n; j += j & -j) bit[j]! += m;
+    const query = (i: number) => { let s = 0; for (i++; i > 0; i -= i & -i) s += bit[i]!; return s; };
+    const update = (i: number, d: number) => { for (i++; i <= n; i += i & -i) bit[i]! += d; };
+    const results: (number[] | boolean)[] = [];
+    for (const [op, k, maxRow] of operations) {
+      if (op === 'gather') {
+        let found = false;
+        for (let r = 0; r <= maxRow; r++) {
+          if (avail[r]! >= k) {
+            results.push([r, m - avail[r]!]);
+            update(r, -k); avail[r]! -= k; found = true; break;
+          }
+        }
+        if (!found) results.push([]);
+      } else {
+        if (query(maxRow) < k) { results.push(false); continue; }
+        let rem = k;
+        for (let r = 0; r <= maxRow && rem > 0; r++) {
+          const take = Math.min(rem, avail[r]!);
+          if (take > 0) { update(r, -take); avail[r]! -= take; rem -= take; }
+        }
+        results.push(true);
+      }
+    }
+    return results;
+  },
+  'minimum-score-of-a-path-between-two-cities': (...args: unknown[]) => {
+    const [n, roads] = args as [number, number[][]];
+    const adj: [number, number][][] = Array.from({length: n + 1}, () => []);
+    for (const [u, v, w] of roads) {
+      adj[u as number]!.push([v as number, w as number]);
+      adj[v as number]!.push([u as number, w as number]);
+    }
+    const vis = new Array<boolean>(n + 1).fill(false);
+    let ans = Infinity;
+    const queue = [1]; vis[1] = true;
+    while (queue.length) {
+      const u = queue.shift()!;
+      for (const [v, w] of adj[u]!) {
+        ans = Math.min(ans, w);
+        if (!vis[v]) { vis[v] = true; queue.push(v); }
+      }
+    }
+    return ans;
+  },
+  'maximum-probability-of-success': (...args: unknown[]) => {
+    const [n, edges, succProb, start, end] = args as [number, number[][], number[], number, number];
+    const adj: [number, number][][] = Array.from({length: n}, () => []);
+    for (let i = 0; i < edges.length; i++) {
+      const [u, v] = edges[i]!, p = succProb[i]!;
+      adj[u as number]!.push([v as number, p]);
+      adj[v as number]!.push([u as number, p]);
+    }
+    const dist = new Array<number>(n).fill(0);
+    dist[start] = 1;
+    const heap: [number, number][] = [[1, start]];
+    while (heap.length) {
+      heap.sort((a, b) => b[0]! - a[0]!);
+      const [p, u] = heap.shift()!;
+      if (u === end) return p;
+      if (p! < dist[u]!) continue;
+      for (const [v, ep] of adj[u]!) {
+        const np = p! * ep;
+        if (np > dist[v]!) { dist[v]! = np; heap.push([np, v]); }
+      }
+    }
+    return 0;
+  },
+  'minimum-fuel-cost-to-report-to-the-capital': (...args: unknown[]) => {
+    const [roads, seats] = args as [number[][], number];
+    const n = roads.length + 1;
+    const adj: number[][] = Array.from({length: n}, () => []);
+    for (const [u, v] of roads) { adj[u as number]!.push(v as number); adj[v as number]!.push(u as number); }
+    let fuel = 0n;
+    const size = new Array<number>(n).fill(1);
+    const vis = new Array<boolean>(n).fill(false); vis[0] = true;
+    const stack: [number, number, boolean][] = [[0, -1, false]];
+    while (stack.length) {
+      const [u, par, done] = stack.pop()!;
+      if (done) {
+        if (par !== -1) {
+          size[par]! += size[u]!;
+          fuel += BigInt(Math.ceil(size[u]! / seats));
+        }
+      } else {
+        stack.push([u, par, true]);
+        for (const v of adj[u]!) if (!vis[v]!) { vis[v]! = true; stack.push([v, u, false]); }
+      }
+    }
+    return Number(fuel);
+  },
+  'minimum-operations-to-make-the-array-alternating': (...args: unknown[]) => {
+    const [nums] = args as [number[]];
+    const n = nums.length;
+    const ec = Math.ceil(n / 2), oc = Math.floor(n / 2);
+    const fe = new Map<number, number>(), fo = new Map<number, number>();
+    for (let i = 0; i < n; i++) {
+      const m = i % 2 === 0 ? fe : fo;
+      m.set(nums[i]!, (m.get(nums[i]!) || 0) + 1);
+    }
+    const top2 = (m: Map<number, number>): [[number | null, number], [number | null, number]] => {
+      let f: [number | null, number] = [null, 0], s: [number | null, number] = [null, 0];
+      for (const [v, c] of m)
+        if (c > f[1]) { s = f; f = [v, c]; } else if (c > s[1]) s = [v, c];
+      return [f, s];
+    };
+    const [e1, e2] = top2(fe), [o1, o2] = top2(fo);
+    if (e1[0] !== o1[0]) return (ec - e1[1]) + (oc - o1[1]);
+    return Math.min((ec - e1[1]) + (oc - o2[1]), (ec - e2[1]) + (oc - o1[1]));
+  },
+
   // batch 80
   'find-the-safest-path-in-a-grid': (...args: unknown[]) => {
     const [grid] = args as [number[][]];

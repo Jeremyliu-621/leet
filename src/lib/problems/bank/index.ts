@@ -2025,6 +2025,12 @@ import { problem as rangeSumOfSortedSubarraySums } from './range-sum-of-sorted-s
 // batch 81 — shortest-path, strings, dp
 import { problem as minimumCostToReachDestinationInTime } from './minimum-cost-to-reach-destination-in-time';
 import { problem as totalAppealOfAString } from './total-appeal-of-a-string';
+// batch 82 — BIT, shortest-path, tree, arrays
+import { problem as bookingConcertTicketsInGroups } from './booking-concert-tickets-in-groups';
+import { problem as minimumScoreOfAPathBetweenTwoCities } from './minimum-score-of-a-path-between-two-cities';
+import { problem as maximumProbabilityOfSuccess } from './maximum-probability-of-success';
+import { problem as minimumFuelCostToReportToTheCapital } from './minimum-fuel-cost-to-report-to-the-capital';
+import { problem as minimumOperationsToMakeTheArrayAlternating } from './minimum-operations-to-make-the-array-alternating';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4086,4 +4092,10 @@ export const problems: readonly Problem[] = [
   // batch 81 — shortest-path, strings, dp
   minimumCostToReachDestinationInTime,
   totalAppealOfAString,
+  // batch 82 — BIT, shortest-path, tree, arrays
+  bookingConcertTicketsInGroups,
+  minimumScoreOfAPathBetweenTwoCities,
+  maximumProbabilityOfSuccess,
+  minimumFuelCostToReportToTheCapital,
+  minimumOperationsToMakeTheArrayAlternating,
 ];

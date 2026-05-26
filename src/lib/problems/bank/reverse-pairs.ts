@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'reverse-pairs',
   title: 'Reverse Pairs',
   difficulty: 'hard',
-  tags: ['arrays'],
+  tags: ['binary-indexed-tree', 'arrays'],
   description: `Given an integer array \`nums\`, return the number of **reverse pairs** in the array.
 
 A reverse pair is a pair \`(i, j)\` where:

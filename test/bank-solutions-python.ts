@@ -28588,6 +28588,148 @@ def appealSum(s: str) -> int:
     return total
 `,
 
+  // batch 82
+  'booking-concert-tickets-in-groups': `
+def bookMyShow(n: int, m: int, operations: list) -> list:
+    avail = [m] * n
+    bit = [0] * (n + 1)
+    for i in range(n):
+        j = i + 1
+        while j <= n:
+            bit[j] += m
+            j += j & -j
+    def query(i):
+        s, i = 0, i + 1
+        while i > 0:
+            s += bit[i]
+            i -= i & -i
+        return s
+    def update(i, d):
+        i += 1
+        while i <= n:
+            bit[i] += d
+            i += i & -i
+    results = []
+    for op, k, maxRow in operations:
+        if op == 'gather':
+            found = False
+            for r in range(maxRow + 1):
+                if avail[r] >= k:
+                    results.append([r, m - avail[r]])
+                    update(r, -k)
+                    avail[r] -= k
+                    found = True
+                    break
+            if not found:
+                results.append([])
+        else:
+            if query(maxRow) < k:
+                results.append(False)
+                continue
+            rem = k
+            for r in range(maxRow + 1):
+                if rem <= 0:
+                    break
+                take = min(rem, avail[r])
+                if take > 0:
+                    update(r, -take)
+                    avail[r] -= take
+                    rem -= take
+            results.append(True)
+    return results
+`,
+  'minimum-score-of-a-path-between-two-cities': `
+from collections import deque
+def minScore(n: int, roads: list) -> int:
+    adj = [[] for _ in range(n + 1)]
+    for u, v, w in roads:
+        adj[u].append((v, w))
+        adj[v].append((u, w))
+    vis = [False] * (n + 1)
+    ans = float('inf')
+    q = deque([1]); vis[1] = True
+    while q:
+        u = q.popleft()
+        for v, w in adj[u]:
+            ans = min(ans, w)
+            if not vis[v]:
+                vis[v] = True
+                q.append(v)
+    return ans
+`,
+  'maximum-probability-of-success': `
+import heapq
+def maxProbability(n: int, edges: list, succProb: list, start: int, end: int) -> float:
+    adj = [[] for _ in range(n)]
+    for i, (u, v) in enumerate(edges):
+        adj[u].append((v, succProb[i]))
+        adj[v].append((u, succProb[i]))
+    dist = [0.0] * n
+    dist[start] = 1.0
+    heap = [(-1.0, start)]
+    while heap:
+        neg_p, u = heapq.heappop(heap)
+        p = -neg_p
+        if u == end:
+            return p
+        if p < dist[u]:
+            continue
+        for v, ep in adj[u]:
+            np = p * ep
+            if np > dist[v]:
+                dist[v] = np
+                heapq.heappush(heap, (-np, v))
+    return 0.0
+`,
+  'minimum-fuel-cost-to-report-to-the-capital': `
+import math
+def minimumFuelCost(roads: list, seats: int) -> int:
+    n = len(roads) + 1
+    adj = [[] for _ in range(n)]
+    for u, v in roads:
+        adj[u].append(v)
+        adj[v].append(u)
+    fuel = 0
+    size = [1] * n
+    vis = [False] * n; vis[0] = True
+    stack = [(0, -1, False)]
+    while stack:
+        u, par, done = stack.pop()
+        if done:
+            if par != -1:
+                size[par] += size[u]
+                fuel += math.ceil(size[u] / seats)
+        else:
+            stack.append((u, par, True))
+            for v in adj[u]:
+                if not vis[v]:
+                    vis[v] = True
+                    stack.append((v, u, False))
+    return fuel
+`,
+  'minimum-operations-to-make-the-array-alternating': `
+import math
+def minimumOperations(nums: list) -> int:
+    n = len(nums)
+    ec = math.ceil(n / 2)
+    oc = n // 2
+    from collections import Counter
+    fe = Counter(nums[i] for i in range(0, n, 2))
+    fo = Counter(nums[i] for i in range(1, n, 2))
+    def top2(cnt):
+        lst = cnt.most_common(2)
+        f = lst[0] if len(lst) > 0 else (None, 0)
+        s = lst[1] if len(lst) > 1 else (None, 0)
+        return f, s
+    (ev1, ef1), (ev2, ef2) = top2(fe)
+    (ov1, of1), (ov2, of2) = top2(fo)
+    if ev1 != ov1:
+        return (ec - ef1) + (oc - of1)
+    opt1 = (ec - ef1) + (oc - of2)
+    opt2 = (ec - ef2) + (oc - of1)
+    return min(opt1, opt2)
+`,
+
   // batch 80
   'find-the-safest-path-in-a-grid': `
 from collections import deque
