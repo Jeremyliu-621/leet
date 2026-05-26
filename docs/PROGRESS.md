@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1999** problems; 6309 tests green. Batches 92–94 complete.
+**Current focus:** Bank at **2000** problems; 6312 tests green. Batches 92–94 + 2K milestone complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continued bank growth (batch 95); UI/UX polish.
+
+### 🎉 2000-problem milestone — find-largest-value-in-each-tree-row (2026-05-26)
+Bank crosses **2000** problems. Added `find-largest-value-in-each-tree-row` (medium/tree, BFS level-order max scan). Marketing site updated to 2,000+. Bank at **2000**; 6312 tests.
 
 ### feat(bank): add batch 94 — rotated-digits, rabbits-in-forest, smallest-string-from-leaf (2026-05-26)
 Added 3 problems: `rotated-digits` (easy/math, count valid 180°-rotated different integers 1..n), `rabbits-in-forest` (medium/math+hash-map, ceil(freq/(k+1))×(k+1) grouping), `smallest-string-starting-from-leaf` (medium/tree, DFS path accumulation with lexicographic comparison). Bank at **1999**; 6309 tests.
