@@ -2085,6 +2085,10 @@ import { problem as minimumDifferenceInSumsAfterRemovalOfElements } from './mini
 import { problem as findTheClosestPalindrome } from './find-the-closest-palindrome';
 import { problem as numberOfSubarraysWithLcmEqualToK } from './number-of-subarrays-with-lcm-equal-to-k';
 import { problem as smallestRotationWithHighestScore } from './smallest-rotation-with-highest-score';
+// batch 90 — arrays/easy, strings/medium, arrays/hard
+import { problem as alternatingGroupsI } from './alternating-groups-i';
+import { problem as longestBinarySubsequenceLessThanOrEqualToK } from './longest-binary-subsequence-less-than-or-equal-to-k';
+import { problem as minimumTimeToCompleteAllTasks } from './minimum-time-to-complete-all-tasks';
 // batch 88 (remote) — arrays, graph
 import { problem as splitTheArray } from './split-the-array';
 import { problem as findTheScoreOfAllPrefixesOfAnArray } from './find-the-score-of-all-prefixes-of-an-array';
@@ -4225,6 +4229,10 @@ export const problems: readonly Problem[] = [
   findTheClosestPalindrome,
   numberOfSubarraysWithLcmEqualToK,
   smallestRotationWithHighestScore,
+  // batch 90 — arrays/easy, strings/medium, arrays/hard
+  alternatingGroupsI,
+  longestBinarySubsequenceLessThanOrEqualToK,
+  minimumTimeToCompleteAllTasks,
   // batch 88 (remote) — arrays, graph
   splitTheArray,
   findTheScoreOfAllPrefixesOfAnArray,

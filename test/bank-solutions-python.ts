@@ -30180,4 +30180,49 @@ def minOperationsNonDecreasing(nums):
     return ops
 `,
 
+  // batch 90
+  'alternating-groups-i': `
+def numberOfAlternatingGroups(colors):
+    n = len(colors)
+    count = 0
+    for i in range(n):
+        prev = colors[(i - 1) % n]
+        curr = colors[i]
+        nxt = colors[(i + 1) % n]
+        if prev != curr and curr != nxt:
+            count += 1
+    return count
+`,
+
+  'longest-binary-subsequence-less-than-or-equal-to-k': `
+def longestSubsequence(s, k):
+    chosen_len = 0
+    value = 0
+    for i in range(len(s) - 1, -1, -1):
+        if s[i] == '0':
+            chosen_len += 1
+        else:
+            if chosen_len < 30 and value + (1 << chosen_len) <= k:
+                value += 1 << chosen_len
+                chosen_len += 1
+    return chosen_len
+`,
+
+  'minimum-time-to-complete-all-tasks': `
+def findMinimumTime(tasks):
+    tasks_sorted = sorted(tasks, key=lambda t: t[1])
+    max_end = max(t[1] for t in tasks_sorted)
+    run = [0] * (max_end + 1)
+    for start, end, dur in tasks_sorted:
+        already = sum(run[start:end+1])
+        need = dur - already
+        t = end
+        while t >= start and need > 0:
+            if not run[t]:
+                run[t] = 1
+                need -= 1
+            t -= 1
+    return sum(run)
+`,
+
 };

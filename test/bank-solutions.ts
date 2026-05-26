@@ -30706,4 +30706,54 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ops;
   },
 
+  // batch 90
+  'alternating-groups-i': (...args: unknown[]) => {
+    const colors = args[0] as number[];
+    const n = colors.length;
+    let count = 0;
+    for (let i = 0; i < n; i++) {
+      const prev = colors[(i - 1 + n) % n]!;
+      const curr = colors[i]!;
+      const next = colors[(i + 1) % n]!;
+      if (prev !== curr && curr !== next) count++;
+    }
+    return count;
+  },
+
+  'longest-binary-subsequence-less-than-or-equal-to-k': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    let chosenLen = 0, value = 0;
+    for (let i = s.length - 1; i >= 0; i--) {
+      if (s[i] === '0') {
+        chosenLen++;
+      } else {
+        if (chosenLen < 30 && value + (1 << chosenLen) <= k) {
+          value += (1 << chosenLen);
+          chosenLen++;
+        }
+      }
+    }
+    return chosenLen;
+  },
+
+  'minimum-time-to-complete-all-tasks': (...args: unknown[]) => {
+    const tasks = args[0] as number[][];
+    const sorted = [...tasks].sort((a, b) => a[1]! - b[1]!);
+    const maxEnd = sorted.reduce((m, t) => Math.max(m, t[1]!), 0);
+    const run = new Uint8Array(maxEnd + 1);
+    for (const task of sorted) {
+      const start = task[0]!, end = task[1]!, dur = task[2]!;
+      let already = 0;
+      for (let t = start; t <= end; t++) already += run[t]!;
+      let need = dur - already;
+      for (let t = end; t >= start && need > 0; t--) {
+        if (!run[t]) { run[t] = 1; need--; }
+      }
+    }
+    let total = 0;
+    for (let i = 0; i < run.length; i++) total += run[i]!;
+    return total;
+  },
+
 };
