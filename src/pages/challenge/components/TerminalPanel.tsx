@@ -471,6 +471,9 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
     [activeTab],
   );
 
+  // "Failures only" filter in the Test Results tab.
+  const [showFailuresOnly, setShowFailuresOnly] = useState(false);
+
   // Track whether the last switch to testcases was due to a failure
   // so we can scroll to top to show the summary and first failure.
   const switchedToTestcasesRef = useRef(false);
@@ -481,6 +484,8 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
       const entries = buildEntries(result, mode);
       setHistory((prev) => [...prev, entries]);
       prevResultRef.current = result;
+      // Reset filter so stale "failures only" doesn't carry over to a new run.
+      setShowFailuresOnly(false);
       // Auto-expand the panel so the user sees the result immediately.
       if (collapsed) {
         onToggleCollapsed?.();
@@ -703,24 +708,42 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
                     {result.totalDurationMs}ms
                   </span>
                 )}
-                {result.outcome === 'accepted' && mode === 'run' && (
+                {result.outcome === 'accepted' && mode === 'run' ? (
                   <span className="font-mono text-[10px] text-faint ml-auto">
                     submit to run all tests
                   </span>
-                )}
+                ) : result.outcome !== 'accepted' && result.passed < result.total ? (
+                  <button
+                    type="button"
+                    onClick={() => setShowFailuresOnly((v) => !v)}
+                    aria-pressed={showFailuresOnly}
+                    className={[
+                      'ml-auto font-mono text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded border transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-accent',
+                      showFailuresOnly
+                        ? 'border-text text-text bg-surface-2'
+                        : 'border-border text-faint hover:text-muted hover:border-muted',
+                    ].join(' ')}
+                  >
+                    {showFailuresOnly ? 'show all' : 'failures only'}
+                  </button>
+                ) : null}
               </div>
 
               {/* Individual test results — key includes passed count so cards
                   reset their expand state when a new result arrives.
-                  Only the first non-pass test starts expanded to avoid
-                  overwhelming the user when many tests fail. */}
+                  In failures-only mode all non-pass cards start expanded. */}
               {(() => {
-                const firstFailIdx = result.verdicts.findIndex((v) => v.status !== 'pass');
-                return result.verdicts.map((verdict, i) => (
+                const filtered = showFailuresOnly
+                  ? result.verdicts.filter((v) => v.status !== 'pass')
+                  : result.verdicts;
+                const firstFailIdx = showFailuresOnly
+                  ? -1  // all failures auto-expand in filter mode
+                  : result.verdicts.findIndex((v) => v.status !== 'pass');
+                return filtered.map((verdict, i) => (
                   <TestResultCard
-                    key={`${result.passed}-${verdict.index}`}
+                    key={`${result.passed}-${verdict.index}-${showFailuresOnly ? 'f' : 'a'}`}
                     verdict={verdict}
-                    autoExpand={i === firstFailIdx}
+                    autoExpand={showFailuresOnly ? verdict.status !== 'pass' : i === firstFailIdx}
                   />
                 ));
               })()}
