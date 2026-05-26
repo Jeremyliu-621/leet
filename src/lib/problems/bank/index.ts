@@ -1973,6 +1973,21 @@ import { problem as minimumTimeToRemoveAllCars } from './minimum-time-to-remove-
 import { problem as processRestrictedFriendRequests } from './process-restricted-friend-requests';
 import { problem as designFoodRatingSystem } from './design-food-rating-system';
 import { problem as firstDayBeenInAllRooms } from './first-day-you-have-been-in-all-rooms';
+// batch 77 — BIT, simulation, shortest-path
+import { problem as countInversions } from './count-inversions';
+import { problem as rangeSumQuery2DMutable } from './range-sum-query-2d-mutable';
+import { problem as countSmallerBeforeSelfBit } from './count-smaller-before-self-bit';
+import { problem as numberOfPairsSatisfyingInequalityBit } from './number-of-pairs-satisfying-inequality-bit';
+import { problem as rangeUpdatePointQueryBit } from './range-update-point-query-bit';
+import { problem as createTargetArrayUsingBit } from './create-target-array-using-bit';
+import { problem as robotCollisions } from './robot-collisions';
+import { problem as spiralMatrixIV } from './spiral-matrix-iv';
+import { problem as textEditorSimulation } from './text-editor-simulation';
+import { problem as atmMachineSimulation } from './atm-machine-simulation';
+import { problem as shortestPathToFood } from './shortest-path-to-food';
+import { problem as minimumJumpsToReachHome } from './minimum-jumps-to-reach-home';
+import { problem as allPairsShortestPath } from './all-pairs-shortest-path';
+import { problem as minimumCostToReachAllNodes } from './minimum-cost-to-reach-all-nodes';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -3982,4 +3997,19 @@ export const problems: readonly Problem[] = [
   processRestrictedFriendRequests,
   designFoodRatingSystem,
   firstDayBeenInAllRooms,
+  // batch 77 — BIT, simulation, shortest-path
+  countInversions,
+  rangeSumQuery2DMutable,
+  countSmallerBeforeSelfBit,
+  numberOfPairsSatisfyingInequalityBit,
+  rangeUpdatePointQueryBit,
+  createTargetArrayUsingBit,
+  robotCollisions,
+  spiralMatrixIV,
+  textEditorSimulation,
+  atmMachineSimulation,
+  shortestPathToFood,
+  minimumJumpsToReachHome,
+  allPairsShortestPath,
+  minimumCostToReachAllNodes,
 ];

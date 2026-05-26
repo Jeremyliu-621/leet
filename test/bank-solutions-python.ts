@@ -27723,4 +27723,353 @@ def designGraph(n, edges, ops):
     return results
 `,
 
+  'count-inversions': `
+def countInversions(nums):
+    sorted_unique = sorted(set(nums))
+    rank = {v: i+1 for i, v in enumerate(sorted_unique)}
+    m = len(sorted_unique)
+    bit = [0] * (m + 1)
+    def update(i):
+        while i <= m:
+            bit[i] += 1
+            i += i & -i
+    def query(i):
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & -i
+        return s
+    inv = 0
+    for v in nums:
+        r = rank[v]
+        inv += query(m) - query(r)
+        update(r)
+    return inv
+`,
+
+  'range-sum-query-2d-mutable': `
+def numMatrixOps(ops):
+    m = n = 0
+    cur = []
+    bit = []
+    def add(r, c, v):
+        i = r + 1
+        while i <= m:
+            j = c + 1
+            while j <= n:
+                bit[i][j] += v
+                j += j & -j
+            i += i & -i
+    def prefix(r, c):
+        s = 0
+        i = r + 1
+        while i > 0:
+            j = c + 1
+            while j > 0:
+                s += bit[i][j]
+                j -= j & -j
+            i -= i & -i
+        return s
+    results = []
+    for op, args in ops:
+        if op == 'NumMatrix':
+            matrix = args[0]
+            m, n = len(matrix), len(matrix[0])
+            cur = [row[:] for row in matrix]
+            for _ in range(m + 1):
+                bit.append([0] * (n + 1))
+            for i in range(m):
+                for j in range(n):
+                    add(i, j, cur[i][j])
+            results.append(None)
+        elif op == 'update':
+            r, c, v = args
+            add(r, c, v - cur[r][c])
+            cur[r][c] = v
+            results.append(None)
+        else:
+            r1, c1, r2, c2 = args
+            results.append(prefix(r2, c2) - prefix(r1-1, c2) - prefix(r2, c1-1) + prefix(r1-1, c1-1))
+    return results
+`,
+
+  'count-smaller-before-self-bit': `
+def countSmallerBefore(nums):
+    sorted_unique = sorted(set(nums))
+    rank = {v: i+1 for i, v in enumerate(sorted_unique)}
+    m = len(sorted_unique)
+    bit = [0] * (m + 1)
+    def update(i):
+        while i <= m:
+            bit[i] += 1
+            i += i & -i
+    def query(i):
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & -i
+        return s
+    result = []
+    for v in nums:
+        r = rank[v]
+        result.append(query(r - 1))
+        update(r)
+    return result
+`,
+
+  'number-of-pairs-satisfying-inequality-bit': `
+def numberOfPairs(nums1, nums2, diff):
+    n = len(nums1)
+    a = [nums1[i] - nums2[i] for i in range(n)]
+    OFFSET = 20001
+    SIZE = 40002
+    bit = [0] * (SIZE + 1)
+    def update(i):
+        while i <= SIZE:
+            bit[i] += 1
+            i += i & -i
+    def query(i):
+        i = min(i, SIZE)
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & -i
+        return s
+    count = 0
+    for j in range(n):
+        threshold = a[j] + diff + OFFSET
+        count += query(threshold)
+        update(a[j] + OFFSET)
+    return count
+`,
+
+  'range-update-point-query-bit': `
+def rangeUpdatePointQuery(n, operations):
+    bit = [0] * (n + 2)
+    def update(i, v):
+        i += 1
+        while i <= n:
+            bit[i] += v
+            i += i & -i
+    def query(i):
+        i += 1
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & -i
+        return s
+    results = []
+    for op in operations:
+        if op[0] == 'add':
+            l, r, v = op[1], op[2], op[3]
+            update(l, v)
+            if r + 1 < n:
+                update(r + 1, -v)
+        else:
+            i = op[1]
+            results.append(query(i))
+    return results
+`,
+
+  'create-target-array-using-bit': `
+def createTargetArray(nums, index):
+    target = []
+    for i in range(len(nums)):
+        target.insert(index[i], nums[i])
+    return target
+`,
+
+  'robot-collisions': `
+def survivedRobotsHealths(positions, healths, directions):
+    n = len(positions)
+    indices = sorted(range(n), key=lambda i: positions[i])
+    alive = [True] * n
+    hp = list(healths)
+    stack = []
+    for idx in indices:
+        if directions[idx] == 'R':
+            stack.append(idx)
+        else:
+            while stack:
+                top = stack[-1]
+                if hp[top] > hp[idx]:
+                    hp[top] -= 1
+                    alive[idx] = False
+                    break
+                elif hp[top] < hp[idx]:
+                    hp[idx] -= 1
+                    alive[top] = False
+                    stack.pop()
+                else:
+                    alive[top] = False
+                    alive[idx] = False
+                    stack.pop()
+                    break
+    return [hp[i] for i in range(n) if alive[i]]
+`,
+
+  'spiral-matrix-iv': `
+def spiralMatrix(m, n, vals):
+    grid = [[-1] * n for _ in range(m)]
+    top, bottom, left, right = 0, m - 1, 0, n - 1
+    ptr = 0
+    while top <= bottom and left <= right:
+        for c in range(left, right + 1):
+            if ptr < len(vals): grid[top][c] = vals[ptr]; ptr += 1
+        top += 1
+        for r in range(top, bottom + 1):
+            if ptr < len(vals): grid[r][right] = vals[ptr]; ptr += 1
+        right -= 1
+        for c in range(right, left - 1, -1):
+            if ptr < len(vals): grid[bottom][c] = vals[ptr]; ptr += 1
+        bottom -= 1
+        for r in range(bottom, top - 1, -1):
+            if ptr < len(vals): grid[r][left] = vals[ptr]; ptr += 1
+        left += 1
+    return grid
+`,
+
+  'text-editor-simulation': `
+def textEditorOperations(operations):
+    left = []
+    right = []
+    results = []
+    for op in operations:
+        name = op[0]
+        val = op[1]
+        if name == 'addText':
+            for ch in val:
+                left.append(ch)
+        elif name == 'deleteText':
+            for _ in range(val):
+                if left:
+                    left.pop()
+        elif name == 'cursorLeft':
+            for _ in range(val):
+                if left:
+                    right.append(left.pop())
+            results.append(''.join(left[-10:]))
+        else:
+            for _ in range(val):
+                if right:
+                    left.append(right.pop())
+            results.append(''.join(left[-10:]))
+    return results
+`,
+
+  'atm-machine-simulation': `
+def atmOperations(operations):
+    denominations = [20, 50, 100, 200, 500]
+    cnt = [0, 0, 0, 0, 0]
+    results = []
+    for op in operations:
+        name = op[0]
+        val = op[1]
+        if name == 'deposit':
+            for i in range(5):
+                cnt[i] += val[i]
+            results.append(None)
+        else:
+            amount = val
+            used = [0, 0, 0, 0, 0]
+            for i in range(4, -1, -1):
+                take = min(amount // denominations[i], cnt[i])
+                used[i] = take
+                amount -= take * denominations[i]
+            if amount != 0:
+                results.append([-1])
+            else:
+                for i in range(5):
+                    cnt[i] -= used[i]
+                results.append(used[:])
+    return results
+`,
+
+  'shortest-path-to-food': `
+def getFood(grid):
+    from collections import deque
+    m, n = len(grid), len(grid[0])
+    start_r = start_c = 0
+    for r in range(m):
+        for c in range(n):
+            if grid[r][c] == 'X':
+                start_r, start_c = r, c
+    visited = [[False] * n for _ in range(m)]
+    visited[start_r][start_c] = True
+    q = deque([(start_r, start_c, 0)])
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    while q:
+        r, c, dist = q.popleft()
+        for dr, dc in dirs:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n and not visited[nr][nc] and grid[nr][nc] != '#':
+                if grid[nr][nc] == '*':
+                    return dist + 1
+                visited[nr][nc] = True
+                q.append((nr, nc, dist + 1))
+    return -1
+`,
+
+  'minimum-jumps-to-reach-home': `
+def minimumJumps(forbidden, a, b, x):
+    from collections import deque
+    forb = set(forbidden)
+    limit = max(x, max(forbidden) if forbidden else 0) + a + b
+    visited = set()
+    visited.add((0, False))
+    q = deque([(0, False, 0)])
+    while q:
+        pos, last_back, jumps = q.popleft()
+        fwd = pos + a
+        if fwd == x:
+            return jumps + 1
+        if fwd <= limit and fwd not in forb:
+            key = (fwd, False)
+            if key not in visited:
+                visited.add(key)
+                q.append((fwd, False, jumps + 1))
+        if not last_back:
+            bwd = pos - b
+            if bwd == x:
+                return jumps + 1
+            if bwd >= 0 and bwd not in forb:
+                key = (bwd, True)
+                if key not in visited:
+                    visited.add(key)
+                    q.append((bwd, True, jumps + 1))
+    return -1
+`,
+
+  'all-pairs-shortest-path': `
+def floydWarshall(dist):
+    n = len(dist)
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if dist[i][k] < 10**9 and dist[k][j] < 10**9:
+                    if dist[i][k] + dist[k][j] < dist[i][j]:
+                        dist[i][j] = dist[i][k] + dist[k][j]
+    return dist
+`,
+
+  'minimum-cost-to-reach-all-nodes': `
+def minCostReachAll(n, edges):
+    from heapq import heappush, heappop
+    adj = [[] for _ in range(n)]
+    for u, v, w in edges:
+        adj[u].append((v, w))
+    dist = [float('inf')] * n
+    dist[0] = 0
+    pq = [(0, 0)]
+    while pq:
+        d, u = heappop(pq)
+        if d > dist[u]:
+            continue
+        for v, w in adj[u]:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                heappush(pq, (dist[v], v))
+    return [-1 if d == float('inf') else d for d in dist]
+`,
+
 };

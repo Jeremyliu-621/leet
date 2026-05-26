@@ -28366,4 +28366,310 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return results;
   },
 
+  // --- batch 77: BIT, simulation, shortest-path ----------------------------
+
+  'count-inversions': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const sorted = [...new Set(nums)].sort((a, b) => a - b);
+    const rank = new Map(sorted.map((v, i) => [v, i + 1]));
+    const m = sorted.length;
+    const bit = new Array<number>(m + 1).fill(0);
+    const update = (i: number) => { for (; i <= m; i += i & -i) bit[i] = bit[i]! + 1; };
+    const query = (i: number) => { let s = 0; for (; i > 0; i -= i & -i) s += bit[i]!; return s; };
+    let inv = 0;
+    for (const v of nums) {
+      const r = rank.get(v)!;
+      inv += query(m) - query(r);
+      update(r);
+    }
+    return inv;
+  },
+
+  'range-sum-query-2d-mutable': (...args: unknown[]) => {
+    const ops = args[0] as Array<[string, unknown[]]>;
+    let m = 0, n = 0;
+    let cur: number[][] = [];
+    const bit: number[][] = [];
+    const add = (r: number, c: number, v: number) => {
+      for (let i = r + 1; i <= m; i += i & -i)
+        for (let j = c + 1; j <= n; j += j & -j)
+          bit[i]![j]! += v;
+    };
+    const prefix = (r: number, c: number): number => {
+      let s = 0;
+      for (let i = r + 1; i > 0; i -= i & -i)
+        for (let j = c + 1; j > 0; j -= j & -j)
+          s += bit[i]![j]!;
+      return s;
+    };
+    const results: (number | null)[] = [];
+    for (const [op, opArgs] of ops) {
+      if (op === 'NumMatrix') {
+        const matrix = opArgs[0] as number[][];
+        m = matrix.length; n = matrix[0]!.length;
+        cur = matrix.map(row => [...row]);
+        for (let i = 0; i <= m; i++) bit.push(new Array<number>(n + 1).fill(0));
+        for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) add(i, j, cur[i]![j]!);
+        results.push(null);
+      } else if (op === 'update') {
+        const [r, c, v] = opArgs as [number, number, number];
+        add(r, c, v - cur[r]![c]!);
+        cur[r]![c] = v;
+        results.push(null);
+      } else {
+        const [r1, c1, r2, c2] = opArgs as [number, number, number, number];
+        results.push(prefix(r2, c2) - prefix(r1 - 1, c2) - prefix(r2, c1 - 1) + prefix(r1 - 1, c1 - 1));
+      }
+    }
+    return results;
+  },
+
+  'count-smaller-before-self-bit': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const sorted = [...new Set(nums)].sort((a, b) => a - b);
+    const rank = new Map(sorted.map((v, i) => [v, i + 1]));
+    const m = sorted.length;
+    const bit = new Array<number>(m + 1).fill(0);
+    const update = (i: number) => { for (; i <= m; i += i & -i) bit[i] = bit[i]! + 1; };
+    const query = (i: number) => { let s = 0; for (; i > 0; i -= i & -i) s += bit[i]!; return s; };
+    const result: number[] = [];
+    for (const v of nums) {
+      const r = rank.get(v)!;
+      result.push(query(r - 1));
+      update(r);
+    }
+    return result;
+  },
+
+  'number-of-pairs-satisfying-inequality-bit': (...args: unknown[]) => {
+    const [nums1, nums2, diff] = args as [number[], number[], number];
+    const n = nums1.length;
+    const a = nums1.map((v, i) => v - nums2[i]!);
+    const OFFSET = 20001;
+    const SIZE = 40002;
+    const bit = new Array<number>(SIZE + 1).fill(0);
+    const update = (i: number) => { for (let x = i; x <= SIZE; x += x & -x) bit[x] = bit[x]! + 1; };
+    const query = (i: number) => { let s = 0; for (let x = Math.min(i, SIZE); x > 0; x -= x & -x) s += bit[x]!; return s; };
+    let count = 0;
+    for (let j = 0; j < n; j++) {
+      const threshold = a[j]! + diff + OFFSET;
+      count += query(threshold);
+      update(a[j]! + OFFSET);
+    }
+    return count;
+  },
+
+  'range-update-point-query-bit': (...args: unknown[]) => {
+    const [n, operations] = args as [number, Array<[string, ...number[]]>];
+    const bit = new Array<number>(n + 2).fill(0);
+    const update = (i: number, v: number) => { for (let x = i + 1; x <= n; x += x & -x) bit[x]! += v; };
+    const query = (i: number) => { let s = 0; for (let x = i + 1; x > 0; x -= x & -x) s += bit[x]!; return s; };
+    const results: number[] = [];
+    for (const op of operations) {
+      if (op[0] === 'add') {
+        const [, l, r, v] = op as [string, number, number, number];
+        update(l, v);
+        if (r + 1 < n) update(r + 1, -v);
+      } else {
+        const [, i] = op as [string, number];
+        results.push(query(i));
+      }
+    }
+    return results;
+  },
+
+  'create-target-array-using-bit': (...args: unknown[]) => {
+    const [nums, index] = args as [number[], number[]];
+    const target: number[] = [];
+    for (let i = 0; i < nums.length; i++) {
+      target.splice(index[i]!, 0, nums[i]!);
+    }
+    return target;
+  },
+
+  'robot-collisions': (...args: unknown[]) => {
+    const [positions, healths, directions] = args as [number[], number[], string];
+    const n = positions.length;
+    const indices = Array.from({length: n}, (_, i) => i).sort((a, b) => positions[a]! - positions[b]!);
+    const alive = new Array<boolean>(n).fill(true);
+    const hp = [...healths];
+    const stack: number[] = [];
+    for (const idx of indices) {
+      if (directions[idx] === 'R') {
+        stack.push(idx);
+      } else {
+        while (stack.length > 0) {
+          const top = stack[stack.length - 1]!;
+          if (hp[top]! > hp[idx]!) {
+            hp[top]!--;
+            alive[idx] = false;
+            break;
+          } else if (hp[top]! < hp[idx]!) {
+            hp[idx]!--;
+            alive[top] = false;
+            stack.pop();
+          } else {
+            alive[top] = false;
+            alive[idx] = false;
+            stack.pop();
+            break;
+          }
+        }
+      }
+    }
+    const result: number[] = [];
+    for (let i = 0; i < n; i++) if (alive[i]) result.push(hp[i]!);
+    return result;
+  },
+
+  'spiral-matrix-iv': (...args: unknown[]) => {
+    const [m, n, vals] = args as [number, number, number[]];
+    const grid = Array.from({length: m}, () => new Array<number>(n).fill(-1));
+    let top = 0, bottom = m - 1, left = 0, right = n - 1, ptr = 0;
+    while (top <= bottom && left <= right) {
+      for (let c = left; c <= right && ptr < vals.length; c++) { grid[top]![c] = vals[ptr++]!; }
+      top++;
+      for (let r = top; r <= bottom && ptr < vals.length; r++) { grid[r]![right] = vals[ptr++]!; }
+      right--;
+      for (let c = right; c >= left && ptr < vals.length; c--) { grid[bottom]![c] = vals[ptr++]!; }
+      bottom--;
+      for (let r = bottom; r >= top && ptr < vals.length; r--) { grid[r]![left] = vals[ptr++]!; }
+      left++;
+    }
+    return grid;
+  },
+
+  'text-editor-simulation': (...args: unknown[]) => {
+    const [operations] = args as [Array<[string, string | number]>];
+    const leftStack: string[] = [];
+    const rightStack: string[] = [];
+    const results: string[] = [];
+    for (const [op, val] of operations) {
+      if (op === 'addText') {
+        for (const ch of val as string) leftStack.push(ch);
+      } else if (op === 'deleteText') {
+        const k = val as number;
+        for (let i = 0; i < k && leftStack.length > 0; i++) leftStack.pop();
+      } else if (op === 'cursorLeft') {
+        const k = val as number;
+        for (let i = 0; i < k && leftStack.length > 0; i++) rightStack.push(leftStack.pop()!);
+        results.push(leftStack.slice(-10).join(''));
+      } else {
+        const k = val as number;
+        for (let i = 0; i < k && rightStack.length > 0; i++) leftStack.push(rightStack.pop()!);
+        results.push(leftStack.slice(-10).join(''));
+      }
+    }
+    return results;
+  },
+
+  'atm-machine-simulation': (...args: unknown[]) => {
+    const [operations] = args as [Array<[string, number[] | number]>];
+    const denominations = [20, 50, 100, 200, 500];
+    const cnt = [0, 0, 0, 0, 0];
+    const results: (null | number[])[] = [];
+    for (const [op, val] of operations) {
+      if (op === 'deposit') {
+        const counts = val as number[];
+        for (let i = 0; i < 5; i++) cnt[i]! += counts[i]!;
+        results.push(null);
+      } else {
+        let amount = val as number;
+        const used = [0, 0, 0, 0, 0];
+        for (let i = 4; i >= 0; i--) {
+          const take = Math.min(Math.floor(amount / denominations[i]!), cnt[i]!);
+          used[i] = take;
+          amount -= take * denominations[i]!;
+        }
+        if (amount !== 0) {
+          results.push([-1]);
+        } else {
+          for (let i = 0; i < 5; i++) cnt[i]! -= used[i]!;
+          results.push([...used]);
+        }
+      }
+    }
+    return results;
+  },
+
+  'shortest-path-to-food': (...args: unknown[]) => {
+    const grid = args[0] as string[][];
+    const m = grid.length, n = grid[0]!.length;
+    let startR = 0, startC = 0;
+    for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) if (grid[r]![c] === 'X') { startR = r; startC = c; }
+    const visited = Array.from({length: m}, () => new Array<boolean>(n).fill(false));
+    const queue: [number, number, number][] = [[startR, startC, 0]];
+    visited[startR]![startC] = true;
+    const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+    while (queue.length > 0) {
+      const [r, c, dist] = queue.shift()!;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr!, nc = c + dc!;
+        if (nr < 0 || nr >= m || nc < 0 || nc >= n || visited[nr]![nc] || grid[nr]![nc] === '#') continue;
+        if (grid[nr]![nc] === '*') return dist + 1;
+        visited[nr]![nc] = true;
+        queue.push([nr, nc, dist + 1]);
+      }
+    }
+    return -1;
+  },
+
+  'minimum-jumps-to-reach-home': (...args: unknown[]) => {
+    const [forbidden, a, b, x] = args as [number[], number, number, number];
+    const forbidSet = new Set(forbidden);
+    const LIMIT = Math.max(x, ...forbidden) + a + b;
+    const visited = new Set<string>();
+    const queue: [number, boolean, number][] = [[0, false, 0]];
+    visited.add('0,false');
+    while (queue.length > 0) {
+      const [pos, lastBack, jumps] = queue.shift()!;
+      const fwd = pos + a;
+      if (fwd === x) return jumps + 1;
+      if (fwd <= LIMIT && !forbidSet.has(fwd)) {
+        const key = `${fwd},false`;
+        if (!visited.has(key)) { visited.add(key); queue.push([fwd, false, jumps + 1]); }
+      }
+      if (!lastBack) {
+        const bwd = pos - b;
+        if (bwd >= 0 && bwd !== x && !forbidSet.has(bwd)) {
+          const key = `${bwd},true`;
+          if (!visited.has(key)) { visited.add(key); queue.push([bwd, true, jumps + 1]); }
+        } else if (bwd === x) return jumps + 1;
+      }
+    }
+    return -1;
+  },
+
+  'all-pairs-shortest-path': (...args: unknown[]) => {
+    const dist = (args[0] as number[][]).map(row => [...row]);
+    const n = dist.length;
+    for (let k = 0; k < n; k++)
+      for (let i = 0; i < n; i++)
+        for (let j = 0; j < n; j++)
+          if (dist[i]![k]! < 1e9 && dist[k]![j]! < 1e9)
+            dist[i]![j] = Math.min(dist[i]![j]!, dist[i]![k]! + dist[k]![j]!);
+    return dist;
+  },
+
+  'minimum-cost-to-reach-all-nodes': (...args: unknown[]) => {
+    const [n, edges] = args as [number, number[][]];
+    const adj: [number, number][][] = Array.from({length: n}, () => []);
+    for (const e of edges) adj[e[0]!]!.push([e[1]!, e[2]!]);
+    const dist = new Array<number>(n).fill(Infinity);
+    dist[0] = 0;
+    const pq: [number, number][] = [[0, 0]];
+    while (pq.length > 0) {
+      pq.sort((a, b) => a[0] - b[0]);
+      const [d, u] = pq.shift()!;
+      if (d > dist[u]!) continue;
+      for (const [v, w] of adj[u]!) {
+        if (dist[u]! + w < dist[v]!) {
+          dist[v] = dist[u]! + w;
+          pq.push([dist[v], v]);
+        }
+      }
+    }
+    return dist.map(d => d === Infinity ? -1 : d);
+  },
+
 };
