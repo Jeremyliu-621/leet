@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at ~1523 problems; 4839 tests green.
+**Current focus:** Bank at 1527 problems; 4869 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1600; UI/UX polish, accessibility, draggable splitter improvements.
 
@@ -490,6 +490,8 @@ Still pending:
 - [x] **Batch 52-57 (remote + local)** — 55+ new problems across all tags (see section notes above); bank at **1502**; 4794 tests.
 - [x] **🎉 1,500-problem milestone** — marketing site updated to "1,500+" in all 3 stat locations.
 - [x] **fix(terminal): FAIL timing + error copy** — TestResultCard shows `durationMs` for FAIL verdicts; runtime-error cards gain a copy button for the error message.
+- [x] **Bank at 1527 (Batch 57 consolidated)** — 25+ more problems from parallel agents; all merge conflicts resolved; 4869 tests.
+- [x] **fix(sw): record actual solve language** — `SolvedProblemRecord.language` was hardcoded to `'javascript'`; added `isSupportedLanguage` type guard, propagated real language through `GrantUnlockRequest`, sent actual language + attempts from challenge page.
 
 ---
 
