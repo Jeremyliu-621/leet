@@ -28299,4 +28299,62 @@ def countGoodArrays(n, m, k):
     return comb_mod(n - 1, k, MOD) * m % MOD * pow(m - 1, diff, MOD) % MOD
 `,
 
+  // batch 79
+  'ternary-expression-parser': `
+def parseTernary(expression: str) -> str:
+    stack = []
+    i = len(expression) - 1
+    while i >= 0:
+        c = expression[i]
+        if c == '?':
+            t = stack.pop()
+            stack.pop()  # ':'
+            f = stack.pop()
+            stack.append(t if expression[i - 1] == 'T' else f)
+            i -= 1  # skip condition char
+        else:
+            stack.append(c)
+        i -= 1
+    return stack[0]
+`,
+
+  'count-all-possible-routes': `
+def countRoutes(locations: list, start: int, finish: int, fuel: int) -> int:
+    MOD = 10**9 + 7
+    n = len(locations)
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dp(pos, rem):
+        if rem < 0:
+            return 0
+        res = 1 if pos == finish else 0
+        for j in range(n):
+            if j == pos:
+                continue
+            cost = abs(locations[pos] - locations[j])
+            if cost <= rem:
+                res = (res + dp(j, rem - cost)) % MOD
+        return res
+    return dp(start, fuel)
+`,
+
+  'minimum-operations-to-make-array-k-increasing': `
+def kIncreasing(arr: list, k: int) -> int:
+    import bisect
+    def min_ops(seq):
+        tails = []
+        for x in seq:
+            idx = bisect.bisect_right(tails, x)
+            if idx == len(tails):
+                tails.append(x)
+            else:
+                tails[idx] = x
+        return len(seq) - len(tails)
+    ops = 0
+    for r in range(k):
+        seq = arr[r::k]
+        ops += min_ops(seq)
+    return ops
+`,
+
 };

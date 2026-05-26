@@ -28911,4 +28911,67 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(ans);
   },
 
+  // batch 79
+  'ternary-expression-parser': (...args: unknown[]) => {
+    const [expression] = args as [string];
+    const stack: string[] = [];
+    for (let i = expression.length - 1; i >= 0; i--) {
+      const c = expression[i]!;
+      if (c === '?') {
+        const t = stack.pop()!;
+        stack.pop(); // ':'
+        const f = stack.pop()!;
+        stack.push(expression[i - 1] === 'T' ? t : f);
+        i--;
+      } else {
+        stack.push(c);
+      }
+    }
+    return stack[0];
+  },
+
+  'count-all-possible-routes': (...args: unknown[]) => {
+    const [locations, start, finish, fuel] = args as [number[], number, number, number];
+    const MOD = 1_000_000_007;
+    const n = locations.length;
+    const memo = new Map<number, number>();
+    function dp(pos: number, rem: number): number {
+      if (rem < 0) return 0;
+      const key = pos * (fuel + 1) + rem;
+      if (memo.has(key)) return memo.get(key)!;
+      let res = pos === finish ? 1 : 0;
+      for (let j = 0; j < n; j++) {
+        if (j === pos) continue;
+        const cost = Math.abs(locations[pos]! - locations[j]!);
+        if (cost <= rem) res = (res + dp(j, rem - cost)) % MOD;
+      }
+      memo.set(key, res);
+      return res;
+    }
+    return dp(start, fuel);
+  },
+
+  'minimum-operations-to-make-array-k-increasing': (...args: unknown[]) => {
+    const [arr, k] = args as [number[], number];
+    function minOps(seq: number[]): number {
+      const tails: number[] = [];
+      for (const x of seq) {
+        let lo = 0, hi = tails.length;
+        while (lo < hi) {
+          const mid = (lo + hi) >> 1;
+          if (tails[mid]! <= x) lo = mid + 1; else hi = mid;
+        }
+        tails[lo] = x;
+      }
+      return seq.length - tails.length;
+    }
+    let ops = 0;
+    for (let r = 0; r < k; r++) {
+      const seq: number[] = [];
+      for (let i = r; i < arr.length; i += k) seq.push(arr[i]!);
+      ops += minOps(seq);
+    }
+    return ops;
+  },
+
 };

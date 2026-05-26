@@ -2001,6 +2001,10 @@ import { problem as sortTransformedArray } from './sort-transformed-array';
 import { problem as checkIfParenthesesStringCanBeValid } from './check-if-parentheses-string-can-be-valid';
 import { problem as findTheNumberOfDistinctColorsAmongTheBalls } from './find-the-number-of-distinct-colors-among-the-balls';
 import { problem as countTheNumberOfArraysWithKMatchingAdjacentElements } from './count-the-number-of-arrays-with-k-matching-adjacent-elements';
+// batch 79 — DP, stack, binary-search
+import { problem as ternaryExpressionParser } from './ternary-expression-parser';
+import { problem as countAllPossibleRoutes } from './count-all-possible-routes';
+import { problem as minimumOperationsMakeArrayKIncreasing } from './minimum-operations-to-make-array-k-increasing';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4038,4 +4042,8 @@ export const problems: readonly Problem[] = [
   checkIfParenthesesStringCanBeValid,
   findTheNumberOfDistinctColorsAmongTheBalls,
   countTheNumberOfArraysWithKMatchingAdjacentElements,
+  // batch 79 — DP, stack, binary-search
+  ternaryExpressionParser,
+  countAllPossibleRoutes,
+  minimumOperationsMakeArrayKIncreasing,
 ];
