@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1549 problems; 4935 tests green.
+**Current focus:** Bank at 1554 problems; 4950 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1600; further UX polish.
+
+### Batch 60 (2026-05-26)
+Added 5 problems: `minimum-number-of-operations-to-make-array-continuous` (arrays/hard, sliding window on unique sorted values), `pacific-atlantic-water-flow` (graph/medium, reverse BFS from both oceans), `critical-connections-in-a-network` (graph/hard, Tarjan bridge-finding), `minimum-cost-to-cut-a-stick` (dp/hard, interval DP on sorted cut points), `largest-rectangle-in-histogram` (stack/hard, monotonic stack). Note: 4 originally requested problems were already in bank — unique replacements selected. JS + Python solutions for all. Bank at **1554**; 4950 tests.
 
 ### a11y(editor): language selector radiogroup fix (2026-05-26)
 Added `tabIndex` roving (0 for selected, -1 for others) and ArrowLeft/ArrowRight keyboard navigation to the language selector in EditorPanel. Matches the ARIA radiogroup pattern already used in Popup and TerminalPanel.
