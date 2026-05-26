@@ -35,7 +35,7 @@ export function TopBar({ secondsLeft, prefs, streak }: TopBarProps) {
       {/* Wordmark */}
       <span
         className="font-mono text-sm font-semibold tracking-widest text-accent uppercase"
-        aria-label="LeetLock"
+        aria-hidden="true"
       >
         LEETLOCK
       </span>
