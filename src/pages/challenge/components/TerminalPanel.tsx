@@ -326,6 +326,12 @@ interface TerminalPanelProps {
   /** null = no run yet; undefined = running in progress */
   result: JudgeResult | null | undefined;
   mode: 'run' | 'submit';
+  /** Whether the panel body is collapsed to just the tab bar. */
+  collapsed?: boolean;
+  /** Called when the user clicks the collapse/expand toggle. */
+  onToggleCollapsed?: () => void;
+  /** Height of the terminal body in px (only applies when not collapsed). */
+  bodyHeight?: number;
 }
 
 function TerminalEntry({ entry }: { entry: TerminalEntry }) {
@@ -411,7 +417,7 @@ function TerminalEntry({ entry }: { entry: TerminalEntry }) {
  */
 const TERMINAL_TABS: ReadonlyArray<'output' | 'testcases'> = ['output', 'testcases'];
 
-export function TerminalPanel({ result, mode }: TerminalPanelProps) {
+export function TerminalPanel({ result, mode, collapsed = false, onToggleCollapsed, bodyHeight }: TerminalPanelProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const tabListRef = useRef<HTMLDivElement>(null);
   const [history, setHistory] = useState<TerminalEntry[][]>([]);
@@ -528,22 +534,37 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
             ) : null}
           </button>
         </div>
-        <button
-          type="button"
-          onClick={handleClear}
-          className="px-2 py-1 mr-1 font-mono text-[9px] uppercase tracking-wider text-faint hover:text-muted transition-colors"
-          title="Clear terminal"
-          aria-label="Clear terminal output"
-        >
-          clear
-        </button>
+        <div className="flex items-center gap-0.5 mr-1">
+          <button
+            type="button"
+            onClick={handleClear}
+            className="px-2 py-1 font-mono text-[9px] uppercase tracking-wider text-faint hover:text-muted transition-colors"
+            title="Clear terminal"
+            aria-label="Clear terminal output"
+          >
+            clear
+          </button>
+          {onToggleCollapsed && (
+            <button
+              type="button"
+              onClick={onToggleCollapsed}
+              aria-label={collapsed ? 'Expand terminal panel' : 'Collapse terminal panel'}
+              aria-pressed={collapsed}
+              title={collapsed ? 'Expand terminal' : 'Collapse terminal'}
+              className="px-1.5 py-1 font-mono text-[10px] text-faint hover:text-muted transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent"
+            >
+              {collapsed ? '▲' : '▼'}
+            </button>
+          )}
+        </div>
       </div>
 
-      {/* Terminal body */}
+      {/* Terminal body — hidden when collapsed */}
       <div
         ref={scrollRef}
         className="overflow-y-auto bg-bg font-mono text-xs leading-relaxed"
-        style={{ minHeight: '120px', maxHeight: '280px' }}
+        style={collapsed ? { display: 'none' } : { height: bodyHeight ? `${bodyHeight}px` : undefined, minHeight: '80px', maxHeight: bodyHeight ? undefined : '280px' }}
+        aria-hidden={collapsed}
       >
         <div
           id="terminal-panel-output"
