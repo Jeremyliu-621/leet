@@ -22082,6 +22082,128 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return total;
   },
 
+  'next-closest-time': (...args: unknown[]) => {
+    const time = args[0] as string;
+    const digits = new Set([time[0]!, time[1]!, time[3]!, time[4]!]);
+    const d = [...digits] as string[];
+    const parts = time.split(':').map(Number);
+    const cur = parts[0]! * 60 + parts[1]!;
+    let best = -1;
+    let bestTime = '';
+    for (const a of d) for (const b of d) for (const c of d) for (const e of d) {
+      const h = +a * 10 + +b;
+      const m = +c * 10 + +e;
+      if (h >= 24 || m >= 60) continue;
+      const t = h * 60 + m;
+      const diff = (t - cur + 1440) % 1440;
+      if (diff === 0) continue;
+      if (best === -1 || diff < best) { best = diff; bestTime = a + b + ':' + c + e; }
+    }
+    if (bestTime === '') return time[0]! + time[1]! + ':' + time[3]! + time[4]!;
+    return bestTime;
+  },
+
+  'employee-free-time': (...args: unknown[]) => {
+    const schedule = args[0] as number[][][];
+    const intervals: number[][] = [];
+    for (const emp of schedule) for (const iv of emp) intervals.push([...iv]);
+    intervals.sort((a, b) => a[0]! - b[0]! || a[1]! - b[1]!);
+    const merged: number[][] = [];
+    for (const iv of intervals) {
+      if (!merged.length || merged[merged.length - 1]![1]! < iv[0]!) merged.push([...iv]);
+      else merged[merged.length - 1]![1] = Math.max(merged[merged.length - 1]![1]!, iv[1]!);
+    }
+    const gaps: number[][] = [];
+    for (let i = 1; i < merged.length; i++) gaps.push([merged[i - 1]![1]!, merged[i]![0]!]);
+    return gaps;
+  },
+
+  'maximum-sum-of-3-non-overlapping-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const n = nums.length;
+    const wLen = n - k + 1;
+    const w = new Array<number>(wLen).fill(0);
+    let sum = 0;
+    for (let i = 0; i < k; i++) sum += nums[i]!;
+    w[0] = sum;
+    for (let i = 1; i < wLen; i++) {
+      sum += nums[i + k - 1]! - nums[i - 1]!;
+      w[i] = sum;
+    }
+    const left = new Array<number>(wLen).fill(0);
+    let best = 0;
+    for (let i = 0; i < wLen; i++) {
+      if (w[i]! > w[best]!) best = i;
+      left[i] = best;
+    }
+    const right = new Array<number>(wLen).fill(0);
+    best = wLen - 1;
+    for (let i = wLen - 1; i >= 0; i--) {
+      if (w[i]! >= w[best]!) best = i;
+      right[i] = best;
+    }
+    let ans = [-1, -1, -1];
+    let maxSum = 0;
+    for (let j = k; j < wLen - k; j++) {
+      const l = left[j - k]!;
+      const r = right[j + k]!;
+      const total = w[l]! + w[j]! + w[r]!;
+      if (total > maxSum) { maxSum = total; ans = [l, j, r]; }
+    }
+    return ans;
+  },
+
+  'domino-tromino-tiling': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const MOD = 1_000_000_007;
+    if (n === 1) return 1;
+    if (n === 2) return 2;
+    const dp = new Array<number>(n + 1).fill(0);
+    dp[0] = 1; dp[1] = 1; dp[2] = 2;
+    for (let i = 3; i <= n; i++) {
+      dp[i] = (2 * dp[i - 1]! % MOD + dp[i - 3]!) % MOD;
+    }
+    return dp[n]!;
+  },
+
+  'split-array-with-same-average': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const total = nums.reduce((a, b) => a + b, 0);
+    const half = Math.floor(n / 2);
+    const buildSets = (arr: number[]): Map<number, Set<number>> => {
+      const sets = new Map<number, Set<number>>();
+      sets.set(0, new Set([0]));
+      for (const num of arr) {
+        const entries = [...sets.entries()];
+        for (const [cnt, sums] of entries) {
+          if (!sets.has(cnt + 1)) sets.set(cnt + 1, new Set<number>());
+          for (const s of sums) sets.get(cnt + 1)!.add(s + num);
+        }
+      }
+      return sets;
+    };
+    const leftSets = buildSets(nums.slice(0, half));
+    const rightSets = buildSets(nums.slice(half));
+    const rightLen = n - half;
+    for (let k = 1; k < n; k++) {
+      if ((total * k) % n !== 0) continue;
+      const target = total * k / n;
+      for (let kL = Math.max(0, k - rightLen); kL <= Math.min(k, half); kL++) {
+        const kR = k - kL;
+        if (kL === half && kR === rightLen) continue;
+        const leftSet = leftSets.get(kL);
+        const rightSet = rightSets.get(kR);
+        if (!leftSet || !rightSet) continue;
+        for (const ls of leftSet) {
+          if (rightSet.has(target - ls)) return true;
+        }
+      }
+    }
+    return false;
+  },
+
   'ways-to-split-array-into-three-subarrays': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const MOD = 1_000_000_007n;

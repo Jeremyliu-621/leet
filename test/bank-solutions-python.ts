@@ -21878,6 +21878,129 @@ def secondMinimum(n, edges, time, change):
     return total
 `,
 
+  'next-closest-time': `def nextClosestTime(time):
+    digits = set([time[0], time[1], time[3], time[4]])
+    d = list(digits)
+    hh, mm = int(time[:2]), int(time[3:])
+    cur = hh * 60 + mm
+    best_diff = float('inf')
+    best_time = time
+    for a in d:
+        for b in d:
+            for c in d:
+                for e in d:
+                    h = int(a) * 10 + int(b)
+                    m = int(c) * 10 + int(e)
+                    if h >= 24 or m >= 60:
+                        continue
+                    t = h * 60 + m
+                    diff = (t - cur + 1440) % 1440
+                    if diff == 0:
+                        continue
+                    if diff < best_diff:
+                        best_diff = diff
+                        best_time = f"{a}{b}:{c}{e}"
+    return best_time
+`,
+
+  'employee-free-time': `def employeeFreeTime(schedule):
+    intervals = []
+    for emp in schedule:
+        for iv in emp:
+            intervals.append(iv[:])
+    intervals.sort(key=lambda x: (x[0], x[1]))
+    merged = []
+    for iv in intervals:
+        if not merged or merged[-1][1] < iv[0]:
+            merged.append(iv[:])
+        else:
+            merged[-1][1] = max(merged[-1][1], iv[1])
+    gaps = []
+    for i in range(1, len(merged)):
+        gaps.append([merged[i-1][1], merged[i][0]])
+    return gaps
+`,
+
+  'maximum-sum-of-3-non-overlapping-subarrays': `def maxSumOfThreeSubarrays(nums, k):
+    n = len(nums)
+    w_len = n - k + 1
+    w = [0] * w_len
+    s = sum(nums[:k])
+    w[0] = s
+    for i in range(1, w_len):
+        s += nums[i + k - 1] - nums[i - 1]
+        w[i] = s
+    left = [0] * w_len
+    best = 0
+    for i in range(w_len):
+        if w[i] > w[best]:
+            best = i
+        left[i] = best
+    right = [0] * w_len
+    best = w_len - 1
+    for i in range(w_len - 1, -1, -1):
+        if w[i] >= w[best]:
+            best = i
+        right[i] = best
+    ans = [-1, -1, -1]
+    max_sum = 0
+    for j in range(k, w_len - k):
+        l = left[j - k]
+        r = right[j + k]
+        total = w[l] + w[j] + w[r]
+        if total > max_sum:
+            max_sum = total
+            ans = [l, j, r]
+    return ans
+`,
+
+  'domino-tromino-tiling': `def numTilings(n):
+    MOD = 10**9 + 7
+    if n == 1:
+        return 1
+    if n == 2:
+        return 2
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    dp[1] = 1
+    dp[2] = 2
+    for i in range(3, n + 1):
+        dp[i] = (2 * dp[i-1] + dp[i-3]) % MOD
+    return dp[n]
+`,
+
+  'split-array-with-same-average': `def splitArraySameAverage(nums):
+    from collections import defaultdict
+    n = len(nums)
+    total = sum(nums)
+    half = n // 2
+    def build_sets(arr):
+        sets = defaultdict(set)
+        sets[0].add(0)
+        for num in arr:
+            for cnt in sorted(sets.keys(), reverse=True):
+                for s in sets[cnt]:
+                    sets[cnt + 1].add(s + num)
+        return sets
+    left_sets = build_sets(nums[:half])
+    right_sets = build_sets(nums[half:])
+    right_len = n - half
+    for k in range(1, n):
+        if (total * k) % n != 0:
+            continue
+        target = total * k // n
+        for kL in range(max(0, k - right_len), min(k, half) + 1):
+            kR = k - kL
+            if kL == half and kR == right_len:
+                continue
+            if kL not in left_sets or kR not in right_sets:
+                continue
+            for ls in left_sets[kL]:
+                if target - ls in right_sets[kR]:
+                    return True
+    return False
+`,
+
   'ways-to-split-array-into-three-subarrays': `def waysToSplit(nums):
     import bisect
     MOD = 10**9 + 7

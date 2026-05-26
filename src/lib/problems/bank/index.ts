@@ -1572,6 +1572,12 @@ import { problem as minimumArrayEnd } from './minimum-array-end';
 import { problem as maximumNumberOfMovesInAGrid } from './maximum-number-of-moves-in-a-grid';
 import { problem as minimumCostToConvertStringI } from './minimum-cost-to-convert-string-i';
 import { problem as waysToSplitArrayIntoThreeSubarrays } from './ways-to-split-array-into-three-subarrays';
+// batch 59
+import { problem as nextClosestTime } from './next-closest-time';
+import { problem as employeeFreeTime } from './employee-free-time';
+import { problem as maximumSumOf3NonOverlappingSubarrays } from './maximum-sum-of-3-non-overlapping-subarrays';
+import { problem as dominoTrominoTiling } from './domino-tromino-tiling';
+import { problem as splitArrayWithSameAverage } from './split-array-with-same-average';
 // batch 57
 import { problem as convertBinaryLinkedList } from './convert-binary-linked-list';
 import { problem as diagonalTraverseII } from './diagonal-traverse-ii';
@@ -3260,4 +3266,9 @@ export const problems: readonly Problem[] = [
   numberOfSeniorCitizens,
   maximumNumberOfGroupsWithIncreasingLength,
   makeIntegerBeautiful,
+  nextClosestTime,
+  employeeFreeTime,
+  maximumSumOf3NonOverlappingSubarrays,
+  dominoTrominoTiling,
+  splitArrayWithSameAverage,
 ];
