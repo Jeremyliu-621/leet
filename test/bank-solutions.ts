@@ -29806,4 +29806,87 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  // batch 84 cont. — simulation, math, arrays, heap, backtracking, linked-list
+  'find-the-winner-of-the-circular-game': (...args: unknown[]) => {
+    const [n, k] = args as [number, number];
+    let pos = 0;
+    for (let i = 2; i <= n; i++) pos = (pos + k) % i;
+    return pos + 1;
+  },
+
+  'minimum-time-to-type-word-using-typewriter': (...args: unknown[]) => {
+    const [word] = args as [string];
+    let time = word.length, prev = 0;
+    for (const ch of word) {
+      const cur = ch.charCodeAt(0) - 97;
+      const diff = Math.abs(cur - prev);
+      time += Math.min(diff, 26 - diff);
+      prev = cur;
+    }
+    return time;
+  },
+
+  'apply-operations-to-array': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    for (let i = 0; i < nums.length - 1; i++) {
+      if (nums[i] === nums[i + 1]) { nums[i]! *= 2; nums[i + 1] = 0; }
+    }
+    const result = nums.filter(x => x !== 0);
+    while (result.length < nums.length) result.push(0);
+    return result;
+  },
+
+  'maximum-performance-of-a-team': (...args: unknown[]) => {
+    const [n, speed, efficiency, k] = args as [number, number[], number[], number];
+    const MOD = 1_000_000_007n;
+    const engineers = (speed as number[]).map((s, i) => [(efficiency as number[])[i]!, s] as [number, number]);
+    engineers.sort((a, b) => b[0] - a[0]);
+    const heap: number[] = [];
+    let speedSum = 0n, best = 0n;
+    for (const [eff, spd] of engineers) {
+      heap.push(spd);
+      heap.sort((a, b) => a - b);
+      speedSum += BigInt(spd);
+      if (heap.length > k) speedSum -= BigInt(heap.shift()!);
+      const perf = speedSum * BigInt(eff);
+      if (perf > best) best = perf;
+    }
+    void n;
+    return Number(best % MOD);
+  },
+
+  'splitting-a-string-into-descending-consecutive-values': (...args: unknown[]) => {
+    const [s] = args as [string];
+    function check(idx: number, prev: bigint, count: number): boolean {
+      if (idx === s.length) return count >= 2;
+      let cur = 0n;
+      for (let i = idx; i < s.length; i++) {
+        cur = cur * 10n + BigInt(s[i]!);
+        if (cur === prev - 1n && check(i + 1, cur, count + 1)) return true;
+        if (cur > prev) break;
+      }
+      return false;
+    }
+    let first = 0n;
+    for (let i = 0; i < s.length - 1; i++) {
+      first = first * 10n + BigInt(s[i]!);
+      if (check(i + 1, first, 1)) return true;
+    }
+    return false;
+  },
+
+  'delete-the-middle-node-of-a-linked-list': (...args: unknown[]) => {
+    const [head] = args as [number[]];
+    const mid = Math.floor(head.length / 2);
+    return [...head.slice(0, mid), ...head.slice(mid + 1)];
+  },
+
+  'maximum-twin-sum-of-a-linked-list': (...args: unknown[]) => {
+    const [head] = args as [number[]];
+    let max = 0;
+    const n = head.length;
+    for (let i = 0; i < n / 2; i++) max = Math.max(max, head[i]! + head[n - 1 - i]!);
+    return max;
+  },
+
 };

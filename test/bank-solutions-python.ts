@@ -29250,4 +29250,87 @@ def minimumAddedCoins(coins: list, target: int) -> int:
     return count
 `,
 
+  // batch 84 cont. — simulation, math, arrays, heap, backtracking, linked-list
+  'find-the-winner-of-the-circular-game': `
+def findTheWinner(n, k):
+    pos = 0
+    for i in range(2, n + 1):
+        pos = (pos + k) % i
+    return pos + 1
+`,
+
+  'minimum-time-to-type-word-using-typewriter': `
+def minTimeToType(word):
+    time = len(word)
+    prev = 0
+    for ch in word:
+        cur = ord(ch) - ord('a')
+        diff = abs(cur - prev)
+        time += min(diff, 26 - diff)
+        prev = cur
+    return time
+`,
+
+  'apply-operations-to-array': `
+def applyOperations(nums):
+    nums = list(nums)
+    for i in range(len(nums) - 1):
+        if nums[i] == nums[i + 1]:
+            nums[i] *= 2
+            nums[i + 1] = 0
+    result = [x for x in nums if x != 0]
+    result += [0] * (len(nums) - len(result))
+    return result
+`,
+
+  'maximum-performance-of-a-team': `
+import heapq
+def maxPerformance(n, speed, efficiency, k):
+    MOD = 10**9 + 7
+    engineers = sorted(zip(efficiency, speed), reverse=True)
+    heap = []
+    speed_sum = 0
+    best = 0
+    for eff, spd in engineers:
+        heapq.heappush(heap, spd)
+        speed_sum += spd
+        if len(heap) > k:
+            speed_sum -= heapq.heappop(heap)
+        best = max(best, speed_sum * eff)
+    return best % MOD
+`,
+
+  'splitting-a-string-into-descending-consecutive-values': `
+def splitString(s):
+    def check(idx, prev, count):
+        if idx == len(s):
+            return count >= 2
+        cur = 0
+        for i in range(idx, len(s)):
+            cur = cur * 10 + int(s[i])
+            if cur == prev - 1 and check(i + 1, cur, count + 1):
+                return True
+            if cur > prev:
+                break
+        return False
+    first = 0
+    for i in range(len(s) - 1):
+        first = first * 10 + int(s[i])
+        if check(i + 1, first, 1):
+            return True
+    return False
+`,
+
+  'delete-the-middle-node-of-a-linked-list': `
+def deleteMiddle(head):
+    mid = len(head) // 2
+    return head[:mid] + head[mid + 1:]
+`,
+
+  'maximum-twin-sum-of-a-linked-list': `
+def pairSum(head):
+    n = len(head)
+    return max(head[i] + head[n - 1 - i] for i in range(n // 2))
+`,
+
 };

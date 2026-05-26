@@ -715,7 +715,7 @@ import { problem as minimumDistanceValue } from './minimum-distance-value';
 import { problem as minimumOperationsMakeArrayAlternating } from './minimum-operations-make-array-alternating';
 import { problem as redistributeCharactersMakeAllStringsEqual } from './redistribute-characters-make-all-strings-equal';
 import { problem as checkCompletenessBinaryTree } from './check-completeness-binary-tree';
-import { problem as maximumTwinSumLinkedList } from './maximum-twin-sum-linked-list';
+import { problem as maximumTwinSumLinkedList } from './maximum-twin-sum-of-a-linked-list';
 import { problem as kRadiusSubarrayAverages } from './k-radius-subarray-averages';
 import { problem as numberOfWaysSelectBuildings } from './number-of-ways-select-buildings';
 import { problem as findCitySmallestNumberNeighbors } from './find-city-smallest-number-neighbors';
@@ -772,7 +772,7 @@ import { problem as longestUncommonSubsequenceI } from './longest-uncommon-subse
 import { problem as perfectNumber } from './perfect-number';
 import { problem as arrangeCoins } from './arrange-coins';
 import { problem as nthDigit } from './nth-digit';
-import { problem as findTheWinner } from './find-the-winner';
+import { problem as findTheWinner } from './find-the-winner-of-the-circular-game';
 import { problem as countNegativeNumbers } from './count-negative-numbers';
 import { problem as canMakeArithmeticProgression } from './can-make-arithmetic-progression';
 import { problem as firstBadVersion } from './first-bad-version';
@@ -812,7 +812,7 @@ import { problem as sortThePeople } from './sort-the-people';
 import { problem as baseballGame } from './baseball-game';
 import { problem as findChampionGraph } from './find-champion-graph';
 import { problem as countDigits } from './count-digits';
-import { problem as applyOperations } from './apply-operations';
+import { problem as applyOperations } from './apply-operations-to-array';
 import { problem as minimumMovesToSeat } from './minimum-moves-to-seat';
 import { problem as ringsAndRods } from './rings-and-rods';
 import { problem as findGcdOfArray } from './find-gcd-of-array';
@@ -948,7 +948,6 @@ import { problem as smallestValueOfRearrangedNumber } from './smallest-value-of-
 import { problem as removingStarsFromString } from './removing-stars-from-string';
 import { problem as findThePeaks } from './find-the-peaks';
 import { problem as minimumPenaltyForAShop } from './minimum-penalty-for-a-shop';
-import { problem as applyOperationsToAnArray } from './apply-operations-to-an-array';
 import { problem as kthDistinctStringInArray } from './kth-distinct-string-in-array';
 import { problem as countElementsWithStrictlySmallerAndGreater } from './count-elements-with-strictly-smaller-and-greater';
 import { problem as largestPositiveIntegerThatExistsWithNegative } from './largest-positive-integer-that-exists-with-negative';
@@ -974,7 +973,7 @@ import { problem as findTargetIndicesAfterSortingArray } from './find-target-ind
 import { problem as numberOfEmployeesWhoMetTheTarget } from './number-of-employees-who-met-the-target';
 import { problem as intersectionOfTwoArraysIi } from './intersection-of-two-arrays-ii';
 import { problem as largestSubarrayLengthK } from './largest-subarray-length-k';
-import { problem as minimumTimeToTypeWord } from './minimum-time-to-type-word';
+import { problem as minimumTimeToTypeWord } from './minimum-time-to-type-word-using-typewriter';
 import { problem as checkIfOneStringSwapCanMakeStringsEqual } from './check-if-one-string-swap-can-make-strings-equal';
 import { problem as numberOfDifferentIntegersInString } from './number-of-different-integers-in-string';
 import { problem as checkIfArrayIsGood } from './check-if-array-is-good';
@@ -1148,7 +1147,7 @@ import { problem as russianDollEnvelopes } from './russian-doll-envelopes';
 import { problem as binaryTreeCameras } from './binary-tree-cameras';
 import { problem as linkedListCycleII } from './linked-list-cycle-ii';
 import { problem as addTwoNumbersII } from './add-two-numbers-ii';
-import { problem as maximumPerformanceOfTeam } from './maximum-performance-of-team';
+import { problem as maximumPerformanceOfTeam } from './maximum-performance-of-a-team';
 import { problem as minimumIntervalToIncludeEachQuery } from './minimum-interval-to-include-each-query';
 import { problem as minimumNumberOfTapsToWaterAGarden } from './minimum-number-of-taps-to-open-to-water-a-garden';
 import { problem as onlineElection } from './online-election';
@@ -1803,7 +1802,6 @@ import { problem as sqrtX } from './sqrtx';
 // batch 62 (local)
 import { problem as seatReservationManager } from './seat-reservation-manager';
 import { problem as subarrayDivByK } from './subarray-sum-divisible-by-k';
-import { problem as findTheWinnerOfCircularGame } from './find-the-winner-of-circular-game';
 import { problem as minimumPathCostInGrid } from './minimum-path-cost-in-grid';
 import { problem as maximumDistanceBetweenAPairOfValues } from './maximum-distance-between-a-pair-of-values';
 
@@ -2055,6 +2053,9 @@ import { problem as tokenBucketRateLimiter } from './token-bucket-rate-limiter';
 // batch 84 — two-pointers, math
 import { problem as maximumScoreOfAGoodSubarray } from './maximum-score-of-a-good-subarray';
 import { problem as minimumNumberOfCoinsToBeAdded } from './minimum-number-of-coins-to-be-added';
+// batch 84 cont. — simulation, backtracking, linked-list
+import { problem as splittingAStringIntoDescendingConsecutiveValues } from './splitting-a-string-into-descending-consecutive-values';
+import { problem as deleteTheMiddleNodeOfALinkedList } from './delete-the-middle-node-of-a-linked-list';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -3050,7 +3051,6 @@ export const problems: readonly Problem[] = [
   removingStarsFromString,
   findThePeaks,
   minimumPenaltyForAShop,
-  applyOperationsToAnArray,
   kthDistinctStringInArray,
   countElementsWithStrictlySmallerAndGreater,
   largestPositiveIntegerThatExistsWithNegative,
@@ -3822,7 +3822,6 @@ export const problems: readonly Problem[] = [
   // batch 62 (local)
   seatReservationManager,
   subarrayDivByK,
-  findTheWinnerOfCircularGame,
   minimumPathCostInGrid,
   maximumDistanceBetweenAPairOfValues,
   // batch 62
@@ -4146,4 +4145,7 @@ export const problems: readonly Problem[] = [
   // batch 84 — two-pointers, math
   maximumScoreOfAGoodSubarray,
   minimumNumberOfCoinsToBeAdded,
+  // batch 84 cont. — simulation, backtracking, linked-list
+  splittingAStringIntoDescendingConsecutiveValues,
+  deleteTheMiddleNodeOfALinkedList,
 ];
