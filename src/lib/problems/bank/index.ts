@@ -1678,7 +1678,6 @@ import { problem as minimumNumberOfOperationsToMakeArrayContinuous } from './min
 import { problem as pacificAtlanticWaterFlow } from './pacific-atlantic-water-flow';
 import { problem as criticalConnectionsInANetwork } from './critical-connections-in-a-network';
 import { problem as minimumCostToCutAStick } from './minimum-cost-to-cut-a-stick';
-import { problem as largestRectangleInHistogram } from './largest-rectangle-in-histogram';
 // batch 61
 import { problem as kClosestPointsToOrigin } from './k-closest-points-to-origin';
 import { problem as findAllAnagramsInAString } from './find-all-anagrams-in-a-string';
@@ -3803,7 +3802,6 @@ export const problems: readonly Problem[] = [
   pacificAtlanticWaterFlow,
   criticalConnectionsInANetwork,
   minimumCostToCutAStick,
-  largestRectangleInHistogram,
   // batch 61
   kClosestPointsToOrigin,
   findAllAnagramsInAString,
