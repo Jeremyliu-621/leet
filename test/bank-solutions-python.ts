@@ -30422,4 +30422,38 @@ def maxSubArrayLen(nums, k):
     return max_len
 `,
 
+  'maximum-number-of-consecutive-values-you-can-make': `
+def getMaximumConsecutive(coins):
+    coins = sorted(coins)
+    reach = 0
+    for c in coins:
+        if c > reach + 1:
+            break
+        reach += c
+    return reach + 1
+`,
+
+  'determine-if-two-events-have-conflict': `
+def haveConflict(event1, event2):
+    return event1[0] <= event2[1] and event2[0] <= event1[1]
+`,
+
+  'number-of-people-that-can-be-seen-in-a-grid': `
+def canSeePersonsCount(heights):
+    heights = list(heights)
+    n = len(heights)
+    ans = [0] * n
+    stack = []
+    for i in range(n - 1, -1, -1):
+        count = 0
+        while stack and stack[-1] < heights[i]:
+            stack.pop()
+            count += 1
+        if stack:
+            count += 1
+        ans[i] = count
+        stack.append(heights[i])
+    return ans
+`,
+
 };

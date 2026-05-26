@@ -2124,6 +2124,10 @@ import { problem as minimumOperationsNonDecreasing } from './minimum-operations-
 import { problem as sumOfSquareNumbers } from './sum-of-square-numbers';
 import { problem as miceAndCheese } from './mice-and-cheese';
 import { problem as maximumSizeSubarraySumEqualsK } from './maximum-size-subarray-sum-equals-k';
+// batch 91 — greedy, strings, monotonic-stack
+import { problem as maximumNumberOfConsecutiveValuesYouCanMake } from './maximum-number-of-consecutive-values-you-can-make';
+import { problem as determineIfTwoEventsHaveConflict } from './determine-if-two-events-have-conflict';
+import { problem as numberOfPeopleThatCanBeSeenInAGrid } from './number-of-people-that-can-be-seen-in-a-grid';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4285,4 +4289,8 @@ export const problems: readonly Problem[] = [
   sumOfSquareNumbers,
   miceAndCheese,
   maximumSizeSubarraySumEqualsK,
+  // batch 91
+  maximumNumberOfConsecutiveValuesYouCanMake,
+  determineIfTwoEventsHaveConflict,
+  numberOfPeopleThatCanBeSeenInAGrid,
 ];
