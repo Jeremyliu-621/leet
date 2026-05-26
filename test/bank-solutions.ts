@@ -24040,4 +24040,112 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'shift-2d-grid': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const k = args[1] as number;
+    const m = grid.length;
+    const n = (grid[0] ?? []).length;
+    const total = m * n;
+    const flat: number[] = [];
+    for (const row of grid) for (const v of row) flat.push(v);
+    const shift = k % total;
+    const rotated = [...flat.slice(total - shift), ...flat.slice(0, total - shift)];
+    const result: number[][] = [];
+    for (let i = 0; i < m; i++) {
+      result.push(rotated.slice(i * n, i * n + n) as number[]);
+    }
+    return result;
+  },
+
+  'find-and-replace-in-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const indices = args[1] as number[];
+    const sources = args[2] as string[];
+    const targets = args[3] as string[];
+    const replacements: Map<number, [number, string]> = new Map();
+    for (let i = 0; i < indices.length; i++) {
+      const idx = indices[i] ?? 0;
+      const src = sources[i] ?? '';
+      const tgt = targets[i] ?? '';
+      if (s.slice(idx, idx + src.length) === src) {
+        replacements.set(idx, [src.length, tgt]);
+      }
+    }
+    let result = '';
+    let i = 0;
+    while (i < s.length) {
+      if (replacements.has(i)) {
+        const [len, tgt] = replacements.get(i)!;
+        result += tgt;
+        i += len;
+      } else {
+        result += s[i];
+        i++;
+      }
+    }
+    return result;
+  },
+
+  'check-whether-two-strings-are-almost-equivalent': (...args: unknown[]) => {
+    const word1 = args[0] as string;
+    const word2 = args[1] as string;
+    const freq: Record<string, number> = {};
+    for (const c of word1) freq[c] = (freq[c] ?? 0) + 1;
+    for (const c of word2) freq[c] = (freq[c] ?? 0) - 1;
+    return Object.values(freq).every(v => Math.abs(v) <= 3);
+  },
+
+  'minimum-number-of-swaps-to-make-the-binary-string-alternating': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const ones = [...s].filter(c => c === '1').length;
+    const zeros = s.length - ones;
+    if (Math.abs(ones - zeros) > 1) return -1;
+    const countSwaps = (startChar: string): number => {
+      let mismatches = 0;
+      for (let i = 0; i < s.length; i++) {
+        const expected = i % 2 === 0 ? startChar : startChar === '0' ? '1' : '0';
+        if (s[i] !== expected) mismatches++;
+      }
+      return mismatches / 2;
+    };
+    if (ones > zeros) return countSwaps('1');
+    if (zeros > ones) return countSwaps('0');
+    return Math.min(countSwaps('0'), countSwaps('1'));
+  },
+
+  'maximum-number-of-non-overlapping-subarrays-with-sum-equals-target': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    const seen = new Set<number>();
+    seen.add(0);
+    let prefix = 0;
+    let count = 0;
+    for (const num of nums) {
+      prefix += num;
+      if (seen.has(prefix - target)) {
+        count++;
+        seen.clear();
+        seen.add(prefix);
+      } else {
+        seen.add(prefix);
+      }
+    }
+    return count;
+  },
+
+  'find-the-minimum-possible-sum-of-a-beautiful-array': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const target = args[1] as number;
+    const MOD = BigInt(1e9 + 7);
+    const bigN = BigInt(n);
+    const bigTarget = BigInt(target);
+    const take = BigInt(Math.min(n, Math.floor(target / 2)));
+    // Sum of 1..take
+    const part1 = (take * (take + 1n)) / 2n;
+    const remaining = bigN - take;
+    // Sum of target..(target + remaining - 1)
+    const part2 = bigTarget * remaining + (remaining * (remaining - 1n)) / 2n;
+    return Number((part1 + part2) % MOD);
+  },
+
 };

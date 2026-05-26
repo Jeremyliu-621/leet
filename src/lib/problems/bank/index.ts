@@ -1733,6 +1733,13 @@ import { problem as sparseMatrixMultiplication } from './sparse-matrix-multiplic
 import { problem as maximumDepthNAryTree } from './maximum-depth-n-ary-tree';
 import { problem as nAryTreeLevelOrderTraversal } from './n-ary-tree-level-order-traversal';
 import { problem as nAryTreePreorderTraversal } from './n-ary-tree-preorder-traversal';
+// batch 64
+import { problem as shiftTwoDGrid } from './shift-2d-grid';
+import { problem as findAndReplaceInString } from './find-and-replace-in-string';
+import { problem as checkWhetherTwoStringsAlmostEquivalent } from './check-whether-two-strings-are-almost-equivalent';
+import { problem as minimumSwapsBinaryStringAlternating } from './minimum-number-of-swaps-to-make-the-binary-string-alternating';
+import { problem as maximumNonOverlappingSubarraysTarget } from './maximum-number-of-non-overlapping-subarrays-with-sum-equals-target';
+import { problem as findMinimumPossibleSumBeautifulArray } from './find-the-minimum-possible-sum-of-a-beautiful-array';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3508,4 +3515,11 @@ export const problems: readonly Problem[] = [
   maximalNetworkRank,
   minimumTapsToOpenToWaterAGarden,
   putMarblesInBags,
+  // batch 65
+  shiftTwoDGrid,
+  findAndReplaceInString,
+  checkWhetherTwoStringsAlmostEquivalent,
+  minimumSwapsBinaryStringAlternating,
+  maximumNonOverlappingSubarraysTarget,
+  findMinimumPossibleSumBeautifulArray,
 ];

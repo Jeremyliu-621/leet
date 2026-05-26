@@ -23547,4 +23547,80 @@ def secondMinimum(n, edges, time, change):
             result.append(None)
     return result
 `,
+
+  'shift-2d-grid': `def shiftGrid(grid, k):
+    m, n = len(grid), len(grid[0])
+    total = m * n
+    flat = [grid[i][j] for i in range(m) for j in range(n)]
+    shift = k % total
+    rotated = flat[total - shift:] + flat[:total - shift]
+    return [rotated[i * n:(i + 1) * n] for i in range(m)]
+`,
+
+  'find-and-replace-in-string': `def findReplaceString(s, indices, sources, targets):
+    replacements = {}
+    for idx, src, tgt in zip(indices, sources, targets):
+        if s[idx:idx + len(src)] == src:
+            replacements[idx] = (len(src), tgt)
+    result = []
+    i = 0
+    while i < len(s):
+        if i in replacements:
+            length, tgt = replacements[i]
+            result.append(tgt)
+            i += length
+        else:
+            result.append(s[i])
+            i += 1
+    return ''.join(result)
+`,
+
+  'check-whether-two-strings-are-almost-equivalent': `def checkAlmostEquivalent(word1, word2):
+    from collections import Counter
+    c1, c2 = Counter(word1), Counter(word2)
+    all_chars = set(c1) | set(c2)
+    return all(abs(c1[ch] - c2[ch]) <= 3 for ch in all_chars)
+`,
+
+  'minimum-number-of-swaps-to-make-the-binary-string-alternating': `def minSwaps(s):
+    ones = s.count('1')
+    zeros = len(s) - ones
+    if abs(ones - zeros) > 1:
+        return -1
+    def count_swaps(start):
+        mismatches = 0
+        for i, c in enumerate(s):
+            expected = start if i % 2 == 0 else ('1' if start == '0' else '0')
+            if c != expected:
+                mismatches += 1
+        return mismatches // 2
+    if ones > zeros:
+        return count_swaps('1')
+    if zeros > ones:
+        return count_swaps('0')
+    return min(count_swaps('0'), count_swaps('1'))
+`,
+
+  'maximum-number-of-non-overlapping-subarrays-with-sum-equals-target': `def maxNonOverlapping(nums, target):
+    seen = {0}
+    prefix = 0
+    count = 0
+    for num in nums:
+        prefix += num
+        if prefix - target in seen:
+            count += 1
+            seen = {prefix}
+        else:
+            seen.add(prefix)
+    return count
+`,
+
+  'find-the-minimum-possible-sum-of-a-beautiful-array': `def minimumPossibleSum(n, target):
+    MOD = 10**9 + 7
+    take = min(n, target // 2)
+    part1 = take * (take + 1) // 2
+    remaining = n - take
+    part2 = target * remaining + remaining * (remaining - 1) // 2
+    return (part1 + part2) % MOD
+`,
 };
