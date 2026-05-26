@@ -6,6 +6,11 @@ import {
   highlightActiveLine,
   highlightActiveLineGutter,
   drawSelection,
+  rectangularSelection,
+  crosshairCursor,
+  highlightSpecialChars,
+  dropCursor,
+  scrollPastEnd,
 } from '@codemirror/view';
 import { Compartment, EditorState } from '@codemirror/state';
 import { javascript } from '@codemirror/lang-javascript';
@@ -268,11 +273,17 @@ export function EditorPanel({
         highlightActiveLineGutter(),
         highlightActiveLine(),
         highlightSelectionMatches(),
+        highlightSpecialChars(),
         foldGutter(),
         drawSelection(),
+        dropCursor(),
+        scrollPastEnd(),
         // Allow multi-cursor (Alt-click, Ctrl-D add-next via defaultKeymap).
         // drawSelection above is what makes the additional carets visible.
         EditorState.allowMultipleSelections.of(true),
+        // Rectangular selection with Alt+drag; shows crosshair cursor when active.
+        rectangularSelection(),
+        crosshairCursor(),
         // Editing extensions
         history(),
         indentOnInput(),

@@ -40,6 +40,7 @@ const SECTIONS: ShortcutSection[] = [
       { keys: ['⌘G', 'Ctrl+G'], description: 'Go to next match' },
       { keys: ['⌘D', 'Ctrl+D'], description: 'Select next occurrence' },
       { keys: ['Alt+Click'], description: 'Add cursor' },
+      { keys: ['Alt+Drag'], description: 'Rectangular / column selection' },
     ],
   },
   {
