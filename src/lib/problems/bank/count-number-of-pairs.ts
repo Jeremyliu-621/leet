@@ -30,6 +30,8 @@ export const problem: Problem = {
   ],
   hints: [
     'Iterate over all pairs (i, j) with i < j and check if |nums[i] - nums[j]| == k.',
+    'Use a nested for loop: outer from 0 to n-2, inner from i+1 to n-1. Increment a counter when Math.abs(nums[i]-nums[j])===k.',
+    'let c=0;for(let i=0;i<nums.length;i++)for(let j=i+1;j<nums.length;j++)if(Math.abs(nums[i]-nums[j])===k)c++;return c;',
   ],
   functionName: 'countKDifference',
   params: ['nums', 'k'],

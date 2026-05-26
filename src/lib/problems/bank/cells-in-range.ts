@@ -31,6 +31,8 @@ Return the **list of cells** \`(r, c)\` such that \`c1 <= c <= c2\` and \`r1 <= 
   ],
   hints: [
     'Parse the column chars and row digits. Iterate column first (outer), then row (inner), building each cell string.',
+    'Extract col1=s.charCodeAt(0), row1=+s[1], col2=s.charCodeAt(3), row2=+s[4]. Nested loop c from col1 to col2, r from row1 to row2.',
+    'const r=[];for(let c=s.charCodeAt(0);c<=s.charCodeAt(3);c++)for(let n=+s[1];n<=+s[4];n++)r.push(String.fromCharCode(c)+n);return r;',
   ],
   functionName: 'cellsInRange',
   params: ['s'],

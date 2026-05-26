@@ -8,9 +8,15 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1785** problems; 5640 tests green.
+**Current focus:** Bank at **1793** problems; 5667 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank toward 1800; UX polish.
+**Next up:** Continue growing problem bank toward 1800; UX polish; marketing site refresh.
+
+### Batch 71 + terminal UX (2026-05-26)
+Added 6 new problems: `find-the-good-days-to-rob-bank` (medium/arrays+dp), `frequency-tracker` (medium/hash-map, design with dual-map O(1)), `minimum-extra-characters-in-a-string` (medium/strings+dp), `minimum-seconds-to-equalize-a-circular-array` (medium/arrays+math), `movement-of-robots` (medium/arrays+math, pass-through collision trick with BigInt pairwise prefix sum), `number-of-ways-of-cutting-a-pizza` (hard/arrays+dp, 2D prefix sum + memoized DP). Terminal UX: only the first failing test auto-expands (not all), scroll-to-top when auto-switching to test-results tab on failure. Marketing site stats updated to 1,750+. Bank at **1793**; 5658 tests.
+
+### Batch 72-local (2026-05-26)
+Added 3 new problems: `reorder-data-in-log-files` (easy/strings+arrays, partition then sort letter-logs by content+id), `minimum-one-bit-operations-to-make-integers-zero` (hard/math, Gray code inverse via iterative XOR), `longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit` (medium/sliding-window, two monotonic deques for running max/min). JS + Python solutions for all. Bank at **1788**; 5667 tests.
 
 ### Batch 71 (our, 2026-05-26)
 Added 13 new problems (14 registered; `maximum-product-of-two-elements-in-an-array` duplicate of upstream `...-in-array`): `find-peak-element-ii` (medium/binary-search, O(m log n) 2D peak), `check-completeness-of-a-binary-tree` (medium/tree, BFS null-gap on array), `all-ancestors-of-a-node-in-a-dag` (medium/graph+dp, DFS from each node), `number-of-nodes-in-subtree-with-same-label` (medium/tree+hash-map), `determine-if-cell-is-reachable-at-given-time` (medium/math, Chebyshev distance), `sum-in-a-matrix` (medium/arrays, sort-rows then column maxes), `largest-substring-between-two-equal-characters` (easy/strings), `destroy-sequential-targets` (medium/arrays+hash-map, modulo groups), `minimize-result-by-adding-parentheses-to-expression` (medium/strings+math), `minimum-sum-of-a-k-avoiding-array` (medium/arrays+math), `count-ways-to-build-rooms-in-an-ant-colony` (hard/tree+dp+math), `length-of-the-longest-alphabetical-continuous-substring` (medium/strings), `number-of-strings-that-appear-as-substrings-in-word` (easy/strings). Fixed Pyodide JsNull vs None check (use isinstance(x, int)) for Python solutions with null array elements. Bank at **1785**; 5640 tests.

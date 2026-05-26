@@ -24,6 +24,8 @@ export const problem: Problem = {
   ],
   hints: [
     'Convert each number to a string and check if its length is even.',
+    "Filter the array keeping only numbers whose string representation has even length, then return the count.",
+    'return nums.filter(n=>String(n).length%2===0).length;',
   ],
   functionName: 'findNumbers',
   params: ['nums'],

@@ -26,6 +26,8 @@ export const problem: Problem = {
   ],
   hints: [
     'Sort the array. The answer is either the product of the three largest values, or the product of the two smallest values (which could be negative) times the largest value.',
+    "After sorting, candidate 1 is nums[n-1]*nums[n-2]*nums[n-3] (three largest). Candidate 2 is nums[0]*nums[1]*nums[n-1] (two most-negative times largest). Return Math.max of the two.",
+    'const s=[...nums].sort((a,b)=>a-b),n=s.length;return Math.max(s[n-1]*s[n-2]*s[n-3],s[0]*s[1]*s[n-1]);',
   ],
   functionName: 'maximumProduct',
   params: ['nums'],

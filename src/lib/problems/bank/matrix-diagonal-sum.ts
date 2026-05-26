@@ -30,6 +30,8 @@ Only include the sum of all the elements on the primary diagonal and all the ele
   ],
   hints: [
     'Iterate i from 0 to n-1. Add mat[i][i] (primary) and mat[i][n-1-i] (secondary). If n is odd, subtract mat[n/2][n/2] (counted twice).',
+    "In a single loop over i, accumulate mat[i][i] and mat[i][n-1-i]. When n is odd the center element (i === Math.floor(n/2)) appears in both diagonals — subtract it once.",
+    'const n=mat.length;let s=0;for(let i=0;i<n;i++)s+=mat[i][i]+mat[i][n-1-i];if(n%2)s-=mat[~~(n/2)][~~(n/2)];return s;',
   ],
   functionName: 'diagonalSum',
   params: ['mat'],

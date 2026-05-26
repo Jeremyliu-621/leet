@@ -26,6 +26,8 @@ Return the **minimum** number of consecutive cards you have to pick up to contai
   ],
   hints: [
     'For each value, track the last index where it appeared. The minimum window for that value is (current index - last index + 1).',
+    "Use a Map to store the most recent index for each card value. When a duplicate is found at index i, compute i - lastSeen + 1 and update the global minimum.",
+    'const m=new Map<number,number>();let ans=Infinity;for(let i=0;i<cards.length;i++){if(m.has(cards[i]))ans=Math.min(ans,i-m.get(cards[i])!+1);m.set(cards[i],i);}return ans===Infinity?-1:ans;',
   ],
   functionName: 'minimumCardPickup',
   params: ['cards'],

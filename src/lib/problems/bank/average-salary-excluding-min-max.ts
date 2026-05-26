@@ -26,6 +26,8 @@ Return the average salary of employees excluding the minimum and maximum salary.
   ],
   hints: [
     'Find the min and max. Sum all salaries minus the min and max. Divide by salary.length - 2.',
+    'Sort the array and skip the first and last elements, or use Math.min/Math.max to exclude extremes.',
+    'const mn=Math.min(...salary),mx=Math.max(...salary);return salary.filter(s=>s!==mn&&s!==mx).reduce((a,b)=>a+b,0)/(salary.length-2);',
   ],
   functionName: 'average',
   params: ['salary'],

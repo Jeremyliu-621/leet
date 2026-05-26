@@ -30,6 +30,8 @@ You can move according to these rules:
   ],
   hints: [
     'The minimum time to go from point A to point B is max(|A.x - B.x|, |A.y - B.y|) because diagonal movement lets you cover both axes simultaneously.',
+    "Sum up the step costs between consecutive point pairs. For each pair, the cost is Math.max(Math.abs(x2-x1), Math.abs(y2-y1)).",
+    'let t=0;for(let i=1;i<points.length;i++)t+=Math.max(Math.abs(points[i][0]-points[i-1][0]),Math.abs(points[i][1]-points[i-1][1]));return t;',
   ],
   functionName: 'minTimeToVisitAllPoints',
   params: ['points'],

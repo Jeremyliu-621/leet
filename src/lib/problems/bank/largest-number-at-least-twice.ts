@@ -27,6 +27,8 @@ Determine whether the largest element in the array is **at least twice** as much
   ],
   hints: [
     'Find the maximum and its index. Check that max >= 2 * every other element.',
+    "Find the max value and its index. Then check every other element: if any element*2 > max, return -1. Otherwise return the max index.",
+    'const m=Math.max(...nums),i=nums.indexOf(m);return nums.every(x=>x===m||m>=2*x)?i:-1;',
   ],
   functionName: 'dominantIndex',
   params: ['nums'],

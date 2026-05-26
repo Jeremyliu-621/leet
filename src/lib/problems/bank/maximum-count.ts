@@ -22,6 +22,8 @@ export const problem: Problem = {
   ],
   hints: [
     'Count negatives (values < 0) and positives (values > 0). Return the larger count.',
+    "Since the array is sorted, use filter to count negatives and positives separately, then return Math.max of the two counts.",
+    'return Math.max(nums.filter(x=>x<0).length,nums.filter(x=>x>0).length);',
   ],
   functionName: 'maximumCount',
   params: ['nums'],

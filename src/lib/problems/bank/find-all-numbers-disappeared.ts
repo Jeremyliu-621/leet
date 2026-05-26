@@ -23,6 +23,8 @@ export const problem: Problem = {
   ],
   hints: [
     'Create a set of all numbers in nums. Then iterate 1..n and collect those not in the set.',
+    "Build a Set from nums. Then use Array.from({length:n},(_,i)=>i+1).filter(x=>!set.has(x)) to collect missing values.",
+    'const s=new Set(nums);return Array.from({length:nums.length},(_,i)=>i+1).filter(x=>!s.has(x));',
   ],
   functionName: 'findDisappearedNumbers',
   params: ['nums'],

@@ -28,6 +28,8 @@ Given the string \`command\`, return the Goal Parser's interpretation of \`comma
   ],
   hints: [
     'Replace `"()"` with `"o"` and `"(al)"` with `"al"`. All `"G"` characters remain.',
+    "Chain replaceAll (or replace with /g flag) for both substrings. Order matters: replace longer pattern first.",
+    "return command.replaceAll('(al)','al').replaceAll('()','o');",
   ],
   functionName: 'interpret',
   params: ['command'],

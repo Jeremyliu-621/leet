@@ -17,6 +17,8 @@ Return the **largest** possible value of \`num\` after **any** number of swaps.`
   ],
   hints: [
     'Collect odd-valued and even-valued digits separately, sort each in descending order, then rebuild the number by placing the largest available digit of the correct parity at each position.',
+    "Split num into digits. Partition into two sorted-descending arrays: odds and evens. Walk the original digit positions, pulling the next odd or even digit depending on parity.",
+    "const d=[...String(num)],o=d.filter(x=>+x%2).sort((a,b)=>+b-+a),e=d.filter(x=>!+x%2||x==='0'?+x%2===0:false).sort((a,b)=>+b-+a);let oi=0,ei=0;return +d.map(x=>+x%2?o[oi++]:e[ei++]).join('');",
   ],
   functionName: 'largestInteger',
   params: ['num'],

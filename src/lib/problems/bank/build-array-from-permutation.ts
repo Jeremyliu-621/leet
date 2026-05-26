@@ -26,6 +26,8 @@ A **zero-based permutation** \`nums\` is an array of **distinct** integers from 
   ],
   hints: [
     'For each index i, the result at position i is nums[nums[i]].',
+    'nums is a permutation of [0..n-1], so every index is valid. Just map each position to its double-indexed value.',
+    'return nums.map((v,i)=>nums[v]??0);',
   ],
   functionName: 'buildArray',
   params: ['nums'],

@@ -1899,8 +1899,27 @@ import { problem as minimumReplacementsToSortTheArray } from './minimum-replacem
 import { problem as findTheCityWithSmallestNeighbors } from './find-the-city-with-smallest-number-of-neighbors-at-a-threshold-distance';
 import { problem as maximumCandiesAllocatedToKChildren } from './maximum-candies-allocated-to-k-children';
 import { problem as numberOfRestrictedPaths } from './number-of-restricted-paths-from-first-to-last-node';
-import { problem as minimumSwapsToSortAnArray } from './minimum-swaps-to-sort-an-array';
-
+import { problem as minimumSwapsToSortAnArray } from './minimum-swaps-to-sort-an-array';// batch 71 (new problems)
+import { problem as findTheGoodDaysToRobBank } from './find-the-good-days-to-rob-bank';
+import { problem as minimumExtraCharactersInAString } from './minimum-extra-characters-in-a-string';
+import { problem as minimumSecondsToEqualizeACircularArray } from './minimum-seconds-to-equalize-a-circular-array';
+import { problem as movementOfRobots } from './movement-of-robots';
+import { problem as numberOfWaysOfCuttingAPizza } from './number-of-ways-of-cutting-a-pizza';
+import { problem as frequencyTracker } from './frequency-tracker';
+// batch 72-local
+import { problem as reorderDataInLogFiles } from './reorder-data-in-log-files';
+import { problem as minimumOneBitOperations } from './minimum-one-bit-operations-to-make-integers-zero';
+import { problem as longestContinuousSubarrayAbsDiff } from './longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit';
+// batch 72
+import { problem as walkingRobotSimulation } from './walking-robot-simulation';
+import { problem as findDistinctDifferenceArray } from './find-distinct-difference-array';
+import { problem as maximumNumberOfAlloys } from './maximum-number-of-alloys';
+import { problem as minimumOpsDistinctElements } from './minimum-ops-distinct-elements';
+import { problem as minimumCoinsToAdd } from './minimum-coins-to-add';
+import { problem as countSpecialCharactersII } from './count-special-characters-ii';
+import { problem as findMaximumK } from './find-maximum-k';
+import { problem as minimumChairsWaitingRoom } from './minimum-chairs-waiting-room';
+import { problem as maximumBallsInBox } from './maximum-balls-in-box';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -3836,4 +3855,25 @@ export const problems: readonly Problem[] = [
   countWaysToBuildRoomsInAntColony,
   lengthOfLongestAlphabeticalContinuousSubstring,
   numberOfStringsThatAppearAsSubstrings,
+  // batch 71 (new problems from this session)
+  findTheGoodDaysToRobBank,
+  minimumExtraCharactersInAString,
+  minimumSecondsToEqualizeACircularArray,
+  movementOfRobots,
+  numberOfWaysOfCuttingAPizza,
+  frequencyTracker,
+  // batch 72-local
+  reorderDataInLogFiles,
+  minimumOneBitOperations,
+  longestContinuousSubarrayAbsDiff,
+  // batch 72
+  walkingRobotSimulation,
+  findDistinctDifferenceArray,
+  maximumNumberOfAlloys,
+  minimumOpsDistinctElements,
+  minimumCoinsToAdd,
+  countSpecialCharactersII,
+  findMaximumK,
+  minimumChairsWaitingRoom,
+  maximumBallsInBox,
 ];

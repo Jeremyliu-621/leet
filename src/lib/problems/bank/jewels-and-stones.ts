@@ -19,6 +19,8 @@ Letters are case sensitive, so \`"a"\` is different from \`"A"\`.`,
   ],
   hints: [
     'Put all jewel types into a set, then count how many stones are in the set.',
+    "Create a Set from the jewels string. Then iterate stones and count characters that appear in the set.",
+    'const j=new Set(jewels);return [...stones].filter(s=>j.has(s)).length;',
   ],
   functionName: 'numJewelsInStones',
   params: ['jewels', 'stones'],

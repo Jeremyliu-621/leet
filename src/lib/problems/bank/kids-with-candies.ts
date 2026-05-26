@@ -29,6 +29,8 @@ Note that **multiple** kids can have the greatest number of candies.`,
   ],
   hints: [
     'Find the maximum value in candies. For each kid, check if candies[i] + extraCandies >= max.',
+    'Compute max with Math.max(...candies), then map: each element returns candies[i] + extraCandies >= max.',
+    'const m=Math.max(...candies);return candies.map(c=>c+extraCandies>=m);',
   ],
   functionName: 'kidsWithCandies',
   params: ['candies', 'extraCandies'],

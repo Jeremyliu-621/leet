@@ -19,7 +19,11 @@ A **defanged IP address** replaces every period \`"."\` with \`"[.]"\`.`,
       output: '"255[.]100[.]50[.]0"',
     },
   ],
-  hints: ['Replace every `.` with `[.]`.'],
+  hints: [
+    'Replace every `.` with `[.]`.',
+    'Use String.prototype.replaceAll or split-join to replace all dots at once.',
+    "return address.split('.').join('[.]');",
+  ],
   functionName: 'defangIPaddr',
   params: ['address'],
   starterCode: {

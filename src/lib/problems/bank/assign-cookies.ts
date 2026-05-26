@@ -19,6 +19,8 @@ Each child \`i\` has a greed factor \`g[i]\`, which is the minimum size of a coo
   ],
   hints: [
     'Sort both arrays. Use a greedy approach: try to satisfy the least greedy child first with the smallest sufficient cookie.',
+    'Two-pointer: sort g and s. Use pointer i for children, j for cookies. If s[j] >= g[i], assign the cookie (increment i and j); otherwise skip this cookie (increment j only).',
+    'g.sort((a,b)=>a-b);s.sort((a,b)=>a-b);let i=0,j=0;while(i<g.length&&j<s.length){if((s[j]??0)>=(g[i]??0))i++;j++;}return i;',
   ],
   functionName: 'findContentChildren',
   params: ['g', 's'],

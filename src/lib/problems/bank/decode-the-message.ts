@@ -25,6 +25,8 @@ Return the decoded message.`,
   ],
   hints: [
     'Build a map from each letter in key (by first appearance) to a, b, c... Then decode each character.',
+    "Iterate key: skip spaces and already-mapped letters. For each new letter, map it to String.fromCharCode(97 + index). Then decode message by looking up each character (pass spaces through).",
+    "const m={};let i=0;for(const c of key)if(c!==' '&&!m[c])m[c]=String.fromCharCode(97+i++);return message.split('').map(c=>c===' '?' ':m[c]).join('');",
   ],
   functionName: 'decodeMessage',
   params: ['key', 'message'],

@@ -25878,6 +25878,62 @@ def findPeakGrid(mat):
             lo = mid + 1
     return [-1, -1]
 `,
+  // batch 72-local
+  'reorder-data-in-log-files': `
+def reorderLogFiles(logs):
+    if hasattr(logs, 'to_py'):
+        logs = list(logs.to_py())
+    logs = [str(x) for x in logs]
+    letters = []
+    digits = []
+    for log in logs:
+        parts = log.split(' ', 1)
+        if parts[1][0].isdigit():
+            digits.append(log)
+        else:
+            letters.append(log)
+    letters.sort(key=lambda log: (log.split(' ', 1)[1], log.split(' ', 1)[0]))
+    return letters + digits
+`,
+
+  'minimum-one-bit-operations-to-make-integers-zero': `
+def minimumOneBitOperations(n):
+    result = n
+    n >>= 1
+    while n > 0:
+        result ^= n
+        n >>= 1
+    return result
+`,
+
+  'longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit': `
+from collections import deque
+def longestSubarray(nums, limit):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    nums = [int(x) for x in nums]
+    limit = int(limit)
+    max_q = deque()
+    min_q = deque()
+    left = 0
+    ans = 0
+    for right, val in enumerate(nums):
+        while max_q and nums[max_q[-1]] <= val:
+            max_q.pop()
+        max_q.append(right)
+        while min_q and nums[min_q[-1]] >= val:
+            min_q.pop()
+        min_q.append(right)
+        while nums[max_q[0]] - nums[min_q[0]] > limit:
+            left += 1
+            if max_q[0] < left:
+                max_q.popleft()
+            if min_q[0] < left:
+                min_q.popleft()
+        ans = max(ans, right - left + 1)
+    return ans
+`,
+
 
   'check-completeness-of-a-binary-tree': `
 def isCompleteTree(root):
@@ -26139,6 +26195,271 @@ def numOfStrings(patterns, word):
             cycle_len += 1
         swaps += cycle_len - 1
     return swaps
+`,
+
+  // batch 71 (new problems)
+
+  'find-the-good-days-to-rob-bank': `def goodDaysToRobBank(security, time):
+    n = len(security)
+    if n == 0:
+        return []
+    dec = [0] * n
+    inc = [0] * n
+    for i in range(1, n):
+        if security[i] <= security[i - 1]:
+            dec[i] = dec[i - 1] + 1
+    for i in range(n - 2, -1, -1):
+        if security[i] <= security[i + 1]:
+            inc[i] = inc[i + 1] + 1
+    return [i for i in range(n) if dec[i] >= time and inc[i] >= time]
+`,
+
+  'minimum-extra-characters-in-a-string': `def minExtraChar(s, dictionary):
+    n = len(s)
+    if n == 0:
+        return 0
+    word_set = set(dictionary)
+    dp = [0] * (n + 1)
+    for j in range(1, n + 1):
+        dp[j] = dp[j - 1] + 1  # skip s[j-1]
+        for i in range(j):
+            if s[i:j] in word_set:
+                dp[j] = min(dp[j], dp[i])
+    return dp[n]
+`,
+
+  'minimum-seconds-to-equalize-a-circular-array': `def minimumSeconds(nums):
+    from collections import defaultdict
+    n = len(nums)
+    positions = defaultdict(list)
+    for i, v in enumerate(nums):
+        positions[v].append(i)
+    ans = n
+    for pos in positions.values():
+        max_gap = 0
+        for i in range(1, len(pos)):
+            max_gap = max(max_gap, pos[i] - pos[i - 1])
+        circular_gap = n - pos[-1] + pos[0]
+        max_gap = max(max_gap, circular_gap)
+        ans = min(ans, max_gap // 2)
+    return ans
+`,
+
+  'movement-of-robots': `def sumDistance(nums, s, d):
+    MOD = 10 ** 9 + 7
+    positions = sorted(v + d if c == 'R' else v - d for v, c in zip(nums, s))
+    total = 0
+    prefix = 0
+    for i, p in enumerate(positions):
+        total = (total + p * i - prefix) % MOD
+        prefix += p
+    return total % MOD
+`,
+
+  'number-of-ways-of-cutting-a-pizza': `def ways(pizza, k):
+    MOD = 10 ** 9 + 7
+    rows = len(pizza)
+    cols = len(pizza[0]) if pizza else 0
+    prefix = [[0] * (cols + 1) for _ in range(rows + 1)]
+    for r in range(rows - 1, -1, -1):
+        for c in range(cols - 1, -1, -1):
+            prefix[r][c] = (1 if pizza[r][c] == 'A' else 0) + prefix[r + 1][c] + prefix[r][c + 1] - prefix[r + 1][c + 1]
+    def apples_in(r, c):
+        return prefix[r][c]
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dp(r, c, cuts):
+        if apples_in(r, c) == 0:
+            return 0
+        if cuts == 1:
+            return 1
+        result = 0
+        total = apples_in(r, c)
+        for nr in range(r + 1, rows):
+            if total - apples_in(nr, c) > 0:
+                result = (result + dp(nr, c, cuts - 1)) % MOD
+        for nc in range(c + 1, cols):
+            if total - apples_in(r, nc) > 0:
+                result = (result + dp(r, nc, cuts - 1)) % MOD
+        return result
+    return dp(0, 0, k)
+`,
+
+  'frequency-tracker': `def frequencyTracker(operations, args):
+    count = {}
+    freq_count = {}
+    def inc_freq(f):
+        freq_count[f] = freq_count.get(f, 0) + 1
+    def dec_freq(f):
+        if freq_count.get(f, 0) <= 1:
+            freq_count.pop(f, None)
+        else:
+            freq_count[f] -= 1
+    result = []
+    for op, a in zip(operations, args):
+        if op == 'add':
+            num = a[0]
+            prev = count.get(num, 0)
+            if prev > 0:
+                dec_freq(prev)
+            count[num] = prev + 1
+            inc_freq(prev + 1)
+            result.append(None)
+        elif op == 'deleteOne':
+            num = a[0]
+            prev = count.get(num, 0)
+            if prev == 0:
+                result.append(None)
+                continue
+            dec_freq(prev)
+            count[num] = prev - 1
+            if prev - 1 > 0:
+                inc_freq(prev - 1)
+            result.append(None)
+        elif op == 'hasFrequency':
+            freq = a[0]
+            result.append(freq_count.get(freq, 0) > 0)
+        else:
+            result.append(None)
+    return result
+`,
+  // batch 72
+  'walking-robot-simulation': `
+def robotSim(commands, obstacles):
+    obs = set(map(tuple, obstacles))
+    dx = [0, 1, 0, -1]
+    dy = [1, 0, -1, 0]
+    direction = 0
+    x, y, best = 0, 0, 0
+    for cmd in commands:
+        if cmd == -2:
+            direction = (direction + 3) % 4
+        elif cmd == -1:
+            direction = (direction + 1) % 4
+        else:
+            for _ in range(cmd):
+                nx, ny = x + dx[direction], y + dy[direction]
+                if (nx, ny) not in obs:
+                    x, y = nx, ny
+                    best = max(best, x*x + y*y)
+    return best
+`,
+
+  'find-distinct-difference-array': `
+def distinctDifferenceArray(nums):
+    n = len(nums)
+    result = []
+    for i in range(n):
+        prefix = len(set(nums[:i+1]))
+        suffix = len(set(nums[i+1:]))
+        result.append(prefix - suffix)
+    return result
+`,
+
+  'maximum-number-of-alloys': `
+def maxNumberOfAlloys(n, k, budget, composition, stock, cost):
+    def can_make(machine, x):
+        spent = 0
+        for j in range(len(machine)):
+            need = machine[j] * x - stock[j]
+            if need > 0:
+                spent += need * cost[j]
+            if spent > budget:
+                return False
+        return True
+    ans = 0
+    for machine in composition:
+        lo, hi = 0, int(2e8)
+        while lo < hi:
+            mid = (lo + hi + 1) // 2
+            if can_make(machine, mid):
+                lo = mid
+            else:
+                hi = mid - 1
+        ans = max(ans, lo)
+    return ans
+`,
+
+  'minimum-ops-distinct-elements': `
+def minimumOperations(nums):
+    ops = 0
+    while True:
+        remaining = nums[ops * 3:]
+        if len(set(remaining)) == len(remaining):
+            break
+        ops += 1
+    return ops
+`,
+
+  'minimum-coins-to-add': `
+def minimumAddedCoins(coins, target):
+    coins = sorted(coins)
+    reach = 0
+    ops = 0
+    i = 0
+    while reach < target:
+        if i < len(coins) and coins[i] <= reach + 1:
+            reach += coins[i]
+            i += 1
+        else:
+            reach += reach + 1
+            ops += 1
+    return ops
+`,
+
+  'count-special-characters-ii': `
+def numberOfSpecialCharsII(word):
+    count = 0
+    for c in range(26):
+        lc = chr(ord('a') + c)
+        uc = chr(ord('A') + c)
+        last_lower = -1
+        first_upper = len(word)
+        for i, ch in enumerate(word):
+            if ch == lc:
+                last_lower = i
+        for i, ch in enumerate(word):
+            if ch == uc:
+                first_upper = i
+                break
+        if last_lower != -1 and first_upper != len(word) and last_lower < first_upper:
+            count += 1
+    return count
+`,
+
+  'find-maximum-k': `
+def findMaxK(nums):
+    s = set(nums)
+    ans = -1
+    for n in nums:
+        if n > 0 and -n in s:
+            ans = max(ans, n)
+    return ans
+`,
+
+  'minimum-chairs-waiting-room': `
+def minimumChairs(s):
+    curr = best = 0
+    for ch in s:
+        if ch == 'E':
+            curr += 1
+        else:
+            curr -= 1
+        best = max(best, curr)
+    return best
+`,
+
+  'maximum-balls-in-box': `
+def countBalls(lowLimit, highLimit):
+    from collections import Counter
+    def digit_sum(n):
+        s = 0
+        while n > 0:
+            s += n % 10
+            n //= 10
+        return s
+    cnt = Counter(digit_sum(i) for i in range(lowLimit, highLimit + 1))
+    return max(cnt.values())
 `,
 
 };

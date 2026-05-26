@@ -22,6 +22,8 @@ Return the **maximum** number of pairs.`,
   ],
   hints: [
     'Use a set. For each word, check if its reverse is already in the set; if so, count a pair. Otherwise add the word.',
+    "Reverse a two-character word by splitting and reversing: word.split('').reverse().join(''). Maintain a Set of seen words; when the reverse is found, increment the counter and remove it.",
+    "const s=new Set<string>();let c=0;for(const w of words){const r=w.split('').reverse().join('');if(s.has(r)){c++;s.delete(r);}else s.add(w);}return c;",
   ],
   functionName: 'maximumNumberOfStringPairs',
   params: ['words'],

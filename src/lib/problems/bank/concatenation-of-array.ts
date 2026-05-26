@@ -27,6 +27,8 @@ Return the array \`ans\`.`,
   ],
   hints: [
     'Simply concatenate nums with itself.',
+    'Use spread: return [...nums, ...nums]. Or nums.concat(nums).',
+    'return [...nums,...nums];',
   ],
   functionName: 'getConcatenation',
   params: ['nums'],

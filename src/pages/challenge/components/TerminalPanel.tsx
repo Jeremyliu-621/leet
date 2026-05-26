@@ -391,6 +391,10 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
     [activeTab],
   );
 
+  // Track whether the last switch to testcases was due to a failure
+  // so we can scroll to top to show the summary and first failure.
+  const switchedToTestcasesRef = useRef(false);
+
   // When a new result arrives, build entries and add to history.
   useEffect(() => {
     if (result && result !== prevResultRef.current && result !== undefined) {
@@ -401,16 +405,22 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
       // sees the first failing test expanded.
       if (result.outcome !== 'accepted' && result.verdicts.length > 0) {
         setActiveTab('testcases');
+        switchedToTestcasesRef.current = true;
       }
     }
   }, [result, mode]);
 
-  // Auto-scroll to bottom when new entries are added.
+  // Auto-scroll: scroll to bottom in terminal output, scroll to top in testcases
+  // (so users see the summary + first failure, not the last test).
   useEffect(() => {
-    if (scrollRef.current) {
+    if (!scrollRef.current) return;
+    if (activeTab === 'testcases' && switchedToTestcasesRef.current) {
+      scrollRef.current.scrollTop = 0;
+      switchedToTestcasesRef.current = false;
+    } else if (activeTab === 'output') {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [history, result]);
+  }, [history, result, activeTab]);
 
   const handleClear = useCallback(() => {
     setHistory([]);
@@ -558,10 +568,19 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
               </div>
 
               {/* Individual test results — key includes passed count so cards
-                  reset their expand state when a new result arrives */}
-              {result.verdicts.map((verdict) => (
-                <TestResultCard key={`${result.passed}-${verdict.index}`} verdict={verdict} />
-              ))}
+                  reset their expand state when a new result arrives.
+                  Only the first non-pass test starts expanded to avoid
+                  overwhelming the user when many tests fail. */}
+              {(() => {
+                const firstFailIdx = result.verdicts.findIndex((v) => v.status !== 'pass');
+                return result.verdicts.map((verdict, i) => (
+                  <TestResultCard
+                    key={`${result.passed}-${verdict.index}`}
+                    verdict={verdict}
+                    autoExpand={i === firstFailIdx}
+                  />
+                ));
+              })()}
             </>
           )}
           {result && result.verdicts.length === 0 && result.message && (
@@ -581,8 +600,8 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
 }
 
 /** Compact test result card for the Test Results tab. */
-function TestResultCard({ verdict }: { verdict: TestVerdict }) {
-  const [expanded, setExpanded] = useState(verdict.status !== 'pass');
+function TestResultCard({ verdict, autoExpand }: { verdict: TestVerdict; autoExpand?: boolean }) {
+  const [expanded, setExpanded] = useState(autoExpand ?? false);
   const label = `Test ${verdict.index + 1}`;
 
   return (

@@ -16,6 +16,8 @@ export const problem: Problem = {
   ],
   hints: [
     'Convert each number to a string and check if its length is even, or count digits using repeated division by 10.',
+    "Use nums.filter(n => String(n).length % 2 === 0).length, which converts each number to a string and tests the length parity.",
+    'return nums.filter(n=>String(n).length%2===0).length;',
   ],
   functionName: 'findNumbers',
   params: ['nums'],

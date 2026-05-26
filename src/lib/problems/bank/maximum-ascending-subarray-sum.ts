@@ -33,6 +33,8 @@ A subarray \`[nums[l], nums[l+1], ..., nums[r-1], nums[r]]\` is **ascending** if
   ],
   hints: [
     'Scan through the array, maintain the current ascending subarray sum. When the next element is not greater, compare to the max and restart.',
+    "Initialize cur=nums[0], max=nums[0]. For each subsequent element: if it is greater than the previous, add it to cur; otherwise reset cur to the current element. Update max after each step.",
+    'let cur=nums[0],best=nums[0];for(let i=1;i<nums.length;i++){cur=nums[i]>nums[i-1]?cur+nums[i]:nums[i];if(cur>best)best=cur;}return best;',
   ],
   functionName: 'maxAscendingSum',
   params: ['nums'],

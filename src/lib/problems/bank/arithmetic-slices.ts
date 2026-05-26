@@ -29,6 +29,8 @@ A **subarray** is a contiguous subsequence of the array.`,
   ],
   hints: [
     'Use DP. Let dp[i] = number of arithmetic slices ending at index i. If nums[i]-nums[i-1]==nums[i-1]-nums[i-2], then dp[i] = dp[i-1]+1, else dp[i]=0. Sum all dp[i].',
+    'Alternatively, use a running counter: if the current triple is arithmetic, increment a local counter `cur` and add it to the total; otherwise reset `cur` to 0.',
+    'let r=0,c=0;for(let i=2;i<nums.length;i++){if(nums[i]-nums[i-1]===nums[i-1]-nums[i-2])r+=++c;else c=0;}return r;',
   ],
   functionName: 'numberOfArithmeticSlices',
   params: ['nums'],

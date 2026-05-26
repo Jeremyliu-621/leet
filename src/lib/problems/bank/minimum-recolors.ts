@@ -24,6 +24,8 @@ Return the **minimum** number of operations needed such that there is at least o
   ],
   hints: [
     'Use a sliding window of size k. Count white blocks in the window. The answer is the minimum such count.',
+    "Initialize the count of white blocks ('W') in the first window of size k. Slide the window: add the new right character and remove the left character, updating the count. Track the minimum.",
+    "let w=blocks.slice(0,k).split('').filter(c=>c==='W').length,m=w;for(let i=k;i<blocks.length;i++){w+=(blocks[i]==='W'?1:0)-(blocks[i-k]==='W'?1:0);if(w<m)m=w;}return m;",
   ],
   functionName: 'minimumRecolors',
   params: ['blocks', 'k'],

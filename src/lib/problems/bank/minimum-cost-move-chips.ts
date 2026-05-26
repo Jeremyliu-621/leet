@@ -31,6 +31,8 @@ Return the **minimum cost** needed to move all the chips to the same position.`,
   ],
   hints: [
     'Moving by 2 is free. So all even-indexed chips are "free" to move to any even position, and all odd to any odd position. Cost is min(count_even, count_odd).',
+    "Count how many chips are at odd positions and how many at even positions. Moving all chips of one parity group to the other costs one per chip. Return the smaller group size.",
+    'const odd=position.filter(p=>p%2).length;return Math.min(odd,position.length-odd);',
   ],
   functionName: 'minCostToMoveChips',
   params: ['position'],

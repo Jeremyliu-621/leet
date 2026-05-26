@@ -34,6 +34,8 @@ Return the **minimum possible sum** of a mountain triplet of \`nums\`. If no suc
   ],
   hints: [
     'Try all O(n^3) triplets. For each valid mountain triplet, track the minimum sum.',
+    "Use three nested loops for i < j < k. Check nums[i]<nums[j] && nums[k]<nums[j]. If so, update a running minimum with nums[i]+nums[j]+nums[k].",
+    'let m=Infinity;for(let i=0;i<nums.length-2;i++)for(let j=i+1;j<nums.length-1;j++)for(let k=j+1;k<nums.length;k++)if(nums[i]<nums[j]&&nums[k]<nums[j])m=Math.min(m,nums[i]+nums[j]+nums[k]);return m===Infinity?-1:m;',
   ],
   functionName: 'minimumSum',
   params: ['nums'],

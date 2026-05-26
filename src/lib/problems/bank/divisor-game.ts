@@ -30,6 +30,8 @@ Return \`true\` if and only if Alice wins the game, assuming both players play o
   ],
   hints: [
     'Alice wins if and only if n is even. Can you prove this by induction or by observing the pattern for small n?',
+    "If n is even, Alice subtracts 1 (a divisor of any even n), leaving Bob with an odd number. From any odd number the only move leaves an even number for Alice again — so Alice always wins when n is even.",
+    'return n%2===0;',
   ],
   functionName: 'divisorGame',
   params: ['n'],
