@@ -12,6 +12,9 @@
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1600; further UX polish.
 
+### a11y: motion-safe: prefix on all animations (2026-05-26)
+Added `motion-safe:` to all `animate-spin` and `animate-pulse` instances so they respect `prefers-reduced-motion: reduce`. Affects: TopBar timer pulse, EditorPanel run/submit spinners, TerminalPanel running-state pulse, CustomTestPanel spinners. State still communicated without motion.
+
 ### Batch 60 (2026-05-26)
 Added 5 problems: `minimum-number-of-operations-to-make-array-continuous` (arrays/hard, sliding window on unique sorted values), `pacific-atlantic-water-flow` (graph/medium, reverse BFS from both oceans), `critical-connections-in-a-network` (graph/hard, Tarjan bridge-finding), `minimum-cost-to-cut-a-stick` (dp/hard, interval DP on sorted cut points), `largest-rectangle-in-histogram` (stack/hard, monotonic stack). Note: 4 originally requested problems were already in bank — unique replacements selected. JS + Python solutions for all. Bank at **1554**; 4950 tests.
 
