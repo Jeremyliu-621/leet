@@ -29143,6 +29143,40 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(ans);
   },
 
+  // batch 81
+  'minimum-cost-to-reach-destination-in-time': (...args: unknown[]) => {
+    const [maxTime, edges, passingFees] = args as [number, number[][], number[]];
+    const n = passingFees.length;
+    const adj: [number, number][][] = Array.from({length: n}, () => []);
+    for (const [x, y, t] of edges as number[][]) { adj[x as number]!.push([y as number, t as number]); adj[y as number]!.push([x as number, t as number]); }
+    const dp = Array.from({length: maxTime+1}, () => new Array<number>(n).fill(Infinity));
+    dp[0]![0] = passingFees[0]!;
+    for (let t = 0; t <= maxTime; t++) {
+      for (let v = 0; v < n; v++) {
+        if (dp[t]![v] === Infinity) continue;
+        for (const [u, et] of adj[v]!) {
+          if (t + et <= maxTime)
+            dp[t+et]![u] = Math.min(dp[t+et]![u]!, dp[t]![v]! + passingFees[u]!);
+        }
+      }
+    }
+    const ans = Math.min(...dp.map(row => row[n-1]!));
+    return ans === Infinity ? -1 : ans;
+  },
+
+  'total-appeal-of-a-string': (...args: unknown[]) => {
+    const [s] = args as [string];
+    const last: Record<string, number> = {};
+    let total = 0, cur = 0;
+    for (let i = 0; i < s.length; i++) {
+      const c = s[i]!;
+      cur += i - (last[c] ?? -1);
+      last[c] = i;
+      total += cur;
+    }
+    return total;
+  },
+
   // batch 80
   'find-the-safest-path-in-a-grid': (...args: unknown[]) => {
     const [grid] = args as [number[][]];

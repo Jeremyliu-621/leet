@@ -2022,6 +2022,9 @@ import { problem as designAuthenticationManager } from './design-authentication-
 import { problem as findTheSafestPathInAGrid } from './find-the-safest-path-in-a-grid';
 import { problem as divideNodesIntoTheMaximumNumberOfGroups } from './divide-nodes-into-the-maximum-number-of-groups';
 import { problem as rangeSumOfSortedSubarraySums } from './range-sum-of-sorted-subarray-sums';
+// batch 81 — shortest-path, strings, dp
+import { problem as minimumCostToReachDestinationInTime } from './minimum-cost-to-reach-destination-in-time';
+import { problem as totalAppealOfAString } from './total-appeal-of-a-string';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4080,4 +4083,7 @@ export const problems: readonly Problem[] = [
   findTheSafestPathInAGrid,
   divideNodesIntoTheMaximumNumberOfGroups,
   rangeSumOfSortedSubarraySums,
+  // batch 81 — shortest-path, strings, dp
+  minimumCostToReachDestinationInTime,
+  totalAppealOfAString,
 ];

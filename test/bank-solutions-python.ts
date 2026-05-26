@@ -28554,6 +28554,40 @@ def countGoodArrays(n, m, k):
     return comb_mod(n - 1, k, MOD) * m % MOD * pow(m - 1, diff, MOD) % MOD
 `,
 
+  // batch 81
+  'minimum-cost-to-reach-destination-in-time': `
+def minCost(maxTime, edges, passingFees):
+    n = len(passingFees)
+    adj = [[] for _ in range(n)]
+    for x, y, t in edges:
+        adj[x].append((y, t))
+        adj[y].append((x, t))
+    INF = float('inf')
+    dp = [[INF] * n for _ in range(maxTime + 1)]
+    dp[0][0] = passingFees[0]
+    for t in range(maxTime + 1):
+        for v in range(n):
+            if dp[t][v] == INF:
+                continue
+            for u, et in adj[v]:
+                nt = t + et
+                if nt <= maxTime:
+                    dp[nt][u] = min(dp[nt][u], dp[t][v] + passingFees[u])
+    ans = min(dp[t][n-1] for t in range(maxTime + 1))
+    return -1 if ans == INF else ans
+`,
+
+  'total-appeal-of-a-string': `
+def appealSum(s: str) -> int:
+    last = {}
+    total = cur = 0
+    for i, c in enumerate(s):
+        cur += i - last.get(c, -1)
+        last[c] = i
+        total += cur
+    return total
+`,
+
   // batch 80
   'find-the-safest-path-in-a-grid': `
 from collections import deque
