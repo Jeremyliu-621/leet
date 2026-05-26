@@ -8,9 +8,15 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1692 problems; 5361 tests green.
+**Current focus:** Bank at 1706 problems; 5403 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank toward 1700; marketing site update at 1,700+ milestone.
+**Next up:** Continue growing problem bank toward 1750; marketing site update at 1,700+ milestone.
+
+### Batch 67+68 backfill (2026-05-26)
+Registered 14 previously orphaned problems (files existed on disk but weren't imported in index.ts):
+- batch-67: 13 problems — `minimum-operations-to-make-uni-value-grid`, `minimum-moves-to-make-array-complementary`, `find-winner-of-array-game`, `maximum-number-of-robots-within-budget`, `minimum-limit-of-balls-in-a-bag`, `maximum-rows-covered-by-columns`, `minimum-array-length-after-pair-removals`, `count-the-number-of-complete-components`, `design-memory-allocator`, `campus-bikes` (fixed: greedy→min-cost assignment), `escape-the-ghosts` (fixed: equal-distance = false), `maximum-value-of-k-coins-from-piles` (fixed: 2 wrong test values), `parallel-courses-iii`
+- batch-65-local: `max-stack` (medium/stack, dual-stack popMax). JS + Python solutions added.
+Bank at **1706**; 5403 tests.
 
 ### Batch 68 (2026-05-26)
 Added 6 problems: `best-time-to-buy-and-sell-stock-iii` (hard/arrays+dp, at-most-2-transactions state machine), `find-the-duplicate-number` (medium/arrays+two-pointers, Floyd's cycle detection), `count-subarrays-with-fixed-bounds` (hard/arrays+sliding-window, three-pointer), `maximum-difference-in-array` (easy/arrays, min-so-far scan), `longest-subarray-with-at-most-k-frequency` (medium/arrays+sliding-window+hash-map), `count-pairs-in-two-arrays` (medium/arrays+binary-search, diff-array sort + bisect). Fixed 5 wrong expected values. Bank at **1692**; 5361 tests.
