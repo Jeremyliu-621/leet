@@ -2179,15 +2179,19 @@ import { problem as dailyTemperaturesVariant } from './monotonic-stack-daily-tem
 import { problem as rangeSumBst } from './range-sum-bst';
 import { problem as deleteNodeInABst } from './delete-node-in-a-bst';
 import { problem as binaryTreeMaximumPathSum } from './binary-tree-maximum-path-sum';
-// batch 96 — arrays/easy, arrays+hash-map/easy, strings+hash-map/easy
+// batch 96 (remote) — arrays/easy, arrays+hash-map/easy, strings+hash-map/easy
 import { problem as checkIfArraySortedAndRotatedB96 } from './check-if-array-sorted-and-rotated';
 import { problem as findAllLonelyNumbersInArray } from './find-all-lonely-numbers-in-array';
 import { problem as checkIfAllCharactersHaveEqualNumberOfOccurrences } from './check-if-all-characters-have-equal-number-of-occurrences';
-// batch 99 — strings/easy, arrays/easy, arrays/medium, sliding-window/medium
+// batch 99 (remote) — strings/easy, arrays/easy, arrays/medium, sliding-window/medium
 import { problem as findLongestBalancedBinarySubstring } from './find-longest-balanced-binary-substring';
 import { problem as matrixDiagonalSumVariant } from './matrix-diagonal-sum-variant';
 import { problem as maxNumberOfKSumPairs } from './max-number-of-k-sum-pairs';
 import { problem as countSubarraysMaxElementKTimes } from './count-subarrays-max-element-k-times';
+// batch 96 — stack/strings, tree/easy, tree/medium
+import { problem as removeAllAdjacentDuplicatesInStringII } from './remove-all-adjacent-duplicates-in-string-ii';
+import { problem as averageOfSubtree } from './average-of-subtree';
+import { problem as cousinsInBinaryTreeII } from './cousins-in-binary-tree-ii';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4404,13 +4408,17 @@ export const problems: readonly Problem[] = [
   rangeSumBst,
   deleteNodeInABst,
   binaryTreeMaximumPathSum,
-  // batch 96 — arrays/easy, arrays+hash-map/easy, strings+hash-map/easy
+  // batch 96 (remote) — arrays/easy, arrays+hash-map/easy, strings+hash-map/easy
   checkIfArraySortedAndRotatedB96,
   findAllLonelyNumbersInArray,
   checkIfAllCharactersHaveEqualNumberOfOccurrences,
-  // batch 99 — strings/easy, arrays/easy, arrays/medium, sliding-window/medium
+  // batch 99 (remote) — strings/easy, arrays/easy, arrays/medium, sliding-window/medium
   findLongestBalancedBinarySubstring,
   matrixDiagonalSumVariant,
   maxNumberOfKSumPairs,
   countSubarraysMaxElementKTimes,
+  // batch 96 — stack/strings, tree/easy, tree/medium
+  removeAllAdjacentDuplicatesInStringII,
+  averageOfSubtree,
+  cousinsInBinaryTreeII,
 ];

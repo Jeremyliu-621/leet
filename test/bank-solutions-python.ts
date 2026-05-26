@@ -31244,7 +31244,7 @@ def maxPathSum(root) -> int:
     return ans
 `,
 
-  // batch 99 — strings/easy, arrays/easy, arrays/medium, sliding-window/medium
+  // batch 99 (remote) — strings/easy, arrays/easy, arrays/medium, sliding-window/medium
   'find-longest-balanced-binary-substring': `
 def findTheLongestBalancedSubstring(s):
     best = 0
@@ -31311,6 +31311,64 @@ def countSubarrays(nums, k):
                 count -= 1
             l += 1
     return result
+`,
+
+  // batch 96 — stack/strings, tree problems
+  'remove-all-adjacent-duplicates-in-string-ii': `
+def removeDuplicates(s: str, k: int) -> str:
+    stack = []
+    for c in s:
+        if stack and stack[-1][0] == c:
+            stack[-1][1] += 1
+            if stack[-1][1] == k:
+                stack.pop()
+        else:
+            stack.append([c, 1])
+    return ''.join(c * n for c, n in stack)
+`,
+
+  'average-of-subtree': `
+def averageOfSubtree(root) -> int:
+    count = 0
+    def dfs(node):
+        nonlocal count
+        if not node:
+            return (0, 0)
+        ls, lc = dfs(node.left)
+        rs, rc = dfs(node.right)
+        total = node.val + ls + rs
+        cnt = 1 + lc + rc
+        if node.val == total // cnt:
+            count += 1
+        return (total, cnt)
+    dfs(root)
+    return count
+`,
+
+  'cousins-in-binary-tree-ii': `
+def cousinsInBinaryTreeII(root):
+    if not root:
+        return root
+    root.val = 0
+    queue = [root]
+    while queue:
+        next_level = []
+        level_sum = 0
+        for node in queue:
+            if node.left:
+                next_level.append(node.left)
+                level_sum += node.left.val
+            if node.right:
+                next_level.append(node.right)
+                level_sum += node.right.val
+        for node in queue:
+            sib = (node.left.val if node.left else 0) + (node.right.val if node.right else 0)
+            if node.left:
+                node.left.val = level_sum - sib
+            if node.right:
+                node.right.val = level_sum - sib
+        queue = next_level
+    return root
 `,
 
 };

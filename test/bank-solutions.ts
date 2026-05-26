@@ -31716,6 +31716,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 96 (remote) — arrays/easy, arrays+hash-map/easy, strings+hash-map/easy
   'check-if-array-sorted-and-rotated': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const n = nums.length;
@@ -31745,16 +31746,14 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return vals.every(v => v === vals[0]);
   },
 
-  // batch 99 — strings/easy, arrays/easy, arrays/medium, sliding-window/medium
+  // batch 99 (remote) — strings/easy, arrays/easy, arrays/medium, sliding-window/medium
   'find-longest-balanced-binary-substring': (...args: unknown[]) => {
     const s = args[0] as string;
     let best = 0;
     let i = 0;
     while (i < s.length) {
-      // count run of zeros
       let zeros = 0;
       while (i < s.length && s[i] === '0') { zeros++; i++; }
-      // count run of ones
       let ones = 0;
       while (i < s.length && s[i] === '1') { ones++; i++; }
       if (zeros > 0 && ones > 0) {
@@ -31810,6 +31809,60 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       }
     }
     return result;
+  },
+
+  // batch 96 — stack/strings, tree problems
+  'remove-all-adjacent-duplicates-in-string-ii': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    const stack: [string, number][] = [];
+    for (const c of s) {
+      if (stack.length > 0 && stack[stack.length - 1]![0] === c) {
+        stack[stack.length - 1]![1]++;
+        if (stack[stack.length - 1]![1] === k) stack.pop();
+      } else {
+        stack.push([c, 1]);
+      }
+    }
+    return stack.map(([c, n]) => c.repeat(n)).join('');
+  },
+
+  'average-of-subtree': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    let count = 0;
+    function dfs(node: _TN | null): [number, number] {
+      if (!node) return [0, 0];
+      const [ls, lc] = dfs(node.l);
+      const [rs, rc] = dfs(node.r);
+      const sum = node.v + ls + rs;
+      const cnt = 1 + lc + rc;
+      if (node.v === Math.floor(sum / cnt)) count++;
+      return [sum, cnt];
+    }
+    dfs(root);
+    return count;
+  },
+
+  'cousins-in-binary-tree-ii': (...args: unknown[]) => {
+    let root = _buildTree(args[0] as (number | null)[]);
+    if (!root) return [];
+    root.v = 0;
+    let queue: _TN[] = [root];
+    while (queue.length > 0) {
+      const next: _TN[] = [];
+      let levelSum = 0;
+      for (const node of queue) {
+        if (node.l) { next.push(node.l); levelSum += node.l.v; }
+        if (node.r) { next.push(node.r); levelSum += node.r.v; }
+      }
+      for (const node of queue) {
+        const sib = (node.l ? node.l.v : 0) + (node.r ? node.r.v : 0);
+        if (node.l) node.l.v = levelSum - sib;
+        if (node.r) node.r.v = levelSum - sib;
+      }
+      queue = next;
+    }
+    return _treeToArr(root);
   },
 
 };
