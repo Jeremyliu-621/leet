@@ -167,3 +167,7 @@ immediately when the problem is accepted.
 - 800ms debounce matches a comfortable typing pause without hammering storage on every keystroke.
 - 7-day TTL: short enough to not accumulate indefinitely, long enough to survive a weekend break.
 - Stored in `local` (not `sync`) because drafts are device-specific and can be large.
+
+### 2026-05-26 — D_: Force-reset origin/main to canonical development branch
+
+Two unrelated git histories existed in this repo: a detached HEAD (80 commits, 1990+ problems, full-feature EditorPanel) and origin/main (50 commits, 25 problems, older EditorPanel). The detached HEAD is the canonical development line per PROGRESS.md; all prior autonomous loop work was on it. Force-pushed detached HEAD to origin/main to consolidate. The diverged origin/main history (50 commits) is superseded.

@@ -26,6 +26,15 @@ Merged local batch 92 (prime-subtraction-operation, find-the-longest-semi-repeti
 
 ### feat(bank): add batch 93 — valid-perfect-square, insertion-sort-list, maximize-score-n-ops (2026-05-26)
 Added 3 problems: `valid-perfect-square` (easy/math+binary-search, binary search for x²=num without sqrt), `insertion-sort-list` (medium/linked-list, O(n²) insertion sort with dummy-head pattern, array-based interface), `maximize-score-after-n-operations` (hard/dp, bitmask DP with precomputed GCD table, O(4^n·n²) for n≤7). Bank at **1990**; 6279 tests.
+**Current focus:** Bank at **1990** problems; 6279 tests green. Batch 93 complete. Word-wrap preference persisted.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green.
+**Next up:** Batch 94 bank growth; further UI/UX polish (light mode, a11y, hints backfill).
+
+### feat(editor): persist word-wrap preference across sessions (2026-05-26)
+Added `editorWordWrap: boolean` to `UserPreferences` and `DEFAULT_PREFERENCES`. `EditorPanel` now accepts `wordWrap?` and `onWordWrapChange?` props; `Challenge.tsx` seeds from `prefs.editorWordWrap` and persists toggles via `updateValue('userPreferences', ...)`.
+
+### feat(bank): add batch 93 — find-longest-awesome-substring, greatest-common-divisor-traversal, minimum-length-of-anagram-concatenation (2026-05-26)
+Added 3 problems: `find-longest-awesome-substring` (hard/strings, bitmask XOR over 10 digit parities), `greatest-common-divisor-traversal` (hard/arrays+math+union-find, prime-factor DSU), `minimum-length-of-anagram-concatenation` (medium/strings+hash-map, divisor enumeration + 26-char freq check). Bank at **1990**; 6279 tests.
 
 ### feat(bank): add batch 92 — alternating-groups-i, longest-binary-subsequence-≤-k, minimum-time-complete-tasks (2026-05-26)
 Added 3 problems: `alternating-groups-i` (easy/arrays, modular-index circular triple count), `longest-binary-subsequence-less-than-or-equal-to-k` (medium/strings+dp, right-to-left greedy — zeros always included, ones included if running value ≤ k), `minimum-time-to-complete-all-tasks` (hard/arrays, sort-by-end + right-fill boolean run array). Fixed wrong expected values in several hidden tests by manual algorithm trace. Bank at **1987**; 6270 tests.

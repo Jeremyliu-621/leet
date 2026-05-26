@@ -1004,6 +1004,16 @@ export function Challenge() {
     })();
   }, []);
 
+  const handleWordWrapChange = useCallback((wrap: boolean) => {
+    void (async () => {
+      try {
+        await updateValue('userPreferences', (curr) => ({ ...curr, editorWordWrap: wrap }));
+      } catch {
+        /* storage unavailable */
+      }
+    })();
+  }, []);
+
   // -------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------
@@ -1113,6 +1123,8 @@ export function Challenge() {
             onToggleFullscreen={handleToggleFullscreen}
             resolvedTheme={resolvedTheme}
             resetCode={resetCode}
+            wordWrap={prefs.editorWordWrap}
+            onWordWrapChange={handleWordWrapChange}
           />
           {/* Custom test drawer — collapses below the verdict/action bar */}
           <CustomTestPanel

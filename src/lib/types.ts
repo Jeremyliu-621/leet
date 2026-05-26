@@ -228,6 +228,8 @@ export interface UserPreferences {
   problemPanelWidthPct: number;
   /** Number of spaces inserted by the Tab key. 2 or 4. */
   editorIndentSize: 2 | 4;
+  /** Whether the code editor wraps long lines. Defaults to true. */
+  editorWordWrap: boolean;
 }
 
 /** Theme options exposed in the UI. */

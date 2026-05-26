@@ -2153,6 +2153,10 @@ import { problem as maximizeScoreAfterNOperations } from './maximize-score-after
 import { problem as primeSubtractionOperation } from './prime-subtraction-operation';
 import { problem as findTheLongestSemiRepetitiveSubarray } from './find-the-longest-semi-repetitive-subarray';
 import { problem as countNumberOfFairPairs } from './count-number-of-fair-pairs';
+// batch 93 — strings/hard, arrays+math+union-find/hard, strings+hash-map/medium
+import { problem as findLongestAwesomeSubstring } from './find-longest-awesome-substring';
+import { problem as greatestCommonDivisorTraversal } from './greatest-common-divisor-traversal';
+import { problem as minimumLengthOfAnagramConcatenation } from './minimum-length-of-anagram-concatenation';
 // batch 94 — math/easy, math+hash-map/medium, tree/medium
 import { problem as rotatedDigits } from './rotated-digits';
 import { problem as rabbitsInForest } from './rabbits-in-forest';
@@ -4355,6 +4359,10 @@ export const problems: readonly Problem[] = [
   primeSubtractionOperation,
   findTheLongestSemiRepetitiveSubarray,
   countNumberOfFairPairs,
+  // batch 93 — strings/hard, arrays+math+union-find/hard, strings+hash-map/medium
+  findLongestAwesomeSubstring,
+  greatestCommonDivisorTraversal,
+  minimumLengthOfAnagramConcatenation,
   // batch 94 — math/easy, math+hash-map/medium, tree/medium
   rotatedDigits,
   rabbitsInForest,
