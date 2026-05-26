@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1595 problems; 5112 tests green.
+**Current focus:** Bank at 1608 problems; 5112 tests green. 🎉 Past 1,600 milestone!
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank toward 1600; further UX polish.
+**Next up:** Continue growing problem bank toward 1700; UX polish (vim mode indicator, a11y, terminal UX).
 
 ### Batch 58+59-new (2026-05-26)
 Added 21 new problems: `find-subarrays-with-equal-sum` (arrays/easy), `best-poker-hand` (arrays/easy), `count-incremovable-subarrays` (arrays/easy, O(n²) brute-force), `step-by-step-directions` (tree/medium, LCA path), `minimum-number-of-food-buckets` (greedy/medium, right-first bucket placement, skip 3 on right-place), `super-ugly-number` (dp/medium, multi-pointer), `reward-top-k-students` (arrays/medium, word-set scoring), `count-subarrays-with-score-less-than-k` (sliding-window/hard), `maximum-number-of-jumps-to-reach-last-index` (dp/medium), `minimum-number-of-coins-for-fruits` (dp/medium), `freq-stack` (design/hard, freq-map + stack map), `minimum-cost-to-equalize-array` (math/medium), `maximum-total-damage` (dp/medium, delete-and-earn variant ±2), `special-array-ii` (arrays/medium, prefix bad-pair count), `find-maximum-length-valid-subsequence` (dp/medium, mod-2 DP), `count-submatrices-all-ones` (dp/medium, histogram DP), `minimum-length-of-string-after-operations` (strings/medium, odd→1 even→2), `count-special-characters-i` (strings/easy), `maximum-jumps-to-reach-last-index` (dp/medium), `minimum-operations-to-make-array-equal-ii` (math/medium), `minimum-cost-for-cutting-cake-i` (greedy/medium). Also adds vim mode indicator (NORMAL/INSERT/VISUAL) to EditorPanel. Fixed wrong expected values in 6 test cases. Bank at **1595**; 5112 tests.
