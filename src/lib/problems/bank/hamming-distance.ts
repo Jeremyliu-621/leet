@@ -23,6 +23,8 @@ Given two integers \`x\` and \`y\`, return the **Hamming distance** between them
   ],
   hints: [
     'XOR the two numbers, then count the set bits.',
+    "XOR x and y to get the differing bits. Then count the 1-bits with a loop: repeatedly check the lowest bit (n&1) and right-shift (n>>=1) until n is 0.",
+    'return (x^y).toString(2).split("").filter(b=>b==="1").length;',
   ],
   functionName: 'hammingDistance',
   params: ['x', 'y'],

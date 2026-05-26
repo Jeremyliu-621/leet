@@ -26853,6 +26853,45 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     while (n > 0) {
       n >>= 1;
       result ^= n;
+  // batch 72
+  'walking-robot-simulation': (...args: unknown[]) => {
+    const commands = args[0] as number[];
+    const obstacles = args[1] as number[][];
+    const obsSet = new Set(obstacles.map(o => `${o[0] ?? 0},${o[1] ?? 0}`));
+    const dx = [0, 1, 0, -1];
+    const dy = [1, 0, -1, 0];
+    let dir = 0;
+    let x = 0;
+    let y = 0;
+    let best = 0;
+    for (const cmd of commands) {
+      if (cmd === -2) {
+        dir = (dir + 3) % 4;
+      } else if (cmd === -1) {
+        dir = (dir + 1) % 4;
+      } else {
+        for (let i = 0; i < cmd; i++) {
+          const nx = x + (dx[dir] ?? 0);
+          const ny = y + (dy[dir] ?? 0);
+          if (!obsSet.has(`${nx},${ny}`)) {
+            x = nx;
+            y = ny;
+            best = Math.max(best, x * x + y * y);
+          }
+        }
+      }
+    }
+    return best;
+  },
+
+  'find-distinct-difference-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const result: number[] = [];
+    for (let i = 0; i < n; i++) {
+      const prefix = new Set(nums.slice(0, i + 1));
+      const suffix = new Set(nums.slice(i + 1));
+      result.push(prefix.size - suffix.size);
     }
     return result;
   },
@@ -26875,8 +26914,121 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
         if (minQ[0]! < left) minQ.shift();
       }
       ans = Math.max(ans, right - left + 1);
+  'maximum-number-of-alloys': (...args: unknown[]) => {
+    const k = args[1] as number;
+    const budget = args[2] as number;
+    const composition = args[3] as number[][];
+    const stock = args[4] as number[];
+    const cost = args[5] as number[];
+    const canMake = (machine: number[], x: number): boolean => {
+      let spent = 0;
+      for (let j = 0; j < machine.length; j++) {
+        const need = (machine[j] ?? 0) * x - (stock[j] ?? 0);
+        if (need > 0) spent += need * (cost[j] ?? 0);
+        if (spent > budget) return false;
+      }
+      return true;
+    };
+    let ans = 0;
+    for (let m = 0; m < k; m++) {
+      const machine = composition[m] ?? [];
+      let lo = 0;
+      let hi = 2e8;
+      while (lo < hi) {
+        const mid = Math.floor((lo + hi + 1) / 2);
+        if (canMake(machine, mid)) lo = mid;
+        else hi = mid - 1;
+      }
+      ans = Math.max(ans, lo);
     }
     return ans;
+  },
+
+
+  'minimum-ops-distinct-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let ops = 0;
+    while (true) {
+      const remaining = nums.slice(ops * 3);
+      if (new Set(remaining).size === remaining.length) break;
+      ops++;
+    }
+    return ops;
+  },
+
+  'minimum-coins-to-add': (...args: unknown[]) => {
+    const coins = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const target = args[1] as number;
+    let reach = 0;
+    let ops = 0;
+    let i = 0;
+    while (reach < target) {
+      if (i < coins.length && (coins[i] ?? 0) <= reach + 1) {
+        reach += coins[i] ?? 0;
+        i++;
+      } else {
+        reach += reach + 1;
+        ops++;
+      }
+    }
+    return ops;
+  },
+
+  'count-special-characters-ii': (...args: unknown[]) => {
+    const word = args[0] as string;
+    let count = 0;
+    for (let c = 0; c < 26; c++) {
+      const lc = String.fromCharCode(97 + c);
+      const uc = String.fromCharCode(65 + c);
+      let lastLower = -1;
+      let firstUpper = word.length;
+      for (let i = 0; i < word.length; i++) {
+        if (word[i] === lc) lastLower = i;
+      }
+      for (let i = 0; i < word.length; i++) {
+        if (word[i] === uc) { firstUpper = i; break; }
+      }
+      if (lastLower !== -1 && firstUpper !== word.length && lastLower < firstUpper) count++;
+    }
+    return count;
+  },
+
+  'find-maximum-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const s = new Set(nums);
+    let ans = -1;
+    for (const n of nums) {
+      if (n > 0 && s.has(-n)) ans = Math.max(ans, n);
+    }
+    return ans;
+  },
+
+  'minimum-chairs-waiting-room': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let curr = 0;
+    let best = 0;
+    for (const ch of s) {
+      if (ch === 'E') curr++;
+      else curr--;
+      best = Math.max(best, curr);
+    }
+    return best;
+  },
+
+  'maximum-balls-in-box': (...args: unknown[]) => {
+    const low = args[0] as number;
+    const high = args[1] as number;
+    const freq = new Map<number, number>();
+    const digitSum = (n: number): number => {
+      let s = 0;
+      while (n > 0) { s += n % 10; n = Math.floor(n / 10); }
+      return s;
+    };
+    for (let i = low; i <= high; i++) {
+      const d = digitSum(i);
+      freq.set(d, (freq.get(d) ?? 0) + 1);
+    }
+    return Math.max(...freq.values());
   },
 
 };

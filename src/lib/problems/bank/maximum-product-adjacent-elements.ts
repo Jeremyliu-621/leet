@@ -31,6 +31,8 @@ Note: Only adjacent pairs (consecutive elements) are considered.`,
   ],
   hints: [
     'Iterate through adjacent pairs and track the maximum product.',
+    "Loop from index 0 to nums.length-2. At each step compute nums[i]*nums[i+1] and compare with the running maximum.",
+    'let m=nums[0]*nums[1];for(let i=1;i<nums.length-1;i++)if(nums[i]*nums[i+1]>m)m=nums[i]*nums[i+1];return m;',
   ],
   functionName: 'maxProduct',
   params: ['nums'],

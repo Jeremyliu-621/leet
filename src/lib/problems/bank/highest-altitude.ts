@@ -26,6 +26,8 @@ You are given an integer array \`gain\` of length \`n\` where \`gain[i]\` is the
   ],
   hints: [
     'Compute the prefix sums of gain (starting from 0). Return the maximum.',
+    "Maintain a running altitude starting at 0. After each gain step, update the running total and track the maximum seen.",
+    'let alt=0,max=0;for(const g of gain){alt+=g;if(alt>max)max=alt;}return max;',
   ],
   functionName: 'largestAltitude',
   params: ['gain'],

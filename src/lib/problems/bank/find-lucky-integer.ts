@@ -19,6 +19,8 @@ Return the **largest** lucky integer in the array. If there is no lucky integer,
   ],
   hints: [
     'Count frequency with a hash map. Then find the maximum value where freq[val] === val.',
+    "Build a frequency Map by iterating arr. Then iterate the map entries and collect keys where key===value. Return the max, or -1 if none.",
+    'const f=new Map<number,number>();for(const n of arr)f.set(n,(f.get(n)??0)+1);return Math.max(-1,...[...f].filter(([k,v])=>k===v).map(([k])=>k));',
   ],
   functionName: 'findLucky',
   params: ['arr'],

@@ -23,6 +23,8 @@ export const problem: Problem = {
   ],
   hints: [
     'The count of odd numbers in [1, n] is Math.ceil(n / 2). The count in [low, high] is countOdd(high) - countOdd(low - 1).',
+    'Define a helper f(n)=Math.ceil(n/2) counting odds in [1,n], then return f(high)-f(low-1). Alternatively, check low parity and compute directly.',
+    'return Math.ceil(high/2)-Math.floor(low/2);',
   ],
   functionName: 'countOdds',
   params: ['low', 'high'],

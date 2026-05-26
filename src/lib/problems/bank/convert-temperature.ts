@@ -30,6 +30,8 @@ Note that:
   ],
   hints: [
     'Apply the formulas directly: kelvin = celsius + 273.15, fahrenheit = celsius * 1.8 + 32.',
+    'Return a two-element array: the first value adds 273.15 to celsius, the second multiplies by 1.8 and adds 32.',
+    'return [celsius+273.15, celsius*1.8+32];',
   ],
   functionName: 'convertTemperature',
   params: ['celsius'],

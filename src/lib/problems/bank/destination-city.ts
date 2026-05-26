@@ -21,6 +21,8 @@ It is guaranteed that the graph of paths forms a line without any loop, therefor
   ],
   hints: [
     'Collect all source cities in a set. The destination city is the city that appears as a destination but never as a source.',
+    "Build a Set of all paths[i][0] (sources). Then find paths[i][1] (destination) that is not in the set.",
+    "const src=new Set(paths.map(p=>p[0]));return paths.find(p=>!src.has(p[1]))[1];",
   ],
   functionName: 'destCity',
   params: ['paths'],

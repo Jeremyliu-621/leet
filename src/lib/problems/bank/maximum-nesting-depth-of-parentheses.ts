@@ -32,7 +32,9 @@ Given a VPS represented as string \`s\`, return the **nesting depth** of \`s\`.`
     },
   ],
   hints: [
-    'Track current depth with a counter. Increment on \'(\', decrement on \')\'. Track the maximum.',
+    "Track current depth with a counter. Increment on '(', decrement on ')'. Track the maximum.",
+    "Use a single pass: maintain depth and max. On '(' increment depth and update max; on ')' decrement depth.",
+    "let d=0,m=0;for(const c of s){if(c==='(')m=Math.max(m,++d);else if(c===')')d--;}return m;",
   ],
   functionName: 'maxDepth',
   params: ['s'],

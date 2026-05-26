@@ -32,6 +32,8 @@ A customer's wealth is the sum of all money in their bank accounts. The richest 
   ],
   hints: [
     'For each customer, sum their bank accounts. Return the maximum sum.',
+    'Use map to compute each row sum (reduce or spread+Math.max), then find the max of all sums.',
+    'return Math.max(...accounts.map(a=>a.reduce((s,v)=>s+v,0)));',
   ],
   functionName: 'maximumWealth',
   params: ['accounts'],

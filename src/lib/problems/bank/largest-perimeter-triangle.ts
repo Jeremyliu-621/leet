@@ -22,6 +22,8 @@ export const problem: Problem = {
   ],
   hints: [
     'Sort the array in descending order. For every consecutive triple (a, b, c) where a >= b >= c, check if b + c > a. The first valid triple gives the largest perimeter.',
+    "After sorting descending, the first valid consecutive triple satisfies nums[i+1]+nums[i+2]>nums[i]. Return nums[i]+nums[i+1]+nums[i+2] for that triple.",
+    'const s=[...nums].sort((a,b)=>b-a);for(let i=0;i<s.length-2;i++)if(s[i+1]+s[i+2]>s[i])return s[i]+s[i+1]+s[i+2];return 0;',
   ],
   functionName: 'largestPerimeter',
   params: ['nums'],

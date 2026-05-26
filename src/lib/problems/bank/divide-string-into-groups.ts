@@ -31,6 +31,8 @@ Given the string \`s\`, the size of each group \`k\` and the character \`fill\`,
   ],
   hints: [
     'Pad s with fill characters until its length is divisible by k. Then split into chunks of size k.',
+    "Calculate padding needed: (k - s.length % k) % k. Append that many fill characters, then slice every k characters into the result array.",
+    "const p=s.padEnd(s.length+(k-s.length%k)%k,fill);return Array.from({length:p.length/k},(_,i)=>p.slice(i*k,i*k+k));",
   ],
   functionName: 'divideString',
   params: ['s', 'k', 'fill'],

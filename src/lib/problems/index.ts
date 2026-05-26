@@ -4,14 +4,17 @@ import { problems as bank } from './bank';
 
 export type { Problem, ProblemExample, TestCase } from './types';
 
+// Module-level Map for O(1) id lookup (bank is static).
+const bankById = new Map<string, Problem>(bank.map((p) => [p.id, p]));
+
 /** Every problem in the local bank. */
 export function getAllProblems(): readonly Problem[] {
   return bank;
 }
 
-/** Looks up a problem by its id. */
+/** Looks up a problem by its id. O(1). */
 export function getProblemById(id: string): Problem | undefined {
-  return bank.find((problem) => problem.id === id);
+  return bankById.get(id);
 }
 
 export interface ProblemFilter {
@@ -26,6 +29,7 @@ export interface ProblemFilter {
 /** Returns every problem matching the filter, preserving bank order. */
 export function filterProblems(filter: ProblemFilter): readonly Problem[] {
   const { difficulties, tags, excludeIds } = filter;
+  const excludeSet = excludeIds && excludeIds.length > 0 ? new Set(excludeIds) : null;
   return bank.filter((problem) => {
     if (difficulties && difficulties.length > 0 && !difficulties.includes(problem.difficulty)) {
       return false;
@@ -33,7 +37,7 @@ export function filterProblems(filter: ProblemFilter): readonly Problem[] {
     if (tags && tags.length > 0 && !problem.tags.some((tag) => tags.includes(tag))) {
       return false;
     }
-    if (excludeIds && excludeIds.includes(problem.id)) {
+    if (excludeSet && excludeSet.has(problem.id)) {
       return false;
     }
     return true;

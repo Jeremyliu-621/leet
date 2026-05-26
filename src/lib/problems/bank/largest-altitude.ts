@@ -19,6 +19,8 @@ You are given an integer array \`gain\` of length \`n\` where \`gain[i]\` is the
   ],
   hints: [
     'Build the running altitude from gain, tracking the maximum at each step.',
+    "Start with altitude=0 and max=0. For each gain value, add it to altitude and update max if altitude is higher.",
+    'let a=0,m=0;for(const g of gain){a+=g;if(a>m)m=a;}return m;',
   ],
   functionName: 'largestAltitude',
   params: ['gain'],

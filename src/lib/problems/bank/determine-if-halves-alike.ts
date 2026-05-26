@@ -21,6 +21,8 @@ Return \`true\` if \`a\` and \`b\` are **alike**. Otherwise, return \`false\`.`,
   ],
   hints: [
     'Count vowels in the first half and second half separately. Compare the counts.',
+    "Define a vowel set ('aeiouAEIOU'). Slice s into two halves, then filter-count characters in the vowel set for each half.",
+    "const v='aeiouAEIOU',h=s.length/2;const c=(t:string)=>[...t].filter(c=>v.includes(c)).length;return c(s.slice(0,h))===c(s.slice(h));",
   ],
   functionName: 'halvesAreAlike',
   params: ['s'],

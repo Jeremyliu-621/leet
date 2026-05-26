@@ -33,6 +33,8 @@ Return the generated matrix.`,
   ],
   hints: [
     'For each valid (i, j), iterate over the 3x3 window starting at (i, j) and find the maximum.',
+    "The output is (n-2)x(n-2). For each output cell (i,j), examine rows i..i+2 and cols j..j+2 of grid with two nested loops and Math.max.",
+    'const n=grid.length;return Array.from({length:n-2},(_,i)=>Array.from({length:n-2},(_,j)=>Math.max(...[0,1,2].flatMap(r=>[0,1,2].map(c=>grid[i+r][j+c])))));',
   ],
   functionName: 'largestLocal',
   params: ['grid'],

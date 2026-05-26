@@ -24,6 +24,8 @@ export const problem: Problem = {
   ],
   hints: [
     'Use integers 1 through n-1, then add their negated sum as the nth element.',
+    "Create an array [1, 2, ..., n-1], compute their sum, then push the negative of that sum. The total will be zero.",
+    'const a=Array.from({length:n-1},(_,i)=>i+1);a.push(-a.reduce((s,v)=>s+v,0));return a;',
   ],
   functionName: 'sumZero',
   params: ['n'],

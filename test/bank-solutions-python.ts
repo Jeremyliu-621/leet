@@ -26241,4 +26241,143 @@ def numOfStrings(patterns, word):
             result.append(None)
     return result
 `,
+  // batch 72
+  'walking-robot-simulation': `
+def robotSim(commands, obstacles):
+    obs = set(map(tuple, obstacles))
+    dx = [0, 1, 0, -1]
+    dy = [1, 0, -1, 0]
+    direction = 0
+    x, y, best = 0, 0, 0
+    for cmd in commands:
+        if cmd == -2:
+            direction = (direction + 3) % 4
+        elif cmd == -1:
+            direction = (direction + 1) % 4
+        else:
+            for _ in range(cmd):
+                nx, ny = x + dx[direction], y + dy[direction]
+                if (nx, ny) not in obs:
+                    x, y = nx, ny
+                    best = max(best, x*x + y*y)
+    return best
+`,
+
+  'find-distinct-difference-array': `
+def distinctDifferenceArray(nums):
+    n = len(nums)
+    result = []
+    for i in range(n):
+        prefix = len(set(nums[:i+1]))
+        suffix = len(set(nums[i+1:]))
+        result.append(prefix - suffix)
+    return result
+`,
+
+  'maximum-number-of-alloys': `
+def maxNumberOfAlloys(n, k, budget, composition, stock, cost):
+    def can_make(machine, x):
+        spent = 0
+        for j in range(len(machine)):
+            need = machine[j] * x - stock[j]
+            if need > 0:
+                spent += need * cost[j]
+            if spent > budget:
+                return False
+        return True
+    ans = 0
+    for machine in composition:
+        lo, hi = 0, int(2e8)
+        while lo < hi:
+            mid = (lo + hi + 1) // 2
+            if can_make(machine, mid):
+                lo = mid
+            else:
+                hi = mid - 1
+        ans = max(ans, lo)
+    return ans
+`,
+
+  'minimum-ops-distinct-elements': `
+def minimumOperations(nums):
+    ops = 0
+    while True:
+        remaining = nums[ops * 3:]
+        if len(set(remaining)) == len(remaining):
+            break
+        ops += 1
+    return ops
+`,
+
+  'minimum-coins-to-add': `
+def minimumAddedCoins(coins, target):
+    coins = sorted(coins)
+    reach = 0
+    ops = 0
+    i = 0
+    while reach < target:
+        if i < len(coins) and coins[i] <= reach + 1:
+            reach += coins[i]
+            i += 1
+        else:
+            reach += reach + 1
+            ops += 1
+    return ops
+`,
+
+  'count-special-characters-ii': `
+def numberOfSpecialCharsII(word):
+    count = 0
+    for c in range(26):
+        lc = chr(ord('a') + c)
+        uc = chr(ord('A') + c)
+        last_lower = -1
+        first_upper = len(word)
+        for i, ch in enumerate(word):
+            if ch == lc:
+                last_lower = i
+        for i, ch in enumerate(word):
+            if ch == uc:
+                first_upper = i
+                break
+        if last_lower != -1 and first_upper != len(word) and last_lower < first_upper:
+            count += 1
+    return count
+`,
+
+  'find-maximum-k': `
+def findMaxK(nums):
+    s = set(nums)
+    ans = -1
+    for n in nums:
+        if n > 0 and -n in s:
+            ans = max(ans, n)
+    return ans
+`,
+
+  'minimum-chairs-waiting-room': `
+def minimumChairs(s):
+    curr = best = 0
+    for ch in s:
+        if ch == 'E':
+            curr += 1
+        else:
+            curr -= 1
+        best = max(best, curr)
+    return best
+`,
+
+  'maximum-balls-in-box': `
+def countBalls(lowLimit, highLimit):
+    from collections import Counter
+    def digit_sum(n):
+        s = 0
+        while n > 0:
+            s += n % 10
+            n //= 10
+        return s
+    cnt = Counter(digit_sum(i) for i in range(lowLimit, highLimit + 1))
+    return max(cnt.values())
+`,
+
 };
