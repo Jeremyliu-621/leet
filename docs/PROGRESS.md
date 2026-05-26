@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1815** problems; 5736 tests green. All problems have ≥3 hints (enforced by regression test).
+**Current focus:** Bank at **1828** problems; 5772 tests green. All problems have ≥3 hints (enforced by regression test).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** UX polish (CodeMirror QoL, accessibility); bank growth; marketing site stats update.
+**Next up:** UX polish (CodeMirror QoL, accessibility); marketing site update to 1,800+ (still accurate, could update to 1,825+).
+
+### feat(bank): add batch 73-remote (12 new problems) (2026-05-26)
+Added 12 problems in underrepresented tags (graph/BFS/union-find/shortest-path/DP): `word-ladder-ii` (hard/graph+backtracking, BFS level-graph + DFS reconstruct all paths), `cut-off-trees-for-golf-event` (hard/graph+simulation, sort + repeated BFS), `number-of-distinct-islands` (medium/graph+hash-map, DFS relative-offset shape hashing), `network-becomes-idle` (medium/graph+shortest-path, BFS + last-resend formula), `smallest-string-with-swaps` (medium/union-find+strings, DSU + sort-within-component), `remove-boxes` (hard/dp, 3D dp[l][r][k] memoization), `escape-the-spreading-fire` (hard/graph+binary-search, multi-source fire BFS + binary search on wait), `minimize-malware-spread` (medium/union-find, sole-infected component sweep), `number-of-good-paths` (hard/union-find+tree, sorted-edge union with cnt tracking), `longest-substring-with-at-least-k-repeating` (medium/strings, divide-and-conquer split on low-freq chars), `count-battleships-in-a-board` (medium/arrays, top-left corner counting), `detect-cycles-in-2d-grid` (medium/graph+union-find, DFS cycle detection). Fixed word-ladder-ii expected values (sorted paths, corrected invalid cases). Bank at **1828** problems; 5772 tests.
 
 ### feat(bank): register 8 new problems + deduplicate (2026-05-26)
 Registered 8 new problems created by background agent: `satisfiability-of-equality-equations` (medium/union-find+graph), `pour-water` (medium/simulation), `bricks-falling-when-hit` (hard/union-find+simulation), `wiggle-sort` (medium/arrays), `redundant-connection-ii` (hard/union-find+graph, directed cycle+double-parent detection), `candy-crush` (medium/simulation), `largest-component-size-by-common-factor` (hard/union-find+math), `reachable-nodes-in-subdivided-graph` (hard/graph+dijkstra). Removed duplicate `design-goal-parser` JS solution, removed duplicate `shortest-path-in-binary-matrix` (already covered). JS + Python solutions for all 8. Bank at **1815** problems; 5736 tests.
