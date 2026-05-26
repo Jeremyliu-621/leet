@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1807** problems; 5709 tests green. Hints: 1×1-hint, 198×2-hint, 1249×3-hint, 361×4+-hint.
+**Current focus:** Bank at **1815** problems; 5736 tests green. All problems have ≥3 hints (enforced by regression test).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue hints backfill (198 two-hint files → 3 hints); UX polish (CodeMirror QoL, accessibility); bank growth.
+**Next up:** UX polish (CodeMirror QoL, accessibility); bank growth; marketing site stats update.
+
+### feat(bank): register 8 new problems + deduplicate (2026-05-26)
+Registered 8 new problems created by background agent: `satisfiability-of-equality-equations` (medium/union-find+graph), `pour-water` (medium/simulation), `bricks-falling-when-hit` (hard/union-find+simulation), `wiggle-sort` (medium/arrays), `redundant-connection-ii` (hard/union-find+graph, directed cycle+double-parent detection), `candy-crush` (medium/simulation), `largest-component-size-by-common-factor` (hard/union-find+math), `reachable-nodes-in-subdivided-graph` (hard/graph+dijkstra). Removed duplicate `design-goal-parser` JS solution, removed duplicate `shortest-path-in-binary-matrix` (already covered). JS + Python solutions for all 8. Bank at **1815** problems; 5736 tests.
 
 ### feat(bank): hints backfill complete pass (2026-05-26)
 82 single-hint easy problems upgraded to 3-level progressive hints (approach → implementation → code skeleton). 23 important 2-hint medium/hard problems upgraded to 3-hint structure (decode-string, copy-list-with-random-pointer, kth-smallest-element-in-bst, increasing-triplet-subsequence, delete-and-earn, and 18 more). Terminal UX: TestDotMatrix visual pass/fail grid shown above summary when verdicts > 3 (dot = pass/fail/error at a glance). Straggler `minimum-index-sum-of-two-lists` upgraded from 1 → 3 hints. Hint distribution after this session: 1×1-hint, 198×2-hint, 1249×3-hint, 361×4+-hint.
