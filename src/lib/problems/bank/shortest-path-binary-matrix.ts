@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'shortest-path-binary-matrix',
   title: 'Shortest Path in Binary Matrix',
   difficulty: 'medium',
-  tags: ['graph', 'arrays'],
+  tags: ['shortest-path', 'graph', 'arrays'],
   description: `Given an \`n x n\` binary matrix \`grid\`, return the length of the **shortest clear path** from the top-left cell \`(0, 0)\` to the bottom-right cell \`(n - 1, n - 1)\`. If there is no such path, return \`-1\`.
 
 A clear path is a path from \`(0, 0)\` to \`(n - 1, n - 1)\` such that:
