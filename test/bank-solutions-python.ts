@@ -22135,6 +22135,50 @@ def secondMinimum(n, edges, time, change):
     return max(min1, min2)
 `,
 
+  // batch 59 (local)
+  'count-substrings-starting-and-ending-with-given-character': `def countSubstrings(s, c):
+    cnt = s.count(c)
+    return cnt + cnt * (cnt - 1) // 2
+`,
+
+  'minimum-number-of-changes-to-make-binary-string-beautiful': `def minChanges(s):
+    cnt = 0
+    for i in range(0, len(s), 2):
+        if s[i] != s[i + 1]:
+            cnt += 1
+    return cnt
+`,
+
+  'distribute-money-to-maximum-children': `def distMoney(money, children):
+    m, n = int(money), int(children)
+    if m < n:
+        return -1
+    rem = m - n
+    give8 = min(rem // 7, n)
+    if give8 == n and m != 8 * n:
+        give8 -= 1
+    if n - give8 == 1 and m - 8 * give8 == 4:
+        give8 -= 1
+    return give8
+`,
+
+  'check-if-strings-can-be-made-equal-with-operations': `def checkStrings(s1, s2):
+    def sort_parity(s, parity):
+        return ''.join(sorted(s[i] for i in range(len(s)) if i % 2 == parity))
+    return sort_parity(s1, 0) == sort_parity(s2, 0) and sort_parity(s1, 1) == sort_parity(s2, 1)
+`,
+
+  'count-days-spent-together': `def countDaysTogether(arriveAlice, leaveAlice, arriveBob, leaveBob):
+    months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    def day_of_year(d):
+        mm, dd = int(d[:2]), int(d[3:])
+        return sum(months[:mm - 1]) + dd
+    start = max(day_of_year(arriveAlice), day_of_year(arriveBob))
+    end = min(day_of_year(leaveAlice), day_of_year(leaveBob))
+    return max(0, end - start + 1)
+`,
+
+  // batch 60
   'minimum-number-of-operations-to-make-array-continuous': `def minOperations(nums):
     a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
     n = len(a)

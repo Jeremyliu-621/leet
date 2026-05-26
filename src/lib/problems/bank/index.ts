@@ -1619,6 +1619,12 @@ import { problem as vowelsOfAllSubstrings } from './vowels-of-all-substrings';
 import { problem as removingMinimumNumberOfMagicBeans } from './removing-minimum-number-of-magic-beans';
 import { problem as findTheLongestEqualSubarray } from './find-the-longest-equal-subarray';
 import { problem as minimumEqualSumOfTwoArraysAfterReplacingZeros } from './minimum-equal-sum-of-two-arrays-after-replacing-zeros';
+// batch 59 (local)
+import { problem as countSubstringsStartingAndEndingWithGivenCharacter } from './count-substrings-starting-and-ending-with-given-character';
+import { problem as minimumNumberOfChangesToMakeBinaryStringBeautiful } from './minimum-number-of-changes-to-make-binary-string-beautiful';
+import { problem as distributeMoneyToMaximumChildren } from './distribute-money-to-maximum-children';
+import { problem as checkIfStringsCanBeMadeEqualWithOperations } from './check-if-strings-can-be-made-equal-with-operations';
+import { problem as countDaysSpentTogether } from './count-days-spent-together';
 // batch 60
 import { problem as minimumNumberOfOperationsToMakeArrayContinuous } from './minimum-number-of-operations-to-make-array-continuous';
 import { problem as pacificAtlanticWaterFlow } from './pacific-atlantic-water-flow';
@@ -3290,6 +3296,12 @@ export const problems: readonly Problem[] = [
   removingMinimumNumberOfMagicBeans,
   findTheLongestEqualSubarray,
   minimumEqualSumOfTwoArraysAfterReplacingZeros,
+  // batch 59 (local)
+  countSubstringsStartingAndEndingWithGivenCharacter,
+  minimumNumberOfChangesToMakeBinaryStringBeautiful,
+  distributeMoneyToMaximumChildren,
+  checkIfStringsCanBeMadeEqualWithOperations,
+  countDaysSpentTogether,
   // batch 60
   minimumNumberOfOperationsToMakeArrayContinuous,
   pacificAtlanticWaterFlow,

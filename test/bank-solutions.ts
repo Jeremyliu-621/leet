@@ -22370,6 +22370,49 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Math.max(min1, min2);
   },
 
+  // batch 59 (local)
+  'count-substrings-starting-and-ending-with-given-character': (s: unknown, c: unknown) => {
+    const cnt = (s as string).split('').filter(x => x === (c as string)).length;
+    return cnt + cnt * (cnt - 1) / 2;
+  },
+
+  'minimum-number-of-changes-to-make-binary-string-beautiful': (s: unknown) => {
+    const str = s as string;
+    let cnt = 0;
+    for (let i = 0; i < str.length; i += 2) if (str[i] !== str[i + 1]) cnt++;
+    return cnt;
+  },
+
+  'distribute-money-to-maximum-children': (money: unknown, children: unknown) => {
+    const m = money as number, n = children as number;
+    if (m < n) return -1;
+    const rem = m - n;
+    let give8 = Math.min(Math.floor(rem / 7), n);
+    if (give8 === n && m !== 8 * n) give8--;
+    if (n - give8 === 1 && m - 8 * give8 === 4) give8--;
+    return give8;
+  },
+
+  'check-if-strings-can-be-made-equal-with-operations': (s1: unknown, s2: unknown) => {
+    const a = s1 as string, b = s2 as string;
+    const sortParity = (s: string, parity: number) =>
+      s.split('').filter((_, i) => i % 2 === parity).sort().join('');
+    return sortParity(a, 0) === sortParity(b, 0) && sortParity(a, 1) === sortParity(b, 1);
+  },
+
+  'count-days-spent-together': (arriveAlice: unknown, leaveAlice: unknown, arriveBob: unknown, leaveBob: unknown) => {
+    const months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    const dayOfYear = (d: string) => {
+      const [mm, dd] = d.split('-').map(Number);
+      let n = dd!;
+      for (let i = 0; i < mm! - 1; i++) n += months[i]!;
+      return n;
+    };
+    const start = Math.max(dayOfYear(arriveAlice as string), dayOfYear(arriveBob as string));
+    const end = Math.min(dayOfYear(leaveAlice as string), dayOfYear(leaveBob as string));
+    return Math.max(0, end - start + 1);
+  },
+
   // batch 60
   'minimum-number-of-operations-to-make-array-continuous': (...args: unknown[]) => {
     const nums = args[0] as number[];
