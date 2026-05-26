@@ -40,6 +40,59 @@ import { problem as digitSum } from './digit-sum';
 import { problem as isPrimeNumber } from './is-prime-number';
 import { problem as greatestCommonDivisor } from './greatest-common-divisor';
 
+// arrays — medium
+import { problem as missingRanges } from './missing-ranges';
+import { problem as productExceptSelf } from './product-except-self';
+import { problem as rotateMatrix } from './rotate-matrix';
+import { problem as maxSubarrayKadane } from './max-subarray-kadane';
+
+// strings — medium
+import { problem as groupAnagrams } from './group-anagrams';
+import { problem as longestSubstringNoRepeat } from './longest-substring-no-repeat';
+import { problem as zigzagConversion } from './zigzag-conversion';
+
+// hash-map — medium
+import { problem as isomorphicStrings } from './isomorphic-strings';
+import { problem as subarraySumK } from './subarray-sum-k';
+
+// two-pointers — medium
+import { problem as threeSum } from './three-sum';
+import { problem as containerWithMostWater } from './container-with-most-water';
+import { problem as removeDuplicatesSorted } from './remove-duplicates-sorted';
+
+// sliding-window — medium
+import { problem as flipKZeros } from './flip-k-zeros';
+import { problem as maxSumKSubarray } from './max-sum-k-subarray';
+
+// binary-search — medium
+import { problem as searchRotatedSorted } from './search-rotated-sorted';
+import { problem as findFirstLastPos } from './find-first-last-pos';
+import { problem as kokoEatingBananas } from './koko-eating-bananas';
+
+// stack — medium
+import { problem as dailyTemperatures } from './daily-temperatures';
+import { problem as decodeString } from './decode-string';
+import { problem as minStack } from './min-stack';
+
+// math — medium
+import { problem as powerFunction } from './power-function';
+import { problem as countPrimesSieve } from './count-primes-sieve';
+import { problem as excelColumnNumber } from './excel-column-number';
+
+// easy additions
+import { problem as fizzBuzz } from './fizz-buzz';
+import { problem as reverseInteger } from './reverse-integer';
+import { problem as validAnagram } from './valid-anagram';
+import { problem as climbingStairs } from './climbing-stairs';
+import { problem as containsDuplicate } from './contains-duplicate';
+import { problem as validPalindrome } from './valid-palindrome';
+import { problem as bestTimeBuySell } from './best-time-buy-sell';
+import { problem as missingNumber } from './missing-number';
+import { problem as moveZeroes } from './move-zeroes';
+import { problem as binarySearch } from './binary-search';
+import { problem as singleNumber } from './single-number';
+import { problem as majorityElement } from './majority-element';
+
 export const problems: readonly Problem[] = [
   runningSum,
   peakElementCount,
@@ -65,4 +118,48 @@ export const problems: readonly Problem[] = [
   digitSum,
   isPrimeNumber,
   greatestCommonDivisor,
+  // arrays — medium
+  missingRanges,
+  productExceptSelf,
+  rotateMatrix,
+  maxSubarrayKadane,
+  // strings — medium
+  groupAnagrams,
+  longestSubstringNoRepeat,
+  zigzagConversion,
+  // hash-map — medium
+  isomorphicStrings,
+  subarraySumK,
+  // two-pointers — medium
+  threeSum,
+  containerWithMostWater,
+  removeDuplicatesSorted,
+  // sliding-window — medium
+  flipKZeros,
+  maxSumKSubarray,
+  // binary-search — medium
+  searchRotatedSorted,
+  findFirstLastPos,
+  kokoEatingBananas,
+  // stack — medium
+  dailyTemperatures,
+  decodeString,
+  minStack,
+  // math — medium
+  powerFunction,
+  countPrimesSieve,
+  excelColumnNumber,
+  // easy additions
+  fizzBuzz,
+  reverseInteger,
+  validAnagram,
+  climbingStairs,
+  containsDuplicate,
+  validPalindrome,
+  bestTimeBuySell,
+  missingNumber,
+  moveZeroes,
+  binarySearch,
+  singleNumber,
+  majorityElement,
 ];
