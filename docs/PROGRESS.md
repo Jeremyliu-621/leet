@@ -8,10 +8,15 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-<<<<<<< HEAD
-**Current focus:** Bank at **2001** problems; 6315 tests green. Batches 92–94 + 2K milestone complete.
+**Current focus:** Bank at **2023** problems; 6363 tests green. Batches 92–95 + 2K milestone + word-wrap persist + remote merges complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 95); UI/UX polish.
+**Next up:** Continued bank growth (batch 96+); UI/UX polish.
+
+### feat(bank): add batch 95 — di-string-match, shortest-distance-to-char, largest-num-twice-others (2026-05-26)
+Added 3 problems: `di-string-match` (easy/arrays+math+two-pointers, lo/hi two-pointer I/D permutation), `shortest-distance-to-a-character` (easy/arrays+strings+two-pointers, two-pass O(n) left/right scan), `largest-number-at-least-twice-of-others` (easy/arrays, max dominance 2× check). Bank at **2004**; 6354 tests.
+
+### feat(bank): add batch 94 — count-of-matches, find-winner-tictactoe, sort-features (2026-05-26)
+Added 3 problems from remote batch 94. Bank at **2004** (combined).
 
 ### feat(bank): add batch 94 — maximum-average-subarray-i (2026-05-26)
 Added `maximum-average-subarray-i` (easy/sliding-window, fixed-size k window tracking max sum). JS and Python reference solutions added. Bank at **2001**; 6315 tests.
@@ -27,8 +32,7 @@ Merged local batch 92 (prime-subtraction-operation, find-the-longest-semi-repeti
 
 ### feat(bank): add batch 93 — valid-perfect-square, insertion-sort-list, maximize-score-n-ops (2026-05-26)
 Added 3 problems: `valid-perfect-square` (easy/math+binary-search, binary search for x²=num without sqrt), `insertion-sort-list` (medium/linked-list, O(n²) insertion sort with dummy-head pattern, array-based interface), `maximize-score-after-n-operations` (hard/dp, bitmask DP with precomputed GCD table, O(4^n·n²) for n≤7). Bank at **1990**; 6279 tests.
-=======
->>>>>>> origin/main
+
 **Current focus:** Bank at **1990** problems; 6279 tests green. Batch 93 complete. Word-wrap preference persisted.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 94 bank growth; further UI/UX polish (light mode, a11y, hints backfill).

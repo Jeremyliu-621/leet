@@ -30982,7 +30982,56 @@ def findMaxAverage(nums, k):
     return mx / k
 `,
 
+<<<<<<< HEAD
   // batch 93
+=======
+  'di-string-match': `
+def diStringMatch(s):
+    n = len(s)
+    lo, hi = 0, n
+    res = []
+    for c in s:
+        if c == 'I':
+            res.append(lo)
+            lo += 1
+        else:
+            res.append(hi)
+            hi -= 1
+    res.append(lo)
+    return res
+`,
+
+  'shortest-distance-to-a-character': `
+def shortestToChar(s, c):
+    n = len(s)
+    ans = [float('inf')] * n
+    prev = float('-inf')
+    for i in range(n):
+        if s[i] == c:
+            prev = i
+        if prev != float('-inf'):
+            ans[i] = i - prev
+    nxt = float('inf')
+    for i in range(n - 1, -1, -1):
+        if s[i] == c:
+            nxt = i
+        if nxt != float('inf'):
+            ans[i] = min(ans[i], nxt - i)
+    return ans
+`,
+
+  'largest-number-at-least-twice-of-others': `
+def dominantIndex(nums):
+    max_val = max(nums)
+    max_idx = nums.index(max_val)
+    for i, v in enumerate(nums):
+        if i != max_idx and 2 * v > max_val:
+            return -1
+    return max_idx
+`,
+
+
+>>>>>>> origin/main
   'find-longest-awesome-substring': `
 def longestAwesome(s):
     seen = [-2] * (1 << 10)
