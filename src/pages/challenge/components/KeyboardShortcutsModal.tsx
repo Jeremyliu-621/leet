@@ -51,6 +51,7 @@ const SECTIONS: ShortcutSection[] = [
     rows: [
       { keys: ['← →', 'Arrow keys'], description: 'Resize panels (focus splitter first)' },
       { keys: ['Home', 'End'], description: 'Snap panel to min / max width' },
+      { keys: ['?'], description: 'Open this shortcuts modal' },
     ],
   },
 ];

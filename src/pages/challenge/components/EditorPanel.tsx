@@ -463,6 +463,23 @@ export function EditorPanel({
 
   const [showShortcuts, setShowShortcuts] = useState(false);
 
+  // Global `?` shortcut — opens the shortcuts modal unless the user is typing
+  // in a text input or the code editor itself.
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key !== '?' || e.ctrlKey || e.metaKey || e.altKey) return;
+      const tag = (document.activeElement as HTMLElement | null)?.tagName ?? '';
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || (document.activeElement as HTMLElement | null)?.isContentEditable) return;
+      // Don't fire when the CodeMirror editor has focus (users may want to type '?')
+      const editorEl = editorContainerRef.current;
+      if (editorEl && editorEl.contains(document.activeElement)) return;
+      e.preventDefault();
+      setShowShortcuts((v) => !v);
+    }
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, []);
+
   // Two-step give-up confirmation: first click arms it, second click fires.
   const [giveUpArmed, setGiveUpArmed] = useState(false);
   const giveUpTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);

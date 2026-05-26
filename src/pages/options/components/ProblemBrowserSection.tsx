@@ -182,10 +182,10 @@ export function ProblemBrowserSection() {
           <div className="flex gap-2">
             <input
               type="search"
-              placeholder="Search by title or tag…"
+              placeholder="Search by title, tag, or id…"
               value={search}
               onChange={(e) => setSearch(e.currentTarget.value)}
-              aria-label="Search problems by title or tag"
+              aria-label="Search problems by title, tag, or id"
               className={[
                 'min-w-0 flex-1 rounded-sm border border-border bg-surface-2 px-3 py-1.5',
                 'font-mono text-xs text-text placeholder:text-faint',
