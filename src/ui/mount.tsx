@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 import { applyEditorFontSize, applyTheme, watchSystemTheme } from '../lib/theme';
 import { getValue } from '../lib/storage';
 import { DEFAULT_PREFERENCES } from '../lib/storage/defaults';
+import { ErrorBoundary } from './ErrorBoundary';
 import './styles/globals.css';
 
 // Apply the dark default synchronously so React never renders with a missing
@@ -42,5 +43,9 @@ export function mount(node: ReactNode): void {
 
   watchSystemTheme(() => currentPreference);
 
-  createRoot(root).render(<StrictMode>{node}</StrictMode>);
+  createRoot(root).render(
+    <StrictMode>
+      <ErrorBoundary>{node}</ErrorBoundary>
+    </StrictMode>,
+  );
 }
