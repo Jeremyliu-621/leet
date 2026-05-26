@@ -453,6 +453,10 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
       const entries = buildEntries(result, mode);
       setHistory((prev) => [...prev, entries]);
       prevResultRef.current = result;
+      // Auto-expand the panel so the user sees the result immediately.
+      if (collapsed) {
+        onToggleCollapsed?.();
+      }
       // Auto-switch to test results on any failure so the user immediately
       // sees the first failing test expanded.
       if (result.outcome !== 'accepted' && result.verdicts.length > 0) {
@@ -460,7 +464,7 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
         switchedToTestcasesRef.current = true;
       }
     }
-  }, [result, mode]);
+  }, [result, mode, collapsed, onToggleCollapsed]);
 
   // Auto-scroll: scroll to bottom in terminal output, scroll to top in testcases
   // (so users see the summary + first failure, not the last test).
