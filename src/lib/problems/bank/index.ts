@@ -1593,7 +1593,7 @@ import { problem as maximumAverageSubarrayII } from './maximum-average-subarray-
 import { problem as longestEvenOddSubarrayWithThreshold } from './longest-even-odd-subarray-with-threshold';
 import { problem as findTheValueOfThePartition } from './find-the-value-of-the-partition';
 import { problem as clearDigits } from './clear-digits';
-// batch 57 (local)
+// batch 57 (remote)
 import { problem as sumOfDigitsInBaseK } from './sum-of-digits-in-base-k';
 import { problem as countSymmetricIntegers } from './count-symmetric-integers';
 import { problem as minimumNumberOfPushesToTypeWordI } from './minimum-number-of-pushes-to-type-word-i';
@@ -1602,6 +1602,11 @@ import { problem as countSubarraysOfLengthThreeWithACondition } from './count-su
 import { problem as minimumOperationsToMakeArrayDivisibleByThree } from './minimum-operations-to-make-array-divisible-by-three';
 import { problem as findThePunishmentNumberOfIntegers } from './find-the-punishment-number-of-integers';
 import { problem as minimumAdditionsToMakeValidString } from './minimum-additions-to-make-valid-string';
+// batch 57 (local)
+import { problem as minimumNumberOfMovesToSeat } from './minimum-number-of-moves-to-seat';
+import { problem as numberOfSeniorCitizens } from './number-of-senior-citizens';
+import { problem as maximumNumberOfGroupsWithIncreasingLength } from './maximum-number-of-groups-with-increasing-length';
+import { problem as makeIntegerBeautiful } from './make-integer-beautiful';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3235,6 +3240,7 @@ export const problems: readonly Problem[] = [
   longestEvenOddSubarrayWithThreshold,
   findTheValueOfThePartition,
   clearDigits,
+  // batch 57 (remote)
   sumOfDigitsInBaseK,
   countSymmetricIntegers,
   minimumNumberOfPushesToTypeWordI,
@@ -3243,9 +3249,15 @@ export const problems: readonly Problem[] = [
   minimumOperationsToMakeArrayDivisibleByThree,
   findThePunishmentNumberOfIntegers,
   minimumAdditionsToMakeValidString,
+  // batch 58 (remote)
   maximumTotalRewardUsingOperationsI,
   minimumArrayEnd,
   maximumNumberOfMovesInAGrid,
   minimumCostToConvertStringI,
   waysToSplitArrayIntoThreeSubarrays,
+  // batch 57 (local)
+  minimumNumberOfMovesToSeat,
+  numberOfSeniorCitizens,
+  maximumNumberOfGroupsWithIncreasingLength,
+  makeIntegerBeautiful,
 ];

@@ -21715,6 +21715,7 @@ def secondMinimum(n, edges, time, change):
     return ''.join(stack)
 `,
 
+  // batch 57 (remote)
   'sum-of-digits-in-base-k': `def sumBase(n, k):
     s = 0
     while n > 0:
@@ -21725,7 +21726,7 @@ def secondMinimum(n, edges, time, change):
 
   'count-symmetric-integers': `def countSymmetricIntegers(low, high):
     count = 0
-    for x in range(low, high + 1):
+    for x in range(int(low), int(high) + 1):
         s = str(x)
         if len(s) % 2 != 0:
             continue
@@ -21890,16 +21891,56 @@ def secondMinimum(n, edges, time, change):
         left_sum = prefix[i + 1]
         if left_sum * 3 > total:
             break
-        # mid must satisfy: prefix[j+1] - prefix[i+1] >= left_sum
-        # => prefix[j+1] >= prefix[i+1] + left_sum = 2 * left_sum
         j_min_val = 2 * left_sum
         j_min = bisect.bisect_left(prefix, j_min_val, i + 2, n) - 1
-        # mid must satisfy: total - prefix[j+1] >= prefix[j+1] - prefix[i+1]
-        # => 2 * prefix[j+1] <= total + prefix[i+1]
         j_max_val = (total + prefix[i + 1]) // 2
         j_max = bisect.bisect_right(prefix, j_max_val, i + 2, n) - 2
         if j_min <= j_max:
             ans = (ans + j_max - j_min + 1) % MOD
     return ans
+`,
+
+  // batch 57 (local)
+  'minimum-number-of-moves-to-seat': `def minMovesToSeat(seats, students):
+    s = sorted(int(x) for x in (seats.to_py() if hasattr(seats, 'to_py') else seats))
+    t = sorted(int(x) for x in (students.to_py() if hasattr(students, 'to_py') else students))
+    return sum(abs(a - b) for a, b in zip(s, t))
+`,
+
+  'number-of-senior-citizens': `def countSeniors(details):
+    lst = list(details.to_py() if hasattr(details, 'to_py') else details)
+    return sum(1 for d in lst if int(d[11:13]) > 60)
+`,
+
+  'maximum-number-of-groups-with-increasing-length': `def maximumGroups(usageLimits):
+    limits = sorted(int(x) for x in (usageLimits.to_py() if hasattr(usageLimits, 'to_py') else usageLimits))
+    n = len(limits)
+    def can_form(m):
+        return sum(min(x, m) for x in limits) >= m * (m + 1) // 2
+    lo, hi, ans = 1, n, 0
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if can_form(mid):
+            ans = mid
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return ans
+`,
+
+  'make-integer-beautiful': `def makeIntegerBeautiful(n, target):
+    def digit_sum(x):
+        return sum(int(c) for c in str(x))
+    x = int(n)
+    t = int(target)
+    ops = 0
+    pow10 = 1
+    while digit_sum(x) > t:
+        rem = x % (pow10 * 10)
+        add = 0 if rem == 0 else pow10 * 10 - rem
+        ops += add
+        x += add
+        pow10 *= 10
+    return ops
 `,
 };

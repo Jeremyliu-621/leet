@@ -21953,7 +21953,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return stack.join('');
   },
 
-  // batch 57
+  // batch 57 (remote)
   'sum-of-digits-in-base-k': (...args: unknown[]) => {
     let n = args[0] as number;
     const k = args[1] as number;
@@ -22090,13 +22090,9 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + nums[i];
     const total = prefix[n];
     let ans = 0n;
-    // i = last index of left (0-indexed), so left sum = prefix[i+1]
-    // j = last index of mid, right sum = prefix[n] - prefix[j+1]
-    // constraint: prefix[i+1] <= prefix[j+1]-prefix[i+1] <= prefix[n]-prefix[j+1]
     const bisectLeft = (target: number, lo: number, hi: number): number => {
       while (lo < hi) {
         const mid = (lo + hi) >> 1;
-        // mid sum = prefix[mid+1] - prefix[i+1]; need mid sum >= left sum
         if (prefix[mid + 1]! - prefix[i + 1]! < target) lo = mid + 1;
         else hi = mid;
       }
@@ -22123,6 +22119,61 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       if (jMin <= jMax) ans = (ans + BigInt(jMax - jMin + 1)) % MOD;
     }
     return Number(ans);
+  },
+
+  // batch 57 (local)
+  'minimum-number-of-moves-to-seat': (seats: unknown, students: unknown) => {
+    const s = [...(seats as number[])].sort((a, b) => a - b);
+    const t = [...(students as number[])].sort((a, b) => a - b);
+    let moves = 0;
+    for (let i = 0; i < s.length; i++) moves += Math.abs(s[i]! - t[i]!);
+    return moves;
+  },
+
+  'number-of-senior-citizens': (details: unknown) => {
+    let count = 0;
+    for (const d of details as string[]) {
+      if (parseInt(d.slice(11, 13), 10) > 60) count++;
+    }
+    return count;
+  },
+
+  'maximum-number-of-groups-with-increasing-length': (usageLimits: unknown) => {
+    const limits = [...(usageLimits as number[])].sort((a, b) => a - b);
+    const n = limits.length;
+    let lo = 1, hi = n;
+    const canForm = (m: number): boolean => {
+      let total = 0;
+      for (let i = 0; i < n; i++) total += Math.min(limits[i]!, m);
+      return total >= (m * (m + 1)) / 2;
+    };
+    let ans = 0;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (canForm(mid)) { ans = mid; lo = mid + 1; }
+      else hi = mid - 1;
+    }
+    return ans;
+  },
+
+  'make-integer-beautiful': (n: unknown, target: unknown) => {
+    const digitSum = (x: bigint): number => {
+      let s = 0;
+      while (x > 0n) { s += Number(x % 10n); x /= 10n; }
+      return s;
+    };
+    let x = BigInt(n as number);
+    const t = target as number;
+    let ops = 0n;
+    let pow = 1n;
+    while (digitSum(x) > t) {
+      const rem = x % (pow * 10n);
+      const add = rem === 0n ? 0n : pow * 10n - rem;
+      ops += add;
+      x += add;
+      pow *= 10n;
+    }
+    return Number(ops);
   },
 
 };
