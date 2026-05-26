@@ -25701,6 +25701,60 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 70b
+  'cells-in-a-range-on-an-excel-sheet': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const result: string[] = [];
+    const c1 = s.charCodeAt(0), c2 = s.charCodeAt(3);
+    const r1 = parseInt(s[1] ?? '1', 10), r2 = parseInt(s[4] ?? '1', 10);
+    for (let c = c1; c <= c2; c++) {
+      for (let r = r1; r <= r2; r++) {
+        result.push(String.fromCharCode(c) + r);
+      }
+    }
+    return result;
+  },
+  'construct-the-rectangle': (...args: unknown[]) => {
+    let area = args[0] as number;
+    let w = Math.floor(Math.sqrt(area));
+    while (area % w !== 0) w--;
+    return [area / w, w];
+  },
+  'count-pairs-of-similar-words': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const freq: Record<string, number> = {};
+    let count = 0;
+    for (const word of words) {
+      const key = [...new Set(word)].sort().join('');
+      count += freq[key] ?? 0;
+      freq[key] = (freq[key] ?? 0) + 1;
+    }
+    return count;
+  },
+  'make-two-arrays-equal-by-reversing-subarrays': (...args: unknown[]) => {
+    const target = args[0] as number[];
+    const arr = args[1] as number[];
+    return [...target].sort((a, b) => a - b).join(',') === [...arr].sort((a, b) => a - b).join(',');
+  },
+  'minimum-number-of-buckets-required': (...args: unknown[]) => {
+    const s = [...(args[0] as string)];
+    let count = 0;
+    for (let i = 0; i < s.length; i++) {
+      if (s[i] !== 'H') continue;
+      if (i > 0 && s[i - 1] === 'B') continue;
+      if (i + 1 < s.length && s[i + 1] === '.') {
+        s[i + 1] = 'B';
+        count++;
+      } else if (i > 0 && s[i - 1] === '.') {
+        s[i - 1] = 'B';
+        count++;
+      } else {
+        return -1;
+      }
+    }
+    return count;
+  },
+
   'find-the-duplicate-subtrees': (...args: unknown[]) => {
     const root = _buildTree(args[0] as (number | null)[]);
     if (!root) return [];
@@ -25936,6 +25990,53 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       }
     }
     return total;
+  },
+
+  'apply-discount-every-n-items': (...args: unknown[]) => {
+    const prices = args[0] as number[];
+    const n = args[1] as number;
+    const discount = args[2] as number;
+    let total = 0;
+    for (let i = 0; i < prices.length; i++) {
+      const price = prices[i] ?? 0;
+      if ((i + 1) % n === 0) {
+        total += Math.floor(price * (100 - discount) / 100);
+      } else {
+        total += price;
+      }
+    }
+    return total;
+  },
+
+  'sum-game': (...args: unknown[]) => {
+    const num = args[0] as string;
+    const half = num.length / 2;
+    let sumL = 0, sumR = 0, qL = 0, qR = 0;
+    for (let i = 0; i < half; i++) {
+      if (num[i] === '?') qL++;
+      else sumL += parseInt(num[i] ?? '0', 10);
+    }
+    for (let i = half; i < num.length; i++) {
+      if (num[i] === '?') qR++;
+      else sumR += parseInt(num[i] ?? '0', 10);
+    }
+    if ((qL + qR) % 2 === 1) return true;
+    return sumL - sumR + (qL - qR) * 9 / 2 !== 0;
+  },
+
+  'find-the-k-th-lucky-number': (...args: unknown[]) => {
+    let k = args[0] as number;
+    let len = 1;
+    while (k > (1 << len)) {
+      k -= (1 << len);
+      len++;
+    }
+    k--;
+    let result = '';
+    for (let i = len - 1; i >= 0; i--) {
+      result += ((k >> i) & 1) === 0 ? '4' : '7';
+    }
+    return result;
   },
 
 };

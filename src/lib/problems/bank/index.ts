@@ -1846,6 +1846,14 @@ import { problem as findTheDuplicateNumber } from './find-the-duplicate-number';
 import { problem as maximumDifferenceInArray } from './maximum-difference-in-array';
 import { problem as longestSubarrayWithAtMostKFrequency } from './longest-subarray-with-at-most-k-frequency';
 import { problem as countPairsInTwoArrays } from './count-pairs-in-two-arrays';
+import { problem as cellsInARangeOnAnExcelSheet } from './cells-in-a-range-on-an-excel-sheet';
+import { problem as makeTwoArraysEqualByReversingSubarrays } from './make-two-arrays-equal-by-reversing-subarrays';
+import { problem as countPairsOfSimilarWords } from './count-pairs-of-similar-words';
+import { problem as constructTheRectangle } from './construct-the-rectangle';
+import { problem as minimumNumberOfBucketsRequired } from './minimum-number-of-buckets-required';
+import { problem as applyDiscountEveryNItems } from './apply-discount-every-n-items';
+import { problem as sumGame } from './sum-game';
+import { problem as findTheKthLuckyNumber } from './find-the-k-th-lucky-number';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3731,4 +3739,12 @@ export const problems: readonly Problem[] = [
   maximumDifferenceInArray,
   longestSubarrayWithAtMostKFrequency,
   countPairsInTwoArrays,
+  cellsInARangeOnAnExcelSheet,
+  makeTwoArraysEqualByReversingSubarrays,
+  countPairsOfSimilarWords,
+  constructTheRectangle,
+  minimumNumberOfBucketsRequired,
+  applyDiscountEveryNItems,
+  sumGame,
+  findTheKthLuckyNumber,
 ];

@@ -24974,6 +24974,53 @@ def minimumMoney(transactions):
     return ans[0]
 `,
 
+  // batch 70b
+  'cells-in-a-range-on-an-excel-sheet': `def cellsInRange(s):
+    result = []
+    for c in range(ord(s[0]), ord(s[3]) + 1):
+        for r in range(int(s[1]), int(s[4]) + 1):
+            result.append(chr(c) + str(r))
+    return result
+`,
+  'construct-the-rectangle': `def constructRectangle(area):
+    import math
+    w = int(math.sqrt(area))
+    while area % w != 0:
+        w -= 1
+    return [area // w, w]
+`,
+  'count-pairs-of-similar-words': `def similarPairs(words):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    count = 0
+    for word in words:
+        key = ''.join(sorted(set(word)))
+        count += freq[key]
+        freq[key] += 1
+    return count
+`,
+  'make-two-arrays-equal-by-reversing-subarrays': `def canBeEqual(target, arr):
+    return sorted(target) == sorted(arr)
+`,
+  'minimum-number-of-buckets-required': `def minimumBuckets(street):
+    s = list(street)
+    count = 0
+    for i in range(len(s)):
+        if s[i] != 'H':
+            continue
+        if i > 0 and s[i-1] == 'B':
+            continue
+        if i + 1 < len(s) and s[i+1] == '.':
+            s[i+1] = 'B'
+            count += 1
+        elif i > 0 and s[i-1] == '.':
+            s[i-1] = 'B'
+            count += 1
+        else:
+            return -1
+    return count
+`,
+
   'find-the-duplicate-subtrees': `def findDuplicateSubtrees(root):
     from collections import defaultdict, deque
     def to_int(x):
@@ -25379,4 +25426,43 @@ def totalCost(costs, k, candidates):
     return count
 `,
 
+  'apply-discount-every-n-items': `def discountPrices(prices, n, discount):
+    total = 0
+    for i, price in enumerate(prices):
+        if (i + 1) % n == 0:
+            total += (price * (100 - discount)) // 100
+        else:
+            total += price
+    return total
+`,
+
+  'sum-game': `def sumGame(num):
+    half = len(num) // 2
+    sum_l = sum_r = q_l = q_r = 0
+    for i in range(half):
+        if num[i] == '?':
+            q_l += 1
+        else:
+            sum_l += int(num[i])
+    for i in range(half, len(num)):
+        if num[i] == '?':
+            q_r += 1
+        else:
+            sum_r += int(num[i])
+    if (q_l + q_r) % 2 == 1:
+        return True
+    return sum_l - sum_r + (q_l - q_r) * 9 / 2 != 0
+`,
+
+  'find-the-k-th-lucky-number': `def kthLuckyNumber(k):
+    length = 1
+    while k > (1 << length):
+        k -= (1 << length)
+        length += 1
+    k -= 1
+    result = ''
+    for i in range(length - 1, -1, -1):
+        result += '4' if ((k >> i) & 1) == 0 else '7'
+    return result
+`,
 };
