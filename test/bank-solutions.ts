@@ -30951,6 +30951,47 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return maxLen;
   },
 
+  // batch 92 — greedy/math, strings/math, greedy, hash-map, graph/UF, DP, greedy
+  'eliminate-maximum-number-of-monsters': (...args: unknown[]) => {
+    const [dist, speed] = args as [number[], number[]];
+    const times = dist.map((d, i) => Math.ceil(d / speed[i]!));
+    times.sort((a, b) => a - b);
+    for (let k = 0; k < times.length; k++) {
+      if (times[k]! <= k) return k;
+    }
+    return dist.length;
+  },
+
+  'decoded-string-at-index': (...args: unknown[]) => {
+    const [s, k] = args as [string, number];
+    let size = 0n;
+    for (const c of s) {
+      if (c >= '0' && c <= '9') size *= BigInt(c);
+      else size++;
+    }
+    let cur = BigInt(k);
+    for (let i = s.length - 1; i >= 0; i--) {
+      const c = s[i]!;
+      cur %= size;
+      if (cur === 0n && c >= 'a' && c <= 'z') return c;
+      if (c >= '0' && c <= '9') size /= BigInt(c);
+      else size--;
+    }
+    return '';
+  },
+
+  'maximum-bags-with-full-capacity-of-rocks': (...args: unknown[]) => {
+    const [capacity, rocks, additionalRocks] = args as [number[], number[], number];
+    const remaining = capacity.map((c, i) => c - rocks[i]!);
+    remaining.sort((a, b) => a - b);
+    let count = 0, ar = additionalRocks;
+    for (const r of remaining) {
+      if (ar >= r) { ar -= r; count++; }
+      else break;
+    }
+    return count;
+  },
+
   'maximum-number-of-consecutive-values-you-can-make': (...args: unknown[]) => {
     const coins = [...(args[0] as number[])];
     coins.sort((a, b) => a - b);
@@ -31026,6 +31067,20 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
         if (diff.has(d)) good = true;
       }
       if (valid && good) count++;
+    }
+    return count;
+  },
+
+  'count-of-interesting-subarrays': (...args: unknown[]) => {
+    const [nums, modulo, k] = args as [number[], number, number];
+    const prefixCount = new Map<number, number>([[0, 1]]);
+    let count = 0, prefix = 0;
+    for (const num of nums) {
+      if (num % modulo === k) prefix++;
+      prefix %= modulo;
+      const target = (prefix - k + modulo) % modulo;
+      count += prefixCount.get(target) ?? 0;
+      prefixCount.set(prefix, (prefixCount.get(prefix) ?? 0) + 1);
     }
     return count;
   },
@@ -31130,6 +31185,97 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       if (prev !== curr && curr !== next) count++;
     }
     return count;
+  },
+
+  'minimum-number-of-visited-cells-in-a-grid': (...args: unknown[]) => {
+    const [grid] = args as [number[][]];
+    const m = grid.length, n = grid[0]!.length;
+    const dist: number[][] = Array.from({ length: m }, () => new Array<number>(n).fill(-1));
+    dist[0]![0] = 1;
+    const rowUF: number[][] = Array.from({ length: m }, (_, _r) =>
+      Array.from({ length: n + 1 }, (_, c) => c));
+    const colUF: number[][] = Array.from({ length: n }, (_, _c) =>
+      Array.from({ length: m + 1 }, (_, r) => r));
+    const rowFind = (r: number, c: number): number => {
+      while (rowUF[r]![c] !== c) {
+        rowUF[r]![c] = rowUF[r]![rowUF[r]![c]!]!;
+        c = rowUF[r]![c]!;
+      }
+      return c;
+    };
+    const colFind = (c: number, r: number): number => {
+      while (colUF[c]![r] !== r) {
+        colUF[c]![r] = colUF[c]![colUF[c]![r]!]!;
+        r = colUF[c]![r]!;
+      }
+      return r;
+    };
+    rowUF[0]![0] = 1;
+    colUF[0]![0] = 1;
+    const queue: [number, number][] = [[0, 0]];
+    let head = 0;
+    while (head < queue.length) {
+      const [r, c] = queue[head++]!;
+      const d = dist[r]![c]!;
+      const g = grid[r]![c]!;
+      const maxC = Math.min(c + g, n - 1);
+      const maxR = Math.min(r + g, m - 1);
+      let nc = rowFind(r, c + 1);
+      while (nc <= maxC) {
+        dist[r]![nc] = d + 1;
+        queue.push([r, nc]);
+        rowUF[r]![nc] = nc + 1;
+        colUF[nc]![r] = r + 1;
+        nc = rowFind(r, nc + 1);
+      }
+      let nr = colFind(c, r + 1);
+      while (nr <= maxR) {
+        dist[nr]![c] = d + 1;
+        queue.push([nr, c]);
+        colUF[c]![nr] = nr + 1;
+        rowUF[nr]![c] = c + 1;
+        nr = colFind(c, nr + 1);
+      }
+    }
+    return dist[m - 1]![n - 1]!;
+  },
+
+  'form-largest-integer-with-digits-that-add-up-to-target': (...args: unknown[]) => {
+    const [cost, target] = args as [number[], number];
+    const NEG_INF = -Infinity;
+    const dp = new Array<number>(target + 1).fill(NEG_INF);
+    dp[0] = 0;
+    for (let j = 1; j <= target; j++) {
+      for (let d = 0; d < 9; d++) {
+        if (j >= cost[d]! && dp[j - cost[d]!]! !== NEG_INF) {
+          dp[j] = Math.max(dp[j]!, dp[j - cost[d]!]! + 1);
+        }
+      }
+    }
+    if (dp[target]! < 0) return '0';
+    let result = '';
+    let rem = target;
+    while (rem > 0) {
+      for (let d = 8; d >= 0; d--) {
+        if (rem >= cost[d]! && dp[rem - cost[d]!] === dp[rem]! - 1) {
+          result += String(d + 1);
+          rem -= cost[d]!;
+          break;
+        }
+      }
+    }
+    return result;
+  },
+
+  'destroying-asteroids': (...args: unknown[]) => {
+    const [mass, asteroids] = args as [number, number[]];
+    const sorted = [...asteroids].sort((a, b) => a - b);
+    let m = mass;
+    for (const a of sorted) {
+      if (m < a) return false;
+      m += a;
+    }
+    return true;
   },
 
   'prime-subtraction-operation': (...args: unknown[]) => {
