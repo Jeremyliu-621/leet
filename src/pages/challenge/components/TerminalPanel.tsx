@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, type RefObject } from 'react';
 import type { JudgeResult, TestVerdict } from '../../../lib/judge';
 
 const TRUNCATE_AT = 160;
@@ -168,7 +168,7 @@ function StringDiffHint({ expected, actual }: { expected: unknown; actual: unkno
 
 /**
  * Compact dot matrix showing pass/fail/error status for all test cases at a glance.
- * Only rendered when there are multiple verdicts. Each dot is clickable — clicking
+ * Only rendered when there are multiple verdicts. Each dot is a button — clicking
  * a dot scrolls the corresponding TestResultCard into view.
  *
  * Dot states:
@@ -176,21 +176,30 @@ function StringDiffHint({ expected, actual }: { expected: unknown; actual: unkno
  *   fail  → outlined square (border only)
  *   error → filled muted square
  */
-function TestDotMatrix({ verdicts }: { verdicts: readonly TestVerdict[] }) {
+function TestDotMatrix({ verdicts, scrollContainerRef }: { verdicts: readonly TestVerdict[]; scrollContainerRef: RefObject<HTMLDivElement | null> }) {
   if (verdicts.length <= 3) return null;
+  const passed = verdicts.filter(v => v.status === 'pass').length;
+  const failed = verdicts.length - passed;
   return (
     <div
       className="flex flex-wrap gap-1 pb-2"
-      role="img"
-      aria-label={`Test results: ${verdicts.filter(v => v.status === 'pass').length} passed, ${verdicts.filter(v => v.status !== 'pass').length} failed`}
+      role="group"
+      aria-label={`Test results: ${passed} passed, ${failed} failed. Click a dot to jump to that test.`}
     >
       {verdicts.map((v) => (
-        <div
+        <button
           key={v.index}
+          type="button"
           title={`Test ${v.index + 1}: ${v.status}`}
-          aria-hidden="true"
+          aria-label={`Jump to Test ${v.index + 1} (${v.status})`}
+          onClick={() => {
+            const container = scrollContainerRef.current;
+            const card = document.getElementById(`test-result-card-${v.index}`);
+            if (!container || !card) return;
+            container.scrollTo({ top: card.offsetTop - container.offsetTop - 8, behavior: 'smooth' });
+          }}
           className={[
-            'w-2.5 h-2.5 rounded-sm flex-shrink-0',
+            'w-2.5 h-2.5 rounded-sm flex-shrink-0 cursor-pointer transition-opacity hover:opacity-70 focus:outline-none focus:ring-1 focus:ring-accent focus:ring-offset-1',
             v.status === 'pass'
               ? 'bg-accent'
               : v.status === 'error'
@@ -581,7 +590,7 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
           {result && result.verdicts.length > 0 && (
             <>
               {/* Dot matrix — quick visual overview of pass/fail pattern */}
-              <TestDotMatrix verdicts={result.verdicts} />
+              <TestDotMatrix verdicts={result.verdicts} scrollContainerRef={scrollRef} />
 
               {/* Summary */}
               <div className="flex items-center gap-3 pb-2 border-b border-border">
@@ -645,7 +654,7 @@ function TestResultCard({ verdict, autoExpand }: { verdict: TestVerdict; autoExp
   const label = `Test ${verdict.index + 1}`;
 
   return (
-    <div className="rounded border border-border bg-surface-2">
+    <div id={`test-result-card-${verdict.index}`} className="rounded border border-border bg-surface-2">
       <button
         type="button"
         onClick={() => setExpanded((e) => !e)}
