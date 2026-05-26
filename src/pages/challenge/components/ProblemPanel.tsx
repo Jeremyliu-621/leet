@@ -4,6 +4,32 @@ import type { Difficulty } from '../../../lib/types';
 import { ProblemDescription } from './ProblemDescription';
 import { HintsSection } from './HintsSection';
 
+/**
+ * Renders a single line of text that may contain inline code spans (backticks).
+ * Splits on `` `...` `` patterns and renders code spans with the design-system
+ * code style. Avoids running the full remark/rehype pipeline for simple strings.
+ */
+function InlineText({ text }: { text: string }) {
+  const parts = text.split(/(`[^`]+`)/g);
+  if (parts.length === 1) return <>{text}</>;
+  return (
+    <>
+      {parts.map((part, i) =>
+        part.startsWith('`') && part.endsWith('`') ? (
+          <code
+            key={i}
+            className="rounded-sm bg-surface-2 px-1 py-0.5 font-mono text-[0.85em] text-text"
+          >
+            {part.slice(1, -1)}
+          </code>
+        ) : (
+          <span key={i}>{part}</span>
+        ),
+      )}
+    </>
+  );
+}
+
 /** Inline copy button for example inputs and outputs. */
 function InlineCopy({ value }: { value: string }) {
   const [copied, setCopied] = useState(false);
@@ -127,7 +153,9 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
                     </div>
                     {example.explanation && (
                       <div className="border-t border-border pt-2 mt-1">
-                        <p className="text-xs leading-relaxed text-muted">{example.explanation}</p>
+                        <p className="text-xs leading-relaxed text-muted">
+                          <InlineText text={example.explanation} />
+                        </p>
                       </div>
                     )}
                   </div>
@@ -155,7 +183,9 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
                     className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-border-strong"
                     aria-hidden="true"
                   />
-                  <span className="font-mono text-xs leading-relaxed text-muted">{constraint}</span>
+                  <span className="font-mono text-xs leading-relaxed text-muted">
+                    <InlineText text={constraint} />
+                  </span>
                 </li>
               ))}
             </ul>

@@ -58,11 +58,16 @@ Each job can be selected at most once.
     { args: [[1], [2], [100]], expected: 100 },
   ],
   hiddenTests: [
+    // start=1,end=3 and start=3,end=5: start[1]=3 >= end[0]=3, non-overlapping → 30
     { args: [[1, 3], [3, 5], [10, 20]], expected: 30 },
+    // start=1,end=2 and start=2,end=3: non-overlapping → 30
     { args: [[1, 2], [2, 3], [10, 20]], expected: 30 },
-    { args: [[1, 2], [3, 4], [10, 5]], expected: 10 },
-    { args: [[6, 3, 1], [7, 8, 5], [1, 20, 30]], expected: 31 },
-    { args: [[1, 2, 3], [4, 6, 5], [50, 30, 20]], expected: 50 },
+    // start=1,end=2 and start=3,end=8: non-overlapping → 15
+    { args: [[1, 3], [2, 8], [10, 5]], expected: 15 },
+    // three jobs: sorted by end: (1,4,20),(6,7,1),(5,8,30) → best 20+30=50
+    { args: [[1, 6, 5], [4, 7, 8], [20, 1, 30]], expected: 50 },
+    // jobs (1,3,50),(2,5,30),(4,10,20): best = 50+20=70
+    { args: [[1, 2, 4], [3, 5, 10], [50, 30, 20]], expected: 70 },
     { args: [[1, 2, 3, 4], [3, 5, 10, 6], [20, 20, 100, 70]], expected: 120 },
   ],
 };

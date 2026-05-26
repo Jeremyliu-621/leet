@@ -29689,6 +29689,112 @@ def countElements(nums: list) -> int:
     return sum(1 for x in nums if mn < x < mx)
 `,
 
+  'check-if-there-is-a-valid-partition-for-the-array': `
+def validPartition(nums: list) -> bool:
+    n = len(nums)
+    dp = [False] * (n + 1)
+    dp[0] = True
+    for i in range(2, n + 1):
+        if nums[i - 1] == nums[i - 2]:
+            dp[i] = dp[i] or dp[i - 2]
+        if i >= 3:
+            if nums[i - 1] == nums[i - 2] == nums[i - 3]:
+                dp[i] = dp[i] or dp[i - 3]
+            if nums[i - 1] == nums[i - 2] + 1 == nums[i - 3] + 2:
+                dp[i] = dp[i] or dp[i - 3]
+    return dp[n]
+`,
+
+  'reverse-nodes-in-even-length-groups': `
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+def reverseEvenLengthGroupsRunner(arr):
+    arr = list(arr)
+    if not arr:
+        return []
+    head = ListNode(arr[0])
+    cur = head
+    for v in arr[1:]:
+        cur.next = ListNode(v)
+        cur = cur.next
+
+    prev = head  # group 1 has size 1 (odd), unchanged
+    group_size = 2
+    while prev and prev.next:
+        node = prev.next
+        count = 0
+        tmp = node
+        while tmp and count < group_size:
+            tmp = tmp.next
+            count += 1
+        if count % 2 == 0:
+            tail = node
+            prev_node = None
+            curr_node = node
+            for _ in range(count):
+                nxt = curr_node.next
+                curr_node.next = prev_node
+                prev_node = curr_node
+                curr_node = nxt
+            prev.next = prev_node
+            tail.next = curr_node
+            prev = tail
+        else:
+            for _ in range(count):
+                prev = prev.next
+        group_size += 1
+
+    result = []
+    p = head
+    while p:
+        result.append(p.val)
+        p = p.next
+    return result
+`,
+
+  'minimum-difference-in-sums-after-removal-of-elements': `
+import heapq
+
+def minimumDifference(nums: list) -> int:
+    nums = list(nums)
+    total = len(nums)
+    n = total // 3
+
+    # prefMin[i] = min sum of n elements from nums[0..i-1]
+    pref_min = {}
+    max_heap = []  # store negatives for max-heap simulation
+    s1 = 0
+    for i in range(2 * n):
+        heapq.heappush(max_heap, -nums[i])
+        s1 += nums[i]
+        if len(max_heap) > n:
+            s1 += heapq.heappop(max_heap)  # pop largest (stored as negative)
+        if len(max_heap) == n:
+            pref_min[i + 1] = s1
+
+    # suffMax[i] = max sum of n elements from nums[i..3n-1]
+    suff_max = {}
+    min_heap = []
+    s2 = 0
+    for i in range(3 * n - 1, n - 1, -1):
+        heapq.heappush(min_heap, nums[i])
+        s2 += nums[i]
+        if len(min_heap) > n:
+            s2 -= heapq.heappop(min_heap)
+        if len(min_heap) == n:
+            suff_max[i] = s2
+
+    ans = float('inf')
+    for m in range(n, 2 * n + 1):
+        if m in pref_min and m in suff_max:
+            ans = min(ans, pref_min[m] - suff_max[m])
+    return ans
+`,
+
+
   'split-the-array': `
 def isPossibleToSplit(nums: list) -> bool:
     from collections import Counter
@@ -29734,73 +29840,121 @@ def findShortestCycle(n: int, edges: list) -> int:
     return -1 if ans == float('inf') else ans
 `,
 
+  // batch 89
+  'next-greater-element-distances': `
+def nextGreaterDistances(nums):
+    n = len(nums)
+    result = [-1] * n
+    stack = []
+    for i in range(n):
+        while stack and nums[stack[-1]] < nums[i]:
+            j = stack.pop()
+            result[j] = i - j
+        stack.append(i)
+    return result
+`,
+
+  'find-all-occurrences-z-algorithm': `
+def findAllOccurrences(text, pattern):
+    s = pattern + '#' + text
+    n = len(s)
+    z = [0] * n
+    l = r = 0
+    for i in range(1, n):
+        if i < r:
+            z[i] = min(r - i, z[i - l])
+        while i + z[i] < n and s[z[i]] == s[i + z[i]]:
+            z[i] += 1
+        if i + z[i] > r:
+            l, r = i, i + z[i]
+    plen = len(pattern)
+    return [i - plen - 1 for i in range(plen + 1, n) if z[i] >= plen]
+`,
+
+  'z-algorithm-longest-prefix-suffix': `
+def longestPrefixSuffix(s):
+    n = len(s)
+    if n == 0:
+        return 0
+    pi = [0] * n
+    k = 0
+    for i in range(1, n):
+        while k > 0 and s[k] != s[i]:
+            k = pi[k - 1]
+        if s[k] == s[i]:
+            k += 1
+        pi[i] = k
+    return pi[-1]
+`,
+
   'count-subarrays-exactly-k-distinct': `
-def subarraysWithKDistinct(nums: list, k: int) -> int:
-    def at_most(k):
+def subarraysWithKDistinct(nums, k):
+    def at_most(limit):
+        count = left = 0
         freq = {}
-        left = 0
-        total = 0
-        for right in range(len(nums)):
-            v = int(nums[right])
+        for right, v in enumerate(nums):
             freq[v] = freq.get(v, 0) + 1
-            while len(freq) > k:
-                lv = int(nums[left])
+            while len(freq) > limit:
+                lv = nums[left]
                 freq[lv] -= 1
                 if freq[lv] == 0:
                     del freq[lv]
                 left += 1
-            total += right - left + 1
-        return total
+            count += right - left + 1
+        return count
     return at_most(k) - at_most(k - 1)
+`,
+
+  'maximum-product-subarray-length-k': `
+def maxProductSubarrayK(nums, k):
+    best = float('-inf')
+    for i in range(len(nums) - k + 1):
+        prod = 1
+        for j in range(i, i + k):
+            prod *= nums[j]
+        best = max(best, prod)
+    return best
 `,
 
   'weighted-job-scheduling': `
 import bisect
-def jobScheduling(startTime: list, endTime: list, profit: list) -> int:
-    n = len(list(startTime))
-    jobs = sorted(zip(list(endTime), list(startTime), list(profit)))
-    dp = [0] * (n + 1)
-    ends = [0] + [j[0] for j in jobs]
-    for i in range(1, n + 1):
-        end_i, start_i, profit_i = jobs[i - 1]
-        j = bisect.bisect_right(ends, start_i, 0, i) - 1
-        dp[i] = max(dp[i - 1], profit_i + dp[j])
-    return dp[n]
+def jobScheduling(startTime, endTime, profit):
+    jobs = sorted(zip(endTime, startTime, profit))
+    ends = [j[0] for j in jobs]
+    dp = [0] * (len(jobs) + 1)
+    for i, (end, start, p) in enumerate(jobs, 1):
+        j = bisect.bisect_right(ends, start, 0, i - 1)
+        dp[i] = max(dp[i - 1], dp[j] + p)
+    return dp[-1]
 `,
 
   'parallel-courses': `
 from collections import deque
-def minimumSemesters(n: int, relations: list) -> int:
-    indegree = [0] * (n + 1)
+def minimumSemesters(n, relations):
+    in_deg = [0] * (n + 1)
     adj = [[] for _ in range(n + 1)]
-    for r in relations:
-        u, v = int(r[0]), int(r[1])
+    for u, v in relations:
         adj[u].append(v)
-        indegree[v] += 1
-    q = deque()
-    for i in range(1, n + 1):
-        if indegree[i] == 0:
-            q.append(i)
-    semesters = 0
-    processed = 0
+        in_deg[v] += 1
+    q = deque(i for i in range(1, n + 1) if in_deg[i] == 0)
+    semesters = processed = 0
     while q:
         semesters += 1
         for _ in range(len(q)):
             u = q.popleft()
             processed += 1
             for v in adj[u]:
-                indegree[v] -= 1
-                if indegree[v] == 0:
+                in_deg[v] -= 1
+                if in_deg[v] == 0:
                     q.append(v)
     return semesters if processed == n else -1
 `,
 
   'parallel-courses-ii': `
-def minNumberOfSemesters(n: int, relations: list, k: int) -> int:
-    prereq = [0] * n
-    for r in relations:
-        u, v = int(r[0]), int(r[1])
-        prereq[v] |= (1 << u)
+def minNumberOfSemesters(n, relations, k):
+    prereqs = [0] * n
+    for x, y in relations:
+        prereqs[y] |= (1 << x)
     INF = float('inf')
     dp = [INF] * (1 << n)
     dp[0] = 0
@@ -29809,51 +29963,31 @@ def minNumberOfSemesters(n: int, relations: list, k: int) -> int:
             continue
         avail = 0
         for i in range(n):
-            if not (mask >> i & 1) and (prereq[i] & mask) == prereq[i]:
+            if not (mask >> i & 1) and (prereqs[i] & mask) == prereqs[i]:
                 avail |= (1 << i)
         sub = avail
         while sub:
-            if bin(sub).count('1') <= k:
-                dp[mask | sub] = min(dp[mask | sub], dp[mask] + 1)
+            bits = bin(sub).count('1')
+            if bits <= k:
+                nxt = mask | sub
+                if dp[nxt] > dp[mask] + 1:
+                    dp[nxt] = dp[mask] + 1
             sub = (sub - 1) & avail
     return dp[(1 << n) - 1]
 `,
 
-  'find-all-occurrences-z-algorithm': `
-def findAllOccurrences(text: str, pattern: str) -> list:
-    if not pattern or not text:
-        return []
-    s = pattern + '#' + text
-    n = len(s)
-    z = [0] * n
-    l, r = 0, 0
-    for i in range(1, n):
-        if i < r:
-            z[i] = min(r - i, z[i - l])
-        while i + z[i] < n and s[z[i]] == s[i + z[i]]:
-            z[i] += 1
-        if i + z[i] > r:
-            l, r = i, i + z[i]
-    m = len(pattern)
-    result = []
-    for i in range(m + 1, n):
-        if z[i] >= m:
-            result.append(i - m - 1)
-    return result
-`,
-
   'grid-count-paths-mod': `
-def countPaths(grid: list) -> int:
-    MOD = 10 ** 9 + 7
-    g = [[int(v) for v in row] for row in grid]
-    m, n = len(g), len(g[0])
-    dp = [[0] * n for _ in range(m)]
+def countPaths(grid):
+    MOD = 10**9 + 7
+    m, n = len(grid), len(grid[0])
+    dp = [[0]*n for _ in range(m)]
     dp[0][0] = 1
     for i in range(m):
         for j in range(n):
             if i == 0 and j == 0:
                 continue
-            if g[i][j] == 1:
+            if grid[i][j] == 1:
+                dp[i][j] = 0
                 continue
             top = dp[i-1][j] if i > 0 else 0
             left = dp[i][j-1] if j > 0 else 0
@@ -29862,102 +29996,103 @@ def countPaths(grid: list) -> int:
 `,
 
   'max-sum-submatrix': `
-def maxSumSubmatrix(matrix: list) -> int:
-    mat = [[int(v) for v in row] for row in matrix]
-    m, n = len(mat), len(mat[0])
-    best = float('-inf')
+def maxSumSubmatrix(matrix):
+    m, n = len(matrix), len(matrix[0])
+    ans = float('-inf')
     for top in range(m):
         col_sum = [0] * n
         for bot in range(top, m):
-            for c in range(n):
-                col_sum[c] += mat[bot][c]
-            cur = col_sum[0]
-            run = col_sum[0]
-            for c in range(1, n):
-                run = max(col_sum[c], run + col_sum[c])
-                cur = max(cur, run)
-            best = max(best, cur)
-    return best
-`,
-
-  'maximum-product-subarray-length-k': `
-def maxProductSubarrayK(nums: list, k: int) -> int:
-    arr = list(nums)
-    n = len(arr)
-    best = float('-inf')
-    for i in range(n - k + 1):
-        prod = 1
-        for j in range(i, i + k):
-            prod *= arr[j]
-        best = max(best, prod)
-    return best
-`,
-
-  'next-greater-element-distances': `
-def nextGreaterDistances(nums: list) -> list:
-    arr = list(nums)
-    n = len(arr)
-    result = [-1] * n
-    stack = []
-    for i in range(n):
-        while stack and arr[i] > arr[stack[-1]]:
-            j = stack.pop()
-            result[j] = i - j
-        stack.append(i)
-    return result
+            for j in range(n):
+                col_sum[j] += matrix[bot][j]
+            # Kadane's
+            cur = max_sub = float('-inf')
+            for v in col_sum:
+                cur = max(v, cur + v)
+                max_sub = max(max_sub, cur)
+            ans = max(ans, max_sub)
+    return ans
 `,
 
   'number-good-leaf-node-pairs': `
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val; self.left = left; self.right = right
-
-def __from_array__(arr):
-    if hasattr(arr, 'to_py'):
-        raw = arr.to_py()
-    else:
-        raw = list(arr)
-    arr2 = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
-    if not arr2 or arr2[0] is None:
-        return None
-    root = TreeNode(arr2[0])
-    queue = [root]
-    i = 1
-    while queue and i < len(arr2):
-        node = queue.pop(0)
-        if i < len(arr2) and arr2[i] is not None:
-            node.left = TreeNode(arr2[i]); queue.append(node.left)
-        i += 1
-        if i < len(arr2) and arr2[i] is not None:
-            node.right = TreeNode(arr2[i]); queue.append(node.right)
-        i += 1
-    return root
-
-def countPairs(root_arr, distance: int) -> int:
-    root = __from_array__(root_arr)
-    count = 0
+def countPairsRunner(arr, distance):
+    raw_list = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
+    a = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    class TreeNode:
+        def __init__(self, v): self.v = v; self.l = self.r = None
+    def build(arr2):
+        if not arr2 or arr2[0] is None: return None
+        root = TreeNode(arr2[0])
+        q = [root]; i = 1
+        while q and i < len(arr2):
+            node = q.pop(0)
+            if i < len(arr2) and arr2[i] is not None:
+                node.l = TreeNode(arr2[i]); q.append(node.l)
+            i += 1
+            if i < len(arr2) and arr2[i] is not None:
+                node.r = TreeNode(arr2[i]); q.append(node.r)
+            i += 1
+        return root
+    count = [0]
     def dfs(node):
-        nonlocal count
-        if not node:
-            return []
-        if not node.left and not node.right:
-            return [0]
-        left = dfs(node.left)
-        right = dfs(node.right)
+        if not node: return []
+        if not node.l and not node.r: return [0]
+        left = [d+1 for d in dfs(node.l)]
+        right = [d+1 for d in dfs(node.r)]
         for l in left:
             for r in right:
-                if l + r + 2 <= distance:
-                    count += 1
-        merged = []
-        for d in left:
-            if d + 1 < distance:
-                merged.append(d + 1)
-        for d in right:
-            if d + 1 < distance:
-                merged.append(d + 1)
-        return merged
+                if l + r <= distance:
+                    count[0] += 1
+        return [d for d in left + right if d < distance]
+    dfs(build(a))
+    return count[0]
+`,
+
+  'tree-node-product-of-children': `
+def maximumProductSplitRunner(arr):
+    MOD = 10**9 + 7
+    raw_list = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
+    a = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    class TreeNode:
+        def __init__(self, v): self.v = v; self.l = self.r = None
+    def build(arr2):
+        if not arr2 or arr2[0] is None: return None
+        root = TreeNode(arr2[0])
+        q = [root]; i = 1
+        while q and i < len(arr2):
+            node = q.pop(0)
+            if i < len(arr2) and arr2[i] is not None:
+                node.l = TreeNode(arr2[i]); q.append(node.l)
+            i += 1
+            if i < len(arr2) and arr2[i] is not None:
+                node.r = TreeNode(arr2[i]); q.append(node.r)
+            i += 1
+        return root
+    def total_sum(node):
+        if not node: return 0
+        return node.v + total_sum(node.l) + total_sum(node.r)
+    root = build(a)
+    total = total_sum(root)
+    best = [0]
+    def dfs(node):
+        if not node: return 0
+        s = node.v + dfs(node.l) + dfs(node.r)
+        prod = (s * (total - s)) % MOD
+        if prod > best[0]: best[0] = prod
+        return s
     dfs(root)
-    return count
+    return best[0]
+`,
+
+  'minimum-operations-to-make-array-non-decreasing': `
+def minOperationsNonDecreasing(nums):
+    ops = 0
+    prev = nums[0] if nums else 0
+    for i in range(1, len(nums)):
+        if nums[i] < prev:
+            ops += prev - nums[i]
+        else:
+            prev = nums[i]
+    return ops
 `,
 
 };
