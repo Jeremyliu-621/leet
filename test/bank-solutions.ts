@@ -31084,4 +31084,72 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return total;
   },
 
+  'count-vowel-substrings-of-a-word': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+    let count = 0;
+    for (let i = 0; i < word.length; i++) {
+      const seen = new Set<string>();
+      for (let j = i; j < word.length; j++) {
+        if (!vowels.has(word[j]!)) break;
+        seen.add(word[j]!);
+        if (seen.size === 5) count++;
+      }
+    }
+    return count;
+  },
+
+  'minimum-cost-to-move-chips': (...args: unknown[]) => {
+    const position = args[0] as number[];
+    let odd = 0, even = 0;
+    for (const p of position) {
+      if (p % 2 === 0) even++;
+      else odd++;
+    }
+    return Math.min(odd, even);
+  },
+
+  'string-compression-ii': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    const n = s.length;
+    const dp: number[][] = Array.from({ length: n + 1 }, () =>
+      new Array<number>(k + 1).fill(n)
+    );
+    dp[0]![0] = 0;
+    const rleLen = (cnt: number): number => {
+      if (cnt === 0) return 0;
+      if (cnt === 1) return 1;
+      if (cnt < 10) return 2;
+      if (cnt < 100) return 3;
+      return 4;
+    };
+    for (let i = 1; i <= n; i++) {
+      for (let j = 0; j <= k; j++) {
+        if (j > 0) dp[i]![j] = Math.min(dp[i]![j]!, dp[i - 1]![j - 1]!);
+        let same = 0, diff = 0;
+        for (let l = i; l >= 1; l--) {
+          if (s[l - 1] === s[i - 1]) same++;
+          else diff++;
+          if (diff > j) break;
+          dp[i]![j] = Math.min(dp[i]![j]!, dp[l - 1]![j - diff]! + rleLen(same));
+        }
+      }
+    }
+    return dp[n]![k]!;
+  },
+
+  'build-an-array-with-stack-operations': (...args: unknown[]) => {
+    const target = args[0] as number[];
+    const n = args[1] as number;
+    const ops: string[] = [];
+    const set = new Set(target);
+    for (let i = 1; i <= n; i++) {
+      ops.push('Push');
+      if (!set.has(i)) ops.push('Pop');
+      if (i === target[target.length - 1]) break;
+    }
+    return ops;
+  },
+
 };

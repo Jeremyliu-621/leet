@@ -2132,6 +2132,11 @@ import { problem as numberOfPeopleThatCanBeSeenInAGrid } from './number-of-peopl
 import { problem as alternatingGroupsI } from './alternating-groups-i';
 import { problem as longestBinarySubsequenceLessThanOrEqualToK } from './longest-binary-subsequence-less-than-or-equal-to-k';
 import { problem as minimumTimeToCompleteAllTasks } from './minimum-time-to-complete-all-tasks';
+// batch 92 — design, strings, greedy, math, dp, stack
+import { problem as countVowelSubstringsOfAWord } from './count-vowel-substrings-of-a-word';
+import { problem as minimumCostToMoveChips } from './minimum-cost-to-move-chips';
+import { problem as stringCompressionII } from './string-compression-ii';
+import { problem as buildAnArrayWithStackOperations } from './build-an-array-with-stack-operations';
 // batch 93 — math/easy, linked-list/medium, dp/hard
 import { problem as validPerfectSquare } from './valid-perfect-square';
 import { problem as insertionSortList } from './insertion-sort-list';
@@ -4305,6 +4310,11 @@ export const problems: readonly Problem[] = [
   alternatingGroupsI,
   longestBinarySubsequenceLessThanOrEqualToK,
   minimumTimeToCompleteAllTasks,
+  // batch 92 — design, strings, greedy, math, dp, stack
+  countVowelSubstringsOfAWord,
+  minimumCostToMoveChips,
+  stringCompressionII,
+  buildAnArrayWithStackOperations,
   // batch 93 — math/easy, linked-list/medium, dp/hard
   validPerfectSquare,
   insertionSortList,
