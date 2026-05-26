@@ -2102,7 +2102,11 @@ import { problem as numberOfLaserBeamsInABank } from './number-of-laser-beams-in
 import { problem as checkIfAllAsAppearsBeforeAllBs } from './check-if-all-as-appears-before-all-bs';
 import { problem as countNodesWithTheHighestScore } from './count-nodes-with-the-highest-score';
 import { problem as maximumNumberOfPointsFromGridQueries } from './maximum-number-of-points-from-grid-queries';
-// batch 89 — monotonic-stack, string, sliding-window, dp, tree, graph
+// batch 91 — math/strings, arrays/math ×2
+import { problem as findTheClosestPalindrome } from './find-the-closest-palindrome';
+import { problem as numberOfSubarraysWithLcmEqualToK } from './number-of-subarrays-with-lcm-equal-to-k';
+import { problem as smallestRotationWithHighestScore } from './smallest-rotation-with-highest-score';
+// batch 87 remote — monotonic-stack, string, sliding-window, dp, tree, graph
 import { problem as nextGreaterElementDistances } from './next-greater-element-distances';
 import { problem as findAllOccurrencesZAlgorithm } from './find-all-occurrences-z-algorithm';
 import { problem as zAlgorithmLongestPrefixSuffix } from './z-algorithm-longest-prefix-suffix';
@@ -4255,6 +4259,10 @@ export const problems: readonly Problem[] = [
   checkIfThereIsAValidPartitionForTheArray,
   reverseNodesInEvenLengthGroups,
   minimumDifferenceInSumsAfterRemovalOfElements,
+  // batch 91 — math/strings, arrays/math ×2
+  findTheClosestPalindrome,
+  numberOfSubarraysWithLcmEqualToK,
+  smallestRotationWithHighestScore,
   // batch 87 remote — monotonic-stack, string, sliding-window, dp, tree, graph
   nextGreaterElementDistances,
   findAllOccurrencesZAlgorithm,

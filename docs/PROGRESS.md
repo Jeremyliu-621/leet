@@ -15,8 +15,11 @@
 ### feat(bank): add batch 89 — 7 problems (arrays, strings, hash-map, math, graph) (2026-05-26)
 Added 7 problems: `minimum-rounds-to-complete-all-tasks` (medium/arrays+hash-map, ceil(freq/3) rounds), `longest-palindrome-by-concatenating-two-letter-words` (medium/strings+hash-map, paired reverse words + palindromic-word center), `maximum-product-difference-between-two-pairs` (easy/arrays, sorted top-2 minus bottom-2), `minimum-bit-flips-to-convert-number` (easy/math, popcount of XOR), `min-number-of-flips-to-convert-binary-matrix-to-zero-matrix` (hard/graph+simulation, BFS on bitmask state space), `determine-if-two-strings-are-close` (medium/strings+hash-map, same char set + same freq multiset), `maximum-xor-after-operations` (medium/arrays+math, bitwise OR of all elements). Bank at **1958**; tests green.
 
-### feat(bank): add batch 88 — 3 problems (arrays, graph) (2026-05-26)
-Added 3 problems: `split-the-array` (easy/arrays+hash-map, max-frequency ≤ 2 check), `find-the-score-of-all-prefixes-of-an-array` (medium/arrays, running max + prefix sum accumulation), `shortest-cycle-in-a-graph` (medium/graph, BFS from each node tracking parent to detect back edges). Bank at **1951**; 6147 tests.
+### merge: batches 88–89 local + remote (2026-05-26)
+Local batch 88: `check-if-there-is-a-valid-partition-for-the-array` (medium/dp), `reverse-nodes-in-even-length-groups` (medium/linked-list), `minimum-difference-in-sums-after-removal-of-elements` (hard/heap); `InlineText` component for backtick inline code; site stats to 1,950+.
+Remote batch 88: `split-the-array` (easy/arrays+hash-map), `find-the-score-of-all-prefixes-of-an-array` (medium/arrays), `shortest-cycle-in-a-graph` (medium/graph); a11y: aria-live verdict announcements + focus restoration on modal close.
+Local batch 89: `find-the-closest-palindrome` (hard/math+strings), `number-of-subarrays-with-lcm-equal-to-k` (medium/arrays+math), `smallest-rotation-with-highest-score` (hard/arrays+math).
+Remote batch 89: 13 problems — next-greater-element-distances, find-all-occurrences-z-algorithm, z-algorithm-longest-prefix-suffix, count-subarrays-exactly-k-distinct, maximum-product-subarray-length-k, weighted-job-scheduling, parallel-courses, parallel-courses-ii, grid-count-paths-mod, max-sum-submatrix, number-good-leaf-node-pairs, tree-node-product-of-children, minimum-operations-non-decreasing.
 
 ### feat(bank): add batch 87 — 3 problems (dp, strings, arrays) (2026-05-26)
 Added 3 problems: `maximize-the-profit-as-the-salesman` (medium/dp, weighted interval scheduling with DP sweep), `check-if-string-is-an-acronym-of-words` (easy/strings, first-char matching), `count-elements-with-smaller-and-greater-element` (easy/arrays, min/max filtering). Bank at **1948**; 6138 tests.
