@@ -127,6 +127,9 @@ export function Challenge() {
   // Panel split ratio (left panel fraction of total width, in [0.2, 0.8]).
   const [splitRatio, setSplitRatio] = useState(DEFAULT_PREFERENCES.splitRatio);
 
+  // Fullscreen editor mode — hides the problem panel. Not persisted (session only).
+  const [fullscreen, setFullscreen] = useState(false);
+
   // -------------------------------------------------------------------------
   // Load prefs + pick problem (once on mount)
   // -------------------------------------------------------------------------
@@ -483,27 +486,33 @@ export function Challenge() {
         className="min-h-0 flex-1 flex flex-col lg:flex-row overflow-hidden"
         aria-label="Challenge workspace"
       >
-        {/* Problem panel — scrollable independently */}
-        <div
-          className="flex flex-col overflow-hidden max-lg:border-b max-lg:max-h-[45vh] lg:shrink-0"
-          style={{ flexBasis: `${splitRatio * 100}%` }}
-        >
-          <ProblemPanel
-            problem={problem}
-            hintCostLabel="1 min"
-            onHintRevealed={() => setSecondsLeft((s) => Math.max(0, s - HINT_COST_SECONDS))}
-          />
-        </div>
+        {/* Problem panel — hidden in fullscreen mode */}
+        {!fullscreen && (
+          <div
+            className="flex flex-col overflow-hidden max-lg:border-b max-lg:max-h-[45vh] lg:shrink-0"
+            style={{ flexBasis: `${splitRatio * 100}%` }}
+          >
+            <ProblemPanel
+              problem={problem}
+              hintCostLabel="1 min"
+              onHintRevealed={() => setSecondsLeft((s) => Math.max(0, s - HINT_COST_SECONDS))}
+            />
+          </div>
+        )}
 
-        {/* Draggable splitter — only visible on lg+ */}
-        <DraggableSplitter
-          onRatioChange={handleSplitRatioChange}
-          onRatioCommit={handleSplitRatioCommit}
-        />
+        {/* Draggable splitter — only when not in fullscreen mode */}
+        {!fullscreen && (
+          <DraggableSplitter
+            onRatioChange={handleSplitRatioChange}
+            onRatioCommit={handleSplitRatioCommit}
+          />
+        )}
 
         {/* Editor panel — fixed, no scroll on the outer shell */}
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
           <EditorPanel
+            fullscreen={fullscreen}
+            onFullscreenToggle={() => setFullscreen((f) => !f)}
             starterCode={
               language === 'python' && problem.starterCode.python
                 ? problem.starterCode.python

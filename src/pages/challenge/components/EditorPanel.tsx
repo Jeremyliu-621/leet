@@ -32,6 +32,10 @@ import type { EditorKeymap, SupportedLanguage } from '../../../lib/types';
 import { VerdictPanel } from './VerdictPanel';
 
 interface EditorPanelProps {
+  /** When true, the editor occupies full width (problem panel is hidden). */
+  fullscreen: boolean;
+  /** Called when the user clicks the fullscreen toggle button. */
+  onFullscreenToggle: () => void;
   /** Starter code for the active language. Replacing this resets the editor. */
   starterCode: string;
   /** Language currently active in the editor (controls syntax highlighting + the runner). */
@@ -110,6 +114,8 @@ function indentUnitExtension(spaces: 2 | 4) {
  * tab-size changes go through Compartment.reconfigure to avoid rebuilding state.
  */
 export function EditorPanel({
+  fullscreen,
+  onFullscreenToggle,
   starterCode,
   language,
   availableLanguages,
@@ -368,7 +374,36 @@ export function EditorPanel({
           </span>
         )}
 
-        {/* Right: settings gear button */}
+        {/* Right: fullscreen toggle + settings gear */}
+        <div className="flex items-center gap-1">
+        {/* Fullscreen toggle */}
+        <button
+          type="button"
+          aria-label={fullscreen ? 'Exit fullscreen editor' : 'Fullscreen editor'}
+          aria-pressed={fullscreen}
+          onClick={onFullscreenToggle}
+          className="flex items-center justify-center rounded-sm p-1 text-faint transition-colors hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+        >
+          {fullscreen ? (
+            /* Collapse icon */
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <polyline points="4 14 10 14 10 20" />
+              <polyline points="20 10 14 10 14 4" />
+              <line x1="10" y1="14" x2="3" y2="21" />
+              <line x1="21" y1="3" x2="14" y2="10" />
+            </svg>
+          ) : (
+            /* Expand icon */
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <polyline points="15 3 21 3 21 9" />
+              <polyline points="9 21 3 21 3 15" />
+              <line x1="21" y1="3" x2="14" y2="10" />
+              <line x1="3" y1="21" x2="10" y2="14" />
+            </svg>
+          )}
+        </button>
+
+        {/* Settings gear button */}
         <div className="relative">
           <button
             ref={settingsButtonRef}
@@ -482,6 +517,7 @@ export function EditorPanel({
             </div>
           )}
         </div>
+        </div>{/* end flex items-center gap-1 */}
       </div>
 
       {/* Editor */}
