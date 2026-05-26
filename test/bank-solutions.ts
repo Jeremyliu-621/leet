@@ -23795,6 +23795,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 64 (remote)
   'minimum-cost-valid-path-in-grid': (grid: unknown) => {
     const g = grid as number[][];
     const m = g.length, n = g[0]!.length;
@@ -23848,6 +23849,121 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       for (let j = i+1; j < nn; j++) {
         const rank = degree[i]! + degree[j]! - (connected.has(`${i},${j}`) ? 1 : 0);
         ans = Math.max(ans, rank);
+      }
+    }
+    return ans;
+  },
+
+  // batch 64 (local)
+  'number-of-wonderful-substrings': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const count = new Map<number, number>();
+    count.set(0, 1);
+    let mask = 0;
+    let ans = 0;
+    for (const ch of word) {
+      mask ^= 1 << (ch.charCodeAt(0) - 97);
+      ans += count.get(mask) ?? 0;
+      for (let k = 0; k < 10; k++) {
+        ans += count.get(mask ^ (1 << k)) ?? 0;
+      }
+      count.set(mask, (count.get(mask) ?? 0) + 1);
+    }
+    return ans;
+  },
+
+  'design-a-number-container-system': (...args: unknown[]) => {
+    const operations = args[0] as string[];
+    const argsList = args[1] as number[][];
+    const results: (number | null)[] = [];
+    const indexToNum = new Map<number, number>();
+    const numToIndices = new Map<number, number[]>();
+
+    function binInsert(arr: number[], val: number): void {
+      let lo = 0, hi = arr.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (arr[mid]! < val) lo = mid + 1; else hi = mid; }
+      arr.splice(lo, 0, val);
+    }
+    function binRemove(arr: number[], val: number): void {
+      let lo = 0, hi = arr.length - 1;
+      while (lo <= hi) { const mid = (lo + hi) >> 1; if (arr[mid]! < val) lo = mid + 1; else if (arr[mid]! > val) hi = mid - 1; else { arr.splice(mid, 1); return; } }
+    }
+
+    for (let i = 0; i < operations.length; i++) {
+      const op = operations[i]!;
+      const arg = argsList[i]!;
+      if (op === 'NumberContainers') {
+        results.push(null);
+      } else if (op === 'change') {
+        const idx = arg[0]!, num = arg[1]!;
+        const old = indexToNum.get(idx);
+        if (old !== undefined && old !== num) binRemove(numToIndices.get(old)!, idx);
+        if (old !== num) {
+          indexToNum.set(idx, num);
+          if (!numToIndices.has(num)) numToIndices.set(num, []);
+          binInsert(numToIndices.get(num)!, idx);
+        }
+        results.push(null);
+      } else {
+        const num = arg[0]!;
+        const arr = numToIndices.get(num);
+        results.push(!arr || arr.length === 0 ? -1 : arr[0]!);
+      }
+    }
+    return results;
+  },
+
+  'continuous-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    let ans = 0, left = 0;
+    const maxDq: number[] = [];
+    const minDq: number[] = [];
+    for (let right = 0; right < n; right++) {
+      while (maxDq.length > 0 && nums[maxDq[maxDq.length - 1]!]! <= nums[right]!) maxDq.pop();
+      maxDq.push(right);
+      while (minDq.length > 0 && nums[minDq[minDq.length - 1]!]! >= nums[right]!) minDq.pop();
+      minDq.push(right);
+      while (nums[maxDq[0]!]! - nums[minDq[0]!]! > 2) {
+        left++;
+        if (maxDq[0] === left - 1) maxDq.shift();
+        if (minDq[0] === left - 1) minDq.shift();
+      }
+      ans += right - left + 1;
+    }
+    return ans;
+  },
+
+  'count-pairs-that-form-a-complete-day-i': (...args: unknown[]) => {
+    const hours = args[0] as number[];
+    const freq = new Array<number>(24).fill(0);
+    let ans = 0;
+    for (const h of hours) {
+      const rem = h % 24;
+      ans += freq[(24 - rem) % 24]!;
+      freq[rem]!++;
+    }
+    return ans;
+  },
+
+  'substring-with-largest-variance': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let ans = 0;
+    const chars = [...new Set(s)];
+    for (const ca of chars) {
+      for (const cb of chars) {
+        if (ca === cb) continue;
+        let dp = 0, dpB = -Infinity;
+        for (const c of s) {
+          if (c === ca) {
+            dp = Math.max(dp, 0) + 1;
+            dpB = dpB + 1;
+          } else if (c === cb) {
+            dpB = Math.max(dpB - 1, dp - 1);
+            dp = Math.max(dp - 1, 0);
+          }
+          ans = Math.max(ans, dpB);
+        }
       }
     }
     return ans;

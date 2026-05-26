@@ -1626,6 +1626,12 @@ import { problem as maximumStrongPairXorI } from './maximum-strong-pair-xor-i';
 import { problem as extraCharactersInAString } from './extra-characters-in-a-string';
 import { problem as kthLargestSumInABinaryTree } from './kth-largest-sum-in-a-binary-tree';
 import { problem as sumOfMatrixAfterQueries } from './sum-of-matrix-after-queries';
+// batch 64 (local)
+import { problem as numberOfWonderfulSubstrings } from './number-of-wonderful-substrings';
+import { problem as designANumberContainerSystem } from './design-a-number-container-system';
+import { problem as continuousSubarrays } from './continuous-subarrays';
+import { problem as countPairsThatFormACompleteDayI } from './count-pairs-that-form-a-complete-day-i';
+import { problem as substringWithLargestVariance } from './substring-with-largest-variance';
 // batch 63 (local)
 import { problem as twoBestNonOverlappingEvents } from './two-best-non-overlapping-events';
 import { problem as minimumLinesToRepresentALineChart } from './minimum-lines-to-represent-a-line-chart';
@@ -3412,6 +3418,12 @@ export const problems: readonly Problem[] = [
   extraCharactersInAString,
   kthLargestSumInABinaryTree,
   sumOfMatrixAfterQueries,
+  // batch 64 (local)
+  numberOfWonderfulSubstrings,
+  designANumberContainerSystem,
+  continuousSubarrays,
+  countPairsThatFormACompleteDayI,
+  substringWithLargestVariance,
   // batch 63 (local)
   twoBestNonOverlappingEvents,
   minimumLinesToRepresentALineChart,

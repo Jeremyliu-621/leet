@@ -23357,6 +23357,113 @@ def secondMinimum(n, edges, time, change):
     return ops
 `,
 
+  // batch 64 (local)
+  'number-of-wonderful-substrings': `def wonderfulSubstrings(word):
+    word = str(word)
+    from collections import defaultdict
+    count = defaultdict(int)
+    count[0] = 1
+    mask = 0
+    ans = 0
+    for c in word:
+        mask ^= 1 << (ord(c) - ord('a'))
+        ans += count[mask]
+        for k in range(10):
+            ans += count[mask ^ (1 << k)]
+        count[mask] += 1
+    return ans
+`,
+
+  'design-a-number-container-system': `def numberContainers(operations, args):
+    import bisect
+    ops = list(operations.to_py() if hasattr(operations, 'to_py') else operations)
+    args_list = [list(a.to_py() if hasattr(a, 'to_py') else a) for a in (args.to_py() if hasattr(args, 'to_py') else args)]
+    index_to_num = {}
+    num_to_indices = {}
+    results = []
+    for i, op in enumerate(ops):
+        arg = [int(x) for x in args_list[i]]
+        if op == 'NumberContainers':
+            results.append(None)
+        elif op == 'change':
+            idx, num = arg[0], arg[1]
+            old = index_to_num.get(idx)
+            if old is not None and old != num:
+                arr = num_to_indices[old]
+                pos = bisect.bisect_left(arr, idx)
+                if pos < len(arr) and arr[pos] == idx:
+                    arr.pop(pos)
+            if old != num:
+                index_to_num[idx] = num
+                if num not in num_to_indices:
+                    num_to_indices[num] = []
+                bisect.insort(num_to_indices[num], idx)
+            results.append(None)
+        else:
+            num = arg[0]
+            arr = num_to_indices.get(num, [])
+            results.append(arr[0] if arr else -1)
+    return results
+`,
+
+  'continuous-subarrays': `def continuousSubarrays(nums):
+    from collections import deque
+    nums = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    n = len(nums)
+    ans = 0
+    left = 0
+    max_dq = deque()
+    min_dq = deque()
+    for right in range(n):
+        while max_dq and nums[max_dq[-1]] <= nums[right]:
+            max_dq.pop()
+        max_dq.append(right)
+        while min_dq and nums[min_dq[-1]] >= nums[right]:
+            min_dq.pop()
+        min_dq.append(right)
+        while nums[max_dq[0]] - nums[min_dq[0]] > 2:
+            left += 1
+            if max_dq[0] == left - 1:
+                max_dq.popleft()
+            if min_dq[0] == left - 1:
+                min_dq.popleft()
+        ans += right - left + 1
+    return ans
+`,
+
+  'count-pairs-that-form-a-complete-day-i': `def countCompleteDayPairs(hours):
+    hours = list(int(x) for x in (hours.to_py() if hasattr(hours, 'to_py') else hours))
+    freq = [0] * 24
+    ans = 0
+    for h in hours:
+        rem = h % 24
+        ans += freq[(24 - rem) % 24]
+        freq[rem] += 1
+    return ans
+`,
+
+  'substring-with-largest-variance': `def largestVariance(s):
+    s = str(s)
+    ans = 0
+    chars = list(set(s))
+    for ca in chars:
+        for cb in chars:
+            if ca == cb:
+                continue
+            dp = 0
+            dp_b = float('-inf')
+            for c in s:
+                if c == ca:
+                    dp = max(dp, 0) + 1
+                    dp_b = dp_b + 1
+                elif c == cb:
+                    dp_b = max(dp_b - 1, dp - 1)
+                    dp = max(dp - 1, 0)
+                if dp_b > ans:
+                    ans = dp_b
+    return ans
+`,
+
   // batch 63 (local)
   'two-best-non-overlapping-events': `def maxTwoEvents(events):
     events = [[int(x) for x in e] for e in (events.to_py() if hasattr(events, 'to_py') else events)]
