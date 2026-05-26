@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1613 problems; 5127 tests green.
+**Current focus:** Bank at 1622 problems; 5139 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1700; UX polish (vim mode indicator, a11y, terminal UX).
+
+### Batch 62 — 5 new problems (2026-05-26)
+Added 5 problems: `group-shifted-strings` (medium/strings+hash-map, shift-delta canonical key), `sparse-matrix-multiplication` (medium/arrays, skip-zero sparse optimization), `maximum-depth-n-ary-tree` (easy/tree, DFS recursive with N-ary runner preamble), `n-ary-tree-level-order-traversal` (medium/tree, BFS level-collection with N-ary runner preamble), `n-ary-tree-preorder-traversal` (easy/tree+stack, iterative stack with reverse-children push, N-ary runner preamble). Also committed 4 problems from a prior incomplete session (batch 63): `number-of-increasing-paths-in-a-grid`, `minimum-time-to-visit-a-cell-in-a-grid`, `number-of-beautiful-subsets`, `maximum-number-of-fish-in-a-grid` — fixed bugs: inverted parity in wait formula (Dijkstra); wrong expected value in number-of-beautiful-subsets. JS + Python solutions for all. Bank at **1622**; 5139 tests.
 
 ### Batch 58+59-new (2026-05-26)
 Added 21 new problems: `find-subarrays-with-equal-sum` (arrays/easy), `best-poker-hand` (arrays/easy), `count-incremovable-subarrays` (arrays/easy, O(n²) brute-force), `step-by-step-directions` (tree/medium, LCA path), `minimum-number-of-food-buckets` (greedy/medium, right-first bucket placement, skip 3 on right-place), `super-ugly-number` (dp/medium, multi-pointer), `reward-top-k-students` (arrays/medium, word-set scoring), `count-subarrays-with-score-less-than-k` (sliding-window/hard), `maximum-number-of-jumps-to-reach-last-index` (dp/medium), `minimum-number-of-coins-for-fruits` (dp/medium), `freq-stack` (design/hard, freq-map + stack map), `minimum-cost-to-equalize-array` (math/medium), `maximum-total-damage` (dp/medium, delete-and-earn variant ±2), `special-array-ii` (arrays/medium, prefix bad-pair count), `find-maximum-length-valid-subsequence` (dp/medium, mod-2 DP), `count-submatrices-all-ones` (dp/medium, histogram DP), `minimum-length-of-string-after-operations` (strings/medium, odd→1 even→2), `count-special-characters-i` (strings/easy), `maximum-jumps-to-reach-last-index` (dp/medium), `minimum-operations-to-make-array-equal-ii` (math/medium), `minimum-cost-for-cutting-cake-i` (greedy/medium). Also adds vim mode indicator (NORMAL/INSERT/VISUAL) to EditorPanel. Fixed wrong expected values in 6 test cases. Bank at **1595**; 5112 tests.
