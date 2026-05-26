@@ -174,6 +174,10 @@ type PageState =
       elapsedSec: number;
       language: SupportedLanguage;
       related: readonly RelatedProblem[];
+      /** True if this is the user's fastest time for this problem (or first solve). */
+      isPersonalBest: boolean;
+      /** Previous best elapsed seconds, null if this is the first solve. */
+      prevBestSec: number | null;
     };
 
 // ---------------------------------------------------------------------------
@@ -226,6 +230,8 @@ function SolvedStandaloneScreen({
   language,
   related,
   settingsHref,
+  isPersonalBest,
+  prevBestSec,
 }: {
   problemTitle: string;
   difficulty: string;
@@ -234,6 +240,8 @@ function SolvedStandaloneScreen({
   language: SupportedLanguage;
   related: readonly RelatedProblem[];
   settingsHref?: string;
+  isPersonalBest: boolean;
+  prevBestSec: number | null;
 }) {
   const challengeBase = window.location.pathname;
 
@@ -264,6 +272,21 @@ function SolvedStandaloneScreen({
           <p className="font-mono text-sm font-semibold text-text tabular-nums mt-0.5">
             {formatElapsed(elapsedSec)}
           </p>
+          {isPersonalBest && prevBestSec !== null && (
+            <p className="font-mono text-[8px] text-accent mt-0.5 uppercase tracking-widest">
+              personal best
+            </p>
+          )}
+          {isPersonalBest && prevBestSec === null && (
+            <p className="font-mono text-[8px] text-muted mt-0.5 uppercase tracking-widest">
+              first solve
+            </p>
+          )}
+          {!isPersonalBest && prevBestSec !== null && (
+            <p className="font-mono text-[8px] text-faint mt-0.5 tabular-nums">
+              best {formatElapsed(prevBestSec)}
+            </p>
+          )}
         </div>
         <div className="h-6 w-px bg-border" aria-hidden="true" />
         <div className="text-center">
@@ -750,6 +773,8 @@ export function Challenge() {
         } catch {
           /* storage unavailable */
         }
+        const elapsedSec = Math.max(0, prefs.challengeTimeLimitSec - secondsLeft);
+
         // Notify service worker → grant unlock token.
         try {
           await chrome.runtime.sendMessage({
@@ -759,6 +784,7 @@ export function Challenge() {
             durationMs: prefs.unlockDurationMin * 60 * 1000,
             language,
             attempts: attempts + 1,
+            solveDurationMs: elapsedSec * 1000,
           });
         } catch {
           // SW may be transiently unavailable — redirect still proceeds.
@@ -780,14 +806,32 @@ export function Challenge() {
             related.push({ id: p.id, title: p.title, difficulty: p.difficulty });
             if (related.length >= 3) break;
           }
+
+          // Determine personal best from prior solve records.
+          let isPersonalBest = true;
+          let prevBestSec: number | null = null;
+          try {
+            const solved = await getValue('solvedProblems');
+            const prevSolves = solved.filter((r) => r.problemId === problem.id && r.durationMs > 0);
+            if (prevSolves.length > 0) {
+              const bestPrevMs = Math.min(...prevSolves.map((r) => r.durationMs));
+              prevBestSec = Math.round(bestPrevMs / 1000);
+              isPersonalBest = elapsedSec * 1000 < bestPrevMs;
+            }
+          } catch {
+            /* storage unavailable */
+          }
+
           setPageState({
             status: 'solved-standalone',
             problemTitle: problem.title,
             difficulty: problem.difficulty,
             attempts: attempts + 1,
-            elapsedSec: Math.max(0, prefs.challengeTimeLimitSec - secondsLeft),
+            elapsedSec,
             language,
             related,
+            isPersonalBest,
+            prevBestSec,
           });
         }
       } else {
@@ -972,6 +1016,8 @@ export function Challenge() {
         language={pageState.language}
         related={pageState.related}
         settingsHref={settingsHref}
+        isPersonalBest={pageState.isPersonalBest}
+        prevBestSec={pageState.prevBestSec}
       />
     );
   }
