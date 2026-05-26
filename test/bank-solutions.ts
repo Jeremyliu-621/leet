@@ -21874,6 +21874,67 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'maximum-total-reward-using-operations-i': (...args: unknown[]) => {
+    const rewardValues = args[0] as number[];
+    const vals = [...new Set(rewardValues)].sort((a, b) => a - b);
+    const maxVal = vals[vals.length - 1]!;
+    const dp = new Array(2 * maxVal).fill(false);
+    dp[0] = true;
+    for (const v of vals) {
+      for (let j = 2 * maxVal - 1; j >= 0; j--) {
+        if (dp[j] && j < v) dp[j + v] = true;
+      }
+    }
+    for (let j = 2 * maxVal - 1; j >= 0; j--) {
+      if (dp[j]) return j;
+    }
+    return 0;
+  },
+
+  'minimum-array-end': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const x = args[1] as number;
+    // fill n-1 into the zero-bit positions of x
+    let result = BigInt(x);
+    let offset = BigInt(n - 1);
+    let bit = 0n;
+    while (offset > 0n) {
+      // find next zero bit in x
+      while ((result >> bit) & 1n) bit++;
+      if (offset & 1n) result |= (1n << bit);
+      offset >>= 1n;
+      bit++;
+    }
+    return Number(result);
+  },
+
+  'maximum-number-of-moves-in-a-grid': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length;
+    const n = grid[0]!.length;
+    // dp[r] = max moves to reach column col at row r
+    let reachable = new Array(m).fill(true);
+    let ans = 0;
+    for (let col = 0; col < n - 1; col++) {
+      const nextReachable = new Array(m).fill(false);
+      let anyNext = false;
+      for (let row = 0; row < m; row++) {
+        if (!reachable[row]) continue;
+        for (const dr of [-1, 0, 1]) {
+          const nr = row + dr;
+          if (nr >= 0 && nr < m && grid[nr]![col + 1]! > grid[row]![col]!) {
+            nextReachable[nr] = true;
+            anyNext = true;
+          }
+        }
+      }
+      if (!anyNext) break;
+      reachable = nextReachable;
+      ans = col + 1;
+    }
+    return ans;
+  },
+
   'find-the-value-of-the-partition': (nums: unknown) => {
     const sorted = [...(nums as number[])].sort((a, b) => a - b);
     let min = Infinity;
@@ -21988,6 +22049,80 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       if (i < word.length && word[i] === 'c') i++;
     }
     return groups * 3 - word.length;
+  },
+
+  'minimum-cost-to-convert-string-i': (...args: unknown[]) => {
+    const source = args[0] as string;
+    const target = args[1] as string;
+    const original = args[2] as string[];
+    const changed = args[3] as string[];
+    const cost = args[4] as number[];
+    const INF = 1e15;
+    const dist: number[][] = Array.from({ length: 26 }, (_, i) =>
+      Array.from({ length: 26 }, (_, j) => (i === j ? 0 : INF))
+    );
+    for (let i = 0; i < original.length; i++) {
+      const u = original[i]!.charCodeAt(0) - 97;
+      const v = changed[i]!.charCodeAt(0) - 97;
+      dist[u]![v] = Math.min(dist[u]![v]!, cost[i]!);
+    }
+    for (let k = 0; k < 26; k++)
+      for (let i = 0; i < 26; i++)
+        for (let j = 0; j < 26; j++)
+          if (dist[i]![k]! + dist[k]![j]! < dist[i]![j]!)
+            dist[i]![j] = dist[i]![k]! + dist[k]![j]!;
+    let total = 0;
+    for (let i = 0; i < source.length; i++) {
+      const u = source.charCodeAt(i) - 97;
+      const v = target.charCodeAt(i) - 97;
+      if (u === v) continue;
+      if (dist[u]![v]! >= INF) return -1;
+      total += dist[u]![v]!;
+    }
+    return total;
+  },
+
+  'ways-to-split-array-into-three-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const MOD = 1_000_000_007n;
+    const n = nums.length;
+    const prefix = new Array(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + nums[i];
+    const total = prefix[n];
+    let ans = 0n;
+    // i = last index of left (0-indexed), so left sum = prefix[i+1]
+    // j = last index of mid, right sum = prefix[n] - prefix[j+1]
+    // constraint: prefix[i+1] <= prefix[j+1]-prefix[i+1] <= prefix[n]-prefix[j+1]
+    const bisectLeft = (target: number, lo: number, hi: number): number => {
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        // mid sum = prefix[mid+1] - prefix[i+1]; need mid sum >= left sum
+        if (prefix[mid + 1]! - prefix[i + 1]! < target) lo = mid + 1;
+        else hi = mid;
+      }
+      return lo;
+    };
+    const bisectRight = (lo: number, hi: number): number => {
+      let result = lo - 1;
+      let l = lo, r = hi;
+      while (l <= r) {
+        const mid = (l + r) >> 1;
+        const midSum = prefix[mid + 1]! - prefix[i + 1]!;
+        const rightSum = total - prefix[mid + 1]!;
+        if (midSum <= rightSum) { result = mid; l = mid + 1; }
+        else r = mid - 1;
+      }
+      return result;
+    };
+    let i = 0;
+    for (; i < n - 2; i++) {
+      const leftSum = prefix[i + 1]!;
+      if (leftSum * 3 > total) break;
+      const jMin = bisectLeft(leftSum, i + 1, n - 2);
+      const jMax = bisectRight(i + 1, n - 2);
+      if (jMin <= jMax) ans = (ans + BigInt(jMax - jMin + 1)) % MOD;
+    }
+    return Number(ans);
   },
 
 };

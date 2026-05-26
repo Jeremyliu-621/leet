@@ -21798,4 +21798,108 @@ def secondMinimum(n, edges, time, change):
             i += 1
     return groups * 3 - len(word)
 `,
+
+  'maximum-total-reward-using-operations-i': `def maxTotalReward(rewardValues):
+    vals = sorted(set(rewardValues))
+    max_val = vals[-1]
+    dp = [False] * (2 * max_val)
+    dp[0] = True
+    for v in vals:
+        for j in range(2 * max_val - 1, -1, -1):
+            if dp[j] and j < v:
+                dp[j + v] = True
+    for j in range(2 * max_val - 1, -1, -1):
+        if dp[j]:
+            return j
+    return 0
+`,
+
+  'minimum-array-end': `def minEnd(n, x):
+    result = x
+    offset = n - 1
+    bit = 0
+    while offset > 0:
+        while (result >> bit) & 1:
+            bit += 1
+        if offset & 1:
+            result |= (1 << bit)
+        offset >>= 1
+        bit += 1
+    return result
+`,
+
+  'maximum-number-of-moves-in-a-grid': `def maxMoves(grid):
+    m = len(grid)
+    n = len(grid[0])
+    reachable = [True] * m
+    ans = 0
+    for col in range(n - 1):
+        next_reachable = [False] * m
+        any_next = False
+        for row in range(m):
+            if not reachable[row]:
+                continue
+            for dr in [-1, 0, 1]:
+                nr = row + dr
+                if 0 <= nr < m and grid[nr][col + 1] > grid[row][col]:
+                    next_reachable[nr] = True
+                    any_next = True
+        if not any_next:
+            break
+        reachable = next_reachable
+        ans = col + 1
+    return ans
+`,
+
+  'minimum-cost-to-convert-string-i': `def minimumCost(source, target, original, changed, cost):
+    INF = float('inf')
+    dist = [[INF] * 26 for _ in range(26)]
+    for i in range(26):
+        dist[i][i] = 0
+    for orig, chng, c in zip(original, changed, cost):
+        u = ord(orig) - ord('a')
+        v = ord(chng) - ord('a')
+        dist[u][v] = min(dist[u][v], c)
+    for k in range(26):
+        for i in range(26):
+            for j in range(26):
+                if dist[i][k] + dist[k][j] < dist[i][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+    total = 0
+    for s, t in zip(source, target):
+        u = ord(s) - ord('a')
+        v = ord(t) - ord('a')
+        if u == v:
+            continue
+        if dist[u][v] == INF:
+            return -1
+        total += dist[u][v]
+    return total
+`,
+
+  'ways-to-split-array-into-three-subarrays': `def waysToSplit(nums):
+    import bisect
+    MOD = 10**9 + 7
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + nums[i]
+    total = prefix[n]
+    ans = 0
+    for i in range(n - 2):
+        left_sum = prefix[i + 1]
+        if left_sum * 3 > total:
+            break
+        # mid must satisfy: prefix[j+1] - prefix[i+1] >= left_sum
+        # => prefix[j+1] >= prefix[i+1] + left_sum = 2 * left_sum
+        j_min_val = 2 * left_sum
+        j_min = bisect.bisect_left(prefix, j_min_val, i + 2, n) - 1
+        # mid must satisfy: total - prefix[j+1] >= prefix[j+1] - prefix[i+1]
+        # => 2 * prefix[j+1] <= total + prefix[i+1]
+        j_max_val = (total + prefix[i + 1]) // 2
+        j_max = bisect.bisect_right(prefix, j_max_val, i + 2, n) - 2
+        if j_min <= j_max:
+            ans = (ans + j_max - j_min + 1) % MOD
+    return ans
+`,
 };

@@ -363,11 +363,27 @@ function TerminalEntry({ entry }: { entry: TerminalEntry }) {
  * Shows console output, test results, and execution info in a scrollable
  * terminal with a monospace font, resembling a real terminal/console.
  */
+const TERMINAL_TABS: ReadonlyArray<'output' | 'testcases'> = ['output', 'testcases'];
+
 export function TerminalPanel({ result, mode }: TerminalPanelProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [history, setHistory] = useState<TerminalEntry[][]>([]);
   const [activeTab, setActiveTab] = useState<'output' | 'testcases'>('output');
   const prevResultRef = useRef<JudgeResult | null | undefined>(null);
+
+  const handleTabKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      const idx = TERMINAL_TABS.indexOf(activeTab);
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        setActiveTab(TERMINAL_TABS[(idx + 1) % TERMINAL_TABS.length]!);
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        setActiveTab(TERMINAL_TABS[(idx - 1 + TERMINAL_TABS.length) % TERMINAL_TABS.length]!);
+      }
+    },
+    [activeTab],
+  );
 
   // When a new result arrives, build entries and add to history.
   useEffect(() => {
@@ -408,9 +424,11 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
             aria-selected={activeTab === 'output'}
             aria-controls="terminal-panel-output"
             id="terminal-tab-output"
+            tabIndex={activeTab === 'output' ? 0 : -1}
             onClick={() => setActiveTab('output')}
+            onKeyDown={handleTabKeyDown}
             className={[
-              'px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest transition-colors',
+              'px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent',
               activeTab === 'output'
                 ? 'text-text border-b-2 border-accent'
                 : 'text-faint hover:text-muted',
@@ -424,9 +442,11 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
             aria-selected={activeTab === 'testcases'}
             aria-controls="terminal-panel-testcases"
             id="terminal-tab-testcases"
+            tabIndex={activeTab === 'testcases' ? 0 : -1}
             onClick={() => setActiveTab('testcases')}
+            onKeyDown={handleTabKeyDown}
             className={[
-              'px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest transition-colors flex items-center gap-1.5',
+              'px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest transition-colors flex items-center gap-1.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent',
               activeTab === 'testcases'
                 ? 'text-text border-b-2 border-accent'
                 : 'text-faint hover:text-muted',

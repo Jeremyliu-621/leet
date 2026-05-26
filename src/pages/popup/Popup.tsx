@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getValue, setValue, updateValue } from '../../lib/storage';
 import type { StorageSchema } from '../../lib/storage';
 import { extractDomain } from '../../lib/blocking';
@@ -98,6 +98,67 @@ interface PopupData {
   editorFontSize: number;
   editorKeymap: EditorKeymap;
   preferredLanguage: SupportedLanguage;
+}
+
+/**
+ * Accessible radio-button group.
+ * - Only the selected option is in the tab order (tabIndex=0); others are -1.
+ * - Arrow keys cycle through options and move focus automatically.
+ */
+function RadioGroup<T extends string | number>({
+  options,
+  value,
+  onChange,
+  buttonClass,
+  wrapClass = 'flex items-center gap-1',
+}: {
+  options: readonly { value: T; label: string; ariaLabel?: string }[];
+  value: T;
+  onChange: (v: T) => void;
+  buttonClass: (selected: boolean) => string;
+  wrapClass?: string;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      const idx = options.findIndex((o) => o.value === value);
+      let next: number;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        next = (idx + 1) % options.length;
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        next = (idx - 1 + options.length) % options.length;
+      } else return;
+      e.preventDefault();
+      onChange(options[next]!.value);
+      const radios = containerRef.current?.querySelectorAll<HTMLElement>('[role="radio"]');
+      radios?.[next]?.focus();
+    },
+    [options, value, onChange],
+  );
+
+  return (
+    <div ref={containerRef} className={wrapClass}>
+      {options.map((opt) => {
+        const selected = opt.value === value;
+        return (
+          <button
+            key={String(opt.value)}
+            type="button"
+            role="radio"
+            aria-checked={selected}
+            aria-label={opt.ariaLabel}
+            tabIndex={selected ? 0 : -1}
+            onClick={() => onChange(opt.value)}
+            onKeyDown={handleKeyDown}
+            className={buttonClass(selected)}
+          >
+            {opt.label}
+          </button>
+        );
+      })}
+    </div>
+  );
 }
 
 /**
@@ -398,111 +459,74 @@ export function Popup() {
 
       <section className="mt-5 border-t border-border pt-4" role="radiogroup" aria-label="Theme">
         <p className="mb-2 font-mono text-[9px] uppercase tracking-widest text-faint">Theme</p>
-        <div className="flex items-center gap-1">
-          {THEME_OPTIONS.map((opt) => {
-            const selected = data.theme === opt.value;
-            return (
-              <button
-                key={opt.value}
-                type="button"
-                role="radio"
-                aria-checked={selected}
-                onClick={() => void handleThemeChange(opt.value)}
-                className={
-                  selected
-                    ? 'flex-1 border border-border-strong bg-surface-2 px-3 py-1.5 text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
-                    : 'flex-1 border border-border bg-bg px-3 py-1.5 text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
-                }
-              >
-                {opt.label}
-              </button>
-            );
-          })}
-        </div>
+        <RadioGroup
+          options={THEME_OPTIONS}
+          value={data.theme}
+          onChange={(v) => void handleThemeChange(v)}
+          buttonClass={(s) =>
+            s
+              ? 'flex-1 border border-border-strong bg-surface-2 px-3 py-1.5 text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+              : 'flex-1 border border-border bg-bg px-3 py-1.5 text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+          }
+        />
       </section>
 
       <section className="mt-4" role="radiogroup" aria-label="Editor font size">
         <p className="mb-2 font-mono text-[9px] uppercase tracking-widest text-faint">
           Editor font · {data.editorFontSize}px
         </p>
-        <div className="flex items-center gap-1">
-          {FONT_SIZE_OPTIONS.map((opt) => {
-            const selected = data.editorFontSize === opt.value;
-            return (
-              <button
-                key={opt.value}
-                type="button"
-                role="radio"
-                aria-checked={selected}
-                aria-label={`Set editor font size to ${opt.value} pixels`}
-                onClick={() => void handleFontSizeChange(opt.value)}
-                className={
-                  selected
-                    ? 'flex-1 border border-border-strong bg-surface-2 px-3 py-1.5 font-mono text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
-                    : 'flex-1 border border-border bg-bg px-3 py-1.5 font-mono text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
-                }
-              >
-                {opt.label}
-              </button>
-            );
-          })}
-        </div>
+        <RadioGroup
+          options={FONT_SIZE_OPTIONS.map((o) => ({
+            ...o,
+            ariaLabel: `Set editor font size to ${o.value} pixels`,
+          }))}
+          value={data.editorFontSize}
+          onChange={(v) => void handleFontSizeChange(v)}
+          buttonClass={(s) =>
+            s
+              ? 'flex-1 border border-border-strong bg-surface-2 px-3 py-1.5 font-mono text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+              : 'flex-1 border border-border bg-bg px-3 py-1.5 font-mono text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+          }
+        />
       </section>
 
       <section className="mt-4" role="radiogroup" aria-label="Default language">
         <p className="mb-2 font-mono text-[9px] uppercase tracking-widest text-faint">
           Default language
         </p>
-        <div className="flex flex-wrap items-center gap-1">
-          {LANGUAGE_OPTIONS.map((opt) => {
-            const selected = data.preferredLanguage === opt.value;
-            return (
-              <button
-                key={opt.value}
-                type="button"
-                role="radio"
-                aria-checked={selected}
-                aria-label={`Set default language to ${opt.label}`}
-                onClick={() => void handleLanguageChange(opt.value)}
-                className={
-                  selected
-                    ? 'border border-border-strong bg-surface-2 px-2 py-1 font-mono text-[10px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
-                    : 'border border-border bg-bg px-2 py-1 font-mono text-[10px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
-                }
-              >
-                {opt.label}
-              </button>
-            );
-          })}
-        </div>
+        <RadioGroup
+          options={LANGUAGE_OPTIONS.map((o) => ({
+            ...o,
+            ariaLabel: `Set default language to ${o.label}`,
+          }))}
+          value={data.preferredLanguage}
+          onChange={(v) => void handleLanguageChange(v)}
+          wrapClass="flex flex-wrap items-center gap-1"
+          buttonClass={(s) =>
+            s
+              ? 'border border-border-strong bg-surface-2 px-2 py-1 font-mono text-[10px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+              : 'border border-border bg-bg px-2 py-1 font-mono text-[10px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+          }
+        />
       </section>
 
       <section className="mt-4" role="radiogroup" aria-label="Editor keymap">
         <p className="mb-2 font-mono text-[9px] uppercase tracking-widest text-faint">
           Editor keymap
         </p>
-        <div className="flex items-center gap-1">
-          {KEYMAP_OPTIONS.map((opt) => {
-            const selected = data.editorKeymap === opt.value;
-            return (
-              <button
-                key={opt.value}
-                type="button"
-                role="radio"
-                aria-checked={selected}
-                aria-label={`Set editor keymap to ${opt.label}`}
-                onClick={() => void handleKeymapChange(opt.value)}
-                className={
-                  selected
-                    ? 'flex-1 border border-border-strong bg-surface-2 px-3 py-1.5 font-mono text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
-                    : 'flex-1 border border-border bg-bg px-3 py-1.5 font-mono text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
-                }
-              >
-                {opt.label}
-              </button>
-            );
-          })}
-        </div>
+        <RadioGroup
+          options={KEYMAP_OPTIONS.map((o) => ({
+            ...o,
+            ariaLabel: `Set editor keymap to ${o.label}`,
+          }))}
+          value={data.editorKeymap}
+          onChange={(v) => void handleKeymapChange(v)}
+          buttonClass={(s) =>
+            s
+              ? 'flex-1 border border-border-strong bg-surface-2 px-3 py-1.5 font-mono text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+              : 'flex-1 border border-border bg-bg px-3 py-1.5 font-mono text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+          }
+        />
       </section>
     </main>
   );

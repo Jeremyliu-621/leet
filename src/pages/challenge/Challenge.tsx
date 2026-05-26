@@ -575,7 +575,7 @@ export function Challenge() {
         tabId,
       });
     } catch {
-      // Service worker not yet implemented (Phase 5) — ignore for now.
+      // SW may be transiently unavailable — swallow the error.
     }
   }, []);
 

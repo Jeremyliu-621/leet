@@ -1566,6 +1566,12 @@ import { problem as maxDotProductOfTwoSubsequences } from './max-dot-product-of-
 import { problem as numberOfSquarefulArrays } from './number-of-squareful-arrays';
 import { problem as sellingPiecesOfWood } from './selling-pieces-of-wood';
 import { problem as numberOfDiceRollsWithTargetSum } from './number-of-dice-rolls-with-target-sum';
+// batch 58
+import { problem as maximumTotalRewardUsingOperationsI } from './maximum-total-reward-using-operations-i';
+import { problem as minimumArrayEnd } from './minimum-array-end';
+import { problem as maximumNumberOfMovesInAGrid } from './maximum-number-of-moves-in-a-grid';
+import { problem as minimumCostToConvertStringI } from './minimum-cost-to-convert-string-i';
+import { problem as waysToSplitArrayIntoThreeSubarrays } from './ways-to-split-array-into-three-subarrays';
 // batch 57
 import { problem as convertBinaryLinkedList } from './convert-binary-linked-list';
 import { problem as diagonalTraverseII } from './diagonal-traverse-ii';
@@ -3229,7 +3235,6 @@ export const problems: readonly Problem[] = [
   longestEvenOddSubarrayWithThreshold,
   findTheValueOfThePartition,
   clearDigits,
-  // batch 57 (local)
   sumOfDigitsInBaseK,
   countSymmetricIntegers,
   minimumNumberOfPushesToTypeWordI,
@@ -3238,4 +3243,9 @@ export const problems: readonly Problem[] = [
   minimumOperationsToMakeArrayDivisibleByThree,
   findThePunishmentNumberOfIntegers,
   minimumAdditionsToMakeValidString,
+  maximumTotalRewardUsingOperationsI,
+  minimumArrayEnd,
+  maximumNumberOfMovesInAGrid,
+  minimumCostToConvertStringI,
+  waysToSplitArrayIntoThreeSubarrays,
 ];
