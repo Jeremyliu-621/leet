@@ -1649,6 +1649,12 @@ import { problem as findAllAnagramsInAString } from './find-all-anagrams-in-a-st
 import { problem as longestPalindrome } from './longest-palindrome';
 import { problem as reverseWordsInAString } from './reverse-words-in-a-string';
 import { problem as countPrimes } from './count-primes';
+// batch 63
+import { problem as designHitCounter } from './design-hit-counter';
+import { problem as removeColoredPieces } from './remove-colored-pieces';
+import { problem as swapAdjacentInLrString } from './swap-adjacent-in-lr-string';
+import { problem as nextGreaterElementIV } from './next-greater-element-iv';
+import { problem as minimumNumberOfOperationsToMakeArraysSimilar } from './minimum-number-of-operations-to-make-arrays-similar';
 // batch 62
 import { problem as gridGame } from './grid-game';
 import { problem as maximumNumberOfPointsWithCost } from './maximum-number-of-points-with-cost';
@@ -3469,4 +3475,10 @@ export const problems: readonly Problem[] = [
   numStepsBinaryToOne,
   minimizeSumTwoChanges,
   sqrtX,
+  // batch 63 (session)
+  designHitCounter,
+  removeColoredPieces,
+  swapAdjacentInLrString,
+  nextGreaterElementIV,
+  minimumNumberOfOperationsToMakeArraysSimilar,
 ];

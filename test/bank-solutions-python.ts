@@ -23267,4 +23267,92 @@ def secondMinimum(n, edges, time, change):
     return hi
 `,
 
+  'design-hit-counter': `def hitCounter(operations, args):
+    results = []
+    timestamps = []
+    for i in range(len(operations)):
+        op = operations[i]
+        arg = args[i] if args[i] else []
+        if op == 'HitCounter':
+            timestamps = []
+            results.append(None)
+        elif op == 'hit':
+            timestamps.append(arg[0])
+            results.append(None)
+        else:
+            t = arg[0]
+            count = sum(1 for ts in timestamps if ts >= t - 299)
+            results.append(count)
+    return results
+`,
+
+  'remove-colored-pieces': `def winnerOfGame(colors):
+    alice = 0
+    bob = 0
+    for i in range(1, len(colors) - 1):
+        if colors[i] == 'A' and colors[i-1] == 'A' and colors[i+1] == 'A':
+            alice += 1
+        if colors[i] == 'B' and colors[i-1] == 'B' and colors[i+1] == 'B':
+            bob += 1
+    return alice > bob
+`,
+
+  'swap-adjacent-in-lr-string': `def canTransform(start, end):
+    n = len(start)
+    if start.replace('X', '') != end.replace('X', ''):
+        return False
+    i, j = 0, 0
+    while i < n and j < n:
+        while i < n and start[i] == 'X':
+            i += 1
+        while j < n and end[j] == 'X':
+            j += 1
+        if i == n and j == n:
+            return True
+        if i == n or j == n:
+            return False
+        if start[i] != end[j]:
+            return False
+        if start[i] == 'L' and i < j:
+            return False
+        if start[i] == 'R' and i > j:
+            return False
+        i += 1
+        j += 1
+    return True
+`,
+
+  'next-greater-element-iv': `def secondGreaterElement(nums):
+    n = len(nums)
+    ans = [-1] * n
+    stack1 = []
+    stack2 = []
+    for j in range(n):
+        while stack2 and nums[stack2[-1]] < nums[j]:
+            ans[stack2.pop()] = nums[j]
+        to_move = []
+        while stack1 and nums[stack1[-1]] < nums[j]:
+            to_move.append(stack1.pop())
+        for k in range(len(to_move) - 1, -1, -1):
+            stack2.append(to_move[k])
+        stack1.append(j)
+    return ans
+`,
+
+  'minimum-number-of-operations-to-make-arrays-similar': `def makeSimilar(nums, target):
+    nums_even = sorted(x for x in nums if x % 2 == 0)
+    nums_odd = sorted(x for x in nums if x % 2 != 0)
+    tgt_even = sorted(x for x in target if x % 2 == 0)
+    tgt_odd = sorted(x for x in target if x % 2 != 0)
+    ops = 0
+    for i in range(len(nums_even)):
+        diff = tgt_even[i] - nums_even[i]
+        if diff > 0:
+            ops += diff // 2
+    for i in range(len(nums_odd)):
+        diff = tgt_odd[i] - nums_odd[i]
+        if diff > 0:
+            ops += diff // 2
+    return ops
+`,
 };

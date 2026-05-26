@@ -23717,4 +23717,101 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return hi;
   },
 
+  // batch 63
+  'design-hit-counter': (...args: unknown[]) => {
+    const operations = args[0] as string[];
+    const argsList = args[1] as (number[] | [])[];
+    const results: (number | null)[] = [];
+    let timestamps: number[] = [];
+    for (let i = 0; i < operations.length; i++) {
+      const op = operations[i]!;
+      const arg = argsList[i] ?? [];
+      if (op === 'HitCounter') {
+        timestamps = [];
+        results.push(null);
+      } else if (op === 'hit') {
+        timestamps.push((arg as number[])[0]!);
+        results.push(null);
+      } else {
+        const t = (arg as number[])[0]!;
+        let count = 0;
+        for (const ts of timestamps) {
+          if (ts >= t - 299) count++;
+        }
+        results.push(count);
+      }
+    }
+    return results;
+  },
+
+  'remove-colored-pieces': (...args: unknown[]) => {
+    const colors = args[0] as string;
+    let alice = 0, bob = 0;
+    for (let i = 1; i < colors.length - 1; i++) {
+      if (colors[i] === 'A' && colors[i - 1] === 'A' && colors[i + 1] === 'A') alice++;
+      if (colors[i] === 'B' && colors[i - 1] === 'B' && colors[i + 1] === 'B') bob++;
+    }
+    return alice > bob;
+  },
+
+  'swap-adjacent-in-lr-string': (...args: unknown[]) => {
+    const start = args[0] as string;
+    const end = args[1] as string;
+    const n = start.length;
+    if (start.replace(/X/g, '') !== end.replace(/X/g, '')) return false;
+    let i = 0, j = 0;
+    while (i < n && j < n) {
+      while (i < n && start[i] === 'X') i++;
+      while (j < n && end[j] === 'X') j++;
+      if (i === n && j === n) return true;
+      if (i === n || j === n) return false;
+      if (start[i] !== end[j]) return false;
+      if (start[i] === 'L' && i < j) return false;
+      if (start[i] === 'R' && i > j) return false;
+      i++; j++;
+    }
+    return true;
+  },
+
+  'next-greater-element-iv': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const ans = new Array<number>(n).fill(-1);
+    const stack1: number[] = [];
+    const stack2: number[] = [];
+    for (let j = 0; j < n; j++) {
+      while (stack2.length > 0 && nums[stack2[stack2.length - 1]!]! < nums[j]!) {
+        ans[stack2.pop()!] = nums[j]!;
+      }
+      const toMove: number[] = [];
+      while (stack1.length > 0 && nums[stack1[stack1.length - 1]!]! < nums[j]!) {
+        toMove.push(stack1.pop()!);
+      }
+      for (let k = toMove.length - 1; k >= 0; k--) {
+        stack2.push(toMove[k]!);
+      }
+      stack1.push(j);
+    }
+    return ans;
+  },
+
+  'minimum-number-of-operations-to-make-arrays-similar': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number[];
+    const numsEven = nums.filter(x => x % 2 === 0).sort((a, b) => a - b);
+    const numsOdd = nums.filter(x => x % 2 !== 0).sort((a, b) => a - b);
+    const tgtEven = target.filter(x => x % 2 === 0).sort((a, b) => a - b);
+    const tgtOdd = target.filter(x => x % 2 !== 0).sort((a, b) => a - b);
+    let ops = 0;
+    for (let i = 0; i < numsEven.length; i++) {
+      const diff = (tgtEven[i] ?? 0) - (numsEven[i] ?? 0);
+      if (diff > 0) ops += diff / 2;
+    }
+    for (let i = 0; i < numsOdd.length; i++) {
+      const diff = (tgtOdd[i] ?? 0) - (numsOdd[i] ?? 0);
+      if (diff > 0) ops += diff / 2;
+    }
+    return ops;
+  },
+
 };
