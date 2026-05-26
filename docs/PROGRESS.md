@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1627 problems; 5169 tests green.
+**Current focus:** Bank at 1632 problems; 5184 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1700; UX polish (vim mode indicator, a11y, terminal UX).
 
@@ -20,6 +20,12 @@ Added 5 problems: `group-shifted-strings` (medium/strings+hash-map, shift-delta 
 
 ### Batch 58+59-new (2026-05-26)
 Added 21 new problems: `find-subarrays-with-equal-sum` (arrays/easy), `best-poker-hand` (arrays/easy), `count-incremovable-subarrays` (arrays/easy, O(n²) brute-force), `step-by-step-directions` (tree/medium, LCA path), `minimum-number-of-food-buckets` (greedy/medium, right-first bucket placement, skip 3 on right-place), `super-ugly-number` (dp/medium, multi-pointer), `reward-top-k-students` (arrays/medium, word-set scoring), `count-subarrays-with-score-less-than-k` (sliding-window/hard), `maximum-number-of-jumps-to-reach-last-index` (dp/medium), `minimum-number-of-coins-for-fruits` (dp/medium), `freq-stack` (design/hard, freq-map + stack map), `minimum-cost-to-equalize-array` (math/medium), `maximum-total-damage` (dp/medium, delete-and-earn variant ±2), `special-array-ii` (arrays/medium, prefix bad-pair count), `find-maximum-length-valid-subsequence` (dp/medium, mod-2 DP), `count-submatrices-all-ones` (dp/medium, histogram DP), `minimum-length-of-string-after-operations` (strings/medium, odd→1 even→2), `count-special-characters-i` (strings/easy), `maximum-jumps-to-reach-last-index` (dp/medium), `minimum-operations-to-make-array-equal-ii` (math/medium), `minimum-cost-for-cutting-cake-i` (greedy/medium). Also adds vim mode indicator (NORMAL/INSERT/VISUAL) to EditorPanel. Fixed wrong expected values in 6 test cases. Bank at **1595**; 5112 tests.
+
+### Batch 63 (2026-05-26)
+Added 5 problems: `design-hit-counter` (medium/hash-map, simulate HitCounter class via operations/args array), `remove-colored-pieces` (medium/strings, Alice/Bob game count run-based moves), `swap-adjacent-in-lr-string` (medium/two-pointers, L/R movement constraint check), `next-greater-element-iv` (hard/stack, two monotone stacks for second NGE), `minimum-number-of-operations-to-make-arrays-similar` (hard/math+arrays, sort by parity + pair + sum positive diffs). Merged with concurrent agents — bank at **1632**; 5184 tests.
+
+### fix(about): dynamic tag count + marketing site 1,560+ (2026-05-26)
+AboutSection tag count now derived from `PROBLEM_TAGS.length` instead of hardcoded 14. Marketing site `site/index.html` updated from 1,500+ → 1,560+ in all three stat locations.
 
 ### Batch 62-local (2026-05-26)
 Added 5 problems: `find-the-minimum-number-of-fibonacci-numbers-whose-sum-is-k` (greedy/easy, largest-fib-first), `count-pairs-of-similar-strings` (hash-map/easy, bitmask/sorted-char key), `maximum-difference-between-increasing-elements` (arrays/easy, min-so-far scan), `longest-path-with-different-adjacent-characters` (tree+dp/medium, DFS top-2 chains), `increment-submatrices-by-one` (arrays/medium, 2D difference array + prefix sums). JS + Python solutions for all. Bank at **1613**; 5127 tests.
