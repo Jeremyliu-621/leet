@@ -8,9 +8,15 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1882** problems; 5934 tests green. Batch 78 complete.
+**Current focus:** Bank at **1885** problems; 5943 tests green. Batch 79 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth; UX polish; light-mode QA; marketing site stat update.
+**Next up:** Continued bank growth; UX polish; marketing site stat update (1,885+).
+
+### feat(bank): add batch 79 — 3 new problems (DP, stack, binary-search) (2026-05-26)
+Added 3 new problems: `ternary-expression-parser` (medium/strings+stack, right-to-left stack evaluation of nested ternaries), `count-all-possible-routes` (hard/dynamic-programming, memoized DFS with fuel budget, mod 10^9+7), `minimum-operations-to-make-array-k-increasing` (hard/dynamic-programming+binary-search, group by index mod k + LNDS via patience sort). Also: cleaned Pyodide-internal paths from Python error tracebacks (`cleanPythonTraceback` in python-worker.js), added copy-output button to TerminalPanel tab bar. Bank at **1885**; 5943 tests.
+
+### feat(ui): add ErrorBoundary + theme selector (2026-05-26)
+Added ErrorBoundary to prevent blank-screen crashes; added theme selector (dark/light/system) to Editor settings. (from concurrent session)
 
 ### feat(bank): add batch 78 — 12 new problems (arrays, strings, math, graph) (2026-05-26)
 Added 12 new problems across arrays/two-pointers, strings/sliding-window, math/combinatorics, and graph/Dijkstra categories. `minimum-operations-to-make-all-array-elements-equal-to-one` (medium/arrays+math, GCD subarray min-length), `find-indices-with-index-and-value-difference-ii` (medium/arrays+two-pointers, sliding window minIdx/maxIdx), `minimum-absolute-difference-queries` (medium/arrays+hash-map, prefix counts over values 1–100), `minimum-cost-for-cutting-cake-ii` (hard/arrays+simulation, greedy sort-and-multiply), `find-number-of-ways-to-place-people` (medium/arrays, sort+maxY O(n²) rectangle pairs), `find-the-k-sum-of-an-array` (hard/arrays+heap, BFS subset-sum reduction with min-heap), `minimum-time-to-visit-disappearing-nodes` (medium/graph+shortest-path, Dijkstra with disappear-time constraint), `count-beautiful-substrings-i` (medium/strings+sliding-window, O(n²) vowel==consonant && len%k), `sort-transformed-array` (medium/arrays+two-pointers+math, two-pointer based on parabola direction), `check-if-parentheses-string-can-be-valid` (medium/strings+stack, range [lo,hi] tracking), `find-the-number-of-distinct-colors-among-the-balls` (medium/arrays+hash-map+simulation, two-map running distinct count), `count-the-number-of-arrays-with-k-matching-adjacent-elements` (hard/math+dp, C(n-1,k)×m×(m-1)^(n-1-k) mod 1e9+7). Bank at **1882**; 5934 tests.
