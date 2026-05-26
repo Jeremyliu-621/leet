@@ -30,6 +30,7 @@ import { leetlockEditorTheme } from '../codemirror-theme';
 import type { JudgeResult } from '../../../lib/judge';
 import type { EditorKeymap, SupportedLanguage } from '../../../lib/types';
 import { VerdictPanel } from './VerdictPanel';
+import { CustomTestcase } from './CustomTestcase';
 
 interface EditorPanelProps {
   /** When true, the editor occupies full width (problem panel is hidden). */
@@ -79,6 +80,19 @@ interface EditorPanelProps {
   showGiveUp: boolean;
   /** Number of attempts remaining. */
   attemptsRemaining: number | null;
+  /** Parameter names for the current problem — shown in the custom testcase panel. */
+  params: readonly string[];
+  /** Called when the user clicks "Run" in the custom testcase panel with parsed args. */
+  onCustomRun: (args: unknown[]) => void;
+  /** Whether a custom test run is currently in progress. */
+  isCustomRunning: boolean;
+  /**
+   * Serialised output from the most recent custom run.
+   * null = no run yet; undefined = running; string = completed actual value.
+   */
+  customOutput: string | null | undefined;
+  /** Error message from the most recent custom run. */
+  customError: string | null;
 }
 
 const LANGUAGE_LABEL: Readonly<Record<SupportedLanguage, string>> = {
@@ -135,7 +149,15 @@ export function EditorPanel({
   verdictMode,
   showGiveUp,
   attemptsRemaining,
+  params,
+  onCustomRun,
+  isCustomRunning,
+  customOutput,
+  customError,
 }: EditorPanelProps) {
+  // Active bottom tab: 'testcase' | 'result'.
+  // Auto-switch to 'result' whenever a standard run/submit completes.
+  const [bottomTab, setBottomTab] = useState<'testcase' | 'result'>('testcase');
   const editorContainerRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
   const languageCompartmentRef = useRef(new Compartment());
@@ -157,6 +179,17 @@ export function EditorPanel({
   useEffect(() => { onRunRef.current = onRun; }, [onRun]);
   useEffect(() => { onSubmitRef.current = onSubmit; }, [onSubmit]);
   useEffect(() => { starterCodeRef.current = starterCode; }, [starterCode]);
+
+  // Auto-switch to 'result' tab when a standard run or submit completes (verdict becomes non-undefined non-null).
+  const prevVerdictRef = useRef(verdict);
+  useEffect(() => {
+    const prev = prevVerdictRef.current;
+    prevVerdictRef.current = verdict;
+    // If verdict just changed from undefined (in-flight) to a JudgeResult, switch to result tab.
+    if (prev === undefined && verdict !== undefined && verdict !== null) {
+      setBottomTab('result');
+    }
+  }, [verdict]);
 
   // Build and mount the editor once.
   useEffect(() => {
@@ -529,16 +562,61 @@ export function EditorPanel({
         />
       </div>
 
-      {/* Divider */}
-      <div className="shrink-0 border-t border-border" aria-hidden="true" />
+      {/* Bottom panel: Testcase / Result tabs + action bar */}
+      <div className="shrink-0 border-t border-border">
+        {/* Tab bar */}
+        <div className="flex items-center border-b border-border px-4" role="tablist" aria-label="Bottom panel tabs">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={bottomTab === 'testcase'}
+            aria-controls="editor-bottom-testcase"
+            onClick={() => setBottomTab('testcase')}
+            className={
+              bottomTab === 'testcase'
+                ? 'border-b border-text py-2 mr-4 font-mono text-[10px] uppercase tracking-widest text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent'
+                : 'py-2 mr-4 font-mono text-[10px] uppercase tracking-widest text-faint transition-colors hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent'
+            }
+          >
+            Testcase
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={bottomTab === 'result'}
+            aria-controls="editor-bottom-result"
+            onClick={() => setBottomTab('result')}
+            className={
+              bottomTab === 'result'
+                ? 'border-b border-text py-2 font-mono text-[10px] uppercase tracking-widest text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent'
+                : 'py-2 font-mono text-[10px] uppercase tracking-widest text-faint transition-colors hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent'
+            }
+          >
+            Result
+          </button>
+        </div>
 
-      {/* Verdict region — fixed height to prevent layout shift */}
-      <div className="min-h-[80px] shrink-0 overflow-y-auto">
-        <VerdictPanel result={verdict} mode={verdictMode} />
-      </div>
+        {/* Tab panels */}
+        <div className="min-h-[100px] max-h-[160px] overflow-y-auto">
+          {bottomTab === 'testcase' ? (
+            <div id="editor-bottom-testcase" role="tabpanel">
+              <CustomTestcase
+                params={params}
+                onRun={onCustomRun}
+                isRunning={isCustomRunning}
+                output={customOutput}
+                error={customError}
+              />
+            </div>
+          ) : (
+            <div id="editor-bottom-result" role="tabpanel">
+              <VerdictPanel result={verdict} mode={verdictMode} />
+            </div>
+          )}
+        </div>
 
-      {/* Action bar */}
-      <div className="shrink-0 border-t border-border bg-surface">
+        {/* Action bar */}
+        <div className="border-t border-border bg-surface">
         <div className="flex items-center justify-between px-4 py-3">
           {/* Left: shortcut hint + attempts remaining (when relevant) */}
           <div className="flex items-center gap-3 font-mono text-[10px] text-faint">
@@ -593,7 +671,8 @@ export function EditorPanel({
             </button>
           </div>
         </div>
-      </div>
+        </div>{/* end action bar bg-surface */}
+      </div>{/* end outer border-t panel */}
     </section>
   );
 }

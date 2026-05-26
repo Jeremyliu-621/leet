@@ -130,6 +130,11 @@ export function Challenge() {
   // Fullscreen editor mode — hides the problem panel. Not persisted (session only).
   const [fullscreen, setFullscreen] = useState(false);
 
+  // Custom test-case state — for the "Testcase" tab in the bottom panel.
+  const [isCustomRunning, setIsCustomRunning] = useState(false);
+  const [customOutput, setCustomOutput] = useState<string | null | undefined>(null);
+  const [customError, setCustomError] = useState<string | null>(null);
+
   // -------------------------------------------------------------------------
   // Load prefs + pick problem (once on mount)
   // -------------------------------------------------------------------------
@@ -434,6 +439,64 @@ export function Challenge() {
     })();
   }, []);
 
+  // Custom test-case run — runs the user's code with arbitrary args (no expected comparison).
+  const handleCustomRun = useCallback(async (args: unknown[]) => {
+    if (pageState.status !== 'ready' || isCustomRunning) return;
+    const { problem } = pageState;
+
+    setIsCustomRunning(true);
+    setCustomOutput(undefined); // in-flight
+    setCustomError(null);
+
+    try {
+      // Use a unique sentinel for expected so the verdict is always 'fail'
+      // (we only care about the actual output, not a pass/fail comparison).
+      const SENTINEL = '__custom_test_sentinel__';
+      const result = await runTests({
+        code,
+        problem,
+        language,
+        tests: [{ args, expected: SENTINEL }],
+        timeoutMs: 4000,
+      });
+      if (result.outcome === 'compile-error' || result.outcome === 'timeout') {
+        setCustomOutput(null);
+        setCustomError(result.message ?? result.outcome);
+      } else if (result.verdicts.length > 0) {
+        const v = result.verdicts[0];
+        if (v === undefined) {
+          setCustomOutput(null);
+          setCustomError('No output.');
+        } else if (v.status === 'error') {
+          setCustomOutput(null);
+          setCustomError(v.error);
+        } else if (v.status === 'fail') {
+          // 'fail' because actual !== SENTINEL; actual is the real return value.
+          let outputStr: string;
+          try {
+            outputStr = JSON.stringify(v.actual);
+          } catch {
+            outputStr = String(v.actual);
+          }
+          setCustomOutput(outputStr);
+          setCustomError(null);
+        } else {
+          // 'pass' means the function returned the sentinel string — very unlikely but handle it.
+          setCustomOutput(JSON.stringify(SENTINEL));
+          setCustomError(null);
+        }
+      } else {
+        setCustomOutput(null);
+        setCustomError('No output.');
+      }
+    } catch (err) {
+      setCustomOutput(null);
+      setCustomError(err instanceof Error ? err.message : 'The code sandbox failed to load.');
+    } finally {
+      setIsCustomRunning(false);
+    }
+  }, [pageState, isCustomRunning, code, language]);
+
   // Split ratio — real-time update (no persistence on every mouse move).
   const handleSplitRatioChange = useCallback((ratio: number) => {
     setSplitRatio(ratio);
@@ -536,6 +599,11 @@ export function Challenge() {
             verdictMode={verdictMode}
             showGiveUp={prefs.allowGiveUp}
             attemptsRemaining={attemptsRemaining}
+            params={problem.params}
+            onCustomRun={(args) => void handleCustomRun(args)}
+            isCustomRunning={isCustomRunning}
+            customOutput={customOutput}
+            customError={customError}
           />
         </div>
       </main>
