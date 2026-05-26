@@ -1779,7 +1779,6 @@ import { problem as minimumSwapsBinaryStringAlternating } from './minimum-number
 import { problem as maximumNonOverlappingSubarraysTarget } from './maximum-number-of-non-overlapping-subarrays-with-sum-equals-target';
 import { problem as findMinimumPossibleSumBeautifulArray } from './find-the-minimum-possible-sum-of-a-beautiful-array';
 // batch 67
-import { problem as minimumReplacementsToSortTheArray } from './minimum-replacements-to-sort-the-array';
 import { problem as findTheKOrOfAnArray } from './find-the-k-or-of-an-array';
 import { problem as minimumOperationsToSatisfyConditions } from './minimum-number-of-operations-to-satisfy-conditions';
 import { problem as maximumSumAlmostUniqueSubarray } from './maximum-sum-of-almost-unique-subarray';
@@ -3611,7 +3610,6 @@ export const problems: readonly Problem[] = [
   maximumNonOverlappingSubarraysTarget,
   findMinimumPossibleSumBeautifulArray,
   // batch 67
-  minimumReplacementsToSortTheArray,
   findTheKOrOfAnArray,
   minimumOperationsToSatisfyConditions,
   maximumSumAlmostUniqueSubarray,
