@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2009** problems; 6345 tests green. Batches 94–95 merged.
+**Current focus:** Bank at **2017** problems; 6345 tests green. Batch 92 local (7 problems) + remote batches merged.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continued bank growth (batch 96+); UI/UX polish.
+
+### feat(bank): add batch 92 local — 7 problems (greedy/math, strings, arrays, hash-map, BFS+UF, DP) (2026-05-26)
+Added 7 problems: `eliminate-maximum-number-of-monsters` (medium/arrays, sort arrival times), `decoded-string-at-index` (medium/strings, BigInt backward modulo scan), `maximum-bags-with-full-capacity-of-rocks` (medium/arrays, sort remaining + greedy fill), `count-of-interesting-subarrays` (medium/hash-map, prefix-sum modulo), `minimum-number-of-visited-cells-in-a-grid` (hard/graph, BFS + row/col union-find), `form-largest-integer-with-digits-that-add-up-to-target` (hard/dynamic-programming, unbounded knapsack + greedy reconstruction), `destroying-asteroids` (medium/arrays, sort + greedy absorption). Bank at **2017**; 6345 tests.
 
 ### feat(bank): add batch 94 — maximum-average-subarray-i (2026-05-26)
 Added `maximum-average-subarray-i` (easy/sliding-window, fixed-size k window tracking max sum). JS and Python reference solutions added. Bank at **2001**; 6315 tests.
