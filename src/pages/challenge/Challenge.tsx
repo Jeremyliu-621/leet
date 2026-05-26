@@ -322,6 +322,7 @@ function SolvedStandaloneScreen({
                   className="flex items-center gap-2 border border-border bg-surface px-3 py-2 text-xs transition-colors hover:bg-surface-2 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
                 >
                   <span
+                    role="img"
                     className={`shrink-0 font-mono text-[10px] ${p.solved ? 'text-accent' : 'text-border-strong'}`}
                     aria-label={p.solved ? 'Solved' : 'Not solved'}
                   >

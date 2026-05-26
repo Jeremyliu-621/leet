@@ -56,10 +56,7 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
         {settingsHref && (
           <span className="hidden sm:inline-block h-4 w-px bg-border" aria-hidden="true" />
         )}
-        <span
-          className="font-mono text-sm font-bold tracking-[0.2em] text-accent uppercase"
-          aria-label="LeetLock"
-        >
+        <span className="font-mono text-sm font-bold tracking-[0.2em] text-accent uppercase">
           LEETLOCK
         </span>
         <span className="hidden sm:inline-block h-4 w-px bg-border" aria-hidden="true" />
