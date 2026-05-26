@@ -22370,6 +22370,91 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Math.max(min1, min2);
   },
 
+  // batch 61 (local)
+  'check-if-every-row-and-column-contains-all-numbers': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const n = matrix.length;
+    for (let r = 0; r < n; r++) {
+      if (new Set(matrix[r]).size !== n) return false;
+    }
+    for (let c = 0; c < n; c++) {
+      if (new Set(matrix.map(row => row[c])).size !== n) return false;
+    }
+    return true;
+  },
+
+  'maximum-strong-pair-xor-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let max = 0;
+    for (let i = 0; i < nums.length; i++) {
+      for (let j = i; j < nums.length; j++) {
+        if (Math.abs(nums[i]! - nums[j]!) <= Math.min(nums[i]!, nums[j]!)) {
+          max = Math.max(max, nums[i]! ^ nums[j]!);
+        }
+      }
+    }
+    return max;
+  },
+
+  'extra-characters-in-a-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const dict = new Set(args[1] as string[]);
+    const n = s.length;
+    const dp = new Array(n + 1).fill(0);
+    for (let i = 1; i <= n; i++) {
+      dp[i] = dp[i - 1]! + 1;
+      for (let j = 0; j < i; j++) {
+        if (dict.has(s.slice(j, i))) dp[i] = Math.min(dp[i]!, dp[j]!);
+      }
+    }
+    return dp[n]!;
+  },
+
+  'kth-largest-sum-in-a-binary-tree': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    const k = args[1] as number;
+    const sums: number[] = [];
+    const queue: (_TN | null)[] = root ? [root] : [];
+    while (queue.length) {
+      const size = queue.length;
+      let levelSum = 0;
+      for (let i = 0; i < size; i++) {
+        const node = queue.shift()!;
+        if (node) {
+          levelSum += node.v;
+          if (node.l) queue.push(node.l);
+          if (node.r) queue.push(node.r);
+        }
+      }
+      sums.push(levelSum);
+    }
+    if (k > sums.length) return -1;
+    sums.sort((a, b) => b - a);
+    return sums[k - 1]!;
+  },
+
+  'sum-of-matrix-after-queries': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const queries = args[1] as number[][];
+    const setRows = new Set<number>(), setCols = new Set<number>();
+    let total = 0;
+    for (let i = queries.length - 1; i >= 0; i--) {
+      const [type, idx, val] = queries[i]!;
+      if (type === 0) {
+        if (!setRows.has(idx!)) {
+          total += val! * (n - setCols.size);
+          setRows.add(idx!);
+        }
+      } else {
+        if (!setCols.has(idx!)) {
+          total += val! * (n - setRows.size);
+          setCols.add(idx!);
+        }
+      }
+    }
+    return total;
+  },
+
   // batch 59 (local)
   'count-substrings-starting-and-ending-with-given-character': (s: unknown, c: unknown) => {
     const cnt = (s as string).split('').filter(x => x === (c as string)).length;

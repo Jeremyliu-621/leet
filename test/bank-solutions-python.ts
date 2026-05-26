@@ -22135,6 +22135,80 @@ def secondMinimum(n, edges, time, change):
     return max(min1, min2)
 `,
 
+  // batch 61 (local)
+  'check-if-every-row-and-column-contains-all-numbers': `def checkValid(matrix):
+    matrix = matrix.to_py() if hasattr(matrix, 'to_py') else matrix
+    grid = [list(int(x) for x in (row.to_py() if hasattr(row, 'to_py') else row)) for row in matrix]
+    n = len(grid)
+    for row in grid:
+        if len(set(row)) != n:
+            return False
+    for c in range(n):
+        if len(set(grid[r][c] for r in range(n))) != n:
+            return False
+    return True
+`,
+
+  'maximum-strong-pair-xor-i': `def maximumStrongPairXor(nums):
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    max_xor = 0
+    for i in range(len(a)):
+        for j in range(i, len(a)):
+            if abs(a[i] - a[j]) <= min(a[i], a[j]):
+                max_xor = max(max_xor, a[i] ^ a[j])
+    return max_xor
+`,
+
+  'extra-characters-in-a-string': `def minExtraChar(s, dictionary):
+    d = set(dictionary.to_py() if hasattr(dictionary, 'to_py') else dictionary)
+    n = len(s)
+    dp = [0] * (n + 1)
+    for i in range(1, n + 1):
+        dp[i] = dp[i - 1] + 1
+        for j in range(i):
+            if s[j:i] in d:
+                dp[i] = min(dp[i], dp[j])
+    return dp[n]
+`,
+
+  'kth-largest-sum-in-a-binary-tree': `def kthLargestLevelSum(root, k):
+    from collections import deque
+    ki = int(k)
+    sums = []
+    if root is None:
+        return -1
+    q = deque([root])
+    while q:
+        level_sum = 0
+        for _ in range(len(q)):
+            node = q.popleft()
+            level_sum += int(node.val)
+            if node.left: q.append(node.left)
+            if node.right: q.append(node.right)
+        sums.append(level_sum)
+    if ki > len(sums):
+        return -1
+    sums.sort(reverse=True)
+    return sums[ki - 1]
+`,
+
+  'sum-of-matrix-after-queries': `def matrixSumQueries(n, queries):
+    ni = int(n)
+    qs = [(int(q[0]), int(q[1]), int(q[2])) for q in (queries.to_py() if hasattr(queries, 'to_py') else queries)]
+    set_rows, set_cols = set(), set()
+    total = 0
+    for t, idx, val in reversed(qs):
+        if t == 0:
+            if idx not in set_rows:
+                total += val * (ni - len(set_cols))
+                set_rows.add(idx)
+        else:
+            if idx not in set_cols:
+                total += val * (ni - len(set_rows))
+                set_cols.add(idx)
+    return total
+`,
+
   // batch 59 (local)
   'count-substrings-starting-and-ending-with-given-character': `def countSubstrings(s, c):
     cnt = s.count(c)

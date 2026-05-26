@@ -1619,6 +1619,12 @@ import { problem as vowelsOfAllSubstrings } from './vowels-of-all-substrings';
 import { problem as removingMinimumNumberOfMagicBeans } from './removing-minimum-number-of-magic-beans';
 import { problem as findTheLongestEqualSubarray } from './find-the-longest-equal-subarray';
 import { problem as minimumEqualSumOfTwoArraysAfterReplacingZeros } from './minimum-equal-sum-of-two-arrays-after-replacing-zeros';
+// batch 61 (local)
+import { problem as checkIfEveryRowAndColumnContainsAllNumbers } from './check-if-every-row-and-column-contains-all-numbers';
+import { problem as maximumStrongPairXorI } from './maximum-strong-pair-xor-i';
+import { problem as extraCharactersInAString } from './extra-characters-in-a-string';
+import { problem as kthLargestSumInABinaryTree } from './kth-largest-sum-in-a-binary-tree';
+import { problem as sumOfMatrixAfterQueries } from './sum-of-matrix-after-queries';
 // batch 59 (local)
 import { problem as countSubstringsStartingAndEndingWithGivenCharacter } from './count-substrings-starting-and-ending-with-given-character';
 import { problem as minimumNumberOfChangesToMakeBinaryStringBeautiful } from './minimum-number-of-changes-to-make-binary-string-beautiful';
@@ -3313,6 +3319,12 @@ export const problems: readonly Problem[] = [
   removingMinimumNumberOfMagicBeans,
   findTheLongestEqualSubarray,
   minimumEqualSumOfTwoArraysAfterReplacingZeros,
+  // batch 61 (local)
+  checkIfEveryRowAndColumnContainsAllNumbers,
+  maximumStrongPairXorI,
+  extraCharactersInAString,
+  kthLargestSumInABinaryTree,
+  sumOfMatrixAfterQueries,
   // batch 59 (local)
   countSubstringsStartingAndEndingWithGivenCharacter,
   minimumNumberOfChangesToMakeBinaryStringBeautiful,
