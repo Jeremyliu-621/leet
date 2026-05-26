@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13+ — Post-MVP polish
-**Current focus:** Submission history shipped. Next: streak heatmap, time-saved, settings import/export.
+**Current focus:** All Phase 13 polish tasks done. Next: marketing site iteration.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green (432 tests across 22 files).
-**Next up:** Streak heatmap in the popup + time-saved metric.
+**Next up:** Marketing site iteration + Vercel deployment (separate repo).
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -176,9 +176,11 @@ Still pending:
 - [x] Fullscreen-editor toggle — gear toolbar button hides problem panel; session-only state
 - [x] Custom test-case input drawer — "Testcase" / "Result" tabs below editor; JSON args input; actual output shown
 - [x] Submission history + per-submit stats — SubmissionRecord in local storage (capped 500), last 5 shown in popup
-- [ ] Streak heatmap, time-saved, settings import/export
+- [x] Streak heatmap — 28-day activity grid in popup (4 grayscale intensity levels from streakHistory)
+- [x] Time-invested metric — total wall-clock solving time surfaced in popup below stats grid
+- [x] Settings import/export — ImportExportSection in Options; versioned JSON download + validated file import
 - [ ] Marketing site iteration + Vercel deployment
-- [ ] Address logged a11y findings (text-faint contrast on microlabels, one `aria-prohibited-attr`)
+- [x] Address logged a11y findings — raised --ll-faint to WCAG AA (#7c7c7c dark / #595959 light); removed aria-label from generic <span> in TopBar
 
 ---
 
