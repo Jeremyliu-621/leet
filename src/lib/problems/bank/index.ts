@@ -2103,6 +2103,10 @@ import { problem as maxSumSubmatrix } from './max-sum-submatrix';
 import { problem as numberGoodLeafNodePairs } from './number-good-leaf-node-pairs';
 import { problem as treeNodeProductOfChildren } from './tree-node-product-of-children';
 import { problem as minimumOperationsNonDecreasing } from './minimum-operations-to-make-array-non-decreasing';
+// batch 90 — math, greedy, hash-map
+import { problem as sumOfSquareNumbers } from './sum-of-square-numbers';
+import { problem as miceAndCheese } from './mice-and-cheese';
+import { problem as maximumSizeSubarraySumEqualsK } from './maximum-size-subarray-sum-equals-k';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4243,4 +4247,8 @@ export const problems: readonly Problem[] = [
   numberGoodLeafNodePairs,
   treeNodeProductOfChildren,
   minimumOperationsNonDecreasing,
+  // batch 90
+  sumOfSquareNumbers,
+  miceAndCheese,
+  maximumSizeSubarraySumEqualsK,
 ];
