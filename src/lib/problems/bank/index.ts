@@ -1719,6 +1719,20 @@ import { problem as minimumNumberOfRabbits } from './minimum-number-of-rabbits';
 import { problem as theMazeII } from './the-maze-ii';
 import { problem as maximumVacationDays } from './maximum-vacation-days';
 import { problem as gridIllumination } from './grid-illumination';
+// batch 67
+import { problem as minimumOperationsToMakeUniValueGrid } from './minimum-operations-to-make-uni-value-grid';
+import { problem as minimumMovesToMakeArrayComplementary } from './minimum-moves-to-make-array-complementary';
+import { problem as findWinnerOfArrayGame } from './find-winner-of-array-game';
+import { problem as maximumNumberOfRobotsWithinBudget } from './maximum-number-of-robots-within-budget';
+import { problem as minimumSizeOfBag } from './minimum-limit-of-balls-in-a-bag';
+import { problem as maximumRowsCoveredByColumns } from './maximum-rows-covered-by-columns';
+import { problem as minimumArrayLengthAfterPairRemovals } from './minimum-array-length-after-pair-removals';
+import { problem as countTheNumberOfCompleteComponents } from './count-the-number-of-complete-components';
+import { problem as designMemoryAllocatorProblem } from './design-memory-allocator';
+import { problem as campusBikesProblem } from './campus-bikes';
+import { problem as escapeTheGhosts } from './escape-the-ghosts';
+import { problem as maximumValueOfKCoinsFromPiles } from './maximum-value-of-k-coins-from-piles';
+import { problem as parallelCoursesIII } from './parallel-courses-iii';
 
 // batch 58
 import { problem as maxConsecutiveOnesII } from './max-consecutive-ones-ii';
@@ -3621,4 +3635,17 @@ export const problems: readonly Problem[] = [
   maximumStrictlyIncreasingCellsInMatrix,
   findLongestSpecialSubstringThriceI,
   minimumOperationsToMakeArrayValuesEqualToK,
+  minimumOperationsToMakeUniValueGrid,
+  minimumMovesToMakeArrayComplementary,
+  findWinnerOfArrayGame,
+  maximumNumberOfRobotsWithinBudget,
+  minimumSizeOfBag,
+  maximumRowsCoveredByColumns,
+  minimumArrayLengthAfterPairRemovals,
+  countTheNumberOfCompleteComponents,
+  designMemoryAllocatorProblem,
+  campusBikesProblem,
+  escapeTheGhosts,
+  maximumValueOfKCoinsFromPiles,
+  parallelCoursesIII,
 ];

@@ -59,11 +59,18 @@ Return \`true\` if you can escape, otherwise return \`false\`.
   ],
   hiddenTests: [
     { args: [[[0, 0]], [1, 1]], expected: false },
+    // ghost at origin same as player, dist = 2 = my_dist -> cannot escape
     { args: [[[5, 5]], [1, 1]], expected: true },
+    // ghost dist = |5-1|+|5-1| = 8 > my_dist 2 -> can escape
     { args: [[[1, 0], [0, 1]], [1, 1]], expected: false },
+    // ghost1 dist = |1-1|+|0-1| = 1 < my_dist 2 -> caught
     { args: [[[3, 0]], [1, 0]], expected: true },
-    { args: [[[1, 1]], [0, 2]], expected: true },
-    { args: [[[0, 10]], [0, 5]], expected: true },
+    // ghost dist = |3-1|+0 = 2 > my_dist 1 -> can escape
+    { args: [[[1, 1]], [0, 2]], expected: false },
+    // ghost dist = |1-0|+|1-2| = 2 = my_dist 2 -> cannot escape
+    { args: [[[0, 10]], [0, 5]], expected: false },
+    // ghost dist = |0-0|+|10-5| = 5 = my_dist 5 -> cannot escape
     { args: [[[-1, 0]], [-2, 0]], expected: false },
+    // ghost dist = |-1-(-2)|+0 = 1 < my_dist 2 -> caught
   ],
 };

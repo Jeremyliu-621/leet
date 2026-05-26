@@ -50,9 +50,11 @@ Given a list \`piles\`, where \`piles[i]\` is a list of integers denoting the co
   ],
   hiddenTests: [
     { args: [[[1]], 1], expected: 1 },
-    { args: [[[5, 3, 1], [2, 4, 6]], 3], expected: 14 },
+    { args: [[[5, 3, 1], [2, 4, 6]], 3], expected: 12 },
+    // Take 3 from pile2: 2+4+6=12. Taking 0,1,2,3 from pile1 gives max 12.
     { args: [[[1, 2, 3]], 2], expected: 3 },
-    { args: [[[10, 1], [1, 10]], 2], expected: 20 },
+    { args: [[[10, 1], [1, 10]], 2], expected: 11 },
+    // Take 2 from either pile: pile1=10+1=11, pile2=1+10=11, or 1+1=10+1=11. Max=11.
     { args: [[[3, 2, 1], [4, 5, 6]], 4], expected: 18 },
     { args: [[[1, 2], [3, 4], [5, 6]], 6], expected: 21 },
   ],

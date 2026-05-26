@@ -24391,79 +24391,263 @@ def secondMinimum(n, edges, time, change):
             return -1
     return len(set(v for v in nums if v > k))
 `,
-
-  'best-time-to-buy-and-sell-stock-iii': `def maxProfit(prices):
-    buy1, sell1, buy2, sell2 = float('-inf'), 0, float('-inf'), 0
-    for p in prices:
-        buy1 = max(buy1, -p)
-        sell1 = max(sell1, buy1 + p)
-        buy2 = max(buy2, sell1 - p)
-        sell2 = max(sell2, buy2 + p)
-    return sell2
+  // batch 67
+  'minimum-operations-to-make-uni-value-grid': `def minOperations(grid, x):
+    flat = [v for row in grid for v in row]
+    rem = flat[0] % x
+    for v in flat:
+        if v % x != rem:
+            return -1
+    flat.sort()
+    median = flat[len(flat) // 2]
+    return sum(abs(v - median) // x for v in flat)
 `,
 
-  'find-the-duplicate-number': `def findDuplicate(nums):
-    slow = nums[0]
-    fast = nums[0]
-    while True:
-        slow = nums[slow]
-        fast = nums[nums[fast]]
-        if slow == fast:
-            break
-    slow = nums[0]
-    while slow != fast:
-        slow = nums[slow]
-        fast = nums[fast]
-    return slow
+  'minimum-moves-to-make-array-complementary': `def minMoves(nums, limit):
+    n = len(nums)
+    diff = [0] * (2 * limit + 2)
+    for i in range(n // 2):
+        a = min(nums[i], nums[n - 1 - i])
+        b = max(nums[i], nums[n - 1 - i])
+        diff[2] += 2
+        diff[2 * limit + 1] -= 2
+        diff[a + 1] -= 1
+        if b + limit + 1 <= 2 * limit + 1:
+            diff[b + limit + 1] += 1
+        diff[a + b] -= 1
+        if a + b + 1 <= 2 * limit + 1:
+            diff[a + b + 1] += 1
+    cur = 0
+    result = float('inf')
+    for t in range(2, 2 * limit + 1):
+        cur += diff[t]
+        result = min(result, cur)
+    return result
 `,
 
-  'count-subarrays-with-fixed-bounds': `def countSubarrays(nums, minK, maxK):
-    last_bad = -1
-    last_min = -1
-    last_max = -1
-    count = 0
-    for i, v in enumerate(nums):
-        if v < minK or v > maxK:
-            last_bad = i
-        if v == minK:
-            last_min = i
-        if v == maxK:
-            last_max = i
-        count += max(0, min(last_min, last_max) - last_bad)
-    return count
-`,
-
-  'maximum-difference-in-array': `def maximumDifference(nums):
-    min_so_far = nums[0]
-    max_diff = -1
-    for i in range(1, len(nums)):
-        if nums[i] > min_so_far:
-            max_diff = max(max_diff, nums[i] - min_so_far)
+  'find-winner-of-array-game': `def getWinner(arr, k):
+    current = arr[0]
+    wins = 0
+    for i in range(1, len(arr)):
+        if arr[i] > current:
+            current = arr[i]
+            wins = 1
         else:
-            min_so_far = min(min_so_far, nums[i])
-    return max_diff
+            wins += 1
+        if wins >= k:
+            return current
+    return current
 `,
 
-  'longest-subarray-with-at-most-k-frequency': `def maxSubarrayLength(nums, k):
-    freq = {}
-    l = 0
-    ans = 0
-    for r, v in enumerate(nums):
-        freq[v] = freq.get(v, 0) + 1
-        while freq[v] > k:
-            freq[nums[l]] -= 1
-            l += 1
-        ans = max(ans, r - l + 1)
+  'maximum-number-of-robots-within-budget': `def maximumRobots(chargeTimes, runningCosts, budget):
+    from collections import deque
+    n = len(chargeTimes)
+    def can_fit(k):
+        dq = deque()
+        run_sum = 0
+        for i in range(n):
+            while dq and chargeTimes[dq[-1]] <= chargeTimes[i]:
+                dq.pop()
+            dq.append(i)
+            run_sum += runningCosts[i]
+            if i >= k:
+                if dq[0] == i - k:
+                    dq.popleft()
+                run_sum -= runningCosts[i - k]
+            if i >= k - 1:
+                cost = chargeTimes[dq[0]] + k * run_sum
+                if cost <= budget:
+                    return True
+        return False
+    lo, hi, ans = 0, n, 0
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if mid == 0 or can_fit(mid):
+            ans = mid
+            lo = mid + 1
+        else:
+            hi = mid - 1
     return ans
 `,
 
-  'count-pairs-in-two-arrays': `def countPairs(nums1, nums2):
-    import bisect
-    diff = sorted(a - b for a, b in zip(nums1, nums2))
-    count = 0
-    for i in range(len(diff) - 1):
-        lo = bisect.bisect_right(diff, -diff[i], i + 1)
-        count += len(diff) - lo
-    return count
+  'minimum-limit-of-balls-in-a-bag': `def minimumSize(nums, maxOperations):
+    lo, hi = 1, max(nums)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        ops = sum((n - 1) // mid for n in nums)
+        if ops <= maxOperations:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
 `,
+
+  'maximum-rows-covered-by-columns': `def maximumRows(matrix, numSelect):
+    m = len(matrix)
+    n = len(matrix[0])
+    row_masks = [sum(v << j for j, v in enumerate(row)) for row in matrix]
+    best = 0
+    for mask in range(1 << n):
+        if bin(mask).count('1') != numSelect:
+            continue
+        count = sum(1 for rm in row_masks if (rm & mask) == rm)
+        best = max(best, count)
+    return best
+`,
+
+  'minimum-array-length-after-pair-removals': `def minLengthAfterRemovals(nums):
+    from collections import Counter
+    n = len(nums)
+    max_freq = max(Counter(nums).values())
+    if max_freq > n // 2:
+        return 2 * max_freq - n
+    return n % 2
+`,
+
+  'count-the-number-of-complete-components': `def countCompleteComponents(n, edges):
+    parent = list(range(n))
+    rank = [0] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(a, b):
+        pa, pb = find(a), find(b)
+        if pa == pb:
+            return
+        if rank[pa] < rank[pb]:
+            pa, pb = pb, pa
+        parent[pb] = pa
+        if rank[pa] == rank[pb]:
+            rank[pa] += 1
+    for a, b in edges:
+        union(a, b)
+    node_count = {}
+    edge_count = {}
+    for i in range(n):
+        root = find(i)
+        node_count[root] = node_count.get(root, 0) + 1
+    for a, b in edges:
+        root = find(a)
+        edge_count[root] = edge_count.get(root, 0) + 1
+    result = 0
+    for root, k in node_count.items():
+        e = edge_count.get(root, 0)
+        if e == k * (k - 1) // 2:
+            result += 1
+    return result
+`,
+
+  'design-memory-allocator': `def memoryAllocator(n, ops):
+    mem = [0] * n
+    results = []
+    for op in ops:
+        type_, a, b = op[0], op[1], op[2]
+        if type_ == 0:
+            start = -1
+            run = 0
+            for i in range(n + 1):
+                if i < n and mem[i] == 0:
+                    run += 1
+                    if run == a:
+                        start = i - a + 1
+                        break
+                else:
+                    run = 0
+            if start != -1:
+                for i in range(start, start + a):
+                    mem[i] = b
+            results.append(start)
+        else:
+            count = sum(1 for i in range(n) if mem[i] == a)
+            for i in range(n):
+                if mem[i] == a:
+                    mem[i] = 0
+            results.append(count)
+    return results
+`,
+
+  'campus-bikes': `def campusBikes(workers, bikes):
+    n = len(workers)
+    m = len(bikes)
+    dist = [[abs(wx - bx) + abs(wy - by) for bx, by in bikes] for wx, wy in workers]
+    INF = float('inf')
+    dp = [INF] * (1 << m)
+    parent = [-1] * (1 << m)
+    dp[0] = 0
+    for mask in range(1 << m):
+        if dp[mask] == INF:
+            continue
+        assigned = bin(mask).count('1')
+        if assigned == n:
+            break
+        wi = assigned
+        for bi in range(m):
+            if mask & (1 << bi):
+                continue
+            new_mask = mask | (1 << bi)
+            new_cost = dp[mask] + dist[wi][bi]
+            if new_cost < dp[new_mask]:
+                dp[new_mask] = new_cost
+                parent[new_mask] = bi
+    best_cost = INF
+    final_mask = -1
+    for mask in range(1 << m):
+        if bin(mask).count('1') == n and dp[mask] < best_cost:
+            best_cost = dp[mask]
+            final_mask = mask
+    result = [-1] * n
+    cur_mask = final_mask
+    wi = n - 1
+    while cur_mask != 0 and wi >= 0:
+        bi = parent[cur_mask]
+        result[wi] = bi
+        cur_mask ^= (1 << bi)
+        wi -= 1
+    return result
+`,
+
+  'escape-the-ghosts': `def escapeGhosts(ghosts, target):
+    my_dist = abs(target[0]) + abs(target[1])
+    for gx, gy in ghosts:
+        ghost_dist = abs(gx - target[0]) + abs(gy - target[1])
+        if ghost_dist <= my_dist:
+            return False
+    return True
+`,
+
+  'maximum-value-of-k-coins-from-piles': `def maxValueOfCoins(piles, k):
+    dp = [0] * (k + 1)
+    for pile in piles:
+        prefix = [0]
+        for coin in pile:
+            prefix.append(prefix[-1] + coin)
+        for j in range(k, -1, -1):
+            for t in range(1, min(len(pile), j) + 1):
+                dp[j] = max(dp[j], dp[j - t] + prefix[t])
+    return dp[k]
+`,
+
+  'parallel-courses-iii': `def minimumTime(n, relations, time):
+    from collections import deque
+    adj = [[] for _ in range(n + 1)]
+    indegree = [0] * (n + 1)
+    for u, v in relations:
+        adj[u].append(v)
+        indegree[v] += 1
+    dp = [0] * (n + 1)
+    for i in range(1, n + 1):
+        dp[i] = time[i - 1]
+    queue = deque(i for i in range(1, n + 1) if indegree[i] == 0)
+    while queue:
+        u = queue.popleft()
+        for v in adj[u]:
+            dp[v] = max(dp[v], dp[u] + time[v - 1])
+            indegree[v] -= 1
+            if indegree[v] == 0:
+                queue.append(v)
+    return max(dp[1:])
+`,
+
 };

@@ -15,12 +15,7 @@ Return an array \`answer\` of length \`n\`, where \`answer[i]\` is the index (0-
 
 The Manhattan distance between two points \`p1\` and \`p2\` is \`|p1.x - p2.x| + |p1.y - p2.y|\`.
 
-**Greedy approach:** Sort all (worker, bike) pairs by:
-1. Manhattan distance (ascending)
-2. Worker index (ascending), as a tiebreaker
-3. Bike index (ascending), as a tiebreaker
-
-Then assign greedily: for each pair in order, if neither the worker nor the bike has been assigned yet, make the assignment.`,
+**Goal:** Find the assignment that **minimizes the total sum** of Manhattan distances. When multiple assignments tie, workers are assigned in order (worker 0 first) and each worker takes the lowest-indexed available bike that minimizes total cost.`,
   constraints: [
     '`n == workers.length`',
     '`m == bikes.length`',
@@ -33,18 +28,19 @@ Then assign greedily: for each pair in order, if neither the worker nor the bike
   examples: [
     {
       input: 'workers = [[0,0],[1,1]], bikes = [[2,0],[1,0]]',
-      output: '[1,0]',
-      explanation: 'Worker 0 and bike 1 have distance |0-1|+|0-0|=1. Worker 1 and bike 0 have distance |1-2|+|1-0|=2, worker 1 and bike 1 have distance |1-1|+|1-0|=1. Sort by distance: (0, w0, b1)=1, (1, w1, b0)=1, ... Assign w0→b1, w1→b0.',
+      output: '[0,1]',
+      explanation: 'Both assignments have total distance 3. Assign w0→b0 (distance 2) and w1→b1 (distance 1), total = 3. This minimizes the total distance.',
     },
     {
       input: 'workers = [[0,0],[2,1]], bikes = [[1,2],[3,3]]',
       output: '[0,1]',
+      explanation: 'Assign w0→b0 (distance 3) and w1→b1 (distance 3), total = 6. The alternative w0→b1, w1→b0 has total 8.',
     },
   ],
   hints: [
-    'Enumerate every (worker, bike) pair and compute the Manhattan distance.',
-    'Sort the pairs by (distance, workerIndex, bikeIndex).',
-    'Iterate through sorted pairs; assign if both worker and bike are unassigned. Stop when all workers are assigned.',
+    'Use a minimum-cost assignment (Hungarian algorithm or bitmask DP) to find the assignment that minimizes total Manhattan distance.',
+    'For small n (≤ 20), bitmask DP over which bikes have been assigned works well: dp[bikeMask] = minimum cost to assign workers 0..popcount(bikeMask)-1 to the bikes in bikeMask.',
+    'Process workers in order (0, 1, ..., n-1). For each dp state, try assigning the next worker to each unassigned bike.',
   ],
   functionName: 'campusBikes',
   params: ['workers', 'bikes'],
@@ -56,7 +52,8 @@ Then assign greedily: for each pair in order, if neither the worker nor the bike
     pass`,
   },
   visibleTests: [
-    { args: [[[0, 0], [1, 1]], [[2, 0], [1, 0]]], expected: [1, 0] },
+    { args: [[[0, 0], [1, 1]], [[2, 0], [1, 0]]], expected: [0, 1] },
+    // Both [0,1] and [1,0] have total distance 3; algorithm assigns w0 to first-available min-cost bike
     { args: [[[0, 0], [2, 1]], [[1, 2], [3, 3]]], expected: [0, 1] },
   ],
   hiddenTests: [

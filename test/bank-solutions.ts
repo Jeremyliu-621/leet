@@ -24662,48 +24662,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
-  'best-time-to-buy-and-sell-stock-iii': (...args: unknown[]) => {
-    const prices = args[0] as number[];
-    let buy1 = -Infinity, sell1 = 0, buy2 = -Infinity, sell2 = 0;
-    for (const p of prices) {
-      buy1 = Math.max(buy1, -p);
-      sell1 = Math.max(sell1, buy1 + p);
-      buy2 = Math.max(buy2, sell1 - p);
-      sell2 = Math.max(sell2, buy2 + p);
-    }
-    return sell2;
-  },
-
-  'find-the-duplicate-number': (...args: unknown[]) => {
-    const nums = args[0] as number[];
-    let slow = nums[0]!, fast = nums[0]!;
-    do {
-      slow = nums[slow]!;
-      fast = nums[nums[fast]!]!;
-    } while (slow !== fast);
-    slow = nums[0]!;
-    while (slow !== fast) {
-      slow = nums[slow]!;
-      fast = nums[fast]!;
-    }
-    return slow;
-  },
-
-  'count-subarrays-with-fixed-bounds': (...args: unknown[]) => {
-    const nums = args[0] as number[];
-    const minK = args[1] as number, maxK = args[2] as number;
-    let lastBad = -1, lastMin = -1, lastMax = -1;
-    let count = 0;
-    for (let i = 0; i < nums.length; i++) {
-      const v = nums[i] as number;
-      if (v < minK || v > maxK) lastBad = i;
-      if (v === minK) lastMin = i;
-      if (v === maxK) lastMax = i;
-      count += Math.max(0, Math.min(lastMin, lastMax) - lastBad);
-    }
-    return count;
-  },
-
   'find-the-minimum-possible-sum-of-a-beautiful-array': (...args: unknown[]) => {
     const n = args[0] as number;
     const target = args[1] as number;
@@ -24897,32 +24855,95 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
-  'maximum-difference-in-array': (...args: unknown[]) => {
-    const nums = args[0] as number[];
-    let minSoFar = nums[0] as number;
-    let maxDiff = -1;
-    for (let i = 1; i < nums.length; i++) {
-      const v = nums[i] as number;
-      if (v > minSoFar) maxDiff = Math.max(maxDiff, v - minSoFar);
-      else minSoFar = Math.min(minSoFar, v);
-    }
-    return maxDiff;
+  // batch 67
+  'minimum-operations-to-make-uni-value-grid': (grid: unknown, x: unknown): unknown => {
+    const g = grid as number[][];
+    const xv = x as number;
+    const flat: number[] = [];
+    for (const row of g) for (const v of row) flat.push(v);
+    const rem = flat[0]! % xv;
+    for (const v of flat) if (v % xv !== rem) return -1;
+    flat.sort((a, b) => a - b);
+    const median = flat[Math.floor(flat.length / 2)]!;
+    let ops = 0;
+    for (const v of flat) ops += Math.abs(v - median) / xv;
+    return ops;
   },
 
-  'longest-subarray-with-at-most-k-frequency': (...args: unknown[]) => {
-    const nums = args[0] as number[];
-    const k = args[1] as number;
-    const freq = new Map<number, number>();
-    let l = 0, ans = 0;
-    for (let r = 0; r < nums.length; r++) {
-      const v = nums[r] as number;
-      freq.set(v, (freq.get(v) || 0) + 1);
-      while ((freq.get(v) || 0) > k) {
-        const lv = nums[l] as number;
-        freq.set(lv, (freq.get(lv) || 0) - 1);
-        l++;
+  'minimum-moves-to-make-array-complementary': (nums: unknown, limit: unknown): unknown => {
+    const arr = nums as number[];
+    const lim = limit as number;
+    const n = arr.length;
+    const diff = new Array<number>(2 * lim + 2).fill(0);
+    for (let i = 0; i < n / 2; i++) {
+      const a = Math.min(arr[i]!, arr[n - 1 - i]!);
+      const b = Math.max(arr[i]!, arr[n - 1 - i]!);
+      // cost 2 for all targets [2, 2*lim]
+      diff[2]! += 2;
+      if (2 * lim + 1 <= 2 * lim + 1) diff[2 * lim + 1]! -= 2;
+      // cost 1 for target in [a+1, b+lim]
+      diff[a + 1]! -= 1;
+      if (b + lim + 1 <= 2 * lim + 1) diff[b + lim + 1]! += 1;
+      // cost 0 for target = a+b
+      diff[a + b]! -= 1;
+      if (a + b + 1 <= 2 * lim + 1) diff[a + b + 1]! += 1;
+    }
+    let cur = 0;
+    let min = Infinity;
+    for (let t = 2; t <= 2 * lim; t++) {
+      cur += diff[t]!;
+      if (cur < min) min = cur;
+    }
+    return min;
+  },
+
+  'find-winner-of-array-game': (arr: unknown, k: unknown): unknown => {
+    const a = arr as number[];
+    const kv = k as number;
+    let current = a[0]!;
+    let wins = 0;
+    for (let i = 1; i < a.length; i++) {
+      if (a[i]! > current) {
+        current = a[i]!;
+        wins = 1;
+      } else {
+        wins++;
       }
-      ans = Math.max(ans, r - l + 1);
+      if (wins >= kv) return current;
+    }
+    return current;
+  },
+
+  'maximum-number-of-robots-within-budget': (chargeTimes: unknown, runningCosts: unknown, budget: unknown): unknown => {
+    const ct = chargeTimes as number[];
+    const rc = runningCosts as number[];
+    const bud = budget as number;
+    const n = ct.length;
+    // Binary search on k
+    const canFit = (k: number): boolean => {
+      const deque: number[] = []; // indices, monotonic decreasing ct values
+      let runSum = 0;
+      for (let i = 0; i < n; i++) {
+        // add i to window
+        while (deque.length && ct[deque[deque.length - 1]!]! <= ct[i]!) deque.pop();
+        deque.push(i);
+        runSum += rc[i]!;
+        if (i >= k) {
+          if (deque[0] === i - k) deque.shift();
+          runSum -= rc[i - k]!;
+        }
+        if (i >= k - 1) {
+          const cost = ct[deque[0]!]! + k * runSum;
+          if (cost <= bud) return true;
+        }
+      }
+      return false;
+    };
+    let lo = 0, hi = n, ans = 0;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (mid === 0 || canFit(mid)) { ans = mid; lo = mid + 1; }
+      else hi = mid - 1;
     }
     return ans;
   },
@@ -24961,6 +24982,43 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best;
   },
 
+  'minimum-limit-of-balls-in-a-bag': (nums: unknown, maxOperations: unknown): unknown => {
+    const arr = nums as number[];
+    const maxOps = maxOperations as number;
+    let lo = 1, hi = Math.max(...arr);
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      let ops = 0;
+      for (const n of arr) ops += Math.floor((n - 1) / mid);
+      if (ops <= maxOps) hi = mid;
+      else lo = mid + 1;
+    }
+    return lo;
+  },
+
+  'maximum-rows-covered-by-columns': (matrix: unknown, numSelect: unknown): unknown => {
+    const mat = matrix as number[][];
+    const ns = numSelect as number;
+    const m = mat.length;
+    const n = mat[0]!.length;
+    // Compute bitmask for each row
+    const rowMasks: number[] = mat.map(row => row.reduce((acc, v, j) => acc | (v << j), 0));
+    let best = 0;
+    for (let mask = 0; mask < (1 << n); mask++) {
+      // Count set bits
+      let bits = 0;
+      let tmp = mask;
+      while (tmp) { bits += tmp & 1; tmp >>= 1; }
+      if (bits !== ns) continue;
+      let count = 0;
+      for (let r = 0; r < m; r++) {
+        if ((rowMasks[r]! & mask) === rowMasks[r]!) count++;
+      }
+      if (count > best) best = count;
+    }
+    return best;
+  },
+
   'minimum-operations-to-make-array-values-equal-to-k': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const k = args[1] as number;
@@ -24971,20 +25029,196 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return distinct.size;
   },
 
-  'count-pairs-in-two-arrays': (...args: unknown[]) => {
-    const nums1 = args[0] as number[], nums2 = args[1] as number[];
-    const diff = nums1.map((v, i) => v - (nums2[i] as number)).sort((a, b) => a - b);
-    let count = 0;
-    for (let i = 0; i < diff.length - 1; i++) {
-      let lo = i + 1, hi = diff.length;
-      while (lo < hi) {
-        const mid = (lo + hi) >> 1;
-        if ((diff[i] as number) + (diff[mid] as number) > 0) hi = mid;
-        else lo = mid + 1;
-      }
-      count += diff.length - lo;
+  'minimum-array-length-after-pair-removals': (nums: unknown): unknown => {
+    const arr = nums as number[];
+    const n = arr.length;
+    // Count max frequency
+    const freq = new Map<number, number>();
+    for (const v of arr) freq.set(v, (freq.get(v) ?? 0) + 1);
+    let maxFreq = 0;
+    for (const f of freq.values()) if (f > maxFreq) maxFreq = f;
+    if (maxFreq > n / 2) return 2 * maxFreq - n;
+    return n % 2;
+  },
+
+  'count-the-number-of-complete-components': (n: unknown, edges: unknown): unknown => {
+    const nv = n as number;
+    const edgeList = edges as [number, number][];
+    const parent = Array.from({ length: nv }, (_, i) => i);
+    const rank = new Array<number>(nv).fill(0);
+    const find = (x: number): number => {
+      if (parent[x] !== x) parent[x] = find(parent[x]!);
+      return parent[x]!;
+    };
+    const union = (a: number, b: number) => {
+      const pa = find(a), pb = find(b);
+      if (pa === pb) return;
+      if (rank[pa]! < rank[pb]!) parent[pa] = pb;
+      else if (rank[pa]! > rank[pb]!) parent[pb] = pa;
+      else { parent[pb] = pa; rank[pa]!++; }
+    };
+    for (const [a, b] of edgeList) union(a, b);
+    // Count nodes and edges per component root
+    const nodeCount = new Map<number, number>();
+    const edgeCount = new Map<number, number>();
+    for (let i = 0; i < nv; i++) {
+      const root = find(i);
+      nodeCount.set(root, (nodeCount.get(root) ?? 0) + 1);
     }
-    return count;
+    for (const [a, b] of edgeList) {
+      const root = find(a);
+      edgeCount.set(root, (edgeCount.get(root) ?? 0) + 1);
+      void b;
+    }
+    let complete = 0;
+    for (const [root, k] of nodeCount) {
+      const e = edgeCount.get(root) ?? 0;
+      if (e === k * (k - 1) / 2) complete++;
+    }
+    return complete;
+  },
+
+  'design-memory-allocator': (n: unknown, ops: unknown): unknown => {
+    const size = n as number;
+    const operations = ops as [number, number, number][];
+    const mem = new Array<number>(size).fill(0);
+    const results: number[] = [];
+    for (const [type, a, b] of operations) {
+      if (type === 0) {
+        // allocate(size=a, mID=b)
+        let start = -1;
+        let run = 0;
+        for (let i = 0; i <= size; i++) {
+          if (i < size && mem[i] === 0) {
+            run++;
+            if (run === a) { start = i - a + 1; break; }
+          } else {
+            run = 0;
+          }
+        }
+        if (start !== -1) {
+          for (let i = start; i < start + a; i++) mem[i] = b;
+        }
+        results.push(start);
+      } else {
+        // freeMemory(mID=a)
+        let count = 0;
+        for (let i = 0; i < size; i++) {
+          if (mem[i] === a) { mem[i] = 0; count++; }
+        }
+        results.push(count);
+      }
+    }
+    return results;
+  },
+
+  'campus-bikes': (workers: unknown, bikes: unknown): unknown => {
+    const ws = workers as [number, number][];
+    const bs = bikes as [number, number][];
+    const n = ws.length;
+    const m = bs.length;
+    // Precompute distances
+    const dist = Array.from({ length: n }, (_, wi) =>
+      Array.from({ length: m }, (_, bi) =>
+        Math.abs(ws[wi]![0] - bs[bi]![0]) + Math.abs(ws[wi]![1] - bs[bi]![1])
+      )
+    );
+    // DP with bitmask over bikes assigned: dp[bikeMask] = min cost assigning first popcount(bikeMask) workers
+    // to the bikes in bikeMask. For each state, the next worker to assign is popcount(bikeMask).
+    const dp = new Array<number>(1 << m).fill(Infinity);
+    const parent = new Array<number>(1 << m).fill(-1);
+    dp[0] = 0;
+    const result = new Array<number>(n).fill(-1);
+    let finalMask = -1;
+    for (let mask = 0; mask < (1 << m); mask++) {
+      if (dp[mask] === Infinity) continue;
+      // Count assigned workers so far
+      let assigned = 0;
+      let tmp = mask;
+      while (tmp) { assigned += tmp & 1; tmp >>= 1; }
+      if (assigned === n) { finalMask = mask; break; }
+      const wi = assigned; // next worker to assign
+      for (let bi = 0; bi < m; bi++) {
+        if (mask & (1 << bi)) continue;
+        const newMask = mask | (1 << bi);
+        const newCost = dp[mask]! + dist[wi]![bi]!;
+        if (newCost < dp[newMask]!) {
+          dp[newMask] = newCost;
+          parent[newMask] = bi;
+        }
+      }
+    }
+    // Find best final mask
+    let bestCost = Infinity;
+    for (let mask = 0; mask < (1 << m); mask++) {
+      let cnt = 0; let t = mask; while (t) { cnt += t & 1; t >>= 1; }
+      if (cnt === n && dp[mask]! < bestCost) { bestCost = dp[mask]!; finalMask = mask; }
+    }
+    // Reconstruct
+    let curMask = finalMask;
+    let wi = n - 1;
+    while (curMask !== 0 && wi >= 0) {
+      const bi = parent[curMask]!;
+      result[wi] = bi;
+      curMask ^= (1 << bi);
+      wi--;
+    }
+    return result;
+  },
+
+  'escape-the-ghosts': (ghosts: unknown, target: unknown): unknown => {
+    const gs = ghosts as [number, number][];
+    const tgt = target as [number, number];
+    const myDist = Math.abs(tgt[0]) + Math.abs(tgt[1]);
+    for (const [gx, gy] of gs) {
+      const ghostDist = Math.abs(gx - tgt[0]) + Math.abs(gy - tgt[1]);
+      if (ghostDist <= myDist) return false;
+    }
+    return true;
+  },
+
+  'maximum-value-of-k-coins-from-piles': (piles: unknown, k: unknown): unknown => {
+    const ps = piles as number[][];
+    const kv = k as number;
+    // dp[j] = max value using exactly j coins from piles processed so far
+    const dp = new Array<number>(kv + 1).fill(0);
+    for (const pile of ps) {
+      // Prefix sums of this pile
+      const prefix = [0];
+      for (const coin of pile) prefix.push(prefix[prefix.length - 1]! + coin);
+      // Iterate j in reverse to avoid reuse
+      for (let j = kv; j >= 0; j--) {
+        for (let t = 1; t <= Math.min(pile.length, j); t++) {
+          const val = dp[j - t]! + prefix[t]!;
+          if (val > dp[j]!) dp[j] = val;
+        }
+      }
+    }
+    return dp[kv]!;
+  },
+
+  'parallel-courses-iii': (n: unknown, relations: unknown, time: unknown): unknown => {
+    const nv = n as number;
+    const rels = relations as [number, number][];
+    const times = time as number[];
+    const adj: number[][] = Array.from({ length: nv + 1 }, () => []);
+    const indegree = new Array<number>(nv + 1).fill(0);
+    for (const [u, v] of rels) {
+      adj[u]!.push(v);
+      indegree[v]!++;
+    }
+    const dp = new Array<number>(nv + 1).fill(0);
+    for (let i = 1; i <= nv; i++) dp[i] = times[i - 1]!;
+    const queue: number[] = [];
+    for (let i = 1; i <= nv; i++) if (indegree[i] === 0) queue.push(i);
+    while (queue.length) {
+      const u = queue.shift()!;
+      for (const v of adj[u]!) {
+        if (dp[u]! + times[v - 1]! > dp[v]!) dp[v] = dp[u]! + times[v - 1]!;
+        if (--indegree[v]! === 0) queue.push(v);
+      }
+    }
+    return Math.max(...dp.slice(1));
   },
 
 };
