@@ -21349,70 +21349,302 @@ def secondMinimum(n, edges, time, change):
     return dp[target]
 `,
 
-  'count-all-valid-pickup-and-delivery-options': `def countOrders(n):
-    n = int(n)
-    MOD = 10**9 + 7
-    dp = 1
-    for i in range(2, n + 1):
-        dp = dp * i * (2 * i - 1) % MOD
-    return dp
+  'convert-binary-linked-list': `def getDecimalValue(head):
+    result = 0
+    while head:
+        result = result * 2 + head.val
+        head = head.next
+    return result
 `,
 
-  'maximum-average-subarray-ii': `def findMaxAverage(nums, k):
-    a = list(float(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
-    k = int(k)
-    n = len(a)
-    lo, hi = min(a), max(a)
-    def check(mid):
-        adj = [v - mid for v in a]
-        window_sum = sum(adj[:k])
-        if window_sum >= 0:
-            return True
-        prev_sum = 0.0
-        min_prev_sum = 0.0
-        for i in range(k, n):
-            window_sum += adj[i]
-            prev_sum += adj[i - k]
-            min_prev_sum = min(min_prev_sum, prev_sum)
-            if window_sum - min_prev_sum >= 0:
-                return True
-        return False
-    for _ in range(100):
-        mid = (lo + hi) / 2
-        if check(mid):
+  'diagonal-traverse-ii': `def findDiagonalOrder(nums):
+    from collections import defaultdict
+    buckets = defaultdict(list)
+    for r, row in enumerate(nums):
+        for c, val in enumerate(row):
+            buckets[r + c].append(val)
+    result = []
+    for d in sorted(buckets):
+        result.extend(reversed(buckets[d]))
+    return result
+`,
+
+  'design-circular-deque': `def designCircularDeque(k, actions, values):
+    buf = [0] * k
+    state = [0, 0, 0]
+    results = []
+    for i, action in enumerate(actions):
+        front, rear, size = state
+        val = values[i]
+        if action == 'insertFront':
+            if size == k:
+                results.append(False)
+            else:
+                front = (front - 1 + k) % k
+                buf[front] = val
+                state[:] = [front, rear, size + 1]
+                results.append(True)
+        elif action == 'insertLast':
+            if size == k:
+                results.append(False)
+            else:
+                buf[rear] = val
+                rear = (rear + 1) % k
+                state[:] = [front, rear, size + 1]
+                results.append(True)
+        elif action == 'deleteFront':
+            if size == 0:
+                results.append(False)
+            else:
+                front = (front + 1) % k
+                state[:] = [front, rear, size - 1]
+                results.append(True)
+        elif action == 'deleteLast':
+            if size == 0:
+                results.append(False)
+            else:
+                rear = (rear - 1 + k) % k
+                state[:] = [front, rear, size - 1]
+                results.append(True)
+        elif action == 'getFront':
+            results.append(-1 if size == 0 else buf[front])
+        elif action == 'getRear':
+            results.append(-1 if size == 0 else buf[(rear - 1 + k) % k])
+        elif action == 'isEmpty':
+            results.append(size == 0)
+        elif action == 'isFull':
+            results.append(size == k)
+    return results
+`,
+
+  'beautiful-towers-i': `def maximumSumOfHeights(maxHeights):
+    n = len(maxHeights)
+    best = 0
+    for p in range(n):
+        h = [0] * n
+        h[p] = maxHeights[p]
+        for i in range(p - 1, -1, -1):
+            h[i] = min(maxHeights[i], h[i + 1])
+        for i in range(p + 1, n):
+            h[i] = min(maxHeights[i], h[i - 1])
+        best = max(best, sum(h))
+    return best
+`,
+
+  'maximum-tastiness-candy-basket': `def maximumTastiness(price, k):
+    price = sorted(price)
+    n = len(price)
+    def can_pick(gap):
+        count, last = 1, price[0]
+        for i in range(1, n):
+            if price[i] - last >= gap:
+                count += 1
+                last = price[i]
+                if count >= k:
+                    return True
+        return count >= k
+    lo, hi = 0, (price[-1] - price[0]) // (k - 1) if k > 1 else 0
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_pick(mid):
             lo = mid
         else:
-            hi = mid
-    return round(lo, 5)
+            hi = mid - 1
+    return lo
 `,
 
-  'longest-even-odd-subarray-with-threshold': `def longestAlternatingSubarray(nums, threshold):
-    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
-    t = int(threshold)
-    n = len(a); ans = 0; i = 0
-    while i < n:
-        if a[i] % 2 != 0 or a[i] > t:
-            i += 1; continue
-        start = i; i += 1
-        while i < n and a[i] <= t and a[i] % 2 == (i - start) % 2:
-            i += 1
-        ans = max(ans, i - start)
-    return ans
+  'shortest-subarray-sum-at-least-k': `def shortestSubarray(nums, k):
+    from collections import deque
+    n = len(nums)
+    P = [0] * (n + 1)
+    for i in range(n):
+        P[i + 1] = P[i] + nums[i]
+    dq = deque()
+    ans = float('inf')
+    for r in range(n + 1):
+        while dq and P[r] - P[dq[0]] >= k:
+            ans = min(ans, r - dq.popleft())
+        while dq and P[dq[-1]] >= P[r]:
+            dq.pop()
+        dq.append(r)
+    return ans if ans != float('inf') else -1
 `,
 
-  'find-the-value-of-the-partition': `def findValueOfPartition(nums):
-    a = sorted(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
-    return min(a[i + 1] - a[i] for i in range(len(a) - 1))
+  'substring-with-concatenation-of-all-words': `def findSubstring(s, words):
+    from collections import Counter
+    if not s or not words:
+        return []
+    word_len = len(words[0])
+    num_words = len(words)
+    freq = Counter(words)
+    result = []
+    for offset in range(word_len):
+        cur = Counter()
+        count = 0
+        left = offset
+        right = offset
+        while right + word_len <= len(s):
+            word = s[right:right + word_len]
+            if word in freq:
+                cur[word] += 1
+                count += 1
+                while cur[word] > freq[word]:
+                    lw = s[left:left + word_len]
+                    cur[lw] -= 1
+                    count -= 1
+                    left += word_len
+                if count == num_words:
+                    result.append(left)
+            else:
+                cur.clear()
+                count = 0
+                left = right + word_len
+            right += word_len
+    return sorted(result)
 `,
 
-  'clear-digits': `def clearDigits(s):
-    stack = []
-    for c in (s if isinstance(s, str) else str(s)):
-        if c.isdigit():
-            if stack:
-                stack.pop()
+  'minimum-people-to-teach': `def minimumTeachings(n, languages, friendships):
+    lang_sets = [set(l) for l in languages]
+    need_help = set()
+    for u, v in friendships:
+        a, b = u - 1, v - 1
+        if not lang_sets[a] & lang_sets[b]:
+            need_help.add(a)
+            need_help.add(b)
+    all_langs = set()
+    for ls in lang_sets:
+        all_langs |= ls
+    best = len(need_help)
+    for lang in all_langs:
+        cost = sum(1 for u in need_help if lang not in lang_sets[u])
+        best = min(best, cost)
+    return best
+`,
+
+  'punishment-number-of-integer': `def punishmentNumber(n):
+    def can_partition(s, target):
+        if not s and target == 0:
+            return True
+        if target < 0:
+            return False
+        for length in range(1, len(s) + 1):
+            part = int(s[:length])
+            if part > target:
+                break
+            if can_partition(s[length:], target - part):
+                return True
+        return False
+    total = 0
+    for i in range(1, n + 1):
+        if can_partition(str(i * i), i):
+            total += i * i
+    return total
+`,
+
+  'minimum-cost-to-separate-sentence-into-rows': `def minimumCost(sentence, k):
+    words = sentence.split()
+    n = len(words)
+    lens = [len(w) for w in words]
+    INF = float('inf')
+    dp = [INF] * (n + 1)
+    dp[n] = 0
+    for i in range(n - 1, -1, -1):
+        line_len = 0
+        for j in range(i, n):
+            if j > i:
+                line_len += 1
+            line_len += lens[j]
+            if line_len > k:
+                break
+            slack = k - line_len
+            cost = 0 if j == n - 1 else slack * slack
+            dp[i] = min(dp[i], cost + dp[j + 1])
+    return dp[0]
+`,
+
+  'maximum-running-time-of-n-computers': `def maxRunTime(n, batteries):
+    total = sum(batteries)
+    lo, hi = 0, total // n
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if sum(min(b, mid) for b in batteries) >= mid * n:
+            lo = mid
         else:
-            stack.append(c)
-    return ''.join(stack)
+            hi = mid - 1
+    return lo
+`,
+
+  'count-strictly-increasing-subarrays': `def countSubarrays(nums):
+    if not nums:
+        return 0
+    total = run = 1
+    for i in range(1, len(nums)):
+        if nums[i] > nums[i - 1]:
+            run += 1
+        else:
+            run = 1
+        total += run
+    return total
+`,
+
+  'minimum-score-path-between-two-cities': `def minScore(n, roads):
+    from collections import deque
+    adj = [[] for _ in range(n + 1)]
+    for a, b, d in roads:
+        adj[a].append((b, d))
+        adj[b].append((a, d))
+    visited = set([1])
+    queue = deque([1])
+    min_dist = float('inf')
+    while queue:
+        node = queue.popleft()
+        for nb, dist in adj[node]:
+            min_dist = min(min_dist, dist)
+            if nb not in visited:
+                visited.add(nb)
+                queue.append(nb)
+    return min_dist
+`,
+
+  'split-message-based-on-limit': `def splitMessage(message, limit):
+    for n in range(1, len(message) + 1):
+        n_digits = len(str(n))
+        total = 0
+        valid = True
+        for i in range(1, n + 1):
+            i_digits = len(str(i))
+            avail = limit - i_digits - n_digits - 3
+            if avail <= 0:
+                valid = False
+                break
+            total += avail
+        if not valid:
+            continue
+        if total >= len(message):
+            parts = []
+            idx = 0
+            for i in range(1, n + 1):
+                i_digits = len(str(i))
+                n_digits2 = len(str(n))
+                avail = limit - i_digits - n_digits2 - 3
+                parts.append(message[idx:idx + avail] + f'<{i}/{n}>')
+                idx += avail
+            return parts
+    return []
+`,
+
+  'longest-word-in-dict-deleting': `def findLongestWord(s, dictionary):
+    def is_subseq(t):
+        j = 0
+        for c in s:
+            if j < len(t) and c == t[j]:
+                j += 1
+        return j == len(t)
+    best = ''
+    for word in dictionary:
+        if is_subseq(word):
+            if len(word) > len(best) or (len(word) == len(best) and word < best):
+                best = word
+    return best
 `,
 };

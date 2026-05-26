@@ -21424,6 +21424,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 56
   'arithmetic-slices-ii-subsequence': (nums: unknown) => {
     const a = nums as number[];
     const n = a.length;
@@ -21517,72 +21518,310 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[target];
   },
 
-  'count-all-valid-pickup-and-delivery-options': (n: unknown) => {
-    const MOD = 1_000_000_007n;
-    let dp = 1n;
-    for (let i = 2; i <= (n as number); i++) {
-      dp = dp * BigInt(i) * BigInt(2 * i - 1) % MOD;
-    }
-    return Number(dp);
+  'convert-binary-linked-list': (...args: unknown[]) => {
+    const head = args[0] as Array<number>;
+    let result = 0;
+    for (const bit of head) { result = result * 2 + bit; }
+    return result;
   },
 
-  'maximum-average-subarray-ii': (nums: unknown, k: unknown) => {
-    const a = nums as number[], kk = k as number;
-    const n = a.length;
-    let lo = Math.min(...a), hi = Math.max(...a);
-    const check = (mid: number) => {
-      const adj = a.map(v => v - mid);
-      let windowSum = adj.slice(0, kk).reduce((s, v) => s + v, 0);
-      if (windowSum >= 0) return true;
-      let prevSum = 0, minPrevSum = 0;
-      for (let i = kk; i < n; i++) {
-        windowSum += adj[i]!;
-        prevSum += adj[i - kk]!;
-        minPrevSum = Math.min(minPrevSum, prevSum);
-        if (windowSum - minPrevSum >= 0) return true;
+  'diagonal-traverse-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[][];
+    const buckets: number[][] = [];
+    for (let r = 0; r < nums.length; r++) {
+      for (let c = 0; c < nums[r]!.length; c++) {
+        const d = r + c;
+        if (!buckets[d]) buckets[d] = [];
+        buckets[d]!.push(nums[r]![c]!);
+      }
+    }
+    const result: number[] = [];
+    for (const bucket of buckets) {
+      if (bucket) for (let i = bucket.length - 1; i >= 0; i--) result.push(bucket[i]!);
+    }
+    return result;
+  },
+
+  'design-circular-deque': (...args: unknown[]) => {
+    const k = args[0] as number;
+    const actions = args[1] as string[];
+    const values = args[2] as number[];
+    const buf = new Array(k).fill(0);
+    let front = 0, rear = 0, size = 0;
+    const results: Array<boolean | number> = [];
+    for (let i = 0; i < actions.length; i++) {
+      const action = actions[i]!;
+      const val = values[i]!;
+      if (action === 'insertFront') {
+        if (size === k) { results.push(false); continue; }
+        front = (front - 1 + k) % k;
+        buf[front] = val;
+        size++;
+        results.push(true);
+      } else if (action === 'insertLast') {
+        if (size === k) { results.push(false); continue; }
+        buf[rear] = val;
+        rear = (rear + 1) % k;
+        size++;
+        results.push(true);
+      } else if (action === 'deleteFront') {
+        if (size === 0) { results.push(false); continue; }
+        front = (front + 1) % k;
+        size--;
+        results.push(true);
+      } else if (action === 'deleteLast') {
+        if (size === 0) { results.push(false); continue; }
+        rear = (rear - 1 + k + k) % k;
+        size--;
+        results.push(true);
+      } else if (action === 'getFront') {
+        results.push(size === 0 ? -1 : buf[front]!);
+      } else if (action === 'getRear') {
+        results.push(size === 0 ? -1 : buf[(rear - 1 + k) % k]!);
+      } else if (action === 'isEmpty') {
+        results.push(size === 0);
+      } else if (action === 'isFull') {
+        results.push(size === k);
+      }
+    }
+    return results;
+  },
+
+  'beautiful-towers-i': (...args: unknown[]) => {
+    const maxHeights = args[0] as number[];
+    const n = maxHeights.length;
+    let best = 0;
+    for (let p = 0; p < n; p++) {
+      const h = new Array(n).fill(0);
+      h[p] = maxHeights[p]!;
+      for (let i = p - 1; i >= 0; i--) h[i] = Math.min(maxHeights[i]!, h[i + 1]!);
+      for (let i = p + 1; i < n; i++) h[i] = Math.min(maxHeights[i]!, h[i - 1]!);
+      const s = (h as number[]).reduce((a, b) => a + b, 0);
+      if (s > best) best = s;
+    }
+    return best;
+  },
+
+  'maximum-tastiness-candy-basket': (...args: unknown[]) => {
+    const price = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const k = args[1] as number;
+    const canPick = (gap: number) => {
+      let count = 1, last = price[0]!;
+      for (let i = 1; i < price.length; i++) {
+        if (price[i]! - last >= gap) { count++; last = price[i]!; if (count >= k) return true; }
+      }
+      return count >= k;
+    };
+    let lo = 0, hi = Math.floor((price[price.length - 1]! - price[0]!) / (k - 1 || 1));
+    while (lo < hi) {
+      const mid = Math.ceil((lo + hi) / 2);
+      if (canPick(mid)) lo = mid; else hi = mid - 1;
+    }
+    return lo;
+  },
+
+  'shortest-subarray-sum-at-least-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const n = nums.length;
+    const P = new Array(n + 1).fill(0);
+    for (let i = 0; i < n; i++) P[i + 1] = P[i] + nums[i]!;
+    const dq: number[] = [];
+    let ans = Infinity;
+    for (let r = 0; r <= n; r++) {
+      while (dq.length && P[r]! - P[dq[0]!]! >= k) { ans = Math.min(ans, r - dq.shift()!); }
+      while (dq.length && P[dq[dq.length - 1]!]! >= P[r]!) { dq.pop(); }
+      dq.push(r);
+    }
+    return ans === Infinity ? -1 : ans;
+  },
+
+  'substring-with-concatenation-of-all-words': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const words = args[1] as string[];
+    if (!s.length || !words.length) return [];
+    const wordLen = words[0]!.length;
+    const numWords = words.length;
+    const freq: Record<string, number> = {};
+    for (const w of words) freq[w] = (freq[w] ?? 0) + 1;
+    const result: number[] = [];
+    for (let offset = 0; offset < wordLen; offset++) {
+      const cur: Record<string, number> = {};
+      let count = 0, left = offset;
+      for (let right = offset; right + wordLen <= s.length; right += wordLen) {
+        const word = s.slice(right, right + wordLen);
+        if (word in freq) {
+          cur[word] = (cur[word] ?? 0) + 1;
+          count++;
+          while ((cur[word] ?? 0) > (freq[word] ?? 0)) {
+            const lw = s.slice(left, left + wordLen);
+            cur[lw] = (cur[lw] ?? 1) - 1;
+            count--;
+            left += wordLen;
+          }
+          if (count === numWords) result.push(left);
+        } else {
+          for (const key of Object.keys(cur)) delete cur[key];
+          count = 0;
+          left = right + wordLen;
+        }
+      }
+    }
+    return result.sort((a, b) => a - b);
+  },
+
+  'minimum-people-to-teach': (...args: unknown[]) => {
+    const languages = args[1] as number[][];
+    const friendships = args[2] as number[][];
+    const langSets = languages.map(ls => new Set(ls));
+    const needHelp = new Set<number>();
+    for (const [u, v] of friendships) {
+      const a = u! - 1, b = v! - 1;
+      const hasCommon = [...langSets[a]!].some(l => langSets[b]!.has(l));
+      if (!hasCommon) { needHelp.add(a); needHelp.add(b); }
+    }
+    const allLangs = new Set<number>();
+    for (const ls of langSets) ls.forEach(l => allLangs.add(l));
+    let best = needHelp.size;
+    for (const lang of allLangs) {
+      const cost = [...needHelp].filter(u => !langSets[u]!.has(lang)).length;
+      best = Math.min(best, cost);
+    }
+    return best;
+  },
+
+  'punishment-number-of-integer': (...args: unknown[]) => {
+    const n = args[0] as number;
+    function canPartition(s: string, target: number): boolean {
+      if (s === '' && target === 0) return true;
+      if (target < 0) return false;
+      for (let len = 1; len <= s.length; len++) {
+        const part = parseInt(s.slice(0, len));
+        if (part > target) break;
+        if (canPartition(s.slice(len), target - part)) return true;
       }
       return false;
+    }
+    let sum = 0;
+    for (let i = 1; i <= n; i++) {
+      if (canPartition(String(i * i), i)) sum += i * i;
+    }
+    return sum;
+  },
+
+  'minimum-cost-to-separate-sentence-into-rows': (...args: unknown[]) => {
+    const sentence = args[0] as string;
+    const k = args[1] as number;
+    const words = sentence.split(' ');
+    const n = words.length;
+    const lens = words.map(w => w.length);
+    const dp = new Array(n + 1).fill(Infinity);
+    dp[n] = 0;
+    for (let i = n - 1; i >= 0; i--) {
+      let lineLen = 0;
+      for (let j = i; j < n; j++) {
+        if (j > i) lineLen++;
+        lineLen += lens[j]!;
+        if (lineLen > k) break;
+        const slack = k - lineLen;
+        const cost = j === n - 1 ? 0 : slack * slack;
+        dp[i] = Math.min(dp[i] as number, cost + (dp[j + 1] as number));
+      }
+    }
+    return dp[0];
+  },
+
+  'maximum-running-time-of-n-computers': (...args: unknown[]) => {
+    const n = BigInt(args[0] as number);
+    const batteries = args[1] as number[];
+    let lo = 0n, hi = BigInt(batteries.reduce((a, b) => a + b, 0)) / n;
+    while (lo < hi) {
+      const mid = (lo + hi + 1n) / 2n;
+      const total = batteries.reduce((s, b) => s + (BigInt(b) < mid ? BigInt(b) : mid), 0n);
+      if (total >= mid * n) lo = mid; else hi = mid - 1n;
+    }
+    return Number(lo);
+  },
+
+  'count-strictly-increasing-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    if (nums.length === 0) return 0;
+    let total = 1, run = 1;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i]! > nums[i - 1]!) run++; else run = 1;
+      total += run;
+    }
+    return total;
+  },
+
+  'minimum-score-path-between-two-cities': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const roads = args[1] as number[][];
+    const adj: Array<Array<[number, number]>> = Array.from({ length: n + 1 }, () => []);
+    for (const edge of roads) {
+      const a = edge[0]!, b = edge[1]!, d = edge[2]!;
+      adj[a]!.push([b, d]);
+      adj[b]!.push([a, d]);
+    }
+    const visited = new Set<number>();
+    let minDist = Infinity;
+    const queue = [1];
+    visited.add(1);
+    while (queue.length) {
+      const node = queue.shift()!;
+      for (const [nb, dist] of adj[node]!) {
+        minDist = Math.min(minDist, dist);
+        if (!visited.has(nb)) { visited.add(nb); queue.push(nb); }
+      }
+    }
+    return minDist;
+  },
+
+  'split-message-based-on-limit': (...args: unknown[]) => {
+    const message = args[0] as string;
+    const limit = args[1] as number;
+    for (let n = 1; n <= message.length; n++) {
+      const nDigits = String(n).length;
+      let total = 0;
+      let valid = true;
+      for (let i = 1; i <= n; i++) {
+        const iDigits = String(i).length;
+        const avail = limit - iDigits - nDigits - 3;
+        if (avail <= 0) { valid = false; break; }
+        total += avail;
+      }
+      if (!valid) continue;
+      if (total >= message.length) {
+        const parts: string[] = [];
+        let idx = 0;
+        for (let i = 1; i <= n; i++) {
+          const iDigits = String(i).length;
+          const nDigits2 = String(n).length;
+          const avail = limit - iDigits - nDigits2 - 3;
+          parts.push(message.slice(idx, idx + avail) + `<${i}/${n}>`);
+          idx += avail;
+        }
+        return parts;
+      }
+    }
+    return [];
+  },
+
+  'longest-word-in-dict-deleting': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const dictionary = args[1] as string[];
+    const isSubseq = (t: string) => {
+      let j = 0;
+      for (const c of s) { if (j < t.length && c === t[j]) j++; }
+      return j === t.length;
     };
-    for (let iter = 0; iter < 100; iter++) {
-      const mid = (lo + hi) / 2;
-      if (check(mid)) lo = mid;
-      else hi = mid;
+    let best = '';
+    for (const word of dictionary) {
+      if (isSubseq(word)) {
+        if (word.length > best.length || (word.length === best.length && word < best)) best = word;
+      }
     }
-    return parseFloat(lo.toFixed(5));
-  },
-
-  'longest-even-odd-subarray-with-threshold': (nums: unknown, threshold: unknown) => {
-    const a = nums as number[];
-    const t = threshold as number;
-    const n = a.length;
-    let ans = 0;
-    let i = 0;
-    while (i < n) {
-      if (a[i]! % 2 !== 0 || a[i]! > t) { i++; continue; }
-      const start = i;
-      i++;
-      while (i < n && a[i]! <= t && a[i]! % 2 === (i - start) % 2) i++;
-      ans = Math.max(ans, i - start);
-    }
-    return ans;
-  },
-
-  'find-the-value-of-the-partition': (nums: unknown) => {
-    const sorted = [...(nums as number[])].sort((a, b) => a - b);
-    let min = Infinity;
-    for (let i = 0; i < sorted.length - 1; i++) {
-      min = Math.min(min, sorted[i + 1]! - sorted[i]!);
-    }
-    return min;
-  },
-
-  'clear-digits': (s: unknown) => {
-    const stack: string[] = [];
-    for (const c of s as string) {
-      if (c >= '0' && c <= '9') stack.pop();
-      else stack.push(c);
-    }
-    return stack.join('');
+    return best;
   },
 
 };
