@@ -2083,6 +2083,14 @@ import { problem as countElementsWithSmallerAndGreaterElement } from './count-el
 import { problem as splitTheArray } from './split-the-array';
 import { problem as findTheScoreOfAllPrefixesOfAnArray } from './find-the-score-of-all-prefixes-of-an-array';
 import { problem as shortestCycleInAGraph } from './shortest-cycle-in-a-graph';
+// batch 89 — arrays, strings, hash-map, math, graph
+import { problem as minimumRoundsToCompleteAllTasks } from './minimum-rounds-to-complete-all-tasks';
+import { problem as longestPalindromeByConcat } from './longest-palindrome-by-concatenating-two-letter-words';
+import { problem as maximumProductDifferenceBetweenTwoPairs } from './maximum-product-difference-between-two-pairs';
+import { problem as minimumBitFlipsToConvertNumber } from './minimum-bit-flips-to-convert-number';
+import { problem as minFlipsToBinaryZeroMatrix } from './min-number-of-flips-to-convert-binary-matrix-to-zero-matrix';
+import { problem as determineIfTwoStringsAreClose } from './determine-if-two-strings-are-close';
+import { problem as maximumXorAfterOperations } from './maximum-xor-after-operations';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4202,4 +4210,12 @@ export const problems: readonly Problem[] = [
   splitTheArray,
   findTheScoreOfAllPrefixesOfAnArray,
   shortestCycleInAGraph,
+  // batch 89 — arrays, strings, hash-map, math, graph
+  minimumRoundsToCompleteAllTasks,
+  longestPalindromeByConcat,
+  maximumProductDifferenceBetweenTwoPairs,
+  minimumBitFlipsToConvertNumber,
+  minFlipsToBinaryZeroMatrix,
+  determineIfTwoStringsAreClose,
+  maximumXorAfterOperations,
 ];

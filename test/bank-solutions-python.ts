@@ -29369,6 +29369,114 @@ def kthSmallest(matrix, k):
     return lo
 `,
 
+  // batch 89 — arrays, strings, hash-map, math, graph
+  'minimum-rounds-to-complete-all-tasks': `
+import math
+from collections import Counter
+def minimumRounds(tasks):
+    freq = Counter(tasks)
+    result = 0
+    for cnt in freq.values():
+        if cnt == 1:
+            return -1
+        result += math.ceil(cnt / 3)
+    return result
+`,
+
+  'longest-palindrome-by-concatenating-two-letter-words': `
+from collections import Counter
+def longestPalindrome(words):
+    count = Counter(words)
+    result = 0
+    has_center = False
+    visited = set()
+    for w, cnt in count.items():
+        if w in visited:
+            continue
+        rev = w[1] + w[0]
+        if w == rev:
+            result += (cnt // 2) * 4
+            if cnt % 2 == 1:
+                has_center = True
+        else:
+            visited.add(rev)
+            pairs = min(cnt, count.get(rev, 0))
+            result += pairs * 4
+    if has_center:
+        result += 2
+    return result
+`,
+
+  'maximum-product-difference-between-two-pairs': `
+def maxProductDifference(nums):
+    nums = sorted(nums)
+    return nums[-1] * nums[-2] - nums[0] * nums[1]
+`,
+
+  'minimum-bit-flips-to-convert-number': `
+def minBitFlips(start, goal):
+    return bin(start ^ goal).count('1')
+`,
+
+  'min-number-of-flips-to-convert-binary-matrix-to-zero-matrix': `
+from collections import deque
+def minFlips(mat):
+    m, n = len(mat), len(mat[0])
+    start = 0
+    for i in range(m):
+        for j in range(n):
+            if mat[i][j]:
+                start |= 1 << (i * n + j)
+    if start == 0:
+        return 0
+    queue = deque([start])
+    visited = {start}
+    steps = 0
+    dirs = [(0,0),(-1,0),(1,0),(0,-1),(0,1)]
+    while queue:
+        steps += 1
+        for _ in range(len(queue)):
+            state = queue.popleft()
+            for i in range(m):
+                for j in range(n):
+                    nxt = state
+                    for di, dj in dirs:
+                        ni, nj = i + di, j + dj
+                        if 0 <= ni < m and 0 <= nj < n:
+                            nxt ^= 1 << (ni * n + nj)
+                    if nxt == 0:
+                        return steps
+                    if nxt not in visited:
+                        visited.add(nxt)
+                        queue.append(nxt)
+    return -1
+`,
+
+  'determine-if-two-strings-are-close': `
+def closeStrings(word1, word2):
+    word1, word2 = str(word1), str(word2)
+    if len(word1) != len(word2):
+        return False
+    freq1 = [0] * 26
+    freq2 = [0] * 26
+    for c in word1:
+        freq1[ord(c) - 97] += 1
+    for c in word2:
+        freq2[ord(c) - 97] += 1
+    for i in range(26):
+        if (freq1[i] == 0) != (freq2[i] == 0):
+            return False
+    return sorted(freq1) == sorted(freq2)
+`,
+
+  'maximum-xor-after-operations': `
+def maximumXOR(nums):
+    result = 0
+    for x in nums:
+        result |= x
+    return result
+`,
+
   // batch 83
 
   'count-palindromes': `

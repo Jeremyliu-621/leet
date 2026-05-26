@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1951** problems; 6147 tests green. Batch 88 complete (3 problems: arrays, graph).
+**Current focus:** Bank at **1958** problems; 6147+ tests green. Batch 89 complete (7 problems).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 89); UI/UX polish.
+**Next up:** Continued bank growth (batch 90+); UI/UX polish.
+
+### feat(bank): add batch 89 — 7 problems (arrays, strings, hash-map, math, graph) (2026-05-26)
+Added 7 problems: `minimum-rounds-to-complete-all-tasks` (medium/arrays+hash-map, ceil(freq/3) rounds), `longest-palindrome-by-concatenating-two-letter-words` (medium/strings+hash-map, paired reverse words + palindromic-word center), `maximum-product-difference-between-two-pairs` (easy/arrays, sorted top-2 minus bottom-2), `minimum-bit-flips-to-convert-number` (easy/math, popcount of XOR), `min-number-of-flips-to-convert-binary-matrix-to-zero-matrix` (hard/graph+simulation, BFS on bitmask state space), `determine-if-two-strings-are-close` (medium/strings+hash-map, same char set + same freq multiset), `maximum-xor-after-operations` (medium/arrays+math, bitwise OR of all elements). Bank at **1958**; tests green.
 
 ### feat(bank): add batch 88 — 3 problems (arrays, graph) (2026-05-26)
 Added 3 problems: `split-the-array` (easy/arrays+hash-map, max-frequency ≤ 2 check), `find-the-score-of-all-prefixes-of-an-array` (medium/arrays, running max + prefix sum accumulation), `shortest-cycle-in-a-graph` (medium/graph, BFS from each node tracking parent to detect back edges). Bank at **1951**; 6147 tests.
