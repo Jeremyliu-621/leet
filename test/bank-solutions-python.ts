@@ -24391,4 +24391,79 @@ def secondMinimum(n, edges, time, change):
             return -1
     return len(set(v for v in nums if v > k))
 `,
+
+  'best-time-to-buy-and-sell-stock-iii': `def maxProfit(prices):
+    buy1, sell1, buy2, sell2 = float('-inf'), 0, float('-inf'), 0
+    for p in prices:
+        buy1 = max(buy1, -p)
+        sell1 = max(sell1, buy1 + p)
+        buy2 = max(buy2, sell1 - p)
+        sell2 = max(sell2, buy2 + p)
+    return sell2
+`,
+
+  'find-the-duplicate-number': `def findDuplicate(nums):
+    slow = nums[0]
+    fast = nums[0]
+    while True:
+        slow = nums[slow]
+        fast = nums[nums[fast]]
+        if slow == fast:
+            break
+    slow = nums[0]
+    while slow != fast:
+        slow = nums[slow]
+        fast = nums[fast]
+    return slow
+`,
+
+  'count-subarrays-with-fixed-bounds': `def countSubarrays(nums, minK, maxK):
+    last_bad = -1
+    last_min = -1
+    last_max = -1
+    count = 0
+    for i, v in enumerate(nums):
+        if v < minK or v > maxK:
+            last_bad = i
+        if v == minK:
+            last_min = i
+        if v == maxK:
+            last_max = i
+        count += max(0, min(last_min, last_max) - last_bad)
+    return count
+`,
+
+  'maximum-difference-in-array': `def maximumDifference(nums):
+    min_so_far = nums[0]
+    max_diff = -1
+    for i in range(1, len(nums)):
+        if nums[i] > min_so_far:
+            max_diff = max(max_diff, nums[i] - min_so_far)
+        else:
+            min_so_far = min(min_so_far, nums[i])
+    return max_diff
+`,
+
+  'longest-subarray-with-at-most-k-frequency': `def maxSubarrayLength(nums, k):
+    freq = {}
+    l = 0
+    ans = 0
+    for r, v in enumerate(nums):
+        freq[v] = freq.get(v, 0) + 1
+        while freq[v] > k:
+            freq[nums[l]] -= 1
+            l += 1
+        ans = max(ans, r - l + 1)
+    return ans
+`,
+
+  'count-pairs-in-two-arrays': `def countPairs(nums1, nums2):
+    import bisect
+    diff = sorted(a - b for a, b in zip(nums1, nums2))
+    count = 0
+    for i in range(len(diff) - 1):
+        lo = bisect.bisect_right(diff, -diff[i], i + 1)
+        count += len(diff) - lo
+    return count
+`,
 };
