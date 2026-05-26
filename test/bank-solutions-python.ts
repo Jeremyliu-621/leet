@@ -26466,4 +26466,213 @@ def countBalls(lowLimit, highLimit):
     return max(cnt.values())
 `,
 
+  'satisfiability-of-equality-equations': `
+def equationsPossible(equations):
+    parent = list(range(26))
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(x, y):
+        parent[find(x)] = find(y)
+    for eq in equations:
+        if eq[1] == '=':
+            union(ord(eq[0]) - 97, ord(eq[3]) - 97)
+    for eq in equations:
+        if eq[1] == '!' and find(ord(eq[0]) - 97) == find(ord(eq[3]) - 97):
+            return False
+    return True
+`,
+
+  'pour-water': `
+def pourWater(heights, volume, k):
+    h = list(heights)
+    for _ in range(volume):
+        pos = k
+        for i in range(k - 1, -1, -1):
+            if h[i] < h[pos]:
+                pos = i
+            elif h[i] > h[pos]:
+                break
+        if pos == k:
+            for i in range(k + 1, len(h)):
+                if h[i] < h[pos]:
+                    pos = i
+                elif h[i] > h[pos]:
+                    break
+        h[pos] += 1
+    return h
+`,
+
+  'bricks-falling-when-hit': `
+def hitBricks(grid, hits):
+    m, n = len(grid), len(grid[0])
+    g = [row[:] for row in grid]
+    for r, c in hits:
+        g[r][c] = 0
+    parent = list(range(m * n + 1))
+    size = [1] * (m * n + 1)
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(x, y):
+        x, y = find(x), find(y)
+        if x == y:
+            return
+        if size[x] < size[y]:
+            x, y = y, x
+        parent[y] = x
+        size[x] += size[y]
+    for r in range(m):
+        for c in range(n):
+            if g[r][c] != 1:
+                continue
+            if r == 0:
+                union(r * n + c, m * n)
+            if r > 0 and g[r-1][c] == 1:
+                union(r * n + c, (r-1) * n + c)
+            if c > 0 and g[r][c-1] == 1:
+                union(r * n + c, r * n + c - 1)
+    result = [0] * len(hits)
+    dirs = [(1,0),(-1,0),(0,1),(0,-1)]
+    for i in range(len(hits) - 1, -1, -1):
+        r, c = hits[i]
+        if grid[r][c] == 0:
+            continue
+        prev_size = size[find(m * n)]
+        g[r][c] = 1
+        if r == 0:
+            union(r * n + c, m * n)
+        for dr, dc in dirs:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n and g[nr][nc] == 1:
+                union(r * n + c, nr * n + nc)
+        new_size = size[find(m * n)]
+        result[i] = max(0, new_size - prev_size - 1)
+    return result
+`,
+
+  'redundant-connection-ii': `
+def findRedundantDirectedConnection(edges):
+    n = len(edges)
+    parent = [0] * (n + 1)
+    cand1 = cand2 = None
+    for u, v in edges:
+        if parent[v] == 0:
+            parent[v] = u
+        else:
+            cand1 = [parent[v], v]
+            cand2 = [u, v]
+    uf = list(range(n + 1))
+    def find(x):
+        while uf[x] != x:
+            uf[x] = uf[uf[x]]
+            x = uf[x]
+        return x
+    for u, v in edges:
+        if cand2 and [u, v] == cand2:
+            continue
+        if find(u) == find(v):
+            return cand1 if cand1 else [u, v]
+        uf[find(u)] = find(v)
+    return cand2
+`,
+
+  'largest-component-size-by-common-factor': `
+def largestComponentSize(nums):
+    from math import isqrt
+    max_val = max(nums)
+    uf = list(range(max_val + 1))
+    def find(x):
+        while uf[x] != x:
+            uf[x] = uf[uf[x]]
+            x = uf[x]
+        return x
+    def union(a, b):
+        uf[find(a)] = find(b)
+    for n in nums:
+        f = 2
+        while f * f <= n:
+            if n % f == 0:
+                union(n, f)
+                union(n, n // f)
+            f += 1
+    from collections import Counter
+    cnt = Counter(find(n) for n in nums)
+    return max(cnt.values())
+`,
+
+  'reachable-nodes-in-subdivided-graph': `
+def reachableNodes(edges, maxMoves, n):
+    import heapq
+    g = [[] for _ in range(n)]
+    for u, v, c in edges:
+        g[u].append((v, c))
+        g[v].append((u, c))
+    dist = [float('inf')] * n
+    dist[0] = 0
+    pq = [(0, 0)]
+    while pq:
+        d, u = heapq.heappop(pq)
+        if d > dist[u]:
+            continue
+        for v, c in g[u]:
+            nd = d + c + 1
+            if nd < dist[v]:
+                dist[v] = nd
+                heapq.heappush(pq, (nd, v))
+    ans = sum(1 for d in dist if d <= maxMoves)
+    for u, v, c in edges:
+        fu = maxMoves - dist[u] if dist[u] <= maxMoves else 0
+        fv = maxMoves - dist[v] if dist[v] <= maxMoves else 0
+        ans += min(c, fu + fv)
+    return ans
+`,
+
+  'wiggle-sort': `
+def wiggleSort(nums):
+    arr = nums[:]
+    for i in range(len(arr) - 1):
+        if (i % 2 == 0 and arr[i] > arr[i+1]) or (i % 2 == 1 and arr[i] < arr[i+1]):
+            arr[i], arr[i+1] = arr[i+1], arr[i]
+    return arr
+`,
+
+  'candy-crush': `
+def candyCrush(board):
+    board = [row[:] for row in board]
+    m, n = len(board), len(board[0])
+    while True:
+        crush = [[False]*n for _ in range(m)]
+        for r in range(m):
+            for c in range(n-2):
+                v = board[r][c]
+                if v and v == board[r][c+1] == board[r][c+2]:
+                    crush[r][c] = crush[r][c+1] = crush[r][c+2] = True
+        for r in range(m-2):
+            for c in range(n):
+                v = board[r][c]
+                if v and v == board[r+1][c] == board[r+2][c]:
+                    crush[r][c] = crush[r+1][c] = crush[r+2][c] = True
+        if not any(crush[r][c] for r in range(m) for c in range(n)):
+            break
+        for r in range(m):
+            for c in range(n):
+                if crush[r][c]:
+                    board[r][c] = 0
+        for c in range(n):
+            w = m - 1
+            for r in range(m-1, -1, -1):
+                if board[r][c]:
+                    board[w][c] = board[r][c]
+                    w -= 1
+            while w >= 0:
+                board[w][c] = 0
+                w -= 1
+    return board
+`,
+
 };

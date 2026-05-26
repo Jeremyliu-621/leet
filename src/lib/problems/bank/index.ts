@@ -1921,6 +1921,15 @@ import { problem as countSpecialCharactersII } from './count-special-characters-
 import { problem as findMaximumK } from './find-maximum-k';
 import { problem as minimumChairsWaitingRoom } from './minimum-chairs-waiting-room';
 import { problem as maximumBallsInBox } from './maximum-balls-in-box';
+import { problem as satisfiabilityOfEqualityEquations } from './satisfiability-of-equality-equations';
+import { problem as pourWater } from './pour-water';
+import { problem as bricksFallingWhenHit } from './bricks-falling-when-hit';
+// batch 73 — new problems
+import { problem as redundantConnectionII } from './redundant-connection-ii';
+import { problem as largestComponentSizeByCommonFactor } from './largest-component-size-by-common-factor';
+import { problem as reachableNodesInSubdividedGraph } from './reachable-nodes-in-subdivided-graph';
+import { problem as wiggleSort } from './wiggle-sort';
+import { problem as candyCrush } from './candy-crush';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -3878,4 +3887,13 @@ export const problems: readonly Problem[] = [
   findMaximumK,
   minimumChairsWaitingRoom,
   maximumBallsInBox,
+  satisfiabilityOfEqualityEquations,
+  pourWater,
+  bricksFallingWhenHit,
+  // batch 73
+  redundantConnectionII,
+  largestComponentSizeByCommonFactor,
+  reachableNodesInSubdividedGraph,
+  wiggleSort,
+  candyCrush,
 ];

@@ -17131,6 +17131,88 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return base + maxExtra;
   },
 
+  'redundant-connection-ii': (...args: unknown[]) => {
+    const edges = args[0] as number[][];
+    const n = edges.length;
+    const parent = new Array(n + 1).fill(0);
+    let cand1: number[] | null = null, cand2: number[] | null = null;
+    for (const [u, v] of edges) {
+      if (!parent[v!]) parent[v!] = u!;
+      else { cand1 = [parent[v!]!, v!]; cand2 = [u!, v!]; }
+    }
+    const uf = Array.from({ length: n + 1 }, (_, i) => i);
+    const find = (x: number): number => uf[x] === x ? x : (uf[x] = find(uf[x]!));
+    for (const [u, v] of edges) {
+      if (cand2 && u === cand2[0] && v === cand2[1]) continue;
+      if (find(u!) === find(v!)) return cand1 ?? [u!, v!];
+      uf[find(u!)] = find(v!);
+    }
+    return cand2;
+  },
+
+  'largest-component-size-by-common-factor': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const max = Math.max(...nums);
+    const uf = Array.from({ length: max + 1 }, (_, i) => i);
+    const find = (x: number): number => uf[x] === x ? x : (uf[x] = find(uf[x]!));
+    const union = (a: number, b: number) => { uf[find(a)] = find(b); };
+    for (const n of nums)
+      for (let f = 2; f * f <= n; f++)
+        if (n % f === 0) { union(n, f); union(n, Math.floor(n / f)); }
+    const cnt = new Map<number, number>(); let ans = 0;
+    for (const n of nums) { const r = find(n); cnt.set(r, (cnt.get(r) ?? 0) + 1); ans = Math.max(ans, cnt.get(r)!); }
+    return ans;
+  },
+
+  'reachable-nodes-in-subdivided-graph': (...args: unknown[]) => {
+    const edges = args[0] as number[][], maxMoves = args[1] as number, n = args[2] as number;
+    const g: [number, number][][] = Array.from({ length: n }, () => []);
+    for (const [u, v, c] of edges) { g[u!]!.push([v!, c!]); g[v!]!.push([u!, c!]); }
+    const dist = new Array(n).fill(Infinity); dist[0] = 0;
+    const pq: [number, number][] = [[0, 0]];
+    while (pq.length) {
+      pq.sort((a, b) => a[0]! - b[0]!);
+      const [d, u] = pq.shift()!;
+      if (d! > dist[u!]!) continue;
+      for (const [v, c] of g[u!]!) {
+        const nd = d! + c + 1;
+        if (nd < dist[v]!) { dist[v] = nd; pq.push([nd, v]); }
+      }
+    }
+    let ans = dist.filter(d => d <= maxMoves).length;
+    for (const [u, v, c] of edges) {
+      const fu = dist[u!]! <= maxMoves ? maxMoves - dist[u!]! : 0;
+      const fv = dist[v!]! <= maxMoves ? maxMoves - dist[v!]! : 0;
+      ans += Math.min(c!, fu + fv);
+    }
+    return ans;
+  },
+
+  'wiggle-sort': (...args: unknown[]) => {
+    const arr = [...(args[0] as number[])];
+    for (let i = 0; i < arr.length - 1; i++) {
+      if ((i % 2 === 0 && arr[i]! > arr[i + 1]!) || (i % 2 === 1 && arr[i]! < arr[i + 1]!)) {
+        [arr[i], arr[i + 1]] = [arr[i + 1]!, arr[i]!];
+      }
+    }
+    return arr;
+  },
+
+  'candy-crush': (...args: unknown[]) => {
+    const board = (args[0] as number[][]).map(r => [...r]);
+    const m = board.length, n = board[0]!.length;
+    while (true) {
+      const crush = Array.from({ length: m }, () => new Array(n).fill(false));
+      for (let r = 0; r < m; r++) for (let c = 0; c < n - 2; c++) { const v = board[r]![c]; if (v && v === board[r]![c + 1] && v === board[r]![c + 2]) crush[r]![c] = crush[r]![c + 1] = crush[r]![c + 2] = true; }
+      for (let r = 0; r < m - 2; r++) for (let c = 0; c < n; c++) { const v = board[r]![c]; if (v && v === board[r + 1]![c] && v === board[r + 2]![c]) crush[r]![c] = crush[r + 1]![c] = crush[r + 2]![c] = true; }
+      let any = false;
+      for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) if (crush[r]![c]) { any = true; board[r]![c] = 0; }
+      if (!any) break;
+      for (let c = 0; c < n; c++) { let w = m - 1; for (let r = m - 1; r >= 0; r--) if (board[r]![c]) board[w--]![c] = board[r]![c]!; while (w >= 0) board[w--]![c] = 0; }
+    }
+    return board;
+  },
+
   'most-stones-removed-with-same-row-or-column': (stones: unknown) => {
     const s = stones as number[][];
     const parent = new Map<number, number>();
@@ -27138,6 +27220,94 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       freq.set(d, (freq.get(d) ?? 0) + 1);
     }
     return Math.max(...freq.values());
+  },
+
+  'pour-water': (...args: unknown[]) => {
+    const heights = [...(args[0] as number[])];
+    const volume = args[1] as number;
+    const k = args[2] as number;
+    for (let v = 0; v < volume; v++) {
+      let pos = k;
+      for (let i = k - 1; i >= 0; i--) {
+        if (heights[i]! < heights[pos]!) pos = i;
+        else if (heights[i]! > heights[pos]!) break;
+      }
+      if (pos === k) {
+        for (let i = k + 1; i < heights.length; i++) {
+          if (heights[i]! < heights[pos]!) pos = i;
+          else if (heights[i]! > heights[pos]!) break;
+        }
+      }
+      heights[pos]!++;
+    }
+    return heights;
+  },
+
+  'satisfiability-of-equality-equations': (...args: unknown[]) => {
+    const equations = args[0] as string[];
+    const parent = Array.from({ length: 26 }, (_, i) => i);
+    function find(x: number): number {
+      if (parent[x] !== x) parent[x] = find(parent[x]!);
+      return parent[x]!;
+    }
+    function union(x: number, y: number): void {
+      parent[find(x)] = find(y);
+    }
+    for (const eq of equations) {
+      if (eq[1] === '=') union(eq.charCodeAt(0) - 97, eq.charCodeAt(3) - 97);
+    }
+    for (const eq of equations) {
+      if (eq[1] === '!' && find(eq.charCodeAt(0) - 97) === find(eq.charCodeAt(3) - 97)) return false;
+    }
+    return true;
+  },
+
+  'bricks-falling-when-hit': (...args: unknown[]) => {
+    const grid = (args[0] as number[][]).map(r => [...r]);
+    const hits = args[1] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    // Remove all hit bricks first
+    for (const [r, c] of hits) { if (grid[r!]![c!] === 1) grid[r!]![c!] = 0; }
+    // Union-Find with a virtual top node (m*n)
+    const parent = Array.from({ length: m * n + 1 }, (_, i) => i);
+    const size = new Array(m * n + 1).fill(1);
+    function find(x: number): number {
+      if (parent[x] !== x) parent[x] = find(parent[x]!);
+      return parent[x]!;
+    }
+    function union(x: number, y: number): void {
+      x = find(x); y = find(y);
+      if (x === y) return;
+      if (size[x]! < size[y]!) { const t = x; x = y; y = t; }
+      parent[y] = x; size[x]! += size[y]!;
+    }
+    function idx(r: number, c: number) { return r * n + c; }
+    // Build DSU for the state after all hits
+    for (let r = 0; r < m; r++) {
+      for (let c = 0; c < n; c++) {
+        if (grid[r]![c] !== 1) continue;
+        if (r === 0) union(idx(r, c), m * n);
+        if (r > 0 && grid[r-1]![c] === 1) union(idx(r, c), idx(r-1, c));
+        if (c > 0 && grid[r]![c-1] === 1) union(idx(r, c), idx(r, c-1));
+      }
+    }
+    // Reverse hits, add bricks back
+    const result = new Array(hits.length).fill(0);
+    const dirs = [[1,0],[-1,0],[0,1],[0,-1]];
+    for (let i = hits.length - 1; i >= 0; i--) {
+      const [r, c] = hits[i]!;
+      if ((args[0] as number[][])[r!]![c!] === 0) { result[i] = 0; continue; }
+      const prevRoofSize = size[find(m * n)]!;
+      grid[r!]![c!] = 1;
+      if (r === 0) union(idx(r!, c!), m * n);
+      for (const [dr, dc] of dirs) {
+        const nr = r! + dr!, nc = c! + dc!;
+        if (nr >= 0 && nr < m && nc >= 0 && nc < n && grid[nr]![nc] === 1) union(idx(r!, c!), idx(nr, nc));
+      }
+      const newRoofSize = size[find(m * n)]!;
+      result[i] = Math.max(0, newRoofSize - prevRoofSize - 1);
+    }
+    return result;
   },
 
 };
