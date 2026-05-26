@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1569 problems; 5022 tests green.
+**Current focus:** Bank at 1574 problems; 5037 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1600; further UX polish.
+
+### Batch 62-local (2026-05-26)
+Added 5 medium problems: `seat-reservation-manager` (min-heap design, simulate reserve/unreserve ops), `subarray-sum-divisible-by-k` (prefix sum + hash map, handles negatives via `((rem%k)+k)%k`), `find-the-winner-of-circular-game` (Josephus O(n) DP recurrence), `minimum-path-cost-in-grid` (row-by-row DP with moveCost table indexed by cell value), `maximum-distance-between-a-pair-of-values` (two-pointer with `j<n1 && j<n2` bounds). JS + Python solutions for all. Bank at **1574**; 5037 tests.
 
 ### Batch 61-local (2026-05-26)
 Added 5 problems: `check-if-every-row-and-column-contains-all-numbers` (easy/arrays, row+col set dedup), `maximum-strong-pair-xor-i` (easy/arrays+math, O(n²) pair XOR with |x-y|≤min(x,y) guard), `extra-characters-in-a-string` (medium/dp+strings, O(n²) DP with dict set lookup), `kth-largest-sum-in-a-binary-tree` (medium/tree+heap, BFS level sums + sort, with preamble), `sum-of-matrix-after-queries` (medium/arrays+hash-map, reverse-order row/col query with set tracking). Bank at **1569**; 5022 tests.
