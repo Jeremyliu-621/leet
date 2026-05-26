@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1670 problems; 5298 tests green.
+**Current focus:** Bank at 1675 problems; 5313 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1700; marketing site update at 1,700+ milestone.
 
@@ -16,6 +16,9 @@
 Added 5 problems: `find-if-path-exists-in-graph` (easy/graph, BFS), `longest-subarray-of-ones-after-deleting-one-element` (medium/sliding-window, at-most-one-0), `check-if-array-pairs-are-divisible-by-k` (medium/arrays+math, remainder pairing), `maximum-beauty-of-an-array-after-applying-operation` (medium/arrays+sliding-window, sort+2k window), `rearrange-characters-to-make-target-string` (easy/strings+hash-map, min freq floor-div). Bank at **1670**; 5298 tests.
 
 ### Batch 66 (2026-05-26)
+Added 5 problems: `find-all-numbers-disappeared-in-array` (easy/arrays+hash-map, O(n) set lookup), `kth-largest-element-in-array` (medium/arrays+heap, sort descending), `best-time-to-buy-and-sell-stock-ii` (medium/arrays+dp, greedy positive consecutive diffs), `count-good-nodes-in-binary-tree` (medium/tree+dp, DFS with max-on-path tracking), `minimum-depth-of-binary-tree` (easy/tree, DFS to nearest leaf). Python tree solutions build tree inline with Pyodide null handling via try/except int(). Bank at **1675**; 5313 tests.
+
+### Batch 66 (prior) (2026-05-26)
 Added 5 problems: `soup-servings` (medium/dp+math, memoized top-down DP; returns 1.0 for n≥4800), `minimum-number-of-rabbits` (medium/hash-map+math, frequency count + ceiling group formula), `the-maze-ii` (medium/graph, Dijkstra ball-rolling with step distances), `maximum-vacation-days` (hard/dp+graph, week-by-week DP through flight adjacency), `grid-illumination` (hard/hash-map, 4 direction count maps + 9-cell teardown). Also added missing JS+Python reference solutions for batch 64 remote problems (`minimum-taps-to-open-to-water-a-garden`, `put-marbles-in-bags`, and 3 others). Bank at **1668**; 5268 tests.
 
 ### Batch 65-local (2026-05-26)
