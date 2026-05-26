@@ -1841,6 +1841,11 @@ import { problem as largestPalindromicNumber } from './largest-palindromic-numbe
 import { problem as countWordsObtainedAfterAddingALetter } from './count-words-obtained-after-adding-a-letter';
 import { problem as minimumNumberOfFlipsBinaryStringAlternating } from './minimum-number-of-flips-to-make-binary-string-alternating';
 import { problem as totalCostToHireKWorkers } from './total-cost-to-hire-k-workers';
+import { problem as bestTimeToBuyAndSellStockIII } from './best-time-to-buy-and-sell-stock-iii';
+import { problem as findTheDuplicateNumber } from './find-the-duplicate-number';
+import { problem as maximumDifferenceInArray } from './maximum-difference-in-array';
+import { problem as longestSubarrayWithAtMostKFrequency } from './longest-subarray-with-at-most-k-frequency';
+import { problem as countPairsInTwoArrays } from './count-pairs-in-two-arrays';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3721,4 +3726,9 @@ export const problems: readonly Problem[] = [
   countWordsObtainedAfterAddingALetter,
   minimumNumberOfFlipsBinaryStringAlternating,
   totalCostToHireKWorkers,
+  bestTimeToBuyAndSellStockIII,
+  findTheDuplicateNumber,
+  maximumDifferenceInArray,
+  longestSubarrayWithAtMostKFrequency,
+  countPairsInTwoArrays,
 ];

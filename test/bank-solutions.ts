@@ -25772,6 +25772,44 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'best-time-to-buy-and-sell-stock-iii': (...args: unknown[]) => {
+    const prices = args[0] as number[];
+    let buy1 = -Infinity, sell1 = 0, buy2 = -Infinity, sell2 = 0;
+    for (const p of prices) {
+      buy1 = Math.max(buy1, -p);
+      sell1 = Math.max(sell1, buy1 + p);
+      buy2 = Math.max(buy2, sell1 - p);
+      sell2 = Math.max(sell2, buy2 + p);
+    }
+    return sell2;
+  },
+
+  'find-the-duplicate-number': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let slow = nums[0]!, fast = nums[0]!;
+    do { slow = nums[slow]!; fast = nums[nums[fast]!]!; } while (slow !== fast);
+    slow = nums[0]!;
+    while (slow !== fast) { slow = nums[slow]!; fast = nums[fast]!; }
+    return slow;
+  },
+
+  'longest-subarray-with-at-most-k-frequency': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const freq = new Map<number, number>();
+    let l = 0, ans = 0;
+    for (let r = 0; r < nums.length; r++) {
+      const v = nums[r] as number;
+      freq.set(v, (freq.get(v) || 0) + 1);
+      while ((freq.get(v) || 0) > k) {
+        const lv = nums[l] as number;
+        freq.set(lv, (freq.get(lv) || 0) - 1);
+        l++;
+      }
+      ans = Math.max(ans, r - l + 1);
+    }
+    return ans;
+  },
+
   'largest-palindromic-number': (...args: unknown[]) => {
     const num = args[0] as string;
     const freq = new Array(10).fill(0);
@@ -25823,6 +25861,22 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
           if (startSet.has(mask ^ (1 << i))) { count++; break; }
         }
       }
+    }
+    return count;
+  },
+
+  'count-pairs-in-two-arrays': (...args: unknown[]) => {
+    const nums1 = args[0] as number[], nums2 = args[1] as number[];
+    const diff = nums1.map((v, i) => v - (nums2[i] as number)).sort((a, b) => a - b);
+    let count = 0;
+    for (let i = 0; i < diff.length - 1; i++) {
+      let lo = i + 1, hi = diff.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if ((diff[i] as number) + (diff[mid] as number) > 0) hi = mid;
+        else lo = mid + 1;
+      }
+      count += diff.length - lo;
     }
     return count;
   },
