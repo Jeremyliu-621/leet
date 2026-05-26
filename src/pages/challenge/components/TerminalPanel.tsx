@@ -139,6 +139,33 @@ export function computeStringDiff(
 }
 
 /**
+ * Returns a human-readable "off by N" description for two numeric values.
+ * Returns null when values are equal, non-finite, or not numbers.
+ * Exported for unit testing.
+ */
+export function computeNumberDiff(expected: unknown, actual: unknown): string | null {
+  if (typeof expected !== 'number' || typeof actual !== 'number') return null;
+  if (!isFinite(expected) || !isFinite(actual) || expected === actual) return null;
+  const diff = actual - expected;
+  const sign = diff > 0 ? '+' : '';
+  return `off by ${sign}${diff}`;
+}
+
+/**
+ * Shows a diff hint when expected and actual are both finite numbers.
+ * Reports "off by N" so the user can spot off-by-one or scaling errors.
+ */
+function NumberDiffHint({ expected, actual }: { expected: unknown; actual: unknown }) {
+  const label = computeNumberDiff(expected, actual);
+  if (!label) return null;
+  return (
+    <div className="pl-4 text-[10px] text-faint tabular-nums" aria-label={`Number diff: ${label}`}>
+      ↳ {label}
+    </div>
+  );
+}
+
+/**
  * Shows a concise diff hint when expected and actual are both strings.
  * Highlights the first diverging character position for quick debugging.
  */
@@ -379,6 +406,7 @@ function TerminalEntry({ entry }: { entry: TerminalEntry }) {
             <span className="text-faint shrink-0">Actual:</span>
             <ValueDisplay value={entry.actual} />
           </div>
+          <NumberDiffHint expected={entry.rawExpected} actual={entry.rawActual} />
           <ArrayDiffHint expected={entry.rawExpected} actual={entry.rawActual} />
           <StringDiffHint expected={entry.rawExpected} actual={entry.rawActual} />
         </div>
@@ -646,7 +674,7 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
           className="p-3 space-y-2"
         >
           {result === undefined && (
-            <div role="status" className="text-faint motion-safe:animate-pulse font-mono text-xs">Running tests...</div>
+            <div role="status" aria-live="polite" className="text-faint motion-safe:animate-pulse font-mono text-xs">Running tests...</div>
           )}
           {result === null && (
             <div className="text-faint font-mono text-xs">
@@ -766,6 +794,7 @@ function TestResultCard({ verdict, autoExpand }: { verdict: TestVerdict; autoExp
                 <ValueDisplay value={displayValue(verdict.actual)} />
                 <CopyButton value={displayValue(verdict.actual)} />
               </div>
+              <NumberDiffHint expected={verdict.expected} actual={verdict.actual} />
               <ArrayDiffHint expected={verdict.expected} actual={verdict.actual} />
               <StringDiffHint expected={verdict.expected} actual={verdict.actual} />
             </>

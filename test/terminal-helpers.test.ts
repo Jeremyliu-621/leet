@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { computeStringDiff } from '../src/pages/challenge/components/TerminalPanel';
+import { computeStringDiff, computeNumberDiff } from '../src/pages/challenge/components/TerminalPanel';
 
 describe('computeStringDiff', () => {
   it('returns null for non-string inputs', () => {
@@ -87,5 +87,40 @@ describe('computeStringDiff', () => {
   it('returns null when one value is not a string', () => {
     expect(computeStringDiff('abc', 123)).toBeNull();
     expect(computeStringDiff(null, 'abc')).toBeNull();
+  });
+});
+
+describe('computeNumberDiff', () => {
+  it('returns null for non-number inputs', () => {
+    expect(computeNumberDiff('5', '6')).toBeNull();
+    expect(computeNumberDiff(null, 5)).toBeNull();
+    expect(computeNumberDiff([1], [2])).toBeNull();
+  });
+
+  it('returns null for equal numbers', () => {
+    expect(computeNumberDiff(5, 5)).toBeNull();
+    expect(computeNumberDiff(0, 0)).toBeNull();
+    expect(computeNumberDiff(-3, -3)).toBeNull();
+  });
+
+  it('returns null for non-finite numbers', () => {
+    expect(computeNumberDiff(Infinity, 5)).toBeNull();
+    expect(computeNumberDiff(5, NaN)).toBeNull();
+  });
+
+  it('reports positive diff when actual > expected', () => {
+    expect(computeNumberDiff(5, 6)).toBe('off by +1');
+    expect(computeNumberDiff(0, 10)).toBe('off by +10');
+  });
+
+  it('reports negative diff when actual < expected', () => {
+    expect(computeNumberDiff(10, 7)).toBe('off by -3');
+    expect(computeNumberDiff(100, 0)).toBe('off by -100');
+  });
+
+  it('handles fractional differences', () => {
+    const result = computeNumberDiff(0.5, 0.7);
+    expect(result).not.toBeNull();
+    expect(result).toContain('off by');
   });
 });
