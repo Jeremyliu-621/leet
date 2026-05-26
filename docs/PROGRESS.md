@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2026** problems; 6378 tests green. Batches 92–95 + 2K milestone + remote merges complete.
+**Current focus:** Bank at **2034** problems; 6399 tests green. Batches 92–99 + 2K milestone + remote merges complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 97+); UI/UX polish.
+**Next up:** Continued bank growth (batch 100+); UI/UX polish.
+
+### feat(bank): add batch 99 — find-longest-balanced-binary-substring, matrix-diagonal-sum-variant, max-number-of-k-sum-pairs, count-subarrays-max-element-k-times (2026-05-26)
+Added 4 problems: `find-longest-balanced-binary-substring` (easy/strings, run-scan pairing zeros/ones), `matrix-diagonal-sum-variant` (easy/arrays, both diagonals minus center for odd n), `max-number-of-k-sum-pairs` (medium/two-pointers, sort + two-pointer k-sum pair counting), `count-subarrays-max-element-k-times` (medium/sliding-window, two-pointer count subarrays with global max ≥k times). Bank at **2034**; 6399 tests.
 
 ### feat(bank): add batch 96 — check-if-array-sorted-and-rotated, find-all-lonely-numbers-in-array, check-if-all-characters-have-equal-number-of-occurrences (2026-05-26)
 Added 3 problems: `check-if-array-sorted-and-rotated` (easy/arrays, circular inversion count ≤1), `find-all-lonely-numbers-in-array` (easy/arrays+hash-map, frequency map + neighbor check), `check-if-all-characters-have-equal-number-of-occurrences` (easy/strings+hash-map, frequency uniformity check). Bank at **2026**; 6372 tests.
