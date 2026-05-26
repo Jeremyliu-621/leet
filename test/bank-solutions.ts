@@ -29925,6 +29925,107 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return lo;
   },
 
+  // batch 89 — arrays, strings, hash-map, math, graph
+  'minimum-rounds-to-complete-all-tasks': (...args: unknown[]) => {
+    const [tasks] = args as [number[]];
+    const freq = new Map<number, number>();
+    for (const t of tasks) freq.set(t, (freq.get(t) || 0) + 1);
+    let rounds = 0;
+    for (const cnt of freq.values()) {
+      if (cnt === 1) return -1;
+      rounds += Math.ceil(cnt / 3);
+    }
+    return rounds;
+  },
+
+  'longest-palindrome-by-concatenating-two-letter-words': (...args: unknown[]) => {
+    const [words] = args as [string[]];
+    const count = new Map<string, number>();
+    for (const w of words) count.set(w, (count.get(w) || 0) + 1);
+    let result = 0;
+    let hasCenter = false;
+    const visited = new Set<string>();
+    for (const [w, cnt] of count) {
+      if (visited.has(w)) continue;
+      const rev = w[1]! + w[0]!;
+      if (w === rev) {
+        result += Math.floor(cnt / 2) * 4;
+        if (cnt % 2 === 1) hasCenter = true;
+      } else {
+        visited.add(rev);
+        const pairs = Math.min(cnt, count.get(rev) || 0);
+        result += pairs * 4;
+      }
+    }
+    if (hasCenter) result += 2;
+    return result;
+  },
+
+  'maximum-product-difference-between-two-pairs': (...args: unknown[]) => {
+    const [nums] = args as [number[]];
+    const sorted = [...nums].sort((a, b) => a - b);
+    const n = sorted.length;
+    return sorted[n - 1]! * sorted[n - 2]! - sorted[0]! * sorted[1]!;
+  },
+
+  'minimum-bit-flips-to-convert-number': (...args: unknown[]) => {
+    const [start, goal] = args as [number, number];
+    let x = start ^ goal;
+    let count = 0;
+    while (x) { count += x & 1; x >>>= 1; }
+    return count;
+  },
+
+  'min-number-of-flips-to-convert-binary-matrix-to-zero-matrix': (...args: unknown[]) => {
+    const [mat] = args as [number[][]];
+    const m = mat.length, n = mat[0]!.length;
+    let start = 0;
+    for (let i = 0; i < m; i++)
+      for (let j = 0; j < n; j++)
+        if (mat[i]![j]) start |= 1 << (i * n + j);
+    if (start === 0) return 0;
+    const queue: number[] = [start];
+    const visited = new Set<number>([start]);
+    let steps = 0;
+    const dirs = [[0,0],[-1,0],[1,0],[0,-1],[0,1]];
+    while (queue.length) {
+      steps++;
+      const nextQ: number[] = [];
+      for (const state of queue) {
+        for (let i = 0; i < m; i++) {
+          for (let j = 0; j < n; j++) {
+            let next = state;
+            for (const [di, dj] of dirs) {
+              const ni = i + di!, nj = j + dj!;
+              if (ni >= 0 && ni < m && nj >= 0 && nj < n) next ^= 1 << (ni * n + nj);
+            }
+            if (next === 0) return steps;
+            if (!visited.has(next)) { visited.add(next); nextQ.push(next); }
+          }
+        }
+      }
+      queue.length = 0; queue.push(...nextQ);
+    }
+    return -1;
+  },
+
+  'determine-if-two-strings-are-close': (...args: unknown[]) => {
+    const [word1, word2] = args as [string, string];
+    if (word1.length !== word2.length) return false;
+    const freq1 = new Array(26).fill(0);
+    const freq2 = new Array(26).fill(0);
+    for (const c of word1) freq1[c.charCodeAt(0) - 97]!++;
+    for (const c of word2) freq2[c.charCodeAt(0) - 97]!++;
+    for (let i = 0; i < 26; i++)
+      if ((freq1[i] === 0) !== (freq2[i] === 0)) return false;
+    return [...freq1].sort((a, b) => a - b).join(',') === [...freq2].sort((a, b) => a - b).join(',');
+  },
+
+  'maximum-xor-after-operations': (...args: unknown[]) => {
+    const [nums] = args as [number[]];
+    return nums.reduce((acc, x) => acc | x, 0);
+  },
+
   // batch 83
 
   'count-palindromes': (...args: unknown[]) => {
@@ -30223,6 +30324,27 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return nums.filter(x => x > min && x < max).length;
   },
 
+  'split-the-array': (...args: unknown[]) => {
+    const [nums] = args as [number[]];
+    const freq = new Map<number, number>();
+    for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+    for (const c of freq.values()) if (c > 2) return false;
+    return true;
+  },
+
+  'find-the-score-of-all-prefixes-of-an-array': (...args: unknown[]) => {
+    const [nums] = args as [number[]];
+    const ans: number[] = [];
+    let maxSoFar = 0;
+    let prefixSum = 0;
+    for (const x of nums) {
+      maxSoFar = Math.max(maxSoFar, x);
+      prefixSum += x + maxSoFar;
+      ans.push(prefixSum);
+    }
+    return ans;
+  },
+
   'check-if-there-is-a-valid-partition-for-the-array': (...args: unknown[]) => {
     const [nums] = args as [number[]];
     const n = nums.length;
@@ -30389,27 +30511,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
-  'split-the-array': (...args: unknown[]) => {
-    const [nums] = args as [number[]];
-    const freq = new Map<number, number>();
-    for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
-    for (const c of freq.values()) if (c > 2) return false;
-    return true;
-  },
-
-  'find-the-score-of-all-prefixes-of-an-array': (...args: unknown[]) => {
-    const [nums] = args as [number[]];
-    const ans: number[] = [];
-    let maxSoFar = 0;
-    let prefixSum = 0;
-    for (const x of nums) {
-      maxSoFar = Math.max(maxSoFar, x);
-      prefixSum += x + maxSoFar;
-      ans.push(prefixSum);
-    }
-    return ans;
-  },
-
   'shortest-cycle-in-a-graph': (...args: unknown[]) => {
     const [n, edges] = args as [number, number[][]];
     const adj: number[][] = Array.from({ length: n }, () => []);
@@ -30440,6 +30541,42 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans === Infinity ? -1 : ans;
   },
 
+  // batch 90 — arrays, strings, hash-map, math, graph, tree
+  'count-common-words-with-one-occurrence': (...args: unknown[]) => {
+    const [words1, words2] = args as [string[], string[]];
+    const freq1 = new Map<string, number>();
+    const freq2 = new Map<string, number>();
+    for (const w of words1) freq1.set(w, (freq1.get(w) || 0) + 1);
+    for (const w of words2) freq2.set(w, (freq2.get(w) || 0) + 1);
+    let count = 0;
+    for (const [w, c] of freq1) if (c === 1 && freq2.get(w) === 1) count++;
+    return count;
+  },
+
+  'find-three-consecutive-integers-that-sum-to-a-given-number': (...args: unknown[]) => {
+    const [num] = args as [number];
+    if (num % 3 !== 0) return [];
+    const n = num / 3;
+    return [n - 1, n, n + 1];
+  },
+
+  'equal-row-and-column-pairs': (...args: unknown[]) => {
+    const [grid] = args as [number[][]];
+    const rowMap = new Map<string, number>();
+    for (const row of grid) {
+      const key = row.join(',');
+      rowMap.set(key, (rowMap.get(key) || 0) + 1);
+    }
+    let result = 0;
+    const n = grid.length;
+    for (let j = 0; j < n; j++) {
+      const col = grid.map(r => r[j]!);
+      const key = col.join(',');
+      result += rowMap.get(key) || 0;
+    }
+    return result;
+  },
+
   // --- batch 89 -----------------------------------------------------------
   'next-greater-element-distances': (...args: unknown[]) => {
     const nums = args[0] as number[];
@@ -30454,6 +30591,75 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       stack.push(i);
     }
     return result;
+  },
+
+  'number-of-laser-beams-in-a-bank': (...args: unknown[]) => {
+    const [bank] = args as [string[]];
+    const counts: number[] = [];
+    for (const row of bank) {
+      const c = [...row].filter(x => x === '1').length;
+      if (c > 0) counts.push(c);
+    }
+    let total = 0;
+    for (let i = 1; i < counts.length; i++) total += counts[i - 1]! * counts[i]!;
+    return total;
+  },
+
+  'check-if-all-as-appears-before-all-bs': (...args: unknown[]) => {
+    const [s] = args as [string];
+    return !s.includes('ba');
+  },
+
+  'count-nodes-with-the-highest-score': (...args: unknown[]) => {
+    const [parents] = args as [number[]];
+    const n = parents.length;
+    const children: number[][] = Array.from({ length: n }, () => []);
+    for (let i = 1; i < n; i++) children[parents[i]!]!.push(i);
+    const sub = new Array(n).fill(0);
+    const dfs = (v: number): void => {
+      sub[v] = 1;
+      for (const c of children[v]!) { dfs(c); sub[v]! += sub[c]!; }
+    };
+    dfs(0);
+    let maxScore = 0, count = 0;
+    for (let v = 0; v < n; v++) {
+      let score = 1;
+      for (const c of children[v]!) score *= sub[c]!;
+      const above = n - sub[v]!;
+      if (above > 0) score *= above;
+      if (score > maxScore) { maxScore = score; count = 1; }
+      else if (score === maxScore) count++;
+    }
+    return count;
+  },
+
+  'maximum-number-of-points-from-grid-queries': (...args: unknown[]) => {
+    const [grid, queries] = args as [number[][], number[]];
+    const m = grid.length, n = grid[0]!.length;
+    const sorted = queries.map((q, i) => [q, i] as [number, number]).sort((a, b) => a[0] - b[0]);
+    const res = new Array(queries.length).fill(0);
+    const vis = Array.from({ length: m }, () => new Array(n).fill(false));
+    vis[0]![0] = true;
+    const heap: [number, number, number][] = [[grid[0]![0]!, 0, 0]];
+    const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+    let cnt = 0;
+    for (const [q, origIdx] of sorted) {
+      while (heap.length > 0) {
+        heap.sort((a, b) => a[0] - b[0]);
+        if (heap[0]![0] >= q) break;
+        const [, r, c] = heap.shift()!;
+        cnt++;
+        for (const [dr, dc] of dirs) {
+          const nr = r + dr!, nc = c + dc!;
+          if (nr >= 0 && nr < m && nc >= 0 && nc < n && !vis[nr]![nc]) {
+            vis[nr]![nc] = true;
+            heap.push([grid[nr]![nc]!, nr, nc]);
+          }
+        }
+      }
+      res[origIdx] = cnt;
+    }
+    return res;
   },
 
   'find-all-occurrences-z-algorithm': (...args: unknown[]) => {

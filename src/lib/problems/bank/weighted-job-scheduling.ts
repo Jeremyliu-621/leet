@@ -68,6 +68,7 @@ Each job can be selected at most once.
     { args: [[1, 6, 5], [4, 7, 8], [20, 1, 30]], expected: 50 },
     // jobs (1,3,50),(2,5,30),(4,10,20): best = 50+20=70
     { args: [[1, 2, 4], [3, 5, 10], [50, 30, 20]], expected: 70 },
+    // original problem's example extended
     { args: [[1, 2, 3, 4], [3, 5, 10, 6], [20, 20, 100, 70]], expected: 120 },
   ],
 };

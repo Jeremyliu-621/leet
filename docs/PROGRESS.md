@@ -8,12 +8,15 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1974** problems; 6201 tests green. Batch 90 complete (3 problems: math, greedy, hash-map).
+**Current focus:** Bank at **1981** problems; 6210 tests green. Batches 89–90 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 91); UI/UX polish.
+**Next up:** Continued bank growth (batch 91+); UI/UX polish.
 
 ### feat(bank): add batch 90 — sum-of-square-numbers, mice-and-cheese, maximum-size-subarray-sum-equals-k (2026-05-26)
 Added 3 problems: `sum-of-square-numbers` (easy/math, Fermat two-square theorem, √c iteration), `mice-and-cheese` (medium/greedy, delta-sort to maximize k assignments), `maximum-size-subarray-sum-equals-k` (medium/hash-map, prefix sum + first-seen map for O(n)). Corrected 5 wrong hidden test expected values via brute-force verification. Bank at **1974**; 6201 tests.
+
+### feat(bank): add batch 89 — 7 problems (arrays, strings, hash-map, math, graph) (2026-05-26)
+Added 7 problems: `minimum-rounds-to-complete-all-tasks` (medium/arrays+hash-map, ceil(freq/3) rounds), `longest-palindrome-by-concatenating-two-letter-words` (medium/strings+hash-map, paired reverse words + palindromic-word center), `maximum-product-difference-between-two-pairs` (easy/arrays, sorted top-2 minus bottom-2), `minimum-bit-flips-to-convert-number` (easy/math, popcount of XOR), `min-number-of-flips-to-convert-binary-matrix-to-zero-matrix` (hard/graph+simulation, BFS on bitmask state space), `determine-if-two-strings-are-close` (medium/strings+hash-map, same char set + same freq multiset), `maximum-xor-after-operations` (medium/arrays+math, bitwise OR of all elements). Bank at **1958**; tests green.
 
 ### merge: batches 88–89 local + remote (2026-05-26)
 Local batch 88: `check-if-there-is-a-valid-partition-for-the-array` (medium/dp), `reverse-nodes-in-even-length-groups` (medium/linked-list), `minimum-difference-in-sums-after-removal-of-elements` (hard/heap); `InlineText` component for backtick inline code; site stats to 1,950+.
