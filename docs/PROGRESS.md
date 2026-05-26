@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1564 problems; 5007 tests green.
+**Current focus:** Bank at 1569 problems; 5022 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continue growing problem bank toward 1600; further UX polish.
+
+### Batch 61-local (2026-05-26)
+Added 5 problems: `check-if-every-row-and-column-contains-all-numbers` (easy/arrays, row+col set dedup), `maximum-strong-pair-xor-i` (easy/arrays+math, O(n²) pair XOR with |x-y|≤min(x,y) guard), `extra-characters-in-a-string` (medium/dp+strings, O(n²) DP with dict set lookup), `kth-largest-sum-in-a-binary-tree` (medium/tree+heap, BFS level sums + sort, with preamble), `sum-of-matrix-after-queries` (medium/arrays+hash-map, reverse-order row/col query with set tracking). Bank at **1569**; 5022 tests.
 
 ### Batch 59-local (2026-05-26)
 Added 5 easy problems: `count-substrings-starting-and-ending-with-given-character` (strings+math, count formula n+n*(n-1)/2), `minimum-number-of-changes-to-make-binary-string-beautiful` (strings, pair mismatch count), `distribute-money-to-maximum-children` (math, greedy 8-dollar distribution with no-4 guard), `check-if-strings-can-be-made-equal-with-operations` (strings, even/odd parity multiset equality), `count-days-spent-together` (strings+math, day-of-year conversion + overlap). Fixed test case for `0110` (expected 2 not 1). Bank at **1559**; 4965 tests.
