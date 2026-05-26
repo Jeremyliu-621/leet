@@ -27016,4 +27016,248 @@ def containsCycle(grid):
     return False
 `,
 
+  'range-sum-query-mutable': `
+def numArrayOps(ops):
+    bit = None
+    nums = None
+    n = 0
+    def update(i, delta):
+        i += 1
+        while i <= n:
+            bit[i] += delta
+            i += i & (-i)
+    def query(i):
+        i += 1
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & (-i)
+        return s
+    result = []
+    for op, params in ops:
+        if op == 'NumArray':
+            input_nums = list(params[0])
+            n_val = len(input_nums)
+            import builtins
+            globals()['n'] = n_val
+            bit_arr = [0] * (n_val + 2)
+            nums_arr = input_nums[:]
+            globals()['bit'] = bit_arr
+            globals()['nums'] = nums_arr
+            for i, v in enumerate(input_nums):
+                j = i + 1
+                while j <= n_val:
+                    bit_arr[j] += v
+                    j += j & (-j)
+            result.append(None)
+        elif op == 'update':
+            idx, val = int(params[0]), int(params[1])
+            delta = val - globals()['nums'][idx]
+            globals()['nums'][idx] = val
+            i = idx + 1
+            n_val = globals()['n']
+            bit_arr = globals()['bit']
+            while i <= n_val:
+                bit_arr[i] += delta
+                i += i & (-i)
+            result.append(None)
+        else:
+            l, r = int(params[0]), int(params[1])
+            bit_arr = globals()['bit']
+            def q(i):
+                i += 1
+                s = 0
+                while i > 0:
+                    s += bit_arr[i]
+                    i -= i & (-i)
+                return s
+            result.append(q(r) - (q(l-1) if l > 0 else 0))
+    return result
+`,
+
+  'count-of-smaller-numbers-after-self-bit': `
+def countSmaller(nums):
+    sorted_unique = sorted(set(nums))
+    rank = {v: i+1 for i, v in enumerate(sorted_unique)}
+    m = len(sorted_unique)
+    bit = [0] * (m + 2)
+    def update(i):
+        while i <= m:
+            bit[i] += 1
+            i += i & (-i)
+    def query(i):
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & (-i)
+        return s
+    result = [0] * len(nums)
+    for i in range(len(nums)-1, -1, -1):
+        r = rank[nums[i]]
+        result[i] = query(r-1) if r > 1 else 0
+        update(r)
+    return result
+`,
+
+  'rank-transform-of-an-array': `
+def arrayRankTransform(arr):
+    sorted_unique = sorted(set(arr))
+    rank = {v: i+1 for i, v in enumerate(sorted_unique)}
+    return [rank[x] for x in arr]
+`,
+
+  'similar-string-groups': `
+def numSimilarGroups(strs):
+    n = len(strs)
+    parent = list(range(n))
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(a, b):
+        parent[find(a)] = find(b)
+    def similar(a, b):
+        diff = sum(1 for x, y in zip(a, b) if x != y)
+        return diff == 0 or diff == 2
+    for i in range(n):
+        for j in range(i+1, n):
+            if similar(strs[i], strs[j]):
+                union(i, j)
+    return len(set(find(i) for i in range(n)))
+`,
+
+  'the-maze': `
+from collections import deque
+def hasPath(maze, start, destination):
+    m, n = len(maze), len(maze[0])
+    visited = [[False]*n for _ in range(m)]
+    queue = deque([(start[0], start[1])])
+    visited[start[0]][start[1]] = True
+    dirs = [(1,0),(-1,0),(0,1),(0,-1)]
+    while queue:
+        r, c = queue.popleft()
+        if r == destination[0] and c == destination[1]:
+            return True
+        for dr, dc in dirs:
+            nr, nc = r+dr, c+dc
+            while 0 <= nr < m and 0 <= nc < n and maze[nr][nc] == 0:
+                nr += dr; nc += dc
+            nr -= dr; nc -= dc
+            if not visited[nr][nc]:
+                visited[nr][nc] = True
+                queue.append((nr, nc))
+    return False
+`,
+
+  'create-sorted-array-through-instructions': `
+def createSortedArray(instructions):
+    MOD = 10**9 + 7
+    max_val = 100001
+    bit = [0] * (max_val + 1)
+    def update(i):
+        while i <= max_val:
+            bit[i] += 1
+            i += i & (-i)
+    def query(i):
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & (-i)
+        return s
+    total = 0
+    for k, v in enumerate(instructions):
+        less = query(v-1) if v > 1 else 0
+        greater = k - query(v)
+        total = (total + min(less, greater)) % MOD
+        update(v)
+    return total
+`,
+
+  'minimum-time-to-remove-all-cars': `
+def minimumTime(s):
+    n = len(s)
+    left = [0] * n
+    right = [0] * n
+    left[0] = 1 if s[0] == '1' else 0
+    for i in range(1, n):
+        left[i] = min(left[i-1] + 2*(s[i]=='1'), i+1)
+    right[n-1] = 1 if s[n-1] == '1' else 0
+    for i in range(n-2, -1, -1):
+        right[i] = min(right[i+1] + 2*(s[i]=='1'), n-i)
+    ans = min(left[n-1], right[0])
+    for i in range(n-1):
+        ans = min(ans, left[i] + right[i+1])
+    return ans
+`,
+
+  'process-restricted-friend-requests': `
+def friendRequests(n, restrictions, requests):
+    parent = list(range(n))
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    result = []
+    for u, v in requests:
+        ru, rv = find(u), find(v)
+        if ru == rv:
+            result.append(True)
+            continue
+        ok = True
+        for x, y in restrictions:
+            rx, ry = find(x), find(y)
+            if (rx == ru and ry == rv) or (rx == rv and ry == ru):
+                ok = False
+                break
+        if ok:
+            parent[ru] = rv
+        result.append(ok)
+    return result
+`,
+
+  'design-food-rating-system': `
+import heapq
+def foodRatingOps(ops):
+    food_map = {}
+    cuisine_heap = {}
+    result = []
+    for op, params in ops:
+        if op == 'FoodRatings':
+            foods, cuisines, ratings = params[0], params[1], params[2]
+            for f, c, r in zip(foods, cuisines, ratings):
+                food_map[f] = [c, r]
+                if c not in cuisine_heap:
+                    cuisine_heap[c] = []
+                heapq.heappush(cuisine_heap[c], (-r, f))
+            result.append(None)
+        elif op == 'changeRating':
+            food, new_rating = params[0], int(params[1])
+            food_map[food][1] = new_rating
+            c = food_map[food][0]
+            heapq.heappush(cuisine_heap[c], (-new_rating, food))
+            result.append(None)
+        else:
+            cuisine = params[0]
+            heap = cuisine_heap[cuisine]
+            while heap:
+                r, f = heap[0]
+                if food_map[f][1] == -r:
+                    break
+                heapq.heappop(heap)
+            result.append(heap[0][1])
+    return result
+`,
+
+  'first-day-you-have-been-in-all-rooms': `
+def firstDayBeenInAllRooms(nextVisit):
+    MOD = 10**9 + 7
+    n = len(nextVisit)
+    dp = [0] * n
+    for i in range(1, n):
+        dp[i] = (2 * dp[i-1] - dp[nextVisit[i-1]] + 2) % MOD
+    return dp[n-1]
+`,
+
 };

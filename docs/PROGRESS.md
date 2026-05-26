@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1828** problems; 5772 tests green. All problems have ≥3 hints (enforced by regression test).
+**Current focus:** Bank at **1828** problems; 5772 tests green. Marketing site at 1,825+. All problems have ≥3 hints.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** UX polish (CodeMirror QoL, accessibility); marketing site update to 1,800+ (still accurate, could update to 1,825+).
+**Next up:** More bank problems; UX polish (CodeMirror QoL, accessibility); light-mode QA.
+
+### feat(ux): Practice-next solved indicators + site update to 1,825+ (2026-05-26)
+Added `solved: boolean` to `RelatedProblem` interface in Challenge.tsx; "Practice next" section now shows ✓/· prefix on each suggested problem so users see which adjacent problems they have already completed. Marketing site updated from 1,800+ → 1,825+ in all three stat locations.
 
 ### feat(bank): add batch 73-remote (12 new problems) (2026-05-26)
 Added 12 problems in underrepresented tags (graph/BFS/union-find/shortest-path/DP): `word-ladder-ii` (hard/graph+backtracking, BFS level-graph + DFS reconstruct all paths), `cut-off-trees-for-golf-event` (hard/graph+simulation, sort + repeated BFS), `number-of-distinct-islands` (medium/graph+hash-map, DFS relative-offset shape hashing), `network-becomes-idle` (medium/graph+shortest-path, BFS + last-resend formula), `smallest-string-with-swaps` (medium/union-find+strings, DSU + sort-within-component), `remove-boxes` (hard/dp, 3D dp[l][r][k] memoization), `escape-the-spreading-fire` (hard/graph+binary-search, multi-source fire BFS + binary search on wait), `minimize-malware-spread` (medium/union-find, sole-infected component sweep), `number-of-good-paths` (hard/union-find+tree, sorted-edge union with cnt tracking), `longest-substring-with-at-least-k-repeating` (medium/strings, divide-and-conquer split on low-freq chars), `count-battleships-in-a-board` (medium/arrays, top-left corner counting), `detect-cycles-in-2d-grid` (medium/graph+union-find, DFS cycle detection). Fixed word-ladder-ii expected values (sorted paths, corrected invalid cases). Bank at **1828** problems; 5772 tests.

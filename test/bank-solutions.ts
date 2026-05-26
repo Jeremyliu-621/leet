@@ -27667,4 +27667,232 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return false;
   },
 
+  // batch 74
+  'range-sum-query-mutable': (...args: unknown[]) => {
+    const ops = args[0] as [string, unknown[]][];
+    const bit: number[] = [];
+    let n = 0;
+    function update(i: number, delta: number) {
+      for (i++; i <= n; i += i & (-i)) bit[i] = (bit[i] ?? 0) + delta;
+    }
+    function query(i: number): number {
+      let s = 0;
+      for (i++; i > 0; i -= i & (-i)) s += bit[i] ?? 0;
+      return s;
+    }
+    const nums: number[] = [];
+    const result: (number | null)[] = [];
+    for (const [op, params] of ops) {
+      if (op === 'NumArray') {
+        const input = params[0] as number[];
+        n = input.length;
+        bit.length = n + 1;
+        bit.fill(0);
+        nums.length = 0;
+        for (let i = 0; i < n; i++) { nums.push(input[i]!); update(i, input[i]!); }
+        result.push(null);
+      } else if (op === 'update') {
+        const [idx, val] = params as [number, number];
+        update(idx, val - nums[idx]!);
+        nums[idx] = val;
+        result.push(null);
+      } else {
+        const [l, r] = params as [number, number];
+        result.push(query(r) - (l > 0 ? query(l - 1) : 0));
+      }
+    }
+    return result;
+  },
+
+  'count-of-smaller-numbers-after-self-bit': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const sorted = [...new Set(nums)].sort((a, b) => a - b);
+    const rank = new Map<number, number>();
+    sorted.forEach((v, i) => rank.set(v, i + 1));
+    const m = sorted.length;
+    const bit = new Array(m + 1).fill(0);
+    function update(i: number) { for (; i <= m; i += i & (-i)) bit[i]++; }
+    function query(i: number): number { let s = 0; for (; i > 0; i -= i & (-i)) s += bit[i]; return s; }
+    const result: number[] = new Array(nums.length);
+    for (let i = nums.length - 1; i >= 0; i--) {
+      const r = rank.get(nums[i]!)!;
+      result[i] = r > 1 ? query(r - 1) : 0;
+      update(r);
+    }
+    return result;
+  },
+
+  'rank-transform-of-an-array': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const sorted = [...new Set(arr)].sort((a, b) => a - b);
+    const rankMap = new Map<number, number>();
+    sorted.forEach((v, i) => rankMap.set(v, i + 1));
+    return arr.map(x => rankMap.get(x)!);
+  },
+
+  'similar-string-groups': (...args: unknown[]) => {
+    const strs = args[0] as string[];
+    const n = strs.length;
+    const parent = Array.from({length: n}, (_, i) => i);
+    function find(x: number): number { return parent[x] === x ? x : (parent[x] = find(parent[x]!)); }
+    function union(a: number, b: number) { parent[find(a)] = find(b); }
+    function similar(a: string, b: string): boolean {
+      let diff = 0;
+      for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) { diff++; if (diff > 2) return false; }
+      return diff === 0 || diff === 2;
+    }
+    for (let i = 0; i < n; i++)
+      for (let j = i + 1; j < n; j++)
+        if (similar(strs[i]!, strs[j]!)) union(i, j);
+    return new Set(strs.map((_, i) => find(i))).size;
+  },
+
+  'the-maze': (...args: unknown[]) => {
+    const maze = args[0] as number[][], start = args[1] as [number, number], dest = args[2] as [number, number];
+    const m = maze.length, n = maze[0]!.length;
+    const visited = Array.from({length: m}, () => new Array(n).fill(false));
+    const queue: [number, number][] = [[start[0], start[1]]];
+    visited[start[0]]![start[1]] = true;
+    const dirs = [[1,0],[-1,0],[0,1],[0,-1]];
+    while (queue.length) {
+      const [r, c] = queue.shift()!;
+      if (r === dest[0] && c === dest[1]) return true;
+      for (const [dr, dc] of dirs) {
+        let nr = r + dr!, nc = c + dc!;
+        while (nr >= 0 && nr < m && nc >= 0 && nc < n && maze[nr]![nc] === 0) { nr += dr!; nc += dc!; }
+        nr -= dr!; nc -= dc!;
+        if (!visited[nr]![nc]) { visited[nr]![nc] = true; queue.push([nr, nc]); }
+      }
+    }
+    return false;
+  },
+
+  'create-sorted-array-through-instructions': (...args: unknown[]) => {
+    const instructions = args[0] as number[];
+    const MOD = 1_000_000_007n;
+    const maxVal = 100001;
+    const bit = new Array(maxVal + 1).fill(0);
+    function update(i: number) { for (; i <= maxVal; i += i & (-i)) bit[i]++; }
+    function query(i: number): number { let s = 0; for (; i > 0; i -= i & (-i)) s += bit[i]; return s; }
+    let total = 0n;
+    for (let k = 0; k < instructions.length; k++) {
+      const v = instructions[k]!;
+      const less = query(v - 1);
+      const greater = k - query(v);
+      total = (total + BigInt(Math.min(less, greater))) % MOD;
+      update(v);
+    }
+    return Number(total);
+  },
+
+  'minimum-time-to-remove-all-cars': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const MOD = 1_000_000_007;
+    const left = new Array(n).fill(0);
+    const right = new Array(n).fill(0);
+    left[0] = s[0] === '1' ? 1 : 0;
+    for (let i = 1; i < n; i++) left[i] = Math.min(left[i-1]! + 2 * (s[i] === '1' ? 1 : 0), i + 1);
+    right[n-1] = s[n-1] === '1' ? 1 : 0;
+    for (let i = n - 2; i >= 0; i--) right[i] = Math.min(right[i+1]! + 2 * (s[i] === '1' ? 1 : 0), n - i);
+    let ans = Math.min(left[n-1]!, right[0]!);
+    for (let i = 0; i < n - 1; i++) ans = Math.min(ans, left[i]! + right[i+1]!);
+    return ans;
+    void MOD;
+  },
+
+  'process-restricted-friend-requests': (...args: unknown[]) => {
+    const n = args[0] as number, restrictions = args[1] as [number,number][], requests = args[2] as [number,number][];
+    const parent = Array.from({length: n}, (_, i) => i);
+    function find(x: number): number { return parent[x] === x ? x : (parent[x] = find(parent[x]!)); }
+    const result: boolean[] = [];
+    for (const [u, v] of requests) {
+      const ru = find(u), rv = find(v);
+      if (ru === rv) { result.push(true); continue; }
+      let ok = true;
+      for (const [x, y] of restrictions) {
+        const rx = find(x), ry = find(y);
+        if ((rx === ru && ry === rv) || (rx === rv && ry === ru)) { ok = false; break; }
+      }
+      if (ok) parent[ru] = rv;
+      result.push(ok);
+    }
+    return result;
+  },
+
+  'design-food-rating-system': (...args: unknown[]) => {
+    const ops = args[0] as [string, unknown[]][];
+    const foodMap = new Map<string, {cuisine: string, rating: number}>();
+    const cuisineHeap = new Map<string, [number, string][]>();
+    function heapPush(arr: [number, string][], item: [number, string]) {
+      arr.push(item);
+      let i = arr.length - 1;
+      while (i > 0) {
+        const p = (i - 1) >> 1;
+        if (arr[p]![0] > item[0] || (arr[p]![0] === item[0] && arr[p]![1] <= item[1])) break;
+        [arr[i], arr[p]] = [arr[p]!, arr[i]!];
+        i = p;
+      }
+    }
+    function heapPop(arr: [number, string][]): [number, string] {
+      const top = arr[0]!;
+      const last = arr.pop()!;
+      if (arr.length > 0) {
+        arr[0] = last;
+        let i = 0;
+        while (true) {
+          let best = i;
+          const l = 2*i+1, r = 2*i+2;
+          for (const c of [l, r]) {
+            if (c < arr.length && (arr[c]![0] > arr[best]![0] || (arr[c]![0] === arr[best]![0] && arr[c]![1] < arr[best]![1]))) best = c;
+          }
+          if (best === i) break;
+          [arr[i], arr[best]] = [arr[best]!, arr[i]!];
+          i = best;
+        }
+      }
+      return top;
+    }
+    const result: (string | null)[] = [];
+    for (const [op, params] of ops) {
+      if (op === 'FoodRatings') {
+        const [foods, cuisines, ratings] = params as [string[], string[], number[]];
+        for (let i = 0; i < foods.length; i++) {
+          foodMap.set(foods[i]!, {cuisine: cuisines[i]!, rating: ratings[i]!});
+          if (!cuisineHeap.has(cuisines[i]!)) cuisineHeap.set(cuisines[i]!, []);
+          heapPush(cuisineHeap.get(cuisines[i]!)!, [ratings[i]!, foods[i]!]);
+        }
+        result.push(null);
+      } else if (op === 'changeRating') {
+        const [food, newRating] = params as [string, number];
+        const info = foodMap.get(food)!;
+        info.rating = newRating;
+        heapPush(cuisineHeap.get(info.cuisine)!, [newRating, food]);
+        result.push(null);
+      } else {
+        const cuisine = params[0] as string;
+        const heap = cuisineHeap.get(cuisine)!;
+        while (heap.length > 0) {
+          const [r, f] = heap[0]!;
+          if (foodMap.get(f)!.rating === r) break;
+          heapPop(heap);
+        }
+        result.push(heap[0]![1]);
+      }
+    }
+    return result;
+  },
+
+  'first-day-you-have-been-in-all-rooms': (...args: unknown[]) => {
+    const nextVisit = args[0] as number[];
+    const n = nextVisit.length;
+    const MOD = 1_000_000_007n;
+    const dp = new Array(n).fill(0n);
+    dp[0] = 0n;
+    for (let i = 1; i < n; i++) {
+      dp[i] = (2n * dp[i-1]! - dp[nextVisit[i-1]!]! + 2n + BigInt(MOD)) % BigInt(MOD);
+    }
+    return Number(dp[n-1]);
+  },
+
 };

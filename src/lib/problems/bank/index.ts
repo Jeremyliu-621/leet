@@ -1942,6 +1942,17 @@ import { problem as largestComponentSizeByCommonFactor } from './largest-compone
 import { problem as reachableNodesInSubdividedGraph } from './reachable-nodes-in-subdivided-graph';
 import { problem as wiggleSort } from './wiggle-sort';
 import { problem as candyCrush } from './candy-crush';
+// batch 74
+import { problem as rangeSumQueryMutable } from './range-sum-query-mutable';
+import { problem as countOfSmallerNumbersAfterSelfBit } from './count-of-smaller-numbers-after-self-bit';
+import { problem as rankTransformOfAnArray } from './rank-transform-of-an-array';
+import { problem as similarStringGroups } from './similar-string-groups';
+import { problem as theMaze } from './the-maze';
+import { problem as createSortedArrayThroughInstructions } from './create-sorted-array-through-instructions';
+import { problem as minimumTimeToRemoveAllCars } from './minimum-time-to-remove-all-cars';
+import { problem as processRestrictedFriendRequests } from './process-restricted-friend-requests';
+import { problem as designFoodRatingSystem } from './design-food-rating-system';
+import { problem as firstDayBeenInAllRooms } from './first-day-you-have-been-in-all-rooms';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -3920,4 +3931,15 @@ export const problems: readonly Problem[] = [
   reachableNodesInSubdividedGraph,
   wiggleSort,
   candyCrush,
+  // batch 74
+  rangeSumQueryMutable,
+  countOfSmallerNumbersAfterSelfBit,
+  rankTransformOfAnArray,
+  similarStringGroups,
+  theMaze,
+  createSortedArrayThroughInstructions,
+  minimumTimeToRemoveAllCars,
+  processRestrictedFriendRequests,
+  designFoodRatingSystem,
+  firstDayBeenInAllRooms,
 ];
