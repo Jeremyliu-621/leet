@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1935** problems; 6078 tests green. Batch 84 complete (9 problems total).
+**Current focus:** Bank at **1945** problems; 6129 tests green. Batch 86 complete (3 problems: arrays, strings).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 85); UI/UX polish (light mode, accessibility, draggable splitter).
+**Next up:** Continued bank growth (batch 87); UI/UX polish.
+
+### feat(bank): add batch 86 — 3 problems (arrays, strings) (2026-05-26)
+Added 3 problems: `maximum-value-of-an-ordered-triplet-ii` (medium/arrays, O(n) single-pass tracking maxI/maxDiff/ans for (nums[i]-nums[j])*nums[k]), `divide-array-into-arrays-with-max-difference` (medium/arrays, sort + consecutive triplet max-diff check), `shifting-letters-ii` (medium/strings+arrays, difference array for O(n+q) range shifts mod 26). Bank at **1945**; 6129 tests.
 
 ### feat(bank): batch 84 cont. — 7 problems (simulation, heap, backtracking, linked-list) (2026-05-26)
 Added 7 problems: `find-the-winner-of-the-circular-game` (medium/simulation+math, Josephus iterative), `minimum-time-to-type-word-using-typewriter` (easy/simulation+math+strings, circular ring greedy), `apply-operations-to-array` (easy/arrays+simulation, merge-equal+shift-zeros), `maximum-performance-of-a-team` (hard/heap+arrays+math, sort-by-eff+min-heap, mod 1e9+7), `splitting-a-string-into-descending-consecutive-values` (medium/backtracking+strings+math, BigInt recursion), `delete-the-middle-node-of-a-linked-list` (medium/linked-list+two-pointers), `maximum-twin-sum-of-a-linked-list` (medium/linked-list+two-pointers). Supersedes shorter-ID variants with canonical full-title IDs. Bank at **1935**; 6078 tests.

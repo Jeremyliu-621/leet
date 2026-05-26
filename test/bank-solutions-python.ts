@@ -29618,4 +29618,46 @@ def gardenNoAdjRunner(n, paths):
     return True
 `,
 
+
+  'maximum-value-of-an-ordered-triplet-ii': `
+def maximumTripletValue(nums: list) -> int:
+    max_i = float('-inf')
+    max_diff = float('-inf')
+    ans = 0
+    for x in nums:
+        ans = max(ans, max_diff * x)
+        max_diff = max(max_diff, max_i - x)
+        max_i = max(max_i, x)
+    return ans
+`,
+
+  'divide-array-into-arrays-with-max-difference': `
+def divideArray(nums: list, k: int) -> list:
+    sorted_nums = sorted(nums)
+    result = []
+    for i in range(0, len(sorted_nums), 3):
+        if sorted_nums[i + 2] - sorted_nums[i] > k:
+            return []
+        result.append([sorted_nums[i], sorted_nums[i + 1], sorted_nums[i + 2]])
+    return result
+`,
+
+  'shifting-letters-ii': `
+def shiftingLetters(s: str, queries: list) -> str:
+    n = len(s)
+    diff = [0] * (n + 1)
+    for q in queries:
+        l, r, d = int(q[0]), int(q[1]), int(q[2])
+        delta = 1 if d == 1 else -1
+        diff[l] += delta
+        diff[r + 1] -= delta
+    chars = list(s)
+    net = 0
+    for i in range(n):
+        net += diff[i]
+        shift = ((net % 26) + 26) % 26
+        chars[i] = chr((ord(chars[i]) - ord('a') + shift) % 26 + ord('a'))
+    return ''.join(chars)
+`,
+
 };

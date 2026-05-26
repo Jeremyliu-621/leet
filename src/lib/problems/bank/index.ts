@@ -2072,6 +2072,10 @@ import { problem as deleteTheMiddleNodeOfALinkedList } from './delete-the-middle
 // batch 85 — union-find, heap
 import { problem as numberOfConnectedComponentsInAnUndirectedGraph } from './number-of-connected-components-in-an-undirected-graph';
 import { problem as kthSmallestElementInASortedMatrix } from './kth-smallest-element-in-a-sorted-matrix';
+// batch 86 — arrays, strings
+import { problem as maximumValueOfAnOrderedTripletII } from './maximum-value-of-an-ordered-triplet-ii';
+import { problem as divideArrayIntoArraysWithMaxDifference } from './divide-array-into-arrays-with-max-difference';
+import { problem as shiftingLettersII } from './shifting-letters-ii';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4180,4 +4184,8 @@ export const problems: readonly Problem[] = [
   // batch 85 — union-find, heap
   numberOfConnectedComponentsInAnUndirectedGraph,
   kthSmallestElementInASortedMatrix,
+  // batch 86 — arrays, strings
+  maximumValueOfAnOrderedTripletII,
+  divideArrayIntoArraysWithMaxDifference,
+  shiftingLettersII,
 ];

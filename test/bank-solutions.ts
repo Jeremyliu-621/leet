@@ -30153,4 +30153,46 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
+
+  'maximum-value-of-an-ordered-triplet-ii': (...args: unknown[]) => {
+    const [nums] = args as [number[]];
+    let maxI = -Infinity, maxDiff = -Infinity, ans = 0;
+    for (const x of nums) {
+      ans = Math.max(ans, maxDiff * x);
+      maxDiff = Math.max(maxDiff, maxI - x);
+      maxI = Math.max(maxI, x);
+    }
+    return ans;
+  },
+
+  'divide-array-into-arrays-with-max-difference': (...args: unknown[]) => {
+    const [nums, k] = args as [number[], number];
+    const sorted = [...nums].sort((a, b) => a - b);
+    const result: number[][] = [];
+    for (let i = 0; i < sorted.length; i += 3) {
+      if (sorted[i + 2]! - sorted[i]! > k) return [];
+      result.push([sorted[i]!, sorted[i + 1]!, sorted[i + 2]!]);
+    }
+    return result;
+  },
+
+  'shifting-letters-ii': (...args: unknown[]) => {
+    const [s, queries] = args as [string, number[][]];
+    const n = s.length;
+    const diff = new Array<number>(n + 1).fill(0);
+    for (const [l, r, dir] of queries) {
+      const delta = dir === 1 ? 1 : -1;
+      diff[l!]! += delta;
+      diff[r! + 1]! -= delta;
+    }
+    const chars = s.split('');
+    let net = 0;
+    for (let i = 0; i < n; i++) {
+      net += diff[i]!;
+      const shift = ((net % 26) + 26) % 26;
+      chars[i] = String.fromCharCode(((chars[i]!.charCodeAt(0) - 97 + shift) % 26) + 97);
+    }
+    return chars.join('');
+  },
+
 };
