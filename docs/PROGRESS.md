@@ -10,7 +10,13 @@
 **Current phase:** Phase 13 — Post-MVP polish
 **Current focus:** Bank at 1745 problems; 5535 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank toward 1750+; UX polish.
+**Next up:** Continue growing problem bank toward 1800; UX polish.
+
+### feat(sw): badge shows today's solve count (2026-05-26)
+Extension icon badge now updates after each solve to show problems solved today (e.g. "3"). Uses neutral dark gray background. Also refreshed on install/startup and storage changes.
+
+### feat(challenge): personal best tracking (2026-05-26)
+After solving in standalone/practice mode the Time stat now shows "personal best" (white accent) on a new record, "first solve" (muted) with no prior timed data, or "best Xm Ys" (faint) when not beating the previous best. Also passes `solveDurationMs` in `grant-unlock` so future solves are recorded with timing.
 
 ### Batch 68+69-local backfill (2026-05-26)
 Added 14 previously deferred problems from batch-68 and batch-69-local sessions: `best-time-to-buy-and-sell-stock-iii` (hard/arrays+dp, at-most-2-transactions state machine), `find-the-duplicate-number` (medium/arrays+two-pointers, Floyd's cycle detection), `maximum-difference-in-array` (easy/arrays, min-so-far scan), `longest-subarray-with-at-most-k-frequency` (medium/arrays+sliding-window+hash-map), `count-pairs-in-two-arrays` (medium/arrays+binary-search, diff-array sort + bisect), `image-smoother` (easy/arrays, 3×3 box filter floor-average), `complex-number-multiplication` (medium/strings+math, (a+bi)(c+di) formula), `number-of-boomerangs` (medium/hash-map+math, equidistant ordered pairs), `find-duplicate-file-in-system` (medium/strings+hash-map, content-to-path grouping), `poor-pigs` (hard/math, (rounds+1)^pigs >= buckets), `strobogrammatic-number` (easy/strings+math, two-pointer pair validation), `fraction-addition-and-subtraction` (medium/strings+math, gcd cross-multiply), `longest-zigzag-path-in-binary-tree` (medium/tree+dp, DFS direction tracking), `find-the-duplicate-subtrees` (medium/tree+hash-map, post-order serialization). JS + Python solutions for all. Bank at **1741**; 5511 tests.
