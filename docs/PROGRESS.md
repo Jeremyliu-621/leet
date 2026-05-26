@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2038** problems; 6408 tests green. Batches 92–99 + batch 96 tree/stack + 2K milestone + remote merges complete.
+**Current focus:** Bank at **2039** problems; 6411 tests green. Batches 99–100 + remote batch 96 tree/stack complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 100+); UI/UX polish.
+**Next up:** Continued bank growth (batch 101+); UI/UX polish.
+
+### feat(bank): add batch 100 — construct-binary-tree-from-preorder-and-inorder-traversal (2026-05-26)
+Registered `construct-binary-tree-from-preorder-and-inorder-traversal` (medium/tree, hash-map + recursive preL/preR/inL/inR divide-and-conquer). Also: backfilled find-all-groups-of-farmland expanded hidden tests (10 hidden, up from 3) with improved hints. Bank at **2036**; 6402 tests.
 
 ### feat(bank): add batch 96 — remove-all-adjacent-duplicates-in-string-ii, average-of-subtree, cousins-in-binary-tree-ii (2026-05-26)
 Added 3 problems: `remove-all-adjacent-duplicates-in-string-ii` (medium/stack+strings, (char,count) stack; pop when count==k), `average-of-subtree` (easy/tree, post-order DFS returning [sum,count]; integer-division equality check), `cousins-in-binary-tree-ii` (medium/tree, BFS sets each child's value to levelSum−siblingSum). Bank at **2038**; 6408 tests.
