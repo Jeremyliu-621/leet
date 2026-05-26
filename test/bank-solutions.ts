@@ -29458,4 +29458,242 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ops;
   },
 
+  // batch 80 — backtracking, heap
+
+  'all-paths-source-to-target-backtrack': (...args: unknown[]) => {
+    const [grid] = args as [number[][]];
+    const m = grid.length, n = grid[0]!.length;
+    const memo = new Map<number, number>();
+    function dp(r: number, c: number): number {
+      if (r === m - 1 && c === n - 1) return 1;
+      const key = r * n + c;
+      if (memo.has(key)) return memo.get(key)!;
+      let res = 0;
+      if (r + 1 < m && grid[r + 1]![c] === 0) res += dp(r + 1, c);
+      if (c + 1 < n && grid[r]![c + 1] === 0) res += dp(r, c + 1);
+      memo.set(key, res);
+      return res;
+    }
+    if (grid[0]![0] === 1 || grid[m - 1]![n - 1] === 1) return 0;
+    return dp(0, 0);
+  },
+
+  'factor-combinations': (...args: unknown[]) => {
+    const [n] = args as [number];
+    const result: number[][] = [];
+    function bt(rem: number, start: number, path: number[]) {
+      if (path.length > 0) result.push([...path, rem]);
+      for (let d = start; d * d <= rem; d++) {
+        if (rem % d === 0) {
+          path.push(d);
+          bt(rem / d, d, path);
+          path.pop();
+        }
+      }
+    }
+    if (n <= 1) return [];
+    bt(n, 2, []);
+    const norm = result.map(c => [...c].sort((a, b) => a - b));
+    return norm.sort((a, b) => {
+      for (let i = 0; i < Math.max(a.length, b.length); i++) {
+        if (i >= a.length) return -1;
+        if (i >= b.length) return 1;
+        if (a[i] !== b[i]) return a[i]! - b[i]!;
+      }
+      return 0;
+    });
+  },
+
+  'find-all-increasing-subsequences': (...args: unknown[]) => {
+    const [nums] = args as [number[]];
+    const result: number[][] = [];
+    function bt(start: number, path: number[]) {
+      if (path.length >= 2) result.push([...path]);
+      const used = new Set<number>();
+      for (let i = start; i < nums.length; i++) {
+        const v = nums[i]!;
+        if (used.has(v)) continue;
+        if (path.length === 0 || v >= path[path.length - 1]!) {
+          used.add(v);
+          path.push(v);
+          bt(i + 1, path);
+          path.pop();
+        }
+      }
+    }
+    bt(0, []);
+    const seen = new Set<string>();
+    const unique = result.filter(a => { const k = JSON.stringify(a); if (seen.has(k)) return false; seen.add(k); return true; });
+    return unique.sort((a, b) => {
+      for (let i = 0; i < Math.max(a.length, b.length); i++) {
+        if (i >= a.length) return -1;
+        if (i >= b.length) return 1;
+        if (a[i] !== b[i]) return a[i]! - b[i]!;
+      }
+      return 0;
+    });
+  },
+
+  'generalized-abbreviation': (...args: unknown[]) => {
+    const [word] = args as [string];
+    const n = word.length;
+    const results: string[] = [];
+    function bt(i: number, cur: string, cnt: number) {
+      if (i === n) { results.push(cur + (cnt > 0 ? cnt : '')); return; }
+      bt(i + 1, cur, cnt + 1);
+      bt(i + 1, cur + (cnt > 0 ? cnt : '') + word[i]!, 0);
+    }
+    bt(0, '', 0);
+    return results.sort();
+  },
+
+  'maximum-cpu-load': (...args: unknown[]) => {
+    const [jobs] = args as [number[][]];
+    if (jobs.length === 0) return 0;
+    const sorted = [...jobs].sort((a, b) => a[0]! - b[0]!);
+    // min-heap by end time; simulate with sort
+    const heap: [number, number][] = []; // [end, load]
+    let current = 0, max = 0;
+    function heapPush(e: number, l: number) { heap.push([e, l]); heap.sort((a, b) => a[0]! - b[0]!); }
+    for (const job of sorted) {
+      const [s, e, l] = job as [number, number, number];
+      // remove ended
+      while (heap.length > 0 && heap[0]![0] <= s) {
+        current -= heap[0]![1]!;
+        heap.shift();
+      }
+      heapPush(e, l);
+      current += l;
+      if (current > max) max = current;
+    }
+    return max;
+  },
+
+  'maximum-events-attended-with-k-events': (...args: unknown[]) => {
+    const [events, k] = args as [number[][], number];
+    const n = events.length;
+    // Sort by end day; one-day model: compatible when s_p < s_i (attend p on an earlier day)
+    const sorted = [...events].sort((a, b) => a[1]! !== b[1]! ? a[1]! - b[1]! : a[0]! - b[0]!);
+    const dp: number[][] = Array.from({ length: n + 1 }, () => new Array(k + 1).fill(0));
+    for (let i = 1; i <= n; i++) {
+      const [s, , v] = sorted[i - 1] as [number, number, number];
+      // Largest p in [1..i-1] with sorted[p-1][0] < s (linear scan; starts not monotone)
+      let prev = 0;
+      for (let p = 1; p < i; p++) {
+        if (sorted[p - 1]![0]! < s) prev = p;
+      }
+      for (let j = 1; j <= k; j++) {
+        dp[i]![j] = Math.max(dp[i - 1]![j]!, dp[prev]![j - 1]! + v);
+      }
+    }
+    return dp[n]![k]!;
+  },
+
+  'merge-k-sorted-arrays': (...args: unknown[]) => {
+    const [arrays] = args as [number[][]];
+    const result: number[] = [];
+    // simple merge with sorted extraction (n log k via heap simulation)
+    const heap: [number, number, number][] = []; // [val, arrIdx, elemIdx]
+    function heapPush(val: number, ai: number, ei: number) {
+      heap.push([val, ai, ei]);
+      heap.sort((a, b) => a[0]! - b[0]!);
+    }
+    for (let i = 0; i < arrays.length; i++) {
+      if (arrays[i]!.length > 0) heapPush(arrays[i]![0]!, i, 0);
+    }
+    while (heap.length > 0) {
+      const [val, ai, ei] = heap.shift()!;
+      result.push(val);
+      if (ei + 1 < arrays[ai]!.length) heapPush(arrays[ai]![ei + 1]!, ai, ei + 1);
+    }
+    return result;
+  },
+
+  'sort-nearly-sorted-array': (...args: unknown[]) => {
+    const [nums, k] = args as [number[], number];
+    const result: number[] = [];
+    const heap: number[] = [];
+    function heapPush(v: number) { heap.push(v); heap.sort((a, b) => a - b); }
+    for (const v of nums) {
+      heapPush(v);
+      if (heap.length > k) result.push(heap.shift()!);
+    }
+    while (heap.length > 0) result.push(heap.shift()!);
+    return result;
+  },
+
+  'interleave-two-linked-lists': (...args: unknown[]) => {
+    const [arr1, arr2] = args as [number[], number[]];
+    const result: number[] = [];
+    let i = 0, j = 0;
+    while (i < arr1.length || j < arr2.length) {
+      if (i < arr1.length) result.push(arr1[i++]!);
+      if (j < arr2.length) result.push(arr2[j++]!);
+    }
+    return result;
+  },
+
+  'segregate-even-odd-linked-list': (...args: unknown[]) => {
+    const [arr] = args as [number[]];
+    const evens = arr.filter(v => v % 2 === 0);
+    const odds = arr.filter(v => v % 2 !== 0);
+    return [...evens, ...odds];
+  },
+
+  'linked-list-decimal-value': (...args: unknown[]) => {
+    const [arr] = args as [number[]];
+    let result = 0;
+    for (const d of arr) result = result * 10 + d;
+    return result;
+  },
+
+  'bowling-game-score': (...args: unknown[]) => {
+    const [rolls] = args as [number[]];
+    let score = 0, i = 0;
+    for (let frame = 0; frame < 10; frame++) {
+      if (rolls[i] === 10) {
+        score += 10 + (rolls[i + 1] ?? 0) + (rolls[i + 2] ?? 0);
+        i += 1;
+      } else if ((rolls[i] ?? 0) + (rolls[i + 1] ?? 0) === 10) {
+        score += 10 + (rolls[i + 2] ?? 0);
+        i += 2;
+      } else {
+        score += (rolls[i] ?? 0) + (rolls[i + 1] ?? 0);
+        i += 2;
+      }
+    }
+    return score;
+  },
+
+  'ball-through-inclined-grid': (...args: unknown[]) => {
+    const [grid] = args as [number[][]];
+    const m = grid.length, n = grid[0]!.length;
+    const result: number[] = [];
+    for (let startCol = 0; startCol < n; startCol++) {
+      let col = startCol, stuck = false;
+      for (let row = 0; row < m; row++) {
+        const dir = grid[row]![col]!;
+        const nextCol = col + dir;
+        if (nextCol < 0 || nextCol >= n || grid[row]![nextCol] !== dir) {
+          stuck = true; break;
+        }
+        col = nextCol;
+      }
+      result.push(stuck ? -1 : col);
+    }
+    return result;
+  },
+
+  'token-bucket-rate-limiter': (...args: unknown[]) => {
+    const [capacity, refillRate, requests] = args as [number, number, number[][]];
+    let tokens = capacity, lastTime = 0;
+    return requests.map(req => {
+      const [ts, needed] = req as [number, number];
+      tokens = Math.min(capacity, tokens + (ts - lastTime) * refillRate);
+      lastTime = ts;
+      if (tokens >= needed) { tokens -= needed; return true; }
+      return false;
+    });
+  },
+
 };

@@ -2031,6 +2031,21 @@ import { problem as minimumScoreOfAPathBetweenTwoCities } from './minimum-score-
 import { problem as maximumProbabilityOfSuccess } from './maximum-probability-of-success';
 import { problem as minimumFuelCostToReportToTheCapital } from './minimum-fuel-cost-to-report-to-the-capital';
 import { problem as minimumOperationsToMakeTheArrayAlternating } from './minimum-operations-to-make-the-array-alternating';
+// batch 80 (cont.) — backtracking, heap, linked-list, simulation
+import { problem as allPathsSourceToTargetBacktrack } from './all-paths-source-to-target-backtrack';
+import { problem as factorCombinations } from './factor-combinations';
+import { problem as findAllIncreasingSubsequences } from './find-all-increasing-subsequences';
+import { problem as generalizedAbbreviation } from './generalized-abbreviation';
+import { problem as maximumCpuLoad } from './maximum-cpu-load';
+import { problem as maximumEventsAttendedWithKEvents } from './maximum-events-attended-with-k-events';
+import { problem as mergeKSortedArrays } from './merge-k-sorted-arrays';
+import { problem as sortNearlySortedArray } from './sort-nearly-sorted-array';
+import { problem as interleaveTwoLinkedLists } from './interleave-two-linked-lists';
+import { problem as segregateEvenOddLinkedList } from './segregate-even-odd-linked-list';
+import { problem as linkedListDecimalValue } from './linked-list-decimal-value';
+import { problem as bowlingGameScore } from './bowling-game-score';
+import { problem as ballThroughInclinedGrid } from './ball-through-inclined-grid';
+import { problem as tokenBucketRateLimiter } from './token-bucket-rate-limiter';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4098,4 +4113,19 @@ export const problems: readonly Problem[] = [
   maximumProbabilityOfSuccess,
   minimumFuelCostToReportToTheCapital,
   minimumOperationsToMakeTheArrayAlternating,
+  // batch 80 (cont.) — backtracking, heap, linked-list, simulation
+  allPathsSourceToTargetBacktrack,
+  factorCombinations,
+  findAllIncreasingSubsequences,
+  generalizedAbbreviation,
+  maximumCpuLoad,
+  maximumEventsAttendedWithKEvents,
+  mergeKSortedArrays,
+  sortNearlySortedArray,
+  interleaveTwoLinkedLists,
+  segregateEvenOddLinkedList,
+  linkedListDecimalValue,
+  bowlingGameScore,
+  ballThroughInclinedGrid,
+  tokenBucketRateLimiter,
 ];

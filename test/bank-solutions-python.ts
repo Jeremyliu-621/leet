@@ -28896,4 +28896,240 @@ def kIncreasing(arr: list, k: int) -> int:
     return ops
 `,
 
+  // batch 80 — backtracking, heap
+
+  'all-paths-source-to-target-backtrack': `
+def countPaths(grid):
+    m = len(grid)
+    n = len(grid[0])
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dp(r, c):
+        if r == m - 1 and c == n - 1:
+            return 1
+        res = 0
+        if r + 1 < m and grid[r + 1][c] == 0:
+            res += dp(r + 1, c)
+        if c + 1 < n and grid[r][c + 1] == 0:
+            res += dp(r, c + 1)
+        return res
+    if grid[0][0] == 1 or grid[m-1][n-1] == 1:
+        return 0
+    return dp(0, 0)
+`,
+
+  'factor-combinations': `
+def getFactors(n):
+    result = []
+    def bt(rem, start, path):
+        if path:
+            result.append(path + [rem])
+        d = start
+        while d * d <= rem:
+            if rem % d == 0:
+                bt(rem // d, d, path + [d])
+            d += 1
+    if n <= 1:
+        return []
+    bt(n, 2, [])
+    norm = [sorted(c) for c in result]
+    return sorted(norm)
+`,
+
+  'find-all-increasing-subsequences': `
+def findSubsequences(nums):
+    nums = list(nums)
+    result = []
+    def bt(start, path):
+        if len(path) >= 2:
+            result.append(list(path))
+        used = set()
+        for i in range(start, len(nums)):
+            v = nums[i]
+            if v in used:
+                continue
+            if not path or v >= path[-1]:
+                used.add(v)
+                path.append(v)
+                bt(i + 1, path)
+                path.pop()
+    bt(0, [])
+    seen = set()
+    unique = []
+    for seq in result:
+        key = tuple(seq)
+        if key not in seen:
+            seen.add(key)
+            unique.append(seq)
+    return sorted(unique)
+`,
+
+  'generalized-abbreviation': `
+def generateAbbreviations(word):
+    n = len(word)
+    results = []
+    def bt(i, cur, cnt):
+        if i == n:
+            results.append(cur + (str(cnt) if cnt > 0 else ''))
+            return
+        bt(i + 1, cur, cnt + 1)
+        bt(i + 1, cur + (str(cnt) if cnt > 0 else '') + word[i], 0)
+    bt(0, '', 0)
+    return sorted(results)
+`,
+
+  'maximum-cpu-load': `
+def findMaxCPULoad(jobs):
+    jobs = [list(j) for j in jobs]
+    if not jobs:
+        return 0
+    import heapq
+    jobs.sort(key=lambda j: j[0])
+    heap = []  # (end, load)
+    current = 0
+    max_load = 0
+    for s, e, l in jobs:
+        while heap and heap[0][0] <= s:
+            current -= heapq.heappop(heap)[1]
+        heapq.heappush(heap, (e, l))
+        current += l
+        if current > max_load:
+            max_load = current
+    return max_load
+`,
+
+  'maximum-events-attended-with-k-events': `
+def maxValue(events, k):
+    events = [list(e) for e in events]
+    n = len(events)
+    # Sort by end day; compatible when s_p < s_i (one-day attendance model)
+    events.sort(key=lambda e: (e[1], e[0]))
+    dp = [[0] * (k + 1) for _ in range(n + 1)]
+    for i in range(1, n + 1):
+        s, e, v = events[i - 1]
+        prev = 0
+        for p in range(1, i):
+            if events[p - 1][0] < s:
+                prev = p
+        for j in range(1, k + 1):
+            dp[i][j] = max(dp[i-1][j], dp[prev][j-1] + v)
+    return dp[n][k]
+`,
+
+  'merge-k-sorted-arrays': `
+def mergeKSortedArrays(arrays):
+    arrays = [list(a) for a in arrays]
+    import heapq
+    result = []
+    heap = []
+    for ai, arr in enumerate(arrays):
+        if arr:
+            heapq.heappush(heap, (arr[0], ai, 0))
+    while heap:
+        val, ai, ei = heapq.heappop(heap)
+        result.append(val)
+        if ei + 1 < len(arrays[ai]):
+            heapq.heappush(heap, (arrays[ai][ei + 1], ai, ei + 1))
+    return result
+`,
+
+  'sort-nearly-sorted-array': `
+def sortNearlySorted(nums, k):
+    nums = list(nums)
+    import heapq
+    result = []
+    heap = []
+    for v in nums:
+        heapq.heappush(heap, v)
+        if len(heap) > k:
+            result.append(heapq.heappop(heap))
+    while heap:
+        result.append(heapq.heappop(heap))
+    return result
+`,
+
+  'interleave-two-linked-lists': `
+def interleaveListsRunner(arr1, arr2):
+    arr1, arr2 = list(arr1), list(arr2)
+    result = []
+    i, j = 0, 0
+    while i < len(arr1) or j < len(arr2):
+        if i < len(arr1):
+            result.append(arr1[i]); i += 1
+        if j < len(arr2):
+            result.append(arr2[j]); j += 1
+    return result
+`,
+
+  'segregate-even-odd-linked-list': `
+def segregateEvenOddRunner(arr):
+    arr = list(arr)
+    evens = [v for v in arr if v % 2 == 0]
+    odds = [v for v in arr if v % 2 != 0]
+    return evens + odds
+`,
+
+  'linked-list-decimal-value': `
+def listDecimalValueRunner(arr):
+    result = 0
+    for d in arr:
+        result = result * 10 + int(d)
+    return result
+`,
+
+  'bowling-game-score': `
+def bowlingScore(rolls):
+    rolls = list(rolls)
+    score = 0
+    i = 0
+    for frame in range(10):
+        if i < len(rolls) and rolls[i] == 10:
+            score += 10 + (rolls[i+1] if i+1 < len(rolls) else 0) + (rolls[i+2] if i+2 < len(rolls) else 0)
+            i += 1
+        elif i+1 < len(rolls) and rolls[i] + rolls[i+1] == 10:
+            score += 10 + (rolls[i+2] if i+2 < len(rolls) else 0)
+            i += 2
+        else:
+            score += (rolls[i] if i < len(rolls) else 0) + (rolls[i+1] if i+1 < len(rolls) else 0)
+            i += 2
+    return score
+`,
+
+  'ball-through-inclined-grid': `
+def findBall(grid):
+    grid = [list(row) for row in grid]
+    m = len(grid)
+    n = len(grid[0])
+    result = []
+    for start_col in range(n):
+        col = start_col
+        stuck = False
+        for row in range(m):
+            d = grid[row][col]
+            next_col = col + d
+            if next_col < 0 or next_col >= n or grid[row][next_col] != d:
+                stuck = True
+                break
+            col = next_col
+        result.append(-1 if stuck else col)
+    return result
+`,
+
+  'token-bucket-rate-limiter': `
+def tokenBucket(capacity, refillRate, requests):
+    requests = [list(r) for r in requests]
+    tokens = capacity
+    last_time = 0
+    result = []
+    for ts, needed in requests:
+        tokens = min(capacity, tokens + (ts - last_time) * refillRate)
+        last_time = ts
+        if tokens >= needed:
+            tokens -= needed
+            result.append(True)
+        else:
+            result.append(False)
+    return result
+`,
+
 };
