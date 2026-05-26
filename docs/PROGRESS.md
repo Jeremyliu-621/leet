@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1838** problems; 5802 tests green. Marketing site at 1,825+. All problems have ≥3 hints.
+**Current focus:** Bank at **1852** problems; 5856 tests green. Marketing site at 1,850+. All problems have ≥3 hints.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** UX polish (CodeMirror QoL, accessibility); light-mode QA; more bank growth.
+**Next up:** Update marketing site stats to 1,850+; UX polish (CodeMirror QoL, accessibility); light-mode QA; more bank growth.
+
+### feat(bank): add batch 76 — 14 problems (union-find, heap, DP, graph, design) (2026-05-26)
+5 new problem files + 9 orphan registrations. New: `remove-max-edges-graph-traversable` (hard/union-find, dual-DSU Alice+Bob), `exam-room` (medium/simulation, sorted-seat greedy), `checking-edge-length-limited-paths` (hard/union-find, offline sort+DSU), `last-day-still-cross` (hard/union-find+binary-search, binary-search+BFS), `minimum-cost-walk-weighted-graph` (medium/union-find, AND of all edges in component). Orphans: `maximum-average-pass-ratio` (medium/heap), `count-good-meals` (medium/hash-map), `rank-teams-by-votes` (medium/simulation), `minimum-refueling-stops` (hard/heap), `minimum-space-wasted-k-resizing` (medium/dp), `maximum-tasks-assign` (hard/binary-search), `maximum-total-beauty-gardens` (hard/binary-search), `maximum-xor-two-numbers-array` (medium/hash-map), `design-graph-shortest-path` (hard/graph+dijkstra). Fixed beauty-of-gardens solution bug (already-complete gardens misclassified). Bank at **1852**; 5856 tests.
 
 ### feat(bank): add batch 74 — 10 new problems (BIT, union-find, shortest-path, simulation) (2026-05-26)
 Added 10 problems targeting underrepresented tags: `range-sum-query-mutable` (medium/BIT, BIT point update + prefix sum), `count-of-smaller-numbers-after-self-bit` (hard/BIT, coordinate-compress + BIT right-to-left), `create-sorted-array-through-instructions` (hard/BIT, BIT insertion cost tracking mod 1e9+7), `rank-transform-of-an-array` (easy/arrays, sorted-unique rank mapping), `similar-string-groups` (hard/union-find+strings, DSU on 0/2-diff string pairs), `the-maze` (medium/shortest-path+graph, BFS with wall-rolling stops), `minimum-time-to-remove-all-cars` (hard/dp, prefix/suffix DP), `process-restricted-friend-requests` (medium/union-find, DSU + restriction check before merge), `design-food-rating-system` (medium/simulation+heap, lazy-deletion max-heap design), `first-day-you-have-been-in-all-rooms` (medium/dp+simulation, 2*dp[i-1]-dp[nv]+2 formula mod 1e9+7). Bank at **1838** problems; 5802 tests.
