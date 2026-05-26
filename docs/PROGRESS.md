@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1527 problems; 4869 tests green.
+**Current focus:** Bank at 1535 problems; 4893 tests green. Accessibility + UX polish pass complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank toward 1600; UI/UX polish, accessibility, draggable splitter improvements.
+**Next up:** Continue growing problem bank toward 1600; further UX polish.
+
+### Batch 58 + accessibility/UX pass (2026-05-26)
+Added 5 problems: `maximum-total-reward-using-operations-i` (dp/medium, bitset DP), `minimum-array-end` (arrays/medium, bit fill), `maximum-number-of-moves-in-a-grid` (dp/medium, column-BFS), `minimum-cost-to-convert-string-i` (graph/medium, Floyd-Warshall), `ways-to-split-array-into-three-subarrays` (binary-search/medium, prefix sums + two binary searches). Also: `fix(challenge)` pagehide streak damage on force-close; `a11y(terminal)` tablist arrow-key nav with proper tabIndex management; `a11y(popup)` RadioGroup component with arrow-key navigation and tabIndex for all 4 radiogroups; removed stale "Phase 5" dev comment. Bank at **1535**; 4893 tests.
 
 ### Batch 57 (2026-05-26)
 Added 15 problems: `convert-binary-linked-list` (easy), `diagonal-traverse-ii` (medium), `design-circular-deque` (medium), `beautiful-towers-i` (medium), `maximum-tastiness-candy-basket` (medium, binary search), `shortest-subarray-sum-at-least-k` (hard, monotone deque), `substring-with-concatenation-of-all-words` (hard, sliding window), `minimum-people-to-teach` (medium), `punishment-number-of-integer` (medium, backtracking), `minimum-cost-to-separate-sentence-into-rows` (medium, DP), `maximum-running-time-of-n-computers` (hard, BigInt binary search), `count-strictly-increasing-subarrays` (medium, sliding window), `minimum-score-path-between-two-cities` (medium, BFS), `split-message-based-on-limit` (hard), `longest-word-in-dict-deleting` (medium, two-pointers). JS + Python solutions for all. Bank at **~1523**; 4839 tests.
