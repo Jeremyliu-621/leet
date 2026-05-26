@@ -4373,6 +4373,10 @@ def deserialize(data):
     return command.replace('()', 'o').replace('(al)', 'al')
 `,
 
+  'design-goal-parser': `def goalParserInterpretation(command):
+    return command.replace('(al)', 'Gal').replace('()', 'Go')
+`,
+
   'shuffle-the-array': `def shuffle(nums, n):
     result = []
     for i in range(n):

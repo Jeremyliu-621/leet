@@ -127,6 +127,7 @@ import { problem as findCommonCharacters } from './find-common-characters';
 import { problem as countingWordsWithGivenPrefix } from './counting-words-with-given-prefix';
 import { problem as addBinary } from './add-binary';
 import { problem as goalParser } from './goal-parser';
+import { problem as designGoalParser } from './design-goal-parser';
 import { problem as detectCapital } from './detect-capital';
 import { problem as repeatedSubstringPattern } from './repeated-substring-pattern';
 import { problem as checkIfPangram } from './check-if-pangram';
@@ -2067,6 +2068,7 @@ export const problems: readonly Problem[] = [
   countingWordsWithGivenPrefix,
   addBinary,
   goalParser,
+  designGoalParser,
   detectCapital,
   repeatedSubstringPattern,
   checkIfPangram,

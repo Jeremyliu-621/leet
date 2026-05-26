@@ -4881,6 +4881,10 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return (args[0] as string).replace(/\(\)/g, 'o').replace(/\(al\)/g, 'al');
   },
 
+  'design-goal-parser': (...args: unknown[]) => {
+    return (args[0] as string).replace(/\(al\)/g, 'Gal').replace(/\(\)/g, 'Go');
+  },
+
   'shuffle-the-array': (...args: unknown[]) => {
     const nums = args[0] as number[], n = args[1] as number;
     const result: number[] = [];
