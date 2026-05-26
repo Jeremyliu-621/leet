@@ -31514,4 +31514,45 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return max / k;
   },
 
+  // batch 97
+  '4sum': (...args: unknown[]) => {
+    const [numsRaw, target] = args as [number[], number];
+    const nums = [...numsRaw].sort((a, b) => a - b);
+    const n = nums.length;
+    const res: number[][] = [];
+    for (let i = 0; i < n - 3; i++) {
+      if (i > 0 && nums[i] === nums[i - 1]) continue;
+      for (let j = i + 1; j < n - 2; j++) {
+        if (j > i + 1 && nums[j] === nums[j - 1]) continue;
+        let l = j + 1, r = n - 1;
+        while (l < r) {
+          const s = nums[i]! + nums[j]! + nums[l]! + nums[r]!;
+          if (s === target) {
+            res.push([nums[i]!, nums[j]!, nums[l]!, nums[r]!]);
+            while (l < r && nums[l] === nums[l + 1]) l++;
+            while (l < r && nums[r] === nums[r - 1]) r--;
+            l++; r--;
+          } else if (s < target) l++;
+          else r--;
+        }
+      }
+    }
+    return res;
+  },
+
+  'monotonic-stack-daily-temperatures': (...args: unknown[]) => {
+    const [temps] = args as [number[]];
+    const n = temps.length;
+    const ans = new Array<number>(n).fill(0);
+    const stack: number[] = [];
+    for (let i = 0; i < n; i++) {
+      while (stack.length > 0 && temps[i]! > temps[stack[stack.length - 1]!]!) {
+        const j = stack.pop()!;
+        ans[j] = i - j;
+      }
+      stack.push(i);
+    }
+    return ans;
+  },
+
 };

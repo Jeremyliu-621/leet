@@ -2164,6 +2164,9 @@ import { problem as smallestStringStartingFromLeaf } from './smallest-string-sta
 import { problem as findLargestValueInEachTreeRow } from './find-largest-value-in-each-tree-row';
 // batch 94 — sliding-window
 import { problem as maximumAverageSubarrayI } from './maximum-average-subarray-i';
+// batch 97 — two-pointers, stack
+import { problem as fourSumVariant } from './4sum';
+import { problem as dailyTemperaturesVariant } from './monotonic-stack-daily-temperatures';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4365,4 +4368,7 @@ export const problems: readonly Problem[] = [
   findLargestValueInEachTreeRow,
   // batch 94 — sliding-window
   maximumAverageSubarrayI,
+  // batch 97 — two-pointers, stack
+  fourSumVariant,
+  dailyTemperaturesVariant,
 ];
