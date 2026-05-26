@@ -31186,6 +31186,8 @@ def dailyTemperatures(temperatures):
             ans[j] = i - j
         stack.append(i)
     return ans
+`,
+
   'check-if-array-sorted-and-rotated': `
 def check(nums):
     n = len(nums)
