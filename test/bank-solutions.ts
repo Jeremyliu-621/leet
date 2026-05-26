@@ -21824,4 +21824,102 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best;
   },
 
+  // batch 57
+  'sum-of-digits-in-base-k': (...args: unknown[]) => {
+    let n = args[0] as number;
+    const k = args[1] as number;
+    let s = 0;
+    while (n > 0) {
+      s += n % k;
+      n = Math.floor(n / k);
+    }
+    return s;
+  },
+
+  'count-symmetric-integers': (...args: unknown[]) => {
+    const low = args[0] as number;
+    const high = args[1] as number;
+    let count = 0;
+    for (let x = low; x <= high; x++) {
+      const str = String(x);
+      if (str.length % 2 !== 0) continue;
+      const half = str.length / 2;
+      let leftSum = 0, rightSum = 0;
+      for (let i = 0; i < half; i++) leftSum += parseInt(str[i]!);
+      for (let i = half; i < str.length; i++) rightSum += parseInt(str[i]!);
+      if (leftSum === rightSum) count++;
+    }
+    return count;
+  },
+
+  'minimum-number-of-pushes-to-type-word-i': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const n = word.length;
+    let total = 0;
+    for (let i = 0; i < n; i++) total += Math.floor(i / 8) + 1;
+    return total;
+  },
+
+  'divide-array-into-groups-of-size-k': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const k = args[1] as number;
+    for (let i = 0; i < nums.length; i += k) {
+      const chunk = nums.slice(i, i + k);
+      if (new Set(chunk).size !== k) return [];
+    }
+    const result: number[][] = [];
+    for (let i = 0; i < nums.length; i += k) {
+      result.push(nums.slice(i, i + k));
+    }
+    return result;
+  },
+
+  'count-subarrays-of-length-three-with-a-condition': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let count = 0;
+    for (let i = 0; i <= nums.length - 3; i++) {
+      if (2 * (nums[i]! + nums[i + 2]!) === nums[i + 1]!) count++;
+    }
+    return count;
+  },
+
+  'minimum-operations-to-make-array-divisible-by-three': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let ops = 0;
+    for (const n of nums) {
+      const r = n % 3;
+      ops += Math.min(r, 3 - r);
+    }
+    return ops;
+  },
+
+  'find-the-punishment-number-of-integers': (...args: unknown[]) => {
+    const n = args[0] as number;
+    function canPartition(s: string, target: number): boolean {
+      if (target < 0) return false;
+      if (s === '' && target === 0) return true;
+      for (let i = 1; i <= s.length; i++) {
+        if (canPartition(s.slice(i), target - parseInt(s.slice(0, i)))) return true;
+      }
+      return false;
+    }
+    let sum = 0;
+    for (let i = 1; i <= n; i++) {
+      if (canPartition(String(i * i), i)) sum += i * i;
+    }
+    return sum;
+  },
+
+  'minimum-additions-to-make-valid-string': (...args: unknown[]) => {
+    const word = args[0] as string;
+    let i = 0, groups = 0;
+    while (i < word.length) {
+      groups++;
+      if (i < word.length && word[i] === 'a') i++;
+      if (i < word.length && word[i] === 'b') i++;
+      if (i < word.length && word[i] === 'c') i++;
+    }
+    return groups * 3 - word.length;
+  },
+
 };

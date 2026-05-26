@@ -21647,4 +21647,88 @@ def secondMinimum(n, edges, time, change):
                 best = word
     return best
 `,
+
+  'sum-of-digits-in-base-k': `def sumBase(n, k):
+    s = 0
+    while n > 0:
+        s += n % k
+        n //= k
+    return s
+`,
+
+  'count-symmetric-integers': `def countSymmetricIntegers(low, high):
+    count = 0
+    for x in range(low, high + 1):
+        s = str(x)
+        if len(s) % 2 != 0:
+            continue
+        half = len(s) // 2
+        if sum(int(c) for c in s[:half]) == sum(int(c) for c in s[half:]):
+            count += 1
+    return count
+`,
+
+  'minimum-number-of-pushes-to-type-word-i': `def minimumPushes(word):
+    n = len(word)
+    total = 0
+    for i in range(n):
+        total += i // 8 + 1
+    return total
+`,
+
+  'divide-array-into-groups-of-size-k': `def divideArray(nums, k):
+    nums = sorted(nums)
+    for i in range(0, len(nums), k):
+        chunk = nums[i:i + k]
+        if len(set(chunk)) != k:
+            return []
+    return [nums[i:i + k] for i in range(0, len(nums), k)]
+`,
+
+  'count-subarrays-of-length-three-with-a-condition': `def countSubarrays(nums):
+    count = 0
+    for i in range(len(nums) - 2):
+        if 2 * (nums[i] + nums[i + 2]) == nums[i + 1]:
+            count += 1
+    return count
+`,
+
+  'minimum-operations-to-make-array-divisible-by-three': `def minimumOperations(nums):
+    ops = 0
+    for n in nums:
+        r = n % 3
+        ops += min(r, 3 - r)
+    return ops
+`,
+
+  'find-the-punishment-number-of-integers': `def punishmentNumber(n):
+    def can_partition(s, target):
+        if target < 0:
+            return False
+        if s == '' and target == 0:
+            return True
+        for i in range(1, len(s) + 1):
+            if can_partition(s[i:], target - int(s[:i])):
+                return True
+        return False
+    total = 0
+    for i in range(1, n + 1):
+        if can_partition(str(i * i), i):
+            total += i * i
+    return total
+`,
+
+  'minimum-additions-to-make-valid-string': `def addMinimum(word):
+    i = 0
+    groups = 0
+    while i < len(word):
+        groups += 1
+        if i < len(word) and word[i] == 'a':
+            i += 1
+        if i < len(word) and word[i] == 'b':
+            i += 1
+        if i < len(word) and word[i] == 'c':
+            i += 1
+    return groups * 3 - len(word)
+`,
 };

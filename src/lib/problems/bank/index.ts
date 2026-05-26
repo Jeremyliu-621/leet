@@ -1582,6 +1582,17 @@ import { problem as countStrictlyIncreasingSubarrays } from './count-strictly-in
 import { problem as minimumScorePathBetweenTwoCities } from './minimum-score-path-between-two-cities';
 import { problem as splitMessageBasedOnLimit } from './split-message-based-on-limit';
 import { problem as longestWordInDictDeleting } from './longest-word-in-dict-deleting';
+import { problem as countAllValidPickupAndDeliveryOptions } from './count-all-valid-pickup-and-delivery-options';
+import { problem as maximumAverageSubarrayII } from './maximum-average-subarray-ii';
+// batch 57 (local)
+import { problem as sumOfDigitsInBaseK } from './sum-of-digits-in-base-k';
+import { problem as countSymmetricIntegers } from './count-symmetric-integers';
+import { problem as minimumNumberOfPushesToTypeWordI } from './minimum-number-of-pushes-to-type-word-i';
+import { problem as divideArrayIntoGroupsOfSizeK } from './divide-array-into-groups-of-size-k';
+import { problem as countSubarraysOfLengthThreeWithACondition } from './count-subarrays-of-length-three-with-a-condition';
+import { problem as minimumOperationsToMakeArrayDivisibleByThree } from './minimum-operations-to-make-array-divisible-by-three';
+import { problem as findThePunishmentNumberOfIntegers } from './find-the-punishment-number-of-integers';
+import { problem as minimumAdditionsToMakeValidString } from './minimum-additions-to-make-valid-string';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3210,4 +3221,15 @@ export const problems: readonly Problem[] = [
   minimumScorePathBetweenTwoCities,
   splitMessageBasedOnLimit,
   longestWordInDictDeleting,
+  countAllValidPickupAndDeliveryOptions,
+  maximumAverageSubarrayII,
+  // batch 57 (local)
+  sumOfDigitsInBaseK,
+  countSymmetricIntegers,
+  minimumNumberOfPushesToTypeWordI,
+  divideArrayIntoGroupsOfSizeK,
+  countSubarraysOfLengthThreeWithACondition,
+  minimumOperationsToMakeArrayDivisibleByThree,
+  findThePunishmentNumberOfIntegers,
+  minimumAdditionsToMakeValidString,
 ];
