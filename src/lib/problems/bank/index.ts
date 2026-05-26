@@ -2091,6 +2091,14 @@ import { problem as minimumBitFlipsToConvertNumber } from './minimum-bit-flips-t
 import { problem as minFlipsToBinaryZeroMatrix } from './min-number-of-flips-to-convert-binary-matrix-to-zero-matrix';
 import { problem as determineIfTwoStringsAreClose } from './determine-if-two-strings-are-close';
 import { problem as maximumXorAfterOperations } from './maximum-xor-after-operations';
+// batch 90 — arrays, strings, hash-map, math, graph, tree
+import { problem as countCommonWordsWithOneOccurrence } from './count-common-words-with-one-occurrence';
+import { problem as findThreeConsecutiveIntegersThatSumToAGivenNumber } from './find-three-consecutive-integers-that-sum-to-a-given-number';
+import { problem as equalRowAndColumnPairs } from './equal-row-and-column-pairs';
+import { problem as numberOfLaserBeamsInABank } from './number-of-laser-beams-in-a-bank';
+import { problem as checkIfAllAsAppearsBeforeAllBs } from './check-if-all-as-appears-before-all-bs';
+import { problem as countNodesWithTheHighestScore } from './count-nodes-with-the-highest-score';
+import { problem as maximumNumberOfPointsFromGridQueries } from './maximum-number-of-points-from-grid-queries';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4218,4 +4226,12 @@ export const problems: readonly Problem[] = [
   minFlipsToBinaryZeroMatrix,
   determineIfTwoStringsAreClose,
   maximumXorAfterOperations,
+  // batch 90 — arrays, strings, hash-map, math, graph, tree
+  countCommonWordsWithOneOccurrence,
+  findThreeConsecutiveIntegersThatSumToAGivenNumber,
+  equalRowAndColumnPairs,
+  numberOfLaserBeamsInABank,
+  checkIfAllAsAppearsBeforeAllBs,
+  countNodesWithTheHighestScore,
+  maximumNumberOfPointsFromGridQueries,
 ];

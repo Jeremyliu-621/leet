@@ -30375,4 +30375,109 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans === Infinity ? -1 : ans;
   },
 
+  // batch 90 — arrays, strings, hash-map, math, graph, tree
+  'count-common-words-with-one-occurrence': (...args: unknown[]) => {
+    const [words1, words2] = args as [string[], string[]];
+    const freq1 = new Map<string, number>();
+    const freq2 = new Map<string, number>();
+    for (const w of words1) freq1.set(w, (freq1.get(w) || 0) + 1);
+    for (const w of words2) freq2.set(w, (freq2.get(w) || 0) + 1);
+    let count = 0;
+    for (const [w, c] of freq1) if (c === 1 && freq2.get(w) === 1) count++;
+    return count;
+  },
+
+  'find-three-consecutive-integers-that-sum-to-a-given-number': (...args: unknown[]) => {
+    const [num] = args as [number];
+    if (num % 3 !== 0) return [];
+    const n = num / 3;
+    return [n - 1, n, n + 1];
+  },
+
+  'equal-row-and-column-pairs': (...args: unknown[]) => {
+    const [grid] = args as [number[][]];
+    const rowMap = new Map<string, number>();
+    for (const row of grid) {
+      const key = row.join(',');
+      rowMap.set(key, (rowMap.get(key) || 0) + 1);
+    }
+    let result = 0;
+    const n = grid.length;
+    for (let j = 0; j < n; j++) {
+      const col = grid.map(r => r[j]!);
+      const key = col.join(',');
+      result += rowMap.get(key) || 0;
+    }
+    return result;
+  },
+
+  'number-of-laser-beams-in-a-bank': (...args: unknown[]) => {
+    const [bank] = args as [string[]];
+    const counts: number[] = [];
+    for (const row of bank) {
+      const c = [...row].filter(x => x === '1').length;
+      if (c > 0) counts.push(c);
+    }
+    let total = 0;
+    for (let i = 1; i < counts.length; i++) total += counts[i - 1]! * counts[i]!;
+    return total;
+  },
+
+  'check-if-all-as-appears-before-all-bs': (...args: unknown[]) => {
+    const [s] = args as [string];
+    return !s.includes('ba');
+  },
+
+  'count-nodes-with-the-highest-score': (...args: unknown[]) => {
+    const [parents] = args as [number[]];
+    const n = parents.length;
+    const children: number[][] = Array.from({ length: n }, () => []);
+    for (let i = 1; i < n; i++) children[parents[i]!]!.push(i);
+    const sub = new Array(n).fill(0);
+    const dfs = (v: number): void => {
+      sub[v] = 1;
+      for (const c of children[v]!) { dfs(c); sub[v]! += sub[c]!; }
+    };
+    dfs(0);
+    let maxScore = 0, count = 0;
+    for (let v = 0; v < n; v++) {
+      let score = 1;
+      for (const c of children[v]!) score *= sub[c]!;
+      const above = n - sub[v]!;
+      if (above > 0) score *= above;
+      if (score > maxScore) { maxScore = score; count = 1; }
+      else if (score === maxScore) count++;
+    }
+    return count;
+  },
+
+  'maximum-number-of-points-from-grid-queries': (...args: unknown[]) => {
+    const [grid, queries] = args as [number[][], number[]];
+    const m = grid.length, n = grid[0]!.length;
+    const sorted = queries.map((q, i) => [q, i] as [number, number]).sort((a, b) => a[0] - b[0]);
+    const res = new Array(queries.length).fill(0);
+    const vis = Array.from({ length: m }, () => new Array(n).fill(false));
+    vis[0]![0] = true;
+    const heap: [number, number, number][] = [[grid[0]![0]!, 0, 0]];
+    const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+    let cnt = 0;
+    for (const [q, origIdx] of sorted) {
+      while (heap.length > 0) {
+        heap.sort((a, b) => a[0] - b[0]);
+        if (heap[0]![0] >= q) break;
+        const [, r, c] = heap.shift()!;
+        cnt++;
+        for (const [dr, dc] of dirs) {
+          const nr = r + dr!, nc = c + dc!;
+          if (nr >= 0 && nr < m && nc >= 0 && nc < n && !vis[nr]![nc]) {
+            vis[nr]![nc] = true;
+            heap.push([grid[nr]![nc]!, nr, nc]);
+          }
+        }
+      }
+      res[origIdx] = cnt;
+    }
+    return res;
+  },
+
 };

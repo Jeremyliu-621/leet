@@ -29842,4 +29842,98 @@ def findShortestCycle(n: int, edges: list) -> int:
     return -1 if ans == float('inf') else ans
 `,
 
+  // batch 90 — arrays, strings, hash-map, math, graph, tree
+  'count-common-words-with-one-occurrence': `
+from collections import Counter
+def countWords(words1, words2):
+    c1 = Counter(words1)
+    c2 = Counter(words2)
+    return sum(1 for w in c1 if c1[w] == 1 and c2.get(w, 0) == 1)
+`,
+
+  'find-three-consecutive-integers-that-sum-to-a-given-number': `
+def sumOfThree(num):
+    if num % 3 != 0:
+        return []
+    n = num // 3
+    return [n - 1, n, n + 1]
+`,
+
+  'equal-row-and-column-pairs': `
+def equalPairs(grid):
+    from collections import Counter
+    n = len(grid)
+    row_counts = Counter(tuple(row) for row in grid)
+    result = 0
+    for j in range(n):
+        col = tuple(grid[i][j] for i in range(n))
+        result += row_counts[col]
+    return result
+`,
+
+  'number-of-laser-beams-in-a-bank': `
+def numberOfBeams(bank):
+    counts = [row.count('1') for row in bank if '1' in row]
+    return sum(counts[i] * counts[i+1] for i in range(len(counts)-1))
+`,
+
+  'check-if-all-as-appears-before-all-bs': `
+def checkString(s):
+    return 'ba' not in s
+`,
+
+  'count-nodes-with-the-highest-score': `
+def countHighestScoreNodes(parents):
+    n = len(parents)
+    children = [[] for _ in range(n)]
+    for i in range(1, n):
+        children[parents[i]].append(i)
+    sub = [0] * n
+    def dfs(v):
+        sub[v] = 1
+        for c in children[v]:
+            dfs(c)
+            sub[v] += sub[c]
+    dfs(0)
+    max_score = 0
+    count = 0
+    for v in range(n):
+        score = 1
+        for c in children[v]:
+            score *= sub[c]
+        above = n - sub[v]
+        if above > 0:
+            score *= above
+        if score > max_score:
+            max_score = score
+            count = 1
+        elif score == max_score:
+            count += 1
+    return count
+`,
+
+  'maximum-number-of-points-from-grid-queries': `
+import heapq
+def maxPoints(grid, queries):
+    m, n = len(grid), len(grid[0])
+    sorted_q = sorted(enumerate(queries), key=lambda x: x[1])
+    res = [0] * len(queries)
+    vis = [[False]*n for _ in range(m)]
+    vis[0][0] = True
+    heap = [(grid[0][0], 0, 0)]
+    cnt = 0
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    for orig_idx, q in sorted_q:
+        while heap and heap[0][0] < q:
+            v, r, c = heapq.heappop(heap)
+            cnt += 1
+            for dr, dc in dirs:
+                nr, nc = r+dr, c+dc
+                if 0 <= nr < m and 0 <= nc < n and not vis[nr][nc]:
+                    vis[nr][nc] = True
+                    heapq.heappush(heap, (grid[nr][nc], nr, nc))
+        res[orig_idx] = cnt
+    return res
+`,
+
 };
