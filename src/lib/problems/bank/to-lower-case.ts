@@ -26,6 +26,8 @@ export const problem: Problem = {
   ],
   hints: [
     'Use the built-in toLowerCase method, or iterate character by character converting uppercase ASCII values (65-90) to their lowercase equivalents (add 32).',
+    'Convert each uppercase character to lowercase using `charCodeAt` and `fromCharCode`, or simply use the built-in `toLowerCase()` method.',
+    '`return s.toLowerCase();`'
   ],
   functionName: 'toLowerCase',
   params: ['s'],

@@ -31,6 +31,11 @@ Return the original array \`arr\`. It can be proved that the answer exists and i
   ],
   hints: [
     'Since encoded[i] = arr[i] XOR arr[i+1], we get arr[i+1] = encoded[i] XOR arr[i]. Build the array left to right starting from first.',
+    'Use the XOR property: since `encoded[i] = arr[i] ^ arr[i+1]`, you get `arr[i+1] = encoded[i] ^ arr[i]`. Start from `arr[0] = first` and build forward.',
+    `\`\`\`js
+const arr = [first];
+for (const e of encoded) arr.push(arr[arr.length-1] ^ e);
+return arr;\`\`\``
   ],
   functionName: 'decode',
   params: ['encoded', 'first'],

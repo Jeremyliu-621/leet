@@ -20,6 +20,11 @@ Return the selected integer.`,
   ],
   hints: [
     'Find min and max, then return the first element that is neither.',
+    'Find the min and max of the array. Return any element that is strictly between them, or `-1` if none exists.',
+    `\`\`\`js
+const mn = Math.min(...nums), mx = Math.max(...nums);
+const mid = nums.find(x => x > mn && x < mx);
+return mid ?? -1;\`\`\``
   ],
   functionName: 'findNonMinOrMax',
   params: ['nums'],

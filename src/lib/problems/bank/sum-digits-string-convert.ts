@@ -24,6 +24,11 @@ Return the resulting integer after performing the operations described above.`,
   ],
   hints: [
     'First convert each character to its number string (a→"1", z→"26"), concatenate, then sum digits k times.',
+    'Apply the conversion `k` times: `convert` maps each character to its alphabetical position (a=1, b=2, ...), concatenates them, then sums the digits of the result.',
+    `\`\`\`js
+let s = [...word].map(c => c.charCodeAt(0)-96).join('');
+for (let i = 0; i < k; i++) s = String([...s].reduce((a,c)=>a+Number(c),0));
+return Number(s);\`\`\``
   ],
   functionName: 'getLucky',
   params: ['s', 'k'],

@@ -31,6 +31,15 @@ Return the **minimum number of moves** required to make \`s\` valid.`,
   ],
   hints: [
     'Track unmatched open brackets and unmatched close brackets separately.',
+    'Track `open` (unmatched `(`s) and `close` (unmatched `)`s). On `(` increment `open`. On `)`: if `open > 0` decrement open (match), else increment `close`.',
+    `\`\`\`js
+let open = 0, close = 0;
+for (const c of s) {
+  if (c === '(') open++;
+  else if (open > 0) open--;
+  else close++;
+}
+return open + close;\`\`\``
   ],
   functionName: 'minAddToMakeValid',
   params: ['s'],

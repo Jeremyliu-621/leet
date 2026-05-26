@@ -30,6 +30,11 @@ Return the array in the form \`[x1,y1,x2,y2,...,xn,yn]\`.`,
   ],
   hints: [
     'Iterate from 0 to n-1. At each index i, push nums[i] and nums[i+n] alternately.',
+    'Reconstruct the array by interleaving: `[nums[0], nums[n], nums[1], nums[n+1], ...]`.',
+    `\`\`\`js
+const res = [];
+for (let i = 0; i < n; i++) { res.push(nums[i]); res.push(nums[i+n]); }
+return res;\`\`\``
   ],
   functionName: 'shuffle',
   params: ['nums', 'n'],

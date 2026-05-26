@@ -26,6 +26,8 @@ To separate the digits of an integer is to get all the digits it has in the same
   ],
   hints: [
     'Convert each number to a string, then extract individual digits.',
+    'Convert each number to its individual digits. Flatten the resulting arrays.',
+    '`return nums.flatMap(n => [...String(n)].map(Number));`'
   ],
   functionName: 'separateDigits',
   params: ['nums'],

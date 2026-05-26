@@ -30,6 +30,16 @@ The values in the two lists should be returned in **increasing** order.`,
   ],
   hints: [
     'Track loss count per player. Include all players (both winners and losers) in the map. Return those with 0 losses and those with exactly 1 loss, sorted.',
+    'Use a Map to count losses per player. Players with 0 losses are winners; players with exactly 1 loss are in the second group.',
+    `\`\`\`js
+const losses = new Map();
+for (const [w,l] of matches) {
+  if (!losses.has(w)) losses.set(w, 0);
+  losses.set(l, (losses.get(l)||0)+1);
+}
+const w0=[], w1=[];
+for (const [p,c] of losses) { if(c===0)w0.push(p); else if(c===1)w1.push(p); }
+return [w0.sort((a,b)=>a-b), w1.sort((a,b)=>a-b)];\`\`\``
   ],
   functionName: 'findWinners',
   params: ['matches'],

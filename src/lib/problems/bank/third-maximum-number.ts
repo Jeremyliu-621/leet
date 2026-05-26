@@ -28,6 +28,10 @@ export const problem: Problem = {
   ],
   hints: [
     'Use a set to get distinct values, then sort descending. Return the third element if it exists, or the first element otherwise.',
+    'Use a Set to get distinct values, then sort descending. If fewer than 3 distinct values exist, return the maximum.',
+    `\`\`\`js
+const sorted = [...new Set(nums)].sort((a,b)=>b-a);
+return sorted.length >= 3 ? sorted[2] : sorted[0];\`\`\``
   ],
   functionName: 'thirdMax',
   params: ['nums'],

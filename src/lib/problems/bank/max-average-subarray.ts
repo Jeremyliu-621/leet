@@ -26,6 +26,14 @@ Find a contiguous subarray whose **length is equal to** \`k\` that has the maxim
   ],
   hints: [
     'Use a sliding window of size k. Compute the sum of the first window, then slide by adding the next element and removing the first.',
+    'Compute the sum of the first `k` elements as the initial window. Slide the window right, adding `nums[i]` and subtracting `nums[i-k]`. Track the maximum sum.',
+    `\`\`\`js
+let sum = nums.slice(0, k).reduce((a,b)=>a+b, 0), max = sum;
+for (let i = k; i < nums.length; i++) {
+  sum += nums[i] - nums[i-k];
+  max = Math.max(max, sum);
+}
+return max / k;\`\`\``
   ],
   functionName: 'findMaxAverage',
   params: ['nums', 'k'],

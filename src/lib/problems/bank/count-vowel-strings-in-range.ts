@@ -22,6 +22,11 @@ Return the number of vowel strings \`words[i]\` where \`i\` belongs to the inclu
   ],
   hints: [
     'Iterate from left to right (inclusive). Check if words[i][0] and words[i][last] are both vowels.',
+    'A word qualifies if its first AND last character are vowels. Check the words in the `[l, r]` range for each query.',
+    `\`\`\`js
+const v = new Set('aeiou');
+const check = w => v.has(w[0]) && v.has(w[w.length-1]);
+return queries.map(([l, r]) => words.slice(l, r+1).filter(check).length);\`\`\``
   ],
   functionName: 'vowelStringsInRange',
   params: ['words', 'left', 'right'],

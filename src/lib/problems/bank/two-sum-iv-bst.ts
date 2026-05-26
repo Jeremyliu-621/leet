@@ -20,6 +20,13 @@ The BST is given as a level-order array where \`null\` represents missing nodes.
   ],
   hints: [
     'Do an in-order traversal to get a sorted array of values. Then use a two-pointer approach to find if any two values sum to k.',
+    'In-order traversal of a BST gives sorted values. Collect all values into an array, then use two-pointer or a Set to find if any pair sums to `k`.',
+    `\`\`\`js
+const vals = [];
+function inorder(node) { if (!node) return; inorder(node.left); vals.push(node.val); inorder(node.right); }
+inorder(root);
+const s = new Set(vals);
+return vals.some(v => v !== k-v && s.has(k-v));\`\`\``
   ],
   functionName: 'findTarget',
   params: ['root', 'k'],

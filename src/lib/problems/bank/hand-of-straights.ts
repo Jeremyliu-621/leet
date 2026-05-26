@@ -27,6 +27,21 @@ Given an integer array \`hand\` where \`hand[i]\` is the value written on the \`
   ],
   hints: [
     'Count each card\'s frequency. Process from smallest card: greedily form a group starting at that card, decrementing frequencies of the next groupSize cards.',
+    'If `hand.length % groupSize !== 0`, return `false`. Use a sorted map of frequencies. At each step, start a group from the smallest available card and consume `groupSize` consecutive frequencies.',
+    `\`\`\`js
+if (hand.length % groupSize !== 0) return false;
+const cnt = new Map();
+for (const c of hand) cnt.set(c, (cnt.get(c)||0)+1);
+const keys = [...cnt.keys()].sort((a,b)=>a-b);
+for (const k of keys) {
+  const n = cnt.get(k);
+  if (!n) continue;
+  for (let i = 0; i < groupSize; i++) {
+    if ((cnt.get(k+i)||0) < n) return false;
+    cnt.set(k+i, cnt.get(k+i)-n);
+  }
+}
+return true;\`\`\``
   ],
   functionName: 'isNStraightHand',
   params: ['hand', 'groupSize'],

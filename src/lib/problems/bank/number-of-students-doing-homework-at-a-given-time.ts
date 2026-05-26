@@ -30,6 +30,8 @@ Return the number of students doing their homework at time \`queryTime\`. More f
   ],
   hints: [
     'Count the students for whom startTime[i] <= queryTime <= endTime[i].',
+    'Count students where `startTime[i] <= queryTime <= endTime[i]`.',
+    '`return startTime.filter((s, i) => s <= queryTime && queryTime <= endTime[i]).length;`'
   ],
   functionName: 'busyStudent',
   params: ['startTime', 'endTime', 'queryTime'],

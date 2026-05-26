@@ -37,6 +37,13 @@ Return the **furthest building index** (0-indexed) you can reach if you use the 
   ],
   hints: [
     'Use ladders for the largest climbs. A min-heap tracks the ladders currently allocated; when more ladders are used than available, swap the smallest climb to bricks.',
+    'Use a min-heap of size `ladders` to track which climbs used ladders. Whenever the heap exceeds `ladders`, swap the smallest ladder-climb to bricks. If bricks go negative, stop.',
+    `\`\`\`js
+// MinHeap<number> of climb heights where ladders were used
+// For each climb height h = buildings[i+1] - buildings[i] > 0:
+//   heap.push(h)
+//   if (heap.size > ladders) bricks -= heap.pop()
+//   if (bricks < 0) return i\`\`\``
   ],
   functionName: 'furthestBuilding',
   params: ['heights', 'bricks', 'ladders'],

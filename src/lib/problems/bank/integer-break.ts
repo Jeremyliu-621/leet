@@ -23,6 +23,14 @@ Return the *maximum product you can get*.`,
   ],
   hints: [
     'DP: dp[i] = max product when breaking i. For each i, try all splits j and (i-j), taking max(j, dp[j]) * max(i-j, dp[i-j]).',
+    'DP: `dp[i]` = max product from breaking `i`. For each split `j` (1 to i-1), each piece can be kept as-is or broken further: `max(j, dp[j]) * max(i-j, dp[i-j])`.',
+    `\`\`\`js
+const dp = new Array(n+1).fill(0);
+dp[1] = 1;
+for (let i = 2; i <= n; i++)
+  for (let j = 1; j < i; j++)
+    dp[i] = Math.max(dp[i], Math.max(j,dp[j]) * Math.max(i-j,dp[i-j]));
+return dp[n];\`\`\``
   ],
   functionName: 'integerBreak',
   params: ['n'],

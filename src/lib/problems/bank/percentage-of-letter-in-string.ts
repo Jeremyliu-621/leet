@@ -24,6 +24,8 @@ export const problem: Problem = {
   ],
   hints: [
     'Count occurrences of letter, then return Math.floor(count / s.length * 100).',
+    'Count occurrences of `letter` in `s`. Percentage = `Math.floor(count / s.length * 100)`.',
+    '`return Math.floor([...s].filter(c => c === letter).length / s.length * 100);`'
   ],
   functionName: 'percentageLetter',
   params: ['s', 'letter'],

@@ -28,6 +28,8 @@ A string is **represented** by an array if the array elements concatenated **in 
   ],
   hints: [
     'Concatenate each array into a single string, then compare.',
+    'Join each array into a single string and compare equality.',
+    '`return word1.join(\'\') === word2.join(\'\');`'
   ],
   functionName: 'arrayStringsAreEqual',
   params: ['word1', 'word2'],

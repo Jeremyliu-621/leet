@@ -33,6 +33,16 @@ An array \`nums\` is **strictly increasing** if \`nums[i] < nums[i+1]\` for all 
   ],
   hints: [
     'Greedy: for each element, if it is not greater than the previous, set it to prev+1 and add the difference to operations.',
+    'For each element, it must be strictly greater than the previous. If `nums[i] <= nums[i-1]`, you need `nums[i-1]+1 - nums[i]` operations to bring it up.',
+    `\`\`\`js
+let ops = 0;
+for (let i = 1; i < nums.length; i++) {
+  if (nums[i] <= nums[i-1]) {
+    ops += nums[i-1] + 1 - nums[i];
+    nums[i] = nums[i-1] + 1;
+  }
+}
+return ops;\`\`\``
   ],
   functionName: 'minOperations',
   params: ['nums'],

@@ -28,6 +28,8 @@ A **substring** is a contiguous sequence of characters within a string.`,
   ],
   hints: [
     'For each pattern, check if it appears in word using built-in string search (includes/indexOf/in operator).',
+    'Count how many strings in `patterns` are substrings of `word`.',
+    '`return patterns.filter(p => word.includes(p)).length;`'
   ],
   functionName: 'numOfStrings',
   params: ['patterns', 'word'],

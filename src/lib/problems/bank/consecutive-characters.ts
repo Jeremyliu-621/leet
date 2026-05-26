@@ -26,6 +26,14 @@ Given a string \`s\`, return *the **power** of* \`s\`.`,
   ],
   hints: [
     'Iterate through the string, tracking the current run length. Reset when the character changes.',
+    'Track the current character and run length. Update max when the run ends or the loop finishes.',
+    `\`\`\`js
+let max = 1, cur = 1;
+for (let i = 1; i < s.length; i++) {
+  cur = s[i] === s[i-1] ? cur + 1 : 1;
+  max = Math.max(max, cur);
+}
+return max;\`\`\``
   ],
   functionName: 'maxPower',
   params: ['s'],

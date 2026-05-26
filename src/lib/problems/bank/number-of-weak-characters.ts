@@ -34,6 +34,15 @@ Return the number of **weak** characters.`,
   ],
   hints: [
     'Sort by attack descending. For ties in attack, sort by defense ascending (so same-attack chars don\'t beat each other). Then track the max defense seen; a character is weak if its defense < max so far.',
+    'Sort by attack descending. For ties in attack, sort by defense ascending (to prevent same-attack pairs being compared). Scan once, tracking max defense seen; any defense below max is weak.',
+    `\`\`\`js
+props.sort((a,b) => a[0]!==b[0] ? b[0]-a[0] : a[1]-b[1]);
+let maxDef = 0, count = 0;
+for (const [,d] of props) {
+  if (d < maxDef) count++;
+  maxDef = Math.max(maxDef, d);
+}
+return count;\`\`\``
   ],
   functionName: 'numberOfWeakCharacters',
   params: ['properties'],

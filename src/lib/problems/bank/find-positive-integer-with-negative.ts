@@ -31,6 +31,12 @@ export const problem: Problem = {
   ],
   hints: [
     'Put all numbers in a Set. Then for each positive number, check if its negative exists.',
+    'Build a Set of all values. For each positive number `x`, check if `-x` also exists. Return the largest such `x`, or `-1`.',
+    `\`\`\`js
+const s = new Set(nums);
+let ans = -1;
+for (const x of nums) if (x > 0 && s.has(-x)) ans = Math.max(ans, x);
+return ans;\`\`\``
   ],
   functionName: 'findMaxK',
   params: ['nums'],

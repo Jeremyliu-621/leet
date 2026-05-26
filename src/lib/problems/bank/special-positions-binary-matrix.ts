@@ -28,6 +28,14 @@ A position \`(i, j)\` is called special if \`mat[i][j] == 1\` and all other elem
   ],
   hints: [
     'For each cell (i,j) where mat[i][j]==1, check that the row sum and column sum are both 1.',
+    'A position `(i, j)` is special if `mat[i][j] === 1`, the entire row `i` sums to 1, and the entire column `j` sums to 1.',
+    `\`\`\`js
+let count = 0;
+for (let i = 0; i < mat.length; i++)
+  for (let j = 0; j < mat[0].length; j++)
+    if (mat[i][j] === 1 && mat[i].reduce((a,b)=>a+b,0) === 1 &&
+        mat.reduce((a,r)=>a+r[j],0) === 1) count++;
+return count;\`\`\``
   ],
   functionName: 'numSpecial',
   params: ['mat'],

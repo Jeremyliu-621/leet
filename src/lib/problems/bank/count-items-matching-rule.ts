@@ -31,6 +31,10 @@ Return the number of items that match the given rule.`,
   ],
   hints: [
     'Map the rule key to an index (type→0, color→1, name→2) and filter items where `items[i][index] === ruleValue`.',
+    'Map `ruleKey` to an array index: `{type:0, color:1, name:2}`. Then count items where `item[index] === ruleValue`.',
+    `\`\`\`js
+const idx = {type: 0, color: 1, name: 2}[ruleKey];
+return items.filter(item => item[idx] === ruleValue).length;\`\`\``
   ],
   functionName: 'countMatches',
   params: ['items', 'ruleKey', 'ruleValue'],

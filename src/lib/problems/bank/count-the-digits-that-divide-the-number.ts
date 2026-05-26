@@ -31,6 +31,8 @@ An integer \`val\` divides \`nums\` if \`nums % val == 0\`.`,
   ],
   hints: [
     'Extract each digit of num and check if num % digit == 0.',
+    'Iterate each digit of `num`. Convert to a number; skip if zero. Count if `num % digit === 0`.',
+    '`return String(num).split(\'\').filter(d => +d !== 0 && num % +d === 0).length;`'
   ],
   functionName: 'countDigits',
   params: ['num'],

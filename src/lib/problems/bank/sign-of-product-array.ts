@@ -35,6 +35,10 @@ Return \`signFunc(product)\`.`,
   ],
   hints: [
     'If any element is 0, return 0. Count the number of negative numbers. If the count is odd, return -1; otherwise return 1.',
+    'You don\'t need the actual product. If any element is `0`, return `0`. Count negatives: even count → `1`, odd count → `-1`.',
+    `\`\`\`js
+if (nums.includes(0)) return 0;
+return nums.filter(x => x < 0).length % 2 === 0 ? 1 : -1;\`\`\``
   ],
   functionName: 'arraySign',
   params: ['nums'],

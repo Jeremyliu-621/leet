@@ -28,6 +28,15 @@ Note that each character should belong to exactly one substring in a partition.`
   ],
   hints: [
     'Greedy: keep a set of characters in the current substring. When you see a repeat, start a new substring.',
+    'Greedy: keep a Set of characters in the current partition. When you see a repeat, start a new partition and reset the Set. The number of resets + 1 is the answer.',
+    `\`\`\`js
+let parts = 1;
+const seen = new Set();
+for (const c of s) {
+  if (seen.has(c)) { parts++; seen.clear(); }
+  seen.add(c);
+}
+return parts;\`\`\``
   ],
   functionName: 'partitionString',
   params: ['s'],

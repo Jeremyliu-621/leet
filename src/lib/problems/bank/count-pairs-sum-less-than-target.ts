@@ -18,6 +18,15 @@ export const problem: Problem = {
   ],
   hints: [
     'Sort nums, then use two pointers: if nums[lo]+nums[hi] < target, all pairs (lo, lo+1..hi) are valid — add hi-lo to count and advance lo.',
+    'Sort the array. Two-pointer: if `nums[l]+nums[r] < target`, all `r-l` pairs starting at `l` are valid; advance `l`. Otherwise shrink `r`.',
+    `\`\`\`js
+nums.sort((a,b)=>a-b);
+let l=0, r=nums.length-1, count=0;
+while (l < r) {
+  if (nums[l]+nums[r] < target) { count += r-l; l++; }
+  else r--;
+}
+return count;\`\`\``
   ],
   functionName: 'countPairs',
   params: ['nums', 'target'],

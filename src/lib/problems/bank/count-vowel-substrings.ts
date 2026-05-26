@@ -31,6 +31,19 @@ Given a string \`word\`, return the number of **vowel substrings** in \`word\`.`
   ],
   hints: [
     'For each pair (i, j), check if s[i..j] contains only vowels and has all 5 vowels. Use a set to track distinct vowels.',
+    'A substring must contain all 5 vowels exactly. Use `atMost(5) - atMost(4)` trick: count substrings with at most 5 distinct vowels minus those with at most 4.',
+    `\`\`\`js
+function atMost(k, s) {
+  let res=0, l=0; const cnt={};
+  for (let r=0; r<s.length; r++) {
+    if (!'aeiou'.includes(s[r])) { cnt={}; l=r+1; continue; }
+    cnt[s[r]]=(cnt[s[r]]||0)+1;
+    while (Object.keys(cnt).length>k) { if(--cnt[s[l]]===0) delete cnt[s[l]]; l++; }
+    res+=r-l+1;
+  }
+  return res;
+}
+return atMost(5,word)-atMost(4,word);\`\`\``
   ],
   functionName: 'countVowelSubstrings',
   params: ['word'],

@@ -30,6 +30,11 @@ Return **any permutation** of \`s\` that satisfies this property.`,
   ],
   hints: [
     'Build a frequency map of characters in `s`. Then output characters in the order they appear in `order`, followed by any remaining characters.',
+    'Build a rank map: `order[i]` gets rank `i`. Sort the characters of `s` by rank (characters not in `order` go last).',
+    `\`\`\`js
+const rank = {};
+for (let i = 0; i < order.length; i++) rank[order[i]] = i;
+return [...s].sort((a,b) => (rank[a]??26)-(rank[b]??26)).join('');\`\`\``
   ],
   functionName: 'customSortString',
   params: ['order', 's'],

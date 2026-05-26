@@ -30,6 +30,14 @@ Given an integer array \`nums\`, return \`true\` if the given array is monotonic
   ],
   hints: [
     'Track whether the array is increasing and decreasing separately. If both flags become false, return false.',
+    'An array is monotonic if it is entirely non-increasing OR non-decreasing. Check both properties in a single pass.',
+    `\`\`\`js
+let inc = true, dec = true;
+for (let i = 1; i < nums.length; i++) {
+  if (nums[i] > nums[i-1]) dec = false;
+  if (nums[i] < nums[i-1]) inc = false;
+}
+return inc || dec;\`\`\``
   ],
   functionName: 'isMonotonic',
   params: ['nums'],

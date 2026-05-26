@@ -21,6 +21,11 @@ Return the shuffled string.`,
   ],
   hints: [
     'Create an array of the same length. Place s[i] at result[indices[i]] for each i.',
+    'Create a result array, then place `s[i]` at `result[indices[i]]`.',
+    `\`\`\`js
+const res = new Array(s.length);
+for (let i = 0; i < s.length; i++) res[indices[i]] = s[i];
+return res.join('');\`\`\``
   ],
   functionName: 'restoreString',
   params: ['s', 'indices'],

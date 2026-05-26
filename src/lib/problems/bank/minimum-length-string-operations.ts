@@ -21,6 +21,11 @@ Return the **minimum** possible length of the resulting string.`,
   ],
   hints: [
     'Use a stack. Push characters; when the top of the stack and the current char form "AB" or "CD", pop and continue.',
+    'A character with even frequency can be fully paired (contributes 2 to the minimum length). An odd-frequency character leaves 1 unpaired (contributes 1).',
+    `\`\`\`js
+const freq = {};
+for (const c of s) freq[c] = (freq[c]||0)+1;
+return Object.values(freq).reduce((acc, v) => acc + (v % 2 === 0 ? 2 : 1), 0);\`\`\``
   ],
   functionName: 'minLength',
   params: ['s'],

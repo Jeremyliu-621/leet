@@ -29,6 +29,11 @@ In one step, if the current number is even, you have to divide it by 2, otherwis
   ],
   hints: [
     'Simulate the process: while num > 0, if even do num >>= 1, else num--. Increment step counter each time.',
+    'Follow the rules: if `num` is even, divide by 2 (right-shift); if odd, subtract 1. Count steps until `num === 0`.',
+    `\`\`\`js
+let steps = 0;
+while (num > 0) { num = num % 2 === 0 ? num >> 1 : num - 1; steps++; }
+return steps;\`\`\``
   ],
   functionName: 'numberOfSteps',
   params: ['num'],

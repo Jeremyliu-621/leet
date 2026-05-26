@@ -30,6 +30,8 @@ Return *the integer denoting the number of employees who worked at least* \`targ
   ],
   hints: [
     'Count how many elements in hours are >= target.',
+    'Iterate through `hours` and count each element where `hours[i] >= target`.',
+    '`return hours.filter(h => h >= target).length;`',
   ],
   functionName: 'numberOfEmployeesWhoMetTarget',
   params: ['hours', 'target'],

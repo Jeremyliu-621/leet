@@ -30,6 +30,19 @@ If it cannot be done, return \`-1\`.`,
   ],
   hints: [
     'The target value must be tops[0] or bottoms[0]. For each candidate, count how many rotations it takes to align tops, then bottoms. Take the min across valid candidates.',
+    'The target value can only be `tops[0]` or `bottoms[0]` (any other value would fail on the first domino). Try each candidate and compute minimum swaps; return the minimum or `-1`.',
+    `\`\`\`js
+function check(x) {
+  let ts=0, bs=0;
+  for (let i=0; i<tops.length; i++) {
+    if (tops[i]!==x && bottoms[i]!==x) return Infinity;
+    if (tops[i]!==x) ts++;
+    if (bottoms[i]!==x) bs++;
+  }
+  return Math.min(ts, bs);
+}
+const r = Math.min(check(tops[0]), check(bottoms[0]));
+return r===Infinity ? -1 : r;\`\`\``
   ],
   functionName: 'minDominoRotations',
   params: ['tops', 'bottoms'],

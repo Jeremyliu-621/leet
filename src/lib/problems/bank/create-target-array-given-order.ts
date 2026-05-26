@@ -33,6 +33,11 @@ It is guaranteed that the insertion operations will be valid.`,
   ],
   hints: [
     'Simulate the process directly using array splice.',
+    'Process each `(nums[i], index[i])` pair in order. Insert `nums[i]` at position `index[i]` in the result array.',
+    `\`\`\`js
+const res = [];
+for (let i = 0; i < nums.length; i++) res.splice(index[i], 0, nums[i]);
+return res;\`\`\``
   ],
   functionName: 'createTargetArray',
   params: ['nums', 'index'],

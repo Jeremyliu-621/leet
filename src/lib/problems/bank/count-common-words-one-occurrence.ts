@@ -28,6 +28,12 @@ export const problem: Problem = {
   ],
   hints: [
     'Count frequencies in each array using a map. Count words where frequency is exactly 1 in both arrays.',
+    'Build frequency maps for both arrays. A word is common if it has frequency exactly 1 in both.',
+    `\`\`\`js
+const f1 = {}, f2 = {};
+for (const w of words1) f1[w] = (f1[w]||0)+1;
+for (const w of words2) f2[w] = (f2[w]||0)+1;
+return Object.keys(f1).filter(w => f1[w] === 1 && f2[w] === 1).length;\`\`\``
   ],
   functionName: 'countWords',
   params: ['words1', 'words2'],

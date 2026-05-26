@@ -29,6 +29,17 @@ Return *the number of possible non-empty sequences of letters* you can make usin
   ],
   hints: [
     'Count character frequencies. At each step, pick any available character (that hasn\'t been fully used), use it, recurse, then restore. Count all valid placements.',
+    'Count character frequencies. Use backtracking: pick any character with remaining count, use it (decrement frequency), recurse, then restore. Every choice at any depth adds 1 to the answer.',
+    `\`\`\`js
+const freq = {};
+for (const c of tiles) freq[c] = (freq[c]||0)+1;
+function bt() {
+  let res = 0;
+  for (const c of Object.keys(freq))
+    if (freq[c] > 0) { freq[c]--; res += 1 + bt(); freq[c]++; }
+  return res;
+}
+return bt();\`\`\``
   ],
   functionName: 'numTilePossibilities',
   params: ['tiles'],

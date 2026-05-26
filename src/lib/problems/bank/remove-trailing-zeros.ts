@@ -18,6 +18,11 @@ export const problem: Problem = {
   ],
   hints: [
     'Find the last non-zero character and slice the string up to that index.',
+    'Strip trailing zeros from the numeric string by removing characters from the end while the last character is `\'0\'`.',
+    `\`\`\`js
+let s = num;
+while (s.endsWith('0')) s = s.slice(0, -1);
+return s;\`\`\``
   ],
   functionName: 'removeTrailingZeros',
   params: ['num'],

@@ -32,6 +32,17 @@ Return \`s\` after reversing it.`,
   ],
   hints: [
     'Use two pointers — one starting from the left and one from the right. Skip non-letter characters. Swap the letter pair and advance both pointers.',
+    'Two pointers from both ends. Skip non-letter characters. Swap letters and advance both pointers inward.',
+    `\`\`\`js
+const arr = [...s];
+let l = 0, r = arr.length-1;
+while (l < r) {
+  while (l < r && !/[a-zA-Z]/.test(arr[l])) l++;
+  while (l < r && !/[a-zA-Z]/.test(arr[r])) r--;
+  [arr[l], arr[r]] = [arr[r], arr[l]];
+  l++; r--;
+}
+return arr.join('');\`\`\``
   ],
   functionName: 'reverseOnlyLetters',
   params: ['s'],

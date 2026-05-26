@@ -36,6 +36,14 @@ A **k-diff** pair is an integer pair \`(nums[i], nums[j])\`, where the following
   ],
   hints: [
     'Use a frequency map. For k>0, a valid pair is (n, n+k) if both appear. For k=0, a valid pair is (n, n) if n appears at least twice.',
+    'For `k > 0`: use a frequency map; for each key `n`, check if `n + k` also exists. For `k === 0`: count values appearing at least twice. Return count of distinct valid pairs.',
+    `\`\`\`js
+const cnt = {};
+for (const n of nums) cnt[n] = (cnt[n]||0)+1;
+if (k === 0) return Object.values(cnt).filter(v => v >= 2).length;
+let pairs = 0;
+for (const n of Object.keys(cnt)) if (cnt[+n+k] !== undefined) pairs++;
+return pairs;\`\`\``
   ],
   functionName: 'findPairs',
   params: ['nums', 'k'],

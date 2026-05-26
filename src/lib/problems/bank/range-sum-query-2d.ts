@@ -35,6 +35,10 @@ Implement a function \`sumRegion(matrix, row1, col1, row2, col2)\` that returns 
   ],
   hints: [
     'Build a 2D prefix sum array where `prefix[i][j]` is the sum of all elements from (0,0) to (i-1,j-1). Then the region sum is `prefix[r2+1][c2+1] - prefix[r1][c2+1] - prefix[r2+1][c1] + prefix[r1][c1]`.',
+    'Build a 2D prefix sum table in the constructor. `pre[i][j]` = sum of the rectangle from `(0,0)` to `(i-1,j-1)`. The formula `pre[r2+1][c2+1] - pre[r1][c2+1] - pre[r2+1][c1] + pre[r1][c1]` gives the region sum in O(1).',
+    `\`\`\`js
+// Build: pre[i][j] = matrix[i-1][j-1] + pre[i-1][j] + pre[i][j-1] - pre[i-1][j-1]
+// Query: pre[r2+1][c2+1] - pre[r1][c2+1] - pre[r2+1][c1] + pre[r1][c1]\`\`\``
   ],
   functionName: 'sumRegion',
   params: ['matrix', 'row1', 'col1', 'row2', 'col2'],

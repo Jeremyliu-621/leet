@@ -26,6 +26,8 @@ A **shift** on \`s\` consists of moving the leftmost character of \`s\` to the r
   ],
   hints: [
     '`s` can be rotated into `goal` if and only if `goal` is a substring of `s + s` and both strings have the same length.',
+    '`s` can become `goal` via rotation if and only if `goal` is a substring of `s + s` (and both have the same length).',
+    '`return s.length === goal.length && (s + s).includes(goal);`'
   ],
   functionName: 'rotateString',
   params: ['s', 'goal'],

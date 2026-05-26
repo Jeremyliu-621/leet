@@ -25,6 +25,15 @@ After doing so, return the array.`,
   ],
   hints: [
     'Traverse from right to left. Track the running maximum of elements seen so far. For each element, set it to the running max, then update the running max.',
+    'Scan right-to-left. Track the running maximum from the right. For each position, the answer is the current max, then update the max to include the current element.',
+    `\`\`\`js
+let maxRight = -1;
+for (let i = arr.length-1; i >= 0; i--) {
+  const cur = arr[i];
+  arr[i] = maxRight;
+  maxRight = Math.max(maxRight, cur);
+}
+return arr;\`\`\``
   ],
   functionName: 'replaceElements',
   params: ['arr'],

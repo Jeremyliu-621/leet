@@ -31,6 +31,13 @@ Given two strings \`word1\` and \`word2\`, each of length \`n\`, return \`true\`
   ],
   hints: [
     'Count frequencies of each letter in both strings. Check if |freq1[c] - freq2[c]| <= 3 for all letters a-z.',
+    'Count character frequencies for both strings. For every character `c` that appears in either, check that `|freq1[c] - freq2[c]| <= 3`.',
+    `\`\`\`js
+const f1 = {}, f2 = {};
+for (const c of word1) f1[c] = (f1[c]||0)+1;
+for (const c of word2) f2[c] = (f2[c]||0)+1;
+const all = new Set([...Object.keys(f1), ...Object.keys(f2)]);
+return [...all].every(c => Math.abs((f1[c]||0)-(f2[c]||0)) <= 3);\`\`\``
   ],
   functionName: 'checkAlmostEquivalent',
   params: ['word1', 'word2'],

@@ -21,6 +21,15 @@ A string \`s\` is a **prefix string** of \`words\` if \`s\` can be made by conca
   ],
   hints: [
     'Build the prefix incrementally by concatenating words one at a time and check if it matches s.',
+    'Concatenate words one by one. After each addition, check if the prefix equals `s` (return `true`) or if `s` no longer starts with the prefix (return `false`).',
+    `\`\`\`js
+let pre = '';
+for (const w of words) {
+  pre += w;
+  if (pre === s) return true;
+  if (!s.startsWith(pre)) return false;
+}
+return false;\`\`\``
   ],
   functionName: 'isPrefixString',
   params: ['s', 'words'],

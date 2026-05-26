@@ -28,6 +28,15 @@ The minute must consist of **two digits** and may contain a leading zero.
   ],
   hints: [
     'Iterate all valid (hour, minute) pairs and count how many bits are on. Return those matching turnedOn.',
+    'Count set bits with `(h.toString(2) + m.toString(2)).split(\'\').filter(c => c === \'1\').length`. Valid ranges: `0 <= h < 12`, `0 <= m < 60`.',
+    `\`\`\`js
+const res = [];
+for (let h = 0; h < 12; h++)
+  for (let m = 0; m < 60; m++) {
+    const bits = (h.toString(2)+m.toString(2)).split('').filter(c=>c==='1').length;
+    if (bits === turnedOn) res.push(h + ':' + (m < 10 ? '0' + m : m));
+  }
+return res;\`\`\``
   ],
   functionName: 'readBinaryWatch',
   params: ['turnedOn'],

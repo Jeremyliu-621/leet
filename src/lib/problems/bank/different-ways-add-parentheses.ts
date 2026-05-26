@@ -40,6 +40,18 @@ The test expression only contains the digits \`0-9\` and the operators \`'+'\`, 
   ],
   hints: [
     'Divide and conquer: for each operator, compute all results for the left side and right side independently, then combine.',
+    'Split the expression at each operator. Recursively compute all results for left and right sub-expressions. Combine every left result with every right result using the operator.',
+    `\`\`\`js
+const res = [];
+for (let i = 0; i < expr.length; i++) {
+  if ('+-*'.includes(expr[i])) {
+    const L = diffWays(expr.slice(0, i));
+    const R = diffWays(expr.slice(i+1));
+    for (const l of L) for (const r of R)
+      res.push(expr[i]==='+'?l+r : expr[i]==='-'?l-r : l*r);
+  }
+}
+return res.length ? res : [+expr];\`\`\``
   ],
   functionName: 'diffWaysToComputeRunner',
   params: ['expression'],

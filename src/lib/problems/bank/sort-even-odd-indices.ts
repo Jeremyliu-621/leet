@@ -36,6 +36,11 @@ Return the array formed after rearranging the values of \`nums\`.`,
   ],
   hints: [
     'Extract even-indexed values, sort ascending. Extract odd-indexed values, sort descending. Interleave back.',
+    'Separate values at even indices and odd indices. Sort even-index values ascending and odd-index values descending. Merge back.',
+    `\`\`\`js
+const even = nums.filter((_,i)=>i%2===0).sort((a,b)=>a-b);
+const odd  = nums.filter((_,i)=>i%2!==0).sort((a,b)=>b-a);
+return nums.map((_,i) => i%2===0 ? even.shift() : odd.shift());\`\`\``
   ],
   functionName: 'sortEvenOdd',
   params: ['nums'],

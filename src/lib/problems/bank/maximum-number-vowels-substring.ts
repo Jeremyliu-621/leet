@@ -32,6 +32,16 @@ export const problem: Problem = {
   ],
   hints: [
     'Sliding window of size k. Track vowel count; on each slide add the right char and subtract the left char.',
+    'Sliding window of size `k`. Count vowels in the initial window, then slide: add new character\'s vowel status, subtract leftmost character\'s. Track the maximum.',
+    `\`\`\`js
+const v = new Set('aeiou');
+let cur = 0, max = 0;
+for (let i = 0; i < s.length; i++) {
+  if (v.has(s[i])) cur++;
+  if (i >= k && v.has(s[i-k])) cur--;
+  max = Math.max(max, cur);
+}
+return max;\`\`\``
   ],
   functionName: 'maxVowels',
   params: ['s', 'k'],

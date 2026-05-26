@@ -27,6 +27,14 @@ Sort the elements of \`arr1\` such that the relative ordering of items in \`arr1
   ],
   hints: [
     'Build a map of arr2 element → position. Sort arr1 using a custom comparator: elements in arr2 sort by their arr2 index; elements not in arr2 sort by value and come after.',
+    'Assign a rank to each element in `arr2`. Sort `arr1`: elements in `arr2` come first (in `arr2`\'s order), then remaining elements in ascending order.',
+    `\`\`\`js
+const rank = new Map(arr2.map((v,i)=>[v,i]));
+return arr1.sort((a,b) => {
+  const ra = rank.has(a) ? rank.get(a) : arr2.length + a;
+  const rb = rank.has(b) ? rank.get(b) : arr2.length + b;
+  return ra - rb;
+});\`\`\``
   ],
   functionName: 'relativeSortArray',
   params: ['arr1', 'arr2'],

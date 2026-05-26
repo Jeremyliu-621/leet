@@ -23,6 +23,14 @@ An array is a valid mountain array if:
   ],
   hints: [
     'Walk up from the left until you stop climbing, then walk down. If you started at index 0 or ended at the last index, it is not a valid mountain.',
+    'Find the peak (index of maximum value). It must not be at either end, and the array must strictly increase up to the peak and strictly decrease from the peak.',
+    `\`\`\`js
+const n = arr.length;
+let i = 0;
+while (i+1 < n && arr[i] < arr[i+1]) i++;
+if (i === 0 || i === n-1) return false;
+while (i+1 < n && arr[i] > arr[i+1]) i++;
+return i === n-1;\`\`\``
   ],
   functionName: 'validMountainArray',
   params: ['arr'],

@@ -17,6 +17,12 @@ export const problem: Problem = {
   ],
   hints: [
     'Count each value with a hash map. Then check if all count values are distinct using a set.',
+    'Count frequencies of each value. A mapping from values to counts is unique if all frequency values are distinct (no two values share the same frequency).',
+    `\`\`\`js
+const freq = {};
+for (const x of arr) freq[x] = (freq[x]||0)+1;
+const counts = Object.values(freq);
+return new Set(counts).size === counts.length;\`\`\``
   ],
   functionName: 'uniqueOccurrences',
   params: ['arr'],

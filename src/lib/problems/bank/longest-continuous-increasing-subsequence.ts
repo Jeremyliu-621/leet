@@ -24,6 +24,14 @@ export const problem: Problem = {
   ],
   hints: [
     'Track the current streak length. Reset to 1 whenever the sequence stops increasing.',
+    'Single pass: maintain a current run length `cur`. Reset to 1 whenever `nums[i] <= nums[i-1]`. Track the running maximum.',
+    `\`\`\`js
+let max = 1, cur = 1;
+for (let i = 1; i < nums.length; i++) {
+  cur = nums[i] > nums[i-1] ? cur + 1 : 1;
+  max = Math.max(max, cur);
+}
+return max;\`\`\``
   ],
   functionName: 'findLengthOfLCIS',
   params: ['nums'],

@@ -26,6 +26,13 @@ Return an array \`answer\` of size \`n\` where \`answer[i]\` is the rank of the 
   ],
   hints: [
     'Create an index array sorted by score descending. Map position to rank label.',
+    'Create an array of `[score, original index]` sorted descending by score. Assign rank labels: 1st→\'Gold Medal\', 2nd→\'Silver Medal\', 3rd→\'Bronze Medal\', rest→rank number. Place labels back at original indices.',
+    `\`\`\`js
+const sorted = score.map((v,i)=>[v,i]).sort((a,b)=>b[0]-a[0]);
+const medals = ['Gold Medal','Silver Medal','Bronze Medal'];
+const ans = new Array(score.length);
+for (let i=0; i<sorted.length; i++) ans[sorted[i][1]] = i<3 ? medals[i] : String(i+1);
+return ans;\`\`\``
   ],
   functionName: 'findRelativeRanks',
   params: ['score'],

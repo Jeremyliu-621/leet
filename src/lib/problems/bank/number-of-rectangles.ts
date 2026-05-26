@@ -24,6 +24,9 @@ Return the **number** of rectangles that can make a square of side length \`maxL
   ],
   hints: [
     'For each rectangle, the max square side is min(l, w). Find the global max across all rectangles, then count how many achieve it.',
+    'A rectangle with sides `l` and `w` can contain a stick of length `n` if `Math.min(l, w) >= n`. Count such rectangles.',
+    `\`\`\`js
+return rectangles.filter(([l, w]) => Math.min(l, w) >= n).length;\`\`\``
   ],
   functionName: 'countGoodRectangles',
   params: ['rectangles'],

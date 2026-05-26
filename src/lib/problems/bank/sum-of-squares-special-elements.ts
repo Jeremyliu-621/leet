@@ -28,6 +28,10 @@ Return the **sum of the squares** of all special elements.`,
   ],
   hints: [
     'Iterate from i=1 to n. If n % i === 0, add nums[i-1]^2 to the result.',
+    'An element at index `i` (1-based) is special if `n % i === 0`. Sum the squares of special elements.',
+    `\`\`\`js
+const n = nums.length;
+return nums.reduce((sum, v, i) => n % (i+1) === 0 ? sum + v*v : sum, 0);\`\`\``
   ],
   functionName: 'sumOfSquares',
   params: ['nums'],

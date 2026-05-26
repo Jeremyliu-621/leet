@@ -28,6 +28,17 @@ export const problem: Problem = {
   ],
   hints: [
     'Count k = total number of 1s. Find a window of size k with the maximum number of 1s — the minimum swaps needed equals k minus that maximum count.',
+    'Count total ones `k`. Use a sliding window of size `k` (circular, doubled array). The number of zeros in the window = swaps needed. Find the window with minimum zeros.',
+    `\`\`\`js
+const k = nums.reduce((a,b)=>a+b, 0);
+if (!k) return 0;
+const n = nums.length;
+let zeros = nums.slice(0,k).filter(x=>!x).length, minZ = zeros;
+for (let i = k; i < 2*n; i++) {
+  zeros += (nums[i%n]?0:1) - (nums[(i-k+n)%n]?0:1);
+  minZ = Math.min(minZ, zeros);
+}
+return minZ;\`\`\``
   ],
   functionName: 'minSwaps',
   params: ['data'],

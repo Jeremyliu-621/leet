@@ -31,6 +31,11 @@ Return the minimum **positive** value of \`startValue\` such that the step by st
   ],
   hints: [
     'Compute prefix sums. The minimum prefix sum determines how much startValue needs to be. startValue = max(1, 1 - minPrefixSum).',
+    'The running prefix sum must stay above 0. Track the minimum prefix sum seen; the answer is `max(1, 1 - minPrefixSum)`.',
+    `\`\`\`js
+let min = 0, sum = 0;
+for (const n of nums) { sum += n; min = Math.min(min, sum); }
+return Math.max(1, 1 - min);\`\`\``
   ],
   functionName: 'minStartValue',
   params: ['nums'],

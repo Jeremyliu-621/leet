@@ -27,6 +27,14 @@ export const problem: Problem = {
   ],
   hints: [
     'Use a set. For each element x, check if x*2 or x/2 (when x is even) is already in the set, then add x.',
+    'Handle `0` carefully: `0 * 2 = 0`, so you\'d need at least two `0`s. For non-zero `x`, check if `x * 2` is already in the set before inserting.',
+    `\`\`\`js
+const seen = new Set();
+for (const x of arr) {
+  if (seen.has(x * 2) || (x % 2 === 0 && seen.has(x / 2))) return true;
+  seen.add(x);
+}
+return false;\`\`\``
   ],
   functionName: 'checkIfExist',
   params: ['arr'],

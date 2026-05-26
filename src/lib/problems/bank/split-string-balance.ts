@@ -34,6 +34,16 @@ Return the maximum amount of split balanced strings.`,
   ],
   hints: [
     'Use a counter: +1 for R, -1 for L (or vice versa). Each time the counter reaches 0, increment the answer.',
+    'The split is balanced when the left half has as many `\'l\'`s as the right half has `\'r\'`s. Scan from left: use a counter (+1 for `\'l\'`, -1 for `\'r\'`); count how many prefix sums equal 0 at a valid split point.',
+    `\`\`\`js
+let count = 0, bal = 0, splits = 0;
+for (const c of s) bal += c === 'l' ? 1 : -1;
+let cur = 0;
+for (let i = 0; i < s.length-1; i++) {
+  cur += s[i] === 'l' ? 1 : -1;
+  if (cur === bal - cur) splits++;
+}
+return splits;\`\`\``
   ],
   functionName: 'balancedStringSplit',
   params: ['s'],

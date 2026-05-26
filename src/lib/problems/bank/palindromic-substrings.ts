@@ -28,6 +28,14 @@ A **substring** is a contiguous sequence of characters within the string.`,
   ],
   hints: [
     'Expand around each center. For each index, try expanding both for odd-length and even-length palindromes.',
+    'Expand around each center. There are `2n-1` centers: `n` single-char (odd) and `n-1` between-chars (even). For each center, expand outward while characters match.',
+    `\`\`\`js
+let count = 0;
+function expand(l, r) {
+  while (l >= 0 && r < s.length && s[l] === s[r]) { count++; l--; r++; }
+}
+for (let i = 0; i < s.length; i++) { expand(i, i); expand(i, i+1); }
+return count;\`\`\``
   ],
   functionName: 'countSubstrings',
   params: ['s'],

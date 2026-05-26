@@ -30,6 +30,8 @@ Return the integer denoting the number of employees who worked at least \`target
   ],
   hints: [
     'Simply count the elements that are >= target.',
+    'Count employees whose `hours[i] >= target`.',
+    '`return hours.filter(h => h >= target).length;`'
   ],
   functionName: 'numberOfEmployeesWhoMetTarget',
   params: ['hours', 'target'],

@@ -32,6 +32,8 @@ You are given a sentence \`s\` and an integer \`k\`. You want to **truncate** \`
   ],
   hints: [
     'Split the sentence by spaces, take the first k words, and join them back with spaces.',
+    'Split `s` by spaces, take the first `k` words, and join them back with spaces.',
+    '`return s.split(\' \').slice(0, k).join(\' \');`'
   ],
   functionName: 'truncateSentence',
   params: ['s', 'k'],

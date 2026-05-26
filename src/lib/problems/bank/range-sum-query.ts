@@ -34,6 +34,10 @@ Implement the \`NumArray\` class, but for this problem implement a function \`su
   ],
   hints: [
     'Build a prefix sum array where `prefix[i]` is the sum of nums[0..i-1]. Then `sumRange(left, right) = prefix[right+1] - prefix[left]` in O(1).',
+    'Compute a prefix sum array once. The range sum `[left, right]` = `prefix[right+1] - prefix[left]`.',
+    `\`\`\`js
+// Build: prefix[0]=0, prefix[i] = prefix[i-1]+nums[i-1]
+// Query: prefix[right+1] - prefix[left]\`\`\``
   ],
   functionName: 'sumRange',
   params: ['nums', 'left', 'right'],

@@ -36,6 +36,14 @@ Given a valid parentheses string \`s\`, consider its primitive decomposition: \`
   ],
   hints: [
     'Track depth. At depth > 1, include the character. Increment on \'(\', decrement on \')\'.',
+    'Track depth. At depth 0, opening parentheses start a new primitive (don\'t include the outermost `(`). At depth 1, closing parentheses end a primitive (don\'t include the outermost `)`).',
+    `\`\`\`js
+let depth = 0, res = '';
+for (const c of s) {
+  if (c === '(') { if (depth > 0) res += c; depth++; }
+  else { depth--; if (depth > 0) res += c; }
+}
+return res;\`\`\``
   ],
   functionName: 'removeOuterParentheses',
   params: ['s'],

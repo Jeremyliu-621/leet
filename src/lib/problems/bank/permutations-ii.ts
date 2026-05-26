@@ -43,6 +43,19 @@ export const problem: Problem = {
   ],
   hints: [
     'Sort nums first. During backtracking, skip a number if it equals the previous number and the previous was not used — this avoids duplicate permutations.',
+    'Sort `nums` so duplicates are adjacent. In backtracking, skip `nums[i]` if it equals `nums[i-1]` and `nums[i-1]` has not been used in the current path — this prunes duplicate branches.',
+    `\`\`\`js
+nums.sort((a,b)=>a-b);
+const res=[], used=new Array(nums.length).fill(false);
+function bt(path) {
+  if (path.length===nums.length){res.push([...path]);return;}
+  for(let i=0;i<nums.length;i++){
+    if(used[i]||(i>0&&nums[i]===nums[i-1]&&!used[i-1]))continue;
+    used[i]=true;path.push(nums[i]);bt(path);path.pop();used[i]=false;
+  }
+}
+bt([]);
+return res;\`\`\``
   ],
   functionName: 'permuteUniqueRunner',
   params: ['nums'],

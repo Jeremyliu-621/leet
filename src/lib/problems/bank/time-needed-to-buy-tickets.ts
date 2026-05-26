@@ -31,6 +31,12 @@ Return the **time taken** for the person at position \`k\` (**0-indexed**) to fi
   ],
   hints: [
     'For each person at position i, they contribute min(tickets[i], tickets[k]) time if i <= k, and min(tickets[i], tickets[k] - 1) if i > k.',
+    'For each person at position `i`, they buy tickets in rounds. Person `j` before `k` buys `min(tickets[j], tickets[k])` times; person `j` after `k` buys `min(tickets[j], tickets[k]-1)` times.',
+    `\`\`\`js
+let time = 0;
+for (let i = 0; i < tickets.length; i++)
+  time += i <= k ? Math.min(tickets[i], tickets[k]) : Math.min(tickets[i], tickets[k]-1);
+return time;\`\`\``
   ],
   functionName: 'timeRequiredToBuy',
   params: ['tickets', 'k'],

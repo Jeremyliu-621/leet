@@ -31,6 +31,14 @@ Return the **maximum difference**. If no such \`i\` and \`j\` exists, return \`-
   ],
   hints: [
     'Track the minimum element seen so far as you scan left to right. At each position, compute current - min so far.',
+    'Track `minSoFar` as you scan left to right. At each position, compute `nums[i] - minSoFar` and update the answer if it\'s positive. Then update `minSoFar`.',
+    `\`\`\`js
+let min = nums[0], ans = -1;
+for (let i = 1; i < nums.length; i++) {
+  if (nums[i] > min) ans = Math.max(ans, nums[i] - min);
+  min = Math.min(min, nums[i]);
+}
+return ans;\`\`\``
   ],
   functionName: 'maximumDifference',
   params: ['nums'],

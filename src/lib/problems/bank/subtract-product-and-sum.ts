@@ -15,6 +15,11 @@ export const problem: Problem = {
   ],
   hints: [
     'Extract each digit by repeatedly taking n % 10 and dividing by 10. Compute product and sum of all digits.',
+    'Iterate through the digits of `n` (use `% 10` to get each digit, then divide by 10). Accumulate product and sum separately.',
+    `\`\`\`js
+let prod = 1, sum = 0, x = n;
+while (x > 0) { const d = x % 10; prod *= d; sum += d; x = Math.floor(x/10); }
+return prod - sum;\`\`\``
   ],
   functionName: 'subtractProductAndSum',
   params: ['n'],

@@ -32,6 +32,17 @@ Here **follow** means a full match, such that there is a bijection between a let
   ],
   hints: [
     'Split s into words. Check that lengths match. Maintain a bidirectional map: pattern char → word and word → pattern char. If a mapping conflicts, return false.',
+    'Build a bidirectional map: pattern character → word, and word → pattern character. Both must be consistent (bijection). If a character maps to a different word, or a word maps to a different character, return `false`.',
+    `\`\`\`js
+const words = s.split(' ');
+if (pattern.length !== words.length) return false;
+const c2w = {}, w2c = {};
+for (let i = 0; i < pattern.length; i++) {
+  const c = pattern[i], w = words[i];
+  if ((c2w[c] && c2w[c] !== w) || (w2c[w] && w2c[w] !== c)) return false;
+  c2w[c] = w; w2c[w] = c;
+}
+return true;\`\`\``
   ],
   functionName: 'wordPattern',
   params: ['pattern', 's'],

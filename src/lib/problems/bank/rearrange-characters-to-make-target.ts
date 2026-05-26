@@ -30,6 +30,12 @@ Return the **maximum** number of copies of \`target\` that can be formed by taki
   ],
   hints: [
     'Count frequency of each character in s and target. For each character in target, the number of copies is floor(freq_s[c] / freq_target[c]). Return the minimum across all target characters.',
+    'Count frequencies of each character in both `s` and `target`. For each character in `target`, we can form `floor(freq_s[c] / freq_target[c])` copies. The answer is the minimum across all target characters.',
+    `\`\`\`js
+const fs = {}, ft = {};
+for (const c of s) fs[c] = (fs[c]||0)+1;
+for (const c of target) ft[c] = (ft[c]||0)+1;
+return Math.min(...Object.keys(ft).map(c => Math.floor((fs[c]||0) / ft[c])));\`\`\``
   ],
   functionName: 'rearrangeCharacters',
   params: ['s', 'target'],

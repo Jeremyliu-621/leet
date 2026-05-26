@@ -25,6 +25,8 @@ Return **any array** that satisfies this condition.`,
   ],
   hints: [
     'Filter evens first, then odds, and concatenate.',
+    'Partition the array: evens first, odds last. Use a two-pointer swap in-place, or `filter` and `concat`.',
+    '`return [...nums.filter(x => x%2===0), ...nums.filter(x => x%2!==0)];`'
   ],
   functionName: 'sortArrayByParity',
   params: ['nums'],

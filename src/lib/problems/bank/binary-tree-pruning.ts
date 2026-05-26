@@ -94,6 +94,16 @@ A subtree of a node is that node plus every node that is a descendant of that no
   ],
   hints: [
     'Use postorder DFS (process children before parent). If after pruning both children are null and the node value is 0, return null to remove this node.',
+    'After recursing on both children, check: if `node.val === 0` AND both children are `null`, this node contains no `1` — remove it by returning `null`.',
+    `\`\`\`js
+function prune(node) {
+  if (!node) return null;
+  node.left = prune(node.left);
+  node.right = prune(node.right);
+  if (node.val === 0 && !node.left && !node.right) return null;
+  return node;
+}
+return prune(root);\`\`\``
   ],
   functionName: 'pruneTreeRunner',
   params: ['arr'],

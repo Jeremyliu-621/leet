@@ -19,6 +19,11 @@ Return the resulting string.`,
   ],
   hints: [
     'Find the first index of ch. Reverse the substring from 0 to that index, then concatenate the rest.',
+    'Find the first occurrence of `ch` in `word`. Reverse the substring from index 0 to that index (inclusive).',
+    `\`\`\`js
+const i = word.indexOf(ch);
+if (i === -1) return word;
+return word.slice(0, i+1).split('').reverse().join('') + word.slice(i+1);\`\`\``
   ],
   functionName: 'reversePrefix',
   params: ['word', 'ch'],

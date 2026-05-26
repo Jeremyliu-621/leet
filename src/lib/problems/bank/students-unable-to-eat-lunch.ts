@@ -34,6 +34,15 @@ Return the number of students that are unable to eat.`,
   ],
   hints: [
     'Count how many students prefer each type. For each sandwich on the stack, if no remaining student wants it, all remaining students cannot eat.',
+    'Count students preferring each type (0 and 1). Process the sandwiches: if a sandwich type has no remaining students, stop. Otherwise decrement that type\'s count.',
+    `\`\`\`js
+const cnt = [0, 0];
+for (const s of students) cnt[s]++;
+for (const s of sandwiches) {
+  if (cnt[s] === 0) break;
+  cnt[s]--;
+}
+return cnt[0] + cnt[1];\`\`\``
   ],
   functionName: 'countStudents',
   params: ['students', 'sandwiches'],
