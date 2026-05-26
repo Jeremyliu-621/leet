@@ -15,8 +15,10 @@ import { useEffect, useState } from 'react';
 import { SectionCard } from './SectionCard';
 import { readInitStats, type InitStats } from '../../../lib/runner/init-stats';
 import { getAllProblems } from '../../../lib/problems';
+import { PROBLEM_TAGS } from '../../../lib/types';
 
 const BANK_SIZE = getAllProblems().length;
+const TAG_COUNT = PROBLEM_TAGS.length;
 
 export function AboutSection() {
   const [stats, setStats] = useState<InitStats | null>(null);
@@ -41,7 +43,7 @@ export function AboutSection() {
         <p>
           LeetLock is a Chrome Manifest V3 extension with{' '}
           <span className="font-semibold text-text">{BANK_SIZE} original problems</span>{' '}
-          covering 14 topic categories.{' '}
+          covering {TAG_COUNT} topic categories.{' '}
           <span className="font-semibold text-text">JavaScript, TypeScript, and Python</span>{' '}
           are all supported. Every problem and every piece of code you write runs
           entirely on this device — there is no server, no LeetLock account, and
