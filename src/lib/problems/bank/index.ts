@@ -2082,11 +2082,14 @@ import { problem as countElementsWithSmallerAndGreaterElement } from './count-el
 import { problem as checkIfThereIsAValidPartitionForTheArray } from './check-if-there-is-a-valid-partition-for-the-array';
 import { problem as reverseNodesInEvenLengthGroups } from './reverse-nodes-in-even-length-groups';
 import { problem as minimumDifferenceInSumsAfterRemovalOfElements } from './minimum-difference-in-sums-after-removal-of-elements';
-// batch 88 — arrays, graph
+import { problem as findTheClosestPalindrome } from './find-the-closest-palindrome';
+import { problem as numberOfSubarraysWithLcmEqualToK } from './number-of-subarrays-with-lcm-equal-to-k';
+import { problem as smallestRotationWithHighestScore } from './smallest-rotation-with-highest-score';
+// batch 88 (remote) — arrays, graph
 import { problem as splitTheArray } from './split-the-array';
 import { problem as findTheScoreOfAllPrefixesOfAnArray } from './find-the-score-of-all-prefixes-of-an-array';
 import { problem as shortestCycleInAGraph } from './shortest-cycle-in-a-graph';
-// batch 89 — monotonic-stack, string, sliding-window, dp, tree, graph
+// batch 89 (remote) — monotonic-stack, string, sliding-window, dp, tree, graph
 import { problem as nextGreaterElementDistances } from './next-greater-element-distances';
 import { problem as findAllOccurrencesZAlgorithm } from './find-all-occurrences-z-algorithm';
 import { problem as zAlgorithmLongestPrefixSuffix } from './z-algorithm-longest-prefix-suffix';
@@ -4218,11 +4221,15 @@ export const problems: readonly Problem[] = [
   checkIfThereIsAValidPartitionForTheArray,
   reverseNodesInEvenLengthGroups,
   minimumDifferenceInSumsAfterRemovalOfElements,
+  // batch 89 — math/strings, arrays/math ×2
+  findTheClosestPalindrome,
+  numberOfSubarraysWithLcmEqualToK,
+  smallestRotationWithHighestScore,
   // batch 88 — arrays, graph
   splitTheArray,
   findTheScoreOfAllPrefixesOfAnArray,
   shortestCycleInAGraph,
-  // batch 89 — monotonic-stack, string, sliding-window, dp, tree, graph
+  // batch 89 (remote) — monotonic-stack, string, sliding-window, dp, tree, graph
   nextGreaterElementDistances,
   findAllOccurrencesZAlgorithm,
   zAlgorithmLongestPrefixSuffix,

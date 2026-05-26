@@ -29794,6 +29794,91 @@ def minimumDifference(nums: list) -> int:
     return ans
 `,
 
+  'find-the-closest-palindrome': `
+import math
+
+def nearestPalindromic(n):
+    L = len(n)
+    is_odd = L % 2 == 1
+    half = n[: math.ceil(L / 2)]
+    half_int = int(half)
+    n_int = int(n)
+
+    def make_pal(h):
+        s = str(h)
+        mirror = s[:-1][::-1] if is_odd else s[::-1]
+        return int(s + mirror)
+
+    candidates = [
+        make_pal(half_int),
+        make_pal(half_int - 1),
+        make_pal(half_int + 1),
+        10 ** (L - 1) - 1,
+        10 ** L + 1,
+    ]
+
+    best = None
+    for c in candidates:
+        if c == n_int or c < 0:
+            continue
+        dist = abs(c - n_int)
+        if best is None:
+            best = c
+        else:
+            best_dist = abs(best - n_int)
+            if dist < best_dist or (dist == best_dist and c < best):
+                best = c
+    return str(best)
+`,
+
+  'number-of-subarrays-with-lcm-equal-to-k': `
+from math import gcd
+
+def subarrayLCM(nums, k):
+    def lcm(a, b):
+        return a // gcd(a, b) * b
+
+    count = 0
+    for i in range(len(nums)):
+        l = nums[i]
+        for j in range(i, len(nums)):
+            l = lcm(l, nums[j])
+            if l == k:
+                count += 1
+            if l > k:
+                break
+    return count
+`,
+
+  'smallest-rotation-with-highest-score': `
+def bestRotation(nums):
+    n = len(nums)
+    diff = [0] * (n + 1)
+    for i in range(n):
+        v = nums[i]
+        if v == 0:
+            continue
+        lo = (i - v + 1 + n) % n
+        hi = i
+        if lo <= hi:
+            diff[lo] += 1
+            diff[hi + 1] -= 1
+        else:
+            diff[0] += 1
+            diff[hi + 1] -= 1
+            diff[lo] += 1
+            diff[n] -= 1
+
+    bad = 0
+    min_bad = float('inf')
+    ans = 0
+    for k in range(n):
+        bad += diff[k]
+        if bad < min_bad:
+            min_bad = bad
+            ans = k
+    return ans
+`,
 
   'split-the-array': `
 def isPossibleToSplit(nums: list) -> bool:

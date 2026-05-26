@@ -8,12 +8,15 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1951** problems; 6147 tests green. Batch 88 complete (3 problems: arrays, graph).
+**Current focus:** Bank at **1971** problems; 6201 tests green. Batches 88–89 merged (local + remote). InlineText component, a11y fixes, site stats updated to 1,970+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 89); UI/UX polish.
+**Next up:** Continued bank growth (batch 90); UI/UX polish.
 
-### feat(bank): add batch 88 — 3 problems (arrays, graph) (2026-05-26)
-Added 3 problems: `split-the-array` (easy/arrays+hash-map, max-frequency ≤ 2 check), `find-the-score-of-all-prefixes-of-an-array` (medium/arrays, running max + prefix sum accumulation), `shortest-cycle-in-a-graph` (medium/graph, BFS from each node tracking parent to detect back edges). Bank at **1951**; 6147 tests.
+### merge: batches 88–89 local + remote (2026-05-26)
+Local batch 88: `check-if-there-is-a-valid-partition-for-the-array` (medium/dp), `reverse-nodes-in-even-length-groups` (medium/linked-list), `minimum-difference-in-sums-after-removal-of-elements` (hard/heap); `InlineText` component for backtick inline code; site stats to 1,950+.
+Remote batch 88: `split-the-array` (easy/arrays+hash-map), `find-the-score-of-all-prefixes-of-an-array` (medium/arrays), `shortest-cycle-in-a-graph` (medium/graph); a11y: aria-live verdict announcements + focus restoration on modal close.
+Local batch 89: `find-the-closest-palindrome` (hard/math+strings), `number-of-subarrays-with-lcm-equal-to-k` (medium/arrays+math), `smallest-rotation-with-highest-score` (hard/arrays+math).
+Remote batch 89: 13 problems — next-greater-element-distances, find-all-occurrences-z-algorithm, z-algorithm-longest-prefix-suffix, count-subarrays-exactly-k-distinct, maximum-product-subarray-length-k, weighted-job-scheduling, parallel-courses, parallel-courses-ii, grid-count-paths-mod, max-sum-submatrix, number-good-leaf-node-pairs, tree-node-product-of-children, minimum-operations-non-decreasing.
 
 ### feat(bank): add batch 87 — 3 problems (dp, strings, arrays) (2026-05-26)
 Added 3 problems: `maximize-the-profit-as-the-salesman` (medium/dp, weighted interval scheduling with DP sweep), `check-if-string-is-an-acronym-of-words` (easy/strings, first-char matching), `count-elements-with-smaller-and-greater-element` (easy/arrays, min/max filtering). Bank at **1948**; 6138 tests.
