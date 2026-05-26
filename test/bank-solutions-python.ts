@@ -22637,4 +22637,42 @@ def secondMinimum(n, edges, time, change):
     return ans
 `,
 
+  // batch 62
+  'maximum-number-of-points-with-cost': `def maxPoints(points):
+    m, n = len(points), len(points[0])
+    dp = list(points[0])
+    for i in range(1, m):
+        left = [0] * n
+        right = [0] * n
+        left[0] = dp[0] + 0
+        for j in range(1, n):
+            left[j] = max(left[j-1], dp[j] + j)
+        right[n-1] = dp[n-1] - (n-1)
+        for j in range(n-2, -1, -1):
+            right[j] = max(right[j+1], dp[j] - j)
+        dp = [points[i][j] + max(left[j] - j, right[j] + j) for j in range(n)]
+    return max(dp)
+`,
+
+  'find-three-consecutive-integers-that-sum-to-given-number': `def sumOfThree(num):
+    num = int(num)
+    if num % 3 != 0:
+        return []
+    n = num // 3
+    return [n - 1, n, n + 1]
+`,
+
+  'minimum-sum-of-four-digit-number-after-splitting-digits': `def minimumSum(num):
+    num = int(num)
+    d = sorted(int(ch) for ch in str(num))
+    return (d[0] * 10 + d[2]) + (d[1] * 10 + d[3])
+`,
+
+  'k-items-with-the-maximum-sum': `def kItemsWithMaximumSum(numOnes, numZeros, numNegOnes, k):
+    numOnes, numZeros, numNegOnes, k = int(numOnes), int(numZeros), int(numNegOnes), int(k)
+    ones = min(k, numOnes)
+    zeros = min(k - ones, numZeros)
+    negones = k - ones - zeros
+    return ones - negones
+`,
 };

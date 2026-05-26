@@ -22945,4 +22945,41 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 62
+  'maximum-number-of-points-with-cost': (...args: unknown[]) => {
+    const points = args[0] as number[][];
+    const m = points.length, n = points[0]!.length;
+    let dp = [...points[0]!];
+    for (let i = 1; i < m; i++) {
+      const left = new Array(n).fill(0) as number[];
+      const right = new Array(n).fill(0) as number[];
+      left[0] = dp[0]! + 0;
+      for (let j = 1; j < n; j++) left[j] = Math.max(left[j - 1]!, dp[j]! + j);
+      right[n - 1] = dp[n - 1]! - (n - 1);
+      for (let j = n - 2; j >= 0; j--) right[j] = Math.max(right[j + 1]!, dp[j]! - j);
+      dp = points[i]!.map((v, j) => v + Math.max(left[j]! - j, right[j]! + j));
+    }
+    return Math.max(...dp);
+  },
+  'find-three-consecutive-integers-that-sum-to-given-number': (...args: unknown[]) => {
+    const num = args[0] as number;
+    if (num % 3 !== 0) return [];
+    const n = num / 3;
+    return [n - 1, n, n + 1];
+  },
+  'minimum-sum-of-four-digit-number-after-splitting-digits': (...args: unknown[]) => {
+    const num = args[0] as number;
+    const d = String(num).split('').map(Number).sort((a, b) => a - b);
+    return (d[0]! * 10 + d[2]!) + (d[1]! * 10 + d[3]!);
+  },
+  'k-items-with-the-maximum-sum': (...args: unknown[]) => {
+    const numOnes = args[0] as number;
+    const numZeros = args[1] as number;
+    const k = args[3] as number;
+    const ones = Math.min(k, numOnes);
+    const zeros = Math.min(k - ones, numZeros);
+    const negones = k - ones - zeros;
+    return ones - negones;
+  },
+
 };

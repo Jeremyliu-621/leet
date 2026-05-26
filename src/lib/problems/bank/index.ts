@@ -1643,12 +1643,17 @@ import { problem as findAllAnagramsInAString } from './find-all-anagrams-in-a-st
 import { problem as longestPalindrome } from './longest-palindrome';
 import { problem as reverseWordsInAString } from './reverse-words-in-a-string';
 import { problem as countPrimes } from './count-primes';
+// batch 62
+import { problem as gridGame } from './grid-game';
+import { problem as maximumNumberOfPointsWithCost } from './maximum-number-of-points-with-cost';
+import { problem as findThreeConsecutiveIntegersThatSumToGivenNumber } from './find-three-consecutive-integers-that-sum-to-given-number';
+import { problem as minimumSumOfFourDigitNumberAfterSplittingDigits } from './minimum-sum-of-four-digit-number-after-splitting-digits';
+import { problem as kItemsWithTheMaximumSum } from './k-items-with-the-maximum-sum';
 
 // batch 58
 import { problem as maxConsecutiveOnesII } from './max-consecutive-ones-ii';
 import { problem as lengthOfLongestFibonacciSubsequence } from './length-of-longest-fibonacci-subsequence';
 import { problem as detectSquares } from './detect-squares';
-import { problem as gridGame } from './grid-game';
 import { problem as maximumWhiteTilesCoveredByCarpet } from './maximum-white-tiles-covered-by-carpet';
 import { problem as minimumOperationsToMakeAllArrayElementsEqual } from './minimum-operations-to-make-all-array-elements-equal';
 import { problem as reverseWordsInAStringII } from './reverse-words-in-a-string-ii';
@@ -3365,4 +3370,9 @@ export const problems: readonly Problem[] = [
   findTheWinnerOfCircularGame,
   minimumPathCostInGrid,
   maximumDistanceBetweenAPairOfValues,
+  // batch 62
+  maximumNumberOfPointsWithCost,
+  findThreeConsecutiveIntegersThatSumToGivenNumber,
+  minimumSumOfFourDigitNumberAfterSplittingDigits,
+  kItemsWithTheMaximumSum,
 ];

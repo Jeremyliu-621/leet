@@ -4,56 +4,57 @@ export const problem: Problem = {
   id: 'grid-game',
   title: 'Grid Game',
   difficulty: 'medium',
-  tags: ['arrays', 'math'],
-  description: `You are given a 2D array \`grid\` of size \`2 × n\`, where \`grid[r][c]\` represents the points at position \`(r, c)\`.
+  tags: ['arrays'],
+  description: `You are given a **0-indexed** 2D array \`grid\` of size \`2 × n\`, where \`grid[r][c]\` represents the number of points in the cell \`(r, c)\`.
 
-Two robots start at \`(0, 0)\` and both want to reach \`(1, n-1)\`. Each robot may only move right or down.
+Two robots play a game on this grid:
 
-The **first** robot goes first, collecting all points it visits (those cells become 0). Then the **second** robot collects all remaining points.
+- **Robot 1** starts at \`(0, 0)\` and must reach \`(1, n-1)\`. It can only move right or down. When it passes through a cell it collects all the points and leaves that cell empty (0).
+- **Robot 2** then starts at \`(0, 0)\` and must also reach \`(1, n-1)\`, moving right or down, collecting points from the remaining cells.
 
-Return the **number of points collected by the second robot**, assuming both robots play optimally (second robot maximizes; first robot minimizes second robot's score).
+Robot 1 wants to **minimize** the number of points Robot 2 can collect. Robot 2 plays **optimally** to maximize its score.
 
-**Example 1:**
-\`\`\`
-Input: grid = [[2,5,4],[1,5,1]]
-Output: 4
-\`\`\`
-
-**Example 2:**
-\`\`\`
-Input: grid = [[3,3,1],[8,5,2]]
-Output: 4
-\`\`\`
-
-**Constraints:**
-- \`grid.length == 2\`
-- \`1 <= n <= 5 × 10^4\`
-- \`1 <= grid[i][j] <= 10^5\``,
-  constraints: ['grid.length == 2', '1 <= n <= 5 * 10^4', '1 <= grid[i][j] <= 10^5'],
+Return the **minimum** number of points Robot 2 can collect.`,
+  constraints: [
+    '`grid.length == 2`',
+    '`n == grid[0].length`',
+    '`1 <= n <= 5 * 10^4`',
+    '`1 <= grid[i][j] <= 10^5`',
+  ],
   examples: [
-    { input: 'grid = [[2,5,4],[1,5,1]]', output: '4' },
-    { input: 'grid = [[3,3,1],[8,5,2]]', output: '4' },
+    {
+      input: 'grid = [[2,3,1,4],[0,2,1,1]]',
+      output: '4',
+      explanation: 'Robot 1 turns down at column 2. Robot 2 can take the top-right suffix (sum 4) or the bottom-left prefix (sum 2). Robot 2 picks 4.',
+    },
+    {
+      input: 'grid = [[3,3,1],[8,5,2]]',
+      output: '4',
+      explanation: 'Robot 1 turns at column 1. Top suffix = 1, bottom prefix = 8. Robot 2 picks max(1,8)? Robot 1 tries all columns to minimize Robot 2\'s best option.',
+    },
   ],
   hints: [
-    'The first robot must descend at exactly one column k (moving from row 0 to row 1 at column k).',
-    'After robot 1 descends at column k, the second robot can collect: top row to the right of k (columns k+1..n-1), OR bottom row to the left of k (columns 0..k-1).',
-    'Iterate over all k. For each k, second robot collects max(topRight, bottomLeft). First robot minimizes this, so answer = min over k of max(sumTop[k+1..n-1], sumBottom[0..k-1]).',
+    'If Robot 1 turns down at column c, Robot 2 has two choices: collect the top row from column c+1 to n-1, or collect the bottom row from column 0 to c-1.',
+    'Precompute prefix sums for both rows so you can evaluate each turn column in O(1).',
+    'Robot 1 wants to minimize max(topSuffix[c+1], bottomPrefix[c]). Iterate over all columns and track the minimum.',
   ],
   functionName: 'gridGame',
   params: ['grid'],
   starterCode: {
-    javascript: 'function gridGame(grid) {\n  // your code here\n}\n',
-    python: 'def gridGame(grid):\n    pass\n',
+    javascript: `function gridGame(grid) {
+
+}`,
+    python: `def gridGame(grid):
+    pass`,
   },
   visibleTests: [
-    { args: [[[2, 5, 4], [1, 5, 1]]], expected: 4 },
+    { args: [[[2, 3, 1, 4], [0, 2, 1, 1]]], expected: 3 },
     { args: [[[3, 3, 1], [8, 5, 2]]], expected: 4 },
     { args: [[[1, 3, 1, 15], [1, 3, 3, 1]]], expected: 7 },
   ],
   hiddenTests: [
-    { args: [[[1], [1]]], expected: 0 },
     { args: [[[1, 1], [1, 1]]], expected: 1 },
-    { args: [[[10, 1], [1, 10]]], expected: 1 },
-    { args: [[[1, 1, 1, 1], [1, 1, 1, 1]]], expected: 2 },
+    { args: [[[20, 3, 20], [1, 1, 1]]], expected: 2 },
+    { args: [[[1, 2, 3, 4, 5], [5, 4, 3, 2, 1]]], expected: 9 },
   ],
 };
