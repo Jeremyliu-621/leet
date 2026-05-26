@@ -34,6 +34,11 @@ export const problem: Problem = {
     javascript: 'function isPrime(n) {\n  // your code here\n}\n',
     python: 'def isPrime(n):\n    # your code here\n    pass\n',
   },
+  hints: [
+    'Immediately return false for n < 2. Then try dividing n by every integer from 2 up to Math.sqrt(n).',
+    'If any divisor d divides n evenly (n % d === 0), return false. If the loop completes without finding a divisor, return true.',
+    'Checking up to sqrt(n) works because if n has a factor larger than sqrt(n), its pair factor must be smaller than sqrt(n) — you would have found it already.',
+  ],
   visibleTests: [
     { args: [7], expected: true },
     { args: [12], expected: false },

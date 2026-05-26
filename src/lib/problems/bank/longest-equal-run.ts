@@ -33,6 +33,11 @@ export const problem: Problem = {
     javascript: 'function longestEqualRun(text) {\n  // your code here\n}\n',
     python: 'def longestEqualRun(text):\n    # your code here\n    pass\n',
   },
+  hints: [
+    'Iterate from left to right. Maintain a current run length and a max run length seen so far.',
+    'When text[i] === text[i-1], increment the current run; otherwise reset the current run to 1.',
+    'Update max at each step. Handle the empty string by initializing max to 0 and returning 0 immediately.',
+  ],
   visibleTests: [
     { args: ['aabbbcc'], expected: 3 },
     { args: ['abc'], expected: 1 },

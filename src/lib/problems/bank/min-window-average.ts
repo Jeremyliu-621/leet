@@ -34,6 +34,11 @@ export const problem: Problem = {
     javascript: 'function minWindowSum(nums, k) {\n  // your code here\n}\n',
     python: 'def minWindowSum(nums, k):\n    # your code here\n    pass\n',
   },
+  hints: [
+    'Compute the sum of the first k elements as the initial window sum, and set minSum to that value.',
+    'Slide the window right: subtract nums[i - k] (the element leaving) and add nums[i] (the element entering). Update minSum at each step.',
+    'Return minSum after processing all windows. The sliding window avoids re-summing each block from scratch, keeping the algorithm O(n).',
+  ],
   visibleTests: [
     { args: [[4, 2, 1, 7], 2], expected: 3 },
     { args: [[3, 3, 3], 3], expected: 9 },

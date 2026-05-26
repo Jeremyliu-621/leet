@@ -26,6 +26,7 @@ Given a string \`s\`, return \`true\` if it is a palindrome, or \`false\` otherw
   hints: [
     'Filter the string to only alphanumeric characters, convert to lowercase, then check if it equals its reverse.',
     'Or use two pointers: skip non-alphanumeric characters, compare lowercase letters/digits from both ends.',
+    'To test alphanumeric in JS, use `/[a-z0-9]/.test(ch.toLowerCase())`; in Python, use `ch.isalnum()`. An empty string after filtering is a valid palindrome.',
   ],
   visibleTests: [
     { args: ['A man, a plan, a canal: Panama'], expected: true },

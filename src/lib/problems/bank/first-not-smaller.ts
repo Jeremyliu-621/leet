@@ -35,6 +35,11 @@ export const problem: Problem = {
     javascript: 'function firstNotSmaller(nums, target) {\n  // your code here\n}\n',
     python: 'def firstNotSmaller(nums, target):\n    # your code here\n    pass\n',
   },
+  hints: [
+    'This is a classic lower-bound binary search. Maintain left = 0, right = nums.length (note: not nums.length - 1, since the answer may be past the last element).',
+    'At each step: if nums[mid] < target, move left = mid + 1; otherwise move right = mid. The loop ends when left === right.',
+    'Return left — it is the index of the first element >= target, or nums.length if no such element exists.',
+  ],
   visibleTests: [
     { args: [[1, 3, 5, 7], 5], expected: 2 },
     { args: [[1, 3, 5, 7], 4], expected: 2 },

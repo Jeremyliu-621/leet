@@ -33,6 +33,11 @@ export const problem: Problem = {
     javascript: 'function collapseAdjacentDuplicates(text) {\n  // your code here\n}\n',
     python: 'def collapseAdjacentDuplicates(text):\n    # your code here\n    pass\n',
   },
+  hints: [
+    'Use an array as a stack. Iterate through each character; if the stack is non-empty and its top equals the current character, pop the top instead of pushing.',
+    'Otherwise push the current character. After the loop, join the stack into a string.',
+    'An empty string input should return an empty string. The algorithm naturally handles cascading removals because each pop may reveal a new adjacent pair.',
+  ],
   visibleTests: [
     { args: ['abbaca'], expected: 'ca' },
     { args: ['azxxzy'], expected: 'ay' },

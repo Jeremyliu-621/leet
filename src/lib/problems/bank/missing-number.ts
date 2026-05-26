@@ -26,6 +26,7 @@ export const problem: Problem = {
   hints: [
     'The sum of 0 to n is n*(n+1)/2. The missing number is that expected sum minus the actual sum of nums.',
     'Or use XOR: XOR all indices 0..n with all values in nums. Paired values cancel; the remaining is the missing number.',
+    'Both approaches are O(n) time, O(1) space. The sum approach is simpler to code; the XOR trick avoids any overflow risk.',
   ],
   visibleTests: [
     { args: [[3, 0, 1]], expected: 2 },

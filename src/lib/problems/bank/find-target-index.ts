@@ -34,6 +34,11 @@ export const problem: Problem = {
     javascript: 'function findTargetIndex(nums, target) {\n  // your code here\n}\n',
     python: 'def findTargetIndex(nums, target):\n    # your code here\n    pass\n',
   },
+  hints: [
+    'Set left = 0 and right = nums.length - 1. Compute mid = (left + right) >> 1 each iteration.',
+    'If nums[mid] === target, return mid. If nums[mid] < target, narrow to the right half (left = mid + 1). Otherwise narrow to the left half (right = mid - 1).',
+    'If the loop exits without finding the target, return -1.',
+  ],
   visibleTests: [
     { args: [[1, 3, 5, 7, 9], 7], expected: 3 },
     { args: [[1, 3, 5, 7, 9], 4], expected: -1 },

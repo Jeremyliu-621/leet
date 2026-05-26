@@ -27,6 +27,7 @@ You must implement a solution with a linear runtime complexity and use only cons
   hints: [
     'XOR of a number with itself is 0, and XOR with 0 is the number itself.',
     'XOR all elements together. Pairs cancel out, leaving only the unique number.',
+    'This is O(n) time and O(1) space — better than using a hash map or sorting. In JS: use `nums.reduce((acc, n) => acc ^ n, 0)` for a concise one-liner.',
   ],
   visibleTests: [
     { args: [[2, 2, 1]], expected: 1 },

@@ -27,6 +27,7 @@ Return the maximum profit you can achieve from this transaction. If you cannot a
   hints: [
     'Track the minimum price seen so far as you iterate. At each price, the profit is price - minSoFar.',
     'Update maxProfit = max(maxProfit, prices[i] - minSoFar).',
+    'If prices only decrease, no profitable transaction exists — return 0. Initialize maxProfit = 0 so this is handled automatically.',
   ],
   visibleTests: [
     { args: [[7, 1, 5, 3, 6, 4]], expected: 5 },

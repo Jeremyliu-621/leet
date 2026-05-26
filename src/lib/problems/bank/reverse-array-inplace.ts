@@ -33,6 +33,11 @@ export const problem: Problem = {
     javascript: 'function reverseArray(nums) {\n  // your code here\n}\n',
     python: 'def reverseArray(nums):\n    # your code here\n    pass\n',
   },
+  hints: [
+    'Create a copy of the array (or work on a new array). Set left = 0 and right = n - 1, swapping nums[left] and nums[right] while left < right.',
+    'Alternatively, simply return `[...nums].reverse()` in JS or `nums[::-1]` in Python — both create a new reversed array without modifying the original.',
+    'Make sure not to mutate the input array in-place if the problem says "must not be modified." Returning a slice or spreading into a new array satisfies this.',
+  ],
   visibleTests: [
     { args: [[1, 2, 3, 4]], expected: [4, 3, 2, 1] },
     { args: [[9]], expected: [9] },

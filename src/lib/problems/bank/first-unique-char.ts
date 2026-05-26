@@ -34,6 +34,11 @@ export const problem: Problem = {
     javascript: 'function firstUniqueChar(text) {\n  // your code here\n}\n',
     python: 'def firstUniqueChar(text):\n    # your code here\n    pass\n',
   },
+  hints: [
+    'First pass: count occurrences of each character using a Map (or a 26-element frequency array for lowercase letters).',
+    'Second pass: iterate the string left to right and return the index of the first character whose count equals 1.',
+    'If no unique character is found, return -1. An empty string should immediately return -1.',
+  ],
   visibleTests: [
     { args: ['leetcode'], expected: 0 },
     { args: ['aabb'], expected: -1 },

@@ -27,6 +27,7 @@ The majority element is the element that appears more than \`⌊n / 2⌋\` times
   hints: [
     'The Boyer-Moore Voting Algorithm: maintain a candidate and a count. Increment count when you see the candidate, decrement otherwise. When count hits 0, update the candidate.',
     'The final candidate is the majority element (guaranteed to exist).',
+    'A simpler O(n) approach: use a hash map to count frequencies, then return the key with count > n/2. Boyer-Moore is preferred for its O(1) space.',
   ],
   visibleTests: [
     { args: [[3, 2, 3]], expected: 3 },

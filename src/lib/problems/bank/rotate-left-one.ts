@@ -34,6 +34,11 @@ export const problem: Problem = {
     javascript: 'function shiftLeftByOne(nums) {\n  // your code here\n}\n',
     python: 'def shiftLeftByOne(nums):\n    # your code here\n    pass\n',
   },
+  hints: [
+    'Slice off the first element, then concatenate the rest of the array with the first element at the end.',
+    'In JS: `[...nums.slice(1), nums[0]]`. In Python: `nums[1:] + [nums[0]]`.',
+    'Do not mutate the original array — return a new array. If the array has only one element, the result equals the input unchanged.',
+  ],
   visibleTests: [
     { args: [[1, 2, 3]], expected: [2, 3, 1] },
     { args: [[9]], expected: [9] },

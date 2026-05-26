@@ -26,6 +26,7 @@ export const problem: Problem = {
   hints: [
     'Loop from 1 to n inclusive. Check divisibility by 15 first (FizzBuzz), then by 3, then by 5.',
     'Convert non-Fizz/Buzz numbers to strings with String(i) or str(i).',
+    'The order of checks matters: if you check divisible-by-3 before divisible-by-15, you will emit "Fizz" for 15 instead of "FizzBuzz".',
   ],
   visibleTests: [
     { args: [3], expected: ['1', '2', 'Fizz'] },

@@ -24,6 +24,7 @@ export const problem: Problem = {
   hints: [
     'Add each element to a Set as you iterate. If you try to add something already in the Set, return true.',
     'Alternatively, sort the array and check adjacent elements.',
+    'The Set approach is O(n) time and O(n) space. The sort approach is O(n log n) time and O(1) space — pick the approach that fits the constraint.',
   ],
   visibleTests: [
     { args: [[1, 2, 3, 1]], expected: true },

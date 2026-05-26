@@ -33,6 +33,11 @@ export const problem: Problem = {
     javascript: 'function vowelTally(text) {\n  // your code here\n}\n',
     python: 'def vowelTally(text):\n    # your code here\n    pass\n',
   },
+  hints: [
+    'Create a Set (or string) of vowels: "aeiou". Iterate each character, convert to lowercase, and check if it is in the set.',
+    'Increment a counter for each match. Return the counter after the loop.',
+    'In JS: `[...text.toLowerCase()].filter(c => "aeiouAEIOU".includes(c)).length`. In Python: `sum(1 for c in text if c.lower() in "aeiou")`.',
+  ],
   visibleTests: [
     { args: ['hello'], expected: 2 },
     { args: ['SKY'], expected: 0 },

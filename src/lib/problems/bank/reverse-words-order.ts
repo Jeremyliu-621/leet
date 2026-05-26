@@ -34,6 +34,11 @@ export const problem: Problem = {
     javascript: 'function reverseWordOrder(sentence) {\n  // your code here\n}\n',
     python: 'def reverseWordOrder(sentence):\n    # your code here\n    pass\n',
   },
+  hints: [
+    'Split the sentence on spaces to get an array of words, then reverse the array and join with spaces.',
+    'In JS: `sentence.split(" ").reverse().join(" ")`. In Python: `" ".join(sentence.split()[::-1])`.',
+    'Since the problem guarantees single spaces and no leading/trailing spaces, a plain split on " " is safe (no empty strings in the word list).',
+  ],
   visibleTests: [
     { args: ['the sky is blue'], expected: 'blue is sky the' },
     { args: ['hello'], expected: 'hello' },

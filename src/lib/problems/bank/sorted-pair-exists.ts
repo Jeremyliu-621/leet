@@ -34,6 +34,11 @@ export const problem: Problem = {
     javascript: 'function sortedPairExists(nums, target) {\n  // your code here\n}\n',
     python: 'def sortedPairExists(nums, target):\n    # your code here\n    pass\n',
   },
+  hints: [
+    'Place one pointer at the start (left = 0) and one at the end (right = n - 1). Compute their sum each iteration.',
+    'If sum === target, return true. If sum < target, move left right to increase the sum. If sum > target, move right left to decrease it.',
+    'Return false if the pointers cross. This works because the array is sorted — any sum change can be achieved by moving exactly one pointer.',
+  ],
   visibleTests: [
     { args: [[1, 2, 4, 7], 6], expected: true },
     { args: [[1, 2, 4, 7], 100], expected: false },

@@ -33,6 +33,11 @@ export const problem: Problem = {
     javascript: 'function digitSum(n) {\n  // your code here\n}\n',
     python: 'def digitSum(n):\n    # your code here\n    pass\n',
   },
+  hints: [
+    'Extract digits one at a time: the last digit is `n % 10`, then divide n by 10 (integer division) and repeat.',
+    'Loop while n > 0; accumulate the digit sum. Handle n === 0 separately (or just return 0 when the loop never runs).',
+    'You can also convert n to a string and sum the numeric values of its characters: `String(n).split("").reduce((s, c) => s + Number(c), 0)`.',
+  ],
   visibleTests: [
     { args: [472], expected: 13 },
     { args: [0], expected: 0 },
