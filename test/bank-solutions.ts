@@ -24286,4 +24286,172 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return balls.length;
   },
 
+  // batch 66
+  'soup-servings': (n: unknown) => {
+    const N = n as number;
+    if (N >= 4800) return 1.0;
+    const scaled = Math.ceil(N / 25);
+    const memo = new Map<number, number>();
+    const dp = (a: number, b: number): number => {
+      if (a <= 0 && b <= 0) return 0.5;
+      if (a <= 0) return 1.0;
+      if (b <= 0) return 0.0;
+      const key = a * 200 + b;
+      if (memo.has(key)) return memo.get(key)!;
+      const res = 0.25 * (dp(a - 4, b) + dp(a - 3, b - 1) + dp(a - 2, b - 2) + dp(a - 1, b - 3));
+      memo.set(key, res);
+      return res;
+    };
+    return dp(scaled, scaled);
+  },
+
+  'minimum-number-of-rabbits': (answers: unknown) => {
+    const arr = answers as number[];
+    const count = new Map<number, number>();
+    for (const a of arr) count.set(a, (count.get(a) ?? 0) + 1);
+    let total = 0;
+    for (const [color, freq] of count) {
+      total += Math.ceil(freq / (color + 1)) * (color + 1);
+    }
+    return total;
+  },
+
+  'the-maze-ii': (maze: unknown, start: unknown, destination: unknown) => {
+    const g = maze as number[][];
+    const s = start as number[];
+    const d = destination as number[];
+    const m = g.length, n = g[0]!.length;
+    const dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+    const dist = Array.from({ length: m }, () => new Array(n).fill(Infinity)) as number[][];
+    dist[s[0]!]![s[1]!] = 0;
+    const heap: number[][] = [[0, s[0]!, s[1]!]];
+    while (heap.length) {
+      heap.sort((a, b) => a[0]! - b[0]!);
+      const [dd, r, c] = heap.shift()!;
+      if (dd! > dist[r!]![c!]!) continue;
+      for (const [dr, dc] of dirs) {
+        let nr = r!, nc = c!, steps = 0;
+        while (nr + dr! >= 0 && nr + dr! < m && nc + dc! >= 0 && nc + dc! < n && g[nr + dr!]![nc + dc!] === 0) {
+          nr += dr!; nc += dc!; steps++;
+        }
+        const nd = dd! + steps;
+        if (nd < dist[nr]![nc]!) {
+          dist[nr]![nc] = nd;
+          heap.push([nd, nr, nc]);
+        }
+      }
+    }
+    const ans = dist[d[0]!]![d[1]!]!;
+    return ans === Infinity ? -1 : ans;
+  },
+
+  'maximum-vacation-days': (flights: unknown, days: unknown) => {
+    const fl = flights as number[][];
+    const dy = days as number[][];
+    const nn = fl.length;
+    const K = dy[0]!.length;
+    let dp = new Array(nn).fill(-Infinity) as number[];
+    dp[0] = 0;
+    for (let week = 0; week < K; week++) {
+      const ndp = new Array(nn).fill(-Infinity) as number[];
+      for (let city = 0; city < nn; city++) {
+        if (dp[city] === -Infinity) continue;
+        for (let next = 0; next < nn; next++) {
+          if (next === city || fl[city]![next] === 1) {
+            ndp[next] = Math.max(ndp[next]!, dp[city]! + dy[next]![week]!);
+          }
+        }
+      }
+      dp = ndp;
+    }
+    return Math.max(0, ...dp.filter(x => x !== -Infinity));
+  },
+
+  'minimum-taps-to-open-to-water-a-garden': (n: unknown, ranges: unknown) => {
+    const nn = n as number;
+    const rng = ranges as number[];
+    // Convert to jump game: maxReach[i] = max right end reachable if we are at position i
+    const maxReach = new Array(nn + 1).fill(0) as number[];
+    for (let i = 0; i <= nn; i++) {
+      const left = Math.max(0, i - rng[i]!);
+      const right = Math.min(nn, i + rng[i]!);
+      maxReach[left] = Math.max(maxReach[left]!, right);
+    }
+    let taps = 0, currEnd = 0, furthest = 0;
+    for (let i = 0; i < nn; i++) {
+      furthest = Math.max(furthest, maxReach[i]!);
+      if (i === currEnd) {
+        if (furthest <= currEnd) return -1;
+        taps++;
+        currEnd = furthest;
+      }
+    }
+    return taps;
+  },
+
+  'put-marbles-in-bags': (weights: unknown, k: unknown) => {
+    const w = weights as number[];
+    const kk = k as number;
+    const n = w.length;
+    if (kk === 1 || kk === n) return 0;
+    // Build pair sums for all n-1 adjacent pairs
+    const pairSums: number[] = [];
+    for (let i = 0; i < n - 1; i++) {
+      pairSums.push(w[i]! + w[i + 1]!);
+    }
+    pairSums.sort((a, b) => a - b);
+    // Pick k-1 boundaries; min score uses smallest, max uses largest
+    let minScore = 0, maxScore = 0;
+    for (let i = 0; i < kk - 1; i++) {
+      minScore += pairSums[i]!;
+      maxScore += pairSums[n - 1 - 1 - i]!;
+    }
+    return maxScore - minScore;
+  },
+
+  'grid-illumination': (_n: unknown, lamps: unknown, queries: unknown) => {
+    const lps = lamps as number[][];
+    const qs = queries as number[][];
+    const lampSet = new Set<number>();
+    const rowCount = new Map<number, number>();
+    const colCount = new Map<number, number>();
+    const diagCount = new Map<number, number>();
+    const antiCount = new Map<number, number>();
+    const MULT = 100001;
+    const addLamp = (r: number, c: number) => {
+      const key = r * MULT + c;
+      if (lampSet.has(key)) return;
+      lampSet.add(key);
+      rowCount.set(r, (rowCount.get(r) ?? 0) + 1);
+      colCount.set(c, (colCount.get(c) ?? 0) + 1);
+      diagCount.set(r - c, (diagCount.get(r - c) ?? 0) + 1);
+      antiCount.set(r + c, (antiCount.get(r + c) ?? 0) + 1);
+    };
+    const removeLamp = (r: number, c: number) => {
+      const key = r * MULT + c;
+      if (!lampSet.has(key)) return;
+      lampSet.delete(key);
+      rowCount.set(r, rowCount.get(r)! - 1);
+      colCount.set(c, colCount.get(c)! - 1);
+      diagCount.set(r - c, diagCount.get(r - c)! - 1);
+      antiCount.set(r + c, antiCount.get(r + c)! - 1);
+    };
+    for (const [r, c] of lps) addLamp(r!, c!);
+    const result: number[] = [];
+    for (const [qr, qc] of qs) {
+      const lit =
+        (rowCount.get(qr!) ?? 0) > 0 ||
+        (colCount.get(qc!) ?? 0) > 0 ||
+        (diagCount.get(qr! - qc!) ?? 0) > 0 ||
+        (antiCount.get(qr! + qc!) ?? 0) > 0;
+      result.push(lit ? 1 : 0);
+      for (let dr = -1; dr <= 1; dr++) {
+        for (let dc = -1; dc <= 1; dc++) {
+          removeLamp(qr! + dr, qc! + dc);
+        }
+      }
+    }
+    return result;
+  },
+
 };

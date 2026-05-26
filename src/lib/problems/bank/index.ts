@@ -1694,6 +1694,20 @@ import { problem as minimumTimeToVisitACellInAGrid } from './minimum-time-to-vis
 import { problem as numberOfBeautifulSubsets } from './number-of-beautiful-subsets';
 import { problem as maximumNumberOfFishInAGrid } from './maximum-number-of-fish-in-a-grid';
 
+// batch 64
+import { problem as minimumCostValidPathInGrid } from './minimum-cost-valid-path-in-grid';
+import { problem as decreaseElementsToMakeArrayZigzag } from './decrease-elements-to-make-array-zigzag';
+import { problem as maximalNetworkRank } from './maximal-network-rank';
+import { problem as minimumTapsToOpenToWaterAGarden } from './minimum-taps-to-open-to-water-a-garden';
+import { problem as putMarblesInBags } from './put-marbles-in-bags';
+
+// batch 66
+import { problem as soupServings } from './soup-servings';
+import { problem as minimumNumberOfRabbits } from './minimum-number-of-rabbits';
+import { problem as theMazeII } from './the-maze-ii';
+import { problem as maximumVacationDays } from './maximum-vacation-days';
+import { problem as gridIllumination } from './grid-illumination';
+
 // batch 58
 import { problem as maxConsecutiveOnesII } from './max-consecutive-ones-ii';
 import { problem as lengthOfLongestFibonacciSubsequence } from './length-of-longest-fibonacci-subsequence';
@@ -3533,4 +3547,16 @@ export const problems: readonly Problem[] = [
   swapAdjacentInLrString,
   nextGreaterElementIV,
   minimumNumberOfOperationsToMakeArraysSimilar,
+  // batch 64
+  minimumCostValidPathInGrid,
+  decreaseElementsToMakeArrayZigzag,
+  maximalNetworkRank,
+  minimumTapsToOpenToWaterAGarden,
+  putMarblesInBags,
+  // batch 66
+  soupServings,
+  minimumNumberOfRabbits,
+  theMazeII,
+  maximumVacationDays,
+  gridIllumination,
 ];

@@ -23744,4 +23744,201 @@ def secondMinimum(n, edges, time, change):
             return total
     return len(balls)
 `,
+
+  // batch 66
+  'soup-servings': `def soupServings(n):
+    if n >= 4800:
+        return 1.0
+    import math
+    n = math.ceil(n / 25)
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dp(a, b):
+        if a <= 0 and b <= 0:
+            return 0.5
+        if a <= 0:
+            return 1.0
+        if b <= 0:
+            return 0.0
+        return 0.25 * (dp(a - 4, b) + dp(a - 3, b - 1) + dp(a - 2, b - 2) + dp(a - 1, b - 3))
+    return dp(n, n)
+`,
+
+  'minimum-number-of-rabbits': `def numRabbits(answers):
+    from collections import Counter
+    import math
+    count = Counter(answers)
+    total = 0
+    for color, freq in count.items():
+        total += math.ceil(freq / (color + 1)) * (color + 1)
+    return total
+`,
+
+  'the-maze-ii': `def shortestDistance(maze, start, destination):
+    import heapq
+    m, n = len(maze), len(maze[0])
+    dist = [[float('inf')] * n for _ in range(m)]
+    dist[start[0]][start[1]] = 0
+    heap = [(0, start[0], start[1])]
+    while heap:
+        d, r, c = heapq.heappop(heap)
+        if d > dist[r][c]:
+            continue
+        for dr, dc in ((0,1),(0,-1),(1,0),(-1,0)):
+            nr, nc, steps = r, c, 0
+            while 0 <= nr + dr < m and 0 <= nc + dc < n and maze[nr + dr][nc + dc] == 0:
+                nr += dr
+                nc += dc
+                steps += 1
+            nd = d + steps
+            if nd < dist[nr][nc]:
+                dist[nr][nc] = nd
+                heapq.heappush(heap, (nd, nr, nc))
+    ans = dist[destination[0]][destination[1]]
+    return -1 if ans == float('inf') else ans
+`,
+
+  'maximum-vacation-days': `def maxVacationDays(flights, days):
+    n = len(flights)
+    K = len(days[0])
+    NEG_INF = float('-inf')
+    dp = [NEG_INF] * n
+    dp[0] = 0
+    for week in range(K):
+        ndp = [NEG_INF] * n
+        for city in range(n):
+            if dp[city] == NEG_INF:
+                continue
+            for nxt in range(n):
+                if nxt == city or flights[city][nxt] == 1:
+                    val = dp[city] + days[nxt][week]
+                    if val > ndp[nxt]:
+                        ndp[nxt] = val
+        dp = ndp
+    return max(0, max((x for x in dp if x != NEG_INF), default=0))
+`,
+
+  // batch 64 (remote)
+  'minimum-cost-valid-path-in-grid': `def minCost(grid):
+    import heapq
+    m, n = len(grid), len(grid[0])
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    dist = [[float('inf')] * n for _ in range(m)]
+    dist[0][0] = 0
+    heap = [(0, 0, 0)]
+    while heap:
+        cost, r, c = heapq.heappop(heap)
+        if cost > dist[r][c]:
+            continue
+        if r == m-1 and c == n-1:
+            return cost
+        for d, (dr, dc) in enumerate(dirs):
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n:
+                edge_cost = 0 if grid[r][c] == d + 1 else 1
+                new_cost = cost + edge_cost
+                if new_cost < dist[nr][nc]:
+                    dist[nr][nc] = new_cost
+                    heapq.heappush(heap, (new_cost, nr, nc))
+    return dist[m-1][n-1]
+`,
+
+  'decrease-elements-to-make-array-zigzag': `def movesToMakeZigzag(nums):
+    n = len(nums)
+    ans = [0, 0]
+    for i in range(n):
+        neighbors = []
+        if i > 0:
+            neighbors.append(nums[i-1])
+        if i < n-1:
+            neighbors.append(nums[i+1])
+        min_neighbor = min(neighbors) if neighbors else float('inf')
+        ans[i % 2] += max(0, nums[i] - min_neighbor + 1)
+    return min(ans)
+`,
+
+  'maximal-network-rank': `def maximalNetworkRank(n, roads):
+    degree = [0] * n
+    connected = set()
+    for a, b in roads:
+        degree[a] += 1
+        degree[b] += 1
+        connected.add((min(a,b), max(a,b)))
+    ans = 0
+    for i in range(n):
+        for j in range(i+1, n):
+            rank = degree[i] + degree[j] - (1 if (i,j) in connected else 0)
+            ans = max(ans, rank)
+    return ans
+`,
+
+  'minimum-taps-to-open-to-water-a-garden': `def minTaps(n, ranges):
+    max_reach = [0] * (n + 1)
+    for i in range(n + 1):
+        left = max(0, i - ranges[i])
+        right = min(n, i + ranges[i])
+        max_reach[left] = max(max_reach[left], right)
+    taps = 0
+    curr_end = 0
+    furthest = 0
+    for i in range(n):
+        furthest = max(furthest, max_reach[i])
+        if i == curr_end:
+            if furthest <= curr_end:
+                return -1
+            taps += 1
+            curr_end = furthest
+    return taps
+`,
+
+  'put-marbles-in-bags': `def putMarbles(weights, k):
+    n = len(weights)
+    if k == 1 or k == n:
+        return 0
+    pair_sums = sorted(weights[i] + weights[i+1] for i in range(n-1))
+    min_score = sum(pair_sums[:k-1])
+    max_score = sum(pair_sums[-(k-1):])
+    return max_score - min_score
+`,
+
+  'grid-illumination': `def gridIllumination(n, lamps, queries):
+    from collections import defaultdict
+    lamp_set = set()
+    row_count = defaultdict(int)
+    col_count = defaultdict(int)
+    diag_count = defaultdict(int)
+    anti_count = defaultdict(int)
+
+    def add_lamp(r, c):
+        if (r, c) in lamp_set:
+            return
+        lamp_set.add((r, c))
+        row_count[r] += 1
+        col_count[c] += 1
+        diag_count[r - c] += 1
+        anti_count[r + c] += 1
+
+    def remove_lamp(r, c):
+        if (r, c) not in lamp_set:
+            return
+        lamp_set.discard((r, c))
+        row_count[r] -= 1
+        col_count[c] -= 1
+        diag_count[r - c] -= 1
+        anti_count[r + c] -= 1
+
+    for r, c in lamps:
+        add_lamp(r, c)
+
+    result = []
+    for qr, qc in queries:
+        lit = (row_count[qr] > 0 or col_count[qc] > 0 or
+               diag_count[qr - qc] > 0 or anti_count[qr + qc] > 0)
+        result.append(1 if lit else 0)
+        for dr in range(-1, 2):
+            for dc in range(-1, 2):
+                remove_lamp(qr + dr, qc + dc)
+    return result
+`,
+
 };
