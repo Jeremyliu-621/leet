@@ -29936,6 +29936,7 @@ def maxPoints(grid, queries):
     return res
 `,
 
+
   'check-if-there-is-a-valid-partition-for-the-array': `
 def validPartition(nums: list) -> bool:
     n = len(nums)
