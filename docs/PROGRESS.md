@@ -10,7 +10,10 @@
 **Current phase:** Phase 13 — Post-MVP polish
 **Current focus:** Bank at **2026** problems; 6378 tests green. Batches 92–95 + 2K milestone + remote merges complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 96+); UI/UX polish.
+**Next up:** Continued bank growth (batch 97+); UI/UX polish.
+
+### feat(bank): add batch 96 — check-if-array-sorted-and-rotated, find-all-lonely-numbers-in-array, check-if-all-characters-have-equal-number-of-occurrences (2026-05-26)
+Added 3 problems: `check-if-array-sorted-and-rotated` (easy/arrays, circular inversion count ≤1), `find-all-lonely-numbers-in-array` (easy/arrays+hash-map, frequency map + neighbor check), `check-if-all-characters-have-equal-number-of-occurrences` (easy/strings+hash-map, frequency uniformity check). Bank at **2026**; 6372 tests.
 
 ### feat(bank): add batch 95 — range-sum-bst, delete-node-in-a-bst, binary-tree-maximum-path-sum (2026-05-26)
 Added 3 tree problems: `range-sum-bst` (easy/tree, DFS leveraging BST ordering to skip irrelevant subtrees), `delete-node-in-a-bst` (medium/tree, inorder-successor replacement for two-child deletion), `binary-tree-maximum-path-sum` (hard/tree, gain-function DFS with global max tracking). Bank at **2026**; 6378 tests.
