@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at 1745 problems; 5535 tests green.
+**Current focus:** 🎉 Bank at **1750** problems; 5550 tests green — 1,750 milestone reached!
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue growing problem bank toward 1800; UX polish.
+**Next up:** Update marketing site to 1,750+; continue growing bank toward 1800.
 
 ### feat(sw): badge shows today's solve count (2026-05-26)
 Extension icon badge now updates after each solve to show problems solved today (e.g. "3"). Uses neutral dark gray background. Also refreshed on install/startup and storage changes.
@@ -21,11 +21,11 @@ After solving in standalone/practice mode the Time stat now shows "personal best
 ### Batch 68+69-local backfill (2026-05-26)
 Added 14 previously deferred problems from batch-68 and batch-69-local sessions: `best-time-to-buy-and-sell-stock-iii` (hard/arrays+dp, at-most-2-transactions state machine), `find-the-duplicate-number` (medium/arrays+two-pointers, Floyd's cycle detection), `maximum-difference-in-array` (easy/arrays, min-so-far scan), `longest-subarray-with-at-most-k-frequency` (medium/arrays+sliding-window+hash-map), `count-pairs-in-two-arrays` (medium/arrays+binary-search, diff-array sort + bisect), `image-smoother` (easy/arrays, 3×3 box filter floor-average), `complex-number-multiplication` (medium/strings+math, (a+bi)(c+di) formula), `number-of-boomerangs` (medium/hash-map+math, equidistant ordered pairs), `find-duplicate-file-in-system` (medium/strings+hash-map, content-to-path grouping), `poor-pigs` (hard/math, (rounds+1)^pigs >= buckets), `strobogrammatic-number` (easy/strings+math, two-pointer pair validation), `fraction-addition-and-subtraction` (medium/strings+math, gcd cross-multiply), `longest-zigzag-path-in-binary-tree` (medium/tree+dp, DFS direction tracking), `find-the-duplicate-subtrees` (medium/tree+hash-map, post-order serialization). JS + Python solutions for all. Bank at **1741**; 5511 tests.
 
-### Batch 70 (2026-05-26) — this session
+### Batch 70 (2026-05-26) — local session A
 Added 8 new problems: `cells-in-a-range-on-an-excel-sheet` (easy/strings, column+row nested loop), `make-two-arrays-equal-by-reversing-subarrays` (easy/arrays+hash-map, frequency equality), `count-pairs-of-similar-words` (easy/hash-map, canonical char-set key), `construct-the-rectangle` (easy/math, sqrt factorization), `minimum-number-of-buckets-required` (medium/strings, greedy right-first bucket placement), `apply-discount-every-n-items` (easy/arrays, 1-indexed modulo), `sum-game` (medium/math, parity + diff formula), `find-the-k-th-lucky-number` (easy/math, binary-digit-to-4/7 mapping). JS + Python solutions for all. Bank at **1745**; 5535 tests.
 
-### Batch 70 (2026-05-26) — remote
-Added 5 new problems: `find-the-longest-balanced-substring-of-a-binary-string` (easy/strings, run-length consecutive 0/1 pairing), `largest-palindromic-number` (medium/strings+hash-map, pair-frequency greedy from 9 down), `count-words-obtained-after-adding-a-letter` (medium/strings+hash-map, bitmask subtraction lookup), `minimum-number-of-flips-to-make-binary-string-alternating` (medium/strings+sliding-window, doubled-string window mismatch count), `total-cost-to-hire-k-workers` (medium/heap+two-pointers, dual min-heap + lo/hi pointer expansion). JS + Python solutions for all. Bank at **1736**; 5496 tests.
+### Batch 70 (2026-05-26) — local session B (1,750 milestone!)
+Added 5 new problems: `check-if-it-is-a-good-array` (hard/math, Bézout's identity — gcd(nums)==1), `maximum-coins-you-can-get` (medium/arrays, greedy sort descending + every-other pick), `number-of-islands-ii` (hard/arrays+union-find, online DSU with path-compression + rank), `find-the-celebrity` (medium/arrays+graph, O(n) candidate-elimination), `minimum-number-of-days-to-disconnect-island` (hard/arrays+graph, 0/1/2 answer with BFS island count). Fixed Python solutions: `sorted()` instead of `.sort()` for JsProxy safety; BFS instead of recursive DFS to avoid recursion-limit on 30×30 grids; list comprehension instead of `copy.deepcopy` for grid conversion. Bank at **1750**; 5550 tests.
 
 ### Batch 69 (this session, 2026-05-26)
 Added 8 new problems: `find-score-of-an-array-after-marking-all-elements` (medium/heap+simulation, greedy mark-and-score), `count-zero-request-servers` (hard/sliding-window, sort+two-pointer server counts), `maximum-score-after-applying-operations-on-a-tree` (medium/tree+dp, minimize kept nodes covering all root-to-leaf paths), `counting-words-with-a-given-prefix` (easy/strings, startsWith filter), `earliest-moment-everyone-became-friends` (medium/union-find, sort+DSU), `minimum-weighted-subgraph-with-the-required-paths` (hard/graph+dijkstra, 3×Dijkstra + meeting-point sweep), `longest-path-in-a-directed-acyclic-graph` (medium/dp+graph, toposort + consecutive-char DP), `count-good-triplets-in-an-array` (hard/binary-indexed-tree, permutation mapping + BIT left-smaller/right-larger). Also added new ProblemTags: `union-find`, `binary-indexed-tree`, `simulation`, `shortest-path`. JS + Python solutions for all. Bank at **1731**; 5481 tests.
