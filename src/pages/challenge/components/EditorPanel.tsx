@@ -221,6 +221,8 @@ export function EditorPanel({
   // Theme goes through its own Compartment so it can be swapped when the
   // user toggles between dark and light mode without rebuilding the editor.
   const themeCompartmentRef = useRef(new Compartment());
+  // Word-wrap goes through its own Compartment for live toggling.
+  const wrapCompartmentRef = useRef(new Compartment());
 
   // Stable refs — the editor builds ONCE; refs let the keymap and the doc-
   // change effect read fresh callback values without rebuilding.
@@ -376,7 +378,8 @@ export function EditorPanel({
         // live when the user adjusts it in Settings without rebuilding the editor.
         fontSizeCompartmentRef.current.of(fontSizeTheme(fontSize)),
         updateListener,
-        EditorView.lineWrapping,
+        // Word-wrap in its own Compartment so the toolbar button can toggle it live.
+        wrapCompartmentRef.current.of(EditorView.lineWrapping),
         // Scrollbar styling
         EditorView.theme({
           '.cm-scroller': {
@@ -478,6 +481,15 @@ export function EditorPanel({
   );
 
   const [showShortcuts, setShowShortcuts] = useState(false);
+  const [codeCopied, setCodeCopied] = useState(false);
+  const handleCopyCode = useCallback(() => {
+    const code = viewRef.current?.state.doc.toString() ?? '';
+    if (!code) return;
+    void navigator.clipboard.writeText(code).then(() => {
+      setCodeCopied(true);
+      setTimeout(() => setCodeCopied(false), 1500);
+    });
+  }, []);
 
   // Global `?` shortcut — opens the shortcuts modal unless the user is typing
   // in a text input or the code editor itself.
@@ -611,6 +623,21 @@ export function EditorPanel({
     };
   }, [editorKeymap]);
 
+  // Word-wrap toggle — defaults to on (matching the initial Compartment value).
+  const [wordWrap, setWordWrap] = useState(true);
+  const handleToggleWrap = useCallback(() => {
+    setWordWrap((prev) => {
+      const next = !prev;
+      const view = viewRef.current;
+      if (view) {
+        view.dispatch({
+          effects: wrapCompartmentRef.current.reconfigure(next ? EditorView.lineWrapping : []),
+        });
+      }
+      return next;
+    });
+  }, []);
+
   const showLanguageSelector = availableLanguages.length > 1;
 
   return (
@@ -655,8 +682,32 @@ export function EditorPanel({
           </span>
         )}
 
-        {/* Right controls: shortcuts button + fullscreen toggle */}
+        {/* Right controls: copy code + wrap toggle + shortcuts button + fullscreen toggle */}
         <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={handleCopyCode}
+            aria-label="Copy code to clipboard"
+            title="Copy code"
+            className="rounded-sm border border-transparent px-1.5 py-0.5 font-mono text-[10px] text-faint transition-colors hover:border-border hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+          >
+            {codeCopied ? '✓' : 'copy'}
+          </button>
+          <button
+            type="button"
+            onClick={handleToggleWrap}
+            aria-label={wordWrap ? 'Disable word wrap' : 'Enable word wrap'}
+            aria-pressed={wordWrap}
+            title={wordWrap ? 'Word wrap: on' : 'Word wrap: off'}
+            className={[
+              'rounded-sm border px-1.5 py-0.5 font-mono text-[10px] transition-colors focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent',
+              wordWrap
+                ? 'border-border-strong text-muted bg-surface-2'
+                : 'border-transparent text-faint hover:border-border hover:text-muted',
+            ].join(' ')}
+          >
+            wrap
+          </button>
           <button
             type="button"
             onClick={() => setShowShortcuts(true)}
