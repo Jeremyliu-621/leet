@@ -19,6 +19,8 @@ export const problem: Problem = {
   ],
   hints: [
     'Build a map from string to index for list1. Then for each item in list2, compute the index sum for common strings.',
+    'Iterate list2 with its index. Look up each element in the map. If found, the index sum is `map[item] + i`. Track the minimum sum and reset the result array whenever a strictly smaller sum is found; append when equal.',
+    '```js\nconst map = {};\nfor (let i = 0; i < list1.length; i++) map[list1[i]] = i;\nlet best = Infinity, res = [];\nfor (let j = 0; j < list2.length; j++) {\n  if (list2[j] in map) {\n    const s = map[list2[j]] + j;\n    if (s < best) { best = s; res = [list2[j]]; }\n    else if (s === best) res.push(list2[j]);\n  }\n}\nreturn res;```',
   ],
   functionName: 'findRestaurant',
   params: ['list1', 'list2'],

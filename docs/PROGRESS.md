@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1807** problems; 5709 tests green.
+**Current focus:** Bank at **1807** problems; 5709 tests green. Hints: 1×1-hint, 198×2-hint, 1249×3-hint, 361×4+-hint.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Hints backfill (multi-hint upgrade for single-hint easy problems); UX polish; bank growth.
+**Next up:** Continue hints backfill (198 two-hint files → 3 hints); UX polish (CodeMirror QoL, accessibility); bank growth.
+
+### feat(bank): hints backfill complete pass (2026-05-26)
+82 single-hint easy problems upgraded to 3-level progressive hints (approach → implementation → code skeleton). 23 important 2-hint medium/hard problems upgraded to 3-hint structure (decode-string, copy-list-with-random-pointer, kth-smallest-element-in-bst, increasing-triplet-subsequence, delete-and-earn, and 18 more). Terminal UX: TestDotMatrix visual pass/fail grid shown above summary when verdicts > 3 (dot = pass/fail/error at a glance). Straggler `minimum-index-sum-of-two-lists` upgraded from 1 → 3 hints. Hint distribution after this session: 1×1-hint, 198×2-hint, 1249×3-hint, 361×4+-hint.
 
 ### merge: batch 71 (5 new) + remote batch 71-72 integration (2026-05-26)
 Merged our batch-71 (5 new problems: `find-the-city-with-smallest-number-of-neighbors-at-a-threshold-distance`, `maximum-candies-allocated-to-k-children`, `number-of-restricted-paths-from-first-to-last-node`, `minimum-swaps-to-sort-an-array`, `minimum-replacements-to-sort-the-array`) with remote concurrent additions. Bank at **1807**; 5709 tests.
