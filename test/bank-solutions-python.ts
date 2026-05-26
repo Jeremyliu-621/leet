@@ -26059,4 +26059,130 @@ def numOfStrings(patterns, word):
     return sum(1 for p in patterns if p in word)
 `,
 
+  // batch 71 (new problems)
+
+  'find-the-good-days-to-rob-bank': `def goodDaysToRobBank(security, time):
+    n = len(security)
+    if n == 0:
+        return []
+    dec = [0] * n
+    inc = [0] * n
+    for i in range(1, n):
+        if security[i] <= security[i - 1]:
+            dec[i] = dec[i - 1] + 1
+    for i in range(n - 2, -1, -1):
+        if security[i] <= security[i + 1]:
+            inc[i] = inc[i + 1] + 1
+    return [i for i in range(n) if dec[i] >= time and inc[i] >= time]
+`,
+
+  'minimum-extra-characters-in-a-string': `def minExtraChar(s, dictionary):
+    n = len(s)
+    if n == 0:
+        return 0
+    word_set = set(dictionary)
+    dp = [0] * (n + 1)
+    for j in range(1, n + 1):
+        dp[j] = dp[j - 1] + 1  # skip s[j-1]
+        for i in range(j):
+            if s[i:j] in word_set:
+                dp[j] = min(dp[j], dp[i])
+    return dp[n]
+`,
+
+  'minimum-seconds-to-equalize-a-circular-array': `def minimumSeconds(nums):
+    from collections import defaultdict
+    n = len(nums)
+    positions = defaultdict(list)
+    for i, v in enumerate(nums):
+        positions[v].append(i)
+    ans = n
+    for pos in positions.values():
+        max_gap = 0
+        for i in range(1, len(pos)):
+            max_gap = max(max_gap, pos[i] - pos[i - 1])
+        circular_gap = n - pos[-1] + pos[0]
+        max_gap = max(max_gap, circular_gap)
+        ans = min(ans, max_gap // 2)
+    return ans
+`,
+
+  'movement-of-robots': `def sumDistance(nums, s, d):
+    MOD = 10 ** 9 + 7
+    positions = sorted(v + d if c == 'R' else v - d for v, c in zip(nums, s))
+    total = 0
+    prefix = 0
+    for i, p in enumerate(positions):
+        total = (total + p * i - prefix) % MOD
+        prefix += p
+    return total % MOD
+`,
+
+  'number-of-ways-of-cutting-a-pizza': `def ways(pizza, k):
+    MOD = 10 ** 9 + 7
+    rows = len(pizza)
+    cols = len(pizza[0]) if pizza else 0
+    prefix = [[0] * (cols + 1) for _ in range(rows + 1)]
+    for r in range(rows - 1, -1, -1):
+        for c in range(cols - 1, -1, -1):
+            prefix[r][c] = (1 if pizza[r][c] == 'A' else 0) + prefix[r + 1][c] + prefix[r][c + 1] - prefix[r + 1][c + 1]
+    def apples_in(r, c):
+        return prefix[r][c]
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dp(r, c, cuts):
+        if apples_in(r, c) == 0:
+            return 0
+        if cuts == 1:
+            return 1
+        result = 0
+        total = apples_in(r, c)
+        for nr in range(r + 1, rows):
+            if total - apples_in(nr, c) > 0:
+                result = (result + dp(nr, c, cuts - 1)) % MOD
+        for nc in range(c + 1, cols):
+            if total - apples_in(r, nc) > 0:
+                result = (result + dp(r, nc, cuts - 1)) % MOD
+        return result
+    return dp(0, 0, k)
+`,
+
+  'frequency-tracker': `def frequencyTracker(operations, args):
+    count = {}
+    freq_count = {}
+    def inc_freq(f):
+        freq_count[f] = freq_count.get(f, 0) + 1
+    def dec_freq(f):
+        if freq_count.get(f, 0) <= 1:
+            freq_count.pop(f, None)
+        else:
+            freq_count[f] -= 1
+    result = []
+    for op, a in zip(operations, args):
+        if op == 'add':
+            num = a[0]
+            prev = count.get(num, 0)
+            if prev > 0:
+                dec_freq(prev)
+            count[num] = prev + 1
+            inc_freq(prev + 1)
+            result.append(None)
+        elif op == 'deleteOne':
+            num = a[0]
+            prev = count.get(num, 0)
+            if prev == 0:
+                result.append(None)
+                continue
+            dec_freq(prev)
+            count[num] = prev - 1
+            if prev - 1 > 0:
+                inc_freq(prev - 1)
+            result.append(None)
+        elif op == 'hasFrequency':
+            freq = a[0]
+            result.append(freq_count.get(freq, 0) > 0)
+        else:
+            result.append(None)
+    return result
+`,
 };

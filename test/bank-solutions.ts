@@ -26475,6 +26475,69 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // --- batch 71 (new problems) ------------------------------------------------
+
+  'find-the-good-days-to-rob-bank': (...args: unknown[]) => {
+    const security = args[0] as number[];
+    const time = args[1] as number;
+    const n = security.length;
+    if (n === 0) return [];
+    const dec: number[] = new Array(n).fill(0);
+    const inc: number[] = new Array(n).fill(0);
+    for (let i = 1; i < n; i++) {
+      if ((security[i] ?? 0) <= (security[i - 1] ?? 0)) dec[i] = (dec[i - 1] ?? 0) + 1;
+    }
+    for (let i = n - 2; i >= 0; i--) {
+      if ((security[i] ?? 0) <= (security[i + 1] ?? 0)) inc[i] = (inc[i + 1] ?? 0) + 1;
+    }
+    const result: number[] = [];
+    for (let i = 0; i < n; i++) {
+      if ((dec[i] ?? 0) >= time && (inc[i] ?? 0) >= time) result.push(i);
+    }
+    return result;
+  },
+
+  'minimum-extra-characters-in-a-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const dictionary = args[1] as string[];
+    const n = s.length;
+    if (n === 0) return 0;
+    const wordSet = new Set(dictionary);
+    const dp: number[] = new Array(n + 1).fill(0);
+    for (let j = 1; j <= n; j++) {
+      dp[j] = (dp[j - 1] ?? 0) + 1; // skip s[j-1]
+      for (let i = 0; i < j; i++) {
+        if (wordSet.has(s.slice(i, j))) {
+          dp[j] = Math.min(dp[j] as number, dp[i] as number);
+        }
+      }
+    }
+    return dp[n] as number;
+  },
+
+  'minimum-seconds-to-equalize-a-circular-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const positions = new Map<number, number[]>();
+    for (let i = 0; i < n; i++) {
+      const v = nums[i] as number;
+      if (!positions.has(v)) positions.set(v, []);
+      positions.get(v)!.push(i);
+    }
+    let ans = n;
+    for (const [, pos] of positions) {
+      let maxGap = 0;
+      for (let i = 1; i < pos.length; i++) {
+        maxGap = Math.max(maxGap, (pos[i] as number) - (pos[i - 1] as number));
+      }
+      // circular gap
+      const circularGap = n - (pos[pos.length - 1] as number) + (pos[0] as number);
+      maxGap = Math.max(maxGap, circularGap);
+      ans = Math.min(ans, Math.floor(maxGap / 2));
+    }
+    return ans;
+  },
+
   'prison-cells-after-n-days': (...args: unknown[]) => {
     let cells = args[0] as number[];
     let n = args[1] as number;
@@ -26660,6 +26723,101 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   'number-of-strings-that-appear-as-substrings-in-word': (...args: unknown[]) => {
     const patterns = args[0] as string[], word = args[1] as string;
     return patterns.filter(p => word.includes(p)).length;
+  },
+
+  'movement-of-robots': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const s = args[1] as string;
+    const d = args[2] as number;
+    const MOD = 1_000_000_007n;
+    const positions: bigint[] = nums.map((v, i) =>
+      s[i] === 'R' ? BigInt(v) + BigInt(d) : BigInt(v) - BigInt(d)
+    );
+    positions.sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
+    let total = 0n;
+    let prefix = 0n;
+    for (let i = 0; i < positions.length; i++) {
+      const p = positions[i] as bigint;
+      total = (total + p * BigInt(i) - prefix) % MOD;
+      prefix += p;
+    }
+    return Number((total + MOD) % MOD);
+  },
+
+  'number-of-ways-of-cutting-a-pizza': (...args: unknown[]) => {
+    const pizza = args[0] as string[];
+    const k = args[1] as number;
+    const MOD = 1_000_000_007;
+    const rows = pizza.length;
+    const cols = pizza[0]?.length ?? 0;
+    // prefix[r][c] = apples in pizza[r..rows-1][c..cols-1]
+    const prefix: number[][] = Array.from({ length: rows + 1 }, () => new Array(cols + 1).fill(0));
+    for (let r = rows - 1; r >= 0; r--) {
+      for (let c = cols - 1; c >= 0; c--) {
+        prefix[r]![c] =
+          (pizza[r]?.[c] === 'A' ? 1 : 0) +
+          (prefix[r + 1]?.[c] ?? 0) +
+          (prefix[r]?.[c + 1] ?? 0) -
+          (prefix[r + 1]?.[c + 1] ?? 0);
+      }
+    }
+    const applesIn = (r: number, c: number) => prefix[r]?.[c] ?? 0;
+    const memo = new Map<string, number>();
+    function dp(r: number, c: number, cuts: number): number {
+      if (applesIn(r, c) === 0) return 0;
+      if (cuts === 1) return 1;
+      const key = `${r},${c},${cuts}`;
+      if (memo.has(key)) return memo.get(key)!;
+      let ways = 0;
+      for (let nr = r + 1; nr < rows; nr++) {
+        if (applesIn(r, c) - applesIn(nr, c) > 0) {
+          ways = (ways + dp(nr, c, cuts - 1)) % MOD;
+        }
+      }
+      for (let nc = c + 1; nc < cols; nc++) {
+        if (applesIn(r, c) - applesIn(r, nc) > 0) {
+          ways = (ways + dp(r, nc, cuts - 1)) % MOD;
+        }
+      }
+      memo.set(key, ways);
+      return ways;
+    }
+    return dp(0, 0, k);
+  },
+
+  'frequency-tracker': (...args: unknown[]) => {
+    const operations = args[0] as string[];
+    const opArgs = args[1] as number[][];
+    const count = new Map<number, number>();
+    const freqCount = new Map<number, number>();
+    const incFreq = (f: number) => freqCount.set(f, (freqCount.get(f) ?? 0) + 1);
+    const decFreq = (f: number) => {
+      const c = freqCount.get(f) ?? 0;
+      if (c <= 1) freqCount.delete(f); else freqCount.set(f, c - 1);
+    };
+    return operations.map((op, i) => {
+      const a = opArgs[i] ?? [];
+      if (op === 'add') {
+        const num = a[0] as number;
+        const prev = count.get(num) ?? 0;
+        if (prev > 0) decFreq(prev);
+        count.set(num, prev + 1);
+        incFreq(prev + 1);
+        return null;
+      } else if (op === 'deleteOne') {
+        const num = a[0] as number;
+        const prev = count.get(num) ?? 0;
+        if (prev === 0) return null;
+        decFreq(prev);
+        count.set(num, prev - 1);
+        if (prev - 1 > 0) incFreq(prev - 1);
+        return null;
+      } else if (op === 'hasFrequency') {
+        const freq = a[0] as number;
+        return (freqCount.get(freq) ?? 0) > 0;
+      }
+      return null;
+    });
   },
 
 };

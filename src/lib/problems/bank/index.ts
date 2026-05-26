@@ -1894,6 +1894,13 @@ import { problem as prisonCellsAfterNDays } from './prison-cells-after-n-days';
 import { problem as allAncestorsDAG } from './all-ancestors-of-a-node-in-a-directed-acyclic-graph';
 import { problem as deleteNodesReturnForest } from './delete-nodes-and-return-forest';
 import { problem as namingACompany } from './naming-a-company';
+// batch 71 (new problems)
+import { problem as findTheGoodDaysToRobBank } from './find-the-good-days-to-rob-bank';
+import { problem as minimumExtraCharactersInAString } from './minimum-extra-characters-in-a-string';
+import { problem as minimumSecondsToEqualizeACircularArray } from './minimum-seconds-to-equalize-a-circular-array';
+import { problem as movementOfRobots } from './movement-of-robots';
+import { problem as numberOfWaysOfCuttingAPizza } from './number-of-ways-of-cutting-a-pizza';
+import { problem as frequencyTracker } from './frequency-tracker';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3825,4 +3832,11 @@ export const problems: readonly Problem[] = [
   countWaysToBuildRoomsInAntColony,
   lengthOfLongestAlphabeticalContinuousSubstring,
   numberOfStringsThatAppearAsSubstrings,
+  // batch 71 (new problems from this session)
+  findTheGoodDaysToRobBank,
+  minimumExtraCharactersInAString,
+  minimumSecondsToEqualizeACircularArray,
+  movementOfRobots,
+  numberOfWaysOfCuttingAPizza,
+  frequencyTracker,
 ];
