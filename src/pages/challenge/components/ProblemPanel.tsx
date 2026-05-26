@@ -18,7 +18,7 @@ function InlineCopy({ value }: { value: string }) {
       type="button"
       onClick={handleCopy}
       aria-label="Copy to clipboard"
-      className="ml-1 shrink-0 font-mono text-faint transition-colors hover:text-muted"
+      className="ml-1 shrink-0 font-mono text-faint transition-colors hover:text-muted focus:outline-none focus-visible:ring-1 focus-visible:ring-accent focus-visible:rounded-sm"
       style={{ fontSize: '9px', letterSpacing: '0.05em' }}
     >
       {copied ? '✓' : 'copy'}

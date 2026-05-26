@@ -47,7 +47,7 @@ export function Blocked() {
           <button
             type="button"
             onClick={() => window.close()}
-            className="font-mono text-[11px] text-faint transition-colors hover:text-muted focus:outline-none"
+            className="font-mono text-[11px] text-faint transition-colors hover:text-muted focus:outline-none focus-visible:ring-1 focus-visible:ring-accent focus-visible:rounded-sm"
           >
             Close tab
           </button>
