@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import {
   EditorView,
   keymap,
@@ -16,6 +16,7 @@ import {
   indentOnInput,
   foldGutter,
   foldKeymap,
+  indentUnit,
 } from '@codemirror/language';
 import {
   autocompletion,
@@ -41,6 +42,16 @@ interface EditorPanelProps {
   onLanguageChange: (language: SupportedLanguage) => void;
   /** Active CodeMirror keymap. `'vim'` switches the editor to modal vim bindings. */
   editorKeymap: EditorKeymap;
+  /** Called when the user toggles the vim keymap in the settings popover. */
+  onEditorKeymapChange: (keymap: EditorKeymap) => void;
+  /** Editor font size in CSS pixels. */
+  editorFontSize: number;
+  /** Called when the user changes font size in the settings popover. */
+  onEditorFontSizeChange: (size: number) => void;
+  /** Number of spaces per indent level. */
+  editorTabSize: 2 | 4;
+  /** Called when the user changes tab size in the settings popover. */
+  onEditorTabSizeChange: (size: 2 | 4) => void;
   /** Callback invoked whenever the editor content changes. */
   onChange: (code: string) => void;
   /** Called when user clicks Run. */
@@ -66,8 +77,6 @@ interface EditorPanelProps {
   attemptsRemaining: number | null;
 }
 
-const INDENT_SPACES = '  ';
-
 const LANGUAGE_LABEL: Readonly<Record<SupportedLanguage, string>> = {
   javascript: 'JavaScript',
   python: 'Python',
@@ -78,15 +87,27 @@ const LANGUAGE_SHORT: Readonly<Record<SupportedLanguage, string>> = {
   python: 'Py',
 };
 
+const FONT_SIZE_OPTIONS: readonly number[] = [12, 13, 14, 15, 16, 18, 20];
+
 function languageExtension(language: SupportedLanguage) {
   return language === 'python' ? python() : javascript();
 }
 
+/** Generate a CodeMirror theme extension that overrides only the font size. */
+function fontSizeTheme(size: number) {
+  return EditorView.theme({ '&': { fontSize: `${size}px` } });
+}
+
+/** Generate an indentUnit extension for the given number of spaces. */
+function indentUnitExtension(spaces: 2 | 4) {
+  return indentUnit.of(' '.repeat(spaces));
+}
+
 /**
  * Right panel — houses the CodeMirror 6 editor, the JS/Py language selector,
- * action buttons, and the verdict region. The editor is built once via
- * `useRef`; language changes go through a `Compartment.reconfigure` so the
- * syntax extension swaps without rebuilding the editor state.
+ * action buttons, verdict region, and an editor settings popover.
+ * The editor is built once via `useRef`; language, keymap, font-size, and
+ * tab-size changes go through Compartment.reconfigure to avoid rebuilding state.
  */
 export function EditorPanel({
   starterCode,
@@ -94,6 +115,11 @@ export function EditorPanel({
   availableLanguages,
   onLanguageChange,
   editorKeymap,
+  onEditorKeymapChange,
+  editorFontSize,
+  onEditorFontSizeChange,
+  editorTabSize,
+  onEditorTabSizeChange,
   onChange,
   onRun,
   onSubmit,
@@ -107,29 +133,24 @@ export function EditorPanel({
   const editorContainerRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
   const languageCompartmentRef = useRef(new Compartment());
-  // Keymap goes through its own Compartment so the user can toggle vim
-  // mode in the popup without rebuilding the editor (which would lose
-  // their in-progress code).
   const keymapCompartmentRef = useRef(new Compartment());
+  const fontSizeCompartmentRef = useRef(new Compartment());
+  const tabSizeCompartmentRef = useRef(new Compartment());
 
-  // Stable refs — the editor builds ONCE; refs let the keymap and the doc-
-  // change effect read fresh callback values without rebuilding.
+  // Settings popover visibility
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const settingsButtonRef = useRef<HTMLButtonElement>(null);
+  const settingsPanelRef = useRef<HTMLDivElement>(null);
+
+  // Stable refs — the editor builds ONCE; refs let callbacks read fresh values.
   const onChangeRef = useRef(onChange);
   const onRunRef = useRef(onRun);
   const onSubmitRef = useRef(onSubmit);
   const starterCodeRef = useRef(starterCode);
-  useEffect(() => {
-    onChangeRef.current = onChange;
-  }, [onChange]);
-  useEffect(() => {
-    onRunRef.current = onRun;
-  }, [onRun]);
-  useEffect(() => {
-    onSubmitRef.current = onSubmit;
-  }, [onSubmit]);
-  useEffect(() => {
-    starterCodeRef.current = starterCode;
-  }, [starterCode]);
+  useEffect(() => { onChangeRef.current = onChange; }, [onChange]);
+  useEffect(() => { onRunRef.current = onRun; }, [onRun]);
+  useEffect(() => { onSubmitRef.current = onSubmit; }, [onSubmit]);
+  useEffect(() => { starterCodeRef.current = starterCode; }, [starterCode]);
 
   // Build and mount the editor once.
   useEffect(() => {
@@ -144,10 +165,12 @@ export function EditorPanel({
     const state = EditorState.create({
       doc: starterCode,
       extensions: [
-        // Vim mode (when enabled) MUST come before every other keymap so
-        // its modal handlers take precedence. The Compartment lets us
-        // swap it in / out without rebuilding the editor.
+        // Vim mode (when enabled) MUST come before every other keymap.
         keymapCompartmentRef.current.of(editorKeymap === 'vim' ? vim() : []),
+        // Font size override — composable on top of the base theme.
+        fontSizeCompartmentRef.current.of(fontSizeTheme(editorFontSize)),
+        // Indent unit (spaces per tab level).
+        tabSizeCompartmentRef.current.of(indentUnitExtension(editorTabSize)),
         // Display extensions
         lineNumbers(),
         highlightActiveLineGutter(),
@@ -155,8 +178,6 @@ export function EditorPanel({
         highlightSelectionMatches(),
         foldGutter(),
         drawSelection(),
-        // Allow multi-cursor (Alt-click, Ctrl-D add-next via defaultKeymap).
-        // drawSelection above is what makes the additional carets visible.
         EditorState.allowMultipleSelections.of(true),
         // Editing extensions
         history(),
@@ -165,74 +186,51 @@ export function EditorPanel({
         closeBrackets(),
         autocompletion(),
         search(),
-        // Language goes through a Compartment so it can be swapped without
-        // rebuilding the editor state on language change.
+        // Language via Compartment for live swapping.
         languageCompartmentRef.current.of(languageExtension(language)),
         // Keymap — order matters; first match wins.
         keymap.of([
-          // Cmd/Ctrl+Enter runs visible tests; Cmd/Ctrl+Shift+Enter submits.
           {
             key: 'Mod-Enter',
             preventDefault: true,
-            run() {
-              onRunRef.current();
-              return true;
-            },
+            run() { onRunRef.current(); return true; },
           },
           {
             key: 'Mod-Shift-Enter',
             preventDefault: true,
-            run() {
-              onSubmitRef.current();
-              return true;
-            },
+            run() { onSubmitRef.current(); return true; },
           },
-          // Alt-R: reset the editor to the problem's starter code. Browser
-          // hard-refresh owns Ctrl/Cmd-Shift-R, so this picks a free combo.
           {
             key: 'Alt-r',
             preventDefault: true,
             run(view) {
               view.dispatch(
                 view.state.update({
-                  changes: {
-                    from: 0,
-                    to: view.state.doc.length,
-                    insert: starterCodeRef.current,
-                  },
+                  changes: { from: 0, to: view.state.doc.length, insert: starterCodeRef.current },
                 }),
               );
               return true;
             },
           },
-          // Autocomplete first — accepts a completion with Tab/Enter while the
-          // popup is open. Falls through to plain Tab insertion below otherwise.
           ...completionKeymap,
-          // Close-brackets Backspace deletes both halves of an empty pair.
           ...closeBracketsKeymap,
-          // Cmd/Ctrl+F search panel.
           ...searchKeymap,
-          // Code-folding shortcuts.
           ...foldKeymap,
-          // Undo/redo.
           ...historyKeymap,
-          // Arrow keys, selection, copy/paste, etc.
           ...defaultKeymap,
-          // Tab inserts two spaces — no hard tabs. (Completions captured Tab
-          // above when their popup is open, so this only fires otherwise.)
+          // Tab inserts spaces according to the current tab size.
           {
             key: 'Tab',
             run(view) {
+              const spaces = ' '.repeat(view.state.facet(indentUnit).length || 2);
               view.dispatch(
                 view.state.update({
                   changes: {
                     from: view.state.selection.main.from,
                     to: view.state.selection.main.to,
-                    insert: INDENT_SPACES,
+                    insert: spaces,
                   },
-                  selection: {
-                    anchor: view.state.selection.main.from + INDENT_SPACES.length,
-                  },
+                  selection: { anchor: view.state.selection.main.from + spaces.length },
                 }),
               );
               return true;
@@ -259,26 +257,21 @@ export function EditorPanel({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // intentionally empty — editor is created once
 
-  // If the problem changes (different starterCode prop) and the editor exists,
-  // reset the document content.
+  // Reset document when problem changes (different starterCode).
   const prevStarterRef = useRef(starterCode);
   useEffect(() => {
     if (prevStarterRef.current === starterCode) return;
     prevStarterRef.current = starterCode;
     const view = viewRef.current;
     if (!view) return;
-    view.dispatch({
-      changes: { from: 0, to: view.state.doc.length, insert: starterCode },
-    });
+    view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: starterCode } });
   }, [starterCode]);
 
   // Swap the language extension when `language` changes.
   useEffect(() => {
     const view = viewRef.current;
     if (!view) return;
-    view.dispatch({
-      effects: languageCompartmentRef.current.reconfigure(languageExtension(language)),
-    });
+    view.dispatch({ effects: languageCompartmentRef.current.reconfigure(languageExtension(language)) });
   }, [language]);
 
   // Swap the keymap extension when `editorKeymap` changes.
@@ -286,30 +279,56 @@ export function EditorPanel({
     const view = viewRef.current;
     if (!view) return;
     view.dispatch({
-      effects: keymapCompartmentRef.current.reconfigure(
-        editorKeymap === 'vim' ? vim() : [],
-      ),
+      effects: keymapCompartmentRef.current.reconfigure(editorKeymap === 'vim' ? vim() : []),
     });
   }, [editorKeymap]);
 
+  // Swap the font-size theme when `editorFontSize` changes.
+  useEffect(() => {
+    const view = viewRef.current;
+    if (!view) return;
+    view.dispatch({
+      effects: fontSizeCompartmentRef.current.reconfigure(fontSizeTheme(editorFontSize)),
+    });
+  }, [editorFontSize]);
+
+  // Swap the indent-unit when `editorTabSize` changes.
+  useEffect(() => {
+    const view = viewRef.current;
+    if (!view) return;
+    view.dispatch({
+      effects: tabSizeCompartmentRef.current.reconfigure(indentUnitExtension(editorTabSize)),
+    });
+  }, [editorTabSize]);
+
+  // Close settings popover when clicking outside it.
+  useEffect(() => {
+    if (!settingsOpen) return;
+    function handleClickOutside(e: MouseEvent) {
+      const target = e.target as Node;
+      if (
+        settingsPanelRef.current &&
+        !settingsPanelRef.current.contains(target) &&
+        settingsButtonRef.current &&
+        !settingsButtonRef.current.contains(target)
+      ) {
+        setSettingsOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [settingsOpen]);
+
   const handleRunKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === 'Enter' || e.key === ' ') onRun();
-    },
+    (e: React.KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') onRun(); },
     [onRun],
   );
-
   const handleSubmitKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === 'Enter' || e.key === ' ') onSubmit();
-    },
+    (e: React.KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') onSubmit(); },
     [onSubmit],
   );
-
   const handleGiveUpKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if ((e.key === 'Enter' || e.key === ' ') && onGiveUp) onGiveUp();
-    },
+    (e: React.KeyboardEvent) => { if ((e.key === 'Enter' || e.key === ' ') && onGiveUp) onGiveUp(); },
     [onGiveUp],
   );
 
@@ -317,8 +336,9 @@ export function EditorPanel({
 
   return (
     <section className="flex h-full flex-col overflow-hidden" aria-label="Code editor">
-      {/* Language label / selector */}
+      {/* Language label / selector + settings gear */}
       <div className="flex shrink-0 items-center justify-between border-b border-border px-4 py-2">
+        {/* Left: language selector or label */}
         {showLanguageSelector ? (
           <div role="radiogroup" aria-label="Code language" className="flex items-center gap-0.5">
             {availableLanguages.map((lang) => {
@@ -330,9 +350,7 @@ export function EditorPanel({
                   role="radio"
                   aria-checked={selected}
                   aria-label={`Switch to ${LANGUAGE_LABEL[lang]}`}
-                  onClick={() => {
-                    if (!selected) onLanguageChange(lang);
-                  }}
+                  onClick={() => { if (!selected) onLanguageChange(lang); }}
                   className={
                     selected
                       ? 'rounded-sm border border-border-strong bg-surface-2 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent'
@@ -349,6 +367,121 @@ export function EditorPanel({
             {LANGUAGE_LABEL[language]}
           </span>
         )}
+
+        {/* Right: settings gear button */}
+        <div className="relative">
+          <button
+            ref={settingsButtonRef}
+            type="button"
+            aria-label="Editor settings"
+            aria-expanded={settingsOpen}
+            aria-haspopup="true"
+            onClick={() => setSettingsOpen((o) => !o)}
+            className="flex items-center justify-center rounded-sm p-1 text-faint transition-colors hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+          >
+            {/* Gear icon (SVG inline, no dependency) */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="3" />
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+            </svg>
+          </button>
+
+          {/* Settings popover */}
+          {settingsOpen && (
+            <div
+              ref={settingsPanelRef}
+              role="dialog"
+              aria-label="Editor settings"
+              className="absolute right-0 top-full z-50 mt-1 w-52 rounded-sm border border-border bg-surface p-3 shadow-lg"
+            >
+              {/* Font size */}
+              <div className="mb-3">
+                <label className="mb-1.5 block font-mono text-[10px] uppercase tracking-widest text-faint">
+                  Font size
+                </label>
+                <div className="flex flex-wrap gap-1">
+                  {FONT_SIZE_OPTIONS.map((size) => (
+                    <button
+                      key={size}
+                      type="button"
+                      aria-pressed={editorFontSize === size}
+                      aria-label={`Font size ${size}px`}
+                      onClick={() => onEditorFontSizeChange(size)}
+                      className={
+                        editorFontSize === size
+                          ? 'rounded-sm border border-border-strong bg-surface-2 px-2 py-0.5 font-mono text-[10px] text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent'
+                          : 'rounded-sm border border-transparent px-2 py-0.5 font-mono text-[10px] text-faint transition-colors hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent'
+                      }
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Tab size */}
+              <div className="mb-3">
+                <label className="mb-1.5 block font-mono text-[10px] uppercase tracking-widest text-faint">
+                  Tab size
+                </label>
+                <div className="flex gap-1">
+                  {([2, 4] as const).map((size) => (
+                    <button
+                      key={size}
+                      type="button"
+                      aria-pressed={editorTabSize === size}
+                      aria-label={`Tab size ${size} spaces`}
+                      onClick={() => onEditorTabSizeChange(size)}
+                      className={
+                        editorTabSize === size
+                          ? 'rounded-sm border border-border-strong bg-surface-2 px-3 py-0.5 font-mono text-[10px] text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent'
+                          : 'rounded-sm border border-transparent px-3 py-0.5 font-mono text-[10px] text-faint transition-colors hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent'
+                      }
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Vim mode toggle */}
+              <div>
+                <label className="mb-1.5 block font-mono text-[10px] uppercase tracking-widest text-faint">
+                  Keymap
+                </label>
+                <div className="flex gap-1">
+                  {(['default', 'vim'] as const).map((km) => (
+                    <button
+                      key={km}
+                      type="button"
+                      aria-pressed={editorKeymap === km}
+                      aria-label={`${km === 'vim' ? 'Vim' : 'Default'} keymap`}
+                      onClick={() => onEditorKeymapChange(km)}
+                      className={
+                        editorKeymap === km
+                          ? 'rounded-sm border border-border-strong bg-surface-2 px-3 py-0.5 font-mono text-[10px] text-text capitalize focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent'
+                          : 'rounded-sm border border-transparent px-3 py-0.5 font-mono text-[10px] text-faint capitalize transition-colors hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent'
+                      }
+                    >
+                      {km}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Editor */}
@@ -356,8 +489,6 @@ export function EditorPanel({
         <div
           ref={editorContainerRef}
           className="h-full w-full"
-          // CodeMirror manages its own focus/tab behaviour; the outer div is
-          // presentational only.
           aria-hidden="true"
         />
       </div>

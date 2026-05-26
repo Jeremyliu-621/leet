@@ -167,6 +167,8 @@ export interface UserPreferences {
   preferredLanguage: SupportedLanguage;
   /** CodeMirror keymap flavour. `'vim'` enables the full `@replit/codemirror-vim` modal keymap. */
   editorKeymap: EditorKeymap;
+  /** Number of spaces per indent level in the editor. */
+  editorTabSize: 2 | 4;
 }
 
 /** Theme options exposed in the UI. */

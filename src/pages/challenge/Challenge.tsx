@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import type { SupportedLanguage, UserPreferences } from '../../lib/types';
+import type { SupportedLanguage, UserPreferences, EditorKeymap } from '../../lib/types';
 import type { Problem } from '../../lib/problems/types';
 import type { JudgeResult } from '../../lib/judge';
 import type { ChallengeFailureReason } from '../../lib/messaging/runtime';
@@ -117,6 +117,12 @@ export function Challenge() {
   // Streak (loaded from storage in a future phase; placeholder 0 for now).
   const [streak] = useState(0);
 
+  // Editor appearance settings — mirrored from prefs but held in local state
+  // so changes are immediately reflected without a full prefs reload.
+  const [editorFontSize, setEditorFontSize] = useState(DEFAULT_PREFERENCES.editorFontSize);
+  const [editorKeymap, setEditorKeymap] = useState<EditorKeymap>(DEFAULT_PREFERENCES.editorKeymap);
+  const [editorTabSize, setEditorTabSize] = useState<2 | 4>(DEFAULT_PREFERENCES.editorTabSize);
+
   // -------------------------------------------------------------------------
   // Load prefs + pick problem (once on mount)
   // -------------------------------------------------------------------------
@@ -154,6 +160,10 @@ export function Challenge() {
       setLanguage(initialLanguage);
       setCode(initialStarter);
       setSecondsLeft(prefs.challengeTimeLimitSec);
+      // Seed editor appearance settings from prefs.
+      setEditorFontSize(prefs.editorFontSize);
+      setEditorKeymap(prefs.editorKeymap);
+      setEditorTabSize(prefs.editorTabSize);
       setPageState({ status: 'ready', problem, prefs });
 
       // Warm Pyodide while the user is reading the problem, so the first
@@ -386,6 +396,37 @@ export function Challenge() {
   }, [pageState, handleFail]);
 
   // -------------------------------------------------------------------------
+  // Editor settings change handlers — update local state and persist to prefs
+  // -------------------------------------------------------------------------
+
+  const handleEditorFontSizeChange = useCallback((size: number) => {
+    setEditorFontSize(size);
+    void (async () => {
+      try {
+        await updateValue('userPreferences', (curr) => ({ ...curr, editorFontSize: size }));
+      } catch { /* storage unavailable */ }
+    })();
+  }, []);
+
+  const handleEditorKeymapChange = useCallback((km: EditorKeymap) => {
+    setEditorKeymap(km);
+    void (async () => {
+      try {
+        await updateValue('userPreferences', (curr) => ({ ...curr, editorKeymap: km }));
+      } catch { /* storage unavailable */ }
+    })();
+  }, []);
+
+  const handleEditorTabSizeChange = useCallback((size: 2 | 4) => {
+    setEditorTabSize(size);
+    void (async () => {
+      try {
+        await updateValue('userPreferences', (curr) => ({ ...curr, editorTabSize: size }));
+      } catch { /* storage unavailable */ }
+    })();
+  }, []);
+
+  // -------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------
 
@@ -440,7 +481,12 @@ export function Challenge() {
             language={language}
             availableLanguages={availableLanguagesFor(problem)}
             onLanguageChange={handleLanguageChange}
-            editorKeymap={prefs.editorKeymap}
+            editorKeymap={editorKeymap}
+            onEditorKeymapChange={handleEditorKeymapChange}
+            editorFontSize={editorFontSize}
+            onEditorFontSizeChange={handleEditorFontSizeChange}
+            editorTabSize={editorTabSize}
+            onEditorTabSizeChange={handleEditorTabSizeChange}
             onChange={setCode}
             onRun={() => void handleRun()}
             onSubmit={() => void handleSubmit()}

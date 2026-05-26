@@ -20,6 +20,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   editorFontSize: 13,
   preferredLanguage: 'javascript',
   editorKeymap: 'default',
+  editorTabSize: 2,
 };
 
 /**
