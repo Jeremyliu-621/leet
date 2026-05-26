@@ -2132,6 +2132,31 @@ import { problem as minimumOperationsNonDecreasing } from './minimum-operations-
 import { problem as sumOfSquareNumbers } from './sum-of-square-numbers';
 import { problem as miceAndCheese } from './mice-and-cheese';
 import { problem as maximumSizeSubarraySumEqualsK } from './maximum-size-subarray-sum-equals-k';
+// batch 91 — greedy, strings, monotonic-stack
+import { problem as maximumNumberOfConsecutiveValuesYouCanMake } from './maximum-number-of-consecutive-values-you-can-make';
+import { problem as determineIfTwoEventsHaveConflict } from './determine-if-two-events-have-conflict';
+import { problem as numberOfPeopleThatCanBeSeenInAGrid } from './number-of-people-that-can-be-seen-in-a-grid';
+// batch 92 — arrays/easy, strings/medium, arrays/hard
+import { problem as alternatingGroupsI } from './alternating-groups-i';
+import { problem as longestBinarySubsequenceLessThanOrEqualToK } from './longest-binary-subsequence-less-than-or-equal-to-k';
+import { problem as minimumTimeToCompleteAllTasks } from './minimum-time-to-complete-all-tasks';
+// batch 92 — design, strings, greedy, math, dp, stack
+import { problem as countVowelSubstringsOfAWord } from './count-vowel-substrings-of-a-word';
+import { problem as minimumCostToMoveChips } from './minimum-cost-to-move-chips';
+import { problem as stringCompressionII } from './string-compression-ii';
+import { problem as buildAnArrayWithStackOperations } from './build-an-array-with-stack-operations';
+// batch 93 — math/easy, linked-list/medium, dp/hard
+import { problem as validPerfectSquare } from './valid-perfect-square';
+import { problem as insertionSortList } from './insertion-sort-list';
+import { problem as maximizeScoreAfterNOperations } from './maximize-score-after-n-operations';
+// batch 92 (remote) — arrays/math/binary-search, arrays/sliding-window, arrays/binary-search/two-pointers
+import { problem as primeSubtractionOperation } from './prime-subtraction-operation';
+import { problem as findTheLongestSemiRepetitiveSubarray } from './find-the-longest-semi-repetitive-subarray';
+import { problem as countNumberOfFairPairs } from './count-number-of-fair-pairs';
+// batch 94 — math/easy, math+hash-map/medium, tree/medium
+import { problem as rotatedDigits } from './rotated-digits';
+import { problem as rabbitsInForest } from './rabbits-in-forest';
+import { problem as smallestStringStartingFromLeaf } from './smallest-string-starting-from-leaf';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4301,4 +4326,29 @@ export const problems: readonly Problem[] = [
   sumOfSquareNumbers,
   miceAndCheese,
   maximumSizeSubarraySumEqualsK,
+  // batch 91
+  maximumNumberOfConsecutiveValuesYouCanMake,
+  determineIfTwoEventsHaveConflict,
+  numberOfPeopleThatCanBeSeenInAGrid,
+  // batch 92 — arrays/easy, strings/medium, arrays/hard
+  alternatingGroupsI,
+  longestBinarySubsequenceLessThanOrEqualToK,
+  minimumTimeToCompleteAllTasks,
+  // batch 92 — design, strings, greedy, math, dp, stack
+  countVowelSubstringsOfAWord,
+  minimumCostToMoveChips,
+  stringCompressionII,
+  buildAnArrayWithStackOperations,
+  // batch 93 — math/easy, linked-list/medium, dp/hard
+  validPerfectSquare,
+  insertionSortList,
+  maximizeScoreAfterNOperations,
+  // batch 92 (remote)
+  primeSubtractionOperation,
+  findTheLongestSemiRepetitiveSubarray,
+  countNumberOfFairPairs,
+  // batch 94 — math/easy, math+hash-map/medium, tree/medium
+  rotatedDigits,
+  rabbitsInForest,
+  smallestStringStartingFromLeaf,
 ];

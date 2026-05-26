@@ -30992,6 +30992,58 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  'maximum-number-of-consecutive-values-you-can-make': (...args: unknown[]) => {
+    const coins = [...(args[0] as number[])];
+    coins.sort((a, b) => a - b);
+    let reach = 0;
+    for (const c of coins) {
+      if (c > reach + 1) break;
+      reach += c;
+    }
+    return reach + 1;
+  },
+
+  'determine-if-two-events-have-conflict': (...args: unknown[]) => {
+    const [event1, event2] = args as [string[], string[]];
+    return event1[0]! <= event2[1]! && event2[0]! <= event1[1]!;
+  },
+
+  'number-of-people-that-can-be-seen-in-a-grid': (...args: unknown[]) => {
+    const heights = [...(args[0] as number[])];
+    const n = heights.length;
+    const ans = new Array<number>(n).fill(0);
+    const stack: number[] = [];
+    for (let i = n - 1; i >= 0; i--) {
+      let count = 0;
+      while (stack.length && stack[stack.length - 1]! < heights[i]!) {
+        stack.pop();
+        count++;
+      }
+      if (stack.length) count++;
+      ans[i] = count;
+      stack.push(heights[i]!);
+    }
+    return ans;
+  },
+
+  // --- batch 94 -----------------------------------------------------------
+  'rotated-digits': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const diff = new Set([2, 5, 6, 9]);
+    const invalid = new Set([3, 4, 7]);
+    let count = 0;
+    for (let i = 1; i <= n; i++) {
+      let good = false, valid = true;
+      for (const c of String(i)) {
+        const d = +c;
+        if (invalid.has(d)) { valid = false; break; }
+        if (diff.has(d)) good = true;
+      }
+      if (valid && good) count++;
+    }
+    return count;
+  },
+
   'count-of-interesting-subarrays': (...args: unknown[]) => {
     const [nums, modulo, k] = args as [number[], number, number];
     const prefixCount = new Map<number, number>([[0, 1]]);
@@ -31002,6 +31054,108 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       const target = (prefix - k + modulo) % modulo;
       count += prefixCount.get(target) ?? 0;
       prefixCount.set(prefix, (prefixCount.get(prefix) ?? 0) + 1);
+    }
+    return count;
+  },
+
+  'rabbits-in-forest': (...args: unknown[]) => {
+    const answers = args[0] as number[];
+    const cnt = new Map<number, number>();
+    for (const a of answers) cnt.set(a, (cnt.get(a) ?? 0) + 1);
+    let total = 0;
+    for (const [k, v] of cnt) total += Math.ceil(v / (k + 1)) * (k + 1);
+    return total;
+  },
+
+  'smallest-string-starting-from-leaf': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    interface TN { v: number; l: TN | null; r: TN | null }
+    function build(a: (number | null)[]): TN | null {
+      if (!a.length || a[0] == null) return null;
+      const root: TN = { v: a[0], l: null, r: null };
+      const q: TN[] = [root]; let i = 1;
+      while (q.length && i < a.length) {
+        const node = q.shift()!;
+        if (i < a.length && a[i] != null) { node.l = { v: a[i]!, l: null, r: null }; q.push(node.l); } i++;
+        if (i < a.length && a[i] != null) { node.r = { v: a[i]!, l: null, r: null }; q.push(node.r); } i++;
+      }
+      return root;
+    }
+    let best = '{';
+    const path: string[] = [];
+    function dfs(node: TN | null): void {
+      if (!node) return;
+      path.push(String.fromCharCode(97 + node.v));
+      if (!node.l && !node.r) {
+        const s = path.slice().reverse().join('');
+        if (s < best) best = s;
+      }
+      dfs(node.l); dfs(node.r);
+      path.pop();
+    }
+    dfs(build(arr));
+    return best;
+  },
+
+  // --- batch 93 -----------------------------------------------------------
+  'valid-perfect-square': (...args: unknown[]) => {
+    const num = args[0] as number;
+    let lo = 1, hi = num;
+    while (lo <= hi) {
+      const mid = Math.floor((lo + hi) / 2);
+      const sq = mid * mid;
+      if (sq === num) return true;
+      if (sq < num) lo = mid + 1;
+      else hi = mid - 1;
+    }
+    return false;
+  },
+
+  'insertion-sort-list': (...args: unknown[]) => {
+    const arr = [...(args[0] as number[])];
+    for (let i = 1; i < arr.length; i++) {
+      const key = arr[i]!;
+      let j = i - 1;
+      while (j >= 0 && arr[j]! > key) { arr[j + 1] = arr[j]!; j--; }
+      arr[j + 1] = key;
+    }
+    return arr;
+  },
+
+  'maximize-score-after-n-operations': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const m = nums.length;
+    const gcd = (a: number, b: number): number => b ? gcd(b, a % b) : a;
+    const g: number[][] = Array.from({length: m}, (_, i) =>
+      Array.from({length: m}, (_, j) => gcd(nums[i]!, nums[j]!)));
+    const dp = new Array<number>(1 << m).fill(0);
+    for (let mask = 0; mask < (1 << m); mask++) {
+      let bits = 0;
+      for (let b = mask; b; b &= b - 1) bits++;
+      if (bits % 2 !== 0) continue;
+      const op = bits / 2 + 1;
+      for (let i = 0; i < m; i++) {
+        if (mask & (1 << i)) continue;
+        for (let j = i + 1; j < m; j++) {
+          if (mask & (1 << j)) continue;
+          const nm = mask | (1 << i) | (1 << j);
+          dp[nm] = Math.max(dp[nm]!, dp[mask]! + op * g[i]![j]!);
+        }
+      }
+    }
+    return dp[(1 << m) - 1]!;
+  },
+
+  // --- batch 92 -----------------------------------------------------------
+  'alternating-groups-i': (...args: unknown[]) => {
+    const colors = args[0] as number[];
+    const n = colors.length;
+    let count = 0;
+    for (let i = 0; i < n; i++) {
+      const prev = colors[(i - 1 + n) % n]!;
+      const curr = colors[i]!;
+      const next = colors[(i + 1) % n]!;
+      if (prev !== curr && curr !== next) count++;
     }
     return count;
   },
@@ -31095,6 +31249,186 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       m += a;
     }
     return true;
+  },
+
+  'prime-subtraction-operation': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    // Sieve of Eratosthenes up to 1000
+    const isPrime = new Array<boolean>(1001).fill(true);
+    isPrime[0] = isPrime[1] = false;
+    for (let i = 2; i * i <= 1000; i++) {
+      if (isPrime[i]) for (let j = i * i; j <= 1000; j += i) isPrime[j] = false;
+    }
+    const primes: number[] = [];
+    for (let i = 2; i <= 1000; i++) if (isPrime[i]) primes.push(i);
+    let prev = 0;
+    for (const x of nums) {
+      // Find largest prime p <= x - prev - 1 using binary search
+      const limit = x - prev - 1;
+      let lo = 0, hi = primes.length - 1, best = -1;
+      while (lo <= hi) {
+        const mid = (lo + hi) >> 1;
+        if (primes[mid]! <= limit) { best = primes[mid]!; lo = mid + 1; }
+        else hi = mid - 1;
+      }
+      const after = best >= 0 ? x - best : x;
+      if (after <= prev) return false;
+      prev = after;
+    }
+    return true;
+  },
+
+  'find-the-longest-semi-repetitive-subarray': (...args: unknown[]) => {
+    const s = args[0] as number[];
+    let left = 0, pairs = 0, maxLen = 1;
+    for (let right = 1; right < s.length; right++) {
+      if (s[right] === s[right - 1]) pairs++;
+      while (pairs > 1) {
+        if (s[left] === s[left + 1]) pairs--;
+        left++;
+      }
+      maxLen = Math.max(maxLen, right - left + 1);
+    }
+    return maxLen;
+  },
+
+  'count-number-of-fair-pairs': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    const lower = args[1] as number;
+    const upper = args[2] as number;
+    nums.sort((a, b) => a - b);
+    const n = nums.length;
+    // lowerBound: first index >= target in nums[start..n-1]
+    function lowerBound(start: number, target: number): number {
+      let lo = start, hi = n;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (nums[mid]! < target) lo = mid + 1;
+        else hi = mid;
+      }
+      return lo;
+    }
+    // upperBound: first index > target in nums[start..n-1]
+    function upperBound(start: number, target: number): number {
+      let lo = start, hi = n;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (nums[mid]! <= target) lo = mid + 1;
+        else hi = mid;
+      }
+      return lo;
+    }
+    let count = 0;
+    for (let i = 0; i < n - 1; i++) {
+      const lo = lowerBound(i + 1, lower - nums[i]!);
+      const hi = upperBound(i + 1, upper - nums[i]!);
+      count += hi - lo;
+    }
+    return count;
+  },
+
+  'longest-binary-subsequence-less-than-or-equal-to-k': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    let chosenLen = 0, value = 0;
+    for (let i = s.length - 1; i >= 0; i--) {
+      if (s[i] === '0') {
+        chosenLen++;
+      } else {
+        if (chosenLen < 30 && value + (1 << chosenLen) <= k) {
+          value += (1 << chosenLen);
+          chosenLen++;
+        }
+      }
+    }
+    return chosenLen;
+  },
+
+  'minimum-time-to-complete-all-tasks': (...args: unknown[]) => {
+    const tasks = args[0] as number[][];
+    const sorted = [...tasks].sort((a, b) => a[1]! - b[1]!);
+    const maxEnd = sorted.reduce((m, t) => Math.max(m, t[1]!), 0);
+    const run = new Uint8Array(maxEnd + 1);
+    for (const task of sorted) {
+      const start = task[0]!, end = task[1]!, dur = task[2]!;
+      let already = 0;
+      for (let t = start; t <= end; t++) already += run[t]!;
+      let need = dur - already;
+      for (let t = end; t >= start && need > 0; t--) {
+        if (!run[t]) { run[t] = 1; need--; }
+      }
+    }
+    let total = 0;
+    for (let i = 0; i < run.length; i++) total += run[i]!;
+    return total;
+  },
+
+  'count-vowel-substrings-of-a-word': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+    let count = 0;
+    for (let i = 0; i < word.length; i++) {
+      const seen = new Set<string>();
+      for (let j = i; j < word.length; j++) {
+        if (!vowels.has(word[j]!)) break;
+        seen.add(word[j]!);
+        if (seen.size === 5) count++;
+      }
+    }
+    return count;
+  },
+
+  'minimum-cost-to-move-chips': (...args: unknown[]) => {
+    const position = args[0] as number[];
+    let odd = 0, even = 0;
+    for (const p of position) {
+      if (p % 2 === 0) even++;
+      else odd++;
+    }
+    return Math.min(odd, even);
+  },
+
+  'string-compression-ii': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    const n = s.length;
+    const dp: number[][] = Array.from({ length: n + 1 }, () =>
+      new Array<number>(k + 1).fill(n)
+    );
+    dp[0]![0] = 0;
+    const rleLen = (cnt: number): number => {
+      if (cnt === 0) return 0;
+      if (cnt === 1) return 1;
+      if (cnt < 10) return 2;
+      if (cnt < 100) return 3;
+      return 4;
+    };
+    for (let i = 1; i <= n; i++) {
+      for (let j = 0; j <= k; j++) {
+        if (j > 0) dp[i]![j] = Math.min(dp[i]![j]!, dp[i - 1]![j - 1]!);
+        let same = 0, diff = 0;
+        for (let l = i; l >= 1; l--) {
+          if (s[l - 1] === s[i - 1]) same++;
+          else diff++;
+          if (diff > j) break;
+          dp[i]![j] = Math.min(dp[i]![j]!, dp[l - 1]![j - diff]! + rleLen(same));
+        }
+      }
+    }
+    return dp[n]![k]!;
+  },
+
+  'build-an-array-with-stack-operations': (...args: unknown[]) => {
+    const target = args[0] as number[];
+    const n = args[1] as number;
+    const ops: string[] = [];
+    const set = new Set(target);
+    for (let i = 1; i <= n; i++) {
+      ops.push('Push');
+      if (!set.has(i)) ops.push('Pop');
+      if (i === target[target.length - 1]) break;
+    }
+    return ops;
   },
 
 };

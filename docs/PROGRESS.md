@@ -8,9 +8,27 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1957** problems; 6165 tests green. Batch 89 complete (7 problems).
+**Current focus:** Bank at **1999** problems; 6309 tests green. Batches 92–94 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 90+); UI/UX polish.
+**Next up:** Continued bank growth (batch 95); UI/UX polish.
+
+### feat(bank): add batch 94 — rotated-digits, rabbits-in-forest, smallest-string-from-leaf (2026-05-26)
+Added 3 problems: `rotated-digits` (easy/math, count valid 180°-rotated different integers 1..n), `rabbits-in-forest` (medium/math+hash-map, ceil(freq/(k+1))×(k+1) grouping), `smallest-string-starting-from-leaf` (medium/tree, DFS path accumulation with lexicographic comparison). Bank at **1999**; 6309 tests.
+
+### feat(bank): merge batches 92a+92b — prime-subtraction, semi-repetitive-subarray, fair-pairs integrated (2026-05-26)
+Merged local batch 92 (prime-subtraction-operation, find-the-longest-semi-repetitive-subarray, count-number-of-fair-pairs) with remote batch 92 (alternating-groups-i, count-vowel-substrings, min-cost-move-chips, string-compression-ii, build-array-stack-ops) and remote batch 93 (valid-perfect-square, insertion-sort-list, maximize-score-after-n-ops). All 6300 tests green. Bank at **1993**.
+
+### feat(bank): add batch 93 — valid-perfect-square, insertion-sort-list, maximize-score-n-ops (2026-05-26)
+Added 3 problems: `valid-perfect-square` (easy/math+binary-search, binary search for x²=num without sqrt), `insertion-sort-list` (medium/linked-list, O(n²) insertion sort with dummy-head pattern, array-based interface), `maximize-score-after-n-operations` (hard/dp, bitmask DP with precomputed GCD table, O(4^n·n²) for n≤7). Bank at **1990**; 6279 tests.
+
+### feat(bank): add batch 92 — alternating-groups-i, longest-binary-subsequence-≤-k, minimum-time-complete-tasks (2026-05-26)
+Added 3 problems: `alternating-groups-i` (easy/arrays, modular-index circular triple count), `longest-binary-subsequence-less-than-or-equal-to-k` (medium/strings+dp, right-to-left greedy — zeros always included, ones included if running value ≤ k), `minimum-time-to-complete-all-tasks` (hard/arrays, sort-by-end + right-fill boolean run array). Fixed wrong expected values in several hidden tests by manual algorithm trace. Bank at **1987**; 6270 tests.
+
+### feat(bank): add batch 91 — maximum-consecutive-values, two-events-conflict, visible-people-queue (2026-05-26)
+Added 3 problems: `maximum-number-of-consecutive-values-you-can-make` (medium/arrays+math, sort+reach greedy), `determine-if-two-events-have-conflict` (easy/strings, lexicographic interval overlap), `number-of-people-that-can-be-seen-in-a-grid` (medium/arrays+stack, monotonic-stack right-to-left). Bank at **1977**; 6219 tests.
+
+### feat(bank): add batch 90 — sum-of-square-numbers, mice-and-cheese, maximum-size-subarray-sum-equals-k (2026-05-26)
+Added 3 problems: `sum-of-square-numbers` (easy/math, Fermat two-square theorem, √c iteration), `mice-and-cheese` (medium/greedy, delta-sort to maximize k assignments), `maximum-size-subarray-sum-equals-k` (medium/hash-map, prefix sum + first-seen map for O(n)). Corrected 5 wrong hidden test expected values via brute-force verification. Bank at **1974**; 6201 tests.
 
 ### feat(bank): add batch 89 — 7 problems (arrays, strings, hash-map, math, graph) (2026-05-26)
 Added 7 problems: `minimum-rounds-to-complete-all-tasks` (medium/arrays+hash-map, ceil(freq/3) rounds), `longest-palindrome-by-concatenating-two-letter-words` (medium/strings+hash-map, paired reverse words + palindromic-word center), `maximum-product-difference-between-two-pairs` (easy/arrays, sorted top-2 minus bottom-2), `minimum-bit-flips-to-convert-number` (easy/math, popcount of XOR), `min-number-of-flips-to-convert-binary-matrix-to-zero-matrix` (hard/graph+simulation, BFS on bitmask state space), `determine-if-two-strings-are-close` (medium/strings+hash-map, same char set + same freq multiset), `maximum-xor-after-operations` (medium/arrays+math, bitwise OR of all elements). Bank at **1958**; tests green.

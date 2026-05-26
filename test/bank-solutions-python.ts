@@ -29936,6 +29936,7 @@ def maxPoints(grid, queries):
     return res
 `,
 
+
   'check-if-there-is-a-valid-partition-for-the-array': `
 def validPartition(nums: list) -> bool:
     n = len(nums)
@@ -30563,6 +30564,326 @@ def asteroidsDestroyed(mass, asteroids):
             return False
         mass += a
     return True
+`,
+
+  'maximum-number-of-consecutive-values-you-can-make': `
+def getMaximumConsecutive(coins):
+    coins = sorted(coins)
+    reach = 0
+    for c in coins:
+        if c > reach + 1:
+            break
+        reach += c
+    return reach + 1
+`,
+
+  'determine-if-two-events-have-conflict': `
+def haveConflict(event1, event2):
+    return event1[0] <= event2[1] and event2[0] <= event1[1]
+`,
+
+  'number-of-people-that-can-be-seen-in-a-grid': `
+def canSeePersonsCount(heights):
+    heights = list(heights)
+    n = len(heights)
+    ans = [0] * n
+    stack = []
+    for i in range(n - 1, -1, -1):
+        count = 0
+        while stack and stack[-1] < heights[i]:
+            stack.pop()
+            count += 1
+        if stack:
+            count += 1
+        ans[i] = count
+        stack.append(heights[i])
+    return ans
+`,
+
+  // batch 94
+  'rotated-digits': `
+def rotatedDigits(n):
+    diff = {2, 5, 6, 9}
+    invalid = {3, 4, 7}
+    count = 0
+    for i in range(1, n + 1):
+        digits = [int(c) for c in str(i)]
+        if any(d in invalid for d in digits):
+            continue
+        if any(d in diff for d in digits):
+            count += 1
+    return count
+`,
+
+  'rabbits-in-forest': `
+from collections import Counter
+def numRabbits(answers):
+    cnt = Counter(answers)
+    total = 0
+    for k, v in cnt.items():
+        group_size = k + 1
+        total += -(-v // group_size) * group_size
+    return total
+`,
+
+  'smallest-string-starting-from-leaf': `
+def smallestFromLeaf(root):
+    raw = list(root)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
+    if not arr or arr[0] is None:
+        return ''
+    class TN:
+        def __init__(self, v): self.v = v; self.l = self.r = None
+    def build(a):
+        if not a or a[0] is None: return None
+        r = TN(a[0])
+        q = [r]; i = 1
+        while q and i < len(a):
+            node = q.pop(0)
+            if i < len(a) and a[i] is not None:
+                node.l = TN(a[i]); q.append(node.l)
+            i += 1
+            if i < len(a) and a[i] is not None:
+                node.r = TN(a[i]); q.append(node.r)
+            i += 1
+        return r
+    best = ['{']
+    path = []
+    def dfs(node):
+        if not node: return
+        path.append(chr(97 + node.v))
+        if not node.l and not node.r:
+            s = ''.join(reversed(path))
+            if s < best[0]:
+                best[0] = s
+        dfs(node.l); dfs(node.r)
+        path.pop()
+    dfs(build(arr))
+    return best[0]
+`,
+
+  // batch 93
+  'valid-perfect-square': `
+def isPerfectSquare(num):
+    lo, hi = 1, num
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        sq = mid * mid
+        if sq == num:
+            return True
+        if sq < num:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return False
+`,
+
+  'insertion-sort-list': `
+def insertionSortList(head):
+    arr = list(head)
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+    return arr
+`,
+
+  'maximize-score-after-n-operations': `
+from math import gcd
+def maxScore(nums):
+    nums = list(nums)
+    m = len(nums)
+    g = [[gcd(nums[i], nums[j]) for j in range(m)] for i in range(m)]
+    dp = [0] * (1 << m)
+    for mask in range(1 << m):
+        bits = bin(mask).count('1')
+        if bits % 2 != 0:
+            continue
+        op = bits // 2 + 1
+        for i in range(m):
+            if mask & (1 << i):
+                continue
+            for j in range(i + 1, m):
+                if mask & (1 << j):
+                    continue
+                nm = mask | (1 << i) | (1 << j)
+                dp[nm] = max(dp[nm], dp[mask] + op * g[i][j])
+    return dp[(1 << m) - 1]
+`,
+
+  // batch 92
+  'alternating-groups-i': `
+def numberOfAlternatingGroups(colors):
+    n = len(colors)
+    count = 0
+    for i in range(n):
+        prev = colors[(i - 1) % n]
+        curr = colors[i]
+        nxt = colors[(i + 1) % n]
+        if prev != curr and curr != nxt:
+            count += 1
+    return count
+`,
+
+  'longest-binary-subsequence-less-than-or-equal-to-k': `
+def longestSubsequence(s, k):
+    chosen_len = 0
+    value = 0
+    for i in range(len(s) - 1, -1, -1):
+        if s[i] == '0':
+            chosen_len += 1
+        else:
+            if chosen_len < 30 and value + (1 << chosen_len) <= k:
+                value += 1 << chosen_len
+                chosen_len += 1
+    return chosen_len
+`,
+
+  'minimum-time-to-complete-all-tasks': `
+def findMinimumTime(tasks):
+    tasks_sorted = sorted(tasks, key=lambda t: t[1])
+    max_end = max(t[1] for t in tasks_sorted)
+    run = [0] * (max_end + 1)
+    for start, end, dur in tasks_sorted:
+        already = sum(run[start:end+1])
+        need = dur - already
+        t = end
+        while t >= start and need > 0:
+            if not run[t]:
+                run[t] = 1
+                need -= 1
+            t -= 1
+    return sum(run)
+`,
+
+  'count-vowel-substrings-of-a-word': `
+def countVowelSubstringsOfAWord(word):
+    vowels = set('aeiou')
+    count = 0
+    for i in range(len(word)):
+        seen = set()
+        for j in range(i, len(word)):
+            if word[j] not in vowels:
+                break
+            seen.add(word[j])
+            if len(seen) == 5:
+                count += 1
+    return count
+`,
+
+  'minimum-cost-to-move-chips': `
+def minCostToMoveChips(position):
+    position = list(position)
+    odd = sum(1 for p in position if p % 2 == 1)
+    even = sum(1 for p in position if p % 2 == 0)
+    return min(odd, even)
+`,
+
+  'string-compression-ii': `
+def getLengthOfOptimalCompression(s, k):
+    n = len(s)
+    dp = [[n] * (k + 1) for _ in range(n + 1)]
+    dp[0][0] = 0
+
+    def rle_len(cnt):
+        if cnt == 0: return 0
+        if cnt == 1: return 1
+        if cnt < 10: return 2
+        if cnt < 100: return 3
+        return 4
+
+    for i in range(1, n + 1):
+        for j in range(k + 1):
+            if j > 0:
+                dp[i][j] = min(dp[i][j], dp[i-1][j-1])
+            same = diff = 0
+            for l in range(i, 0, -1):
+                if s[l-1] == s[i-1]:
+                    same += 1
+                else:
+                    diff += 1
+                if diff > j:
+                    break
+                dp[i][j] = min(dp[i][j], dp[l-1][j-diff] + rle_len(same))
+    return dp[n][k]
+`,
+
+  'build-an-array-with-stack-operations': `
+def buildArray(target, n):
+    target = list(target)
+    target_set = set(target)
+    ops = []
+    for i in range(1, n + 1):
+        ops.append('Push')
+        if i not in target_set:
+            ops.append('Pop')
+        if i == target[-1]:
+            break
+    return ops
+`,
+
+  'prime-subtraction-operation': `
+def primeSubOperation(nums):
+    def sieve(n):
+        is_prime = [True] * (n + 1)
+        is_prime[0] = is_prime[1] = False
+        i = 2
+        while i * i <= n:
+            if is_prime[i]:
+                j = i * i
+                while j <= n:
+                    is_prime[j] = False
+                    j += i
+            i += 1
+        return [x for x in range(2, n + 1) if is_prime[x]]
+
+    import bisect
+    primes = sieve(1000)
+    prev = 0
+    for x in nums:
+        limit = x - prev - 1
+        idx = bisect.bisect_right(primes, limit) - 1
+        if idx >= 0:
+            after = x - primes[idx]
+        else:
+            after = x
+        if after <= prev:
+            return False
+        prev = after
+    return True
+`,
+
+  'find-the-longest-semi-repetitive-subarray': `
+def longestSemiRepetitiveSubarray(s):
+    s = list(s)
+    left = 0
+    pairs = 0
+    max_len = 1
+    for right in range(1, len(s)):
+        if s[right] == s[right - 1]:
+            pairs += 1
+        while pairs > 1:
+            if s[left] == s[left + 1]:
+                pairs -= 1
+            left += 1
+        max_len = max(max_len, right - left + 1)
+    return max_len
+`,
+
+  'count-number-of-fair-pairs': `
+def countFairPairs(nums, lower, upper):
+    import bisect
+    nums = sorted(nums)
+    n = len(nums)
+    count = 0
+    for i in range(n - 1):
+        lo = bisect.bisect_left(nums, lower - nums[i], i + 1, n)
+        hi = bisect.bisect_right(nums, upper - nums[i], i + 1, n)
+        count += hi - lo
+    return count
 `,
 
 };
