@@ -24779,7 +24779,7 @@ def secondMinimum(n, edges, time, change):
     return -1 if min_len == float('inf') else min_len + full_loops * n
 `,
 
-  // batch 67 (local)
+  // batch 70 (remote)
   'number-of-ways-to-select-buildings': `
 def numberOfWays(s):
     c0 = c1 = c01 = c10 = ans = 0
@@ -24861,4 +24861,178 @@ def minimumMoney(transactions):
     return ans
 `,
 
+  // batch 69 (local)
+  'image-smoother': `def imageSmoother(img):
+    m, n = len(img), len(img[0])
+    res = [[0]*n for _ in range(m)]
+    for r in range(m):
+        for c in range(n):
+            s = cnt = 0
+            for dr in (-1, 0, 1):
+                for dc in (-1, 0, 1):
+                    nr, nc = r+dr, c+dc
+                    if 0 <= nr < m and 0 <= nc < n:
+                        s += img[nr][nc]; cnt += 1
+            res[r][c] = s // cnt
+    return res
+`,
+
+  'complex-number-multiplication': `def complexNumberMultiply(num1, num2):
+    def parse(s):
+        a, b = s.split('+')
+        return int(a), int(b[:-1])
+    a, b = parse(num1); c, d = parse(num2)
+    return f"{a*c-b*d}+{a*d+b*c}i"
+`,
+
+  'number-of-boomerangs': `def numberOfBoomerangs(points):
+    ans = 0
+    for x1, y1 in points:
+        dist = {}
+        for x2, y2 in points:
+            d = (x1-x2)**2 + (y1-y2)**2
+            dist[d] = dist.get(d, 0) + 1
+        for cnt in dist.values():
+            ans += cnt * (cnt - 1)
+    return ans
+`,
+
+  'find-duplicate-file-in-system': `def findDuplicate(paths):
+    from collections import defaultdict
+    content_map = defaultdict(list)
+    for p in paths:
+        parts = p.split(' ')
+        d = parts[0]
+        for f in parts[1:]:
+            paren = f.index('(')
+            name = f[:paren]
+            content = f[paren+1:-1]
+            content_map[content].append(d + '/' + name)
+    return sorted([sorted(v) for v in content_map.values() if len(v) >= 2])
+`,
+
+  'poor-pigs': `def poorPigs(buckets, minutesToDie, minutesToTest):
+    rounds = minutesToTest // minutesToDie
+    pigs = 0
+    while (rounds + 1) ** pigs < buckets:
+        pigs += 1
+    return pigs
+`,
+
+  'strobogrammatic-number': `def isStrobogrammatic(num):
+    pairs = {'0':'0','1':'1','6':'9','8':'8','9':'6'}
+    l, r = 0, len(num) - 1
+    while l <= r:
+        if pairs.get(num[l]) != num[r]:
+            return False
+        l += 1; r -= 1
+    return True
+`,
+
+  'fraction-addition-and-subtraction': `def fractionAddition(expression):
+    from math import gcd
+    expr = expression
+    if not expr.startswith('-') and not expr.startswith('+'):
+        expr = '+' + expr
+    fracs = []
+    i = 0
+    while i < len(expr):
+        sign = 1 if expr[i] == '+' else -1
+        i += 1
+        j = i
+        while j < len(expr) and expr[j] not in '+-':
+            j += 1
+        n, d = map(int, expr[i:j].split('/'))
+        fracs.append((sign * n, d))
+        i = j
+    num, den = 0, 1
+    for n, d in fracs:
+        num = num * d + n * den
+        den = den * d
+        g = gcd(abs(num), abs(den)) if num != 0 else den
+        num //= g; den //= g
+    if den < 0:
+        num, den = -num, -den
+    return str(num) + '/' + str(den)
+`,
+
+  'longest-zigzag-path-in-binary-tree': `def longestZigZag(root):
+    from collections import deque
+    def to_int(x):
+        try: return int(x)
+        except: return None
+    def build(arr):
+        converted = [to_int(x) for x in arr]
+        if not converted or converted[0] is None: return None
+        root_node = [converted[0], None, None]
+        q = deque([root_node])
+        i = 1
+        while q and i < len(converted):
+            node = q.popleft()
+            if i < len(converted) and converted[i] is not None:
+                node[1] = [converted[i], None, None]; q.append(node[1])
+            i += 1
+            if i < len(converted) and converted[i] is not None:
+                node[2] = [converted[i], None, None]; q.append(node[2])
+            i += 1
+        return root_node
+    root_node = build(root)
+    ans = [0]
+    def dfs(node, from_left, length):
+        if node is None: return
+        ans[0] = max(ans[0], length)
+        if from_left:
+            dfs(node[2], False, length + 1)
+            dfs(node[1], True, 1)
+        else:
+            dfs(node[1], True, length + 1)
+            dfs(node[2], False, 1)
+    if root_node:
+        dfs(root_node[1], True, 1)
+        dfs(root_node[2], False, 1)
+    return ans[0]
+`,
+
+  'find-the-duplicate-subtrees': `def findDuplicateSubtrees(root):
+    from collections import defaultdict, deque
+    def to_int(x):
+        try: return int(x)
+        except: return None
+    def build(arr):
+        converted = [to_int(x) for x in arr]
+        if not converted or converted[0] is None: return None
+        root_node = [converted[0], None, None]
+        q = deque([root_node])
+        i = 1
+        while q and i < len(converted):
+            node = q.popleft()
+            if i < len(converted) and converted[i] is not None:
+                node[1] = [converted[i], None, None]; q.append(node[1])
+            i += 1
+            if i < len(converted) and converted[i] is not None:
+                node[2] = [converted[i], None, None]; q.append(node[2])
+            i += 1
+        return root_node
+    def bfs(node):
+        if node is None: return []
+        res, q = [], deque([node])
+        while q:
+            n = q.popleft()
+            if n is None: res.append(None)
+            else:
+                res.append(n[0]); q.append(n[1]); q.append(n[2])
+        while res and res[-1] is None: res.pop()
+        return res
+    root_node = build(root)
+    seen = defaultdict(int)
+    result = []
+    def serialize(node):
+        if node is None: return '#'
+        s = str(node[0]) + ',' + serialize(node[1]) + ',' + serialize(node[2])
+        seen[s] += 1
+        if seen[s] == 2: result.append(bfs(node))
+        return s
+    serialize(root_node)
+    return sorted(result, key=lambda x: int(x[0]) if x and x[0] is not None else 0)
+`,
 };

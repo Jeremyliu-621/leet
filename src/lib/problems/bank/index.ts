@@ -1811,11 +1811,21 @@ import { problem as countTheNumberOfGoodSubarrays } from './count-the-number-of-
 import { problem as maximumStrictlyIncreasingCellsInMatrix } from './maximum-strictly-increasing-cells-in-a-matrix';
 import { problem as findLongestSpecialSubstringThriceI } from './find-longest-special-substring-that-occurs-thrice-i';
 import { problem as minimumOperationsToMakeArrayValuesEqualToK } from './minimum-operations-to-make-array-values-equal-to-k';
-// batch 69
+// batch 69 (remote)
 import { problem as mergeNodesBetweenZeros } from './merge-nodes-in-between-zeros';
 import { problem as reachableNodesWithRestrictions } from './reachable-nodes-with-restrictions';
 import { problem as minKConsecutiveBitFlips } from './minimum-number-of-k-consecutive-bit-flips';
 import { problem as minSizeSubarrayInfiniteArray } from './minimum-size-subarray-in-infinite-array';
+// batch 69 (local)
+import { problem as imageSmoother } from './image-smoother';
+import { problem as complexNumberMultiplication } from './complex-number-multiplication';
+import { problem as numberOfBoomerangs } from './number-of-boomerangs';
+import { problem as findDuplicateFileInSystem } from './find-duplicate-file-in-system';
+import { problem as poorPigs } from './poor-pigs';
+import { problem as strobogrammaticNumber } from './strobogrammatic-number';
+import { problem as fractionAdditionAndSubtraction } from './fraction-addition-and-subtraction';
+import { problem as longestZigZagPathInBinaryTree } from './longest-zigzag-path-in-binary-tree';
+import { problem as findTheDuplicateSubtrees } from './find-the-duplicate-subtrees';
 
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -3667,9 +3677,19 @@ export const problems: readonly Problem[] = [
   escapeTheGhosts,
   maximumValueOfKCoinsFromPiles,
   parallelCoursesIII,
-  // batch 69
+  // batch 69 (remote)
   mergeNodesBetweenZeros,
   reachableNodesWithRestrictions,
   minKConsecutiveBitFlips,
   minSizeSubarrayInfiniteArray,
+  // batch 69 (local)
+  imageSmoother,
+  complexNumberMultiplication,
+  numberOfBoomerangs,
+  findDuplicateFileInSystem,
+  poorPigs,
+  strobogrammaticNumber,
+  fractionAdditionAndSubtraction,
+  longestZigZagPathInBinaryTree,
+  findTheDuplicateSubtrees,
 ];

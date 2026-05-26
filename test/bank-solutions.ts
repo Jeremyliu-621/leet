@@ -25426,6 +25426,46 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'image-smoother': (...args: unknown[]) => {
+    const img = args[0] as number[][];
+    const m = img.length, n = img[0]!.length;
+    const res = Array.from({length: m}, () => new Array(n).fill(0));
+    for (let r = 0; r < m; r++) {
+      for (let c = 0; c < n; c++) {
+        let sum = 0, cnt = 0;
+        for (let dr = -1; dr <= 1; dr++) {
+          for (let dc = -1; dc <= 1; dc++) {
+            const nr = r + dr, nc = c + dc;
+            if (nr >= 0 && nr < m && nc >= 0 && nc < n) { sum += img[nr]![nc]!; cnt++; }
+          }
+        }
+        res[r]![c] = Math.floor(sum / cnt);
+      }
+    }
+    return res;
+  },
+
+  'complex-number-multiplication': (...args: unknown[]) => {
+    const parse = (s: string) => { const [a, b] = s.split('+'); return [+a!, +(b!.slice(0,-1))]; };
+    const [a, b] = parse(args[0] as string);
+    const [c, d] = parse(args[1] as string);
+    return `${a!*c!-b!*d!}+${a!*d!+b!*c!}i`;
+  },
+
+  'number-of-boomerangs': (...args: unknown[]) => {
+    const points = args[0] as number[][];
+    let ans = 0;
+    for (const [x1, y1] of points) {
+      const dist: Map<number, number> = new Map();
+      for (const [x2, y2] of points) {
+        const d = (x1!-x2!)*(x1!-x2!) + (y1!-y2!)*(y1!-y2!);
+        dist.set(d, (dist.get(d) ?? 0) + 1);
+      }
+      for (const cnt of dist.values()) ans += cnt * (cnt - 1);
+    }
+    return ans;
+  },
+
   'minimum-size-subarray-in-infinite-array': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const target = args[1] as number;
@@ -25443,6 +25483,100 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       if (sum === rem) minLen = Math.min(minLen, r - l + 1);
     }
     return minLen === Infinity ? -1 : minLen + fullLoops * n;
+  },
+
+  'find-duplicate-file-in-system': (...args: unknown[]) => {
+    const paths = args[0] as string[];
+    const map: Map<string, string[]> = new Map();
+    for (const p of paths) {
+      const parts = p.split(' ');
+      const dir = parts[0]!;
+      for (let i = 1; i < parts.length; i++) {
+        const m = parts[i]!.match(/^(.+)\((.+)\)$/);
+        if (!m) continue;
+        const path = `${dir}/${m[1]}`;
+        const content = m[2]!;
+        if (!map.has(content)) map.set(content, []);
+        map.get(content)!.push(path);
+      }
+    }
+    const res: string[][] = [];
+    for (const grp of map.values()) {
+      if (grp.length >= 2) res.push([...grp].sort());
+    }
+    return res.sort((a,b) => (a[0]??'').localeCompare(b[0]??''));
+  },
+
+  'poor-pigs': (...args: unknown[]) => {
+    const [buckets, minutesToDie, minutesToTest] = args as [number, number, number];
+    const rounds = Math.floor(minutesToTest / minutesToDie);
+    let pigs = 0;
+    while (Math.pow(rounds + 1, pigs) < buckets) pigs++;
+    return pigs;
+  },
+
+  'strobogrammatic-number': (...args: unknown[]) => {
+    const num = args[0] as string;
+    const pairs: Record<string, string> = {'0':'0','1':'1','6':'9','8':'8','9':'6'};
+    let l = 0, r = num.length - 1;
+    while (l <= r) {
+      if (pairs[num[l]!] !== num[r]) return false;
+      l++; r--;
+    }
+    return true;
+  },
+
+  'fraction-addition-and-subtraction': (...args: unknown[]) => {
+    const expr = args[0] as string;
+    const fracs = expr.match(/[+-]?\d+\/\d+/g) ?? [];
+    const gcd = (a: number, b: number): number => b === 0 ? Math.abs(a) : gcd(b, a % b);
+    let num = 0, den = 1;
+    for (const f of fracs) {
+      const [n, d] = f.split('/').map(Number);
+      num = num * d! + n! * den;
+      den = den * d!;
+      const g = gcd(num, den);
+      num /= g; den /= g;
+    }
+    if (den < 0) { num = -num; den = -den; }
+    return `${num}/${den}`;
+  },
+
+  'longest-zigzag-path-in-binary-tree': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    if (!root) return 0;
+    let ans = 0;
+    const dfs = (node: _TN | null, fromLeft: boolean, len: number) => {
+      if (!node) return;
+      ans = Math.max(ans, len);
+      if (fromLeft) {
+        dfs(node.r, false, len + 1);
+        dfs(node.l, true, 1);
+      } else {
+        dfs(node.l, true, len + 1);
+        dfs(node.r, false, 1);
+      }
+    };
+    dfs(root.l, true, 1);
+    dfs(root.r, false, 1);
+    return ans;
+  },
+
+  'find-the-duplicate-subtrees': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    if (!root) return [];
+    const seen: Map<string, number> = new Map();
+    const result: _TN[] = [];
+    const serialize = (node: _TN | null): string => {
+      if (!node) return '#';
+      const s = `${node.v},${serialize(node.l)},${serialize(node.r)}`;
+      const cnt = (seen.get(s) ?? 0) + 1;
+      seen.set(s, cnt);
+      if (cnt === 2) result.push(node);
+      return s;
+    };
+    serialize(root);
+    return result.map(n => _treeToArr(n)).sort((a, b) => (a[0] as number) - (b[0] as number));
   },
 
 };
