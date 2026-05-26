@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **1945** problems; 6129 tests green. Batch 86 complete (3 problems: arrays, strings).
+**Current focus:** Bank at **1948** problems; 6138 tests green. Batch 87 complete (3 problems: dp, strings, arrays).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 87); UI/UX polish.
+**Next up:** Continued bank growth (batch 88); UI/UX polish.
+
+### feat(bank): add batch 87 — 3 problems (dp, strings, arrays) (2026-05-26)
+Added 3 problems: `maximize-the-profit-as-the-salesman` (medium/dp, weighted interval scheduling with DP sweep), `check-if-string-is-an-acronym-of-words` (easy/strings, first-char matching), `count-elements-with-smaller-and-greater-element` (easy/arrays, min/max filtering). Bank at **1948**; 6138 tests.
 
 ### feat(bank): add batch 86 — 3 problems (arrays, strings) (2026-05-26)
 Added 3 problems: `maximum-value-of-an-ordered-triplet-ii` (medium/arrays, O(n) single-pass tracking maxI/maxDiff/ans for (nums[i]-nums[j])*nums[k]), `divide-array-into-arrays-with-max-difference` (medium/arrays, sort + consecutive triplet max-diff check), `shifting-letters-ii` (medium/strings+arrays, difference array for O(n+q) range shifts mod 26). Bank at **1945**; 6129 tests.

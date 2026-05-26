@@ -29660,4 +29660,33 @@ def shiftingLetters(s: str, queries: list) -> str:
     return ''.join(chars)
 `,
 
+
+  'maximize-the-profit-as-the-salesman': `
+def maximizeTheProfit(n: int, offers: list) -> int:
+    by_end = [[] for _ in range(n)]
+    for o in offers:
+        by_end[int(o[1])].append(o)
+    dp = [0] * (n + 1)
+    for e in range(n):
+        dp[e + 1] = dp[e]
+        for o in by_end[e]:
+            s, _, g = int(o[0]), int(o[1]), int(o[2])
+            dp[e + 1] = max(dp[e + 1], dp[s] + g)
+    return dp[n]
+`,
+
+  'check-if-string-is-an-acronym-of-words': `
+def isAcronym(words: list, s: str) -> bool:
+    if len(words) != len(s):
+        return False
+    return all(words[i][0] == s[i] for i in range(len(words)))
+`,
+
+  'count-elements-with-smaller-and-greater-element': `
+def countElements(nums: list) -> int:
+    mn = min(nums)
+    mx = max(nums)
+    return sum(1 for x in nums if mn < x < mx)
+`,
+
 };

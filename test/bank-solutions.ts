@@ -30195,4 +30195,32 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return chars.join('');
   },
 
+
+  'maximize-the-profit-as-the-salesman': (...args: unknown[]) => {
+    const [n, offers] = args as [number, number[][]];
+    const byEnd: number[][][] = Array.from({ length: n }, () => []);
+    for (const o of offers) byEnd[o[1]!]!.push(o);
+    const dp = new Array<number>(n + 1).fill(0);
+    for (let e = 0; e < n; e++) {
+      dp[e + 1] = dp[e]!;
+      for (const [s, , g] of byEnd[e]!) {
+        dp[e + 1] = Math.max(dp[e + 1]!, dp[s!]! + g!);
+      }
+    }
+    return dp[n]!;
+  },
+
+  'check-if-string-is-an-acronym-of-words': (...args: unknown[]) => {
+    const [words, s] = args as [string[], string];
+    if (words.length !== s.length) return false;
+    return words.every((w, i) => w[0] === s[i]);
+  },
+
+  'count-elements-with-smaller-and-greater-element': (...args: unknown[]) => {
+    const [nums] = args as [number[]];
+    const min = Math.min(...nums);
+    const max = Math.max(...nums);
+    return nums.filter(x => x > min && x < max).length;
+  },
+
 };

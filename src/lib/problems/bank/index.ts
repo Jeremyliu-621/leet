@@ -2076,6 +2076,10 @@ import { problem as kthSmallestElementInASortedMatrix } from './kth-smallest-ele
 import { problem as maximumValueOfAnOrderedTripletII } from './maximum-value-of-an-ordered-triplet-ii';
 import { problem as divideArrayIntoArraysWithMaxDifference } from './divide-array-into-arrays-with-max-difference';
 import { problem as shiftingLettersII } from './shifting-letters-ii';
+// batch 87 — dp, strings, arrays
+import { problem as maximizeTheProfitAsTheSalesman } from './maximize-the-profit-as-the-salesman';
+import { problem as checkIfStringIsAnAcronymOfWords } from './check-if-string-is-an-acronym-of-words';
+import { problem as countElementsWithSmallerAndGreaterElement } from './count-elements-with-smaller-and-greater-element';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4188,4 +4192,8 @@ export const problems: readonly Problem[] = [
   maximumValueOfAnOrderedTripletII,
   divideArrayIntoArraysWithMaxDifference,
   shiftingLettersII,
+  // batch 87 — dp, strings, arrays
+  maximizeTheProfitAsTheSalesman,
+  checkIfStringIsAnAcronymOfWords,
+  countElementsWithSmallerAndGreaterElement,
 ];
