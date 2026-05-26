@@ -21518,6 +21518,40 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[target];
   },
 
+  'count-all-valid-pickup-and-delivery-options': (n: unknown) => {
+    const MOD = 1_000_000_007n;
+    let dp = 1n;
+    for (let i = 2; i <= (n as number); i++) {
+      dp = dp * BigInt(i) * BigInt(2 * i - 1) % MOD;
+    }
+    return Number(dp);
+  },
+
+  'maximum-average-subarray-ii': (nums: unknown, k: unknown) => {
+    const a = nums as number[], kk = k as number;
+    const n = a.length;
+    let lo = Math.min(...a), hi = Math.max(...a);
+    const check = (mid: number) => {
+      const adj = a.map(v => v - mid);
+      let windowSum = adj.slice(0, kk).reduce((s, v) => s + v, 0);
+      if (windowSum >= 0) return true;
+      let prevSum = 0, minPrevSum = 0;
+      for (let i = kk; i < n; i++) {
+        windowSum += adj[i]!;
+        prevSum += adj[i - kk]!;
+        minPrevSum = Math.min(minPrevSum, prevSum);
+        if (windowSum - minPrevSum >= 0) return true;
+      }
+      return false;
+    };
+    for (let iter = 0; iter < 100; iter++) {
+      const mid = (lo + hi) / 2;
+      if (check(mid)) lo = mid;
+      else hi = mid;
+    }
+    return parseFloat(lo.toFixed(5));
+  },
+
   'convert-binary-linked-list': (...args: unknown[]) => {
     const head = args[0] as Array<number>;
     let result = 0;
@@ -21822,6 +21856,40 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       }
     }
     return best;
+  },
+
+  'longest-even-odd-subarray-with-threshold': (nums: unknown, threshold: unknown) => {
+    const a = nums as number[];
+    const t = threshold as number;
+    const n = a.length;
+    let ans = 0;
+    let i = 0;
+    while (i < n) {
+      if (a[i]! % 2 !== 0 || a[i]! > t) { i++; continue; }
+      const start = i;
+      i++;
+      while (i < n && a[i]! <= t && a[i]! % 2 === (i - start) % 2) i++;
+      ans = Math.max(ans, i - start);
+    }
+    return ans;
+  },
+
+  'find-the-value-of-the-partition': (nums: unknown) => {
+    const sorted = [...(nums as number[])].sort((a, b) => a - b);
+    let min = Infinity;
+    for (let i = 0; i < sorted.length - 1; i++) {
+      min = Math.min(min, sorted[i + 1]! - sorted[i]!);
+    }
+    return min;
+  },
+
+  'clear-digits': (s: unknown) => {
+    const stack: string[] = [];
+    for (const c of s as string) {
+      if (c >= '0' && c <= '9') stack.pop();
+      else stack.push(c);
+    }
+    return stack.join('');
   },
 
   // batch 57

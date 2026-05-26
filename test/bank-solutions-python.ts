@@ -21349,6 +21349,43 @@ def secondMinimum(n, edges, time, change):
     return dp[target]
 `,
 
+  'count-all-valid-pickup-and-delivery-options': `def countOrders(n):
+    n = int(n)
+    MOD = 10**9 + 7
+    dp = 1
+    for i in range(2, n + 1):
+        dp = dp * i * (2 * i - 1) % MOD
+    return dp
+`,
+
+  'maximum-average-subarray-ii': `def findMaxAverage(nums, k):
+    a = list(float(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    k = int(k)
+    n = len(a)
+    lo, hi = min(a), max(a)
+    def check(mid):
+        adj = [v - mid for v in a]
+        window_sum = sum(adj[:k])
+        if window_sum >= 0:
+            return True
+        prev_sum = 0.0
+        min_prev_sum = 0.0
+        for i in range(k, n):
+            window_sum += adj[i]
+            prev_sum += adj[i - k]
+            min_prev_sum = min(min_prev_sum, prev_sum)
+            if window_sum - min_prev_sum >= 0:
+                return True
+        return False
+    for _ in range(100):
+        mid = (lo + hi) / 2
+        if check(mid):
+            lo = mid
+        else:
+            hi = mid
+    return round(lo, 5)
+`,
+
   'convert-binary-linked-list': `def getDecimalValue(head):
     result = 0
     while head:
@@ -21646,6 +21683,36 @@ def secondMinimum(n, edges, time, change):
             if len(word) > len(best) or (len(word) == len(best) and word < best):
                 best = word
     return best
+`,
+
+  'longest-even-odd-subarray-with-threshold': `def longestAlternatingSubarray(nums, threshold):
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    t = int(threshold)
+    n = len(a); ans = 0; i = 0
+    while i < n:
+        if a[i] % 2 != 0 or a[i] > t:
+            i += 1; continue
+        start = i; i += 1
+        while i < n and a[i] <= t and a[i] % 2 == (i - start) % 2:
+            i += 1
+        ans = max(ans, i - start)
+    return ans
+`,
+
+  'find-the-value-of-the-partition': `def findValueOfPartition(nums):
+    a = sorted(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    return min(a[i + 1] - a[i] for i in range(len(a) - 1))
+`,
+
+  'clear-digits': `def clearDigits(s):
+    stack = []
+    for c in (s if isinstance(s, str) else str(s)):
+        if c.isdigit():
+            if stack:
+                stack.pop()
+        else:
+            stack.append(c)
+    return ''.join(stack)
 `,
 
   'sum-of-digits-in-base-k': `def sumBase(n, k):
