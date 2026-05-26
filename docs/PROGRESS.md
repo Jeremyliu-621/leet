@@ -8,6 +8,7 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
+<<<<<<< HEAD
 **Current focus:** Bank at **2001** problems; 6315 tests green. Batches 92–94 + 2K milestone complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Continued bank growth (batch 95); UI/UX polish.
@@ -26,6 +27,8 @@ Merged local batch 92 (prime-subtraction-operation, find-the-longest-semi-repeti
 
 ### feat(bank): add batch 93 — valid-perfect-square, insertion-sort-list, maximize-score-n-ops (2026-05-26)
 Added 3 problems: `valid-perfect-square` (easy/math+binary-search, binary search for x²=num without sqrt), `insertion-sort-list` (medium/linked-list, O(n²) insertion sort with dummy-head pattern, array-based interface), `maximize-score-after-n-operations` (hard/dp, bitmask DP with precomputed GCD table, O(4^n·n²) for n≤7). Bank at **1990**; 6279 tests.
+=======
+>>>>>>> origin/main
 **Current focus:** Bank at **1990** problems; 6279 tests green. Batch 93 complete. Word-wrap preference persisted.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 94 bank growth; further UI/UX polish (light mode, a11y, hints backfill).
