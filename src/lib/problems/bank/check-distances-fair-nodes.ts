@@ -33,6 +33,16 @@ Return \`true\` if \`s\` is a well-spaced string, otherwise return \`false\`.`,
   hints: [
     'Record the first occurrence index of each character.',
     'On the second occurrence, check if the gap matches distance[c - \'a\'].',
+    `\`\`\`js
+function checkDistances(s, distance) {
+  const first={};
+  for(let i=0;i<s.length;i++){
+    const c=s.charCodeAt(i)-97;
+    if(c in first){if(i-first[c]-1!==distance[c])return false;}
+    else first[c]=i;
+  }
+  return true;
+}\`\`\``,
   ],
   functionName: 'checkDistances',
   params: ['s', 'distance'],

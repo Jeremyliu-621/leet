@@ -26,6 +26,10 @@ Given a string \`sentence\` containing only lowercase English letters, return \`
   hints: [
     'Put all the characters into a Set. If the set size is 26, it\'s a pangram.',
     'You can also use a bitmask of 26 bits — set bit i when character \'a\'+i is seen.',
+    `\`\`\`js
+function checkIfPangram(sentence) {
+  return new Set(sentence).size>=26;
+}\`\`\``,
   ],
   starterCode: {
     javascript: `function checkIfPangram(sentence) {

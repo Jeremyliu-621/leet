@@ -35,6 +35,19 @@ A **subarray** may only include each element at most once. Formally, for a subar
   hints: [
     'Consider two cases: (1) the maximum subarray lies entirely in the non-circular range — use Kadane\'s algorithm; (2) the maximum subarray wraps around — its complement (the elements not in the subarray) is a minimum contiguous subarray. Answer = total sum - minimum subarray sum.',
     'Edge case: if all elements are negative, the wrap-around case would give total - (total) = 0, which is wrong. In that case, just return the maximum element.',
+    `\`\`\`js
+function maxSubarraySumCircular(nums) {
+  let maxSum=nums[0],curMax=0,minSum=nums[0],curMin=0,total=0;
+  for(const n of nums){
+    curMax=Math.max(curMax+n,n);
+    maxSum=Math.max(maxSum,curMax);
+    curMin=Math.min(curMin+n,n);
+    minSum=Math.min(minSum,curMin);
+    total+=n;
+  }
+  // if all negative, maxSum is the answer (wrap-around would give 0)
+  return maxSum>0?Math.max(maxSum,total-minSum):maxSum;
+}\`\`\``,
   ],
   functionName: 'maxSubarraySumCircular',
   params: ['nums'],

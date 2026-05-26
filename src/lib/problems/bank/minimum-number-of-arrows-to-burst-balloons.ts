@@ -29,6 +29,15 @@ Given the array \`points\`, return the **minimum** number of arrows that must be
   hints: [
     'Sort balloons by their ending x-coordinate.',
     'Greedily shoot an arrow at each balloon\'s end when it would miss the current arrow.',
+    `\`\`\`js
+function findMinArrowShots(points) {
+  points.sort((a,b)=>a[1]-b[1]);
+  let arrows=1,end=points[0][1];
+  for(let i=1;i<points.length;i++){
+    if(points[i][0]>end){arrows++;end=points[i][1];}
+  }
+  return arrows;
+}\`\`\``,
   ],
   functionName: 'findMinArrowShots',
   params: ['points'],

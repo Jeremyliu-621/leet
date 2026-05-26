@@ -32,6 +32,10 @@ Given a string \`sentence\` containing only lowercase English letters, return \`
   hints: [
     'Put all characters into a Set and check if its size is 26.',
     'Or use a bitmask: set bit (c - \'a\') for each character and check if the result equals (1 << 26) - 1.',
+    `\`\`\`js
+function checkIfPangram(sentence) {
+  return new Set(sentence).size>=26;
+}\`\`\``,
   ],
   functionName: 'checkIfPangram',
   params: ['sentence'],

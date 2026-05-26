@@ -32,6 +32,14 @@ Return the resulting integer after performing the operations described above.`,
   hints: [
     'Build the digit string by converting each character to its 1-indexed position.',
     'Sum the digits (that\'s the first transform), then repeat k-1 more times.',
+    `\`\`\`js
+function getLucky(s, k) {
+  let num=s.split("").map(c=>String(c.charCodeAt(0)-96)).join("");
+  let sum=num.split("").reduce((a,c)=>a+Number(c),0);
+  for(let i=1;i<k;i++)
+    sum=String(sum).split("").reduce((a,c)=>a+Number(c),0);
+  return sum;
+}\`\`\``,
   ],
   functionName: 'getLucky',
   params: ['s', 'k'],

@@ -86,6 +86,18 @@ The **tilt** of a tree node is the **absolute difference** between the sum of al
   hints: [
     'Use a post-order DFS: compute each subtree\'s sum, accumulate the tilt, return the sum upward.',
     '`function sum(node) { if (!node) return 0; const l=sum(node.left), r=sum(node.right); total+=Math.abs(l-r); return node.val+l+r; }`',
+    `\`\`\`js
+function findTilt(root) {
+  let total=0;
+  function sum(node){
+    if(!node) return 0;
+    const l=sum(node.left),r=sum(node.right);
+    total+=Math.abs(l-r);
+    return node.val+l+r;
+  }
+  sum(root);
+  return total;
+}\`\`\``,
   ],
   functionName: 'findTiltRunner',
   params: ['root'],

@@ -30,6 +30,19 @@ Return *the sum of lengths of all **good** strings in* \`words\`.`,
   hints: [
     'Build a frequency map of chars. For each word, check if the word\'s frequency map is covered by chars.',
     'A word is good if for every letter, its count in the word ≤ its count in chars.',
+    `\`\`\`js
+function countCharacters(words, chars) {
+  const freq={};
+  for(const c of chars) freq[c]=(freq[c]||0)+1;
+  let total=0;
+  for(const w of words){
+    const wf={};
+    let ok=true;
+    for(const c of w){wf[c]=(wf[c]||0)+1;if((wf[c]||0)>(freq[c]||0)){ok=false;break;}}
+    if(ok) total+=w.length;
+  }
+  return total;
+}\`\`\``,
   ],
   functionName: 'countCharacters',
   params: ['words', 'chars'],

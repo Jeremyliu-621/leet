@@ -57,6 +57,11 @@ describe('problem bank', () => {
         }
         expect(problem.visibleTests.length).toBeGreaterThan(0);
         expect(problem.hiddenTests.length).toBeGreaterThan(0);
+        // Every problem must have at least 3 progressive hints for a good UX.
+        expect(
+          (problem.hints?.length ?? 0) >= 3,
+          `"${problem.id}" has ${problem.hints?.length ?? 0} hint(s); need at least 3`,
+        ).toBe(true);
       });
 
       it('reference solution passes every visible and hidden test', () => {

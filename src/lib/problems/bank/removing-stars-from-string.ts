@@ -34,6 +34,15 @@ Return the string after **all** stars have been removed.
   hints: [
     'Use a stack. Push characters; on \'*\', pop the top.',
     'Join the stack at the end.',
+    `\`\`\`js
+function removeStars(s) {
+  const stack=[];
+  for(const c of s){
+    if(c==="*") stack.pop();
+    else stack.push(c);
+  }
+  return stack.join("");
+}\`\`\``,
   ],
   functionName: 'removeStars',
   params: ['s'],

@@ -31,6 +31,11 @@ Return one of \`"Sunday"\`, \`"Monday"\`, \`"Tuesday"\`, \`"Wednesday"\`, \`"Thu
   hints: [
     'Use built-in date functions or Zeller\'s congruence.',
     'JavaScript: `new Date(year, month - 1, day).getDay()` gives 0 = Sunday, 1 = Monday, …, 6 = Saturday.',
+    `\`\`\`js
+function dayOfTheWeek(day, month, year) {
+  const days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  return days[new Date(year,month-1,day).getDay()];
+}\`\`\``,
   ],
   functionName: 'dayOfTheWeek',
   params: ['day', 'month', 'year'],

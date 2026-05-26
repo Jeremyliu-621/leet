@@ -28,6 +28,10 @@ Return \`true\` if the student is eligible for an attendance award, or \`false\`
   hints: [
     'Count the number of A\'s. If >= 2, return false.',
     'Check if "LLL" appears as a substring. If yes, return false.',
+    `\`\`\`js
+function checkRecord(s) {
+  return (s.match(/A/g)||[]).length<2 && !s.includes("LLL");
+}\`\`\``,
   ],
   functionName: 'checkRecord',
   params: ['s'],

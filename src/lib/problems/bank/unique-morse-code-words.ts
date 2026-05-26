@@ -32,6 +32,14 @@ Given an array of strings \`words\`, return the number of **different** Morse co
   hints: [
     'Build each word\'s morse transformation by concatenating the code for each character. Store transformations in a Set to count unique ones.',
     'Index into the mapping with `word.charCodeAt(i) - 97` (or `ord(c) - ord("a")` in Python) to get the Morse code for each letter.',
+    `\`\`\`js
+const MORSE=[".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."];
+function uniqueMorseRepresentations(words) {
+  const set=new Set();
+  for(const w of words)
+    set.add([...w].map(c=>MORSE[c.charCodeAt(0)-97]).join(""));
+  return set.size;
+}\`\`\``,
   ],
   functionName: 'uniqueMorseRepresentations',
   params: ['words'],
