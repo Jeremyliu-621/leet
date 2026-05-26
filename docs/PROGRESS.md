@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13+ — Post-MVP polish
-**Current focus:** Fullscreen toggle shipped. Next: custom test-case input drawer.
+**Current focus:** Custom testcase drawer shipped. Next: submission history + per-submit stats.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green (430 tests across 22 files).
-**Next up:** Custom test-case input drawer ("Testcase" tab below the editor).
+**Next up:** Submission history + per-submit stats (runtime, attempts) stored in chrome.storage.
 
 **Pyodide rollout status — COMPLETE:**
 - ✅ M1 — Type plumbing.
@@ -174,7 +174,7 @@ Still pending:
 - [x] Editor settings popover — font size (12–20px), vim keymap toggle, tab-size (2/4 spaces) — gear icon in EditorPanel toolbar, persisted via updateValue
 - [x] Draggable splitter between problem and editor panels (+ persist splitRatio in prefs)
 - [x] Fullscreen-editor toggle — gear toolbar button hides problem panel; session-only state
-- [ ] Custom test-case input drawer ("Testcase" tab)
+- [x] Custom test-case input drawer — "Testcase" / "Result" tabs below editor; JSON args input; actual output shown
 - [ ] Submission history + per-submit stats (runtime, attempts)
 - [ ] Streak heatmap, time-saved, settings import/export
 - [ ] Marketing site iteration + Vercel deployment
