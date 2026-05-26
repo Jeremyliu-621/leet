@@ -9,6 +9,7 @@ import type {
   BlockRule,
   EditorKeymap,
   SolvedProblemRecord,
+  StreakDay,
   StreakSummary,
   SubmissionRecord,
   ThemePreference,
@@ -54,6 +55,8 @@ interface PopupData {
   editorKeymap: EditorKeymap;
   /** Last 5 submission attempts, newest first. */
   recentSubmissions: SubmissionRecord[];
+  /** Last 28 days of streak history for the activity heatmap. */
+  heatmapDays: StreakDay[];
 }
 
 /**
@@ -68,7 +71,7 @@ export function Popup() {
     let cancelled = false;
 
     async function init() {
-      const [streak, tokens, solved, blockedRules, prefs, tabs, submissions] = await Promise.all([
+      const [streak, tokens, solved, blockedRules, prefs, tabs, submissions, streakHistory] = await Promise.all([
         safeGet('streakSummary'),
         safeGet('unlockTokens'),
         safeGet('solvedProblems'),
@@ -76,6 +79,7 @@ export function Popup() {
         safeGet('userPreferences'),
         safeQueryActiveTab(),
         safeGet('submissionHistory'),
+        safeGet('streakHistory'),
       ]);
 
       const url = tabs?.[0]?.url ?? null;
@@ -98,6 +102,18 @@ export function Popup() {
       );
 
       if (cancelled) return;
+      // Build heatmap: last 28 calendar days, oldest-first.
+      const historyMap = new Map<string, StreakDay>(
+        (streakHistory as StreakDay[]).map((d: StreakDay) => [d.date, d]),
+      );
+      const heatmapDays: StreakDay[] = [];
+      for (let i = 27; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        const dateStr = localDateString(d);
+        heatmapDays.push(historyMap.get(dateStr) ?? { date: dateStr, solved: 0, failed: 0 });
+      }
+
       setData({
         streak,
         activeUnlocks: pruneTokens(tokens),
@@ -109,6 +125,7 @@ export function Popup() {
         editorFontSize: prefs.editorFontSize,
         editorKeymap: prefs.editorKeymap,
         recentSubmissions: submissions.slice(0, 5),
+        heatmapDays,
       });
     }
 
@@ -212,6 +229,34 @@ export function Popup() {
         <Stat label="Streak" value={data.streak.current} sub={`best ${data.streak.longest}`} />
         <Stat label="Today" value={data.solvedToday} sub="solves" />
         <Stat label="Unlocks" value={data.activeUnlocks.length} sub="active" />
+      </section>
+
+      {/* Activity heatmap — 28-day grid (4 rows of 7) */}
+      <section className="mt-4" aria-label="28-day activity heatmap">
+        <div className="flex flex-wrap gap-[3px]">
+          {data.heatmapDays.map((day) => {
+            const intensity = day.solved === 0 ? 0 : day.solved === 1 ? 1 : day.solved <= 3 ? 2 : 3;
+            const bg =
+              intensity === 0
+                ? 'bg-surface'
+                : intensity === 1
+                  ? 'bg-[#4A4A4A]'
+                  : intensity === 2
+                    ? 'bg-[#8A8A8A]'
+                    : 'bg-text';
+            const label = day.solved === 0
+              ? `${day.date}: no solves`
+              : `${day.date}: ${day.solved} solve${day.solved === 1 ? '' : 's'}`;
+            return (
+              <div
+                key={day.date}
+                title={label}
+                aria-label={label}
+                className={`h-[10px] w-[10px] rounded-[2px] ${bg}`}
+              />
+            );
+          })}
+        </div>
       </section>
 
       {data.recentSubmissions.length > 0 && (
