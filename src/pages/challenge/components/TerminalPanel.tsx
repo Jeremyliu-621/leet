@@ -166,6 +166,43 @@ function StringDiffHint({ expected, actual }: { expected: unknown; actual: unkno
   );
 }
 
+/**
+ * Compact dot matrix showing pass/fail/error status for all test cases at a glance.
+ * Only rendered when there are multiple verdicts. Each dot is clickable — clicking
+ * a dot scrolls the corresponding TestResultCard into view.
+ *
+ * Dot states:
+ *   pass  → filled accent square (white on dark, black on light)
+ *   fail  → outlined square (border only)
+ *   error → filled muted square
+ */
+function TestDotMatrix({ verdicts }: { verdicts: readonly TestVerdict[] }) {
+  if (verdicts.length <= 3) return null;
+  return (
+    <div
+      className="flex flex-wrap gap-1 pb-2"
+      role="img"
+      aria-label={`Test results: ${verdicts.filter(v => v.status === 'pass').length} passed, ${verdicts.filter(v => v.status !== 'pass').length} failed`}
+    >
+      {verdicts.map((v) => (
+        <div
+          key={v.index}
+          title={`Test ${v.index + 1}: ${v.status}`}
+          aria-hidden="true"
+          className={[
+            'w-2.5 h-2.5 rounded-sm flex-shrink-0',
+            v.status === 'pass'
+              ? 'bg-accent'
+              : v.status === 'error'
+              ? 'bg-muted'
+              : 'border border-text',
+          ].join(' ')}
+        />
+      ))}
+    </div>
+  );
+}
+
 /** Terminal entry types for the output log. */
 type TerminalEntry =
   | { type: 'system'; text: string }
@@ -543,6 +580,9 @@ export function TerminalPanel({ result, mode }: TerminalPanelProps) {
           )}
           {result && result.verdicts.length > 0 && (
             <>
+              {/* Dot matrix — quick visual overview of pass/fail pattern */}
+              <TestDotMatrix verdicts={result.verdicts} />
+
               {/* Summary */}
               <div className="flex items-center gap-3 pb-2 border-b border-border">
                 <span
