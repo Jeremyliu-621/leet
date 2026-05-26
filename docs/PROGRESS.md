@@ -15,6 +15,12 @@
 ### feat(bank): add batch 86 — 3 problems (arrays, strings) (2026-05-26)
 Added 3 problems: `maximum-value-of-an-ordered-triplet-ii` (medium/arrays, O(n) single-pass tracking maxI/maxDiff/ans for (nums[i]-nums[j])*nums[k]), `divide-array-into-arrays-with-max-difference` (medium/arrays, sort + consecutive triplet max-diff check), `shifting-letters-ii` (medium/strings+arrays, difference array for O(n+q) range shifts mod 26). Bank at **1945**; 6129 tests.
 
+### feat(bank): add batch 83 — strings/dp/graph (2026-05-26)
+Added 12 problems: `count-palindromes` (length-5 subsequence count mod), `longest-duplicate-substring` (binary search + rolling hash), `shortest-palindrome` (KMP longest palindromic prefix), `sum-of-prefix-scores-of-strings` (trie/hash prefix count), `filling-bookcase-shelves` (1D DP), `maximum-length-of-repeated-subarray` (2D DP), `minimum-number-of-taps-to-water-garden` (jump-game greedy), `number-of-ways-to-paint-n-3-grid` (ABA/ABC recurrence), `frog-position-after-t-seconds` (DFS probability), `loud-and-rich` (memoized DAG DFS), `count-restricted-paths` (Dijkstra + memoized DP), `flower-planting-no-adjacent` (preamble validator, greedy 4-coloring). Bank at **1942**; 6120 tests.
+
+### fix(a11y): add focus-visible rings across challenge page buttons (2026-05-26)
+Fixed missing keyboard focus indicators on 10+ buttons across Blocked.tsx, SubmissionsPanel, CustomTestPanel, ProblemPanel (InlineCopy), TerminalPanel (copy/clear/expand/toggle). Fixed Monaco reference in site/index.html. Fixed React key anti-pattern in RecentSolvesList (index → problemId).
+
 ### feat(bank): batch 84 cont. — 7 problems (simulation, heap, backtracking, linked-list) (2026-05-26)
 Added 7 problems: `find-the-winner-of-the-circular-game` (medium/simulation+math, Josephus iterative), `minimum-time-to-type-word-using-typewriter` (easy/simulation+math+strings, circular ring greedy), `apply-operations-to-array` (easy/arrays+simulation, merge-equal+shift-zeros), `maximum-performance-of-a-team` (hard/heap+arrays+math, sort-by-eff+min-heap, mod 1e9+7), `splitting-a-string-into-descending-consecutive-values` (medium/backtracking+strings+math, BigInt recursion), `delete-the-middle-node-of-a-linked-list` (medium/linked-list+two-pointers), `maximum-twin-sum-of-a-linked-list` (medium/linked-list+two-pointers). Supersedes shorter-ID variants with canonical full-title IDs. Bank at **1935**; 6078 tests.
 
