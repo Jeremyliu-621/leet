@@ -8,9 +8,21 @@
 
 **Last updated:** 2026-05-26
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** 🎉 Bank at **1750** problems; 5550 tests green — 1,750 milestone reached!
+**Current focus:** Bank at **1766** problems; 5586 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Update marketing site to 1,750+; continue growing bank toward 1800.
+**Next up:** Continue growing problem bank toward 1800; UX polish.
+
+### feat(site): 18 topic categories + tag list (2026-05-26)
+Marketing site updated: Topic categories stat updated from 14 → 18 (union-find, binary-indexed-tree, simulation, shortest-path added). Tag list in stats section now includes all 18 tags. Feature block updated to mention "union-find, and more".
+
+### Batch 71 (2026-05-26)
+Added 7 new problems: `maximum-product-of-two-elements-in-array` (easy/arrays, sort desc top-2), `find-the-highest-altitude` (easy/arrays, prefix-sum max), `find-the-array-concatenation-value` (easy/arrays, two-pointer concatenation), `running-sum-of-1d-array` (easy/arrays, prefix sum), `check-distances-between-same-letters` (easy/arrays+strings, first-occurrence spacing), `find-missing-and-repeated-values` (easy/arrays+hash-map, frequency count), `find-indices-of-stable-mountains` (easy/arrays, previous-height > threshold). JS + Python solutions for all. Bank at **1766**; 5586 tests.
+
+### Batch 68-local-2 (2026-05-26)
+Added 5 new hard problems from deferred batch: `find-median-from-data-stream` (hard/heap, two sorted-insert heaps), `check-completeness-of-binary-tree` (medium/tree, BFS null-gap check), `earliest-possible-day-of-full-bloom` (hard/arrays+math, greedy sort by grow time), `find-the-longest-valid-obstacle-course-at-each-position` (hard/arrays+binary-search, patience-sort LNDS), `minimum-time-to-finish-the-race` (hard/dp, precompute best consecutive laps + DP). JS + Python solutions for all.
+
+### Batch 70 remote (2026-05-26)
+Added 5 problems: `check-if-it-is-a-good-array` (hard/math, Bézout's identity / GCD), `maximum-coins-you-can-get` (medium/arrays, greedy sort + every-other pick), `number-of-islands-ii` (hard/graph, online DSU), `find-the-celebrity` (medium/arrays, O(n) candidate elimination), `minimum-number-of-days-to-disconnect-island` (hard/graph, 0/1/2 answer + BFS). JS + Python solutions for all.
 
 ### feat(sw): badge shows today's solve count (2026-05-26)
 Extension icon badge now updates after each solve to show problems solved today (e.g. "3"). Uses neutral dark gray background. Also refreshed on install/startup and storage changes.
