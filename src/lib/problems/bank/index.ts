@@ -2141,6 +2141,10 @@ import { problem as buildAnArrayWithStackOperations } from './build-an-array-wit
 import { problem as validPerfectSquare } from './valid-perfect-square';
 import { problem as insertionSortList } from './insertion-sort-list';
 import { problem as maximizeScoreAfterNOperations } from './maximize-score-after-n-operations';
+// batch 94 — math, simulation, arrays+hash-map
+import { problem as countOfMatchesInTournament } from './count-of-matches-in-tournament';
+import { problem as findWinnerOnATicTacToeGame } from './find-winner-on-a-tic-tac-toe-game';
+import { problem as sortFeaturesByPopularity } from './sort-features-by-popularity';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4319,4 +4323,8 @@ export const problems: readonly Problem[] = [
   validPerfectSquare,
   insertionSortList,
   maximizeScoreAfterNOperations,
+  // batch 94 — math, simulation, arrays+hash-map
+  countOfMatchesInTournament,
+  findWinnerOnATicTacToeGame,
+  sortFeaturesByPopularity,
 ];

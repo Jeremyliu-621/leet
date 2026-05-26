@@ -30620,4 +30620,49 @@ def buildArray(target, n):
     return ops
 `,
 
+  // batch 94
+  'count-of-matches-in-tournament': `
+def numberOfMatches(n: int) -> int:
+    return n - 1
+`,
+
+  'find-winner-on-a-tic-tac-toe-game': `
+def tictactoe(moves) -> str:
+    moves = [list(m) for m in moves]
+    rows = [0, 0, 0]
+    cols = [0, 0, 0]
+    diag = anti = 0
+    for i, (r, c) in enumerate(moves):
+        v = 1 if i % 2 == 0 else -1
+        rows[r] += v
+        cols[c] += v
+        if r == c:
+            diag += v
+        if r + c == 2:
+            anti += v
+    for k in range(3):
+        if abs(rows[k]) == 3:
+            return 'A' if rows[k] > 0 else 'B'
+        if abs(cols[k]) == 3:
+            return 'A' if cols[k] > 0 else 'B'
+    if abs(diag) == 3:
+        return 'A' if diag > 0 else 'B'
+    if abs(anti) == 3:
+        return 'A' if anti > 0 else 'B'
+    return 'Draw' if len(moves) == 9 else 'Pending'
+`,
+
+  'sort-features-by-popularity': `
+def sortFeatures(features, responses):
+    features = list(features)
+    responses = [str(r) for r in responses]
+    count = {f: 0 for f in features}
+    for r in responses:
+        words = set(r.split())
+        for f in features:
+            if f in words:
+                count[f] += 1
+    return sorted(features, key=lambda f: -count[f])
+`,
+
 };
