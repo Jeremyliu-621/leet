@@ -31514,6 +31514,48 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return max / k;
   },
 
+  // batch 95
+  'di-string-match': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const res: number[] = [];
+    let lo = 0, hi = n;
+    for (const c of s) {
+      if (c === 'I') { res.push(lo); lo++; }
+      else { res.push(hi); hi--; }
+    }
+    res.push(lo);
+    return res;
+  },
+
+  'shortest-distance-to-a-character': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const c = args[1] as string;
+    const n = s.length;
+    const ans = new Array<number>(n).fill(Infinity);
+    let prev = -Infinity;
+    for (let i = 0; i < n; i++) {
+      if (s[i] === c) prev = i;
+      if (isFinite(prev)) ans[i] = i - prev;
+    }
+    let next = Infinity;
+    for (let i = n - 1; i >= 0; i--) {
+      if (s[i] === c) next = i;
+      if (isFinite(next)) ans[i] = Math.min(ans[i]!, next - i);
+    }
+    return ans;
+  },
+
+  'largest-number-at-least-twice-of-others': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const maxVal = Math.max(...nums);
+    const maxIdx = nums.indexOf(maxVal);
+    for (let i = 0; i < nums.length; i++) {
+      if (i !== maxIdx && 2 * nums[i]! > maxVal) return -1;
+    }
+    return maxIdx;
+  },
+
   // batch 97
   '4sum': (...args: unknown[]) => {
     const [numsRaw, target] = args as [number[], number];
@@ -31553,6 +31595,78 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       stack.push(i);
     }
     return ans;
+  },
+
+  'find-longest-awesome-substring': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const seen = new Array(1 << 10).fill(-2) as number[];
+    seen[0] = -1;
+    let mask = 0, ans = 0;
+    for (let i = 0; i < s.length; i++) {
+      mask ^= 1 << (s.charCodeAt(i) - 48);
+      if (seen[mask] !== -2) ans = Math.max(ans, i - seen[mask]!);
+      else seen[mask] = i;
+      for (let d = 0; d < 10; d++) {
+        const t = mask ^ (1 << d);
+        if (seen[t] !== -2) ans = Math.max(ans, i - seen[t]!);
+      }
+    }
+    return ans;
+  },
+
+  'greatest-common-divisor-traversal': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    if (n === 1) return true;
+    if (nums.some((x) => x === 1)) return false;
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const rank = new Array(n).fill(0) as number[];
+    function find(x: number): number {
+      while (parent[x] !== x) { parent[x] = parent[parent[x]!]!; x = parent[x]!; }
+      return x;
+    }
+    function union(x: number, y: number): void {
+      const rx = find(x), ry = find(y);
+      if (rx === ry) return;
+      if (rank[rx]! < rank[ry]!) parent[rx] = ry;
+      else if (rank[rx]! > rank[ry]!) parent[ry] = rx;
+      else { parent[ry] = rx; rank[rx]!++; }
+    }
+    const primeToIdx = new Map<number, number>();
+    for (let i = 0; i < n; i++) {
+      let x = nums[i]!;
+      for (let p = 2; p * p <= x; p++) {
+        if (x % p === 0) {
+          if (primeToIdx.has(p)) union(i, primeToIdx.get(p)!);
+          else primeToIdx.set(p, i);
+          while (x % p === 0) x = (x / p) | 0;
+        }
+      }
+      if (x > 1) {
+        if (primeToIdx.has(x)) union(i, primeToIdx.get(x)!);
+        else primeToIdx.set(x, i);
+      }
+    }
+    const root = find(0);
+    return nums.every((_, i) => find(i) === root);
+  },
+
+  'minimum-length-of-anagram-concatenation': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    for (let k = 1; k <= n; k++) {
+      if (n % k !== 0) continue;
+      const target = new Array(26).fill(0) as number[];
+      for (let i = 0; i < k; i++) target[s.charCodeAt(i) - 97]!++;
+      let valid = true;
+      for (let p = 1; p < n / k; p++) {
+        const cur = new Array(26).fill(0) as number[];
+        for (let i = p * k; i < (p + 1) * k; i++) cur[s.charCodeAt(i) - 97]!++;
+        if (cur.some((v, c) => v !== target[c])) { valid = false; break; }
+      }
+      if (valid) return k;
+    }
+    return n;
   },
 
 };

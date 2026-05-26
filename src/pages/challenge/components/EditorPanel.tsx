@@ -101,6 +101,10 @@ interface EditorPanelProps {
    * re-fires even if the content string happens to be the same.
    */
   resetCode?: { content: string; version: number };
+  /** Initial word-wrap state; controlled externally for persistence. */
+  wordWrap?: boolean;
+  /** Called when the user toggles word-wrap so the caller can persist it. */
+  onWordWrapChange?: (wrap: boolean) => void;
 }
 
 function indentSpaces(n: 2 | 4): string {
@@ -207,6 +211,8 @@ export function EditorPanel({
   onToggleFullscreen,
   resolvedTheme = 'dark',
   resetCode,
+  wordWrap: wordWrapProp,
+  onWordWrapChange,
 }: EditorPanelProps) {
   const editorContainerRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
@@ -623,8 +629,23 @@ export function EditorPanel({
     };
   }, [editorKeymap]);
 
-  // Word-wrap toggle — defaults to on (matching the initial Compartment value).
-  const [wordWrap, setWordWrap] = useState(true);
+  // Word-wrap toggle — seed from prop if provided, else default on.
+  const [wordWrap, setWordWrap] = useState(wordWrapProp ?? true);
+  const onWordWrapChangeRef = useRef(onWordWrapChange);
+  useEffect(() => { onWordWrapChangeRef.current = onWordWrapChange; }, [onWordWrapChange]);
+
+  // Sync compartment when the prop changes externally (e.g. first load from storage).
+  useEffect(() => {
+    if (wordWrapProp === undefined) return;
+    setWordWrap(wordWrapProp);
+    const view = viewRef.current;
+    if (view) {
+      view.dispatch({
+        effects: wrapCompartmentRef.current.reconfigure(wordWrapProp ? EditorView.lineWrapping : []),
+      });
+    }
+  }, [wordWrapProp]);
+
   const handleToggleWrap = useCallback(() => {
     setWordWrap((prev) => {
       const next = !prev;
@@ -634,6 +655,7 @@ export function EditorPanel({
           effects: wrapCompartmentRef.current.reconfigure(next ? EditorView.lineWrapping : []),
         });
       }
+      onWordWrapChangeRef.current?.(next);
       return next;
     });
   }, []);

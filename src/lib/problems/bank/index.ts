@@ -2153,6 +2153,10 @@ import { problem as maximizeScoreAfterNOperations } from './maximize-score-after
 import { problem as primeSubtractionOperation } from './prime-subtraction-operation';
 import { problem as findTheLongestSemiRepetitiveSubarray } from './find-the-longest-semi-repetitive-subarray';
 import { problem as countNumberOfFairPairs } from './count-number-of-fair-pairs';
+// batch 93 — strings/hard, arrays+math+union-find/hard, strings+hash-map/medium
+import { problem as findLongestAwesomeSubstring } from './find-longest-awesome-substring';
+import { problem as greatestCommonDivisorTraversal } from './greatest-common-divisor-traversal';
+import { problem as minimumLengthOfAnagramConcatenation } from './minimum-length-of-anagram-concatenation';
 // batch 94 — math, simulation, arrays+hash-map, tree
 import { problem as countOfMatchesInTournament } from './count-of-matches-in-tournament';
 import { problem as findWinnerOnATicTacToeGame } from './find-winner-on-a-tic-tac-toe-game';
@@ -2164,6 +2168,10 @@ import { problem as smallestStringStartingFromLeaf } from './smallest-string-sta
 import { problem as findLargestValueInEachTreeRow } from './find-largest-value-in-each-tree-row';
 // batch 94 — sliding-window
 import { problem as maximumAverageSubarrayI } from './maximum-average-subarray-i';
+// batch 95 — arrays/strings
+import { problem as diStringMatch } from './di-string-match';
+import { problem as shortestDistanceToACharacter } from './shortest-distance-to-a-character';
+import { problem as largestNumberAtLeastTwiceOfOthers } from './largest-number-at-least-twice-of-others';
 // batch 97 — two-pointers, stack
 import { problem as fourSumVariant } from './4sum';
 import { problem as dailyTemperaturesVariant } from './monotonic-stack-daily-temperatures';
@@ -4357,6 +4365,10 @@ export const problems: readonly Problem[] = [
   primeSubtractionOperation,
   findTheLongestSemiRepetitiveSubarray,
   countNumberOfFairPairs,
+  // batch 93 — strings/hard, arrays+math+union-find/hard, strings+hash-map/medium
+  findLongestAwesomeSubstring,
+  greatestCommonDivisorTraversal,
+  minimumLengthOfAnagramConcatenation,
   // batch 94 — math, simulation, arrays+hash-map, tree
   countOfMatchesInTournament,
   findWinnerOnATicTacToeGame,
@@ -4368,6 +4380,10 @@ export const problems: readonly Problem[] = [
   findLargestValueInEachTreeRow,
   // batch 94 — sliding-window
   maximumAverageSubarrayI,
+  // batch 95 — arrays/strings
+  diStringMatch,
+  shortestDistanceToACharacter,
+  largestNumberAtLeastTwiceOfOthers,
   // batch 97 — two-pointers, stack
   fourSumVariant,
   dailyTemperaturesVariant,
