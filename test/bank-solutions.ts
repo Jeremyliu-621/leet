@@ -23854,6 +23854,81 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 66 (local)
+  'find-if-path-exists-in-graph': (...args: unknown[]) => {
+    const edges = args[1] as number[][];
+    const source = args[2] as number;
+    const destination = args[3] as number;
+    if (source === destination) return true;
+    const adj = new Map<number, number[]>();
+    for (const [a, b] of edges) {
+      if (!adj.has(a!)) adj.set(a!, []);
+      if (!adj.has(b!)) adj.set(b!, []);
+      adj.get(a!)!.push(b!);
+      adj.get(b!)!.push(a!);
+    }
+    const visited = new Set<number>();
+    const queue = [source];
+    visited.add(source);
+    while (queue.length > 0) {
+      const node = queue.shift()!;
+      if (node === destination) return true;
+      for (const nb of adj.get(node) ?? []) {
+        if (!visited.has(nb)) { visited.add(nb); queue.push(nb); }
+      }
+    }
+    return false;
+  },
+
+  'longest-subarray-of-ones-after-deleting-one-element': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let left = 0, zeros = 0, ans = 0;
+    for (let right = 0; right < nums.length; right++) {
+      if (nums[right] === 0) zeros++;
+      while (zeros > 1) { if (nums[left]! === 0) zeros--; left++; }
+      ans = Math.max(ans, right - left);
+    }
+    return ans;
+  },
+
+  'check-if-array-pairs-are-divisible-by-k': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const k = args[1] as number;
+    const freq = new Array<number>(k).fill(0);
+    for (const x of arr) freq[((x % k) + k) % k]!++;
+    for (let r = 0; r < k; r++) {
+      if (r === 0) { if (freq[r]! % 2 !== 0) return false; }
+      else if (2 * r === k) { if (freq[r]! % 2 !== 0) return false; }
+      else if (r < k - r && freq[r] !== freq[k - r]) return false;
+    }
+    return true;
+  },
+
+  'maximum-beauty-of-an-array-after-applying-operation': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const k = args[1] as number;
+    let ans = 0, left = 0;
+    for (let right = 0; right < nums.length; right++) {
+      while (nums[right]! - nums[left]! > 2 * k) left++;
+      ans = Math.max(ans, right - left + 1);
+    }
+    return ans;
+  },
+
+  'rearrange-characters-to-make-target-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const target = args[1] as string;
+    const sFreq: Record<string, number> = {};
+    const tFreq: Record<string, number> = {};
+    for (const c of s) sFreq[c] = (sFreq[c] ?? 0) + 1;
+    for (const c of target) tFreq[c] = (tFreq[c] ?? 0) + 1;
+    let ans = Infinity;
+    for (const [c, need] of Object.entries(tFreq)) {
+      ans = Math.min(ans, Math.floor((sFreq[c] ?? 0) / need));
+    }
+    return ans === Infinity ? 0 : ans;
+  },
+
   // batch 65 (local)
   'count-pairs-that-form-a-complete-day-ii': (...args: unknown[]) => {
     const hours = args[0] as number[];

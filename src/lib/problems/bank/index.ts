@@ -1625,6 +1625,12 @@ import { problem as maximumStrongPairXorI } from './maximum-strong-pair-xor-i';
 import { problem as extraCharactersInAString } from './extra-characters-in-a-string';
 import { problem as kthLargestSumInABinaryTree } from './kth-largest-sum-in-a-binary-tree';
 import { problem as sumOfMatrixAfterQueries } from './sum-of-matrix-after-queries';
+// batch 66 (local)
+import { problem as findIfPathExistsInGraph } from './find-if-path-exists-in-graph';
+import { problem as longestSubarrayOfOnesAfterDeletingOneElement } from './longest-subarray-of-ones-after-deleting-one-element';
+import { problem as checkIfArrayPairsAreDivisibleByK } from './check-if-array-pairs-are-divisible-by-k';
+import { problem as maximumBeautyOfAnArrayAfterApplyingOperation } from './maximum-beauty-of-an-array-after-applying-operation';
+import { problem as rearrangeCharactersToMakeTargetString } from './rearrange-characters-to-make-target-string';
 // batch 65 (local)
 import { problem as countPairsThatFormACompleteDayIi } from './count-pairs-that-form-a-complete-day-ii';
 import { problem as kthLargestElementInAStream } from './kth-largest-element-in-a-stream';
@@ -3430,6 +3436,12 @@ export const problems: readonly Problem[] = [
   extraCharactersInAString,
   kthLargestSumInABinaryTree,
   sumOfMatrixAfterQueries,
+  // batch 66 (local)
+  findIfPathExistsInGraph,
+  longestSubarrayOfOnesAfterDeletingOneElement,
+  checkIfArrayPairsAreDivisibleByK,
+  maximumBeautyOfAnArrayAfterApplyingOperation,
+  rearrangeCharactersToMakeTargetString,
   // batch 65 (local)
   countPairsThatFormACompleteDayIi,
   kthLargestElementInAStream,

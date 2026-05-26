@@ -23357,6 +23357,90 @@ def secondMinimum(n, edges, time, change):
     return ops
 `,
 
+  // batch 66 (local)
+  'find-if-path-exists-in-graph': `def validPath(n, edges, source, destination):
+    n = int(n)
+    source = int(source)
+    destination = int(destination)
+    edges = [[int(x) for x in e] for e in (edges.to_py() if hasattr(edges, 'to_py') else edges)]
+    if source == destination:
+        return True
+    from collections import defaultdict, deque
+    adj = defaultdict(list)
+    for a, b in edges:
+        adj[a].append(b)
+        adj[b].append(a)
+    visited = set([source])
+    q = deque([source])
+    while q:
+        node = q.popleft()
+        if node == destination:
+            return True
+        for nb in adj[node]:
+            if nb not in visited:
+                visited.add(nb)
+                q.append(nb)
+    return False
+`,
+
+  'longest-subarray-of-ones-after-deleting-one-element': `def longestSubarray(nums):
+    nums = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    left = 0
+    zeros = 0
+    ans = 0
+    for right in range(len(nums)):
+        if nums[right] == 0:
+            zeros += 1
+        while zeros > 1:
+            if nums[left] == 0:
+                zeros -= 1
+            left += 1
+        ans = max(ans, right - left)
+    return ans
+`,
+
+  'check-if-array-pairs-are-divisible-by-k': `def canArrange(arr, k):
+    arr = list(int(x) for x in (arr.to_py() if hasattr(arr, 'to_py') else arr))
+    k = int(k)
+    freq = [0] * k
+    for x in arr:
+        freq[x % k] += 1
+    for r in range(k):
+        if r == 0:
+            if freq[r] % 2 != 0:
+                return False
+        elif 2 * r == k:
+            if freq[r] % 2 != 0:
+                return False
+        elif r < k - r and freq[r] != freq[k - r]:
+            return False
+    return True
+`,
+
+  'maximum-beauty-of-an-array-after-applying-operation': `def maximumBeauty(nums, k):
+    nums = sorted(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    k = int(k)
+    ans = 0
+    left = 0
+    for right in range(len(nums)):
+        while nums[right] - nums[left] > 2 * k:
+            left += 1
+        ans = max(ans, right - left + 1)
+    return ans
+`,
+
+  'rearrange-characters-to-make-target-string': `def rearrangeCharacters(s, target):
+    s = str(s)
+    target = str(target)
+    from collections import Counter
+    s_freq = Counter(s)
+    t_freq = Counter(target)
+    ans = float('inf')
+    for c, need in t_freq.items():
+        ans = min(ans, s_freq.get(c, 0) // need)
+    return ans if ans != float('inf') else 0
+`,
+
   // batch 65 (local)
   'count-pairs-that-form-a-complete-day-ii': `def countCompleteDayPairs(hours):
     hours = list(int(x) for x in (hours.to_py() if hasattr(hours, 'to_py') else hours))
