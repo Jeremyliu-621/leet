@@ -2427,6 +2427,10 @@ import { problem as validNumber } from './valid-number';
 import { problem as minimumMovesToEqualArrayElementsII } from './minimum-moves-to-equal-array-elements-ii';
 import { problem as superWashingMachines } from './super-washing-machines';
 import { problem as numberOfSubmatricesThatSumToTarget } from './number-of-submatrices-that-sum-to-target';
+// batch 142 — strings+stack+two-pointers/medium
+import { problem as minimumSwapsToMakeBalanced } from './minimum-swaps-to-make-balanced';
+import { problem as findKthLargestXorCoordinateValue } from './find-kth-largest-xor-coordinate-value';
+import { problem as tweetCountsPerFrequency } from './tweet-counts-per-frequency';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4891,4 +4895,8 @@ export const problems: readonly Problem[] = [
   minimumMovesToEqualArrayElementsII,
   superWashingMachines,
   numberOfSubmatricesThatSumToTarget,
+  // batch 142 — strings+stack+two-pointers/medium, arrays/medium, hash-map+simulation/medium
+  minimumSwapsToMakeBalanced,
+  findKthLargestXorCoordinateValue,
+  tweetCountsPerFrequency,
 ];

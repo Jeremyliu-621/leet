@@ -34508,4 +34508,58 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  // batch 142
+  'minimum-swaps-to-make-balanced': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let balance = 0, maxDeficit = 0;
+    for (const c of s) {
+      balance += c === '[' ? 1 : -1;
+      if (-balance > maxDeficit) maxDeficit = -balance;
+    }
+    return Math.ceil(maxDeficit / 2);
+  },
+
+  'find-kth-largest-xor-coordinate-value': (...args: unknown[]) => {
+    const matrix = args[0] as number[][], k = args[1] as number;
+    const m = matrix.length, n = matrix[0]!.length;
+    const prefix = Array.from({ length: m }, () => new Array<number>(n).fill(0));
+    const vals: number[] = [];
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        prefix[i]![j] = matrix[i]![j]!;
+        if (i > 0) prefix[i]![j]! ^= prefix[i - 1]![j]!;
+        if (j > 0) prefix[i]![j]! ^= prefix[i]![j - 1]!;
+        if (i > 0 && j > 0) prefix[i]![j]! ^= prefix[i - 1]![j - 1]!;
+        vals.push(prefix[i]![j]!);
+      }
+    }
+    vals.sort((a, b) => b - a);
+    return vals[k - 1]!;
+  },
+
+  'tweet-counts-per-frequency': (...args: unknown[]) => {
+    const ops = args[0] as string[], vals = args[1] as unknown[][];
+    const store = new Map<string, number[]>();
+    const deltas: Record<string, number> = { minute: 60, hour: 3600, day: 86400 };
+    const results: (null | number[])[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      if (ops[i] === 'recordTweet') {
+        const [name, time] = vals[i] as [string, number];
+        if (!store.has(name)) store.set(name, []);
+        store.get(name)!.push(time);
+        results.push(null);
+      } else {
+        const [freq, name, start, end] = vals[i] as [string, string, number, number];
+        const delta = deltas[freq]!;
+        const n = Math.floor((end - start) / delta) + 1;
+        const counts = new Array<number>(n).fill(0);
+        for (const t of (store.get(name) ?? [])) {
+          if (t >= start && t <= end) counts[Math.floor((t - start) / delta)]!++;
+        }
+        results.push(counts);
+      }
+    }
+    return results;
+  },
+
 };

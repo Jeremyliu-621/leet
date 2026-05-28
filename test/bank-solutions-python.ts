@@ -34288,4 +34288,58 @@ def numSubmatrixSumTarget(matrix: list, target: int) -> int:
                 prefix_count[prefix] += 1
     return count`,
 
+  // batch 142
+  'minimum-swaps-to-make-balanced': `
+def minSwaps(s: str) -> int:
+    balance = 0
+    max_deficit = 0
+    for c in s:
+        balance += 1 if c == '[' else -1
+        max_deficit = max(max_deficit, -balance)
+    return (max_deficit + 1) // 2
+`,
+
+  'find-kth-largest-xor-coordinate-value': `
+def kthLargestValue(matrix: list, k: int) -> int:
+    matrix = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (matrix.to_py() if hasattr(matrix, 'to_py') else matrix)]
+    m, n = len(matrix), len(matrix[0])
+    prefix = [[0]*n for _ in range(m)]
+    vals = []
+    for i in range(m):
+        for j in range(n):
+            prefix[i][j] = matrix[i][j]
+            if i > 0: prefix[i][j] ^= prefix[i-1][j]
+            if j > 0: prefix[i][j] ^= prefix[i][j-1]
+            if i > 0 and j > 0: prefix[i][j] ^= prefix[i-1][j-1]
+            vals.append(prefix[i][j])
+    vals.sort(reverse=True)
+    return vals[k-1]
+`,
+
+  'tweet-counts-per-frequency': `
+def tweetCountsRunner(ops, vals):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    vals = list(vals.to_py() if hasattr(vals, 'to_py') else vals)
+    vals = [list(v.to_py() if hasattr(v, 'to_py') else v) for v in vals]
+    from collections import defaultdict
+    store = defaultdict(list)
+    deltas = {'minute': 60, 'hour': 3600, 'day': 86400}
+    results = []
+    for op, val in zip(ops, vals):
+        if op == 'recordTweet':
+            store[val[0]].append(val[1])
+            results.append(None)
+        else:
+            freq, name, start, end = val[0], val[1], val[2], val[3]
+            delta = deltas[freq]
+            n = (end - start) // delta + 1
+            counts = [0] * n
+            for t in store[name]:
+                if start <= t <= end:
+                    counts[(t - start) // delta] += 1
+            results.append(counts)
+    return results
+`,
+
+
 };
