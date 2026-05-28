@@ -2412,7 +2412,7 @@ import { problem as findMissingObservations } from './find-missing-observations'
 import { problem as decryptXoredArray } from './decrypt-xored-array';
 import { problem as countItemsMatchingARule } from './count-items-matching-a-rule';
 import { problem as kidsWithTheGreatestNumberOfCandies } from './kids-with-the-greatest-number-of-candies';
-// batch 141 — arrays/easy, arrays/medium, stack+arrays/hard, arrays+dp+binary-search/hard, arrays+graph/medium
+// batch 141b — arrays/easy, arrays/medium, stack+arrays/hard, arrays+dp+binary-search/hard, arrays+graph/medium
 import { problem as numberOfUnequalTriplets } from './number-of-unequal-triplets-in-array';
 import { problem as maximizeSquareHoleArea } from './maximize-area-of-square-hole-in-grid';
 import { problem as sumTotalStrengthOfWizards } from './sum-of-total-strength-of-wizards';
@@ -4872,7 +4872,7 @@ export const problems: readonly Problem[] = [
   decryptXoredArray,
   countItemsMatchingARule,
   kidsWithTheGreatestNumberOfCandies,
-  // batch 141 — arrays/easy, arrays/medium, stack+arrays/hard, arrays+dp+binary-search/hard, arrays+graph/medium
+  // batch 141b — arrays/easy, arrays/medium, stack+arrays/hard, arrays+dp+binary-search/hard, arrays+graph/medium
   numberOfUnequalTriplets,
   maximizeSquareHoleArea,
   sumTotalStrengthOfWizards,
