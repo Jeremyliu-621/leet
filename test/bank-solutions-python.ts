@@ -33977,4 +33977,28 @@ def canMakeSquare(grid):
     return False
 `,
 
+  // batch 140
+  'decrypt-xored-array': `
+def decode(encoded, first):
+    encoded = list(encoded.to_py() if hasattr(encoded, 'to_py') else encoded)
+    arr = [first]
+    for i, e in enumerate(encoded):
+        arr.append(e ^ arr[i])
+    return arr
+`,
+
+  'count-items-matching-a-rule': `
+def countMatches(items, ruleKey: str, ruleValue: str) -> int:
+    items = [list(item.to_py() if hasattr(item, 'to_py') else item) for item in (items.to_py() if hasattr(items, 'to_py') else items)]
+    idx = {'type': 0, 'color': 1, 'name': 2}[ruleKey]
+    return sum(1 for item in items if item[idx] == ruleValue)
+`,
+
+  'kids-with-the-greatest-number-of-candies': `
+def kidsWithCandies(candies, extraCandies: int):
+    candies = list(candies.to_py() if hasattr(candies, 'to_py') else candies)
+    max_c = max(candies)
+    return [c + extraCandies >= max_c for c in candies]
+`,
+
 };
