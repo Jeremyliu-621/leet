@@ -31684,6 +31684,210 @@ def minCostConnectPoints(points):
                     dist[v] = d
     return total
 `,
+  'validate-binary-search-tree': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def __from_array__(raw):
+    raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i])
+            queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i])
+            queue.append(node.right)
+        i += 1
+    return root
+
+def isValidBSTRunner(arr):
+    root = __from_array__(arr)
+    def dfs(node, lo, hi):
+        if node is None:
+            return True
+        if node.val <= lo or node.val >= hi:
+            return False
+        return dfs(node.left, lo, node.val) and dfs(node.right, node.val, hi)
+    return dfs(root, float('-inf'), float('inf'))
+`,
+  'kth-smallest-element-in-a-bst': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def __from_array__(raw):
+    raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i])
+            queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i])
+            queue.append(node.right)
+        i += 1
+    return root
+
+def kthSmallestRunner(arr, k):
+    root = __from_array__(arr)
+    k = int(k)
+    result = [0]
+    count = [0]
+    def inorder(node):
+        if node is None or count[0] >= k:
+            return
+        inorder(node.left)
+        count[0] += 1
+        if count[0] == k:
+            result[0] = node.val
+            return
+        inorder(node.right)
+    inorder(root)
+    return result[0]
+`,
+  'lowest-common-ancestor-of-a-bst': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def __from_array__(raw):
+    raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i])
+            queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i])
+            queue.append(node.right)
+        i += 1
+    return root
+
+def lcaRunner(arr, p, q):
+    root = __from_array__(arr)
+    p, q = int(p), int(q)
+    def lca(node):
+        if p < node.val and q < node.val:
+            return lca(node.left)
+        if p > node.val and q > node.val:
+            return lca(node.right)
+        return node
+    return lca(root).val
+`,
+  'check-if-two-string-arrays-are-equivalent': `
+def arrayStringsAreEqual(word1, word2):
+    w1 = list(word1.to_py() if hasattr(word1, 'to_py') else word1)
+    w2 = list(word2.to_py() if hasattr(word2, 'to_py') else word2)
+    return ''.join(str(s) for s in w1) == ''.join(str(s) for s in w2)
+`,
+  'verify-preorder-serialization-of-a-binary-tree': `
+def isValidSerialization(preorder):
+    nodes = preorder.split(',')
+    slots = 1
+    for node in nodes:
+        slots -= 1
+        if slots < 0:
+            return False
+        if node != '#':
+            slots += 2
+    return slots == 0
+`,
+  'serialize-and-deserialize-binary-tree': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def __from_array__(raw):
+    raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i])
+            queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i])
+            queue.append(node.right)
+        i += 1
+    return root
+
+def __to_array__(root):
+    if root is None:
+        return []
+    result = []
+    queue = [root]
+    while queue:
+        node = queue.pop(0)
+        if node is None:
+            result.append(None)
+        else:
+            result.append(node.val)
+            queue.append(node.left)
+            queue.append(node.right)
+    while result and result[-1] is None:
+        result.pop()
+    return result
+
+def serDeserRunner(arr):
+    root = __from_array__(arr)
+    def serialize(node):
+        if node is None:
+            return '#'
+        return str(node.val) + ',' + serialize(node.left) + ',' + serialize(node.right)
+    def deserialize(data):
+        tokens = data.split(',')
+        idx = [0]
+        def helper():
+            token = tokens[idx[0]]
+            idx[0] += 1
+            if token == '#':
+                return None
+            node = TreeNode(int(token))
+            node.left = helper()
+            node.right = helper()
+            return node
+        return helper()
+    data = serialize(root)
+    restored = deserialize(data)
+    return __to_array__(restored)
+`,
   'implement-trie-prefix-tree': `
 def trieOps(ops):
     ops = ops.to_py() if hasattr(ops, 'to_py') else list(ops)

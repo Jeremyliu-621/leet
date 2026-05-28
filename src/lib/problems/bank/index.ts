@@ -2233,10 +2233,18 @@ import { problem as largestRectangleInHistogram } from './largest-rectangle-in-h
 import { problem as implementTriePrefixTree } from './implement-trie-prefix-tree';
 import { problem as numberOfRecentCalls } from './number-of-recent-calls';
 import { problem as twoSumIIIDataStructureDesign } from './two-sum-iii-data-structure-design';
-// batch 110 — arrays+hash-map/easy, arrays+math/easy, strings+two-pointers/medium
+// batch 110a — arrays+hash-map/easy, arrays+math/easy, strings+two-pointers/medium
 import { problem as divideArrayIntoEqualPairs } from './divide-array-into-equal-pairs';
 import { problem as addToArrayFormOfInteger } from './add-to-array-form-of-integer';
 import { problem as minimumSwapsToMakeStringsBalanced } from './minimum-swaps-to-make-strings-balanced';
+// batch 110b — strings/easy, tree/medium, tree/hard
+import { problem as checkIfTwoStringArraysAreEquivalent } from './check-if-two-string-arrays-are-equivalent';
+import { problem as verifyPreorderSerializationOfABinaryTree } from './verify-preorder-serialization-of-a-binary-tree';
+import { problem as serializeAndDeserializeBinaryTree } from './serialize-and-deserialize-binary-tree';
+// batch 111 — tree/medium, tree/medium, tree/easy
+import { problem as validateBinarySearchTree } from './validate-binary-search-tree';
+import { problem as kthSmallestElementInABST } from './kth-smallest-element-in-a-bst';
+import { problem as lowestCommonAncestorOfABST } from './lowest-common-ancestor-of-a-bst';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4507,8 +4515,16 @@ export const problems: readonly Problem[] = [
   implementTriePrefixTree,
   numberOfRecentCalls,
   twoSumIIIDataStructureDesign,
-  // batch 110 — arrays+hash-map/easy, arrays+math/easy, strings+two-pointers/medium
+  // batch 110a — arrays+hash-map/easy, arrays+math/easy, strings+two-pointers/medium
   divideArrayIntoEqualPairs,
   addToArrayFormOfInteger,
   minimumSwapsToMakeStringsBalanced,
+  // batch 110b — strings/easy, tree/medium, tree/hard
+  checkIfTwoStringArraysAreEquivalent,
+  verifyPreorderSerializationOfABinaryTree,
+  serializeAndDeserializeBinaryTree,
+  // batch 111 — tree/medium, tree/medium, tree/easy
+  validateBinarySearchTree,
+  kthSmallestElementInABST,
+  lowestCommonAncestorOfABST,
 ];
