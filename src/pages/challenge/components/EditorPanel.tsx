@@ -497,6 +497,24 @@ export function EditorPanel({
     });
   }, []);
 
+  // Language-switch confirmation: show an inline banner when the user has
+  // modified the editor content and tries to switch languages.
+  const [pendingLang, setPendingLang] = useState<SupportedLanguage | null>(null);
+  useEffect(() => { setPendingLang(null); }, [language, starterCode]);
+
+  const handleLangClick = useCallback(
+    (lang: SupportedLanguage) => {
+      if (lang === language) return;
+      const currentCode = viewRef.current?.state.doc.toString() ?? '';
+      if (currentCode !== starterCode) {
+        setPendingLang(lang);
+      } else {
+        onLanguageChange(lang);
+      }
+    },
+    [language, starterCode, onLanguageChange],
+  );
+
   // Global `?` shortcut — opens the shortcuts modal unless the user is typing
   // in a text input or the code editor itself.
   useEffect(() => {
@@ -559,11 +577,11 @@ export function EditorPanel({
       if (!next) return;
       const nextLang = availableLanguages[buttons.indexOf(next)];
       if (nextLang) {
-        onLanguageChange(nextLang);
+        handleLangClick(nextLang);
         next.focus();
       }
     },
-    [availableLanguages, onLanguageChange],
+    [availableLanguages, handleLangClick],
   );
 
   // Terminal collapse state — persisted in-session only.
@@ -684,7 +702,7 @@ export function EditorPanel({
                   aria-label={`Switch to ${LANGUAGE_LABEL[lang]}`}
                   tabIndex={selected ? 0 : -1}
                   onClick={() => {
-                    if (!selected) onLanguageChange(lang);
+                    if (!selected) handleLangClick(lang);
                   }}
                   onKeyDown={handleLangKeyDown}
                   className={
@@ -756,6 +774,34 @@ export function EditorPanel({
         </div>
       </div>
 
+      {/* Language-switch confirmation — shown when user tries to switch while code is modified */}
+      {pendingLang !== null && (
+        <div
+          role="alert"
+          className="shrink-0 flex items-center justify-between gap-3 border-b border-border bg-surface-2 px-3 py-1.5"
+        >
+          <span className="font-mono text-[11px] text-muted">
+            Switch to {LANGUAGE_LABEL[pendingLang]}? Your current code will be replaced.
+          </span>
+          <div className="flex items-center gap-1.5">
+            <button
+              type="button"
+              onClick={() => { onLanguageChange(pendingLang); setPendingLang(null); }}
+              className="rounded-sm border border-border-strong bg-accent px-2.5 py-0.5 font-mono text-[10px] font-semibold text-on-accent transition-opacity hover:opacity-80 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+            >
+              switch
+            </button>
+            <button
+              type="button"
+              onClick={() => setPendingLang(null)}
+              className="rounded-sm border border-border px-2.5 py-0.5 font-mono text-[10px] text-faint transition-colors hover:border-border-strong hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+            >
+              cancel
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Editor — role="group" is required for aria-label on a non-landmark div. */}
       <div
         role="group"
@@ -821,7 +867,12 @@ export function EditorPanel({
             {attemptsRemaining !== null && attemptsRemaining < Infinity && (
               <span
                 aria-label={`${attemptsRemaining} submissions remaining`}
-                className="rounded border border-border px-1.5 py-0.5 text-[10px]"
+                className={[
+                  'rounded border px-1.5 py-0.5 text-[10px]',
+                  attemptsRemaining <= 1
+                    ? 'border-border-strong bg-surface-2 font-semibold text-text'
+                    : 'border-border text-faint',
+                ].join(' ')}
               >
                 {attemptsRemaining} left
               </span>
