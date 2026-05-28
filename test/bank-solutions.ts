@@ -34023,6 +34023,77 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 139
+  'element-appearing-more-than-25-percent-in-sorted-array': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const quarter = Math.floor(arr.length / 4);
+    for (const cand of [arr[quarter]!, arr[2 * quarter]!, arr[3 * quarter]!]) {
+      let count = 0;
+      for (const x of arr) if (x === cand) count++;
+      if (count > quarter) return cand;
+    }
+    return arr[0]!;
+  },
+  'minimum-operations-to-collect-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const need = new Set(Array.from({ length: k }, (_, i) => i + 1));
+    for (let ops = 1; ops <= nums.length; ops++) {
+      need.delete(nums[nums.length - ops]!);
+      if (need.size === 0) return ops;
+    }
+    return nums.length;
+  },
+  'decode-the-array-from-adjacent-xors': (...args: unknown[]) => {
+    const encoded = args[0] as number[], first = args[1] as number;
+    const arr = [first];
+    for (const e of encoded) arr.push(arr[arr.length - 1]! ^ e);
+    return arr;
+  },
+  'number-of-excellent-pairs': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const popcount = (n: number) => { let c = 0; while (n) { c += n & 1; n >>= 1; } return c; };
+    const counts = [...new Set(nums)].map(popcount).sort((a, b) => a - b);
+    const m = counts.length;
+    let ans = 0;
+    for (let i = 0; i < m; i++) {
+      const need = k - counts[i]!;
+      let lo = i, hi = m;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (counts[mid]! >= need) hi = mid;
+        else lo = mid + 1;
+      }
+      ans += m - lo;
+    }
+    return ans;
+  },
+  // batch 138c
+  'make-a-square-with-the-same-color': (...args: unknown[]) => {
+    const grid = args[0] as string[][];
+    for (let r = 0; r < 2; r++) {
+      for (let c = 0; c < 2; c++) {
+        const cells = [grid[r]![c]!, grid[r]![c + 1]!, grid[r + 1]![c]!, grid[r + 1]![c + 1]!];
+        const whites = cells.filter((x) => x === 'W').length;
+        if (whites >= 3 || whites <= 1) return true;
+      }
+    }
+    return false;
+  },
+  'count-the-number-of-special-characters-ii': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const lastLower = new Map<string, number>(), firstUpper = new Map<string, number>();
+    for (let i = 0; i < word.length; i++) {
+      const c = word[i]!;
+      if (c === c.toLowerCase()) lastLower.set(c, i);
+      else if (!firstUpper.has(c.toLowerCase())) firstUpper.set(c.toLowerCase(), i);
+    }
+    let count = 0;
+    for (const [c, lIdx] of lastLower) {
+      const uIdx = firstUpper.get(c);
+      if (uIdx !== undefined && lIdx < uIdx) count++;
+    }
+    return count;
+  },
   // batch 137
   'maximum-or': (...args: unknown[]) => {
     const nums = args[0] as number[], k = args[1] as number;
@@ -34098,35 +34169,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Array.from({ length: n }, (_, i) => base + (i < extra ? 1 : 0));
   },
 
-
-  // batch 134b — strings+hash-map/medium, arrays+simulation/easy, arrays+hash-map/medium
-  'count-the-number-of-special-characters-ii': (...args: unknown[]) => {
-    const word = args[0] as string;
-    const lastLower: Record<string, number> = {};
-    const firstUpper: Record<string, number> = {};
-    for (let i = 0; i < word.length; i++) {
-      const c = word[i]!;
-      if (c >= 'a' && c <= 'z') lastLower[c] = i;
-      else if (!(c.toLowerCase() in firstUpper)) firstUpper[c.toLowerCase()] = i;
-    }
-    let count = 0;
-    for (const [c, lIdx] of Object.entries(lastLower)) {
-      if (c in firstUpper && lIdx < firstUpper[c]!) count++;
-    }
-    return count;
-  },
-
-  'make-a-square-with-the-same-color': (...args: unknown[]) => {
-    const grid = args[0] as string[][];
-    for (let r = 0; r < 2; r++) {
-      for (let cc = 0; cc < 2; cc++) {
-        const cells = [grid[r]![cc]!, grid[r]![cc + 1]!, grid[r + 1]![cc]!, grid[r + 1]![cc + 1]!];
-        const whites = cells.filter(x => x === 'W').length;
-        if (whites >= 3 || whites <= 1) return true;
-      }
-    }
-    return false;
-  },
 
   // batch 138
   'longest-unequal-adjacent-groups-subsequence-ii': (...args: unknown[]) => {
@@ -34249,6 +34291,26 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const d1 = getDiameter(edges1, edges1.length + 1);
     const d2 = getDiameter(edges2, edges2.length + 1);
     return Math.max(d1, d2, Math.ceil(d1 / 2) + Math.ceil(d2 / 2) + 1);
+  },
+
+  // batch 140
+  'decrypt-xored-array': (...args: unknown[]) => {
+    const encoded = args[0] as number[], first = args[1] as number;
+    const arr = [first];
+    for (let i = 0; i < encoded.length; i++) arr.push(encoded[i]! ^ arr[i]!);
+    return arr;
+  },
+
+  'count-items-matching-a-rule': (...args: unknown[]) => {
+    const items = args[0] as string[][], ruleKey = args[1] as string, ruleValue = args[2] as string;
+    const idx = ruleKey === 'type' ? 0 : ruleKey === 'color' ? 1 : 2;
+    return items.filter(item => item[idx] === ruleValue).length;
+  },
+
+  'kids-with-the-greatest-number-of-candies': (...args: unknown[]) => {
+    const candies = args[0] as number[], extraCandies = args[1] as number;
+    const maxC = Math.max(...candies);
+    return candies.map(c => c + extraCandies >= maxC);
   },
 
 };

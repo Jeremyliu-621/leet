@@ -2388,6 +2388,11 @@ import { problem as minCostConnectTwoGroups } from './minimum-cost-to-connect-tw
 // batch 134b — strings+hash-map/medium, arrays+simulation/easy, arrays+hash-map/medium
 import { problem as numberOfSpecialCharsII } from './count-the-number-of-special-characters-ii';
 import { problem as canMakeSquare } from './make-a-square-with-the-same-color';
+// batch 139b — arrays/easy, arrays+hash-map/easy, arrays/easy, arrays+math/hard
+import { problem as elementAppearingMoreThan25Percent } from './element-appearing-more-than-25-percent-in-sorted-array';
+import { problem as minimumOperationsToCollectElements } from './minimum-operations-to-collect-elements';
+import { problem as decodeTheArrayFromAdjacentXors } from './decode-the-array-from-adjacent-xors';
+import { problem as numberOfExcellentPairs } from './number-of-excellent-pairs';
 import { problem as findTheNumberOfGoodPairsII } from './find-the-number-of-good-pairs-ii';
 // batch 137 — arrays+math/medium, strings+hash-map/easy, arrays/medium
 import { problem as maximumOr } from './maximum-or';
@@ -2403,6 +2408,10 @@ import { problem as findMinimumDiameterAfterMergingTwoTrees } from './find-minim
 import { problem as sortPeople } from './sort-people';
 import { problem as countWordsGivenPrefix } from './count-words-given-prefix';
 import { problem as findMissingObservations } from './find-missing-observations';
+// batch 140 — arrays+math/easy, arrays+strings/easy, arrays/easy
+import { problem as decryptXoredArray } from './decrypt-xored-array';
+import { problem as countItemsMatchingARule } from './count-items-matching-a-rule';
+import { problem as kidsWithTheGreatestNumberOfCandies } from './kids-with-the-greatest-number-of-candies';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4828,6 +4837,11 @@ export const problems: readonly Problem[] = [
   // batch 134b — strings+hash-map/medium, arrays+simulation/easy, arrays+hash-map/medium
   numberOfSpecialCharsII,
   canMakeSquare,
+  // batch 139b — arrays/easy, arrays+hash-map/easy, arrays/easy, arrays+math/hard
+  elementAppearingMoreThan25Percent,
+  minimumOperationsToCollectElements,
+  decodeTheArrayFromAdjacentXors,
+  numberOfExcellentPairs,
   findTheNumberOfGoodPairsII,
   // batch 137 — arrays+math/medium, strings+hash-map/easy, arrays/medium
   maximumOr,
@@ -4843,4 +4857,8 @@ export const problems: readonly Problem[] = [
   sortPeople,
   countWordsGivenPrefix,
   findMissingObservations,
+  // batch 140 — arrays+math/easy, arrays+strings/easy, arrays/easy
+  decryptXoredArray,
+  countItemsMatchingARule,
+  kidsWithTheGreatestNumberOfCandies,
 ];
