@@ -33272,4 +33272,31 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return words.every((w, i) => w[0] === s[i]);
   },
 
+  'find-champion-i': (...args: unknown[]) => {
+    const grid = (args[0] as unknown[][]).map(r => r as number[]);
+    const n = grid.length;
+    for (let i = 0; i < n; i++) {
+      let beaten = false;
+      for (let j = 0; j < n; j++) if (grid[j]![i] === 1) { beaten = true; break; }
+      if (!beaten) return i;
+    }
+    return -1;
+  },
+
+  'count-the-number-of-consistent-strings': (...args: unknown[]) => {
+    const allowed = args[0] as string;
+    const words = args[1] as string[];
+    const set = new Set(allowed);
+    return words.filter(w => [...w].every(c => set.has(c))).length;
+  },
+
+  'count-number-of-pairs-with-absolute-difference-k': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    let count = 0;
+    for (let i = 0; i < nums.length; i++)
+      for (let j = i + 1; j < nums.length; j++)
+        if (Math.abs(nums[i]! - nums[j]!) === k) count++;
+    return count;
+  },
+
 };

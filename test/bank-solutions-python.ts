@@ -32993,4 +32993,33 @@ def isAcronym(words, s):
     return all(w[0] == s[i] for i, w in enumerate(words))
 `,
 
+  'find-champion-i': `
+def findChampion(grid):
+    grid = [list(x.to_py() if hasattr(x, 'to_py') else x) for x in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    n = len(grid)
+    for i in range(n):
+        if not any(grid[j][i] == 1 for j in range(n)):
+            return i
+    return -1
+`,
+
+  'count-the-number-of-consistent-strings': `
+def countConsistentStrings(allowed, words):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    allowed_set = set(allowed)
+    return sum(1 for w in words if all(c in allowed_set for c in w))
+`,
+
+  'count-number-of-pairs-with-absolute-difference-k': `
+def countKDifference(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    count = 0
+    n = len(nums)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if abs(nums[i] - nums[j]) == k:
+                count += 1
+    return count
+`,
+
 };

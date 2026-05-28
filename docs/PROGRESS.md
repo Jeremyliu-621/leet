@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2122** problems; 6669 tests green. Batches 102–124 + 113b + 117b + 122b complete. TypeScript starters backfilled. Site stats at 2,122+.
+**Current focus:** Bank at **2125** problems; 6678 tests green. Batches 102–125 + 113b + 117b + 122b complete. TypeScript starters backfilled. Site stats at 2,125+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 125 bank growth; UI/UX refinements; accessibility audit.
+**Next up:** Batch 126 bank growth; UI/UX refinements; accessibility audit.
+
+### feat(bank): add batch 125 — find-champion-i, consistent-strings, abs-diff-k-pairs (2026-05-28)
+Three easy problems: `find-champion-i` (easy/arrays, find team with column-sum 0 in grid — no one beats them), `count-the-number-of-consistent-strings` (easy/arrays+strings+hash-map, count words where all chars in allowed Set), `count-number-of-pairs-with-absolute-difference-k` (easy/arrays+hash-map, O(n²) brute force |a-b|==k). Bank at **2125**; 6678 tests.
 
 ### feat(bank): add batch 124 — min-ops-array-empty, max-string-pairs, acronym-check (2026-05-28)
 Three problems: `minimum-number-of-operations-to-make-array-empty` (medium/arrays+hash-map+math, freq map → if any freq=1 return -1, else ops += ceil(f/3)), `find-maximum-number-of-string-pairs` (easy/arrays+strings+hash-map, greedily match each word's reverse in a seen-map), `check-if-a-string-is-an-acronym-of-words` (easy/arrays+strings, lengths equal and every words[i][0]==s[i]). Bank at **2122**; 6669 tests.
