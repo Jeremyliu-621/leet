@@ -2438,6 +2438,14 @@ import { problem as countMaxBitwiseOrSubsets } from './count-number-of-max-bitwi
 import { problem as partitionKEqualSumSubsets } from './partition-to-k-equal-sum-subsets';
 import { problem as minOpsArrayEqualToTarget } from './minimum-operations-to-make-array-equal-to-target';
 import { problem as consecutiveNumbersSum } from './consecutive-numbers-sum';
+// batch 146 — register 7 orphan problems that had reference solutions
+import { problem as reverseVowelsOfString } from './reverse-vowels-of-a-string';
+import { problem as applyOpsToMakeStringEmpty } from './apply-operations-to-make-string-empty';
+import { problem as findAllRecipesFromSupplies } from './find-all-possible-recipes-from-given-supplies';
+import { problem as maxTotalDamageWithSpellCasting } from './maximum-total-damage-with-spell-casting';
+import { problem as minDominoRotations } from './minimum-domino-rotations-for-equal-row';
+import { problem as reorderRoutesToCity } from './reorder-routes-to-make-all-paths-lead-to-the-city-zero';
+import { problem as countBeautifulSubarrays } from './count-the-number-of-beautiful-subarrays';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4913,4 +4921,12 @@ export const problems: readonly Problem[] = [
   partitionKEqualSumSubsets,
   minOpsArrayEqualToTarget,
   consecutiveNumbersSum,
+  // batch 146 — register 7 orphan problems (strings/easy, strings/medium, graph/medium, arrays/medium, arrays/hard, graph/medium, arrays/medium)
+  reverseVowelsOfString,
+  applyOpsToMakeStringEmpty,
+  findAllRecipesFromSupplies,
+  maxTotalDamageWithSpellCasting,
+  minDominoRotations,
+  reorderRoutesToCity,
+  countBeautifulSubarrays,
 ];
