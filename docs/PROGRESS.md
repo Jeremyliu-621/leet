@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2134** problems; 6711 tests green. Batches 102–126 + 113b + 117b + 122b + 122c + 123b + 124b complete. TypeScript starters backfilled. Site stats at 2,128+.
+**Current focus:** Bank at **2137** problems; 6720 tests green. Batches 102–127 + 113b + 117b + 122b + 122c + 123b + 124b complete. TypeScript starters backfilled. Site stats at 2,128+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 127 bank growth; UI/UX refinements; accessibility audit.
+**Next up:** Batch 128 bank growth; UI/UX refinements; accessibility audit.
+
+### feat(bank): add batch 127 — min-sum-mountain-triplets-ii, xor-range, count-pairs-sum-less-than-target (2026-05-28)
+Three problems: `minimum-sum-of-mountain-triplets-ii` (medium/arrays, O(n) prefix+suffix min), `find-the-xor-of-numbers-in-a-range` (easy/math, iterate l..r XOR), `count-pairs-whose-sum-is-less-than-target` (easy/arrays+two-pointers, O(n²) brute). Bank at **2137**; 6720 tests.
 
 ### feat(bank): add batch 124b — max-element-decrement-rearrange, distance-value-two-arrays, min-sum-mountain-triplets-i (2026-05-28)
 Three problems: `maximum-element-after-decreasing-and-rearranging` (medium/arrays, sort+greedy a[0]=1, a[i]=min(arr[i], prev+1), return last), `find-the-distance-value-between-two-arrays` (easy/arrays, count arr1[i] where all |arr1[i]-arr2[j]|>d), `minimum-sum-of-mountain-triplets-i` (easy/arrays, O(n³) brute force over valid (i<j<k) mountain triplets). JS + Python reference solutions. Bank at **2134**; 6711 tests.
