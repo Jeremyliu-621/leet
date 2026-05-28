@@ -8,12 +8,15 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2048** problems; 6438 tests green. Batches 102–103 complete. Site stats at 2,045+.
+**Current focus:** Bank at **2054** problems; 6456 tests green. Batches 102–105 complete. Site stats at 2,045+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 104 bank growth; accessibility audit.
+**Next up:** Batch 106 bank growth; update site stats; accessibility audit.
 
-### feat(bank): add batches 102–103 + site stats update (2026-05-28)
-Batch 102: `two-sum` (easy/arrays+hash-map, O(n) hash-map), `squares-of-a-sorted-array` (easy/arrays+two-pointers, inward two-pointer fill), `middle-of-the-linked-list` (easy/linked-list+two-pointers, slow/fast pointer with runner). Batch 103: `3sum` (medium/arrays+two-pointers, sort+two-pointer; runner normalizes output order), `search-a-2d-matrix` (medium/arrays+binary-search, 1D index mapping), `max-points-on-a-line` (hard/math+hash-map, GCD slope normalization). Marketing site updated: 2,000+ → 2,045+. Bank at **2048**; 6438 tests.
+### feat(bank): add batch 105 — merge-two-binary-trees, range-sum-query-immutable, min-cost-connect-all-points (2026-05-28)
+Added 3 problems: `merge-two-binary-trees` (easy/tree, DFS with tree preamble pattern), `range-sum-query-immutable` (easy/arrays+dp, prefix-sum ops-array design pattern), `min-cost-connect-all-points` (medium/graph, O(n²) Prim's MST on Manhattan-distance graph). JS and Python reference solutions for all; JsNull handling fixed for Python tree solutions. Bank at **2054**; 6456 tests.
+
+### feat(bank): add batches 102–104 + site stats update (2026-05-28)
+Batch 102: `two-sum`, `squares-of-a-sorted-array`, `middle-of-the-linked-list`. Batch 103: `3sum` (runner normalizes output order), `search-a-2d-matrix`, `max-points-on-a-line`. Batch 104: `search-a-2d-matrix-ii`, `count-number-of-connected-components`, `longest-increasing-path-in-a-matrix`. Marketing site updated: 2,000+ → 2,045+. Bank at **2051**; 6447 tests.
 
 ### feat(bank): add batch 101 — prime-arrangements, lucky-numbers-in-a-matrix, smallest-range-i (2026-05-28)
 Added 3 problems: `prime-arrangements` (easy/math, count permutations where primes at prime indices mod 10^9+7), `lucky-numbers-in-a-matrix` (easy/arrays+math, precompute colMax then rowMin check), `smallest-range-i` (easy/arrays+math, max(0, spread - 2k)). JS and Python reference solutions for all. Bank at **2042**; 6420 tests.
