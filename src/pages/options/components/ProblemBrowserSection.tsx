@@ -160,6 +160,7 @@ export function ProblemBrowserSection() {
         onClick={() => setIsOpen((v) => !v)}
         className="mb-4 font-mono text-[10px] text-muted underline-offset-2 hover:text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
         aria-expanded={isOpen}
+        aria-controls="problem-browser-list"
       >
         {isOpen ? '▾ collapse list' : '▸ browse all problems'}
       </button>
@@ -177,7 +178,7 @@ export function ProblemBrowserSection() {
       </div>
 
       {isOpen && (
-        <div className="mt-4 space-y-3">
+        <div id="problem-browser-list" className="mt-4 space-y-3">
           {/* Search + sort row */}
           <div className="flex gap-2">
             <input
