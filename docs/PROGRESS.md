@@ -8,9 +8,15 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2232** problems; 6990 tests green. Batches 102–146 complete. UX polish ongoing.
+**Current focus:** Bank at **2236** problems; 7002 tests green. Batches 102–147 complete. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth; UX polish; accessibility audit.
+
+### feat(ux): streak + today count on solved screen; custom-test pre-fill from first example (2026-05-28)
+Challenge page solved-standalone screen: streak display (`Nd` badge with "X today" sub-label) now shown when user has a streak. CustomTestPanel now pre-fills arg inputs from `problem.visibleTests[0].args` when opened, so the first example is ready to run immediately. Both changes are additive — no regressions.
+
+### feat(bank): add batch 147 — find-product-pivot, count-subarrays-equal-balance, longest-arithmetic-subarray, sum-of-all-submatrix-sums (2026-05-28)
+Four medium-difficulty problems: `find-product-pivot` (math/arrays, prefix+suffix product comparison to find leftmost equal-product index), `count-subarrays-equal-balance` (arrays+hash-map, prefix sum + hash map for equal positive/negative count subarrays), `longest-arithmetic-subarray` (arrays, O(n) consecutive diff tracking for contiguous arithmetic subarray), `sum-of-all-submatrix-sums` (arrays+math, O(mn) per-cell contribution formula). Bank at **2236**; 7002 tests.
 
 ### feat(bank): register batch 146 — 7 orphan problems with existing solutions (2026-05-28)
 Registered 7 problems that had problem files and reference solutions but were not imported in index.ts: `reverse-vowels-of-a-string` (easy/strings+two-pointers), `apply-operations-to-make-string-empty` (medium/strings+hash-map), `find-all-possible-recipes-from-given-supplies` (medium/graph+hash-map), `maximum-total-damage-with-spell-casting` (medium/arrays+dp), `minimum-domino-rotations-for-equal-row` (medium/arrays+simulation), `reorder-routes-to-make-all-paths-lead-to-the-city-zero` (medium/graph), `count-the-number-of-beautiful-subarrays` (medium/arrays+math). Bank at **2232**; 6990 tests.

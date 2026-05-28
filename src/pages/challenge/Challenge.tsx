@@ -1183,6 +1183,7 @@ export function Challenge() {
             params={problem.params}
             onRun={handleCustomRun}
             result={customTestResult}
+            defaultArgs={problem.visibleTests[0]?.args}
           />
           {/* Submission history — appears after first submit, collapsible */}
           <SubmissionsPanel submissions={submissions} onRestore={handleRestoreCode} />
