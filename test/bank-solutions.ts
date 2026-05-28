@@ -34764,6 +34764,35 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  'longest-arithmetic-subarray': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    if (nums.length <= 1) return nums.length;
+    let maxLen = 2, curLen = 2, diff = nums[1]! - nums[0]!;
+    for (let i = 2; i < nums.length; i++) {
+      const d = nums[i]! - nums[i - 1]!;
+      if (d === diff) {
+        curLen++;
+      } else {
+        diff = d;
+        curLen = 2;
+      }
+      if (curLen > maxLen) maxLen = curLen;
+    }
+    return maxLen;
+  },
+
+  'sum-of-all-submatrix-sums': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const m = matrix.length, n = matrix[0]!.length;
+    let total = 0;
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        total += matrix[i]![j]! * (i + 1) * (m - i) * (j + 1) * (n - j);
+      }
+    }
+    return total;
+  },
+
   'partition-to-k-equal-sum-subsets': (...args: unknown[]) => {
     const nums = [...(args[0] as number[])], k = args[1] as number;
     const total = nums.reduce((a, b) => a + b, 0);
