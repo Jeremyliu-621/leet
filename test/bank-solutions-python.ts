@@ -32031,4 +32031,45 @@ def checkStraightLine(coordinates):
     return True
 `,
 
+  'divide-array-into-equal-pairs': `
+def divideArray(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    from collections import Counter
+    freq = Counter(nums)
+    return all(v % 2 == 0 for v in freq.values())
+`,
+
+  'add-to-array-form-of-integer': `
+def addToArrayForm(num, k):
+    num = list(num.to_py() if hasattr(num, 'to_py') else num)
+    i = len(num) - 1
+    carry = k
+    while i >= 0 or carry > 0:
+        digit = carry % 10
+        carry //= 10
+        if i >= 0:
+            s = num[i] + digit
+            num[i] = s % 10
+            carry += s // 10
+            i -= 1
+        else:
+            num.insert(0, digit)
+    return num
+`,
+
+  'minimum-swaps-to-make-strings-balanced': `
+def minSwaps(s):
+    balance = 0
+    swaps = 0
+    for ch in s:
+        if ch == '[':
+            balance += 1
+        else:
+            balance -= 1
+            if balance < 0:
+                swaps += 1
+                balance = 1
+    return swaps
+`,
+
 };

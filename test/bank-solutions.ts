@@ -32376,4 +32376,42 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
+  'divide-array-into-equal-pairs': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+    for (const count of freq.values()) {
+      if (count % 2 !== 0) return false;
+    }
+    return true;
+  },
+
+  'add-to-array-form-of-integer': (...args: unknown[]) => {
+    const num = [...(args[0] as number[])];
+    let k = args[1] as number;
+    let i = num.length - 1;
+    while (i >= 0 || k > 0) {
+      const sum = (i >= 0 ? (num[i] as number) : 0) + (k % 10);
+      if (i >= 0) num[i] = sum % 10;
+      else num.unshift(sum % 10);
+      k = Math.floor(k / 10) + Math.floor(sum / 10);
+      i--;
+    }
+    return num;
+  },
+
+  'minimum-swaps-to-make-strings-balanced': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let balance = 0;
+    let swaps = 0;
+    for (const ch of s) {
+      if (ch === '[') balance++;
+      else {
+        balance--;
+        if (balance < 0) { swaps++; balance = 1; }
+      }
+    }
+    return swaps;
+  },
+
 };

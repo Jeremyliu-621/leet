@@ -2233,6 +2233,10 @@ import { problem as largestRectangleInHistogram } from './largest-rectangle-in-h
 import { problem as implementTriePrefixTree } from './implement-trie-prefix-tree';
 import { problem as numberOfRecentCalls } from './number-of-recent-calls';
 import { problem as twoSumIIIDataStructureDesign } from './two-sum-iii-data-structure-design';
+// batch 110 — arrays+hash-map/easy, arrays+math/easy, strings+two-pointers/medium
+import { problem as divideArrayIntoEqualPairs } from './divide-array-into-equal-pairs';
+import { problem as addToArrayFormOfInteger } from './add-to-array-form-of-integer';
+import { problem as minimumSwapsToMakeStringsBalanced } from './minimum-swaps-to-make-strings-balanced';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4503,4 +4507,8 @@ export const problems: readonly Problem[] = [
   implementTriePrefixTree,
   numberOfRecentCalls,
   twoSumIIIDataStructureDesign,
+  // batch 110 — arrays+hash-map/easy, arrays+math/easy, strings+two-pointers/medium
+  divideArrayIntoEqualPairs,
+  addToArrayFormOfInteger,
+  minimumSwapsToMakeStringsBalanced,
 ];
