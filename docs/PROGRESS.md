@@ -6,11 +6,14 @@
 
 ---
 
-**Last updated:** 2026-05-26
+**Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2039** problems; 6411 tests green. Batches 99–100 + remote batch 96 tree/stack complete.
+**Current focus:** Bank at **2042** problems; 6420 tests green. Batch 101 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 101+); UI/UX polish.
+**Next up:** Batch 102 bank growth; UI/UX polish (light mode, a11y).
+
+### feat(bank): add batch 101 — prime-arrangements, lucky-numbers-in-a-matrix, smallest-range-i (2026-05-28)
+Added 3 problems: `prime-arrangements` (easy/math, count permutations where primes at prime indices mod 10^9+7), `lucky-numbers-in-a-matrix` (easy/arrays+math, precompute colMax then rowMin check), `smallest-range-i` (easy/arrays+math, max(0, spread - 2k)). JS and Python reference solutions for all. Bank at **2042**; 6420 tests.
 
 ### feat(bank): add batch 100 — construct-binary-tree-from-preorder-and-inorder-traversal (2026-05-26)
 Registered `construct-binary-tree-from-preorder-and-inorder-traversal` (medium/tree, hash-map + recursive preL/preR/inL/inR divide-and-conquer). Also: backfilled find-all-groups-of-farmland expanded hidden tests (10 hidden, up from 3) with improved hints. Bank at **2036**; 6402 tests.
