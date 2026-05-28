@@ -32175,6 +32175,73 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     dfs(root, root ? root.val : 0, 0);
     return max;
   },
+  'check-if-two-string-arrays-are-equivalent': (...args: unknown[]) => {
+    return (args[0] as string[]).join('') === (args[1] as string[]).join('');
+  },
+  'verify-preorder-serialization-of-a-binary-tree': (...args: unknown[]) => {
+    const nodes = (args[0] as string).split(',');
+    let slots = 1;
+    for (const node of nodes) {
+      slots--;
+      if (slots < 0) return false;
+      if (node !== '#') slots += 2;
+    }
+    return slots === 0;
+  },
+  'serialize-and-deserialize-binary-tree': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    interface N { val: number; left: N | null; right: N | null }
+    const fromArray = (a: (number | null)[]): N | null => {
+      if (!a.length || a[0] == null) return null;
+      const root: N = { val: a[0], left: null, right: null };
+      const q: N[] = [root];
+      let i = 1;
+      while (q.length && i < a.length) {
+        const node = q.shift() as N;
+        if (a[i] != null) { node.left = { val: a[i] as number, left: null, right: null }; q.push(node.left); }
+        i++;
+        if (i < a.length && a[i] != null) { node.right = { val: a[i] as number, left: null, right: null }; q.push(node.right); }
+        i++;
+      }
+      return root;
+    };
+    const toArray = (root: N | null): (number | null)[] => {
+      if (!root) return [];
+      const result: (number | null)[] = [];
+      const q: (N | null)[] = [root];
+      while (q.length) {
+        const node = q.shift() as N | null;
+        if (node == null) { result.push(null); } else { result.push(node.val); q.push(node.left); q.push(node.right); }
+      }
+      while (result.length && result[result.length - 1] === null) result.pop();
+      return result;
+    };
+    const serialize = (root: N | null): string => {
+      const res: string[] = [];
+      const q: (N | null)[] = [root];
+      while (q.length) {
+        const node = q.shift() as N | null;
+        if (node == null) { res.push('#'); } else { res.push(String(node.val)); q.push(node.left); q.push(node.right); }
+      }
+      return res.join(',');
+    };
+    const deserialize = (data: string): N | null => {
+      const tokens = data.split(',');
+      if (!tokens.length || tokens[0] === '#') return null;
+      const root: N = { val: Number(tokens[0]), left: null, right: null };
+      const q: N[] = [root];
+      let i = 1;
+      while (q.length && i < tokens.length) {
+        const node = q.shift() as N;
+        if (tokens[i] !== '#') { node.left = { val: Number(tokens[i]), left: null, right: null }; q.push(node.left); }
+        i++;
+        if (i < tokens.length && tokens[i] !== '#') { node.right = { val: Number(tokens[i] as string), left: null, right: null }; q.push(node.right); }
+        i++;
+      }
+      return root;
+    };
+    return toArray(deserialize(serialize(fromArray(arr))));
+  },
   'implement-trie-prefix-tree': (...args: unknown[]) => {
     const ops = args[0] as [string, unknown[]][];
     interface TrieNode { children: Map<string, TrieNode>; end: boolean }
