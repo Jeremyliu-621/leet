@@ -2213,10 +2213,22 @@ import { problem as longestIncreasingPathInAMatrix } from './longest-increasing-
 import { problem as mergeTwoBinaryTrees } from './merge-two-binary-trees';
 import { problem as rangeSumQueryImmutable } from './range-sum-query-immutable';
 import { problem as minCostConnectAllPoints } from './min-cost-connect-all-points';
-// batch 106 — tree/easy, arrays+dp/easy, arrays+math/easy
+// batch 106a — tree/easy (orphan), arrays+hash-map/easy, arrays+math/easy
 import { problem as binaryTreeSumOfLeftLeaves } from './binary-tree-sum-of-left-leaves';
 import { problem as minimumOperationsToMakeElementsDistinct } from './minimum-operations-to-make-elements-distinct';
 import { problem as checkIfItIsAStraightLine } from './check-if-it-is-a-straight-line';
+// batch 106b — strings/easy, tree/medium, arrays/medium
+import { problem as longerContiguousSegmentsOfOnesThanZeros } from './longer-contiguous-segments-of-ones-than-zeros';
+import { problem as binaryTreeLongestConsecutiveSequence } from './binary-tree-longest-consecutive-sequence';
+import { problem as countUnguardedCellsInTheGrid } from './count-unguarded-cells-in-the-grid';
+// batch 107 — strings/easy, tree/medium, tree/medium
+import { problem as firstUniqueCharacterInAString } from './first-unique-character-in-a-string';
+import { problem as sumRootToLeafNumbers } from './sum-root-to-leaf-numbers';
+import { problem as flattenBinaryTreeToLinkedList } from './flatten-binary-tree-to-linked-list';
+// batch 108 — arrays/medium, arrays/hard, stack/hard
+import { problem as kthLargestElementInAnArray } from './kth-largest-element-in-an-array';
+import { problem as findMissingPositive } from './find-missing-positive';
+import { problem as largestRectangleInHistogram } from './largest-rectangle-in-histogram';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4467,8 +4479,20 @@ export const problems: readonly Problem[] = [
   mergeTwoBinaryTrees,
   rangeSumQueryImmutable,
   minCostConnectAllPoints,
-  // batch 106 — tree/easy (orphan), arrays+hash-map/easy, arrays+math/easy
+  // batch 106a — tree/easy (orphan), arrays+hash-map/easy, arrays+math/easy
   binaryTreeSumOfLeftLeaves,
   minimumOperationsToMakeElementsDistinct,
   checkIfItIsAStraightLine,
+  // batch 106b — strings/easy, tree/medium, arrays/medium
+  longerContiguousSegmentsOfOnesThanZeros,
+  binaryTreeLongestConsecutiveSequence,
+  countUnguardedCellsInTheGrid,
+  // batch 107 — strings/easy, tree/medium, tree/medium
+  firstUniqueCharacterInAString,
+  sumRootToLeafNumbers,
+  flattenBinaryTreeToLinkedList,
+  // batch 108 — arrays/medium, arrays/hard, stack/hard
+  kthLargestElementInAnArray,
+  findMissingPositive,
+  largestRectangleInHistogram,
 ];
