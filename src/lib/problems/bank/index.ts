@@ -2373,6 +2373,10 @@ import { problem as kthCharacterGameII } from './find-the-k-th-character-in-stri
 import { problem as checkIfGridSatisfiesConditions } from './check-if-grid-satisfies-conditions';
 import { problem as findMaximumSumOfNodeValues } from './find-the-maximum-sum-of-node-values';
 import { problem as maximumXorProduct } from './maximum-xor-product';
+// batch 133b — strings+hash-map/easy, arrays+hash-map/hard, arrays+binary-search/medium
+import { problem as numberOfSpecialCharsI } from './count-the-number-of-special-characters-i';
+import { problem as numberOfGoodPartitions } from './count-number-of-good-partitions';
+import { problem as maxCountRangeII } from './maximum-number-of-integers-to-choose-from-a-range-ii';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4783,4 +4787,8 @@ export const problems: readonly Problem[] = [
   checkIfGridSatisfiesConditions,
   findMaximumSumOfNodeValues,
   maximumXorProduct,
+  // batch 133b — strings+hash-map/easy, arrays+hash-map/hard, arrays+binary-search/medium
+  numberOfSpecialCharsI,
+  numberOfGoodPartitions,
+  maxCountRangeII,
 ];

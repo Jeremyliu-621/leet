@@ -33609,4 +33609,63 @@ def maximumXorProduct(a, b, n):
     return (fa % MOD) * (fb % MOD) % MOD
 `,
 
+  // batch 133b
+  'count-the-number-of-special-characters-i': `
+def numberOfSpecialChars(word):
+    lower = set()
+    upper = set()
+    for c in word:
+        if c == c.lower():
+            lower.add(c)
+        else:
+            upper.add(c.lower())
+    return sum(1 for c in lower if c in upper)
+`,
+
+  'count-number-of-good-partitions': `
+def numberOfGoodPartitions(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    MOD = 10**9 + 7
+    last = {}
+    for i, v in enumerate(nums):
+        last[v] = i
+    result = 1
+    max_end = 0
+    for i in range(len(nums) - 1):
+        max_end = max(max_end, last[nums[i]])
+        if i == max_end:
+            result = result * 2 % MOD
+    return result
+`,
+
+  'maximum-number-of-integers-to-choose-from-a-range-ii': `
+def maxCount(banned, n, maxSum):
+    banned = list(banned.to_py() if hasattr(banned, 'to_py') else banned)
+    banned_set = set(x for x in banned if x <= n)
+    sorted_banned = sorted(banned_set)
+    count = 0
+    total = 0
+    prev = 0
+
+    def take_from(lo, hi):
+        nonlocal count, total
+        lo2, hi2 = 0, hi - lo + 1
+        while lo2 < hi2:
+            mid = (lo2 + hi2 + 1) // 2
+            if total + mid * lo + mid * (mid - 1) // 2 <= maxSum:
+                lo2 = mid
+            else:
+                hi2 = mid - 1
+        total += lo2 * lo + lo2 * (lo2 - 1) // 2
+        count += lo2
+
+    for b in sorted_banned:
+        if b > prev + 1:
+            take_from(prev + 1, b - 1)
+        prev = b
+    if prev < n:
+        take_from(prev + 1, n)
+    return count
+`,
+
 };

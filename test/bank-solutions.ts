@@ -33866,4 +33866,53 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number((fa % MOD) * (fb % MOD) % MOD);
   },
 
+  // batch 133b
+  'count-the-number-of-special-characters-i': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const lower = new Set<string>(), upper = new Set<string>();
+    for (const c of word) {
+      if (c === c.toLowerCase()) lower.add(c);
+      else upper.add(c.toLowerCase());
+    }
+    let count = 0;
+    for (const c of lower) if (upper.has(c)) count++;
+    return count;
+  },
+
+  'count-number-of-good-partitions': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const MOD = 1000000007n;
+    const last = new Map<number, number>();
+    for (let i = 0; i < nums.length; i++) last.set(nums[i]!, i);
+    let result = 1n, maxEnd = 0;
+    for (let i = 0; i < nums.length - 1; i++) {
+      maxEnd = Math.max(maxEnd, last.get(nums[i]!)!);
+      if (i === maxEnd) result = result * 2n % MOD;
+    }
+    return Number(result);
+  },
+
+  'maximum-number-of-integers-to-choose-from-a-range-ii': (...args: unknown[]) => {
+    const banned = args[0] as number[], n = args[1] as number, maxSum = args[2] as number;
+    const bannedSet = new Set(banned);
+    const sorted = [...bannedSet].filter(x => x <= n).sort((a, b) => a - b);
+    let count = 0, sum = 0, prev = 0;
+    const takeFrom = (lo: number, hi: number) => {
+      let lo2 = 0, hi2 = hi - lo + 1;
+      while (lo2 < hi2) {
+        const mid = Math.floor((lo2 + hi2 + 1) / 2);
+        if (sum + mid * lo + mid * (mid - 1) / 2 <= maxSum) lo2 = mid;
+        else hi2 = mid - 1;
+      }
+      sum += lo2 * lo + lo2 * (lo2 - 1) / 2;
+      count += lo2;
+    };
+    for (const b of sorted) {
+      if (b > prev + 1) takeFrom(prev + 1, b - 1);
+      prev = b;
+    }
+    if (prev < n) takeFrom(prev + 1, n);
+    return count;
+  },
+
 };
