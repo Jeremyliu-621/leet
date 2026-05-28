@@ -32519,4 +32519,30 @@ def maximumTripletValue(nums):
     return best
 `,
 
+  'check-balanced-string': `
+def isBalanced(num):
+    even_sum = sum(int(num[i]) for i in range(0, len(num), 2))
+    odd_sum = sum(int(num[i]) for i in range(1, len(num), 2))
+    return even_sum == odd_sum
+`,
+
+  'minimum-number-of-chairs-in-a-waiting-room': `
+def minimumChairs(s):
+    count = 0
+    max_count = 0
+    for c in s:
+        if c == 'E':
+            count += 1
+            max_count = max(max_count, count)
+        else:
+            count -= 1
+    return max_count
+`,
+
+  'find-minimum-operations-to-make-all-elements-divisible-by-three': `
+def minimumOperations(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    return sum(1 for n in nums if n % 3 != 0)
+`,
+
 };

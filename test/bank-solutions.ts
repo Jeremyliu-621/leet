@@ -32809,4 +32809,26 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best;
   },
 
+  'check-balanced-string': (...args: unknown[]) => {
+    const num = args[0] as string;
+    let even = 0, odd = 0;
+    for (let i = 0; i < num.length; i++) {
+      const d = parseInt(num[i]!, 10);
+      if (i % 2 === 0) even += d; else odd += d;
+    }
+    return even === odd;
+  },
+
+  'minimum-number-of-chairs-in-a-waiting-room': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let count = 0, max = 0;
+    for (const c of s) { if (c === 'E') max = Math.max(max, ++count); else count--; }
+    return max;
+  },
+
+  'find-minimum-operations-to-make-all-elements-divisible-by-three': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return nums.filter(n => n % 3 !== 0).length;
+  },
+
 };

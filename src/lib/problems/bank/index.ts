@@ -2260,6 +2260,10 @@ import { problem as numberOfWaysToSplitString } from './number-of-ways-to-split-
 import { problem as minimumOperationsBinaryArrayEqualToOneI } from './minimum-operations-to-make-binary-array-elements-equal-to-one-i';
 import { problem as findCommonElementsBetweenTwoArrays } from './find-common-elements-between-two-arrays';
 import { problem as maximumValueOfAnOrderedTripletI } from './maximum-value-of-an-ordered-triplet-i';
+// batch 116 — strings/easy, strings/easy, arrays/easy
+import { problem as checkBalancedString } from './check-balanced-string';
+import { problem as minimumNumberOfChairsInAWaitingRoom } from './minimum-number-of-chairs-in-a-waiting-room';
+import { problem as findMinimumOperationsDivisibleByThree } from './find-minimum-operations-to-make-all-elements-divisible-by-three';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4557,4 +4561,8 @@ export const problems: readonly Problem[] = [
   minimumOperationsBinaryArrayEqualToOneI,
   findCommonElementsBetweenTwoArrays,
   maximumValueOfAnOrderedTripletI,
+  // batch 116 — strings/easy, strings/easy, arrays/easy
+  checkBalancedString,
+  minimumNumberOfChairsInAWaitingRoom,
+  findMinimumOperationsDivisibleByThree,
 ];
