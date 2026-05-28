@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2130** problems; 6693 tests green. Batches 102–125 + 113b + 117b + 122b + 122c + 123b complete. TypeScript starters backfilled. Site stats at 2,130+.
+**Current focus:** Bank at **2131** problems; 6702 tests green. Batches 102–126 + 113b + 117b + 122b + 122c + 123b complete. TypeScript starters backfilled. Site stats at 2,128+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 126 bank growth; UI/UX refinements; accessibility audit.
+**Next up:** Batch 127 bank growth; UI/UX refinements; accessibility audit.
+
+### feat(bank): add batch 126 — number-of-steps, convert-date-to-binary, two-sneaky-numbers (2026-05-28)
+Three easy problems: `number-of-steps-to-reduce-a-number-to-zero` (easy/math, simulate even÷2 / odd−1), `convert-date-to-binary` (easy/strings+math, split "YYYY-MM-DD" and parseInt each part to binary string), `the-two-sneaky-numbers-of-digitville` (easy/arrays+hash-map, freq map returning values with count > 1 sorted ascending). Bank at **2131**; 6702 tests.
 
 ### feat(bank): add batch 122c — find-original-typed-string-ii, find-min-time-last-room-ii, min-ops-write-y-grid (2026-05-28)
 Three problems: `find-the-original-typed-string-ii` (hard/strings+dp, product-of-run-lengths minus DP count of originals shorter than k using sliding-window prefix sum BigInt DP mod 10^9+7), `find-minimum-time-to-reach-last-room-ii` (medium/graph+shortest-path, Dijkstra with alternating move costs 1/2 tracked as parity in state), `minimum-operations-to-write-letter-y-on-grid` (medium/arrays+hash-map, partition cells into Y vs non-Y, find min-cost distinct (yVal, nonYVal) pair). Bank at **2130**; 6693 tests.
