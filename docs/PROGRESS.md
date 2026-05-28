@@ -8,9 +8,15 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2197** problems; 6885 tests green. Batches 102–139 complete. TypeScript starters backfilled. UX polish ongoing.
+**Current focus:** Bank at **2203** problems; 6912 tests green. Batches 102–141 complete. TypeScript starters backfilled. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More UX polish; more bank growth; accessibility audit.
+
+### feat(bank): add batch 141 — reaching-points, orderly-queue, valid-number, min-moves-ii, super-washing, submatrices-sum (2026-05-28)
+Six problems: `reaching-points` (hard/math, reverse GCD/modulo traversal to check reachability), `orderly-queue` (hard/math+strings, k=1 min rotation, k≥2 sort), `valid-number` (hard/strings, state-machine with seenDigit/seenDot/seenE flags), `minimum-moves-to-equal-array-elements-ii` (medium/math, median minimises L1 sum), `super-washing-machines` (hard/math, cumulative flow bottleneck argument), `number-of-submatrices-that-sum-to-target` (hard/arrays+dp+hash-map, 2D prefix sum reduction to 1D subarray problem). Bank at **2203**; 6912 tests.
+
+### feat(ux): add copy-problem button and fix heading hierarchy (2026-05-28)
+ProblemPanel: added CopyProblemButton in title row — serialises full problem (title, difficulty, tags, description, examples, constraints) as plain text to clipboard for pasting into AI tools. Challenge page: changed "Practice next" label from `<p>` to `<h2>` for correct screen-reader heading hierarchy; added `role="list"` to related-problems list.
 
 ### feat(bank): add batch 134b — count-special-chars-ii, make-square-same-color, good-pairs-ii (2026-05-28)
 Three problems: `count-the-number-of-special-characters-ii` (medium/strings+hash-map, track lastLower and firstUpper per char, count chars where lastLower<firstUpper), `make-a-square-with-the-same-color` (easy/arrays+simulation, check all 4 possible 2×2 sub-squares for ≥3 uniform cells), `find-the-number-of-good-pairs-ii` (medium/arrays+hash-map, freq map + iterate multiples up to 10^6 for O(max/k) per element). Bank at **2189**; 6858 tests.
