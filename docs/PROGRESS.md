@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2083** problems; 6543 tests green. Batches 102–113 complete. All branches merged. Site stats at 2,083+.
+**Current focus:** Bank at **2087** problems; 6552 tests green. Batches 102–114 complete. All branches merged. Site stats at 2,081+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 114 bank growth; UI/UX refinements; accessibility audit.
+**Next up:** Batch 115 bank growth; UI/UX refinements; accessibility audit.
+
+### feat(bank): add batch 114 — lexicographically-smallest-equivalent-string, single-threaded-cpu, number-of-ways-to-split-string (2026-05-28)
+Three medium problems targeting underrepresented tags: `lexicographically-smallest-equivalent-string` (medium/strings+union-find, DSU over 26 chars keeping smaller char as root; boosts union-find tag from 23 to 24), `single-threaded-cpu` (medium/heap+simulation, sort by enqueue, min-heap [processingTime,idx], idle-time clock jump), `number-of-ways-to-split-string` (medium/strings+math, if total 1s not divisible by 3 → 0; if 0 ones → C(n-1,2); else gap1×gap2 mod 10^9+7). Bank: **2087**; 6552 tests.
 
 ### feat(bank): add batch 113 — max-product-two-elements, remove-nth-node-from-end (2026-05-28)
 Registered `maximum-product-of-two-elements-in-an-array` (easy/arrays, find two largest then multiply decremented values). Added `remove-nth-node-from-end-of-list` (medium/linked-list, two-pointer with dummy head — fast leads n steps, co-advance until fast.next=null, then skip). Upgraded `two-sum-iv-bst` to full preamble/runner pattern (functionName: findTargetRunner); fixed Python reference solution to use DFS+set instead of iterating TreeNode directly. Bank at **2083**; 6543 tests.
