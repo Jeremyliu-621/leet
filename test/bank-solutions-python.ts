@@ -33123,6 +33123,7 @@ def sumOfSquares(nums):
     return sum(nums[i-1] ** 2 for i in range(1, n+1) if n % i == 0)
 `,
 
+  // batch 126 — math/easy, strings+math/easy, arrays+hash-map/easy
   'number-of-steps-to-reduce-a-number-to-zero': `
 def numberOfSteps(num):
     steps = 0
@@ -33264,6 +33265,62 @@ def isPrefixString(s, words):
         if len(acc) >= len(s):
             return False
     return False
+`,
+
+  // batch 129 — arrays/medium, strings+math/medium, arrays+graph/hard
+  'minimum-number-of-operations-to-move-all-balls-to-each-box': `
+def minOperations(boxes):
+    n = len(boxes)
+    ans = [0] * n
+    for i in range(n):
+        for j in range(n):
+            if boxes[j] == '1':
+                ans[i] += abs(i - j)
+    return ans
+`,
+
+  'minimum-operations-to-make-a-special-number': `
+def minimumOperations(num):
+    n = len(num)
+    ans = n - 1 if '0' in num else n
+    endings = [('0', '0'), ('2', '5'), ('5', '0'), ('7', '5')]
+    for s1, s2 in endings:
+        p2 = n - 1
+        while p2 >= 0 and num[p2] != s2:
+            p2 -= 1
+        if p2 < 0:
+            continue
+        p1 = p2 - 1
+        while p1 >= 0 and num[p1] != s1:
+            p1 -= 1
+        if p1 < 0:
+            continue
+        ans = min(ans, n - p1 - 2)
+    return ans
+`,
+
+  'maximum-score-of-a-node-sequence': `
+def maximumScore(scores, edges):
+    scores = list(scores.to_py() if hasattr(scores, 'to_py') else scores)
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (edges.to_py() if hasattr(edges, 'to_py') else edges)]
+    n = len(scores)
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append((scores[v], v))
+        adj[v].append((scores[u], u))
+    for i in range(n):
+        adj[i].sort(key=lambda x: -x[0])
+        adj[i] = adj[i][:3]
+    ans = -1
+    for b, c in edges:
+        for sa, a in adj[b]:
+            if a == c:
+                continue
+            for sd, d in adj[c]:
+                if d == b or d == a:
+                    continue
+                ans = max(ans, scores[b] + scores[c] + sa + sd)
+    return ans
 `,
 
 };

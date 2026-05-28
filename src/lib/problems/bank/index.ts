@@ -2338,6 +2338,10 @@ import { problem as countTriplets } from './count-triplets-forming-two-arrays-of
 import { problem as removingStarsFromAString } from './removing-stars-from-a-string';
 import { problem as minimumNumberOfMovesToSeatEveryone } from './minimum-number-of-moves-to-seat-everyone';
 import { problem as checkIfStringIsAPrefixOfArray } from './check-if-string-is-a-prefix-of-array';
+// batch 129 — arrays/medium, strings+math/medium, arrays+graph/hard
+import { problem as minimumNumberOfOperationsToMoveAllBallsToEachBox } from './minimum-number-of-operations-to-move-all-balls-to-each-box';
+import { problem as minimumOperationsToMakeASpecialNumber } from './minimum-operations-to-make-a-special-number';
+import { problem as maximumScoreOfANodeSequence } from './maximum-score-of-a-node-sequence';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4713,4 +4717,8 @@ export const problems: readonly Problem[] = [
   removingStarsFromAString,
   minimumNumberOfMovesToSeatEveryone,
   checkIfStringIsAPrefixOfArray,
+  // batch 129 — arrays/medium, strings+math/medium, arrays+graph/hard
+  minimumNumberOfOperationsToMoveAllBallsToEachBox,
+  minimumOperationsToMakeASpecialNumber,
+  maximumScoreOfANodeSequence,
 ];

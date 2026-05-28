@@ -33402,6 +33402,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return sum;
   },
 
+  // batch 126 — math/easy, strings+math/easy, arrays+hash-map/easy
   'number-of-steps-to-reduce-a-number-to-zero': (...args: unknown[]) => {
     let num = args[0] as number, steps = 0;
     while (num > 0) { num % 2 === 0 ? (num /= 2) : (num -= 1); steps++; }
@@ -33522,6 +33523,59 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       if (acc.length >= s.length) return false;
     }
     return false;
+  },
+
+  // batch 129 — arrays/medium, strings+math/medium, arrays+graph/hard
+  'minimum-number-of-operations-to-move-all-balls-to-each-box': (...args: unknown[]) => {
+    const boxes = args[0] as string;
+    const n = boxes.length;
+    const ans: number[] = new Array(n).fill(0);
+    for (let i = 0; i < n; i++)
+      for (let j = 0; j < n; j++)
+        if (boxes[j] === '1') ans[i]! += Math.abs(i - j);
+    return ans;
+  },
+
+  'minimum-operations-to-make-a-special-number': (...args: unknown[]) => {
+    const num = args[0] as string;
+    const n = num.length;
+    let ans = num.includes('0') ? n - 1 : n;
+    for (const [s1, s2] of [['0', '0'], ['2', '5'], ['5', '0'], ['7', '5']]) {
+      let p2 = n - 1;
+      while (p2 >= 0 && num[p2] !== s2!) p2--;
+      if (p2 < 0) continue;
+      let p1 = p2 - 1;
+      while (p1 >= 0 && num[p1] !== s1!) p1--;
+      if (p1 < 0) continue;
+      ans = Math.min(ans, n - p1 - 2);
+    }
+    return ans;
+  },
+
+  'maximum-score-of-a-node-sequence': (...args: unknown[]) => {
+    const scores = args[0] as number[];
+    const edges = args[1] as number[][];
+    const n = scores.length;
+    const adj: [number, number][][] = Array.from({ length: n }, () => []);
+    for (const [u, v] of edges) {
+      adj[u!]!.push([scores[v!]!, v!]);
+      adj[v!]!.push([scores[u!]!, u!]);
+    }
+    for (let i = 0; i < n; i++) {
+      adj[i]!.sort((a, b) => b[0]! - a[0]!);
+      if (adj[i]!.length > 3) adj[i]!.length = 3;
+    }
+    let ans = -1;
+    for (const [b, c] of edges) {
+      for (const [sa, a] of adj[b!]!) {
+        if (a === c!) continue;
+        for (const [sd, d] of adj[c!]!) {
+          if (d === b! || d === a) continue;
+          ans = Math.max(ans, scores[b!]! + scores[c!]! + sa + sd);
+        }
+      }
+    }
+    return ans;
   },
 
 };
