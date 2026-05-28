@@ -32175,6 +32175,101 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     dfs(root, root ? root.val : 0, 0);
     return max;
   },
+  'lowest-common-ancestor-of-a-binary-tree': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const p = args[1] as number;
+    const q = args[2] as number;
+    interface N { val: number; left: N | null; right: N | null }
+    const fromArray = (a: (number | null)[]): N | null => {
+      if (!a.length || a[0] == null) return null;
+      const root: N = { val: a[0], left: null, right: null };
+      const queue: N[] = [root];
+      let i = 1;
+      while (queue.length && i < a.length) {
+        const node = queue.shift() as N;
+        if (a[i] != null) { node.left = { val: a[i] as number, left: null, right: null }; queue.push(node.left); }
+        i++;
+        if (i < a.length && a[i] != null) { node.right = { val: a[i] as number, left: null, right: null }; queue.push(node.right); }
+        i++;
+      }
+      return root;
+    };
+    const lca = (node: N | null): N | null => {
+      if (!node) return null;
+      if (node.val === p || node.val === q) return node;
+      const left = lca(node.left);
+      const right = lca(node.right);
+      if (left && right) return node;
+      return left ?? right;
+    };
+    return (lca(fromArray(arr)) as N).val;
+  },
+  'binary-tree-zigzag-level-order-traversal': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    interface N { val: number; left: N | null; right: N | null }
+    const fromArray = (a: (number | null)[]): N | null => {
+      if (!a.length || a[0] == null) return null;
+      const root: N = { val: a[0], left: null, right: null };
+      const q: N[] = [root];
+      let i = 1;
+      while (q.length && i < a.length) {
+        const node = q.shift() as N;
+        if (a[i] != null) { node.left = { val: a[i] as number, left: null, right: null }; q.push(node.left); }
+        i++;
+        if (i < a.length && a[i] != null) { node.right = { val: a[i] as number, left: null, right: null }; q.push(node.right); }
+        i++;
+      }
+      return root;
+    };
+    const root = fromArray(arr);
+    if (!root) return [];
+    const result: number[][] = [];
+    let queue: N[] = [root];
+    let leftToRight = true;
+    while (queue.length) {
+      const level: number[] = [];
+      const next: N[] = [];
+      for (const node of queue) {
+        level.push(node.val);
+        if (node.left) next.push(node.left);
+        if (node.right) next.push(node.right);
+      }
+      result.push(leftToRight ? level : level.reverse());
+      leftToRight = !leftToRight;
+      queue = next;
+    }
+    return result;
+  },
+  'binary-tree-level-order-traversal-ii': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    interface N { val: number; left: N | null; right: N | null }
+    const fromArray = (a: (number | null)[]): N | null => {
+      if (!a.length || a[0] == null) return null;
+      const root: N = { val: a[0], left: null, right: null };
+      const q: N[] = [root];
+      let i = 1;
+      while (q.length && i < a.length) {
+        const node = q.shift() as N;
+        if (a[i] != null) { node.left = { val: a[i] as number, left: null, right: null }; q.push(node.left); }
+        i++;
+        if (i < a.length && a[i] != null) { node.right = { val: a[i] as number, left: null, right: null }; q.push(node.right); }
+        i++;
+      }
+      return root;
+    };
+    const root = fromArray(arr);
+    if (!root) return [];
+    const result: number[][] = [];
+    let queue: N[] = [root];
+    while (queue.length) {
+      const level: number[] = [];
+      const next: N[] = [];
+      for (const node of queue) { level.push(node.val); if (node.left) next.push(node.left); if (node.right) next.push(node.right); }
+      result.unshift(level);
+      queue = next;
+    }
+    return result;
+  },
   'validate-binary-search-tree': (...args: unknown[]) => {
     const arr = args[0] as (number | null)[];
     interface N { val: number; left: N | null; right: N | null }
