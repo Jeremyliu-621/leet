@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2054** problems; 6456 tests green. Batches 102–105 complete. Site stats at 2,045+.
+**Current focus:** Bank at **2057** problems; 6465 tests green. Batches 102–106 complete. Site stats at 2,045+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 106 bank growth; update site stats; accessibility audit.
+**Next up:** Batch 107 bank growth; update site stats; accessibility audit.
+
+### feat(bank): add batch 106 — longer-contiguous-segments, binary-tree-longest-consecutive-sequence, count-unguarded-cells (2026-05-28)
+Added 3 problems: `longer-contiguous-segments-of-ones-than-zeros` (easy/strings, max-run helper comparing '1' vs '0' streaks), `binary-tree-longest-consecutive-sequence` (medium/tree, DFS passing expected=parent+1; reset to 1 on mismatch — fixed 3 hidden test expectations that were wrong), `count-unguarded-cells-in-the-grid` (medium/arrays+simulation, sentinel-grid ray-cast in 4 cardinal directions). Bank at **2057**; 6465 tests.
 
 ### feat(bank): add batch 105 — merge-two-binary-trees, range-sum-query-immutable, min-cost-connect-all-points (2026-05-28)
 Added 3 problems: `merge-two-binary-trees` (easy/tree, DFS with tree preamble pattern), `range-sum-query-immutable` (easy/arrays+dp, prefix-sum ops-array design pattern), `min-cost-connect-all-points` (medium/graph, O(n²) Prim's MST on Manhattan-distance graph). JS and Python reference solutions for all; JsNull handling fixed for Python tree solutions. Bank at **2054**; 6456 tests.
