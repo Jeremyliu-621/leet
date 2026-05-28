@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2075** problems; 6519 tests green. Batches 102–111 complete. Site stats at 2,072+.
+**Current focus:** Bank at **2078** problems; 6528 tests green. Batches 102–112 complete. Site stats at 2,075+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 112 bank growth; update site stats; UI/UX refinements.
+**Next up:** Batch 113 bank growth; update site stats.
+
+### feat(bank): add batch 112 — lca-binary-tree, zigzag-level-order, level-order-ii (2026-05-28)
+Added 3 problems: `lowest-common-ancestor-of-a-binary-tree` (medium/tree, post-order DFS — null propagation; unlike BST version, must explore entire tree), `binary-tree-zigzag-level-order-traversal` (medium/tree, BFS with alternating level reversal flag), `binary-tree-level-order-traversal-ii` (medium/tree, BFS with unshift/insert(0) for bottom-up result). Bank at **2078**; 6528 tests.
 
 ### feat(bank): add batch 111 — validate-bst, kth-smallest-in-bst, lca-of-bst (2026-05-28)
 Added 3 problems: `validate-binary-search-tree` (medium/tree, min/max bounds DFS — checks strict inequalities at every node), `kth-smallest-element-in-a-bst` (medium/tree, in-order traversal counting to k), `lowest-common-ancestor-of-a-bst` (easy/tree, BST property navigation; runner passes integer values not TreeNode objects). Bank at **2075**; 6519 tests.
