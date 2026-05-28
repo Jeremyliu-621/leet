@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2147** problems; 6735 tests green. Batches 102–128 + 113b + 117b + 122b + 122c + 123b + 124b + 127b complete. TypeScript starters backfilled. Site stats at 2,131+.
+**Current focus:** Bank at **2150** problems; 6744 tests green. Batches 102–129 + 113b + 117b + 122b + 122c + 123b + 124b + 127b complete. TypeScript starters backfilled.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 129 bank growth; UI/UX refinements; accessibility audit.
+**Next up:** Batch 130 bank growth; UI/UX refinements; accessibility audit.
+
+### feat(bank): add batch 129 — min-ops-move-balls, min-ops-special-number, max-score-node-sequence (2026-05-28)
+Three problems: `minimum-number-of-operations-to-move-all-balls-to-each-box` (medium/arrays, O(n²) brute force: answer[i] = sum of |i-j| for all j with box[j]='1'), `minimum-operations-to-make-a-special-number` (medium/strings+math, find last 2-char suffix matching 00/25/50/75 greedy scan; deletion count = n-p1-2), `maximum-score-of-a-node-sequence` (hard/arrays+graph, for each edge (b,c) try all combinations from top-3 neighbors of b and c checking distinctness). Bank at **2150**; 6744 tests.
 
 ### feat(bank): add batch 128 — removing-stars, min-moves-seat-everyone, check-prefix-of-array (2026-05-28)
 Three problems: `removing-stars-from-a-string` (medium/strings+stack, push non-star/pop on star), `minimum-number-of-moves-to-seat-everyone` (easy/arrays, sort both+sum abs diffs), `check-if-string-is-a-prefix-of-array` (easy/arrays+strings, accumulate until match or exceed). Bank at **2147**; 6735 tests.
