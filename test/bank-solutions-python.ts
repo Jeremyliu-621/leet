@@ -33977,20 +33977,4 @@ def canMakeSquare(grid):
     return False
 `,
 
-  'find-the-number-of-good-pairs-ii': `
-def numberOfPairs(nums1, nums2, k):
-    nums1 = list(nums1.to_py() if hasattr(nums1, 'to_py') else nums1)
-    nums2 = list(nums2.to_py() if hasattr(nums2, 'to_py') else nums2)
-    from collections import Counter
-    freq = Counter(nums1)
-    count = 0
-    for b in nums2:
-        target = b * k
-        mul = target
-        while mul <= 1000000:
-            count += freq.get(mul, 0)
-            mul += target
-    return count
-`,
-
 };

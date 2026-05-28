@@ -2384,6 +2384,9 @@ import { problem as countTheNumberOfSpecialCharsI } from './count-the-number-of-
 import { problem as findXorSumOfAllPairsBitwiseAnd } from './find-xor-sum-of-all-pairs-bitwise-and';
 import { problem as maximumNumberOfIntegersFromRangeII } from './maximum-number-of-integers-to-choose-from-a-range-ii';
 import { problem as minimumCostToConnectTwoGroups } from './minimum-cost-to-connect-two-groups';
+// batch 138c — arrays+simulation/easy, strings+hash-map/medium
+import { problem as makeASquareWithTheSameColor } from './make-a-square-with-the-same-color';
+import { problem as countTheNumberOfSpecialCharsII } from './count-the-number-of-special-characters-ii';
 // batch 138b — arrays+math/medium, strings+hash-map/easy, arrays/medium
 import { problem as maximumOr } from './maximum-or';
 import { problem as findPermutationDifference } from './permutation-difference-between-two-strings';
@@ -4816,6 +4819,9 @@ export const problems: readonly Problem[] = [
   findXorSumOfAllPairsBitwiseAnd,
   maximumNumberOfIntegersFromRangeII,
   minimumCostToConnectTwoGroups,
+  // batch 138c — arrays+simulation/easy, strings+hash-map/medium
+  makeASquareWithTheSameColor,
+  countTheNumberOfSpecialCharsII,
   // batch 138b — arrays+math/medium, strings+hash-map/easy, arrays/medium
   maximumOr,
   findPermutationDifference,
