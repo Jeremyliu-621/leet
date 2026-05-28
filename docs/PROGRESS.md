@@ -8,9 +8,18 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2057** problems; 6465 tests green. Batches 102–106 complete. Site stats at 2,045+.
+**Current focus:** Bank at **2069** problems; 6492 tests green. Batches 102–109 complete. Site stats at 2,057+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 107 bank growth; update site stats; accessibility audit.
+**Next up:** Batch 110 bank growth; accessibility audit; UI/UX refinements.
+
+### feat(bank): add batch 109 — implement-trie, number-of-recent-calls, two-sum-iii (2026-05-28)
+Added 3 problems: `implement-trie-prefix-tree` (medium/tree+strings, ops-array with TrieNode map children), `number-of-recent-calls` (easy/simulation, sliding-window queue pruning), `two-sum-iii-data-structure-design` (easy/hash-map, frequency map + complement check with duplicate handling). Bank at **2069**; 6492 tests.
+
+### feat(bank): add batch 108 — kth-largest-element, find-missing-positive, largest-rectangle-in-histogram (2026-05-28)
+Added 3 problems: `kth-largest-element-in-an-array` (medium/heap, sort-desc approach), `find-missing-positive` (hard/arrays, O(n) index-placement swapping), `largest-rectangle-in-histogram` (hard/stack, monotonic increasing stack with sentinel 0). Note: existing orphaned solution for `largest-rectangle-in-histogram` was present in bank-solutions; created matching problem file. Bank at **2066**; 6483 tests.
+
+### feat(bank): add batch 107 — first-unique-character, sum-root-to-leaf-numbers, flatten-binary-tree (2026-05-28)
+Added 3 problems: `first-unique-character-in-a-string` (easy/strings+hash-map, two-pass frequency scan), `sum-root-to-leaf-numbers` (medium/tree, DFS accumulating path number × 10 + val), `flatten-binary-tree-to-linked-list` (medium/tree, rightmost-predecessor in-place flattening; runner returns right-spine values array). Bank at **2063**; 6474 tests.
 
 ### feat(bank): add batch 106 — longer-contiguous-segments, binary-tree-longest-consecutive-sequence, count-unguarded-cells (2026-05-28)
 Added 3 problems: `longer-contiguous-segments-of-ones-than-zeros` (easy/strings, max-run helper comparing '1' vs '0' streaks), `binary-tree-longest-consecutive-sequence` (medium/tree, DFS passing expected=parent+1; reset to 1 on mismatch — fixed 3 hidden test expectations that were wrong), `count-unguarded-cells-in-the-grid` (medium/arrays+simulation, sentinel-grid ray-cast in 4 cardinal directions). Bank at **2057**; 6465 tests.
