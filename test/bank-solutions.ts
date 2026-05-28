@@ -33611,7 +33611,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return mat;
   },
 
-  // batch 130 — arrays+math/easy, arrays+sliding-window/medium, arrays+dynamic-programming/hard
+  // batch 130a — arrays+math/easy, arrays+sliding-window/medium, arrays+dynamic-programming/hard
   'count-even-sum-pairs': (...args: unknown[]) => {
     const nums = args[0] as number[];
     let evens = 0, odds = 0;
@@ -33655,6 +33655,52 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       linearRob(nums.slice(0, n - 1)),
       linearRob(nums.slice(1)),
     );
+  },
+
+  // batch 130b — math/easy, arrays+sliding-window/medium, strings+sliding-window/medium
+  'maximum-difference-by-remapping-a-digit': (...args: unknown[]) => {
+    const num = args[0] as number;
+    const s = String(num);
+    const maxC = s.split('').find(c => c !== '9') ?? '9';
+    const max = parseInt(s.replaceAll(maxC, '9'));
+    const min = parseInt(s.replaceAll(s[0]!, '0') || '0');
+    return max - min;
+  },
+
+  'find-the-power-of-k-size-subarrays-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    if (k === 1) return nums.slice();
+    const res: number[] = [];
+    let streak = 1;
+    for (let i = 1; i < nums.length; i++) {
+      streak = nums[i] === nums[i - 1]! + 1 ? streak + 1 : 1;
+      if (i >= k - 1) res.push(streak >= k ? nums[i]! : -1);
+    }
+    return res;
+  },
+
+  'count-of-substrings-containing-every-vowel-and-k-consonants-ii': (...args: unknown[]) => {
+    const word = args[0] as string, k = args[1] as number;
+    const atLeast = (minK: number): number => {
+      const VOWELS = new Set('aeiou');
+      const vowelCount = new Map<string, number>();
+      let consonants = 0, result = 0, left = 0;
+      for (let right = 0; right < word.length; right++) {
+        const c = word[right]!;
+        if (VOWELS.has(c)) vowelCount.set(c, (vowelCount.get(c) ?? 0) + 1);
+        else consonants++;
+        while (vowelCount.size === 5 && consonants >= minK) {
+          result += word.length - right;
+          const lc = word[left++]!;
+          if (VOWELS.has(lc)) {
+            vowelCount.set(lc, vowelCount.get(lc)! - 1);
+            if (vowelCount.get(lc) === 0) vowelCount.delete(lc);
+          } else consonants--;
+        }
+      }
+      return result;
+    };
+    return atLeast(k) - atLeast(k + 1);
   },
 
   // batch 131
