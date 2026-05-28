@@ -17,6 +17,12 @@ describe('daysBetween', () => {
     expect(daysBetween('2026-05-23', '2026-05-23')).toBe(0);
     expect(daysBetween('2026-06-01', '2026-05-30')).toBe(2);
   });
+
+  it('returns NaN for malformed date strings', () => {
+    expect(daysBetween('not-a-date', '2026-05-22')).toBeNaN();
+    expect(daysBetween('2026-05-22', '')).toBeNaN();
+    expect(daysBetween('2026/05/22', '2026-05-22')).toBeNaN();
+  });
 });
 
 describe('localDateString', () => {
@@ -95,5 +101,34 @@ describe('damageStreak', () => {
     expect(next.longest).toBe(12);
     expect(next.damaged).toBe(true);
     expect(next.lastSolvedDate).toBe('2026-05-22');
+  });
+});
+
+describe('recordSolve edge cases', () => {
+  it('history is capped at MAX_HISTORY_DAYS when overflow occurs', () => {
+    const longHistory: StreakDay[] = Array.from({ length: MAX_HISTORY_DAYS }, (_, i) => ({
+      date: `2025-01-${String(i + 1).padStart(2, '0')}`,
+      solved: 1,
+      failed: 0,
+    }));
+    const result = recordSolve(EMPTY_SUMMARY, longHistory, { today: '2026-05-23' });
+    expect(result.history).toHaveLength(MAX_HISTORY_DAYS);
+    // The most recent entry should be the new day
+    expect(result.history[result.history.length - 1]?.date).toBe('2026-05-23');
+  });
+
+  it('initialises streak from zero on first ever solve', () => {
+    const result = recordSolve(EMPTY_SUMMARY, [], { today: '2026-05-23' });
+    expect(result.summary.current).toBe(1);
+    expect(result.summary.longest).toBe(1);
+    expect(result.summary.lastSolvedDate).toBe('2026-05-23');
+    expect(result.summary.damaged).toBe(false);
+  });
+
+  it('multiple solves on the same day accumulate in history but do not double-count streak', () => {
+    const after1 = recordSolve(EMPTY_SUMMARY, [], { today: '2026-05-23' });
+    const after2 = recordSolve(after1.summary, after1.history, { today: '2026-05-23' });
+    expect(after2.summary.current).toBe(1);
+    expect(after2.history.filter((d) => d.date === '2026-05-23')[0]?.solved).toBe(2);
   });
 });

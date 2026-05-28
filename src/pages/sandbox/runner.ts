@@ -83,6 +83,7 @@ function executeJsRun(request: RunRequest): void {
     code: request.code,
     functionName: request.functionName,
     tests: request.tests,
+    ...(request.preamble ? { preamble: request.preamble } : {}),
   });
 }
 
@@ -218,6 +219,7 @@ async function executePythonRun(request: RunRequest): Promise<void> {
     code: request.code,
     functionName: request.functionName,
     tests: request.tests,
+    ...(request.preamble ? { preamble: request.preamble } : {}),
   });
 }
 

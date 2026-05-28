@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import {
   EditorView,
   keymap,
@@ -6,16 +6,33 @@ import {
   highlightActiveLine,
   highlightActiveLineGutter,
   drawSelection,
+  rectangularSelection,
+  crosshairCursor,
+  highlightSpecialChars,
+  dropCursor,
+  scrollPastEnd,
 } from '@codemirror/view';
 import { Compartment, EditorState } from '@codemirror/state';
 import { javascript } from '@codemirror/lang-javascript';
 import { python } from '@codemirror/lang-python';
-import { defaultKeymap, history, historyKeymap } from '@codemirror/commands';
+import { java } from '@codemirror/lang-java';
+import { cpp } from '@codemirror/lang-cpp';
+import { rust } from '@codemirror/lang-rust';
+import { sql } from '@codemirror/lang-sql';
+import { go } from '@codemirror/lang-go';
+import {
+  defaultKeymap,
+  history,
+  historyKeymap,
+  indentWithTab,
+  toggleComment,
+} from '@codemirror/commands';
 import {
   bracketMatching,
   indentOnInput,
   foldGutter,
   foldKeymap,
+  indentUnit,
 } from '@codemirror/language';
 import {
   autocompletion,
@@ -24,13 +41,17 @@ import {
   completionKeymap,
 } from '@codemirror/autocomplete';
 import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/search';
-import { vim } from '@replit/codemirror-vim';
-import { leetlockEditorTheme } from '../codemirror-theme';
+import { vim, getCM } from '@replit/codemirror-vim';
+import { emacs } from '@replit/codemirror-emacs';
+import { leetlockEditorThemeDark, leetlockEditorThemeLight } from '../codemirror-theme';
 import type { JudgeResult } from '../../../lib/judge';
 import type { EditorKeymap, SupportedLanguage } from '../../../lib/types';
-import { VerdictPanel } from './VerdictPanel';
+import { TerminalPanel } from './TerminalPanel';
+import { KeyboardShortcutsModal } from './KeyboardShortcutsModal';
 
 interface EditorPanelProps {
+  /** Number of spaces inserted by the Tab key. */
+  indentSize?: 2 | 4;
   /** Starter code for the active language. Replacing this resets the editor. */
   starterCode: string;
   /** Language currently active in the editor (controls syntax highlighting + the runner). */
@@ -41,6 +62,8 @@ interface EditorPanelProps {
   onLanguageChange: (language: SupportedLanguage) => void;
   /** Active CodeMirror keymap. `'vim'` switches the editor to modal vim bindings. */
   editorKeymap: EditorKeymap;
+  /** Editor font size in CSS pixels. Reconfigured live via a Compartment. */
+  fontSize: number;
   /** Callback invoked whenever the editor content changes. */
   onChange: (code: string) => void;
   /** Called when user clicks Run. */
@@ -62,25 +85,103 @@ interface EditorPanelProps {
   verdictMode: 'run' | 'submit';
   /** Whether the Give Up button should be shown. */
   showGiveUp: boolean;
+  /** Called when the user wants to skip to a different problem (practice mode only). */
+  onNewProblem?: () => void;
   /** Number of attempts remaining. */
   attemptsRemaining: number | null;
+  /** Whether the editor is currently in fullscreen (problem panel hidden) mode. */
+  isFullscreen?: boolean;
+  /** Called when the user clicks the fullscreen toggle button. */
+  onToggleFullscreen?: () => void;
+  /** Current resolved theme — controls the CodeMirror colour scheme. */
+  resolvedTheme?: 'dark' | 'light';
+  /**
+   * When set, replaces the entire editor content with `content` once. The
+   * `version` counter must change for each new restore request so the effect
+   * re-fires even if the content string happens to be the same.
+   */
+  resetCode?: { content: string; version: number };
+  /** Initial word-wrap state; controlled externally for persistence. */
+  wordWrap?: boolean;
+  /** Called when the user toggles word-wrap so the caller can persist it. */
+  onWordWrapChange?: (wrap: boolean) => void;
 }
 
-const INDENT_SPACES = '  ';
+function indentSpaces(n: 2 | 4): string {
+  return ' '.repeat(n);
+}
+
+function fontSizeTheme(px: number) {
+  return EditorView.theme({ '&': { fontSize: `${px}px` } });
+}
 
 const LANGUAGE_LABEL: Readonly<Record<SupportedLanguage, string>> = {
   javascript: 'JavaScript',
+  typescript: 'TypeScript',
   python: 'Python',
+  java: 'Java',
+  cpp: 'C++',
+  csharp: 'C#',
+  go: 'Go',
+  rust: 'Rust',
+  kotlin: 'Kotlin',
+  swift: 'Swift',
+  sql: 'SQL',
 };
 
 const LANGUAGE_SHORT: Readonly<Record<SupportedLanguage, string>> = {
   javascript: 'JS',
+  typescript: 'TS',
   python: 'Py',
+  java: 'Java',
+  cpp: 'C++',
+  csharp: 'C#',
+  go: 'Go',
+  rust: 'Rust',
+  kotlin: 'Kt',
+  swift: 'Swift',
+  sql: 'SQL',
 };
 
 function languageExtension(language: SupportedLanguage) {
-  return language === 'python' ? python() : javascript();
+  switch (language) {
+    case 'python':
+      return python();
+    case 'typescript':
+      return javascript({ typescript: true });
+    case 'java':
+      return java();
+    case 'cpp':
+      return cpp();
+    case 'rust':
+      return rust();
+    case 'sql':
+      return sql();
+    case 'go':
+      return go();
+    // Kotlin and Swift don't have official CodeMirror extensions — use Java
+    // syntax highlighting as a reasonable approximation for both.
+    case 'kotlin':
+      return java();
+    case 'swift':
+      return java();
+    case 'csharp':
+      return java();
+    default:
+      return javascript();
+  }
 }
+
+function modalKeymapExtension(k: EditorKeymap) {
+  if (k === 'vim') return vim();
+  if (k === 'emacs') return emacs();
+  return [];
+}
+
+const TERMINAL_MIN_PX = 80;
+const TERMINAL_MAX_PX = 480;
+const TERMINAL_DEFAULT_PX = 200;
+const TERMINAL_RESIZE_STEP_PX = 20;
 
 /**
  * Right panel — houses the CodeMirror 6 editor, the JS/Py language selector,
@@ -89,11 +190,13 @@ function languageExtension(language: SupportedLanguage) {
  * syntax extension swaps without rebuilding the editor state.
  */
 export function EditorPanel({
+  indentSize = 2,
   starterCode,
   language,
   availableLanguages,
   onLanguageChange,
   editorKeymap,
+  fontSize,
   onChange,
   onRun,
   onSubmit,
@@ -102,7 +205,14 @@ export function EditorPanel({
   verdict,
   verdictMode,
   showGiveUp,
+  onNewProblem,
   attemptsRemaining,
+  isFullscreen = false,
+  onToggleFullscreen,
+  resolvedTheme = 'dark',
+  resetCode,
+  wordWrap: wordWrapProp,
+  onWordWrapChange,
 }: EditorPanelProps) {
   const editorContainerRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
@@ -111,6 +221,14 @@ export function EditorPanel({
   // mode in the popup without rebuilding the editor (which would lose
   // their in-progress code).
   const keymapCompartmentRef = useRef(new Compartment());
+  // Font size goes through its own Compartment so it can be changed live
+  // without rebuilding the editor or losing the document state.
+  const fontSizeCompartmentRef = useRef(new Compartment());
+  // Theme goes through its own Compartment so it can be swapped when the
+  // user toggles between dark and light mode without rebuilding the editor.
+  const themeCompartmentRef = useRef(new Compartment());
+  // Word-wrap goes through its own Compartment for live toggling.
+  const wrapCompartmentRef = useRef(new Compartment());
 
   // Stable refs — the editor builds ONCE; refs let the keymap and the doc-
   // change effect read fresh callback values without rebuilding.
@@ -118,6 +236,10 @@ export function EditorPanel({
   const onRunRef = useRef(onRun);
   const onSubmitRef = useRef(onSubmit);
   const starterCodeRef = useRef(starterCode);
+  const indentSizeRef = useRef(indentSize);
+  useEffect(() => {
+    indentSizeRef.current = indentSize;
+  }, [indentSize]);
   useEffect(() => {
     onChangeRef.current = onChange;
   }, [onChange]);
@@ -139,6 +261,12 @@ export function EditorPanel({
       if (update.docChanged) {
         onChangeRef.current(update.state.doc.toString());
       }
+      if (update.docChanged || update.selectionSet) {
+        const { state } = update;
+        const head = state.selection.main.head;
+        const line = state.doc.lineAt(head);
+        setCursorPosRef.current({ line: line.number, col: head - line.from + 1 });
+      }
     });
 
     const state = EditorState.create({
@@ -147,17 +275,23 @@ export function EditorPanel({
         // Vim mode (when enabled) MUST come before every other keymap so
         // its modal handlers take precedence. The Compartment lets us
         // swap it in / out without rebuilding the editor.
-        keymapCompartmentRef.current.of(editorKeymap === 'vim' ? vim() : []),
+        keymapCompartmentRef.current.of(modalKeymapExtension(editorKeymap)),
         // Display extensions
         lineNumbers(),
         highlightActiveLineGutter(),
         highlightActiveLine(),
         highlightSelectionMatches(),
+        highlightSpecialChars(),
         foldGutter(),
         drawSelection(),
+        dropCursor(),
+        scrollPastEnd(),
         // Allow multi-cursor (Alt-click, Ctrl-D add-next via defaultKeymap).
         // drawSelection above is what makes the additional carets visible.
         EditorState.allowMultipleSelections.of(true),
+        // Rectangular selection with Alt+drag; shows crosshair cursor when active.
+        rectangularSelection(),
+        crosshairCursor(),
         // Editing extensions
         history(),
         indentOnInput(),
@@ -165,6 +299,10 @@ export function EditorPanel({
         closeBrackets(),
         autocompletion(),
         search(),
+        // Indent unit — respects user preference
+        indentUnit.of(indentSpaces(indentSize)),
+        // Placeholder text when the editor is empty
+        EditorView.contentAttributes.of({ 'aria-label': 'Code editor' }),
         // Language goes through a Compartment so it can be swapped without
         // rebuilding the editor state on language change.
         languageCompartmentRef.current.of(languageExtension(language)),
@@ -187,8 +325,7 @@ export function EditorPanel({
               return true;
             },
           },
-          // Alt-R: reset the editor to the problem's starter code. Browser
-          // hard-refresh owns Ctrl/Cmd-Shift-R, so this picks a free combo.
+          // Alt-R: reset the editor to the problem's starter code.
           {
             key: 'Alt-r',
             preventDefault: true,
@@ -205,6 +342,25 @@ export function EditorPanel({
               return true;
             },
           },
+          // Toggle comment with Cmd/Ctrl + /
+          {
+            key: 'Mod-/',
+            preventDefault: true,
+            run: toggleComment,
+          },
+          // Duplicate line with Cmd/Ctrl+Shift+D
+          {
+            key: 'Mod-Shift-d',
+            preventDefault: true,
+            run(view) {
+              const { state: s } = view;
+              const line = s.doc.lineAt(s.selection.main.head);
+              view.dispatch({
+                changes: { from: line.to, insert: '\n' + line.text },
+              });
+              return true;
+            },
+          },
           // Autocomplete first — accepts a completion with Tab/Enter while the
           // popup is open. Falls through to plain Tab insertion below otherwise.
           ...completionKeymap,
@@ -218,30 +374,24 @@ export function EditorPanel({
           ...historyKeymap,
           // Arrow keys, selection, copy/paste, etc.
           ...defaultKeymap,
-          // Tab inserts two spaces — no hard tabs. (Completions captured Tab
-          // above when their popup is open, so this only fires otherwise.)
-          {
-            key: 'Tab',
-            run(view) {
-              view.dispatch(
-                view.state.update({
-                  changes: {
-                    from: view.state.selection.main.from,
-                    to: view.state.selection.main.to,
-                    insert: INDENT_SPACES,
-                  },
-                  selection: {
-                    anchor: view.state.selection.main.from + INDENT_SPACES.length,
-                  },
-                }),
-              );
-              return true;
-            },
-          },
+          // Tab inserts spaces — respects indent size.
+          indentWithTab,
         ]),
-        leetlockEditorTheme,
+        themeCompartmentRef.current.of(
+          resolvedTheme === 'light' ? leetlockEditorThemeLight : leetlockEditorThemeDark,
+        ),
+        // Font size goes through its own Compartment so it can be reconfigured
+        // live when the user adjusts it in Settings without rebuilding the editor.
+        fontSizeCompartmentRef.current.of(fontSizeTheme(fontSize)),
         updateListener,
-        EditorView.lineWrapping,
+        // Word-wrap in its own Compartment so the toolbar button can toggle it live.
+        wrapCompartmentRef.current.of(EditorView.lineWrapping),
+        // Scrollbar styling
+        EditorView.theme({
+          '.cm-scroller': {
+            scrollbarWidth: 'thin',
+          },
+        }),
       ],
     });
 
@@ -272,6 +422,18 @@ export function EditorPanel({
     });
   }, [starterCode]);
 
+  // External content restore (e.g. "restore last submitted code").
+  // Fires whenever `version` increments, replacing the full document.
+  useEffect(() => {
+    if (!resetCode) return;
+    const view = viewRef.current;
+    if (!view) return;
+    view.dispatch({
+      changes: { from: 0, to: view.state.doc.length, insert: resetCode.content },
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resetCode?.version]);
+
   // Swap the language extension when `language` changes.
   useEffect(() => {
     const view = viewRef.current;
@@ -286,11 +448,29 @@ export function EditorPanel({
     const view = viewRef.current;
     if (!view) return;
     view.dispatch({
-      effects: keymapCompartmentRef.current.reconfigure(
-        editorKeymap === 'vim' ? vim() : [],
-      ),
+      effects: keymapCompartmentRef.current.reconfigure(modalKeymapExtension(editorKeymap)),
     });
   }, [editorKeymap]);
+
+  // Reconfigure font size when the user changes it in Settings.
+  useEffect(() => {
+    const view = viewRef.current;
+    if (!view) return;
+    view.dispatch({
+      effects: fontSizeCompartmentRef.current.reconfigure(fontSizeTheme(fontSize)),
+    });
+  }, [fontSize]);
+
+  // Swap the colour theme when resolvedTheme changes.
+  useEffect(() => {
+    const view = viewRef.current;
+    if (!view) return;
+    view.dispatch({
+      effects: themeCompartmentRef.current.reconfigure(
+        resolvedTheme === 'light' ? leetlockEditorThemeLight : leetlockEditorThemeDark,
+      ),
+    });
+  }, [resolvedTheme]);
 
   const handleRunKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
@@ -306,21 +486,193 @@ export function EditorPanel({
     [onSubmit],
   );
 
+  const [showShortcuts, setShowShortcuts] = useState(false);
+  const [codeCopied, setCodeCopied] = useState(false);
+  const handleCopyCode = useCallback(() => {
+    const code = viewRef.current?.state.doc.toString() ?? '';
+    if (!code) return;
+    void navigator.clipboard.writeText(code).then(() => {
+      setCodeCopied(true);
+      setTimeout(() => setCodeCopied(false), 1500);
+    });
+  }, []);
+
+  // Global `?` shortcut — opens the shortcuts modal unless the user is typing
+  // in a text input or the code editor itself.
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key !== '?' || e.ctrlKey || e.metaKey || e.altKey) return;
+      const tag = (document.activeElement as HTMLElement | null)?.tagName ?? '';
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || (document.activeElement as HTMLElement | null)?.isContentEditable) return;
+      // Don't fire when the CodeMirror editor has focus (users may want to type '?')
+      const editorEl = editorContainerRef.current;
+      if (editorEl && editorEl.contains(document.activeElement)) return;
+      e.preventDefault();
+      setShowShortcuts((v) => !v);
+    }
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, []);
+
+  // Two-step give-up confirmation: first click arms it, second click fires.
+  const [giveUpArmed, setGiveUpArmed] = useState(false);
+  const giveUpTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const handleGiveUpClick = useCallback(() => {
+    if (!onGiveUp) return;
+    if (giveUpArmed) {
+      if (giveUpTimerRef.current) clearTimeout(giveUpTimerRef.current);
+      setGiveUpArmed(false);
+      onGiveUp();
+    } else {
+      setGiveUpArmed(true);
+      giveUpTimerRef.current = setTimeout(() => setGiveUpArmed(false), 3000);
+    }
+  }, [onGiveUp, giveUpArmed]);
+
   const handleGiveUpKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      if ((e.key === 'Enter' || e.key === ' ') && onGiveUp) onGiveUp();
+      if (e.key === 'Enter' || e.key === ' ') handleGiveUpClick();
     },
-    [onGiveUp],
+    [handleGiveUpClick],
   );
+
+  // Line / column state — updated on every selection change.
+  const [cursorPos, setCursorPos] = useState<{ line: number; col: number }>({ line: 1, col: 1 });
+  const setCursorPosRef = useRef(setCursorPos);
+
+  const langContainerRef = useRef<HTMLDivElement>(null);
+  const handleLangKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLButtonElement>) => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      e.preventDefault();
+      const container = langContainerRef.current;
+      if (!container) return;
+      const buttons = Array.from(
+        container.querySelectorAll<HTMLButtonElement>('button[role="radio"]'),
+      );
+      const idx = buttons.indexOf(e.currentTarget);
+      if (idx === -1) return;
+      const next =
+        e.key === 'ArrowRight'
+          ? buttons[(idx + 1) % buttons.length]
+          : buttons[(idx - 1 + buttons.length) % buttons.length];
+      if (!next) return;
+      const nextLang = availableLanguages[buttons.indexOf(next)];
+      if (nextLang) {
+        onLanguageChange(nextLang);
+        next.focus();
+      }
+    },
+    [availableLanguages, onLanguageChange],
+  );
+
+  // Terminal collapse state — persisted in-session only.
+  const [terminalCollapsed, setTerminalCollapsed] = useState(false);
+  const toggleTerminal = useCallback(() => setTerminalCollapsed((v) => !v), []);
+
+  // Terminal resize — drag handle above the terminal panel.
+  const [terminalHeight, setTerminalHeight] = useState(TERMINAL_DEFAULT_PX);
+  const isResizingTerminalRef = useRef(false);
+
+  const handleTerminalResizePointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    isResizingTerminalRef.current = true;
+    (e.target as HTMLDivElement).setPointerCapture(e.pointerId);
+  }, []);
+
+  const handleTerminalResizePointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isResizingTerminalRef.current) return;
+    // The drag handle is positioned right above the terminal; moving up = taller terminal.
+    // We use clientY to determine the new terminal height.
+    const container = (e.currentTarget as HTMLDivElement).closest('section');
+    if (!container) return;
+    const rect = container.getBoundingClientRect();
+    // Height = distance from pointer to bottom of container, minus the action bar height (~40px).
+    const actionBarApprox = 40;
+    const rawH = rect.bottom - e.clientY - actionBarApprox;
+    const clamped = Math.min(TERMINAL_MAX_PX, Math.max(TERMINAL_MIN_PX, rawH));
+    setTerminalHeight(clamped);
+  }, []);
+
+  const handleTerminalResizePointerUp = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isResizingTerminalRef.current) return;
+    isResizingTerminalRef.current = false;
+    const container = (e.currentTarget as HTMLDivElement).closest('section');
+    if (!container) return;
+    const rect = container.getBoundingClientRect();
+    const actionBarApprox = 40;
+    const rawH = rect.bottom - e.clientY - actionBarApprox;
+    const clamped = Math.min(TERMINAL_MAX_PX, Math.max(TERMINAL_MIN_PX, rawH));
+    setTerminalHeight(clamped);
+  }, []);
+
+  // Vim mode indicator — tracks NORMAL / INSERT / VISUAL / REPLACE so users
+  // can see the current modal state without watching the cursor shape.
+  const [vimMode, setVimMode] = useState<string | null>(null);
+  useEffect(() => {
+    if (editorKeymap !== 'vim') {
+      setVimMode(null);
+      return;
+    }
+    const view = viewRef.current;
+    if (!view) return;
+    const cm = getCM(view);
+    if (!cm) return;
+    setVimMode('normal');
+    const handler = (info: { mode: string; subMode?: string }) => {
+      const label = info.subMode ? `${info.mode} (${info.subMode})` : info.mode;
+      setVimMode(label);
+    };
+    cm.on('vim-mode-change', handler);
+    return () => {
+      cm.off('vim-mode-change', handler);
+    };
+  }, [editorKeymap]);
+
+  // Word-wrap toggle — seed from prop if provided, else default on.
+  const [wordWrap, setWordWrap] = useState(wordWrapProp ?? true);
+  const onWordWrapChangeRef = useRef(onWordWrapChange);
+  useEffect(() => { onWordWrapChangeRef.current = onWordWrapChange; }, [onWordWrapChange]);
+
+  // Sync compartment when the prop changes externally (e.g. first load from storage).
+  useEffect(() => {
+    if (wordWrapProp === undefined) return;
+    setWordWrap(wordWrapProp);
+    const view = viewRef.current;
+    if (view) {
+      view.dispatch({
+        effects: wrapCompartmentRef.current.reconfigure(wordWrapProp ? EditorView.lineWrapping : []),
+      });
+    }
+  }, [wordWrapProp]);
+
+  const handleToggleWrap = useCallback(() => {
+    setWordWrap((prev) => {
+      const next = !prev;
+      const view = viewRef.current;
+      if (view) {
+        view.dispatch({
+          effects: wrapCompartmentRef.current.reconfigure(next ? EditorView.lineWrapping : []),
+        });
+      }
+      onWordWrapChangeRef.current?.(next);
+      return next;
+    });
+  }, []);
 
   const showLanguageSelector = availableLanguages.length > 1;
 
   return (
     <section className="flex h-full flex-col overflow-hidden" aria-label="Code editor">
-      {/* Language label / selector */}
-      <div className="flex shrink-0 items-center justify-between border-b border-border px-4 py-2">
+      {/* Language label / selector + fullscreen toggle */}
+      <div className="flex shrink-0 items-center justify-between border-b border-border px-3 py-1.5">
         {showLanguageSelector ? (
-          <div role="radiogroup" aria-label="Code language" className="flex items-center gap-0.5">
+          <div
+            ref={langContainerRef}
+            role="radiogroup"
+            aria-label="Code language"
+            className="flex items-center gap-0.5 overflow-x-auto scrollbar-none"
+          >
             {availableLanguages.map((lang) => {
               const selected = lang === language;
               return (
@@ -330,13 +682,15 @@ export function EditorPanel({
                   role="radio"
                   aria-checked={selected}
                   aria-label={`Switch to ${LANGUAGE_LABEL[lang]}`}
+                  tabIndex={selected ? 0 : -1}
                   onClick={() => {
                     if (!selected) onLanguageChange(lang);
                   }}
+                  onKeyDown={handleLangKeyDown}
                   className={
                     selected
-                      ? 'rounded-sm border border-border-strong bg-surface-2 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent'
-                      : 'rounded-sm border border-transparent px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-faint transition-colors hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent'
+                      ? 'whitespace-nowrap rounded-sm border border-border-strong bg-surface-2 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent'
+                      : 'whitespace-nowrap rounded-sm border border-transparent px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-faint transition-colors hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent'
                   }
                 >
                   {LANGUAGE_SHORT[lang]}
@@ -349,55 +703,178 @@ export function EditorPanel({
             {LANGUAGE_LABEL[language]}
           </span>
         )}
+
+        {/* Right controls: copy code + wrap toggle + shortcuts button + fullscreen toggle */}
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={handleCopyCode}
+            aria-label="Copy code to clipboard"
+            title="Copy code"
+            className="rounded-sm border border-transparent px-1.5 py-0.5 font-mono text-[10px] text-faint transition-colors hover:border-border hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+          >
+            {codeCopied ? '✓' : 'copy'}
+          </button>
+          <button
+            type="button"
+            onClick={handleToggleWrap}
+            aria-label={wordWrap ? 'Disable word wrap' : 'Enable word wrap'}
+            aria-pressed={wordWrap}
+            title={wordWrap ? 'Word wrap: on' : 'Word wrap: off'}
+            className={[
+              'rounded-sm border px-1.5 py-0.5 font-mono text-[10px] transition-colors focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent',
+              wordWrap
+                ? 'border-border-strong text-muted bg-surface-2'
+                : 'border-transparent text-faint hover:border-border hover:text-muted',
+            ].join(' ')}
+          >
+            wrap
+          </button>
+          <button
+            type="button"
+            onClick={() => setShowShortcuts(true)}
+            aria-label="Show keyboard shortcuts"
+            title="Keyboard shortcuts"
+            className="rounded-sm border border-transparent px-1.5 py-0.5 font-mono text-[10px] text-faint transition-colors hover:border-border hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+          >
+            ?
+          </button>
+
+          {/* Fullscreen toggle — only rendered when the parent passes the callback */}
+          {onToggleFullscreen && (
+            <button
+              type="button"
+              onClick={onToggleFullscreen}
+              aria-label={isFullscreen ? 'Show problem panel' : 'Expand editor to full width'}
+              aria-pressed={isFullscreen}
+              title={isFullscreen ? 'Collapse (show problem)' : 'Expand editor'}
+              className="rounded-sm border border-transparent p-1 font-mono text-[10px] text-faint transition-colors hover:border-border hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+            >
+              {isFullscreen ? '⊡' : '⊞'}
+            </button>
+          )}
+        </div>
       </div>
 
-      {/* Editor */}
-      <div className="min-h-0 flex-1 overflow-hidden" aria-label={`Code editor — ${LANGUAGE_LABEL[language]}`}>
+      {/* Editor — role="group" is required for aria-label on a non-landmark div. */}
+      <div
+        role="group"
+        aria-label={`Code editor — ${LANGUAGE_LABEL[language]}`}
+        className="min-h-0 flex-1 overflow-hidden"
+      >
+        <div ref={editorContainerRef} className="h-full w-full" />
+      </div>
+
+      {/* Terminal resize handle — hidden when terminal is collapsed */}
+      {!terminalCollapsed && (
         <div
-          ref={editorContainerRef}
-          className="h-full w-full"
-          // CodeMirror manages its own focus/tab behaviour; the outer div is
-          // presentational only.
-          aria-hidden="true"
+          role="separator"
+          aria-orientation="horizontal"
+          aria-label="Resize terminal panel"
+          tabIndex={0}
+          className="group relative h-1 shrink-0 cursor-row-resize bg-border transition-colors hover:bg-border-strong focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+          onPointerDown={handleTerminalResizePointerDown}
+          onPointerMove={handleTerminalResizePointerMove}
+          onPointerUp={handleTerminalResizePointerUp}
+          onKeyDown={(e) => {
+            if (e.key === 'ArrowUp') {
+              e.preventDefault();
+              setTerminalHeight((h) => Math.min(TERMINAL_MAX_PX, h + TERMINAL_RESIZE_STEP_PX));
+            } else if (e.key === 'ArrowDown') {
+              e.preventDefault();
+              setTerminalHeight((h) => Math.max(TERMINAL_MIN_PX, h - TERMINAL_RESIZE_STEP_PX));
+            }
+          }}
+        >
+          <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-border-strong opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
+        </div>
+      )}
+      <div className="shrink-0 overflow-hidden" role="region" aria-label="Terminal output">
+        <TerminalPanel
+          result={verdict}
+          mode={verdictMode}
+          collapsed={terminalCollapsed}
+          onToggleCollapsed={toggleTerminal}
+          bodyHeight={terminalCollapsed ? undefined : terminalHeight}
         />
       </div>
 
-      {/* Divider */}
-      <div className="shrink-0 border-t border-border" aria-hidden="true" />
-
-      {/* Verdict region — fixed height to prevent layout shift */}
-      <div className="min-h-[80px] shrink-0 overflow-y-auto">
-        <VerdictPanel result={verdict} mode={verdictMode} />
-      </div>
+      {/* Keyboard shortcuts modal */}
+      {showShortcuts && <KeyboardShortcutsModal onClose={() => setShowShortcuts(false)} />}
 
       {/* Action bar */}
       <div className="shrink-0 border-t border-border bg-surface">
-        <div className="flex items-center justify-between px-4 py-3">
-          {/* Left: shortcut hint + attempts remaining (when relevant) */}
+        <div className="flex items-center justify-between px-4 py-2">
+          {/* Left: status info */}
           <div className="flex items-center gap-3 font-mono text-[10px] text-faint">
-            <span aria-hidden="true" className="hidden md:inline">
-              <kbd className="font-mono">⌘↵</kbd> run · <kbd className="font-mono">⌘⇧↵</kbd> submit
-              · <kbd className="font-mono">⌥R</kbd> reset
+            <span aria-hidden="true" className="hidden md:flex items-center gap-1.5">
+              <kbd className="rounded border border-border bg-surface-2 px-1 py-px text-[9px]">
+                ⌘↵
+              </kbd>
+              <span>run</span>
+              <span className="text-border-strong mx-0.5">·</span>
+              <kbd className="rounded border border-border bg-surface-2 px-1 py-px text-[9px]">
+                ⌘⇧↵
+              </kbd>
+              <span>submit</span>
             </span>
             {attemptsRemaining !== null && attemptsRemaining < Infinity && (
-              <span aria-label={`${attemptsRemaining} submissions remaining`} className="text-xs">
+              <span
+                aria-label={`${attemptsRemaining} submissions remaining`}
+                className="rounded border border-border px-1.5 py-0.5 text-[10px]"
+              >
                 {attemptsRemaining} left
               </span>
             )}
+            {/* Vim mode indicator — shows NORMAL/INSERT/VISUAL when vim keymap is active */}
+            {vimMode !== null && (
+              <span
+                aria-live="polite"
+                aria-atomic="true"
+                aria-label={`Vim mode: ${vimMode}`}
+                className="uppercase tracking-widest font-semibold"
+              >
+                {vimMode}
+              </span>
+            )}
+            {/* Line / column indicator — mirrors every major IDE */}
+            <span
+              aria-label={`Line ${cursorPos.line}, column ${cursorPos.col}`}
+              className="tabular-nums"
+            >
+              Ln {cursorPos.line}, Col {cursorPos.col}
+            </span>
           </div>
 
           {/* Right: action buttons */}
           <div className="flex items-center gap-2">
+            {onNewProblem && (
+              <button
+                type="button"
+                onClick={onNewProblem}
+                disabled={isRunning}
+                aria-label="Skip to a different problem"
+                className="rounded-sm border border-border px-3 py-1.5 font-mono text-[11px] text-faint transition-colors hover:border-border-strong hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                new problem
+              </button>
+            )}
             {showGiveUp && onGiveUp && (
               <button
                 type="button"
-                onClick={onGiveUp}
+                onClick={handleGiveUpClick}
                 onKeyDown={handleGiveUpKeyDown}
                 disabled={isRunning}
-                aria-label="Give up on this challenge"
-                className="rounded-sm border border-border px-3 py-1.5 font-mono text-xs text-faint transition-colors hover:border-border-strong hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent disabled:cursor-not-allowed disabled:opacity-40"
+                aria-label={giveUpArmed ? 'Confirm: give up on this challenge' : 'Give up on this challenge'}
+                className={[
+                  'rounded-sm border px-3 py-1.5 font-mono text-[11px] transition-colors',
+                  'focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent disabled:cursor-not-allowed disabled:opacity-40',
+                  giveUpArmed
+                    ? 'border-border-strong text-text hover:border-accent'
+                    : 'border-border text-faint hover:border-border-strong hover:text-muted',
+                ].join(' ')}
               >
-                give up
+                {giveUpArmed ? 'confirm?' : 'give up'}
               </button>
             )}
 
@@ -408,8 +885,26 @@ export function EditorPanel({
               disabled={isRunning}
               aria-keyshortcuts="Control+Enter Meta+Enter"
               aria-label="Run visible test cases"
-              className="rounded-sm border border-border px-3 py-1.5 font-mono text-xs text-muted transition-colors hover:border-border-strong hover:text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent disabled:cursor-not-allowed disabled:opacity-40"
+              className="inline-flex items-center gap-1.5 rounded-sm border border-border px-4 py-1.5 font-mono text-[11px] font-medium text-muted transition-all hover:border-border-strong hover:text-text hover:bg-surface-2 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent disabled:cursor-not-allowed disabled:opacity-40"
             >
+              {isRunning && verdictMode === 'run' && (
+                <svg
+                  className="h-3 w-3 motion-safe:animate-spin"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    strokeOpacity="0.25"
+                  />
+                  <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+              )}
               {isRunning && verdictMode === 'run' ? 'running' : 'run'}
             </button>
 
@@ -420,9 +915,27 @@ export function EditorPanel({
               disabled={isRunning}
               aria-keyshortcuts="Control+Shift+Enter Meta+Shift+Enter"
               aria-label="Submit solution against all test cases"
-              className="rounded-sm bg-accent px-3 py-1.5 font-mono text-xs font-semibold text-on-accent transition-opacity hover:opacity-90 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent disabled:cursor-not-allowed disabled:opacity-40"
+              className="inline-flex items-center gap-1.5 rounded-sm bg-accent px-4 py-1.5 font-mono text-[11px] font-bold text-on-accent transition-opacity hover:opacity-90 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent disabled:cursor-not-allowed disabled:opacity-40"
             >
-              {isRunning && verdictMode === 'submit' ? 'running' : 'submit'}
+              {isRunning && verdictMode === 'submit' && (
+                <svg
+                  className="h-3 w-3 motion-safe:animate-spin"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    strokeOpacity="0.25"
+                  />
+                  <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+              )}
+              {isRunning && verdictMode === 'submit' ? 'submitting' : 'submit'}
             </button>
           </div>
         </div>

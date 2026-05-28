@@ -27,6 +27,11 @@ export const problem: Problem = {
       output: '4',
     },
   ],
+  hints: [
+    'You\'re tracking a streak that resets when the character changes. What two things do you need to remember as you scan left to right?',
+    'Keep a `curr` run length and a `best` seen so far. Extend `curr` when the next character matches the previous one; reset `curr = 1` when it differs. Update `best = Math.max(best, curr)` on every step.',
+    '`if (!text.length) return 0; let best = 1, curr = 1; for (let i = 1; i < text.length; i++) { curr = text[i] === text[i-1] ? curr + 1 : 1; best = Math.max(best, curr); } return best;`',
+  ],
   functionName: 'longestEqualRun',
   params: ['text'],
   starterCode: {

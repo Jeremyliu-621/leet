@@ -4,8 +4,19 @@
 
 import type { Difficulty, ProblemTag, UserPreferences } from '../../../lib/types';
 import { DIFFICULTIES, PROBLEM_TAGS } from '../../../lib/types';
+import { getAllProblems } from '../../../lib/problems';
 import { formatTag, capitalise } from '../options-helpers';
 import { SectionCard } from './SectionCard';
+
+const _all = getAllProblems();
+
+const TAG_COUNTS: Readonly<Record<ProblemTag, number>> = Object.fromEntries(
+  PROBLEM_TAGS.map((tag) => [tag, _all.filter((p) => p.tags.includes(tag)).length]),
+) as Readonly<Record<ProblemTag, number>>;
+
+const DIFF_COUNTS: Readonly<Record<Difficulty, number>> = Object.fromEntries(
+  DIFFICULTIES.map((d) => [d, _all.filter((p) => p.difficulty === d).length]),
+) as Readonly<Record<Difficulty, number>>;
 
 interface ProblemSelectionSectionProps {
   prefs: UserPreferences;
@@ -63,7 +74,7 @@ export function ProblemSelectionSection({ prefs, onChange }: ProblemSelectionSec
                   onClick={() => toggleDifficulty(d)}
                   disabled={isLast}
                   aria-pressed={selected}
-                  aria-label={`${capitalise(d)} difficulty${isLast ? ' (cannot deselect last)' : ''}`}
+                  aria-label={`${capitalise(d)} difficulty — ${DIFF_COUNTS[d]} problems${isLast ? ' (cannot deselect last)' : ''}`}
                   className={[
                     'rounded-sm border px-3 py-1.5 font-mono text-xs transition-colors',
                     'focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent',
@@ -74,6 +85,7 @@ export function ProblemSelectionSection({ prefs, onChange }: ProblemSelectionSec
                   ].join(' ')}
                 >
                   {d}
+                  <span className="ml-1.5 opacity-50">{DIFF_COUNTS[d]}</span>
                 </button>
               );
             })}
@@ -115,7 +127,7 @@ export function ProblemSelectionSection({ prefs, onChange }: ProblemSelectionSec
                   type="button"
                   onClick={() => toggleTag(tag)}
                   aria-pressed={selected}
-                  aria-label={`${formatTag(tag)} topic${selected ? ' (selected)' : ''}`}
+                  aria-label={`${formatTag(tag)} topic — ${TAG_COUNTS[tag]} problems${selected ? ' (selected)' : ''}`}
                   className={[
                     'rounded-sm border px-3 py-1.5 font-mono text-xs transition-colors',
                     'focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent',
@@ -125,6 +137,7 @@ export function ProblemSelectionSection({ prefs, onChange }: ProblemSelectionSec
                   ].join(' ')}
                 >
                   {formatTag(tag)}
+                  <span className="ml-1.5 opacity-50">{TAG_COUNTS[tag]}</span>
                 </button>
               );
             })}

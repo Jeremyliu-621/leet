@@ -35,6 +35,7 @@ import {
   setValue,
   updateValue,
 } from '../../lib/storage';
+import { applyTheme } from '../../lib/theme';
 import { DEFAULT_PREFERENCES } from '../../lib/storage/defaults';
 import { verifySecret } from '../../lib/crypto';
 import {
@@ -61,6 +62,9 @@ import { PendingChangesSection } from './components/PendingChangesSection';
 import { SyncStatusSection } from './components/SyncStatusSection';
 import { ResetSection } from './components/ResetSection';
 import { AboutSection } from './components/AboutSection';
+import { ImportExportSection } from './components/ImportExportSection';
+import { EditorSection } from './components/EditorSection';
+import { ProblemBrowserSection } from './components/ProblemBrowserSection';
 import { VerifyModal } from './components/VerifyModal';
 
 // ---------------------------------------------------------------------------
@@ -165,6 +169,11 @@ export function Options() {
       cancelled = true;
     };
   }, []);
+
+  // Apply theme changes live so the settings page itself reflects the new theme.
+  useEffect(() => {
+    if (data?.prefs.theme) applyTheme(data.prefs.theme);
+  }, [data?.prefs.theme]);
 
   // ---------------------------------------------------------------------------
   // Helpers
@@ -744,7 +753,13 @@ export function Options() {
             onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}
           />
 
-          {/* 6. Failure */}
+          {/* 6. Editor */}
+          <EditorSection
+            prefs={d.prefs}
+            onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}
+          />
+
+          {/* 7. Failure */}
           <FailureSection
             prefs={d.prefs}
             onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}
@@ -770,14 +785,20 @@ export function Options() {
           {/* 11. Sync status */}
           <SyncStatusSection lastSyncAt={null} />
 
-          {/* 12. Reset */}
+          {/* 12. Import / Export */}
+          <ImportExportSection />
+
+          {/* 13. Reset */}
           <ResetSection
             lock={d.lock}
             strictMode={d.prefs.strictMode}
             onReset={handleReset(d)}
           />
 
-          {/* 13. About — bundled-Pyodide reassurance + boot-time stat */}
+          {/* 14. Problem bank browser */}
+          <ProblemBrowserSection />
+
+          {/* 15. About — bundled-Pyodide reassurance + boot-time stat */}
           <AboutSection />
         </main>
       </div>

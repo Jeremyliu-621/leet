@@ -1,4 +1,4 @@
-import type { Difficulty, ProblemTag } from '../types';
+import type { Difficulty, ProblemTag, SupportedLanguage } from '../types';
 
 /** A worked example shown on the challenge problem panel. */
 export interface ProblemExample {
@@ -43,11 +43,14 @@ export interface Problem {
   /** Ordered parameter names for that function. */
   params: readonly string[];
   /**
-   * Starter code skeleton per language. JavaScript is **required**. Python
-   * is added problem-by-problem during the Pyodide rollout (see
-   * `docs/PYODIDE_PLAN.md`); additional languages stay optional.
+   * Starter code skeleton per language. JavaScript is **required**. Additional
+   * languages are optional and added problem-by-problem.
    */
-  starterCode: Readonly<{ javascript: string; python?: string }>;
+  starterCode: Readonly<
+    { javascript: string; python?: string } & Partial<
+      Record<Exclude<SupportedLanguage, 'javascript' | 'python'>, string>
+    >
+  >;
   /** Tests shown to the user and run by the "Run" button. */
   visibleTests: readonly TestCase[];
   /** Tests hidden from the user and run only by the "Submit" button. */
@@ -57,4 +60,11 @@ export interface Problem {
    * reveals them one at a time, gated by an explicit user click.
    */
   hints?: readonly string[];
+  /**
+   * Optional preamble code injected before the user's solution. Useful for
+   * problems that require a shared data-structure definition (e.g. ListNode for
+   * linked-list problems). The user's editor shows only `starterCode`; the
+   * preamble runs invisibly in the sandbox before the user's code.
+   */
+  preamble?: Readonly<Partial<Record<SupportedLanguage, string>>>;
 }

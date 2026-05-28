@@ -6,22 +6,26 @@
 // instantiated as a Blob Worker by the sandbox host page, so it inherits the
 // sandbox page's relaxed CSP (which permits the `new Function` call below).
 //
-// It receives { requestId, code, functionName, tests }, builds the user's
-// function, runs it against every test, and posts back a structured result.
-// The host page enforces the wall-clock timeout by terminating this Worker.
+// It receives { requestId, code, functionName, tests, preamble? }, builds the
+// user's function (optionally preceded by preamble code), runs it against every
+// test, and posts back a structured result. The host page enforces the
+// wall-clock timeout by terminating this Worker.
 
 self.onmessage = function handleMessage(event) {
   var data = event.data || {};
   var requestId = data.requestId;
   var code = typeof data.code === 'string' ? data.code : '';
+  var preamble = typeof data.preamble === 'string' ? data.preamble + '\n' : '';
   var functionName = typeof data.functionName === 'string' ? data.functionName : '';
   var tests = Array.isArray(data.tests) ? data.tests : [];
 
   var userFn;
   try {
-    // Define the user's code, then hand back the target function by name.
+    // Define the user's code (optionally preceded by preamble), then hand
+    // back the target function by name.
     var factory = new Function(
       '"use strict";\n' +
+        preamble +
         code +
         '\n;return (typeof ' +
         functionName +
@@ -61,6 +65,7 @@ self.onmessage = function handleMessage(event) {
 };
 
 // Runs a single test, capturing console output and any thrown error.
+// Measures wall-clock execution time with Date.now() for approximate ms timing.
 function runOne(userFn, test, index) {
   var logs = [];
   var originalLog = console.log;
@@ -69,8 +74,10 @@ function runOne(userFn, test, index) {
   };
   try {
     var args = test && Array.isArray(test.args) ? test.args : [];
+    var start = Date.now();
     var value = userFn.apply(null, args);
-    return { index: index, status: 'returned', value: value, logs: logs };
+    var durationMs = Date.now() - start;
+    return { index: index, status: 'returned', value: value, logs: logs, durationMs: durationMs };
   } catch (err) {
     return { index: index, status: 'threw', error: describeError(err), logs: logs };
   } finally {

@@ -148,3 +148,26 @@ so Vite transforms them through its normal HTML pipeline (injects hashed `<scrip
 
 **Detection:** the Playwright e2e harness (`e2e/extension.spec.ts`) — this is exactly the class
 of bug only real-browser end-to-end testing can catch.
+
+
+### 2026-05-24 — D16: Draft code stored in local storage, keyed by problem ID
+
+**Context:** Users sometimes close the challenge tab mid-progress (tab crash, accidental close,
+system sleep). Losing all editor work is frustrating and increases give-up rate.
+
+**Decision:** Auto-save in-progress code to `chrome.storage.local` under `draftCode[problemId]`
+with an 800ms debounce. Entries older than 7 days are pruned automatically. The draft is cleared
+immediately when the problem is accepted.
+
+**Key choices:**
+- Keyed by `problem.id`, not by `(problem.id, language)` — the draft stores whichever language
+  was last active, so switching languages mid-session works without extra keys.
+- Only the unmodified starter code is NOT saved (guard: `if (code === starter) return`).
+  This avoids writing to storage on every problem load.
+- 800ms debounce matches a comfortable typing pause without hammering storage on every keystroke.
+- 7-day TTL: short enough to not accumulate indefinitely, long enough to survive a weekend break.
+- Stored in `local` (not `sync`) because drafts are device-specific and can be large.
+
+### 2026-05-26 — D_: Force-reset origin/main to canonical development branch
+
+Two unrelated git histories existed in this repo: a detached HEAD (80 commits, 1990+ problems, full-feature EditorPanel) and origin/main (50 commits, 25 problems, older EditorPanel). The detached HEAD is the canonical development line per PROGRESS.md; all prior autonomous loop work was on it. Force-pushed detached HEAD to origin/main to consolidate. The diverged origin/main history (50 commits) is superseded.

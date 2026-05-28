@@ -28,6 +28,11 @@ export const problem: Problem = {
       explanation: '1 is not considered prime.',
     },
   ],
+  hints: [
+    'Handle edge cases first: any number less than 2 is *not* prime. For the main check, think about what range of divisors you actually need to test.',
+    'If `n` has a factor `d > 1`, it also has `n/d`. The smaller of the two is always ≤ √n. So testing divisors from 2 up to `Math.floor(Math.sqrt(n))` is sufficient — you don\'t need to go further.',
+    '`if (n < 2) return false; for (let i = 2; i <= Math.sqrt(n); i++) { if (n % i === 0) return false; } return true;` — works correctly for 2 (returns true) and 4 (caught by i=2).',
+  ],
   functionName: 'isPrime',
   params: ['n'],
   starterCode: {

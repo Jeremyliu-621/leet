@@ -20,6 +20,9 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   editorFontSize: 13,
   preferredLanguage: 'javascript',
   editorKeymap: 'default',
+  problemPanelWidthPct: 41.67,
+  editorIndentSize: 2,
+  editorWordWrap: true,
 };
 
 /**
@@ -37,4 +40,6 @@ export const STORAGE_DEFAULTS: StorageSchema = {
   unlockTokens: [],
   solvedProblems: [],
   streakHistory: [],
+  draftCode: {},
+  submissionHistory: {},
 };

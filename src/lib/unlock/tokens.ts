@@ -12,15 +12,23 @@ export interface CreateTokenInput {
   now?: number;
 }
 
+/** Minimum meaningful token lifetime — 1 minute in ms. */
+const MIN_DURATION_MS = 60_000;
+
 /** Creates a token that expires `durationMs` after the given clock value. */
 export function createToken(input: CreateTokenInput): UnlockToken {
   const now = input.now ?? Date.now();
+  // Guard against zero, negative, NaN, or Infinity — clamp to at least 1 minute.
+  const durationMs =
+    typeof input.durationMs === 'number' && isFinite(input.durationMs) && input.durationMs > 0
+      ? input.durationMs
+      : MIN_DURATION_MS;
   return {
     domain: input.domain.toLowerCase(),
     problemId: input.problemId,
-    durationMs: input.durationMs,
+    durationMs,
     grantedAt: now,
-    expiresAt: now + input.durationMs,
+    expiresAt: now + durationMs,
   };
 }
 

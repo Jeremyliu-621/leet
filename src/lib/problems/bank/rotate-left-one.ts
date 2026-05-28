@@ -28,6 +28,11 @@ export const problem: Problem = {
       output: '[8,15,16,4]',
     },
   ],
+  hints: [
+    'Only one element moves in a surprising way — the rest just shift left by one slot. Which element is "special," and where does it end up?',
+    'The result is `[nums[1], nums[2], …, nums[n-1], nums[0]]`. Array slicing lets you grab the tail in one operation and append the head without modifying the original.',
+    '`return [...nums.slice(1), nums[0]];` — `slice(1)` gives everything from index 1 onward; appending `nums[0]` at the end completes the rotation. Single-element arrays work too: `slice(1)` is `[]`, result is `[nums[0]]`.',
+  ],
   functionName: 'shiftLeftByOne',
   params: ['nums'],
   starterCode: {

@@ -9,6 +9,7 @@ import {
 import { recordFail, recordSolve } from '../lib/streak/streak';
 import { RECONCILE_ALARM, reconcile } from './reconcile';
 import type { SolvedProblemRecord, UnlockToken } from '../lib/types';
+import { isSupportedLanguage } from '../lib/types';
 import type {
   FailChallengeRequest,
   GrantUnlockRequest,
@@ -67,7 +68,7 @@ async function grantUnlock(request: GrantUnlockRequest): Promise<RuntimeResponse
     solvedAt: now,
     durationMs: request.solveDurationMs ?? 0,
     attempts: request.attempts ?? 0,
-    language: 'javascript',
+    language: isSupportedLanguage(request.language) ? request.language : 'javascript',
     domain: token.domain,
   };
   const nextSolved = [...solvedHistory, record].slice(-MAX_SOLVED_HISTORY);
@@ -84,6 +85,7 @@ async function grantUnlock(request: GrantUnlockRequest): Promise<RuntimeResponse
   // -> reconcile() path is async and the challenge page's navigation races
   // the stale rule, bouncing back into a fresh challenge.
   await reconcile(now);
+  void updateBadge(nextSolved, now);
   return { ok: true, token };
 }
 
@@ -116,10 +118,17 @@ async function failChallenge(
     }
     return { ok: true };
   }
-  const url =
-    request.redirectUrl && request.redirectUrl.trim().length > 0
-      ? request.redirectUrl
-      : chrome.runtime.getURL('src/pages/blocked/index.html');
+  let url: string;
+  if (request.redirectUrl && request.redirectUrl.trim().length > 0) {
+    url = request.redirectUrl;
+  } else {
+    const base = chrome.runtime.getURL('src/pages/blocked/index.html');
+    const q = new URLSearchParams();
+    if (request.domain) q.set('domain', request.domain);
+    if (request.targetUrl) q.set('target', request.targetUrl);
+    const qs = q.toString();
+    url = qs ? `${base}?${qs}` : base;
+  }
   await chrome.tabs.update(tabId, { url });
   return { ok: true };
 }
@@ -150,6 +159,24 @@ async function openChallenge(
   const challengeUrl = `${chrome.runtime.getURL('src/pages/challenge/index.html')}?target=${encodeURIComponent(request.blockedUrl)}`;
   await chrome.tabs.update(tabId, { url: challengeUrl });
   return { ok: true };
+}
+
+// --- Badge: show today's solve count on the extension icon ---------------
+
+async function updateBadge(
+  solved: readonly SolvedProblemRecord[] = [],
+  now = Date.now(),
+): Promise<void> {
+  const todayStart = new Date(now);
+  todayStart.setHours(0, 0, 0, 0);
+  const count = solved.filter((r) => r.solvedAt >= todayStart.getTime()).length;
+  const text = count > 0 ? String(count > 99 ? '99+' : count) : '';
+  try {
+    await chrome.action.setBadgeBackgroundColor({ color: '#4A4A4A' });
+    await chrome.action.setBadgeText({ text });
+  } catch {
+    // Badge API unavailable (e.g. in test environments).
+  }
 }
 
 // --- webNavigation: catch SPA history-state changes ----------------------
@@ -188,10 +215,12 @@ chrome.tabs.onRemoved.addListener((tabId) => {
 chrome.runtime.onInstalled.addListener(() => {
   console.info('[LeetLock] installed / updated');
   void reconcile();
+  void getValue('solvedProblems').then((s) => updateBadge(s));
 });
 
 chrome.runtime.onStartup.addListener(() => {
   void reconcile();
+  void getValue('solvedProblems').then((s) => updateBadge(s));
 });
 
 chrome.alarms.onAlarm.addListener((alarm) => {
@@ -210,6 +239,10 @@ chrome.storage.onChanged.addListener((changes, _area) => {
   ];
   if (triggers.some((key) => Object.prototype.hasOwnProperty.call(changes, key))) {
     void reconcile();
+  }
+  if (Object.prototype.hasOwnProperty.call(changes, 'solvedProblems')) {
+    const next = changes['solvedProblems']?.newValue as readonly SolvedProblemRecord[] | undefined;
+    void updateBadge(next ?? []);
   }
 });
 

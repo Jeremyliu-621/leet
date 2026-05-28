@@ -11,7 +11,7 @@ describe('deepEqual', () => {
     expect(deepEqual(1, 2)).toBe(false);
     expect(deepEqual('a', 'b')).toBe(false);
     expect(deepEqual(0, false)).toBe(false);
-    expect(deepEqual(null, undefined)).toBe(false);
+    expect(deepEqual(null, undefined)).toBe(true); // Pyodide converts Python None → undefined
     expect(deepEqual(1, '1')).toBe(false);
   });
 

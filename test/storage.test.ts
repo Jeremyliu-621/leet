@@ -83,6 +83,51 @@ describe('storage store', () => {
     expect(localKeys).not.toContain('userPreferences');
   });
 
+  it('submissionHistory defaults to empty record and routes to local', async () => {
+    expect(await getValue('submissionHistory')).toEqual({});
+    expect(STORAGE_AREAS.submissionHistory).toBe('local');
+  });
+
+  it('submissionHistory can be updated per problem id', async () => {
+    const record = {
+      attempt: 1,
+      timestamp: 1000,
+      outcome: 'wrong-answer' as const,
+      passCount: 2,
+      totalTests: 5,
+    };
+    await updateValue('submissionHistory', (history) => ({ ...history, 'two-sum': [record] }));
+    const stored = await getValue('submissionHistory');
+    expect(stored['two-sum']).toEqual([record]);
+    expect(stored['other-problem']).toBeUndefined();
+  });
+
+  it('submissionHistory persists optional code field', async () => {
+    const record = {
+      attempt: 1,
+      timestamp: 1000,
+      outcome: 'wrong-answer' as const,
+      passCount: 0,
+      totalTests: 3,
+      code: 'return null;',
+    };
+    await updateValue('submissionHistory', (h) => ({ ...h, 'two-sum': [record] }));
+    const stored = await getValue('submissionHistory');
+    expect(stored['two-sum']?.[0]?.code).toBe('return null;');
+  });
+
+  it('submissionHistory can be cleared per problem id on solve', async () => {
+    const record = { attempt: 1, timestamp: 1000, outcome: 'wrong-answer' as const, passCount: 1, totalTests: 3 };
+    await setValue('submissionHistory', { 'two-sum': [record], 'fizz-buzz': [record] });
+    await updateValue('submissionHistory', (history) => {
+      const { 'two-sum': _, ...rest } = history;
+      return rest;
+    });
+    const stored = await getValue('submissionHistory');
+    expect(stored['two-sum']).toBeUndefined();
+    expect(stored['fizz-buzz']).toEqual([record]);
+  });
+
   it('throws a clear error when chrome.storage is unavailable', async () => {
     uninstallFakeChrome();
     await expect(getValue('blockedRules')).rejects.toThrow(/chrome\.storage is unavailable/);

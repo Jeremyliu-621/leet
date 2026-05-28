@@ -106,3 +106,59 @@ describe('nextExpiry', () => {
     expect(nextExpiry([], 0)).toBeNull();
   });
 });
+
+describe('createToken edge cases', () => {
+  it('clamps non-positive durationMs to MIN_DURATION_MS', () => {
+    const t0 = createToken({ domain: 'test.com', problemId: 'p1', durationMs: 0, now: 1000 });
+    expect(t0.durationMs).toBe(60_000);
+    expect(t0.expiresAt).toBe(1000 + 60_000);
+
+    const tNeg = createToken({ domain: 'test.com', problemId: 'p1', durationMs: -500, now: 1000 });
+    expect(tNeg.durationMs).toBe(60_000);
+  });
+
+  it('clamps Infinity and NaN durationMs to MIN_DURATION_MS', () => {
+    const tInf = createToken({ domain: 'test.com', problemId: 'p1', durationMs: Infinity, now: 1000 });
+    expect(tInf.durationMs).toBe(60_000);
+
+    const tNaN = createToken({ domain: 'test.com', problemId: 'p1', durationMs: NaN, now: 1000 });
+    expect(tNaN.durationMs).toBe(60_000);
+  });
+
+  it('accepts a valid positive durationMs', () => {
+    const t = createToken({ domain: 'test.com', problemId: 'p1', durationMs: 300_000, now: 0 });
+    expect(t.durationMs).toBe(300_000);
+    expect(t.expiresAt).toBe(300_000);
+  });
+});
+
+describe('upsertToken edge cases', () => {
+  it('deduplicates when domain differs only in case', () => {
+    const existing = [token('YOUTUBE.COM', 0, 600_000)];
+    const next = upsertToken(existing, token('youtube.com', 100, 300_000), 50);
+    // Should replace the old entry, not add a second
+    expect(next.filter((t) => t.domain === 'youtube.com')).toHaveLength(1);
+  });
+
+  it('returns a single token when upsert into empty list', () => {
+    const next = upsertToken([], token('a.com', 0, 60_000), 0);
+    expect(next).toHaveLength(1);
+  });
+});
+
+describe('pruneTokens edge cases', () => {
+  it('keeps tokens whose expiresAt equals now (exact boundary)', () => {
+    const t = token('a.com', 0, 100);
+    // isActive uses expiresAt > now, so at exactly now the token is expired
+    expect(pruneTokens([t], 100)).toHaveLength(0);
+  });
+
+  it('keeps tokens expiring strictly after now', () => {
+    const t = token('a.com', 0, 101);
+    expect(pruneTokens([t], 100)).toHaveLength(1);
+  });
+
+  it('returns empty list from empty input', () => {
+    expect(pruneTokens([], 999)).toHaveLength(0);
+  });
+});

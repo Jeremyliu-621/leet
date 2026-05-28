@@ -29,6 +29,11 @@ export const problem: Problem = {
       explanation: '8 is larger than every element, so it goes at the end.',
     },
   ],
+  hints: [
+    'You want the *leftmost* index where the element is ≥ target — the classic "left boundary" binary search. What should happen when you find a qualifying element at `mid`?',
+    'Keep a variable `result = nums.length` (the fallback when nothing qualifies). When `nums[mid] >= target`, record `result = mid` and continue searching *left* (`hi = mid - 1`) to find an earlier match. When `nums[mid] < target`, search right.',
+    '`let lo = 0, hi = nums.length - 1, result = nums.length; while (lo <= hi) { const mid = (lo + hi) >> 1; if (nums[mid] >= target) { result = mid; hi = mid - 1; } else { lo = mid + 1; } } return result;`',
+  ],
   functionName: 'firstNotSmaller',
   params: ['nums', 'target'],
   starterCode: {

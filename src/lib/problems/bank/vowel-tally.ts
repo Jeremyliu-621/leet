@@ -27,6 +27,11 @@ export const problem: Problem = {
       output: '5',
     },
   ],
+  hints: [
+    'You need to match each character against a fixed set of five vowels, and the check must be case-insensitive. How do you normalize the input before checking?',
+    'Convert the string to lowercase first, then test each character against the set `{\'a\', \'e\', \'i\', \'o\', \'u\'}`. A `Set` lookup is O(1) per character.',
+    '`const vowels = new Set([\'a\',\'e\',\'i\',\'o\',\'u\']); return [...text.toLowerCase()].filter(c => vowels.has(c)).length;` — or a plain counter loop: `let count = 0; for (const c of text.toLowerCase()) if (vowels.has(c)) count++; return count;`',
+  ],
   functionName: 'vowelTally',
   params: ['text'],
   starterCode: {

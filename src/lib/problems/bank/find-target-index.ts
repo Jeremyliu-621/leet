@@ -28,6 +28,11 @@ export const problem: Problem = {
       output: '0',
     },
   ],
+  hints: [
+    'A linear scan works in O(n), but the sorted order lets binary search find the answer in O(log n). What information tells you which half of the array the target must be in?',
+    'Maintain two pointers `lo = 0` and `hi = nums.length - 1`. Compute midpoint `mid = (lo + hi) >> 1`. If `nums[mid] === target` you are done. If `nums[mid] < target`, the answer must be in the right half; otherwise the left half.',
+    '`while (lo <= hi) { const mid = (lo + hi) >> 1; if (nums[mid] === target) return mid; else if (nums[mid] < target) lo = mid + 1; else hi = mid - 1; } return -1;`',
+  ],
   functionName: 'findTargetIndex',
   params: ['nums', 'target'],
   starterCode: {

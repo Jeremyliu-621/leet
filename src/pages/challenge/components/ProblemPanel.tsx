@@ -1,7 +1,56 @@
+import { useState, useCallback } from 'react';
 import type { Problem } from '../../../lib/problems/types';
 import type { Difficulty } from '../../../lib/types';
 import { ProblemDescription } from './ProblemDescription';
 import { HintsSection } from './HintsSection';
+
+/**
+ * Renders a single line of text that may contain inline code spans (backticks).
+ * Splits on `` `...` `` patterns and renders code spans with the design-system
+ * code style. Avoids running the full remark/rehype pipeline for simple strings.
+ */
+function InlineText({ text }: { text: string }) {
+  const parts = text.split(/(`[^`]+`)/g);
+  if (parts.length === 1) return <>{text}</>;
+  return (
+    <>
+      {parts.map((part, i) =>
+        part.startsWith('`') && part.endsWith('`') ? (
+          <code
+            key={i}
+            className="rounded-sm bg-surface-2 px-1 py-0.5 font-mono text-[0.85em] text-text"
+          >
+            {part.slice(1, -1)}
+          </code>
+        ) : (
+          <span key={i}>{part}</span>
+        ),
+      )}
+    </>
+  );
+}
+
+/** Inline copy button for example inputs and outputs. */
+function InlineCopy({ value }: { value: string }) {
+  const [copied, setCopied] = useState(false);
+  const handleCopy = useCallback(() => {
+    void navigator.clipboard.writeText(value).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    });
+  }, [value]);
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      aria-label="Copy to clipboard"
+      className="ml-1 shrink-0 font-mono text-faint transition-colors hover:text-muted focus:outline-none focus-visible:ring-1 focus-visible:ring-accent focus-visible:rounded-sm"
+      style={{ fontSize: '9px', letterSpacing: '0.05em' }}
+    >
+      {copied ? '✓' : 'copy'}
+    </button>
+  );
+}
 
 interface ProblemPanelProps {
   problem: Problem;
@@ -13,8 +62,6 @@ interface ProblemPanelProps {
 
 /** Maps difficulty to Tailwind classes for the pill label. */
 function difficultyClasses(difficulty: Difficulty): string {
-  // Pure grayscale — only contrast differentiates difficulty.
-  // easy → faint, medium → muted, hard → text (all uppercase mono).
   switch (difficulty) {
     case 'easy':
       return 'text-faint border-faint';
@@ -40,12 +87,12 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
     >
       <div className="px-6 pb-8 pt-6">
         {/* Title row */}
-        <div className="mb-4 flex flex-wrap items-baseline gap-3">
+        <div className="mb-3 flex flex-wrap items-center gap-3">
           <h1 className="text-base font-semibold leading-snug text-text">{title}</h1>
           {/* Difficulty pill */}
           <span
             className={[
-              'inline-block rounded-sm border px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-widest',
+              'inline-block rounded-sm border px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest',
               difficultyClasses(difficulty),
             ].join(' ')}
             aria-label={`Difficulty: ${difficulty}`}
@@ -61,7 +108,7 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
               <span
                 key={tag}
                 role="listitem"
-                className="inline-block rounded-sm border border-border px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-faint"
+                className="inline-block rounded-sm border border-border bg-surface-2 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-faint"
               >
                 {tag}
               </span>
@@ -69,7 +116,7 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
           </div>
         )}
 
-        {/* Description — markdown (GFM); plain text still renders cleanly. */}
+        {/* Description */}
         <div className="mb-6">
           <ProblemDescription markdown={description} />
         </div>
@@ -84,26 +131,32 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
               {examples.map((example, i) => (
                 <div
                   key={i}
-                  className="rounded-card border border-border bg-surface-2 px-4 py-3"
+                  className="rounded-card border border-border bg-surface px-4 py-3"
                   aria-label={`Example ${i + 1}`}
                 >
-                  <div className="space-y-1.5">
-                    <div className="flex flex-wrap gap-x-2 gap-y-1">
-                      <span className="font-mono text-[10px] uppercase tracking-wider text-faint">
+                  <div className="space-y-2">
+                    <div className="flex flex-wrap gap-x-3 gap-y-1">
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-faint w-14 shrink-0">
                         Input
                       </span>
-                      <code className="font-mono text-xs text-text">{example.input}</code>
+                      <code className="font-mono text-xs text-text break-all">{example.input}</code>
+                      <InlineCopy value={example.input} />
                     </div>
-                    <div className="flex flex-wrap gap-x-2 gap-y-1">
-                      <span className="font-mono text-[10px] uppercase tracking-wider text-faint">
+                    <div className="flex flex-wrap gap-x-3 gap-y-1">
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-faint w-14 shrink-0">
                         Output
                       </span>
-                      <code className="font-mono text-xs text-text">{example.output}</code>
+                      <code className="font-mono text-xs text-text break-all">
+                        {example.output}
+                      </code>
+                      <InlineCopy value={example.output} />
                     </div>
                     {example.explanation && (
-                      <p className="pt-1 text-xs leading-relaxed text-muted">
-                        {example.explanation}
-                      </p>
+                      <div className="border-t border-border pt-2 mt-1">
+                        <p className="text-xs leading-relaxed text-muted">
+                          <InlineText text={example.explanation} />
+                        </p>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -126,8 +179,13 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
             <ul className="space-y-1.5" aria-label="Problem constraints">
               {constraints.map((constraint, i) => (
                 <li key={i} className="flex gap-2.5">
-                  <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-faint" aria-hidden="true" />
-                  <span className="font-mono text-xs leading-relaxed text-muted">{constraint}</span>
+                  <span
+                    className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-border-strong"
+                    aria-hidden="true"
+                  />
+                  <span className="font-mono text-xs leading-relaxed text-muted">
+                    <InlineText text={constraint} />
+                  </span>
                 </li>
               ))}
             </ul>

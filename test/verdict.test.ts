@@ -23,6 +23,8 @@ describe('buildVerdict', () => {
     expect(result.passed).toBe(2);
     expect(result.total).toBe(2);
     expect(result.verdicts.every((v) => v.status === 'pass')).toBe(true);
+    expect(result.verdicts[0]?.input).toBe('1, 2');
+    expect(result.verdicts[1]?.input).toBe('10, 5');
   });
 
   it('reports wrong-answer when a result mismatches', () => {
@@ -34,6 +36,7 @@ describe('buildVerdict', () => {
     if (failing?.status === 'fail') {
       expect(failing.expected).toBe(15);
       expect(failing.actual).toBe(99);
+      expect(failing.input).toBe('10, 5');
     }
   });
 
@@ -45,6 +48,7 @@ describe('buildVerdict', () => {
     expect(result.outcome).toBe('runtime-error');
     expect(result.passed).toBe(1);
     expect(result.verdicts[1]?.status).toBe('error');
+    expect(result.verdicts[1]?.input).toBe('10, 5');
   });
 
   it('reports timeout for a timed-out run', () => {
@@ -84,5 +88,79 @@ describe('buildVerdict', () => {
     const arrayTests: TestCase[] = [{ args: [[3, 1, 2]], expected: [1, 2, 3] }];
     const result = buildVerdict(arrayTests, okResponse([returned(0, [1, 2, 3])]));
     expect(result.outcome).toBe('accepted');
+    expect(result.verdicts[0]?.input).toBe('[3,1,2]');
+  });
+
+  it('accumulates totalDurationMs from outcomes that carry durationMs', () => {
+    const withTiming: RunResponse = {
+      type: 'result',
+      requestId: 'r',
+      ok: true,
+      outcomes: [
+        { index: 0, status: 'returned', value: 3, logs: [], durationMs: 2 },
+        { index: 1, status: 'returned', value: 15, logs: [], durationMs: 3 },
+      ],
+    };
+    const result = buildVerdict(tests, withTiming);
+    expect(result.outcome).toBe('accepted');
+    expect(result.totalDurationMs).toBe(5);
+    const v0 = result.verdicts[0];
+    if (v0?.status === 'pass') expect(v0.durationMs).toBe(2);
+    const v1 = result.verdicts[1];
+    if (v1?.status === 'pass') expect(v1.durationMs).toBe(3);
+  });
+
+  it('leaves totalDurationMs undefined when no outcomes carry durationMs', () => {
+    const result = buildVerdict(tests, okResponse([returned(0, 3), returned(1, 15)]));
+    expect(result.totalDurationMs).toBeUndefined();
+  });
+
+  it('includes durationMs on failing verdicts and accumulates all test times', () => {
+    const withTiming: RunResponse = {
+      type: 'result',
+      requestId: 'r',
+      ok: true,
+      outcomes: [
+        { index: 0, status: 'returned', value: 3, logs: [], durationMs: 1 },
+        { index: 1, status: 'returned', value: 99, logs: [], durationMs: 2 },
+      ],
+    };
+    const result = buildVerdict(tests, withTiming);
+    expect(result.outcome).toBe('wrong-answer');
+    // totalDurationMs is the sum of ALL test timings (pass + fail).
+    expect(result.totalDurationMs).toBe(3);
+    const v0 = result.verdicts[0];
+    if (v0?.status === 'pass') expect(v0.durationMs).toBe(1);
+    const v1 = result.verdicts[1];
+    if (v1?.status === 'fail') expect(v1.durationMs).toBe(2);
+  });
+
+  it('ignores non-finite durationMs values in accumulation', () => {
+    const withBadTiming: RunResponse = {
+      type: 'result',
+      requestId: 'r',
+      ok: true,
+      outcomes: [
+        { index: 0, status: 'returned', value: 3, logs: [], durationMs: Infinity },
+        { index: 1, status: 'returned', value: 15, logs: [], durationMs: 5 },
+      ],
+    };
+    const result = buildVerdict(tests, withBadTiming);
+    // Only the finite durationMs contributes.
+    expect(result.totalDurationMs).toBe(5);
+  });
+
+  it('ignores negative durationMs values in accumulation', () => {
+    const withNegTiming: RunResponse = {
+      type: 'result',
+      requestId: 'r',
+      ok: true,
+      outcomes: [
+        { index: 0, status: 'returned', value: 3, logs: [], durationMs: -10 },
+        { index: 1, status: 'returned', value: 15, logs: [], durationMs: 4 },
+      ],
+    };
+    const result = buildVerdict(tests, withNegTiming);
+    expect(result.totalDurationMs).toBe(4);
   });
 });

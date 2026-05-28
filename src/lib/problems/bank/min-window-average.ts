@@ -28,6 +28,11 @@ export const problem: Problem = {
       output: '1',
     },
   ],
+  hints: [
+    'A naive approach recomputes each window sum from scratch — O(n·k). How can you update the window sum in O(1) when you slide one position to the right?',
+    'Compute the sum of the first `k` elements. Then for each new position, subtract the element leaving the left edge (`nums[i - k]`) and add the element entering the right edge (`nums[i]`). Track the running minimum.',
+    '`let win = nums.slice(0, k).reduce((a, b) => a + b, 0); let min = win; for (let i = k; i < nums.length; i++) { win += nums[i] - nums[i - k]; if (win < min) min = win; } return min;`',
+  ],
   functionName: 'minWindowSum',
   params: ['nums', 'k'],
   starterCode: {

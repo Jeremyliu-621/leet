@@ -1,0 +1,62 @@
+import type { Problem } from '../types';
+
+export const problem: Problem = {
+  id: 'largest-number-at-least-twice-of-others',
+  title: 'Largest Number At Least Twice of Others',
+  difficulty: 'easy',
+  tags: ['arrays'],
+  description: `You are given an integer array \`nums\` where the largest integer is **unique**.
+
+Determine whether the largest element in the array is **at least twice** as much as every other number in the array. If it is, return the **index** of the largest element, or return \`-1\` otherwise.`,
+  constraints: [
+    '`1 <= nums.length <= 50`',
+    '`0 <= nums[i] <= 100`',
+    'The largest element in `nums` is unique.',
+  ],
+  examples: [
+    {
+      input: 'nums = [3,6,1,0]',
+      output: '1',
+      explanation:
+        '6 is the largest integer. For every other number: 6 >= 2*3=6 ✓, 6 >= 2*1=2 ✓, 6 >= 2*0=0 ✓. Return index 1.',
+    },
+    {
+      input: 'nums = [1,2,3,4]',
+      output: '-1',
+      explanation: '4 is the largest, but 4 < 2*3=6, so return -1.',
+    },
+    {
+      input: 'nums = [1]',
+      output: '0',
+      explanation: 'Single element is trivially at least twice every other element.',
+    },
+  ],
+  hints: [
+    'Find the maximum value and its index. Then check whether max >= 2 * every other element.',
+    'Equivalently, find the maximum and the second maximum. If max >= 2 * secondMax, return the index of max; otherwise return -1.',
+    'Be careful with zeros: 2*0 = 0, so any positive max dominates zeros.',
+  ],
+  functionName: 'dominantIndex',
+  params: ['nums'],
+  starterCode: {
+    javascript: `function dominantIndex(nums) {
+
+}`,
+    python: `def dominantIndex(nums):
+    pass`,
+  },
+  visibleTests: [
+    { args: [[3, 6, 1, 0]], expected: 1 },
+    { args: [[1, 2, 3, 4]], expected: -1 },
+    { args: [[1]], expected: 0 },
+    { args: [[0, 0, 0, 1]], expected: 3 },
+  ],
+  hiddenTests: [
+    { args: [[2, 2]], expected: -1 },
+    { args: [[2, 0]], expected: 0 },
+    { args: [[0, 2]], expected: 1 },
+    { args: [[10, 1, 1, 1, 1]], expected: 0 },
+    { args: [[4, 2]], expected: 0 },
+    { args: [[4, 3]], expected: -1 },
+  ],
+};

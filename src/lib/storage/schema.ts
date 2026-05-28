@@ -7,9 +7,18 @@ import type {
   SolvedProblemRecord,
   StreakDay,
   StreakSummary,
+  SubmissionRecord,
+  SupportedLanguage,
   UnlockToken,
   UserPreferences,
 } from '../types';
+
+/** In-progress editor code saved between challenge sessions. */
+export interface DraftCodeEntry {
+  code: string;
+  language: SupportedLanguage;
+  savedAt: number;
+}
 
 /** The full shape of LeetLock's persisted state, keyed by storage key. */
 export interface StorageSchema {
@@ -23,6 +32,14 @@ export interface StorageSchema {
   unlockTokens: UnlockToken[];
   solvedProblems: SolvedProblemRecord[];
   streakHistory: StreakDay[];
+  draftCode: Record<string, DraftCodeEntry>;
+  /**
+   * Per-problem submission history. Keyed by problem id; each array holds the
+   * last MAX_SUBMISSION_HISTORY_PER_PROBLEM attempts, newest-last. Cleared when
+   * a problem is solved (accepted verdict). Stored in local (not sync) to avoid
+   * quota pressure.
+   */
+  submissionHistory: Record<string, SubmissionRecord[]>;
 }
 
 export type StorageKey = keyof StorageSchema;
@@ -45,4 +62,6 @@ export const STORAGE_AREAS: Readonly<Record<StorageKey, StorageAreaName>> = {
   unlockTokens: 'local',
   solvedProblems: 'local',
   streakHistory: 'local',
+  draftCode: 'local',
+  submissionHistory: 'local',
 };

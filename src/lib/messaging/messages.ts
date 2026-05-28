@@ -30,11 +30,17 @@ export interface RunRequest {
    * `docs/PYODIDE_PLAN.md`.
    */
   language?: 'javascript' | 'python';
+  /**
+   * Optional preamble source code executed before the user's code. Used by
+   * problems that need shared definitions (e.g. ListNode for linked-list
+   * problems). Must be valid JavaScript (or Python when language is python).
+   */
+  preamble?: string;
 }
 
 /** Outcome of a single test executed by the Worker. */
 export type TestOutcome =
-  | { index: number; status: 'returned'; value: unknown; logs: readonly string[] }
+  | { index: number; status: 'returned'; value: unknown; logs: readonly string[]; durationMs?: number }
   | { index: number; status: 'threw'; error: string; logs: readonly string[] };
 
 /** Why a run failed before producing per-test outcomes. */

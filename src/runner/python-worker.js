@@ -37,6 +37,7 @@ self.onmessage = async function handleMessage(event) {
     return;
   }
   const requestId = data.requestId;
+  const preamble = typeof data.preamble === 'string' ? data.preamble + '\n' : '';
   const code = typeof data.code === 'string' ? data.code : '';
   const functionName = typeof data.functionName === 'string' ? data.functionName : '';
   const tests = Array.isArray(data.tests) ? data.tests : [];
@@ -72,7 +73,7 @@ self.onmessage = async function handleMessage(event) {
 
   let userFn;
   try {
-    await pyodide.runPythonAsync(code, { globals: userGlobals });
+    await pyodide.runPythonAsync(preamble + code, { globals: userGlobals });
     userFn = userGlobals.get(functionName);
   } catch (err) {
     destroy(userGlobals);
@@ -163,9 +164,41 @@ function destroy(proxy) {
 
 function errorMessage(err) {
   if (err && typeof err.message === 'string') {
-    return err.name ? err.name + ': ' + err.message : err.message;
+    const raw = err.name ? err.name + ': ' + err.message : err.message;
+    return cleanPythonTraceback(raw);
   }
   return String(err);
+}
+
+/**
+ * Strips Pyodide-internal file references from Python tracebacks so users
+ * only see their own code's context. Lines like:
+ *   File "/lib/python3.11/pyodide/...", line X, in Y
+ * are removed together with their following code-context lines.
+ */
+function cleanPythonTraceback(message) {
+  const lines = message.split('\n');
+  const out = [];
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
+    // Detect internal File references: pyodide paths and site-packages internals
+    if (/^\s+File\s+"(?:\/lib\/python|\/pyodide\/|\<frozen )/.test(line)) {
+      // Skip the File line and any immediately following code/caret context
+      i++;
+      while (i < lines.length && /^\s/.test(lines[i]) && !/^\s+File\s+"/.test(lines[i])) {
+        i++;
+      }
+      continue;
+    }
+    out.push(line);
+    i++;
+  }
+  // Collapse consecutive blank lines introduced by the stripping
+  return out
+    .join('\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
 }
 
 function stringifyValue(value) {

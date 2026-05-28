@@ -14,6 +14,11 @@
 import { useEffect, useState } from 'react';
 import { SectionCard } from './SectionCard';
 import { readInitStats, type InitStats } from '../../../lib/runner/init-stats';
+import { getAllProblems } from '../../../lib/problems';
+import { PROBLEM_TAGS } from '../../../lib/types';
+
+const BANK_SIZE = getAllProblems().length;
+const TAG_COUNT = PROBLEM_TAGS.length;
 
 export function AboutSection() {
   const [stats, setStats] = useState<InitStats | null>(null);
@@ -36,9 +41,20 @@ export function AboutSection() {
     >
       <div className="space-y-3 text-xs leading-relaxed text-muted">
         <p>
-          LeetLock is a Chrome Manifest V3 extension. Every problem and every
-          piece of code you write runs entirely on this device — there is no
-          server, no LeetLock account, and no telemetry.
+          LeetLock is a Chrome Manifest V3 extension with{' '}
+          <span className="font-semibold text-text">{BANK_SIZE} original problems</span>{' '}
+          covering {TAG_COUNT} topic categories.{' '}
+          <span className="font-semibold text-text">JavaScript, TypeScript, and Python</span>{' '}
+          are all supported. Every problem and every piece of code you write runs
+          entirely on this device — there is no server, no LeetLock account, and
+          no telemetry.
+        </p>
+        <p>
+          <span className="font-semibold text-text">TypeScript support</span> strips
+          type annotations via <span className="font-mono">sucrase</span> before
+          passing your code to the JavaScript runner — no compilation server,
+          no network request. The JS starter code is valid TypeScript, so you can
+          add types freely.
         </p>
         <p>
           <span className="font-semibold text-text">Python support</span> is

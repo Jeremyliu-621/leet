@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   parseTargetParam,
+  parseProblemIdParam,
   extractDomain,
   formatCountdown,
 } from '../src/pages/challenge/challenge-helpers';
@@ -43,6 +44,36 @@ describe('parseTargetParam', () => {
   it('handles HTTPS URLs with paths and query strings', () => {
     const url = 'https://reddit.com/r/programming?sort=new';
     expect(parseTargetParam(`?target=${encodeURIComponent(url)}`)).toBe(url);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// parseProblemIdParam
+// ---------------------------------------------------------------------------
+
+describe('parseProblemIdParam', () => {
+  it('returns null for empty string', () => {
+    expect(parseProblemIdParam('')).toBeNull();
+  });
+
+  it('returns null when param is absent', () => {
+    expect(parseProblemIdParam('?foo=bar')).toBeNull();
+  });
+
+  it('returns null when param is empty', () => {
+    expect(parseProblemIdParam('?problem=')).toBeNull();
+  });
+
+  it('returns the problem id', () => {
+    expect(parseProblemIdParam('?problem=two-sum')).toBe('two-sum');
+  });
+
+  it('trims whitespace from the id', () => {
+    expect(parseProblemIdParam('?problem=%20two-sum%20')).toBe('two-sum');
+  });
+
+  it('works with other params present', () => {
+    expect(parseProblemIdParam('?foo=1&problem=coin-change&bar=2')).toBe('coin-change');
   });
 });
 

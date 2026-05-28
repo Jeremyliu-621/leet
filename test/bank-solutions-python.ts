@@ -194,6 +194,27 @@ export const pythonSolutions: Record<string, string> = {
             stack.append(ch)
     return ''.join(stack)
 `,
+  'next-greater-element-ii': `def nextGreaterElements(nums):
+    n = len(nums)
+    res = [-1] * n
+    stack = []
+    for i in range(2 * n):
+        val = nums[i % n]
+        while stack and nums[stack[-1]] < val:
+            idx = stack.pop()
+            res[idx] = val
+        if i < n:
+            stack.append(i)
+    return res
+`,
+
+  'hamming-weight': `def hammingWeight(n):
+    count = 0
+    while n:
+        n &= n - 1
+        count += 1
+    return count
+`,
   'digit-sum': `def digitSum(n):
     total = 0
     while n > 0:
@@ -220,4 +241,31511 @@ export const pythonSolutions: Record<string, string> = {
         i += 2
     return True
 `,
+  'max-subarray': `def maxSubarraySum(nums):
+    cur = nums[0]
+    best = cur
+    for n in nums[1:]:
+        cur = max(n, cur + n)
+        best = max(best, cur)
+    return best
+`,
+  'anagram-check': `def areAnagrams(s, t):
+    if len(s) != len(t):
+        return False
+    from collections import Counter
+    return Counter(s) == Counter(t)
+`,
+  'move-zeros': `def moveZeros(nums):
+    non_zero = [n for n in nums if n != 0]
+    return non_zero + [0] * (len(nums) - len(non_zero))
+`,
+  'compress-string': `def compressString(s):
+    if not s:
+        return ''
+    out = []
+    i = 0
+    while i < len(s):
+        j = i
+        while j < len(s) and s[j] == s[i]:
+            j += 1
+        out.append(s[i] + str(j - i))
+        i = j
+    return ''.join(out)
+`,
+  'longest-unique-window': `def longestUniqueWindow(s):
+    seen = {}
+    left = 0
+    best = 0
+    for right, ch in enumerate(s):
+        if ch in seen and seen[ch] >= left:
+            left = seen[ch] + 1
+        seen[ch] = right
+        best = max(best, right - left + 1)
+    return best
+`,
+  'count-divisors': `def countDivisors(n):
+    count = 0
+    d = 1
+    while d * d <= n:
+        if n % d == 0:
+            count += 1 if d * d == n else 2
+        d += 1
+    return count
+`,
+  'valid-subsequence': `def isSubsequence(seq, arr):
+    i = 0
+    for val in arr:
+        if i < len(seq) and val == seq[i]:
+            i += 1
+    return i == len(seq)
+`,
+  'binary-search-range': `def countOccurrences(nums, target):
+    def lower_bound(t):
+        lo, hi = 0, len(nums)
+        while lo < hi:
+            mid = (lo + hi) // 2
+            if nums[mid] >= t:
+                hi = mid
+            else:
+                lo = mid + 1
+        return lo
+    return lower_bound(target + 1) - lower_bound(target)
+`,
+  'daily-temperatures': `def daysUntilWarmer(temps):
+    stack = []
+    answer = [0] * len(temps)
+    for i, t in enumerate(temps):
+        while stack and temps[stack[-1]] < t:
+            j = stack.pop()
+            answer[j] = i - j
+        stack.append(i)
+    return answer
+`,
+  'subsets': `def subsets(nums):
+    nums = sorted(nums)
+    result = []
+    def bt(start, cur):
+        result.append(list(cur))
+        for i in range(start, len(nums)):
+            cur.append(nums[i])
+            bt(i + 1, cur)
+            cur.pop()
+    bt(0, [])
+    return sorted(result)
+`,
+
+  'subsets-ii': `def subsetsII(nums):
+    nums = sorted(nums)
+    result = []
+    def bt(start, cur):
+        result.append(list(cur))
+        for i in range(start, len(nums)):
+            if i > start and nums[i] == nums[i - 1]:
+                continue
+            cur.append(nums[i])
+            bt(i + 1, cur)
+            cur.pop()
+    bt(0, [])
+    return sorted([sorted(s) for s in result])
+`,
+
+  'combination-sum': `def combinationSum(candidates, target):
+    candidates = sorted(candidates)
+    result = []
+    def bt(start, rem, cur):
+        if rem == 0:
+            result.append(list(cur))
+            return
+        for i in range(start, len(candidates)):
+            if candidates[i] > rem:
+                break
+            cur.append(candidates[i])
+            bt(i, rem - candidates[i], cur)
+            cur.pop()
+    bt(0, target, [])
+    return result
+`,
+
+  'meeting-rooms-ii': `def minMeetingRooms(intervals):
+    starts = sorted(iv[0] for iv in intervals)
+    ends = sorted(iv[1] for iv in intervals)
+    j, max_rooms = 0, 0
+    for i in range(len(starts)):
+        if starts[i] >= ends[j]:
+            j += 1
+        max_rooms = max(max_rooms, i - j + 1)
+    return max_rooms
+`,
+
+  'h-index': `def hIndex(citations):
+    citations = sorted(citations, reverse=True)
+    h = 0
+    for i, c in enumerate(citations):
+        if c >= i + 1:
+            h = i + 1
+        else:
+            break
+    return h
+`,
+
+  'merge-intervals': `def merge(intervals):
+    intervals = sorted(intervals, key=lambda x: x[0])
+    result = []
+    for iv in intervals:
+        if result and iv[0] <= result[-1][1]:
+            result[-1][1] = max(result[-1][1], iv[1])
+        else:
+            result.append(list(iv))
+    return result
+`,
+
+  'non-overlapping-intervals': `def eraseOverlapIntervals(intervals):
+    intervals = sorted(intervals, key=lambda x: x[1])
+    removed = 0
+    end = float('-inf')
+    for iv in intervals:
+        if iv[0] >= end:
+            end = iv[1]
+        else:
+            removed += 1
+    return removed
+`,
+
+  'permutations': `def permute(nums):
+    result = []
+    nums = list(nums)
+    def bt(start):
+        if start == len(nums):
+            result.append(nums[:])
+            return
+        for i in range(start, len(nums)):
+            nums[start], nums[i] = nums[i], nums[start]
+            bt(start + 1)
+            nums[start], nums[i] = nums[i], nums[start]
+    bt(0)
+    return sorted(result)
+`,
+
+  'generate-parentheses': `def generateParentheses(n):
+    result = []
+    def bt(cur, open_count, close_count):
+        if len(cur) == 2 * n:
+            result.append(cur)
+            return
+        if open_count < n:
+            bt(cur + '(', open_count + 1, close_count)
+        if close_count < open_count:
+            bt(cur + ')', open_count, close_count + 1)
+    bt('', 0, 0)
+    return sorted(result)
+`,
+
+  'palindrome-partitioning': `def partition(s):
+    result = []
+    def is_palindrome(l, r):
+        while l < r:
+            if s[l] != s[r]:
+                return False
+            l += 1
+            r -= 1
+        return True
+    def bt(start, cur):
+        if start == len(s):
+            result.append(list(cur))
+            return
+        for end in range(start + 1, len(s) + 1):
+            if is_palindrome(start, end - 1):
+                cur.append(s[start:end])
+                bt(end, cur)
+                cur.pop()
+    bt(0, [])
+    return result
+`,
+
+  'rotate-array': `def rotateArray(nums, k):
+    n = len(nums)
+    steps = k % n
+    return nums[-steps:] + nums[:-steps] if steps else list(nums)
+`,
+  'max-product-subarray': `def maxProductSubarray(nums):
+    cur_max = cur_min = best = nums[0]
+    for v in nums[1:]:
+        new_max = max(v, cur_max * v, cur_min * v)
+        cur_min = min(v, cur_max * v, cur_min * v)
+        cur_max = new_max
+        if cur_max > best:
+            best = cur_max
+    return best
+`,
+  'longest-palindromic-string': `def longestPalindrome(s):
+    def expand(l, r):
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            l -= 1
+            r += 1
+        return s[l+1:r]
+    best = ''
+    for i in range(len(s)):
+        a = expand(i, i)
+        b = expand(i, i + 1)
+        if len(a) > len(best):
+            best = a
+        if len(b) > len(best):
+            best = b
+    return best
+`,
+  'climbing-stairs': `def climbStairs(n):
+    if n <= 2:
+        return n
+    a, b = 1, 2
+    for _ in range(3, n + 1):
+        a, b = b, a + b
+    return b
+`,
+  'max-consecutive-ones': `def maxConsecutiveOnes(nums):
+    best = 0
+    current = 0
+    for n in nums:
+        current = current + 1 if n == 1 else 0
+        if current > best:
+            best = current
+    return best
+`,
+  'capitalize-words': `def capitalizeWords(sentence):
+    return ' '.join(w[0].upper() + w[1:] for w in sentence.split(' '))
+`,
+  'intersection-two-arrays': `def intersectionTwoArrays(nums1, nums2):
+    set1 = set(nums1)
+    return list(dict.fromkeys(n for n in nums2 if n in set1))
+`,
+  'subarray-sum-equals-k': `def subarraySumEqualsK(nums, k):
+    freq = {0: 1}
+    total = 0
+    count = 0
+    for n in nums:
+        total += n
+        count += freq.get(total - k, 0)
+        freq[total] = freq.get(total, 0) + 1
+    return count
+`,
+  'is-perfect-square': `def isPerfectSquare(n):
+    lo, hi = 1, n
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        sq = mid * mid
+        if sq == n:
+            return True
+        if sq < n:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return False
+`,
+  'sum-of-squares': `def sumOfSquares(n):
+    if n == 0:
+        return 0
+    total = 0
+    while n > 0:
+        d = n % 10
+        total += d * d
+        n //= 10
+    return total
+`,
+  'find-max-min': `def findMaxMin(nums):
+    max_v = min_v = nums[0]
+    for v in nums[1:]:
+        if v > max_v:
+            max_v = v
+        if v < min_v:
+            min_v = v
+    return [max_v, min_v]
+`,
+  'reverse-string': `
+def reverseString(s):
+    s = list(s.to_py() if hasattr(s, 'to_py') else s)
+    l, r = 0, len(s) - 1
+    while l < r:
+        s[l], s[r] = s[r], s[l]
+        l += 1
+        r -= 1
+    return s
+`,
+  'count-good-pairs': `def countGoodPairs(nums):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    count = 0
+    for n in nums:
+        count += freq[n]
+        freq[n] += 1
+    return count
+`,
+  'remove-duplicates-sorted': `def removeDuplicatesSorted(nums):
+    out = []
+    for i, v in enumerate(nums):
+        if i == 0 or v != nums[i - 1]:
+            out.append(v)
+    return out
+`,
+  'min-subarray-length': `def minSubarrayLength(nums, target):
+    left = 0
+    total = 0
+    best = float('inf')
+    for right in range(len(nums)):
+        total += nums[right]
+        while total >= target:
+            best = min(best, right - left + 1)
+            total -= nums[left]
+            left += 1
+    return 0 if best == float('inf') else best
+`,
+  'minimum-size-subarray-sum': `def minSubArrayLen(target, nums):
+    left = 0
+    total = 0
+    best = float('inf')
+    for right in range(len(nums)):
+        total += nums[right]
+        while total >= target:
+            best = min(best, right - left + 1)
+            total -= nums[left]
+            left += 1
+    return 0 if best == float('inf') else best
+`,
+
+  'evaluate-rpn': `def evalRPN(tokens):
+    stack = []
+    for t in tokens:
+        if t in '+-*/' and len(t) == 1:
+            b, a = stack.pop(), stack.pop()
+            if t == '+':
+                stack.append(a + b)
+            elif t == '-':
+                stack.append(a - b)
+            elif t == '*':
+                stack.append(a * b)
+            else:
+                stack.append(int(a / b))
+        else:
+            stack.append(int(t))
+    return stack[0]
+`,
+  'missing-number': `def missingNumber(nums):
+    n = len(nums)
+    return n * (n + 1) // 2 - sum(nums)
+`,
+  'contains-duplicate': `def containsDuplicate(nums):
+    seen = set()
+    for n in nums:
+        if n in seen:
+            return True
+        seen.add(n)
+    return False
+`,
+  'longest-common-prefix': `def longestCommonPrefix(strs):
+    prefix = strs[0]
+    for s in strs:
+        while not s.startswith(prefix):
+            prefix = prefix[:-1]
+            if not prefix:
+                return ''
+    return prefix
+`,
+  'word-frequency': `def wordFrequency(text):
+    freq = {}
+    for w in text.split(' '):
+        freq[w] = freq.get(w, 0) + 1
+    return freq
+`,
+  'power-of-two': `def isPowerOfTwo(n):
+    if n <= 0:
+        return False
+    return (n & (n - 1)) == 0
+`,
+  'fibonacci-number': `def fibonacci(n):
+    if n <= 1:
+        return n
+    a, b = 0, 1
+    for _ in range(2, n + 1):
+        a, b = b, a + b
+    return b
+`,
+
+  // ---------------------------------------------------------------------------
+  // Medium-difficulty problems (batch expansion)
+  // ---------------------------------------------------------------------------
+
+  'product-except-self': `def productExceptSelf(nums):
+    n = len(nums)
+    out = [1] * n
+    p = 1
+    for i in range(n):
+        out[i] = p
+        p *= nums[i]
+    p = 1
+    for i in range(n - 1, -1, -1):
+        out[i] *= p
+        p *= nums[i]
+    return out
+`,
+
+  'sort-colors': `def sortColors(nums):
+    lo, mid, hi = 0, 0, len(nums) - 1
+    while mid <= hi:
+        if nums[mid] == 0:
+            nums[lo], nums[mid] = nums[mid], nums[lo]
+            lo += 1
+            mid += 1
+        elif nums[mid] == 2:
+            nums[hi], nums[mid] = nums[mid], nums[hi]
+            hi -= 1
+        else:
+            mid += 1
+    return nums
+`,
+
+  'trap-rain-water': `def trapRainWater(height):
+    n = len(height)
+    if n == 0:
+        return 0
+    left_max = [0] * n
+    right_max = [0] * n
+    left_max[0] = height[0]
+    for i in range(1, n):
+        left_max[i] = max(left_max[i - 1], height[i])
+    right_max[n - 1] = height[n - 1]
+    for i in range(n - 2, -1, -1):
+        right_max[i] = max(right_max[i + 1], height[i])
+    water = 0
+    for i in range(n):
+        water += max(0, min(left_max[i], right_max[i]) - height[i])
+    return water
+`,
+
+  'container-with-most-water': `def containerWithMostWater(height):
+    left, right = 0, len(height) - 1
+    best = 0
+    while left < right:
+        best = max(best, min(height[left], height[right]) * (right - left))
+        if height[left] <= height[right]:
+            left += 1
+        else:
+            right -= 1
+    return best
+`,
+
+  'three-sum-zero': `def threeSumZero(nums):
+    nums.sort()
+    result = []
+    for i in range(len(nums) - 2):
+        if i > 0 and nums[i] == nums[i - 1]:
+            continue
+        left, right = i + 1, len(nums) - 1
+        while left < right:
+            s = nums[i] + nums[left] + nums[right]
+            if s == 0:
+                result.append([nums[i], nums[left], nums[right]])
+                while left < right and nums[left] == nums[left + 1]:
+                    left += 1
+                while left < right and nums[right] == nums[right - 1]:
+                    right -= 1
+                left += 1
+                right -= 1
+            elif s < 0:
+                left += 1
+            else:
+                right -= 1
+    return result
+`,
+
+  'jump-game': `def canJump(nums):
+    max_reach = 0
+    for i, v in enumerate(nums):
+        if i > max_reach:
+            return False
+        max_reach = max(max_reach, i + v)
+    return True
+`,
+
+  'best-time-buy-sell-two': `def maxProfitMultiple(prices):
+    profit = 0
+    for i in range(1, len(prices)):
+        if prices[i] > prices[i - 1]:
+            profit += prices[i] - prices[i - 1]
+    return profit
+`,
+
+  'majority-element': `def majorityElement(nums):
+    count = 0
+    candidate = None
+    for n in nums:
+        if count == 0:
+            candidate = n
+        count += 1 if n == candidate else -1
+    return candidate
+`,
+
+  'kth-largest-element': `def kthLargest(nums, k):
+    sorted_nums = sorted(list(nums))
+    return sorted_nums[len(sorted_nums) - k]
+`,
+
+  'find-all-duplicates': `def findAllDuplicates(nums):
+    result = []
+    for v in nums:
+        idx = abs(v) - 1
+        if nums[idx] < 0:
+            result.append(abs(v))
+        else:
+            nums[idx] = -nums[idx]
+    return sorted(result)
+`,
+
+  'longest-subarray-of-ones': `def longestSubarrayOfOnes(nums):
+    left = 0
+    zeros = 0
+    best = 0
+    for right in range(len(nums)):
+        if nums[right] == 0:
+            zeros += 1
+        while zeros > 1:
+            if nums[left] == 0:
+                zeros -= 1
+            left += 1
+        best = max(best, right - left)
+    return best
+`,
+
+  // ---------------------------------------------------------------------------
+  // Medium-difficulty problems — batch 2 (strings + hash-map)
+  // ---------------------------------------------------------------------------,
+
+  'count-palindromic-substrings': `def countPalindromicSubstrings(s):
+    count = 0
+    n = len(s)
+    for i in range(n):
+        l, r = i, i
+        while l >= 0 and r < n and s[l] == s[r]:
+            count += 1
+            l -= 1
+            r += 1
+        l, r = i, i + 1
+        while l >= 0 and r < n and s[l] == s[r]:
+            count += 1
+            l -= 1
+            r += 1
+    return count
+`,
+
+  'decode-string': `def decodeString(s):
+    stack = []
+    cur = ''
+    num = 0
+    for ch in s:
+        if ch.isdigit():
+            num = num * 10 + int(ch)
+        elif ch == '[':
+            stack.append((cur, num))
+            cur = ''
+            num = 0
+        elif ch == ']':
+            prev, k = stack.pop()
+            cur = prev + cur * k
+        else:
+            cur += ch
+    return cur
+`,
+
+  'minimum-remove-to-make-valid': `def minRemoveForValid(s):
+    open_count = 0
+    s1 = []
+    for c in s:
+        if c == '(':
+            open_count += 1
+            s1.append(c)
+        elif c == ')':
+            if open_count > 0:
+                open_count -= 1
+                s1.append(c)
+        else:
+            s1.append(c)
+    close_count = 0
+    s2 = []
+    for c in reversed(s1):
+        if c == ')':
+            close_count += 1
+            s2.append(c)
+        elif c == '(':
+            if close_count > 0:
+                close_count -= 1
+                s2.append(c)
+        else:
+            s2.append(c)
+    return ''.join(reversed(s2))
+`,
+
+  'reverse-string-words': `def reverseWordsInSentence(s):
+    return ' '.join(s.split()[::-1])
+`,
+
+  'string-multiply': `def multiplyStrings(num1, num2):
+    m, n = len(num1), len(num2)
+    res = [0] * (m + n)
+    for i in range(m - 1, -1, -1):
+        for j in range(n - 1, -1, -1):
+            mul = (ord(num1[i]) - 48) * (ord(num2[j]) - 48)
+            p1, p2 = i + j, i + j + 1
+            total = mul + res[p2]
+            res[p2] = total % 10
+            res[p1] += total // 10
+    s = ''.join(map(str, res)).lstrip('0')
+    return s if s else '0'
+`,
+
+  'is-subsequence-medium': `def countSubsequenceOccurrences(s, t):
+    MOD = 10 ** 9 + 7
+    m, n = len(s), len(t)
+    prev = [1] * (n + 1)
+    for i in range(1, m + 1):
+        curr = [0] * (n + 1)
+        for j in range(1, n + 1):
+            curr[j] = curr[j - 1]
+            if s[i - 1] == t[j - 1]:
+                curr[j] = (curr[j] + prev[j - 1]) % MOD
+        prev = curr
+    return prev[n]
+`,
+
+  'character-replacement': `def characterReplacement(s, k):
+    freq = [0] * 26
+    left = 0
+    max_count = 0
+    best = 0
+    for right in range(len(s)):
+        freq[ord(s[right]) - 65] += 1
+        max_count = max(max_count, freq[ord(s[right]) - 65])
+        while right - left + 1 - max_count > k:
+            freq[ord(s[left]) - 65] -= 1
+            left += 1
+        best = max(best, right - left + 1)
+    return best
+`,
+
+  'group-anagrams': `def groupAnagrams(strs):
+    from collections import defaultdict
+    groups = defaultdict(list)
+    for s in strs:
+        key = ''.join(sorted(s))
+        groups[key].append(s)
+    result = [sorted(g) for g in groups.values()]
+    result.sort(key=lambda g: g[0] if g else '')
+    return result
+`,
+
+  'top-k-frequent-elements': `def topKFrequent(nums, k):
+    from collections import Counter
+    freq = Counter(nums)
+    return sorted(sorted(freq.keys(), key=lambda x: (-freq[x], x))[:k])
+`,
+
+  'longest-consecutive-sequence': `def longestConsecutive(nums):
+    s = set(nums)
+    best = 0
+    for n in s:
+        if n - 1 not in s:
+            length = 1
+            while n + length in s:
+                length += 1
+            best = max(best, length)
+    return best
+`,
+
+  'find-all-anagrams-in-string': `def findAnagrams(s, p):
+    from collections import Counter
+    p_freq = Counter(p)
+    w_freq = Counter()
+    result = []
+    p_len = len(p)
+    for i in range(len(s)):
+        w_freq[s[i]] += 1
+        if i >= p_len:
+            out = s[i - p_len]
+            w_freq[out] -= 1
+            if w_freq[out] == 0:
+                del w_freq[out]
+        if i >= p_len - 1 and w_freq == p_freq:
+            result.append(i - p_len + 1)
+    return result
+`,
+
+  'maximum-erasure-value': `def maximumUniqueSum(nums):
+    seen = {}
+    left = 0
+    current_sum = 0
+    best = 0
+    for right in range(len(nums)):
+        v = nums[right]
+        if v in seen and seen[v] >= left:
+            while left <= seen[v]:
+                current_sum -= nums[left]
+                left += 1
+        seen[v] = right
+        current_sum += v
+        best = max(best, current_sum)
+    return best
+`,
+
+  // ---------------------------------------------------------------------------
+  // Medium-difficulty problems — batch 3 (binary-search + stack + math)
+  // ---------------------------------------------------------------------------,
+
+  'find-k-pairs-smallest-sums': `def findKPairsRunner(nums1, nums2, k):
+    import heapq
+    result = []
+    if not nums1 or not nums2:
+        return result
+    heap = [(nums1[i] + nums2[0], i, 0) for i in range(min(len(nums1), k))]
+    heapq.heapify(heap)
+    while heap and len(result) < k:
+        _, i, j = heapq.heappop(heap)
+        result.append([nums1[i], nums2[j]])
+        if j + 1 < len(nums2):
+            heapq.heappush(heap, (nums1[i] + nums2[j+1], i, j+1))
+    return sorted(result, key=lambda p: (p[0], p[1]))
+`,
+
+  'search-rotated-sorted': `def searchRotated(nums, target):
+    left, right = 0, len(nums) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if nums[mid] == target:
+            return mid
+        if nums[left] <= nums[mid]:
+            if nums[left] <= target < nums[mid]:
+                right = mid - 1
+            else:
+                left = mid + 1
+        else:
+            if nums[mid] < target <= nums[right]:
+                left = mid + 1
+            else:
+                right = mid - 1
+    return -1
+`,
+
+  'find-minimum-rotated': `def findMinRotated(nums):
+    left, right = 0, len(nums) - 1
+    while left < right:
+        mid = (left + right) // 2
+        if nums[mid] > nums[right]:
+            left = mid + 1
+        else:
+            right = mid
+    return nums[left]
+`,
+
+  'single-element-sorted': `def singleNonDuplicate(nums):
+    left, right = 0, len(nums) - 1
+    while left < right:
+        mid = (left + right) // 2
+        if mid % 2 == 1:
+            mid -= 1
+        if nums[mid] == nums[mid + 1]:
+            left = mid + 2
+        else:
+            right = mid
+    return nums[left]
+`,
+
+  'asteroid-collision': `def asteroidCollision(asteroids):
+    stack = []
+    for a in asteroids:
+        survived = True
+        while survived and a < 0 and stack and stack[-1] > 0:
+            if stack[-1] < -a:
+                stack.pop()
+            elif stack[-1] == -a:
+                stack.pop()
+                survived = False
+            else:
+                survived = False
+        if survived:
+            stack.append(a)
+    return stack
+`,
+
+  'score-of-parentheses': `def scoreOfParentheses(s):
+    stack = [0]
+    for c in s:
+        if c == '(':
+            stack.append(0)
+        else:
+            v = stack.pop()
+            stack[-1] += max(2 * v, 1)
+    return stack[0]
+`,
+
+  'valid-parenthesis-string': `def validParenthesisString(s):
+    min_open = 0
+    max_open = 0
+    for c in s:
+        if c == '(':
+            min_open += 1
+            max_open += 1
+        elif c == ')':
+            min_open -= 1
+            max_open -= 1
+        else:
+            min_open -= 1
+            max_open += 1
+        if max_open < 0:
+            return False
+        if min_open < 0:
+            min_open = 0
+    return min_open == 0
+`,
+
+  'simplify-path': `def simplifyPath(path):
+    stack = []
+    for part in path.split('/'):
+        if part == '' or part == '.':
+            continue
+        elif part == '..':
+            if stack:
+                stack.pop()
+        else:
+            stack.append(part)
+    return '/' + '/'.join(stack)
+`,
+
+  'add-binary': `def addBinary(a, b):
+    i, j, carry, result = len(a) - 1, len(b) - 1, 0, ''
+    while i >= 0 or j >= 0 or carry:
+        s = (int(a[i]) if i >= 0 else 0) + (int(b[j]) if j >= 0 else 0) + carry
+        result = str(s % 2) + result
+        carry = s // 2
+        i -= 1
+        j -= 1
+    return result or '0'
+`,
+
+  'integer-to-roman': `def intToRoman(num):
+    table = [(1000,'M'),(900,'CM'),(500,'D'),(400,'CD'),(100,'C'),(90,'XC'),
+             (50,'L'),(40,'XL'),(10,'X'),(9,'IX'),(5,'V'),(4,'IV'),(1,'I')]
+    result = ''
+    for val, sym in table:
+        while num >= val:
+            result += sym
+            num -= val
+    return result
+`,
+
+  'task-scheduler': `def leastInterval(tasks, n):
+    from collections import Counter
+    freq = Counter(tasks)
+    max_freq = max(freq.values())
+    max_count = sum(1 for v in freq.values() if v == max_freq)
+    return max(len(tasks), (max_freq - 1) * (n + 1) + max_count)
+`,
+
+  'count-primes-sieve': `def countPrimesUpTo(n):
+    if n < 2:
+        return 0
+    is_prime = [True] * n
+    is_prime[0] = is_prime[1] = False
+    i = 2
+    while i * i < n:
+        if is_prime[i]:
+            for j in range(i * i, n, i):
+                is_prime[j] = False
+        i += 1
+    return sum(is_prime)
+`,
+
+  'pow-x-n': `def fastPow(x, n):
+    def helper(base, exp):
+        if exp == 0:
+            return 1.0
+        half = helper(base, exp // 2)
+        return half * half if exp % 2 == 0 else base * half * half
+    if n < 0:
+        return helper(1.0 / x, -n)
+    return helper(x, n)
+`,
+
+  'reverse-integer': `def reverseInteger(x):
+    sign = -1 if x < 0 else 1
+    rev = int(str(abs(x))[::-1]) * sign
+    if rev > 2**31 - 1 or rev < -(2**31):
+        return 0
+    return rev
+`,
+
+  'happy-number': `def isHappyNumber(n):
+    def digit_square_sum(num):
+        total = 0
+        while num > 0:
+            d = num % 10
+            total += d * d
+            num //= 10
+        return total
+    seen = set()
+    cur = n
+    while cur != 1:
+        if cur in seen:
+            return False
+        seen.add(cur)
+        cur = digit_square_sum(cur)
+    return True
+`,
+
+  'n-queens': `def solveNQueens(n):
+    result = []
+    cols = set()
+    diag1 = set()
+    diag2 = set()
+    queens = []
+    def bt(row):
+        if row == n:
+            board = ['.' * c + 'Q' + '.' * (n - c - 1) for c in queens]
+            result.append(board)
+            return
+        for c in range(n):
+            if c in cols or (row - c) in diag1 or (row + c) in diag2:
+                continue
+            cols.add(c); diag1.add(row - c); diag2.add(row + c); queens.append(c)
+            bt(row + 1)
+            cols.discard(c); diag1.discard(row - c); diag2.discard(row + c); queens.pop()
+    bt(0)
+    return result
+`,
+
+  'sudoku-solver': `def solveSudoku(board):
+    def is_valid(r, c, d):
+        for i in range(9):
+            if board[r][i] == d or board[i][c] == d:
+                return False
+            br = 3 * (r // 3) + i // 3
+            bc = 3 * (c // 3) + i % 3
+            if board[br][bc] == d:
+                return False
+        return True
+    def solve():
+        for r in range(9):
+            for c in range(9):
+                if board[r][c] == '.':
+                    for d in '123456789':
+                        if is_valid(r, c, d):
+                            board[r][c] = d
+                            if solve():
+                                return True
+                            board[r][c] = '.'
+                    return False
+        return True
+    solve()
+`,
+
+  'first-missing-positive': `def firstMissingPositive(nums):
+    n = len(nums)
+    i = 0
+    while i < n:
+        j = nums[i] - 1
+        if 1 <= nums[i] <= n and nums[i] != nums[j]:
+            nums[i], nums[j] = nums[j], nums[i]
+        else:
+            i += 1
+    for i in range(n):
+        if nums[i] != i + 1:
+            return i + 1
+    return n + 1
+`,
+
+  'jump-game-ii': `def minJumps(nums):
+    jumps = 0
+    cur_end = 0
+    farthest = 0
+    for i in range(len(nums) - 1):
+        farthest = max(farthest, i + nums[i])
+        if i == cur_end:
+            jumps += 1
+            cur_end = farthest
+    return jumps
+`,
+
+  'largest-rectangle-histogram': `def largestRectangleArea(heights):
+    stack = []
+    max_area = 0
+    h = heights + [0]
+    for i, height in enumerate(h):
+        while stack and h[stack[-1]] > height:
+            ht = h[stack.pop()]
+            width = i if not stack else i - stack[-1] - 1
+            max_area = max(max_area, ht * width)
+        stack.append(i)
+    return max_area
+`,
+
+  'sliding-window-maximum': `def maxSlidingWindow(nums, k):
+    from collections import deque
+    dq = deque()
+    result = []
+    for i, val in enumerate(nums):
+        while dq and dq[0] < i - k + 1:
+            dq.popleft()
+        while dq and nums[dq[-1]] < val:
+            dq.pop()
+        dq.append(i)
+        if i >= k - 1:
+            result.append(nums[dq[0]])
+    return result
+`,
+
+  'largest-number': `def largestNumber(nums):
+    from functools import cmp_to_key
+    strs = list(map(str, nums))
+    def compare(a, b):
+        if a + b > b + a:
+            return -1
+        elif a + b < b + a:
+            return 1
+        return 0
+    strs.sort(key=cmp_to_key(compare))
+    if strs[0] == '0':
+        return '0'
+    return ''.join(strs)
+`,
+
+  'longest-increasing-subsequence': `def lengthOfLIS(nums):
+    import bisect
+    tails = []
+    for n in nums:
+        pos = bisect.bisect_left(tails, n)
+        if pos == len(tails):
+            tails.append(n)
+        else:
+            tails[pos] = n
+    return len(tails)
+`,
+
+  'minimum-window-substring': `def minWindow(s, t):
+    from collections import Counter
+    need = Counter(t)
+    have = 0
+    required = len(need)
+    window = {}
+    left = 0
+    min_len = float('inf')
+    min_left = 0
+    for right, c in enumerate(s):
+        window[c] = window.get(c, 0) + 1
+        if c in need and window[c] == need[c]:
+            have += 1
+        while have == required:
+            if right - left + 1 < min_len:
+                min_len = right - left + 1
+                min_left = left
+            lc = s[left]
+            window[lc] -= 1
+            if lc in need and window[lc] < need[lc]:
+                have -= 1
+            left += 1
+    return '' if min_len == float('inf') else s[min_left:min_left + min_len]
+`,
+
+  'longest-valid-parentheses': `def longestValidParentheses(s):
+    stack = [-1]
+    max_len = 0
+    for i, c in enumerate(s):
+        if c == '(':
+            stack.append(i)
+        else:
+            stack.pop()
+            if not stack:
+                stack.append(i)
+            else:
+                max_len = max(max_len, i - stack[-1])
+    return max_len
+`,
+
+  'edit-distance': `def editDistance(word1, word2):
+    m, n = len(word1), len(word2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(m + 1):
+        dp[i][0] = i
+    for j in range(n + 1):
+        dp[0][j] = j
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if word1[i-1] == word2[j-1]:
+                dp[i][j] = dp[i-1][j-1]
+            else:
+                dp[i][j] = 1 + min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1])
+    return dp[m][n]
+`,
+
+  'word-break': `def wordBreak(s, wordDict):
+    word_set = set(wordDict)
+    dp = [False] * (len(s) + 1)
+    dp[0] = True
+    for i in range(1, len(s) + 1):
+        for j in range(i):
+            if dp[j] and s[j:i] in word_set:
+                dp[i] = True
+                break
+    return dp[len(s)]
+`,
+
+  'three-sum-closest': `def threeSumClosest(nums, target):
+    nums = sorted(nums)
+    closest = nums[0] + nums[1] + nums[2]
+    for i in range(len(nums) - 2):
+        l, r = i + 1, len(nums) - 1
+        while l < r:
+            s = nums[i] + nums[l] + nums[r]
+            if abs(s - target) < abs(closest - target):
+                closest = s
+            if s == target:
+                return s
+            elif s < target:
+                l += 1
+            else:
+                r -= 1
+    return closest
+`,
+
+  'boats-to-save-people': `def numRescueBoats(people, limit):
+    people = sorted(people)
+    left, right, boats = 0, len(people) - 1, 0
+    while left <= right:
+        if people[left] + people[right] <= limit:
+            left += 1
+        right -= 1
+        boats += 1
+    return boats
+`,
+
+  'partition-labels': `def partitionLabels(s):
+    last = {ch: i for i, ch in enumerate(s)}
+    parts = []
+    start = end = 0
+    for i, ch in enumerate(s):
+        end = max(end, last[ch])
+        if i == end:
+            parts.append(end - start + 1)
+            start = i + 1
+    return parts
+`,
+
+  'basic-calculator': `def calculate(s):
+    result, num, sign = 0, 0, 1
+    stack = []
+    for ch in s:
+        if ch.isdigit():
+            num = num * 10 + int(ch)
+        elif ch == '+':
+            result += sign * num
+            num, sign = 0, 1
+        elif ch == '-':
+            result += sign * num
+            num, sign = 0, -1
+        elif ch == '(':
+            stack.append(result)
+            stack.append(sign)
+            result, sign = 0, 1
+        elif ch == ')':
+            result += sign * num
+            num = 0
+            saved_sign = stack.pop()
+            saved_result = stack.pop()
+            result = saved_result + saved_sign * result
+    return result + sign * num
+`,
+  'sum-subarray-minimums': `def sumSubarrayMins(arr: list[int]) -> int:
+    MOD = 10**9 + 7
+    n = len(arr)
+    left = [0] * n
+    right = [0] * n
+    stk = []
+    for i in range(n):
+        while stk and arr[stk[-1]] >= arr[i]:
+            stk.pop()
+        left[i] = i - stk[-1] if stk else i + 1
+        stk.append(i)
+    stk = []
+    for i in range(n - 1, -1, -1):
+        while stk and arr[stk[-1]] > arr[i]:
+            stk.pop()
+        right[i] = stk[-1] - i if stk else n - i
+        stk.append(i)
+    ans = 0
+    for i in range(n):
+        ans = (ans + arr[i] * left[i] * right[i]) % MOD
+    return ans
+`,
+  'remove-k-digits': `def removeKdigits(num: str, k: int) -> str:
+    stk = []
+    rem = k
+    for d in num:
+        while rem > 0 and stk and stk[-1] > d:
+            stk.pop()
+            rem -= 1
+        stk.append(d)
+    while rem > 0:
+        stk.pop()
+        rem -= 1
+    result = ''.join(stk).lstrip('0')
+    return result if result else '0'
+`,
+
+  'median-two-sorted-arrays': `def findMedianSortedArrays(nums1, nums2):
+    if len(nums1) > len(nums2):
+        nums1, nums2 = nums2, nums1
+    m, n = len(nums1), len(nums2)
+    half = (m + n + 1) // 2
+    lo, hi = 0, m
+    while lo <= hi:
+        i = (lo + hi) // 2
+        j = half - i
+        ln1 = float('-inf') if i == 0 else nums1[i - 1]
+        rn1 = float('inf') if i == m else nums1[i]
+        ln2 = float('-inf') if j == 0 else nums2[j - 1]
+        rn2 = float('inf') if j == n else nums2[j]
+        if ln1 <= rn2 and ln2 <= rn1:
+            max_left = max(ln1, ln2)
+            if (m + n) % 2 == 1:
+                return float(max_left)
+            return (max_left + min(rn1, rn2)) / 2.0
+        elif ln1 > rn2:
+            hi = i - 1
+        else:
+            lo = i + 1
+    return 0.0
+`,
+  'split-array-largest-sum': `def splitArrayLargest(nums, k):
+    lo, hi = max(nums), sum(nums)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        parts, curr = 1, 0
+        for n in nums:
+            if curr + n > mid:
+                parts += 1
+                curr = 0
+            curr += n
+        if parts <= k:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+  'capacity-to-ship': `def shipWithinDays(weights, days):
+    lo, hi = max(weights), sum(weights)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        d, curr = 1, 0
+        for w in weights:
+            if curr + w > mid:
+                d += 1
+                curr = 0
+            curr += w
+        if d <= days:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+  'max-consecutive-flips': `def longestOnes(nums, k):
+    left = zeros = best = 0
+    for right, v in enumerate(nums):
+        if v == 0:
+            zeros += 1
+        while zeros > k:
+            if nums[left] == 0:
+                zeros -= 1
+            left += 1
+        best = max(best, right - left + 1)
+    return best
+`,
+  'count-subarrays-bounded-max': `def numSubarrayBoundedMax(nums, left, right):
+    def count_at_most(bound):
+        res = curr = 0
+        for n in nums:
+            curr = curr + 1 if n <= bound else 0
+            res += curr
+        return res
+    return count_at_most(right) - count_at_most(left - 1)
+`,
+  'trapping-rain-water': `def trap(height):
+    if not height:
+        return 0
+    l, r = 0, len(height) - 1
+    left_max = right_max = 0
+    water = 0
+    while l < r:
+        if height[l] <= height[r]:
+            left_max = max(left_max, height[l])
+            water += left_max - height[l]
+            l += 1
+        else:
+            right_max = max(right_max, height[r])
+            water += right_max - height[r]
+            r -= 1
+    return water
+`,
+  'four-sum': `def fourSum(nums, target):
+    nums = sorted(nums)
+    n = len(nums)
+    result = []
+    for i in range(n - 3):
+        if i > 0 and nums[i] == nums[i - 1]:
+            continue
+        for j in range(i + 1, n - 2):
+            if j > i + 1 and nums[j] == nums[j - 1]:
+                continue
+            l, r = j + 1, n - 1
+            while l < r:
+                s = nums[i] + nums[j] + nums[l] + nums[r]
+                if s == target:
+                    result.append([nums[i], nums[j], nums[l], nums[r]])
+                    while l < r and nums[l] == nums[l + 1]:
+                        l += 1
+                    while l < r and nums[r] == nums[r - 1]:
+                        r -= 1
+                    l += 1
+                    r -= 1
+                elif s < target:
+                    l += 1
+                else:
+                    r -= 1
+    return result
+`,
+  'fraction-to-recurring-decimal': `def fractionToDecimal(numerator, denominator):
+    if numerator == 0:
+        return '0'
+    result = ''
+    if (numerator < 0) != (denominator < 0):
+        result += '-'
+    numerator, denominator = abs(numerator), abs(denominator)
+    result += str(numerator // denominator)
+    remainder = numerator % denominator
+    if remainder == 0:
+        return result
+    result += '.'
+    seen = {}
+    frac_chars = []
+    while remainder != 0:
+        if remainder in seen:
+            pos = seen[remainder]
+            frac_chars.insert(pos, '(')
+            frac_chars.append(')')
+            break
+        seen[remainder] = len(frac_chars)
+        remainder *= 10
+        frac_chars.append(str(remainder // denominator))
+        remainder = remainder % denominator
+    return result + ''.join(frac_chars)
+`,
+  'integer-to-english-words': `def numberToWords(num):
+    if num == 0:
+        return 'Zero'
+    ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
+            'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen',
+            'Seventeen', 'Eighteen', 'Nineteen']
+    tens_words = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety']
+    def helper(n):
+        if n == 0:
+            return ''
+        if n < 20:
+            return ones[n] + ' '
+        if n < 100:
+            return tens_words[n // 10] + ' ' + helper(n % 10)
+        return ones[n // 100] + ' Hundred ' + helper(n % 100)
+    scales = [(1_000_000_000, 'Billion'), (1_000_000, 'Million'), (1_000, 'Thousand'), (1, '')]
+    result = ''
+    remaining = num
+    for scale, label in scales:
+        if remaining >= scale:
+            result += helper(remaining // scale) + (label + ' ' if label else '')
+            remaining = remaining % scale
+    return result.strip()
+`,
+  'at-most-k-distinct': `def atMostKDistinct(s, k):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    l = 0
+    best = 0
+    for r in range(len(s)):
+        freq[s[r]] += 1
+        while len(freq) > k:
+            freq[s[l]] -= 1
+            if freq[s[l]] == 0:
+                del freq[s[l]]
+            l += 1
+        best = max(best, r - l + 1)
+    return best
+`,
+  'permutation-in-string': `def permutationInString(s1, s2):
+    if len(s1) > len(s2):
+        return False
+    count = [0] * 26
+    window = [0] * 26
+    for c in s1:
+        count[ord(c) - ord('a')] += 1
+    n = len(s1)
+    for r in range(len(s2)):
+        window[ord(s2[r]) - ord('a')] += 1
+        if r >= n:
+            window[ord(s2[r - n]) - ord('a')] -= 1
+        if r >= n - 1 and window == count:
+            return True
+    return False
+`,
+  'subarray-product-less-than-k': `def subarrayProductLessThanK(nums, k):
+    if k <= 1:
+        return 0
+    l = 0
+    product = 1
+    count = 0
+    for r in range(len(nums)):
+        product *= nums[r]
+        while product >= k:
+            product //= nums[l]
+            l += 1
+        count += r - l + 1
+    return count
+`,
+  'longest-string-chain': `def longestStrChain(words):
+    words = sorted(list(words), key=len)
+    dp = {}
+    best = 1
+    for word in words:
+        max_chain = 0
+        for i in range(len(word)):
+            pred = word[:i] + word[i+1:]
+            if pred in dp:
+                max_chain = max(max_chain, dp[pred])
+        dp[word] = max_chain + 1
+        best = max(best, dp[word])
+    return best
+`,
+
+  'house-robber': `def rob(nums: list[int]) -> int:
+    prev2 = 0
+    prev1 = 0
+    for n in nums:
+        curr = max(prev1, prev2 + n)
+        prev2 = prev1
+        prev1 = curr
+    return prev1
+`,
+  'coin-change': `def coinChange(coins: list[int], amount: int) -> int:
+    dp = [float('inf')] * (amount + 1)
+    dp[0] = 0
+    for i in range(1, amount + 1):
+        for c in coins:
+            if i >= c:
+                dp[i] = min(dp[i], dp[i - c] + 1)
+    return dp[amount] if dp[amount] != float('inf') else -1
+`,
+  'longest-common-subsequence': `def longestCommonSubsequence(text1: str, text2: str) -> int:
+    m, n = len(text1), len(text2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if text1[i - 1] == text2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+            else:
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+    return dp[m][n]
+`,
+  'minimum-path-sum': `def minPathSum(grid: list[list[int]]) -> int:
+    m, n = len(grid), len(grid[0])
+    dp = [row[:] for row in grid]
+    for j in range(1, n):
+        dp[0][j] += dp[0][j - 1]
+    for i in range(1, m):
+        dp[i][0] += dp[i - 1][0]
+    for i in range(1, m):
+        for j in range(1, n):
+            dp[i][j] += min(dp[i - 1][j], dp[i][j - 1])
+    return dp[m - 1][n - 1]
+`,
+  'decode-ways': `def numDecodings(s: str) -> int:
+    n = len(s)
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    dp[1] = 1 if s[0] != '0' else 0
+    for i in range(2, n + 1):
+        if s[i - 1] != '0':
+            dp[i] += dp[i - 1]
+        two = int(s[i - 2:i])
+        if 10 <= two <= 26:
+            dp[i] += dp[i - 2]
+    return dp[n]
+`,
+  'unique-paths': `def uniquePaths(m: int, n: int) -> int:
+    dp = [[1] * n for _ in range(m)]
+    for i in range(1, m):
+        for j in range(1, n):
+            dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
+    return dp[m - 1][n - 1]
+`,
+  'four-sum-ii': `def fourSumII(nums1: list[int], nums2: list[int], nums3: list[int], nums4: list[int]) -> int:
+    from collections import defaultdict
+    sum_map = defaultdict(int)
+    for a in nums1:
+        for b in nums2:
+            sum_map[a + b] += 1
+    count = 0
+    for c in nums3:
+        for d in nums4:
+            count += sum_map[-(c + d)]
+    return count
+`,
+  'max-points-on-line': `def maxPoints(points: list[list[int]]) -> int:
+    from math import gcd
+    n = len(points)
+    if n <= 2:
+        return n
+    result = 1
+    for i in range(n):
+        counts = {}
+        local_max = 0
+        for j in range(i + 1, n):
+            dy = points[j][1] - points[i][1]
+            dx = points[j][0] - points[i][0]
+            g = gcd(abs(dy), abs(dx))
+            dy //= g
+            dx //= g
+            if dx < 0 or (dx == 0 and dy < 0):
+                dy, dx = -dy, -dx
+            key = (dy, dx)
+            counts[key] = counts.get(key, 0) + 1
+            local_max = max(local_max, counts[key])
+        result = max(result, local_max + 1)
+    return result
+`,
+
+  'lru-cache': `def lruCacheRunner(capacity, ops, args):
+    from collections import OrderedDict
+    class LRUCache:
+        def __init__(self, cap):
+            self.cap = cap
+            self.cache = OrderedDict()
+        def get(self, key):
+            if key not in self.cache:
+                return -1
+            self.cache.move_to_end(key)
+            return self.cache[key]
+        def put(self, key, value):
+            if key in self.cache:
+                self.cache.move_to_end(key)
+                self.cache[key] = value
+            else:
+                if len(self.cache) >= self.cap:
+                    self.cache.popitem(last=False)
+                self.cache[key] = value
+    cache = LRUCache(int(capacity))
+    result = []
+    for op, a in zip(ops, args):
+        if op == 'get':
+            result.append(cache.get(a[0]))
+        elif op == 'put':
+            cache.put(a[0], a[1])
+            result.append(None)
+        else:
+            result.append(None)
+    return result
+`,
+
+  'roman-to-integer': `def romanToInt(s: str) -> int:
+    val = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+    res = 0
+    for i in range(len(s)):
+        cur = val[s[i]]
+        nxt = val[s[i + 1]] if i + 1 < len(s) else 0
+        res += -cur if cur < nxt else cur
+    return res
+`,
+
+  'perfect-squares': `def numSquares(n: int) -> int:
+    import math
+    dp = [float('inf')] * (n + 1)
+    dp[0] = 0
+    for i in range(1, n + 1):
+        j = 1
+        while j * j <= i:
+            dp[i] = min(dp[i], dp[i - j * j] + 1)
+            j += 1
+    return dp[n]
+`,
+
+  'valid-sudoku': `def isValidSudoku(board: list[list[str]]) -> bool:
+    rows = [set() for _ in range(9)]
+    cols = [set() for _ in range(9)]
+    boxes = [set() for _ in range(9)]
+    for i in range(9):
+        for j in range(9):
+            v = board[i][j]
+            if v == '.':
+                continue
+            b = (i // 3) * 3 + (j // 3)
+            if v in rows[i] or v in cols[j] or v in boxes[b]:
+                return False
+            rows[i].add(v)
+            cols[j].add(v)
+            boxes[b].add(v)
+    return True
+`,
+
+  'find-first-and-last-position': `def searchRange(nums: list[int], target: int) -> list[int]:
+    def search(find_first: bool) -> int:
+        lo, hi, res = 0, len(nums) - 1, -1
+        while lo <= hi:
+            mid = (lo + hi) // 2
+            if nums[mid] == target:
+                res = mid
+                if find_first:
+                    hi = mid - 1
+                else:
+                    lo = mid + 1
+            elif nums[mid] < target:
+                lo = mid + 1
+            else:
+                hi = mid - 1
+        return res
+    return [search(True), search(False)]
+`,
+
+  'search-2d-matrix': `def searchMatrix(matrix: list[list[int]], target: int) -> bool:
+    m, n = len(matrix), len(matrix[0])
+    lo, hi = 0, m * n - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        val = matrix[mid // n][mid % n]
+        if val == target:
+            return True
+        elif val < target:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return False
+`,
+
+  'search-2d-matrix-ii': `def searchMatrix(matrix, target):
+    row, col = 0, len(matrix[0]) - 1
+    while row < len(matrix) and col >= 0:
+        val = matrix[row][col]
+        if val == target:
+            return True
+        elif val > target:
+            col -= 1
+        else:
+            row += 1
+    return False
+`,
+
+  'spiral-matrix': `def spiralOrder(matrix: list[list[int]]) -> list[int]:
+    m, n = len(matrix), len(matrix[0])
+    top, bottom, left, right = 0, m - 1, 0, n - 1
+    res = []
+    while top <= bottom and left <= right:
+        for c in range(left, right + 1):
+            res.append(matrix[top][c])
+        top += 1
+        for r in range(top, bottom + 1):
+            res.append(matrix[r][right])
+        right -= 1
+        if top <= bottom:
+            for c in range(right, left - 1, -1):
+                res.append(matrix[bottom][c])
+            bottom -= 1
+        if left <= right:
+            for r in range(bottom, top - 1, -1):
+                res.append(matrix[r][left])
+            left += 1
+    return res
+`,
+
+  'rotate-image': `def rotate(matrix: list[list[int]]) -> list[list[int]]:
+    n = len(matrix)
+    for i in range(n):
+        for j in range(i + 1, n):
+            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+    for row in matrix:
+        row.reverse()
+    return matrix
+`,
+
+  'maximal-square': `def maximalSquare(matrix: list[list[str]]) -> int:
+    m, n = len(matrix), len(matrix[0])
+    dp = [[0] * n for _ in range(m)]
+    best = 0
+    for i in range(m):
+        for j in range(n):
+            if matrix[i][j] == '1':
+                if i > 0 and j > 0:
+                    dp[i][j] = min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1
+                else:
+                    dp[i][j] = 1
+                best = max(best, dp[i][j])
+    return best * best
+`,
+
+  'queue-reconstruction-by-height': `def reconstructQueue(people):
+    people = [list(p) for p in people]
+    people.sort(key=lambda x: (-x[0], x[1]))
+    result = []
+    for p in people:
+        result.insert(p[1], p)
+    return result
+`,
+
+  'remove-duplicates-sorted-array-ii': `def removeDuplicatesIIRunner(nums):
+    nums = list(nums)
+    k = 0
+    for num in nums:
+        if k < 2 or nums[k-2] != num:
+            nums[k] = num
+            k += 1
+    return nums[:k]
+`,
+
+  'set-matrix-zeroes': `def setZeroes(matrix):
+    matrix = [list(row) for row in matrix]
+    m, n = len(matrix), len(matrix[0])
+    first_row_zero = any(matrix[0][j] == 0 for j in range(n))
+    first_col_zero = any(matrix[i][0] == 0 for i in range(m))
+    for i in range(1, m):
+        for j in range(1, n):
+            if matrix[i][j] == 0:
+                matrix[i][0] = 0
+                matrix[0][j] = 0
+    for i in range(1, m):
+        for j in range(1, n):
+            if matrix[i][0] == 0 or matrix[0][j] == 0:
+                matrix[i][j] = 0
+    if first_row_zero:
+        for j in range(n):
+            matrix[0][j] = 0
+    if first_col_zero:
+        for i in range(m):
+            matrix[i][0] = 0
+    return matrix
+`,
+
+  'minimum-arrows-burst-balloons': `def findMinArrowShots(points):
+    points = sorted(points, key=lambda x: x[1])
+    arrows, arrow_pos = 1, points[0][1]
+    for i in range(1, len(points)):
+        if points[i][0] > arrow_pos:
+            arrows += 1
+            arrow_pos = points[i][1]
+    return arrows
+`,
+
+  'word-break-ii': `def wordBreak(s, wordDict):
+    from functools import lru_cache
+    word_set = set(wordDict)
+    @lru_cache(maxsize=None)
+    def bt(start):
+        if start == len(s):
+            return ['']
+        results = []
+        for end in range(start + 1, len(s) + 1):
+            word = s[start:end]
+            if word in word_set:
+                for rest in bt(end):
+                    results.append(word if rest == '' else word + ' ' + rest)
+        return results
+    return sorted(bt(0))
+`,
+
+  'decode-ways-ii': `def numDecodings(s):
+    MOD = 10**9 + 7
+    prev2 = 1
+    prev1 = 9 if s[0] == '*' else (0 if s[0] == '0' else 1)
+    for i in range(1, len(s)):
+        cur, pre = s[i], s[i-1]
+        single = 9 if cur == '*' else (0 if cur == '0' else 1)
+        two = 0
+        if pre == '*':
+            if cur == '*':
+                two = 15
+            elif int(cur) <= 6:
+                two = 2
+            else:
+                two = 1
+        elif pre == '1':
+            two = 9 if cur == '*' else 1
+        elif pre == '2':
+            if cur == '*':
+                two = 6
+            elif int(cur) <= 6:
+                two = 1
+        prev2, prev1 = prev1, (single * prev1 + two * prev2) % MOD
+    return prev1
+`,
+
+  'longest-palindromic-subsequence': `def longestPalindromeSubseq(s: str) -> int:
+    n = len(s)
+    dp = [[0] * n for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            if s[i] == s[j]:
+                dp[i][j] = 2 if length == 2 else dp[i + 1][j - 1] + 2
+            else:
+                dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+    return dp[0][n - 1]
+`,
+
+  'palindrome-partitioning-min-cuts': `def minCut(s: str) -> int:
+    n = len(s)
+    is_palin = [[False] * n for _ in range(n)]
+    for i in range(n):
+        d = 0
+        while i - d >= 0 and i + d < n:
+            if s[i - d] == s[i + d]:
+                is_palin[i - d][i + d] = True
+                d += 1
+            else:
+                break
+        d = 0
+        while i - d >= 0 and i + d + 1 < n:
+            if s[i - d] == s[i + d + 1]:
+                is_palin[i - d][i + d + 1] = True
+                d += 1
+            else:
+                break
+    cuts = list(range(n))
+    for i in range(1, n):
+        if is_palin[0][i]:
+            cuts[i] = 0
+            continue
+        for j in range(1, i + 1):
+            if is_palin[j][i]:
+                cuts[i] = min(cuts[i], cuts[j - 1] + 1)
+    return cuts[n - 1]
+`,
+
+  'maximum-product-cutting': `def integerBreak(n: int) -> int:
+    dp = [0] * (n + 1)
+    for i in range(2, n + 1):
+        for j in range(1, i):
+            dp[i] = max(dp[i], j * max(i - j, dp[i - j]))
+    return dp[n]
+`,
+
+  'next-permutation': `def nextPermutation(nums: list[int]) -> list[int]:
+    i = len(nums) - 2
+    while i >= 0 and nums[i] >= nums[i + 1]:
+        i -= 1
+    if i >= 0:
+        j = len(nums) - 1
+        while nums[j] <= nums[i]:
+            j -= 1
+        nums[i], nums[j] = nums[j], nums[i]
+    l, r = i + 1, len(nums) - 1
+    while l < r:
+        nums[l], nums[r] = nums[r], nums[l]
+        l += 1
+        r -= 1
+    return nums
+`,
+
+  'interval-list-intersections': `def intervalIntersection(firstList: list[list[int]], secondList: list[list[int]]) -> list[list[int]]:
+    res = []
+    i, j = 0, 0
+    while i < len(firstList) and j < len(secondList):
+        lo = max(firstList[i][0], secondList[j][0])
+        hi = min(firstList[i][1], secondList[j][1])
+        if lo <= hi:
+            res.append([lo, hi])
+        if firstList[i][1] < secondList[j][1]:
+            i += 1
+        else:
+            j += 1
+    return res
+`,
+
+  'longest-mountain-in-array': `def longestMountain(arr: list[int]) -> int:
+    best = 0
+    for k in range(1, len(arr) - 1):
+        if arr[k - 1] < arr[k] > arr[k + 1]:
+            l, r = k - 1, k + 1
+            while l > 0 and arr[l - 1] < arr[l]:
+                l -= 1
+            while r < len(arr) - 1 and arr[r] > arr[r + 1]:
+                r += 1
+            best = max(best, r - l + 1)
+    return best
+`,
+
+  // --- dynamic-programming — hard -------------------------------------------
+  'regular-expression-matching': `def isMatch(s: str, p: str) -> bool:
+    m, n = len(s), len(p)
+    dp = [[False] * (n + 1) for _ in range(m + 1)]
+    dp[0][0] = True
+    for j in range(1, n + 1):
+        if p[j - 1] == '*':
+            dp[0][j] = dp[0][j - 2]
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if p[j - 1] == '*':
+                dp[i][j] = dp[i][j - 2]
+                if p[j - 2] in ('.', s[i - 1]):
+                    dp[i][j] = dp[i][j] or dp[i - 1][j]
+            elif p[j - 1] in ('.', s[i - 1]):
+                dp[i][j] = dp[i - 1][j - 1]
+    return dp[m][n]
+`,
+  'partition-equal-subset-sum': `def canPartition(nums: list[int]) -> bool:
+    total = sum(nums)
+    if total % 2 != 0:
+        return False
+    target = total // 2
+    dp = [False] * (target + 1)
+    dp[0] = True
+    for num in nums:
+        for j in range(target, num - 1, -1):
+            dp[j] = dp[j] or dp[j - num]
+    return dp[target]
+`,
+  'target-sum': `def findTargetSumWays(nums: list[int], target: int) -> int:
+    dp = {0: 1}
+    for num in nums:
+        next_dp: dict[int, int] = {}
+        for s, c in dp.items():
+            next_dp[s + num] = next_dp.get(s + num, 0) + c
+            next_dp[s - num] = next_dp.get(s - num, 0) + c
+        dp = next_dp
+    return dp.get(target, 0)
+`,
+  'burst-balloons': `def maxCoins(nums: list[int]) -> int:
+    a = [1] + list(nums) + [1]
+    n = len(a)
+    dp = [[0] * n for _ in range(n)]
+    for length in range(2, n):
+        for i in range(n - length):
+            j = i + length
+            for k in range(i + 1, j):
+                dp[i][j] = max(dp[i][j], dp[i][k] + a[i] * a[k] * a[j] + dp[k][j])
+    return dp[0][n - 1]
+`,
+  'wildcard-matching': `def isMatch(s: str, p: str) -> bool:
+    m, n = len(s), len(p)
+    dp = [[False] * (n + 1) for _ in range(m + 1)]
+    dp[0][0] = True
+    for j in range(1, n + 1):
+        if p[j - 1] == '*':
+            dp[0][j] = dp[0][j - 1]
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if p[j - 1] == '*':
+                dp[i][j] = dp[i - 1][j] or dp[i][j - 1]
+            elif p[j - 1] == '?' or p[j - 1] == s[i - 1]:
+                dp[i][j] = dp[i - 1][j - 1]
+    return dp[m][n]
+`,
+  'dungeon-game': `def calculateMinimumHP(dungeon: list[list[int]]) -> int:
+    dungeon = [list(row) for row in dungeon]
+    m, n = len(dungeon), len(dungeon[0])
+    dp = [[float('inf')] * (n + 1) for _ in range(m + 1)]
+    dp[m][n - 1] = 1
+    dp[m - 1][n] = 1
+    for i in range(m - 1, -1, -1):
+        for j in range(n - 1, -1, -1):
+            need = min(dp[i + 1][j], dp[i][j + 1]) - dungeon[i][j]
+            dp[i][j] = max(1, int(need))
+    return dp[0][0]
+`,
+
+  // --- dynamic-programming — easy -------------------------------------------
+  'min-cost-climbing-stairs': `def minCostClimbingStairs(cost):
+    n = len(cost)
+    dp = list(cost)
+    for i in range(2, n):
+        dp[i] = cost[i] + min(dp[i-1], dp[i-2])
+    return min(dp[n-1], dp[n-2])
+`,
+
+  'counting-bits': `def countBits(n):
+    ans = [0] * (n + 1)
+    for i in range(1, n + 1):
+        ans[i] = ans[i >> 1] + (i & 1)
+    return ans
+`,
+
+  'best-time-buy-sell': `def maxProfit(prices):
+    min_price = float('inf')
+    profit = 0
+    for p in prices:
+        min_price = min(min_price, p)
+        profit = max(profit, p - min_price)
+    return profit
+`,
+
+  'search-insert-position': `def searchInsert(nums, target):
+    lo, hi = 0, len(nums)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if nums[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+`,
+  'car-fleet': `def carFleet(target, position, speed):
+    pairs = sorted(zip(position, speed), reverse=True)
+    stack = []
+    for p, s in pairs:
+        t = (target - p) / s
+        if not stack or t > stack[-1]:
+            stack.append(t)
+    return len(stack)
+`,
+
+  'online-stock-span': `def stockSpannerRunner(prices):
+    stack = []
+    result = []
+    for price in prices:
+        span = 1
+        while stack and stack[-1][0] <= price:
+            span += stack.pop()[1]
+        stack.append((price, span))
+        result.append(span)
+    return result
+`,
+  'koko-eating-bananas': `def minEatingSpeed(piles, h):
+    import math
+    lo, hi = 1, max(piles)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if sum(math.ceil(p / mid) for p in piles) <= h:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+  'find-peak-element': `def findPeakElement(nums):
+    lo, hi = 0, len(nums) - 1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if nums[mid] < nums[mid + 1]:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+`,
+  'minimum-operations-reduce-x': `def minOperations(nums, x):
+    target = sum(nums) - x
+    if target < 0:
+        return -1
+    lo = 0
+    total = 0
+    best = -1
+    for hi in range(len(nums)):
+        total += nums[hi]
+        while total > target:
+            total -= nums[lo]
+            lo += 1
+        if total == target:
+            best = max(best, hi - lo + 1)
+    return -1 if best == -1 else len(nums) - best
+`,
+  'sort-list': `def sortArray(nums):
+    if len(nums) <= 1:
+        return list(nums)
+    mid = len(nums) // 2
+    left = sortArray(nums[:mid])
+    right = sortArray(nums[mid:])
+    result = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i]); i += 1
+        else:
+            result.append(right[j]); j += 1
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
+`,
+  'subarrays-k-distinct': `def subarraysWithKDistinct(nums, k):
+    from collections import defaultdict
+    def at_most(limit):
+        freq = defaultdict(int)
+        lo = cnt = 0
+        for hi, v in enumerate(nums):
+            freq[v] += 1
+            while len(freq) > limit:
+                freq[nums[lo]] -= 1
+                if freq[nums[lo]] == 0:
+                    del freq[nums[lo]]
+                lo += 1
+            cnt += hi - lo + 1
+        return cnt
+    return at_most(k) - at_most(k - 1)
+`,
+  'ransom-note': `def canConstruct(ransomNote, magazine):
+    from collections import Counter
+    m = Counter(magazine)
+    for c in ransomNote:
+        if m[c] <= 0:
+            return False
+        m[c] -= 1
+    return True
+`,
+  'isomorphic-strings': `def isIsomorphic(s, t):
+    s_to_t = {}
+    t_to_s = {}
+    for sc, tc in zip(s, t):
+        if (sc in s_to_t and s_to_t[sc] != tc) or (tc in t_to_s and t_to_s[tc] != sc):
+            return False
+        s_to_t[sc] = tc
+        t_to_s[tc] = sc
+    return True
+`,
+  'nth-ugly-number': `def nthUglyNumber(n):
+    dp = [0] * n
+    dp[0] = 1
+    i2 = i3 = i5 = 0
+    for i in range(1, n):
+        nxt = min(dp[i2] * 2, dp[i3] * 3, dp[i5] * 5)
+        dp[i] = nxt
+        if nxt == dp[i2] * 2: i2 += 1
+        if nxt == dp[i3] * 3: i3 += 1
+        if nxt == dp[i5] * 5: i5 += 1
+    return dp[n - 1]
+`,
+  'maximum-swap': `def maximumSwap(num):
+    digits = list(str(num))
+    last = {int(d): i for i, d in enumerate(digits)}
+    for i, d in enumerate(digits):
+        for c in range(9, int(d), -1):
+            if last.get(c, -1) > i:
+                digits[i], digits[last[c]] = digits[last[c]], digits[i]
+                return int(''.join(digits))
+    return num
+`,
+  // --- linked-list -----------------------------------------------------------
+  'delete-node-in-linked-list': `def deleteNode(node):
+    node.val = node.next.val
+    node.next = node.next.next
+`,
+
+  'reverse-linked-list': `def reverseList(head):
+    prev = None
+    curr = head
+    while curr:
+        nxt = curr.next
+        curr.next = prev
+        prev = curr
+        curr = nxt
+    return prev
+`,
+  'linked-list-cycle': `def hasCycle(head):
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow is fast:
+            return True
+    return False
+`,
+  'merge-two-sorted-linked-lists': `def mergeTwoLists(list1, list2):
+    dummy = ListNode(0)
+    curr = dummy
+    while list1 and list2:
+        if list1.val <= list2.val:
+            curr.next = list1
+            list1 = list1.next
+        else:
+            curr.next = list2
+            list2 = list2.next
+        curr = curr.next
+    curr.next = list1 if list1 else list2
+    return dummy.next
+`,
+  'middle-of-linked-list': `def middleNode(head):
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+    return slow
+`,
+  'palindrome-linked-list': `def isPalindrome(head):
+    vals = []
+    cur = head
+    while cur:
+        vals.append(cur.val)
+        cur = cur.next
+    return vals == vals[::-1]
+`,
+  'remove-nth-from-end': `def removeNthFromEnd(head, n):
+    dummy = ListNode(0)
+    dummy.next = head
+    slow = dummy
+    fast = head
+    for _ in range(n):
+        fast = fast.next
+    while fast:
+        slow = slow.next
+        fast = fast.next
+    slow.next = slow.next.next
+    return dummy.next
+`,
+  'odd-even-linked-list': `def oddEvenList(head):
+    if not head:
+        return head
+    odd = head
+    even = head.next
+    even_head = even
+    while even and even.next:
+        odd.next = even.next
+        odd = odd.next
+        even.next = odd.next
+        even = even.next
+    odd.next = even_head
+    return head
+`,
+  'intersection-two-linked-lists': `def getIntersectionNode(headA, headB):
+    a, b = headA, headB
+    while a is not b:
+        a = a.next if a else headB
+        b = b.next if b else headA
+    return a
+`,
+  'plus-one': `def plusOne(digits):
+    digits = list(digits)
+    for i in range(len(digits) - 1, -1, -1):
+        if digits[i] < 9:
+            digits[i] += 1
+            return digits
+        digits[i] = 0
+    return [1] + digits
+`,
+  'length-of-last-word': `def lengthOfLastWord(s):
+    s = s.rstrip()
+    return len(s) - s.rfind(' ') - 1
+`,
+  'palindrome-number': `def isPalindrome(x):
+    if x < 0 or (x % 10 == 0 and x != 0):
+        return False
+    rev = 0
+    while x > rev:
+        rev = rev * 10 + x % 10
+        x //= 10
+    return x == rev or x == rev // 10
+`,
+  'excel-column-number': `def titleToNumber(columnTitle):
+    r = 0
+    for c in columnTitle:
+        r = r * 26 + (ord(c) - 64)
+    return r
+`,
+
+  'reorder-list': `def reorderList(head):
+    if not head:
+        return
+    slow, fast = head, head
+    while fast.next and fast.next.next:
+        slow = slow.next
+        fast = fast.next.next
+    prev, curr = None, slow.next
+    slow.next = None
+    while curr:
+        next_node = curr.next
+        curr.next = prev
+        prev = curr
+        curr = next_node
+    first, second = head, prev
+    while second:
+        tmp1, tmp2 = first.next, second.next
+        first.next = second
+        second.next = tmp1
+        first = tmp1
+        second = tmp2
+`,
+
+  'add-two-numbers': `def addTwoNumbers(l1, l2):
+    dummy = ListNode(0)
+    curr = dummy
+    carry = 0
+    while l1 or l2 or carry:
+        v1 = l1.val if l1 else 0
+        v2 = l2.val if l2 else 0
+        total = v1 + v2 + carry
+        carry = total // 10
+        curr.next = ListNode(total % 10)
+        curr = curr.next
+        if l1: l1 = l1.next
+        if l2: l2 = l2.next
+    return dummy.next
+`,
+
+  'merge-k-sorted-lists': `def mergeKLists(lists):
+    import heapq
+    heap = []
+    for i, node in enumerate(lists):
+        if node:
+            heapq.heappush(heap, (node.val, i, node))
+    dummy = ListNode(0)
+    curr = dummy
+    while heap:
+        val, i, node = heapq.heappop(heap)
+        curr.next = node
+        curr = curr.next
+        if node.next:
+            heapq.heappush(heap, (node.next.val, i, node.next))
+    return dummy.next
+`,
+
+  'swap-nodes-in-pairs': `def swapPairs(head):
+    dummy = ListNode(0)
+    dummy.next = head
+    prev = dummy
+    while prev.next and prev.next.next:
+        a = prev.next
+        b = a.next
+        prev.next = b
+        a.next = b.next
+        b.next = a
+        prev = a
+    return dummy.next
+`,
+
+  'reverse-linked-list-ii': `def reverseBetween(head, left, right):
+    dummy = ListNode(0)
+    dummy.next = head
+    pre = dummy
+    for _ in range(left - 1):
+        pre = pre.next
+    cur = pre.next
+    for _ in range(right - left):
+        nxt = cur.next
+        cur.next = nxt.next
+        nxt.next = pre.next
+        pre.next = nxt
+    return dummy.next
+`,
+
+  'rotate-list': `def rotateRight(head, k):
+    if not head or not head.next or k == 0:
+        return head
+    n, tail = 1, head
+    while tail.next:
+        tail = tail.next
+        n += 1
+    tail.next = head
+    step = k % n
+    new_tail = head
+    for _ in range(n - step - 1):
+        new_tail = new_tail.next
+    new_head = new_tail.next
+    new_tail.next = None
+    return new_head
+`,
+
+  'remove-linked-list-elements': `def removeElements(head, val):
+    dummy = ListNode(0)
+    dummy.next = head
+    cur = dummy
+    while cur.next:
+        if cur.next.val == val:
+            cur.next = cur.next.next
+        else:
+            cur = cur.next
+    return dummy.next
+`,
+
+  'partition-list': `def partition(head, x):
+    less_dummy = ListNode(0)
+    greater_dummy = ListNode(0)
+    less = less_dummy
+    greater = greater_dummy
+    cur = head
+    while cur:
+        if cur.val < x:
+            less.next = cur
+            less = less.next
+        else:
+            greater.next = cur
+            greater = greater.next
+        cur = cur.next
+    greater.next = None
+    less.next = greater_dummy.next
+    return less_dummy.next
+`,
+
+  '01-matrix': `def updateMatrix(mat):
+    from collections import deque
+    m, n = len(mat), len(mat[0])
+    dist = [[0 if mat[r][c] == 0 else float('inf') for c in range(n)] for r in range(m)]
+    queue = deque((r, c) for r in range(m) for c in range(n) if mat[r][c] == 0)
+    dirs = [(1,0),(-1,0),(0,1),(0,-1)]
+    while queue:
+        r, c = queue.popleft()
+        for dr, dc in dirs:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n and dist[nr][nc] > dist[r][c] + 1:
+                dist[nr][nc] = dist[r][c] + 1
+                queue.append((nr, nc))
+    return dist
+`,
+
+  'flood-fill': `def floodFill(image, sr, sc, color):
+    orig = image[sr][sc]
+    if orig == color:
+        return image
+    def dfs(r, c):
+        if r < 0 or r >= len(image) or c < 0 or c >= len(image[0]):
+            return
+        if image[r][c] != orig:
+            return
+        image[r][c] = color
+        dfs(r - 1, c)
+        dfs(r + 1, c)
+        dfs(r, c - 1)
+        dfs(r, c + 1)
+    dfs(sr, sc)
+    return image
+`,
+
+  'number-of-islands': `def numIslands(grid):
+    count = 0
+    rows, cols = len(grid), len(grid[0])
+    def dfs(r, c):
+        if r < 0 or r >= rows or c < 0 or c >= cols or grid[r][c] != '1':
+            return
+        grid[r][c] = '0'
+        dfs(r - 1, c)
+        dfs(r + 1, c)
+        dfs(r, c - 1)
+        dfs(r, c + 1)
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == '1':
+                count += 1
+                dfs(r, c)
+    return count
+`,
+
+  'course-schedule': `def canFinish(numCourses, prerequisites):
+    from collections import defaultdict
+    adj = defaultdict(list)
+    for a, b in prerequisites:
+        adj[b].append(a)
+    state = [0] * numCourses
+    def dfs(node):
+        if state[node] == 1:
+            return False
+        if state[node] == 2:
+            return True
+        state[node] = 1
+        for nb in adj[node]:
+            if not dfs(nb):
+                return False
+        state[node] = 2
+        return True
+    return all(dfs(i) for i in range(numCourses))
+`,
+
+  'binary-tree-level-order-bottom': `def levelOrderBottom(root):
+    if not root:
+        return []
+    result = []
+    queue = [root]
+    while queue:
+        level = []
+        for _ in range(len(queue)):
+            node = queue.pop(0)
+            level.append(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        result.insert(0, level)
+    return result
+`,
+
+  'find-duplicate-number': `def findDuplicate(nums):
+    slow = fast = nums[0]
+    while True:
+        slow = nums[slow]
+        fast = nums[nums[fast]]
+        if slow == fast:
+            break
+    slow = nums[0]
+    while slow != fast:
+        slow = nums[slow]
+        fast = nums[fast]
+    return slow
+`,
+
+  'shortest-path-binary-matrix': `def shortestPathBinaryMatrix(grid):
+    from collections import deque
+    grid = [list(row) for row in grid]
+    n = len(grid)
+    if grid[0][0] or grid[n-1][n-1]:
+        return -1
+    if n == 1:
+        return 1
+    q = deque([(0, 0, 1)])
+    grid[0][0] = 1
+    dirs = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
+    while q:
+        r, c, d = q.popleft()
+        for dr, dc in dirs:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < n and 0 <= nc < n and grid[nr][nc] == 0:
+                if nr == n-1 and nc == n-1:
+                    return d+1
+                grid[nr][nc] = 1
+                q.append((nr, nc, d+1))
+    return -1
+`,
+
+  'accounts-merge': `def accountsMerge(accounts):
+    parent = {}
+    def find(x):
+        parent.setdefault(x, x)
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    def union(a, b):
+        parent[find(a)] = find(b)
+    email_name = {}
+    for acc in accounts:
+        name = acc[0]
+        for email in acc[1:]:
+            email_name[email] = name
+            union(acc[1], email)
+    from collections import defaultdict
+    groups = defaultdict(list)
+    for email in email_name:
+        groups[find(email)].append(email)
+    result = []
+    for root, emails in groups.items():
+        result.append([email_name[root]] + sorted(emails))
+    return sorted([[a[0]] + sorted(a[1:]) for a in result], key=lambda a: (a[0], a[1] if len(a) > 1 else ''))
+`,
+
+  'graph-valid-tree': `def validTree(n, edges):
+    if len(edges) != n - 1:
+        return False
+    parent = list(range(n))
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    for a, b in edges:
+        ra, rb = find(a), find(b)
+        if ra == rb:
+            return False
+        parent[ra] = rb
+    return True
+`,
+
+  // --- tree -------------------------------------------------------------------
+  'balanced-binary-tree': `def isBalanced(root):
+    def height(node):
+        if not node:
+            return 0
+        l = height(node.left)
+        if l == -1:
+            return -1
+        r = height(node.right)
+        if r == -1:
+            return -1
+        if abs(l - r) > 1:
+            return -1
+        return 1 + max(l, r)
+    return height(root) != -1
+`,
+
+  'minimum-depth-binary-tree': `def minDepth(root):
+    if not root:
+        return 0
+    if not root.left and not root.right:
+        return 1
+    if not root.left:
+        return 1 + minDepth(root.right)
+    if not root.right:
+        return 1 + minDepth(root.left)
+    return 1 + min(minDepth(root.left), minDepth(root.right))
+`,
+
+  'max-depth-binary-tree': `def maxDepth(root):
+    if not root:
+        return 0
+    return 1 + max(maxDepth(root.left), maxDepth(root.right))
+`,
+  'symmetric-tree': `def isSymmetric(root):
+    def mirror(a, b):
+        if not a and not b:
+            return True
+        if not a or not b or a.val != b.val:
+            return False
+        return mirror(a.left, b.right) and mirror(a.right, b.left)
+    return not root or mirror(root.left, root.right)
+`,
+  'invert-binary-tree': `def invertTree(root):
+    if not root:
+        return None
+    root.left, root.right = invertTree(root.right), invertTree(root.left)
+    return root
+`,
+
+  'binary-tree-paths': `def binaryTreePaths(root):
+    paths = []
+    def dfs(node, path):
+        if not node:
+            return
+        p = path + '->' + str(node.val) if path else str(node.val)
+        if not node.left and not node.right:
+            paths.append(p)
+            return
+        dfs(node.left, p)
+        dfs(node.right, p)
+    dfs(root, '')
+    return paths
+`,
+
+  'path-sum': `def hasPathSum(root, targetSum):
+    if not root:
+        return False
+    if not root.left and not root.right:
+        return root.val == targetSum
+    return hasPathSum(root.left, targetSum - root.val) or hasPathSum(root.right, targetSum - root.val)
+`,
+
+  'same-tree': `def isSameTree(p, q):
+    if not p and not q:
+        return True
+    if not p or not q:
+        return False
+    return p.val == q.val and isSameTree(p.left, q.left) and isSameTree(p.right, q.right)
+`,
+
+  'validate-bst': `def isValidBST(root):
+    def validate(node, min_val, max_val):
+        if not node:
+            return True
+        if node.val <= min_val or node.val >= max_val:
+            return False
+        return validate(node.left, min_val, node.val) and validate(node.right, node.val, max_val)
+    return validate(root, float('-inf'), float('inf'))
+`,
+
+  'level-order-traversal': `def levelOrder(root):
+    if not root:
+        return []
+    result = []
+    queue = [root]
+    while queue:
+        level = []
+        for _ in range(len(queue)):
+            node = queue.pop(0)
+            level.append(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        result.append(level)
+    return result
+`,
+
+  'diameter-of-binary-tree': `def diameterOfBinaryTree(root):
+    best = [0]
+    def depth(node):
+        if not node:
+            return 0
+        l = depth(node.left)
+        r = depth(node.right)
+        if l + r > best[0]:
+            best[0] = l + r
+        return 1 + max(l, r)
+    depth(root)
+    return best[0]
+`,
+
+  'lowest-common-ancestor-bst': `def lowestCommonAncestor(root, p, q):
+    if p < root.val and q < root.val:
+        return lowestCommonAncestor(root.left, p, q)
+    if p > root.val and q > root.val:
+        return lowestCommonAncestor(root.right, p, q)
+    return root
+`,
+
+  'binary-tree-max-path-sum': `def maxPathSum(root):
+    best = [float('-inf')]
+    def gain(node):
+        if not node:
+            return 0
+        l = max(0, gain(node.left))
+        r = max(0, gain(node.right))
+        if node.val + l + r > best[0]:
+            best[0] = node.val + l + r
+        return node.val + max(l, r)
+    gain(root)
+    return best[0]
+`,
+
+  'word-search': `def exist(board, word):
+    board = [list(row) for row in board]
+    m, n = len(board), len(board[0])
+    def dfs(r, c, idx):
+        if idx == len(word):
+            return True
+        if r < 0 or r >= m or c < 0 or c >= n or board[r][c] != word[idx]:
+            return False
+        ch = board[r][c]
+        board[r][c] = '#'
+        found = dfs(r+1,c,idx+1) or dfs(r-1,c,idx+1) or dfs(r,c+1,idx+1) or dfs(r,c-1,idx+1)
+        board[r][c] = ch
+        return found
+    for r in range(m):
+        for c in range(n):
+            if dfs(r, c, 0):
+                return True
+    return False
+`,
+
+  'surrounded-regions': `def solve(board):
+    if not board:
+        return board
+    board = [list(row) for row in board]
+    m, n = len(board), len(board[0])
+    def mark(r, c):
+        if r < 0 or r >= m or c < 0 or c >= n or board[r][c] != 'O':
+            return
+        board[r][c] = 'S'
+        mark(r+1, c); mark(r-1, c); mark(r, c+1); mark(r, c-1)
+    for r in range(m):
+        mark(r, 0); mark(r, n-1)
+    for c in range(n):
+        mark(0, c); mark(m-1, c)
+    for r in range(m):
+        for c in range(n):
+            if board[r][c] == 'O':
+                board[r][c] = 'X'
+            elif board[r][c] == 'S':
+                board[r][c] = 'O'
+    return board
+`,
+
+  'find-the-town-judge': `def findJudge(n, trust):
+    in_deg = [0] * (n + 1)
+    out_deg = [0] * (n + 1)
+    for a, b in trust:
+        out_deg[a] += 1
+        in_deg[b] += 1
+    for i in range(1, n + 1):
+        if in_deg[i] == n - 1 and out_deg[i] == 0:
+            return i
+    return -1
+`,
+
+  'find-if-path-exists': `def validPath(n, edges, source, destination):
+    if source == destination:
+        return True
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    visited = set([source])
+    queue = [source]
+    while queue:
+        cur = queue.pop(0)
+        for nb in adj[cur]:
+            if nb == destination:
+                return True
+            if nb not in visited:
+                visited.add(nb)
+                queue.append(nb)
+    return False
+`,
+
+  'max-area-of-island': `def maxAreaOfIsland(grid):
+    rows, cols = len(grid), len(grid[0])
+    def dfs(r, c):
+        if r < 0 or r >= rows or c < 0 or c >= cols or grid[r][c] != 1:
+            return 0
+        grid[r][c] = 0
+        return 1 + dfs(r-1,c) + dfs(r+1,c) + dfs(r,c-1) + dfs(r,c+1)
+    best = 0
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == 1:
+                area = dfs(r, c)
+                if area > best:
+                    best = area
+    return best
+`,
+
+  'rotting-oranges': `def orangesRotting(grid):
+    from collections import deque
+    rows, cols = len(grid), len(grid[0])
+    queue = deque()
+    fresh = 0
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == 2:
+                queue.append((r, c))
+            elif grid[r][c] == 1:
+                fresh += 1
+    minutes = 0
+    dirs = [(-1,0),(1,0),(0,-1),(0,1)]
+    while queue and fresh > 0:
+        for _ in range(len(queue)):
+            r, c = queue.popleft()
+            for dr, dc in dirs:
+                nr, nc = r + dr, c + dc
+                if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == 1:
+                    grid[nr][nc] = 2
+                    fresh -= 1
+                    queue.append((nr, nc))
+        minutes += 1
+    return minutes if fresh == 0 else -1
+`,
+
+  'keys-and-rooms': `def canVisitAllRooms(rooms):
+    visited = {0}
+    stack = [0]
+    while stack:
+        room = stack.pop()
+        for key in rooms[room]:
+            if key not in visited:
+                visited.add(key)
+                stack.append(key)
+    return len(visited) == len(rooms)
+`,
+
+  'network-delay-time': `def networkDelayTime(times, n, k):
+    import heapq
+    adj = [[] for _ in range(n + 1)]
+    for u, v, w in times:
+        adj[u].append((v, w))
+    dist = [float('inf')] * (n + 1)
+    dist[k] = 0
+    heap = [(0, k)]
+    while heap:
+        d, u = heapq.heappop(heap)
+        if d > dist[u]:
+            continue
+        for v, w in adj[u]:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                heapq.heappush(heap, (dist[v], v))
+    max_dist = max(dist[1:])
+    return max_dist if max_dist < float('inf') else -1
+`,
+
+  'word-ladder': `def ladderLength(beginWord, endWord, wordList):
+    word_set = set(wordList)
+    if endWord not in word_set:
+        return 0
+    from collections import deque
+    queue = deque([(beginWord, 1)])
+    visited = {beginWord}
+    while queue:
+        word, length = queue.popleft()
+        for i in range(len(word)):
+            for c in 'abcdefghijklmnopqrstuvwxyz':
+                next_word = word[:i] + c + word[i+1:]
+                if next_word == endWord:
+                    return length + 1
+                if next_word in word_set and next_word not in visited:
+                    visited.add(next_word)
+                    queue.append((next_word, length + 1))
+    return 0
+`,
+
+  'count-good-nodes': `def goodNodes(root):
+    count = [0]
+    def dfs(node, max_so_far):
+        if not node:
+            return
+        if node.val >= max_so_far:
+            count[0] += 1
+        new_max = max(max_so_far, node.val)
+        dfs(node.left, new_max)
+        dfs(node.right, new_max)
+    dfs(root, float('-inf'))
+    return count[0]
+`,
+
+  'binary-tree-right-side-view': `def rightSideView(root):
+    if not root:
+        return []
+    result = []
+    queue = [root]
+    while queue:
+        size = len(queue)
+        for i in range(size):
+            node = queue.pop(0)
+            if i == size - 1:
+                result.append(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+    return result
+`,
+
+  'number-of-connected-components': `def countComponents(n, edges):
+    parent = list(range(n))
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    components = n
+    for a, b in edges:
+        ra, rb = find(a), find(b)
+        if ra != rb:
+            parent[ra] = rb
+            components -= 1
+    return components
+`,
+
+  'clone-graph': `def cloneGraph(node):
+    if not node:
+        return None
+    cloned = {}
+    def dfs(n):
+        if n.val in cloned:
+            return cloned[n.val]
+        copy = Node(n.val)
+        cloned[n.val] = copy
+        copy.neighbors = [dfs(nb) for nb in n.neighbors]
+        return copy
+    return dfs(node)
+`,
+
+  'serialize-binary-tree': `def serialize(root):
+    tokens = []
+    queue = [root]
+    while queue:
+        node = queue.pop(0)
+        if node is None:
+            tokens.append('#')
+        else:
+            tokens.append(str(node.val))
+            queue.append(node.left)
+            queue.append(node.right)
+    return ','.join(tokens)
+
+def deserialize(data):
+    parts = data.split(',')
+    if not parts or parts[0] == '#':
+        return None
+    root = TreeNode(int(parts[0]))
+    queue = [root]
+    i = 1
+    while queue and i < len(parts):
+        node = queue.pop(0)
+        if i < len(parts) and parts[i] != '#':
+            node.left = TreeNode(int(parts[i]))
+            queue.append(node.left)
+        i += 1
+        if i < len(parts) and parts[i] != '#':
+            node.right = TreeNode(int(parts[i]))
+            queue.append(node.right)
+        i += 1
+    return root
+`,
+
+  'flatten-binary-tree': `def flatten(root):
+    if not root:
+        return
+    stack = [root]
+    while stack:
+        node = stack.pop()
+        if node.right:
+            stack.append(node.right)
+        if node.left:
+            stack.append(node.left)
+        node.left = None
+        node.right = stack[-1] if stack else None
+`,
+
+  'pacific-atlantic': `def pacificAtlantic(heights):
+    rows, cols = len(heights), len(heights[0])
+    dirs = [(-1,0),(1,0),(0,-1),(0,1)]
+    def bfs(starts):
+        reach = [[False]*cols for _ in range(rows)]
+        queue = list(starts)
+        for r, c in starts:
+            reach[r][c] = True
+        while queue:
+            r, c = queue.pop(0)
+            for dr, dc in dirs:
+                nr, nc = r+dr, c+dc
+                if 0 <= nr < rows and 0 <= nc < cols and not reach[nr][nc] and heights[nr][nc] >= heights[r][c]:
+                    reach[nr][nc] = True
+                    queue.append((nr, nc))
+        return reach
+    p_starts = [(r, 0) for r in range(rows)] + [(0, c) for c in range(cols)]
+    a_starts = [(r, cols-1) for r in range(rows)] + [(rows-1, c) for c in range(cols)]
+    pr = bfs(p_starts)
+    ar = bfs(a_starts)
+    return [[r, c] for r in range(rows) for c in range(cols) if pr[r][c] and ar[r][c]]
+`,
+
+  'kth-smallest-bst': `def kthSmallest(root, k):
+    vals = []
+    def inorder(node):
+        if not node:
+            return
+        inorder(node.left)
+        vals.append(node.val)
+        inorder(node.right)
+    inorder(root)
+    return vals[k - 1]
+`,
+
+  'course-schedule-ii': `def findOrder(numCourses, prerequisites):
+    from collections import deque
+    in_deg = [0] * numCourses
+    adj = [[] for _ in range(numCourses)]
+    for a, b in prerequisites:
+        adj[b].append(a)
+        in_deg[a] += 1
+    queue = deque(i for i in range(numCourses) if in_deg[i] == 0)
+    order = []
+    while queue:
+        cur = queue.popleft()
+        order.append(cur)
+        for nb in adj[cur]:
+            in_deg[nb] -= 1
+            if in_deg[nb] == 0:
+                queue.append(nb)
+    return order if len(order) == numCourses else []
+`,
+
+  'construct-binary-tree': `def buildTree(preorder, inorder):
+    if not preorder:
+        return None
+    index_map = {v: i for i, v in enumerate(inorder)}
+    pi = [0]
+    def build(lo, hi):
+        if lo > hi:
+            return None
+        root_val = preorder[pi[0]]
+        pi[0] += 1
+        mid = index_map[root_val]
+        node = TreeNode(root_val)
+        node.left = build(lo, mid - 1)
+        node.right = build(mid + 1, hi)
+        return node
+    return build(0, len(inorder) - 1)
+`,
+
+  'zigzag-level-order': `def zigzagLevelOrder(root):
+    if not root:
+        return []
+    result = []
+    queue = [root]
+    left_to_right = True
+    while queue:
+        size = len(queue)
+        level = []
+        for _ in range(size):
+            node = queue.pop(0)
+            level.append(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        result.append(level if left_to_right else level[::-1])
+        left_to_right = not left_to_right
+    return result
+`,
+
+  'sum-root-to-leaf': `def sumNumbers(root):
+    def dfs(node, cur):
+        if not node:
+            return 0
+        n = cur * 10 + node.val
+        if not node.left and not node.right:
+            return n
+        return dfs(node.left, n) + dfs(node.right, n)
+    return dfs(root, 0)
+`,
+
+  'number-of-provinces': `def findCircleNum(isConnected):
+    n = len(isConnected)
+    visited = [False] * n
+    def dfs(i):
+        visited[i] = True
+        for j in range(n):
+            if isConnected[i][j] == 1 and not visited[j]:
+                dfs(j)
+    provinces = 0
+    for i in range(n):
+        if not visited[i]:
+            dfs(i)
+            provinces += 1
+    return provinces
+`,
+
+  'path-sum-iii': `def pathSum(root, targetSum):
+    from collections import defaultdict
+    prefix_count = defaultdict(int)
+    prefix_count[0] = 1
+    count = [0]
+    def dfs(node, cur_sum):
+        if not node:
+            return
+        cur_sum += node.val
+        count[0] += prefix_count[cur_sum - targetSum]
+        prefix_count[cur_sum] += 1
+        dfs(node.left, cur_sum)
+        dfs(node.right, cur_sum)
+        prefix_count[cur_sum] -= 1
+    dfs(root, 0)
+    return count[0]
+`,
+
+  'reverse-nodes-in-k-group': `def reverseKGroup(head, k):
+    def count_nodes(node):
+        count = 0
+        while node and count < k:
+            node = node.next
+            count += 1
+        return count
+    if count_nodes(head) < k:
+        return head
+    prev = None
+    cur = head
+    for _ in range(k):
+        nxt = cur.next
+        cur.next = prev
+        prev = cur
+        cur = nxt
+    head.next = reverseKGroup(cur, k)
+    return prev
+`,
+
+  'redundant-connection': `def findRedundantConnection(edges):
+    n = len(edges)
+    parent = list(range(n + 1))
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    for u, v in edges:
+        pu, pv = find(u), find(v)
+        if pu == pv:
+            return [u, v]
+        parent[pu] = pv
+    return []
+`,
+
+  'is-graph-bipartite': `def isBipartite(graph):
+    from collections import deque
+    n = len(graph)
+    color = [-1] * n
+    for start in range(n):
+        if color[start] != -1:
+            continue
+        color[start] = 0
+        queue = deque([start])
+        while queue:
+            u = queue.popleft()
+            for v in graph[u]:
+                if color[v] == -1:
+                    color[v] = 1 - color[u]
+                    queue.append(v)
+                elif color[v] == color[u]:
+                    return False
+    return True
+`,
+
+  'all-paths-source-target': `def allPathsSourceTarget(graph):
+    n = len(graph)
+    result = []
+    def dfs(node, path):
+        if node == n - 1:
+            result.append(list(path))
+            return
+        for nb in graph[node]:
+            path.append(nb)
+            dfs(nb, path)
+            path.pop()
+    dfs(0, [0])
+    return result
+`,
+
+  'house-robber-iii': `def rob(root):
+    def dp(node):
+        if not node:
+            return (0, 0)
+        ll, ls = dp(node.left)
+        rl, rs = dp(node.right)
+        return (node.val + ls + rs, max(ll, ls) + max(rl, rs))
+    r, s = dp(root)
+    return max(r, s)
+`,
+
+  'maximum-width-binary-tree': `def widthOfBinaryTree(root):
+    if not root:
+        return 0
+    max_width = 0
+    queue = [(root, 0)]
+    while queue:
+        left_idx = queue[0][1]
+        right_idx = left_idx
+        next_queue = []
+        for node, idx in queue:
+            right_idx = idx
+            norm = idx - left_idx
+            if node.left:
+                next_queue.append((node.left, 2 * norm))
+            if node.right:
+                next_queue.append((node.right, 2 * norm + 1))
+        max_width = max(max_width, right_idx - left_idx + 1)
+        queue = next_queue
+    return max_width
+`,
+
+  'minimum-height-trees': `def findMinHeightTrees(n, edges):
+    if n == 1:
+        return [0]
+    from collections import defaultdict, deque
+    adj = defaultdict(set)
+    deg = [0] * n
+    for a, b in edges:
+        adj[a].add(b)
+        adj[b].add(a)
+        deg[a] += 1
+        deg[b] += 1
+    leaves = deque(i for i in range(n) if deg[i] == 1)
+    remaining = n
+    while remaining > 2:
+        remaining -= len(leaves)
+        next_leaves = deque()
+        for _ in range(len(leaves)):
+            l = leaves.popleft()
+            for nb in adj[l]:
+                adj[nb].discard(l)
+                deg[nb] -= 1
+                if deg[nb] == 1:
+                    next_leaves.append(nb)
+        leaves = next_leaves
+    return sorted(leaves)
+`,
+
+  'triangle': `def minimumTotal(triangle):
+    dp = list(triangle[-1])
+    for i in range(len(triangle) - 2, -1, -1):
+        for j in range(i + 1):
+            dp[j] = triangle[i][j] + min(dp[j], dp[j + 1])
+    return dp[0]
+`,
+
+  'interleaving-string': `def isInterleave(s1, s2, s3):
+    if len(s1) + len(s2) != len(s3):
+        return False
+    dp = [[False] * (len(s2) + 1) for _ in range(len(s1) + 1)]
+    dp[0][0] = True
+    for i in range(1, len(s1) + 1):
+        dp[i][0] = dp[i-1][0] and s1[i-1] == s3[i-1]
+    for j in range(1, len(s2) + 1):
+        dp[0][j] = dp[0][j-1] and s2[j-1] == s3[j-1]
+    for i in range(1, len(s1) + 1):
+        for j in range(1, len(s2) + 1):
+            dp[i][j] = (s1[i-1] == s3[i+j-1] and dp[i-1][j]) or (s2[j-1] == s3[i+j-1] and dp[i][j-1])
+    return dp[len(s1)][len(s2)]
+`,
+
+  'find-eventual-safe-states': `def eventualSafeNodes(graph):
+    n = len(graph)
+    state = [0] * n  # 0=unvisited, 1=in-progress, 2=safe
+    def dfs(node):
+        if state[node] == 1:
+            return False
+        if state[node] == 2:
+            return True
+        state[node] = 1
+        for nb in graph[node]:
+            if not dfs(nb):
+                state[node] = 1
+                return False
+        state[node] = 2
+        return True
+    return [i for i in range(n) if dfs(i)]
+`,
+
+  'lowest-common-ancestor-binary-tree': `def lowestCommonAncestor(root, p, q):
+    if not root:
+        return None
+    if root is p or root is q:
+        return root
+    left = lowestCommonAncestor(root.left, p, q)
+    right = lowestCommonAncestor(root.right, p, q)
+    if left and right:
+        return root
+    return left if left else right
+`,
+
+  'reverse-vowels': `def reverseVowels(s):
+    vowels = set('aeiouAEIOU')
+    arr = list(s)
+    l, r = 0, len(arr) - 1
+    while l < r:
+        while l < r and arr[l] not in vowels:
+            l += 1
+        while l < r and arr[r] not in vowels:
+            r -= 1
+        if l < r:
+            arr[l], arr[r] = arr[r], arr[l]
+            l += 1
+            r -= 1
+    return ''.join(arr)
+`,
+
+  'fizz-buzz': `def fizzBuzz(n):
+    result = []
+    for i in range(1, n + 1):
+        if i % 15 == 0:
+            result.append('FizzBuzz')
+        elif i % 3 == 0:
+            result.append('Fizz')
+        elif i % 5 == 0:
+            result.append('Buzz')
+        else:
+            result.append(str(i))
+    return result
+`,
+
+  'lucky-numbers-in-matrix': `def luckyNumbers(matrix):
+    matrix = [list(row) for row in matrix]
+    m, n = len(matrix), len(matrix[0])
+    result = []
+    for i in range(m):
+        min_val = min(matrix[i])
+        min_col = matrix[i].index(min_val)
+        if max(matrix[k][min_col] for k in range(m)) == min_val:
+            result.append(min_val)
+    return result
+`,
+
+  'check-sorted-rotated': `def check(nums):
+    nums = list(nums)
+    n = len(nums)
+    count = sum(1 for i in range(n) if nums[i] > nums[(i + 1) % n])
+    return count <= 1
+`,
+
+  'maximum-vowels': `def maxVowels(s, k):
+    vowels = set('aeiou')
+    count = best = 0
+    for i in range(len(s)):
+        if s[i] in vowels:
+            count += 1
+        if i >= k and s[i - k] in vowels:
+            count -= 1
+        best = max(best, count)
+    return best
+`,
+
+  'longest-subarray-after-deleting': `def longestSubarray(nums):
+    nums = list(nums)
+    left = zeros = best = 0
+    for right in range(len(nums)):
+        if nums[right] == 0:
+            zeros += 1
+        while zeros > 1:
+            if nums[left] == 0:
+                zeros -= 1
+            left += 1
+        best = max(best, right - left)
+    return best
+`,
+
+  'gas-station': `def canCompleteCircuit(gas, cost):
+    gas = list(gas)
+    cost = list(cost)
+    total = tank = start = 0
+    for i in range(len(gas)):
+        diff = gas[i] - cost[i]
+        total += diff
+        tank += diff
+        if tank < 0:
+            start = i + 1
+            tank = 0
+    return start if total >= 0 else -1
+`,
+
+  'minimum-cost-tickets': `def mincostTickets(days, costs):
+    day_set = set(days)
+    dp = [0] * 366
+    for i in range(1, 366):
+        if i not in day_set:
+            dp[i] = dp[i - 1]
+        else:
+            dp[i] = min(dp[i-1] + costs[0], dp[max(0,i-7)] + costs[1], dp[max(0,i-30)] + costs[2])
+    return dp[365]
+`,
+
+  'max-subarray-circular': `def maxSubarraySumCircular(nums):
+    nums = list(nums)
+    total_sum = 0
+    max_sum = nums[0]
+    min_sum = nums[0]
+    cur_max = 0
+    cur_min = 0
+    for n in nums:
+        cur_max = max(cur_max + n, n)
+        max_sum = max(max_sum, cur_max)
+        cur_min = min(cur_min + n, n)
+        min_sum = min(min_sum, cur_min)
+        total_sum += n
+    return max(max_sum, total_sum - min_sum) if max_sum > 0 else max_sum
+`,
+
+  'squares-of-sorted-array': `def sortedSquares(nums):
+    nums = list(nums)
+    left, right = 0, len(nums) - 1
+    result = [0] * len(nums)
+    pos = len(nums) - 1
+    while left <= right:
+        lsq, rsq = nums[left] ** 2, nums[right] ** 2
+        if lsq > rsq:
+            result[pos] = lsq
+            left += 1
+        else:
+            result[pos] = rsq
+            right -= 1
+        pos -= 1
+    return result
+`,
+
+  'minimum-absolute-difference': `def minimumAbsDifference(arr):
+    arr = sorted(arr)
+    best = float('inf')
+    for i in range(1, len(arr)):
+        best = min(best, arr[i] - arr[i-1])
+    return [[arr[i-1], arr[i]] for i in range(1, len(arr)) if arr[i] - arr[i-1] == best]
+`,
+
+  'count-negatives-in-sorted-matrix': `def countNegatives(grid):
+    count = 0
+    for row in grid:
+        l, r = 0, len(row)
+        while l < r:
+            m = (l + r) // 2
+            if row[m] < 0:
+                r = m
+            else:
+                l = m + 1
+        count += len(row) - l
+    return count
+`,
+
+  'k-closest-points': `def kClosestRunner(points, k):
+    pts = [list(p) for p in points]
+    return sorted(pts, key=lambda p: (p[0]*p[0]+p[1]*p[1], p[0], p[1]))[:k]
+`,
+
+  'top-k-frequent-words': `def topKFrequent(words, k):
+    from collections import Counter
+    freq = Counter(words)
+    return sorted(freq.keys(), key=lambda w: (-freq[w], w))[:k]
+`,
+
+  'find-disappeared-numbers': `def findDisappearedNumbers(nums):
+    nums = list(nums)
+    for n in nums:
+        idx = abs(n) - 1
+        if nums[idx] > 0:
+            nums[idx] = -nums[idx]
+    return [i + 1 for i in range(len(nums)) if nums[i] > 0]
+`,
+
+  'spiral-matrix-ii': `def generateMatrix(n):
+    mat = [[0] * n for _ in range(n)]
+    top, bottom, left, right, num = 0, n - 1, 0, n - 1, 1
+    while top <= bottom and left <= right:
+        for i in range(left, right + 1):
+            mat[top][i] = num
+            num += 1
+        top += 1
+        for i in range(top, bottom + 1):
+            mat[i][right] = num
+            num += 1
+        right -= 1
+        if top <= bottom:
+            for i in range(right, left - 1, -1):
+                mat[bottom][i] = num
+                num += 1
+            bottom -= 1
+        if left <= right:
+            for i in range(bottom, top - 1, -1):
+                mat[i][left] = num
+                num += 1
+            left += 1
+    return mat
+`,
+
+  'max-consecutive-ones-iii': `def longestOnes(nums, k):
+    left = zeros = best = 0
+    for right in range(len(nums)):
+        if nums[right] == 0:
+            zeros += 1
+        while zeros > k:
+            if nums[left] == 0:
+                zeros -= 1
+            left += 1
+        best = max(best, right - left + 1)
+    return best
+`,
+
+  'jump-game-iii': `def canReach(arr, start):
+    from collections import deque
+    n = len(arr)
+    visited = [False] * n
+    queue = deque([start])
+    visited[start] = True
+    while queue:
+        i = queue.popleft()
+        if arr[i] == 0:
+            return True
+        for nxt in [i - arr[i], i + arr[i]]:
+            if 0 <= nxt < n and not visited[nxt]:
+                visited[nxt] = True
+                queue.append(nxt)
+    return False
+`,
+
+  'coin-change-ii': `def change(amount, coins):
+    dp = [0] * (amount + 1)
+    dp[0] = 1
+    for coin in coins:
+        for i in range(coin, amount + 1):
+            dp[i] += dp[i - coin]
+    return dp[amount]
+`,
+
+  'best-time-buy-sell-cooldown': `def maxProfit(prices):
+    if len(prices) <= 1:
+        return 0
+    held = -prices[0]
+    sold = 0
+    rest = 0
+    for i in range(1, len(prices)):
+        ph, ps, pr = held, sold, rest
+        held = max(ph, pr - prices[i])
+        sold = ph + prices[i]
+        rest = max(pr, ps)
+    return max(sold, rest)
+`,
+
+  'longest-arithmetic-subsequence': `def longestArithSeqLength(nums):
+    n = len(nums)
+    dp = [{} for _ in range(n)]
+    best = 2
+    for i in range(1, n):
+        for j in range(i):
+            diff = nums[i] - nums[j]
+            prev = dp[j].get(diff, 1)
+            cur = prev + 1
+            dp[i][diff] = max(dp[i].get(diff, 0), cur)
+            best = max(best, cur)
+    return best
+`,
+
+  'combination-sum-ii': `def combinationSum2(candidates, target):
+    candidates = sorted(candidates)
+    result = []
+    def bt(start, rem, cur):
+        if rem == 0:
+            result.append(list(cur))
+            return
+        for i in range(start, len(candidates)):
+            if i > start and candidates[i] == candidates[i-1]:
+                continue
+            if candidates[i] > rem:
+                break
+            cur.append(candidates[i])
+            bt(i + 1, rem - candidates[i], cur)
+            cur.pop()
+    bt(0, target, [])
+    return result
+`,
+
+  'combination-sum-iii': `def combinationSumIII(k, n):
+    result = []
+    def bt(start, rem, cur):
+        if len(cur) == k and rem == 0:
+            result.append(cur[:])
+            return
+        if len(cur) == k or rem <= 0:
+            return
+        for d in range(start, 10):
+            cur.append(d)
+            bt(d + 1, rem - d, cur)
+            cur.pop()
+    bt(1, n, [])
+    return sorted([sorted(c) for c in result])
+`,
+
+  'number-of-dice-rolls': `def numRollsToTarget(n, k, target):
+    MOD = 10**9 + 7
+    dp = [0] * (target + 1)
+    dp[0] = 1
+    for _ in range(n):
+        nxt = [0] * (target + 1)
+        for t in range(target + 1):
+            if not dp[t]:
+                continue
+            for face in range(1, k + 1):
+                if t + face <= target:
+                    nxt[t + face] = (nxt[t + face] + dp[t]) % MOD
+        dp = nxt
+    return dp[target]
+`,
+
+  'unique-paths-ii': `def uniquePathsWithObstacles(obstacleGrid):
+    m, n = len(obstacleGrid), len(obstacleGrid[0])
+    dp = [[0] * n for _ in range(m)]
+    for i in range(m):
+        if obstacleGrid[i][0] == 1:
+            break
+        dp[i][0] = 1
+    for j in range(n):
+        if obstacleGrid[0][j] == 1:
+            break
+        dp[0][j] = 1
+    for i in range(1, m):
+        for j in range(1, n):
+            if obstacleGrid[i][j] == 0:
+                dp[i][j] = dp[i-1][j] + dp[i][j-1]
+    return dp[m-1][n-1]
+`,
+
+  'word-search-ii': `def findWords(board, words):
+    trie = {}
+    for word in words:
+        node = trie
+        for c in word:
+            if c not in node:
+                node[c] = {}
+            node = node[c]
+        node['$'] = word
+    result = []
+    m, n = len(board), len(board[0])
+    def dfs(r, c, node):
+        ch = board[r][c]
+        if ch not in node:
+            return
+        nxt = node[ch]
+        if '$' in nxt:
+            result.append(nxt['$'])
+            del nxt['$']
+        board[r][c] = '#'
+        for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
+            nr, nc2 = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc2 < n and board[nr][nc2] != '#':
+                dfs(nr, nc2, nxt)
+        board[r][c] = ch
+    for r in range(m):
+        for c in range(n):
+            dfs(r, c, trie)
+    return sorted(result)
+`,
+
+  'letter-case-permutation': `def letterCasePermutation(s):
+    result = []
+    def bt(i, cur):
+        if i == len(s):
+            result.append(''.join(cur))
+            return
+        ch = s[i]
+        if ch.isdigit():
+            cur.append(ch)
+            bt(i + 1, cur)
+            cur.pop()
+        else:
+            cur.append(ch.lower())
+            bt(i + 1, cur)
+            cur.pop()
+            cur.append(ch.upper())
+            bt(i + 1, cur)
+            cur.pop()
+    bt(0, [])
+    return sorted(result)
+`,
+
+
+  'combinations': `def combine(n, k):
+    result = []
+    def bt(start, cur):
+        if len(cur) == k:
+            result.append(cur[:])
+            return
+        for i in range(start, n - (k - len(cur)) + 2):
+            cur.append(i)
+            bt(i + 1, cur)
+            cur.pop()
+    bt(1, [])
+    return result
+`,
+
+  'alien-dictionary': `def alienOrder(words):
+    from collections import defaultdict, deque
+    chars = set(c for w in words for c in w)
+    adj = defaultdict(set)
+    indeg = {c: 0 for c in chars}
+    for i in range(len(words) - 1):
+        w1, w2 = words[i], words[i + 1]
+        if len(w1) > len(w2) and w1.startswith(w2):
+            return ''
+        for c1, c2 in zip(w1, w2):
+            if c1 != c2:
+                if c2 not in adj[c1]:
+                    adj[c1].add(c2)
+                    indeg[c2] += 1
+                break
+    queue = deque(sorted(c for c in chars if indeg[c] == 0))
+    result = []
+    while queue:
+        c = queue.popleft()
+        result.append(c)
+        for nb in sorted(adj[c]):
+            indeg[nb] -= 1
+            if indeg[nb] == 0:
+                queue.append(nb)
+        queue = deque(sorted(queue))
+    return ''.join(result) if len(result) == len(chars) else ''
+`,
+
+  'critical-connections': `def criticalConnections(n, connections):
+    from collections import defaultdict
+    adj = defaultdict(list)
+    for u, v in connections:
+        adj[u].append(v)
+        adj[v].append(u)
+    disc = [-1] * n
+    low = [0] * n
+    bridges = []
+    timer = [0]
+    def dfs(u, parent):
+        disc[u] = low[u] = timer[0]
+        timer[0] += 1
+        for v in adj[u]:
+            if v == parent:
+                continue
+            if disc[v] == -1:
+                dfs(v, u)
+                low[u] = min(low[u], low[v])
+                if low[v] > disc[u]:
+                    bridges.append([min(u, v), max(u, v)])
+            else:
+                low[u] = min(low[u], disc[v])
+    for i in range(n):
+        if disc[i] == -1:
+            dfs(i, -1)
+    return sorted(bridges)
+`,
+
+  'vertical-order-traversal': `def verticalTraversal(root):
+    if root is None:
+        return []
+    nodes = []
+    def dfs(node, row, col):
+        if node is None:
+            return
+        nodes.append((col, row, node.val))
+        dfs(node.left, row + 1, col - 1)
+        dfs(node.right, row + 1, col + 1)
+    dfs(root, 0, 0)
+    nodes.sort()
+    from collections import defaultdict
+    col_map = defaultdict(list)
+    for col, row, val in nodes:
+        col_map[col].append(val)
+    return [col_map[c] for c in sorted(col_map)]
+`,
+
+  'longest-increasing-path-matrix': `def longestIncreasingPath(matrix):
+    m, n = len(matrix), len(matrix[0])
+    memo = [[0] * n for _ in range(m)]
+    def dfs(i, j):
+        if memo[i][j]:
+            return memo[i][j]
+        best = 1
+        for di, dj in [(-1,0),(1,0),(0,-1),(0,1)]:
+            ni, nj = i + di, j + dj
+            if 0 <= ni < m and 0 <= nj < n and matrix[ni][nj] > matrix[i][j]:
+                best = max(best, 1 + dfs(ni, nj))
+        memo[i][j] = best
+        return best
+    return max(dfs(i, j) for i in range(m) for j in range(n))
+`,
+
+  'find-min-rotated-ii': `def findMin(nums):
+    lo, hi = 0, len(nums) - 1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if nums[mid] > nums[hi]:
+            lo = mid + 1
+        elif nums[mid] < nums[hi]:
+            hi = mid
+        else:
+            hi -= 1
+    return nums[lo]
+`,
+
+  'number-of-substrings': `def numberOfSubstrings(s):
+    count = [0, 0, 0]
+    left = 0
+    result = 0
+    for right in range(len(s)):
+        count[ord(s[right]) - ord('a')] += 1
+        while count[0] > 0 and count[1] > 0 and count[2] > 0:
+            result += len(s) - right
+            count[ord(s[left]) - ord('a')] -= 1
+            left += 1
+    return result
+`,
+
+  'single-number': `def singleNumber(nums):
+    result = 0
+    for n in nums:
+        result ^= n
+    return result
+`,
+
+  'house-robber-ii': `def rob(nums):
+    if len(nums) == 1:
+        return nums[0]
+    def rob_range(lo, hi):
+        prev2, prev1 = 0, 0
+        for i in range(lo, hi + 1):
+            cur = max(prev1, prev2 + nums[i])
+            prev2, prev1 = prev1, cur
+        return prev1
+    return max(rob_range(0, len(nums) - 2), rob_range(1, len(nums) - 1))
+`,
+
+  'wiggle-subsequence': `def wiggleMaxLength(nums):
+    if len(nums) < 2:
+        return len(nums)
+    up = down = 1
+    for i in range(1, len(nums)):
+        if nums[i] > nums[i - 1]:
+            up = down + 1
+        elif nums[i] < nums[i - 1]:
+            down = up + 1
+    return max(up, down)
+`,
+
+  'missing-ranges': `def findMissingRanges(nums, lower, upper):
+    result = []
+    prev = lower - 1
+    for i in range(len(nums) + 1):
+        cur = nums[i] if i < len(nums) else upper + 1
+        if cur - prev >= 2:
+            if cur - prev == 2:
+                result.append(str(prev + 1))
+            else:
+                result.append(f'{prev + 1}->{cur - 1}')
+        prev = cur
+    return result
+`,
+
+  'excel-sheet-column-title': `def convertToTitle(columnNumber):
+    result = ''
+    n = columnNumber
+    while n > 0:
+        n -= 1
+        result = chr(65 + n % 26) + result
+        n //= 26
+    return result
+`,
+
+  'number-of-1-bits': `def hammingWeight(n):
+    count = 0
+    while n:
+        count += n & 1
+        n >>= 1
+    return count
+`,
+
+  'longest-palindrome-build': `def longestPalindrome(s):
+    from collections import Counter
+    freq = Counter(s)
+    length = sum(c // 2 * 2 for c in freq.values())
+    has_odd = any(c % 2 == 1 for c in freq.values())
+    return length + (1 if has_odd else 0)
+`,
+
+  'power-of-three': `def isPowerOfThree(n):
+    if n <= 0:
+        return False
+    while n % 3 == 0:
+        n //= 3
+    return n == 1
+`,
+
+  'reverse-bits': `def reverseBits(n):
+    result = 0
+    for _ in range(32):
+        result = (result << 1) | (n & 1)
+        n >>= 1
+    return result
+`,
+
+  'game-of-life': `def gameOfLife(board):
+    board = [[int(board[r][c]) for c in range(len(board[r]))] for r in range(len(board))]
+    m, n = len(board), len(board[0])
+    dirs = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
+    snapshot = [row[:] for row in board]
+    for r in range(m):
+        for c in range(n):
+            live = sum(
+                1 for dr, dc in dirs
+                if 0 <= r+dr < m and 0 <= c+dc < n and snapshot[r+dr][c+dc] == 1
+            )
+            if snapshot[r][c] == 1:
+                board[r][c] = 1 if live in (2, 3) else 0
+            else:
+                board[r][c] = 1 if live == 3 else 0
+    return board
+`,
+
+  'count-and-say': `def countAndSay(n):
+    s = '1'
+    for _ in range(n - 1):
+        next_s = ''
+        j = 0
+        while j < len(s):
+            count = 1
+            while j + count < len(s) and s[j + count] == s[j]:
+                count += 1
+            next_s += str(count) + s[j]
+            j += count
+        s = next_s
+    return s
+`,
+
+  'beautiful-arrangement': `def countArrangement(n):
+    visited = [False] * (n + 1)
+    count = [0]
+    def bt(pos):
+        if pos > n:
+            count[0] += 1
+            return
+        for k in range(1, n + 1):
+            if not visited[k] and (k % pos == 0 or pos % k == 0):
+                visited[k] = True
+                bt(pos + 1)
+                visited[k] = False
+    bt(1)
+    return count[0]
+`,
+
+  'expression-add-operators': `def addOperators(num, target):
+    result = []
+    def bt(start, expr, val, last_mul):
+        if start == len(num):
+            if val == target:
+                result.append(expr)
+            return
+        for length in range(1, len(num) - start + 1):
+            s = num[start:start + length]
+            if len(s) > 1 and s[0] == '0':
+                break
+            cur = int(s)
+            if start == 0:
+                bt(length, s, cur, cur)
+            else:
+                bt(start + length, expr + '+' + s, val + cur, cur)
+                bt(start + length, expr + '-' + s, val - cur, -cur)
+                bt(start + length, expr + '*' + s, val - last_mul + last_mul * cur, last_mul * cur)
+    bt(0, '', 0, 0)
+    return result
+`,
+
+  'insert-interval': `def insert(intervals, newInterval):
+    result = []
+    start, end = newInterval
+    i = 0
+    while i < len(intervals) and intervals[i][1] < start:
+        result.append(intervals[i])
+        i += 1
+    while i < len(intervals) and intervals[i][0] <= end:
+        start = min(start, intervals[i][0])
+        end = max(end, intervals[i][1])
+        i += 1
+    result.append([start, end])
+    result.extend(intervals[i:])
+    return result
+`,
+
+  'sum-of-two-integers': `def getSum(a, b):
+    mask = 0xFFFFFFFF
+    while b & mask:
+        carry = (a & b) << 1
+        a = a ^ b
+        b = carry
+    return a if b == 0 else a & mask | -(~(a & mask) + 1) & ~mask
+`,
+
+  'majority-element-ii': `def majorityElementII(nums):
+    c1, c2, cnt1, cnt2 = 0, 1, 0, 0
+    for n in nums:
+        if n == c1:
+            cnt1 += 1
+        elif n == c2:
+            cnt2 += 1
+        elif cnt1 == 0:
+            c1, cnt1 = n, 1
+        elif cnt2 == 0:
+            c2, cnt2 = n, 1
+        else:
+            cnt1 -= 1
+            cnt2 -= 1
+    cnt1 = cnt2 = 0
+    for n in nums:
+        if n == c1:
+            cnt1 += 1
+        elif n == c2:
+            cnt2 += 1
+    result = []
+    threshold = len(nums) / 3
+    if cnt1 > threshold:
+        result.append(c1)
+    if cnt2 > threshold:
+        result.append(c2)
+    return sorted(result)
+`,
+
+  'contains-duplicate-ii': `def containsNearbyDuplicate(nums, k):
+    seen = set()
+    for i, n in enumerate(nums):
+        if n in seen:
+            return True
+        seen.add(n)
+        if len(seen) > k:
+            seen.discard(nums[i - k])
+    return False
+`,
+
+  'pascals-triangle': `def generate(numRows):
+    result = []
+    for i in range(numRows):
+        row = [1]
+        for j in range(1, i):
+            row.append(result[i-1][j-1] + result[i-1][j])
+        if i > 0:
+            row.append(1)
+        result.append(row)
+    return result
+`,
+
+  'single-number-ii': `def singleNumber(nums):
+    ones, twos = 0, 0
+    for n in nums:
+        ones = (ones ^ n) & ~twos
+        twos = (twos ^ n) & ~ones
+    return ones
+`,
+
+  'goal-parser': `def interpret(command):
+    return command.replace('()', 'o').replace('(al)', 'al')
+`,
+
+  'design-goal-parser': `def goalParserInterpretation(command):
+    return command.replace('(al)', 'Gal').replace('()', 'Go')
+`,
+
+  'shuffle-the-array': `def shuffle(nums, n):
+    result = []
+    for i in range(n):
+        result.append(nums[i])
+        result.append(nums[i + n])
+    return result
+`,
+
+  'count-items-matching-rule': `def countMatches(items, ruleKey, ruleValue):
+    idx = {'type': 0, 'color': 1, 'name': 2}[ruleKey]
+    return sum(1 for item in items if item[idx] == ruleValue)
+`,
+
+  'richest-customer-wealth': `def maximumWealth(accounts):
+    return max(sum(row) for row in accounts)
+`,
+
+  'maximum-units-on-truck': `def maximumUnits(boxTypes, truckSize):
+    boxTypes = sorted([list(b) for b in boxTypes], key=lambda x: -x[1])
+    total = 0
+    for count, units in boxTypes:
+        take = min(count, truckSize)
+        total += take * units
+        truckSize -= take
+        if truckSize == 0:
+            break
+    return total
+`,
+
+  'find-the-difference': `def findTheDifference(s, t):
+    c = 0
+    for ch in s:
+        c ^= ord(ch)
+    for ch in t:
+        c ^= ord(ch)
+    return chr(c)
+`,
+
+  'reverse-only-letters': `def reverseOnlyLetters(s):
+    arr = list(s)
+    lo, hi = 0, len(arr) - 1
+    while lo < hi:
+        while lo < hi and not arr[lo].isalpha():
+            lo += 1
+        while lo < hi and not arr[hi].isalpha():
+            hi -= 1
+        if lo < hi:
+            arr[lo], arr[hi] = arr[hi], arr[lo]
+            lo += 1
+            hi -= 1
+    return ''.join(arr)
+`,
+
+  'backspace-string-compare': `def backspaceCompare(s, t):
+    def build(st):
+        stack = []
+        for c in st:
+            if c == '#':
+                if stack:
+                    stack.pop()
+            else:
+                stack.append(c)
+        return ''.join(stack)
+    return build(s) == build(t)
+`,
+
+  'number-of-steps': `def numberOfSteps(num):
+    steps = 0
+    while num > 0:
+        if num % 2 == 0:
+            num >>= 1
+        else:
+            num -= 1
+        steps += 1
+    return steps
+`,
+
+  'summary-ranges': `def summaryRanges(nums):
+    result = []
+    i = 0
+    while i < len(nums):
+        start = nums[i]
+        while i + 1 < len(nums) and nums[i + 1] == nums[i] + 1:
+            i += 1
+        if nums[i] == start:
+            result.append(str(start))
+        else:
+            result.append(f'{start}->{nums[i]}')
+        i += 1
+    return result
+`,
+
+  'longest-turbulent-subarray': `def maxTurbulenceSize(arr):
+    if len(arr) < 2:
+        return len(arr)
+    ans = inc = dec = 1
+    for i in range(1, len(arr)):
+        if arr[i] > arr[i - 1]:
+            inc = dec + 1
+            dec = 1
+        elif arr[i] < arr[i - 1]:
+            dec = inc + 1
+            inc = 1
+        else:
+            inc = dec = 1
+        ans = max(ans, inc, dec)
+    return ans
+`,
+
+  'minimum-genetic-mutation': `def minMutation(startGene, endGene, bank):
+    from collections import deque
+    bank_set = set(bank)
+    queue = deque([(startGene, 0)])
+    visited = {startGene}
+    while queue:
+        gene, steps = queue.popleft()
+        if gene == endGene:
+            return steps
+        for i in range(8):
+            for c in 'ACGT':
+                if c == gene[i]:
+                    continue
+                nxt = gene[:i] + c + gene[i+1:]
+                if nxt in bank_set and nxt not in visited:
+                    visited.add(nxt)
+                    queue.append((nxt, steps + 1))
+    return -1
+`,
+
+  'largest-divisible-subset': `def largestDivisibleSubset(nums):
+    nums = sorted(nums)
+    n = len(nums)
+    dp = [1] * n
+    parent = [-1] * n
+    max_len, max_idx = 1, 0
+    for i in range(1, n):
+        for j in range(i):
+            if nums[i] % nums[j] == 0 and dp[j] + 1 > dp[i]:
+                dp[i] = dp[j] + 1
+                parent[i] = j
+        if dp[i] > max_len:
+            max_len = dp[i]
+            max_idx = i
+    result = []
+    idx = max_idx
+    while idx != -1:
+        result.append(nums[idx])
+        idx = parent[idx]
+    return sorted(result)
+`,
+
+  'min-stack': `def minStackRunner(ops, args):
+    st, min_st = [], []
+    result = []
+    for op, a in zip(ops, args):
+        if op == 'push':
+            v = a[0]
+            st.append(v)
+            if not min_st or v <= min_st[-1]:
+                min_st.append(v)
+            result.append(None)
+        elif op == 'pop':
+            v = st.pop()
+            if v == min_st[-1]:
+                min_st.pop()
+            result.append(None)
+        elif op == 'top':
+            result.append(st[-1])
+        elif op == 'getMin':
+            result.append(min_st[-1])
+        else:
+            result.append(None)
+    return result
+`,
+
+  'restore-ip-addresses': `def restoreIpAddresses(s):
+    result = []
+    def bt(start, parts):
+        if len(parts) == 4 and start == len(s):
+            result.append('.'.join(parts))
+            return
+        if len(parts) == 4 or start == len(s):
+            return
+        remaining = len(s) - start
+        parts_left = 4 - len(parts)
+        if remaining < parts_left or remaining > parts_left * 3:
+            return
+        for length in range(1, 4):
+            if start + length > len(s):
+                break
+            part = s[start:start + length]
+            if length > 1 and part[0] == '0':
+                break
+            if int(part) > 255:
+                break
+            parts.append(part)
+            bt(start + length, parts)
+            parts.pop()
+    bt(0, [])
+    return result
+`,
+
+  'valid-anagram': `def isAnagram(s, t):
+    if len(s) != len(t):
+        return False
+    from collections import Counter
+    return Counter(s) == Counter(t)
+`,
+
+  'defanging-ip-address': `def defangIPaddr(address):
+    return address.replace('.', '[.]')
+`,
+
+  'kids-with-candies': `def kidsWithCandies(candies, extraCandies):
+    max_c = max(candies)
+    return [c + extraCandies >= max_c for c in candies]
+`,
+
+  'monotonic-array': `def isMonotonic(nums):
+    inc = dec = True
+    for i in range(1, len(nums)):
+        if nums[i] > nums[i-1]: dec = False
+        if nums[i] < nums[i-1]: inc = False
+    return inc or dec
+`,
+
+  'build-array-from-permutation': `def buildArray(nums):
+    return [nums[nums[i]] for i in range(len(nums))]
+`,
+
+  'decode-xored-array': `def decode(encoded, first):
+    arr = [first]
+    for e in encoded:
+        arr.append(arr[-1] ^ e)
+    return arr
+`,
+
+  'replace-elements-with-greatest': `def replaceElements(arr):
+    arr = list(arr)
+    max_val = -1
+    for i in range(len(arr) - 1, -1, -1):
+        cur = arr[i]
+        arr[i] = max_val
+        if cur > max_val:
+            max_val = cur
+    return arr
+`,
+
+  'highest-altitude': `def largestAltitude(gain):
+    max_alt, cur = 0, 0
+    for g in gain:
+        cur += g
+        max_alt = max(max_alt, cur)
+    return max_alt
+`,
+
+  'sign-of-product-array': `def arraySign(nums):
+    neg = 0
+    for n in nums:
+        if n == 0: return 0
+        if n < 0: neg += 1
+    return 1 if neg % 2 == 0 else -1
+`,
+
+  'maximum-difference-increasing-elements': `def maximumDifference(nums):
+    min_val, ans = nums[0], -1
+    for i in range(1, len(nums)):
+        if nums[i] > min_val:
+            ans = max(ans, nums[i] - min_val)
+        else:
+            min_val = nums[i]
+    return ans
+`,
+
+  'cells-in-range': `def cellsInRange(s):
+    c1, r1, c2, r2 = ord(s[0]), int(s[1]), ord(s[3]), int(s[4])
+    result = []
+    for c in range(c1, c2 + 1):
+        for r in range(r1, r2 + 1):
+            result.append(chr(c) + str(r))
+    return result
+`,
+
+  'find-all-numbers-disappeared': `def findDisappearedNumbers(nums):
+    n = len(nums)
+    seen = set(nums)
+    return [i for i in range(1, n + 1) if i not in seen]
+`,
+
+  'check-if-n-and-double-exist': `def checkIfExist(arr):
+    seen = set()
+    for x in arr:
+        if x * 2 in seen or (x % 2 == 0 and x // 2 in seen):
+            return True
+        seen.add(x)
+    return False
+`,
+
+  'largest-number-at-least-twice': `def dominantIndex(nums):
+    max_idx = nums.index(max(nums))
+    for i, v in enumerate(nums):
+        if i != max_idx and nums[max_idx] < 2 * v:
+            return -1
+    return max_idx
+`,
+
+  'special-positions-binary-matrix': `def numSpecial(mat):
+    count = 0
+    for i in range(len(mat)):
+        for j in range(len(mat[0])):
+            if mat[i][j] == 1:
+                if sum(mat[i]) == 1 and sum(row[j] for row in mat) == 1:
+                    count += 1
+    return count
+`,
+
+  'matrix-diagonal-sum': `def diagonalSum(mat):
+    n = len(mat)
+    total = sum(mat[i][i] + mat[i][n - 1 - i] for i in range(n))
+    if n % 2 == 1:
+        total -= mat[n // 2][n // 2]
+    return total
+`,
+
+  'sort-array-by-parity': `def sortArrayByParity(nums):
+    return [x for x in nums if x % 2 == 0] + [x for x in nums if x % 2 != 0]
+`,
+
+  'left-and-right-sum-differences': `def leftRigthDifference(nums):
+    total = sum(nums)
+    result = []
+    left = 0
+    for x in nums:
+        right = total - left - x
+        result.append(abs(left - right))
+        left += x
+    return result
+`,
+
+  'minimum-value-positive-step-sum': `def minStartValue(nums):
+    min_prefix = 0
+    cur = 0
+    for n in nums:
+        cur += n
+        if cur < min_prefix:
+            min_prefix = cur
+    return max(1, 1 - min_prefix)
+`,
+
+  'count-number-of-pairs': `def countKDifference(nums, k):
+    count = 0
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            if abs(nums[i] - nums[j]) == k:
+                count += 1
+    return count
+`,
+
+  'minimum-sum-mountain-triplet': `def minimumSum(nums):
+    ans = float('inf')
+    n = len(nums)
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if nums[i] < nums[j] and nums[k] < nums[j]:
+                    ans = min(ans, nums[i] + nums[j] + nums[k])
+    return ans if ans != float('inf') else -1
+`,
+
+  'add-digits': `def addDigits(num):
+    if num == 0:
+        return 0
+    return 9 if num % 9 == 0 else num % 9
+`,
+
+  'degree-of-array': `def findShortestSubArray(nums):
+    count, first, last = {}, {}, {}
+    for i, n in enumerate(nums):
+        count[n] = count.get(n, 0) + 1
+        if n not in first:
+            first[n] = i
+        last[n] = i
+    deg = max(count.values())
+    return min(last[n] - first[n] + 1 for n, c in count.items() if c == deg)
+`,
+
+  'check-array-arithmetic-progression': `def canMakeArithmeticProgression(arr):
+    arr.sort()
+    diff = arr[1] - arr[0]
+    return all(arr[i] - arr[i-1] == diff for i in range(2, len(arr)))
+`,
+
+  'how-many-numbers-smaller-than-current': `def smallerNumbersThanCurrent(nums):
+    sorted_nums = sorted(nums)
+    return [sorted_nums.index(n) for n in nums]
+`,
+
+  'find-target-indices-after-sorting': `def targetIndices(nums, target):
+    nums_sorted = sorted(nums)
+    return [i for i, n in enumerate(nums_sorted) if n == target]
+`,
+
+  'max-average-subarray': `def findMaxAverage(nums, k):
+    window = sum(nums[:k])
+    max_sum = window
+    for i in range(k, len(nums)):
+        window += nums[i] - nums[i - k]
+        if window > max_sum:
+            max_sum = window
+    return max_sum / k
+`,
+
+  'consecutive-characters': `def maxPower(s):
+    max_p = cur = 1
+    for i in range(1, len(s)):
+        cur = cur + 1 if s[i] == s[i-1] else 1
+        if cur > max_p:
+            max_p = cur
+    return max_p
+`,
+
+  'count-items-with-the-given-sum': `def maxFrequencyElements(nums):
+    from collections import Counter
+    freq = Counter(nums)
+    max_f = max(freq.values())
+    return sum(c for c in freq.values() if c == max_f)
+`,
+
+  'number-of-employees-can-meet': `def numberOfEmployeesWhoMetTarget(hours, target):
+    return sum(1 for h in hours if h >= target)
+`,
+
+  'partition-array-according-to-given-pivot': `def pivotArray(nums, pivot):
+    return [x for x in nums if x < pivot] + [x for x in nums if x == pivot] + [x for x in nums if x > pivot]
+`,
+
+  'sort-even-odd-indices': `def sortEvenOdd(nums):
+    evens = sorted(nums[::2])
+    odds = sorted(nums[1::2], reverse=True)
+    result = []
+    ei = oi = 0
+    for i in range(len(nums)):
+        if i % 2 == 0:
+            result.append(evens[ei]); ei += 1
+        else:
+            result.append(odds[oi]); oi += 1
+    return result
+`,
+
+  'percentage-of-letter-in-string': `def percentageLetter(s, letter):
+    return int(s.count(letter) / len(s) * 100)
+`,
+
+  'count-common-words-one-occurrence': `def countWords(words1, words2):
+    from collections import Counter
+    c1 = Counter(list(words1))
+    c2 = Counter(list(words2))
+    return sum(1 for w, cnt in c1.items() if cnt == 1 and c2[w] == 1)
+`,
+
+  'convert-temperature': `def convertTemperature(celsius):
+    return [celsius + 273.15, celsius * 1.8 + 32]
+`,
+
+  'determine-if-string-halves-alike': `def halvesAreAlike(s):
+    vowels = set('aeiouAEIOU')
+    half = len(s) // 2
+    return sum(1 for c in s[:half] if c in vowels) == sum(1 for c in s[half:] if c in vowels)
+`,
+
+  'check-two-strings-almost-equivalent': `def checkAlmostEquivalent(word1, word2):
+    from collections import Counter
+    c1 = Counter(word1)
+    c2 = Counter(word2)
+    for ch in 'abcdefghijklmnopqrstuvwxyz':
+        if abs(c1[ch] - c2[ch]) > 3:
+            return False
+    return True
+`,
+
+  'rearrange-characters-to-make-target': `def rearrangeCharacters(s, target):
+    from collections import Counter
+    sc = Counter(s)
+    tc = Counter(target)
+    return min(sc[c] // cnt for c, cnt in tc.items())
+`,
+
+  'divide-string-into-groups': `def divideString(s, k, fill):
+    remainder = len(s) % k
+    if remainder:
+        s = s + fill * (k - remainder)
+    return [s[i:i+k] for i in range(0, len(s), k)]
+`,
+
+  'count-vowel-substrings': `def countVowelSubstrings(word):
+    vowels = set('aeiou')
+    count = 0
+    for i in range(len(word)):
+        if word[i] not in vowels:
+            continue
+        seen = set()
+        for j in range(i, len(word)):
+            if word[j] not in vowels:
+                break
+            seen.add(word[j])
+            if len(seen) == 5:
+                count += 1
+    return count
+`,
+
+  'check-prefix-string': `def isPrefixString(s, words):
+    built = ''
+    for w in words:
+        built += w
+        if built == s:
+            return True
+        if len(built) >= len(s):
+            return False
+    return False
+`,
+
+  'sum-digits-string-convert': `def getLucky(s, k):
+    num_str = ''.join(str(ord(c) - 96) for c in s)
+    total = sum(int(d) for d in num_str)
+    for _ in range(k - 1):
+        total = sum(int(d) for d in str(total))
+    return total
+`,
+
+  'maximum-number-of-string-pairs': `def maximumNumberOfStringPairs(words):
+    seen = set()
+    pairs = 0
+    for w in words:
+        rev = w[::-1]
+        if rev in seen:
+            pairs += 1
+        else:
+            seen.add(w)
+    return pairs
+`,
+
+  'count-pairs-sum-less-than-target': `def countPairs(nums, target):
+    nums = sorted(nums)
+    lo, hi, count = 0, len(nums) - 1, 0
+    while lo < hi:
+        if nums[lo] + nums[hi] < target:
+            count += hi - lo
+            lo += 1
+        else:
+            hi -= 1
+    return count
+`,
+
+  'neither-minimum-nor-maximum': `def findNonMinOrMax(nums):
+    if len(nums) < 3:
+        return -1
+    mn, mx = min(nums), max(nums)
+    for n in nums:
+        if n != mn and n != mx:
+            return n
+    return -1
+`,
+
+  'count-vowel-strings-in-range': `def vowelStringsInRange(words, left, right):
+    vowels = set('aeiou')
+    count = 0
+    for i in range(left, right + 1):
+        w = words[i]
+        if w[0] in vowels and w[-1] in vowels:
+            count += 1
+    return count
+`,
+
+  'find-kth-positive': `def findKthPositive(arr, k):
+    missing = 0
+    i = 0
+    num = 1
+    while True:
+        if i < len(arr) and arr[i] == num:
+            i += 1
+        else:
+            missing += 1
+            if missing == k:
+                return num
+        num += 1
+`,
+
+  'minimum-length-string-operations': `def minLength(s):
+    stack = []
+    for c in s:
+        if stack and ((stack[-1] == 'A' and c == 'B') or (stack[-1] == 'C' and c == 'D')):
+            stack.pop()
+        else:
+            stack.append(c)
+    return len(stack)
+`,
+
+  'largest-integer-digit-swaps': `def largestInteger(num):
+    digits = [int(d) for d in str(num)]
+    odds = sorted((d for d in digits if d % 2 == 1), reverse=True)
+    evens = sorted((d for d in digits if d % 2 == 0), reverse=True)
+    oi = ei = 0
+    result = []
+    for d in digits:
+        if d % 2 == 1:
+            result.append(odds[oi])
+            oi += 1
+        else:
+            result.append(evens[ei])
+            ei += 1
+    return int(''.join(map(str, result)))
+`,
+
+  'count-fair-pairs': `def countFairPairs(nums, lower, upper):
+    nums = sorted(nums)
+    def count_le(limit):
+        lo, hi, c = 0, len(nums) - 1, 0
+        while lo < hi:
+            if nums[lo] + nums[hi] <= limit:
+                c += hi - lo
+                lo += 1
+            else:
+                hi -= 1
+        return c
+    return count_le(upper) - count_le(lower - 1)
+`,
+
+  'minimum-average-difference': `def minimumAverageDifference(nums):
+    n = len(nums)
+    total = sum(nums)
+    prefix = 0
+    min_diff = float('inf')
+    ans = 0
+    for i in range(n):
+        prefix += nums[i]
+        left = prefix // (i + 1)
+        right = (total - prefix) // (n - i - 1) if i < n - 1 else 0
+        diff = abs(left - right)
+        if diff < min_diff:
+            min_diff = diff
+            ans = i
+    return ans
+`,
+
+  'concatenation-of-array': `def getConcatenation(nums):
+    return list(nums) + list(nums)
+`,
+
+  'third-maximum-number': `def thirdMax(nums):
+    distinct = sorted(set(nums), reverse=True)
+    return distinct[2] if len(distinct) >= 3 else distinct[0]
+`,
+
+  'count-odd-numbers-in-interval': `def countOdds(low, high):
+    def count_odd(n):
+        return (n + 1) // 2
+    return count_odd(high) - count_odd(low - 1)
+`,
+
+  'maximum-product-three-numbers': `def maximumProduct(nums):
+    nums = sorted(nums)
+    n = len(nums)
+    return max(nums[-1] * nums[-2] * nums[-3], nums[0] * nums[1] * nums[-1])
+`,
+
+  'average-salary-excluding-min-max': `def average(salary):
+    salary = list(salary)
+    return (sum(salary) - min(salary) - max(salary)) / (len(salary) - 2)
+`,
+
+  'find-n-unique-integers-sum-to-zero': `def sumZero(n):
+    result = list(range(1, n))
+    result.append(-sum(result))
+    return result
+`,
+
+  'truncate-sentence': `def truncateSentence(s, k):
+    return ' '.join(s.split()[:k])
+`,
+
+  'largest-perimeter-triangle': `def largestPerimeter(nums):
+    nums = sorted(list(nums), reverse=True)
+    for i in range(len(nums) - 2):
+        if nums[i+1] + nums[i+2] > nums[i]:
+            return nums[i] + nums[i+1] + nums[i+2]
+    return 0
+`,
+
+  'to-lower-case': `def toLowerCase(s):
+    return s.lower()
+`,
+
+  'check-if-two-string-arrays-equivalent': `def arrayStringsAreEqual(word1, word2):
+    return ''.join(word1) == ''.join(word2)
+`,
+
+  'sum-of-unique-elements': `def sumOfUnique(nums):
+    from collections import Counter
+    c = Counter(nums)
+    return sum(k for k, v in c.items() if v == 1)
+`,
+
+  'find-winners': `def findWinners(matches):
+    from collections import defaultdict
+    losses = defaultdict(int)
+    for w, l in matches:
+        if w not in losses:
+            losses[w] = 0
+        losses[l] += 1
+    zero = sorted(p for p, lc in losses.items() if lc == 0)
+    one = sorted(p for p, lc in losses.items() if lc == 1)
+    return [zero, one]
+`,
+
+  'count-number-of-texts': `def countTexts(pressedKeys):
+    MOD = 10**9 + 7
+    n = len(pressedKeys)
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    for i in range(1, n + 1):
+        c = pressedKeys[i - 1]
+        dp[i] = dp[i - 1]
+        if i >= 2 and pressedKeys[i - 2] == c:
+            dp[i] = (dp[i] + dp[i - 2]) % MOD
+            if i >= 3 and pressedKeys[i - 3] == c:
+                dp[i] = (dp[i] + dp[i - 3]) % MOD
+                if c in '79' and i >= 4 and pressedKeys[i - 4] == c:
+                    dp[i] = (dp[i] + dp[i - 4]) % MOD
+    return dp[n]
+`,
+
+  'word-pattern': `def wordPattern(pattern, s):
+    words = s.split()
+    if len(pattern) != len(words):
+        return False
+    char_to_word, word_to_char = {}, {}
+    for c, w in zip(pattern, words):
+        if char_to_word.get(c, w) != w or word_to_char.get(w, c) != c:
+            return False
+        char_to_word[c] = w
+        word_to_char[w] = c
+    return True
+`,
+
+  'maximum-product-word-lengths': `def maxProduct(words):
+    masks = []
+    for w in words:
+        m = 0
+        for c in w:
+            m |= 1 << (ord(c) - ord('a'))
+        masks.append(m)
+    best = 0
+    for i in range(len(words)):
+        for j in range(i + 1, len(words)):
+            if (masks[i] & masks[j]) == 0:
+                best = max(best, len(words[i]) * len(words[j]))
+    return best
+`,
+
+  'detect-capital': `def detectCapitalUse(word):
+    uppers = sum(1 for c in word if c.isupper())
+    return uppers == len(word) or uppers == 0 or (uppers == 1 and word[0].isupper())
+`,
+
+  'repeated-substring-pattern': `def repeatedSubstringPattern(s):
+    n = len(s)
+    for length in range(1, n // 2 + 1):
+        if n % length != 0:
+            continue
+        pattern = s[:length]
+        if pattern * (n // length) == s:
+            return True
+    return False
+`,
+
+  'find-pivot-index': `def pivotIndex(nums):
+    total = sum(nums)
+    left = 0
+    for i, v in enumerate(nums):
+        if left == total - left - v:
+            return i
+        left += v
+    return -1
+`,
+
+  'path-crossing': `def isPathCrossing(path):
+    visited = {(0, 0)}
+    x, y = 0, 0
+    for d in path:
+        if d == 'N': y += 1
+        elif d == 'S': y -= 1
+        elif d == 'E': x += 1
+        else: x -= 1
+        if (x, y) in visited:
+            return True
+        visited.add((x, y))
+    return False
+`,
+
+  // --- heap — easy -----------------------------------------------------------
+  'last-stone-weight': `def lastStoneWeight(stones):
+    import heapq
+    heap = [-s for s in stones]
+    heapq.heapify(heap)
+    while len(heap) > 1:
+        y = -heapq.heappop(heap)
+        x = -heapq.heappop(heap)
+        if y != x:
+            heapq.heappush(heap, -(y - x))
+    return -heap[0] if heap else 0
+`,
+
+  // --- heap — medium ---------------------------------------------------------
+
+  'kth-largest-in-stream': `def kthLargestRunner(k, nums, adds):
+    import heapq
+    heap = list(nums)
+    heapq.heapify(heap)
+    while len(heap) > k:
+        heapq.heappop(heap)
+    result = []
+    for val in adds:
+        heapq.heappush(heap, val)
+        if len(heap) > k:
+            heapq.heappop(heap)
+        result.append(heap[0])
+    return result
+`,
+
+  // --- heap — hard -----------------------------------------------------------
+  'median-from-data-stream': `def medianFinderRunner(ops, args):
+    import heapq
+    lo = []  # max-heap (negated)
+    hi = []  # min-heap
+    def add_num(num):
+        heapq.heappush(lo, -num)
+        if hi and -lo[0] > hi[0]:
+            heapq.heappush(hi, -heapq.heappop(lo))
+        if len(lo) > len(hi) + 1:
+            heapq.heappush(hi, -heapq.heappop(lo))
+        elif len(hi) > len(lo):
+            heapq.heappush(lo, -heapq.heappop(hi))
+    def find_median():
+        if len(lo) == len(hi):
+            return (-lo[0] + hi[0]) / 2
+        return float(-lo[0])
+    result = []
+    for op, a in zip(ops, args):
+        if op == 'addNum':
+            add_num(a[0])
+            result.append(None)
+        elif op == 'findMedian':
+            result.append(find_median())
+        else:
+            result.append(None)
+    return result
+`,
+
+  'minimum-cost-to-connect-sticks': `def connectSticks(sticks):
+    import heapq
+    heap = [int(x) for x in sticks]
+    heapq.heapify(heap)
+    cost = 0
+    while len(heap) > 1:
+        a = heapq.heappop(heap)
+        b = heapq.heappop(heap)
+        combined = a + b
+        cost += combined
+        heapq.heappush(heap, combined)
+    return cost
+`,
+
+  'reorganize-string': `def reorganizeString(s):
+    from collections import Counter
+    freq = Counter(s)
+    n = len(s)
+    entries = sorted(freq.items(), key=lambda x: (-x[1], x[0]))
+    if entries[0][1] > (n + 1) // 2:
+        return ''
+    result = [''] * n
+    pos = 0
+    for char, count in entries:
+        for _ in range(count):
+            if pos >= n:
+                pos = 1
+            result[pos] = char
+            pos += 2
+    return ''.join(result)
+`,
+
+  'check-if-pangram': `def checkIfPangram(sentence):
+    return len(set(sentence)) >= 26
+`,
+
+  'is-power-of-four': `def isPowerOfFour(n):
+    return n > 0 and (n & (n - 1)) == 0 and (n & 0xAAAAAAAA) == 0
+`,
+
+  'longest-word-in-dictionary': `def longestWord(words):
+    word_set = set(words)
+    best = ''
+    for word in words:
+        valid = all(word[:i] in word_set for i in range(1, len(word)))
+        if valid:
+            if len(word) > len(best) or (len(word) == len(best) and word < best):
+                best = word
+    return best
+`,
+
+  'valid-mountain-array': `def validMountainArray(arr):
+    n = len(arr)
+    if n < 3:
+        return False
+    i = 0
+    while i + 1 < n and arr[i] < arr[i + 1]:
+        i += 1
+    if i == 0 or i == n - 1:
+        return False
+    while i + 1 < n and arr[i] > arr[i + 1]:
+        i += 1
+    return i == n - 1
+`,
+
+  'can-place-flowers': `def canPlaceFlowers(flowerbed, n):
+    bed = flowerbed[:]
+    for i in range(len(bed)):
+        if bed[i] == 0 and (i == 0 or bed[i-1] == 0) and (i == len(bed)-1 or bed[i+1] == 0):
+            bed[i] = 1
+            n -= 1
+    return n <= 0
+`,
+
+  'number-complement': `def findComplement(num):
+    mask = 1
+    while mask <= num:
+        mask <<= 1
+    return (mask - 1) ^ num
+`,
+
+  'maximum-average-subarray': `def findMaxAverage(nums, k):
+    total = sum(nums[:k])
+    best = total
+    for i in range(k, len(nums)):
+        total += nums[i] - nums[i - k]
+        if total > best:
+            best = total
+    return best / k
+`,
+
+  'range-sum-query': `
+def sumRange(nums, left, right):
+    return sum(nums[left:right+1])
+`,
+
+
+  'reverse-string-ii': `def reverseStr(s, k):
+    arr = list(s)
+    for i in range(0, len(arr), 2 * k):
+        arr[i:i+k] = arr[i:i+k][::-1]
+    return ''.join(arr)
+`,
+
+  'to-hex': `def toHex(num):
+    if num == 0:
+        return '0'
+    return format(num & 0xFFFFFFFF, 'x')
+`,
+
+  'jewels-and-stones': `def numJewelsInStones(jewels, stones):
+    jewel_set = set(jewels)
+    return sum(1 for s in stones if s in jewel_set)
+`,
+
+  'find-words-from-chars': `def countCharacters(words, chars):
+    from collections import Counter
+    freq = Counter(chars)
+    total = 0
+    for word in words:
+        wf = Counter(word)
+        if all(wf[c] <= freq[c] for c in wf):
+            total += len(word)
+    return total
+`,
+  'rotate-string': `
+def rotateString(s, goal):
+    return len(s) == len(goal) and goal in s + s
+`,
+
+  'implement-trie': `def trieRunner(ops, words):
+    trie = Trie()
+    result = []
+    for op, word in zip(ops, words):
+        if op == 'insert':
+            trie.insert(word)
+            result.append(None)
+        elif op == 'search':
+            result.append(trie.search(word))
+        elif op == 'startsWith':
+            result.append(trie.startsWith(word))
+        else:
+            result.append(None)
+    return result
+
+class Trie:
+    def __init__(self):
+        self.root = {}
+    def insert(self, word):
+        node = self.root
+        for ch in word:
+            node = node.setdefault(ch, {})
+        node['#'] = True
+    def search(self, word):
+        node = self.root
+        for ch in word:
+            if ch not in node: return False
+            node = node[ch]
+        return '#' in node
+    def startsWith(self, prefix):
+        node = self.root
+        for ch in prefix:
+            if ch not in node: return False
+            node = node[ch]
+        return True
+`,
+
+  'custom-sort-string': `
+def customSortString(order, s):
+    from collections import Counter
+    freq = Counter(s)
+    result = []
+    for c in order:
+        if c in freq:
+            result.append(c * freq[c])
+            del freq[c]
+    for c in sorted(freq):
+        result.append(c * freq[c])
+    return ''.join(result)
+`,
+
+  'copy-list-with-random-pointer': `
+def copyRandomListRunner(arr):
+    if not arr:
+        return []
+    return [[val, ri] for val, ri in arr]
+`,
+
+  'implement-queue-using-stacks': `
+def queueOps(operations, values):
+    inbox, outbox = [], []
+    def pour():
+        while inbox:
+            outbox.append(inbox.pop())
+    result = []
+    for op, val in zip(operations, values):
+        if op == 'push':
+            inbox.append(int(val))
+        elif op == 'pop':
+            if not outbox: pour()
+            result.append(outbox.pop())
+        elif op == 'peek':
+            if not outbox: pour()
+            result.append(outbox[-1])
+        elif op == 'empty':
+            result.append(len(inbox) == 0 and len(outbox) == 0)
+    return result
+`,
+
+  'binary-tree-pruning': `
+def pruneTreeRunner(arr):
+    a = list(arr)
+    if not a: return []
+    def _safe_int(v):
+        try: return int(v)
+        except: return None
+    # Build tree as list of [val, left_idx, right_idx], using compact BFS parsing
+    n = len(a)
+    vals = [_safe_int(v) for v in a]
+    left_c = [None] * n
+    right_c = [None] * n
+    bfs = [0]; ptr = 1
+    for ni in bfs:
+        if ptr < n:
+            if vals[ptr] is not None:
+                left_c[ni] = ptr; bfs.append(ptr)
+            ptr += 1
+        if ptr < n:
+            if vals[ptr] is not None:
+                right_c[ni] = ptr; bfs.append(ptr)
+            ptr += 1
+    def contains_one(i):
+        if i is None: return False
+        return vals[i] == 1 or contains_one(left_c[i]) or contains_one(right_c[i])
+    def prune(i):
+        if i is None: return None
+        left_c[i] = prune(left_c[i])
+        right_c[i] = prune(right_c[i])
+        if vals[i] == 0 and left_c[i] is None and right_c[i] is None:
+            return None
+        return i
+    root = prune(0)
+    if root is None: return []
+    result = []; out_q = [0]
+    while out_q:
+        i = out_q.pop(0)
+        if i is None: result.append(None); continue
+        result.append(vals[i])
+        l, r = left_c[i], right_c[i]
+        if l is not None or r is not None:
+            out_q.append(l); out_q.append(r)
+    while result and result[-1] is None: result.pop()
+    return result
+`,
+
+  'count-complete-tree-nodes': `
+def countNodesRunner(arr):
+    a = list(arr)
+    if not a: return 0
+    def _ok(v):
+        try: int(v); return True
+        except: return False
+    return sum(1 for v in a if _ok(v))
+`,
+
+  'populating-next-right-pointers': `
+def connectTree(arr):
+    a = list(arr)
+    if not a: return []
+    result = []
+    size = 1; i = 0
+    while i < len(a):
+        level = []
+        for _ in range(size):
+            if i < len(a):
+                level.append(a[i]); i += 1
+        if level: result.append(level)
+        size *= 2
+    return result
+`,
+
+  'range-sum-query-2d': `
+def sumRegion(matrix, row1, col1, row2, col2):
+    total = 0
+    for r in range(row1, row2 + 1):
+        for c in range(col1, col2 + 1):
+            total += matrix[r][c]
+    return total
+`,
+
+  'find-anagram-mappings': `
+def anagramMappings(nums1, nums2):
+    nums2_list = list(nums2)
+    idx = {v: i for i, v in enumerate(nums2_list)}
+    return [idx[v] for v in nums1]
+`,
+
+  'maximum-product-two-elements': `
+def maxProduct(nums):
+    a = sorted(nums, reverse=True)
+    return (a[0]-1)*(a[1]-1)
+`,
+
+  'find-k-closest-elements': `
+def findClosestElements(arr, k, x):
+    a = list(arr)
+    lo, hi = 0, len(a) - k
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if x - a[mid] > a[mid+k] - x:
+            lo = mid + 1
+        else:
+            hi = mid
+    return a[lo:lo+k]
+`,
+
+  'string-compression': `
+def compress(s):
+    result = ''
+    i = 0
+    while i < len(s):
+        j = i
+        while j < len(s) and s[j] == s[i]:
+            j += 1
+        result += s[i]
+        if j - i > 1:
+            result += str(j - i)
+        i = j
+    return len(result)
+`,
+
+  'maximum-69-number': `
+def maximum69Number(num):
+    return int(str(num).replace('6', '9', 1))
+`,
+
+  'count-of-matches-tournament': `
+def numberOfMatches(n):
+    return n - 1
+`,
+
+  'sort-characters-by-frequency': `
+def frequencySort(s):
+    from collections import Counter
+    freq = Counter(s)
+    chars = sorted(freq.keys(), key=lambda c: (-freq[c], c))
+    return ''.join(c * freq[c] for c in chars)
+`,
+
+  'minimum-operations-alternating': `def minimumOperations(nums):
+    from collections import Counter
+    n = len(nums)
+    even_freq = Counter(nums[i] for i in range(0, n, 2))
+    odd_freq = Counter(nums[i] for i in range(1, n, 2))
+    def top2(freq):
+        items = sorted(freq.items(), key=lambda x: -x[1])
+        first = items[0] if items else (None, 0)
+        second = items[1] if len(items) > 1 else (None, 0)
+        return first, second
+    (ev1, ef1), (_, ef2) = top2(even_freq)
+    (ov1, of1), (_, of2) = top2(odd_freq)
+    if ev1 != ov1:
+        return n - ef1 - of1
+    return n - max(ef1 + of2, ef2 + of1)
+`,
+
+  'largest-altitude': `def largestAltitude(gain):
+    alt = max_alt = 0
+    for g in gain:
+        alt += g
+        max_alt = max(max_alt, alt)
+    return max_alt
+`,
+
+  'increasing-triplet-subsequence': `def increasingTriplet(nums):
+    first = second = float('inf')
+    for n in nums:
+        if n <= first:
+            first = n
+        elif n <= second:
+            second = n
+        else:
+            return True
+    return False
+`,
+
+  'number-of-rectangles': `def countGoodRectangles(rectangles):
+    sides = [min(l, w) for l, w in rectangles]
+    max_len = max(sides)
+    return sum(1 for s in sides if s == max_len)
+`,
+
+  'determine-if-halves-alike': `def halvesAreAlike(s):
+    vowels = set('aeiouAEIOU')
+    half = len(s) // 2
+    return sum(1 for c in s[:half] if c in vowels) == sum(1 for c in s[half:] if c in vowels)
+`,
+
+  'maximum-nesting-depth': `def maxDepth(s):
+    depth = max_depth = 0
+    for c in s:
+        if c == '(':
+            depth += 1
+            max_depth = max(max_depth, depth)
+        elif c == ')':
+            depth -= 1
+    return max_depth
+`,
+
+  'count-primes-less-than': `def countPrimes(n):
+    if n < 2:
+        return 0
+    sieve = [True] * n
+    sieve[0] = sieve[1] = False
+    i = 2
+    while i * i < n:
+        if sieve[i]:
+            for j in range(i * i, n, i):
+                sieve[j] = False
+        i += 1
+    return sum(sieve)
+`,
+
+  'number-of-students-eating-lunch': `
+def countStudents(students, sandwiches):
+    s = list(students)
+    w = list(sandwiches)
+    zeros = sum(1 for x in s if x == 0)
+    ones = len(s) - zeros
+    for sandwich in w:
+        if sandwich == 0 and zeros > 0:
+            zeros -= 1
+        elif sandwich == 1 and ones > 0:
+            ones -= 1
+        else:
+            return zeros + ones
+    return 0
+`,
+
+  'two-sum-less-than-k': `
+def twoSumLessThanK(nums, k):
+    a = sorted(nums)
+    lo, hi, best = 0, len(a)-1, -1
+    while lo < hi:
+        s = a[lo] + a[hi]
+        if s < k:
+            best = max(best, s)
+            lo += 1
+        else:
+            hi -= 1
+    return best
+`,
+
+  'find-smallest-letter-greater-than-target': `
+def nextGreatestLetter(letters, target):
+    a = list(letters)
+    lo, hi = 0, len(a)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if a[mid] <= target:
+            lo = mid + 1
+        else:
+            hi = mid
+    return a[lo % len(a)]
+`,
+
+  'minimum-difference-k-scores': `
+def minimumDifference(nums, k):
+    a = sorted(nums)
+    return min(a[i+k-1] - a[i] for i in range(len(a)-k+1))
+`,
+
+  'two-out-of-three': `
+def twoOutOfThree(nums1, nums2, nums3):
+    s1, s2, s3 = set(nums1), set(nums2), set(nums3)
+    result = set()
+    for v in s1:
+        if v in s2 or v in s3: result.add(v)
+    for v in s2:
+        if v in s1 or v in s3: result.add(v)
+    return sorted(result)
+`,
+
+  'sum-of-odd-length-subarrays': `
+def sumOddLengthSubarrays(arr):
+    a = list(arr)
+    total = 0
+    length = len(a)
+    for l in range(1, length+1, 2):
+        for i in range(length - l + 1):
+            total += sum(a[i:i+l])
+    return total
+`,
+
+  'stone-game': `
+def stoneGame(piles):
+    piles = list(piles)
+    n = len(piles)
+    dp = [[0] * n for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = piles[i]
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            dp[i][j] = max(piles[i] - dp[i+1][j], piles[j] - dp[i][j-1])
+    return dp[0][n-1] > 0
+`,
+
+  'robot-bounded-in-circle': `
+def isRobotBounded(instructions):
+    dirs = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+    x, y, d = 0, 0, 0
+    for c in instructions:
+        if c == 'G':
+            x += dirs[d][0]; y += dirs[d][1]
+        elif c == 'L':
+            d = (d + 3) % 4
+        else:
+            d = (d + 1) % 4
+    return (x == 0 and y == 0) or d != 0
+`,
+
+  'zigzag-conversion': `
+def convert(s, numRows):
+    if numRows == 1:
+        return s
+    rows = [''] * numRows
+    row, direction = 0, -1
+    for c in s:
+        rows[row] += c
+        if row == 0 or row == numRows - 1:
+            direction = -direction
+        row += direction
+    return ''.join(rows)
+`,
+
+  'merge-sorted-array': `
+def mergeSortedRunner(nums1, m, nums2, n):
+    a = list(nums1[:m]) + [0] * n
+    b = list(nums2[:n])
+    p1, p2, p = m - 1, n - 1, m + n - 1
+    while p2 >= 0:
+        if p1 >= 0 and a[p1] > b[p2]:
+            a[p] = a[p1]; p1 -= 1
+        else:
+            a[p] = b[p2]; p2 -= 1
+        p -= 1
+    return a
+`,
+
+  'minimum-moves-equal-array': `
+def minMoves(nums):
+    nums = list(nums)
+    return sum(nums) - min(nums) * len(nums)
+`,
+
+  'multiply-strings': `
+def multiply(num1, num2):
+    m, n = len(num1), len(num2)
+    pos = [0] * (m + n)
+    for i in range(m - 1, -1, -1):
+        for j in range(n - 1, -1, -1):
+            mul = int(num1[i]) * int(num2[j])
+            p1, p2 = i + j, i + j + 1
+            s = mul + pos[p2]
+            pos[p2] = s % 10
+            pos[p1] += s // 10
+    result = ''.join(map(str, pos)).lstrip('0')
+    return result or '0'
+`,
+
+  'count-triplets-xor': `
+def countTriplets(arr):
+    arr = list(arr)
+    n = len(arr)
+    count = 0
+    for i in range(n - 1):
+        xor = arr[i]
+        for k in range(i + 1, n):
+            xor ^= arr[k]
+            if xor == 0:
+                count += k - i
+    return count
+`,
+
+  'water-and-jug': `
+def canMeasureWater(jug1Capacity, jug2Capacity, targetCapacity):
+    from math import gcd
+    if targetCapacity == 0:
+        return True
+    if targetCapacity > jug1Capacity + jug2Capacity:
+        return False
+    return targetCapacity % gcd(jug1Capacity, jug2Capacity) == 0
+`,
+
+  'find-center-of-star-graph': `
+def findCenter(edges):
+    edges = [list(e) for e in edges]
+    a, b = edges[0]
+    c, d = edges[1]
+    return a if a == c or a == d else b
+`,
+
+  'maximum-frequency-stack': `
+def freqStackRunner(ops, vals):
+    freq = {}
+    group = {}
+    max_freq = 0
+    result = []
+    ops_list = list(ops)
+    vals_list = list(vals)
+    for op, val in zip(ops_list, vals_list):
+        if op == 'push':
+            f = freq.get(val, 0) + 1
+            freq[val] = f
+            if f not in group:
+                group[f] = []
+            group[f].append(val)
+            if f > max_freq:
+                max_freq = f
+            result.append(None)
+        else:
+            val = group[max_freq].pop()
+            freq[val] -= 1
+            if not group[max_freq]:
+                max_freq -= 1
+            result.append(val)
+    return result
+`,
+
+  'shuffle-string': `def restoreString(s, indices):
+    result = [''] * len(s)
+    for i, c in enumerate(s):
+        result[indices[i]] = c
+    return ''.join(result)
+`,
+
+  'subtract-product-and-sum': `def subtractProductAndSum(n):
+    product, total = 1, 0
+    while n > 0:
+        d = n % 10
+        product *= d
+        total += d
+        n //= 10
+    return product - total
+`,
+
+  'find-numbers-even-digits': `def findNumbers(nums):
+    return sum(1 for n in nums if len(str(n)) % 2 == 0)
+`,
+
+  'check-if-all-characters-appear-twice': `
+def areOccurrencesEqual(s):
+    from collections import Counter
+    counts = Counter(s)
+    return len(set(counts.values())) == 1
+`,
+
+  'find-difference-of-two-arrays': `
+def findDifference(nums1, nums2):
+    s1, s2 = set(nums1), set(nums2)
+    return [sorted(v for v in s1 if v not in s2), sorted(v for v in s2 if v not in s1)]
+`,
+
+  'rearrange-array-elements-by-sign': `
+def rearrangeArray(nums):
+    a = list(nums)
+    pos = [x for x in a if x > 0]
+    neg = [x for x in a if x < 0]
+    result = []
+    for i in range(len(pos)):
+        result.append(pos[i])
+        result.append(neg[i])
+    return result
+`,
+
+  'number-of-zero-filled-subarrays': `
+def zeroFilledSubarray(nums):
+    a = list(nums)
+    total = run = 0
+    for n in a:
+        if n == 0:
+            run += 1
+            total += run
+        else:
+            run = 0
+    return total
+`,
+
+  'minimum-recolors-to-get-k-consecutive-black': `
+def minimumRecolors(blocks, k):
+    whites = blocks[:k].count('W')
+    min_w = whites
+    for i in range(k, len(blocks)):
+        if blocks[i] == 'W': whites += 1
+        if blocks[i-k] == 'W': whites -= 1
+        min_w = min(min_w, whites)
+    return min_w
+`,
+
+  'assign-cookies': `def findContentChildren(g, s):
+    g_s = sorted(g)
+    s_s = sorted(s)
+    count = j = 0
+    for greed in g_s:
+        while j < len(s_s) and s_s[j] < greed:
+            j += 1
+        if j < len(s_s):
+            count += 1
+            j += 1
+    return count
+`,
+
+  'relative-ranks': `def findRelativeRanks(score):
+    sorted_idx = sorted(range(len(score)), key=lambda i: -score[i])
+    medals = ['Gold Medal', 'Silver Medal', 'Bronze Medal']
+    result = [''] * len(score)
+    for rank, idx in enumerate(sorted_idx):
+        result[idx] = medals[rank] if rank < 3 else str(rank + 1)
+    return result
+`,
+
+  'base-7': `def convertToBase7(num):
+    if num == 0:
+        return '0'
+    neg = num < 0
+    n, result = abs(num), ''
+    while n > 0:
+        result = str(n % 7) + result
+        n //= 7
+    return ('-' + result) if neg else result
+`,
+
+  'maximum-count': `def maximumCount(nums):
+    neg = sum(1 for n in nums if n < 0)
+    pos = sum(1 for n in nums if n > 0)
+    return max(neg, pos)
+`,
+
+  'minimum-recolors': `def minimumRecolors(blocks, k):
+    whites = blocks[:k].count('W')
+    min_w = whites
+    for i in range(k, len(blocks)):
+        whites += (blocks[i] == 'W') - (blocks[i - k] == 'W')
+        min_w = min(min_w, whites)
+    return min_w
+`,
+
+  'decode-the-message': `def decodeMessage(key, message):
+    mapping = {}
+    idx = 0
+    for c in key:
+        if c != ' ' and c not in mapping:
+            mapping[c] = chr(ord('a') + idx)
+            idx += 1
+    return ''.join(mapping.get(c, ' ') for c in message)
+`,
+
+  'remove-trailing-zeros': `def removeTrailingZeros(num):
+    return num.rstrip('0')
+`,
+
+  'reverse-prefix-of-word': `def reversePrefix(word, ch):
+    idx = word.find(ch)
+    if idx == -1:
+        return word
+    return word[:idx+1][::-1] + word[idx+1:]
+`,
+
+  'count-words-with-given-prefix': `def prefixCount(words, pref):
+    return sum(1 for w in words if w.startswith(pref))
+`,
+
+  'largest-odd-number-in-string': `def largestOddNumber(num):
+    for i in range(len(num) - 1, -1, -1):
+        if int(num[i]) % 2 == 1:
+            return num[:i+1]
+    return ''
+`,
+
+  'toeplitz-matrix': `
+def isToeplitzMatrix(matrix):
+    if hasattr(matrix, 'to_py'):
+        matrix = matrix.to_py()
+    rows = [list(r.to_py()) if hasattr(r, 'to_py') else list(r) for r in matrix]
+    for i in range(1, len(rows)):
+        for j in range(1, len(rows[0])):
+            if rows[i][j] != rows[i-1][j-1]:
+                return False
+    return True
+`,
+
+  'transpose-matrix': `
+def transpose(matrix):
+    if hasattr(matrix, 'to_py'):
+        matrix = matrix.to_py()
+    rows = [list(r.to_py()) if hasattr(r, 'to_py') else list(r) for r in matrix]
+    m, n = len(rows), len(rows[0])
+    return [[rows[i][j] for i in range(m)] for j in range(n)]
+`,
+
+  'maximum-number-of-balloons': `
+def maxNumberOfBalloons(text):
+    from collections import Counter
+    freq = Counter(text)
+    return min(freq['b'], freq['a'], freq['l']//2, freq['o']//2, freq['n'])
+`,
+
+  'count-characters': `
+def countCharacters(words, chars):
+    if hasattr(words, 'to_py'):
+        words = words.to_py()
+    if hasattr(chars, 'to_py'):
+        chars = chars.to_py()
+    words = [str(w) for w in words]
+    chars = str(chars)
+    from collections import Counter
+    freq = Counter(chars)
+    total = 0
+    for word in words:
+        wfreq = Counter(word)
+        if all(wfreq[c] <= freq[c] for c in wfreq):
+            total += len(word)
+    return total
+`,
+
+  'validate-stack-sequences': `
+def validateStackSequences(pushed, popped):
+    pushed = list(pushed)
+    popped = list(popped)
+    stack = []
+    j = 0
+    for val in pushed:
+        stack.append(val)
+        while stack and stack[-1] == popped[j]:
+            stack.pop()
+            j += 1
+    return len(stack) == 0
+`,
+
+  '132-pattern': `
+def find132pattern(nums):
+    nums = list(nums)
+    stack = []
+    min3 = float('-inf')
+    for i in range(len(nums) - 1, -1, -1):
+        if nums[i] < min3:
+            return True
+        while stack and stack[-1] < nums[i]:
+            min3 = stack.pop()
+        stack.append(nums[i])
+    return False
+`,
+
+  'frequency-of-most-frequent-element': `
+def maxFrequency(nums, k):
+    nums = sorted(nums)
+    left = 0
+    total = 0
+    result = 0
+    for right in range(len(nums)):
+        total += nums[right]
+        while nums[right] * (right - left + 1) - total > k:
+            total -= nums[left]
+            left += 1
+        result = max(result, right - left + 1)
+    return result
+`,
+
+  'find-common-characters': `
+def commonChars(words):
+    words = list(words)
+    min_freq = [float('inf')] * 26
+    for word in words:
+        freq = [0] * 26
+        for c in word:
+            freq[ord(c) - 97] += 1
+        for i in range(26):
+            min_freq[i] = min(min_freq[i], freq[i])
+    result = []
+    for i in range(26):
+        result.extend([chr(97 + i)] * int(min_freq[i]))
+    return result
+`,
+
+  'minimum-rounds-to-complete-tasks': `
+def minimumRounds(tasks):
+    from collections import Counter
+    freq = Counter(list(tasks))
+    rounds = 0
+    for f in freq.values():
+        if f == 1:
+            return -1
+        rounds += (f + 2) // 3
+    return rounds
+`,
+
+  'minimum-steps-make-anagram': `
+def minSteps(s, t):
+    freq = [0] * 26
+    for c in s:
+        freq[ord(c) - 97] += 1
+    for c in t:
+        freq[ord(c) - 97] -= 1
+    return sum(-v for v in freq if v < 0)
+`,
+
+  'find-words-formed-by-characters': `
+def countCharacters(words, chars):
+    words = list(words)
+    char_freq = [0] * 26
+    for c in chars:
+        char_freq[ord(c) - 97] += 1
+    total = 0
+    for word in words:
+        w_freq = [0] * 26
+        for c in word:
+            w_freq[ord(c) - 97] += 1
+        if all(w_freq[i] <= char_freq[i] for i in range(26)):
+            total += len(word)
+    return total
+`,
+
+  'sum-of-left-leaves': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def __from_array__(arr):
+    if hasattr(arr, 'to_py'):
+        raw = arr.to_py()
+    else:
+        raw = list(arr)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i]); queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i]); queue.append(node.right)
+        i += 1
+    return root
+
+def sumOfLeftLeavesRunner(arr):
+    return sumOfLeftLeaves(__from_array__(arr))
+
+def sumOfLeftLeaves(root):
+    def dfs(node, is_left):
+        if not node:
+            return 0
+        if not node.left and not node.right:
+            return node.val if is_left else 0
+        return dfs(node.left, True) + dfs(node.right, False)
+    return dfs(root, False)
+`,
+
+  'leaf-similar-trees': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def __from_array__(arr):
+    if hasattr(arr, 'to_py'):
+        raw = arr.to_py()
+    else:
+        raw = list(arr)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i]); queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i]); queue.append(node.right)
+        i += 1
+    return root
+
+def leafSimilarRunner(arr1, arr2):
+    return leafSimilar(__from_array__(arr1), __from_array__(arr2))
+
+def leafSimilar(root1, root2):
+    def get_leaves(node):
+        if not node:
+            return []
+        if not node.left and not node.right:
+            return [node.val]
+        return get_leaves(node.left) + get_leaves(node.right)
+    return get_leaves(root1) == get_leaves(root2)
+`,
+
+  'total-cost-hire-k-workers': `def totalCost(costs, k, candidates):
+    import heapq
+    n = len(costs)
+    heap = []
+    lo, hi = 0, n - 1
+    for i in range(candidates):
+        if lo <= hi:
+            heapq.heappush(heap, (costs[lo], lo))
+            lo += 1
+    for i in range(candidates):
+        if hi >= lo:
+            heapq.heappush(heap, (costs[hi], hi))
+            hi -= 1
+    total = 0
+    for _ in range(k):
+        cost, idx = heapq.heappop(heap)
+        total += cost
+        if lo <= hi:
+            if idx < lo:
+                heapq.heappush(heap, (costs[lo], lo))
+                lo += 1
+            else:
+                heapq.heappush(heap, (costs[hi], hi))
+                hi -= 1
+    return total
+`,
+
+  'maximum-subsequence-score': `def maxScore(nums1, nums2, k):
+    import heapq
+    pairs = sorted(zip(nums1, nums2), key=lambda x: -x[1])
+    heap = []
+    s = 0
+    best = 0
+    for v1, v2 in pairs:
+        heapq.heappush(heap, v1)
+        s += v1
+        if len(heap) > k:
+            s -= heapq.heappop(heap)
+        if len(heap) == k:
+            best = max(best, s * v2)
+    return best
+`,
+
+  'gray-code': `def grayCode(n):
+    return [i ^ (i >> 1) for i in range(1 << n)]
+`,
+
+  'count-vowels-permutation': `def countVowelPermutation(n):
+    MOD = 10**9 + 7
+    a = e = i = o = u = 1
+    for _ in range(n - 1):
+        na = (e + i + u) % MOD
+        ne = (a + i) % MOD
+        ni = (e + o) % MOD
+        no = i % MOD
+        nu = (i + o) % MOD
+        a, e, i, o, u = na, ne, ni, no, nu
+    return (a + e + i + o + u) % MOD
+`,
+
+  'snakes-and-ladders': `def snakesAndLadders(board):
+    from collections import deque
+    n = len(board)
+    def get_cell(num):
+        row = (num - 1) // n
+        col = (num - 1) % n
+        r = n - 1 - row
+        c = col if row % 2 == 0 else n - 1 - col
+        return board[r][c]
+    visited = {1}
+    queue = deque([1])
+    moves = 0
+    while queue:
+        for _ in range(len(queue)):
+            sq = queue.popleft()
+            if sq == n * n:
+                return moves
+            for dice in range(1, 7):
+                dest = sq + dice
+                if dest > n * n:
+                    break
+                cell = get_cell(dest)
+                if cell != -1:
+                    dest = cell
+                if dest not in visited:
+                    visited.add(dest)
+                    queue.append(dest)
+        moves += 1
+    return -1
+`,
+
+  'swim-in-rising-water': `def swimInWater(grid):
+    import heapq
+    n = len(grid)
+    heap = [(grid[0][0], 0, 0)]
+    visited = [[False]*n for _ in range(n)]
+    visited[0][0] = True
+    while heap:
+        t, r, c = heapq.heappop(heap)
+        if r == n-1 and c == n-1:
+            return t
+        for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < n and 0 <= nc < n and not visited[nr][nc]:
+                visited[nr][nc] = True
+                heapq.heappush(heap, (max(t, grid[nr][nc]), nr, nc))
+    return -1
+`,
+
+  'n-queens-ii': `def totalNQueens(n):
+    count = [0]
+    cols = set()
+    diag1 = set()
+    diag2 = set()
+    def bt(row):
+        if row == n:
+            count[0] += 1
+            return
+        for col in range(n):
+            if col in cols or row-col in diag1 or row+col in diag2:
+                continue
+            cols.add(col); diag1.add(row-col); diag2.add(row+col)
+            bt(row+1)
+            cols.discard(col); diag1.discard(row-col); diag2.discard(row+col)
+    bt(0)
+    return count[0]
+`,
+
+  'remove-invalid-parentheses': `def removeInvalidParentheses(s):
+    def is_valid(st):
+        count = 0
+        for c in st:
+            if c == '(':
+                count += 1
+            elif c == ')':
+                count -= 1
+                if count < 0:
+                    return False
+        return count == 0
+    result = set()
+    queue = {s}
+    found = False
+    while queue:
+        next_q = set()
+        for cur in queue:
+            if is_valid(cur):
+                result.add(cur)
+                found = True
+            if not found:
+                for i in range(len(cur)):
+                    if cur[i] not in '()':
+                        continue
+                    next_q.add(cur[:i] + cur[i+1:])
+        if found:
+            break
+        queue = next_q
+    return sorted(result)
+`,
+
+  'number-of-ways-arrive-destination': `def countPaths(n, roads):
+    import heapq
+    MOD = 10**9 + 7
+    adj = [[] for _ in range(n)]
+    for u, v, t in roads:
+        adj[u].append((v, t))
+        adj[v].append((u, t))
+    dist = [float('inf')] * n
+    ways = [0] * n
+    dist[0] = 0
+    ways[0] = 1
+    heap = [(0, 0)]
+    while heap:
+        d, u = heapq.heappop(heap)
+        if d > dist[u]:
+            continue
+        for v, t in adj[u]:
+            nd = d + t
+            if nd < dist[v]:
+                dist[v] = nd
+                ways[v] = ways[u]
+                heapq.heappush(heap, (nd, v))
+            elif nd == dist[v]:
+                ways[v] = (ways[v] + ways[u]) % MOD
+    return ways[n-1]
+`,
+
+  'minimum-cost-cut-stick': `def minCost(n, cuts):
+    c = sorted([0] + list(cuts) + [n])
+    m = len(c)
+    dp = [[0]*m for _ in range(m)]
+    for length in range(2, m):
+        for i in range(m - length):
+            j = i + length
+            dp[i][j] = float('inf')
+            for k in range(i+1, j):
+                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j] + c[j] - c[i])
+    return dp[0][m-1]
+`,
+
+  'kth-missing-positive-number': `def findKthPositive(arr, k):
+    lo, hi = 0, len(arr)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if arr[mid] - (mid + 1) >= k:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo + k
+`,
+
+  'process-tasks-using-servers': `def assignTasks(servers, tasks):
+    import heapq
+    available = sorted((w, i) for i, w in enumerate(servers))
+    available = list(available)
+    busy = []  # (freeAt, weight, idx)
+    result = []
+    time = 0
+    for j, task in enumerate(tasks):
+        time = max(time, j)
+        while busy and busy[0][0] <= time:
+            free_at, w, i = heapq.heappop(busy)
+            heapq.heappush(available, (w, i))
+        if not available:
+            free_at, w, i = heapq.heappop(busy)
+            time = free_at
+            heapq.heappush(available, (w, i))
+            while busy and busy[0][0] == time:
+                free_at2, w2, i2 = heapq.heappop(busy)
+                heapq.heappush(available, (w2, i2))
+        w, i = heapq.heappop(available)
+        result.append(i)
+        heapq.heappush(busy, (time + task, w, i))
+    return result
+`,
+
+  'smallest-number-in-infinite-set': `def smallestInfiniteSetRunner(ops, args):
+    import heapq
+    cursor = 1
+    added = []
+    added_set = set()
+    result = []
+    for op, a in zip(ops, args):
+        if op == 'popSmallest':
+            if added and added[0] < cursor:
+                v = heapq.heappop(added)
+                added_set.discard(v)
+                result.append(v)
+            else:
+                result.append(cursor)
+                cursor += 1
+        elif op == 'addBack':
+            num = a[0] if a else 0
+            if num < cursor and num not in added_set:
+                added_set.add(num)
+                heapq.heappush(added, num)
+            result.append(None)
+        else:
+            result.append(None)
+    return result
+`,
+
+  'strange-printer': `def strangePrinter(s):
+    n = len(s)
+    dp = [[0]*n for _ in range(n)]
+    for i in range(n-1, -1, -1):
+        dp[i][i] = 1
+        for j in range(i+1, n):
+            if s[i] == s[j]:
+                dp[i][j] = dp[i][j-1]
+            else:
+                dp[i][j] = float('inf')
+                for k in range(i, j):
+                    dp[i][j] = min(dp[i][j], dp[i][k] + dp[k+1][j])
+    return dp[0][n-1]
+`,
+
+  'counting-words-with-given-prefix': `
+def prefixCount(words, pref):
+    words = list(words)
+    return sum(1 for w in words if w.startswith(pref))
+`,
+
+  'number-of-laser-beams': `
+def numberOfBeams(bank):
+    bank = list(bank)
+    prev = 0
+    total = 0
+    for row in bank:
+        count = row.count('1')
+        if count > 0:
+            total += prev * count
+            prev = count
+    return total
+`,
+
+  'minimum-number-of-moves-seat': `
+def minMovesToSeat(seats, students):
+    seats = sorted(seats)
+    students = sorted(students)
+    return sum(abs(seats[i] - students[i]) for i in range(len(seats)))
+`,
+
+  'unique-number-of-occurrences': `def uniqueOccurrences(arr):
+    from collections import Counter
+    counts = list(Counter(arr).values())
+    return len(set(counts)) == len(counts)
+`,
+
+  'find-lucky-integer': `def findLucky(arr):
+    from collections import Counter
+    freq = Counter(arr)
+    result = -1
+    for val, count in freq.items():
+        if val == count:
+            result = max(result, val)
+    return result
+`,
+
+  'minimum-index-sum-of-two-lists': `def findRestaurant(list1, list2):
+    idx_map = {s: i for i, s in enumerate(list1)}
+    min_sum = float('inf')
+    result = []
+    for j, s in enumerate(list2):
+        if s in idx_map:
+            total = idx_map[s] + j
+            if total < min_sum:
+                min_sum = total
+                result = [s]
+            elif total == min_sum:
+                result.append(s)
+    return result
+`,
+
+  'two-sum-iv-bst': `def findTarget(root, k):
+    vals = set()
+    for v in root:
+        try:
+            vals.add(int(v))
+        except (TypeError, AttributeError):
+            pass
+    return any(k - v in vals and k - v != v for v in vals)
+`,
+
+  'sort-array-by-parity-ii': `
+def sortArrayByParityII(nums):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    else:
+        nums = list(nums)
+    result = [0] * len(nums)
+    e, o = 0, 1
+    for n in nums:
+        if n % 2 == 0:
+            result[e] = n
+            e += 2
+        else:
+            result[o] = n
+            o += 2
+    return result
+`,
+
+  'number-of-arithmetic-triplets': `
+def arithmeticTriplets(nums, diff):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    else:
+        nums = list(nums)
+    s = set(nums)
+    return sum(1 for n in nums if (n + diff) in s and (n + 2 * diff) in s)
+`,
+
+  'nth-tribonacci-number': `
+def tribonacci(n):
+    if n == 0: return 0
+    if n <= 2: return 1
+    a, b, c = 0, 1, 1
+    for _ in range(n - 2):
+        a, b, c = b, c, a + b + c
+    return c
+`,
+
+  'count-homogenous-substrings': `
+def countHomogenous(s):
+    MOD = 10**9 + 7
+    total = 0
+    run = 1
+    for i in range(1, len(s) + 1):
+        if i < len(s) and s[i] == s[i-1]:
+            run += 1
+        else:
+            total = (total + run * (run + 1) // 2) % MOD
+            run = 1
+    return total
+`,
+
+  'binary-tree-tilt': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def __from_array__(arr):
+    if hasattr(arr, 'to_py'):
+        raw = arr.to_py()
+    else:
+        raw = list(arr)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i]); queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i]); queue.append(node.right)
+        i += 1
+    return root
+
+def findTiltRunner(arr):
+    return findTilt(__from_array__(arr))
+
+def findTilt(root):
+    total = [0]
+    def dfs(node):
+        if not node:
+            return 0
+        l = dfs(node.left)
+        r = dfs(node.right)
+        total[0] += abs(l - r)
+        return node.val + l + r
+    dfs(root)
+    return total[0]
+`,
+
+  'average-of-levels': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def __from_array__(arr):
+    if hasattr(arr, 'to_py'):
+        raw = arr.to_py()
+    else:
+        raw = list(arr)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i]); queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i]); queue.append(node.right)
+        i += 1
+    return root
+
+def averageOfLevelsRunner(arr):
+    return averageOfLevels(__from_array__(arr))
+
+def averageOfLevels(root):
+    if not root:
+        return []
+    result = []
+    queue = [root]
+    while queue:
+        n = len(queue)
+        level_sum = 0
+        for _ in range(n):
+            node = queue.pop(0)
+            level_sum += node.val
+            if node.left: queue.append(node.left)
+            if node.right: queue.append(node.right)
+        result.append(level_sum / n)
+    return result
+`,
+
+  'count-equal-and-divisible-pairs': `
+def countPairs(nums, k):
+    nums = list(nums)
+    count = 0
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            if nums[i] == nums[j] and (i * j) % k == 0:
+                count += 1
+    return count
+`,
+
+  'count-elements-with-maximum-frequency': `
+def maxFrequencyElements(nums):
+    nums = list(nums)
+    from collections import Counter
+    freq = Counter(nums)
+    max_freq = max(freq.values())
+    return sum(f for f in freq.values() if f == max_freq)
+`,
+
+  'make-string-great': `
+def makeGood(s):
+    stack = []
+    for c in s:
+        if stack and abs(ord(stack[-1]) - ord(c)) == 32:
+            stack.pop()
+        else:
+            stack.append(c)
+    return ''.join(stack)
+`,
+
+  'minimum-string-length': `
+def minLength(s):
+    stack = []
+    for c in s:
+        if stack and ((stack[-1] == 'A' and c == 'B') or (stack[-1] == 'C' and c == 'D')):
+            stack.pop()
+        else:
+            stack.append(c)
+    return len(stack)
+`,
+
+  'sum-of-multiples': `
+def sumOfMultiples(n):
+    return sum(i for i in range(1, n + 1) if i % 3 == 0 or i % 5 == 0 or i % 7 == 0)
+`,
+
+  'maximum-score-after-splitting-string': `
+def maxScore(s):
+    best = 0
+    for i in range(1, len(s)):
+        score = s[:i].count('0') + s[i:].count('1')
+        best = max(best, score)
+    return best
+`,
+
+  'append-characters-to-make-subsequence': `
+def appendCharacters(s, t):
+    j = 0
+    for i in range(len(s)):
+        if j < len(t) and s[i] == t[j]:
+            j += 1
+    return len(t) - j
+`,
+
+  'max-sum-of-pair-with-equal-sum-of-digits': `
+def maximumSum(nums):
+    def digit_sum(n):
+        s = 0
+        while n > 0:
+            s += n % 10
+            n //= 10
+        return s
+    best = {}
+    ans = -1
+    for n in nums:
+        ds = digit_sum(n)
+        if ds in best:
+            ans = max(ans, best[ds] + n)
+            best[ds] = max(best[ds], n)
+        else:
+            best[ds] = n
+    return ans
+`,
+
+  'count-number-of-rectangles': `
+def countRectangles(rectangles, points):
+    import bisect
+    by_height = [[] for _ in range(101)]
+    for l, h in rectangles:
+        by_height[h].append(l)
+    for h in range(101):
+        by_height[h].sort()
+    result = []
+    for x, y in points:
+        count = 0
+        for h in range(y, 101):
+            arr = by_height[h]
+            lo = bisect.bisect_left(arr, x)
+            count += len(arr) - lo
+        result.append(count)
+    return result
+`,
+
+  'range-sum-of-bst': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def __from_array__(raw):
+    raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i]); queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i]); queue.append(node.right)
+        i += 1
+    return root
+
+def rangeSumBSTRunner(arr, low, high):
+    return rangeSumBST(__from_array__(arr), low, high)
+
+def rangeSumBST(root, low, high):
+    if not root:
+        return 0
+    s = root.val if low <= root.val <= high else 0
+    if root.val > low:
+        s += rangeSumBST(root.left, low, high)
+    if root.val < high:
+        s += rangeSumBST(root.right, low, high)
+    return s
+`,
+
+  'xor-operation-in-an-array': `
+def xorOperation(n, start):
+    res = 0
+    for i in range(n):
+        res ^= (start + 2 * i)
+    return res
+`,
+
+  'get-maximum-in-generated-array': `
+def getMaximumGenerated(n):
+    if n == 0:
+        return 0
+    nums = [0, 1]
+    for i in range(2, n + 1):
+        if i % 2 == 0:
+            nums.append(nums[i // 2])
+        else:
+            nums.append(nums[i // 2] + nums[i // 2 + 1])
+    return max(nums)
+`,
+
+  'flipping-an-image': `
+def flipAndInvertImage(image):
+    if hasattr(image, 'to_py'):
+        rows = [list(row.to_py()) for row in image]
+    else:
+        rows = [list(row) for row in image]
+    return [[(b ^ 1) for b in reversed(row)] for row in rows]
+`,
+
+  'count-good-triplets': `
+def countGoodTriplets(arr, a, b, c):
+    arr = list(arr)
+    count = 0
+    n = len(arr)
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if abs(arr[i]-arr[j]) <= a and abs(arr[j]-arr[k]) <= b and abs(arr[i]-arr[k]) <= c:
+                    count += 1
+    return count
+`,
+
+  'matrix-block-sum': `
+def matrixBlockSum(mat, k):
+    if hasattr(mat, 'to_py'):
+        mat = [list(row.to_py()) for row in mat]
+    else:
+        mat = [list(row) for row in mat]
+    m, n = len(mat), len(mat[0])
+    prefix = [[0]*(n+1) for _ in range(m+1)]
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            prefix[i][j] = mat[i-1][j-1] + prefix[i-1][j] + prefix[i][j-1] - prefix[i-1][j-1]
+    ans = [[0]*n for _ in range(m)]
+    for i in range(m):
+        for j in range(n):
+            r1, c1 = max(0, i-k), max(0, j-k)
+            r2, c2 = min(m-1, i+k), min(n-1, j+k)
+            ans[i][j] = prefix[r2+1][c2+1] - prefix[r1][c2+1] - prefix[r2+1][c1] + prefix[r1][c1]
+    return ans
+`,
+  'unique-morse-code-words': `
+def uniqueMorseRepresentations(words):
+    MORSE = [".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."]
+    transforms = set()
+    for word in words:
+        transforms.add("".join(MORSE[ord(c) - ord('a')] for c in word))
+    return len(transforms)
+`,
+  'number-of-good-pairs': `
+def numIdenticalPairs(nums):
+    count = 0
+    freq = {}
+    for n in nums:
+        count += freq.get(n, 0)
+        freq[n] = freq.get(n, 0) + 1
+    return count
+`,
+  'check-if-array-sorted-rotated': `
+def check(nums):
+    n = len(nums)
+    descents = 0
+    for i in range(n):
+        if nums[i] > nums[(i + 1) % n]:
+            descents += 1
+    return descents <= 1
+`,
+  'maximum-product-difference': `
+def maxProductDifference(nums):
+    nums = sorted(nums)
+    return nums[-1] * nums[-2] - nums[0] * nums[1]
+`,
+  'replace-words': `
+def replaceWords(dictionary, sentence):
+    root_set = set(dictionary)
+    def replace(word):
+        for i in range(1, len(word) + 1):
+            if word[:i] in root_set:
+                return word[:i]
+        return word
+    return " ".join(replace(w) for w in sentence.split())
+`,
+  'minimum-time-difference': `
+def findMinDifference(timePoints):
+    minutes = sorted(int(t[:2]) * 60 + int(t[3:]) for t in timePoints)
+    min_diff = 1440 - minutes[-1] + minutes[0]
+    for i in range(1, len(minutes)):
+        min_diff = min(min_diff, minutes[i] - minutes[i-1])
+    return min_diff
+`,
+  'string-to-integer-atoi': `
+def myAtoi(s):
+    INT_MAX, INT_MIN = 2147483647, -2147483648
+    i, sign, result = 0, 1, 0
+    while i < len(s) and s[i] == ' ':
+        i += 1
+    if i < len(s) and s[i] in ('+', '-'):
+        sign = -1 if s[i] == '-' else 1
+        i += 1
+    while i < len(s) and s[i].isdigit():
+        d = int(s[i])
+        if result > (INT_MAX - d) // 10:
+            return INT_MAX if sign == 1 else INT_MIN
+        result = result * 10 + d
+        i += 1
+    return sign * result
+`,
+  'minimum-sum-four-digit-number': `
+def minimumSum(num):
+    digits = sorted(int(d) for d in str(num))
+    return digits[0] * 10 + digits[1] * 10 + digits[2] + digits[3]
+`,
+  'count-pairs-absolute-difference-k': `
+def countKDifference(nums, k):
+    count = 0
+    freq = {}
+    for n in nums:
+        count += freq.get(n - k, 0) + freq.get(n + k, 0)
+        freq[n] = freq.get(n, 0) + 1
+    return count
+`,
+  'find-closest-number-to-zero': `
+def findClosestNumber(nums):
+    best = nums[0]
+    for n in nums:
+        if abs(n) < abs(best) or (abs(n) == abs(best) and n > best):
+            best = n
+    return best
+`,
+  'minimum-deletions-char-frequencies': `def minDeletions(s):
+    from collections import Counter
+    freq = sorted(Counter(s).values(), reverse=True)
+    used = set()
+    deletions = 0
+    for f in freq:
+        while f > 0 and f in used:
+            f -= 1
+            deletions += 1
+        if f > 0:
+            used.add(f)
+    return deletions
+`,
+  'bulls-and-cows': `def getHint(secret, guess):
+    bulls = 0
+    secret_freq = {}
+    guess_freq = {}
+    for s, g in zip(secret, guess):
+        if s == g:
+            bulls += 1
+        else:
+            secret_freq[s] = secret_freq.get(s, 0) + 1
+            guess_freq[g] = guess_freq.get(g, 0) + 1
+    cows = sum(min(guess_freq.get(d, 0), secret_freq.get(d, 0)) for d in guess_freq)
+    return f"{bulls}A{cows}B"
+`,
+  'first-letter-to-appear-twice': `def repeatedCharacter(s):
+    seen = set()
+    for ch in s:
+        if ch in seen:
+            return ch
+        seen.add(ch)
+    return ''
+`,
+  'count-asterisks': `def countAsterisks(s):
+    count = 0
+    inside = False
+    for ch in s:
+        if ch == '|':
+            inside = not inside
+        elif ch == '*' and not inside:
+            count += 1
+    return count
+`,
+  'count-even-numbers': `
+def countEven(num):
+    count = 0
+    for i in range(1, num + 1):
+        if sum(int(d) for d in str(i)) % 2 == 0:
+            count += 1
+    return count
+`,
+  'count-segments-in-string': `
+def countSegments(s):
+    return len(s.split())
+`,
+  'find-repeated-dna-sequences': `
+def findRepeatedDnaSequences(s):
+    from collections import Counter
+    counts = Counter(s[i:i+10] for i in range(len(s) - 9))
+    return sorted(k for k, v in counts.items() if v > 1)
+`,
+  'widest-vertical-area': `
+def maxWidthOfVerticalArea(points):
+    xs = sorted(int(p[0]) for p in points)
+    return max(xs[i+1] - xs[i] for i in range(len(xs) - 1)) if len(xs) > 1 else 0
+`,
+  'convert-1d-array-into-2d-array': `
+def construct2DArray(original, m, n):
+    if hasattr(original, 'to_py'):
+        original = list(original.to_py())
+    else:
+        original = list(original)
+    if len(original) != m * n:
+        return []
+    return [original[i*n:(i+1)*n] for i in range(m)]
+`,
+  'check-if-all-chars-have-equal-occurrences': `
+def areOccurrencesEqual(s):
+    from collections import Counter
+    freq = set(Counter(s).values())
+    return len(freq) == 1
+`,
+  'find-the-pivot-integer': `
+def pivotInteger(n):
+    import math
+    x = math.isqrt(n * (n + 1) // 2)
+    return x if x * x == n * (n + 1) // 2 else -1
+`,
+  'maximum-sum-circular-subarray': `
+def maxSubarraySumCircular(nums):
+    nums = list(nums)
+    if all(n < 0 for n in nums):
+        return max(nums)
+    max_sum = cur_max = float('-inf')
+    min_sum = cur_min = float('inf')
+    total = 0
+    for n in nums:
+        cur_max = max(n, cur_max + n)
+        max_sum = max(max_sum, cur_max)
+        cur_min = min(n, cur_min + n)
+        min_sum = min(min_sum, cur_min)
+        total += n
+    return max(max_sum, total - min_sum)
+`,
+  'unique-email-addresses': `def numUniqueEmails(emails):
+    def normalize(e):
+        local, dom = e.split('@')
+        local = local.split('+')[0].replace('.', '')
+        return local + '@' + dom
+    return len(set(normalize(e) for e in emails))
+`,
+  'reverse-words-in-string-iii': `def reverseWords(s):
+    return ' '.join(w[::-1] for w in s.split(' '))
+`,
+  'count-binary-substrings': `def countBinarySubstrings(s):
+    ans, prev, curr = 0, 0, 1
+    for i in range(1, len(s)):
+        if s[i] == s[i-1]:
+            curr += 1
+        else:
+            prev = curr
+            curr = 1
+        if prev >= curr:
+            ans += 1
+    return ans
+`,
+  'shortest-unsorted-continuous-subarray': `def findUnsortedSubarray(nums):
+    s = sorted(nums)
+    l, r = 0, len(nums) - 1
+    while l <= r and nums[l] == s[l]:
+        l += 1
+    while r >= l and nums[r] == s[r]:
+        r -= 1
+    return 0 if l > r else r - l + 1
+`,
+  'max-chunks-to-make-sorted': `def maxChunksToSorted(arr):
+    max_so_far = count = 0
+    for i, v in enumerate(arr):
+        max_so_far = max(max_so_far, v)
+        if max_so_far == i:
+            count += 1
+    return count
+`,
+  'champagne-tower': `def champagneTower(poured, query_row, query_glass):
+    tower = [[0.0] * (query_row + 2) for _ in range(query_row + 2)]
+    tower[0][0] = poured
+    for r in range(query_row):
+        for g in range(r + 1):
+            excess = tower[r][g] - 1
+            if excess > 0:
+                tower[r][g] = 1
+                tower[r+1][g] += excess / 2
+                tower[r+1][g+1] += excess / 2
+    return min(1.0, tower[query_row][query_glass])
+`,
+  'minimum-remove-to-make-valid-parentheses': `def minRemoveToMakeValid(s):
+    to_remove = set()
+    stack = []
+    for i, ch in enumerate(s):
+        if ch == '(':
+            stack.append(i)
+        elif ch == ')':
+            if stack:
+                stack.pop()
+            else:
+                to_remove.add(i)
+    to_remove.update(stack)
+    return ''.join(ch for i, ch in enumerate(s) if i not in to_remove)
+`,
+  'bitwise-and-of-numbers-range': `def rangeBitwiseAnd(left, right):
+    shift = 0
+    while left != right:
+        left >>= 1
+        right >>= 1
+        shift += 1
+    return left << shift
+`,
+  'number-of-enclaves': `def numEnclaves(grid):
+    m, n = len(grid), len(grid[0])
+    def dfs(r, c):
+        if r < 0 or r >= m or c < 0 or c >= n or not grid[r][c]:
+            return
+        grid[r][c] = 0
+        for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:
+            dfs(r+dr, c+dc)
+    for r in range(m):
+        dfs(r, 0); dfs(r, n-1)
+    for c in range(n):
+        dfs(0, c); dfs(m-1, c)
+    return sum(cell for row in grid for cell in row)
+`,
+  'jump-game-iv': `def minJumps(arr):
+    from collections import defaultdict, deque
+    n = len(arr)
+    if n == 1:
+        return 0
+    graph = defaultdict(list)
+    for i, v in enumerate(arr):
+        graph[v].append(i)
+    visited = {0}
+    q = deque([(0, 0)])
+    while q:
+        i, steps = q.popleft()
+        for j in [i-1, i+1] + graph.pop(arr[i], []):
+            if j == n - 1:
+                return steps + 1
+            if 0 <= j < n and j not in visited:
+                visited.add(j)
+                q.append((j, steps+1))
+    return -1
+`,
+  'number-of-distinct-averages': `
+def distinctAverages(nums):
+    nums = sorted(nums)
+    sums = set()
+    for i in range(len(nums) // 2):
+        sums.add(nums[i] + nums[-(i+1)])
+    return len(sums)
+`,
+  'find-positive-integer-with-negative': `
+def findMaxK(nums):
+    s = set(nums)
+    result = -1
+    for n in nums:
+        if n > 0 and -n in s:
+            if n > result:
+                result = n
+    return result
+`,
+  'sum-of-squares-special-elements': `
+def sumOfSquares(nums):
+    nums = list(nums)
+    n = len(nums)
+    return sum(nums[i-1] ** 2 for i in range(1, n+1) if n % i == 0)
+`,
+  'minimum-operations-make-array-empty': `
+def minOperations(nums):
+    from collections import Counter
+    import math
+    freq = Counter(nums)
+    ops = 0
+    for f in freq.values():
+        if f == 1:
+            return -1
+        ops += math.ceil(f / 3)
+    return ops
+`,
+  'split-string-balance': `
+def balancedStringSplit(s):
+    count = balance = 0
+    for c in s:
+        balance += 1 if c == 'R' else -1
+        if balance == 0:
+            count += 1
+    return count
+`,
+  'maximum-product-adjacent-elements': `
+def maxProduct(nums):
+    nums = list(nums)
+    return max(nums[i] * nums[i+1] for i in range(len(nums)-1))
+`,
+  'candy': `def candy(ratings):
+    n = len(ratings)
+    c = [1] * n
+    for i in range(1, n):
+        if ratings[i] > ratings[i-1]:
+            c[i] = c[i-1] + 1
+    for i in range(n-2, -1, -1):
+        if ratings[i] > ratings[i+1]:
+            c[i] = max(c[i], c[i+1] + 1)
+    return sum(c)
+`,
+  'minimum-falling-path-sum': `def minFallingPathSum(matrix):
+    matrix = [row[:] for row in matrix]
+    for i in range(1, len(matrix)):
+        for j in range(len(matrix[i])):
+            prev = [matrix[i-1][j]]
+            if j > 0: prev.append(matrix[i-1][j-1])
+            if j < len(matrix[i])-1: prev.append(matrix[i-1][j+1])
+            matrix[i][j] += min(prev)
+    return min(matrix[-1])
+`,
+  'count-nice-subarrays': `def numberOfSubarrays(nums, k):
+    def at_most(x):
+        l = odds = res = 0
+        for r in range(len(nums)):
+            odds += nums[r] % 2
+            while odds > x:
+                odds -= nums[l] % 2
+                l += 1
+            res += r - l + 1
+        return res
+    return at_most(k) - at_most(k - 1)
+`,
+  'split-linked-list-in-parts': `def splitListToParts(head, k):
+    n = len(head)
+    base, extra = divmod(n, k)
+    res, i = [], 0
+    for p in range(k):
+        size = base + (1 if p < extra else 0)
+        res.append(head[i:i+size])
+        i += size
+    return res
+`,
+  'time-based-key-value-store': `def timeMap(ops, args):
+    import bisect
+    store = {}
+    results = []
+    for op, a in zip(ops, args):
+        if op == 'TimeMap':
+            results.append(None)
+        elif op == 'set':
+            k, v, t = a
+            if k not in store:
+                store[k] = []
+            store[k].append((t, v))
+            results.append(None)
+        else:
+            k, t = a
+            if k not in store:
+                results.append('')
+                continue
+            arr = store[k]
+            idx = bisect.bisect_right(arr, (t, chr(127))) - 1
+            results.append(arr[idx][1] if idx >= 0 else '')
+    return results
+`,
+  'minimum-cost-for-tickets': `def mincostTickets(days, costs):
+    day_set = set(days)
+    dp = [0] * 366
+    for i in range(1, 366):
+        if i not in day_set:
+            dp[i] = dp[i-1]
+        else:
+            dp[i] = min(
+                dp[i-1] + costs[0],
+                dp[max(0, i-7)] + costs[1],
+                dp[max(0, i-30)] + costs[2]
+            )
+    return dp[365]
+`,
+  'stone-game-ii': `def stoneGameII(piles):
+    from functools import lru_cache
+    n = len(piles)
+    suf = [0] * (n + 1)
+    for i in range(n-1, -1, -1):
+        suf[i] = suf[i+1] + piles[i]
+    @lru_cache(maxsize=None)
+    def dp(i, m):
+        if i >= n:
+            return 0
+        if 2*m >= n-i:
+            return suf[i]
+        return max(suf[i] - dp(i+x, max(m,x)) for x in range(1, 2*m+1))
+    return dp(0, 1)
+`,
+  'maximum-width-ramp': `def maxWidthRamp(nums):
+    st = []
+    for i, v in enumerate(nums):
+        if not st or v < nums[st[-1]]:
+            st.append(i)
+    ans = 0
+    for j in range(len(nums)-1, -1, -1):
+        while st and nums[st[-1]] <= nums[j]:
+            ans = max(ans, j - st.pop())
+    return ans
+`,
+  'check-if-array-pairs-divisible-by-k': `def canArrange(arr, k):
+    freq = [0] * k
+    for x in arr:
+        freq[x % k % k] += 1
+    if freq[0] % 2 != 0:
+        return False
+    for r in range(1, k // 2 + 1):
+        if r == k - r:
+            if freq[r] % 2 != 0:
+                return False
+        elif freq[r] != freq[k-r]:
+            return False
+    return True
+`,
+  'find-k-th-smallest-pair-distance': `def smallestDistancePair(nums, k):
+    import bisect
+    nums.sort()
+    n = len(nums)
+    lo, hi = 0, nums[-1] - nums[0]
+    while lo < hi:
+        mid = (lo + hi) // 2
+        cnt = l = 0
+        for r in range(n):
+            while nums[r] - nums[l] > mid:
+                l += 1
+            cnt += r - l
+        if cnt >= k:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'valid-triangle-number': `def triangleNumber(nums):
+    nums.sort()
+    cnt = 0
+    for k in range(len(nums) - 1, 1, -1):
+        l, r = 0, k - 1
+        while l < r:
+            if nums[l] + nums[r] > nums[k]:
+                cnt += r - l
+                r -= 1
+            else:
+                l += 1
+    return cnt
+`,
+
+  'max-number-k-sum-pairs': `def maxOperations(nums, k):
+    from collections import Counter
+    freq = Counter()
+    cnt = 0
+    for n in nums:
+        c = k - n
+        if freq[c] > 0:
+            cnt += 1
+            freq[c] -= 1
+        else:
+            freq[n] += 1
+    return cnt
+`,
+
+  'minimum-time-rope-colorful': `def minCost(colors, neededTime):
+    res = i = 0
+    while i < len(colors):
+        j = i
+        group_max = group_sum = 0
+        while j < len(colors) and colors[j] == colors[i]:
+            group_max = max(group_max, neededTime[j])
+            group_sum += neededTime[j]
+            j += 1
+        res += group_sum - group_max
+        i = j
+    return res
+`,
+
+  'shortest-bridge': `def shortestBridge(grid):
+    from collections import deque
+    n = len(grid)
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    queue = deque()
+    found = False
+
+    def dfs(r, c):
+        if r < 0 or r >= n or c < 0 or c >= n or grid[r][c] != 1:
+            return
+        grid[r][c] = 2
+        queue.append((r, c))
+        for dr, dc in dirs:
+            dfs(r + dr, c + dc)
+
+    for r in range(n):
+        if found:
+            break
+        for c in range(n):
+            if grid[r][c] == 1:
+                dfs(r, c)
+                found = True
+                break
+
+    dist = 0
+    while queue:
+        for _ in range(len(queue)):
+            r, c = queue.popleft()
+            for dr, dc in dirs:
+                nr, nc = r + dr, c + dc
+                if nr < 0 or nr >= n or nc < 0 or nc >= n or grid[nr][nc] == 2:
+                    continue
+                if grid[nr][nc] == 1:
+                    return dist
+                grid[nr][nc] = 2
+                queue.append((nr, nc))
+        dist += 1
+    return dist
+`,
+
+  'number-of-subsequences-target-sum': `def numSubseq(nums, target):
+    MOD = 10**9 + 7
+    nums.sort()
+    n = len(nums)
+    pow2 = [1] * n
+    for i in range(1, n):
+        pow2[i] = pow2[i-1] * 2 % MOD
+    ans = l = 0
+    r = n - 1
+    while l <= r:
+        if nums[l] + nums[r] <= target:
+            ans = (ans + pow2[r - l]) % MOD
+            l += 1
+        else:
+            r -= 1
+    return ans
+`,
+  'increasing-decreasing-string': `
+def sortString(s):
+    from collections import Counter
+    freq = Counter(s)
+    result = []
+    while sum(freq.values()) > 0:
+        for c in 'abcdefghijklmnopqrstuvwxyz':
+            if freq[c] > 0:
+                result.append(c)
+                freq[c] -= 1
+        for c in 'zyxwvutsrqponmlkjihgfedcba':
+            if freq[c] > 0:
+                result.append(c)
+                freq[c] -= 1
+    return ''.join(result)
+`,
+
+  'car-pooling': `def carPooling(trips, capacity):
+    diff = [0] * 1001
+    for n, f, t in trips:
+        diff[f] += n
+        diff[t] -= n
+    cur = 0
+    for d in diff:
+        cur += d
+        if cur > capacity:
+            return False
+    return True
+`,
+
+  'most-profit-assigning-work': `def maxProfitAssignment(difficulty, profit, worker):
+    import bisect
+    jobs = sorted(zip(difficulty, profit))
+    max_profit = [0]
+    for _, p in jobs:
+        max_profit.append(max(max_profit[-1], p))
+    total = 0
+    for w in worker:
+        idx = bisect.bisect_right(jobs, (w, float('inf')))
+        total += max_profit[idx]
+    return total
+`,
+
+  'fruit-into-baskets': `def totalFruit(fruits):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    l = ans = 0
+    for r, f in enumerate(fruits):
+        freq[f] += 1
+        while len(freq) > 2:
+            freq[fruits[l]] -= 1
+            if freq[fruits[l]] == 0:
+                del freq[fruits[l]]
+            l += 1
+        ans = max(ans, r - l + 1)
+    return ans
+`,
+
+  'minimum-swaps-string-balanced': `def minSwaps(s):
+    b = m = 0
+    for c in s:
+        b += 1 if c == '[' else -1
+        if b < 0:
+            m += 1
+            b = 0
+    return (m + 1) // 2
+`,
+
+  'sum-of-subarray-ranges': `def subArrayRanges(nums):
+    res = 0
+    n = len(nums)
+    for i in range(n):
+        mn = mx = nums[i]
+        for j in range(i, n):
+            mn = min(mn, nums[j])
+            mx = max(mx, nums[j])
+            res += mx - mn
+    return res
+`,
+
+  'students-unable-to-eat-lunch': `
+def countStudents(students, sandwiches):
+    students = list(students)
+    sandwiches = list(sandwiches)
+    i = 0
+    while i < len(sandwiches):
+        if sandwiches[i] in students:
+            students.remove(sandwiches[i])
+            i += 1
+        else:
+            break
+    return len(students)
+`,
+
+  'create-target-array-given-order': `
+def createTargetArray(nums, index):
+    nums = list(nums)
+    index = list(index)
+    target = []
+    for i in range(len(nums)):
+        target.insert(index[i], nums[i])
+    return target
+`,
+
+  'maximum-ascending-subarray-sum': `
+def maxAscendingSum(nums):
+    nums = list(nums)
+    max_sum = cur = nums[0]
+    for i in range(1, len(nums)):
+        if nums[i] > nums[i-1]:
+            cur += nums[i]
+        else:
+            max_sum = max(max_sum, cur)
+            cur = nums[i]
+    return max(max_sum, cur)
+`,
+
+  'minimum-consecutive-cards-pickup': `
+def minimumCardPickup(cards):
+    cards = list(cards)
+    last = {}
+    min_len = float('inf')
+    for i, c in enumerate(cards):
+        if c in last:
+            min_len = min(min_len, i - last[c] + 1)
+        last[c] = i
+    return min_len if min_len != float('inf') else -1
+`,
+
+  'divisor-game': `
+def divisorGame(n):
+    return n % 2 == 0
+`,
+
+  'minimum-time-visiting-all-points': `
+def minTimeToVisitAllPoints(points):
+    points = [list(p) for p in points]
+    total = 0
+    for i in range(1, len(points)):
+        total += max(abs(points[i][0] - points[i-1][0]), abs(points[i][1] - points[i-1][1]))
+    return total
+`,
+
+  'largest-local-values-matrix': `
+def largestLocal(grid):
+    grid = [list(row) for row in grid]
+    n = len(grid)
+    res = []
+    for i in range(n - 2):
+        row = []
+        for j in range(n - 2):
+            mx = 0
+            for r in range(i, i + 3):
+                for c in range(j, j + 3):
+                    mx = max(mx, grid[r][c])
+            row.append(mx)
+        res.append(row)
+    return res
+`,
+
+  'percentage-letter-in-string': `
+def percentageLetter(s, letter):
+    return s.count(letter) * 100 // len(s)
+`,
+
+  'number-of-weak-characters': `
+def numberOfWeakCharacters(properties):
+    properties = sorted(properties, key=lambda x: (-x[0], x[1]))
+    max_def = count = 0
+    for _, d in properties:
+        if d < max_def:
+            count += 1
+        max_def = max(max_def, d)
+    return count
+`,
+
+  'arithmetic-slices': `
+def numberOfArithmeticSlices(nums):
+    nums = list(nums)
+    count = cur = 0
+    for i in range(2, len(nums)):
+        if nums[i] - nums[i-1] == nums[i-1] - nums[i-2]:
+            cur += 1
+            count += cur
+        else:
+            cur = 0
+    return count
+`,
+
+  'maximum-number-vowels-substring': `
+def maxVowels(s, k):
+    vowels = set('aeiou')
+    cnt = sum(1 for c in s[:k] if c in vowels)
+    max_cnt = cnt
+    for i in range(k, len(s)):
+        if s[i] in vowels:
+            cnt += 1
+        if s[i - k] in vowels:
+            cnt -= 1
+        max_cnt = max(max_cnt, cnt)
+    return max_cnt
+`,
+
+  'minimum-swaps-group-all-ones': `
+def minSwaps(data):
+    data = list(data)
+    k = sum(data)
+    if k == 0 or k == len(data):
+        return 0
+    zeros = data[:k].count(0)
+    min_zeros = zeros
+    for i in range(k, len(data)):
+        if data[i] == 0:
+            zeros += 1
+        if data[i - k] == 0:
+            zeros -= 1
+        min_zeros = min(min_zeros, zeros)
+    return min_zeros
+`,
+
+  'k-diff-pairs-in-array': `
+def findPairs(nums, k):
+    if k < 0:
+        return 0
+    from collections import Counter
+    freq = Counter(nums)
+    count = 0
+    for n, f in freq.items():
+        if k == 0:
+            if f > 1:
+                count += 1
+        elif n + k in freq:
+            count += 1
+    return count
+`,
+
+  'hand-of-straights': `
+def isNStraightHand(hand, groupSize):
+    from collections import Counter
+    if len(hand) % groupSize != 0:
+        return False
+    freq = Counter(hand)
+    for k in sorted(freq):
+        cnt = freq[k]
+        if cnt > 0:
+            for i in range(groupSize):
+                if freq[k + i] < cnt:
+                    return False
+                freq[k + i] -= cnt
+    return True
+`,
+
+  'minimum-domino-rotations': `
+def minDominoRotations(tops, bottoms):
+    tops = list(tops)
+    bottoms = list(bottoms)
+    def check(x):
+        rt = rb = 0
+        for i in range(len(tops)):
+            if tops[i] != x and bottoms[i] != x:
+                return float('inf')
+            elif tops[i] != x:
+                rt += 1
+            elif bottoms[i] != x:
+                rb += 1
+        return min(rt, rb)
+    res = min(check(tops[0]), check(bottoms[0]))
+    return res if res != float('inf') else -1
+`,
+
+  'maximize-confusion-exam': `def maxConsecutiveAnswers(answerKey, k):
+    def solve(c):
+        l = cnt = ans = 0
+        for r in range(len(answerKey)):
+            if answerKey[r] != c:
+                cnt += 1
+            while cnt > k:
+                if answerKey[l] != c:
+                    cnt -= 1
+                l += 1
+            ans = max(ans, r - l + 1)
+        return ans
+    return max(solve('T'), solve('F'))
+`,
+
+  'sum-of-all-subset-xor-totals': `def subsetXORSum(nums):
+    from functools import reduce
+    from operator import or_
+    total_or = reduce(or_, nums, 0)
+    return total_or * (1 << (len(nums) - 1))
+`,
+
+  'continuous-subarray-sum': `def checkSubarraySum(nums, k):
+    seen = {0: -1}
+    s = 0
+    for i, n in enumerate(nums):
+        s = (s + n) % k
+        if s in seen:
+            if i - seen[s] >= 2:
+                return True
+        else:
+            seen[s] = i
+    return False
+`,
+
+  'equal-row-column-pairs': `def equalPairs(grid):
+    from collections import Counter
+    n = len(grid)
+    row_counts = Counter(tuple(row) for row in grid)
+    ans = 0
+    for j in range(n):
+        col = tuple(grid[i][j] for i in range(n))
+        ans += row_counts[col]
+    return ans
+`,
+
+  'determine-if-two-strings-close': `def closeStrings(word1, word2):
+    from collections import Counter
+    if len(word1) != len(word2):
+        return False
+    c1, c2 = Counter(word1), Counter(word2)
+    return set(c1.keys()) == set(c2.keys()) and sorted(c1.values()) == sorted(c2.values())
+`,
+
+  'furthest-building-ladders': `
+def furthestBuilding(heights, bricks, ladders):
+    import heapq
+    heights = list(heights)
+    heap = []
+    b = bricks
+    for i in range(len(heights) - 1):
+        diff = heights[i+1] - heights[i]
+        if diff <= 0:
+            continue
+        heapq.heappush(heap, diff)
+        if len(heap) > ladders:
+            b -= heapq.heappop(heap)
+            if b < 0:
+                return i
+    return len(heights) - 1
+`,
+
+  'ipo': `
+def findMaximizedCapital(k, w, profits, capital):
+    import heapq
+    profits = list(profits)
+    capital = list(capital)
+    projects = sorted(zip(capital, profits))
+    max_heap = []
+    j = 0
+    for _ in range(k):
+        while j < len(projects) and projects[j][0] <= w:
+            heapq.heappush(max_heap, -projects[j][1])
+            j += 1
+        if not max_heap:
+            break
+        w += -heapq.heappop(max_heap)
+    return w
+`,
+
+  'relative-sort-array': `
+def relativeSortArray(arr1, arr2):
+    arr1 = list(arr1)
+    arr2 = list(arr2)
+    rank = {v: i for i, v in enumerate(arr2)}
+    return sorted(arr1, key=lambda x: rank[x] if x in rank else 1000 + x)
+`,
+
+  'permutations-ii': `
+def permuteUniqueRunner(arr):
+    arr = list(arr)
+    def permuteUnique(nums):
+        nums = sorted(nums)
+        result = []
+        used = [False] * len(nums)
+        def bt(cur):
+            if len(cur) == len(nums):
+                result.append(cur[:])
+                return
+            for i in range(len(nums)):
+                if used[i]:
+                    continue
+                if i > 0 and nums[i] == nums[i-1] and not used[i-1]:
+                    continue
+                used[i] = True
+                cur.append(nums[i])
+                bt(cur)
+                used[i] = False
+                cur.pop()
+        bt([])
+        return result
+    return sorted(permuteUnique(arr))
+`,
+
+  'letter-tile-possibilities': `
+def numTilePossibilities(tiles):
+    freq = [0] * 26
+    for c in tiles:
+        freq[ord(c) - 65] += 1
+    def bt():
+        count = 0
+        for i in range(26):
+            if freq[i] > 0:
+                count += 1
+                freq[i] -= 1
+                count += bt()
+                freq[i] += 1
+        return count
+    return bt()
+`,
+
+  'different-ways-add-parentheses': `
+def diffWaysToComputeRunner(expr):
+    def compute(e):
+        results = []
+        for i, c in enumerate(e):
+            if c in '+-*':
+                for l in compute(e[:i]):
+                    for r in compute(e[i+1:]):
+                        if c == '+': results.append(l + r)
+                        elif c == '-': results.append(l - r)
+                        else: results.append(l * r)
+        if not results:
+            results.append(int(e))
+        return results
+    return sorted(compute(expr))
+`,
+
+  'integer-break': `
+def integerBreak(n):
+    dp = [0] * (n + 1)
+    dp[1] = 1
+    for i in range(2, n + 1):
+        for j in range(1, i):
+            dp[i] = max(dp[i], max(j, dp[j]) * max(i - j, dp[i - j]))
+    return dp[n]
+`,
+
+  'minimum-cost-move-chips': `
+def minCostToMoveChips(position):
+    position = list(position)
+    even = sum(1 for p in position if p % 2 == 0)
+    odd = sum(1 for p in position if p % 2 != 0)
+    return min(even, odd)
+`,
+
+  'binary-watch': `
+def readBinaryWatch(turnedOn):
+    times = []
+    for h in range(12):
+        for m in range(60):
+            bits = bin(h).count('1') + bin(m).count('1')
+            if bits == turnedOn:
+                times.append(f'{h}:{m:02d}')
+    return times
+`,
+
+  'minimum-add-make-valid-parentheses': `
+def minAddToMakeValid(s):
+    open_count = close_count = 0
+    for c in s:
+        if c == '(':
+            open_count += 1
+        elif open_count > 0:
+            open_count -= 1
+        else:
+            close_count += 1
+    return open_count + close_count
+`,
+
+  'palindromic-substrings': `
+def countSubstrings(s):
+    count = 0
+    for center in range(2 * len(s) - 1):
+        l = center // 2
+        r = l + (center % 2)
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            count += 1
+            l -= 1
+            r += 1
+    return count
+`,
+
+  'partition-string': `
+def partitionString(s):
+    parts = 1
+    seen = set()
+    for c in s:
+        if c in seen:
+            parts += 1
+            seen = set()
+        seen.add(c)
+    return parts
+`,
+
+  'ugly-number-ii': `def nthUglyNumber(n):
+    dp = [1]
+    i2 = i3 = i5 = 0
+    for _ in range(1, n):
+        nx = min(dp[i2] * 2, dp[i3] * 3, dp[i5] * 5)
+        dp.append(nx)
+        if nx == dp[i2] * 2:
+            i2 += 1
+        if nx == dp[i3] * 3:
+            i3 += 1
+        if nx == dp[i5] * 5:
+            i5 += 1
+    return dp[n - 1]
+`,
+
+  'delete-node-in-bst': `def deleteNode(root, key):
+    if root is None:
+        return None
+    if key < root.val:
+        root.left = deleteNode(root.left, key)
+    elif key > root.val:
+        root.right = deleteNode(root.right, key)
+    else:
+        if root.left is None:
+            return root.right
+        if root.right is None:
+            return root.left
+        s = root.right
+        while s.left:
+            s = s.left
+        root.val = s.val
+        root.right = deleteNode(root.right, s.val)
+    return root
+`,
+
+  'insert-into-bst': `def insertIntoBST(root, val):
+    if root is None:
+        return TreeNode(val)
+    if val < root.val:
+        root.left = insertIntoBST(root.left, val)
+    else:
+        root.right = insertIntoBST(root.right, val)
+    return root
+`,
+
+  'minimum-cost-connect-points': `def minCostConnectPoints(points):
+    n = len(points)
+    in_mst = [False] * n
+    dist = [float('inf')] * n
+    dist[0] = 0
+    res = 0
+    for _ in range(n):
+        u = -1
+        for j in range(n):
+            if not in_mst[j] and (u == -1 or dist[j] < dist[u]):
+                u = j
+        in_mst[u] = True
+        res += dist[u]
+        for v in range(n):
+            if not in_mst[v]:
+                d = abs(points[u][0] - points[v][0]) + abs(points[u][1] - points[v][1])
+                if d < dist[v]:
+                    dist[v] = d
+    return res
+`,
+
+  'number-of-visible-people-in-queue': `def canSeePersonsCount(heights):
+    heights = list(heights)
+    n = len(heights)
+    ans = [0] * n
+    st = []
+    for i in range(n - 1, -1, -1):
+        cnt = 0
+        while st and st[-1] < heights[i]:
+            st.pop()
+            cnt += 1
+        if st:
+            cnt += 1
+        ans[i] = cnt
+        st.append(heights[i])
+    return ans
+`,
+
+  'combination-sum-iv': `
+def combinationSum4(nums, target):
+    nums = list(nums)
+    dp = [0] * (target + 1)
+    dp[0] = 1
+    for i in range(1, target + 1):
+        for n in nums:
+            if n <= i:
+                dp[i] += dp[i - n]
+    return dp[target]
+`,
+
+  'valid-parentheses': `
+def isValid(s):
+    stack = []
+    mapping = {')': '(', ']': '[', '}': '{'}
+    for c in s:
+        if c in '([{':
+            stack.append(c)
+        elif not stack or stack.pop() != mapping[c]:
+            return False
+    return len(stack) == 0
+`,
+
+  'evaluate-reverse-polish-notation': `
+def evalRPN(tokens):
+    stack = []
+    tokens = list(tokens)
+    for t in tokens:
+        if t in ('+', '-', '*', '/'):
+            b, a = stack.pop(), stack.pop()
+            if t == '+': stack.append(a + b)
+            elif t == '-': stack.append(a - b)
+            elif t == '*': stack.append(a * b)
+            else: stack.append(int(a / b))
+        else:
+            stack.append(int(t))
+    return stack[0]
+`,
+
+  'move-zeroes': `
+def moveZeroes(nums):
+    nums = list(nums)
+    pos = 0
+    for n in nums:
+        if n != 0:
+            nums[pos] = n
+            pos += 1
+    while pos < len(nums):
+        nums[pos] = 0
+        pos += 1
+    return nums
+`,
+
+  'merge-strings-alternately': `
+def mergeAlternately(word1, word2):
+    result = []
+    i = 0
+    while i < len(word1) or i < len(word2):
+        if i < len(word1):
+            result.append(word1[i])
+        if i < len(word2):
+            result.append(word2[i])
+        i += 1
+    return ''.join(result)
+`,
+
+  'uncrossed-lines': `
+def maxUncrossedLines(nums1, nums2):
+    nums1, nums2 = list(nums1), list(nums2)
+    m, n = len(nums1), len(nums2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if nums1[i-1] == nums2[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    return dp[m][n]
+`,
+
+  'course-schedule-iii': `
+def scheduleCourse(courses):
+    courses = sorted([[d, e] for d, e in courses], key=lambda x: x[1])
+    heap = []
+    time = 0
+    for d, end in courses:
+        time += d
+        heap.append(d)
+        heap.sort(reverse=True)
+        if time > end:
+            time -= heap.pop(0)
+    return len(heap)
+`,
+
+  'buy-two-chocolates': `
+def buyChoco(prices, money):
+    prices = sorted(prices)
+    s = prices[0] + prices[1]
+    return money - s if s <= money else money
+`,
+
+  'most-frequent-even-element': `
+def mostFrequentEven(nums):
+    from collections import Counter
+    freq = Counter(n for n in nums if n % 2 == 0)
+    if not freq:
+        return -1
+    best_freq = max(freq.values())
+    return min(n for n, f in freq.items() if f == best_freq)
+`,
+
+  'find-first-palindromic-string': `
+def firstPalindrome(words):
+    words = list(words)
+    for w in words:
+        if w == w[::-1]:
+            return w
+    return ''
+`,
+
+  'minimum-number-operations-make-array-empty': `
+def minOperations(nums):
+    from collections import Counter
+    import math
+    freq = Counter(nums)
+    ops = 0
+    for f in freq.values():
+        if f == 1:
+            return -1
+        ops += math.ceil(f / 3)
+    return ops
+`,
+
+  'maximum-difference-between-node-and-ancestor': `
+def maxAncestorDiff(root):
+    ans = 0
+    def dfs(node, mn, mx):
+        nonlocal ans
+        if node is None:
+            return
+        ans = max(ans, abs(mn - node.val), abs(mx - node.val))
+        nm = min(mn, node.val)
+        nx = max(mx, node.val)
+        dfs(node.left, nm, nx)
+        dfs(node.right, nm, nx)
+    dfs(root, root.val, root.val)
+    return ans
+`,
+
+  'jump-game-vi': `
+from collections import deque
+def maxResult(nums, k):
+    nums = list(nums)
+    n = len(nums)
+    dp = [0] * n
+    dp[0] = nums[0]
+    dq = deque([0])
+    for i in range(1, n):
+        while dq and dq[0] < i - k:
+            dq.popleft()
+        dp[i] = nums[i] + dp[dq[0]]
+        while dq and dp[dq[-1]] <= dp[i]:
+            dq.pop()
+        dq.append(i)
+    return dp[n - 1]
+`,
+
+  'longest-subarray-max-bitwise-and': `
+def longestSubarray(nums):
+    nums = list(nums)
+    mx = max(nums)
+    ans = cur = 0
+    for x in nums:
+        if x == mx:
+            cur += 1
+            ans = max(ans, cur)
+        else:
+            cur = 0
+    return ans
+`,
+
+  'maximum-events-can-attend': `
+import heapq
+def maxEvents(events):
+    events = sorted([list(e) for e in events], key=lambda x: x[0])
+    heap = []
+    i = 0
+    n = len(events)
+    day = 0
+    ans = 0
+    while i < n or heap:
+        if not heap:
+            day = events[i][0]
+        while i < n and events[i][0] <= day:
+            heapq.heappush(heap, events[i][1])
+            i += 1
+        while heap and heap[0] < day:
+            heapq.heappop(heap)
+        if heap:
+            heapq.heappop(heap)
+            ans += 1
+        day += 1
+    return ans
+`,
+
+  'count-nodes-equal-average-subtree': `
+def averageOfSubtree(root):
+    ans = [0]
+    def dfs(node):
+        if node is None:
+            return 0, 0
+        ls, lc = dfs(node.left)
+        rs, rc = dfs(node.right)
+        s = node.val + ls + rs
+        c = 1 + lc + rc
+        if s // c == node.val:
+            ans[0] += 1
+        return s, c
+    dfs(root)
+    return ans[0]
+`,
+
+  'maximum-level-sum-binary-tree': `
+from collections import deque
+def maxLevelSum(root):
+    level = 1
+    ans = 1
+    mx = float('-inf')
+    q = deque([root])
+    while q:
+        n = len(q)
+        s = 0
+        for _ in range(n):
+            nd = q.popleft()
+            s += nd.val
+            if nd.left:
+                q.append(nd.left)
+            if nd.right:
+                q.append(nd.right)
+        if s > mx:
+            mx = s
+            ans = level
+        level += 1
+    return ans
+`,
+
+  'minimum-distance-value': `
+def findTheDistanceValue(arr1, arr2, d):
+    arr1, arr2 = list(arr1), list(arr2)
+    count = 0
+    for a in arr1:
+        if all(abs(a - b) > d for b in arr2):
+            count += 1
+    return count
+`,
+
+  'minimum-operations-make-array-alternating': `
+def minimumOperations(nums):
+    from collections import Counter
+    nums = list(nums)
+    n = len(nums)
+    if n == 1:
+        return 0
+    def top_two(arr):
+        freq = Counter(arr)
+        sorted_items = sorted(freq.items(), key=lambda x: -x[1])
+        first = sorted_items[0] if sorted_items else (0, 0)
+        second = sorted_items[1] if len(sorted_items) > 1 else (0, 0)
+        return first, second
+    even = [nums[i] for i in range(0, n, 2)]
+    odd = [nums[i] for i in range(1, n, 2)]
+    (ev1, ef1), (ev2, ef2) = top_two(even)
+    (ov1, of1), (ov2, of2) = top_two(odd)
+    if ev1 != ov1:
+        return n - (ef1 + of1)
+    return n - max(ef1 + of2, ef2 + of1)
+`,
+
+  'redistribute-characters-make-all-strings-equal': `
+def makeEqual(words):
+    from collections import Counter
+    words = list(words)
+    n = len(words)
+    freq = Counter()
+    for w in words:
+        freq.update(w)
+    return all(v % n == 0 for v in freq.values())
+`,
+
+  'check-completeness-binary-tree': `
+def isCompleteTree(root):
+    from collections import deque
+    if not root:
+        return True
+    q = deque([root])
+    seen_null = False
+    while q:
+        node = q.popleft()
+        if node is None:
+            seen_null = True
+        else:
+            if seen_null:
+                return False
+            q.append(node.left)
+            q.append(node.right)
+    return True
+`,
+
+  'maximum-twin-sum-linked-list': `
+def pairSum(head):
+    vals = []
+    cur = head
+    while cur:
+        vals.append(cur.val)
+        cur = cur.next
+    n = len(vals)
+    return max(vals[i] + vals[n-1-i] for i in range(n // 2))
+`,
+
+  'k-radius-subarray-averages': `
+def getAverages(nums, k):
+    nums = list(nums)
+    n = len(nums)
+    w = 2 * k + 1
+    avgs = [-1] * n
+    if w > n:
+        return avgs
+    s = sum(nums[:w])
+    avgs[k] = s // w
+    for i in range(k + 1, n - k):
+        s += nums[i + k] - nums[i - k - 1]
+        avgs[i] = s // w
+    return avgs
+`,
+
+  'number-of-ways-select-buildings': `
+def numberOfWays(s):
+    c0 = c1 = c01 = c10 = ans = 0
+    for ch in s:
+        if ch == '0':
+            c10 += c1
+            ans += c01
+            c0 += 1
+        else:
+            c01 += c0
+            ans += c10
+            c1 += 1
+    return ans
+`,
+
+  'find-city-smallest-number-neighbors': `
+def findTheCity(n, edges, distanceThreshold):
+    INF = float('inf')
+    dist = [[INF] * n for _ in range(n)]
+    for i in range(n):
+        dist[i][i] = 0
+    for u, v, w in edges:
+        dist[u][v] = w
+        dist[v][u] = w
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if dist[i][k] + dist[k][j] < dist[i][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+    ans = -1
+    min_n = n + 1
+    for i in range(n):
+        cnt = sum(1 for j in range(n) if j != i and dist[i][j] <= distanceThreshold)
+        if cnt <= min_n:
+            min_n = cnt
+            ans = i
+    return ans
+`,
+
+  'total-appeal-of-string': `
+def appealSum(s):
+    last = {}
+    dp = ans = 0
+    for i, c in enumerate(s):
+        dp += i - last.get(c, -1)
+        ans += dp
+        last[c] = i
+    return ans
+`,
+
+  'minimum-fuel-cost-report-capital': `
+import sys
+sys.setrecursionlimit(200000)
+def minimumFuelCost(roads, seats):
+    n = len(roads) + 1
+    adj = [[] for _ in range(n)]
+    for u, v in roads:
+        adj[u].append(v)
+        adj[v].append(u)
+    ans = [0]
+    def dfs(u, p):
+        sz = 1
+        for v in adj[u]:
+            if v != p:
+                sz += dfs(v, u)
+        if u != 0:
+            import math
+            ans[0] += math.ceil(sz / seats)
+        return sz
+    dfs(0, -1)
+    return ans[0]
+`,
+
+  'robot-return-to-origin': `
+def judgeCircle(moves):
+    x, y = 0, 0
+    for c in moves:
+        if c == 'U': y += 1
+        elif c == 'D': y -= 1
+        elif c == 'L': x -= 1
+        else: x += 1
+    return x == 0 and y == 0
+`,
+
+  'count-sorted-vowel-strings': `
+def countVowelStrings(n):
+    dp = [1, 1, 1, 1, 1]
+    for _ in range(1, n):
+        next_dp = [0] * 5
+        acc = 0
+        for v in range(5):
+            acc += dp[v]
+            next_dp[v] = acc
+        dp = next_dp
+    return sum(dp)
+`,
+
+  'maximum-product-of-word-lengths': `
+def maxProduct(words):
+    words = list(words)
+    masks = []
+    for w in words:
+        m = 0
+        for c in w:
+            m |= (1 << (ord(c) - ord('a')))
+        masks.append(m)
+    max_val = 0
+    for i in range(len(words)):
+        for j in range(i + 1, len(words)):
+            if not (masks[i] & masks[j]):
+                max_val = max(max_val, len(words[i]) * len(words[j]))
+    return max_val
+`,
+
+  'exclusive-time-of-functions': `
+def exclusiveTime(n, logs):
+    logs = list(logs)
+    result = [0] * n
+    stack = []
+    prev = 0
+    for log in logs:
+        parts = log.split(':')
+        fid = int(parts[0])
+        typ = parts[1]
+        t = int(parts[2])
+        if typ == 'start':
+            if stack:
+                result[stack[-1]] += t - prev
+            stack.append(fid)
+            prev = t
+        else:
+            result[fid] += t - prev + 1
+            stack.pop()
+            prev = t + 1
+    return result
+`,
+
+  'as-far-from-land-as-possible': `
+def maxDistance(grid):
+    grid = [list(row) for row in grid]
+    n = len(grid)
+    dist = [[0 if grid[r][c] == 1 else -1 for c in range(n)] for r in range(n)]
+    q = [(r, c) for r in range(n) for c in range(n) if grid[r][c] == 1]
+    if len(q) == 0 or len(q) == n * n:
+        return -1
+    head = 0
+    max_d = -1
+    while head < len(q):
+        r, c = q[head]
+        head += 1
+        for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < n and 0 <= nc < n and dist[nr][nc] == -1:
+                dist[nr][nc] = dist[r][c] + 1
+                max_d = max(max_d, dist[nr][nc])
+                q.append((nr, nc))
+    return max_d
+`,
+
+  'cheapest-flights-within-k-stops': `
+def findCheapestPrice(n, flights, src, dst, k):
+    flights = [list(f) for f in flights]
+    prices = [float('inf')] * n
+    prices[src] = 0
+    for _ in range(k + 1):
+        tmp = prices[:]
+        for frm, to, price in flights:
+            if prices[frm] < float('inf'):
+                tmp[to] = min(tmp[to], prices[frm] + price)
+        prices = tmp
+    return prices[dst] if prices[dst] < float('inf') else -1
+`,
+
+  'sorted-array-to-bst': `
+def sortedArrayToBST(nums):
+    import math
+    def build(lo, hi):
+        if lo > hi:
+            return None
+        mid = lo + math.ceil((hi - lo) / 2)
+        node = TreeNode(nums[mid])
+        node.left = build(lo, mid - 1)
+        node.right = build(mid + 1, hi)
+        return node
+    return build(0, len(nums) - 1)
+`,
+
+  'factorial-trailing-zeroes': `
+def trailingZeroes(n):
+    count = 0
+    while n >= 5:
+        n //= 5
+        count += n
+    return count
+`,
+
+  'unique-binary-search-trees': `
+def numTrees(n):
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    if n >= 1:
+        dp[1] = 1
+    for i in range(2, n + 1):
+        for j in range(1, i + 1):
+            dp[i] += dp[j - 1] * dp[i - j]
+    return dp[n]
+`,
+
+  'non-decreasing-array': `
+def checkPossibility(nums):
+    nums = list(nums)
+    count = 0
+    for i in range(len(nums) - 1):
+        if nums[i] > nums[i + 1]:
+            count += 1
+            if count > 1:
+                return False
+            if i > 0 and nums[i - 1] > nums[i + 1]:
+                nums[i + 1] = nums[i]
+            else:
+                nums[i] = nums[i + 1]
+    return True
+`,
+
+  'best-time-buy-sell-iii': `
+def maxProfitIII(prices):
+    prices = list(prices)
+    buy1 = float('-inf')
+    sell1 = 0
+    buy2 = float('-inf')
+    sell2 = 0
+    for p in prices:
+        buy1 = max(buy1, -p)
+        sell1 = max(sell1, buy1 + p)
+        buy2 = max(buy2, sell1 - p)
+        sell2 = max(sell2, buy2 + p)
+    return sell2
+`,
+
+  'deepest-leaves-sum': `
+def deepestLeavesSum(root):
+    from collections import deque
+    if not root:
+        return 0
+    q = deque([root])
+    level_sum = 0
+    while q:
+        n = len(q)
+        level_sum = 0
+        for _ in range(n):
+            nd = q.popleft()
+            level_sum += nd.val
+            if nd.left:
+                q.append(nd.left)
+            if nd.right:
+                q.append(nd.right)
+    return level_sum
+`,
+
+  'count-subarrays-fixed-bounds': `
+def countSubarrays(nums, minK, maxK):
+    nums = list(nums)
+    min_pos = max_pos = bad_pos = -1
+    ans = 0
+    for i, x in enumerate(nums):
+        if x < minK or x > maxK:
+            bad_pos = i
+        if x == minK:
+            min_pos = i
+        if x == maxK:
+            max_pos = i
+        ans += max(0, min(min_pos, max_pos) - bad_pos)
+    return ans
+`,
+
+  'amount-of-time-for-binary-tree-to-be-infected': `
+from collections import defaultdict, deque
+def amountOfTime(root, start):
+    adj = defaultdict(list)
+    def build(node):
+        if not node:
+            return
+        if node.left:
+            adj[node.val].append(node.left.val)
+            adj[node.left.val].append(node.val)
+            build(node.left)
+        if node.right:
+            adj[node.val].append(node.right.val)
+            adj[node.right.val].append(node.val)
+            build(node.right)
+    build(root)
+    visited = {start}
+    q = deque([start])
+    ans = 0
+    while q:
+        nxt = []
+        for _ in range(len(q)):
+            u = q.popleft()
+            for v in adj[u]:
+                if v not in visited:
+                    visited.add(v)
+                    nxt.append(v)
+        if nxt:
+            ans += 1
+            q.extend(nxt)
+    return ans
+`,
+
+  'count-collisions-on-road': `
+def countCollisions(directions):
+    s = list(directions)
+    n = len(s)
+    l = 0
+    while l < n and s[l] == 'L':
+        l += 1
+    r = n - 1
+    while r >= 0 and s[r] == 'R':
+        r -= 1
+    return sum(1 for c in s[l:r+1] if c != 'S')
+`,
+
+  'maximum-alternating-subsequence-sum': `
+def maxAlternatingSum(nums):
+    nums = list(nums)
+    even = odd = 0
+    for x in nums:
+        ne = max(even, odd + x)
+        no = max(odd, even - x)
+        even, odd = ne, no
+    return even
+`,
+
+  'count-hills-valleys': `
+def countHillValley(nums):
+    nums = list(nums)
+    deduped = [nums[0]]
+    for i in range(1, len(nums)):
+        if nums[i] != nums[i - 1]:
+            deduped.append(nums[i])
+    count = 0
+    for i in range(1, len(deduped) - 1):
+        if deduped[i] > deduped[i - 1] and deduped[i] > deduped[i + 1]:
+            count += 1
+        elif deduped[i] < deduped[i - 1] and deduped[i] < deduped[i + 1]:
+            count += 1
+    return count
+`,
+
+  'find-all-lonely-numbers': `
+def findLonely(nums):
+    from collections import Counter
+    freq = Counter(nums)
+    res = []
+    for n, c in freq.items():
+        if c == 1 and (n - 1) not in freq and (n + 1) not in freq:
+            res.append(n)
+    return sorted(res)
+`,
+
+  'count-prefixes-of-given-string': `
+def countPrefixes(words, s):
+    words = list(words)
+    return sum(1 for w in words if s.startswith(w))
+`,
+
+  'minimum-number-game': `
+def numberGame(nums):
+    nums = sorted(nums)
+    arr = []
+    for i in range(0, len(nums), 2):
+        arr.append(nums[i + 1])
+        arr.append(nums[i])
+    return arr
+`,
+
+  'find-words-containing-character': `
+def findWordsContaining(words, x):
+    words = list(words)
+    return [i for i, w in enumerate(words) if x in w]
+`,
+
+  'count-good-numbers': `
+def countGoodNumbers(n):
+    MOD = 10 ** 9 + 7
+    even = (n + 1) // 2
+    odd = n // 2
+    return pow(5, even, MOD) * pow(4, odd, MOD) % MOD
+`,
+
+  'maximum-sum-exactly-k-elements': `
+def maximizeSum(nums, k):
+    nums = list(nums)
+    m = max(nums)
+    return k * m + k * (k - 1) // 2
+`,
+
+  'minimum-common-value': `
+def getCommon(nums1, nums2):
+    nums1, nums2 = list(nums1), list(nums2)
+    i = j = 0
+    while i < len(nums1) and j < len(nums2):
+        if nums1[i] == nums2[j]:
+            return nums1[i]
+        elif nums1[i] < nums2[j]:
+            i += 1
+        else:
+            j += 1
+    return -1
+`,
+
+  'find-pivot-integer': `
+def findPivot(n):
+    import math
+    s = n * (n + 1) // 2
+    x = int(math.isqrt(s))
+    return x if x * x == s else -1
+`,
+
+  'compare-version-numbers': `
+def compareVersion(version1, version2):
+    a = version1.split('.')
+    b = version2.split('.')
+    n = max(len(a), len(b))
+    for i in range(n):
+        x = int(a[i]) if i < len(a) else 0
+        y = int(b[i]) if i < len(b) else 0
+        if x < y:
+            return -1
+        if x > y:
+            return 1
+    return 0
+`,
+
+  'open-the-lock': `
+from collections import deque
+def openLock(deadends, target):
+    dead = set(deadends)
+    if '0000' in dead:
+        return -1
+    if target == '0000':
+        return 0
+    vis = set(dead)
+    vis.add('0000')
+    q = deque(['0000'])
+    steps = 0
+    while q:
+        steps += 1
+        for _ in range(len(q)):
+            s = q.popleft()
+            for i in range(4):
+                for d in (1, -1):
+                    ns = list(s)
+                    ns[i] = str((int(ns[i]) + d) % 10)
+                    t = ''.join(ns)
+                    if t == target:
+                        return steps
+                    if t not in vis:
+                        vis.add(t)
+                        q.append(t)
+    return -1
+`,
+
+  'diagonal-traverse': `
+def findDiagonalOrder(mat):
+    mat = [list(row) for row in mat]
+    m, n = len(mat), len(mat[0])
+    res = []
+    for d in range(m + n - 1):
+        tmp = []
+        r_min = max(0, d - n + 1)
+        r_max = min(d, m - 1)
+        for r in range(r_min, r_max + 1):
+            tmp.append(mat[r][d - r])
+        if d % 2 == 0:
+            tmp.reverse()
+        res.extend(tmp)
+    return res
+`,
+
+  'reshape-the-matrix': `
+def matrixReshape(mat, r, c):
+    mat = [list(row) for row in mat]
+    flat = [x for row in mat for x in row]
+    if len(flat) != r * c:
+        return mat
+    return [[flat[i * c + j] for j in range(c)] for i in range(r)]
+`,
+
+  'find-town-judge': `
+def findJudge(n, trust):
+    trust = list(trust)
+    s = [0] * (n + 1)
+    for a, b in trust:
+        s[a] -= 1
+        s[b] += 1
+    for i in range(1, n + 1):
+        if s[i] == n - 1:
+            return i
+    return -1
+`,
+
+  'possible-bipartition': `
+from collections import deque
+def possibleBipartition(n, dislikes):
+    dislikes = list(dislikes)
+    adj = [[] for _ in range(n + 1)]
+    for a, b in dislikes:
+        adj[a].append(b)
+        adj[b].append(a)
+    color = [-1] * (n + 1)
+    for s in range(1, n + 1):
+        if color[s] != -1:
+            continue
+        color[s] = 0
+        q = deque([s])
+        while q:
+            u = q.popleft()
+            for v in adj[u]:
+                if color[v] == -1:
+                    color[v] = 1 - color[u]
+                    q.append(v)
+                elif color[v] == color[u]:
+                    return False
+    return True
+`,
+
+  'flip-string-to-monotone-increasing': `
+def minFlipsMonoIncr(s):
+    flips = ones = 0
+    for c in s:
+        if c == '1':
+            ones += 1
+        else:
+            flips = min(flips + 1, ones)
+    return flips
+`,
+
+  'maximum-length-subarray-positive-product': `
+def getMaxLen(nums):
+    nums = list(nums)
+    pos = neg = ans = 0
+    for n in nums:
+        if n == 0:
+            pos = neg = 0
+        elif n > 0:
+            pos = pos + 1
+            neg = neg + 1 if neg > 0 else 0
+        else:
+            pos, neg = (neg + 1 if neg > 0 else 0), pos + 1
+        ans = max(ans, pos)
+    return ans
+`,
+
+  'minimum-days-to-make-m-bouquets': `
+def minDays(bloomDay, m, k):
+    bloomDay = list(bloomDay)
+    n = len(bloomDay)
+    if m * k > n:
+        return -1
+    def can_make(day):
+        bouquets = streak = 0
+        for b in bloomDay:
+            if b <= day:
+                streak += 1
+                if streak == k:
+                    bouquets += 1
+                    streak = 0
+            else:
+                streak = 0
+        return bouquets >= m
+    lo, hi = 1, max(bloomDay)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if can_make(mid):
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'find-resultant-array-after-removing-anagrams': `
+def removeAnagrams(words):
+    words = list(words)
+    def sorted_word(w):
+        return tuple(sorted(w))
+    stack = []
+    for w in words:
+        if not stack or sorted_word(stack[-1]) != sorted_word(w):
+            stack.append(w)
+    return stack
+`,
+
+  'longest-zigzag-path-binary-tree': `
+def longestZigZag(root):
+    ans = [0]
+    def dfs(node):
+        if not node:
+            return -1, -1
+        ll, lr = dfs(node.left)
+        rl, rr = dfs(node.right)
+        go_left = lr + 1
+        go_right = rl + 1
+        ans[0] = max(ans[0], go_left, go_right)
+        return go_left, go_right
+    dfs(root)
+    return ans[0]
+`,
+
+  'two-sum-ii': `
+def twoSumII(numbers, target):
+    numbers = list(numbers)
+    l, r = 0, len(numbers) - 1
+    while l < r:
+        s = numbers[l] + numbers[r]
+        if s == target:
+            return [l + 1, r + 1]
+        elif s < target:
+            l += 1
+        else:
+            r -= 1
+    return [-1, -1]
+`,
+
+  'set-mismatch': `
+def findErrorNums(nums):
+    nums = list(nums)
+    n = len(nums)
+    cnt = [0] * (n + 1)
+    for x in nums:
+        cnt[x] += 1
+    dup = miss = -1
+    for i in range(1, n + 1):
+        if cnt[i] == 2:
+            dup = i
+        if cnt[i] == 0:
+            miss = i
+    return [dup, miss]
+`,
+
+  'maximum-gap': `
+def maximumGap(nums):
+    nums = sorted(nums)
+    if len(nums) < 2:
+        return 0
+    return max(nums[i] - nums[i - 1] for i in range(1, len(nums)))
+`,
+
+  'array-partition': `
+def arrayPairSum(nums):
+    nums = sorted(nums)
+    return sum(nums[i] for i in range(0, len(nums), 2))
+`,
+
+  'power-of-four': `
+def isPowerOfFour(n):
+    if n <= 0:
+        return False
+    if n & (n - 1) != 0:
+        return False
+    return n & 0xAAAAAAAA == 0
+`,
+
+  'valid-palindrome-ii': `
+def validPalindrome(s):
+    def is_palin(l, r):
+        while l < r:
+            if s[l] != s[r]:
+                return False
+            l += 1; r -= 1
+        return True
+    l, r = 0, len(s) - 1
+    while l < r:
+        if s[l] != s[r]:
+            return is_palin(l + 1, r) or is_palin(l, r - 1)
+        l += 1; r -= 1
+    return True
+`,
+
+  'bulb-switcher': `
+import math
+def bulbSwitch(n):
+    return int(math.isqrt(n))
+`,
+
+  'self-dividing-numbers': `
+def selfDividingNumbers(left, right):
+    result = []
+    for n in range(left, right + 1):
+        x = n
+        ok = True
+        while x > 0:
+            d = x % 10
+            if d == 0 or n % d != 0:
+                ok = False
+                break
+            x //= 10
+        if ok:
+            result.append(n)
+    return result
+`,
+
+  'student-attendance-record-i': `
+def checkRecord(s):
+    return s.count('A') < 2 and 'LLL' not in s
+`,
+
+  'license-key-formatting': `
+def licenseKeyFormatting(s, k):
+    s = s.replace('-', '').upper()
+    result = []
+    i = len(s)
+    while i > 0:
+        result.append(s[max(0, i - k):i])
+        i -= k
+    return '-'.join(reversed(result))
+`,
+
+  'keyboard-row': `
+def findWords(words):
+    words = list(words)
+    rows = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm']
+    row_of = {}
+    for r, row in enumerate(rows):
+        for c in row:
+            row_of[c] = r
+    result = []
+    for w in words:
+        r = row_of[w[0].lower()]
+        if all(row_of[c.lower()] == r for c in w):
+            result.append(w)
+    return result
+`,
+
+  'longest-uncommon-subsequence-i': `
+def findLUSlength(a, b):
+    if a == b:
+        return -1
+    return max(len(a), len(b))
+`,
+
+  'perfect-number': `
+def checkPerfectNumber(num):
+    if num <= 1:
+        return False
+    total = 1
+    i = 2
+    while i * i <= num:
+        if num % i == 0:
+            total += i
+            if i != num // i:
+                total += num // i
+        i += 1
+    return total == num
+`,
+
+  'arrange-coins': `
+def arrangeCoins(n):
+    import math
+    return int((-1 + math.sqrt(1 + 8 * n)) / 2)
+`,
+
+  'nth-digit': `
+def findNthDigit(n):
+    d, cnt, start = 1, 9, 1
+    while n > d * cnt:
+        n -= d * cnt
+        d += 1
+        cnt *= 10
+        start *= 10
+    num = start + (n - 1) // d
+    return int(str(num)[(n - 1) % d])
+`,
+
+  'find-the-winner': `
+def findTheWinner(n, k):
+    pos = 0
+    for i in range(2, n + 1):
+        pos = (pos + k) % i
+    return pos + 1
+`,
+
+  'count-negative-numbers': `
+def countNegatives(grid):
+    grid = [list(row) for row in grid]
+    r, c, cnt = 0, len(grid[0]) - 1, 0
+    while r < len(grid) and c >= 0:
+        if grid[r][c] < 0:
+            cnt += len(grid) - r
+            c -= 1
+        else:
+            r += 1
+    return cnt
+`,
+
+  'can-make-arithmetic-progression': `
+def canMakeArithmeticProgression(arr):
+    arr = sorted(arr)
+    d = arr[1] - arr[0]
+    return all(arr[i] - arr[i - 1] == d for i in range(2, len(arr)))
+`,
+
+  'first-bad-version': `
+def firstBadVersion(n, is_bad_version):
+    lo, hi = 1, n
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if is_bad_version(mid):
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'number-of-segments-in-string': `
+def countSegments(s):
+    return len(s.split())
+`,
+
+  'find-mode-bst': `
+from collections import Counter
+def findMode(root):
+    freq = Counter()
+    def dfs(node):
+        if not node:
+            return
+        freq[node.val] += 1
+        dfs(node.left)
+        dfs(node.right)
+    dfs(root)
+    if not freq:
+        return []
+    max_count = max(freq.values())
+    return sorted(v for v, c in freq.items() if c == max_count)
+`,
+
+  'final-value-after-operations': `
+def finalValueAfterOperations(ops):
+    ops = list(ops)
+    x = 0
+    for op in ops:
+        x += 1 if '+' in op else -1
+    return x
+`,
+
+  'find-original-array-from-doubled': `
+def findOriginalArray(changed):
+    from collections import Counter
+    changed = sorted(list(changed))
+    freq = Counter(changed)
+    result = []
+    for n in changed:
+        if freq[n] == 0:
+            continue
+        freq[n] -= 1
+        d = n * 2
+        if freq[d] == 0:
+            return []
+        freq[d] -= 1
+        result.append(n)
+    return result
+`,
+
+  'number-of-students-unable-to-eat-lunch': `
+def countStudents(students, sandwiches):
+    students = list(students)
+    sandwiches = list(sandwiches)
+    cnt = [students.count(0), students.count(1)]
+    for sand in sandwiches:
+        if cnt[sand] == 0:
+            return cnt[0] + cnt[1]
+        cnt[sand] -= 1
+    return 0
+`,
+
+  'maximum-number-of-words-found-in-sentences': `
+def mostWordsFound(sentences):
+    sentences = list(sentences)
+    return max(len(s.split()) for s in sentences)
+`,
+
+  'capitalize-the-title': `
+def capitalizeTitle(title):
+    result = []
+    for w in title.split():
+        if len(w) <= 2:
+            result.append(w.lower())
+        else:
+            result.append(w[0].upper() + w[1:].lower())
+    return ' '.join(result)
+`,
+
+  'hamming-distance': `
+def hammingDistance(x, y):
+    return bin(x ^ y).count('1')
+`,
+
+  'single-number-iii': `
+def singleNumberIII(nums):
+    nums = list(nums)
+    xor = 0
+    for n in nums:
+        xor ^= n
+    bit = xor & (-xor)
+    a = 0
+    for n in nums:
+        if n & bit:
+            a ^= n
+    return sorted([a, xor ^ a])
+`,
+
+  'minimum-operations-to-make-array-increasing': `
+def minOperations(nums):
+    nums = list(nums)
+    ops = 0
+    for i in range(1, len(nums)):
+        if nums[i] <= nums[i - 1]:
+            ops += nums[i - 1] + 1 - nums[i]
+            nums[i] = nums[i - 1] + 1
+    return ops
+`,
+
+  'rank-transform-array': `
+def arrayRankTransform(arr):
+    sorted_unique = sorted(set(arr))
+    rank = {v: i + 1 for i, v in enumerate(sorted_unique)}
+    return [rank[x] for x in arr]
+`,
+
+  'final-value-operations': `
+def finalValueAfterOperations(operations):
+    return sum(1 if '++' in op else -1 for op in operations)
+`,
+
+  'two-city-scheduling': `
+def twoCitySchedCost(costs):
+    costs = sorted(list(costs), key=lambda c: c[0] - c[1])
+    n = len(costs) // 2
+    return sum(costs[i][0] if i < n else costs[i][1] for i in range(len(costs)))
+`,
+
+  'check-if-straight-line': `
+def checkStraightLine(coordinates):
+    coordinates = [list(p) for p in coordinates]
+    x1, y1 = coordinates[0]
+    x2, y2 = coordinates[1]
+    return all((y2 - y1) * (p[0] - x1) == (p[1] - y1) * (x2 - x1) for p in coordinates)
+`,
+
+  'binary-gap': `
+def binaryGap(n):
+    last, best, pos = -1, 0, 0
+    while n:
+        if n & 1:
+            if last >= 0:
+                best = max(best, pos - last)
+            last = pos
+        n >>= 1
+        pos += 1
+    return best
+`,
+
+  'design-hashmap': `
+def designHashMapRunner(ops, vals):
+    ops = list(ops)
+    vals = [list(v) for v in vals]
+    data = {}
+    results = [None]
+    for i in range(1, len(ops)):
+        if ops[i] == 'put':
+            data[vals[i][0]] = vals[i][1]
+            results.append(None)
+        elif ops[i] == 'get':
+            results.append(data.get(vals[i][0], -1))
+        else:
+            data.pop(vals[i][0], None)
+            results.append(None)
+    return results
+`,
+
+  'contiguous-array': `
+def findMaxLength(nums):
+    nums = list(nums)
+    mp = {0: -1}
+    total = ans = 0
+    for i, n in enumerate(nums):
+        total += -1 if n == 0 else 1
+        if total in mp:
+            ans = max(ans, i - mp[total])
+        else:
+            mp[total] = i
+    return ans
+`,
+
+  'shifting-letters': `
+def shiftingLetters(s, shifts):
+    shifts = list(shifts)
+    n = len(shifts)
+    for i in range(n - 2, -1, -1):
+        shifts[i] = (shifts[i] + shifts[i + 1]) % 26
+    return ''.join(chr((ord(c) - ord('a') + shifts[i]) % 26 + ord('a')) for i, c in enumerate(s))
+`,
+
+  'convert-bst-to-greater-tree': `
+def convertBST(root):
+    total = [0]
+    def dfs(node):
+        if not node:
+            return
+        dfs(node.right)
+        total[0] += node.val
+        node.val = total[0]
+        dfs(node.left)
+    dfs(root)
+    return root
+`,
+
+  'distribute-coins-binary-tree': `
+def distributeCoins(root):
+    moves = [0]
+    def dfs(node):
+        if not node:
+            return 0
+        l, r = dfs(node.left), dfs(node.right)
+        moves[0] += abs(l) + abs(r)
+        return node.val + l + r - 1
+    dfs(root)
+    return moves[0]
+`,
+
+  'flip-columns-for-maximum-equal-rows': `
+def maxEqualRowsAfterFlips(matrix):
+    matrix = [list(row) for row in matrix]
+    from collections import Counter
+    def normalize(row):
+        if row[0] == 1:
+            return tuple(1 - x for x in row)
+        return tuple(row)
+    return max(Counter(normalize(row) for row in matrix).values())
+`,
+
+  'delete-columns-sorted-iii': `
+def minDeletionSize(strs):
+    strs = list(strs)
+    n = len(strs[0])
+    dp = [1] * n
+    for j in range(1, n):
+        for i in range(j):
+            if all(strs[k][i] <= strs[k][j] for k in range(len(strs))):
+                dp[j] = max(dp[j], dp[i] + 1)
+    return n - max(dp)
+`,
+
+  'minimum-bit-flips': `
+def minBitFlips(start, goal):
+    return bin(start ^ goal).count('1')
+`,
+
+  'smallest-even-multiple': `
+def smallestEvenMultiple(n):
+    return n if n % 2 == 0 else 2 * n
+`,
+
+  'special-array-greater-equal': `
+def specialArray(nums):
+    n = len(nums)
+    for x in range(n + 1):
+        if sum(1 for v in nums if v >= x) == x:
+            return x
+    return -1
+`,
+
+  'count-pairs-two-arrays': `
+def countPairs(nums, target):
+    nums = sorted(nums)
+    l, r, cnt = 0, len(nums) - 1, 0
+    while l < r:
+        if nums[l] + nums[r] < target:
+            cnt += r - l
+            l += 1
+        else:
+            r -= 1
+    return cnt
+`,
+
+  'convert-time-hhmm': `
+def convertTime(current, correct):
+    def to_min(s):
+        return int(s[:2]) * 60 + int(s[3:])
+    d = to_min(correct) - to_min(current)
+    ops = 0
+    for step in [60, 15, 5, 1]:
+        ops += d // step
+        d %= step
+    return ops
+`,
+
+  'find-players-zero-losses': `
+def findWinners(matches):
+    matches = [list(m) for m in matches]
+    from collections import defaultdict
+    losses = defaultdict(int)
+    for w, l in matches:
+        if w not in losses:
+            losses[w] = 0
+        losses[l] += 1
+    no_loss = sorted(p for p, cnt in losses.items() if cnt == 0)
+    one_loss = sorted(p for p, cnt in losses.items() if cnt == 1)
+    return [no_loss, one_loss]
+`,
+
+  'check-distances-fair-nodes': `
+def checkDistances(s, distance):
+    distance = list(distance)
+    first = {}
+    for i, c in enumerate(s):
+        if c not in first:
+            first[c] = i
+        else:
+            if i - first[c] - 1 != distance[ord(c) - ord('a')]:
+                return False
+    return True
+`,
+
+  'minimum-rounds-complete-tasks': `
+def minimumRounds(tasks):
+    tasks = list(tasks)
+    from collections import Counter
+    freq = Counter(tasks)
+    rounds = 0
+    for f in freq.values():
+        if f == 1:
+            return -1
+        rounds += (f + 2) // 3
+    return rounds
+`,
+
+  'largest-combination-bitwise-and': `
+def largestCombination(candidates):
+    candidates = list(candidates)
+    best = 0
+    for bit in range(24):
+        cnt = sum(1 for c in candidates if c & (1 << bit))
+        best = max(best, cnt)
+    return best
+`,
+
+  'sort-the-people': `
+def sortPeople(names, heights):
+    names = list(names)
+    heights = list(heights)
+    paired = sorted(zip(heights, names), reverse=True)
+    return [name for _, name in paired]
+`,
+
+  'baseball-game': `
+def calPoints(ops):
+    ops = list(ops)
+    stack = []
+    for o in ops:
+        if o == '+':
+            stack.append(stack[-1] + stack[-2])
+        elif o == 'D':
+            stack.append(stack[-1] * 2)
+        elif o == 'C':
+            stack.pop()
+        else:
+            stack.append(int(o))
+    return sum(stack)
+`,
+
+  'find-champion-graph': `
+def findChampion(grid):
+    grid = [list(row) for row in grid]
+    n = len(grid)
+    for i in range(n):
+        if sum(grid[i]) == n - 1:
+            return i
+    return -1
+`,
+
+  'count-digits': `
+def countDigits(num):
+    n, c = num, 0
+    while n > 0:
+        d = n % 10
+        if d != 0 and num % d == 0:
+            c += 1
+        n //= 10
+    return c
+`,
+
+  'apply-operations': `
+def applyOperations(nums):
+    nums = list(nums)
+    n = len(nums)
+    for i in range(n - 1):
+        if nums[i] != 0 and nums[i] == nums[i + 1]:
+            nums[i] *= 2
+            nums[i + 1] = 0
+    return [x for x in nums if x != 0] + [x for x in nums if x == 0]
+`,
+
+  'minimum-moves-to-seat': `
+def minMovesToSeat(seats, students):
+    seats = sorted(seats)
+    students = sorted(students)
+    return sum(abs(s - t) for s, t in zip(seats, students))
+`,
+
+  'rings-and-rods': `
+def countPoints(rings):
+    rods = {}
+    for i in range(0, len(rings), 2):
+        c, r = rings[i], rings[i+1]
+        if r not in rods:
+            rods[r] = set()
+        rods[r].add(c)
+    return sum(1 for s in rods.values() if len(s) == 3)
+`,
+
+  'find-gcd-of-array': `
+def findGCD(nums):
+    nums = list(nums)
+    from math import gcd
+    return gcd(min(nums), max(nums))
+`,
+
+  'keep-multiplying-found-values': `
+def findFinalValue(nums, original):
+    s = set(nums)
+    while original in s:
+        original *= 2
+    return original
+`,
+
+  'percentages-of-letter': `
+def percentageLetter(s, letter):
+    return int(s.count(letter) / len(s) * 100)
+`,
+
+  'maximum-bags-full-capacity': `
+def maximumBags(capacity, rocks, additionalRocks):
+    capacity = list(capacity)
+    rocks = list(rocks)
+    rem = sorted(c - r for c, r in zip(capacity, rocks))
+    bags = 0
+    for r in rem:
+        if r <= additionalRocks:
+            additionalRocks -= r
+            bags += 1
+        else:
+            break
+    return bags
+`,
+
+  'find-subsequence-of-length-k': `
+def maxSubsequence(nums, k):
+    nums = list(nums)
+    idx = sorted(range(len(nums)), key=lambda i: -nums[i])[:k]
+    idx.sort()
+    return [nums[i] for i in idx]
+`,
+
+  'odd-string-difference': `
+def oddString(words):
+    words = list(words)
+    def diff(w):
+        return tuple(ord(w[i+1]) - ord(w[i]) for i in range(len(w)-1))
+    from collections import defaultdict
+    m = defaultdict(list)
+    for w in words:
+        m[diff(w)].append(w)
+    for v in m.values():
+        if len(v) == 1:
+            return v[0]
+`,
+
+  'best-time-buy-sell-transaction-fee': `
+def maxProfit(prices, fee):
+    prices = list(prices)
+    cash, hold = 0, -prices[0]
+    for p in prices[1:]:
+        cash = max(cash, hold + p - fee)
+        hold = max(hold, cash - p)
+    return cash
+`,
+
+  'maximal-rectangle': `
+def maximalRectangle(matrix):
+    matrix = [list(row) for row in matrix]
+    if not matrix or not matrix[0]:
+        return 0
+    cols = len(matrix[0])
+    heights = [0] * cols
+    max_area = 0
+    def largest_rect(h):
+        stack, area = [], 0
+        for i in range(len(h) + 1):
+            cur = 0 if i == len(h) else h[i]
+            while stack and h[stack[-1]] > cur:
+                height = h[stack.pop()]
+                width = i if not stack else i - stack[-1] - 1
+                area = max(area, height * width)
+            stack.append(i)
+        return area
+    for row in matrix:
+        for c in range(cols):
+            heights[c] = heights[c] + 1 if row[c] == '1' else 0
+        max_area = max(max_area, largest_rect(heights))
+    return max_area
+`,
+
+  'stone-game-iii': `
+def stoneGameIII(stoneValue):
+    stoneValue = list(stoneValue)
+    n = len(stoneValue)
+    dp = [float('-inf')] * (n + 1)
+    dp[n] = 0
+    for i in range(n - 1, -1, -1):
+        s = 0
+        for k in range(1, 4):
+            if i + k > n:
+                break
+            s += stoneValue[i + k - 1]
+            dp[i] = max(dp[i], s - dp[i + k])
+    if dp[0] > 0:
+        return 'Alice'
+    elif dp[0] < 0:
+        return 'Bob'
+    return 'Tie'
+`,
+
+  'maximum-profit-job-scheduling': `
+def jobScheduling(startTime, endTime, profit):
+    import bisect
+    startTime = list(startTime)
+    endTime = list(endTime)
+    profit = list(profit)
+    jobs = sorted(zip(endTime, startTime, profit))
+    ends = [j[0] for j in jobs]
+    dp = [0] * (len(jobs) + 1)
+    for i, (end, start, p) in enumerate(jobs):
+        j = bisect.bisect_right(ends, start)
+        dp[i + 1] = max(dp[i], p + dp[j])
+    return dp[len(jobs)]
+`,
+
+  'count-of-smaller-numbers-after-self': `
+def countSmaller(nums):
+    nums = list(nums)
+    counts = [0] * len(nums)
+    sorted_arr = []
+    import bisect
+    for i in range(len(nums) - 1, -1, -1):
+        pos = bisect.bisect_left(sorted_arr, nums[i])
+        counts[i] = pos
+        sorted_arr.insert(pos, nums[i])
+    return counts
+`,
+
+  'k-th-symbol-in-grammar': `
+def kthGrammar(n, k):
+    flips = 0
+    while k > 1:
+        if k % 2 == 0:
+            flips += 1
+        k = (k + 1) // 2
+    return flips % 2
+`,
+
+  'longest-substring-without-repeating': `
+def lengthOfLongestSubstring(s):
+    last_seen = {}
+    left = best = 0
+    for right, c in enumerate(s):
+        if c in last_seen and last_seen[c] >= left:
+            left = last_seen[c] + 1
+        last_seen[c] = right
+        best = max(best, right - left + 1)
+    return best
+`,
+
+  'decompress-run-length-encoding': `
+def decompressRLElist(nums):
+    nums = list(nums)
+    res = []
+    for i in range(0, len(nums), 2):
+        res.extend([nums[i+1]] * nums[i])
+    return res
+`,
+
+  'check-almost-equivalent-strings': `
+def checkAlmostEquivalent(word1, word2):
+    from collections import Counter
+    c1, c2 = Counter(word1), Counter(word2)
+    return all(abs(c1.get(c, 0) - c2.get(c, 0)) <= 3 for c in 'abcdefghijklmnopqrstuvwxyz')
+`,
+
+  'minimum-value-positive-steps': `
+def minStartValue(nums):
+    nums = list(nums)
+    s, mn = 0, float('inf')
+    for n in nums:
+        s += n
+        mn = min(mn, s)
+    return max(1, 1 - mn)
+`,
+
+  'check-if-all-as-before-bs': `
+def checkString(s):
+    seen_b = False
+    for c in s:
+        if c == 'b':
+            seen_b = True
+        elif seen_b:
+            return False
+    return True
+`,
+
+  'check-if-word-equals-summation': `
+def isSumEqual(firstWord, secondWord, targetWord):
+    def to_num(w):
+        return int(''.join(str(ord(c) - ord('a')) for c in w))
+    return to_num(firstWord) + to_num(secondWord) == to_num(targetWord)
+`,
+
+  'ways-to-buy-pens-pencils': `
+def waysToBuyPensPencils(total, cost1, cost2):
+    ans = 0
+    x = 0
+    while x * cost1 <= total:
+        ans += (total - x * cost1) // cost2 + 1
+        x += 1
+    return ans
+`,
+
+  'check-array-sorted-rotated': `
+def check(nums):
+    nums = list(nums)
+    n = len(nums)
+    drops = sum(1 for i in range(n) if nums[i] > nums[(i+1) % n])
+    return drops <= 1
+`,
+
+  'interpret-string': `
+def interpret(command):
+    return command.replace('(al)', 'al').replace('()', 'o')
+`,
+
+  'merge-similar-items': `
+def mergeSimilarItems(items1, items2):
+    items1 = [list(x) for x in items1]
+    items2 = [list(x) for x in items2]
+    from collections import defaultdict
+    m = defaultdict(int)
+    for v, w in items1 + items2:
+        m[v] += w
+    return sorted([v, w] for v, w in m.items())
+`,
+
+  'count-good-rectangles': `
+def countGoodRectangles(rectangles):
+    rectangles = [list(r) for r in rectangles]
+    sides = [min(l, w) for l, w in rectangles]
+    mx = max(sides)
+    return sum(1 for s in sides if s == mx)
+`,
+
+  'maximum-population-year': `
+def maximumPopulation(logs):
+    logs = [list(l) for l in logs]
+    diff = [0] * 101
+    for b, d in logs:
+        diff[b - 1950] += 1
+        diff[d - 1950] -= 1
+    mx, yr, cur = 0, 1950, 0
+    for i in range(101):
+        cur += diff[i]
+        if cur > mx:
+            mx, yr = cur, i + 1950
+    return yr
+`,
+
+  'find-kth-bit-nth-binary-string': `
+def findKthBit(n, k):
+    def f(n, k):
+        if n == 1:
+            return '0'
+        mid = 1 << (n - 1)
+        if k == mid:
+            return '1'
+        if k < mid:
+            return f(n - 1, k)
+        bit = f(n - 1, (1 << n) - k)
+        return '1' if bit == '0' else '0'
+    return f(n, k)
+`,
+
+  'count-operations-to-obtain-zero': `
+def countOperations(num1, num2):
+    count = 0
+    while num1 > 0 and num2 > 0:
+        if num1 >= num2:
+            num1 -= num2
+        else:
+            num2 -= num1
+        count += 1
+    return count
+`,
+
+  'design-underground-system': `
+def undergroundSystem(operations):
+    check_ins = {}
+    routes = {}
+    results = []
+    for op in operations:
+        if op[0] == 'checkIn':
+            check_ins[op[1]] = (op[2], op[3])
+        elif op[0] == 'checkOut':
+            start_station, start_time = check_ins.pop(op[1])
+            key = (start_station, op[2])
+            total, count = routes.get(key, (0, 0))
+            routes[key] = (total + op[3] - start_time, count + 1)
+        else:
+            key = (op[1], op[2])
+            total, count = routes[key]
+            results.append(total / count)
+    return results
+`,
+
+  'sort-vowels-in-a-string': `
+def sortVowels(s):
+    vowels = set('aeiouAEIOU')
+    extracted = sorted(c for c in s if c in vowels)
+    idx = 0
+    result = []
+    for c in s:
+        if c in vowels:
+            result.append(extracted[idx])
+            idx += 1
+        else:
+            result.append(c)
+    return ''.join(result)
+`,
+
+  'minimum-time-to-repair-cars': `
+def repairCars(ranks, cars):
+    import math
+    lo, hi = 1, min(ranks) * cars * cars
+    while lo < hi:
+        mid = (lo + hi) // 2
+        total = sum(int(math.sqrt(mid / r)) for r in ranks)
+        if total >= cars:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'number-of-matching-subsequences': `
+def numMatchingSubseq(s, words):
+    def is_subseq(w):
+        i = 0
+        for c in s:
+            if i < len(w) and c == w[i]:
+                i += 1
+        return i == len(w)
+    return sum(1 for w in words if is_subseq(w))
+`,
+
+  'lfu-cache': `
+def lfuCache(capacity, operations):
+    from collections import OrderedDict
+    key_map = {}
+    freq_map = {}
+    min_freq = 0
+    results = []
+
+    def increment_freq(key):
+        nonlocal min_freq
+        value, freq = key_map[key]
+        key_map[key] = [value, freq + 1]
+        freq_map[freq].pop(key)
+        if not freq_map[freq]:
+            del freq_map[freq]
+            if min_freq == freq:
+                min_freq = freq + 1
+        freq_map.setdefault(freq + 1, OrderedDict())[key] = True
+
+    for op in operations:
+        if op[0] == 'get':
+            key = op[1]
+            if key not in key_map:
+                results.append(-1)
+                continue
+            increment_freq(key)
+            results.append(key_map[key][0])
+        else:
+            key, value = op[1], op[2]
+            if capacity <= 0:
+                continue
+            if key in key_map:
+                key_map[key][0] = value
+                increment_freq(key)
+            else:
+                if len(key_map) >= capacity:
+                    evict_key, _ = freq_map[min_freq].popitem(last=False)
+                    if not freq_map[min_freq]:
+                        del freq_map[min_freq]
+                    del key_map[evict_key]
+                key_map[key] = [value, 1]
+                freq_map.setdefault(1, OrderedDict())[key] = True
+                min_freq = 1
+    return results
+`,
+
+  'smallest-range-covering-k-lists': `
+def smallestRange(nums):
+    import heapq
+    heap = []
+    cur_max = float('-inf')
+    for i, lst in enumerate(nums):
+        heapq.heappush(heap, (lst[0], i, 0))
+        if lst[0] > cur_max:
+            cur_max = lst[0]
+    range_start = heap[0][0]
+    range_end = cur_max
+    while True:
+        min_val, list_idx, elem_idx = heapq.heappop(heap)
+        if cur_max - min_val < range_end - range_start or (cur_max - min_val == range_end - range_start and min_val < range_start):
+            range_start = min_val
+            range_end = cur_max
+        next_idx = elem_idx + 1
+        if next_idx >= len(nums[list_idx]):
+            break
+        next_val = nums[list_idx][next_idx]
+        if next_val > cur_max:
+            cur_max = next_val
+        heapq.heappush(heap, (next_val, list_idx, next_idx))
+    return [range_start, range_end]
+`,
+
+  'bus-routes': `
+def numBusesToDestination(routes, source, target):
+    from collections import defaultdict, deque
+    if source == target:
+        return 0
+    stop_to_buses = defaultdict(list)
+    for i, route in enumerate(routes):
+        for stop in route:
+            stop_to_buses[stop].append(i)
+    visited_buses = set()
+    visited_stops = {source}
+    queue = deque([source])
+    buses = 1
+    while queue:
+        next_stops = []
+        for _ in range(len(queue)):
+            stop = queue.popleft()
+            for bus_idx in stop_to_buses[stop]:
+                if bus_idx in visited_buses:
+                    continue
+                visited_buses.add(bus_idx)
+                for s in routes[bus_idx]:
+                    if s == target:
+                        return buses
+                    if s not in visited_stops:
+                        visited_stops.add(s)
+                        next_stops.append(s)
+        queue = deque(next_stops)
+        buses += 1
+    return -1
+`,
+
+  'beautiful-arrangement-ii': `
+def constructArray(n, k):
+    result = []
+    lo, hi = 1, k + 1
+    while lo <= hi:
+        result.append(lo)
+        lo += 1
+        if lo <= hi:
+            result.append(hi)
+            hi -= 1
+    for i in range(k + 2, n + 1):
+        result.append(i)
+    return result
+`,
+
+  'maximum-score-words-formed': `
+def maxScoreWords(words, letters, score):
+    available = [0] * 26
+    for c in letters:
+        available[ord(c) - ord('a')] += 1
+    best = 0
+    n = len(words)
+    for mask in range(1, 1 << n):
+        used = [0] * 26
+        total = 0
+        valid = True
+        for i in range(n):
+            if not (mask & (1 << i)):
+                continue
+            for c in words[i]:
+                idx = ord(c) - ord('a')
+                used[idx] += 1
+                total += score[idx]
+                if used[idx] > available[idx]:
+                    valid = False
+                    break
+            if not valid:
+                break
+        if valid and total > best:
+            best = total
+    return best
+`,
+
+  'largest-positive-integer-with-negative': `
+def findMaxK(nums):
+    nums = list(nums)
+    s = set(nums)
+    ans = -1
+    for n in nums:
+        if n > 0 and -n in s:
+            ans = max(ans, n)
+    return ans
+`,
+
+  'maximize-sum-k-elements': `
+def largestSumAfterKNegations(nums, k):
+    nums = sorted(nums, key=abs)
+    for i in range(len(nums) - 1, -1, -1):
+        if nums[i] < 0 and k > 0:
+            nums[i] = -nums[i]
+            k -= 1
+    if k % 2 == 1:
+        nums[0] = -nums[0]
+    return sum(nums)
+`,
+
+  'check-if-acronym': `
+def isAcronym(words, s):
+    words = list(words)
+    return ''.join(w[0] for w in words) == s
+`,
+
+  'count-pairs-absolute-diff-k': `
+def countKDifference(nums, k):
+    nums = list(nums)
+    cnt = 0
+    n = len(nums)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if abs(nums[i] - nums[j]) == k:
+                cnt += 1
+    return cnt
+`,
+
+  'number-of-arithmetic-subarrays': `
+def checkArithmeticSubarrays(nums, l, r):
+    nums = list(nums)
+    l = list(l)
+    r = list(r)
+    result = []
+    for li, ri in zip(l, r):
+        sub = sorted(nums[li:ri+1])
+        d = sub[1] - sub[0]
+        result.append(all(sub[j] - sub[j-1] == d for j in range(1, len(sub))))
+    return result
+`,
+
+
+  'check-valid-matrix': `
+def checkValid(matrix):
+    n = len(matrix)
+    def ok(arr):
+        return len(set(arr)) == n and all(1 <= v <= n for v in arr)
+    for row in matrix:
+        if not ok(row): return False
+    for j in range(n):
+        if not ok([matrix[i][j] for i in range(n)]): return False
+    return True
+`,
+
+  'count-max-frequency-elements': `
+def maxFrequencyElements(nums):
+    from collections import Counter
+    freq = Counter(nums)
+    max_f = max(freq.values())
+    return sum(f for f in freq.values() if f == max_f)
+`,
+
+  'minimum-difference-after-k-removals': `
+def minimumDifference(nums, k):
+    nums = sorted(nums)
+    return min(nums[i+k-1] - nums[i] for i in range(len(nums)-k+1))
+`,
+
+  'number-of-valid-clock-times': `
+def countTime(time):
+    cnt = 0
+    for h in range(24):
+        for m in range(60):
+            s = f"{h:02d}:{m:02d}"
+            if all(c == '?' or c == s[i] for i, c in enumerate(time)):
+                cnt += 1
+    return cnt
+`,
+
+  'calculate-money-in-bank': `
+def totalMoney(n):
+    total = 0
+    week = 0
+    for d in range(n):
+        dow = d % 7
+        if dow == 0:
+            week += 1
+        total += week + dow
+    return total
+`,
+
+  'score-of-string': `
+def scoreOfString(s):
+    return sum(abs(ord(s[i]) - ord(s[i-1])) for i in range(1, len(s)))
+`,
+
+  'chalk-replacer': `
+def chalkReplacer(chalk, k):
+    chalk = list(chalk)
+    total = sum(chalk)
+    k %= total
+    for i, c in enumerate(chalk):
+        if k < c:
+            return i
+        k -= c
+    return 0
+`,
+
+  'split-with-minimum-sum': `
+def splitNum(num):
+    d = sorted(int(c) for c in str(num))
+    n1, n2, p = 0, 0, 1
+    for i in range(len(d) - 1, -1, -2):
+        n1 += d[i] * p
+        if i - 1 >= 0:
+            n2 += d[i-1] * p
+        p *= 10
+    return n1 + n2
+`,
+
+  'max-difference-increasing-elements': `
+def maximumDifference(nums):
+    min_val = nums[0]
+    max_diff = -1
+    for j in range(1, len(nums)):
+        if nums[j] > min_val:
+            max_diff = max(max_diff, nums[j] - min_val)
+        else:
+            min_val = nums[j]
+    return max_diff
+`,
+
+  'longest-nice-subarray': `
+def longestNiceSubarray(nums):
+    l, used, ans = 0, 0, 1
+    for r in range(len(nums)):
+        while used & nums[r]:
+            used ^= nums[l]
+            l += 1
+        used |= nums[r]
+        ans = max(ans, r - l + 1)
+    return ans
+`,
+
+  'interchangeable-rectangles': `
+from math import gcd
+def interchangeableRectangles(rectangles):
+    from collections import Counter
+    counts = Counter()
+    for w, h in rectangles:
+        g = gcd(w, h)
+        counts[(w//g, h//g)] += 1
+    return sum(c*(c-1)//2 for c in counts.values())
+`,
+
+  'find-triangular-sum': `
+def triangularSum(nums):
+    nums = list(nums)
+    while len(nums) > 1:
+        nums = [(nums[i] + nums[i+1]) % 10 for i in range(len(nums)-1)]
+    return nums[0]
+`,
+
+  'two-furthest-houses-different-colors': `
+def maxDistance(colors):
+    n = len(colors)
+    ans = 0
+    for j in range(n-1, 0, -1):
+        if colors[0] != colors[j]:
+            ans = j
+            break
+    for i in range(n-1):
+        if colors[i] != colors[n-1]:
+            ans = max(ans, n-1-i)
+            break
+    return ans
+`,
+
+  'count-lattice-points-circle': `
+def countLatticePoints(circles):
+    points = set()
+    for cx, cy, r in circles:
+        for x in range(cx-r, cx+r+1):
+            for y in range(cy-r, cy+r+1):
+                if (x-cx)**2 + (y-cy)**2 <= r**2:
+                    points.add((x, y))
+    return len(points)
+`,
+
+  'nearest-exit-maze': `
+from collections import deque
+def nearestExit(maze, entrance):
+    maze = [list(row) for row in maze]
+    m, n = len(maze), len(maze[0])
+    er, ec = entrance
+    q = deque([(er, ec, 0)])
+    maze[er][ec] = '+'
+    while q:
+        r, c, steps = q.popleft()
+        for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
+            nr, nc = r+dr, c+dc
+            if nr < 0 or nr >= m or nc < 0 or nc >= n or maze[nr][nc] == '+':
+                continue
+            if nr == 0 or nr == m-1 or nc == 0 or nc == n-1:
+                return steps+1
+            maze[nr][nc] = '+'
+            q.append((nr, nc, steps+1))
+    return -1
+`,
+
+  'climbing-stairs-k-steps': `def climbStairsK(n: int, k: int) -> int:
+    MOD = 10**9 + 7
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    for i in range(1, n + 1):
+        for j in range(1, min(k, i) + 1):
+            dp[i] = (dp[i] + dp[i - j]) % MOD
+    return dp[n]
+`,
+  'maximum-xor-two-numbers': `def findMaximumXOR(nums: list[int]) -> int:
+    max_xor = 0
+    for i in range(len(nums)):
+        for j in range(i, len(nums)):
+            max_xor = max(max_xor, nums[i] ^ nums[j])
+    return max_xor
+`,
+  'remove-stones-to-minimize-total': `def minStoneSum(piles: list[int], k: int) -> int:
+    import heapq
+    heap = [-p for p in piles]
+    heapq.heapify(heap)
+    for _ in range(k):
+        largest = -heapq.heappop(heap)
+        heapq.heappush(heap, -(largest - largest // 2))
+    return -sum(heap)
+`,
+  'maximize-happiness-of-selected-children': `def maximumHappinessSum(happiness: list[int], k: int) -> int:
+    happiness = sorted(happiness, reverse=True)
+    total = 0
+    for i in range(k):
+        total += max(0, happiness[i] - i)
+    return total
+`,
+  'find-the-maximum-achievable-number': `def theMaximumAchievableX(num: int, t: int) -> int:
+    return num + 2 * t
+`,
+  'partition-array-maximum-difference': `def partitionArray(nums: list[int], k: int) -> int:
+    nums = sorted(nums)
+    groups = 1
+    start = nums[0]
+    for i in range(1, len(nums)):
+        if nums[i] - start > k:
+            groups += 1
+            start = nums[i]
+    return groups
+`,
+  'remove-duplicates-from-sorted-list-ii': `def deleteDuplicatesII(head: list[int]) -> list[int]:
+    from collections import Counter
+    freq = Counter(head)
+    return [v for v in head if freq[v] == 1]
+`,
+  'count-number-of-homogenous-substrings': `def countHomogenous(s: str) -> int:
+    MOD = 10**9 + 7
+    ans = 0
+    cnt = 1
+    for i in range(1, len(s) + 1):
+        if i < len(s) and s[i] == s[i - 1]:
+            cnt += 1
+        else:
+            ans = (ans + cnt * (cnt + 1) // 2) % MOD
+            cnt = 1
+    return ans
+`,
+  'stone-game-vi': `def stoneGameVI(aliceValues: list[int], bobValues: list[int]) -> int:
+    n = len(aliceValues)
+    stones = sorted(range(n), key=lambda i: -(aliceValues[i] + bobValues[i]))
+    alice = sum(aliceValues[stones[i]] for i in range(0, n, 2))
+    bob = sum(bobValues[stones[i]] for i in range(1, n, 2))
+    if alice > bob:
+        return 1
+    elif bob > alice:
+        return -1
+    return 0
+`,
+  'count-special-quadruplets': `def countQuadruplets(nums: list[int]) -> int:
+    n = len(nums)
+    count = 0
+    for a in range(n - 3):
+        for b in range(a + 1, n - 2):
+            for c in range(b + 1, n - 1):
+                for d in range(c + 1, n):
+                    if nums[a] + nums[b] + nums[c] == nums[d]:
+                        count += 1
+    return count
+`,
+  'find-all-duplicates-in-array': `def findDuplicates(nums: list[int]) -> list[int]:
+    nums = list(nums)
+    result = []
+    for i in range(len(nums)):
+        idx = abs(nums[i]) - 1
+        if nums[idx] < 0:
+            result.append(idx + 1)
+        else:
+            nums[idx] = -nums[idx]
+    return sorted(result)
+`,
+  'alternating-digit-sum': `def alternateDigitSum(n: int) -> int:
+    digits = [int(c) for c in str(n)]
+    return sum(d if i % 2 == 0 else -d for i, d in enumerate(digits))
+`,
+  'count-ways-to-build-good-string': `def countGoodStrings(low: int, high: int, zero: int, one: int) -> int:
+    MOD = 10**9 + 7
+    dp = [0] * (high + 1)
+    dp[0] = 1
+    ans = 1 if low == 0 else 0
+    for i in range(1, high + 1):
+        if i >= zero:
+            dp[i] = (dp[i] + dp[i - zero]) % MOD
+        if i >= one:
+            dp[i] = (dp[i] + dp[i - one]) % MOD
+        if i >= low:
+            ans = (ans + dp[i]) % MOD
+    return ans
+`,
+  'divide-players-into-teams-of-equal-skill': `def dividePlayers(skill: list[int]) -> int:
+    skill = sorted(skill)
+    n = len(skill)
+    target = skill[0] + skill[-1]
+    chemistry = 0
+    for i in range(n // 2):
+        if skill[i] + skill[n - 1 - i] != target:
+            return -1
+        chemistry += skill[i] * skill[n - 1 - i]
+    return chemistry
+`,
+  'maximum-number-of-pairs-in-array': `def numberOfPairs(nums: list[int]) -> list[int]:
+    from collections import Counter
+    freq = Counter(nums)
+    pairs = sum(c // 2 for c in freq.values())
+    return [pairs, len(nums) - pairs * 2]
+`,
+  'minimize-maximum-pair-sum-in-array': `def minPairSum(nums: list[int]) -> int:
+    nums = sorted(nums)
+    n = len(nums)
+    return max(nums[i] + nums[n - 1 - i] for i in range(n // 2))
+`,
+  'minimum-operations-to-exceed-threshold-value-ii': `def minOperations(nums: list[int], k: int) -> int:
+    import heapq
+    heap = list(nums)
+    heapq.heapify(heap)
+    ops = 0
+    while heap[0] < k:
+        x = heapq.heappop(heap)
+        y = heapq.heappop(heap)
+        heapq.heappush(heap, x * 2 + y)
+        ops += 1
+    return ops
+`,
+  'number-of-ways-to-split-array': `def waysToSplitArray(nums: list[int]) -> int:
+    total = sum(nums)
+    prefix = 0
+    count = 0
+    for i in range(len(nums) - 1):
+        prefix += nums[i]
+        if prefix >= total - prefix:
+            count += 1
+    return count
+`,
+  'check-if-word-occurs-as-prefix': `def isPrefixOfWord(sentence: str, searchWord: str) -> int:
+    for i, word in enumerate(sentence.split(), 1):
+        if word.startswith(searchWord):
+            return i
+    return -1
+`,
+  'count-subarrays-score-less-than-k': `def countSubarrays(nums: list[int], k: int) -> int:
+    ans = left = 0
+    total = 0
+    for right in range(len(nums)):
+        total += nums[right]
+        while total * (right - left + 1) >= k:
+            total -= nums[left]
+            left += 1
+        ans += right - left + 1
+    return ans
+`,
+  'excel-sheet-column-number': `def titleToNumber(columnTitle: str) -> int:
+    result = 0
+    for ch in columnTitle:
+        result = result * 26 + (ord(ch) - 64)
+    return result
+`,
+  'jump-game-vii': `def canReach(s: str, minJump: int, maxJump: int) -> bool:
+    n = len(s)
+    reach = [False] * n
+    reach[0] = True
+    window_count = 0
+    for i in range(1, n):
+        if i - minJump >= 0 and reach[i - minJump]:
+            window_count += 1
+        if i - maxJump - 1 >= 0 and reach[i - maxJump - 1]:
+            window_count -= 1
+        if s[i] == '0' and window_count > 0:
+            reach[i] = True
+    return reach[n - 1]
+`,
+  'longest-square-streak': `def longestSquareStreak(nums: list[int]) -> int:
+    num_set = set(nums)
+    best = -1
+    for n in num_set:
+        cur, length = n, 1
+        while cur * cur in num_set:
+            cur = cur * cur
+            length += 1
+        if length >= 2:
+            best = max(best, length)
+    return best
+`,
+  'maximum-beauty-array-after-applying-operation': `def maximumBeauty(nums: list[int], k: int) -> int:
+    nums = sorted(nums)
+    best = 1
+    left = 0
+    for right in range(1, len(nums)):
+        while nums[right] - nums[left] > 2 * k:
+            left += 1
+        best = max(best, right - left + 1)
+    return best
+`,
+  'maximum-product-after-k-increments': `def maximumProduct(nums: list[int], k: int) -> int:
+    import heapq
+    MOD = 10**9 + 7
+    heap = list(nums)
+    heapq.heapify(heap)
+    for _ in range(k):
+        x = heapq.heappop(heap)
+        heapq.heappush(heap, x + 1)
+    result = 1
+    for v in heap:
+        result = (result * v) % MOD
+    return result
+`,
+  'pairs-of-songs-total-divisible-60': `def numPairsDivisibleBy60(time: list[int]) -> int:
+    cnt = [0] * 60
+    ans = 0
+    for t in time:
+        r = t % 60
+        ans += cnt[(60 - r) % 60]
+        cnt[r] += 1
+    return ans
+`,
+
+  'find-the-index-of-first-occurrence': `def strStr(haystack: str, needle: str) -> int:
+    return haystack.find(needle)
+`,
+
+  'integer-replacement': `def integerReplacement(n: int) -> int:
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def solve(x):
+        if x == 1:
+            return 0
+        if x % 2 == 0:
+            return 1 + solve(x // 2)
+        return 1 + min(solve(x + 1), solve(x - 1))
+    return solve(n)
+`,
+
+  'number-of-smooth-descent-periods': `def getDescentPeriods(prices: list[int]) -> int:
+    ans = 1
+    run = 1
+    for i in range(1, len(prices)):
+        if prices[i] == prices[i - 1] - 1:
+            run += 1
+        else:
+            run = 1
+        ans += run
+    return ans
+`,
+
+  'maximum-matrix-sum': `def maxMatrixSum(matrix: list[list[int]]) -> int:
+    total = 0
+    neg_count = 0
+    min_abs = float('inf')
+    for row in matrix:
+        for val in row:
+            total += abs(val)
+            if val < 0:
+                neg_count += 1
+            min_abs = min(min_abs, abs(val))
+    if neg_count % 2 == 0:
+        return total
+    return total - 2 * min_abs
+`,
+
+  'count-nodes-with-highest-score': `def countHighestScoreNodes(parents: list[int]) -> int:
+    n = len(parents)
+    children = [[] for _ in range(n)]
+    for i in range(1, n):
+        children[parents[i]].append(i)
+    sub = [1] * n
+    order = []
+    stack = [0]
+    while stack:
+        node = stack.pop()
+        order.append(node)
+        for c in children[node]:
+            stack.append(c)
+    for node in reversed(order):
+        for c in children[node]:
+            sub[node] += sub[c]
+    max_score = 0
+    count = 0
+    for x in range(n):
+        ch = children[x]
+        L = sub[ch[0]] if len(ch) > 0 else 0
+        R = sub[ch[1]] if len(ch) > 1 else 0
+        U = n - sub[x]
+        score = (L or 1) * (R or 1) * (U or 1)
+        if score > max_score:
+            max_score = score
+            count = 1
+        elif score == max_score:
+            count += 1
+    return count
+`,
+
+  'find-right-interval': `def findRightInterval(intervals: list[list[int]]) -> list[int]:
+    import bisect
+    starts = sorted((iv[0], i) for i, iv in enumerate(intervals))
+    starts_vals = [s[0] for s in starts]
+    result = []
+    for iv in intervals:
+        end = iv[1]
+        idx = bisect.bisect_left(starts_vals, end)
+        result.append(starts[idx][1] if idx < len(starts) else -1)
+    return result
+`,
+
+  'circular-sentence': `def isCircularSentence(sentence: str) -> bool:
+    words = sentence.split()
+    n = len(words)
+    for i in range(n):
+        if words[i][-1] != words[(i + 1) % n][0]:
+            return False
+    return True
+`,
+
+  'minimum-garden-perimeter': `def minimumPerimeter(neededApples: int) -> int:
+    lo, hi = 1, 100000
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if 2 * mid * (mid + 1) * (2 * mid + 1) >= neededApples:
+            hi = mid
+        else:
+            lo = mid + 1
+    return 8 * lo
+`,
+
+  'group-people-given-group-size': `def groupThePeople(groupSizes: list[int]) -> list[list[int]]:
+    from collections import defaultdict
+    buckets = defaultdict(list)
+    result = []
+    for i, size in enumerate(groupSizes):
+        buckets[size].append(i)
+        if len(buckets[size]) == size:
+            result.append(list(buckets[size]))
+            buckets[size] = []
+    return result
+`,
+
+  'count-number-of-bad-pairs': `def countBadPairs(nums: list[int]) -> int:
+    from collections import Counter
+    freq = Counter(v - i for i, v in enumerate(nums))
+    good = sum(c * (c - 1) // 2 for c in freq.values())
+    n = len(nums)
+    return n * (n - 1) // 2 - good
+`,
+
+  'minimum-changes-to-make-binary-string-beautiful': `def minOperations(s: str) -> int:
+    count = sum(1 for i, c in enumerate(s) if c != ('0' if i % 2 == 0 else '1'))
+    return min(count, len(s) - count)
+`,
+
+  'remove-all-occurrences-of-substring': `def removeOccurrences(s: str, part: str) -> str:
+    while part in s:
+        s = s[:s.index(part)] + s[s.index(part) + len(part):]
+    return s
+`,
+
+  'minimum-time-to-complete-trips': `def minimumTime(time: list[int], totalTrips: int) -> int:
+    lo, hi = 1, min(time) * totalTrips
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if sum(mid // t for t in time) >= totalTrips:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'minimum-speed-to-arrive-on-time': `def minSpeedOnTime(dist: list[int], hour: float) -> int:
+    import math
+    n = len(dist)
+    if n - 1 >= hour:
+        return -1
+    def can_arrive(speed):
+        t = sum(math.ceil(d / speed) for d in dist[:-1])
+        t += dist[-1] / speed
+        return t <= hour + 1e-9
+    lo, hi = 1, 10_000_000
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if can_arrive(mid):
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo if can_arrive(lo) else -1
+`,
+
+  'sum-of-beauty-in-the-array': `def sumOfBeauties(nums: list[int]) -> int:
+    n = len(nums)
+    pref_max = [0] * n
+    suf_min = [0] * n
+    pref_max[0] = nums[0]
+    for i in range(1, n):
+        pref_max[i] = max(pref_max[i-1], nums[i])
+    suf_min[n-1] = nums[n-1]
+    for i in range(n-2, -1, -1):
+        suf_min[i] = min(suf_min[i+1], nums[i])
+    ans = 0
+    for i in range(1, n-1):
+        if pref_max[i-1] < nums[i] < suf_min[i+1]:
+            ans += 2
+        elif nums[i-1] < nums[i] < nums[i+1]:
+            ans += 1
+    return ans
+`,
+
+  'find-all-possible-recipes': `def findAllRecipes(recipes: list[str], ingredients: list[list[str]], supplies: list[str]) -> list[str]:
+    from collections import defaultdict, deque
+    in_degree = {}
+    dependents = defaultdict(list)
+    recipe_set = set(recipes)
+    for r, ings in zip(recipes, ingredients):
+        in_degree[r] = len(ings)
+        for ing in ings:
+            dependents[ing].append(r)
+    queue = deque(supplies)
+    result = []
+    while queue:
+        item = queue.popleft()
+        for dep in dependents[item]:
+            in_degree[dep] -= 1
+            if in_degree[dep] == 0:
+                queue.append(dep)
+                if dep in recipe_set:
+                    result.append(dep)
+    return result
+`,
+
+  'take-k-of-each-character-from-left-and-right': `def takeCharacters(s: str, k: int) -> int:
+    total = [s.count(c) for c in 'abc']
+    if any(t < k for t in total):
+        return -1
+    if k == 0:
+        return 0
+    win = [0, 0, 0]
+    best = 0
+    left = 0
+    for right in range(len(s)):
+        win[ord(s[right]) - ord('a')] += 1
+        while any(total[i] - win[i] < k for i in range(3)):
+            win[ord(s[left]) - ord('a')] -= 1
+            left += 1
+        best = max(best, right - left + 1)
+    return len(s) - best
+`,
+
+  'minimum-operations-to-make-array-xor-equal-k': `def minOperations(nums: list[int], k: int) -> int:
+    xor_all = 0
+    for v in nums:
+        xor_all ^= v
+    return bin(xor_all ^ k).count('1')
+`,
+
+  'maximum-odd-binary-number': `def maximumOddBinaryNumber(s: str) -> str:
+    ones = s.count('1')
+    zeros = len(s) - ones
+    return '1' * (ones - 1) + '0' * zeros + '1'
+`,
+
+  'minimum-equal-sum-two-arrays': `def minSum(nums1: list[int], nums2: list[int]) -> int:
+    s1 = sum(nums1)
+    s2 = sum(nums2)
+    z1 = nums1.count(0)
+    z2 = nums2.count(0)
+    min1 = s1 + z1
+    min2 = s2 + z2
+    if z1 == 0 and min1 < min2:
+        return -1
+    if z2 == 0 and min2 < min1:
+        return -1
+    return max(min1, min2)
+`,
+
+  'find-score-of-array-after-marking': `def findScore(nums: list[int]) -> int:
+    n = len(nums)
+    indexed = sorted(range(n), key=lambda i: (nums[i], i))
+    marked = [False] * n
+    score = 0
+    for i in indexed:
+        if not marked[i]:
+            score += nums[i]
+            marked[i] = True
+            if i > 0:
+                marked[i - 1] = True
+            if i < n - 1:
+                marked[i + 1] = True
+    return score
+`,
+
+  'count-complete-day-pairs': `def countCompleteDayPairs(hours: list[int]) -> int:
+    freq = [0] * 24
+    count = 0
+    for h in hours:
+        r = h % 24
+        count += freq[(24 - r) % 24]
+        freq[r] += 1
+    return count
+`,
+
+  'check-if-matrix-is-x-matrix': `def checkXMatrix(grid: list[list[int]]) -> bool:
+    n = len(grid)
+    for i in range(n):
+        for j in range(n):
+            on_diag = (i == j) or (i + j == n - 1)
+            if on_diag and grid[i][j] == 0:
+                return False
+            if not on_diag and grid[i][j] != 0:
+                return False
+    return True
+`,
+
+  'determine-color-of-chessboard-square': `def squareIsWhite(coordinates: str) -> bool:
+    col = ord(coordinates[0]) - ord('a') + 1
+    row = int(coordinates[1])
+    return (col + row) % 2 != 0
+`,
+
+  'faulty-keyboard': `def finalString(s: str) -> str:
+    result = []
+    for c in s:
+        if c == 'i':
+            result.reverse()
+        else:
+            result.append(c)
+    return ''.join(result)
+`,
+
+  'sum-multiples': `def sumOfMultiples(n: int) -> int:
+    return sum(i for i in range(1, n + 1) if i % 3 == 0 or i % 5 == 0 or i % 7 == 0)
+`,
+
+  'count-beautiful-pairs': `def countBeautifulPairs(nums: list[int]) -> int:
+    from math import gcd
+    count = 0
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            first = int(str(nums[i])[0])
+            last = nums[j] % 10
+            if gcd(first, last) == 1:
+                count += 1
+    return count
+`,
+
+  'minimum-time-to-collect-all-apples': `def minTime(n: int, edges: list[list[int]], hasApple: list[bool]) -> int:
+    from collections import defaultdict
+    adj = defaultdict(list)
+    for a, b in edges:
+        adj[a].append(b)
+        adj[b].append(a)
+    def dfs(node, parent):
+        time = 0
+        for child in adj[node]:
+            if child == parent:
+                continue
+            child_time = dfs(child, node)
+            if child_time > 0 or hasApple[child]:
+                time += child_time + 2
+        return time
+    return dfs(0, -1)
+`,
+
+  'find-prefix-common-array-of-two-arrays': `def findThePrefixCommonArray(A: list[int], B: list[int]) -> list[int]:
+    n = len(A)
+    cnt = [0] * (n + 1)
+    result = []
+    common = 0
+    for i in range(n):
+        cnt[A[i]] += 1
+        if cnt[A[i]] == 2:
+            common += 1
+        cnt[B[i]] += 1
+        if cnt[B[i]] == 2:
+            common += 1
+        result.append(common)
+    return result
+`,
+
+  'minimum-time-to-collect-garbage': `def garbageCollection(garbage: list[str], travel: list[int]) -> int:
+    total = sum(len(g) for g in garbage)
+    prefix = [0] * len(garbage)
+    for i in range(1, len(garbage)):
+        prefix[i] = prefix[i-1] + travel[i-1]
+    for t in 'MPG':
+        last = -1
+        for i in range(len(garbage) - 1, -1, -1):
+            if t in garbage[i]:
+                last = i
+                break
+        if last > 0:
+            total += prefix[last]
+    return total
+`,
+
+  'longest-subarray-of-ones-after-deleting': `def longestSubarray(nums: list[int]) -> int:
+    left = zeros = best = 0
+    for right in range(len(nums)):
+        if nums[right] == 0:
+            zeros += 1
+        while zeros > 1:
+            if nums[left] == 0:
+                zeros -= 1
+            left += 1
+        best = max(best, right - left)
+    return best
+`,
+
+  'minimum-vertices-to-reach-all-nodes': `def findSmallestSetOfVertices(n: int, edges: list[list[int]]) -> list[int]:
+    has_incoming = set(to for _, to in edges)
+    return [i for i in range(n) if i not in has_incoming]
+`,
+
+  'count-odd-numbers-in-interval-range': `def countOdds(low: int, high: int) -> int:
+    def count_odds_up_to(n):
+        return (n + 1) // 2
+    return count_odds_up_to(high) - count_odds_up_to(low - 1)
+`,
+
+  'make-sum-divisible-by-p': `def minSubarray(nums: list[int], p: int) -> int:
+    target = sum(nums) % p
+    if target == 0:
+        return 0
+    last_seen = {0: -1}
+    prefix = 0
+    best = len(nums)
+    for i, v in enumerate(nums):
+        prefix = (prefix + v) % p
+        need = (prefix - target + p) % p
+        if need in last_seen:
+            best = min(best, i - last_seen[need])
+        last_seen[prefix] = i
+    return best if best < len(nums) else -1
+`,
+
+  'count-zero-filled-subarrays': `
+def zeroFilledSubarray(nums):
+    ans = 0
+    run = 0
+    for x in nums:
+        if x == 0:
+            run += 1
+            ans += run
+        else:
+            run = 0
+    return ans
+`,
+
+  'check-whether-two-string-arrays-equal': `
+def arrayStringsAreEqual(word1, word2):
+    return ''.join(word1) == ''.join(word2)
+`,
+
+  'minimum-flips-to-make-a-or-b-equal-c': `
+def minFlips(a, b, c):
+    flips = 0
+    while a or b or c:
+        ca, cb, cc = a & 1, b & 1, c & 1
+        if cc == 1:
+            if ca == 0 and cb == 0:
+                flips += 1
+        else:
+            flips += ca + cb
+        a >>= 1
+        b >>= 1
+        c >>= 1
+    return flips
+`,
+
+  'make-array-zero-by-subtracting-equal-amounts': `
+def minimumOperations(nums):
+    return len(set(x for x in nums if x > 0))
+`,
+
+  'find-all-groups-of-farmland': `
+def findFarmland(land):
+    m, n = len(land), len(land[0])
+    result = []
+    for r in range(m):
+        for c in range(n):
+            if land[r][c] == 1:
+                r2, c2 = r, c
+                while r2 + 1 < m and land[r2 + 1][c] == 1:
+                    r2 += 1
+                while c2 + 1 < n and land[r][c2 + 1] == 1:
+                    c2 += 1
+                result.append([r, c, r2, c2])
+                for i in range(r, r2 + 1):
+                    for j in range(c, c2 + 1):
+                        land[i][j] = 0
+    return result
+`,
+
+  'merge-triplets-to-form-target-triplet': `
+def mergeTriplets(triplets, target):
+    t0, t1, t2 = target[0], target[1], target[2]
+    m0, m1, m2 = 0, 0, 0
+    for t in triplets:
+        if t[0] <= t0 and t[1] <= t1 and t[2] <= t2:
+            m0 = max(m0, t[0])
+            m1 = max(m1, t[1])
+            m2 = max(m2, t[2])
+    return m0 == t0 and m1 == t1 and m2 == t2
+`,
+
+  'replace-elements-with-greatest-on-right': `
+def replaceElements(arr):
+    max_right = -1
+    for i in range(len(arr) - 1, -1, -1):
+        arr[i], max_right = max_right, max(max_right, arr[i])
+    return arr
+`,
+
+  'destroy-asteroids': `
+def asteroidsDestroyed(mass, asteroids):
+    for a in sorted(asteroids):
+        if mass < a:
+            return False
+        mass += a
+    return True
+`,
+
+  'largest-number-after-digit-swaps-by-parity': `
+def largestInteger(num):
+    digits = [int(d) for d in str(num)]
+    odds = sorted([d for d in digits if d % 2 == 1], reverse=True)
+    evens = sorted([d for d in digits if d % 2 == 0], reverse=True)
+    oi = ei = 0
+    result = []
+    for d in digits:
+        if d % 2 == 1:
+            result.append(odds[oi])
+            oi += 1
+        else:
+            result.append(evens[ei])
+            ei += 1
+    return int(''.join(map(str, result)))
+`,
+
+  'maximum-count-of-positive-and-negative': `
+def maximumCount(nums):
+    neg = sum(1 for x in nums if x < 0)
+    pos = sum(1 for x in nums if x > 0)
+    return max(neg, pos)
+`,
+
+  'find-the-original-array-of-prefix-xor': `
+def findArray(pref):
+    result = [pref[0]]
+    for i in range(1, len(pref)):
+        result.append(pref[i] ^ pref[i - 1])
+    return result
+`,
+
+  'separate-digits-in-array': `
+def separateDigits(nums):
+    result = []
+    for n in nums:
+        for d in str(int(n)):
+            result.append(int(d))
+    return result
+`,
+
+  'number-of-pairs-of-interchangeable-rectangles': `
+def interchangeableRectangles(rectangles):
+    from math import gcd
+    from collections import Counter
+    ratios = Counter()
+    for rect in rectangles:
+        w, h = int(rect[0]), int(rect[1])
+        g = gcd(w, h)
+        ratios[(w // g, h // g)] += 1
+    return sum(c * (c - 1) // 2 for c in ratios.values())
+`,
+
+  'optimal-partition-of-string': `
+def partitionString(s):
+    count = 0
+    seen = set()
+    for c in s:
+        if c in seen:
+            count += 1
+            seen = {c}
+        else:
+            seen.add(c)
+    return count + 1
+`,
+
+  'unique-length-three-palindromic-subsequences': `
+def countPalindromicSubsequence(s):
+    count = 0
+    for c in set(s):
+        first = s.index(c)
+        last = len(s) - 1 - s[::-1].index(c)
+        if first < last:
+            count += len(set(s[first + 1:last]))
+    return count
+`,
+
+  'bitwise-xor-of-all-pairings': `
+def xorAllNums(nums1, nums2):
+    n1, n2 = list(nums1), list(nums2)
+    result = 0
+    if len(n2) % 2 == 1:
+        for x in n1:
+            result ^= int(x)
+    if len(n1) % 2 == 1:
+        for x in n2:
+            result ^= int(x)
+    return result
+`,
+
+  'number-of-rectangles-can-form-largest-square': `
+def countGoodRectangles(rectangles):
+    best = 0
+    count = 0
+    for rect in rectangles:
+        side = min(int(rect[0]), int(rect[1]))
+        if side > best:
+            best = side
+            count = 1
+        elif side == best:
+            count += 1
+    return count
+`,
+
+  'maximize-number-of-subsequences-in-a-string': `
+def maximumSubsequenceCount(text, pattern):
+    a, b = pattern[0], pattern[1]
+    base = 0
+    cnt_a = 0
+    for c in text:
+        if c == b:
+            base += cnt_a
+        if c == a:
+            cnt_a += 1
+    count_a = sum(1 for c in text if c == a)
+    count_b = sum(1 for c in text if c == b)
+    return base + max(count_a, count_b)
+`,
+
+  'number-of-ways-to-buy-pens-and-pencils': `
+def waysToBuyPensPencils(total, cost1, cost2):
+    ways = 0
+    pens = 0
+    while pens * cost1 <= total:
+        ways += (total - pens * cost1) // cost2 + 1
+        pens += 1
+    return ways
+`,
+
+  'sum-of-digits-of-string-after-convert': `
+def getLucky(s, k):
+    num_str = ''.join(str(ord(c) - 96) for c in s)
+    val = sum(int(d) for d in num_str)
+    for _ in range(k - 1):
+        val = sum(int(d) for d in str(val))
+    return val
+`,
+
+  'smallest-value-of-rearranged-number': `
+def smallestNumber(num):
+    n = int(num)
+    if n == 0:
+        return 0
+    if n > 0:
+        digits = sorted(str(n))
+        for i, d in enumerate(digits):
+            if d != '0':
+                return int(d + ''.join(digits[:i]) + ''.join(digits[i + 1:]))
+    digits = sorted(str(-n), reverse=True)
+    return -int(''.join(digits))
+`,
+
+  'removing-stars-from-string': `
+def removeStars(s):
+    stack = []
+    for c in s:
+        if c == '*':
+            stack.pop()
+        else:
+            stack.append(c)
+    return ''.join(stack)
+`,
+
+  'find-the-peaks': `
+def findPeaks(mountain):
+    m = [int(x) for x in mountain]
+    result = []
+    for i in range(1, len(m) - 1):
+        if m[i] > m[i-1] and m[i] > m[i+1]:
+            result.append(i)
+    return result
+`,
+
+  'minimum-penalty-for-a-shop': `
+def bestClosingTime(customers):
+    penalty = sum(1 for c in customers if c == 'Y')
+    min_penalty = penalty
+    best_hour = 0
+    for i, c in enumerate(customers):
+        if c == 'Y':
+            penalty -= 1
+        else:
+            penalty += 1
+        if penalty < min_penalty:
+            min_penalty = penalty
+            best_hour = i + 1
+    return best_hour
+`,
+
+  'apply-operations-to-an-array': `
+def applyOperations(nums):
+    arr = [int(x) for x in nums]
+    n = len(arr)
+    for i in range(n - 1):
+        if arr[i] == arr[i+1]:
+            arr[i] *= 2
+            arr[i+1] = 0
+    result = [x for x in arr if x != 0]
+    result += [0] * (n - len(result))
+    return result
+`,
+
+  'kth-distinct-string-in-array': `
+def kthDistinct(arr, k):
+    from collections import Counter
+    a = [str(x) for x in arr]
+    count = Counter(a)
+    cnt = 0
+    for s in a:
+        if count[s] == 1:
+            cnt += 1
+            if cnt == k:
+                return s
+    return ''
+`,
+
+  'count-elements-with-strictly-smaller-and-greater': `
+def countElements(nums):
+    m = [int(x) for x in nums]
+    mn, mx = min(m), max(m)
+    return sum(1 for x in m if mn < x < mx)
+`,
+
+  'largest-positive-integer-that-exists-with-negative': `
+def findMaxK(nums):
+    s = set(int(x) for x in nums)
+    result = -1
+    for x in s:
+        if x > 0 and -x in s:
+            result = max(result, x)
+    return result
+`,
+
+  'check-if-number-has-equal-digit-count-and-digit-value': `
+def digitCount(num):
+    for i, c in enumerate(num):
+        if num.count(str(i)) != int(c):
+            return False
+    return True
+`,
+
+  'decode-xor-array': `
+def decode(encoded, first):
+    result = [first]
+    for e in encoded:
+        result.append(result[-1] ^ int(e))
+    return result
+`,
+
+  'maximum-split-of-positive-even-integers': `
+def maximumEvenSplit(finalSum):
+    n = int(finalSum)
+    if n % 2 == 1:
+        return []
+    result = []
+    cur = 2
+    while cur * 2 < n:
+        result.append(cur)
+        n -= cur
+        cur += 2
+    result.append(n)
+    return result
+`,
+
+  'minimum-average-of-smallest-and-largest-elements': `
+def minimumAverage(nums):
+    s = sorted(int(x) for x in nums)
+    n = len(s)
+    result = float('inf')
+    for i in range(n // 2):
+        result = min(result, (s[i] + s[n-1-i]) / 2)
+    return result
+`,
+
+  'count-tested-devices-after-test-runs': `
+def countTestedDevices(batteryPercentages):
+    count = 0
+    for b in batteryPercentages:
+        if int(b) - count > 0:
+            count += 1
+    return count
+`,
+
+  'number-of-subarrays-with-gcd-equal-to-k': `
+def subarrayGCD(nums, k):
+    from math import gcd
+    n_list = [int(x) for x in nums]
+    n = len(n_list)
+    count = 0
+    for i in range(n):
+        g = n_list[i]
+        for j in range(i, n):
+            g = gcd(g, n_list[j])
+            if g == k:
+                count += 1
+            elif g < k:
+                break
+    return count
+`,
+
+  'find-subsequence-of-length-k-with-largest-sum': `
+def maxSubsequence(nums, k):
+    n_list = list(enumerate(int(x) for x in nums))
+    n_list.sort(key=lambda x: -x[1])
+    selected = sorted(n_list[:k], key=lambda x: x[0])
+    return [v for _, v in selected]
+`,
+
+  'minimum-absolute-sum-difference': `
+def minAbsoluteSumDiff(nums1, nums2):
+    import bisect
+    MOD = 10**9 + 7
+    n1 = [int(x) for x in nums1]
+    n2 = [int(x) for x in nums2]
+    n = len(n1)
+    sorted1 = sorted(n1)
+    total = sum(abs(a - b) for a, b in zip(n1, n2))
+    max_gain = 0
+    for a, b in zip(n1, n2):
+        diff = abs(a - b)
+        idx = bisect.bisect_left(sorted1, b)
+        for j in [idx - 1, idx]:
+            if 0 <= j < n:
+                best_diff = abs(sorted1[j] - b)
+                max_gain = max(max_gain, diff - best_diff)
+    return (total - max_gain) % MOD
+`,
+
+  'find-the-k-beauty-of-a-number': `
+def divisorSubstrings(num, k):
+    n = int(num)
+    s = str(n)
+    count = 0
+    for i in range(len(s) - k + 1):
+        sub = int(s[i:i+k])
+        if sub != 0 and n % sub == 0:
+            count += 1
+    return count
+`,
+
+  'first-unique-character-in-string': `
+def firstUniqChar(s):
+    from collections import Counter
+    freq = Counter(s)
+    for i, c in enumerate(s):
+        if freq[c] == 1:
+            return i
+    return -1
+`,
+
+  'long-pressed-name': `
+def isLongPressedName(name, typed):
+    i = 0
+    j = 0
+    while j < len(typed):
+        if i < len(name) and name[i] == typed[j]:
+            i += 1
+            j += 1
+        elif j > 0 and typed[j] == typed[j-1]:
+            j += 1
+        else:
+            return False
+    return i == len(name)
+`,
+
+  'remove-outermost-parentheses': `
+def removeOuterParentheses(s):
+    depth = 0
+    result = []
+    for c in s:
+        if c == '(':
+            if depth > 0:
+                result.append(c)
+            depth += 1
+        else:
+            depth -= 1
+            if depth > 0:
+                result.append(c)
+    return ''.join(result)
+`,
+
+  'maximum-nesting-depth-of-parentheses': `
+def maxDepth(s):
+    depth = 0
+    max_depth = 0
+    for c in s:
+        if c == '(':
+            depth += 1
+            max_depth = max(max_depth, depth)
+        elif c == ')':
+            depth -= 1
+    return max_depth
+`,
+
+  'next-greater-element-i': `
+def nextGreaterElement(nums1, nums2):
+    n1 = [int(x) for x in nums1]
+    n2 = [int(x) for x in nums2]
+    nge = {}
+    stack = []
+    for n in n2:
+        while stack and stack[-1] < n:
+            nge[stack.pop()] = n
+        stack.append(n)
+    return [nge.get(x, -1) for x in n1]
+`,
+
+  'find-and-replace-pattern': `
+def findAndReplacePattern(words, pattern):
+    p = str(pattern)
+    result = []
+    for word in words:
+        w = str(word)
+        w2p = {}
+        p2w = {}
+        match = True
+        for wc, pc in zip(w, p):
+            if w2p.get(wc, pc) != pc or p2w.get(pc, wc) != wc:
+                match = False
+                break
+            w2p[wc] = pc
+            p2w[pc] = wc
+        if match:
+            result.append(w)
+    return result
+`,
+
+  'largest-3-same-digit-number-in-string': `
+def largestGoodInteger(num):
+    best = ''
+    for i in range(len(num) - 2):
+        if num[i] == num[i+1] == num[i+2]:
+            triple = num[i:i+3]
+            if triple > best:
+                best = triple
+    return best
+`,
+
+  'count-number-of-consistent-strings': `
+def countConsistentStrings(allowed, words):
+    allowed_set = set(str(allowed))
+    count = 0
+    for word in words:
+        if all(c in allowed_set for c in str(word)):
+            count += 1
+    return count
+`,
+
+  'make-the-string-great': `
+def makeGood(s):
+    stack = []
+    for c in s:
+        if stack and abs(ord(stack[-1]) - ord(c)) == 32:
+            stack.pop()
+        else:
+            stack.append(c)
+    return ''.join(stack)
+`,
+
+  'find-target-indices-after-sorting-array': `
+def targetIndices(nums, target):
+    t = int(target)
+    arr = sorted(int(x) for x in nums)
+    return [i for i, v in enumerate(arr) if v == t]
+`,
+
+  'number-of-employees-who-met-the-target': `
+def numberOfEmployeesWhoMetTarget(hours, target):
+    t = int(target)
+    return sum(1 for h in hours if int(h) >= t)
+`,
+
+  'intersection-of-two-arrays-ii': `
+def intersect(nums1, nums2):
+    from collections import Counter
+    n1 = Counter(int(x) for x in nums1)
+    result = []
+    for x in nums2:
+        v = int(x)
+        if n1.get(v, 0) > 0:
+            result.append(v)
+            n1[v] -= 1
+    return sorted(result)
+`,
+
+  'largest-subarray-length-k': `
+def largestSubarray(nums, k):
+    k = int(k)
+    n_list = [int(x) for x in nums]
+    best = 0
+    for i in range(1, len(n_list) - k + 1):
+        if n_list[i] > n_list[best]:
+            best = i
+    return n_list[best:best+k]
+`,
+
+  'minimum-time-to-type-word': `
+def minTimeToType(word):
+    time = 0
+    cur = 0
+    for c in str(word):
+        nxt = ord(c) - 97
+        diff = abs(nxt - cur)
+        time += min(diff, 26 - diff) + 1
+        cur = nxt
+    return time
+`,
+
+  'check-if-one-string-swap-can-make-strings-equal': `
+def areAlmostEqual(s1, s2):
+    diffs = [i for i in range(len(s1)) if s1[i] != s2[i]]
+    if len(diffs) == 0:
+        return True
+    if len(diffs) != 2:
+        return False
+    i, j = diffs
+    return s1[i] == s2[j] and s1[j] == s2[i]
+`,
+
+  'number-of-different-integers-in-string': `
+def numDifferentIntegers(word):
+    import re
+    groups = re.findall(r'\\d+', word)
+    return len(set(str(int(g)) for g in groups))
+`,
+
+  'check-if-array-is-good': `
+def isGood(nums):
+    arr = sorted(int(x) for x in nums)
+    n = arr[-1]
+    if len(arr) != n + 1:
+        return False
+    if arr[-2] != n:
+        return False
+    for i in range(n - 1):
+        if arr[i] != i + 1:
+            return False
+    return True
+`,
+
+  'count-the-digits-that-divide-the-number': `
+def countDigits(num):
+    n = int(num)
+    return sum(1 for c in str(n) if int(c) != 0 and n % int(c) == 0)
+`,
+
+  'find-the-difference-of-two-arrays': `
+def findDifference(nums1, nums2):
+    s1 = set(int(x) for x in nums1)
+    s2 = set(int(x) for x in nums2)
+    return [sorted(s1 - s2), sorted(s2 - s1)]
+`,
+
+  'longest-continuous-increasing-subsequence': `
+def findLengthOfLCIS(nums):
+    n_list = [int(x) for x in nums]
+    max_len = 1
+    cur = 1
+    for i in range(1, len(n_list)):
+        if n_list[i] > n_list[i-1]:
+            cur += 1
+            max_len = max(max_len, cur)
+        else:
+            cur = 1
+    return max_len
+`,
+
+  'find-numbers-with-even-number-of-digits': `
+def findNumbers(nums):
+    return sum(1 for x in nums if len(str(int(x))) % 2 == 0)
+`,
+
+  'count-nice-pairs-in-an-array': `
+def countNicePairs(nums):
+    MOD = 10**9 + 7
+    def rev(n):
+        return int(str(int(n))[::-1])
+    from collections import Counter
+    freq = Counter(int(x) - rev(int(x)) for x in nums)
+    ans = 0
+    for cnt in freq.values():
+        ans = (ans + cnt * (cnt - 1) // 2) % MOD
+    return ans
+`,
+
+  'check-if-string-is-prefix-of-array': `
+def isPrefixString(s, words):
+    built = ''
+    for w in words:
+        built += str(w)
+        if built == s:
+            return True
+        if len(built) >= len(s):
+            return False
+    return False
+`,
+
+  'remove-trailing-zeros-from-string': `
+def removeTrailingZeros(num):
+    return str(num).rstrip('0')
+`,
+
+  'rearrange-spaces-between-words': `
+def reorderSpaces(text):
+    total_spaces = text.count(' ')
+    words = text.split()
+    if len(words) == 1:
+        return words[0] + ' ' * total_spaces
+    between = total_spaces // (len(words) - 1)
+    trailing = total_spaces % (len(words) - 1)
+    return (' ' * between).join(words) + ' ' * trailing
+`,
+
+  'split-a-string-in-balanced-strings': `
+def balancedStringSplit(s):
+    count = 0
+    balance = 0
+    for c in s:
+        balance += 1 if c == 'R' else -1
+        if balance == 0:
+            count += 1
+    return count
+`,
+
+  'find-greatest-common-divisor-of-array': `
+def findGCD(nums):
+    from math import gcd
+    nums_list = [int(x) for x in nums]
+    return gcd(min(nums_list), max(nums_list))
+`,
+
+  'remove-all-adjacent-duplicates-in-string': `
+def removeDuplicates(s):
+    stack = []
+    for c in s:
+        if stack and stack[-1] == c:
+            stack.pop()
+        else:
+            stack.append(c)
+    return ''.join(stack)
+`,
+
+  'semi-ordered-permutation': `
+def semiOrderedPermutation(nums):
+    nums_list = [int(x) for x in nums]
+    n = len(nums_list)
+    pos1 = nums_list.index(1)
+    posN = nums_list.index(n)
+    return pos1 + (n - 1 - posN) - (1 if pos1 > posN else 0)
+`,
+
+  'calculate-delayed-arrival-time': `
+def findDelayedArrivalTime(arrivalTime, delayedTime):
+    return (int(arrivalTime) + int(delayedTime)) % 24
+`,
+
+  'check-if-numbers-are-ascending-in-sentence': `
+def areNumbersAscending(s):
+    nums = [int(t) for t in s.split() if t.isdigit()]
+    return all(nums[i] > nums[i-1] for i in range(1, len(nums)))
+`,
+
+  'find-xor-beauty-of-array': `
+def xorBeauty(nums):
+    result = 0
+    for x in nums:
+        result ^= int(x)
+    return result
+`,
+
+  'number-of-words-that-can-be-typed': `
+def canBeTypedWords(text, brokenLetters):
+    broken = set(brokenLetters)
+    count = 0
+    for word in text.split():
+        if not any(c in broken for c in word):
+            count += 1
+    return count
+`,
+
+  'number-of-common-factors': `
+def commonFactors(a, b):
+    a, b = int(a), int(b)
+    return sum(1 for i in range(1, min(a, b) + 1) if a % i == 0 and b % i == 0)
+`,
+
+  'sum-of-all-odd-length-subarrays': `
+def sumOddLengthSubarrays(arr):
+    arr_list = [int(x) for x in arr]
+    total = 0
+    n = len(arr_list)
+    for start in range(n):
+        for length in range(1, n - start + 1, 2):
+            total += sum(arr_list[start:start + length])
+    return total
+`,
+
+  'count-of-integers-with-odd-digit-sum': `
+def countOdd(num):
+    count = 0
+    for i in range(1, int(num) + 1):
+        if sum(int(d) for d in str(i)) % 2 == 1:
+            count += 1
+    return count
+`,
+
+  'replace-all-digits-with-characters': `
+def replaceDigits(s):
+    res = []
+    for i, c in enumerate(s):
+        if i % 2 == 0:
+            res.append(c)
+        else:
+            res.append(chr(ord(res[-1]) + int(c)))
+    return ''.join(res)
+`,
+
+  'minimum-moves-to-convert-string': `
+def minimumMoves(s):
+    count = 0
+    i = 0
+    while i < len(s):
+        if s[i] == 'X':
+            count += 1
+            i += 3
+        else:
+            i += 1
+    return count
+`,
+
+  'minimum-recolors-to-get-k-consecutive-black-blocks': `
+def minimumRecolors(blocks, k):
+    k = int(k)
+    whites = sum(1 for c in blocks[:k] if c == 'W')
+    min_w = whites
+    for i in range(k, len(blocks)):
+        if blocks[i] == 'W':
+            whites += 1
+        if blocks[i - k] == 'W':
+            whites -= 1
+        min_w = min(min_w, whites)
+    return min_w
+`,
+
+  'convert-the-temperature': `
+def convertTemperature(celsius):
+    celsius = float(celsius)
+    return [celsius + 273.15, celsius * 1.80 + 32.00]
+`,
+
+  'sorting-the-sentence': `
+def sortSentence(s):
+    words = s.split()
+    words.sort(key=lambda w: int(w[-1]))
+    return ' '.join(w[:-1] for w in words)
+`,
+
+  'find-the-maximum-divisibility-score': `
+def maxDivScore(nums, divisors):
+    nums_list = [int(x) for x in nums]
+    div_list = [int(x) for x in divisors]
+    best_score = -1
+    best_div = float('inf')
+    for d in div_list:
+        score = sum(1 for n in nums_list if n % d == 0)
+        if score > best_score or (score == best_score and d < best_div):
+            best_score = score
+            best_div = d
+    return best_div
+`,
+
+  'minimum-amount-of-time-to-fill-cups': `
+def fillCups(amount):
+    amount_list = [int(x) for x in amount]
+    total = sum(amount_list)
+    return max(max(amount_list), (total + 1) // 2)
+`,
+
+  'append-characters-to-string-to-make-subsequence': `
+def appendCharacters(s, t):
+    j = 0
+    for i in range(len(s)):
+        if j < len(t) and s[i] == t[j]:
+            j += 1
+    return len(t) - j
+`,
+
+  'count-total-number-of-colored-cells': `
+def coloredCells(n):
+    n = int(n)
+    return 2 * n * n - 2 * n + 1
+`,
+
+  'difference-between-element-sum-and-digit-sum-of-array': `
+def differenceOfSum(nums):
+    nums_list = [int(x) for x in nums]
+    element_sum = sum(nums_list)
+    digit_sum = sum(int(d) for n in nums_list for d in str(n))
+    return abs(element_sum - digit_sum)
+`,
+
+  'minimum-length-of-string-after-deleting-similar-ends': `
+def minimumLength(s):
+    left, right = 0, len(s) - 1
+    while left < right and s[left] == s[right]:
+        c = s[left]
+        while left <= right and s[left] == c:
+            left += 1
+        while left <= right and s[right] == c:
+            right -= 1
+    return right - left + 1
+`,
+
+  'maximum-number-of-vowels-in-substring-of-given-length': `
+def maxVowels(s, k):
+    k = int(k)
+    vowels = set('aeiou')
+    count = sum(1 for c in s[:k] if c in vowels)
+    max_count = count
+    for i in range(k, len(s)):
+        if s[i] in vowels:
+            count += 1
+        if s[i - k] in vowels:
+            count -= 1
+        max_count = max(max_count, count)
+    return max_count
+`,
+
+  'categorize-box-according-to-criteria': `
+def categorizeBox(length, width, height, mass):
+    l, w, h, m = int(length), int(width), int(height), int(mass)
+    bulk = l >= 10000 or w >= 10000 or h >= 10000 or l * w * h >= 10**9
+    heavy = m >= 100
+    if bulk and heavy:
+        return 'Both'
+    if bulk:
+        return 'Bulk'
+    if heavy:
+        return 'Heavy'
+    return 'Neither'
+`,
+
+  'find-the-middle-index-in-array': `
+def findMiddleIndex(nums):
+    nums_list = [int(x) for x in nums]
+    total = sum(nums_list)
+    left_sum = 0
+    for i, n in enumerate(nums_list):
+        if left_sum == total - left_sum - n:
+            return i
+        left_sum += n
+    return -1
+`,
+
+  'maximum-absolute-sum-of-any-subarray': `
+def maxAbsoluteSum(nums):
+    nums_list = [int(x) for x in nums]
+    max_sum = min_sum = cur_max = cur_min = 0
+    for n in nums_list:
+        cur_max = max(cur_max + n, n)
+        max_sum = max(max_sum, cur_max)
+        cur_min = min(cur_min + n, n)
+        min_sum = min(min_sum, cur_min)
+    return max(max_sum, abs(min_sum))
+`,
+
+  'count-substrings-with-only-one-distinct-letter': `
+def countLetters(s):
+    count = 0
+    run = 1
+    for i in range(1, len(s) + 1):
+        if i < len(s) and s[i] == s[i - 1]:
+            run += 1
+        else:
+            count += run * (run + 1) // 2
+            run = 1
+    return count
+`,
+
+  'sum-of-number-and-its-reverse': `
+def sumOfNumberAndReverse(num):
+    num = int(num)
+    for k in range(num + 1):
+        rev = int(str(k)[::-1])
+        if k + rev == num:
+            return True
+    return False
+`,
+
+  'sum-of-absolute-differences-in-sorted-array': `
+def getSumAbsoluteDifferences(nums):
+    nums_list = [int(x) for x in nums]
+    n = len(nums_list)
+    prefix = [0] * n
+    prefix[0] = nums_list[0]
+    for i in range(1, n):
+        prefix[i] = prefix[i - 1] + nums_list[i]
+    result = []
+    for i in range(n):
+        left_sum = prefix[i - 1] if i > 0 else 0
+        right_sum = prefix[n - 1] - prefix[i]
+        result.append(nums_list[i] * i - left_sum + right_sum - nums_list[i] * (n - 1 - i))
+    return result
+`,
+
+  'number-of-subarrays-with-odd-sum': `
+def numOfSubarrays(arr):
+    MOD = 10**9 + 7
+    arr_list = [int(x) for x in arr]
+    even_count, odd_count, pref_sum, res = 1, 0, 0, 0
+    for n in arr_list:
+        pref_sum += n
+        if pref_sum % 2 == 0:
+            res = (res + odd_count) % MOD
+        else:
+            res = (res + even_count) % MOD
+        if pref_sum % 2 == 0:
+            even_count += 1
+        else:
+            odd_count += 1
+    return res
+`,
+
+  'number-of-people-aware-of-secret': `
+def peopleAwareOfSecret(n, delay, forget):
+    n, delay, forget = int(n), int(delay), int(forget)
+    MOD = 10**9 + 7
+    dp = [0] * (n + 1)
+    dp[1] = 1
+    for i in range(1, n + 1):
+        for j in range(i + delay, min(n, i + forget - 1) + 1):
+            dp[j] = (dp[j] + dp[i]) % MOD
+    ans = 0
+    for i in range(max(1, n - forget + 1), n + 1):
+        ans = (ans + dp[i]) % MOD
+    return ans
+`,
+
+  'valid-word-abbreviation': `
+def validWordAbbreviation(word, abbr):
+    i, j = 0, 0
+    while i < len(word) and j < len(abbr):
+        if abbr[j].isalpha():
+            if word[i] != abbr[j]:
+                return False
+            i += 1
+            j += 1
+        else:
+            if abbr[j] == '0':
+                return False
+            num = 0
+            while j < len(abbr) and abbr[j].isdigit():
+                num = num * 10 + int(abbr[j])
+                j += 1
+            i += num
+    return i == len(word) and j == len(abbr)
+`,
+
+  'number-of-valid-words-in-sentence': `
+def countValidWords(sentence):
+    count = 0
+    for tok in sentence.split(' '):
+        if not tok:
+            continue
+        if any(c.isdigit() for c in tok):
+            continue
+        hyphens = tok.count('-')
+        if hyphens > 1:
+            continue
+        if hyphens == 1:
+            idx = tok.index('-')
+            if idx == 0 or idx == len(tok) - 1:
+                continue
+            if not tok[idx - 1].isalpha() or not tok[idx + 1].isalpha():
+                continue
+        puncts = sum(1 for c in tok if c in '!.,')
+        if puncts > 1:
+            continue
+        if puncts == 1 and tok[-1] not in '!.,':
+            continue
+        count += 1
+    return count
+`,
+
+  'is-subsequence': `
+def isSubsequence(s, t):
+    i = 0
+    for c in t:
+        if i < len(s) and s[i] == c:
+            i += 1
+    return i == len(s)
+`,
+
+  'find-the-longest-balanced-substring-of-binary-string': `
+def findTheLongestBalancedSubstring(s):
+    res, i = 0, 0
+    while i < len(s):
+        zeros = ones = 0
+        while i < len(s) and s[i] == '0':
+            zeros += 1
+            i += 1
+        while i < len(s) and s[i] == '1':
+            ones += 1
+            i += 1
+        res = max(res, 2 * min(zeros, ones))
+    return res
+`,
+
+  'count-number-of-distinct-integers-after-reverse-operations': `
+def countDistinctIntegers(nums):
+    nums_list = [int(x) for x in nums]
+    s = set(nums_list)
+    for n in nums_list:
+        s.add(int(str(n)[::-1]))
+    return len(s)
+`,
+
+  'most-frequent-number-following-key': `
+def mostFrequent(nums, key):
+    nums_list = [int(x) for x in nums]
+    key = int(key)
+    from collections import Counter
+    c = Counter()
+    for i in range(len(nums_list) - 1):
+        if nums_list[i] == key:
+            c[nums_list[i + 1]] += 1
+    return c.most_common(1)[0][0]
+`,
+
+  'minimum-difference-between-highest-and-lowest-of-k-scores': `
+def minimumDifference(nums, k):
+    nums_list = sorted(int(x) for x in nums)
+    k = int(k)
+    res = float('inf')
+    for i in range(len(nums_list) - k + 1):
+        res = min(res, nums_list[i + k - 1] - nums_list[i])
+    return res
+`,
+
+  'find-the-array-concat-val': `
+def findTheArrayConcVal(nums):
+    nums_list = [int(x) for x in nums]
+    val, l, r = 0, 0, len(nums_list) - 1
+    while l < r:
+        val += int(str(nums_list[l]) + str(nums_list[r]))
+        l += 1
+        r -= 1
+    if l == r:
+        val += nums_list[l]
+    return val
+`,
+
+  'sort-array-by-increasing-frequency': `
+def frequencySort(nums):
+    from collections import Counter
+    nums_list = [int(x) for x in nums]
+    freq = Counter(nums_list)
+    return sorted(nums_list, key=lambda x: (freq[x], -x))
+`,
+
+  'find-all-k-distant-indices': `
+def findKDistantIndices(nums, key, k):
+    nums_list = [int(x) for x in nums]
+    key, k = int(key), int(k)
+    res = []
+    for i in range(len(nums_list)):
+        for j in range(len(nums_list)):
+            if nums_list[j] == key and abs(i - j) <= k:
+                res.append(i)
+                break
+    return res
+`,
+
+  'number-of-beautiful-pairs': `
+def countBeautifulPairs(nums):
+    from math import gcd
+    nums_list = [int(x) for x in nums]
+    count = 0
+    for i in range(len(nums_list)):
+        first = int(str(nums_list[i])[0])
+        for j in range(i + 1, len(nums_list)):
+            last = nums_list[j] % 10
+            if gcd(first, last) == 1:
+                count += 1
+    return count
+`,
+
+  'split-string-by-separator': `
+def splitWordsBySeparator(words, separator):
+    words_list = list(words)
+    result = []
+    for w in words_list:
+        for part in str(w).split(separator):
+            if part:
+                result.append(part)
+    return result
+`,
+
+  'count-vowel-strings-in-ranges': `
+def vowelStrings(words, queries):
+    words_list = list(words)
+    vowels = set('aeiou')
+    pre = [0]
+    for w in words_list:
+        w = str(w)
+        pre.append(pre[-1] + (1 if w[0] in vowels and w[-1] in vowels else 0))
+    result = []
+    for q in queries:
+        q_list = [int(x) for x in q]
+        result.append(pre[q_list[1] + 1] - pre[q_list[0]])
+    return result
+`,
+
+  'number-of-even-odd-bits': `
+def evenOddBit(n):
+    n = int(n)
+    even = odd = 0
+    pos = 0
+    while n > 0:
+        if n & 1:
+            if pos % 2 == 0:
+                even += 1
+            else:
+                odd += 1
+        n >>= 1
+        pos += 1
+    return [even, odd]
+`,
+
+  'average-value-of-even-numbers-divisible-by-three': `
+def averageValue(nums):
+    nums_list = [int(x) for x in nums]
+    evens = [n for n in nums_list if n % 6 == 0]
+    return sum(evens) // len(evens) if evens else 0
+`,
+
+  'count-prefix-suffix-pairs': `
+def countPrefixSuffixPairs(words):
+    words_list = [str(w) for w in words]
+    count = 0
+    for i in range(len(words_list)):
+        for j in range(i + 1, len(words_list)):
+            if words_list[j].startswith(words_list[i]) and words_list[j].endswith(words_list[i]):
+                count += 1
+    return count
+`,
+
+  'minimum-cost-of-buying-candies-with-discount': `
+def minimumCost(cost):
+    cost_list = sorted([int(x) for x in cost], reverse=True)
+    return sum(v for i, v in enumerate(cost_list) if (i + 1) % 3 != 0)
+`,
+
+  'find-original-array-from-prefix-xor': `
+def findArray(pref):
+    pref_list = [int(x) for x in pref]
+    arr = [pref_list[0]]
+    for i in range(1, len(pref_list)):
+        arr.append(pref_list[i - 1] ^ pref_list[i])
+    return arr
+`,
+
+  'total-distance-traveled': `
+def distanceTraveled(mainTank, additionalTank):
+    main, extra = int(mainTank), int(additionalTank)
+    dist = 0
+    while main >= 5:
+        dist += 50
+        main -= 5
+        if extra > 0:
+            main += 1
+            extra -= 1
+    dist += main * 10
+    return dist
+`,
+
+  'delete-characters-to-make-fancy-string': `
+def makeFancyString(s):
+    res = []
+    for c in s:
+        if len(res) >= 2 and res[-1] == c and res[-2] == c:
+            continue
+        res.append(c)
+    return ''.join(res)
+`,
+
+  'three-consecutive-odds': `
+def threeConsecutiveOdds(arr):
+    arr_list = [int(x) for x in arr]
+    count = 0
+    for n in arr_list:
+        if n % 2 == 1:
+            count += 1
+            if count >= 3:
+                return True
+        else:
+            count = 0
+    return False
+`,
+
+  'count-equal-and-divisible-pairs-in-array': `
+def countPairs(nums, k):
+    nums_list = [int(x) for x in nums]
+    k = int(k)
+    count = 0
+    for i in range(len(nums_list)):
+        for j in range(i + 1, len(nums_list)):
+            if nums_list[i] == nums_list[j] and (i * j) % k == 0:
+                count += 1
+    return count
+`,
+
+  'minimum-changes-to-make-alternating-binary-string': `
+def minOperations(s):
+    mis = sum(1 for i, c in enumerate(s) if c != '01'[i % 2])
+    return min(mis, len(s) - mis)
+`,
+
+  'rotate-function': `
+def maxRotateFunction(nums):
+    nums_list = [int(x) for x in nums]
+    n = len(nums_list)
+    total = sum(nums_list)
+    f = sum(i * nums_list[i] for i in range(n))
+    max_f = f
+    for k in range(1, n):
+        f = f + total - n * nums_list[n - k]
+        max_f = max(max_f, f)
+    return max_f
+`,
+
+  'maximum-sum-of-distinct-subarrays-with-length-k': `
+def maximumSubarraySum(nums, k):
+    nums_list = [int(x) for x in nums]
+    k = int(k)
+    from collections import defaultdict
+    freq = defaultdict(int)
+    s = 0
+    max_s = 0
+    for r in range(len(nums_list)):
+        freq[nums_list[r]] += 1
+        s += nums_list[r]
+        if r >= k:
+            l = nums_list[r - k]
+            s -= l
+            freq[l] -= 1
+            if freq[l] == 0:
+                del freq[l]
+        if r >= k - 1 and len(freq) == k:
+            max_s = max(max_s, s)
+    return max_s
+`,
+
+  'find-the-sum-of-encrypted-integers': `
+def sumOfEncryptedInt(nums):
+    total = 0
+    for n in nums:
+        n = int(n)
+        s = str(n)
+        max_d = max(int(c) for c in s)
+        total += int(str(max_d) * len(s))
+    return total
+`,
+
+  'maximum-number-of-weeks-for-which-you-can-work': `
+def numberOfWeeks(milestones):
+    milestones = [int(x) for x in milestones]
+    total = sum(milestones)
+    mx = max(milestones)
+    rest = total - mx
+    return total if mx <= rest + 1 else 2 * rest + 1
+`,
+
+  'count-complete-subarrays-in-an-array': `
+def countCompleteSubarrays(nums):
+    nums_list = [int(x) for x in nums]
+    total = len(set(nums_list))
+    count = 0
+    for l in range(len(nums_list)):
+        seen = set()
+        for r in range(l, len(nums_list)):
+            seen.add(nums_list[r])
+            if len(seen) == total:
+                count += 1
+    return count
+`,
+
+  'count-subarrays-where-max-element-appears-at-least-k-times': `
+def countSubarrays(nums, k):
+    nums_list = [int(x) for x in nums]
+    k = int(k)
+    M = max(nums_list)
+    positions = []
+    count = 0
+    for r in range(len(nums_list)):
+        if nums_list[r] == M:
+            positions.append(r)
+        if len(positions) >= k:
+            count += positions[len(positions) - k] + 1
+    return count
+`,
+
+  'minimum-index-of-a-valid-split': `
+def minimumIndex(nums):
+    nums_list = [int(x) for x in nums]
+    n = len(nums_list)
+    from collections import Counter
+    freq = Counter(nums_list)
+    dom, total = max(freq.items(), key=lambda x: x[1])
+    left_freq = 0
+    for i in range(n - 1):
+        if nums_list[i] == dom:
+            left_freq += 1
+        right_freq = total - left_freq
+        if left_freq * 2 > i + 1 and right_freq * 2 > n - i - 1:
+            return i
+    return -1
+`,
+
+  'last-moment-before-ants-fall-off-a-plank': `
+def getLastMoment(n, left, right):
+    n = int(n)
+    left_list = [int(x) for x in left] if hasattr(left, '__iter__') else []
+    right_list = [int(x) for x in right] if hasattr(right, '__iter__') else []
+    ml = max(left_list) if left_list else 0
+    mr = max(n - p for p in right_list) if right_list else 0
+    return max(ml, mr)
+`,
+
+  'check-if-two-chessboard-squares-have-same-color': `
+def checkTwoChessboards(coordinate1, coordinate2):
+    col1 = ord(coordinate1[0]) - 96
+    row1 = int(coordinate1[1])
+    col2 = ord(coordinate2[0]) - 96
+    row2 = int(coordinate2[1])
+    return (col1 + row1 + col2 + row2) % 2 == 0
+`,
+
+  'count-number-of-teams': `
+def numTeams(rating):
+    rating = [int(x) for x in rating]
+    n = len(rating)
+    count = 0
+    for j in range(1, n - 1):
+        ls = ll = rs = rl = 0
+        for i in range(j):
+            if rating[i] < rating[j]: ls += 1
+            elif rating[i] > rating[j]: ll += 1
+        for k in range(j + 1, n):
+            if rating[k] > rating[j]: rl += 1
+            elif rating[k] < rating[j]: rs += 1
+        count += ls * rl + ll * rs
+    return count
+`,
+
+  'remove-colored-pieces-if-both-neighbors-are-same-color': `
+def winnerOfGame(colors):
+    alice = bob = 0
+    for i in range(1, len(colors) - 1):
+        if colors[i] == 'A' and colors[i-1] == 'A' and colors[i+1] == 'A':
+            alice += 1
+        if colors[i] == 'B' and colors[i-1] == 'B' and colors[i+1] == 'B':
+            bob += 1
+    return alice > bob
+`,
+
+  'longest-alternating-subarray': `
+def alternatingSubarray(nums):
+    nums_list = [int(x) for x in nums]
+    ans = -1
+    for i in range(len(nums_list) - 1):
+        if nums_list[i+1] - nums_list[i] != 1:
+            continue
+        length = 2
+        for j in range(i + 2, len(nums_list)):
+            r = j - i
+            expected = 1 if r % 2 == 1 else -1
+            if nums_list[j] - nums_list[j-1] == expected:
+                length += 1
+            else:
+                break
+        ans = max(ans, length)
+    return ans
+`,
+
+  'divisible-and-non-divisible-sums-difference': `
+def differenceOfSums(n, m):
+    n, m = int(n), int(m)
+    num1 = num2 = 0
+    for i in range(1, n + 1):
+        if i % m == 0:
+            num2 += i
+        else:
+            num1 += i
+    return num1 - num2
+`,
+
+  'minimum-element-after-replacement-with-digit-sum': `
+def minElement(nums):
+    nums_list = [int(x) for x in nums]
+    return min(sum(int(d) for d in str(n)) for n in nums_list)
+`,
+
+  'pick-gifts': `
+def pickGifts(gifts, k):
+    import math
+    gifts = [int(x) for x in gifts]
+    k = int(k)
+    for _ in range(k):
+        max_val = max(gifts)
+        idx = gifts.index(max_val)
+        gifts[idx] = int(math.floor(math.sqrt(max_val)))
+    return sum(gifts)
+`,
+
+  'minimum-operations-to-make-array-xor-equal-to-k': `
+def minOperations(nums, k):
+    nums_list = [int(x) for x in nums]
+    k = int(k)
+    xor_all = 0
+    for n in nums_list:
+        xor_all ^= n
+    return bin(xor_all ^ k).count('1')
+`,
+
+  'maximum-count-of-positive-integer-and-negative-integer': `
+def maximumCount(nums):
+    nums_list = [int(x) for x in nums]
+    pos = sum(1 for n in nums_list if n > 0)
+    neg = sum(1 for n in nums_list if n < 0)
+    return max(pos, neg)
+`,
+
+  'number-of-students-doing-homework-at-a-given-time': `
+def busyStudent(startTime, endTime, queryTime):
+    start = [int(x) for x in startTime]
+    end = [int(x) for x in endTime]
+    q = int(queryTime)
+    return sum(1 for i in range(len(start)) if start[i] <= q <= end[i])
+`,
+
+  'find-the-xor-of-numbers-which-appear-twice': `
+def duplicateNumbersXOR(nums):
+    nums_list = [int(x) for x in nums]
+    from collections import Counter
+    freq = Counter(nums_list)
+    result = 0
+    for n, c in freq.items():
+        if c == 2:
+            result ^= n
+    return result
+`,
+
+  'minimum-sum-mountain-triplet-ii': `
+def minimumSumMountainTriplet(nums):
+    nums_list = [int(x) for x in nums]
+    n = len(nums_list)
+    pref_min = [float('inf')] * n
+    suf_min = [float('inf')] * n
+    for i in range(1, n):
+        pref_min[i] = min(pref_min[i-1], nums_list[i-1])
+    for i in range(n-2, -1, -1):
+        suf_min[i] = min(suf_min[i+1], nums_list[i+1])
+    ans = float('inf')
+    for j in range(1, n-1):
+        if pref_min[j] < nums_list[j] and suf_min[j] < nums_list[j]:
+            ans = min(ans, pref_min[j] + nums_list[j] + suf_min[j])
+    return ans if ans != float('inf') else -1
+`,
+
+  'minimum-operations-to-exceed-threshold-value-i': `
+def minOperations(nums, k):
+    nums_list = [int(x) for x in nums]
+    k = int(k)
+    return sum(1 for x in nums_list if x < k)
+`,
+
+  'maximum-subarray': `
+def maxSubArray(nums):
+    nums_list = [int(x) for x in nums]
+    best = cur = nums_list[0]
+    for n in nums_list[1:]:
+        cur = max(n, cur + n)
+        best = max(best, cur)
+    return best
+`,
+
+  'meeting-rooms': `
+def canAttendMeetings(intervals):
+    intervals_list = [list(iv) for iv in intervals]
+    if not intervals_list:
+        return True
+    intervals_list.sort(key=lambda x: x[0])
+    for i in range(1, len(intervals_list)):
+        if intervals_list[i][0] < intervals_list[i-1][1]:
+            return False
+    return True
+`,
+
+  'brick-wall': `
+def leastBricks(wall):
+    wall_list = [list(row) for row in wall]
+    from collections import defaultdict
+    edges = defaultdict(int)
+    for row in wall_list:
+        pos = 0
+        for brick in row[:-1]:
+            pos += brick
+            edges[pos] += 1
+    if not edges:
+        return len(wall_list)
+    return len(wall_list) - max(edges.values())
+`,
+
+  'number-of-longest-increasing-subsequence': `
+def findNumberOfLIS(nums):
+    nums_list = [int(x) for x in nums]
+    n = len(nums_list)
+    dp = [1] * n
+    cnt = [1] * n
+    for i in range(n):
+        for j in range(i):
+            if nums_list[j] < nums_list[i]:
+                if dp[j] + 1 > dp[i]:
+                    dp[i] = dp[j] + 1
+                    cnt[i] = cnt[j]
+                elif dp[j] + 1 == dp[i]:
+                    cnt[i] += cnt[j]
+    max_len = max(dp)
+    return sum(cnt[i] for i in range(n) if dp[i] == max_len)
+`,
+
+  'kth-smallest-element-in-sorted-matrix': `
+def kthSmallest(matrix, k):
+    matrix_list = [[int(x) for x in row] for row in matrix]
+    k = int(k)
+    n = len(matrix_list)
+    lo, hi = matrix_list[0][0], matrix_list[n-1][n-1]
+    while lo < hi:
+        mid = (lo + hi) // 2
+        count = 0
+        col = n - 1
+        for row in range(n):
+            while col >= 0 and matrix_list[row][col] > mid:
+                col -= 1
+            count += col + 1
+        if count < k:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+`,
+
+  'minimum-knight-moves': `
+def minKnightMoves(x, y):
+    x, y = abs(int(x)), abs(int(y))
+    if x == 0 and y == 0:
+        return 0
+    from collections import deque
+    queue = deque([(0, 0, 0)])
+    visited = {(0, 0)}
+    moves = [(1,2),(2,1),(2,-1),(1,-2),(-1,-2),(-2,-1),(-2,1),(-1,2)]
+    while queue:
+        cx, cy, steps = queue.popleft()
+        for dx, dy in moves:
+            nx, ny = cx + dx, cy + dy
+            if nx == x and ny == y:
+                return steps + 1
+            if (nx, ny) not in visited and nx >= -2 and ny >= -2 and nx <= x + 2 and ny <= y + 2:
+                visited.add((nx, ny))
+                queue.append((nx, ny, steps + 1))
+    return -1
+`,
+
+  'palindrome-pairs': `
+def palindromePairs(words):
+    words = list(words)
+    def is_palin(s):
+        return s == s[::-1]
+    n = len(words)
+    res = []
+    for i in range(n):
+        for j in range(n):
+            if i != j and is_palin(words[i] + words[j]):
+                res.append([i, j])
+    res.sort()
+    return res
+`,
+
+  'search-suggestions-system': `
+def suggestedProducts(products, searchWord):
+    products = sorted(products)
+    searchWord = str(searchWord)
+    result = []
+    for i in range(1, len(searchWord) + 1):
+        prefix = searchWord[:i]
+        matches = [p for p in products if p.startswith(prefix)][:3]
+        result.append(matches)
+    return result
+`,
+
+  'array-nesting': `
+def arrayNesting(nums):
+    nums_list = [int(x) for x in nums]
+    n = len(nums_list)
+    visited = [False] * n
+    best = 0
+    for i in range(n):
+        if not visited[i]:
+            size, j = 0, i
+            while not visited[j]:
+                visited[j] = True
+                j = nums_list[j]
+                size += 1
+            best = max(best, size)
+    return best
+`,
+
+  'evaluate-division': `
+def calcEquation(equations, values, queries):
+    from collections import defaultdict, deque
+    equations = [list(eq) for eq in equations]
+    values = [float(v) for v in values]
+    queries = [list(q) for q in queries]
+    graph = defaultdict(list)
+    for (a, b), v in zip(equations, values):
+        graph[a].append((b, v))
+        graph[b].append((a, 1.0 / v))
+    def bfs(src, dst):
+        if src not in graph or dst not in graph:
+            return -1.0
+        if src == dst:
+            return 1.0
+        q = deque([(src, 1.0)])
+        visited = {src}
+        while q:
+            node, prod = q.popleft()
+            for nb, w in graph[node]:
+                if nb == dst:
+                    return prod * w
+                if nb not in visited:
+                    visited.add(nb)
+                    q.append((nb, prod * w))
+        return -1.0
+    return [bfs(c, d) for c, d in queries]
+`,
+
+  'out-of-boundary-paths': `
+def findPaths(m, n, maxMove, startRow, startColumn):
+    m, n, maxMove = int(m), int(n), int(maxMove)
+    startRow, startColumn = int(startRow), int(startColumn)
+    MOD = 10**9 + 7
+    dp = [[0]*n for _ in range(m)]
+    dp[startRow][startColumn] = 1
+    ans = 0
+    for _ in range(maxMove):
+        nxt = [[0]*n for _ in range(m)]
+        for i in range(m):
+            for j in range(n):
+                if dp[i][j] == 0:
+                    continue
+                for di, dj in [(-1,0),(1,0),(0,-1),(0,1)]:
+                    ni, nj = i+di, j+dj
+                    if ni < 0 or ni >= m or nj < 0 or nj >= n:
+                        ans = (ans + dp[i][j]) % MOD
+                    else:
+                        nxt[ni][nj] = (nxt[ni][nj] + dp[i][j]) % MOD
+        dp = nxt
+    return ans
+`,
+
+  'maximum-ice-cream-bars': `
+def maxIceCream(costs, coins):
+    costs_list = sorted(int(x) for x in costs)
+    coins = int(coins)
+    count = 0
+    for c in costs_list:
+        if coins >= c:
+            coins -= c
+            count += 1
+        else:
+            break
+    return count
+`,
+
+  'count-numbers-with-unique-digits': `
+def countNumbersWithUniqueDigits(n):
+    n = int(n)
+    if n == 0:
+        return 1
+    ans, avail, unique_count = 10, 9, 9
+    for i in range(2, min(n, 10) + 1):
+        unique_count *= avail
+        ans += unique_count
+        avail -= 1
+    return ans
+`,
+
+  'minimum-cost-to-cut-stick': `
+def minCost(n, cuts):
+    n = int(n)
+    c = sorted([0] + [int(x) for x in cuts] + [n])
+    m = len(c)
+    dp = [[0]*m for _ in range(m)]
+    for length in range(2, m):
+        for i in range(m - length):
+            j = i + length
+            dp[i][j] = float('inf')
+            for k in range(i+1, j):
+                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j] + c[j] - c[i])
+    return dp[0][m-1]
+`,
+
+  'find-minimum-in-rotated-sorted-array-ii': `
+def findMin(nums):
+    nums_list = [int(x) for x in nums]
+    lo, hi = 0, len(nums_list) - 1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if nums_list[mid] < nums_list[hi]:
+            hi = mid
+        elif nums_list[mid] > nums_list[hi]:
+            lo = mid + 1
+        else:
+            hi -= 1
+    return nums_list[lo]
+`,
+
+  'search-in-rotated-sorted-array-ii': `
+def search(nums, target):
+    nums_list = [int(x) for x in nums]
+    target = int(target)
+    lo, hi = 0, len(nums_list) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if nums_list[mid] == target:
+            return True
+        if nums_list[lo] == nums_list[mid]:
+            lo += 1
+            continue
+        if nums_list[lo] <= nums_list[mid]:
+            if nums_list[lo] <= target < nums_list[mid]:
+                hi = mid - 1
+            else:
+                lo = mid + 1
+        else:
+            if nums_list[mid] < target <= nums_list[hi]:
+                lo = mid + 1
+            else:
+                hi = mid - 1
+    return False
+`,
+
+  'distinct-subsequences': `
+def numDistinct(s, t):
+    s, t = str(s), str(t)
+    m, n = len(s), len(t)
+    dp = [[0]*(n+1) for _ in range(m+1)]
+    for i in range(m+1):
+        dp[i][0] = 1
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            dp[i][j] = dp[i-1][j] + (dp[i-1][j-1] if s[i-1] == t[j-1] else 0)
+    return dp[m][n]
+`,
+
+  'minimum-window-subsequence': `
+def minWindow(s1, s2):
+    s1, s2 = str(s1), str(s2)
+    best = ''
+    lo = 0
+    while lo < len(s1):
+        i, j = lo, 0
+        while i < len(s1) and j < len(s2):
+            if s1[i] == s2[j]:
+                j += 1
+            i += 1
+        if j < len(s2):
+            break
+        hi = i - 1
+        j = len(s2) - 1
+        while j >= 0:
+            if s1[hi] == s2[j]:
+                j -= 1
+            hi -= 1
+        win = s1[hi+1:i]
+        if not best or len(win) < len(best):
+            best = win
+        lo = hi + 2
+    return best
+`,
+
+  'reconstruct-itinerary': `
+from collections import defaultdict
+def reconstructItinerary(tickets):
+    graph = defaultdict(list)
+    for f, t in tickets:
+        graph[f].append(t)
+    for k in graph:
+        graph[k].sort()
+    result = []
+    def dfs(node):
+        while graph[node]:
+            dfs(graph[node].pop(0))
+        result.append(node)
+    dfs('JFK')
+    return result[::-1]
+`,
+
+  'partition-k-equal-subset-sum': `
+def canPartitionKSubsets(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    total = sum(nums)
+    if total % k != 0:
+        return False
+    target = total // k
+    nums.sort(reverse=True)
+    if nums[0] > target:
+        return False
+    buckets = [0] * k
+    def bt(idx):
+        if idx == len(nums):
+            return all(b == target for b in buckets)
+        for i in range(k):
+            if buckets[i] + nums[idx] <= target:
+                buckets[i] += nums[idx]
+                if bt(idx + 1):
+                    return True
+                buckets[i] -= nums[idx]
+                if buckets[i] == 0:
+                    break
+        return False
+    return bt(0)
+`,
+
+  'paint-house': `
+def minCostPaintHouse(costs):
+    r, g, b = costs[0]
+    for i in range(1, len(costs)):
+        cr, cg, cb = costs[i]
+        r, g, b = cr + min(g, b), cg + min(r, b), cb + min(r, g)
+    return min(r, g, b)
+`,
+
+  'add-strings': `
+def addStrings(num1, num2):
+    i, j, carry = len(num1)-1, len(num2)-1, 0
+    res = []
+    while i >= 0 or j >= 0 or carry:
+        d1 = ord(num1[i]) - 48 if i >= 0 else 0
+        d2 = ord(num2[j]) - 48 if j >= 0 else 0
+        s = d1 + d2 + carry
+        res.append(str(s % 10))
+        carry = s // 10
+        i -= 1; j -= 1
+    return ''.join(reversed(res))
+`,
+
+  'palindrome-partitioning-ii': `
+def minCutPalindrome(s):
+    n = len(s)
+    is_palin = [[False]*n for _ in range(n)]
+    for i in range(n-1, -1, -1):
+        for j in range(i, n):
+            is_palin[i][j] = s[i] == s[j] and (j - i <= 2 or is_palin[i+1][j-1])
+    cut = [0] * n
+    for i in range(n):
+        if is_palin[0][i]:
+            cut[i] = 0
+            continue
+        cut[i] = float('inf')
+        for j in range(1, i+1):
+            if is_palin[j][i]:
+                cut[i] = min(cut[i], cut[j-1] + 1)
+    return cut[n-1]
+`,
+
+  'wiggle-sort-ii': `
+def wiggleSortII(nums):
+    sorted_nums = sorted(nums)
+    n = len(nums)
+    mid = (n - 1) // 2
+    lo, hi = mid, n - 1
+    for i in range(n):
+        if i % 2 == 0:
+            nums[i] = sorted_nums[lo]; lo -= 1
+        else:
+            nums[i] = sorted_nums[hi]; hi -= 1
+`,
+
+  'stone-game-iv': `
+def winnerSquareGame(n):
+    dp = [False] * (n + 1)
+    k = 1
+    squares = []
+    while k * k <= n:
+        squares.append(k * k)
+        k += 1
+    for i in range(1, n + 1):
+        for sq in squares:
+            if sq > i:
+                break
+            if not dp[i - sq]:
+                dp[i] = True
+                break
+    return dp[n]
+`,
+
+  'minimum-refueling-stops': `
+import heapq
+def minRefuelStops(target, startFuel, stations):
+    fuel = startFuel
+    stops = 0
+    heap = []
+    idx = 0
+    while fuel < target:
+        while idx < len(stations) and stations[idx][0] <= fuel:
+            heapq.heappush(heap, -stations[idx][1])
+            idx += 1
+        if not heap:
+            return -1
+        fuel -= heapq.heappop(heap)
+        stops += 1
+    return stops
+`,
+
+  'snapshot-array': `
+import bisect
+def snapshotArrayRunner(length, ops, args):
+    history = [[[0, 0]] for _ in range(int(length))]
+    snap_id = 0
+    result = []
+    for op, a in zip(ops, args):
+        if op == 'set':
+            idx, val = a[0], a[1]
+            if history[idx][-1][0] == snap_id:
+                history[idx][-1][1] = val
+            else:
+                history[idx].append([snap_id, val])
+            result.append(None)
+        elif op == 'snap':
+            result.append(snap_id)
+            snap_id += 1
+        elif op == 'get':
+            idx, sid = a[0], a[1]
+            h = history[idx]
+            lo, hi = 0, len(h) - 1
+            while lo < hi:
+                mid = (lo + hi + 1) // 2
+                if h[mid][0] <= sid:
+                    lo = mid
+                else:
+                    hi = mid - 1
+            result.append(h[lo][1])
+        else:
+            result.append(None)
+    return result
+`,
+
+  'paint-house-ii': `
+def minCostII(costs):
+    costs = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (costs.to_py() if hasattr(costs, 'to_py') else costs)]
+    k = len(costs[0])
+    prev = costs[0][:]
+    for i in range(1, len(costs)):
+        min1, min2, min_idx = float('inf'), float('inf'), -1
+        for j in range(k):
+            if prev[j] < min1:
+                min2, min1, min_idx = min1, prev[j], j
+            elif prev[j] < min2:
+                min2 = prev[j]
+        prev = [costs[i][j] + (min2 if j == min_idx else min1) for j in range(k)]
+    return min(prev)
+`,
+
+  'minimum-moves-equal-array-ii': `
+def minMoves2(nums):
+    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else list(nums))
+    median = nums[len(nums) // 2]
+    return sum(abs(x - median) for x in nums)
+`,
+
+  'frog-jump': `
+def canCross(stones):
+    stones = list(stones.to_py()) if hasattr(stones, 'to_py') else list(stones)
+    stone_set = set(stones)
+    dp = {s: set() for s in stones}
+    dp[0].add(0)
+    for stone in stones:
+        for k in dp[stone]:
+            for nxt in [k-1, k, k+1]:
+                if nxt > 0 and stone + nxt in stone_set:
+                    dp[stone + nxt].add(nxt)
+    return len(dp[stones[-1]]) > 0
+`,
+
+  'k-inverse-pairs-array': `
+def kInversePairs(n, k):
+    MOD = 10**9 + 7
+    dp = [0] * (k + 1)
+    dp[0] = 1
+    for i in range(1, n + 1):
+        ndp = [0] * (k + 1)
+        prefix = 0
+        for j in range(k + 1):
+            prefix += dp[j]
+            if j >= i:
+                prefix -= dp[j - i]
+            prefix %= MOD
+            ndp[j] = prefix
+        dp = ndp
+    return dp[k]
+`,
+
+  'minimum-cost-to-hire-k-workers': `
+import heapq
+def mincostToHireWorkers(quality, wage, k):
+    quality = list(quality.to_py()) if hasattr(quality, 'to_py') else list(quality)
+    wage = list(wage.to_py()) if hasattr(wage, 'to_py') else list(wage)
+    workers = sorted(zip(wage, quality), key=lambda x: x[0]/x[1])
+    heap = []
+    q_sum = 0
+    res = float('inf')
+    for w, q in workers:
+        heapq.heappush(heap, -q)
+        q_sum += q
+        if len(heap) > k:
+            q_sum += heapq.heappop(heap)
+        if len(heap) == k:
+            res = min(res, (w / q) * q_sum)
+    return res
+`,
+
+  'random-pick-with-weight': `
+import random, bisect
+def randomPickWeightRunner(w, picks):
+    w = list(w.to_py()) if hasattr(w, 'to_py') else list(w)
+    picks = list(picks.to_py()) if hasattr(picks, 'to_py') else list(picks)
+    prefix = []
+    s = 0
+    for wi in w:
+        s += wi
+        prefix.append(s)
+    result = []
+    for _ in picks:
+        r = random.random() * s
+        result.append(bisect.bisect_left(prefix, r))
+    return result
+`,
+
+  'find-in-mountain-array': `
+def findInMountainArray(mountainArr, target):
+    arr = list(mountainArr.to_py()) if hasattr(mountainArr, 'to_py') else list(mountainArr)
+    n = len(arr)
+    lo, hi = 0, n - 1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if arr[mid] < arr[mid+1]:
+            lo = mid + 1
+        else:
+            hi = mid
+    peak = lo
+    lo, hi = 0, peak
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if arr[mid] == target: return mid
+        elif arr[mid] < target: lo = mid + 1
+        else: hi = mid - 1
+    lo, hi = peak + 1, n - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if arr[mid] == target: return mid
+        elif arr[mid] > target: lo = mid + 1
+        else: hi = mid - 1
+    return -1
+`,
+
+  'basic-calculator-ii': `
+def calculateII(s):
+    stack = []
+    num = 0
+    op = '+'
+    for i, c in enumerate(s):
+        if c.isdigit():
+            num = num * 10 + int(c)
+        if c in '+-*/' or i == len(s) - 1:
+            if op == '+': stack.append(num)
+            elif op == '-': stack.append(-num)
+            elif op == '*': stack.append(stack.pop() * num)
+            elif op == '/': stack.append(int(stack.pop() / num))
+            op = c
+            num = 0
+    return sum(stack)
+`,
+
+  'maximum-binary-tree': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+def constructMaximumBinaryTree(nums):
+    if not nums: return None
+    mi = nums.index(max(nums))
+    node = TreeNode(nums[mi])
+    node.left = constructMaximumBinaryTree(nums[:mi])
+    node.right = constructMaximumBinaryTree(nums[mi+1:])
+    return node
+`,
+
+  'next-greater-element-iii': `
+def nextGreaterElementIII(n):
+    d = list(str(n))
+    i = len(d) - 2
+    while i >= 0 and d[i] >= d[i+1]:
+        i -= 1
+    if i < 0: return -1
+    j = len(d) - 1
+    while d[j] <= d[i]:
+        j -= 1
+    d[i], d[j] = d[j], d[i]
+    d[i+1:] = d[i+1:][::-1]
+    result = int(''.join(d))
+    return -1 if result > 2**31 - 1 else result
+`,
+
+  'number-of-digit-one': `
+def countDigitOne(n):
+    count = 0
+    factor = 1
+    while factor <= n:
+        d = (n // factor) % 10
+        higher = n // (factor * 10)
+        lower = n % factor
+        if d == 0: count += higher * factor
+        elif d == 1: count += higher * factor + lower + 1
+        else: count += (higher + 1) * factor
+        factor *= 10
+    return count
+`,
+
+  'moving-average-from-data-stream': `
+from collections import deque
+def movingAverageRunner(size, vals):
+    vals = list(vals.to_py()) if hasattr(vals, 'to_py') else list(vals)
+    q = deque()
+    s = 0
+    result = []
+    for v in vals:
+        q.append(v); s += v
+        if len(q) > size: s -= q.popleft()
+        result.append(s / len(q))
+    return result
+`,
+
+  'design-add-and-search-words': `
+def wordDictionaryRunner(ops, args):
+    trie = {}
+    def add(word):
+        node = trie
+        for c in word:
+            if c not in node: node[c] = {}
+            node = node[c]
+        node['$'] = True
+    def search(word, node=None):
+        if node is None: node = trie
+        for i, c in enumerate(word):
+            if c == '.':
+                return any(search(word[i+1:], node[k]) for k in node if k != '$')
+            if c not in node: return False
+            node = node[c]
+        return '$' in node
+    result = []
+    for op, a in zip(ops, args):
+        if op == 'addWord': add(a[0]); result.append(None)
+        elif op == 'search': result.append(search(a[0]))
+        else: result.append(None)
+    return result
+`,
+
+  'serialize-deserialize-bst': `
+def serialize(root):
+    def pre(node):
+        if not node: return []
+        return [str(node.val)] + pre(node.left) + pre(node.right)
+    return ','.join(pre(root))
+def deserialize(data):
+    if not data: return None
+    vals = list(map(int, data.split(',')))
+    idx = [0]
+    def bt(mn, mx):
+        if idx[0] >= len(vals) or vals[idx[0]] < mn or vals[idx[0]] > mx:
+            return None
+        v = vals[idx[0]]; idx[0] += 1
+        node = TreeNode(v)
+        node.left = bt(mn, v-1)
+        node.right = bt(v+1, mx)
+        return node
+    return bt(float('-inf'), float('inf'))
+`,
+
+  'best-meeting-point': `
+def minTotalDistance(grid):
+    grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    rows, cols = [], []
+    for r in range(len(grid)):
+        for c in range(len(grid[0])):
+            if grid[r][c]:
+                rows.append(r); cols.append(c)
+    def total(arr):
+        arr = sorted(arr)
+        med = arr[len(arr)//2]
+        return sum(abs(x-med) for x in arr)
+    return total(rows) + total(cols)
+`,
+
+  'longest-subarray-ones-after-delete': `
+def longestSubarray(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    lo = zeros = best = 0
+    for hi in range(len(nums)):
+        if nums[hi] == 0: zeros += 1
+        while zeros > 1:
+            if nums[lo] == 0: zeros -= 1
+            lo += 1
+        best = max(best, hi - lo)
+    return best
+`,
+
+  'reverse-pairs': `
+def reversePairs(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    count = [0]
+    def merge(arr):
+        if len(arr) <= 1: return arr
+        mid = len(arr)//2
+        left = merge(arr[:mid])
+        right = merge(arr[mid:])
+        j = 0
+        for x in left:
+            while j < len(right) and x > 2*right[j]:
+                j += 1
+            count[0] += j
+        merged = []
+        a = b = 0
+        while a < len(left) and b < len(right):
+            if left[a] <= right[b]: merged.append(left[a]); a+=1
+            else: merged.append(right[b]); b+=1
+        return merged + left[a:] + right[b:]
+    merge(nums)
+    return count[0]
+`,
+
+  'minimum-cost-cut-cake': `
+def minCostCutCake(n, cuts):
+    cuts = sorted(list(cuts.to_py()) if hasattr(cuts, 'to_py') else list(cuts))
+    arr = [0] + cuts + [n]
+    m = len(arr)
+    dp = [[0]*m for _ in range(m)]
+    for length in range(2, m):
+        for i in range(m - length):
+            j = i + length
+            dp[i][j] = float('inf')
+            for k in range(i+1, j):
+                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j] + arr[j] - arr[i])
+    return dp[0][m-1]
+`,
+
+  'spiral-matrix-iii': `
+def spiralMatrixIII(rows, cols, rStart, cStart):
+    result = []
+    r, c = rStart, cStart
+    dirs = [(0,1),(1,0),(0,-1),(-1,0)]
+    di, steps = 0, 1
+    result.append([r, c])
+    while len(result) < rows * cols:
+        for _ in range(2):
+            dr, dc = dirs[di % 4]
+            for _ in range(steps):
+                r += dr; c += dc
+                if 0 <= r < rows and 0 <= c < cols:
+                    result.append([r, c])
+            di += 1
+        steps += 1
+    return result
+`,
+
+  'text-justification': `
+def fullJustify(words, maxWidth):
+    words = list(words.to_py()) if hasattr(words, 'to_py') else list(words)
+    lines = []
+    cur, cur_len = [], 0
+    for w in words:
+        if cur_len + len(w) + len(cur) > maxWidth:
+            lines.append(cur); cur, cur_len = [], 0
+        cur.append(w); cur_len += len(w)
+    lines.append(cur)
+    result = []
+    for i, line in enumerate(lines):
+        if i == len(lines)-1 or len(line) == 1:
+            s = ' '.join(line)
+            result.append(s + ' '*(maxWidth-len(s)))
+        else:
+            total = maxWidth - sum(len(w) for w in line)
+            gaps = len(line) - 1
+            base, extra = divmod(total, gaps)
+            s = line[0]
+            for j in range(1, len(line)):
+                s += ' '*(base + (1 if j <= extra else 0)) + line[j]
+            result.append(s)
+    return result
+`,
+
+  'minimum-operations-make-array-continuous': `
+import bisect
+def minOperations(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums)
+    uniq = sorted(set(nums))
+    best = 0
+    j = 0
+    for i in range(len(uniq)):
+        while j < len(uniq) and uniq[j] <= uniq[i] + n - 1:
+            j += 1
+        best = max(best, j - i)
+    return n - best
+`,
+
+  'arithmetic-subarrays': `
+def checkArithmeticSubarrays(nums, l, r):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    l = list(l.to_py()) if hasattr(l, 'to_py') else list(l)
+    r = list(r.to_py()) if hasattr(r, 'to_py') else list(r)
+    result = []
+    for li, ri in zip(l, r):
+        sub = sorted(nums[li:ri+1])
+        if len(sub) < 2:
+            result.append(True); continue
+        d = sub[1] - sub[0]
+        result.append(all(sub[j]-sub[j-1]==d for j in range(1, len(sub))))
+    return result
+`,
+
+  'minimum-score-path': `
+def minScore(n, roads):
+    roads = [list(r) for r in (roads.to_py() if hasattr(roads, 'to_py') else roads)]
+    from collections import defaultdict
+    adj = defaultdict(list)
+    for a, b, d in roads:
+        adj[a].append((b, d))
+        adj[b].append((a, d))
+    ans = float('inf')
+    visited = set()
+    stack = [1]
+    while stack:
+        u = stack.pop()
+        if u in visited: continue
+        visited.add(u)
+        for v, d in adj[u]:
+            ans = min(ans, d)
+            if v not in visited:
+                stack.append(v)
+    return ans
+`,
+
+  'design-circular-queue': `
+def circularQueueRunner(k, ops, args):
+    arr = [0] * int(k)
+    head = size = 0
+    k = int(k)
+    def enQueue(v):
+        nonlocal size
+        if size == k: return False
+        arr[(head + size) % k] = v; size += 1; return True
+    def deQueue():
+        nonlocal head, size
+        if size == 0: return False
+        head = (head + 1) % k; size -= 1; return True
+    def Front(): return -1 if size == 0 else arr[head]
+    def Rear(): return -1 if size == 0 else arr[(head + size - 1) % k]
+    result = []
+    for op, a in zip(ops, args):
+        if op == 'enQueue': result.append(enQueue(a[0]))
+        elif op == 'deQueue': result.append(deQueue())
+        elif op == 'Front': result.append(Front())
+        elif op == 'Rear': result.append(Rear())
+        elif op == 'isEmpty': result.append(size == 0)
+        elif op == 'isFull': result.append(size == k)
+        else: result.append(None)
+    return result
+`,
+
+  'find-duplicate-number-ii': `
+def findDuplicateFloyd(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    slow = fast = nums[0]
+    while True:
+        slow = nums[slow]
+        fast = nums[nums[fast]]
+        if slow == fast:
+            break
+    slow = nums[0]
+    while slow != fast:
+        slow = nums[slow]
+        fast = nums[fast]
+    return slow
+`,
+
+  'insert-delete-getrandom': `
+import random
+def insertDeleteGetRandomRunner(ops, args):
+    val_to_idx = {}
+    arr = []
+    result = []
+    for op, a in zip(ops, args):
+        if op == 'insert':
+            val = a[0]
+            if val in val_to_idx:
+                result.append(False)
+            else:
+                val_to_idx[val] = len(arr)
+                arr.append(val)
+                result.append(True)
+        elif op == 'remove':
+            val = a[0]
+            if val not in val_to_idx:
+                result.append(False)
+            else:
+                idx = val_to_idx[val]
+                last = arr[-1]
+                arr[idx] = last
+                val_to_idx[last] = idx
+                arr.pop()
+                del val_to_idx[val]
+                result.append(True)
+        elif op == 'getRandom':
+            result.append(random.choice(arr))
+        else:
+            result.append(None)
+    return result
+`,
+
+  'maximum-points-from-cards': `
+def maxScore(cardPoints, k):
+    pts = list(cardPoints.to_py()) if hasattr(cardPoints, 'to_py') else list(cardPoints)
+    n = len(pts)
+    total = sum(pts)
+    if k == n:
+        return total
+    win = n - k
+    window_sum = sum(pts[:win])
+    min_window = window_sum
+    for i in range(win, n):
+        window_sum += pts[i] - pts[i - win]
+        if window_sum < min_window:
+            min_window = window_sum
+    return total - min_window
+`,
+
+  'minimum-ascii-delete-sum': `
+def minimumDeleteSum(s1, s2):
+    m, n = len(s1), len(s2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(1, m + 1):
+        dp[i][0] = dp[i-1][0] + ord(s1[i-1])
+    for j in range(1, n + 1):
+        dp[0][j] = dp[0][j-1] + ord(s2[j-1])
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if s1[i-1] == s2[j-1]:
+                dp[i][j] = dp[i-1][j-1]
+            else:
+                dp[i][j] = min(dp[i-1][j] + ord(s1[i-1]), dp[i][j-1] + ord(s2[j-1]))
+    return dp[m][n]
+`,
+
+  'sum-of-distances-in-tree': `
+import sys
+sys.setrecursionlimit(50000)
+def sumOfDistancesInTree(n, edges):
+    edges_list = list(edges.to_py()) if hasattr(edges, 'to_py') else list(edges)
+    adj = [[] for _ in range(n)]
+    for e in edges_list:
+        e = list(e.to_py()) if hasattr(e, 'to_py') else list(e)
+        adj[e[0]].append(e[1])
+        adj[e[1]].append(e[0])
+    count = [1] * n
+    ans = [0] * n
+    def dfs1(node, parent):
+        for child in adj[node]:
+            if child == parent:
+                continue
+            dfs1(child, node)
+            count[node] += count[child]
+            ans[node] += ans[child] + count[child]
+    def dfs2(node, parent):
+        for child in adj[node]:
+            if child == parent:
+                continue
+            ans[child] = ans[node] - count[child] + (n - count[child])
+            dfs2(child, node)
+    dfs1(0, -1)
+    dfs2(0, -1)
+    return ans
+`,
+
+  'couples-holding-hands': `
+def minSwapsCouples(row):
+    row = list(row.to_py()) if hasattr(row, 'to_py') else list(row)
+    pos = [0] * len(row)
+    for i, v in enumerate(row):
+        pos[v] = i
+    swaps = 0
+    for i in range(0, len(row), 2):
+        partner = row[i] ^ 1
+        if row[i + 1] == partner:
+            continue
+        j = pos[partner]
+        pos[row[j]] = i + 1
+        row[i + 1], row[j] = row[j], row[i + 1]
+        pos[partner] = i + 1
+        swaps += 1
+    return swaps
+`,
+
+  'falling-squares': `
+def fallingSquares(positions):
+    positions = list(positions.to_py()) if hasattr(positions, 'to_py') else list(positions)
+    intervals = []
+    max_h = 0
+    result = []
+    for pos in positions:
+        pos = list(pos.to_py()) if hasattr(pos, 'to_py') else list(pos)
+        left, size = pos[0], pos[1]
+        r = left + size
+        base = 0
+        for seg in intervals:
+            if seg[0] < r and left < seg[1]:
+                base = max(base, seg[2])
+        new_h = base + size
+        intervals.append((left, r, new_h))
+        max_h = max(max_h, new_h)
+        result.append(max_h)
+    return result
+`,
+
+  'constrained-subsequence-sum': `
+from collections import deque
+def constrainedSubsetSum(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    dp = nums[:]
+    dq = deque()
+    res = -float('inf')
+    for i in range(len(nums)):
+        if dq and dq[0] < i - k:
+            dq.popleft()
+        if dq:
+            dp[i] = nums[i] + max(0, dp[dq[0]])
+        while dq and dp[dq[-1]] <= dp[i]:
+            dq.pop()
+        dq.append(i)
+        if dp[i] > res:
+            res = dp[i]
+    return res
+`,
+
+  'pseudo-palindromic-paths': `
+def pseudoPalindromicPathsRunner(arr):
+    raw_list = list(arr.to_py()) if hasattr(arr, 'to_py') else list(arr)
+    cleaned = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    if not cleaned or cleaned[0] is None:
+        return 0
+    class TreeNode:
+        def __init__(self, v): self.v = v; self.l = None; self.r = None
+    def build(i):
+        if i >= len(cleaned) or cleaned[i] is None:
+            return None
+        node = TreeNode(cleaned[i])
+        node.l = build(2 * i + 1)
+        node.r = build(2 * i + 2)
+        return node
+    root = build(0)
+    result = [0]
+    def dfs(node, mask):
+        if not node:
+            return
+        mask ^= (1 << node.v)
+        if not node.l and not node.r:
+            if (mask & (mask - 1)) == 0:
+                result[0] += 1
+            return
+        dfs(node.l, mask)
+        dfs(node.r, mask)
+    dfs(root, 0)
+    return result[0]
+`,
+
+  'number-of-nodes-same-label': `
+import sys
+sys.setrecursionlimit(200000)
+def countSubTrees(n, edges, labels):
+    edges_list = list(edges.to_py()) if hasattr(edges, 'to_py') else list(edges)
+    adj = [[] for _ in range(n)]
+    for e in edges_list:
+        e = list(e.to_py()) if hasattr(e, 'to_py') else list(e)
+        adj[e[0]].append(e[1])
+        adj[e[1]].append(e[0])
+    ans = [0] * n
+    def dfs(node, parent):
+        freq = [0] * 26
+        freq[ord(labels[node]) - 97] += 1
+        for child in adj[node]:
+            if child == parent:
+                continue
+            child_freq = dfs(child, node)
+            for i in range(26):
+                freq[i] += child_freq[i]
+        ans[node] = freq[ord(labels[node]) - 97]
+        return freq
+    dfs(0, -1)
+    return ans
+`,
+
+  'minimum-cost-tree-leaf-values': `
+def mctFromLeafValues(arr):
+    arr = list(arr.to_py()) if hasattr(arr, 'to_py') else list(arr)
+    cost = 0
+    while len(arr) > 1:
+        min_idx = arr.index(min(arr))
+        left = arr[min_idx - 1] if min_idx > 0 else float('inf')
+        right = arr[min_idx + 1] if min_idx < len(arr) - 1 else float('inf')
+        cost += arr[min_idx] * min(left, right)
+        arr.pop(min_idx)
+    return cost
+`,
+
+  'valid-partition-array': `
+def validPartition(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums)
+    dp = [False] * (n + 1)
+    dp[0] = True
+    for i in range(2, n + 1):
+        if dp[i - 2] and nums[i - 2] == nums[i - 1]:
+            dp[i] = True
+        if i >= 3 and dp[i - 3]:
+            a, b, c = nums[i - 3], nums[i - 2], nums[i - 1]
+            if (a == b == c) or (b == a + 1 and c == a + 2):
+                dp[i] = True
+    return dp[n]
+`,
+
+  'paint-fence': `
+def numWays(n, k):
+    if n == 1:
+        return k
+    same = k
+    diff = k * (k - 1)
+    for _ in range(3, n + 1):
+        same, diff = diff, (k - 1) * (same + diff)
+    return same + diff
+`,
+
+  'minimum-insertion-steps-palindrome': `
+def minInsertions(s):
+    n = len(s)
+    rev = s[::-1]
+    dp = [[0] * (n + 1) for _ in range(n + 1)]
+    for i in range(1, n + 1):
+        for j in range(1, n + 1):
+            if s[i-1] == rev[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    return n - dp[n][n]
+`,
+
+  'longest-subarray-abs-diff-limit': `
+from collections import deque
+def longestSubarrayWithLimit(nums, limit):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    max_dq = deque()
+    min_dq = deque()
+    left = 0
+    res = 0
+    for right in range(len(nums)):
+        while max_dq and nums[max_dq[-1]] <= nums[right]:
+            max_dq.pop()
+        while min_dq and nums[min_dq[-1]] >= nums[right]:
+            min_dq.pop()
+        max_dq.append(right)
+        min_dq.append(right)
+        while nums[max_dq[0]] - nums[min_dq[0]] > limit:
+            left += 1
+            if max_dq[0] < left: max_dq.popleft()
+            if min_dq[0] < left: min_dq.popleft()
+        res = max(res, right - left + 1)
+    return res
+`,
+
+  'maximum-sum-two-non-overlapping-subarrays': `
+def maxSumTwoNoOverlap(nums, firstLen, secondLen):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i+1] = prefix[i] + nums[i]
+    def s(l, r): return prefix[r+1] - prefix[l]
+    res = 0
+    max_first = 0
+    for i in range(firstLen - 1, n - secondLen):
+        max_first = max(max_first, s(i - firstLen + 1, i))
+        res = max(res, max_first + s(i + 1, i + secondLen))
+    max_second = 0
+    for i in range(secondLen - 1, n - firstLen):
+        max_second = max(max_second, s(i - secondLen + 1, i))
+        res = max(res, max_second + s(i + 1, i + firstLen))
+    return res
+`,
+
+  'number-of-closed-islands': `
+def closedIsland(grid):
+    grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    rows, cols = len(grid), len(grid[0])
+    def flood(r, c):
+        if r < 0 or r >= rows or c < 0 or c >= cols or grid[r][c] != 0:
+            return
+        grid[r][c] = 1
+        flood(r+1,c); flood(r-1,c); flood(r,c+1); flood(r,c-1)
+    for r in range(rows):
+        flood(r, 0); flood(r, cols-1)
+    for c in range(cols):
+        flood(0, c); flood(rows-1, c)
+    count = 0
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == 0:
+                flood(r, c)
+                count += 1
+    return count
+`,
+
+  'destination-city': `
+def destCity(paths):
+    paths = list(paths.to_py()) if hasattr(paths, 'to_py') else list(paths)
+    sources = set()
+    for p in paths:
+        p = list(p.to_py()) if hasattr(p, 'to_py') else list(p)
+        sources.add(p[0])
+    for p in paths:
+        p = list(p.to_py()) if hasattr(p, 'to_py') else list(p)
+        if p[1] not in sources:
+            return p[1]
+    return ''
+`,
+
+  'find-winner-tictactoe': `
+def tictactoe(moves):
+    moves = list(moves.to_py()) if hasattr(moves, 'to_py') else list(moves)
+    rowA = [0]*3; colA = [0]*3; diagA = 0; antiA = 0
+    rowB = [0]*3; colB = [0]*3; diagB = 0; antiB = 0
+    for i, m in enumerate(moves):
+        m = list(m.to_py()) if hasattr(m, 'to_py') else list(m)
+        r, c = m[0], m[1]
+        if i % 2 == 0:
+            rowA[r] += 1; colA[c] += 1
+            if r == c: diagA += 1
+            if r + c == 2: antiA += 1
+            if 3 in (rowA[r], colA[c], diagA, antiA): return 'A'
+        else:
+            rowB[r] += 1; colB[c] += 1
+            if r == c: diagB += 1
+            if r + c == 2: antiB += 1
+            if 3 in (rowB[r], colB[c], diagB, antiB): return 'B'
+    return 'Draw' if len(moves) == 9 else 'Pending'
+`,
+
+  'maximum-eaten-apples': `
+import heapq
+def eatenApples(apples, days):
+    apples = list(apples.to_py()) if hasattr(apples, 'to_py') else list(apples)
+    days = list(days.to_py()) if hasattr(days, 'to_py') else list(days)
+    n = len(apples)
+    heap = []
+    eaten = 0
+    day = 0
+    while day < n or heap:
+        if day < n and apples[day] > 0:
+            heapq.heappush(heap, (day + days[day], apples[day]))
+        while heap and heap[0][0] <= day:
+            heapq.heappop(heap)
+        if heap:
+            expiry, count = heapq.heappop(heap)
+            eaten += 1
+            if count > 1:
+                heapq.heappush(heap, (expiry, count - 1))
+        day += 1
+    return eaten
+`,
+
+  'split-array-fibonacci': `
+def splitIntoFibonacci(num):
+    MAX = 2**31 - 1
+    result = []
+    def bt(start, seq):
+        if start == len(num) and len(seq) >= 3:
+            return True
+        for end in range(start + 1, len(num) + 1):
+            sub = num[start:end]
+            if len(sub) > 1 and sub[0] == '0':
+                break
+            n = int(sub)
+            if n > MAX:
+                break
+            if len(seq) >= 2:
+                expected = seq[-2] + seq[-1]
+                if n < expected:
+                    continue
+                if n > expected:
+                    break
+            seq.append(n)
+            if bt(end, seq):
+                return True
+            seq.pop()
+        return False
+    bt(0, result)
+    return result
+`,
+
+  'maximum-score-performing-multiplication': `
+def maximumScore(nums, multipliers):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    multipliers = list(multipliers.to_py()) if hasattr(multipliers, 'to_py') else list(multipliers)
+    n, m = len(nums), len(multipliers)
+    dp = [[-float('inf')] * (m + 1) for _ in range(m + 1)]
+    dp[0][0] = 0
+    for k in range(m):
+        for i in range(k + 1):
+            j = k - i
+            if dp[i][j] == -float('inf'):
+                continue
+            cur = dp[i][j]
+            if dp[i+1][j] < cur + nums[i] * multipliers[k]:
+                dp[i+1][j] = cur + nums[i] * multipliers[k]
+            if dp[i][j+1] < cur + nums[n-1-j] * multipliers[k]:
+                dp[i][j+1] = cur + nums[n-1-j] * multipliers[k]
+    res = -float('inf')
+    for i in range(m + 1):
+        j = m - i
+        if dp[i][j] > res:
+            res = dp[i][j]
+    return res
+`,
+
+  'cherry-pickup': `
+def cherryPickup(grid):
+    grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    n = len(grid)
+    NEG_INF = float('-inf')
+    dp = [[NEG_INF] * n for _ in range(n)]
+    dp[0][0] = grid[0][0]
+    for t in range(1, 2 * n - 1):
+        ndp = [[NEG_INF] * n for _ in range(n)]
+        lo = max(0, t - (n - 1))
+        hi = min(n - 1, t)
+        for r1 in range(lo, hi + 1):
+            c1 = t - r1
+            if grid[r1][c1] == -1:
+                continue
+            for r2 in range(r1, hi + 1):
+                c2 = t - r2
+                if grid[r2][c2] == -1:
+                    continue
+                best = NEG_INF
+                for d1, d2 in [(0,0),(0,1),(1,0),(1,1)]:
+                    pr1, pr2 = r1 - d1, r2 - d2
+                    if pr1 >= 0 and pr2 >= 0 and dp[pr1][pr2] != NEG_INF:
+                        best = max(best, dp[pr1][pr2])
+                if best == NEG_INF:
+                    continue
+                cherries = grid[r1][c1]
+                if r1 != r2:
+                    cherries += grid[r2][c2]
+                ndp[r1][r2] = best + cherries
+        dp = ndp
+    ans = dp[n-1][n-1]
+    return max(0, ans) if ans != NEG_INF else 0
+`,
+
+  'count-ways-build-good-string': `
+def countGoodStrings(low, high, zero, one):
+    MOD = 10**9 + 7
+    dp = [0] * (high + 1)
+    dp[0] = 1
+    ans = 0
+    for i in range(1, high + 1):
+        if i >= zero:
+            dp[i] = (dp[i] + dp[i - zero]) % MOD
+        if i >= one:
+            dp[i] = (dp[i] + dp[i - one]) % MOD
+        if i >= low:
+            ans = (ans + dp[i]) % MOD
+    return ans
+`,
+
+  'profitable-schemes': `
+def profitableSchemes(n, minProfit, group, profit):
+    group = list(group.to_py()) if hasattr(group, 'to_py') else list(group)
+    profit = list(profit.to_py()) if hasattr(profit, 'to_py') else list(profit)
+    MOD = 10**9 + 7
+    dp = [[0] * (minProfit + 1) for _ in range(n + 1)]
+    dp[0][0] = 1
+    for i in range(len(group)):
+        g, p = group[i], profit[i]
+        for w in range(n, g - 1, -1):
+            for j in range(minProfit, -1, -1):
+                np_val = min(j + p, minProfit)
+                dp[w][np_val] = (dp[w][np_val] + dp[w - g][j]) % MOD
+    return sum(dp[w][minProfit] for w in range(n + 1)) % MOD
+`,
+
+  'count-square-submatrices': `
+def countSquares(matrix):
+    matrix = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (matrix.to_py() if hasattr(matrix, 'to_py') else matrix)]
+    ans = 0
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+            if matrix[i][j] == 1 and i > 0 and j > 0:
+                matrix[i][j] = min(matrix[i-1][j], matrix[i][j-1], matrix[i-1][j-1]) + 1
+            ans += matrix[i][j]
+    return ans
+`,
+
+  'freedom-trail': `
+def findRotateSteps(ring, key):
+    n = len(ring)
+    pos = {}
+    for i, c in enumerate(ring):
+        pos.setdefault(c, []).append(i)
+    dp = [float('inf')] * n
+    dp[0] = 0
+    for c in key:
+        ndp = [float('inf')] * n
+        for nxt in pos[c]:
+            for cur in range(n):
+                if dp[cur] == float('inf'):
+                    continue
+                diff = abs(cur - nxt)
+                steps = min(diff, n - diff)
+                ndp[nxt] = min(ndp[nxt], dp[cur] + steps + 1)
+        dp = ndp
+    return min(dp)
+`,
+
+  'guess-number-higher-or-lower-ii': `
+def getMoneyAmount(n):
+    dp = [[0] * (n + 2) for _ in range(n + 2)]
+    for length in range(2, n + 1):
+        for i in range(1, n - length + 2):
+            j = i + length - 1
+            dp[i][j] = float('inf')
+            for k in range(i, j + 1):
+                cost = k + max(dp[i][k-1] if k > i else 0, dp[k+1][j] if k < j else 0)
+                dp[i][j] = min(dp[i][j], cost)
+    return dp[1][n]
+`,
+
+  'remove-palindromic-subsequences': `
+def removePalindromeSub(s):
+    if not s:
+        return 0
+    if s == s[::-1]:
+        return 1
+    return 2
+`,
+
+  'check-array-formation': `
+def canFormArray(arr, pieces):
+    arr = list(arr.to_py()) if hasattr(arr, 'to_py') else list(arr)
+    pieces = [list(p.to_py()) if hasattr(p, 'to_py') else list(p) for p in (pieces.to_py() if hasattr(pieces, 'to_py') else pieces)]
+    mp = {p[0]: p for p in pieces}
+    i = 0
+    while i < len(arr):
+        if arr[i] not in mp:
+            return False
+        piece = mp[arr[i]]
+        for j in range(len(piece)):
+            if arr[i + j] != piece[j]:
+                return False
+        i += len(piece)
+    return True
+`,
+
+  'minimum-falling-path-sum-ii': `
+def minFallingPathSumII(grid):
+    grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    n = len(grid)
+    dp = grid[0][:]
+    for i in range(1, n):
+        min1 = min2 = float('inf')
+        min_idx = -1
+        for j in range(n):
+            if dp[j] < min1:
+                min2 = min1
+                min1 = dp[j]
+                min_idx = j
+            elif dp[j] < min2:
+                min2 = dp[j]
+        ndp = [0] * n
+        for j in range(n):
+            ndp[j] = grid[i][j] + (min2 if j == min_idx else min1)
+        dp = ndp
+    return min(dp)
+`,
+
+  'scramble-string': `
+def isScramble(s1, s2):
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def solve(a, b):
+        if a == b:
+            return True
+        if sorted(a) != sorted(b):
+            return False
+        n = len(a)
+        for i in range(1, n):
+            if (solve(a[:i], b[:i]) and solve(a[i:], b[i:])) or \
+               (solve(a[:i], b[n-i:]) and solve(a[i:], b[:n-i])):
+                return True
+        return False
+    return solve(s1, s2)
+`,
+
+  'predict-the-winner': `
+def predictTheWinner(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums)
+    dp = [[0] * n for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = nums[i]
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            dp[i][j] = max(nums[i] - dp[i+1][j], nums[j] - dp[i][j-1])
+    return dp[0][n-1] >= 0
+`,
+
+  'russian-doll-envelopes': `
+import bisect
+def maxEnvelopes(envelopes):
+    envs = list(envelopes.to_py()) if hasattr(envelopes, 'to_py') else list(envelopes)
+    envs = [list(e.to_py()) if hasattr(e, 'to_py') else list(e) for e in envs]
+    envs.sort(key=lambda x: (x[0], -x[1]))
+    tails = []
+    for _, h in envs:
+        pos = bisect.bisect_left(tails, h)
+        if pos == len(tails):
+            tails.append(h)
+        else:
+            tails[pos] = h
+    return len(tails)
+`,
+
+  'binary-tree-cameras': `
+def minCameraCover(root):
+    cameras = 0
+    def dfs(node):
+        nonlocal cameras
+        if node is None: return 1
+        left = dfs(node.left); right = dfs(node.right)
+        if left == 0 or right == 0: cameras += 1; return 2
+        if left == 2 or right == 2: return 1
+        return 0
+    if dfs(root) == 0: cameras += 1
+    return cameras
+`,
+
+  'linked-list-cycle-ii': `
+def detectCycle(vals, pos):
+    vals = list(vals.to_py()) if hasattr(vals, 'to_py') else list(vals)
+    pos = int(pos)
+    if not vals: return -1
+    class Node:
+        def __init__(self, v): self.val = v; self.next = None
+    nodes = [Node(v) for v in vals]
+    for i in range(len(nodes) - 1): nodes[i].next = nodes[i + 1]
+    if 0 <= pos < len(nodes): nodes[-1].next = nodes[pos]
+    slow = fast = nodes[0]
+    while True:
+        slow = slow.next
+        if not fast.next or not fast.next.next: return -1
+        fast = fast.next.next
+        if slow is fast: break
+    entry = nodes[0]
+    while entry is not slow: entry = entry.next; slow = slow.next
+    return nodes.index(entry)
+`,
+
+  'add-two-numbers-ii': `
+def addTwoNumbers(l1, l2):
+    s1 = list(l1.to_py()) if hasattr(l1, 'to_py') else list(l1)
+    s2 = list(l2.to_py()) if hasattr(l2, 'to_py') else list(l2)
+    result = []; carry = 0
+    while s1 or s2 or carry:
+        d1 = s1.pop() if s1 else 0
+        d2 = s2.pop() if s2 else 0
+        total = d1 + d2 + carry
+        carry, digit = divmod(total, 10)
+        result.insert(0, digit)
+    return result
+`,
+
+  'maximum-performance-of-team': `
+import heapq
+def maxPerformance(n, speed, efficiency, k):
+    speed = list(speed.to_py()) if hasattr(speed, 'to_py') else list(speed)
+    efficiency = list(efficiency.to_py()) if hasattr(efficiency, 'to_py') else list(efficiency)
+    k = int(k); MOD = 10**9 + 7
+    engineers = sorted(zip(efficiency, speed), reverse=True)
+    min_heap = []; speed_sum = 0; best = 0
+    for eff, spd in engineers:
+        heapq.heappush(min_heap, spd); speed_sum += spd
+        if len(min_heap) > k: speed_sum -= heapq.heappop(min_heap)
+        best = max(best, speed_sum * eff)
+    return best % MOD
+`,
+
+  'minimum-interval-to-include-each-query': `
+import heapq
+def minInterval(intervals, queries):
+    intervals = [list(iv.to_py()) if hasattr(iv, 'to_py') else list(iv) for iv in (intervals.to_py() if hasattr(intervals, 'to_py') else intervals)]
+    queries = list(queries.to_py()) if hasattr(queries, 'to_py') else list(queries)
+    intervals.sort()
+    indexed = sorted(enumerate(queries), key=lambda x: x[1])
+    ans = [-1] * len(queries)
+    min_heap = []; j = 0
+    for qi, q in indexed:
+        while j < len(intervals) and intervals[j][0] <= q:
+            l, r = intervals[j]; heapq.heappush(min_heap, (r - l + 1, r)); j += 1
+        while min_heap and min_heap[0][1] < q: heapq.heappop(min_heap)
+        if min_heap: ans[qi] = min_heap[0][0]
+    return ans
+`,
+
+  'minimum-number-of-taps-to-open-to-water-a-garden': `
+def minTaps(n, ranges):
+    n = int(n)
+    ranges = list(ranges.to_py()) if hasattr(ranges, 'to_py') else list(ranges)
+    max_reach = [0] * (n + 1)
+    for i in range(n + 1):
+        left = max(0, i - ranges[i]); right = min(n, i + ranges[i])
+        max_reach[left] = max(max_reach[left], right)
+    taps = cur_end = next_end = 0
+    for i in range(n + 1):
+        if i > next_end: return -1
+        next_end = max(next_end, max_reach[i])
+        if i == cur_end and i < n: taps += 1; cur_end = next_end
+    return taps
+`,
+
+  'online-election': `
+import bisect
+def topVotedCandidate(persons, times, queries):
+    persons = list(persons.to_py()) if hasattr(persons, 'to_py') else list(persons)
+    times = list(times.to_py()) if hasattr(times, 'to_py') else list(times)
+    queries = list(queries.to_py()) if hasattr(queries, 'to_py') else list(queries)
+    votes = {}; leaders = []; leader = -1
+    for p in persons:
+        votes[p] = votes.get(p, 0) + 1
+        if leader == -1 or votes[p] >= votes[leader]: leader = p
+        leaders.append(leader)
+    result = []
+    for t in queries:
+        idx = bisect.bisect_right(times, t) - 1
+        result.append(leaders[idx])
+    return result
+`,
+
+  'count-of-range-sum': `
+def countRangeSum(nums, lower, upper):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    lower = int(lower); upper = int(upper)
+    prefix = [0] * (len(nums) + 1)
+    for i, v in enumerate(nums): prefix[i+1] = prefix[i] + v
+    count = 0
+    def merge_sort(arr):
+        nonlocal count
+        if len(arr) <= 1: return arr
+        mid = len(arr) // 2
+        left = merge_sort(arr[:mid]); right = merge_sort(arr[mid:])
+        j = k = 0
+        for r in right:
+            while j < len(left) and left[j] < r - upper: j += 1
+            while k < len(left) and left[k] <= r - lower: k += 1
+            count += k - j
+        return sorted(left + right)
+    merge_sort(prefix)
+    return count
+`,
+
+  'design-linked-list': `
+def simulateLinkedList(ops, args):
+    ops = list(ops.to_py()) if hasattr(ops, 'to_py') else list(ops)
+    args = [list(a.to_py()) if hasattr(a, 'to_py') else list(a) for a in (args.to_py() if hasattr(args, 'to_py') else args)]
+    class Node:
+        def __init__(self, v): self.val = v; self.next = None
+    head = Node(0); size = 0
+    def get(i):
+        if i < 0 or i >= size: return -1
+        cur = head.next
+        for _ in range(i): cur = cur.next
+        return cur.val
+    def add_at_index(i, v):
+        nonlocal size
+        if i > size: return
+        i = max(0, i); prev = head
+        for _ in range(i): prev = prev.next
+        node = Node(v); node.next = prev.next; prev.next = node; size += 1
+    def delete_at_index(i):
+        nonlocal size
+        if i < 0 or i >= size: return
+        prev = head
+        for _ in range(i): prev = prev.next
+        prev.next = prev.next.next; size -= 1
+    result = []
+    for op, a in zip(ops, args):
+        if op == 'addAtHead': add_at_index(0, a[0]); result.append(None)
+        elif op == 'addAtTail': add_at_index(size, a[0]); result.append(None)
+        elif op == 'addAtIndex': add_at_index(a[0], a[1]); result.append(None)
+        elif op == 'deleteAtIndex': delete_at_index(a[0]); result.append(None)
+        elif op == 'get': result.append(get(a[0]))
+    return result
+`,
+  'maximum-product-subarray': `
+def maxProduct(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    max_p = min_p = res = nums[0]
+    for n in nums[1:]:
+        candidates = (n, max_p * n, min_p * n)
+        max_p = max(candidates)
+        min_p = min(candidates)
+        res = max(res, max_p)
+    return res
+`,
+
+  'delete-and-earn': `
+def deleteAndEarn(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    max_val = max(nums)
+    total = [0] * (max_val + 1)
+    for n in nums:
+        total[n] += n
+    prev2 = prev1 = 0
+    for i in range(max_val + 1):
+        cur = max(prev1, prev2 + total[i])
+        prev2 = prev1
+        prev1 = cur
+    return prev1
+`,
+
+  'minimum-time-collect-apples': `
+def minTime(n, edges, hasApple):
+    import sys
+    sys.setrecursionlimit(200000)
+    edges = [list(e.to_py()) if hasattr(e, 'to_py') else list(e) for e in (edges.to_py() if hasattr(edges, 'to_py') else edges)]
+    hasApple = list(hasApple.to_py()) if hasattr(hasApple, 'to_py') else list(hasApple)
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    def dfs(node, parent):
+        time = 0
+        for child in adj[node]:
+            if child == parent:
+                continue
+            ct = dfs(child, node)
+            if ct > 0 or hasApple[child]:
+                time += ct + 2
+        return time
+    return dfs(0, -1)
+`,
+
+  'xor-queries-of-subarray': `
+def xorQueries(arr, queries):
+    arr = list(arr.to_py()) if hasattr(arr, 'to_py') else list(arr)
+    queries = [list(q.to_py()) if hasattr(q, 'to_py') else list(q) for q in (queries.to_py() if hasattr(queries, 'to_py') else queries)]
+    prefix = [0]
+    for n in arr:
+        prefix.append(prefix[-1] ^ n)
+    return [prefix[r + 1] ^ prefix[l] for l, r in queries]
+`,
+
+  'sequential-digits': `
+def sequentialDigits(low, high):
+    result = []
+    for start in range(1, 10):
+        num = 0
+        for d in range(start, 10):
+            num = num * 10 + d
+            if low <= num <= high:
+                result.append(num)
+    return sorted(result)
+`,
+
+  'count-sub-islands': `
+def countSubIslands(grid1, grid2):
+    grid1 = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid1.to_py() if hasattr(grid1, 'to_py') else grid1)]
+    grid2 = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid2.to_py() if hasattr(grid2, 'to_py') else grid2)]
+    m, n = len(grid1), len(grid1[0])
+    count = 0
+    def dfs(i, j):
+        if i < 0 or i >= m or j < 0 or j >= n or grid2[i][j] != 1:
+            return True
+        grid2[i][j] = 0
+        ok = grid1[i][j] == 1
+        ok = dfs(i - 1, j) and ok
+        ok = dfs(i + 1, j) and ok
+        ok = dfs(i, j - 1) and ok
+        ok = dfs(i, j + 1) and ok
+        return ok
+    for i in range(m):
+        for j in range(n):
+            if grid2[i][j] == 1 and dfs(i, j):
+                count += 1
+    return count
+`,
+
+  'maximum-profit-assignment': `
+def maxProfitAssignment(difficulty, profit, worker):
+    difficulty = list(difficulty.to_py()) if hasattr(difficulty, 'to_py') else list(difficulty)
+    profit = list(profit.to_py()) if hasattr(profit, 'to_py') else list(profit)
+    worker = list(worker.to_py()) if hasattr(worker, 'to_py') else list(worker)
+    jobs = sorted(zip(difficulty, profit))
+    worker.sort()
+    total = best = k = 0
+    for w in worker:
+        while k < len(jobs) and jobs[k][0] <= w:
+            best = max(best, jobs[k][1])
+            k += 1
+        total += best
+    return total
+`,
+
+  'longest-palindromic-substring': `
+def longestPalindrome(s):
+    start, max_len = 0, 0
+    def expand(l, r):
+        nonlocal start, max_len
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            l -= 1
+            r += 1
+        if r - l - 1 > max_len:
+            max_len = r - l - 1
+            start = l + 1
+    for i in range(len(s)):
+        expand(i, i)
+        expand(i, i + 1)
+    return s[start:start + max_len]
+`,
+
+  'max-product-word-lengths': `
+def maxProductWordLengths(words):
+    words = list(words.to_py()) if hasattr(words, 'to_py') else list(words)
+    masks = []
+    for w in words:
+        mask = 0
+        for c in w:
+            mask |= (1 << (ord(c) - ord('a')))
+        masks.append(mask)
+    best = 0
+    for i in range(len(words) - 1):
+        for j in range(i + 1, len(words)):
+            if masks[i] & masks[j] == 0:
+                best = max(best, len(words[i]) * len(words[j]))
+    return best
+`,
+
+  'cherry-pickup-ii': `
+def cherryPickup(grid):
+    grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    rows, cols = len(grid), len(grid[0])
+    NEG_INF = float('-inf')
+    dp = [[NEG_INF] * cols for _ in range(cols)]
+    dp[0][cols - 1] = grid[0][0] + (grid[0][cols - 1] if cols > 1 else 0)
+    for r in range(1, rows):
+        ndp = [[NEG_INF] * cols for _ in range(cols)]
+        for c1 in range(cols):
+            for c2 in range(c1, cols):
+                if dp[c1][c2] == NEG_INF:
+                    continue
+                for d1 in (-1, 0, 1):
+                    for d2 in (-1, 0, 1):
+                        nc1, nc2 = c1 + d1, c2 + d2
+                        if nc1 < 0 or nc1 >= cols or nc2 < 0 or nc2 >= cols or nc1 > nc2:
+                            continue
+                        cherries = grid[r][nc1] + (0 if nc1 == nc2 else grid[r][nc2])
+                        ndp[nc1][nc2] = max(ndp[nc1][nc2], dp[c1][c2] + cherries)
+        dp = ndp
+    ans = 0
+    for c1 in range(cols):
+        for c2 in range(c1, cols):
+            if dp[c1][c2] > ans:
+                ans = dp[c1][c2]
+    return ans
+`,
+
+  'detonate-maximum-bombs': `
+def maximumDetonation(bombs):
+    bombs = [list(b.to_py()) if hasattr(b, 'to_py') else list(b) for b in (bombs.to_py() if hasattr(bombs, 'to_py') else bombs)]
+    n = len(bombs)
+    adj = [[] for _ in range(n)]
+    for i in range(n):
+        x1, y1, r1 = bombs[i]
+        for j in range(n):
+            if i == j:
+                continue
+            x2, y2, _ = bombs[j]
+            if (x1 - x2) ** 2 + (y1 - y2) ** 2 <= r1 * r1:
+                adj[i].append(j)
+    def bfs(start):
+        vis = {start}
+        queue = [start]
+        for cur in queue:
+            for nb in adj[cur]:
+                if nb not in vis:
+                    vis.add(nb)
+                    queue.append(nb)
+        return len(vis)
+    return max(bfs(i) for i in range(n))
+`,
+
+  'stone-game-vii': `
+def stoneGameVII(stones):
+    stones = list(stones.to_py()) if hasattr(stones, 'to_py') else list(stones)
+    n = len(stones)
+    prefix = [0] * (n + 1)
+    for i, x in enumerate(stones):
+        prefix[i + 1] = prefix[i] + x
+    def rng(i, j):
+        return prefix[j + 1] - prefix[i]
+    dp = [[0] * n for _ in range(n)]
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            dp[i][j] = max(rng(i + 1, j) - dp[i + 1][j], rng(i, j - 1) - dp[i][j - 1])
+    return dp[0][n - 1]
+`,
+
+  'design-browser-history': `
+def browserHistory(homepage, ops):
+    ops = list(ops.to_py()) if hasattr(ops, 'to_py') else list(ops)
+    back_stack = []
+    fwd_stack = []
+    cur = str(homepage)
+    results = []
+    for op in ops:
+        op = list(op.to_py()) if hasattr(op, 'to_py') else list(op)
+        action = op[0]
+        if action == 'visit':
+            back_stack.append(cur)
+            fwd_stack.clear()
+            cur = op[1]
+        elif action == 'back':
+            steps = int(op[1])
+            for _ in range(min(steps, len(back_stack))):
+                fwd_stack.append(cur)
+                cur = back_stack.pop()
+            results.append(cur)
+        else:  # forward
+            steps = int(op[1])
+            for _ in range(min(steps, len(fwd_stack))):
+                back_stack.append(cur)
+                cur = fwd_stack.pop()
+            results.append(cur)
+    return results
+`,
+
+  'knight-dialer': `
+def knightDialer(n):
+    MOD = 10 ** 9 + 7
+    moves = [[4,6],[6,8],[7,9],[4,8],[0,3,9],[],[0,1,7],[2,6],[1,3],[2,4]]
+    dp = [1] * 10
+    for _ in range(n - 1):
+        ndp = [0] * 10
+        for d in range(10):
+            for nb in moves[d]:
+                ndp[d] = (ndp[d] + dp[nb]) % MOD
+        dp = ndp
+    return sum(dp) % MOD
+`,
+
+  'paint-house-iii': `
+def minCost(houses, cost, m, n, target):
+    houses = list(houses.to_py()) if hasattr(houses, 'to_py') else list(houses)
+    cost = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (cost.to_py() if hasattr(cost, 'to_py') else cost)]
+    INF = float('inf')
+    dp = [[[INF] * (target + 1) for _ in range(n)] for _ in range(m)]
+    if houses[0] != 0:
+        dp[0][houses[0] - 1][1] = 0
+    else:
+        for j in range(n):
+            dp[0][j][1] = cost[0][j]
+    for i in range(1, m):
+        color_range = [houses[i] - 1] if houses[i] != 0 else range(n)
+        for j in color_range:
+            paint = 0 if houses[i] != 0 else cost[i][j]
+            for k in range(1, min(i + 2, target + 1)):
+                if dp[i-1][j][k] != INF:
+                    dp[i][j][k] = min(dp[i][j][k], dp[i-1][j][k] + paint)
+                if k > 1:
+                    for pj in range(n):
+                        if pj != j and dp[i-1][pj][k-1] != INF:
+                            dp[i][j][k] = min(dp[i][j][k], dp[i-1][pj][k-1] + paint)
+    ans = min(dp[m-1][j][target] for j in range(n))
+    return -1 if ans == INF else ans
+`,
+
+  'maximize-distance-to-closest-person': `
+def maxDistToClosest(seats):
+    seats = list(seats.to_py()) if hasattr(seats, 'to_py') else list(seats)
+    n = len(seats)
+    best = prev = -1
+    for i in range(n):
+        if seats[i] == 1:
+            if prev == -1:
+                best = max(best, i)
+            else:
+                best = max(best, (i - prev) // 2)
+            prev = i
+    if prev != n - 1:
+        best = max(best, n - 1 - prev)
+    return best
+`,
+
+  'minimum-number-of-vertices': `
+def findSmallestSetOfVertices(n, edges):
+    edges = [list(e.to_py()) if hasattr(e, 'to_py') else list(e) for e in (edges.to_py() if hasattr(edges, 'to_py') else edges)]
+    has_incoming = set()
+    for e in edges:
+        has_incoming.add(e[1])
+    return [i for i in range(n) if i not in has_incoming]
+`,
+
+
+  'sliding-window-median': `
+def medianSlidingWindow(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    k = int(k)
+    result = []
+    for i in range(len(nums) - k + 1):
+        window = sorted(nums[i:i+k])
+        mid = k // 2
+        if k % 2 == 1:
+            result.append(window[mid])
+        else:
+            result.append((window[mid-1] + window[mid]) / 2)
+    return result
+`,
+
+  'minimum-difficulty-of-job-schedule': `
+def minDifficulty(jobDifficulty, d):
+    jobDifficulty = list(jobDifficulty.to_py()) if hasattr(jobDifficulty, 'to_py') else list(jobDifficulty)
+    d = int(d)
+    n = len(jobDifficulty)
+    if n < d: return -1
+    INF = float('inf')
+    dp = [INF] * n
+    mx = 0
+    for i in range(n): mx = max(mx, jobDifficulty[i]); dp[i] = mx
+    for day in range(2, d + 1):
+        ndp = [INF] * n
+        for i in range(day - 1, n):
+            mx = 0
+            for j in range(i, day - 2, -1):
+                mx = max(mx, jobDifficulty[j])
+                if dp[j-1] < INF: ndp[i] = min(ndp[i], dp[j-1] + mx)
+        dp = ndp
+    return dp[n-1]
+`,
+
+  'tallest-billboard': `
+def tallestBillboard(rods):
+    rods = list(rods.to_py()) if hasattr(rods, 'to_py') else list(rods)
+    S = sum(rods)
+    dp = [-1] * (S + 1)
+    dp[0] = 0
+    for r in rods:
+        curr = dp[:]
+        for d in range(S + 1):
+            if curr[d] < 0: continue
+            if d + r <= S: dp[d + r] = max(dp[d + r], curr[d] + r)
+            if d >= r: dp[d - r] = max(dp[d - r], curr[d])
+            else: dp[r - d] = max(dp[r - d], curr[d] + r - d)
+    return dp[0]
+`,
+
+  'concatenated-words': `
+def findAllConcatenatedWordsInADict(words):
+    words = list(words.to_py()) if hasattr(words, 'to_py') else list(words)
+    word_set = set(words)
+    def can_form(word):
+        n = len(word)
+        dp = [False] * (n + 1); dp[0] = True
+        for i in range(1, n + 1):
+            for j in range(i):
+                if not dp[j]: continue
+                sub = word[j:i]
+                if sub != word and sub in word_set: dp[i] = True; break
+        return dp[n]
+    return sorted([w for w in words if w and can_form(w)])
+`,
+
+  'max-value-of-equation': `
+from collections import deque
+def findMaxValueOfEquation(points, k):
+    points = [list(p.to_py()) if hasattr(p, 'to_py') else list(p) for p in (points.to_py() if hasattr(points, 'to_py') else points)]
+    k = int(k)
+    dq = deque()  # (yi-xi, xi)
+    ans = float('-inf')
+    for xj, yj in points:
+        while dq and xj - dq[0][1] > k: dq.popleft()
+        if dq: ans = max(ans, dq[0][0] + xj + yj)
+        while dq and dq[-1][0] <= yj - xj: dq.pop()
+        dq.append((yj - xj, xj))
+    return ans
+`,
+
+  'number-of-music-playlists': `
+def numMusicPlaylists(n, goal, k):
+    n = int(n); goal = int(goal); k = int(k)
+    MOD = 10**9 + 7
+    dp = [[0] * (n + 1) for _ in range(goal + 1)]
+    dp[0][0] = 1
+    for i in range(1, goal + 1):
+        for j in range(1, n + 1):
+            dp[i][j] = (dp[i][j] + dp[i-1][j-1] * (n - j + 1)) % MOD
+            if j > k: dp[i][j] = (dp[i][j] + dp[i-1][j] * (j - k)) % MOD
+    return dp[goal][n]
+`,
+
+  'count-different-palindromic-subsequences': `
+def countPalindromicSubsequences(s):
+    MOD = 10**9 + 7
+    n = len(s)
+    dp = [[0] * n for _ in range(n)]
+    for i in range(n): dp[i][i] = 1
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            for c in 'abcd':
+                l, r = i, j
+                while l <= j and s[l] != c: l += 1
+                while r >= i and s[r] != c: r -= 1
+                if l > j or r < i: continue
+                if l == r: dp[i][j] = (dp[i][j] + 1) % MOD
+                elif l + 1 == r: dp[i][j] = (dp[i][j] + 2) % MOD
+                else: dp[i][j] = (dp[i][j] + dp[l+1][r-1] + 2) % MOD
+    return dp[0][n-1]
+`,
+
+  'painting-the-walls': `
+def paintWalls(cost, time):
+    cost = list(cost.to_py()) if hasattr(cost, 'to_py') else list(cost)
+    time = list(time.to_py()) if hasattr(time, 'to_py') else list(time)
+    n = len(cost)
+    dp = [float('inf')] * (n + 1); dp[0] = 0
+    for i in range(n):
+        for j in range(n, -1, -1):
+            dp[j] = min(dp[j], dp[max(0, j - time[i] - 1)] + cost[i])
+    return dp[n]
+`,
+
+  'shortest-path-to-get-all-keys': `
+from collections import deque
+def shortestPathAllKeys(grid):
+    grid = list(grid.to_py()) if hasattr(grid, 'to_py') else list(grid)
+    grid = [str(row) for row in grid]
+    m, n = len(grid), len(grid[0])
+    num_keys = 0; sr = sc = 0
+    for r in range(m):
+        for c in range(n):
+            ch = grid[r][c]
+            if ch == '@': sr, sc = r, c
+            elif 'a' <= ch <= 'f': num_keys += 1
+    if num_keys == 0: return 0
+    all_keys = (1 << num_keys) - 1
+    visited = set()
+    q = deque([(sr, sc, 0, 0)])
+    visited.add((sr, sc, 0))
+    while q:
+        r, c, keys, dist = q.popleft()
+        if keys == all_keys: return dist
+        for dr, dc in ((0,1),(0,-1),(1,0),(-1,0)):
+            nr, nc = r + dr, c + dc
+            if not (0 <= nr < m and 0 <= nc < n): continue
+            cell = grid[nr][nc]
+            if cell == '#': continue
+            if 'A' <= cell <= 'F' and not (keys & (1 << (ord(cell) - 65))): continue
+            nkeys = keys | (1 << (ord(cell) - 97)) if 'a' <= cell <= 'f' else keys
+            if (nr, nc, nkeys) not in visited:
+                visited.add((nr, nc, nkeys))
+                q.append((nr, nc, nkeys, dist + 1))
+    return -1
+`,
+
+  'stone-game-v': `
+def stoneGameV(stoneValue):
+    stoneValue = list(stoneValue.to_py()) if hasattr(stoneValue, 'to_py') else list(stoneValue)
+    n = len(stoneValue)
+    if n == 1: return 0
+    prefix = [0]*(n+1)
+    for i in range(n): prefix[i+1] = prefix[i] + stoneValue[i]
+    dp = [[0]*n for _ in range(n)]
+    for length in range(2, n+1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            for m in range(i, j):
+                left = prefix[m+1] - prefix[i]
+                right = prefix[j+1] - prefix[m+1]
+                if left < right: dp[i][j] = max(dp[i][j], left + dp[i][m])
+                elif left > right: dp[i][j] = max(dp[i][j], right + dp[m+1][j])
+                else: dp[i][j] = max(dp[i][j], left + max(dp[i][m], dp[m+1][j]))
+    return dp[0][n-1]
+`,
+
+  'maximum-sum-three-non-overlapping-subarrays': `
+def maxSumOfThreeSubarrays(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums)
+    w = []
+    s = sum(nums[:k]); w.append(s)
+    for i in range(k, n): s += nums[i] - nums[i-k]; w.append(s)
+    wn = len(w)
+    left = [0]*wn; right = [0]*wn
+    best = w[0]; bidx = 0
+    for i in range(wn):
+        if w[i] > best: best = w[i]; bidx = i
+        left[i] = bidx
+    best = w[-1]; bidx = wn-1
+    for i in range(wn-1, -1, -1):
+        if w[i] >= best: best = w[i]; bidx = i
+        right[i] = bidx
+    ans = [-1,-1,-1]; best_sum = 0
+    for j in range(k, wn-k):
+        l, r = left[j-k], right[j+k]
+        if w[l]+w[j]+w[r] > best_sum:
+            best_sum = w[l]+w[j]+w[r]; ans = [l,j,r]
+    return ans
+`,
+
+  'minimum-cost-to-merge-stones': `
+def mergeStones(stones, k):
+    stones = list(stones.to_py()) if hasattr(stones, 'to_py') else list(stones)
+    n = len(stones)
+    if n == 1: return 0
+    if (n - 1) % (k - 1) != 0: return -1
+    prefix = [0]*(n+1)
+    for i in range(n): prefix[i+1] = prefix[i] + stones[i]
+    dp = [[0]*n for _ in range(n)]
+    for length in range(k, n+1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            dp[i][j] = float('inf')
+            for m in range(i, j, k-1):
+                dp[i][j] = min(dp[i][j], dp[i][m] + dp[m+1][j])
+            if (length - 1) % (k - 1) == 0:
+                dp[i][j] += prefix[j+1] - prefix[i]
+    return dp[0][n-1]
+`,
+
+  'palindrome-partitioning-iii': `
+def palindromePartition(s, k):
+    n = len(s)
+    cost = [[0]*n for _ in range(n)]
+    for length in range(2, n+1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            cost[i][j] = cost[i+1][j-1] + (0 if s[i] == s[j] else 1)
+    INF = float('inf')
+    dp = [[INF]*n for _ in range(k+1)]
+    for j in range(n): dp[1][j] = cost[0][j]
+    for t in range(2, k+1):
+        for j in range(t-1, n):
+            for m in range(t-1, j+1):
+                dp[t][j] = min(dp[t][j], dp[t-1][m-1] + cost[m][j])
+    return dp[k][n-1]
+`,
+
+  'maximum-height-by-stacking-cuboids': `
+def maxHeight(cuboids):
+    cuboids = [list(c.to_py()) if hasattr(c, 'to_py') else list(c) for c in (cuboids.to_py() if hasattr(cuboids, 'to_py') else cuboids)]
+    for c in cuboids: c.sort()
+    cuboids.sort()
+    n = len(cuboids)
+    dp = [c[2] for c in cuboids]
+    for i in range(n):
+        for j in range(i):
+            if cuboids[j][0] <= cuboids[i][0] and cuboids[j][1] <= cuboids[i][1] and cuboids[j][2] <= cuboids[i][2]:
+                dp[i] = max(dp[i], dp[j] + cuboids[i][2])
+    return max(dp)
+`,
+
+  'minimum-number-of-days-to-eat-n-oranges': `
+def minDays(n):
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dp(x):
+        if x <= 1: return x
+        return 1 + min(x % 2 + dp(x // 2), x % 3 + dp(x // 3))
+    return dp(n)
+`,
+
+  'best-team-with-no-conflicts': `
+def bestTeamScore(scores, ages):
+    scores = list(scores.to_py()) if hasattr(scores, 'to_py') else list(scores)
+    ages = list(ages.to_py()) if hasattr(ages, 'to_py') else list(ages)
+    players = sorted(zip(ages, scores))
+    n = len(players)
+    dp = [p[1] for p in players]
+    for i in range(n):
+        for j in range(i):
+            if players[j][1] <= players[i][1]:
+                dp[i] = max(dp[i], dp[j] + players[i][1])
+    return max(dp)
+`,
+
+  'number-of-ways-to-form-target-given-dictionary': `
+def numWays(words, target):
+    words = list(words.to_py()) if hasattr(words, 'to_py') else list(words)
+    words = [str(w) for w in words]
+    MOD = 10**9 + 7
+    wlen, tlen = len(words[0]), len(target)
+    count = [[0]*26 for _ in range(wlen)]
+    for w in words:
+        for j, c in enumerate(w):
+            count[j][ord(c)-ord('a')] += 1
+    dp = [0]*(tlen+1); dp[0] = 1
+    for j in range(wlen):
+        for i in range(min(j+1,tlen), 0, -1):
+            c = ord(target[i-1]) - ord('a')
+            dp[i] = (dp[i] + dp[i-1] * count[j][c]) % MOD
+    return dp[tlen]
+`,
+
+  'minimum-xor-sum-of-two-arrays': `
+def minimumXORSum(nums1, nums2):
+    nums1 = list(nums1.to_py()) if hasattr(nums1, 'to_py') else list(nums1)
+    nums2 = list(nums2.to_py()) if hasattr(nums2, 'to_py') else list(nums2)
+    n = len(nums1)
+    INF = float('inf')
+    dp = [INF] * (1 << n); dp[0] = 0
+    for mask in range(1 << n):
+        if dp[mask] == INF: continue
+        i = bin(mask).count('1')
+        if i >= n: continue
+        for j in range(n):
+            if not (mask & (1 << j)):
+                nxt = mask | (1 << j)
+                dp[nxt] = min(dp[nxt], dp[mask] + (nums1[i] ^ nums2[j]))
+    return dp[(1 << n) - 1]
+`,
+
+  'number-of-ways-to-rearrange-sticks-with-k-sticks-visible': `
+def rearrangeSticks(n, k):
+    MOD = 10**9 + 7
+    dp = [[0] * (k + 1) for _ in range(n + 1)]
+    dp[0][0] = 1
+    for i in range(1, n + 1):
+        for j in range(1, min(i, k) + 1):
+            dp[i][j] = (dp[i-1][j-1] + (i - 1) * dp[i-1][j]) % MOD
+    return dp[n][k]
+`,
+
+  'number-of-ways-to-stay-in-same-place-after-some-steps': `
+def numWays(steps, arrLen):
+    MOD = 10**9 + 7
+    max_pos = min(arrLen - 1, steps // 2)
+    dp = [0] * (max_pos + 1)
+    dp[0] = 1
+    for _ in range(steps):
+        ndp = [0] * (max_pos + 1)
+        for i in range(max_pos + 1):
+            ndp[i] = dp[i]
+            if i > 0:
+                ndp[i] = (ndp[i] + dp[i-1]) % MOD
+            if i < max_pos:
+                ndp[i] = (ndp[i] + dp[i+1]) % MOD
+        dp = ndp
+    return dp[0]
+`,
+
+  'minimum-score-triangulation-of-polygon': `
+def minScoreTriangulation(values):
+    values = list(values.to_py()) if hasattr(values, 'to_py') else list(values)
+    n = len(values)
+    dp = [[0] * n for _ in range(n)]
+    for length in range(2, n):
+        for i in range(n - length):
+            j = i + length
+            dp[i][j] = float('inf')
+            for k in range(i + 1, j):
+                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j] + values[i] * values[k] * values[j])
+    return dp[0][n-1]
+`,
+
+  'minimum-cost-to-make-array-equal': `
+def minCost(nums, cost):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    cost = list(cost.to_py()) if hasattr(cost, 'to_py') else list(cost)
+    def total(v):
+        return sum(abs(nums[i] - v) * cost[i] for i in range(len(nums)))
+    lo, hi = min(nums), max(nums)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if total(mid) <= total(mid + 1):
+            hi = mid
+        else:
+            lo = mid + 1
+    return total(lo)
+`,
+
+  'maximum-number-of-achievable-transfer-requests': `
+def maximumRequests(n, requests):
+    requests = list(requests.to_py()) if hasattr(requests, 'to_py') else list(requests)
+    requests = [[int(x) for x in r] for r in requests]
+    m = len(requests)
+    best = 0
+    for mask in range(1 << m):
+        balance = [0] * n
+        count = 0
+        for i in range(m):
+            if mask & (1 << i):
+                balance[requests[i][0]] -= 1
+                balance[requests[i][1]] += 1
+                count += 1
+        if all(b == 0 for b in balance):
+            best = max(best, count)
+    return best
+`,
+
+  'maximum-elegance-of-k-length-subsequence': `
+def findMaximumElegance(items, k):
+    items = list(items.to_py()) if hasattr(items, 'to_py') else list(items)
+    items = [[int(x) for x in row] for row in items]
+    items.sort(key=lambda x: -x[0])
+    total_profit = 0
+    distinct_count = 0
+    seen = set()
+    stack = []
+    for i in range(k):
+        profit, cat = items[i]
+        total_profit += profit
+        if cat not in seen:
+            seen.add(cat)
+            distinct_count += 1
+        else:
+            stack.append(profit)
+    ans = total_profit + distinct_count * distinct_count
+    for i in range(k, len(items)):
+        profit, cat = items[i]
+        if cat not in seen and stack:
+            seen.add(cat)
+            distinct_count += 1
+            total_profit -= stack.pop()
+            total_profit += profit
+            ans = max(ans, total_profit + distinct_count * distinct_count)
+    return ans
+`,
+
+  'minimum-total-distance-traveled': `
+def minimumTotalDistance(robot, factory):
+    robot = list(robot.to_py()) if hasattr(robot, 'to_py') else list(robot)
+    factory = list(factory.to_py()) if hasattr(factory, 'to_py') else list(factory)
+    factory = [[int(x) for x in row] for row in factory]
+    robot = sorted([int(x) for x in robot])
+    factory.sort(key=lambda x: x[0])
+    flat = []
+    for pos, limit in factory:
+        for _ in range(limit):
+            flat.append(pos)
+    n, m = len(robot), len(flat)
+    INF = float('inf')
+    dp = [[INF] * (m + 1) for _ in range(n + 1)]
+    for j in range(m + 1):
+        dp[0][j] = 0
+    for i in range(1, n + 1):
+        for j in range(i, m + 1):
+            dp[i][j] = dp[i][j - 1]
+            if dp[i - 1][j - 1] < INF:
+                dp[i][j] = min(dp[i][j], dp[i - 1][j - 1] + abs(robot[i - 1] - flat[j - 1]))
+    return dp[n][m]
+`,
+
+  'minimum-incompatibility': `
+def minimumIncompatibility(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    nums = [int(x) for x in nums]
+    n = len(nums)
+    sz = n // k
+    from collections import Counter
+    cnt = Counter(nums)
+    if max(cnt.values()) > k:
+        return -1
+    full = (1 << n) - 1
+    subset_cost = {}
+    for mask in range(1, 1 << n):
+        if bin(mask).count('1') != sz:
+            continue
+        elems = [nums[i] for i in range(n) if mask & (1 << i)]
+        if len(set(elems)) != sz:
+            continue
+        subset_cost[mask] = max(elems) - min(elems)
+    INF = float('inf')
+    dp = [INF] * (1 << n)
+    dp[0] = 0
+    for mask in range(0, 1 << n):
+        if dp[mask] == INF:
+            continue
+        comp = full ^ mask
+        sub = comp
+        while sub > 0:
+            if sub in subset_cost and dp[mask | sub] > dp[mask] + subset_cost[sub]:
+                dp[mask | sub] = dp[mask] + subset_cost[sub]
+            sub = (sub - 1) & comp
+    return dp[full] if dp[full] != INF else -1
+`,
+
+  'fair-distribution-of-cookies': `
+def distributeCookies(cookies, k):
+    cookies = list(cookies.to_py()) if hasattr(cookies, 'to_py') else list(cookies)
+    cookies = [int(x) for x in cookies]
+    cookies.sort(reverse=True)
+    children = [0] * k
+    ans = [float('inf')]
+    def bt(i, cur_max):
+        if cur_max >= ans[0]:
+            return
+        if i == len(cookies):
+            ans[0] = cur_max
+            return
+        seen = set()
+        for j in range(k):
+            if children[j] in seen:
+                continue
+            seen.add(children[j])
+            children[j] += cookies[i]
+            bt(i + 1, max(cur_max, children[j]))
+            children[j] -= cookies[i]
+    bt(0, 0)
+    return ans[0]
+`,
+
+  'maximum-profit-in-job-scheduling': `
+def jobScheduling(startTime, endTime, profit):
+    startTime = list(startTime.to_py()) if hasattr(startTime, 'to_py') else list(startTime)
+    endTime = list(endTime.to_py()) if hasattr(endTime, 'to_py') else list(endTime)
+    profit = list(profit.to_py()) if hasattr(profit, 'to_py') else list(profit)
+    startTime = [int(x) for x in startTime]
+    endTime = [int(x) for x in endTime]
+    profit = [int(x) for x in profit]
+    import bisect
+    n = len(startTime)
+    jobs = sorted(zip(startTime, endTime, profit), key=lambda x: x[1])
+    dp = [0] * (n + 1)
+    end_times = [0] + [jobs[i][1] for i in range(n)]
+    for i in range(1, n + 1):
+        s, e, p = jobs[i - 1]
+        idx = bisect.bisect_right(end_times, s, 0, i) - 1
+        dp[i] = max(dp[i - 1], dp[idx] + p)
+    return dp[n]
+`,
+
+  'dota2-senate': `
+def predictPartyVictory(senate):
+    from collections import deque
+    n = len(senate)
+    r = deque(i for i, s in enumerate(senate) if s == 'R')
+    d = deque(i for i, s in enumerate(senate) if s == 'D')
+    while r and d:
+        ri, di = r.popleft(), d.popleft()
+        if ri < di:
+            r.append(ri + n)
+        else:
+            d.append(di + n)
+    return 'Radiant' if r else 'Dire'
+`,
+
+  'time-needed-to-inform-all-employees': `
+def numTimeToInform(n, headID, manager, informTime):
+    children = [[] for _ in range(n)]
+    for i in range(n):
+        if manager[i] != -1:
+            children[manager[i]].append(i)
+    best = 0
+    def dfs(emp, time):
+        nonlocal best
+        if time > best:
+            best = time
+        for child in children[emp]:
+            dfs(child, time + informTime[emp])
+    dfs(headID, 0)
+    return best
+`,
+
+  'minesweeper': `
+def updateBoard(board, click):
+    if hasattr(board, 'to_py'):
+        board = [list(row) for row in board.to_py()]
+    else:
+        board = [list(row) for row in board]
+    if hasattr(click, 'to_py'):
+        click = list(click.to_py())
+    cr, cc = int(click[0]), int(click[1])
+    m, n = len(board), len(board[0])
+    if board[cr][cc] == 'M':
+        board[cr][cc] = 'X'
+        return board
+    dirs = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
+    def dfs(r, c):
+        mines = sum(
+            1 for dr, dc in dirs
+            if 0 <= r+dr < m and 0 <= c+dc < n and board[r+dr][c+dc] == 'M'
+        )
+        if mines > 0:
+            board[r][c] = str(mines)
+        else:
+            board[r][c] = 'B'
+            for dr, dc in dirs:
+                nr, nc = r+dr, c+dc
+                if 0 <= nr < m and 0 <= nc < n and board[nr][nc] == 'E':
+                    dfs(nr, nc)
+    dfs(cr, cc)
+    return board
+`,
+
+  'minimum-score-triangulation': `
+def minScoreTriangulation(values):
+    n = len(values)
+    dp = [[0] * n for _ in range(n)]
+    for length in range(3, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            dp[i][j] = float('inf')
+            for k in range(i + 1, j):
+                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j] + values[i] * values[k] * values[j])
+    return dp[0][n - 1]
+`,
+
+  'score-after-flipping-matrix': `
+def matrixScore(grid):
+    if hasattr(grid, 'to_py'):
+        g = [list(row) for row in grid.to_py()]
+    else:
+        g = [list(row) for row in grid]
+    m, n = len(g), len(g[0])
+    for i in range(m):
+        if g[i][0] == 0:
+            g[i] = [1 - x for x in g[i]]
+    for j in range(1, n):
+        ones = sum(g[i][j] for i in range(m))
+        if ones < m - ones:
+            for i in range(m):
+                g[i][j] = 1 - g[i][j]
+    total = 0
+    for i in range(m):
+        row = 0
+        for j in range(n):
+            row = (row << 1) | g[i][j]
+        total += row
+    return total
+`,
+
+  'beautiful-array': `
+def beautifulArray(n):
+    from math import ceil, floor
+    memo = {}
+    def ba(k):
+        if k in memo:
+            return memo[k]
+        if k == 1:
+            return [1]
+        left = ba(ceil(k / 2))
+        right = ba(floor(k / 2))
+        result = [2*x - 1 for x in left if 2*x - 1 <= k] + [2*x for x in right if 2*x <= k]
+        memo[k] = result
+        return result
+    return ba(n)
+`,
+
+  'recover-binary-search-tree': `
+def recoverTree(root):
+    first = second = prev = None
+    def inorder(node):
+        nonlocal first, second, prev
+        if not node:
+            return
+        inorder(node.left)
+        if prev and prev.val > node.val:
+            if not first:
+                first = prev
+            second = node
+        prev = node
+        inorder(node.right)
+    inorder(root)
+    if first and second:
+        first.val, second.val = second.val, first.val
+`,
+
+  'find-duplicate-subtrees': `
+def findDuplicateSubtrees(root):
+    from collections import defaultdict
+    count = defaultdict(int)
+    result = []
+    def serialize(node):
+        if not node:
+            return '#'
+        s = f"{node.val},{serialize(node.left)},{serialize(node.right)}"
+        count[s] += 1
+        if count[s] == 2:
+            result.append(node)
+        return s
+    serialize(root)
+    return result
+`,
+
+  'path-with-minimum-effort': `
+def minimumEffortPath(heights):
+    heights = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (heights.to_py() if hasattr(heights, 'to_py') else heights)]
+    import heapq
+    m, n = len(heights), len(heights[0])
+    dist = [[float('inf')] * n for _ in range(m)]
+    dist[0][0] = 0
+    heap = [(0, 0, 0)]
+    while heap:
+        eff, r, c = heapq.heappop(heap)
+        if r == m - 1 and c == n - 1:
+            return eff
+        if eff > dist[r][c]:
+            continue
+        for dr, dc in ((0,1),(0,-1),(1,0),(-1,0)):
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n:
+                ne = max(eff, abs(heights[r][c] - heights[nr][nc]))
+                if ne < dist[nr][nc]:
+                    dist[nr][nc] = ne
+                    heapq.heappush(heap, (ne, nr, nc))
+    return 0
+`,
+
+  'path-with-maximum-probability': `
+def maxProbability(n, edges, succProb, start, end):
+    edges = list(edges.to_py()) if hasattr(edges, 'to_py') else list(edges)
+    edges = [list(e.to_py()) if hasattr(e, 'to_py') else list(e) for e in edges]
+    succProb = list(succProb.to_py()) if hasattr(succProb, 'to_py') else list(succProb)
+    prob = [0.0] * n
+    prob[start] = 1.0
+    for _ in range(n - 1):
+        updated = False
+        for j, (u, v) in enumerate(edges):
+            p = succProb[j]
+            if prob[u] * p > prob[v]:
+                prob[v] = prob[u] * p
+                updated = True
+            if prob[v] * p > prob[u]:
+                prob[u] = prob[v] * p
+                updated = True
+        if not updated:
+            break
+    return prob[end]
+`,
+
+  'video-stitching': `
+def videoStitching(clips, time):
+    clips = [list(c.to_py()) if hasattr(c, 'to_py') else list(c) for c in (clips.to_py() if hasattr(clips, 'to_py') else clips)]
+    clips.sort()
+    count, end, farthest, i = 0, 0, 0, 0
+    while end < time:
+        while i < len(clips) and clips[i][0] <= end:
+            farthest = max(farthest, clips[i][1])
+            i += 1
+        if farthest == end:
+            return -1
+        end = farthest
+        count += 1
+    return count
+`,
+
+  'subarray-sums-divisible-by-k': `
+def subarraysDivByK(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    from collections import defaultdict
+    counts = defaultdict(int)
+    counts[0] = 1
+    prefix = 0
+    result = 0
+    for num in nums:
+        prefix = (prefix + num) % k
+        result += counts[prefix]
+        counts[prefix] += 1
+    return result
+`,
+
+  'sum-of-even-numbers-after-queries': `
+def sumEvenAfterQueries(nums, queries):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    queries = [list(q.to_py()) if hasattr(q, 'to_py') else list(q) for q in (queries.to_py() if hasattr(queries, 'to_py') else queries)]
+    even_sum = sum(x for x in nums if x % 2 == 0)
+    result = []
+    for val, idx in queries:
+        if nums[idx] % 2 == 0:
+            even_sum -= nums[idx]
+        nums[idx] += val
+        if nums[idx] % 2 == 0:
+            even_sum += nums[idx]
+        result.append(even_sum)
+    return result
+`,
+
+  'average-waiting-time': `
+def averageWaitingTime(customers):
+    customers = [list(c.to_py()) if hasattr(c, 'to_py') else list(c) for c in (customers.to_py() if hasattr(customers, 'to_py') else customers)]
+    time = 0
+    total = 0
+    for arrival, duration in customers:
+        time = max(time, arrival) + duration
+        total += time - arrival
+    return total / len(customers)
+`,
+
+  'sort-an-array': `
+def sortArray(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    def merge(l, r):
+        res = []
+        i = j = 0
+        while i < len(l) and j < len(r):
+            if l[i] <= r[j]:
+                res.append(l[i]); i += 1
+            else:
+                res.append(r[j]); j += 1
+        return res + l[i:] + r[j:]
+    def sort(arr):
+        if len(arr) <= 1:
+            return arr
+        mid = len(arr) // 2
+        return merge(sort(arr[:mid]), sort(arr[mid:]))
+    return sort(nums)
+`,
+
+  'sliding-puzzle': `
+def slidingPuzzle(board):
+    board = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (board.to_py() if hasattr(board, 'to_py') else board)]
+    goal = '123450'
+    start = ''.join(str(x) for row in board for x in row)
+    neighbors = [[1,3],[0,2,4],[1,5],[0,4],[1,3,5],[2,4]]
+    if start == goal:
+        return 0
+    from collections import deque
+    queue = deque([(start, 0)])
+    visited = {start}
+    while queue:
+        state, steps = queue.popleft()
+        pos = state.index('0')
+        for nb in neighbors[pos]:
+            arr = list(state)
+            arr[pos], arr[nb] = arr[nb], arr[pos]
+            nxt = ''.join(arr)
+            if nxt == goal:
+                return steps + 1
+            if nxt not in visited:
+                visited.add(nxt)
+                queue.append((nxt, steps + 1))
+    return -1
+`,
+
+  'jump-game-v': `
+def maxJumps(arr, d):
+    arr = list(arr.to_py()) if hasattr(arr, 'to_py') else list(arr)
+    n = len(arr)
+    dp = [1] * n
+    order = sorted(range(n), key=lambda i: arr[i])
+    for i in order:
+        j = i + 1
+        while j <= min(i + d, n - 1):
+            if arr[j] >= arr[i]:
+                break
+            dp[i] = max(dp[i], 1 + dp[j])
+            j += 1
+        j = i - 1
+        while j >= max(i - d, 0):
+            if arr[j] >= arr[i]:
+                break
+            dp[i] = max(dp[i], 1 + dp[j])
+            j -= 1
+    return max(dp)
+`,
+
+  'word-subsets': `
+def wordSubsets(words1, words2):
+    words1 = list(words1.to_py()) if hasattr(words1, 'to_py') else list(words1)
+    words2 = list(words2.to_py()) if hasattr(words2, 'to_py') else list(words2)
+    from collections import Counter
+    max_freq = Counter()
+    for w in words2:
+        freq = Counter(w)
+        for c, cnt in freq.items():
+            if cnt > max_freq[c]:
+                max_freq[c] = cnt
+    result = []
+    for w in words1:
+        freq = Counter(w)
+        if all(freq[c] >= cnt for c, cnt in max_freq.items()):
+            result.append(w)
+    return result
+`,
+
+  'max-chunks-to-make-sorted-ii': `
+def maxChunksToSorted(arr):
+    arr = list(arr.to_py()) if hasattr(arr, 'to_py') else list(arr)
+    stack = []
+    for num in arr:
+        max_val = num
+        while stack and stack[-1] > num:
+            max_val = max(max_val, stack.pop())
+        stack.append(max_val)
+    return len(stack)
+`,
+
+  'count-ways-to-place-houses': `
+def countWays(n):
+    MOD = 10**9 + 7
+    a, b = 1, 0
+    for _ in range(n):
+        a, b = (a + b) % MOD, a % MOD
+    total = (a + b) % MOD
+    return total * total % MOD
+`,
+
+  'stone-game-viii': `
+def stoneGameVIII(stones):
+    stones = list(stones.to_py()) if hasattr(stones, 'to_py') else list(stones)
+    n = len(stones)
+    prefix = stones[:]
+    for i in range(1, n):
+        prefix[i] += prefix[i - 1]
+    dp = prefix[-1]
+    for i in range(n - 2, 0, -1):
+        dp = max(prefix[i] - dp, dp)
+    return dp
+`,
+
+  'stone-game-ix': `
+def stoneGameIX(stones):
+    stones = list(stones.to_py()) if hasattr(stones, 'to_py') else list(stones)
+    cnt = [0, 0, 0]
+    for x in stones:
+        cnt[x % 3] += 1
+    if cnt[0] % 2 == 0:
+        return cnt[1] > 0 and cnt[2] > 0
+    return abs(cnt[1] - cnt[2]) > 2
+`,
+
+  'maximum-score-removing-stones': `
+def maximumScore(a, b, c):
+    total = a + b + c
+    max_v = max(a, b, c)
+    if max_v >= total - max_v:
+        return total - max_v
+    return total // 2
+`,
+
+  'number-of-atoms': `
+def countOfAtoms(formula):
+    from collections import defaultdict
+    stack = [defaultdict(int)]
+    i, n = 0, len(formula)
+    while i < n:
+        if formula[i] == '(':
+            stack.append(defaultdict(int))
+            i += 1
+        elif formula[i] == ')':
+            i += 1
+            num = 0
+            while i < n and formula[i].isdigit():
+                num = num * 10 + int(formula[i])
+                i += 1
+            if num == 0:
+                num = 1
+            top = stack.pop()
+            for elem, cnt in top.items():
+                stack[-1][elem] += cnt * num
+        elif formula[i].isupper():
+            elem = formula[i]
+            i += 1
+            while i < n and formula[i].islower():
+                elem += formula[i]
+                i += 1
+            num = 0
+            while i < n and formula[i].isdigit():
+                num = num * 10 + int(formula[i])
+                i += 1
+            if num == 0:
+                num = 1
+            stack[-1][elem] += num
+    result = []
+    for elem in sorted(stack[0].keys()):
+        cnt = stack[0][elem]
+        result.append(elem + (str(cnt) if cnt > 1 else ''))
+    return ''.join(result)
+`,
+
+  'find-all-people-with-secret': `
+def findAllPeople(n, meetings, firstPerson):
+    meetings = [list(m.to_py()) if hasattr(m, 'to_py') else list(m) for m in (meetings.to_py() if hasattr(meetings, 'to_py') else meetings)]
+    parent = list(range(n))
+    rank = [0] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(x, y):
+        px, py = find(x), find(y)
+        if px == py:
+            return
+        if rank[px] < rank[py]:
+            parent[px] = py
+        elif rank[px] > rank[py]:
+            parent[py] = px
+        else:
+            parent[py] = px
+            rank[px] += 1
+    union(0, firstPerson)
+    meetings.sort(key=lambda m: m[2])
+    i = 0
+    while i < len(meetings):
+        j = i
+        while j < len(meetings) and meetings[j][2] == meetings[i][2]:
+            j += 1
+        group = []
+        for k in range(i, j):
+            union(meetings[k][0], meetings[k][1])
+            group.append(meetings[k][0])
+            group.append(meetings[k][1])
+        for p in group:
+            if find(p) != find(0):
+                parent[p] = p
+                rank[p] = 0
+        i = j
+    return [p for p in range(n) if find(p) == find(0)]
+`,
+
+  'plates-between-candles': `
+def platesBetweenCandles(s, queries):
+    queries = [list(q.to_py()) if hasattr(q, 'to_py') else list(q) for q in (queries.to_py() if hasattr(queries, 'to_py') else queries)]
+    n = len(s)
+    prefix = [0] * (n + 1)
+    left_candle = [-1] * n
+    right_candle = [-1] * n
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + (1 if s[i] == '*' else 0)
+        if s[i] == '|':
+            left_candle[i] = i
+        elif i > 0:
+            left_candle[i] = left_candle[i - 1]
+    for i in range(n - 1, -1, -1):
+        if s[i] == '|':
+            right_candle[i] = i
+        elif i < n - 1:
+            right_candle[i] = right_candle[i + 1]
+    result = []
+    for q in queries:
+        l, r = q[0], q[1]
+        lc = right_candle[l]
+        rc = left_candle[r]
+        if lc == -1 or rc == -1 or lc >= rc:
+            result.append(0)
+        else:
+            result.append(prefix[rc] - prefix[lc])
+    return result
+`,
+
+  'minimum-cost-to-make-all-characters-equal': `
+def minimumCost(s):
+    n = len(s)
+    cost = 0
+    for i in range(1, n):
+        if s[i] != s[i - 1]:
+            cost += min(i, n - i)
+    return cost
+`,
+
+  'maximum-consecutive-floors-without-special-floors': `
+def maxConsecutive(bottom, top, special):
+    special = sorted(x for x in (list(special.to_py()) if hasattr(special, 'to_py') else list(special)) if bottom <= x <= top)
+    if not special:
+        return top - bottom + 1
+    max_gap = special[0] - bottom
+    for i in range(1, len(special)):
+        max_gap = max(max_gap, special[i] - special[i - 1] - 1)
+    max_gap = max(max_gap, top - special[-1])
+    return max_gap
+`,
+
+  'minimum-moves-to-reach-target-score': `
+def minMoves(target, maxDoubles):
+    moves = 0
+    while target > 1 and maxDoubles > 0:
+        if target % 2 == 1:
+            target -= 1
+            moves += 1
+        else:
+            target //= 2
+            moves += 1
+            maxDoubles -= 1
+    return moves + (target - 1)
+`,
+
+  'maximum-segment-sum-after-removals': `
+def maximumSegmentSum(nums, removeQueries):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    removeQueries = list(removeQueries.to_py()) if hasattr(removeQueries, 'to_py') else list(removeQueries)
+    n = len(nums)
+    parent = list(range(n + 1))
+    seg_sum = [0] * (n + 1)
+    present = [False] * n
+    ans = [0] * n
+    max_sum = 0
+
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    def union(x, y):
+        px, py = find(x), find(y)
+        if px != py:
+            parent[px] = py
+            seg_sum[py] += seg_sum[px]
+
+    for i in range(n - 1, -1, -1):
+        ans[i] = max_sum
+        idx = removeQueries[i]
+        present[idx] = True
+        seg_sum[idx] = nums[idx]
+        if idx > 0 and present[idx - 1]:
+            union(idx, idx - 1)
+        if idx < n - 1 and present[idx + 1]:
+            union(idx, idx + 1)
+        cur_sum = seg_sum[find(idx)]
+        if cur_sum > max_sum:
+            max_sum = cur_sum
+    return ans
+`,
+
+  'prime-palindrome': `
+def primePalindrome(n):
+    def is_prime(x):
+        if x < 2:
+            return False
+        if x == 2:
+            return True
+        if x % 2 == 0:
+            return False
+        i = 3
+        while i * i <= x:
+            if x % i == 0:
+                return False
+            i += 2
+        return True
+
+    def is_palin(x):
+        s = str(x)
+        return s == s[::-1]
+
+    small = [2, 3, 5, 7, 11]
+    for p in small:
+        if p >= n:
+            return p
+
+    for length in range(1, 10, 2):
+        half = (length + 1) // 2
+        start = 10 ** (half - 1)
+        end = 10 ** half
+        for first_half in range(start, end):
+            s = str(first_half)
+            pal = int(s + s[:length - half][::-1])
+            if pal >= n and is_prime(pal):
+                return pal
+    return -1
+`,
+
+  'car-fleet-ii': `
+def getCollisionTimes(cars):
+    cars = [list(c.to_py()) if hasattr(c, 'to_py') else list(c) for c in (cars.to_py() if hasattr(cars, 'to_py') else cars)]
+    n = len(cars)
+    ans = [-1.0] * n
+    stack = []
+    for i in range(n - 1, -1, -1):
+        pos, spd = cars[i][0], cars[i][1]
+        while stack:
+            j = stack[-1]
+            jpos, jspd = cars[j][0], cars[j][1]
+            if spd <= jspd:
+                stack.pop()
+                continue
+            t = (jpos - pos) / (spd - jspd)
+            if ans[j] < 0 or t <= ans[j]:
+                ans[i] = t
+                break
+            stack.pop()
+        stack.append(i)
+    return ans
+`,
+
+  'all-possible-full-binary-trees': `
+def allPossibleFBT(n):
+    memo = {}
+    def gen(k):
+        if k in memo:
+            return memo[k]
+        if k == 1:
+            return [TreeNode(0)]
+        if k % 2 == 0:
+            return []
+        result = []
+        for left in range(1, k - 1, 2):
+            for lt in gen(left):
+                for rt in gen(k - 1 - left):
+                    node = TreeNode(0)
+                    node.left = lt
+                    node.right = rt
+                    result.append(node)
+        memo[k] = result
+        return result
+    return gen(n)
+`,
+
+  // ── Batch 14 ──────────────────────────────────────────────────────────────
+  'knight-probability-in-chessboard': `def knightProbability(n, k, row, column):
+    n = int(n); k = int(k); row = int(row); column = int(column)
+    dp = [[0.0]*n for _ in range(n)]
+    dp[row][column] = 1.0
+    moves = [(-2,-1),(-2,1),(-1,-2),(-1,2),(1,-2),(1,2),(2,-1),(2,1)]
+    for _ in range(k):
+        new_dp = [[0.0]*n for _ in range(n)]
+        for r in range(n):
+            for c in range(n):
+                if dp[r][c] > 0:
+                    for dr, dc in moves:
+                        nr, nc = r+dr, c+dc
+                        if 0 <= nr < n and 0 <= nc < n:
+                            new_dp[nr][nc] += dp[r][c] / 8
+        dp = new_dp
+    return sum(dp[r][c] for r in range(n) for c in range(n))
+`,
+
+  'minimum-distance-bst-nodes': `def minDiffInBST(root):
+    prev = [None]
+    min_diff = [float('inf')]
+    def inorder(node):
+        if not node: return
+        inorder(node.left)
+        if prev[0] is not None:
+            min_diff[0] = min(min_diff[0], node.val - prev[0])
+        prev[0] = node.val
+        inorder(node.right)
+    inorder(root)
+    return min_diff[0]
+`,
+
+  'second-minimum-node-binary-tree': `def findSecondMinimumValue(root):
+    min_val = root.val
+    second = [float('inf')]
+    def dfs(node):
+        if not node: return
+        if node.val > min_val and node.val < second[0]:
+            second[0] = node.val
+        elif node.val == min_val:
+            dfs(node.left)
+            dfs(node.right)
+    dfs(root)
+    return second[0] if second[0] != float('inf') else -1
+`,
+
+  'meeting-rooms-iii': `def mostBooked(n, meetings):
+    import heapq
+    n = int(n)
+    raw = meetings.to_py() if hasattr(meetings, 'to_py') else list(meetings)
+    meet = [[int(x) for x in (m.to_py() if hasattr(m, 'to_py') else list(m))] for m in raw]
+    meet.sort()
+    free = list(range(n))
+    heapq.heapify(free)
+    busy = []
+    count = [0] * n
+    for start, end in meet:
+        while busy and busy[0][0] <= start:
+            end_time, room = heapq.heappop(busy)
+            heapq.heappush(free, room)
+        if free:
+            room = heapq.heappop(free)
+            heapq.heappush(busy, (end, room))
+        else:
+            prev_end, room = heapq.heappop(busy)
+            heapq.heappush(busy, (prev_end + (end - start), room))
+        count[room] += 1
+    return count.index(max(count))
+`,
+
+  'minimum-obstacle-removal-to-reach-corner': `def minimumObstacles(grid):
+    from collections import deque
+    raw = grid.to_py() if hasattr(grid, 'to_py') else list(grid)
+    g = [[int(v) for v in (row.to_py() if hasattr(row, 'to_py') else list(row))] for row in raw]
+    m, n = len(g), len(g[0])
+    dist = [[float('inf')]*n for _ in range(m)]
+    dist[0][0] = 0
+    dq = deque([(0, 0, 0)])
+    while dq:
+        obs, r, c = dq.popleft()
+        if obs > dist[r][c]: continue
+        if r == m-1 and c == n-1:
+            return obs
+        for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < m and 0 <= nc < n:
+                new_obs = obs + g[nr][nc]
+                if new_obs < dist[nr][nc]:
+                    dist[nr][nc] = new_obs
+                    if g[nr][nc] == 0:
+                        dq.appendleft((new_obs, nr, nc))
+                    else:
+                        dq.append((new_obs, nr, nc))
+    return dist[m-1][n-1]
+`,
+
+  'smallest-divisor-given-threshold': `
+def smallestDivisor(nums, threshold):
+    lo, hi = 1, max(nums)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if sum((n + mid - 1) // mid for n in nums) <= threshold:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'additive-number': `
+def isAdditiveNumber(num):
+    n = len(num)
+    for i in range(1, n):
+        for j in range(i + 1, n):
+            a_str, b_str = num[:i], num[i:j]
+            if (len(a_str) > 1 and a_str[0] == '0') or (len(b_str) > 1 and b_str[0] == '0'):
+                continue
+            a, b = int(a_str), int(b_str)
+            pos = j
+            while pos < n:
+                c = a + b
+                c_str = str(c)
+                if not num[pos:].startswith(c_str):
+                    break
+                pos += len(c_str)
+                a, b = b, c
+            if pos == n:
+                return True
+    return False
+`,
+
+  'unique-paths-iii': `
+def uniquePathsIII(grid):
+    m, n = len(grid), len(grid[0])
+    total = sum(grid[r][c] != -1 for r in range(m) for c in range(n))
+    sr, sc = next((r, c) for r in range(m) for c in range(n) if grid[r][c] == 1)
+    def dfs(r, c, remaining):
+        if grid[r][c] == 2:
+            return 1 if remaining == 1 else 0
+        orig = grid[r][c]
+        grid[r][c] = -1
+        res = 0
+        for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n and grid[nr][nc] != -1:
+                res += dfs(nr, nc, remaining - 1)
+        grid[r][c] = orig
+        return res
+    return dfs(sr, sc, total)
+`,
+
+  'max-sum-of-rectangle-no-larger-than-k': `def maxSumSubmatrix(matrix, k):
+    import bisect
+    raw = matrix.to_py() if hasattr(matrix, 'to_py') else list(matrix)
+    mat = [[int(v) for v in (row.to_py() if hasattr(row, 'to_py') else list(row))] for row in raw]
+    k = int(k)
+    m, n = len(mat), len(mat[0])
+    ans = float('-inf')
+    for c1 in range(n):
+        row_sum = [0] * m
+        for c2 in range(c1, n):
+            for r in range(m):
+                row_sum[r] += mat[r][c2]
+            sorted_prefix = [0]
+            prefix = 0
+            for s in row_sum:
+                prefix += s
+                idx = bisect.bisect_left(sorted_prefix, prefix - k)
+                if idx < len(sorted_prefix):
+                    ans = max(ans, prefix - sorted_prefix[idx])
+                bisect.insort(sorted_prefix, prefix)
+    return ans
+`,
+
+  'count-unique-characters-of-all-substrings': `def uniqueLetterString(s):
+    from collections import defaultdict
+    s = str(s)
+    MOD = 10**9 + 7
+    index = defaultdict(list)
+    for i, c in enumerate(s):
+        index[c].append(i)
+    ans = 0
+    for positions in index.values():
+        pos = [-1] + positions + [len(s)]
+        for i in range(1, len(pos)-1):
+            ans += (pos[i] - pos[i-1]) * (pos[i+1] - pos[i])
+    return ans % MOD
+`,
+
+  'zuma-game': `def findMinStep(board, hand):
+    from collections import Counter
+    board = str(board)
+    hand = str(hand)
+    hand_count = Counter(hand)
+
+    def clean(s):
+        changed = True
+        while changed:
+            changed = False
+            i = 0
+            ns = ''
+            while i < len(s):
+                j = i
+                while j < len(s) and s[j] == s[i]:
+                    j += 1
+                if j - i < 3:
+                    ns += s[i:j]
+                else:
+                    changed = True
+                i = j
+            s = ns
+        return s
+
+    memo = {}
+    def dp(b, hc_tuple):
+        b = clean(b)
+        if not b:
+            return 0
+        key = (b, hc_tuple)
+        if key in memo:
+            return memo[key]
+        hc = dict(hc_tuple)
+        best = float('inf')
+        i = 0
+        while i < len(b):
+            j = i
+            while j < len(b) and b[j] == b[i]:
+                j += 1
+            color = b[i]
+            cnt = j - i
+            need = 3 - cnt
+            if hc.get(color, 0) >= need:
+                hc[color] -= need
+                rest = dp(b[:i] + b[j:], tuple(sorted(hc.items())))
+                hc[color] += need
+                if rest != -1:
+                    best = min(best, need + rest)
+            i = j
+        res = best if best != float('inf') else -1
+        memo[key] = res
+        return res
+
+    return dp(board, tuple(sorted(hand_count.items())))
+`,
+
+  'find-longest-valid-obstacle-course': `def longestObstacleCourseAtEachPosition(obstacles):
+    import bisect
+    raw = obstacles.to_py() if hasattr(obstacles, 'to_py') else list(obstacles)
+    obs = [int(v) for v in raw]
+    tails = []
+    result = []
+    for x in obs:
+        pos = bisect.bisect_right(tails, x)
+        if pos == len(tails):
+            tails.append(x)
+        else:
+            tails[pos] = x
+        result.append(pos + 1)
+    return result
+`,
+
+  'best-sightseeing-pair': `def maxScoreSightseeingPair(values):
+    raw = values.to_py() if hasattr(values, 'to_py') else list(values)
+    vals = [int(v) for v in raw]
+    max_left = vals[0] + 0
+    ans = 0
+    for j in range(1, len(vals)):
+        ans = max(ans, max_left + vals[j] - j)
+        max_left = max(max_left, vals[j] + j)
+    return ans
+`,
+
+  'find-longest-substring-vowels-even': `def findTheLongestSubstring(s):
+    s = str(s)
+    vowels = 'aeiou'
+    first = {0: -1}
+    state = 0
+    ans = 0
+    for i, c in enumerate(s):
+        bit = vowels.find(c)
+        if bit != -1:
+            state ^= (1 << bit)
+        if state in first:
+            ans = max(ans, i - first[state])
+        else:
+            first[state] = i
+    return ans
+`,
+
+  'reverse-substrings-between-parentheses': `def reverseParentheses(s):
+    s = str(s)
+    stack = ['']
+    for c in s:
+        if c == '(':
+            stack.append('')
+        elif c == ')':
+            top = stack.pop()
+            stack[-1] += top[::-1]
+        else:
+            stack[-1] += c
+    return stack[0]
+`,
+
+  'design-stack-with-increment': `def customStackOps(maxSize, ops):
+    max_size = int(maxSize)
+    raw_ops = ops.to_py() if hasattr(ops, 'to_py') else list(ops)
+    stack = []
+    inc = []
+    results = []
+    for op in raw_ops:
+        if op[0] == 'push':
+            if len(stack) < max_size:
+                stack.append(int(op[1]))
+                inc.append(0)
+        elif op[0] == 'pop':
+            if not stack:
+                results.append(-1)
+            else:
+                extra = inc.pop()
+                val = stack.pop() + extra
+                if inc:
+                    inc[-1] += extra
+                results.append(val)
+        elif op[0] == 'increment':
+            k = min(int(op[1]), len(stack))
+            if k > 0:
+                inc[k - 1] += int(op[2])
+    return results
+`,
+
+  'minimum-number-of-frogs-croaking': `def minNumberOfFrogs(croakOfFrogs):
+    s = str(croakOfFrogs)
+    order = 'croak'
+    cnt = {c: 0 for c in order}
+    frogs = 0
+    ans = 0
+    for c in s:
+        if c not in cnt:
+            return -1
+        cnt[c] += 1
+        idx = order.index(c)
+        if idx > 0:
+            prev = order[idx - 1]
+            if cnt[prev] < cnt[c]:
+                return -1
+        if c == 'c':
+            frogs += 1
+            ans = max(ans, frogs)
+        if c == 'k':
+            frogs -= 1
+    return -1 if frogs != 0 else ans
+`,
+
+  'shortest-path-visiting-all-nodes': `def shortestPathLength(graph):
+    from collections import deque
+    raw = graph.to_py() if hasattr(graph, 'to_py') else [list(x) for x in graph]
+    g = [list(row) for row in raw]
+    n = len(g)
+    full = (1 << n) - 1
+    visited = [[False] * (1 << n) for _ in range(n)]
+    queue = deque()
+    for i in range(n):
+        mask = 1 << i
+        visited[i][mask] = True
+        if mask == full:
+            return 0
+        queue.append((i, mask, 0))
+    while queue:
+        node, mask, dist = queue.popleft()
+        for nxt in g[node]:
+            new_mask = mask | (1 << nxt)
+            if new_mask == full:
+                return dist + 1
+            if not visited[nxt][new_mask]:
+                visited[nxt][new_mask] = True
+                queue.append((nxt, new_mask, dist + 1))
+    return -1
+`,
+
+  'minimum-number-of-work-sessions': `def minSessions(tasks, sessionTime):
+    from functools import lru_cache
+    raw = tasks.to_py() if hasattr(tasks, 'to_py') else list(tasks)
+    ts = [int(v) for v in raw]
+    st = int(sessionTime)
+    n = len(ts)
+    full_mask = (1 << n) - 1
+    @lru_cache(maxsize=None)
+    def dp(done, remaining):
+        if done == full_mask:
+            return 0
+        best = float('inf')
+        for i in range(n):
+            if done & (1 << i):
+                continue
+            t = ts[i]
+            if t <= remaining:
+                res = dp(done | (1 << i), remaining - t)
+            else:
+                res = 1 + dp(done | (1 << i), st - t)
+            best = min(best, res)
+        return best
+    return 1 + dp(0, st)
+`,
+
+  'minimize-product-sum': `def minProductSum(nums1, nums2):
+    raw1 = nums1.to_py() if hasattr(nums1, 'to_py') else list(nums1)
+    raw2 = nums2.to_py() if hasattr(nums2, 'to_py') else list(nums2)
+    a = sorted([int(v) for v in raw1])
+    b = sorted([int(v) for v in raw2], reverse=True)
+    return sum(a[i] * b[i] for i in range(len(a)))
+`,
+
+  'count-range-sum': `def countRangeSum(nums, lower, upper):
+    raw = nums.to_py() if hasattr(nums, 'to_py') else list(nums)
+    arr = [int(v) for v in raw]
+    lo, hi = int(lower), int(upper)
+    prefix = [0]
+    for n in arr:
+        prefix.append(prefix[-1] + n)
+    count = [0]
+    def merge_sort(l, r):
+        if r - l <= 1:
+            return
+        mid = (l + r) // 2
+        merge_sort(l, mid)
+        merge_sort(mid, r)
+        j = k = mid
+        for i in range(l, mid):
+            while j < r and prefix[j] - prefix[i] < lo:
+                j += 1
+            while k < r and prefix[k] - prefix[i] <= hi:
+                k += 1
+            count[0] += k - j
+        prefix[l:r] = sorted(prefix[l:r])
+    merge_sort(0, len(prefix))
+    return count[0]
+`,
+
+  'advantage-shuffle': `def advantageCount(nums1, nums2):
+    raw1 = nums1.to_py() if hasattr(nums1, 'to_py') else list(nums1)
+    raw2 = nums2.to_py() if hasattr(nums2, 'to_py') else list(nums2)
+    a = sorted([int(v) for v in raw1])
+    b = [(int(v), i) for i, v in enumerate(raw2)]
+    b.sort(key=lambda x: -x[0])
+    result = [0] * len(a)
+    lo, hi = 0, len(a) - 1
+    for target, idx in b:
+        if a[hi] > target:
+            result[idx] = a[hi]
+            hi -= 1
+        else:
+            result[idx] = a[lo]
+            lo += 1
+    return result
+`,
+
+  'longest-repeating-character-replacement': `def characterReplacement(s, k):
+    s = str(s)
+    k = int(k)
+    freq = [0] * 26
+    max_freq = 0
+    ans = 0
+    left = 0
+    for right in range(len(s)):
+        c = ord(s[right]) - ord('A')
+        freq[c] += 1
+        max_freq = max(max_freq, freq[c])
+        while (right - left + 1 - max_freq) > k:
+            freq[ord(s[left]) - ord('A')] -= 1
+            left += 1
+        ans = max(ans, right - left + 1)
+    return ans
+`,
+
+  'subarrays-with-k-different-integers': `def subarraysWithKDistinct(nums, k):
+    raw = nums.to_py() if hasattr(nums, 'to_py') else list(nums)
+    arr = [int(v) for v in raw]
+    k = int(k)
+    from collections import defaultdict
+    def at_most(limit):
+        cnt = defaultdict(int)
+        res = left = 0
+        for right, v in enumerate(arr):
+            cnt[v] += 1
+            while len(cnt) > limit:
+                cnt[arr[left]] -= 1
+                if cnt[arr[left]] == 0:
+                    del cnt[arr[left]]
+                left += 1
+            res += right - left + 1
+        return res
+    return at_most(k) - at_most(k - 1)
+`,
+
+  'binary-subarrays-with-sum': `def numSubarraysWithSum(nums, goal):
+    raw = nums.to_py() if hasattr(nums, 'to_py') else list(nums)
+    arr = [int(v) for v in raw]
+    g = int(goal)
+    from collections import defaultdict
+    cnt = defaultdict(int)
+    cnt[0] = 1
+    prefix = ans = 0
+    for n in arr:
+        prefix += n
+        ans += cnt[prefix - g]
+        cnt[prefix] += 1
+    return ans
+`,
+
+  'reduce-array-size-to-the-half': `def minSetSize(arr):
+    raw = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
+    a = [int(v) for v in raw]
+    from collections import Counter
+    freq = sorted(Counter(a).values(), reverse=True)
+    target = (len(a) + 1) // 2
+    removed = set_size = 0
+    for f in freq:
+        removed += f
+        set_size += 1
+        if removed >= target:
+            return set_size
+    return set_size
+`,
+
+  'minimum-number-of-removals-to-make-mountain-array': `def minimumMountainRemovals(nums):
+    raw = nums.to_py() if hasattr(nums, 'to_py') else list(nums)
+    arr = [int(v) for v in raw]
+    n = len(arr)
+    lis = [1] * n
+    lds = [1] * n
+    for i in range(1, n):
+        for j in range(i):
+            if arr[j] < arr[i]:
+                lis[i] = max(lis[i], lis[j] + 1)
+    for i in range(n - 2, -1, -1):
+        for j in range(n - 1, i, -1):
+            if arr[j] < arr[i]:
+                lds[i] = max(lds[i], lds[j] + 1)
+    best = 0
+    for i in range(1, n - 1):
+        if lis[i] > 1 and lds[i] > 1:
+            best = max(best, lis[i] + lds[i] - 1)
+    return n - best
+`,
+
+  'number-of-ways-to-divide-a-long-corridor': `def numberOfWays(corridor):
+    s = str(corridor)
+    MOD = 10**9 + 7
+    seats = [i for i, c in enumerate(s) if c == 'S']
+    if not seats or len(seats) % 2 != 0:
+        return 0
+    ways = 1
+    for i in range(2, len(seats), 2):
+        ways = (ways * (seats[i] - seats[i - 1])) % MOD
+    return ways
+`,
+
+  'delete-operation-for-two-strings': `def minDistance(word1, word2):
+    w1 = str(word1)
+    w2 = str(word2)
+    m, n = len(w1), len(w2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if w1[i-1] == w2[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    return m + n - 2 * dp[m][n]
+`,
+
+  'product-of-array-except-self': `def productExceptSelf(nums):
+    raw = nums.to_py() if hasattr(nums, 'to_py') else list(nums)
+    arr = [int(v) for v in raw]
+    n = len(arr)
+    result = [1] * n
+    prefix = 1
+    for i in range(n):
+        result[i] = prefix
+        prefix *= arr[i]
+    suffix = 1
+    for i in range(n - 1, -1, -1):
+        result[i] *= suffix
+        suffix *= arr[i]
+    return result
+`,
+
+  'minimum-moves-to-equal-array-elements': `def minMoves(nums):
+    raw = nums.to_py() if hasattr(nums, 'to_py') else list(nums)
+    arr = [int(v) for v in raw]
+    mn = min(arr)
+    return sum(v - mn for v in arr)
+`,
+
+  'all-paths-from-source-lead-to-destination': `def leadsToDestination(n, edges, source, destination):
+    n = int(n)
+    raw = edges.to_py() if hasattr(edges, 'to_py') else [list(e) for e in edges]
+    edge_list = [[int(e[0]), int(e[1])] for e in raw]
+    src = int(source)
+    dst = int(destination)
+    graph = [[] for _ in range(n)]
+    for a, b in edge_list:
+        graph[a].append(b)
+    if graph[dst]:
+        return False
+    color = [0] * n
+    def dfs(node):
+        if color[node] == 1:
+            return False
+        if color[node] == 2:
+            return True
+        if not graph[node]:
+            return node == dst
+        color[node] = 1
+        for nxt in graph[node]:
+            if not dfs(nxt):
+                return False
+        color[node] = 2
+        return True
+    return dfs(src)
+`,
+
+  'race-car': `
+def racecar(target):
+    dp = [float('inf')] * (target + 1)
+    dp[0] = 0
+    for v in range(1, target + 1):
+        k = 1
+        while (1 << k) - 1 < 2 * v:
+            reach = (1 << k) - 1
+            if reach == v:
+                dp[v] = min(dp[v], k)
+            elif reach > v:
+                dp[v] = min(dp[v], k + 1 + dp[reach - v])
+            else:
+                for j in range(k):
+                    back = (1 << j) - 1
+                    dp[v] = min(dp[v], k + 1 + j + 1 + dp[v - reach + back])
+            k += 1
+    return dp[target]
+`,
+
+  'minimum-cost-to-make-valid-parentheses': `
+def minAddToMakeValid(s):
+    open_count = 0
+    close_count = 0
+    for c in s:
+        if c == '(':
+            open_count += 1
+        elif open_count > 0:
+            open_count -= 1
+        else:
+            close_count += 1
+    return open_count + close_count
+`,
+
+  'minimum-score-of-path': `
+def minScore(n, roads):
+    from collections import defaultdict, deque
+    adj = defaultdict(list)
+    for a, b, d in roads:
+        adj[a].append((b, d))
+        adj[b].append((a, d))
+    visited = set()
+    queue = deque([1])
+    visited.add(1)
+    min_dist = float('inf')
+    while queue:
+        node = queue.popleft()
+        for neighbor, dist in adj[node]:
+            min_dist = min(min_dist, dist)
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)
+    return min_dist
+`,
+
+  'count-operations-to-obtain-zero-ii': `
+def minOperations(nums, x):
+    total = sum(nums)
+    target = total - x
+    if target < 0:
+        return -1
+    if target == 0:
+        return len(nums)
+    max_len = -1
+    cur_sum = 0
+    l = 0
+    for r in range(len(nums)):
+        cur_sum += nums[r]
+        while cur_sum > target and l <= r:
+            cur_sum -= nums[l]
+            l += 1
+        if cur_sum == target:
+            max_len = max(max_len, r - l + 1)
+    return len(nums) - max_len if max_len != -1 else -1
+`,
+
+  'minimum-deletions-to-balance-parentheses': `
+def minimumDeletions(s):
+    b_count = 0
+    deletions = 0
+    for c in s:
+        if c == 'b':
+            b_count += 1
+        elif b_count > 0:
+            b_count -= 1
+            deletions += 1
+    return deletions
+`,
+
+  'minimum-path-cost-in-a-grid': `def minPathCost(grid, moveCost):
+    g = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    mc = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (moveCost.to_py() if hasattr(moveCost, 'to_py') else moveCost)]
+    m, n = len(g), len(g[0])
+    dp = [v for v in g[0]]
+    for r in range(m - 1):
+        ndp = [float('inf')] * n
+        for c in range(n):
+            val = g[r][c]
+            for c2 in range(n):
+                cost = dp[c] + mc[val][c2] + g[r + 1][c2]
+                if cost < ndp[c2]:
+                    ndp[c2] = cost
+        dp = ndp
+    return min(dp)
+`,
+
+  'count-ways-group-overlapping-ranges': `def countWays(ranges):
+    MOD = 10**9 + 7
+    r = sorted([list(x.to_py() if hasattr(x, 'to_py') else x) for x in (ranges.to_py() if hasattr(ranges, 'to_py') else ranges)], key=lambda x: x[0])
+    components = 0
+    max_end = -1
+    for s, e in r:
+        if s > max_end:
+            components += 1
+            max_end = e
+        elif e > max_end:
+            max_end = e
+    return pow(2, components, MOD)
+`,
+
+  'take-gifts-from-the-richest-pile': `def pickGifts(gifts, k):
+    import math
+    g = list(gifts.to_py() if hasattr(gifts, 'to_py') else gifts)
+    k = int(k)
+    for _ in range(k):
+        max_idx = g.index(max(g))
+        g[max_idx] = math.isqrt(g[max_idx])
+    return sum(g)
+`,
+
+  'find-all-good-indices': `def goodIndices(nums, k):
+    a = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    K = int(k)
+    n = len(a)
+    dec = [1] * n
+    inc = [1] * n
+    for i in range(1, n):
+        if a[i] <= a[i-1]:
+            dec[i] = dec[i-1] + 1
+    for i in range(n-2, -1, -1):
+        if a[i] <= a[i+1]:
+            inc[i] = inc[i+1] + 1
+    res = []
+    for i in range(K, n - K):
+        if dec[i-1] >= K and inc[i+1] >= K:
+            res.append(i)
+    return res
+`,
+
+  'partition-array-into-three-parts-with-equal-sum': `def canThreePartsEqualSum(arr):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    total = sum(arr)
+    if total % 3 != 0:
+        return False
+    target = total // 3
+    parts = 0
+    cur = 0
+    for v in arr:
+        cur += v
+        if cur == target:
+            parts += 1
+            cur = 0
+    return parts >= 3
+`,
+
+  'second-largest-digit-in-string': `def secondHighest(s):
+    digits = set()
+    for c in str(s):
+        if c.isdigit():
+            digits.add(int(c))
+    sorted_d = sorted(digits, reverse=True)
+    return sorted_d[1] if len(sorted_d) >= 2 else -1
+`,
+
+  'number-of-operations-to-make-network-connected': `def makeConnected(n, connections):
+    n = int(n)
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (connections.to_py() if hasattr(connections, 'to_py') else connections)]
+    if len(edges) < n - 1:
+        return -1
+    parent = list(range(n))
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    components = n
+    for a, b in edges:
+        pa, pb = find(a), find(b)
+        if pa != pb:
+            parent[pa] = pb
+            components -= 1
+    return components - 1
+`,
+
+  'maximize-number-of-tasks-you-can-assign': `def maxTaskAssign(tasks, workers, pills, strength):
+    from collections import deque
+    t = sorted(list(tasks.to_py() if hasattr(tasks, 'to_py') else tasks))
+    w = sorted(list(workers.to_py() if hasattr(workers, 'to_py') else workers))
+    P = int(pills)
+    S = int(strength)
+    m = len(w)
+    def can_do(k):
+        sub_t = t[:k]
+        sub_w = w[m - k:]
+        p = P
+        dq = deque()
+        wi = k - 1
+        for i in range(k - 1, -1, -1):
+            while wi >= 0 and sub_w[wi] + S >= sub_t[i]:
+                dq.appendleft(sub_w[wi])
+                wi -= 1
+            if not dq:
+                return False
+            if dq[-1] >= sub_t[i]:
+                dq.pop()
+            else:
+                if p == 0:
+                    return False
+                dq.popleft()
+                p -= 1
+        return True
+    lo, hi = 0, min(len(t), m)
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_do(mid):
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'minimum-consecutive-cards-to-pick-up': `def minimumCardPickup(cards):
+    cards = list(cards.to_py() if hasattr(cards, 'to_py') else cards)
+    last = {}
+    ans = float('inf')
+    for i, v in enumerate(cards):
+        if v in last:
+            ans = min(ans, i - last[v] + 1)
+        last[v] = i
+    return ans if ans != float('inf') else -1
+`,
+
+  'lexicographically-smallest-palindrome': `def makeSmallestPalindrome(s):
+    a = list(str(s))
+    l, r = 0, len(a) - 1
+    while l < r:
+        if a[l] < a[r]:
+            a[r] = a[l]
+        else:
+            a[l] = a[r]
+        l += 1
+        r -= 1
+    return ''.join(a)
+`,
+
+  'minimum-operations-to-make-binary-array-elements-equal-to-one-ii': `def minOperations(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    flips = 0
+    for v in nums:
+        if (v + flips) % 2 == 0:
+            flips += 1
+    return flips
+`,
+
+  'closest-prime-numbers-in-range': `def closestPrimes(left, right):
+    lo = int(left)
+    hi = int(right)
+    not_prime = bytearray(hi + 1)
+    not_prime[0] = not_prime[1] = 1
+    i = 2
+    while i * i <= hi:
+        if not not_prime[i]:
+            j = i * i
+            while j <= hi:
+                not_prime[j] = 1
+                j += i
+        i += 1
+    primes = [i for i in range(lo, hi + 1) if not not_prime[i]]
+    if len(primes) < 2:
+        return [-1, -1]
+    best = [-1, -1]
+    min_gap = float('inf')
+    for i in range(1, len(primes)):
+        gap = primes[i] - primes[i-1]
+        if gap < min_gap:
+            min_gap = gap
+            best = [primes[i-1], primes[i]]
+    return best
+`,
+
+  'sum-of-subarray-minimums': `def sumSubarrayMins(arr):
+    MOD = 10**9 + 7
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    n = len(arr)
+    stack = []
+    left = [-1] * n
+    right = [n] * n
+    for i in range(n):
+        while stack and arr[stack[-1]] >= arr[i]:
+            right[stack.pop()] = i
+        left[i] = stack[-1] if stack else -1
+        stack.append(i)
+    ans = 0
+    for i in range(n):
+        ans = (ans + (i - left[i]) * (right[i] - i) * arr[i]) % MOD
+    return ans
+`,
+
+  'maximum-xor-for-each-query': `def getMaximumXor(nums, maximumBit):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    bits = int(maximumBit)
+    n = len(nums)
+    max_k = (1 << bits) - 1
+    ans = [0] * n
+    xor_sum = 0
+    for v in nums:
+        xor_sum ^= v
+    for i in range(n):
+        ans[i] = xor_sum ^ max_k
+        xor_sum ^= nums[n - 1 - i]
+    return ans
+`,
+
+  'count-ways-to-split-array': `def waysToSplitArray(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    total = sum(nums)
+    prefix = 0
+    ans = 0
+    for i in range(len(nums) - 1):
+        prefix += nums[i]
+        if prefix >= total - prefix:
+            ans += 1
+    return ans
+`,
+
+  'maximum-subarray-sum-with-one-deletion': `def maximumSum(arr):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    n = len(arr)
+    dp0 = [0] * n
+    dp1 = [float('-inf')] * n
+    dp0[0] = arr[0]
+    for i in range(1, n):
+        dp0[i] = max(arr[i], dp0[i-1] + arr[i])
+        dp1[i] = max(dp0[i-1], dp1[i-1] + arr[i])
+    return max(max(dp0), max(dp1))
+`,
+
+  'number-of-sub-arrays-size-k-average-threshold': `def numOfSubarrays(arr, k, threshold):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    K = int(k)
+    T = int(threshold)
+    window_sum = sum(arr[:K])
+    count = 1 if window_sum >= K * T else 0
+    for i in range(K, len(arr)):
+        window_sum += arr[i] - arr[i - K]
+        if window_sum >= K * T:
+            count += 1
+    return count
+`,
+
+  'grumpy-bookstore-owner': `def maxSatisfied(customers, grumpy, minutes):
+    customers = list(customers.to_py() if hasattr(customers, 'to_py') else customers)
+    grumpy = list(grumpy.to_py() if hasattr(grumpy, 'to_py') else grumpy)
+    minutes = int(minutes)
+    n = len(customers)
+    base = sum(customers[i] for i in range(n) if not grumpy[i])
+    extra = sum(customers[i] for i in range(minutes) if grumpy[i])
+    max_extra = extra
+    for i in range(minutes, n):
+        if grumpy[i]:
+            extra += customers[i]
+        if grumpy[i - minutes]:
+            extra -= customers[i - minutes]
+        max_extra = max(max_extra, extra)
+    return base + max_extra
+`,
+
+  'most-stones-removed-with-same-row-or-column': `def removeStones(stones):
+    stones = [list(s.to_py() if hasattr(s, 'to_py') else s) for s in (stones.to_py() if hasattr(stones, 'to_py') else stones)]
+    parent = {}
+    def find(x):
+        if x not in parent:
+            parent[x] = x
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    def union(a, b):
+        pa, pb = find(a), find(b)
+        if pa != pb:
+            parent[pa] = pb
+    for r, c in stones:
+        union(r, ~c)
+    roots = set(find(r) for r, _ in stones)
+    return len(stones) - len(roots)
+`,
+
+  'longest-subsequence-with-limited-sum': `def answerQueries(nums, queries):
+    import bisect
+    nums = sorted(list(nums.to_py() if hasattr(nums, 'to_py') else nums))
+    queries = list(queries.to_py() if hasattr(queries, 'to_py') else queries)
+    prefix = [0]
+    for v in nums:
+        prefix.append(prefix[-1] + v)
+    result = []
+    for q in queries:
+        idx = bisect.bisect_right(prefix, q) - 1
+        result.append(idx)
+    return result
+`,
+
+  'minimum-number-of-arrows-to-burst-balloons': `def findMinArrowShots(points):
+    pts = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in (points.to_py() if hasattr(points, 'to_py') else points)]
+    pts.sort(key=lambda x: x[1])
+    arrows = 1
+    end = pts[0][1]
+    for i in range(1, len(pts)):
+        if pts[i][0] > end:
+            arrows += 1
+            end = pts[i][1]
+    return arrows
+`,
+
+  'find-largest-value-each-tree-row': `def largestValues(root):
+    if not root:
+        return []
+    result = []
+    queue = [root]
+    while queue:
+        level_max = float('-inf')
+        for _ in range(len(queue)):
+            node = queue.pop(0)
+            if node.val > level_max:
+                level_max = node.val
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        result.append(level_max)
+    return result
+`,
+
+  'find-bottom-left-tree-value': `def findBottomLeftValue(root):
+    ans = root.val
+    queue = [root]
+    while queue:
+        ans = queue[0].val
+        for _ in range(len(queue)):
+            node = queue.pop(0)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+    return ans
+`,
+
+  'most-stones-removed-same-row-or-column': `def removeStones(stones):
+    stones = [list(s.to_py() if hasattr(s, 'to_py') else s) for s in (stones.to_py() if hasattr(stones, 'to_py') else stones)]
+    parent = {}
+    def find(x):
+        parent.setdefault(x, x)
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    def union(a, b):
+        a, b = find(a), find(b)
+        if a != b:
+            parent[a] = b
+    for r, c in stones:
+        union(r, c + 10001)
+    stone_roots = set(find(r) for r, _ in stones)
+    return len(stones) - len(stone_roots)
+`,
+
+  'count-unreachable-pairs-of-nodes': `def countPairs(n, edges):
+    n = int(n)
+    adj = [[] for _ in range(n)]
+    for a, b in (edges.to_py() if hasattr(edges, 'to_py') else edges):
+        adj[int(a)].append(int(b))
+        adj[int(b)].append(int(a))
+    visited = [False] * n
+    ans = 0
+    remaining = n
+    for i in range(n):
+        if not visited[i]:
+            size = 0
+            stack = [i]
+            visited[i] = True
+            while stack:
+                node = stack.pop()
+                size += 1
+                for nxt in adj[node]:
+                    if not visited[nxt]:
+                        visited[nxt] = True
+                        stack.append(nxt)
+            remaining -= size
+            ans += size * remaining
+    return ans
+`,
+
+  'my-calendar-i': `def myCalendarI(bookings):
+    raw = bookings.to_py() if hasattr(bookings, 'to_py') else bookings
+    bs = [list(b.to_py() if hasattr(b, 'to_py') else b) for b in raw]
+    accepted = []
+    result = []
+    for s, e in bs:
+        overlap = any(s < ae and a_s < e for a_s, ae in accepted)
+        if not overlap:
+            accepted.append([s, e])
+            result.append(True)
+        else:
+            result.append(False)
+    return result
+`,
+
+  'time-needed-to-buy-tickets': `def timeRequiredToBuy(tickets, k):
+    tickets = list(tickets.to_py() if hasattr(tickets, 'to_py') else tickets)
+    k = int(k)
+    total = 0
+    for i, v in enumerate(tickets):
+        if i <= k:
+            total += min(v, tickets[k])
+        else:
+            total += min(v, tickets[k] - 1)
+    return total
+`,
+
+  'kth-smallest-element-in-bst': `def kthSmallestRunner(arr, k):
+    raw = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
+    k = int(k)
+    class TreeNode:
+        def __init__(self, val=0, left=None, right=None):
+            self.val = val; self.left = left; self.right = right
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i])
+            queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i])
+            queue.append(node.right)
+        i += 1
+    result = [0]
+    count = [0]
+    def inorder(node):
+        if not node:
+            return
+        inorder(node.left)
+        count[0] += 1
+        if count[0] == k:
+            result[0] = node.val
+        inorder(node.right)
+    inorder(root)
+    return result[0]
+`,
+
+  'find-minimum-in-rotated-sorted-array': `def findMin(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    lo, hi = 0, len(nums) - 1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if nums[mid] > nums[hi]:
+            lo = mid + 1
+        else:
+            hi = mid
+    return nums[lo]
+`,
+
+  'search-in-rotated-sorted-array': `def search(nums, target):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    target = int(target)
+    lo, hi = 0, len(nums) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if nums[mid] == target:
+            return mid
+        if nums[lo] <= nums[mid]:
+            if nums[lo] <= target < nums[mid]:
+                hi = mid - 1
+            else:
+                lo = mid + 1
+        else:
+            if nums[mid] < target <= nums[hi]:
+                lo = mid + 1
+            else:
+                hi = mid - 1
+    return -1
+`,
+
+  'minimum-number-of-days-to-make-m-bouquets': `def minDays(bloomDay, m, k):
+    bloomDay = list(bloomDay.to_py() if hasattr(bloomDay, 'to_py') else bloomDay)
+    m, k = int(m), int(k)
+    if len(bloomDay) < m * k:
+        return -1
+    def can_make(day):
+        bouquets = consecutive = 0
+        for d in bloomDay:
+            if d <= day:
+                consecutive += 1
+                if consecutive == k:
+                    bouquets += 1
+                    consecutive = 0
+            else:
+                consecutive = 0
+        return bouquets >= m
+    lo, hi = 1, max(bloomDay)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if can_make(mid):
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'maximum-number-of-events-that-can-be-attended': `def maxEvents(events):
+    import heapq
+    evs = sorted([list(e.to_py() if hasattr(e, 'to_py') else e) for e in (events.to_py() if hasattr(events, 'to_py') else events)], key=lambda x: x[0])
+    max_day = max(e[1] for e in evs)
+    heap = []
+    idx = 0
+    count = 0
+    for day in range(1, max_day + 1):
+        while idx < len(evs) and evs[idx][0] <= day:
+            heapq.heappush(heap, evs[idx][1])
+            idx += 1
+        while heap and heap[0] < day:
+            heapq.heappop(heap)
+        if heap:
+            heapq.heappop(heap)
+            count += 1
+    return count
+`,
+
+  'median-of-two-sorted-arrays': `def findMedianSortedArrays(nums1, nums2):
+    nums1 = list(nums1.to_py() if hasattr(nums1, 'to_py') else nums1)
+    nums2 = list(nums2.to_py() if hasattr(nums2, 'to_py') else nums2)
+    if len(nums1) > len(nums2):
+        nums1, nums2 = nums2, nums1
+    m, n = len(nums1), len(nums2)
+    half = (m + n + 1) // 2
+    lo, hi = 0, m
+    while lo <= hi:
+        i = (lo + hi) // 2
+        j = half - i
+        l1 = nums1[i-1] if i > 0 else float('-inf')
+        r1 = nums1[i] if i < m else float('inf')
+        l2 = nums2[j-1] if j > 0 else float('-inf')
+        r2 = nums2[j] if j < n else float('inf')
+        if l1 <= r2 and l2 <= r1:
+            if (m + n) % 2 == 1:
+                return float(max(l1, l2))
+            return (max(l1, l2) + min(r1, r2)) / 2
+        elif l1 > r2:
+            hi = i - 1
+        else:
+            lo = i + 1
+    return 0.0
+`,
+
+  'number-of-subsequences-that-satisfy-the-given-sum-condition': `def numSubseq(nums, target):
+    nums = sorted(list(nums.to_py() if hasattr(nums, 'to_py') else nums))
+    target = int(target)
+    MOD = 10**9 + 7
+    n = len(nums)
+    pow2 = [1] * n
+    for i in range(1, n):
+        pow2[i] = pow2[i-1] * 2 % MOD
+    lo, hi = 0, n - 1
+    ans = 0
+    while lo <= hi:
+        if nums[lo] + nums[hi] <= target:
+            ans = (ans + pow2[hi - lo]) % MOD
+            lo += 1
+        else:
+            hi -= 1
+    return ans
+`,
+
+  'find-players-with-zero-or-one-losses': `def findWinners(matches):
+    matches = [list(m.to_py() if hasattr(m, 'to_py') else m) for m in (matches.to_py() if hasattr(matches, 'to_py') else matches)]
+    losses = {}
+    for w, l in matches:
+        if w not in losses:
+            losses[w] = 0
+        losses[l] = losses.get(l, 0) + 1
+    zero = sorted(p for p, c in losses.items() if c == 0)
+    one = sorted(p for p, c in losses.items() if c == 1)
+    return [zero, one]
+`,
+
+  'count-unreachable-pairs-after-removing-vertices': `def countPairs(n, edges):
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (edges.to_py() if hasattr(edges, 'to_py') else edges)]
+    parent = list(range(n))
+    size = [1] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    for a, b in edges:
+        pa, pb = find(a), find(b)
+        if pa != pb:
+            parent[pa] = pb
+            size[pb] += size[pa]
+    ans = 0
+    remaining = n
+    for i in range(n):
+        if find(i) == i:
+            sz = size[i]
+            ans += sz * (remaining - sz)
+            remaining -= sz
+    return ans
+`,
+
+  'maximum-value-at-given-index-in-bounded-array': `def maxValue(n, index, maxSum):
+    def sum_at_peak(v, length):
+        if length == 0:
+            return 0
+        if length >= v:
+            return v * (v + 1) // 2 + (length - v)
+        return v * length - length * (length - 1) // 2
+    lo, hi = 1, maxSum
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        total = sum_at_peak(mid, index + 1) + sum_at_peak(mid, n - index) - mid
+        if total <= maxSum:
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'walls-and-gates': `
+def wallsAndGates(rooms):
+    rooms = [list(row) for row in rooms]
+    INF = 2147483647
+    m, n = len(rooms), len(rooms[0])
+    from collections import deque
+    q = deque()
+    for i in range(m):
+        for j in range(n):
+            if rooms[i][j] == 0:
+                q.append((i, j))
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    while q:
+        r, c = q.popleft()
+        for dr, dc in dirs:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < m and 0 <= nc < n and rooms[nr][nc] == INF:
+                rooms[nr][nc] = rooms[r][c] + 1
+                q.append((nr, nc))
+    return rooms
+`,
+
+  'making-a-large-island': `
+def largestIsland(grid):
+    grid = [list(row) for row in grid]
+    n = len(grid)
+    island_size = {}
+    island_id = 2
+    def dfs(r, c, iid):
+        if r < 0 or r >= n or c < 0 or c >= n or grid[r][c] != 1:
+            return 0
+        grid[r][c] = iid
+        return 1 + dfs(r+1,c,iid) + dfs(r-1,c,iid) + dfs(r,c+1,iid) + dfs(r,c-1,iid)
+    for i in range(n):
+        for j in range(n):
+            if grid[i][j] == 1:
+                island_size[island_id] = dfs(i, j, island_id)
+                island_id += 1
+    res = max(island_size.values(), default=0)
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    for i in range(n):
+        for j in range(n):
+            if grid[i][j] == 0:
+                seen = set()
+                size = 1
+                for dr, dc in dirs:
+                    nr, nc = i+dr, j+dc
+                    if 0 <= nr < n and 0 <= nc < n and grid[nr][nc] > 1:
+                        iid = grid[nr][nc]
+                        if iid not in seen:
+                            seen.add(iid)
+                            size += island_size.get(iid, 0)
+                res = max(res, size)
+    return res
+`,
+
+  'increasing-order-search-tree': `
+def increasingBSTRunner(arr):
+    converted = []
+    for x in arr:
+        if x is None or (hasattr(x, 'typeof') and x.typeof == 'object' and x == None):
+            converted.append(None)
+        else:
+            try:
+                converted.append(int(x))
+            except Exception:
+                converted.append(None)
+    root = __from_array__(converted)
+    vals = []
+    def inorder(n):
+        if not n: return
+        inorder(n.left)
+        vals.append(n.val)
+        inorder(n.right)
+    inorder(root)
+    if not vals:
+        return []
+    dummy = TreeNode(0)
+    cur = dummy
+    for v in vals:
+        cur.right = TreeNode(v)
+        cur = cur.right
+    return __to_array__(dummy.right)
+`,
+
+  'next-greater-node-in-linked-list': `
+def nextLargerNodesRunner(arr):
+    arr = list(arr)
+    n = len(arr)
+    result = [0] * n
+    stack = []
+    for i in range(n):
+        while stack and arr[stack[-1]] < arr[i]:
+            result[stack.pop()] = arr[i]
+        stack.append(i)
+    return result
+`,
+
+  'longest-cycle-in-graph': `
+def longestCycle(edges):
+    edges = list(edges)
+    n = len(edges)
+    visit_time = [-1] * n
+    ans = -1
+    global_time = 0
+    for i in range(n):
+        if visit_time[i] != -1:
+            continue
+        start_time = global_time
+        cur = i
+        while cur != -1 and visit_time[cur] == -1:
+            visit_time[cur] = global_time
+            global_time += 1
+            cur = edges[cur]
+        if cur != -1 and visit_time[cur] >= start_time:
+            ans = max(ans, global_time - visit_time[cur])
+    return ans
+`,
+
+  'maximum-subarray-min-product': `
+def maxSumMinProduct(nums):
+    MOD = 10**9 + 7
+    nums = list(nums)
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i+1] = prefix[i] + nums[i]
+    left = [-1] * n
+    right = [n] * n
+    stack = []
+    for i in range(n):
+        while stack and nums[stack[-1]] >= nums[i]:
+            stack.pop()
+        left[i] = stack[-1] if stack else -1
+        stack.append(i)
+    stack = []
+    for i in range(n-1, -1, -1):
+        while stack and nums[stack[-1]] > nums[i]:
+            stack.pop()
+        right[i] = stack[-1] if stack else n
+        stack.append(i)
+    ans = 0
+    for i in range(n):
+        l, r = left[i] + 1, right[i]
+        val = nums[i] * (prefix[r] - prefix[l])
+        if val > ans:
+            ans = val
+    return ans % MOD
+`,
+
+  'steps-to-make-array-nondecreasing': `
+def totalSteps(nums):
+    nums = list(nums)
+    n = len(nums)
+    dp = [0] * n
+    stack = []
+    ans = 0
+    for i in range(n):
+        max_steps = 0
+        while stack and nums[stack[-1]] <= nums[i]:
+            max_steps = max(max_steps, dp[stack.pop()])
+        if stack:
+            dp[i] = max(max_steps + 1, 1)
+            ans = max(ans, dp[i])
+        stack.append(i)
+    return ans
+`,
+
+  'count-substrings-that-differ-by-one-character': `
+def countSubstrings(s, t):
+    m, n = len(s), len(t)
+    count = 0
+    def along(si, ti):
+        nonlocal count
+        prev, cur = 0, 0
+        while si < m and ti < n:
+            if s[si] != t[ti]:
+                prev = cur + 1
+                cur = 0
+            else:
+                cur += 1
+            count += prev
+            si += 1
+            ti += 1
+    for i in range(m):
+        along(i, 0)
+    for j in range(1, n):
+        along(0, j)
+    return count
+`,
+
+  'minimum-operations-to-move-balls': `
+def minOperations(boxes):
+    n = len(boxes)
+    result = [0] * n
+    balls = ops = 0
+    for i in range(n):
+        result[i] += ops
+        balls += int(boxes[i])
+        ops += balls
+    balls = ops = 0
+    for i in range(n-1, -1, -1):
+        result[i] += ops
+        balls += int(boxes[i])
+        ops += balls
+    return result
+`,
+
+  'maximum-area-of-piece-of-cake': `
+def maxArea(h, w, horizontalCuts, verticalCuts):
+    MOD = 10**9 + 7
+    hc = sorted(horizontalCuts)
+    vc = sorted(verticalCuts)
+    max_h = max(hc[0], h - hc[-1])
+    for i in range(1, len(hc)):
+        max_h = max(max_h, hc[i] - hc[i-1])
+    max_w = max(vc[0], w - vc[-1])
+    for i in range(1, len(vc)):
+        max_w = max(max_w, vc[i] - vc[i-1])
+    return (max_h * max_w) % MOD
+`,
+
+  'minimum-area-rectangle': `def minAreaRect(points):
+    pts = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in (points.to_py() if hasattr(points, 'to_py') else points)]
+    point_set = set((p[0], p[1]) for p in pts)
+    min_area = float('inf')
+    n = len(pts)
+    for i in range(n):
+        for j in range(i + 1, n):
+            x1, y1 = pts[i][0], pts[i][1]
+            x2, y2 = pts[j][0], pts[j][1]
+            if x1 != x2 and y1 != y2:
+                if (x1, y2) in point_set and (x2, y1) in point_set:
+                    area = abs(x2 - x1) * abs(y2 - y1)
+                    if area < min_area:
+                        min_area = area
+    return 0 if min_area == float('inf') else min_area
+`,
+
+  'minimum-operations-to-halve-array-sum': `def halveArray(nums):
+    import heapq
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    total = sum(nums)
+    need = total / 2
+    reduced = 0
+    ops = 0
+    heap = [-x for x in nums]
+    heapq.heapify(heap)
+    while reduced < need:
+        val = -heapq.heappop(heap)
+        half = val / 2
+        reduced += half
+        heapq.heappush(heap, -half)
+        ops += 1
+    return ops
+`,
+
+  'maximum-binary-string-after-change': `def maximumBinaryString(binary):
+    first_zero = binary.find('0')
+    if first_zero == -1:
+        return binary
+    zeros = binary.count('0')
+    n = len(binary)
+    return '1' * (first_zero + zeros - 1) + '0' + '1' * (n - first_zero - zeros)
+`,
+
+  'circular-array-loop': `def circularArrayLoop(nums):
+    n = len(nums)
+    def nxt(i):
+        return (i + nums[i]) % n
+    for i in range(n):
+        s, f = i, i
+        while nums[s] * nums[nxt(s)] > 0 and nums[f] * nums[nxt(nxt(f))] > 0:
+            s = nxt(s)
+            f = nxt(nxt(f))
+            if s == f:
+                return nxt(s) != s
+    return False
+`,
+
+  'longest-arithmetic-subsequence-of-given-difference': `def longestSubsequence(arr, difference):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    d = int(difference)
+    dp = {}
+    ans = 1
+    for x in arr:
+        prev = dp.get(x - d, 0)
+        dp[x] = prev + 1
+        if dp[x] > ans:
+            ans = dp[x]
+    return ans
+`,
+
+  'number-of-subarrays-with-bounded-maximum': `def numSubarrayBoundedMax(nums, left, right):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    L = int(left)
+    R = int(right)
+    def at_most(b):
+        count = cur = 0
+        for v in nums:
+            cur = cur + 1 if v <= b else 0
+            count += cur
+        return count
+    return at_most(R) - at_most(L - 1)
+`,
+
+  'split-array-into-consecutive-subsequences': `def isPossible(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    freq = {}
+    end = {}
+    for v in nums:
+        freq[v] = freq.get(v, 0) + 1
+    for v in nums:
+        if not freq.get(v):
+            continue
+        freq[v] -= 1
+        if end.get(v):
+            end[v] -= 1
+            end[v + 1] = end.get(v + 1, 0) + 1
+        elif freq.get(v + 1) and freq.get(v + 2):
+            freq[v + 1] -= 1
+            freq[v + 2] -= 1
+            end[v + 3] = end.get(v + 3, 0) + 1
+        else:
+            return False
+    return True
+`,
+
+  'restore-the-array-from-adjacent-pairs': `def restoreArray(adjacentPairs):
+    pairs = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in (adjacentPairs.to_py() if hasattr(adjacentPairs, 'to_py') else adjacentPairs)]
+    adj = {}
+    for a, b in pairs:
+        adj.setdefault(a, []).append(b)
+        adj.setdefault(b, []).append(a)
+    start = next(k for k, v in adj.items() if len(v) == 1)
+    n = len(pairs) + 1
+    res = [start]
+    for i in range(1, n):
+        nbrs = adj[res[i - 1]]
+        res.append(nbrs[0] if nbrs[0] != res[i - 2] else nbrs[1])
+    return res
+`,
+
+  'monotone-increasing-digits': `def monotoneIncreasingDigits(n):
+    d = list(str(n))
+    mark = len(d)
+    for i in range(len(d) - 1, 0, -1):
+        if d[i - 1] > d[i]:
+            mark = i
+            d[i - 1] = str(int(d[i - 1]) - 1)
+    for i in range(mark, len(d)):
+        d[i] = '9'
+    return int(''.join(d))
+`,
+
+  'construct-k-palindrome-strings': `def canConstruct(k, s):
+    from collections import Counter
+    k = int(k)
+    freq = Counter(s)
+    odds = sum(1 for v in freq.values() if v % 2 == 1)
+    return odds <= k <= len(s)
+`,
+
+
+  'push-dominoes': `def pushDominoes(dominoes):
+    n = len(dominoes)
+    forces = [0] * n
+    f = 0
+    for i in range(n):
+        if dominoes[i] == 'R': f = n
+        elif dominoes[i] == 'L': f = 0
+        else: f = max(f - 1, 0)
+        forces[i] += f
+    f = 0
+    for i in range(n - 1, -1, -1):
+        if dominoes[i] == 'L': f = n
+        elif dominoes[i] == 'R': f = 0
+        else: f = max(f - 1, 0)
+        forces[i] -= f
+    return ''.join('R' if x > 0 else 'L' if x < 0 else '.' for x in forces)
+`,
+
+  'largest-merge-of-two-strings': `def largestMerge(word1, word2):
+    result = []
+    i, j = 0, 0
+    while i < len(word1) and j < len(word2):
+        if word1[i:] >= word2[j:]:
+            result.append(word1[i]); i += 1
+        else:
+            result.append(word2[j]); j += 1
+    result.append(word1[i:])
+    result.append(word2[j:])
+    return ''.join(result)
+`,
+
+  'remove-covered-intervals': `def removeCoveredIntervals(intervals):
+    raw = intervals.to_py() if hasattr(intervals, 'to_py') else list(intervals)
+    arr = [list(x.to_py() if hasattr(x, 'to_py') else x) for x in raw]
+    arr.sort(key=lambda x: (x[0], -x[1]))
+    count, max_right = 0, 0
+    for a, b in arr:
+        if b > max_right:
+            count += 1
+            max_right = b
+    return count
+`,
+
+  'minimize-array-value': `def minimizeArrayValue(nums):
+    raw = nums.to_py() if hasattr(nums, 'to_py') else list(nums)
+    arr = [int(x) for x in raw]
+    prefix, ans = 0, 0
+    for i, x in enumerate(arr):
+        prefix += x
+        ans = max(ans, (prefix + i) // (i + 1))
+    return ans
+`,
+
+  'validate-ip-address': `def validIPAddress(queryIP):
+    if '.' in queryIP:
+        parts = queryIP.split('.')
+        if len(parts) != 4:
+            return 'Neither'
+        for p in parts:
+            if not p or len(p) > 3:
+                return 'Neither'
+            if len(p) > 1 and p[0] == '0':
+                return 'Neither'
+            if not p.isdigit():
+                return 'Neither'
+            if int(p) > 255:
+                return 'Neither'
+        return 'IPv4'
+    elif ':' in queryIP:
+        parts = queryIP.split(':')
+        if len(parts) != 8:
+            return 'Neither'
+        valid_hex = set('0123456789abcdefABCDEF')
+        for p in parts:
+            if not 1 <= len(p) <= 4:
+                return 'Neither'
+            if not all(c in valid_hex for c in p):
+                return 'Neither'
+        return 'IPv6'
+    return 'Neither'
+`,
+
+  'maximum-sum-hourglass': `def maxSum(grid):
+    raw = grid.to_py() if hasattr(grid, 'to_py') else list(grid)
+    g = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in raw]
+    m, n = len(g), len(g[0])
+    best = 0
+    for r in range(1, m - 1):
+        for c in range(1, n - 1):
+            s = (g[r-1][c-1] + g[r-1][c] + g[r-1][c+1]
+                 + g[r][c]
+                 + g[r+1][c-1] + g[r+1][c] + g[r+1][c+1])
+            best = max(best, s)
+    return best
+`,
+
+  'reverse-odd-levels-binary-tree': `def reverseOddLevelsRunner(arr):
+    root = __from_array__(arr)
+    def dfs(left, right, level):
+        if left is None or right is None:
+            return
+        if level % 2 == 1:
+            left.val, right.val = right.val, left.val
+        dfs(left.left, right.right, level + 1)
+        dfs(left.right, right.left, level + 1)
+    if root:
+        dfs(root.left, root.right, 1)
+    return __to_array__(root)
+`,
+
+  'number-of-flowers-in-full-bloom': `def fullBloomFlowers(flowers, people):
+    import bisect
+    raw_fl = flowers.to_py() if hasattr(flowers, 'to_py') else list(flowers)
+    fl = [list(x.to_py() if hasattr(x, 'to_py') else x) for x in raw_fl]
+    raw_pp = people.to_py() if hasattr(people, 'to_py') else list(people)
+    pp = [int(x) for x in raw_pp]
+    starts = sorted(int(f[0]) for f in fl)
+    ends = sorted(int(f[1]) for f in fl)
+    return [bisect.bisect_right(starts, t) - bisect.bisect_left(ends, t) for t in pp]
+`,
+
+  'most-beautiful-item-for-each-query': `def maximumBeauty(items, queries):
+    import bisect
+    raw_it = items.to_py() if hasattr(items, 'to_py') else list(items)
+    its = [list(x.to_py() if hasattr(x, 'to_py') else x) for x in raw_it]
+    its.sort(key=lambda x: x[0])
+    for i in range(1, len(its)):
+        its[i][1] = max(its[i][1], its[i-1][1])
+    prices = [x[0] for x in its]
+    raw_q = queries.to_py() if hasattr(queries, 'to_py') else list(queries)
+    qq = [int(x) for x in raw_q]
+    result = []
+    for q in qq:
+        idx = bisect.bisect_right(prices, q) - 1
+        result.append(its[idx][1] if idx >= 0 else 0)
+    return result
+`,
+
+  'remove-duplicate-letters': `def removeDuplicateLetters(s):
+    last = {c: i for i, c in enumerate(s)}
+    stack = []
+    in_stack = set()
+    for i, c in enumerate(s):
+        if c in in_stack:
+            continue
+        while stack and stack[-1] > c and last[stack[-1]] > i:
+            in_stack.discard(stack.pop())
+        stack.append(c)
+        in_stack.add(c)
+    return ''.join(stack)
+`,
+
+  'best-time-to-buy-and-sell-stock-iv': `def maxProfit(k, prices):
+    k = int(k)
+    prices = list(prices.to_py() if hasattr(prices, 'to_py') else prices)
+    n = len(prices)
+    if n == 0 or k == 0:
+        return 0
+    if k >= n // 2:
+        return sum(max(0, prices[i] - prices[i-1]) for i in range(1, n))
+    buy = [-float('inf')] * (k + 1)
+    sell = [0] * (k + 1)
+    for p in prices:
+        for j in range(k, 0, -1):
+            buy[j] = max(buy[j], sell[j-1] - p)
+            sell[j] = max(sell[j], buy[j] + p)
+    return sell[k]
+`,
+
+  'shortest-path-with-alternating-colors': `def shortestAlternatingColors(n, redEdges, blueEdges):
+    n = int(n)
+    redEdges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (redEdges.to_py() if hasattr(redEdges, 'to_py') else redEdges)]
+    blueEdges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (blueEdges.to_py() if hasattr(blueEdges, 'to_py') else blueEdges)]
+    from collections import deque
+    adj = [[[], []] for _ in range(n)]
+    for u, v in redEdges:
+        adj[u][0].append(v)
+    for u, v in blueEdges:
+        adj[u][1].append(v)
+    dist = [-1] * n
+    visited = [[False, False] for _ in range(n)]
+    visited[0][0] = visited[0][1] = True
+    dist[0] = 0
+    q = deque([(0, 0), (0, 1)])
+    step = 1
+    while q:
+        for _ in range(len(q)):
+            node, color = q.popleft()
+            nc = 1 - color
+            for nxt in adj[node][nc]:
+                if not visited[nxt][nc]:
+                    visited[nxt][nc] = True
+                    if dist[nxt] == -1:
+                        dist[nxt] = step
+                    q.append((nxt, nc))
+        step += 1
+    return dist
+`,
+
+  'minimum-swaps-to-make-sequences-increasing': `def minSwap(nums1, nums2):
+    nums1 = list(nums1.to_py() if hasattr(nums1, 'to_py') else nums1)
+    nums2 = list(nums2.to_py() if hasattr(nums2, 'to_py') else nums2)
+    keep, swap = 0, 1
+    for i in range(1, len(nums1)):
+        nk = ns = float('inf')
+        if nums1[i] > nums1[i-1] and nums2[i] > nums2[i-1]:
+            nk = min(nk, keep)
+            ns = min(ns, swap + 1)
+        if nums1[i] > nums2[i-1] and nums2[i] > nums1[i-1]:
+            nk = min(nk, swap)
+            ns = min(ns, keep + 1)
+        keep, swap = nk, ns
+    return min(keep, swap)
+`,
+
+  'array-of-doubled-pairs': `def canReorderDoubled(changed):
+    changed = list(changed.to_py() if hasattr(changed, 'to_py') else changed)
+    from collections import Counter
+    cnt = Counter(changed)
+    for x in sorted(cnt, key=abs):
+        if cnt[x] == 0:
+            continue
+        doubled = 2 * x
+        if doubled == x:
+            if cnt[x] % 2 != 0:
+                return False
+            cnt[x] = 0
+            continue
+        if cnt[doubled] < cnt[x]:
+            return False
+        cnt[doubled] -= cnt[x]
+        cnt[x] = 0
+    return True
+`,
+
+  'count-vowel-permutation': `def countVowelPermutation(n):
+    MOD = 10**9 + 7
+    n = int(n)
+    a = e = i = o = u = 1
+    for _ in range(n - 1):
+        a, e, i, o, u = (e + i + u) % MOD, (a + i) % MOD, (e + o) % MOD, i % MOD, (i + o) % MOD
+    return (a + e + i + o + u) % MOD
+`,
+
+  'longest-ideal-subsequence': `def longestIdealString(s, k):
+    k = int(k)
+    dp = [0] * 26
+    for c in s:
+        idx = ord(c) - ord('a')
+        best = max(dp[max(0, idx - k):min(26, idx + k + 1)])
+        dp[idx] = best + 1
+    return max(dp)
+`,
+
+  'minimum-string-length-after-removing-substrings': `def minLength(s):
+    stack = []
+    for c in s:
+        if stack and ((stack[-1] == 'A' and c == 'B') or (stack[-1] == 'C' and c == 'D')):
+            stack.pop()
+        else:
+            stack.append(c)
+    return len(stack)
+
+`,
+
+  'total-hamming-distance': `def totalHammingDistance(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    total = 0
+    n = len(nums)
+    for i in range(32):
+        ones = sum((x >> i) & 1 for x in nums)
+        total += ones * (n - ones)
+    return total
+`,
+
+  'maximum-number-of-occurrences-of-a-substring': `def maxFreq(s, maxLetters, minSize, maxSize):
+    s = str(s)
+    maxLetters, minSize = int(maxLetters), int(minSize)
+    from collections import defaultdict
+    count = defaultdict(int)
+    res = 0
+    for i in range(len(s) - minSize + 1):
+        sub = s[i:i+minSize]
+        if len(set(sub)) <= maxLetters:
+            count[sub] += 1
+            res = max(res, count[sub])
+    return res
+`,
+
+  'longest-happy-prefix': `def longestPrefix(s):
+    n = len(s)
+    lps = [0] * n
+    length = 0
+    i = 1
+    while i < n:
+        if s[i] == s[length]:
+            length += 1
+            lps[i] = length
+            i += 1
+        elif length:
+            length = lps[length - 1]
+        else:
+            lps[i] = 0
+            i += 1
+    return s[:lps[n-1]]
+`,
+
+  'reducing-dishes': `def maxSatisfaction(satisfaction):
+    satisfaction = sorted(satisfaction.to_py() if hasattr(satisfaction, 'to_py') else satisfaction, reverse=True)
+    total = curr = 0
+    for s in satisfaction:
+        curr += s
+        if curr <= 0:
+            break
+        total += curr
+    return total
+`,
+
+  'find-closest-node-to-given-two-nodes': `def closestMeetingNode(edges, node1, node2):
+    edges = list(edges.to_py() if hasattr(edges, 'to_py') else edges)
+    node1, node2 = int(node1), int(node2)
+    n = len(edges)
+    def get_dist(start):
+        d = [-1] * n
+        cur, step = start, 0
+        while cur != -1 and d[cur] == -1:
+            d[cur] = step
+            step += 1
+            cur = edges[cur]
+        return d
+    d1, d2 = get_dist(node1), get_dist(node2)
+    res, best = -1, float('inf')
+    for i in range(n):
+        if d1[i] != -1 and d2[i] != -1:
+            mx = max(d1[i], d2[i])
+            if mx < best:
+                best = mx
+                res = i
+    return res
+`,
+
+  'minimum-number-of-swaps-to-make-string-balanced': `def minimumSwaps(s):
+    import math
+    open_count = 0
+    unmatched = 0
+    for c in s:
+        if c == '[':
+            open_count += 1
+        elif open_count > 0:
+            open_count -= 1
+        else:
+            unmatched += 1
+    return math.ceil(unmatched / 2)
+`,
+
+  'number-of-substrings-containing-all-three-characters': `def numberOfSubstrings(s):
+    last = [-1, -1, -1]
+    ans = 0
+    for i, c in enumerate(s):
+        last[ord(c) - ord('a')] = i
+        ans += min(last) + 1
+    return ans
+`,
+
+  'minimum-deletions-to-make-string-balanced': `def minimumDeletions(s):
+    b_count = dp = 0
+    for c in s:
+        if c == 'b':
+            b_count += 1
+        else:
+            dp = min(dp + 1, b_count)
+    return dp
+`,
+
+  'minimum-difference-between-largest-and-smallest-value-in-three-moves': `def minDifference(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    if n <= 4:
+        return 0
+    nums.sort()
+    return min(nums[n - 1 - (3 - i)] - nums[i] for i in range(4))
+`,
+
+  'shortest-subarray-to-be-removed-to-make-array-sorted': `def findLengthOfShortestSubarray(arr):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    n = len(arr)
+    right = n - 1
+    while right > 0 and arr[right] >= arr[right - 1]:
+        right -= 1
+    if right == 0:
+        return 0
+    res = right
+    left = 0
+    while left < right and (left == 0 or arr[left] >= arr[left - 1]):
+        while right < n and arr[right] < arr[left]:
+            right += 1
+        res = min(res, right - left - 1)
+        left += 1
+    return res
+`,
+
+  'maximum-score-from-removing-substrings': `def maximumGain(s, x, y):
+    x, y = int(x), int(y)
+    def remove(t, first, second, val):
+        stack = []
+        score = 0
+        for c in t:
+            if stack and stack[-1] == first and c == second:
+                stack.pop()
+                score += val
+            else:
+                stack.append(c)
+        return ''.join(stack), score
+    if x >= y:
+        s, s1 = remove(s, 'a', 'b', x)
+        s, s2 = remove(s, 'b', 'a', y)
+    else:
+        s, s1 = remove(s, 'b', 'a', y)
+        s, s2 = remove(s, 'a', 'b', x)
+    return s1 + s2
+`,
+
+  'minimum-health-to-beat-the-game': `def minimumHealth(damage, armor):
+    damage = list(damage.to_py() if hasattr(damage, 'to_py') else damage)
+    armor = int(armor)
+    total = sum(damage)
+    max_dmg = max(damage)
+    savings = min(max_dmg - 1, armor)
+    return total - savings + 1
+`,
+
+  'check-if-string-contains-all-binary-codes-of-size-k': `def hasAllCodes(s, k):
+    k = int(k)
+    required = 1 << k
+    seen = set()
+    for i in range(k, len(s) + 1):
+        seen.add(s[i - k:i])
+        if len(seen) == required:
+            return True
+    return False
+`,
+
+  'longest-nice-substring': `def longestNiceSubstring(s):
+    def solve(t):
+        if len(t) < 2:
+            return ''
+        for i, c in enumerate(t):
+            if c.upper() not in t or c.lower() not in t:
+                l = solve(t[:i])
+                r = solve(t[i + 1:])
+                return l if len(l) >= len(r) else r
+        return t
+    return solve(s)
+`,
+
+  'minimum-add-to-make-parentheses-valid': `def minAddToMakeValid(s):
+    open_count = 0
+    close_count = 0
+    for c in s:
+        if c == '(':
+            open_count += 1
+        elif open_count > 0:
+            open_count -= 1
+        else:
+            close_count += 1
+    return open_count + close_count
+`,
+
+  'predict-winner': `def predictTheWinner(nums):
+    raw = nums.to_py() if hasattr(nums, 'to_py') else list(nums)
+    arr = [int(x) for x in raw]
+    n = len(arr)
+    dp = [arr[:] for _ in range(n)]
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            dp[i][j] = max(arr[i] - dp[i+1][j], arr[j] - dp[i][j-1])
+    return dp[0][n-1] >= 0
+`,
+
+  'can-i-win': `def canIWin(maxChoosableInteger, desiredTotal):
+    target = int(desiredTotal)
+    max_i = int(maxChoosableInteger)
+    if target <= 0:
+        return True
+    total_sum = max_i * (max_i + 1) // 2
+    if total_sum < target:
+        return False
+    memo = {}
+    def can_win(mask, total):
+        if mask in memo:
+            return memo[mask]
+        for i in range(1, max_i + 1):
+            if (mask >> i) & 1:
+                continue
+            if total + i >= target or not can_win(mask | (1 << i), total + i):
+                memo[mask] = True
+                return True
+        memo[mask] = False
+        return False
+    return can_win(0, 0)
+`,
+
+  'optimal-division': `def optimalDivision(nums):
+    raw = nums.to_py() if hasattr(nums, 'to_py') else list(nums)
+    arr = [int(x) for x in raw]
+    if len(arr) == 1:
+        return str(arr[0])
+    if len(arr) == 2:
+        return f"{arr[0]}/{arr[1]}"
+    inner = '/'.join(str(x) for x in arr[1:])
+    return f"{arr[0]}/({inner})"
+`,
+
+  'minimum-insertions-to-balance-parentheses': `def minInsertions(s):
+    open_count = 0
+    res = 0
+    i = 0
+    while i < len(s):
+        if s[i] == '(':
+            open_count += 1
+        else:
+            if i + 1 < len(s) and s[i+1] == ')':
+                i += 1
+            else:
+                res += 1
+            if open_count > 0:
+                open_count -= 1
+            else:
+                res += 1
+        i += 1
+    return res + 2 * open_count
+`,
+
+  'longest-subarray-of-1s-after-deleting-one-element': `def longestSubarray(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    left = 0
+    zeros = 0
+    ans = 0
+    for right in range(len(nums)):
+        if nums[right] == 0:
+            zeros += 1
+        while zeros > 1:
+            if nums[left] == 0:
+                zeros -= 1
+            left += 1
+        ans = max(ans, right - left)
+    return ans
+`,
+
+  'count-number-of-nice-subarrays': `def numberOfSubarrays(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    k = int(k)
+    def at_most(limit):
+        left = count = result = 0
+        for right in range(len(nums)):
+            if nums[right] % 2 == 1:
+                count += 1
+            while count > limit:
+                if nums[left] % 2 == 1:
+                    count -= 1
+                left += 1
+            result += right - left + 1
+        return result
+    return at_most(k) - at_most(k - 1)
+`,
+
+  'number-of-ways-to-arrive-at-destination': `def countPaths(n, roads):
+    import heapq
+    n = int(n)
+    MOD = 10**9 + 7
+    edges = list(roads.to_py() if hasattr(roads, 'to_py') else roads)
+    adj = [[] for _ in range(n)]
+    for e in edges:
+        u, v, t = int(e[0]), int(e[1]), int(e[2])
+        adj[u].append((v, t))
+        adj[v].append((u, t))
+    dist = [float('inf')] * n
+    ways = [0] * n
+    dist[0] = 0
+    ways[0] = 1
+    pq = [(0, 0)]
+    while pq:
+        d, u = heapq.heappop(pq)
+        if d > dist[u]:
+            continue
+        for v, t in adj[u]:
+            nd = d + t
+            if nd < dist[v]:
+                dist[v] = nd
+                ways[v] = ways[u]
+                heapq.heappush(pq, (nd, v))
+            elif nd == dist[v]:
+                ways[v] = (ways[v] + ways[u]) % MOD
+    return ways[n - 1]
+`,
+
+  'reorder-routes-to-make-all-paths-lead-to-city-zero': `def minReorder(n, connections):
+    from collections import deque
+    n = int(n)
+    conns = list(connections.to_py() if hasattr(connections, 'to_py') else connections)
+    adj = [[] for _ in range(n)]
+    for e in conns:
+        a, b = int(e[0]), int(e[1])
+        adj[a].append((b, 1))
+        adj[b].append((a, 0))
+    visited = [False] * n
+    q = deque([0])
+    visited[0] = True
+    count = 0
+    while q:
+        u = q.popleft()
+        for v, cost in adj[u]:
+            if not visited[v]:
+                visited[v] = True
+                count += cost
+                q.append(v)
+    return count
+`,
+
+  'maximum-length-of-pair-chain': `def findLongestChain(pairs):
+    raw = pairs.to_py() if hasattr(pairs, 'to_py') else list(pairs)
+    p = sorted([[int(x[0]), int(x[1])] for x in raw], key=lambda x: x[1])
+    count = 1
+    right = p[0][1]
+    for i in range(1, len(p)):
+        if p[i][0] > right:
+            count += 1
+            right = p[i][1]
+    return count
+`,
+
+  'count-servers-that-communicate': `def countServers(grid):
+    raw = grid.to_py() if hasattr(grid, 'to_py') else list(grid)
+    g = [[int(x) for x in row] for row in raw]
+    m, n = len(g), len(g[0])
+    row_count = [sum(g[r]) for r in range(m)]
+    col_count = [sum(g[r][c] for r in range(m)) for c in range(n)]
+    ans = 0
+    for r in range(m):
+        for c in range(n):
+            if g[r][c] == 1 and (row_count[r] > 1 or col_count[c] > 1):
+                ans += 1
+    return ans
+`,
+
+  'maximum-length-of-a-concatenated-string-with-unique-characters': `def maxLength(arr):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    result = [0]
+    def dfs(idx, mask, length):
+        result[0] = max(result[0], length)
+        for i in range(idx, len(arr)):
+            m = 0
+            valid = True
+            for c in arr[i]:
+                bit = 1 << (ord(c) - ord('a'))
+                if m & bit:
+                    valid = False
+                    break
+                m |= bit
+            if valid and (mask & m) == 0:
+                dfs(i + 1, mask | m, length + len(arr[i]))
+    dfs(0, 0, 0)
+    return result[0]
+`,
+
+  'nim-game': `def canWinNim(n):
+    return int(n) % 4 != 0
+`,
+
+  'palindrome-permutation': `def canPermutePalindrome(s):
+    from collections import Counter
+    freq = Counter(s)
+    odds = sum(1 for v in freq.values() if v % 2 == 1)
+    return odds <= 1
+`,
+
+  'remove-element': `def removeElement(nums, val):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    val = int(val)
+    k = 0
+    for i in range(len(nums)):
+        if nums[i] != val:
+            nums[k] = nums[i]
+            k += 1
+    return k
+`,
+
+  'water-bottles': `def numWaterBottles(numBottles, numExchange):
+    bottles = int(numBottles)
+    exchange = int(numExchange)
+    total = bottles
+    while bottles >= exchange:
+        new_bottles = bottles // exchange
+        bottles = new_bottles + bottles % exchange
+        total += new_bottles
+    return total
+`,
+
+  'distribute-candies': `def distributeCandies(candyType):
+    candy = list(candyType.to_py() if hasattr(candyType, 'to_py') else candyType)
+    types = len(set(candy))
+    half = len(candy) // 2
+    return min(types, half)
+`,
+
+  'count-prime-set-bits': `def countPrimeSetBits(left, right):
+    primes = {2, 3, 5, 7, 11, 13, 17, 19}
+    count = 0
+    for n in range(int(left), int(right) + 1):
+        bits = bin(n).count('1')
+        if bits in primes:
+            count += 1
+    return count
+`,
+
+  'verifying-alien-dictionary': `def isAlienSorted(words, order):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    rank = {c: i for i, c in enumerate(order)}
+    for i in range(len(words) - 1):
+        a, b = words[i], words[i + 1]
+        found = False
+        for j in range(len(a)):
+            if j >= len(b):
+                return False
+            if rank[a[j]] < rank[b[j]]:
+                found = True
+                break
+            if rank[a[j]] > rank[b[j]]:
+                return False
+        if not found and len(a) > len(b):
+            return False
+    return True
+`,
+
+  'rectangle-area': `def computeArea(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2):
+    ax1, ay1, ax2, ay2 = int(ax1), int(ay1), int(ax2), int(ay2)
+    bx1, by1, bx2, by2 = int(bx1), int(by1), int(bx2), int(by2)
+    A = (ax2 - ax1) * (ay2 - ay1)
+    B = (bx2 - bx1) * (by2 - by1)
+    overlap_w = max(0, min(ax2, bx2) - max(ax1, bx1))
+    overlap_h = max(0, min(ay2, by2) - max(ay1, by1))
+    return A + B - overlap_w * overlap_h
+`,
+
+  'encode-decode-strings': `def encodeDecodeStrings(strs):
+    strs = list(strs.to_py() if hasattr(strs, 'to_py') else strs)
+    encoded = ''
+    for s in strs:
+        encoded += str(len(s)) + '#' + s
+    decoded = []
+    i = 0
+    while i < len(encoded):
+        j = encoded.index('#', i)
+        length = int(encoded[i:j])
+        decoded.append(encoded[j + 1:j + 1 + length])
+        i = j + 1 + length
+    return decoded
+`,
+
+  'shortest-distance-to-character': `def shortestToChar(s, c):
+    n = len(s)
+    ans = [float('inf')] * n
+    prev = float('-inf')
+    for i in range(n):
+        if s[i] == c:
+            prev = i
+        ans[i] = i - prev
+    prev = float('inf')
+    for i in range(n - 1, -1, -1):
+        if s[i] == c:
+            prev = i
+        ans[i] = min(ans[i], prev - i)
+    return ans
+`,
+
+  'utf-8-validation': `def validUtf8(data):
+    data = list(data.to_py() if hasattr(data, 'to_py') else data)
+    i = 0
+    while i < len(data):
+        b = data[i] & 0xFF
+        if (b & 0x80) == 0:
+            count = 0
+        elif (b & 0xE0) == 0xC0:
+            count = 1
+        elif (b & 0xF0) == 0xE0:
+            count = 2
+        elif (b & 0xF8) == 0xF0:
+            count = 3
+        else:
+            return False
+        i += 1
+        for _ in range(count):
+            if i >= len(data) or (data[i] & 0xC0) != 0x80:
+                return False
+            i += 1
+    return True
+`,
+
+  'range-addition': `def getModifiedArray(n, updates):
+    n = int(n)
+    updates = [list(u.to_py() if hasattr(u, 'to_py') else u) for u in (updates.to_py() if hasattr(updates, 'to_py') else updates)]
+    diff = [0] * (n + 1)
+    for start, end, inc in updates:
+        diff[start] += inc
+        diff[end + 1] -= inc
+    res = []
+    s = 0
+    for i in range(n):
+        s += diff[i]
+        res.append(s)
+    return res
+`,
+
+  'count-the-number-of-fair-pairs': `def countFairPairs(nums, lower, upper):
+    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else list(nums))
+    lower, upper = int(lower), int(upper)
+    def count_at_most(limit):
+        l, r, cnt = 0, len(nums) - 1, 0
+        while l < r:
+            if nums[l] + nums[r] <= limit:
+                cnt += r - l
+                l += 1
+            else:
+                r -= 1
+        return cnt
+    return count_at_most(upper) - count_at_most(lower - 1)
+`,
+
+  'find-if-array-can-be-sorted': `def canSortArray(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    prev_max = float('-inf')
+    i = 0
+    while i < len(nums):
+        bits = bin(nums[i]).count('1')
+        g_min = g_max = nums[i]
+        j = i
+        while j < len(nums) and bin(nums[j]).count('1') == bits:
+            g_min = min(g_min, nums[j])
+            g_max = max(g_max, nums[j])
+            j += 1
+        if g_min < prev_max:
+            return False
+        prev_max = g_max
+        i = j
+    return True
+`,
+
+  'construct-string-with-repeat-limit': `def repeatLimitedString(s, repeatLimit):
+    limit = int(repeatLimit)
+    from collections import Counter
+    freq = [0] * 26
+    for c in s:
+        freq[ord(c) - ord('a')] += 1
+    res = []
+    i = 25
+    while i >= 0:
+        if freq[i] == 0:
+            i -= 1
+            continue
+        take = min(freq[i], limit)
+        res.append(chr(ord('a') + i) * take)
+        freq[i] -= take
+        if freq[i] > 0:
+            j = i - 1
+            while j >= 0 and freq[j] == 0:
+                j -= 1
+            if j < 0:
+                break
+            res.append(chr(ord('a') + j))
+            freq[j] -= 1
+    return ''.join(res)
+`,
+
+  'count-ways-to-select-buildings': `def countWays(s):
+    n = len(s)
+    ones = [0] * (n + 1)
+    for i in range(n):
+        ones[i + 1] = ones[i] + (1 if s[i] == '1' else 0)
+    total_ones = ones[n]
+    ans = 0
+    for j in range(1, n - 1):
+        ones_before = ones[j]
+        zeros_before = j - ones_before
+        ones_after = total_ones - ones[j + 1]
+        zeros_after = (n - j - 1) - ones_after
+        if s[j] == '1':
+            ans += zeros_before * zeros_after
+        else:
+            ans += ones_before * ones_after
+    return ans
+`,
+
+  'power-of-heroes': `def sumOfPower(nums):
+    MOD = 10 ** 9 + 7
+    arr = sorted(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    ans = 0
+    s = 0
+    for x in arr:
+        ans = (ans + x * x * (s + x)) % MOD
+        s = (2 * s + x) % MOD
+    return ans
+`,
+
+  'valid-palindrome': `def isPalindrome(s):
+    l, r = 0, len(s) - 1
+    while l < r:
+        while l < r and not s[l].isalnum():
+            l += 1
+        while l < r and not s[r].isalnum():
+            r -= 1
+        if s[l].lower() != s[r].lower():
+            return False
+        l += 1
+        r -= 1
+    return True
+`,
+
+  'peak-index-in-mountain-array': `def peakIndexInMountainArray(arr):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    l, r = 0, len(arr) - 1
+    while l < r:
+        mid = (l + r) // 2
+        if arr[mid] < arr[mid + 1]:
+            l = mid + 1
+        else:
+            r = mid
+    return l
+`,
+
+  'two-keys-keyboard': `def minSteps(n):
+    n = int(n)
+    res = 0
+    p = 2
+    while p <= n:
+        while n % p == 0:
+            res += p
+            n //= p
+        p += 1
+    return res
+`,
+
+  'bag-of-tokens': `def bagOfTokensScore(tokens, power):
+    tokens = sorted(tokens.to_py() if hasattr(tokens, 'to_py') else list(tokens))
+    power = int(power)
+    lo, hi = 0, len(tokens) - 1
+    points = 0
+    max_points = 0
+    while lo <= hi:
+        if power >= tokens[lo]:
+            power -= tokens[lo]
+            lo += 1
+            points += 1
+            max_points = max(max_points, points)
+        elif points > 0:
+            power += tokens[hi]
+            hi -= 1
+            points -= 1
+        else:
+            break
+    return max_points
+`,
+
+  'find-the-k-weakest-rows-in-a-matrix': `def kWeakestRows(mat, k):
+    mat = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (mat.to_py() if hasattr(mat, 'to_py') else mat)]
+    k = int(k)
+    rows = sorted(range(len(mat)), key=lambda i: (sum(mat[i]), i))
+    return rows[:k]
+`,
+
+  'separate-black-and-white-balls': `def minimumSteps(s):
+    s = str(s)
+    zeros = 0
+    result = 0
+    for i, c in enumerate(s):
+        if c == '0':
+            result += i - zeros
+            zeros += 1
+    return result
+`,
+
+  'minimum-number-of-steps-to-make-two-strings-anagram': `def minSteps(s, t):
+    s = str(s)
+    t = str(t)
+    count = [0] * 26
+    for c in s:
+        count[ord(c) - ord('a')] += 1
+    for c in t:
+        count[ord(c) - ord('a')] -= 1
+    return sum(max(0, -v) for v in count)
+`,
+
+  'find-the-prefix-common-array-of-two-arrays': `def findThePrefixCommonArray(A, B):
+    A = list(A.to_py() if hasattr(A, 'to_py') else A)
+    B = list(B.to_py() if hasattr(B, 'to_py') else B)
+    n = len(A)
+    freq = [0] * (n + 1)
+    result = []
+    common = 0
+    for i in range(n):
+        freq[A[i]] += 1
+        if freq[A[i]] == 2:
+            common += 1
+        freq[B[i]] += 1
+        if freq[B[i]] == 2:
+            common += 1
+        result.append(common)
+    return result
+`,
+
+  'last-stone-weight-ii': `def lastStoneWeightII(stones):
+    stones = list(stones.to_py() if hasattr(stones, 'to_py') else stones)
+    total = sum(stones)
+    half = total // 2
+    dp = [False] * (half + 1)
+    dp[0] = True
+    for s in stones:
+        for j in range(half, s - 1, -1):
+            dp[j] = dp[j] or dp[j - s]
+    for j in range(half, -1, -1):
+        if dp[j]:
+            return total - 2 * j
+    return total
+`,
+
+  'divide-two-integers': `def divide(dividend, divisor):
+    dividend = int(dividend)
+    divisor = int(divisor)
+    INT_MAX = 2**31 - 1
+    INT_MIN = -(2**31)
+    if dividend == INT_MIN and divisor == -1:
+        return INT_MAX
+    sign = -1 if (dividend > 0) != (divisor > 0) else 1
+    a, b = abs(dividend), abs(divisor)
+    result = 0
+    while a >= b:
+        temp, mul = b, 1
+        while a >= (temp << 1):
+            temp <<= 1
+            mul <<= 1
+        a -= temp
+        result += mul
+    return sign * result
+`,
+
+  'longest-harmonious-subsequence': `def findLHS(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    from collections import Counter
+    freq = Counter(nums)
+    ans = 0
+    for k in freq:
+        if k + 1 in freq:
+            ans = max(ans, freq[k] + freq[k + 1])
+    return ans
+`,
+
+  'buddy-strings': `def buddyStrings(s, goal):
+    s = str(s)
+    goal = str(goal)
+    if len(s) != len(goal):
+        return False
+    if s == goal:
+        return len(set(s)) < len(s)
+    diffs = [i for i in range(len(s)) if s[i] != goal[i]]
+    if len(diffs) != 2:
+        return False
+    i, j = diffs
+    return s[i] == goal[j] and s[j] == goal[i]
+`,
+
+  'beautiful-subsets': `def beautifulSubsets(nums, k):
+    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else list(nums))
+    k = int(k)
+    freq = {}
+    count = [0]
+    def bt(idx):
+        if idx == len(nums):
+            count[0] += 1
+            return
+        bt(idx + 1)
+        if not freq.get(nums[idx] - k, 0):
+            freq[nums[idx]] = freq.get(nums[idx], 0) + 1
+            bt(idx + 1)
+            freq[nums[idx]] -= 1
+            if freq[nums[idx]] == 0:
+                del freq[nums[idx]]
+    bt(0)
+    return count[0] - 1
+`,
+
+  'my-calendar-ii': `def myCalendarTwo(bookings):
+    raw = bookings.to_py() if hasattr(bookings, 'to_py') else bookings
+    bs = [list(b.to_py() if hasattr(b, 'to_py') else b) for b in raw]
+    calendar = []
+    double_booked = []
+    result = []
+    for s, e in bs:
+        conflict = any(s < e2 and e > s2 for s2, e2 in double_booked)
+        if conflict:
+            result.append(False)
+        else:
+            for cs, ce in calendar:
+                os_ = max(s, cs)
+                oe_ = min(e, ce)
+                if os_ < oe_:
+                    double_booked.append([os_, oe_])
+            calendar.append([s, e])
+            result.append(True)
+    return result
+`,
+
+  'task-scheduler-ii': `def taskSchedulerII(tasks, space):
+    tasks_list = list(tasks.to_py() if hasattr(tasks, 'to_py') else tasks)
+    sp = int(space)
+    last_day = {}
+    day = 0
+    for task in tasks_list:
+        day += 1
+        if task in last_day:
+            day = max(day, last_day[task] + sp + 1)
+        last_day[task] = day
+    return day
+`,
+
+  'swapping-nodes-in-a-linked-list': `def swapNodes(head, k):
+    length = 0
+    curr = head
+    while curr:
+        length += 1
+        curr = curr.next
+    first = head
+    for _ in range(k - 1):
+        first = first.next
+    second = head
+    for _ in range(length - k):
+        second = second.next
+    first.val, second.val = second.val, first.val
+    return head
+`,
+
+  'move-pieces-to-obtain-a-string': `def canChange(start, target):
+    n = len(start)
+    s_chars = [c for c in start if c != '_']
+    t_chars = [c for c in target if c != '_']
+    if s_chars != t_chars:
+        return False
+    i = j = 0
+    while i < n or j < n:
+        while i < n and start[i] == '_':
+            i += 1
+        while j < n and target[j] == '_':
+            j += 1
+        if i == n and j == n:
+            return True
+        if i == n or j == n:
+            return False
+        if start[i] != target[j]:
+            return False
+        if start[i] == 'L' and i < j:
+            return False
+        if start[i] == 'R' and i > j:
+            return False
+        i += 1
+        j += 1
+    return True
+`,
+
+  'greatest-common-divisor-of-strings': `def gcdOfStrings(str1, str2):
+    str1 = str(str1)
+    str2 = str(str2)
+    if str1 + str2 != str2 + str1:
+        return ''
+    from math import gcd
+    return str1[:gcd(len(str1), len(str2))]
+`,
+
+  'maximum-distance-in-arrays': `def maxDistance(arrays):
+    arrays = [list(arr.to_py() if hasattr(arr, 'to_py') else arr) for arr in (arrays.to_py() if hasattr(arrays, 'to_py') else arrays)]
+    min_val = arrays[0][0]
+    max_val = arrays[0][-1]
+    result = 0
+    for i in range(1, len(arrays)):
+        first = arrays[i][0]
+        last = arrays[i][-1]
+        result = max(result, abs(last - min_val), abs(max_val - first))
+        min_val = min(min_val, first)
+        max_val = max(max_val, last)
+    return result
+`,
+
+  'path-with-maximum-gold': `def getMaximumGold(grid):
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    m, n = len(grid), len(grid[0])
+    def dfs(r, c):
+        if r < 0 or r >= m or c < 0 or c >= n or grid[r][c] == 0:
+            return 0
+        val = grid[r][c]
+        grid[r][c] = 0
+        best = val + max(dfs(r+1,c), dfs(r-1,c), dfs(r,c+1), dfs(r,c-1))
+        grid[r][c] = val
+        return best
+    ans = 0
+    for r in range(m):
+        for c in range(n):
+            if grid[r][c] > 0:
+                ans = max(ans, dfs(r, c))
+    return ans
+`,
+
+  'convert-sorted-array-to-bst': `def sortedArrayToBST(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    def build(l, r):
+        if l > r:
+            return None
+        mid = (l + r) // 2
+        node = [nums[mid], None, None]
+        node[1] = build(l, mid - 1)
+        node[2] = build(mid + 1, r)
+        return node
+    def to_arr(node):
+        if node is None:
+            return []
+        result = []
+        q = [node]
+        while q:
+            n = q.pop(0)
+            if n is None:
+                result.append(None)
+            else:
+                result.append(n[0])
+                q.append(n[1])
+                q.append(n[2])
+        while result and result[-1] is None:
+            result.pop()
+        return result
+    return to_arr(build(0, len(nums) - 1))
+`,
+
+  'trim-a-binary-search-tree': `def trimBST(root, low, high):
+    root = list(root.to_py() if hasattr(root, 'to_py') else root)
+    low = int(low)
+    high = int(high)
+    def build(arr):
+        if not arr or arr[0] is None:
+            return None
+        node = [arr[0], None, None]
+        q = [node]
+        i = 1
+        while q and i < len(arr):
+            n = q.pop(0)
+            if i < len(arr) and arr[i] is not None:
+                n[1] = [arr[i], None, None]
+                q.append(n[1])
+            i += 1
+            if i < len(arr) and arr[i] is not None:
+                n[2] = [arr[i], None, None]
+                q.append(n[2])
+            i += 1
+        return node
+    def trim(node):
+        if node is None:
+            return None
+        if node[0] < low:
+            return trim(node[2])
+        if node[0] > high:
+            return trim(node[1])
+        node[1] = trim(node[1])
+        node[2] = trim(node[2])
+        return node
+    def to_arr(node):
+        if node is None:
+            return []
+        result = []
+        q = [node]
+        while q:
+            n = q.pop(0)
+            if n is None:
+                result.append(None)
+            else:
+                result.append(n[0])
+                q.append(n[1])
+                q.append(n[2])
+        while result and result[-1] is None:
+            result.pop()
+        return result
+    return to_arr(trim(build(root)))
+`,
+
+  'finding-users-active-minutes': `def findingUsersActiveMinutes(logs, k):
+    logs = [list(log.to_py() if hasattr(log, 'to_py') else log) for log in (logs.to_py() if hasattr(logs, 'to_py') else logs)]
+    k = int(k)
+    uam = {}
+    for log in logs:
+        uid, t = log[0], log[1]
+        if uid not in uam:
+            uam[uid] = set()
+        uam[uid].add(t)
+    ans = [0] * k
+    for s in uam.values():
+        if len(s) <= k:
+            ans[len(s) - 1] += 1
+    return ans
+`,
+
+  'day-of-the-year': `def dayOfYear(date):
+    date = str(date)
+    y, m, d = int(date[:4]), int(date[5:7]), int(date[8:])
+    leap = (y % 4 == 0 and y % 100 != 0) or y % 400 == 0
+    days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    total = d + sum(days[:m-1])
+    if leap and m > 2:
+        total += 1
+    return total
+`,
+
+  'type-of-triangle': `def triangleType(nums):
+    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else list(nums))
+    a, b, c = nums[0], nums[1], nums[2]
+    if a + b <= c:
+        return "none"
+    if a == c:
+        return "equilateral"
+    if a == b or b == c:
+        return "isosceles"
+    return "scalene"
+`,
+
+  'maximum-enemy-forts-that-can-be-captured': `def captureForts(forts):
+    forts = list(forts.to_py() if hasattr(forts, 'to_py') else forts)
+    ans = 0
+    prev = -1
+    for i, v in enumerate(forts):
+        if v != 0:
+            if prev != -1 and v != forts[prev]:
+                ans = max(ans, i - prev - 1)
+            prev = i
+    return ans
+`,
+
+  'minimum-amount-of-time-to-collect-garbage': `def garbageCollection(garbage, travel):
+    garbage = [str(g) for g in (garbage.to_py() if hasattr(garbage, 'to_py') else garbage)]
+    travel = list(travel.to_py() if hasattr(travel, 'to_py') else travel)
+    ans = 0
+    for t in ['M', 'P', 'G']:
+        travel_cost = 0
+        last_travel = 0
+        for i, g in enumerate(garbage):
+            if i > 0:
+                last_travel += travel[i - 1]
+            cnt = g.count(t)
+            if cnt > 0:
+                ans += cnt
+                travel_cost = last_travel
+        ans += travel_cost
+    return ans
+`,
+
+  'check-if-array-is-sorted-and-rotated': `def check(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    drops = sum(1 for i in range(n) if nums[i] > nums[(i + 1) % n])
+    return drops <= 1
+`,
+
+  'nodes-between-critical-points': `def nodesBetweenCriticalPoints(head):
+    arr = list(head.to_py() if hasattr(head, 'to_py') else head)
+    crit = []
+    for i in range(1, len(arr) - 1):
+        if (arr[i] > arr[i-1] and arr[i] > arr[i+1]) or \
+           (arr[i] < arr[i-1] and arr[i] < arr[i+1]):
+            crit.append(i)
+    if len(crit) < 2:
+        return [-1, -1]
+    min_d = min(crit[i] - crit[i-1] for i in range(1, len(crit)))
+    return [min_d, crit[-1] - crit[0]]
+`,
+
+  'number-after-a-double-reversal': `def isSameAfterReversals(num):
+    num = int(num)
+    return num == 0 or num % 10 != 0
+`,
+
+  'domino-and-tromino-tiling': `def numTilings(n):
+    n = int(n)
+    MOD = 10**9 + 7
+    if n == 1:
+        return 1
+    if n == 2:
+        return 2
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    dp[1] = 1
+    dp[2] = 2
+    for i in range(3, n + 1):
+        dp[i] = (2 * dp[i-1] + dp[i-3]) % MOD
+    return dp[n]
+`,
+
+  'number-of-lines-to-write-string': `def numberOfLines(widths, s):
+    widths = list(widths.to_py() if hasattr(widths, 'to_py') else widths)
+    s = str(s)
+    lines = 1
+    cur = 0
+    for c in s:
+        pw = widths[ord(c) - ord('a')]
+        if cur + pw > 100:
+            lines += 1
+            cur = pw
+        else:
+            cur += pw
+    return [lines, cur]
+`,
+
+  'find-the-minimum-and-maximum-number-of-nodes-between-critical-points': `def nodesBetweenCriticalPointsRunner(head):
+    arr = list(head.to_py() if hasattr(head, 'to_py') else head)
+    if len(arr) < 3:
+        return [-1, -1]
+    criticals = []
+    for i in range(1, len(arr) - 1):
+        prev, curr, nxt = arr[i-1], arr[i], arr[i+1]
+        if (curr > prev and curr > nxt) or (curr < prev and curr < nxt):
+            criticals.append(i)
+    if len(criticals) < 2:
+        return [-1, -1]
+    min_dist = min(criticals[i] - criticals[i-1] for i in range(1, len(criticals)))
+    max_dist = criticals[-1] - criticals[0]
+    return [min_dist, max_dist]
+`,
+
+  'binary-tree-inorder-traversal': `def inorderTraversal(root):
+    result = []
+    def helper(node):
+        if not node:
+            return
+        helper(node.left)
+        result.append(node.val)
+        helper(node.right)
+    helper(root)
+    return result
+`,
+
+  'binary-tree-preorder-traversal': `def preorderTraversal(root):
+    result = []
+    def helper(node):
+        if not node:
+            return
+        result.append(node.val)
+        helper(node.left)
+        helper(node.right)
+    helper(root)
+    return result
+`,
+
+  'binary-tree-postorder-traversal': `def postorderTraversal(root):
+    result = []
+    def helper(node):
+        if not node:
+            return
+        helper(node.left)
+        helper(node.right)
+        result.append(node.val)
+    helper(root)
+    return result
+`,
+
+  'minimum-hours-of-training': `def minNumberOfHours(initialEnergy, initialExperience, energy, experience):
+    energy = list(energy.to_py() if hasattr(energy, 'to_py') else energy)
+    experience = list(experience.to_py() if hasattr(experience, 'to_py') else experience)
+    init_e = int(initialEnergy)
+    init_x = int(initialExperience)
+    hours = 0
+    total_e = sum(energy) + 1
+    if init_e < total_e:
+        hours += total_e - init_e
+        init_e = total_e
+    cur = init_x
+    for exp in experience:
+        if cur <= exp:
+            hours += exp - cur + 1
+            cur = exp + 1
+        cur += exp
+    return hours
+`,
+
+  'number-of-pairs-of-strings-with-concatenation-equal-to-target': `def numOfPairs(nums, target):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    target = str(target)
+    count = 0
+    n = len(nums)
+    for i in range(n):
+        for j in range(n):
+            if i != j and nums[i] + nums[j] == target:
+                count += 1
+    return count
+`,
+
+  'sum-of-beauty-of-all-substrings': `def beautySum(s):
+    s = str(s)
+    ans = 0
+    for i in range(len(s)):
+        freq = [0] * 26
+        for j in range(i, len(s)):
+            freq[ord(s[j]) - ord('a')] += 1
+            vals = [v for v in freq if v > 0]
+            ans += max(vals) - min(vals)
+    return ans
+`,
+
+  'maximum-number-of-words-you-can-type': `def canBeTypedWords(text, brokenLetters):
+    text = str(text)
+    broken = set(str(brokenLetters))
+    words = text.split(' ')
+    return sum(1 for w in words if not any(c in broken for c in w))
+`,
+
+  'ugly-number': `def isUgly(n):
+    if n <= 0:
+        return False
+    for f in [2, 3, 5]:
+        while n % f == 0:
+            n //= f
+    return n == 1
+`,
+
+  'lemonade-change': `def lemonadeChange(bills):
+    bills_list = list(bills.to_py() if hasattr(bills, 'to_py') else bills)
+    five = ten = 0
+    for bill in bills_list:
+        if bill == 5:
+            five += 1
+        elif bill == 10:
+            if five == 0:
+                return False
+            five -= 1
+            ten += 1
+        else:
+            if ten > 0 and five > 0:
+                ten -= 1; five -= 1
+            elif five >= 3:
+                five -= 3
+            else:
+                return False
+    return True
+`,
+
+  'most-frequent-subtree-sum': `def findFrequentTreeSum(root):
+    from collections import Counter
+    freq = Counter()
+    def dfs(node):
+        if not node:
+            return 0
+        s = node.val + dfs(node.left) + dfs(node.right)
+        freq[s] += 1
+        return s
+    dfs(root)
+    if not freq:
+        return []
+    max_freq = max(freq.values())
+    return sorted(k for k, v in freq.items() if v == max_freq)
+`,
+
+  'implement-stack-using-queues': `def myStackRunner(ops, vals):
+    ops_list = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    vals_list = list(vals.to_py() if hasattr(vals, 'to_py') else vals)
+    from collections import deque
+    q = deque()
+    results = []
+    for op, val in zip(ops_list, vals_list):
+        if op == 'push':
+            q.append(val)
+            for _ in range(len(q) - 1):
+                q.append(q.popleft())
+            results.append(None)
+        elif op == 'pop':
+            results.append(q.popleft())
+        elif op == 'top':
+            results.append(q[0])
+        elif op == 'empty':
+            results.append(len(q) == 0)
+    return results
+`,
+
+  'sum-of-nodes-with-even-valued-grandparent': `def sumEvenGrandparent(root):
+    total = 0
+    def dfs(node, parent_val, grandparent_val):
+        nonlocal total
+        if not node:
+            return
+        if grandparent_val != -1 and grandparent_val % 2 == 0:
+            total += node.val
+        dfs(node.left, node.val, parent_val)
+        dfs(node.right, node.val, parent_val)
+    dfs(root, -1, -1)
+    return total
+`,
+
+  'flip-equivalent-binary-trees': `def flipEquiv(root1, root2):
+    def equiv(a, b):
+        if not a and not b:
+            return True
+        if not a or not b:
+            return False
+        if a.val != b.val:
+            return False
+        return (equiv(a.left, b.left) and equiv(a.right, b.right)) or \
+               (equiv(a.left, b.right) and equiv(a.right, b.left))
+    return equiv(root1, root2)
+`,
+
+  'count-vowel-substrings-of-a-string': `def countVowelSubstrings(word):
+    word = str(word)
+    vowels = set('aeiou')
+    count = 0
+    for i in range(len(word)):
+        seen = set()
+        for j in range(i, len(word)):
+            if word[j] not in vowels:
+                break
+            seen.add(word[j])
+            if len(seen) == 5:
+                count += 1
+    return count
+`,
+
+  'number-of-rectangles-that-can-form-the-largest-square': `def countGoodRectangles(rectangles):
+    rectangles = list(rectangles.to_py() if hasattr(rectangles, 'to_py') else rectangles)
+    mins = [min(r[0], r[1]) for r in rectangles]
+    max_len = max(mins)
+    return sum(1 for m in mins if m == max_len)
+`,
+
+  'determine-if-string-halves-are-alike': `def halvesAreAlike(s):
+    s = str(s)
+    vowels = set('aeiouAEIOU')
+    h = len(s) // 2
+    return sum(1 for c in s[:h] if c in vowels) == sum(1 for c in s[h:] if c in vowels)
+`,
+
+  'divide-a-string-into-groups-of-size-k': `def divideString(s, k, fill):
+    s = str(s)
+    k = int(k)
+    fill = str(fill)
+    rem = len(s) % k
+    if rem:
+        s += fill * (k - rem)
+    return [s[i:i+k] for i in range(0, len(s), k)]
+`,
+
+  'count-integers-with-even-digit-sum': `def countEven(num):
+    num = int(num)
+    count = 0
+    for i in range(1, num + 1):
+        if sum(int(d) for d in str(i)) % 2 == 0:
+            count += 1
+    return count
+`,
+
+  'design-hashset': `def myHashSetRunner(ops, vals):
+    ops_list = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    vals_list = list(vals.to_py() if hasattr(vals, 'to_py') else vals)
+    s = set()
+    results = []
+    for op, val in zip(ops_list, vals_list):
+        if op == 'add':
+            s.add(int(val))
+            results.append(None)
+        elif op == 'remove':
+            s.discard(int(val))
+            results.append(None)
+        elif op == 'contains':
+            results.append(int(val) in s)
+    return results
+`,
+
+  'design-parking-system': `def parkingSystemRunner(ops, vals):
+    ops_list = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    vals_list = [list(v.to_py() if hasattr(v, 'to_py') else v) for v in (vals.to_py() if hasattr(vals, 'to_py') else vals)]
+    init = vals_list[0]
+    counts = [0, int(init[0]), int(init[1]), int(init[2])]
+    results = []
+    for op, val in zip(ops_list, vals_list):
+        if op == 'addCar':
+            t = int(val[0])
+            if counts[t] > 0:
+                counts[t] -= 1
+                results.append(True)
+            else:
+                results.append(False)
+        else:
+            results.append(None)
+    return results
+`,
+
+  'defuse-the-bomb': `def decrypt(code, k):
+    code = list(code.to_py() if hasattr(code, 'to_py') else code)
+    k = int(k)
+    n = len(code)
+    res = [0] * n
+    if k == 0:
+        return res
+    for i in range(n):
+        s = 0
+        for j in range(1, abs(k) + 1):
+            if k > 0:
+                s += code[(i + j) % n]
+            else:
+                s += code[(i - j) % n]
+        res[i] = s
+    return res
+`,
+
+  'check-if-sentence-is-pangram': `def checkIfPangram(sentence):
+    return len(set(str(sentence))) >= 26
+`,
+
+  'find-the-student-that-will-replace-the-chalk': `def chalkReplacer(chalk, k):
+    chalk = list(chalk.to_py() if hasattr(chalk, 'to_py') else chalk)
+    k = int(k)
+    total = sum(chalk)
+    rem = k % total
+    for i, c in enumerate(chalk):
+        if rem < c:
+            return i
+        rem -= c
+    return 0
+`,
+
+  'greatest-english-letter-in-upper-and-lower-case': `def greatestLetter(s):
+    chars = set(s)
+    for c in range(ord('Z'), ord('A') - 1, -1):
+        upper = chr(c)
+        lower = chr(c + 32)
+        if upper in chars and lower in chars:
+            return upper
+    return ''
+`,
+
+  'reformat-the-string': `def reformat(s):
+    letters = [ch for ch in s if ch.isalpha()]
+    digits = [ch for ch in s if ch.isdigit()]
+    if abs(len(letters) - len(digits)) > 1:
+        return ''
+    first, second = (letters, digits) if len(letters) >= len(digits) else (digits, letters)
+    result = []
+    for i in range(len(first)):
+        result.append(first[i])
+        if i < len(second):
+            result.append(second[i])
+    return ''.join(result)
+`,
+
+  'find-n-unique-integers-sum-up-to-zero': `def sumZero(n):
+    n = int(n)
+    if n == 1:
+        return [0]
+    result = list(range(1, n))
+    result.append(-sum(result))
+    return result
+`,
+
+  'check-array-formation-through-concatenation': `def canFormArray(arr, pieces):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    pieces = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in (pieces.to_py() if hasattr(pieces, 'to_py') else pieces)]
+    piece_map = {int(p[0]): [int(x) for x in p] for p in pieces}
+    i = 0
+    while i < len(arr):
+        piece = piece_map.get(int(arr[i]))
+        if piece is None:
+            return False
+        for v in piece:
+            if int(arr[i]) != v:
+                return False
+            i += 1
+    return True
+`,
+
+  'minimize-string-length': `def minimizedStringLength(s):
+    return len(set(str(s)))
+`,
+
+  'find-score-of-array-after-marking-elements': `def findScore(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    indexed = sorted(enumerate(nums), key=lambda x: (x[1], x[0]))
+    marked = [False] * n
+    score = 0
+    for i, v in indexed:
+        if not marked[i]:
+            score += v
+            marked[i] = True
+            if i > 0:
+                marked[i - 1] = True
+            if i < n - 1:
+                marked[i + 1] = True
+    return score
+`,
+
+  'elements-appearing-more-than-25-percent': `def findSpecialInteger(arr):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    n = len(arr)
+    threshold = n // 4
+    for i in range(n - threshold):
+        if arr[i] == arr[i + threshold]:
+            return arr[i]
+    return arr[-1]
+`,
+
+  'make-string-a-subsequence-using-cyclic-increments': `def canMakeSubsequence(str1, str2):
+    str1 = str(str1)
+    str2 = str(str2)
+    j = 0
+    for i in range(len(str1)):
+        if j == len(str2):
+            break
+        c1 = ord(str1[i]) - ord('a')
+        c2 = ord(str2[j]) - ord('a')
+        if c1 == c2 or (c1 + 1) % 26 == c2:
+            j += 1
+    return j == len(str2)
+`,
+
+  'number-of-beautiful-integers-in-range': `def numberOfBeautifulIntegers(low, high, k):
+    from functools import lru_cache
+    low = int(low)
+    high = int(high)
+    k = int(k)
+
+    def count_up_to(n):
+        if n <= 0:
+            return 0
+        digits = [int(d) for d in str(n)]
+        le = len(digits)
+
+        @lru_cache(maxsize=None)
+        def dp(pos, tight, diff, rem, started):
+            if pos == le:
+                return 1 if (started and diff == 0 and rem == 0) else 0
+            limit = digits[pos] if tight else 9
+            res = 0
+            for d in range(0, limit + 1):
+                nt = tight and d == limit
+                ns = started or d > 0
+                nd = diff + (1 if d % 2 == 0 else -1) if ns else 0
+                nr = (rem * 10 + d) % k if ns else 0
+                res += dp(pos + 1, nt, nd, nr, ns)
+            return res
+
+        result = dp(0, True, 0, 0, False)
+        dp.cache_clear()
+        return result
+
+    return count_up_to(high) - count_up_to(low - 1)
+`,
+
+  'maximum-depth-binary-tree': `def maxDepth(root):
+    if root is None:
+        return 0
+    return 1 + max(maxDepth(root.left), maxDepth(root.right))
+`,
+
+  'minimum-absolute-difference-in-bst': `def getMinimumDifference(root):
+    prev = [None]
+    min_diff = [float('inf')]
+    def inorder(node):
+        if node is None:
+            return
+        inorder(node.left)
+        if prev[0] is not None:
+            min_diff[0] = min(min_diff[0], node.val - prev[0])
+        prev[0] = node.val
+        inorder(node.right)
+    inorder(root)
+    return min_diff[0]
+`,
+
+  'pascals-triangle-ii': `def getRow(rowIndex):
+    rowIndex = int(rowIndex)
+    row = [1]
+    for i in range(rowIndex):
+        j = len(row) - 1
+        while j >= 1:
+            row[j] = row[j] + row[j - 1]
+            j -= 1
+        row.append(1)
+    return row
+`,
+
+  'super-egg-drop': `def superEggDrop(k: int, n: int) -> int:
+    k = int(k)
+    n = int(n)
+    dp = [0] * (k + 1)
+    m = 0
+    while dp[k] < n:
+        m += 1
+        for j in range(k, 0, -1):
+            dp[j] = dp[j - 1] + dp[j] + 1
+    return m
+`,
+
+  'maximum-score-spliced-array': `def maximumsSplicedArray(nums1: list[int], nums2: list[int]) -> int:
+    a = list(nums1.to_py() if hasattr(nums1, 'to_py') else nums1)
+    b = list(nums2.to_py() if hasattr(nums2, 'to_py') else nums2)
+    def kadane(base, other):
+        s = sum(base)
+        gain = cur = 0
+        for x, y in zip(base, other):
+            cur = max(0, cur + y - x)
+            gain = max(gain, cur)
+        return s + gain
+    return max(kadane(a, b), kadane(b, a))
+`,
+
+  'count-increasing-quadruplets': `def countQuadruplets(nums: list[int]) -> int:
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    ans = 0
+    for k in range(1, n - 1):
+        lc = 0
+        for j in range(k):
+            if nums[j] > nums[k]:
+                rc = sum(1 for l in range(k + 1, n) if nums[l] > nums[j])
+                ans += lc * rc
+            if nums[j] < nums[k]:
+                lc += 1
+    return ans
+`,
+
+  'ways-to-make-fair-array': `def waysToMakeFair(nums: list[int]) -> int:
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    eS = sum(nums[i] for i in range(n) if i % 2 == 0)
+    oS = sum(nums[i] for i in range(n) if i % 2 == 1)
+    pE = pO = res = 0
+    for i in range(n):
+        sE = eS - pE - (nums[i] if i % 2 == 0 else 0)
+        sO = oS - pO - (nums[i] if i % 2 == 1 else 0)
+        if pE + sO == pO + sE:
+            res += 1
+        if i % 2 == 0:
+            pE += nums[i]
+        else:
+            pO += nums[i]
+    return res
+`,
+
+  'minimum-initial-energy-to-finish-tasks': `def minimumEffort(tasks: list[list[int]]) -> int:
+    tasks_list = [[int(t[0]), int(t[1])] for t in tasks]
+    tasks_list.sort(key=lambda t: t[1] - t[0], reverse=True)
+    e = 0
+    ans = 0
+    for act, mn in tasks_list:
+        if e < mn:
+            ans += mn - e
+            e = mn
+        e -= act
+    return ans
+`,
+
+  'construct-target-array-with-multiple-sums': `def isPossible(target: list[int]) -> bool:
+    arr = list(target.to_py() if hasattr(target, 'to_py') else target)
+    total = sum(arr)
+    while True:
+        arr.sort(reverse=True)
+        mx = arr[0]
+        rest = total - mx
+        if mx == 1:
+            return True
+        if rest < 1 or mx <= rest:
+            return False
+        if rest == 1:
+            return True
+        nv = mx % rest
+        if nv == 0:
+            return False
+        total = total - mx + nv
+        arr[0] = nv
+`,
+
+  'minimize-maximum-difference-of-pairs': `def minimizeMax(nums: list[int], p: int) -> int:
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    p = int(p)
+    nums.sort()
+    n = len(nums)
+    def ok(d):
+        c = i = 0
+        while i < n - 1:
+            if nums[i + 1] - nums[i] <= d:
+                c += 1
+                i += 2
+            else:
+                i += 1
+        return c >= p
+    lo, hi = 0, nums[-1] - nums[0]
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if ok(mid):
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'minimum-number-of-keypresses': `def minimumKeypresses(s: str) -> int:
+    s = str(s)
+    freq = [0] * 26
+    for c in s:
+        freq[ord(c) - ord('a')] += 1
+    freq.sort(reverse=True)
+    total = 0
+    for i in range(26):
+        if freq[i] == 0:
+            break
+        total += freq[i] * (i // 9 + 1)
+    return total
+`,
+
+  'longest-subarray-at-most-k-frequency': `def maxSubarrayLength(nums: list[int], k: int) -> int:
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    k = int(k)
+    freq = {}
+    l = ans = 0
+    for r in range(len(nums)):
+        freq[nums[r]] = freq.get(nums[r], 0) + 1
+        while freq[nums[r]] > k:
+            freq[nums[l]] -= 1
+            l += 1
+        ans = max(ans, r - l + 1)
+    return ans
+`,
+
+  'minimum-deletions-to-make-string-k-special': `def minimumDeletions(word: str, k: int) -> int:
+    word = str(word)
+    k = int(k)
+    freq = [0] * 26
+    for c in word:
+        freq[ord(c) - ord('a')] += 1
+    f = sorted(v for v in freq if v > 0)
+    mn = float('inf')
+    ps = 0
+    for i in range(len(f)):
+        d = ps
+        for j in range(i, len(f)):
+            d += max(0, f[j] - f[i] - k)
+        mn = min(mn, d)
+        ps += f[i]
+    return mn if mn != float('inf') else 0
+`,
+
+  'cousins-in-binary-tree': `def isCousinsRunner(arr, x, y):
+    from collections import deque
+    raw = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
+    vals = [int(v) if isinstance(v, (int, float)) else None for v in raw]
+    x, y = int(x), int(y)
+
+    class TreeNode:
+        def __init__(self, val): self.val = val; self.left = None; self.right = None
+
+    if not vals: return False
+    root = TreeNode(vals[0])
+    q = deque([root]); i = 1
+    while q and i < len(vals):
+        node = q.popleft()
+        if i < len(vals) and vals[i] is not None:
+            node.left = TreeNode(vals[i]); q.append(node.left)
+        i += 1
+        if i < len(vals) and vals[i] is not None:
+            node.right = TreeNode(vals[i]); q.append(node.right)
+        i += 1
+
+    return isCousins(root, x, y)
+
+def isCousins(root, x, y):
+    xd = xp = yd = yp = None
+    def dfs(node, depth, parent):
+        nonlocal xd, xp, yd, yp
+        if not node: return
+        if node.val == x: xd, xp = depth, parent
+        if node.val == y: yd, yp = depth, parent
+        dfs(node.left, depth+1, node)
+        dfs(node.right, depth+1, node)
+    dfs(root, 0, None)
+    return xd == yd and xp is not yp
+`,
+
+  'all-nodes-distance-k-in-binary-tree': `def distanceKRunner(arr, target, k):
+    from collections import deque
+    raw = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
+    vals = [int(v) if isinstance(v, (int, float)) else None for v in raw]
+    target, k = int(target), int(k)
+
+    class TreeNode:
+        def __init__(self, val): self.val = val; self.left = None; self.right = None
+
+    if not vals: return []
+    root = TreeNode(vals[0])
+    q = deque([root]); i = 1
+    while q and i < len(vals):
+        node = q.popleft()
+        if i < len(vals) and vals[i] is not None:
+            node.left = TreeNode(vals[i]); q.append(node.left)
+        i += 1
+        if i < len(vals) and vals[i] is not None:
+            node.right = TreeNode(vals[i]); q.append(node.right)
+        i += 1
+
+    def find_node(node, val):
+        if not node: return None
+        if node.val == val: return node
+        return find_node(node.left, val) or find_node(node.right, val)
+
+    target_node = find_node(root, target)
+    return sorted(distanceK(root, target_node, k))
+
+def distanceK(root, target, k):
+    parent = {}
+    def build_parent(node, par):
+        if not node: return
+        if par: parent[node] = par
+        build_parent(node.left, node)
+        build_parent(node.right, node)
+    build_parent(root, None)
+    visited = {target}
+    queue = [target]
+    dist = 0
+    while dist < k and queue:
+        nxt = []
+        for node in queue:
+            for nb in [node.left, node.right, parent.get(node)]:
+                if nb and nb not in visited:
+                    visited.add(nb); nxt.append(nb)
+        queue = nxt; dist += 1
+    return [n.val for n in queue]
+`,
+
+  'open-lock': `def openLock(deadends, target):
+    deadends = list(deadends.to_py() if hasattr(deadends, 'to_py') else deadends)
+    target = str(target)
+    dead = set(deadends)
+    if '0000' in dead: return -1
+    if target == '0000': return 0
+    visited = {'0000'}
+    queue = ['0000']
+    steps = 0
+    while queue:
+        steps += 1
+        nxt = []
+        for state in queue:
+            for i in range(4):
+                d = int(state[i])
+                for delta in [1, -1]:
+                    nd = (d + delta) % 10
+                    ns = state[:i] + str(nd) + state[i+1:]
+                    if ns == target: return steps
+                    if ns not in visited and ns not in dead:
+                        visited.add(ns); nxt.append(ns)
+        queue = nxt
+    return -1
+`,
+
+  'maximize-sum-of-array-after-k-negations': `def largestSumAfterKNegations(nums, k):
+    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    k = int(k)
+    for i in range(len(nums)):
+        if k > 0 and nums[i] < 0:
+            nums[i] = -nums[i]; k -= 1
+    if k % 2 == 1:
+        nums.sort(); nums[0] = -nums[0]
+    return sum(nums)
+`,
+
+  'remove-duplicates-from-sorted-list': `def deleteDuplicates(head):
+    head = list(head.to_py() if hasattr(head, 'to_py') else head)
+    if not head: return []
+    result = [head[0]]
+    for i in range(1, len(head)):
+        if head[i] != head[i-1]:
+            result.append(head[i])
+    return result
+`,
+
+  'intersection-of-two-arrays': `def intersection(nums1, nums2):
+    s = set(nums1)
+    result = set()
+    for n in nums2:
+        if n in s:
+            result.add(n)
+    return sorted(result)
+`,
+
+  'climbing-stairs-memo': `def climbStairs(n):
+    memo = {}
+    def climb(k):
+        if k <= 1:
+            return 1
+        if k in memo:
+            return memo[k]
+        v = climb(k - 1) + climb(k - 2)
+        memo[k] = v
+        return v
+    return climb(int(n))
+`,
+
+  'count-vowels-in-string': `def countVowels(s):
+    vowels = set('aeiouAEIOU')
+    return sum(1 for c in str(s) if c in vowels)
+`,
+
+  'percentage-of-letter': `def percentageLetter(s, letter):
+    s = str(s)
+    letter = str(letter)
+    count = s.count(letter)
+    return count * 100 // len(s)
+`,
+
+  'reverse-words-in-string': `def reverseWords(s):
+    return ' '.join(reversed(str(s).split()))
+`,
+
+  'day-of-the-week': `def dayOfTheWeek(day, month, year):
+    from datetime import date
+    return date(int(year), int(month), int(day)).strftime('%A')
+`,
+
+  'guess-number-higher-or-lower': `def guessNumber(n, pick):
+    n = int(n)
+    pick = int(pick)
+    def guess(num):
+        if num > pick: return -1
+        if num < pick: return 1
+        return 0
+    lo, hi = 1, n
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        r = guess(mid)
+        if r == 0:
+            return mid
+        elif r == -1:
+            hi = mid - 1
+        else:
+            lo = mid + 1
+    return -1
+`,
+
+  'largest-triangle-area': `def largestTriangleArea(points):
+    pts = [[int(c) for c in list(row.to_py() if hasattr(row, 'to_py') else row)] for row in list(points.to_py() if hasattr(points, 'to_py') else points)]
+    best = 0
+    n = len(pts)
+    for i in range(n):
+        for j in range(i+1, n):
+            for k in range(j+1, n):
+                x1,y1 = pts[i]
+                x2,y2 = pts[j]
+                x3,y3 = pts[k]
+                area = 0.5 * abs(x1*(y2-y3) + x2*(y3-y1) + x3*(y1-y2))
+                if area > best:
+                    best = area
+    return best
+`,
+
+  'minimum-value-to-get-positive-step-sum': `def minStartValue(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    nums = [int(x) for x in nums]
+    min_sum = 0
+    cur = 0
+    for n in nums:
+        cur += n
+        if cur < min_sum:
+            min_sum = cur
+    return max(1, 1 - min_sum)
+`,
+
+  'number-of-rectangles-that-can-form-largest-square': `def countGoodRectangles(rectangles):
+    rects = [[int(c) for c in list(row.to_py() if hasattr(row, 'to_py') else row)] for row in list(rectangles.to_py() if hasattr(rectangles, 'to_py') else rectangles)]
+    mins = [min(r[0], r[1]) for r in rects]
+    max_len = max(mins)
+    return sum(1 for m in mins if m == max_len)
+`,
+
+  'successful-pairs-of-spells-and-potions': `def successfulPairs(spells, potions, success):
+    from bisect import bisect_left
+    import math
+    spells = list(spells.to_py() if hasattr(spells, 'to_py') else spells)
+    potions = sorted(potions.to_py() if hasattr(potions, 'to_py') else potions)
+    success = int(success)
+    result = []
+    for spell in spells:
+        target = math.ceil(success / spell)
+        idx = bisect_left(potions, target)
+        result.append(len(potions) - idx)
+    return result
+`,
+
+  'minimum-operations-to-reduce-x-to-zero': `def minOperations(nums, x):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    x = int(x)
+    total = sum(nums)
+    target = total - x
+    if target < 0: return -1
+    if target == 0: return len(nums)
+    max_len = -1
+    left = 0
+    curr_sum = 0
+    for right in range(len(nums)):
+        curr_sum += nums[right]
+        while curr_sum > target and left <= right:
+            curr_sum -= nums[left]
+            left += 1
+        if curr_sum == target:
+            max_len = max(max_len, right - left + 1)
+    return -1 if max_len == -1 else len(nums) - max_len
+`,
+
+  'largest-submatrix-with-rearrangements': `def largestSubmatrix(matrix):
+    matrix = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (matrix.to_py() if hasattr(matrix, 'to_py') else matrix)]
+    m, n = len(matrix), len(matrix[0])
+    res = 0
+    for i in range(m):
+        for j in range(n):
+            if matrix[i][j] == 1 and i > 0:
+                matrix[i][j] += matrix[i-1][j]
+        row = sorted(matrix[i], reverse=True)
+        for j in range(n):
+            res = max(res, row[j] * (j + 1))
+    return res
+`,
+
+  'subtree-of-another-tree': `def isSubtreeRunner(rootArr, subRootArr):
+    from collections import deque
+    def from_array(raw):
+        raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+        a = [int(v) if isinstance(v, (int, float)) else None for v in raw_list]
+        if not a or a[0] is None: return None
+        class TreeNode:
+            def __init__(self, val): self.val = val; self.left = None; self.right = None
+        root = TreeNode(a[0]); q = deque([root]); i = 1
+        while q and i < len(a):
+            node = q.popleft()
+            if i < len(a) and a[i] is not None: node.left = TreeNode(a[i]); q.append(node.left)
+            i += 1
+            if i < len(a) and a[i] is not None: node.right = TreeNode(a[i]); q.append(node.right)
+            i += 1
+        return root
+    def is_same(s, t):
+        if not s and not t: return True
+        if not s or not t or s.val != t.val: return False
+        return is_same(s.left, t.left) and is_same(s.right, t.right)
+    def is_sub(root, sub):
+        if not root: return False
+        if is_same(root, sub): return True
+        return is_sub(root.left, sub) or is_sub(root.right, sub)
+    return is_sub(from_array(rootArr), from_array(subRootArr))
+`,
+
+  'maximum-product-of-splitted-binary-tree': `def maxProductRunner(arr):
+    from collections import deque
+    raw_list = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
+    a = [int(v) if isinstance(v, (int, float)) else None for v in raw_list]
+    if not a or a[0] is None: return 0
+    class TreeNode:
+        def __init__(self, val): self.val = val; self.left = None; self.right = None
+    root = TreeNode(a[0]); q = deque([root]); i = 1
+    while q and i < len(a):
+        node = q.popleft()
+        if i < len(a) and a[i] is not None: node.left = TreeNode(a[i]); q.append(node.left)
+        i += 1
+        if i < len(a) and a[i] is not None: node.right = TreeNode(a[i]); q.append(node.right)
+        i += 1
+    MOD = 10**9 + 7
+    def tree_sum(node):
+        if not node: return 0
+        return node.val + tree_sum(node.left) + tree_sum(node.right)
+    total = tree_sum(root)
+    best = [0]
+    def dfs(node):
+        if not node: return 0
+        s = node.val + dfs(node.left) + dfs(node.right)
+        best[0] = max(best[0], s * (total - s))
+        return s
+    dfs(root)
+    return best[0] % MOD
+`,
+
+  'watering-plants': `def wateringPlants(plants, capacity):
+    plants = list(plants.to_py() if hasattr(plants, 'to_py') else plants)
+    plants = [int(x) for x in plants]
+    capacity = int(capacity)
+    steps = 0
+    water = capacity
+    for i, need in enumerate(plants):
+        steps += 1
+        if water < need:
+            steps += 2 * i
+            water = capacity
+        water -= need
+    return steps
+`,
+
+  'logger-rate-limiter': `def loggerRateLimiter(calls):
+    calls_list = list(calls.to_py() if hasattr(calls, 'to_py') else calls)
+    last_printed = {}
+    result = []
+    for entry in calls_list:
+        entry = list(entry.to_py() if hasattr(entry, 'to_py') else entry)
+        timestamp = int(entry[0])
+        message = str(entry[1])
+        if message not in last_printed or timestamp - last_printed[message] >= 10:
+            last_printed[message] = timestamp
+            result.append(True)
+        else:
+            result.append(False)
+    return result
+`,
+
+  'bst-from-preorder': `def bstFromPreorder(preorder):
+    def insert(root, val):
+        if not root: return TreeNode(val)
+        if val < root.val: root.left = insert(root.left, val)
+        else: root.right = insert(root.right, val)
+        return root
+    root = None
+    for v in preorder:
+        root = insert(root, v)
+    return root
+`,
+
+  'balance-a-binary-search-tree': `def balanceBST(root):
+    vals = []
+    def inorder(n):
+        if not n: return
+        inorder(n.left); vals.append(n.val); inorder(n.right)
+    inorder(root)
+    def build(lo, hi):
+        if lo > hi: return None
+        mid = (lo + hi) // 2
+        node = TreeNode(vals[mid])
+        node.left = build(lo, mid - 1)
+        node.right = build(mid + 1, hi)
+        return node
+    return build(0, len(vals) - 1)
+`,
+
+  'maximum-sum-bst-in-binary-tree': `def maxSumBST(root):
+    max_sum = [0]
+    def dfs(n):
+        if not n: return True, float('inf'), float('-inf'), 0
+        l_bst, l_min, l_max, l_sum = dfs(n.left)
+        r_bst, r_min, r_max, r_sum = dfs(n.right)
+        if l_bst and r_bst and l_max < n.val < r_min:
+            s = l_sum + n.val + r_sum
+            if s > max_sum[0]: max_sum[0] = s
+            return True, min(l_min, n.val), max(r_max, n.val), s
+        return False, 0, 0, 0
+    dfs(root)
+    return max_sum[0]
+`,
+
+  'stock-price-fluctuation': `def stockPriceFluctuation(updates, queries):
+    price_map = {}
+    latest_time = 0
+    for t, p in updates:
+        price_map[t] = p
+        if t > latest_time:
+            latest_time = t
+    values = list(price_map.values())
+    current = price_map[latest_time]
+    maximum = max(values)
+    minimum = min(values)
+    result = []
+    for q in queries:
+        if q == 'current':
+            result.append(current)
+        elif q == 'maximum':
+            result.append(maximum)
+        else:
+            result.append(minimum)
+    return result
+`,
+
+  'minimum-replacements-to-sort-array': `def minimumReplacement(nums):
+    import math
+    n = len(nums)
+    nums = list(nums)
+    ops = 0
+    for i in range(n - 2, -1, -1):
+        if nums[i] > nums[i + 1]:
+            k = math.ceil(nums[i] / nums[i + 1])
+            ops += k - 1
+            nums[i] = nums[i] // k
+    return ops
+`,
+
+  'largest-color-value-in-directed-graph': `def largestPathValue(colors, edges):
+    from collections import deque
+    n = len(colors)
+    adj = [[] for _ in range(n)]
+    indegree = [0] * n
+    for u, v in edges:
+        adj[u].append(v)
+        indegree[v] += 1
+    dp = [[0] * 26 for _ in range(n)]
+    queue = deque()
+    for i in range(n):
+        if indegree[i] == 0:
+            queue.append(i)
+    processed = 0
+    ans = 0
+    while queue:
+        u = queue.popleft()
+        processed += 1
+        dp[u][ord(colors[u]) - ord('a')] += 1
+        ans = max(ans, max(dp[u]))
+        for v in adj[u]:
+            for c in range(26):
+                if dp[u][c] > dp[v][c]:
+                    dp[v][c] = dp[u][c]
+            indegree[v] -= 1
+            if indegree[v] == 0:
+                queue.append(v)
+    return -1 if processed < n else ans
+`,
+
+  'string-without-aaa-or-bbb': `def strWithout3a3b(a, b):
+    res = []
+    while a > 0 or b > 0:
+        if a > b:
+            res.append('a')
+            a -= 1
+            if a > b and a > 0:
+                res.append('a')
+                a -= 1
+            if b > 0:
+                res.append('b')
+                b -= 1
+        elif b > a:
+            res.append('b')
+            b -= 1
+            if b > a and b > 0:
+                res.append('b')
+                b -= 1
+            if a > 0:
+                res.append('a')
+                a -= 1
+        else:
+            res.append('a')
+            a -= 1
+            if b > 0:
+                res.append('b')
+                b -= 1
+    return ''.join(res)
+`,
+
+  'count-the-hidden-sequences': `def numberOfArrays(differences, lower, upper):
+    cur = 0
+    min_val = 0
+    max_val = 0
+    for d in differences:
+        cur += d
+        if cur < min_val:
+            min_val = cur
+        if cur > max_val:
+            max_val = cur
+    spread = max_val - min_val
+    return max(0, (upper - lower) - spread + 1)
+`,
+
+  'my-calendar-iii': `def myCalendarThree(bookings):
+    def conv(x):
+        return list(x.to_py() if hasattr(x, 'to_py') else x)
+    bookings = conv(bookings)
+    events = {}
+    results = []
+    for b in bookings:
+        b = conv(b)
+        start, end = int(b[0]), int(b[1])
+        events[start] = events.get(start, 0) + 1
+        events[end] = events.get(end, 0) - 1
+        cur = 0
+        mx = 0
+        for k in sorted(events.keys()):
+            cur += events[k]
+            if cur > mx:
+                mx = cur
+        results.append(mx)
+    return results
+`,
+
+  'design-twitter': `def designTwitter(actions, args):
+    def conv(x):
+        return list(x.to_py() if hasattr(x, 'to_py') else x)
+    actions = conv(actions)
+    args = conv(args)
+    results = [None]
+    timer = [0]
+    tweets = {}
+    following = {}
+
+    def get_following(uid):
+        if uid not in following:
+            following[uid] = set()
+        return following[uid]
+
+    def get_tweets(uid):
+        if uid not in tweets:
+            tweets[uid] = []
+        return tweets[uid]
+
+    for i in range(1, len(actions)):
+        action = str(actions[i])
+        a = conv(args[i])
+        if action == 'postTweet':
+            uid, tid = int(a[0]), int(a[1])
+            get_tweets(uid).append({'tweetId': tid, 'time': timer[0]})
+            timer[0] += 1
+            results.append(None)
+        elif action == 'getNewsFeed':
+            uid = int(a[0])
+            feed = list(get_tweets(uid))
+            for fid in get_following(uid):
+                if fid != uid:
+                    feed.extend(get_tweets(fid))
+            feed.sort(key=lambda x: -x['time'])
+            results.append([t['tweetId'] for t in feed[:10]])
+        elif action == 'follow':
+            get_following(int(a[0])).add(int(a[1]))
+            results.append(None)
+        elif action == 'unfollow':
+            get_following(int(a[0])).discard(int(a[1]))
+            results.append(None)
+    return results
+`,
+
+  'zigzag-iterator': `def zigzagIterator(v1, v2):
+    def conv(x):
+        return list(x.to_py() if hasattr(x, 'to_py') else x)
+    v1 = conv(v1)
+    v2 = conv(v2)
+    result = []
+    i, j = 0, 0
+    while i < len(v1) and j < len(v2):
+        result.append(v1[i]); i += 1
+        result.append(v2[j]); j += 1
+    while i < len(v1):
+        result.append(v1[i]); i += 1
+    while j < len(v2):
+        result.append(v2[j]); j += 1
+    return result
+`,
+
+  'second-minimum-time-to-reach-destination': `from collections import deque
+def secondMinimum(n, edges, time, change):
+    def conv(x):
+        return list(x.to_py() if hasattr(x, 'to_py') else x)
+    n = int(n)
+    edges = [conv(e) for e in conv(edges)]
+    time = int(time)
+    change = int(change)
+    adj = [[] for _ in range(n + 1)]
+    for u, v in edges:
+        adj[int(u)].append(int(v))
+        adj[int(v)].append(int(u))
+    INF = float('inf')
+    dist1 = [INF] * (n + 1)
+    dist2 = [INF] * (n + 1)
+    dist1[1] = 0
+    q = deque([(1, 0)])
+    while q:
+        node, arr = q.popleft()
+        period = arr // change
+        leave = arr if period % 2 == 0 else (period + 1) * change
+        nxt = leave + time
+        for nei in adj[node]:
+            if nxt < dist1[nei]:
+                dist2[nei] = dist1[nei]
+                dist1[nei] = nxt
+                q.append((nei, nxt))
+            elif nxt > dist1[nei] and nxt < dist2[nei]:
+                dist2[nei] = nxt
+                q.append((nei, nxt))
+    return dist2[n]
+`,
+
+  'path-sum-ii': `def pathSumRunner(arr, targetSum):
+    from collections import deque
+    raw_list = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
+    a = [int(v) if isinstance(v, (int, float)) else None for v in raw_list]
+    if not a or a[0] is None: return []
+    class TreeNode:
+        def __init__(self, val): self.val = val; self.left = None; self.right = None
+    root = TreeNode(a[0]); q = deque([root]); i = 1
+    while q and i < len(a):
+        node = q.popleft()
+        if i < len(a) and a[i] is not None: node.left = TreeNode(a[i]); q.append(node.left)
+        i += 1
+        if i < len(a) and a[i] is not None: node.right = TreeNode(a[i]); q.append(node.right)
+        i += 1
+    target = int(targetSum)
+    result = []
+    def dfs(node, rem, path):
+        if not node: return
+        path.append(node.val)
+        if not node.left and not node.right and rem == node.val:
+            result.append(list(path))
+        else:
+            dfs(node.left, rem - node.val, path)
+            dfs(node.right, rem - node.val, path)
+        path.pop()
+    dfs(root, target, [])
+    result.sort()
+    return result
+`,
+
+  'construct-binary-tree-from-inorder-and-postorder-traversal': `def buildFromInorderPostorderRunner(inorder, postorder):
+    ino = list(inorder); post = list(postorder)
+    class TreeNode:
+        def __init__(self, val): self.val = val; self.left = None; self.right = None
+    def to_array(root):
+        if not root: return []
+        result = []; queue = [root]
+        while queue:
+            node = queue.pop(0)
+            if node is None: result.append(None); continue
+            result.append(node.val); queue.append(node.left); queue.append(node.right)
+        while result and result[-1] is None: result.pop()
+        return result
+    idx_map = {v: i for i, v in enumerate(ino)}
+    def build(in_l, in_r, po_l, po_r):
+        if in_l > in_r: return None
+        root_val = post[po_r]; root_idx = idx_map[root_val]; left_len = root_idx - in_l
+        node = TreeNode(root_val)
+        node.left = build(in_l, root_idx - 1, po_l, po_l + left_len - 1)
+        node.right = build(root_idx + 1, in_r, po_l + left_len, po_r - 1)
+        return node
+    return to_array(build(0, len(ino) - 1, 0, len(post) - 1))
+`,
+
+  'construct-binary-tree-from-preorder-and-inorder-traversal': `def buildFromPreorderInorderRunner(preorder, inorder):
+    pre = list(preorder); ino = list(inorder)
+    class TreeNode:
+        def __init__(self, val): self.val = val; self.left = None; self.right = None
+    def to_array(root):
+        if not root: return []
+        result = []; queue = [root]
+        while queue:
+            node = queue.pop(0)
+            if node is None: result.append(None); continue
+            result.append(node.val); queue.append(node.left); queue.append(node.right)
+        while result and result[-1] is None: result.pop()
+        return result
+    idx_map = {v: i for i, v in enumerate(ino)}
+    def build(pre_l, pre_r, in_l, in_r):
+        if pre_l > pre_r: return None
+        root_val = pre[pre_l]; in_index = idx_map[root_val]; left_len = in_index - in_l
+        node = TreeNode(root_val)
+        node.left = build(pre_l + 1, pre_l + left_len, in_l, in_index - 1)
+        node.right = build(pre_l + left_len + 1, pre_r, in_index + 1, in_r)
+        return node
+    return to_array(build(0, len(pre) - 1, 0, len(ino) - 1))
+`,
+
+  'maximum-number-of-removable-characters': `def maximumRemovals(s, p, removable):
+    sv = str(s); pv = str(p)
+    rem_list = list(int(x) for x in (removable.to_py() if hasattr(removable, 'to_py') else removable))
+    def is_subseq(k):
+        removed = set(rem_list[:k])
+        j = 0
+        for i in range(len(sv)):
+            if i not in removed and j < len(pv) and sv[i] == pv[j]:
+                j += 1
+        return j == len(pv)
+    lo, hi = 0, len(rem_list)
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if is_subseq(mid): lo = mid
+        else: hi = mid - 1
+    return lo
+`,
+
+  'minimum-sum-of-squared-difference': `def minSumSquareDiff(nums1, nums2, k1, k2):
+    n1 = list(int(x) for x in (nums1.to_py() if hasattr(nums1, 'to_py') else nums1))
+    n2 = list(int(x) for x in (nums2.to_py() if hasattr(nums2, 'to_py') else nums2))
+    diff = sorted([abs(a - b) for a, b in zip(n1, n2)], reverse=True)
+    k = int(k1) + int(k2)
+    lo, hi = 0, diff[0] if diff else 0
+    while lo < hi:
+        mid = (lo + hi) // 2
+        cost = sum(max(0, d - mid) for d in diff)
+        if cost <= k: hi = mid
+        else: lo = mid + 1
+    T = lo
+    cost_used = sum(max(0, d - T) for d in diff)
+    remaining = k - cost_used
+    total = 0
+    for d in diff:
+        clamped = min(d, T)
+        if remaining > 0 and clamped == T and T > 0:
+            total += (T - 1) ** 2; remaining -= 1
+        else:
+            total += clamped ** 2
+    return total
+`,
+
+  'find-the-kth-largest-integer-in-array': `def kthLargestNumber(nums, k):
+    arr = [str(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else list(nums))]
+    arr.sort(key=lambda x: (len(x), x), reverse=True)
+    return arr[int(k) - 1]
+
+`,
+
+  'trapping-rain-water-ii': `def trapRainWaterII(heightMap):
+    import heapq
+    m = len(heightMap)
+    n = len(heightMap[0]) if m > 0 else 0
+    if m < 3 or n < 3:
+        return 0
+    visited = [[False] * n for _ in range(m)]
+    heap = []
+    for r in range(m):
+        for c in range(n):
+            if r == 0 or r == m - 1 or c == 0 or c == n - 1:
+                heapq.heappush(heap, (heightMap[r][c], r, c))
+                visited[r][c] = True
+    water = 0
+    dirs = [(-1,0),(1,0),(0,-1),(0,1)]
+    while heap:
+        h, r, c = heapq.heappop(heap)
+        for dr, dc in dirs:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n and not visited[nr][nc]:
+                visited[nr][nc] = True
+                nh = heightMap[nr][nc]
+                if nh < h:
+                    water += h - nh
+                heapq.heappush(heap, (max(h, nh), nr, nc))
+    return water
+`,
+
+  'minimum-number-of-pushes-to-type-word-ii': `def minimumPushes(word):
+    from collections import Counter
+    freq = sorted(Counter(word).values(), reverse=True)
+    total = 0
+    for i, f in enumerate(freq):
+        total += f * (i // 8 + 1)
+    return total
+`,
+
+  'maximize-win-from-two-segments': `def maximizeWin(prizePositions, k):
+    n = len(prizePositions)
+    best = [0] * n
+    ans = 0
+    l = 0
+    for r in range(n):
+        while prizePositions[r] - prizePositions[l] > k:
+            l += 1
+        window_size = r - l + 1
+        best[r] = max(best[r - 1], window_size) if r > 0 else window_size
+        # Binary search for largest j with prizePositions[j] <= prizePositions[r] - k - 1
+        lo, hi, j = 0, r - 1, -1
+        limit = prizePositions[r] - k - 1
+        while lo <= hi:
+            mid = (lo + hi) // 2
+            if prizePositions[mid] <= limit:
+                j = mid
+                lo = mid + 1
+            else:
+                hi = mid - 1
+        ans = max(ans, window_size + (best[j] if j >= 0 else 0))
+    return ans
+`,
+
+  'minimum-swaps-to-group-all-ones-together-ii': `def minSwaps(nums):
+    n = len(nums)
+    k = sum(nums)
+    if k == 0:
+        return 0
+    window_ones = sum(nums[:k])
+    max_ones = window_ones
+    for i in range(1, n):
+        window_ones += nums[(i + k - 1) % n]
+        window_ones -= nums[(i - 1) % n]
+        if window_ones > max_ones:
+            max_ones = window_ones
+    return k - max_ones
+`,
+
+  'three-sum-smaller': `def threeSumSmaller(nums, target):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    nums.sort()
+    count = 0
+    n = len(nums)
+    for i in range(n - 2):
+        l, r = i + 1, n - 1
+        while l < r:
+            if nums[i] + nums[l] + nums[r] < target:
+                count += r - l
+                l += 1
+            else:
+                r -= 1
+    return count
+`,
+
+  'most-common-word': `def mostCommonWord(paragraph, banned):
+    import re
+    from collections import Counter
+    banned_set = set(banned.to_py() if hasattr(banned, 'to_py') else banned)
+    words = re.findall(r'[a-z]+', paragraph.lower())
+    freq = Counter(w for w in words if w not in banned_set)
+    return max(freq, key=freq.get)
+`,
+
+  'student-attendance-record-ii': `def checkRecord(n):
+    MOD = 10**9 + 7
+    dp = [[0]*3 for _ in range(2)]
+    dp[0][0] = 1
+    for _ in range(n):
+        ndp = [[0]*3 for _ in range(2)]
+        for a in range(2):
+            for l in range(3):
+                v = dp[a][l]
+                if v == 0:
+                    continue
+                ndp[a][0] = (ndp[a][0] + v) % MOD
+                if l < 2:
+                    ndp[a][l+1] = (ndp[a][l+1] + v) % MOD
+                if a < 1:
+                    ndp[1][0] = (ndp[1][0] + v) % MOD
+        dp = ndp
+    return sum(dp[a][l] for a in range(2) for l in range(3)) % MOD
+`,
+
+  'permutation-sequence': `def getPermutation(n, k):
+    from math import factorial
+    digits = list(range(1, n + 1))
+    k -= 1
+    result = []
+    for i in range(n, 0, -1):
+        f = factorial(i - 1)
+        idx = k // f
+        result.append(str(digits[idx]))
+        digits.pop(idx)
+        k %= f
+    return ''.join(result)
+`,
+
+  'maximum-sum-obtained-of-any-permutation': `def maxSumRangeQuery(nums, requests):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    raw_req = requests.to_py() if hasattr(requests, 'to_py') else list(requests)
+    reqs = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in raw_req]
+    MOD = 10**9 + 7
+    n = len(nums)
+    diff = [0] * (n + 1)
+    for lr in reqs:
+        l, r = int(lr[0]), int(lr[1])
+        diff[l] += 1
+        if r + 1 <= n:
+            diff[r + 1] -= 1
+    counts = []
+    cur = 0
+    for i in range(n):
+        cur += diff[i]
+        counts.append(cur)
+    counts.sort(reverse=True)
+    nums.sort(reverse=True)
+    ans = 0
+    for i in range(n):
+        ans = (ans + nums[i] * counts[i]) % MOD
+    return ans
+`,
+
+  'longest-univalue-path': `def longestUnivaluePathRunner(arr):
+    class TreeNode:
+        def __init__(self, val=0, left=None, right=None):
+            self.val = val; self.left = left; self.right = right
+    def from_array(raw):
+        raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+        a = [int(v) if isinstance(v, (int, float)) else None for v in raw_list]
+        if not a or a[0] is None: return None
+        root = TreeNode(a[0]); queue = [root]; i = 1
+        while queue and i < len(a):
+            node = queue.pop(0)
+            if i < len(a) and a[i] is not None: node.left = TreeNode(a[i]); queue.append(node.left)
+            i += 1
+            if i < len(a) and a[i] is not None: node.right = TreeNode(a[i]); queue.append(node.right)
+            i += 1
+        return root
+    root = from_array(arr)
+    ans = [0]
+    def dfs(node):
+        if not node: return 0
+        l = dfs(node.left); r = dfs(node.right)
+        left_path = l + 1 if node.left and node.left.val == node.val else 0
+        right_path = r + 1 if node.right and node.right.val == node.val else 0
+        ans[0] = max(ans[0], left_path + right_path)
+        return max(left_path, right_path)
+    dfs(root)
+    return ans[0]
+`,
+
+  'add-one-row-to-tree': `def addOneRowRunner(arr, val, depth):
+    class TreeNode:
+        def __init__(self, val=0, left=None, right=None):
+            self.val = val; self.left = left; self.right = right
+    def from_array(raw):
+        raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+        a = [int(v) if isinstance(v, (int, float)) else None for v in raw_list]
+        if not a or a[0] is None: return None
+        root = TreeNode(a[0]); queue = [root]; i = 1
+        while queue and i < len(a):
+            node = queue.pop(0)
+            if i < len(a) and a[i] is not None: node.left = TreeNode(a[i]); queue.append(node.left)
+            i += 1
+            if i < len(a) and a[i] is not None: node.right = TreeNode(a[i]); queue.append(node.right)
+            i += 1
+        return root
+    def to_array(root):
+        if not root: return []
+        result = []; queue = [root]
+        while queue:
+            node = queue.pop(0)
+            if node is None: result.append(None); continue
+            result.append(node.val); queue.append(node.left); queue.append(node.right)
+        while result and result[-1] is None: result.pop()
+        return result
+    v = int(val); d = int(depth)
+    root = from_array(arr)
+    if d == 1:
+        new_root = TreeNode(v); new_root.left = root
+        return to_array(new_root)
+    queue = [root] if root else []; level = 1
+    while queue:
+        if level == d - 1:
+            for node in queue:
+                new_left = TreeNode(v); new_left.left = node.left; node.left = new_left
+                new_right = TreeNode(v); new_right.right = node.right; node.right = new_right
+            break
+        next_q = []
+        for node in queue:
+            if node.left: next_q.append(node.left)
+            if node.right: next_q.append(node.right)
+        queue = next_q; level += 1
+    return to_array(root)
+`,
+
+  'even-odd-tree': `def isEvenOddTreeRunner(arr):
+    class TreeNode:
+        def __init__(self, val=0, left=None, right=None):
+            self.val = val; self.left = left; self.right = right
+    def from_array(raw):
+        raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+        a = [int(v) if isinstance(v, (int, float)) else None for v in raw_list]
+        if not a or a[0] is None: return None
+        root = TreeNode(a[0]); queue = [root]; i = 1
+        while queue and i < len(a):
+            node = queue.pop(0)
+            if i < len(a) and a[i] is not None: node.left = TreeNode(a[i]); queue.append(node.left)
+            i += 1
+            if i < len(a) and a[i] is not None: node.right = TreeNode(a[i]); queue.append(node.right)
+            i += 1
+        return root
+    root = from_array(arr)
+    if not root: return False
+    queue = [root]; level = 0
+    while queue:
+        size = len(queue); prev = float('-inf') if level % 2 == 0 else float('inf')
+        for _ in range(size):
+            node = queue.pop(0)
+            if level % 2 == 0:
+                if node.val % 2 == 0 or node.val <= prev: return False
+            else:
+                if node.val % 2 != 0 or node.val >= prev: return False
+            prev = node.val
+            if node.left: queue.append(node.left)
+            if node.right: queue.append(node.right)
+        level += 1
+    return True
+`,
+
+  'sort-integers-by-number-of-1-bits': `def sortByBits(arr):
+    a = list(int(x) for x in (arr.to_py() if hasattr(arr, 'to_py') else arr))
+    a.sort(key=lambda x: (bin(x).count('1'), x))
+    return a
+`,
+
+  'minimum-operations-to-make-array-equal': `def minOperations(n):
+    return int(n) * int(n) // 4
+`,
+
+  'convert-sorted-list-to-binary-search-tree': `def convertSortedListToBST(listValues):
+    from collections import deque
+
+    class TreeNode:
+        def __init__(self, val=0, left=None, right=None):
+            self.val = val
+            self.left = left
+            self.right = right
+
+    def build(arr, lo, hi):
+        if lo > hi:
+            return None
+        mid = (lo + hi) // 2
+        node = TreeNode(arr[mid])
+        node.left = build(arr, lo, mid - 1)
+        node.right = build(arr, mid + 1, hi)
+        return node
+
+    def to_bfs_array(root):
+        if not root:
+            return []
+        res = []
+        q = deque([root])
+        while q:
+            node = q.popleft()
+            if node is None:
+                res.append(None)
+                continue
+            res.append(node.val)
+            q.append(node.left)
+            q.append(node.right)
+        while res and res[-1] is None:
+            res.pop()
+        return res
+
+    root = build(listValues, 0, len(listValues) - 1)
+    return to_bfs_array(root)
+`,
+
+  'contains-duplicate-iii': `def containsNearbyAlmostDuplicate(nums, indexDiff, valueDiff):
+    w = valueDiff + 1
+
+    def bucket(x):
+        if x >= 0:
+            return x // w
+        return (x + 1) // w - 1
+
+    mp = {}
+    for i, x in enumerate(nums):
+        b = bucket(x)
+        if b in mp:
+            return True
+        if b - 1 in mp and abs(x - mp[b - 1]) <= valueDiff:
+            return True
+        if b + 1 in mp and abs(x - mp[b + 1]) <= valueDiff:
+            return True
+        mp[b] = x
+        if len(mp) > indexDiff:
+            del mp[bucket(nums[i - indexDiff])]
+    return False
+`,
+
+  'make-array-strictly-increasing': `def makeArrayIncreasing(arr1, arr2):
+    arr2 = sorted(set(arr2))
+    dp = {float('-inf'): 0}
+    for x in arr1:
+        ndp = {}
+        for last, ops in dp.items():
+            if x > last:
+                if x not in ndp or ndp[x] > ops:
+                    ndp[x] = ops
+            for v in arr2:
+                if v <= last:
+                    continue
+                cost = ops + 1
+                if v not in ndp or ndp[v] > cost:
+                    ndp[v] = cost
+        dp = ndp
+        if not dp:
+            return -1
+    return min(dp.values())
+`,
+
+  'encode-and-decode-tinyurl': `def tinyUrl(operations, args):
+    long_to_short = {}
+    short_to_long = {}
+    counter = [0]
+
+    def encode(long_url):
+        if long_url not in long_to_short:
+            counter[0] += 1
+            short = f"http://tinyurl.com/{counter[0]}"
+            long_to_short[long_url] = short
+            short_to_long[short] = long_url
+        return long_to_short[long_url]
+
+    def decode(short_url):
+        return short_to_long.get(short_url, '')
+
+    results = []
+    for i, op in enumerate(operations):
+        a = args[i] if i < len(args) else []
+        if op == 'encode':
+            results.append(encode(a[0]))
+        else:
+            results.append(decode(a[0]))
+    return results
+`,
+
+  'course-schedule-iv': `def checkIfPrerequisite(numCourses, prerequisites, queries):
+    reach = [[False] * numCourses for _ in range(numCourses)]
+    for a, b in prerequisites:
+        reach[a][b] = True
+    for k in range(numCourses):
+        for i in range(numCourses):
+            for j in range(numCourses):
+                if reach[i][k] and reach[k][j]:
+                    reach[i][j] = True
+    return [reach[u][v] for u, v in queries]
+`,
+
+  'final-prices-with-a-special-discount-in-a-shop': `def finalPrices(prices):
+    p = list(int(x) for x in (prices.to_py() if hasattr(prices, 'to_py') else prices))
+    stack = []
+    for i in range(len(p)):
+        while stack and p[stack[-1]] >= p[i]:
+            p[stack.pop()] -= p[i]
+        stack.append(i)
+    return p
+`,
+
+  'buildings-with-an-ocean-view': `def findBuildings(heights):
+    h = list(int(x) for x in (heights.to_py() if hasattr(heights, 'to_py') else heights))
+    result = []; max_right = 0
+    for i in range(len(h) - 1, -1, -1):
+        if h[i] > max_right:
+            result.append(i); max_right = h[i]
+    return result[::-1]
+`,
+
+  'remove-nodes-from-linked-list': `def removeNodesRunner(arr):
+    class ListNode:
+        def __init__(self, val=0, next=None):
+            self.val = val; self.next = next
+    def from_array(raw):
+        raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+        dummy = ListNode(); cur = dummy
+        for v in raw_list:
+            cur.next = ListNode(int(v)); cur = cur.next
+        return dummy.next
+    def to_array(head):
+        res = []
+        while head:
+            res.append(head.val); head = head.next
+        return res
+    head = from_array(arr)
+    stack = []
+    cur = head
+    while cur:
+        while stack and stack[-1].val < cur.val:
+            stack.pop()
+        stack.append(cur); cur = cur.next
+    for i in range(len(stack) - 1):
+        stack[i].next = stack[i + 1]
+    if stack:
+        stack[-1].next = None
+    return to_array(stack[0] if stack else None)
+`,
+
+  'find-polygon-with-the-largest-perimeter': `def largestPerimeter(nums):
+    a = sorted(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    total = 0; ans = -1
+    for v in a:
+        if total > v: ans = total + v
+        total += v
+    return ans
+`,
+
+  'minimum-deletions-to-make-character-frequencies-unique': `def minDeletions(s):
+    sv = str(s)
+    freq = [0] * 26
+    for c in sv:
+        freq[ord(c) - 97] += 1
+    sorted_freq = sorted((f for f in freq if f > 0), reverse=True)
+    used = set(); deletions = 0
+    for f in sorted_freq:
+        while f > 0 and f in used:
+            f -= 1; deletions += 1
+        if f > 0:
+            used.add(f)
+    return deletions
+`,
+
+  'kth-smallest-in-sorted-matrix': `def kthSmallest(matrix, k):
+    matrix = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (matrix.to_py() if hasattr(matrix, 'to_py') else matrix)]
+    n = len(matrix)
+    lo, hi = matrix[0][0], matrix[n - 1][n - 1]
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        count = 0
+        col = n - 1
+        for row in range(n):
+            while col >= 0 and matrix[row][col] > mid:
+                col -= 1
+            count += col + 1
+        if count < k:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+`,
+
+  'the-skyline-problem': `def getSkyline(buildings):
+    raw = buildings.to_py() if hasattr(buildings, 'to_py') else list(buildings)
+    bldgs = [list(b.to_py() if hasattr(b, 'to_py') else b) for b in raw]
+    events = []
+    for b in bldgs:
+        l, r, h = int(b[0]), int(b[1]), int(b[2])
+        events.append((l, -h))
+        events.append((r, h))
+    events.sort()
+    result = []
+    active = [0]
+    prev_max = 0
+    for x, h in events:
+        if h < 0:
+            active.append(-h)
+            active.sort(reverse=True)
+        else:
+            active.remove(h)
+        cur_max = active[0]
+        if cur_max != prev_max:
+            result.append([x, cur_max])
+            prev_max = cur_max
+    return result
+`,
+
+  'island-perimeter': `def islandPerimeter(grid):
+    raw = grid.to_py() if hasattr(grid, 'to_py') else list(grid)
+    rows_list = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in raw]
+    rows = len(rows_list)
+    cols = len(rows_list[0]) if rows > 0 else 0
+    perimeter = 0
+    for i in range(rows):
+        for j in range(cols):
+            if rows_list[i][j] == 1:
+                perimeter += 4
+                if j + 1 < cols and rows_list[i][j + 1] == 1:
+                    perimeter -= 2
+                if i + 1 < rows and rows_list[i + 1][j] == 1:
+                    perimeter -= 2
+    return perimeter
+`,
+
+  'matrix-chain-multiplication': `def matrixChainOrder(dims):
+    dims = list(int(x) for x in (dims.to_py() if hasattr(dims, 'to_py') else dims))
+    n = len(dims) - 1
+    if n <= 1:
+        return 0
+    dp = [[0] * (n + 1) for _ in range(n + 1)]
+    for length in range(2, n + 1):
+        for i in range(1, n - length + 2):
+            j = i + length - 1
+            dp[i][j] = float('inf')
+            for k in range(i, j):
+                cost = dp[i][k] + dp[k + 1][j] + dims[i - 1] * dims[k] * dims[j]
+                if cost < dp[i][j]:
+                    dp[i][j] = cost
+    return dp[1][n]
+`,
+
+  'binary-search-tree-iterator': `def bstIteratorRunner(ops, vals, tree_arr):
+    class TreeNode:
+        def __init__(self, val=0, left=None, right=None):
+            self.val = val; self.left = left; self.right = right
+    def from_array(raw):
+        raw_list = list(raw.to_py() if hasattr(raw, 'to_py') else raw)
+        a = [int(v) if isinstance(v, (int, float)) else None for v in raw_list]
+        if not a or a[0] is None: return None
+        root = TreeNode(a[0]); queue = [root]; i = 1
+        while queue and i < len(a):
+            node = queue.pop(0)
+            if i < len(a) and a[i] is not None: node.left = TreeNode(a[i]); queue.append(node.left)
+            i += 1
+            if i < len(a) and a[i] is not None: node.right = TreeNode(a[i]); queue.append(node.right)
+            i += 1
+        return root
+    class BSTIterator:
+        def __init__(self, root):
+            self.stack = []
+            self._push_left(root)
+        def _push_left(self, node):
+            while node:
+                self.stack.append(node)
+                node = node.left
+        def next(self):
+            node = self.stack.pop()
+            self._push_left(node.right)
+            return node.val
+        def hasNext(self):
+            return len(self.stack) > 0
+    tree_arr_list = list(tree_arr.to_py() if hasattr(tree_arr, 'to_py') else tree_arr)
+    root = from_array(tree_arr_list)
+    ops_list = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    iterator = BSTIterator(root)
+    result = []
+    for op in ops_list:
+        if op == 'next':
+            result.append(iterator.next())
+        elif op == 'hasNext':
+            result.append(iterator.hasNext())
+        else:
+            result.append(None)
+    return result
+
+`,
+
+  'matrix-cells-in-distance-order': `def matrixCellsInDistanceOrder(rows, cols, rCenter, cCenter):
+    cells = [[r, c] for r in range(rows) for c in range(cols)]
+    cells.sort(key=lambda x: (abs(x[0] - rCenter) + abs(x[1] - cCenter), x[0], x[1]))
+    return cells
+`,
+
+  'broken-calculator': `def brokenCalc(startValue, target):
+    ops = 0
+    while target > startValue:
+        if target % 2 == 1:
+            target += 1
+        else:
+            target //= 2
+        ops += 1
+    return ops + (startValue - target)
+`,
+
+  'count-days-without-meetings': `def countDays(days, meetings):
+    sorted_meetings = sorted(meetings, key=lambda x: x[0])
+    merged = []
+    for item in sorted_meetings:
+        s, e = item[0], item[1]
+        if merged and s <= merged[-1][1] + 1:
+            merged[-1][1] = max(merged[-1][1], e)
+        else:
+            merged.append([s, e])
+    covered = sum(item[1] - item[0] + 1 for item in merged)
+    return days - covered
+`,
+
+  'string-compression-iii': `def compressedString(word):
+    result = []
+    i = 0
+    while i < len(word):
+        ch = word[i]
+        count = 0
+        while i < len(word) and word[i] == ch and count < 9:
+            count += 1
+            i += 1
+        result.append(str(count) + ch)
+    return ''.join(result)
+`,
+
+  'alternating-groups-ii': `def numberOfAlternatingGroups(colors, k):
+    n = len(colors)
+    if k == 1:
+        return n
+    doubled = colors + colors
+    count = 0
+    run = 1
+    for i in range(1, n + k - 1):
+        if doubled[i] != doubled[i - 1]:
+            run += 1
+        else:
+            run = 1
+        if i >= k - 1:
+            start = i - k + 1
+            if start < n and run >= k:
+                count += 1
+    return count
+`,
+
+  'count-of-connected-components': `def countComponents(n, edges):
+    parent = list(range(n))
+    rank = [0] * n
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    def union(x, y):
+        px, py = find(x), find(y)
+        if px == py:
+            return
+        if rank[px] < rank[py]:
+            parent[px] = py
+        elif rank[px] > rank[py]:
+            parent[py] = px
+        else:
+            parent[py] = px
+            rank[px] += 1
+    for u, v in edges:
+        union(u, v)
+    return len(set(find(i) for i in range(n)))
+`,
+
+  'longest-non-decreasing-subarray-from-two-arrays': `def maxNonDecreasingLength(nums1, nums2):
+    n = len(nums1)
+    if n == 0:
+        return 0
+    dp1 = dp2 = ans = 1
+    for i in range(1, n):
+        new1 = new2 = 1
+        if nums1[i - 1] <= nums1[i]:
+            new1 = max(new1, dp1 + 1)
+        if nums2[i - 1] <= nums1[i]:
+            new1 = max(new1, dp2 + 1)
+        if nums1[i - 1] <= nums2[i]:
+            new2 = max(new2, dp1 + 1)
+        if nums2[i - 1] <= nums2[i]:
+            new2 = max(new2, dp2 + 1)
+        dp1 = new1
+        dp2 = new2
+        ans = max(ans, dp1, dp2)
+    return ans
+`,
+
+  'report-spam-message': `def reportSpam(message, bannedWords):
+    banned = set(bannedWords)
+    count = sum(1 for word in message if word in banned)
+    return count >= 2
+`,
+
+  'distribute-elements-into-two-arrays-ii': `def resultArray(nums):
+    arr1 = [nums[0]]
+    arr2 = [nums[1]]
+    def greater_count(arr, val):
+        return sum(1 for x in arr if x > val)
+    for i in range(2, len(nums)):
+        gc1 = greater_count(arr1, nums[i])
+        gc2 = greater_count(arr2, nums[i])
+        if gc1 > gc2:
+            arr1.append(nums[i])
+        elif gc2 > gc1:
+            arr2.append(nums[i])
+        else:
+            arr1.append(nums[i])
+    return arr1 + arr2
+`,
+
+  'strange-printer-ii': `def isPrintable(targetGrid):
+    from collections import deque
+    m, n = len(targetGrid), len(targetGrid[0])
+    colors = set(targetGrid[r][c] for r in range(m) for c in range(n))
+    bbox = {}
+    for color in colors:
+        bbox[color] = [m, n, -1, -1]
+    for r in range(m):
+        for c in range(n):
+            color = targetGrid[r][c]
+            b = bbox[color]
+            b[0] = min(b[0], r)
+            b[1] = min(b[1], c)
+            b[2] = max(b[2], r)
+            b[3] = max(b[3], c)
+    graph = {color: set() for color in colors}
+    in_degree = {color: 0 for color in colors}
+    for color, (r1, c1, r2, c2) in bbox.items():
+        for r in range(r1, r2 + 1):
+            for c in range(c1, c2 + 1):
+                cell = targetGrid[r][c]
+                if cell != color and cell not in graph[color]:
+                    graph[color].add(cell)
+                    in_degree[cell] += 1
+    queue = deque(color for color in colors if in_degree[color] == 0)
+    processed = 0
+    while queue:
+        cur = queue.popleft()
+        processed += 1
+        for dep in graph[cur]:
+            in_degree[dep] -= 1
+            if in_degree[dep] == 0:
+                queue.append(dep)
+    return processed == len(colors)
+`,
+
+  'maximize-greatness-of-an-array': `def maximizeGreatness(nums):
+    a = sorted(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    i = 0
+    for j in range(len(a)):
+        if a[j] > a[i]:
+            i += 1
+    return i
+`,
+
+  'neighboring-bitwise-xor': `def doesValidArrayExist(derived):
+    d = list(int(x) for x in (derived.to_py() if hasattr(derived, 'to_py') else derived))
+    xor = 0
+    for v in d:
+        xor ^= v
+    return xor == 0
+`,
+
+  'minimize-xor': `def minimizeXor(num1, num2):
+    n1 = int(num1); n2 = int(num2)
+    k = bin(n2).count('1')
+    x = 0
+    for bit in range(30, -1, -1):
+        if k <= 0: break
+        if n1 & (1 << bit):
+            x |= (1 << bit); k -= 1
+    for bit in range(31):
+        if k <= 0: break
+        if not (x & (1 << bit)):
+            x |= (1 << bit); k -= 1
+    return x
+`,
+
+  'find-the-maximum-number-of-marked-indices': `def maxNumOfMarkedIndices(nums):
+    a = sorted(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    n = len(a); left = 0
+    for right in range(n // 2, n):
+        if 2 * a[left] <= a[right]:
+            left += 1
+    return left * 2
+`,
+
+  'minimize-maximum-of-array': `def minimizeArrayValue(nums):
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    total = 0; ans = 0
+    for i, v in enumerate(a):
+        total += v
+        ans = max(ans, -(-total // (i + 1)))  # ceiling division
+    return ans
+`,
+
+  'implement-strstr': `def strStr(haystack, needle):
+    if not needle:
+        return 0
+    for i in range(len(haystack) - len(needle) + 1):
+        if haystack[i:i + len(needle)] == needle:
+            return i
+    return -1
+`,
+
+  'repeated-string-match': `def repeatedStringMatch(a, b):
+    import math
+    min_reps = math.ceil(len(b) / len(a))
+    for k in range(min_reps, min_reps + 2):
+        if b in a * k:
+            return k
+    return -1
+`,
+
+  'pass-the-pillow': `def passThePillow(n, time):
+    cycle = 2 * (n - 1)
+    t = time % cycle
+    if t < n:
+        return t + 1
+    return cycle - t + 1
+`,
+
+  'number-of-changing-keys': `def countKeyChanges(s):
+    count = 0
+    for i in range(1, len(s)):
+        if s[i].lower() != s[i - 1].lower():
+            count += 1
+    return count
+`,
+
+  'maximum-repeating-substring': `def maxRepeating(sequence, word):
+    k = 0
+    while word * (k + 1) in sequence:
+        k += 1
+    return k
+`,
+
+  'delete-greatest-value-in-each-row': `def deleteGreatestValue(grid):
+    g = grid.to_py() if hasattr(grid, 'to_py') else grid
+    rows = [sorted(int(x) for x in row) for row in g]
+    return sum(max(rows[i][j] for i in range(len(rows))) for j in range(len(rows[0])))
+`,
+
+  'sort-the-jumbled-numbers': `def sortJumbled(mapping, nums):
+    mp = list(int(x) for x in (mapping.to_py() if hasattr(mapping, 'to_py') else mapping))
+    ns = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    def mapped(n):
+        s = str(n)
+        return int(''.join(str(mp[int(d)]) for d in s))
+    return sorted(ns, key=mapped)
+`,
+
+  'minimum-operations-to-make-array-alternating': `def minimumOperations(nums):
+    from collections import Counter
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    n = len(a)
+    even = Counter(a[i] for i in range(0, n, 2))
+    odd = Counter(a[i] for i in range(1, n, 2))
+    ec = (n + 1) // 2; oc = n // 2
+    def top2(c):
+        s = sorted(c.items(), key=lambda x: -x[1])
+        v1, f1 = s[0] if s else (-1, 0)
+        v2, f2 = s[1] if len(s) > 1 else (-1, 0)
+        return (v1, f1), (v2, f2)
+    (v1e, f1e), (_, f2e) = top2(even)
+    (v1o, f1o), (_, f2o) = top2(odd)
+    if v1e != v1o:
+        return (ec - f1e) + (oc - f1o)
+    return min((ec - f1e) + (oc - f2o), (ec - f2e) + (oc - f1o))
+`,
+
+  'maximum-total-importance-of-roads': `def maximumImportance(n, roads):
+    n = int(n)
+    r = roads.to_py() if hasattr(roads, 'to_py') else roads
+    degree = [0] * n
+    for edge in r:
+        u, v = int(edge[0]), int(edge[1])
+        degree[u] += 1; degree[v] += 1
+    degree.sort()
+    return sum(degree[i] * (i + 1) for i in range(n))
+`,
+
+  'smallest-subarrays-with-maximum-bitwise-or': `def smallestSubarrays(nums):
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    n = len(a)
+    nxt = [[n] * (n + 1) for _ in range(30)]
+    for b in range(30):
+        for i in range(n - 1, -1, -1):
+            nxt[b][i] = i if (a[i] >> b) & 1 else nxt[b][i + 1]
+    ans = []
+    for i in range(n):
+        max_right = i
+        for b in range(30):
+            if nxt[b][i] < n:
+                max_right = max(max_right, nxt[b][i])
+        ans.append(max_right - i + 1)
+    return ans
+`,
+
+  'arithmetic-slices-ii-subsequence': `def countArithmeticSlices(nums):
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    n = len(a)
+    dp = [{} for _ in range(n)]
+    count = 0
+    for i in range(n):
+        for j in range(i):
+            d = a[i] - a[j]
+            prev = dp[j].get(d, 0)
+            count += prev
+            dp[i][d] = dp[i].get(d, 0) + prev + 1
+    return count
+`,
+
+  'max-dot-product-of-two-subsequences': `def maxDotProduct(nums1, nums2):
+    a = list(int(x) for x in (nums1.to_py() if hasattr(nums1, 'to_py') else nums1))
+    b = list(int(x) for x in (nums2.to_py() if hasattr(nums2, 'to_py') else nums2))
+    m, n = len(a), len(b)
+    dp = [[float('-inf')] * n for _ in range(m)]
+    for i in range(m):
+        for j in range(n):
+            prod = a[i] * b[j]
+            dp[i][j] = prod
+            if i > 0 and j > 0 and dp[i-1][j-1] > 0:
+                dp[i][j] = max(dp[i][j], dp[i-1][j-1] + prod)
+            if i > 0:
+                dp[i][j] = max(dp[i][j], dp[i-1][j])
+            if j > 0:
+                dp[i][j] = max(dp[i][j], dp[i][j-1])
+    return dp[m-1][n-1]
+`,
+
+  'number-of-squareful-arrays': `def numSquarefulPerms(nums):
+    import math
+    a = sorted(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    n = len(a)
+    used = [False] * n
+    count = [0]
+    def is_square(x):
+        s = int(math.isqrt(x))
+        return s * s == x
+    def bt(path):
+        if len(path) == n:
+            count[0] += 1
+            return
+        for i in range(n):
+            if used[i]: continue
+            if i > 0 and a[i] == a[i-1] and not used[i-1]: continue
+            if path and not is_square(path[-1] + a[i]): continue
+            used[i] = True
+            path.append(a[i])
+            bt(path)
+            path.pop()
+            used[i] = False
+    bt([])
+    return count[0]
+`,
+
+  'selling-pieces-of-wood': `def sellingWood(m, n, prices):
+    m = int(m); n = int(n)
+    p = prices.to_py() if hasattr(prices, 'to_py') else prices
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for item in p:
+        h, w, price = int(item[0]), int(item[1]), int(item[2])
+        dp[h][w] = max(dp[h][w], price)
+    for h in range(1, m + 1):
+        for w in range(1, n + 1):
+            for i in range(1, h):
+                dp[h][w] = max(dp[h][w], dp[i][w] + dp[h-i][w])
+            for j in range(1, w):
+                dp[h][w] = max(dp[h][w], dp[h][j] + dp[h][w-j])
+    return dp[m][n]
+`,
+
+  'number-of-dice-rolls-with-target-sum': `def numRollsToTarget(n, k, target):
+    n = int(n); k = int(k); target = int(target)
+    MOD = 10**9 + 7
+    dp = [0] * (target + 1)
+    dp[0] = 1
+    for _ in range(n):
+        nxt = [0] * (target + 1)
+        for s in range(target + 1):
+            if dp[s] == 0: continue
+            for f in range(1, k + 1):
+                if s + f <= target:
+                    nxt[s + f] = (nxt[s + f] + dp[s]) % MOD
+        dp = nxt
+    return dp[target]
+`,
+
+  'count-all-valid-pickup-and-delivery-options': `def countOrders(n):
+    n = int(n)
+    MOD = 10**9 + 7
+    dp = 1
+    for i in range(2, n + 1):
+        dp = dp * i * (2 * i - 1) % MOD
+    return dp
+`,
+
+  'maximum-average-subarray-ii': `def findMaxAverage(nums, k):
+    a = list(float(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    k = int(k)
+    n = len(a)
+    lo, hi = min(a), max(a)
+    def check(mid):
+        adj = [v - mid for v in a]
+        window_sum = sum(adj[:k])
+        if window_sum >= 0:
+            return True
+        prev_sum = 0.0
+        min_prev_sum = 0.0
+        for i in range(k, n):
+            window_sum += adj[i]
+            prev_sum += adj[i - k]
+            min_prev_sum = min(min_prev_sum, prev_sum)
+            if window_sum - min_prev_sum >= 0:
+                return True
+        return False
+    for _ in range(100):
+        mid = (lo + hi) / 2
+        if check(mid):
+            lo = mid
+        else:
+            hi = mid
+    return round(lo, 5)
+`,
+
+  'convert-binary-linked-list': `def getDecimalValue(head):
+    result = 0
+    while head:
+        result = result * 2 + head.val
+        head = head.next
+    return result
+`,
+
+  'diagonal-traverse-ii': `def findDiagonalOrder(nums):
+    from collections import defaultdict
+    buckets = defaultdict(list)
+    for r, row in enumerate(nums):
+        for c, val in enumerate(row):
+            buckets[r + c].append(val)
+    result = []
+    for d in sorted(buckets):
+        result.extend(reversed(buckets[d]))
+    return result
+`,
+
+  'design-circular-deque': `def designCircularDeque(k, actions, values):
+    buf = [0] * k
+    state = [0, 0, 0]
+    results = []
+    for i, action in enumerate(actions):
+        front, rear, size = state
+        val = values[i]
+        if action == 'insertFront':
+            if size == k:
+                results.append(False)
+            else:
+                front = (front - 1 + k) % k
+                buf[front] = val
+                state[:] = [front, rear, size + 1]
+                results.append(True)
+        elif action == 'insertLast':
+            if size == k:
+                results.append(False)
+            else:
+                buf[rear] = val
+                rear = (rear + 1) % k
+                state[:] = [front, rear, size + 1]
+                results.append(True)
+        elif action == 'deleteFront':
+            if size == 0:
+                results.append(False)
+            else:
+                front = (front + 1) % k
+                state[:] = [front, rear, size - 1]
+                results.append(True)
+        elif action == 'deleteLast':
+            if size == 0:
+                results.append(False)
+            else:
+                rear = (rear - 1 + k) % k
+                state[:] = [front, rear, size - 1]
+                results.append(True)
+        elif action == 'getFront':
+            results.append(-1 if size == 0 else buf[front])
+        elif action == 'getRear':
+            results.append(-1 if size == 0 else buf[(rear - 1 + k) % k])
+        elif action == 'isEmpty':
+            results.append(size == 0)
+        elif action == 'isFull':
+            results.append(size == k)
+    return results
+`,
+
+  'beautiful-towers-i': `def maximumSumOfHeights(maxHeights):
+    n = len(maxHeights)
+    best = 0
+    for p in range(n):
+        h = [0] * n
+        h[p] = maxHeights[p]
+        for i in range(p - 1, -1, -1):
+            h[i] = min(maxHeights[i], h[i + 1])
+        for i in range(p + 1, n):
+            h[i] = min(maxHeights[i], h[i - 1])
+        best = max(best, sum(h))
+    return best
+`,
+
+  'maximum-tastiness-candy-basket': `def maximumTastiness(price, k):
+    price = sorted(price)
+    n = len(price)
+    def can_pick(gap):
+        count, last = 1, price[0]
+        for i in range(1, n):
+            if price[i] - last >= gap:
+                count += 1
+                last = price[i]
+                if count >= k:
+                    return True
+        return count >= k
+    lo, hi = 0, (price[-1] - price[0]) // (k - 1) if k > 1 else 0
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_pick(mid):
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'shortest-subarray-sum-at-least-k': `def shortestSubarray(nums, k):
+    from collections import deque
+    n = len(nums)
+    P = [0] * (n + 1)
+    for i in range(n):
+        P[i + 1] = P[i] + nums[i]
+    dq = deque()
+    ans = float('inf')
+    for r in range(n + 1):
+        while dq and P[r] - P[dq[0]] >= k:
+            ans = min(ans, r - dq.popleft())
+        while dq and P[dq[-1]] >= P[r]:
+            dq.pop()
+        dq.append(r)
+    return ans if ans != float('inf') else -1
+`,
+
+  'substring-with-concatenation-of-all-words': `def findSubstring(s, words):
+    from collections import Counter
+    if not s or not words:
+        return []
+    word_len = len(words[0])
+    num_words = len(words)
+    freq = Counter(words)
+    result = []
+    for offset in range(word_len):
+        cur = Counter()
+        count = 0
+        left = offset
+        right = offset
+        while right + word_len <= len(s):
+            word = s[right:right + word_len]
+            if word in freq:
+                cur[word] += 1
+                count += 1
+                while cur[word] > freq[word]:
+                    lw = s[left:left + word_len]
+                    cur[lw] -= 1
+                    count -= 1
+                    left += word_len
+                if count == num_words:
+                    result.append(left)
+            else:
+                cur.clear()
+                count = 0
+                left = right + word_len
+            right += word_len
+    return sorted(result)
+`,
+
+  'minimum-people-to-teach': `def minimumTeachings(n, languages, friendships):
+    lang_sets = [set(l) for l in languages]
+    need_help = set()
+    for u, v in friendships:
+        a, b = u - 1, v - 1
+        if not lang_sets[a] & lang_sets[b]:
+            need_help.add(a)
+            need_help.add(b)
+    all_langs = set()
+    for ls in lang_sets:
+        all_langs |= ls
+    best = len(need_help)
+    for lang in all_langs:
+        cost = sum(1 for u in need_help if lang not in lang_sets[u])
+        best = min(best, cost)
+    return best
+`,
+
+  'punishment-number-of-integer': `def punishmentNumber(n):
+    def can_partition(s, target):
+        if not s and target == 0:
+            return True
+        if target < 0:
+            return False
+        for length in range(1, len(s) + 1):
+            part = int(s[:length])
+            if part > target:
+                break
+            if can_partition(s[length:], target - part):
+                return True
+        return False
+    total = 0
+    for i in range(1, n + 1):
+        if can_partition(str(i * i), i):
+            total += i * i
+    return total
+`,
+
+  'minimum-cost-to-separate-sentence-into-rows': `def minimumCost(sentence, k):
+    words = sentence.split()
+    n = len(words)
+    lens = [len(w) for w in words]
+    INF = float('inf')
+    dp = [INF] * (n + 1)
+    dp[n] = 0
+    for i in range(n - 1, -1, -1):
+        line_len = 0
+        for j in range(i, n):
+            if j > i:
+                line_len += 1
+            line_len += lens[j]
+            if line_len > k:
+                break
+            slack = k - line_len
+            cost = 0 if j == n - 1 else slack * slack
+            dp[i] = min(dp[i], cost + dp[j + 1])
+    return dp[0]
+`,
+
+  'maximum-running-time-of-n-computers': `def maxRunTime(n, batteries):
+    total = sum(batteries)
+    lo, hi = 0, total // n
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if sum(min(b, mid) for b in batteries) >= mid * n:
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'count-strictly-increasing-subarrays': `def countSubarrays(nums):
+    if not nums:
+        return 0
+    total = run = 1
+    for i in range(1, len(nums)):
+        if nums[i] > nums[i - 1]:
+            run += 1
+        else:
+            run = 1
+        total += run
+    return total
+`,
+
+  'minimum-score-path-between-two-cities': `def minScore(n, roads):
+    from collections import deque
+    adj = [[] for _ in range(n + 1)]
+    for a, b, d in roads:
+        adj[a].append((b, d))
+        adj[b].append((a, d))
+    visited = set([1])
+    queue = deque([1])
+    min_dist = float('inf')
+    while queue:
+        node = queue.popleft()
+        for nb, dist in adj[node]:
+            min_dist = min(min_dist, dist)
+            if nb not in visited:
+                visited.add(nb)
+                queue.append(nb)
+    return min_dist
+`,
+
+  'split-message-based-on-limit': `def splitMessage(message, limit):
+    for n in range(1, len(message) + 1):
+        n_digits = len(str(n))
+        total = 0
+        valid = True
+        for i in range(1, n + 1):
+            i_digits = len(str(i))
+            avail = limit - i_digits - n_digits - 3
+            if avail <= 0:
+                valid = False
+                break
+            total += avail
+        if not valid:
+            continue
+        if total >= len(message):
+            parts = []
+            idx = 0
+            for i in range(1, n + 1):
+                i_digits = len(str(i))
+                n_digits2 = len(str(n))
+                avail = limit - i_digits - n_digits2 - 3
+                parts.append(message[idx:idx + avail] + f'<{i}/{n}>')
+                idx += avail
+            return parts
+    return []
+`,
+
+  'longest-word-in-dict-deleting': `def findLongestWord(s, dictionary):
+    def is_subseq(t):
+        j = 0
+        for c in s:
+            if j < len(t) and c == t[j]:
+                j += 1
+        return j == len(t)
+    best = ''
+    for word in dictionary:
+        if is_subseq(word):
+            if len(word) > len(best) or (len(word) == len(best) and word < best):
+                best = word
+    return best
+`,
+
+  'longest-even-odd-subarray-with-threshold': `def longestAlternatingSubarray(nums, threshold):
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    t = int(threshold)
+    n = len(a); ans = 0; i = 0
+    while i < n:
+        if a[i] % 2 != 0 or a[i] > t:
+            i += 1; continue
+        start = i; i += 1
+        while i < n and a[i] <= t and a[i] % 2 == (i - start) % 2:
+            i += 1
+        ans = max(ans, i - start)
+    return ans
+`,
+
+  'find-the-value-of-the-partition': `def findValueOfPartition(nums):
+    a = sorted(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    return min(a[i + 1] - a[i] for i in range(len(a) - 1))
+`,
+
+  'clear-digits': `def clearDigits(s):
+    stack = []
+    for c in (s if isinstance(s, str) else str(s)):
+        if c.isdigit():
+            if stack:
+                stack.pop()
+        else:
+            stack.append(c)
+    return ''.join(stack)
+`,
+
+  // batch 57 (remote)
+  'sum-of-digits-in-base-k': `def sumBase(n, k):
+    s = 0
+    while n > 0:
+        s += n % k
+        n //= k
+    return s
+`,
+
+  'count-symmetric-integers': `def countSymmetricIntegers(low, high):
+    count = 0
+    for x in range(int(low), int(high) + 1):
+        s = str(x)
+        if len(s) % 2 != 0:
+            continue
+        half = len(s) // 2
+        if sum(int(c) for c in s[:half]) == sum(int(c) for c in s[half:]):
+            count += 1
+    return count
+`,
+
+  'minimum-number-of-pushes-to-type-word-i': `def minimumPushes(word):
+    n = len(word)
+    total = 0
+    for i in range(n):
+        total += i // 8 + 1
+    return total
+`,
+
+  'divide-array-into-groups-of-size-k': `def divideArray(nums, k):
+    nums = sorted(nums)
+    for i in range(0, len(nums), k):
+        chunk = nums[i:i + k]
+        if len(set(chunk)) != k:
+            return []
+    return [nums[i:i + k] for i in range(0, len(nums), k)]
+`,
+
+  'count-subarrays-of-length-three-with-a-condition': `def countSubarrays(nums):
+    count = 0
+    for i in range(len(nums) - 2):
+        if 2 * (nums[i] + nums[i + 2]) == nums[i + 1]:
+            count += 1
+    return count
+`,
+
+  'minimum-operations-to-make-array-divisible-by-three': `def minimumOperations(nums):
+    ops = 0
+    for n in nums:
+        r = n % 3
+        ops += min(r, 3 - r)
+    return ops
+`,
+
+  'find-the-punishment-number-of-integers': `def punishmentNumber(n):
+    def can_partition(s, target):
+        if target < 0:
+            return False
+        if s == '' and target == 0:
+            return True
+        for i in range(1, len(s) + 1):
+            if can_partition(s[i:], target - int(s[:i])):
+                return True
+        return False
+    total = 0
+    for i in range(1, n + 1):
+        if can_partition(str(i * i), i):
+            total += i * i
+    return total
+`,
+
+  'minimum-additions-to-make-valid-string': `def addMinimum(word):
+    i = 0
+    groups = 0
+    while i < len(word):
+        groups += 1
+        if i < len(word) and word[i] == 'a':
+            i += 1
+        if i < len(word) and word[i] == 'b':
+            i += 1
+        if i < len(word) and word[i] == 'c':
+            i += 1
+    return groups * 3 - len(word)
+`,
+
+  'maximum-total-reward-using-operations-i': `def maxTotalReward(rewardValues):
+    vals = sorted(set(rewardValues))
+    max_val = vals[-1]
+    dp = [False] * (2 * max_val)
+    dp[0] = True
+    for v in vals:
+        for j in range(2 * max_val - 1, -1, -1):
+            if dp[j] and j < v:
+                dp[j + v] = True
+    for j in range(2 * max_val - 1, -1, -1):
+        if dp[j]:
+            return j
+    return 0
+`,
+
+  'minimum-array-end': `def minEnd(n, x):
+    result = x
+    offset = n - 1
+    bit = 0
+    while offset > 0:
+        while (result >> bit) & 1:
+            bit += 1
+        if offset & 1:
+            result |= (1 << bit)
+        offset >>= 1
+        bit += 1
+    return result
+`,
+
+  'maximum-number-of-moves-in-a-grid': `def maxMoves(grid):
+    m = len(grid)
+    n = len(grid[0])
+    reachable = [True] * m
+    ans = 0
+    for col in range(n - 1):
+        next_reachable = [False] * m
+        any_next = False
+        for row in range(m):
+            if not reachable[row]:
+                continue
+            for dr in [-1, 0, 1]:
+                nr = row + dr
+                if 0 <= nr < m and grid[nr][col + 1] > grid[row][col]:
+                    next_reachable[nr] = True
+                    any_next = True
+        if not any_next:
+            break
+        reachable = next_reachable
+        ans = col + 1
+    return ans
+`,
+
+  'minimum-cost-to-convert-string-i': `def minimumCost(source, target, original, changed, cost):
+    INF = float('inf')
+    dist = [[INF] * 26 for _ in range(26)]
+    for i in range(26):
+        dist[i][i] = 0
+    for orig, chng, c in zip(original, changed, cost):
+        u = ord(orig) - ord('a')
+        v = ord(chng) - ord('a')
+        dist[u][v] = min(dist[u][v], c)
+    for k in range(26):
+        for i in range(26):
+            for j in range(26):
+                if dist[i][k] + dist[k][j] < dist[i][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+    total = 0
+    for s, t in zip(source, target):
+        u = ord(s) - ord('a')
+        v = ord(t) - ord('a')
+        if u == v:
+            continue
+        if dist[u][v] == INF:
+            return -1
+        total += dist[u][v]
+    return total
+`,
+
+  'next-closest-time': `def nextClosestTime(time):
+    digits = set([time[0], time[1], time[3], time[4]])
+    d = list(digits)
+    hh, mm = int(time[:2]), int(time[3:])
+    cur = hh * 60 + mm
+    best_diff = float('inf')
+    best_time = time
+    for a in d:
+        for b in d:
+            for c in d:
+                for e in d:
+                    h = int(a) * 10 + int(b)
+                    m = int(c) * 10 + int(e)
+                    if h >= 24 or m >= 60:
+                        continue
+                    t = h * 60 + m
+                    diff = (t - cur + 1440) % 1440
+                    if diff == 0:
+                        continue
+                    if diff < best_diff:
+                        best_diff = diff
+                        best_time = f"{a}{b}:{c}{e}"
+    return best_time
+`,
+
+  'employee-free-time': `def employeeFreeTime(schedule):
+    intervals = []
+    for emp in schedule:
+        for iv in emp:
+            intervals.append(iv[:])
+    intervals.sort(key=lambda x: (x[0], x[1]))
+    merged = []
+    for iv in intervals:
+        if not merged or merged[-1][1] < iv[0]:
+            merged.append(iv[:])
+        else:
+            merged[-1][1] = max(merged[-1][1], iv[1])
+    gaps = []
+    for i in range(1, len(merged)):
+        gaps.append([merged[i-1][1], merged[i][0]])
+    return gaps
+`,
+
+  'maximum-sum-of-3-non-overlapping-subarrays': `def maxSumOfThreeSubarrays(nums, k):
+    n = len(nums)
+    w_len = n - k + 1
+    w = [0] * w_len
+    s = sum(nums[:k])
+    w[0] = s
+    for i in range(1, w_len):
+        s += nums[i + k - 1] - nums[i - 1]
+        w[i] = s
+    left = [0] * w_len
+    best = 0
+    for i in range(w_len):
+        if w[i] > w[best]:
+            best = i
+        left[i] = best
+    right = [0] * w_len
+    best = w_len - 1
+    for i in range(w_len - 1, -1, -1):
+        if w[i] >= w[best]:
+            best = i
+        right[i] = best
+    ans = [-1, -1, -1]
+    max_sum = 0
+    for j in range(k, w_len - k):
+        l = left[j - k]
+        r = right[j + k]
+        total = w[l] + w[j] + w[r]
+        if total > max_sum:
+            max_sum = total
+            ans = [l, j, r]
+    return ans
+`,
+
+  'domino-tromino-tiling': `def numTilings(n):
+    MOD = 10**9 + 7
+    if n == 1:
+        return 1
+    if n == 2:
+        return 2
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    dp[1] = 1
+    dp[2] = 2
+    for i in range(3, n + 1):
+        dp[i] = (2 * dp[i-1] + dp[i-3]) % MOD
+    return dp[n]
+`,
+
+  'split-array-with-same-average': `def splitArraySameAverage(nums):
+    from collections import defaultdict
+    n = len(nums)
+    total = sum(nums)
+    half = n // 2
+    def build_sets(arr):
+        sets = defaultdict(set)
+        sets[0].add(0)
+        for num in arr:
+            for cnt in sorted(sets.keys(), reverse=True):
+                for s in sets[cnt]:
+                    sets[cnt + 1].add(s + num)
+        return sets
+    left_sets = build_sets(nums[:half])
+    right_sets = build_sets(nums[half:])
+    right_len = n - half
+    for k in range(1, n):
+        if (total * k) % n != 0:
+            continue
+        target = total * k // n
+        for kL in range(max(0, k - right_len), min(k, half) + 1):
+            kR = k - kL
+            if kL == half and kR == right_len:
+                continue
+            if kL not in left_sets or kR not in right_sets:
+                continue
+            for ls in left_sets[kL]:
+                if target - ls in right_sets[kR]:
+                    return True
+    return False
+`,
+
+  'ways-to-split-array-into-three-subarrays': `def waysToSplit(nums):
+    import bisect
+    MOD = 10**9 + 7
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + nums[i]
+    total = prefix[n]
+    ans = 0
+    for i in range(n - 2):
+        left_sum = prefix[i + 1]
+        if left_sum * 3 > total:
+            break
+        j_min_val = 2 * left_sum
+        j_min = bisect.bisect_left(prefix, j_min_val, i + 2, n) - 1
+        j_max_val = (total + prefix[i + 1]) // 2
+        j_max = bisect.bisect_right(prefix, j_max_val, i + 2, n) - 2
+        if j_min <= j_max:
+            ans = (ans + j_max - j_min + 1) % MOD
+    return ans
+`,
+
+  // batch 57 (local)
+  'minimum-number-of-moves-to-seat': `def minMovesToSeat(seats, students):
+    s = sorted(int(x) for x in (seats.to_py() if hasattr(seats, 'to_py') else seats))
+    t = sorted(int(x) for x in (students.to_py() if hasattr(students, 'to_py') else students))
+    return sum(abs(a - b) for a, b in zip(s, t))
+`,
+
+  'number-of-senior-citizens': `def countSeniors(details):
+    lst = list(details.to_py() if hasattr(details, 'to_py') else details)
+    return sum(1 for d in lst if int(d[11:13]) > 60)
+`,
+
+  'maximum-number-of-groups-with-increasing-length': `def maximumGroups(usageLimits):
+    limits = sorted(int(x) for x in (usageLimits.to_py() if hasattr(usageLimits, 'to_py') else usageLimits))
+    n = len(limits)
+    def can_form(m):
+        return sum(min(x, m) for x in limits) >= m * (m + 1) // 2
+    lo, hi, ans = 1, n, 0
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if can_form(mid):
+            ans = mid
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return ans
+`,
+
+  'make-integer-beautiful': `def makeIntegerBeautiful(n, target):
+    def digit_sum(x):
+        return sum(int(c) for c in str(x))
+    x = int(n)
+    t = int(target)
+    ops = 0
+    pow10 = 1
+    while digit_sum(x) > t:
+        rem = x % (pow10 * 10)
+        add = 0 if rem == 0 else pow10 * 10 - rem
+        ops += add
+        x += add
+        pow10 *= 10
+    return ops
+`,
+
+  // batch 58 (local)
+  'minimum-time-to-buy-tickets': `def timeRequiredToBuy(tickets, k):
+    t = list(int(x) for x in (tickets.to_py() if hasattr(tickets, 'to_py') else tickets))
+    ki = int(k)
+    time = 0
+    for i, val in enumerate(t):
+        if i <= ki:
+            time += min(val, t[ki])
+        else:
+            time += min(val, t[ki] - 1)
+    return time
+`,
+
+  'vowels-of-all-substrings': `def countVowels(word):
+    w = str(word)
+    n = len(w)
+    MOD = 10**9 + 7
+    vowels = set('aeiou')
+    ans = 0
+    for i, c in enumerate(w):
+        if c in vowels:
+            ans = (ans + (i + 1) * (n - i)) % MOD
+    return ans
+`,
+
+  'removing-minimum-number-of-magic-beans': `def minimumRemoval(beans):
+    b = sorted(int(x) for x in (beans.to_py() if hasattr(beans, 'to_py') else beans))
+    n = len(b)
+    total = sum(b)
+    ans = total
+    for i in range(n):
+        cost = total - b[i] * (n - i)
+        if cost < ans:
+            ans = cost
+    return ans
+`,
+
+  'find-the-longest-equal-subarray': `def longestEqualSubarray(nums, k):
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    ki = int(k)
+    from collections import defaultdict
+    positions = defaultdict(list)
+    for i, v in enumerate(a):
+        positions[v].append(i)
+    ans = 0
+    for pos in positions.values():
+        left = 0
+        for right in range(len(pos)):
+            while pos[right] - pos[left] - (right - left) > ki:
+                left += 1
+            ans = max(ans, right - left + 1)
+    return ans
+`,
+
+  'minimum-equal-sum-of-two-arrays-after-replacing-zeros': `def minSum(nums1, nums2):
+    a = list(int(x) for x in (nums1.to_py() if hasattr(nums1, 'to_py') else nums1))
+    b = list(int(x) for x in (nums2.to_py() if hasattr(nums2, 'to_py') else nums2))
+    zeros1 = a.count(0)
+    zeros2 = b.count(0)
+    min1 = sum(a) + zeros1
+    min2 = sum(b) + zeros2
+    if zeros1 == 0 and min1 < min2:
+        return -1
+    if zeros2 == 0 and min2 < min1:
+        return -1
+    return max(min1, min2)
+`,
+
+  // batch 62 (local)
+  'find-the-minimum-number-of-fibonacci-numbers-whose-sum-is-k': `def findMinFibonacciNumbers(k):
+    ki = int(k)
+    fibs = [1, 1]
+    while fibs[-1] < ki:
+        fibs.append(fibs[-1] + fibs[-2])
+    count = 0
+    while ki > 0:
+        i = len(fibs) - 1
+        while fibs[i] > ki:
+            i -= 1
+        ki -= fibs[i]
+        count += 1
+    return count
+`,
+
+  'count-pairs-of-similar-strings': `def similarPairs(words):
+    words = words.to_py() if hasattr(words, 'to_py') else words
+    from collections import Counter
+    freq = Counter(''.join(sorted(set(w))) for w in words)
+    return sum(c * (c - 1) // 2 for c in freq.values())
+`,
+
+  'maximum-difference-between-increasing-elements': `def maximumDifference(nums):
+    nums = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    min_so_far = nums[0]
+    max_diff = -1
+    for i in range(1, len(nums)):
+        if nums[i] > min_so_far:
+            max_diff = max(max_diff, nums[i] - min_so_far)
+        else:
+            min_so_far = min(min_so_far, nums[i])
+    return max_diff
+`,
+
+  'longest-path-with-different-adjacent-characters': `def longestPath(parent, s):
+    parent = list(int(x) for x in (parent.to_py() if hasattr(parent, 'to_py') else parent))
+    n = len(parent)
+    children = [[] for _ in range(n)]
+    for i in range(1, n):
+        children[parent[i]].append(i)
+    ans = [1]
+    def dfs(u):
+        top1, top2 = 0, 0
+        for v in children[u]:
+            length = dfs(v)
+            if s[v] == s[u]:
+                continue
+            if length > top1:
+                top2, top1 = top1, length
+            elif length > top2:
+                top2 = length
+        ans[0] = max(ans[0], 1 + top1 + top2)
+        return 1 + top1
+    dfs(0)
+    return ans[0]
+`,
+
+  'increment-submatrices-by-one': `def rangeAddQueries(n, queries):
+    ni = int(n)
+    qs = [(int(q[0]), int(q[1]), int(q[2]), int(q[3])) for q in (queries.to_py() if hasattr(queries, 'to_py') else queries)]
+    d = [[0] * (ni + 1) for _ in range(ni + 1)]
+    for r1, c1, r2, c2 in qs:
+        d[r1][c1] += 1
+        if c2 + 1 <= ni: d[r1][c2 + 1] -= 1
+        if r2 + 1 <= ni: d[r2 + 1][c1] -= 1
+        if r2 + 1 <= ni and c2 + 1 <= ni: d[r2 + 1][c2 + 1] += 1
+    mat = [[0] * ni for _ in range(ni)]
+    for r in range(ni):
+        for c in range(ni):
+            d[r][c] += (d[r-1][c] if r > 0 else 0) + (d[r][c-1] if c > 0 else 0) - (d[r-1][c-1] if r > 0 and c > 0 else 0)
+            mat[r][c] = d[r][c]
+    return mat
+`,
+
+  // batch 61 (local)
+  'check-if-every-row-and-column-contains-all-numbers': `def checkValid(matrix):
+    matrix = matrix.to_py() if hasattr(matrix, 'to_py') else matrix
+    grid = [list(int(x) for x in (row.to_py() if hasattr(row, 'to_py') else row)) for row in matrix]
+    n = len(grid)
+    for row in grid:
+        if len(set(row)) != n:
+            return False
+    for c in range(n):
+        if len(set(grid[r][c] for r in range(n))) != n:
+            return False
+    return True
+`,
+
+  'maximum-strong-pair-xor-i': `def maximumStrongPairXor(nums):
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    max_xor = 0
+    for i in range(len(a)):
+        for j in range(i, len(a)):
+            if abs(a[i] - a[j]) <= min(a[i], a[j]):
+                max_xor = max(max_xor, a[i] ^ a[j])
+    return max_xor
+`,
+
+  'extra-characters-in-a-string': `def minExtraChar(s, dictionary):
+    d = set(dictionary.to_py() if hasattr(dictionary, 'to_py') else dictionary)
+    n = len(s)
+    dp = [0] * (n + 1)
+    for i in range(1, n + 1):
+        dp[i] = dp[i - 1] + 1
+        for j in range(i):
+            if s[j:i] in d:
+                dp[i] = min(dp[i], dp[j])
+    return dp[n]
+`,
+
+  'kth-largest-sum-in-a-binary-tree': `def kthLargestLevelSum(root, k):
+    from collections import deque
+    ki = int(k)
+    sums = []
+    if root is None:
+        return -1
+    q = deque([root])
+    while q:
+        level_sum = 0
+        for _ in range(len(q)):
+            node = q.popleft()
+            level_sum += int(node.val)
+            if node.left: q.append(node.left)
+            if node.right: q.append(node.right)
+        sums.append(level_sum)
+    if ki > len(sums):
+        return -1
+    sums.sort(reverse=True)
+    return sums[ki - 1]
+`,
+
+  'sum-of-matrix-after-queries': `def matrixSumQueries(n, queries):
+    ni = int(n)
+    qs = [(int(q[0]), int(q[1]), int(q[2])) for q in (queries.to_py() if hasattr(queries, 'to_py') else queries)]
+    set_rows, set_cols = set(), set()
+    total = 0
+    for t, idx, val in reversed(qs):
+        if t == 0:
+            if idx not in set_rows:
+                total += val * (ni - len(set_cols))
+                set_rows.add(idx)
+        else:
+            if idx not in set_cols:
+                total += val * (ni - len(set_rows))
+                set_cols.add(idx)
+    return total
+`,
+
+  // batch 59 (local)
+  'count-substrings-starting-and-ending-with-given-character': `def countSubstrings(s, c):
+    cnt = s.count(c)
+    return cnt + cnt * (cnt - 1) // 2
+`,
+
+  'minimum-number-of-changes-to-make-binary-string-beautiful': `def minChanges(s):
+    cnt = 0
+    for i in range(0, len(s), 2):
+        if s[i] != s[i + 1]:
+            cnt += 1
+    return cnt
+`,
+
+  'distribute-money-to-maximum-children': `def distMoney(money, children):
+    m, n = int(money), int(children)
+    if m < n:
+        return -1
+    rem = m - n
+    give8 = min(rem // 7, n)
+    if give8 == n and m != 8 * n:
+        give8 -= 1
+    if n - give8 == 1 and m - 8 * give8 == 4:
+        give8 -= 1
+    return give8
+`,
+
+  'check-if-strings-can-be-made-equal-with-operations': `def checkStrings(s1, s2):
+    def sort_parity(s, parity):
+        return ''.join(sorted(s[i] for i in range(len(s)) if i % 2 == parity))
+    return sort_parity(s1, 0) == sort_parity(s2, 0) and sort_parity(s1, 1) == sort_parity(s2, 1)
+`,
+
+  'count-days-spent-together': `def countDaysTogether(arriveAlice, leaveAlice, arriveBob, leaveBob):
+    months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    def day_of_year(d):
+        mm, dd = int(d[:2]), int(d[3:])
+        return sum(months[:mm - 1]) + dd
+    start = max(day_of_year(arriveAlice), day_of_year(arriveBob))
+    end = min(day_of_year(leaveAlice), day_of_year(leaveBob))
+    return max(0, end - start + 1)
+`,
+
+  // batch 60
+  'minimum-number-of-operations-to-make-array-continuous': `def minOperations(nums):
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    n = len(a)
+    unique = sorted(set(a))
+    max_fit = 0
+    right = 0
+    for left in range(len(unique)):
+        while right < len(unique) and unique[right] <= unique[left] + n - 1:
+            right += 1
+        max_fit = max(max_fit, right - left)
+    return n - max_fit
+`,
+
+  'pacific-atlantic-water-flow': `def pacificAtlantic(heights):
+    from collections import deque
+    h = heights.to_py() if hasattr(heights, 'to_py') else heights
+    grid = [[list(row.to_py() if hasattr(row, 'to_py') else row) for row in h]]
+    grid = [list(int(x) for x in (row.to_py() if hasattr(row, 'to_py') else row)) for row in h]
+    m, n = len(grid), len(grid[0])
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    def bfs(starts):
+        visited = [[False]*n for _ in range(m)]
+        q = deque(starts)
+        for r, c in starts:
+            visited[r][c] = True
+        while q:
+            r, c = q.popleft()
+            for dr, dc in dirs:
+                nr, nc = r+dr, c+dc
+                if 0 <= nr < m and 0 <= nc < n and not visited[nr][nc] and grid[nr][nc] >= grid[r][c]:
+                    visited[nr][nc] = True
+                    q.append((nr, nc))
+        return visited
+    pac_starts = [(r, 0) for r in range(m)] + [(0, c) for c in range(n)]
+    atl_starts = [(r, n-1) for r in range(m)] + [(m-1, c) for c in range(n)]
+    pac = bfs(pac_starts)
+    atl = bfs(atl_starts)
+    return [[r, c] for r in range(m) for c in range(n) if pac[r][c] and atl[r][c]]
+`,
+
+  'critical-connections-in-a-network': `def criticalConnections(n, connections):
+    ni = int(n)
+    conns = [(int(u), int(v)) for u, v in (connections.to_py() if hasattr(connections, 'to_py') else connections)]
+    from collections import defaultdict
+    adj = defaultdict(list)
+    for u, v in conns:
+        adj[u].append(v)
+        adj[v].append(u)
+    disc = [-1] * ni
+    low = [0] * ni
+    bridges = []
+    timer = [0]
+    def dfs(u, parent):
+        disc[u] = low[u] = timer[0]
+        timer[0] += 1
+        for v in adj[u]:
+            if disc[v] == -1:
+                dfs(v, u)
+                low[u] = min(low[u], low[v])
+                if low[v] > disc[u]:
+                    bridges.append([u, v])
+            elif v != parent:
+                low[u] = min(low[u], disc[v])
+    import sys
+    sys.setrecursionlimit(200000)
+    for i in range(ni):
+        if disc[i] == -1:
+            dfs(i, -1)
+    return sorted(bridges)
+`,
+
+  'minimum-cost-to-cut-a-stick': `def minCost(n, cuts):
+    ni = int(n)
+    cuts_list = sorted(int(x) for x in (cuts.to_py() if hasattr(cuts, 'to_py') else cuts))
+    c = [0] + cuts_list + [ni]
+    length = len(c)
+    dp = [[0]*length for _ in range(length)]
+    for gap in range(2, length):
+        for i in range(length - gap):
+            j = i + gap
+            dp[i][j] = float('inf')
+            for k in range(i+1, j):
+                cost = dp[i][k] + dp[k][j] + c[j] - c[i]
+                if cost < dp[i][j]:
+                    dp[i][j] = cost
+    return dp[0][length-1]
+`,
+
+  'largest-rectangle-in-histogram': `def largestRectangleArea(heights):
+    h = list(int(x) for x in (heights.to_py() if hasattr(heights, 'to_py') else heights))
+    stack = []
+    max_area = 0
+    h.append(0)
+    for i in range(len(h)):
+        while stack and h[stack[-1]] > h[i]:
+            height = h[stack.pop()]
+            width = i if not stack else i - stack[-1] - 1
+            max_area = max(max_area, height * width)
+        stack.append(i)
+    return max_area
+`,
+
+  'k-closest-points-to-origin': `def kClosest(points, k):
+    pts = points.to_py() if hasattr(points, 'to_py') else list(points)
+    ki = int(k)
+    pts_list = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in pts]
+    pts_list.sort(key=lambda p: p[0]**2 + p[1]**2)
+    return pts_list[:ki]
+`,
+
+  'find-all-anagrams-in-a-string': `def findAnagrams(s, p):
+    s = str(s)
+    p = str(p)
+    result = []
+    if len(p) > len(s):
+        return result
+    p_count = [0] * 26
+    w_count = [0] * 26
+    for c in p:
+        p_count[ord(c) - ord('a')] += 1
+    for c in s[:len(p)]:
+        w_count[ord(c) - ord('a')] += 1
+    if p_count == w_count:
+        result.append(0)
+    for i in range(len(p), len(s)):
+        w_count[ord(s[i]) - ord('a')] += 1
+        w_count[ord(s[i - len(p)]) - ord('a')] -= 1
+        if p_count == w_count:
+            result.append(i - len(p) + 1)
+    return result
+`,
+
+  'longest-palindrome': `def longestPalindrome(s):
+    s = str(s)
+    from collections import Counter
+    freq = Counter(s)
+    length = 0
+    has_odd = False
+    for count in freq.values():
+        length += (count // 2) * 2
+        if count % 2 == 1:
+            has_odd = True
+    return length + 1 if has_odd else length
+`,
+
+  'reverse-words-in-a-string': `def reverseWords(s):
+    s = str(s)
+    return ' '.join(reversed(s.split()))
+`,
+
+  'count-primes': `def countPrimes(n):
+    n = int(n)
+    if n < 2:
+        return 0
+    is_prime = [True] * n
+    is_prime[0] = is_prime[1] = False
+    i = 2
+    while i * i < n:
+        if is_prime[i]:
+            for j in range(i * i, n, i):
+                is_prime[j] = False
+        i += 1
+    return sum(is_prime)
+`,
+
+  'max-consecutive-ones-ii': `def findMaxConsecutiveOnes(nums):
+    left = 0; last_zero = -1; ans = 0
+    for right, v in enumerate(nums):
+        if v == 0:
+            left = last_zero + 1
+            last_zero = right
+        ans = max(ans, right - left + 1)
+    return ans
+`,
+
+  'length-of-longest-fibonacci-subsequence': `def lenLongestFibSubseq(arr):
+    idx = {v: i for i, v in enumerate(arr)}
+    n = len(arr)
+    dp = [[2] * n for _ in range(n)]
+    ans = 0
+    for j in range(n):
+        for i in range(j):
+            diff = arr[j] - arr[i]
+            if diff < arr[i] and diff in idx:
+                k = idx[diff]
+                dp[i][j] = dp[k][i] + 1
+                ans = max(ans, dp[i][j])
+    return ans if ans >= 3 else 0
+`,
+
+  'detect-squares': `def detect_squares_sim(ops, args_list):
+    from collections import defaultdict
+    point_count = defaultdict(int)
+    x_to_ys = defaultdict(set)
+    result = [None]
+    def add(p):
+        key = (p[0], p[1])
+        point_count[key] += 1
+        x_to_ys[p[0]].add(p[1])
+    def count(p):
+        px, py = p[0], p[1]
+        res = 0
+        for y2 in x_to_ys[px]:
+            if y2 == py:
+                continue
+            side = y2 - py
+            for x2 in [px + side, px - side]:
+                c1 = point_count[(x2, py)]
+                c2 = point_count[(x2, y2)]
+                c3 = point_count[(px, y2)]
+                res += c1 * c2 * c3
+        return res
+    for i in range(1, len(ops)):
+        if ops[i] == 'add':
+            add(args_list[i])
+            result.append(None)
+        else:
+            result.append(count(args_list[i]))
+    return result
+`,
+
+  'grid-game': `def gridGame(grid):
+    n = len(grid[0])
+    top_sum = sum(grid[0])
+    top_prefix = 0; bottom_prefix = 0; ans = float('inf')
+    for k in range(n):
+        top_prefix += grid[0][k]
+        top_right = top_sum - top_prefix
+        second = max(top_right, bottom_prefix)
+        ans = min(ans, second)
+        bottom_prefix += grid[1][k]
+    return ans
+`,
+
+  'maximum-white-tiles-covered-by-carpet': `def maximumWhiteTiles(tiles, carpetLen):
+    import bisect
+    t = sorted(tiles, key=lambda x: x[0])
+    n = len(t)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + (t[i][1] - t[i][0] + 1)
+    ans = 0
+    starts = [tile[0] for tile in t]
+    for i in range(n):
+        end = t[i][0] + carpetLen - 1
+        j = bisect.bisect_right(starts, end) - 1
+        if j < i:
+            ans = max(ans, min(carpetLen, t[i][1] - t[i][0] + 1))
+            continue
+        full = prefix[j + 1] - prefix[i]
+        partial = min(end - t[j][0] + 1, t[j][1] - t[j][0] + 1)
+        covered = full - (t[j][1] - t[j][0] + 1) + partial
+        ans = max(ans, covered)
+    return ans
+`,
+
+  'minimum-operations-to-make-all-array-elements-equal': `def minOperations(nums, queries):
+    import bisect
+    sorted_nums = sorted(nums)
+    n = len(sorted_nums)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + sorted_nums[i]
+    result = []
+    for q in queries:
+        lo = bisect.bisect_left(sorted_nums, q)
+        left_cost = q * lo - prefix[lo]
+        right_cost = (prefix[n] - prefix[lo]) - q * (n - lo)
+        result.append(left_cost + right_cost)
+    return result
+`,
+
+  'reverse-words-in-a-string-ii': `def reverseWords(s):
+    s = list(s.to_py() if hasattr(s, 'to_py') else s)
+    def rev(l, r):
+        while l < r:
+            s[l], s[r] = s[r], s[l]
+            l += 1; r -= 1
+    rev(0, len(s) - 1)
+    start = 0
+    for i in range(len(s) + 1):
+        if i == len(s) or s[i] == ' ':
+            rev(start, i - 1)
+            start = i + 1
+    return s
+`,
+
+  'count-subarrays-with-median': `def countSubarrays(nums, k):
+    from collections import defaultdict
+    ki = list(nums).index(k)
+    left_freq = defaultdict(int)
+    left_freq[0] = 1
+    bal = 0
+    for i in range(ki - 1, -1, -1):
+        bal += 1 if nums[i] > k else -1
+        left_freq[bal] += 1
+    ans = left_freq[0] + left_freq[1]
+    bal = 0
+    for j in range(ki + 1, len(nums)):
+        bal += 1 if nums[j] > k else -1
+        ans += left_freq[-bal] + left_freq[-bal + 1]
+    return ans
+`,
+
+  'maximum-sum-queries': `def maximumSumQueries(nums1, nums2, queries):
+    n = len(nums1)
+    pairs = [(nums1[i], nums2[i], nums1[i] + nums2[i]) for i in range(n)]
+    result = []
+    for xi, yi in queries:
+        best = -1
+        for n1, n2, s in pairs:
+            if n1 >= xi and n2 >= yi:
+                best = max(best, s)
+        result.append(best)
+    return result
+`,
+
+
+
+  'find-subarrays-with-equal-sum': `def findSubarrays(nums):
+    seen = set()
+    for i in range(len(nums) - 1):
+        s = nums[i] + nums[i + 1]
+        if s in seen:
+            return True
+        seen.add(s)
+    return False
+`,
+
+  'best-poker-hand': `def bestHand(ranks, suits):
+    if len(set(suits)) == 1:
+        return 'Flush'
+    from collections import Counter
+    freq = Counter(ranks)
+    max_freq = max(freq.values())
+    if max_freq >= 3:
+        return 'Three of a Kind'
+    if max_freq == 2:
+        return 'Pair'
+    return 'High Card'
+`,
+
+
+  'count-incremovable-subarrays': `def incremovableSubarrayCount(nums):
+    n = len(nums)
+    def is_strictly_increasing(l, r):
+        for i in range(l, r):
+            if nums[i] >= nums[i + 1]:
+                return False
+        return True
+    count = 0
+    for l in range(n):
+        for r in range(l, n):
+            left_ok = is_strictly_increasing(0, l - 1)
+            right_ok = is_strictly_increasing(r + 1, n - 1)
+            border_ok = l == 0 or r == n - 1 or nums[l - 1] < nums[r + 1]
+            if left_ok and right_ok and border_ok:
+                count += 1
+    return count
+`,
+
+  'step-by-step-directions': `def getDirectionsImpl(root, s, t):
+    def find_path(node, target, path):
+        if not node:
+            return False
+        if node.val == target:
+            return True
+        path.append('L')
+        if find_path(node.left, target, path):
+            return True
+        path.pop()
+        path.append('R')
+        if find_path(node.right, target, path):
+            return True
+        path.pop()
+        return False
+    path_s = []
+    path_t = []
+    find_path(root, s, path_s)
+    find_path(root, t, path_t)
+    k = 0
+    while k < len(path_s) and k < len(path_t) and path_s[k] == path_t[k]:
+        k += 1
+    return 'U' * (len(path_s) - k) + ''.join(path_t[k:])
+`,
+
+  'minimum-number-of-food-buckets': `def minimumBuckets(street):
+    s = list(street)
+    count = 0
+    i = 0
+    while i < len(s):
+        if s[i] == 'H':
+            if i + 1 < len(s) and s[i + 1] == '.':
+                s[i + 1] = 'B'
+                count += 1
+                i += 3
+            elif i - 1 >= 0 and s[i - 1] == '.':
+                s[i - 1] = 'B'
+                count += 1
+                i += 1
+            else:
+                return -1
+        else:
+            i += 1
+    return count
+`,
+
+  'super-ugly-number': `def nthSuperUglyNumber(n, primes):
+    dp = [0] * n
+    dp[0] = 1
+    pointers = [0] * len(primes)
+    for i in range(1, n):
+        candidates = [primes[j] * dp[pointers[j]] for j in range(len(primes))]
+        min_val = min(candidates)
+        dp[i] = min_val
+        for j in range(len(primes)):
+            if candidates[j] == min_val:
+                pointers[j] += 1
+    return dp[n - 1]
+`,
+
+  'reward-top-k-students': `def topStudents(positive_feedback, negative_feedback, report, student_id, k):
+    pos_set = set(positive_feedback)
+    neg_set = set(negative_feedback)
+    scores = []
+    for i, sid in enumerate(student_id):
+        score = 0
+        for word in report[i].split():
+            if word in pos_set:
+                score += 3
+            elif word in neg_set:
+                score -= 1
+        scores.append((sid, score))
+    scores.sort(key=lambda x: (-x[1], x[0]))
+    return [x[0] for x in scores[:k]]
+`,
+
+  'count-subarrays-with-score-less-than-k': `def countSubarrays(nums, k):
+    count = 0
+    total = 0
+    left = 0
+    for right in range(len(nums)):
+        total += nums[right]
+        while total * (right - left + 1) >= k:
+            total -= nums[left]
+            left += 1
+        count += right - left + 1
+    return count
+`,
+
+  'maximum-number-of-jumps-to-reach-last-index': `def maximumJumps(nums, target):
+    n = len(nums)
+    dp = [-1] * n
+    dp[0] = 0
+    for j in range(1, n):
+        for i in range(j):
+            if dp[i] != -1 and abs(nums[i] - nums[j]) <= target:
+                dp[j] = max(dp[j], dp[i] + 1)
+    return dp[n - 1]
+`,
+
+  'minimum-number-of-coins-for-fruits': `def minimumCoins(prices):
+    n = len(prices)
+    dp = [0] * (n + 2)
+    for i in range(n, 0, -1):
+        free_end = min(n + 1, i + i + 1)
+        min_next = min(dp[i + 1:free_end + 1]) if i + 1 <= free_end else 0
+        dp[i] = prices[i - 1] + min_next
+    return dp[1]
+`,
+
+  'freq-stack': `def freqStack(ops, vals):
+    freq = {}
+    group = {}
+    max_freq = 0
+    result = []
+    for op, val in zip(ops, vals):
+        if op == 'FreqStack':
+            result.append(None)
+        elif op == 'push':
+            v = val[0]
+            f = freq.get(v, 0) + 1
+            freq[v] = f
+            if f > max_freq:
+                max_freq = f
+            if f not in group:
+                group[f] = []
+            group[f].append(v)
+            result.append(None)
+        else:
+            v = group[max_freq].pop()
+            if not group[max_freq]:
+                max_freq -= 1
+            freq[v] -= 1
+            result.append(v)
+    return result
+`,
+
+  'minimum-cost-to-equalize-array': `def minCostToEqualizeArray(nums, cost1, cost2):
+    MOD = 10**9 + 7
+    n = len(nums)
+    if n == 1:
+        return 0
+    max_val = max(nums)
+    min_val = min(nums)
+    total_diff = sum(max_val - v for v in nums)
+    max_diff = max_val - min_val
+    if 2 * cost1 <= cost2:
+        return (cost1 * total_diff) % MOD
+    best = float('inf')
+    for extra in range(n + 1):
+        total = total_diff + extra * n
+        cur_max_d = max_diff + extra
+        op2 = (total - max(0, 2 * cur_max_d - total)) // 2
+        op1 = total - 2 * op2
+        best = min(best, op2 * cost2 + op1 * cost1)
+    return best % MOD
+`,
+
+  'maximum-total-damage': `def maximumTotalDamage(power):
+    from collections import Counter
+    freq = Counter(power)
+    vals = sorted(freq.keys())
+    sums = [v * freq[v] for v in vals]
+    n = len(vals)
+    dp = [0] * n
+    dp[0] = sums[0]
+    for i in range(1, n):
+        j = i - 1
+        while j >= 0 and vals[i] - vals[j] <= 2:
+            j -= 1
+        take = (dp[j] if j >= 0 else 0) + sums[i]
+        dp[i] = max(dp[i-1], take)
+    return dp[n-1]
+`,
+
+  'special-array-ii': `def isArraySpecial(nums, queries):
+    n = len(nums)
+    prefix = [0] * n
+    for i in range(1, n):
+        prefix[i] = prefix[i-1] + (1 if nums[i] % 2 == nums[i-1] % 2 else 0)
+    return [prefix[r] == prefix[l] for l, r in queries]
+`,
+
+  'find-maximum-length-valid-subsequence': `def maximumLength(nums):
+    all_even = sum(1 for n in nums if n % 2 == 0)
+    all_odd = sum(1 for n in nums if n % 2 != 0)
+    dp = [0, 0]
+    best = 0
+    for n in nums:
+        p = n % 2
+        dp[p] = dp[1 - p] + 1
+        best = max(best, dp[p])
+    return max(all_even, all_odd, best)
+`,
+
+  'count-submatrices-all-ones': `def numSubmat(mat):
+    m, n = len(mat), len(mat[0])
+    h = [[0]*n for _ in range(m)]
+    total = 0
+    for i in range(m):
+        for j in range(n):
+            h[i][j] = 0 if mat[i][j] == 0 else (1 if i == 0 else h[i-1][j] + 1)
+        for j in range(n):
+            min_h = h[i][j]
+            for k in range(j, -1, -1):
+                min_h = min(min_h, h[i][k])
+                total += min_h
+    return total
+`,
+
+  'minimum-length-of-string-after-operations': `def minimumLength(s):
+    from collections import Counter
+    freq = Counter(s)
+    return sum(2 if count % 2 == 0 else 1 for count in freq.values())
+`,
+
+  'count-special-characters-i': `def numberOfSpecialChars(word):
+    lower = set()
+    upper = set()
+    for c in word:
+        if c.islower():
+            lower.add(c)
+        else:
+            upper.add(c.lower())
+    return sum(1 for c in lower if c in upper)
+`,
+
+  'maximum-jumps-to-reach-last-index': `def maximumJumps(nums, target):
+    n = len(nums)
+    dp = [-1] * n
+    dp[0] = 0
+    for j in range(1, n):
+        for i in range(j):
+            if dp[i] != -1 and abs(nums[i] - nums[j]) <= target:
+                dp[j] = max(dp[j], dp[i] + 1)
+    return dp[n - 1]
+`,
+
+  'minimum-operations-to-make-array-equal-ii': `def minOperations(nums1, nums2, k):
+    n1 = list(nums1)
+    n2 = list(nums2)
+    if k == 0:
+        return 0 if n1 == n2 else -1
+    pos, neg = 0, 0
+    for a, b in zip(n1, n2):
+        d = a - b
+        if d % k != 0:
+            return -1
+        if d > 0:
+            pos += d // k
+        else:
+            neg -= d // k
+    return pos if pos == neg else -1
+`,
+
+  'minimum-cost-for-cutting-cake-i': `def minimumCost(m, n, horizontalCut, verticalCut):
+    cuts = [('h', c) for c in horizontalCut] + [('v', c) for c in verticalCut]
+    cuts.sort(key=lambda x: -x[1])
+    h, v, total = 1, 1, 0
+    for t, cost in cuts:
+        if t == 'h':
+            total += cost * v
+            h += 1
+        else:
+            total += cost * h
+            v += 1
+    return total
+`,
+
+  'seat-reservation-manager': `def seatReservationManager(n, operations, operandArgs):
+    import heapq
+    n = int(n)
+    ops = list(operations.to_py() if hasattr(operations, 'to_py') else operations)
+    op_args = list(operandArgs.to_py() if hasattr(operandArgs, 'to_py') else operandArgs)
+    heap = list(range(1, n + 1))
+    heapq.heapify(heap)
+    results = []
+    for i, op in enumerate(ops):
+        if op == 'reserve':
+            results.append(heapq.heappop(heap))
+        else:
+            seat = int(op_args[i]) if op_args[i] is not None else 0
+            heapq.heappush(heap, seat)
+    return results
+`,
+
+  'subarray-sum-divisible-by-k': `def subarraysDivByK(nums, k):
+    a = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    k = int(k)
+    count = {0: 1}
+    prefix = 0; ans = 0
+    for num in a:
+        prefix += num
+        rem = prefix % k
+        if rem < 0: rem += k
+        ans += count.get(rem, 0)
+        count[rem] = count.get(rem, 0) + 1
+    return ans
+`,
+
+  'find-the-winner-of-circular-game': `def findTheWinner(n, k):
+    n = int(n); k = int(k)
+    pos = 0
+    for i in range(2, n + 1):
+        pos = (pos + k) % i
+    return pos + 1
+`,
+
+  'minimum-path-cost-in-grid': `def minPathCost(grid, moveCost):
+    g = [list(int(x) for x in (row.to_py() if hasattr(row, 'to_py') else row)) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    mc = [list(int(x) for x in (row.to_py() if hasattr(row, 'to_py') else row)) for row in (moveCost.to_py() if hasattr(moveCost, 'to_py') else moveCost)]
+    m, n = len(g), len(g[0])
+    dp = g[0][:]
+    for r in range(1, m):
+        new_dp = [float('inf')] * n
+        for c1 in range(n):
+            costs = mc[g[r-1][c1]]
+            for c2 in range(n):
+                val = dp[c1] + costs[c2] + g[r][c2]
+                if val < new_dp[c2]: new_dp[c2] = val
+        dp = new_dp
+    return min(dp)
+`,
+
+  'maximum-distance-between-a-pair-of-values': `def maxDistance(nums1, nums2):
+    a1 = list(int(x) for x in (nums1.to_py() if hasattr(nums1, 'to_py') else nums1))
+    a2 = list(int(x) for x in (nums2.to_py() if hasattr(nums2, 'to_py') else nums2))
+    n1, n2 = len(a1), len(a2)
+    i = j = 0; ans = 0
+    while i < n1 and j < n1 and j < n2:
+        if a1[i] <= a2[j]: ans = max(ans, j - i); j += 1
+        elif i < j: i += 1
+        else: i += 1; j += 1
+    return ans
+`,
+
+  // batch 62
+  'maximum-number-of-points-with-cost': `def maxPoints(points):
+    m, n = len(points), len(points[0])
+    dp = list(points[0])
+    for i in range(1, m):
+        left = [0] * n
+        right = [0] * n
+        left[0] = dp[0] + 0
+        for j in range(1, n):
+            left[j] = max(left[j-1], dp[j] + j)
+        right[n-1] = dp[n-1] - (n-1)
+        for j in range(n-2, -1, -1):
+            right[j] = max(right[j+1], dp[j] - j)
+        dp = [points[i][j] + max(left[j] - j, right[j] + j) for j in range(n)]
+    return max(dp)
+`,
+
+  'find-three-consecutive-integers-that-sum-to-given-number': `def sumOfThree(num):
+    num = int(num)
+    if num % 3 != 0:
+        return []
+    n = num // 3
+    return [n - 1, n, n + 1]
+`,
+
+  'minimum-sum-of-four-digit-number-after-splitting-digits': `def minimumSum(num):
+    num = int(num)
+    d = sorted(int(ch) for ch in str(num))
+    return (d[0] * 10 + d[2]) + (d[1] * 10 + d[3])
+`,
+
+  'k-items-with-the-maximum-sum': `def kItemsWithMaximumSum(numOnes, numZeros, numNegOnes, k):
+    numOnes, numZeros, numNegOnes, k = int(numOnes), int(numZeros), int(numNegOnes), int(k)
+    ones = min(k, numOnes)
+    zeros = min(k - ones, numZeros)
+    negones = k - ones - zeros
+    return ones - negones
+`,
+
+  'group-shifted-strings': `def groupStrings(strings):
+    from collections import defaultdict
+    groups = defaultdict(list)
+    for s in strings:
+        if len(s) == 1:
+            key = ''
+        else:
+            key = ','.join(str((ord(s[i+1]) - ord(s[i]) + 26) % 26) for i in range(len(s) - 1))
+        groups[key].append(s)
+    result = [sorted(g) for g in groups.values()]
+    result.sort(key=lambda g: g[0])
+    return result
+`,
+
+  'sparse-matrix-multiplication': `def multiply(mat1, mat2):
+    m = len(mat1)
+    k = len(mat1[0])
+    n = len(mat2[0])
+    result = [[0] * n for _ in range(m)]
+    for i in range(m):
+        for p in range(k):
+            if mat1[i][p] != 0:
+                for j in range(n):
+                    result[i][j] += mat1[i][p] * mat2[p][j]
+    return result
+`,
+
+  'maximum-depth-n-ary-tree': `def maxDepth(root):
+    if not root:
+        return 0
+    if not root.children:
+        return 1
+    return 1 + max(maxDepth(c) for c in root.children)
+`,
+
+  'n-ary-tree-level-order-traversal': `def levelOrder(root):
+    if not root:
+        return []
+    from collections import deque
+    result = []
+    queue = deque([root])
+    while queue:
+        level = []
+        for _ in range(len(queue)):
+            node = queue.popleft()
+            level.append(node.val)
+            for child in node.children:
+                queue.append(child)
+        result.append(level)
+    return result
+`,
+
+  'n-ary-tree-preorder-traversal': `def preorder(root):
+    if not root:
+        return []
+    result = []
+    stack = [root]
+    while stack:
+        node = stack.pop()
+        result.append(node.val)
+        for child in reversed(node.children):
+            stack.append(child)
+    return result
+`,
+
+  'number-of-increasing-paths-in-a-grid': `def countPaths(grid):
+    MOD = 10**9 + 7
+    m, n = len(grid), len(grid[0])
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dfs(r, c):
+        cnt = 1
+        for dr, dc in ((0,1),(0,-1),(1,0),(-1,0)):
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n and grid[nr][nc] > grid[r][c]:
+                cnt = (cnt + dfs(nr, nc)) % MOD
+        return cnt
+    return sum(dfs(r, c) for r in range(m) for c in range(n)) % MOD
+`,
+
+  'minimum-time-to-visit-a-cell-in-a-grid': `def minimumTime(grid):
+    import heapq
+    m, n = len(grid), len(grid[0])
+    if grid[0][1] > 1 and grid[1][0] > 1:
+        return -1
+    dist = [[float('inf')] * n for _ in range(m)]
+    dist[0][0] = 0
+    heap = [(0, 0, 0)]
+    while heap:
+        t, r, c = heapq.heappop(heap)
+        if t > dist[r][c]:
+            continue
+        if r == m - 1 and c == n - 1:
+            return t
+        for dr, dc in ((0,1),(0,-1),(1,0),(-1,0)):
+            nr, nc = r + dr, c + dc
+            if not (0 <= nr < m and 0 <= nc < n):
+                continue
+            arrive = t + 1
+            wait = (grid[nr][nc] - arrive) % 2 if grid[nr][nc] > arrive else 0
+            nt = max(arrive, grid[nr][nc]) + wait
+            if nt < dist[nr][nc]:
+                dist[nr][nc] = nt
+                heapq.heappush(heap, (nt, nr, nc))
+    return -1
+`,
+
+  'number-of-beautiful-subsets': `def beautifulSubsets(nums, k):
+    nums = sorted(nums)
+    from collections import defaultdict
+    freq = defaultdict(int)
+    ans = [0]
+    def bt(idx):
+        if idx == len(nums):
+            ans[0] += 1
+            return
+        bt(idx + 1)
+        if freq[nums[idx] - k] == 0:
+            freq[nums[idx]] += 1
+            bt(idx + 1)
+            freq[nums[idx]] -= 1
+    bt(0)
+    return ans[0] - 1
+`,
+
+  'maximum-number-of-fish-in-a-grid': `def findMaxFish(grid):
+    m, n = len(grid), len(grid[0])
+    visited = [[False] * n for _ in range(m)]
+    def dfs(r, c):
+        if r < 0 or r >= m or c < 0 or c >= n or visited[r][c] or grid[r][c] == 0:
+            return 0
+        visited[r][c] = True
+        return grid[r][c] + dfs(r+1,c) + dfs(r-1,c) + dfs(r,c+1) + dfs(r,c-1)
+    ans = 0
+    for r in range(m):
+        for c in range(n):
+            if grid[r][c] > 0:
+                ans = max(ans, dfs(r, c))
+    return ans
+`,
+
+  'count-consistent-strings': `def countConsistentStrings(allowed, words):
+    words_list = list(words.to_py() if hasattr(words, 'to_py') else words)
+    allowed_str = str(allowed)
+    s = set(allowed_str)
+    return sum(1 for w in words_list if all(c in s for c in str(w)))
+`,
+
+  'max-points-you-can-obtain-from-cards': `def maxScore(cardPoints, k):
+    cards = list(int(x) for x in (cardPoints.to_py() if hasattr(cardPoints, 'to_py') else cardPoints))
+    k = int(k)
+    n = len(cards)
+    total = sum(cards)
+    if k == n: return total
+    win = n - k
+    curr = sum(cards[:win])
+    min_win = curr
+    for i in range(win, n):
+        curr += cards[i] - cards[i - win]
+        if curr < min_win: min_win = curr
+    return total - min_win
+`,
+
+  'number-of-steps-to-reduce-number-in-binary-representation-to-one': `def numSteps(s):
+    arr = [int(c) for c in str(s)]
+    steps = 0
+    while len(arr) > 1:
+        if arr[-1] == 0:
+            arr.pop()
+        else:
+            carry = 1
+            i = len(arr) - 1
+            while i >= 0 and carry:
+                total = arr[i] + carry
+                arr[i] = total % 2
+                carry = total >> 1
+                i -= 1
+            if carry:
+                arr.insert(0, 1)
+        steps += 1
+    return steps
+`,
+
+  'minimum-score-by-changing-two-elements': `def minimizeSum(nums):
+    a = sorted(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    n = len(a)
+    if n <= 2: return 0
+    return min(a[n-1] - a[2], a[n-2] - a[1], a[n-3] - a[0])
+`,
+
+  'sqrtx': `def mySqrt(x):
+    x = int(x)
+    if x < 2: return x
+    lo, hi = 1, x // 2
+    while lo <= hi:
+        mid = (lo + hi) >> 1
+        sq = mid * mid
+        if sq == x: return mid
+        elif sq < x: lo = mid + 1
+        else: hi = mid - 1
+    return hi
+`,
+
+  // batch 63 (remote)
+  'design-hit-counter': `def hitCounter(operations, args):
+    results = []
+    timestamps = []
+    for i in range(len(operations)):
+        op = operations[i]
+        arg = args[i] if args[i] else []
+        if op == 'HitCounter':
+            timestamps = []
+            results.append(None)
+        elif op == 'hit':
+            timestamps.append(arg[0])
+            results.append(None)
+        else:
+            t = arg[0]
+            count = sum(1 for ts in timestamps if ts >= t - 299)
+            results.append(count)
+    return results
+`,
+
+  'remove-colored-pieces': `def winnerOfGame(colors):
+    alice = 0
+    bob = 0
+    for i in range(1, len(colors) - 1):
+        if colors[i] == 'A' and colors[i-1] == 'A' and colors[i+1] == 'A':
+            alice += 1
+        if colors[i] == 'B' and colors[i-1] == 'B' and colors[i+1] == 'B':
+            bob += 1
+    return alice > bob
+`,
+
+  'swap-adjacent-in-lr-string': `def canTransform(start, end):
+    n = len(start)
+    if start.replace('X', '') != end.replace('X', ''):
+        return False
+    i, j = 0, 0
+    while i < n and j < n:
+        while i < n and start[i] == 'X':
+            i += 1
+        while j < n and end[j] == 'X':
+            j += 1
+        if i == n and j == n:
+            return True
+        if i == n or j == n:
+            return False
+        if start[i] != end[j]:
+            return False
+        if start[i] == 'L' and i < j:
+            return False
+        if start[i] == 'R' and i > j:
+            return False
+        i += 1
+        j += 1
+    return True
+`,
+
+  'next-greater-element-iv': `def secondGreaterElement(nums):
+    n = len(nums)
+    ans = [-1] * n
+    stack1 = []
+    stack2 = []
+    for j in range(n):
+        while stack2 and nums[stack2[-1]] < nums[j]:
+            ans[stack2.pop()] = nums[j]
+        to_move = []
+        while stack1 and nums[stack1[-1]] < nums[j]:
+            to_move.append(stack1.pop())
+        for k in range(len(to_move) - 1, -1, -1):
+            stack2.append(to_move[k])
+        stack1.append(j)
+    return ans
+`,
+
+  'minimum-number-of-operations-to-make-arrays-similar': `def makeSimilar(nums, target):
+    nums_even = sorted(x for x in nums if x % 2 == 0)
+    nums_odd = sorted(x for x in nums if x % 2 != 0)
+    tgt_even = sorted(x for x in target if x % 2 == 0)
+    tgt_odd = sorted(x for x in target if x % 2 != 0)
+    ops = 0
+    for i in range(len(nums_even)):
+        diff = tgt_even[i] - nums_even[i]
+        if diff > 0:
+            ops += diff // 2
+    for i in range(len(nums_odd)):
+        diff = tgt_odd[i] - nums_odd[i]
+        if diff > 0:
+            ops += diff // 2
+    return ops
+`,
+
+  // batch 66 (local)
+  'find-if-path-exists-in-graph': `def validPath(n, edges, source, destination):
+    n = int(n)
+    source = int(source)
+    destination = int(destination)
+    edges = [[int(x) for x in e] for e in (edges.to_py() if hasattr(edges, 'to_py') else edges)]
+    if source == destination:
+        return True
+    from collections import defaultdict, deque
+    adj = defaultdict(list)
+    for a, b in edges:
+        adj[a].append(b)
+        adj[b].append(a)
+    visited = set([source])
+    q = deque([source])
+    while q:
+        node = q.popleft()
+        if node == destination:
+            return True
+        for nb in adj[node]:
+            if nb not in visited:
+                visited.add(nb)
+                q.append(nb)
+    return False
+`,
+
+  'longest-subarray-of-ones-after-deleting-one-element': `def longestSubarray(nums):
+    nums = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    left = 0
+    zeros = 0
+    ans = 0
+    for right in range(len(nums)):
+        if nums[right] == 0:
+            zeros += 1
+        while zeros > 1:
+            if nums[left] == 0:
+                zeros -= 1
+            left += 1
+        ans = max(ans, right - left)
+    return ans
+`,
+
+  'check-if-array-pairs-are-divisible-by-k': `def canArrange(arr, k):
+    arr = list(int(x) for x in (arr.to_py() if hasattr(arr, 'to_py') else arr))
+    k = int(k)
+    freq = [0] * k
+    for x in arr:
+        freq[x % k] += 1
+    for r in range(k):
+        if r == 0:
+            if freq[r] % 2 != 0:
+                return False
+        elif 2 * r == k:
+            if freq[r] % 2 != 0:
+                return False
+        elif r < k - r and freq[r] != freq[k - r]:
+            return False
+    return True
+`,
+
+  'maximum-beauty-of-an-array-after-applying-operation': `def maximumBeauty(nums, k):
+    nums = sorted(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    k = int(k)
+    ans = 0
+    left = 0
+    for right in range(len(nums)):
+        while nums[right] - nums[left] > 2 * k:
+            left += 1
+        ans = max(ans, right - left + 1)
+    return ans
+`,
+
+  'rearrange-characters-to-make-target-string': `def rearrangeCharacters(s, target):
+    s = str(s)
+    target = str(target)
+    from collections import Counter
+    s_freq = Counter(s)
+    t_freq = Counter(target)
+    ans = float('inf')
+    for c, need in t_freq.items():
+        ans = min(ans, s_freq.get(c, 0) // need)
+    return ans if ans != float('inf') else 0
+`,
+
+  // batch 65 (local)
+  'count-pairs-that-form-a-complete-day-ii': `def countCompleteDayPairs(hours):
+    hours = list(int(x) for x in (hours.to_py() if hasattr(hours, 'to_py') else hours))
+    freq = [0] * 24
+    ans = 0
+    for h in hours:
+        rem = h % 24
+        ans += freq[(24 - rem) % 24]
+        freq[rem] += 1
+    return ans
+`,
+
+  'kth-largest-element-in-a-stream': `def kthLargest(operations, args):
+    import bisect
+    ops = list(operations.to_py() if hasattr(operations, 'to_py') else operations)
+    args_list = [list(a.to_py() if hasattr(a, 'to_py') else a) for a in (args.to_py() if hasattr(args, 'to_py') else args)]
+    results = []
+    K = 0
+    sorted_arr = []
+    for i, op in enumerate(ops):
+        arg = args_list[i]
+        if op == 'KthLargest':
+            K = int(arg[0])
+            nums = list(arg[1].to_py() if hasattr(arg[1], 'to_py') else arg[1]) if len(arg) > 1 and arg[1] is not None else []
+            sorted_arr = sorted(int(x) for x in nums)
+            results.append(None)
+        else:
+            val = int(arg[0])
+            bisect.insort(sorted_arr, val)
+            results.append(sorted_arr[-K])
+    return results
+`,
+
+  'check-if-the-sentence-is-pangram': `def checkIfPangram(sentence):
+    sentence = str(sentence)
+    return len(set(sentence)) >= 26
+`,
+
+  'count-number-of-ways-to-place-houses': `def countHousePlacements(n):
+    n = int(n)
+    MOD = 10**9 + 7
+    a, b = 1, 2
+    for _ in range(2, n + 1):
+        a, b = b, (a + b) % MOD
+    return b * b % MOD
+`,
+
+  'count-ways-to-group-overlapping-ranges': `def countWays(ranges):
+    ranges = [[int(x) for x in r] for r in (ranges.to_py() if hasattr(ranges, 'to_py') else ranges)]
+    ranges.sort(key=lambda r: r[0])
+    MOD = 10**9 + 7
+    components = 0
+    max_end = float('-inf')
+    for l, r in ranges:
+        if l > max_end:
+            components += 1
+        max_end = max(max_end, r)
+    return pow(2, components, MOD)
+`,
+
+  // batch 64 (local)
+  'number-of-wonderful-substrings': `def wonderfulSubstrings(word):
+    word = str(word)
+    from collections import defaultdict
+    count = defaultdict(int)
+    count[0] = 1
+    mask = 0
+    ans = 0
+    for c in word:
+        mask ^= 1 << (ord(c) - ord('a'))
+        ans += count[mask]
+        for k in range(10):
+            ans += count[mask ^ (1 << k)]
+        count[mask] += 1
+    return ans
+`,
+
+  'design-a-number-container-system': `def numberContainers(operations, args):
+    import bisect
+    ops = list(operations.to_py() if hasattr(operations, 'to_py') else operations)
+    args_list = [list(a.to_py() if hasattr(a, 'to_py') else a) for a in (args.to_py() if hasattr(args, 'to_py') else args)]
+    index_to_num = {}
+    num_to_indices = {}
+    results = []
+    for i, op in enumerate(ops):
+        arg = [int(x) for x in args_list[i]]
+        if op == 'NumberContainers':
+            results.append(None)
+        elif op == 'change':
+            idx, num = arg[0], arg[1]
+            old = index_to_num.get(idx)
+            if old is not None and old != num:
+                arr = num_to_indices[old]
+                pos = bisect.bisect_left(arr, idx)
+                if pos < len(arr) and arr[pos] == idx:
+                    arr.pop(pos)
+            if old != num:
+                index_to_num[idx] = num
+                if num not in num_to_indices:
+                    num_to_indices[num] = []
+                bisect.insort(num_to_indices[num], idx)
+            results.append(None)
+        else:
+            num = arg[0]
+            arr = num_to_indices.get(num, [])
+            results.append(arr[0] if arr else -1)
+    return results
+`,
+
+  'continuous-subarrays': `def continuousSubarrays(nums):
+    from collections import deque
+    nums = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    n = len(nums)
+    ans = 0
+    left = 0
+    max_dq = deque()
+    min_dq = deque()
+    for right in range(n):
+        while max_dq and nums[max_dq[-1]] <= nums[right]:
+            max_dq.pop()
+        max_dq.append(right)
+        while min_dq and nums[min_dq[-1]] >= nums[right]:
+            min_dq.pop()
+        min_dq.append(right)
+        while nums[max_dq[0]] - nums[min_dq[0]] > 2:
+            left += 1
+            if max_dq[0] == left - 1:
+                max_dq.popleft()
+            if min_dq[0] == left - 1:
+                min_dq.popleft()
+        ans += right - left + 1
+    return ans
+`,
+
+  'count-pairs-that-form-a-complete-day-i': `def countCompleteDayPairs(hours):
+    hours = list(int(x) for x in (hours.to_py() if hasattr(hours, 'to_py') else hours))
+    freq = [0] * 24
+    ans = 0
+    for h in hours:
+        rem = h % 24
+        ans += freq[(24 - rem) % 24]
+        freq[rem] += 1
+    return ans
+`,
+
+  'substring-with-largest-variance': `def largestVariance(s):
+    s = str(s)
+    ans = 0
+    chars = list(set(s))
+    for ca in chars:
+        for cb in chars:
+            if ca == cb:
+                continue
+            dp = 0
+            dp_b = float('-inf')
+            for c in s:
+                if c == ca:
+                    dp = max(dp, 0) + 1
+                    dp_b = dp_b + 1
+                elif c == cb:
+                    dp_b = max(dp_b - 1, dp - 1)
+                    dp = max(dp - 1, 0)
+                if dp_b > ans:
+                    ans = dp_b
+    return ans
+`,
+
+  // batch 63 (local)
+  'two-best-non-overlapping-events': `def maxTwoEvents(events):
+    events = [[int(x) for x in e] for e in (events.to_py() if hasattr(events, 'to_py') else events)]
+    events.sort(key=lambda e: e[1])
+    n = len(events)
+    pref = [0] * n
+    pref[0] = events[0][2]
+    for i in range(1, n):
+        pref[i] = max(pref[i-1], events[i][2])
+    ans = pref[-1]
+    import bisect
+    ends = [e[1] for e in events]
+    for i in range(n):
+        start = events[i][0]
+        j = bisect.bisect_left(ends, start) - 1
+        if j >= 0:
+            ans = max(ans, events[i][2] + pref[j])
+    return ans
+`,
+
+  'minimum-lines-to-represent-a-line-chart': `def minimumLines(stockPrices):
+    sp = sorted([[int(p[0]), int(p[1])] for p in (stockPrices.to_py() if hasattr(stockPrices, 'to_py') else stockPrices)], key=lambda p: p[0])
+    n = len(sp)
+    if n <= 1:
+        return 0
+    lines = 1
+    for i in range(2, n):
+        x1, y1 = sp[i-2]
+        x2, y2 = sp[i-1]
+        x3, y3 = sp[i]
+        if (y2 - y1) * (x3 - x2) != (y3 - y2) * (x2 - x1):
+            lines += 1
+    return lines
+`,
+
+  'number-of-common-divisors': `def commonDivisors(a, b):
+    a, b = int(a), int(b)
+    from math import gcd
+    g = gcd(a, b)
+    count = 0
+    i = 1
+    while i * i <= g:
+        if g % i == 0:
+            count += 1
+            if i != g // i:
+                count += 1
+        i += 1
+    return count
+`,
+
+  'first-completely-painted-row-or-column': `def firstCompleteIndex(arr, mat):
+    arr = list(int(x) for x in (arr.to_py() if hasattr(arr, 'to_py') else arr))
+    mat = [[int(v) for v in row] for row in (mat.to_py() if hasattr(mat, 'to_py') else mat)]
+    pos = {arr[i]: i for i in range(len(arr))}
+    m, n = len(mat), len(mat[0])
+    ans = float('inf')
+    for r in range(m):
+        ans = min(ans, max(pos[mat[r][c]] for c in range(n)))
+    for c in range(n):
+        ans = min(ans, max(pos[mat[r][c]] for r in range(m)))
+    return ans
+`,
+
+  'maximum-prime-difference': `def maximumPrimeDifference(nums):
+    nums = list(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    def is_prime(n):
+        if n < 2: return False
+        if n < 4: return True
+        if n % 2 == 0 or n % 3 == 0: return False
+        i = 5
+        while i * i <= n:
+            if n % i == 0 or n % (i + 2) == 0: return False
+            i += 6
+        return True
+    first, last = -1, -1
+    for i, v in enumerate(nums):
+        if is_prime(v):
+            if first == -1: first = i
+            last = i
+    return last - first
+`,
+
+  'number-of-beautiful-subarrays': `def beautifulSubarrays(nums):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    freq[0] = 1
+    xor = 0
+    count = 0
+    for n in nums:
+        xor ^= n
+        count += freq[xor]
+        freq[xor] += 1
+    return count
+`,
+
+  'zero-array-transformation-i': `def isZeroArray(nums, queries):
+    n = len(nums)
+    diff = [0] * (n + 1)
+    queries = [[int(q[0]), int(q[1])] for q in queries]
+    for l, r in queries:
+        diff[l] += 1
+        diff[r + 1] -= 1
+    coverage = 0
+    for i in range(n):
+        coverage += diff[i]
+        if coverage < nums[i]:
+            return False
+    return True
+`,
+
+  'maximum-building-height': `def maxBuilding(n, restrictions):
+    n = int(n)
+    restrictions = [[int(r[0]), int(r[1])] for r in restrictions]
+    restrictions.append([1, 0])
+    restrictions.sort()
+    m = len(restrictions)
+    for i in range(1, m):
+        restrictions[i][1] = min(restrictions[i][1], restrictions[i-1][1] + restrictions[i][0] - restrictions[i-1][0])
+    for i in range(m - 2, -1, -1):
+        restrictions[i][1] = min(restrictions[i][1], restrictions[i+1][1] + restrictions[i+1][0] - restrictions[i][0])
+    ans = 0
+    for i in range(1, m):
+        id1, h1 = restrictions[i-1]
+        id2, h2 = restrictions[i]
+        ans = max(ans, (h1 + h2 + id2 - id1) // 2)
+    last_id, last_h = restrictions[-1]
+    ans = max(ans, last_h + n - last_id)
+    return ans
+`,
+
+  'count-number-of-special-integers': `def countSpecialNumbers(n):
+    s = str(n)
+    length = len(s)
+    ans = 0
+    p = 9
+    for d in range(1, length):
+        ans += p
+        p *= (10 - d)
+    used = set()
+    for i, ch in enumerate(s):
+        digit = int(ch)
+        start = 1 if i == 0 else 0
+        for d in range(start, digit):
+            if d not in used:
+                remaining = length - i - 1
+                count = 1
+                avail = 10 - (i + 1)
+                for j in range(remaining):
+                    count *= (avail - j)
+                ans += count
+        if digit in used:
+            break
+        used.add(digit)
+        if i == length - 1:
+            ans += 1
+    return ans
+`,
+
+  'divide-intervals-into-minimum-number-of-groups': `def minGroups(intervals):
+    import heapq
+    intervals = sorted([[int(iv[0]), int(iv[1])] for iv in intervals])
+    heap = []
+    for iv in intervals:
+        l, r = iv[0], iv[1]
+        if heap and heap[0] < l:
+            heapq.heappop(heap)
+        heapq.heappush(heap, r)
+    return len(heap)
+`,
+
+  'minimum-number-of-moves-to-make-palindrome': `def minMovesToMakePalindrome(s):
+    s = list(s)
+    cost = 0
+    l, r = 0, len(s) - 1
+    while l < r:
+        if s[l] == s[r]:
+            l += 1
+            r -= 1
+        else:
+            j = r - 1
+            while j > l and s[j] != s[l]:
+                j -= 1
+            if j == l:
+                cost += 1
+                l += 1
+            else:
+                for k in range(j, r):
+                    s[k], s[k+1] = s[k+1], s[k]
+                    cost += 1
+                l += 1
+                r -= 1
+    return cost
+`,
+
+  'node-with-highest-edge-score': `def edgeScore(edges):
+    n = len(edges)
+    score = [0] * n
+    for i, e in enumerate(edges):
+        score[int(e)] += i
+    return score.index(max(score))
+`,
+
+  'minimum-number-of-groups-to-create-a-valid-assignment': `def minGroupsForValidAssignment(balls):
+    from collections import Counter
+    import math
+    freqs = list(Counter(balls).values())
+    min_f = min(freqs)
+    for x in range(min_f, 0, -1):
+        total = 0
+        valid = True
+        for f in freqs:
+            N = math.ceil(f / (x + 1))
+            if N * x > f:
+                valid = False
+                break
+            total += N
+        if valid:
+            return total
+    return len(balls)
+`,
+
+  // batch 66
+  'soup-servings': `def soupServings(n):
+    if n >= 4800:
+        return 1.0
+    import math
+    n = math.ceil(n / 25)
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dp(a, b):
+        if a <= 0 and b <= 0:
+            return 0.5
+        if a <= 0:
+            return 1.0
+        if b <= 0:
+            return 0.0
+        return 0.25 * (dp(a - 4, b) + dp(a - 3, b - 1) + dp(a - 2, b - 2) + dp(a - 1, b - 3))
+    return dp(n, n)
+`,
+
+  'minimum-number-of-rabbits': `def numRabbits(answers):
+    from collections import Counter
+    import math
+    count = Counter(answers)
+    total = 0
+    for color, freq in count.items():
+        total += math.ceil(freq / (color + 1)) * (color + 1)
+    return total
+`,
+
+  'the-maze-ii': `def shortestDistance(maze, start, destination):
+    import heapq
+    m, n = len(maze), len(maze[0])
+    dist = [[float('inf')] * n for _ in range(m)]
+    dist[start[0]][start[1]] = 0
+    heap = [(0, start[0], start[1])]
+    while heap:
+        d, r, c = heapq.heappop(heap)
+        if d > dist[r][c]:
+            continue
+        for dr, dc in ((0,1),(0,-1),(1,0),(-1,0)):
+            nr, nc, steps = r, c, 0
+            while 0 <= nr + dr < m and 0 <= nc + dc < n and maze[nr + dr][nc + dc] == 0:
+                nr += dr
+                nc += dc
+                steps += 1
+            nd = d + steps
+            if nd < dist[nr][nc]:
+                dist[nr][nc] = nd
+                heapq.heappush(heap, (nd, nr, nc))
+    ans = dist[destination[0]][destination[1]]
+    return -1 if ans == float('inf') else ans
+`,
+
+  'maximum-vacation-days': `def maxVacationDays(flights, days):
+    n = len(flights)
+    K = len(days[0])
+    NEG_INF = float('-inf')
+    dp = [NEG_INF] * n
+    dp[0] = 0
+    for week in range(K):
+        ndp = [NEG_INF] * n
+        for city in range(n):
+            if dp[city] == NEG_INF:
+                continue
+            for nxt in range(n):
+                if nxt == city or flights[city][nxt] == 1:
+                    val = dp[city] + days[nxt][week]
+                    if val > ndp[nxt]:
+                        ndp[nxt] = val
+        dp = ndp
+    return max(0, max((x for x in dp if x != NEG_INF), default=0))
+`,
+
+  // batch 64 (remote)
+
+  'find-the-k-or-of-an-array': `def findKOr(nums, k):
+    result = 0
+    for bit in range(31):
+        count = sum(1 for n in nums if n & (1 << bit))
+        if count >= k:
+            result |= 1 << bit
+    return result
+`,
+
+  'minimum-number-of-operations-to-satisfy-conditions': `def minimumOperations(grid):
+    m = len(grid)
+    n = len(grid[0]) if grid else 0
+    dp = [0] * 10
+    for c in range(n):
+        cnt = [0] * 10
+        for r in range(m):
+            cnt[grid[r][c]] += 1
+        cost = [m - cnt[d] for d in range(10)]
+        # Find two smallest in dp
+        min1, min2, min_idx = float('inf'), float('inf'), -1
+        for d in range(10):
+            if dp[d] < min1:
+                min2 = min1
+                min1 = dp[d]
+                min_idx = d
+            elif dp[d] < min2:
+                min2 = dp[d]
+        new_dp = [0] * 10
+        for d in range(10):
+            best = 0 if c == 0 else (min2 if d == min_idx else min1)
+            new_dp[d] = cost[d] + best
+        dp = new_dp
+    return min(dp)
+`,
+
+  'maximum-sum-of-almost-unique-subarray': `def maxSum(nums, m, k):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    window_sum = 0
+    distinct = 0
+    best = 0
+    for i, v in enumerate(nums):
+        freq[v] += 1
+        if freq[v] == 1:
+            distinct += 1
+        window_sum += v
+        if i >= k:
+            left = nums[i - k]
+            window_sum -= left
+            freq[left] -= 1
+            if freq[left] == 0:
+                del freq[left]
+                distinct -= 1
+        if i >= k - 1 and distinct >= m:
+            best = max(best, window_sum)
+    return best
+`,
+
+  'split-array-into-maximum-number-of-subarrays': `def maxSubarrays(nums):
+    total_and = nums[0]
+    for n in nums[1:]:
+        total_and &= n
+    count = 0
+    run = (1 << 30) - 1 + (1 << 30)
+    for n in nums:
+        run &= n
+        if run == total_and:
+            count += 1
+            run = (1 << 30) - 1 + (1 << 30)
+    return max(1, count)
+`,
+
+  'minimum-number-of-operations-to-make-array-xor-equal-to-k': `def minOperations(nums, k):
+    xor_all = 0
+    for n in nums:
+        xor_all ^= n
+    diff = xor_all ^ k
+    return bin(diff).count('1')
+`,
+
+  'maximum-alternating-subarray-sum': `def alternatingSubarraySum(nums):
+    pos = float('-inf')
+    neg = float('-inf')
+    best = float('-inf')
+    for n in nums:
+        new_pos = max(n, (neg + n) if neg != float('-inf') else n)
+        new_neg = (pos - n) if pos != float('-inf') else float('-inf')
+        pos = new_pos
+        neg = new_neg
+        best = max(best, pos)
+    return best
+`,
+
+  'minimum-replacements-to-sort-the-array': `def minimumReplacement(nums):
+    import math
+    if not nums:
+        return 0
+    ops = 0
+    bound = nums[-1]
+    for i in range(len(nums) - 2, -1, -1):
+        v = nums[i]
+        if v > bound:
+            pieces = math.ceil(v / bound)
+            ops += pieces - 1
+            bound = v // pieces
+        else:
+            bound = v
+    return ops
+`,
+
+  'minimum-cost-valid-path-in-grid': `def minCost(grid):
+    import heapq
+    m, n = len(grid), len(grid[0])
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    dist = [[float('inf')] * n for _ in range(m)]
+    dist[0][0] = 0
+    heap = [(0, 0, 0)]
+    while heap:
+        cost, r, c = heapq.heappop(heap)
+        if cost > dist[r][c]:
+            continue
+        if r == m - 1 and c == n - 1:
+            return cost
+        for d, (dr, dc) in enumerate(dirs):
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n:
+                edge_cost = 0 if grid[r][c] == d + 1 else 1
+                new_cost = cost + edge_cost
+                if new_cost < dist[nr][nc]:
+                    dist[nr][nc] = new_cost
+                    heapq.heappush(heap, (new_cost, nr, nc))
+    return dist[m-1][n-1]
+`,
+
+  'decrease-elements-to-make-array-zigzag': `def movesToMakeZigzag(nums):
+    n = len(nums)
+    ans = [0, 0]
+    for i in range(n):
+        neighbors = []
+        if i > 0:
+            neighbors.append(nums[i-1])
+        if i < n-1:
+            neighbors.append(nums[i+1])
+
+    ans = [0, 0]
+    for i in range(len(nums)):
+        neighbors = []
+        if i > 0:
+            neighbors.append(nums[i - 1])
+        if i < len(nums) - 1:
+            neighbors.append(nums[i + 1])
+        min_neighbor = min(neighbors) if neighbors else float('inf')
+        ans[i % 2] += max(0, nums[i] - min_neighbor + 1)
+    return min(ans)
+`,
+
+  'maximal-network-rank': `def maximalNetworkRank(n, roads):
+    degree = [0] * n
+    connected = set()
+    for a, b in roads:
+        degree[a] += 1
+        degree[b] += 1
+        connected.add((min(a, b), max(a, b)))
+    ans = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            rank = degree[i] + degree[j] - (1 if (i, j) in connected else 0)
+            ans = max(ans, rank)
+    return ans
+`,
+
+  'minimum-taps-to-open-to-water-a-garden': `def minTaps(n, ranges):
+    max_reach = [0] * (n + 1)
+    for i in range(n + 1):
+        left = max(0, i - ranges[i])
+        right = min(n, i + ranges[i])
+        max_reach[left] = max(max_reach[left], right)
+    taps = 0
+    curr_end = 0
+    furthest = 0
+    for i in range(n):
+        furthest = max(furthest, max_reach[i])
+        if i == curr_end:
+            if furthest <= curr_end:
+                return -1
+            taps += 1
+            curr_end = furthest
+
+    curr_end = next_end = taps = 0
+    for i in range(n):
+        next_end = max(next_end, max_reach[i])
+        if i == curr_end:
+            if next_end == curr_end:
+                return -1
+            curr_end = next_end
+            taps += 1
+    return taps
+`,
+
+  'put-marbles-in-bags': `def putMarbles(weights, k):
+    n = len(weights)
+    if k == 1 or k == n:
+        return 0
+    pair_sums = sorted(weights[i] + weights[i+1] for i in range(n-1))
+    min_score = sum(pair_sums[:k-1])
+    max_score = sum(pair_sums[-(k-1):])
+    return max_score - min_score
+`,
+
+  'grid-illumination': `def gridIllumination(n, lamps, queries):
+    from collections import defaultdict
+    lamp_set = set()
+    row_count = defaultdict(int)
+    col_count = defaultdict(int)
+    diag_count = defaultdict(int)
+    anti_count = defaultdict(int)
+
+    def add_lamp(r, c):
+        if (r, c) in lamp_set:
+            return
+        lamp_set.add((r, c))
+        row_count[r] += 1
+        col_count[c] += 1
+        diag_count[r - c] += 1
+        anti_count[r + c] += 1
+
+    def remove_lamp(r, c):
+        if (r, c) not in lamp_set:
+            return
+        lamp_set.discard((r, c))
+        row_count[r] -= 1
+        col_count[c] -= 1
+        diag_count[r - c] -= 1
+        anti_count[r + c] -= 1
+
+    for r, c in lamps:
+        add_lamp(r, c)
+
+    result = []
+    for qr, qc in queries:
+        lit = (row_count[qr] > 0 or col_count[qc] > 0 or
+               diag_count[qr - qc] > 0 or anti_count[qr + qc] > 0)
+        result.append(1 if lit else 0)
+        for dr in range(-1, 2):
+            for dc in range(-1, 2):
+                remove_lamp(qr + dr, qc + dc)
+    return result
+`,
+
+  'find-all-numbers-disappeared-in-array': `def findDisappearedNumbers(nums):
+    seen = set(nums)
+    return [i for i in range(1, len(nums) + 1) if i not in seen]
+`,
+
+  'kth-largest-element-in-array': `def findKthLargest(nums, k):
+    return sorted(nums, reverse=True)[k - 1]
+`,
+
+  'best-time-to-buy-and-sell-stock-ii': `def maxProfit(prices):
+    profit = 0
+    for i in range(1, len(prices)):
+        if prices[i] > prices[i - 1]:
+            profit += prices[i] - prices[i - 1]
+    return profit
+`,
+
+  'count-good-nodes-in-binary-tree': `def goodNodes(root):
+    def to_int(x):
+        try: return int(x)
+        except: return None
+    def build(arr):
+        converted = [to_int(x) for x in arr]
+        if not converted or converted[0] is None:
+            return None
+        class N:
+            def __init__(self, v): self.val = v; self.left = None; self.right = None
+        r = N(converted[0])
+        q = [r]
+        i = 1
+        while q and i < len(converted):
+            node = q.pop(0)
+            if i < len(converted) and converted[i] is not None:
+                node.left = N(converted[i]); q.append(node.left)
+            i += 1
+            if i < len(converted) and converted[i] is not None:
+                node.right = N(converted[i]); q.append(node.right)
+            i += 1
+        return r
+    arr = list(root) if hasattr(root, '__iter__') else [root]
+    tree = build(arr)
+    count = [0]
+    def dfs(node, max_so_far):
+        if not node: return
+        if node.val >= max_so_far: count[0] += 1
+        dfs(node.left, max(max_so_far, node.val))
+        dfs(node.right, max(max_so_far, node.val))
+    dfs(tree, float('-inf'))
+    return count[0]
+`,
+
+  'minimum-depth-of-binary-tree': `def minDepth(root):
+    def to_int(x):
+        try: return int(x)
+        except: return None
+    def build(arr):
+        converted = [to_int(x) for x in arr]
+        if not converted or converted[0] is None:
+            return None
+        class N:
+            def __init__(self, v): self.val = v; self.left = None; self.right = None
+        r = N(converted[0])
+        q = [r]
+        i = 1
+        while q and i < len(converted):
+            node = q.pop(0)
+            if i < len(converted) and converted[i] is not None:
+                node.left = N(converted[i]); q.append(node.left)
+            i += 1
+            if i < len(converted) and converted[i] is not None:
+                node.right = N(converted[i]); q.append(node.right)
+            i += 1
+        return r
+    arr = list(root) if hasattr(root, '__iter__') else [root]
+    if not arr or (len(arr) == 1 and arr[0] is None):
+        return 0
+    tree = build(arr)
+    if not tree: return 0
+    def min_d(node):
+        if not node: return float('inf')
+        if not node.left and not node.right: return 1
+        if not node.left: return 1 + min_d(node.right)
+        if not node.right: return 1 + min_d(node.left)
+        return 1 + min(min_d(node.left), min_d(node.right))
+    result = min_d(tree)
+    return result if result != float('inf') else 0
+`,
+
+  'shift-2d-grid': `def shiftGrid(grid, k):
+    m, n = len(grid), len(grid[0])
+    total = m * n
+    flat = [grid[i][j] for i in range(m) for j in range(n)]
+    shift = k % total
+    rotated = flat[total - shift:] + flat[:total - shift]
+    return [rotated[i * n:(i + 1) * n] for i in range(m)]
+`,
+
+  'find-and-replace-in-string': `def findReplaceString(s, indices, sources, targets):
+    replacements = {}
+    for idx, src, tgt in zip(indices, sources, targets):
+        if s[idx:idx + len(src)] == src:
+            replacements[idx] = (len(src), tgt)
+    result = []
+    i = 0
+    while i < len(s):
+        if i in replacements:
+            length, tgt = replacements[i]
+            result.append(tgt)
+            i += length
+        else:
+            result.append(s[i])
+            i += 1
+    return ''.join(result)
+`,
+
+  'campus-bikes': `def campusBikes(workers, bikes):
+    workers = [list(w.to_py() if hasattr(w, 'to_py') else w) for w in workers]
+    bikes = [list(b.to_py() if hasattr(b, 'to_py') else b) for b in bikes]
+    triples = []
+    for wi, w in enumerate(workers):
+        for bi, b in enumerate(bikes):
+            dist = abs(w[0] - b[0]) + abs(w[1] - b[1])
+            triples.append((dist, wi, bi))
+    triples.sort()
+    assigned_w = set()
+    assigned_b = set()
+    result = [-1] * len(workers)
+    for dist, wi, bi in triples:
+        if wi not in assigned_w and bi not in assigned_b:
+            result[wi] = bi
+            assigned_w.add(wi)
+            assigned_b.add(bi)
+        if len(assigned_w) == len(workers):
+            break
+    return result
+`,
+
+  'count-the-number-of-complete-components': `def countCompleteComponents(n, edges):
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in edges]
+    parent = list(range(n))
+    rank = [0] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(x, y):
+        px, py = find(x), find(y)
+        if px == py: return
+        if rank[px] < rank[py]: px, py = py, px
+        parent[py] = px
+        if rank[px] == rank[py]: rank[px] += 1
+    for u, v in edges:
+        union(int(u), int(v))
+    from collections import defaultdict
+    node_count = defaultdict(int)
+    edge_count = defaultdict(int)
+    for i in range(n):
+        node_count[find(i)] += 1
+    for u, v in edges:
+        edge_count[find(int(u))] += 1
+    count = 0
+    for p, nc in node_count.items():
+        ec = edge_count[p]
+        if ec == nc * (nc - 1) // 2:
+            count += 1
+    return count
+`,
+
+  'design-memory-allocator': `def memoryAllocator(n, ops):
+    ops = [list(o.to_py() if hasattr(o, 'to_py') else o) for o in ops]
+    mem = [0] * n
+    results = []
+    for op in ops:
+        t, a, b = int(op[0]), int(op[1]), int(op[2])
+        if t == 0:
+            start = -1
+            for i in range(n - a + 1):
+                if all(mem[i+j] == 0 for j in range(a)):
+                    start = i
+                    break
+            if start == -1:
+                results.append(-1)
+            else:
+                for i in range(start, start + a):
+                    mem[i] = b
+                results.append(start)
+        else:
+            freed = sum(1 for i in range(n) if mem[i] == a)
+            for i in range(n):
+                if mem[i] == a: mem[i] = 0
+            results.append(freed)
+    return results
+`,
+
+  'escape-the-ghosts': `def escapeGhosts(ghosts, target):
+    ghosts = [list(g.to_py() if hasattr(g, 'to_py') else g) for g in ghosts]
+    target = list(target.to_py() if hasattr(target, 'to_py') else target)
+    player_dist = abs(target[0]) + abs(target[1])
+    for g in ghosts:
+        ghost_dist = abs(target[0] - g[0]) + abs(target[1] - g[1])
+        if ghost_dist <= player_dist:
+            return False
+    return True
+`,
+
+  'check-whether-two-strings-are-almost-equivalent': `def checkAlmostEquivalent(word1, word2):
+    from collections import Counter
+    c1, c2 = Counter(word1), Counter(word2)
+    all_chars = set(c1) | set(c2)
+    return all(abs(c1[ch] - c2[ch]) <= 3 for ch in all_chars)
+`,
+
+  'minimum-number-of-swaps-to-make-the-binary-string-alternating': `def minSwaps(s):
+    ones = s.count('1')
+    zeros = len(s) - ones
+    if abs(ones - zeros) > 1:
+        return -1
+    def count_swaps(start):
+        mismatches = 0
+        for i, c in enumerate(s):
+            expected = start if i % 2 == 0 else ('1' if start == '0' else '0')
+            if c != expected:
+                mismatches += 1
+        return mismatches // 2
+    if ones > zeros:
+        return count_swaps('1')
+    if zeros > ones:
+        return count_swaps('0')
+    return min(count_swaps('0'), count_swaps('1'))
+`,
+
+  'maximum-number-of-non-overlapping-subarrays-with-sum-equals-target': `def maxNonOverlapping(nums, target):
+    seen = {0}
+    prefix = 0
+    count = 0
+    for num in nums:
+        prefix += num
+        if prefix - target in seen:
+            count += 1
+            seen = {prefix}
+        else:
+            seen.add(prefix)
+    return count
+`,
+
+  'find-the-minimum-possible-sum-of-a-beautiful-array': `def minimumPossibleSum(n, target):
+    MOD = 10**9 + 7
+    take = min(n, target // 2)
+    part1 = take * (take + 1) // 2
+    remaining = n - take
+    part2 = target * remaining + remaining * (remaining - 1) // 2
+    return (part1 + part2) % MOD
+`,
+
+  'max-stack': `def maxStackRunner(ops, args):
+    main_stack = []
+    max_stack = []
+    results = []
+    for op, a in zip(ops, args):
+        if op == 'push':
+            x = a[0]
+            main_stack.append(x)
+            max_stack.append(max(x, max_stack[-1] if max_stack else x))
+            results.append(None)
+        elif op == 'pop':
+            max_stack.pop()
+            results.append(main_stack.pop())
+        elif op == 'top':
+            results.append(main_stack[-1])
+        elif op == 'peekMax':
+            results.append(max_stack[-1])
+        elif op == 'popMax':
+            mx = max_stack[-1]
+            buf = []
+            while main_stack[-1] != mx:
+                max_stack.pop()
+                buf.append(main_stack.pop())
+            max_stack.pop()
+            main_stack.pop()
+            for v in reversed(buf):
+                main_stack.append(v)
+                max_stack.append(max(v, max_stack[-1] if max_stack else v))
+            results.append(mx)
+        else:
+            results.append(None)
+    return results
+`,
+
+  'count-the-number-of-good-subarrays': `def countGood(nums, k):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    pairs = 0
+    left = 0
+    result = 0
+    for right in range(len(nums)):
+        pairs += freq[nums[right]]
+        freq[nums[right]] += 1
+        while pairs >= k:
+            result += len(nums) - right
+            freq[nums[left]] -= 1
+            pairs -= freq[nums[left]]
+            left += 1
+    return result
+`,
+
+  'maximum-strictly-increasing-cells-in-a-matrix': `def maxIncreasingCells(mat):
+    m, n = len(mat), len(mat[0])
+    row_best = [0] * m
+    col_best = [0] * n
+    dp = [[1] * n for _ in range(m)]
+    cells = sorted((mat[i][j], i, j) for i in range(m) for j in range(n))
+    ans = 1
+    idx = 0
+    while idx < len(cells):
+        end = idx
+        while end < len(cells) and cells[end][0] == cells[idx][0]:
+            end += 1
+        group = cells[idx:end]
+        for val, r, c in group:
+            dp[r][c] = max(row_best[r], col_best[c]) + 1
+            ans = max(ans, dp[r][c])
+        for val, r, c in group:
+            row_best[r] = max(row_best[r], dp[r][c])
+            col_best[c] = max(col_best[c], dp[r][c])
+        idx = end
+    return ans
+`,
+
+  'find-longest-special-substring-that-occurs-thrice-i': `def maximumLength(s):
+    from collections import defaultdict
+    runs = defaultdict(list)
+    i = 0
+    while i < len(s):
+        j = i
+        while j < len(s) and s[j] == s[i]:
+            j += 1
+        runs[s[i]].append(j - i)
+        i = j
+    best = -1
+    for ch, lengths in runs.items():
+        lengths.sort(reverse=True)
+        max_len = lengths[0] if lengths else 0
+        for length in range(max_len, 0, -1):
+            count = 0
+            for r in lengths:
+                if r < length:
+                    break
+                count += r - length + 1
+                if count >= 3:
+                    break
+            if count >= 3:
+                best = max(best, length)
+                break
+    return best
+`,
+
+  'minimum-operations-to-make-array-values-equal-to-k': `def minOperations(nums, k):
+    for v in nums:
+        if v < k:
+            return -1
+    return len(set(v for v in nums if v > k))
+`,
+  // batch 67
+  'minimum-operations-to-make-uni-value-grid': `def minOperations(grid, x):
+    flat = [v for row in grid for v in row]
+    rem = flat[0] % x
+    for v in flat:
+        if v % x != rem:
+            return -1
+    flat.sort()
+    median = flat[len(flat) // 2]
+    return sum(abs(v - median) // x for v in flat)
+`,
+
+  'count-subarrays-with-fixed-bounds': `def countSubarrays(nums, minK, maxK):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    else:
+        nums = list(nums)
+    last_bad = last_min = last_max = -1
+    count = 0
+    for i, v in enumerate(nums):
+        v = int(v)
+        if v < minK or v > maxK:
+            last_bad = i
+        if v == minK:
+            last_min = i
+        if v == maxK:
+            last_max = i
+        count += max(0, min(last_min, last_max) - last_bad)
+    return count
+`,
+
+  'minimum-moves-to-make-array-complementary': `def minMoves(nums, limit):
+    n = len(nums)
+    diff = [0] * (2 * limit + 2)
+    for i in range(n // 2):
+        a = min(nums[i], nums[n - 1 - i])
+        b = max(nums[i], nums[n - 1 - i])
+        diff[2] += 2
+        diff[2 * limit + 1] -= 2
+        diff[a + 1] -= 1
+        if b + limit + 1 <= 2 * limit + 1:
+            diff[b + limit + 1] += 1
+        diff[a + b] -= 1
+        if a + b + 1 <= 2 * limit + 1:
+            diff[a + b + 1] += 1
+    cur = 0
+    result = float('inf')
+    for t in range(2, 2 * limit + 1):
+        cur += diff[t]
+        result = min(result, cur)
+    return result
+`,
+
+  'find-winner-of-array-game': `def getWinner(arr, k):
+    current = arr[0]
+    wins = 0
+    for i in range(1, len(arr)):
+        if arr[i] > current:
+            current = arr[i]
+            wins = 1
+        else:
+            wins += 1
+        if wins >= k:
+            return current
+    return current
+`,
+
+  'maximum-number-of-robots-within-budget': `def maximumRobots(chargeTimes, runningCosts, budget):
+    from collections import deque
+    n = len(chargeTimes)
+    def can_fit(k):
+        dq = deque()
+        run_sum = 0
+        for i in range(n):
+            while dq and chargeTimes[dq[-1]] <= chargeTimes[i]:
+                dq.pop()
+            dq.append(i)
+            run_sum += runningCosts[i]
+            if i >= k:
+                if dq[0] == i - k:
+                    dq.popleft()
+                run_sum -= runningCosts[i - k]
+            if i >= k - 1:
+                cost = chargeTimes[dq[0]] + k * run_sum
+                if cost <= budget:
+                    return True
+        return False
+    lo, hi, ans = 0, n, 0
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if mid == 0 or can_fit(mid):
+            ans = mid
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return ans
+`,
+
+  'minimum-limit-of-balls-in-a-bag': `def minimumSize(nums, maxOperations):
+    lo, hi = 1, max(nums)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        ops = sum((n - 1) // mid for n in nums)
+        if ops <= maxOperations:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'maximum-rows-covered-by-columns': `def maximumRows(matrix, numSelect):
+    m = len(matrix)
+    n = len(matrix[0])
+    row_masks = [sum(v << j for j, v in enumerate(row)) for row in matrix]
+    best = 0
+    for mask in range(1 << n):
+        if bin(mask).count('1') != numSelect:
+            continue
+        count = sum(1 for rm in row_masks if (rm & mask) == rm)
+        best = max(best, count)
+    return best
+`,
+
+  'minimum-array-length-after-pair-removals': `def minLengthAfterRemovals(nums):
+    from collections import Counter
+    n = len(nums)
+    max_freq = max(Counter(nums).values())
+    if max_freq > n // 2:
+        return 2 * max_freq - n
+    return n % 2
+`,
+
+  'maximum-value-of-k-coins-from-piles': `def maxValueOfCoins(piles, k):
+    piles = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in (piles.to_py() if hasattr(piles, 'to_py') else piles)]
+    piles = [[int(v) for v in p] for p in piles]
+    k = int(k)
+    dp = [0] * (k + 1)
+    for pile in piles:
+        prefix = [0]
+        for v in pile:
+            prefix.append(prefix[-1] + v)
+        for j in range(k, -1, -1):
+            for take in range(1, min(len(pile), j) + 1):
+                dp[j] = max(dp[j], dp[j - take] + prefix[take])
+    return dp[k]
+`,
+
+  'parallel-courses-iii': `def minimumTime(n, relations, time):
+    from collections import deque
+    adj = [[] for _ in range(n + 1)]
+    indegree = [0] * (n + 1)
+    for u, v in relations:
+        adj[u].append(v)
+        indegree[v] += 1
+    dp = [0] * (n + 1)
+    for i in range(1, n + 1):
+        dp[i] = time[i - 1]
+    queue = deque(i for i in range(1, n + 1) if indegree[i] == 0)
+    while queue:
+        u = queue.popleft()
+        for v in adj[u]:
+            dp[v] = max(dp[v], dp[u] + time[v - 1])
+            indegree[v] -= 1
+            if indegree[v] == 0:
+                queue.append(v)
+    return max(dp[1:])
+`,
+
+  // batch 69
+  'merge-nodes-in-between-zeros': `def mergeNodes(head):
+    dummy = ListNode(0)
+    tail = dummy
+    cur = head.next
+    s = 0
+    while cur is not None:
+        if cur.val == 0:
+            tail.next = ListNode(s)
+            tail = tail.next
+            s = 0
+        else:
+            s += cur.val
+        cur = cur.next
+    return dummy.next
+`,
+
+  'reachable-nodes-with-restrictions': `def reachableNodes(n, edges, restricted):
+    blocked = set(restricted)
+    adj = [[] for _ in range(n)]
+    for a, b in edges:
+        adj[a].append(b)
+        adj[b].append(a)
+    count = 0
+    visited = {0}
+    queue = [0]
+    while queue:
+        node = queue.pop()
+        count += 1
+        for nb in adj[node]:
+            if nb not in visited and nb not in blocked:
+                visited.add(nb)
+                queue.append(nb)
+    return count
+`,
+
+  'minimum-number-of-k-consecutive-bit-flips': `def minKBitFlips(nums, k):
+    n = len(nums)
+    flip = [0] * n
+    flips = 0
+    ans = 0
+    for i in range(n):
+        if i >= k:
+            flips -= flip[i - k]
+        if (nums[i] + flips) % 2 == 0:
+            if i + k > n:
+                return -1
+            flip[i] = 1
+            flips += 1
+            ans += 1
+    return ans
+`,
+
+  'minimum-size-subarray-in-infinite-array': `def minSizeSubarray(nums, target):
+    n = len(nums)
+    total = sum(nums)
+    if total == 0:
+        return -1
+    full_loops = target // total
+    rem = target % total
+    if rem == 0:
+        return full_loops * n
+    double = nums + nums
+    min_len = float('inf')
+    s = 0
+    l = 0
+    for r in range(len(double)):
+        s += double[r]
+        while s > rem:
+            s -= double[l]
+            l += 1
+        if s == rem:
+            min_len = min(min_len, r - l + 1)
+    return -1 if min_len == float('inf') else min_len + full_loops * n
+`,
+
+  // batch 70 (remote)
+  'number-of-ways-to-select-buildings': `
+def numberOfWays(s):
+    c0 = c1 = c01 = c10 = ans = 0
+    for ch in str(s):
+        if ch == '0':
+            ans += c01
+            c10 += c1
+            c0 += 1
+        else:
+            ans += c10
+            c01 += c0
+            c1 += 1
+    return ans
+`,
+
+  'maximum-fruits-harvested-after-at-most-k-steps': `
+def maxTotalFruits(fruits, startPos, k):
+    if hasattr(fruits, 'to_py'):
+        raw = fruits.to_py()
+        fruits_list = [[int(raw[i][0]), int(raw[i][1])] for i in range(len(raw))]
+    else:
+        fruits_list = [[int(row[0]), int(row[1])] for row in fruits]
+    n = len(fruits_list)
+    if n == 0:
+        return 0
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + fruits_list[i][1]
+    def can_reach(l, r):
+        L, R = fruits_list[l][0], fruits_list[r][0]
+        if R <= startPos:
+            return startPos - L <= k
+        if L >= startPos:
+            return R - startPos <= k
+        return min(2 * (R - startPos) + (startPos - L),
+                   2 * (startPos - L) + (R - startPos)) <= k
+    ans = 0
+    left = 0
+    for right in range(n):
+        while left <= right and not can_reach(left, right):
+            left += 1
+        if left <= right:
+            ans = max(ans, prefix[right + 1] - prefix[left])
+    return ans
+`,
+
+  'count-unique-chars-of-all-substrings': `
+def uniqueLetterString(s):
+    n = len(s)
+    prev = [-1] * n
+    nxt = [n] * n
+    last = {}
+    for i in range(n):
+        if s[i] in last:
+            prev[i] = last[s[i]]
+        last[s[i]] = i
+    last = {}
+    for i in range(n - 1, -1, -1):
+        if s[i] in last:
+            nxt[i] = last[s[i]]
+        last[s[i]] = i
+    return sum((i - prev[i]) * (nxt[i] - i) for i in range(n))
+`,
+
+  'minimum-money-required-before-transactions': `
+def minimumMoney(transactions):
+    if hasattr(transactions, 'to_py'):
+        raw = transactions.to_py()
+        txns = [[int(raw[i][0]), int(raw[i][1])] for i in range(len(raw))]
+    else:
+        txns = [[int(row[0]), int(row[1])] for row in transactions]
+    total_loss = sum(max(0, c - b) for c, b in txns)
+    ans = 0
+    for c, b in txns:
+        if c > b:
+            ans = max(ans, total_loss + b)
+        else:
+            ans = max(ans, total_loss + c)
+    return ans
+`,
+
+  // batch 69 (local)
+  'image-smoother': `def imageSmoother(img):
+    m, n = len(img), len(img[0])
+    res = [[0]*n for _ in range(m)]
+    for r in range(m):
+        for c in range(n):
+            s = cnt = 0
+            for dr in (-1, 0, 1):
+                for dc in (-1, 0, 1):
+                    nr, nc = r+dr, c+dc
+                    if 0 <= nr < m and 0 <= nc < n:
+                        s += img[nr][nc]; cnt += 1
+            res[r][c] = s // cnt
+    return res
+`,
+
+  'complex-number-multiplication': `def complexNumberMultiply(num1, num2):
+    def parse(s):
+        a, b = s.split('+')
+        return int(a), int(b[:-1])
+    a, b = parse(num1); c, d = parse(num2)
+    return f"{a*c-b*d}+{a*d+b*c}i"
+`,
+
+  'number-of-boomerangs': `def numberOfBoomerangs(points):
+    ans = 0
+    for x1, y1 in points:
+        dist = {}
+        for x2, y2 in points:
+            d = (x1-x2)**2 + (y1-y2)**2
+            dist[d] = dist.get(d, 0) + 1
+        for cnt in dist.values():
+            ans += cnt * (cnt - 1)
+    return ans
+`,
+
+  'find-duplicate-file-in-system': `def findDuplicate(paths):
+    from collections import defaultdict
+    content_map = defaultdict(list)
+    for p in paths:
+        parts = p.split(' ')
+        d = parts[0]
+        for f in parts[1:]:
+            paren = f.index('(')
+            name = f[:paren]
+            content = f[paren+1:-1]
+            content_map[content].append(d + '/' + name)
+    return sorted([sorted(v) for v in content_map.values() if len(v) >= 2])
+`,
+
+  'poor-pigs': `def poorPigs(buckets, minutesToDie, minutesToTest):
+    rounds = minutesToTest // minutesToDie
+    pigs = 0
+    while (rounds + 1) ** pigs < buckets:
+        pigs += 1
+    return pigs
+`,
+
+  'strobogrammatic-number': `def isStrobogrammatic(num):
+    pairs = {'0':'0','1':'1','6':'9','8':'8','9':'6'}
+    l, r = 0, len(num) - 1
+    while l <= r:
+        if pairs.get(num[l]) != num[r]:
+            return False
+        l += 1; r -= 1
+    return True
+`,
+
+  'fraction-addition-and-subtraction': `def fractionAddition(expression):
+    from math import gcd
+    expr = expression
+    if not expr.startswith('-') and not expr.startswith('+'):
+        expr = '+' + expr
+    fracs = []
+    i = 0
+    while i < len(expr):
+        sign = 1 if expr[i] == '+' else -1
+        i += 1
+        j = i
+        while j < len(expr) and expr[j] not in '+-':
+            j += 1
+        n, d = map(int, expr[i:j].split('/'))
+        fracs.append((sign * n, d))
+        i = j
+    num, den = 0, 1
+    for n, d in fracs:
+        num = num * d + n * den
+        den = den * d
+        g = gcd(abs(num), abs(den)) if num != 0 else den
+        num //= g; den //= g
+    if den < 0:
+        num, den = -num, -den
+    return str(num) + '/' + str(den)
+`,
+
+  'longest-zigzag-path-in-binary-tree': `def longestZigZag(root):
+    from collections import deque
+    def to_int(x):
+        try: return int(x)
+        except: return None
+    def build(arr):
+        converted = [to_int(x) for x in arr]
+        if not converted or converted[0] is None: return None
+        root_node = [converted[0], None, None]
+        q = deque([root_node])
+        i = 1
+        while q and i < len(converted):
+            node = q.popleft()
+            if i < len(converted) and converted[i] is not None:
+                node[1] = [converted[i], None, None]; q.append(node[1])
+            i += 1
+            if i < len(converted) and converted[i] is not None:
+                node[2] = [converted[i], None, None]; q.append(node[2])
+            i += 1
+        return root_node
+    root_node = build(root)
+    ans = [0]
+    def dfs(node, from_left, length):
+        if node is None: return
+        ans[0] = max(ans[0], length)
+        if from_left:
+            dfs(node[2], False, length + 1)
+            dfs(node[1], True, 1)
+        else:
+            dfs(node[1], True, length + 1)
+            dfs(node[2], False, 1)
+    if root_node:
+        dfs(root_node[1], True, 1)
+        dfs(root_node[2], False, 1)
+    return ans[0]
+`,
+
+  // batch 70b
+  'cells-in-a-range-on-an-excel-sheet': `def cellsInRange(s):
+    result = []
+    for c in range(ord(s[0]), ord(s[3]) + 1):
+        for r in range(int(s[1]), int(s[4]) + 1):
+            result.append(chr(c) + str(r))
+    return result
+`,
+  'construct-the-rectangle': `def constructRectangle(area):
+    import math
+    w = int(math.sqrt(area))
+    while area % w != 0:
+        w -= 1
+    return [area // w, w]
+`,
+  'count-pairs-of-similar-words': `def similarPairs(words):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    count = 0
+    for word in words:
+        key = ''.join(sorted(set(word)))
+        count += freq[key]
+        freq[key] += 1
+    return count
+`,
+  'make-two-arrays-equal-by-reversing-subarrays': `def canBeEqual(target, arr):
+    return sorted(target) == sorted(arr)
+`,
+  'minimum-number-of-buckets-required': `def minimumBuckets(street):
+    s = list(street)
+    count = 0
+    for i in range(len(s)):
+        if s[i] != 'H':
+            continue
+        if i > 0 and s[i-1] == 'B':
+            continue
+        if i + 1 < len(s) and s[i+1] == '.':
+            s[i+1] = 'B'
+            count += 1
+        elif i > 0 and s[i-1] == '.':
+            s[i-1] = 'B'
+            count += 1
+        else:
+            return -1
+    return count
+`,
+
+  'find-the-duplicate-subtrees': `def findDuplicateSubtrees(root):
+    from collections import defaultdict, deque
+    def to_int(x):
+        try: return int(x)
+        except: return None
+    def build(arr):
+        converted = [to_int(x) for x in arr]
+        if not converted or converted[0] is None: return None
+        root_node = [converted[0], None, None]
+        q = deque([root_node])
+        i = 1
+        while q and i < len(converted):
+            node = q.popleft()
+            if i < len(converted) and converted[i] is not None:
+                node[1] = [converted[i], None, None]; q.append(node[1])
+            i += 1
+            if i < len(converted) and converted[i] is not None:
+                node[2] = [converted[i], None, None]; q.append(node[2])
+            i += 1
+        return root_node
+    def bfs(node):
+        if node is None: return []
+        res, q = [], deque([node])
+        while q:
+            n = q.popleft()
+            if n is None: res.append(None)
+            else:
+                res.append(n[0]); q.append(n[1]); q.append(n[2])
+        while res and res[-1] is None: res.pop()
+        return res
+    root_node = build(root)
+    seen = defaultdict(int)
+    result = []
+    def serialize(node):
+        if node is None: return '#'
+        s = str(node[0]) + ',' + serialize(node[1]) + ',' + serialize(node[2])
+        seen[s] += 1
+        if seen[s] == 2: result.append(bfs(node))
+        return s
+    serialize(root_node)
+    return sorted(result, key=lambda x: int(x[0]) if x and x[0] is not None else 0)
+`,
+
+  'find-score-of-an-array-after-marking-all-elements': `def findScore(nums):
+    n = len(nums)
+    marked = [False] * n
+    order = sorted(range(n), key=lambda i: (nums[i], i))
+    score = 0
+    for i in order:
+        if marked[i]:
+            continue
+        score += nums[i]
+        marked[i] = True
+        if i > 0:
+            marked[i - 1] = True
+        if i < n - 1:
+            marked[i + 1] = True
+    return score
+`,
+
+  'count-zero-request-servers': `def countServers(n, logs, x, queries):
+    from collections import defaultdict
+    logs_sorted = sorted(logs, key=lambda l: l[1])
+    m = len(queries)
+    idx_order = sorted(range(m), key=lambda i: queries[i])
+    result = [0] * m
+    freq = defaultdict(int)
+    left = 0
+    right = 0
+    for qi in idx_order:
+        q = queries[qi]
+        lo, hi = q - x, q
+        while right < len(logs_sorted) and logs_sorted[right][1] <= hi:
+            srv = logs_sorted[right][0]
+            freq[srv] += 1
+            right += 1
+        while left < right and logs_sorted[left][1] < lo:
+            srv = logs_sorted[left][0]
+            freq[srv] -= 1
+            if freq[srv] == 0:
+                del freq[srv]
+            left += 1
+        result[qi] = n - len(freq)
+    return result
+`,
+
+  'maximum-score-after-applying-operations-on-a-tree': `def maximumScoreAfterOperations(edges, values):
+    from collections import defaultdict
+    n = len(values)
+    adj = defaultdict(list)
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    total = sum(values)
+    def dfs(node, parent):
+        children_cost0 = 0
+        children_cost1 = 0
+        is_leaf = True
+        for child in adj[node]:
+            if child == parent:
+                continue
+            is_leaf = False
+            c0, c1 = dfs(child, node)
+            children_cost0 += c0
+            children_cost1 += c1
+        if is_leaf:
+            return values[node], 0
+        dp1 = 0
+        dp0 = min(values[node] + children_cost1, children_cost0)
+        return dp0, dp1
+    min_kept, _ = dfs(0, -1)
+    return total - min_kept
+`,
+
+  'counting-words-with-a-given-prefix': `def prefixCount(words, pref):
+    return sum(1 for w in words if w.startswith(pref))
+`,
+
+  'earliest-moment-everyone-became-friends': `def earliestAcq(logs, n):
+    logs_sorted = sorted(logs, key=lambda l: l[0])
+    parent = list(range(n))
+    rank = [0] * n
+    components = n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(x, y):
+        px, py = find(x), find(y)
+        if px == py:
+            return False
+        if rank[px] < rank[py]:
+            parent[px] = py
+        elif rank[px] > rank[py]:
+            parent[py] = px
+        else:
+            parent[py] = px
+            rank[px] += 1
+        return True
+    for t, x, y in logs_sorted:
+        if union(x, y):
+            components -= 1
+            if components == 1:
+                return t
+    return -1
+`,
+
+  'minimum-weighted-subgraph-with-the-required-paths': `def minimumWeight(n, edges, src1, src2, dest):
+    import heapq
+    INF = float('inf')
+    fwd = [[] for _ in range(n)]
+    rev = [[] for _ in range(n)]
+    for u, v, w in edges:
+        fwd[u].append((v, w))
+        rev[v].append((u, w))
+    def dijkstra(start, graph):
+        dist = [INF] * n
+        dist[start] = 0
+        heap = [(0, start)]
+        while heap:
+            d, u = heapq.heappop(heap)
+            if d > dist[u]:
+                continue
+            for v, w in graph[u]:
+                nd = dist[u] + w
+                if nd < dist[v]:
+                    dist[v] = nd
+                    heapq.heappush(heap, (nd, v))
+        return dist
+    d1 = dijkstra(src1, fwd)
+    d2 = dijkstra(src2, fwd)
+    dd = dijkstra(dest, rev)
+    ans = INF
+    for m in range(n):
+        if d1[m] < INF and d2[m] < INF and dd[m] < INF:
+            ans = min(ans, d1[m] + d2[m] + dd[m])
+    return -1 if ans == INF else ans
+`,
+
+  'longest-path-in-a-directed-acyclic-graph': `def longestPath(edges, n, s):
+    from collections import deque
+    indegree = [0] * n
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+        indegree[v] += 1
+    dp = [1] * n
+    queue = deque(i for i in range(n) if indegree[i] == 0)
+    ans = 1
+    while queue:
+        u = queue.popleft()
+        for v in adj[u]:
+            if ord(s[v]) == ord(s[u]) + 1:
+                dp[v] = max(dp[v], dp[u] + 1)
+                ans = max(ans, dp[v])
+            indegree[v] -= 1
+            if indegree[v] == 0:
+                queue.append(v)
+    return ans
+`,
+
+  'count-good-triplets-in-an-array': `def goodTriplets(nums1, nums2):
+    n = len(nums1)
+    pos_in_b = [0] * n
+    for i, v in enumerate(nums2):
+        pos_in_b[v] = i
+    seq = [pos_in_b[v] for v in nums1]
+    bit = [0] * (n + 1)
+    def update(i):
+        i += 1
+        while i <= n:
+            bit[i] += 1
+            i += i & -i
+    def query(i):
+        i += 1
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & -i
+        return s
+    left_smaller = [0] * n
+    for j in range(n):
+        left_smaller[j] = query(seq[j] - 1) if seq[j] > 0 else 0
+        update(seq[j])
+    bit2 = [0] * (n + 1)
+    def update2(i):
+        i += 1
+        while i <= n:
+            bit2[i] += 1
+            i += i & -i
+    def query2(i):
+        i += 1
+        s = 0
+        while i > 0:
+            s += bit2[i]
+            i -= i & -i
+        return s
+    right_larger = [0] * n
+    for j in range(n - 1, -1, -1):
+        right_larger[j] = (n - 1 - j) - query2(seq[j])
+        update2(seq[j])
+    return sum(left_smaller[j] * right_larger[j] for j in range(n))
+`,
+
+  'find-the-longest-balanced-substring-of-a-binary-string': `
+def findTheLongestBalancedSubstring(s):
+    ans = 0
+    i = 0
+    while i < len(s):
+        zeros = 0
+        ones = 0
+        while i < len(s) and s[i] == '0':
+            zeros += 1; i += 1
+        while i < len(s) and s[i] == '1':
+            ones += 1; i += 1
+        ans = max(ans, 2 * min(zeros, ones))
+    return ans
+`,
+
+  'largest-palindromic-number': `
+def largestPalindromic(num):
+    freq = [0] * 10
+    for c in num:
+        freq[int(c)] += 1
+    half = ''
+    for d in range(9, -1, -1):
+        half += str(d) * (freq[d] // 2)
+    if not half:
+        for d in range(9, -1, -1):
+            if freq[d] > 0:
+                return str(d)
+        return '0'
+    stripped = half.lstrip('0')
+    if not stripped:
+        center = ''
+        for d in range(9, -1, -1):
+            if freq[d] % 2 == 1:
+                center = str(d); break
+        return center if center else '0'
+    center = ''
+    for d in range(9, -1, -1):
+        if freq[d] % 2 == 1:
+            center = str(d); break
+    return stripped + center + stripped[::-1]
+`,
+
+  'count-words-obtained-after-adding-a-letter': `
+def wordCount(startWords, targetWords):
+    start_set = set()
+    for w in startWords:
+        mask = 0
+        for c in w:
+            mask |= 1 << (ord(c) - ord('a'))
+        start_set.add(mask)
+    count = 0
+    for w in targetWords:
+        mask = 0
+        for c in w:
+            mask |= 1 << (ord(c) - ord('a'))
+        for i in range(26):
+            if mask & (1 << i):
+                if (mask ^ (1 << i)) in start_set:
+                    count += 1; break
+    return count
+`,
+
+  'minimum-number-of-flips-to-make-binary-string-alternating': `
+def minFlips(s):
+    n = len(s)
+    doubled = s + s
+    diff01 = 0
+    diff10 = 0
+    for i in range(n):
+        c = int(doubled[i])
+        if c != i % 2: diff01 += 1
+        if c != (i + 1) % 2: diff10 += 1
+    ans = min(diff01, diff10)
+    for i in range(n, 2 * n):
+        add = int(doubled[i])
+        remove = int(doubled[i - n])
+        if add != i % 2: diff01 += 1
+        if remove != (i - n) % 2: diff01 -= 1
+        if add != (i + 1) % 2: diff10 += 1
+        if remove != (i - n + 1) % 2: diff10 -= 1
+        ans = min(ans, diff01, diff10)
+    return ans
+`,
+
+  'total-cost-to-hire-k-workers': `
+import heapq
+def totalCost(costs, k, candidates):
+    left_heap = []
+    right_heap = []
+    lo = 0
+    hi = len(costs) - 1
+    for i in range(candidates):
+        if lo <= hi:
+            heapq.heappush(left_heap, (costs[lo], lo)); lo += 1
+    for i in range(candidates):
+        if lo <= hi:
+            heapq.heappush(right_heap, (costs[hi], hi)); hi -= 1
+    total = 0
+    for _ in range(k):
+        l = left_heap[0] if left_heap else (float('inf'), float('inf'))
+        r = right_heap[0] if right_heap else (float('inf'), float('inf'))
+        if l[0] < r[0] or (l[0] == r[0] and l[1] < r[1]):
+            cost, _ = heapq.heappop(left_heap)
+            total += cost
+            if lo <= hi:
+                heapq.heappush(left_heap, (costs[lo], lo)); lo += 1
+        else:
+            cost, _ = heapq.heappop(right_heap)
+            total += cost
+            if lo <= hi:
+                heapq.heappush(right_heap, (costs[hi], hi)); hi -= 1
+    return total
+`,
+
+  'best-time-to-buy-and-sell-stock-iii': `def maxProfit(prices):
+    buy1, sell1, buy2, sell2 = float('-inf'), 0, float('-inf'), 0
+    for p in prices:
+        buy1 = max(buy1, -p); sell1 = max(sell1, buy1 + p)
+        buy2 = max(buy2, sell1 - p); sell2 = max(sell2, buy2 + p)
+    return sell2
+`,
+
+  'find-the-duplicate-number': `def findDuplicate(nums):
+    slow = nums[0]; fast = nums[0]
+    while True:
+        slow = nums[slow]; fast = nums[nums[fast]]
+        if slow == fast: break
+    slow = nums[0]
+    while slow != fast:
+        slow = nums[slow]; fast = nums[fast]
+    return slow
+`,
+
+  'maximum-difference-in-array': `def maximumDifference(nums):
+    min_so_far = nums[0]; max_diff = -1
+    for v in nums[1:]:
+        if v > min_so_far: max_diff = max(max_diff, v - min_so_far)
+        else: min_so_far = min(min_so_far, v)
+    return max_diff
+`,
+
+  'longest-subarray-with-at-most-k-frequency': `def maxSubarrayLength(nums, k):
+    freq = {}; l = 0; ans = 0
+    for r, v in enumerate(nums):
+        freq[v] = freq.get(v, 0) + 1
+        while freq[v] > k:
+            freq[nums[l]] -= 1; l += 1
+        ans = max(ans, r - l + 1)
+    return ans
+`,
+
+  'count-pairs-in-two-arrays': `def countPairs(nums1, nums2):
+    import bisect
+    diff = sorted(a - b for a, b in zip(nums1, nums2))
+    count = 0
+    for i in range(len(diff) - 1):
+        lo = bisect.bisect_right(diff, -diff[i], i + 1)
+        count += len(diff) - lo
+    return count
+`,
+
+  'apply-discount-every-n-items': `def discountPrices(prices, n, discount):
+    total = 0
+    for i, price in enumerate(prices):
+        if (i + 1) % n == 0:
+            total += (price * (100 - discount)) // 100
+        else:
+            total += price
+    return total
+`,
+
+  'sum-game': `def sumGame(num):
+    half = len(num) // 2
+    sum_l = sum_r = q_l = q_r = 0
+    for i in range(half):
+        if num[i] == '?':
+            q_l += 1
+        else:
+            sum_l += int(num[i])
+    for i in range(half, len(num)):
+        if num[i] == '?':
+            q_r += 1
+        else:
+            sum_r += int(num[i])
+    if (q_l + q_r) % 2 == 1:
+        return True
+    return sum_l - sum_r + (q_l - q_r) * 9 / 2 != 0
+`,
+
+  'find-the-k-th-lucky-number': `def kthLuckyNumber(k):
+    length = 1
+    while k > (1 << length):
+        k -= (1 << length)
+        length += 1
+    k -= 1
+    result = ''
+    for i in range(length - 1, -1, -1):
+        result += '4' if ((k >> i) & 1) == 0 else '7'
+    return result
+`,
+
+  'find-median-from-data-stream': `
+import bisect
+def medianFinder(ops, vals):
+    if hasattr(ops, 'to_py'):
+        ops = list(ops.to_py())
+    if hasattr(vals, 'to_py'):
+        raw = vals.to_py()
+        vals = [list(row) if hasattr(row, '__iter__') else row for row in raw]
+    lower = []
+    upper = []
+    import heapq
+    result = []
+    for op, v in zip(ops, vals):
+        if op == 'addNum':
+            num = int(v[0]) if v else 0
+            heapq.heappush(lower, -num)
+            heapq.heappush(upper, -heapq.heappop(lower))
+            if len(upper) > len(lower):
+                heapq.heappush(lower, -heapq.heappop(upper))
+            result.append(None)
+        else:
+            if len(lower) == len(upper):
+                result.append((-lower[0] + upper[0]) / 2)
+            else:
+                result.append(float(-lower[0]))
+    return result
+`,
+
+  'check-completeness-of-binary-tree': `
+from collections import deque
+def isCompleteTree(root):
+    if hasattr(root, 'to_py'):
+        arr = list(root.to_py())
+    else:
+        arr = list(root)
+    arr = [int(v) if v is not None else -1 for v in arr]
+    if not arr:
+        return True
+    queue = deque([0])
+    seen_null = False
+    while queue:
+        idx = queue.popleft()
+        left = 2 * idx + 1
+        right = 2 * idx + 2
+        lval = arr[left] if left < len(arr) else -1
+        rval = arr[right] if right < len(arr) else -1
+        if lval == -1:
+            seen_null = True
+        else:
+            if seen_null:
+                return False
+            queue.append(left)
+        if rval == -1:
+            seen_null = True
+        else:
+            if seen_null:
+                return False
+            queue.append(right)
+    return True
+`,
+
+  'earliest-possible-day-of-full-bloom': `
+def earliestFullBloom(plantTime, growTime):
+    if hasattr(plantTime, 'to_py'):
+        plantTime = list(plantTime.to_py())
+    if hasattr(growTime, 'to_py'):
+        growTime = list(growTime.to_py())
+    plantTime = [int(v) for v in plantTime]
+    growTime = [int(v) for v in growTime]
+    order = sorted(range(len(plantTime)), key=lambda i: -growTime[i])
+    day = 0
+    ans = 0
+    for i in order:
+        day += plantTime[i]
+        ans = max(ans, day + growTime[i])
+    return ans
+`,
+
+  'find-the-longest-valid-obstacle-course-at-each-position': `
+import bisect
+def longestObstacleCourseAtEachPosition(obstacles):
+    if hasattr(obstacles, 'to_py'):
+        obstacles = list(obstacles.to_py())
+    obstacles = [int(v) for v in obstacles]
+    tails = []
+    result = []
+    for v in obstacles:
+        pos = bisect.bisect_right(tails, v)
+        if pos == len(tails):
+            tails.append(v)
+        else:
+            tails[pos] = v
+        result.append(pos + 1)
+    return result
+`,
+
+  'minimum-time-to-finish-the-race': `
+def minimumFinishTime(tires, changeTime, numLaps):
+    if hasattr(tires, 'to_py'):
+        raw = tires.to_py()
+        tires = [[int(raw[i][0]), int(raw[i][1])] for i in range(len(raw))]
+    else:
+        tires = [[int(row[0]), int(row[1])] for row in tires]
+    changeTime = int(changeTime)
+    numLaps = int(numLaps)
+    MAX_LAPS = 17
+    best = [float('inf')] * (MAX_LAPS + 1)
+    for f, r in tires:
+        lap_time = f
+        total = f
+        for j in range(1, MAX_LAPS + 1):
+            best[j] = min(best[j], total)
+            lap_time = lap_time * r
+            total += lap_time
+            if lap_time > changeTime + f:
+                break
+    dp = [float('inf')] * (numLaps + 1)
+    dp[0] = -changeTime
+    for i in range(1, numLaps + 1):
+        for j in range(1, min(i, MAX_LAPS) + 1):
+            if best[j] == float('inf'):
+                continue
+            dp[i] = min(dp[i], dp[i - j] + changeTime + best[j])
+    return dp[numLaps]
+`,
+
+  'check-if-it-is-a-good-array': `def isGoodArray(nums):
+    from math import gcd
+    from functools import reduce
+    return reduce(gcd, nums) == 1
+`,
+
+  'maximum-coins-you-can-get': `def maxCoins(piles):
+    p = sorted(piles, reverse=True)
+    n = len(p) // 3
+    return sum(p[i] for i in range(1, 2 * n, 2))
+`,
+
+  'number-of-islands-ii': `def numIslands2(m, n, positions):
+    parent = [-1] * (m * n)
+    rank = [0] * (m * n)
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(a, b):
+        pa, pb = find(a), find(b)
+        if pa == pb:
+            return False
+        if rank[pa] < rank[pb]:
+            pa, pb = pb, pa
+        parent[pb] = pa
+        if rank[pa] == rank[pb]:
+            rank[pa] += 1
+        return True
+    count = 0
+    result = []
+    dirs = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    for r, c in positions:
+        idx = r * n + c
+        if parent[idx] == -1:
+            parent[idx] = idx
+            count += 1
+            for dr, dc in dirs:
+                nr, nc = r + dr, c + dc
+                if 0 <= nr < m and 0 <= nc < n:
+                    nidx = nr * n + nc
+                    if parent[nidx] != -1 and union(idx, nidx):
+                        count -= 1
+        result.append(count)
+    return result
+`,
+
+  'find-the-celebrity': `def findCelebrity(knows):
+    n = len(knows)
+    candidate = 0
+    for i in range(1, n):
+        if knows[candidate][i] == 1:
+            candidate = i
+    for i in range(n):
+        if i == candidate:
+            continue
+        if knows[candidate][i] == 1 or knows[i][candidate] != 1:
+            return -1
+    return candidate
+`,
+
+  'minimum-number-of-days-to-disconnect-island': `def minDays(grid):
+    from collections import deque
+    m, n = len(grid), len(grid[0])
+    def count_islands(board):
+        visited = [[False] * n for _ in range(m)]
+        count = 0
+        for i in range(m):
+            for j in range(n):
+                if not visited[i][j] and board[i][j] == 1:
+                    queue = deque([(i, j)])
+                    visited[i][j] = True
+                    while queue:
+                        r, c = queue.popleft()
+                        for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                            nr, nc = r + dr, c + dc
+                            if 0 <= nr < m and 0 <= nc < n and not visited[nr][nc] and board[nr][nc] == 1:
+                                visited[nr][nc] = True
+                                queue.append((nr, nc))
+                    count += 1
+        return count
+    g = [[grid[i][j] for j in range(n)] for i in range(m)]
+    if count_islands(g) != 1:
+        return 0
+    for i in range(m):
+        for j in range(n):
+            if g[i][j] == 1:
+                g[i][j] = 0
+                if count_islands(g) != 1:
+                    return 1
+                g[i][j] = 1
+    return 2
+`,
+
+  // batch 71
+  'maximum-product-of-two-elements-in-array': `def maxProduct(nums):
+    nums_sorted = sorted(nums, reverse=True)
+    return (nums_sorted[0] - 1) * (nums_sorted[1] - 1)
+`,
+
+  'find-the-highest-altitude': `def largestAltitude(gain):
+    alt = 0
+    max_alt = 0
+    for g in gain:
+        alt += g
+        if alt > max_alt:
+            max_alt = alt
+    return max_alt
+`,
+
+  'find-the-array-concatenation-value': `def findTheArrayConcVal(nums):
+    l, r = 0, len(nums) - 1
+    val = 0
+    while l < r:
+        val += int(str(nums[l]) + str(nums[r]))
+        l += 1; r -= 1
+    if l == r:
+        val += nums[l]
+    return val
+`,
+
+  'running-sum-of-1d-array': `def runningSum(nums):
+    result = []
+    s = 0
+    for n in nums:
+        s += n
+        result.append(s)
+    return result
+`,
+
+  'check-distances-between-same-letters': `def checkDistances(s, distance):
+    first = {}
+    for i, c in enumerate(s):
+        idx = ord(c) - ord('a')
+        if idx not in first:
+            first[idx] = i
+        elif i - first[idx] - 1 != distance[idx]:
+            return False
+    return True
+`,
+
+  'find-missing-and-repeated-values': `def findMissingAndRepeatedValues(grid):
+    flat = [v for row in grid for v in row]
+    n2 = len(flat)
+    cnt = [0] * (n2 + 1)
+    for v in flat:
+        cnt[v] += 1
+    a = b = 0
+    for i in range(1, n2 + 1):
+        if cnt[i] == 2:
+            a = i
+        elif cnt[i] == 0:
+            b = i
+    return [a, b]
+`,
+
+  'find-indices-of-stable-mountains': `def stableMountains(height, threshold):
+    return [i for i in range(1, len(height)) if height[i - 1] > threshold]
+`,
+  // batch 71-local
+  'minimize-deviation-in-array': `
+import heapq
+def minimumDeviation(nums):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    nums = [int(x) for x in nums]
+    nums = [x * 2 if x % 2 == 1 else x for x in nums]
+    mn = min(nums)
+    heap = [-x for x in nums]
+    heapq.heapify(heap)
+    ans = -heap[0] - mn
+    while (-heap[0]) % 2 == 0:
+        mx = -heapq.heappop(heap)
+        mn = min(mn, mx // 2)
+        heapq.heappush(heap, -(mx // 2))
+        ans = min(ans, -heap[0] - mn)
+    return ans
+`,
+
+  'prison-cells-after-n-days': `
+def prisonAfterNDays(cells, n):
+    if hasattr(cells, 'to_py'):
+        cells = list(cells.to_py())
+    cells = [int(x) for x in cells]
+    n = int(n)
+    def step(c):
+        return [0] + [1 if c[i-1] == c[i+1] else 0 for i in range(1, 7)] + [0]
+    seen = {}
+    day = 0
+    while day < n:
+        key = tuple(cells)
+        if key in seen:
+            cycle_len = day - seen[key]
+            remaining = (n - day) % cycle_len
+            for _ in range(remaining):
+                cells = step(cells)
+            return cells
+        seen[key] = day
+        cells = step(cells)
+        day += 1
+    return cells
+`,
+
+  'all-ancestors-of-a-node-in-a-directed-acyclic-graph': `
+def getAncestors(n, edges):
+    n = int(n)
+    if hasattr(edges, 'to_py'):
+        raw = edges.to_py()
+        edges = [[int(raw[i][0]), int(raw[i][1])] for i in range(len(raw))]
+    else:
+        edges = [[int(e[0]), int(e[1])] for e in edges]
+    children = [[] for _ in range(n)]
+    for u, v in edges:
+        children[u].append(v)
+    result = [[] for _ in range(n)]
+    def dfs(node, ancestor):
+        for child in children[node]:
+            if not result[child] or result[child][-1] != ancestor:
+                result[child].append(ancestor)
+                dfs(child, ancestor)
+    for i in range(n):
+        dfs(i, i)
+    return result
+`,
+
+  'delete-nodes-and-return-forest': `
+def delNodes(root, to_delete):
+    if hasattr(root, 'to_py'):
+        arr = list(root.to_py())
+    else:
+        arr = list(root)
+    arr = [int(v) for v in arr]
+    if hasattr(to_delete, 'to_py'):
+        to_delete = list(to_delete.to_py())
+    to_delete = set(int(v) for v in to_delete)
+    roots = []
+    def dfs(idx, parent_deleted):
+        if idx >= len(arr) or arr[idx] == -1:
+            return
+        val = arr[idx]
+        is_deleted = val in to_delete
+        if parent_deleted and not is_deleted:
+            roots.append(val)
+        dfs(2 * idx + 1, is_deleted)
+        dfs(2 * idx + 2, is_deleted)
+    dfs(0, True)
+    return sorted(roots)
+`,
+
+  'naming-a-company': `
+def distinctNames(ideas):
+    if hasattr(ideas, 'to_py'):
+        ideas = list(ideas.to_py())
+    ideas = [str(x) for x in ideas]
+    sets = [set() for _ in range(26)]
+    for idea in ideas:
+        sets[ord(idea[0]) - ord('a')].add(idea[1:])
+    count = 0
+    for i in range(25):
+        for j in range(i + 1, 26):
+            common = len(sets[i] & sets[j])
+            count += 2 * (len(sets[i]) - common) * (len(sets[j]) - common)
+    return count
+`,
+
+  // batch 71
+  'find-peak-element-ii': `
+def findPeakGrid(mat):
+    m, n = len(mat), len(mat[0])
+    lo, hi = 0, n - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        max_row = max(range(m), key=lambda r: mat[r][mid])
+        val = mat[max_row][mid]
+        left = mat[max_row][mid - 1] if mid > 0 else -1
+        right = mat[max_row][mid + 1] if mid < n - 1 else -1
+        if val > left and val > right:
+            return [max_row, mid]
+        elif left > right:
+            hi = mid - 1
+        else:
+            lo = mid + 1
+    return [-1, -1]
+`,
+  // batch 72-local
+  'reorder-data-in-log-files': `
+def reorderLogFiles(logs):
+    if hasattr(logs, 'to_py'):
+        logs = list(logs.to_py())
+    logs = [str(x) for x in logs]
+    letters = []
+    digits = []
+    for log in logs:
+        parts = log.split(' ', 1)
+        if parts[1][0].isdigit():
+            digits.append(log)
+        else:
+            letters.append(log)
+    letters.sort(key=lambda log: (log.split(' ', 1)[1], log.split(' ', 1)[0]))
+    return letters + digits
+`,
+
+  'minimum-one-bit-operations-to-make-integers-zero': `
+def minimumOneBitOperations(n):
+    result = n
+    n >>= 1
+    while n > 0:
+        result ^= n
+        n >>= 1
+    return result
+`,
+
+  'longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit': `
+from collections import deque
+def longestSubarray(nums, limit):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    nums = [int(x) for x in nums]
+    limit = int(limit)
+    max_q = deque()
+    min_q = deque()
+    left = 0
+    ans = 0
+    for right, val in enumerate(nums):
+        while max_q and nums[max_q[-1]] <= val:
+            max_q.pop()
+        max_q.append(right)
+        while min_q and nums[min_q[-1]] >= val:
+            min_q.pop()
+        min_q.append(right)
+        while nums[max_q[0]] - nums[min_q[0]] > limit:
+            left += 1
+            if max_q[0] < left:
+                max_q.popleft()
+            if min_q[0] < left:
+                min_q.popleft()
+        ans = max(ans, right - left + 1)
+    return ans
+`,
+
+
+  'check-completeness-of-a-binary-tree': `
+def isCompleteTree(root):
+    if not root:
+        return False
+    from collections import deque
+    arr = root.to_py() if hasattr(root, 'to_py') else list(root)
+    n = len(arr)
+    seen_null = False
+    q = deque([0])
+    while q:
+        i = q.popleft()
+        if i >= n or not isinstance(arr[i], int):
+            seen_null = True
+            continue
+        if seen_null:
+            return False
+        q.append(2 * i + 1)
+        q.append(2 * i + 2)
+    return True
+`,
+
+  'all-ancestors-of-a-node-in-a-dag': `
+def getAncestors(n, edges):
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+    ancestors = [set() for _ in range(n)]
+    def dfs(node, anc):
+        for child in adj[node]:
+            if anc not in ancestors[child]:
+                ancestors[child].add(anc)
+                dfs(child, anc)
+    for i in range(n):
+        dfs(i, i)
+    return [sorted(a) for a in ancestors]
+`,
+
+  'number-of-nodes-in-subtree-with-same-label': `
+def countSubTrees(n, edges, labels):
+    from collections import defaultdict
+    adj = defaultdict(list)
+    for a, b in edges:
+        adj[a].append(b); adj[b].append(a)
+    ans = [0] * n
+    def dfs(node, parent):
+        cnt = [0] * 26
+        cnt[ord(labels[node]) - ord('a')] += 1
+        for child in adj[node]:
+            if child == parent:
+                continue
+            child_cnt = dfs(child, node)
+            for i in range(26):
+                cnt[i] += child_cnt[i]
+        ans[node] = cnt[ord(labels[node]) - ord('a')]
+        return cnt
+    dfs(0, -1)
+    return ans
+`,
+
+  'determine-if-cell-is-reachable-at-given-time': `
+def isReachableAtTime(sx, sy, fx, fy, t):
+    d = max(abs(fx - sx), abs(fy - sy))
+    if d == 0:
+        return t != 1
+    return t >= d
+`,
+
+  'sum-in-a-matrix': `
+def matrixSum(nums):
+    mat = [sorted(list(row), reverse=True) for row in nums]
+    return sum(max(mat[i][j] for i in range(len(mat))) for j in range(len(mat[0])))
+`,
+
+  'maximum-product-of-two-elements-in-an-array': `
+def maxProduct(nums):
+    a = sorted(list(nums), reverse=True)
+    return (a[0] - 1) * (a[1] - 1)
+`,
+
+  'largest-substring-between-two-equal-characters': `
+def maxLengthBetweenEqualCharacters(s):
+    first = {}
+    ans = -1
+    for i, c in enumerate(s):
+        if c in first:
+            ans = max(ans, i - first[c] - 1)
+        else:
+            first[c] = i
+    return ans
+`,
+
+  'destroy-sequential-targets': `
+def destroyTargets(nums, space):
+    from collections import defaultdict
+    groups = defaultdict(lambda: [0, float('inf')])
+    for v in nums:
+        r = v % space
+        groups[r][0] += 1
+        groups[r][1] = min(groups[r][1], v)
+    best_count, best_min = 0, float('inf')
+    for count, min_val in groups.values():
+        if count > best_count or (count == best_count and min_val < best_min):
+            best_count, best_min = count, min_val
+    return best_min
+`,
+
+  'minimize-result-by-adding-parentheses-to-expression': `
+def minimizeResult(expression):
+    plus = expression.index('+')
+    num1, num2 = expression[:plus], expression[plus+1:]
+    best = float('inf'); best_str = ''
+    for i in range(len(num1)):
+        for j in range(1, len(num2) + 1):
+            left = int(num1[:i]) if num1[:i] else 1
+            inner = int(num1[i:]) + int(num2[:j])
+            right = int(num2[j:]) if num2[j:] else 1
+            val = left * inner * right
+            if val < best:
+                best = val
+                best_str = f"{num1[:i]}({num1[i:]}+{num2[:j]}){num2[j:]}"
+    return best_str
+`,
+
+  'minimum-sum-of-a-k-avoiding-array': `
+def minimumSum(n, k):
+    picked = set()
+    total = 0; count = 0; i = 1
+    while count < n:
+        if k - i not in picked:
+            picked.add(i)
+            total += i
+            count += 1
+        i += 1
+    return total
+`,
+
+  'count-ways-to-build-rooms-in-an-ant-colony': `
+def waysToBuildRooms(prevRoom):
+    MOD = 10**9 + 7
+    n = len(prevRoom)
+    children = [[] for _ in range(n)]
+    for i in range(1, n):
+        children[prevRoom[i]].append(i)
+    size = [1] * n
+    order = []
+    stack = [0]
+    while stack:
+        node = stack.pop()
+        order.append(node)
+        for c in children[node]:
+            stack.append(c)
+    for node in reversed(order):
+        for c in children[node]:
+            size[node] += size[c]
+    fact = 1
+    for i in range(1, n + 1):
+        fact = fact * i % MOD
+    ans = fact
+    for s in size:
+        ans = ans * pow(s, MOD - 2, MOD) % MOD
+    return ans
+`,
+
+  'length-of-the-longest-alphabetical-continuous-substring': `
+def longestContinuousSubstring(s):
+    ans = cur = 1
+    for i in range(1, len(s)):
+        if ord(s[i]) == ord(s[i-1]) + 1:
+            cur += 1
+            ans = max(ans, cur)
+        else:
+            cur = 1
+    return ans
+`,
+
+  'number-of-strings-that-appear-as-substrings-in-word': `
+def numOfStrings(patterns, word):
+    return sum(1 for p in patterns if p in word)
+`,
+
+  'find-the-city-with-smallest-number-of-neighbors-at-a-threshold-distance': `def findTheCity(n, edges, distanceThreshold):
+    INF = float('inf')
+    dist = [[INF] * n for _ in range(n)]
+    for i in range(n):
+        dist[i][i] = 0
+    for u, v, w in edges:
+        dist[u][v] = min(dist[u][v], w)
+        dist[v][u] = min(dist[v][u], w)
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if dist[i][k] + dist[k][j] < dist[i][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+    ans, min_count = 0, INF
+    for i in range(n):
+        count = sum(1 for j in range(n) if i != j and dist[i][j] <= distanceThreshold)
+        if count <= min_count:
+            min_count = count
+            ans = i
+    return ans
+`,
+
+  'maximum-candies-allocated-to-k-children': `def maximumCandies(candies, k):
+    lo, hi = 0, max(candies)
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        total = sum(p // mid for p in candies)
+        if total >= k:
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'number-of-restricted-paths-from-first-to-last-node': `def countRestrictedPaths(n, edges):
+    import heapq
+    MOD = 10**9 + 7
+    adj = [[] for _ in range(n + 1)]
+    for u, v, w in edges:
+        adj[u].append((v, w))
+        adj[v].append((u, w))
+    dist = [float('inf')] * (n + 1)
+    dist[n] = 0
+    pq = [(0, n)]
+    while pq:
+        d, u = heapq.heappop(pq)
+        if d > dist[u]:
+            continue
+        for v, w in adj[u]:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                heapq.heappush(pq, (dist[v], v))
+    order = sorted(range(1, n + 1), key=lambda x: dist[x])
+    dp = [0] * (n + 1)
+    dp[n] = 1
+    for u in order:
+        for v, _ in adj[u]:
+            if dist[v] < dist[u]:
+                dp[u] = (dp[u] + dp[v]) % MOD
+    return dp[1]
+`,
+
+  'minimum-swaps-to-sort-an-array': `def minSwaps(nums):
+    n = len(nums)
+    sorted_nums = sorted(nums)
+    pos = {v: i for i, v in enumerate(sorted_nums)}
+    visited = [False] * n
+    swaps = 0
+    arr = list(nums)
+    for i in range(n):
+        if visited[i] or pos[arr[i]] == i:
+            continue
+        cycle_len = 0
+        j = i
+        while not visited[j]:
+            visited[j] = True
+            j = pos[arr[j]]
+            cycle_len += 1
+        swaps += cycle_len - 1
+    return swaps
+`,
+
+  // batch 71 (new problems)
+
+  'find-the-good-days-to-rob-bank': `def goodDaysToRobBank(security, time):
+    n = len(security)
+    if n == 0:
+        return []
+    dec = [0] * n
+    inc = [0] * n
+    for i in range(1, n):
+        if security[i] <= security[i - 1]:
+            dec[i] = dec[i - 1] + 1
+    for i in range(n - 2, -1, -1):
+        if security[i] <= security[i + 1]:
+            inc[i] = inc[i + 1] + 1
+    return [i for i in range(n) if dec[i] >= time and inc[i] >= time]
+`,
+
+  'minimum-extra-characters-in-a-string': `def minExtraChar(s, dictionary):
+    n = len(s)
+    if n == 0:
+        return 0
+    word_set = set(dictionary)
+    dp = [0] * (n + 1)
+    for j in range(1, n + 1):
+        dp[j] = dp[j - 1] + 1  # skip s[j-1]
+        for i in range(j):
+            if s[i:j] in word_set:
+                dp[j] = min(dp[j], dp[i])
+    return dp[n]
+`,
+
+  'minimum-seconds-to-equalize-a-circular-array': `def minimumSeconds(nums):
+    from collections import defaultdict
+    n = len(nums)
+    positions = defaultdict(list)
+    for i, v in enumerate(nums):
+        positions[v].append(i)
+    ans = n
+    for pos in positions.values():
+        max_gap = 0
+        for i in range(1, len(pos)):
+            max_gap = max(max_gap, pos[i] - pos[i - 1])
+        circular_gap = n - pos[-1] + pos[0]
+        max_gap = max(max_gap, circular_gap)
+        ans = min(ans, max_gap // 2)
+    return ans
+`,
+
+  'movement-of-robots': `def sumDistance(nums, s, d):
+    MOD = 10 ** 9 + 7
+    positions = sorted(v + d if c == 'R' else v - d for v, c in zip(nums, s))
+    total = 0
+    prefix = 0
+    for i, p in enumerate(positions):
+        total = (total + p * i - prefix) % MOD
+        prefix += p
+    return total % MOD
+`,
+
+  'number-of-ways-of-cutting-a-pizza': `def ways(pizza, k):
+    MOD = 10 ** 9 + 7
+    rows = len(pizza)
+    cols = len(pizza[0]) if pizza else 0
+    prefix = [[0] * (cols + 1) for _ in range(rows + 1)]
+    for r in range(rows - 1, -1, -1):
+        for c in range(cols - 1, -1, -1):
+            prefix[r][c] = (1 if pizza[r][c] == 'A' else 0) + prefix[r + 1][c] + prefix[r][c + 1] - prefix[r + 1][c + 1]
+    def apples_in(r, c):
+        return prefix[r][c]
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dp(r, c, cuts):
+        if apples_in(r, c) == 0:
+            return 0
+        if cuts == 1:
+            return 1
+        result = 0
+        total = apples_in(r, c)
+        for nr in range(r + 1, rows):
+            if total - apples_in(nr, c) > 0:
+                result = (result + dp(nr, c, cuts - 1)) % MOD
+        for nc in range(c + 1, cols):
+            if total - apples_in(r, nc) > 0:
+                result = (result + dp(r, nc, cuts - 1)) % MOD
+        return result
+    return dp(0, 0, k)
+`,
+
+  'frequency-tracker': `def frequencyTracker(operations, args):
+    count = {}
+    freq_count = {}
+    def inc_freq(f):
+        freq_count[f] = freq_count.get(f, 0) + 1
+    def dec_freq(f):
+        if freq_count.get(f, 0) <= 1:
+            freq_count.pop(f, None)
+        else:
+            freq_count[f] -= 1
+    result = []
+    for op, a in zip(operations, args):
+        if op == 'add':
+            num = a[0]
+            prev = count.get(num, 0)
+            if prev > 0:
+                dec_freq(prev)
+            count[num] = prev + 1
+            inc_freq(prev + 1)
+            result.append(None)
+        elif op == 'deleteOne':
+            num = a[0]
+            prev = count.get(num, 0)
+            if prev == 0:
+                result.append(None)
+                continue
+            dec_freq(prev)
+            count[num] = prev - 1
+            if prev - 1 > 0:
+                inc_freq(prev - 1)
+            result.append(None)
+        elif op == 'hasFrequency':
+            freq = a[0]
+            result.append(freq_count.get(freq, 0) > 0)
+        else:
+            result.append(None)
+    return result
+`,
+  // batch 72
+  'walking-robot-simulation': `
+def robotSim(commands, obstacles):
+    obs = set(map(tuple, obstacles))
+    dx = [0, 1, 0, -1]
+    dy = [1, 0, -1, 0]
+    direction = 0
+    x, y, best = 0, 0, 0
+    for cmd in commands:
+        if cmd == -2:
+            direction = (direction + 3) % 4
+        elif cmd == -1:
+            direction = (direction + 1) % 4
+        else:
+            for _ in range(cmd):
+                nx, ny = x + dx[direction], y + dy[direction]
+                if (nx, ny) not in obs:
+                    x, y = nx, ny
+                    best = max(best, x*x + y*y)
+    return best
+`,
+
+  'find-distinct-difference-array': `
+def distinctDifferenceArray(nums):
+    n = len(nums)
+    result = []
+    for i in range(n):
+        prefix = len(set(nums[:i+1]))
+        suffix = len(set(nums[i+1:]))
+        result.append(prefix - suffix)
+    return result
+`,
+
+  'maximum-number-of-alloys': `
+def maxNumberOfAlloys(n, k, budget, composition, stock, cost):
+    def can_make(machine, x):
+        spent = 0
+        for j in range(len(machine)):
+            need = machine[j] * x - stock[j]
+            if need > 0:
+                spent += need * cost[j]
+            if spent > budget:
+                return False
+        return True
+    ans = 0
+    for machine in composition:
+        lo, hi = 0, int(2e8)
+        while lo < hi:
+            mid = (lo + hi + 1) // 2
+            if can_make(machine, mid):
+                lo = mid
+            else:
+                hi = mid - 1
+        ans = max(ans, lo)
+    return ans
+`,
+
+  'minimum-ops-distinct-elements': `
+def minimumOperations(nums):
+    ops = 0
+    while True:
+        remaining = nums[ops * 3:]
+        if len(set(remaining)) == len(remaining):
+            break
+        ops += 1
+    return ops
+`,
+
+  'minimum-coins-to-add': `
+def minimumAddedCoins(coins, target):
+    coins = sorted(coins)
+    reach = 0
+    ops = 0
+    i = 0
+    while reach < target:
+        if i < len(coins) and coins[i] <= reach + 1:
+            reach += coins[i]
+            i += 1
+        else:
+            reach += reach + 1
+            ops += 1
+    return ops
+`,
+
+  'count-special-characters-ii': `
+def numberOfSpecialCharsII(word):
+    count = 0
+    for c in range(26):
+        lc = chr(ord('a') + c)
+        uc = chr(ord('A') + c)
+        last_lower = -1
+        first_upper = len(word)
+        for i, ch in enumerate(word):
+            if ch == lc:
+                last_lower = i
+        for i, ch in enumerate(word):
+            if ch == uc:
+                first_upper = i
+                break
+        if last_lower != -1 and first_upper != len(word) and last_lower < first_upper:
+            count += 1
+    return count
+`,
+
+  'find-maximum-k': `
+def findMaxK(nums):
+    s = set(nums)
+    ans = -1
+    for n in nums:
+        if n > 0 and -n in s:
+            ans = max(ans, n)
+    return ans
+`,
+
+  'minimum-chairs-waiting-room': `
+def minimumChairs(s):
+    curr = best = 0
+    for ch in s:
+        if ch == 'E':
+            curr += 1
+        else:
+            curr -= 1
+        best = max(best, curr)
+    return best
+`,
+
+  'maximum-balls-in-box': `
+def countBalls(lowLimit, highLimit):
+    from collections import Counter
+    def digit_sum(n):
+        s = 0
+        while n > 0:
+            s += n % 10
+            n //= 10
+        return s
+    cnt = Counter(digit_sum(i) for i in range(lowLimit, highLimit + 1))
+    return max(cnt.values())
+`,
+
+  'satisfiability-of-equality-equations': `
+def equationsPossible(equations):
+    parent = list(range(26))
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(x, y):
+        parent[find(x)] = find(y)
+    for eq in equations:
+        if eq[1] == '=':
+            union(ord(eq[0]) - 97, ord(eq[3]) - 97)
+    for eq in equations:
+        if eq[1] == '!' and find(ord(eq[0]) - 97) == find(ord(eq[3]) - 97):
+            return False
+    return True
+`,
+
+  'pour-water': `
+def pourWater(heights, volume, k):
+    h = list(heights)
+    for _ in range(volume):
+        pos = k
+        for i in range(k - 1, -1, -1):
+            if h[i] < h[pos]:
+                pos = i
+            elif h[i] > h[pos]:
+                break
+        if pos == k:
+            for i in range(k + 1, len(h)):
+                if h[i] < h[pos]:
+                    pos = i
+                elif h[i] > h[pos]:
+                    break
+        h[pos] += 1
+    return h
+`,
+
+  'bricks-falling-when-hit': `
+def hitBricks(grid, hits):
+    m, n = len(grid), len(grid[0])
+    g = [row[:] for row in grid]
+    for r, c in hits:
+        g[r][c] = 0
+    parent = list(range(m * n + 1))
+    size = [1] * (m * n + 1)
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(x, y):
+        x, y = find(x), find(y)
+        if x == y:
+            return
+        if size[x] < size[y]:
+            x, y = y, x
+        parent[y] = x
+        size[x] += size[y]
+    for r in range(m):
+        for c in range(n):
+            if g[r][c] != 1:
+                continue
+            if r == 0:
+                union(r * n + c, m * n)
+            if r > 0 and g[r-1][c] == 1:
+                union(r * n + c, (r-1) * n + c)
+            if c > 0 and g[r][c-1] == 1:
+                union(r * n + c, r * n + c - 1)
+    result = [0] * len(hits)
+    dirs = [(1,0),(-1,0),(0,1),(0,-1)]
+    for i in range(len(hits) - 1, -1, -1):
+        r, c = hits[i]
+        if grid[r][c] == 0:
+            continue
+        prev_size = size[find(m * n)]
+        g[r][c] = 1
+        if r == 0:
+            union(r * n + c, m * n)
+        for dr, dc in dirs:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n and g[nr][nc] == 1:
+                union(r * n + c, nr * n + nc)
+        new_size = size[find(m * n)]
+        result[i] = max(0, new_size - prev_size - 1)
+    return result
+`,
+
+  'redundant-connection-ii': `
+def findRedundantDirectedConnection(edges):
+    n = len(edges)
+    parent = [0] * (n + 1)
+    cand1 = cand2 = None
+    for u, v in edges:
+        if parent[v] == 0:
+            parent[v] = u
+        else:
+            cand1 = [parent[v], v]
+            cand2 = [u, v]
+    uf = list(range(n + 1))
+    def find(x):
+        while uf[x] != x:
+            uf[x] = uf[uf[x]]
+            x = uf[x]
+        return x
+    for u, v in edges:
+        if cand2 and [u, v] == cand2:
+            continue
+        if find(u) == find(v):
+            return cand1 if cand1 else [u, v]
+        uf[find(u)] = find(v)
+    return cand2
+`,
+
+  'largest-component-size-by-common-factor': `
+def largestComponentSize(nums):
+    from math import isqrt
+    max_val = max(nums)
+    uf = list(range(max_val + 1))
+    def find(x):
+        while uf[x] != x:
+            uf[x] = uf[uf[x]]
+            x = uf[x]
+        return x
+    def union(a, b):
+        uf[find(a)] = find(b)
+    for n in nums:
+        f = 2
+        while f * f <= n:
+            if n % f == 0:
+                union(n, f)
+                union(n, n // f)
+            f += 1
+    from collections import Counter
+    cnt = Counter(find(n) for n in nums)
+    return max(cnt.values())
+`,
+
+  'reachable-nodes-in-subdivided-graph': `
+def reachableNodes(edges, maxMoves, n):
+    import heapq
+    g = [[] for _ in range(n)]
+    for u, v, c in edges:
+        g[u].append((v, c))
+        g[v].append((u, c))
+    dist = [float('inf')] * n
+    dist[0] = 0
+    pq = [(0, 0)]
+    while pq:
+        d, u = heapq.heappop(pq)
+        if d > dist[u]:
+            continue
+        for v, c in g[u]:
+            nd = d + c + 1
+            if nd < dist[v]:
+                dist[v] = nd
+                heapq.heappush(pq, (nd, v))
+    ans = sum(1 for d in dist if d <= maxMoves)
+    for u, v, c in edges:
+        fu = maxMoves - dist[u] if dist[u] <= maxMoves else 0
+        fv = maxMoves - dist[v] if dist[v] <= maxMoves else 0
+        ans += min(c, fu + fv)
+    return ans
+`,
+
+  'wiggle-sort': `
+def wiggleSort(nums):
+    arr = nums[:]
+    for i in range(len(arr) - 1):
+        if (i % 2 == 0 and arr[i] > arr[i+1]) or (i % 2 == 1 and arr[i] < arr[i+1]):
+            arr[i], arr[i+1] = arr[i+1], arr[i]
+    return arr
+`,
+
+  'candy-crush': `
+def candyCrush(board):
+    board = [row[:] for row in board]
+    m, n = len(board), len(board[0])
+    while True:
+        crush = [[False]*n for _ in range(m)]
+        for r in range(m):
+            for c in range(n-2):
+                v = board[r][c]
+                if v and v == board[r][c+1] == board[r][c+2]:
+                    crush[r][c] = crush[r][c+1] = crush[r][c+2] = True
+        for r in range(m-2):
+            for c in range(n):
+                v = board[r][c]
+                if v and v == board[r+1][c] == board[r+2][c]:
+                    crush[r][c] = crush[r+1][c] = crush[r+2][c] = True
+        if not any(crush[r][c] for r in range(m) for c in range(n)):
+            break
+        for r in range(m):
+            for c in range(n):
+                if crush[r][c]:
+                    board[r][c] = 0
+        for c in range(n):
+            w = m - 1
+            for r in range(m-1, -1, -1):
+                if board[r][c]:
+                    board[w][c] = board[r][c]
+                    w -= 1
+            while w >= 0:
+                board[w][c] = 0
+                w -= 1
+    return board
+`,
+
+  'number-of-distinct-islands': `
+def numDistinctIslands(grid):
+    grid = [list(row) for row in grid]
+    m, n = len(grid), len(grid[0])
+    shapes = set()
+    def dfs(r, c, r0, c0, shape):
+        if r < 0 or r >= m or c < 0 or c >= n or not grid[r][c]:
+            return
+        grid[r][c] = 0
+        shape.append((r - r0, c - c0))
+        for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:
+            dfs(r+dr, c+dc, r0, c0, shape)
+    for r in range(m):
+        for c in range(n):
+            if grid[r][c]:
+                shape = []
+                dfs(r, c, r, c, shape)
+                shapes.add(tuple(sorted(shape)))
+    return len(shapes)
+`,
+
+  'word-ladder-ii': `
+def findLadders(beginWord, endWord, wordList):
+    from collections import defaultdict
+    word_set = set(wordList)
+    if endWord not in word_set:
+        return []
+    parents = defaultdict(set)
+    curr = {beginWord}
+    found = False
+    while curr and not found:
+        for w in curr:
+            word_set.discard(w)
+        nxt = set()
+        for word in curr:
+            arr = list(word)
+            for i in range(len(arr)):
+                orig = arr[i]
+                for c in 'abcdefghijklmnopqrstuvwxyz':
+                    arr[i] = c
+                    neigh = ''.join(arr)
+                    if neigh in word_set:
+                        parents[neigh].add(word)
+                        nxt.add(neigh)
+                        if neigh == endWord:
+                            found = True
+                arr[i] = orig
+        curr = nxt
+    if not found:
+        return []
+    result = []
+    def dfs(word, path):
+        if word == beginWord:
+            result.append(list(reversed(path)))
+            return
+        for parent in parents[word]:
+            path.append(parent)
+            dfs(parent, path)
+            path.pop()
+    dfs(endWord, [endWord])
+    result.sort()
+    return result
+`,
+
+  'cut-off-trees-for-golf-event': `
+def cutOffTree(forest):
+    from collections import deque
+    forest = [list(row) for row in forest]
+    m, n = len(forest), len(forest[0])
+    trees = sorted((forest[r][c], r, c) for r in range(m) for c in range(n) if forest[r][c] > 1)
+    def bfs(sr, sc, tr, tc):
+        if sr == tr and sc == tc:
+            return 0
+        visited = {(sr, sc)}
+        q = deque([(sr, sc, 0)])
+        while q:
+            r, c, steps = q.popleft()
+            for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:
+                nr, nc = r+dr, c+dc
+                if 0 <= nr < m and 0 <= nc < n and forest[nr][nc] and (nr,nc) not in visited:
+                    if nr == tr and nc == tc:
+                        return steps + 1
+                    visited.add((nr, nc))
+                    q.append((nr, nc, steps+1))
+        return -1
+    total, cr, cc = 0, 0, 0
+    for _, tr, tc in trees:
+        steps = bfs(cr, cc, tr, tc)
+        if steps == -1:
+            return -1
+        total += steps
+        cr, cc = tr, tc
+    return total
+`,
+
+  'network-becomes-idle': `
+def networkBecomesIdle(edges, patience):
+    from collections import deque
+    n = len(patience)
+    graph = [[] for _ in range(n)]
+    for u, v in edges:
+        graph[u].append(v)
+        graph[v].append(u)
+    dist = [-1] * n
+    dist[0] = 0
+    q = deque([0])
+    while q:
+        u = q.popleft()
+        for v in graph[u]:
+            if dist[v] == -1:
+                dist[v] = dist[u] + 1
+                q.append(v)
+    ans = 0
+    for i in range(1, n):
+        rt = 2 * dist[i]
+        p = patience[i]
+        last_resend = (rt - 1) // p * p
+        idle = last_resend + rt + 1
+        ans = max(ans, idle)
+    return ans
+`,
+
+  'smallest-string-with-swaps': `
+def smallestStringWithSwaps(s, pairs):
+    n = len(s)
+    parent = list(range(n))
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    for a, b in pairs:
+        pa, pb = find(a), find(b)
+        if pa != pb:
+            parent[pa] = pb
+    from collections import defaultdict
+    groups = defaultdict(list)
+    for i in range(n):
+        groups[find(i)].append(i)
+    res = list(s)
+    for indices in groups.values():
+        chars = sorted(s[i] for i in indices)
+        for i, idx in enumerate(sorted(indices)):
+            res[idx] = chars[i]
+    return ''.join(res)
+`,
+
+  'remove-boxes': `
+def removeBoxes(boxes):
+    from functools import lru_cache
+    n = len(boxes)
+    @lru_cache(maxsize=None)
+    def dp(l, r, k):
+        if l > r:
+            return 0
+        res = (k + 1) * (k + 1) + dp(l + 1, r, 0)
+        for m in range(l + 1, r + 1):
+            if boxes[m] == boxes[l]:
+                res = max(res, dp(l + 1, m - 1, 0) + dp(m, r, k + 1))
+        return res
+    return dp(0, n - 1, 0)
+`,
+
+  'escape-the-spreading-fire': `
+def maximumMinutes(grid):
+    from collections import deque
+    m, n = len(grid), len(grid[0])
+    dirs = [(1,0),(-1,0),(0,1),(0,-1)]
+    fire_dist = [[float('inf')]*n for _ in range(m)]
+    fq = deque()
+    for r in range(m):
+        for c in range(n):
+            if grid[r][c] == 1:
+                fire_dist[r][c] = 0
+                fq.append((r, c))
+    while fq:
+        r, c = fq.popleft()
+        for dr, dc in dirs:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < m and 0 <= nc < n and grid[nr][nc] != 2 and fire_dist[nr][nc] == float('inf'):
+                fire_dist[nr][nc] = fire_dist[r][c] + 1
+                fq.append((nr, nc))
+    def can_escape(t):
+        if fire_dist[0][0] <= t:
+            return False
+        dist = [[-1]*n for _ in range(m)]
+        dist[0][0] = t
+        q = deque([(0, 0)])
+        while q:
+            r, c = q.popleft()
+            d = dist[r][c]
+            for dr, dc in dirs:
+                nr, nc = r+dr, c+dc
+                if nr < 0 or nr >= m or nc < 0 or nc >= n or grid[nr][nc] == 2 or dist[nr][nc] != -1:
+                    continue
+                nd = d + 1
+                if nr == m-1 and nc == n-1:
+                    if nd <= fire_dist[nr][nc]:
+                        return True
+                    continue
+                if nd >= fire_dist[nr][nc]:
+                    continue
+                dist[nr][nc] = nd
+                q.append((nr, nc))
+        return False
+    if not can_escape(0):
+        return -1
+    lo, hi = 0, m * n
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_escape(mid):
+            lo = mid
+        else:
+            hi = mid - 1
+    return 10**9 if lo >= m * n else lo
+`,
+
+  'minimize-malware-spread': `
+def minMalwareSpread(graph, initial):
+    initial = sorted(initial)
+    n = len(graph)
+    parent = list(range(n))
+    size = [1] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(a, b):
+        a, b = find(a), find(b)
+        if a == b:
+            return
+        if size[a] < size[b]:
+            a, b = b, a
+        parent[b] = a
+        size[a] += size[b]
+    for i in range(n):
+        for j in range(i+1, n):
+            if graph[i][j]:
+                union(i, j)
+    comp_count = {}
+    for node in initial:
+        root = find(node)
+        comp_count[root] = comp_count.get(root, 0) + 1
+    best_node = initial[0]
+    best_save = -1
+    for node in initial:
+        root = find(node)
+        if comp_count[root] == 1:
+            saved = size[root]
+            if saved > best_save or (saved == best_save and node < best_node):
+                best_save = saved
+                best_node = node
+    return best_node
+`,
+
+  'number-of-good-paths': `
+def numberOfGoodPaths(vals, edges):
+    n = len(vals)
+    parent = list(range(n))
+    cnt = [1] * n
+    max_val = vals[:]
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(a, b):
+        a, b = find(a), find(b)
+        if a == b:
+            return 0
+        new_paths = 0
+        if max_val[a] == max_val[b]:
+            new_paths = cnt[a] * cnt[b]
+            cnt[a] += cnt[b]
+        elif max_val[a] < max_val[b]:
+            cnt[a] = cnt[b]
+            max_val[a] = max_val[b]
+        parent[b] = a
+        return new_paths
+    sorted_edges = sorted(edges, key=lambda e: max(vals[e[0]], vals[e[1]]))
+    ans = n
+    for u, v in sorted_edges:
+        ans += union(u, v)
+    return ans
+`,
+
+  'longest-substring-with-at-least-k-repeating': `
+def longestSubstring(s, k):
+    def solve(left, right):
+        if right - left < k:
+            return 0
+        freq = {}
+        for i in range(left, right):
+            freq[s[i]] = freq.get(s[i], 0) + 1
+        for i in range(left, right):
+            if freq[s[i]] < k:
+                return max(solve(left, i), solve(i+1, right))
+        return right - left
+    return solve(0, len(s))
+`,
+
+  'count-battleships-in-a-board': `
+def countBattleships(board):
+    m, n = len(board), len(board[0])
+    count = 0
+    for i in range(m):
+        for j in range(n):
+            if board[i][j] == 'X':
+                if (i == 0 or board[i-1][j] != 'X') and (j == 0 or board[i][j-1] != 'X'):
+                    count += 1
+    return count
+`,
+
+  'detect-cycles-in-2d-grid': `
+def containsCycle(grid):
+    m, n = len(grid), len(grid[0])
+    visited = [[False]*n for _ in range(m)]
+    def dfs(r, c, pr, pc, val):
+        if visited[r][c]:
+            return True
+        visited[r][c] = True
+        for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:
+            nr, nc = r+dr, c+dc
+            if nr < 0 or nr >= m or nc < 0 or nc >= n:
+                continue
+            if nr == pr and nc == pc:
+                continue
+            if grid[nr][nc] != val:
+                continue
+            if dfs(nr, nc, r, c, val):
+                return True
+        return False
+    for r in range(m):
+        for c in range(n):
+            if not visited[r][c]:
+                if dfs(r, c, -1, -1, grid[r][c]):
+                    return True
+    return False
+`,
+
+  'range-sum-query-mutable': `
+def numArrayOps(ops):
+    bit = None
+    nums = None
+    n = 0
+    def update(i, delta):
+        i += 1
+        while i <= n:
+            bit[i] += delta
+            i += i & (-i)
+    def query(i):
+        i += 1
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & (-i)
+        return s
+    result = []
+    for op, params in ops:
+        if op == 'NumArray':
+            input_nums = list(params[0])
+            n_val = len(input_nums)
+            import builtins
+            globals()['n'] = n_val
+            bit_arr = [0] * (n_val + 2)
+            nums_arr = input_nums[:]
+            globals()['bit'] = bit_arr
+            globals()['nums'] = nums_arr
+            for i, v in enumerate(input_nums):
+                j = i + 1
+                while j <= n_val:
+                    bit_arr[j] += v
+                    j += j & (-j)
+            result.append(None)
+        elif op == 'update':
+            idx, val = int(params[0]), int(params[1])
+            delta = val - globals()['nums'][idx]
+            globals()['nums'][idx] = val
+            i = idx + 1
+            n_val = globals()['n']
+            bit_arr = globals()['bit']
+            while i <= n_val:
+                bit_arr[i] += delta
+                i += i & (-i)
+            result.append(None)
+        else:
+            l, r = int(params[0]), int(params[1])
+            bit_arr = globals()['bit']
+            def q(i):
+                i += 1
+                s = 0
+                while i > 0:
+                    s += bit_arr[i]
+                    i -= i & (-i)
+                return s
+            result.append(q(r) - (q(l-1) if l > 0 else 0))
+    return result
+`,
+
+  'count-of-smaller-numbers-after-self-bit': `
+def countSmaller(nums):
+    sorted_unique = sorted(set(nums))
+    rank = {v: i+1 for i, v in enumerate(sorted_unique)}
+    m = len(sorted_unique)
+    bit = [0] * (m + 2)
+    def update(i):
+        while i <= m:
+            bit[i] += 1
+            i += i & (-i)
+    def query(i):
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & (-i)
+        return s
+    result = [0] * len(nums)
+    for i in range(len(nums)-1, -1, -1):
+        r = rank[nums[i]]
+        result[i] = query(r-1) if r > 1 else 0
+        update(r)
+    return result
+`,
+
+  'rank-transform-of-an-array': `
+def arrayRankTransform(arr):
+    sorted_unique = sorted(set(arr))
+    rank = {v: i+1 for i, v in enumerate(sorted_unique)}
+    return [rank[x] for x in arr]
+`,
+
+  'similar-string-groups': `
+def numSimilarGroups(strs):
+    n = len(strs)
+    parent = list(range(n))
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(a, b):
+        parent[find(a)] = find(b)
+    def similar(a, b):
+        diff = sum(1 for x, y in zip(a, b) if x != y)
+        return diff == 0 or diff == 2
+    for i in range(n):
+        for j in range(i+1, n):
+            if similar(strs[i], strs[j]):
+                union(i, j)
+    return len(set(find(i) for i in range(n)))
+`,
+
+  'the-maze': `
+from collections import deque
+def hasPath(maze, start, destination):
+    m, n = len(maze), len(maze[0])
+    visited = [[False]*n for _ in range(m)]
+    queue = deque([(start[0], start[1])])
+    visited[start[0]][start[1]] = True
+    dirs = [(1,0),(-1,0),(0,1),(0,-1)]
+    while queue:
+        r, c = queue.popleft()
+        if r == destination[0] and c == destination[1]:
+            return True
+        for dr, dc in dirs:
+            nr, nc = r+dr, c+dc
+            while 0 <= nr < m and 0 <= nc < n and maze[nr][nc] == 0:
+                nr += dr; nc += dc
+            nr -= dr; nc -= dc
+            if not visited[nr][nc]:
+                visited[nr][nc] = True
+                queue.append((nr, nc))
+    return False
+`,
+
+  'create-sorted-array-through-instructions': `
+def createSortedArray(instructions):
+    MOD = 10**9 + 7
+    max_val = 100001
+    bit = [0] * (max_val + 1)
+    def update(i):
+        while i <= max_val:
+            bit[i] += 1
+            i += i & (-i)
+    def query(i):
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & (-i)
+        return s
+    total = 0
+    for k, v in enumerate(instructions):
+        less = query(v-1) if v > 1 else 0
+        greater = k - query(v)
+        total = (total + min(less, greater)) % MOD
+        update(v)
+    return total
+`,
+
+  'minimum-time-to-remove-all-cars': `
+def minimumTime(s):
+    n = len(s)
+    left = [0] * n
+    right = [0] * n
+    left[0] = 1 if s[0] == '1' else 0
+    for i in range(1, n):
+        left[i] = min(left[i-1] + 2*(s[i]=='1'), i+1)
+    right[n-1] = 1 if s[n-1] == '1' else 0
+    for i in range(n-2, -1, -1):
+        right[i] = min(right[i+1] + 2*(s[i]=='1'), n-i)
+    ans = min(left[n-1], right[0])
+    for i in range(n-1):
+        ans = min(ans, left[i] + right[i+1])
+    return ans
+`,
+
+  'process-restricted-friend-requests': `
+def friendRequests(n, restrictions, requests):
+    parent = list(range(n))
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    result = []
+    for u, v in requests:
+        ru, rv = find(u), find(v)
+        if ru == rv:
+            result.append(True)
+            continue
+        ok = True
+        for x, y in restrictions:
+            rx, ry = find(x), find(y)
+            if (rx == ru and ry == rv) or (rx == rv and ry == ru):
+                ok = False
+                break
+        if ok:
+            parent[ru] = rv
+        result.append(ok)
+    return result
+`,
+
+  'design-food-rating-system': `
+import heapq
+def foodRatingOps(ops):
+    food_map = {}
+    cuisine_heap = {}
+    result = []
+    for op, params in ops:
+        if op == 'FoodRatings':
+            foods, cuisines, ratings = params[0], params[1], params[2]
+            for f, c, r in zip(foods, cuisines, ratings):
+                food_map[f] = [c, r]
+                if c not in cuisine_heap:
+                    cuisine_heap[c] = []
+                heapq.heappush(cuisine_heap[c], (-r, f))
+            result.append(None)
+        elif op == 'changeRating':
+            food, new_rating = params[0], int(params[1])
+            food_map[food][1] = new_rating
+            c = food_map[food][0]
+            heapq.heappush(cuisine_heap[c], (-new_rating, food))
+            result.append(None)
+        else:
+            cuisine = params[0]
+            heap = cuisine_heap[cuisine]
+            while heap:
+                r, f = heap[0]
+                if food_map[f][1] == -r:
+                    break
+                heapq.heappop(heap)
+            result.append(heap[0][1])
+    return result
+`,
+
+  'first-day-you-have-been-in-all-rooms': `
+def firstDayBeenInAllRooms(nextVisit):
+    MOD = 10**9 + 7
+    n = len(nextVisit)
+    dp = [0] * n
+    for i in range(1, n):
+        dp[i] = (2 * dp[i-1] - dp[nextVisit[i-1]] + 2) % MOD
+    return dp[n-1]
+`,
+
+  // batch 75
+  'shortest-path-in-grid-with-obstacles-elimination': `
+def shortestPath(grid, k):
+    from collections import deque
+    m, n = len(grid), len(grid[0])
+    if m == 1 and n == 1:
+        return 0
+    visited = [[[False]*(k+1) for _ in range(n)] for _ in range(m)]
+    queue = deque([(0, 0, k, 0)])
+    visited[0][0][k] = True
+    dirs = [(1,0),(-1,0),(0,1),(0,-1)]
+    while queue:
+        r, c, rem, steps = queue.popleft()
+        for dr, dc in dirs:
+            nr, nc = r+dr, c+dc
+            if not (0 <= nr < m and 0 <= nc < n):
+                continue
+            new_rem = rem - grid[nr][nc]
+            if new_rem < 0:
+                continue
+            if nr == m-1 and nc == n-1:
+                return steps + 1
+            if not visited[nr][nc][new_rem]:
+                visited[nr][nc][new_rem] = True
+                queue.append((nr, nc, new_rem, steps+1))
+    return -1
+`,
+
+  'regions-cut-by-slashes': `
+def regionsBySlashes(grid):
+    n = len(grid)
+    size = n * 3
+    g = [[0]*size for _ in range(size)]
+    for r in range(n):
+        for c in range(n):
+            ch = grid[r][c]
+            if ch == '/':
+                g[r*3+2][c*3+0] = 1
+                g[r*3+1][c*3+1] = 1
+                g[r*3+0][c*3+2] = 1
+            elif ch == '\\\\':
+                g[r*3+0][c*3+0] = 1
+                g[r*3+1][c*3+1] = 1
+                g[r*3+2][c*3+2] = 1
+    regions = 0
+    from collections import deque
+    for r in range(size):
+        for c in range(size):
+            if g[r][c] == 0:
+                regions += 1
+                q = deque([(r, c)])
+                g[r][c] = 1
+                while q:
+                    cr, cc = q.popleft()
+                    for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:
+                        nr, nc = cr+dr, cc+dc
+                        if 0 <= nr < size and 0 <= nc < size and g[nr][nc] == 0:
+                            g[nr][nc] = 1
+                            q.append((nr, nc))
+    return regions
+`,
+
+  'find-latest-group-of-size-m': `
+def findLatestStep(arr, m):
+    n = len(arr)
+    if m == n:
+        return n
+    left = [0] * (n + 2)
+    right = [0] * (n + 2)
+    count = [0] * (n + 2)
+    ans = -1
+    for step, pos in enumerate(arr):
+        l_len = right[pos - 1]
+        r_len = left[pos + 1]
+        new_len = 1 + l_len + r_len
+        if l_len > 0:
+            count[l_len] -= 1
+        if r_len > 0:
+            count[r_len] -= 1
+        count[new_len] += 1
+        left[pos - l_len] = new_len
+        right[pos + r_len] = new_len
+        left[pos] = new_len
+        right[pos] = new_len
+        if count[m] > 0:
+            ans = step + 1
+    return ans
+`,
+
+  'sentence-similarity-ii': `
+def areSentencesSimilarTwo(sentence1, sentence2, similarPairs):
+    if len(sentence1) != len(sentence2):
+        return False
+    parent = {}
+    def find(x):
+        if x not in parent:
+            parent[x] = x
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    def union(a, b):
+        ra, rb = find(a), find(b)
+        if ra != rb:
+            parent[ra] = rb
+    for a, b in similarPairs:
+        union(a, b)
+    for w1, w2 in zip(sentence1, sentence2):
+        if w1 != w2 and find(w1) != find(w2):
+            return False
+    return True
+`,
+
+  // batch 76
+  'remove-max-number-of-edges-to-keep-graph-fully-traversable': `
+def maxNumEdgesToRemove(n, edges):
+    def make_dsu(n):
+        parent = list(range(n + 1))
+        rank = [0] * (n + 1)
+        count = [n]
+        def find(x):
+            if parent[x] != x:
+                parent[x] = find(parent[x])
+            return parent[x]
+        def union(a, b):
+            ra, rb = find(a), find(b)
+            if ra == rb: return False
+            if rank[ra] < rank[rb]: parent[ra] = rb
+            elif rank[ra] > rank[rb]: parent[rb] = ra
+            else: parent[rb] = ra; rank[ra] += 1
+            count[0] -= 1
+            return True
+        return find, union, lambda: count[0] == 1
+    fa, ua, ca = make_dsu(n)
+    fb, ub, cb = make_dsu(n)
+    removed = 0
+    for t, u, v in edges:
+        if t == 3:
+            a = ua(u, v); b = ub(u, v)
+            if not a and not b: removed += 1
+    for t, u, v in edges:
+        if t == 1:
+            if not ua(u, v): removed += 1
+        elif t == 2:
+            if not ub(u, v): removed += 1
+    if not ca() or not cb(): return -1
+    return removed
+`,
+
+  'exam-room': `
+def examRoomOps(ops):
+    import bisect
+    state = {'n': 0, 'seated': []}
+    def seat():
+        seated = state['seated']
+        n = state['n']
+        if not seated:
+            bisect.insort(seated, 0)
+            return 0
+        best, best_dist = 0, seated[0]
+        for i in range(1, len(seated)):
+            dist = (seated[i] - seated[i-1]) // 2
+            mid = (seated[i-1] + seated[i]) // 2
+            if dist > best_dist:
+                best_dist = dist
+                best = mid
+        if n - 1 - seated[-1] > best_dist:
+            best = n - 1
+        bisect.insort(seated, best)
+        return best
+    def leave(p):
+        state['seated'].remove(p)
+    results = []
+    for op, args in ops:
+        if op == 'ExamRoom':
+            state['n'] = args[0]
+            results.append(None)
+        elif op == 'seat':
+            results.append(seat())
+        else:
+            leave(args[0])
+            results.append(None)
+    return results
+`,
+
+  'checking-existence-of-edge-length-limited-paths': `
+def distanceLimitedPathsExist(n, edgeList, queries):
+    parent = list(range(n))
+    rank = [0] * n
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    def union(a, b):
+        ra, rb = find(a), find(b)
+        if ra == rb: return
+        if rank[ra] < rank[rb]: parent[ra] = rb
+        elif rank[ra] > rank[rb]: parent[rb] = ra
+        else: parent[rb] = ra; rank[ra] += 1
+    sorted_edges = sorted(edgeList, key=lambda e: e[2])
+    indexed = sorted(enumerate(queries), key=lambda x: x[1][2])
+    ans = [False] * len(queries)
+    ei = 0
+    for orig_i, (p, q, limit) in indexed:
+        while ei < len(sorted_edges) and sorted_edges[ei][2] < limit:
+            union(sorted_edges[ei][0], sorted_edges[ei][1])
+            ei += 1
+        ans[orig_i] = find(p) == find(q)
+    return ans
+`,
+
+  'last-day-where-you-can-still-cross': `
+def latestDayToCross(row, col, cells):
+    from collections import deque
+    def can_cross(day):
+        flooded = set()
+        for i in range(day):
+            r, c = cells[i]
+            flooded.add((r-1)*col + (c-1))
+        queue = deque()
+        for c in range(col):
+            if c not in flooded:
+                queue.append((0, c))
+                flooded.add(c)
+        while queue:
+            r, c = queue.popleft()
+            if r == row - 1: return True
+            for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:
+                nr, nc = r+dr, c+dc
+                if 0 <= nr < row and 0 <= nc < col:
+                    key = nr*col + nc
+                    if key not in flooded:
+                        flooded.add(key)
+                        queue.append((nr, nc))
+        return False
+    lo, hi = 0, row * col
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_cross(mid): lo = mid
+        else: hi = mid - 1
+    return lo
+`,
+
+  'minimum-cost-walk-in-weighted-graph': `
+def minimumCost(n, edges, queries):
+    parent = list(range(n))
+    rank = [0] * n
+    and_cost = [(1 << 17) - 1] * n
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    def union(a, b, w):
+        ra, rb = find(a), find(b)
+        and_cost[ra] &= w
+        and_cost[rb] &= w
+        if ra == rb: return
+        if rank[ra] < rank[rb]:
+            parent[ra] = rb; and_cost[rb] &= and_cost[ra]
+        elif rank[ra] > rank[rb]:
+            parent[rb] = ra; and_cost[ra] &= and_cost[rb]
+        else:
+            parent[rb] = ra; and_cost[ra] &= and_cost[rb]; rank[ra] += 1
+    for u, v, w in edges:
+        union(u, v, w)
+    result = []
+    for s, t in queries:
+        if find(s) != find(t): result.append(-1)
+        else: result.append(and_cost[find(s)])
+    return result
+`,
+
+  'maximum-average-pass-ratio': `
+def maxAverageRatio(classes, extraStudents):
+    import heapq
+    def gain(p, t): return (p+1)/(t+1) - p/t
+    heap = [(-gain(p, t), p, t) for p, t in classes]
+    heapq.heapify(heap)
+    for _ in range(extraStudents):
+        g, p, t = heapq.heappop(heap)
+        heapq.heappush(heap, (-gain(p+1, t+1), p+1, t+1))
+    return sum(p/t for _, p, t in heap) / len(classes)
+`,
+
+  'count-good-meals': `
+def countPairs(deliciousness):
+    MOD = 10**9 + 7
+    freq = {}
+    count = 0
+    for d in deliciousness:
+        for p in range(22):
+            target = (1 << p) - d
+            if target in freq:
+                count = (count + freq[target]) % MOD
+        freq[d] = freq.get(d, 0) + 1
+    return count
+`,
+
+  'rank-teams-by-votes': `
+def rankTeams(votes):
+    teams = list(votes[0])
+    m = len(teams)
+    counts = {t: [0]*m for t in teams}
+    for vote in votes:
+        for i, t in enumerate(vote):
+            counts[t][i] += 1
+    teams.sort(key=lambda t: ([-c for c in counts[t]], t))
+    return ''.join(teams)
+`,
+
+  'minimum-number-of-refueling-stops': `
+def minRefuelStops(target, startFuel, stations):
+    import heapq
+    heap = []
+    fuel = startFuel
+    stops = 0
+    prev = 0
+    for pos, f in stations:
+        fuel -= pos - prev
+        while fuel < 0 and heap:
+            fuel -= heapq.heappop(heap)
+            stops += 1
+        if fuel < 0: return -1
+        heapq.heappush(heap, -f)
+        prev = pos
+    fuel -= target - prev
+    while fuel < 0 and heap:
+        fuel -= heapq.heappop(heap)
+        stops += 1
+    return -1 if fuel < 0 else stops
+`,
+
+  'minimum-total-space-wasted-with-k-resizing-operations': `
+def minSpaceWastedKResizing(nums, k):
+    n = len(nums)
+    waste = [[0]*n for _ in range(n)]
+    for i in range(n):
+        max_val = 0; total = 0
+        for j in range(i, n):
+            max_val = max(max_val, nums[j]); total += nums[j]
+            waste[i][j] = max_val * (j-i+1) - total
+    INF = float('inf')
+    dp = [[INF]*(k+1) for _ in range(n)]
+    for j in range(n): dp[j][0] = waste[0][j]
+    for seg in range(1, k+1):
+        for j in range(seg, n):
+            for l in range(seg-1, j):
+                if dp[l][seg-1] != INF:
+                    dp[j][seg] = min(dp[j][seg], dp[l][seg-1] + waste[l+1][j])
+    return min(dp[n-1])
+`,
+
+  'maximum-number-of-tasks-you-can-assign': `
+def maxTaskAssign(tasks, workers, pills, strength):
+    tasks = sorted(tasks)
+    workers = sorted(workers)
+    n, m = len(tasks), len(workers)
+    def can_do(k):
+        avail = list(workers[m-k:])
+        pills_left = pills
+        for ti in range(k-1, -1, -1):
+            task = tasks[ti]
+            if avail and avail[-1] >= task:
+                avail.pop()
+            elif pills_left > 0:
+                lo2, hi2 = 0, len(avail)
+                while lo2 < hi2:
+                    mid2 = (lo2 + hi2) // 2
+                    if avail[mid2] + strength >= task: hi2 = mid2
+                    else: lo2 = mid2 + 1
+                if lo2 >= len(avail): return False
+                avail.pop(lo2); pills_left -= 1
+            else:
+                return False
+        return True
+    lo, hi = 0, min(n, m)
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_do(mid): lo = mid
+        else: hi = mid - 1
+    return lo
+`,
+
+  'maximum-total-beauty-of-gardens': `
+def maximumBeauty(flowers, newFlowers, target, full, partial):
+    flowers = sorted(flowers)
+    n = len(flowers)
+    nc = n
+    while nc > 0 and flowers[nc-1] >= target:
+        nc -= 1
+    already_complete = n - nc
+    prefix = [0] * (nc + 1)
+    for i in range(nc): prefix[i+1] = prefix[i] + flowers[i]
+    def cost_for_v(v, incomplete_cnt):
+        lo, hi = 0, incomplete_cnt
+        while lo < hi:
+            mid = (lo + hi) // 2
+            if flowers[mid] < v: lo = mid + 1
+            else: hi = mid
+        return v * lo - prefix[lo]
+    ans = already_complete * full
+    cost_full = 0
+    for k in range(nc + 1):
+        if k > 0:
+            cost_full += target - flowers[nc - k]
+            if cost_full > newFlowers: break
+        seeds_left = newFlowers - cost_full
+        incomplete_cnt = nc - k
+        total_complete = already_complete + k
+        if incomplete_cnt == 0:
+            ans = max(ans, total_complete * full)
+            continue
+        v_lo, v_hi = flowers[0], target - 1
+        while v_lo < v_hi:
+            v_mid = (v_lo + v_hi + 1) // 2
+            if cost_for_v(v_mid, incomplete_cnt) <= seeds_left: v_lo = v_mid
+            else: v_hi = v_mid - 1
+        ans = max(ans, total_complete * full + v_lo * partial)
+    return ans
+`,
+
+  'maximum-xor-of-two-numbers-in-an-array': `
+def findMaximumXOR(nums):
+    ans = 0
+    mask = 0
+    for i in range(30, -1, -1):
+        mask |= (1 << i)
+        prefixes = set(n & mask for n in nums)
+        candidate = ans | (1 << i)
+        for p in prefixes:
+            if p ^ candidate in prefixes:
+                ans = candidate
+                break
+    return ans
+`,
+
+  'design-graph-with-shortest-path-calculator': `
+def designGraph(n, edges, ops):
+    from heapq import heappush, heappop
+    adj = [[] for _ in range(n)]
+    for frm, to, cost in edges:
+        adj[frm].append((to, cost))
+    def dijkstra(src, dst):
+        dist = [float('inf')] * n
+        dist[src] = 0
+        pq = [(0, src)]
+        while pq:
+            d, u = heappop(pq)
+            if d > dist[u]: continue
+            for v, w in adj[u]:
+                if dist[u] + w < dist[v]:
+                    dist[v] = dist[u] + w
+                    heappush(pq, (dist[v], v))
+        return dist[dst] if dist[dst] != float('inf') else -1
+    results = []
+    for op, args in ops:
+        if op == 'addEdge':
+            adj[args[0]].append((args[1], args[2]))
+            results.append(None)
+        else:
+            results.append(dijkstra(args[0], args[1]))
+    return results
+`,
+
+  'count-inversions': `
+def countInversions(nums):
+    sorted_unique = sorted(set(nums))
+    rank = {v: i+1 for i, v in enumerate(sorted_unique)}
+    m = len(sorted_unique)
+    bit = [0] * (m + 1)
+    def update(i):
+        while i <= m:
+            bit[i] += 1
+            i += i & -i
+    def query(i):
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & -i
+        return s
+    inv = 0
+    for v in nums:
+        r = rank[v]
+        inv += query(m) - query(r)
+        update(r)
+    return inv
+`,
+
+  'range-sum-query-2d-mutable': `
+def numMatrixOps(ops):
+    m = n = 0
+    cur = []
+    bit = []
+    def add(r, c, v):
+        i = r + 1
+        while i <= m:
+            j = c + 1
+            while j <= n:
+                bit[i][j] += v
+                j += j & -j
+            i += i & -i
+    def prefix(r, c):
+        s = 0
+        i = r + 1
+        while i > 0:
+            j = c + 1
+            while j > 0:
+                s += bit[i][j]
+                j -= j & -j
+            i -= i & -i
+        return s
+    results = []
+    for op, args in ops:
+        if op == 'NumMatrix':
+            matrix = args[0]
+            m, n = len(matrix), len(matrix[0])
+            cur = [row[:] for row in matrix]
+            for _ in range(m + 1):
+                bit.append([0] * (n + 1))
+            for i in range(m):
+                for j in range(n):
+                    add(i, j, cur[i][j])
+            results.append(None)
+        elif op == 'update':
+            r, c, v = args
+            add(r, c, v - cur[r][c])
+            cur[r][c] = v
+            results.append(None)
+        else:
+            r1, c1, r2, c2 = args
+            results.append(prefix(r2, c2) - prefix(r1-1, c2) - prefix(r2, c1-1) + prefix(r1-1, c1-1))
+    return results
+`,
+
+  'count-smaller-before-self-bit': `
+def countSmallerBefore(nums):
+    sorted_unique = sorted(set(nums))
+    rank = {v: i+1 for i, v in enumerate(sorted_unique)}
+    m = len(sorted_unique)
+    bit = [0] * (m + 1)
+    def update(i):
+        while i <= m:
+            bit[i] += 1
+            i += i & -i
+    def query(i):
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & -i
+        return s
+    result = []
+    for v in nums:
+        r = rank[v]
+        result.append(query(r - 1))
+        update(r)
+    return result
+`,
+
+  'number-of-pairs-satisfying-inequality-bit': `
+def numberOfPairs(nums1, nums2, diff):
+    n = len(nums1)
+    a = [nums1[i] - nums2[i] for i in range(n)]
+    OFFSET = 20001
+    SIZE = 40002
+    bit = [0] * (SIZE + 1)
+    def update(i):
+        while i <= SIZE:
+            bit[i] += 1
+            i += i & -i
+    def query(i):
+        i = min(i, SIZE)
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & -i
+        return s
+    count = 0
+    for j in range(n):
+        threshold = a[j] + diff + OFFSET
+        count += query(threshold)
+        update(a[j] + OFFSET)
+    return count
+`,
+
+  'range-update-point-query-bit': `
+def rangeUpdatePointQuery(n, operations):
+    bit = [0] * (n + 2)
+    def update(i, v):
+        i += 1
+        while i <= n:
+            bit[i] += v
+            i += i & -i
+    def query(i):
+        i += 1
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & -i
+        return s
+    results = []
+    for op in operations:
+        if op[0] == 'add':
+            l, r, v = op[1], op[2], op[3]
+            update(l, v)
+            if r + 1 < n:
+                update(r + 1, -v)
+        else:
+            i = op[1]
+            results.append(query(i))
+    return results
+`,
+
+  'create-target-array-using-bit': `
+def createTargetArray(nums, index):
+    target = []
+    for i in range(len(nums)):
+        target.insert(index[i], nums[i])
+    return target
+`,
+
+  'robot-collisions': `
+def survivedRobotsHealths(positions, healths, directions):
+    n = len(positions)
+    indices = sorted(range(n), key=lambda i: positions[i])
+    alive = [True] * n
+    hp = list(healths)
+    stack = []
+    for idx in indices:
+        if directions[idx] == 'R':
+            stack.append(idx)
+        else:
+            while stack:
+                top = stack[-1]
+                if hp[top] > hp[idx]:
+                    hp[top] -= 1
+                    alive[idx] = False
+                    break
+                elif hp[top] < hp[idx]:
+                    hp[idx] -= 1
+                    alive[top] = False
+                    stack.pop()
+                else:
+                    alive[top] = False
+                    alive[idx] = False
+                    stack.pop()
+                    break
+    return [hp[i] for i in range(n) if alive[i]]
+`,
+
+  'spiral-matrix-iv': `
+def spiralMatrix(m, n, vals):
+    grid = [[-1] * n for _ in range(m)]
+    top, bottom, left, right = 0, m - 1, 0, n - 1
+    ptr = 0
+    while top <= bottom and left <= right:
+        for c in range(left, right + 1):
+            if ptr < len(vals): grid[top][c] = vals[ptr]; ptr += 1
+        top += 1
+        for r in range(top, bottom + 1):
+            if ptr < len(vals): grid[r][right] = vals[ptr]; ptr += 1
+        right -= 1
+        for c in range(right, left - 1, -1):
+            if ptr < len(vals): grid[bottom][c] = vals[ptr]; ptr += 1
+        bottom -= 1
+        for r in range(bottom, top - 1, -1):
+            if ptr < len(vals): grid[r][left] = vals[ptr]; ptr += 1
+        left += 1
+    return grid
+`,
+
+  'text-editor-simulation': `
+def textEditorOperations(operations):
+    left = []
+    right = []
+    results = []
+    for op in operations:
+        name = op[0]
+        val = op[1]
+        if name == 'addText':
+            for ch in val:
+                left.append(ch)
+        elif name == 'deleteText':
+            for _ in range(val):
+                if left:
+                    left.pop()
+        elif name == 'cursorLeft':
+            for _ in range(val):
+                if left:
+                    right.append(left.pop())
+            results.append(''.join(left[-10:]))
+        else:
+            for _ in range(val):
+                if right:
+                    left.append(right.pop())
+            results.append(''.join(left[-10:]))
+    return results
+`,
+
+  'atm-machine-simulation': `
+def atmOperations(operations):
+    denominations = [20, 50, 100, 200, 500]
+    cnt = [0, 0, 0, 0, 0]
+    results = []
+    for op in operations:
+        name = op[0]
+        val = op[1]
+        if name == 'deposit':
+            for i in range(5):
+                cnt[i] += val[i]
+            results.append(None)
+        else:
+            amount = val
+            used = [0, 0, 0, 0, 0]
+            for i in range(4, -1, -1):
+                take = min(amount // denominations[i], cnt[i])
+                used[i] = take
+                amount -= take * denominations[i]
+            if amount != 0:
+                results.append([-1])
+            else:
+                for i in range(5):
+                    cnt[i] -= used[i]
+                results.append(used[:])
+    return results
+`,
+
+  'shortest-path-to-food': `
+def getFood(grid):
+    from collections import deque
+    m, n = len(grid), len(grid[0])
+    start_r = start_c = 0
+    for r in range(m):
+        for c in range(n):
+            if grid[r][c] == 'X':
+                start_r, start_c = r, c
+    visited = [[False] * n for _ in range(m)]
+    visited[start_r][start_c] = True
+    q = deque([(start_r, start_c, 0)])
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    while q:
+        r, c, dist = q.popleft()
+        for dr, dc in dirs:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n and not visited[nr][nc] and grid[nr][nc] != '#':
+                if grid[nr][nc] == '*':
+                    return dist + 1
+                visited[nr][nc] = True
+                q.append((nr, nc, dist + 1))
+    return -1
+`,
+
+  'minimum-jumps-to-reach-home': `
+def minimumJumps(forbidden, a, b, x):
+    from collections import deque
+    forb = set(forbidden)
+    limit = max(x, max(forbidden) if forbidden else 0) + a + b
+    visited = set()
+    visited.add((0, False))
+    q = deque([(0, False, 0)])
+    while q:
+        pos, last_back, jumps = q.popleft()
+        fwd = pos + a
+        if fwd == x:
+            return jumps + 1
+        if fwd <= limit and fwd not in forb:
+            key = (fwd, False)
+            if key not in visited:
+                visited.add(key)
+                q.append((fwd, False, jumps + 1))
+        if not last_back:
+            bwd = pos - b
+            if bwd == x:
+                return jumps + 1
+            if bwd >= 0 and bwd not in forb:
+                key = (bwd, True)
+                if key not in visited:
+                    visited.add(key)
+                    q.append((bwd, True, jumps + 1))
+    return -1
+`,
+
+  'all-pairs-shortest-path': `
+def floydWarshall(dist):
+    n = len(dist)
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if dist[i][k] < 10**9 and dist[k][j] < 10**9:
+                    if dist[i][k] + dist[k][j] < dist[i][j]:
+                        dist[i][j] = dist[i][k] + dist[k][j]
+    return dist
+`,
+
+  'minimum-cost-to-reach-all-nodes': `
+def minCostReachAll(n, edges):
+    from heapq import heappush, heappop
+    adj = [[] for _ in range(n)]
+    for u, v, w in edges:
+        adj[u].append((v, w))
+    dist = [float('inf')] * n
+    dist[0] = 0
+    pq = [(0, 0)]
+    while pq:
+        d, u = heappop(pq)
+        if d > dist[u]:
+            continue
+        for v, w in adj[u]:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                heappush(pq, (dist[v], v))
+    return [-1 if d == float('inf') else d for d in dist]
+`,
+
+  'minimum-operations-to-make-all-array-elements-equal-to-one': `
+from math import gcd
+def minOperations(nums):
+    n = len(nums)
+    ones = nums.count(1)
+    if ones > 0:
+        return n - ones
+    min_len = float('inf')
+    for i in range(n):
+        g = nums[i]
+        for j in range(i + 1, n):
+            g = gcd(g, nums[j])
+            if g == 1:
+                min_len = min(min_len, j - i + 1)
+                break
+    return -1 if min_len == float('inf') else (min_len - 1) + (n - 1)
+`,
+
+  'find-indices-with-index-and-value-difference-ii': `
+def findIndices(nums, indexDiff, valueDiff):
+    min_idx = max_idx = 0
+    for j in range(len(nums)):
+        i = j - indexDiff
+        if i >= 0:
+            if nums[i] < nums[min_idx]:
+                min_idx = i
+            if nums[i] > nums[max_idx]:
+                max_idx = i
+            if nums[j] - nums[min_idx] >= valueDiff:
+                return [min_idx, j]
+            if nums[max_idx] - nums[j] >= valueDiff:
+                return [max_idx, j]
+    return [-1, -1]
+`,
+
+  'minimum-absolute-difference-queries': `
+def minDifference(nums, queries):
+    MAX_VAL = 100
+    n = len(nums)
+    prefix = [[0] * (n + 1) for _ in range(MAX_VAL + 1)]
+    for i, x in enumerate(nums):
+        for v in range(1, MAX_VAL + 1):
+            prefix[v][i + 1] = prefix[v][i] + (1 if x == v else 0)
+    result = []
+    for l, r in queries:
+        prev = -1
+        min_diff = float('inf')
+        for v in range(1, MAX_VAL + 1):
+            if prefix[v][r + 1] - prefix[v][l] > 0:
+                if prev != -1:
+                    min_diff = min(min_diff, v - prev)
+                prev = v
+        result.append(-1 if min_diff == float('inf') else min_diff)
+    return result
+`,
+
+  'minimum-cost-for-cutting-cake-ii': `
+def minimumCost(m, n, horizontalCut, verticalCut):
+    h = sorted(horizontalCut, reverse=True)
+    v = sorted(verticalCut, reverse=True)
+    hi = vi = 0
+    h_pieces = v_pieces = 1
+    total = 0
+    while hi < len(h) or vi < len(v):
+        hv = h[hi] if hi < len(h) else -1
+        vv = v[vi] if vi < len(v) else -1
+        if hv >= vv:
+            total += hv * v_pieces
+            h_pieces += 1
+            hi += 1
+        else:
+            total += vv * h_pieces
+            v_pieces += 1
+            vi += 1
+    return total
+`,
+
+  'find-number-of-ways-to-place-people': `
+def numberOfPairs(points):
+    pts = sorted([[p[0], p[1]] for p in points], key=lambda p: (p[0], -p[1]))
+    count = 0
+    for i in range(len(pts)):
+        max_y = float('-inf')
+        xi, yi = pts[i]
+        for j in range(i + 1, len(pts)):
+            xj, yj = pts[j]
+            if xj >= xi and yj <= yi:
+                if yj > max_y:
+                    count += 1
+                    max_y = yj
+    return count
+`,
+
+  'find-the-k-sum-of-an-array': `
+def kSum(nums, k):
+    from heapq import heappush, heappop
+    max_sum = sum(x for x in nums if x > 0)
+    abs_nums = sorted(abs(x) for x in nums)
+    heap = [(0, 0)]
+    ans = 0
+    for _ in range(k):
+        red, i = heappop(heap)
+        ans = max_sum - red
+        if i < len(abs_nums):
+            heappush(heap, (red + abs_nums[i], i + 1))
+            if i > 0:
+                heappush(heap, (red - abs_nums[i - 1] + abs_nums[i], i + 1))
+    return ans
+`,
+
+  'minimum-time-to-visit-disappearing-nodes': `
+def minimumTime(n, edges, disappear):
+    from heapq import heappush, heappop
+    adj = [[] for _ in range(n)]
+    for u, v, w in edges:
+        adj[u].append((v, w))
+        adj[v].append((u, w))
+    dist = [float('inf')] * n
+    dist[0] = 0
+    pq = [(0, 0)]
+    while pq:
+        d, u = heappop(pq)
+        if d > dist[u]:
+            continue
+        for v, w in adj[u]:
+            nd = d + w
+            if nd < disappear[v] and nd < dist[v]:
+                dist[v] = nd
+                heappush(pq, (nd, v))
+    return [-1 if d == float('inf') else d for d in dist]
+`,
+
+  'count-beautiful-substrings-i': `
+def beautifulSubstrings(s, k):
+    vowels = set('aeiou')
+    count = 0
+    for i in range(len(s)):
+        v = c = 0
+        for j in range(i, len(s)):
+            if s[j] in vowels:
+                v += 1
+            else:
+                c += 1
+            if v == c and (j - i + 1) % k == 0:
+                count += 1
+    return count
+`,
+
+  'sort-transformed-array': `
+def sortTransformed(nums, a, b, c):
+    f = lambda x: a * x * x + b * x + c
+    res = [0] * len(nums)
+    lo, hi = 0, len(nums) - 1
+    idx = len(nums) - 1 if a >= 0 else 0
+    while lo <= hi:
+        fl, fr = f(nums[lo]), f(nums[hi])
+        if a >= 0:
+            if fl >= fr:
+                res[idx] = fl; lo += 1
+            else:
+                res[idx] = fr; hi -= 1
+            idx -= 1
+        else:
+            if fl <= fr:
+                res[idx] = fl; lo += 1
+            else:
+                res[idx] = fr; hi -= 1
+            idx += 1
+    return res
+`,
+
+  'check-if-parentheses-string-can-be-valid': `
+def canBeValid(s, locked):
+    if len(s) % 2 != 0:
+        return False
+    lo = hi = 0
+    for i in range(len(s)):
+        if locked[i] == '1':
+            d = 1 if s[i] == '(' else -1
+            lo += d; hi += d
+        else:
+            lo -= 1; hi += 1
+        if hi < 0:
+            return False
+        if lo < 0:
+            lo = 0
+    return lo == 0
+`,
+
+  'find-the-number-of-distinct-colors-among-the-balls': `
+def queryResults(limit, queries):
+    ball_color = {}
+    color_count = {}
+    distinct = 0
+    result = []
+    for x, y in queries:
+        prev = ball_color.get(x)
+        if prev is not None and prev != y:
+            color_count[prev] -= 1
+            if color_count[prev] == 0:
+                del color_count[prev]
+                distinct -= 1
+        if prev != y:
+            ball_color[x] = y
+            color_count[y] = color_count.get(y, 0) + 1
+            if color_count[y] == 1:
+                distinct += 1
+        result.append(distinct)
+    return result
+`,
+
+  // batch 79
+  'divide-chocolate': `
+def maximizeSweetness(sweetness, k):
+    lo, hi = min(sweetness), sum(sweetness)
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        pieces, cur = 0, 0
+        for s in sweetness:
+            cur += s
+            if cur >= mid:
+                pieces += 1
+                cur = 0
+        if pieces >= k + 1:
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'find-the-smallest-divisor-given-a-threshold': `
+def smallestDivisor(nums, threshold):
+    import math
+    lo, hi = 1, max(nums)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        total = sum(math.ceil(x / mid) for x in nums)
+        if total <= threshold:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'magnetic-force-between-two-balls': `
+def maxDistance(position, m):
+    position = sorted([p for p in position])
+    def can_place(d):
+        count, last = 1, position[0]
+        for p in position[1:]:
+            if p - last >= d:
+                count += 1
+                last = p
+        return count >= m
+    lo, hi = 1, position[-1] - position[0]
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_place(mid):
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'nth-magical-number': `
+def nthMagicalNumber(n, a, b):
+    from math import gcd
+    MOD = 10**9 + 7
+    lcm = a * b // gcd(a, b)
+    lo, hi = 0, n * min(a, b)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        cnt = mid // a + mid // b - mid // lcm
+        if cnt >= n:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo % MOD
+`,
+
+  'get-equal-substrings-within-budget': `
+def equalSubstring(s, t, maxCost):
+    left = cost = result = 0
+    for right in range(len(s)):
+        cost += abs(ord(s[right]) - ord(t[right]))
+        while cost > maxCost:
+            cost -= abs(ord(s[left]) - ord(t[left]))
+            left += 1
+        result = max(result, right - left + 1)
+    return result
+`,
+
+  'longest-equal-subarray': `
+def longestEqualSubarray(nums, k):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    left = max_freq = 0
+    for right, val in enumerate(nums):
+        freq[val] += 1
+        max_freq = max(max_freq, freq[val])
+        if (right - left + 1) - max_freq > k:
+            freq[nums[left]] -= 1
+            left += 1
+    return max_freq
+`,
+
+  'three-sum-with-multiplicity': `
+def threeSumMulti(arr, target):
+    MOD = 10**9 + 7
+    arr.sort()
+    count = 0
+    for i in range(len(arr) - 2):
+        j, k = i + 1, len(arr) - 1
+        while j < k:
+            s = arr[i] + arr[j] + arr[k]
+            if s == target:
+                if arr[j] == arr[k]:
+                    n = k - j + 1
+                    count += n * (n - 1) // 2
+                    break
+                else:
+                    cnt_j = cnt_k = 1
+                    while j + cnt_j < k and arr[j + cnt_j] == arr[j]:
+                        cnt_j += 1
+                    while k - cnt_k > j and arr[k - cnt_k] == arr[k]:
+                        cnt_k += 1
+                    count += cnt_j * cnt_k
+                    j += cnt_j
+                    k -= cnt_k
+            elif s < target:
+                j += 1
+            else:
+                k -= 1
+    return count % MOD
+`,
+
+  'new-21-game': `
+def new21Game(n, k, maxPts):
+    if k == 0 or n >= k + maxPts - 1:
+        return 1.0
+    dp = [0.0] * (n + 1)
+    dp[0] = 1.0
+    window_sum = 1.0
+    result = 0.0
+    for i in range(1, n + 1):
+        dp[i] = window_sum / maxPts
+        if i < k:
+            window_sum += dp[i]
+        else:
+            result += dp[i]
+        if i >= maxPts:
+            window_sum -= dp[i - maxPts]
+    return result
+`,
+
+  'shortest-common-supersequence': `
+def shortestCommonSupersequence(str1, str2):
+    m, n = len(str1), len(str2)
+    dp = [[i + j for j in range(n + 1)] for i in range(m + 1)]
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if str1[i-1] == str2[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + 1
+    chars = []
+    i, j = m, n
+    while i > 0 and j > 0:
+        if str1[i-1] == str2[j-1]:
+            chars.append(str1[i-1])
+            i -= 1
+            j -= 1
+        elif dp[i-1][j] < dp[i][j-1]:
+            chars.append(str1[i-1])
+            i -= 1
+        else:
+            chars.append(str2[j-1])
+            j -= 1
+    while i > 0:
+        chars.append(str1[i-1])
+        i -= 1
+    while j > 0:
+        chars.append(str2[j-1])
+        j -= 1
+    return ''.join(reversed(chars))
+`,
+
+  'stickers-to-spell-word': `
+def minStickers(stickers, target):
+    from collections import Counter
+    n = len(target)
+    dp = [-1] * (1 << n)
+    dp[0] = 0
+    for state in range(1 << n):
+        if dp[state] == -1:
+            continue
+        for sticker in stickers:
+            cnt = Counter(sticker)
+            used = Counter()
+            next_state = state
+            for i in range(n):
+                if not (state >> i & 1):
+                    c = target[i]
+                    if used[c] < cnt[c]:
+                        used[c] += 1
+                        next_state |= 1 << i
+            if dp[next_state] == -1 or dp[next_state] > dp[state] + 1:
+                dp[next_state] = dp[state] + 1
+    return dp[(1 << n) - 1]
+`,
+
+  'design-exam-room': `
+def examRoom(operations, args):
+    import bisect
+    results = []
+    seats = []
+    n = 0
+    for op, arg in zip(operations, args):
+        if op == 'ExamRoom':
+            n = arg[0]
+            seats.clear()
+            results.append(None)
+        elif op == 'seat':
+            if not seats:
+                bisect.insort(seats, 0)
+                results.append(0)
+                continue
+            best_dist, best_seat = seats[0], 0
+            for j in range(1, len(seats)):
+                d = (seats[j] - seats[j-1]) // 2
+                if d > best_dist:
+                    best_dist, best_seat = d, seats[j-1] + d
+            if n - 1 - seats[-1] > best_dist:
+                best_seat = n - 1
+            bisect.insort(seats, best_seat)
+            results.append(best_seat)
+        else:
+            seats.remove(arg[0])
+            results.append(None)
+    return results
+`,
+
+  'design-authentication-manager': `
+def authManager(operations, args):
+    results = []
+    time_to_live = 0
+    token_map = {}
+    for op, arg in zip(operations, args):
+        if op == 'AuthenticationManager':
+            time_to_live = arg[0]
+            token_map.clear()
+            results.append(None)
+        elif op == 'generate':
+            token_map[arg[0]] = arg[1] + time_to_live
+            results.append(None)
+        elif op == 'renew':
+            token_id, current_time = arg[0], arg[1]
+            if token_id in token_map and token_map[token_id] > current_time:
+                token_map[token_id] = current_time + time_to_live
+            results.append(None)
+        else:
+            current_time = arg[0]
+            results.append(sum(1 for exp in token_map.values() if exp > current_time))
+    return results
+`,
+
+  'count-the-number-of-arrays-with-k-matching-adjacent-elements': `
+def countGoodArrays(n, m, k):
+    MOD = 10**9 + 7
+    # C(n-1, k) * m * (m-1)^(n-1-k)
+    def comb_mod(n, r, mod):
+        if r < 0 or r > n:
+            return 0
+        num = den = 1
+        for i in range(r):
+            num = num * (n - i) % mod
+            den = den * (i + 1) % mod
+        return num * pow(den, mod - 2, mod) % mod
+    diff = n - 1 - k
+    return comb_mod(n - 1, k, MOD) * m % MOD * pow(m - 1, diff, MOD) % MOD
+`,
+
+  // batch 81
+  // batch 83
+  'letter-combinations-of-a-phone-number': `
+def letterCombinations(digits: str) -> list:
+    if not digits:
+        return []
+    mapping = {'2':'abc','3':'def','4':'ghi','5':'jkl','6':'mno','7':'pqrs','8':'tuv','9':'wxyz'}
+    res = []
+    def bt(i, cur):
+        if i == len(digits):
+            res.append(cur)
+            return
+        for c in mapping[digits[i]]:
+            bt(i + 1, cur + c)
+    bt(0, '')
+    return res
+`,
+  'design-tic-tac-toe': `
+def ticTacToe(n: int, moves: list) -> int:
+    rows = [[0]*n for _ in range(2)]
+    cols = [[0]*n for _ in range(2)]
+    diags = [0, 0]
+    anti = [0, 0]
+    for row, col, player in moves:
+        p = player - 1
+        rows[p][row] += 1
+        cols[p][col] += 1
+        if row == col:
+            diags[p] += 1
+        if row + col == n - 1:
+            anti[p] += 1
+        if rows[p][row] == n or cols[p][col] == n or diags[p] == n or anti[p] == n:
+            return player
+    return 0
+`,
+  'battleships-in-a-board': `
+def countBattleships(board: list) -> int:
+    count = 0
+    for r in range(len(board)):
+        for c in range(len(board[0])):
+            if board[r][c] == 'X' and (r == 0 or board[r-1][c] != 'X') and (c == 0 or board[r][c-1] != 'X'):
+                count += 1
+    return count
+`,
+  'ones-and-zeroes': `
+def findMaxForm(strs: list, m: int, n: int) -> int:
+    dp = [[0]*(n+1) for _ in range(m+1)]
+    for s in strs:
+        zeros = s.count('0')
+        ones = len(s) - zeros
+        for i in range(m, zeros-1, -1):
+            for j in range(n, ones-1, -1):
+                dp[i][j] = max(dp[i][j], dp[i-zeros][j-ones] + 1)
+    return dp[m][n]
+`,
+  'best-time-to-buy-and-sell-stock-with-cooldown': `
+def maxProfitCooldown(prices: list) -> int:
+    hold, sold, rest = float('-inf'), 0, 0
+    for p in prices:
+        hold, sold, rest = max(hold, rest - p), hold + p, max(rest, sold)
+    return max(sold, rest)
+`,
+  'insert-delete-getrandom-o1': `
+import random
+def insertDeleteGetRandom(operations: list) -> list:
+    idx_map = {}
+    vals = []
+    results = []
+    for op, val in operations:
+        if op == 'insert':
+            if val in idx_map:
+                results.append(False)
+            else:
+                idx_map[val] = len(vals)
+                vals.append(val)
+                results.append(True)
+        elif op == 'remove':
+            if val not in idx_map:
+                results.append(False)
+            else:
+                i = idx_map[val]
+                last = vals[-1]
+                vals[i] = last
+                idx_map[last] = i
+                vals.pop()
+                del idx_map[val]
+                results.append(True)
+        else:
+            results.append(vals[random.randint(0, len(vals)-1)])
+    return results
+`,
+  'convert-binary-number-in-linked-list-to-integer': `
+def getDecimalValue(head: list) -> int:
+    val = 0
+    for bit in head:
+        val = val * 2 + bit
+    return val
+`,
+
+  'minimum-cost-to-reach-destination-in-time': `
+def minCost(maxTime, edges, passingFees):
+    n = len(passingFees)
+    adj = [[] for _ in range(n)]
+    for x, y, t in edges:
+        adj[x].append((y, t))
+        adj[y].append((x, t))
+    INF = float('inf')
+    dp = [[INF] * n for _ in range(maxTime + 1)]
+    dp[0][0] = passingFees[0]
+    for t in range(maxTime + 1):
+        for v in range(n):
+            if dp[t][v] == INF:
+                continue
+            for u, et in adj[v]:
+                nt = t + et
+                if nt <= maxTime:
+                    dp[nt][u] = min(dp[nt][u], dp[t][v] + passingFees[u])
+    ans = min(dp[t][n-1] for t in range(maxTime + 1))
+    return -1 if ans == INF else ans
+`,
+
+  'total-appeal-of-a-string': `
+def appealSum(s: str) -> int:
+    last = {}
+    total = cur = 0
+    for i, c in enumerate(s):
+        cur += i - last.get(c, -1)
+        last[c] = i
+        total += cur
+    return total
+`,
+
+  // batch 82
+  'booking-concert-tickets-in-groups': `
+def bookMyShow(n: int, m: int, operations: list) -> list:
+    avail = [m] * n
+    bit = [0] * (n + 1)
+    for i in range(n):
+        j = i + 1
+        while j <= n:
+            bit[j] += m
+            j += j & -j
+    def query(i):
+        s, i = 0, i + 1
+        while i > 0:
+            s += bit[i]
+            i -= i & -i
+        return s
+    def update(i, d):
+        i += 1
+        while i <= n:
+            bit[i] += d
+            i += i & -i
+    results = []
+    for op, k, maxRow in operations:
+        if op == 'gather':
+            found = False
+            for r in range(maxRow + 1):
+                if avail[r] >= k:
+                    results.append([r, m - avail[r]])
+                    update(r, -k)
+                    avail[r] -= k
+                    found = True
+                    break
+            if not found:
+                results.append([])
+        else:
+            if query(maxRow) < k:
+                results.append(False)
+                continue
+            rem = k
+            for r in range(maxRow + 1):
+                if rem <= 0:
+                    break
+                take = min(rem, avail[r])
+                if take > 0:
+                    update(r, -take)
+                    avail[r] -= take
+                    rem -= take
+            results.append(True)
+    return results
+`,
+  'minimum-score-of-a-path-between-two-cities': `
+from collections import deque
+def minScore(n: int, roads: list) -> int:
+    adj = [[] for _ in range(n + 1)]
+    for u, v, w in roads:
+        adj[u].append((v, w))
+        adj[v].append((u, w))
+    vis = [False] * (n + 1)
+    ans = float('inf')
+    q = deque([1]); vis[1] = True
+    while q:
+        u = q.popleft()
+        for v, w in adj[u]:
+            ans = min(ans, w)
+            if not vis[v]:
+                vis[v] = True
+                q.append(v)
+    return ans
+`,
+  'maximum-probability-of-success': `
+import heapq
+def maxProbability(n: int, edges: list, succProb: list, start: int, end: int) -> float:
+    adj = [[] for _ in range(n)]
+    for i, (u, v) in enumerate(edges):
+        adj[u].append((v, succProb[i]))
+        adj[v].append((u, succProb[i]))
+    dist = [0.0] * n
+    dist[start] = 1.0
+    heap = [(-1.0, start)]
+    while heap:
+        neg_p, u = heapq.heappop(heap)
+        p = -neg_p
+        if u == end:
+            return p
+        if p < dist[u]:
+            continue
+        for v, ep in adj[u]:
+            np = p * ep
+            if np > dist[v]:
+                dist[v] = np
+                heapq.heappush(heap, (-np, v))
+    return 0.0
+`,
+  'minimum-fuel-cost-to-report-to-the-capital': `
+import math
+def minimumFuelCost(roads: list, seats: int) -> int:
+    n = len(roads) + 1
+    adj = [[] for _ in range(n)]
+    for u, v in roads:
+        adj[u].append(v)
+        adj[v].append(u)
+    fuel = 0
+    size = [1] * n
+    vis = [False] * n; vis[0] = True
+    stack = [(0, -1, False)]
+    while stack:
+        u, par, done = stack.pop()
+        if done:
+            if par != -1:
+                size[par] += size[u]
+                fuel += math.ceil(size[u] / seats)
+        else:
+            stack.append((u, par, True))
+            for v in adj[u]:
+                if not vis[v]:
+                    vis[v] = True
+                    stack.append((v, u, False))
+    return fuel
+`,
+  'minimum-operations-to-make-the-array-alternating': `
+import math
+def minimumOperations(nums: list) -> int:
+    n = len(nums)
+    ec = math.ceil(n / 2)
+    oc = n // 2
+    from collections import Counter
+    fe = Counter(nums[i] for i in range(0, n, 2))
+    fo = Counter(nums[i] for i in range(1, n, 2))
+    def top2(cnt):
+        lst = cnt.most_common(2)
+        f = lst[0] if len(lst) > 0 else (None, 0)
+        s = lst[1] if len(lst) > 1 else (None, 0)
+        return f, s
+    (ev1, ef1), (ev2, ef2) = top2(fe)
+    (ov1, of1), (ov2, of2) = top2(fo)
+    if ev1 != ov1:
+        return (ec - ef1) + (oc - of1)
+    opt1 = (ec - ef1) + (oc - of2)
+    opt2 = (ec - ef2) + (oc - of1)
+    return min(opt1, opt2)
+`,
+
+  // batch 80
+  'find-the-safest-path-in-a-grid': `
+from collections import deque
+def maximumSafenessFactor(grid):
+    n = len(grid)
+    dist = [[float('inf')] * n for _ in range(n)]
+    q = deque()
+    for i in range(n):
+        for j in range(n):
+            if grid[i][j] == 1:
+                dist[i][j] = 0
+                q.append((i, j))
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    while q:
+        r, c = q.popleft()
+        for dr, dc in dirs:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < n and 0 <= nc < n and dist[nr][nc] == float('inf'):
+                dist[nr][nc] = dist[r][c] + 1
+                q.append((nr, nc))
+    def ok(k):
+        if dist[0][0] < k or dist[n-1][n-1] < k:
+            return False
+        seen = [[False]*n for _ in range(n)]
+        seen[0][0] = True
+        bq = deque([(0,0)])
+        while bq:
+            r, c = bq.popleft()
+            if r == n-1 and c == n-1:
+                return True
+            for dr, dc in dirs:
+                nr, nc = r+dr, c+dc
+                if 0 <= nr < n and 0 <= nc < n and not seen[nr][nc] and dist[nr][nc] >= k:
+                    seen[nr][nc] = True
+                    bq.append((nr, nc))
+        return False
+    lo, hi = 0, 2*n
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if ok(mid):
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'divide-nodes-into-the-maximum-number-of-groups': `
+from collections import deque
+def magnificentSets(n, edges):
+    adj = [[] for _ in range(n+1)]
+    for a, b in edges:
+        adj[a].append(b)
+        adj[b].append(a)
+    color = [-1] * (n+1)
+    comp = [-1] * (n+1)
+    cid = 0
+    for s in range(1, n+1):
+        if color[s] != -1:
+            continue
+        q = deque([s])
+        color[s] = 0
+        comp[s] = cid
+        while q:
+            u = q.popleft()
+            for v in adj[u]:
+                if color[v] == -1:
+                    color[v] = color[u] ^ 1
+                    comp[v] = cid
+                    q.append(v)
+                elif color[v] == color[u]:
+                    return -1
+        cid += 1
+    def bfs_depth(start):
+        d = [-1] * (n+1)
+        d[start] = 0
+        q = deque([start])
+        mx = 0
+        while q:
+            u = q.popleft()
+            for v in adj[u]:
+                if d[v] == -1:
+                    d[v] = d[u] + 1
+                    mx = max(mx, d[v])
+                    q.append(v)
+        return mx
+    by_comp = [[] for _ in range(cid)]
+    for u in range(1, n+1):
+        by_comp[comp[u]].append(u)
+    ans = 0
+    for nodes in by_comp:
+        best = max(bfs_depth(s) + 1 for s in nodes)
+        ans += best
+    return ans
+`,
+
+  'range-sum-of-sorted-subarray-sums': `
+def rangeSum(nums, n, left, right):
+    MOD = 10**9 + 7
+    sums = []
+    for i in range(n):
+        s = 0
+        for j in range(i, n):
+            s += nums[j]
+            sums.append(s)
+    sums.sort()
+    return sum(sums[left-1:right]) % MOD
+`,
+
+  // batch 79
+  'ternary-expression-parser': `
+def parseTernary(expression: str) -> str:
+    stack = []
+    i = len(expression) - 1
+    while i >= 0:
+        c = expression[i]
+        if c == '?':
+            t = stack.pop()
+            stack.pop()  # ':'
+            f = stack.pop()
+            stack.append(t if expression[i - 1] == 'T' else f)
+            i -= 1  # skip condition char
+        else:
+            stack.append(c)
+        i -= 1
+    return stack[0]
+`,
+
+  'count-all-possible-routes': `
+def countRoutes(locations: list, start: int, finish: int, fuel: int) -> int:
+    MOD = 10**9 + 7
+    n = len(locations)
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dp(pos, rem):
+        if rem < 0:
+            return 0
+        res = 1 if pos == finish else 0
+        for j in range(n):
+            if j == pos:
+                continue
+            cost = abs(locations[pos] - locations[j])
+            if cost <= rem:
+                res = (res + dp(j, rem - cost)) % MOD
+        return res
+    return dp(start, fuel)
+`,
+
+  'minimum-operations-to-make-array-k-increasing': `
+def kIncreasing(arr: list, k: int) -> int:
+    import bisect
+    def min_ops(seq):
+        tails = []
+        for x in seq:
+            idx = bisect.bisect_right(tails, x)
+            if idx == len(tails):
+                tails.append(x)
+            else:
+                tails[idx] = x
+        return len(seq) - len(tails)
+    ops = 0
+    for r in range(k):
+        seq = arr[r::k]
+        ops += min_ops(seq)
+    return ops
+`,
+
+  // batch 80 — backtracking, heap
+
+  'all-paths-source-to-target-backtrack': `
+def countPaths(grid):
+    m = len(grid)
+    n = len(grid[0])
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dp(r, c):
+        if r == m - 1 and c == n - 1:
+            return 1
+        res = 0
+        if r + 1 < m and grid[r + 1][c] == 0:
+            res += dp(r + 1, c)
+        if c + 1 < n and grid[r][c + 1] == 0:
+            res += dp(r, c + 1)
+        return res
+    if grid[0][0] == 1 or grid[m-1][n-1] == 1:
+        return 0
+    return dp(0, 0)
+`,
+
+  'factor-combinations': `
+def getFactors(n):
+    result = []
+    def bt(rem, start, path):
+        if path:
+            result.append(path + [rem])
+        d = start
+        while d * d <= rem:
+            if rem % d == 0:
+                bt(rem // d, d, path + [d])
+            d += 1
+    if n <= 1:
+        return []
+    bt(n, 2, [])
+    norm = [sorted(c) for c in result]
+    return sorted(norm)
+`,
+
+  'find-all-increasing-subsequences': `
+def findSubsequences(nums):
+    nums = list(nums)
+    result = []
+    def bt(start, path):
+        if len(path) >= 2:
+            result.append(list(path))
+        used = set()
+        for i in range(start, len(nums)):
+            v = nums[i]
+            if v in used:
+                continue
+            if not path or v >= path[-1]:
+                used.add(v)
+                path.append(v)
+                bt(i + 1, path)
+                path.pop()
+    bt(0, [])
+    seen = set()
+    unique = []
+    for seq in result:
+        key = tuple(seq)
+        if key not in seen:
+            seen.add(key)
+            unique.append(seq)
+    return sorted(unique)
+`,
+
+  'generalized-abbreviation': `
+def generateAbbreviations(word):
+    n = len(word)
+    results = []
+    def bt(i, cur, cnt):
+        if i == n:
+            results.append(cur + (str(cnt) if cnt > 0 else ''))
+            return
+        bt(i + 1, cur, cnt + 1)
+        bt(i + 1, cur + (str(cnt) if cnt > 0 else '') + word[i], 0)
+    bt(0, '', 0)
+    return sorted(results)
+`,
+
+  'maximum-cpu-load': `
+def findMaxCPULoad(jobs):
+    jobs = [list(j) for j in jobs]
+    if not jobs:
+        return 0
+    import heapq
+    jobs.sort(key=lambda j: j[0])
+    heap = []  # (end, load)
+    current = 0
+    max_load = 0
+    for s, e, l in jobs:
+        while heap and heap[0][0] <= s:
+            current -= heapq.heappop(heap)[1]
+        heapq.heappush(heap, (e, l))
+        current += l
+        if current > max_load:
+            max_load = current
+    return max_load
+`,
+
+  'maximum-events-attended-with-k-events': `
+def maxValue(events, k):
+    events = [list(e) for e in events]
+    n = len(events)
+    # Sort by end day; compatible when s_p < s_i (one-day attendance model)
+    events.sort(key=lambda e: (e[1], e[0]))
+    dp = [[0] * (k + 1) for _ in range(n + 1)]
+    for i in range(1, n + 1):
+        s, e, v = events[i - 1]
+        prev = 0
+        for p in range(1, i):
+            if events[p - 1][0] < s:
+                prev = p
+        for j in range(1, k + 1):
+            dp[i][j] = max(dp[i-1][j], dp[prev][j-1] + v)
+    return dp[n][k]
+`,
+
+  'merge-k-sorted-arrays': `
+def mergeKSortedArrays(arrays):
+    arrays = [list(a) for a in arrays]
+    import heapq
+    result = []
+    heap = []
+    for ai, arr in enumerate(arrays):
+        if arr:
+            heapq.heappush(heap, (arr[0], ai, 0))
+    while heap:
+        val, ai, ei = heapq.heappop(heap)
+        result.append(val)
+        if ei + 1 < len(arrays[ai]):
+            heapq.heappush(heap, (arrays[ai][ei + 1], ai, ei + 1))
+    return result
+`,
+
+  'sort-nearly-sorted-array': `
+def sortNearlySorted(nums, k):
+    nums = list(nums)
+    import heapq
+    result = []
+    heap = []
+    for v in nums:
+        heapq.heappush(heap, v)
+        if len(heap) > k:
+            result.append(heapq.heappop(heap))
+    while heap:
+        result.append(heapq.heappop(heap))
+    return result
+`,
+
+  'interleave-two-linked-lists': `
+def interleaveListsRunner(arr1, arr2):
+    arr1, arr2 = list(arr1), list(arr2)
+    result = []
+    i, j = 0, 0
+    while i < len(arr1) or j < len(arr2):
+        if i < len(arr1):
+            result.append(arr1[i]); i += 1
+        if j < len(arr2):
+            result.append(arr2[j]); j += 1
+    return result
+`,
+
+  'segregate-even-odd-linked-list': `
+def segregateEvenOddRunner(arr):
+    arr = list(arr)
+    evens = [v for v in arr if v % 2 == 0]
+    odds = [v for v in arr if v % 2 != 0]
+    return evens + odds
+`,
+
+  'linked-list-decimal-value': `
+def listDecimalValueRunner(arr):
+    result = 0
+    for d in arr:
+        result = result * 10 + int(d)
+    return result
+`,
+
+  'bowling-game-score': `
+def bowlingScore(rolls):
+    rolls = list(rolls)
+    score = 0
+    i = 0
+    for frame in range(10):
+        if i < len(rolls) and rolls[i] == 10:
+            score += 10 + (rolls[i+1] if i+1 < len(rolls) else 0) + (rolls[i+2] if i+2 < len(rolls) else 0)
+            i += 1
+        elif i+1 < len(rolls) and rolls[i] + rolls[i+1] == 10:
+            score += 10 + (rolls[i+2] if i+2 < len(rolls) else 0)
+            i += 2
+        else:
+            score += (rolls[i] if i < len(rolls) else 0) + (rolls[i+1] if i+1 < len(rolls) else 0)
+            i += 2
+    return score
+`,
+
+  'ball-through-inclined-grid': `
+def findBall(grid):
+    grid = [list(row) for row in grid]
+    m = len(grid)
+    n = len(grid[0])
+    result = []
+    for start_col in range(n):
+        col = start_col
+        stuck = False
+        for row in range(m):
+            d = grid[row][col]
+            next_col = col + d
+            if next_col < 0 or next_col >= n or grid[row][next_col] != d:
+                stuck = True
+                break
+            col = next_col
+        result.append(-1 if stuck else col)
+    return result
+`,
+
+  'token-bucket-rate-limiter': `
+def tokenBucket(capacity, refillRate, requests):
+    requests = [list(r) for r in requests]
+    tokens = capacity
+    last_time = 0
+    result = []
+    for ts, needed in requests:
+        tokens = min(capacity, tokens + (ts - last_time) * refillRate)
+        last_time = ts
+        if tokens >= needed:
+            tokens -= needed
+            result.append(True)
+        else:
+            result.append(False)
+    return result
+`,
+
+  'maximum-score-of-a-good-subarray': `
+def maximumScore(nums: list, k: int) -> int:
+    n = len(nums)
+    l = r = k
+    min_val = nums[k]
+    score = nums[k]
+    while l > 0 or r < n - 1:
+        if l == 0:
+            r += 1
+        elif r == n - 1:
+            l -= 1
+        elif nums[l - 1] >= nums[r + 1]:
+            l -= 1
+        else:
+            r += 1
+        min_val = min(min_val, nums[l], nums[r])
+        score = max(score, min_val * (r - l + 1))
+    return score
+`,
+
+  'minimum-number-of-coins-to-be-added': `
+def minimumAddedCoins(coins: list, target: int) -> int:
+    sorted_coins = sorted(coins)
+    reach = 0
+    count = 0
+    i = 0
+    while reach < target:
+        if i < len(sorted_coins) and sorted_coins[i] <= reach + 1:
+            reach += sorted_coins[i]
+            i += 1
+        else:
+            reach += reach + 1
+            count += 1
+    return count
+`,
+
+  // batch 84 cont. — simulation, math, arrays, heap, backtracking, linked-list
+  'find-the-winner-of-the-circular-game': `
+def findTheWinner(n, k):
+    pos = 0
+    for i in range(2, n + 1):
+        pos = (pos + k) % i
+    return pos + 1
+`,
+
+  'minimum-time-to-type-word-using-typewriter': `
+def minTimeToType(word):
+    time = len(word)
+    prev = 0
+    for ch in word:
+        cur = ord(ch) - ord('a')
+        diff = abs(cur - prev)
+        time += min(diff, 26 - diff)
+        prev = cur
+    return time
+`,
+
+  'apply-operations-to-array': `
+def applyOperations(nums):
+    nums = list(nums)
+    for i in range(len(nums) - 1):
+        if nums[i] == nums[i + 1]:
+            nums[i] *= 2
+            nums[i + 1] = 0
+    result = [x for x in nums if x != 0]
+    result += [0] * (len(nums) - len(result))
+    return result
+`,
+
+  'maximum-performance-of-a-team': `
+import heapq
+def maxPerformance(n, speed, efficiency, k):
+    MOD = 10**9 + 7
+    engineers = sorted(zip(efficiency, speed), reverse=True)
+    heap = []
+    speed_sum = 0
+    best = 0
+    for eff, spd in engineers:
+        heapq.heappush(heap, spd)
+        speed_sum += spd
+        if len(heap) > k:
+            speed_sum -= heapq.heappop(heap)
+        best = max(best, speed_sum * eff)
+    return best % MOD
+`,
+
+  'splitting-a-string-into-descending-consecutive-values': `
+def splitString(s):
+    def check(idx, prev, count):
+        if idx == len(s):
+            return count >= 2
+        cur = 0
+        for i in range(idx, len(s)):
+            cur = cur * 10 + int(s[i])
+            if cur == prev - 1 and check(i + 1, cur, count + 1):
+                return True
+            if cur > prev:
+                break
+        return False
+    first = 0
+    for i in range(len(s) - 1):
+        first = first * 10 + int(s[i])
+        if check(i + 1, first, 1):
+            return True
+    return False
+`,
+
+  'delete-the-middle-node-of-a-linked-list': `
+def deleteMiddle(head):
+    mid = len(head) // 2
+    return head[:mid] + head[mid + 1:]
+`,
+
+  'maximum-twin-sum-of-a-linked-list': `
+def pairSum(head):
+    n = len(head)
+    return max(head[i] + head[n - 1 - i] for i in range(n // 2))
+`,
+
+  // batch 85 — union-find, heap
+  'number-of-connected-components-in-an-undirected-graph': `
+def countComponents(n, edges):
+    parent = list(range(n))
+    rank = [0] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    count = n
+    for a, b in edges:
+        pa, pb = find(a), find(b)
+        if pa != pb:
+            if rank[pa] < rank[pb]: parent[pa] = pb
+            elif rank[pa] > rank[pb]: parent[pb] = pa
+            else: parent[pb] = pa; rank[pa] += 1
+            count -= 1
+    return count
+`,
+
+  'kth-smallest-element-in-a-sorted-matrix': `
+import bisect
+def kthSmallest(matrix, k):
+    n = len(matrix)
+    lo, hi = matrix[0][0], matrix[-1][-1]
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        count = sum(bisect.bisect_right(row, mid) for row in matrix)
+        if count >= k:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  // batch 89 — arrays, strings, hash-map, math, graph
+  'minimum-rounds-to-complete-all-tasks': `
+import math
+from collections import Counter
+def minimumRounds(tasks):
+    freq = Counter(tasks)
+    result = 0
+    for cnt in freq.values():
+        if cnt == 1:
+            return -1
+        result += math.ceil(cnt / 3)
+    return result
+`,
+
+  'longest-palindrome-by-concatenating-two-letter-words': `
+from collections import Counter
+def longestPalindrome(words):
+    count = Counter(words)
+    result = 0
+    has_center = False
+    visited = set()
+    for w, cnt in count.items():
+        if w in visited:
+            continue
+        rev = w[1] + w[0]
+        if w == rev:
+            result += (cnt // 2) * 4
+            if cnt % 2 == 1:
+                has_center = True
+        else:
+            visited.add(rev)
+            pairs = min(cnt, count.get(rev, 0))
+            result += pairs * 4
+    if has_center:
+        result += 2
+    return result
+`,
+
+  'maximum-product-difference-between-two-pairs': `
+def maxProductDifference(nums):
+    nums = sorted(nums)
+    return nums[-1] * nums[-2] - nums[0] * nums[1]
+`,
+
+  'minimum-bit-flips-to-convert-number': `
+def minBitFlips(start, goal):
+    return bin(start ^ goal).count('1')
+`,
+
+  'min-number-of-flips-to-convert-binary-matrix-to-zero-matrix': `
+from collections import deque
+def minFlips(mat):
+    m, n = len(mat), len(mat[0])
+    start = 0
+    for i in range(m):
+        for j in range(n):
+            if mat[i][j]:
+                start |= 1 << (i * n + j)
+    if start == 0:
+        return 0
+    queue = deque([start])
+    visited = {start}
+    steps = 0
+    dirs = [(0,0),(-1,0),(1,0),(0,-1),(0,1)]
+    while queue:
+        steps += 1
+        for _ in range(len(queue)):
+            state = queue.popleft()
+            for i in range(m):
+                for j in range(n):
+                    nxt = state
+                    for di, dj in dirs:
+                        ni, nj = i + di, j + dj
+                        if 0 <= ni < m and 0 <= nj < n:
+                            nxt ^= 1 << (ni * n + nj)
+                    if nxt == 0:
+                        return steps
+                    if nxt not in visited:
+                        visited.add(nxt)
+                        queue.append(nxt)
+    return -1
+`,
+
+  'determine-if-two-strings-are-close': `
+def closeStrings(word1, word2):
+    word1, word2 = str(word1), str(word2)
+    if len(word1) != len(word2):
+        return False
+    freq1 = [0] * 26
+    freq2 = [0] * 26
+    for c in word1:
+        freq1[ord(c) - 97] += 1
+    for c in word2:
+        freq2[ord(c) - 97] += 1
+    for i in range(26):
+        if (freq1[i] == 0) != (freq2[i] == 0):
+            return False
+    return sorted(freq1) == sorted(freq2)
+`,
+
+  'maximum-xor-after-operations': `
+def maximumXOR(nums):
+    result = 0
+    for x in nums:
+        result |= x
+    return result
+`,
+
+  // batch 83
+
+  'count-palindromes': `
+def countPalindromes(s):
+    MOD = 10**9 + 7
+    n = len(s)
+    if n < 5:
+        return 0
+    digits = [int(c) for c in s]
+    lp = [[0]*10 for _ in range(10)]
+    ls = [0]*10
+    rp = [[0]*10 for _ in range(10)]
+    rs = [0]*10
+    for i in range(n-1, 2, -1):
+        d = digits[i]
+        for b in range(10):
+            rp[d][b] = (rp[d][b] + rs[b]) % MOD
+        rs[d] += 1
+    for i in range(2):
+        d = digits[i]
+        for a in range(10):
+            lp[a][d] = (lp[a][d] + ls[a]) % MOD
+        ls[d] += 1
+    ans = 0
+    for k in range(2, n-2):
+        for x in range(10):
+            for y in range(10):
+                ans = (ans + lp[x][y] * rp[y][x]) % MOD
+        if k < n-3:
+            dk = digits[k]
+            for a in range(10):
+                lp[a][dk] = (lp[a][dk] + ls[a]) % MOD
+            ls[dk] += 1
+            dk1 = digits[k+1]
+            rs[dk1] -= 1
+            for b in range(10):
+                rp[dk1][b] = (rp[dk1][b] - rs[b]) % MOD
+    return ans
+`,
+
+  'longest-duplicate-substring': `
+def longestDupSubstring(s):
+    n = len(s)
+    best = ""
+    lo, hi = 1, n - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        seen = set()
+        found = ""
+        for i in range(n - mid + 1):
+            sub = s[i:i+mid]
+            if sub in seen:
+                found = sub
+                break
+            seen.add(sub)
+        if found:
+            best = found
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return best
+`,
+
+  'shortest-palindrome': `
+def shortestPalindrome(s):
+    if not s:
+        return s
+    t = s + "#" + s[::-1]
+    fail = [0] * len(t)
+    for i in range(1, len(t)):
+        j = fail[i-1]
+        while j > 0 and t[i] != t[j]:
+            j = fail[j-1]
+        if t[i] == t[j]:
+            j += 1
+        fail[i] = j
+    k = fail[-1]
+    return s[k:][::-1] + s
+`,
+
+  'sum-of-prefix-scores-of-strings': `
+def sumPrefixScores(words):
+    from collections import defaultdict
+    prefix_count = defaultdict(int)
+    for w in words:
+        for i in range(1, len(w)+1):
+            prefix_count[w[:i]] += 1
+    result = []
+    for w in words:
+        score = sum(prefix_count[w[:i]] for i in range(1, len(w)+1))
+        result.append(score)
+    return result
+`,
+
+  'filling-bookcase-shelves': `
+def minHeightShelves(books, shelfWidth):
+    n = len(books)
+    dp = [float('inf')] * (n + 1)
+    dp[0] = 0
+    for i in range(1, n + 1):
+        w = h = 0
+        for j in range(i, 0, -1):
+            w += books[j-1][0]
+            if w > shelfWidth:
+                break
+            h = max(h, books[j-1][1])
+            dp[i] = min(dp[i], dp[j-1] + h)
+    return dp[n]
+`,
+
+  'maximum-length-of-repeated-subarray': `
+def findLength(nums1, nums2):
+    m, n = len(nums1), len(nums2)
+    ans = 0
+    dp = [0] * (n + 1)
+    for i in range(1, m + 1):
+        for j in range(n, 0, -1):
+            if nums1[i-1] == nums2[j-1]:
+                dp[j] = dp[j-1] + 1
+                ans = max(ans, dp[j])
+            else:
+                dp[j] = 0
+    return ans
+`,
+
+  'minimum-number-of-taps-to-water-garden': `
+def minTaps(n, ranges):
+    reach = [0] * (n + 1)
+    for i in range(n + 1):
+        l = max(0, i - ranges[i])
+        r = min(n, i + ranges[i])
+        reach[l] = max(reach[l], r)
+    taps = cur = far = 0
+    for i in range(n + 1):
+        if i > far:
+            return -1
+        if i > cur:
+            taps += 1
+            cur = far
+        far = max(far, reach[i])
+    return taps
+`,
+
+  'number-of-ways-to-paint-n-3-grid': `
+def numOfWays(n):
+    MOD = 10**9 + 7
+    aba, abc = 6, 6
+    for _ in range(n - 1):
+        aba, abc = (3*aba + 2*abc) % MOD, (2*aba + 2*abc) % MOD
+    return (aba + abc) % MOD
+`,
+
+  'frog-position-after-t-seconds': `
+def frogPosition(n, edges, t, target):
+    from collections import defaultdict
+    adj = defaultdict(list)
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    ans = [0.0]
+    def dfs(node, parent, time, prob):
+        unvisited = [nb for nb in adj[node] if nb != parent]
+        if node == target:
+            if time == t or (time < t and not unvisited):
+                ans[0] = prob
+            return
+        if time >= t or not unvisited:
+            return
+        for nb in unvisited:
+            dfs(nb, node, time+1, prob / len(unvisited))
+    dfs(1, -1, 0, 1.0)
+    return ans[0]
+`,
+
+  'loud-and-rich': `
+def loudAndRich(richer, quiet):
+    n = len(quiet)
+    adj = [[] for _ in range(n)]
+    for a, b in richer:
+        adj[b].append(a)
+    ans = [-1] * n
+    def dfs(x):
+        if ans[x] != -1:
+            return ans[x]
+        ans[x] = x
+        for r in adj[x]:
+            c = dfs(r)
+            if quiet[c] < quiet[ans[x]]:
+                ans[x] = c
+        return ans[x]
+    for i in range(n):
+        dfs(i)
+    return ans
+`,
+
+  'count-restricted-paths': `
+def countRestrictedPaths(n, edges):
+    import heapq
+    MOD = 10**9 + 7
+    adj = [[] for _ in range(n+1)]
+    for u, v, w in edges:
+        adj[u].append((v, w))
+        adj[v].append((u, w))
+    dist = [float('inf')] * (n+1)
+    dist[n] = 0
+    pq = [(0, n)]
+    while pq:
+        d, u = heapq.heappop(pq)
+        if d > dist[u]:
+            continue
+        for v, w in adj[u]:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                heapq.heappush(pq, (dist[v], v))
+    memo = {}
+    def dp(u):
+        if u == n:
+            return 1
+        if u in memo:
+            return memo[u]
+        cnt = 0
+        for v, _ in adj[u]:
+            if dist[v] < dist[u]:
+                cnt = (cnt + dp(v)) % MOD
+        memo[u] = cnt
+        return cnt
+    return dp(1)
+`,
+
+  'flower-planting-no-adjacent': `
+def gardenNoAdjRunner(n, paths):
+    adj = [[] for _ in range(n+1)]
+    for u, v in paths:
+        adj[u].append(v)
+        adj[v].append(u)
+    color = [0] * (n+1)
+    for i in range(1, n+1):
+        used = {color[nb] for nb in adj[i]}
+        for c in range(1, 5):
+            if c not in used:
+                color[i] = c
+                break
+    for i in range(1, n+1):
+        for nb in adj[i]:
+            if color[i] == color[nb]:
+                return False
+    return True
+`,
+
+
+  'maximum-value-of-an-ordered-triplet-ii': `
+def maximumTripletValue(nums: list) -> int:
+    max_i = float('-inf')
+    max_diff = float('-inf')
+    ans = 0
+    for x in nums:
+        ans = max(ans, max_diff * x)
+        max_diff = max(max_diff, max_i - x)
+        max_i = max(max_i, x)
+    return ans
+`,
+
+  'divide-array-into-arrays-with-max-difference': `
+def divideArray(nums: list, k: int) -> list:
+    sorted_nums = sorted(nums)
+    result = []
+    for i in range(0, len(sorted_nums), 3):
+        if sorted_nums[i + 2] - sorted_nums[i] > k:
+            return []
+        result.append([sorted_nums[i], sorted_nums[i + 1], sorted_nums[i + 2]])
+    return result
+`,
+
+  'shifting-letters-ii': `
+def shiftingLetters(s: str, queries: list) -> str:
+    n = len(s)
+    diff = [0] * (n + 1)
+    for q in queries:
+        l, r, d = int(q[0]), int(q[1]), int(q[2])
+        delta = 1 if d == 1 else -1
+        diff[l] += delta
+        diff[r + 1] -= delta
+    chars = list(s)
+    net = 0
+    for i in range(n):
+        net += diff[i]
+        shift = ((net % 26) + 26) % 26
+        chars[i] = chr((ord(chars[i]) - ord('a') + shift) % 26 + ord('a'))
+    return ''.join(chars)
+`,
+
+
+  'maximize-the-profit-as-the-salesman': `
+def maximizeTheProfit(n: int, offers: list) -> int:
+    by_end = [[] for _ in range(n)]
+    for o in offers:
+        by_end[int(o[1])].append(o)
+    dp = [0] * (n + 1)
+    for e in range(n):
+        dp[e + 1] = dp[e]
+        for o in by_end[e]:
+            s, _, g = int(o[0]), int(o[1]), int(o[2])
+            dp[e + 1] = max(dp[e + 1], dp[s] + g)
+    return dp[n]
+`,
+
+  'check-if-string-is-an-acronym-of-words': `
+def isAcronym(words: list, s: str) -> bool:
+    if len(words) != len(s):
+        return False
+    return all(words[i][0] == s[i] for i in range(len(words)))
+`,
+
+  'count-elements-with-smaller-and-greater-element': `
+def countElements(nums: list) -> int:
+    mn = min(nums)
+    mx = max(nums)
+    return sum(1 for x in nums if mn < x < mx)
+`,
+
+  'split-the-array': `
+def isPossibleToSplit(nums: list) -> bool:
+    from collections import Counter
+    freq = Counter(nums)
+    return all(c <= 2 for c in freq.values())
+`,
+
+  'find-the-score-of-all-prefixes-of-an-array': `
+def findPrefixScore(nums: list) -> list:
+    ans = []
+    max_so_far = 0
+    prefix_sum = 0
+    for x in nums:
+        max_so_far = max(max_so_far, x)
+        prefix_sum += x + max_so_far
+        ans.append(prefix_sum)
+    return ans
+`,
+
+  'shortest-cycle-in-a-graph': `
+from collections import deque
+def findShortestCycle(n: int, edges: list) -> int:
+    adj = [[] for _ in range(n)]
+    for e in edges:
+        u, v = int(e[0]), int(e[1])
+        adj[u].append(v)
+        adj[v].append(u)
+    ans = float('inf')
+    for start in range(n):
+        dist = [-1] * n
+        parent = [-1] * n
+        dist[start] = 0
+        q = deque([start])
+        while q:
+            u = q.popleft()
+            for v in adj[u]:
+                if dist[v] == -1:
+                    dist[v] = dist[u] + 1
+                    parent[v] = u
+                    q.append(v)
+                elif parent[u] != v:
+                    ans = min(ans, dist[u] + dist[v] + 1)
+    return -1 if ans == float('inf') else ans
+`,
+
+  // batch 90 — arrays, strings, hash-map, math, graph, tree
+  'count-common-words-with-one-occurrence': `
+from collections import Counter
+def countWords(words1, words2):
+    c1 = Counter(words1)
+    c2 = Counter(words2)
+    return sum(1 for w in c1 if c1[w] == 1 and c2.get(w, 0) == 1)
+`,
+
+  'find-three-consecutive-integers-that-sum-to-a-given-number': `
+def sumOfThree(num):
+    if num % 3 != 0:
+        return []
+    n = num // 3
+    return [n - 1, n, n + 1]
+`,
+
+  'equal-row-and-column-pairs': `
+def equalPairs(grid):
+    from collections import Counter
+    n = len(grid)
+    row_counts = Counter(tuple(row) for row in grid)
+    result = 0
+    for j in range(n):
+        col = tuple(grid[i][j] for i in range(n))
+        result += row_counts[col]
+    return result
+`,
+
+  'number-of-laser-beams-in-a-bank': `
+def numberOfBeams(bank):
+    counts = [row.count('1') for row in bank if '1' in row]
+    return sum(counts[i] * counts[i+1] for i in range(len(counts)-1))
+`,
+
+  'check-if-all-as-appears-before-all-bs': `
+def checkString(s):
+    return 'ba' not in s
+`,
+
+  'count-nodes-with-the-highest-score': `
+def countHighestScoreNodes(parents):
+    n = len(parents)
+    children = [[] for _ in range(n)]
+    for i in range(1, n):
+        children[parents[i]].append(i)
+    sub = [0] * n
+    def dfs(v):
+        sub[v] = 1
+        for c in children[v]:
+            dfs(c)
+            sub[v] += sub[c]
+    dfs(0)
+    max_score = 0
+    count = 0
+    for v in range(n):
+        score = 1
+        for c in children[v]:
+            score *= sub[c]
+        above = n - sub[v]
+        if above > 0:
+            score *= above
+        if score > max_score:
+            max_score = score
+            count = 1
+        elif score == max_score:
+            count += 1
+    return count
+`,
+
+  'maximum-number-of-points-from-grid-queries': `
+import heapq
+def maxPoints(grid, queries):
+    m, n = len(grid), len(grid[0])
+    sorted_q = sorted(enumerate(queries), key=lambda x: x[1])
+    res = [0] * len(queries)
+    vis = [[False]*n for _ in range(m)]
+    vis[0][0] = True
+    heap = [(grid[0][0], 0, 0)]
+    cnt = 0
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    for orig_idx, q in sorted_q:
+        while heap and heap[0][0] < q:
+            v, r, c = heapq.heappop(heap)
+            cnt += 1
+            for dr, dc in dirs:
+                nr, nc = r+dr, c+dc
+                if 0 <= nr < m and 0 <= nc < n and not vis[nr][nc]:
+                    vis[nr][nc] = True
+                    heapq.heappush(heap, (grid[nr][nc], nr, nc))
+        res[orig_idx] = cnt
+    return res
+`,
+
+
+  'check-if-there-is-a-valid-partition-for-the-array': `
+def validPartition(nums: list) -> bool:
+    n = len(nums)
+    dp = [False] * (n + 1)
+    dp[0] = True
+    for i in range(2, n + 1):
+        if nums[i - 1] == nums[i - 2]:
+            dp[i] = dp[i] or dp[i - 2]
+        if i >= 3:
+            if nums[i - 1] == nums[i - 2] == nums[i - 3]:
+                dp[i] = dp[i] or dp[i - 3]
+            if nums[i - 1] == nums[i - 2] + 1 == nums[i - 3] + 2:
+                dp[i] = dp[i] or dp[i - 3]
+    return dp[n]
+`,
+
+  'reverse-nodes-in-even-length-groups': `
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+def reverseEvenLengthGroupsRunner(arr):
+    arr = list(arr)
+    if not arr:
+        return []
+    head = ListNode(arr[0])
+    cur = head
+    for v in arr[1:]:
+        cur.next = ListNode(v)
+        cur = cur.next
+
+    prev = head  # group 1 has size 1 (odd), unchanged
+    group_size = 2
+    while prev and prev.next:
+        node = prev.next
+        count = 0
+        tmp = node
+        while tmp and count < group_size:
+            tmp = tmp.next
+            count += 1
+        if count % 2 == 0:
+            tail = node
+            prev_node = None
+            curr_node = node
+            for _ in range(count):
+                nxt = curr_node.next
+                curr_node.next = prev_node
+                prev_node = curr_node
+                curr_node = nxt
+            prev.next = prev_node
+            tail.next = curr_node
+            prev = tail
+        else:
+            for _ in range(count):
+                prev = prev.next
+        group_size += 1
+
+    result = []
+    p = head
+    while p:
+        result.append(p.val)
+        p = p.next
+    return result
+`,
+
+  'minimum-difference-in-sums-after-removal-of-elements': `
+import heapq
+
+def minimumDifference(nums: list) -> int:
+    nums = list(nums)
+    total = len(nums)
+    n = total // 3
+
+    # prefMin[i] = min sum of n elements from nums[0..i-1]
+    pref_min = {}
+    max_heap = []  # store negatives for max-heap simulation
+    s1 = 0
+    for i in range(2 * n):
+        heapq.heappush(max_heap, -nums[i])
+        s1 += nums[i]
+        if len(max_heap) > n:
+            s1 += heapq.heappop(max_heap)  # pop largest (stored as negative)
+        if len(max_heap) == n:
+            pref_min[i + 1] = s1
+
+    # suffMax[i] = max sum of n elements from nums[i..3n-1]
+    suff_max = {}
+    min_heap = []
+    s2 = 0
+    for i in range(3 * n - 1, n - 1, -1):
+        heapq.heappush(min_heap, nums[i])
+        s2 += nums[i]
+        if len(min_heap) > n:
+            s2 -= heapq.heappop(min_heap)
+        if len(min_heap) == n:
+            suff_max[i] = s2
+
+    ans = float('inf')
+    for m in range(n, 2 * n + 1):
+        if m in pref_min and m in suff_max:
+            ans = min(ans, pref_min[m] - suff_max[m])
+    return ans
+`,
+
+  'find-the-closest-palindrome': `
+import math
+
+def nearestPalindromic(n):
+    L = len(n)
+    is_odd = L % 2 == 1
+    half = n[: math.ceil(L / 2)]
+    half_int = int(half)
+    n_int = int(n)
+
+    def make_pal(h):
+        s = str(h)
+        mirror = s[:-1][::-1] if is_odd else s[::-1]
+        return int(s + mirror)
+
+    candidates = [
+        make_pal(half_int),
+        make_pal(half_int - 1),
+        make_pal(half_int + 1),
+        10 ** (L - 1) - 1,
+        10 ** L + 1,
+    ]
+
+    best = None
+    for c in candidates:
+        if c == n_int or c < 0:
+            continue
+        dist = abs(c - n_int)
+        if best is None:
+            best = c
+        else:
+            best_dist = abs(best - n_int)
+            if dist < best_dist or (dist == best_dist and c < best):
+                best = c
+    return str(best)
+`,
+
+  'number-of-subarrays-with-lcm-equal-to-k': `
+from math import gcd
+
+def subarrayLCM(nums, k):
+    def lcm(a, b):
+        return a // gcd(a, b) * b
+
+    count = 0
+    for i in range(len(nums)):
+        l = nums[i]
+        for j in range(i, len(nums)):
+            l = lcm(l, nums[j])
+            if l == k:
+                count += 1
+            if l > k:
+                break
+    return count
+`,
+
+  'smallest-rotation-with-highest-score': `
+def bestRotation(nums):
+    n = len(nums)
+    diff = [0] * (n + 1)
+    for i in range(n):
+        v = nums[i]
+        if v == 0:
+            continue
+        lo = (i - v + 1 + n) % n
+        hi = i
+        if lo <= hi:
+            diff[lo] += 1
+            diff[hi + 1] -= 1
+        else:
+            diff[0] += 1
+            diff[hi + 1] -= 1
+            diff[lo] += 1
+            diff[n] -= 1
+
+    bad = 0
+    min_bad = float('inf')
+    ans = 0
+    for k in range(n):
+        bad += diff[k]
+        if bad < min_bad:
+            min_bad = bad
+            ans = k
+    return ans
+`,
+
+  // batch 89
+  'next-greater-element-distances': `
+def nextGreaterDistances(nums):
+    n = len(nums)
+    result = [-1] * n
+    stack = []
+    for i in range(n):
+        while stack and nums[stack[-1]] < nums[i]:
+            j = stack.pop()
+            result[j] = i - j
+        stack.append(i)
+    return result
+`,
+
+  'find-all-occurrences-z-algorithm': `
+def findAllOccurrences(text, pattern):
+    s = pattern + '#' + text
+    n = len(s)
+    z = [0] * n
+    l = r = 0
+    for i in range(1, n):
+        if i < r:
+            z[i] = min(r - i, z[i - l])
+        while i + z[i] < n and s[z[i]] == s[i + z[i]]:
+            z[i] += 1
+        if i + z[i] > r:
+            l, r = i, i + z[i]
+    plen = len(pattern)
+    return [i - plen - 1 for i in range(plen + 1, n) if z[i] >= plen]
+`,
+
+  'z-algorithm-longest-prefix-suffix': `
+def longestPrefixSuffix(s):
+    n = len(s)
+    if n == 0:
+        return 0
+    pi = [0] * n
+    k = 0
+    for i in range(1, n):
+        while k > 0 and s[k] != s[i]:
+            k = pi[k - 1]
+        if s[k] == s[i]:
+            k += 1
+        pi[i] = k
+    return pi[-1]
+`,
+
+  'count-subarrays-exactly-k-distinct': `
+def subarraysWithKDistinct(nums, k):
+    def at_most(limit):
+        count = left = 0
+        freq = {}
+        for right, v in enumerate(nums):
+            freq[v] = freq.get(v, 0) + 1
+            while len(freq) > limit:
+                lv = nums[left]
+                freq[lv] -= 1
+                if freq[lv] == 0:
+                    del freq[lv]
+                left += 1
+            count += right - left + 1
+        return count
+    return at_most(k) - at_most(k - 1)
+`,
+
+  'maximum-product-subarray-length-k': `
+def maxProductSubarrayK(nums, k):
+    best = float('-inf')
+    for i in range(len(nums) - k + 1):
+        prod = 1
+        for j in range(i, i + k):
+            prod *= nums[j]
+        best = max(best, prod)
+    return best
+`,
+
+  'weighted-job-scheduling': `
+import bisect
+def jobScheduling(startTime, endTime, profit):
+    jobs = sorted(zip(endTime, startTime, profit))
+    ends = [j[0] for j in jobs]
+    dp = [0] * (len(jobs) + 1)
+    for i, (end, start, p) in enumerate(jobs, 1):
+        j = bisect.bisect_right(ends, start, 0, i - 1)
+        dp[i] = max(dp[i - 1], dp[j] + p)
+    return dp[-1]
+`,
+
+  'parallel-courses': `
+from collections import deque
+def minimumSemesters(n, relations):
+    in_deg = [0] * (n + 1)
+    adj = [[] for _ in range(n + 1)]
+    for u, v in relations:
+        adj[u].append(v)
+        in_deg[v] += 1
+    q = deque(i for i in range(1, n + 1) if in_deg[i] == 0)
+    semesters = processed = 0
+    while q:
+        semesters += 1
+        for _ in range(len(q)):
+            u = q.popleft()
+            processed += 1
+            for v in adj[u]:
+                in_deg[v] -= 1
+                if in_deg[v] == 0:
+                    q.append(v)
+    return semesters if processed == n else -1
+`,
+
+  'parallel-courses-ii': `
+def minNumberOfSemesters(n, relations, k):
+    prereqs = [0] * n
+    for x, y in relations:
+        prereqs[y] |= (1 << x)
+    INF = float('inf')
+    dp = [INF] * (1 << n)
+    dp[0] = 0
+    for mask in range(1 << n):
+        if dp[mask] == INF:
+            continue
+        avail = 0
+        for i in range(n):
+            if not (mask >> i & 1) and (prereqs[i] & mask) == prereqs[i]:
+                avail |= (1 << i)
+        sub = avail
+        while sub:
+            bits = bin(sub).count('1')
+            if bits <= k:
+                nxt = mask | sub
+                if dp[nxt] > dp[mask] + 1:
+                    dp[nxt] = dp[mask] + 1
+            sub = (sub - 1) & avail
+    return dp[(1 << n) - 1]
+`,
+
+  'grid-count-paths-mod': `
+def countPaths(grid):
+    MOD = 10**9 + 7
+    m, n = len(grid), len(grid[0])
+    dp = [[0]*n for _ in range(m)]
+    dp[0][0] = 1
+    for i in range(m):
+        for j in range(n):
+            if i == 0 and j == 0:
+                continue
+            if grid[i][j] == 1:
+                dp[i][j] = 0
+                continue
+            top = dp[i-1][j] if i > 0 else 0
+            left = dp[i][j-1] if j > 0 else 0
+            dp[i][j] = (top + left) % MOD
+    return dp[m-1][n-1]
+`,
+
+  'max-sum-submatrix': `
+def maxSumSubmatrix(matrix):
+    m, n = len(matrix), len(matrix[0])
+    ans = float('-inf')
+    for top in range(m):
+        col_sum = [0] * n
+        for bot in range(top, m):
+            for j in range(n):
+                col_sum[j] += matrix[bot][j]
+            # Kadane's
+            cur = max_sub = float('-inf')
+            for v in col_sum:
+                cur = max(v, cur + v)
+                max_sub = max(max_sub, cur)
+            ans = max(ans, max_sub)
+    return ans
+`,
+
+  'number-good-leaf-node-pairs': `
+def countPairsRunner(arr, distance):
+    raw_list = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
+    a = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    class TreeNode:
+        def __init__(self, v): self.v = v; self.l = self.r = None
+    def build(arr2):
+        if not arr2 or arr2[0] is None: return None
+        root = TreeNode(arr2[0])
+        q = [root]; i = 1
+        while q and i < len(arr2):
+            node = q.pop(0)
+            if i < len(arr2) and arr2[i] is not None:
+                node.l = TreeNode(arr2[i]); q.append(node.l)
+            i += 1
+            if i < len(arr2) and arr2[i] is not None:
+                node.r = TreeNode(arr2[i]); q.append(node.r)
+            i += 1
+        return root
+    count = [0]
+    def dfs(node):
+        if not node: return []
+        if not node.l and not node.r: return [0]
+        left = [d+1 for d in dfs(node.l)]
+        right = [d+1 for d in dfs(node.r)]
+        for l in left:
+            for r in right:
+                if l + r <= distance:
+                    count[0] += 1
+        return [d for d in left + right if d < distance]
+    dfs(build(a))
+    return count[0]
+`,
+
+  'tree-node-product-of-children': `
+def maximumProductSplitRunner(arr):
+    MOD = 10**9 + 7
+    raw_list = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
+    a = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    class TreeNode:
+        def __init__(self, v): self.v = v; self.l = self.r = None
+    def build(arr2):
+        if not arr2 or arr2[0] is None: return None
+        root = TreeNode(arr2[0])
+        q = [root]; i = 1
+        while q and i < len(arr2):
+            node = q.pop(0)
+            if i < len(arr2) and arr2[i] is not None:
+                node.l = TreeNode(arr2[i]); q.append(node.l)
+            i += 1
+            if i < len(arr2) and arr2[i] is not None:
+                node.r = TreeNode(arr2[i]); q.append(node.r)
+            i += 1
+        return root
+    def total_sum(node):
+        if not node: return 0
+        return node.v + total_sum(node.l) + total_sum(node.r)
+    root = build(a)
+    total = total_sum(root)
+    best = [0]
+    def dfs(node):
+        if not node: return 0
+        s = node.v + dfs(node.l) + dfs(node.r)
+        prod = (s * (total - s)) % MOD
+        if prod > best[0]: best[0] = prod
+        return s
+    dfs(root)
+    return best[0]
+`,
+
+  'minimum-operations-to-make-array-non-decreasing': `
+def minOperationsNonDecreasing(nums):
+    ops = 0
+    prev = nums[0] if nums else 0
+    for i in range(1, len(nums)):
+        if nums[i] < prev:
+            ops += prev - nums[i]
+        else:
+            prev = nums[i]
+    return ops
+`,
+
+  // batch 90
+  'sum-of-square-numbers': `
+import math
+def judgeSquareSum(c: int) -> bool:
+    a = 0
+    while a * a <= c:
+        b2 = c - a * a
+        b = round(math.sqrt(b2))
+        if b * b == b2:
+            return True
+        a += 1
+    return False
+`,
+
+  'mice-and-cheese': `
+def miceAndCheese(reward1, reward2, k):
+    reward1 = list(reward1)
+    reward2 = list(reward2)
+    n = len(reward1)
+    base = sum(reward2)
+    deltas = sorted([reward1[i] - reward2[i] for i in range(n)], reverse=True)
+    return base + sum(deltas[:k])
+`,
+
+  'maximum-size-subarray-sum-equals-k': `
+def maxSubArrayLen(nums, k):
+    nums = list(nums)
+    first_seen = {0: -1}
+    prefix = 0
+    max_len = 0
+    for j, v in enumerate(nums):
+        prefix += v
+        target = prefix - k
+        if target in first_seen:
+            max_len = max(max_len, j - first_seen[target])
+        if prefix not in first_seen:
+            first_seen[prefix] = j
+    return max_len
+`,
+
+  // batch 92
+  'eliminate-maximum-number-of-monsters': `
+def eliminateMaximum(dist, speed):
+    import math
+    dist = list(dist)
+    speed = list(speed)
+    times = sorted(math.ceil(d / s) for d, s in zip(dist, speed))
+    for k, t in enumerate(times):
+        if t <= k:
+            return k
+    return len(dist)
+`,
+
+  'decoded-string-at-index': `
+def decodeAtIndex(s, k):
+    size = 0
+    for c in s:
+        if c.isdigit():
+            size *= int(c)
+        else:
+            size += 1
+    cur = k
+    for i in range(len(s) - 1, -1, -1):
+        c = s[i]
+        cur %= size
+        if cur == 0 and c.isalpha():
+            return c
+        if c.isdigit():
+            size //= int(c)
+        else:
+            size -= 1
+    return ''
+`,
+
+  'maximum-bags-with-full-capacity-of-rocks': `
+def maximumBags(capacity, rocks, additionalRocks):
+    capacity = list(capacity)
+    rocks = list(rocks)
+    remaining = sorted(c - r for c, r in zip(capacity, rocks))
+    count = 0
+    for r in remaining:
+        if additionalRocks >= r:
+            additionalRocks -= r
+            count += 1
+        else:
+            break
+    return count
+`,
+
+  'count-of-interesting-subarrays': `
+def countInterestingSubarrays(nums, modulo, k):
+    nums = list(nums)
+    prefix_count = {0: 1}
+    count = 0
+    prefix = 0
+    for num in nums:
+        if num % modulo == k:
+            prefix += 1
+        prefix %= modulo
+        target = (prefix - k + modulo) % modulo
+        count += prefix_count.get(target, 0)
+        prefix_count[prefix] = prefix_count.get(prefix, 0) + 1
+    return count
+`,
+
+  'minimum-number-of-visited-cells-in-a-grid': `
+def minimumVisitedCells(grid):
+    from collections import deque
+    grid = [list(row) for row in grid]
+    m, n = len(grid), len(grid[0])
+    dist = [[-1] * n for _ in range(m)]
+    dist[0][0] = 1
+    row_uf = [list(range(n + 1)) for _ in range(m)]
+    col_uf = [list(range(m + 1)) for _ in range(n)]
+    def row_find(r, c):
+        while row_uf[r][c] != c:
+            row_uf[r][c] = row_uf[r][row_uf[r][c]]
+            c = row_uf[r][c]
+        return c
+    def col_find(c, r):
+        while col_uf[c][r] != r:
+            col_uf[c][r] = col_uf[c][col_uf[c][r]]
+            r = col_uf[c][r]
+        return r
+    row_uf[0][0] = 1
+    col_uf[0][0] = 1
+    queue = deque([(0, 0)])
+    while queue:
+        r, c = queue.popleft()
+        d = dist[r][c]
+        g = grid[r][c]
+        max_c = min(c + g, n - 1)
+        max_r = min(r + g, m - 1)
+        nc = row_find(r, c + 1)
+        while nc <= max_c:
+            dist[r][nc] = d + 1
+            queue.append((r, nc))
+            row_uf[r][nc] = nc + 1
+            col_uf[nc][r] = r + 1
+            nc = row_find(r, nc + 1)
+        nr = col_find(c, r + 1)
+        while nr <= max_r:
+            dist[nr][c] = d + 1
+            queue.append((nr, c))
+            col_uf[c][nr] = nr + 1
+            row_uf[nr][c] = c + 1
+            nr = col_find(c, nr + 1)
+    return dist[m-1][n-1]
+`,
+
+  'form-largest-integer-with-digits-that-add-up-to-target': `
+def largestNumber(cost, target):
+    cost = list(cost)
+    NEG_INF = float('-inf')
+    dp = [NEG_INF] * (target + 1)
+    dp[0] = 0
+    for j in range(1, target + 1):
+        for d in range(9):
+            if j >= cost[d] and dp[j - cost[d]] != NEG_INF:
+                dp[j] = max(dp[j], dp[j - cost[d]] + 1)
+    if dp[target] < 0:
+        return '0'
+    result = []
+    rem = target
+    while rem > 0:
+        for d in range(8, -1, -1):
+            if rem >= cost[d] and dp[rem - cost[d]] == dp[rem] - 1:
+                result.append(str(d + 1))
+                rem -= cost[d]
+                break
+    return ''.join(result)
+`,
+
+  'destroying-asteroids': `
+def asteroidsDestroyed(mass, asteroids):
+    asteroids = sorted(asteroids)
+    for a in asteroids:
+        if mass < a:
+            return False
+        mass += a
+    return True
+`,
+
+  'maximum-number-of-consecutive-values-you-can-make': `
+def getMaximumConsecutive(coins):
+    coins = sorted(coins)
+    reach = 0
+    for c in coins:
+        if c > reach + 1:
+            break
+        reach += c
+    return reach + 1
+`,
+
+  'determine-if-two-events-have-conflict': `
+def haveConflict(event1, event2):
+    return event1[0] <= event2[1] and event2[0] <= event1[1]
+`,
+
+  'number-of-people-that-can-be-seen-in-a-grid': `
+def canSeePersonsCount(heights):
+    heights = list(heights)
+    n = len(heights)
+    ans = [0] * n
+    stack = []
+    for i in range(n - 1, -1, -1):
+        count = 0
+        while stack and stack[-1] < heights[i]:
+            stack.pop()
+            count += 1
+        if stack:
+            count += 1
+        ans[i] = count
+        stack.append(heights[i])
+    return ans
+`,
+
+  // 2000-milestone
+  'find-largest-value-in-each-tree-row': `
+from collections import deque
+def largestValues(root):
+    raw = list(root)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
+    if not arr or arr[0] is None:
+        return []
+    class TN:
+        def __init__(self, v): self.v = v; self.l = self.r = None
+    def build(a):
+        if not a or a[0] is None: return None
+        r = TN(a[0])
+        q = deque([r]); i = 1
+        while q and i < len(a):
+            node = q.popleft()
+            if i < len(a) and a[i] is not None:
+                node.l = TN(a[i]); q.append(node.l)
+            i += 1
+            if i < len(a) and a[i] is not None:
+                node.r = TN(a[i]); q.append(node.r)
+            i += 1
+        return r
+    root_node = build(arr)
+    if not root_node: return []
+    res = []
+    q = deque([root_node])
+    while q:
+        level_len = len(q)
+        mx = float('-inf')
+        for _ in range(level_len):
+            node = q.popleft()
+            mx = max(mx, node.v)
+            if node.l: q.append(node.l)
+            if node.r: q.append(node.r)
+        res.append(mx)
+    return res
+`,
+
+  // batch 94
+  'rotated-digits': `
+def rotatedDigits(n):
+    diff = {2, 5, 6, 9}
+    invalid = {3, 4, 7}
+    count = 0
+    for i in range(1, n + 1):
+        digits = [int(c) for c in str(i)]
+        if any(d in invalid for d in digits):
+            continue
+        if any(d in diff for d in digits):
+            count += 1
+    return count
+`,
+
+  'rabbits-in-forest': `
+from collections import Counter
+def numRabbits(answers):
+    cnt = Counter(answers)
+    total = 0
+    for k, v in cnt.items():
+        group_size = k + 1
+        total += -(-v // group_size) * group_size
+    return total
+`,
+
+  'smallest-string-starting-from-leaf': `
+def smallestFromLeaf(root):
+    raw = list(root)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
+    if not arr or arr[0] is None:
+        return ''
+    class TN:
+        def __init__(self, v): self.v = v; self.l = self.r = None
+    def build(a):
+        if not a or a[0] is None: return None
+        r = TN(a[0])
+        q = [r]; i = 1
+        while q and i < len(a):
+            node = q.pop(0)
+            if i < len(a) and a[i] is not None:
+                node.l = TN(a[i]); q.append(node.l)
+            i += 1
+            if i < len(a) and a[i] is not None:
+                node.r = TN(a[i]); q.append(node.r)
+            i += 1
+        return r
+    best = ['{']
+    path = []
+    def dfs(node):
+        if not node: return
+        path.append(chr(97 + node.v))
+        if not node.l and not node.r:
+            s = ''.join(reversed(path))
+            if s < best[0]:
+                best[0] = s
+        dfs(node.l); dfs(node.r)
+        path.pop()
+    dfs(build(arr))
+    return best[0]
+`,
+
+  // batch 93
+  'valid-perfect-square': `
+def isPerfectSquare(num):
+    lo, hi = 1, num
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        sq = mid * mid
+        if sq == num:
+            return True
+        if sq < num:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return False
+`,
+
+  'insertion-sort-list': `
+def insertionSortList(head):
+    arr = list(head)
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+    return arr
+`,
+
+  'maximize-score-after-n-operations': `
+from math import gcd
+def maxScore(nums):
+    nums = list(nums)
+    m = len(nums)
+    g = [[gcd(nums[i], nums[j]) for j in range(m)] for i in range(m)]
+    dp = [0] * (1 << m)
+    for mask in range(1 << m):
+        bits = bin(mask).count('1')
+        if bits % 2 != 0:
+            continue
+        op = bits // 2 + 1
+        for i in range(m):
+            if mask & (1 << i):
+                continue
+            for j in range(i + 1, m):
+                if mask & (1 << j):
+                    continue
+                nm = mask | (1 << i) | (1 << j)
+                dp[nm] = max(dp[nm], dp[mask] + op * g[i][j])
+    return dp[(1 << m) - 1]
+`,
+
+  // batch 92
+  'alternating-groups-i': `
+def numberOfAlternatingGroups(colors):
+    n = len(colors)
+    count = 0
+    for i in range(n):
+        prev = colors[(i - 1) % n]
+        curr = colors[i]
+        nxt = colors[(i + 1) % n]
+        if prev != curr and curr != nxt:
+            count += 1
+    return count
+`,
+
+  'longest-binary-subsequence-less-than-or-equal-to-k': `
+def longestSubsequence(s, k):
+    chosen_len = 0
+    value = 0
+    for i in range(len(s) - 1, -1, -1):
+        if s[i] == '0':
+            chosen_len += 1
+        else:
+            if chosen_len < 30 and value + (1 << chosen_len) <= k:
+                value += 1 << chosen_len
+                chosen_len += 1
+    return chosen_len
+`,
+
+  'minimum-time-to-complete-all-tasks': `
+def findMinimumTime(tasks):
+    tasks_sorted = sorted(tasks, key=lambda t: t[1])
+    max_end = max(t[1] for t in tasks_sorted)
+    run = [0] * (max_end + 1)
+    for start, end, dur in tasks_sorted:
+        already = sum(run[start:end+1])
+        need = dur - already
+        t = end
+        while t >= start and need > 0:
+            if not run[t]:
+                run[t] = 1
+                need -= 1
+            t -= 1
+    return sum(run)
+`,
+
+  'count-vowel-substrings-of-a-word': `
+def countVowelSubstringsOfAWord(word):
+    vowels = set('aeiou')
+    count = 0
+    for i in range(len(word)):
+        seen = set()
+        for j in range(i, len(word)):
+            if word[j] not in vowels:
+                break
+            seen.add(word[j])
+            if len(seen) == 5:
+                count += 1
+    return count
+`,
+
+  'minimum-cost-to-move-chips': `
+def minCostToMoveChips(position):
+    position = list(position)
+    odd = sum(1 for p in position if p % 2 == 1)
+    even = sum(1 for p in position if p % 2 == 0)
+    return min(odd, even)
+`,
+
+  'string-compression-ii': `
+def getLengthOfOptimalCompression(s, k):
+    n = len(s)
+    dp = [[n] * (k + 1) for _ in range(n + 1)]
+    dp[0][0] = 0
+
+    def rle_len(cnt):
+        if cnt == 0: return 0
+        if cnt == 1: return 1
+        if cnt < 10: return 2
+        if cnt < 100: return 3
+        return 4
+
+    for i in range(1, n + 1):
+        for j in range(k + 1):
+            if j > 0:
+                dp[i][j] = min(dp[i][j], dp[i-1][j-1])
+            same = diff = 0
+            for l in range(i, 0, -1):
+                if s[l-1] == s[i-1]:
+                    same += 1
+                else:
+                    diff += 1
+                if diff > j:
+                    break
+                dp[i][j] = min(dp[i][j], dp[l-1][j-diff] + rle_len(same))
+    return dp[n][k]
+`,
+
+  'build-an-array-with-stack-operations': `
+def buildArray(target, n):
+    target = list(target)
+    target_set = set(target)
+    ops = []
+    for i in range(1, n + 1):
+        ops.append('Push')
+        if i not in target_set:
+            ops.append('Pop')
+        if i == target[-1]:
+            break
+    return ops
+`,
+
+  // batch 92 (remote)
+  'prime-subtraction-operation': `
+def primeSubOperation(nums):
+    def sieve(n):
+        is_prime = [True] * (n + 1)
+        is_prime[0] = is_prime[1] = False
+        i = 2
+        while i * i <= n:
+            if is_prime[i]:
+                j = i * i
+                while j <= n:
+                    is_prime[j] = False
+                    j += i
+            i += 1
+        return [x for x in range(2, n + 1) if is_prime[x]]
+
+    import bisect
+    primes = sieve(1000)
+    prev = 0
+    for x in nums:
+        limit = x - prev - 1
+        idx = bisect.bisect_right(primes, limit) - 1
+        if idx >= 0:
+            after = x - primes[idx]
+        else:
+            after = x
+        if after <= prev:
+            return False
+        prev = after
+    return True
+`,
+
+  'find-the-longest-semi-repetitive-subarray': `
+def longestSemiRepetitiveSubarray(s):
+    s = list(s)
+    left = 0
+    pairs = 0
+    max_len = 1
+    for right in range(1, len(s)):
+        if s[right] == s[right - 1]:
+            pairs += 1
+        while pairs > 1:
+            if s[left] == s[left + 1]:
+                pairs -= 1
+            left += 1
+        max_len = max(max_len, right - left + 1)
+    return max_len
+`,
+
+  'count-number-of-fair-pairs': `
+def countFairPairs(nums, lower, upper):
+    import bisect
+    nums = sorted(nums)
+    n = len(nums)
+    count = 0
+    for i in range(n - 1):
+        lo = bisect.bisect_left(nums, lower - nums[i], i + 1, n)
+        hi = bisect.bisect_right(nums, upper - nums[i], i + 1, n)
+        count += hi - lo
+    return count
+`,
+
+  // batch 94 (remote)
+  'count-of-matches-in-tournament': `
+def numberOfMatches(n: int) -> int:
+    return n - 1
+`,
+
+  'find-winner-on-a-tic-tac-toe-game': `
+def tictactoe(moves) -> str:
+    moves = [list(m) for m in moves]
+    rows = [0, 0, 0]
+    cols = [0, 0, 0]
+    diag = anti = 0
+    for i, (r, c) in enumerate(moves):
+        v = 1 if i % 2 == 0 else -1
+        rows[r] += v
+        cols[c] += v
+        if r == c:
+            diag += v
+        if r + c == 2:
+            anti += v
+    for k in range(3):
+        if abs(rows[k]) == 3:
+            return 'A' if rows[k] > 0 else 'B'
+        if abs(cols[k]) == 3:
+            return 'A' if cols[k] > 0 else 'B'
+    if abs(diag) == 3:
+        return 'A' if diag > 0 else 'B'
+    if abs(anti) == 3:
+        return 'A' if anti > 0 else 'B'
+    return 'Draw' if len(moves) == 9 else 'Pending'
+`,
+
+  'sort-features-by-popularity': `
+def sortFeatures(features, responses):
+    features = list(features)
+    responses = [str(r) for r in responses]
+    count = {f: 0 for f in features}
+    for r in responses:
+        words = set(r.split())
+        for f in features:
+            if f in words:
+                count[f] += 1
+    return sorted(features, key=lambda f: -count[f])
+`,
+
+  'maximum-average-subarray-i': `
+def findMaxAverage(nums, k):
+    s = sum(nums[:k])
+    mx = s
+    for i in range(k, len(nums)):
+        s += nums[i] - nums[i - k]
+        if s > mx:
+            mx = s
+    return mx / k
+`,
+
+  // batch 93
+  'find-longest-awesome-substring': `
+def longestAwesome(s):
+    seen = [-2] * (1 << 10)
+    seen[0] = -1
+    mask = 0
+    ans = 0
+    for i, c in enumerate(s):
+        mask ^= 1 << (ord(c) - 48)
+        if seen[mask] != -2:
+            ans = max(ans, i - seen[mask])
+        else:
+            seen[mask] = i
+        for d in range(10):
+            t = mask ^ (1 << d)
+            if seen[t] != -2:
+                ans = max(ans, i - seen[t])
+    return ans
+`,
+
+  'greatest-common-divisor-traversal': `
+def canTraverseAllPairs(nums):
+    n = len(nums)
+    if n == 1:
+        return True
+    if any(x == 1 for x in nums):
+        return False
+    parent = list(range(n))
+    rank = [0] * n
+
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    def union(x, y):
+        rx, ry = find(x), find(y)
+        if rx == ry:
+            return
+        if rank[rx] < rank[ry]:
+            parent[rx] = ry
+        elif rank[rx] > rank[ry]:
+            parent[ry] = rx
+        else:
+            parent[ry] = rx
+            rank[rx] += 1
+
+    prime_to_idx = {}
+    for i in range(n):
+        x = nums[i]
+        p = 2
+        while p * p <= x:
+            if x % p == 0:
+                if p in prime_to_idx:
+                    union(i, prime_to_idx[p])
+                else:
+                    prime_to_idx[p] = i
+                while x % p == 0:
+                    x //= p
+            p += 1
+        if x > 1:
+            if x in prime_to_idx:
+                union(i, prime_to_idx[x])
+            else:
+                prime_to_idx[x] = i
+
+    root = find(0)
+    return all(find(i) == root for i in range(n))
+`,
+
+  'minimum-length-of-anagram-concatenation': `
+def minAnagramLength(s):
+    n = len(s)
+    for k in range(1, n + 1):
+        if n % k != 0:
+            continue
+        target = [0] * 26
+        for i in range(k):
+            target[ord(s[i]) - 97] += 1
+        valid = True
+        for p in range(1, n // k):
+            cur = [0] * 26
+            for i in range(p * k, (p + 1) * k):
+                cur[ord(s[i]) - 97] += 1
+            if cur != target:
+                valid = False
+                break
+        if valid:
+            return k
+    return n
+`,
+
+  // batch 95
+  'di-string-match': `
+def diStringMatch(s):
+    n = len(s)
+    lo, hi = 0, n
+    res = []
+    for c in s:
+        if c == 'I':
+            res.append(lo)
+            lo += 1
+        else:
+            res.append(hi)
+            hi -= 1
+    res.append(lo)
+    return res
+`,
+
+  'shortest-distance-to-a-character': `
+def shortestToChar(s, c):
+    n = len(s)
+    ans = [float('inf')] * n
+    prev = float('-inf')
+    for i in range(n):
+        if s[i] == c:
+            prev = i
+        if prev != float('-inf'):
+            ans[i] = i - prev
+    nxt = float('inf')
+    for i in range(n - 1, -1, -1):
+        if s[i] == c:
+            nxt = i
+        if nxt != float('inf'):
+            ans[i] = min(ans[i], nxt - i)
+    return ans
+`,
+
+  'largest-number-at-least-twice-of-others': `
+def dominantIndex(nums):
+    nums = list(nums)
+    max_val = max(nums)
+    max_idx = nums.index(max_val)
+    for i, v in enumerate(nums):
+        if i != max_idx and 2 * v > max_val:
+            return -1
+    return max_idx
+`,
+
+  // batch 97
+  '4sum': `
+def fourSum(nums, target):
+    nums = sorted(nums)
+    n = len(nums)
+    res = []
+    for i in range(n - 3):
+        if i > 0 and nums[i] == nums[i - 1]:
+            continue
+        for j in range(i + 1, n - 2):
+            if j > i + 1 and nums[j] == nums[j - 1]:
+                continue
+            l, r = j + 1, n - 1
+            while l < r:
+                s = nums[i] + nums[j] + nums[l] + nums[r]
+                if s == target:
+                    res.append([nums[i], nums[j], nums[l], nums[r]])
+                    while l < r and nums[l] == nums[l + 1]:
+                        l += 1
+                    while l < r and nums[r] == nums[r - 1]:
+                        r -= 1
+                    l += 1
+                    r -= 1
+                elif s < target:
+                    l += 1
+                else:
+                    r -= 1
+    return res
+`,
+
+  'monotonic-stack-daily-temperatures': `
+def dailyTemperatures(temperatures):
+    temperatures = list(temperatures)
+    n = len(temperatures)
+    ans = [0] * n
+    stack = []
+    for i in range(n):
+        while stack and temperatures[i] > temperatures[stack[-1]]:
+            j = stack.pop()
+            ans[j] = i - j
+        stack.append(i)
+    return ans
+`,
+
+  'check-if-array-sorted-and-rotated': `
+def check(nums):
+    n = len(nums)
+    count = 0
+    for i in range(n):
+        if nums[i] > nums[(i + 1) % n]:
+            count += 1
+    return count <= 1
+`,
+
+  'find-all-lonely-numbers-in-array': `
+def findLonely(nums):
+    from collections import Counter
+    freq = Counter(nums)
+    result = []
+    for x in nums:
+        if freq[x] == 1 and (x - 1) not in freq and (x + 1) not in freq:
+            result.append(x)
+    return sorted(result)
+`,
+
+  'check-if-all-characters-have-equal-number-of-occurrences': `
+def areOccurrencesEqual(s):
+    from collections import Counter
+    freq = Counter(s)
+    vals = list(freq.values())
+    return all(v == vals[0] for v in vals)
+`,
+
+  // batch 95 — tree problems
+  'range-sum-bst': `
+def rangeSumBST(root, low: int, high: int) -> int:
+    if not root:
+        return 0
+    total = root.val if low <= root.val <= high else 0
+    if root.val > low:
+        total += rangeSumBST(root.left, low, high)
+    if root.val < high:
+        total += rangeSumBST(root.right, low, high)
+    return total
+`,
+
+  'delete-node-in-a-bst': `
+def deleteNode(root, key: int):
+    if not root:
+        return None
+    if key < root.val:
+        root.left = deleteNode(root.left, key)
+    elif key > root.val:
+        root.right = deleteNode(root.right, key)
+    else:
+        if not root.left:
+            return root.right
+        if not root.right:
+            return root.left
+        successor = root.right
+        while successor.left:
+            successor = successor.left
+        root.val = successor.val
+        root.right = deleteNode(root.right, successor.val)
+    return root
+`,
+
+  'binary-tree-maximum-path-sum': `
+def maxPathSum(root) -> int:
+    ans = float('-inf')
+    def gain(node):
+        nonlocal ans
+        if not node:
+            return 0
+        left = max(0, gain(node.left))
+        right = max(0, gain(node.right))
+        ans = max(ans, node.val + left + right)
+        return node.val + max(left, right)
+    gain(root)
+    return ans
+`,
+
+  // batch 99 (remote) — strings/easy, arrays/easy, arrays/medium, sliding-window/medium
+  'find-longest-balanced-binary-substring': `
+def findTheLongestBalancedSubstring(s):
+    best = 0
+    i = 0
+    while i < len(s):
+        zeros = 0
+        while i < len(s) and s[i] == '0':
+            zeros += 1
+            i += 1
+        ones = 0
+        while i < len(s) and s[i] == '1':
+            ones += 1
+            i += 1
+        if zeros > 0 and ones > 0:
+            best = max(best, 2 * min(zeros, ones))
+    return best
+`,
+
+  'matrix-diagonal-sum-variant': `
+def diagonalSumVariant(mat):
+    mat = [list(row) for row in (mat.to_py() if hasattr(mat, 'to_py') else mat)]
+    n = len(mat)
+    total = 0
+    for i in range(n):
+        total += mat[i][i]
+        total += mat[i][n - 1 - i]
+    if n % 2 == 1:
+        mid = n // 2
+        total -= mat[mid][mid]
+    return total
+`,
+
+  'max-number-of-k-sum-pairs': `
+def maxOperations(nums, k):
+    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else list(nums))
+    ops = 0
+    l, r = 0, len(nums) - 1
+    while l < r:
+        s = nums[l] + nums[r]
+        if s == k:
+            ops += 1
+            l += 1
+            r -= 1
+        elif s < k:
+            l += 1
+        else:
+            r -= 1
+    return ops
+`,
+
+  'count-subarrays-max-element-k-times': `
+def countSubarrays(nums, k):
+    nums = nums.to_py() if hasattr(nums, 'to_py') else list(nums)
+    max_val = max(nums)
+    result = 0
+    count = 0
+    l = 0
+    for r in range(len(nums)):
+        if nums[r] == max_val:
+            count += 1
+        while count >= k:
+            result += len(nums) - r
+            if nums[l] == max_val:
+                count -= 1
+            l += 1
+    return result
+`,
+
+  // batch 96 — stack/strings, tree problems
+  'remove-all-adjacent-duplicates-in-string-ii': `
+def removeDuplicates(s: str, k: int) -> str:
+    stack = []
+    for c in s:
+        if stack and stack[-1][0] == c:
+            stack[-1][1] += 1
+            if stack[-1][1] == k:
+                stack.pop()
+        else:
+            stack.append([c, 1])
+    return ''.join(c * n for c, n in stack)
+`,
+
+  'average-of-subtree': `
+def averageOfSubtree(root) -> int:
+    count = 0
+    def dfs(node):
+        nonlocal count
+        if not node:
+            return (0, 0)
+        ls, lc = dfs(node.left)
+        rs, rc = dfs(node.right)
+        total = node.val + ls + rs
+        cnt = 1 + lc + rc
+        if node.val == total // cnt:
+            count += 1
+        return (total, cnt)
+    dfs(root)
+    return count
+`,
+
+  'cousins-in-binary-tree-ii': `
+def cousinsInBinaryTreeII(root):
+    if not root:
+        return root
+    root.val = 0
+    queue = [root]
+    while queue:
+        next_level = []
+        level_sum = 0
+        for node in queue:
+            if node.left:
+                next_level.append(node.left)
+                level_sum += node.left.val
+            if node.right:
+                next_level.append(node.right)
+                level_sum += node.right.val
+        for node in queue:
+            sib = (node.left.val if node.left else 0) + (node.right.val if node.right else 0)
+            if node.left:
+                node.left.val = level_sum - sib
+            if node.right:
+                node.right.val = level_sum - sib
+        queue = next_level
+    return root
+`,
+
+  // batch 101
+  'prime-arrangements': `
+def numPrimeArrangements(n):
+    MOD = 10**9 + 7
+    def is_prime(x):
+        if x < 2: return False
+        i = 2
+        while i * i <= x:
+            if x % i == 0: return False
+            i += 1
+        return True
+    p = sum(1 for i in range(2, n + 1) if is_prime(i))
+    def factorial(k):
+        r = 1
+        for i in range(1, k + 1):
+            r = r * i % MOD
+        return r
+    return factorial(p) * factorial(n - p) % MOD
+`,
+  'lucky-numbers-in-a-matrix': `
+def luckyNumbers(matrix):
+    m, n = len(matrix), len(matrix[0])
+    col_max = [max(matrix[i][j] for i in range(m)) for j in range(n)]
+    result = []
+    for row in matrix:
+        min_val = min(row)
+        min_col = row.index(min_val)
+        if min_val == col_max[min_col]:
+            result.append(min_val)
+    return result
+`,
+  'smallest-range-i': `
+def smallestRangeI(nums, k):
+    return max(0, max(nums) - min(nums) - 2 * k)
+`,
+
+  // batch 102
+  'two-sum': `
+def twoSum(nums, target):
+    seen = {}
+    for i, v in enumerate(nums):
+        comp = target - v
+        if comp in seen:
+            return [seen[comp], i]
+        seen[v] = i
+    return []
+`,
+  'squares-of-a-sorted-array': `
+def sortedSquares(nums):
+    n = len(nums)
+    result = [0] * n
+    l, r, pos = 0, n - 1, n - 1
+    while l <= r:
+        if abs(nums[l]) >= abs(nums[r]):
+            result[pos] = nums[l] * nums[l]
+            l += 1
+        else:
+            result[pos] = nums[r] * nums[r]
+            r -= 1
+        pos -= 1
+    return result
+`,
+  'middle-of-the-linked-list': `
+def middleNodeRunner(arr):
+    arr = list(arr)
+    if not arr:
+        return []
+    slow, fast = 0, 0
+    while fast < len(arr) - 1 and fast + 1 < len(arr) - 1:
+        slow += 1
+        fast += 2
+    if fast < len(arr) - 1:
+        slow += 1
+    return arr[slow:]
+`,
+
+  // batch 103
+  '3sum': `
+def threeSumRunner(nums):
+    nums = sorted(nums)
+    n = len(nums)
+    result = []
+    for i in range(n - 2):
+        if i > 0 and nums[i] == nums[i - 1]:
+            continue
+        l, r = i + 1, n - 1
+        while l < r:
+            s = nums[i] + nums[l] + nums[r]
+            if s == 0:
+                result.append([nums[i], nums[l], nums[r]])
+                while l < r and nums[l] == nums[l + 1]:
+                    l += 1
+                while l < r and nums[r] == nums[r - 1]:
+                    r -= 1
+                l += 1
+                r -= 1
+            elif s < 0:
+                l += 1
+            else:
+                r -= 1
+    normalized = [sorted(t) for t in result]
+    normalized.sort()
+    return normalized
+`,
+  'search-a-2d-matrix': `
+def searchMatrix(matrix, target):
+    m, n = len(matrix), len(matrix[0])
+    lo, hi = 0, m * n - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        v = matrix[mid // n][mid % n]
+        if v == target:
+            return True
+        elif v < target:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return False
+`,
+  'max-points-on-a-line': `
+from math import gcd
+
+def maxPoints(points):
+    n = len(points)
+    if n <= 2:
+        return n
+    ans = 2
+    for i in range(n):
+        slopes = {}
+        for j in range(i + 1, n):
+            dy = points[j][1] - points[i][1]
+            dx = points[j][0] - points[i][0]
+            if dx < 0:
+                dy, dx = -dy, -dx
+            elif dx == 0 and dy < 0:
+                dy = -dy
+            g = gcd(abs(dy), abs(dx))
+            key = (dy // g, dx // g) if g != 0 else (0, 0)
+            slopes[key] = slopes.get(key, 0) + 1
+        for cnt in slopes.values():
+            if cnt + 1 > ans:
+                ans = cnt + 1
+    return ans
+`,
+
+  // batch 104
+  'search-a-2d-matrix-ii': `
+def searchMatrix(matrix, target):
+    if not matrix or not matrix[0]:
+        return False
+    m, n = len(matrix), len(matrix[0])
+    row, col = 0, n - 1
+    while row < m and col >= 0:
+        v = matrix[row][col]
+        if v == target:
+            return True
+        elif v > target:
+            col -= 1
+        else:
+            row += 1
+    return False
+`,
+  'count-number-of-connected-components': `
+def countComponents(n, edges):
+    parent = list(range(n))
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    components = n
+    for a, b in edges:
+        ra, rb = find(a), find(b)
+        if ra != rb:
+            parent[ra] = rb
+            components -= 1
+    return components
+`,
+  'longest-increasing-path-in-a-matrix': `
+def longestIncreasingPath(matrix):
+    if not matrix:
+        return 0
+    m, n = len(matrix), len(matrix[0])
+    memo = [[0] * n for _ in range(m)]
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    def dfs(r, c):
+        if memo[r][c]:
+            return memo[r][c]
+        best = 1
+        for dr, dc in dirs:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n and matrix[nr][nc] > matrix[r][c]:
+                best = max(best, 1 + dfs(nr, nc))
+        memo[r][c] = best
+        return best
+    return max(dfs(r, c) for r in range(m) for c in range(n))
+`,
+
+  // batch 105
+  'merge-two-binary-trees': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def _norm(raw):
+    lst = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+    return [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in lst]
+
+def from_array(arr):
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i]); queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i]); queue.append(node.right)
+        i += 1
+    return root
+
+def to_array(root):
+    if not root:
+        return []
+    result = []; queue = [root]
+    while queue:
+        node = queue.pop(0)
+        if node is None:
+            result.append(None); continue
+        result.append(node.val)
+        queue.append(node.left); queue.append(node.right)
+    while result and result[-1] is None:
+        result.pop()
+    return result
+
+def merge(n1, n2):
+    if not n1: return n2
+    if not n2: return n1
+    n1.val += n2.val
+    n1.left = merge(n1.left, n2.left)
+    n1.right = merge(n1.right, n2.right)
+    return n1
+
+def mergeTreesRunner(arr1, arr2):
+    return to_array(merge(from_array(_norm(arr1)), from_array(_norm(arr2))))
+`,
+  'range-sum-query-immutable': `
+def numArrayOps(ops):
+    ops = ops.to_py() if hasattr(ops, 'to_py') else list(ops)
+    prefix = []
+    results = []
+    for op in ops:
+        name = op[0] if isinstance(op, (list, tuple)) else op.to_py()[0]
+        args = op[1] if isinstance(op, (list, tuple)) else op.to_py()[1]
+        if hasattr(args, 'to_py'):
+            args = args.to_py()
+        if name == 'NumArray':
+            nums = list(args[0])
+            prefix = [0]
+            for x in nums:
+                prefix.append(prefix[-1] + int(x))
+            results.append(None)
+        else:
+            l, r = int(args[0]), int(args[1])
+            results.append(prefix[r + 1] - prefix[l])
+    return results
+`,
+  'min-cost-connect-all-points': `
+def minCostConnectPoints(points):
+    points = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in (points.to_py() if hasattr(points, 'to_py') else points)]
+    n = len(points)
+    dist = [float('inf')] * n
+    visited = [False] * n
+    dist[0] = 0
+    total = 0
+    for _ in range(n):
+        u = min((j for j in range(n) if not visited[j]), key=lambda j: dist[j])
+        visited[u] = True
+        total += dist[u]
+        for v in range(n):
+            if not visited[v]:
+                d = abs(points[u][0] - points[v][0]) + abs(points[u][1] - points[v][1])
+                if d < dist[v]:
+                    dist[v] = d
+    return total
+`,
+
+  'binary-tree-sum-of-left-leaves': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def __from_array__(raw):
+    raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]; i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i]); queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i]); queue.append(node.right)
+        i += 1
+    return root
+
+def sumOfLeftLeavesRunner(root_arr):
+    root = __from_array__(root_arr)
+    def dfs(node, is_left):
+        if node is None:
+            return 0
+        if node.left is None and node.right is None and is_left:
+            return node.val
+        return dfs(node.left, True) + dfs(node.right, False)
+    return dfs(root, False)
+`,
+
+  'minimum-operations-to-make-elements-distinct': `
+import math
+
+def minimumOperations(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    seen = set()
+    for i in range(len(nums) - 1, -1, -1):
+        if nums[i] in seen:
+            return math.ceil((i + 1) / 3)
+        seen.add(nums[i])
+    return 0
+`,
+
+  'check-if-it-is-a-straight-line': `
+def checkStraightLine(coordinates):
+    raw = coordinates.to_py() if hasattr(coordinates, 'to_py') else coordinates
+    coords = []
+    for row in raw:
+        r = row.to_py() if hasattr(row, 'to_py') else row
+        coords.append([int(v) for v in r])
+    x0, y0 = coords[0]
+    x1, y1 = coords[1]
+    dx, dy = x1 - x0, y1 - y0
+    for i in range(2, len(coords)):
+        x, y = coords[i]
+        if dy * (x - x0) != dx * (y - y0):
+            return False
+    return True
+`,
+
 };

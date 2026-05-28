@@ -11,7 +11,17 @@ export type ProblemTag =
   | 'sliding-window'
   | 'binary-search'
   | 'stack'
-  | 'math';
+  | 'heap'
+  | 'math'
+  | 'dynamic-programming'
+  | 'linked-list'
+  | 'graph'
+  | 'tree'
+  | 'backtracking'
+  | 'union-find'
+  | 'binary-indexed-tree'
+  | 'simulation'
+  | 'shortest-path';
 
 /** Every tag, in canonical display order. */
 export const PROBLEM_TAGS: readonly ProblemTag[] = [
@@ -22,7 +32,17 @@ export const PROBLEM_TAGS: readonly ProblemTag[] = [
   'sliding-window',
   'binary-search',
   'stack',
+  'heap',
   'math',
+  'dynamic-programming',
+  'linked-list',
+  'graph',
+  'tree',
+  'backtracking',
+  'union-find',
+  'binary-indexed-tree',
+  'simulation',
+  'shortest-path',
 ];
 
 /** Every difficulty, easiest first. */
@@ -32,11 +52,30 @@ export const DIFFICULTIES: readonly Difficulty[] = ['easy', 'medium', 'hard'];
 export type FailureAction = 'close' | 'redirect';
 
 /**
- * Languages the code runner supports. Python lands incrementally via the
- * Pyodide milestones (see `docs/PYODIDE_PLAN.md`); JavaScript remains the
- * default and is the only language every bank problem ships with today.
+ * Languages the code runner supports. JavaScript remains the default and is
+ * the only language every bank problem ships with today. Additional languages
+ * use transpilation or interpretation in the browser sandbox.
  */
-export type SupportedLanguage = 'javascript' | 'python';
+export type SupportedLanguage =
+  | 'javascript'
+  | 'typescript'
+  | 'python'
+  | 'java'
+  | 'cpp'
+  | 'csharp'
+  | 'go'
+  | 'rust'
+  | 'kotlin'
+  | 'swift'
+  | 'sql';
+
+const SUPPORTED_LANGUAGE_SET = new Set<string>([
+  'javascript', 'typescript', 'python', 'java', 'cpp', 'csharp', 'go', 'rust', 'kotlin', 'swift', 'sql',
+]);
+
+export function isSupportedLanguage(value: unknown): value is SupportedLanguage {
+  return typeof value === 'string' && SUPPORTED_LANGUAGE_SET.has(value);
+}
 
 // --- Block rules ----------------------------------------------------------
 
@@ -80,6 +119,24 @@ export interface SolvedProblemRecord {
   language: SupportedLanguage;
   /** Host whose block triggered the challenge. */
   domain: string;
+}
+
+// --- Submission history ---------------------------------------------------
+
+/**
+ * A single Submit attempt recorded on the challenge page. Persisted per-problem
+ * so the SubmissionsPanel can restore history after a page reload.
+ */
+export interface SubmissionRecord {
+  attempt: number;
+  timestamp: number;
+  outcome: 'accepted' | 'wrong-answer' | 'runtime-error' | 'timeout';
+  passCount: number;
+  totalTests: number;
+  /** Total execution time of all test cases in this submission, if measured. */
+  durationMs?: number;
+  /** Snapshot of the code that was submitted. Enables "restore" in SubmissionsPanel. */
+  code?: string;
 }
 
 // --- Streaks --------------------------------------------------------------
@@ -167,10 +224,16 @@ export interface UserPreferences {
   preferredLanguage: SupportedLanguage;
   /** CodeMirror keymap flavour. `'vim'` enables the full `@replit/codemirror-vim` modal keymap. */
   editorKeymap: EditorKeymap;
+  /** Width of the problem panel as a percentage of the split-view container (desktop only). Clamped to [20, 80]. */
+  problemPanelWidthPct: number;
+  /** Number of spaces inserted by the Tab key. 2 or 4. */
+  editorIndentSize: 2 | 4;
+  /** Whether the code editor wraps long lines. Defaults to true. */
+  editorWordWrap: boolean;
 }
 
 /** Theme options exposed in the UI. */
 export type ThemePreference = 'dark' | 'light' | 'system';
 
 /** Modal-vs-default selector for the CodeMirror editor. */
-export type EditorKeymap = 'default' | 'vim';
+export type EditorKeymap = 'default' | 'vim' | 'emacs';

@@ -23,7 +23,9 @@ describe('problem selector', () => {
     const easy = filterProblems({ difficulties: ['easy'] });
     expect(easy.length).toBeGreaterThan(0);
     expect(easy.every((p) => p.difficulty === 'easy')).toBe(true);
-    expect(filterProblems({ difficulties: ['hard'] })).toHaveLength(0);
+    const hard = filterProblems({ difficulties: ['hard'] });
+    expect(hard.length).toBeGreaterThan(0);
+    expect(hard.every((p) => p.difficulty === 'hard')).toBe(true);
   });
 
   it('filters by tag', () => {
@@ -52,18 +54,56 @@ describe('problem selector', () => {
     expect(last).toBe(matches[matches.length - 1]);
   });
 
-  it('returns undefined when nothing matches', () => {
-    expect(selectProblem({ difficulties: ['hard'] })).toBeUndefined();
+  it('returns undefined when nothing in the bank matches the filter', () => {
+    // Exclude every problem in the bank — guaranteed zero matches regardless of bank size.
+    const allIds = getAllProblems().map((p) => p.id);
+    expect(selectProblem({ excludeIds: allIds }, () => 0)).toBeUndefined();
   });
 
   it('always picks a challenge problem, relaxing the filter as needed', () => {
-    // No bank problem is 'hard' or tagged in a way these prefs expect together,
-    // yet a problem must still be produced.
+    // With no difficulty + very narrow tag combo, it falls back gracefully.
     const picked = pickChallengeProblem(
-      { difficulties: ['hard'], tags: ['math'] },
+      { difficulties: ['hard'], tags: ['dynamic-programming'] },
       { random: () => 0 },
     );
     expect(picked).toBeDefined();
+  });
+
+  it('filters by dynamic-programming tag', () => {
+    const dp = filterProblems({ tags: ['dynamic-programming'] });
+    expect(dp.length).toBeGreaterThan(0);
+    expect(dp.every((p) => p.tags.includes('dynamic-programming'))).toBe(true);
+    // At least the 5 backfilled classic DP problems should appear.
+    const ids = dp.map((p) => p.id);
+    expect(ids).toContain('climbing-stairs');
+    expect(ids).toContain('fibonacci-number');
+    expect(ids).toContain('word-break');
+    expect(ids).toContain('edit-distance');
+    expect(ids).toContain('longest-increasing-subsequence');
+  });
+
+  it('filters by graph tag', () => {
+    const graph = filterProblems({ tags: ['graph'] });
+    expect(graph.length).toBeGreaterThan(0);
+    expect(graph.every((p) => p.tags.includes('graph'))).toBe(true);
+    const ids = graph.map((p) => p.id);
+    expect(ids).toContain('flood-fill');
+    expect(ids).toContain('number-of-islands');
+    expect(ids).toContain('course-schedule');
+  });
+
+  it('filters by backtracking tag', () => {
+    const bt = filterProblems({ tags: ['backtracking'] });
+    expect(bt.length).toBeGreaterThan(0);
+    expect(bt.every((p) => p.tags.includes('backtracking'))).toBe(true);
+    const ids = bt.map((p) => p.id);
+    expect(ids).toContain('permutations');
+    expect(ids).toContain('subsets');
+    expect(ids).toContain('subsets-ii');
+    expect(ids).toContain('combination-sum');
+    expect(ids).toContain('letter-combinations-of-a-phone-number');
+    expect(ids).toContain('generate-parentheses');
+    expect(ids).toContain('sudoku-solver');
   });
 
   it('respects difficulty when it is satisfiable', () => {
