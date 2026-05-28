@@ -32655,6 +32655,62 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return swaps;
   },
 
+  // batch 113b
+  'minimum-positive-sum-subarray': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const l = args[1] as number;
+    const r = args[2] as number;
+    for (let len = l; len <= r; len++) {
+      let sum = 0;
+      for (let i = 0; i < len; i++) sum += nums[i]!;
+      if (sum > 0) return len;
+      for (let i = len; i < nums.length; i++) {
+        sum += nums[i]! - nums[i - len]!;
+        if (sum > 0) return len;
+      }
+    }
+    return -1;
+  },
+
+  'total-characters-after-transformations': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const t = args[1] as number;
+    const MOD = 1_000_000_007n;
+    const freq = new Array<bigint>(26).fill(0n);
+    for (const c of s) freq[c.charCodeAt(0) - 97] = (freq[c.charCodeAt(0) - 97]! + 1n);
+    for (let i = 0; i < t; i++) {
+      const next = new Array<bigint>(26).fill(0n);
+      for (let c = 0; c < 26; c++) {
+        if (c === 25) {
+          next[0] = (next[0]! + freq[c]!) % MOD;
+          next[1] = (next[1]! + freq[c]!) % MOD;
+        } else {
+          next[c + 1] = (next[c + 1]! + freq[c]!) % MOD;
+        }
+      }
+      freq.splice(0, 26, ...next);
+    }
+    return Number(freq.reduce((sum, v) => (sum + v) % MOD, 0n));
+  },
+
+  'count-non-special-numbers': (...args: unknown[]) => {
+    const l = args[0] as number;
+    const r = args[1] as number;
+    const limit = Math.floor(Math.sqrt(r));
+    const isPrime = new Array<boolean>(limit + 1).fill(true);
+    isPrime[0] = isPrime[1] = false;
+    for (let i = 2; i * i <= limit; i++) {
+      if (isPrime[i]) {
+        for (let j = i * i; j <= limit; j += i) isPrime[j] = false;
+      }
+    }
+    let specialCount = 0;
+    for (let p = 2; p <= limit; p++) {
+      if (isPrime[p] && p * p >= l && p * p <= r) specialCount++;
+    }
+    return (r - l + 1) - specialCount;
+  },
+
   // batch 114
   'lexicographically-smallest-equivalent-string': (...args: unknown[]) => {
     const s1 = args[0] as string;

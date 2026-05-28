@@ -2252,6 +2252,10 @@ import { problem as binaryTreeLevelOrderTraversalII } from './binary-tree-level-
 // batch 113 — arrays/easy, linked-list/medium
 import { problem as maximumProductOfTwoElementsInAnArray } from './maximum-product-of-two-elements-in-an-array';
 import { problem as removeNthNodeFromEndOfList } from './remove-nth-node-from-end-of-list';
+// batch 113b — arrays+sliding-window/easy, strings+dp/medium, math/medium
+import { problem as minimumPositiveSumSubarray } from './minimum-positive-sum-subarray';
+import { problem as totalCharactersAfterTransformations } from './total-characters-after-transformations';
+import { problem as countNonSpecialNumbers } from './count-non-special-numbers';
 // batch 114 — strings+union-find/medium, heap+simulation/medium, strings+math/medium
 import { problem as lexicographicallySmallestEquivalentString } from './lexicographically-smallest-equivalent-string';
 import { problem as singleThreadedCpu } from './single-threaded-cpu';
@@ -4553,6 +4557,10 @@ export const problems: readonly Problem[] = [
   // batch 113 — arrays/easy, linked-list/medium
   maximumProductOfTwoElementsInAnArray,
   removeNthNodeFromEndOfList,
+  // batch 113b — arrays+sliding-window/easy, strings+dp/medium, math/medium
+  minimumPositiveSumSubarray,
+  totalCharactersAfterTransformations,
+  countNonSpecialNumbers,
   // batch 114 — strings+union-find/medium, heap+simulation/medium, strings+math/medium
   lexicographicallySmallestEquivalentString,
   singleThreadedCpu,

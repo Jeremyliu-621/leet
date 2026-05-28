@@ -32428,6 +32428,59 @@ def removeNthFromEnd(head, n):
     return dummy.next
 `,
 
+  // batch 113b
+  'minimum-positive-sum-subarray': `
+def minimumSumSubarray(nums, l, r):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    for length in range(l, r + 1):
+        window_sum = sum(nums[:length])
+        if window_sum > 0:
+            return length
+        for i in range(length, n):
+            window_sum += nums[i] - nums[i - length]
+            if window_sum > 0:
+                return length
+    return -1
+`,
+
+  'total-characters-after-transformations': `
+def lengthAfterTransformations(s, t):
+    MOD = 10**9 + 7
+    freq = [0] * 26
+    for c in s:
+        freq[ord(c) - ord('a')] += 1
+    for _ in range(t):
+        next_freq = [0] * 26
+        for c in range(26):
+            if c == 25:  # 'z'
+                next_freq[0] = (next_freq[0] + freq[c]) % MOD
+                next_freq[1] = (next_freq[1] + freq[c]) % MOD
+            else:
+                next_freq[c + 1] = (next_freq[c + 1] + freq[c]) % MOD
+        freq = next_freq
+    return sum(freq) % MOD
+`,
+
+  'count-non-special-numbers': `
+def nonSpecialCount(l, r):
+    import math
+    limit = int(math.isqrt(r))
+    is_prime = [True] * (limit + 1)
+    if limit >= 0:
+        is_prime[0] = False
+    if limit >= 1:
+        is_prime[1] = False
+    p = 2
+    while p * p <= limit:
+        if is_prime[p]:
+            for j in range(p * p, limit + 1, p):
+                is_prime[j] = False
+        p += 1
+    special_count = sum(1 for p in range(2, limit + 1) if is_prime[p] and l <= p * p <= r)
+    return (r - l + 1) - special_count
+`,
+
   // batch 114
   'lexicographically-smallest-equivalent-string': `
 def smallestEquivalentString(s1, s2, baseStr):
