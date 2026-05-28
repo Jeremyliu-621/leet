@@ -31685,4 +31685,67 @@ def minCostConnectPoints(points):
     return total
 `,
 
+  'binary-tree-sum-of-left-leaves': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def __from_array__(raw):
+    raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]; i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i]); queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i]); queue.append(node.right)
+        i += 1
+    return root
+
+def sumOfLeftLeavesRunner(root_arr):
+    root = __from_array__(root_arr)
+    def dfs(node, is_left):
+        if node is None:
+            return 0
+        if node.left is None and node.right is None and is_left:
+            return node.val
+        return dfs(node.left, True) + dfs(node.right, False)
+    return dfs(root, False)
+`,
+
+  'minimum-operations-to-make-elements-distinct': `
+import math
+
+def minimumOperations(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    seen = set()
+    for i in range(len(nums) - 1, -1, -1):
+        if nums[i] in seen:
+            return math.ceil((i + 1) / 3)
+        seen.add(nums[i])
+    return 0
+`,
+
+  'check-if-it-is-a-straight-line': `
+def checkStraightLine(coordinates):
+    raw = coordinates.to_py() if hasattr(coordinates, 'to_py') else coordinates
+    coords = []
+    for row in raw:
+        r = row.to_py() if hasattr(row, 'to_py') else row
+        coords.append([int(v) for v in r])
+    x0, y0 = coords[0]
+    x1, y1 = coords[1]
+    dx, dy = x1 - x0, y1 - y0
+    for i in range(2, len(coords)):
+        x, y = coords[i]
+        if dy * (x - x0) != dx * (y - y0):
+            return False
+    return True
+`,
+
 };

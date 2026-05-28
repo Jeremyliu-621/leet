@@ -32138,4 +32138,38 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return total;
   },
 
+  'binary-tree-sum-of-left-leaves': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const root = _buildTree(arr);
+    function dfs(node: _TN | null, isLeft: boolean): number {
+      if (!node) return 0;
+      if (!node.l && !node.r && isLeft) return node.v;
+      return dfs(node.l, true) + dfs(node.r, false);
+    }
+    return dfs(root, false);
+  },
+
+  'minimum-operations-to-make-elements-distinct': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const seen = new Set<number>();
+    for (let i = nums.length - 1; i >= 0; i--) {
+      if (seen.has(nums[i] as number)) return Math.ceil((i + 1) / 3);
+      seen.add(nums[i] as number);
+    }
+    return 0;
+  },
+
+  'check-if-it-is-a-straight-line': (...args: unknown[]) => {
+    const coords = args[0] as number[][];
+    const [x0, y0] = coords[0] as number[];
+    const [x1, y1] = coords[1] as number[];
+    const dx = (x1 as number) - (x0 as number);
+    const dy = (y1 as number) - (y0 as number);
+    for (let i = 2; i < coords.length; i++) {
+      const [x, y] = coords[i] as number[];
+      if (dy * ((x as number) - (x0 as number)) !== dx * ((y as number) - (y0 as number))) return false;
+    }
+    return true;
+  },
+
 };

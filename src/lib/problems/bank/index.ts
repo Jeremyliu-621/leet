@@ -2213,6 +2213,10 @@ import { problem as longestIncreasingPathInAMatrix } from './longest-increasing-
 import { problem as mergeTwoBinaryTrees } from './merge-two-binary-trees';
 import { problem as rangeSumQueryImmutable } from './range-sum-query-immutable';
 import { problem as minCostConnectAllPoints } from './min-cost-connect-all-points';
+// batch 106 — tree/easy, arrays+dp/easy, arrays+math/easy
+import { problem as binaryTreeSumOfLeftLeaves } from './binary-tree-sum-of-left-leaves';
+import { problem as minimumOperationsToMakeElementsDistinct } from './minimum-operations-to-make-elements-distinct';
+import { problem as checkIfItIsAStraightLine } from './check-if-it-is-a-straight-line';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4463,4 +4467,8 @@ export const problems: readonly Problem[] = [
   mergeTwoBinaryTrees,
   rangeSumQueryImmutable,
   minCostConnectAllPoints,
+  // batch 106 — tree/easy (orphan), arrays+hash-map/easy, arrays+math/easy
+  binaryTreeSumOfLeftLeaves,
+  minimumOperationsToMakeElementsDistinct,
+  checkIfItIsAStraightLine,
 ];
