@@ -33683,4 +33683,34 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return num === 0 || num % 10 !== 0;
   },
 
+  // batch 132
+  'find-the-losers-of-the-circular-game': (...args: unknown[]) => {
+    const n = args[0] as number, k = args[1] as number;
+    const received = new Set<number>();
+    let pos = 0, step = 1;
+    while (!received.has(pos)) {
+      received.add(pos);
+      pos = (pos + step * k) % n;
+      step++;
+    }
+    const losers: number[] = [];
+    for (let i = 0; i < n; i++) if (!received.has(i)) losers.push(i + 1);
+    return losers;
+  },
+
+  'find-unique-binary-string': (...args: unknown[]) => {
+    const nums = args[0] as string[];
+    return nums.map((s, i) => (s[i] === '0' ? '1' : '0')).join('');
+  },
+
+  'maximum-number-of-balls-in-a-box': (...args: unknown[]) => {
+    const lowLimit = args[0] as number, highLimit = args[1] as number;
+    const box = new Map<number, number>();
+    for (let i = lowLimit; i <= highLimit; i++) {
+      const key = String(i).split('').reduce((s, c) => s + Number(c), 0);
+      box.set(key, (box.get(key) ?? 0) + 1);
+    }
+    return Math.max(...box.values());
+  },
+
 };

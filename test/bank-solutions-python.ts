@@ -33428,4 +33428,31 @@ def isSameAfterReversals(num):
     return num == 0 or num % 10 != 0
 `,
 
+  // batch 132
+  'find-the-losers-of-the-circular-game': `
+def circularGameLosers(n, k):
+    received = set()
+    pos, step = 0, 1
+    while pos not in received:
+        received.add(pos)
+        pos = (pos + step * k) % n
+        step += 1
+    return [i + 1 for i in range(n) if i not in received]
+`,
+
+  'find-unique-binary-string': `
+def findDifferentBinaryString(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    return ''.join('1' if s[i] == '0' else '0' for i, s in enumerate(nums))
+`,
+
+  'maximum-number-of-balls-in-a-box': `
+def countBalls(lowLimit, highLimit):
+    from collections import defaultdict
+    box = defaultdict(int)
+    for i in range(lowLimit, highLimit + 1):
+        box[sum(int(c) for c in str(i))] += 1
+    return max(box.values())
+`,
+
 };

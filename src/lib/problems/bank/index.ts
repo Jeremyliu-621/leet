@@ -2354,6 +2354,10 @@ import { problem as maxNonadjacentCircular } from './max-nonadjacent-circular';
 import { problem as countCollisionsOnARoad } from './count-collisions-on-a-road';
 import { problem as formSmallestNumberFromTwoDigitArrays } from './form-smallest-number-from-two-digit-arrays';
 import { problem as aNumberAfterADoubleReversal } from './a-number-after-a-double-reversal';
+// batch 132 — arrays+simulation/easy, arrays+strings/medium, hash-map+math/easy
+import { problem as findTheLosersOfTheCircularGame } from './find-the-losers-of-the-circular-game';
+import { problem as findUniqueBinaryString } from './find-unique-binary-string';
+import { problem as maximumNumberOfBallsInABox } from './maximum-number-of-balls-in-a-box';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4745,4 +4749,8 @@ export const problems: readonly Problem[] = [
   countCollisionsOnARoad,
   formSmallestNumberFromTwoDigitArrays,
   aNumberAfterADoubleReversal,
+  // batch 132 — arrays+simulation/easy, arrays+strings/medium, hash-map+math/easy
+  findTheLosersOfTheCircularGame,
+  findUniqueBinaryString,
+  maximumNumberOfBallsInABox,
 ];
