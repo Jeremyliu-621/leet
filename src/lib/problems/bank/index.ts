@@ -2412,6 +2412,13 @@ import { problem as findMissingObservations } from './find-missing-observations'
 import { problem as decryptXoredArray } from './decrypt-xored-array';
 import { problem as countItemsMatchingARule } from './count-items-matching-a-rule';
 import { problem as kidsWithTheGreatestNumberOfCandies } from './kids-with-the-greatest-number-of-candies';
+// batch 141 — math/hard, strings/hard+math, strings/hard, arrays+math/medium, arrays+math/hard, arrays+dp/hard
+import { problem as reachingPoints } from './reaching-points';
+import { problem as orderlyQueue } from './orderly-queue';
+import { problem as validNumber } from './valid-number';
+import { problem as minimumMovesToEqualArrayElementsII } from './minimum-moves-to-equal-array-elements-ii';
+import { problem as superWashingMachines } from './super-washing-machines';
+import { problem as numberOfSubmatricesThatSumToTarget } from './number-of-submatrices-that-sum-to-target';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4861,4 +4868,11 @@ export const problems: readonly Problem[] = [
   decryptXoredArray,
   countItemsMatchingARule,
   kidsWithTheGreatestNumberOfCandies,
+  // batch 141 — math/hard, strings/hard+math, strings/hard, arrays+math/medium, arrays+math/hard, arrays+dp/hard
+  reachingPoints,
+  orderlyQueue,
+  validNumber,
+  minimumMovesToEqualArrayElementsII,
+  superWashingMachines,
+  numberOfSubmatricesThatSumToTarget,
 ];

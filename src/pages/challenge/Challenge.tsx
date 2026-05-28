@@ -310,10 +310,10 @@ function SolvedStandaloneScreen({
 
       {related.length > 0 && (
         <div className="w-full max-w-sm space-y-2">
-          <p className="font-mono text-[9px] uppercase tracking-widest text-faint text-left">
+          <h2 className="font-mono text-[9px] uppercase tracking-widest text-faint text-left">
             Practice next
-          </p>
-          <ul className="space-y-1">
+          </h2>
+          <ul className="space-y-1" role="list">
             {related.map((p) => (
               <li key={p.id}>
                 <a
