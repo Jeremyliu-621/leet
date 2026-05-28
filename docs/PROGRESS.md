@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2072** problems; 6510 tests green. Batches 102–110 complete. Site stats at 2,069+.
+**Current focus:** Bank at **2075** problems; 6519 tests green. Batches 102–111 complete. Site stats at 2,072+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 111 bank growth; update site stats; UI/UX refinements.
+**Next up:** Batch 112 bank growth; update site stats; UI/UX refinements.
+
+### feat(bank): add batch 111 — validate-bst, kth-smallest-in-bst, lca-of-bst (2026-05-28)
+Added 3 problems: `validate-binary-search-tree` (medium/tree, min/max bounds DFS — checks strict inequalities at every node), `kth-smallest-element-in-a-bst` (medium/tree, in-order traversal counting to k), `lowest-common-ancestor-of-a-bst` (easy/tree, BST property navigation; runner passes integer values not TreeNode objects). Bank at **2075**; 6519 tests.
 
 ### feat(bank): add batch 110 — check-two-string-arrays, verify-preorder-serialization, serialize-binary-tree (2026-05-28)
 Added 3 problems: `check-if-two-string-arrays-are-equivalent` (easy/strings, join-and-compare), `verify-preorder-serialization-of-a-binary-tree` (medium/tree+stack, slots countdown — each non-null adds 2, each '#' consumes 1), `serialize-and-deserialize-binary-tree` (hard/tree, BFS serialize round-trip; preamble provides __toArray__ for runner verification). Bank at **2072**; 6510 tests.
