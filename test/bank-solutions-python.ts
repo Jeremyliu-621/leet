@@ -33646,4 +33646,118 @@ def makeEqual(words):
     return all(v % n == 0 for v in freq.values())
 `,
 
+  // batch 137
+  'count-number-of-good-partitions': `
+def numberOfGoodPartitions(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    MOD = 10**9 + 7
+    last = {}
+    for i, x in enumerate(nums):
+        last[x] = i
+    result = 1
+    max_end = 0
+    for i in range(len(nums) - 1):
+        max_end = max(max_end, last[nums[i]])
+        if i == max_end:
+            result = result * 2 % MOD
+    return result
+`,
+
+  'count-strictly-increasing-columns': `
+def countIncreasingColumns(matrix):
+    matrix = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (matrix.to_py() if hasattr(matrix, 'to_py') else matrix)]
+    m, n = len(matrix), len(matrix[0])
+    count = 0
+    for j in range(n):
+        if all(matrix[i][j] < matrix[i + 1][j] for i in range(m - 1)):
+            count += 1
+    return count
+`,
+
+  'count-the-number-of-special-characters-i': `
+def numberOfSpecialChars(word):
+    lower = set()
+    upper = set()
+    for c in word:
+        if c.islower():
+            lower.add(c)
+        else:
+            upper.add(c.lower())
+    return sum(1 for c in lower if c in upper)
+`,
+
+  'find-xor-sum-of-all-pairs-bitwise-and': `
+def findXORSumOfAllPairBitwiseAND(arr1, arr2):
+    arr1 = list(arr1.to_py() if hasattr(arr1, 'to_py') else arr1)
+    arr2 = list(arr2.to_py() if hasattr(arr2, 'to_py') else arr2)
+    xor1 = 0
+    for x in arr1:
+        xor1 ^= x
+    xor2 = 0
+    for x in arr2:
+        xor2 ^= x
+    return xor1 & xor2
+`,
+
+  'maximum-number-of-integers-to-choose-from-a-range-ii': `
+def maxCount(banned, n, maxSum):
+    banned = list(banned.to_py() if hasattr(banned, 'to_py') else banned)
+    banned_set = sorted(set(b for b in banned if 1 <= b <= n))
+    total = 0
+    count = 0
+    def take_from(lo, hi):
+        nonlocal total, count
+        if lo > hi or total >= maxSum:
+            return
+        rem = maxSum - total
+        # find largest k such that sum(lo..lo+k-1) = k*lo + k*(k-1)/2 <= rem
+        import math
+        b = 2 * lo - 1
+        k = int((-b + math.sqrt(b * b + 8 * rem)) / 2)
+        while k < hi - lo + 1 and (k + 1) * lo + (k + 1) * k // 2 <= rem:
+            k += 1
+        while k > 0 and k * lo + k * (k - 1) // 2 > rem:
+            k -= 1
+        k = min(k, hi - lo + 1)
+        total += k * lo + k * (k - 1) // 2
+        count += k
+    prev = 0
+    for b in banned_set:
+        if b > prev + 1:
+            take_from(prev + 1, b - 1)
+        prev = b
+    if prev < n:
+        take_from(prev + 1, n)
+    return count
+`,
+
+  'minimum-cost-to-connect-two-groups': `
+def minCostConnectGroups(cost):
+    cost = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (cost.to_py() if hasattr(cost, 'to_py') else cost)]
+    n, m = len(cost), len(cost[0])
+    FULL = (1 << m) - 1
+    min_cost = [min(cost[i][j] for i in range(n)) for j in range(m)]
+    INF = float('inf')
+    dp = [INF] * (1 << m)
+    dp[0] = 0
+    for i in range(n):
+        ndp = [INF] * (1 << m)
+        for mask in range(1 << m):
+            if dp[mask] == INF:
+                continue
+            for j in range(m):
+                nm = mask | (1 << j)
+                val = dp[mask] + cost[i][j]
+                if val < ndp[nm]:
+                    ndp[nm] = val
+        dp = ndp
+    ans = INF
+    for mask in range(1 << m):
+        if dp[mask] == INF:
+            continue
+        extra = sum(min_cost[j] for j in range(m) if not (mask & (1 << j)))
+        ans = min(ans, dp[mask] + extra)
+    return ans
+`,
+
 };
