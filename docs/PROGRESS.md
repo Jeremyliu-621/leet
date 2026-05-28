@@ -8,9 +8,15 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2069** problems; 6492 tests green. Batches 102–109 complete. Site stats at 2,057+.
+**Current focus:** Bank at **2069** problems; 6501 tests green. Batches 102–109 + 106a-b complete. All branches merged. Site stats at 2,057+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 110 bank growth; accessibility audit; UI/UX refinements.
+**Next up:** Site stats update (2,069+); batch 110 bank growth; UI/UX refinements (terminal panel polish, Popup UX, editor QoL).
+
+### chore: merge diverged branches + a11y fix (2026-05-28)
+Merged the detached-work branch (UI overhaul: TerminalPanel, CustomTestPanel, SubmissionsPanel, multi-language judge with sucrase TS transpilation, emacs keymap, draggable splitter, etc.) with origin/main (Pyodide M7, vim keymap). Detached-work was the more complete state; all conflicts resolved by taking its version. Also merged batches 106b–109 from origin/main (9 more problems). Applied pending a11y fix: TestResultCard expand/collapse button now has descriptive `aria-label` ("Test N — PASS/FAIL, expand details"). Bank: 2069 problems; 6501 tests.
+
+### feat(bank): add batch 106a — binary-tree-sum-of-left-leaves, minimum-operations-make-elements-distinct, check-if-straight-line (2026-05-28)
+Registered orphaned `binary-tree-sum-of-left-leaves` (was on disk but not in index). Added 2 new problems: `minimum-operations-to-make-elements-distinct` (easy/arrays+hash-map, right-to-left Set scan + ceil formula), `check-if-it-is-a-straight-line` (easy/arrays+math, cross-product collinearity). JS and Python reference solutions for all 3.
 
 ### feat(bank): add batch 109 — implement-trie, number-of-recent-calls, two-sum-iii (2026-05-28)
 Added 3 problems: `implement-trie-prefix-tree` (medium/tree+strings, ops-array with TrieNode map children), `number-of-recent-calls` (easy/simulation, sliding-window queue pruning), `two-sum-iii-data-structure-design` (easy/hash-map, frequency map + complement check with duplicate handling). Bank at **2069**; 6492 tests.
