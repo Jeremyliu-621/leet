@@ -34263,6 +34263,63 @@ def minDominoRotations(tops, bottoms) -> int:
     return -1 if res == float('inf') else res
 `,
 
+  // batch 145
+  'convert-an-array-into-a-2d-array-with-conditions': `
+def findMatrix(nums):
+    freq = {}
+    result = []
+    for num in nums:
+        row = freq.get(num, 0)
+        if row == len(result):
+            result.append([])
+        result[row].append(num)
+        freq[num] = row + 1
+    return result
+`,
+
+  'replace-the-substring-for-balanced-string': `
+def balancedString(s: str) -> int:
+    from collections import Counter
+    n = len(s)
+    target = n // 4
+    count = Counter(s)
+    def is_valid():
+        return all(count.get(c, 0) <= target for c in 'QWER')
+    if is_valid():
+        return 0
+    ans = n
+    l = 0
+    for r in range(n):
+        count[s[r]] -= 1
+        while is_valid():
+            ans = min(ans, r - l + 1)
+            count[s[l]] += 1
+            l += 1
+    return ans
+`,
+
+  'all-divisions-with-the-highest-score-of-a-binary-array': `
+def maxScoreIndices(nums) -> list:
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    total_ones = sum(nums)
+    zeros = 0
+    ones = total_ones
+    max_score = 0
+    scores = []
+    for i in range(n + 1):
+        score = zeros + ones
+        scores.append(score)
+        if score > max_score:
+            max_score = score
+        if i < n:
+            if nums[i] == 0:
+                zeros += 1
+            else:
+                ones -= 1
+    return [i for i, s in enumerate(scores) if s == max_score]
+`,
+
   // batch 144
   'reorder-routes-to-make-all-paths-lead-to-the-city-zero': `
 def minReorder(n: int, connections) -> int:

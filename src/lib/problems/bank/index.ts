@@ -2485,6 +2485,10 @@ import { problem as minimumFlipsBinaryGridPalindromicII } from './minimum-number
 import { problem as minimumSwapsMakeBalanced } from './minimum-swaps-to-make-balanced';
 import { problem as tweetCountsPerFrequency } from './tweet-counts-per-frequency';
 import { problem as findKthLargestXorCoordinateValue } from './find-kth-largest-xor-coordinate-value';
+// batch 150 — arrays+hash-map/medium, strings+two-pointers+sliding-window/medium, arrays/medium
+import { problem as convertArrayInto2dWithConditions } from './convert-an-array-into-a-2d-array-with-conditions';
+import { problem as replaceSubstringForBalancedString } from './replace-the-substring-for-balanced-string';
+import { problem as allDivisionsHighestScore } from './all-divisions-with-the-highest-score-of-a-binary-array';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4955,6 +4959,10 @@ export const problems: readonly Problem[] = [
   sumTotalStrengthOfWizards,
   maxEventsAttendedII,
   minimumOpsConvertNumber,
+  // batch 148 — arrays+hash-map/medium, strings+two-pointers+sliding-window/medium, arrays/medium
+  convertArrayInto2dWithConditions,
+  replaceSubstringForBalancedString,
+  allDivisionsHighestScore,
   // batch 145 — arrays/medium, arrays+backtracking/medium, arrays/hard, math/hard
   countMaxBitwiseOrSubsets,
   partitionKEqualSumSubsets,
@@ -5007,4 +5015,8 @@ export const problems: readonly Problem[] = [
   minimumSwapsMakeBalanced,
   tweetCountsPerFrequency,
   findKthLargestXorCoordinateValue,
+  // batch 150 — arrays+hash-map/medium, strings+two-pointers+sliding-window/medium, arrays/medium
+  convertArrayInto2dWithConditions,
+  replaceSubstringForBalancedString,
+  allDivisionsHighestScore,
 ];

@@ -34313,6 +34313,58 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return candies.map(c => c + extraCandies >= maxC);
   },
 
+  // batch 145
+  'convert-an-array-into-a-2d-array-with-conditions': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    const result: number[][] = [];
+    for (const num of nums) {
+      const row = freq.get(num) ?? 0;
+      if (row === result.length) result.push([]);
+      result[row]!.push(num);
+      freq.set(num, row + 1);
+    }
+    return result;
+  },
+
+  'replace-the-substring-for-balanced-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length, target = n / 4;
+    const count: Record<string, number> = { Q: 0, W: 0, E: 0, R: 0 };
+    for (const c of s) count[c]!++;
+    const isValid = () => count['Q']! <= target && count['W']! <= target && count['E']! <= target && count['R']! <= target;
+    if (isValid()) return 0;
+    let ans = n, l = 0;
+    for (let r = 0; r < n; r++) {
+      count[s[r]!]!--;
+      while (isValid()) {
+        ans = Math.min(ans, r - l + 1);
+        count[s[l]!]!++;
+        l++;
+      }
+    }
+    return ans;
+  },
+
+  'all-divisions-with-the-highest-score-of-a-binary-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const totalOnes = nums.reduce((s, v) => s + v, 0);
+    let zeros = 0, ones = totalOnes;
+    let maxScore = 0;
+    const scores: number[] = [];
+    for (let i = 0; i <= n; i++) {
+      const score = zeros + ones;
+      scores.push(score);
+      if (score > maxScore) maxScore = score;
+      if (i < n) {
+        if (nums[i] === 0) zeros++;
+        else ones--;
+      }
+    }
+    return scores.map((s, i) => [s, i] as [number, number]).filter(([s]) => s === maxScore).map(([, i]) => i);
+  },
+
   // batch 144
   'reorder-routes-to-make-all-paths-lead-to-the-city-zero': (...args: unknown[]) => {
     const n = args[0] as number, connections = args[1] as number[][];
