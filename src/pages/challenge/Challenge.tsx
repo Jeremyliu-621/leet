@@ -178,6 +178,10 @@ type PageState =
       isPersonalBest: boolean;
       /** Previous best elapsed seconds, null if this is the first solve. */
       prevBestSec: number | null;
+      /** Current consecutive-day streak (0 if none). */
+      streak: number;
+      /** Number of distinct problems solved today (including this one). */
+      solvedTodayCount: number;
     };
 
 // ---------------------------------------------------------------------------
@@ -232,6 +236,8 @@ function SolvedStandaloneScreen({
   settingsHref,
   isPersonalBest,
   prevBestSec,
+  streak,
+  solvedTodayCount,
 }: {
   problemTitle: string;
   difficulty: string;
@@ -242,6 +248,8 @@ function SolvedStandaloneScreen({
   settingsHref?: string;
   isPersonalBest: boolean;
   prevBestSec: number | null;
+  streak: number;
+  solvedTodayCount: number;
 }) {
   const challengeBase = window.location.pathname;
 
@@ -306,6 +314,25 @@ function SolvedStandaloneScreen({
                   : language}
           </p>
         </div>
+        {streak > 0 && (
+          <>
+            <div className="h-6 w-px bg-border" aria-hidden="true" />
+            <div className="text-center">
+              <p className="font-mono text-[9px] uppercase tracking-widest text-faint">Streak</p>
+              <p
+                className="font-mono text-sm font-semibold text-text tabular-nums mt-0.5"
+                aria-label={`${streak} day streak`}
+              >
+                {streak}d
+              </p>
+              {solvedTodayCount > 1 && (
+                <p className="font-mono text-[8px] text-faint mt-0.5 tabular-nums">
+                  {solvedTodayCount} today
+                </p>
+              )}
+            </div>
+          </>
+        )}
       </div>
 
       {related.length > 0 && (
@@ -831,6 +858,28 @@ export function Challenge() {
             .slice(0, 3)
             .map((p) => ({ id: p.id, title: p.title, difficulty: p.difficulty, solved: solvedIds.has(p.id) }));
 
+          // Load streak and today's solve count for the solved screen.
+          let solvedScreenStreak = 0;
+          let solvedTodayCount = 1;
+          try {
+            const summaryVal = await getValue('streakSummary');
+            solvedScreenStreak = summaryVal.current;
+            // Count distinct problems solved today (UTC day) from the updated list.
+            const todayUtc = new Date().toISOString().slice(0, 10);
+            const allSolved = await getValue('solvedProblems');
+            const todaySet = new Set<string>();
+            for (const r of allSolved) {
+              if (new Date(r.solvedAt).toISOString().slice(0, 10) === todayUtc) {
+                todaySet.add(r.problemId);
+              }
+            }
+            // Include the current problem (the storage update may lag slightly).
+            todaySet.add(problem.id);
+            solvedTodayCount = todaySet.size;
+          } catch {
+            /* storage unavailable — defaults fine */
+          }
+
           setPageState({
             status: 'solved-standalone',
             problemTitle: problem.title,
@@ -841,6 +890,8 @@ export function Challenge() {
             related,
             isPersonalBest,
             prevBestSec,
+            streak: solvedScreenStreak,
+            solvedTodayCount,
           });
         }
       } else {
@@ -1037,6 +1088,8 @@ export function Challenge() {
         settingsHref={settingsHref}
         isPersonalBest={pageState.isPersonalBest}
         prevBestSec={pageState.prevBestSec}
+        streak={pageState.streak}
+        solvedTodayCount={pageState.solvedTodayCount}
       />
     );
   }
