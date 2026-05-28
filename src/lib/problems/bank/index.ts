@@ -2381,6 +2381,13 @@ import { problem as redistributeCharacters } from './redistribute-characters-to-
 import { problem as maximumOr } from './maximum-or';
 import { problem as permutationDifferenceBetweenTwoStrings } from './permutation-difference-between-two-strings';
 import { problem as calculateTheSumOfDistances } from './calculate-the-sum-of-distances';
+// batch 138 — arrays+hash-map/hard, arrays/medium, strings/easy, arrays+math/medium, arrays+hash-map/medium, arrays+dynamic-programming/hard
+import { problem as countNumberOfGoodPartitions } from './count-number-of-good-partitions';
+import { problem as countStrictlyIncreasingColumns } from './count-strictly-increasing-columns';
+import { problem as countTheNumberOfSpecialCharactersI } from './count-the-number-of-special-characters-i';
+import { problem as findXorSumOfAllPairsBitwiseAnd } from './find-xor-sum-of-all-pairs-bitwise-and';
+import { problem as maximumNumberOfIntegersToChooseFromARangeII } from './maximum-number-of-integers-to-choose-from-a-range-ii';
+import { problem as minimumCostToConnectTwoGroups } from './minimum-cost-to-connect-two-groups';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4799,4 +4806,11 @@ export const problems: readonly Problem[] = [
   maximumOr,
   permutationDifferenceBetweenTwoStrings,
   calculateTheSumOfDistances,
+  // batch 138 — arrays+hash-map/hard, arrays/medium, strings/easy, arrays+math/medium, arrays+hash-map/medium, arrays+dynamic-programming/hard
+  countNumberOfGoodPartitions,
+  countStrictlyIncreasingColumns,
+  countTheNumberOfSpecialCharactersI,
+  findXorSumOfAllPairsBitwiseAnd,
+  maximumNumberOfIntegersToChooseFromARangeII,
+  minimumCostToConnectTwoGroups,
 ];

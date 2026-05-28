@@ -33951,4 +33951,107 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  // batch 138
+  'count-number-of-good-partitions': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const MOD = 1000000007n;
+    const last = new Map<number, number>();
+    for (let i = 0; i < nums.length; i++) last.set(nums[i]!, i);
+    let result = 1n, maxEnd = 0;
+    for (let i = 0; i < nums.length - 1; i++) {
+      maxEnd = Math.max(maxEnd, last.get(nums[i]!)!);
+      if (i === maxEnd) result = result * 2n % MOD;
+    }
+    return Number(result);
+  },
+
+  'count-strictly-increasing-columns': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const m = matrix.length, n = matrix[0]!.length;
+    let count = 0;
+    for (let j = 0; j < n; j++) {
+      let ok = true;
+      for (let i = 0; i < m - 1; i++) {
+        if (matrix[i]![j]! >= matrix[i + 1]![j]!) { ok = false; break; }
+      }
+      if (ok) count++;
+    }
+    return count;
+  },
+
+  'count-the-number-of-special-characters-i': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const lower = new Set<string>(), upper = new Set<string>();
+    for (const c of word) {
+      if (c >= 'a' && c <= 'z') lower.add(c);
+      else upper.add(c.toLowerCase());
+    }
+    return [...lower].filter(c => upper.has(c)).length;
+  },
+
+  'find-xor-sum-of-all-pairs-bitwise-and': (...args: unknown[]) => {
+    const arr1 = args[0] as number[], arr2 = args[1] as number[];
+    let xor1 = 0;
+    for (const x of arr1) xor1 ^= x;
+    let xor2 = 0;
+    for (const x of arr2) xor2 ^= x;
+    return xor1 & xor2;
+  },
+
+  'maximum-number-of-integers-to-choose-from-a-range-ii': (...args: unknown[]) => {
+    const banned = args[0] as number[], n = args[1] as number, maxSum = args[2] as number;
+    const bannedSet = new Set(banned.filter(b => b >= 1 && b <= n));
+    const sortedBanned = [...bannedSet].sort((a, b) => a - b);
+    let total = 0, count = 0;
+    function takeGap(lo: number, hi: number) {
+      if (lo > hi || total >= maxSum) return;
+      const rem = maxSum - total;
+      const b = 2 * lo - 1;
+      let k = Math.floor((-b + Math.sqrt(b * b + 8 * rem)) / 2);
+      while (k + 1 <= hi - lo + 1 && (k + 1) * lo + (k + 1) * k / 2 <= rem) k++;
+      while (k > 0 && k * lo + k * (k - 1) / 2 > rem) k--;
+      k = Math.min(k, hi - lo + 1);
+      total += k * lo + k * (k - 1) / 2;
+      count += k;
+    }
+    let prev = 0;
+    for (const b of sortedBanned) {
+      if (b > prev + 1) takeGap(prev + 1, b - 1);
+      prev = b;
+    }
+    if (prev < n) takeGap(prev + 1, n);
+    return count;
+  },
+
+  'minimum-cost-to-connect-two-groups': (...args: unknown[]) => {
+    const cost = args[0] as number[][];
+    const n = cost.length, m = cost[0]!.length;
+    const minCost = Array.from({ length: m }, (_, j) => Math.min(...cost.map(row => row[j]!)));
+    const INF = Infinity;
+    let dp = new Array<number>(1 << m).fill(INF);
+    dp[0] = 0;
+    for (let i = 0; i < n; i++) {
+      const ndp = new Array<number>(1 << m).fill(INF);
+      for (let mask = 0; mask < (1 << m); mask++) {
+        if (dp[mask] === INF) continue;
+        for (let j = 0; j < m; j++) {
+          const nm = mask | (1 << j);
+          const val = dp[mask]! + cost[i]![j]!;
+          if (val < ndp[nm]!) ndp[nm] = val;
+        }
+      }
+      dp = ndp;
+    }
+    let ans = INF;
+    for (let mask = 0; mask < (1 << m); mask++) {
+      if (dp[mask] === INF) continue;
+      let extra = 0;
+      for (let j = 0; j < m; j++) {
+        if (!(mask & (1 << j))) extra += minCost[j]!;
+      }
+      ans = Math.min(ans, dp[mask]! + extra);
+    }
+    return ans;
+  },
+
 };
