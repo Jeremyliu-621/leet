@@ -33157,4 +33157,43 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return s !== d;
   },
 
+  // batch 122b
+  'count-of-substrings-containing-every-vowel-and-k-consonants-i': (...args: unknown[]) => {
+    const word = args[0] as string, k = args[1] as number;
+    function atLeast(minCons: number): number {
+      const vowels = new Set(['a','e','i','o','u']);
+      const vowelCount = new Map<string, number>();
+      let cons = 0, l = 0, res = 0;
+      for (let r = 0; r < word.length; r++) {
+        const c = word[r]!;
+        if (vowels.has(c)) vowelCount.set(c, (vowelCount.get(c) ?? 0) + 1);
+        else cons++;
+        while (cons >= minCons && vowelCount.size === 5) {
+          res += word.length - r;
+          const lc = word[l]!;
+          if (vowels.has(lc)) {
+            vowelCount.set(lc, vowelCount.get(lc)! - 1);
+            if (vowelCount.get(lc) === 0) vowelCount.delete(lc);
+          } else cons--;
+          l++;
+        }
+      }
+      return res;
+    }
+    return atLeast(k) - atLeast(k + 1);
+  },
+
+  'minimum-operations-to-make-median-equal-to-k': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const k = args[1] as number;
+    const m = Math.floor(nums.length / 2);
+    let ops = 0;
+    if (nums[m]! > k) {
+      for (let i = m; i < nums.length; i++) if (nums[i]! > k) ops++;
+    } else if (nums[m]! < k) {
+      for (let i = 0; i <= m; i++) if (nums[i]! < k) ops++;
+    }
+    return ops;
+  },
+
 };

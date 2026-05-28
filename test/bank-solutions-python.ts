@@ -32871,4 +32871,48 @@ def canAliceWin(nums):
     return s != d
 `,
 
+  // batch 122b
+  'count-of-substrings-containing-every-vowel-and-k-consonants-i': `
+def countOfSubstrings(word, k):
+    vowels = set('aeiou')
+    def at_least(min_cons):
+        vowel_count = {}
+        cons = 0
+        l = 0
+        res = 0
+        for r, c in enumerate(word):
+            if c in vowels:
+                vowel_count[c] = vowel_count.get(c, 0) + 1
+            else:
+                cons += 1
+            while cons >= min_cons and len(vowel_count) == 5:
+                res += len(word) - r
+                lc = word[l]
+                if lc in vowels:
+                    vowel_count[lc] -= 1
+                    if vowel_count[lc] == 0:
+                        del vowel_count[lc]
+                else:
+                    cons -= 1
+                l += 1
+        return res
+    return at_least(k) - at_least(k + 1)
+`,
+
+  'minimum-operations-to-make-median-equal-to-k': `
+def minOperationsToMakeMedianK(nums, k):
+    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    m = len(nums) // 2
+    ops = 0
+    if nums[m] > k:
+        for i in range(m, len(nums)):
+            if nums[i] > k:
+                ops += 1
+    elif nums[m] < k:
+        for i in range(m + 1):
+            if nums[i] < k:
+                ops += 1
+    return ops
+`,
+
 };

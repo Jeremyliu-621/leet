@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2110** problems; 6633 tests green. Batches 102–122 complete. TypeScript starters backfilled. Site stats at 2,110+.
+**Current focus:** Bank at **2116** problems; 6651 tests green. Batches 102–122 + 113b + 117b + 122b complete. TypeScript starters backfilled. Site stats at 2,116+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 123 bank growth; UI/UX refinements; accessibility audit.
+
+### feat(bank): add batch 122b — apply-ops, count-substrings-every-vowel-k-consonants-i, min-ops-median-to-k (2026-05-28)
+Three problems: `apply-operations-to-an-array` (easy/arrays, left-to-right double+zero then shift zeros), `count-of-substrings-containing-every-vowel-and-k-consonants-i` (medium/strings+sliding-window, exactlyK = atLeastK − atLeastK+1), `minimum-operations-to-make-median-equal-to-k` (medium/arrays, sort + count elements on wrong side). JS + Python reference solutions. Bank at **2116**; 6651 tests.
 
 ### feat(bank): add batch 122 — min-flips-palindromic-grid-i, count-substrings-k-freq-i, digit-game (2026-05-28)
 Three problems: `minimum-number-of-flips-to-make-binary-grid-palindromic-i` (medium/arrays, count mismatched mirror pairs per row vs per column, return min), `count-substrings-with-k-frequency-characters-i` (medium/strings+sliding-window+hash-map, for each start extend right until some freq≥k, count += n-j), `find-if-digit-game-can-be-won` (easy/arrays+math, S=single-digit sum, D=double-digit sum, Alice wins iff S≠D). Bank at **2110**; 6633 tests.

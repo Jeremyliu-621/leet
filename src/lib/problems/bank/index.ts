@@ -2292,6 +2292,10 @@ import { problem as maximumNumberOfIntegersToChooseFromARangeI } from './maximum
 import { problem as findTheLengthOfTheLongestCommonPrefix } from './find-the-length-of-the-longest-common-prefix';
 import { problem as maximumNumberOfDistinctElementsAfterOperations } from './maximum-number-of-distinct-elements-after-operations';
 import { problem as minimumTimeToRevertWordToInitialStateI } from './minimum-time-to-revert-word-to-initial-state-i';
+// batch 122b — arrays/easy, strings+sliding-window/medium, arrays/medium
+import { problem as applyOperationsToAnArray } from './apply-operations-to-an-array';
+import { problem as countOfSubstringsContainingEveryVowelAndKConsonantsI } from './count-of-substrings-containing-every-vowel-and-k-consonants-i';
+import { problem as minimumOperationsToMakeMedianEqualToK } from './minimum-operations-to-make-median-equal-to-k';
 // batch 122 — arrays/medium, strings+sliding-window+hash-map/medium, arrays+math/easy
 import { problem as minimumNumberOfFlipsToMakeBinaryGridPalindromicI } from './minimum-number-of-flips-to-make-binary-grid-palindromic-i';
 import { problem as countSubstringsWithKFrequencyCharactersI } from './count-substrings-with-k-frequency-characters-i';
@@ -4629,4 +4633,8 @@ export const problems: readonly Problem[] = [
   minimumNumberOfFlipsToMakeBinaryGridPalindromicI,
   countSubstringsWithKFrequencyCharactersI,
   findIfDigitGameCanBeWon,
+  // batch 122b — arrays/easy, strings+sliding-window/medium, arrays/medium
+  applyOperationsToAnArray,
+  countOfSubstringsContainingEveryVowelAndKConsonantsI,
+  minimumOperationsToMakeMedianEqualToK,
 ];
