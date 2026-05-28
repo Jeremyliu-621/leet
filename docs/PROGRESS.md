@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2177** problems; 6822 tests green. Batches 102–135 + 130b + 132b + 133b complete. TypeScript starters backfilled. UX polish ongoing.
+**Current focus:** Bank at **2180** problems; 6852 tests green. Batches 102–135 + 130b + 132b + 133b + 134 complete. TypeScript starters backfilled. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More UX polish; more bank growth; accessibility audit.
 
@@ -27,8 +27,11 @@ EditorPanel: inline confirmation banner when user attempts to switch language wi
 ### feat(bank): add batch 133 — good-pairs-i, lex-smallest-swap, max-binary-concat (2026-05-28)
 Three problems: `find-the-number-of-good-pairs-i` (easy/arrays+hash-map), `lexicographically-smallest-string-after-a-swap` (easy/strings), `maximum-possible-number-by-binary-concatenation` (medium/arrays). Bank at **2169**; 6798 tests.
 
+### feat(bank): add batch 134 — count-strictly-increasing-columns, find-xor-sum-of-all-pairs-bitwise-and, min-cost-connect-two-groups (2026-05-28)
+Three problems: `count-strictly-increasing-columns` (easy/arrays+simulation, column-by-column strict monotone check O(m×n)), `find-xor-sum-of-all-pairs-bitwise-and` (medium/arrays+math, key insight: XOR distributes over AND per-bit so answer = XOR(arr1) & XOR(arr2) in O(n+m)), `minimum-cost-to-connect-two-groups` (hard/arrays+dynamic-programming, bitmask DP on group2 coverage state + retroactive minimum-cost patch for uncovered group2 points). Bank at **2174**; 6837 tests.
+
 ### feat(bank): add batch 133 — check-if-grid-satisfies-conditions, maximum-xor-product, find-the-maximum-sum-of-node-values (2026-05-28)
-Three problems: `check-if-grid-satisfies-conditions` (easy/arrays, iterate cells checking column-uniform and adjacent-column-distinct), `maximum-xor-product` (medium/math, greedy bit-by-bit: same bits→set both to 1; differing bits→give 1 to smaller factor via AM-GM; BigInt for n≤50), `find-the-maximum-sum-of-node-values` (medium/tree+math, even-subset XOR insight: any even-cardinality subset achievable via path composition; sort deltas desc, greedily take positive pairs). Bank at **2168**; 6807 tests.
+Three problems: `check-if-grid-satisfies-conditions` (easy/arrays, iterate cells checking column-uniform and adjacent-column-distinct), `maximum-xor-product` (medium/math, greedy bit-by-bit: same bits→set both to 1; differing bits→give 1 to smaller factor via AM-GM; BigInt for n≤50), `find-the-maximum-sum-of-node-values` (medium/tree+math, even-subset XOR insight: any even-cardinality subset achievable via path composition; sort deltas desc, greedily take positive pairs). Bank at **2171**; 6807 tests.
 
 ### feat(bank): add batch 132b — max-binary-concat, lex-smallest-after-swap, good-pairs-i (2026-05-28)
 Three problems: `maximum-possible-number-by-binary-concatenation` (easy/math, try all 6 permutations of 3 elements, pick max binary concat), `lexicographically-smallest-string-after-a-swap` (easy/strings+math, first left-to-right adjacent pair of same parity where b<a), `find-the-number-of-good-pairs-i` (easy/arrays+math, brute-force O(n*m): count pairs where nums1[i]%(nums2[j]*k)==0). Bank at **2171**; 6807 tests (after merging with batch 133).
