@@ -146,10 +146,9 @@ function availableLanguagesFor(problem: Problem): SupportedLanguage[] {
 
 /** Returns the starter code for a given language, falling back to JS. */
 function starterCodeFor(problem: Problem, language: SupportedLanguage): string {
-  if (language === 'typescript') {
-    // TypeScript uses the JS starter — it is valid TypeScript.
-    return problem.starterCode.javascript;
-  }
+  // Use a language-specific starter if one exists; otherwise fall back to JS.
+  // TypeScript falls back to JS (valid TS is a superset), unless a typed
+  // TypeScript starter was explicitly provided for the problem.
   const starter = problem.starterCode[language];
   if (starter) return starter;
   return problem.starterCode.javascript;

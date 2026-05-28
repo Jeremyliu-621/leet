@@ -44,6 +44,9 @@ Return the answer in any order.`,
     javascript: `function twoSum(nums, target) {
 
 }`,
+    typescript: `function twoSum(nums: number[], target: number): number[] {
+
+}`,
     python: `def twoSum(nums, target):
     pass`,
   },

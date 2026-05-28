@@ -41,6 +41,7 @@ A single element counts as a valid subarray, so the answer is at least the large
   params: ['nums'],
   starterCode: {
     javascript: 'function maxSubarraySum(nums) {\n  // your code here\n}\n',
+    typescript: 'function maxSubarraySum(nums: number[]): number {\n  // your code here\n}\n',
     python: 'def maxSubarraySum(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

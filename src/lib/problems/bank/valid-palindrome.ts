@@ -43,6 +43,10 @@ Given a string \`s\`, return \`true\` if it is a palindrome, or \`false\` otherw
   // return true if s is a palindrome (ignoring non-alphanumeric chars and case)
 
 }`,
+    typescript: `function isPalindrome(s: string): boolean {
+  // return true if s is a palindrome (ignoring non-alphanumeric chars and case)
+
+}`,
     python: `def isPalindrome(s: str) -> bool:
     # return true if s is a palindrome (ignoring non-alphanumeric chars and case)
     pass

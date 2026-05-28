@@ -33,6 +33,9 @@ An **anagram** is a word or phrase formed by rearranging the letters of a differ
     javascript: `function isAnagram(s, t) {
 
 }`,
+    typescript: `function isAnagram(s: string, t: string): boolean {
+
+}`,
     python: `def isAnagram(s, t):
     pass`,
   },

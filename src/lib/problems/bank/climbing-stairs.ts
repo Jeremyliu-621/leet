@@ -39,6 +39,7 @@ Notice the pattern: the number of ways to reach step \`n\` equals the number of 
   params: ['n'],
   starterCode: {
     javascript: 'function climbStairs(n) {\n  // your code here\n}\n',
+    typescript: 'function climbStairs(n: number): number {\n  // your code here\n}\n',
     python: 'def climbStairs(n):\n    # your code here\n    pass\n',
   },
   visibleTests: [

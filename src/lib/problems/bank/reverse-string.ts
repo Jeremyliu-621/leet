@@ -36,6 +36,7 @@ function reverseString(s) {
   params: ['s'],
   starterCode: {
     javascript: 'function reverseString(s) {\n  \n}\n',
+    typescript: 'function reverseString(s: string[]): void {\n  \n}\n',
     python: 'def reverseString(s):\n    pass\n',
   },
   visibleTests: [

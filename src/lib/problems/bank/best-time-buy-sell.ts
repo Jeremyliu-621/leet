@@ -31,6 +31,7 @@ export const problem: Problem = {
   params: ['prices'],
   starterCode: {
     javascript: 'function maxProfit(prices) {\n  // your code here\n}\n',
+    typescript: 'function maxProfit(prices: number[]): number {\n  // your code here\n}\n',
     python: 'def maxProfit(prices: list) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

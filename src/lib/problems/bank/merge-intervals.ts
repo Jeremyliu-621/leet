@@ -34,6 +34,9 @@ export const problem: Problem = {
     javascript: `function merge(intervals) {
 
 }`,
+    typescript: `function merge(intervals: number[][]): number[][] {
+
+}`,
     python: `def merge(intervals):
     pass`,
   },
