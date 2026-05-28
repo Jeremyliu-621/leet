@@ -32771,4 +32771,42 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return toArray(dummy.next);
   },
 
+  'minimum-operations-to-make-binary-array-elements-equal-to-one-i': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    let ops = 0;
+    for (let i = 0; i <= nums.length - 3; i++) {
+      if (nums[i] === 0) {
+        nums[i] = 1;
+        nums[i + 1] = (nums[i + 1]! ^ 1);
+        nums[i + 2] = (nums[i + 2]! ^ 1);
+        ops++;
+      }
+    }
+    return nums.some(x => x === 0) ? -1 : ops;
+  },
+
+  'find-common-elements-between-two-arrays': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const set2 = new Set(nums2);
+    const set1 = new Set(nums1);
+    return [
+      nums1.filter(x => set2.has(x)).length,
+      nums2.filter(x => set1.has(x)).length,
+    ];
+  },
+
+  'maximum-value-of-an-ordered-triplet-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let best = 0;
+    for (let i = 0; i < nums.length - 2; i++) {
+      for (let j = i + 1; j < nums.length - 1; j++) {
+        for (let k = j + 1; k < nums.length; k++) {
+          best = Math.max(best, ((nums[i] as number) - (nums[j] as number)) * (nums[k] as number));
+        }
+      }
+    }
+    return best;
+  },
+
 };

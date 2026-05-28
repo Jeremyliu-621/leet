@@ -2256,6 +2256,10 @@ import { problem as removeNthNodeFromEndOfList } from './remove-nth-node-from-en
 import { problem as lexicographicallySmallestEquivalentString } from './lexicographically-smallest-equivalent-string';
 import { problem as singleThreadedCpu } from './single-threaded-cpu';
 import { problem as numberOfWaysToSplitString } from './number-of-ways-to-split-string';
+// batch 115 — arrays/easy, arrays/easy, arrays/easy
+import { problem as minimumOperationsBinaryArrayEqualToOneI } from './minimum-operations-to-make-binary-array-elements-equal-to-one-i';
+import { problem as findCommonElementsBetweenTwoArrays } from './find-common-elements-between-two-arrays';
+import { problem as maximumValueOfAnOrderedTripletI } from './maximum-value-of-an-ordered-triplet-i';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4549,4 +4553,8 @@ export const problems: readonly Problem[] = [
   lexicographicallySmallestEquivalentString,
   singleThreadedCpu,
   numberOfWaysToSplitString,
+  // batch 115 — arrays/easy, arrays/easy, arrays/easy
+  minimumOperationsBinaryArrayEqualToOneI,
+  findCommonElementsBetweenTwoArrays,
+  maximumValueOfAnOrderedTripletI,
 ];

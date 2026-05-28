@@ -32485,4 +32485,38 @@ def numWays(s):
     return gap1 * gap2 % MOD
 `,
 
+  'minimum-operations-to-make-binary-array-elements-equal-to-one-i': `
+def minOperations(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    ops = 0
+    for i in range(len(nums) - 2):
+        if nums[i] == 0:
+            nums[i] = 1
+            nums[i+1] ^= 1
+            nums[i+2] ^= 1
+            ops += 1
+    return -1 if any(x == 0 for x in nums) else ops
+`,
+
+  'find-common-elements-between-two-arrays': `
+def findIntersectionValues(nums1, nums2):
+    a = list(nums1.to_py() if hasattr(nums1, 'to_py') else nums1)
+    b = list(nums2.to_py() if hasattr(nums2, 'to_py') else nums2)
+    set_b = set(b)
+    set_a = set(a)
+    return [sum(1 for x in a if x in set_b), sum(1 for x in b if x in set_a)]
+`,
+
+  'maximum-value-of-an-ordered-triplet-i': `
+def maximumTripletValue(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    best = 0
+    n = len(nums)
+    for i in range(n - 2):
+        for j in range(i + 1, n - 1):
+            for k in range(j + 1, n):
+                best = max(best, (nums[i] - nums[j]) * nums[k])
+    return best
+`,
+
 };
