@@ -32954,4 +32954,54 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  'maximum-manhattan-distance': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let x = 0, y = 0, ans = 0;
+    for (const c of s) {
+      if (c === 'N') y++;
+      else if (c === 'S') y--;
+      else if (c === 'E') x++;
+      else x--;
+      ans = Math.max(ans, Math.abs(x) + Math.abs(y));
+    }
+    return ans;
+  },
+
+  'find-the-original-typed-string-i': (...args: unknown[]) => {
+    const word = args[0] as string;
+    let ans = 1;
+    let i = 0;
+    while (i < word.length) {
+      let j = i;
+      while (j < word.length && word[j] === word[i]) j++;
+      ans += (j - i - 1);
+      i = j;
+    }
+    return ans;
+  },
+
+  'find-minimum-time-to-reach-last-room-i': (...args: unknown[]) => {
+    const moveTime = args[0] as number[][];
+    const n = moveTime.length, m = moveTime[0]!.length;
+    const dist: number[][] = Array.from({ length: n }, () => Array(m).fill(Infinity));
+    dist[0]![0] = 0;
+    const heap: [number, number, number][] = [[0, 0, 0]];
+    const dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+    while (heap.length > 0) {
+      heap.sort((a, b) => a[0]! - b[0]!);
+      const [t, r, c] = heap.shift()!;
+      if (t > dist[r]![c]!) continue;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr!, nc = c + dc!;
+        if (nr < 0 || nr >= n || nc < 0 || nc >= m) continue;
+        const nt = Math.max(t, moveTime[nr]![nc]!) + 1;
+        if (nt < dist[nr]![nc]!) {
+          dist[nr]![nc] = nt;
+          heap.push([nt, nr, nc]);
+        }
+      }
+    }
+    return dist[n - 1]![m - 1]!;
+  },
+
 };

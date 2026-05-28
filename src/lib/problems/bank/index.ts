@@ -2276,6 +2276,10 @@ import { problem as countAlternatingSubarrays } from './count-alternating-subarr
 import { problem as maximumDifferenceBetweenEvenAndOddFrequencyI } from './maximum-difference-between-even-and-odd-frequency-i';
 import { problem as findTheKthCharacterInStringGameI } from './find-the-k-th-character-in-string-game-i';
 import { problem as countPrefixAndSuffixPairsI } from './count-prefix-and-suffix-pairs-i';
+// batch 119 — arrays+math/easy, strings/easy, graph+shortest-path/medium
+import { problem as maximumManhattanDistance } from './maximum-manhattan-distance';
+import { problem as findTheOriginalTypedStringI } from './find-the-original-typed-string-i';
+import { problem as findMinimumTimeToReachLastRoomI } from './find-minimum-time-to-reach-last-room-i';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4589,4 +4593,8 @@ export const problems: readonly Problem[] = [
   maximumDifferenceBetweenEvenAndOddFrequencyI,
   findTheKthCharacterInStringGameI,
   countPrefixAndSuffixPairsI,
+  // batch 119 — arrays+math/easy, strings/easy, graph+shortest-path/medium
+  maximumManhattanDistance,
+  findTheOriginalTypedStringI,
+  findMinimumTimeToReachLastRoomI,
 ];

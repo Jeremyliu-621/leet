@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2098** problems; 6597 tests green. Batches 102–118 complete. All branches merged. Site stats at 2,098+.
+**Current focus:** Bank at **2101** problems; 6606 tests green. Batches 102–119 complete. All branches merged. Site stats at 2,101+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 119 bank growth; UI/UX refinements; accessibility audit.
+**Next up:** Batch 120 bank growth; UI/UX refinements; accessibility audit.
+
+### feat(bank): add batch 119 — max-manhattan-distance, find-original-typed-string-i, min-time-last-room-i (2026-05-28)
+Three problems: `maximum-manhattan-distance` (easy/arrays+math, track |x|+|y| max through NSEW moves), `find-the-original-typed-string-i` (easy/strings, count run decompositions: 1 + sum(run_length-1) per run), `find-minimum-time-to-reach-last-room-i` (medium/graph+shortest-path, Dijkstra with new_time = max(t, moveTime[r][c]) + 1). Bank at **2101**; 6606 tests.
 
 ### feat(bank): add batch 118 — max-diff-even-odd-freq-i, k-th-char-string-game-i, count-prefix-suffix-pairs-i (2026-05-28)
 Three easy string problems: `maximum-difference-between-even-and-odd-frequency-i` (easy/strings+hash-map, max odd-freq minus min even-freq), `find-the-k-th-character-in-string-game-i` (easy/strings+math, simulate string doubling with char+1 shift; k-th char = chr('a'+popcount(k-1))), `count-prefix-and-suffix-pairs-i` (easy/strings, O(n²) startsWith+endsWith check for each pair i<j). Bank at **2098**; 6597 tests.

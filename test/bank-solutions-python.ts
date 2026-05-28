@@ -32668,4 +32668,51 @@ def countPrefixSuffixPairs(words):
     return count
 `,
 
+  'maximum-manhattan-distance': `
+def maxDistance(s):
+    x = y = ans = 0
+    for c in s:
+        if c == 'N': y += 1
+        elif c == 'S': y -= 1
+        elif c == 'E': x += 1
+        else: x -= 1
+        ans = max(ans, abs(x) + abs(y))
+    return ans
+`,
+
+  'find-the-original-typed-string-i': `
+def possibleStringCount(word):
+    ans = 1
+    i = 0
+    while i < len(word):
+        j = i
+        while j < len(word) and word[j] == word[i]:
+            j += 1
+        ans += j - i - 1
+        i = j
+    return ans
+`,
+
+  'find-minimum-time-to-reach-last-room-i': `
+def minTimeToReach(moveTime):
+    import heapq
+    moveTime = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (moveTime.to_py() if hasattr(moveTime, 'to_py') else moveTime)]
+    n, m = len(moveTime), len(moveTime[0])
+    dist = [[float('inf')] * m for _ in range(n)]
+    dist[0][0] = 0
+    heap = [(0, 0, 0)]
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    while heap:
+        t, r, c = heapq.heappop(heap)
+        if t > dist[r][c]: continue
+        for dr, dc in dirs:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < n and 0 <= nc < m:
+                nt = max(t, moveTime[nr][nc]) + 1
+                if nt < dist[nr][nc]:
+                    dist[nr][nc] = nt
+                    heapq.heappush(heap, (nt, nr, nc))
+    return dist[n-1][m-1]
+`,
+
 };
