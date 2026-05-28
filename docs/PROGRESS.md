@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2089** problems; 6561 tests green. Batches 102–115 complete. All branches merged. Site stats at 2,089+.
+**Current focus:** Bank at **2092** problems; 6570 tests green. Batches 102–116 complete. All branches merged. Site stats at 2,092+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 116 bank growth; UI/UX refinements; accessibility audit.
+**Next up:** Batch 117 bank growth; UI/UX refinements; accessibility audit.
+
+### feat(bank): add batch 116 — check-balanced-string, min-chairs-waiting-room, min-ops-divisible-three (2026-05-28)
+Three easy problems: `check-balanced-string` (easy/strings, even-index digit sum == odd-index digit sum), `minimum-number-of-chairs-in-a-waiting-room` (easy/strings+simulation, track max concurrent E/L occupancy), `find-minimum-operations-to-make-all-elements-divisible-by-three` (easy/arrays+math, count elements where n%3≠0). Bank at **2092**; 6570 tests.
 
 ### feat(bank): add batch 115 — min-ops-binary-array-i, find-common-elements, max-triplet-i (2026-05-28)
 Three easy array problems: `minimum-operations-to-make-binary-array-elements-equal-to-one-i` (greedy left-to-right 3-window flip), `find-common-elements-between-two-arrays` (set-based bidirectional count returning [answer1, answer2]), `maximum-value-of-an-ordered-triplet-i` (O(n³) brute-force, max (nums[i]-nums[j])*nums[k] or 0). Bank at **2089**; 6561 tests.
