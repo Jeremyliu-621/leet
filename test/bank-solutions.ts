@@ -32175,6 +32175,75 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     dfs(root, root ? root.val : 0, 0);
     return max;
   },
+  'first-unique-character-in-a-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const freq = new Map<string, number>();
+    for (const c of s) freq.set(c, (freq.get(c) ?? 0) + 1);
+    for (let i = 0; i < s.length; i++) if (freq.get(s[i] ?? '') === 1) return i;
+    return -1;
+  },
+  'sum-root-to-leaf-numbers': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    interface N { val: number; left: N | null; right: N | null }
+    const fromArray = (a: (number | null)[]): N | null => {
+      if (!a.length || a[0] == null) return null;
+      const root: N = { val: a[0], left: null, right: null };
+      const q: N[] = [root];
+      let i = 1;
+      while (q.length && i < a.length) {
+        const node = q.shift() as N;
+        if (a[i] != null) { node.left = { val: a[i] as number, left: null, right: null }; q.push(node.left); }
+        i++;
+        if (i < a.length && a[i] != null) { node.right = { val: a[i] as number, left: null, right: null }; q.push(node.right); }
+        i++;
+      }
+      return root;
+    };
+    let total = 0;
+    const dfs = (node: N | null, cur: number) => {
+      if (!node) return;
+      cur = cur * 10 + node.val;
+      if (!node.left && !node.right) { total += cur; return; }
+      dfs(node.left, cur);
+      dfs(node.right, cur);
+    };
+    dfs(fromArray(arr), 0);
+    return total;
+  },
+  'flatten-binary-tree-to-linked-list': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    interface N { val: number; left: N | null; right: N | null }
+    const fromArray = (a: (number | null)[]): N | null => {
+      if (!a.length || a[0] == null) return null;
+      const root: N = { val: a[0], left: null, right: null };
+      const q: N[] = [root];
+      let i = 1;
+      while (q.length && i < a.length) {
+        const node = q.shift() as N;
+        if (a[i] != null) { node.left = { val: a[i] as number, left: null, right: null }; q.push(node.left); }
+        i++;
+        if (i < a.length && a[i] != null) { node.right = { val: a[i] as number, left: null, right: null }; q.push(node.right); }
+        i++;
+      }
+      return root;
+    };
+    const root = fromArray(arr);
+    let cur: N | null = root;
+    while (cur) {
+      if (cur.left) {
+        let rightmost: N = cur.left;
+        while (rightmost.right) rightmost = rightmost.right;
+        rightmost.right = cur.right;
+        cur.right = cur.left;
+        cur.left = null;
+      }
+      cur = cur.right;
+    }
+    const result: number[] = [];
+    let node: N | null = root;
+    while (node) { result.push(node.val); node = node.right; }
+    return result;
+  },
   'count-unguarded-cells-in-the-grid': (...args: unknown[]) => {
     const m = args[0] as number;
     const n = args[1] as number;

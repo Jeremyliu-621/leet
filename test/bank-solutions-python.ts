@@ -31684,6 +31684,103 @@ def minCostConnectPoints(points):
                     dist[v] = d
     return total
 `,
+  'first-unique-character-in-a-string': `
+def firstUniqChar(s):
+    from collections import Counter
+    freq = Counter(s)
+    for i, c in enumerate(s):
+        if freq[c] == 1:
+            return i
+    return -1
+`,
+  'sum-root-to-leaf-numbers': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def __from_array__(raw):
+    raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i])
+            queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i])
+            queue.append(node.right)
+        i += 1
+    return root
+
+def sumNumbersRunner(arr):
+    root = __from_array__(arr)
+    total = [0]
+    def dfs(node, cur):
+        if node is None:
+            return
+        cur = cur * 10 + node.val
+        if node.left is None and node.right is None:
+            total[0] += cur
+            return
+        dfs(node.left, cur)
+        dfs(node.right, cur)
+    dfs(root, 0)
+    return total[0]
+`,
+  'flatten-binary-tree-to-linked-list': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def __from_array__(raw):
+    raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i])
+            queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i])
+            queue.append(node.right)
+        i += 1
+    return root
+
+def flattenRunner(arr):
+    root = __from_array__(arr)
+    cur = root
+    while cur:
+        if cur.left:
+            rightmost = cur.left
+            while rightmost.right:
+                rightmost = rightmost.right
+            rightmost.right = cur.right
+            cur.right = cur.left
+            cur.left = None
+        cur = cur.right
+    result = []
+    node = root
+    while node:
+        result.append(node.val)
+        node = node.right
+    return result
+`,
   'longer-contiguous-segments-of-ones-than-zeros': `
 def checkZeroOnes(s):
     def max_run(c):

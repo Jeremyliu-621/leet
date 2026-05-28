@@ -2217,6 +2217,10 @@ import { problem as minCostConnectAllPoints } from './min-cost-connect-all-point
 import { problem as longerContiguousSegmentsOfOnesThanZeros } from './longer-contiguous-segments-of-ones-than-zeros';
 import { problem as binaryTreeLongestConsecutiveSequence } from './binary-tree-longest-consecutive-sequence';
 import { problem as countUnguardedCellsInTheGrid } from './count-unguarded-cells-in-the-grid';
+// batch 107 — strings/easy, tree/medium, tree/medium
+import { problem as firstUniqueCharacterInAString } from './first-unique-character-in-a-string';
+import { problem as sumRootToLeafNumbers } from './sum-root-to-leaf-numbers';
+import { problem as flattenBinaryTreeToLinkedList } from './flatten-binary-tree-to-linked-list';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4471,4 +4475,8 @@ export const problems: readonly Problem[] = [
   longerContiguousSegmentsOfOnesThanZeros,
   binaryTreeLongestConsecutiveSequence,
   countUnguardedCellsInTheGrid,
+  // batch 107 — strings/easy, tree/medium, tree/medium
+  firstUniqueCharacterInAString,
+  sumRootToLeafNumbers,
+  flattenBinaryTreeToLinkedList,
 ];
