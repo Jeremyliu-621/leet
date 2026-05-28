@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2087** problems; 6552 tests green. Batches 102–114 complete. All branches merged. Site stats at 2,081+.
+**Current focus:** Bank at **2089** problems; 6561 tests green. Batches 102–115 complete. All branches merged. Site stats at 2,089+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 115 bank growth; UI/UX refinements; accessibility audit.
+**Next up:** Batch 116 bank growth; UI/UX refinements; accessibility audit.
+
+### feat(bank): add batch 115 — min-ops-binary-array-i, find-common-elements, max-triplet-i (2026-05-28)
+Three easy array problems: `minimum-operations-to-make-binary-array-elements-equal-to-one-i` (greedy left-to-right 3-window flip), `find-common-elements-between-two-arrays` (set-based bidirectional count returning [answer1, answer2]), `maximum-value-of-an-ordered-triplet-i` (O(n³) brute-force, max (nums[i]-nums[j])*nums[k] or 0). Bank at **2089**; 6561 tests.
 
 ### feat(bank): add batch 114 — lexicographically-smallest-equivalent-string, single-threaded-cpu, number-of-ways-to-split-string (2026-05-28)
 Three medium problems targeting underrepresented tags: `lexicographically-smallest-equivalent-string` (medium/strings+union-find, DSU over 26 chars keeping smaller char as root; boosts union-find tag from 23 to 24), `single-threaded-cpu` (medium/heap+simulation, sort by enqueue, min-heap [processingTime,idx], idle-time clock jump), `number-of-ways-to-split-string` (medium/strings+math, if total 1s not divisible by 3 → 0; if 0 ones → C(n-1,2); else gap1×gap2 mod 10^9+7). Bank: **2087**; 6552 tests.
