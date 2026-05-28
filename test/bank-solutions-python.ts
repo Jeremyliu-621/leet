@@ -34053,4 +34053,104 @@ def kidsWithCandies(candies, extraCandies: int):
     return [c + extraCandies >= max_c for c in candies]
 `,
 
+  // batch 141
+  'reaching-points': `
+def reachingPoints(sx: int, sy: int, tx: int, ty: int) -> bool:
+    while tx >= sx and ty >= sy:
+        if tx == sx and ty == sy:
+            return True
+        if tx > ty:
+            if ty == sy:
+                return (tx - sx) % ty == 0
+            tx %= ty
+        else:
+            if tx == sx:
+                return (ty - sy) % tx == 0
+            ty %= tx
+    return False
+`,
+
+  'orderly-queue': `
+def orderlyQueue(s: str, k: int) -> str:
+    if k >= 2:
+        return ''.join(sorted(s))
+    best = s
+    for i in range(1, len(s)):
+        rot = s[i:] + s[:i]
+        if rot < best:
+            best = rot
+    return best
+`,
+
+  'valid-number': `
+def isNumber(s: str) -> bool:
+    seen_digit = False
+    seen_dot = False
+    seen_e = False
+    for i, c in enumerate(s):
+        if c.isdigit():
+            seen_digit = True
+        elif c in ('+', '-'):
+            if i != 0 and s[i - 1] not in ('e', 'E'):
+                return False
+        elif c == '.':
+            if seen_dot or seen_e:
+                return False
+            seen_dot = True
+        elif c in ('e', 'E'):
+            if seen_e or not seen_digit:
+                return False
+            seen_e = True
+            seen_digit = False
+        else:
+            return False
+    return seen_digit
+`,
+
+  'minimum-moves-to-equal-array-elements-ii': `
+def minMoves2(nums: list) -> int:
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    nums.sort()
+    median = nums[len(nums) // 2]
+    return sum(abs(n - median) for n in nums)
+`,
+
+  'super-washing-machines': `
+def findMinMoves(machines: list) -> int:
+    machines = list(machines.to_py() if hasattr(machines, 'to_py') else machines)
+    total = sum(machines)
+    n = len(machines)
+    if total % n != 0:
+        return -1
+    target = total // n
+    ans = 0
+    flow = 0
+    for m in machines:
+        flow += m - target
+        ans = max(ans, abs(flow), m - target)
+    return ans
+`,
+
+  'number-of-submatrices-that-sum-to-target': `
+def numSubmatrixSumTarget(matrix: list, target: int) -> int:
+    if hasattr(matrix, 'to_py'):
+        matrix = matrix.to_py()
+    matrix = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in matrix]
+    from collections import defaultdict
+    m, n = len(matrix), len(matrix[0])
+    count = 0
+    for r1 in range(m):
+        col_sum = [0] * n
+        for r2 in range(r1, m):
+            for c in range(n):
+                col_sum[c] += matrix[r2][c]
+            prefix_count = defaultdict(int)
+            prefix_count[0] = 1
+            prefix = 0
+            for s in col_sum:
+                prefix += s
+                count += prefix_count[prefix - target]
+                prefix_count[prefix] += 1
+    return count`,
+
 };

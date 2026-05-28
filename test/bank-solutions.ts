@@ -34266,4 +34266,95 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return candies.map(c => c + extraCandies >= maxC);
   },
 
+  // batch 138
+  'reaching-points': (...args: unknown[]) => {
+    let tx = args[2] as number, ty = args[3] as number;
+    const sx = args[0] as number, sy = args[1] as number;
+    while (tx >= sx && ty >= sy) {
+      if (tx === sx && ty === sy) return true;
+      if (tx > ty) {
+        if (ty === sy) return (tx - sx) % ty === 0;
+        tx %= ty;
+      } else {
+        if (tx === sx) return (ty - sy) % tx === 0;
+        ty %= tx;
+      }
+    }
+    return false;
+  },
+
+  'orderly-queue': (...args: unknown[]) => {
+    const s = args[0] as string, k = args[1] as number;
+    if (k >= 2) return s.split('').sort().join('');
+    let best = s;
+    for (let i = 1; i < s.length; i++) {
+      const rot = s.slice(i) + s.slice(0, i);
+      if (rot < best) best = rot;
+    }
+    return best;
+  },
+
+  'valid-number': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let seenDigit = false, seenDot = false, seenE = false;
+    for (let i = 0; i < s.length; i++) {
+      const c = s[i]!;
+      if (c >= '0' && c <= '9') {
+        seenDigit = true;
+      } else if (c === '+' || c === '-') {
+        if (i !== 0 && s[i - 1] !== 'e' && s[i - 1] !== 'E') return false;
+      } else if (c === '.') {
+        if (seenDot || seenE) return false;
+        seenDot = true;
+      } else if (c === 'e' || c === 'E') {
+        if (seenE || !seenDigit) return false;
+        seenE = true;
+        seenDigit = false;
+      } else {
+        return false;
+      }
+    }
+    return seenDigit;
+  },
+
+  'minimum-moves-to-equal-array-elements-ii': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const median = nums[Math.floor(nums.length / 2)]!;
+    return nums.reduce((acc, n) => acc + Math.abs(n - median), 0);
+  },
+
+  'super-washing-machines': (...args: unknown[]) => {
+    const machines = args[0] as number[];
+    const total = machines.reduce((a, b) => a + b, 0);
+    const n = machines.length;
+    if (total % n !== 0) return -1;
+    const target = total / n;
+    let ans = 0, flow = 0;
+    for (const m of machines) {
+      flow += m - target;
+      ans = Math.max(ans, Math.abs(flow), m - target);
+    }
+    return ans;
+  },
+
+  'number-of-submatrices-that-sum-to-target': (...args: unknown[]) => {
+    const matrix = args[0] as number[][], target = args[1] as number;
+    const m = matrix.length, n = matrix[0]!.length;
+    let count = 0;
+    for (let r1 = 0; r1 < m; r1++) {
+      const colSum = new Array<number>(n).fill(0);
+      for (let r2 = r1; r2 < m; r2++) {
+        for (let c = 0; c < n; c++) colSum[c]! += matrix[r2]![c]!;
+        const prefixCount = new Map([[0, 1]]);
+        let prefix = 0;
+        for (const s of colSum) {
+          prefix += s;
+          count += (prefixCount.get(prefix - target) ?? 0);
+          prefixCount.set(prefix, (prefixCount.get(prefix) ?? 0) + 1);
+        }
+      }
+    }
+    return count;
+  },
+
 };
