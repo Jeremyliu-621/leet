@@ -34313,6 +34313,52 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return candies.map(c => c + extraCandies >= maxC);
   },
 
+  // batch 143
+  'count-substrings-that-satisfy-k-constraint-i': (...args: unknown[]) => {
+    const s = args[0] as string, k = args[1] as number;
+    let count = 0;
+    for (let i = 0; i < s.length; i++) {
+      let zeros = 0, ones = 0;
+      for (let j = i; j < s.length; j++) {
+        if (s[j] === '0') zeros++; else ones++;
+        if (zeros <= k || ones <= k) count++;
+      }
+    }
+    return count;
+  },
+
+  'minimum-domino-rotations-for-equal-row': (...args: unknown[]) => {
+    const tops = args[0] as number[], bottoms = args[1] as number[];
+    function check(target: number): number {
+      let rotTop = 0, rotBot = 0;
+      for (let i = 0; i < tops.length; i++) {
+        if (tops[i] !== target && bottoms[i] !== target) return Infinity;
+        if (tops[i] !== target) rotTop++;
+        if (bottoms[i] !== target) rotBot++;
+      }
+      return Math.min(rotTop, rotBot);
+    }
+    const res = Math.min(check(tops[0]!), check(bottoms[0]!));
+    return res === Infinity ? -1 : res;
+  },
+
+  'maximum-total-damage-with-spell-casting': (...args: unknown[]) => {
+    const power = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const p of power) freq.set(p, (freq.get(p) ?? 0) + p);
+    const vals = [...freq.keys()].sort((a, b) => a - b);
+    const dp: number[] = new Array(vals.length).fill(0);
+    for (let i = 0; i < vals.length; i++) {
+      const contrib = freq.get(vals[i]!)!;
+      let best = 0;
+      for (let j = i - 1; j >= 0; j--) {
+        if (vals[j]! < vals[i]! - 2) { best = dp[j]!; break; }
+      }
+      dp[i] = Math.max(i > 0 ? dp[i - 1]! : 0, best + contrib);
+    }
+    return dp.length ? dp[dp.length - 1]! : 0;
+  },
+
   // batch 142
   'reverse-vowels-of-a-string': (...args: unknown[]) => {
     const vowels = new Set('aeiouAEIOU');

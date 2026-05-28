@@ -2412,6 +2412,10 @@ import { problem as findMissingObservations } from './find-missing-observations'
 import { problem as decryptXoredArray } from './decrypt-xored-array';
 import { problem as countItemsMatchingARule } from './count-items-matching-a-rule';
 import { problem as kidsWithTheGreatestNumberOfCandies } from './kids-with-the-greatest-number-of-candies';
+// batch 143 — arrays+dp/medium, strings+sliding-window/easy, arrays+simulation/medium
+import { problem as maximumTotalDamageWithSpellCasting } from './maximum-total-damage-with-spell-casting';
+import { problem as countSubstringsThatSatisfyKConstraintI } from './count-substrings-that-satisfy-k-constraint-i';
+import { problem as minimumDominoRotationsForEqualRow } from './minimum-domino-rotations-for-equal-row';
 // batch 142 — strings+two-pointers/easy, strings+hash-map/medium, graph+topological-sort/medium
 import { problem as reverseVowelsOfAString } from './reverse-vowels-of-a-string';
 import { problem as applyOperationsToMakeStringEmpty } from './apply-operations-to-make-string-empty';
@@ -4872,6 +4876,10 @@ export const problems: readonly Problem[] = [
   decryptXoredArray,
   countItemsMatchingARule,
   kidsWithTheGreatestNumberOfCandies,
+  // batch 143 — arrays+dp/medium, strings+sliding-window/easy, arrays+simulation/medium
+  maximumTotalDamageWithSpellCasting,
+  countSubstringsThatSatisfyKConstraintI,
+  minimumDominoRotationsForEqualRow,
   // batch 142 — strings+two-pointers/easy, strings+hash-map/medium, graph+topological-sort/medium
   reverseVowelsOfAString,
   applyOperationsToMakeStringEmpty,

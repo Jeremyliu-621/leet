@@ -34078,6 +34078,61 @@ def kidsWithCandies(candies, extraCandies: int):
     return [c + extraCandies >= max_c for c in candies]
 `,
 
+  // batch 143
+  'count-substrings-that-satisfy-k-constraint-i': `
+def countKConstraintSubstrings(s: str, k: int) -> int:
+    count = 0
+    for i in range(len(s)):
+        zeros = ones = 0
+        for j in range(i, len(s)):
+            if s[j] == '0':
+                zeros += 1
+            else:
+                ones += 1
+            if zeros <= k or ones <= k:
+                count += 1
+    return count
+`,
+
+  'minimum-domino-rotations-for-equal-row': `
+def minDominoRotations(tops, bottoms) -> int:
+    tops = list(tops.to_py() if hasattr(tops, 'to_py') else tops)
+    bottoms = list(bottoms.to_py() if hasattr(bottoms, 'to_py') else bottoms)
+    def check(target):
+        rot_top = rot_bot = 0
+        for t, b in zip(tops, bottoms):
+            if t != target and b != target:
+                return float('inf')
+            if t != target:
+                rot_top += 1
+            if b != target:
+                rot_bot += 1
+        return min(rot_top, rot_bot)
+    res = min(check(tops[0]), check(bottoms[0]))
+    return -1 if res == float('inf') else res
+`,
+
+  'maximum-total-damage-with-spell-casting': `
+def maximumTotalDamage(power) -> int:
+    power = list(power.to_py() if hasattr(power, 'to_py') else power)
+    from collections import defaultdict
+    freq = defaultdict(int)
+    for p in power:
+        freq[p] += p
+    vals = sorted(freq.keys())
+    dp = [0] * len(vals)
+    for i, v in enumerate(vals):
+        contrib = freq[v]
+        best = 0
+        j = i - 1
+        while j >= 0 and vals[j] >= v - 2:
+            j -= 1
+        if j >= 0:
+            best = dp[j]
+        dp[i] = max(dp[i-1] if i > 0 else 0, best + contrib)
+    return dp[-1] if dp else 0
+`,
+
   // batch 142
   'reverse-vowels-of-a-string': `
 def reverseVowels(s: str) -> str:
