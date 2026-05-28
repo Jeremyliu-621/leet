@@ -44,6 +44,8 @@ Return the **minimum possible sum** of a mountain triplet of \`nums\`. If no suc
     javascript: `function minimumSumMountainTriplet(nums) {
 
 }`,
+    typescript: "function minimumSumMountainTriplet(nums: number[]): number {\n\n}",
+
     python: `def minimumSumMountainTriplet(nums):
     pass`,
   },

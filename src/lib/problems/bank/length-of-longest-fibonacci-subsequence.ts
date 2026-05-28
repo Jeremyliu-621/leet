@@ -40,6 +40,8 @@ Explanation: [1,11,12] or [3,11,14] or [7,11,18]
   params: ['arr'],
   starterCode: {
     javascript: 'function lenLongestFibSubseq(arr) {\n  // your code here\n}\n',
+    typescript: "function lenLongestFibSubseq(arr: number[]): number {\n  // your code here\n}",
+
     python: 'def lenLongestFibSubseq(arr):\n    pass\n',
   },
   visibleTests: [

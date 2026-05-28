@@ -29,6 +29,8 @@ You may return the answer in **any order**.`,
   params: ['n', 'k'],
   starterCode: {
     javascript: 'function combine(n, k) {\n  \n}\n',
+    typescript: "function combine(n: number, k: number): number[][] {\n  \n}",
+
     python: 'def combine(n, k):\n    pass\n',
   },
   visibleTests: [

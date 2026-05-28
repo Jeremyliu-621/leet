@@ -47,6 +47,8 @@ Numbers are space-separated. There is no "and" between hundreds and the rest (e.
   params: ['num'],
   starterCode: {
     javascript: 'function numberToWords(num) {\n  \n}',
+    typescript: "function numberToWords(num: number): string {\n  \n}",
+
     python: 'def numberToWords(num: int) -> str:\n    pass',
   },
   visibleTests: [

@@ -38,6 +38,8 @@ Given \`nums\`, a **0-indexed** integer array of **non-negative** integers, retu
     javascript: `function waysToSplit(nums) {
 
 }`,
+    typescript: "function waysToSplit(nums: number[]): number {\n\n}",
+
     python: `def waysToSplit(nums):
     pass`,
   },

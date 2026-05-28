@@ -39,6 +39,8 @@ For this problem, implement a function \`medianFinder(ops, vals)\` where \`ops\`
   params: ['ops', 'vals'],
   starterCode: {
     javascript: 'function medianFinder(ops, vals) {\n  \n}\n',
+    typescript: "function medianFinder(ops: string[], vals: (number[] | unknown[])[]): (null | number)[] {\n  \n}",
+
     python: 'def medianFinder(ops, vals):\n    pass\n',
   },
   visibleTests: [

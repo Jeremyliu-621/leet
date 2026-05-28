@@ -49,6 +49,8 @@ Given a budget of \`budget\` coins, return the **maximum number of alloys** any 
   params: ['n', 'k', 'budget', 'composition', 'stock', 'cost'],
   starterCode: {
     javascript: 'function maxNumberOfAlloys(n, k, budget, composition, stock, cost) {\n  // your code here\n}\n',
+    typescript: "function maxNumberOfAlloys(n: number, k: number, budget: number, composition: number[][], stock: number[], cost: number[]): number {\n  // your code here\n}",
+
     python: 'def maxNumberOfAlloys(n, k, budget, composition, stock, cost):\n    # your code here\n    pass\n',
   },
   visibleTests: [

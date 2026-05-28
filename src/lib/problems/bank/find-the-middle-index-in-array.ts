@@ -44,6 +44,8 @@ Return the **leftmost** \`middleIndex\` that satisfies the condition, or \`-1\` 
     javascript: `function findMiddleIndex(nums) {
 
 }`,
+    typescript: "function findMiddleIndex(nums: number[]): number {\n\n}",
+
     python: `def findMiddleIndex(nums):
     pass`,
   },

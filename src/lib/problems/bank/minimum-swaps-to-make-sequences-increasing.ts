@@ -46,6 +46,8 @@ Return the **minimum number of swaps** to make both \`nums1\` and \`nums2\` **st
   // return minimum swaps to make both arrays strictly increasing
 
 }`,
+    typescript: "function minSwap(nums1: number[], nums2: number[]): number {\n  // return minimum swaps to make both arrays strictly increasing\n\n}",
+
     python: `def minSwap(nums1: list, nums2: list) -> int:
     # return minimum swaps to make both arrays strictly increasing
     pass

@@ -40,6 +40,8 @@ Your goal is to **maximize** the summation of the matrix's elements. Return the 
     javascript: `function maxMatrixSum(matrix) {
 
 }`,
+    typescript: "function maxMatrixSum(matrix: number[][]): number {\n\n}",
+
     python: `def maxMatrixSum(matrix):
     pass`,
   },

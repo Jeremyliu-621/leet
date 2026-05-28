@@ -42,6 +42,8 @@ Return the **quotient** after dividing \`dividend\` by \`divisor\`.
   // return quotient of dividend / divisor without using * / or %
 
 }`,
+    typescript: "function divide(dividend: number, divisor: number): number {\n  // return quotient of dividend / divisor without using * / or %\n\n}",
+
     python: `def divide(dividend: int, divisor: int) -> int:
     # return quotient of dividend / divisor without using * / or %
     pass

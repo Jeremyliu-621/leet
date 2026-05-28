@@ -39,6 +39,8 @@ Starting at node \`0\` at time \`0\`, return an array \`answer\` of length \`n\`
   // Build adjacency list, then run Dijkstra from node 0.
   // A relaxation to node v is only valid if the new time < disappear[v].
 }`,
+    typescript: "function minimumTime(n: number, edges: number[][], disappear: number[]): number[] {\n  // Build adjacency list, then run Dijkstra from node 0.\n  // A relaxation to node v is only valid if the new time < disappear[v].\n}",
+
     python: `def minimumTime(n, edges, disappear):
     # Build adjacency list, then run Dijkstra from node 0.
     # A relaxation to node v is only valid if the new time < disappear[v].

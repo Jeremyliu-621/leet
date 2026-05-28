@@ -39,6 +39,8 @@ Unlike the maximum sum subarray, a **negative number can become a maximum** when
   params: ['nums'],
   starterCode: {
     javascript: 'function maxProductSubarray(nums) {\n  // your code here\n}\n',
+    typescript: "function maxProductSubarray(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def maxProductSubarray(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

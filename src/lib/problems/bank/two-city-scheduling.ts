@@ -34,6 +34,8 @@ Return the **minimum cost** to fly every person to a city such that exactly \`n\
   params: ['costs'],
   starterCode: {
     javascript: 'function twoCitySchedCost(costs) {\n  // your code here\n}\n',
+    typescript: "function twoCitySchedCost(costs: number[][]): number {\n  // your code here\n}",
+
     python: 'def twoCitySchedCost(costs):\n    # your code here\n    pass\n',
   },
   visibleTests: [

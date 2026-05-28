@@ -74,6 +74,8 @@ export const problem: Problem = {
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// ListNode class and reverseListRunner wrapper are pre-defined.\n// Implement the function below:\nfunction reverseList(head) {\n  \n}\n',
+    typescript: "function reverseListRunner(head: number[]): number[] {\n  \n}",
+
     python: '# ListNode class and reverseListRunner wrapper are pre-defined.\n# Implement the function below:\ndef reverseList(head):\n    pass\n',
   },
   visibleTests: [

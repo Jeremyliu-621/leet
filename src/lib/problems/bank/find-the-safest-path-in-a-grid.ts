@@ -48,6 +48,8 @@ If there is no path from \`(0, 0)\` to \`(n-1, n-1)\`, return \`-1\`.`,
     javascript: `function maximumSafenessFactor(grid) {
 
 }`,
+    typescript: "function maximumSafenessFactor(grid: number[][]): number {\n\n}",
+
     python: `def maximumSafenessFactor(grid: list[list[int]]) -> int:
     pass`,
   },

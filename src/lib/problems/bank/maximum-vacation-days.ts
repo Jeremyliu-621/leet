@@ -44,6 +44,8 @@ Each week, the employee may stay in the same city or fly to a different city at 
     javascript: `function maxVacationDays(flights, days) {
 
 }`,
+    typescript: "function maxVacationDays(flights: number[][], days: number[][]): number {\n\n}",
+
     python: `def maxVacationDays(flights, days):
     pass`,
   },

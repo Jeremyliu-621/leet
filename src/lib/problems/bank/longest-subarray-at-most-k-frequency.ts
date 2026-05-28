@@ -39,6 +39,8 @@ Return the length of the **longest** subarray of \`nums\` where the **frequency*
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function maxSubarrayLength(nums, k) {\n  \n}\n',
+    typescript: "function maxSubarrayLength(nums: number[], k: number): number {\n  \n}",
+
     python: 'def maxSubarrayLength(nums: list[int], k: int) -> int:\n    pass\n',
   },
   visibleTests: [

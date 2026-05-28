@@ -47,6 +47,8 @@ Output: 2
     javascript: `function poorPigs(buckets, minutesToDie, minutesToTest) {
 
 }`,
+    typescript: "function poorPigs(buckets: number, minutesToDie: number, minutesToTest: number): number {\n\n}",
+
     python: `def poorPigs(buckets, minutesToDie, minutesToTest):
     `,
   },

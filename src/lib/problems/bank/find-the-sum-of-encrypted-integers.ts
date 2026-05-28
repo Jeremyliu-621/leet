@@ -35,6 +35,8 @@ Return the **sum** of encrypted elements.`,
     javascript: `function sumOfEncryptedInt(nums) {
 
 }`,
+    typescript: "function sumOfEncryptedInt(nums: number[]): number {\n\n}",
+
     python: `def sumOfEncryptedInt(nums):
     pass`,
   },

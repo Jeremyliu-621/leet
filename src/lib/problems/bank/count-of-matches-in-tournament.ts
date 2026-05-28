@@ -43,6 +43,8 @@ Return the **number of matches** played in the tournament until a winner is deci
     javascript: `function numberOfMatches(n) {
   // Return total matches until one team wins
 }`,
+    typescript: "function numberOfMatches(n: number): number {\n  // Return total matches until one team wins\n}",
+
     python: `def numberOfMatches(n: int) -> int:
     # Return total matches until one team wins
     pass`,

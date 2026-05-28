@@ -31,6 +31,8 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: 'function canPartition(nums) {\n  \n}\n',
+    typescript: "function canPartition(nums: number[]): boolean {\n  \n}",
+
     python: 'def canPartition(nums: list[int]) -> bool:\n    pass\n',
   },
   visibleTests: [

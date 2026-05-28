@@ -41,6 +41,8 @@ Seats in a row are filled left-to-right and are never freed. Return an array of 
     javascript: `function bookMyShow(n, m, operations) {
 
 }`,
+    typescript: "function bookMyShow(n: number, m: number, operations: (string | number)[][]): (number[] | unknown[] | boolean)[] {\n\n}",
+
     python: `def bookMyShow(n: int, m: int, operations: list) -> list:
     pass`,
   },

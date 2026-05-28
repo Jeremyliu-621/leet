@@ -43,6 +43,8 @@ Return the **maximum** possible sum of \`nums1\` after performing the operation.
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: 'function maximumsSplicedArray(nums1, nums2) {\n  \n}\n',
+    typescript: "function maximumsSplicedArray(nums1: number[], nums2: number[]): number {\n  \n}",
+
     python: 'def maximumsSplicedArray(nums1: list[int], nums2: list[int]) -> int:\n    pass\n',
   },
   visibleTests: [

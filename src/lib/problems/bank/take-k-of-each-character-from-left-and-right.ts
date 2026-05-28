@@ -36,6 +36,8 @@ Return the **minimum** number of minutes needed for you to take **at least** \`k
     javascript: `function takeCharacters(s, k) {
 
 }`,
+    typescript: "function takeCharacters(s: string, k: number): number {\n\n}",
+
     python: `def takeCharacters(s, k):
     pass`,
   },

@@ -40,6 +40,8 @@ Each day you load packages onto the ship in order; you cannot split a package ac
   params: ['weights', 'days'],
   starterCode: {
     javascript: 'function shipWithinDays(weights, days) {\n  // Binary search on the ship capacity.\n}\n',
+    typescript: "function shipWithinDays(weights: number[], days: number): number {\n  // Binary search on the ship capacity.\n}",
+
     python: 'def shipWithinDays(weights, days):\n    # Binary search on the ship capacity.\n    pass\n',
   },
   visibleTests: [

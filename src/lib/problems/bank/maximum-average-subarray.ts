@@ -33,6 +33,8 @@ Find a contiguous subarray whose **length is equal to** \`k\` that has the maxim
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function findMaxAverage(nums, k) {\n  // your code here\n}\n',
+    typescript: "function findMaxAverage(nums: number[], k: number): number {\n  // your code here\n}",
+
     python: 'def findMaxAverage(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

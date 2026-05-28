@@ -42,6 +42,8 @@ export const problem: Problem = {
   // return true if all characters of s can form k palindromes
 
 }`,
+    typescript: "function canConstruct(k: number, s: string): boolean {\n  // return true if all characters of s can form k palindromes\n\n}",
+
     python: `def canConstruct(k: int, s: str) -> bool:
     # return True if all characters of s can form k palindromes
     pass

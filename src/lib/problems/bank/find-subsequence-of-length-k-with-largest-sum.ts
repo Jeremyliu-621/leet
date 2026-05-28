@@ -45,6 +45,8 @@ function maxSubsequence(nums, k) {
     javascript: `function maxSubsequence(nums, k) {
 
 }`,
+    typescript: "function maxSubsequence(nums: number[], k: number): number[] {\n\n}",
+
     python: `def maxSubsequence(nums, k):
     pass`,
   },

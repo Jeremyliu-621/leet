@@ -36,6 +36,8 @@ Return an integer array \`answer\` where \`answer[i]\` is the answer to the \`it
   params: ['nums', 'queries'],
   starterCode: {
     javascript: 'function sumEvenAfterQueries(nums, queries) {\n\n}\n',
+    typescript: "function sumEvenAfterQueries(nums: number[], queries: number[][]): number[] {\n\n}",
+
     python: 'def sumEvenAfterQueries(nums, queries):\n    pass\n',
   },
   visibleTests: [

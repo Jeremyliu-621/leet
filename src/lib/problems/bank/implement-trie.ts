@@ -82,6 +82,8 @@ class Trie {
 
   }
 }`,
+    typescript: "function trieRunner(ops: string[], words: string[]): (null | boolean)[] {\n  constructor() {\n\n  }\n\n  insert(word) {\n\n  }\n\n  search(word) {\n\n  }\n\n  startsWith(prefix) {\n\n  }\n}",
+
     python: `# trieRunner is pre-defined and calls your class below.
 class Trie:
     def __init__(self):

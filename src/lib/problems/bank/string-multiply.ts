@@ -39,6 +39,8 @@ export const problem: Problem = {
   params: ['num1', 'num2'],
   starterCode: {
     javascript: 'function multiplyStrings(num1, num2) {\n  // your code here\n}\n',
+    typescript: "function multiplyStrings(num1: string, num2: string): string {\n  // your code here\n}",
+
     python: 'def multiplyStrings(num1, num2):\n    # your code here\n    pass\n',
   },
   visibleTests: [

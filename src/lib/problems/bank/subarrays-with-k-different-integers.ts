@@ -34,6 +34,8 @@ export const problem: Problem = {
     javascript: `function subarraysWithKDistinct(nums, k) {
 
 }`,
+    typescript: "function subarraysWithKDistinct(nums: number[], k: number): number {\n\n}",
+
     python: `def subarraysWithKDistinct(nums, k):
     pass`,
   },

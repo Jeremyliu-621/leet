@@ -45,6 +45,8 @@ function minMeetingRooms(intervals) {
     javascript: `function minMeetingRooms(intervals) {
 
 }`,
+    typescript: "function minMeetingRooms(intervals: number[][]): number {\n\n}",
+
     python: `def minMeetingRooms(intervals):
     pass`,
   },

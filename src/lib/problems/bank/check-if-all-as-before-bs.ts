@@ -35,6 +35,8 @@ export const problem: Problem = {
   params: ['s'],
   starterCode: {
     javascript: 'function checkString(s) {\n  // your code here\n}\n',
+    typescript: "function checkString(s: string): boolean {\n  // your code here\n}",
+
     python: 'def checkString(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

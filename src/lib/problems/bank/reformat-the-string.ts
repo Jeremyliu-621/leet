@@ -40,6 +40,8 @@ If there are multiple valid reformattings, return **any** of them. For this prob
   params: ['s'],
   starterCode: {
     javascript: 'function reformat(s) {\n\n}\n',
+    typescript: "function reformat(s: string): string {\n\n}",
+
     python: 'def reformat(s):\n    pass\n',
   },
   visibleTests: [

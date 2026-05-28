@@ -43,6 +43,8 @@ return count;\`\`\``
   params: ['nums'],
   starterCode: {
     javascript: 'function waysToSplitArray(nums) {\n\n}\n',
+    typescript: "function waysToSplitArray(nums: number[]): number {\n\n}",
+
     python: 'def waysToSplitArray(nums):\n    pass\n',
   },
   visibleTests: [

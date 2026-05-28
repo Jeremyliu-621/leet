@@ -44,6 +44,8 @@ Return the length of the longest mountain subarray in \`arr\`, or \`0\` if no mo
   params: ['arr'] as readonly string[],
   starterCode: {
     javascript: 'function longestMountain(arr) {\n  // your code here\n}\n',
+    typescript: "function longestMountain(arr: number[]): number {\n  // your code here\n}",
+
     python: 'def longestMountain(arr: list[int]) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

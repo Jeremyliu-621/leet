@@ -102,6 +102,8 @@ Your function receives the tree \`root\` (a TreeNode) and two integer values \`p
   starterCode: {
     javascript:
       '// TreeNode class is pre-defined. Implement the function below:\n// p and q are node VALUES (integers), not TreeNodes.\nfunction lowestCommonAncestor(root, p, q) {\n  \n}\n',
+    typescript: "function lowestCommonAncestorRunner(root: (number | null)[], p: number, q: number): number {\n  \n}",
+
     python:
       '# TreeNode class is pre-defined. Implement the function below:\n# p and q are node VALUES (integers), not TreeNodes.\ndef lowestCommonAncestor(root, p, q):\n    pass\n',
   },

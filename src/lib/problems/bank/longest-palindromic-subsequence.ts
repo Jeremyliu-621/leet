@@ -45,6 +45,8 @@ Fill the table by increasing substring length.`,
   params: ['s'] as readonly string[],
   starterCode: {
     javascript: 'function longestPalindromeSubseq(s) {\n  // your code here\n}\n',
+    typescript: "function longestPalindromeSubseq(s: string): number {\n  // your code here\n}",
+
     python: 'def longestPalindromeSubseq(s: str) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

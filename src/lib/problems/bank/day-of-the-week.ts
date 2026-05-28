@@ -43,6 +43,8 @@ function dayOfTheWeek(day, month, year) {
     javascript: `function dayOfTheWeek(day, month, year) {
 
 }`,
+    typescript: "function dayOfTheWeek(day: number, month: number, year: number): string {\n\n}",
+
     python: `def dayOfTheWeek(day, month, year):
     pass`,
   },

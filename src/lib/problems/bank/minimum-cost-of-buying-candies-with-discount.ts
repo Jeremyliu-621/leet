@@ -42,6 +42,8 @@ You are given a **1-indexed** integer array \`cost\`, where \`cost[i]\` denotes 
     javascript: `function minimumCost(cost) {
 
 }`,
+    typescript: "function minimumCost(cost: number[]): number {\n\n}",
+
     python: `def minimumCost(cost):
     pass`,
   },

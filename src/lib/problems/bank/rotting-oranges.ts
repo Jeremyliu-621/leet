@@ -43,6 +43,8 @@ Return the **minimum number of minutes** that must elapse until no cell has a fr
   preamble: {},
   starterCode: {
     javascript: 'function orangesRotting(grid) {\n  \n}\n',
+    typescript: "function orangesRotting(grid: number[][]): number {\n  \n}",
+
     python: 'def orangesRotting(grid):\n    pass\n',
   },
   visibleTests: [

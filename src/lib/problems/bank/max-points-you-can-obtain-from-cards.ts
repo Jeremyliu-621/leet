@@ -43,6 +43,8 @@ Return the **maximum** score you can obtain.`,
     javascript: `function maxScore(cardPoints, k) {
 
 }`,
+    typescript: "function maxScore(cardPoints: number[], k: number): number {\n\n}",
+
     python: `def maxScore(cardPoints, k):
     pass
 `,

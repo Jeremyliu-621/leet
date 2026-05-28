@@ -39,6 +39,8 @@ Return the length of the **longest substring** that contains only one distinct l
   params: ['s', 'k'],
   starterCode: {
     javascript: 'function characterReplacement(s, k) {\n  // your code here\n}\n',
+    typescript: "function characterReplacement(s: string, k: number): number {\n  // your code here\n}",
+
     python: 'def characterReplacement(s, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

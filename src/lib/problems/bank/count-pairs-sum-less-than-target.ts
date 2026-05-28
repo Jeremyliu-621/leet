@@ -32,6 +32,8 @@ return count;\`\`\``
   params: ['nums', 'target'],
   starterCode: {
     javascript: 'function countPairs(nums, target) {\n  \n}\n',
+    typescript: "function countPairs(nums: number[], target: number): number {\n  \n}",
+
     python: 'def countPairs(nums, target):\n    pass\n',
   },
   visibleTests: [

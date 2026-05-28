@@ -95,6 +95,8 @@ The **vertical order traversal** is a list of all non-empty columns (sorted by c
   starterCode: {
     javascript:
       '// TreeNode class is pre-defined. Implement the function below:\nfunction verticalTraversal(root) {\n  \n}\n',
+    typescript: "function verticalTraversalRunner(root: (number | null)[]): number[][] {\n  \n}",
+
     python:
       '# TreeNode class is pre-defined. Implement the function below:\ndef verticalTraversal(root):\n    pass\n',
   },

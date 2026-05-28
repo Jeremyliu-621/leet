@@ -42,6 +42,8 @@ Return an array \`answer\` of size \`n\` where \`answer[i]\` is the prefix score
     javascript: `function sumPrefixScores(words) {
   // Return array of prefix scores for each word
 }`,
+    typescript: "function sumPrefixScores(words: string[]): number[] {\n  // Return array of prefix scores for each word\n}",
+
     python: `def sumPrefixScores(words: list[str]) -> list[int]:
     # Return list of prefix scores for each word
     pass`,

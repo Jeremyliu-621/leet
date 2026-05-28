@@ -34,6 +34,8 @@ Note that houses on **opposite sides** of the street are not considered adjacent
   params: ['n'],
   starterCode: {
     javascript: 'function countWays(n) {\n\n}\n',
+    typescript: "function countWays(n: number): number {\n\n}",
+
     python: 'def countWays(n):\n    pass\n',
   },
   visibleTests: [

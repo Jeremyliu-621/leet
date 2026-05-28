@@ -31,6 +31,8 @@ export const problem: Problem = {
   params: ['moves'],
   starterCode: {
     javascript: `function judgeCircle(moves) {\n  // your code here\n}\n`,
+    typescript: "function judgeCircle(moves: string): boolean {\n  // your code here\n}",
+
     python: `def judgeCircle(moves):\n    # your code here\n    pass\n`,
   },
   visibleTests: [

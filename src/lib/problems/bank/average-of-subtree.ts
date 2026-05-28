@@ -99,6 +99,8 @@ Trees are given as level-order arrays where \`null\` represents a missing node.`
 function averageOfSubtree(root) {
   // Return count of nodes where val equals floor(subtree average)
 }`,
+    typescript: "function averageOfSubtreeRunner(root: (number | null)[]): number {\n  // Return count of nodes where val equals floor(subtree average)\n}",
+
     python: `# TreeNode class and averageOfSubtreeRunner wrapper are pre-defined.
 def averageOfSubtree(root) -> int:
     # Return count of nodes where val equals floor(subtree average)

@@ -42,6 +42,8 @@ Return the minimum number of operations needed for \`n\` to become \`1\`.`,
     javascript: `function integerReplacement(n) {
 
 }`,
+    typescript: "function integerReplacement(n: number): number {\n\n}",
+
     python: `def integerReplacement(n):
     pass`,
   },

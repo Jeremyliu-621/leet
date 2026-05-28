@@ -133,6 +133,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   starterCode: {
     javascript:
       '// TreeNode class and deleteNodeRunner wrapper are pre-defined.\n// Implement the function below:\nfunction deleteNode(root, key) {\n  \n}\n',
+    typescript: "function deleteNodeRunner(root: (number | null)[], key: number): (number | null)[] {\n  \n}",
+
     python:
       '# TreeNode class and deleteNodeRunner wrapper are pre-defined.\n# Implement the function below:\ndef deleteNode(root, key):\n    pass\n',
   },

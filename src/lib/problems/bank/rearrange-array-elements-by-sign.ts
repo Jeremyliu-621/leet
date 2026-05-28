@@ -43,6 +43,8 @@ Return the modified array after rearranging the elements to satisfy the aforemen
     javascript: `function rearrangeArray(nums) {
 
 }`,
+    typescript: "function rearrangeArray(nums: number[]): number[] {\n\n}",
+
     python: `def rearrangeArray(nums):
     pass`,
   },

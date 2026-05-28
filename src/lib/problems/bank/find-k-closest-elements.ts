@@ -46,6 +46,8 @@ return arr.slice(lo, lo+k);\`\`\``
     javascript: `function findClosestElements(arr, k, x) {
 
 }`,
+    typescript: "function findClosestElements(arr: number[], k: number, x: number): number[] {\n\n}",
+
     python: `def findClosestElements(arr, k, x):
     pass`,
   },

@@ -47,6 +47,8 @@ return true;\`\`\``
   params: ['hand', 'groupSize'],
   starterCode: {
     javascript: 'function isNStraightHand(hand, groupSize) {\n  \n}\n',
+    typescript: "function isNStraightHand(hand: number[], groupSize: number): boolean {\n  \n}",
+
     python: 'def isNStraightHand(hand, groupSize):\n    pass\n',
   },
   visibleTests: [

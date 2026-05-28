@@ -36,6 +36,8 @@ Return the **earliest** year with the **maximum population**.`,
   params: ['logs'],
   starterCode: {
     javascript: 'function maximumPopulation(logs) {\n  // your code here\n}\n',
+    typescript: "function maximumPopulation(logs: number[][]): number {\n  // your code here\n}",
+
     python: 'def maximumPopulation(logs):\n    # your code here\n    pass\n',
   },
   visibleTests: [

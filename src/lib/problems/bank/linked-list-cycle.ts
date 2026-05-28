@@ -72,6 +72,8 @@ export const problem: Problem = {
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// ListNode class and hasCycleRunner wrapper are pre-defined.\n// Implement the function below:\nfunction hasCycle(head) {\n  \n}\n',
+    typescript: "function hasCycleRunner(head: number[]): boolean {\n  \n}",
+
     python: '# ListNode class and hasCycleRunner wrapper are pre-defined.\n# Implement the function below:\ndef hasCycle(head):\n    pass\n',
   },
   visibleTests: [

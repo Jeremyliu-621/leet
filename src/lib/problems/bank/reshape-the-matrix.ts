@@ -40,6 +40,8 @@ If the reshape operation with given parameters is possible and legal, output the
   params: ['mat', 'r', 'c'],
   starterCode: {
     javascript: 'function matrixReshape(mat, r, c) {\n  // your code here\n}\n',
+    typescript: "function matrixReshape(mat: number[][], r: number, c: number): number[][] {\n  // your code here\n}",
+
     python: 'def matrixReshape(mat, r, c):\n    # your code here\n    pass\n',
   },
   visibleTests: [

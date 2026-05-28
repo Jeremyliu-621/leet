@@ -40,6 +40,8 @@ You can **rearrange** the dimensions of a cuboid. Return the **maximum height** 
   params: ['cuboids'],
   starterCode: {
     javascript: 'function maxHeight(cuboids) {\n\n}\n',
+    typescript: "function maxHeight(cuboids: number[][]): number {\n\n}",
+
     python: 'def maxHeight(cuboids: list) -> int:\n    pass\n',
   },
   visibleTests: [

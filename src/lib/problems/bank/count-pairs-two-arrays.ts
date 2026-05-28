@@ -24,6 +24,8 @@ export const problem: Problem = {
   params: ['nums', 'target'],
   starterCode: {
     javascript: 'function countPairs(nums, target) {\n  // your code here\n}\n',
+    typescript: "function countPairs(nums: number[], target: number): number {\n  // your code here\n}",
+
     python: 'def countPairs(nums, target):\n    # your code here\n    pass\n',
   },
   visibleTests: [

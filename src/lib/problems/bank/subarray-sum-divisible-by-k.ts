@@ -41,6 +41,8 @@ The subarrays with sums divisible by 5 are: [4,5,0,-2,-3,1], [5], [5,0], [5,0,-2
     javascript: `function subarraysDivByK(nums, k) {
 
 }`,
+    typescript: "function subarraysDivByK(nums: number[], k: number): number {\n\n}",
+
     python: `def subarraysDivByK(nums, k):
     pass
 `,

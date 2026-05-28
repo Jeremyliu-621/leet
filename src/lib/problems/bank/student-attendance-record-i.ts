@@ -37,6 +37,8 @@ function checkRecord(s) {
   params: ['s'],
   starterCode: {
     javascript: 'function checkRecord(s) {\n  \n}\n',
+    typescript: "function checkRecord(s: string): boolean {\n  \n}",
+
     python: 'def checkRecord(s):\n    pass\n',
   },
   visibleTests: [

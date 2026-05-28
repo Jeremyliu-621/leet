@@ -42,6 +42,8 @@ export const problem: Problem = {
     javascript: `function maxNonOverlapping(nums, target) {
 
 }`,
+    typescript: "function maxNonOverlapping(nums: number[], target: number): number {\n\n}",
+
     python: `def maxNonOverlapping(nums, target):
     pass`,
   },

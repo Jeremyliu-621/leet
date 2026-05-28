@@ -38,6 +38,8 @@ The transpose of a matrix is the matrix flipped over its main diagonal, switchin
     javascript: `function transpose(matrix) {
 
 }`,
+    typescript: "function transpose(matrix: number[][]): number[][] {\n\n}",
+
     python: `def transpose(matrix):
     pass`,
   },

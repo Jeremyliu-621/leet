@@ -35,6 +35,8 @@ export const problem: Problem = {
     javascript: `function maximumProduct(nums) {
 
 }`,
+    typescript: "function maximumProduct(nums: number[]): number {\n\n}",
+
     python: `def maximumProduct(nums):
     pass`,
   },

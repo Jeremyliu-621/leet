@@ -42,6 +42,8 @@ Return the **minimum number of boats** needed to carry every person.
   params: ['people', 'limit'],
   starterCode: {
     javascript: 'function numRescueBoats(people, limit) {\n  // your code here\n}\n',
+    typescript: "function numRescueBoats(people: number[], limit: number): number {\n  // your code here\n}",
+
     python: 'def numRescueBoats(people, limit):\n    # your code here\n    pass\n',
   },
   visibleTests: [

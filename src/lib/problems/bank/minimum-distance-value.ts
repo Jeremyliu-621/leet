@@ -42,6 +42,8 @@ function findTheDistanceValue(arr1, arr2, d) {
   params: ['arr1', 'arr2', 'd'],
   starterCode: {
     javascript: 'function findTheDistanceValue(arr1, arr2, d) {\n  \n}\n',
+    typescript: "function findTheDistanceValue(arr1: number[], arr2: number[], d: number): number {\n  \n}",
+
     python: 'def findTheDistanceValue(arr1, arr2, d):\n    pass\n',
   },
   visibleTests: [

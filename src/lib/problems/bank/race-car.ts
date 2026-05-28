@@ -43,6 +43,8 @@ Explanation: "AAARA" reaches position 6
   params: ['target'],
   starterCode: {
     javascript: 'function racecar(target) {\n\n}\n',
+    typescript: "function racecar(target: number): number {\n\n}",
+
     python: 'def racecar(target):\n    pass\n',
   },
   visibleTests: [

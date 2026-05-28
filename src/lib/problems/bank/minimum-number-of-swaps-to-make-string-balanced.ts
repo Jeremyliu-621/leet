@@ -43,6 +43,8 @@ Return the **minimum** number of swaps to make \`s\` balanced.`,
   params: ['s'],
   starterCode: {
     javascript: 'function minimumSwaps(s) {\n\n}\n',
+    typescript: "function minimumSwaps(s: string): number {\n\n}",
+
     python: 'def minimumSwaps(s):\n    pass\n',
   },
   visibleTests: [

@@ -89,6 +89,8 @@ You must swap the **nodes themselves**, not just their values.
   starterCode: {
     javascript:
       '// ListNode class and swapPairsRunner wrapper are pre-defined.\n// Implement the function below:\nfunction swapPairs(head) {\n  \n}\n',
+    typescript: "function swapPairsRunner(head: number[]): number[] {\n  \n}",
+
     python:
       '# ListNode class and swapPairsRunner wrapper are pre-defined.\n# Implement the function below:\ndef swapPairs(head):\n    pass\n',
   },

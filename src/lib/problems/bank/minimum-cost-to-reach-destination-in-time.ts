@@ -56,6 +56,8 @@ You want to travel from city \`0\` to city \`n - 1\` in at most \`maxTime\` minu
     javascript: `function minCost(maxTime, edges, passingFees) {
 
 }`,
+    typescript: "function minCost(maxTime: number, edges: number[][], passingFees: number[]): number {\n\n}",
+
     python: `def minCost(maxTime: int, edges: list[list[int]], passingFees: list[int]) -> int:
     pass`,
   },

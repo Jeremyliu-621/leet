@@ -41,6 +41,8 @@ Return an array containing the answers to each query.
   params: ['intervals', 'queries'],
   starterCode: {
     javascript: 'function minInterval(intervals, queries) {\n\n}\n',
+    typescript: "function minInterval(intervals: number[][], queries: number[]): number[] {\n\n}",
+
     python: 'def minInterval(intervals: list, queries: list) -> list:\n    pass\n',
   },
   visibleTests: [

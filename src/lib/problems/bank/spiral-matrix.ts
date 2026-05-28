@@ -40,6 +40,8 @@ Traverse: right across the top row, down the right column, left across the botto
   params: ['matrix'] as readonly string[],
   starterCode: {
     javascript: 'function spiralOrder(matrix) {\n  // your code here\n}\n',
+    typescript: "function spiralOrder(matrix: number[][]): number[] {\n  // your code here\n}",
+
     python: 'def spiralOrder(matrix: list[list[int]]) -> list[int]:\n    # your code here\n    pass\n',
   },
   visibleTests: [

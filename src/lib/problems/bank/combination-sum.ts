@@ -65,6 +65,8 @@ The combination must be in **non-decreasing order** and the result set must not 
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: 'function combinationSum(candidates, target) {\n  \n}\n',
+    typescript: "function combinationSumRunner(candidates: number[], target: number): number[][] {\n  \n}",
+
     python: 'def combinationSum(candidates, target):\n    pass\n',
   },
   visibleTests: [

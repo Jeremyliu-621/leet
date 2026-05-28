@@ -46,6 +46,8 @@ function sortJumbled(mapping, nums) {
   params: ['mapping', 'nums'],
   starterCode: {
     javascript: 'function sortJumbled(mapping, nums) {\n  \n}\n',
+    typescript: "function sortJumbled(mapping: number[], nums: number[]): number[] {\n  \n}",
+
     python: 'def sortJumbled(mapping, nums):\n    pass\n',
   },
   visibleTests: [

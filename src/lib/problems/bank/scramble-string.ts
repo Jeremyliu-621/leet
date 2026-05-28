@@ -48,6 +48,8 @@ Use memoization to avoid recomputation.`,
   params: ['s1', 's2'],
   starterCode: {
     javascript: 'function isScramble(s1, s2) {\n\n}\n',
+    typescript: "function isScramble(s1: string, s2: string): boolean {\n\n}",
+
     python: 'def isScramble(s1: str, s2: str) -> bool:\n    pass\n',
   },
   visibleTests: [

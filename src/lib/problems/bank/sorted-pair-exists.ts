@@ -37,6 +37,8 @@ export const problem: Problem = {
   params: ['nums', 'target'],
   starterCode: {
     javascript: 'function sortedPairExists(nums, target) {\n  // your code here\n}\n',
+    typescript: "function sortedPairExists(nums: number[], target: number): boolean {\n  // your code here\n}",
+
     python: 'def sortedPairExists(nums, target):\n    # your code here\n    pass\n',
   },
   visibleTests: [

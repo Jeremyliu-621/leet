@@ -46,6 +46,8 @@ Implement a function \`sumRegion(matrix, row1, col1, row2, col2)\` that returns 
     javascript: `function sumRegion(matrix, row1, col1, row2, col2) {
 
 }`,
+    typescript: "function sumRegion(matrix: number[][], row1: number, col1: number, row2: number, col2: number): number {\n\n}",
+
     python: `def sumRegion(matrix, row1, col1, row2, col2):
     pass`,
   },

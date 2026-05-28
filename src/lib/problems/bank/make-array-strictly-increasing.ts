@@ -45,6 +45,8 @@ Return \`-1\` if it is impossible to make \`arr1\` strictly increasing.
   // Sort and deduplicate arr2, then use DP
 
 }`,
+    typescript: "function makeArrayIncreasing(arr1: number[], arr2: number[]): number {\n  // Sort and deduplicate arr2, then use DP\n\n}",
+
     python: `def makeArrayIncreasing(arr1, arr2):
     # Sort and deduplicate arr2, then use DP
     pass

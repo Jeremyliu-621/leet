@@ -42,6 +42,8 @@ Return an array of results from **only** the \`back\` and \`forward\` calls (in 
   params: ['homepage', 'ops'],
   starterCode: {
     javascript: 'function browserHistory(homepage, ops) {\n\n}\n',
+    typescript: "function browserHistory(homepage: string, ops: (string[] | (string | number)[])[]): string[] {\n\n}",
+
     python: 'def browserHistory(homepage, ops):\n    pass\n',
   },
   visibleTests: [

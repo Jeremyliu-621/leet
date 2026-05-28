@@ -48,6 +48,8 @@ Since the answer may be very large, return it **modulo \`10^9 + 7\`**.`,
   params: ['n'],
   starterCode: {
     javascript: 'function knightDialer(n) {\n\n}\n',
+    typescript: "function knightDialer(n: number): number {\n\n}",
+
     python: 'def knightDialer(n):\n    pass\n',
   },
   visibleTests: [

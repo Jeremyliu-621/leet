@@ -58,6 +58,8 @@ Best total: \`5+4+3+2 + 5+4 = ...\`  → Actually: sorted by count descending, a
     javascript: `function maxSumRangeQuery(nums, requests) {
 
 }`,
+    typescript: "function maxSumRangeQuery(nums: number[], requests: number[][]): number {\n\n}",
+
     python: `def maxSumRangeQuery(nums, requests):
     pass
 `,

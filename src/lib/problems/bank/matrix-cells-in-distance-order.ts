@@ -52,6 +52,8 @@ function allCellsDistOrder(rows, cols, rCenter, cCenter) {
     javascript: `function matrixCellsInDistanceOrder(rows, cols, rCenter, cCenter) {
 
 }`,
+    typescript: "function matrixCellsInDistanceOrder(rows: number, cols: number, rCenter: number, cCenter: number): number[][] {\n\n}",
+
     python: `def matrixCellsInDistanceOrder(rows, cols, rCenter, cCenter):
     pass`,
   },

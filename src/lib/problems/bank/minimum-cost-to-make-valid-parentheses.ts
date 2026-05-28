@@ -43,6 +43,8 @@ Output: 3
   params: ['s'],
   starterCode: {
     javascript: 'function minAddToMakeValid(s) {\n\n}\n',
+    typescript: "function minAddToMakeValid(s: string): number {\n\n}",
+
     python: 'def minAddToMakeValid(s):\n    pass\n',
   },
   visibleTests: [

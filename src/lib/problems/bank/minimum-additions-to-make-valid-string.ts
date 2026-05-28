@@ -40,6 +40,8 @@ You can insert any character at any position.`,
   params: ['word'],
   starterCode: {
     javascript: 'function addMinimum(word) {\n  // your code here\n}\n',
+    typescript: "function addMinimum(word: string): number {\n  // your code here\n}",
+
     python: 'def addMinimum(word):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -31,6 +31,8 @@ return Object.values(freq).reduce((acc, v) => acc + (v % 2 === 0 ? 2 : 1), 0);\`
   params: ['s'],
   starterCode: {
     javascript: 'function minLength(s) {\n  \n}\n',
+    typescript: "function minLength(s: string): number {\n  \n}",
+
     python: 'def minLength(s):\n    pass\n',
   },
   visibleTests: [

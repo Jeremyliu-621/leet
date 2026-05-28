@@ -40,6 +40,8 @@ Find the maximum profit you can achieve. You may complete **at most two transact
   params: ['prices'],
   starterCode: {
     javascript: 'function maxProfit(prices) {\n\n}',
+    typescript: "function maxProfit(prices: number[]): number {\n\n}",
+
     python: 'def maxProfit(prices):\n    pass',
   },
   visibleTests: [

@@ -45,6 +45,8 @@ Return the **original array** \`nums\`. There is always exactly one valid answer
   // return the original array given its adjacent pairs
 
 }`,
+    typescript: "function restoreArray(adjacentPairs: number[][]): number[] {\n  // return the original array given its adjacent pairs\n\n}",
+
     python: `def restoreArray(adjacentPairs: list) -> list:
     # return the original array given its adjacent pairs
     pass

@@ -38,6 +38,8 @@ A **complete day** is any duration that is a multiple of 24 hours.`,
   params: ['hours'],
   starterCode: {
     javascript: 'function countCompleteDayPairs(hours) {\n  \n}\n',
+    typescript: "function countCompleteDayPairs(hours: number[]): number {\n  \n}",
+
     python: 'def countCompleteDayPairs(hours):\n    pass\n',
   },
   visibleTests: [

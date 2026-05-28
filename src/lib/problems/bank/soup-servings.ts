@@ -46,6 +46,8 @@ Answers within \`10^-5\` of the actual answer will be accepted.
     javascript: `function soupServings(n) {
 
 }`,
+    typescript: "function soupServings(n: number): number {\n\n}",
+
     python: `def soupServings(n):
     pass`,
   },

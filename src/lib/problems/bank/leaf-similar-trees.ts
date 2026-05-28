@@ -96,6 +96,8 @@ Return \`true\` if and only if the two given trees are leaf-similar.
   starterCode: {
     javascript:
       '// TreeNode class is pre-defined. Implement the function below:\nfunction leafSimilar(root1, root2) {\n  \n}\n',
+    typescript: "function leafSimilarRunner(root1: (number | null)[], root2: (number | null)[]): boolean {\n  \n}",
+
     python:
       '# TreeNode class is pre-defined. Implement the function below:\ndef leafSimilar(root1, root2):\n    pass\n',
   },

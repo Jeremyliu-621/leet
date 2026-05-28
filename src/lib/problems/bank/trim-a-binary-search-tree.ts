@@ -42,6 +42,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   // return root of trimmed BST
 
 }`,
+    typescript: "function trimBST(root: number[], low: number, high: number): (number | null)[] {\n  // return root of trimmed BST\n\n}",
+
     python: `def trimBST(root, low: int, high: int):
     # return root of trimmed BST
     pass

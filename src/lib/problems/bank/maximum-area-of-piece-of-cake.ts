@@ -48,6 +48,8 @@ Return the maximum area of a piece of cake after you cut at each horizontal and 
     javascript: `function maxArea(h, w, horizontalCuts, verticalCuts) {
 
 }`,
+    typescript: "function maxArea(h: number, w: number, horizontalCuts: number[], verticalCuts: number[]): number {\n\n}",
+
     python: `def maxArea(h, w, horizontalCuts, verticalCuts):
     pass`,
   },

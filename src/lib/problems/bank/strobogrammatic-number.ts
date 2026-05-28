@@ -47,6 +47,8 @@ Output: false
     javascript: `function isStrobogrammatic(num) {
 
 }`,
+    typescript: "function isStrobogrammatic(num: string): boolean {\n\n}",
+
     python: `def isStrobogrammatic(num):
     `,
   },

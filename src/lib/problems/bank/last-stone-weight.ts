@@ -40,6 +40,8 @@ At the end of the game, there is **at most one** stone left. Return the weight o
     javascript: `function lastStoneWeight(stones) {
 
 }`,
+    typescript: "function lastStoneWeight(stones: number[]): number {\n\n}",
+
     python: `def lastStoneWeight(stones):
     pass`,
   },

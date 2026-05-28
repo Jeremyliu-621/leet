@@ -47,6 +47,8 @@ Each job can be selected at most once.
     javascript: `function jobScheduling(startTime, endTime, profit) {
   // Return maximum profit from non-overlapping job subset
 }`,
+    typescript: "function jobScheduling(startTime: number[], endTime: number[], profit: number[]): number {\n  // Return maximum profit from non-overlapping job subset\n}",
+
     python: `def jobScheduling(startTime: list[int], endTime: list[int], profit: list[int]) -> int:
     # Return maximum profit from non-overlapping job subset
     pass`,

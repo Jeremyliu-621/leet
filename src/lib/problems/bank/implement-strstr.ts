@@ -38,6 +38,8 @@ export const problem: Problem = {
   params: ['haystack', 'needle'],
   starterCode: {
     javascript: 'function strStr(haystack, needle) {\n  \n}\n',
+    typescript: "function strStr(haystack: string, needle: string): number {\n  \n}",
+
     python: 'def strStr(haystack, needle):\n    pass\n',
   },
   visibleTests: [

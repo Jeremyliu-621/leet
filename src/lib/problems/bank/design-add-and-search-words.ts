@@ -62,6 +62,8 @@ Implement the \`WordDictionary\` class:
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// wordDictionaryRunner is pre-defined.\nclass WordDictionary {\n  constructor() {}\n  addWord(word) {}\n  search(word) {}\n}\n',
+    typescript: "function wordDictionaryRunner(ops: string[], args: string[][]): (null | boolean)[] {\n  constructor() {}\n  addWord(word) {}\n  search(word) {}\n}",
+
     python: '# wordDictionaryRunner is pre-defined.\nclass WordDictionary:\n    def __init__(self): pass\n    def addWord(self, word): pass\n    def search(self, word): pass\n',
   },
   visibleTests: [

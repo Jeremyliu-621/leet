@@ -42,6 +42,8 @@ Return the **sum of integers** in the matrix after all queries are applied.`,
   params: ['n', 'queries'],
   starterCode: {
     javascript: 'function matrixSumQueries(n, queries) {\n  \n}\n',
+    typescript: "function matrixSumQueries(n: number, queries: number[][]): number {\n  \n}",
+
     python: 'def matrixSumQueries(n, queries):\n    pass\n',
   },
   visibleTests: [

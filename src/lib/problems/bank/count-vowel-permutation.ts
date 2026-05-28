@@ -41,6 +41,8 @@ Return the number of strings of length \`n\`. Since the answer may be too large,
   params: ['n'],
   starterCode: {
     javascript: 'function countVowelPermutation(n) {\n\n}\n',
+    typescript: "function countVowelPermutation(n: number): number {\n\n}",
+
     python: 'def countVowelPermutation(n):\n    pass\n',
   },
   visibleTests: [

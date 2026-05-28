@@ -37,6 +37,8 @@ Return the city with the smallest number of cities that are reachable through so
   params: ['n', 'edges', 'distanceThreshold'],
   starterCode: {
     javascript: 'function findTheCity(n, edges, distanceThreshold) {\n  // your code here\n}\n',
+    typescript: "function findTheCity(n: number, edges: number[][], distanceThreshold: number): number {\n  // your code here\n}",
+
     python: 'def findTheCity(n, edges, distanceThreshold):\n    # your code here\n    pass\n',
   },
   visibleTests: [

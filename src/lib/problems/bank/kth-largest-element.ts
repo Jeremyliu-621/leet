@@ -42,6 +42,8 @@ For example, in the array \`[3,2,1,5,6,4]\` with \`k=2\`, the 2nd largest elemen
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function kthLargest(nums, k) {\n  // your code here\n}\n',
+    typescript: "function kthLargest(nums: number[], k: number): number {\n  // your code here\n}",
+
     python: 'def kthLargest(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

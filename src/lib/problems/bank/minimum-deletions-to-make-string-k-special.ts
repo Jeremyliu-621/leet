@@ -41,6 +41,8 @@ Return the **minimum** number of characters you need to delete from \`word\` to 
   params: ['word', 'k'],
   starterCode: {
     javascript: 'function minimumDeletions(word, k) {\n  \n}\n',
+    typescript: "function minimumDeletions(word: string, k: number): number {\n  \n}",
+
     python: 'def minimumDeletions(word: str, k: int) -> int:\n    pass\n',
   },
   visibleTests: [

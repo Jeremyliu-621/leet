@@ -40,6 +40,8 @@ Return the **minimum** number of chairs needed so that every person who enters t
     javascript: `function minimumChairs(s) {
 
 }`,
+    typescript: "function minimumChairs(s: string): number {\n\n}",
+
     python: `def minimumChairs(s):
     pass`,
   },

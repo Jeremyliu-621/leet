@@ -35,6 +35,8 @@ The **distance** between two indices \`i\` and \`j\` is \`|i - j|\`.`,
   params: ['s', 'c'],
   starterCode: {
     javascript: 'function shortestToChar(s, c) {\n  // your code here\n}\n',
+    typescript: "function shortestToChar(s: string, c: string): number[] {\n  // your code here\n}",
+
     python: 'def shortestToChar(s, c):\n    # your code here\n    pass\n',
   },
   visibleTests: [

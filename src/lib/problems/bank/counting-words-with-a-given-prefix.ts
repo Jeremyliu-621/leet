@@ -42,6 +42,8 @@ function prefixCount(words, pref) {
     javascript: `function prefixCount(words, pref) {
 
 }`,
+    typescript: "function prefixCount(words: string[], pref: string): number {\n\n}",
+
     python: `def prefixCount(words, pref):
     pass`,
   },

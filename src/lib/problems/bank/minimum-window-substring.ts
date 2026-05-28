@@ -41,6 +41,8 @@ A **window** is a contiguous substring of \`s\`. The characters from \`t\` do no
   params: ['s', 't'],
   starterCode: {
     javascript: 'function minWindow(s, t) {\n  // your code here\n}\n',
+    typescript: "function minWindow(s: string, t: string): string {\n  // your code here\n}",
+
     python: 'def minWindow(s, t):\n    # your code here\n    pass\n',
   },
   visibleTests: [

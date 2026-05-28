@@ -38,6 +38,8 @@ Return the **maximum** possible bitwise XOR of all elements of \`nums\` after ap
   params: ['nums'],
   starterCode: {
     javascript: 'function maximumXOR(nums) {\n\n}\n',
+    typescript: "function maximumXOR(nums: number[]): number {\n\n}",
+
     python: 'def maximumXOR(nums: list) -> int:\n    pass\n',
   },
   visibleTests: [

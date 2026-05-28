@@ -38,6 +38,8 @@ Given an integer array \`nums\` and an integer \`k\`, return the **k-th smallest
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function smallestDistancePair(nums, k) {\n  // your code here\n}\n',
+    typescript: "function smallestDistancePair(nums: number[], k: number): number {\n  // your code here\n}",
+
     python: 'def smallestDistancePair(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

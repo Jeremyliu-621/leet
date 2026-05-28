@@ -33,6 +33,8 @@ export const problem: Problem = {
     javascript: `function countLetters(s) {
 
 }`,
+    typescript: "function countLetters(s: string): number {\n\n}",
+
     python: `def countLetters(s):
     pass`,
   },

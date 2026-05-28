@@ -43,6 +43,8 @@ Return the **minimum possible sum** of a mountain triplet of \`nums\`. If no suc
     javascript: `function minimumSum(nums) {
 
 }`,
+    typescript: "function minimumSum(nums: number[]): number {\n\n}",
+
     python: `def minimumSum(nums):
     pass`,
   },

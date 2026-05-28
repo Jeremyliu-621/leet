@@ -130,6 +130,8 @@ Return the **merged tree**.
 function mergeTrees(root1, root2) {
 
 }`,
+    typescript: "function mergeTreesRunner(root1: number[], root2: (number | null)[]): (number | null)[] {\n\n}",
+
     python: `# TreeNode is pre-defined. Implement the function below:
 def mergeTrees(root1, root2):
     pass`,

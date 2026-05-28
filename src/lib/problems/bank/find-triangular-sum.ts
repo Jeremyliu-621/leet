@@ -39,6 +39,8 @@ Return the triangular sum of \`nums\`.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function triangularSum(nums) {\n  // your code here\n}\n',
+    typescript: "function triangularSum(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def triangularSum(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

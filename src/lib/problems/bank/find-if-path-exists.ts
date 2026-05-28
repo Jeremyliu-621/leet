@@ -45,6 +45,8 @@ Given the integers \`n\`, \`edges\`, \`source\`, and \`destination\`, return \`t
   params: ['n', 'edges', 'source', 'destination'],
   starterCode: {
     javascript: 'function validPath(n, edges, source, destination) {\n  \n}\n',
+    typescript: "function validPath(n: number, edges: number[][], source: number, destination: number): boolean {\n  \n}",
+
     python: 'def validPath(n, edges, source, destination):\n    pass\n',
   },
   visibleTests: [

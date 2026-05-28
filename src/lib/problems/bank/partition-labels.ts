@@ -40,6 +40,8 @@ Return a list of integers representing the **size of each part**.
   params: ['s'],
   starterCode: {
     javascript: 'function partitionLabels(s) {\n  // your code here\n}\n',
+    typescript: "function partitionLabels(s: string): number[] {\n  // your code here\n}",
+
     python: 'def partitionLabels(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

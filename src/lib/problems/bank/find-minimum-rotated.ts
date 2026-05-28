@@ -42,6 +42,8 @@ The array was originally sorted in ascending order before being rotated. You mus
   params: ['nums'],
   starterCode: {
     javascript: 'function findMinRotated(nums) {\n  // your code here\n}\n',
+    typescript: "function findMinRotated(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def findMinRotated(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

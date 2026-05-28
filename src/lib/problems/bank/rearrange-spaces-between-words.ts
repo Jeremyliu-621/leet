@@ -44,6 +44,8 @@ function reorderSpaces(text) {
     javascript: `function reorderSpaces(text) {
 
 }`,
+    typescript: "function reorderSpaces(text: string): string {\n\n}",
+
     python: `def reorderSpaces(text):
     pass`,
   },

@@ -37,6 +37,8 @@ Return the **minimum number of seconds** needed to buy all tickets for the perso
   params: ['tickets', 'k'],
   starterCode: {
     javascript: 'function timeRequiredToBuy(tickets, k) {\n  \n}\n',
+    typescript: "function timeRequiredToBuy(tickets: number[], k: number): number {\n  \n}",
+
     python: 'def timeRequiredToBuy(tickets, k):\n    pass\n',
   },
   visibleTests: [

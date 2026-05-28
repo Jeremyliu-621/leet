@@ -42,6 +42,8 @@ Return the array \`answer\`.`,
   starterCode: {
     javascript:
       'function leftRigthDifference(nums) {\n  // your code here\n}\n',
+    typescript: "function leftRigthDifference(nums: number[]): number[] {\n  // your code here\n}",
+
     python:
       'def leftRigthDifference(nums):\n    # your code here\n    pass\n',
   },

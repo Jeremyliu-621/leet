@@ -40,6 +40,8 @@ Return the smallest index \`i\` at which either a row or a column will be **comp
   params: ['arr', 'mat'],
   starterCode: {
     javascript: 'function firstCompleteIndex(arr, mat) {\n  \n}\n',
+    typescript: "function firstCompleteIndex(arr: number[], mat: number[][]): number {\n  \n}",
+
     python: 'def firstCompleteIndex(arr, mat):\n    pass\n',
   },
   visibleTests: [

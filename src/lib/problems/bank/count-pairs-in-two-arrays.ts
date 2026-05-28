@@ -32,6 +32,8 @@ export const problem: Problem = {
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: 'function countPairs(nums1, nums2) {\n\n}',
+    typescript: "function countPairs(nums1: number[], nums2: number[]): number {\n\n}",
+
     python: 'def countPairs(nums1, nums2):\n    pass',
   },
   visibleTests: [

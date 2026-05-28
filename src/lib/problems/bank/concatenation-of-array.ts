@@ -36,6 +36,8 @@ Return the array \`ans\`.`,
     javascript: `function getConcatenation(nums) {
 
 }`,
+    typescript: "function getConcatenation(nums: number[]): number[] {\n\n}",
+
     python: `def getConcatenation(nums):
     pass`,
   },

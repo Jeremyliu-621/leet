@@ -35,6 +35,8 @@ Return the **maximum** score you can get.`,
   params: ['a', 'b', 'c'],
   starterCode: {
     javascript: 'function maximumScore(a, b, c) {\n\n}\n',
+    typescript: "function maximumScore(a: number, b: number, c: number): number {\n\n}",
+
     python: 'def maximumScore(a, b, c):\n    pass\n',
   },
   visibleTests: [

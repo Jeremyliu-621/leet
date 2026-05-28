@@ -46,6 +46,8 @@ function distinctAverages(nums) {
   params: ['nums'],
   starterCode: {
     javascript: 'function distinctAverages(nums) {\n  \n}\n',
+    typescript: "function distinctAverages(nums: number[]): number {\n  \n}",
+
     python: 'def distinctAverages(nums):\n    pass\n',
   },
   visibleTests: [

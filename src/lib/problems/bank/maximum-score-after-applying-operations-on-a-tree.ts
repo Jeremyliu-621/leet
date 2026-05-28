@@ -46,6 +46,8 @@ Return the **maximum total score** you can get by applying operations while keep
     javascript: `function maximumScoreAfterOperations(edges, values) {
 
 }`,
+    typescript: "function maximumScoreAfterOperations(edges: number[][], values: number[]): number {\n\n}",
+
     python: `def maximumScoreAfterOperations(edges, values):
     pass`,
   },

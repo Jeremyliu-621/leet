@@ -31,6 +31,8 @@ How many possible unique paths are there?`,
   params: ['m', 'n'],
   starterCode: {
     javascript: 'function uniquePaths(m, n) {\n  \n}\n',
+    typescript: "function uniquePaths(m: number, n: number): number {\n  \n}",
+
     python: 'def uniquePaths(m: int, n: int) -> int:\n    pass\n',
   },
   visibleTests: [

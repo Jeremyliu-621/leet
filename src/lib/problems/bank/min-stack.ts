@@ -75,6 +75,8 @@ You must implement a solution with **O(1) time complexity** for each function.
   starterCode: {
     javascript:
       '// minStackRunner is pre-defined and calls your class below.\nclass MinStack {\n  constructor() {}\n  push(val) {}\n  pop() {}\n  top() {}\n  getMin() {}\n}\n',
+    typescript: "function minStackRunner(ops: string[], args: (number[] | unknown[])[]): (null | number)[] {\n  constructor() {}\n  push(val) {}\n  pop() {}\n  top() {}\n  getMin() {}\n}",
+
     python:
       '# minStackRunner is pre-defined and calls your class below.\nclass MinStack:\n    def __init__(self): pass\n    def push(self, val): pass\n    def pop(self): pass\n    def top(self): pass\n    def getMin(self): pass\n',
   },

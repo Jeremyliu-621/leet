@@ -27,6 +27,8 @@ return sieve.reduce((a,b)=>a+b,0);\`\`\``
   params: ['n'],
   starterCode: {
     javascript: 'function countPrimes(n) {\n  \n}\n',
+    typescript: "function countPrimes(n: number): number {\n  \n}",
+
     python: 'def countPrimes(n):\n    pass\n',
   },
   visibleTests: [

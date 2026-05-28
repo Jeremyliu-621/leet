@@ -31,6 +31,8 @@ export const problem: Problem = {
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function canPartitionKSubsets(nums, k) {\n\n}\n',
+    typescript: "function canPartitionKSubsets(nums: number[], k: number): boolean {\n\n}",
+
     python: 'def canPartitionKSubsets(nums, k):\n    pass\n',
   },
   visibleTests: [

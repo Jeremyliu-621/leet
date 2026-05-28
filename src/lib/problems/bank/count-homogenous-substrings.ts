@@ -38,6 +38,8 @@ A **substring** is a contiguous sequence of characters within a string.`,
   params: ['s'],
   starterCode: {
     javascript: 'function countHomogenous(s) {\n  // your code here\n}\n',
+    typescript: "function countHomogenous(s: string): number {\n  // your code here\n}",
+
     python: 'def countHomogenous(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

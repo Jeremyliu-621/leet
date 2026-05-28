@@ -32,6 +32,8 @@ export const problem: Problem = {
     javascript: `function commonChars(words) {
 
 }`,
+    typescript: "function commonChars(words: string[]): string[] {\n\n}",
+
     python: `def commonChars(words):
     pass`,
   },

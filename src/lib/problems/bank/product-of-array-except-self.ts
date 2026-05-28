@@ -38,6 +38,8 @@ You must write an algorithm that runs in \`O(n)\` time and **without using the d
     javascript: `function productExceptSelf(nums) {
 
 }`,
+    typescript: "function productExceptSelf(nums: number[]): number[] {\n\n}",
+
     python: `def productExceptSelf(nums):
     pass`,
   },

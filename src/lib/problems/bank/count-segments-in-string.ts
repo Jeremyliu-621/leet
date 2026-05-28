@@ -37,6 +37,8 @@ Note that a string with only spaces has zero segments.`,
     javascript: `function countSegments(s) {
 
 }`,
+    typescript: "function countSegments(s: string): number {\n\n}",
+
     python: `def countSegments(s: str) -> int:
     pass`,
   },

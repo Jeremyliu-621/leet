@@ -48,6 +48,8 @@ function clearDigits(s) {
   params: ['s'],
   starterCode: {
     javascript: 'function clearDigits(s) {\n  \n}\n',
+    typescript: "function clearDigits(s: string): string {\n  \n}",
+
     python: 'def clearDigits(s):\n    pass\n',
   },
   visibleTests: [

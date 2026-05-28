@@ -33,6 +33,8 @@ export const problem: Problem = {
     javascript: `function sortedSquares(nums) {
 
 }`,
+    typescript: "function sortedSquares(nums: number[]): number[] {\n\n}",
+
     python: `def sortedSquares(nums):
     pass`,
   },

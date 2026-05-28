@@ -51,6 +51,8 @@ return res;\`\`\``
     javascript: `function removeOuterParentheses(s) {
 
 }`,
+    typescript: "function removeOuterParentheses(s: string): string {\n\n}",
+
     python: `def removeOuterParentheses(s):
     pass`,
   },

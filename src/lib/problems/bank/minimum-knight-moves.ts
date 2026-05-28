@@ -37,6 +37,8 @@ Return the minimum number of steps needed to move the knight to the square \`[x,
     javascript: `function minKnightMoves(x, y) {
 
 }`,
+    typescript: "function minKnightMoves(x: number, y: number): number {\n\n}",
+
     python: `def minKnightMoves(x, y):
     pass`,
   },

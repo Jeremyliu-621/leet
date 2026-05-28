@@ -43,6 +43,8 @@ A subarray is a contiguous portion of the array.`,
     javascript: `function maxSum(nums, m, k) {
   // your code here
 }`,
+    typescript: "function maxSum(nums: number[], m: number, k: number): number {\n  // your code here\n}",
+
     python: `def maxSum(nums, m, k):
     # your code here
     pass`,

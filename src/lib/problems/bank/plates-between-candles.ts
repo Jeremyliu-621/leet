@@ -37,6 +37,8 @@ Return an integer array \`answer\` where \`answer[i]\` is the answer to the \`i\
   params: ['s', 'queries'],
   starterCode: {
     javascript: 'function platesBetweenCandles(s, queries) {\n\n}\n',
+    typescript: "function platesBetweenCandles(s: string, queries: number[][]): number[] {\n\n}",
+
     python: 'def platesBetweenCandles(s, queries):\n    pass\n',
   },
   visibleTests: [

@@ -39,6 +39,8 @@ export const problem: Problem = {
     javascript: `function sumOfNumberAndReverse(num) {
 
 }`,
+    typescript: "function sumOfNumberAndReverse(num: number): boolean {\n\n}",
+
     python: `def sumOfNumberAndReverse(num):
     pass`,
   },

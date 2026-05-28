@@ -48,6 +48,8 @@ Return an integer array \`answer\` where \`answer[x]\` is the **least quiet** (l
     javascript: `function loudAndRich(richer, quiet) {
   // Return answer[x] = least quiet person at least as rich as x, for each x
 }`,
+    typescript: "function loudAndRich(richer: number[][], quiet: number[]): number[] {\n  // Return answer[x] = least quiet person at least as rich as x, for each x\n}",
+
     python: `def loudAndRich(richer: list[list[int]], quiet: list[int]) -> list[int]:
     # Return answer[x] = least quiet person at least as rich as x, for each x
     pass`,

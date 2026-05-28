@@ -37,6 +37,8 @@ Return the final string after all such duplicate removals have been made. It can
     javascript: `function removeDuplicates(s) {
 
 }`,
+    typescript: "function removeDuplicates(s: string): string {\n\n}",
+
     python: `def removeDuplicates(s):
     pass`,
   },

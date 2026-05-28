@@ -42,6 +42,8 @@ This is the classic **Dutch National Flag** problem.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function sortColors(nums) {\n  // your code here\n}\n',
+    typescript: "function sortColors(nums: number[]): number[] {\n  // your code here\n}",
+
     python: 'def sortColors(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

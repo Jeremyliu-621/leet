@@ -48,6 +48,8 @@ return cnt[0] + cnt[1];\`\`\``
   params: ['students', 'sandwiches'],
   starterCode: {
     javascript: 'function countStudents(students, sandwiches) {\n  \n}\n',
+    typescript: "function countStudents(students: number[], sandwiches: number[]): number {\n  \n}",
+
     python: 'def countStudents(students, sandwiches):\n    pass\n',
   },
   visibleTests: [

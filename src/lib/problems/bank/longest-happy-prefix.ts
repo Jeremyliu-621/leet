@@ -52,6 +52,8 @@ return s.slice(0, prefix[n-1]);\`\`\``
   // return the longest happy prefix (also a suffix) of s
 
 }`,
+    typescript: "function longestPrefix(s: string): string {\n  // return the longest happy prefix (also a suffix) of s\n\n}",
+
     python: `def longestPrefix(s: str) -> str:
     # return the longest happy prefix (also a suffix) of s
     pass

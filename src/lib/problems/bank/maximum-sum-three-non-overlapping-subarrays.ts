@@ -35,6 +35,8 @@ Return the result as a list of indices representing the starting position of eac
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function maxSumOfThreeSubarrays(nums, k) {\n\n}\n',
+    typescript: "function maxSumOfThreeSubarrays(nums: number[], k: number): number[] {\n\n}",
+
     python: 'def maxSumOfThreeSubarrays(nums: list, k: int) -> list:\n    pass\n',
   },
   visibleTests: [

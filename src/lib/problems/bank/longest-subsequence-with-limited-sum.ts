@@ -47,6 +47,8 @@ function answerQueries(nums, queries) {
   params: ['nums', 'queries'],
   starterCode: {
     javascript: 'function answerQueries(nums, queries) {\n\n}\n',
+    typescript: "function answerQueries(nums: number[], queries: number[]): number[] {\n\n}",
+
     python: 'def answerQueries(nums, queries):\n    pass\n',
   },
   visibleTests: [

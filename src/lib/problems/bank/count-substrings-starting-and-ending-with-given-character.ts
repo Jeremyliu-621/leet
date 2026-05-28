@@ -33,6 +33,8 @@ export const problem: Problem = {
   params: ['s', 'c'],
   starterCode: {
     javascript: 'function countSubstrings(s, c) {\n  \n}\n',
+    typescript: "function countSubstrings(s: string, c: string): number {\n  \n}",
+
     python: 'def countSubstrings(s, c):\n    pass\n',
   },
   visibleTests: [

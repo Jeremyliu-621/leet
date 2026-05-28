@@ -39,6 +39,8 @@ You can change the value of **two** elements of \`nums\` to any value (you can a
     javascript: `function minimizeSum(nums) {
 
 }`,
+    typescript: "function minimizeSum(nums: number[]): number {\n\n}",
+
     python: `def minimizeSum(nums):
     pass
 `,

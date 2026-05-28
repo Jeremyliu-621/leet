@@ -88,6 +88,8 @@ Return the head of the merged linked list.`,
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// ListNode class and mergeTwoListsRunner wrapper are pre-defined.\n// Implement the function below:\nfunction mergeTwoLists(list1, list2) {\n  \n}\n',
+    typescript: "function mergeTwoListsRunner(list1: number[], list2: number[]): number[] {\n  \n}",
+
     python: '# ListNode class and mergeTwoListsRunner wrapper are pre-defined.\n# Implement the function below:\ndef mergeTwoLists(list1, list2):\n    pass\n',
   },
   visibleTests: [

@@ -43,6 +43,8 @@ Return the **minimum** number of coins **of any value** that need to be added to
 function minimumAddedCoins(coins, target) {
 
 }`,
+    typescript: "function minimumAddedCoins(coins: number[], target: number): number {number[]} coins\n * @param {number} target\n * @return {number}\n */\nfunction minimumAddedCoins(coins, target) {\n\n}",
+
     python: `def minimumAddedCoins(coins: list[int], target: int) -> int:
     pass`,
   },

@@ -44,6 +44,8 @@ Return an array of **right interval** indices for each interval \`i\`. If no **r
     javascript: `function findRightInterval(intervals) {
 
 }`,
+    typescript: "function findRightInterval(intervals: number[][]): number[] {\n\n}",
+
     python: `def findRightInterval(intervals):
     pass`,
   },

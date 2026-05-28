@@ -40,6 +40,8 @@ function waysToBuyPensPencils(total, cost1, cost2) {
     javascript: `function waysToBuyPensPencils(total, cost1, cost2) {
 
 }`,
+    typescript: "function waysToBuyPensPencils(total: number, cost1: number, cost2: number): number {\n\n}",
+
     python: `def waysToBuyPensPencils(total, cost1, cost2):
     pass`,
   },

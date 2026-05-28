@@ -47,6 +47,8 @@ Return the **shortest palindrome** you can find by performing this transformatio
     javascript: `function shortestPalindrome(s) {
   // Find shortest palindrome by prepending characters to s
 }`,
+    typescript: "function shortestPalindrome(s: string): string {\n  // Find shortest palindrome by prepending characters to s\n}",
+
     python: `def shortestPalindrome(s: str) -> str:
     # Find shortest palindrome by prepending characters to s
     pass`,

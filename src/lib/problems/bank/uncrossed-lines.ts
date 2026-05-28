@@ -42,6 +42,8 @@ Return the **maximum number of connecting lines** we can draw.`,
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: 'function maxUncrossedLines(nums1, nums2) {\n  \n}\n',
+    typescript: "function maxUncrossedLines(nums1: number[], nums2: number[]): number {\n  \n}",
+
     python: 'def maxUncrossedLines(nums1, nums2):\n    pass\n',
   },
   visibleTests: [

@@ -45,6 +45,8 @@ Solve this in O(n) time and O(1) space using two pointers — not the DP precomp
   params: ['height'],
   starterCode: {
     javascript: 'function trap(height) {\n  \n}',
+    typescript: "function trap(height: number[]): number {\n  \n}",
+
     python: 'def trap(height: list[int]) -> int:\n    pass',
   },
   visibleTests: [

@@ -41,6 +41,8 @@ The original array must not be modified. A two-pointer approach processes the ar
   params: ['nums'],
   starterCode: {
     javascript: 'function moveZeros(nums) {\n  // your code here\n}\n',
+    typescript: "function moveZeros(nums: number[]): number[] {\n  // your code here\n}",
+
     python: 'def moveZeros(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

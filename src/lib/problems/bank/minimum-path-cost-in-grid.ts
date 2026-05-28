@@ -46,6 +46,8 @@ The total cost includes the initial value of the first cell, all move costs, and
     javascript: `function minPathCost(grid, moveCost) {
 
 }`,
+    typescript: "function minPathCost(grid: number[][], moveCost: number[][]): number {\n\n}",
+
     python: `def minPathCost(grid, moveCost):
     pass
 `,

@@ -40,6 +40,8 @@ A **move** converts **any three consecutive characters** to \`'O'\`. Return the 
     javascript: `function minimumMoves(s) {
 
 }`,
+    typescript: "function minimumMoves(s: string): number {\n\n}",
+
     python: `def minimumMoves(s):
     pass`,
   },

@@ -38,6 +38,8 @@ Return the **maximum area** of an island in \`grid\`. If there is no island, ret
   preamble: {},
   starterCode: {
     javascript: 'function maxAreaOfIsland(grid) {\n  \n}\n',
+    typescript: "function maxAreaOfIsland(grid: number[][]): number {\n  \n}",
+
     python: 'def maxAreaOfIsland(grid):\n    pass\n',
   },
   visibleTests: [

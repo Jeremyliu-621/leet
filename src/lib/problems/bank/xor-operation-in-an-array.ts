@@ -41,6 +41,8 @@ function xorOperation(n, start) {
     javascript: `function xorOperation(n, start) {
 
 }`,
+    typescript: "function xorOperation(n: number, start: number): number {\n\n}",
+
     python: `def xorOperation(n, start):
     pass`,
   },

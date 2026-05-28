@@ -86,6 +86,8 @@ Return the **minimum** number of moves required to make every node have **exactl
   },
   starterCode: {
     javascript: 'function distributeCoins(root) {\n  \n}\n',
+    typescript: "function distributeCoinsRunner(root: number[]): number {\n  \n}",
+
     python: 'def distributeCoins(root):\n    pass\n',
   },
   visibleTests: [

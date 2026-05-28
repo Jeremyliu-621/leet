@@ -42,6 +42,8 @@ return [...s].sort((a,b) => (rank[a]??26)-(rank[b]??26)).join('');\`\`\``
     javascript: `function customSortString(order, s) {
 
 }`,
+    typescript: "function customSortString(order: string, s: string): string {\n\n}",
+
     python: `def customSortString(order, s):
     pass`,
   },

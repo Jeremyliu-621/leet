@@ -52,6 +52,8 @@ Return an integer array \`answer\` of length \`n\` where \`answer[i]\` is the nu
     javascript: `function canSeePersonsCount(heights) {
   // Return array where answer[i] = number of people person i can see to their right
 }`,
+    typescript: "function canSeePersonsCount(heights: number[]): number[] {\n  // Return array where answer[i] = number of people person i can see to their right\n}",
+
     python: `def canSeePersonsCount(heights: list[int]) -> list[int]:
     # Return array where answer[i] = number of people person i can see to their right
     pass`,

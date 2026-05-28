@@ -32,6 +32,8 @@ Return the minimum possible value of \`answer.length\`.`,
   params: ['strs'],
   starterCode: {
     javascript: 'function minDeletionSize(strs) {\n  \n}\n',
+    typescript: "function minDeletionSize(strs: string[]): number {\n  \n}",
+
     python: 'def minDeletionSize(strs):\n    pass\n',
   },
   visibleTests: [

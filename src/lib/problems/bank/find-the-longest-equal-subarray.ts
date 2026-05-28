@@ -43,6 +43,8 @@ Explanation: Delete elements at indices 2, 3 to get [1,1,1,1].
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function longestEqualSubarray(nums, k) {\n  // your code here\n}\n',
+    typescript: "function longestEqualSubarray(nums: number[], k: number): number {\n  // your code here\n}",
+
     python: 'def longestEqualSubarray(nums, k):\n    pass\n',
   },
   visibleTests: [

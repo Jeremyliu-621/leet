@@ -40,6 +40,8 @@ function climbStairs(n) {
   params: ['n'],
   starterCode: {
     javascript: 'function climbStairs(n) {\n  \n}\n',
+    typescript: "function climbStairs(n: number): number {\n  \n}",
+
     python: 'def climbStairs(n):\n    pass\n',
   },
   visibleTests: [

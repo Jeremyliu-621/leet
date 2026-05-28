@@ -48,6 +48,8 @@ Return the **minimum number of liters of fuel** to move all the representatives 
     javascript: `function minimumFuelCost(roads, seats) {
 
 }`,
+    typescript: "function minimumFuelCost(roads: number[][], seats: number): number {\n\n}",
+
     python: `def minimumFuelCost(roads: list[list[int]], seats: int) -> int:
     pass`,
   },

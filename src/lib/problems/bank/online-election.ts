@@ -38,6 +38,8 @@ Return an array of answers where \`answers[j]\` is the leader at time \`queries[
   starterCode: {
     javascript:
       'function topVotedCandidate(persons, times, queries) {\n\n}\n',
+    typescript: "function topVotedCandidate(persons: number[], times: number[], queries: number[]): number[] {\n\n}",
+
     python:
       'def topVotedCandidate(persons: list, times: list, queries: list) -> list:\n    pass\n',
   },

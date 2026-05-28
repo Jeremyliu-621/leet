@@ -35,6 +35,8 @@ Return the **maximum** number of tasks that can be assigned to workers.`,
   params: ['tasks', 'workers', 'pills', 'strength'],
   starterCode: {
     javascript: 'function maxTaskAssign(tasks, workers, pills, strength) {\n\n}\n',
+    typescript: "function maxTaskAssign(tasks: number[], workers: number[], pills: number, strength: number): number {\n\n}",
+
     python: 'def maxTaskAssign(tasks, workers, pills, strength):\n    pass\n',
   },
   visibleTests: [

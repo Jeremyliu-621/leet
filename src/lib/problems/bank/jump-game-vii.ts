@@ -39,6 +39,8 @@ Return \`true\` if you can reach index \`s.length - 1\` in \`s\`, or \`false\` o
     javascript: `function canReach(s, minJump, maxJump) {
 
 }`,
+    typescript: "function canReach(s: string, minJump: number, maxJump: number): boolean {\n\n}",
+
     python: `def canReach(s, minJump, maxJump):
     pass`,
   },

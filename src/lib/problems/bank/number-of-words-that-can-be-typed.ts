@@ -39,6 +39,8 @@ Return the **number of words** in \`text\` you can fully type using this keyboar
     javascript: `function canBeTypedWords(text, brokenLetters) {
 
 }`,
+    typescript: "function canBeTypedWords(text: string, brokenLetters: string): number {\n\n}",
+
     python: `def canBeTypedWords(text, brokenLetters):
     pass`,
   },

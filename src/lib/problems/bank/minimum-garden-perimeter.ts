@@ -41,6 +41,8 @@ Return the **minimum perimeter** of a plot such that **at least** \`neededApples
     javascript: `function minimumPerimeter(neededApples) {
 
 }`,
+    typescript: "function minimumPerimeter(neededApples: number): number {\n\n}",
+
     python: `def minimumPerimeter(neededApples):
     pass`,
   },

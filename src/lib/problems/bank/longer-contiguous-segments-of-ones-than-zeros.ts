@@ -42,6 +42,8 @@ Note that if there are no \`0\`s, then the longest contiguous segment of \`0\`s 
     javascript: `function checkZeroOnes(s) {
 
 }`,
+    typescript: "function checkZeroOnes(s: string): boolean {\n\n}",
+
     python: `def checkZeroOnes(s):
     pass`,
   },

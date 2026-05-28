@@ -38,6 +38,8 @@ function numOfSubarrays(arr, k, threshold) {
   params: ['arr', 'k', 'threshold'],
   starterCode: {
     javascript: 'function numOfSubarrays(arr, k, threshold) {\n\n}\n',
+    typescript: "function numOfSubarrays(arr: number[], k: number, threshold: number): number {\n\n}",
+
     python: 'def numOfSubarrays(arr, k, threshold):\n    pass\n',
   },
   visibleTests: [

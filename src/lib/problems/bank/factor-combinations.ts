@@ -69,6 +69,8 @@ For example, \`12\` can be written as \`2 × 6\`, \`3 × 4\`, or \`2 × 2 × 3\`
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// getFactorsRunner wrapper is pre-defined.\n// Implement the function below:\nfunction getFactors(n) {\n  \n}\n',
+    typescript: "function getFactorsRunner(n: number): number[][] {\n  \n}",
+
     python: '# getFactorsRunner wrapper is pre-defined.\n# Implement the function below:\ndef getFactors(n):\n    pass\n',
   },
   visibleTests: [

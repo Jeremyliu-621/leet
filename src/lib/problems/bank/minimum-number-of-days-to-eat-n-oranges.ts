@@ -38,6 +38,8 @@ Return the minimum number of days to eat all \`n\` oranges.
   params: ['n'],
   starterCode: {
     javascript: 'function minDays(n) {\n\n}\n',
+    typescript: "function minDays(n: number): number {\n\n}",
+
     python: 'def minDays(n: int) -> int:\n    pass\n',
   },
   visibleTests: [

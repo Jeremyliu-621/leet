@@ -48,6 +48,8 @@ function halvesAreAlike(s) {
   // return true if both halves have equal vowel counts
 
 }`,
+    typescript: "function halvesAreAlike(s: string): boolean {\n  // return true if both halves have equal vowel counts\n\n}",
+
     python: `def halvesAreAlike(s: str) -> bool:
     # return true if both halves have equal vowel counts
     pass

@@ -34,6 +34,8 @@ Return the **number of distinct pairs** \`(x, y)\` such that you can buy \`x\` p
   params: ['total', 'cost1', 'cost2'],
   starterCode: {
     javascript: 'function waysToBuyPensPencils(total, cost1, cost2) {\n  // your code here\n}\n',
+    typescript: "function waysToBuyPensPencils(total: number, cost1: number, cost2: number): number {\n  // your code here\n}",
+
     python: 'def waysToBuyPensPencils(total, cost1, cost2):\n    # your code here\n    pass\n',
   },
   visibleTests: [

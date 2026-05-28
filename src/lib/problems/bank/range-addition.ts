@@ -38,6 +38,8 @@ After applying all updates, return the resulting array.
   params: ['n', 'updates'],
   starterCode: {
     javascript: 'function getModifiedArray(n, updates) {\n  // your code here\n}\n',
+    typescript: "function getModifiedArray(n: number, updates: number[][]): number[] {\n  // your code here\n}",
+
     python: 'def getModifiedArray(n, updates):\n    # your code here\n    pass\n',
   },
   visibleTests: [

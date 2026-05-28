@@ -37,6 +37,8 @@ function singleNumber(nums) {
     javascript: `function singleNumber(nums) {
 
 }`,
+    typescript: "function singleNumber(nums: number[]): number {\n\n}",
+
     python: `def singleNumber(nums):
     pass`,
   },

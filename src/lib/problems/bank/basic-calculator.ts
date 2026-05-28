@@ -44,6 +44,8 @@ Return the result as an integer.
   params: ['s'],
   starterCode: {
     javascript: 'function calculate(s) {\n  // your code here\n}\n',
+    typescript: "function calculate(s: string): number {\n  // your code here\n}",
+
     python: 'def calculate(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

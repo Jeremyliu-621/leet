@@ -46,6 +46,8 @@ Given an integer array \`nums\`, return the **minimum** number of elements to re
     javascript: `function minimumMountainRemovals(nums) {
 
 }`,
+    typescript: "function minimumMountainRemovals(nums: number[]): number {\n\n}",
+
     python: `def minimumMountainRemovals(nums):
     pass`,
   },

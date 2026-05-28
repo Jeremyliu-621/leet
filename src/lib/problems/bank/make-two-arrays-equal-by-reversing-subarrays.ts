@@ -42,6 +42,8 @@ Return \`true\` if you can make \`arr\` equal to \`target\`, or \`false\` otherw
   params: ['target', 'arr'],
   starterCode: {
     javascript: 'function canBeEqual(target, arr) {\n  // your code here\n}\n',
+    typescript: "function canBeEqual(target: number[], arr: number[]): boolean {\n  // your code here\n}",
+
     python: 'def canBeEqual(target, arr):\n    # your code here\n    pass\n',
   },
   visibleTests: [

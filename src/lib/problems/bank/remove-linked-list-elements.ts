@@ -86,6 +86,8 @@ function removeElements(head, val) {
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// ListNode class and removeElementsRunner wrapper are pre-defined.\n// Implement the function below:\nfunction removeElements(head, val) {\n  \n}\n',
+    typescript: "function removeElementsRunner(head: number[], val: number): number[] {\n  \n}",
+
     python: '# ListNode class and removeElementsRunner wrapper are pre-defined.\n# Implement the function below:\ndef removeElements(head, val):\n    pass\n',
   },
   visibleTests: [

@@ -34,6 +34,8 @@ You must not use any built-in library function, such as \`sqrt\`.`,
     javascript: `function isPerfectSquare(num) {
 
 }`,
+    typescript: "function isPerfectSquare(num: number): boolean {\n\n}",
+
     python: `def isPerfectSquare(num):
     pass`,
   },

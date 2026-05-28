@@ -48,6 +48,8 @@ Output: 4
   params: ['grid'],
   starterCode: {
     javascript: 'function uniquePathsIII(grid) {\n\n}\n',
+    typescript: "function uniquePathsIII(grid: number[][]): number {\n\n}",
+
     python: 'def uniquePathsIII(grid):\n    pass\n',
   },
   visibleTests: [

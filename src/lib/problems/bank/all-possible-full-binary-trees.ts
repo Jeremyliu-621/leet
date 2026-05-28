@@ -102,6 +102,8 @@ Return the list of BFS-order arrays (level-order, trailing nulls omitted), **sor
   starterCode: {
     javascript:
       '// TreeNode class is pre-defined. Return an array of TreeNode roots:\nfunction allPossibleFBT(n) {\n  \n}\n',
+    typescript: "function allPossibleFBTRunner(n: number): number[][] {\n  \n}",
+
     python:
       '# TreeNode class is pre-defined. Return a list of TreeNode roots:\ndef allPossibleFBT(n):\n    pass\n',
   },

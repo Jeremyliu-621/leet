@@ -37,6 +37,8 @@ export const problem: Problem = {
   params: ['s'],
   starterCode: {
     javascript: 'function lengthOfLastWord(s) {\n  // your code here\n}\n',
+    typescript: "function lengthOfLastWord(s: string): number {\n  // your code here\n}",
+
     python: 'def lengthOfLastWord(s: str) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

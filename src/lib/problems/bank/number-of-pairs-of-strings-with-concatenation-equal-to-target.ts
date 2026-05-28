@@ -45,6 +45,8 @@ function numOfPairs(nums, target) {
   // return count of pairs
 
 }`,
+    typescript: "function numOfPairs(nums: string[], target: string): number {\n  // return count of pairs\n\n}",
+
     python: `def numOfPairs(nums: list, target: str) -> int:
     # return count of pairs
     pass

@@ -50,6 +50,8 @@ return true;\`\`\``
     javascript: `function wordPattern(pattern, s) {
 
 }`,
+    typescript: "function wordPattern(pattern: string, s: string): boolean {\n\n}",
+
     python: `def wordPattern(pattern, s):
     pass`,
   },

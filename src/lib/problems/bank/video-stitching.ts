@@ -41,6 +41,8 @@ Return the **minimum number of clips** needed so that we can cut the clips into 
   params: ['clips', 'time'],
   starterCode: {
     javascript: 'function videoStitching(clips, time) {\n\n}\n',
+    typescript: "function videoStitching(clips: number[][], time: number): number {\n\n}",
+
     python: 'def videoStitching(clips, time):\n    pass\n',
   },
   visibleTests: [

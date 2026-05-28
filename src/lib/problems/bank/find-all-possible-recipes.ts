@@ -48,6 +48,8 @@ Note that two recipes may contain each other in their ingredient lists.`,
     javascript: `function findAllRecipes(recipes, ingredients, supplies) {
 
 }`,
+    typescript: "function findAllRecipes(recipes: string[], ingredients: string[][], supplies: string[]): string[] {\n\n}",
+
     python: `def findAllRecipes(recipes, ingredients, supplies):
     pass`,
   },

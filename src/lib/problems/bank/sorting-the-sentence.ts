@@ -40,6 +40,8 @@ Given a shuffled sentence \`s\` containing no more than 9 words, reconstruct and
     javascript: `function sortSentence(s) {
 
 }`,
+    typescript: "function sortSentence(s: string): string {\n\n}",
+
     python: `def sortSentence(s):
     pass`,
   },

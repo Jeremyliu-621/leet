@@ -102,6 +102,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   starterCode: {
     javascript:
       '// TreeNode class and isValidBSTRunner wrapper are pre-defined.\n// Implement the function below:\nfunction isValidBST(root) {\n  \n}\n',
+    typescript: "function isValidBSTRunner(root: number[]): boolean {\n  \n}",
+
     python:
       '# TreeNode class and isValidBSTRunner wrapper are pre-defined.\n# Implement the function below:\ndef isValidBST(root):\n    pass\n',
   },

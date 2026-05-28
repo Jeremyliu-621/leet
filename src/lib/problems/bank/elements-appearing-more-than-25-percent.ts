@@ -44,6 +44,8 @@ function findSpecialValue(arr) {
   // arr: sorted number array
   // Return the element appearing > 25% of the time
 }`,
+    typescript: "function findSpecialInteger(arr: number[]): number {\n  // arr: sorted number array\n  // Return the element appearing > 25% of the time\n}",
+
     python: `def findSpecialInteger(arr: list[int]) -> int:
     # Your code here
     pass`,

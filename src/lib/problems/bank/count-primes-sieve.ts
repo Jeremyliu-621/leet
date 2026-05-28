@@ -42,6 +42,8 @@ Use the **Sieve of Eratosthenes** for an efficient O(n log log n) solution:
   params: ['n'],
   starterCode: {
     javascript: 'function countPrimesUpTo(n) {\n  // your code here\n}\n',
+    typescript: "function countPrimesUpTo(n: number): number {\n  // your code here\n}",
+
     python: 'def countPrimesUpTo(n):\n    # your code here\n    pass\n',
   },
   visibleTests: [

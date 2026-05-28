@@ -46,6 +46,8 @@ Return an array \`answer\` where \`answer[i]\` is the minimum cost of the walk f
   params: ['n', 'edges', 'queries'],
   starterCode: {
     javascript: 'function minimumCost(n, edges, queries) {\n  \n}\n',
+    typescript: "function minimumCost(n: number, edges: number[][], queries: number[][]): number[] {\n  \n}",
+
     python: 'def minimumCost(n, edges, queries):\n    pass\n',
   },
   visibleTests: [

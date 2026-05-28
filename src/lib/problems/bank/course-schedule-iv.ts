@@ -49,6 +49,8 @@ Given a list of \`queries\` where \`queries[j] = [u, v]\`, for each query return
   // Build reachability matrix and use Floyd-Warshall
 
 }`,
+    typescript: "function checkIfPrerequisite(numCourses: number, prerequisites: number[][], queries: number[][]): boolean[] {\n  // Build reachability matrix and use Floyd-Warshall\n\n}",
+
     python: `def checkIfPrerequisite(numCourses, prerequisites, queries):
     # Build reachability matrix and use Floyd-Warshall
     pass

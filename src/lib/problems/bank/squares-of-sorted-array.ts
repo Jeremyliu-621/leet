@@ -32,6 +32,8 @@ export const problem: Problem = {
     javascript: `function sortedSquares(nums) {
   // Return sorted array of squares
 }`,
+    typescript: "function sortedSquares(nums: number[]): number[] {\n  // Return sorted array of squares\n}",
+
     python: `def sortedSquares(nums):
     # Return sorted array of squares
     pass`,

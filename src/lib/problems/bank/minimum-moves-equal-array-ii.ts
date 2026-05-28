@@ -28,6 +28,8 @@ In one move, you can increment or decrement an element of the array by 1.
   params: ['nums'],
   starterCode: {
     javascript: 'function minMoves2(nums) {\n\n}\n',
+    typescript: "function minMoves2(nums: number[]): number {\n\n}",
+
     python: 'def minMoves2(nums):\n    pass\n',
   },
   visibleTests: [

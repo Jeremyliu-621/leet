@@ -40,6 +40,8 @@ Your solution must run in **O(n)** time.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function longestConsecutive(nums) {\n  // your code here\n}\n',
+    typescript: "function longestConsecutive(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def longestConsecutive(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

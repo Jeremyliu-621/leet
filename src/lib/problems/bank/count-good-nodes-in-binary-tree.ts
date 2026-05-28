@@ -46,6 +46,8 @@ The tree is given as an array in level-order (BFS) format, where \`null\` repres
   params: ['root'],
   starterCode: {
     javascript: 'function goodNodes(root) {\n\n}',
+    typescript: "function goodNodes(root: (number | null)[]): number {\n\n}",
+
     python: 'def goodNodes(root):\n    pass',
   },
   visibleTests: [

@@ -26,6 +26,8 @@ function findNthDigit(n) {
   params: ['n'],
   starterCode: {
     javascript: 'function findNthDigit(n) {\n  \n}\n',
+    typescript: "function findNthDigit(n: number): number {\n  \n}",
+
     python: 'def findNthDigit(n):\n    pass\n',
   },
   visibleTests: [

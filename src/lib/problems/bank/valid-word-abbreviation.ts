@@ -52,6 +52,8 @@ A substring is a contiguous **non-empty** sequence of characters within a string
     javascript: `function validWordAbbreviation(word, abbr) {
 
 }`,
+    typescript: "function validWordAbbreviation(word: string, abbr: string): boolean {\n\n}",
+
     python: `def validWordAbbreviation(word, abbr):
     pass`,
   },

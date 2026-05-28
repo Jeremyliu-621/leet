@@ -35,6 +35,8 @@ export const problem: Problem = {
   params: ['target', 'nums'],
   starterCode: {
     javascript: 'function minSubArrayLen(target, nums) {\n  \n}\n',
+    typescript: "function minSubArrayLen(target: number, nums: number[]): number {\n  \n}",
+
     python: 'def minSubArrayLen(target, nums):\n    pass\n',
   },
   visibleTests: [

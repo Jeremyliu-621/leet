@@ -84,6 +84,8 @@ Return the **maximum binary tree** built from \`nums\`. Return the tree as a lev
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// maximumBinaryTreeRunner is pre-defined and converts your TreeNode to an array.\nfunction constructMaximumBinaryTree(nums) {\n  // Build TreeNode objects: { val, left, right }\n}\n',
+    typescript: "function maximumBinaryTreeRunner(nums: number[]): (number | null)[] {\n  // Build TreeNode objects: { val, left, right }\n}",
+
     python: '# maximumBinaryTreeRunner is pre-defined. TreeNode is available.\ndef constructMaximumBinaryTree(nums):\n    pass\n',
   },
   visibleTests: [

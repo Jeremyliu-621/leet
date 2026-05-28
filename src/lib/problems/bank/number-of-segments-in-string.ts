@@ -31,6 +31,8 @@ function countSegments(s) {
   params: ['s'],
   starterCode: {
     javascript: 'function countSegments(s) {\n  \n}\n',
+    typescript: "function countSegments(s: string): number {\n  \n}",
+
     python: 'def countSegments(s):\n    pass\n',
   },
   visibleTests: [

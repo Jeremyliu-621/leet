@@ -39,6 +39,8 @@ The bitwise AND of an array is the bitwise AND of all the numbers in it.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function longestSubarray(nums) {\n  // your code here\n}\n',
+    typescript: "function longestSubarray(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def longestSubarray(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -39,6 +39,8 @@ return countBelow(upper) - countBelow(lower-1);\`\`\``
   params: ['nums', 'lower', 'upper'],
   starterCode: {
     javascript: 'function countFairPairs(nums, lower, upper) {\n  \n}\n',
+    typescript: "function countFairPairs(nums: number[], lower: number, upper: number): number {\n  \n}",
+
     python: 'def countFairPairs(nums, lower, upper):\n    pass\n',
   },
   visibleTests: [

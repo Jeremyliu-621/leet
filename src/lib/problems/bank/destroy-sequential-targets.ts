@@ -41,6 +41,8 @@ Note: you can only choose **one** seed.`,
     javascript: `function destroyTargets(nums, space) {
 
 }`,
+    typescript: "function destroyTargets(nums: number[], space: number): number {\n\n}",
+
     python: `def destroyTargets(nums, space):
     pass`,
   },

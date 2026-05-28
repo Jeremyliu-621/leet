@@ -43,6 +43,8 @@ The same word from the dictionary may be reused multiple times in the segmentati
   params: ['s', 'wordDict'],
   starterCode: {
     javascript: 'function wordBreak(s, wordDict) {\n  // your code here\n}\n',
+    typescript: "function wordBreak(s: string, wordDict: string[]): boolean {\n  // your code here\n}",
+
     python: 'def wordBreak(s, wordDict):\n    # your code here\n    pass\n',
   },
   visibleTests: [

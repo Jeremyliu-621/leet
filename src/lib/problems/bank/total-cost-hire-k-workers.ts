@@ -41,6 +41,8 @@ Return the **total cost** to hire exactly \`k\` workers.`,
   params: ['costs', 'k', 'candidates'],
   starterCode: {
     javascript: `function totalCost(costs, k, candidates) {\n\n}`,
+    typescript: "function totalCost(costs: number[], k: number, candidates: number): number {\n\n}",
+
     python: `def totalCost(costs, k, candidates):\n    pass`,
   },
   visibleTests: [

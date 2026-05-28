@@ -45,6 +45,8 @@ Return the **minimum** number of training hours required to defeat all \`n\` opp
   // return minimum training hours
 
 }`,
+    typescript: "function minNumberOfHours(initialEnergy: number, initialExperience: number, energy: number[], experience: number[]): number {\n  // return minimum training hours\n\n}",
+
     python: `def minNumberOfHours(initialEnergy: int, initialExperience: int, energy: list, experience: list) -> int:
     # return minimum training hours
     pass

@@ -41,6 +41,8 @@ You may assume that you have an **infinite** number of each kind of coin.`,
   params: ['coins', 'amount'],
   starterCode: {
     javascript: 'function coinChange(coins, amount) {\n  \n}\n',
+    typescript: "function coinChange(coins: number[], amount: number): number {\n  \n}",
+
     python: 'def coinChange(coins: list[int], amount: int) -> int:\n    pass\n',
   },
   visibleTests: [

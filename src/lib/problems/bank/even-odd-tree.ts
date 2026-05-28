@@ -105,6 +105,8 @@ Trees are represented as level-order arrays, where \`null\` indicates a missing 
   starterCode: {
     javascript:
       '// TreeNode class and isEvenOddTreeRunner wrapper are pre-defined.\n// Implement the function below:\nfunction isEvenOddTree(root) {\n  \n}\n',
+    typescript: "function isEvenOddTreeRunner(root: (number | null)[]): boolean {\n  \n}",
+
     python:
       '# TreeNode class and isEvenOddTreeRunner wrapper are pre-defined.\n# Implement the function below:\ndef isEvenOddTree(root):\n    pass\n',
   },

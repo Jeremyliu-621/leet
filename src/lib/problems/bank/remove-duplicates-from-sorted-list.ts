@@ -37,6 +37,8 @@ Because the list is sorted, all duplicates appear consecutively. You only need t
   // head: sorted number array (represents linked list values)
   // Return array with duplicates removed
 }`,
+    typescript: "function deleteDuplicates(head: number[]): number[] {\n  // head: sorted number array (represents linked list values)\n  // Return array with duplicates removed\n}",
+
     python: `def deleteDuplicates(head: list[int]) -> list[int]:
     # Your code here
     pass`,

@@ -41,6 +41,8 @@ function numberOfMatches(n) {
     javascript: `function numberOfMatches(n) {
 
 }`,
+    typescript: "function numberOfMatches(n: number): number {\n\n}",
+
     python: `def numberOfMatches(n):
     pass`,
   },

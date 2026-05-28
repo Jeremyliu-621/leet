@@ -40,6 +40,8 @@ It is guaranteed that there exists at least one pair of points that satisfy the 
   params: ['points', 'k'],
   starterCode: {
     javascript: 'function findMaxValueOfEquation(points, k) {\n\n}\n',
+    typescript: "function findMaxValueOfEquation(points: number[][], k: number): number {\n\n}",
+
     python: 'def findMaxValueOfEquation(points: list, k: int) -> int:\n    pass\n',
   },
   visibleTests: [

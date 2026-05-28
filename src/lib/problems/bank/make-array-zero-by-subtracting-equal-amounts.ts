@@ -38,6 +38,8 @@ function minimumOperations(nums) {
     javascript: `function minimumOperations(nums) {
 
 }`,
+    typescript: "function minimumOperations(nums: number[]): number {\n\n}",
+
     python: `def minimumOperations(nums):
     pass`,
   },

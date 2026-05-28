@@ -37,6 +37,8 @@ Return the **number of distinct islands**.`,
   params: ['grid'],
   starterCode: {
     javascript: 'function numDistinctIslands(grid) {\n  \n}\n',
+    typescript: "function numDistinctIslands(grid: number[][]): number {\n  \n}",
+
     python: 'def numDistinctIslands(grid):\n    pass\n',
   },
   visibleTests: [

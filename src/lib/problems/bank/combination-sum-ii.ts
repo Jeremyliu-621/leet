@@ -40,6 +40,8 @@ Each number in \`candidates\` may only be used **once** in the combination.
     javascript: `function combinationSum2(candidates, target) {
   // Return unique combinations summing to target, each element used once
 }`,
+    typescript: "function combinationSum2(candidates: number[], target: number): number[][] {\n  // Return unique combinations summing to target, each element used once\n}",
+
     python: `def combinationSum2(candidates, target):
     # Return unique combinations summing to target, each element used once
     pass`,

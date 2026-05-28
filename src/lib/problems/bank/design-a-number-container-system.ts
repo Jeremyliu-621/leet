@@ -41,6 +41,8 @@ The problem is presented in the **operations/args** format used for class-based 
   params: ['operations', 'args'],
   starterCode: {
     javascript: 'function numberContainers(operations, args) {\n  \n}\n',
+    typescript: "function numberContainers(operations: string[], args: (unknown[] | number[])[]): (null | number)[] {\n  \n}",
+
     python: 'def numberContainers(operations, args):\n    pass\n',
   },
   visibleTests: [

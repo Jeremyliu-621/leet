@@ -37,6 +37,8 @@ Return the **maximum sum** of values that you can receive by attending events.`,
   params: ['events'],
   starterCode: {
     javascript: 'function maxTwoEvents(events) {\n  \n}\n',
+    typescript: "function maxTwoEvents(events: number[][]): number {\n  \n}",
+
     python: 'def maxTwoEvents(events):\n    pass\n',
   },
   visibleTests: [

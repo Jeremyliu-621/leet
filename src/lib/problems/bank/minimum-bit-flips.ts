@@ -22,6 +22,8 @@ Given two integers \`start\` and \`goal\`, return the **minimum** number of bit 
   params: ['start', 'goal'],
   starterCode: {
     javascript: 'function minBitFlips(start, goal) {\n  // your code here\n}\n',
+    typescript: "function minBitFlips(start: number, goal: number): number {\n  // your code here\n}",
+
     python: 'def minBitFlips(start, goal):\n    # your code here\n    pass\n',
   },
   visibleTests: [

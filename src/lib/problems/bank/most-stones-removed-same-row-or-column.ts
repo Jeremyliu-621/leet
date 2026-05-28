@@ -45,6 +45,8 @@ Return the **largest possible number of stones** that can be removed.
     javascript: `function removeStones(stones) {
 
 }`,
+    typescript: "function removeStones(stones: number[][]): number {\n\n}",
+
     python: `def removeStones(stones: list) -> int:
     pass
 `,

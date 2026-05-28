@@ -40,6 +40,8 @@ export const problem: Problem = {
     javascript: `function minSessions(tasks, sessionTime) {
 
 }`,
+    typescript: "function minSessions(tasks: number[], sessionTime: number): number {\n\n}",
+
     python: `def minSessions(tasks, sessionTime):
     pass`,
   },

@@ -42,6 +42,8 @@ Output: "0+-2i"
     javascript: `function complexNumberMultiply(num1, num2) {
 
 }`,
+    typescript: "function complexNumberMultiply(num1: string, num2: string): string {\n\n}",
+
     python: `def complexNumberMultiply(num1, num2):
     `,
   },

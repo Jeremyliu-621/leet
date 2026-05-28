@@ -106,6 +106,8 @@ return res;\`\`\``,
   starterCode: {
     javascript:
       '// TreeNode class is pre-defined. Implement the function below:\nfunction averageOfLevels(root) {\n  \n}\n',
+    typescript: "function averageOfLevelsRunner(root: (number | null)[]): number[] {\n  \n}",
+
     python:
       '# TreeNode class is pre-defined. Implement the function below:\ndef averageOfLevels(root):\n    pass\n',
   },

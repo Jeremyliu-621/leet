@@ -28,6 +28,8 @@ It is guaranteed that the graph of paths forms a line without any loop, therefor
   params: ['paths'],
   starterCode: {
     javascript: 'function destCity(paths) {\n\n}\n',
+    typescript: "function destCity(paths: string[][]): string {\n\n}",
+
     python: 'def destCity(paths):\n    pass\n',
   },
   visibleTests: [

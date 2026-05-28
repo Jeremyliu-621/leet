@@ -42,6 +42,8 @@ Return \`true\` if and only if it is bipartite.`,
     javascript: `function isBipartite(graph) {
   // Return true if the graph can be 2-colored
 }`,
+    typescript: "function isBipartite(graph: number[][]): boolean {\n  // Return true if the graph can be 2-colored\n}",
+
     python: `def isBipartite(graph):
     # Return True if the graph can be 2-colored
     pass`,

@@ -49,6 +49,8 @@ Return the **furthest building index** (0-indexed) you can reach if you use the 
   params: ['heights', 'bricks', 'ladders'],
   starterCode: {
     javascript: 'function furthestBuilding(heights, bricks, ladders) {\n  \n}\n',
+    typescript: "function furthestBuilding(heights: number[], bricks: number, ladders: number): number {\n  \n}",
+
     python: 'def furthestBuilding(heights, bricks, ladders):\n    pass\n',
   },
   visibleTests: [

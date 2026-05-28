@@ -39,6 +39,8 @@ If no such integer exists, return \`-1\`.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function findMaxK(nums) {\n  // your code here\n}\n',
+    typescript: "function findMaxK(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def findMaxK(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -23,6 +23,8 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: 'function findNumbers(nums) {\n  \n}\n',
+    typescript: "function findNumbers(nums: number[]): number {\n  \n}",
+
     python: 'def findNumbers(nums):\n    pass\n',
   },
   visibleTests: [

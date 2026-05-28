@@ -39,6 +39,8 @@ export const problem: Problem = {
     javascript: `function fizzBuzz(n) {
   // Return FizzBuzz array from 1 to n
 }`,
+    typescript: "function fizzBuzz(n: number): string[] {\n  // Return FizzBuzz array from 1 to n\n}",
+
     python: `def fizzBuzz(n):
     # Return FizzBuzz array from 1 to n
     pass`,

@@ -40,6 +40,8 @@ Return the **minimum** index of a valid split. If no valid split exists, return 
     javascript: `function minimumIndex(nums) {
 
 }`,
+    typescript: "function minimumIndex(nums: number[]): number {\n\n}",
+
     python: `def minimumIndex(nums):
     pass`,
   },

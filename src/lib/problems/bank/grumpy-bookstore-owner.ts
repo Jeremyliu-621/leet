@@ -36,6 +36,8 @@ When the owner is grumpy, the customers of that minute are not satisfied, otherw
   params: ['customers', 'grumpy', 'minutes'],
   starterCode: {
     javascript: 'function maxSatisfied(customers, grumpy, minutes) {\n\n}\n',
+    typescript: "function maxSatisfied(customers: number[], grumpy: number[], minutes: number): number {\n\n}",
+
     python: 'def maxSatisfied(customers, grumpy, minutes):\n    pass\n',
   },
   visibleTests: [

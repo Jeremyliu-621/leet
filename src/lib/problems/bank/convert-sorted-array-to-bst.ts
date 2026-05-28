@@ -41,6 +41,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   // return root of height-balanced BST
 
 }`,
+    typescript: "function sortedArrayToBST(nums: number[]): (number | null)[] {\n  // return root of height-balanced BST\n\n}",
+
     python: `def sortedArrayToBST(nums: list):
     # return root of height-balanced BST
     pass

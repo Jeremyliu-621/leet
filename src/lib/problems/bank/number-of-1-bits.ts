@@ -43,6 +43,8 @@ function hammingWeight(n) {
     javascript: `function hammingWeight(n) {
 
 }`,
+    typescript: "function hammingWeight(n: number): number {\n\n}",
+
     python: `def hammingWeight(n):
     pass`,
   },

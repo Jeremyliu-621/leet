@@ -35,6 +35,8 @@ Return the **minimum** health you need to start with to beat all levels (health 
   params: ['damage', 'armor'],
   starterCode: {
     javascript: 'function minimumHealth(damage, armor) {\n\n}\n',
+    typescript: "function minimumHealth(damage: number[], armor: number): number {\n\n}",
+
     python: 'def minimumHealth(damage, armor):\n    pass\n',
   },
   visibleTests: [

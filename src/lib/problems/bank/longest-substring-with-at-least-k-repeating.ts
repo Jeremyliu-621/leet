@@ -34,6 +34,8 @@ If no such substring exists, return \`0\`.`,
   params: ['s', 'k'],
   starterCode: {
     javascript: 'function longestSubstring(s, k) {\n  \n}\n',
+    typescript: "function longestSubstring(s: string, k: number): number {\n  \n}",
+
     python: 'def longestSubstring(s, k):\n    pass\n',
   },
   visibleTests: [

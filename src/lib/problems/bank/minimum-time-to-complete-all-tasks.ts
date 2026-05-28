@@ -41,6 +41,8 @@ Return the **minimum** time the computer should be turned on to complete all tas
     javascript: `function findMinimumTime(tasks) {
 
 }`,
+    typescript: "function findMinimumTime(tasks: number[][]): number {\n\n}",
+
     python: `def findMinimumTime(tasks):
     pass`,
   },

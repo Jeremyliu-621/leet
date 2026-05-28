@@ -46,6 +46,8 @@ Given an integer \`target\`, return \`true\` if \`target\` is in the matrix, oth
   params: ['matrix', 'target'] as readonly string[],
   starterCode: {
     javascript: 'function searchMatrix(matrix, target) {\n  // your code here\n}\n',
+    typescript: "function searchMatrix(matrix: number[][], target: number): boolean {\n  // your code here\n}",
+
     python: 'def searchMatrix(matrix: list[list[int]], target: int) -> bool:\n    # your code here\n    pass\n',
   },
   visibleTests: [

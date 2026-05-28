@@ -58,6 +58,8 @@ function captureForts(forts) {
   // return maximum enemy forts captured
 
 }`,
+    typescript: "function captureForts(forts: number[]): number {\n  // return maximum enemy forts captured\n\n}",
+
     python: `def captureForts(forts: list) -> int:
     # return maximum enemy forts captured
     pass

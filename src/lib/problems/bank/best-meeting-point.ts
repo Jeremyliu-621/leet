@@ -32,6 +32,8 @@ The distance is calculated using Manhattan distance: \`|row1 - row2| + |col1 - c
   params: ['grid'],
   starterCode: {
     javascript: 'function minTotalDistance(grid) {\n\n}\n',
+    typescript: "function minTotalDistance(grid: number[][]): number {\n\n}",
+
     python: 'def minTotalDistance(grid):\n    pass\n',
   },
   visibleTests: [

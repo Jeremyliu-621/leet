@@ -35,6 +35,8 @@ The LFU cache evicts the least frequently used key when capacity is exceeded. If
     javascript: `function lfuCache(capacity, operations) {
 
 }`,
+    typescript: "function lfuCache(capacity: number, operations: (string | number)[][]): number[] {\n\n}",
+
     python: `def lfuCache(capacity: int, operations: list) -> list:
     pass`,
   },

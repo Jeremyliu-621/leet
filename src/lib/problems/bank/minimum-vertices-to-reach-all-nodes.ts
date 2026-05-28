@@ -40,6 +40,8 @@ Notice that you can return the vertices in any order.`,
     javascript: `function findSmallestSetOfVertices(n, edges) {
 
 }`,
+    typescript: "function findSmallestSetOfVertices(n: number, edges: number[][]): number[] {\n\n}",
+
     python: `def findSmallestSetOfVertices(n, edges):
     pass`,
   },

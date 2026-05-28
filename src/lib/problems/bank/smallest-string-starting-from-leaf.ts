@@ -41,6 +41,8 @@ The tree is given as a level-order array where \`null\` represents a missing nod
     javascript: `function smallestFromLeaf(root) {
   // root is given as a level-order array (null = missing node)
 }`,
+    typescript: "function smallestFromLeaf(root: number[]): string {\n  // root is given as a level-order array (null = missing node)\n}",
+
     python: `def smallestFromLeaf(root):
     # root is given as a level-order array (None = missing node)
     pass`,

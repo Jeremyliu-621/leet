@@ -35,6 +35,8 @@ export const problem: Problem = {
     javascript: `function majorityElementIIRunner(nums) {
   return majorityElementII(nums).slice().sort((a, b) => a - b);
 }`,
+    typescript: "function majorityElementIIRunner(nums: number[]): number[] {\n  // Return all elements appearing more than n/3 times\n}",
+
     python: `def majorityElementIIRunner(nums):
     return sorted(majorityElementII(nums))
 `,

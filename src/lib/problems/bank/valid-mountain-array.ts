@@ -36,6 +36,8 @@ return i === n-1;\`\`\``
   params: ['arr'],
   starterCode: {
     javascript: 'function validMountainArray(arr) {\n  \n}\n',
+    typescript: "function validMountainArray(arr: number[]): boolean {\n  \n}",
+
     python: 'def validMountainArray(arr):\n    pass\n',
   },
   visibleTests: [

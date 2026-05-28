@@ -43,6 +43,8 @@ A **permutation** of \`nums\` is a rearrangement of all its elements. Two permut
     javascript: `function numSquarefulPerms(nums) {
 
 }`,
+    typescript: "function numSquarefulPerms(nums: number[]): number {\n\n}",
+
     python: `def numSquarefulPerms(nums):
     `,
   },

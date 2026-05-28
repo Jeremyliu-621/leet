@@ -36,6 +36,8 @@ Note that the sign of the number does not change after rearranging, and the lead
     javascript: `function smallestNumber(num) {
 
 }`,
+    typescript: "function smallestNumber(num: number): number {\n\n}",
+
     python: `def smallestNumber(num):
     pass`,
   },

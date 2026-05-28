@@ -43,6 +43,8 @@ The matching must cover the **entire** input string.`,
   params: ['s', 'p'],
   starterCode: {
     javascript: 'function isMatch(s, p) {\n  \n}\n',
+    typescript: "function isMatch(s: string, p: string): boolean {\n  \n}",
+
     python: 'def isMatch(s: str, p: str) -> bool:\n    pass\n',
   },
   visibleTests: [

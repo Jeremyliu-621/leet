@@ -41,6 +41,8 @@ The **widest** such area is the one with the maximum width \`x2 - x1\`.
     javascript: `function maxWidthOfVerticalArea(points) {
 
 }`,
+    typescript: "function maxWidthOfVerticalArea(points: number[][]): number {\n\n}",
+
     python: `def maxWidthOfVerticalArea(points: list[list[int]]) -> int:
     pass`,
   },

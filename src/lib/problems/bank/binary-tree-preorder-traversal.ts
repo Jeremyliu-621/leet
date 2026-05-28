@@ -102,6 +102,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   starterCode: {
     javascript:
       '// TreeNode class and preorderTraversalRunner wrapper are pre-defined.\n// Implement the function below:\nfunction preorderTraversal(root) {\n  \n}\n',
+    typescript: "function preorderTraversalRunner(root: (number | null)[]): number[] {\n  \n}",
+
     python:
       '# TreeNode class and preorderTraversalRunner wrapper are pre-defined.\n# Implement the function below:\ndef preorderTraversal(root):\n    pass\n',
   },

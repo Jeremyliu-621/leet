@@ -40,6 +40,8 @@ Return the **minimum total space wasted** if you can resize the array at most \`
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function minSpaceWastedKResizing(nums, k) {\n  \n}\n',
+    typescript: "function minSpaceWastedKResizing(nums: number[], k: number): number {\n  \n}",
+
     python: 'def minSpaceWastedKResizing(nums, k):\n    pass\n',
   },
   visibleTests: [

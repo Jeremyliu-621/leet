@@ -94,6 +94,8 @@ export const problem: Problem = {
 function reverseEvenLengthGroups(head) {
 
 }`,
+    typescript: "function reverseEvenLengthGroupsRunner(head: number[]): number[] {\n\n}",
+
     python: `# ListNode class and reverseEvenLengthGroupsRunner wrapper are pre-defined.
 # Implement the function below:
 def reverseEvenLengthGroups(head):

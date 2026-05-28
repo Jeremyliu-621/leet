@@ -49,6 +49,8 @@ Return \`true\` if you can escape, otherwise return \`false\`.
     javascript: `function escapeGhosts(ghosts, target) {
 
 }`,
+    typescript: "function escapeGhosts(ghosts: number[][], target: number[]): boolean {\n\n}",
+
     python: `def escapeGhosts(ghosts, target):
     pass`,
   },

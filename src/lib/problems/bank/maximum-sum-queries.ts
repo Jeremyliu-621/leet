@@ -46,6 +46,8 @@ Output: [9,9,9]
   params: ['nums1', 'nums2', 'queries'],
   starterCode: {
     javascript: 'function maximumSumQueries(nums1, nums2, queries) {\n  // your code here\n}\n',
+    typescript: "function maximumSumQueries(nums1: number[], nums2: number[], queries: number[][]): number[] {\n  // your code here\n}",
+
     python: 'def maximumSumQueries(nums1, nums2, queries):\n    pass\n',
   },
   visibleTests: [

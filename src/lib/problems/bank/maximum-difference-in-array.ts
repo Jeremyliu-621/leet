@@ -39,6 +39,8 @@ Return *the maximum difference*. If no such \`i\` and \`j\` exists, return \`-1\
   params: ['nums'],
   starterCode: {
     javascript: 'function maximumDifference(nums) {\n\n}',
+    typescript: "function maximumDifference(nums: number[]): number {\n\n}",
+
     python: 'def maximumDifference(nums):\n    pass',
   },
   visibleTests: [

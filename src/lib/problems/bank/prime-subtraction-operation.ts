@@ -50,6 +50,8 @@ Return \`true\` if you can make \`nums\` **strictly increasing** using the above
   // Return true if nums can be made strictly increasing
   // by subtracting a prime from each chosen element.
 }`,
+    typescript: "function primeSubOperation(nums: number[]): boolean {\n  // Return true if nums can be made strictly increasing\n  // by subtracting a prime from each chosen element.\n}",
+
     python: `def primeSubOperation(nums: list[int]) -> bool:
     # Return True if nums can be made strictly increasing
     # by subtracting a prime from each chosen element.

@@ -37,6 +37,8 @@ Return the **minimum cost** to move from any cell in the first row to any cell i
   params: ['grid', 'moveCost'],
   starterCode: {
     javascript: 'function minPathCost(grid, moveCost) {\n\n}\n',
+    typescript: "function minPathCost(grid: number[][], moveCost: number[][]): number {\n\n}",
+
     python: 'def minPathCost(grid, moveCost):\n    pass\n',
   },
   visibleTests: [

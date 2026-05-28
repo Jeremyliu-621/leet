@@ -34,6 +34,8 @@ Letters are **case sensitive**, so "Aa" is not considered a palindrome.`,
     javascript: `function longestPalindrome(s) {
 
 }`,
+    typescript: "function longestPalindrome(s: string): number {\n\n}",
+
     python: `def longestPalindrome(s):
     pass`,
   },

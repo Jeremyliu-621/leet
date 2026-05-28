@@ -44,6 +44,8 @@ You can choose any index of the array and start jumping. Return **the maximum nu
   params: ['arr', 'd'],
   starterCode: {
     javascript: 'function maxJumps(arr, d) {\n\n}\n',
+    typescript: "function maxJumps(arr: number[], d: number): number {\n\n}",
+
     python: 'def maxJumps(arr, d):\n    pass\n',
   },
   visibleTests: [

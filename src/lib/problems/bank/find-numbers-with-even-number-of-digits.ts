@@ -33,6 +33,8 @@ export const problem: Problem = {
     javascript: `function findNumbers(nums) {
 
 }`,
+    typescript: "function findNumbers(nums: number[]): number {\n\n}",
+
     python: `def findNumbers(nums):
     pass`,
   },

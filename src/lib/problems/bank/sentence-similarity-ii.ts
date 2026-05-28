@@ -44,6 +44,8 @@ Words are similar to themselves.`,
   params: ['sentence1', 'sentence2', 'similarPairs'],
   starterCode: {
     javascript: 'function areSentencesSimilarTwo(sentence1, sentence2, similarPairs) {\n  \n}\n',
+    typescript: "function areSentencesSimilarTwo(sentence1: string[], sentence2: string[], similarPairs: string[][]): boolean {\n  \n}",
+
     python: 'def areSentencesSimilarTwo(sentence1, sentence2, similarPairs):\n    pass\n',
   },
   visibleTests: [

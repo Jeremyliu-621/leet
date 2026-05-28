@@ -38,6 +38,8 @@ export const problem: Problem = {
   params: ['nums', 'target'],
   starterCode: {
     javascript: 'function firstNotSmaller(nums, target) {\n  // your code here\n}\n',
+    typescript: "function firstNotSmaller(nums: number[], target: number): number {\n  // your code here\n}",
+
     python: 'def firstNotSmaller(nums, target):\n    # your code here\n    pass\n',
   },
   visibleTests: [

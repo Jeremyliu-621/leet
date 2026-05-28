@@ -39,6 +39,8 @@ A subarray is a contiguous **non-empty** sequence of elements within an array.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function subArrayRanges(nums) {\n  // your code here\n}\n',
+    typescript: "function subArrayRanges(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def subArrayRanges(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

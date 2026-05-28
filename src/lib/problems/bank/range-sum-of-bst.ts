@@ -101,6 +101,8 @@ function rangeSumBST(root, low, high) {
   },
   starterCode: {
     javascript: '// TreeNode class and rangeSumBSTRunner wrapper are pre-defined.\n// Implement the function below:\nfunction rangeSumBST(root, low, high) {\n  \n}\n',
+    typescript: "function rangeSumBSTRunner(root: (number | null)[], low: number, high: number): number {\n  \n}",
+
     python: '# TreeNode class and rangeSumBSTRunner wrapper are pre-defined.\n# Implement the function below:\ndef rangeSumBST(root, low, high):\n    pass\n',
   },
   visibleTests: [

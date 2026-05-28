@@ -31,6 +31,8 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: 'function findMaximumXOR(nums) {\n  \n}\n',
+    typescript: "function findMaximumXOR(nums: number[]): number {\n  \n}",
+
     python: 'def findMaximumXOR(nums):\n    pass\n',
   },
   visibleTests: [

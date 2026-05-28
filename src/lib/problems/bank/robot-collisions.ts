@@ -53,6 +53,8 @@ Return an array containing the health of surviving robots **in their original or
   // When a left-mover arrives, resolve collisions with the stack.
   // Return surviving healths in original order.
 }`,
+    typescript: "function survivedRobotsHealths(positions: number[], healths: number[], directions: string): number[] {\n  // Sort by position. Use a stack of right-moving robots.\n  // When a left-mover arrives, resolve collisions with the stack.\n  // Return surviving healths in original order.\n}",
+
     python: `def survivedRobotsHealths(positions, healths, directions):
     # Sort by position. Use a stack of right-moving robots.
     # When a left-mover arrives, resolve collisions with the stack.

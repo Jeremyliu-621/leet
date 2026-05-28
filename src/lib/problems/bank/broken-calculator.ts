@@ -43,6 +43,8 @@ Given two integers \`startValue\` and \`target\`, return the minimum number of o
     javascript: `function brokenCalc(startValue, target) {
 
 }`,
+    typescript: "function brokenCalc(startValue: number, target: number): number {\n\n}",
+
     python: `def brokenCalc(startValue, target):
     pass`,
   },

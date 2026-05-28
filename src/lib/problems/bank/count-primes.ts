@@ -35,6 +35,8 @@ A prime number is a natural number greater than 1 that has no positive divisors 
     javascript: `function countPrimes(n) {
 
 }`,
+    typescript: "function countPrimes(n: number): number {\n\n}",
+
     python: `def countPrimes(n):
     pass`,
   },

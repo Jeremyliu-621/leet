@@ -44,6 +44,8 @@ Return the modified array.`,
   params: ['nums'] as readonly string[],
   starterCode: {
     javascript: 'function nextPermutation(nums) {\n  // your code here\n}\n',
+    typescript: "function nextPermutation(nums: number[]): number[] {\n  // your code here\n}",
+
     python: 'def nextPermutation(nums: list[int]) -> list[int]:\n    # your code here\n    pass\n',
   },
   visibleTests: [

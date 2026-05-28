@@ -50,6 +50,8 @@ function mergeTriplets(triplets, target) {
     javascript: `function mergeTriplets(triplets, target) {
 
 }`,
+    typescript: "function mergeTriplets(triplets: number[][], target: number[]): boolean {\n\n}",
+
     python: `def mergeTriplets(triplets, target):
     pass`,
   },

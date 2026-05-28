@@ -140,6 +140,8 @@ Trees are given as level-order arrays. The result is validated by checking that 
 function balanceBST(root) {
 
 }`,
+    typescript: "function balanceBSTRunner(root: (number | null)[]): number[] {\n\n}",
+
     python: `# TreeNode class is pre-defined. Implement the function below:
 def balanceBST(root):
     pass`,

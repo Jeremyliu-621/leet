@@ -49,6 +49,8 @@ Return the **maximum** total reward after assigning the cheeses optimally.
     javascript: `function miceAndCheese(reward1, reward2, k) {
   // Return maximum total reward: mouse 1 eats exactly k cheeses, mouse 2 eats the rest
 }`,
+    typescript: "function miceAndCheese(reward1: number[], reward2: number[], k: number): number {\n  // Return maximum total reward: mouse 1 eats exactly k cheeses, mouse 2 eats the rest\n}",
+
     python: `def miceAndCheese(reward1: list[int], reward2: list[int], k: int) -> int:
     # Return maximum total reward: mouse 1 eats exactly k cheeses, mouse 2 eats the rest
     pass`,

@@ -47,6 +47,8 @@ Given a string \`word\`, return the number of **vowel substrings** in \`word\`.
     javascript: `function countVowelSubstringsOfAWord(word) {
   // Count substrings that contain only vowels AND all 5 vowels
 }`,
+    typescript: "function countVowelSubstringsOfAWord(word: string): number {\n  // Count substrings that contain only vowels AND all 5 vowels\n}",
+
     python: `def countVowelSubstringsOfAWord(word: str) -> int:
     # Count substrings that contain only vowels AND all 5 vowels
     pass`,

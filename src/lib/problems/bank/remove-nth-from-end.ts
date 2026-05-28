@@ -78,6 +78,8 @@ export const problem: Problem = {
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// ListNode class and removeNthFromEndRunner wrapper are pre-defined.\n// Implement the function below:\nfunction removeNthFromEnd(head, n) {\n  \n}\n',
+    typescript: "function removeNthFromEndRunner(head: number[], n: number): number[] {\n  \n}",
+
     python: '# ListNode class and removeNthFromEndRunner wrapper are pre-defined.\n# Implement the function below:\ndef removeNthFromEnd(head, n):\n    pass\n',
   },
   visibleTests: [

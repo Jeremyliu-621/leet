@@ -50,6 +50,8 @@ Note that you may use each coin at most once.
     javascript: `function getMaximumConsecutive(coins) {
   // Return the max count of consecutive values starting from 0 you can form
 }`,
+    typescript: "function getMaximumConsecutive(coins: number[]): number {\n  // Return the max count of consecutive values starting from 0 you can form\n}",
+
     python: `def getMaximumConsecutive(coins: list[int]) -> int:
     # Return the max count of consecutive values starting from 0 you can form
     pass`,

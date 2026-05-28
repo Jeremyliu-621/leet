@@ -40,6 +40,8 @@ Make the string good by repeatedly removing such adjacent characters until no su
     javascript: `function makeGood(s) {
 
 }`,
+    typescript: "function makeGood(s: string): string {\n\n}",
+
     python: `def makeGood(s):
     pass`,
   },

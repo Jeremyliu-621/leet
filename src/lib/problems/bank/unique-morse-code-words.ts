@@ -45,6 +45,8 @@ function uniqueMorseRepresentations(words) {
   params: ['words'],
   starterCode: {
     javascript: 'function uniqueMorseRepresentations(words) {\n  \n}\n',
+    typescript: "function uniqueMorseRepresentations(words: string[]): number {\n  \n}",
+
     python: 'def uniqueMorseRepresentations(words):\n    pass\n',
   },
   visibleTests: [

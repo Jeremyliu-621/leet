@@ -47,6 +47,8 @@ A subarray is a contiguous part of the array.
     javascript: `function subarraysWithKDistinct(nums, k) {
   // Return the count of subarrays with exactly k distinct integers
 }`,
+    typescript: "function subarraysWithKDistinct(nums: number[], k: number): number {\n  // Return the count of subarrays with exactly k distinct integers\n}",
+
     python: `def subarraysWithKDistinct(nums: list[int], k: int) -> int:
     # Return the count of subarrays with exactly k distinct integers
     pass`,

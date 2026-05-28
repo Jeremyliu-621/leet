@@ -39,6 +39,8 @@ Find both in a single pass (O(n)) rather than sorting or calling \`Math.max\` / 
   params: ['nums'],
   starterCode: {
     javascript: 'function findMaxMin(nums) {\n  // your code here\n}\n',
+    typescript: "function findMaxMin(nums: number[]): number[] {\n  // your code here\n}",
+
     python: 'def findMaxMin(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

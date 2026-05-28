@@ -84,6 +84,8 @@ Merge all the linked lists into one sorted linked list and return it.
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// ListNode class and mergeKListsRunner wrapper are pre-defined.\n// Implement the function below:\nfunction mergeKLists(lists) {\n  \n}\n',
+    typescript: "function mergeKListsRunner(lists: number[][]): number[] {\n  \n}",
+
     python: '# ListNode class and mergeKListsRunner wrapper are pre-defined.\n# Implement the function below:\ndef mergeKLists(lists):\n    pass\n',
   },
   visibleTests: [

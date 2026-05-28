@@ -43,6 +43,8 @@ function removeAnagrams(words) {
   params: ['words'],
   starterCode: {
     javascript: 'function removeAnagrams(words) {\n  \n}\n',
+    typescript: "function removeAnagrams(words: string[]): string[] {\n  \n}",
+
     python: 'def removeAnagrams(words):\n    pass\n',
   },
   visibleTests: [

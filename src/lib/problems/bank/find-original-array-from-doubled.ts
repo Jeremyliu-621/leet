@@ -39,6 +39,8 @@ Given an array \`changed\`, return \`original\` if \`changed\` is a doubled arra
   params: ['changed'],
   starterCode: {
     javascript: 'function findOriginalArray(changed) {\n  \n}\n',
+    typescript: "function findOriginalArray(changed: number[]): number[] {\n  \n}",
+
     python: 'def findOriginalArray(changed):\n    pass\n',
   },
   visibleTests: [

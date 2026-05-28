@@ -44,6 +44,8 @@ function countSeniors(details) {
   params: ['details'],
   starterCode: {
     javascript: 'function countSeniors(details) {\n  \n}\n',
+    typescript: "function countSeniors(details: string[]): number {\n  \n}",
+
     python: 'def countSeniors(details):\n    pass\n',
   },
   visibleTests: [

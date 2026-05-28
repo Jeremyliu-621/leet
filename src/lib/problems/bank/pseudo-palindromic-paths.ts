@@ -93,6 +93,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   params: ['arr'],
   starterCode: {
     javascript: `${JS_PREAMBLE}\n\nfunction pseudoPalindromicPaths(root) {\n\n}\n`,
+    typescript: "function pseudoPalindromicPathsRunner(arr: (number | null)[]): number {\n  constructor(val, left = null, right = null) {\n    this.val = val; this.left = left; this.right = right;\n  }\n}\nfunction __fromArray__(arr) {\n  if (!arr || arr.length === 0) return null;\n  const root = new TreeNode(arr[0]);\n  const queue = [root];\n  let i = 1;\n  while (queue.length > 0 && i < arr.length) {\n    const node = queue.shift();\n    if (arr[i] !== null && arr[i] !== undefined) {\n      node.left = new TreeNode(arr[i]);\n      queue.push(node.left);\n    }\n    i++;\n    if (i < arr.length && arr[i] !== null && arr[i] !== undefined) {\n      node.right = new TreeNode(arr[i]);\n      queue.push(node.right);\n    }\n    i++;\n  }\n  return root;\n}\nfunction pseudoPalindromicPathsRunner(arr) { return pseudoPalindromicPaths(__fromArray__(arr)); }\n\nfunction pseudoPalindromicPaths(root) {\n\n}",
+
     python: `${PY_PREAMBLE}\n\ndef pseudoPalindromicPaths(root):\n    pass\n`,
   },
   visibleTests: [

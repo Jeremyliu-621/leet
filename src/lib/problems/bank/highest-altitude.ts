@@ -35,6 +35,8 @@ You are given an integer array \`gain\` of length \`n\` where \`gain[i]\` is the
     javascript: `function largestAltitude(gain) {
 
 }`,
+    typescript: "function largestAltitude(gain: number[]): number {\n\n}",
+
     python: `def largestAltitude(gain):
     pass`,
   },

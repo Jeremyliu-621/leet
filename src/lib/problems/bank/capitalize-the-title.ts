@@ -50,6 +50,8 @@ function capitalizeTitle(title) {
     javascript: `function capitalizeTitle(title) {
 
 }`,
+    typescript: "function capitalizeTitle(title: string): string {\n\n}",
+
     python: `def capitalizeTitle(title):
     pass`,
   },

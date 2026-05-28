@@ -40,6 +40,8 @@ You can use each character in \`text\` **at most once**. Return the maximum numb
     javascript: `function maxNumberOfBalloons(text) {
 
 }`,
+    typescript: "function maxNumberOfBalloons(text: string): number {\n\n}",
+
     python: `def maxNumberOfBalloons(text):
     pass`,
   },

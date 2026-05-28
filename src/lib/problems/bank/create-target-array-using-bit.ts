@@ -46,6 +46,8 @@ Return the resulting \`target\` array.
   // Simple O(n^2) approach: use an array and splice.
   // Or O(n log n) with BIT to find the k-th free slot.
 }`,
+    typescript: "function createTargetArray(nums: number[], index: number[]): number[] {\n  // Simple O(n^2) approach: use an array and splice.\n  // Or O(n log n) with BIT to find the k-th free slot.\n}",
+
     python: `def createTargetArray(nums, index):
     # Simple O(n^2) approach: use a list and insert at position.
     # Or O(n log n) with BIT to find the k-th free slot.

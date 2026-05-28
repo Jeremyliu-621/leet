@@ -37,6 +37,8 @@ export const problem: Problem = {
     javascript: `function reverseParentheses(s) {
 
 }`,
+    typescript: "function reverseParentheses(s: string): string {\n\n}",
+
     python: `def reverseParentheses(s):
     pass`,
   },

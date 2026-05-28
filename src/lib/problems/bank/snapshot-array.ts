@@ -67,6 +67,8 @@ export const problem: Problem = {
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// snapshotArrayRunner is pre-defined and calls your class below.\nclass SnapshotArray {\n  constructor(length) {\n    this.length = length;\n  }\n  set(index, val) {}\n  snap() {}\n  get(index, snap_id) {}\n}\n',
+    typescript: "function snapshotArrayRunner(length: number, ops: string[], args: (number[] | unknown[])[]): (null | number)[] {\n  constructor(length) {\n    this.length = length;\n  }\n  set(index, val) {}\n  snap() {}\n  get(index, snap_id) {}\n}",
+
     python: '# snapshotArrayRunner is pre-defined and calls your class below.\nclass SnapshotArray:\n    def __init__(self, length):\n        self.length = length\n    def set(self, index, val): pass\n    def snap(self): pass\n    def get(self, index, snap_id): pass\n',
   },
   visibleTests: [

@@ -41,6 +41,8 @@ export const problem: Problem = {
   params: ['n'],
   starterCode: {
     javascript: 'function countOrders(n) {\n  \n}\n',
+    typescript: "function countOrders(n: number): number {\n  \n}",
+
     python: 'def countOrders(n):\n    ',
   },
   visibleTests: [

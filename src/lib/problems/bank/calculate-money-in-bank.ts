@@ -36,6 +36,8 @@ Given \`n\`, return the total amount of money he will have in the Leetcode bank 
   params: ['n'],
   starterCode: {
     javascript: 'function totalMoney(n) {\n  // your code here\n}\n',
+    typescript: "function totalMoney(n: number): number {\n  // your code here\n}",
+
     python: 'def totalMoney(n):\n    # your code here\n    pass\n',
   },
   visibleTests: [

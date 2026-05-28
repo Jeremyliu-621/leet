@@ -27,6 +27,8 @@ You must solve the problem without using any built-in library for handling large
   params: ['num1', 'num2'],
   starterCode: {
     javascript: 'function addStrings(num1, num2) {\n\n}\n',
+    typescript: "function addStrings(num1: string, num2: string): string {\n\n}",
+
     python: 'def addStrings(num1, num2):\n    pass\n',
   },
   visibleTests: [

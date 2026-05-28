@@ -50,6 +50,8 @@ A string \`s\` is a subsequence of string \`t\` if deleting some number of chara
   }
   // Reconstruct the SCS string
 }`,
+    typescript: "function shortestCommonSupersequence(str1: string, str2: string): string {\n  const m = str1.length, n = str2.length;\n  // dp[i][j] = SCS length of str1[0..i-1] and str2[0..j-1]\n  const dp = Array.from({length: m+1}, (_, i) =>\n    Array.from({length: n+1}, (_, j) => i + j));\n  for (let i = 1; i <= m; i++) {\n    for (let j = 1; j <= n; j++) {\n      if (str1[i-1] === str2[j-1]) dp[i][j] = dp[i-1][j-1] + 1;\n      else dp[i][j] = Math.min(dp[i-1][j], dp[i][j-1]) + 1;\n    }\n  }\n  // Reconstruct the SCS string\n}",
+
     python: `def shortestCommonSupersequence(str1, str2):
     m, n = len(str1), len(str2)
     dp = [[i + j for j in range(n + 1)] for i in range(m + 1)]

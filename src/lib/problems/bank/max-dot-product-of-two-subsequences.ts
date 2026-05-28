@@ -42,6 +42,8 @@ The **dot product** of arrays \`[a1, a2, ..., ak]\` and \`[b1, b2, ..., bk]\` is
     javascript: `function maxDotProduct(nums1, nums2) {
 
 }`,
+    typescript: "function maxDotProduct(nums1: number[], nums2: number[]): number {\n\n}",
+
     python: `def maxDotProduct(nums1, nums2):
     `,
   },

@@ -43,6 +43,8 @@ Note the unusual ordering: the *third* index (k) must hold a value **between** t
   params: ['nums'],
   starterCode: {
     javascript: 'function countQuadruplets(nums) {\n  \n}\n',
+    typescript: "function countQuadruplets(nums: number[]): number {\n  \n}",
+
     python: 'def countQuadruplets(nums: list[int]) -> int:\n    pass\n',
   },
   visibleTests: [

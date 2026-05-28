@@ -36,6 +36,8 @@ A **lucky number** is an element of the matrix such that it is the **minimum ele
   params: ['matrix'],
   starterCode: {
     javascript: 'function luckyNumbers(matrix) {\n  \n}\n',
+    typescript: "function luckyNumbers(matrix: number[][]): number[] {\n  \n}",
+
     python: 'def luckyNumbers(matrix):\n    pass\n',
   },
   visibleTests: [

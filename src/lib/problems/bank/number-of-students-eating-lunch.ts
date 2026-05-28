@@ -50,6 +50,8 @@ function countStudents(students, sandwiches) {
     javascript: `function countStudents(students, sandwiches) {
 
 }`,
+    typescript: "function countStudents(students: number[], sandwiches: number[]): number {\n\n}",
+
     python: `def countStudents(students, sandwiches):
     pass`,
   },

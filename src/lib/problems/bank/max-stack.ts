@@ -77,6 +77,8 @@ Implement the \`MaxStack\` class:
   starterCode: {
     javascript:
       '// maxStackRunner is pre-defined and calls your class below.\nclass MaxStack {\n  constructor() {}\n  push(x) {}\n  pop() {}\n  top() {}\n  peekMax() {}\n  popMax() {}\n}\n',
+    typescript: "function maxStackRunner(ops: string[], args: (number[] | unknown[])[]): (null | number)[] {\n  constructor() {}\n  push(x) {}\n  pop() {}\n  top() {}\n  peekMax() {}\n  popMax() {}\n}",
+
     python:
       '# maxStackRunner is pre-defined and calls your class below.\nclass MaxStack:\n    def __init__(self): pass\n    def push(self, x): pass\n    def pop(self): pass\n    def top(self): pass\n    def peekMax(self): pass\n    def popMax(self): pass\n',
   },

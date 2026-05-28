@@ -50,6 +50,8 @@ return arr.join('');\`\`\``
     javascript: `function reverseOnlyLetters(s) {
 
 }`,
+    typescript: "function reverseOnlyLetters(s: string): string {\n\n}",
+
     python: `def reverseOnlyLetters(s):
     pass`,
   },

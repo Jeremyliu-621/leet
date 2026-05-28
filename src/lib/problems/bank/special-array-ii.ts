@@ -39,6 +39,8 @@ Return a boolean array \`answer\` where \`answer[i]\` is the answer to the \`i\`
   params: ['nums', 'queries'],
   starterCode: {
     javascript: 'function isArraySpecial(nums, queries) {\n\n}',
+    typescript: "function isArraySpecial(nums: number[], queries: number[][]): boolean[] {\n\n}",
+
     python: 'def isArraySpecial(nums, queries):\n    pass',
   },
   visibleTests: [

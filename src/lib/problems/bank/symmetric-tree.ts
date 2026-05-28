@@ -97,6 +97,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   starterCode: {
     javascript:
       '// TreeNode class and isSymmetricRunner wrapper are pre-defined.\n// Implement the function below:\nfunction isSymmetric(root) {\n  \n}\n',
+    typescript: "function isSymmetricRunner(root: number[]): boolean {\n  \n}",
+
     python:
       '# TreeNode class and isSymmetricRunner wrapper are pre-defined.\n# Implement the function below:\ndef isSymmetric(root):\n    pass\n',
   },

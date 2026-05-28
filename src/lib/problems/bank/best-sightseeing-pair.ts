@@ -35,6 +35,8 @@ Return the maximum score of a sightseeing pair.`,
     javascript: `function maxScoreSightseeingPair(values) {
 
 }`,
+    typescript: "function maxScoreSightseeingPair(values: number[]): number {\n\n}",
+
     python: `def maxScoreSightseeingPair(values):
     pass`,
   },

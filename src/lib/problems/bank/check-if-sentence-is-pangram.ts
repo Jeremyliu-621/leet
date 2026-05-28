@@ -36,6 +36,8 @@ function checkIfPangram(sentence) {
   // sentence: string of lowercase letters
   // Return true if every letter a-z appears at least once
 }`,
+    typescript: "function checkIfPangram(sentence: string): boolean {\n  // sentence: string of lowercase letters\n  // Return true if every letter a-z appears at least once\n}",
+
     python: `def checkIfPangram(sentence: str) -> bool:
     # Your code here
     pass`,

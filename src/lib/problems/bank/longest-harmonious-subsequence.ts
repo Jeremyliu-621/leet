@@ -45,6 +45,8 @@ A **subsequence** of an array is a sequence that can be derived from the array b
   // return length of longest harmonious subsequence
 
 }`,
+    typescript: "function findLHS(nums: number[]): number {\n  // return length of longest harmonious subsequence\n\n}",
+
     python: `def findLHS(nums: list) -> int:
     # return length of longest harmonious subsequence
     pass

@@ -32,6 +32,8 @@ export const problem: Problem = {
   params: ['nums', 'cost'],
   starterCode: {
     javascript: 'function minCost(nums, cost) {\n\n}\n',
+    typescript: "function minCost(nums: number[], cost: number[]): number {\n\n}",
+
     python: 'def minCost(nums: list, cost: list) -> int:\n    pass\n',
   },
   visibleTests: [

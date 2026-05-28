@@ -33,6 +33,8 @@ You may assume that the given expression is always valid. All intermediate resul
   params: ['s'],
   starterCode: {
     javascript: 'function calculateII(s) {\n\n}\n',
+    typescript: "function calculateII(s: string): number {\n\n}",
+
     python: 'def calculateII(s):\n    pass\n',
   },
   visibleTests: [

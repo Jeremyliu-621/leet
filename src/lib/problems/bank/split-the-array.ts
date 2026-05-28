@@ -38,6 +38,8 @@ Return \`true\` if it is possible to split the array, and \`false\` otherwise.`,
 function isPossibleToSplit(nums) {
 
 }`,
+    typescript: "function isPossibleToSplit(nums: number[]): boolean {number[]} nums\n * @return {boolean}\n */\nfunction isPossibleToSplit(nums) {\n\n}",
+
     python: `def isPossibleToSplit(nums: list[int]) -> bool:
     pass`,
   },

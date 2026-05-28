@@ -99,6 +99,8 @@ Trees are represented as level-order arrays where \`null\` indicates a missing c
 function findSecondMinimumValue(root) {
 
 }`,
+    typescript: "function findSecondMinimumValueRunner(arr: (number | null)[]): number {\n\n}",
+
     python: `# TreeNode and findSecondMinimumValueRunner wrapper are pre-defined.
 # Implement the function below:
 def findSecondMinimumValue(root):

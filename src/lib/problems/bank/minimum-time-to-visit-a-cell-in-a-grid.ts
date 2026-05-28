@@ -47,6 +47,8 @@ Output: -1
   params: ['grid'],
   starterCode: {
     javascript: 'function minimumTime(grid) {\n  // your code here\n}\n',
+    typescript: "function minimumTime(grid: number[][]): number {\n  // your code here\n}",
+
     python: 'def minimumTime(grid):\n    pass\n',
   },
   visibleTests: [

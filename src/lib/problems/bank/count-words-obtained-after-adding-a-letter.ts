@@ -40,6 +40,8 @@ Explanation: tack = act + 'k' (rearranged), acti = act + 'i'. "act" cannot be fo
     javascript: `function wordCount(startWords, targetWords) {
 
 }`,
+    typescript: "function wordCount(startWords: string[], targetWords: string[]): number {\n\n}",
+
     python: `def wordCount(startWords, targetWords):
     `,
   },

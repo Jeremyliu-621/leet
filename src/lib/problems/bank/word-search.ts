@@ -41,6 +41,8 @@ The word can be constructed from letters of sequentially **adjacent cells** (hor
     javascript: `function exist(board, word) {
 
 }`,
+    typescript: "function exist(board: string[][], word: string): boolean {\n\n}",
+
     python: `def exist(board, word):
     pass`,
   },

@@ -36,6 +36,8 @@ Return the **maximum** possible greatness you can achieve after permuting \`nums
   params: ['nums'],
   starterCode: {
     javascript: 'function maximizeGreatness(nums) {\n  \n}\n',
+    typescript: "function maximizeGreatness(nums: number[]): number {\n  \n}",
+
     python: 'def maximizeGreatness(nums):\n    pass\n',
   },
   visibleTests: [

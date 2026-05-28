@@ -42,6 +42,8 @@ function minOperations(nums, k) {
     javascript: `function minOperations(nums, k) {
 
 }`,
+    typescript: "function minOperations(nums: number[], k: number): number {\n\n}",
+
     python: `def minOperations(nums, k):
     pass`,
   },

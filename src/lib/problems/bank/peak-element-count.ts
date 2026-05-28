@@ -36,6 +36,8 @@ Return the count as a number.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function countInteriorPeaks(nums) {\n  // your code here\n}\n',
+    typescript: "function countInteriorPeaks(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def countInteriorPeaks(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

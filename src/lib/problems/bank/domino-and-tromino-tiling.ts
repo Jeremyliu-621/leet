@@ -33,6 +33,8 @@ In a tiling, every square must be covered by a tile. Two tilings are different i
   params: ['n'],
   starterCode: {
     javascript: 'function numTilings(n) {\n\n}\n',
+    typescript: "function numTilings(n: number): number {\n\n}",
+
     python: 'def numTilings(n):\n    pass\n',
   },
   visibleTests: [

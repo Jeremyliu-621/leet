@@ -35,6 +35,8 @@ Return the **maximum coins** you can collect by bursting the balloons wisely.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function maxCoins(nums) {\n  \n}\n',
+    typescript: "function maxCoins(nums: number[]): number {\n  \n}",
+
     python: 'def maxCoins(nums: list[int]) -> int:\n    pass\n',
   },
   visibleTests: [

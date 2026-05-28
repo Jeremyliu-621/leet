@@ -35,6 +35,8 @@ Return the **minimum** possible value of \`nums[n - 1]\`.`,
     javascript: `function minEnd(n, x) {
 
 }`,
+    typescript: "function minEnd(n: number, x: number): number {\n\n}",
+
     python: `def minEnd(n, x):
     pass`,
   },

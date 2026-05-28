@@ -36,6 +36,8 @@ Given the five integers \`m\`, \`n\`, \`maxMove\`, \`startRow\`, \`startColumn\`
     javascript: `function findPaths(m, n, maxMove, startRow, startColumn) {
 
 }`,
+    typescript: "function findPaths(m: number, n: number, maxMove: number, startRow: number, startColumn: number): number {\n\n}",
+
     python: `def findPaths(m, n, maxMove, startRow, startColumn):
     pass`,
   },

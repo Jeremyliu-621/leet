@@ -43,6 +43,8 @@ Each range \`[a,b]\` in the list should be output as:
     javascript: `function summaryRanges(nums) {
   // Return list of compact range strings
 }`,
+    typescript: "function summaryRanges(nums: number[]): string[] {\n  // Return list of compact range strings\n}",
+
     python: `def summaryRanges(nums):
     # Return list of compact range strings
     pass`,

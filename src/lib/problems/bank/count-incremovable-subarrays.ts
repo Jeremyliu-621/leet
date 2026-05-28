@@ -37,6 +37,8 @@ The remaining elements after removing subarray \`nums[l..r]\` are the concatenat
   params: ['nums'],
   starterCode: {
     javascript: 'function incremovableSubarrayCount(nums) {\n\n}',
+    typescript: "function incremovableSubarrayCount(nums: number[]): number {\n\n}",
+
     python: 'def incremovableSubarrayCount(nums):\n    pass',
   },
   visibleTests: [

@@ -44,6 +44,8 @@ Return the count of days when the employee is available for work but no meetings
     javascript: `function countDays(days, meetings) {
 
 }`,
+    typescript: "function countDays(days: number, meetings: number[][]): number {\n\n}",
+
     python: `def countDays(days, meetings):
     pass`,
   },

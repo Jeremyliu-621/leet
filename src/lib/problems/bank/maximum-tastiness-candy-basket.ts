@@ -53,6 +53,8 @@ Maximum tastiness = **7**`,
     javascript: `function maximumTastiness(price, k) {
 
 }`,
+    typescript: "function maximumTastiness(price: number[], k: number): number {\n\n}",
+
     python: `def maximumTastiness(price, k):
     pass
 `,

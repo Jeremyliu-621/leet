@@ -53,6 +53,8 @@ Return the \`k\` pairs \`(u1, v1), (u2, v2), ..., (uk, vk)\` with the **smallest
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: 'function findKPairs(nums1, nums2, k) {\n  \n}\n',
+    typescript: "function findKPairsRunner(nums1: number[], nums2: number[], k: number): number[][] {\n  \n}",
+
     python: 'def findKPairs(nums1, nums2, k):\n    pass\n',
   },
   visibleTests: [

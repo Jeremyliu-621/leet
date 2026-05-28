@@ -46,6 +46,8 @@ export const problem: Problem = {
     javascript: `function leadsToDestination(n, edges, source, destination) {
 
 }`,
+    typescript: "function leadsToDestination(n: number, edges: number[][], source: number, destination: number): boolean {\n\n}",
+
     python: `def leadsToDestination(n, edges, source, destination):
     pass`,
   },

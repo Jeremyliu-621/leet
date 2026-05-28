@@ -40,6 +40,8 @@ Presented in the **operations/args** format. The constructor args are \`[k, [num
   params: ['operations', 'args'],
   starterCode: {
     javascript: 'function kthLargest(operations, args) {\n  \n}\n',
+    typescript: "function kthLargest(operations: string[], args: ((number | number[])[] | number[])[]): (null | number)[] {\n  \n}",
+
     python: 'def kthLargest(operations, args):\n    pass\n',
   },
   visibleTests: [

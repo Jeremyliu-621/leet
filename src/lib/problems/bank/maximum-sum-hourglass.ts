@@ -44,6 +44,8 @@ Return the **maximum** sum of the elements of any hourglass.`,
     javascript: `function maxSum(grid) {
 
 }`,
+    typescript: "function maxSum(grid: number[][]): number {\n\n}",
+
     python: `def maxSum(grid):
     pass`,
   },

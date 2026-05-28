@@ -37,6 +37,8 @@ You must decrease the overall operation steps as much as possible.`,
     javascript: `function search(nums, target) {
 
 }`,
+    typescript: "function search(nums: number[], target: number): boolean {\n\n}",
+
     python: `def search(nums, target):
     pass`,
   },

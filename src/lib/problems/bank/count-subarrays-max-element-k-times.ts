@@ -48,6 +48,8 @@ The maximum element is the global maximum of the entire array.
     javascript: `function countSubarrays(nums, k) {
   // Return count of subarrays where the global max element appears at least k times
 }`,
+    typescript: "function countSubarrays(nums: number[], k: number): number {\n  // Return count of subarrays where the global max element appears at least k times\n}",
+
     python: `def countSubarrays(nums: list[int], k: int) -> int:
     # Return count of subarrays where the global max element appears at least k times
     pass`,

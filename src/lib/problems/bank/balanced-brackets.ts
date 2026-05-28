@@ -32,6 +32,8 @@ Return \`true\` if the string is balanced, otherwise return \`false\`. An empty 
   params: ['text'],
   starterCode: {
     javascript: 'function balancedBrackets(text) {\n  // your code here\n}\n',
+    typescript: "function balancedBrackets(text: string): boolean {\n  // your code here\n}",
+
     python: 'def balancedBrackets(text):\n    # your code here\n    pass\n',
   },
   visibleTests: [

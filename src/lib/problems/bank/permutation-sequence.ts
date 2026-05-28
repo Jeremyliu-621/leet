@@ -48,6 +48,8 @@ Given \`n\` and \`k\`, return the \`k\`-th permutation sequence.
     javascript: `function getPermutation(n, k) {
 
 }`,
+    typescript: "function getPermutation(n: number, k: number): string {\n\n}",
+
     python: `def getPermutation(n, k):
     pass
 `,

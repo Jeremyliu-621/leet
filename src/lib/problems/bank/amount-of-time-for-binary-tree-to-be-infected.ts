@@ -95,6 +95,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// TreeNode class and amountOfTimeRunner wrapper are pre-defined.\n// Implement the function below:\nfunction amountOfTime(root, start) {\n  // your code here\n}\n',
+    typescript: "function amountOfTimeRunner(arr: (number | null)[], start: number): number {\n  // your code here\n}",
+
     python: '# TreeNode class and amountOfTimeRunner wrapper are pre-defined.\n# Implement the function below:\ndef amountOfTime(root, start):\n    # your code here\n    pass\n',
   },
   visibleTests: [

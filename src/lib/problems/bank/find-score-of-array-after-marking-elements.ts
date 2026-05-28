@@ -55,6 +55,8 @@ return score;\`\`\``
   // nums: number[]
   // Return score after marking all elements
 }`,
+    typescript: "function findScore(nums: number[]): number {\n  // nums: number[]\n  // Return score after marking all elements\n}",
+
     python: `def findScore(nums: list[int]) -> int:
     # Your code here
     pass`,

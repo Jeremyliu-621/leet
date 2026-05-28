@@ -38,6 +38,8 @@ The \`n\`th super ugly number is **guaranteed** to fit in a 32-bit signed intege
   params: ['n', 'primes'],
   starterCode: {
     javascript: 'function nthSuperUglyNumber(n, primes) {\n\n}',
+    typescript: "function nthSuperUglyNumber(n: number, primes: number[]): number {\n\n}",
+
     python: 'def nthSuperUglyNumber(n, primes):\n    pass',
   },
   visibleTests: [

@@ -41,6 +41,8 @@ export const problem: Problem = {
     javascript: `function countQuadruplets(nums) {
 
 }`,
+    typescript: "function countQuadruplets(nums: number[]): number {\n\n}",
+
     python: `def countQuadruplets(nums):
     pass`,
   },

@@ -54,6 +54,8 @@ Since the answer can be very large, return it **modulo** \`10^9 + 7\`.`,
   }
   return count;
 }`,
+    typescript: "function threeSumMulti(arr: number[], target: number): number {\n  const MOD = 1000000007;\n  arr.sort((a, b) => a - b);\n  let count = 0;\n  for (let i = 0; i < arr.length - 2; i++) {\n    let j = i + 1, k = arr.length - 1;\n    while (j < k) {\n      const s = arr[i] + arr[j] + arr[k];\n      if (s === target) {\n        // Count duplicates at j and k\n      } else if (s < target) j++;\n      else k--;\n    }\n  }\n  return count;\n}",
+
     python: `def threeSumMulti(arr, target):
     MOD = 10**9 + 7
     arr.sort()

@@ -45,6 +45,8 @@ return [...all].every(c => Math.abs((f1[c]||0)-(f2[c]||0)) <= 3);\`\`\``
     javascript: `function checkAlmostEquivalent(word1, word2) {
 
 }`,
+    typescript: "function checkAlmostEquivalent(word1: string, word2: string): boolean {\n\n}",
+
     python: `def checkAlmostEquivalent(word1, word2):
     pass`,
   },

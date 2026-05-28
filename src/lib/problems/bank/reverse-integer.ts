@@ -42,6 +42,8 @@ If the reversed integer overflows the 32-bit signed integer range **[-2^31, 2^31
   params: ['x'],
   starterCode: {
     javascript: 'function reverseInteger(x) {\n  // your code here\n}\n',
+    typescript: "function reverseInteger(x: number): number {\n  // your code here\n}",
+
     python: 'def reverseInteger(x):\n    # your code here\n    pass\n',
   },
   visibleTests: [

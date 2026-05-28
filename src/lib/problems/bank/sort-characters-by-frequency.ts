@@ -42,6 +42,8 @@ Return *the sorted string*. If there are multiple valid answers, return any of t
     javascript: `function frequencySort(s) {
 
 }`,
+    typescript: "function frequencySort(s: string): string {\n\n}",
+
     python: `def frequencySort(s):
     pass`,
   },

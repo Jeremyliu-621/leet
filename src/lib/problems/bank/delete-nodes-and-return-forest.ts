@@ -39,6 +39,8 @@ The tree is given as an array in level-order (BFS) where \`-1\` means null.`,
   params: ['root', 'to_delete'],
   starterCode: {
     javascript: 'function delNodes(root, to_delete) {\n  \n}\n',
+    typescript: "function delNodes(root: number[], to_delete: number[]): number[] {\n  \n}",
+
     python: 'def delNodes(root, to_delete):\n    pass\n',
   },
   visibleTests: [

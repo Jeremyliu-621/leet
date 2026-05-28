@@ -40,6 +40,8 @@ Return \`true\` if at least one valid partition exists, otherwise return \`false
     javascript: `function validPartition(nums) {
 
 }`,
+    typescript: "function validPartition(nums: number[]): boolean {\n\n}",
+
     python: `def validPartition(nums):
     pass`,
   },

@@ -43,6 +43,8 @@ return arr;\`\`\``
     javascript: `function decode(encoded, first) {
 
 }`,
+    typescript: "function decode(encoded: number[], first: number): number[] {\n\n}",
+
     python: `def decode(encoded, first):
     pass`,
   },

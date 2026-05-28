@@ -40,6 +40,8 @@ Each individual array is already sorted in non-decreasing order.`,
   params: ['arrays'],
   starterCode: {
     javascript: `function mergeKSortedArrays(arrays) {\n  \n}`,
+    typescript: "function mergeKSortedArrays(arrays: number[][]): number[] {\n  \n}",
+
     python: `def mergeKSortedArrays(arrays):\n    pass`,
   },
   visibleTests: [

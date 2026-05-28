@@ -44,6 +44,8 @@ function maxFrequencyElements(nums) {
     javascript: `function maxFrequencyElements(nums) {
 
 }`,
+    typescript: "function maxFrequencyElements(nums: number[]): number {\n\n}",
+
     python: `def maxFrequencyElements(nums):
     pass`,
   },

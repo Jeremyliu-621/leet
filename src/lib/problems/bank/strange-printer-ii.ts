@@ -46,6 +46,8 @@ Return \`true\` if it is possible to print the matrix \`targetGrid\`, otherwise 
     javascript: `function isPrintable(targetGrid) {
 
 }`,
+    typescript: "function isPrintable(targetGrid: number[][]): boolean {\n\n}",
+
     python: `def isPrintable(targetGrid):
     pass`,
   },

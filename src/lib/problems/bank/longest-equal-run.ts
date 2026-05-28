@@ -36,6 +36,8 @@ export const problem: Problem = {
   params: ['text'],
   starterCode: {
     javascript: 'function longestEqualRun(text) {\n  // your code here\n}\n',
+    typescript: "function longestEqualRun(text: string): number {\n  // your code here\n}",
+
     python: 'def longestEqualRun(text):\n    # your code here\n    pass\n',
   },
   visibleTests: [

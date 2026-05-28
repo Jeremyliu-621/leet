@@ -52,6 +52,8 @@ Explanation: 99999 + 1 = 100000
   params: ['num', 'k'],
   starterCode: {
     javascript: 'function addToArrayForm(num, k) {\n  \n}\n',
+    typescript: "function addToArrayForm(num: number[], k: number): number[] {\n  \n}",
+
     python: 'def addToArrayForm(num, k):\n    ',
   },
   visibleTests: [

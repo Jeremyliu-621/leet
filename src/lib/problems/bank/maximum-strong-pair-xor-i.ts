@@ -38,6 +38,8 @@ Return the **maximum** XOR value of any strong pair in the array \`nums\`.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function maximumStrongPairXor(nums) {\n  \n}\n',
+    typescript: "function maximumStrongPairXor(nums: number[]): number {\n  \n}",
+
     python: 'def maximumStrongPairXor(nums):\n    pass\n',
   },
   visibleTests: [

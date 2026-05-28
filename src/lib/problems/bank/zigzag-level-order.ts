@@ -101,6 +101,8 @@ export const problem: Problem = {
   starterCode: {
     javascript:
       '// TreeNode class is pre-defined. Implement the function below:\nfunction zigzagLevelOrder(root) {\n  // BFS level by level, alternating direction\n}\n',
+    typescript: "function zigzagLevelOrderRunner(root: (number | null)[]): number[][] {\n  // BFS level by level, alternating direction\n}",
+
     python:
       '# TreeNode class is pre-defined. Implement the function below:\ndef zigzagLevelOrder(root):\n    # BFS level by level, alternating direction\n    pass\n',
   },

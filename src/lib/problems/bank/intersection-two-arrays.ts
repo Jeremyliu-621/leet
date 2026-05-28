@@ -39,6 +39,8 @@ For example, the intersection of \`[1,2,2,1]\` and \`[2,2]\` is \`[2]\` (the val
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: 'function intersectionTwoArrays(nums1, nums2) {\n  // your code here\n}\n',
+    typescript: "function intersectionTwoArrays(nums1: number[], nums2: number[]): number[] {\n  // your code here\n}",
+
     python: 'def intersectionTwoArrays(nums1, nums2):\n    # your code here\n    pass\n',
   },
   visibleTests: [

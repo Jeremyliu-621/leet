@@ -42,6 +42,8 @@ Return the final string after the deletion. It can be shown that the answer will
     javascript: `function makeFancyString(s) {
 
 }`,
+    typescript: "function makeFancyString(s: string): string {\n\n}",
+
     python: `def makeFancyString(s):
     pass`,
   },

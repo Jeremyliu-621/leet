@@ -39,6 +39,8 @@ Return the **minimum** number of extra characters left over if you break up \`s\
     javascript: `function minExtraChar(s, dictionary) {
 
 }`,
+    typescript: "function minExtraChar(s: string, dictionary: string[]): number {\n\n}",
+
     python: `def minExtraChar(s: str, dictionary: list[str]) -> int:
     pass`,
   },

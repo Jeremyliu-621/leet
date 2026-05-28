@@ -20,6 +20,8 @@ export const problem: Problem = {
   params: ['n'],
   starterCode: {
     javascript: 'function smallestEvenMultiple(n) {\n  // your code here\n}\n',
+    typescript: "function smallestEvenMultiple(n: number): number {\n  // your code here\n}",
+
     python: 'def smallestEvenMultiple(n):\n    # your code here\n    pass\n',
   },
   visibleTests: [

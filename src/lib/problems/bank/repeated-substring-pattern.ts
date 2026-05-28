@@ -24,6 +24,8 @@ export const problem: Problem = {
   params: ['s'],
   starterCode: {
     javascript: 'function repeatedSubstringPattern(s) {\n  \n}\n',
+    typescript: "function repeatedSubstringPattern(s: string): boolean {\n  \n}",
+
     python: 'def repeatedSubstringPattern(s):\n    pass\n',
   },
   visibleTests: [

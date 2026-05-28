@@ -39,6 +39,8 @@ Given a string \`s\`, return the sum of \`countUniqueChars(t)\` where \`t\` is a
     javascript: `function uniqueLetterString(s) {
 
 }`,
+    typescript: "function uniqueLetterString(s: string): number {\n\n}",
+
     python: `def uniqueLetterString(s):
     pass`,
   },

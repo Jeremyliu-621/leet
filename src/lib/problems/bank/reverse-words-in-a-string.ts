@@ -47,6 +47,8 @@ function reverseWords(s) {
     javascript: `function reverseWords(s) {
 
 }`,
+    typescript: "function reverseWords(s: string): string {\n\n}",
+
     python: `def reverseWords(s):
     pass`,
   },

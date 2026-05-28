@@ -45,6 +45,8 @@ Return the **minimum deviation** the array can have after performing some number
   params: ['nums'],
   starterCode: {
     javascript: 'function minimumDeviation(nums) {\n  \n}\n',
+    typescript: "function minimumDeviation(nums: number[]): number {\n  \n}",
+
     python: 'def minimumDeviation(nums):\n    pass\n',
   },
   visibleTests: [

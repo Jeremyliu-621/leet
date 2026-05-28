@@ -41,6 +41,8 @@ export const problem: Problem = {
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function splitArrayLargest(nums, k) {\n  // Binary search on the answer.\n  // Return the minimum possible maximum subarray sum.\n}\n',
+    typescript: "function splitArrayLargest(nums: number[], k: number): number {\n  // Binary search on the answer.\n  // Return the minimum possible maximum subarray sum.\n}",
+
     python: 'def splitArrayLargest(nums, k):\n    # Binary search on the answer.\n    # Return the minimum possible maximum subarray sum.\n    pass\n',
   },
   visibleTests: [

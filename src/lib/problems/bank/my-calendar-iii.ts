@@ -44,6 +44,8 @@ After adding \`[25,55)\`: [50,55) covered by [50,60) and [25,55) + [10,40) overl
   // return: array where result[i] = max k-booking after i+1 intervals added
 
 }`,
+    typescript: "function myCalendarThree(bookings: number[][]): number[] {\n  // bookings: array of [start, end) half-open intervals\n  // return: array where result[i] = max k-booking after i+1 intervals added\n\n}",
+
     python: `def myCalendarThree(bookings: list) -> list:
     # bookings: list of [start, end) half-open intervals
     # return: list where result[i] = max k-booking after i+1 intervals added

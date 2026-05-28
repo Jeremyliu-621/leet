@@ -43,6 +43,8 @@ export const problem: Problem = {
     javascript: `function maximumCount(nums) {
 
 }`,
+    typescript: "function maximumCount(nums: number[]): number {\n\n}",
+
     python: `def maximumCount(nums):
     pass`,
   },

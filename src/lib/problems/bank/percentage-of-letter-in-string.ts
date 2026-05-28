@@ -33,6 +33,8 @@ export const problem: Problem = {
     javascript: `function percentageLetter(s, letter) {
 
 }`,
+    typescript: "function percentageLetter(s: string, letter: string): number {\n\n}",
+
     python: `def percentageLetter(s, letter):
     pass`,
   },

@@ -41,6 +41,8 @@ The lucky numbers in sorted order are: \`4, 7, 44, 47, 74, 77, 444, 447, 474, 47
   params: ['k'],
   starterCode: {
     javascript: 'function kthLuckyNumber(k) {\n  // your code here\n}\n',
+    typescript: "function kthLuckyNumber(k: number): string {\n  // your code here\n}",
+
     python: 'def kthLuckyNumber(k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

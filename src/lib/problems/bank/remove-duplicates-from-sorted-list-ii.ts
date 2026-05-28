@@ -34,6 +34,8 @@ export const problem: Problem = {
     javascript: `function deleteDuplicatesII(head) {
 
 }`,
+    typescript: "function deleteDuplicatesII(head: number[]): number[] {\n\n}",
+
     python: `def deleteDuplicatesII(head):
     pass`,
   },

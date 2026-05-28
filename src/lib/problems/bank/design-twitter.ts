@@ -62,6 +62,8 @@ The first action is always \`"Twitter"\` (constructor), which returns \`null\`.
   return results;
 }
 `,
+    typescript: "function designTwitter(actions: string[], args: (unknown[] | number[])[]): (null | number[])[] {\n  // Simulate the Twitter class.\n  // Return array of results; null for void operations.\n  const results = [null];\n  let time = 0;\n  const tweets = new Map(); // userId -> [{tweetId, time}]\n  const following = new Map(); // userId -> Set of followeeIds\n\n  function getFollowing(userId) {\n    if (!following.has(userId)) following.set(userId, new Set());\n    return following.get(userId);\n  }\n\n  for (let i = 1; i < actions.length; i++) {\n    const action = actions[i];\n    const a = args[i];\n    if (action === 'postTweet') {\n      // your code here\n    } else if (action === 'getNewsFeed') {\n      // your code here — push the result\n    } else if (action === 'follow') {\n      // your code here\n    } else if (action === 'unfollow') {\n      // your code here\n    }\n  }\n  return results;\n}",
+
     python: `def designTwitter(actions, args):
     results = [None]
     time = 0

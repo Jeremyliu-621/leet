@@ -42,6 +42,8 @@ function findDifference(nums1, nums2) {
     javascript: `function findDifference(nums1, nums2) {
 
 }`,
+    typescript: "function findDifference(nums1: number[], nums2: number[]): number[][] {\n\n}",
+
     python: `def findDifference(nums1, nums2):
     pass`,
   },

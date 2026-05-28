@@ -46,6 +46,8 @@ export const problem: Problem = {
   // return max occurrences of any valid substring
 
 }`,
+    typescript: "function maxFreq(s: string, maxLetters: number, minSize: number, maxSize: number): number {\n  // return max occurrences of any valid substring\n\n}",
+
     python: `def maxFreq(s: str, maxLetters: int, minSize: int, maxSize: int) -> int:
     # return max occurrences of any valid substring
     pass

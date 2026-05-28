@@ -37,6 +37,8 @@ export const problem: Problem = {
   params: ['words'],
   starterCode: {
     javascript: `function maxProduct(words) {\n  // your code here\n}\n`,
+    typescript: "function maxProduct(words: string[]): number {\n  // your code here\n}",
+
     python: `def maxProduct(words):\n    # your code here\n    pass\n`,
   },
   visibleTests: [

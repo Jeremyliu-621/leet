@@ -46,6 +46,8 @@ function longestContinuousSubstring(s) {
     javascript: `function longestContinuousSubstring(s) {
 
 }`,
+    typescript: "function longestContinuousSubstring(s: string): number {\n\n}",
+
     python: `def longestContinuousSubstring(s):
     pass`,
   },

@@ -40,6 +40,8 @@ Return the **minimum** possible value of the **maximum** integer of \`nums\` aft
   params: ['nums'],
   starterCode: {
     javascript: 'function minimizeArrayValue(nums) {\n  \n}\n',
+    typescript: "function minimizeArrayValue(nums: number[]): number {\n  \n}",
+
     python: 'def minimizeArrayValue(nums):\n    pass\n',
   },
   visibleTests: [

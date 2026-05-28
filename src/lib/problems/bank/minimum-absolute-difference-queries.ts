@@ -40,6 +40,8 @@ Return an array of answers, one per query.`,
   // Build prefix count array for values 1..100.
   // For each query [l, r], scan present values and find the min gap.
 }`,
+    typescript: "function minDifference(nums: number[], queries: number[][]): number[] {\n  // Build prefix count array for values 1..100.\n  // For each query [l, r], scan present values and find the min gap.\n}",
+
     python: `def minDifference(nums, queries):
     # Build prefix count array for values 1..100.
     # For each query [l, r], scan present values and find the min gap.

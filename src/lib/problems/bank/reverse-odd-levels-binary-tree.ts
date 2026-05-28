@@ -153,6 +153,8 @@ Trees are represented as level-order arrays (BFS order).`,
     javascript: `function reverseOddLevels(root) {
 
 }`,
+    typescript: "function reverseOddLevelsRunner(arr: number[]): number[] {\n\n}",
+
     python: `def reverseOddLevels(root):
     pass`,
   },

@@ -45,6 +45,8 @@ Return the number of interesting subarrays.
     javascript: `function countInterestingSubarrays(nums, modulo, k) {
   // Return the count of interesting subarrays
 }`,
+    typescript: "function countInterestingSubarrays(nums: number[], modulo: number, k: number): number {\n  // Return the count of interesting subarrays\n}",
+
     python: `def countInterestingSubarrays(nums: list[int], modulo: int, k: int) -> int:
     # Return the count of interesting subarrays
     pass`,

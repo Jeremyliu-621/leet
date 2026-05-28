@@ -40,6 +40,8 @@ Return the **minimum** absolute sum difference **after** replacing at most one e
     javascript: `function minAbsoluteSumDiff(nums1, nums2) {
 
 }`,
+    typescript: "function minAbsoluteSumDiff(nums1: number[], nums2: number[]): number {\n\n}",
+
     python: `def minAbsoluteSumDiff(nums1, nums2):
     pass`,
   },

@@ -41,6 +41,8 @@ For example, rotating \`[1,2,3,4,5]\` by 2 gives \`[4,5,1,2,3]\`.`,
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function rotateArray(nums, k) {\n  // your code here\n}\n',
+    typescript: "function rotateArray(nums: number[], k: number): number[] {\n  // your code here\n}",
+
     python: 'def rotateArray(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -32,6 +32,8 @@ export const problem: Problem = {
     javascript: `function sumOfThree(num) {
 
 }`,
+    typescript: "function sumOfThree(num: number): number[] {\n\n}",
+
     python: `def sumOfThree(num):
     pass`,
   },

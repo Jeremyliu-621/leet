@@ -35,6 +35,8 @@ Given a string \`s\`, return the **total appeal of all of its substrings**.`,
   params: ['s'],
   starterCode: {
     javascript: 'function appealSum(s) {\n  // your code here\n}\n',
+    typescript: "function appealSum(s: string): number {\n  // your code here\n}",
+
     python: 'def appealSum(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

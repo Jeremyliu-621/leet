@@ -104,6 +104,8 @@ function rob(root) {
   // Return the maximum amount of money the thief can rob
 }
 `,
+    typescript: "function robRunner(arr: (number | null)[]): number {\n  // Return the maximum amount of money the thief can rob\n}",
+
     python: `# TreeNode class and robRunner wrapper are pre-defined.
 def rob(root):
     # Return the maximum amount of money the thief can rob

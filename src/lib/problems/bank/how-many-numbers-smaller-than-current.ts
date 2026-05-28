@@ -42,6 +42,8 @@ function smallerNumbersThanCurrent(nums) {
     javascript: `function smallerNumbersThanCurrent(nums) {
 
 }`,
+    typescript: "function smallerNumbersThanCurrent(nums: number[]): number[] {\n\n}",
+
     python: `def smallerNumbersThanCurrent(nums):
     pass`,
   },

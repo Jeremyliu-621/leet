@@ -85,6 +85,8 @@ The runner function validates your answer — your function should return an int
 function gardenNoAdj(n, paths) {
   // Return an array of length n: answer[i] is the flower type (1-4) for garden i+1
 }`,
+    typescript: "function gardenNoAdjRunner(n: number, paths: number[][]): boolean {\n  // Return an array of length n: answer[i] is the flower type (1-4) for garden i+1\n}",
+
     python: `# gardenNoAdjRunner validates your answer automatically.
 def gardenNoAdj(n, paths):
     # Return a list of length n: answer[i] is the flower type (1-4) for garden i+1

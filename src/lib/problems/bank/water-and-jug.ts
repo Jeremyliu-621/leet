@@ -41,6 +41,8 @@ Operations allowed:
     javascript: `function canMeasureWater(jug1Capacity, jug2Capacity, targetCapacity) {
 
 }`,
+    typescript: "function canMeasureWater(jug1Capacity: number, jug2Capacity: number, targetCapacity: number): boolean {\n\n}",
+
     python: `def canMeasureWater(jug1Capacity, jug2Capacity, targetCapacity):
     pass`,
   },

@@ -42,6 +42,8 @@ The array has exactly one missing number — your job is to find it.
   params: ['nums'],
   starterCode: {
     javascript: 'function missingNumber(nums) {\n  // your code here\n}\n',
+    typescript: "function missingNumber(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def missingNumber(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

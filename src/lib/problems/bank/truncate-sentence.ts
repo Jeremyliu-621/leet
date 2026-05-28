@@ -39,6 +39,8 @@ You are given a sentence \`s\` and an integer \`k\`. You want to **truncate** \`
   params: ['s', 'k'],
   starterCode: {
     javascript: 'function truncateSentence(s, k) {\n  \n}\n',
+    typescript: "function truncateSentence(s: string, k: number): string {\n  \n}",
+
     python: 'def truncateSentence(s, k):\n    pass\n',
   },
   visibleTests: [

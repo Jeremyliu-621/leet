@@ -32,6 +32,8 @@ function longestPalindrome(s) {
   params: ['s'],
   starterCode: {
     javascript: 'function longestPalindrome(s) {\n\n}\n',
+    typescript: "function longestPalindrome(s: string): string {\n\n}",
+
     python: 'def longestPalindrome(s):\n    pass\n',
   },
   visibleTests: [

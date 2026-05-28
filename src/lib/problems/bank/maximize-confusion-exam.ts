@@ -35,6 +35,8 @@ The teacher can change at most \`k\` answers. Return the **maximum** number of c
   params: ['answerKey', 'k'],
   starterCode: {
     javascript: 'function maxConsecutiveAnswers(answerKey, k) {\n  // your code here\n}\n',
+    typescript: "function maxConsecutiveAnswers(answerKey: string, k: number): number {\n  // your code here\n}",
+
     python: 'def maxConsecutiveAnswers(answerKey, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

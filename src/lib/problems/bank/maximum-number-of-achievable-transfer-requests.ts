@@ -36,6 +36,8 @@ export const problem: Problem = {
   params: ['n', 'requests'],
   starterCode: {
     javascript: 'function maximumRequests(n, requests) {\n\n}\n',
+    typescript: "function maximumRequests(n: number, requests: number[][]): number {\n\n}",
+
     python: 'def maximumRequests(n: int, requests: list) -> int:\n    pass\n',
   },
   visibleTests: [

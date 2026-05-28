@@ -42,6 +42,8 @@ More formally, a subarray \`arr[i..j]\` is **turbulent** if:
     javascript: `function maxTurbulenceSize(arr) {
   // Return length of longest turbulent subarray
 }`,
+    typescript: "function maxTurbulenceSize(arr: number[]): number {\n  // Return length of longest turbulent subarray\n}",
+
     python: `def maxTurbulenceSize(arr):
     # Return length of longest turbulent subarray
     pass`,

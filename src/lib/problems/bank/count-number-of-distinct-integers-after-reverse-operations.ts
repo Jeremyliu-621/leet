@@ -37,6 +37,8 @@ Return the number of **distinct** integers in the final array.`,
     javascript: `function countDistinctIntegers(nums) {
 
 }`,
+    typescript: "function countDistinctIntegers(nums: number[]): number {\n\n}",
+
     python: `def countDistinctIntegers(nums):
     pass`,
   },

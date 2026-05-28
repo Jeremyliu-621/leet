@@ -34,6 +34,8 @@ return Number(s);\`\`\``
   params: ['s', 'k'],
   starterCode: {
     javascript: 'function getLucky(s, k) {\n  \n}\n',
+    typescript: "function getLucky(s: string, k: number): number {\n  \n}",
+
     python: 'def getLucky(s, k):\n    pass\n',
   },
   visibleTests: [

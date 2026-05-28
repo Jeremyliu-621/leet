@@ -36,6 +36,8 @@ function selfDividingNumbers(left, right) {
   params: ['left', 'right'],
   starterCode: {
     javascript: 'function selfDividingNumbers(left, right) {\n  \n}\n',
+    typescript: "function selfDividingNumbers(left: number, right: number): number[] {\n  \n}",
+
     python: 'def selfDividingNumbers(left, right):\n    pass\n',
   },
   visibleTests: [

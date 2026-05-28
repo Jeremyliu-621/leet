@@ -74,6 +74,8 @@ Design an algorithm to serialize and deserialize a **binary search tree**. There
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// serializeDeserializeBSTRunner validates your functions by comparing in-order traversals.\nfunction serialize(root) {\n  // return a string\n}\nfunction deserialize(data) {\n  // return a TreeNode\n}\n',
+    typescript: "function serializeDeserializeBSTRunner(nums: number[]): number[] {\n  // return a string\n}\nfunction deserialize(data) {\n  // return a TreeNode\n}",
+
     python: '# serializeDeserializeBSTRunner validates by comparing in-order traversals.\n# TreeNode is available.\ndef serialize(root):\n    pass\ndef deserialize(data):\n    pass\n',
   },
   visibleTests: [

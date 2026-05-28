@@ -34,6 +34,8 @@ Return **any array** that satisfies this condition.`,
     javascript: `function sortArrayByParity(nums) {
 
 }`,
+    typescript: "function sortArrayByParity(nums: number[]): number[] {\n\n}",
+
     python: `def sortArrayByParity(nums):
     pass`,
   },

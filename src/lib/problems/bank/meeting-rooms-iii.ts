@@ -37,6 +37,8 @@ All meetings must be held. Assign each meeting to the **lowest-numbered availabl
     javascript: `function mostBooked(n, meetings) {
 
 }`,
+    typescript: "function mostBooked(n: number, meetings: number[][]): number {\n\n}",
+
     python: `def mostBooked(n, meetings):
     pass`,
   },

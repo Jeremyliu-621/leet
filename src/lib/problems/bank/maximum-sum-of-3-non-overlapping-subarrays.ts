@@ -37,6 +37,8 @@ Return the result as a list of indices representing the starting position of eac
     javascript: `function maxSumOfThreeSubarrays(nums, k) {
 
 }`,
+    typescript: "function maxSumOfThreeSubarrays(nums: number[], k: number): number[] {\n\n}",
+
     python: `def maxSumOfThreeSubarrays(nums, k):
     `,
   },

@@ -42,6 +42,8 @@ Return the **minimum time** Bob needs to make the rope colorful.`,
   params: ['colors', 'neededTime'],
   starterCode: {
     javascript: 'function minCost(colors, neededTime) {\n  // your code here\n}\n',
+    typescript: "function minCost(colors: string, neededTime: number[]): number {\n  // your code here\n}",
+
     python: 'def minCost(colors, neededTime):\n    # your code here\n    pass\n',
   },
   visibleTests: [

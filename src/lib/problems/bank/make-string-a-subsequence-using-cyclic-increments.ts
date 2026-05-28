@@ -43,6 +43,8 @@ Wait — the actual operation is: choose any **subset of indices** in \`str1\` a
   // Return true if str2 can become a subsequence of str1
   // after cyclically incrementing some characters of str1
 }`,
+    typescript: "function canMakeSubsequence(str1: string, str2: string): boolean {\n  // str1, str2: strings of lowercase letters\n  // Return true if str2 can become a subsequence of str1\n  // after cyclically incrementing some characters of str1\n}",
+
     python: `def canMakeSubsequence(str1: str, str2: str) -> bool:
     # Your code here
     pass`,

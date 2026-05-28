@@ -47,6 +47,8 @@ Return the **maximum** total fruits you can collect.`,
   params: ['fruits', 'startPos', 'k'],
   starterCode: {
     javascript: 'function maxTotalFruits(fruits, startPos, k) {\n  \n}\n',
+    typescript: "function maxTotalFruits(fruits: number[][], startPos: number, k: number): number {\n  \n}",
+
     python: 'def maxTotalFruits(fruits, startPos, k):\n    pass\n',
   },
   visibleTests: [

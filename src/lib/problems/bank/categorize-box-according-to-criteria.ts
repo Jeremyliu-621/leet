@@ -38,6 +38,8 @@ export const problem: Problem = {
     javascript: `function categorizeBox(length, width, height, mass) {
 
 }`,
+    typescript: "function categorizeBox(length: number, width: number, height: number, mass: number): string {\n\n}",
+
     python: `def categorizeBox(length, width, height, mass):
     pass`,
   },

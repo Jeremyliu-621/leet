@@ -26,6 +26,8 @@ Letters are case sensitive, so \`"a"\` is different from \`"A"\`.`,
   params: ['jewels', 'stones'],
   starterCode: {
     javascript: 'function numJewelsInStones(jewels, stones) {\n  \n}\n',
+    typescript: "function numJewelsInStones(jewels: string, stones: string): number {\n  \n}",
+
     python: 'def numJewelsInStones(jewels, stones):\n    pass\n',
   },
   visibleTests: [

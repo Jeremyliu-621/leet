@@ -32,6 +32,8 @@ Given a string \`sentence\` containing only lowercase English letters, return \`
   params: ['sentence'],
   starterCode: {
     javascript: 'function checkIfPangram(sentence) {\n  // your code here\n}\n',
+    typescript: "function checkIfPangram(sentence: string): boolean {\n  // your code here\n}",
+
     python: 'def checkIfPangram(sentence):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -48,6 +48,8 @@ If there is no path from \`start\` to \`end\`, **return 0**. Your answer will be
     javascript: `function maxProbability(n, edges, succProb, start, end) {
 
 }`,
+    typescript: "function maxProbability(n: number, edges: number[][], succProb: number[], start: number, end: number): number {\n\n}",
+
     python: `def maxProbability(n: int, edges: list[list[int]], succProb: list[float], start: int, end: int) -> float:
     pass`,
   },

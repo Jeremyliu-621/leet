@@ -42,6 +42,8 @@ The passes allow that many days of consecutive travel. Return the **minimum numb
     javascript: `function mincostTickets(days, costs) {
   // Return minimum cost to cover all travel days
 }`,
+    typescript: "function mincostTickets(days: number[], costs: number[]): number {\n  // Return minimum cost to cover all travel days\n}",
+
     python: `def mincostTickets(days, costs):
     # Return minimum cost to cover all travel days
     pass`,

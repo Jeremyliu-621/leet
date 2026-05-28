@@ -48,6 +48,8 @@ The Manhattan distance between two points \`p1\` and \`p2\` is \`|p1.x - p2.x| +
     javascript: `function campusBikes(workers, bikes) {
 
 }`,
+    typescript: "function campusBikes(workers: number[][], bikes: number[][]): number[] {\n\n}",
+
     python: `def campusBikes(workers, bikes):
     pass`,
   },

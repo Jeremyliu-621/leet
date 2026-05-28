@@ -40,6 +40,8 @@ export const problem: Problem = {
   params: ['s'],
   starterCode: {
     javascript: 'function reverseWordsInSentence(s) {\n  // your code here\n}\n',
+    typescript: "function reverseWordsInSentence(s: string): string {\n  // your code here\n}",
+
     python: 'def reverseWordsInSentence(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -38,6 +38,8 @@ A **consecutive run** of \`1\`s is a maximal sequence of adjacent \`1\` values.`
   params: ['nums'],
   starterCode: {
     javascript: 'function maxConsecutiveOnes(nums) {\n  // your code here\n}\n',
+    typescript: "function maxConsecutiveOnes(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def maxConsecutiveOnes(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -45,6 +45,8 @@ The encoded string may be transmitted over a network. Any valid encoding scheme 
   starterCode: {
     javascript:
       'function encodeDecodeStrings(strs) {\n  // Encode the array to a single string, then decode back.\n  // Return the decoded array (should equal the input).\n}\n',
+    typescript: "function encodeDecodeStrings(strs: string[]): string[] {\n  // Encode the array to a single string, then decode back.\n  // Return the decoded array (should equal the input).\n}",
+
     python:
       'def encodeDecodeStrings(strs):\n    # Encode the list to a single string, then decode back.\n    # Return the decoded list (should equal the input).\n    pass\n',
   },

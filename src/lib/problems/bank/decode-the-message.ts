@@ -32,6 +32,8 @@ Return the decoded message.`,
   params: ['key', 'message'],
   starterCode: {
     javascript: 'function decodeMessage(key, message) {\n  \n}\n',
+    typescript: "function decodeMessage(key: string, message: string): string {\n  \n}",
+
     python: 'def decodeMessage(key, message):\n    pass\n',
   },
   visibleTests: [

@@ -39,6 +39,8 @@ Return the **maximum points** you can get.`,
   params: ['boxes'],
   starterCode: {
     javascript: 'function removeBoxes(boxes) {\n  \n}\n',
+    typescript: "function removeBoxes(boxes: number[]): number {\n  \n}",
+
     python: 'def removeBoxes(boxes):\n    pass\n',
   },
   visibleTests: [

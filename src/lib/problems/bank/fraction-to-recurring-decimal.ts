@@ -43,6 +43,8 @@ If the answer is negative, the minus sign comes before the result.`,
   params: ['numerator', 'denominator'],
   starterCode: {
     javascript: 'function fractionToDecimal(numerator, denominator) {\n  \n}',
+    typescript: "function fractionToDecimal(numerator: number, denominator: number): string {\n  \n}",
+
     python: 'def fractionToDecimal(numerator: int, denominator: int) -> str:\n    pass',
   },
   visibleTests: [

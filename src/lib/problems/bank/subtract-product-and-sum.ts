@@ -25,6 +25,8 @@ return prod - sum;\`\`\``
   params: ['n'],
   starterCode: {
     javascript: 'function subtractProductAndSum(n) {\n  \n}\n',
+    typescript: "function subtractProductAndSum(n: number): number {\n  \n}",
+
     python: 'def subtractProductAndSum(n):\n    pass\n',
   },
   visibleTests: [

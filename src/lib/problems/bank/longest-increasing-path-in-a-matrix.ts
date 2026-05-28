@@ -43,6 +43,8 @@ The path must be strictly increasing.`,
     javascript: `function longestIncreasingPath(matrix) {
 
 }`,
+    typescript: "function longestIncreasingPath(matrix: number[][]): number {\n\n}",
+
     python: `def longestIncreasingPath(matrix):
     pass`,
   },

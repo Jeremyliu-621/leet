@@ -43,6 +43,8 @@ A **subarray** is defined as a contiguous block of elements in the array.`,
     javascript: `function minSubarray(nums, p) {
 
 }`,
+    typescript: "function minSubarray(nums: number[], p: number): number {\n\n}",
+
     python: `def minSubarray(nums, p):
     pass`,
   },

@@ -44,6 +44,8 @@ export const problem: Problem = {
     javascript: `function validIPAddress(queryIP) {
 
 }`,
+    typescript: "function validIPAddress(queryIP: string): string {\n\n}",
+
     python: `def validIPAddress(queryIP):
     pass`,
   },

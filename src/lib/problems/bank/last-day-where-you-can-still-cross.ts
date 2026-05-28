@@ -36,6 +36,8 @@ Return the **last day** you are able to walk from the **top row** to the **botto
   params: ['row', 'col', 'cells'],
   starterCode: {
     javascript: 'function latestDayToCross(row, col, cells) {\n  \n}\n',
+    typescript: "function latestDayToCross(row: number, col: number, cells: number[][]): number {\n  \n}",
+
     python: 'def latestDayToCross(row, col, cells):\n    pass\n',
   },
   visibleTests: [

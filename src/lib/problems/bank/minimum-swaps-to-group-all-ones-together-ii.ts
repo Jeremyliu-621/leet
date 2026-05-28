@@ -48,6 +48,8 @@ Given a **circular** binary array \`nums\` (i.e., the next element of \`nums[num
   params: ['nums'],
   starterCode: {
     javascript: 'function minSwaps(nums) {\n  // your code here\n}\n',
+    typescript: "function minSwaps(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def minSwaps(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

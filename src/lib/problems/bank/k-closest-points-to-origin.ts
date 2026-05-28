@@ -35,6 +35,8 @@ The distance from the origin to a point \`(x, y)\` is \`√(x² + y²)\`. You ma
     javascript: `function kClosest(points, k) {
 
 }`,
+    typescript: "function kClosest(points: number[][], k: number): number[][] {\n\n}",
+
     python: `def kClosest(points, k):
     pass`,
   },

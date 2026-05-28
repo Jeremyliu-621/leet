@@ -95,6 +95,8 @@ function maxDepth(root) {
   starterCode: {
     javascript:
       '// TreeNode class and maxDepthRunner wrapper are pre-defined.\n// Implement the function below:\nfunction maxDepth(root) {\n  \n}\n',
+    typescript: "function maxDepthRunner(root: (number | null)[]): number {\n  \n}",
+
     python:
       '# TreeNode class and maxDepthRunner wrapper are pre-defined.\n# Implement the function below:\ndef maxDepth(root):\n    pass\n',
   },

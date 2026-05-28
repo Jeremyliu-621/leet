@@ -42,6 +42,8 @@ Return the **maximum** total number of **units** that can be put on the truck.`,
   starterCode: {
     javascript:
       'function maximumUnits(boxTypes, truckSize) {\n  // your code here\n}\n',
+    typescript: "function maximumUnits(boxTypes: number[][], truckSize: number): number {\n  // your code here\n}",
+
     python:
       'def maximumUnits(boxTypes, truckSize):\n    # your code here\n    pass\n',
   },

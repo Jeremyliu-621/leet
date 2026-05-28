@@ -37,6 +37,8 @@ Return the **minimum total cost** of all the cuts.`,
   params: ['n', 'cuts'],
   starterCode: {
     javascript: `function minCost(n, cuts) {\n\n}`,
+    typescript: "function minCost(n: number, cuts: number[]): number {\n\n}",
+
     python: `def minCost(n, cuts):\n    pass`,
   },
   visibleTests: [

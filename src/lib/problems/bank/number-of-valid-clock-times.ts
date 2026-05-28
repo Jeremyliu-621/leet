@@ -42,6 +42,8 @@ Return an integer, the number of valid clock times that can be created by replac
   params: ['time'],
   starterCode: {
     javascript: 'function countTime(time) {\n  // your code here\n}\n',
+    typescript: "function countTime(time: string): number {\n  // your code here\n}",
+
     python: 'def countTime(time):\n    # your code here\n    pass\n',
   },
   visibleTests: [

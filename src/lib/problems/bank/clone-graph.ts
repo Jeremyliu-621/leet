@@ -118,6 +118,8 @@ function cloneGraph(node) {
 
 }
 `,
+    typescript: "function cloneGraphRunner(adjList: number[][]): number[][] {\n\n}",
+
     python: `# Node class and cloneGraphRunner wrapper are pre-defined.
 # Implement the function below:
 def cloneGraph(node):

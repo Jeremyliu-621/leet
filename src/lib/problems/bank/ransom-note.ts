@@ -26,6 +26,8 @@ Each letter in \`magazine\` can only be used once in \`ransomNote\`.`,
   params: ['ransomNote', 'magazine'],
   starterCode: {
     javascript: 'function canConstruct(ransomNote, magazine) {\n  // your code here\n}\n',
+    typescript: "function canConstruct(ransomNote: string, magazine: string): boolean {\n  // your code here\n}",
+
     python: 'def canConstruct(ransomNote: str, magazine: str) -> bool:\n    # your code here\n    pass\n',
   },
   visibleTests: [

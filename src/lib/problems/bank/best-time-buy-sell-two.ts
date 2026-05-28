@@ -40,6 +40,8 @@ Return the **maximum profit** you can achieve.`,
   params: ['prices'],
   starterCode: {
     javascript: 'function maxProfitMultiple(prices) {\n  // your code here\n}\n',
+    typescript: "function maxProfitMultiple(prices: number[]): number {\n  // your code here\n}",
+
     python: 'def maxProfitMultiple(prices):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -38,6 +38,8 @@ export const problem: Problem = {
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function minimumIncompatibility(nums, k) {\n\n}\n',
+    typescript: "function minimumIncompatibility(nums: number[], k: number): number {\n\n}",
+
     python: 'def minimumIncompatibility(nums: list, k: int) -> int:\n    pass\n',
   },
   visibleTests: [

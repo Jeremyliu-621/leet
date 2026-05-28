@@ -41,6 +41,8 @@ Return the **minimum** number of operations required to make \`nums1\` equal to 
   params: ['nums1', 'nums2', 'k'],
   starterCode: {
     javascript: 'function minOperations(nums1, nums2, k) {\n\n}',
+    typescript: "function minOperations(nums1: number[], nums2: number[], k: number): number {\n\n}",
+
     python: 'def minOperations(nums1, nums2, k):\n    pass',
   },
   visibleTests: [

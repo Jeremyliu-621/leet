@@ -37,6 +37,8 @@ Return the **number of pairs** of **interchangeable** rectangles.`,
   params: ['rectangles'],
   starterCode: {
     javascript: 'function interchangeableRectangles(rectangles) {\n  // your code here\n}\n',
+    typescript: "function interchangeableRectangles(rectangles: number[][]): number {\n  // your code here\n}",
+
     python: 'def interchangeableRectangles(rectangles):\n    # your code here\n    pass\n',
   },
   visibleTests: [

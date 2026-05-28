@@ -68,6 +68,8 @@ The \`get\` and \`put\` operations must each run in **O(1)** average time comple
   starterCode: {
     javascript:
       '// lruCacheRunner is pre-defined and calls your class below.\nclass LRUCache {\n  constructor(capacity) {\n    this.capacity = capacity;\n  }\n  get(key) {}\n  put(key, value) {}\n}\n',
+    typescript: "function lruCacheRunner(capacity: number, ops: string[], args: number[][]): (null | number)[] {\n  constructor(capacity) {\n    this.capacity = capacity;\n  }\n  get(key) {}\n  put(key, value) {}\n}",
+
     python:
       '# lruCacheRunner is pre-defined and calls your class below.\nclass LRUCache:\n    def __init__(self, capacity):\n        self.capacity = capacity\n    def get(self, key): pass\n    def put(self, key, value): pass\n',
   },

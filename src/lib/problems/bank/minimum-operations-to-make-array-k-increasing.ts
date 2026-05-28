@@ -50,6 +50,8 @@ Return the **minimum number of operations** needed to make \`arr\` k-increasing.
     javascript: `function kIncreasing(arr, k) {
 
 }`,
+    typescript: "function kIncreasing(arr: number[], k: number): number {\n\n}",
+
     python: `def kIncreasing(arr: list[int], k: int) -> int:
     pass`,
   },

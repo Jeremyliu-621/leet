@@ -79,6 +79,8 @@ A **leaf** is a node with no children. A **left leaf** is a leaf that is the lef
   },
   starterCode: {
     javascript: 'function sumOfLeftLeaves(root) {\n  // your code here\n}\n',
+    typescript: "function sumOfLeftLeavesRunner(root: (number | null)[]): number {\n  // your code here\n}",
+
     python: 'def sumOfLeftLeaves(root):\n    # your code here\n    pass\n',
   },
   visibleTests: [

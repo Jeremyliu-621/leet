@@ -41,6 +41,8 @@ A customer will not check in twice before checking out. Travel time is defined a
     javascript: `function undergroundSystem(operations) {
 
 }`,
+    typescript: "function undergroundSystem(operations: ((string | number)[] | string[])[]): number[] {\n\n}",
+
     python: `def undergroundSystem(operations):
     pass`,
   },

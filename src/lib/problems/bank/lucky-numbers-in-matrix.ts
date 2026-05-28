@@ -41,6 +41,8 @@ A **lucky number** is an element of the matrix such that it is the **minimum ele
     javascript: `function luckyNumbers(matrix) {
   // Return all lucky numbers (min in row, max in column)
 }`,
+    typescript: "function luckyNumbers(matrix: number[][]): number[] {\n  // Return all lucky numbers (min in row, max in column)\n}",
+
     python: `def luckyNumbers(matrix):
     # Return all lucky numbers (min in row, max in column)
     pass`,

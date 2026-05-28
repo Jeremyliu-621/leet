@@ -44,6 +44,8 @@ Return *the **maximum** integer in the array* \`nums\`​​​.`,
     javascript: `function getMaximumGenerated(n) {
 
 }`,
+    typescript: "function getMaximumGenerated(n: number): number {\n\n}",
+
     python: `def getMaximumGenerated(n):
     pass`,
   },

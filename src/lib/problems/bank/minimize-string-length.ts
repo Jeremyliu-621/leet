@@ -44,6 +44,8 @@ function minimizedStringLength(s) {
   // s: string of lowercase letters
   // Return minimum possible length after operations
 }`,
+    typescript: "function minimizedStringLength(s: string): number {\n  // s: string of lowercase letters\n  // Return minimum possible length after operations\n}",
+
     python: `def minimizedStringLength(s: str) -> int:
     # Your code here
     pass`,

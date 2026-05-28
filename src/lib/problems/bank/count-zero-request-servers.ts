@@ -42,6 +42,8 @@ Return an array \`ans\` of length \`queries.length\` where \`ans[j]\` is the ans
   params: ['n', 'logs', 'x', 'queries'],
   starterCode: {
     javascript: 'function countServers(n, logs, x, queries) {\n  // your code here\n}\n',
+    typescript: "function countServers(n: number, logs: number[][], x: number, queries: number[]): number[] {\n  // your code here\n}",
+
     python: 'def countServers(n, logs, x, queries):\n    # your code here\n    pass\n',
   },
   visibleTests: [

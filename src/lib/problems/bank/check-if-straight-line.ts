@@ -25,6 +25,8 @@ export const problem: Problem = {
   params: ['coordinates'],
   starterCode: {
     javascript: 'function checkStraightLine(coordinates) {\n  // your code here\n}\n',
+    typescript: "function checkStraightLine(coordinates: number[][]): boolean {\n  // your code here\n}",
+
     python: 'def checkStraightLine(coordinates):\n    # your code here\n    pass\n',
   },
   visibleTests: [

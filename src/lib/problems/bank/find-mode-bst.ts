@@ -100,6 +100,8 @@ function inOrder(node) {
   },
   starterCode: {
     javascript: 'function findMode(root) {\n  \n}\n',
+    typescript: "function findModeRunner(root: (number | null)[]): number[] {\n  \n}",
+
     python: 'def findMode(root):\n    pass\n',
   },
   visibleTests: [

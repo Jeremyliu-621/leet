@@ -42,6 +42,8 @@ Return the number of **smooth descent periods**.`,
     javascript: `function getDescentPeriods(prices) {
 
 }`,
+    typescript: "function getDescentPeriods(prices: number[]): number {\n\n}",
+
     python: `def getDescentPeriods(prices):
     pass`,
   },

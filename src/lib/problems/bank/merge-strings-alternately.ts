@@ -47,6 +47,8 @@ function mergeAlternately(word1, word2) {
   params: ['word1', 'word2'],
   starterCode: {
     javascript: 'function mergeAlternately(word1, word2) {\n  \n}\n',
+    typescript: "function mergeAlternately(word1: string, word2: string): string {\n  \n}",
+
     python: 'def mergeAlternately(word1, word2):\n    pass\n',
   },
   visibleTests: [

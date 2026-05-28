@@ -41,6 +41,8 @@ Return the **minimum** number of flips required in some bits of \`a\` and \`b\` 
     javascript: `function minFlips(a, b, c) {
 
 }`,
+    typescript: "function minFlips(a: number, b: number, c: number): number {\n\n}",
+
     python: `def minFlips(a, b, c):
     pass`,
   },

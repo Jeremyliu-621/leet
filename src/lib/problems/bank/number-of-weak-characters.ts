@@ -48,6 +48,8 @@ return count;\`\`\``
   params: ['properties'],
   starterCode: {
     javascript: 'function numberOfWeakCharacters(properties) {\n  \n}\n',
+    typescript: "function numberOfWeakCharacters(properties: number[][]): number {\n  \n}",
+
     python: 'def numberOfWeakCharacters(properties):\n    pass\n',
   },
   visibleTests: [

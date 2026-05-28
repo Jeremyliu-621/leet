@@ -48,6 +48,8 @@ Return \`[]\` if there are no occurrences.`,
     javascript: `function findAllOccurrences(text, pattern) {
   // Return sorted array of starting indices of all pattern occurrences in text
 }`,
+    typescript: "function findAllOccurrences(text: string, pattern: string): number[] {\n  // Return sorted array of starting indices of all pattern occurrences in text\n}",
+
     python: `def findAllOccurrences(text: str, pattern: str) -> list[int]:
     # Return sorted array of starting indices of all pattern occurrences in text
     pass`,

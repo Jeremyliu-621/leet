@@ -40,6 +40,8 @@ Return the number of **valid splits** in \`nums\`.`,
     javascript: `function waysToSplitArray(nums) {
 
 }`,
+    typescript: "function waysToSplitArray(nums: number[]): number {\n\n}",
+
     python: `def waysToSplitArray(nums):
     pass`,
   },

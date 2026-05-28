@@ -34,6 +34,8 @@ Given \`n\`, return the **minimum number of operations** needed to make all the 
   params: ['n'],
   starterCode: {
     javascript: 'function minOperations(n) {\n  \n}\n',
+    typescript: "function minOperations(n: number): number {\n  \n}",
+
     python: 'def minOperations(n):\n    pass\n',
   },
   visibleTests: [

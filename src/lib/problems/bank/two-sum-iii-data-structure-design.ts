@@ -65,6 +65,8 @@ class TwoSum {
 
   }
 }`,
+    typescript: "function twoSumOps(ops: ((string | unknown[])[] | (string | number[])[])[]): (null | boolean)[] {\n  const results = [];\n  let ts;\n  for (const [method, args] of ops) {\n    if (method === 'TwoSum') {\n      ts = new TwoSum();\n      results.push(null);\n    } else {\n      const res = ts[method](...args);\n      results.push(res === undefined ? null : res);\n    }\n  }\n  return results;\n}\n\nclass TwoSum {\n  constructor() {\n\n  }\n  add(number) {\n\n  }\n  find(value) {\n\n  }\n}",
+
     python: `def twoSumOps(ops):
     ops = ops.to_py() if hasattr(ops, 'to_py') else list(ops)
     results = []

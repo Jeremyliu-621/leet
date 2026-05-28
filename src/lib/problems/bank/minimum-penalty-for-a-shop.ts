@@ -46,6 +46,8 @@ Return the **earliest** hour at which the shop must be closed to incur a **minim
     javascript: `function bestClosingTime(customers) {
 
 }`,
+    typescript: "function bestClosingTime(customers: string): number {\n\n}",
+
     python: `def bestClosingTime(customers):
     pass`,
   },

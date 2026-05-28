@@ -40,6 +40,8 @@ Given a string \`s\`, return the sum of \`countUniqueChars(t)\` where \`t\` rang
   params: ['s'],
   starterCode: {
     javascript: 'function uniqueLetterString(s) {\n  \n}\n',
+    typescript: "function uniqueLetterString(s: string): number {\n  \n}",
+
     python: 'def uniqueLetterString(s):\n    pass\n',
   },
   visibleTests: [

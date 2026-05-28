@@ -39,6 +39,8 @@ Return a **2D list** of grid coordinates \`result\` where \`result[i] = [ri, ci]
   params: ['heights'],
   starterCode: {
     javascript: 'function pacificAtlantic(heights) {\n  \n}\n',
+    typescript: "function pacificAtlantic(heights: number[][]): number[][] {\n  \n}",
+
     python: 'def pacificAtlantic(heights):\n    pass\n',
   },
   visibleTests: [

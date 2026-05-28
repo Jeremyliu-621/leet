@@ -34,6 +34,8 @@ Do not use the built-in exponent function or operator.`,
     javascript: `function mySqrt(x) {
 
 }`,
+    typescript: "function mySqrt(x: number): number {\n\n}",
+
     python: `def mySqrt(x):
     pass
 `,

@@ -43,6 +43,8 @@ Return the score of \`s\`.`,
   params: ['s'],
   starterCode: {
     javascript: 'function scoreOfParentheses(s) {\n  // your code here\n}\n',
+    typescript: "function scoreOfParentheses(s: string): number {\n  // your code here\n}",
+
     python: 'def scoreOfParentheses(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

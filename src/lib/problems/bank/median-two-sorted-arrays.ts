@@ -44,6 +44,8 @@ If the combined length is even, the median is the average of the two middle elem
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: 'function findMedianSortedArrays(nums1, nums2) {\n  // your code here\n}\n',
+    typescript: "function findMedianSortedArrays(nums1: number[], nums2: number[]): number {\n  // your code here\n}",
+
     python: 'def findMedianSortedArrays(nums1, nums2):\n    # your code here\n    pass\n',
   },
   visibleTests: [

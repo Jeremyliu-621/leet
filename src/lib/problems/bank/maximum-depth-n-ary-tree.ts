@@ -94,6 +94,8 @@ The tree is serialized as a level-order flat array where each group of children 
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// Node class and maxDepthRunner wrapper are pre-defined.\n// Implement the function below:\nfunction maxDepth(root) {\n  // your code here\n}\n',
+    typescript: "function maxDepthRunner(root: (number | null)[]): number {\n  // your code here\n}",
+
     python: '# Node class and maxDepthRunner wrapper are pre-defined.\n# Implement the function below:\ndef maxDepth(root):\n    # your code here\n    pass\n',
   },
   hints: [

@@ -37,6 +37,8 @@ The **least common multiple** of an array is the smallest positive integer that 
     javascript: `function subarrayLCM(nums, k) {
 
 }`,
+    typescript: "function subarrayLCM(nums: number[], k: number): number {\n\n}",
+
     python: `def subarrayLCM(nums, k):
     pass`,
   },

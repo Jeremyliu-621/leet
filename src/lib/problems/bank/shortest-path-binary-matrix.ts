@@ -41,6 +41,8 @@ The **length** of a clear path is the number of visited cells.`,
     javascript: `function shortestPathBinaryMatrix(grid) {
 
 }`,
+    typescript: "function shortestPathBinaryMatrix(grid: number[][]): number {\n\n}",
+
     python: `def shortestPathBinaryMatrix(grid):
     pass`,
   },

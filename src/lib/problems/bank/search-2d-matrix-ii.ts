@@ -47,6 +47,8 @@ function searchMatrix(matrix, target) {
     javascript: `function searchMatrix(matrix, target) {
 
 }`,
+    typescript: "function searchMatrix(matrix: number[][], target: number): boolean {\n\n}",
+
     python: `def searchMatrix(matrix, target):
     pass`,
   },

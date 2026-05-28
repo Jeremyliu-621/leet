@@ -40,6 +40,8 @@ Use a **fixed-size sliding window** of length \`s1.length\` over \`s2\`, maintai
   params: ['s1', 's2'],
   starterCode: {
     javascript: 'function permutationInString(s1, s2) {\n  // your code here\n}\n',
+    typescript: "function permutationInString(s1: string, s2: string): boolean {\n  // your code here\n}",
+
     python: 'def permutationInString(s1: str, s2: str) -> bool:\n    # your code here\n    pass\n',
   },
   visibleTests: [

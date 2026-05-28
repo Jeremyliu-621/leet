@@ -38,6 +38,8 @@ Return a **2D integer array** \`ret\` where \`ret[i] = [valuei, weighti]\`, with
   params: ['items1', 'items2'],
   starterCode: {
     javascript: 'function mergeSimilarItems(items1, items2) {\n  // your code here\n}\n',
+    typescript: "function mergeSimilarItems(items1: number[][], items2: number[][]): number[][] {\n  // your code here\n}",
+
     python: 'def mergeSimilarItems(items1, items2):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -42,6 +42,8 @@ Return an array of strings containing the new strings formed after the splits, *
     javascript: `function splitWordsBySeparator(words, separator) {
 
 }`,
+    typescript: "function splitWordsBySeparator(words: string[], separator: string): string[] {\n\n}",
+
     python: `def splitWordsBySeparator(words, separator):
     pass`,
   },

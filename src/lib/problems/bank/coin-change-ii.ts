@@ -43,6 +43,8 @@ You may assume that you have an **infinite number of each kind of coin**.`,
     javascript: `function change(amount, coins) {
   // Return number of combinations that make up amount
 }`,
+    typescript: "function change(amount: number, coins: number[]): number {\n  // Return number of combinations that make up amount\n}",
+
     python: `def change(amount, coins):
     # Return number of combinations that make up amount
     pass`,

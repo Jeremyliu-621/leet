@@ -37,6 +37,8 @@ The tree is given as an array in level-order format where \`null\` represents a 
   params: ['root'],
   starterCode: {
     javascript: 'function minDepth(root) {\n\n}',
+    typescript: "function minDepth(root: (number | null)[]): number {\n\n}",
+
     python: 'def minDepth(root):\n    pass',
   },
   visibleTests: [

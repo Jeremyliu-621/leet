@@ -42,6 +42,8 @@ Return an integer array \`answer\` where \`answer[i]\` is the final price you wi
   params: ['prices'],
   starterCode: {
     javascript: 'function finalPrices(prices) {\n  \n}\n',
+    typescript: "function finalPrices(prices: number[]): number[] {\n  \n}",
+
     python: 'def finalPrices(prices):\n    pass\n',
   },
   visibleTests: [

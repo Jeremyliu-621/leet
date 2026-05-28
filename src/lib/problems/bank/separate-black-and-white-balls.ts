@@ -52,6 +52,8 @@ Output: 0
   params: ['s'],
   starterCode: {
     javascript: 'function minimumSteps(s) {\n  // your code here\n}\n',
+    typescript: "function minimumSteps(s: string): number {\n  // your code here\n}",
+
     python: 'def minimumSteps(s):\n    pass\n',
   },
   visibleTests: [

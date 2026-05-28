@@ -33,6 +33,8 @@ The vowels are \`'a'\`, \`'e'\`, \`'i'\`, \`'o'\`, and \`'u'\`, and they can app
     javascript: `function reverseVowels(s) {
   // Return string with vowels reversed
 }`,
+    typescript: "function reverseVowels(s: string): string {\n  // Return string with vowels reversed\n}",
+
     python: `def reverseVowels(s):
     # Return string with vowels reversed
     pass`,

@@ -110,6 +110,8 @@ Trees are given as level-order (BFS) arrays where \`null\` marks missing childre
 function maxSumBST(root) {
 
 }`,
+    typescript: "function maxSumBSTRunner(root: (number | null)[]): number {\n\n}",
+
     python: `# TreeNode class is pre-defined. Implement the function below:
 def maxSumBST(root):
     pass`,

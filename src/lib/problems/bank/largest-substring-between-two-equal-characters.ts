@@ -44,6 +44,8 @@ function maxLengthBetweenEqualCharacters(s) {
     javascript: `function maxLengthBetweenEqualCharacters(s) {
 
 }`,
+    typescript: "function maxLengthBetweenEqualCharacters(s: string): number {\n\n}",
+
     python: `def maxLengthBetweenEqualCharacters(s):
     pass`,
   },

@@ -41,6 +41,8 @@ Return \`true\` if you can, otherwise \`false\`.`,
   params: ['arr', 'k'],
   starterCode: {
     javascript: 'function canArrange(arr, k) {\n  // your code here\n}\n',
+    typescript: "function canArrange(arr: number[], k: number): boolean {\n  // your code here\n}",
+
     python: 'def canArrange(arr, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -50,6 +50,8 @@ Seats are at positions 0, 1, 4, 6. Valid pairs: (0,1) and (4,6). The divider mus
     javascript: `function numberOfWays(corridor) {
 
 }`,
+    typescript: "function numberOfWays(corridor: string): number {\n\n}",
+
     python: `def numberOfWays(corridor):
     pass`,
   },

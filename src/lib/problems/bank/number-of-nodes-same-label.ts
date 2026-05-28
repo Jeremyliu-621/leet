@@ -34,6 +34,8 @@ Return an array of size \`n\` where \`ans[i]\` is the **number of nodes in the s
   params: ['n', 'edges', 'labels'],
   starterCode: {
     javascript: 'function countSubTrees(n, edges, labels) {\n\n}\n',
+    typescript: "function countSubTrees(n: number, edges: number[][], labels: string): number[] {\n\n}",
+
     python: 'def countSubTrees(n, edges, labels):\n    pass\n',
   },
   visibleTests: [

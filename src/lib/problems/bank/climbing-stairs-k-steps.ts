@@ -35,6 +35,8 @@ Since the answer may be very large, return it modulo \`10^9 + 7\`.`,
     javascript: `function climbStairsK(n, k) {
 
 }`,
+    typescript: "function climbStairsK(n: number, k: number): number {\n\n}",
+
     python: `def climbStairsK(n, k):
     pass`,
   },

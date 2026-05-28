@@ -55,6 +55,8 @@ function compressedString(word) {
     javascript: `function compressedString(word) {
 
 }`,
+    typescript: "function compressedString(word: string): string {\n\n}",
+
     python: `def compressedString(word):
     pass`,
   },

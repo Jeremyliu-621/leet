@@ -41,6 +41,8 @@ Return the number of **pairs of different nodes** that are **unreachable** from 
     javascript: `function countPairs(n, edges) {
 
 }`,
+    typescript: "function countPairs(n: number, edges: number[][]): number {\n\n}",
+
     python: `def countPairs(n: int, edges: list) -> int:
     pass
 `,

@@ -45,6 +45,8 @@ Explanation: It is not valid to have leading zeros, so "9" is returned.
     javascript: `function largestPalindromic(num) {
 
 }`,
+    typescript: "function largestPalindromic(num: string): string {\n\n}",
+
     python: `def largestPalindromic(num):
     `,
   },

@@ -52,6 +52,8 @@ Return *the **maximum possible height** of the **tallest** building.*`,
   params: ['n', 'restrictions'],
   starterCode: {
     javascript: 'function maxBuilding(n, restrictions) {\n\n}',
+    typescript: "function maxBuilding(n: number, restrictions: number[][]): number {\n\n}",
+
     python: 'def maxBuilding(n, restrictions):\n    pass',
   },
   visibleTests: [

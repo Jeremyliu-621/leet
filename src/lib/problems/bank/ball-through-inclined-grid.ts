@@ -47,6 +47,8 @@ For each of the \`n\` balls (one per column), simulate and return an array where
   params: ['grid'],
   starterCode: {
     javascript: `function findBall(grid) {\n  \n}`,
+    typescript: "function findBall(grid: number[][]): number[] {\n  \n}",
+
     python: `def findBall(grid):\n    pass`,
   },
   visibleTests: [

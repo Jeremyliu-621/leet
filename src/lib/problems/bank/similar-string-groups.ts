@@ -35,6 +35,8 @@ Given a list of strings \`strs\` where every string in \`strs\` is an anagram of
   params: ['strs'],
   starterCode: {
     javascript: 'function numSimilarGroups(strs) {\n  \n}\n',
+    typescript: "function numSimilarGroups(strs: string[]): number {\n  \n}",
+
     python: 'def numSimilarGroups(strs):\n    pass\n',
   },
   visibleTests: [

@@ -43,6 +43,8 @@ Return the **second minimum time** to reach node \`n\` (there must be a path, an
   // at each node. Apply traffic-light waits at each departure.
 
 }`,
+    typescript: "function secondMinimum(n: number, edges: number[][], time: number, change: number): number {\n  // Build adjacency list, then BFS tracking the two smallest arrival times\n  // at each node. Apply traffic-light waits at each departure.\n\n}",
+
     python: `def secondMinimum(n: int, edges: list, time: int, change: int) -> int:
     # Build adjacency list, then BFS tracking the two smallest arrival times
     # at each node. Apply traffic-light waits at each departure.

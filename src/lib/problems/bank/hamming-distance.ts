@@ -30,6 +30,8 @@ Given two integers \`x\` and \`y\`, return the **Hamming distance** between them
   params: ['x', 'y'],
   starterCode: {
     javascript: 'function hammingDistance(x, y) {\n  \n}\n',
+    typescript: "function hammingDistance(x: number, y: number): number {\n  \n}",
+
     python: 'def hammingDistance(x, y):\n    pass\n',
   },
   visibleTests: [

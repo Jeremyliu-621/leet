@@ -37,6 +37,8 @@ Given an integer \`n\`, return the number of **good** integers in the range \`[1
     javascript: `function rotatedDigits(n) {
 
 }`,
+    typescript: "function rotatedDigits(n: number): number {\n\n}",
+
     python: `def rotatedDigits(n):
     pass`,
   },

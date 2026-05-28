@@ -39,6 +39,8 @@ Return the number of **distinct** valid company names.`,
   params: ['ideas'],
   starterCode: {
     javascript: 'function distinctNames(ideas) {\n  \n}\n',
+    typescript: "function distinctNames(ideas: string[]): number {\n  \n}",
+
     python: 'def distinctNames(ideas):\n    pass\n',
   },
   visibleTests: [

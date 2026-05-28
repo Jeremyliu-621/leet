@@ -45,6 +45,8 @@ function maxProduct(words) {
   params: ['words'],
   starterCode: {
     javascript: 'function maxProductWordLengths(words) {\n\n}\n',
+    typescript: "function maxProductWordLengths(words: string[]): number {\n\n}",
+
     python: 'def maxProductWordLengths(words):\n    pass\n',
   },
   visibleTests: [

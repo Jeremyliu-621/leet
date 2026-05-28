@@ -45,6 +45,8 @@ Implement the \`NumArray\` class, but for this problem implement a function \`su
     javascript: `function sumRange(nums, left, right) {
 
 }`,
+    typescript: "function sumRange(nums: number[], left: number, right: number): number {\n\n}",
+
     python: `def sumRange(nums, left, right):
     pass`,
   },

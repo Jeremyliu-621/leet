@@ -100,6 +100,8 @@ A **leaf** node is a node with no children.
 function sumNumbers(root) {
 
 }`,
+    typescript: "function sumNumbersRunner(root: number[]): number {\n\n}",
+
     python: `# TreeNode is pre-defined. Implement the function below:
 def sumNumbers(root):
     pass`,

@@ -42,6 +42,8 @@ Return the **minimum** amount of \`money\` required before any transaction so th
   params: ['transactions'],
   starterCode: {
     javascript: 'function minimumMoney(transactions) {\n  \n}\n',
+    typescript: "function minimumMoney(transactions: number[][]): number {\n  \n}",
+
     python: 'def minimumMoney(transactions):\n    pass\n',
   },
   visibleTests: [

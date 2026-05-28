@@ -42,6 +42,8 @@ Return the final string after all such duplicate removals have been made. It is 
     javascript: `function removeDuplicates(s, k) {
   // Remove k consecutive duplicate characters repeatedly
 }`,
+    typescript: "function removeDuplicates(s: string, k: number): string {\n  // Remove k consecutive duplicate characters repeatedly\n}",
+
     python: `def removeDuplicates(s: str, k: int) -> str:
     # Remove k consecutive duplicate characters repeatedly
     pass`,

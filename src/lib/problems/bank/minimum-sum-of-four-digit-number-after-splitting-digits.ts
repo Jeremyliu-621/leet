@@ -36,6 +36,8 @@ Return the **minimum** possible sum.
     javascript: `function minimumSum(num) {
 
 }`,
+    typescript: "function minimumSum(num: number): number {\n\n}",
+
     python: `def minimumSum(num):
     pass`,
   },

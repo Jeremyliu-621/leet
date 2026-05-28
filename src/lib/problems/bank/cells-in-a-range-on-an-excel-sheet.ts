@@ -41,6 +41,8 @@ Return the **list of cells** \`(c, r)\` such that \`c1 <= c <= c2\` and \`r1 <= 
   params: ['s'],
   starterCode: {
     javascript: 'function cellsInRange(s) {\n  // your code here\n}\n',
+    typescript: "function cellsInRange(s: string): string[] {\n  // your code here\n}",
+
     python: 'def cellsInRange(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

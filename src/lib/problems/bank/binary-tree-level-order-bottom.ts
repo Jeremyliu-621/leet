@@ -107,6 +107,8 @@ return res.reverse();\`\`\``,
   starterCode: {
     javascript:
       '// TreeNode class is pre-defined. Implement the function below:\nfunction levelOrderBottom(root) {\n  \n}\n',
+    typescript: "function levelOrderBottomRunner(root: (number | null)[]): number[][] {\n  \n}",
+
     python:
       '# TreeNode class is pre-defined. Implement the function below:\ndef levelOrderBottom(root):\n    pass\n',
   },

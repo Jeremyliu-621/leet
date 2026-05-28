@@ -27,6 +27,8 @@ function findComplement(num) {
   params: ['num'],
   starterCode: {
     javascript: 'function findComplement(num) {\n  \n}\n',
+    typescript: "function findComplement(num: number): number {\n  \n}",
+
     python: 'def findComplement(num):\n    pass\n',
   },
   visibleTests: [

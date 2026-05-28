@@ -39,6 +39,8 @@ Return the **maximum number of balls** in a single box.`,
   params: ['lowLimit', 'highLimit'],
   starterCode: {
     javascript: 'function countBalls(lowLimit, highLimit) {\n  // your code here\n}\n',
+    typescript: "function countBalls(lowLimit: number, highLimit: number): number {\n  // your code here\n}",
+
     python: 'def countBalls(lowLimit, highLimit):\n    # your code here\n    pass\n',
   },
   visibleTests: [

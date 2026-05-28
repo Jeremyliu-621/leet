@@ -36,6 +36,8 @@ Return the answer sorted by the frequency from highest to lowest. Sort the words
     javascript: `function topKFrequent(words, k) {
   // Return top k frequent words sorted by frequency desc, then lexicographically
 }`,
+    typescript: "function topKFrequent(words: string[], k: number): string[] {\n  // Return top k frequent words sorted by frequency desc, then lexicographically\n}",
+
     python: `def topKFrequent(words, k):
     # Return top k frequent words sorted by frequency desc, then lexicographically
     pass`,

@@ -45,6 +45,8 @@ function pivotInteger(n) {
   params: ['n'],
   starterCode: {
     javascript: 'function pivotInteger(n) {\n  \n}\n',
+    typescript: "function pivotInteger(n: number): number {\n  \n}",
+
     python: 'def pivotInteger(n):\n    pass\n',
   },
   visibleTests: [

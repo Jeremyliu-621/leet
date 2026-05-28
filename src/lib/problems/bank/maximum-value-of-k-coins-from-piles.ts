@@ -41,6 +41,8 @@ Given a list \`piles\`, where \`piles[i]\` is a list of integers denoting the co
     javascript: `function maxValueOfCoins(piles, k) {
 
 }`,
+    typescript: "function maxValueOfCoins(piles: number[][], k: number): number {\n\n}",
+
     python: `def maxValueOfCoins(piles, k):
     pass`,
   },

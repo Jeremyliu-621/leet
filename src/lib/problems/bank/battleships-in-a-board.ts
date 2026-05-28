@@ -40,6 +40,8 @@ Count the battleships **without** modifying the board and using **O(1)** extra s
     javascript: `function countBattleships(board) {
 
 }`,
+    typescript: "function countBattleships(board: string[][]): number {\n\n}",
+
     python: `def countBattleships(board: list[list[str]]) -> int:
     pass`,
   },

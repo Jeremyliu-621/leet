@@ -35,6 +35,8 @@ A range sum \`S(i, j)\` is defined as the sum of elements in \`nums\` between in
     javascript: `function countRangeSum(nums, lower, upper) {
 
 }`,
+    typescript: "function countRangeSum(nums: number[], lower: number, upper: number): number {\n\n}",
+
     python: `def countRangeSum(nums, lower, upper):
     pass`,
   },

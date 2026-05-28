@@ -39,6 +39,8 @@ Return the **number of connected components** in the graph.`,
     javascript: `function countComponents(n, edges) {
 
 }`,
+    typescript: "function countComponents(n: number, edges: number[][]): number {\n\n}",
+
     python: `def countComponents(n, edges):
     pass`,
   },

@@ -42,6 +42,8 @@ Return *the total number of laser beams in the bank*.`,
     javascript: `function numberOfBeams(bank) {
 
 }`,
+    typescript: "function numberOfBeams(bank: string[]): number {\n\n}",
+
     python: `def numberOfBeams(bank):
     pass`,
   },

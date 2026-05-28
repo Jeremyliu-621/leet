@@ -41,6 +41,8 @@ Return the sorted array.
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function sortNearlySorted(nums, k) {\n  \n}`,
+    typescript: "function sortNearlySorted(nums: number[], k: number): number[] {\n  \n}",
+
     python: `def sortNearlySorted(nums, k):\n    pass`,
   },
   visibleTests: [

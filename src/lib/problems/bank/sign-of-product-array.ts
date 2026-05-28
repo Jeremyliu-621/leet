@@ -46,6 +46,8 @@ return nums.filter(x => x < 0).length % 2 === 0 ? 1 : -1;\`\`\``
     javascript: `function arraySign(nums) {
 
 }`,
+    typescript: "function arraySign(nums: number[]): number {\n\n}",
+
     python: `def arraySign(nums):
     pass`,
   },

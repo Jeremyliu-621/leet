@@ -45,6 +45,8 @@ Given a string \`s\`, reconstruct the permutation \`perm\` and return it. If the
     javascript: `function diStringMatch(s) {
 
 }`,
+    typescript: "function diStringMatch(s: string): number[] {\n\n}",
+
     python: `def diStringMatch(s):
     pass`,
   },

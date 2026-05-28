@@ -45,6 +45,8 @@ function reverseWords(s) {
   params: ['s'],
   starterCode: {
     javascript: 'function reverseWords(s) {\n  \n}\n',
+    typescript: "function reverseWords(s: string): string {\n  \n}",
+
     python: 'def reverseWords(s):\n    pass\n',
   },
   visibleTests: [

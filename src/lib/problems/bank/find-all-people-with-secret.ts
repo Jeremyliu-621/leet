@@ -43,6 +43,8 @@ Meetings are not necessarily in chronological order. Return a list of all the pe
   params: ['n', 'meetings', 'firstPerson'],
   starterCode: {
     javascript: 'function findAllPeople(n, meetings, firstPerson) {\n\n}\n',
+    typescript: "function findAllPeople(n: number, meetings: number[][], firstPerson: number): number[] {\n\n}",
+
     python: 'def findAllPeople(n, meetings, firstPerson):\n    pass\n',
   },
   visibleTests: [

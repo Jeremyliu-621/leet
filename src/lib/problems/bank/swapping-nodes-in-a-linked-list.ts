@@ -88,6 +88,8 @@ export const problem: Problem = {
   starterCode: {
     javascript:
       '// ListNode class and swapNodesRunner wrapper are pre-defined.\n// Implement the function below:\nfunction swapNodes(head, k) {\n  \n}\n',
+    typescript: "function swapNodesRunner(head: number[], k: number): number[] {\n  \n}",
+
     python:
       '# ListNode class and swapNodesRunner wrapper are pre-defined.\n# Implement the function below:\ndef swapNodes(head, k):\n    pass\n',
   },

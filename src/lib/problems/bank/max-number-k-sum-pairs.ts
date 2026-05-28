@@ -36,6 +36,8 @@ Return the **maximum number of operations** you can perform on the array.`,
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function maxOperations(nums, k) {\n  // your code here\n}\n',
+    typescript: "function maxOperations(nums: number[], k: number): number {\n  // your code here\n}",
+
     python: 'def maxOperations(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

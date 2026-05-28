@@ -40,6 +40,8 @@ You must implement an algorithm that runs in \`O(n)\` time and uses \`O(1)\` aux
     javascript: `function firstMissingPositive(nums) {
 
 }`,
+    typescript: "function firstMissingPositive(nums: number[]): number {\n\n}",
+
     python: `def firstMissingPositive(nums):
     pass`,
   },

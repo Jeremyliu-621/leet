@@ -43,6 +43,8 @@ Return an integer array \`pairs\` of length \`n\` where \`pairs[i]\` is the numb
     javascript: `function successfulPairs(spells, potions, success) {
   // Return array where result[i] = count of potions that pair with spells[i]
 }`,
+    typescript: "function successfulPairs(spells: number[], potions: number[], success: number): number[] {\n  // Return array where result[i] = count of potions that pair with spells[i]\n}",
+
     python: `def successfulPairs(spells: list[int], potions: list[int], success: int) -> list[int]:
     # Your code here
     pass`,

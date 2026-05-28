@@ -38,6 +38,8 @@ Implement the \`NumArray\` class:
   // Return results array: null for NumArray, number for sumRange
 
 }`,
+    typescript: "function numArrayOps(ops: ((string | number[][])[] | (string | number[])[])[]): (null | number)[] {\n  // ops: [[\"NumArray\",[nums]], [\"sumRange\",[left,right]], ...]\n  // Return results array: null for NumArray, number for sumRange\n\n}",
+
     python: `def numArrayOps(ops):
     # ops: [["NumArray",[nums]], ["sumRange",[left,right]], ...]
     # Return results list: None for NumArray, number for sumRange

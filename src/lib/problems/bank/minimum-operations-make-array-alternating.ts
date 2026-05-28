@@ -39,6 +39,8 @@ Return the **minimum number of operations** to make the array alternating.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function minimumOperations(nums) {\n  \n}\n',
+    typescript: "function minimumOperations(nums: number[]): number {\n  \n}",
+
     python: 'def minimumOperations(nums):\n    pass\n',
   },
   visibleTests: [

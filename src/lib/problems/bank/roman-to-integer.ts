@@ -53,6 +53,8 @@ Roman numerals use these symbols:
   params: ['s'] as readonly string[],
   starterCode: {
     javascript: 'function romanToInt(s) {\n  // your code here\n}\n',
+    typescript: "function romanToInt(s: string): number {\n  // your code here\n}",
+
     python: 'def romanToInt(s: str) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

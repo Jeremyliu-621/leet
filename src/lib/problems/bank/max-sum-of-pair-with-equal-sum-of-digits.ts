@@ -46,6 +46,8 @@ function maximumSum(nums) {
     javascript: `function maximumSum(nums) {
 
 }`,
+    typescript: "function maximumSum(nums: number[]): number {\n\n}",
+
     python: `def maximumSum(nums):
     pass`,
   },

@@ -35,6 +35,8 @@ An **anagram** is a string formed by rearranging the letters of another, using a
     javascript: `function findAnagrams(s, p) {
 
 }`,
+    typescript: "function findAnagrams(s: string, p: string): number[] {\n\n}",
+
     python: `def findAnagrams(s, p):
     pass`,
   },

@@ -45,6 +45,8 @@ The values you may assign to any cell are the digits \`0\` through \`9\`.`,
     javascript: `function minimumOperations(grid) {
   // your code here
 }`,
+    typescript: "function minimumOperations(grid: number[][]): number {\n  // your code here\n}",
+
     python: `def minimumOperations(grid):
     # your code here
     pass`,

@@ -40,6 +40,8 @@ export const problem: Problem = {
   // Transform to a[i] = nums1[i] - nums2[i].
   // Count pairs i < j where a[i] <= a[j] + diff using BIT.
 }`,
+    typescript: "function numberOfPairs(nums1: number[], nums2: number[], diff: number): number {\n  // Transform to a[i] = nums1[i] - nums2[i].\n  // Count pairs i < j where a[i] <= a[j] + diff using BIT.\n}",
+
     python: `def numberOfPairs(nums1, nums2, diff):
     # Transform to a[i] = nums1[i] - nums2[i].
     # Count pairs i < j where a[i] <= a[j] + diff using BIT.

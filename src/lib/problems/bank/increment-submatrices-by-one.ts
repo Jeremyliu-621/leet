@@ -39,6 +39,8 @@ Return the matrix \`mat\` after performing all of the queries.`,
   params: ['n', 'queries'],
   starterCode: {
     javascript: 'function rangeAddQueries(n, queries) {\n  \n}\n',
+    typescript: "function rangeAddQueries(n: number, queries: number[][]): number[][] {\n  \n}",
+
     python: 'def rangeAddQueries(n, queries):\n    pass\n',
   },
   visibleTests: [

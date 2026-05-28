@@ -36,6 +36,8 @@ Return the **minimum number of lines** needed to represent the line chart.`,
   params: ['stockPrices'],
   starterCode: {
     javascript: 'function minimumLines(stockPrices) {\n  \n}\n',
+    typescript: "function minimumLines(stockPrices: number[][]): number {\n  \n}",
+
     python: 'def minimumLines(stockPrices):\n    pass\n',
   },
   visibleTests: [

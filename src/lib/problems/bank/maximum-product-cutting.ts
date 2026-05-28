@@ -41,6 +41,8 @@ You must make at least one cut — you cannot keep \`n\` intact.
   params: ['n'] as readonly string[],
   starterCode: {
     javascript: 'function integerBreak(n) {\n  // your code here\n}\n',
+    typescript: "function integerBreak(n: number): number {\n  // your code here\n}",
+
     python: 'def integerBreak(n: int) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

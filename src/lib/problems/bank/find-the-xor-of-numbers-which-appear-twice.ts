@@ -48,6 +48,8 @@ function duplicateNumbersXOR(nums) {
     javascript: `function duplicateNumbersXOR(nums) {
 
 }`,
+    typescript: "function duplicateNumbersXOR(nums: number[]): number {\n\n}",
+
     python: `def duplicateNumbersXOR(nums):
     pass`,
   },

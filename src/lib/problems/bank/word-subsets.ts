@@ -40,6 +40,8 @@ Return an array of all the **universal** strings in \`words1\`. You may return t
   params: ['words1', 'words2'],
   starterCode: {
     javascript: 'function wordSubsets(words1, words2) {\n\n}\n',
+    typescript: "function wordSubsets(words1: string[], words2: string[]): string[] {\n\n}",
+
     python: 'def wordSubsets(words1, words2):\n    pass\n',
   },
   visibleTests: [

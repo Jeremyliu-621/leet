@@ -31,6 +31,8 @@ export const problem: Problem = {
   params: ['cost'],
   starterCode: {
     javascript: 'function minCostClimbingStairs(cost) {\n  // your code here\n}\n',
+    typescript: "function minCostClimbingStairs(cost: number[]): number {\n  // your code here\n}",
+
     python: 'def minCostClimbingStairs(cost: list) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

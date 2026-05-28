@@ -45,6 +45,8 @@ Return \`true\` if you can sort the array, or \`false\` otherwise.
   // return true if array can be sorted by swapping adjacent same-popcount elements
 
 }`,
+    typescript: "function canSortArray(nums: number[]): boolean {\n  // return true if array can be sorted by swapping adjacent same-popcount elements\n\n}",
+
     python: `def canSortArray(nums: list) -> bool:
     # return true if array can be sorted by swapping adjacent same-popcount elements
     pass

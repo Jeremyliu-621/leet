@@ -35,6 +35,8 @@ Return the number of pairs of songs for which their total duration in seconds is
     javascript: `function numPairsDivisibleBy60(time) {
 
 }`,
+    typescript: "function numPairsDivisibleBy60(time: number[]): number {\n\n}",
+
     python: `def numPairsDivisibleBy60(time):
     pass`,
   },

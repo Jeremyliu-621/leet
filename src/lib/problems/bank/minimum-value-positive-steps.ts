@@ -39,6 +39,8 @@ Return the minimum **positive** value of \`startValue\` such that the step-by-st
   params: ['nums'],
   starterCode: {
     javascript: 'function minStartValue(nums) {\n  // your code here\n}\n',
+    typescript: "function minStartValue(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def minStartValue(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

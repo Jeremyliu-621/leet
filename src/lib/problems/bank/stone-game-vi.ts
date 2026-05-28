@@ -46,6 +46,8 @@ Return \`1\` if Alice wins, \`-1\` if Bob wins, or \`0\` if it's a tie.`,
     javascript: `function stoneGameVI(aliceValues, bobValues) {
 
 }`,
+    typescript: "function stoneGameVI(aliceValues: number[], bobValues: number[]): number {\n\n}",
+
     python: `def stoneGameVI(aliceValues, bobValues):
     pass`,
   },

@@ -40,6 +40,8 @@ Return the **maximum sum of happiness values** of the selected children.`,
     javascript: `function maximumHappinessSum(happiness, k) {
 
 }`,
+    typescript: "function maximumHappinessSum(happiness: number[], k: number): number {\n\n}",
+
     python: `def maximumHappinessSum(happiness, k):
     pass`,
   },

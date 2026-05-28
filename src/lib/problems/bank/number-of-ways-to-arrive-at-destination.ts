@@ -43,6 +43,8 @@ Return the number of ways you can arrive at your destination in the shortest amo
   params: ['n', 'roads'],
   starterCode: {
     javascript: 'function countPaths(n, roads) {\n\n}\n',
+    typescript: "function countPaths(n: number, roads: number[][]): number {\n\n}",
+
     python: 'def countPaths(n, roads):\n    pass\n',
   },
   visibleTests: [

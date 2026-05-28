@@ -43,6 +43,8 @@ Given a string \`word\` that consists of the first ten lowercase English letters
   params: ['word'],
   starterCode: {
     javascript: 'function wonderfulSubstrings(word) {\n  \n}\n',
+    typescript: "function wonderfulSubstrings(word: string): number {\n  \n}",
+
     python: 'def wonderfulSubstrings(word):\n    pass\n',
   },
   visibleTests: [

@@ -37,6 +37,8 @@ export const problem: Problem = {
   params: ['n'],
   starterCode: {
     javascript: 'function isPrime(n) {\n  // your code here\n}\n',
+    typescript: "function isPrime(n: number): boolean {\n  // your code here\n}",
+
     python: 'def isPrime(n):\n    # your code here\n    pass\n',
   },
   visibleTests: [

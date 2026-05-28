@@ -91,6 +91,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// TreeNode class and averageOfSubtreeRunner wrapper are pre-defined.\n// Implement the function below:\nfunction averageOfSubtree(root) {\n  // your code here\n}\n',
+    typescript: "function averageOfSubtreeRunner(arr: (number | null)[]): number {\n  // your code here\n}",
+
     python: '# TreeNode class and averageOfSubtreeRunner wrapper are pre-defined.\n# Implement the function below:\ndef averageOfSubtree(root):\n    # your code here\n    pass\n',
   },
   visibleTests: [

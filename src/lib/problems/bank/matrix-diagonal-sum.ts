@@ -39,6 +39,8 @@ Only include the sum of all the elements on the primary diagonal and all the ele
     javascript: `function diagonalSum(mat) {
 
 }`,
+    typescript: "function diagonalSum(mat: number[][]): number {\n\n}",
+
     python: `def diagonalSum(mat):
     pass`,
   },

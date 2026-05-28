@@ -40,6 +40,8 @@ Note that if a house is placed on the \`i\`th plot on one side of the street, a 
   params: ['n'],
   starterCode: {
     javascript: 'function countHousePlacements(n) {\n  \n}\n',
+    typescript: "function countHousePlacements(n: number): number {\n  \n}",
+
     python: 'def countHousePlacements(n):\n    pass\n',
   },
   visibleTests: [

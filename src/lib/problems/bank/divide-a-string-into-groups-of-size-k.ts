@@ -51,6 +51,8 @@ function divideString(s, k, fill) {
   // return array of groups
 
 }`,
+    typescript: "function divideString(s: string, k: number, fill: string): string[] {\n  // return array of groups\n\n}",
+
     python: `def divideString(s: str, k: int, fill: str) -> list:
     # return array of groups
     pass

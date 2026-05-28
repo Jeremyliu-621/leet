@@ -41,6 +41,8 @@ A **circular array** means the end of the array connects to the beginning. A sub
     javascript: `function maxSubarraySumCircular(nums) {
   // Return max sum circular subarray
 }`,
+    typescript: "function maxSubarraySumCircular(nums: number[]): number {\n  // Return max sum circular subarray\n}",
+
     python: `def maxSubarraySumCircular(nums):
     # Return max sum circular subarray
     pass`,

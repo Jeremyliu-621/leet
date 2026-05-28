@@ -43,6 +43,8 @@ return Math.max(1, 1 - min);\`\`\``
     javascript: `function minStartValue(nums) {
 
 }`,
+    typescript: "function minStartValue(nums: number[]): number {\n\n}",
+
     python: `def minStartValue(nums):
     pass`,
   },

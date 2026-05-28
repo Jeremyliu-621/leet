@@ -43,6 +43,8 @@ function isToeplitzMatrix(matrix) {
     javascript: `function isToeplitzMatrix(matrix) {
 
 }`,
+    typescript: "function isToeplitzMatrix(matrix: number[][]): boolean {\n\n}",
+
     python: `def isToeplitzMatrix(matrix):
     pass`,
   },

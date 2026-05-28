@@ -38,6 +38,8 @@ Return the maximum subarray sum of all the subarrays that meet the conditions. I
     javascript: `function maximumSubarraySum(nums, k) {
 
 }`,
+    typescript: "function maximumSubarraySum(nums: number[], k: number): number {\n\n}",
+
     python: `def maximumSubarraySum(nums, k):
     pass`,
   },

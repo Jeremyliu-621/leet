@@ -56,6 +56,8 @@ function makeGood(s) {
     javascript: `function makeGood(s) {
 
 }`,
+    typescript: "function makeGood(s: string): string {\n\n}",
+
     python: `def makeGood(s):
     pass`,
   },

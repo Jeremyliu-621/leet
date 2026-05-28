@@ -48,6 +48,8 @@ If Alice and Bob play optimally, return \`true\` if Alice wins, and \`false\` if
   params: ['num'],
   starterCode: {
     javascript: 'function sumGame(num) {\n  // your code here\n}\n',
+    typescript: "function sumGame(num: string): boolean {\n  // your code here\n}",
+
     python: 'def sumGame(num):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -42,6 +42,8 @@ Solve this using O(n) extra space — precompute prefix-maximum arrays from the 
   params: ['height'],
   starterCode: {
     javascript: 'function trapRainWater(height) {\n  // your code here\n}\n',
+    typescript: "function trapRainWater(height: number[]): number {\n  // your code here\n}",
+
     python: 'def trapRainWater(height):\n    # your code here\n    pass\n',
   },
   visibleTests: [

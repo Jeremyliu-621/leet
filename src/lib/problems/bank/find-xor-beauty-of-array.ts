@@ -39,6 +39,8 @@ Note that \`|\` denotes the bitwise OR operator.`,
     javascript: `function xorBeauty(nums) {
 
 }`,
+    typescript: "function xorBeauty(nums: number[]): number {\n\n}",
+
     python: `def xorBeauty(nums):
     pass`,
   },

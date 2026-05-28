@@ -37,6 +37,8 @@ Iterate over every anchor in O(n); for each anchor, build the slope map in O(n).
   params: ['points'],
   starterCode: {
     javascript: 'function maxPoints(points) {\n  // your code here\n}\n',
+    typescript: "function maxPoints(points: number[][]): number {\n  // your code here\n}",
+
     python:
       'def maxPoints(points: list[list[int]]) -> int:\n    # your code here\n    pass\n',
   },

@@ -37,6 +37,8 @@ Return \`names\` sorted in **descending** order by the people's heights.`,
   params: ['names', 'heights'],
   starterCode: {
     javascript: 'function sortPeople(names, heights) {\n  // your code here\n}\n',
+    typescript: "function sortPeople(names: string[], heights: number[]): string[] {\n  // your code here\n}",
+
     python: 'def sortPeople(names, heights):\n    # your code here\n    pass\n',
   },
   visibleTests: [

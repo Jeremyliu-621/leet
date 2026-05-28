@@ -43,6 +43,8 @@ Return the **edge that should be removed** to restore the tree. If multiple answ
   params: ['edges'],
   starterCode: {
     javascript: 'function findRedundantDirectedConnection(edges) {\n  \n}\n',
+    typescript: "function findRedundantDirectedConnection(edges: number[][]): number[] {\n  \n}",
+
     python: 'def findRedundantDirectedConnection(edges):\n    pass\n',
   },
   visibleTests: [

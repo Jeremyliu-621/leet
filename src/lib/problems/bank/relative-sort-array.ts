@@ -40,6 +40,8 @@ return arr1.sort((a,b) => {
   params: ['arr1', 'arr2'],
   starterCode: {
     javascript: 'function relativeSortArray(arr1, arr2) {\n  \n}\n',
+    typescript: "function relativeSortArray(arr1: number[], arr2: number[]): number[] {\n  \n}",
+
     python: 'def relativeSortArray(arr1, arr2):\n    pass\n',
   },
   visibleTests: [

@@ -40,6 +40,8 @@ The container cannot be tilted. Water is bounded by the shorter of the two chose
   params: ['height'],
   starterCode: {
     javascript: 'function containerWithMostWater(height) {\n  // your code here\n}\n',
+    typescript: "function containerWithMostWater(height: number[]): number {\n  // your code here\n}",
+
     python: 'def containerWithMostWater(height):\n    # your code here\n    pass\n',
   },
   visibleTests: [

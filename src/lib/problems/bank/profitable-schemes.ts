@@ -38,6 +38,8 @@ Return the number of schemes that can be chosen. Since the answer may be very la
   params: ['n', 'minProfit', 'group', 'profit'],
   starterCode: {
     javascript: 'function profitableSchemes(n, minProfit, group, profit) {\n\n}\n',
+    typescript: "function profitableSchemes(n: number, minProfit: number, group: number[], profit: number[]): number {\n\n}",
+
     python: 'def profitableSchemes(n, minProfit, group, profit):\n    pass\n',
   },
   visibleTests: [

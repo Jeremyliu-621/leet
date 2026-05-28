@@ -37,6 +37,8 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: 'function shiftLeftByOne(nums) {\n  // your code here\n}\n',
+    typescript: "function shiftLeftByOne(nums: number[]): number[] {\n  // your code here\n}",
+
     python: 'def shiftLeftByOne(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

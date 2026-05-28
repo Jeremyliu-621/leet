@@ -32,6 +32,8 @@ export const problem: Problem = {
     javascript: `function countOdds(low, high) {
 
 }`,
+    typescript: "function countOdds(low: number, high: number): number {\n\n}",
+
     python: `def countOdds(low, high):
     pass`,
   },

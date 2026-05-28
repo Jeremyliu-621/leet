@@ -38,6 +38,8 @@ Return the length of the shortest path that visits every node. You may start and
     javascript: `function shortestPathLength(graph) {
 
 }`,
+    typescript: "function shortestPathLength(graph: number[][]): number {\n\n}",
+
     python: `def shortestPathLength(graph):
     pass`,
   },

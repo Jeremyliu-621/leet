@@ -107,6 +107,8 @@ return true;\`\`\``,
   starterCode: {
     javascript:
       '// TreeNode class and isCompleteTreeRunner wrapper are pre-defined.\nfunction isCompleteTree(root) {\n  \n}\n',
+    typescript: "function isCompleteTreeRunner(root: number[]): boolean {\n  \n}",
+
     python:
       '# TreeNode class and isCompleteTreeRunner wrapper are pre-defined.\ndef isCompleteTree(root):\n    pass\n',
   },

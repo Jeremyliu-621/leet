@@ -42,6 +42,8 @@ function findTheDifference(s, t) {
     javascript: `function findTheDifference(s, t) {
 
 }`,
+    typescript: "function findTheDifference(s: string, t: string): string {\n\n}",
+
     python: `def findTheDifference(s, t):
     pass`,
   },

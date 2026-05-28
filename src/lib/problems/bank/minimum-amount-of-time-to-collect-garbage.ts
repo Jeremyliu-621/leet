@@ -56,6 +56,8 @@ function garbageCollection(garbage, travel) {
   // return minimum minutes to collect all garbage
 
 }`,
+    typescript: "function garbageCollection(garbage: string[], travel: number[]): number {\n  // return minimum minutes to collect all garbage\n\n}",
+
     python: `def garbageCollection(garbage: list, travel: list) -> int:
     # return minimum minutes to collect all garbage
     pass

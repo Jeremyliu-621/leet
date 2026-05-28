@@ -41,6 +41,8 @@ Return a boolean array \`answer\`, where \`answer.length == queries.length\` and
   params: ['n', 'edgeList', 'queries'],
   starterCode: {
     javascript: 'function distanceLimitedPathsExist(n, edgeList, queries) {\n  \n}\n',
+    typescript: "function distanceLimitedPathsExist(n: number, edgeList: number[][], queries: number[][]): boolean[] {\n  \n}",
+
     python: 'def distanceLimitedPathsExist(n, edgeList, queries):\n    pass\n',
   },
   visibleTests: [

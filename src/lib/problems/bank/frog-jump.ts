@@ -37,6 +37,8 @@ If the frog's last jump was \`k\` units, its next jump must be either \`k - 1\`,
   params: ['stones'],
   starterCode: {
     javascript: 'function canCross(stones) {\n\n}\n',
+    typescript: "function canCross(stones: number[]): boolean {\n\n}",
+
     python: 'def canCross(stones):\n    pass\n',
   },
   visibleTests: [

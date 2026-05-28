@@ -41,6 +41,8 @@ function commonFactors(a, b) {
     javascript: `function commonFactors(a, b) {
 
 }`,
+    typescript: "function commonFactors(a: number, b: number): number {\n\n}",
+
     python: `def commonFactors(a, b):
     pass`,
   },

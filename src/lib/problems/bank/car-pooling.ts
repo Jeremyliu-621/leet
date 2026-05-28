@@ -36,6 +36,8 @@ Return \`true\` if it is possible to pick up and drop off all passengers for all
   params: ['trips', 'capacity'],
   starterCode: {
     javascript: 'function carPooling(trips, capacity) {\n  // your code here\n}\n',
+    typescript: "function carPooling(trips: number[][], capacity: number): boolean {\n  // your code here\n}",
+
     python: 'def carPooling(trips, capacity):\n    # your code here\n    pass\n',
   },
   visibleTests: [

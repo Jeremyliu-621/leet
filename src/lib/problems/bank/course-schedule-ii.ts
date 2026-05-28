@@ -45,6 +45,8 @@ If multiple valid orderings exist, any one of them is accepted.`,
     javascript: `function findOrder(numCourses, prerequisites) {
   // Return a valid topological order, or [] if a cycle exists
 }`,
+    typescript: "function findOrder(numCourses: number, prerequisites: number[][]): number[] {\n  // Return a valid topological order, or [] if a cycle exists\n}",
+
     python: `def findOrder(numCourses, prerequisites):
     # Return a valid topological order, or [] if a cycle exists
     pass`,

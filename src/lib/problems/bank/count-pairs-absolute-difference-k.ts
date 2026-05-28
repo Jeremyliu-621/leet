@@ -47,6 +47,8 @@ function countKDifference(nums, k) {
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function countKDifference(nums, k) {\n  \n}\n',
+    typescript: "function countKDifference(nums: number[], k: number): number {\n  \n}",
+
     python: 'def countKDifference(nums, k):\n    pass\n',
   },
   visibleTests: [

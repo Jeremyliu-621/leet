@@ -33,6 +33,8 @@ The product matrix \`result[i][j] = sum over p of mat1[i][p] * mat2[p][j]\`.`,
   params: ['mat1', 'mat2'],
   starterCode: {
     javascript: 'function multiply(mat1, mat2) {\n  // your code here\n}\n',
+    typescript: "function multiply(mat1: number[][], mat2: number[][]): number[][] {\n  // your code here\n}",
+
     python: 'def multiply(mat1, mat2):\n    # your code here\n    pass\n',
   },
   hints: [

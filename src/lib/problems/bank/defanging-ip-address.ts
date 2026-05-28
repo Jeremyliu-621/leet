@@ -30,6 +30,8 @@ A **defanged IP address** replaces every period \`"."\` with \`"[.]"\`.`,
     javascript: `function defangIPaddr(address) {
 
 }`,
+    typescript: "function defangIPaddr(address: string): string {\n\n}",
+
     python: `def defangIPaddr(address):
     pass`,
   },

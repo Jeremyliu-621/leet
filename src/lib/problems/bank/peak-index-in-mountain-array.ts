@@ -48,6 +48,8 @@ function peakIndexInMountainArray(arr) {
   // return the index of the peak element in O(log n) time
 
 }`,
+    typescript: "function peakIndexInMountainArray(arr: number[]): number {\n  // return the index of the peak element in O(log n) time\n\n}",
+
     python: `def peakIndexInMountainArray(arr: list) -> int:
     # return the index of the peak element in O(log n) time
     pass

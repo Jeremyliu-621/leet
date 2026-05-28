@@ -43,6 +43,8 @@ Return the modified matrix.`,
   params: ['matrix'] as readonly string[],
   starterCode: {
     javascript: 'function rotate(matrix) {\n  // your code here\n}\n',
+    typescript: "function rotate(matrix: number[][]): number[][] {\n  // your code here\n}",
+
     python: 'def rotate(matrix: list[list[int]]) -> list[list[int]]:\n    # your code here\n    pass\n',
   },
   visibleTests: [

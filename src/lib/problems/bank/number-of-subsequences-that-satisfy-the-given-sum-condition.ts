@@ -34,6 +34,8 @@ Return the number of **non-empty** subsequences of \`nums\` such that the sum of
   params: ['nums', 'target'],
   starterCode: {
     javascript: 'function numSubseq(nums, target) {\n\n}\n',
+    typescript: "function numSubseq(nums: number[], target: number): number {\n\n}",
+
     python: 'def numSubseq(nums, target):\n    pass\n',
   },
   visibleTests: [

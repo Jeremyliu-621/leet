@@ -36,6 +36,8 @@ export const problem: Problem = {
   params: ['s'],
   starterCode: {
     javascript: 'function areOccurrencesEqual(s) {\n  // your code here\n}\n',
+    typescript: "function areOccurrencesEqual(s: string): boolean {\n  // your code here\n}",
+
     python: 'def areOccurrencesEqual(s: str) -> bool:\n    # your code here\n    pass\n',
   },
   visibleTests: [

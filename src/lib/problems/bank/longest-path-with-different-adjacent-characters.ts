@@ -38,6 +38,8 @@ Return the length of the **longest path** in the tree such that no pair of **adj
   params: ['parent', 's'],
   starterCode: {
     javascript: 'function longestPath(parent, s) {\n  \n}\n',
+    typescript: "function longestPath(parent: number[], s: string): number {\n  \n}",
+
     python: 'def longestPath(parent, s):\n    pass\n',
   },
   visibleTests: [

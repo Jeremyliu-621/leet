@@ -42,6 +42,8 @@ export const problem: Problem = {
   // return true if changed can be rearranged into doubled pairs
 
 }`,
+    typescript: "function canReorderDoubled(changed: number[]): boolean {\n  // return true if changed can be rearranged into doubled pairs\n\n}",
+
     python: `def canReorderDoubled(changed: list) -> bool:
     # return True if changed can be rearranged into doubled pairs
     pass

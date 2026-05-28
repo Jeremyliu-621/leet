@@ -45,6 +45,8 @@ For each value, prefer appending to an existing subsequence before starting a ne
   // return true if nums can be split into valid consecutive subsequences
 
 }`,
+    typescript: "function isPossible(nums: number[]): boolean {\n  // return true if nums can be split into valid consecutive subsequences\n\n}",
+
     python: `def isPossible(nums: list) -> bool:
     # return True if nums can be split into valid consecutive subsequences
     pass

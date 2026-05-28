@@ -30,6 +30,8 @@ Given a 2D integer array \`moves\` where \`moves[i] = [row_i, col_i]\` indicates
   params: ['moves'],
   starterCode: {
     javascript: 'function tictactoe(moves) {\n\n}\n',
+    typescript: "function tictactoe(moves: number[][]): string {\n\n}",
+
     python: 'def tictactoe(moves):\n    pass\n',
   },
   visibleTests: [

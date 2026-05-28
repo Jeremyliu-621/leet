@@ -45,6 +45,8 @@ Return the result string after sorting \`s\` with this algorithm.`,
   params: ['s'],
   starterCode: {
     javascript: 'function sortString(s) {\n  // your code here\n}\n',
+    typescript: "function sortString(s: string): string {\n  // your code here\n}",
+
     python: 'def sortString(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

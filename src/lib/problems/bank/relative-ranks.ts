@@ -38,6 +38,8 @@ return ans;\`\`\``
   params: ['score'],
   starterCode: {
     javascript: 'function findRelativeRanks(score) {\n  \n}\n',
+    typescript: "function findRelativeRanks(score: number[]): string[] {\n  \n}",
+
     python: 'def findRelativeRanks(score):\n    pass\n',
   },
   visibleTests: [

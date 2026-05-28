@@ -43,6 +43,8 @@ Return a string describing the type of triangle that can be formed with the give
   // return "equilateral", "isosceles", "scalene", or "none"
 
 }`,
+    typescript: "function triangleType(nums: number[]): string {\n  // return \"equilateral\", \"isosceles\", \"scalene\", or \"none\"\n\n}",
+
     python: `def triangleType(nums: list) -> str:
     # return "equilateral", "isosceles", "scalene", or "none"
     pass

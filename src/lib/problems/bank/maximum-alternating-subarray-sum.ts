@@ -44,6 +44,8 @@ Given an integer array \`nums\`, return the **maximum alternating sum** over all
     javascript: `function alternatingSubarraySum(nums) {
   // your code here
 }`,
+    typescript: "function alternatingSubarraySum(nums: number[]): number {\n  // your code here\n}",
+
     python: `def alternatingSubarraySum(nums):
     # your code here
     pass`,

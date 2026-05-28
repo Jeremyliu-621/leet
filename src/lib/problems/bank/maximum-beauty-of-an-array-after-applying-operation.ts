@@ -47,6 +47,8 @@ Return the **maximum** possible beauty of the array after applying the operation
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function maximumBeauty(nums, k) {\n  \n}\n',
+    typescript: "function maximumBeauty(nums: number[], k: number): number {\n  \n}",
+
     python: 'def maximumBeauty(nums, k):\n    pass\n',
   },
   visibleTests: [

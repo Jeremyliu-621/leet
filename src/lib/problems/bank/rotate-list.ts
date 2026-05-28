@@ -88,6 +88,8 @@ function rotateRight(head, k) {
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// ListNode class and rotateRightRunner wrapper are pre-defined.\n// Implement the function below:\nfunction rotateRight(head, k) {\n  \n}\n',
+    typescript: "function rotateRightRunner(head: number[], k: number): number[] {\n  \n}",
+
     python: '# ListNode class and rotateRightRunner wrapper are pre-defined.\n# Implement the function below:\ndef rotateRight(head, k):\n    pass\n',
   },
   visibleTests: [

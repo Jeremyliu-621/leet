@@ -38,6 +38,8 @@ Note that **multiple** kids can have the greatest number of candies.`,
     javascript: `function kidsWithCandies(candies, extraCandies) {
 
 }`,
+    typescript: "function kidsWithCandies(candies: number[], extraCandies: number): boolean[] {\n\n}",
+
     python: `def kidsWithCandies(candies, extraCandies):
     pass`,
   },

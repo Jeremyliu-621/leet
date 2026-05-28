@@ -37,6 +37,8 @@ Return \`true\` if all the given points lie on the same straight line, and \`fal
     javascript: `function checkStraightLine(coordinates) {
 
 }`,
+    typescript: "function checkStraightLine(coordinates: number[][]): boolean {\n\n}",
+
     python: `def checkStraightLine(coordinates):
     pass`,
   },

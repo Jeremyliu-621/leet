@@ -102,6 +102,8 @@ The result is returned as a **level-order (BFS) array**, where \`null\` indicate
   starterCode: {
     javascript:
       '// TreeNode class and buildFromInorderPostorderRunner wrapper are pre-defined.\n// Implement the function below:\nfunction buildTree(inorder, postorder) {\n  \n}\n',
+    typescript: "function buildFromInorderPostorderRunner(inorder: number[], postorder: number[]): (number | null)[] {\n  \n}",
+
     python:
       '# TreeNode class and buildFromInorderPostorderRunner wrapper are pre-defined.\n# Implement the function below:\ndef buildTree(inorder, postorder):\n    pass\n',
   },

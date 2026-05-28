@@ -42,6 +42,8 @@ You have a weapon that can eliminate exactly **one monster per minute**, startin
     javascript: `function eliminateMaximum(dist, speed) {
   // Return maximum monsters eliminated before any reaches the city
 }`,
+    typescript: "function eliminateMaximum(dist: number[], speed: number[]): number {\n  // Return maximum monsters eliminated before any reaches the city\n}",
+
     python: `def eliminateMaximum(dist: list[int], speed: list[int]) -> int:
     # Return maximum monsters eliminated before any reaches the city
     pass`,

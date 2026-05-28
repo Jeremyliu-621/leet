@@ -22,6 +22,8 @@ export const problem: Problem = {
   params: ['num'],
   starterCode: {
     javascript: 'function convertToBase7(num) {\n  \n}\n',
+    typescript: "function convertToBase7(num: number): string {\n  \n}",
+
     python: 'def convertToBase7(num):\n    pass\n',
   },
   visibleTests: [

@@ -61,6 +61,8 @@ Output: 1
   params: ['grid'],
   starterCode: {
     javascript: 'function minCost(grid) {\n  // your code here\n}\n',
+    typescript: "function minCost(grid: number[][]): number {\n  // your code here\n}",
+
     python: 'def minCost(grid):\n    pass\n',
   },
   visibleTests: [

@@ -46,6 +46,8 @@ Since the answer may be very large, return it **modulo** \`10^9 + 7\`.`,
   params: ['nums', 'cost1', 'cost2'],
   starterCode: {
     javascript: 'function minCostToEqualizeArray(nums, cost1, cost2) {\n\n}',
+    typescript: "function minCostToEqualizeArray(nums: number[], cost1: number, cost2: number): number {\n\n}",
+
     python: 'def minCostToEqualizeArray(nums, cost1, cost2):\n    pass',
   },
   visibleTests: [

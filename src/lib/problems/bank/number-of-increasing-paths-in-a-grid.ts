@@ -45,6 +45,8 @@ Output: 3
   params: ['grid'],
   starterCode: {
     javascript: 'function countPaths(grid) {\n  // your code here\n}\n',
+    typescript: "function countPaths(grid: number[][]): number {\n  // your code here\n}",
+
     python: 'def countPaths(grid):\n    pass\n',
   },
   visibleTests: [

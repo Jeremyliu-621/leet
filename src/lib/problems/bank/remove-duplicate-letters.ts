@@ -40,6 +40,8 @@ export const problem: Problem = {
   // return smallest lexicographic string with each letter appearing once
 
 }`,
+    typescript: "function removeDuplicateLetters(s: string): string {\n  // return smallest lexicographic string with each letter appearing once\n\n}",
+
     python: `def removeDuplicateLetters(s: str) -> str:
     # return smallest lexicographic string with each letter appearing once
     pass

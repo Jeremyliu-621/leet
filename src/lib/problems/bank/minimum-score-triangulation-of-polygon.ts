@@ -36,6 +36,8 @@ export const problem: Problem = {
   params: ['values'],
   starterCode: {
     javascript: 'function minScoreTriangulation(values) {\n\n}\n',
+    typescript: "function minScoreTriangulation(values: number[]): number {\n\n}",
+
     python: 'def minScoreTriangulation(values: list) -> int:\n    pass\n',
   },
   visibleTests: [

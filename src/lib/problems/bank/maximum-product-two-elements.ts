@@ -42,6 +42,8 @@ function maxProduct(nums) {
     javascript: `function maxProduct(nums) {
 
 }`,
+    typescript: "function maxProduct(nums: number[]): number {\n\n}",
+
     python: `def maxProduct(nums):
     pass`,
   },

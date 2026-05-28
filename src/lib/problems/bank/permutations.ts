@@ -55,6 +55,8 @@ export const problem: Problem = {
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: 'function permute(nums) {\n  \n}\n',
+    typescript: "function permuteRunner(nums: number[]): number[][] {\n  \n}",
+
     python: 'def permute(nums):\n    pass\n',
   },
   visibleTests: [

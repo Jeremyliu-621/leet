@@ -99,6 +99,8 @@ Trees are represented as level-order (BFS) arrays where \`null\` marks a missing
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// TreeNode class and largestValuesRunner wrapper are pre-defined.\nfunction largestValues(root) {\n  \n}\n',
+    typescript: "function largestValuesRunner(root: (number | null)[]): number[] {\n  \n}",
+
     python: '# TreeNode class and largestValuesRunner wrapper are pre-defined.\ndef largestValues(root):\n    pass\n',
   },
   visibleTests: [

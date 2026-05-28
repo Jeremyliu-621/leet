@@ -41,6 +41,8 @@ After processing all digits, if removals remain, trim from the end (those would 
   params: ['num', 'k'],
   starterCode: {
     javascript: 'function removeKdigits(num, k) {\n  // your code here\n}\n',
+    typescript: "function removeKdigits(num: string, k: number): string {\n  // your code here\n}",
+
     python: 'def removeKdigits(num: str, k: int) -> str:\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -45,6 +45,8 @@ You start at \`(0, 0)\` and must cut the trees in **height order (smallest first
   params: ['forest'],
   starterCode: {
     javascript: 'function cutOffTree(forest) {\n  \n}\n',
+    typescript: "function cutOffTree(forest: number[][]): number {\n  \n}",
+
     python: 'def cutOffTree(forest):\n    pass\n',
   },
   visibleTests: [

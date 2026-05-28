@@ -54,6 +54,8 @@ It is guaranteed that the given relations form a DAG (no cycles).
     javascript: `function minNumberOfSemesters(n, relations, k) {
   // Return minimum semesters to complete all courses taking at most k per semester
 }`,
+    typescript: "function minNumberOfSemesters(n: number, relations: number[][], k: number): number {\n  // Return minimum semesters to complete all courses taking at most k per semester\n}",
+
     python: `def minNumberOfSemesters(n: int, relations: list[list[int]], k: int) -> int:
     # Return minimum semesters to complete all courses taking at most k per semester
     pass`,

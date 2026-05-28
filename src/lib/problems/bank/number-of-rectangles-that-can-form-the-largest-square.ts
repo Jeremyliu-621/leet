@@ -44,6 +44,8 @@ Return *the **number** of rectangles from which you can make a square of side le
   // return count of rectangles forming the largest square
 
 }`,
+    typescript: "function countGoodRectangles(rectangles: number[][]): number {\n  // return count of rectangles forming the largest square\n\n}",
+
     python: `def countGoodRectangles(rectangles: list) -> int:
     # return count of rectangles forming the largest square
     pass

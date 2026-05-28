@@ -45,6 +45,8 @@ Return an array of results — \`null\` for deposits, the counts array or \`[-1]
   // Greedy: largest first. Only commit if exact change possible.
   // Return results array (null for deposit, count array or [-1] for withdraw).
 }`,
+    typescript: "function atmOperations(operations: ((string | number[])[] | (string | number)[])[]): (null | number[])[] {\n  // Bank note counts: [cnt20, cnt50, cnt100, cnt200, cnt500]\n  // Denominations: [20, 50, 100, 200, 500]\n  // Greedy: largest first. Only commit if exact change possible.\n  // Return results array (null for deposit, count array or [-1] for withdraw).\n}",
+
     python: `def atmOperations(operations):
     # Bank note counts: [cnt20, cnt50, cnt100, cnt200, cnt500]
     # Denominations: [20, 50, 100, 200, 500]

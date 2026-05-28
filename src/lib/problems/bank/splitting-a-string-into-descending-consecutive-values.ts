@@ -39,6 +39,8 @@ Return \`true\` if it is possible to split \`s\` as described above, or \`false\
     javascript: `function splitString(s) {
 
 }`,
+    typescript: "function splitString(s: string): boolean {\n\n}",
+
     python: `def splitString(s: str) -> bool:
     pass`,
   },

@@ -35,6 +35,8 @@ export const problem: Problem = {
     javascript: `function judgeSquareSum(c) {
   // Return true if there exist a, b >= 0 with a*a + b*b === c
 }`,
+    typescript: "function judgeSquareSum(c: number): boolean {\n  // Return true if there exist a, b >= 0 with a*a + b*b === c\n}",
+
     python: `def judgeSquareSum(c: int) -> bool:
     # Return True if there exist a, b >= 0 with a*a + b*b == c
     pass`,

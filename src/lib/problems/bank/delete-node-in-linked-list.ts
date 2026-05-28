@@ -100,6 +100,8 @@ Delete the given node such that the list no longer contains it. The node to dele
   starterCode: {
     javascript:
       '// ListNode class is pre-defined. Implement the function below:\nfunction deleteNode(node) {\n  \n}\n',
+    typescript: "function deleteNodeRunner(head: number[], node: number): number[] {\n  \n}",
+
     python:
       '# ListNode class is pre-defined. Implement the function below:\ndef deleteNode(node):\n    pass\n',
   },

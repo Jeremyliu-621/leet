@@ -50,6 +50,8 @@ Return the **number of minutes needed to inform all the employees**.`,
     javascript: `function numTimeToInform(n, headID, manager, informTime) {
 
 }`,
+    typescript: "function numTimeToInform(n: number, headID: number, manager: number[], informTime: number[]): number {\n\n}",
+
     python: `def numTimeToInform(n: int, headID: int, manager: list[int], informTime: list[int]) -> int:
     pass`,
   },

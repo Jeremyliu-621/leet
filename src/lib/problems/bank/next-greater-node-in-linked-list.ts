@@ -45,6 +45,8 @@ return res;\`\`\``,
   preamble: {
     javascript: `// Input is a flat array; output is a flat result array.
 // The runner receives the array directly (no ListNode conversion needed for test harness).`,
+    typescript: "function nextLargerNodesRunner(arr: number[]): number[] {\n\n}",
+
     python: `# Input is a flat array; output is a flat result array.`,
   },
   starterCode: {

@@ -42,6 +42,8 @@ Return the **minimum** number of buckets needed to feed all hamsters. If it is i
   params: ['street'],
   starterCode: {
     javascript: 'function minimumBuckets(street) {\n\n}',
+    typescript: "function minimumBuckets(street: string): number {\n\n}",
+
     python: 'def minimumBuckets(street):\n    pass',
   },
   visibleTests: [

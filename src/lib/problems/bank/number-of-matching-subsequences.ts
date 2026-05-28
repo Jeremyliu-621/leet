@@ -37,6 +37,8 @@ A **subsequence** of a string is a new string generated from the original string
     javascript: `function numMatchingSubseq(s, words) {
 
 }`,
+    typescript: "function numMatchingSubseq(s: string, words: string[]): number {\n\n}",
+
     python: `def numMatchingSubseq(s: str, words: list[str]) -> int:
     pass`,
   },

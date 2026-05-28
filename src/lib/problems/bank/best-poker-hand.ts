@@ -51,6 +51,8 @@ Return a string representing the **best** type of poker hand you can make with t
     javascript: `function bestHand(ranks, suits) {
 
 }`,
+    typescript: "function bestHand(ranks: number[], suits: string[]): string {\n\n}",
+
     python: `def bestHand(ranks, suits):
     pass`,
   },

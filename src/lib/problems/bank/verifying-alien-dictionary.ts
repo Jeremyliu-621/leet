@@ -43,6 +43,8 @@ Given a list of \`words\` in this alien language, return \`true\` if the words a
   params: ['words', 'order'],
   starterCode: {
     javascript: 'function isAlienSorted(words, order) {\n  // your code here\n}\n',
+    typescript: "function isAlienSorted(words: string[], order: string): boolean {\n  // your code here\n}",
+
     python: 'def isAlienSorted(words, order):\n    # your code here\n    pass\n',
   },
   visibleTests: [

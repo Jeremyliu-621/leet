@@ -49,6 +49,8 @@ Explanation: The additive sequence is 1, 99, 100, 199.
   params: ['num'],
   starterCode: {
     javascript: 'function isAdditiveNumber(num) {\n\n}\n',
+    typescript: "function isAdditiveNumber(num: string): boolean {\n\n}",
+
     python: 'def isAdditiveNumber(num):\n    pass\n',
   },
   visibleTests: [

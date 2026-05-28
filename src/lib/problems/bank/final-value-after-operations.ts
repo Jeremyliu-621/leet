@@ -44,6 +44,8 @@ function finalValueAfterOperations(operations) {
   params: ['ops'],
   starterCode: {
     javascript: 'function finalValueAfterOperations(ops) {\n  \n}\n',
+    typescript: "function finalValueAfterOperations(ops: string[]): number {\n  \n}",
+
     python: 'def finalValueAfterOperations(ops):\n    pass\n',
   },
   visibleTests: [

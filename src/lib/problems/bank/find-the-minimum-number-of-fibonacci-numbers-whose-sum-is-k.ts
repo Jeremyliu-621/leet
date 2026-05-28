@@ -37,6 +37,8 @@ The Fibonacci numbers are defined as: F1 = 1, F2 = 1, F3 = 2, F4 = 3, F5 = 5, ..
   params: ['k'],
   starterCode: {
     javascript: 'function findMinFibonacciNumbers(k) {\n  \n}\n',
+    typescript: "function findMinFibonacciNumbers(k: number): number {\n  \n}",
+
     python: 'def findMinFibonacciNumbers(k):\n    pass\n',
   },
   visibleTests: [

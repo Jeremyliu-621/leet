@@ -39,6 +39,8 @@ Given the integer array \`fruits\`, return the **maximum** number of fruits you 
   params: ['fruits'],
   starterCode: {
     javascript: 'function totalFruit(fruits) {\n  // your code here\n}\n',
+    typescript: "function totalFruit(fruits: number[]): number {\n  // your code here\n}",
+
     python: 'def totalFruit(fruits):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -38,6 +38,8 @@ Return the number of **special** letters in \`word\`.`,
   params: ['word'],
   starterCode: {
     javascript: 'function numberOfSpecialChars(word) {\n\n}',
+    typescript: "function numberOfSpecialChars(word: string): number {\n\n}",
+
     python: 'def numberOfSpecialChars(word):\n    pass',
   },
   visibleTests: [

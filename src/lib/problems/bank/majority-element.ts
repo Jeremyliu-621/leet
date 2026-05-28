@@ -41,6 +41,8 @@ Can you solve it in O(n) time and O(1) space?`,
   params: ['nums'],
   starterCode: {
     javascript: 'function majorityElement(nums) {\n  // your code here\n}\n',
+    typescript: "function majorityElement(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def majorityElement(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

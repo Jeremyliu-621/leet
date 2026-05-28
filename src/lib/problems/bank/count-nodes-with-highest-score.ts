@@ -40,6 +40,8 @@ Return the **number of nodes** that have the **highest score**.`,
     javascript: `function countHighestScoreNodes(parents) {
 
 }`,
+    typescript: "function countHighestScoreNodes(parents: number[]): number {\n\n}",
+
     python: `def countHighestScoreNodes(parents):
     pass`,
   },

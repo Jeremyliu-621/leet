@@ -45,6 +45,8 @@ Return the **maximum** number of balanced strings you can obtain.`,
     javascript: `function balancedStringSplit(s) {
 
 }`,
+    typescript: "function balancedStringSplit(s: string): number {\n\n}",
+
     python: `def balancedStringSplit(s):
     pass`,
   },

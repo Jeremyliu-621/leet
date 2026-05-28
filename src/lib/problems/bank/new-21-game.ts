@@ -56,6 +56,8 @@ Note that if \`k = 0\`, she will stop without drawing any cards and has 0 points
   }
   return result;
 }`,
+    typescript: "function new21Game(n: number, k: number, maxPts: number): number {\n  if (k === 0 || n >= k + maxPts) return 1.0;\n  const dp = new Array(n + 1).fill(0);\n  dp[0] = 1.0;\n  let windowSum = 1.0, result = 0.0;\n  for (let i = 1; i <= n; i++) {\n    dp[i] = windowSum / maxPts;\n    if (i < k) windowSum += dp[i];        // still in drawing range\n    else result += dp[i];                  // i >= k: final state\n    if (i >= maxPts) windowSum -= dp[i - maxPts];  // slide window\n  }\n  return result;\n}",
+
     python: `def new21Game(n, k, maxPts):
     if k == 0 or n >= k + maxPts:
         return 1.0

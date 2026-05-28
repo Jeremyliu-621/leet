@@ -42,6 +42,8 @@ The board is given as a 2D grid of \`0\`s (dead) and \`1\`s (live). You must upd
     javascript: `function gameOfLife(board) {
 
 }`,
+    typescript: "function gameOfLife(board: number[][]): number[][] {\n\n}",
+
     python: `def gameOfLife(board):
     pass`,
   },

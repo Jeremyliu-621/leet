@@ -105,6 +105,8 @@ function findTilt(root) {
   starterCode: {
     javascript:
       '// TreeNode class is pre-defined. Implement the function below:\nfunction findTilt(root) {\n  \n}\n',
+    typescript: "function findTiltRunner(root: number[]): number {\n  \n}",
+
     python:
       '# TreeNode class is pre-defined. Implement the function below:\ndef findTilt(root):\n    pass\n',
   },

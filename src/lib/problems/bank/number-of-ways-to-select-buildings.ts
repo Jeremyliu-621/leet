@@ -43,6 +43,8 @@ Return the **number of ways** to select 3 buildings.`,
   params: ['s'],
   starterCode: {
     javascript: 'function numberOfWays(s) {\n  \n}\n',
+    typescript: "function numberOfWays(s: string): number {\n  \n}",
+
     python: 'def numberOfWays(s):\n    pass\n',
   },
   visibleTests: [

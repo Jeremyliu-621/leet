@@ -104,6 +104,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   starterCode: {
     javascript:
       '// TreeNode class and maxProductRunner wrapper are pre-defined.\n// Implement the function below:\nfunction maxProduct(root) {\n  \n}\n',
+    typescript: "function maxProductRunner(root: number[]): number {\n  \n}",
+
     python:
       '# TreeNode class and maxProductRunner wrapper are pre-defined.\n# Implement the function below:\ndef maxProduct(root):\n    pass\n',
   },

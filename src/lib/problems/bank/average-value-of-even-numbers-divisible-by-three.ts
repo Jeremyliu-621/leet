@@ -37,6 +37,8 @@ Return \`0\` if there are no such integers.`,
     javascript: `function averageValue(nums) {
 
 }`,
+    typescript: "function averageValue(nums: number[]): number {\n\n}",
+
     python: `def averageValue(nums):
     pass`,
   },

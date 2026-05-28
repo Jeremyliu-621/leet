@@ -36,6 +36,8 @@ export const problem: Problem = {
   params: ['s'],
   starterCode: {
     javascript: 'function lengthOfLongestSubstring(s) {\n  \n}\n',
+    typescript: "function lengthOfLongestSubstring(s: string): number {\n  \n}",
+
     python: 'def lengthOfLongestSubstring(s):\n    pass\n',
   },
   visibleTests: [

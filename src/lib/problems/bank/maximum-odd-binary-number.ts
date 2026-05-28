@@ -38,6 +38,8 @@ Return a string representing the maximum odd binary number from the given combin
     javascript: `function maximumOddBinaryNumber(s) {
 
 }`,
+    typescript: "function maximumOddBinaryNumber(s: string): string {\n\n}",
+
     python: `def maximumOddBinaryNumber(s):
     pass`,
   },

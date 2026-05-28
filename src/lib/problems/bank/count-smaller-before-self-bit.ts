@@ -41,6 +41,8 @@ Use coordinate compression and a Binary Indexed Tree (Fenwick Tree) for an O(n l
   // For each index i, count how many nums[j] < nums[i] where j < i.
   // Use coordinate compression + BIT.
 }`,
+    typescript: "function countSmallerBefore(nums: number[]): number[] {\n  // For each index i, count how many nums[j] < nums[i] where j < i.\n  // Use coordinate compression + BIT.\n}",
+
     python: `def countSmallerBefore(nums):
     # For each index i, count how many nums[j] < nums[i] where j < i.
     # Use coordinate compression + BIT.

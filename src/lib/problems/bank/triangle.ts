@@ -36,6 +36,8 @@ For each step, you may move to an **adjacent number** of the row below. More for
     javascript: `function minimumTotal(triangle) {
   // Return the minimum path sum from top to bottom
 }`,
+    typescript: "function minimumTotal(triangle: number[][]): number {\n  // Return the minimum path sum from top to bottom\n}",
+
     python: `def minimumTotal(triangle):
     # Return the minimum path sum from top to bottom
     pass`,

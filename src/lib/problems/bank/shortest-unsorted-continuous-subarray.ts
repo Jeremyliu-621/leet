@@ -37,6 +37,8 @@ Return the length of this subarray. If the array is already sorted, return \`0\`
   params: ['nums'],
   starterCode: {
     javascript: 'function findUnsortedSubarray(nums) {\n  // your code here\n}\n',
+    typescript: "function findUnsortedSubarray(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def findUnsortedSubarray(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

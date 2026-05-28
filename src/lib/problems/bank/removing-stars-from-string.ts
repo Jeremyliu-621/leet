@@ -50,6 +50,8 @@ function removeStars(s) {
     javascript: `function removeStars(s) {
 
 }`,
+    typescript: "function removeStars(s: string): string {\n\n}",
+
     python: `def removeStars(s):
     pass`,
   },

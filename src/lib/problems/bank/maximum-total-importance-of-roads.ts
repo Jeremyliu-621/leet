@@ -43,6 +43,8 @@ Return the **maximum total importance** of all roads after assigning values opti
   params: ['n', 'roads'],
   starterCode: {
     javascript: 'function maximumImportance(n, roads) {\n  \n}\n',
+    typescript: "function maximumImportance(n: number, roads: number[][]): number {\n  \n}",
+
     python: 'def maximumImportance(n, roads):\n    pass\n',
   },
   visibleTests: [

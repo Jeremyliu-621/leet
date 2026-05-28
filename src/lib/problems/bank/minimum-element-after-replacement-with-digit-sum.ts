@@ -38,6 +38,8 @@ function minElement(nums) {
     javascript: `function minElement(nums) {
 
 }`,
+    typescript: "function minElement(nums: number[]): number {\n\n}",
+
     python: `def minElement(nums):
     pass`,
   },

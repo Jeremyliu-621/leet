@@ -40,6 +40,8 @@ Return the size of the **longest non-empty subarray containing only 1's** in the
     javascript: `function longestSubarray(nums) {
   // Return longest subarray of 1s after deleting exactly one element
 }`,
+    typescript: "function longestSubarray(nums: number[]): number {\n  // Return longest subarray of 1s after deleting exactly one element\n}",
+
     python: `def longestSubarray(nums):
     # Return longest subarray of 1s after deleting exactly one element
     pass`,

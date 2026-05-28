@@ -37,6 +37,8 @@ function moveZeroes(nums) {
   params: ['nums'],
   starterCode: {
     javascript: 'function moveZeroes(nums) {\n  \n  return nums;\n}\n',
+    typescript: "function moveZeroes(nums: number[]): number[] {\n  \n  return nums;\n}",
+
     python: 'def moveZeroes(nums):\n    pass\n',
   },
   visibleTests: [

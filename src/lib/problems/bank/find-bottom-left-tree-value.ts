@@ -100,6 +100,8 @@ Trees are represented as level-order (BFS) arrays where \`null\` marks a missing
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// TreeNode class and findBottomLeftValueRunner wrapper are pre-defined.\nfunction findBottomLeftValue(root) {\n  \n}\n',
+    typescript: "function findBottomLeftValueRunner(root: number[]): number {\n  \n}",
+
     python: '# TreeNode class and findBottomLeftValueRunner wrapper are pre-defined.\ndef findBottomLeftValue(root):\n    pass\n',
   },
   visibleTests: [

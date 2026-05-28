@@ -46,6 +46,8 @@ The input is a flat array of individual roll scores (not frames). Spare/strike b
   params: ['rolls'],
   starterCode: {
     javascript: `function bowlingScore(rolls) {\n  \n}`,
+    typescript: "function bowlingScore(rolls: number[]): number {\n  \n}",
+
     python: `def bowlingScore(rolls):\n    pass`,
   },
   visibleTests: [

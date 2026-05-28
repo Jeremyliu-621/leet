@@ -39,6 +39,8 @@ Given a string \`s\` containing only digits, return all possible valid IP addres
     javascript: `function restoreIpAddressesRunner(s) {
   return restoreIpAddresses(s).slice().sort();
 }`,
+    typescript: "function restoreIpAddressesRunner(s: string): string[] {\n  // Return all valid IP addresses that can be formed from s\n}",
+
     python: `def restoreIpAddressesRunner(s):
     return sorted(restoreIpAddresses(s))
 `,

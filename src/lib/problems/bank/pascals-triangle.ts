@@ -38,6 +38,8 @@ return res;\`\`\``
     javascript: `function generate(numRows) {
 
 }`,
+    typescript: "function generate(numRows: number): number[][] {\n\n}",
+
     python: `def generate(numRows):
     pass`,
   },

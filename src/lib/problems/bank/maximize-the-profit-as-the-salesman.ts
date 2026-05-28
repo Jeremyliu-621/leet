@@ -46,6 +46,8 @@ Return the maximum gold you can earn.`,
 function maximizeTheProfit(n, offers) {
 
 }`,
+    typescript: "function maximizeTheProfit(n: number, offers: number[][]): number {number} n\n * @param {number[][]} offers\n * @return {number}\n */\nfunction maximizeTheProfit(n, offers) {\n\n}",
+
     python: `def maximizeTheProfit(n: int, offers: list[list[int]]) -> int:
     pass`,
   },

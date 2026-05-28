@@ -43,6 +43,8 @@ Return the **minimum number of subsequences** needed for a valid partition.`,
     javascript: `function partitionArray(nums, k) {
 
 }`,
+    typescript: "function partitionArray(nums: number[], k: number): number {\n\n}",
+
     python: `def partitionArray(nums, k):
     pass`,
   },

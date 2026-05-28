@@ -30,6 +30,8 @@ An **island** is surrounded by water and is formed by connecting adjacent land c
     javascript: `function numIslands(grid) {
   // DFS/BFS: count distinct connected components of "1"s
 }`,
+    typescript: "function numIslands(grid: string[][]): number {\n  // DFS/BFS: count distinct connected components of \"1\"s\n}",
+
     python: `def numIslands(grid):
     # DFS/BFS: count distinct connected components of "1"s
     pass`,

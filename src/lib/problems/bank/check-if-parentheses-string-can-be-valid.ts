@@ -48,6 +48,8 @@ A valid parentheses string has balanced brackets: every opening bracket has a ma
   if (s.length % 2 !== 0) return false;
   // Track [lo, hi]: the range of possible open-bracket counts.
 }`,
+    typescript: "function canBeValid(s: string, locked: string): boolean {\n  if (s.length % 2 !== 0) return false;\n  // Track [lo, hi]: the range of possible open-bracket counts.\n}",
+
     python: `def canBeValid(s, locked):
     if len(s) % 2 != 0: return False
     # Track [lo, hi]: the range of possible open-bracket counts.

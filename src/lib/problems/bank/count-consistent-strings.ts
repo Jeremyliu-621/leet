@@ -42,6 +42,8 @@ function countConsistentStrings(allowed, words) {
     javascript: `function countConsistentStrings(allowed, words) {
 
 }`,
+    typescript: "function countConsistentStrings(allowed: string, words: string[]): number {\n\n}",
+
     python: `def countConsistentStrings(allowed, words):
     pass
 `,

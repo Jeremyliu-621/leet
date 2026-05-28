@@ -41,6 +41,8 @@ function commonDivisors(a, b) {
   params: ['a', 'b'],
   starterCode: {
     javascript: 'function commonDivisors(a, b) {\n  \n}\n',
+    typescript: "function commonDivisors(a: number, b: number): number {\n  \n}",
+
     python: 'def commonDivisors(a, b):\n    pass\n',
   },
   visibleTests: [

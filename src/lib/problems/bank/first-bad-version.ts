@@ -62,6 +62,8 @@ function solution(isBadVersion) {
   },
   starterCode: {
     javascript: 'function firstBadVersion(n, isBadVersion) {\n  \n}\n',
+    typescript: "function firstBadVersionRunner(n: number, firstBad: number): number {\n  \n}",
+
     python: 'def firstBadVersion(n, is_bad_version):\n    pass\n',
   },
   visibleTests: [

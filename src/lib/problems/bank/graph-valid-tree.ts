@@ -40,6 +40,8 @@ A valid tree has **no cycles** and all nodes are **connected**.`,
     javascript: `function validTree(n, edges) {
 
 }`,
+    typescript: "function validTree(n: number, edges: number[][]): boolean {\n\n}",
+
     python: `def validTree(n, edges):
     pass`,
   },

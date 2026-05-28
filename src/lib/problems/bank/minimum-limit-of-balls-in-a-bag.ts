@@ -32,6 +32,8 @@ Your goal is to minimize the maximum number of balls in a bag. Return the minimu
   params: ['nums', 'maxOperations'],
   starterCode: {
     javascript: 'function minimumSize(nums, maxOperations) {\n  // your code here\n}\n',
+    typescript: "function minimumSize(nums: number[], maxOperations: number): number {\n  // your code here\n}",
+
     python: 'def minimumSize(nums, maxOperations):\n    # your code here\n    pass\n',
   },
   hints: [

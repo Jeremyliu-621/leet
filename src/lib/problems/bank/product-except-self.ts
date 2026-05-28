@@ -45,6 +45,8 @@ You must solve it **without using division** and in O(n) time.
   params: ['nums'],
   starterCode: {
     javascript: 'function productExceptSelf(nums) {\n  // your code here\n}\n',
+    typescript: "function productExceptSelf(nums: number[]): number[] {\n  // your code here\n}",
+
     python: 'def productExceptSelf(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

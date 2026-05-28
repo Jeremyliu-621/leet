@@ -39,6 +39,8 @@ There may be **duplicates** in the original array.
   params: ['nums'],
   starterCode: {
     javascript: 'function check(nums) {\n  // your code here\n}\n',
+    typescript: "function check(nums: number[]): boolean {\n  // your code here\n}",
+
     python: 'def check(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

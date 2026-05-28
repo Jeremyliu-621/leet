@@ -132,6 +132,8 @@ return root;\`\`\``
   },
   starterCode: {
     javascript: 'function convertBST(root) {\n  \n}\n',
+    typescript: "function convertBSTRunner(root: (number | null)[]): (number | null)[] {\n  \n}",
+
     python: 'def convertBST(root):\n    pass\n',
   },
   visibleTests: [

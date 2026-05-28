@@ -43,6 +43,8 @@ Return the **minimum number of operations** needed to make \`nums\` sorted in **
     javascript: `function minimumReplacement(nums) {
   // your code here
 }`,
+    typescript: "function minimumReplacement(nums: number[]): number {\n  // your code here\n}",
+
     python: `def minimumReplacement(nums):
     # your code here
     pass`,

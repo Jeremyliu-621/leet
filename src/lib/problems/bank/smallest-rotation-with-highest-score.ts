@@ -37,6 +37,8 @@ Return the **smallest** \`k\` (0 <= k < n) that gives the maximum score.`,
     javascript: `function bestRotation(nums) {
 
 }`,
+    typescript: "function bestRotation(nums: number[]): number {\n\n}",
+
     python: `def bestRotation(nums):
     pass`,
   },

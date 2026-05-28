@@ -33,6 +33,8 @@ Given a string \`s\`, return the **longest** nice substring of \`s\`. If there a
   params: ['s'],
   starterCode: {
     javascript: 'function longestNiceSubstring(s) {\n\n}\n',
+    typescript: "function longestNiceSubstring(s: string): string {\n\n}",
+
     python: 'def longestNiceSubstring(s):\n    pass\n',
   },
   visibleTests: [

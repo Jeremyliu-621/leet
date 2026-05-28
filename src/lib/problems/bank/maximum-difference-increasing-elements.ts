@@ -46,6 +46,8 @@ return ans;\`\`\``
     javascript: `function maximumDifference(nums) {
 
 }`,
+    typescript: "function maximumDifference(nums: number[]): number {\n\n}",
+
     python: `def maximumDifference(nums):
     pass`,
   },

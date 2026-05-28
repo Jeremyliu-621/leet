@@ -39,6 +39,8 @@ return sorted.length >= 3 ? sorted[2] : sorted[0];\`\`\``
     javascript: `function thirdMax(nums) {
 
 }`,
+    typescript: "function thirdMax(nums: number[]): number {\n\n}",
+
     python: `def thirdMax(nums):
     pass`,
   },

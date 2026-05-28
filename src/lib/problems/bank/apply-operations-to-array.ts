@@ -44,6 +44,8 @@ Return the resulting array.
     javascript: `function applyOperations(nums) {
 
 }`,
+    typescript: "function applyOperations(nums: number[]): number[] {\n\n}",
+
     python: `def applyOperations(nums: list[int]) -> list[int]:
     pass`,
   },

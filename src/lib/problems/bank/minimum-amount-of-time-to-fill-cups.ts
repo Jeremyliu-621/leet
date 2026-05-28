@@ -42,6 +42,8 @@ Return the **minimum** number of seconds needed to fill up all the cups.`,
     javascript: `function fillCups(amount) {
 
 }`,
+    typescript: "function fillCups(amount: number[]): number {\n\n}",
+
     python: `def fillCups(amount):
     pass`,
   },

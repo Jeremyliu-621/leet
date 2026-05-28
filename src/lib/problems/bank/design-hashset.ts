@@ -86,6 +86,8 @@ function myHashSetRunner(ops, vals) {
   });
 }
 `,
+    typescript: "function myHashSetRunner(ops: string[], vals: number[]): (null | boolean)[] {\n  constructor() {\n    // Your code here\n  }\n  add(key) {\n    // Your code here\n  }\n  remove(key) {\n    // Your code here\n  }\n  contains(key) {\n    // Your code here\n  }\n}",
+
     python: `
 def myHashSetRunner(ops, vals):
     ops_list = list(ops.to_py() if hasattr(ops, 'to_py') else ops)

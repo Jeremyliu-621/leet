@@ -37,6 +37,8 @@ Can you solve it without sorting?`,
     javascript: `function findKthLargest(nums, k) {
 
 }`,
+    typescript: "function findKthLargest(nums: number[], k: number): number {\n\n}",
+
     python: `def findKthLargest(nums, k):
     pass`,
   },

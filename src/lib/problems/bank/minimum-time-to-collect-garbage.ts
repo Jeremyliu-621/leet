@@ -40,6 +40,8 @@ Return the **minimum** number of minutes needed to pick up all the garbage.`,
     javascript: `function garbageCollection(garbage, travel) {
 
 }`,
+    typescript: "function garbageCollection(garbage: string[], travel: number[]): number {\n\n}",
+
     python: `def garbageCollection(garbage, travel):
     pass`,
   },

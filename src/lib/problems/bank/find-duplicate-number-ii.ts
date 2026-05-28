@@ -29,6 +29,8 @@ You must solve the problem **without modifying the array** and uses only **const
   params: ['nums'],
   starterCode: {
     javascript: 'function findDuplicateFloyd(nums) {\n\n}\n',
+    typescript: "function findDuplicateFloyd(nums: number[]): number {\n\n}",
+
     python: 'def findDuplicateFloyd(nums):\n    pass\n',
   },
   visibleTests: [

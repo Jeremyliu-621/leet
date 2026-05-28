@@ -37,6 +37,8 @@ Return \`true\` if you can finish all courses, or \`false\` if it is impossible 
     javascript: `function canFinish(numCourses, prerequisites) {
   // Return true if no cycle exists in the prerequisite graph
 }`,
+    typescript: "function canFinish(numCourses: number, prerequisites: number[][]): boolean {\n  // Return true if no cycle exists in the prerequisite graph\n}",
+
     python: `def canFinish(numCourses, prerequisites):
     # Return True if no cycle exists in the prerequisite graph
     pass`,

@@ -151,6 +151,8 @@ function deserialize(data) {
 
 }
 `,
+    typescript: "function serializeBinaryTreeRunner(arr: number[]): number[] {\n\n}\n\nfunction deserialize(data) {\n\n}",
+
     python: `# TreeNode class and serializeBinaryTreeRunner wrapper are pre-defined.
 # Implement both functions below:
 def serialize(root):

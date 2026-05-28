@@ -39,6 +39,8 @@ Return the minimum cost to merge all piles of stones into **one pile**. If it is
   params: ['stones', 'k'],
   starterCode: {
     javascript: 'function mergeStones(stones, k) {\n\n}\n',
+    typescript: "function mergeStones(stones: number[], k: number): number {\n\n}",
+
     python: 'def mergeStones(stones: list, k: int) -> int:\n    pass\n',
   },
   visibleTests: [

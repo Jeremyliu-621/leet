@@ -36,6 +36,8 @@ Return the **maximum** points you can gain after applying the above operations o
   params: ['s', 'x', 'y'],
   starterCode: {
     javascript: 'function maximumGain(s, x, y) {\n\n}\n',
+    typescript: "function maximumGain(s: string, x: number, y: number): number {\n\n}",
+
     python: 'def maximumGain(s, x, y):\n    pass\n',
   },
   visibleTests: [

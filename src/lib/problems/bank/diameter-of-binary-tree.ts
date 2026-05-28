@@ -101,6 +101,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   starterCode: {
     javascript:
       '// TreeNode class and diameterOfBinaryTreeRunner wrapper are pre-defined.\n// Implement the function below:\nfunction diameterOfBinaryTree(root) {\n  \n}\n',
+    typescript: "function diameterOfBinaryTreeRunner(root: number[]): number {\n  \n}",
+
     python:
       '# TreeNode class and diameterOfBinaryTreeRunner wrapper are pre-defined.\n# Implement the function below:\ndef diameterOfBinaryTree(root):\n    pass\n',
   },

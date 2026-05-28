@@ -51,6 +51,8 @@ Output: 5
   params: ['nums', 'x'],
   starterCode: {
     javascript: 'function minOperations(nums, x) {\n\n}\n',
+    typescript: "function minOperations(nums: number[], x: number): number {\n\n}",
+
     python: 'def minOperations(nums, x):\n    pass\n',
   },
   visibleTests: [

@@ -35,6 +35,8 @@ Return the resulting array. The input array is left unchanged.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function runningSum(nums) {\n  // your code here\n}\n',
+    typescript: "function runningSum(nums: number[]): number[] {\n  // your code here\n}",
+
     python: 'def runningSum(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -35,6 +35,8 @@ Return the result with each group's strings sorted lexicographically, and the gr
   params: ['strings'],
   starterCode: {
     javascript: 'function groupStrings(strings) {\n  // your code here\n}\n',
+    typescript: "function groupStrings(strings: string[]): string[][] {\n  // your code here\n}",
+
     python: 'def groupStrings(strings):\n    # your code here\n    pass\n',
   },
   hints: [

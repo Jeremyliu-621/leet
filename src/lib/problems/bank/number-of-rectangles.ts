@@ -32,6 +32,8 @@ return rectangles.filter(([l, w]) => Math.min(l, w) >= n).length;\`\`\``
   params: ['rectangles'],
   starterCode: {
     javascript: 'function countGoodRectangles(rectangles) {\n  \n}\n',
+    typescript: "function countGoodRectangles(rectangles: number[][]): number {\n  \n}",
+
     python: 'def countGoodRectangles(rectangles):\n    pass\n',
   },
   visibleTests: [

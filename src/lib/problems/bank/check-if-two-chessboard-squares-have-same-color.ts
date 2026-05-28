@@ -36,6 +36,8 @@ Return \`true\` if both squares have the **same** color, and \`false\` otherwise
     javascript: `function checkTwoChessboards(coordinate1, coordinate2) {
 
 }`,
+    typescript: "function checkTwoChessboards(coordinate1: string, coordinate2: string): boolean {\n\n}",
+
     python: `def checkTwoChessboards(coordinate1, coordinate2):
     pass`,
   },

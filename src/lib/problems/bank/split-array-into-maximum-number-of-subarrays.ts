@@ -45,6 +45,8 @@ Return the **maximum number of subarrays** you can split \`nums\` into while kee
     javascript: `function maxSubarrays(nums) {
   // your code here
 }`,
+    typescript: "function maxSubarrays(nums: number[]): number {\n  // your code here\n}",
+
     python: `def maxSubarrays(nums):
     # your code here
     pass`,

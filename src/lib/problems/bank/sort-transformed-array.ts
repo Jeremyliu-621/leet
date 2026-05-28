@@ -41,6 +41,8 @@ export const problem: Problem = {
   // Two pointers. If a >= 0, extremes are largest → fill right to left.
   // If a < 0, extremes are smallest → fill left to right.
 }`,
+    typescript: "function sortTransformed(nums: number[], a: number, b: number, c: number): number[] {\n  const f = x => a * x * x + b * x + c;\n  // Two pointers. If a >= 0, extremes are largest → fill right to left.\n  // If a < 0, extremes are smallest → fill left to right.\n}",
+
     python: `def sortTransformed(nums, a, b, c):
     f = lambda x: a * x * x + b * x + c
     # Two pointers. If a >= 0, extremes are largest → fill right to left.

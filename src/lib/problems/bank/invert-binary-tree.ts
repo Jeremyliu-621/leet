@@ -128,6 +128,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   starterCode: {
     javascript:
       '// TreeNode class and invertTreeRunner wrapper are pre-defined.\n// Implement the function below:\nfunction invertTree(root) {\n  \n}\n',
+    typescript: "function invertTreeRunner(root: number[]): number[] {\n  \n}",
+
     python:
       '# TreeNode class and invertTreeRunner wrapper are pre-defined.\n# Implement the function below:\ndef invertTree(root):\n    pass\n',
   },

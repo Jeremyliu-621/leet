@@ -38,6 +38,8 @@ Return \`s\` after removing all occurrences of \`part\`.`,
     javascript: `function removeOccurrences(s, part) {
 
 }`,
+    typescript: "function removeOccurrences(s: string, part: string): string {\n\n}",
+
     python: `def removeOccurrences(s, part):
     pass`,
   },

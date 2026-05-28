@@ -49,6 +49,8 @@ Return an array of results (null for constructor and update; sum for sumRange).`
   // Return results array (null for NumArray/update, number for sumRange)
 
 }`,
+    typescript: "function numArrayOps(ops: ((string | number[][])[] | (string | number[])[])[]): (null | number)[] {\n  // ops is an array like [[\"NumArray\",[nums]], [\"update\",[i,v]], [\"sumRange\",[l,r]], ...]\n  // Return results array (null for NumArray/update, number for sumRange)\n\n}",
+
     python: `def numArrayOps(ops):
     # ops is a list like [["NumArray",[nums]], ["update",[i,v]], ["sumRange",[l,r]], ...]
     # Return results list (None for NumArray/update, number for sumRange)

@@ -33,6 +33,8 @@ Given an integer array \`nums\` representing the amount of money at each house, 
   params: ['nums'],
   starterCode: {
     javascript: 'function rob(nums) {\n  \n}\n',
+    typescript: "function rob(nums: number[]): number {\n  \n}",
+
     python: 'def rob(nums: list[int]) -> int:\n    pass\n',
   },
   visibleTests: [

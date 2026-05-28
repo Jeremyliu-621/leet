@@ -37,6 +37,8 @@ Return the **maximum possible achievable number**.`,
     javascript: `function theMaximumAchievableX(num, t) {
 
 }`,
+    typescript: "function theMaximumAchievableX(num: number, t: number): number {\n\n}",
+
     python: `def theMaximumAchievableX(num, t):
     pass`,
   },

@@ -42,6 +42,8 @@ return ans;\`\`\``
   params: ['nums'],
   starterCode: {
     javascript: 'function findMaxK(nums) {\n  \n}\n',
+    typescript: "function findMaxK(nums: number[]): number {\n  \n}",
+
     python: 'def findMaxK(nums):\n    pass\n',
   },
   visibleTests: [

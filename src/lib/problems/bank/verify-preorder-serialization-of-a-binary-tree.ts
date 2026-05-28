@@ -46,6 +46,8 @@ You may assume that the input format is always valid. For example, it could neve
     javascript: `function isValidSerialization(preorder) {
 
 }`,
+    typescript: "function isValidSerialization(preorder: string): boolean {\n\n}",
+
     python: `def isValidSerialization(preorder):
     pass`,
   },

@@ -38,6 +38,8 @@ It is guaranteed that at least one letter appears twice.`,
     javascript: `function repeatedCharacter(s) {
 
 }`,
+    typescript: "function repeatedCharacter(s: string): string {\n\n}",
+
     python: `def repeatedCharacter(s):
     pass`,
   },

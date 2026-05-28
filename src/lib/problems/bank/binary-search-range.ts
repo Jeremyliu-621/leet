@@ -41,6 +41,8 @@ A linear scan would work but runs in O(n); the binary search approach runs in O(
   params: ['nums', 'target'],
   starterCode: {
     javascript: 'function countOccurrences(nums, target) {\n  // your code here\n}\n',
+    typescript: "function countOccurrences(nums: number[], target: number): number {\n  // your code here\n}",
+
     python: 'def countOccurrences(nums, target):\n    # your code here\n    pass\n',
   },
   visibleTests: [

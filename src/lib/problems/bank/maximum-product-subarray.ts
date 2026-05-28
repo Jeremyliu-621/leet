@@ -26,6 +26,8 @@ The test cases are generated so that the answer will fit in a **32-bit** integer
   params: ['nums'],
   starterCode: {
     javascript: 'function maxProduct(nums) {\n\n}\n',
+    typescript: "function maxProduct(nums: number[]): number {\n\n}",
+
     python: 'def maxProduct(nums):\n    pass\n',
   },
   visibleTests: [

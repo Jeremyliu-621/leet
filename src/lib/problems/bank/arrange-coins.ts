@@ -22,6 +22,8 @@ Given the integer \`n\`, return the **number of complete rows** of the staircase
   params: ['n'],
   starterCode: {
     javascript: 'function arrangeCoins(n) {\n  // your code here\n}\n',
+    typescript: "function arrangeCoins(n: number): number {\n  // your code here\n}",
+
     python: 'def arrangeCoins(n):\n    # your code here\n    pass\n',
   },
   visibleTests: [

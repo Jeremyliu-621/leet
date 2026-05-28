@@ -49,6 +49,8 @@ You may assume that the border of the maze is all walls.`,
     javascript: `function shortestDistance(maze, start, destination) {
 
 }`,
+    typescript: "function shortestDistance(maze: number[][], start: number[], destination: number[]): number {\n\n}",
+
     python: `def shortestDistance(maze, start, destination):
     pass`,
   },

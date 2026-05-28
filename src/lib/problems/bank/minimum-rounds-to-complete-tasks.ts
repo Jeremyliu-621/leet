@@ -35,6 +35,8 @@ Return *the **minimum** rounds required to complete all the tasks, or* \`-1\` *i
     javascript: `function minimumRounds(tasks) {
 
 }`,
+    typescript: "function minimumRounds(tasks: number[]): number {\n\n}",
+
     python: `def minimumRounds(tasks):
     pass`,
   },

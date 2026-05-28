@@ -40,6 +40,8 @@ Given the 2D array \`wall\` where \`wall[i]\` is a list of brick widths in the i
     javascript: `function leastBricks(wall) {
 
 }`,
+    typescript: "function leastBricks(wall: number[][]): number {\n\n}",
+
     python: `def leastBricks(wall):
     pass`,
   },

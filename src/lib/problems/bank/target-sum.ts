@@ -36,6 +36,8 @@ Return the **number of different expressions** that you can build which evaluate
   params: ['nums', 'target'],
   starterCode: {
     javascript: 'function findTargetSumWays(nums, target) {\n  \n}\n',
+    typescript: "function findTargetSumWays(nums: number[], target: number): number {\n  \n}",
+
     python: 'def findTargetSumWays(nums: list[int], target: int) -> int:\n    pass\n',
   },
   visibleTests: [

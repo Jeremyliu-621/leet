@@ -49,6 +49,8 @@ function minMovesToSeat(seats, students) {
   params: ['seats', 'students'],
   starterCode: {
     javascript: 'function minMovesToSeat(seats, students) {\n  \n}\n',
+    typescript: "function minMovesToSeat(seats: number[], students: number[]): number {\n  \n}",
+
     python: 'def minMovesToSeat(seats, students):\n    pass\n',
   },
   visibleTests: [

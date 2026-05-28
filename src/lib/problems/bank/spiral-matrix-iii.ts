@@ -48,6 +48,8 @@ Return an array of coordinates representing the positions of the grid in the ord
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// spiralMatrixIIIRunner is pre-defined.\nfunction spiralMatrixIII(rows, cols, rStart, cStart) {\n  // return array of [row, col] pairs\n}\n',
+    typescript: "function spiralMatrixIIIRunner(rows: number, cols: number, rStart: number, cStart: number): number[][] {\n  // return array of [row, col] pairs\n}",
+
     python: '# spiralMatrixIIIRunner is pre-defined.\ndef spiralMatrixIII(rows, cols, rStart, cStart):\n    pass\n',
   },
   visibleTests: [

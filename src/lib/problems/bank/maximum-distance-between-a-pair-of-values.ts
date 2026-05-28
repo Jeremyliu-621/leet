@@ -48,6 +48,8 @@ Return the **maximum distance** of any valid pair \`(i, j)\`. If there are no va
     javascript: `function maxDistance(nums1, nums2) {
 
 }`,
+    typescript: "function maxDistance(nums1: number[], nums2: number[]): number {\n\n}",
+
     python: `def maxDistance(nums1, nums2):
     pass
 `,

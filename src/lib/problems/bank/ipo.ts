@@ -43,6 +43,8 @@ The answer is guaranteed to fit in a 32-bit signed integer.`,
   params: ['k', 'w', 'profits', 'capital'],
   starterCode: {
     javascript: 'function findMaximizedCapital(k, w, profits, capital) {\n  \n}\n',
+    typescript: "function findMaximizedCapital(k: number, w: number, profits: number[], capital: number[]): number {\n  \n}",
+
     python: 'def findMaximizedCapital(k, w, profits, capital):\n    pass\n',
   },
   visibleTests: [

@@ -36,6 +36,8 @@ Your task is to find the smallest possible length of a (contiguous) subarray of 
   starterCode: {
     javascript:
       'function findShortestSubArray(nums) {\n  // your code here\n}\n',
+    typescript: "function findShortestSubArray(nums: number[]): number {\n  // your code here\n}",
+
     python:
       'def findShortestSubArray(nums):\n    # your code here\n    pass\n',
   },

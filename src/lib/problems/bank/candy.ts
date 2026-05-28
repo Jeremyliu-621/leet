@@ -39,6 +39,8 @@ Return the **minimum** number of candies you need to have to distribute.`,
   params: ['ratings'],
   starterCode: {
     javascript: 'function candy(ratings) {\n  // your code here\n}\n',
+    typescript: "function candy(ratings: number[]): number {\n  // your code here\n}",
+
     python: 'def candy(ratings):\n    # your code here\n    pass\n',
   },
   visibleTests: [

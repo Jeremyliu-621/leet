@@ -42,6 +42,8 @@ function minimumCardPickup(cards) {
   params: ['cards'],
   starterCode: {
     javascript: 'function minimumCardPickup(cards) {\n\n}\n',
+    typescript: "function minimumCardPickup(cards: number[]): number {\n\n}",
+
     python: 'def minimumCardPickup(cards):\n    pass\n',
   },
   visibleTests: [

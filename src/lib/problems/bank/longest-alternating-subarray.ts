@@ -41,6 +41,8 @@ Return the **maximum** length of all alternating subarrays present in \`nums\`, 
     javascript: `function alternatingSubarray(nums) {
 
 }`,
+    typescript: "function alternatingSubarray(nums: number[]): number {\n\n}",
+
     python: `def alternatingSubarray(nums):
     pass`,
   },

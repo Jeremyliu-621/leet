@@ -35,6 +35,8 @@ Return the final string after all such shifts to \`s\` are applied.`,
   params: ['s', 'shifts'],
   starterCode: {
     javascript: 'function shiftingLetters(s, shifts) {\n  \n}\n',
+    typescript: "function shiftingLetters(s: string, shifts: number[]): string {\n  \n}",
+
     python: 'def shiftingLetters(s, shifts):\n    pass\n',
   },
   visibleTests: [

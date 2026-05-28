@@ -45,6 +45,8 @@ Return a **0-indexed** integer array \`answer\` of size \`2\` where \`answer[0]\
     javascript: `function numberOfPairs(nums) {
 
 }`,
+    typescript: "function numberOfPairs(nums: number[]): number[] {\n\n}",
+
     python: `def numberOfPairs(nums):
     pass`,
   },

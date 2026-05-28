@@ -44,6 +44,8 @@ function twoOutOfThree(nums1, nums2, nums3) {
     javascript: `function twoOutOfThree(nums1, nums2, nums3) {
 
 }`,
+    typescript: "function twoOutOfThree(nums1: number[], nums2: number[], nums3: number[]): number[] {\n\n}",
+
     python: `def twoOutOfThree(nums1, nums2, nums3):
     pass`,
   },

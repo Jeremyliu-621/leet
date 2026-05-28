@@ -54,6 +54,8 @@ return nums[lo];\`\`\``
   params: ['nums'],
   starterCode: {
     javascript: 'function findMin(nums) {\n\n}\n',
+    typescript: "function findMin(nums: number[]): number {\n\n}",
+
     python: 'def findMin(nums):\n    pass\n',
   },
   visibleTests: [

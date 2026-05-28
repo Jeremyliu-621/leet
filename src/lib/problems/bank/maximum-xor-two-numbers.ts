@@ -32,6 +32,8 @@ export const problem: Problem = {
     javascript: `function findMaximumXOR(nums) {
 
 }`,
+    typescript: "function findMaximumXOR(nums: number[]): number {\n\n}",
+
     python: `def findMaximumXOR(nums):
     pass`,
   },

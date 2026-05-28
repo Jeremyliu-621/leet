@@ -47,6 +47,8 @@ Return the number of valid words in the sentence.`,
     javascript: `function countValidWords(sentence) {
 
 }`,
+    typescript: "function countValidWords(sentence: string): number {\n\n}",
+
     python: `def countValidWords(sentence):
     pass`,
   },

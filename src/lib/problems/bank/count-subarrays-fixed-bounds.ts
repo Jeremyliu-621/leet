@@ -40,6 +40,8 @@ A **subarray** is a **contiguous** part of an array.`,
   params: ['nums', 'minK', 'maxK'],
   starterCode: {
     javascript: 'function countSubarrays(nums, minK, maxK) {\n  // your code here\n}\n',
+    typescript: "function countSubarrays(nums: number[], minK: number, maxK: number): number {\n  // your code here\n}",
+
     python: 'def countSubarrays(nums, minK, maxK):\n    # your code here\n    pass\n',
   },
   visibleTests: [

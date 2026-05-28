@@ -30,6 +30,8 @@ function findLUSlength(a, b) {
   params: ['a', 'b'],
   starterCode: {
     javascript: 'function findLUSlength(a, b) {\n  \n}\n',
+    typescript: "function findLUSlength(a: string, b: string): number {\n  \n}",
+
     python: 'def findLUSlength(a, b):\n    pass\n',
   },
   visibleTests: [

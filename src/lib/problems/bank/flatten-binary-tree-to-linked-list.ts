@@ -115,6 +115,8 @@ Modify the tree **in place**. The runner will collect the final right-spine valu
 function flatten(root) {
 
 }`,
+    typescript: "function flattenRunner(root: (number | null)[]): number[] {\n\n}",
+
     python: `# TreeNode is pre-defined. Modify the tree in place.
 def flatten(root):
     pass`,

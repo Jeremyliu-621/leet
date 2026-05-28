@@ -46,6 +46,8 @@ A **subsequence** of an array is a new array generated from the original array b
     javascript: `function maximumBeauty(nums, k) {
 
 }`,
+    typescript: "function maximumBeauty(nums: number[], k: number): number {\n\n}",
+
     python: `def maximumBeauty(nums, k):
     pass`,
   },

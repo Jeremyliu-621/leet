@@ -42,6 +42,8 @@ Return the score you get after applying the above algorithm.`,
     javascript: `function findScore(nums) {
 
 }`,
+    typescript: "function findScore(nums: number[]): number {\n\n}",
+
     python: `def findScore(nums):
     pass`,
   },

@@ -37,6 +37,8 @@ Each robot must be assigned to exactly one factory. The distance traveled by rob
   params: ['robot', 'factory'],
   starterCode: {
     javascript: 'function minimumTotalDistance(robot, factory) {\n\n}\n',
+    typescript: "function minimumTotalDistance(robot: number[], factory: number[][]): number {\n\n}",
+
     python: 'def minimumTotalDistance(robot: list, factory: list) -> int:\n    pass\n',
   },
   visibleTests: [

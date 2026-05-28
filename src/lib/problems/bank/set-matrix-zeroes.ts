@@ -37,6 +37,8 @@ You must do it **in place**.`,
     javascript: `function setZeroes(matrix) {
 
 }`,
+    typescript: "function setZeroes(matrix: number[][]): number[][] {\n\n}",
+
     python: `def setZeroes(matrix):
     pass`,
   },

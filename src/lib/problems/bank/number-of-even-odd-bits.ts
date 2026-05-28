@@ -38,6 +38,8 @@ Return an integer array \`answer\` where \`answer = [even, odd]\`.`,
     javascript: `function evenOddBit(n) {
 
 }`,
+    typescript: "function evenOddBit(n: number): number[] {\n\n}",
+
     python: `def evenOddBit(n):
     pass`,
   },

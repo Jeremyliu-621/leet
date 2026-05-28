@@ -47,6 +47,8 @@ Return the **minimum** possible sum that a beautiful array can have modulo \`10^
     javascript: `function minimumPossibleSum(n, target) {
 
 }`,
+    typescript: "function minimumPossibleSum(n: number, target: number): number {\n\n}",
+
     python: `def minimumPossibleSum(n, target):
     pass`,
   },

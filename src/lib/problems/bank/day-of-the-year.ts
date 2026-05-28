@@ -37,6 +37,8 @@ export const problem: Problem = {
   // return the day number of the year
 
 }`,
+    typescript: "function dayOfYear(date: string): number {\n  // return the day number of the year\n\n}",
+
     python: `def dayOfYear(date: str) -> int:
     # return the day number of the year
     pass

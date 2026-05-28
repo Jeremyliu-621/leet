@@ -101,6 +101,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   starterCode: {
     javascript:
       '// TreeNode class and kthLargestLevelSumRunner wrapper are pre-defined.\n// Implement the function below:\nfunction kthLargestLevelSum(root, k) {\n  \n}\n',
+    typescript: "function kthLargestLevelSumRunner(arr: number[], k: number): number {\n  \n}",
+
     python: 'def kthLargestLevelSum(root, k):\n    pass\n',
   },
   visibleTests: [

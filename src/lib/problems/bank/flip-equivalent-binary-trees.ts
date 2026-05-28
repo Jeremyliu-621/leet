@@ -106,6 +106,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   starterCode: {
     javascript:
       '// TreeNode class and flipEquivRunner wrapper are pre-defined.\n// Implement the function below:\nfunction flipEquiv(root1, root2) {\n  \n}\n',
+    typescript: "function flipEquivRunner(root1: (number | null)[], root2: (number | null)[]): boolean {\n  \n}",
+
     python:
       '# TreeNode class and flipEquivRunner wrapper are pre-defined.\n# Implement the function below:\ndef flipEquiv(root1, root2):\n    pass\n',
   },

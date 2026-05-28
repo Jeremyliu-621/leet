@@ -41,6 +41,8 @@ A digit string is a string consisting of digits \`0\` through \`9\` that may con
   params: ['n'],
   starterCode: {
     javascript: 'function countGoodNumbers(n) {\n  \n}\n',
+    typescript: "function countGoodNumbers(n: number): number {\n  \n}",
+
     python: 'def countGoodNumbers(n):\n    pass\n',
   },
   visibleTests: [

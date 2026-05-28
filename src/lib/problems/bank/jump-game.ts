@@ -40,6 +40,8 @@ You can jump any number of steps from 1 to \`nums[i]\` from position \`i\`.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function canJump(nums) {\n  // your code here\n}\n',
+    typescript: "function canJump(nums: number[]): boolean {\n  // your code here\n}",
+
     python: 'def canJump(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

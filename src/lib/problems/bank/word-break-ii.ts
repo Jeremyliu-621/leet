@@ -40,6 +40,8 @@ The same word in the dictionary may be reused multiple times in the segmentation
     javascript: `function wordBreak(s, wordDict) {
 
 }`,
+    typescript: "function wordBreak(s: string, wordDict: string[]): string[] {\n\n}",
+
     python: `def wordBreak(s, wordDict):
     pass`,
   },

@@ -46,6 +46,8 @@ If \`"0000"\` itself is in deadends, return \`-1\`.`,
   // deadends: string[], target: string
   // Return minimum turns to reach target from "0000", or -1 if impossible
 }`,
+    typescript: "function openLock(deadends: string[], target: string): number {\n  // deadends: string[], target: string\n  // Return minimum turns to reach target from \"0000\", or -1 if impossible\n}",
+
     python: `def openLock(deadends, target: str) -> int:
     # Your code here
     pass`,

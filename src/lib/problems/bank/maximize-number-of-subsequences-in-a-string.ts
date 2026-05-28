@@ -38,6 +38,8 @@ Return the **maximum** number of times \`pattern\` can occur as a **subsequence*
     javascript: `function maximumSubsequenceCount(text, pattern) {
 
 }`,
+    typescript: "function maximumSubsequenceCount(text: string, pattern: string): number {\n\n}",
+
     python: `def maximumSubsequenceCount(text, pattern):
     pass`,
   },

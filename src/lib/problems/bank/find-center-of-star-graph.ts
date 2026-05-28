@@ -42,6 +42,8 @@ function findCenter(edges) {
     javascript: `function findCenter(edges) {
 
 }`,
+    typescript: "function findCenter(edges: number[][]): number {\n\n}",
+
     python: `def findCenter(edges):
     pass`,
   },

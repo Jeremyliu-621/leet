@@ -37,6 +37,8 @@ Implement the \`StockSpanner\` class:
   const spanner = new StockSpanner();
   return prices.map(p => spanner.next(p));
 }`,
+    typescript: "function stockSpannerRunner(prices: number[]): number[] {\n  constructor() {\n\n  }\n\n  next(price) {\n\n  }\n}",
+
     python: `def stockSpannerRunner(prices):
     spanner = StockSpanner()
     return [spanner.next(p) for p in prices]

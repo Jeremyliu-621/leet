@@ -34,6 +34,8 @@ Return the **minimum possible sum** of a k-avoiding array of length \`n\`.`,
     javascript: `function minimumSum(n, k) {
 
 }`,
+    typescript: "function minimumSum(n: number, k: number): number {\n\n}",
+
     python: `def minimumSum(n, k):
     pass`,
   },

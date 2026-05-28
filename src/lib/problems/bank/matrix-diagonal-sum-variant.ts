@@ -53,6 +53,8 @@ Center (5) counted twice → subtract once → 15 + 15 - 5 = 25
     javascript: `function diagonalSumVariant(mat) {
   // Return sum of both diagonals; if n is odd, subtract the center element (counted twice)
 }`,
+    typescript: "function diagonalSumVariant(mat: number[][]): number {\n  // Return sum of both diagonals; if n is odd, subtract the center element (counted twice)\n}",
+
     python: `def diagonalSumVariant(mat: list[list[int]]) -> int:
     # Return sum of both diagonals; if n is odd, subtract the center element (counted twice)
     pass`,

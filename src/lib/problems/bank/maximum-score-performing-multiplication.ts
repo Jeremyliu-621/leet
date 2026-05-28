@@ -33,6 +33,8 @@ Return the **maximum** score after performing \`m\` operations.`,
   params: ['nums', 'multipliers'],
   starterCode: {
     javascript: 'function maximumScore(nums, multipliers) {\n\n}\n',
+    typescript: "function maximumScore(nums: number[], multipliers: number[]): number {\n\n}",
+
     python: 'def maximumScore(nums, multipliers):\n    pass\n',
   },
   visibleTests: [

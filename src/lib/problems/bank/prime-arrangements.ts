@@ -35,6 +35,8 @@ An index is **prime** if the number at that position is prime. For example, \`1\
   params: ['n'],
   starterCode: {
     javascript: 'function numPrimeArrangements(n) {\n  \n}\n',
+    typescript: "function numPrimeArrangements(n: number): number {\n  \n}",
+
     python: 'def numPrimeArrangements(n):\n    pass\n',
   },
   visibleTests: [

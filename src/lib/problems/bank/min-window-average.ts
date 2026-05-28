@@ -37,6 +37,8 @@ export const problem: Problem = {
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function minWindowSum(nums, k) {\n  // your code here\n}\n',
+    typescript: "function minWindowSum(nums: number[], k: number): number {\n  // your code here\n}",
+
     python: 'def minWindowSum(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

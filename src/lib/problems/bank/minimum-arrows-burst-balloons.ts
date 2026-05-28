@@ -43,6 +43,8 @@ Return the **minimum** number of arrows that must be shot to burst all balloons.
     javascript: `function findMinArrowShots(points) {
 
 }`,
+    typescript: "function findMinArrowShots(points: number[][]): number {\n\n}",
+
     python: `def findMinArrowShots(points):
     pass`,
   },

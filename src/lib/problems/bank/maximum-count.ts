@@ -29,6 +29,8 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: 'function maximumCount(nums) {\n  \n}\n',
+    typescript: "function maximumCount(nums: number[]): number {\n  \n}",
+
     python: 'def maximumCount(nums):\n    pass\n',
   },
   visibleTests: [

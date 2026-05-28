@@ -45,6 +45,8 @@ Implement the function \`pickIndex()\`, which **randomly** picks an index in the
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// randomPickWeightRunner is pre-defined and calls your class below.\nclass Solution {\n  constructor(w) {\n    this.w = w;\n  }\n  pickIndex() {}\n}\n',
+    typescript: "function randomPickWeightRunner(w: number[], picks: number[]): number[] {\n  constructor(w) {\n    this.w = w;\n  }\n  pickIndex() {}\n}",
+
     python: '# randomPickWeightRunner is pre-defined and calls your class below.\nimport random\nclass Solution:\n    def __init__(self, w):\n        self.w = list(w)\n    def pickIndex(self):\n        pass\n',
   },
   visibleTests: [

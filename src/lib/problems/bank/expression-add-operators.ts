@@ -40,6 +40,8 @@ Note that operands in the returned expressions **should not** contain leading ze
     javascript: `function addOperators(num, target) {
 
 }`,
+    typescript: "function addOperators(num: string, target: number): string[] {\n\n}",
+
     python: `def addOperators(num, target):
     pass`,
   },

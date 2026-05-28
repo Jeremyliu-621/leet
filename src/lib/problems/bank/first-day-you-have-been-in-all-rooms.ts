@@ -41,6 +41,8 @@ Return the label of the **first** day where you have been in **all** the rooms. 
   params: ['nextVisit'],
   starterCode: {
     javascript: 'function firstDayBeenInAllRooms(nextVisit) {\n  \n}\n',
+    typescript: "function firstDayBeenInAllRooms(nextVisit: number[]): number {\n  \n}",
+
     python: 'def firstDayBeenInAllRooms(nextVisit):\n    pass\n',
   },
   visibleTests: [

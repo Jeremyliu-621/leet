@@ -85,6 +85,8 @@ Lists are represented as arrays. The runner accepts an array and returns an arra
   starterCode: {
     javascript:
       '// ListNode class and removeNodesRunner wrapper are pre-defined.\n// Implement the function below:\nfunction removeNodes(head) {\n  \n}\n',
+    typescript: "function removeNodesRunner(head: number[]): number[] {\n  \n}",
+
     python:
       '# ListNode class and removeNodesRunner wrapper are pre-defined.\n# Implement the function below:\ndef removeNodes(head):\n    pass\n',
   },

@@ -31,6 +31,8 @@ Given the integer array \`cardPoints\` and the integer \`k\`, return the **maxim
   params: ['cardPoints', 'k'],
   starterCode: {
     javascript: 'function maxScore(cardPoints, k) {\n\n}\n',
+    typescript: "function maxScore(cardPoints: number[], k: number): number {\n\n}",
+
     python: 'def maxScore(cardPoints, k):\n    pass\n',
   },
   visibleTests: [

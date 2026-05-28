@@ -39,6 +39,8 @@ Given the secret number and the friend's guess (as strings), return the hint for
     javascript: `function getHint(secret, guess) {
 
 }`,
+    typescript: "function getHint(secret: string, guess: string): string {\n\n}",
+
     python: `def getHint(secret: str, guess: str) -> str:
     pass`,
   },

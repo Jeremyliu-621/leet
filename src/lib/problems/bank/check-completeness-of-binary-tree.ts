@@ -40,6 +40,8 @@ For this problem, the tree is given as an array in level-order format where \`-1
   params: ['root'],
   starterCode: {
     javascript: 'function isCompleteTree(root) {\n  \n}\n',
+    typescript: "function isCompleteTree(root: number[]): boolean {\n  \n}",
+
     python: 'def isCompleteTree(root):\n    pass\n',
   },
   visibleTests: [

@@ -39,6 +39,8 @@ Each second, a falling domino pushes adjacent dominoes. Determine the final stat
     javascript: `function pushDominoes(dominoes) {
 
 }`,
+    typescript: "function pushDominoes(dominoes: string): string {\n\n}",
+
     python: `def pushDominoes(dominoes):
     pass`,
   },

@@ -35,6 +35,8 @@ export const problem: Problem = {
   params: ['words1', 'words2'],
   starterCode: {
     javascript: 'function countWords(words1, words2) {\n\n}\n',
+    typescript: "function countWords(words1: string[], words2: string[]): number {\n\n}",
+
     python: 'def countWords(words1: list, words2: list) -> int:\n    pass\n',
   },
   visibleTests: [

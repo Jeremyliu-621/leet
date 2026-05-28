@@ -50,6 +50,8 @@ Explanation: 1, 2, 3, and 4 each appear exactly once — no equal pairs possible
   params: ['nums'],
   starterCode: {
     javascript: 'function divideArray(nums) {\n  \n}\n',
+    typescript: "function divideArray(nums: number[]): boolean {\n  \n}",
+
     python: 'def divideArray(nums):\n    ',
   },
   visibleTests: [

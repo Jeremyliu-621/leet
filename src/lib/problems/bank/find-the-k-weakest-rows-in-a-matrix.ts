@@ -50,6 +50,8 @@ Return the indices of the \`k\` weakest rows in the matrix ordered from weakest 
   // return indices of k weakest rows ordered from weakest to strongest
 
 }`,
+    typescript: "function kWeakestRows(mat: number[][], k: number): number[] {\n  // return indices of k weakest rows ordered from weakest to strongest\n\n}",
+
     python: `def kWeakestRows(mat: list, k: int) -> list:
     # return indices of k weakest rows ordered from weakest to strongest
     pass

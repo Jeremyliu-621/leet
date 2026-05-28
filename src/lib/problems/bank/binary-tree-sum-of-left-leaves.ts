@@ -119,6 +119,8 @@ Sum = **24**`,
 function sumOfLeftLeaves(root) {
   // Return sum of all left leaves in the binary tree
 }`,
+    typescript: "function sumOfLeftLeavesRunner(root: (number | null)[]): number {\n  // Return sum of all left leaves in the binary tree\n}",
+
     python: `# TreeNode class and sumOfLeftLeavesRunner wrapper are pre-defined.
 # Implement sumOfLeftLeaves below:
 def sumOfLeftLeaves(root) -> int:

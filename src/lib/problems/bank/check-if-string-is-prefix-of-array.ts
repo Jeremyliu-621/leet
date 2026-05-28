@@ -39,6 +39,8 @@ Return \`true\` if \`s\` is a prefix string of \`words\`, or \`false\` otherwise
     javascript: `function isPrefixString(s, words) {
 
 }`,
+    typescript: "function isPrefixString(s: string, words: string[]): boolean {\n\n}",
+
     python: `def isPrefixString(s, words):
     pass`,
   },

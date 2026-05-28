@@ -37,6 +37,8 @@ export const problem: Problem = {
   params: ['x'],
   starterCode: {
     javascript: 'function isPalindrome(x) {\n  // your code here\n}\n',
+    typescript: "function isPalindrome(x: number): boolean {\n  // your code here\n}",
+
     python: 'def isPalindrome(x: int) -> bool:\n    # your code here\n    pass\n',
   },
   visibleTests: [

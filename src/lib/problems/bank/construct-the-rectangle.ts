@@ -42,6 +42,8 @@ Return an array \`[L, W]\` where \`L\` and \`W\` are the length and width of the
   params: ['area'],
   starterCode: {
     javascript: 'function constructRectangle(area) {\n  // your code here\n}\n',
+    typescript: "function constructRectangle(area: number): number[] {\n  // your code here\n}",
+
     python: 'def constructRectangle(area):\n    # your code here\n    pass\n',
   },
   visibleTests: [

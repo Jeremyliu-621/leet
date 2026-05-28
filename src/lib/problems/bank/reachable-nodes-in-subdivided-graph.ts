@@ -41,6 +41,8 @@ Return the number of **distinct nodes** you can reach (including node \`0\` and 
   params: ['edges', 'maxMoves', 'n'],
   starterCode: {
     javascript: 'function reachableNodes(edges, maxMoves, n) {\n  \n}\n',
+    typescript: "function reachableNodes(edges: number[][], maxMoves: number, n: number): number {\n  \n}",
+
     python: 'def reachableNodes(edges, maxMoves, n):\n    pass\n',
   },
   visibleTests: [

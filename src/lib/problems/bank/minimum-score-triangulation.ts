@@ -42,6 +42,8 @@ Return the **minimum total score** for any valid triangulation of the polygon.`,
     javascript: `function minScoreTriangulation(values) {
 
 }`,
+    typescript: "function minScoreTriangulation(values: number[]): number {\n\n}",
+
     python: `def minScoreTriangulation(values: list[int]) -> int:
     pass`,
   },

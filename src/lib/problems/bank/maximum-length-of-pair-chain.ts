@@ -38,6 +38,8 @@ You do not need to use every pair. You can select pairs in any order.`,
   params: ['pairs'],
   starterCode: {
     javascript: 'function findLongestChain(pairs) {\n\n}\n',
+    typescript: "function findLongestChain(pairs: number[][]): number {\n\n}",
+
     python: 'def findLongestChain(pairs):\n    pass\n',
   },
   visibleTests: [

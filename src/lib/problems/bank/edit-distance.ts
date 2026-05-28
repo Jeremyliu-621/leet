@@ -43,6 +43,8 @@ This is the classic **Levenshtein distance** problem, solved efficiently with dy
   params: ['word1', 'word2'],
   starterCode: {
     javascript: 'function editDistance(word1, word2) {\n  // your code here\n}\n',
+    typescript: "function editDistance(word1: string, word2: string): number {\n  // your code here\n}",
+
     python: 'def editDistance(word1, word2):\n    # your code here\n    pass\n',
   },
   visibleTests: [

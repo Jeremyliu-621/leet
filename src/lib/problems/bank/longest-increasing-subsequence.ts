@@ -42,6 +42,8 @@ The O(n²) DP solution is acceptable, but the O(n log n) patience sorting approa
   params: ['nums'],
   starterCode: {
     javascript: 'function lengthOfLIS(nums) {\n  // your code here\n}\n',
+    typescript: "function lengthOfLIS(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def lengthOfLIS(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

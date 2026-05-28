@@ -84,6 +84,8 @@ export const problem: Problem = {
 function middleNode(head) {
 
 }`,
+    typescript: "function middleNodeRunner(head: number[]): number[] {\n\n}",
+
     python: `# ListNode is pre-defined. Implement the function below:
 def middleNode(head):
     pass`,

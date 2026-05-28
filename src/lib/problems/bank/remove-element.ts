@@ -40,6 +40,8 @@ Return \`k\`, the number of elements that are **not** equal to \`val\`. The firs
   starterCode: {
     javascript:
       'function removeElement(nums, val) {\n  // Modify nums in-place and return the count of non-val elements.\n}\n',
+    typescript: "function removeElement(nums: number[], val: number): number {\n  // Modify nums in-place and return the count of non-val elements.\n}",
+
     python: 'def removeElement(nums, val):\n    # Modify nums in-place and return the count.\n    pass\n',
   },
   visibleTests: [

@@ -40,6 +40,8 @@ Return the **minimum** possible sum of \`num1\` and \`num2\`.
   params: ['num'],
   starterCode: {
     javascript: 'function splitNum(num) {\n  // your code here\n}\n',
+    typescript: "function splitNum(num: number): number {\n  // your code here\n}",
+
     python: 'def splitNum(num):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -25,6 +25,8 @@ Given an array of numbers \`arr\`, return \`true\` if the array can be rearrange
   params: ['arr'],
   starterCode: {
     javascript: 'function canMakeArithmeticProgression(arr) {\n  // your code here\n}\n',
+    typescript: "function canMakeArithmeticProgression(arr: number[]): boolean {\n  // your code here\n}",
+
     python: 'def canMakeArithmeticProgression(arr):\n    # your code here\n    pass\n',
   },
   visibleTests: [

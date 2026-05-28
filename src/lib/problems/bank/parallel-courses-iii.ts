@@ -45,6 +45,8 @@ Return the minimum number of months needed to complete all the courses.`,
     javascript: `function minimumTime(n, relations, time) {
 
 }`,
+    typescript: "function minimumTime(n: number, relations: number[][], time: number[]): number {\n\n}",
+
     python: `def minimumTime(n, relations, time):
     pass`,
   },

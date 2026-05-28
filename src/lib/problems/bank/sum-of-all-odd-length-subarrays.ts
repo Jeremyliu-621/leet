@@ -40,6 +40,8 @@ A subarray is a contiguous subsequence of the array.`,
     javascript: `function sumOddLengthSubarrays(arr) {
 
 }`,
+    typescript: "function sumOddLengthSubarrays(arr: number[]): number {\n\n}",
+
     python: `def sumOddLengthSubarrays(arr):
     pass`,
   },

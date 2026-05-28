@@ -47,6 +47,8 @@ function subarrayGCD(nums, k) {
     javascript: `function subarrayGCD(nums, k) {
 
 }`,
+    typescript: "function subarrayGCD(nums: number[], k: number): number {\n\n}",
+
     python: `def subarrayGCD(nums, k):
     pass`,
   },

@@ -39,6 +39,8 @@ function findMinDifference(timePoints) {
   params: ['timePoints'],
   starterCode: {
     javascript: 'function findMinDifference(timePoints) {\n  \n}\n',
+    typescript: "function findMinDifference(timePoints: string[]): number {\n  \n}",
+
     python: 'def findMinDifference(timePoints):\n    pass\n',
   },
   visibleTests: [

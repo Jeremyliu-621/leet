@@ -41,6 +41,8 @@ Return the **minimum** number of seconds needed to make all elements in \`nums\`
     javascript: `function minimumSeconds(nums) {
 
 }`,
+    typescript: "function minimumSeconds(nums: number[]): number {\n\n}",
+
     python: `def minimumSeconds(nums: list[int]) -> int:
     pass`,
   },

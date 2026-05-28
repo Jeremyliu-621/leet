@@ -43,6 +43,8 @@ A string \`t\` is a **subsequence** of \`s\` if \`t\` can be obtained by deletin
     javascript: `function findLongestWord(s, dictionary) {
 
 }`,
+    typescript: "function findLongestWord(s: string, dictionary: string[]): string {\n\n}",
+
     python: `def findLongestWord(s, dictionary):
     pass
 `,

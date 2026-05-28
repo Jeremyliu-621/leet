@@ -124,6 +124,8 @@ Output: [null,null,null,null,1,0,null,2]
   starterCode: {
     javascript:
       'class DetectSquares {\n  constructor() {\n    \n  }\n  add(point) {\n    \n  }\n  count(point) {\n    \n  }\n}\n',
+    typescript: "function detectSquaresRunner(ops: string[], args: (unknown[] | number[])[]): (null | number)[] {\n  constructor() {\n    \n  }\n  add(point) {\n    \n  }\n  count(point) {\n    \n  }\n}",
+
     python:
       'class DetectSquares:\n    def __init__(self):\n        pass\n    def add(self, point):\n        pass\n    def count(self, point):\n        pass\n',
   },

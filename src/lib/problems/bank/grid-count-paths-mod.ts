@@ -54,6 +54,8 @@ There are **2** paths: right→right→down→down and down→down→right→rig
   // Return number of distinct paths from top-left to bottom-right, mod 10^9+7
   const MOD = 1_000_000_007;
 }`,
+    typescript: "function countPaths(grid: number[][]): number {\n  // Return number of distinct paths from top-left to bottom-right, mod 10^9+7\n  const MOD = 1_000_000_007;\n}",
+
     python: `def countPaths(grid: list[list[int]]) -> int:
     # Return number of distinct paths from top-left to bottom-right, mod 10^9+7
     MOD = 10**9 + 7

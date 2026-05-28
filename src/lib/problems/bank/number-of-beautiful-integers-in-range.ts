@@ -42,6 +42,8 @@ Given integers \`low\`, \`high\`, and \`k\`, return the count of beautiful integ
   // low, high: integers, k: divisor
   // Return count of beautiful integers in [low, high]
 }`,
+    typescript: "function numberOfBeautifulIntegers(low: number, high: number, k: number): number {\n  // low, high: integers, k: divisor\n  // Return count of beautiful integers in [low, high]\n}",
+
     python: `def numberOfBeautifulIntegers(low: int, high: int, k: int) -> int:
     # Your code here
     pass`,

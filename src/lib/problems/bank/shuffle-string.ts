@@ -31,6 +31,8 @@ return res.join('');\`\`\``
   params: ['s', 'indices'],
   starterCode: {
     javascript: 'function restoreString(s, indices) {\n  \n}\n',
+    typescript: "function restoreString(s: string, indices: number[]): string {\n  \n}",
+
     python: 'def restoreString(s, indices):\n    pass\n',
   },
   visibleTests: [

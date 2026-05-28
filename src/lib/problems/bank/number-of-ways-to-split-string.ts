@@ -41,6 +41,8 @@ Return the number of ways \`s\` can be split such that the number of \`'1'\` cha
   params: ['s'],
   starterCode: {
     javascript: 'function numWays(s) {\n  \n}\n',
+    typescript: "function numWays(s: string): number {\n  \n}",
+
     python: 'def numWays(s):\n    ',
   },
   visibleTests: [

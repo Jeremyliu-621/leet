@@ -20,6 +20,8 @@ export const problem: Problem = {
   params: ['n'],
   starterCode: {
     javascript: 'function countDigitOne(n) {\n\n}\n',
+    typescript: "function countDigitOne(n: number): number {\n\n}",
+
     python: 'def countDigitOne(n):\n    pass\n',
   },
   visibleTests: [

@@ -49,6 +49,8 @@ Output: 5
   params: ['n', 'roads'],
   starterCode: {
     javascript: 'function maximalNetworkRank(n, roads) {\n  // your code here\n}\n',
+    typescript: "function maximalNetworkRank(n: number, roads: number[][]): number {\n  // your code here\n}",
+
     python: 'def maximalNetworkRank(n, roads):\n    pass\n',
   },
   visibleTests: [

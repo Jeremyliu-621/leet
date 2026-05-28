@@ -41,6 +41,8 @@ Return the \`target\` with the **maximum** count. The test cases will be generat
     javascript: `function mostFrequent(nums, key) {
 
 }`,
+    typescript: "function mostFrequent(nums: number[], key: number): number {\n\n}",
+
     python: `def mostFrequent(nums, key):
     pass`,
   },

@@ -40,6 +40,8 @@ Return \`intervals\` after the insertion.`,
     javascript: `function insert(intervals, newInterval) {
   // Return intervals after inserting and merging newInterval
 }`,
+    typescript: "function insert(intervals: number[][], newInterval: number[]): number[][] {\n  // Return intervals after inserting and merging newInterval\n}",
+
     python: `def insert(intervals, newInterval):
     # Return intervals after inserting and merging newInterval
     pass`,

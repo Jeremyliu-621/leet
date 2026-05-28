@@ -39,6 +39,8 @@ Return the maximum distance.`,
   params: ['arrays'],
   starterCode: {
     javascript: 'function maxDistance(arrays) {\n\n}\n',
+    typescript: "function maxDistance(arrays: number[][]): number {\n\n}",
+
     python: 'def maxDistance(arrays):\n    pass\n',
   },
   visibleTests: [

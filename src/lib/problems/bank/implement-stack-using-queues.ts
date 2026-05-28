@@ -49,6 +49,8 @@ function myStackRunner(ops, vals) {
   });
 }
 `.trim(),
+    typescript: "function myStackRunner(ops: string[], vals: number[]): (null | number | boolean)[] {\n  constructor() {\n    // Initialize your data structure here\n  }\n\n  push(x) {\n    // Push element x onto stack\n  }\n\n  pop() {\n    // Removes the element on top of the stack and returns it\n  }\n\n  top() {\n    // Get the top element\n  }\n\n  empty() {\n    // Returns whether the stack is empty\n  }\n}",
+
     python: `
 def myStackRunner(ops, vals):
     ops_list = list(ops.to_py() if hasattr(ops, 'to_py') else ops)

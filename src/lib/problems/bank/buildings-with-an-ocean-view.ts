@@ -41,6 +41,8 @@ Return a list of indices **(0-indexed)** of buildings that have an ocean view, s
   params: ['heights'],
   starterCode: {
     javascript: 'function findBuildings(heights) {\n  \n}\n',
+    typescript: "function findBuildings(heights: number[]): number[] {\n  \n}",
+
     python: 'def findBuildings(heights):\n    pass\n',
   },
   visibleTests: [

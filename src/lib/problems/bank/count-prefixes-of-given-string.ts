@@ -39,6 +39,8 @@ function countPrefixes(words, s) {
   params: ['words', 's'],
   starterCode: {
     javascript: 'function countPrefixes(words, s) {\n  \n}\n',
+    typescript: "function countPrefixes(words: string[], s: string): number {\n  \n}",
+
     python: 'def countPrefixes(words, s):\n    pass\n',
   },
   visibleTests: [

@@ -44,6 +44,8 @@ Given a string \`pressedKeys\` representing the sequence of digit presses Alice 
 
 }
 `,
+    typescript: "function countTexts(pressedKeys: string): number {\n\n}",
+
     python: `def countTexts(pressedKeys):
     pass
 `,

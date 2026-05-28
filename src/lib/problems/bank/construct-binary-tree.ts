@@ -102,6 +102,8 @@ function buildTree(preorder, inorder) {
 
 }
 `,
+    typescript: "function constructTreeRunner(preorder: number[], inorder: number[]): number[] {\n\n}",
+
     python: `# TreeNode class and constructTreeRunner wrapper are pre-defined.
 # Implement the function below:
 def buildTree(preorder, inorder):

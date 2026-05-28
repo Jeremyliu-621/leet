@@ -38,6 +38,8 @@ export const problem: Problem = {
     javascript: `function minNumberOfFrogs(croakOfFrogs) {
 
 }`,
+    typescript: "function minNumberOfFrogs(croakOfFrogs: string): number {\n\n}",
+
     python: `def minNumberOfFrogs(croakOfFrogs):
     pass`,
   },

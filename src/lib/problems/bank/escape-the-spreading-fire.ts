@@ -51,6 +51,8 @@ You are safe at the safehouse if you and the fire reach the safehouse at the **s
   params: ['grid'],
   starterCode: {
     javascript: 'function maximumMinutes(grid) {\n  \n}\n',
+    typescript: "function maximumMinutes(grid: number[][]): number {\n  \n}",
+
     python: 'def maximumMinutes(grid):\n    pass\n',
   },
   visibleTests: [

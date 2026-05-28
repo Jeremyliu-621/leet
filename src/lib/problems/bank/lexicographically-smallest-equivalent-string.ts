@@ -47,6 +47,8 @@ Return the **lexicographically smallest** equivalent string of \`baseStr\` using
   starterCode: {
     javascript:
       'function smallestEquivalentString(s1, s2, baseStr) {\n  \n}\n',
+    typescript: "function smallestEquivalentString(s1: string, s2: string, baseStr: string): string {\n  \n}",
+
     python: 'def smallestEquivalentString(s1, s2, baseStr):\n    ',
   },
   visibleTests: [

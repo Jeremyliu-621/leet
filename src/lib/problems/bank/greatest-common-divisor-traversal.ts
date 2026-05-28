@@ -45,6 +45,8 @@ You may visit indices in any order, and you may visit an index more than once.`,
     javascript: `function canTraverseAllPairs(nums) {
 
 }`,
+    typescript: "function canTraverseAllPairs(nums: number[]): boolean {\n\n}",
+
     python: `def canTraverseAllPairs(nums):
     pass`,
   },

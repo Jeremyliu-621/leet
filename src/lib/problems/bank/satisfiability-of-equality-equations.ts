@@ -42,6 +42,8 @@ Return \`true\` if it is possible to assign integer values to variable names so 
   params: ['equations'],
   starterCode: {
     javascript: 'function equationsPossible(equations) {\n  \n}\n',
+    typescript: "function equationsPossible(equations: string[]): boolean {\n  \n}",
+
     python: 'def equationsPossible(equations):\n    pass\n',
   },
   visibleTests: [

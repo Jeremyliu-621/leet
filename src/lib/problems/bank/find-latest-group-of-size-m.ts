@@ -37,6 +37,8 @@ Return the latest step at which there exists **at least one** group of \`1\`s of
   params: ['arr', 'm'],
   starterCode: {
     javascript: 'function findLatestStep(arr, m) {\n  \n}\n',
+    typescript: "function findLatestStep(arr: number[], m: number): number {\n  \n}",
+
     python: 'def findLatestStep(arr, m):\n    pass\n',
   },
   visibleTests: [

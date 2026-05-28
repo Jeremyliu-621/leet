@@ -33,6 +33,8 @@ Return the number of substrings containing **at least** one occurrence of all th
   params: ['s'],
   starterCode: {
     javascript: 'function numberOfSubstrings(s) {\n\n}\n',
+    typescript: "function numberOfSubstrings(s: string): number {\n\n}",
+
     python: 'def numberOfSubstrings(s):\n    pass\n',
   },
   visibleTests: [

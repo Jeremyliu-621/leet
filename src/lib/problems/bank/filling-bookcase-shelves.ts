@@ -48,6 +48,8 @@ Return the **minimum possible total height** of the bookcase.`,
     javascript: `function minHeightShelves(books, shelfWidth) {
   // Return minimum total height of the bookcase
 }`,
+    typescript: "function minHeightShelves(books: number[][], shelfWidth: number): number {\n  // Return minimum total height of the bookcase\n}",
+
     python: `def minHeightShelves(books: list[list[int]], shelfWidth: int) -> int:
     # Return minimum total height of the bookcase
     pass`,

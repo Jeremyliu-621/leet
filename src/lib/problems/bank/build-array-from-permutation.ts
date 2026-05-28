@@ -35,6 +35,8 @@ A **zero-based permutation** \`nums\` is an array of **distinct** integers from 
     javascript: `function buildArray(nums) {
 
 }`,
+    typescript: "function buildArray(nums: number[]): number[] {\n\n}",
+
     python: `def buildArray(nums):
     pass`,
   },

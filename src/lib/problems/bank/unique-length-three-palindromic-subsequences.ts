@@ -44,6 +44,8 @@ A **subsequence** of a string is a new string generated from the original string
     javascript: `function countPalindromicSubsequence(s) {
 
 }`,
+    typescript: "function countPalindromicSubsequence(s: string): number {\n\n}",
+
     python: `def countPalindromicSubsequence(s):
     pass`,
   },

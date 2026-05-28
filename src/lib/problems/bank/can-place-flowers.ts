@@ -37,6 +37,8 @@ Given an integer array \`flowerbed\` containing \`0\`s and \`1\`s, where \`0\` m
   starterCode: {
     javascript:
       'function canPlaceFlowers(flowerbed, n) {\n  // your code here\n}\n',
+    typescript: "function canPlaceFlowers(flowerbed: number[], n: number): boolean {\n  // your code here\n}",
+
     python:
       'def canPlaceFlowers(flowerbed, n):\n    # your code here\n    pass\n',
   },

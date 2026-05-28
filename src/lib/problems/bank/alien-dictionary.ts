@@ -39,6 +39,8 @@ Your function receives the array of sorted words and must return a string of the
   params: ['words'],
   starterCode: {
     javascript: 'function alienOrder(words) {\n  \n}\n',
+    typescript: "function alienOrder(words: string[]): string {\n  \n}",
+
     python: 'def alienOrder(words):\n    pass\n',
   },
   visibleTests: [

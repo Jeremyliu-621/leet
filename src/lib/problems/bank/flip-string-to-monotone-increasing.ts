@@ -40,6 +40,8 @@ Return the minimum number of flips to make \`s\` monotone increasing.`,
   params: ['s'],
   starterCode: {
     javascript: 'function minFlipsMonoIncr(s) {\n  \n}\n',
+    typescript: "function minFlipsMonoIncr(s: string): number {\n  \n}",
+
     python: 'def minFlipsMonoIncr(s):\n    pass\n',
   },
   visibleTests: [

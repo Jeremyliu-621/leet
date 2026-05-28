@@ -50,6 +50,8 @@ Return an array \`result\` of the same length where \`result[i]\` is the distanc
     javascript: `function nextGreaterDistances(nums) {
   // Return array where result[i] = distance to next greater element, or -1
 }`,
+    typescript: "function nextGreaterDistances(nums: number[]): number[] {\n  // Return array where result[i] = distance to next greater element, or -1\n}",
+
     python: `def nextGreaterDistances(nums: list[int]) -> list[int]:
     # Return array where result[i] = distance to next greater element, or -1
     pass`,

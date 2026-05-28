@@ -30,6 +30,8 @@ Return the **smallest possible sum** of the values of each non-leaf node.`,
   params: ['arr'],
   starterCode: {
     javascript: 'function mctFromLeafValues(arr) {\n\n}\n',
+    typescript: "function mctFromLeafValues(arr: number[]): number {\n\n}",
+
     python: 'def mctFromLeafValues(arr):\n    pass\n',
   },
   visibleTests: [

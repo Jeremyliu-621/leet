@@ -42,6 +42,8 @@ The **value** of a triplet of indices \`(i, j, k)\` is equal to \`(nums[i] - num
     javascript: `function maximumTripletValue(nums) {
 
 }`,
+    typescript: "function maximumTripletValue(nums: number[]): number {\n\n}",
+
     python: `def maximumTripletValue(nums):
     pass`,
   },

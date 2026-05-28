@@ -37,6 +37,8 @@ export const problem: Problem = {
     javascript: `function longestOnes(nums, k) {
   // Return max window length with at most k flipped zeros
 }`,
+    typescript: "function longestOnes(nums: number[], k: number): number {\n  // Return max window length with at most k flipped zeros\n}",
+
     python: `def longestOnes(nums, k):
     # Return max window length with at most k flipped zeros
     pass`,

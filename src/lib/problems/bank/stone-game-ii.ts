@@ -34,6 +34,8 @@ The game continues until all the stones have been taken. Assuming Alice and Bob 
   params: ['piles'],
   starterCode: {
     javascript: 'function stoneGameII(piles) {\n  // your code here\n}\n',
+    typescript: "function stoneGameII(piles: number[]): number {\n  // your code here\n}",
+
     python: 'def stoneGameII(piles):\n    # your code here\n    pass\n',
   },
   visibleTests: [

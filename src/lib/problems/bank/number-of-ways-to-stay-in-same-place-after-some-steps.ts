@@ -35,6 +35,8 @@ export const problem: Problem = {
   params: ['steps', 'arrLen'],
   starterCode: {
     javascript: 'function numWays(steps, arrLen) {\n\n}\n',
+    typescript: "function numWays(steps: number, arrLen: number): number {\n\n}",
+
     python: 'def numWays(steps: int, arrLen: int) -> int:\n    pass\n',
   },
   visibleTests: [

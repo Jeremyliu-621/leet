@@ -41,6 +41,8 @@ The solution set must not contain duplicate quadruplets. Each quadruplet should 
   params: ['nums', 'target'],
   starterCode: {
     javascript: 'function fourSum(nums, target) {\n  \n}',
+    typescript: "function fourSum(nums: number[], target: number): number[][] {\n  \n}",
+
     python: 'def fourSum(nums: list[int], target: int) -> list[list[int]]:\n    pass',
   },
   visibleTests: [

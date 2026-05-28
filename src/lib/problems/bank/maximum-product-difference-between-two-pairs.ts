@@ -35,6 +35,8 @@ Return the **maximum** such product difference.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function maxProductDifference(nums) {\n\n}\n',
+    typescript: "function maxProductDifference(nums: number[]): number {\n\n}",
+
     python: 'def maxProductDifference(nums: list) -> int:\n    pass\n',
   },
   visibleTests: [

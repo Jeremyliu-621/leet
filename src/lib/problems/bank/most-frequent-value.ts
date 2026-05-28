@@ -35,6 +35,8 @@ The input array is not modified.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function mostFrequentValue(nums) {\n  // your code here\n}\n',
+    typescript: "function mostFrequentValue(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def mostFrequentValue(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

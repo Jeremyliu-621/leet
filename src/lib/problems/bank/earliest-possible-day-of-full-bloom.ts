@@ -43,6 +43,8 @@ Return the **earliest** possible day where **all** seeds are blooming.`,
   params: ['plantTime', 'growTime'],
   starterCode: {
     javascript: 'function earliestFullBloom(plantTime, growTime) {\n  \n}\n',
+    typescript: "function earliestFullBloom(plantTime: number[], growTime: number[]): number {\n  \n}",
+
     python: 'def earliestFullBloom(plantTime, growTime):\n    pass\n',
   },
   visibleTests: [

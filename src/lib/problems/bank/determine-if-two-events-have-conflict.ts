@@ -57,6 +57,8 @@ Return \`true\` if there is a **conflict** between the two events (they share at
     javascript: `function haveConflict(event1, event2) {
   // Return true if the two time-interval events overlap
 }`,
+    typescript: "function haveConflict(event1: string[], event2: string[]): boolean {\n  // Return true if the two time-interval events overlap\n}",
+
     python: `def haveConflict(event1: list[str], event2: list[str]) -> bool:
     # Return True if the two time-interval events overlap
     pass`,

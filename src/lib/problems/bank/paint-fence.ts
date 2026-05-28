@@ -26,6 +26,8 @@ Given the two integers \`n\` and \`k\`, return the **number of ways** you can pa
   params: ['n', 'k'],
   starterCode: {
     javascript: 'function numWays(n, k) {\n\n}\n',
+    typescript: "function numWays(n: number, k: number): number {\n\n}",
+
     python: 'def numWays(n, k):\n    pass\n',
   },
   visibleTests: [

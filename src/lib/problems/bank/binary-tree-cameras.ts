@@ -108,6 +108,8 @@ Trees are given as BFS-order arrays where \`null\` indicates missing children.`,
   starterCode: {
     javascript:
       '// TreeNode class and minCameraCoverRunner wrapper are pre-defined.\n// Implement the function below:\nfunction minCameraCover(root) {\n\n}\n',
+    typescript: "function minCameraCoverRunner(root: (number | null)[]): number {\n\n}",
+
     python:
       '# TreeNode class and minCameraCoverRunner wrapper are pre-defined.\n# Implement the function below:\ndef minCameraCover(root):\n    pass\n',
   },

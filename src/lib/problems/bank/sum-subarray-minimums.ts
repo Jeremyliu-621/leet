@@ -39,6 +39,8 @@ Then \`arr[i]\` contributes \`arr[i] * left[i] * right[i]\` to the answer. The l
   params: ['arr'],
   starterCode: {
     javascript: 'function sumSubarrayMins(arr) {\n  // your code here\n}\n',
+    typescript: "function sumSubarrayMins(arr: number[]): number {\n  // your code here\n}",
+
     python: 'def sumSubarrayMins(arr: list[int]) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

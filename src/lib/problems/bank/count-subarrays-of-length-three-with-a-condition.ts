@@ -41,6 +41,8 @@ nums[i] + nums[i+2] == nums[i+1] / 2
   params: ['nums'],
   starterCode: {
     javascript: 'function countSubarrays(nums) {\n  // your code here\n}\n',
+    typescript: "function countSubarrays(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def countSubarrays(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

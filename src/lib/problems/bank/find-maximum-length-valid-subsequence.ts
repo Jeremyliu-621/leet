@@ -42,6 +42,8 @@ Return the **length** of the longest valid subsequence of \`nums\`.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function maximumLength(nums) {\n\n}',
+    typescript: "function maximumLength(nums: number[]): number {\n\n}",
+
     python: 'def maximumLength(nums):\n    pass',
   },
   visibleTests: [

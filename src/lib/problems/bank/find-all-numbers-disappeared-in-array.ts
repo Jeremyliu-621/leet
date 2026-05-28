@@ -30,6 +30,8 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: 'function findDisappearedNumbers(nums) {\n\n}',
+    typescript: "function findDisappearedNumbers(nums: number[]): number[] {\n\n}",
+
     python: 'def findDisappearedNumbers(nums):\n    pass',
   },
   visibleTests: [

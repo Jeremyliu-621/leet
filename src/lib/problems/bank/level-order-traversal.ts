@@ -97,6 +97,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   starterCode: {
     javascript:
       '// TreeNode class and levelOrderRunner wrapper are pre-defined.\n// Implement the function below:\nfunction levelOrder(root) {\n  \n}\n',
+    typescript: "function levelOrderRunner(root: (number | null)[]): number[][] {\n  \n}",
+
     python:
       '# TreeNode class and levelOrderRunner wrapper are pre-defined.\n# Implement the function below:\ndef levelOrder(root):\n    pass\n',
   },

@@ -42,6 +42,8 @@ If the entire array is \`1\`s, you must still delete one — so the answer is \`
   params: ['nums'],
   starterCode: {
     javascript: 'function longestSubarrayOfOnes(nums) {\n  // your code here\n}\n',
+    typescript: "function longestSubarrayOfOnes(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def longestSubarrayOfOnes(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

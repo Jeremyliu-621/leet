@@ -37,6 +37,8 @@ Given a string \`s\` that represents a DNA sequence, return all the **10-letter-
     javascript: `function findRepeatedDnaSequences(s) {
 
 }`,
+    typescript: "function findRepeatedDnaSequences(s: string): string[] {\n\n}",
+
     python: `def findRepeatedDnaSequences(s: str) -> list[str]:
     pass`,
   },

@@ -41,6 +41,8 @@ A **cycle** is a path that starts and ends at the same node, and each edge in th
 function findShortestCycle(n, edges) {
 
 }`,
+    typescript: "function findShortestCycle(n: number, edges: number[][]): number {number} n\n * @param {number[][]} edges\n * @return {number}\n */\nfunction findShortestCycle(n, edges) {\n\n}",
+
     python: `def findShortestCycle(n: int, edges: list[list[int]]) -> int:
     pass`,
   },

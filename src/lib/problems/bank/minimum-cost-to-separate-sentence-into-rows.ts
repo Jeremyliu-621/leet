@@ -58,6 +58,8 @@ Minimum cost: **36**`,
     javascript: `function minimumCost(sentence, k) {
 
 }`,
+    typescript: "function minimumCost(sentence: string, k: number): number {\n\n}",
+
     python: `def minimumCost(sentence, k):
     pass
 `,

@@ -99,6 +99,8 @@ A **valid BST** is defined as follows:
 function isValidBST(root) {
 
 }`,
+    typescript: "function isValidBSTRunner(root: number[]): boolean {\n\n}",
+
     python: `# TreeNode is pre-defined. Implement the function below:
 def isValidBST(root):
     pass`,

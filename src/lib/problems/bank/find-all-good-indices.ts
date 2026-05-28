@@ -39,6 +39,8 @@ Return an array of all good indices sorted in **increasing** order.`,
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function goodIndices(nums, k) {\n\n}\n',
+    typescript: "function goodIndices(nums: number[], k: number): number[] {\n\n}",
+
     python: 'def goodIndices(nums, k):\n    pass\n',
   },
   visibleTests: [

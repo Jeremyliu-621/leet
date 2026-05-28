@@ -86,6 +86,8 @@ Given a linked list \`head\`, return *an array of length* \`2\` *containing* \`[
   starterCode: {
     javascript:
       '// ListNode class and nodesBetweenCriticalPointsRunner wrapper are pre-defined.\n// Implement the function below:\nfunction nodesBetweenCriticalPoints(head) {\n  \n}\n',
+    typescript: "function nodesBetweenCriticalPointsRunner(head: number[]): number[] {\n  \n}",
+
     python:
       '# ListNode class and nodesBetweenCriticalPointsRunner wrapper are pre-defined.\n# Implement the function below:\ndef nodesBetweenCriticalPoints(head):\n    pass\n',
   },

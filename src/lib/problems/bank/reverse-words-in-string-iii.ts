@@ -35,6 +35,8 @@ Words in \`s\` are separated by a single space. The string does not contain any 
   params: ['s'],
   starterCode: {
     javascript: 'function reverseWords(s) {\n  // your code here\n}\n',
+    typescript: "function reverseWords(s: string): string {\n  // your code here\n}",
+
     python: 'def reverseWords(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

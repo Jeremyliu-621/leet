@@ -49,6 +49,8 @@ Output: 0
   params: ['weights', 'k'],
   starterCode: {
     javascript: 'function putMarbles(weights, k) {\n  // your code here\n}\n',
+    typescript: "function putMarbles(weights: number[], k: number): number {\n  // your code here\n}",
+
     python: 'def putMarbles(weights, k):\n    pass\n',
   },
   visibleTests: [

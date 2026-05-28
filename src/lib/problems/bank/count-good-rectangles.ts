@@ -36,6 +36,8 @@ Return the number of rectangles that can form a square with the **maximum** side
   params: ['rectangles'],
   starterCode: {
     javascript: 'function countGoodRectangles(rectangles) {\n  // your code here\n}\n',
+    typescript: "function countGoodRectangles(rectangles: number[][]): number {\n  // your code here\n}",
+
     python: 'def countGoodRectangles(rectangles):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -45,6 +45,8 @@ A **subarray** is a contiguous part of an array.`,
     javascript: `function maxNonDecreasingLength(nums1, nums2) {
 
 }`,
+    typescript: "function maxNonDecreasingLength(nums1: number[], nums2: number[]): number {\n\n}",
+
     python: `def maxNonDecreasingLength(nums1, nums2):
     pass`,
   },

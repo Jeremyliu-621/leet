@@ -49,6 +49,8 @@ Output: "-1/6"
     javascript: `function fractionAddition(expression) {
 
 }`,
+    typescript: "function fractionAddition(expression: string): string {\n\n}",
+
     python: `def fractionAddition(expression):
     `,
   },

@@ -57,6 +57,8 @@ Explanation: 4 'a's and 1 'b', no "aaa" substring.
     javascript: `function strWithout3a3b(a, b) {
   // your code here
 }`,
+    typescript: "function strWithout3a3b(a: number, b: number): string {\n  // your code here\n}",
+
     python: `def strWithout3a3b(a: int, b: int) -> str:
     # your code here
     pass`,

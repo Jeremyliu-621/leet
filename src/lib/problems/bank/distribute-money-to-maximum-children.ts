@@ -35,6 +35,8 @@ Return the **maximum** number of children who receive **exactly 8 dollars**. If 
   params: ['money', 'children'],
   starterCode: {
     javascript: 'function distMoney(money, children) {\n  \n}\n',
+    typescript: "function distMoney(money: number, children: number): number {\n  \n}",
+
     python: 'def distMoney(money, children):\n    pass\n',
   },
   visibleTests: [

@@ -41,6 +41,8 @@ Day 0 is 73°; the next warmer day is day 1 (74°), so \`answer[0] = 1\`. Day 2 
     javascript: `function dailyTemperatures(temperatures) {
   // Return array of days to wait for a warmer temperature
 }`,
+    typescript: "function dailyTemperatures(temperatures: number[]): number[] {\n  // Return array of days to wait for a warmer temperature\n}",
+
     python: `def dailyTemperatures(temperatures: list[int]) -> list[int]:
     # Return array of days to wait for a warmer temperature
     pass`,

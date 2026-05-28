@@ -28,6 +28,8 @@ export const problem: Problem = {
     javascript: `function multiply(num1, num2) {
 
 }`,
+    typescript: "function multiply(num1: string, num2: string): string {\n\n}",
+
     python: `def multiply(num1, num2):
     pass`,
   },

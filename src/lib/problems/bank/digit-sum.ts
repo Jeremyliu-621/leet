@@ -36,6 +36,8 @@ export const problem: Problem = {
   params: ['n'],
   starterCode: {
     javascript: 'function digitSum(n) {\n  // your code here\n}\n',
+    typescript: "function digitSum(n: number): number {\n  // your code here\n}",
+
     python: 'def digitSum(n):\n    # your code here\n    pass\n',
   },
   visibleTests: [

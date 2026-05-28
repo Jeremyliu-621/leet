@@ -42,6 +42,8 @@ Return the **minimum** total cost to cut the entire cake into \`1 x 1\` pieces.`
   params: ['m', 'n', 'horizontalCut', 'verticalCut'],
   starterCode: {
     javascript: 'function minimumCost(m, n, horizontalCut, verticalCut) {\n\n}',
+    typescript: "function minimumCost(m: number, n: number, horizontalCut: number[], verticalCut: number[]): number {\n\n}",
+
     python: 'def minimumCost(m, n, horizontalCut, verticalCut):\n    pass',
   },
   visibleTests: [

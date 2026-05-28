@@ -40,6 +40,8 @@ A cut splits the string into two parts. For example, \`"aab"\` can be split with
   params: ['s'] as readonly string[],
   starterCode: {
     javascript: 'function minCut(s) {\n  // your code here\n}\n',
+    typescript: "function minCut(s: string): number {\n  // your code here\n}",
+
     python: 'def minCut(s: str) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

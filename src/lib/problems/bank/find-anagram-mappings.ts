@@ -41,6 +41,8 @@ function anagramMappings(nums1, nums2) {
     javascript: `function anagramMappings(nums1, nums2) {
 
 }`,
+    typescript: "function anagramMappings(nums1: number[], nums2: number[]): number[] {\n\n}",
+
     python: `def anagramMappings(nums1, nums2):
     pass`,
   },

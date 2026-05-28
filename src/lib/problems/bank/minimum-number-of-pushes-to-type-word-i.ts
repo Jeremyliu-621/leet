@@ -39,6 +39,8 @@ Return the **minimum** number of total pushes to type \`word\`.`,
   params: ['word'],
   starterCode: {
     javascript: 'function minimumPushes(word) {\n  // your code here\n}\n',
+    typescript: "function minimumPushes(word: string): number {\n  // your code here\n}",
+
     python: 'def minimumPushes(word):\n    # your code here\n    pass\n',
   },
   visibleTests: [

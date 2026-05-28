@@ -43,6 +43,8 @@ Return the **maximum possible** number of marked indices in \`nums\` after perfo
   params: ['nums'],
   starterCode: {
     javascript: 'function maxNumOfMarkedIndices(nums) {\n  \n}\n',
+    typescript: "function maxNumOfMarkedIndices(nums: number[]): number {\n  \n}",
+
     python: 'def maxNumOfMarkedIndices(nums):\n    pass\n',
   },
   visibleTests: [

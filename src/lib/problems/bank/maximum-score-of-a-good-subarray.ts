@@ -40,6 +40,8 @@ Return the **maximum possible score** of a good subarray.`,
 function maximumScore(nums, k) {
 
 }`,
+    typescript: "function maximumScore(nums: number[], k: number): number {number[]} nums\n * @param {number} k\n * @return {number}\n */\nfunction maximumScore(nums, k) {\n\n}",
+
     python: `def maximumScore(nums: list[int], k: int) -> int:
     pass`,
   },

@@ -33,6 +33,8 @@ function isPowerOfThree(n) {
     javascript: `function isPowerOfThree(n) {
 
 }`,
+    typescript: "function isPowerOfThree(n: number): boolean {\n\n}",
+
     python: `def isPowerOfThree(n):
     pass`,
   },

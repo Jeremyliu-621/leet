@@ -36,6 +36,8 @@ The punishment number of \`n\` is defined as the sum of the squares of all integ
   params: ['n'],
   starterCode: {
     javascript: 'function punishmentNumber(n) {\n  // your code here\n}\n',
+    typescript: "function punishmentNumber(n: number): number {\n  // your code here\n}",
+
     python: 'def punishmentNumber(n):\n    # your code here\n    pass\n',
   },
   visibleTests: [

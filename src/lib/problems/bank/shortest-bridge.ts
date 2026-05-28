@@ -43,6 +43,8 @@ Return the **smallest number of \`0\`s you must flip** to connect the two island
   params: ['grid'],
   starterCode: {
     javascript: 'function shortestBridge(grid) {\n  // your code here\n}\n',
+    typescript: "function shortestBridge(grid: number[][]): number {\n  // your code here\n}",
+
     python: 'def shortestBridge(grid):\n    # your code here\n    pass\n',
   },
   visibleTests: [

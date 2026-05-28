@@ -41,6 +41,8 @@ export const problem: Problem = {
     javascript: `function maxVowels(s, k) {
   // Return max vowels in any substring of length k
 }`,
+    typescript: "function maxVowels(s: string, k: number): number {\n  // Return max vowels in any substring of length k\n}",
+
     python: `def maxVowels(s, k):
     # Return max vowels in any substring of length k
     pass`,

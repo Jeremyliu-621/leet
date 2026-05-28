@@ -45,6 +45,8 @@ function twoSumLessThanK(nums, k) {
     javascript: `function twoSumLessThanK(nums, k) {
 
 }`,
+    typescript: "function twoSumLessThanK(nums: number[], k: number): number {\n\n}",
+
     python: `def twoSumLessThanK(nums, k):
     pass`,
   },

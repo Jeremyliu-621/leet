@@ -41,6 +41,8 @@ function singleNumber(nums) {
     javascript: `function singleNumber(nums) {
   // Return the element that appears only once
 }`,
+    typescript: "function singleNumber(nums: number[]): number {\n  // Return the element that appears only once\n}",
+
     python: `def singleNumber(nums):
     # Return the element that appears only once
     pass`,

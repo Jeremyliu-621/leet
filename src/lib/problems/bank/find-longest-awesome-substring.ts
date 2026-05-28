@@ -44,6 +44,8 @@ A **substring** is a contiguous sequence of characters within a string.`,
     javascript: `function longestAwesome(s) {
 
 }`,
+    typescript: "function longestAwesome(s: string): number {\n\n}",
+
     python: `def longestAwesome(s):
     pass`,
   },

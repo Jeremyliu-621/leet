@@ -33,6 +33,8 @@ Formally, we can partition the array if we can find indices \`i + 1 < j\` with:
   params: ['arr'],
   starterCode: {
     javascript: 'function canThreePartsEqualSum(arr) {\n\n}\n',
+    typescript: "function canThreePartsEqualSum(arr: number[]): boolean {\n\n}",
+
     python: 'def canThreePartsEqualSum(arr):\n    pass\n',
   },
   visibleTests: [

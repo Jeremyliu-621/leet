@@ -41,6 +41,8 @@ function mostWordsFound(sentences) {
   params: ['sentences'],
   starterCode: {
     javascript: 'function mostWordsFound(sentences) {\n  \n}\n',
+    typescript: "function mostWordsFound(sentences: string[]): number {\n  \n}",
+
     python: 'def mostWordsFound(sentences):\n    pass\n',
   },
   visibleTests: [

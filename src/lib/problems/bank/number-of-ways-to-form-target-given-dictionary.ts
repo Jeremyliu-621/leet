@@ -43,6 +43,8 @@ Return the number of ways to form \`target\` from \`words\`. Return the answer *
   params: ['words', 'target'],
   starterCode: {
     javascript: 'function numWays(words, target) {\n\n}\n',
+    typescript: "function numWays(words: string[], target: string): number {\n\n}",
+
     python: 'def numWays(words: list, target: str) -> int:\n    pass\n',
   },
   visibleTests: [

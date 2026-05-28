@@ -45,6 +45,8 @@ The input is given as an array of operations. Return results for \`highestRated\
   // ops: [["FoodRatings", [foods, cuisines, ratings]], ["highestRated", [cuisine]], ["changeRating", [food, newRating]], ...]
   // Return array of results (null for FoodRatings/changeRating, string for highestRated)
 }`,
+    typescript: "function foodRatingOps(ops: ((string | (string[] | number[])[])[] | (string | string[])[] | (string | (string | number)[])[])[]): (null | string)[] {\n  // ops: [[\"FoodRatings\", [foods, cuisines, ratings]], [\"highestRated\", [cuisine]], [\"changeRating\", [food, newRating]], ...]\n  // Return array of results (null for FoodRatings/changeRating, string for highestRated)\n}",
+
     python: `def foodRatingOps(ops):
     # ops: [["FoodRatings", [foods, cuisines, ratings]], ["highestRated", [cuisine]], ["changeRating", [food, newRating]], ...]
     # Return list of results (None for FoodRatings/changeRating, string for highestRated)

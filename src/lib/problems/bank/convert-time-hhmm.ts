@@ -33,6 +33,8 @@ In one operation you can increase the time \`current\` by \`1\`, \`5\`, \`15\`, 
   params: ['current', 'correct'],
   starterCode: {
     javascript: 'function convertTime(current, correct) {\n  // your code here\n}\n',
+    typescript: "function convertTime(current: string, correct: string): number {\n  // your code here\n}",
+
     python: 'def convertTime(current, correct):\n    # your code here\n    pass\n',
   },
   visibleTests: [

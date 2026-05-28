@@ -42,6 +42,8 @@ An **anagram** of a string is a string that uses the same characters with the sa
     javascript: `function minSteps(s, t) {
 
 }`,
+    typescript: "function minSteps(s: string, t: string): number {\n\n}",
+
     python: `def minSteps(s, t):
     pass`,
   },

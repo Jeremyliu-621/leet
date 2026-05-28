@@ -43,6 +43,8 @@ Return the **number** of fixed-bound subarrays.`,
   params: ['nums', 'minK', 'maxK'],
   starterCode: {
     javascript: 'function countSubarrays(nums, minK, maxK) {\n  \n}\n',
+    typescript: "function countSubarrays(nums: number[], minK: number, maxK: number): number {\n  \n}",
+
     python: 'def countSubarrays(nums, minK, maxK):\n    pass\n',
   },
   visibleTests: [

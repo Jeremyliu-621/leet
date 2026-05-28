@@ -45,6 +45,8 @@ You are given an integer \`n\` and a 2D array \`moves\` where \`moves[i] = [row,
     javascript: `function ticTacToe(n, moves) {
 
 }`,
+    typescript: "function ticTacToe(n: number, moves: number[][]): number {\n\n}",
+
     python: `def ticTacToe(n: int, moves: list[list[int]]) -> int:
     pass`,
   },

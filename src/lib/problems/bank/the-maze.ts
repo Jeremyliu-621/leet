@@ -47,6 +47,8 @@ Given the \`m x n\` \`maze\`, the ball's \`start\` position, and the \`destinati
   params: ['maze', 'start', 'destination'],
   starterCode: {
     javascript: 'function hasPath(maze, start, destination) {\n  \n}\n',
+    typescript: "function hasPath(maze: number[][], start: number[], destination: number[]): boolean {\n  \n}",
+
     python: 'def hasPath(maze, start, destination):\n    pass\n',
   },
   visibleTests: [

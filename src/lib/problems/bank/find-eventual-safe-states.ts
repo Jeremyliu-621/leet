@@ -42,6 +42,8 @@ Return an array containing all the **safe nodes** of the graph. The answer shoul
     javascript: `function eventualSafeNodes(graph) {
   // Return sorted array of safe node indices
 }`,
+    typescript: "function eventualSafeNodes(graph: (number[] | unknown[])[]): number[] {\n  // Return sorted array of safe node indices\n}",
+
     python: `def eventualSafeNodes(graph):
     # Return sorted list of safe node indices
     pass`,

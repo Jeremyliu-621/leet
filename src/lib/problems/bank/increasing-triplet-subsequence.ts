@@ -31,6 +31,8 @@ return false;\`\`\``
   params: ['nums'],
   starterCode: {
     javascript: 'function increasingTriplet(nums) {\n  \n}\n',
+    typescript: "function increasingTriplet(nums: number[]): boolean {\n  \n}",
+
     python: 'def increasingTriplet(nums):\n    pass\n',
   },
   visibleTests: [

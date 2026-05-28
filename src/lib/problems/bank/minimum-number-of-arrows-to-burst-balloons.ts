@@ -43,6 +43,8 @@ function findMinArrowShots(points) {
   params: ['points'],
   starterCode: {
     javascript: 'function findMinArrowShots(points) {\n\n}\n',
+    typescript: "function findMinArrowShots(points: number[][]): number {\n\n}",
+
     python: 'def findMinArrowShots(points):\n    pass\n',
   },
   visibleTests: [

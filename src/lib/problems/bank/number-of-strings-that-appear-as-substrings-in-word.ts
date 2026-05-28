@@ -37,6 +37,8 @@ A **substring** is a contiguous sequence of characters within a string.`,
     javascript: `function numOfStrings(patterns, word) {
 
 }`,
+    typescript: "function numOfStrings(patterns: string[], word: string): number {\n\n}",
+
     python: `def numOfStrings(patterns, word):
     pass`,
   },

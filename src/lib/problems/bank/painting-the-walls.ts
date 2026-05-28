@@ -40,6 +40,8 @@ Return the **minimum cost** to paint all \`n\` walls.
   params: ['cost', 'time'],
   starterCode: {
     javascript: 'function paintWalls(cost, time) {\n\n}\n',
+    typescript: "function paintWalls(cost: number[], time: number[]): number {\n\n}",
+
     python: 'def paintWalls(cost: list, time: list) -> int:\n    pass\n',
   },
   visibleTests: [

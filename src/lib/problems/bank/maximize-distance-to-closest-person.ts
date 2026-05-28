@@ -41,6 +41,8 @@ Alex wants to sit in the seat such that the distance between him and the closest
   params: ['seats'],
   starterCode: {
     javascript: 'function maxDistToClosest(seats) {\n\n}\n',
+    typescript: "function maxDistToClosest(seats: number[]): number {\n\n}",
+
     python: 'def maxDistToClosest(seats):\n    pass\n',
   },
   visibleTests: [

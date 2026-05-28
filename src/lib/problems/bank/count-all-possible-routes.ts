@@ -50,6 +50,8 @@ A route is any sequence of cities (without running out of fuel) that starts at \
     javascript: `function countRoutes(locations, start, finish, fuel) {
 
 }`,
+    typescript: "function countRoutes(locations: number[], start: number, finish: number, fuel: number): number {\n\n}",
+
     python: `def countRoutes(locations: list[int], start: int, finish: int, fuel: int) -> int:
     pass`,
   },

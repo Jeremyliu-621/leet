@@ -73,6 +73,8 @@ export const problem: Problem = {
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// ListNode class and middleNodeRunner wrapper are pre-defined.\n// Implement the function below:\nfunction middleNode(head) {\n  \n}\n',
+    typescript: "function middleNodeRunner(head: number[]): number[] {\n  \n}",
+
     python: '# ListNode class and middleNodeRunner wrapper are pre-defined.\n# Implement the function below:\ndef middleNode(head):\n    pass\n',
   },
   visibleTests: [

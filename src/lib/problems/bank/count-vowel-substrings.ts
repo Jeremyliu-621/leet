@@ -51,6 +51,8 @@ return atMost(5,word)-atMost(4,word);\`\`\``
     javascript: `function countVowelSubstrings(word) {
 
 }`,
+    typescript: "function countVowelSubstrings(word: string): number {\n\n}",
+
     python: `def countVowelSubstrings(word):
     pass`,
   },

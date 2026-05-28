@@ -35,6 +35,8 @@ Return the **minimum** total number of magic beans you have to remove.`,
   params: ['beans'],
   starterCode: {
     javascript: 'function minimumRemoval(beans) {\n  \n}\n',
+    typescript: "function minimumRemoval(beans: number[]): number {\n  \n}",
+
     python: 'def minimumRemoval(beans):\n    pass\n',
   },
   visibleTests: [

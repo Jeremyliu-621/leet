@@ -43,6 +43,8 @@ It is guaranteed that:
   params: ['street'],
   starterCode: {
     javascript: 'function minimumBuckets(street) {\n  // your code here\n}\n',
+    typescript: "function minimumBuckets(street: string): number {\n  // your code here\n}",
+
     python: 'def minimumBuckets(street):\n    # your code here\n    pass\n',
   },
   visibleTests: [

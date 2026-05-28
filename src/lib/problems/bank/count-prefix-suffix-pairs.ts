@@ -41,6 +41,8 @@ Return an integer denoting the **number of pairs** of indices \`(i, j)\` such th
     javascript: `function countPrefixSuffixPairs(words) {
 
 }`,
+    typescript: "function countPrefixSuffixPairs(words: string[]): number {\n\n}",
+
     python: `def countPrefixSuffixPairs(words):
     pass`,
   },

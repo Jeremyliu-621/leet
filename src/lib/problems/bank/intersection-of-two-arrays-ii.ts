@@ -31,6 +31,8 @@ export const problem: Problem = {
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: `function intersect(nums1, nums2) {\n\n}`,
+    typescript: "function intersect(nums1: number[], nums2: number[]): number[] {\n\n}",
+
     python: `def intersect(nums1, nums2):\n    pass`,
   },
   visibleTests: [

@@ -43,6 +43,8 @@ Return the **largest possible height** of your billboard installation. If you ca
   params: ['rods'],
   starterCode: {
     javascript: 'function tallestBillboard(rods) {\n\n}\n',
+    typescript: "function tallestBillboard(rods: number[]): number {\n\n}",
+
     python: 'def tallestBillboard(rods: list) -> int:\n    pass\n',
   },
   visibleTests: [

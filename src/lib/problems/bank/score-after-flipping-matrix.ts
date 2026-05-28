@@ -39,6 +39,8 @@ Return the **highest possible score**.`,
     javascript: `function matrixScore(grid) {
 
 }`,
+    typescript: "function matrixScore(grid: number[][]): number {\n\n}",
+
     python: `def matrixScore(grid: list[list[int]]) -> int:
     pass`,
   },

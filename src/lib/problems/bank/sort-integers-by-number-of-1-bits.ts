@@ -35,6 +35,8 @@ function sortByBits(arr) {
   params: ['arr'],
   starterCode: {
     javascript: 'function sortByBits(arr) {\n  \n}\n',
+    typescript: "function sortByBits(arr: number[]): number[] {\n  \n}",
+
     python: 'def sortByBits(arr):\n    pass\n',
   },
   visibleTests: [

@@ -40,6 +40,8 @@ Return an integer array \`ans\` of size \`queries.length\`, where \`ans[i]\` is 
     javascript: `function vowelStrings(words, queries) {
 
 }`,
+    typescript: "function vowelStrings(words: string[], queries: number[][]): number[] {\n\n}",
+
     python: `def vowelStrings(words, queries):
     pass`,
   },

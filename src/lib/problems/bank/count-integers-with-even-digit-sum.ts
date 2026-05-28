@@ -45,6 +45,8 @@ function countEven(num) {
   // return count of integers with even digit sum
 
 }`,
+    typescript: "function countEven(num: number): number {\n  // return count of integers with even digit sum\n\n}",
+
     python: `def countEven(num: int) -> int:
     # return count of integers with even digit sum
     pass

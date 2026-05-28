@@ -47,6 +47,8 @@ Explanation: alternate between v1 and v2. After v1 runs out at index 2, continue
   // Return a flat array of all elements from v1 and v2 in zigzag (alternating) order.
 
 }`,
+    typescript: "function zigzagIterator(v1: number[], v2: number[]): number[] {\n  // Return a flat array of all elements from v1 and v2 in zigzag (alternating) order.\n\n}",
+
     python: `def zigzagIterator(v1: list, v2: list) -> list:
     # Return a flat list of all elements from v1 and v2 in zigzag order.
     pass

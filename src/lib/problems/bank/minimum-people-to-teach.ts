@@ -49,6 +49,8 @@ Return the **minimum number of users** you need to teach so that every pair of f
   // friendships[j] = [u, v] (1-indexed user pair)
 
 }`,
+    typescript: "function minimumTeachings(n: number, languages: number[][], friendships: number[][]): number {\n  // languages[i] is 1-indexed array of languages user i+1 speaks\n  // friendships[j] = [u, v] (1-indexed user pair)\n\n}",
+
     python: `def minimumTeachings(n, languages, friendships):
     # languages[i] is 1-indexed list of languages user i+1 speaks
     # friendships[j] = [u, v] (1-indexed user pair)

@@ -33,6 +33,8 @@ A **falling path with non-zero shifts** is a choice of exactly one element from 
   params: ['grid'],
   starterCode: {
     javascript: 'function minFallingPathSumII(grid) {\n\n}\n',
+    typescript: "function minFallingPathSumII(grid: number[][]): number {\n\n}",
+
     python: 'def minFallingPathSumII(grid):\n    pass\n',
   },
   visibleTests: [

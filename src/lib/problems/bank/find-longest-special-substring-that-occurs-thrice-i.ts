@@ -44,6 +44,8 @@ A **substring** is a contiguous **non-empty** sequence of characters within a st
     javascript: `function maximumLength(s) {
 
 }`,
+    typescript: "function maximumLength(s: string): number {\n\n}",
+
     python: `def maximumLength(s: str) -> int:
     pass`,
   },

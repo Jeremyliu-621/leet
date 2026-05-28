@@ -40,6 +40,8 @@ A **subarray** is a contiguous non-empty sequence of elements within an array.`,
     javascript: `function zeroFilledSubarray(nums) {
 
 }`,
+    typescript: "function zeroFilledSubarray(nums: number[]): number {\n\n}",
+
     python: `def zeroFilledSubarray(nums):
     pass`,
   },

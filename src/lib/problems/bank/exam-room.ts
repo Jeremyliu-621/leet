@@ -32,6 +32,8 @@ Design a class \`ExamRoom\` that simulates this process. Implement it via an ope
   params: ['ops'],
   starterCode: {
     javascript: 'function examRoomOps(ops) {\n  \n}\n',
+    typescript: "function examRoomOps(ops: ((string | number[])[] | (string | unknown[])[])[]): (null | number)[] {\n  \n}",
+
     python: 'def examRoomOps(ops):\n    pass\n',
   },
   visibleTests: [

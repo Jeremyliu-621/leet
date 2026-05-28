@@ -23,6 +23,8 @@ An integer \`n\` is a power of two if there exists an integer \`x\` such that \`
   params: ['n'],
   starterCode: {
     javascript: 'function isPowerOfTwo(n) {\n  // your code here\n}\n',
+    typescript: "function isPowerOfTwo(n: number): boolean {\n  // your code here\n}",
+
     python: 'def isPowerOfTwo(n):\n    # your code here\n    pass\n',
   },
   visibleTests: [

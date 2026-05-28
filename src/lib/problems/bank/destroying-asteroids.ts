@@ -45,6 +45,8 @@ Return \`true\` if the planet can absorb **all** asteroids, otherwise \`false\`.
     javascript: `function asteroidsDestroyed(mass, asteroids) {
   // Return true if the planet can absorb all asteroids
 }`,
+    typescript: "function asteroidsDestroyed(mass: number, asteroids: number[]): boolean {\n  // Return true if the planet can absorb all asteroids\n}",
+
     python: `def asteroidsDestroyed(mass: int, asteroids: list[int]) -> bool:
     # Return true if the planet can absorb all asteroids
     pass`,

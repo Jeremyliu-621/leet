@@ -37,6 +37,8 @@ Two intervals **intersect** if there is at least one common number between them.
   params: ['intervals'],
   starterCode: {
     javascript: 'function minGroups(intervals) {\n\n}',
+    typescript: "function minGroups(intervals: number[][]): number {\n\n}",
+
     python: 'def minGroups(intervals):\n    pass',
   },
   visibleTests: [

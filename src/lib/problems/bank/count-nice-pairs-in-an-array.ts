@@ -49,6 +49,8 @@ return ans;\`\`\``
     javascript: `function countNicePairs(nums) {
 
 }`,
+    typescript: "function countNicePairs(nums: number[]): number {\n\n}",
+
     python: `def countNicePairs(nums):
     pass`,
   },

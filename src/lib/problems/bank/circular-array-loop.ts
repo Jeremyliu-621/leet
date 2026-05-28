@@ -47,6 +47,8 @@ From index \`i\`, the next index is \`next(i) = ((i + nums[i]) % n + n) % n\`.
   // return true if a valid cycle exists
 
 }`,
+    typescript: "function circularArrayLoop(nums: number[]): boolean {\n  // return true if a valid cycle exists\n\n}",
+
     python: `def circularArrayLoop(nums: list) -> bool:
     # return True if a valid cycle exists
     pass

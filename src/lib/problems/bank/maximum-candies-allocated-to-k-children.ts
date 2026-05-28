@@ -38,6 +38,8 @@ Given an integer \`k\`, return the **maximum** number of candies each child can 
     javascript: `function maximumCandies(candies, k) {
 
 }`,
+    typescript: "function maximumCandies(candies: number[], k: number): number {\n\n}",
+
     python: `def maximumCandies(candies, k):
     pass`,
   },

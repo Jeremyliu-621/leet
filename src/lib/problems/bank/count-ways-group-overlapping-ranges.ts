@@ -40,6 +40,8 @@ Return the **total number of ways** to split \`ranges\` into two groups. Since t
   params: ['ranges'],
   starterCode: {
     javascript: 'function countWays(ranges) {\n\n}\n',
+    typescript: "function countWays(ranges: number[][]): number {\n\n}",
+
     python: 'def countWays(ranges):\n    pass\n',
   },
   visibleTests: [

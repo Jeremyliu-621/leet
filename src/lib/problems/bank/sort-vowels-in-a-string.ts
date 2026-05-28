@@ -40,6 +40,8 @@ Vowels are: \`'a'\`, \`'e'\`, \`'i'\`, \`'o'\`, \`'u'\`, \`'A'\`, \`'E'\`, \`'I'
     javascript: `function sortVowels(s) {
 
 }`,
+    typescript: "function sortVowels(s: string): string {\n\n}",
+
     python: `def sortVowels(s: str) -> str:
     pass`,
   },

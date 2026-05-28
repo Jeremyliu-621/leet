@@ -36,6 +36,8 @@ All strings except one have the same difference array. Return the string with th
   params: ['words'],
   starterCode: {
     javascript: 'function oddString(words) {\n  // your code here\n}\n',
+    typescript: "function oddString(words: string[]): string {\n  // your code here\n}",
+
     python: 'def oddString(words):\n    # your code here\n    pass\n',
   },
   visibleTests: [

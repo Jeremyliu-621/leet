@@ -39,6 +39,8 @@ Return \`true\` if it is possible to achieve that and \`false\` otherwise.
     javascript: `function splitArraySameAverage(nums) {
 
 }`,
+    typescript: "function splitArraySameAverage(nums: number[]): boolean {\n\n}",
+
     python: `def splitArraySameAverage(nums):
     `,
   },

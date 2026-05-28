@@ -33,6 +33,8 @@ An **anagram** is a string that contains the same characters, only the order of 
   params: ['s', 'p'],
   starterCode: {
     javascript: 'function findAnagrams(s, p) {\n  // your code here\n}\n',
+    typescript: "function findAnagrams(s: string, p: string): number[] {\n  // your code here\n}",
+
     python: 'def findAnagrams(s, p):\n    # your code here\n    pass\n',
   },
   visibleTests: [

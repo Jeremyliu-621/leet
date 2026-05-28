@@ -34,6 +34,8 @@ Return the resulting string after interpretation.`,
   params: ['command'],
   starterCode: {
     javascript: 'function interpret(command) {\n  // your code here\n}\n',
+    typescript: "function interpret(command: string): string {\n  // your code here\n}",
+
     python: 'def interpret(command):\n    # your code here\n    pass\n',
   },
   visibleTests: [

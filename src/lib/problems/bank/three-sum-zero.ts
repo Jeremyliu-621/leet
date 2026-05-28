@@ -40,6 +40,8 @@ The result must not contain duplicate triplets.
   params: ['nums'],
   starterCode: {
     javascript: 'function threeSumZero(nums) {\n  // your code here\n}\n',
+    typescript: "function threeSumZero(nums: number[]): number[][] {\n  // your code here\n}",
+
     python: 'def threeSumZero(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

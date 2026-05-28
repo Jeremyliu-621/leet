@@ -41,6 +41,8 @@ Implement the \`TimeMap\` class:
   // Return array of results (null for constructor and set, string for get)
 }
 `,
+    typescript: "function timeMap(ops: string[], args: (unknown[] | (string | number)[])[]): (null | string)[] {\n  // Simulate TimeMap class operations\n  // ops: array of method names, args: array of argument arrays\n  // Return array of results (null for constructor and set, string for get)\n}",
+
     python: `def timeMap(ops, args):
     # Simulate TimeMap class operations
     pass

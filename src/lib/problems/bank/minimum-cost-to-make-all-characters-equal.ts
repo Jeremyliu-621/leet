@@ -36,6 +36,8 @@ Return the **minimum cost** to make all characters of the string **equal**.`,
   params: ['s'],
   starterCode: {
     javascript: 'function minimumCost(s) {\n\n}\n',
+    typescript: "function minimumCost(s: string): number {\n\n}",
+
     python: 'def minimumCost(s):\n    pass\n',
   },
   visibleTests: [

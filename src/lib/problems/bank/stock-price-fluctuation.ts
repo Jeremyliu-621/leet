@@ -60,6 +60,8 @@ Explanation: After updates: timestamp 1→5 (corrected), timestamp 2→20. Curre
     javascript: `function stockPriceFluctuation(updates, queries) {
   // your code here
 }`,
+    typescript: "function stockPriceFluctuation(updates: number[][], queries: string[]): number[] {\n  // your code here\n}",
+
     python: `def stockPriceFluctuation(updates: list, queries: list) -> list:
     # your code here
     pass`,

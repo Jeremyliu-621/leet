@@ -40,6 +40,8 @@ A **common subsequence** is a subsequence that is common to both strings.`,
   params: ['text1', 'text2'],
   starterCode: {
     javascript: 'function longestCommonSubsequence(text1, text2) {\n  \n}\n',
+    typescript: "function longestCommonSubsequence(text1: string, text2: string): number {\n  \n}",
+
     python: 'def longestCommonSubsequence(text1: str, text2: str) -> int:\n    pass\n',
   },
   visibleTests: [

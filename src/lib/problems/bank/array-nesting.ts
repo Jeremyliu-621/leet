@@ -41,6 +41,8 @@ Return the longest length of a set \`s[k]\`.`,
     javascript: `function arrayNesting(nums) {
 
 }`,
+    typescript: "function arrayNesting(nums: number[]): number {\n\n}",
+
     python: `def arrayNesting(nums):
     pass`,
   },

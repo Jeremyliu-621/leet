@@ -43,6 +43,8 @@ A swap exchanges any two elements of the array (not necessarily adjacent).`,
     javascript: `function minSwaps(nums) {
 
 }`,
+    typescript: "function minSwaps(nums: number[]): number {\n\n}",
+
     python: `def minSwaps(nums):
     pass`,
   },

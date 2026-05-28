@@ -39,6 +39,8 @@ Return the answers to all queries. If a single answer does not exist, return \`-
     javascript: `function calcEquation(equations, values, queries) {
 
 }`,
+    typescript: "function calcEquation(equations: string[][], values: number[], queries: string[][]): number[] {\n\n}",
+
     python: `def calcEquation(equations, values, queries):
     pass`,
   },

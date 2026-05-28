@@ -43,6 +43,8 @@ Return \`true\` if \`n\` is a happy number, otherwise return \`false\`.
   params: ['n'],
   starterCode: {
     javascript: 'function isHappyNumber(n) {\n  // your code here\n}\n',
+    typescript: "function isHappyNumber(n: number): boolean {\n  // your code here\n}",
+
     python: 'def isHappyNumber(n):\n    # your code here\n    pass\n',
   },
   visibleTests: [

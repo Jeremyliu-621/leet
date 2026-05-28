@@ -38,6 +38,8 @@ A subarray is **nice** if it contains exactly \`k\` **odd** numbers.`,
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function numberOfSubarrays(nums, k) {\n  // your code here\n}\n',
+    typescript: "function numberOfSubarrays(nums: number[], k: number): number {\n  // your code here\n}",
+
     python: 'def numberOfSubarrays(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

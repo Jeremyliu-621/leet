@@ -44,6 +44,8 @@ Return the number of pairs \`(i, j)\` such that \`0 <= i < j <= word.length - 1\
   params: ['words'],
   starterCode: {
     javascript: 'function similarPairs(words) {\n  // your code here\n}\n',
+    typescript: "function similarPairs(words: string[]): number {\n  // your code here\n}",
+
     python: 'def similarPairs(words):\n    # your code here\n    pass\n',
   },
   visibleTests: [

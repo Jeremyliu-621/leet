@@ -49,6 +49,8 @@ function numDifferentIntegers(word) {
     javascript: `function numDifferentIntegers(word) {
 
 }`,
+    typescript: "function numDifferentIntegers(word: string): number {\n\n}",
+
     python: `def numDifferentIntegers(word):
     pass`,
   },

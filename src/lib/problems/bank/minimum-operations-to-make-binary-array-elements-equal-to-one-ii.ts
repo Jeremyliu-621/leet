@@ -33,6 +33,8 @@ Return the **minimum** number of operations required to make all elements of the
   params: ['nums'],
   starterCode: {
     javascript: 'function minOperations(nums) {\n\n}\n',
+    typescript: "function minOperations(nums: number[]): number {\n\n}",
+
     python: 'def minOperations(nums):\n    pass\n',
   },
   visibleTests: [

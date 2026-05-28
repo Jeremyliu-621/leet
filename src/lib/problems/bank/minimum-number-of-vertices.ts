@@ -37,6 +37,8 @@ Return the vertices in **any order**.`,
   params: ['n', 'edges'],
   starterCode: {
     javascript: 'function findSmallestSetOfVertices(n, edges) {\n\n}\n',
+    typescript: "function findSmallestSetOfVertices(n: number, edges: number[][]): number[] {\n\n}",
+
     python: 'def findSmallestSetOfVertices(n, edges):\n    pass\n',
   },
   visibleTests: [

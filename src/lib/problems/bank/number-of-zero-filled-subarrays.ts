@@ -45,6 +45,8 @@ function zeroFilledSubarray(nums) {
     javascript: `function zeroFilledSubarray(nums) {
 
 }`,
+    typescript: "function zeroFilledSubarray(nums: number[]): number {\n\n}",
+
     python: `def zeroFilledSubarray(nums):
     pass`,
   },

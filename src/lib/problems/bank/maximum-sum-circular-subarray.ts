@@ -53,6 +53,8 @@ function maxSubarraySumCircular(nums) {
   params: ['nums'],
   starterCode: {
     javascript: 'function maxSubarraySumCircular(nums) {\n  \n}\n',
+    typescript: "function maxSubarraySumCircular(nums: number[]): number {\n  \n}",
+
     python: 'def maxSubarraySumCircular(nums):\n    pass\n',
   },
   visibleTests: [

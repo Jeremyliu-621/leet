@@ -44,6 +44,8 @@ Return the number of **special** letters in \`word\`.`,
   params: ['word'],
   starterCode: {
     javascript: 'function numberOfSpecialCharsII(word) {\n  // your code here\n}\n',
+    typescript: "function numberOfSpecialCharsII(word: string): number {\n  // your code here\n}",
+
     python: 'def numberOfSpecialCharsII(word):\n    # your code here\n    pass\n',
   },
   visibleTests: [

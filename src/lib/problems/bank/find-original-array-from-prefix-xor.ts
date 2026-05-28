@@ -38,6 +38,8 @@ It can be proven that the answer is **unique**.`,
     javascript: `function findArray(pref) {
 
 }`,
+    typescript: "function findArray(pref: number[]): number[] {\n\n}",
+
     python: `def findArray(pref):
     pass`,
   },

@@ -33,6 +33,8 @@ export const problem: Problem = {
     javascript: `function advantageCount(nums1, nums2) {
 
 }`,
+    typescript: "function advantageCount(nums1: number[], nums2: number[]): number[] {\n\n}",
+
     python: `def advantageCount(nums1, nums2):
     pass`,
   },

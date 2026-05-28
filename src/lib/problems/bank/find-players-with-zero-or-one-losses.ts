@@ -50,6 +50,8 @@ function findWinners(matches) {
   params: ['matches'],
   starterCode: {
     javascript: 'function findWinners(matches) {\n\n}\n',
+    typescript: "function findWinners(matches: number[][]): number[][] {\n\n}",
+
     python: 'def findWinners(matches):\n    pass\n',
   },
   visibleTests: [

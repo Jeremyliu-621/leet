@@ -42,6 +42,8 @@ Return \`true\` if the data represents a valid UTF-8 encoding.`,
   params: ['data'],
   starterCode: {
     javascript: 'function validUtf8(data) {\n  // your code here\n}\n',
+    typescript: "function validUtf8(data: number[]): boolean {\n  // your code here\n}",
+
     python: 'def validUtf8(data):\n    # your code here\n    pass\n',
   },
   visibleTests: [

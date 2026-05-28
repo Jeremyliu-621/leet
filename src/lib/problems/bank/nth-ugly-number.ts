@@ -30,6 +30,8 @@ Note: \`1\` is considered an ugly number by convention.`,
   params: ['n'],
   starterCode: {
     javascript: 'function nthUglyNumber(n) {\n  // your code here\n}\n',
+    typescript: "function nthUglyNumber(n: number): number {\n  // your code here\n}",
+
     python: 'def nthUglyNumber(n: int) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

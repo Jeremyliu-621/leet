@@ -41,6 +41,8 @@ Return *the expression after adding a pair of parentheses such that \`expression
     javascript: `function minimizeResult(expression) {
 
 }`,
+    typescript: "function minimizeResult(expression: string): string {\n\n}",
+
     python: `def minimizeResult(expression):
     pass`,
   },

@@ -43,6 +43,8 @@ Output: 4
   params: ['nums'],
   starterCode: {
     javascript: 'function movesToMakeZigzag(nums) {\n  // your code here\n}\n',
+    typescript: "function movesToMakeZigzag(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def movesToMakeZigzag(nums):\n    pass\n',
   },
   visibleTests: [

@@ -54,6 +54,8 @@ function minDays(bloomDay, m, k) {
   params: ['bloomDay', 'm', 'k'],
   starterCode: {
     javascript: 'function minDays(bloomDay, m, k) {\n\n}\n',
+    typescript: "function minDays(bloomDay: number[], m: number, k: number): number {\n\n}",
+
     python: 'def minDays(bloomDay, m, k):\n    pass\n',
   },
   visibleTests: [

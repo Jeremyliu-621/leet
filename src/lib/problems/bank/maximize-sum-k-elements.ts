@@ -39,6 +39,8 @@ Return the **maximum sum** of the array after performing the above operation exa
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function largestSumAfterKNegations(nums, k) {\n  // your code here\n}\n',
+    typescript: "function largestSumAfterKNegations(nums: number[], k: number): number {\n  // your code here\n}",
+
     python: 'def largestSumAfterKNegations(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

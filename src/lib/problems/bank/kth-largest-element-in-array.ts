@@ -31,6 +31,8 @@ Note that it is the \`kth\` largest element in the sorted order, not the \`kth\`
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function findKthLargest(nums, k) {\n\n}',
+    typescript: "function findKthLargest(nums: number[], k: number): number {\n\n}",
+
     python: 'def findKthLargest(nums, k):\n    pass',
   },
   visibleTests: [

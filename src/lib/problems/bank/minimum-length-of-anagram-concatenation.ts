@@ -45,6 +45,8 @@ Return the minimum possible length of \`t\`.`,
     javascript: `function minAnagramLength(s) {
 
 }`,
+    typescript: "function minAnagramLength(s: string): number {\n\n}",
+
     python: `def minAnagramLength(s):
     pass`,
   },

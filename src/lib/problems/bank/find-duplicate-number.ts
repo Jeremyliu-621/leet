@@ -39,6 +39,8 @@ You must solve the problem **without modifying** the array and using only **O(1)
     javascript: `function findDuplicate(nums) {
 
 }`,
+    typescript: "function findDuplicate(nums: number[]): number {\n\n}",
+
     python: `def findDuplicate(nums):
     pass`,
   },

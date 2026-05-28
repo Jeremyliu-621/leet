@@ -42,6 +42,8 @@ return parts;\`\`\``
   params: ['s'],
   starterCode: {
     javascript: 'function partitionString(s) {\n  \n}\n',
+    typescript: "function partitionString(s: string): number {\n  \n}",
+
     python: 'def partitionString(s):\n    pass\n',
   },
   visibleTests: [

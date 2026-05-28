@@ -36,6 +36,8 @@ Return the **largest** number of chunks we can make to sort the array.`,
   params: ['arr'],
   starterCode: {
     javascript: 'function maxChunksToSorted(arr) {\n  // your code here\n}\n',
+    typescript: "function maxChunksToSorted(arr: number[]): number {\n  // your code here\n}",
+
     python: 'def maxChunksToSorted(arr):\n    # your code here\n    pass\n',
   },
   visibleTests: [

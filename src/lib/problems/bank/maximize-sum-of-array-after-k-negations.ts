@@ -42,6 +42,8 @@ export const problem: Problem = {
   // nums: number[], k: number
   // Return maximum possible sum after exactly k negations
 }`,
+    typescript: "function largestSumAfterKNegations(nums: number[], k: number): number {\n  // nums: number[], k: number\n  // Return maximum possible sum after exactly k negations\n}",
+
     python: `def largestSumAfterKNegations(nums: list[int], k: int) -> int:
     # Your code here
     pass`,

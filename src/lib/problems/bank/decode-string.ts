@@ -52,6 +52,8 @@ return cur;\`\`\``
     javascript: `function decodeString(s) {
 
 }`,
+    typescript: "function decodeString(s: string): string {\n\n}",
+
     python: `def decodeString(s):
     pass`,
   },

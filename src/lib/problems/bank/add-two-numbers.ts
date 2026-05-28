@@ -94,6 +94,8 @@ You may assume the two numbers do not have leading zeros, except the number 0 it
   starterCode: {
     javascript:
       '// ListNode class and addTwoNumbersRunner wrapper are pre-defined.\n// Implement the function below:\nfunction addTwoNumbers(l1, l2) {\n  \n}\n',
+    typescript: "function addTwoNumbersRunner(arr1: number[], arr2: number[]): number[] {\n  \n}",
+
     python:
       '# ListNode class and addTwoNumbersRunner wrapper are pre-defined.\n# Implement the function below:\ndef addTwoNumbers(l1, l2):\n    pass\n',
   },

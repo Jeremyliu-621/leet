@@ -46,6 +46,8 @@ Output: 4
     javascript: `function totalCost(costs, k, candidates) {
 
 }`,
+    typescript: "function totalCost(costs: number[], k: number, candidates: number): number {\n\n}",
+
     python: `def totalCost(costs, k, candidates):
     `,
   },

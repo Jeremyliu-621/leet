@@ -26,6 +26,8 @@ A subsequence of an array is obtained by deleting some number of elements (can b
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function constrainedSubsetSum(nums, k) {\n\n}\n',
+    typescript: "function constrainedSubsetSum(nums: number[], k: number): number {\n\n}",
+
     python: 'def constrainedSubsetSum(nums, k):\n    pass\n',
   },
   visibleTests: [

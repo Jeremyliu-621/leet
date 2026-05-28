@@ -37,6 +37,8 @@ Return the **minimum** length of \`nums\` after performing the operation any num
   params: ['nums'],
   starterCode: {
     javascript: 'function minLengthAfterRemovals(nums) {\n  // your code here\n}\n',
+    typescript: "function minLengthAfterRemovals(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def minLengthAfterRemovals(nums):\n    # your code here\n    pass\n',
   },
   hints: [

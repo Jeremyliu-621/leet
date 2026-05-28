@@ -96,6 +96,8 @@ You may not modify the values in the list's nodes. Only nodes themselves may be 
   starterCode: {
     javascript:
       '// ListNode class and reorderListRunner wrapper are pre-defined.\n// Modify the list in-place; the runner reads head after your call.\nfunction reorderList(head) {\n  \n}\n',
+    typescript: "function reorderListRunner(head: number[]): number[] {\n  \n}",
+
     python:
       '# ListNode class and reorderListRunner wrapper are pre-defined.\n# Modify the list in-place; the runner reads head after your call.\ndef reorderList(head):\n    pass\n',
   },

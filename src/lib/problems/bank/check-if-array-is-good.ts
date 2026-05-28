@@ -49,6 +49,8 @@ function isGood(nums) {
     javascript: `function isGood(nums) {
 
 }`,
+    typescript: "function isGood(nums: number[]): boolean {\n\n}",
+
     python: `def isGood(nums):
     pass`,
   },

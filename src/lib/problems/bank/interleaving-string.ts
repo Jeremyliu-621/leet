@@ -42,6 +42,8 @@ An interleaving of two strings \`s\` and \`t\` is a configuration where \`s\` an
     javascript: `function isInterleave(s1, s2, s3) {
   // Return true if s3 is an interleaving of s1 and s2
 }`,
+    typescript: "function isInterleave(s1: string, s2: string, s3: string): boolean {\n  // Return true if s3 is an interleaving of s1 and s2\n}",
+
     python: `def isInterleave(s1, s2, s3):
     # Return True if s3 is an interleaving of s1 and s2
     pass`,

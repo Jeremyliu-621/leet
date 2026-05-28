@@ -42,6 +42,8 @@ In this problem, the linked list is given as an **array** and you should return 
     javascript: `function deleteMiddle(head) {
 
 }`,
+    typescript: "function deleteMiddle(head: number[]): number[] {\n\n}",
+
     python: `def deleteMiddle(head: list[int]) -> list[int]:
     pass`,
   },

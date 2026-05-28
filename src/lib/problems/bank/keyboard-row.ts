@@ -34,6 +34,8 @@ function findWords(words) {
   params: ['words'],
   starterCode: {
     javascript: 'function findWords(words) {\n  \n}\n',
+    typescript: "function findWords(words: string[]): string[] {\n  \n}",
+
     python: 'def findWords(words):\n    pass\n',
   },
   visibleTests: [

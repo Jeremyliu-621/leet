@@ -42,6 +42,8 @@ Return a boolean array indicating which requests were approved. The bucket start
   params: ['capacity', 'refillRate', 'requests'],
   starterCode: {
     javascript: `function tokenBucket(capacity, refillRate, requests) {\n  \n}`,
+    typescript: "function tokenBucket(capacity: number, refillRate: number, requests: number[][]): boolean[] {\n  \n}",
+
     python: `def tokenBucket(capacity, refillRate, requests):\n    pass`,
   },
   visibleTests: [

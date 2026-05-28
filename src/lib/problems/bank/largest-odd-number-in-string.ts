@@ -47,6 +47,8 @@ function largestOddNumber(num) {
     javascript: `function largestOddNumber(num) {
 
 }`,
+    typescript: "function largestOddNumber(num: string): string {\n\n}",
+
     python: `def largestOddNumber(num):
     pass`,
   },

@@ -38,6 +38,8 @@ function findClosestNumber(nums) {
   params: ['nums'],
   starterCode: {
     javascript: 'function findClosestNumber(nums) {\n  \n}\n',
+    typescript: "function findClosestNumber(nums: number[]): number {\n  \n}",
+
     python: 'def findClosestNumber(nums):\n    pass\n',
   },
   visibleTests: [

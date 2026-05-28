@@ -34,6 +34,8 @@ Given two strings \`word1\` and \`word2\`, each of length \`n\`, return \`true\`
   params: ['word1', 'word2'],
   starterCode: {
     javascript: 'function checkAlmostEquivalent(word1, word2) {\n  // your code here\n}\n',
+    typescript: "function checkAlmostEquivalent(word1: string, word2: string): boolean {\n  // your code here\n}",
+
     python: 'def checkAlmostEquivalent(word1, word2):\n    # your code here\n    pass\n',
   },
   visibleTests: [

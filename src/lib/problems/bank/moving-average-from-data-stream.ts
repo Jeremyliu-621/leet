@@ -44,6 +44,8 @@ Implement the \`MovingAverage\` class:
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// movingAverageRunner is pre-defined and calls your class below.\nclass MovingAverage {\n  constructor(size) {\n    this.size = size;\n  }\n  next(val) {}\n}\n',
+    typescript: "function movingAverageRunner(size: number, vals: number[]): number[] {\n  constructor(size) {\n    this.size = size;\n  }\n  next(val) {}\n}",
+
     python: '# movingAverageRunner is pre-defined and calls your class below.\nclass MovingAverage:\n    def __init__(self, size):\n        self.size = size\n    def next(self, val): pass\n',
   },
   visibleTests: [

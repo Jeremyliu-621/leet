@@ -41,6 +41,8 @@ Return the count modulo \`10^9 + 7\`.`,
   params: ['n', 'roads'],
   starterCode: {
     javascript: `function countPaths(n, roads) {\n\n}`,
+    typescript: "function countPaths(n: number, roads: number[][]): number {\n\n}",
+
     python: `def countPaths(n, roads):\n    pass`,
   },
   visibleTests: [

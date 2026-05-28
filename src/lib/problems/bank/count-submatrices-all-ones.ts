@@ -31,6 +31,8 @@ export const problem: Problem = {
   params: ['mat'],
   starterCode: {
     javascript: 'function numSubmat(mat) {\n\n}',
+    typescript: "function numSubmat(mat: number[][]): number {\n\n}",
+
     python: 'def numSubmat(mat):\n    pass',
   },
   visibleTests: [

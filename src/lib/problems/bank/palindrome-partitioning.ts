@@ -31,6 +31,8 @@ export const problem: Problem = {
     javascript: `function partition(s) {
 
 }`,
+    typescript: "function partition(s: string): string[][] {\n\n}",
+
     python: `def partition(s):
     pass`,
   },

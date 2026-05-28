@@ -43,6 +43,8 @@ Since the answer may be too large, return it **modulo 10^9 + 7**.`,
     javascript: `function numRollsToTarget(n, k, target) {
 
 }`,
+    typescript: "function numRollsToTarget(n: number, k: number, target: number): number {\n\n}",
+
     python: `def numRollsToTarget(n, k, target):
     `,
   },

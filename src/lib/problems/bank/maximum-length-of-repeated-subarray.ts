@@ -42,6 +42,8 @@ Note: The subarray must appear as a contiguous block in both arrays (not merely 
     javascript: `function findLength(nums1, nums2) {
   // Return the maximum length of a subarray in both nums1 and nums2
 }`,
+    typescript: "function findLength(nums1: number[], nums2: number[]): number {\n  // Return the maximum length of a subarray in both nums1 and nums2\n}",
+
     python: `def findLength(nums1: list[int], nums2: list[int]) -> int:
     # Return the maximum length of a subarray in both nums1 and nums2
     pass`,

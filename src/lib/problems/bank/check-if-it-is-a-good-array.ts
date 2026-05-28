@@ -42,6 +42,8 @@ Return \`true\` if you can make the array contain only \`1\`, otherwise return \
     javascript: `function isGoodArray(nums) {
 
 }`,
+    typescript: "function isGoodArray(nums: number[]): boolean {\n\n}",
+
     python: `def isGoodArray(nums):
     pass`,
   },

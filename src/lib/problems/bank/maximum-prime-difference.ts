@@ -41,6 +41,8 @@ It is guaranteed that at least **two** elements in \`nums\` are prime.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function maximumPrimeDifference(nums) {\n  \n}\n',
+    typescript: "function maximumPrimeDifference(nums: number[]): number {\n  \n}",
+
     python: 'def maximumPrimeDifference(nums):\n    pass\n',
   },
   visibleTests: [

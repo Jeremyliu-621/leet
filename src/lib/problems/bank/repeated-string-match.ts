@@ -38,6 +38,8 @@ Notice: string \`"abc"\` repeated 0 times is \`""\`, repeated 1 time is \`"abc"\
   params: ['a', 'b'],
   starterCode: {
     javascript: 'function repeatedStringMatch(a, b) {\n  \n}\n',
+    typescript: "function repeatedStringMatch(a: string, b: string): number {\n  \n}",
+
     python: 'def repeatedStringMatch(a, b):\n    pass\n',
   },
   visibleTests: [

@@ -37,6 +37,8 @@ Return an array \`answer\` of length \`n\` where \`answer[i]\` is the number of 
   params: ['heights'],
   starterCode: {
     javascript: 'function canSeePersonsCount(heights) {\n  // your code here\n}\n',
+    typescript: "function canSeePersonsCount(heights: number[]): number[] {\n  // your code here\n}",
+
     python: 'def canSeePersonsCount(heights):\n    # your code here\n    pass\n',
   },
   visibleTests: [

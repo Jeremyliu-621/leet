@@ -36,6 +36,8 @@ Return the **maximum** number of bags that could have full capacity after placin
   params: ['capacity', 'rocks', 'additionalRocks'],
   starterCode: {
     javascript: 'function maximumBags(capacity, rocks, additionalRocks) {\n  // your code here\n}\n',
+    typescript: "function maximumBags(capacity: number[], rocks: number[], additionalRocks: number): number {\n  // your code here\n}",
+
     python: 'def maximumBags(capacity, rocks, additionalRocks):\n    # your code here\n    pass\n',
   },
   visibleTests: [

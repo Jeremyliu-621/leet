@@ -34,6 +34,8 @@ A row and column pair is considered equal if they contain the same elements in t
   params: ['grid'],
   starterCode: {
     javascript: 'function equalPairs(grid) {\n  // your code here\n}\n',
+    typescript: "function equalPairs(grid: number[][]): number {\n  // your code here\n}",
+
     python: 'def equalPairs(grid):\n    # your code here\n    pass\n',
   },
   visibleTests: [

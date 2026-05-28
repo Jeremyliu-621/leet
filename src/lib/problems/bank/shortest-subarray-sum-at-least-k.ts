@@ -39,6 +39,8 @@ Output: **3**`,
     javascript: `function shortestSubarray(nums, k) {
 
 }`,
+    typescript: "function shortestSubarray(nums: number[], k: number): number {\n\n}",
+
     python: `def shortestSubarray(nums, k):
     pass
 `,

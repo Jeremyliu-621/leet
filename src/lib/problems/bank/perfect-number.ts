@@ -26,6 +26,8 @@ Given an integer \`num\`, return \`true\` if \`num\` is a perfect number, otherw
   params: ['num'],
   starterCode: {
     javascript: 'function checkPerfectNumber(num) {\n  \n}\n',
+    typescript: "function checkPerfectNumber(num: number): boolean {\n  \n}",
+
     python: 'def checkPerfectNumber(num):\n    pass\n',
   },
   visibleTests: [

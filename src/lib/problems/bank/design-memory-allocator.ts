@@ -47,6 +47,8 @@ Implement the solution as a function that takes a list of operations and returns
   // Return array of results.
 }
 `,
+    typescript: "function memoryAllocator(n: number, ops: number[][]): number[] {\n  // Implement the Allocator class logic here.\n  // For each op [type, a, b]:\n  //   type=0: allocate(size=a, mID=b), return first free index or -1\n  //   type=1: freeMemory(mID=a), return count freed\n  // Return array of results.\n}",
+
     python: `def memoryAllocator(n, ops):
     # Implement the Allocator class logic here.
     # For each op [type, a, b]:

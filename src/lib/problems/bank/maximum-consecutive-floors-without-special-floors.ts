@@ -33,6 +33,8 @@ Alice decides to visit all floors from floor \`bottom\` to floor \`top\` (inclus
   params: ['bottom', 'top', 'special'],
   starterCode: {
     javascript: 'function maxConsecutive(bottom, top, special) {\n\n}\n',
+    typescript: "function maxConsecutive(bottom: number, top: number, special: number[]): number {\n\n}",
+
     python: 'def maxConsecutive(bottom, top, special):\n    pass\n',
   },
   visibleTests: [

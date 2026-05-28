@@ -35,6 +35,8 @@ function findKthPositive(arr, k) {
   params: ['arr', 'k'],
   starterCode: {
     javascript: 'function findKthPositive(arr, k) {\n  \n}\n',
+    typescript: "function findKthPositive(arr: number[], k: number): number {\n  \n}",
+
     python: 'def findKthPositive(arr, k):\n    pass\n',
   },
   visibleTests: [

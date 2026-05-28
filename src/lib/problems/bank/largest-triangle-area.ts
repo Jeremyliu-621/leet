@@ -50,6 +50,8 @@ function largestTriangleArea(points) {
     javascript: `function largestTriangleArea(points) {
 
 }`,
+    typescript: "function largestTriangleArea(points: number[][]): number {\n\n}",
+
     python: `def largestTriangleArea(points):
     pass`,
   },

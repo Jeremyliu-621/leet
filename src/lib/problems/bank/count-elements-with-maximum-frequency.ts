@@ -37,6 +37,8 @@ The *frequency* of an element is the number of occurrences of that element in th
     javascript: `function maxFrequencyElements(nums) {
 
 }`,
+    typescript: "function maxFrequencyElements(nums: number[]): number {\n\n}",
+
     python: `def maxFrequencyElements(nums):
     pass`,
   },

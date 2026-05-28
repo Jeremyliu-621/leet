@@ -98,6 +98,8 @@ export const problem: Problem = {
 function zigzagLevelOrder(root) {
 
 }`,
+    typescript: "function zigzagLevelOrderRunner(root: (number | null)[]): number[][] {\n\n}",
+
     python: `# TreeNode is pre-defined. Implement the function below:
 def zigzagLevelOrder(root):
     pass`,

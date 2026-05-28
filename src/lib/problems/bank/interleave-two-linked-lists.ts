@@ -92,6 +92,8 @@ You must rearrange the **nodes themselves**, not create new nodes.
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// ListNode class and interleaveListsRunner wrapper are pre-defined.\n// Implement the function below:\nfunction interleaveLists(l1, l2) {\n  \n}\n',
+    typescript: "function interleaveListsRunner(l1: number[], l2: number[]): number[] {\n  \n}",
+
     python: '# ListNode class and interleaveListsRunner wrapper are pre-defined.\n# Implement the function below:\ndef interleaveLists(l1, l2):\n    pass\n',
   },
   visibleTests: [

@@ -44,6 +44,8 @@ Return the number of **good** arrays modulo \`10^9 + 7\`.`,
   // Answer = C(n-1, k) * m * (m-1)^(n-1-k) mod (10^9+7).
   // Precompute factorials and inverse factorials for the binomial coefficient.
 }`,
+    typescript: "function countGoodArrays(n: number, m: number, k: number): number {\n  // Answer = C(n-1, k) * m * (m-1)^(n-1-k) mod (10^9+7).\n  // Precompute factorials and inverse factorials for the binomial coefficient.\n}",
+
     python: `def countGoodArrays(n, m, k):
     # Answer = C(n-1, k) * m * (m-1)^(n-1-k) mod (10^9+7).
     # Use Python's built-in pow(base, exp, mod) for fast modular exponentiation.

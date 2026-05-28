@@ -41,6 +41,8 @@ export const problem: Problem = {
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function longestOnes(nums, k) {\n  // Sliding window with at most k zeros allowed.\n}\n',
+    typescript: "function longestOnes(nums: number[], k: number): number {\n  // Sliding window with at most k zeros allowed.\n}",
+
     python: 'def longestOnes(nums, k):\n    # Sliding window with at most k zeros allowed.\n    pass\n',
   },
   visibleTests: [

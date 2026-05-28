@@ -36,6 +36,8 @@ A **subsequence** of a string is a new string that is formed from the original s
     javascript: `function isSubsequence(s, t) {
 
 }`,
+    typescript: "function isSubsequence(s: string, t: string): boolean {\n\n}",
+
     python: `def isSubsequence(s, t):
     pass`,
   },

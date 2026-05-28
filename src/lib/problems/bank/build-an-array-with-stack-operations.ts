@@ -55,6 +55,8 @@ The \`target\` array is guaranteed to be achievable.
     javascript: `function buildArray(target, n) {
   // Return the array of "Push" / "Pop" operation strings
 }`,
+    typescript: "function buildArray(target: number[], n: number): string[] {\n  // Return the array of \"Push\" / \"Pop\" operation strings\n}",
+
     python: `def buildArray(target, n: int):
     target = list(target)
     # Return the list of "Push" / "Pop" operation strings

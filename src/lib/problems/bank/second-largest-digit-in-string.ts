@@ -37,6 +37,8 @@ function secondHighest(s) {
   params: ['s'],
   starterCode: {
     javascript: 'function secondHighest(s) {\n\n}\n',
+    typescript: "function secondHighest(s: string): number {\n\n}",
+
     python: 'def secondHighest(s):\n    pass\n',
   },
   visibleTests: [

@@ -38,6 +38,8 @@ In a **well-spaced** string, the number of letters between the two occurrences o
   params: ['s', 'distance'],
   starterCode: {
     javascript: 'function checkDistances(s, distance) {\n  // your code here\n}\n',
+    typescript: "function checkDistances(s: string, distance: number[]): boolean {\n  // your code here\n}",
+
     python: 'def checkDistances(s, distance):\n    # your code here\n    pass\n',
   },
   visibleTests: [

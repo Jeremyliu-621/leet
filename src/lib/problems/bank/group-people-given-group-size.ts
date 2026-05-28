@@ -38,6 +38,8 @@ Return a list of groups there are. Each person should appear in **exactly one gr
     javascript: `function groupThePeople(groupSizes) {
 
 }`,
+    typescript: "function groupThePeople(groupSizes: number[]): number[][] {\n\n}",
+
     python: `def groupThePeople(groupSizes):
     pass`,
   },

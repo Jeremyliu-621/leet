@@ -47,6 +47,8 @@ Output: [[137,141,137],[141,138,141],[137,141,137]]
     javascript: `function imageSmoother(img) {
 
 }`,
+    typescript: "function imageSmoother(img: number[][]): number[][] {\n\n}",
+
     python: `def imageSmoother(img):
     `,
   },

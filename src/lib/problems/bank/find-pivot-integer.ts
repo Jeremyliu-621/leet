@@ -41,6 +41,8 @@ Return the pivot integer \`x\`. If no such integer exists, return \`-1\`. It is 
     javascript: `function findPivot(n) {
 
 }`,
+    typescript: "function findPivot(n: number): number {\n\n}",
+
     python: `def findPivot(n):
     pass`,
   },

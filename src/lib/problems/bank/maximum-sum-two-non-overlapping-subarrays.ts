@@ -26,6 +26,8 @@ The array with length \`firstLen\` could occur before or after the array with le
   params: ['nums', 'firstLen', 'secondLen'],
   starterCode: {
     javascript: 'function maxSumTwoNoOverlap(nums, firstLen, secondLen) {\n\n}\n',
+    typescript: "function maxSumTwoNoOverlap(nums: number[], firstLen: number, secondLen: number): number {\n\n}",
+
     python: 'def maxSumTwoNoOverlap(nums, firstLen, secondLen):\n    pass\n',
   },
   visibleTests: [

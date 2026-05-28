@@ -28,6 +28,8 @@ Return the list of integers, or an **empty list** if no valid sequence exists.`,
   params: ['num'],
   starterCode: {
     javascript: 'function splitIntoFibonacci(num) {\n\n}\n',
+    typescript: "function splitIntoFibonacci(num: string): number[] {\n\n}",
+
     python: 'def splitIntoFibonacci(num):\n    pass\n',
   },
   visibleTests: [

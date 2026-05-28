@@ -49,6 +49,8 @@ Return the total number of increment operations needed.
     javascript: `function minOperationsNonDecreasing(nums) {
   // Return minimum number of increment operations to make nums non-decreasing
 }`,
+    typescript: "function minOperationsNonDecreasing(nums: number[]): number {\n  // Return minimum number of increment operations to make nums non-decreasing\n}",
+
     python: `def minOperationsNonDecreasing(nums: list[int]) -> int:
     # Return minimum number of increment operations to make nums non-decreasing
     pass`,

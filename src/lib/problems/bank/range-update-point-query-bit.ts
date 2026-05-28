@@ -46,6 +46,8 @@ Return an array containing the results of all \`"query"\` operations, in order.`
   // query(i): return BIT.prefixSum(i)
   // Return results of all "query" operations.
 }`,
+    typescript: "function rangeUpdatePointQuery(n: number, operations: (string | number)[][]): number[] {\n  // Maintain a BIT on the difference array.\n  // add(l, r, v): BIT.update(l, +v), BIT.update(r+1, -v)\n  // query(i): return BIT.prefixSum(i)\n  // Return results of all \"query\" operations.\n}",
+
     python: `def rangeUpdatePointQuery(n, operations):
     # Maintain a BIT on the difference array.
     # add(l, r, v): update(l, +v), update(r+1, -v)

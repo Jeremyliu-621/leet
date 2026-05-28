@@ -46,6 +46,8 @@ Return the **maximum** possible minimum sweetness.`,
   let hi = sweetness.reduce((a, b) => a + b, 0);
   // Binary search: find largest min-sweetness that allows k+1 pieces
 }`,
+    typescript: "function maximizeSweetness(sweetness: number[], k: number): number {\n  let lo = Math.min(...sweetness);\n  let hi = sweetness.reduce((a, b) => a + b, 0);\n  // Binary search: find largest min-sweetness that allows k+1 pieces\n}",
+
     python: `def maximizeSweetness(sweetness, k):
     lo, hi = min(sweetness), sum(sweetness)
     # Binary search: find largest min-sweetness that allows k+1 pieces

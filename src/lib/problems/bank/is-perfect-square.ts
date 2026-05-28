@@ -39,6 +39,8 @@ Do **not** use the built-in square root function (\`Math.sqrt\`). Use binary sea
   params: ['n'],
   starterCode: {
     javascript: 'function isPerfectSquare(n) {\n  // your code here\n}\n',
+    typescript: "function isPerfectSquare(n: number): boolean {\n  // your code here\n}",
+
     python: 'def isPerfectSquare(n):\n    # your code here\n    pass\n',
   },
   visibleTests: [

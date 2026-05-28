@@ -39,6 +39,8 @@ Return the sorted array.`,
     javascript: `function frequencySort(nums) {
 
 }`,
+    typescript: "function frequencySort(nums: number[]): number[] {\n\n}",
+
     python: `def frequencySort(nums):
     pass`,
   },

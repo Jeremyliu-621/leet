@@ -41,6 +41,8 @@ Return the **length** of the **longest** subsequence of \`s\` that makes up a **
     javascript: `function longestSubsequence(s, k) {
 
 }`,
+    typescript: "function longestSubsequence(s: string, k: number): number {\n\n}",
+
     python: `def longestSubsequence(s, k):
     pass`,
   },

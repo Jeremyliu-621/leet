@@ -39,6 +39,8 @@ A subsequence is obtained by deleting some characters from \`s\` without changin
   params: ['s'],
   starterCode: {
     javascript: 'function countPalindromicSubsequences(s) {\n\n}\n',
+    typescript: "function countPalindromicSubsequences(s: string): number {\n\n}",
+
     python: 'def countPalindromicSubsequences(s: str) -> int:\n    pass\n',
   },
   visibleTests: [

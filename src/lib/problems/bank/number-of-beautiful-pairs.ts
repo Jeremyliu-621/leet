@@ -38,6 +38,8 @@ Two integers \`x\` and \`y\` are **coprime** if there is no integer greater than
     javascript: `function countBeautifulPairs(nums) {
 
 }`,
+    typescript: "function countBeautifulPairs(nums: number[]): number {\n\n}",
+
     python: `def countBeautifulPairs(nums):
     pass`,
   },

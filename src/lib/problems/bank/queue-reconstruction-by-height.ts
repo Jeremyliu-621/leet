@@ -34,6 +34,8 @@ Reconstruct and return the queue that is represented by the input array \`people
   params: ['people'],
   starterCode: {
     javascript: 'function reconstructQueue(people) {\n  \n}\n',
+    typescript: "function reconstructQueue(people: number[][]): number[][] {\n  \n}",
+
     python: 'def reconstructQueue(people):\n    pass\n',
   },
   visibleTests: [

@@ -45,6 +45,8 @@ You may return the answer in **any order**. Each quadruplet must be in non-decre
     javascript: `function fourSum(nums, target) {
   // Return all unique quadruplets that sum to target
 }`,
+    typescript: "function fourSum(nums: number[], target: number): number[][] {\n  // Return all unique quadruplets that sum to target\n}",
+
     python: `def fourSum(nums: list[int], target: int) -> list[list[int]]:
     # Return all unique quadruplets that sum to target
     pass`,

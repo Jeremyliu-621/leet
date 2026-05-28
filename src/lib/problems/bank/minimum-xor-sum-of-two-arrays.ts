@@ -39,6 +39,8 @@ Return the **minimum** XOR sum after rearranging \`nums2\`.
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: 'function minimumXORSum(nums1, nums2) {\n\n}\n',
+    typescript: "function minimumXORSum(nums1: number[], nums2: number[]): number {\n\n}",
+
     python: 'def minimumXORSum(nums1: list, nums2: list) -> int:\n    pass\n',
   },
   visibleTests: [

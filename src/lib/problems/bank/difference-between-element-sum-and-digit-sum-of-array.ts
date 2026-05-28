@@ -40,6 +40,8 @@ Return the **absolute** difference between the element sum and digit sum of \`nu
     javascript: `function differenceOfSum(nums) {
 
 }`,
+    typescript: "function differenceOfSum(nums: number[]): number {\n\n}",
+
     python: `def differenceOfSum(nums):
     pass`,
   },

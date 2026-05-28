@@ -51,6 +51,8 @@ If it is **impossible** to finish all courses (due to a cycle), return **-1**.
     javascript: `function minimumSemesters(n, relations) {
   // Return minimum semesters to complete all courses, or -1 if impossible
 }`,
+    typescript: "function minimumSemesters(n: number, relations: number[][]): number {\n  // Return minimum semesters to complete all courses, or -1 if impossible\n}",
+
     python: `def minimumSemesters(n: int, relations: list[list[int]]) -> int:
     # Return minimum semesters to complete all courses, or -1 if impossible
     pass`,

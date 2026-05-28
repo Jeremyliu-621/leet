@@ -34,6 +34,8 @@ Return the **maximum** possible length of \`s\`.`,
   params: ['arr'],
   starterCode: {
     javascript: 'function maxLength(arr) {\n\n}\n',
+    typescript: "function maxLength(arr: string[]): number {\n\n}",
+
     python: 'def maxLength(arr):\n    pass\n',
   },
   visibleTests: [

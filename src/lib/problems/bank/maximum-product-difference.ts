@@ -40,6 +40,8 @@ function maxProductDifference(nums) {
   params: ['nums'],
   starterCode: {
     javascript: 'function maxProductDifference(nums) {\n  \n}\n',
+    typescript: "function maxProductDifference(nums: number[]): number {\n  \n}",
+
     python: 'def maxProductDifference(nums):\n    pass\n',
   },
   visibleTests: [

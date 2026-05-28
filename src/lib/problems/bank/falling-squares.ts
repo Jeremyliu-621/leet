@@ -34,6 +34,8 @@ Return an integer array \`ans\` where \`ans[i]\` represents the height described
   params: ['positions'],
   starterCode: {
     javascript: 'function fallingSquares(positions) {\n\n}\n',
+    typescript: "function fallingSquares(positions: number[][]): number[] {\n\n}",
+
     python: 'def fallingSquares(positions):\n    pass\n',
   },
   visibleTests: [

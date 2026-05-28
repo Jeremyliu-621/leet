@@ -43,6 +43,8 @@ Return \`true\` if it is possible to form the array \`arr\` from \`pieces\`. Oth
 
 }
 `,
+    typescript: "function canFormArray(arr: number[], pieces: number[][]): boolean {\n\n}",
+
     python: `def canFormArray(arr, pieces):
     pass
 `,

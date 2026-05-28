@@ -34,6 +34,8 @@ export const problem: Problem = {
     javascript: `function minSetSize(arr) {
 
 }`,
+    typescript: "function minSetSize(arr: number[]): number {\n\n}",
+
     python: `def minSetSize(arr):
     pass`,
   },

@@ -43,6 +43,8 @@ return 0;\`\`\``
   // chalk: number[], k: integer
   // Return index of student who replaces chalk
 }`,
+    typescript: "function chalkReplacer(chalk: number[], k: number): number {\n  // chalk: number[], k: integer\n  // Return index of student who replaces chalk\n}",
+
     python: `def chalkReplacer(chalk: list[int], k: int) -> int:
     # Your code here
     pass`,

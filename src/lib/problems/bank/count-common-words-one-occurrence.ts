@@ -41,6 +41,8 @@ return Object.keys(f1).filter(w => f1[w] === 1 && f2[w] === 1).length;\`\`\``
     javascript: `function countWords(words1, words2) {
 
 }`,
+    typescript: "function countWords(words1: string[], words2: string[]): number {\n\n}",
+
     python: `def countWords(words1, words2):
     pass`,
   },

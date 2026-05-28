@@ -40,6 +40,8 @@ An integer \`val\` divides \`nums\` if \`nums % val == 0\`.`,
     javascript: `function countDigits(num) {
 
 }`,
+    typescript: "function countDigits(num: number): number {\n\n}",
+
     python: `def countDigits(num):
     pass`,
   },

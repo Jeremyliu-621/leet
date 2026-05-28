@@ -43,6 +43,8 @@ Output: 44
   params: ['nums', 'threshold'],
   starterCode: {
     javascript: 'function smallestDivisor(nums, threshold) {\n\n}\n',
+    typescript: "function smallestDivisor(nums: number[], threshold: number): number {\n\n}",
+
     python: 'def smallestDivisor(nums, threshold):\n    pass\n',
   },
   visibleTests: [

@@ -31,6 +31,8 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: 'function sortArray(nums) {\n  // your code here\n}\n',
+    typescript: "function sortArray(nums: number[]): number[] {\n  // your code here\n}",
+
     python: 'def sortArray(nums: list) -> list:\n    # your code here\n    pass\n',
   },
   visibleTests: [

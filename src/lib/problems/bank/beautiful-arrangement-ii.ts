@@ -32,6 +32,8 @@ Return *any valid array*. It is guaranteed that an answer exists for the given \
     javascript: `function constructArray(n, k) {
 
 }`,
+    typescript: "function constructArray(n: number, k: number): number[] {\n\n}",
+
     python: `def constructArray(n: int, k: int) -> list[int]:
     pass`,
   },

@@ -41,6 +41,8 @@ We will send a signal from a given node \`k\`. Return the **minimum time it take
   preamble: {},
   starterCode: {
     javascript: 'function networkDelayTime(times, n, k) {\n  \n}\n',
+    typescript: "function networkDelayTime(times: number[][], n: number, k: number): number {\n  \n}",
+
     python: 'def networkDelayTime(times, n, k):\n    pass\n',
   },
   visibleTests: [

@@ -36,6 +36,8 @@ Return the number of subarrays where the **maximum** element of \`nums\` appears
     javascript: `function countSubarrays(nums, k) {
 
 }`,
+    typescript: "function countSubarrays(nums: number[], k: number): number {\n\n}",
+
     python: `def countSubarrays(nums, k):
     pass`,
   },

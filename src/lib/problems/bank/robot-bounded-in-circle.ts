@@ -53,6 +53,8 @@ Return \`true\` if and only if there exists some circle that contains all the po
     javascript: `function isRobotBounded(instructions) {
 
 }`,
+    typescript: "function isRobotBounded(instructions: string): boolean {\n\n}",
+
     python: `def isRobotBounded(instructions):
     pass`,
   },

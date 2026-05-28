@@ -94,6 +94,8 @@ export const problem: Problem = {
 function removeNthFromEnd(head, n) {
 
 }`,
+    typescript: "function removeNthRunner(arr: number[], n: number): number[] {\n\n}",
+
     python: `# ListNode class and removeNthRunner wrapper are pre-defined.
 # Implement the function below:
 def removeNthFromEnd(head, n):

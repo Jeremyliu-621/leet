@@ -48,6 +48,8 @@ function replaceWords(dictionary, sentence) {
   params: ['dictionary', 'sentence'],
   starterCode: {
     javascript: 'function replaceWords(dictionary, sentence) {\n  \n}\n',
+    typescript: "function replaceWords(dictionary: string[], sentence: string): string {\n  \n}",
+
     python: 'def replaceWords(dictionary, sentence):\n    pass\n',
   },
   visibleTests: [

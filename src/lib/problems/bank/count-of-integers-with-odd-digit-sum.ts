@@ -34,6 +34,8 @@ The digit sum of a positive integer is the sum of all its digits.`,
     javascript: `function countOdd(num) {
 
 }`,
+    typescript: "function countOdd(num: number): number {\n\n}",
+
     python: `def countOdd(num):
     pass`,
   },

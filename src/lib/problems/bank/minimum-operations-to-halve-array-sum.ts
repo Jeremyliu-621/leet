@@ -40,6 +40,8 @@ export const problem: Problem = {
   // return minimum operations to reduce sum to at most half
 
 }`,
+    typescript: "function halveArray(nums: number[]): number {\n  // return minimum operations to reduce sum to at most half\n\n}",
+
     python: `def halveArray(nums: list) -> int:
     # return minimum operations to reduce sum to at most half
     pass

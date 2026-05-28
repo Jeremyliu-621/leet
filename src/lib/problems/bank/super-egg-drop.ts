@@ -43,6 +43,8 @@ Return the **minimum number of moves** that guarantees you can determine \`f\`, 
   params: ['k', 'n'],
   starterCode: {
     javascript: 'function superEggDrop(k, n) {\n  \n}\n',
+    typescript: "function superEggDrop(k: number, n: number): number {\n  \n}",
+
     python: 'def superEggDrop(k: int, n: int) -> int:\n    pass\n',
   },
   visibleTests: [

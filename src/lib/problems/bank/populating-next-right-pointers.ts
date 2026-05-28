@@ -47,6 +47,8 @@ while(queue.length){
     javascript: `function connectTree(arr) {
 
 }`,
+    typescript: "function connectTree(arr: number[]): number[][] {\n\n}",
+
     python: `def connectTree(arr):
     pass`,
   },

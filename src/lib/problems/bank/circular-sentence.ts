@@ -55,6 +55,8 @@ Return \`true\` if \`sentence\` is a circular sentence, or \`false\` otherwise.`
     javascript: `function isCircularSentence(sentence) {
 
 }`,
+    typescript: "function isCircularSentence(sentence: string): boolean {\n\n}",
+
     python: `def isCircularSentence(sentence):
     pass`,
   },

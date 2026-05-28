@@ -41,6 +41,8 @@ Evaluate the expression. Return an integer that represents the value of the expr
   params: ['tokens'],
   starterCode: {
     javascript: 'function evalRPN(tokens) {\n  \n}\n',
+    typescript: "function evalRPN(tokens: string[]): number {\n  \n}",
+
     python: 'def evalRPN(tokens):\n    pass\n',
   },
   visibleTests: [

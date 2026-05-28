@@ -47,6 +47,8 @@ This runs in **O(log n)** time instead of O(n).`,
   params: ['x', 'n'],
   starterCode: {
     javascript: 'function fastPow(x, n) {\n  // your code here\n}\n',
+    typescript: "function fastPow(x: number, n: number): number {\n  // your code here\n}",
+
     python: 'def fastPow(x, n):\n    # your code here\n    pass\n',
   },
   visibleTests: [

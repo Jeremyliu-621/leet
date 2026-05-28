@@ -45,6 +45,8 @@ Return the **maximum** binary string you can get (lexicographically largest).
   // return the maximum binary string achievable
 
 }`,
+    typescript: "function maximumBinaryString(binary: string): string {\n  // return the maximum binary string achievable\n\n}",
+
     python: `def maximumBinaryString(binary: str) -> str:
     # return the maximum binary string achievable
     pass

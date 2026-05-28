@@ -44,6 +44,8 @@ Given two words, \`beginWord\` and \`endWord\`, and a dictionary \`wordList\`, r
   preamble: {},
   starterCode: {
     javascript: 'function ladderLength(beginWord, endWord, wordList) {\n  \n}\n',
+    typescript: "function ladderLength(beginWord: string, endWord: string, wordList: string[]): number {\n  \n}",
+
     python: 'def ladderLength(beginWord, endWord, wordList):\n    pass\n',
   },
   visibleTests: [

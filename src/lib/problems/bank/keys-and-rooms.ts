@@ -42,6 +42,8 @@ Given an array \`rooms\` where \`rooms[i]\` is the list of keys you can find in 
   preamble: {},
   starterCode: {
     javascript: 'function canVisitAllRooms(rooms) {\n  \n}\n',
+    typescript: "function canVisitAllRooms(rooms: (number[] | unknown[])[]): boolean {\n  \n}",
+
     python: 'def canVisitAllRooms(rooms):\n    pass\n',
   },
   visibleTests: [

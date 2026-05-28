@@ -44,6 +44,8 @@ Return the **K-or** of \`nums\`.`,
     javascript: `function findKOr(nums, k) {
   // your code here
 }`,
+    typescript: "function findKOr(nums: number[], k: number): number {\n  // your code here\n}",
+
     python: `def findKOr(nums, k):
     # your code here
     pass`,

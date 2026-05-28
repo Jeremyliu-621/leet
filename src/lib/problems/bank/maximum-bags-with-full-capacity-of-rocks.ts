@@ -44,6 +44,8 @@ Return the **maximum number of bags** that you can fill to **full capacity**.
     javascript: `function maximumBags(capacity, rocks, additionalRocks) {
   // Return the maximum number of bags filled to full capacity
 }`,
+    typescript: "function maximumBags(capacity: number[], rocks: number[], additionalRocks: number): number {\n  // Return the maximum number of bags filled to full capacity\n}",
+
     python: `def maximumBags(capacity: list[int], rocks: list[int], additionalRocks: int) -> int:
     # Return the maximum number of bags filled to full capacity
     pass`,

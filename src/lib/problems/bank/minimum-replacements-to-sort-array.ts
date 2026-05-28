@@ -55,6 +55,8 @@ Explanation: Already sorted; no operations needed.
     javascript: `function minimumReplacement(nums) {
   // your code here
 }`,
+    typescript: "function minimumReplacement(nums: number[]): number {\n  // your code here\n}",
+
     python: `def minimumReplacement(nums: list) -> int:
     # your code here
     pass`,

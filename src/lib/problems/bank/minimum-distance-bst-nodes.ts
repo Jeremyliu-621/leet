@@ -98,6 +98,8 @@ Trees are represented as level-order arrays where \`null\` indicates a missing c
 function minDiffInBST(root) {
 
 }`,
+    typescript: "function minDiffInBSTRunner(arr: number[]): number {\n\n}",
+
     python: `# TreeNode and minDiffInBSTRunner wrapper are pre-defined.
 # Implement the function below:
 def minDiffInBST(root):

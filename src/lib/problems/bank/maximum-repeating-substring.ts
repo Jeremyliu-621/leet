@@ -39,6 +39,8 @@ Given strings \`sequence\` and \`word\`, return the **maximum k-repeating value*
   params: ['sequence', 'word'],
   starterCode: {
     javascript: 'function maxRepeating(sequence, word) {\n  \n}\n',
+    typescript: "function maxRepeating(sequence: string, word: string): number {\n  \n}",
+
     python: 'def maxRepeating(sequence, word):\n    pass\n',
   },
   visibleTests: [

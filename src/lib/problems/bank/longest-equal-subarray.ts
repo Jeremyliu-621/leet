@@ -58,6 +58,8 @@ In other words, find the longest contiguous segment of identical values in \`num
   }
   return result;
 }`,
+    typescript: "function longestEqualSubarray(nums: number[], k: number): number {\n  const freq = new Map();\n  let left = 0, maxFreq = 0, result = 0;\n  for (let right = 0; right < nums.length; right++) {\n    freq.set(nums[right], (freq.get(nums[right]) || 0) + 1);\n    maxFreq = Math.max(maxFreq, freq.get(nums[right]));\n    // Shrink window if more than k deletions needed\n    while ((right - left + 1) - maxFreq > k) {\n      freq.set(nums[left], freq.get(nums[left]) - 1);\n      left++;\n      // Update maxFreq after shrinking\n    }\n    result = Math.max(result, maxFreq);\n  }\n  return result;\n}",
+
     python: `def longestEqualSubarray(nums, k):
     from collections import defaultdict
     freq = defaultdict(int)

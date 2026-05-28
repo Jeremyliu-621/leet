@@ -35,6 +35,8 @@ Return the decompressed list.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function decompressRLElist(nums) {\n  // your code here\n}\n',
+    typescript: "function decompressRLElist(nums: number[]): number[] {\n  // your code here\n}",
+
     python: 'def decompressRLElist(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

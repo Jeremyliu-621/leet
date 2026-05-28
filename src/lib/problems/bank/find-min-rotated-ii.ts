@@ -47,6 +47,8 @@ return nums[lo];\`\`\``
     javascript: `function findMin(nums) {
   // Return minimum element
 }`,
+    typescript: "function findMin(nums: number[]): number {\n  // Return minimum element\n}",
+
     python: `def findMin(nums):
     # Return minimum element
     pass`,

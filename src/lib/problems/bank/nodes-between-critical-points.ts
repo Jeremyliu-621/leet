@@ -44,6 +44,8 @@ Given a linked list represented as an array, return an array of length two where
   // return [minDistance, maxDistance] or [-1,-1]
 
 }`,
+    typescript: "function nodesBetweenCriticalPoints(head: number[]): number[] {\n  // return [minDistance, maxDistance] or [-1,-1]\n\n}",
+
     python: `def nodesBetweenCriticalPoints(head) -> list:
     # return [minDistance, maxDistance] or [-1,-1]
     pass

@@ -35,6 +35,8 @@ A *stack* of indices waiting for their next greater value solves this in a singl
   params: ['nums'],
   starterCode: {
     javascript: 'function nextGreaterElement(nums) {\n  // your code here\n}\n',
+    typescript: "function nextGreaterElement(nums: number[]): number[] {\n  // your code here\n}",
+
     python: 'def nextGreaterElement(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

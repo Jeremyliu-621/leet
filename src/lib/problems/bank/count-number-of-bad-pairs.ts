@@ -35,6 +35,8 @@ Return the **total number of bad pairs** in \`nums\`.`,
     javascript: `function countBadPairs(nums) {
 
 }`,
+    typescript: "function countBadPairs(nums: number[]): number {\n\n}",
+
     python: `def countBadPairs(nums):
     pass`,
   },

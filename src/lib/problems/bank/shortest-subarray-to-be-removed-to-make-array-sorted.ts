@@ -33,6 +33,8 @@ Return the length of the **shortest** subarray to remove.`,
   params: ['arr'],
   starterCode: {
     javascript: 'function findLengthOfShortestSubarray(arr) {\n\n}\n',
+    typescript: "function findLengthOfShortestSubarray(arr: number[]): number {\n\n}",
+
     python: 'def findLengthOfShortestSubarray(arr):\n    pass\n',
   },
   visibleTests: [

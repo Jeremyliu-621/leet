@@ -40,6 +40,8 @@ Each \`answer[i]\` is calculated considering the **initial** state of the boxes.
     javascript: `function minOperations(boxes) {
 
 }`,
+    typescript: "function minOperations(boxes: string): number[] {\n\n}",
+
     python: `def minOperations(boxes):
     pass`,
   },

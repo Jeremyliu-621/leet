@@ -40,6 +40,8 @@ Game ends when there is only **one** stone remaining. Return Alice's **maximum s
   params: ['stoneValue'],
   starterCode: {
     javascript: 'function stoneGameV(stoneValue) {\n\n}\n',
+    typescript: "function stoneGameV(stoneValue: number[]): number {\n\n}",
+
     python: 'def stoneGameV(stoneValue: list) -> int:\n    pass\n',
   },
   visibleTests: [

@@ -34,6 +34,8 @@ Return a **0-indexed** integer array \`ans\` of size \`2\` where \`ans[0]\` equa
   params: ['grid'],
   starterCode: {
     javascript: 'function findMissingAndRepeatedValues(grid) {\n  // your code here\n}\n',
+    typescript: "function findMissingAndRepeatedValues(grid: number[][]): number[] {\n  // your code here\n}",
+
     python: 'def findMissingAndRepeatedValues(grid):\n    # your code here\n    pass\n',
   },
   visibleTests: [

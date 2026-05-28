@@ -34,6 +34,8 @@ Perform a **flood fill**: starting from \`image[sr][sc]\`, change the color of t
     javascript: `function floodFill(image, sr, sc, color) {
   // DFS/BFS from (sr, sc), painting connected same-color pixels
 }`,
+    typescript: "function floodFill(image: number[][], sr: number, sc: number, color: number): number[][] {\n  // DFS/BFS from (sr, sc), painting connected same-color pixels\n}",
+
     python: `def floodFill(image, sr, sc, color):
     # DFS/BFS from (sr, sc), painting connected same-color pixels
     pass`,

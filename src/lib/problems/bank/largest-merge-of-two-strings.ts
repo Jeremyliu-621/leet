@@ -37,6 +37,8 @@ Return the lexicographically largest \`merge\` you can construct.`,
     javascript: `function largestMerge(word1, word2) {
 
 }`,
+    typescript: "function largestMerge(word1: string, word2: string): string {\n\n}",
+
     python: `def largestMerge(word1, word2):
     pass`,
   },

@@ -39,6 +39,8 @@ Since the answer can be very large, return it modulo \`10^9 + 7\`.`,
     javascript: `function numOfSubarrays(arr) {
 
 }`,
+    typescript: "function numOfSubarrays(arr: number[]): number {\n\n}",
+
     python: `def numOfSubarrays(arr):
     pass`,
   },

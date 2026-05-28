@@ -41,6 +41,8 @@ If no path exists, return \`0\`.`,
   params: ['grid'],
   starterCode: {
     javascript: `function countPaths(grid) {\n  \n}`,
+    typescript: "function countPaths(grid: number[][]): number {\n  \n}",
+
     python: `def countPaths(grid):\n    pass`,
   },
   visibleTests: [

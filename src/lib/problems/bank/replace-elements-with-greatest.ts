@@ -41,6 +41,8 @@ return arr;\`\`\``
     javascript: `function replaceElements(arr) {
 
 }`,
+    typescript: "function replaceElements(arr: number[]): number[] {\n\n}",
+
     python: `def replaceElements(arr):
     pass`,
   },

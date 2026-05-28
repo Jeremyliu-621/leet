@@ -44,6 +44,8 @@ Return the **minimum number of moves** to reach square \`n²\`. Return \`-1\` if
   params: ['board'],
   starterCode: {
     javascript: `function snakesAndLadders(board) {\n\n}`,
+    typescript: "function snakesAndLadders(board: number[][]): number {\n\n}",
+
     python: `def snakesAndLadders(board):\n    pass`,
   },
   visibleTests: [

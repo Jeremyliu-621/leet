@@ -86,6 +86,8 @@ Note that the relative order inside both the odd and even groups should remain a
   starterCode: {
     javascript:
       '// ListNode class and oddEvenListRunner wrapper are pre-defined.\n// Implement the function below:\nfunction oddEvenList(head) {\n  \n}\n',
+    typescript: "function oddEvenListRunner(head: number[]): number[] {\n  \n}",
+
     python:
       '# ListNode class and oddEvenListRunner wrapper are pre-defined.\n# Implement the function below:\ndef oddEvenList(head):\n    pass\n',
   },

@@ -47,6 +47,8 @@ The test cases are generated so that the answer fits in a 32-bit integer.`,
   params: ['s'],
   starterCode: {
     javascript: 'function numDecodings(s) {\n  \n}\n',
+    typescript: "function numDecodings(s: string): number {\n  \n}",
+
     python: 'def numDecodings(s: str) -> int:\n    pass\n',
   },
   visibleTests: [

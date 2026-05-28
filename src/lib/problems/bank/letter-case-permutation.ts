@@ -45,6 +45,8 @@ Return **a list of all possible strings** we could create. Return the output in 
   starterCode: {
     javascript:
       '// letterCasePermutationRunner is pre-defined and sorts the output.\nfunction letterCasePermutation(s) {\n  \n}\n',
+    typescript: "function letterCasePermutationRunner(s: string): string[] {\n  \n}",
+
     python:
       '# letterCasePermutationRunner is pre-defined and sorts the output.\ndef letterCasePermutation(s):\n    pass\n',
   },

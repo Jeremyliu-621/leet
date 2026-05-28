@@ -36,6 +36,8 @@ An **anagram** of a string is a string that contains the same characters with a 
   params: ['s', 't'],
   starterCode: {
     javascript: 'function minSteps(s, t) {\n\n}\n',
+    typescript: "function minSteps(s: string, t: string): number {\n\n}",
+
     python: 'def minSteps(s, t):\n    pass\n',
   },
   visibleTests: [

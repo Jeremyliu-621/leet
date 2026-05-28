@@ -30,6 +30,8 @@ Return the number of **closed islands**.`,
   params: ['grid'],
   starterCode: {
     javascript: 'function closedIsland(grid) {\n\n}\n',
+    typescript: "function closedIsland(grid: number[][]): number {\n\n}",
+
     python: 'def closedIsland(grid):\n    pass\n',
   },
   visibleTests: [

@@ -46,6 +46,8 @@ Output: true
   // bills: number[] — each element is 5, 10, or 20
   // Return true if you can give correct change to every customer
 }`,
+    typescript: "function lemonadeChange(bills: number[]): boolean {\n  // bills: number[] — each element is 5, 10, or 20\n  // Return true if you can give correct change to every customer\n}",
+
     python: `def lemonadeChange(bills):
     # bills: list of int (5, 10, or 20)
     # Return True if you can give correct change to every customer

@@ -46,6 +46,8 @@ If it is not possible to reach index \`n - 1\`, return \`-1\`.`,
   params: ['nums', 'target'],
   starterCode: {
     javascript: 'function maximumJumps(nums, target) {\n\n}',
+    typescript: "function maximumJumps(nums: number[], target: number): number {\n\n}",
+
     python: 'def maximumJumps(nums, target):\n    pass',
   },
   visibleTests: [

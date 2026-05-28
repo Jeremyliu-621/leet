@@ -106,6 +106,8 @@ function widthOfBinaryTree(root) {
   // Return the maximum width of the binary tree
 }
 `,
+    typescript: "function widthOfBinaryTreeRunner(arr: (number | null)[]): number {\n  // Return the maximum width of the binary tree\n}",
+
     python: `# TreeNode class and widthOfBinaryTreeRunner wrapper are pre-defined.
 def widthOfBinaryTree(root):
     # Return the maximum width of the binary tree

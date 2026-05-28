@@ -68,6 +68,8 @@ Return the **minimum number of stickers** that you need to spell out \`target\`.
   }
   return dp[(1 << n) - 1];
 }`,
+    typescript: "function minStickers(stickers: string[], target: string): number {\n  const n = target.length;\n  const dp = new Array(1 << n).fill(-1);\n  dp[0] = 0;\n  for (let state = 0; state < (1 << n); state++) {\n    if (dp[state] === -1) continue;\n    for (const sticker of stickers) {\n      const cnt = new Array(26).fill(0);\n      for (const c of sticker) cnt[c.charCodeAt(0) - 97]++;\n      let nextState = state;\n      const used = new Array(26).fill(0);\n      for (let i = 0; i < n; i++) {\n        if (!(state >> i & 1)) {\n          const ci = target.charCodeAt(i) - 97;\n          if (used[ci] < cnt[ci]) { used[ci]++; nextState |= 1 << i; }\n        }\n      }\n      if (dp[nextState] === -1 || dp[nextState] > dp[state] + 1) {\n        dp[nextState] = dp[state] + 1;\n      }\n    }\n  }\n  return dp[(1 << n) - 1];\n}",
+
     python: `def minStickers(stickers, target):
     from collections import Counter
     n = len(target)

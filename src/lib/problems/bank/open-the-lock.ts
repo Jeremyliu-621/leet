@@ -47,6 +47,8 @@ Return the **minimum** number of turns required to reach the target, or \`-1\` i
   params: ['deadends', 'target'],
   starterCode: {
     javascript: 'function openLock(deadends, target) {\n  // your code here\n}\n',
+    typescript: "function openLock(deadends: string[], target: string): number {\n  // your code here\n}",
+
     python: 'def openLock(deadends, target):\n    # your code here\n    pass\n',
   },
   visibleTests: [

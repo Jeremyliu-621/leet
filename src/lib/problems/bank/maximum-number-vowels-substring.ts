@@ -47,6 +47,8 @@ return max;\`\`\``
   params: ['s', 'k'],
   starterCode: {
     javascript: 'function maxVowels(s, k) {\n  \n}\n',
+    typescript: "function maxVowels(s: string, k: number): number {\n  \n}",
+
     python: 'def maxVowels(s, k):\n    pass\n',
   },
   visibleTests: [

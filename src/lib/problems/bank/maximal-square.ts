@@ -44,6 +44,8 @@ The answer is \`max(dp[i][j])²\`.`,
   params: ['matrix'] as readonly string[],
   starterCode: {
     javascript: 'function maximalSquare(matrix) {\n  // your code here\n}\n',
+    typescript: "function maximalSquare(matrix: string[][]): number {\n  // your code here\n}",
+
     python: 'def maximalSquare(matrix: list[list[str]]) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

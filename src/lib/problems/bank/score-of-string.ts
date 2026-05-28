@@ -33,6 +33,8 @@ Return the **score** of \`s\`.`,
   params: ['s'],
   starterCode: {
     javascript: 'function scoreOfString(s) {\n  // your code here\n}\n',
+    typescript: "function scoreOfString(s: string): number {\n  // your code here\n}",
+
     python: 'def scoreOfString(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

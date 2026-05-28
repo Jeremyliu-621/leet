@@ -37,6 +37,8 @@ Given two integer \`n\` and \`k\`, return the \`k\`-th (**1-indexed**) symbol in
   params: ['n', 'k'],
   starterCode: {
     javascript: 'function kthGrammar(n, k) {\n  \n}\n',
+    typescript: "function kthGrammar(n: number, k: number): number {\n  \n}",
+
     python: 'def kthGrammar(n, k):\n    pass\n',
   },
   visibleTests: [

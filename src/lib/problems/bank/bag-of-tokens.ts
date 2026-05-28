@@ -45,6 +45,8 @@ Each token can be played at most once, in any order. Return the **maximum** scor
   // return maximum score achievable
 
 }`,
+    typescript: "function bagOfTokensScore(tokens: number[], power: number): number {\n  // return maximum score achievable\n\n}",
+
     python: `def bagOfTokensScore(tokens: list, power: int) -> int:
     # return maximum score achievable
     pass

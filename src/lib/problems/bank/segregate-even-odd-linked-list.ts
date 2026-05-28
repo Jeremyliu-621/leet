@@ -88,6 +88,8 @@ Return the head of the rearranged list.
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// ListNode class and segregateEvenOddRunner wrapper are pre-defined.\n// Implement the function below:\nfunction segregateEvenOdd(head) {\n  \n}\n',
+    typescript: "function segregateEvenOddRunner(head: number[]): number[] {\n  \n}",
+
     python: '# ListNode class and segregateEvenOddRunner wrapper are pre-defined.\n# Implement the function below:\ndef segregateEvenOdd(head):\n    pass\n',
   },
   visibleTests: [

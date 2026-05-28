@@ -43,6 +43,8 @@ Since the answer can be very large, return it as a **string** (not an integer).
     javascript: `function largestNumber(cost, target) {
   // Return the largest integer string with total cost == target, or "0"
 }`,
+    typescript: "function largestNumber(cost: number[], target: number): string {\n  // Return the largest integer string with total cost == target, or \"0\"\n}",
+
     python: `def largestNumber(cost: list[int], target: int) -> str:
     # Return the largest integer string with total cost == target, or "0"
     pass`,

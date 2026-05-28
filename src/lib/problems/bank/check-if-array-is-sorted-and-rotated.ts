@@ -52,6 +52,8 @@ function check(nums) {
   // return true if array is sorted and rotated
 
 }`,
+    typescript: "function check(nums: number[]): boolean {\n  // return true if array is sorted and rotated\n\n}",
+
     python: `def check(nums: list) -> bool:
     # return true if array is sorted and rotated
     pass

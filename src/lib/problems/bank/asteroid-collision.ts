@@ -47,6 +47,8 @@ export const problem: Problem = {
   params: ['asteroids'],
   starterCode: {
     javascript: 'function asteroidCollision(asteroids) {\n  // your code here\n}\n',
+    typescript: "function asteroidCollision(asteroids: number[]): number[] {\n  // your code here\n}",
+
     python: 'def asteroidCollision(asteroids):\n    # your code here\n    pass\n',
   },
   visibleTests: [

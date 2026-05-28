@@ -39,6 +39,8 @@ Return the next closest time in \`"HH:MM"\` format.`,
     javascript: `function nextClosestTime(time) {
 
 }`,
+    typescript: "function nextClosestTime(time: string): string {\n\n}",
+
     python: `def nextClosestTime(time):
     `,
   },

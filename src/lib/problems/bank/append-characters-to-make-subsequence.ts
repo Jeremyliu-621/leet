@@ -42,6 +42,8 @@ A **subsequence** is a string that can be derived from another string by deletin
     javascript: `function appendCharacters(s, t) {
 
 }`,
+    typescript: "function appendCharacters(s: string, t: string): number {\n\n}",
+
     python: `def appendCharacters(s, t):
     pass`,
   },

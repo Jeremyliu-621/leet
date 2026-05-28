@@ -25,6 +25,8 @@ Return \`true\` if the path crosses itself at any point, that is, if at any time
   params: ['path'],
   starterCode: {
     javascript: 'function isPathCrossing(path) {\n  \n}\n',
+    typescript: "function isPathCrossing(path: string): boolean {\n  \n}",
+
     python: 'def isPathCrossing(path):\n    pass\n',
   },
   visibleTests: [

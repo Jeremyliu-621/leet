@@ -50,6 +50,8 @@ Return an array of results, one per operation.`,
     }
   });
 }`,
+    typescript: "function tinyUrl(operations: string[], args: string[][]): string[] {\n  const longToShort = new Map();\n  const shortToLong = new Map();\n  let counter = 0;\n\n  return operations.map((op, i) => {\n    const a = args[i] ?? [];\n    if (op === 'encode') {\n      // implement encode\n    } else {\n      // implement decode\n    }\n  });\n}",
+
     python: `def tinyUrl(operations, args):
     long_to_short = {}
     short_to_long = {}

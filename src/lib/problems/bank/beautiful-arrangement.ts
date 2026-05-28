@@ -37,6 +37,8 @@ Return the **number of beautiful arrangements** you can construct.
   params: ['n'],
   starterCode: {
     javascript: 'function countArrangement(n) {\n  // your code here\n}\n',
+    typescript: "function countArrangement(n: number): number {\n  // your code here\n}",
+
     python: 'def countArrangement(n):\n    # your code here\n    pass\n',
   },
   visibleTests: [

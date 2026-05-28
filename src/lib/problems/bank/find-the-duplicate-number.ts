@@ -35,6 +35,8 @@ You must solve the problem **without** modifying the array \`nums\` and uses onl
   params: ['nums'],
   starterCode: {
     javascript: 'function findDuplicate(nums) {\n\n}',
+    typescript: "function findDuplicate(nums: number[]): number {\n\n}",
+
     python: 'def findDuplicate(nums):\n    pass',
   },
   visibleTests: [

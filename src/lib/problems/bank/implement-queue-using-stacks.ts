@@ -47,6 +47,8 @@ Return an array of results for \`"pop"\`, \`"peek"\`, and \`"empty"\` operations
     javascript: `function queueOps(operations, values) {
 
 }`,
+    typescript: "function queueOps(operations: string[], values: (number | null)[]): (number | boolean)[] {\n\n}",
+
     python: `def queueOps(operations, values):
     pass`,
   },

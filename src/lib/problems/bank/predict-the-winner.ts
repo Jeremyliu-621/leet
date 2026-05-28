@@ -35,6 +35,8 @@ Return \`true\` if Player 1 can win the game. If the scores of both players are 
   params: ['nums'],
   starterCode: {
     javascript: 'function predictTheWinner(nums) {\n\n}\n',
+    typescript: "function predictTheWinner(nums: number[]): boolean {\n\n}",
+
     python: 'def predictTheWinner(nums):\n    pass\n',
   },
   visibleTests: [

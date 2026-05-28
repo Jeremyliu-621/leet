@@ -44,6 +44,8 @@ Output: 2
     javascript: `function numberOfBoomerangs(points) {
 
 }`,
+    typescript: "function numberOfBoomerangs(points: number[][]): number {\n\n}",
+
     python: `def numberOfBoomerangs(points):
     `,
   },

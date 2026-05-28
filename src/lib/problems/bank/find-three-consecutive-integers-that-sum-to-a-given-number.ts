@@ -30,6 +30,8 @@ export const problem: Problem = {
   params: ['num'],
   starterCode: {
     javascript: 'function sumOfThree(num) {\n\n}\n',
+    typescript: "function sumOfThree(num: number): number[] {\n\n}",
+
     python: 'def sumOfThree(num: int) -> list:\n    pass\n',
   },
   visibleTests: [

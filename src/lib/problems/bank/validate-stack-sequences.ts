@@ -36,6 +36,8 @@ export const problem: Problem = {
     javascript: `function validateStackSequences(pushed, popped) {
 
 }`,
+    typescript: "function validateStackSequences(pushed: number[], popped: number[]): boolean {\n\n}",
+
     python: `def validateStackSequences(pushed, popped):
     pass`,
   },

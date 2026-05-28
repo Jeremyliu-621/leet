@@ -47,6 +47,8 @@ Return \`"Alice"\` if Alice will win, \`"Bob"\` if Bob will win, or \`"Tie"\` if
   params: ['stoneValue'],
   starterCode: {
     javascript: 'function stoneGameIII(stoneValue) {\n  \n}\n',
+    typescript: "function stoneGameIII(stoneValue: number[]): string {\n  \n}",
+
     python: 'def stoneGameIII(stoneValue):\n    pass\n',
   },
   visibleTests: [

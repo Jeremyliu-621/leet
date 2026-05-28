@@ -41,6 +41,8 @@ function makeEqual(words) {
   params: ['words'],
   starterCode: {
     javascript: 'function makeEqual(words) {\n  \n}\n',
+    typescript: "function makeEqual(words: string[]): boolean {\n  \n}",
+
     python: 'def makeEqual(words):\n    pass\n',
   },
   visibleTests: [

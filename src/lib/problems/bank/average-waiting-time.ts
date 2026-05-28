@@ -38,6 +38,8 @@ Return the **average** waiting time of all customers. Solutions within \`10^-5\`
   params: ['customers'],
   starterCode: {
     javascript: 'function averageWaitingTime(customers) {\n\n}\n',
+    typescript: "function averageWaitingTime(customers: number[][]): number {\n\n}",
+
     python: 'def averageWaitingTime(customers):\n    pass\n',
   },
   visibleTests: [

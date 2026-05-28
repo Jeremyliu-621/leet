@@ -43,6 +43,8 @@ Return the **earliest** time at which all \`n\` people become friends with each 
     javascript: `function earliestAcq(logs, n) {
 
 }`,
+    typescript: "function earliestAcq(logs: number[][], n: number): number {\n\n}",
+
     python: `def earliestAcq(logs, n):
     pass`,
   },

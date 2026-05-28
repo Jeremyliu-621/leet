@@ -40,6 +40,8 @@ Return the sum of all the scores on the record after applying all the operations
   params: ['ops'],
   starterCode: {
     javascript: 'function calPoints(ops) {\n  // your code here\n}\n',
+    typescript: "function calPoints(ops: string[]): number {\n  // your code here\n}",
+
     python: 'def calPoints(ops):\n    # your code here\n    pass\n',
   },
   visibleTests: [

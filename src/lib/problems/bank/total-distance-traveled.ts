@@ -38,6 +38,8 @@ Return the maximum distance which can be traveled.
     javascript: `function distanceTraveled(mainTank, additionalTank) {
 
 }`,
+    typescript: "function distanceTraveled(mainTank: number, additionalTank: number): number {\n\n}",
+
     python: `def distanceTraveled(mainTank, additionalTank):
     pass`,
   },

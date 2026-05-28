@@ -41,6 +41,8 @@ Return the **minimum number of dollars** you need to travel every day in the giv
   params: ['days', 'costs'],
   starterCode: {
     javascript: 'function mincostTickets(days, costs) {\n  // your code here\n}\n',
+    typescript: "function mincostTickets(days: number[], costs: number[]): number {\n  // your code here\n}",
+
     python: 'def mincostTickets(days, costs):\n    # your code here\n    pass\n',
   },
   visibleTests: [

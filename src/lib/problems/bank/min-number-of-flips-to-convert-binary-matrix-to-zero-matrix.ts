@@ -40,6 +40,8 @@ A binary matrix has only \`0\` and \`1\` values. A zero matrix is all \`0\`s.`,
   params: ['mat'],
   starterCode: {
     javascript: 'function minFlips(mat) {\n\n}\n',
+    typescript: "function minFlips(mat: number[][]): number {\n\n}",
+
     python: 'def minFlips(mat: list) -> int:\n    pass\n',
   },
   visibleTests: [

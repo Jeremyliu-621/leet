@@ -38,6 +38,8 @@ Return the **minimum time** \`t\` when you can reach \`(n-1, n-1)\` from \`(0, 0
   params: ['grid'],
   starterCode: {
     javascript: `function swimInWater(grid) {\n\n}`,
+    typescript: "function swimInWater(grid: number[][]): number {\n\n}",
+
     python: `def swimInWater(grid):\n    pass`,
   },
   visibleTests: [

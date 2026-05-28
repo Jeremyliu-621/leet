@@ -37,6 +37,8 @@ You are also given an integer \`totalTrips\`, which denotes the number of trips 
     javascript: `function minimumTime(time, totalTrips) {
 
 }`,
+    typescript: "function minimumTime(time: number[], totalTrips: number): number {\n\n}",
+
     python: `def minimumTime(time, totalTrips):
     pass`,
   },

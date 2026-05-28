@@ -42,6 +42,8 @@ Once all the milestones of all the projects are finished, or if the only milesto
     javascript: `function numberOfWeeks(milestones) {
 
 }`,
+    typescript: "function numberOfWeeks(milestones: number[]): number {\n\n}",
+
     python: `def numberOfWeeks(milestones):
     pass`,
   },

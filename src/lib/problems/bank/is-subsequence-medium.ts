@@ -41,6 +41,8 @@ Return the count **modulo 10^9 + 7**.`,
   params: ['s', 't'],
   starterCode: {
     javascript: 'function countSubsequenceOccurrences(s, t) {\n  // your code here\n}\n',
+    typescript: "function countSubsequenceOccurrences(s: string, t: string): number {\n  // your code here\n}",
+
     python: 'def countSubsequenceOccurrences(s, t):\n    # your code here\n    pass\n',
   },
   visibleTests: [

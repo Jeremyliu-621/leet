@@ -81,6 +81,8 @@ Return an array with results from only \`shortestPath\` calls (in order). \`addE
   }
   return results;
 }`,
+    typescript: "function designGraph(n: number, edges: number[][], ops: (string | number[])[][]): (number | null)[] {\n  const adj = Array.from({ length: n }, () => []);\n  for (const [from, to, cost] of edges) {\n    adj[from].push([to, cost]);\n  }\n\n  const dijkstra = (src, dst) => {\n    const dist = new Array(n).fill(Infinity);\n    dist[src] = 0;\n    const pq = [[0, src]]; // [cost, node]\n    while (pq.length > 0) {\n      pq.sort((a, b) => a[0] - b[0]);\n      const [d, u] = pq.shift();\n      if (d > dist[u]) continue;\n      for (const [v, w] of adj[u]) {\n        if (dist[u] + w < dist[v]) {\n          dist[v] = dist[u] + w;\n          pq.push([dist[v], v]);\n        }\n      }\n    }\n    return dist[dst] === Infinity ? -1 : dist[dst];\n  };\n\n  const results = [];\n  for (const [op, args] of ops) {\n    if (op === 'addEdge') {\n      const [from, to, cost] = args;\n      adj[from].push([to, cost]);\n      results.push(null);\n    } else {\n      const [node1, node2] = args;\n      results.push(dijkstra(node1, node2));\n    }\n  }\n  return results;\n}",
+
     python: `def designGraph(n, edges, ops):
     from heapq import heappush, heappop
 

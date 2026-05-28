@@ -46,6 +46,8 @@ A **subarray** is a contiguous non-empty sequence of elements within an array.`,
     javascript: `function minimumSumSubarray(nums, l, r) {
 
 }`,
+    typescript: "function minimumSumSubarray(nums: number[], l: number, r: number): number {\n\n}",
+
     python: `def minimumSumSubarray(nums, l, r):
     pass`,
   },

@@ -33,6 +33,8 @@ export const problem: Problem = {
     javascript: `function largestRectangleArea(heights) {
 
 }`,
+    typescript: "function largestRectangleArea(heights: number[]): number {\n\n}",
+
     python: `def largestRectangleArea(heights):
     pass`,
   },

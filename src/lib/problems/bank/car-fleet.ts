@@ -42,6 +42,8 @@ Return the **number of car fleets** that will arrive at the destination.
   params: ['target', 'position', 'speed'],
   starterCode: {
     javascript: 'function carFleet(target, position, speed) {\n  // your code here\n}\n',
+    typescript: "function carFleet(target: number, position: number[], speed: number[]): number {\n  // your code here\n}",
+
     python: 'def carFleet(target: int, position: list, speed: list) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

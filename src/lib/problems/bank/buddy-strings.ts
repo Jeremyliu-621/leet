@@ -46,6 +46,8 @@ Swapping letters is defined as taking two indices \`i\` and \`j\` (0-indexed) su
   // return true if swapping two letters in s can make s equal goal
 
 }`,
+    typescript: "function buddyStrings(s: string, goal: string): boolean {\n  // return true if swapping two letters in s can make s equal goal\n\n}",
+
     python: `def buddyStrings(s: str, goal: str) -> bool:
     # return true if swapping two letters in s can make s equal goal
     pass

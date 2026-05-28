@@ -35,6 +35,8 @@ A value at one index may not be paired with itself; the two indices must be diff
   params: ['nums', 'target'],
   starterCode: {
     javascript: 'function pairSumIndices(nums, target) {\n  // your code here\n}\n',
+    typescript: "function pairSumIndices(nums: number[], target: number): number[] {\n  // your code here\n}",
+
     python: 'def pairSumIndices(nums, target):\n    # your code here\n    pass\n',
   },
   visibleTests: [

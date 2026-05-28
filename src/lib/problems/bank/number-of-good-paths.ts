@@ -53,6 +53,8 @@ Note that a path and its reverse are counted as the **same** path. Also, a singl
   params: ['vals', 'edges'],
   starterCode: {
     javascript: 'function numberOfGoodPaths(vals, edges) {\n  \n}\n',
+    typescript: "function numberOfGoodPaths(vals: number[], edges: number[][]): number {\n  \n}",
+
     python: 'def numberOfGoodPaths(vals, edges):\n    pass\n',
   },
   visibleTests: [

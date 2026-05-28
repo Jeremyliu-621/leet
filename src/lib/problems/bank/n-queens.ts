@@ -35,6 +35,8 @@ Each solution contains a distinct board configuration of the n-queens' placement
     javascript: `function solveNQueens(n) {
 
 }`,
+    typescript: "function solveNQueens(n: number): string[][] {\n\n}",
+
     python: `def solveNQueens(n):
     pass`,
   },

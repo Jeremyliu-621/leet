@@ -37,6 +37,8 @@ Return the **index** of the student that will replace the chalk pieces.`,
   params: ['chalk', 'k'],
   starterCode: {
     javascript: 'function chalkReplacer(chalk, k) {\n  // your code here\n}\n',
+    typescript: "function chalkReplacer(chalk: number[], k: number): number {\n  // your code here\n}",
+
     python: 'def chalkReplacer(chalk, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

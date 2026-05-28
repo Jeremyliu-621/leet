@@ -44,6 +44,8 @@ A **substring** is a contiguous sequence of characters within a string.`,
     javascript: `function findTheLongestBalancedSubstring(s) {
 
 }`,
+    typescript: "function findTheLongestBalancedSubstring(s: string): number {\n\n}",
+
     python: `def findTheLongestBalancedSubstring(s):
     pass`,
   },

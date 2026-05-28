@@ -29,6 +29,8 @@ export const problem: Problem = {
   params: ['n'],
   starterCode: {
     javascript: 'function numTrees(n) {\n  \n}\n',
+    typescript: "function numTrees(n: number): number {\n  \n}",
+
     python: 'def numTrees(n):\n    pass\n',
   },
   visibleTests: [

@@ -37,6 +37,8 @@ Find the maximum profit you can achieve. You may complete as many transactions a
     javascript: `function maxProfitCooldown(prices) {
 
 }`,
+    typescript: "function maxProfitCooldown(prices: number[]): number {\n\n}",
+
     python: `def maxProfitCooldown(prices: list[int]) -> int:
     pass`,
   },

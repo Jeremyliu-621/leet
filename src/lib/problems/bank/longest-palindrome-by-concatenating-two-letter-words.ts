@@ -43,6 +43,8 @@ A **palindrome** is a string that reads the same forward and backward.`,
   params: ['words'],
   starterCode: {
     javascript: 'function longestPalindrome(words) {\n\n}\n',
+    typescript: "function longestPalindrome(words: string[]): number {\n\n}",
+
     python: 'def longestPalindrome(words: list) -> int:\n    pass\n',
   },
   visibleTests: [

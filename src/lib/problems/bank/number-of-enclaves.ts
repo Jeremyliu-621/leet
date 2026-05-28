@@ -37,6 +37,8 @@ Return the number of **land cells** in the grid from which we **cannot** walk of
   params: ['grid'],
   starterCode: {
     javascript: 'function numEnclaves(grid) {\n  // your code here\n}\n',
+    typescript: "function numEnclaves(grid: number[][]): number {\n  // your code here\n}",
+
     python: 'def numEnclaves(grid):\n    # your code here\n    pass\n',
   },
   visibleTests: [

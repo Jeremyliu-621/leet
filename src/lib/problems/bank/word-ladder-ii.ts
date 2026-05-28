@@ -41,6 +41,8 @@ Given two words, \`beginWord\` and \`endWord\`, and a dictionary \`wordList\`, r
   params: ['beginWord', 'endWord', 'wordList'],
   starterCode: {
     javascript: 'function findLadders(beginWord, endWord, wordList) {\n  \n}\n',
+    typescript: "function findLadders(beginWord: string, endWord: string, wordList: string[]): string[][] {\n  \n}",
+
     python: 'def findLadders(beginWord, endWord, wordList):\n    pass\n',
   },
   visibleTests: [

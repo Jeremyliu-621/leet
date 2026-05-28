@@ -51,6 +51,8 @@ function countVowelSubstrings(word) {
   // return count of vowel substrings
 
 }`,
+    typescript: "function countVowelSubstrings(word: string): number {\n  // return count of vowel substrings\n\n}",
+
     python: `def countVowelSubstrings(word: str) -> int:
     # return count of vowel substrings
     pass

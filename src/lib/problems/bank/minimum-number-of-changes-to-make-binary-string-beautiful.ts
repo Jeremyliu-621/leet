@@ -43,6 +43,8 @@ Return the **minimum** number of changes needed to make \`s\` beautiful.`,
   params: ['s'],
   starterCode: {
     javascript: 'function minChanges(s) {\n  \n}\n',
+    typescript: "function minChanges(s: string): number {\n  \n}",
+
     python: 'def minChanges(s):\n    pass\n',
   },
   visibleTests: [

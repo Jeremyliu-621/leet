@@ -40,6 +40,8 @@ Use a sliding window: expand the right edge and, whenever a duplicate enters, sh
   params: ['s'],
   starterCode: {
     javascript: 'function longestUniqueWindow(s) {\n  // your code here\n}\n',
+    typescript: "function longestUniqueWindow(s: string): number {\n  // your code here\n}",
+
     python: 'def longestUniqueWindow(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

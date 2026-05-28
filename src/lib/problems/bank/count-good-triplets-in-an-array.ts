@@ -42,6 +42,8 @@ Return *the **total number** of good triplets*.`,
     javascript: `function goodTriplets(nums1, nums2) {
 
 }`,
+    typescript: "function goodTriplets(nums1: number[], nums2: number[]): number {\n\n}",
+
     python: `def goodTriplets(nums1, nums2):
     pass`,
   },

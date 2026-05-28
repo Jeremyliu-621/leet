@@ -37,6 +37,8 @@ Return the **sum** of all the unique elements of \`nums\`.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function sumOfUnique(nums) {\n  // your code here\n}\n',
+    typescript: "function sumOfUnique(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def sumOfUnique(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

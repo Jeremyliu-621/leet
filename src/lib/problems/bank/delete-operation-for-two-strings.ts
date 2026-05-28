@@ -35,6 +35,8 @@ In one step, you can delete exactly **one** character in either string.`,
     javascript: `function minDistance(word1, word2) {
 
 }`,
+    typescript: "function minDistance(word1: string, word2: string): number {\n\n}",
+
     python: `def minDistance(word1, word2):
     pass`,
   },

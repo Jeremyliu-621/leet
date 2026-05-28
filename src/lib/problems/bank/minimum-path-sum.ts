@@ -35,6 +35,8 @@ You can only move either **down** or **right** at any point in time.`,
   params: ['grid'],
   starterCode: {
     javascript: 'function minPathSum(grid) {\n  \n}\n',
+    typescript: "function minPathSum(grid: number[][]): number {\n  \n}",
+
     python: 'def minPathSum(grid: list[list[int]]) -> int:\n    pass\n',
   },
   visibleTests: [

@@ -47,6 +47,8 @@ function licenseKeyFormatting(s, k) {
     javascript: `function licenseKeyFormatting(s, k) {
 
 }`,
+    typescript: "function licenseKeyFormatting(s: string, k: number): string {\n\n}",
+
     python: `def licenseKeyFormatting(s, k):
     pass`,
   },

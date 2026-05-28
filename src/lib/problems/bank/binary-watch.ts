@@ -42,6 +42,8 @@ return res;\`\`\``
   params: ['turnedOn'],
   starterCode: {
     javascript: 'function readBinaryWatch(turnedOn) {\n  \n}\n',
+    typescript: "function readBinaryWatch(turnedOn: number): string[] {\n  \n}",
+
     python: 'def readBinaryWatch(turnedOn):\n    pass\n',
   },
   visibleTests: [

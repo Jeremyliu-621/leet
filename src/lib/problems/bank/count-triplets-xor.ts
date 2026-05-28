@@ -37,6 +37,8 @@ export const problem: Problem = {
     javascript: `function countTriplets(arr) {
 
 }`,
+    typescript: "function countTriplets(arr: number[]): number {\n\n}",
+
     python: `def countTriplets(arr):
     pass`,
   },

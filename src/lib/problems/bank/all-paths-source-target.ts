@@ -61,6 +61,8 @@ The runner sorts the output paths lexicographically before comparison.`,
 function allPathsSourceTarget(graph) {
   // Return array of all paths from node 0 to node n-1
 }`,
+    typescript: "function allPathsRunner(graph: (number[] | unknown[])[]): number[][] {\n  // Return array of all paths from node 0 to node n-1\n}",
+
     python: `# allPathsRunner wrapper is pre-defined and sorts your output.
 def allPathsSourceTarget(graph):
     # Return list of all paths from node 0 to node n-1

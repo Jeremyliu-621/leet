@@ -44,6 +44,8 @@ return res;\`\`\``
   params: ['num'],
   starterCode: {
     javascript: 'function intToRoman(num) {\n  \n}\n',
+    typescript: "function intToRoman(num: number): string {\n  \n}",
+
     python: 'def intToRoman(num):\n    pass\n',
   },
   visibleTests: [

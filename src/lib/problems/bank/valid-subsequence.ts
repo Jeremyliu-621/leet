@@ -41,6 +41,8 @@ For example, \`[1, 3]\` is a subsequence of \`[1, 2, 3, 4]\` because you can pic
   params: ['seq', 'arr'],
   starterCode: {
     javascript: 'function isSubsequence(seq, arr) {\n  // your code here\n}\n',
+    typescript: "function isSubsequence(seq: number[], arr: number[]): boolean {\n  // your code here\n}",
+
     python: 'def isSubsequence(seq, arr):\n    # your code here\n    pass\n',
   },
   visibleTests: [

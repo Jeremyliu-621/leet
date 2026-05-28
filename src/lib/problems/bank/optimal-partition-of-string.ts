@@ -37,6 +37,8 @@ Note that each character should belong to exactly one substring in a partition.`
     javascript: `function partitionString(s) {
 
 }`,
+    typescript: "function partitionString(s: string): number {\n\n}",
+
     python: `def partitionString(s):
     pass`,
   },

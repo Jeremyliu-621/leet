@@ -36,6 +36,8 @@ Return the total number of days that Alice and Bob are in Rome **together**.`,
   starterCode: {
     javascript:
       'function countDaysTogether(arriveAlice, leaveAlice, arriveBob, leaveBob) {\n  \n}\n',
+    typescript: "function countDaysTogether(arriveAlice: string, leaveAlice: string, arriveBob: string, leaveBob: string): number {\n  \n}",
+
     python: 'def countDaysTogether(arriveAlice, leaveAlice, arriveBob, leaveBob):\n    pass\n',
   },
   visibleTests: [

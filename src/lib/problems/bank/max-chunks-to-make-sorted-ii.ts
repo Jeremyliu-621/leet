@@ -37,6 +37,8 @@ Return **the maximum number of chunks** we can split the array into.
   params: ['arr'],
   starterCode: {
     javascript: 'function maxChunksToSorted(arr) {\n\n}\n',
+    typescript: "function maxChunksToSorted(arr: number[]): number {\n\n}",
+
     python: 'def maxChunksToSorted(arr):\n    pass\n',
   },
   visibleTests: [

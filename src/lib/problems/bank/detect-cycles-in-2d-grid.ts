@@ -45,6 +45,8 @@ Return \`true\` if any cycle of the same value exists in \`grid\`, otherwise ret
   params: ['grid'],
   starterCode: {
     javascript: 'function containsCycle(grid) {\n  \n}\n',
+    typescript: "function containsCycle(grid: string[][]): boolean {\n  \n}",
+
     python: 'def containsCycle(grid):\n    pass\n',
   },
   visibleTests: [

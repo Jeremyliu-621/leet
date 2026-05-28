@@ -50,6 +50,8 @@ function deleteGreatestValue(grid) {
   params: ['grid'],
   starterCode: {
     javascript: 'function deleteGreatestValue(grid) {\n  \n}\n',
+    typescript: "function deleteGreatestValue(grid: number[][]): number {\n  \n}",
+
     python: 'def deleteGreatestValue(grid):\n    pass\n',
   },
   visibleTests: [

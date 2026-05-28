@@ -41,6 +41,8 @@ Return a list of lists of the suggested products after each character of \`searc
     javascript: `function suggestedProducts(products, searchWord) {
 
 }`,
+    typescript: "function suggestedProducts(products: string[], searchWord: string): string[][] {\n\n}",
+
     python: `def suggestedProducts(products, searchWord):
     pass`,
   },

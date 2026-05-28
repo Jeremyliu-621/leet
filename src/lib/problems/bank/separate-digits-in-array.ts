@@ -35,6 +35,8 @@ To separate the digits of an integer is to get all the digits it has in the same
     javascript: `function separateDigits(nums) {
 
 }`,
+    typescript: "function separateDigits(nums: number[]): number[] {\n\n}",
+
     python: `def separateDigits(nums):
     pass`,
   },

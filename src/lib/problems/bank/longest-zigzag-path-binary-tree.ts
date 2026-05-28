@@ -100,6 +100,8 @@ Return the longest ZigZag path contained in that tree.`,
   },
   starterCode: {
     javascript: 'function longestZigZag(root) {\n  \n}\n',
+    typescript: "function longestZigZagRunner(root: number[]): number {\n  \n}",
+
     python: 'def longestZigZag(root):\n    pass\n',
   },
   visibleTests: [

@@ -44,6 +44,8 @@ Return the **length** of the resulting string after exactly \`t\` transformation
     javascript: `function lengthAfterTransformations(s, t) {
 
 }`,
+    typescript: "function lengthAfterTransformations(s: string, t: number): number {\n\n}",
+
     python: `def lengthAfterTransformations(s, t):
     pass`,
   },

@@ -78,6 +78,8 @@ class FreqStack {
 
   }
 }`,
+    typescript: "function freqStackRunner(ops: string[], vals: number[]): (null | number)[] {\n  constructor() {\n\n  }\n\n  push(val) {\n\n  }\n\n  pop() {\n\n  }\n}",
+
     python: `# freqStackRunner is pre-defined and calls your class below.
 class FreqStack:
     def __init__(self):

@@ -55,6 +55,8 @@ P     I
     javascript: `function convert(s, numRows) {
 
 }`,
+    typescript: "function convert(s: string, numRows: number): string {\n\n}",
+
     python: `def convert(s, numRows):
     pass`,
   },

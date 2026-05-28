@@ -36,6 +36,8 @@ function addDigits(num) {
     javascript: `function addDigits(num) {
 
 }`,
+    typescript: "function addDigits(num: number): number {\n\n}",
+
     python: `def addDigits(num):
     pass`,
   },

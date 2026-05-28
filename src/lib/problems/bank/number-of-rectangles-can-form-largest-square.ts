@@ -45,6 +45,8 @@ function countGoodRectangles(rectangles) {
     javascript: `function countGoodRectangles(rectangles) {
 
 }`,
+    typescript: "function countGoodRectangles(rectangles: number[][]): number {\n\n}",
+
     python: `def countGoodRectangles(rectangles):
     pass`,
   },

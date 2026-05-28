@@ -37,6 +37,8 @@ export const problem: Problem = {
     javascript: `function numRollsToTarget(n, k, target) {
   // Return number of ways to roll n k-faced dice to get target sum (mod 1e9+7)
 }`,
+    typescript: "function numRollsToTarget(n: number, k: number, target: number): number {\n  // Return number of ways to roll n k-faced dice to get target sum (mod 1e9+7)\n}",
+
     python: `def numRollsToTarget(n, k, target):
     # Return number of ways to roll n k-faced dice to get target sum (mod 10**9+7)
     pass`,

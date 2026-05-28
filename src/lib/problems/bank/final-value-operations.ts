@@ -31,6 +31,8 @@ Given an array of strings \`operations\` containing a list of operations, return
   params: ['operations'],
   starterCode: {
     javascript: 'function finalValueAfterOperations(operations) {\n  // your code here\n}\n',
+    typescript: "function finalValueAfterOperations(operations: string[]): number {\n  // your code here\n}",
+
     python: 'def finalValueAfterOperations(operations):\n    # your code here\n    pass\n',
   },
   visibleTests: [

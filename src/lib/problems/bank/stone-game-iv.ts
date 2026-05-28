@@ -28,6 +28,8 @@ Given a positive integer \`n\`, return \`true\` if and only if Alice wins the ga
   params: ['n'],
   starterCode: {
     javascript: 'function winnerSquareGame(n) {\n\n}\n',
+    typescript: "function winnerSquareGame(n: number): boolean {\n\n}",
+
     python: 'def winnerSquareGame(n):\n    pass\n',
   },
   visibleTests: [

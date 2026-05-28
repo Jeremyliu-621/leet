@@ -42,6 +42,8 @@ Return the **minimum** possible value of this sum after applying at most \`k1 + 
   params: ['nums1', 'nums2', 'k1', 'k2'],
   starterCode: {
     javascript: 'function minSumSquareDiff(nums1, nums2, k1, k2) {\n  \n}\n',
+    typescript: "function minSumSquareDiff(nums1: number[], nums2: number[], k1: number, k2: number): number {\n  \n}",
+
     python: 'def minSumSquareDiff(nums1, nums2, k1, k2):\n    pass\n',
   },
   visibleTests: [

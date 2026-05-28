@@ -46,6 +46,8 @@ Return an array \`ans\` of length \`queries.length\` where \`ans[j]\` is \`1\` i
     javascript: `function gridIllumination(n, lamps, queries) {
 
 }`,
+    typescript: "function gridIllumination(n: number, lamps: number[][], queries: number[][]): number[] {\n\n}",
+
     python: `def gridIllumination(n, lamps, queries):
     pass`,
   },

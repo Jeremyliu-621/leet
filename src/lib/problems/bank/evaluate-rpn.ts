@@ -43,6 +43,8 @@ In RPN, operands appear before their operator: \`["2","3","+"]\` means \`2 + 3 =
   params: ['tokens'],
   starterCode: {
     javascript: 'function evalRPN(tokens) {\n  // your code here\n}\n',
+    typescript: "function evalRPN(tokens: string[]): number {\n  // your code here\n}",
+
     python: 'def evalRPN(tokens):\n    # your code here\n    pass\n',
   },
   visibleTests: [

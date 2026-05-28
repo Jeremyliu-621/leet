@@ -40,6 +40,8 @@ Note: A rotation of \`x\` positions means taking the last \`x\` elements and mov
   params: ['nums'],
   starterCode: {
     javascript: 'function check(nums) {\n  // your code here\n}\n',
+    typescript: "function check(nums: number[]): boolean {\n  // your code here\n}",
+
     python: 'def check(nums: list[int]) -> bool:\n    # your code here\n    pass\n',
   },
   visibleTests: [

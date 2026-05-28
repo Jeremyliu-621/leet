@@ -44,6 +44,8 @@ Return the **maximum** total beauty that Alice can achieve after planting at mos
   params: ['flowers', 'newFlowers', 'target', 'full', 'partial'],
   starterCode: {
     javascript: 'function maximumBeauty(flowers, newFlowers, target, full, partial) {\n  \n}\n',
+    typescript: "function maximumBeauty(flowers: number[], newFlowers: number, target: number, full: number, partial: number): number {\n  \n}",
+
     python: 'def maximumBeauty(flowers, newFlowers, target, full, partial):\n    pass\n',
   },
   visibleTests: [

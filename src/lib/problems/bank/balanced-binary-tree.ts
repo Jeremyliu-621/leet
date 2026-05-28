@@ -100,6 +100,8 @@ A binary tree is **height-balanced** if for every node, the heights of its left 
   starterCode: {
     javascript:
       '// TreeNode class is pre-defined. Implement the function below:\nfunction isBalanced(root) {\n  \n}\n',
+    typescript: "function isBalancedRunner(root: (number | null)[]): boolean {\n  \n}",
+
     python:
       '# TreeNode class is pre-defined. Implement the function below:\ndef isBalanced(root):\n    pass\n',
   },

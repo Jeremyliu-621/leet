@@ -43,6 +43,8 @@ Return \`true\` if Alice wins, or \`false\` if Bob wins.`,
     javascript: `function winnerOfGame(colors) {
 
 }`,
+    typescript: "function winnerOfGame(colors: string): boolean {\n\n}",
+
     python: `def winnerOfGame(colors):
     pass`,
   },

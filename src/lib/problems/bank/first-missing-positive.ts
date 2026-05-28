@@ -40,6 +40,8 @@ You must implement an algorithm that runs in **O(n) time** and uses **O(1) extra
   params: ['nums'],
   starterCode: {
     javascript: 'function firstMissingPositive(nums) {\n  // your code here\n}\n',
+    typescript: "function firstMissingPositive(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def firstMissingPositive(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

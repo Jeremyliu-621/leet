@@ -42,6 +42,8 @@ function canMakeArithmeticProgression(arr) {
     javascript: `function canMakeArithmeticProgression(arr) {
 
 }`,
+    typescript: "function canMakeArithmeticProgression(arr: number[]): boolean {\n\n}",
+
     python: `def canMakeArithmeticProgression(arr):
     pass`,
   },

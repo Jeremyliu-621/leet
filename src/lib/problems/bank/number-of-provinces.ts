@@ -44,6 +44,8 @@ A **province** is a group of directly or indirectly connected cities with no oth
     javascript: `function findCircleNum(isConnected) {
 
 }`,
+    typescript: "function findCircleNum(isConnected: number[][]): number {\n\n}",
+
     python: `def findCircleNum(isConnected):
     pass`,
   },

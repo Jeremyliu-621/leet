@@ -38,6 +38,8 @@ Return \`nums[index]\` of the constructed array.`,
   params: ['n', 'index', 'maxSum'],
   starterCode: {
     javascript: 'function maxValue(n, index, maxSum) {\n\n}\n',
+    typescript: "function maxValue(n: number, index: number, maxSum: number): number {\n\n}",
+
     python: 'def maxValue(n, index, maxSum):\n    pass\n',
   },
   visibleTests: [

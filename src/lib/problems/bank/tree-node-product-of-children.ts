@@ -125,6 +125,8 @@ function maximumProductSplit(root) {
   // Return maximum product of two subtree sums after removing one edge, mod 10^9+7
   const MOD = 1_000_000_007n;
 }`,
+    typescript: "function maximumProductSplitRunner(root: number[]): number {\n  // Return maximum product of two subtree sums after removing one edge, mod 10^9+7\n  const MOD = 1_000_000_007n;\n}",
+
     python: `# TreeNode class and maximumProductSplitRunner wrapper are pre-defined.
 # Implement maximumProductSplit below:
 def maximumProductSplit(root) -> int:

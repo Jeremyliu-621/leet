@@ -39,6 +39,8 @@ Return the number of **complete** subarrays.`,
     javascript: `function countCompleteSubarrays(nums) {
 
 }`,
+    typescript: "function countCompleteSubarrays(nums: number[]): number {\n\n}",
+
     python: `def countCompleteSubarrays(nums):
     pass`,
   },

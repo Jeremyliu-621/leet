@@ -28,6 +28,8 @@ return s;\`\`\``
   params: ['num'],
   starterCode: {
     javascript: 'function removeTrailingZeros(num) {\n  \n}\n',
+    typescript: "function removeTrailingZeros(num: string): string {\n  \n}",
+
     python: 'def removeTrailingZeros(num):\n    pass\n',
   },
   visibleTests: [

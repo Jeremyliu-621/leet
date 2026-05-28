@@ -40,6 +40,8 @@ Return the count of all elements as a string in the following form: the first na
   params: ['formula'],
   starterCode: {
     javascript: 'function countOfAtoms(formula) {\n\n}\n',
+    typescript: "function countOfAtoms(formula: string): string {\n\n}",
+
     python: 'def countOfAtoms(formula):\n    pass\n',
   },
   visibleTests: [

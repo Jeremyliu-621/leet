@@ -44,6 +44,8 @@ Return \`true\` if the **first player** can guarantee a win, assuming both play 
   // return true if first player can guarantee a win
 
 }`,
+    typescript: "function canIWin(maxChoosableInteger: number, desiredTotal: number): boolean {\n  // return true if first player can guarantee a win\n\n}",
+
     python: `def canIWin(maxChoosableInteger: int, desiredTotal: int) -> bool:
     # return true if first player can guarantee a win
     pass

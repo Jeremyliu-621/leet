@@ -43,6 +43,8 @@ Return the **minimum number of operations** needed to make all elements of \`num
   // If none exists, return -1.
   // Otherwise answer = (minLen - 1) + (n - 1).
 }`,
+    typescript: "function minOperations(nums: number[]): number {\n  // If any 1 exists: answer = n - count(1s).\n  // Otherwise find the shortest subarray with gcd = 1.\n  // If none exists, return -1.\n  // Otherwise answer = (minLen - 1) + (n - 1).\n}",
+
     python: `def minOperations(nums):
     # If any 1 exists: answer = n - count(1s).
     # Otherwise find the shortest subarray with gcd = 1.

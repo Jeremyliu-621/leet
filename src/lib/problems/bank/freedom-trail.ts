@@ -41,6 +41,8 @@ Initially, the first character of the ring is aligned at the \`"12:00"\` directi
   params: ['ring', 'key'],
   starterCode: {
     javascript: 'function findRotateSteps(ring, key) {\n\n}\n',
+    typescript: "function findRotateSteps(ring: string, key: string): number {\n\n}",
+
     python: 'def findRotateSteps(ring, key):\n    pass\n',
   },
   visibleTests: [

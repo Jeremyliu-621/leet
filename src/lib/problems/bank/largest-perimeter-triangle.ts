@@ -31,6 +31,8 @@ export const problem: Problem = {
     javascript: `function largestPerimeter(nums) {
 
 }`,
+    typescript: "function largestPerimeter(nums: number[]): number {\n\n}",
+
     python: `def largestPerimeter(nums):
     pass`,
   },

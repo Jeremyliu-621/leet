@@ -44,6 +44,8 @@ You are to calculate a **1-indexed** array \`answer\` of size \`k\` such that, f
   // return 1-indexed array of size k
 
 }`,
+    typescript: "function findingUsersActiveMinutes(logs: number[][], k: number): number[] {\n  // return 1-indexed array of size k\n\n}",
+
     python: `def findingUsersActiveMinutes(logs: list, k: int) -> list:
     # return 1-indexed array of size k
     pass

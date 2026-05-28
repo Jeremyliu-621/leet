@@ -49,6 +49,8 @@ Return the minimum number of steps, or **-1** if no food is reachable.`,
     javascript: `function getFood(grid) {
   // BFS from 'X'. Return distance to nearest '*', or -1 if unreachable.
 }`,
+    typescript: "function getFood(grid: string[][]): number {\n  // BFS from 'X'. Return distance to nearest '*', or -1 if unreachable.\n}",
+
     python: `def getFood(grid):
     # BFS from 'X'. Return distance to nearest '*', or -1 if unreachable.
     pass`,

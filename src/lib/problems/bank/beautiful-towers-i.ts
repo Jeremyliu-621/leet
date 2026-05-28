@@ -47,6 +47,8 @@ Return the **maximum possible sum** of heights.
     javascript: `function maximumSumOfHeights(maxHeights) {
 
 }`,
+    typescript: "function maximumSumOfHeights(maxHeights: number[]): number {\n\n}",
+
     python: `def maximumSumOfHeights(maxHeights):
     pass
 `,

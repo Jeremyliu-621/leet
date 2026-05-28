@@ -44,6 +44,8 @@ An island is a 4-directionally connected group of \`1\`s.`,
     javascript: `function largestIsland(grid) {
 
 }`,
+    typescript: "function largestIsland(grid: number[][]): number {\n\n}",
+
     python: `def largestIsland(grid):
     pass`,
   },

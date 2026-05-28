@@ -49,6 +49,8 @@ Use Dijkstra's algorithm for efficiency.`,
   // Build adjacency list. Run Dijkstra from node 0.
   // Return array of min distances; use -1 for unreachable nodes.
 }`,
+    typescript: "function minCostReachAll(n: number, edges: number[][]): number[] {\n  // Build adjacency list. Run Dijkstra from node 0.\n  // Return array of min distances; use -1 for unreachable nodes.\n}",
+
     python: `def minCostReachAll(n, edges):
     # Build adjacency list. Run Dijkstra from node 0.
     # Return list of min distances; use -1 for unreachable nodes.

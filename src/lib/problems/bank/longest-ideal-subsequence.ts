@@ -37,6 +37,8 @@ Return the **length** of the **longest** ideal string.`,
   params: ['s', 'k'],
   starterCode: {
     javascript: 'function longestIdealString(s, k) {\n\n}\n',
+    typescript: "function longestIdealString(s: string, k: number): number {\n\n}",
+
     python: 'def longestIdealString(s, k):\n    pass\n',
   },
   visibleTests: [

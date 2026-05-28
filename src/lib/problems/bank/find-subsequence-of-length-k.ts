@@ -36,6 +36,8 @@ A **subsequence** is an array that can be derived from another array by deleting
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function maxSubsequence(nums, k) {\n  // your code here\n}\n',
+    typescript: "function maxSubsequence(nums: number[], k: number): number[] {\n  // your code here\n}",
+
     python: 'def maxSubsequence(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

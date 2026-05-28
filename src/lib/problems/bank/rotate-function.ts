@@ -46,6 +46,8 @@ function maxRotateFunction(nums) {
     javascript: `function maxRotateFunction(nums) {
 
 }`,
+    typescript: "function maxRotateFunction(nums: number[]): number {\n\n}",
+
     python: `def maxRotateFunction(nums):
     pass`,
   },

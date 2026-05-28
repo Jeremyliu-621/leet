@@ -42,6 +42,8 @@ Return the **lexicographically smallest string** that \`s\` can be changed to af
   params: ['s', 'pairs'],
   starterCode: {
     javascript: 'function smallestStringWithSwaps(s, pairs) {\n  \n}\n',
+    typescript: "function smallestStringWithSwaps(s: string, pairs: number[][]): string {\n  \n}",
+
     python: 'def smallestStringWithSwaps(s, pairs):\n    pass\n',
   },
   visibleTests: [

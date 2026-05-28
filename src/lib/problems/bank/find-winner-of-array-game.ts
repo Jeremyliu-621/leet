@@ -44,6 +44,8 @@ It is **guaranteed** there will be a winner of the game.
   params: ['arr', 'k'],
   starterCode: {
     javascript: 'function getWinner(arr, k) {\n  \n}\n',
+    typescript: "function getWinner(arr: number[], k: number): number {\n  \n}",
+
     python: 'def getWinner(arr, k):\n    ',
   },
   visibleTests: [

@@ -44,6 +44,8 @@ You can use each number in \`nums\` an unlimited number of times.`,
   params: ['nums', 'target'],
   starterCode: {
     javascript: 'function combinationSum4(nums, target) {\n  // your code here\n}\n',
+    typescript: "function combinationSum4(nums: number[], target: number): number {\n  // your code here\n}",
+
     python: 'def combinationSum4(nums, target):\n    # your code here\n    pass\n',
   },
   visibleTests: [

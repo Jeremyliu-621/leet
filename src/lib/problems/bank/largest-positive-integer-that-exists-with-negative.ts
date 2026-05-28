@@ -47,6 +47,8 @@ function findMaxK(nums) {
     javascript: `function findMaxK(nums) {
 
 }`,
+    typescript: "function findMaxK(nums: number[]): number {\n\n}",
+
     python: `def findMaxK(nums):
     pass`,
   },

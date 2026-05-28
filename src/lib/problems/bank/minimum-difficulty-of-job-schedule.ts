@@ -43,6 +43,8 @@ Given a list \`jobDifficulty\` and an integer \`d\`, return the **minimum diffic
   params: ['jobDifficulty', 'd'],
   starterCode: {
     javascript: 'function minDifficulty(jobDifficulty, d) {\n\n}\n',
+    typescript: "function minDifficulty(jobDifficulty: number[], d: number): number {\n\n}",
+
     python: 'def minDifficulty(jobDifficulty: list, d: int) -> int:\n    pass\n',
   },
   visibleTests: [

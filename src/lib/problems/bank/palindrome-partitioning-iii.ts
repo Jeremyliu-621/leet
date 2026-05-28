@@ -43,6 +43,8 @@ Return the **minimum number of characters** you need to change to divide the str
   params: ['s', 'k'],
   starterCode: {
     javascript: 'function palindromePartition(s, k) {\n\n}\n',
+    typescript: "function palindromePartition(s: string, k: number): number {\n\n}",
+
     python: 'def palindromePartition(s: str, k: int) -> int:\n    pass\n',
   },
   visibleTests: [

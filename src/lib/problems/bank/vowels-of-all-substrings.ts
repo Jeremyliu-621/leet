@@ -40,6 +40,8 @@ Note: Due to the large number of substrings, the answer may be very large. Retur
   params: ['word'],
   starterCode: {
     javascript: 'function countVowels(word) {\n  \n}\n',
+    typescript: "function countVowels(word: string): number {\n  \n}",
+
     python: 'def countVowels(word):\n    pass\n',
   },
   visibleTests: [

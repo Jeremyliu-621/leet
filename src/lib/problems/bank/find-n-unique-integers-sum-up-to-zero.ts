@@ -40,6 +40,8 @@ Return the array \`[1, 2, ..., n-1, -(n*(n-1)/2)]\` so that when \`n = 1\` the r
 
 }
 `,
+    typescript: "function sumZero(n: number): number[] {\n\n}",
+
     python: `def sumZero(n):
     pass
 `,

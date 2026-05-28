@@ -42,6 +42,8 @@ Return the final order of the logs.`,
   params: ['logs'],
   starterCode: {
     javascript: 'function reorderLogFiles(logs) {\n  \n}\n',
+    typescript: "function reorderLogFiles(logs: string[]): string[] {\n  \n}",
+
     python: 'def reorderLogFiles(logs):\n    pass\n',
   },
   visibleTests: [

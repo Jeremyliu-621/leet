@@ -24,6 +24,8 @@ All the letters in the answer string should be lowercase characters, and there s
   params: ['num'],
   starterCode: {
     javascript: 'function toHex(num) {\n  \n}\n',
+    typescript: "function toHex(num: number): string {\n  \n}",
+
     python: 'def toHex(num):\n    pass\n',
   },
   visibleTests: [

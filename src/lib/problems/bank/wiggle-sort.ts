@@ -37,6 +37,8 @@ Return the reordered array.
   params: ['nums'],
   starterCode: {
     javascript: 'function wiggleSort(nums) {\n  // modify nums in-place and return it\n}\n',
+    typescript: "function wiggleSort(nums: number[]): number[] {\n  // modify nums in-place and return it\n}",
+
     python: 'def wiggleSort(nums):\n    # modify nums in-place and return it\n    pass\n',
   },
   visibleTests: [

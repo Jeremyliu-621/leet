@@ -47,6 +47,8 @@ Return the resulting \`m × n\` matrix.`,
   // Fill cells with vals[ptr++] or leave -1.
   // Return the matrix.
 }`,
+    typescript: "function spiralMatrix(m: number, n: number, vals: number[]): number[][] {\n  // Initialize m×n matrix of -1.\n  // Traverse in spiral order: right, down, left, up.\n  // Fill cells with vals[ptr++] or leave -1.\n  // Return the matrix.\n}",
+
     python: `def spiralMatrix(m, n, vals):
     # Initialize m×n matrix of -1.
     # Traverse in spiral order: right, down, left, up.

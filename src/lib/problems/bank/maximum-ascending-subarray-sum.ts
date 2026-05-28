@@ -40,6 +40,8 @@ A subarray \`[nums[l], nums[l+1], ..., nums[r-1], nums[r]]\` is **ascending** if
   params: ['nums'],
   starterCode: {
     javascript: 'function maxAscendingSum(nums) {\n  \n}\n',
+    typescript: "function maxAscendingSum(nums: number[]): number {\n  \n}",
+
     python: 'def maxAscendingSum(nums):\n    pass\n',
   },
   visibleTests: [

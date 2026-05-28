@@ -41,6 +41,8 @@ A string is valid if:
   params: ['s'],
   starterCode: {
     javascript: 'function minRemoveToMakeValid(s) {\n  // your code here\n}\n',
+    typescript: "function minRemoveToMakeValid(s: string): string {\n  // your code here\n}",
+
     python: 'def minRemoveToMakeValid(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

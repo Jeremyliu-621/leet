@@ -43,6 +43,8 @@ Return the **minimum number of operations** to reduce \`x\` to **exactly** 0 if 
     javascript: `function minOperations(nums, x) {
   // Return minimum ops to reduce x to 0, or -1 if impossible
 }`,
+    typescript: "function minOperations(nums: number[], x: number): number {\n  // Return minimum ops to reduce x to 0, or -1 if impossible\n}",
+
     python: `def minOperations(nums: list[int], x: int) -> int:
     # Your code here
     pass`,

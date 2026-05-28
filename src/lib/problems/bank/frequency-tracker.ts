@@ -124,6 +124,8 @@ class FrequencyTracker {
   deleteOne(number) {}
   hasFrequency(frequency) {}
 }`,
+    typescript: "function frequencyTracker(operations: string[], args: number[][]): (null | boolean)[] {\n  constructor() {}\n  add(number) {}\n  deleteOne(number) {}\n  hasFrequency(frequency) {}\n}",
+
     python: `# frequencyTracker is pre-defined and calls your class below.
 class FrequencyTracker:
     def __init__(self): pass

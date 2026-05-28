@@ -51,6 +51,8 @@ function squareIsWhite(coordinates) {
     javascript: `function squareIsWhite(coordinates) {
 
 }`,
+    typescript: "function squareIsWhite(coordinates: string): boolean {\n\n}",
+
     python: `def squareIsWhite(coordinates):
     pass`,
   },

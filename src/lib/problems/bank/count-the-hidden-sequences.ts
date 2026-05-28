@@ -55,6 +55,8 @@ Output: \`4\`
     javascript: `function numberOfArrays(differences, lower, upper) {
   // your code here
 }`,
+    typescript: "function numberOfArrays(differences: number[], lower: number, upper: number): number {\n  // your code here\n}",
+
     python: `def numberOfArrays(differences: list, lower: int, upper: int) -> int:
     # your code here
     pass`,

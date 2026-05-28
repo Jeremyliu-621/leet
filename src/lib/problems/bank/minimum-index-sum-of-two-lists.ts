@@ -26,6 +26,8 @@ export const problem: Problem = {
   params: ['list1', 'list2'],
   starterCode: {
     javascript: 'function findRestaurant(list1, list2) {\n  \n}\n',
+    typescript: "function findRestaurant(list1: string[], list2: string[]): string[] {\n  \n}",
+
     python: 'def findRestaurant(list1, list2):\n    pass\n',
   },
   visibleTests: [

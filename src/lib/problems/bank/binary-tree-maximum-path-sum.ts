@@ -101,6 +101,8 @@ Trees are given as level-order arrays where \`null\` represents a missing node.`
 function maxPathSum(root) {
   // Return the maximum path sum in the tree
 }`,
+    typescript: "function maxPathSumRunner(root: number[]): number {\n  // Return the maximum path sum in the tree\n}",
+
     python: `# TreeNode class and maxPathSumRunner wrapper are pre-defined.
 def maxPathSum(root):
     # Return the maximum path sum in the tree

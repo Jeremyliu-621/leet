@@ -23,6 +23,8 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: 'function findMaxLength(nums) {\n  \n}\n',
+    typescript: "function findMaxLength(nums: number[]): number {\n  \n}",
+
     python: 'def findMaxLength(nums):\n    pass\n',
   },
   visibleTests: [

@@ -40,6 +40,8 @@ Given an array of strings \`emails\`, return the number of **unique** email addr
   params: ['emails'],
   starterCode: {
     javascript: 'function numUniqueEmails(emails) {\n  // your code here\n}\n',
+    typescript: "function numUniqueEmails(emails: string[]): number {\n  // your code here\n}",
+
     python: 'def numUniqueEmails(emails):\n    # your code here\n    pass\n',
   },
   visibleTests: [

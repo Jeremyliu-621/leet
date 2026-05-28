@@ -52,6 +52,8 @@ The skyline is a list of **key points** \`[x, height]\` that mark every point wh
   params: ['buildings'],
   starterCode: {
     javascript: 'function getSkyline(buildings) {\n  // your code here\n}\n',
+    typescript: "function getSkyline(buildings: number[][]): number[][] {\n  // your code here\n}",
+
     python: 'def getSkyline(buildings):\n    # your code here\n    pass\n',
   },
   visibleTests: [

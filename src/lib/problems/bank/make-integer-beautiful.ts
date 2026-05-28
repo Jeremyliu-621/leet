@@ -41,6 +41,8 @@ Return the **minimum number of operations** to make the digit sum of \`n\` less 
   params: ['n', 'target'],
   starterCode: {
     javascript: 'function makeIntegerBeautiful(n, target) {\n  \n}\n',
+    typescript: "function makeIntegerBeautiful(n: number, target: number): number {\n  \n}",
+
     python: 'def makeIntegerBeautiful(n, target):\n    pass\n',
   },
   visibleTests: [

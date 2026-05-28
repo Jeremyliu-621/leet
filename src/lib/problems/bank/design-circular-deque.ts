@@ -66,6 +66,8 @@ The \`values\` array provides the integer argument for insert operations (ignore
   }
   return results;
 }`,
+    typescript: "function designCircularDeque(k: number, actions: string[], values: (number | null)[]): (boolean | number)[] {\n  const results = [];\n  // Initialize your deque here\n\n  for (let i = 0; i < actions.length; i++) {\n    const action = actions[i];\n    const val = values[i];\n    if (action === 'insertFront') {\n      // results.push(...)\n    } else if (action === 'insertLast') {\n      // results.push(...)\n    } else if (action === 'deleteFront') {\n      // results.push(...)\n    } else if (action === 'deleteLast') {\n      // results.push(...)\n    } else if (action === 'getFront') {\n      // results.push(...)\n    } else if (action === 'getRear') {\n      // results.push(...)\n    } else if (action === 'isEmpty') {\n      // results.push(...)\n    } else if (action === 'isFull') {\n      // results.push(...)\n    }\n  }\n  return results;\n}",
+
     python: `def designCircularDeque(k, actions, values):
     results = []
     # Initialize your deque here

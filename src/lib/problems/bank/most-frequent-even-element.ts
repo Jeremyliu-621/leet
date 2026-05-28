@@ -48,6 +48,8 @@ function mostFrequentEven(nums) {
   params: ['nums'],
   starterCode: {
     javascript: 'function mostFrequentEven(nums) {\n  \n}\n',
+    typescript: "function mostFrequentEven(nums: number[]): number {\n  \n}",
+
     python: 'def mostFrequentEven(nums):\n    pass\n',
   },
   visibleTests: [

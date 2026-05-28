@@ -35,6 +35,8 @@ export const problem: Problem = {
     javascript: `function toLowerCase(s) {
 
 }`,
+    typescript: "function toLowerCase(s: string): string {\n\n}",
+
     python: `def toLowerCase(s):
     pass`,
   },

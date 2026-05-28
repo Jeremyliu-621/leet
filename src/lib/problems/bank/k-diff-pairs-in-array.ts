@@ -49,6 +49,8 @@ return pairs;\`\`\``
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function findPairs(nums, k) {\n  \n}\n',
+    typescript: "function findPairs(nums: number[], k: number): number {\n  \n}",
+
     python: 'def findPairs(nums, k):\n    pass\n',
   },
   visibleTests: [

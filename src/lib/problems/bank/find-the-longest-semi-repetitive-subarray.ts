@@ -45,6 +45,8 @@ Return the length of the **longest semi-repetitive subarray** of \`s\`.
     javascript: `function longestSemiRepetitiveSubarray(s) {
   // Return the length of the longest semi-repetitive subarray.
 }`,
+    typescript: "function longestSemiRepetitiveSubarray(s: number[]): number {\n  // Return the length of the longest semi-repetitive subarray.\n}",
+
     python: `def longestSemiRepetitiveSubarray(s: list[int]) -> int:
     # Return the length of the longest semi-repetitive subarray.
     pass`,

@@ -41,6 +41,8 @@ Assuming Alice and Bob play **optimally**, return \`true\` *if Alice wins the ga
     javascript: `function stoneGame(piles) {
 
 }`,
+    typescript: "function stoneGame(piles: number[]): boolean {\n\n}",
+
     python: `def stoneGame(piles):
     pass`,
   },

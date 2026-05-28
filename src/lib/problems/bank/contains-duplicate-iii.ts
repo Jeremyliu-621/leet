@@ -48,6 +48,8 @@ Return \`false\` otherwise.
   // Use bucket sort with sliding window
 
 }`,
+    typescript: "function containsNearbyAlmostDuplicate(nums: number[], indexDiff: number, valueDiff: number): boolean {\n  // Use bucket sort with sliding window\n\n}",
+
     python: `def containsNearbyAlmostDuplicate(nums, indexDiff, valueDiff):
     # Use bucket sort with sliding window
     pass

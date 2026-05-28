@@ -112,6 +112,8 @@ return prune(root);\`\`\``
 function pruneTree(root) {
 
 }`,
+    typescript: "function pruneTreeRunner(arr: (number | null)[]): (number | null)[] {\n  constructor(val, left = null, right = null) { this.val = val; this.left = left; this.right = right; }\n}\nfunction __fromBFS__(arr) {\n  if (!arr || arr.length === 0 || arr[0] === null) return null;\n  const root = new TreeNode(arr[0]);\n  const q = [root]; let i = 1;\n  while (q.length && i < arr.length) {\n    const node = q.shift();\n    if (i < arr.length && arr[i] !== null) { node.left = new TreeNode(arr[i]); q.push(node.left); } i++;\n    if (i < arr.length && arr[i] !== null) { node.right = new TreeNode(arr[i]); q.push(node.right); } i++;\n  }\n  return root;\n}\nfunction __toBFS__(root) {\n  if (!root) return [];\n  const result = [], q = [root];\n  while (q.length) {\n    const node = q.shift();\n    if (node === null) { result.push(null); continue; }\n    result.push(node.val);\n    if (node.left !== null || node.right !== null) { q.push(node.left); q.push(node.right); }\n  }\n  while (result.length && result[result.length - 1] === null) result.pop();\n  return result;\n}\nfunction pruneTreeRunner(arr) { return __toBFS__(pruneTree(__fromBFS__(arr))); }\n\nfunction pruneTree(root) {\n\n}",
+
     python: `${PY_PREAMBLE}
 def pruneTree(root):
     pass`,

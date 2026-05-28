@@ -44,6 +44,8 @@ Return the maximum performance of this team. Since the answer can be a huge numb
     javascript: `function maxPerformance(n, speed, efficiency, k) {
 
 }`,
+    typescript: "function maxPerformance(n: number, speed: number[], efficiency: number[], k: number): number {\n\n}",
+
     python: `def maxPerformance(n: int, speed: list[int], efficiency: list[int], k: int) -> int:
     pass`,
   },

@@ -39,6 +39,8 @@ This operation is the basis of the **happy number** problem — repeatedly apply
   params: ['n'],
   starterCode: {
     javascript: 'function sumOfSquares(n) {\n  // your code here\n}\n',
+    typescript: "function sumOfSquares(n: number): number {\n  // your code here\n}",
+
     python: 'def sumOfSquares(n):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -41,6 +41,8 @@ export const problem: Problem = {
   // return the minimum area of any axis-aligned rectangle, or 0
 
 }`,
+    typescript: "function minAreaRect(points: number[][]): number {\n  // points: array of [x, y] pairs\n  // return the minimum area of any axis-aligned rectangle, or 0\n\n}",
+
     python: `def minAreaRect(points: list) -> int:
     # points: list of [x, y] pairs
     # return the minimum area of any axis-aligned rectangle, or 0

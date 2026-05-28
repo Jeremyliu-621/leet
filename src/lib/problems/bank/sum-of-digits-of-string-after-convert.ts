@@ -47,6 +47,8 @@ function getLucky(s, k) {
     javascript: `function getLucky(s, k) {
 
 }`,
+    typescript: "function getLucky(s: string, k: number): number {\n\n}",
+
     python: `def getLucky(s, k):
     pass`,
   },

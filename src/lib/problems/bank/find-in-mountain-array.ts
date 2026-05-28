@@ -29,6 +29,8 @@ Given a mountain array \`mountainArr\` and integer \`target\`, return the **smal
   params: ['mountainArr', 'target'],
   starterCode: {
     javascript: 'function findInMountainArray(mountainArr, target) {\n\n}\n',
+    typescript: "function findInMountainArray(mountainArr: number[], target: number): number {\n\n}",
+
     python: 'def findInMountainArray(mountainArr, target):\n    pass\n',
   },
   visibleTests: [

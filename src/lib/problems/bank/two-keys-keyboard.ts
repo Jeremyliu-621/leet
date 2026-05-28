@@ -40,6 +40,8 @@ Given an integer \`n\`, return the **minimum** number of operations to get the c
   // return minimum operations to get exactly n 'A's
 
 }`,
+    typescript: "function minSteps(n: number): number {\n  // return minimum operations to get exactly n 'A's\n\n}",
+
     python: `def minSteps(n: int) -> int:
     # return minimum operations to get exactly n 'A's
     pass

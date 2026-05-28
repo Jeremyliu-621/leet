@@ -48,6 +48,8 @@ Output: -1
   params: ['n', 'ranges'],
   starterCode: {
     javascript: 'function minTaps(n, ranges) {\n  // your code here\n}\n',
+    typescript: "function minTaps(n: number, ranges: number[]): number {\n  // your code here\n}",
+
     python: 'def minTaps(n, ranges):\n    pass\n',
   },
   visibleTests: [

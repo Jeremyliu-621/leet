@@ -121,6 +121,8 @@ The function receives the root and two **integer values** \`p\` and \`q\`. Retur
 function lowestCommonAncestor(root, p, q) {
 
 }`,
+    typescript: "function lcaRunner(root: (number | null)[], p: number, q: number): number {\n\n}",
+
     python: `# TreeNode is pre-defined. p and q are integer values (not TreeNode objects).
 # Return the LCA TreeNode.
 def lowestCommonAncestor(root, p, q):

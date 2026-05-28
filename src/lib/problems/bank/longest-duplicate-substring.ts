@@ -43,6 +43,8 @@ A **substring** is a contiguous sequence of characters within a string.`,
     javascript: `function longestDupSubstring(s) {
   // Return the longest substring that appears at least twice
 }`,
+    typescript: "function longestDupSubstring(s: string): string {\n  // Return the longest substring that appears at least twice\n}",
+
     python: `def longestDupSubstring(s: str) -> str:
     # Return the longest substring that appears at least twice
     pass`,

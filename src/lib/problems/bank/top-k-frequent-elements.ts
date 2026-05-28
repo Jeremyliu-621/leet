@@ -39,6 +39,8 @@ If multiple elements have the same frequency, prefer the element with the **smal
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function topKFrequent(nums, k) {\n  // your code here\n}\n',
+    typescript: "function topKFrequent(nums: number[], k: number): number[] {\n  // your code here\n}",
+
     python: 'def topKFrequent(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

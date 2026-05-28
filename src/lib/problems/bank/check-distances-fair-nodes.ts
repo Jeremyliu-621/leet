@@ -48,6 +48,8 @@ function checkDistances(s, distance) {
   params: ['s', 'distance'],
   starterCode: {
     javascript: 'function checkDistances(s, distance) {\n  \n}\n',
+    typescript: "function checkDistances(s: string, distance: number[]): boolean {\n  \n}",
+
     python: 'def checkDistances(s, distance):\n    pass\n',
   },
   visibleTests: [

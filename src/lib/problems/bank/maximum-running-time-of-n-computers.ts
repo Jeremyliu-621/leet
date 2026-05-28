@@ -42,6 +42,8 @@ Return the **maximum number of minutes** you can run all \`n\` computers simulta
     javascript: `function maxRunTime(n, batteries) {
 
 }`,
+    typescript: "function maxRunTime(n: number, batteries: number[]): number {\n\n}",
+
     python: `def maxRunTime(n, batteries):
     pass
 `,

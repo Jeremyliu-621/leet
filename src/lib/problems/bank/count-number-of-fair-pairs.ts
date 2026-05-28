@@ -43,6 +43,8 @@ A pair \`(i, j)\` is **fair** if:
     javascript: `function countFairPairs(nums, lower, upper) {
   // Return the count of pairs (i, j) where i < j and lower <= nums[i]+nums[j] <= upper.
 }`,
+    typescript: "function countFairPairs(nums: number[], lower: number, upper: number): number {\n  // Return the count of pairs (i, j) where i < j and lower <= nums[i]+nums[j] <= upper.\n}",
+
     python: `def countFairPairs(nums: list[int], lower: int, upper: int) -> int:
     # Return the count of pairs (i, j) where i < j and lower <= nums[i]+nums[j] <= upper.
     pass`,

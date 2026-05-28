@@ -43,6 +43,8 @@ Return the **minimum number of coins** of **any value** that need to be added to
   params: ['coins', 'target'],
   starterCode: {
     javascript: 'function minimumAddedCoins(coins, target) {\n  // your code here\n}\n',
+    typescript: "function minimumAddedCoins(coins: number[], target: number): number {\n  // your code here\n}",
+
     python: 'def minimumAddedCoins(coins, target):\n    # your code here\n    pass\n',
   },
   visibleTests: [

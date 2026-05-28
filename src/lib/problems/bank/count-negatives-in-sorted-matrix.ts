@@ -34,6 +34,8 @@ export const problem: Problem = {
     javascript: `function countNegatives(grid) {
   // Return count of negative numbers in the sorted matrix
 }`,
+    typescript: "function countNegatives(grid: number[][]): number {\n  // Return count of negative numbers in the sorted matrix\n}",
+
     python: `def countNegatives(grid):
     # Return count of negative numbers in the sorted matrix
     pass`,

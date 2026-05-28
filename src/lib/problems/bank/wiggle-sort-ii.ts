@@ -51,6 +51,8 @@ You may assume the input array always has a valid answer.`,
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// wiggleSortIIRunner calls wiggleSortII(nums) which modifies in-place.\nfunction wiggleSortII(nums) {\n\n}\n',
+    typescript: "function wiggleSortIIRunner(nums: number[]): number[] {\n\n}",
+
     python: '# wiggleSortIIRunner calls wiggleSortII(nums) which modifies in-place.\ndef wiggleSortII(nums):\n    pass\n',
   },
   visibleTests: [

@@ -40,6 +40,8 @@ Given an integer \`n\`, return the **largest** number less than or equal to \`n\
   // return largest number <= n with monotone increasing digits
 
 }`,
+    typescript: "function monotoneIncreasingDigits(n: number): number {\n  // return largest number <= n with monotone increasing digits\n\n}",
+
     python: `def monotoneIncreasingDigits(n: int) -> int:
     # return largest number <= n with monotone increasing digits
     pass

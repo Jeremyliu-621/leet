@@ -36,6 +36,8 @@ Return the number of times the user had to change the key.
   params: ['s'],
   starterCode: {
     javascript: 'function countKeyChanges(s) {\n  \n}\n',
+    typescript: "function countKeyChanges(s: string): number {\n  \n}",
+
     python: 'def countKeyChanges(s):\n    pass\n',
   },
   visibleTests: [

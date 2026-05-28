@@ -77,6 +77,8 @@ export const problem: Problem = {
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// ListNode class and reverseBetweenRunner wrapper are pre-defined.\n// Implement the function below:\nfunction reverseBetween(head, left, right) {\n  \n}\n',
+    typescript: "function reverseBetweenRunner(head: number[], left: number, right: number): number[] {\n  \n}",
+
     python: '# ListNode class and reverseBetweenRunner wrapper are pre-defined.\n# Implement the function below:\ndef reverseBetween(head, left, right):\n    pass\n',
   },
   visibleTests: [

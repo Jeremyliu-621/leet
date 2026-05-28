@@ -60,6 +60,8 @@ Merge accounts that belong to the same person. Two accounts are in the same pers
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: 'function accountsMerge(accounts) {\n  \n}\n',
+    typescript: "function accountsMergeRunner(accounts: string[][]): string[][] {\n  \n}",
+
     python: 'def accountsMerge(accounts):\n    pass\n',
   },
   visibleTests: [

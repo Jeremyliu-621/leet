@@ -40,6 +40,8 @@ You must choose a contiguous subarray; you may not skip elements.
   params: ['nums'],
   starterCode: {
     javascript: 'function maximumUniqueSum(nums) {\n  // your code here\n}\n',
+    typescript: "function maximumUniqueSum(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def maximumUniqueSum(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

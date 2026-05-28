@@ -35,6 +35,8 @@ Return the **minimum** equal sum you can obtain, or \`-1\` if it is impossible.`
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: 'function minSum(nums1, nums2) {\n  \n}\n',
+    typescript: "function minSum(nums1: number[], nums2: number[]): number {\n  \n}",
+
     python: 'def minSum(nums1, nums2):\n    pass\n',
   },
   visibleTests: [

@@ -43,6 +43,8 @@ Return an array \`answer\` of length \`n\` where \`answer[i]\` is the length of 
   // return shortest alternating-color path from node 0 to each node
 
 }`,
+    typescript: "function shortestAlternatingColors(n: number, redEdges: number[][], blueEdges: unknown[]): number[] {\n  // return shortest alternating-color path from node 0 to each node\n\n}",
+
     python: `def shortestAlternatingColors(n: int, redEdges: list, blueEdges: list) -> list:
     # return shortest alternating-color path from node 0 to each node
     pass

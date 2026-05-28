@@ -42,6 +42,8 @@ return cur;\`\`\``
   params: ['nums'],
   starterCode: {
     javascript: 'function deleteAndEarn(nums) {\n\n}\n',
+    typescript: "function deleteAndEarn(nums: number[]): number {\n\n}",
+
     python: 'def deleteAndEarn(nums):\n    pass\n',
   },
   visibleTests: [

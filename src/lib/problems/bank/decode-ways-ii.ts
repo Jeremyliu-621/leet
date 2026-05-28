@@ -38,6 +38,8 @@ Given a string \`s\` consisting of digits and \`'*'\` characters (where \`'*'\` 
   params: ['s'],
   starterCode: {
     javascript: 'function numDecodings(s) {\n  \n}\n',
+    typescript: "function numDecodings(s: string): number {\n  \n}",
+
     python: 'def numDecodings(s):\n    pass\n',
   },
   visibleTests: [

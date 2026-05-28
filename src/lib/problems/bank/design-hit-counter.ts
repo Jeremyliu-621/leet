@@ -64,6 +64,8 @@ Timestamps are given as positive integers. Multiple hits at the same timestamp a
   }
   return results;
 }`,
+    typescript: "function hitCounter(operations: string[], args: (unknown[] | number[])[]): (null | number)[] {\n  const results = [];\n  let timestamps = [];\n\n  for (let i = 0; i < operations.length; i++) {\n    const op = operations[i];\n    const arg = args[i] ?? [];\n    if (op === 'HitCounter') {\n      timestamps = [];\n      results.push(null);\n    } else if (op === 'hit') {\n      // record the hit\n      results.push(null);\n    } else { // getHits\n      const t = arg[0];\n      // count hits in [t - 299, t]\n      results.push(0);\n    }\n  }\n  return results;\n}",
+
     python: `def hitCounter(operations, args):
     results = []
     timestamps = []

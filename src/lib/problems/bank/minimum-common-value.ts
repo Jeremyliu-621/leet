@@ -39,6 +39,8 @@ Note that an integer is said to be **common** to \`nums1\` and \`nums2\` if both
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: 'function getCommon(nums1, nums2) {\n  \n}\n',
+    typescript: "function getCommon(nums1: number[], nums2: number[]): number {\n  \n}",
+
     python: 'def getCommon(nums1, nums2):\n    pass\n',
   },
   visibleTests: [

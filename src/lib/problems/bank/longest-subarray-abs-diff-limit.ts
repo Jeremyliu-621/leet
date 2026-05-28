@@ -21,6 +21,8 @@ export const problem: Problem = {
   params: ['nums', 'limit'],
   starterCode: {
     javascript: 'function longestSubarrayWithLimit(nums, limit) {\n\n}\n',
+    typescript: "function longestSubarrayWithLimit(nums: number[], limit: number): number {\n\n}",
+
     python: 'def longestSubarrayWithLimit(nums, limit):\n    pass\n',
   },
   visibleTests: [

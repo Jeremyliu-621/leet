@@ -39,6 +39,8 @@ function reverseBits(n) {
     javascript: `function reverseBits(n) {
 
 }`,
+    typescript: "function reverseBits(n: number): number {\n\n}",
+
     python: `def reverseBits(n):
     pass`,
   },

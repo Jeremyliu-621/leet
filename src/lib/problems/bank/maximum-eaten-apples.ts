@@ -31,6 +31,8 @@ Given two integer arrays \`days\` and \`apples\` of length \`n\`, return the max
   params: ['apples', 'days'],
   starterCode: {
     javascript: 'function eatenApples(apples, days) {\n\n}\n',
+    typescript: "function eatenApples(apples: number[], days: number[]): number {\n\n}",
+
     python: 'def eatenApples(apples, days):\n    pass\n',
   },
   visibleTests: [

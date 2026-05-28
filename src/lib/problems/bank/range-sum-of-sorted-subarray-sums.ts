@@ -43,6 +43,8 @@ Return the sum of the numbers from position \`left\` to \`right\` (both **1-inde
     javascript: `function rangeSum(nums, n, left, right) {
 
 }`,
+    typescript: "function rangeSum(nums: number[], n: number, left: number, right: number): number {\n\n}",
+
     python: `def rangeSum(nums: list[int], n: int, left: int, right: int) -> int:
     pass`,
   },

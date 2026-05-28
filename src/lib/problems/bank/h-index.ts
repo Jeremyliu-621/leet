@@ -42,6 +42,8 @@ function hIndex(citations) {
     javascript: `function hIndex(citations) {
 
 }`,
+    typescript: "function hIndex(citations: number[]): number {\n\n}",
+
     python: `def hIndex(citations):
     pass`,
   },

@@ -40,6 +40,8 @@ export const problem: Problem = {
   // return count of subarrays with max in [left, right]
 
 }`,
+    typescript: "function numSubarrayBoundedMax(nums: number[], left: number, right: number): number {\n  // return count of subarrays with max in [left, right]\n\n}",
+
     python: `def numSubarrayBoundedMax(nums: list, left: int, right: int) -> int:
     # return count of subarrays with max in [left, right]
     pass

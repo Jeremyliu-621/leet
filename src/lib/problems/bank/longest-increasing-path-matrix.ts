@@ -41,6 +41,8 @@ From each cell, you can either move in four directions: left, right, up, or down
     javascript: `function longestIncreasingPath(matrix) {
   // Return length of longest increasing path
 }`,
+    typescript: "function longestIncreasingPath(matrix: number[][]): number {\n  // Return length of longest increasing path\n}",
+
     python: `def longestIncreasingPath(matrix):
     # Return length of longest increasing path
     pass`,

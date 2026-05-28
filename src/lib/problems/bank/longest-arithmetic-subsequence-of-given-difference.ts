@@ -43,6 +43,8 @@ export const problem: Problem = {
   // with consecutive difference equal to 'difference'
 
 }`,
+    typescript: "function longestSubsequence(arr: number[], difference: number): number {\n  // return the length of the longest arithmetic subsequence\n  // with consecutive difference equal to 'difference'\n\n}",
+
     python: `def longestSubsequence(arr: list, difference: int) -> int:
     # return the length of the longest arithmetic subsequence
     # with consecutive difference equal to 'difference'

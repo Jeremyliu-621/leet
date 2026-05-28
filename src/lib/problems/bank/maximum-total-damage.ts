@@ -35,6 +35,8 @@ Return the **maximum total damage** that a magician can deal.`,
   params: ['power'],
   starterCode: {
     javascript: 'function maximumTotalDamage(power) {\n\n}',
+    typescript: "function maximumTotalDamage(power: number[]): number {\n\n}",
+
     python: 'def maximumTotalDamage(power):\n    pass',
   },
   visibleTests: [

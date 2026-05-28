@@ -32,6 +32,8 @@ Given the two integer arrays \`quality\` and \`wage\` and an integer \`k\`, retu
   params: ['quality', 'wage', 'k'],
   starterCode: {
     javascript: 'function mincostToHireWorkers(quality, wage, k) {\n\n}\n',
+    typescript: "function mincostToHireWorkers(quality: number[], wage: number[], k: number): number {\n\n}",
+
     python: 'def mincostToHireWorkers(quality, wage, k):\n    pass\n',
   },
   visibleTests: [

@@ -50,6 +50,8 @@ You may assume all tickets form at least one valid itinerary. You must use all t
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: 'function reconstructItinerary(tickets) {\n\n}\n',
+    typescript: "function reconstructItineraryRunner(tickets: string[][]): string[] {\n\n}",
+
     python: 'def reconstructItinerary(tickets):\n    pass\n',
   },
   visibleTests: [

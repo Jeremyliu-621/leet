@@ -41,6 +41,8 @@ Return the maximum profit we can achieve after assigning the workers to the jobs
   params: ['difficulty', 'profit', 'worker'],
   starterCode: {
     javascript: 'function maxProfitAssignment(difficulty, profit, worker) {\n  // your code here\n}\n',
+    typescript: "function maxProfitAssignment(difficulty: number[], profit: number[], worker: number[]): number {\n  // your code here\n}",
+
     python: 'def maxProfitAssignment(difficulty, profit, worker):\n    # your code here\n    pass\n',
   },
   visibleTests: [

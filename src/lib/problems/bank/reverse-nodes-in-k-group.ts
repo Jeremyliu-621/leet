@@ -91,6 +91,8 @@ You may not alter the values in the list's nodes — only nodes themselves may b
   starterCode: {
     javascript:
       '// ListNode class and reverseKGroupRunner wrapper are pre-defined.\nfunction reverseKGroup(head, k) {\n  // Reverse every k nodes; leave the tail as-is if < k nodes remain\n}\n',
+    typescript: "function reverseKGroupRunner(head: number[], k: number): number[] {\n  // Reverse every k nodes; leave the tail as-is if < k nodes remain\n}",
+
     python:
       '# ListNode class and reverseKGroupRunner wrapper are pre-defined.\ndef reverseKGroup(head, k):\n    # Reverse every k nodes; leave the tail as-is if < k nodes remain\n    pass\n',
   },

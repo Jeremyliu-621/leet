@@ -39,6 +39,8 @@ Given an integer array \`nums\` representing the amount of money of each house, 
     javascript: `function rob(nums) {
   // Return max amount you can rob (circular arrangement)
 }`,
+    typescript: "function rob(nums: number[]): number {\n  // Return max amount you can rob (circular arrangement)\n}",
+
     python: `def rob(nums):
     # Return max amount you can rob (circular arrangement)
     pass`,

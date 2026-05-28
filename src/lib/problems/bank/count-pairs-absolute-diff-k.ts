@@ -38,6 +38,8 @@ export const problem: Problem = {
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function countKDifference(nums, k) {\n  // your code here\n}\n',
+    typescript: "function countKDifference(nums: number[], k: number): number {\n  // your code here\n}",
+
     python: 'def countKDifference(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

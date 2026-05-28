@@ -43,6 +43,8 @@ A city \`a\` can be reached from city \`b\` if there exists a path with total di
     javascript: `function findTheCity(n, edges, distanceThreshold) {
 
 }`,
+    typescript: "function findTheCity(n: number, edges: number[][], distanceThreshold: number): number {\n\n}",
+
     python: `def findTheCity(n, edges, distanceThreshold):
     pass`,
   },

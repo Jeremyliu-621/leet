@@ -40,6 +40,8 @@ Return the **maximum number** of envelopes you can Russian doll (put one inside 
   starterCode: {
     javascript:
       'function maxEnvelopes(envelopes) {\n\n}\n',
+    typescript: "function maxEnvelopes(envelopes: number[][]): number {\n\n}",
+
     python:
       'def maxEnvelopes(envelopes: list[list[int]]) -> int:\n    pass\n',
   },

@@ -43,6 +43,8 @@ A **subsequence** is derived from \`nums\` by deleting some (possibly zero) elem
     javascript: `function countArithmeticSlices(nums) {
 
 }`,
+    typescript: "function countArithmeticSlices(nums: number[]): number {\n\n}",
+
     python: `def countArithmeticSlices(nums):
     `,
   },

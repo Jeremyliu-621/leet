@@ -37,6 +37,8 @@ A **subsequence** of an array is a new array generated from the original array b
   params: ['nums'],
   starterCode: {
     javascript: 'function maxAlternatingSum(nums) {\n  // your code here\n}\n',
+    typescript: "function maxAlternatingSum(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def maxAlternatingSum(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

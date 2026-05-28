@@ -29,6 +29,8 @@ Return the **minimum number of swaps** so that every couple is sitting side by s
   params: ['row'],
   starterCode: {
     javascript: 'function minSwapsCouples(row) {\n\n}\n',
+    typescript: "function minSwapsCouples(row: number[]): number {\n\n}",
+
     python: 'def minSwapsCouples(row):\n    pass\n',
   },
   visibleTests: [

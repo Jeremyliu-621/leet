@@ -51,6 +51,8 @@ function maxIceCream(costs, coins) {
     javascript: `function maxIceCream(costs, coins) {
 
 }`,
+    typescript: "function maxIceCream(costs: number[], coins: number): number {\n\n}",
+
     python: `def maxIceCream(costs, coins):
     pass`,
   },

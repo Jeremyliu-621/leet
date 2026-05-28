@@ -40,6 +40,8 @@ A **subsequence** is an array that can be derived from another array by deleting
     javascript: `function longestSquareStreak(nums) {
 
 }`,
+    typescript: "function longestSquareStreak(nums: number[]): number {\n\n}",
+
     python: `def longestSquareStreak(nums):
     pass`,
   },

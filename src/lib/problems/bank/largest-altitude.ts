@@ -26,6 +26,8 @@ You are given an integer array \`gain\` of length \`n\` where \`gain[i]\` is the
   params: ['gain'],
   starterCode: {
     javascript: 'function largestAltitude(gain) {\n  \n}\n',
+    typescript: "function largestAltitude(gain: number[]): number {\n  \n}",
+
     python: 'def largestAltitude(gain):\n    pass\n',
   },
   visibleTests: [

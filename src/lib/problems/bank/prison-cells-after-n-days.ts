@@ -40,6 +40,8 @@ Return the state of the prison after \`n\` days (i.e., \`n\` such changes descri
   params: ['cells', 'n'],
   starterCode: {
     javascript: 'function prisonAfterNDays(cells, n) {\n  \n}\n',
+    typescript: "function prisonAfterNDays(cells: number[], n: number): number[] {\n  \n}",
+
     python: 'def prisonAfterNDays(cells, n):\n    pass\n',
   },
   visibleTests: [

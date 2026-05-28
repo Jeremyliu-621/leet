@@ -42,6 +42,8 @@ return res;\`\`\``
     javascript: `function shuffle(nums, n) {
 
 }`,
+    typescript: "function shuffle(nums: number[], n: number): number[] {\n\n}",
+
     python: `def shuffle(nums, n):
     pass`,
   },

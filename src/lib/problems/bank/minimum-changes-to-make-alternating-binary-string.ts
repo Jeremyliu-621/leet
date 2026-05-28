@@ -42,6 +42,8 @@ Return the **minimum** number of operations needed to make \`s\` alternating.`,
     javascript: `function minOperations(s) {
 
 }`,
+    typescript: "function minOperations(s: string): number {\n\n}",
+
     python: `def minOperations(s):
     pass`,
   },

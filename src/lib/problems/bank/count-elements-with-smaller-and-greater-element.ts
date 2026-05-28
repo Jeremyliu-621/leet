@@ -39,6 +39,8 @@ More formally, count the elements \`nums[i]\` such that there exist indices \`j\
 function countElements(nums) {
 
 }`,
+    typescript: "function countElements(nums: number[]): number {number[]} nums\n * @return {number}\n */\nfunction countElements(nums) {\n\n}",
+
     python: `def countElements(nums: list[int]) -> int:
     pass`,
   },

@@ -42,6 +42,8 @@ Return the answer formatted to 5 decimal places.
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function findMaxAverage(nums, k) {\n  \n}\n',
+    typescript: "function findMaxAverage(nums: number[], k: number): number {\n  \n}",
+
     python: 'def findMaxAverage(nums, k):\n    ',
   },
   visibleTests: [

@@ -51,6 +51,8 @@ function sumOddLengthSubarrays(arr) {
     javascript: `function sumOddLengthSubarrays(arr) {
 
 }`,
+    typescript: "function sumOddLengthSubarrays(arr: number[]): number {\n\n}",
+
     python: `def sumOddLengthSubarrays(arr):
     pass`,
   },

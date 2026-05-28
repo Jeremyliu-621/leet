@@ -45,6 +45,8 @@ function differenceOfSums(n, m) {
     javascript: `function differenceOfSums(n, m) {
 
 }`,
+    typescript: "function differenceOfSums(n: number, m: number): number {\n\n}",
+
     python: `def differenceOfSums(n, m):
     pass`,
   },

@@ -40,6 +40,8 @@ Return the **length** of the longest possible word chain with words chosen from 
     javascript: `function longestStrChain(words) {
 
 }`,
+    typescript: "function longestStrChain(words: string[]): number {\n\n}",
+
     python: `def longestStrChain(words):
     pass`,
   },

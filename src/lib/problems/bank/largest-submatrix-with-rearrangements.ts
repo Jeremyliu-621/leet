@@ -44,6 +44,8 @@ Return the **area** of the largest submatrix within \`matrix\` where **every ele
     javascript: `function largestSubmatrix(matrix) {
   // Rearrange columns optimally, return the largest all-1s submatrix area
 }`,
+    typescript: "function largestSubmatrix(matrix: number[][]): number {\n  // Rearrange columns optimally, return the largest all-1s submatrix area\n}",
+
     python: `def largestSubmatrix(matrix: list[list[int]]) -> int:
     # Your code here
     pass`,

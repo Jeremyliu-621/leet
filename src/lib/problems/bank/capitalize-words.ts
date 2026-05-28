@@ -40,6 +40,8 @@ Words are separated by single spaces. A word is any sequence of characters betwe
   params: ['sentence'],
   starterCode: {
     javascript: 'function capitalizeWords(sentence) {\n  // your code here\n}\n',
+    typescript: "function capitalizeWords(sentence: string): string {\n  // your code here\n}",
+
     python: 'def capitalizeWords(sentence):\n    # your code here\n    pass\n',
   },
   visibleTests: [

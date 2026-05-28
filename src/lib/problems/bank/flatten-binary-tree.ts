@@ -105,6 +105,8 @@ export const problem: Problem = {
   starterCode: {
     javascript:
       '// TreeNode class is pre-defined. Implement the function below:\nfunction flatten(root) {\n  \n}\n',
+    typescript: "function flattenRunner(root: (number | null)[]): number[] {\n  \n}",
+
     python:
       '# TreeNode class is pre-defined. Implement the function below:\ndef flatten(root):\n    pass\n',
   },

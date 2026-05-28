@@ -44,6 +44,8 @@ Return the resulting string after the operation.
     javascript: `function replaceDigits(s) {
 
 }`,
+    typescript: "function replaceDigits(s: string): string {\n\n}",
+
     python: `def replaceDigits(s):
     pass`,
   },

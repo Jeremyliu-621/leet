@@ -37,6 +37,8 @@ Given the array \`answers\`, return the **minimum** number of rabbits that could
     javascript: `function numRabbits(answers) {
 
 }`,
+    typescript: "function numRabbits(answers: number[]): number {\n\n}",
+
     python: `def numRabbits(answers):
     pass`,
   },

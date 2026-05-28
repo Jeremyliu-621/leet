@@ -40,6 +40,8 @@ function xorQueries(arr, queries) {
   params: ['arr', 'queries'],
   starterCode: {
     javascript: 'function xorQueries(arr, queries) {\n\n}\n',
+    typescript: "function xorQueries(arr: number[], queries: number[][]): number[] {\n\n}",
+
     python: 'def xorQueries(arr, queries):\n    pass\n',
   },
   visibleTests: [

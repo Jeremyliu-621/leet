@@ -45,6 +45,8 @@ You must write a solution with **O(log n)** runtime complexity.
   params: ['nums', 'target'],
   starterCode: {
     javascript: 'function searchRotated(nums, target) {\n  // your code here\n}\n',
+    typescript: "function searchRotated(nums: number[], target: number): number {\n  // your code here\n}",
+
     python: 'def searchRotated(nums, target):\n    # your code here\n    pass\n',
   },
   visibleTests: [

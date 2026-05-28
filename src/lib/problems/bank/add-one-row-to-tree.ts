@@ -138,6 +138,8 @@ Return the modified tree as a **level-order (BFS) array**.
   starterCode: {
     javascript:
       '// TreeNode class and addOneRowRunner wrapper are pre-defined.\n// Implement the function below:\nfunction addOneRow(root, val, depth) {\n  \n}\n',
+    typescript: "function addOneRowRunner(root: number[], val: number, depth: number): (number | null)[] {\n  \n}",
+
     python:
       '# TreeNode class and addOneRowRunner wrapper are pre-defined.\n# Implement the function below:\ndef addOneRow(root, val, depth):\n    pass\n',
   },

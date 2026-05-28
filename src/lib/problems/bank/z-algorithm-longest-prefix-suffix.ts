@@ -49,6 +49,8 @@ This is the core computation of the **KMP failure function** (also called the pr
     javascript: `function longestPrefixSuffix(s) {
   // Return length of longest proper prefix of s that is also a suffix
 }`,
+    typescript: "function longestPrefixSuffix(s: string): number {\n  // Return length of longest proper prefix of s that is also a suffix\n}",
+
     python: `def longestPrefixSuffix(s: str) -> int:
     # Return length of longest proper prefix of s that is also a suffix
     pass`,

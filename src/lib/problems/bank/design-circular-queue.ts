@@ -69,6 +69,8 @@ Implement the \`MyCircularQueue\` class:
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// circularQueueRunner is pre-defined.\nclass MyCircularQueue {\n  constructor(k) { this.k = k; }\n  enQueue(value) {}\n  deQueue() {}\n  Front() {}\n  Rear() {}\n  isEmpty() {}\n  isFull() {}\n}\n',
+    typescript: "function circularQueueRunner(k: number, ops: string[], args: (number[] | unknown[])[]): (boolean | number)[] {\n  constructor(k) { this.k = k; }\n  enQueue(value) {}\n  deQueue() {}\n  Front() {}\n  Rear() {}\n  isEmpty() {}\n  isFull() {}\n}",
+
     python: '# circularQueueRunner is pre-defined.\nclass MyCircularQueue:\n    def __init__(self, k): self.k = k\n    def enQueue(self, value): pass\n    def deQueue(self): pass\n    def Front(self): pass\n    def Rear(self): pass\n    def isEmpty(self): pass\n    def isFull(self): pass\n',
   },
   visibleTests: [

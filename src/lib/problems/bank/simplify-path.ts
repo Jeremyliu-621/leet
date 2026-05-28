@@ -47,6 +47,8 @@ function simplifyPath(path) {
     javascript: `function simplifyPath(path) {
 
 }`,
+    typescript: "function simplifyPath(path: string): string {\n\n}",
+
     python: `def simplifyPath(path):
     pass`,
   },

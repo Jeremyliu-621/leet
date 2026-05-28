@@ -43,6 +43,8 @@ A **substring** is a contiguous sequence of characters within a string.`,
   params: ['s'],
   starterCode: {
     javascript: 'function largestVariance(s) {\n  \n}\n',
+    typescript: "function largestVariance(s: string): number {\n  \n}",
+
     python: 'def largestVariance(s):\n    pass\n',
   },
   visibleTests: [

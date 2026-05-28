@@ -40,6 +40,8 @@ Return the number of gifts remaining after \`k\` seconds.`,
     javascript: `function pickGifts(gifts, k) {
 
 }`,
+    typescript: "function pickGifts(gifts: number[], k: number): number {\n\n}",
+
     python: `def pickGifts(gifts, k):
     pass`,
   },

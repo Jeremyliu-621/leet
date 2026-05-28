@@ -38,6 +38,8 @@ You do **not** need to solve the puzzle — just validate it. A partially-filled
   params: ['board'] as readonly string[],
   starterCode: {
     javascript: 'function isValidSudoku(board) {\n  // your code here\n}\n',
+    typescript: "function isValidSudoku(board: string[][]): boolean {\n  // your code here\n}",
+
     python: 'def isValidSudoku(board: list[list[str]]) -> bool:\n    # your code here\n    pass\n',
   },
   visibleTests: [

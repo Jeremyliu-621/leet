@@ -35,6 +35,8 @@ Substrings that occur multiple times at different positions are counted separate
   params: ['s'],
   starterCode: {
     javascript: 'function countBinarySubstrings(s) {\n  // your code here\n}\n',
+    typescript: "function countBinarySubstrings(s: string): number {\n  // your code here\n}",
+
     python: 'def countBinarySubstrings(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

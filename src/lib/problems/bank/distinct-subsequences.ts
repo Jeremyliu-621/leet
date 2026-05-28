@@ -35,6 +35,8 @@ The test cases are generated so that the answer fits on a 32-bit signed integer.
     javascript: `function numDistinct(s, t) {
 
 }`,
+    typescript: "function numDistinct(s: string, t: string): number {\n\n}",
+
     python: `def numDistinct(s, t):
     pass`,
   },

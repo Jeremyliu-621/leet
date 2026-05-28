@@ -34,6 +34,8 @@ Return the number of **nice** sub-arrays.`,
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function numberOfSubarrays(nums, k) {\n\n}\n',
+    typescript: "function numberOfSubarrays(nums: number[], k: number): number {\n\n}",
+
     python: 'def numberOfSubarrays(nums, k):\n    pass\n',
   },
   visibleTests: [

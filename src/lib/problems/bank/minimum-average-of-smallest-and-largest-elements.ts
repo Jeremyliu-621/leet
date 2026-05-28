@@ -48,6 +48,8 @@ function minimumAverage(nums) {
     javascript: `function minimumAverage(nums) {
 
 }`,
+    typescript: "function minimumAverage(nums: number[]): number {\n\n}",
+
     python: `def minimumAverage(nums):
     pass`,
   },

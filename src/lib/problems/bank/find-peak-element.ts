@@ -40,6 +40,8 @@ You must write an algorithm that runs in **O(log n)** time.
   params: ['nums'],
   starterCode: {
     javascript: 'function findPeakElement(nums) {\n  // your code here\n}\n',
+    typescript: "function findPeakElement(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def findPeakElement(nums: list) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

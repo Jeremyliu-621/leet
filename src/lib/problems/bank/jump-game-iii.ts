@@ -42,6 +42,8 @@ Notice that you can not jump outside of the array at any time.`,
     javascript: `function canReach(arr, start) {
   // Return true if any index with value 0 is reachable
 }`,
+    typescript: "function canReach(arr: number[], start: number): boolean {\n  // Return true if any index with value 0 is reachable\n}",
+
     python: `def canReach(arr, start):
     # Return true if any index with value 0 is reachable
     pass`,

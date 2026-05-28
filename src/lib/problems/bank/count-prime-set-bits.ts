@@ -34,6 +34,8 @@ A **set bit** is a bit equal to \`1\`. A number is **prime** if it is greater th
   params: ['left', 'right'],
   starterCode: {
     javascript: 'function countPrimeSetBits(left, right) {\n  // your code here\n}\n',
+    typescript: "function countPrimeSetBits(left: number, right: number): number {\n  // your code here\n}",
+
     python: 'def countPrimeSetBits(left, right):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -44,6 +44,8 @@ function digitCount(num) {
     javascript: `function digitCount(num) {
 
 }`,
+    typescript: "function digitCount(num: string): boolean {\n\n}",
+
     python: `def digitCount(num):
     pass`,
   },

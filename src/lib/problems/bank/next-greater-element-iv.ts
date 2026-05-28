@@ -42,6 +42,8 @@ The **second greater** integer of \`nums[i]\` is defined as follows: let \`j\` b
     javascript: `function secondGreaterElement(nums) {
 
 }`,
+    typescript: "function secondGreaterElement(nums: number[]): number[] {\n\n}",
+
     python: `def secondGreaterElement(nums):
     pass`,
   },

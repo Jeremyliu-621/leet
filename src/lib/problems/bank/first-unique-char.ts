@@ -37,6 +37,8 @@ export const problem: Problem = {
   params: ['text'],
   starterCode: {
     javascript: 'function firstUniqueChar(text) {\n  // your code here\n}\n',
+    typescript: "function firstUniqueChar(text: string): number {\n  // your code here\n}",
+
     python: 'def firstUniqueChar(text):\n    # your code here\n    pass\n',
   },
   visibleTests: [

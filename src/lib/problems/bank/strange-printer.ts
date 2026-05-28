@@ -36,6 +36,8 @@ Given a string \`s\`, return the **minimum number of turns** the printer needs t
   params: ['s'],
   starterCode: {
     javascript: `function strangePrinter(s) {\n\n}`,
+    typescript: "function strangePrinter(s: string): number {\n\n}",
+
     python: `def strangePrinter(s):\n    pass`,
   },
   visibleTests: [

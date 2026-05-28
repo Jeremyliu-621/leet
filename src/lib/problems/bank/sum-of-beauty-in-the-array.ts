@@ -44,6 +44,8 @@ Return the **sum of beauty** of all \`nums[i]\` where \`1 <= i <= nums.length - 
     javascript: `function sumOfBeauties(nums) {
 
 }`,
+    typescript: "function sumOfBeauties(nums: number[]): number {\n\n}",
+
     python: `def sumOfBeauties(nums):
     pass`,
   },

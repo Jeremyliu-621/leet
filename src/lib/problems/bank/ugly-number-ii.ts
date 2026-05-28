@@ -32,6 +32,8 @@ Given an integer \`n\`, return the \`n\`th **ugly number**.`,
   params: ['n'],
   starterCode: {
     javascript: 'function nthUglyNumber(n) {\n  // your code here\n}\n',
+    typescript: "function nthUglyNumber(n: number): number {\n  // your code here\n}",
+
     python: 'def nthUglyNumber(n):\n    # your code here\n    pass\n',
   },
   visibleTests: [

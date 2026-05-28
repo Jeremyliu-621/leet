@@ -31,6 +31,8 @@ Return the **minimum** number of operations needed such that there is at least o
   params: ['blocks', 'k'],
   starterCode: {
     javascript: 'function minimumRecolors(blocks, k) {\n  \n}\n',
+    typescript: "function minimumRecolors(blocks: string, k: number): number {\n  \n}",
+
     python: 'def minimumRecolors(blocks, k):\n    pass\n',
   },
   visibleTests: [

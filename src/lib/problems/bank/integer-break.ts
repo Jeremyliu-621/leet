@@ -36,6 +36,8 @@ return dp[n];\`\`\``
   params: ['n'],
   starterCode: {
     javascript: 'function integerBreak(n) {\n  \n}\n',
+    typescript: "function integerBreak(n: number): number {\n  \n}",
+
     python: 'def integerBreak(n):\n    pass\n',
   },
   visibleTests: [

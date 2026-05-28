@@ -43,6 +43,8 @@ Return the **number of restricted paths** from node \`1\` to node \`n\`. Since t
     javascript: `function countRestrictedPaths(n, edges) {
   // Return number of restricted paths from node 1 to node n, mod 10^9+7
 }`,
+    typescript: "function countRestrictedPaths(n: number, edges: number[][]): number {\n  // Return number of restricted paths from node 1 to node n, mod 10^9+7\n}",
+
     python: `def countRestrictedPaths(n: int, edges: list[list[int]]) -> int:
     # Return number of restricted paths from node 1 to node n, mod 10^9+7
     pass`,

@@ -46,6 +46,8 @@ function check(nums) {
   params: ['nums'],
   starterCode: {
     javascript: 'function check(nums) {\n  \n}\n',
+    typescript: "function check(nums: number[]): boolean {\n  \n}",
+
     python: 'def check(nums):\n    pass\n',
   },
   visibleTests: [

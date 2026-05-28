@@ -90,6 +90,8 @@ export const problem: Problem = {
   starterCode: {
     javascript:
       '// TreeNode class is pre-defined. Implement the function below:\nfunction rightSideView(root) {\n  \n}\n',
+    typescript: "function rightSideViewRunner(root: (number | null)[]): number[] {\n  \n}",
+
     python:
       '# TreeNode class is pre-defined. Implement the function below:\ndef rightSideView(root):\n    pass\n',
   },

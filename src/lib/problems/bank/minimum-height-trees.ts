@@ -43,6 +43,8 @@ You may return the answer in **any order**. The result is sorted before comparis
     javascript: `function findMinHeightTrees(n, edges) {
   // Return sorted array of MHT root node labels
 }`,
+    typescript: "function findMinHeightTrees(n: number, edges: number[][]): number[] {\n  // Return sorted array of MHT root node labels\n}",
+
     python: `def findMinHeightTrees(n, edges):
     # Return sorted list of MHT root node labels
     pass`,

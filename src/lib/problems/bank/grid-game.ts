@@ -44,6 +44,8 @@ Return the **minimum** number of points Robot 2 can collect.`,
     javascript: `function gridGame(grid) {
 
 }`,
+    typescript: "function gridGame(grid: number[][]): number {\n\n}",
+
     python: `def gridGame(grid):
     pass`,
   },

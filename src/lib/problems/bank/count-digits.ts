@@ -23,6 +23,8 @@ An integer \`val\` divides \`nums\` if \`nums % val == 0\`.`,
   params: ['num'],
   starterCode: {
     javascript: 'function countDigits(num) {\n  // your code here\n}\n',
+    typescript: "function countDigits(num: number): number {\n  // your code here\n}",
+
     python: 'def countDigits(num):\n    # your code here\n    pass\n',
   },
   visibleTests: [

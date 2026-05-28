@@ -45,6 +45,8 @@ Return the **largest** perimeter of a polygon whose sides can be formed from \`n
   params: ['nums'],
   starterCode: {
     javascript: 'function largestPerimeter(nums) {\n  \n}\n',
+    typescript: "function largestPerimeter(nums: number[]): number {\n  \n}",
+
     python: 'def largestPerimeter(nums):\n    pass\n',
   },
   visibleTests: [

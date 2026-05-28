@@ -43,6 +43,8 @@ return res;\`\`\``
   params: ['nums', 'index'],
   starterCode: {
     javascript: 'function createTargetArray(nums, index) {\n  \n}\n',
+    typescript: "function createTargetArray(nums: number[], index: number[]): number[] {\n  \n}",
+
     python: 'def createTargetArray(nums, index):\n    pass\n',
   },
   visibleTests: [

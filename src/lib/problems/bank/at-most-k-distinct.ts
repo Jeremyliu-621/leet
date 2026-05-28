@@ -41,6 +41,8 @@ Use a sliding window with a character-frequency map: expand the right boundary f
   params: ['s', 'k'],
   starterCode: {
     javascript: 'function atMostKDistinct(s, k) {\n  // your code here\n}\n',
+    typescript: "function atMostKDistinct(s: string, k: number): number {\n  // your code here\n}",
+
     python: 'def atMostKDistinct(s: str, k: int) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

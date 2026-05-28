@@ -145,6 +145,8 @@ function serialize(root) {
 function deserialize(data) {
 
 }`,
+    typescript: "function serDeserRunner(root: (number | null)[]): (number | null)[] {\n\n}\n\nfunction deserialize(data) {\n\n}",
+
     python: `# TreeNode is pre-defined. The runner calls serialize then deserialize and checks round-trip.
 def serialize(root):
     pass

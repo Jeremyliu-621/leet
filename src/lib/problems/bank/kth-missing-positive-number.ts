@@ -35,6 +35,8 @@ Return the \`k\`th positive integer that is **missing** from this array.`,
   params: ['arr', 'k'],
   starterCode: {
     javascript: `function findKthPositive(arr, k) {\n\n}`,
+    typescript: "function findKthPositive(arr: number[], k: number): number {\n\n}",
+
     python: `def findKthPositive(arr, k):\n    pass`,
   },
   visibleTests: [

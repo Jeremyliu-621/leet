@@ -90,6 +90,8 @@ You must **preserve the original relative order** of nodes in each partition.
   starterCode: {
     javascript:
       '// ListNode class and partitionListRunner wrapper are pre-defined.\n// Implement the function below:\nfunction partition(head, x) {\n  \n}\n',
+    typescript: "function partitionListRunner(head: number[], x: number): number[] {\n  \n}",
+
     python:
       '# ListNode class and partitionListRunner wrapper are pre-defined.\n# Implement the function below:\ndef partition(head, x):\n    pass\n',
   },

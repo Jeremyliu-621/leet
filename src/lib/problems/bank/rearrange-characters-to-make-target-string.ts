@@ -39,6 +39,8 @@ Return the **maximum** number of copies of \`target\` that can be formed by taki
   params: ['s', 'target'],
   starterCode: {
     javascript: 'function rearrangeCharacters(s, target) {\n  \n}\n',
+    typescript: "function rearrangeCharacters(s: string, target: string): number {\n  \n}",
+
     python: 'def rearrangeCharacters(s, target):\n    pass\n',
   },
   visibleTests: [

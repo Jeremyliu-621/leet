@@ -71,6 +71,8 @@ function parkingSystemRunner(ops, vals) {
   });
 }
 `,
+    typescript: "function parkingSystemRunner(ops: string[], vals: number[][]): (null | boolean)[] {\n  constructor(big, medium, small) {\n    // Your code here\n  }\n  addCar(carType) {\n    // carType: 1 = big, 2 = medium, 3 = small\n    // Return true if there is space; false otherwise\n  }\n}",
+
     python: `
 def parkingSystemRunner(ops, vals):
     ops_list = list(ops.to_py() if hasattr(ops, 'to_py') else ops)

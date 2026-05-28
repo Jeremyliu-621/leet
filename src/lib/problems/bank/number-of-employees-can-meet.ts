@@ -39,6 +39,8 @@ Return *the integer denoting the number of employees who worked at least* \`targ
     javascript: `function numberOfEmployeesWhoMetTarget(hours, target) {
 
 }`,
+    typescript: "function numberOfEmployeesWhoMetTarget(hours: number[], target: number): number {\n\n}",
+
     python: `def numberOfEmployeesWhoMetTarget(hours, target):
     pass`,
   },

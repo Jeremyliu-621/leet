@@ -39,6 +39,8 @@ Given a 2D integer array \`grid\` of size \`n x n\` representing a square matrix
     javascript: `function checkXMatrix(grid) {
 
 }`,
+    typescript: "function checkXMatrix(grid: number[][]): boolean {\n\n}",
+
     python: `def checkXMatrix(grid):
     pass`,
   },

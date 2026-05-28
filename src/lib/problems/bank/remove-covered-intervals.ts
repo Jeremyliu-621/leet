@@ -39,6 +39,8 @@ Return the number of remaining intervals.`,
     javascript: `function removeCoveredIntervals(intervals) {
 
 }`,
+    typescript: "function removeCoveredIntervals(intervals: number[][]): number {\n\n}",
+
     python: `def removeCoveredIntervals(intervals):
     pass`,
   },

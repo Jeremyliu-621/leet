@@ -45,6 +45,8 @@ Given an array of strings \`votes\`, return a string of all teams sorted by the 
   params: ['votes'],
   starterCode: {
     javascript: 'function rankTeams(votes) {\n  \n}\n',
+    typescript: "function rankTeams(votes: string[]): string {\n  \n}",
+
     python: 'def rankTeams(votes):\n    pass\n',
   },
   visibleTests: [

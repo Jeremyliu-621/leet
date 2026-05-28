@@ -40,6 +40,8 @@ The brute-force approach checks all O(n²) pairs of start/end indices. A more ef
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function subarraySumEqualsK(nums, k) {\n  // your code here\n}\n',
+    typescript: "function subarraySumEqualsK(nums: number[], k: number): number {\n  // your code here\n}",
+
     python: 'def subarraySumEqualsK(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

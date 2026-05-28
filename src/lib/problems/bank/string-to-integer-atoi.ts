@@ -56,6 +56,8 @@ function myAtoi(s) {
   params: ['s'],
   starterCode: {
     javascript: 'function myAtoi(s) {\n  \n}\n',
+    typescript: "function myAtoi(s: string): number {\n  \n}",
+
     python: 'def myAtoi(s):\n    pass\n',
   },
   visibleTests: [

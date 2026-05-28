@@ -37,6 +37,8 @@ The edges of the undirected tree are given in the array \`edges\`, where \`edges
     javascript: `function minTime(n, edges, hasApple) {
 
 }`,
+    typescript: "function minTime(n: number, edges: number[][], hasApple: boolean[]): number {\n\n}",
+
     python: `def minTime(n, edges, hasApple):
     pass`,
   },

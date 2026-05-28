@@ -39,6 +39,8 @@ Return the **minimum time** to remove all the cars containing illegal goods.`,
   params: ['s'],
   starterCode: {
     javascript: 'function minimumTime(s) {\n  \n}\n',
+    typescript: "function minimumTime(s: string): number {\n  \n}",
+
     python: 'def minimumTime(s):\n    pass\n',
   },
   visibleTests: [

@@ -35,6 +35,8 @@ Given three strings \`firstWord\`, \`secondWord\`, and \`targetWord\`, return \`
   params: ['firstWord', 'secondWord', 'targetWord'],
   starterCode: {
     javascript: 'function isSumEqual(firstWord, secondWord, targetWord) {\n  // your code here\n}\n',
+    typescript: "function isSumEqual(firstWord: string, secondWord: string, targetWord: string): boolean {\n  // your code here\n}",
+
     python: 'def isSumEqual(firstWord, secondWord, targetWord):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -40,6 +40,8 @@ Find and return *the maximum profit you can achieve*.`,
   params: ['prices'],
   starterCode: {
     javascript: 'function maxProfit(prices) {\n\n}',
+    typescript: "function maxProfit(prices: number[]): number {\n\n}",
+
     python: 'def maxProfit(prices):\n    pass',
   },
   visibleTests: [

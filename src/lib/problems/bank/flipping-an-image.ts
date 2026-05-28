@@ -35,6 +35,8 @@ To invert means to replace each \`0\` with \`1\` and each \`1\` with \`0\`: \`[0
   params: ['image'],
   starterCode: {
     javascript: 'function flipAndInvertImage(image) {\n  // your code here\n}\n',
+    typescript: "function flipAndInvertImage(image: number[][]): number[][] {\n  // your code here\n}",
+
     python: 'def flipAndInvertImage(image):\n    # your code here\n    pass\n',
   },
   visibleTests: [

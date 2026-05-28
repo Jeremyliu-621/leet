@@ -29,6 +29,8 @@ A **132 pattern** is a subsequence of three integers \`nums[i]\`, \`nums[j]\` an
     javascript: `function find132pattern(nums) {
 
 }`,
+    typescript: "function find132pattern(nums: number[]): boolean {\n\n}",
+
     python: `def find132pattern(nums):
     pass`,
   },

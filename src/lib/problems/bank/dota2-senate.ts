@@ -45,6 +45,8 @@ Both sides play **optimally** — a senator will always ban the nearest next opp
   params: ['senate'],
   starterCode: {
     javascript: 'function predictPartyVictory(senate) {\n  \n}\n',
+    typescript: "function predictPartyVictory(senate: string): string {\n  \n}",
+
     python: 'def predictPartyVictory(senate: str) -> str:\n    pass\n',
   },
   visibleTests: [

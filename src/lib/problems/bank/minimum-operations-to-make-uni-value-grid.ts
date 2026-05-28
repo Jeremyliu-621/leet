@@ -47,6 +47,8 @@ Return the **minimum** number of operations to make the grid **uni-value**. If i
   params: ['grid', 'x'],
   starterCode: {
     javascript: 'function minOperations(grid, x) {\n  \n}\n',
+    typescript: "function minOperations(grid: number[][], x: number): number {\n  \n}",
+
     python: 'def minOperations(grid, x):\n    ',
   },
   visibleTests: [

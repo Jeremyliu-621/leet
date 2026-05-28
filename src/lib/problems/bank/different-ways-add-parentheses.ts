@@ -57,6 +57,8 @@ return res.length ? res : [+expr];\`\`\``
   params: ['expression'],
   starterCode: {
     javascript: `${JS_PREAMBLE}\nfunction diffWaysToCompute(expression) {\n  \n}\n`,
+    typescript: "function diffWaysToComputeRunner(expression: string): number[] {\n  return diffWaysToCompute(expr).sort((a, b) => a - b);\n}\nfunction diffWaysToCompute(expression) {\n  \n}",
+
     python: `${PY_PREAMBLE}\ndef diffWaysToCompute(expression):\n    pass\n`,
   },
   visibleTests: [

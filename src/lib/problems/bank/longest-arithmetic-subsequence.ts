@@ -40,6 +40,8 @@ A **subsequence** is a sequence that can be derived from \`nums\` by deleting so
     javascript: `function longestArithSeqLength(nums) {
   // Return the length of the longest arithmetic subsequence
 }`,
+    typescript: "function longestArithSeqLength(nums: number[]): number {\n  // Return the length of the longest arithmetic subsequence\n}",
+
     python: `def longestArithSeqLength(nums):
     # Return the length of the longest arithmetic subsequence
     pass`,

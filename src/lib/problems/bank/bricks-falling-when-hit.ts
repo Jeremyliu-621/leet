@@ -45,6 +45,8 @@ Return an array \`result\`, where \`result[i]\` is the number of bricks that **f
   params: ['grid', 'hits'],
   starterCode: {
     javascript: 'function hitBricks(grid, hits) {\n  \n}\n',
+    typescript: "function hitBricks(grid: number[][], hits: number[][]): number[] {\n  \n}",
+
     python: 'def hitBricks(grid, hits):\n    pass\n',
   },
   visibleTests: [

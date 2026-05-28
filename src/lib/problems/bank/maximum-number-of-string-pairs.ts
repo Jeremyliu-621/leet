@@ -29,6 +29,8 @@ Return the **maximum** number of pairs.`,
   params: ['words'],
   starterCode: {
     javascript: 'function maximumNumberOfStringPairs(words) {\n  \n}\n',
+    typescript: "function maximumNumberOfStringPairs(words: string[]): number {\n  \n}",
+
     python: 'def maximumNumberOfStringPairs(words):\n    pass\n',
   },
   visibleTests: [

@@ -41,6 +41,8 @@ A set \`x\` is a **subset** of a set \`y\` if all elements of \`x\` are also ele
     javascript: `function findMaxForm(strs, m, n) {
 
 }`,
+    typescript: "function findMaxForm(strs: string[], m: number, n: number): number {\n\n}",
+
     python: `def findMaxForm(strs: list[str], m: int, n: int) -> int:
     pass`,
   },

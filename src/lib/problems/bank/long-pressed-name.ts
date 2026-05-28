@@ -43,6 +43,8 @@ function isLongPressedName(name, typed) {
     javascript: `function isLongPressedName(name, typed) {
 
 }`,
+    typescript: "function isLongPressedName(name: string, typed: string): boolean {\n\n}",
+
     python: `def isLongPressedName(name, typed):
     pass`,
   },

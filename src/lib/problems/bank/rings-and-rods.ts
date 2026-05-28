@@ -42,6 +42,8 @@ Return the number of rods that have **all three colors** of rings on them.`,
   params: ['rings'],
   starterCode: {
     javascript: 'function countPoints(rings) {\n  // your code here\n}\n',
+    typescript: "function countPoints(rings: string): number {\n  // your code here\n}",
+
     python: 'def countPoints(rings):\n    # your code here\n    pass\n',
   },
   visibleTests: [

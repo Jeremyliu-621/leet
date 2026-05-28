@@ -35,6 +35,8 @@ A **shift** on \`s\` consists of moving the leftmost character of \`s\` to the r
     javascript: `function rotateString(s, goal) {
 
 }`,
+    typescript: "function rotateString(s: string, goal: string): boolean {\n\n}",
+
     python: `def rotateString(s, goal):
     pass`,
   },

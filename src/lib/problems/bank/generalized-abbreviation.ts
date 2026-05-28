@@ -49,6 +49,8 @@ Given a string \`word\`, return **all possible generalized abbreviations** of \`
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// generateAbbreviationsRunner wrapper is pre-defined.\n// Implement the function below:\nfunction generateAbbreviations(word) {\n  \n}\n',
+    typescript: "function generateAbbreviationsRunner(word: string): string[] {\n  \n}",
+
     python: '# generateAbbreviationsRunner wrapper is pre-defined.\n# Implement the function below:\ndef generateAbbreviations(word):\n    pass\n',
   },
   visibleTests: [

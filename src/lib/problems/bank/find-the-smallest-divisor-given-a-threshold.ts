@@ -44,6 +44,8 @@ It is guaranteed that there will be an answer.`,
   let lo = 1, hi = Math.max(...nums);
   // Binary search: find smallest divisor d such that Σ ceil(nums[i]/d) <= threshold
 }`,
+    typescript: "function smallestDivisor(nums: number[], threshold: number): number {\n  let lo = 1, hi = Math.max(...nums);\n  // Binary search: find smallest divisor d such that Σ ceil(nums[i]/d) <= threshold\n}",
+
     python: `def smallestDivisor(nums, threshold):
     import math
     lo, hi = 1, max(nums)

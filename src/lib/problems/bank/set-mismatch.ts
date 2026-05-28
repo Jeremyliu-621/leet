@@ -25,6 +25,8 @@ You are given an integer array \`nums\` representing the data status of this set
   params: ['nums'],
   starterCode: {
     javascript: 'function findErrorNums(nums) {\n  // your code here\n}\n',
+    typescript: "function findErrorNums(nums: number[]): number[] {\n  // your code here\n}",
+
     python: 'def findErrorNums(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

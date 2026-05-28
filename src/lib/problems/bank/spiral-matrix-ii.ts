@@ -30,6 +30,8 @@ export const problem: Problem = {
     javascript: `function generateMatrix(n) {
   // Return n x n matrix filled 1..n^2 in spiral order
 }`,
+    typescript: "function generateMatrix(n: number): number[][] {\n  // Return n x n matrix filled 1..n^2 in spiral order\n}",
+
     python: `def generateMatrix(n):
     # Return n x n matrix filled 1..n^2 in spiral order
     pass`,

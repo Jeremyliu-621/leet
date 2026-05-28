@@ -48,6 +48,8 @@ Return the **minimum number of buses** you must take to travel from \`source\` t
     javascript: `function numBusesToDestination(routes, source, target) {
 
 }`,
+    typescript: "function numBusesToDestination(routes: number[][], source: number, target: number): number {\n\n}",
+
     python: `def numBusesToDestination(routes: list[list[int]], source: int, target: int) -> int:
     pass`,
   },

@@ -40,6 +40,8 @@ Return the **minimum number of intervals** the CPU will take to finish all tasks
     javascript: `function leastInterval(tasks, n) {
 
 }`,
+    typescript: "function leastInterval(tasks: string[], n: number): number {\n\n}",
+
     python: `def leastInterval(tasks, n):
     pass`,
   },

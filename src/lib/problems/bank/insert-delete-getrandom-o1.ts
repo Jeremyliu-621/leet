@@ -46,6 +46,8 @@ You are given a list of \`operations\` where each operation is \`["insert", val]
     javascript: `function insertDeleteGetRandom(operations) {
 
 }`,
+    typescript: "function insertDeleteGetRandom(operations: (string | number)[][]): (boolean | number)[] {\n\n}",
+
     python: `def insertDeleteGetRandom(operations: list[list]) -> list:
     pass`,
   },

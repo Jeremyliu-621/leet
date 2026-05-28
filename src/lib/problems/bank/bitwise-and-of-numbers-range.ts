@@ -33,6 +33,8 @@ export const problem: Problem = {
   params: ['left', 'right'],
   starterCode: {
     javascript: 'function rangeBitwiseAnd(left, right) {\n  // your code here\n}\n',
+    typescript: "function rangeBitwiseAnd(left: number, right: number): number {\n  // your code here\n}",
+
     python: 'def rangeBitwiseAnd(left, right):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -48,6 +48,8 @@ Output: 4
     javascript: `function longestZigZag(root) {
 
 }`,
+    typescript: "function longestZigZag(root: (number | null)[]): number {\n\n}",
+
     python: `def longestZigZag(root):
     `,
   },

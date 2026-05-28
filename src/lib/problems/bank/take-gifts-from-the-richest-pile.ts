@@ -34,6 +34,8 @@ After \`k\` seconds, return the **total number of gifts remaining**.`,
   params: ['gifts', 'k'],
   starterCode: {
     javascript: 'function pickGifts(gifts, k) {\n\n}\n',
+    typescript: "function pickGifts(gifts: number[], k: number): number {\n\n}",
+
     python: 'def pickGifts(gifts, k):\n    pass\n',
   },
   visibleTests: [

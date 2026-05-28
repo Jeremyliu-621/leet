@@ -43,6 +43,8 @@ A subarray is a contiguous **non-empty** sequence of elements within an array.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function continuousSubarrays(nums) {\n  \n}\n',
+    typescript: "function continuousSubarrays(nums: number[]): number {\n  \n}",
+
     python: 'def continuousSubarrays(nums):\n    pass\n',
   },
   visibleTests: [

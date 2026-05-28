@@ -43,6 +43,8 @@ The brute-force O(nk) approach is too slow. Use a **monotonic deque** to achieve
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function maxSlidingWindow(nums, k) {\n  // your code here\n}\n',
+    typescript: "function maxSlidingWindow(nums: number[], k: number): number[] {\n  // your code here\n}",
+
     python: 'def maxSlidingWindow(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

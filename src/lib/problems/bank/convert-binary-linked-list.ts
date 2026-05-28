@@ -73,6 +73,8 @@ Binary: \`101\` → Decimal: **5**`,
 function getDecimalValue(head) {
 
 }`,
+    typescript: "function getDecimalValueRunner(head: number[]): number {\n\n}",
+
     python: `# ListNode class and getDecimalValueRunner wrapper are pre-defined.
 # Implement the function below:
 def getDecimalValue(head):

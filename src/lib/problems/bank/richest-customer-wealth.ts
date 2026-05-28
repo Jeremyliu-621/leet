@@ -41,6 +41,8 @@ A customer's wealth is the sum of all money in their bank accounts. The richest 
     javascript: `function maximumWealth(accounts) {
 
 }`,
+    typescript: "function maximumWealth(accounts: number[][]): number {\n\n}",
+
     python: `def maximumWealth(accounts):
     pass`,
   },

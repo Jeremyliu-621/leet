@@ -43,6 +43,8 @@ Return the **minimum number of taps** that should be open to water the **whole g
     javascript: `function minTaps(n, ranges) {
   // Return minimum taps to water [0, n], or -1 if impossible
 }`,
+    typescript: "function minTaps(n: number, ranges: number[]): number {\n  // Return minimum taps to water [0, n], or -1 if impossible\n}",
+
     python: `def minTaps(n: int, ranges: list[int]) -> int:
     # Return minimum taps to water [0, n], or -1 if impossible
     pass`,

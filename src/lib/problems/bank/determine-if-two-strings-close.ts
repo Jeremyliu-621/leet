@@ -42,6 +42,8 @@ Given two strings \`word1\` and \`word2\`, return \`true\` if \`word1\` and \`wo
   params: ['word1', 'word2'],
   starterCode: {
     javascript: 'function closeStrings(word1, word2) {\n  // your code here\n}\n',
+    typescript: "function closeStrings(word1: string, word2: string): boolean {\n  // your code here\n}",
+
     python: 'def closeStrings(word1, word2):\n    # your code here\n    pass\n',
   },
   visibleTests: [

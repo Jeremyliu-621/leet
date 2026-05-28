@@ -34,6 +34,8 @@ Return an array \`answer\` of length \`n\` where \`answer[i]\` is the sum of the
   params: ['n', 'edges'],
   starterCode: {
     javascript: 'function sumOfDistancesInTree(n, edges) {\n\n}\n',
+    typescript: "function sumOfDistancesInTree(n: number, edges: number[][]): number[] {\n\n}",
+
     python: 'def sumOfDistancesInTree(n, edges):\n    pass\n',
   },
   visibleTests: [

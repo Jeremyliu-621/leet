@@ -39,6 +39,8 @@ You must find a solution with a memory complexity better than \`O(n^2)\`.`,
     javascript: `function kthSmallest(matrix, k) {
 
 }`,
+    typescript: "function kthSmallest(matrix: number[][], k: number): number {\n\n}",
+
     python: `def kthSmallest(matrix, k):
     pass`,
   },

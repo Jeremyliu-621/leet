@@ -39,6 +39,8 @@ function countVowels(word) {
   params: ['s'],
   starterCode: {
     javascript: 'function countVowels(s) {\n  \n}\n',
+    typescript: "function countVowels(s: string): number {\n  \n}",
+
     python: 'def countVowels(s):\n    pass\n',
   },
   visibleTests: [

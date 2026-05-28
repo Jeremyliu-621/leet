@@ -43,6 +43,8 @@ Given the three integers \`n\`, \`a\`, and \`b\`, return the \`n\`-th magical nu
   const lcm = a * b / gcd(a, b);
   // Binary search: count(x) = floor(x/a) + floor(x/b) - floor(x/lcm) >= n
 }`,
+    typescript: "function nthMagicalNumber(n: number, a: number, b: number): number {\n  const MOD = 1000000007n;\n  function gcd(x, y) { while (y) { [x, y] = [y, x % y]; } return x; }\n  const lcm = a * b / gcd(a, b);\n  // Binary search: count(x) = floor(x/a) + floor(x/b) - floor(x/lcm) >= n\n}",
+
     python: `def nthMagicalNumber(n, a, b):
     from math import gcd
     MOD = 10**9 + 7

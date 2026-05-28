@@ -41,6 +41,8 @@ More formally, a \`'*'\` counts if it appears before the first \`'|'\`, after th
     javascript: `function countAsterisks(s) {
 
 }`,
+    typescript: "function countAsterisks(s: string): number {\n\n}",
+
     python: `def countAsterisks(s):
     pass`,
   },

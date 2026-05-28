@@ -44,6 +44,8 @@ Given an integer \`n\` and two integer arrays \`left\` and \`right\`, the positi
     javascript: `function getLastMoment(n, left, right) {
 
 }`,
+    typescript: "function getLastMoment(n: number, left: number[], right: number[]): number {\n\n}",
+
     python: `def getLastMoment(n, left, right):
     pass`,
   },

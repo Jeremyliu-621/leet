@@ -43,6 +43,8 @@ You should aim for O(n) time and O(1) extra space (beyond the output).`,
   params: ['nums'],
   starterCode: {
     javascript: 'function findAllDuplicates(nums) {\n  // your code here\n}\n',
+    typescript: "function findAllDuplicates(nums: number[]): number[] {\n  // your code here\n}",
+
     python: 'def findAllDuplicates(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

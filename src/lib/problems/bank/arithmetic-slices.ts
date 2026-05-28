@@ -36,6 +36,8 @@ A **subarray** is a contiguous subsequence of the array.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function numberOfArithmeticSlices(nums) {\n  \n}\n',
+    typescript: "function numberOfArithmeticSlices(nums: number[]): number {\n  \n}",
+
     python: 'def numberOfArithmeticSlices(nums):\n    pass\n',
   },
   visibleTests: [

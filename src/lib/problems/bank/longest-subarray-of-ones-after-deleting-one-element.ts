@@ -38,6 +38,8 @@ Return the size of the **longest non-empty subarray** containing only \`1\`'s in
   params: ['nums'],
   starterCode: {
     javascript: 'function longestSubarray(nums) {\n  \n}\n',
+    typescript: "function longestSubarray(nums: number[]): number {\n  \n}",
+
     python: 'def longestSubarray(nums):\n    pass\n',
   },
   visibleTests: [

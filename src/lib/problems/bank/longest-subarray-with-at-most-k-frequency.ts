@@ -44,6 +44,8 @@ A **subarray** is a contiguous non-empty sequence of elements within an array.`,
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function maxSubarrayLength(nums, k) {\n\n}',
+    typescript: "function maxSubarrayLength(nums: number[], k: number): number {\n\n}",
+
     python: 'def maxSubarrayLength(nums, k):\n    pass',
   },
   visibleTests: [

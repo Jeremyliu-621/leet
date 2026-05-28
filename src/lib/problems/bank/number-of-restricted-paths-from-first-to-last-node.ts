@@ -46,6 +46,8 @@ Return the number of restricted paths from node \`1\` to node \`n\`. Since that 
     javascript: `function countRestrictedPaths(n, edges) {
 
 }`,
+    typescript: "function countRestrictedPaths(n: number, edges: number[][]): number {\n\n}",
+
     python: `def countRestrictedPaths(n, edges):
     pass`,
   },

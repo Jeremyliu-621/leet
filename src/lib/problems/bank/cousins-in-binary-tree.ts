@@ -107,6 +107,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   starterCode: {
     javascript:
       '// TreeNode class and isCousinsRunner wrapper are pre-defined.\n// Implement the function below:\nfunction isCousins(root, x, y) {\n  \n}\n',
+    typescript: "function isCousinsRunner(root: number[], x: number, y: number): boolean {\n  \n}",
+
     python:
       '# TreeNode class and isCousinsRunner wrapper are pre-defined.\n# Implement the function below:\ndef isCousins(root, x, y):\n    pass\n',
   },

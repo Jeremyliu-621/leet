@@ -38,6 +38,8 @@ Return the count of integers in the range \`[l, r]\` that are **not special**.
     javascript: `function nonSpecialCount(l, r) {
 
 }`,
+    typescript: "function nonSpecialCount(l: number, r: number): number {\n\n}",
+
     python: `def nonSpecialCount(l, r):
     pass`,
   },

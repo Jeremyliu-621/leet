@@ -39,6 +39,8 @@ If you choose a job that ends at time \`X\` you will be able to start another jo
   params: ['difficulty', 'profit', 'worker'],
   starterCode: {
     javascript: 'function maxProfitAssignment(difficulty, profit, worker) {\n\n}\n',
+    typescript: "function maxProfitAssignment(difficulty: number[], profit: number[], worker: number[]): number {\n\n}",
+
     python: 'def maxProfitAssignment(difficulty, profit, worker):\n    pass\n',
   },
   visibleTests: [

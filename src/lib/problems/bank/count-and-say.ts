@@ -43,6 +43,8 @@ Given a positive integer \`n\`, return the \`n\`th term of the count-and-say seq
   params: ['n'],
   starterCode: {
     javascript: 'function countAndSay(n) {\n  // your code here\n}\n',
+    typescript: "function countAndSay(n: number): string {\n  // your code here\n}",
+
     python: 'def countAndSay(n):\n    # your code here\n    pass\n',
   },
   visibleTests: [

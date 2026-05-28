@@ -42,6 +42,8 @@ Alice and Bob play optimally. Return the **maximum difference** in score (Alice'
   params: ['stones'],
   starterCode: {
     javascript: 'function stoneGameVIII(stones) {\n\n}\n',
+    typescript: "function stoneGameVIII(stones: number[]): number {\n\n}",
+
     python: 'def stoneGameVIII(stones):\n    pass\n',
   },
   visibleTests: [

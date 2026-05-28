@@ -45,6 +45,8 @@ Return the **perimeter** of the island.`,
   params: ['grid'],
   starterCode: {
     javascript: 'function islandPerimeter(grid) {\n  // your code here\n}\n',
+    typescript: "function islandPerimeter(grid: number[][]): number {\n  // your code here\n}",
+
     python: 'def islandPerimeter(grid):\n    # your code here\n    pass\n',
   },
   visibleTests: [

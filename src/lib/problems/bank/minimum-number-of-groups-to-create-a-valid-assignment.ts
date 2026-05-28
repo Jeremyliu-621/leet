@@ -38,6 +38,8 @@ Return *the **minimum** number of groups required.*`,
   params: ['balls'],
   starterCode: {
     javascript: 'function minGroupsForValidAssignment(balls) {\n\n}',
+    typescript: "function minGroupsForValidAssignment(balls: number[]): number {\n\n}",
+
     python: 'def minGroupsForValidAssignment(balls):\n    pass',
   },
   visibleTests: [

@@ -101,6 +101,8 @@ Trees are given as level-order arrays where \`null\` represents a missing node.`
 function rangeSumBST(root, low, high) {
   // Return sum of BST node values in [low, high]
 }`,
+    typescript: "function rangeSumBSTRunner(root: (number | null)[], low: number, high: number): number {\n  // Return sum of BST node values in [low, high]\n}",
+
     python: `# TreeNode class and rangeSumBSTRunner wrapper are pre-defined.
 def rangeSumBST(root, low: int, high: int) -> int:
     # Return sum of BST node values in [low, high]

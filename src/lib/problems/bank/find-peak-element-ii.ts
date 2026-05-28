@@ -43,6 +43,8 @@ You must write an algorithm that runs in \`O(m log(n))\` or \`O(n log(m))\` time
     javascript: `function findPeakGrid(mat) {
 
 }`,
+    typescript: "function findPeakGrid(mat: number[][]): number[] {\n\n}",
+
     python: `def findPeakGrid(mat):
     pass`,
   },

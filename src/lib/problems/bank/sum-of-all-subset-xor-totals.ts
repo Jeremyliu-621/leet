@@ -39,6 +39,8 @@ An array \`a\` is a **subset** of an array \`b\` if \`a\` can be obtained from \
   params: ['nums'],
   starterCode: {
     javascript: 'function subsetXORSum(nums) {\n  // your code here\n}\n',
+    typescript: "function subsetXORSum(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def subsetXORSum(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

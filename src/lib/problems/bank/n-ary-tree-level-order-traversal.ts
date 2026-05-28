@@ -94,6 +94,8 @@ Return a list of lists, where each inner list contains the values of nodes at th
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// Node class and levelOrderRunner wrapper are pre-defined.\n// Implement the function below:\nfunction levelOrder(root) {\n  // your code here\n}\n',
+    typescript: "function levelOrderRunner(root: (number | null)[]): number[][] {\n  // your code here\n}",
+
     python: '# Node class and levelOrderRunner wrapper are pre-defined.\n# Implement the function below:\ndef levelOrder(root):\n    # your code here\n    pass\n',
   },
   hints: [

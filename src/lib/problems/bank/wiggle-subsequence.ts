@@ -41,6 +41,8 @@ A **subsequence** is obtained by deleting some elements (possibly zero) from the
     javascript: `function wiggleMaxLength(nums) {
   // Return length of longest wiggle subsequence
 }`,
+    typescript: "function wiggleMaxLength(nums: number[]): number {\n  // Return length of longest wiggle subsequence\n}",
+
     python: `def wiggleMaxLength(nums):
     # Return length of longest wiggle subsequence
     pass`,

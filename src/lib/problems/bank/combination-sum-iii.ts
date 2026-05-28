@@ -58,6 +58,8 @@ Return a list of all possible valid combinations. The list must not contain the 
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: 'function combinationSumIII(k, n) {\n  \n}\n',
+    typescript: "function combinationSumIIIRunner(k: number, n: number): number[][] {\n  \n}",
+
     python: 'def combinationSumIII(k, n):\n    pass\n',
   },
   visibleTests: [

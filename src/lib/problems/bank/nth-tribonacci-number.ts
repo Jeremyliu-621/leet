@@ -40,6 +40,8 @@ function tribonacci(n) {
     javascript: `function tribonacci(n) {
 
 }`,
+    typescript: "function tribonacci(n: number): number {\n\n}",
+
     python: `def tribonacci(n):
     pass`,
   },

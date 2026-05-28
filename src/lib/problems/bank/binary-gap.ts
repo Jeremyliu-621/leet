@@ -23,6 +23,8 @@ Two \`1\`'s are adjacent if there are only \`0\`'s separating them (possibly no 
   params: ['n'],
   starterCode: {
     javascript: 'function binaryGap(n) {\n  // your code here\n}\n',
+    typescript: "function binaryGap(n: number): number {\n  // your code here\n}",
+
     python: 'def binaryGap(n):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -34,6 +34,8 @@ export const problem: Problem = {
     javascript: `function numSubarraysWithSum(nums, goal) {
 
 }`,
+    typescript: "function numSubarraysWithSum(nums: number[], goal: number): number {\n\n}",
+
     python: `def numSubarraysWithSum(nums, goal):
     pass`,
   },

@@ -33,6 +33,8 @@ function sequentialDigits(low, high) {
   params: ['low', 'high'],
   starterCode: {
     javascript: 'function sequentialDigits(low, high) {\n\n}\n',
+    typescript: "function sequentialDigits(low: number, high: number): number[] {\n\n}",
+
     python: 'def sequentialDigits(low, high):\n    pass\n',
   },
   visibleTests: [

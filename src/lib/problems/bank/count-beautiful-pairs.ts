@@ -38,6 +38,8 @@ Two integers are **coprime** if their greatest common divisor is \`1\`.`,
     javascript: `function countBeautifulPairs(nums) {
 
 }`,
+    typescript: "function countBeautifulPairs(nums: number[]): number {\n\n}",
+
     python: `def countBeautifulPairs(nums):
     pass`,
   },

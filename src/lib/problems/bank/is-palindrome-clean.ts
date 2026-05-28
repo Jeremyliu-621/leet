@@ -34,6 +34,8 @@ Return \`true\` if the cleaned string is a palindrome, otherwise return \`false\
   params: ['text'],
   starterCode: {
     javascript: 'function isLetterPalindrome(text) {\n  // your code here\n}\n',
+    typescript: "function isLetterPalindrome(text: string): boolean {\n  // your code here\n}",
+
     python: 'def isLetterPalindrome(text):\n    # your code here\n    pass\n',
   },
   visibleTests: [

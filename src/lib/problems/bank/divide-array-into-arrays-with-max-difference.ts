@@ -45,6 +45,8 @@ Return a **2D** array containing the arrays. If it is impossible to satisfy the 
 function divideArray(nums, k) {
 
 }`,
+    typescript: "function divideArray(nums: number[], k: number): number[][] {number[]} nums\n * @param {number} k\n * @return {number[][]}\n */\nfunction divideArray(nums, k) {\n\n}",
+
     python: `def divideArray(nums: list[int], k: int) -> list[list[int]]:
     pass`,
   },

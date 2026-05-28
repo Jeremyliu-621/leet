@@ -35,6 +35,8 @@ Return the number of substrings that satisfy the condition above.`,
     javascript: `function countSubstrings(s, t) {
 
 }`,
+    typescript: "function countSubstrings(s: string, t: string): number {\n\n}",
+
     python: `def countSubstrings(s, t):
     pass`,
   },

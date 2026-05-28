@@ -51,6 +51,8 @@ Return the concatenation of \`arr1\` and \`arr2\` as the result array.`,
     javascript: `function resultArray(nums) {
 
 }`,
+    typescript: "function resultArray(nums: number[]): number[] {\n\n}",
+
     python: `def resultArray(nums):
     pass`,
   },

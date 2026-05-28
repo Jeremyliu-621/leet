@@ -42,6 +42,8 @@ Return the **maximum** possible score.`,
   params: ['nums1', 'nums2', 'k'],
   starterCode: {
     javascript: `function maxScore(nums1, nums2, k) {\n\n}`,
+    typescript: "function maxScore(nums1: number[], nums2: number[], k: number): number {\n\n}",
+
     python: `def maxScore(nums1, nums2, k):\n    pass`,
   },
   visibleTests: [

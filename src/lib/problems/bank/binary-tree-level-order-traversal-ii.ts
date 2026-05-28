@@ -96,6 +96,8 @@ export const problem: Problem = {
 function levelOrderBottom(root) {
 
 }`,
+    typescript: "function levelOrderBottomRunner(root: (number | null)[]): number[][] {\n\n}",
+
     python: `# TreeNode is pre-defined. Implement the function below:
 def levelOrderBottom(root):
     pass`,

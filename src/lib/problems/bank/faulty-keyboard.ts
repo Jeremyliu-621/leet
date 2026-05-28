@@ -38,6 +38,8 @@ Return the final string that will be present on your laptop screen.`,
     javascript: `function finalString(s) {
 
 }`,
+    typescript: "function finalString(s: string): string {\n\n}",
+
     python: `def finalString(s):
     pass`,
   },

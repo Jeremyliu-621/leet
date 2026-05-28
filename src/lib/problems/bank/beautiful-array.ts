@@ -38,6 +38,8 @@ Given an integer \`n\`, return **any beautiful array** of length \`n\` that is a
     javascript: `function beautifulArray(n) {
 
 }`,
+    typescript: "function beautifulArray(n: number): number[] {\n\n}",
+
     python: `def beautifulArray(n: int) -> list[int]:
     pass`,
   },

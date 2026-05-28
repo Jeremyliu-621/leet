@@ -24,6 +24,8 @@ Return the **largest** possible value of \`num\` after **any** number of swaps.`
   params: ['num'],
   starterCode: {
     javascript: 'function largestInteger(num) {\n  \n}\n',
+    typescript: "function largestInteger(num: number): number {\n  \n}",
+
     python: 'def largestInteger(num):\n    pass\n',
   },
   visibleTests: [

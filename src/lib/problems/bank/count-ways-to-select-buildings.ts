@@ -46,6 +46,8 @@ You want to select 3 buildings such that they are not all the same type. Specifi
   // return count of ways to select 3 buildings forming 010 or 101 pattern
 
 }`,
+    typescript: "function countWays(s: string): number {\n  // return count of ways to select 3 buildings forming 010 or 101 pattern\n\n}",
+
     python: `def countWays(s: str) -> int:
     # return count of ways to select 3 buildings forming 010 or 101 pattern
     pass

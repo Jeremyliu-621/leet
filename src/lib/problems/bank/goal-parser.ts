@@ -37,6 +37,8 @@ Given the string \`command\`, return the Goal Parser's interpretation of \`comma
     javascript: `function interpret(command) {
 
 }`,
+    typescript: "function interpret(command: string): string {\n\n}",
+
     python: `def interpret(command):
     pass`,
   },

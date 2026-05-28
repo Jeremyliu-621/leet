@@ -37,6 +37,8 @@ Return the label of the town judge if the town judge exists and can be identifie
   params: ['n', 'trust'],
   starterCode: {
     javascript: 'function findJudge(n, trust) {\n  // your code here\n}\n',
+    typescript: "function findJudge(n: number, trust: number[][]): number {\n  // your code here\n}",
+
     python: 'def findJudge(n, trust):\n    # your code here\n    pass\n',
   },
   visibleTests: [

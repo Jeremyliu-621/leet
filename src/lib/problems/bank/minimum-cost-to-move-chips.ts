@@ -46,6 +46,8 @@ Return the **minimum cost** to move all chips to the same position.
     javascript: `function minCostToMoveChips(position) {
   // Return the minimum cost to move all chips to one position
 }`,
+    typescript: "function minCostToMoveChips(position: number[]): number {\n  // Return the minimum cost to move all chips to one position\n}",
+
     python: `def minCostToMoveChips(position) -> int:
     position = list(position)
     # Return the minimum cost to move all chips to one position

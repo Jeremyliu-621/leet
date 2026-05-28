@@ -37,6 +37,8 @@ Return *the number of operations performed* until either \`num1\` or \`num2\` be
     javascript: `function countOperations(num1, num2) {
 
 }`,
+    typescript: "function countOperations(num1: number, num2: number): number {\n\n}",
+
     python: `def countOperations(num1: int, num2: int) -> int:
     pass`,
   },

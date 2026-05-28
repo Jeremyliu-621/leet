@@ -64,6 +64,8 @@ The final sorted array should not be returned by the function, but instead be **
 function merge(nums1, m, nums2, n) {
 
 }`,
+    typescript: "function mergeSortedRunner(nums1: number[], m: number, nums2: number[], n: number): number[] {\n\n}",
+
     python: `# mergeSortedRunner is pre-defined and calls your function below.
 def merge(nums1, m, nums2, n):
     pass`,

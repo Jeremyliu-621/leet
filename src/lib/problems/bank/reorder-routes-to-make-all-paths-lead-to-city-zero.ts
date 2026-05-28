@@ -40,6 +40,8 @@ Return the **minimum** number of edges changed so that each node can reach the c
   params: ['n', 'connections'],
   starterCode: {
     javascript: 'function minReorder(n, connections) {\n\n}\n',
+    typescript: "function minReorder(n: number, connections: number[][]): number {\n\n}",
+
     python: 'def minReorder(n, connections):\n    pass\n',
   },
   visibleTests: [

@@ -41,6 +41,8 @@ Return the final stable board.`,
   params: ['board'],
   starterCode: {
     javascript: 'function candyCrush(board) {\n  \n}\n',
+    typescript: "function candyCrush(board: number[][]): number[][] {\n  \n}",
+
     python: 'def candyCrush(board):\n    pass\n',
   },
   visibleTests: [

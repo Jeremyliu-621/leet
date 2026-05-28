@@ -41,6 +41,8 @@ Use a modified merge sort on the prefix array. During merge, for each right-half
   params: ['nums', 'lower', 'upper'],
   starterCode: {
     javascript: 'function countRangeSum(nums, lower, upper) {\n\n}\n',
+    typescript: "function countRangeSum(nums: number[], lower: number, upper: number): number {\n\n}",
+
     python: 'def countRangeSum(nums: list, lower: int, upper: int) -> int:\n    pass\n',
   },
   visibleTests: [

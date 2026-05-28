@@ -44,6 +44,8 @@ Explanation: Only [3] has median 3.
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function countSubarrays(nums, k) {\n  // your code here\n}\n',
+    typescript: "function countSubarrays(nums: number[], k: number): number {\n  // your code here\n}",
+
     python: 'def countSubarrays(nums, k):\n    pass\n',
   },
   visibleTests: [

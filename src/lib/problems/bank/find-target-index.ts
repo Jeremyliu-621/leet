@@ -37,6 +37,8 @@ export const problem: Problem = {
   params: ['nums', 'target'],
   starterCode: {
     javascript: 'function findTargetIndex(nums, target) {\n  // your code here\n}\n',
+    typescript: "function findTargetIndex(nums: number[], target: number): number {\n  // your code here\n}",
+
     python: 'def findTargetIndex(nums, target):\n    # your code here\n    pass\n',
   },
   visibleTests: [

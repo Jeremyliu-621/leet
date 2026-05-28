@@ -46,6 +46,8 @@ Return the **minimum number of insertions** to make \`s\` balanced.
   // return minimum insertions to balance (each '(' needs '))')
 
 }`,
+    typescript: "function minInsertions(s: string): number {\n  // return minimum insertions to balance (each '(' needs '))')\n\n}",
+
     python: `def minInsertions(s: str) -> int:
     # return minimum insertions to balance (each '(' needs '))')
     pass

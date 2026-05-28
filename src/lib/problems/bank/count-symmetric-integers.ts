@@ -34,6 +34,8 @@ Return the **number of symmetric integers** in the range \`[low, high]\`.`,
   params: ['low', 'high'],
   starterCode: {
     javascript: 'function countSymmetricIntegers(low, high) {\n  // your code here\n}\n',
+    typescript: "function countSymmetricIntegers(low: number, high: number): number {\n  // your code here\n}",
+
     python: 'def countSymmetricIntegers(low, high):\n    # your code here\n    pass\n',
   },
   visibleTests: [

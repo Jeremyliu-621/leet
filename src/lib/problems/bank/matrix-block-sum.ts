@@ -39,6 +39,8 @@ export const problem: Problem = {
     javascript: `function matrixBlockSum(mat, k) {
 
 }`,
+    typescript: "function matrixBlockSum(mat: number[][], k: number): number[][] {\n\n}",
+
     python: `def matrixBlockSum(mat, k):
     pass`,
   },

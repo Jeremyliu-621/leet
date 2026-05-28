@@ -46,6 +46,8 @@ Return the **k-th character** (1-indexed) in the decoded string. The decoded str
     javascript: `function decodeAtIndex(s, k) {
   // Return the k-th character (1-indexed) of the decoded string
 }`,
+    typescript: "function decodeAtIndex(s: string, k: number): string {\n  // Return the k-th character (1-indexed) of the decoded string\n}",
+
     python: `def decodeAtIndex(s: str, k: int) -> str:
     # Return the k-th character (1-indexed) of the decoded string
     pass`,

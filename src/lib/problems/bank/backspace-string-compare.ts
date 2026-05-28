@@ -48,6 +48,8 @@ function backspaceCompare(s, t) {
     javascript: `function backspaceCompare(s, t) {
 
 }`,
+    typescript: "function backspaceCompare(s: string, t: string): boolean {\n\n}",
+
     python: `def backspaceCompare(s, t):
     pass`,
   },

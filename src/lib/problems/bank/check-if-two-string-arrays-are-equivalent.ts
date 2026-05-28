@@ -42,6 +42,8 @@ A string is **represented** by an array if the array elements concatenated **in 
     javascript: `function arrayStringsAreEqual(word1, word2) {
 
 }`,
+    typescript: "function arrayStringsAreEqual(word1: string[], word2: string[]): boolean {\n\n}",
+
     python: `def arrayStringsAreEqual(word1, word2):
     pass`,
   },

@@ -50,6 +50,8 @@ function nextGreatestLetter(letters, target) {
     javascript: `function nextGreatestLetter(letters, target) {
 
 }`,
+    typescript: "function nextGreatestLetter(letters: string[], target: string): string {\n\n}",
+
     python: `def nextGreatestLetter(letters, target):
     pass`,
   },

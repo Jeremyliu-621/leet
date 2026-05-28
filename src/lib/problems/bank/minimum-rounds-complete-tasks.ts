@@ -25,6 +25,8 @@ Return the **minimum** rounds required to complete all the tasks, or \`-1\` if i
   params: ['tasks'],
   starterCode: {
     javascript: 'function minimumRounds(tasks) {\n  \n}\n',
+    typescript: "function minimumRounds(tasks: number[]): number {\n  \n}",
+
     python: 'def minimumRounds(tasks):\n    pass\n',
   },
   visibleTests: [

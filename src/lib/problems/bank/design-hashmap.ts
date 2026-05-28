@@ -90,6 +90,8 @@ const map = new Array(1000001).fill(-1);
   },
   starterCode: {
     javascript: 'class MyHashMap {\n  constructor() {\n    \n  }\n  put(key, val) {\n    \n  }\n  get(key) {\n    \n  }\n  remove(key) {\n    \n  }\n}\n',
+    typescript: "function designHashMapRunner(ops: string[], vals: (unknown[] | number[])[]): (null | number)[] {\n  constructor() {\n    \n  }\n  put(key, val) {\n    \n  }\n  get(key) {\n    \n  }\n  remove(key) {\n    \n  }\n}",
+
     python: 'class MyHashMap:\n    def __init__(self):\n        pass\n    def put(self, key, val):\n        pass\n    def get(self, key):\n        pass\n    def remove(self, key):\n        pass\n',
   },
   visibleTests: [

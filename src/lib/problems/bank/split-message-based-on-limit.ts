@@ -50,6 +50,8 @@ Output: \`["thi<1/14>", "s i<2/14>", ..., "ge<14/14>"]\``,
     javascript: `function splitMessage(message, limit) {
 
 }`,
+    typescript: "function splitMessage(message: string, limit: number): string[] {\n\n}",
+
     python: `def splitMessage(message, limit):
     pass
 `,

@@ -36,6 +36,8 @@ A region is a maximal connected set of empty space. Slashes are considered walls
   params: ['grid'],
   starterCode: {
     javascript: 'function regionsBySlashes(grid) {\n  \n}\n',
+    typescript: "function regionsBySlashes(grid: string[]): number {\n  \n}",
+
     python: 'def regionsBySlashes(grid):\n    pass\n',
   },
   visibleTests: [

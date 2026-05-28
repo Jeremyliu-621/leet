@@ -45,6 +45,8 @@ function targetIndices(nums, target) {
   params: ['nums', 'target'],
   starterCode: {
     javascript: 'function targetIndices(nums, target) {\n  \n}\n',
+    typescript: "function targetIndices(nums: number[], target: number): number[] {\n  \n}",
+
     python: 'def targetIndices(nums, target):\n    pass\n',
   },
   visibleTests: [

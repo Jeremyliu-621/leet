@@ -40,6 +40,8 @@ A variable-size sliding window expands when the sum is too small and shrinks whe
   params: ['nums', 'target'],
   starterCode: {
     javascript: 'function minSubarrayLength(nums, target) {\n  // your code here\n}\n',
+    typescript: "function minSubarrayLength(nums: number[], target: number): number {\n  // your code here\n}",
+
     python: 'def minSubarrayLength(nums, target):\n    # your code here\n    pass\n',
   },
   visibleTests: [

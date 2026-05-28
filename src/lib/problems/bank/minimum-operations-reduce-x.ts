@@ -41,6 +41,8 @@ Use a sliding window to find the longest subarray with the target sum.`,
   params: ['nums', 'x'],
   starterCode: {
     javascript: 'function minOperations(nums, x) {\n  // your code here\n}\n',
+    typescript: "function minOperations(nums: number[], x: number): number {\n  // your code here\n}",
+
     python: 'def minOperations(nums: list, x: int) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

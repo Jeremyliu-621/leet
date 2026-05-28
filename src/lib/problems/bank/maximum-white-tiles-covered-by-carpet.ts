@@ -48,6 +48,8 @@ Output: 2
   params: ['tiles', 'carpetLen'],
   starterCode: {
     javascript: 'function maximumWhiteTiles(tiles, carpetLen) {\n  // your code here\n}\n',
+    typescript: "function maximumWhiteTiles(tiles: number[][], carpetLen: number): number {\n  // your code here\n}",
+
     python: 'def maximumWhiteTiles(tiles, carpetLen):\n    pass\n',
   },
   visibleTests: [

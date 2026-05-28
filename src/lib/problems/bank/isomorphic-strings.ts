@@ -27,6 +27,8 @@ Two strings are isomorphic if the characters in \`s\` can be replaced to get \`t
   params: ['s', 't'],
   starterCode: {
     javascript: 'function isIsomorphic(s, t) {\n  // your code here\n}\n',
+    typescript: "function isIsomorphic(s: string, t: string): boolean {\n  // your code here\n}",
+
     python: 'def isIsomorphic(s: str, t: str) -> bool:\n    # your code here\n    pass\n',
   },
   visibleTests: [

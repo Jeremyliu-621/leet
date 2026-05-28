@@ -43,6 +43,8 @@ Return the **minimum number of chairs** needed in the waiting room such that a c
   params: ['s'],
   starterCode: {
     javascript: 'function minimumChairs(s) {\n  // your code here\n}\n',
+    typescript: "function minimumChairs(s: string): number {\n  // your code here\n}",
+
     python: 'def minimumChairs(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

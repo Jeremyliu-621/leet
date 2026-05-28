@@ -42,6 +42,8 @@ Return *the **maximum possible frequency** of an element after performing **at m
     javascript: `function maxFrequency(nums, k) {
 
 }`,
+    typescript: "function maxFrequency(nums: number[], k: number): number {\n\n}",
+
     python: `def maxFrequency(nums, k):
     pass`,
   },

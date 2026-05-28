@@ -35,6 +35,8 @@ Return an integer array \`answer\` of length \`n\` where \`answer[i]\` is the **
   params: ['nums', 'removeQueries'],
   starterCode: {
     javascript: 'function maximumSegmentSum(nums, removeQueries) {\n\n}\n',
+    typescript: "function maximumSegmentSum(nums: number[], removeQueries: number[]): number[] {\n\n}",
+
     python: 'def maximumSegmentSum(nums, removeQueries):\n    pass\n',
   },
   visibleTests: [

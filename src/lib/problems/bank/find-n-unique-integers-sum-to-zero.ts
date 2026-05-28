@@ -33,6 +33,8 @@ export const problem: Problem = {
     javascript: `function sumZero(n) {
 
 }`,
+    typescript: "function sumZero(n: number): number[] {\n\n}",
+
     python: `def sumZero(n):
     pass`,
   },

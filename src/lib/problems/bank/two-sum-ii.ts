@@ -33,6 +33,8 @@ Your solution must use only constant extra space.`,
   params: ['numbers', 'target'],
   starterCode: {
     javascript: 'function twoSumII(numbers, target) {\n  // your code here\n}\n',
+    typescript: "function twoSumII(numbers: number[], target: number): number[] {\n  // your code here\n}",
+
     python: 'def twoSumII(numbers, target):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -40,6 +40,8 @@ export const problem: Problem = {
     javascript: `function maxSubArrayLen(nums, k) {
   // Return maximum length of a subarray summing to k
 }`,
+    typescript: "function maxSubArrayLen(nums: number[], k: number): number {\n  // Return maximum length of a subarray summing to k\n}",
+
     python: `def maxSubArrayLen(nums: list[int], k: int) -> int:
     # Return maximum length of a subarray summing to k
     pass`,

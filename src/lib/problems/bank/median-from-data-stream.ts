@@ -65,6 +65,8 @@ Design a data structure that supports the following two operations:
   starterCode: {
     javascript:
       '// medianFinderRunner is pre-defined and calls your class below.\nclass MedianFinder {\n  constructor() {\n  }\n  addNum(num) {\n  }\n  findMedian() {\n    // return median as a number\n  }\n}\n',
+    typescript: "function medianFinderRunner(ops: string[], args: (number[] | unknown[])[]): (null | number)[] {\n  constructor() {\n  }\n  addNum(num) {\n  }\n  findMedian() {\n    // return median as a number\n  }\n}",
+
     python:
       '# medianFinderRunner is pre-defined and calls your class below.\nclass MedianFinder:\n    def __init__(self):\n        pass\n    def addNum(self, num):\n        pass\n    def findMedian(self):\n        pass  # return median as a float\n',
   },

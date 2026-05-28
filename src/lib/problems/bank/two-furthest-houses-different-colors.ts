@@ -37,6 +37,8 @@ The distance between the \`i\`th and \`j\`th houses is \`|i - j|\`.`,
   params: ['colors'],
   starterCode: {
     javascript: 'function maxDistance(colors) {\n  // your code here\n}\n',
+    typescript: "function maxDistance(colors: number[]): number {\n  // your code here\n}",
+
     python: 'def maxDistance(colors):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -51,6 +51,8 @@ Output: 1
     javascript: `function minFlips(s) {
 
 }`,
+    typescript: "function minFlips(s: string): number {\n\n}",
+
     python: `def minFlips(s):
     `,
   },

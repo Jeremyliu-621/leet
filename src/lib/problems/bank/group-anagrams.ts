@@ -41,6 +41,8 @@ Return the result with each group's strings sorted ascending alphabetically, and
   params: ['strs'],
   starterCode: {
     javascript: 'function groupAnagrams(strs) {\n  // your code here\n}\n',
+    typescript: "function groupAnagrams(strs: string[]): string[][] {\n  // your code here\n}",
+
     python: 'def groupAnagrams(strs):\n    # your code here\n    pass\n',
   },
   visibleTests: [

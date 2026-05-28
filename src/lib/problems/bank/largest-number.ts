@@ -42,6 +42,8 @@ Since the result may be very large, return it as a string rather than an integer
   params: ['nums'],
   starterCode: {
     javascript: 'function largestNumber(nums) {\n  // your code here\n}\n',
+    typescript: "function largestNumber(nums: number[]): string {\n  // your code here\n}",
+
     python: 'def largestNumber(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -44,6 +44,8 @@ Any two characters may be swapped, even if they are not adjacent.`,
     javascript: `function minSwaps(s) {
 
 }`,
+    typescript: "function minSwaps(s: string): number {\n\n}",
+
     python: `def minSwaps(s):
     pass`,
   },

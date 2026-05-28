@@ -121,6 +121,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   starterCode: {
     javascript:
       '// TreeNode class and distanceKRunner wrapper are pre-defined.\n// Implement the function below:\nfunction distanceK(root, target, k) {\n  \n}\n',
+    typescript: "function distanceKRunner(root: (number | null)[], target: number, k: number): number[] {\n  \n}",
+
     python:
       '# TreeNode class and distanceKRunner wrapper are pre-defined.\n# Implement the function below:\ndef distanceK(root, target, k):\n    pass\n',
   },

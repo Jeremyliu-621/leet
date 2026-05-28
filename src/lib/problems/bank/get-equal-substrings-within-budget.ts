@@ -55,6 +55,8 @@ If there is no substring that can be changed, return \`0\`.`,
   }
   return result;
 }`,
+    typescript: "function equalSubstring(s: string, t: string, maxCost: number): number {\n  let left = 0, cost = 0, result = 0;\n  for (let right = 0; right < s.length; right++) {\n    cost += Math.abs(s.charCodeAt(right) - t.charCodeAt(right));\n    while (cost > maxCost) {\n      cost -= Math.abs(s.charCodeAt(left) - t.charCodeAt(left));\n      left++;\n    }\n    result = Math.max(result, right - left + 1);\n  }\n  return result;\n}",
+
     python: `def equalSubstring(s, t, maxCost):
     left = cost = result = 0
     for right in range(len(s)):

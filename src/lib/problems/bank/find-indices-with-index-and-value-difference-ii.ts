@@ -46,6 +46,8 @@ Return \`[i, j]\` if such a pair exists, or \`[-1, -1]\` otherwise. If multiple 
   // Slide a window of candidates with index <= j - indexDiff.
   // Track minIdx and maxIdx within the window.
 }`,
+    typescript: "function findIndices(nums: number[], indexDiff: number, valueDiff: number): number[] {\n  // Slide a window of candidates with index <= j - indexDiff.\n  // Track minIdx and maxIdx within the window.\n}",
+
     python: `def findIndices(nums, indexDiff, valueDiff):
     # Slide a window of candidates with index <= j - indexDiff.
     # Track min_idx and max_idx within the window.

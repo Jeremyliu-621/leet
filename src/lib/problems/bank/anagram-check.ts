@@ -40,6 +40,8 @@ An empty string is an anagram of itself but not of any non-empty string.`,
   params: ['s', 't'],
   starterCode: {
     javascript: 'function areAnagrams(s, t) {\n  // your code here\n}\n',
+    typescript: "function areAnagrams(s: string, t: string): boolean {\n  // your code here\n}",
+
     python: 'def areAnagrams(s, t):\n    # your code here\n    pass\n',
   },
   visibleTests: [

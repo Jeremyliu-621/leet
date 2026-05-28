@@ -39,6 +39,8 @@ Return the number of students doing their homework at time \`queryTime\`. More f
     javascript: `function busyStudent(startTime, endTime, queryTime) {
 
 }`,
+    typescript: "function busyStudent(startTime: number[], endTime: number[], queryTime: number): number {\n\n}",
+
     python: `def busyStudent(startTime, endTime, queryTime):
     pass`,
   },

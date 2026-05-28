@@ -43,6 +43,8 @@ Return the answer array. Note that for each query you visit each cell at most on
   params: ['grid', 'queries'],
   starterCode: {
     javascript: 'function maxPoints(grid, queries) {\n\n}\n',
+    typescript: "function maxPoints(grid: number[][], queries: number[]): number[] {\n\n}",
+
     python: 'def maxPoints(grid: list, queries: list) -> list:\n    pass\n',
   },
   visibleTests: [

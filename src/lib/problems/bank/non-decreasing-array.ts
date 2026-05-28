@@ -34,6 +34,8 @@ We define an array as non-decreasing if \`nums[i] <= nums[i + 1]\` holds for eve
   params: ['nums'],
   starterCode: {
     javascript: 'function checkPossibility(nums) {\n  \n}\n',
+    typescript: "function checkPossibility(nums: number[]): boolean {\n  \n}",
+
     python: 'def checkPossibility(nums):\n    pass\n',
   },
   visibleTests: [

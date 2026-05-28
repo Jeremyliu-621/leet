@@ -38,6 +38,8 @@ Return a list of boolean answers to each query.`,
   params: ['nums', 'l', 'r'],
   starterCode: {
     javascript: 'function checkArithmeticSubarrays(nums, l, r) {\n\n}\n',
+    typescript: "function checkArithmeticSubarrays(nums: number[], l: number[], r: number[]): boolean[] {\n\n}",
+
     python: 'def checkArithmeticSubarrays(nums, l, r):\n    pass\n',
   },
   visibleTests: [

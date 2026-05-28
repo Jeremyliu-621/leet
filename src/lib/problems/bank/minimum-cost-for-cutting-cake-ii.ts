@@ -43,6 +43,8 @@ Return the **minimum total cost** to cut the cake into \`1 × 1\` pieces.`,
   // Sort both arrays descending.
   // Greedy: always take the larger cut, multiplied by existing pieces in the other direction.
 }`,
+    typescript: "function minimumCost(m: number, n: number, horizontalCut: number[], verticalCut: number[]): number {\n  // Sort both arrays descending.\n  // Greedy: always take the larger cut, multiplied by existing pieces in the other direction.\n}",
+
     python: `def minimumCost(m, n, horizontalCut, verticalCut):
     # Sort both arrays descending.
     # Greedy: always take the larger cut, multiplied by existing pieces in the other direction.

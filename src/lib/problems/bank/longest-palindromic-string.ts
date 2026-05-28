@@ -38,6 +38,8 @@ export const problem: Problem = {
   params: ['s'],
   starterCode: {
     javascript: 'function longestPalindrome(s) {\n  // your code here\n}\n',
+    typescript: "function longestPalindrome(s: string): string {\n  // your code here\n}",
+
     python: 'def longestPalindrome(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

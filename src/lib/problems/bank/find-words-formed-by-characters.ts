@@ -50,6 +50,8 @@ function countCharacters(words, chars) {
     javascript: `function countCharacters(words, chars) {
 
 }`,
+    typescript: "function countCharacters(words: string[], chars: string): number {\n\n}",
+
     python: `def countCharacters(words, chars):
     pass`,
   },

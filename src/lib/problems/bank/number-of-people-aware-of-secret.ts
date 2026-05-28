@@ -40,6 +40,8 @@ Given integers \`n\`, \`delay\`, and \`forget\`, return the **number of people**
     javascript: `function peopleAwareOfSecret(n, delay, forget) {
 
 }`,
+    typescript: "function peopleAwareOfSecret(n: number, delay: number, forget: number): number {\n\n}",
+
     python: `def peopleAwareOfSecret(n, delay, forget):
     pass`,
   },

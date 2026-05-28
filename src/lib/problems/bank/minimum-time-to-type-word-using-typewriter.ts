@@ -41,6 +41,8 @@ Given a string \`word\`, return the **minimum** number of seconds to type out th
     javascript: `function minTimeToType(word) {
 
 }`,
+    typescript: "function minTimeToType(word: string): number {\n\n}",
+
     python: `def minTimeToType(word: str) -> int:
     pass`,
   },

@@ -39,6 +39,8 @@ export const problem: Problem = {
     javascript: `function eraseOverlapIntervals(intervals) {
 
 }`,
+    typescript: "function eraseOverlapIntervals(intervals: number[][]): number {\n\n}",
+
     python: `def eraseOverlapIntervals(intervals):
     pass`,
   },

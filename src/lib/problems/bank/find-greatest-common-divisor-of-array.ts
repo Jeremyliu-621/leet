@@ -35,6 +35,8 @@ The greatest common divisor of two numbers is the largest positive integer that 
     javascript: `function findGCD(nums) {
 
 }`,
+    typescript: "function findGCD(nums: number[]): number {\n\n}",
+
     python: `def findGCD(nums):
     pass`,
   },

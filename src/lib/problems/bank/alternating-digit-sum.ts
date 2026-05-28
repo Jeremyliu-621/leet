@@ -42,6 +42,8 @@ Return the sum of all digits with their corresponding sign.`,
     javascript: `function alternateDigitSum(n) {
 
 }`,
+    typescript: "function alternateDigitSum(n: number): number {\n\n}",
+
     python: `def alternateDigitSum(n):
     pass`,
   },

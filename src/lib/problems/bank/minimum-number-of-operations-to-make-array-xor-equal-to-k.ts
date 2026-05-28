@@ -45,6 +45,8 @@ Return the **minimum number of operations** required to make the bitwise XOR of 
     javascript: `function minOperations(nums, k) {
   // your code here
 }`,
+    typescript: "function minOperations(nums: number[], k: number): number {\n  // your code here\n}",
+
     python: `def minOperations(nums, k):
     # your code here
     pass`,

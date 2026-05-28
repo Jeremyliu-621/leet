@@ -50,6 +50,8 @@ function closestPrimes(left, right) {
   params: ['left', 'right'],
   starterCode: {
     javascript: 'function closestPrimes(left, right) {\n\n}\n',
+    typescript: "function closestPrimes(left: number, right: number): number[] {\n\n}",
+
     python: 'def closestPrimes(left, right):\n    pass\n',
   },
   visibleTests: [

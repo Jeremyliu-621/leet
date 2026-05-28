@@ -95,6 +95,8 @@ A **consecutive sequence path** is a path where the values **increase by one** a
 function longestConsecutive(root) {
 
 }`,
+    typescript: "function longestConsecutiveRunner(root: (number | null)[]): number {\n\n}",
+
     python: `# TreeNode is pre-defined. Implement the function below:
 def longestConsecutive(root):
     pass`,

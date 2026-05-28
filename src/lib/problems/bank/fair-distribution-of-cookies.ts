@@ -34,6 +34,8 @@ export const problem: Problem = {
   params: ['cookies', 'k'],
   starterCode: {
     javascript: 'function distributeCookies(cookies, k) {\n\n}\n',
+    typescript: "function distributeCookies(cookies: number[], k: number): number {\n\n}",
+
     python: 'def distributeCookies(cookies: list, k: int) -> int:\n    pass\n',
   },
   visibleTests: [

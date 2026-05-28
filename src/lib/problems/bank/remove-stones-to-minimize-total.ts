@@ -40,6 +40,8 @@ Return the **minimum** possible total number of stones remaining after applying 
     javascript: `function minStoneSum(piles, k) {
 
 }`,
+    typescript: "function minStoneSum(piles: number[], k: number): number {\n\n}",
+
     python: `def minStoneSum(piles, k):
     pass`,
   },

@@ -35,6 +35,8 @@ Return the **total number of collisions** with the following simulation behavior
   params: ['directions'],
   starterCode: {
     javascript: 'function countCollisions(directions) {\n  // your code here\n}\n',
+    typescript: "function countCollisions(directions: string): number {\n  // your code here\n}",
+
     python: 'def countCollisions(directions):\n    # your code here\n    pass\n',
   },
   visibleTests: [

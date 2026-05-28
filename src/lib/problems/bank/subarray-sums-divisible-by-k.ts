@@ -33,6 +33,8 @@ A **subarray** is a **contiguous** part of an array.`,
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function subarraysDivByK(nums, k) {\n\n}\n',
+    typescript: "function subarraysDivByK(nums: number[], k: number): number {\n\n}",
+
     python: 'def subarraysDivByK(nums, k):\n    pass\n',
   },
   visibleTests: [

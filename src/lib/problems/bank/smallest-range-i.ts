@@ -41,6 +41,8 @@ Return the **minimum** possible difference between the **maximum** and **minimum
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function smallestRangeI(nums, k) {\n  \n}\n',
+    typescript: "function smallestRangeI(nums: number[], k: number): number {\n  \n}",
+
     python: 'def smallestRangeI(nums, k):\n    pass\n',
   },
   visibleTests: [

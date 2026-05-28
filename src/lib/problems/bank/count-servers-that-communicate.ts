@@ -36,6 +36,8 @@ Return the number of servers that communicate with **at least one** other server
   params: ['grid'],
   starterCode: {
     javascript: 'function countServers(grid) {\n\n}\n',
+    typescript: "function countServers(grid: number[][]): number {\n\n}",
+
     python: 'def countServers(grid):\n    pass\n',
   },
   visibleTests: [

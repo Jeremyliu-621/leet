@@ -40,6 +40,8 @@ Implement the \`MyLinkedList\` class:
   starterCode: {
     javascript:
       'function simulateLinkedList(ops, args) {\n  // Implement MyLinkedList here, then simulate\n}\n',
+    typescript: "function simulateLinkedList(ops: string[], args: number[][]): (null | number)[] {\n  // Implement MyLinkedList here, then simulate\n}",
+
     python:
       'def simulateLinkedList(ops: list, args: list) -> list:\n    # Implement MyLinkedList here, then simulate\n    pass\n',
   },

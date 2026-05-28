@@ -46,6 +46,8 @@ function sortArrayByParityII(nums) {
     javascript: `function sortArrayByParityII(nums) {
 
 }`,
+    typescript: "function sortArrayByParityII(nums: number[]): number[] {\n\n}",
+
     python: `def sortArrayByParityII(nums):
     pass`,
   },

@@ -37,6 +37,8 @@ function minimumSum(num) {
   params: ['num'],
   starterCode: {
     javascript: 'function minimumSum(num) {\n  \n}\n',
+    typescript: "function minimumSum(num: number): number {\n  \n}",
+
     python: 'def minimumSum(num):\n    pass\n',
   },
   visibleTests: [

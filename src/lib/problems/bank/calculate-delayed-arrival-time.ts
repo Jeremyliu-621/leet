@@ -37,6 +37,8 @@ Note that the time in this problem is in **24-hour format**.`,
     javascript: `function findDelayedArrivalTime(arrivalTime, delayedTime) {
 
 }`,
+    typescript: "function findDelayedArrivalTime(arrivalTime: number, delayedTime: number): number {\n\n}",
+
     python: `def findDelayedArrivalTime(arrivalTime, delayedTime):
     pass`,
   },

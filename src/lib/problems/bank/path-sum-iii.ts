@@ -103,6 +103,8 @@ A path must travel **downward** (from parent to child) but does **not** need to 
   starterCode: {
     javascript:
       '// TreeNode class is pre-defined. Implement the function below:\nfunction pathSum(root, targetSum) {\n  \n}\n',
+    typescript: "function pathSumIIIRunner(root: (number | null)[], targetSum: number): number {\n  \n}",
+
     python:
       '# TreeNode class is pre-defined. Implement the function below:\ndef pathSum(root, targetSum):\n    pass\n',
   },

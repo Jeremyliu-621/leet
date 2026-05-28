@@ -113,6 +113,8 @@ Return the root of the rearranged tree.`,
   },
   starterCode: {
     javascript: 'function increasingBST(root) {\n  // your code here\n}\n',
+    typescript: "function increasingBSTRunner(root: (number | null)[]): (number | null)[] {\n  // your code here\n}",
+
     python: 'def increasingBST(root):\n    # your code here\n    pass\n',
   },
   visibleTests: [

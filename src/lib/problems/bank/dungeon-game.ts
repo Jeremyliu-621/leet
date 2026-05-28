@@ -36,6 +36,8 @@ Return the **minimum initial health** the knight must start with to rescue the p
   params: ['dungeon'],
   starterCode: {
     javascript: 'function calculateMinimumHP(dungeon) {\n  \n}\n',
+    typescript: "function calculateMinimumHP(dungeon: number[][]): number {\n  \n}",
+
     python: 'def calculateMinimumHP(dungeon: list[list[int]]) -> int:\n    pass\n',
   },
   visibleTests: [

@@ -45,6 +45,8 @@ Return \`true\` if the array \`message\` is spam, and \`false\` otherwise.`,
     javascript: `function reportSpam(message, bannedWords) {
 
 }`,
+    typescript: "function reportSpam(message: string[], bannedWords: string[]): boolean {\n\n}",
+
     python: `def reportSpam(message, bannedWords):
     pass`,
   },

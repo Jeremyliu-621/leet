@@ -45,6 +45,8 @@ AB -> 28
     javascript: `function titleToNumber(columnTitle) {
 
 }`,
+    typescript: "function titleToNumber(columnTitle: string): number {\n\n}",
+
     python: `def titleToNumber(columnTitle):
     pass`,
   },

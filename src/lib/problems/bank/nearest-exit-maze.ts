@@ -46,6 +46,8 @@ Return the **number of steps** in the shortest path from the entrance to the nea
   params: ['maze', 'entrance'],
   starterCode: {
     javascript: 'function nearestExit(maze, entrance) {\n  // your code here\n}\n',
+    typescript: "function nearestExit(maze: string[][], entrance: number[]): number {\n  // your code here\n}",
+
     python: 'def nearestExit(maze, entrance):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -34,6 +34,8 @@ The integer square root is the largest whole number \`r\` such that \`r * r\` is
   params: ['n'],
   starterCode: {
     javascript: 'function integerSquareRoot(n) {\n  // your code here\n}\n',
+    typescript: "function integerSquareRoot(n: number): number {\n  // your code here\n}",
+
     python: 'def integerSquareRoot(n):\n    # your code here\n    pass\n',
   },
   visibleTests: [

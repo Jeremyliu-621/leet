@@ -49,6 +49,8 @@ Output: 1
   params: ['grid'],
   starterCode: {
     javascript: 'function findMaxFish(grid) {\n  // your code here\n}\n',
+    typescript: "function findMaxFish(grid: number[][]): number {\n  // your code here\n}",
+
     python: 'def findMaxFish(grid):\n    pass\n',
   },
   visibleTests: [

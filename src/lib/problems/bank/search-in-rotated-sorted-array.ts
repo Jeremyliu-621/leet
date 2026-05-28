@@ -55,6 +55,8 @@ function search(nums, target) {
   params: ['nums', 'target'],
   starterCode: {
     javascript: 'function search(nums, target) {\n\n}\n',
+    typescript: "function search(nums: number[], target: number): number {\n\n}",
+
     python: 'def search(nums, target):\n    pass\n',
   },
   visibleTests: [

@@ -37,6 +37,8 @@ You can move according to these rules:
   params: ['points'],
   starterCode: {
     javascript: 'function minTimeToVisitAllPoints(points) {\n  \n}\n',
+    typescript: "function minTimeToVisitAllPoints(points: number[][]): number {\n  \n}",
+
     python: 'def minTimeToVisitAllPoints(points):\n    pass\n',
   },
   visibleTests: [

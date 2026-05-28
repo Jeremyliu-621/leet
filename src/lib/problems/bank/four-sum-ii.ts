@@ -41,6 +41,8 @@ This reduces O(n⁴) brute force to **O(n²)** time.`,
   starterCode: {
     javascript:
       'function fourSumII(nums1, nums2, nums3, nums4) {\n  // your code here\n}\n',
+    typescript: "function fourSumII(nums1: number[], nums2: number[], nums3: number[], nums4: number[]): number {\n  // your code here\n}",
+
     python:
       'def fourSumII(nums1: list[int], nums2: list[int], nums3: list[int], nums4: list[int]) -> int:\n    # your code here\n    pass\n',
   },

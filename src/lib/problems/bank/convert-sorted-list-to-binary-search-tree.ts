@@ -77,6 +77,8 @@ Return the tree as a **BFS level-order array** where \`null\` represents a missi
 
   return toBfsArray(build(listValues, 0, listValues.length - 1));
 }`,
+    typescript: "function convertSortedListToBST(listValues: number[]): (number | null)[] {\n  class TreeNode {\n    constructor(val) {\n      this.val = val;\n      this.left = null;\n      this.right = null;\n    }\n  }\n\n  function build(arr, lo, hi) {\n    if (lo > hi) return null;\n    const mid = Math.floor((lo + hi) / 2);\n    const node = new TreeNode(arr[mid]);\n    node.left = build(arr, lo, mid - 1);\n    node.right = build(arr, mid + 1, hi);\n    return node;\n  }\n\n  function toBfsArray(root) {\n    if (!root) return [];\n    const res = [];\n    const q = [root];\n    while (q.length > 0) {\n      const node = q.shift();\n      if (!node) { res.push(null); continue; }\n      res.push(node.val);\n      q.push(node.left ?? null);\n      q.push(node.right ?? null);\n    }\n    while (res.length > 0 && res[res.length - 1] === null) res.pop();\n    return res;\n  }\n\n  return toBfsArray(build(listValues, 0, listValues.length - 1));\n}",
+
     python: `def convertSortedListToBST(listValues):
     from collections import deque
 

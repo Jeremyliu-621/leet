@@ -29,6 +29,8 @@ An input string is valid if:
   params: ['s'],
   starterCode: {
     javascript: 'function isValid(s) {\n  \n}\n',
+    typescript: "function isValid(s: string): boolean {\n  \n}",
+
     python: 'def isValid(s):\n    pass\n',
   },
   visibleTests: [

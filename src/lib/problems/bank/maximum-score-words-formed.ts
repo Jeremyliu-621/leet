@@ -51,6 +51,8 @@ Each letter in \`letters\` can only be used **once**. A word can only be include
     javascript: `function maxScoreWords(words, letters, score) {
 
 }`,
+    typescript: "function maxScoreWords(words: string[], letters: string[], score: number[]): number {\n\n}",
+
     python: `def maxScoreWords(words: list[str], letters: list[str], score: list[int]) -> int:
     pass`,
   },

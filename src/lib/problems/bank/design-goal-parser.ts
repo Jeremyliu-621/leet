@@ -41,6 +41,8 @@ Return the **Goal Parser's interpretation** of \`command\`.`,
   params: ['command'],
   starterCode: {
     javascript: 'function goalParserInterpretation(command) {\n  \n}\n',
+    typescript: "function goalParserInterpretation(command: string): string {\n  \n}",
+
     python: 'def goalParserInterpretation(command):\n    pass\n',
   },
   visibleTests: [

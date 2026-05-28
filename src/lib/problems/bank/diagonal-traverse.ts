@@ -36,6 +36,8 @@ The traversal goes diagonally — first upward-right, then downward-left, altern
   params: ['mat'],
   starterCode: {
     javascript: 'function findDiagonalOrder(mat) {\n  // your code here\n}\n',
+    typescript: "function findDiagonalOrder(mat: number[][]): number[] {\n  // your code here\n}",
+
     python: 'def findDiagonalOrder(mat):\n    # your code here\n    pass\n',
   },
   visibleTests: [

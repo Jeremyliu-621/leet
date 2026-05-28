@@ -24,6 +24,8 @@ A reverse pair is a pair \`(i, j)\` where:
   params: ['nums'],
   starterCode: {
     javascript: 'function reversePairs(nums) {\n\n}\n',
+    typescript: "function reversePairs(nums: number[]): number {\n\n}",
+
     python: 'def reversePairs(nums):\n    pass\n',
   },
   visibleTests: [

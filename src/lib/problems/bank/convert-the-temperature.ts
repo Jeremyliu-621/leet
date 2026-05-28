@@ -39,6 +39,8 @@ Return \`ans\`. Answers within \`10^-5\` of the actual answer will be accepted.`
     javascript: `function convertTemperature(celsius) {
 
 }`,
+    typescript: "function convertTemperature(celsius: number): number[] {\n\n}",
+
     python: `def convertTemperature(celsius):
     pass`,
   },

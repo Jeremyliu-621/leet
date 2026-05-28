@@ -42,6 +42,8 @@ Two integers are compared by their **numeric value**. Two strings of different l
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function kthLargestNumber(nums, k) {\n  \n}\n',
+    typescript: "function kthLargestNumber(nums: string[], k: number): string {\n  \n}",
+
     python: 'def kthLargestNumber(nums, k):\n    pass\n',
   },
   visibleTests: [

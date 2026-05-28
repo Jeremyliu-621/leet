@@ -43,6 +43,8 @@ Return the **minimum number of steps** to reach the **last index** of the array.
   params: ['arr'],
   starterCode: {
     javascript: 'function minJumps(arr) {\n  // your code here\n}\n',
+    typescript: "function minJumps(arr: number[]): number {\n  // your code here\n}",
+
     python: 'def minJumps(arr):\n    # your code here\n    pass\n',
   },
   visibleTests: [

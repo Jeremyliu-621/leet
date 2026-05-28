@@ -105,6 +105,8 @@ return ans;\`\`\``
   starterCode: {
     javascript:
       '// TreeNode class and kthSmallestRunner wrapper are pre-defined.\n// Implement the function below:\nfunction kthSmallest(root, k) {\n\n}\n',
+    typescript: "function kthSmallestRunner(root: (number | null)[], k: number): number {\n\n}",
+
     python:
       '# TreeNode class and kthSmallestRunner wrapper are pre-defined.\n# Implement the function below:\ndef kthSmallest(root, k):\n    pass\n',
   },

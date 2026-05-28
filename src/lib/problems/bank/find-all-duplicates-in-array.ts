@@ -42,6 +42,8 @@ You must write an algorithm that runs in \`O(n)\` time and uses only constant ex
     javascript: `function findDuplicates(nums) {
 
 }`,
+    typescript: "function findDuplicates(nums: number[]): number[] {\n\n}",
+
     python: `def findDuplicates(nums):
     pass`,
   },

@@ -37,6 +37,8 @@ Return an integer array \`answer\` of length \`n\` where \`answer[i]\` is this m
   params: ['nums'],
   starterCode: {
     javascript: 'function smallestSubarrays(nums) {\n  \n}\n',
+    typescript: "function smallestSubarrays(nums: number[]): number[] {\n  \n}",
+
     python: 'def smallestSubarrays(nums):\n    pass\n',
   },
   visibleTests: [

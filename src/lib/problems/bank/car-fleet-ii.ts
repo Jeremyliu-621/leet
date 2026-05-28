@@ -36,6 +36,8 @@ Answers within \`10^-5\` of the actual answers are accepted.`,
   params: ['cars'],
   starterCode: {
     javascript: 'function getCollisionTimes(cars) {\n\n}\n',
+    typescript: "function getCollisionTimes(cars: number[][]): number[] {\n\n}",
+
     python: 'def getCollisionTimes(cars):\n    pass\n',
   },
   visibleTests: [

@@ -40,6 +40,8 @@ Return the **minimum number of operations** needed so that all remaining element
   params: ['nums'],
   starterCode: {
     javascript: 'function minimumOperations(nums) {\n  // your code here\n}\n',
+    typescript: "function minimumOperations(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def minimumOperations(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

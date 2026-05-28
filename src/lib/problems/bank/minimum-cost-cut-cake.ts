@@ -33,6 +33,8 @@ Return the **minimum total cost** of all the cuts.`,
   params: ['n', 'cuts'],
   starterCode: {
     javascript: 'function minCostCutCake(n, cuts) {\n\n}\n',
+    typescript: "function minCostCutCake(n: number, cuts: number[]): number {\n\n}",
+
     python: 'def minCostCutCake(n, cuts):\n    pass\n',
   },
   visibleTests: [

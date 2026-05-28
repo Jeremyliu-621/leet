@@ -40,6 +40,8 @@ If you choose a job that ends at time \`X\` you will be able to start another jo
   params: ['startTime', 'endTime', 'profit'],
   starterCode: {
     javascript: 'function jobScheduling(startTime, endTime, profit) {\n  \n}\n',
+    typescript: "function jobScheduling(startTime: number[], endTime: number[], profit: number[]): number {\n  \n}",
+
     python: 'def jobScheduling(startTime, endTime, profit):\n    pass\n',
   },
   visibleTests: [

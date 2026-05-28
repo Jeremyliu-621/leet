@@ -32,6 +32,8 @@ Solve it in **O(n)** time — do not call a built-in popcount function for each 
   params: ['n'],
   starterCode: {
     javascript: 'function countBits(n) {\n  // your code here\n}\n',
+    typescript: "function countBits(n: number): number[] {\n  // your code here\n}",
+
     python: 'def countBits(n: int) -> list:\n    # your code here\n    pass\n',
   },
   visibleTests: [

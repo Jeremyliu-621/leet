@@ -37,6 +37,8 @@ Given the two positive integers \`n\` and \`time\`, return the index of the pers
   params: ['n', 'time'],
   starterCode: {
     javascript: 'function passThePillow(n, time) {\n  \n}\n',
+    typescript: "function passThePillow(n: number, time: number): number {\n  \n}",
+
     python: 'def passThePillow(n, time):\n    pass\n',
   },
   visibleTests: [

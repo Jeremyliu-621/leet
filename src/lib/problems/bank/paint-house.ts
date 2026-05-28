@@ -36,6 +36,8 @@ Return the **minimum cost** to paint all houses such that **no two adjacent hous
   params: ['costs'],
   starterCode: {
     javascript: 'function minCostPaintHouse(costs) {\n\n}\n',
+    typescript: "function minCostPaintHouse(costs: number[][]): number {\n\n}",
+
     python: 'def minCostPaintHouse(costs):\n    pass\n',
   },
   visibleTests: [

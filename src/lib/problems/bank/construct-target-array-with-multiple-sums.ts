@@ -41,6 +41,8 @@ Return \`true\` if it is possible to construct \`target\` from an array of all o
   params: ['target'],
   starterCode: {
     javascript: 'function isPossible(target) {\n  \n}\n',
+    typescript: "function isPossible(target: number[]): boolean {\n  \n}",
+
     python: 'def isPossible(target: list[int]) -> bool:\n    pass\n',
   },
   visibleTests: [

@@ -55,6 +55,8 @@ Return \`k\` — the number of elements remaining after removal. The first \`k\`
 function removeDuplicates(nums) {
 
 }`,
+    typescript: "function removeDuplicatesIIRunner(nums: number[]): number[] {\n\n}",
+
     python: `# removeDuplicatesIIRunner is pre-defined and calls your function below.
 def removeDuplicates(nums):
     pass`,

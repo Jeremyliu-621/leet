@@ -37,6 +37,8 @@ Return the length of the **longest** nice subarray.
   params: ['nums'],
   starterCode: {
     javascript: 'function longestNiceSubarray(nums) {\n  // your code here\n}\n',
+    typescript: "function longestNiceSubarray(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def longestNiceSubarray(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -99,6 +99,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   starterCode: {
     javascript:
       '// TreeNode class and goodNodesRunner wrapper are pre-defined.\n// Implement the function below:\nfunction goodNodes(root) {\n  \n}\n',
+    typescript: "function goodNodesRunner(root: (number | null)[]): number {\n  \n}",
+
     python:
       '# TreeNode class and goodNodesRunner wrapper are pre-defined.\n# Implement the function below:\ndef goodNodes(root):\n    pass\n',
   },

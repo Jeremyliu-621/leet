@@ -49,6 +49,8 @@ return splits;\`\`\``
   params: ['s'],
   starterCode: {
     javascript: 'function balancedStringSplit(s) {\n  \n}\n',
+    typescript: "function balancedStringSplit(s: string): number {\n  \n}",
+
     python: 'def balancedStringSplit(s):\n    pass\n',
   },
   visibleTests: [

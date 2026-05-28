@@ -40,6 +40,8 @@ Return the **minimum** possible maximum of \`nums\` after any number of operatio
     javascript: `function minimizeArrayValue(nums) {
 
 }`,
+    typescript: "function minimizeArrayValue(nums: number[]): number {\n\n}",
+
     python: `def minimizeArrayValue(nums):
     pass`,
   },

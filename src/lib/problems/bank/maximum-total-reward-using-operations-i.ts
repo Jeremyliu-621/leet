@@ -40,6 +40,8 @@ Return an integer denoting the **maximum** total reward you can collect by perfo
     javascript: `function maxTotalReward(rewardValues) {
 
 }`,
+    typescript: "function maxTotalReward(rewardValues: number[]): number {\n\n}",
+
     python: `def maxTotalReward(rewardValues):
     pass`,
   },

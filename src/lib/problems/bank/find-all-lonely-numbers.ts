@@ -33,6 +33,8 @@ Return **all** lonely numbers in \`nums\`. You may return the answer in **any or
   params: ['nums'],
   starterCode: {
     javascript: 'function findLonely(nums) {\n  \n}\n',
+    typescript: "function findLonely(nums: number[]): number[] {\n  \n}",
+
     python: 'def findLonely(nums):\n    pass\n',
   },
   visibleTests: [

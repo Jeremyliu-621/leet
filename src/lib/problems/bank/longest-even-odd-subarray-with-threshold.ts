@@ -46,6 +46,8 @@ Return the length of the longest such subarray.`,
   params: ['nums', 'threshold'],
   starterCode: {
     javascript: 'function longestAlternatingSubarray(nums, threshold) {\n  \n}\n',
+    typescript: "function longestAlternatingSubarray(nums: number[], threshold: number): number {\n  \n}",
+
     python: 'def longestAlternatingSubarray(nums, threshold):\n    pass\n',
   },
   visibleTests: [

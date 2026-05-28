@@ -38,6 +38,8 @@ A substring is a contiguous sequence of characters within a string.`,
     javascript: `function appealSum(s) {
 
 }`,
+    typescript: "function appealSum(s: string): number {\n\n}",
+
     python: `def appealSum(s: str) -> int:
     pass`,
   },

@@ -45,6 +45,8 @@ Return *the number of good triplets*.`,
     javascript: `function countGoodTriplets(arr, a, b, c) {
 
 }`,
+    typescript: "function countGoodTriplets(arr: number[], a: number, b: number, c: number): number {\n\n}",
+
     python: `def countGoodTriplets(arr, a, b, c):
     pass`,
   },

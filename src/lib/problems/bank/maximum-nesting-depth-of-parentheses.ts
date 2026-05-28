@@ -42,6 +42,8 @@ Given a VPS represented as string \`s\`, return the **nesting depth** of \`s\`.`
     javascript: `function maxDepth(s) {
 
 }`,
+    typescript: "function maxDepth(s: string): number {\n\n}",
+
     python: `def maxDepth(s):
     pass`,
   },

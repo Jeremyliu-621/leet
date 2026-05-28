@@ -98,6 +98,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   starterCode: {
     javascript:
       '// TreeNode class and sumEvenGrandparentRunner wrapper are pre-defined.\n// Implement the function below:\nfunction sumEvenGrandparent(root) {\n  \n}\n',
+    typescript: "function sumEvenGrandparentRunner(root: number[]): number {\n  \n}",
+
     python:
       '# TreeNode class and sumEvenGrandparentRunner wrapper are pre-defined.\n# Implement the function below:\ndef sumEvenGrandparent(root):\n    pass\n',
   },

@@ -39,6 +39,8 @@ Return the maximum elegance of any subsequence of length \`k\`.
   params: ['items', 'k'],
   starterCode: {
     javascript: 'function findMaximumElegance(items, k) {\n\n}\n',
+    typescript: "function findMaximumElegance(items: number[][], k: number): number {\n\n}",
+
     python: 'def findMaximumElegance(items: list, k: int) -> int:\n    pass\n',
   },
   visibleTests: [

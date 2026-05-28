@@ -35,6 +35,8 @@ export const problem: Problem = {
     javascript: `function maxPoints(points) {
 
 }`,
+    typescript: "function maxPoints(points: number[][]): number {\n\n}",
+
     python: `def maxPoints(points):
     pass`,
   },

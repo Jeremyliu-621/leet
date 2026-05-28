@@ -37,6 +37,8 @@ A string of parentheses is valid if every open parenthesis has a matching close 
   params: ['s'],
   starterCode: {
     javascript: `function removeInvalidParentheses(s) {\n\n}`,
+    typescript: "function removeInvalidParentheses(s: string): string[] {\n\n}",
+
     python: `def removeInvalidParentheses(s):\n    pass`,
   },
   visibleTests: [

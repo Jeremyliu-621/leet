@@ -35,6 +35,8 @@ Return the **maximum product** of \`nums\` after **at most** \`k\` operations. S
     javascript: `function maximumProduct(nums, k) {
 
 }`,
+    typescript: "function maximumProduct(nums: number[], k: number): number {\n\n}",
+
     python: `def maximumProduct(nums, k):
     pass`,
   },

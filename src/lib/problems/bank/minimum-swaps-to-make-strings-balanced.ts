@@ -54,6 +54,8 @@ Output: 0
   params: ['s'],
   starterCode: {
     javascript: 'function minSwaps(s) {\n  \n}\n',
+    typescript: "function minSwaps(s: string): number {\n  \n}",
+
     python: 'def minSwaps(s):\n    ',
   },
   visibleTests: [

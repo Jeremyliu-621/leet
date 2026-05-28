@@ -41,6 +41,8 @@ return max / k;\`\`\``
     javascript: `function findMaxAverage(nums, k) {
 
 }`,
+    typescript: "function findMaxAverage(nums: number[], k: number): number {\n\n}",
+
     python: `def findMaxAverage(nums, k):
     pass`,
   },

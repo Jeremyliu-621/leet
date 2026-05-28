@@ -99,6 +99,8 @@ return map.get(head) || null;\`\`\``
 function copyRandomList(head) {
 
 }`,
+    typescript: "function copyRandomListRunner(arr: ((number | null)[] | number[])[]): ((number | null)[] | number[])[] {\n  constructor(val, next = null, random = null) {\n    this.val = val; this.next = next; this.random = random;\n  }\n}\nfunction __fromArray__(arr) {\n  if (!arr || arr.length === 0) return null;\n  const nodes = arr.map(([val]) => new ListNode(val));\n  for (let i = 0; i < arr.length; i++) {\n    if (i + 1 < arr.length) nodes[i].next = nodes[i + 1];\n    const ri = arr[i][1];\n    nodes[i].random = ri === null ? null : nodes[ri];\n  }\n  return nodes[0];\n}\nfunction __toArray__(head) {\n  const nodes = [];\n  let cur = head;\n  while (cur) { nodes.push(cur); cur = cur.next; }\n  const idx = new Map(nodes.map((n, i) => [n, i]));\n  return nodes.map(n => [n.val, n.random === null ? null : idx.get(n.random)]);\n}\nfunction copyRandomListRunner(arr) {\n  return __toArray__(copyRandomList(__fromArray__(arr)));\n}\n\nfunction copyRandomList(head) {\n\n}",
+
     python: `${PY_PREAMBLE}
 def copyRandomList(head):
     pass`,

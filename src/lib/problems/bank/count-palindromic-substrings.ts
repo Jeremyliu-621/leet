@@ -38,6 +38,8 @@ A **palindrome** reads the same forwards and backwards. A **substring** is a con
   params: ['s'],
   starterCode: {
     javascript: 'function countPalindromicSubstrings(s) {\n  // your code here\n}\n',
+    typescript: "function countPalindromicSubstrings(s: string): number {\n  // your code here\n}",
+
     python: 'def countPalindromicSubstrings(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

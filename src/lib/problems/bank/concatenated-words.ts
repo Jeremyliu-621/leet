@@ -38,6 +38,8 @@ Return the result in **sorted order**.
   params: ['words'],
   starterCode: {
     javascript: 'function findAllConcatenatedWordsInADict(words) {\n\n}\n',
+    typescript: "function findAllConcatenatedWordsInADict(words: string[]): string[] {\n\n}",
+
     python: 'def findAllConcatenatedWordsInADict(words: list) -> list:\n    pass\n',
   },
   visibleTests: [

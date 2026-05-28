@@ -112,6 +112,8 @@ Return a **sorted array of the root values** of the duplicate subtrees (one repr
   starterCode: {
     javascript:
       '// TreeNode class is pre-defined. Return an array of TreeNode roots:\nfunction findDuplicateSubtrees(root) {\n  \n}\n',
+    typescript: "function findDuplicateSubtreesRunner(root: (number | null)[]): number[] {\n  \n}",
+
     python:
       '# TreeNode class is pre-defined. Return a list of TreeNode roots:\ndef findDuplicateSubtrees(root):\n    pass\n',
   },

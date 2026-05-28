@@ -23,6 +23,8 @@ Given two integers \`n\` and \`k\`, return the number of different arrays consis
   params: ['n', 'k'],
   starterCode: {
     javascript: 'function kInversePairs(n, k) {\n\n}\n',
+    typescript: "function kInversePairs(n: number, k: number): number {\n\n}",
+
     python: 'def kInversePairs(n, k):\n    pass\n',
   },
   visibleTests: [

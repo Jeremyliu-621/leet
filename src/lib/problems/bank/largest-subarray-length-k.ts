@@ -40,6 +40,8 @@ function largestSubarray(nums, k) {
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function largestSubarray(nums, k) {\n\n}`,
+    typescript: "function largestSubarray(nums: number[], k: number): number[] {\n\n}",
+
     python: `def largestSubarray(nums, k):\n    pass`,
   },
   visibleTests: [

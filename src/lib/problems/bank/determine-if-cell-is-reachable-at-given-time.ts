@@ -38,6 +38,8 @@ Return \`true\` *if you can reach cell* \`(fx, fy)\` *after **exactly** \`t\` se
     javascript: `function isReachableAtTime(sx, sy, fx, fy, t) {
 
 }`,
+    typescript: "function isReachableAtTime(sx: number, sy: number, fx: number, fy: number, t: number): boolean {\n\n}",
+
     python: `def isReachableAtTime(sx, sy, fx, fy, t):
     pass`,
   },

@@ -41,6 +41,8 @@ Apply all queries in order. Return the resulting string.`,
 function shiftingLetters(s, queries) {
 
 }`,
+    typescript: "function shiftingLetters(s: string, queries: number[][]): string {string} s\n * @param {number[][]} queries\n * @return {string}\n */\nfunction shiftingLetters(s, queries) {\n\n}",
+
     python: `def shiftingLetters(s: str, queries: list[list[int]]) -> str:
     pass`,
   },

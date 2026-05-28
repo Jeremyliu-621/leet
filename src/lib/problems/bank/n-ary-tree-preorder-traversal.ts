@@ -94,6 +94,8 @@ The tree is serialized as a flat array in level-order format where groups of chi
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// Node class and preorderRunner wrapper are pre-defined.\n// Implement the function below:\nfunction preorder(root) {\n  // your code here\n}\n',
+    typescript: "function preorderRunner(root: (number | null)[]): number[] {\n  // your code here\n}",
+
     python: '# Node class and preorderRunner wrapper are pre-defined.\n# Implement the function below:\ndef preorder(root):\n    # your code here\n    pass\n',
   },
   hints: [

@@ -130,6 +130,8 @@ function lowestCommonAncestor(root, p, q) {
 
 }
 `,
+    typescript: "function lcaBinaryTreeRunner(arr: number[], p: number, q: number): number {\n\n}",
+
     python: `# TreeNode class and lcaBinaryTreeRunner wrapper are pre-defined.
 # p and q are TreeNode objects (not values).
 def lowestCommonAncestor(root, p, q):

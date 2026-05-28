@@ -43,6 +43,8 @@ Return the **maximum sum of like-time coefficients** you can achieve after cooki
   // return max sum of like-time coefficients
 
 }`,
+    typescript: "function maxSatisfaction(satisfaction: number[]): number {\n  // return max sum of like-time coefficients\n\n}",
+
     python: `def maxSatisfaction(satisfaction: list) -> int:
     # return max sum of like-time coefficients
     pass

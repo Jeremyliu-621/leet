@@ -45,6 +45,8 @@ Given two nodes \`node1\` and \`node2\`, find the node \`x\` reachable from **bo
   // return node minimizing max distance from both node1 and node2
 
 }`,
+    typescript: "function closestMeetingNode(edges: number[], node1: number, node2: number): number {\n  // return node minimizing max distance from both node1 and node2\n\n}",
+
     python: `def closestMeetingNode(edges: list, node1: int, node2: int) -> int:
     # return node minimizing max distance from both node1 and node2
     pass

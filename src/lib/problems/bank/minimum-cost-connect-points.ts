@@ -36,6 +36,8 @@ Return the **minimum cost** to make all points connected. All points are connect
   params: ['points'],
   starterCode: {
     javascript: 'function minCostConnectPoints(points) {\n  // your code here\n}\n',
+    typescript: "function minCostConnectPoints(points: number[][]): number {\n  // your code here\n}",
+
     python: 'def minCostConnectPoints(points):\n    # your code here\n    pass\n',
   },
   visibleTests: [

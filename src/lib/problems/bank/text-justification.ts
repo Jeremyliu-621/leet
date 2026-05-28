@@ -40,6 +40,8 @@ For the last line of text, it should be **left-justified**, and no extra space i
   params: ['words', 'maxWidth'],
   starterCode: {
     javascript: 'function fullJustify(words, maxWidth) {\n\n}\n',
+    typescript: "function fullJustify(words: string[], maxWidth: number): string[] {\n\n}",
+
     python: 'def fullJustify(words, maxWidth):\n    pass\n',
   },
   visibleTests: [

@@ -48,6 +48,8 @@ return nums.map((_,i) => i%2===0 ? even.shift() : odd.shift());\`\`\``
     javascript: `function sortEvenOdd(nums) {
 
 }`,
+    typescript: "function sortEvenOdd(nums: number[]): number[] {\n\n}",
+
     python: `def sortEvenOdd(nums):
     pass`,
   },

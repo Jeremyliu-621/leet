@@ -43,6 +43,8 @@ Return the number of unoccupied cells that are **not guarded**.`,
     javascript: `function countUnguarded(m, n, guards, walls) {
 
 }`,
+    typescript: "function countUnguarded(m: number, n: number, guards: number[][], walls: number[][]): number {\n\n}",
+
     python: `def countUnguarded(m, n, guards, walls):
     pass`,
   },

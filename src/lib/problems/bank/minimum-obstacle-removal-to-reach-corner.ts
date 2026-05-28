@@ -39,6 +39,8 @@ You can move up, down, left, or right in one step.`,
     javascript: `function minimumObstacles(grid) {
 
 }`,
+    typescript: "function minimumObstacles(grid: number[][]): number {\n\n}",
+
     python: `def minimumObstacles(grid):
     pass`,
   },

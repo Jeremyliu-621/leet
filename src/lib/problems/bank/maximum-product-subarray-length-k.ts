@@ -50,6 +50,8 @@ Note: Numbers can be negative and zero.`,
     javascript: `function maxProductSubarrayK(nums, k) {
   // Return the maximum product of any contiguous subarray of exactly k elements
 }`,
+    typescript: "function maxProductSubarrayK(nums: number[], k: number): number {\n  // Return the maximum product of any contiguous subarray of exactly k elements\n}",
+
     python: `def maxProductSubarrayK(nums: list[int], k: int) -> int:
     # Return the maximum product of any contiguous subarray of exactly k elements
     pass`,

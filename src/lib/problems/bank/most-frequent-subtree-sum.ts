@@ -110,6 +110,8 @@ Output: [2, -3, 4]   (all appear once — tie)
   // root: TreeNode | null
   // Return array of most frequent subtree sums
 }`,
+    typescript: "function findFrequentTreeSumRunner(root: number[]): number[] {\n  // root: TreeNode | null\n  // Return array of most frequent subtree sums\n}",
+
     python: `def findFrequentTreeSum(root):
     # root: TreeNode | None
     # Return list of most frequent subtree sums

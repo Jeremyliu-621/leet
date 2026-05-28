@@ -36,6 +36,8 @@ Note that the word should be built from shortest to longest, adding one characte
   params: ['words'],
   starterCode: {
     javascript: 'function longestWord(words) {\n  \n}\n',
+    typescript: "function longestWord(words: string[]): string {\n  \n}",
+
     python: 'def longestWord(words):\n    pass\n',
   },
   visibleTests: [

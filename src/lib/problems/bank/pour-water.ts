@@ -49,6 +49,8 @@ Return the final heights after pouring all water.
   params: ['heights', 'volume', 'k'],
   starterCode: {
     javascript: 'function pourWater(heights, volume, k) {\n  \n}\n',
+    typescript: "function pourWater(heights: number[], volume: number, k: number): number[] {\n  \n}",
+
     python: 'def pourWater(heights, volume, k):\n    pass\n',
   },
   visibleTests: [

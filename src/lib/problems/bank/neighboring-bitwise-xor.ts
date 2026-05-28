@@ -48,6 +48,8 @@ A binary array contains only **0s** and **1s**.`,
   params: ['derived'],
   starterCode: {
     javascript: 'function doesValidArrayExist(derived) {\n  \n}\n',
+    typescript: "function doesValidArrayExist(derived: number[]): boolean {\n  \n}",
+
     python: 'def doesValidArrayExist(derived):\n    pass\n',
   },
   visibleTests: [

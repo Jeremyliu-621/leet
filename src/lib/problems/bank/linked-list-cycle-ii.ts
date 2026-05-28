@@ -52,6 +52,8 @@ function detectCycle(vals, pos) {
 
 }
 `,
+    typescript: "function detectCycle(vals: number[], pos: number): number {\n\n}",
+
     python: `# The function receives a flat array and a pos (cycle start index, -1 = no cycle).
 # Return the 0-based index of the cycle start, or -1 if no cycle.
 def detectCycle(vals: list, pos: int) -> int:

@@ -34,6 +34,8 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: 'function countSmaller(nums) {\n  \n}\n',
+    typescript: "function countSmaller(nums: number[]): number[] {\n  \n}",
+
     python: 'def countSmaller(nums):\n    pass\n',
   },
   visibleTests: [

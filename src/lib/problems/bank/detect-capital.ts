@@ -35,6 +35,8 @@ function detectCapitalUse(word) {
   params: ['word'],
   starterCode: {
     javascript: 'function detectCapitalUse(word) {\n  \n}\n',
+    typescript: "function detectCapitalUse(word: string): boolean {\n  \n}",
+
     python: 'def detectCapitalUse(word):\n    pass\n',
   },
   visibleTests: [

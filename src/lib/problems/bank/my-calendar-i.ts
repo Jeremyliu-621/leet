@@ -41,6 +41,8 @@ Given a list of \`[start, end)\` bookings (half-open intervals), determine which
   // return boolean array: true if booking accepted, false if rejected
 
 }`,
+    typescript: "function myCalendarI(bookings: number[][]): boolean[] {\n  // bookings: array of [start, end) intervals\n  // return boolean array: true if booking accepted, false if rejected\n\n}",
+
     python: `def myCalendarI(bookings: list) -> list:
     # bookings: list of [start, end) intervals
     # return boolean list: True if accepted, False if rejected

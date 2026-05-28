@@ -46,6 +46,8 @@ Return the **sum** of the power of all **non-empty** groups of heroes possible. 
   // return sum of power of all non-empty groups, modulo 1e9+7
 
 }`,
+    typescript: "function sumOfPower(nums: number[]): number {\n  // return sum of power of all non-empty groups, modulo 1e9+7\n\n}",
+
     python: `def sumOfPower(nums: list) -> int:
     # return sum of power of all non-empty groups, modulo 1e9+7
     pass

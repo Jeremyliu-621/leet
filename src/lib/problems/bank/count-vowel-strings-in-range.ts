@@ -32,6 +32,8 @@ return queries.map(([l, r]) => words.slice(l, r+1).filter(check).length);\`\`\``
   params: ['words', 'left', 'right'],
   starterCode: {
     javascript: 'function vowelStringsInRange(words, left, right) {\n  \n}\n',
+    typescript: "function vowelStringsInRange(words: string[], left: number, right: number): number {\n  \n}",
+
     python: 'def vowelStringsInRange(words, left, right):\n    pass\n',
   },
   visibleTests: [

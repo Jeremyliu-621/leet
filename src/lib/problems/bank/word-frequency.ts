@@ -40,6 +40,8 @@ Words are separated by single spaces. Treat the input as case-sensitive (so \`"T
   params: ['text'],
   starterCode: {
     javascript: 'function wordFrequency(text) {\n  // your code here\n}\n',
+    typescript: "function wordFrequency(text: string): unknown {\n  // your code here\n}",
+
     python: 'def wordFrequency(text):\n    # your code here\n    pass\n',
   },
   visibleTests: [

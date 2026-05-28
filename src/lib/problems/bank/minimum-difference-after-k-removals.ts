@@ -35,6 +35,8 @@ Return the **minimum** possible difference.`,
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function minimumDifference(nums, k) {\n  // your code here\n}\n',
+    typescript: "function minimumDifference(nums: number[], k: number): number {\n  // your code here\n}",
+
     python: 'def minimumDifference(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

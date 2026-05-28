@@ -40,6 +40,8 @@ export const problem: Problem = {
     javascript: `function minimumEffortPath(heights) {
 
 }`,
+    typescript: "function minimumEffortPath(heights: number[][]): number {\n\n}",
+
     python: `def minimumEffortPath(heights):
     pass`,
   },

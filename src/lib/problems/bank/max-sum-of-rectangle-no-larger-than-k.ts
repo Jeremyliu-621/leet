@@ -38,6 +38,8 @@ It is guaranteed that there will be a rectangle with a sum no larger than \`k\`.
     javascript: `function maxSumSubmatrix(matrix, k) {
 
 }`,
+    typescript: "function maxSumSubmatrix(matrix: number[][], k: number): number {\n\n}",
+
     python: `def maxSumSubmatrix(matrix, k):
     pass`,
   },

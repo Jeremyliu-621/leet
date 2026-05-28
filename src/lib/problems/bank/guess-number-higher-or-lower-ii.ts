@@ -36,6 +36,8 @@ Given a particular \`n\`, return the **minimum amount of money you need to guara
   params: ['n'],
   starterCode: {
     javascript: 'function getMoneyAmount(n) {\n\n}\n',
+    typescript: "function getMoneyAmount(n: number): number {\n\n}",
+
     python: 'def getMoneyAmount(n):\n    pass\n',
   },
   visibleTests: [

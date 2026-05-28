@@ -36,6 +36,8 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: 'function reverseArray(nums) {\n  // your code here\n}\n',
+    typescript: "function reverseArray(nums: number[]): number[] {\n  // your code here\n}",
+
     python: 'def reverseArray(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

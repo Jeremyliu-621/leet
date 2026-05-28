@@ -52,6 +52,8 @@ Output: **4**`,
   params: ['heightMap'],
   starterCode: {
     javascript: 'function trapRainWaterII(heightMap) {\n  // your code here\n}\n',
+    typescript: "function trapRainWaterII(heightMap: number[][]): number {\n  // your code here\n}",
+
     python: 'def trapRainWaterII(heightMap):\n    # your code here\n    pass\n',
   },
   visibleTests: [

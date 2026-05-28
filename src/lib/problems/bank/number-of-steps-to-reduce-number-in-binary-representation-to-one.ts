@@ -45,6 +45,8 @@ It is guaranteed that you can always reach one for all test cases.`,
     javascript: `function numSteps(s) {
 
 }`,
+    typescript: "function numSteps(s: string): number {\n\n}",
+
     python: `def numSteps(s):
     pass
 `,

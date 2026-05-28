@@ -44,6 +44,8 @@ You must write an algorithm with **O(log n)** runtime complexity.
   params: ['nums', 'target'] as readonly string[],
   starterCode: {
     javascript: 'function searchRange(nums, target) {\n  // your code here\n}\n',
+    typescript: "function searchRange(nums: number[], target: number): number[] {\n  // your code here\n}",
+
     python: 'def searchRange(nums: list[int], target: int) -> list[int]:\n    # your code here\n    pass\n',
   },
   visibleTests: [

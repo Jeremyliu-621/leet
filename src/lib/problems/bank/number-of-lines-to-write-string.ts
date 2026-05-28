@@ -39,6 +39,8 @@ Return *an array* \`result\` *of length* \`2\` *where*:
   params: ['widths', 's'],
   starterCode: {
     javascript: 'function numberOfLines(widths, s) {\n\n}\n',
+    typescript: "function numberOfLines(widths: number[], s: string): number[] {\n\n}",
+
     python: 'def numberOfLines(widths, s):\n    pass\n',
   },
   visibleTests: [

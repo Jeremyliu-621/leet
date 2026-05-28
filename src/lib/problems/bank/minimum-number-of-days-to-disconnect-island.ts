@@ -46,6 +46,8 @@ Return the **minimum number of days** to disconnect the grid.`,
     javascript: `function minDays(grid) {
 
 }`,
+    typescript: "function minDays(grid: number[][]): number {\n\n}",
+
     python: `def minDays(grid):
     pass`,
   },

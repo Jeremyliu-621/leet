@@ -35,6 +35,8 @@ export const problem: Problem = {
   params: ['n', 'logs'],
   starterCode: {
     javascript: `function exclusiveTime(n, logs) {\n  // your code here\n}\n`,
+    typescript: "function exclusiveTime(n: number, logs: string[]): number[] {\n  // your code here\n}",
+
     python: `def exclusiveTime(n, logs):\n    # your code here\n    pass\n`,
   },
   visibleTests: [

@@ -99,6 +99,8 @@ return sum;\`\`\``
   },
   starterCode: {
     javascript: 'function deepestLeavesSum(root) {\n  \n}\n',
+    typescript: "function deepestLeavesSumRunner(root: (number | null)[]): number {\n  \n}",
+
     python: 'def deepestLeavesSum(root):\n    pass\n',
   },
   visibleTests: [

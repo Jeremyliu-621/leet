@@ -30,6 +30,8 @@ export const problem: Problem = {
     javascript: `function countNumbersWithUniqueDigits(n) {
 
 }`,
+    typescript: "function countNumbersWithUniqueDigits(n: number): number {\n\n}",
+
     python: `def countNumbersWithUniqueDigits(n):
     pass`,
   },

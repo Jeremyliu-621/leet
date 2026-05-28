@@ -29,6 +29,8 @@ export const problem: Problem = {
   params: ['grid'],
   starterCode: {
     javascript: 'function countNegatives(grid) {\n  // your code here\n}\n',
+    typescript: "function countNegatives(grid: number[][]): number {\n  // your code here\n}",
+
     python: 'def countNegatives(grid):\n    # your code here\n    pass\n',
   },
   visibleTests: [

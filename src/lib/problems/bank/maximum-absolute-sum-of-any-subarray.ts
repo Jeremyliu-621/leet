@@ -39,6 +39,8 @@ Note that \`abs(x)\` is defined as follows:
     javascript: `function maxAbsoluteSum(nums) {
 
 }`,
+    typescript: "function maxAbsoluteSum(nums: number[]): number {\n\n}",
+
     python: `def maxAbsoluteSum(nums):
     pass`,
   },

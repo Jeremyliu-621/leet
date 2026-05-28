@@ -40,6 +40,8 @@ Return the **list of cells** \`(r, c)\` such that \`c1 <= c <= c2\` and \`r1 <= 
     javascript: `function cellsInRange(s) {
 
 }`,
+    typescript: "function cellsInRange(s: string): string[] {\n\n}",
+
     python: `def cellsInRange(s):
     pass`,
   },

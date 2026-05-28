@@ -39,6 +39,8 @@ If there are multiple solutions, return **any** of them.`,
     javascript: `function largestDivisibleSubsetRunner(nums) {
   return largestDivisibleSubset(nums).slice().sort((a, b) => a - b);
 }`,
+    typescript: "function largestDivisibleSubsetRunner(nums: number[]): number[] {\n  // Return largest subset where every pair divides\n}",
+
     python: `def largestDivisibleSubsetRunner(nums):
     return sorted(largestDivisibleSubset(nums))
 `,

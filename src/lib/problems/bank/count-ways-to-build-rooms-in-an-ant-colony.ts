@@ -38,6 +38,8 @@ Return the number of **different orders** you can build all the rooms in. Since 
     javascript: `function waysToBuildRooms(prevRoom) {
 
 }`,
+    typescript: "function waysToBuildRooms(prevRoom: number[]): number {\n\n}",
+
     python: `def waysToBuildRooms(prevRoom):
     pass`,
   },

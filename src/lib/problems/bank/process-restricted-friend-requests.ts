@@ -52,6 +52,8 @@ Return a **boolean array** \`result\` where each \`result[j]\` is \`true\` if th
   params: ['n', 'restrictions', 'requests'],
   starterCode: {
     javascript: 'function friendRequests(n, restrictions, requests) {\n  \n}\n',
+    typescript: "function friendRequests(n: number, restrictions: number[][], requests: number[][]): boolean[] {\n  \n}",
+
     python: 'def friendRequests(n, restrictions, requests):\n    pass\n',
   },
   visibleTests: [

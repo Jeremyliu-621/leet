@@ -64,6 +64,8 @@ Explanation: No zeroes appear before any ones, so no balanced substring exists.
     javascript: `function findTheLongestBalancedSubstring(s) {
   // Return length of longest substring with equal 0s before 1s
 }`,
+    typescript: "function findTheLongestBalancedSubstring(s: string): number {\n  // Return length of longest substring with equal 0s before 1s\n}",
+
     python: `def findTheLongestBalancedSubstring(s: str) -> int:
     # Return length of longest substring with equal 0s before 1s
     pass`,

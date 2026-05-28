@@ -32,6 +32,8 @@ Note that the subarray needs to be non-empty after deleting one element.`,
   params: ['arr'],
   starterCode: {
     javascript: 'function maximumSum(arr) {\n\n}\n',
+    typescript: "function maximumSum(arr: number[]): number {\n\n}",
+
     python: 'def maximumSum(arr):\n    pass\n',
   },
   visibleTests: [

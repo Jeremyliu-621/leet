@@ -44,6 +44,8 @@ export const problem: Problem = {
   // return max profit with at most k transactions
 
 }`,
+    typescript: "function maxProfit(k: number, prices: number[]): number {\n  // return max profit with at most k transactions\n\n}",
+
     python: `def maxProfit(k: int, prices: list) -> int:
     # return max profit with at most k transactions
     pass

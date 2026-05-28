@@ -41,6 +41,8 @@ You may return the answer in **any order**. The answer is **guaranteed** to be *
     return a[1] - b[1];
   });
 }`,
+    typescript: "function kClosestRunner(points: number[][], k: number): number[][] {\n  // Return the k closest points to the origin\n}",
+
     python: `def kClosestRunner(points, k):
     result = kClosest(points, k)
     return sorted([list(p) for p in result], key=lambda p: (p[0]*p[0]+p[1]*p[1], p[0], p[1]))

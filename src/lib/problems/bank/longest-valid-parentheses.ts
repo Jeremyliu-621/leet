@@ -40,6 +40,8 @@ A valid parentheses substring is one where every opening parenthesis has a match
   params: ['s'],
   starterCode: {
     javascript: 'function longestValidParentheses(s) {\n  // your code here\n}\n',
+    typescript: "function longestValidParentheses(s: string): number {\n  // your code here\n}",
+
     python: 'def longestValidParentheses(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

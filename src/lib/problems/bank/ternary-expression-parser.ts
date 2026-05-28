@@ -47,6 +47,8 @@ The ternary operator is right-associative. For example, \`"F?1:T?4:5"\` evaluate
     javascript: `function parseTernary(expression) {
 
 }`,
+    typescript: "function parseTernary(expression: string): string {\n\n}",
+
     python: `def parseTernary(expression: str) -> str:
     pass`,
   },

@@ -47,6 +47,8 @@ You are given a parentheses string \`s\`. In one move, you can insert a parenthe
   // return minimum insertions to make parentheses valid
 
 }`,
+    typescript: "function minAddToMakeValid(s: string): number {\n  // return minimum insertions to make parentheses valid\n\n}",
+
     python: `def minAddToMakeValid(s: str) -> int:
     # return minimum insertions to make parentheses valid
     pass

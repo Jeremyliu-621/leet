@@ -35,6 +35,8 @@ Return the **number** of islands in \`grid2\` that are considered **sub-islands*
   params: ['grid1', 'grid2'],
   starterCode: {
     javascript: 'function countSubIslands(grid1, grid2) {\n\n}\n',
+    typescript: "function countSubIslands(grid1: number[][], grid2: number[][]): number {\n\n}",
+
     python: 'def countSubIslands(grid1, grid2):\n    pass\n',
   },
   visibleTests: [

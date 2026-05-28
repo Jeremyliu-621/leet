@@ -28,6 +28,8 @@ Return \`true\` if \`a\` and \`b\` are **alike**. Otherwise, return \`false\`.`,
   params: ['s'],
   starterCode: {
     javascript: 'function halvesAreAlike(s) {\n  \n}\n',
+    typescript: "function halvesAreAlike(s: string): boolean {\n  \n}",
+
     python: 'def halvesAreAlike(s):\n    pass\n',
   },
   visibleTests: [

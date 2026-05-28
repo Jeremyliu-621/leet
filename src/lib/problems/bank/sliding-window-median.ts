@@ -38,6 +38,8 @@ Return an array of the **medians** of each window position.
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function medianSlidingWindow(nums, k) {\n\n}\n',
+    typescript: "function medianSlidingWindow(nums: number[], k: number): number[] {\n\n}",
+
     python: 'def medianSlidingWindow(nums: list, k: int) -> list:\n    pass\n',
   },
   visibleTests: [

@@ -36,6 +36,8 @@ Note that for a pair of elements at indices \`i\` and \`j\`, the difference is \
   params: ['nums', 'p'],
   starterCode: {
     javascript: 'function minimizeMax(nums, p) {\n  \n}\n',
+    typescript: "function minimizeMax(nums: number[], p: number): number {\n  \n}",
+
     python: 'def minimizeMax(nums: list[int], p: int) -> int:\n    pass\n',
   },
   visibleTests: [

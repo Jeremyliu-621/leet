@@ -34,6 +34,8 @@ export const problem: Problem = {
     javascript: `function knightProbability(n, k, row, column) {
 
 }`,
+    typescript: "function knightProbability(n: number, k: number, row: number, column: number): number {\n\n}",
+
     python: `def knightProbability(n, k, row, column):
     pass`,
   },

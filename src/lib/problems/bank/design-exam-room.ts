@@ -78,6 +78,8 @@ The first operation is always \`"ExamRoom"\`.`,
   }
   return results;
 }`,
+    typescript: "function examRoom(operations: string[], args: (number[] | unknown[])[]): (null | number)[] {\n  const results = [];\n  let n;\n  const seats = []; // sorted list of occupied seats\n\n  function insert(p) {\n    let lo = 0, hi = seats.length;\n    while (lo < hi) {\n      const mid = (lo + hi) >> 1;\n      if (seats[mid] < p) lo = mid + 1; else hi = mid;\n    }\n    seats.splice(lo, 0, p);\n  }\n\n  for (let i = 0; i < operations.length; i++) {\n    const op = operations[i], arg = args[i];\n    if (op === 'ExamRoom') {\n      n = arg[0];\n      seats.length = 0;\n      results.push(null);\n    } else if (op === 'seat') {\n      if (seats.length === 0) { insert(0); results.push(0); continue; }\n      let bestDist = seats[0], bestSeat = 0; // distance from left edge\n      for (let j = 1; j < seats.length; j++) {\n        const d = Math.floor((seats[j] - seats[j-1]) / 2);\n        if (d > bestDist) { bestDist = d; bestSeat = seats[j-1] + d; }\n      }\n      if (n - 1 - seats[seats.length - 1] > bestDist) bestSeat = n - 1;\n      insert(bestSeat);\n      results.push(bestSeat);\n    } else { // leave\n      seats.splice(seats.indexOf(arg[0]), 1);\n      results.push(null);\n    }\n  }\n  return results;\n}",
+
     python: `def examRoom(operations, args):
     import bisect
     results = []

@@ -41,6 +41,8 @@ function buyChoco(prices, money) {
   params: ['prices', 'money'],
   starterCode: {
     javascript: 'function buyChoco(prices, money) {\n  \n}\n',
+    typescript: "function buyChoco(prices: number[], money: number): number {\n  \n}",
+
     python: 'def buyChoco(prices, money):\n    pass\n',
   },
   visibleTests: [

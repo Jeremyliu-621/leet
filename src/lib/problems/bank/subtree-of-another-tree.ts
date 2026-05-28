@@ -103,6 +103,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   starterCode: {
     javascript:
       '// TreeNode class and isSubtreeRunner wrapper are pre-defined.\n// Implement the function below:\nfunction isSubtree(root, subRoot) {\n  \n}\n',
+    typescript: "function isSubtreeRunner(root: number[], subRoot: number[]): boolean {\n  \n}",
+
     python:
       '# TreeNode class and isSubtreeRunner wrapper are pre-defined.\n# Implement the function below:\ndef isSubtree(root, subRoot):\n    pass\n',
   },

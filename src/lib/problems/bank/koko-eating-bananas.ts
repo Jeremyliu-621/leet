@@ -42,6 +42,8 @@ Return the **minimum integer** \`k\` such that she can eat all the bananas withi
   params: ['piles', 'h'],
   starterCode: {
     javascript: 'function minEatingSpeed(piles, h) {\n  // your code here\n}\n',
+    typescript: "function minEatingSpeed(piles: number[], h: number): number {\n  // your code here\n}",
+
     python: 'def minEatingSpeed(piles: list, h: int) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

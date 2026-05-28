@@ -43,6 +43,8 @@ Return the **smallest possible weight** of the leftmost stone. If there are no s
   // return minimum possible last stone weight
 
 }`,
+    typescript: "function lastStoneWeightII(stones: number[]): number {\n  // return minimum possible last stone weight\n\n}",
+
     python: `def lastStoneWeightII(stones: list) -> int:
     # return minimum possible last stone weight
     pass

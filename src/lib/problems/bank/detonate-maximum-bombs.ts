@@ -42,6 +42,8 @@ Given the list of bombs, return the **maximum** number of bombs that can be deto
   params: ['bombs'],
   starterCode: {
     javascript: 'function maximumDetonation(bombs) {\n\n}\n',
+    typescript: "function maximumDetonation(bombs: number[][]): number {\n\n}",
+
     python: 'def maximumDetonation(bombs):\n    pass\n',
   },
   visibleTests: [

@@ -45,6 +45,8 @@ Note that the same subsequence may appear multiple times (from different index s
   // 2. BFS with min-heap: enumerate reductions from maxSum in ascending order.
   // 3. The k-th pop gives the answer.
 }`,
+    typescript: "function kSum(nums: number[], k: number): number {\n  // 1. Compute maxSum (sum of positives). Replace nums with |nums|, sort.\n  // 2. BFS with min-heap: enumerate reductions from maxSum in ascending order.\n  // 3. The k-th pop gives the answer.\n}",
+
     python: `def kSum(nums, k):
     # 1. Compute max_sum (sum of positives). Replace nums with |nums|, sort.
     # 2. BFS with min-heap: enumerate reductions from max_sum in ascending order.

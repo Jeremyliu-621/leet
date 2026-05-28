@@ -49,6 +49,8 @@ function pivotIndex(nums) {
   params: ['nums'],
   starterCode: {
     javascript: 'function pivotIndex(nums) {\n  \n}\n',
+    typescript: "function pivotIndex(nums: number[]): number {\n  \n}",
+
     python: 'def pivotIndex(nums):\n    pass\n',
   },
   visibleTests: [

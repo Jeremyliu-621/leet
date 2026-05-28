@@ -38,6 +38,8 @@ Return all critical connections in the network in any order.`,
   params: ['n', 'connections'],
   starterCode: {
     javascript: 'function criticalConnections(n, connections) {\n  \n}\n',
+    typescript: "function criticalConnections(n: number, connections: number[][]): number[][] {\n  \n}",
+
     python: 'def criticalConnections(n, connections):\n    pass\n',
   },
   visibleTests: [

@@ -42,6 +42,8 @@ Note that two subsets that contain the same elements but are chosen from differe
   // return number of non-empty beautiful subsets
 
 }`,
+    typescript: "function beautifulSubsets(nums: number[], k: number): number {\n  // return number of non-empty beautiful subsets\n\n}",
+
     python: `def beautifulSubsets(nums: list, k: int) -> int:
     # return number of non-empty beautiful subsets
     pass

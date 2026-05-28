@@ -55,6 +55,8 @@ The board is a \`9x9\` array of strings. Modify it **in place**.
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: 'function solveSudoku(board) {\n  \n}\n',
+    typescript: "function solveSudokuRunner(board: string[][]): string[][] {\n  \n}",
+
     python: 'def solveSudoku(board):\n    pass\n',
   },
   visibleTests: [

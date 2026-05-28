@@ -37,6 +37,8 @@ export const problem: Problem = {
   params: ['s', 'k'],
   starterCode: {
     javascript: 'function hasAllCodes(s, k) {\n\n}\n',
+    typescript: "function hasAllCodes(s: string, k: number): boolean {\n\n}",
+
     python: 'def hasAllCodes(s, k):\n    pass\n',
   },
   visibleTests: [

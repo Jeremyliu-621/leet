@@ -31,6 +31,8 @@ export const problem: Problem = {
     javascript: `function getSum(a, b) {
   // Return a + b without using + or -
 }`,
+    typescript: "function getSum(a: number, b: number): number {\n  // Return a + b without using + or -\n}",
+
     python: `def getSum(a, b):
     # Return a + b without using + or -
     pass`,

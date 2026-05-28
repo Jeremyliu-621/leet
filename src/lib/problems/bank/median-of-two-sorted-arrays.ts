@@ -37,6 +37,8 @@ The overall run time complexity should be \`O(log(m + n))\`.`,
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: 'function findMedianSortedArrays(nums1, nums2) {\n\n}\n',
+    typescript: "function findMedianSortedArrays(nums1: number[], nums2: number[]): number {\n\n}",
+
     python: 'def findMedianSortedArrays(nums1, nums2):\n    pass\n',
   },
   visibleTests: [

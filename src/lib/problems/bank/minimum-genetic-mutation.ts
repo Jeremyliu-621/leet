@@ -44,6 +44,8 @@ Note that the starting point is assumed to be valid, so it might not be included
     javascript: `function minMutation(startGene, endGene, bank) {
   // Return minimum mutations to reach endGene, or -1 if impossible
 }`,
+    typescript: "function minMutation(startGene: string, endGene: string, bank: string[]): number {\n  // Return minimum mutations to reach endGene, or -1 if impossible\n}",
+
     python: `def minMutation(startGene, endGene, bank):
     # Return minimum mutations to reach endGene, or -1 if impossible
     pass`,

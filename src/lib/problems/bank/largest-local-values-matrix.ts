@@ -40,6 +40,8 @@ Return the generated matrix.`,
   params: ['grid'],
   starterCode: {
     javascript: 'function largestLocal(grid) {\n  \n}\n',
+    typescript: "function largestLocal(grid: number[][]): number[][] {\n  \n}",
+
     python: 'def largestLocal(grid):\n    pass\n',
   },
   visibleTests: [

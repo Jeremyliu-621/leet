@@ -25,6 +25,8 @@ You must write an algorithm that runs in linear time and uses linear extra space
   params: ['nums'],
   starterCode: {
     javascript: 'function maximumGap(nums) {\n  // your code here\n}\n',
+    typescript: "function maximumGap(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def maximumGap(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -94,6 +94,8 @@ export const problem: Problem = {
 function kthSmallest(root, k) {
 
 }`,
+    typescript: "function kthSmallestRunner(root: (number | null)[], k: number): number {\n\n}",
+
     python: `# TreeNode is pre-defined. Implement the function below:
 def kthSmallest(root, k):
     pass`,

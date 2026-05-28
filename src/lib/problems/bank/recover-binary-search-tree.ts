@@ -137,6 +137,8 @@ Recover the tree by fixing the two swapped nodes **without changing its structur
   starterCode: {
     javascript:
       '// TreeNode class is pre-defined. Modify the tree in-place:\nfunction recoverTree(root) {\n  \n}\n',
+    typescript: "function recoverBSTRunner(root: (number | null)[]): (number | null)[] {\n  \n}",
+
     python:
       '# TreeNode class is pre-defined. Modify the tree in-place:\ndef recoverTree(root):\n    pass\n',
   },

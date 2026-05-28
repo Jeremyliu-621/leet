@@ -38,6 +38,8 @@ Your solution must run in **O(log n)** time.`,
   params: ['nums', 'target'],
   starterCode: {
     javascript: 'function searchInsert(nums, target) {\n  // your code here\n}\n',
+    typescript: "function searchInsert(nums: number[], target: number): number {\n  // your code here\n}",
+
     python: 'def searchInsert(nums: list, target: int) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

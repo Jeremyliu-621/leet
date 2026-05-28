@@ -43,6 +43,8 @@ Return the array \`[answer1, answer2]\`.`,
     javascript: `function findIntersectionValues(nums1, nums2) {
 
 }`,
+    typescript: "function findIntersectionValues(nums1: number[], nums2: number[]): number[] {\n\n}",
+
     python: `def findIntersectionValues(nums1, nums2):
     pass`,
   },

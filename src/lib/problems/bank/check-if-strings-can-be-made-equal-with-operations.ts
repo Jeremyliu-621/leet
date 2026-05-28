@@ -37,6 +37,8 @@ Return \`true\` if you can make \`s1\` equal to \`s2\` using any number of opera
   params: ['s1', 's2'],
   starterCode: {
     javascript: 'function checkStrings(s1, s2) {\n  \n}\n',
+    typescript: "function checkStrings(s1: string, s2: string): boolean {\n  \n}",
+
     python: 'def checkStrings(s1, s2):\n    pass\n',
   },
   visibleTests: [

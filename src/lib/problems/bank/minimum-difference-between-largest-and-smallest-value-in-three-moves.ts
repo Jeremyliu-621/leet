@@ -35,6 +35,8 @@ Return the **minimum difference** between the largest and smallest value of \`nu
   params: ['nums'],
   starterCode: {
     javascript: 'function minDifference(nums) {\n\n}\n',
+    typescript: "function minDifference(nums: number[]): number {\n\n}",
+
     python: 'def minDifference(nums):\n    pass\n',
   },
   visibleTests: [

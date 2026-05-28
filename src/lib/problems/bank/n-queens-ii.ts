@@ -29,6 +29,8 @@ Return the **number** of distinct solutions to the n-queens puzzle.`,
   params: ['n'],
   starterCode: {
     javascript: `function totalNQueens(n) {\n\n}`,
+    typescript: "function totalNQueens(n: number): number {\n\n}",
+
     python: `def totalNQueens(n):\n    pass`,
   },
   visibleTests: [

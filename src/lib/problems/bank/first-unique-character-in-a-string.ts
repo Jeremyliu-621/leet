@@ -38,6 +38,8 @@ export const problem: Problem = {
     javascript: `function firstUniqChar(s) {
 
 }`,
+    typescript: "function firstUniqChar(s: string): number {\n\n}",
+
     python: `def firstUniqChar(s):
     pass`,
   },

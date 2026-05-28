@@ -74,6 +74,8 @@ The first operation is always \`"AuthenticationManager"\`.`,
   }
   return results;
 }`,
+    typescript: "function authManager(operations: string[], args: (number[] | (string | number)[])[]): (null | number)[] {\n  const results = [];\n  let timeToLive;\n  const tokenMap = new Map(); // tokenId -> expirationTime\n\n  for (let i = 0; i < operations.length; i++) {\n    const op = operations[i], arg = args[i];\n    if (op === 'AuthenticationManager') {\n      timeToLive = arg[0];\n      tokenMap.clear();\n      results.push(null);\n    } else if (op === 'generate') {\n      tokenMap.set(arg[0], arg[1] + timeToLive);\n      results.push(null);\n    } else if (op === 'renew') {\n      const [tokenId, currentTime] = arg;\n      if (tokenMap.has(tokenId) && tokenMap.get(tokenId) > currentTime) {\n        tokenMap.set(tokenId, currentTime + timeToLive);\n      }\n      results.push(null);\n    } else { // countUnexpiredTokens\n      const currentTime = arg[0];\n      let count = 0;\n      for (const [, expiry] of tokenMap) {\n        if (expiry > currentTime) count++;\n      }\n      results.push(count);\n    }\n  }\n  return results;\n}",
+
     python: `def authManager(operations, args):
     results = []
     time_to_live = 0

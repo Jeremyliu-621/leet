@@ -37,6 +37,8 @@ Return an array \`ans\` of length \`m\` where \`ans[j]\` is the index of the ser
   params: ['servers', 'tasks'],
   starterCode: {
     javascript: `function assignTasks(servers, tasks) {\n\n}`,
+    typescript: "function assignTasks(servers: number[], tasks: number[]): number[] {\n\n}",
+
     python: `def assignTasks(servers, tasks):\n    pass`,
   },
   visibleTests: [

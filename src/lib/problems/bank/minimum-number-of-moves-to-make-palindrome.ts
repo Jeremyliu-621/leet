@@ -38,6 +38,8 @@ Return *the **minimum** number of moves needed to make* \`s\` *a palindrome.*
   params: ['s'],
   starterCode: {
     javascript: 'function minMovesToMakePalindrome(s) {\n\n}',
+    typescript: "function minMovesToMakePalindrome(s: string): number {\n\n}",
+
     python: 'def minMovesToMakePalindrome(s):\n    pass',
   },
   visibleTests: [

@@ -39,6 +39,8 @@ Return the **total cost** to insert all elements from \`instructions\` into \`nu
   params: ['instructions'],
   starterCode: {
     javascript: 'function createSortedArray(instructions) {\n  \n}\n',
+    typescript: "function createSortedArray(instructions: number[]): number {\n  \n}",
+
     python: 'def createSortedArray(instructions):\n    pass\n',
   },
   visibleTests: [

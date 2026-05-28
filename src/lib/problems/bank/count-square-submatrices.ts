@@ -32,6 +32,8 @@ export const problem: Problem = {
   params: ['matrix'],
   starterCode: {
     javascript: 'function countSquares(matrix) {\n\n}\n',
+    typescript: "function countSquares(matrix: number[][]): number {\n\n}",
+
     python: 'def countSquares(matrix):\n    pass\n',
   },
   visibleTests: [

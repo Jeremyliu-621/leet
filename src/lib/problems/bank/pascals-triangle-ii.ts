@@ -32,6 +32,8 @@ In Pascal's triangle, each number is the sum of the two numbers directly above i
   params: ['rowIndex'],
   starterCode: {
     javascript: 'function getRow(rowIndex) {\n  \n}\n',
+    typescript: "function getRow(rowIndex: number): number[] {\n  \n}",
+
     python: 'def getRow(rowIndex):\n    pass\n',
   },
   visibleTests: [

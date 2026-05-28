@@ -107,6 +107,8 @@ return minDiff;\`\`\``,
   starterCode: {
     javascript:
       '// TreeNode class and getMinimumDifferenceRunner wrapper are pre-defined.\n// Implement the function below:\nfunction getMinimumDifference(root) {\n  \n}\n',
+    typescript: "function getMinimumDifferenceRunner(root: number[]): number {\n  \n}",
+
     python:
       '# TreeNode class and getMinimumDifferenceRunner wrapper are pre-defined.\n# Implement the function below:\ndef getMinimumDifference(root):\n    pass\n',
   },

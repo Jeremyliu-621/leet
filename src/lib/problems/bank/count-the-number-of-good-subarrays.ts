@@ -38,6 +38,8 @@ A **subarray** is a contiguous **non-empty** sequence of elements within an arra
     javascript: `function countGood(nums, k) {
 
 }`,
+    typescript: "function countGood(nums: number[], k: number): number {\n\n}",
+
     python: `def countGood(nums: list, k: int) -> int:
     pass`,
   },

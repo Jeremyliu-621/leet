@@ -38,6 +38,8 @@ Find the maximum profit you can achieve. You may complete as many transactions a
     javascript: `function maxProfit(prices) {
   // Return max profit with one-day cooldown after selling
 }`,
+    typescript: "function maxProfit(prices: number[]): number {\n  // Return max profit with one-day cooldown after selling\n}",
+
     python: `def maxProfit(prices):
     # Return max profit with one-day cooldown after selling
     pass`,

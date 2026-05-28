@@ -44,6 +44,8 @@ Formally, \`i\` is upper-left and \`j\` is lower-right when: \`xi <= xj\` AND \`
   // Sort points by x asc, then y desc for ties.
   // For each i, scan j > i; track maxY to count valid lower-right corners.
 }`,
+    typescript: "function numberOfPairs(points: number[][]): number {\n  // Sort points by x asc, then y desc for ties.\n  // For each i, scan j > i; track maxY to count valid lower-right corners.\n}",
+
     python: `def numberOfPairs(points):
     # Sort points by x asc, then y desc for ties.
     # For each i, scan j > i; track max_y to count valid lower-right corners.

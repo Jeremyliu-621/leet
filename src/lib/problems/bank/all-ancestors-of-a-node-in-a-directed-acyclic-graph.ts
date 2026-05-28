@@ -40,6 +40,8 @@ A node \`u\` is an **ancestor** of another node \`v\` if \`u\` can reach \`v\` v
   params: ['n', 'edges'],
   starterCode: {
     javascript: 'function getAncestors(n, edges) {\n  \n}\n',
+    typescript: "function getAncestors(n: number, edges: number[][]): (unknown[] | number[])[] {\n  \n}",
+
     python: 'def getAncestors(n, edges):\n    pass\n',
   },
   visibleTests: [

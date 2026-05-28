@@ -42,6 +42,8 @@ Return the integer \`divisors[i]\` with the **maximum** divisibility score. If t
     javascript: `function maxDivScore(nums, divisors) {
 
 }`,
+    typescript: "function maxDivScore(nums: number[], divisors: number[]): number {\n\n}",
+
     python: `def maxDivScore(nums, divisors):
     pass`,
   },

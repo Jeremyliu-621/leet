@@ -45,6 +45,8 @@ function canBeTypedWords(text, brokenLetters) {
   // return count of words that can be typed
 
 }`,
+    typescript: "function canBeTypedWords(text: string, brokenLetters: string): number {\n  // return count of words that can be typed\n\n}",
+
     python: `def canBeTypedWords(text: str, brokenLetters: str) -> int:
     # return count of words that can be typed
     pass

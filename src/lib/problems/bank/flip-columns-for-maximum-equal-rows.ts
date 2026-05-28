@@ -30,6 +30,8 @@ Return the maximum number of rows that have all values equal after some (possibl
   params: ['matrix'],
   starterCode: {
     javascript: 'function maxEqualRowsAfterFlips(matrix) {\n  \n}\n',
+    typescript: "function maxEqualRowsAfterFlips(matrix: number[][]): number {\n  \n}",
+
     python: 'def maxEqualRowsAfterFlips(matrix):\n    pass\n',
   },
   visibleTests: [

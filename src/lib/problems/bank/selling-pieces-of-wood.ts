@@ -43,6 +43,8 @@ You can cut a piece of wood **horizontally** or **vertically** into two smaller 
     javascript: `function sellingWood(m, n, prices) {
 
 }`,
+    typescript: "function sellingWood(m: number, n: number, prices: number[][]): number {\n\n}",
+
     python: `def sellingWood(m, n, prices):
     `,
   },

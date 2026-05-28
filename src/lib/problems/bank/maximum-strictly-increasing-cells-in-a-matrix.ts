@@ -43,6 +43,8 @@ Return the **maximum** number of cells you can visit in the matrix by starting f
     javascript: `function maxIncreasingCells(mat) {
 
 }`,
+    typescript: "function maxIncreasingCells(mat: number[][]): number {\n\n}",
+
     python: `def maxIncreasingCells(mat: list) -> int:
     pass`,
   },

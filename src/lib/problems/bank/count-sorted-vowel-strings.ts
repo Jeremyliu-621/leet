@@ -30,6 +30,8 @@ export const problem: Problem = {
   params: ['n'],
   starterCode: {
     javascript: `function countVowelStrings(n) {\n  // your code here\n}\n`,
+    typescript: "function countVowelStrings(n: number): number {\n  // your code here\n}",
+
     python: `def countVowelStrings(n):\n    # your code here\n    pass\n`,
   },
   visibleTests: [

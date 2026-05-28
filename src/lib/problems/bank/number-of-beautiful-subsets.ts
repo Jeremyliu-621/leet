@@ -46,6 +46,8 @@ Output: 1
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function beautifulSubsets(nums, k) {\n  // your code here\n}\n',
+    typescript: "function beautifulSubsets(nums: number[], k: number): number {\n  // your code here\n}",
+
     python: 'def beautifulSubsets(nums, k):\n    pass\n',
   },
   visibleTests: [

@@ -100,6 +100,8 @@ Trees are represented as level-order arrays, where \`null\` indicates a missing 
   starterCode: {
     javascript:
       '// TreeNode class and longestUnivaluePathRunner wrapper are pre-defined.\n// Implement the function below:\nfunction longestUnivaluePath(root) {\n  \n}\n',
+    typescript: "function longestUnivaluePathRunner(root: (number | null)[]): number {\n  \n}",
+
     python:
       '# TreeNode class and longestUnivaluePathRunner wrapper are pre-defined.\n# Implement the function below:\ndef longestUnivaluePath(root):\n    pass\n',
   },

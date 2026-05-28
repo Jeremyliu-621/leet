@@ -54,6 +54,8 @@ Return the **updated board**.`,
     javascript: `function updateBoard(board, click) {
 
 }`,
+    typescript: "function updateBoard(board: string[][], click: number[]): string[][] {\n\n}",
+
     python: `def updateBoard(board: list[list[str]], click: list[int]) -> list[list[str]]:
     pass`,
   },

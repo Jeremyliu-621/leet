@@ -38,6 +38,8 @@ Return the integer \`x\`. The test cases are generated such that \`x\` is **uniq
   params: ['num1', 'num2'],
   starterCode: {
     javascript: 'function minimizeXor(num1, num2) {\n  \n}\n',
+    typescript: "function minimizeXor(num1: number, num2: number): number {\n  \n}",
+
     python: 'def minimizeXor(num1, num2):\n    pass\n',
   },
   visibleTests: [

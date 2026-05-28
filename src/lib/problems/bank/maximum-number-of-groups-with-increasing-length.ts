@@ -38,6 +38,8 @@ Return the **maximum number of groups** you can create while satisfying these co
   params: ['usageLimits'],
   starterCode: {
     javascript: 'function maximumGroups(usageLimits) {\n  \n}\n',
+    typescript: "function maximumGroups(usageLimits: number[]): number {\n  \n}",
+
     python: 'def maximumGroups(usageLimits):\n    pass\n',
   },
   visibleTests: [

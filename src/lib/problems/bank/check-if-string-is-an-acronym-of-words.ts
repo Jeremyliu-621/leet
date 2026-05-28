@@ -44,6 +44,8 @@ Return \`true\` if \`s\` is an acronym of \`words\`, and \`false\` otherwise.`,
 function isAcronym(words, s) {
 
 }`,
+    typescript: "function isAcronym(words: string[], s: string): boolean {string[]} words\n * @param {string} s\n * @return {boolean}\n */\nfunction isAcronym(words, s) {\n\n}",
+
     python: `def isAcronym(words: list[str], s: str) -> bool:
     pass`,
   },

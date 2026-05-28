@@ -38,6 +38,8 @@ export const problem: Problem = {
   params: ['n', 'flights', 'src', 'dst', 'k'],
   starterCode: {
     javascript: `function findCheapestPrice(n, flights, src, dst, k) {\n  // your code here\n}\n`,
+    typescript: "function findCheapestPrice(n: number, flights: number[][], src: number, dst: number, k: number): number {\n  // your code here\n}",
+
     python: `def findCheapestPrice(n, flights, src, dst, k):\n    # your code here\n    pass\n`,
   },
   visibleTests: [

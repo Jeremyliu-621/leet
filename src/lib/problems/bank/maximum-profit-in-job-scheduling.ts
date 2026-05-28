@@ -39,6 +39,8 @@ export const problem: Problem = {
   params: ['startTime', 'endTime', 'profit'],
   starterCode: {
     javascript: 'function jobScheduling(startTime, endTime, profit) {\n\n}\n',
+    typescript: "function jobScheduling(startTime: number[], endTime: number[], profit: number[]): number {\n\n}",
+
     python: 'def jobScheduling(startTime: list, endTime: list, profit: list) -> int:\n    pass\n',
   },
   visibleTests: [

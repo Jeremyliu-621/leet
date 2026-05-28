@@ -48,6 +48,8 @@ Output: [[2,3],[3]]
     javascript: `function findDuplicateSubtrees(root) {
 
 }`,
+    typescript: "function findDuplicateSubtrees(root: (number | null)[]): number[][] {\n\n}",
+
     python: `def findDuplicateSubtrees(root):
     `,
   },

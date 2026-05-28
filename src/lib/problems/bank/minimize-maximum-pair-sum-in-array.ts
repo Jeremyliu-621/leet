@@ -44,6 +44,8 @@ Return the minimized maximum pair sum after optimally pairing up the elements.`,
     javascript: `function minPairSum(nums) {
 
 }`,
+    typescript: "function minPairSum(nums: number[]): number {\n\n}",
+
     python: `def minPairSum(nums):
     pass`,
   },

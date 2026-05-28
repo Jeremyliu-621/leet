@@ -41,6 +41,8 @@ return steps;\`\`\``
     javascript: `function numberOfSteps(num) {
 
 }`,
+    typescript: "function numberOfSteps(num: number): number {\n\n}",
+
     python: `def numberOfSteps(num):
     pass`,
   },

@@ -40,6 +40,8 @@ Given a string \`s\`, return the **minimum total keypresses** needed to type eve
   params: ['s'],
   starterCode: {
     javascript: 'function minimumKeypresses(s) {\n  \n}\n',
+    typescript: "function minimumKeypresses(s: string): number {\n  \n}",
+
     python: 'def minimumKeypresses(s: str) -> int:\n    pass\n',
   },
   visibleTests: [

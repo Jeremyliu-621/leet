@@ -52,6 +52,8 @@ function minimumRecolors(blocks, k) {
     javascript: `function minimumRecolors(blocks, k) {
 
 }`,
+    typescript: "function minimumRecolors(blocks: string, k: number): number {\n\n}",
+
     python: `def minimumRecolors(blocks, k):
     pass`,
   },

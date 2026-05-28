@@ -40,6 +40,8 @@ An empty string encodes to an empty string.`,
   params: ['s'],
   starterCode: {
     javascript: 'function compressString(s) {\n  // your code here\n}\n',
+    typescript: "function compressString(s: string): string {\n  // your code here\n}",
+
     python: 'def compressString(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -49,6 +49,8 @@ Return the bill with these discounts applied. The answer is the sum of the disco
   params: ['prices', 'n', 'discount'],
   starterCode: {
     javascript: 'function discountPrices(prices, n, discount) {\n  // your code here\n}\n',
+    typescript: "function discountPrices(prices: number[], n: number, discount: number): number {\n  // your code here\n}",
+
     python: 'def discountPrices(prices, n, discount):\n    # your code here\n    pass\n',
   },
   visibleTests: [

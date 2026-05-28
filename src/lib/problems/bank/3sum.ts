@@ -59,6 +59,8 @@ The solution set must **not contain duplicate triplets**.
     javascript: `function threeSum(nums) {
 
 }`,
+    typescript: "function threeSumRunner(nums: number[]): number[][] {\n\n}",
+
     python: `def threeSum(nums):
     pass`,
   },

@@ -44,6 +44,8 @@ return true;\`\`\``
     javascript: `function asteroidsDestroyed(mass, asteroids) {
 
 }`,
+    typescript: "function asteroidsDestroyed(mass: number, asteroids: number[]): boolean {\n\n}",
+
     python: `def asteroidsDestroyed(mass, asteroids):
     pass`,
   },

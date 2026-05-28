@@ -26,6 +26,8 @@ Return \`x\` if the array is special, otherwise, return \`-1\`. It can be proven
   params: ['nums'],
   starterCode: {
     javascript: 'function specialArray(nums) {\n  // your code here\n}\n',
+    typescript: "function specialArray(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def specialArray(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -38,6 +38,8 @@ Return the sum of lengths of all **good** strings in \`words\`.`,
     javascript: `function countCharacters(words, chars) {
 
 }`,
+    typescript: "function countCharacters(words: string[], chars: string): number {\n\n}",
+
     python: `def countCharacters(words, chars):
     pass`,
   },

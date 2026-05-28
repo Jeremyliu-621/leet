@@ -38,6 +38,8 @@ Return the **maximum** number of points you can achieve.`,
     javascript: `function maxPoints(points) {
 
 }`,
+    typescript: "function maxPoints(points: number[][]): number {\n\n}",
+
     python: `def maxPoints(points):
     pass`,
   },

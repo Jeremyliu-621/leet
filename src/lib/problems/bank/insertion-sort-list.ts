@@ -37,6 +37,8 @@ export const problem: Problem = {
     javascript: `function insertionSortList(head) {
   // head is provided as an array; return a sorted array
 }`,
+    typescript: "function insertionSortList(head: number[]): number[] {\n  // head is provided as an array; return a sorted array\n}",
+
     python: `def insertionSortList(head):
     # head is provided as a list; return a sorted list
     pass`,

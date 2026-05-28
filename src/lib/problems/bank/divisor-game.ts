@@ -37,6 +37,8 @@ Return \`true\` if and only if Alice wins the game, assuming both players play o
   params: ['n'],
   starterCode: {
     javascript: 'function divisorGame(n) {\n  \n}\n',
+    typescript: "function divisorGame(n: number): boolean {\n  \n}",
+
     python: 'def divisorGame(n):\n    pass\n',
   },
   visibleTests: [

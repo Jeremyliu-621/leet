@@ -41,6 +41,8 @@ So \`10\` is valid, contributing \`100\` to the sum.`,
     javascript: `function punishmentNumber(n) {
 
 }`,
+    typescript: "function punishmentNumber(n: number): number {\n\n}",
+
     python: `def punishmentNumber(n):
     pass
 `,

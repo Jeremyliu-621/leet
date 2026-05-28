@@ -36,6 +36,8 @@ The closest is defined as the absolute difference minimized between two integers
     javascript: `function nearestPalindromic(n) {
 
 }`,
+    typescript: "function nearestPalindromic(n: string): string {\n\n}",
+
     python: `def nearestPalindromic(n):
     pass`,
   },

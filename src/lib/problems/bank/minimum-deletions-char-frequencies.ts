@@ -41,6 +41,8 @@ Given a string \`s\`, return the **minimum** number of characters you need to de
     javascript: `function minDeletions(s) {
 
 }`,
+    typescript: "function minDeletions(s: string): number {\n\n}",
+
     python: `def minDeletions(s):
     pass`,
   },

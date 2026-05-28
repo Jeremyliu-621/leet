@@ -52,6 +52,8 @@ function divisorSubstrings(num, k) {
     javascript: `function divisorSubstrings(num, k) {
 
 }`,
+    typescript: "function divisorSubstrings(num: number, k: number): number {\n\n}",
+
     python: `def divisorSubstrings(num, k):
     pass`,
   },

@@ -37,6 +37,8 @@ Return the **minimum** possible difference.`,
     javascript: `function minimumDifference(nums, k) {
 
 }`,
+    typescript: "function minimumDifference(nums: number[], k: number): number {\n\n}",
+
     python: `def minimumDifference(nums, k):
     pass`,
   },

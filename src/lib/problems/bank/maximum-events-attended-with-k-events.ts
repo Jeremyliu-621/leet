@@ -42,6 +42,8 @@ Return the **maximum sum of values** you can obtain by attending at most \`k\` e
   params: ['events', 'k'],
   starterCode: {
     javascript: `function maxValue(events, k) {\n  \n}`,
+    typescript: "function maxValue(events: number[][], k: number): number {\n  \n}",
+
     python: `def maxValue(events, k):\n    pass`,
   },
   visibleTests: [

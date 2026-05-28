@@ -39,6 +39,8 @@ A **perfect square** is an integer that is the square of an integer; in other wo
   params: ['n'] as readonly string[],
   starterCode: {
     javascript: 'function numSquares(n) {\n  // your code here\n}\n',
+    typescript: "function numSquares(n: number): number {\n  // your code here\n}",
+
     python: 'def numSquares(n: int) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

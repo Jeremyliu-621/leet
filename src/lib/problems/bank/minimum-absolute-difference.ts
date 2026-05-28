@@ -40,6 +40,8 @@ Return a list of pairs in ascending order (with respect to pairs), each pair \`[
     javascript: `function minimumAbsDifference(arr) {
 
 }`,
+    typescript: "function minimumAbsDifference(arr: number[]): number[][] {\n\n}",
+
     python: `def minimumAbsDifference(arr):
     pass`,
   },

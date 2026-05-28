@@ -51,6 +51,8 @@ Actually \`[[4,5]]\` has sum **9**. Let's recalculate: The best submatrix is \`[
     javascript: `function maxSumSubmatrix(matrix) {
   // Return the maximum sum over all submatrices (contiguous rectangular regions)
 }`,
+    typescript: "function maxSumSubmatrix(matrix: number[][]): number {\n  // Return the maximum sum over all submatrices (contiguous rectangular regions)\n}",
+
     python: `def maxSumSubmatrix(matrix: list[list[int]]) -> int:
     # Return the maximum sum over all submatrices (contiguous rectangular regions)
     pass`,

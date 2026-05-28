@@ -35,6 +35,8 @@ The other number at that point is the greatest common divisor.`,
   params: ['a', 'b'],
   starterCode: {
     javascript: 'function greatestCommonDivisor(a, b) {\n  // your code here\n}\n',
+    typescript: "function greatestCommonDivisor(a: number, b: number): number {\n  // your code here\n}",
+
     python: 'def greatestCommonDivisor(a, b):\n    # your code here\n    pass\n',
   },
   visibleTests: [

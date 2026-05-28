@@ -38,6 +38,8 @@ Return the \`k\`th bit in \`Sn\`. It is guaranteed that \`k\` is valid for the g
   params: ['n', 'k'],
   starterCode: {
     javascript: 'function findKthBit(n, k) {\n  // your code here\n}\n',
+    typescript: "function findKthBit(n: number, k: number): string {\n  // your code here\n}",
+
     python: 'def findKthBit(n, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

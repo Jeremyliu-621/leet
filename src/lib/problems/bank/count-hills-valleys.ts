@@ -40,6 +40,8 @@ Return the number of hills and valleys in \`nums\`.
   params: ['nums'],
   starterCode: {
     javascript: 'function countHillValley(nums) {\n  \n}\n',
+    typescript: "function countHillValley(nums: number[]): number {\n  \n}",
+
     python: 'def countHillValley(nums):\n    pass\n',
   },
   visibleTests: [

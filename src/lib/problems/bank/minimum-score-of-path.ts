@@ -58,6 +58,8 @@ return minW;\`\`\``,
   params: ['n', 'roads'],
   starterCode: {
     javascript: 'function minScore(n, roads) {\n\n}\n',
+    typescript: "function minScore(n: number, roads: number[][]): number {\n\n}",
+
     python: 'def minScore(n, roads):\n    pass\n',
   },
   visibleTests: [

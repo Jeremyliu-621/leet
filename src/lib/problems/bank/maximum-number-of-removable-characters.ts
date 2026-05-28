@@ -47,6 +47,8 @@ A string \`t\` is a subsequence of a string \`s\` if every character of \`t\` ap
   params: ['s', 'p', 'removable'],
   starterCode: {
     javascript: 'function maximumRemovals(s, p, removable) {\n  \n}\n',
+    typescript: "function maximumRemovals(s: string, p: string, removable: number[]): number {\n  \n}",
+
     python: 'def maximumRemovals(s, p, removable):\n    pass\n',
   },
   visibleTests: [

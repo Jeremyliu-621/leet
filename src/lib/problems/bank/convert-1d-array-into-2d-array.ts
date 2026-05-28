@@ -45,6 +45,8 @@ Return the constructed 2D array if possible. If the total number of elements in 
     javascript: `function construct2DArray(original, m, n) {
 
 }`,
+    typescript: "function construct2DArray(original: number[], m: number, n: number): number[][] {\n\n}",
+
     python: `def construct2DArray(original: list[int], m: int, n: int) -> list[list[int]]:
     pass`,
   },

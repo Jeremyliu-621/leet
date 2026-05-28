@@ -49,6 +49,8 @@ Most common non-banned word: \`"ball"\` (appears 2 times).`,
     javascript: `function mostCommonWord(paragraph, banned) {
 
 }`,
+    typescript: "function mostCommonWord(paragraph: string, banned: string[]): string {\n\n}",
+
     python: `def mostCommonWord(paragraph, banned):
     pass
 `,

@@ -50,6 +50,8 @@ Output: 0
     javascript: `function findTheLongestBalancedSubstring(s) {
 
 }`,
+    typescript: "function findTheLongestBalancedSubstring(s: string): number {\n\n}",
+
     python: `def findTheLongestBalancedSubstring(s):
     `,
   },

@@ -103,6 +103,8 @@ export const problem: Problem = {
     javascript: `function findTarget(root, k) {
 
 }`,
+    typescript: "function findTargetRunner(arr: (number | null)[], k: number): boolean {\n\n}",
+
     python: `def findTarget(root, k):
     pass`,
   },

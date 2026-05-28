@@ -46,6 +46,8 @@ function convertToTitle(columnNumber) {
     javascript: `function convertToTitle(columnNumber) {
 
 }`,
+    typescript: "function convertToTitle(columnNumber: number): string {\n\n}",
+
     python: `def convertToTitle(columnNumber):
     pass`,
   },

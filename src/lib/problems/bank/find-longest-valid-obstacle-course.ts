@@ -37,6 +37,8 @@ export const problem: Problem = {
     javascript: `function longestObstacleCourseAtEachPosition(obstacles) {
 
 }`,
+    typescript: "function longestObstacleCourseAtEachPosition(obstacles: number[]): number[] {\n\n}",
+
     python: `def longestObstacleCourseAtEachPosition(obstacles):
     pass`,
   },

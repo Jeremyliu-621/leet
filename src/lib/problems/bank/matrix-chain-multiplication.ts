@@ -48,6 +48,8 @@ The minimum is \`4500\`.`,
   params: ['dims'],
   starterCode: {
     javascript: 'function matrixChainOrder(dims) {\n  // your code here\n}\n',
+    typescript: "function matrixChainOrder(dims: number[]): number {\n  // your code here\n}",
+
     python: 'def matrixChainOrder(dims):\n    # your code here\n    pass\n',
   },
   visibleTests: [

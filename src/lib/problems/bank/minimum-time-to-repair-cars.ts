@@ -38,6 +38,8 @@ Return *the minimum time* required to repair all \`cars\` cars.`,
     javascript: `function repairCars(ranks, cars) {
 
 }`,
+    typescript: "function repairCars(ranks: number[], cars: number): number {\n\n}",
+
     python: `def repairCars(ranks: list[int], cars: int) -> int:
     pass`,
   },

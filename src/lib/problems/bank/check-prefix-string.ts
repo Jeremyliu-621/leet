@@ -35,6 +35,8 @@ return false;\`\`\``
   params: ['s', 'words'],
   starterCode: {
     javascript: 'function isPrefixString(s, words) {\n  \n}\n',
+    typescript: "function isPrefixString(s: string, words: string[]): boolean {\n  \n}",
+
     python: 'def isPrefixString(s, words):\n    pass\n',
   },
   visibleTests: [

@@ -45,6 +45,8 @@ Alternatively, reduce to Jump Game II: create an array \`maxReach[i]\` = the fur
   params: ['n', 'ranges'],
   starterCode: {
     javascript: 'function minTaps(n, ranges) {\n\n}\n',
+    typescript: "function minTaps(n: number, ranges: number[]): number {\n\n}",
+
     python: 'def minTaps(n: int, ranges: list) -> int:\n    pass\n',
   },
   visibleTests: [

@@ -40,6 +40,8 @@ Return \`true\` if these subarrays exist, and \`false\` otherwise.`,
     javascript: `function findSubarrays(nums) {
 
 }`,
+    typescript: "function findSubarrays(nums: number[]): boolean {\n\n}",
+
     python: `def findSubarrays(nums):
     pass`,
   },

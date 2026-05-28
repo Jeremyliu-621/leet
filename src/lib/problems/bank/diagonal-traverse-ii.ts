@@ -57,6 +57,8 @@ Output: \`[1,4,2,7,5,3,8,6,9]\``,
     javascript: `function findDiagonalOrder(nums) {
 
 }`,
+    typescript: "function findDiagonalOrder(nums: number[][]): number[] {\n\n}",
+
     python: `def findDiagonalOrder(nums):
     pass
 `,

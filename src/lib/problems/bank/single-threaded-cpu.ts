@@ -48,6 +48,8 @@ Return the order in which the CPU processes the tasks (by original task index).`
   params: ['tasks'],
   starterCode: {
     javascript: 'function getOrder(tasks) {\n  \n}\n',
+    typescript: "function getOrder(tasks: number[][]): number[] {\n  \n}",
+
     python: 'def getOrder(tasks):\n    ',
   },
   visibleTests: [

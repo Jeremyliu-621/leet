@@ -43,6 +43,8 @@ function pivotArray(nums, pivot) {
   params: ['nums', 'pivot'],
   starterCode: {
     javascript: 'function pivotArray(nums, pivot) {\n  \n}\n',
+    typescript: "function pivotArray(nums: number[], pivot: number): number[] {\n  \n}",
+
     python: 'def pivotArray(nums, pivot):\n    pass\n',
   },
   visibleTests: [

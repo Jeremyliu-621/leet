@@ -36,6 +36,8 @@ Build and return an array \`avgs\` of length \`n\` where \`avgs[i]\` is the **k-
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function getAverages(nums, k) {\n  // your code here\n}\n',
+    typescript: "function getAverages(nums: number[], k: number): number[] {\n  // your code here\n}",
+
     python: 'def getAverages(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

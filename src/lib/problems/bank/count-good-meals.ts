@@ -39,6 +39,8 @@ Note that items with different indices are considered different even if they hav
   params: ['deliciousness'],
   starterCode: {
     javascript: 'function countPairs(deliciousness) {\n  \n}\n',
+    typescript: "function countPairs(deliciousness: number[]): number {\n  \n}",
+
     python: 'def countPairs(deliciousness):\n    pass\n',
   },
   visibleTests: [

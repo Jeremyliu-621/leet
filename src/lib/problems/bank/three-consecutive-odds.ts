@@ -33,6 +33,8 @@ export const problem: Problem = {
     javascript: `function threeConsecutiveOdds(arr) {
 
 }`,
+    typescript: "function threeConsecutiveOdds(arr: number[]): boolean {\n\n}",
+
     python: `def threeConsecutiveOdds(arr):
     pass`,
   },

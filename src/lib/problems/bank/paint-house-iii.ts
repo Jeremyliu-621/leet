@@ -50,6 +50,8 @@ Return the **minimum cost** of painting all the remaining houses such that exact
   params: ['houses', 'cost', 'm', 'n', 'target'],
   starterCode: {
     javascript: 'function minCost(houses, cost, m, n, target) {\n\n}\n',
+    typescript: "function minCost(houses: number[], cost: number[][], m: number, n: number, target: number): number {\n\n}",
+
     python: 'def minCost(houses, cost, m, n, target):\n    pass\n',
   },
   visibleTests: [

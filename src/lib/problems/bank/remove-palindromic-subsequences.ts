@@ -43,6 +43,8 @@ A string is called **palindrome** if it reads the same backward as forward.`,
   params: ['s'],
   starterCode: {
     javascript: 'function removePalindromeSub(s) {\n\n}\n',
+    typescript: "function removePalindromeSub(s: string): number {\n\n}",
+
     python: 'def removePalindromeSub(s):\n    pass\n',
   },
   visibleTests: [

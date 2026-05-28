@@ -43,6 +43,8 @@ A **good subarray** is a subarray where:
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function checkSubarraySum(nums, k) {\n  // your code here\n}\n',
+    typescript: "function checkSubarraySum(nums: number[], k: number): boolean {\n  // your code here\n}",
+
     python: 'def checkSubarraySum(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

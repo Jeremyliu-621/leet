@@ -43,6 +43,8 @@ Given \`source\` and \`destination\`, return \`true\` if there is a **valid path
   params: ['n', 'edges', 'source', 'destination'],
   starterCode: {
     javascript: 'function validPath(n, edges, source, destination) {\n  \n}\n',
+    typescript: "function validPath(n: number, edges: number[][], source: number, destination: number): boolean {\n  \n}",
+
     python: 'def validPath(n, edges, source, destination):\n    pass\n',
   },
   visibleTests: [

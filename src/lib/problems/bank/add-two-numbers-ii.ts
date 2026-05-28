@@ -42,6 +42,8 @@ You may assume the two numbers do not have leading zeros, except for the number 
   params: ['l1', 'l2'],
   starterCode: {
     javascript: 'function addTwoNumbers(l1, l2) {\n\n}\n',
+    typescript: "function addTwoNumbers(l1: number[], l2: number[]): number[] {\n\n}",
+
     python: 'def addTwoNumbers(l1: list, l2: list) -> list:\n    pass\n',
   },
   visibleTests: [

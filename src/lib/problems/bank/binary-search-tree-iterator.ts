@@ -116,6 +116,8 @@ You may assume that \`next()\` calls are always valid (i.e., there will be at le
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// bstIteratorRunner is pre-defined and calls your class below.\nclass BSTIterator {\n  constructor(root) {\n    // root has .val, .left, .right\n  }\n  next() {\n    // return next smallest value\n  }\n  hasNext() {\n    // return true if more elements exist\n  }\n}\n',
+    typescript: "function bstIteratorRunner(ops: string[], vals: unknown[], treeArr: (number | null)[]): (number | boolean)[] {\n  constructor(root) {\n    // root has .val, .left, .right\n  }\n  next() {\n    // return next smallest value\n  }\n  hasNext() {\n    // return true if more elements exist\n  }\n}",
+
     python: '# bstIteratorRunner is pre-defined and calls your class below.\nclass BSTIterator:\n    def __init__(self, root):\n        # root has .val, .left, .right\n        pass\n    def next(self):\n        pass  # return next smallest value\n    def hasNext(self):\n        pass  # return True if more elements exist\n',
   },
   visibleTests: [

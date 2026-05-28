@@ -41,6 +41,8 @@ Return the **minimum number of jumps** needed to reach the last index. It is gua
   params: ['nums'],
   starterCode: {
     javascript: 'function minJumps(nums) {\n  // your code here\n}\n',
+    typescript: "function minJumps(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def minJumps(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

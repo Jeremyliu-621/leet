@@ -39,6 +39,8 @@ Because the array is sorted, all duplicates of a value appear consecutively. You
   params: ['nums'],
   starterCode: {
     javascript: 'function removeDuplicatesSorted(nums) {\n  // your code here\n}\n',
+    typescript: "function removeDuplicatesSorted(nums: number[]): number[] {\n  // your code here\n}",
+
     python: 'def removeDuplicatesSorted(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

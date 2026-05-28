@@ -38,6 +38,8 @@ Return the **minimum number of operations** needed to transform \`n\` into \`0\`
   params: ['n'],
   starterCode: {
     javascript: 'function minimumOneBitOperations(n) {\n  \n}\n',
+    typescript: "function minimumOneBitOperations(n: number): number {\n  \n}",
+
     python: 'def minimumOneBitOperations(n):\n    pass\n',
   },
   visibleTests: [

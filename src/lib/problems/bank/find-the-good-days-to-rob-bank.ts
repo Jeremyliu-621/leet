@@ -48,6 +48,8 @@ Return a list of all days (0-indexed) that are good days to rob the bank. The an
     javascript: `function goodDaysToRobBank(security, time) {
 
 }`,
+    typescript: "function goodDaysToRobBank(security: number[], time: number): number[] {\n\n}",
+
     python: `def goodDaysToRobBank(security: list[int], time: int) -> list[int]:
     pass`,
   },

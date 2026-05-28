@@ -45,6 +45,8 @@ function findPeaks(mountain) {
     javascript: `function findPeaks(mountain) {
 
 }`,
+    typescript: "function findPeaks(mountain: number[]): unknown[] {\n\n}",
+
     python: `def findPeaks(mountain):
     pass`,
   },

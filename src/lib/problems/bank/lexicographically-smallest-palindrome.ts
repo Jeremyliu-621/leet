@@ -41,6 +41,8 @@ function makeSmallestPalindrome(s) {
   params: ['s'],
   starterCode: {
     javascript: 'function makeSmallestPalindrome(s) {\n\n}\n',
+    typescript: "function makeSmallestPalindrome(s: string): string {\n\n}",
+
     python: 'def makeSmallestPalindrome(s):\n    pass\n',
   },
   visibleTests: [

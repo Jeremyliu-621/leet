@@ -42,6 +42,8 @@ Return the index of the word in \`sentence\` (1-indexed) where \`searchWord\` is
     javascript: `function isPrefixOfWord(sentence, searchWord) {
 
 }`,
+    typescript: "function isPrefixOfWord(sentence: string, searchWord: string): number {\n\n}",
+
     python: `def isPrefixOfWord(sentence, searchWord):
     pass`,
   },

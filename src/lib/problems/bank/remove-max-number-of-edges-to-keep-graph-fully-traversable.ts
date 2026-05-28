@@ -49,6 +49,8 @@ Return the maximum number of edges you can remove, or return \`-1\` if it's impo
   params: ['n', 'edges'],
   starterCode: {
     javascript: 'function maxNumEdgesToRemove(n, edges) {\n  \n}\n',
+    typescript: "function maxNumEdgesToRemove(n: number, edges: number[][]): number {\n  \n}",
+
     python: 'def maxNumEdgesToRemove(n, edges):\n    pass\n',
   },
   visibleTests: [

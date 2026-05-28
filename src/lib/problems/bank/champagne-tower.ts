@@ -39,6 +39,8 @@ Given \`poured\` cups poured at the top, and the 0-indexed \`query_row\` and \`q
   params: ['poured', 'query_row', 'query_glass'],
   starterCode: {
     javascript: 'function champagneTower(poured, query_row, query_glass) {\n  // your code here\n}\n',
+    typescript: "function champagneTower(poured: number, query_row: number, query_glass: number): number {\n  // your code here\n}",
+
     python: 'def champagneTower(poured, query_row, query_glass):\n    # your code here\n    pass\n',
   },
   visibleTests: [

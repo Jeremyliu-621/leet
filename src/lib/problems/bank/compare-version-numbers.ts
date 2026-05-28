@@ -29,6 +29,8 @@ Return \`-1\` if \`version1 < version2\`, \`1\` if \`version1 > version2\`, and 
   params: ['version1', 'version2'],
   starterCode: {
     javascript: 'function compareVersion(version1, version2) {\n  // your code here\n}\n',
+    typescript: "function compareVersion(version1: string, version2: string): number {\n  // your code here\n}",
+
     python: 'def compareVersion(version1, version2):\n    # your code here\n    pass\n',
   },
   visibleTests: [

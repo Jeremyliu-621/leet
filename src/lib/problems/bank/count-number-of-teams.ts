@@ -42,6 +42,8 @@ Return the number of teams you can form given the conditions. (Soldiers can be p
     javascript: `function numTeams(rating) {
 
 }`,
+    typescript: "function numTeams(rating: number[]): number {\n\n}",
+
     python: `def numTeams(rating):
     pass`,
   },

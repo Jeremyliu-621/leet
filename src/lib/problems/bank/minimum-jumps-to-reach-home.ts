@@ -51,6 +51,8 @@ Return the **minimum number of jumps** to reach position \`x\`, or **-1** if it'
   // Forward: always valid (if not forbidden, not negative, within bound).
   // Backward: valid only if last jump was not also backward.
 }`,
+    typescript: "function minimumJumps(forbidden: number[], a: number, b: number, x: number): number {\n  // BFS on states (position, canGoBack).\n  // Forward: always valid (if not forbidden, not negative, within bound).\n  // Backward: valid only if last jump was not also backward.\n}",
+
     python: `def minimumJumps(forbidden, a, b, x):
     # BFS on states (position, can_go_back).
     # Forward: always valid (if not forbidden, not negative, within bound).

@@ -46,6 +46,8 @@ Given the integer array \`position\` and the integer \`m\`, return the **maximum
   let lo = 1, hi = position[position.length - 1] - position[0];
   // Binary search: find the largest minimum distance that still allows placing m balls
 }`,
+    typescript: "function maxDistance(position: number[], m: number): number {\n  position.sort((a, b) => a - b);\n  let lo = 1, hi = position[position.length - 1] - position[0];\n  // Binary search: find the largest minimum distance that still allows placing m balls\n}",
+
     python: `def maxDistance(position, m):
     position.sort()
     lo, hi = 1, position[-1] - position[0]

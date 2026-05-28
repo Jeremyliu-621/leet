@@ -45,6 +45,8 @@ function countTestedDevices(batteryPercentages) {
     javascript: `function countTestedDevices(batteryPercentages) {
 
 }`,
+    typescript: "function countTestedDevices(batteryPercentages: number[]): number {\n\n}",
+
     python: `def countTestedDevices(batteryPercentages):
     pass`,
   },

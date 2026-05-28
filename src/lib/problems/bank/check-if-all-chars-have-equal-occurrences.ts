@@ -37,6 +37,8 @@ function areOccurrencesEqual(s) {
   params: ['s'],
   starterCode: {
     javascript: 'function areOccurrencesEqual(s) {\n  \n}\n',
+    typescript: "function areOccurrencesEqual(s: string): boolean {\n  \n}",
+
     python: 'def areOccurrencesEqual(s):\n    pass\n',
   },
   visibleTests: [

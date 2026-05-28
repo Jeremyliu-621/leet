@@ -41,6 +41,8 @@ Free time is any interval not covered by any employee's working time.`,
     javascript: `function employeeFreeTime(schedule) {
 
 }`,
+    typescript: "function employeeFreeTime(schedule: number[][][]): number[][] {\n\n}",
+
     python: `def employeeFreeTime(schedule):
     `,
   },

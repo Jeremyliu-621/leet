@@ -57,6 +57,8 @@ A word is found if it can be constructed from letters of **sequentially adjacent
   starterCode: {
     javascript:
       '// findWordsRunner is pre-defined and calls your function below.\nfunction findWords(board, words) {\n  \n}\n',
+    typescript: "function findWordsRunner(board: string[][], words: string[]): string[] {\n  \n}",
+
     python:
       '# findWordsRunner is pre-defined and calls your function below.\ndef findWords(board, words):\n    pass\n',
   },

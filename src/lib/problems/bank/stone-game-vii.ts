@@ -36,6 +36,8 @@ Return the **difference** in score between Alice and Bob if they both play optim
   params: ['stones'],
   starterCode: {
     javascript: 'function stoneGameVII(stones) {\n\n}\n',
+    typescript: "function stoneGameVII(stones: number[]): number {\n\n}",
+
     python: 'def stoneGameVII(stones):\n    pass\n',
   },
   visibleTests: [

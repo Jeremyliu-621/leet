@@ -33,6 +33,8 @@ export const problem: Problem = {
     javascript: `function strStr(haystack, needle) {
 
 }`,
+    typescript: "function strStr(haystack: string, needle: string): number {\n\n}",
+
     python: `def strStr(haystack, needle):
     pass`,
   },

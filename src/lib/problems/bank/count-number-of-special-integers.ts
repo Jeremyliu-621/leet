@@ -37,6 +37,8 @@ Given a **positive** integer \`n\`, return *the number of special integers that 
   params: ['n'],
   starterCode: {
     javascript: 'function countSpecialNumbers(n) {\n\n}',
+    typescript: "function countSpecialNumbers(n: number): number {\n\n}",
+
     python: 'def countSpecialNumbers(n):\n    pass',
   },
   visibleTests: [

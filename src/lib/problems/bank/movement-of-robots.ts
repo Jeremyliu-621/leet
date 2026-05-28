@@ -43,6 +43,8 @@ Return the sum of distances between all pairs of robots after \`d\` seconds, mod
     javascript: `function sumDistance(nums, s, d) {
 
 }`,
+    typescript: "function sumDistance(nums: number[], s: string, d: number): number {\n\n}",
+
     python: `def sumDistance(nums: list[int], s: str, d: int) -> int:
     pass`,
   },

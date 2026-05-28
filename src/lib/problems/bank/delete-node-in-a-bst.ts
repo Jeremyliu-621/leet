@@ -137,6 +137,8 @@ It is guaranteed that all node values are unique. If the key does not exist in t
 function deleteNode(root, key) {
   // Return root of modified BST after deletion
 }`,
+    typescript: "function deleteNodeBSTRunner(root: (number | null)[], key: number): (number | null)[] {\n  // Return root of modified BST after deletion\n}",
+
     python: `# TreeNode class and deleteNodeBSTRunner wrapper are pre-defined.
 def deleteNode(root, key: int):
     # Return root of modified BST after deletion

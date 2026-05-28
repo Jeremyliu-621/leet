@@ -57,6 +57,8 @@ class RecentCounter {
 
   }
 }`,
+    typescript: "function recentCounterOps(ops: ((string | unknown[])[] | (string | number[])[])[]): (null | number)[] {\n  const results = [];\n  let counter;\n  for (const [method, args] of ops) {\n    if (method === 'RecentCounter') {\n      counter = new RecentCounter();\n      results.push(null);\n    } else {\n      results.push(counter[method](...args));\n    }\n  }\n  return results;\n}\n\nclass RecentCounter {\n  constructor() {\n\n  }\n  ping(t) {\n\n  }\n}",
+
     python: `def recentCounterOps(ops):
     ops = ops.to_py() if hasattr(ops, 'to_py') else list(ops)
     results = []

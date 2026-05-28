@@ -45,6 +45,8 @@ Your answer will be accepted if it differs from the correct answer by at most **
     javascript: `function frogPosition(n, edges, t, target) {
   // Return probability of frog being at target after t seconds
 }`,
+    typescript: "function frogPosition(n: number, edges: number[][], t: number, target: number): number {\n  // Return probability of frog being at target after t seconds\n}",
+
     python: `def frogPosition(n: int, edges: list[list[int]], t: int, target: int) -> float:
     # Return probability of frog being at target after t seconds
     pass`,

@@ -49,6 +49,8 @@ return words.filter(w => matches(w, pattern));\`\`\``
     javascript: `function findAndReplacePattern(words, pattern) {
 
 }`,
+    typescript: "function findAndReplacePattern(words: string[], pattern: string): string[] {\n\n}",
+
     python: `def findAndReplacePattern(words, pattern):
     pass`,
   },

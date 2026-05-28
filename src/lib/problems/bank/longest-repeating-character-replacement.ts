@@ -34,6 +34,8 @@ export const problem: Problem = {
     javascript: `function characterReplacement(s, k) {
 
 }`,
+    typescript: "function characterReplacement(s: string, k: number): number {\n\n}",
+
     python: `def characterReplacement(s, k):
     pass`,
   },

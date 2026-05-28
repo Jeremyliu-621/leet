@@ -37,6 +37,8 @@ export const problem: Problem = {
     javascript: `function numberOfSubstrings(s) {
   // Return count of substrings with at least one 'a', 'b', and 'c'
 }`,
+    typescript: "function numberOfSubstrings(s: string): number {\n  // Return count of substrings with at least one 'a', 'b', and 'c'\n}",
+
     python: `def numberOfSubstrings(s):
     # Return count of substrings with at least one 'a', 'b', and 'c'
     pass`,

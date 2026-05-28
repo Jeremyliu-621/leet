@@ -39,6 +39,8 @@ Return *the node with the **highest** edge score. If multiple nodes have the sam
   params: ['edges'],
   starterCode: {
     javascript: 'function edgeScore(edges) {\n\n}',
+    typescript: "function edgeScore(edges: number[]): number {\n\n}",
+
     python: 'def edgeScore(edges):\n    pass',
   },
   visibleTests: [

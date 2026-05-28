@@ -37,6 +37,8 @@ Return *the **largest** possible value of* \`num\` *after **any** number of swap
   // return largest number after parity swaps
 
 }`,
+    typescript: "function largestInteger(num: number): number {\n  // return largest number after parity swaps\n\n}",
+
     python: `def largestInteger(num: int) -> int:
     # return largest number after parity swaps
     pass

@@ -43,6 +43,8 @@ A naive recursive solution works but is exponential. An iterative approach solve
   params: ['n'],
   starterCode: {
     javascript: 'function fibonacci(n) {\n  // your code here\n}\n',
+    typescript: "function fibonacci(n: number): number {\n  // your code here\n}",
+
     python: 'def fibonacci(n):\n    # your code here\n    pass\n',
   },
   visibleTests: [

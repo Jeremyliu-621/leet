@@ -40,6 +40,8 @@ Given a string \`s\`, return *the sum of **beauty** of all of its substrings.*
   // return sum of beauties of all substrings
 
 }`,
+    typescript: "function beautySum(s: string): number {\n  // return sum of beauties of all substrings\n\n}",
+
     python: `def beautySum(s: str) -> int:
     # return sum of beauties of all substrings
     pass

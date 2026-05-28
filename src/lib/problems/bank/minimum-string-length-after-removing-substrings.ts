@@ -37,6 +37,8 @@ Return the **minimum** possible length of the resulting string that you can obta
   params: ['s'],
   starterCode: {
     javascript: 'function minLength(s) {\n\n}\n',
+    typescript: "function minLength(s: string): number {\n\n}",
+
     python: 'def minLength(s):\n    pass\n',
   },
   visibleTests: [

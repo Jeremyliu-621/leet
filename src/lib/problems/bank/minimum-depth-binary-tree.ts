@@ -99,6 +99,8 @@ The minimum depth is the number of nodes along the **shortest path** from the ro
   starterCode: {
     javascript:
       '// TreeNode class is pre-defined. Implement the function below:\nfunction minDepth(root) {\n  \n}\n',
+    typescript: "function minDepthRunner(root: (number | null)[]): number {\n  \n}",
+
     python:
       '# TreeNode class is pre-defined. Implement the function below:\ndef minDepth(root):\n    pass\n',
   },

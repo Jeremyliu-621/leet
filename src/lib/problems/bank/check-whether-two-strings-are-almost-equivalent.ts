@@ -46,6 +46,8 @@ The **frequency** of a letter \`x\` is the number of times it occurs in the stri
     javascript: `function checkAlmostEquivalent(word1, word2) {
 
 }`,
+    typescript: "function checkAlmostEquivalent(word1: string, word2: string): boolean {\n\n}",
+
     python: `def checkAlmostEquivalent(word1, word2):
     pass`,
   },

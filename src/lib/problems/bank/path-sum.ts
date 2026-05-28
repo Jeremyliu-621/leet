@@ -95,6 +95,8 @@ A **leaf** is a node with no children.
   starterCode: {
     javascript:
       '// TreeNode class is pre-defined. Implement the function below:\nfunction hasPathSum(root, targetSum) {\n  \n}\n',
+    typescript: "function hasPathSumRunner(root: (number | null)[], targetSum: number): boolean {\n  \n}",
+
     python:
       '# TreeNode class is pre-defined. Implement the function below:\ndef hasPathSum(root, targetSum):\n    pass\n',
   },

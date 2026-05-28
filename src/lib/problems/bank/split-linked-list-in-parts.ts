@@ -38,6 +38,8 @@ The parts should be in the order of occurrence in the input list, and parts occu
   params: ['head', 'k'],
   starterCode: {
     javascript: 'function splitListToParts(head, k) {\n  // head is an array; return array of arrays\n}\n',
+    typescript: "function splitListToParts(head: number[], k: number): (number[] | unknown[])[] {\n  // head is an array; return array of arrays\n}",
+
     python: 'def splitListToParts(head, k):\n    # head is a list; return list of lists\n    pass\n',
   },
   visibleTests: [

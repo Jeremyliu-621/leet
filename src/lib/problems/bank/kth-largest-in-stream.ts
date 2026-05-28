@@ -54,6 +54,8 @@ Note that it is the k-th largest element **in sorted order**, not the k-th disti
   starterCode: {
     javascript:
       '// kthLargestRunner is pre-defined and calls your class below.\nclass KthLargest {\n  constructor(k, nums) {\n    this.k = k;\n  }\n  add(val) {\n    // return kth largest\n  }\n}\n',
+    typescript: "function kthLargestRunner(k: number, nums: number[], adds: number[]): number[] {\n  constructor(k, nums) {\n    this.k = k;\n  }\n  add(val) {\n    // return kth largest\n  }\n}",
+
     python:
       '# kthLargestRunner is pre-defined and calls your class below.\nclass KthLargest:\n    def __init__(self, k, nums):\n        self.k = k\n    def add(self, val):\n        pass  # return kth largest\n',
   },

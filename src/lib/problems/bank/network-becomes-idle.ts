@@ -47,6 +47,8 @@ Return the **earliest second** starting from which the network **becomes idle**,
   params: ['edges', 'patience'],
   starterCode: {
     javascript: 'function networkBecomesIdle(edges, patience) {\n  \n}\n',
+    typescript: "function networkBecomesIdle(edges: number[][], patience: number[]): number {\n  \n}",
+
     python: 'def networkBecomesIdle(edges, patience):\n    pass\n',
   },
   visibleTests: [

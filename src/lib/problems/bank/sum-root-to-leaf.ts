@@ -96,6 +96,8 @@ export const problem: Problem = {
   starterCode: {
     javascript:
       '// TreeNode class is pre-defined. Implement the function below:\nfunction sumNumbers(root) {\n  \n}\n',
+    typescript: "function sumNumbersRunner(root: number[]): number {\n  \n}",
+
     python:
       '# TreeNode class is pre-defined. Implement the function below:\ndef sumNumbers(root):\n    pass\n',
   },

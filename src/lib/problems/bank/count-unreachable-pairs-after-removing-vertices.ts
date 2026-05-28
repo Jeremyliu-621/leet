@@ -48,6 +48,8 @@ return Number(res);\`\`\``,
   params: ['n', 'edges'],
   starterCode: {
     javascript: 'function countPairs(n, edges) {\n\n}\n',
+    typescript: "function countPairs(n: number, edges: number[][]): number {\n\n}",
+
     python: 'def countPairs(n, edges):\n    pass\n',
   },
   visibleTests: [

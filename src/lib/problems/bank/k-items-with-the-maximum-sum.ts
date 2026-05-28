@@ -41,6 +41,8 @@ Return the **maximum** possible sum.`,
     javascript: `function kItemsWithMaximumSum(numOnes, numZeros, numNegOnes, k) {
 
 }`,
+    typescript: "function kItemsWithMaximumSum(numOnes: number, numZeros: number, numNegOnes: number, k: number): number {\n\n}",
+
     python: `def kItemsWithMaximumSum(numOnes, numZeros, numNegOnes, k):
     pass`,
   },

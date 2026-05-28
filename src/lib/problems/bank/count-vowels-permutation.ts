@@ -37,6 +37,8 @@ Return the count modulo \`10^9 + 7\`.`,
   params: ['n'],
   starterCode: {
     javascript: `function countVowelPermutation(n) {\n\n}`,
+    typescript: "function countVowelPermutation(n: number): number {\n\n}",
+
     python: `def countVowelPermutation(n):\n    pass`,
   },
   visibleTests: [

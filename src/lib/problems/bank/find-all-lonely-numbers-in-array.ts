@@ -38,6 +38,8 @@ Return **all** lonely numbers in \`nums\`. You may return the answer in **any or
   params: ['nums'],
   starterCode: {
     javascript: 'function findLonely(nums) {\n  // your code here\n}\n',
+    typescript: "function findLonely(nums: number[]): number[] {\n  // your code here\n}",
+
     python: 'def findLonely(nums: list[int]) -> list[int]:\n    # your code here\n    pass\n',
   },
   visibleTests: [

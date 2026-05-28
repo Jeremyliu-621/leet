@@ -41,6 +41,8 @@ Jobs may overlap. Return \`0\` if the input is empty.`,
   params: ['jobs'],
   starterCode: {
     javascript: `function findMaxCPULoad(jobs) {\n  \n}`,
+    typescript: "function findMaxCPULoad(jobs: number[][]): number {\n  \n}",
+
     python: `def findMaxCPULoad(jobs):\n    pass`,
   },
   visibleTests: [

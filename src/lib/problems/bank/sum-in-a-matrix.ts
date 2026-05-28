@@ -49,6 +49,8 @@ function matrixSum(nums) {
     javascript: `function matrixSum(nums) {
 
 }`,
+    typescript: "function matrixSum(nums: number[][]): number {\n\n}",
+
     python: `def matrixSum(nums):
     pass`,
   },

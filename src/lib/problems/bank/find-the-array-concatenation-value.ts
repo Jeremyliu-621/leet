@@ -37,6 +37,8 @@ Return the concatenation value of \`nums\`.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function findTheArrayConcVal(nums) {\n  // your code here\n}\n',
+    typescript: "function findTheArrayConcVal(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def findTheArrayConcVal(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

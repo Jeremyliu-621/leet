@@ -53,6 +53,8 @@ All replacement operations must occur **simultaneously**, meaning the replacemen
     javascript: `function findReplaceString(s, indices, sources, targets) {
 
 }`,
+    typescript: "function findReplaceString(s: string, indices: number[], sources: string[], targets: string[]): string {\n\n}",
+
     python: `def findReplaceString(s, indices, sources, targets):
     pass`,
   },

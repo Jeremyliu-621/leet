@@ -42,6 +42,8 @@ Return the **number** of alternating groups.
     javascript: `function numberOfAlternatingGroups(colors) {
 
 }`,
+    typescript: "function numberOfAlternatingGroups(colors: number[]): number {\n\n}",
+
     python: `def numberOfAlternatingGroups(colors):
     pass`,
   },

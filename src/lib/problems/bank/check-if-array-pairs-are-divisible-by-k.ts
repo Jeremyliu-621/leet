@@ -42,6 +42,8 @@ Return \`true\` if you can find a way to do that or \`false\` otherwise.`,
   params: ['arr', 'k'],
   starterCode: {
     javascript: 'function canArrange(arr, k) {\n  \n}\n',
+    typescript: "function canArrange(arr: number[], k: number): boolean {\n  \n}",
+
     python: 'def canArrange(arr, k):\n    pass\n',
   },
   visibleTests: [

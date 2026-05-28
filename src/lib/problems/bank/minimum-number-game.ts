@@ -39,6 +39,8 @@ The game continues until \`nums\` becomes empty. Return the resulting array \`ar
   params: ['nums'],
   starterCode: {
     javascript: 'function numberGame(nums) {\n  \n}\n',
+    typescript: "function numberGame(nums: number[]): number[] {\n  \n}",
+
     python: 'def numberGame(nums):\n    pass\n',
   },
   visibleTests: [

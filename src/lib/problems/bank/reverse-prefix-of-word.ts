@@ -29,6 +29,8 @@ return word.slice(0, i+1).split('').reverse().join('') + word.slice(i+1);\`\`\``
   params: ['word', 'ch'],
   starterCode: {
     javascript: 'function reversePrefix(word, ch) {\n  \n}\n',
+    typescript: "function reversePrefix(word: string, ch: string): string {\n  \n}",
+
     python: 'def reversePrefix(word, ch):\n    pass\n',
   },
   visibleTests: [

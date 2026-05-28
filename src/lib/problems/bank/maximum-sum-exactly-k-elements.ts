@@ -39,6 +39,8 @@ Return the **maximum** achievable score after performing the operation exactly \
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function maximizeSum(nums, k) {\n  \n}\n',
+    typescript: "function maximizeSum(nums: number[], k: number): number {\n  \n}",
+
     python: 'def maximizeSum(nums, k):\n    pass\n',
   },
   visibleTests: [

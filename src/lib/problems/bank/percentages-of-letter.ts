@@ -31,6 +31,8 @@ export const problem: Problem = {
   params: ['s', 'letter'],
   starterCode: {
     javascript: 'function percentageLetter(s, letter) {\n  // your code here\n}\n',
+    typescript: "function percentageLetter(s: string, letter: string): number {\n  // your code here\n}",
+
     python: 'def percentageLetter(s, letter):\n    # your code here\n    pass\n',
   },
   visibleTests: [

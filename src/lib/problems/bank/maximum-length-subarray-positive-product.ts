@@ -40,6 +40,8 @@ Return the maximum length of a subarray with positive product.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function getMaxLen(nums) {\n  \n}\n',
+    typescript: "function getMaxLen(nums: number[]): number {\n  \n}",
+
     python: 'def getMaxLen(nums):\n    pass\n',
   },
   visibleTests: [

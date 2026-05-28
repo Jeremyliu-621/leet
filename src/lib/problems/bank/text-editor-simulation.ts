@@ -46,6 +46,8 @@ Return an array of these recorded strings, one per cursor-movement operation.`,
   // right: array of chars to the right (top = cursor boundary)
   // Return results of cursorLeft/cursorRight operations only.
 }`,
+    typescript: "function textEditorOperations(operations: (string[] | (string | number)[])[]): string[] {\n  // left: array of chars to the left of cursor (top = cursor boundary)\n  // right: array of chars to the right (top = cursor boundary)\n  // Return results of cursorLeft/cursorRight operations only.\n}",
+
     python: `def textEditorOperations(operations):
     # left: list of chars to the left of cursor (end = cursor boundary)
     # right: list of chars to the right (end = cursor boundary)

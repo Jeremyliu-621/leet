@@ -42,6 +42,8 @@ Return the **minimum** cost to convert the string \`source\` to \`target\` using
     javascript: `function minimumCost(source, target, original, changed, cost) {
 
 }`,
+    typescript: "function minimumCost(source: string, target: string, original: string[], changed: string[], cost: number[]): number {\n\n}",
+
     python: `def minimumCost(source, target, original, changed, cost):
     pass`,
   },

@@ -45,6 +45,8 @@ function arithmeticTriplets(nums, diff) {
     javascript: `function arithmeticTriplets(nums, diff) {
 
 }`,
+    typescript: "function arithmeticTriplets(nums: number[], diff: number): number {\n\n}",
+
     python: `def arithmeticTriplets(nums, diff):
     pass`,
   },

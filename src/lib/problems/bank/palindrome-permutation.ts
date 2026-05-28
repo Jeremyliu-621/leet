@@ -38,6 +38,8 @@ A **palindrome** reads the same forwards and backwards. For a string to have a p
   params: ['s'],
   starterCode: {
     javascript: 'function canPermutePalindrome(s) {\n  // your code here\n}\n',
+    typescript: "function canPermutePalindrome(s: string): boolean {\n  // your code here\n}",
+
     python: 'def canPermutePalindrome(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -41,6 +41,8 @@ return max;\`\`\``
     javascript: `function maxPower(s) {
 
 }`,
+    typescript: "function maxPower(s: string): number {\n\n}",
+
     python: `def maxPower(s):
     pass`,
   },

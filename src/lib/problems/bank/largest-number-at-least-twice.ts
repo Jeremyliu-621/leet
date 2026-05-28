@@ -36,6 +36,8 @@ Determine whether the largest element in the array is **at least twice** as much
     javascript: `function dominantIndex(nums) {
 
 }`,
+    typescript: "function dominantIndex(nums: number[]): number {\n\n}",
+
     python: `def dominantIndex(nums):
     pass`,
   },

@@ -46,6 +46,8 @@ Return \`true\` if player 1 can win, \`false\` otherwise. **Both players play op
   // return true if player 1 can win or tie
 
 }`,
+    typescript: "function predictTheWinner(nums: number[]): boolean {\n  // return true if player 1 can win or tie\n\n}",
+
     python: `def predictTheWinner(nums: list) -> bool:
     # return true if player 1 can win or tie
     pass

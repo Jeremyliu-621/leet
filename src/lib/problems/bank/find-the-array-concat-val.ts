@@ -41,6 +41,8 @@ Return the **concatenation value** of \`nums\`.`,
     javascript: `function findTheArrayConcVal(nums) {
 
 }`,
+    typescript: "function findTheArrayConcVal(nums: number[]): number {\n\n}",
+
     python: `def findTheArrayConcVal(nums):
     pass`,
   },

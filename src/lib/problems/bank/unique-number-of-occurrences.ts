@@ -28,6 +28,8 @@ return new Set(counts).size === counts.length;\`\`\``
   params: ['arr'],
   starterCode: {
     javascript: 'function uniqueOccurrences(arr) {\n  \n}\n',
+    typescript: "function uniqueOccurrences(arr: number[]): boolean {\n  \n}",
+
     python: 'def uniqueOccurrences(arr):\n    pass\n',
   },
   visibleTests: [

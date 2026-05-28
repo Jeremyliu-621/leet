@@ -40,6 +40,8 @@ Return the **minimum** number of swaps to make \`nums\` semi-ordered.`,
     javascript: `function semiOrderedPermutation(nums) {
 
 }`,
+    typescript: "function semiOrderedPermutation(nums: number[]): number {\n\n}",
+
     python: `def semiOrderedPermutation(nums):
     pass`,
   },

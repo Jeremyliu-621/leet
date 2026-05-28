@@ -41,6 +41,8 @@ Return the range as \`[a, b]\`.`,
     javascript: `function smallestRange(nums) {
 
 }`,
+    typescript: "function smallestRange(nums: number[][]): number[] {\n\n}",
+
     python: `def smallestRange(nums: list[list[int]]) -> list[int]:
     pass`,
   },

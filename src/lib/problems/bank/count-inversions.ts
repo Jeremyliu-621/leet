@@ -42,6 +42,8 @@ An **inversion** is a pair \`(i, j)\` where \`i < j\` and \`nums[i] > nums[j]\`.
   // For each element at rank r, the number of inversions it forms
   // with previous elements = (elements already inserted) - prefixSum(r).
 }`,
+    typescript: "function countInversions(nums: number[]): number {\n  // Coordinate-compress, then use a BIT scanning left to right.\n  // For each element at rank r, the number of inversions it forms\n  // with previous elements = (elements already inserted) - prefixSum(r).\n}",
+
     python: `def countInversions(nums):
     # Coordinate-compress, then use a BIT scanning left to right.
     # For each element at rank r, inversions formed = (elements inserted) - prefix_sum(r).

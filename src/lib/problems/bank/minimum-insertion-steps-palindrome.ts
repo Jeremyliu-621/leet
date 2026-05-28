@@ -25,6 +25,8 @@ A Palindrome String is one that reads the same backward as well as forward.`,
   params: ['s'],
   starterCode: {
     javascript: 'function minInsertions(s) {\n\n}\n',
+    typescript: "function minInsertions(s: string): number {\n\n}",
+
     python: 'def minInsertions(s):\n    pass\n',
   },
   visibleTests: [

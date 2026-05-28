@@ -42,6 +42,8 @@ Return the **minimum** number of liters of fuel to reach the capital city \`0\`.
   params: ['roads', 'seats'],
   starterCode: {
     javascript: 'function minimumFuelCost(roads, seats) {\n  // your code here\n}\n',
+    typescript: "function minimumFuelCost(roads: number[][], seats: number): number {\n  // your code here\n}",
+
     python: 'def minimumFuelCost(roads, seats):\n    # your code here\n    pass\n',
   },
   visibleTests: [

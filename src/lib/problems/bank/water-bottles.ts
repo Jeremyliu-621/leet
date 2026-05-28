@@ -35,6 +35,8 @@ Return the **maximum** number of water bottles you can drink.`,
   params: ['numBottles', 'numExchange'],
   starterCode: {
     javascript: 'function numWaterBottles(numBottles, numExchange) {\n  // your code here\n}\n',
+    typescript: "function numWaterBottles(numBottles: number, numExchange: number): number {\n  // your code here\n}",
+
     python: 'def numWaterBottles(numBottles, numExchange):\n    # your code here\n    pass\n',
   },
   visibleTests: [

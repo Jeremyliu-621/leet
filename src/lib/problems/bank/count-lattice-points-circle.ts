@@ -36,6 +36,8 @@ export const problem: Problem = {
   params: ['circles'],
   starterCode: {
     javascript: 'function countLatticePoints(circles) {\n  // your code here\n}\n',
+    typescript: "function countLatticePoints(circles: number[][]): number {\n  // your code here\n}",
+
     python: 'def countLatticePoints(circles):\n    # your code here\n    pass\n',
   },
   visibleTests: [

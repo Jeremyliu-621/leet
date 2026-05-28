@@ -40,6 +40,8 @@ Return the **minimum number of operations** needed so that all remaining element
     javascript: `function minimumOperations(nums) {
 
 }`,
+    typescript: "function minimumOperations(nums: number[]): number {\n\n}",
+
     python: `def minimumOperations(nums):
     pass`,
   },

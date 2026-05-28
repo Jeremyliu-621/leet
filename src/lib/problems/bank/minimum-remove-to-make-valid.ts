@@ -44,6 +44,8 @@ Return the resulting string.`,
   params: ['s'],
   starterCode: {
     javascript: 'function minRemoveForValid(s) {\n  // your code here\n}\n',
+    typescript: "function minRemoveForValid(s: string): string {\n  // your code here\n}",
+
     python: 'def minRemoveForValid(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

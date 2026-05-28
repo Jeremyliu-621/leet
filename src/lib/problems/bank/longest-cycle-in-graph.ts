@@ -46,6 +46,8 @@ A cycle is a path that starts and ends at the **same node**.`,
     javascript: `function longestCycle(edges) {
 
 }`,
+    typescript: "function longestCycle(edges: number[]): number {\n\n}",
+
     python: `def longestCycle(edges):
     pass`,
   },

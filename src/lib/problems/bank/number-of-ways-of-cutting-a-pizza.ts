@@ -49,6 +49,8 @@ Return the number of ways of cutting the pizza such that each piece contains at 
     javascript: `function ways(pizza, k) {
 
 }`,
+    typescript: "function ways(pizza: string[], k: number): number {\n\n}",
+
     python: `def ways(pizza: list[str], k: int) -> int:
     pass`,
   },

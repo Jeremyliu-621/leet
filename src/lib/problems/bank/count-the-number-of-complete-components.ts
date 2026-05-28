@@ -36,6 +36,8 @@ A connected component is said to be **complete** if there exists an edge between
   params: ['n', 'edges'],
   starterCode: {
     javascript: 'function countCompleteComponents(n, edges) {\n  // your code here\n}\n',
+    typescript: "function countCompleteComponents(n: number, edges: number[][]): number {\n  // your code here\n}",
+
     python: 'def countCompleteComponents(n, edges):\n    # your code here\n    pass\n',
   },
   hints: [

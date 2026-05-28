@@ -47,6 +47,8 @@ Return the **minimum possible score** of a path between cities \`1\` and \`n\`.
     javascript: `function minScore(n, roads) {
 
 }`,
+    typescript: "function minScore(n: number, roads: number[][]): number {\n\n}",
+
     python: `def minScore(n: int, roads: list[list[int]]) -> int:
     pass`,
   },

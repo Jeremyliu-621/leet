@@ -35,6 +35,8 @@ Return any possible rearrangement of \`s\`, or return \`""\` if it is not possib
     javascript: `function reorganizeString(s) {
 
 }`,
+    typescript: "function reorganizeString(s: string): string {\n\n}",
+
     python: `def reorganizeString(s):
     pass`,
   },

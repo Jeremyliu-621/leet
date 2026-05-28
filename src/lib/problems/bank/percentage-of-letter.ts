@@ -34,6 +34,8 @@ function percentageLetter(s, letter) {
   params: ['s', 'letter'],
   starterCode: {
     javascript: 'function percentageLetter(s, letter) {\n  \n}\n',
+    typescript: "function percentageLetter(s: string, letter: string): number {\n  \n}",
+
     python: 'def percentageLetter(s, letter):\n    pass\n',
   },
   visibleTests: [

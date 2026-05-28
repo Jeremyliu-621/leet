@@ -39,6 +39,8 @@ If a solution exists, it is **guaranteed to be unique**.`,
     javascript: `function canCompleteCircuit(gas, cost) {
   // Return start index or -1 if impossible
 }`,
+    typescript: "function canCompleteCircuit(gas: number[], cost: number[]): number {\n  // Return start index or -1 if impossible\n}",
+
     python: `def canCompleteCircuit(gas, cost):
     # Return start index or -1 if impossible
     pass`,

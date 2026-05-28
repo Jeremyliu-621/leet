@@ -40,6 +40,8 @@ The score after splitting a string is the number of **zeros** in the **left** su
     javascript: `function maxScore(s) {
 
 }`,
+    typescript: "function maxScore(s: string): number {\n\n}",
+
     python: `def maxScore(s):
     pass`,
   },

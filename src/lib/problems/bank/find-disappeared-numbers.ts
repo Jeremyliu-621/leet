@@ -32,6 +32,8 @@ export const problem: Problem = {
     javascript: `function findDisappearedNumbers(nums) {
   // Return all integers in [1, n] missing from nums
 }`,
+    typescript: "function findDisappearedNumbers(nums: number[]): number[] {\n  // Return all integers in [1, n] missing from nums\n}",
+
     python: `def findDisappearedNumbers(nums):
     # Return all integers in [1, n] missing from nums
     pass`,

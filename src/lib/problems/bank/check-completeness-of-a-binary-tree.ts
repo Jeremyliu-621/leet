@@ -46,6 +46,8 @@ return true;\`\`\``,
     javascript: `function isCompleteTree(root) {
 
 }`,
+    typescript: "function isCompleteTree(root: number[]): boolean {\n\n}",
+
     python: `def isCompleteTree(root):
     pass`,
   },

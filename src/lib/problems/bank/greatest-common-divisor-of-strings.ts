@@ -38,6 +38,8 @@ Given two strings \`str1\` and \`str2\`, return the largest string \`x\` such th
   params: ['str1', 'str2'],
   starterCode: {
     javascript: 'function gcdOfStrings(str1, str2) {\n\n}\n',
+    typescript: "function gcdOfStrings(str1: string, str2: string): string {\n\n}",
+
     python: 'def gcdOfStrings(str1, str2):\n    pass\n',
   },
   visibleTests: [

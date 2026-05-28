@@ -42,6 +42,8 @@ Return a **0-indexed** integer array containing the indices of words that contai
   params: ['words', 'x'],
   starterCode: {
     javascript: 'function findWordsContaining(words, x) {\n  \n}\n',
+    typescript: "function findWordsContaining(words: string[], x: string): number[] {\n  \n}",
+
     python: 'def findWordsContaining(words, x):\n    pass\n',
   },
   visibleTests: [

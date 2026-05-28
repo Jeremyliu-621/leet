@@ -45,6 +45,8 @@ return bt();\`\`\``
   params: ['tiles'],
   starterCode: {
     javascript: 'function numTilePossibilities(tiles) {\n  \n}\n',
+    typescript: "function numTilePossibilities(tiles: string): number {\n  \n}",
+
     python: 'def numTilePossibilities(tiles):\n    pass\n',
   },
   visibleTests: [

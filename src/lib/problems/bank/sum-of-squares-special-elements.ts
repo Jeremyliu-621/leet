@@ -37,6 +37,8 @@ return nums.reduce((sum, v, i) => n % (i+1) === 0 ? sum + v*v : sum, 0);\`\`\``
   params: ['nums'],
   starterCode: {
     javascript: 'function sumOfSquares(nums) {\n  \n}\n',
+    typescript: "function sumOfSquares(nums: number[]): number {\n  \n}",
+
     python: 'def sumOfSquares(nums):\n    pass\n',
   },
   visibleTests: [

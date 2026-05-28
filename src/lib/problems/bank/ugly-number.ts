@@ -45,6 +45,8 @@ Given an integer \`n\`, return \`true\` if \`n\` is an ugly number.
   // n: integer
   // Return true if n's prime factors are only 2, 3, and 5
 }`,
+    typescript: "function isUgly(n: number): boolean {\n  // n: integer\n  // Return true if n's prime factors are only 2, 3, and 5\n}",
+
     python: `def isUgly(n):
     # n: int
     # Return True if n's prime factors are only 2, 3, and 5

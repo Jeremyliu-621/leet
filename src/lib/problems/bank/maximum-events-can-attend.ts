@@ -35,6 +35,8 @@ Return the **maximum** number of events you can attend.`,
   params: ['events'],
   starterCode: {
     javascript: 'function maxEvents(events) {\n  // your code here\n}\n',
+    typescript: "function maxEvents(events: number[][]): number {\n  // your code here\n}",
+
     python: 'def maxEvents(events):\n    # your code here\n    pass\n',
   },
   visibleTests: [

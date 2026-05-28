@@ -50,6 +50,8 @@ function nextGreaterElement(nums1, nums2) {
     javascript: `function nextGreaterElement(nums1, nums2) {
 
 }`,
+    typescript: "function nextGreaterElement(nums1: number[], nums2: number[]): number[] {\n\n}",
+
     python: `def nextGreaterElement(nums1, nums2):
     pass`,
   },

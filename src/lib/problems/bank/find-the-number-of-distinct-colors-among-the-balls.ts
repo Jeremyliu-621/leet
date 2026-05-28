@@ -42,6 +42,8 @@ Return the result array. Uncolored balls do not count toward any color.`,
   let distinct = 0;
   // Process each query and record distinct count after each.
 }`,
+    typescript: "function queryResults(limit: number, queries: number[][]): number[] {\n  const ballColor = new Map();   // ball → current color\n  const colorCount = new Map();  // color → number of balls with this color\n  let distinct = 0;\n  // Process each query and record distinct count after each.\n}",
+
     python: `def queryResults(limit, queries):
     ball_color = {}   # ball -> current color
     color_count = {}  # color -> number of balls with this color

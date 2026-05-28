@@ -44,6 +44,8 @@ Given an integer \`num\`, **reverse** \`num\` to get \`reversed1\`, **then rever
   // return true if two reversals give back num
 
 }`,
+    typescript: "function isSameAfterReversals(num: number): boolean {\n  // return true if two reversals give back num\n\n}",
+
     python: `def isSameAfterReversals(num: int) -> bool:
     # return true if two reversals give back num
     pass

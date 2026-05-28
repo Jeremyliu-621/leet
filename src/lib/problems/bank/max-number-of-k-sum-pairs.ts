@@ -50,6 +50,8 @@ Each element may be used in **at most one** operation.
     javascript: `function maxOperations(nums, k) {
   // Return max number of pairs (a, b) where a + b === k, each element used at most once
 }`,
+    typescript: "function maxOperations(nums: number[], k: number): number {\n  // Return max number of pairs (a, b) where a + b === k, each element used at most once\n}",
+
     python: `def maxOperations(nums: list[int], k: int) -> int:
     # Return max number of pairs (a, b) where a + b === k, each element used at most once
     pass`,

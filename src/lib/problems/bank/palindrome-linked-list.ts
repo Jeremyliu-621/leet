@@ -70,6 +70,8 @@ export const problem: Problem = {
   starterCode: {
     javascript:
       '// ListNode class and isPalindromeRunner wrapper are pre-defined.\n// Implement the function below:\nfunction isPalindrome(head) {\n  \n}\n',
+    typescript: "function isPalindromeRunner(head: number[]): boolean {\n  \n}",
+
     python:
       '# ListNode class and isPalindromeRunner wrapper are pre-defined.\n# Implement the function below:\ndef isPalindrome(head):\n    pass\n',
   },

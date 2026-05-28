@@ -47,6 +47,8 @@ A **subgraph** is a graph whose vertices and edges are subsets of the original g
     javascript: `function minimumWeight(n, edges, src1, src2, dest) {
 
 }`,
+    typescript: "function minimumWeight(n: number, edges: number[][], src1: number, src2: number, dest: number): number {\n\n}",
+
     python: `def minimumWeight(n, edges, src1, src2, dest):
     pass`,
   },

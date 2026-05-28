@@ -37,6 +37,8 @@ Return the **minimum cost** of connecting all the given sticks into one stick in
     javascript: `function connectSticks(sticks) {
 
 }`,
+    typescript: "function connectSticks(sticks: number[]): number {\n\n}",
+
     python: `def connectSticks(sticks):
     pass`,
   },

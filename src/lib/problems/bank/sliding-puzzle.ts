@@ -40,6 +40,8 @@ Given the puzzle board, return the least number of moves required so that the st
   params: ['board'],
   starterCode: {
     javascript: 'function slidingPuzzle(board) {\n\n}\n',
+    typescript: "function slidingPuzzle(board: number[][]): number {\n\n}",
+
     python: 'def slidingPuzzle(board):\n    pass\n',
   },
   visibleTests: [

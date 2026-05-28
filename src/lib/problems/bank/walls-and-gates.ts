@@ -41,6 +41,8 @@ Fill each empty room with the **distance to its nearest gate**. If it is impossi
     javascript: `function wallsAndGates(rooms) {
 
 }`,
+    typescript: "function wallsAndGates(rooms: number[][]): number[][] {\n\n}",
+
     python: `def wallsAndGates(rooms):
     pass`,
   },

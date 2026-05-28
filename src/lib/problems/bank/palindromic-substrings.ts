@@ -41,6 +41,8 @@ return count;\`\`\``
   params: ['s'],
   starterCode: {
     javascript: 'function countSubstrings(s) {\n  \n}\n',
+    typescript: "function countSubstrings(s: string): number {\n  \n}",
+
     python: 'def countSubstrings(s):\n    pass\n',
   },
   visibleTests: [

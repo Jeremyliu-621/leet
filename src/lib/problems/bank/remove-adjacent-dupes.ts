@@ -36,6 +36,8 @@ export const problem: Problem = {
   params: ['text'],
   starterCode: {
     javascript: 'function collapseAdjacentDuplicates(text) {\n  // your code here\n}\n',
+    typescript: "function collapseAdjacentDuplicates(text: string): string {\n  // your code here\n}",
+
     python: 'def collapseAdjacentDuplicates(text):\n    # your code here\n    pass\n',
   },
   visibleTests: [

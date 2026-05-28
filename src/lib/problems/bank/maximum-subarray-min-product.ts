@@ -44,6 +44,8 @@ Note that the min-product should be maximized **before** performing the modulo o
     javascript: `function maxSumMinProduct(nums) {
 
 }`,
+    typescript: "function maxSumMinProduct(nums: number[]): number {\n\n}",
+
     python: `def maxSumMinProduct(nums):
     pass`,
   },

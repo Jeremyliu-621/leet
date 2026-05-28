@@ -43,6 +43,8 @@ You must solve this in **O(log n)** time and **O(1)** space.
   params: ['nums'],
   starterCode: {
     javascript: 'function singleNonDuplicate(nums) {\n  // your code here\n}\n',
+    typescript: "function singleNonDuplicate(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def singleNonDuplicate(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

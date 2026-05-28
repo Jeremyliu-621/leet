@@ -37,6 +37,8 @@ export const problem: Problem = {
   params: ['nums', 'limit'],
   starterCode: {
     javascript: 'function longestSubarray(nums, limit) {\n  \n}\n',
+    typescript: "function longestSubarray(nums: number[], limit: number): number {\n  \n}",
+
     python: 'def longestSubarray(nums, limit):\n    pass\n',
   },
   visibleTests: [

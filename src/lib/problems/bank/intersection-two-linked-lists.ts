@@ -95,6 +95,8 @@ The test inputs are encoded as three arrays: \`arrA\` (nodes before intersection
   starterCode: {
     javascript:
       '// ListNode class and getIntersectionNodeRunner wrapper are pre-defined.\n// headA and headB are built for you; implement the function below:\nfunction getIntersectionNode(headA, headB) {\n  \n}\n',
+    typescript: "function getIntersectionNodeRunner(arrA: number[], arrB: number[], shared: number[]): number {\n  \n}",
+
     python:
       '# ListNode class and getIntersectionNodeRunner wrapper are pre-defined.\n# headA and headB are built for you; implement the function below:\ndef getIntersectionNode(headA, headB):\n    pass\n',
   },

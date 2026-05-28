@@ -46,6 +46,8 @@ The intersection of two closed intervals \`[a, b]\` and \`[c, d]\` is \`[max(a,c
   params: ['firstList', 'secondList'] as readonly string[],
   starterCode: {
     javascript: 'function intervalIntersection(firstList, secondList) {\n  // your code here\n}\n',
+    typescript: "function intervalIntersection(firstList: number[][], secondList: number[][]): number[][] {\n  // your code here\n}",
+
     python: 'def intervalIntersection(firstList: list[list[int]], secondList: list[list[int]]) -> list[list[int]]:\n    # your code here\n    pass\n',
   },
   visibleTests: [

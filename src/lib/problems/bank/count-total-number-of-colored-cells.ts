@@ -43,6 +43,8 @@ Return the number of **colored cells** at the end of \`n\` minutes.`,
     javascript: `function coloredCells(n) {
 
 }`,
+    typescript: "function coloredCells(n: number): number {\n\n}",
+
     python: `def coloredCells(n):
     pass`,
   },

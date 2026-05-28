@@ -36,6 +36,8 @@ Given an integer \`n\`, return **any** valid n-bit gray code sequence.`,
   params: ['n'],
   starterCode: {
     javascript: `function grayCode(n) {\n\n}`,
+    typescript: "function grayCode(n: number): number[] {\n\n}",
+
     python: `def grayCode(n):\n    pass`,
   },
   visibleTests: [

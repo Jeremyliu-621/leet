@@ -111,6 +111,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   starterCode: {
     javascript:
       '// TreeNode class and getDirections wrapper are pre-defined.\n// Implement the function below:\nfunction getDirectionsImpl(root, s, t) {\n  \n}\n',
+    typescript: "function getDirections(root: (number | null)[], s: number, t: number): string {\n  \n}",
+
     python:
       '# TreeNode class and getDirections wrapper are pre-defined.\n# Implement the function below:\ndef getDirectionsImpl(root, s, t):\n    pass\n',
   },

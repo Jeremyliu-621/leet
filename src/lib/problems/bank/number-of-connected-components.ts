@@ -40,6 +40,8 @@ Return the **number of connected components** in the graph.
   preamble: {},
   starterCode: {
     javascript: 'function countComponents(n, edges) {\n  \n}\n',
+    typescript: "function countComponents(n: number, edges: number[][]): number {\n  \n}",
+
     python: 'def countComponents(n, edges):\n    pass\n',
   },
   visibleTests: [

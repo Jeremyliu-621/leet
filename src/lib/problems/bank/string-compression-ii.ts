@@ -48,6 +48,8 @@ You may delete **at most \`k\`** characters from string \`s\`. Return the **mini
     javascript: `function getLengthOfOptimalCompression(s, k) {
   // Return minimum RLE length after deleting at most k characters
 }`,
+    typescript: "function getLengthOfOptimalCompression(s: string, k: number): number {\n  // Return minimum RLE length after deleting at most k characters\n}",
+
     python: `def getLengthOfOptimalCompression(s: str, k: int) -> int:
     # Return minimum RLE length after deleting at most k characters
     pass`,

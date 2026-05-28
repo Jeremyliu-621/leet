@@ -42,6 +42,8 @@ Return \`true\` if so, or \`false\` otherwise.`,
     javascript: `function areNumbersAscending(s) {
 
 }`,
+    typescript: "function areNumbersAscending(s: string): boolean {\n\n}",
+
     python: `def areNumbersAscending(s):
     pass`,
   },

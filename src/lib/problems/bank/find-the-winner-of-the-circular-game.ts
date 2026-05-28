@@ -34,6 +34,8 @@ export const problem: Problem = {
     javascript: `function findTheWinner(n, k) {
 
 }`,
+    typescript: "function findTheWinner(n: number, k: number): number {\n\n}",
+
     python: `def findTheWinner(n: int, k: int) -> int:
     pass`,
   },

@@ -24,6 +24,8 @@ export const problem: Problem = {
   params: ['n'],
   starterCode: {
     javascript: 'function nextGreaterElementIII(n) {\n\n}\n',
+    typescript: "function nextGreaterElementIII(n: number): number {\n\n}",
+
     python: 'def nextGreaterElementIII(n):\n    pass\n',
   },
   visibleTests: [

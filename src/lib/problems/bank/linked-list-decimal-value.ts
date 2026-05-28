@@ -78,6 +78,8 @@ For example, if the list is \`1 → 2 → 3\`, the value is \`123\`.
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// ListNode class and listDecimalValueRunner wrapper are pre-defined.\n// Implement the function below:\nfunction listDecimalValue(head) {\n  \n}\n',
+    typescript: "function listDecimalValueRunner(head: number[]): number {\n  \n}",
+
     python: '# ListNode class and listDecimalValueRunner wrapper are pre-defined.\n# Implement the function below:\ndef listDecimalValue(head):\n    pass\n',
   },
   visibleTests: [

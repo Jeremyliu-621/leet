@@ -43,6 +43,8 @@ return Math.min(...Object.keys(ft).map(c => Math.floor((fs[c]||0) / ft[c])));\`\
     javascript: `function rearrangeCharacters(s, target) {
 
 }`,
+    typescript: "function rearrangeCharacters(s: string, target: string): number {\n\n}",
+
     python: `def rearrangeCharacters(s, target):
     pass`,
   },

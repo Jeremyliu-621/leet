@@ -44,6 +44,8 @@ You have a **budget** (possibly very large). Return the **maximum** number of co
   starterCode: {
     javascript:
       'function maximumRobots(chargeTimes, runningCosts, budget) {\n  \n}\n',
+    typescript: "function maximumRobots(chargeTimes: number[], runningCosts: number[], budget: number): number {\n  \n}",
+
     python: 'def maximumRobots(chargeTimes, runningCosts, budget):\n    ',
   },
   visibleTests: [

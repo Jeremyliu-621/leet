@@ -43,6 +43,8 @@ Return an edge that can be removed so that the resulting graph is a tree. If the
     javascript: `function findRedundantConnection(edges) {
   // Return the edge that creates a cycle
 }`,
+    typescript: "function findRedundantConnection(edges: number[][]): number[] {\n  // Return the edge that creates a cycle\n}",
+
     python: `def findRedundantConnection(edges):
     # Return the edge that creates a cycle
     pass`,

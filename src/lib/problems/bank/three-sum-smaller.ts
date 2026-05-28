@@ -52,6 +52,8 @@ Answer: **2**`,
     javascript: `function threeSumSmaller(nums, target) {
 
 }`,
+    typescript: "function threeSumSmaller(nums: number[], target: number): number {\n\n}",
+
     python: `def threeSumSmaller(nums, target):
     pass
 `,

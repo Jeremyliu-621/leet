@@ -30,6 +30,8 @@ Return the **minimum cuts** needed for a palindrome partitioning of \`s\`.`,
   params: ['s'],
   starterCode: {
     javascript: 'function minCutPalindrome(s) {\n\n}\n',
+    typescript: "function minCutPalindrome(s: string): number {\n\n}",
+
     python: 'def minCutPalindrome(s):\n    pass\n',
   },
   visibleTests: [

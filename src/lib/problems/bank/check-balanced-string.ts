@@ -42,6 +42,8 @@ Return \`true\` if \`num\` is balanced, otherwise return \`false\`.`,
     javascript: `function isBalanced(num) {
 
 }`,
+    typescript: "function isBalanced(num: string): boolean {\n\n}",
+
     python: `def isBalanced(num):
     pass`,
   },

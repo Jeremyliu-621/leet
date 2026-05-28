@@ -36,6 +36,8 @@ You must decrease the overall operation steps as much as possible.`,
     javascript: `function findMin(nums) {
 
 }`,
+    typescript: "function findMin(nums: number[]): number {\n\n}",
+
     python: `def findMin(nums):
     pass`,
   },

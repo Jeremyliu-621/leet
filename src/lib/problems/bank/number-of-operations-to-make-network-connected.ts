@@ -38,6 +38,8 @@ Return the **minimum number of cable operations** required to make all the compu
   params: ['n', 'connections'],
   starterCode: {
     javascript: 'function makeConnected(n, connections) {\n\n}\n',
+    typescript: "function makeConnected(n: number, connections: number[][]): number {\n\n}",
+
     python: 'def makeConnected(n, connections):\n    pass\n',
   },
   visibleTests: [

@@ -41,6 +41,8 @@ Return the **maximum** possible average pass ratio after assigning the \`extraSt
   params: ['classes', 'extraStudents'],
   starterCode: {
     javascript: 'function maxAverageRatio(classes, extraStudents) {\n  \n}\n',
+    typescript: "function maxAverageRatio(classes: number[][], extraStudents: number): number {\n  \n}",
+
     python: 'def maxAverageRatio(classes, extraStudents):\n    pass\n',
   },
   visibleTests: [

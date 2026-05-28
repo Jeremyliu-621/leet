@@ -45,6 +45,8 @@ Return the addition of parentheses in \`nums\` such that the value of this expre
   // return string expression maximizing value
 
 }`,
+    typescript: "function optimalDivision(nums: number[]): string {\n  // return string expression maximizing value\n\n}",
+
     python: `def optimalDivision(nums: list) -> str:
     # return string expression maximizing value
     pass

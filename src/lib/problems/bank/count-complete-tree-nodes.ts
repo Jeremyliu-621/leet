@@ -88,6 +88,8 @@ return 1 + countNodes(root.left) + countNodes(root.right);\`\`\``
 function countNodes(root) {
 
 }`,
+    typescript: "function countNodesRunner(arr: number[]): number {\n  constructor(val, left = null, right = null) { this.val = val; this.left = left; this.right = right; }\n}\nfunction __fromBFS__(arr) {\n  if (!arr || arr.length === 0 || arr[0] === null) return null;\n  const root = new TreeNode(arr[0]);\n  const q = [root]; let i = 1;\n  while (q.length && i < arr.length) {\n    const node = q.shift();\n    if (i < arr.length && arr[i] !== null) { node.left = new TreeNode(arr[i]); q.push(node.left); } i++;\n    if (i < arr.length && arr[i] !== null) { node.right = new TreeNode(arr[i]); q.push(node.right); } i++;\n  }\n  return root;\n}\nfunction countNodesRunner(arr) { return countNodes(__fromBFS__(arr)); }\n\nfunction countNodes(root) {\n\n}",
+
     python: `${PY_PREAMBLE}
 def countNodes(root):
     pass`,

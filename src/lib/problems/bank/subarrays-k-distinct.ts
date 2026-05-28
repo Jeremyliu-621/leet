@@ -38,6 +38,8 @@ Use a sliding window to count subarrays with **at most k** distinct integers. Th
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function subarraysWithKDistinct(nums, k) {\n  // your code here\n}\n',
+    typescript: "function subarraysWithKDistinct(nums: number[], k: number): number {\n  // your code here\n}",
+
     python: 'def subarraysWithKDistinct(nums: list, k: int) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

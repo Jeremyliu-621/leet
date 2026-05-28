@@ -62,6 +62,8 @@ function findFarmland(land) {
     javascript: `function findFarmland(land) {
 
 }`,
+    typescript: "function findFarmland(land: number[][]): number[][] {\n\n}",
+
     python: `def findFarmland(land):
     pass`,
   },

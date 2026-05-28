@@ -37,6 +37,8 @@ You must write an algorithm that runs in linear runtime complexity and uses only
   params: ['nums'],
   starterCode: {
     javascript: 'function singleNumberIII(nums) {\n  \n}\n',
+    typescript: "function singleNumberIII(nums: number[]): number[] {\n  \n}",
+
     python: 'def singleNumberIII(nums):\n    pass\n',
   },
   visibleTests: [

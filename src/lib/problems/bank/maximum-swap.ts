@@ -30,6 +30,8 @@ Return the maximum valued number you can get.`,
   params: ['num'],
   starterCode: {
     javascript: 'function maximumSwap(num) {\n  // your code here\n}\n',
+    typescript: "function maximumSwap(num: number): number {\n  // your code here\n}",
+
     python: 'def maximumSwap(num: int) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

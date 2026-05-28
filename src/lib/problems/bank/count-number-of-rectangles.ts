@@ -50,6 +50,8 @@ return res;\`\`\``,
     javascript: `function countRectangles(rectangles, points) {
 
 }`,
+    typescript: "function countRectangles(rectangles: number[][], points: number[][]): number[] {\n\n}",
+
     python: `def countRectangles(rectangles, points):
     pass`,
   },

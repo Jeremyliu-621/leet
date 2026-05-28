@@ -42,6 +42,8 @@ return items.filter(item => item[idx] === ruleValue).length;\`\`\``
     javascript: `function countMatches(items, ruleKey, ruleValue) {
 
 }`,
+    typescript: "function countMatches(items: string[][], ruleKey: string, ruleValue: string): number {\n\n}",
+
     python: `def countMatches(items, ruleKey, ruleValue):
     pass`,
   },

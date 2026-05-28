@@ -44,6 +44,8 @@ function reverseStr(s, k) {
     javascript: `function reverseStr(s, k) {
 
 }`,
+    typescript: "function reverseStr(s: string, k: number): string {\n\n}",
+
     python: `def reverseStr(s, k):
     pass`,
   },

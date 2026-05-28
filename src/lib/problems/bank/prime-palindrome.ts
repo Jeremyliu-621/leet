@@ -27,6 +27,8 @@ An integer is a **palindrome** if it reads the same forward and backward.`,
   params: ['n'],
   starterCode: {
     javascript: 'function primePalindrome(n) {\n\n}\n',
+    typescript: "function primePalindrome(n: number): number {\n\n}",
+
     python: 'def primePalindrome(n):\n    pass\n',
   },
   visibleTests: [

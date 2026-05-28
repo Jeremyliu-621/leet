@@ -50,6 +50,8 @@ Return the \`features\` array sorted by the number of responses mentioning each 
     javascript: `function sortFeatures(features, responses) {
   // Return features sorted by number of responses mentioning each (desc), stable
 }`,
+    typescript: "function sortFeatures(features: string[], responses: string[]): string[] {\n  // Return features sorted by number of responses mentioning each (desc), stable\n}",
+
     python: `def sortFeatures(features, responses):
     # Return features sorted by number of responses mentioning each (desc), stable
     pass`,

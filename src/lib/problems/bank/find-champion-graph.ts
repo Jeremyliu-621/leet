@@ -30,6 +30,8 @@ Return the index of the **champion** team, or \`-1\` if there is no champion.`,
   params: ['grid'],
   starterCode: {
     javascript: 'function findChampion(grid) {\n  // your code here\n}\n',
+    typescript: "function findChampion(grid: number[][]): number {\n  // your code here\n}",
+
     python: 'def findChampion(grid):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -41,6 +41,8 @@ The **frequency** of a character in a string is the number of times it appears i
   params: ['s'],
   starterCode: {
     javascript: 'function minDeletions(s) {\n  \n}\n',
+    typescript: "function minDeletions(s: string): number {\n  \n}",
+
     python: 'def minDeletions(s):\n    pass\n',
   },
   visibleTests: [

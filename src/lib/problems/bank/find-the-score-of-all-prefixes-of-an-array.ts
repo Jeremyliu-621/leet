@@ -40,6 +40,8 @@ Given a **0-indexed** integer array \`nums\` of length \`n\`, return an array \`
 function findPrefixScore(nums) {
 
 }`,
+    typescript: "function findPrefixScore(nums: number[]): number[] {number[]} nums\n * @return {number[]}\n */\nfunction findPrefixScore(nums) {\n\n}",
+
     python: `def findPrefixScore(nums: list[int]) -> list[int]:
     pass`,
   },

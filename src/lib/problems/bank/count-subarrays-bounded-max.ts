@@ -41,6 +41,8 @@ export const problem: Problem = {
   params: ['nums', 'left', 'right'],
   starterCode: {
     javascript: 'function numSubarrayBoundedMax(nums, left, right) {\n  // Count subarrays where max(subarray) is in [left, right].\n}\n',
+    typescript: "function numSubarrayBoundedMax(nums: number[], left: number, right: number): number {\n  // Count subarrays where max(subarray) is in [left, right].\n}",
+
     python: 'def numSubarrayBoundedMax(nums, left, right):\n    # Count subarrays where max(subarray) is in [left, right].\n    pass\n',
   },
   visibleTests: [

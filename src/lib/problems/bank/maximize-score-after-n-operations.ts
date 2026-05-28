@@ -50,6 +50,8 @@ Return the **maximum** score you can receive after performing \`n\` operations.
     javascript: `function maxScore(nums) {
 
 }`,
+    typescript: "function maxScore(nums: number[]): number {\n\n}",
+
     python: `def maxScore(nums):
     pass`,
   },

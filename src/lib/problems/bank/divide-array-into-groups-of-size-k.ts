@@ -45,6 +45,8 @@ Return a 2D array containing all the subarrays. If it is impossible to satisfy t
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function divideArray(nums, k) {\n  // your code here\n}\n',
+    typescript: "function divideArray(nums: number[], k: number): number[][] {\n  // your code here\n}",
+
     python: 'def divideArray(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

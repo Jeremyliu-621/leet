@@ -34,6 +34,8 @@ export const problem: Problem = {
   params: ['board'],
   starterCode: {
     javascript: 'function countBattleships(board) {\n  \n}\n',
+    typescript: "function countBattleships(board: string[][]): number {\n  \n}",
+
     python: 'def countBattleships(board):\n    pass\n',
   },
   visibleTests: [

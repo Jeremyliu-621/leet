@@ -35,6 +35,8 @@ If there are multiple such minimum-length windows, return the one with the **lef
     javascript: `function minWindow(s1, s2) {
 
 }`,
+    typescript: "function minWindow(s1: string, s2: string): string {\n\n}",
+
     python: `def minWindow(s1, s2):
     pass`,
   },

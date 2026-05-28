@@ -36,6 +36,8 @@ The **digit sum** of a positive integer is the sum of all its digits.
     javascript: `function countEven(num) {
 
 }`,
+    typescript: "function countEven(num: number): number {\n\n}",
+
     python: `def countEven(num: int) -> int:
     pass`,
   },

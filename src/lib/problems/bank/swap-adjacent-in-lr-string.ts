@@ -44,6 +44,8 @@ Given strings \`start\` and \`end\` of the same length, return \`true\` if \`sta
     javascript: `function canTransform(start, end) {
 
 }`,
+    typescript: "function canTransform(start: string, end: string): boolean {\n\n}",
+
     python: `def canTransform(start, end):
     pass`,
   },

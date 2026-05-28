@@ -41,6 +41,8 @@ Return a list of grid coordinates \`[r, c]\` where water can flow to **both** th
     javascript: `function pacificAtlantic(heights) {
   // Return array of [r, c] pairs that can reach both oceans
 }`,
+    typescript: "function pacificAtlantic(heights: number[][]): number[][] {\n  // Return array of [r, c] pairs that can reach both oceans\n}",
+
     python: `def pacificAtlantic(heights):
     # Return list of [r, c] pairs that can reach both oceans
     pass`,

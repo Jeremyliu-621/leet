@@ -46,6 +46,8 @@ Implement a function \`shouldPrintMessage(timestamp, message)\` that:
   // Return a boolean array
 
 }`,
+    typescript: "function loggerRateLimiter(calls: (number | string)[][]): boolean[] {\n  // calls is an array of [timestamp, message] pairs\n  // Return a boolean array\n\n}",
+
     python: `def loggerRateLimiter(calls):
     # calls is a list of [timestamp, message] pairs
     # Return a boolean list

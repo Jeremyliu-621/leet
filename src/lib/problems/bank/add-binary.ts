@@ -38,6 +38,8 @@ function addBinary(a, b) {
     javascript: `function addBinary(a, b) {
 
 }`,
+    typescript: "function addBinary(a: string, b: string): string {\n\n}",
+
     python: `def addBinary(a, b):
     pass`,
   },

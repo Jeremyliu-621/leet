@@ -112,6 +112,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   starterCode: {
     javascript:
       '// TreeNode class and pathSumRunner wrapper are pre-defined.\n// Implement the function below:\nfunction pathSum(root, targetSum) {\n  \n}\n',
+    typescript: "function pathSumRunner(root: (number | null)[], targetSum: number): number[][] {\n  \n}",
+
     python:
       '# TreeNode class and pathSumRunner wrapper are pre-defined.\n# Implement the function below:\ndef pathSum(root, targetSum):\n    pass\n',
   },

@@ -41,6 +41,8 @@ function firstPalindrome(words) {
   params: ['words'],
   starterCode: {
     javascript: 'function firstPalindrome(words) {\n  \n}\n',
+    typescript: "function firstPalindrome(words: string[]): string {\n  \n}",
+
     python: 'def firstPalindrome(words):\n    pass\n',
   },
   visibleTests: [

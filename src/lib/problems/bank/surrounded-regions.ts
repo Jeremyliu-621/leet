@@ -39,6 +39,8 @@ Return the modified \`board\` as a 2D array of strings.`,
     javascript: `function solve(board) {
 
 }`,
+    typescript: "function solve(board: string[][]): string[][] {\n\n}",
+
     python: `def solve(board):
     pass`,
   },

@@ -52,6 +52,8 @@ return dfs(0,-1);\`\`\``,
   params: ['n', 'edges', 'hasApple'],
   starterCode: {
     javascript: 'function minTime(n, edges, hasApple) {\n\n}\n',
+    typescript: "function minTime(n: number, edges: number[][], hasApple: boolean[]): number {\n\n}",
+
     python: 'def minTime(n, edges, hasApple):\n    pass\n',
   },
   visibleTests: [

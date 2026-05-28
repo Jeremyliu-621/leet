@@ -39,6 +39,8 @@ Return the **maximum number of courses** that you can take.`,
   params: ['courses'],
   starterCode: {
     javascript: 'function scheduleCourse(courses) {\n  \n}\n',
+    typescript: "function scheduleCourse(courses: number[][]): number {\n  \n}",
+
     python: 'def scheduleCourse(courses):\n    pass\n',
   },
   visibleTests: [

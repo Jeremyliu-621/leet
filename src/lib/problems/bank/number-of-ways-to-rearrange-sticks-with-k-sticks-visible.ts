@@ -41,6 +41,8 @@ Return the number of arrangements. Answer mod 10^9 + 7.
   params: ['n', 'k'],
   starterCode: {
     javascript: 'function rearrangeSticks(n, k) {\n\n}\n',
+    typescript: "function rearrangeSticks(n: number, k: number): number {\n\n}",
+
     python: 'def rearrangeSticks(n: int, k: int) -> int:\n    pass\n',
   },
   visibleTests: [

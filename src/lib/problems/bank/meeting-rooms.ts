@@ -33,6 +33,8 @@ export const problem: Problem = {
     javascript: `function canAttendMeetings(intervals) {
 
 }`,
+    typescript: "function canAttendMeetings(intervals: number[][]): boolean {\n\n}",
+
     python: `def canAttendMeetings(intervals):
     pass`,
   },

@@ -64,6 +64,8 @@ function tictactoe(moves) {
     javascript: `function tictactoe(moves) {
   // Return "A", "B", "Draw", or "Pending"
 }`,
+    typescript: "function tictactoe(moves: number[][]): string {\n  // Return \"A\", \"B\", \"Draw\", or \"Pending\"\n}",
+
     python: `def tictactoe(moves) -> str:
     # Return "A", "B", "Draw", or "Pending"
     pass`,

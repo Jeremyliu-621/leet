@@ -40,6 +40,8 @@ Return \`true\` if it is possible to transform \`nums\` into a Zero Array after 
   params: ['nums', 'queries'],
   starterCode: {
     javascript: 'function isZeroArray(nums, queries) {\n\n}',
+    typescript: "function isZeroArray(nums: number[], queries: number[][]): boolean {\n\n}",
+
     python: 'def isZeroArray(nums, queries):\n    pass',
   },
   visibleTests: [

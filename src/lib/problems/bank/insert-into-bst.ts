@@ -131,6 +131,8 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   starterCode: {
     javascript:
       '// TreeNode class and insertIntoBSTRunner wrapper are pre-defined.\n// Implement the function below:\nfunction insertIntoBST(root, val) {\n  \n}\n',
+    typescript: "function insertIntoBSTRunner(root: number[], val: number): number[] {\n  \n}",
+
     python:
       '# TreeNode class and insertIntoBSTRunner wrapper are pre-defined.\n# Implement the function below:\ndef insertIntoBST(root, val):\n    pass\n',
   },

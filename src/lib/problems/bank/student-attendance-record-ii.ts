@@ -49,6 +49,8 @@ Since the answer may be very large, return it **modulo \`10^9 + 7\`**.
     javascript: `function checkRecord(n) {
 
 }`,
+    typescript: "function checkRecord(n: number): number {\n\n}",
+
     python: `def checkRecord(n):
     pass
 `,

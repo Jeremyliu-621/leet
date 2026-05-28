@@ -45,6 +45,8 @@ function getMaximumXor(nums, maximumBit) {
   params: ['nums', 'maximumBit'],
   starterCode: {
     javascript: 'function getMaximumXor(nums, maximumBit) {\n\n}\n',
+    typescript: "function getMaximumXor(nums: number[], maximumBit: number): number[] {\n\n}",
+
     python: 'def getMaximumXor(nums, maximumBit):\n    pass\n',
   },
   visibleTests: [

@@ -42,6 +42,8 @@ Return the maximum amount of gold you can collect under the conditions:
   params: ['grid'],
   starterCode: {
     javascript: 'function getMaximumGold(grid) {\n\n}\n',
+    typescript: "function getMaximumGold(grid: number[][]): number {\n\n}",
+
     python: 'def getMaximumGold(grid):\n    pass\n',
   },
   visibleTests: [

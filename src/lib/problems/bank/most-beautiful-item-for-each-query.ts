@@ -39,6 +39,8 @@ Return an array \`answer\` of the same length as \`queries\` where \`answer[j]\`
     javascript: `function maximumBeauty(items, queries) {
 
 }`,
+    typescript: "function maximumBeauty(items: number[][], queries: number[]): number[] {\n\n}",
+
     python: `def maximumBeauty(items, queries):
     pass`,
   },

@@ -39,6 +39,8 @@ Return *an integer denoting the sum of all integers in the range* \`[1, n]\` *th
     javascript: `function sumOfMultiples(n) {
 
 }`,
+    typescript: "function sumOfMultiples(n: number): number {\n\n}",
+
     python: `def sumOfMultiples(n):
     pass`,
   },

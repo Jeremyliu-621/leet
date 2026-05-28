@@ -50,6 +50,8 @@ function largestGoodInteger(num) {
     javascript: `function largestGoodInteger(num) {
 
 }`,
+    typescript: "function largestGoodInteger(num: string): string {\n\n}",
+
     python: `def largestGoodInteger(num):
     pass`,
   },

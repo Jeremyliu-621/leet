@@ -30,6 +30,8 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: 'function triangleNumber(nums) {\n  // your code here\n}\n',
+    typescript: "function triangleNumber(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def triangleNumber(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

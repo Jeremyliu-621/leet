@@ -42,6 +42,8 @@ There may be **duplicates** in the original array.
     javascript: `function check(nums) {
   // Return true if nums is a rotation of a sorted array
 }`,
+    typescript: "function check(nums: number[]): boolean {\n  // Return true if nums is a rotation of a sorted array\n}",
+
     python: `def check(nums):
     # Return True if nums is a rotation of a sorted array
     pass`,

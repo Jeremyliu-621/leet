@@ -44,6 +44,8 @@ A 5-character palindrome has the form \`xyzyx\` — the first and last character
     javascript: `function countPalindromes(s) {
   // Count palindromic subsequences of length 5, modulo 10^9+7
 }`,
+    typescript: "function countPalindromes(s: string): number {\n  // Count palindromic subsequences of length 5, modulo 10^9+7\n}",
+
     python: `def countPalindromes(s: str) -> int:
     # Count palindromic subsequences of length 5, modulo 10**9+7
     pass`,

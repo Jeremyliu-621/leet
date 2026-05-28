@@ -33,6 +33,8 @@ export const problem: Problem = {
     javascript: `function findNumberOfLIS(nums) {
 
 }`,
+    typescript: "function findNumberOfLIS(nums: number[]): number {\n\n}",
+
     python: `def findNumberOfLIS(nums):
     pass`,
   },

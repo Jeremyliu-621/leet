@@ -61,6 +61,8 @@ return res;\`\`\``
   params: ['nums'],
   starterCode: {
     javascript: `${JS_PREAMBLE}\nfunction permuteUnique(nums) {\n  \n}\n`,
+    typescript: "function permuteUniqueRunner(nums: number[]): number[][] {\n  const r = permuteUnique(arr);\n  return r.sort((a, b) => {\n    for (let i = 0; i < Math.min(a.length, b.length); i++)\n      if (a[i] !== b[i]) return a[i] - b[i];\n    return a.length - b.length;\n  });\n}\nfunction permuteUnique(nums) {\n  \n}",
+
     python: `${PY_PREAMBLE}\ndef permuteUnique(nums):\n    pass\n`,
   },
   visibleTests: [

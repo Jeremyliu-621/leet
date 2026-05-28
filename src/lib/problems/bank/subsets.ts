@@ -62,6 +62,8 @@ The solution set **must not** contain duplicate subsets. Return the subsets in a
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: 'function subsets(nums) {\n  \n}\n',
+    typescript: "function subsetsRunner(nums: number[]): (unknown[] | number[])[] {\n  \n}",
+
     python: 'def subsets(nums):\n    pass\n',
   },
   visibleTests: [

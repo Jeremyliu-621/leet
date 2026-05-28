@@ -33,6 +33,8 @@ export const problem: Problem = {
   params: ['grid'],
   starterCode: {
     javascript: `function maxDistance(grid) {\n  // your code here\n}\n`,
+    typescript: "function maxDistance(grid: number[][]): number {\n  // your code here\n}",
+
     python: `def maxDistance(grid):\n    # your code here\n    pass\n`,
   },
   visibleTests: [

@@ -48,6 +48,8 @@ Return the **total number of beautiful substrings** in \`s\`.`,
   const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
   // Try all starting indices i; extend j and check the beautiful condition.
 }`,
+    typescript: "function beautifulSubstrings(s: string, k: number): number {\n  const vowels = new Set(['a', 'e', 'i', 'o', 'u']);\n  // Try all starting indices i; extend j and check the beautiful condition.\n}",
+
     python: `def beautifulSubstrings(s, k):
     vowels = set('aeiou')
     # Try all starting indices i; extend j and check the beautiful condition.

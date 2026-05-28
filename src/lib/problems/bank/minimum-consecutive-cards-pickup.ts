@@ -33,6 +33,8 @@ Return the **minimum** number of consecutive cards you have to pick up to contai
   params: ['cards'],
   starterCode: {
     javascript: 'function minimumCardPickup(cards) {\n  \n}\n',
+    typescript: "function minimumCardPickup(cards: number[]): number {\n  \n}",
+
     python: 'def minimumCardPickup(cards):\n    pass\n',
   },
   visibleTests: [

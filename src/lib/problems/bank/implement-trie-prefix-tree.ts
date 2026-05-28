@@ -66,6 +66,8 @@ class Trie {
 
   }
 }`,
+    typescript: "function trieOps(ops: ((string | unknown[])[] | (string | string[])[])[]): (null | boolean)[] {\n  // ops is an array of [methodName, args] pairs.\n  // Return an array of results; use null for void methods.\n  const results = [];\n  let trie;\n  for (const [method, args] of ops) {\n    if (method === 'Trie') {\n      // Initialize your Trie here\n      trie = new Trie();\n      results.push(null);\n    } else {\n      results.push(trie[method](...args));\n    }\n  }\n  return results;\n}\n\nclass Trie {\n  constructor() {\n\n  }\n  insert(word) {\n\n  }\n  search(word) {\n\n  }\n  startsWith(prefix) {\n\n  }\n}",
+
     python: `def trieOps(ops):
     # ops is a list of [method, args] pairs.
     # Return a list of results; use None for void methods.

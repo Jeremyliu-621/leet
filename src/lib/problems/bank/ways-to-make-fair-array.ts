@@ -42,6 +42,8 @@ Return the **number of indices** you can remove to make \`nums\` fair.
   params: ['nums'],
   starterCode: {
     javascript: 'function waysToMakeFair(nums) {\n  \n}\n',
+    typescript: "function waysToMakeFair(nums: number[]): number {\n  \n}",
+
     python: 'def waysToMakeFair(nums: list[int]) -> int:\n    pass\n',
   },
   visibleTests: [

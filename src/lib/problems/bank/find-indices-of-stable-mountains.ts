@@ -41,6 +41,8 @@ Return an array containing the indices of all **stable** mountains in **any orde
   params: ['height', 'threshold'],
   starterCode: {
     javascript: 'function stableMountains(height, threshold) {\n  // your code here\n}\n',
+    typescript: "function stableMountains(height: number[], threshold: number): number[] {\n  // your code here\n}",
+
     python: 'def stableMountains(height, threshold):\n    # your code here\n    pass\n',
   },
   visibleTests: [

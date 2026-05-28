@@ -47,6 +47,8 @@ Repeat until there are no more piles of coins. Return the **maximum** number of 
     javascript: `function maxCoins(piles) {
 
 }`,
+    typescript: "function maxCoins(piles: number[]): number {\n\n}",
+
     python: `def maxCoins(piles):
     pass`,
   },

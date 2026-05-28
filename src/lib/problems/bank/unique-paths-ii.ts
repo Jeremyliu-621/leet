@@ -38,6 +38,8 @@ Return the number of possible unique paths that the robot can take to reach the 
     javascript: `function uniquePathsWithObstacles(obstacleGrid) {
   // Return number of unique paths avoiding obstacles
 }`,
+    typescript: "function uniquePathsWithObstacles(obstacleGrid: number[][]): number {\n  // Return number of unique paths avoiding obstacles\n}",
+
     python: `def uniquePathsWithObstacles(obstacleGrid):
     # Return number of unique paths avoiding obstacles
     pass`,

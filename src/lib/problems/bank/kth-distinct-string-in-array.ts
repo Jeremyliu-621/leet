@@ -50,6 +50,8 @@ function kthDistinct(arr, k) {
     javascript: `function kthDistinct(arr, k) {
 
 }`,
+    typescript: "function kthDistinct(arr: string[], k: number): string {\n\n}",
+
     python: `def kthDistinct(arr, k):
     pass`,
   },

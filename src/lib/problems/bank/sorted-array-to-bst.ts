@@ -95,6 +95,8 @@ Trees are represented as level-order (BFS) arrays where \`null\` marks a missing
   starterCode: {
     javascript:
       '// TreeNode class and sortedArrayToBSTRunner wrapper are pre-defined.\n// Implement the function below:\nfunction sortedArrayToBST(nums) {\n  \n}\n',
+    typescript: "function sortedArrayToBSTRunner(nums: number[]): (number | null)[] {\n  \n}",
+
     python:
       '# TreeNode class and sortedArrayToBSTRunner wrapper are pre-defined.\n# Implement the function below:\ndef sortedArrayToBST(nums):\n    pass\n',
   },

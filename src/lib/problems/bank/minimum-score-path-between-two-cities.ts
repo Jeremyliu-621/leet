@@ -42,6 +42,8 @@ Return the **minimum score** of a path from city \`1\` to city \`n\`.`,
     javascript: `function minScore(n, roads) {
 
 }`,
+    typescript: "function minScore(n: number, roads: number[][]): number {\n\n}",
+
     python: `def minScore(n, roads):
     pass
 `,

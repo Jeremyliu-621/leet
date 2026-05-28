@@ -55,6 +55,8 @@ function compress(chars) {
     javascript: `function compress(s) {
 
 }`,
+    typescript: "function compress(s: string): number {\n\n}",
+
     python: `def compress(s):
     pass`,
   },

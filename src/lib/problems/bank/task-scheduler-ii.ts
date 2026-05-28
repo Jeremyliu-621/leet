@@ -49,6 +49,8 @@ Day 1: task[0]=1 · Day 2: task[1]=2 · Day 3–4: idle · Day 5: task[2]=1 · D
     javascript: `function taskSchedulerII(tasks, space) {
 
 }`,
+    typescript: "function taskSchedulerII(tasks: number[], space: number): number {\n\n}",
+
     python: `def taskSchedulerII(tasks, space):
     pass`,
   },

@@ -39,6 +39,8 @@ export const problem: Problem = {
     javascript: `function findMinStep(board, hand) {
 
 }`,
+    typescript: "function findMinStep(board: string, hand: string): number {\n\n}",
+
     python: `def findMinStep(board, hand):
     pass`,
   },

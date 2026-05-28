@@ -44,6 +44,8 @@ Subarrays: [1],[3],[5],[4],[4],[6] (6 of length 1), [1,3],[3,5],[4,6] (3 of leng
     javascript: `function countSubarrays(nums) {
 
 }`,
+    typescript: "function countSubarrays(nums: number[]): number {\n\n}",
+
     python: `def countSubarrays(nums):
     pass
 `,

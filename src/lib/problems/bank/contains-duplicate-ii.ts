@@ -36,6 +36,8 @@ export const problem: Problem = {
     javascript: `function containsNearbyDuplicate(nums, k) {
   // Return true if any two equal elements are within k indices apart
 }`,
+    typescript: "function containsNearbyDuplicate(nums: number[], k: number): boolean {\n  // Return true if any two equal elements are within k indices apart\n}",
+
     python: `def containsNearbyDuplicate(nums, k):
     # Return true if any two equal elements are within k indices apart
     pass`,

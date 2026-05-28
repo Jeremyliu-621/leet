@@ -40,6 +40,8 @@ A string is **homogenous** if all characters in it are the same. A **substring**
     javascript: `function countHomogenous(s) {
 
 }`,
+    typescript: "function countHomogenous(s: string): number {\n\n}",
+
     python: `def countHomogenous(s):
     pass`,
   },

@@ -40,6 +40,8 @@ Given \`positions\`, where \`positions[i] = [r_i, c_i]\` adds land at row \`r_i\
     javascript: `function numIslands2(m, n, positions) {
 
 }`,
+    typescript: "function numIslands2(m: number, n: number, positions: number[][]): number[] {\n\n}",
+
     python: `def numIslands2(m, n, positions):
     pass`,
   },

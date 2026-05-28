@@ -35,6 +35,8 @@ export const problem: Problem = {
     javascript: `function updateMatrix(mat) {
 
 }`,
+    typescript: "function updateMatrix(mat: number[][]): number[][] {\n\n}",
+
     python: `def updateMatrix(mat):
     pass`,
   },

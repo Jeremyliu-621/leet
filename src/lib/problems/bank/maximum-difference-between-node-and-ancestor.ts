@@ -96,6 +96,8 @@ Trees are given as BFS level-order arrays with \`null\` for missing nodes.`,
   starterCode: {
     javascript:
       '// TreeNode class and maxAncestorDiffRunner wrapper are pre-defined.\n// Implement the function below:\nfunction maxAncestorDiff(root) {\n  \n}\n',
+    typescript: "function maxAncestorDiffRunner(root: (number | null)[]): number {\n  \n}",
+
     python:
       '# TreeNode class and maxAncestorDiffRunner wrapper are pre-defined.\n# Implement the function below:\ndef maxAncestorDiff(root):\n    pass\n',
   },

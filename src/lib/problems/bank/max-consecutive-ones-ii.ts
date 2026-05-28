@@ -36,6 +36,8 @@ Output: 6
   params: ['nums'],
   starterCode: {
     javascript: 'function findMaxConsecutiveOnes(nums) {\n  // your code here\n}\n',
+    typescript: "function findMaxConsecutiveOnes(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def findMaxConsecutiveOnes(nums):\n    pass\n',
   },
   visibleTests: [

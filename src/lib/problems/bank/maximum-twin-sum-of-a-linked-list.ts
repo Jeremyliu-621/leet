@@ -40,6 +40,8 @@ Given the head of a linked list (as an **array**) with an even number of nodes, 
     javascript: `function pairSum(head) {
 
 }`,
+    typescript: "function pairSum(head: number[]): number {\n\n}",
+
     python: `def pairSum(head: list[int]) -> int:
     pass`,
   },

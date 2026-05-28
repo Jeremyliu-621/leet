@@ -48,6 +48,8 @@ return r===Infinity ? -1 : r;\`\`\``
   params: ['tops', 'bottoms'],
   starterCode: {
     javascript: 'function minDominoRotations(tops, bottoms) {\n  \n}\n',
+    typescript: "function minDominoRotations(tops: number[], bottoms: number[]): number {\n  \n}",
+
     python: 'def minDominoRotations(tops, bottoms):\n    pass\n',
   },
   visibleTests: [

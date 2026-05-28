@@ -40,6 +40,8 @@ Like primality testing, you only need to check divisors up to √n: if \`d\` div
   params: ['n'],
   starterCode: {
     javascript: 'function countDivisors(n) {\n  // your code here\n}\n',
+    typescript: "function countDivisors(n: number): number {\n  // your code here\n}",
+
     python: 'def countDivisors(n):\n    # your code here\n    pass\n',
   },
   visibleTests: [

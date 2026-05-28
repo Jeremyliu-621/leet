@@ -33,6 +33,8 @@ Given an integer array \`nums\`, return the **maximum width of a ramp** in \`num
   params: ['nums'],
   starterCode: {
     javascript: 'function maxWidthRamp(nums) {\n  // your code here\n}\n',
+    typescript: "function maxWidthRamp(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def maxWidthRamp(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

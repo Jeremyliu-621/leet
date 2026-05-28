@@ -40,6 +40,8 @@ After converting, each digit of \`n\` in base \`k\` should be summed and the sum
   params: ['n', 'k'],
   starterCode: {
     javascript: 'function sumBase(n, k) {\n  // your code here\n}\n',
+    typescript: "function sumBase(n: number, k: number): number {\n  // your code here\n}",
+
     python: 'def sumBase(n, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

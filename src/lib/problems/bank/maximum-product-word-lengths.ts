@@ -38,6 +38,8 @@ export const problem: Problem = {
     javascript: `function maxProduct(words) {
   // Return max product of lengths of two words with no shared letters
 }`,
+    typescript: "function maxProduct(words: string[]): number {\n  // Return max product of lengths of two words with no shared letters\n}",
+
     python: `def maxProduct(words):
     # Return max product of lengths of two words with no shared letters
     pass`,

@@ -52,6 +52,8 @@ function findMissingRanges(nums, lower, upper) {
     javascript: `function findMissingRanges(nums, lower, upper) {
 
 }`,
+    typescript: "function findMissingRanges(nums: number[], lower: number, upper: number): string[] {\n\n}",
+
     python: `def findMissingRanges(nums, lower, upper):
     pass`,
   },

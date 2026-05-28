@@ -38,6 +38,8 @@ You can complete the tasks in **any order**. Return the minimum initial energy y
   params: ['tasks'],
   starterCode: {
     javascript: 'function minimumEffort(tasks) {\n  \n}\n',
+    typescript: "function minimumEffort(tasks: number[][]): number {\n  \n}",
+
     python: 'def minimumEffort(tasks: list[list[int]]) -> int:\n    pass\n',
   },
   visibleTests: [

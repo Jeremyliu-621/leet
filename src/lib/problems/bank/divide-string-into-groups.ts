@@ -40,6 +40,8 @@ Given the string \`s\`, the size of each group \`k\` and the character \`fill\`,
     javascript: `function divideString(s, k, fill) {
 
 }`,
+    typescript: "function divideString(s: string, k: number, fill: string): string[] {\n\n}",
+
     python: `def divideString(s, k, fill):
     pass`,
   },

@@ -52,6 +52,8 @@ Output: [true,true,true,false,true,true]
   // bookings: [[start, end), ...] half-open intervals in order
   // Return boolean array — true if booking accepted, false if rejected
 }`,
+    typescript: "function myCalendarTwo(bookings: number[][]): boolean[] {\n  // bookings: [[start, end), ...] half-open intervals in order\n  // Return boolean array — true if booking accepted, false if rejected\n}",
+
     python: `def myCalendarTwo(bookings):
     # bookings: list of [start, end) half-open intervals in order
     # Return list of booleans

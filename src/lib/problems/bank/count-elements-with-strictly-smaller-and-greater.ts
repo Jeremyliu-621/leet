@@ -42,6 +42,8 @@ function countElements(nums) {
     javascript: `function countElements(nums) {
 
 }`,
+    typescript: "function countElements(nums: number[]): number {\n\n}",
+
     python: `def countElements(nums):
     pass`,
   },

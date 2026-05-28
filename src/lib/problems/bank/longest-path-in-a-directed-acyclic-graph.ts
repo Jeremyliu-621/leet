@@ -41,6 +41,8 @@ Return the length of the **longest path** in the graph such that all characters 
     javascript: `function longestPath(edges, n, s) {
 
 }`,
+    typescript: "function longestPath(edges: number[][], n: number, s: string): number {\n\n}",
+
     python: `def longestPath(edges, n, s):
     pass`,
   },

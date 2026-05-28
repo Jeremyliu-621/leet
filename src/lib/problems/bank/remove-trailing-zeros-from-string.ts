@@ -34,6 +34,8 @@ export const problem: Problem = {
     javascript: `function removeTrailingZeros(num) {
 
 }`,
+    typescript: "function removeTrailingZeros(num: string): string {\n\n}",
+
     python: `def removeTrailingZeros(num):
     pass`,
   },

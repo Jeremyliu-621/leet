@@ -34,6 +34,8 @@ function intersection(nums1, nums2) {
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: 'function intersection(nums1, nums2) {\n  \n}\n',
+    typescript: "function intersection(nums1: number[], nums2: number[]): number[] {\n  \n}",
+
     python: 'def intersection(nums1, nums2):\n    pass\n',
   },
   visibleTests: [

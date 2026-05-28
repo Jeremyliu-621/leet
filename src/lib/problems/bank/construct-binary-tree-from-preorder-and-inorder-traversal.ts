@@ -103,6 +103,8 @@ The result is returned as a **level-order (BFS) array**, where \`null\` indicate
   starterCode: {
     javascript:
       '// TreeNode class and buildFromPreorderInorderRunner wrapper are pre-defined.\n// Implement the function below:\nfunction buildTree(preorder, inorder) {\n  \n}\n',
+    typescript: "function buildFromPreorderInorderRunner(preorder: number[], inorder: number[]): (number | null)[] {\n  \n}",
+
     python:
       '# TreeNode class and buildFromPreorderInorderRunner wrapper are pre-defined.\n# Implement the function below:\ndef buildTree(preorder, inorder):\n    pass\n',
   },

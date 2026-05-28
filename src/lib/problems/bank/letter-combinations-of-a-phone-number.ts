@@ -45,6 +45,8 @@ A mapping of digits to letters (just like on the telephone buttons) is given bel
     javascript: `function letterCombinations(digits) {
 
 }`,
+    typescript: "function letterCombinations(digits: string): string[] {\n\n}",
+
     python: `def letterCombinations(digits: str) -> list[str]:
     pass`,
   },

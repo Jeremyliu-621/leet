@@ -47,6 +47,8 @@ Return the label of the celebrity if one exists, or \`-1\` if no celebrity is fo
     javascript: `function findCelebrity(knows) {
 
 }`,
+    typescript: "function findCelebrity(knows: number[][]): number {\n\n}",
+
     python: `def findCelebrity(knows):
     pass`,
   },

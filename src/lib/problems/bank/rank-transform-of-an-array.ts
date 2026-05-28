@@ -40,6 +40,8 @@ The rank represents how large the element is. The rank has the following rules:
   params: ['arr'],
   starterCode: {
     javascript: 'function arrayRankTransform(arr) {\n  \n}\n',
+    typescript: "function arrayRankTransform(arr: number[]): number[] {\n  \n}",
+
     python: 'def arrayRankTransform(arr):\n    pass\n',
   },
   visibleTests: [

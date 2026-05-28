@@ -65,6 +65,8 @@ Implement the \`SmallestInfiniteSet\` class:
   starterCode: {
     javascript:
       '// smallestInfiniteSetRunner is pre-defined and calls your class below.\nclass SmallestInfiniteSet {\n  constructor() {\n  }\n  popSmallest() {\n    // return the smallest integer\n  }\n  addBack(num) {\n  }\n}\n',
+    typescript: "function smallestInfiniteSetRunner(ops: string[], args: (unknown[] | number[])[]): (number | null)[] {\n  constructor() {\n  }\n  popSmallest() {\n    // return the smallest integer\n  }\n  addBack(num) {\n  }\n}",
+
     python:
       '# smallestInfiniteSetRunner is pre-defined and calls your class below.\nclass SmallestInfiniteSet:\n    def __init__(self):\n        pass\n    def popSmallest(self):\n        pass  # return int\n    def addBack(self, num):\n        pass\n',
   },

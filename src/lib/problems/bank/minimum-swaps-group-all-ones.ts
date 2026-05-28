@@ -44,6 +44,8 @@ return minZ;\`\`\``
   params: ['data'],
   starterCode: {
     javascript: 'function minSwaps(data) {\n  \n}\n',
+    typescript: "function minSwaps(data: number[]): number {\n  \n}",
+
     python: 'def minSwaps(data):\n    pass\n',
   },
   visibleTests: [

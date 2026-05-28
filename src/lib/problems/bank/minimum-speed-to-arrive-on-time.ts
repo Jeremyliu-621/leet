@@ -49,6 +49,8 @@ Return the **minimum positive integer speed** (in kilometers per hour) that all 
     javascript: `function minSpeedOnTime(dist, hour) {
 
 }`,
+    typescript: "function minSpeedOnTime(dist: number[], hour: number): number {\n\n}",
+
     python: `def minSpeedOnTime(dist, hour):
     pass`,
   },

@@ -38,6 +38,8 @@ A sequence of \`n\` integers is called a **permutation** if it contains all inte
   params: ['A', 'B'],
   starterCode: {
     javascript: 'function findThePrefixCommonArray(A, B) {\n\n}\n',
+    typescript: "function findThePrefixCommonArray(A: number[], B: number[]): number[] {\n\n}",
+
     python: 'def findThePrefixCommonArray(A, B):\n    pass\n',
   },
   visibleTests: [

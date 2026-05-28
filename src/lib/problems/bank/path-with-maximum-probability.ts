@@ -44,6 +44,8 @@ If there is no path from \`start\` to \`end\`, **return 0**. Your answer will be
   params: ['n', 'edges', 'succProb', 'start', 'end'],
   starterCode: {
     javascript: 'function maxProbability(n, edges, succProb, start, end) {\n\n}\n',
+    typescript: "function maxProbability(n: number, edges: number[][], succProb: number[], start: number, end: number): number {\n\n}",
+
     python: 'def maxProbability(n, edges, succProb, start, end):\n    pass\n',
   },
   visibleTests: [

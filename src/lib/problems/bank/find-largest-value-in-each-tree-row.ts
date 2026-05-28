@@ -34,6 +34,8 @@ The tree is given as a level-order array where \`null\` represents a missing nod
     javascript: `function largestValues(root) {
   // root is given as a level-order array (null = missing node)
 }`,
+    typescript: "function largestValues(root: (number | null)[]): number[] {\n  // root is given as a level-order array (null = missing node)\n}",
+
     python: `def largestValues(root):
     # root is given as a level-order array (None = missing node)
     pass`,

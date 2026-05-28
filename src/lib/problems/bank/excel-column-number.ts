@@ -39,6 +39,8 @@ This is essentially a base-26 number system where A=1, B=2, ..., Z=26.`,
   params: ['columnTitle'],
   starterCode: {
     javascript: 'function titleToNumber(columnTitle) {\n  // your code here\n}\n',
+    typescript: "function titleToNumber(columnTitle: string): number {\n  // your code here\n}",
+
     python: 'def titleToNumber(columnTitle: str) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

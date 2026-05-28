@@ -42,6 +42,8 @@ Return an array \`ans\` of length \`n\`, where \`ans[i]\` is the length of the *
   params: ['obstacles'],
   starterCode: {
     javascript: 'function longestObstacleCourseAtEachPosition(obstacles) {\n  \n}\n',
+    typescript: "function longestObstacleCourseAtEachPosition(obstacles: number[]): number[] {\n  \n}",
+
     python: 'def longestObstacleCourseAtEachPosition(obstacles):\n    pass\n',
   },
   visibleTests: [

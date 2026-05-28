@@ -44,6 +44,8 @@ Return \`true\` if \`s\` is valid, otherwise return \`false\`.`,
   params: ['s'],
   starterCode: {
     javascript: 'function validParenthesisString(s) {\n  // your code here\n}\n',
+    typescript: "function validParenthesisString(s: string): boolean {\n  // your code here\n}",
+
     python: 'def validParenthesisString(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

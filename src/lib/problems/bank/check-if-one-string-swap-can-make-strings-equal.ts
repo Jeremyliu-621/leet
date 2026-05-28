@@ -45,6 +45,8 @@ function areAlmostEqual(s1, s2) {
     javascript: `function areAlmostEqual(s1, s2) {
 
 }`,
+    typescript: "function areAlmostEqual(s1: string, s2: string): boolean {\n\n}",
+
     python: `def areAlmostEqual(s1, s2):
     pass`,
   },

@@ -31,6 +31,8 @@ You must solve the problem **without using any built-in functions** in O(nlog(n)
   params: ['nums'],
   starterCode: {
     javascript: 'function sortArray(nums) {\n\n}\n',
+    typescript: "function sortArray(nums: number[]): number[] {\n\n}",
+
     python: 'def sortArray(nums):\n    pass\n',
   },
   visibleTests: [

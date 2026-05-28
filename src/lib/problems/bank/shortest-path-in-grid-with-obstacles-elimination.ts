@@ -37,6 +37,8 @@ Return the minimum number of steps to walk from the upper left corner \`(0, 0)\`
   params: ['grid', 'k'],
   starterCode: {
     javascript: 'function shortestPath(grid, k) {\n  \n}\n',
+    typescript: "function shortestPath(grid: number[][], k: number): number {\n  \n}",
+
     python: 'def shortestPath(grid, k):\n    pass\n',
   },
   visibleTests: [

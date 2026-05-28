@@ -42,6 +42,8 @@ Return \`true\` if Alice can win with optimal play, or \`false\` otherwise.`,
   params: ['stones'],
   starterCode: {
     javascript: 'function stoneGameIX(stones) {\n\n}\n',
+    typescript: "function stoneGameIX(stones: number[]): boolean {\n\n}",
+
     python: 'def stoneGameIX(stones):\n    pass\n',
   },
   visibleTests: [

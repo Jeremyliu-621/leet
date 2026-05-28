@@ -46,6 +46,8 @@ The array is circular: the element after \`code[n-1]\` is \`code[0]\`.`,
   // code: number[], k: integer
   // Return decrypted array
 }`,
+    typescript: "function decrypt(code: number[], k: number): number[] {\n  // code: number[], k: integer\n  // Return decrypted array\n}",
+
     python: `def decrypt(code: list[int], k: int) -> list[int]:
     # Your code here
     pass`,

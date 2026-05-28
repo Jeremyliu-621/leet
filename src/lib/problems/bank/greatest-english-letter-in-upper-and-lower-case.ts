@@ -38,6 +38,8 @@ An English letter \`b\` is **greater** than another letter \`a\` if \`b\` appear
   params: ['s'],
   starterCode: {
     javascript: 'function greatestLetter(s) {\n\n}\n',
+    typescript: "function greatestLetter(s: string): string {\n\n}",
+
     python: 'def greatestLetter(s):\n    pass\n',
   },
   visibleTests: [

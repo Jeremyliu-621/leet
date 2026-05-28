@@ -99,6 +99,8 @@ The result is returned as a level-order (BFS) array where \`null\` represents mi
 function bstFromPreorder(preorder) {
 
 }`,
+    typescript: "function bstFromPreorderRunner(preorder: number[]): (number | null)[] {\n\n}",
+
     python: `# TreeNode class is pre-defined. Implement the function below:
 def bstFromPreorder(preorder):
     pass`,

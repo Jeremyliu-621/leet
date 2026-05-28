@@ -41,6 +41,8 @@ Return the **minimum** number of moves required to make **nums** **complementary
   params: ['nums', 'limit'],
   starterCode: {
     javascript: 'function minMoves(nums, limit) {\n  \n}\n',
+    typescript: "function minMoves(nums: number[], limit: number): number {\n  \n}",
+
     python: 'def minMoves(nums, limit):\n    ',
   },
   visibleTests: [

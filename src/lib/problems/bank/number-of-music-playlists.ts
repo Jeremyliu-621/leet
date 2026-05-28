@@ -44,6 +44,8 @@ Given \`n\`, \`goal\`, and \`k\`, return the **number of possible playlists**. T
   params: ['n', 'goal', 'k'],
   starterCode: {
     javascript: 'function numMusicPlaylists(n, goal, k) {\n\n}\n',
+    typescript: "function numMusicPlaylists(n: number, goal: number, k: number): number {\n\n}",
+
     python: 'def numMusicPlaylists(n: int, goal: int, k: int) -> int:\n    pass\n',
   },
   visibleTests: [

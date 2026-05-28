@@ -40,6 +40,8 @@ Output: [20]
   params: ['nums', 'queries'],
   starterCode: {
     javascript: 'function minOperations(nums, queries) {\n  // your code here\n}\n',
+    typescript: "function minOperations(nums: number[], queries: number[]): number[] {\n  // your code here\n}",
+
     python: 'def minOperations(nums, queries):\n    pass\n',
   },
   visibleTests: [

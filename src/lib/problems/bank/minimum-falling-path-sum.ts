@@ -34,6 +34,8 @@ A **falling path** starts at any element in the first row and chooses the elemen
   params: ['matrix'],
   starterCode: {
     javascript: 'function minFallingPathSum(matrix) {\n  // your code here\n}\n',
+    typescript: "function minFallingPathSum(matrix: number[][]): number {\n  // your code here\n}",
+
     python: 'def minFallingPathSum(matrix):\n    # your code here\n    pass\n',
   },
   visibleTests: [

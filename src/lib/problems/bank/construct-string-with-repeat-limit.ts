@@ -43,6 +43,8 @@ Return \`repeatLimitedString\`.
   // return lexicographically largest string with no letter repeating > repeatLimit times consecutively
 
 }`,
+    typescript: "function repeatLimitedString(s: string, repeatLimit: number): string {\n  // return lexicographically largest string with no letter repeating > repeatLimit times consecutively\n\n}",
+
     python: `def repeatLimitedString(s: str, repeatLimit: int) -> str:
     # return lexicographically largest string with no letter repeating > repeatLimit times consecutively
     pass

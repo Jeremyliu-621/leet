@@ -38,6 +38,8 @@ For this problem, the linked list is represented as an array of integers (e.g., 
     javascript: `function getDecimalValue(head) {
 
 }`,
+    typescript: "function getDecimalValue(head: number[]): number {\n\n}",
+
     python: `def getDecimalValue(head: list[int]) -> int:
     pass`,
   },

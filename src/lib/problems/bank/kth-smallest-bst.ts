@@ -102,6 +102,8 @@ function kthSmallest(root, k) {
 
 }
 `,
+    typescript: "function kthSmallestRunner(arr: (number | null)[], k: number): number {\n\n}",
+
     python: `# TreeNode class and kthSmallestRunner wrapper are pre-defined.
 # Implement the function below:
 def kthSmallest(root, k):

@@ -37,6 +37,8 @@ Return the **maximum score** you can get.`,
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function maxResult(nums, k) {\n  // your code here\n}\n',
+    typescript: "function maxResult(nums: number[], k: number): number {\n  // your code here\n}",
+
     python: 'def maxResult(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

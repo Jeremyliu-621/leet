@@ -41,6 +41,8 @@ When the window \`[l, r]\` has product < \`k\`, all \`r - l + 1\` subarrays endi
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function subarrayProductLessThanK(nums, k) {\n  // your code here\n}\n',
+    typescript: "function subarrayProductLessThanK(nums: number[], k: number): number {\n  // your code here\n}",
+
     python: 'def subarrayProductLessThanK(nums: list[int], k: int) -> int:\n    # your code here\n    pass\n',
   },
   visibleTests: [

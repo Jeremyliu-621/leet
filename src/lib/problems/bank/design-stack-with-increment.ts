@@ -40,6 +40,8 @@ Simulate the operations given as an array of commands and return the results of 
 function customStackOps(maxSize, ops) {
   // Implement CustomStack class and simulate ops
 }`,
+    typescript: "function customStackOps(maxSize: number, ops: ((string | number)[] | string[])[]): number[] {\n  // Implement CustomStack class and simulate ops\n}",
+
     python: `def customStackOps(maxSize, ops):
     # Implement CustomStack class and simulate ops
     pass`,

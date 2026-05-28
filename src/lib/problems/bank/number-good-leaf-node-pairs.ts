@@ -120,6 +120,8 @@ Answer: **3**`,
 function countPairs(root, distance) {
   // Return number of good leaf node pairs with path length <= distance
 }`,
+    typescript: "function countPairsRunner(root: number[], distance: number): number {\n  // Return number of good leaf node pairs with path length <= distance\n}",
+
     python: `# TreeNode class and countPairsRunner wrapper are pre-defined.
 # Implement countPairs below:
 def countPairs(root, distance: int) -> int:

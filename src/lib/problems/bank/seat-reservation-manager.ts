@@ -44,6 +44,8 @@ Given \`n\` seats and a sequence of operations, return the result for each \`res
     javascript: `function seatReservationManager(n, operations, operandArgs) {
 
 }`,
+    typescript: "function seatReservationManager(n: number, operations: string[], operandArgs: (null | number)[]): number[] {\n\n}",
+
     python: `def seatReservationManager(n, operations, operandArgs):
     pass
 `,

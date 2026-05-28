@@ -26,6 +26,8 @@ Return the **largest** lucky integer in the array. If there is no lucky integer,
   params: ['arr'],
   starterCode: {
     javascript: 'function findLucky(arr) {\n  \n}\n',
+    typescript: "function findLucky(arr: number[]): number {\n  \n}",
+
     python: 'def findLucky(arr):\n    pass\n',
   },
   visibleTests: [

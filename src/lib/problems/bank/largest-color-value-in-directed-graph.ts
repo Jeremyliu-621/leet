@@ -63,6 +63,8 @@ Explanation: There is a self-loop (cycle).
     javascript: `function largestPathValue(colors, edges) {
   // your code here
 }`,
+    typescript: "function largestPathValue(colors: string, edges: number[][]): number {\n  // your code here\n}",
+
     python: `def largestPathValue(colors: str, edges: list) -> int:
     # your code here
     pass`,

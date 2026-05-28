@@ -45,6 +45,8 @@ return t.length - j;\`\`\``
     javascript: `function appendCharacters(s, t) {
 
 }`,
+    typescript: "function appendCharacters(s: string, t: string): number {\n\n}",
+
     python: `def appendCharacters(s, t):
     pass`,
   },

@@ -35,6 +35,8 @@ Return the average salary of employees excluding the minimum and maximum salary.
     javascript: `function average(salary) {
 
 }`,
+    typescript: "function average(salary: number[]): number {\n\n}",
+
     python: `def average(salary):
     pass`,
   },

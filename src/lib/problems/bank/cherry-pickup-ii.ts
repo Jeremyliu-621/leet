@@ -46,6 +46,8 @@ Return the **maximum** number of cherries collection using both robots by follow
   params: ['grid'],
   starterCode: {
     javascript: 'function cherryPickup(grid) {\n\n}\n',
+    typescript: "function cherryPickup(grid: number[][]): number {\n\n}",
+
     python: 'def cherryPickup(grid):\n    pass\n',
   },
   visibleTests: [

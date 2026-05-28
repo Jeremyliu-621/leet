@@ -35,6 +35,8 @@ Return the **bitwise XOR** of all integers in \`nums3\`.`,
     javascript: `function xorAllNums(nums1, nums2) {
 
 }`,
+    typescript: "function xorAllNums(nums1: number[], nums2: number[]): number {\n\n}",
+
     python: `def xorAllNums(nums1, nums2):
     pass`,
   },

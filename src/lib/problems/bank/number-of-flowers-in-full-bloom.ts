@@ -40,6 +40,8 @@ Return an integer array \`answer\` of size \`n\`, where \`answer[i]\` is the num
     javascript: `function fullBloomFlowers(flowers, people) {
 
 }`,
+    typescript: "function fullBloomFlowers(flowers: number[][], people: number[]): number[] {\n\n}",
+
     python: `def fullBloomFlowers(flowers, people):
     pass`,
   },

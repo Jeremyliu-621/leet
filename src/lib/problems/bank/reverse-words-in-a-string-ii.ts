@@ -48,6 +48,8 @@ Output: ["a"]
   starterCode: {
     javascript:
       'function reverseWords(s) {\n  // modify s in-place, then return s\n}\n',
+    typescript: "function reverseWords(s: string[]): string[] {\n  // modify s in-place, then return s\n}",
+
     python: 'def reverseWords(s):\n    # modify s in-place\n    pass\n',
   },
   visibleTests: [

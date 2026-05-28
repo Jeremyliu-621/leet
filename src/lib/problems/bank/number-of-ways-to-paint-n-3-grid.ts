@@ -38,6 +38,8 @@ Given \`n\` the number of rows, return the number of ways you can paint this gri
     javascript: `function numOfWays(n) {
   // Return number of valid 3-color paintings of an n×3 grid, mod 10^9+7
 }`,
+    typescript: "function numOfWays(n: number): number {\n  // Return number of valid 3-color paintings of an n×3 grid, mod 10^9+7\n}",
+
     python: `def numOfWays(n: int) -> int:
     # Return number of valid 3-color paintings of an n×3 grid, mod 10^9+7
     pass`,

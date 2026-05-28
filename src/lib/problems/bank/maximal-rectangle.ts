@@ -36,6 +36,8 @@ export const problem: Problem = {
   params: ['matrix'],
   starterCode: {
     javascript: 'function maximalRectangle(matrix) {\n  \n}\n',
+    typescript: "function maximalRectangle(matrix: string[][]): number {\n  \n}",
+
     python: 'def maximalRectangle(matrix):\n    pass\n',
   },
   visibleTests: [

@@ -46,6 +46,8 @@ Return the **maximum** number of groups (i.e., maximum \`m\`) into which you can
     javascript: `function magnificentSets(n, edges) {
 
 }`,
+    typescript: "function magnificentSets(n: number, edges: number[][]): number {\n\n}",
+
     python: `def magnificentSets(n: int, edges: list[list[int]]) -> int:
     pass`,
   },

@@ -59,6 +59,8 @@ var guessGame = function(guess) {
   // relative to pick. Return the picked number.
 
 }`,
+    typescript: "function guessNumber(n: number, pick: number): number {\n  // pick is provided so you can simulate: guess(num) returns 0, -1, or 1\n  // relative to pick. Return the picked number.\n\n}",
+
     python: `def guessNumber(n, pick):
     # pick is provided; simulate guess(num): 0 if equal, -1 if num > pick, 1 if num < pick
     pass`,

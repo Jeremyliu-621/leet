@@ -42,6 +42,8 @@ There is a concise O(n) solution using frequency counting: when you encounter a 
   params: ['nums'],
   starterCode: {
     javascript: 'function countGoodPairs(nums) {\n  // your code here\n}\n',
+    typescript: "function countGoodPairs(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def countGoodPairs(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -23,6 +23,8 @@ export const problem: Problem = {
   params: ['s1', 's2'],
   starterCode: {
     javascript: 'function minimumDeleteSum(s1, s2) {\n\n}\n',
+    typescript: "function minimumDeleteSum(s1: string, s2: string): number {\n\n}",
+
     python: 'def minimumDeleteSum(s1, s2):\n    pass\n',
   },
   visibleTests: [

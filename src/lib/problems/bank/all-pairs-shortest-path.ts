@@ -44,6 +44,8 @@ Return the updated distance matrix where \`dist[i][j]\` is the shortest path fro
   // dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
   return dist;
 }`,
+    typescript: "function floydWarshall(dist: number[][]): number[][] {\n  const n = dist.length;\n  // Three nested loops: for k, for i, for j\n  // dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])\n  return dist;\n}",
+
     python: `def floydWarshall(dist):
     n = len(dist)
     # Three nested loops: for k, for i, for j

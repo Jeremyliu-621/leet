@@ -43,6 +43,8 @@ Return the **maximum** number of moves that you can perform.`,
     javascript: `function maxMoves(grid) {
 
 }`,
+    typescript: "function maxMoves(grid: number[][]): number {\n\n}",
+
     python: `def maxMoves(grid):
     pass`,
   },

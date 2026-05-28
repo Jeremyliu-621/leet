@@ -45,6 +45,8 @@ Return the **minimum number of moves** to acquire all keys. If it is impossible,
   params: ['grid'],
   starterCode: {
     javascript: 'function shortestPathAllKeys(grid) {\n\n}\n',
+    typescript: "function shortestPathAllKeys(grid: string[]): number {\n\n}",
+
     python: 'def shortestPathAllKeys(grid: list) -> int:\n    pass\n',
   },
   visibleTests: [

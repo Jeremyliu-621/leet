@@ -25,6 +25,8 @@ An integer \`n\` is a power of four if there exists an integer \`x\` such that \
   params: ['n'],
   starterCode: {
     javascript: 'function isPowerOfFour(n) {\n  \n}\n',
+    typescript: "function isPowerOfFour(n: number): boolean {\n  \n}",
+
     python: 'def isPowerOfFour(n):\n    pass\n',
   },
   visibleTests: [

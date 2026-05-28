@@ -42,6 +42,8 @@ Return the **size of the largest connected component** in the graph.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function largestComponentSize(nums) {\n  \n}\n',
+    typescript: "function largestComponentSize(nums: number[]): number {\n  \n}",
+
     python: 'def largestComponentSize(nums):\n    pass\n',
   },
   visibleTests: [

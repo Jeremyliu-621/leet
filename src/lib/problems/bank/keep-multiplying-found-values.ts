@@ -38,6 +38,8 @@ Return the **final** value of \`original\`.`,
   params: ['nums', 'original'],
   starterCode: {
     javascript: 'function findFinalValue(nums, original) {\n  // your code here\n}\n',
+    typescript: "function findFinalValue(nums: number[], original: number): number {\n  // your code here\n}",
+
     python: 'def findFinalValue(nums, original):\n    # your code here\n    pass\n',
   },
   visibleTests: [

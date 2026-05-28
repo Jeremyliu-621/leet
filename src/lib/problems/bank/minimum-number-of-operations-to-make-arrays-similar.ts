@@ -48,6 +48,8 @@ Return the **minimum** number of operations needed.`,
     javascript: `function makeSimilar(nums, target) {
 
 }`,
+    typescript: "function makeSimilar(nums: number[], target: number[]): number {\n\n}",
+
     python: `def makeSimilar(nums, target):
     pass`,
   },

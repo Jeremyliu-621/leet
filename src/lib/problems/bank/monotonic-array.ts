@@ -45,6 +45,8 @@ return inc || dec;\`\`\``
     javascript: `function isMonotonic(nums) {
 
 }`,
+    typescript: "function isMonotonic(nums: number[]): boolean {\n\n}",
+
     python: `def isMonotonic(nums):
     pass`,
   },

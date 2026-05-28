@@ -40,6 +40,8 @@ Return the number of **different** good strings that can be constructed satisfyi
   params: ['low', 'high', 'zero', 'one'],
   starterCode: {
     javascript: 'function countGoodStrings(low, high, zero, one) {\n\n}\n',
+    typescript: "function countGoodStrings(low: number, high: number, zero: number, one: number): number {\n\n}",
+
     python: 'def countGoodStrings(low, high, zero, one):\n    pass\n',
   },
   visibleTests: [

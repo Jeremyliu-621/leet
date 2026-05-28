@@ -43,6 +43,8 @@ return count;\`\`\``
     javascript: `function numSpecial(mat) {
 
 }`,
+    typescript: "function numSpecial(mat: number[][]): number {\n\n}",
+
     python: `def numSpecial(mat):
     pass`,
   },

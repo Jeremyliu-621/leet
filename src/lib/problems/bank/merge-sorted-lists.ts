@@ -35,6 +35,8 @@ Return the merged array. Both inputs are left unchanged, and either of them may 
   params: ['a', 'b'],
   starterCode: {
     javascript: 'function mergeSortedArrays(a, b) {\n  // your code here\n}\n',
+    typescript: "function mergeSortedArrays(a: number[], b: number[]): number[] {\n  // your code here\n}",
+
     python: 'def mergeSortedArrays(a, b):\n    # your code here\n    pass\n',
   },
   visibleTests: [

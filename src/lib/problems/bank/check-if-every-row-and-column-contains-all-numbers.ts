@@ -34,6 +34,8 @@ Given an \`n × n\` integer matrix \`matrix\`, return \`true\` if the matrix is 
   params: ['matrix'],
   starterCode: {
     javascript: 'function checkValid(matrix) {\n  \n}\n',
+    typescript: "function checkValid(matrix: number[][]): boolean {\n  \n}",
+
     python: 'def checkValid(matrix):\n    pass\n',
   },
   visibleTests: [

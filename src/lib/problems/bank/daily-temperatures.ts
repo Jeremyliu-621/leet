@@ -41,6 +41,8 @@ Return an array \`answer\` where \`answer[i]\` is the number of days after day \
   params: ['temps'],
   starterCode: {
     javascript: 'function daysUntilWarmer(temps) {\n  // your code here\n}\n',
+    typescript: "function daysUntilWarmer(temps: number[]): number[] {\n  // your code here\n}",
+
     python: 'def daysUntilWarmer(temps):\n    # your code here\n    pass\n',
   },
   visibleTests: [

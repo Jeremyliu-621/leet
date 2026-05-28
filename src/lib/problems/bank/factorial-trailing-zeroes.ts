@@ -36,6 +36,8 @@ Note that \`n! = n * (n - 1) * (n - 2) * ... * 3 * 2 * 1\`.`,
   params: ['n'],
   starterCode: {
     javascript: 'function trailingZeroes(n) {\n  \n}\n',
+    typescript: "function trailingZeroes(n: number): number {\n  \n}",
+
     python: 'def trailingZeroes(n):\n    pass\n',
   },
   visibleTests: [

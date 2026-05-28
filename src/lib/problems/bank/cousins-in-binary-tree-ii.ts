@@ -138,6 +138,8 @@ Trees are given and returned as level-order arrays where \`null\` represents a m
 function cousinsInBinaryTreeII(root) {
   // Replace each node's value with the sum of its cousin nodes' values
 }`,
+    typescript: "function cousinsInBinaryTreeIIRunner(root: (number | null)[]): (number | null)[] {\n  // Replace each node's value with the sum of its cousin nodes' values\n}",
+
     python: `# TreeNode class and cousinsInBinaryTreeIIRunner wrapper are pre-defined.
 def cousinsInBinaryTreeII(root):
     # Replace each node's value with the sum of its cousin nodes' values

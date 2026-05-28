@@ -41,6 +41,8 @@ Return the **minimum** time to finish the race.`,
   params: ['tires', 'changeTime', 'numLaps'],
   starterCode: {
     javascript: 'function minimumFinishTime(tires, changeTime, numLaps) {\n  \n}\n',
+    typescript: "function minimumFinishTime(tires: number[][], changeTime: number, numLaps: number): number {\n  \n}",
+
     python: 'def minimumFinishTime(tires, changeTime, numLaps):\n    pass\n',
   },
   visibleTests: [

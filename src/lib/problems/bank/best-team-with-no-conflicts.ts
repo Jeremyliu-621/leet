@@ -44,6 +44,8 @@ Given two lists, \`scores\` and \`ages\`, where each \`scores[i]\` and \`ages[i]
   params: ['scores', 'ages'],
   starterCode: {
     javascript: 'function bestTeamScore(scores, ages) {\n\n}\n',
+    typescript: "function bestTeamScore(scores: number[], ages: number[]): number {\n\n}",
+
     python: 'def bestTeamScore(scores: list, ages: list) -> int:\n    pass\n',
   },
   visibleTests: [

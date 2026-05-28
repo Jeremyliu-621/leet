@@ -29,6 +29,8 @@ Given the integer \`n\` and the array \`dislikes\` where \`dislikes[i] = [a_i, b
   params: ['n', 'dislikes'],
   starterCode: {
     javascript: 'function possibleBipartition(n, dislikes) {\n  // your code here\n}\n',
+    typescript: "function possibleBipartition(n: number, dislikes: number[][]): boolean {\n  // your code here\n}",
+
     python: 'def possibleBipartition(n, dislikes):\n    # your code here\n    pass\n',
   },
   visibleTests: [

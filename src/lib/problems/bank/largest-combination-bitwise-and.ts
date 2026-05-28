@@ -27,6 +27,8 @@ Return the **size** of the **largest** combination of elements in \`candidates\`
   params: ['candidates'],
   starterCode: {
     javascript: 'function largestCombination(candidates) {\n  \n}\n',
+    typescript: "function largestCombination(candidates: number[]): number {\n  \n}",
+
     python: 'def largestCombination(candidates):\n    pass\n',
   },
   visibleTests: [

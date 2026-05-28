@@ -46,6 +46,8 @@ Return the **minimum length** of \`s\` after performing the above operation any 
     javascript: `function minimumLength(s) {
 
 }`,
+    typescript: "function minimumLength(s: string): number {\n\n}",
+
     python: `def minimumLength(s):
     pass`,
   },

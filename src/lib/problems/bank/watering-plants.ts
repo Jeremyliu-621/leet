@@ -48,6 +48,8 @@ Return the **total number of steps** you need to water all plants. Each move bet
     javascript: `function wateringPlants(plants, capacity) {
 
 }`,
+    typescript: "function wateringPlants(plants: number[], capacity: number): number {\n\n}",
+
     python: `def wateringPlants(plants, capacity):
     pass`,
   },

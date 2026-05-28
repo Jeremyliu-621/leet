@@ -24,6 +24,8 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: 'function arrayPairSum(nums) {\n  // your code here\n}\n',
+    typescript: "function arrayPairSum(nums: number[]): number {\n  // your code here\n}",
+
     python: 'def arrayPairSum(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

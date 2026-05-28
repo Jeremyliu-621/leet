@@ -59,6 +59,8 @@ Return an array of all the **palindrome pairs** of \`words\`. You may return the
     javascript: `function palindromePairs(words) {
 
 }`,
+    typescript: "function palindromePairsRunner(words: string[]): number[][] {\n\n}",
+
     python: `def palindromePairs(words):
     pass`,
   },

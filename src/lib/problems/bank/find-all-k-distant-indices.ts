@@ -37,6 +37,8 @@ Return a list of all k-distant indices sorted in **increasing order**.`,
     javascript: `function findKDistantIndices(nums, key, k) {
 
 }`,
+    typescript: "function findKDistantIndices(nums: number[], key: number, k: number): number[] {\n\n}",
+
     python: `def findKDistantIndices(nums, key, k):
     pass`,
   },

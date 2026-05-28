@@ -48,6 +48,8 @@ Return the **maximum Euclidean distance squared** (\`x² + y²\`) from the origi
   params: ['commands', 'obstacles'],
   starterCode: {
     javascript: 'function robotSim(commands, obstacles) {\n  // your code here\n}\n',
+    typescript: "function robotSim(commands: number[], obstacles: unknown[]): number {\n  // your code here\n}",
+
     python: 'def robotSim(commands, obstacles):\n    # your code here\n    pass\n',
   },
   visibleTests: [

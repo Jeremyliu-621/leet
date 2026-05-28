@@ -39,6 +39,8 @@ Return the **minimum** number of moves required to move each student to a seat s
   starterCode: {
     javascript:
       'function minMovesToSeat(seats, students) {\n  // your code here\n}\n',
+    typescript: "function minMovesToSeat(seats: number[], students: number[]): number {\n  // your code here\n}",
+
     python:
       'def minMovesToSeat(seats, students):\n    # your code here\n    pass\n',
   },

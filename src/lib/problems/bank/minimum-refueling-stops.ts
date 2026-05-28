@@ -44,6 +44,8 @@ Return the minimum number of refueling stops the car must make in order to reach
   params: ['target', 'startFuel', 'stations'],
   starterCode: {
     javascript: 'function minRefuelStops(target, startFuel, stations) {\n\n}\n',
+    typescript: "function minRefuelStops(target: number, startFuel: number, stations: unknown[]): number {\n\n}",
+
     python: 'def minRefuelStops(target, startFuel, stations):\n    pass\n',
   },
   visibleTests: [

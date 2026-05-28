@@ -51,6 +51,8 @@ Return the top \`k\` students based on their points, sorted by points in **desce
   starterCode: {
     javascript:
       'function topStudents(positive_feedback, negative_feedback, report, student_id, k) {\n\n}',
+    typescript: "function topStudents(positive_feedback: string[], negative_feedback: string[], report: string[], student_id: number[], k: number): number[] {\n\n}",
+
     python:
       'def topStudents(positive_feedback, negative_feedback, report, student_id, k):\n    pass',
   },

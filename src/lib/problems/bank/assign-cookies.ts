@@ -26,6 +26,8 @@ Each child \`i\` has a greed factor \`g[i]\`, which is the minimum size of a coo
   params: ['g', 's'],
   starterCode: {
     javascript: 'function findContentChildren(g, s) {\n  \n}\n',
+    typescript: "function findContentChildren(g: number[], s: number[]): number {\n  \n}",
+
     python: 'def findContentChildren(g, s):\n    pass\n',
   },
   visibleTests: [

@@ -30,6 +30,8 @@ return mid ?? -1;\`\`\``
   params: ['nums'],
   starterCode: {
     javascript: 'function findNonMinOrMax(nums) {\n  \n}\n',
+    typescript: "function findNonMinOrMax(nums: number[]): number {\n  \n}",
+
     python: 'def findNonMinOrMax(nums):\n    pass\n',
   },
   visibleTests: [

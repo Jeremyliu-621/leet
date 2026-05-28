@@ -47,6 +47,8 @@ Return an array of results (\`null\` for constructor and update; the integer sum
   // Return array of results: null for NumMatrix/update, sum for sumRegion.
 
 }`,
+    typescript: "function numMatrixOps(ops: ((string | number[][][])[] | (string | number[])[])[]): (null | number)[] {\n  // ops: [[\"NumMatrix\",[matrix]], [\"update\",[r,c,v]], [\"sumRegion\",[r1,c1,r2,c2]], ...]\n  // Return array of results: null for NumMatrix/update, sum for sumRegion.\n\n}",
+
     python: `def numMatrixOps(ops):
     # ops: [["NumMatrix",[matrix]], ["update",[r,c,v]], ["sumRegion",[r1,c1,r2,c2]], ...]
     # Return list of results: None for NumMatrix/update, sum for sumRegion.

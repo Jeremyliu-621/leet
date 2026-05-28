@@ -47,6 +47,8 @@ Return the **maximum** number of prizes you can win.
   params: ['prizePositions', 'k'],
   starterCode: {
     javascript: 'function maximizeWin(prizePositions, k) {\n  // your code here\n}\n',
+    typescript: "function maximizeWin(prizePositions: number[], k: number): number {\n  // your code here\n}",
+
     python: 'def maximizeWin(prizePositions, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

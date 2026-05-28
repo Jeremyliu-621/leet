@@ -38,6 +38,8 @@ In other words, \`result[i] = sum(|nums[i] - nums[j]|)\` where \`0 <= j < nums.l
     javascript: `function getSumAbsoluteDifferences(nums) {
 
 }`,
+    typescript: "function getSumAbsoluteDifferences(nums: number[]): number[] {\n\n}",
+
     python: `def getSumAbsoluteDifferences(nums):
     pass`,
   },

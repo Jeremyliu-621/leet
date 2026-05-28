@@ -30,6 +30,8 @@ export const problem: Problem = {
   params: ['arr'],
   starterCode: {
     javascript: 'function sumSubarrayMins(arr) {\n\n}\n',
+    typescript: "function sumSubarrayMins(arr: number[]): number {\n\n}",
+
     python: 'def sumSubarrayMins(arr):\n    pass\n',
   },
   visibleTests: [

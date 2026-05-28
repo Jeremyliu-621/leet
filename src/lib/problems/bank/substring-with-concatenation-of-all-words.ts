@@ -44,6 +44,8 @@ Return an array of all starting indices in \`s\` where a concatenated string beg
     javascript: `function findSubstring(s, words) {
 
 }`,
+    typescript: "function findSubstring(s: string, words: string[]): number[] {\n\n}",
+
     python: `def findSubstring(s, words):
     pass
 `,

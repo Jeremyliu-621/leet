@@ -42,6 +42,8 @@ return false;\`\`\``
     javascript: `function checkIfExist(arr) {
 
 }`,
+    typescript: "function checkIfExist(arr: number[]): boolean {\n\n}",
+
     python: `def checkIfExist(arr):
     pass`,
   },

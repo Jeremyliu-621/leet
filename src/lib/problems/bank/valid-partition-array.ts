@@ -28,6 +28,8 @@ Return \`true\` if the array has **at least one valid partition**, and \`false\`
   params: ['nums'],
   starterCode: {
     javascript: 'function validPartition(nums) {\n\n}\n',
+    typescript: "function validPartition(nums: number[]): boolean {\n\n}",
+
     python: 'def validPartition(nums):\n    pass\n',
   },
   visibleTests: [

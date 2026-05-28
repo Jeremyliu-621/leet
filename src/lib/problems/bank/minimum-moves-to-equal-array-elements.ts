@@ -35,6 +35,8 @@ In one move, you can increment \`n - 1\` elements of the array by \`1\`.`,
     javascript: `function minMoves(nums) {
 
 }`,
+    typescript: "function minMoves(nums: number[]): number {\n\n}",
+
     python: `def minMoves(nums):
     pass`,
   },

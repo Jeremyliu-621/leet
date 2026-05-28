@@ -44,6 +44,8 @@ function minimumAverageDifference(nums) {
   params: ['nums'],
   starterCode: {
     javascript: 'function minimumAverageDifference(nums) {\n  \n}\n',
+    typescript: "function minimumAverageDifference(nums: number[]): number {\n  \n}",
+
     python: 'def minimumAverageDifference(nums):\n    pass\n',
   },
   visibleTests: [

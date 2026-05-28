@@ -42,6 +42,8 @@ Return the **minimum** number of coins needed to acquire all \`n\` fruits.`,
   params: ['prices'],
   starterCode: {
     javascript: 'function minimumCoins(prices) {\n\n}',
+    typescript: "function minimumCoins(prices: number[]): number {\n\n}",
+
     python: 'def minimumCoins(prices):\n    pass',
   },
   visibleTests: [

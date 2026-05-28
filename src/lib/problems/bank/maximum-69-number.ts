@@ -43,6 +43,8 @@ function maximum69Number(num) {
     javascript: `function maximum69Number(num) {
 
 }`,
+    typescript: "function maximum69Number(num: number): number {\n\n}",
+
     python: `def maximum69Number(num):
     pass`,
   },

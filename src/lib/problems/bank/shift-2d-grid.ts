@@ -49,6 +49,8 @@ Return the 2D grid after applying shift operation \`k\` times.`,
     javascript: `function shiftGrid(grid, k) {
 
 }`,
+    typescript: "function shiftGrid(grid: number[][], k: number): number[][] {\n\n}",
+
     python: `def shiftGrid(grid, k):
     pass`,
   },

@@ -46,6 +46,8 @@ Return \`true\` if \`start\` can be transformed into \`target\`, or \`false\` ot
     javascript: `function canChange(start, target) {
 
 }`,
+    typescript: "function canChange(start: string, target: string): boolean {\n\n}",
+
     python: `def canChange(start, target):
     pass`,
   },

@@ -35,6 +35,8 @@ Return the **maximum** number of rows that can be covered by a selection of exac
   params: ['matrix', 'numSelect'],
   starterCode: {
     javascript: 'function maximumRows(matrix, numSelect) {\n  // your code here\n}\n',
+    typescript: "function maximumRows(matrix: number[][], numSelect: number): number {\n  // your code here\n}",
+
     python: 'def maximumRows(matrix, numSelect):\n    # your code here\n    pass\n',
   },
   hints: [

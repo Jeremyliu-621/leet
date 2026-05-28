@@ -43,6 +43,8 @@ Given an integer array \`nums\`, return the **sum of Hamming distances** between
   // return sum of Hamming distances between all pairs
 
 }`,
+    typescript: "function totalHammingDistance(nums: number[]): number {\n  // return sum of Hamming distances between all pairs\n\n}",
+
     python: `def totalHammingDistance(nums: list) -> int:
     # return sum of Hamming distances between all pairs
     pass

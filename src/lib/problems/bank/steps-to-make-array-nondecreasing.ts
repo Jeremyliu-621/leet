@@ -35,6 +35,8 @@ Return the number of steps performed until the array becomes **non-decreasing**.
     javascript: `function totalSteps(nums) {
 
 }`,
+    typescript: "function totalSteps(nums: number[]): number {\n\n}",
+
     python: `def totalSteps(nums):
     pass`,
   },

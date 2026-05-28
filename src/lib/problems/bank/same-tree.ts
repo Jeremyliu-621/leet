@@ -91,6 +91,8 @@ Two binary trees are considered the same if they are structurally identical and 
   starterCode: {
     javascript:
       '// TreeNode class is pre-defined. Implement the function below:\nfunction isSameTree(p, q) {\n  \n}\n',
+    typescript: "function isSameTreeRunner(p: number[], q: number[]): boolean {\n  \n}",
+
     python:
       '# TreeNode class is pre-defined. Implement the function below:\ndef isSameTree(p, q):\n    pass\n',
   },

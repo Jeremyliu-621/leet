@@ -39,6 +39,8 @@ return max;\`\`\``
     javascript: `function findLengthOfLCIS(nums) {
 
 }`,
+    typescript: "function findLengthOfLCIS(nums: number[]): number {\n\n}",
+
     python: `def findLengthOfLCIS(nums):
     pass`,
   },

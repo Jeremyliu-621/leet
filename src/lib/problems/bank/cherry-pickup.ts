@@ -47,6 +47,8 @@ Return the maximum number of cherries you can collect by following the rules bel
   params: ['grid'],
   starterCode: {
     javascript: 'function cherryPickup(grid) {\n\n}\n',
+    typescript: "function cherryPickup(grid: number[][]): number {\n\n}",
+
     python: 'def cherryPickup(grid):\n    pass\n',
   },
   visibleTests: [

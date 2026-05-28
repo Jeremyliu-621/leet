@@ -42,6 +42,8 @@ Given an integer array \`candyType\` representing the type of each candy, return
   params: ['candyType'],
   starterCode: {
     javascript: 'function distributeCandies(candyType) {\n  // your code here\n}\n',
+    typescript: "function distributeCandies(candyType: number[]): number {\n  // your code here\n}",
+
     python: 'def distributeCandies(candyType):\n    # your code here\n    pass\n',
   },
   visibleTests: [

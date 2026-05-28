@@ -94,6 +94,8 @@ Given the \`root\` of a binary tree, return the maximum **path sum** of any non-
   starterCode: {
     javascript:
       '// TreeNode class is pre-defined. Implement the function below:\nfunction maxPathSum(root) {\n  \n}\n',
+    typescript: "function maxPathSumRunner(root: number[]): number {\n  \n}",
+
     python:
       '# TreeNode class is pre-defined. Implement the function below:\ndef maxPathSum(root):\n    pass\n',
   },

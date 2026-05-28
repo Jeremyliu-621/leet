@@ -39,6 +39,8 @@ Note that:
     javascript: `function convertTemperature(celsius) {
 
 }`,
+    typescript: "function convertTemperature(celsius: number): number[] {\n\n}",
+
     python: `def convertTemperature(celsius):
     pass`,
   },

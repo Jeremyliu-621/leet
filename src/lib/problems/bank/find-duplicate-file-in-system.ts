@@ -48,6 +48,8 @@ Output: [["root/a/2.txt","root/c/d/4.txt","root/4.txt"],["root/a/1.txt","root/c/
     javascript: `function findDuplicate(paths) {
 
 }`,
+    typescript: "function findDuplicate(paths: string[]): string[][] {\n\n}",
+
     python: `def findDuplicate(paths):
     `,
   },

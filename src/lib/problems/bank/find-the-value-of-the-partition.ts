@@ -39,6 +39,8 @@ Return the **minimum** value of the partition over all possible partitions.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function findValueOfPartition(nums) {\n  \n}\n',
+    typescript: "function findValueOfPartition(nums: number[]): number {\n  \n}",
+
     python: 'def findValueOfPartition(nums):\n    pass\n',
   },
   visibleTests: [

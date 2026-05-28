@@ -40,6 +40,8 @@ The rectangle must be a contiguous span of bars and can be at most as tall as th
   params: ['heights'],
   starterCode: {
     javascript: 'function largestRectangleArea(heights) {\n  // your code here\n}\n',
+    typescript: "function largestRectangleArea(heights: number[]): number {\n  // your code here\n}",
+
     python: 'def largestRectangleArea(heights):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -33,6 +33,8 @@ function validPalindrome(s) {
   params: ['s'],
   starterCode: {
     javascript: 'function validPalindrome(s) {\n  \n}\n',
+    typescript: "function validPalindrome(s: string): boolean {\n  \n}",
+
     python: 'def validPalindrome(s):\n    pass\n',
   },
   visibleTests: [

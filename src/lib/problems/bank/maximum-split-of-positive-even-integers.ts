@@ -41,6 +41,8 @@ Return a list of integers that represent a **valid** split containing a **maximu
     javascript: `function maximumEvenSplit(finalSum) {
 
 }`,
+    typescript: "function maximumEvenSplit(finalSum: number): number[] {\n\n}",
+
     python: `def maximumEvenSplit(finalSum):
     pass`,
   },

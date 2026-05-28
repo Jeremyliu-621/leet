@@ -42,6 +42,8 @@ function numIdenticalPairs(nums) {
   params: ['nums'],
   starterCode: {
     javascript: 'function numIdenticalPairs(nums) {\n  \n}\n',
+    typescript: "function numIdenticalPairs(nums: number[]): number {\n  \n}",
+
     python: 'def numIdenticalPairs(nums):\n    pass\n',
   },
   visibleTests: [

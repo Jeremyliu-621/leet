@@ -41,6 +41,8 @@ A **prefix** is a string that appears at the start of every word. For example, t
   params: ['strs'],
   starterCode: {
     javascript: 'function longestCommonPrefix(strs) {\n  // your code here\n}\n',
+    typescript: "function longestCommonPrefix(strs: string[]): string {\n  // your code here\n}",
+
     python: 'def longestCommonPrefix(strs):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -49,6 +49,8 @@ Return the **minimum number of cells** you need to visit to reach the bottom-rig
     javascript: `function minimumVisitedCells(grid) {
   // Return min cells to visit from (0,0) to (m-1,n-1), or -1
 }`,
+    typescript: "function minimumVisitedCells(grid: number[][]): number {\n  // Return min cells to visit from (0,0) to (m-1,n-1), or -1\n}",
+
     python: `def minimumVisitedCells(grid: list[list[int]]) -> int:
     # Return min cells to visit from (0,0) to (m-1,n-1), or -1
     pass`,

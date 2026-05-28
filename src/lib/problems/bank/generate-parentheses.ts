@@ -44,6 +44,8 @@ export const problem: Problem = {
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: 'function generateParentheses(n) {\n  \n}\n',
+    typescript: "function generateParenthesesRunner(n: number): string[] {\n  \n}",
+
     python: 'def generateParentheses(n):\n    pass\n',
   },
   visibleTests: [

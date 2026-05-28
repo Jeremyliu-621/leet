@@ -66,6 +66,8 @@ A **non-descending subsequence** is a sequence of elements taken from \`nums\` (
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: '// findSubsequencesRunner wrapper is pre-defined.\n// Implement the function below:\nfunction findSubsequences(nums) {\n  \n}\n',
+    typescript: "function findSubsequencesRunner(nums: number[]): number[][] {\n  \n}",
+
     python: '# findSubsequencesRunner wrapper is pre-defined.\n# Implement the function below:\ndef findSubsequences(nums):\n    pass\n',
   },
   visibleTests: [

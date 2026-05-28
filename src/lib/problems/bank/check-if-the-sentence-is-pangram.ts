@@ -41,6 +41,8 @@ function checkIfPangram(sentence) {
   params: ['sentence'],
   starterCode: {
     javascript: 'function checkIfPangram(sentence) {\n  \n}\n',
+    typescript: "function checkIfPangram(sentence: string): boolean {\n  \n}",
+
     python: 'def checkIfPangram(sentence):\n    pass\n',
   },
   visibleTests: [
