@@ -31952,4 +31952,60 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return arr.slice(slow);
   },
 
+  // batch 103
+  '3sum': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const n = nums.length;
+    const result: number[][] = [];
+    for (let i = 0; i < n - 2; i++) {
+      if (i > 0 && nums[i] === nums[i - 1]) continue;
+      let l = i + 1, r = n - 1;
+      while (l < r) {
+        const s = (nums[i] as number) + (nums[l] as number) + (nums[r] as number);
+        if (s === 0) {
+          result.push([nums[i] as number, nums[l] as number, nums[r] as number]);
+          while (l < r && nums[l] === nums[l + 1]) l++;
+          while (l < r && nums[r] === nums[r - 1]) r--;
+          l++; r--;
+        } else if (s < 0) { l++; } else { r--; }
+      }
+    }
+    return result;
+  },
+  'search-a-2d-matrix': (...args: unknown[]) => {
+    const matrix = args[0] as number[][], target = args[1] as number;
+    const m = matrix.length, n = (matrix[0] as number[]).length;
+    let lo = 0, hi = m * n - 1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      const v = (matrix[Math.floor(mid / n)] as number[])[mid % n] as number;
+      if (v === target) return true;
+      if (v < target) lo = mid + 1; else hi = mid - 1;
+    }
+    return false;
+  },
+  'max-points-on-a-line': (...args: unknown[]) => {
+    const points = args[0] as number[][];
+    const n = points.length;
+    if (n <= 2) return n;
+    let ans = 2;
+    function gcd(a: number, b: number): number { return b === 0 ? a : gcd(b, a % b); }
+    for (let i = 0; i < n; i++) {
+      const map = new Map<string, number>();
+      for (let j = i + 1; j < n; j++) {
+        const pi = points[i] as number[], pj = points[j] as number[];
+        let dy = (pj[1] as number) - (pi[1] as number);
+        let dx = (pj[0] as number) - (pi[0] as number);
+        if (dx < 0) { dy = -dy; dx = -dx; } else if (dx === 0 && dy < 0) { dy = -dy; }
+        const g = gcd(Math.abs(dy), Math.abs(dx));
+        const key = g === 0 ? '0/0' : `${dy / g}/${dx / g}`;
+        map.set(key, (map.get(key) ?? 0) + 1);
+      }
+      for (const cnt of map.values()) {
+        if (cnt + 1 > ans) ans = cnt + 1;
+      }
+    }
+    return ans;
+  },
+
 };

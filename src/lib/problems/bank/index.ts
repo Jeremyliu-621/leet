@@ -2201,6 +2201,10 @@ import { problem as smallestRangeI } from './smallest-range-i';
 import { problem as twoSum } from './two-sum';
 import { problem as squaresOfASortedArray } from './squares-of-a-sorted-array';
 import { problem as middleOfTheLinkedList } from './middle-of-the-linked-list';
+// batch 103 — arrays/medium, arrays+binary-search/medium, math/hard
+import { problem as threeSum } from './3sum';
+import { problem as searchA2DMatrix } from './search-a-2d-matrix';
+import { problem as maxPointsOnALine } from './max-points-on-a-line';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4439,4 +4443,8 @@ export const problems: readonly Problem[] = [
   twoSum,
   squaresOfASortedArray,
   middleOfTheLinkedList,
+  // batch 103 — arrays/medium, arrays+binary-search/medium, math/hard
+  threeSum,
+  searchA2DMatrix,
+  maxPointsOnALine,
 ];

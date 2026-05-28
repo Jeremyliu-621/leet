@@ -31471,4 +31471,73 @@ def middleNodeRunner(arr):
     return arr[slow:]
 `,
 
+  // batch 103
+  '3sum': `
+def threeSumRunner(nums):
+    nums = sorted(nums)
+    n = len(nums)
+    result = []
+    for i in range(n - 2):
+        if i > 0 and nums[i] == nums[i - 1]:
+            continue
+        l, r = i + 1, n - 1
+        while l < r:
+            s = nums[i] + nums[l] + nums[r]
+            if s == 0:
+                result.append([nums[i], nums[l], nums[r]])
+                while l < r and nums[l] == nums[l + 1]:
+                    l += 1
+                while l < r and nums[r] == nums[r - 1]:
+                    r -= 1
+                l += 1
+                r -= 1
+            elif s < 0:
+                l += 1
+            else:
+                r -= 1
+    normalized = [sorted(t) for t in result]
+    normalized.sort()
+    return normalized
+`,
+  'search-a-2d-matrix': `
+def searchMatrix(matrix, target):
+    m, n = len(matrix), len(matrix[0])
+    lo, hi = 0, m * n - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        v = matrix[mid // n][mid % n]
+        if v == target:
+            return True
+        elif v < target:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return False
+`,
+  'max-points-on-a-line': `
+from math import gcd
+
+def maxPoints(points):
+    n = len(points)
+    if n <= 2:
+        return n
+    ans = 2
+    for i in range(n):
+        slopes = {}
+        for j in range(i + 1, n):
+            dy = points[j][1] - points[i][1]
+            dx = points[j][0] - points[i][0]
+            if dx < 0:
+                dy, dx = -dy, -dx
+            elif dx == 0 and dy < 0:
+                dy = -dy
+            g = gcd(abs(dy), abs(dx))
+            key = (dy // g, dx // g) if g != 0 else (0, 0)
+            slopes[key] = slopes.get(key, 0) + 1
+        for cnt in slopes.values():
+            if cnt + 1 > ans:
+                ans = cnt + 1
+    return ans
+`,
+
 };
