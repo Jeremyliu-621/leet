@@ -34954,27 +34954,25 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(dp[r] as bigint);
   },
 
-  'longest-arithmetic-subarray': (...args: unknown[]) => {
-    const nums = args[0] as number[];
-    if (nums.length <= 1) return nums.length;
-    let maxLen = 2, curLen = 2, diff = (nums[1] as number) - (nums[0] as number);
-    for (let i = 2; i < nums.length; i++) {
-      const d = (nums[i] as number) - (nums[i - 1] as number);
-      if (d === diff) { curLen++; }
-      else { curLen = 2; diff = d; }
-      if (curLen > maxLen) maxLen = curLen;
-    }
-    return maxLen;
+  'max-product-after-cutting-rope': (...args: unknown[]) => {
+    let n = args[0] as number;
+    if (n === 2) return 1;
+    if (n === 3) return 2;
+    let product = 1;
+    while (n > 4) { product *= 3; n -= 3; }
+    return product * n;
   },
 
-  'sum-of-all-submatrix-sums': (...args: unknown[]) => {
-    const matrix = args[0] as number[][];
-    const m = matrix.length, n = (matrix[0] as number[]).length;
-    let total = 0;
-    for (let i = 0; i < m; i++)
-      for (let j = 0; j < n; j++)
-        total += (matrix[i] as number[])[j] as number * (i + 1) * (m - i) * (j + 1) * (n - j);
-    return total;
+  'minimum-path-sum-triangle': (...args: unknown[]) => {
+    const triangle = args[0] as number[][];
+    const dp = [...(triangle[triangle.length - 1] as number[])];
+    for (let row = triangle.length - 2; row >= 0; row--) {
+      for (let col = 0; col <= row; col++) {
+        (dp[col] as number);
+        dp[col] = (triangle[row] as number[])[col] as number + Math.min(dp[col] as number, dp[col + 1] as number);
+      }
+    }
+    return dp[0] as number;
   },
 
 };

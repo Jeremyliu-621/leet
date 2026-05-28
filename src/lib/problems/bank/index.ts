@@ -2449,6 +2449,9 @@ import { problem as findProductPivot } from './find-product-pivot';
 import { problem as countSubarraysEqualBalance } from './count-subarrays-equal-balance';
 import { problem as longestArithmeticSubarray } from './longest-arithmetic-subarray';
 import { problem as sumOfAllSubmatrixSums } from './sum-of-all-submatrix-sums';
+// batch 148 — math+dp/medium, dp/medium
+import { problem as maxProductAfterCuttingRope } from './max-product-after-cutting-rope';
+import { problem as minimumPathSumTriangle } from './minimum-path-sum-triangle';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4935,4 +4938,7 @@ export const problems: readonly Problem[] = [
   countSubarraysEqualBalance,
   longestArithmeticSubarray,
   sumOfAllSubmatrixSums,
+  // batch 148 — math+dp/medium, dp/medium
+  maxProductAfterCuttingRope,
+  minimumPathSumTriangle,
 ];
