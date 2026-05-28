@@ -32598,4 +32598,45 @@ def minimumOperations(nums):
     return sum(1 for n in nums if n % 3 != 0)
 `,
 
+  'longest-strictly-increasing-or-strictly-decreasing-subarray': `
+def longestMonotonicSubarray(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    ans = inc = dec = 1
+    for i in range(1, len(nums)):
+        if nums[i] > nums[i - 1]:
+            inc += 1
+            dec = 1
+        elif nums[i] < nums[i - 1]:
+            dec += 1
+            inc = 1
+        else:
+            inc = dec = 1
+        ans = max(ans, inc, dec)
+    return ans
+`,
+
+  'find-the-power-of-k-size-subarrays-i': `
+def resultsArray(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    result = []
+    for i in range(len(nums) - k + 1):
+        valid = all(nums[j] == nums[j - 1] + 1 for j in range(i + 1, i + k))
+        result.append(nums[i + k - 1] if valid else -1)
+    return result
+`,
+
+  'count-alternating-subarrays': `
+def countAlternatingSubarrays(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    ans = 1
+    run = 1
+    for i in range(1, len(nums)):
+        if nums[i] != nums[i - 1]:
+            run += 1
+        else:
+            run = 1
+        ans += run
+    return ans
+`,
+
 };

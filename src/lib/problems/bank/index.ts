@@ -2268,6 +2268,10 @@ import { problem as maximumValueOfAnOrderedTripletI } from './maximum-value-of-a
 import { problem as checkBalancedString } from './check-balanced-string';
 import { problem as minimumNumberOfChairsInAWaitingRoom } from './minimum-number-of-chairs-in-a-waiting-room';
 import { problem as findMinimumOperationsDivisibleByThree } from './find-minimum-operations-to-make-all-elements-divisible-by-three';
+// batch 117 — arrays/easy, arrays+sliding-window/medium, arrays+math/medium
+import { problem as longestStrictlyIncreasingOrDecreasingSubarray } from './longest-strictly-increasing-or-strictly-decreasing-subarray';
+import { problem as findThePowerOfKSizeSubarraysI } from './find-the-power-of-k-size-subarrays-i';
+import { problem as countAlternatingSubarrays } from './count-alternating-subarrays';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4573,4 +4577,8 @@ export const problems: readonly Problem[] = [
   checkBalancedString,
   minimumNumberOfChairsInAWaitingRoom,
   findMinimumOperationsDivisibleByThree,
+  // batch 117 — arrays/easy, arrays+sliding-window/medium, arrays+math/medium
+  longestStrictlyIncreasingOrDecreasingSubarray,
+  findThePowerOfKSizeSubarraysI,
+  countAlternatingSubarrays,
 ];

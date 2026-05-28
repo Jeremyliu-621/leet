@@ -32887,4 +32887,40 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return nums.filter(n => n % 3 !== 0).length;
   },
 
+  'longest-strictly-increasing-or-strictly-decreasing-subarray': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let ans = 1, inc = 1, dec = 1;
+    for (let i = 1; i < nums.length; i++) {
+      const a = nums[i - 1]!, b = nums[i]!;
+      if (b > a) { inc++; dec = 1; }
+      else if (b < a) { dec++; inc = 1; }
+      else { inc = 1; dec = 1; }
+      ans = Math.max(ans, inc, dec);
+    }
+    return ans;
+  },
+
+  'find-the-power-of-k-size-subarrays-i': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const result: number[] = [];
+    for (let i = 0; i <= nums.length - k; i++) {
+      let valid = true;
+      for (let j = i + 1; j < i + k; j++) {
+        if ((nums[j] as number) !== (nums[j - 1] as number) + 1) { valid = false; break; }
+      }
+      result.push(valid ? (nums[i + k - 1] as number) : -1);
+    }
+    return result;
+  },
+
+  'count-alternating-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let ans = 0, run = 1;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i] !== nums[i - 1]) run++; else run = 1;
+      ans += run;
+    }
+    return ans + 1;
+  },
+
 };
