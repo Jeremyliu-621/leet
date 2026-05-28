@@ -32871,7 +32871,6 @@ def canAliceWin(nums):
     return s != d
 `,
 
-  // batch 122b
   'count-of-substrings-containing-every-vowel-and-k-consonants-i': `
 def countOfSubstrings(word, k):
     vowels = set('aeiou')
@@ -32915,6 +32914,93 @@ def minOperationsToMakeMedianK(nums, k):
     return ops
 `,
 
+  // batch 122c
+  'find-the-original-typed-string-ii': `
+def possibleStringCount(word, k):
+    MOD = 10**9 + 7
+    runs = []
+    i = 0
+    while i < len(word):
+        length = 1
+        while i + length < len(word) and word[i + length] == word[i]:
+            length += 1
+        runs.append(length)
+        i += length
+    total = 1
+    for L in runs:
+        total = total * L % MOD
+    n = len(runs)
+    if n >= k:
+        return total
+    dp = [0] * k
+    dp[0] = 1
+    for L in runs:
+        new_dp = [0] * k
+        prefix = [0] * (k + 1)
+        for j in range(k):
+            prefix[j + 1] = (prefix[j] + dp[j]) % MOD
+        for j in range(1, k):
+            lo = max(0, j - L)
+            new_dp[j] = (prefix[j] - prefix[lo]) % MOD
+        dp = new_dp
+    bad = sum(dp) % MOD
+    return (total - bad) % MOD
+`,
+
+  'find-minimum-time-to-reach-last-room-ii': `
+import heapq
+def minTimeToReach(moveTime):
+    moveTime = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (moveTime.to_py() if hasattr(moveTime, 'to_py') else moveTime)]
+    m, n = len(moveTime), len(moveTime[0])
+    INF = float('inf')
+    dist = [[[INF, INF] for _ in range(n)] for _ in range(m)]
+    dist[0][0][0] = 0
+    heap = [(0, 0, 0, 0)]
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    while heap:
+        t, r, c, p = heapq.heappop(heap)
+        if t > dist[r][c][p]:
+            continue
+        if r == m - 1 and c == n - 1:
+            return t
+        for dr, dc in dirs:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n:
+                cost = 1 if p == 0 else 2
+                new_t = max(t, moveTime[nr][nc]) + cost
+                np = 1 - p
+                if new_t < dist[nr][nc][np]:
+                    dist[nr][nc][np] = new_t
+                    heapq.heappush(heap, (new_t, nr, nc, np))
+    return min(dist[m-1][n-1])
+`,
+
+  'minimum-operations-to-write-letter-y-on-grid': `
+def minimumOperationsToWriteY(grid):
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    n = len(grid)
+    half = n // 2
+    y_count = [0, 0, 0]
+    non_y_count = [0, 0, 0]
+    for r in range(n):
+        for c in range(n):
+            is_y = (r < half and (r == c or r + c == n - 1)) or (r >= half and c == half)
+            if is_y:
+                y_count[grid[r][c]] += 1
+            else:
+                non_y_count[grid[r][c]] += 1
+    y_size = sum(y_count)
+    non_y_size = sum(non_y_count)
+    ans = float('inf')
+    for a in range(3):
+        for b in range(3):
+            if a != b:
+                cost = (y_size - y_count[a]) + (non_y_size - non_y_count[b])
+                ans = min(ans, cost)
+    return ans
+`,
+
+  // batch 123
   'find-the-number-of-winning-players': `
 def winningPlayerCount(n, pick):
     pick = [list(x.to_py() if hasattr(x, 'to_py') else x) for x in (pick.to_py() if hasattr(pick, 'to_py') else pick)]
@@ -32957,6 +33043,7 @@ def minTimeToReach(moveTime):
     return min(dist[n-1][m-1])
 `,
 
+  // batch 124
   'minimum-number-of-operations-to-make-array-empty': `
 def minOperations(nums):
     nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
@@ -32993,6 +33080,7 @@ def isAcronym(words, s):
     return all(w[0] == s[i] for i, w in enumerate(words))
 `,
 
+  // batch 125
   'find-champion-i': `
 def findChampion(grid):
     grid = [list(x.to_py() if hasattr(x, 'to_py') else x) for x in (grid.to_py() if hasattr(grid, 'to_py') else grid)]

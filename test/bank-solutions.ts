@@ -33157,7 +33157,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return s !== d;
   },
 
-  // batch 122b
   'count-of-substrings-containing-every-vowel-and-k-consonants-i': (...args: unknown[]) => {
     const word = args[0] as string, k = args[1] as number;
     function atLeast(minCons: number): number {
@@ -33196,6 +33195,92 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ops;
   },
 
+  // batch 122c — strings+dp/hard, graph+shortest-path/medium, arrays+hash-map/medium
+  'find-the-original-typed-string-ii': (...args: unknown[]) => {
+    const word = args[0] as string, k = args[1] as number;
+    const MOD = 1000000007n;
+    const runs: number[] = [];
+    let i = 0;
+    while (i < word.length) {
+      let len = 1;
+      while (i + len < word.length && word[i + len] === word[i]) len++;
+      runs.push(len);
+      i += len;
+    }
+    let total = 1n;
+    for (const L of runs) total = total * BigInt(L) % MOD;
+    const numRuns = runs.length;
+    if (numRuns >= k) return Number(total);
+    const dp: bigint[] = new Array(k).fill(0n) as bigint[];
+    dp[0] = 1n;
+    for (const L of runs) {
+      const newDp: bigint[] = new Array(k).fill(0n) as bigint[];
+      const prefix: bigint[] = new Array(k + 1).fill(0n) as bigint[];
+      for (let j = 0; j < k; j++) prefix[j + 1] = ((prefix[j] as bigint) + (dp[j] as bigint)) % MOD;
+      for (let j = 1; j < k; j++) {
+        const lo = Math.max(0, j - L);
+        newDp[j] = ((prefix[j] as bigint) - (prefix[lo] as bigint) + MOD) % MOD;
+      }
+      dp.splice(0, dp.length, ...newDp);
+    }
+    let bad = 0n;
+    for (const v of dp) bad = (bad + (v as bigint)) % MOD;
+    return Number((total - bad + MOD) % MOD);
+  },
+
+  'find-minimum-time-to-reach-last-room-ii': (...args: unknown[]) => {
+    const moveTime = args[0] as number[][];
+    const m = moveTime.length, n = moveTime[0]!.length;
+    const dist: number[][][] = Array.from({ length: m }, () =>
+      Array.from({ length: n }, () => [Infinity, Infinity])
+    );
+    dist[0]![0]![0] = 0;
+    const heap: [number, number, number, number][] = [[0, 0, 0, 0]];
+    const dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+    while (heap.length > 0) {
+      heap.sort((a, b) => a[0]! - b[0]!);
+      const [t, r, c, p] = heap.shift()!;
+      if (t > dist[r]![c]![p]!) continue;
+      if (r === m - 1 && c === n - 1) return t;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr!, nc = c + dc!;
+        if (nr < 0 || nr >= m || nc < 0 || nc >= n) continue;
+        const cost = p === 0 ? 1 : 2;
+        const newT = Math.max(t, moveTime[nr]![nc]!) + cost;
+        const np = 1 - p;
+        if (newT < dist[nr]![nc]![np]!) {
+          dist[nr]![nc]![np] = newT;
+          heap.push([newT, nr, nc, np]);
+        }
+      }
+    }
+    return Math.min(dist[m - 1]![n - 1]![0]!, dist[m - 1]![n - 1]![1]!);
+  },
+
+  'minimum-operations-to-write-letter-y-on-grid': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const n = grid.length, half = Math.floor(n / 2);
+    const yCount = [0, 0, 0], nonYCount = [0, 0, 0];
+    for (let r = 0; r < n; r++) {
+      for (let c = 0; c < n; c++) {
+        const isY = (r < half && (r === c || r + c === n - 1)) || (r >= half && c === half);
+        if (isY) yCount[grid[r]![c]!]!++;
+        else nonYCount[grid[r]![c]!]!++;
+      }
+    }
+    const ySize = yCount[0]! + yCount[1]! + yCount[2]!;
+    const nonYSize = nonYCount[0]! + nonYCount[1]! + nonYCount[2]!;
+    let ans = Infinity;
+    for (let a = 0; a < 3; a++) {
+      for (let b = 0; b < 3; b++) {
+        if (a === b) continue;
+        ans = Math.min(ans, (ySize - yCount[a]!) + (nonYSize - nonYCount[b]!));
+      }
+    }
+    return ans;
+  },
+
+  // batch 123 — arrays+hash-map/easy, arrays+math/easy, graph+shortest-path/medium
   'find-the-number-of-winning-players': (...args: unknown[]) => {
     const n = args[0] as number;
     const pick = args[1] as number[][];
@@ -33242,6 +33327,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Math.min(dist[n - 1]![m - 1]![0]!, dist[n - 1]![m - 1]![1]!);
   },
 
+  // batch 124 — arrays+hash-map+math/medium, arrays+strings+hash-map/easy, arrays+strings/easy
   'minimum-number-of-operations-to-make-array-empty': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const freq = new Map<number, number>();
@@ -33272,6 +33358,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return words.every((w, i) => w[0] === s[i]);
   },
 
+  // batch 125 — arrays/easy, arrays+strings+hash-map/easy, arrays+hash-map/easy
   'find-champion-i': (...args: unknown[]) => {
     const grid = (args[0] as unknown[][]).map(r => r as number[]);
     const n = grid.length;
