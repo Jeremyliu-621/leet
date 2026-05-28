@@ -2412,6 +2412,10 @@ import { problem as findMissingObservations } from './find-missing-observations'
 import { problem as decryptXoredArray } from './decrypt-xored-array';
 import { problem as countItemsMatchingARule } from './count-items-matching-a-rule';
 import { problem as kidsWithTheGreatestNumberOfCandies } from './kids-with-the-greatest-number-of-candies';
+// batch 142 — strings+two-pointers/easy, strings+hash-map/medium, graph+topological-sort/medium
+import { problem as reverseVowelsOfAString } from './reverse-vowels-of-a-string';
+import { problem as applyOperationsToMakeStringEmpty } from './apply-operations-to-make-string-empty';
+import { problem as findAllPossibleRecipesFromGivenSupplies } from './find-all-possible-recipes-from-given-supplies';
 // batch 141 — math/hard, strings/hard+math, strings/hard, arrays+math/medium, arrays+math/hard, arrays+dp/hard
 import { problem as reachingPoints } from './reaching-points';
 import { problem as orderlyQueue } from './orderly-queue';
@@ -4868,6 +4872,10 @@ export const problems: readonly Problem[] = [
   decryptXoredArray,
   countItemsMatchingARule,
   kidsWithTheGreatestNumberOfCandies,
+  // batch 142 — strings+two-pointers/easy, strings+hash-map/medium, graph+topological-sort/medium
+  reverseVowelsOfAString,
+  applyOperationsToMakeStringEmpty,
+  findAllPossibleRecipesFromGivenSupplies,
   // batch 141 — math/hard, strings/hard+math, strings/hard, arrays+math/medium, arrays+math/hard, arrays+dp/hard
   reachingPoints,
   orderlyQueue,

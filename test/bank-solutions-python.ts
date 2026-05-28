@@ -34078,6 +34078,61 @@ def kidsWithCandies(candies, extraCandies: int):
     return [c + extraCandies >= max_c for c in candies]
 `,
 
+  // batch 142
+  'reverse-vowels-of-a-string': `
+def reverseVowels(s: str) -> str:
+    vowels = set('aeiouAEIOU')
+    arr = list(s)
+    l, r = 0, len(arr) - 1
+    while l < r:
+        while l < r and arr[l] not in vowels:
+            l += 1
+        while l < r and arr[r] not in vowels:
+            r -= 1
+        if l < r:
+            arr[l], arr[r] = arr[r], arr[l]
+            l += 1
+            r -= 1
+    return ''.join(arr)
+`,
+
+  'apply-operations-to-make-string-empty': `
+def lastNonEmptyString(s: str) -> str:
+    from collections import Counter
+    freq = Counter(s)
+    last_idx = {}
+    for i, c in enumerate(s):
+        last_idx[c] = i
+    max_freq = max(freq.values())
+    candidates = [(last_idx[c], c) for c, f in freq.items() if f == max_freq]
+    candidates.sort()
+    return ''.join(c for _, c in candidates)
+`,
+
+  'find-all-possible-recipes-from-given-supplies': `
+def findAllRecipes(recipes, ingredients, supplies):
+    from collections import defaultdict, deque
+    recipes = list(recipes.to_py() if hasattr(recipes, 'to_py') else recipes)
+    ingredients = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (ingredients.to_py() if hasattr(ingredients, 'to_py') else ingredients)]
+    supplies = list(supplies.to_py() if hasattr(supplies, 'to_py') else supplies)
+    in_degree = {}
+    graph = defaultdict(list)
+    for i, r in enumerate(recipes):
+        in_degree[r] = len(ingredients[i])
+        for ing in ingredients[i]:
+            graph[ing].append(r)
+    queue = deque(supplies)
+    result = []
+    while queue:
+        cur = queue.popleft()
+        for recipe in graph[cur]:
+            in_degree[recipe] -= 1
+            if in_degree[recipe] == 0:
+                result.append(recipe)
+                queue.append(recipe)
+    return result
+`,
+
   // batch 141
   'reaching-points': `
 def reachingPoints(sx: int, sy: int, tx: int, ty: int) -> bool:

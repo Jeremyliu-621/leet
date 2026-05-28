@@ -34313,6 +34313,64 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return candies.map(c => c + extraCandies >= maxC);
   },
 
+  // batch 142
+  'reverse-vowels-of-a-string': (...args: unknown[]) => {
+    const vowels = new Set('aeiouAEIOU');
+    const arr = (args[0] as string).split('');
+    let l = 0, r = arr.length - 1;
+    while (l < r) {
+      while (l < r && !vowels.has(arr[l]!)) l++;
+      while (l < r && !vowels.has(arr[r]!)) r--;
+      if (l < r) { [arr[l], arr[r]] = [arr[r]!, arr[l]!]; l++; r--; }
+    }
+    return arr.join('');
+  },
+
+  'apply-operations-to-make-string-empty': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const freq = new Map<string, number>();
+    const lastIdx = new Map<string, number>();
+    for (let i = 0; i < s.length; i++) {
+      freq.set(s[i]!, (freq.get(s[i]!) ?? 0) + 1);
+      lastIdx.set(s[i]!, i);
+    }
+    const maxFreq = Math.max(...freq.values());
+    const result: [number, string][] = [];
+    for (const [ch, f] of freq) {
+      if (f === maxFreq) result.push([lastIdx.get(ch)!, ch]);
+    }
+    result.sort((a, b) => a[0] - b[0]);
+    return result.map(([, ch]) => ch).join('');
+  },
+
+  'find-all-possible-recipes-from-given-supplies': (...args: unknown[]) => {
+    const recipes = args[0] as string[];
+    const ingredients = args[1] as string[][];
+    const supplies = args[2] as string[];
+    const inDegree = new Map<string, number>();
+    const graph = new Map<string, string[]>();
+    for (let i = 0; i < recipes.length; i++) {
+      inDegree.set(recipes[i]!, ingredients[i]!.length);
+      for (const ing of ingredients[i]!) {
+        if (!graph.has(ing)) graph.set(ing, []);
+        graph.get(ing)!.push(recipes[i]!);
+      }
+    }
+    const queue: string[] = [...supplies];
+    const result: string[] = [];
+    while (queue.length) {
+      const cur = queue.shift()!;
+      for (const recipe of (graph.get(cur) ?? [])) {
+        inDegree.set(recipe, inDegree.get(recipe)! - 1);
+        if (inDegree.get(recipe) === 0) {
+          result.push(recipe);
+          queue.push(recipe);
+        }
+      }
+    }
+    return result;
+  },
+
   // batch 138
   'reaching-points': (...args: unknown[]) => {
     let tx = args[2] as number, ty = args[3] as number;
