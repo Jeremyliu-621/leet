@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2069** problems; 6501 tests green. Batches 102–109 + 106a-b complete. All branches merged. Site stats at 2,057+.
+**Current focus:** Bank at **2072** problems; 6510 tests green. Batches 102–110 complete. Site stats at 2,069+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Site stats update (2,069+); batch 110 bank growth; UI/UX refinements (terminal panel polish, Popup UX, editor QoL).
+**Next up:** Batch 111 bank growth; update site stats; UI/UX refinements.
+
+### feat(bank): add batch 110 — check-two-string-arrays, verify-preorder-serialization, serialize-binary-tree (2026-05-28)
+Added 3 problems: `check-if-two-string-arrays-are-equivalent` (easy/strings, join-and-compare), `verify-preorder-serialization-of-a-binary-tree` (medium/tree+stack, slots countdown — each non-null adds 2, each '#' consumes 1), `serialize-and-deserialize-binary-tree` (hard/tree, BFS serialize round-trip; preamble provides __toArray__ for runner verification). Bank at **2072**; 6510 tests.
 
 ### chore: merge diverged branches + a11y fix (2026-05-28)
 Merged the detached-work branch (UI overhaul: TerminalPanel, CustomTestPanel, SubmissionsPanel, multi-language judge with sucrase TS transpilation, emacs keymap, draggable splitter, etc.) with origin/main (Pyodide M7, vim keymap). Detached-work was the more complete state; all conflicts resolved by taking its version. Also merged batches 106b–109 from origin/main (9 more problems). Applied pending a11y fix: TestResultCard expand/collapse button now has descriptive `aria-label` ("Test N — PASS/FAIL, expand details"). Bank: 2069 problems; 6501 tests.
