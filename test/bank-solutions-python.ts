@@ -31540,4 +31540,57 @@ def maxPoints(points):
     return ans
 `,
 
+  // batch 104
+  'search-a-2d-matrix-ii': `
+def searchMatrix(matrix, target):
+    if not matrix or not matrix[0]:
+        return False
+    m, n = len(matrix), len(matrix[0])
+    row, col = 0, n - 1
+    while row < m and col >= 0:
+        v = matrix[row][col]
+        if v == target:
+            return True
+        elif v > target:
+            col -= 1
+        else:
+            row += 1
+    return False
+`,
+  'count-number-of-connected-components': `
+def countComponents(n, edges):
+    parent = list(range(n))
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    components = n
+    for a, b in edges:
+        ra, rb = find(a), find(b)
+        if ra != rb:
+            parent[ra] = rb
+            components -= 1
+    return components
+`,
+  'longest-increasing-path-in-a-matrix': `
+def longestIncreasingPath(matrix):
+    if not matrix:
+        return 0
+    m, n = len(matrix), len(matrix[0])
+    memo = [[0] * n for _ in range(m)]
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    def dfs(r, c):
+        if memo[r][c]:
+            return memo[r][c]
+        best = 1
+        for dr, dc in dirs:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n and matrix[nr][nc] > matrix[r][c]:
+                best = max(best, 1 + dfs(nr, nc))
+        memo[r][c] = best
+        return best
+    return max(dfs(r, c) for r in range(m) for c in range(n))
+`,
+
 };

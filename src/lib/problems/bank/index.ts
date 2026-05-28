@@ -2205,6 +2205,10 @@ import { problem as middleOfTheLinkedList } from './middle-of-the-linked-list';
 import { problem as threeSum } from './3sum';
 import { problem as searchA2DMatrix } from './search-a-2d-matrix';
 import { problem as maxPointsOnALine } from './max-points-on-a-line';
+// batch 104 — arrays+binary-search/medium, graph/medium, arrays+dp+graph/hard
+import { problem as searchA2DMatrixII } from './search-a-2d-matrix-ii';
+import { problem as countNumberOfConnectedComponents } from './count-number-of-connected-components';
+import { problem as longestIncreasingPathInAMatrix } from './longest-increasing-path-in-a-matrix';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4447,4 +4451,8 @@ export const problems: readonly Problem[] = [
   threeSum,
   searchA2DMatrix,
   maxPointsOnALine,
+  // batch 104 — arrays+binary-search/medium, graph/medium, arrays+dp+graph/hard
+  searchA2DMatrixII,
+  countNumberOfConnectedComponents,
+  longestIncreasingPathInAMatrix,
 ];

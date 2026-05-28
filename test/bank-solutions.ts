@@ -32008,4 +32008,48 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 104
+  'search-a-2d-matrix-ii': (...args: unknown[]) => {
+    const matrix = args[0] as number[][], target = args[1] as number;
+    const m = matrix.length, n = (matrix[0] as number[]).length;
+    let row = 0, col = n - 1;
+    while (row < m && col >= 0) {
+      const v = (matrix[row] as number[])[col] as number;
+      if (v === target) return true;
+      if (v > target) col--; else row++;
+    }
+    return false;
+  },
+  'count-number-of-connected-components': (...args: unknown[]) => {
+    const n = args[0] as number, edges = args[1] as number[][];
+    const parent = Array.from({ length: n }, (_, i) => i);
+    function find(x: number): number { return parent[x] === x ? x : (parent[x] = find(parent[x] as number)); }
+    let components = n;
+    for (const edge of edges) {
+      const a = find(edge[0] as number), b = find(edge[1] as number);
+      if (a !== b) { parent[a] = b; components--; }
+    }
+    return components;
+  },
+  'longest-increasing-path-in-a-matrix': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const m = matrix.length, n = (matrix[0] as number[]).length;
+    const memo: number[][] = Array.from({ length: m }, () => new Array(n).fill(0) as number[]);
+    const dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+    function dfs(r: number, c: number): number {
+      if ((memo[r] as number[])[c]) return (memo[r] as number[])[c] as number;
+      let best = 1;
+      for (const dir of dirs) {
+        const nr = r + (dir[0] as number), nc = c + (dir[1] as number);
+        if (nr >= 0 && nr < m && nc >= 0 && nc < n && ((matrix[nr] as number[])[nc] as number) > ((matrix[r] as number[])[c] as number)) {
+          best = Math.max(best, 1 + dfs(nr, nc));
+        }
+      }
+      return (memo[r] as number[])[c] = best;
+    }
+    let ans = 0;
+    for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) ans = Math.max(ans, dfs(r, c));
+    return ans;
+  },
+
 };
