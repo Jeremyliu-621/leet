@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2095** problems; 6579 tests green. Batches 102–117 complete. All branches merged. Site stats at 2,095+.
+**Current focus:** Bank at **2098** problems; 6597 tests green. Batches 102–118 complete. All branches merged. Site stats at 2,098+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 118 bank growth; UI/UX refinements; accessibility audit.
+**Next up:** Batch 119 bank growth; UI/UX refinements; accessibility audit.
+
+### feat(bank): add batch 118 — max-diff-even-odd-freq-i, k-th-char-string-game-i, count-prefix-suffix-pairs-i (2026-05-28)
+Three easy string problems: `maximum-difference-between-even-and-odd-frequency-i` (easy/strings+hash-map, max odd-freq minus min even-freq), `find-the-k-th-character-in-string-game-i` (easy/strings+math, simulate string doubling with char+1 shift; k-th char = chr('a'+popcount(k-1))), `count-prefix-and-suffix-pairs-i` (easy/strings, O(n²) startsWith+endsWith check for each pair i<j). Bank at **2098**; 6597 tests.
 
 ### feat(bank): add batch 117 — longest-monotonic-subarray, k-size-subarray-power-i, count-alternating-subarrays (2026-05-28)
 Three problems: `longest-strictly-increasing-or-strictly-decreasing-subarray` (easy/arrays, two-run inc/dec tracking), `find-the-power-of-k-size-subarrays-i` (medium/arrays+sliding-window, O(n*k) consecutive ascending window check, power=max or -1), `count-alternating-subarrays` (medium/arrays+math, run-length contribution counting — each run of length `r` adds `r` to total). Bank at **2095**; 6579 tests.

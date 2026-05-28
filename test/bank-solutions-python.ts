@@ -32639,4 +32639,33 @@ def countAlternatingSubarrays(nums):
     return ans
 `,
 
+  'maximum-difference-between-even-and-odd-frequency-i': `
+def maxDifference(s):
+    from collections import Counter
+    freq = Counter(s)
+    odds = [v for v in freq.values() if v % 2 == 1]
+    evens = [v for v in freq.values() if v % 2 == 0]
+    return max(odds) - min(evens)
+`,
+
+  'find-the-k-th-character-in-string-game-i': `
+def kthCharacter(k):
+    word = 'a'
+    while len(word) < k:
+        word += ''.join(chr(ord(c) + 1) for c in word)
+    return word[k - 1]
+`,
+
+  'count-prefix-and-suffix-pairs-i': `
+def countPrefixSuffixPairs(words):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    count = 0
+    for i in range(len(words)):
+        for j in range(i + 1, len(words)):
+            a, b = words[i], words[j]
+            if b.startswith(a) and b.endswith(a):
+                count += 1
+    return count
+`,
+
 };

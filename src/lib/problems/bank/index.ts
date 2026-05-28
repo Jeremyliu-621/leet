@@ -2272,6 +2272,10 @@ import { problem as findMinimumOperationsDivisibleByThree } from './find-minimum
 import { problem as longestStrictlyIncreasingOrDecreasingSubarray } from './longest-strictly-increasing-or-strictly-decreasing-subarray';
 import { problem as findThePowerOfKSizeSubarraysI } from './find-the-power-of-k-size-subarrays-i';
 import { problem as countAlternatingSubarrays } from './count-alternating-subarrays';
+// batch 118 — strings+hash-map/easy, strings+math/easy, strings/easy
+import { problem as maximumDifferenceBetweenEvenAndOddFrequencyI } from './maximum-difference-between-even-and-odd-frequency-i';
+import { problem as findTheKthCharacterInStringGameI } from './find-the-k-th-character-in-string-game-i';
+import { problem as countPrefixAndSuffixPairsI } from './count-prefix-and-suffix-pairs-i';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4581,4 +4585,8 @@ export const problems: readonly Problem[] = [
   longestStrictlyIncreasingOrDecreasingSubarray,
   findThePowerOfKSizeSubarraysI,
   countAlternatingSubarrays,
+  // batch 118 — strings+hash-map/easy, strings+math/easy, strings/easy
+  maximumDifferenceBetweenEvenAndOddFrequencyI,
+  findTheKthCharacterInStringGameI,
+  countPrefixAndSuffixPairsI,
 ];

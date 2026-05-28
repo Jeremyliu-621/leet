@@ -32923,4 +32923,35 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans + 1;
   },
 
+  'maximum-difference-between-even-and-odd-frequency-i': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const freq: Record<string, number> = {};
+    for (const c of s) freq[c] = (freq[c] ?? 0) + 1;
+    const vals = Object.values(freq);
+    const odds = vals.filter(v => v % 2 === 1);
+    const evens = vals.filter(v => v % 2 === 0);
+    return Math.max(...odds) - Math.min(...evens);
+  },
+
+  'find-the-k-th-character-in-string-game-i': (...args: unknown[]) => {
+    const k = args[0] as number;
+    let word = 'a';
+    while (word.length < k) {
+      word += word.split('').map(c => String.fromCharCode(c.charCodeAt(0) + 1)).join('');
+    }
+    return word[k - 1];
+  },
+
+  'count-prefix-and-suffix-pairs-i': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    let count = 0;
+    for (let i = 0; i < words.length; i++) {
+      for (let j = i + 1; j < words.length; j++) {
+        const a = words[i]!, b = words[j]!;
+        if (b.startsWith(a) && b.endsWith(a)) count++;
+      }
+    }
+    return count;
+  },
+
 };
