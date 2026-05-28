@@ -8,12 +8,24 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2233** problems; 6930 tests green. Batches 102–145 complete. TypeScript starters backfilled. UX polish ongoing.
+**Current focus:** Bank at **2236** problems; 7002 tests green. Batches 102–147 complete. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth; UX polish; accessibility audit.
 
+### feat(ux): streak + today count on solved screen; custom-test pre-fill from first example (2026-05-28)
+Challenge page solved-standalone screen: streak display (`Nd` badge with "X today" sub-label) now shown when user has a streak. CustomTestPanel now pre-fills arg inputs from `problem.visibleTests[0].args` when opened, so the first example is ready to run immediately. Both changes are additive — no regressions.
+
+### feat(bank): add batch 147 — find-product-pivot, count-subarrays-equal-balance, longest-arithmetic-subarray, sum-of-all-submatrix-sums (2026-05-28)
+Four medium-difficulty problems: `find-product-pivot` (math/arrays, prefix+suffix product comparison to find leftmost equal-product index), `count-subarrays-equal-balance` (arrays+hash-map, prefix sum + hash map for equal positive/negative count subarrays), `longest-arithmetic-subarray` (arrays, O(n) consecutive diff tracking for contiguous arithmetic subarray), `sum-of-all-submatrix-sums` (arrays+math, O(mn) per-cell contribution formula). Bank at **2236**; 7002 tests.
+
+### feat(bank): register batch 146 — 7 orphan problems with existing solutions (2026-05-28)
+Registered 7 problems that had problem files and reference solutions but were not imported in index.ts: `reverse-vowels-of-a-string` (easy/strings+two-pointers), `apply-operations-to-make-string-empty` (medium/strings+hash-map), `find-all-possible-recipes-from-given-supplies` (medium/graph+hash-map), `maximum-total-damage-with-spell-casting` (medium/arrays+dp), `minimum-domino-rotations-for-equal-row` (medium/arrays+simulation), `reorder-routes-to-make-all-paths-lead-to-the-city-zero` (medium/graph), `count-the-number-of-beautiful-subarrays` (medium/arrays+math). Bank at **2232**; 6990 tests.
+
 ### feat(bank): add batch 145 — max-bitwise-or-subsets, partition-k-subsets, min-ops-array-equal-target, consecutive-numbers-sum (2026-05-28)
 Four problems: `count-number-of-max-bitwise-or-subsets` (medium/arrays+backtracking, 2^n bitmask enumeration counting subsets with max OR), `partition-to-k-equal-sum-subsets` (medium/arrays+backtracking+dp, descending sort + k-bucket DFS with duplicate-skip pruning), `minimum-operations-to-make-array-equal-to-target` (hard/arrays, diff[i]=target-nums layer-counting formula — sum positive transitions in extended diff sequence), `consecutive-numbers-sum` (hard/math, k consecutive starting at a formula — loop k while k*(k+1)≤2n, check divisibility). Bank at **2233**; 6930 tests.
+
+### feat(bank): add batch 142 — max-height-triangle, divide-array-min-cost-i, k-constraint-substr-i, final-array-mult-i, first-player-win-k, digit-diff-pairs, monotonic-pairs-i (2026-05-28)
+Seven problems from 2024-era LeetCode (3150-3270 range): `maximum-height-of-a-triangle` (easy/simulation, try both color orderings row-by-row), `divide-array-into-subarrays-with-minimum-cost-i` (easy/arrays, nums[0]+k-1 smallest from rest), `count-substrings-satisfy-k-constraint-i` (easy/strings, O(n²) brute-force), `final-array-state-k-multiplication-i` (easy/simulation, k ops: find leftmost min × multiplier), `find-the-first-player-to-win-k-games-in-a-row` (medium/simulation, king-of-the-hill O(n) scan), `sum-of-digit-differences-of-all-pairs` (medium/math, per-position frequency → C(n,2)−agree pairs), `find-the-count-of-monotonic-pairs-i` (hard/dp, prefix-sum DP enforcing lower bound per transition). Bank at **2221**; 6957 tests.
 
 ### feat(bank): add batch 142b — beautiful-towers-ii, palindromic-grid-ii, balanced-subseq-sum (2026-05-28)
 Three problems: `beautiful-towers-ii` (medium/arrays+stack, O(n) monotone stack with prefix/suffix mountain sums), `minimum-number-of-flips-to-make-binary-grid-palindromic-ii` (medium/arrays, groups-of-4 cell matching + middle row/col pair handling), `maximum-balanced-subsequence-sum` (hard/binary-indexed-tree+dp+arrays, key[i]=nums[i]-i transforms to max non-decreasing subsequence sum, O(n log n) BIT). Bank at **2221**; 6957 tests.

@@ -8,6 +8,8 @@ interface CustomTestPanelProps {
   onRun: (args: unknown[]) => Promise<void>;
   /** Result of the most recent custom run. */
   result: CustomTestStatus;
+  /** Initial argument values to pre-fill (e.g. from first visible test). */
+  defaultArgs?: readonly unknown[];
 }
 
 /** Attempts JSON.parse; returns { ok, value } so callers can show inline errors. */
@@ -79,9 +81,14 @@ function displayResult(result: CustomTestStatus): React.ReactNode {
  * Collapsible "Custom test" drawer that lets users supply their own argument
  * values, run the code, and see the raw output without a predefined expected.
  */
-export function CustomTestPanel({ params, onRun, result }: CustomTestPanelProps) {
+export function CustomTestPanel({ params, onRun, result, defaultArgs }: CustomTestPanelProps) {
   const [open, setOpen] = useState(false);
-  const [rawArgs, setRawArgs] = useState<string[]>(() => params.map(() => ''));
+  const [rawArgs, setRawArgs] = useState<string[]>(() =>
+    params.map((_, i) => {
+      const def = defaultArgs?.[i];
+      return def !== undefined ? JSON.stringify(def) : '';
+    }),
+  );
   const [parseErrors, setParseErrors] = useState<boolean[]>(() => params.map(() => false));
 
   const handleRun = useCallback(async () => {
