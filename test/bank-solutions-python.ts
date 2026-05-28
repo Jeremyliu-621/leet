@@ -32412,4 +32412,61 @@ def minSwaps(s):
     return swaps
 `,
 
+  // batch 113
+  'lexicographically-smallest-equivalent-string': `
+def smallestEquivalentString(s1, s2, baseStr):
+    parent = list(range(26))
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    for a, b in zip(s1, s2):
+        ra = find(ord(a) - 97)
+        rb = find(ord(b) - 97)
+        if ra != rb:
+            if ra < rb:
+                parent[rb] = ra
+            else:
+                parent[ra] = rb
+    return ''.join(chr(find(ord(c) - 97) + 97) for c in baseStr)
+`,
+
+  'single-threaded-cpu': `
+import heapq
+def getOrder(tasks):
+    indexed = sorted([(t[0], t[1], i) for i, t in enumerate(tasks)])
+    result = []
+    heap = []
+    time = 0
+    ti = 0
+    n = len(tasks)
+    while len(result) < n:
+        if not heap and ti < n:
+            time = max(time, indexed[ti][0])
+        while ti < n and indexed[ti][0] <= time:
+            heapq.heappush(heap, (indexed[ti][1], indexed[ti][2]))
+            ti += 1
+        pt, idx = heapq.heappop(heap)
+        result.append(idx)
+        time += pt
+    return result
+`,
+
+  'number-of-ways-to-split-string': `
+def numWays(s):
+    MOD = 10**9 + 7
+    ones = [i for i, c in enumerate(s) if c == '1']
+    total = len(ones)
+    if total % 3 != 0:
+        return 0
+    if total == 0:
+        n = len(s)
+        return (n - 1) * (n - 2) // 2 % MOD
+    k = total // 3
+    gap1 = ones[k] - ones[k - 1]
+    gap2 = ones[2 * k] - ones[2 * k - 1]
+    return gap1 * gap2 % MOD
+`,
+
 };

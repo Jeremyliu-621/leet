@@ -2249,6 +2249,10 @@ import { problem as lowestCommonAncestorOfABST } from './lowest-common-ancestor-
 import { problem as lowestCommonAncestorOfABinaryTree } from './lowest-common-ancestor-of-a-binary-tree';
 import { problem as binaryTreeZigzagLevelOrderTraversal } from './binary-tree-zigzag-level-order-traversal';
 import { problem as binaryTreeLevelOrderTraversalII } from './binary-tree-level-order-traversal-ii';
+// batch 113 — strings+union-find/medium, heap+simulation/medium, strings+math/medium
+import { problem as lexicographicallySmallestEquivalentString } from './lexicographically-smallest-equivalent-string';
+import { problem as singleThreadedCpu } from './single-threaded-cpu';
+import { problem as numberOfWaysToSplitString } from './number-of-ways-to-split-string';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4535,4 +4539,8 @@ export const problems: readonly Problem[] = [
   lowestCommonAncestorOfABinaryTree,
   binaryTreeZigzagLevelOrderTraversal,
   binaryTreeLevelOrderTraversalII,
+  // batch 113 — strings+union-find/medium, heap+simulation/medium, strings+math/medium
+  lexicographicallySmallestEquivalentString,
+  singleThreadedCpu,
+  numberOfWaysToSplitString,
 ];

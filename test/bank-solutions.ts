@@ -32655,4 +32655,98 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return swaps;
   },
 
+  // batch 113
+  'lexicographically-smallest-equivalent-string': (...args: unknown[]) => {
+    const s1 = args[0] as string;
+    const s2 = args[1] as string;
+    const baseStr = args[2] as string;
+    const parent: number[] = Array.from({ length: 26 }, (_, i) => i);
+    function find(x: number): number {
+      if (parent[x] !== x) parent[x] = find(parent[x]!);
+      return parent[x]!;
+    }
+    for (let i = 0; i < s1.length; i++) {
+      const a = s1.charCodeAt(i) - 97;
+      const b = s2.charCodeAt(i) - 97;
+      const ra = find(a);
+      const rb = find(b);
+      if (ra !== rb) {
+        if (ra < rb) parent[rb] = ra;
+        else parent[ra] = rb;
+      }
+    }
+    return baseStr.split('').map(c => String.fromCharCode(find(c.charCodeAt(0) - 97) + 97)).join('');
+  },
+
+  'single-threaded-cpu': (...args: unknown[]) => {
+    const raw = args[0] as number[][];
+    const tasks: [number, number, number][] = raw.map((t, i) => [t[0]!, t[1]!, i]);
+    tasks.sort((a, b) => a[0] !== b[0] ? a[0] - b[0] : a[2] - b[2]);
+    const heap: [number, number][] = [];
+    function cmp(a: [number, number], b: [number, number]) {
+      return a[0] < b[0] || (a[0] === b[0] && a[1] < b[1]);
+    }
+    function heapPush(val: [number, number]) {
+      heap.push(val);
+      let i = heap.length - 1;
+      while (i > 0) {
+        const p = Math.floor((i - 1) / 2);
+        if (!cmp(val, heap[p]!)) break;
+        heap[i] = heap[p]!;
+        heap[p] = val;
+        i = p;
+      }
+    }
+    function heapPop(): [number, number] {
+      const top = heap[0]!;
+      const last = heap.pop()!;
+      if (heap.length > 0) {
+        heap[0] = last;
+        let i = 0;
+        while (true) {
+          let s = i;
+          const l = 2 * i + 1, r = 2 * i + 2;
+          if (l < heap.length && cmp(heap[l]!, heap[s]!)) s = l;
+          if (r < heap.length && cmp(heap[r]!, heap[s]!)) s = r;
+          if (s === i) break;
+          [heap[i], heap[s]] = [heap[s]!, heap[i]!];
+          i = s;
+        }
+      }
+      return top;
+    }
+    const result: number[] = [];
+    let time = 0;
+    let ti = 0;
+    const n = tasks.length;
+    while (result.length < n) {
+      if (heap.length === 0 && ti < n) time = Math.max(time, tasks[ti]![0]);
+      while (ti < n && tasks[ti]![0] <= time) {
+        heapPush([tasks[ti]![1], tasks[ti]![2]]);
+        ti++;
+      }
+      const [pt, idx] = heapPop();
+      result.push(idx);
+      time += pt;
+    }
+    return result;
+  },
+
+  'number-of-ways-to-split-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const MOD = 1_000_000_007n;
+    const ones: number[] = [];
+    for (let i = 0; i < s.length; i++) if (s[i] === '1') ones.push(i);
+    const total = ones.length;
+    if (total % 3 !== 0) return 0;
+    if (total === 0) {
+      const n = BigInt(s.length);
+      return Number(((n - 1n) * (n - 2n) / 2n) % MOD);
+    }
+    const k = total / 3;
+    const gap1 = BigInt(ones[k]! - ones[k - 1]!);
+    const gap2 = BigInt(ones[2 * k]! - ones[2 * k - 1]!);
+    return Number((gap1 * gap2) % MOD);
+  },
+
 };
