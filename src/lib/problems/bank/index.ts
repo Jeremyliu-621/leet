@@ -2412,12 +2412,30 @@ import { problem as findMissingObservations } from './find-missing-observations'
 import { problem as decryptXoredArray } from './decrypt-xored-array';
 import { problem as countItemsMatchingARule } from './count-items-matching-a-rule';
 import { problem as kidsWithTheGreatestNumberOfCandies } from './kids-with-the-greatest-number-of-candies';
-// batch 141 — arrays/easy, arrays/medium, stack+arrays/hard, arrays+dp+binary-search/hard, arrays+graph/medium
+// batch 141b — arrays/easy, arrays/medium, stack+arrays/hard, arrays+dp+binary-search/hard, arrays+graph/medium
 import { problem as numberOfUnequalTriplets } from './number-of-unequal-triplets-in-array';
 import { problem as maximizeSquareHoleArea } from './maximize-area-of-square-hole-in-grid';
 import { problem as sumTotalStrengthOfWizards } from './sum-of-total-strength-of-wizards';
 import { problem as maxEventsAttendedII } from './maximum-number-of-events-that-can-be-attended-ii';
 import { problem as minimumOpsConvertNumber } from './minimum-operations-to-convert-number';
+// batch 144 — graph+tree/medium, arrays+hash-map/medium
+import { problem as reorderRoutesToCityZero } from './reorder-routes-to-make-all-paths-lead-to-the-city-zero';
+import { problem as countTheNumberOfBeautifulSubarrays } from './count-the-number-of-beautiful-subarrays';
+// batch 143 — arrays+dp/medium, strings+sliding-window/easy, arrays+simulation/medium
+import { problem as maximumTotalDamageWithSpellCasting } from './maximum-total-damage-with-spell-casting';
+import { problem as countSubstringsThatSatisfyKConstraintI } from './count-substrings-that-satisfy-k-constraint-i';
+import { problem as minimumDominoRotationsForEqualRow } from './minimum-domino-rotations-for-equal-row';
+// batch 142 — strings+two-pointers/easy, strings+hash-map/medium, graph+topological-sort/medium
+import { problem as reverseVowelsOfAString } from './reverse-vowels-of-a-string';
+import { problem as applyOperationsToMakeStringEmpty } from './apply-operations-to-make-string-empty';
+import { problem as findAllPossibleRecipesFromGivenSupplies } from './find-all-possible-recipes-from-given-supplies';
+// batch 141 — math/hard, strings/hard+math, strings/hard, arrays+math/medium, arrays+math/hard, arrays+dp/hard
+import { problem as reachingPoints } from './reaching-points';
+import { problem as orderlyQueue } from './orderly-queue';
+import { problem as validNumber } from './valid-number';
+import { problem as minimumMovesToEqualArrayElementsII } from './minimum-moves-to-equal-array-elements-ii';
+import { problem as superWashingMachines } from './super-washing-machines';
+import { problem as numberOfSubmatricesThatSumToTarget } from './number-of-submatrices-that-sum-to-target';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4867,10 +4885,28 @@ export const problems: readonly Problem[] = [
   decryptXoredArray,
   countItemsMatchingARule,
   kidsWithTheGreatestNumberOfCandies,
-  // batch 141 — arrays/easy, arrays/medium, stack+arrays/hard, arrays+dp+binary-search/hard, arrays+graph/medium
+  // batch 141b — arrays/easy, arrays/medium, stack+arrays/hard, arrays+dp+binary-search/hard, arrays+graph/medium
   numberOfUnequalTriplets,
   maximizeSquareHoleArea,
   sumTotalStrengthOfWizards,
   maxEventsAttendedII,
   minimumOpsConvertNumber,
+  // batch 144 — graph+tree/medium, arrays+hash-map/medium
+  reorderRoutesToCityZero,
+  countTheNumberOfBeautifulSubarrays,
+  // batch 143 — arrays+dp/medium, strings+sliding-window/easy, arrays+simulation/medium
+  maximumTotalDamageWithSpellCasting,
+  countSubstringsThatSatisfyKConstraintI,
+  minimumDominoRotationsForEqualRow,
+  // batch 142 — strings+two-pointers/easy, strings+hash-map/medium, graph+topological-sort/medium
+  reverseVowelsOfAString,
+  applyOperationsToMakeStringEmpty,
+  findAllPossibleRecipesFromGivenSupplies,
+  // batch 141 — math/hard, strings/hard+math, strings/hard, arrays+math/medium, arrays+math/hard, arrays+dp/hard
+  reachingPoints,
+  orderlyQueue,
+  validNumber,
+  minimumMovesToEqualArrayElementsII,
+  superWashingMachines,
+  numberOfSubmatricesThatSumToTarget,
 ];
