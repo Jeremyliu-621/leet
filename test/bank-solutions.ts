@@ -32175,6 +32175,85 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     dfs(root, root ? root.val : 0, 0);
     return max;
   },
+  'validate-binary-search-tree': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    interface N { val: number; left: N | null; right: N | null }
+    const fromArray = (a: (number | null)[]): N | null => {
+      if (!a.length || a[0] == null) return null;
+      const root: N = { val: a[0], left: null, right: null };
+      const q: N[] = [root];
+      let i = 1;
+      while (q.length && i < a.length) {
+        const node = q.shift() as N;
+        if (a[i] != null) { node.left = { val: a[i] as number, left: null, right: null }; q.push(node.left); }
+        i++;
+        if (i < a.length && a[i] != null) { node.right = { val: a[i] as number, left: null, right: null }; q.push(node.right); }
+        i++;
+      }
+      return root;
+    };
+    const dfs = (node: N | null, min: number, max: number): boolean => {
+      if (!node) return true;
+      if (node.val <= min || node.val >= max) return false;
+      return dfs(node.left, min, node.val) && dfs(node.right, node.val, max);
+    };
+    return dfs(fromArray(arr), -Infinity, Infinity);
+  },
+  'kth-smallest-element-in-a-bst': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    let k = args[1] as number;
+    interface N { val: number; left: N | null; right: N | null }
+    const fromArray = (a: (number | null)[]): N | null => {
+      if (!a.length || a[0] == null) return null;
+      const root: N = { val: a[0], left: null, right: null };
+      const q: N[] = [root];
+      let i = 1;
+      while (q.length && i < a.length) {
+        const node = q.shift() as N;
+        if (a[i] != null) { node.left = { val: a[i] as number, left: null, right: null }; q.push(node.left); }
+        i++;
+        if (i < a.length && a[i] != null) { node.right = { val: a[i] as number, left: null, right: null }; q.push(node.right); }
+        i++;
+      }
+      return root;
+    };
+    let result = 0;
+    const inorder = (node: N | null) => {
+      if (!node || k === 0) return;
+      inorder(node.left);
+      if (--k === 0) result = node.val;
+      inorder(node.right);
+    };
+    inorder(fromArray(arr));
+    return result;
+  },
+  'lowest-common-ancestor-of-a-bst': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const p = args[1] as number;
+    const q = args[2] as number;
+    interface N { val: number; left: N | null; right: N | null }
+    const fromArray = (a: (number | null)[]): N | null => {
+      if (!a.length || a[0] == null) return null;
+      const root: N = { val: a[0], left: null, right: null };
+      const queue: N[] = [root];
+      let i = 1;
+      while (queue.length && i < a.length) {
+        const node = queue.shift() as N;
+        if (a[i] != null) { node.left = { val: a[i] as number, left: null, right: null }; queue.push(node.left); }
+        i++;
+        if (i < a.length && a[i] != null) { node.right = { val: a[i] as number, left: null, right: null }; queue.push(node.right); }
+        i++;
+      }
+      return root;
+    };
+    const lca = (node: N | null): N => {
+      if (!node) return { val: -1, left: null, right: null };
+      if (p < node.val && q < node.val) return lca(node.left);
+      if (p > node.val && q > node.val) return lca(node.right);
+      return node;
+    };
+    return lca(fromArray(arr)).val;
+  },
   'check-if-two-string-arrays-are-equivalent': (...args: unknown[]) => {
     return (args[0] as string[]).join('') === (args[1] as string[]).join('');
   },

@@ -2237,6 +2237,10 @@ import { problem as twoSumIIIDataStructureDesign } from './two-sum-iii-data-stru
 import { problem as checkIfTwoStringArraysAreEquivalent } from './check-if-two-string-arrays-are-equivalent';
 import { problem as verifyPreorderSerializationOfABinaryTree } from './verify-preorder-serialization-of-a-binary-tree';
 import { problem as serializeAndDeserializeBinaryTree } from './serialize-and-deserialize-binary-tree';
+// batch 111 — tree/medium, tree/medium, tree/easy
+import { problem as validateBinarySearchTree } from './validate-binary-search-tree';
+import { problem as kthSmallestElementInABST } from './kth-smallest-element-in-a-bst';
+import { problem as lowestCommonAncestorOfABST } from './lowest-common-ancestor-of-a-bst';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4511,4 +4515,8 @@ export const problems: readonly Problem[] = [
   checkIfTwoStringArraysAreEquivalent,
   verifyPreorderSerializationOfABinaryTree,
   serializeAndDeserializeBinaryTree,
+  // batch 111 — tree/medium, tree/medium, tree/easy
+  validateBinarySearchTree,
+  kthSmallestElementInABST,
+  lowestCommonAncestorOfABST,
 ];
