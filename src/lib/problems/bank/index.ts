@@ -2427,12 +2427,17 @@ import { problem as getFinalStateKMultiplicationI } from './final-array-state-af
 import { problem as findWinningPlayer } from './find-the-first-player-to-win-k-games-in-a-row';
 import { problem as sumDigitDifferencesAllPairs } from './sum-of-digit-differences-of-all-pairs';
 import { problem as countOfMonotonicPairsI } from './find-the-count-of-monotonic-pairs-i';
-// batch 141 — arrays/easy, arrays/medium, stack+arrays/hard, arrays+dp+binary-search/hard, arrays+graph/medium
+// batch 141b — arrays/easy, arrays/medium, stack+arrays/hard, arrays+dp+binary-search/hard, arrays+graph/medium
 import { problem as numberOfUnequalTriplets } from './number-of-unequal-triplets-in-array';
 import { problem as maximizeSquareHoleArea } from './maximize-area-of-square-hole-in-grid';
 import { problem as sumTotalStrengthOfWizards } from './sum-of-total-strength-of-wizards';
 import { problem as maxEventsAttendedII } from './maximum-number-of-events-that-can-be-attended-ii';
 import { problem as minimumOpsConvertNumber } from './minimum-operations-to-convert-number';
+// batch 145 — arrays/medium, arrays+backtracking/medium, arrays+backtracking/hard, arrays/hard, math/hard
+import { problem as countMaxBitwiseOrSubsets } from './count-number-of-max-bitwise-or-subsets';
+import { problem as partitionKEqualSumSubsets } from './partition-to-k-equal-sum-subsets';
+import { problem as minOpsArrayEqualToTarget } from './minimum-operations-to-make-array-equal-to-target';
+import { problem as consecutiveNumbersSum } from './consecutive-numbers-sum';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4897,10 +4902,15 @@ export const problems: readonly Problem[] = [
   findWinningPlayer,
   sumDigitDifferencesAllPairs,
   countOfMonotonicPairsI,
-  // batch 141 — arrays/easy, arrays/medium, stack+arrays/hard, arrays+dp+binary-search/hard, arrays+graph/medium
+    // batch 141b — arrays/easy, arrays/medium, stack+arrays/hard, arrays+dp+binary-search/hard, arrays+graph/medium
   numberOfUnequalTriplets,
   maximizeSquareHoleArea,
   sumTotalStrengthOfWizards,
   maxEventsAttendedII,
   minimumOpsConvertNumber,
+  // batch 145 — arrays/medium, arrays+backtracking/medium, arrays/hard, math/hard
+  countMaxBitwiseOrSubsets,
+  partitionKEqualSumSubsets,
+  minOpsArrayEqualToTarget,
+  consecutiveNumbersSum,
 ];

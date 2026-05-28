@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2221** problems; 6957 tests green. Batches 102–144b + 142 complete. UX polish ongoing.
+**Current focus:** Bank at **2225** problems; 6969 tests green. Batches 102–145 complete. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More UX polish; more bank growth; accessibility audit.
 

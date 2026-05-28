@@ -34079,6 +34079,244 @@ def kidsWithCandies(candies, extraCandies: int):
 `,
 
   // batch 141
+  'reaching-points': `
+def reachingPoints(sx: int, sy: int, tx: int, ty: int) -> bool:
+    while tx >= sx and ty >= sy:
+        if tx == sx and ty == sy:
+            return True
+        if tx > ty:
+            if ty == sy:
+                return (tx - sx) % ty == 0
+            tx %= ty
+        else:
+            if tx == sx:
+                return (ty - sy) % tx == 0
+            ty %= tx
+    return False
+`,
+
+  'orderly-queue': `
+def orderlyQueue(s: str, k: int) -> str:
+    if k == 1:
+        return min(s[i:] + s[:i] for i in range(len(s)))
+    return ''.join(sorted(s))
+`,
+
+  'valid-number': `
+def isNumber(s: str) -> bool:
+    seen_digit = seen_dot = seen_e = False
+    for i, c in enumerate(s):
+        if c.isdigit():
+            seen_digit = True
+        elif c in ('+', '-'):
+            if i > 0 and s[i-1] not in ('e', 'E'):
+                return False
+        elif c == '.':
+            if seen_dot or seen_e:
+                return False
+            seen_dot = True
+        elif c in ('e', 'E'):
+            if seen_e or not seen_digit:
+                return False
+            seen_e = True
+            seen_digit = False
+        else:
+            return False
+    return seen_digit
+`,
+
+  'minimum-moves-to-equal-array-elements-ii': `
+def minMoves2(nums) -> int:
+    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    median = nums[len(nums) // 2]
+    return sum(abs(x - median) for x in nums)
+`,
+
+  'super-washing-machines': `
+def findMinMoves(machines) -> int:
+    machines = list(machines.to_py() if hasattr(machines, 'to_py') else machines)
+    total = sum(machines)
+    n = len(machines)
+    if total % n != 0:
+        return -1
+    avg = total // n
+    ans = running = 0
+    for m in machines:
+        running += m - avg
+        ans = max(ans, abs(running), m - avg)
+    return ans
+`,
+
+  'number-of-submatrices-that-sum-to-target': `
+def numSubmatrixSumTarget(matrix, target: int) -> int:
+    matrix = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (matrix.to_py() if hasattr(matrix, 'to_py') else matrix)]
+    from collections import defaultdict
+    m, n = len(matrix), len(matrix[0])
+    for row in matrix:
+        for j in range(1, n):
+            row[j] += row[j-1]
+    count = 0
+    for c1 in range(n):
+        for c2 in range(c1, n):
+            freq = defaultdict(int)
+            freq[0] = 1
+            cur_sum = 0
+            for row in matrix:
+                cur_sum += row[c2] - (row[c1-1] if c1 > 0 else 0)
+                count += freq[cur_sum - target]
+                freq[cur_sum] += 1
+    return count
+`,
+
+  // batch 142
+  'reverse-vowels-of-a-string': `
+def reverseVowels(s: str) -> str:
+    vowels = set('aeiouAEIOU')
+    arr = list(s)
+    l, r = 0, len(arr) - 1
+    while l < r:
+        while l < r and arr[l] not in vowels:
+            l += 1
+        while l < r and arr[r] not in vowels:
+            r -= 1
+        if l < r:
+            arr[l], arr[r] = arr[r], arr[l]
+            l += 1
+            r -= 1
+    return ''.join(arr)
+`,
+
+  'apply-operations-to-make-string-empty': `
+def lastNonEmptyString(s: str) -> str:
+    from collections import Counter
+    freq = Counter(s)
+    last_idx = {}
+    for i, c in enumerate(s):
+        last_idx[c] = i
+    max_freq = max(freq.values())
+    candidates = [(last_idx[c], c) for c, f in freq.items() if f == max_freq]
+    candidates.sort()
+    return ''.join(c for _, c in candidates)
+`,
+
+  'find-all-possible-recipes-from-given-supplies': `
+def findAllRecipes(recipes, ingredients, supplies):
+    from collections import defaultdict, deque
+    recipes = list(recipes.to_py() if hasattr(recipes, 'to_py') else recipes)
+    ingredients = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (ingredients.to_py() if hasattr(ingredients, 'to_py') else ingredients)]
+    supplies = list(supplies.to_py() if hasattr(supplies, 'to_py') else supplies)
+    in_degree = {}
+    graph = defaultdict(list)
+    for i, r in enumerate(recipes):
+        in_degree[r] = len(ingredients[i])
+        for ing in ingredients[i]:
+            graph[ing].append(r)
+    queue = deque(supplies)
+    result = []
+    while queue:
+        cur = queue.popleft()
+        for recipe in graph[cur]:
+            in_degree[recipe] -= 1
+            if in_degree[recipe] == 0:
+                result.append(recipe)
+                queue.append(recipe)
+    return result
+`,
+
+  // batch 143
+  'maximum-total-damage-with-spell-casting': `
+def maximumTotalDamage(power) -> int:
+    power = list(power.to_py() if hasattr(power, 'to_py') else power)
+    from collections import defaultdict
+    freq = defaultdict(int)
+    for p in power:
+        freq[p] += p
+    vals = sorted(freq.keys())
+    dp = [0] * len(vals)
+    for i, v in enumerate(vals):
+        contrib = freq[v]
+        best = 0
+        j = i - 1
+        while j >= 0 and vals[j] >= v - 2:
+            j -= 1
+        if j >= 0:
+            best = dp[j]
+        dp[i] = max(dp[i-1] if i > 0 else 0, best + contrib)
+    return dp[-1] if dp else 0
+`,
+
+  'minimum-domino-rotations-for-equal-row': `
+def minDominoRotations(tops, bottoms) -> int:
+    tops = list(tops.to_py() if hasattr(tops, 'to_py') else tops)
+    bottoms = list(bottoms.to_py() if hasattr(bottoms, 'to_py') else bottoms)
+    def check(target):
+        rot_top = rot_bot = 0
+        for t, b in zip(tops, bottoms):
+            if t != target and b != target:
+                return float('inf')
+            if t != target:
+                rot_top += 1
+            if b != target:
+                rot_bot += 1
+        return min(rot_top, rot_bot)
+    res = min(check(tops[0]), check(bottoms[0]))
+    return -1 if res == float('inf') else res
+`,
+
+  // batch 144
+  'reorder-routes-to-make-all-paths-lead-to-the-city-zero': `
+def minReorder(n: int, connections) -> int:
+    connections = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (connections.to_py() if hasattr(connections, 'to_py') else connections)]
+    from collections import defaultdict, deque
+    adj = defaultdict(list)
+    for u, v in connections:
+        adj[u].append((v, 1))
+        adj[v].append((u, 0))
+    visited = set([0])
+    queue = deque([0])
+    changes = 0
+    while queue:
+        cur = queue.popleft()
+        for nb, cost in adj[cur]:
+            if nb not in visited:
+                visited.add(nb)
+                changes += cost
+                queue.append(nb)
+    return changes
+`,
+
+  'count-the-number-of-beautiful-subarrays': `
+def beautifulSubarrays(nums) -> int:
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    from collections import defaultdict
+    freq = defaultdict(int)
+    freq[0] = 1
+    xor = 0
+    count = 0
+    for v in nums:
+        xor ^= v
+        count += freq[xor]
+        freq[xor] += 1
+    return count
+`,
+
+  // batch 143
+  'count-substrings-that-satisfy-k-constraint-i': `
+def countKConstraintSubstrings(s: str, k: int) -> int:
+    count = 0
+    for i in range(len(s)):
+        zeros = ones = 0
+        for j in range(i, len(s)):
+            if s[j] == '0':
+                zeros += 1
+            else:
+                ones += 1
+            if zeros <= k or ones <= k:
+                count += 1
+    return count
+`,
+
+  // batch 141b
   'number-of-unequal-triplets-in-array': `
 def unequalTriplets(nums):
     nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
@@ -34178,109 +34416,7 @@ def minimumOperations(nums, start, goal):
         queue = nxt
     return -1
 `,
-
-  // batch 141 python (math/hard + hard)
-  'reaching-points': `
-def reachingPoints(sx: int, sy: int, tx: int, ty: int) -> bool:
-    while tx >= sx and ty >= sy:
-        if tx == sx and ty == sy:
-            return True
-        if tx > ty:
-            if ty == sy:
-                return (tx - sx) % ty == 0
-            tx %= ty
-        else:
-            if tx == sx:
-                return (ty - sy) % tx == 0
-            ty %= tx
-    return False
-`,
-
-  'orderly-queue': `
-def orderlyQueue(s: str, k: int) -> str:
-    if k >= 2:
-        return ''.join(sorted(s))
-    best = s
-    for i in range(1, len(s)):
-        rot = s[i:] + s[:i]
-        if rot < best:
-            best = rot
-    return best
-`,
-
-  'valid-number': `
-def isNumber(s: str) -> bool:
-    seen_digit = False
-    seen_dot = False
-    seen_e = False
-    for i, c in enumerate(s):
-        if c.isdigit():
-            seen_digit = True
-        elif c in ('+', '-'):
-            if i != 0 and s[i - 1] not in ('e', 'E'):
-                return False
-        elif c == '.':
-            if seen_dot or seen_e:
-                return False
-            seen_dot = True
-        elif c in ('e', 'E'):
-            if seen_e or not seen_digit:
-                return False
-            seen_e = True
-            seen_digit = False
-        else:
-            return False
-    return seen_digit
-`,
-
-  'minimum-moves-to-equal-array-elements-ii': `
-def minMoves2(nums: list) -> int:
-    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
-    nums.sort()
-    median = nums[len(nums) // 2]
-    return sum(abs(n - median) for n in nums)
-`,
-
-  'super-washing-machines': `
-def findMinMoves(machines: list) -> int:
-    machines = list(machines.to_py() if hasattr(machines, 'to_py') else machines)
-    total = sum(machines)
-    n = len(machines)
-    if total % n != 0:
-        return -1
-    target = total // n
-    ans = 0
-    flow = 0
-    for m in machines:
-        flow += m - target
-        ans = max(ans, abs(flow), m - target)
-    return ans
-`,
-
-  'number-of-submatrices-that-sum-to-target': `
-def numSubmatrixSumTarget(matrix: list, target: int) -> int:
-    if hasattr(matrix, 'to_py'):
-        matrix = matrix.to_py()
-    matrix = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in matrix]
-    from collections import defaultdict
-    m, n = len(matrix), len(matrix[0])
-    count = 0
-    for r1 in range(m):
-        col_sum = [0] * n
-        for r2 in range(r1, m):
-            for c in range(n):
-                col_sum[c] += matrix[r2][c]
-            prefix_count = defaultdict(int)
-            prefix_count[0] = 1
-            prefix = 0
-            for s in col_sum:
-                prefix += s
-                count += prefix_count[prefix - target]
-                prefix_count[prefix] += 1
-    return count
-`,
-
-    // batch 142
+  // batch 142
   'maximum-height-of-a-triangle': `
 def maxHeightOfTriangle(red, blue):
     def check(a, b):
@@ -34303,21 +34439,6 @@ def minimumCost(nums, k):
         return nums[0]
     rest = sorted(nums[1:])
     return nums[0] + sum(rest[:k - 1])`,
-
-  'count-substrings-that-satisfy-k-constraint-i': `
-def countKConstraintSubstrings(s, k):
-    count = 0
-    n = len(s)
-    for i in range(n):
-        zeros = ones = 0
-        for j in range(i, n):
-            if s[j] == '0':
-                zeros += 1
-            else:
-                ones += 1
-            if zeros <= k or ones <= k:
-                count += 1
-    return count`,
 
   'final-array-state-after-k-multiplication-operations-i': `
 def getFinalState(nums, k, multiplier):
@@ -34381,5 +34502,79 @@ def countOfPairs(nums):
                 new_dp[v] = prefix[max_prev + 1]
         dp = new_dp
     return sum(dp) % MOD`,
+
+  'count-number-of-max-bitwise-or-subsets': `
+def countMaxOrSubsets(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    max_or = 0
+    for x in nums:
+        max_or |= x
+    count = 0
+    for mask in range(1, 1 << n):
+        cur = 0
+        for i in range(n):
+            if mask >> i & 1:
+                cur |= nums[i]
+        if cur == max_or:
+            count += 1
+    return count
+`,
+
+  'partition-to-k-equal-sum-subsets': `
+def canPartitionKSubsets(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    total = sum(nums)
+    if total % k != 0:
+        return False
+    target = total // k
+    nums.sort(reverse=True)
+    if nums[0] > target:
+        return False
+    buckets = [0] * k
+    def bt(i):
+        if i == len(nums):
+            return True
+        seen = set()
+        for j in range(k):
+            if buckets[j] in seen:
+                continue
+            if buckets[j] + nums[i] <= target:
+                seen.add(buckets[j])
+                buckets[j] += nums[i]
+                if bt(i + 1):
+                    return True
+                buckets[j] -= nums[i]
+        return False
+    return bt(0)
+`,
+
+  'minimum-operations-to-make-array-equal-to-target': `
+def minimumOperations(nums, target):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    target = list(target.to_py() if hasattr(target, 'to_py') else target)
+    ans = 0
+    prev = 0
+    for i in range(len(nums)):
+        d = target[i] - nums[i]
+        if d > prev:
+            ans += d - prev
+        prev = d
+    if prev < 0:
+        ans += -prev
+    return ans
+`,
+
+  'consecutive-numbers-sum': `
+def consecutiveNumbersSum(n):
+    count = 0
+    k = 1
+    while k * (k + 1) <= 2 * n:
+        if (2 * n - k * (k - 1)) % (2 * k) == 0:
+            count += 1
+        k += 1
+    return count
+`,
+
 
 };
