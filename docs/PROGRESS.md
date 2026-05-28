@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2125** problems; 6678 tests green. Batches 102–125 + 113b + 117b + 122b complete. TypeScript starters backfilled. Site stats at 2,125+.
+**Current focus:** Bank at **2127** problems; 6684 tests green. Batches 102–125 + 113b + 117b + 122b + 123b complete. TypeScript starters backfilled. Site stats at 2,127+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 126 bank growth; UI/UX refinements; accessibility audit.
+
+### feat(bank): add batch 123b — score-of-string, sum-squares-special-elements (2026-05-28)
+Two easy problems: `score-of-a-string` (easy/strings, adjacent ASCII diff sum), `sum-of-squares-of-special-elements` (easy/arrays+math, 1-indexed divisor positions). JS + Python reference solutions. Bank at **2127**; 6684 tests.
 
 ### feat(bank): add batch 125 — find-champion-i, consistent-strings, abs-diff-k-pairs (2026-05-28)
 Three easy problems: `find-champion-i` (easy/arrays, find team with column-sum 0 in grid — no one beats them), `count-the-number-of-consistent-strings` (easy/arrays+strings+hash-map, count words where all chars in allowed Set), `count-number-of-pairs-with-absolute-difference-k` (easy/arrays+hash-map, O(n²) brute force |a-b|==k). Bank at **2125**; 6678 tests.

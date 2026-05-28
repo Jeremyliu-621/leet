@@ -33299,4 +33299,20 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  // batch 123b
+  'score-of-a-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let score = 0;
+    for (let i = 0; i < s.length - 1; i++) score += Math.abs(s.charCodeAt(i) - s.charCodeAt(i + 1));
+    return score;
+  },
+
+  'sum-of-squares-of-special-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    let sum = 0;
+    for (let i = 1; i <= n; i++) if (n % i === 0) sum += nums[i - 1]! ** 2;
+    return sum;
+  },
+
 };

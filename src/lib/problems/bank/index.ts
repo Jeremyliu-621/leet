@@ -2308,6 +2308,9 @@ import { problem as minimumTimeToReachLastRoomII } from './minimum-time-to-reach
 import { problem as minimumNumberOfOperationsToMakeArrayEmpty } from './minimum-number-of-operations-to-make-array-empty';
 import { problem as findMaximumNumberOfStringPairs } from './find-maximum-number-of-string-pairs';
 import { problem as checkIfAStringIsAnAcronymOfWords } from './check-if-a-string-is-an-acronym-of-words';
+// batch 123b — strings/easy, arrays+math/easy
+import { problem as scoreOfAString } from './score-of-a-string';
+import { problem as sumOfSquaresOfSpecialElements } from './sum-of-squares-of-special-elements';
 // batch 125 — arrays/easy, arrays+strings+hash-map/easy, arrays+hash-map/easy
 import { problem as findChampionI } from './find-champion-i';
 import { problem as countTheNumberOfConsistentStrings } from './count-the-number-of-consistent-strings';
@@ -4657,6 +4660,9 @@ export const problems: readonly Problem[] = [
   minimumNumberOfOperationsToMakeArrayEmpty,
   findMaximumNumberOfStringPairs,
   checkIfAStringIsAnAcronymOfWords,
+  // batch 123b — strings/easy, arrays+math/easy
+  scoreOfAString,
+  sumOfSquaresOfSpecialElements,
   // batch 125 — arrays/easy, arrays+strings+hash-map/easy, arrays+hash-map/easy
   findChampionI,
   countTheNumberOfConsistentStrings,

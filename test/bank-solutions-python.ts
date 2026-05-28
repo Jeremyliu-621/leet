@@ -33022,4 +33022,17 @@ def countKDifference(nums, k):
     return count
 `,
 
+  // batch 123b
+  'score-of-a-string': `
+def scoreOfString(s):
+    return sum(abs(ord(s[i]) - ord(s[i+1])) for i in range(len(s) - 1))
+`,
+
+  'sum-of-squares-of-special-elements': `
+def sumOfSquares(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    return sum(nums[i-1] ** 2 for i in range(1, n+1) if n % i == 0)
+`,
+
 };
