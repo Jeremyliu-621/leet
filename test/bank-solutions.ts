@@ -33915,4 +33915,67 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  // batch 134 — arrays+simulation/easy, arrays+math/medium, arrays+dynamic-programming/hard
+  'count-strictly-increasing-columns': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const m = matrix.length;
+    const n = matrix[0]!.length;
+    let count = 0;
+    for (let j = 0; j < n; j++) {
+      let ok = true;
+      for (let i = 1; i < m; i++) {
+        if (matrix[i]![j]! <= matrix[i - 1]![j]!) { ok = false; break; }
+      }
+      if (ok) count++;
+    }
+    return count;
+  },
+
+  'find-xor-sum-of-all-pairs-bitwise-and': (...args: unknown[]) => {
+    const arr1 = args[0] as number[];
+    const arr2 = args[1] as number[];
+    let xor1 = 0;
+    for (const x of arr1) xor1 ^= x;
+    let xor2 = 0;
+    for (const x of arr2) xor2 ^= x;
+    return xor1 & xor2;
+  },
+
+  'minimum-cost-to-connect-two-groups': (...args: unknown[]) => {
+    const cost = args[0] as number[][];
+    const size1 = cost.length;
+    const size2 = cost[0]!.length;
+    const full = 1 << size2;
+    const minCost2: number[] = new Array(size2).fill(Infinity);
+    for (let i = 0; i < size1; i++) {
+      for (let j = 0; j < size2; j++) {
+        if (cost[i]![j]! < minCost2[j]!) minCost2[j] = cost[i]![j]!;
+      }
+    }
+    let dp: number[] = new Array(full).fill(Infinity);
+    dp[0] = 0;
+    for (let i = 0; i < size1; i++) {
+      const newDp: number[] = new Array(full).fill(Infinity);
+      for (let mask = 0; mask < full; mask++) {
+        if (dp[mask] === Infinity) continue;
+        for (let j = 0; j < size2; j++) {
+          const newMask = mask | (1 << j);
+          const next = dp[mask]! + cost[i]![j]!;
+          if (next < newDp[newMask]!) newDp[newMask] = next;
+        }
+      }
+      dp = newDp;
+    }
+    let ans = Infinity;
+    for (let mask = 0; mask < full; mask++) {
+      if (dp[mask] === Infinity) continue;
+      let total = dp[mask]!;
+      for (let k = 0; k < size2; k++) {
+        if (!((mask >> k) & 1)) total += minCost2[k]!;
+      }
+      if (total < ans) ans = total;
+    }
+    return ans;
+  },
+
 };

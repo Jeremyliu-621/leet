@@ -33668,4 +33668,68 @@ def maxCount(banned, n, maxSum):
     return count
 `,
 
+  // batch 134 — arrays+simulation/easy, arrays+math/medium, arrays+dynamic-programming/hard
+  'count-strictly-increasing-columns': `
+def countIncreasingColumns(matrix):
+    matrix = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (matrix.to_py() if hasattr(matrix, 'to_py') else matrix)]
+    m = len(matrix)
+    n = len(matrix[0])
+    count = 0
+    for j in range(n):
+        ok = True
+        for i in range(1, m):
+            if matrix[i][j] <= matrix[i-1][j]:
+                ok = False
+                break
+        if ok:
+            count += 1
+    return count
+`,
+
+  'find-xor-sum-of-all-pairs-bitwise-and': `
+def findXORSumOfAllPairBitwiseAND(arr1, arr2):
+    arr1 = list(arr1.to_py() if hasattr(arr1, 'to_py') else arr1)
+    arr2 = list(arr2.to_py() if hasattr(arr2, 'to_py') else arr2)
+    xor1 = 0
+    for x in arr1:
+        xor1 ^= x
+    xor2 = 0
+    for x in arr2:
+        xor2 ^= x
+    return xor1 & xor2
+`,
+
+  'minimum-cost-to-connect-two-groups': `
+def minCostConnectGroups(cost):
+    cost = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (cost.to_py() if hasattr(cost, 'to_py') else cost)]
+    size1 = len(cost)
+    size2 = len(cost[0])
+    full = 1 << size2
+    min_cost2 = [min(cost[i][j] for i in range(size1)) for j in range(size2)]
+    dp = [float('inf')] * full
+    dp[0] = 0
+    for i in range(size1):
+        new_dp = [float('inf')] * full
+        for mask in range(full):
+            if dp[mask] == float('inf'):
+                continue
+            for j in range(size2):
+                new_mask = mask | (1 << j)
+                val = dp[mask] + cost[i][j]
+                if val < new_dp[new_mask]:
+                    new_dp[new_mask] = val
+        dp = new_dp
+    ans = float('inf')
+    for mask in range(full):
+        if dp[mask] == float('inf'):
+            continue
+        total = dp[mask]
+        for k in range(size2):
+            if not ((mask >> k) & 1):
+                total += min_cost2[k]
+        if total < ans:
+            ans = total
+    return ans
+`,
+
 };
