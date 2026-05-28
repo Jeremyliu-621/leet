@@ -33904,7 +33904,126 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
-  // batch 136 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
+  // batch 133b — strings+hash-map/easy, arrays+hash-map/hard, arrays+binary-search/medium
+  'count-the-number-of-special-characters-i': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const lower = new Set<string>();
+    const upper = new Set<string>();
+    for (const c of word) {
+      if (c === c.toLowerCase()) lower.add(c);
+      else upper.add(c.toLowerCase());
+    }
+    let count = 0;
+    for (const c of lower) if (upper.has(c)) count++;
+    return count;
+  },
+
+  'count-number-of-good-partitions': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const MOD = 1_000_000_007n;
+    const last = new Map<number, number>();
+    for (let i = 0; i < nums.length; i++) last.set(nums[i]!, i);
+    let result = 1n, maxEnd = 0;
+    for (let i = 0; i < nums.length - 1; i++) {
+      maxEnd = Math.max(maxEnd, last.get(nums[i]!)!);
+      if (i === maxEnd) result = result * 2n % MOD;
+    }
+    return Number(result);
+  },
+
+  'maximum-number-of-integers-to-choose-from-a-range-ii': (...args: unknown[]) => {
+    const banned = args[0] as number[], n = args[1] as number, maxSum = args[2] as number;
+    const bannedSet = new Set(banned);
+    const sorted = [...bannedSet].filter((x: number) => x <= n).sort((a, b) => a - b);
+    let count = 0;
+    let sumBig = 0n;
+    const maxSumBig = BigInt(maxSum);
+    let prev = 0;
+    const takeFrom = (lo: number, hi: number) => {
+      let lo2 = 0, hi2 = hi - lo + 1;
+      const loBig = BigInt(lo);
+      while (lo2 < hi2) {
+        const mid = Math.floor((lo2 + hi2 + 1) / 2);
+        const midBig = BigInt(mid);
+        if (sumBig + midBig * loBig + midBig * (midBig - 1n) / 2n <= maxSumBig) lo2 = mid;
+        else hi2 = mid - 1;
+      }
+      const lo2Big = BigInt(lo2);
+      sumBig += lo2Big * loBig + lo2Big * (lo2Big - 1n) / 2n;
+      count += lo2;
+    };
+    for (const b of sorted) {
+      if (b > prev + 1) takeFrom(prev + 1, b - 1);
+      prev = b;
+    }
+    if (prev < n) takeFrom(prev + 1, n);
+    return count;
+  },
+
+  // batch 134 — arrays+simulation/easy, arrays+math/medium, arrays+dynamic-programming/hard
+  'count-strictly-increasing-columns': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const m = matrix.length;
+    const n = matrix[0]!.length;
+    let count = 0;
+    for (let j = 0; j < n; j++) {
+      let ok = true;
+      for (let i = 1; i < m; i++) {
+        if (matrix[i]![j]! <= matrix[i - 1]![j]!) { ok = false; break; }
+      }
+      if (ok) count++;
+    }
+    return count;
+  },
+
+  'find-xor-sum-of-all-pairs-bitwise-and': (...args: unknown[]) => {
+    const arr1 = args[0] as number[];
+    const arr2 = args[1] as number[];
+    let xor1 = 0;
+    for (const x of arr1) xor1 ^= x;
+    let xor2 = 0;
+    for (const x of arr2) xor2 ^= x;
+    return xor1 & xor2;
+  },
+
+  'minimum-cost-to-connect-two-groups': (...args: unknown[]) => {
+    const cost = args[0] as number[][];
+    const size1 = cost.length;
+    const size2 = cost[0]!.length;
+    const full = 1 << size2;
+    const minCost2: number[] = new Array(size2).fill(Infinity);
+    for (let i = 0; i < size1; i++) {
+      for (let j = 0; j < size2; j++) {
+        if (cost[i]![j]! < minCost2[j]!) minCost2[j] = cost[i]![j]!;
+      }
+    }
+    let dp: number[] = new Array(full).fill(Infinity);
+    dp[0] = 0;
+    for (let i = 0; i < size1; i++) {
+      const newDp: number[] = new Array(full).fill(Infinity);
+      for (let mask = 0; mask < full; mask++) {
+        if (dp[mask] === Infinity) continue;
+        for (let j = 0; j < size2; j++) {
+          const newMask = mask | (1 << j);
+          const next = dp[mask]! + cost[i]![j]!;
+          if (next < newDp[newMask]!) newDp[newMask] = next;
+        }
+      }
+      dp = newDp;
+    }
+    let ans = Infinity;
+    for (let mask = 0; mask < full; mask++) {
+      if (dp[mask] === Infinity) continue;
+      let total = dp[mask]!;
+      for (let k = 0; k < size2; k++) {
+        if (!((mask >> k) & 1)) total += minCost2[k]!;
+      }
+      if (total < ans) ans = total;
+    }
+    return ans;
+  },
+
+  // batch 137 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
   'sort-people': (...args: unknown[]) => {
     const names = args[0] as string[];
     const heights = args[1] as number[];

@@ -33646,7 +33646,128 @@ def makeEqual(words):
     return all(v % n == 0 for v in freq.values())
 `,
 
-  // batch 136 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
+  // batch 133b — strings+hash-map/easy, arrays+hash-map/hard, arrays+binary-search/medium
+  'count-the-number-of-special-characters-i': `
+def numberOfSpecialChars(word):
+    lower = set()
+    upper = set()
+    for c in word:
+        if c == c.lower():
+            lower.add(c)
+        else:
+            upper.add(c.lower())
+    return sum(1 for c in lower if c in upper)
+`,
+
+  'count-number-of-good-partitions': `
+def numberOfGoodPartitions(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    MOD = 10**9 + 7
+    last = {}
+    for i, v in enumerate(nums):
+        last[v] = i
+    result = 1
+    max_end = 0
+    for i in range(len(nums) - 1):
+        max_end = max(max_end, last[nums[i]])
+        if i == max_end:
+            result = result * 2 % MOD
+    return result
+`,
+
+  'maximum-number-of-integers-to-choose-from-a-range-ii': `
+def maxCount(banned, n, maxSum):
+    banned = list(banned.to_py() if hasattr(banned, 'to_py') else banned)
+    banned_set = set(x for x in banned if x <= n)
+    sorted_banned = sorted(banned_set)
+    count = 0
+    total = 0
+    prev = 0
+    def take_from(lo, hi):
+        nonlocal count, total
+        lo2, hi2 = 0, hi - lo + 1
+        while lo2 < hi2:
+            mid = (lo2 + hi2 + 1) // 2
+            if total + mid * lo + mid * (mid - 1) // 2 <= maxSum:
+                lo2 = mid
+            else:
+                hi2 = mid - 1
+        total += lo2 * lo + lo2 * (lo2 - 1) // 2
+        count += lo2
+    for b in sorted_banned:
+        if b > prev + 1:
+            take_from(prev + 1, b - 1)
+        prev = b
+    if prev < n:
+        take_from(prev + 1, n)
+    return count
+`,
+
+  // batch 134 — arrays+simulation/easy, arrays+math/medium, arrays+dynamic-programming/hard
+  'count-strictly-increasing-columns': `
+def countIncreasingColumns(matrix):
+    matrix = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (matrix.to_py() if hasattr(matrix, 'to_py') else matrix)]
+    m = len(matrix)
+    n = len(matrix[0])
+    count = 0
+    for j in range(n):
+        ok = True
+        for i in range(1, m):
+            if matrix[i][j] <= matrix[i-1][j]:
+                ok = False
+                break
+        if ok:
+            count += 1
+    return count
+`,
+
+  'find-xor-sum-of-all-pairs-bitwise-and': `
+def findXORSumOfAllPairBitwiseAND(arr1, arr2):
+    arr1 = list(arr1.to_py() if hasattr(arr1, 'to_py') else arr1)
+    arr2 = list(arr2.to_py() if hasattr(arr2, 'to_py') else arr2)
+    xor1 = 0
+    for x in arr1:
+        xor1 ^= x
+    xor2 = 0
+    for x in arr2:
+        xor2 ^= x
+    return xor1 & xor2
+`,
+
+  'minimum-cost-to-connect-two-groups': `
+def minCostConnectGroups(cost):
+    cost = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (cost.to_py() if hasattr(cost, 'to_py') else cost)]
+    size1 = len(cost)
+    size2 = len(cost[0])
+    full = 1 << size2
+    min_cost2 = [min(cost[i][j] for i in range(size1)) for j in range(size2)]
+    dp = [float('inf')] * full
+    dp[0] = 0
+    for i in range(size1):
+        new_dp = [float('inf')] * full
+        for mask in range(full):
+            if dp[mask] == float('inf'):
+                continue
+            for j in range(size2):
+                new_mask = mask | (1 << j)
+                val = dp[mask] + cost[i][j]
+                if val < new_dp[new_mask]:
+                    new_dp[new_mask] = val
+        dp = new_dp
+    ans = float('inf')
+    for mask in range(full):
+        if dp[mask] == float('inf'):
+            continue
+        total = dp[mask]
+        for k in range(size2):
+            if not ((mask >> k) & 1):
+                total += min_cost2[k]
+        if total < ans:
+            ans = total
+    return ans
+`,
+
+  // batch 137 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
   'sort-people': `
 def sortPeople(names, heights):
     names = list(names.to_py() if hasattr(names, 'to_py') else names)
