@@ -34003,6 +34003,55 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 138b
+  'maximum-or': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const n = nums.length;
+    const pre = new Array(n + 1).fill(0n);
+    const suf = new Array(n + 1).fill(0n);
+    for (let i = 0; i < n; i++) pre[i + 1] = pre[i]! | BigInt(nums[i]!);
+    for (let i = n - 1; i >= 0; i--) suf[i] = suf[i + 1]! | BigInt(nums[i]!);
+    let ans = 0n;
+    for (let i = 0; i < n; i++) {
+      const val = (BigInt(nums[i]!) << BigInt(k)) | pre[i]! | suf[i + 1]!;
+      if (val > ans) ans = val;
+    }
+    return Number(ans);
+  },
+  'permutation-difference-between-two-strings': (...args: unknown[]) => {
+    const s = args[0] as string, t = args[1] as string;
+    const posInT = new Map<string, number>();
+    for (let i = 0; i < t.length; i++) posInT.set(t[i]!, i);
+    let sum = 0;
+    for (let i = 0; i < s.length; i++) sum += Math.abs(i - posInT.get(s[i]!)!);
+    return sum;
+  },
+  'calculate-the-sum-of-distances': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const n = arr.length;
+    const result = new Array(n).fill(0);
+    const groups = new Map<number, number[]>();
+    for (let i = 0; i < n; i++) {
+      if (!groups.has(arr[i]!)) groups.set(arr[i]!, []);
+      groups.get(arr[i]!)!.push(i);
+    }
+    for (const positions of groups.values()) {
+      const m = positions.length;
+      let prefixSum = 0;
+      for (let k = 0; k < m; k++) {
+        const p = positions[k]!;
+        result[p] += k * p - prefixSum;
+        prefixSum += p;
+      }
+      let suffixSum = 0;
+      for (let k = m - 1; k >= 0; k--) {
+        const p = positions[k]!;
+        result[p] += suffixSum - (m - 1 - k) * p;
+        suffixSum += p;
+      }
+    }
+    return result;
+  },
   // batch 138
   'longest-unequal-adjacent-groups-subsequence-ii': (...args: unknown[]) => {
     const words = args[0] as string[], groups = args[1] as number[];

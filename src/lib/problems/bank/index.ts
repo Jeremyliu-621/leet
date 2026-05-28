@@ -2384,6 +2384,10 @@ import { problem as countTheNumberOfSpecialCharsI } from './count-the-number-of-
 import { problem as findXorSumOfAllPairsBitwiseAnd } from './find-xor-sum-of-all-pairs-bitwise-and';
 import { problem as maximumNumberOfIntegersFromRangeII } from './maximum-number-of-integers-to-choose-from-a-range-ii';
 import { problem as minimumCostToConnectTwoGroups } from './minimum-cost-to-connect-two-groups';
+// batch 138b — arrays+math/medium, strings+hash-map/easy, arrays/medium
+import { problem as maximumOr } from './maximum-or';
+import { problem as findPermutationDifference } from './permutation-difference-between-two-strings';
+import { problem as calculateSumOfDistances } from './calculate-the-sum-of-distances';
 // batch 138 — strings+dp/medium, arrays+hash-map/medium, arrays+binary-search/medium, arrays+hash-map/medium, arrays+math/easy, graph+tree/hard
 import { problem as longestUnequalAdjacentGroupsSubsequenceII } from './longest-unequal-adjacent-groups-subsequence-ii';
 import { problem as findTheNumberOfGoodPairsII } from './find-the-number-of-good-pairs-ii';
@@ -4812,6 +4816,10 @@ export const problems: readonly Problem[] = [
   findXorSumOfAllPairsBitwiseAnd,
   maximumNumberOfIntegersFromRangeII,
   minimumCostToConnectTwoGroups,
+  // batch 138b — arrays+math/medium, strings+hash-map/easy, arrays/medium
+  maximumOr,
+  findPermutationDifference,
+  calculateSumOfDistances,
   // batch 138 — strings+dp/medium, arrays+hash-map/medium, arrays+binary-search/medium, arrays+hash-map/medium, arrays+math/easy, graph+tree/hard
   longestUnequalAdjacentGroupsSubsequenceII,
   findTheNumberOfGoodPairsII,
