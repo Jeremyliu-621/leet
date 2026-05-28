@@ -2377,6 +2377,10 @@ import { problem as maximumXorProduct } from './maximum-xor-product';
 import { problem as findTheEncryptedString } from './find-the-encrypted-string';
 import { problem as maximumSubarraySumDivisibleByK } from './maximum-subarray-sum-with-length-divisible-by-k';
 import { problem as redistributeCharacters } from './redistribute-characters-to-make-all-strings-equal';
+// batch 137 — arrays+math/medium, strings+hash-map/easy, arrays/medium
+import { problem as maximumOr } from './maximum-or';
+import { problem as permutationDifferenceBetweenTwoStrings } from './permutation-difference-between-two-strings';
+import { problem as calculateTheSumOfDistances } from './calculate-the-sum-of-distances';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4791,4 +4795,8 @@ export const problems: readonly Problem[] = [
   findTheEncryptedString,
   maximumSubarraySumDivisibleByK,
   redistributeCharacters,
+  // batch 137 — arrays+math/medium, strings+hash-map/easy, arrays/medium
+  maximumOr,
+  permutationDifferenceBetweenTwoStrings,
+  calculateTheSumOfDistances,
 ];
