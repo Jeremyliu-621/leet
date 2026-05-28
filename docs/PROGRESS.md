@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2156** problems; 6762 tests green. Batches 102–130 + 113b + 117b + 122b + 122c + 123b + 124b + 127b + 128b complete. TypeScript starters backfilled.
+**Current focus:** Bank at **2159** problems; 6771 tests green. Batches 102–131 complete. TypeScript starters backfilled.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 131 bank growth; UI/UX refinements; accessibility audit.
+**Next up:** Batch 132 bank growth; UI/UX refinements; accessibility audit.
+
+### feat(bank): add batch 131 — count-collisions-road, form-smallest-two-digits, double-reversal (2026-05-28)
+Three problems: `count-collisions-on-a-road` (medium/strings+stack, trim leading-L/trailing-R then count non-S chars), `form-smallest-number-from-two-digit-arrays` (easy/arrays+hash-map, common digit or smallest 2-digit combo), `a-number-after-a-double-reversal` (easy/math, num==0 || num%10!=0). Bank at **2159**; 6771 tests.
 
 ### feat(bank): add batch 130 — count-even-sum-pairs, longest-bounded-subarray, max-nonadjacent-circular (2026-05-28)
 Three problems: `count-even-sum-pairs` (easy/arrays+math, parity counting C(e,2)+C(o,2) in O(n)), `longest-bounded-subarray` (medium/arrays+sliding-window, shrinking two-pointer with all-positive elements for longest sum≤k window), `max-nonadjacent-circular` (hard/arrays+dynamic-programming, circular House Robber via two linear DP subproblems — exclude first or last element). Bank at **2156**; 6762 tests.
