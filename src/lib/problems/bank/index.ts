@@ -2366,6 +2366,10 @@ import { problem as maximumNumberOfBallsInABox } from './maximum-number-of-balls
 import { problem as maximumBinaryString } from './maximum-possible-number-by-binary-concatenation';
 import { problem as getSmallestString } from './lexicographically-smallest-string-after-a-swap';
 import { problem as numberOfPairsI } from './find-the-number-of-good-pairs-i';
+// batch 133 — arrays/easy, math/medium, tree+math/medium
+import { problem as checkIfGridSatisfiesConditions } from './check-if-grid-satisfies-conditions';
+import { problem as maximumXorProduct } from './maximum-xor-product';
+import { problem as findTheMaximumSumOfNodeValues } from './find-the-maximum-sum-of-node-values';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4769,4 +4773,8 @@ export const problems: readonly Problem[] = [
   maximumBinaryString,
   getSmallestString,
   numberOfPairsI,
+  // batch 133 — arrays/easy, math/medium, tree+math/medium
+  checkIfGridSatisfiesConditions,
+  maximumXorProduct,
+  findTheMaximumSumOfNodeValues,
 ];

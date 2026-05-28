@@ -33795,4 +33795,50 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  // batch 133 — arrays/easy, math/medium, tree+math/medium
+  'check-if-grid-satisfies-conditions': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        if (i + 1 < m && grid[i]![j] !== grid[i + 1]![j]) return false;
+        if (j + 1 < n && grid[i]![j] === grid[i]![j + 1]) return false;
+      }
+    }
+    return true;
+  },
+
+  'maximum-xor-product': (...args: unknown[]) => {
+    const MOD = 1_000_000_007n;
+    let a = BigInt(args[0] as number);
+    let b = BigInt(args[1] as number);
+    const n = args[2] as number;
+    for (let i = n - 1; i >= 0; i--) {
+      const bit = 1n << BigInt(i);
+      const aBit = (a >> BigInt(i)) & 1n;
+      const bBit = (b >> BigInt(i)) & 1n;
+      if (aBit === bBit) {
+        a |= bit;
+        b |= bit;
+      } else {
+        if (a < b) { a |= bit; b &= ~bit; } else { a &= ~bit; b |= bit; }
+      }
+    }
+    return Number((a % MOD) * (b % MOD) % MOD);
+  },
+
+  'find-the-maximum-sum-of-node-values': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const base = nums.reduce((s, v) => s + v, 0);
+    const deltas = nums.map(v => (v ^ k) - v).sort((a, b) => b - a);
+    let gain = 0;
+    for (let i = 0; i + 1 < deltas.length; i += 2) {
+      const pair = deltas[i]! + deltas[i + 1]!;
+      if (pair <= 0) break;
+      gain += pair;
+    }
+    return base + gain;
+  },
+
 };

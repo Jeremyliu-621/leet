@@ -33535,4 +33535,55 @@ def numberOfPairs(nums1, nums2, k):
     return sum(1 for a in nums1 for b in nums2 if a % (b * k) == 0)
 `,
 
+  // batch 133 — arrays/easy, math/medium, tree+math/medium
+  'check-if-grid-satisfies-conditions': `
+def satisfiesConditions(grid):
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    m, n = len(grid), len(grid[0])
+    for i in range(m):
+        for j in range(n):
+            if i + 1 < m and grid[i][j] != grid[i + 1][j]:
+                return False
+            if j + 1 < n and grid[i][j] == grid[i][j + 1]:
+                return False
+    return True
+`,
+
+  'maximum-xor-product': `
+def maximumXorProduct(a, b, n):
+    MOD = 10**9 + 7
+    a, b = int(a), int(b)
+    for i in range(n - 1, -1, -1):
+        bit = 1 << i
+        a_bit = (a >> i) & 1
+        b_bit = (b >> i) & 1
+        if a_bit == b_bit:
+            a |= bit
+            b |= bit
+        else:
+            if a < b:
+                a |= bit
+                b &= ~bit
+            else:
+                a &= ~bit
+                b |= bit
+    return (a % MOD) * (b % MOD) % MOD
+`,
+
+  'find-the-maximum-sum-of-node-values': `
+def maximumValueSum(nums, k, edges):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    base = sum(nums)
+    deltas = sorted([(v ^ k) - v for v in nums], reverse=True)
+    gain = 0
+    i = 0
+    while i + 1 < len(deltas):
+        pair = deltas[i] + deltas[i + 1]
+        if pair <= 0:
+            break
+        gain += pair
+        i += 2
+    return base + gain
+`,
+
 };
