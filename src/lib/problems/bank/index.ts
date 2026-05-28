@@ -2373,6 +2373,10 @@ import { problem as kthCharacterGameII } from './find-the-k-th-character-in-stri
 import { problem as checkIfGridSatisfiesConditions } from './check-if-grid-satisfies-conditions';
 import { problem as findMaximumSumOfNodeValues } from './find-the-maximum-sum-of-node-values';
 import { problem as maximumXorProduct } from './maximum-xor-product';
+// batch 136 — strings+math/easy, arrays+hash-map/medium, strings+hash-map/easy
+import { problem as findTheEncryptedString } from './find-the-encrypted-string';
+import { problem as maximumSubarraySumDivisibleByK } from './maximum-subarray-sum-with-length-divisible-by-k';
+import { problem as redistributeCharacters } from './redistribute-characters-to-make-all-strings-equal';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4783,4 +4787,8 @@ export const problems: readonly Problem[] = [
   checkIfGridSatisfiesConditions,
   findMaximumSumOfNodeValues,
   maximumXorProduct,
+  // batch 136 — strings+math/easy, arrays+hash-map/medium, strings+hash-map/easy
+  findTheEncryptedString,
+  maximumSubarraySumDivisibleByK,
+  redistributeCharacters,
 ];

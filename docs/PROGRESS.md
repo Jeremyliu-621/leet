@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2174** problems; 6813 tests green. Batches 102–135 complete. TypeScript starters backfilled. UX polish ongoing.
+**Current focus:** Bank at **2177** problems; 6822 tests green. Batches 102–136 complete. TypeScript starters backfilled. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More UX polish; more bank growth; accessibility audit.
+
+### feat(bank): add batch 136 — encrypted-string, max-subarray-sum-div-k, redistribute-chars (2026-05-28)
+Three problems: `find-the-encrypted-string` (easy/strings+math, shift each index by k with modulo), `maximum-subarray-sum-with-length-divisible-by-k` (medium/arrays+hash-map, rolling min per mod class over prefix sums), `redistribute-characters-to-make-all-strings-equal` (easy/strings+hash-map, check each char frequency divisible by n). Bank at **2177**; 6822 tests.
 
 ### feat(bank): add batch 135 — check-grid-conditions, max-node-values, max-xor-product (2026-05-28)
 Three problems: `check-if-grid-satisfies-conditions` (easy/arrays, check column-uniform + adjacent-column-distinct), `find-the-maximum-sum-of-node-values` (medium/tree+math, XOR-even-subset insight: sort deltas desc, greedily take positive pairs; edges irrelevant), `maximum-xor-product` (medium/math, greedy bit-by-bit with BigInt for a,b<2^50). Bank at **2174**; 6813 tests.

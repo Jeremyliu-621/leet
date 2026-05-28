@@ -33609,4 +33609,41 @@ def maximumXorProduct(a, b, n):
     return (fa % MOD) * (fb % MOD) % MOD
 `,
 
+  // batch 136
+  'find-the-encrypted-string': `
+def getEncryptedString(word, k):
+    n = len(word)
+    return ''.join(word[(i + k) % n] for i in range(n))
+`,
+
+  'maximum-subarray-sum-with-length-divisible-by-k': `
+def maximumSubarraySum(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i, x in enumerate(nums):
+        prefix[i + 1] = prefix[i] + x
+    min_by_mod = {}
+    ans = float('-inf')
+    for r in range(k, n + 1):
+        l = r - k
+        mod = l % k
+        p_l = prefix[l]
+        if mod not in min_by_mod or p_l < min_by_mod[mod]:
+            min_by_mod[mod] = p_l
+        r_mod = r % k
+        if r_mod in min_by_mod:
+            ans = max(ans, prefix[r] - min_by_mod[r_mod])
+    return 0 if ans == float('-inf') else ans
+`,
+
+  'redistribute-characters-to-make-all-strings-equal': `
+def makeEqual(words):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    from collections import Counter
+    freq = Counter(c for word in words for c in word)
+    n = len(words)
+    return all(v % n == 0 for v in freq.values())
+`,
+
 };

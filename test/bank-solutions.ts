@@ -33866,4 +33866,42 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number((fa % MOD) * (fb % MOD) % MOD);
   },
 
+  // batch 136
+  'find-the-encrypted-string': (...args: unknown[]) => {
+    const word = args[0] as string, k = args[1] as number;
+    const n = word.length;
+    return Array.from({ length: n }, (_, i) => word[(i + k) % n]!).join('');
+  },
+
+  'maximum-subarray-sum-with-length-divisible-by-k': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const n = nums.length;
+    const prefix = [0];
+    for (const x of nums) prefix.push(prefix[prefix.length - 1]! + x);
+    const minByMod = new Map<number, number>();
+    let ans = -Infinity;
+    for (let r = k; r <= n; r++) {
+      const l = r - k;
+      const mod = l % k;
+      const pL = prefix[l]!;
+      if (!minByMod.has(mod) || pL < minByMod.get(mod)!) minByMod.set(mod, pL);
+      const bestMin = minByMod.get(r % k);
+      if (bestMin !== undefined) ans = Math.max(ans, prefix[r]! - bestMin);
+    }
+    return ans === -Infinity ? 0 : ans;
+  },
+
+  'redistribute-characters-to-make-all-strings-equal': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const freq = new Map<string, number>();
+    for (const word of words) {
+      for (const c of word) freq.set(c, (freq.get(c) ?? 0) + 1);
+    }
+    const n = words.length;
+    for (const count of freq.values()) {
+      if (count % n !== 0) return false;
+    }
+    return true;
+  },
+
 };
