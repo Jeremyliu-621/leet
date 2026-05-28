@@ -33652,7 +33652,7 @@ def numberOfSpecialChars(word):
     lower = set()
     upper = set()
     for c in word:
-        if c == c.lower():
+        if c.islower():
             lower.add(c)
         else:
             upper.add(c.lower())
@@ -33664,8 +33664,8 @@ def numberOfGoodPartitions(nums):
     nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
     MOD = 10**9 + 7
     last = {}
-    for i, v in enumerate(nums):
-        last[v] = i
+    for i, x in enumerate(nums):
+        last[x] = i
     result = 1
     max_end = 0
     for i in range(len(nums) - 1):
@@ -33678,8 +33678,7 @@ def numberOfGoodPartitions(nums):
   'maximum-number-of-integers-to-choose-from-a-range-ii': `
 def maxCount(banned, n, maxSum):
     banned = list(banned.to_py() if hasattr(banned, 'to_py') else banned)
-    banned_set = set(x for x in banned if x <= n)
-    sorted_banned = sorted(banned_set)
+    banned_set = sorted(set(x for x in banned if x <= n))
     count = 0
     total = 0
     prev = 0
@@ -33694,7 +33693,7 @@ def maxCount(banned, n, maxSum):
                 hi2 = mid - 1
         total += lo2 * lo + lo2 * (lo2 - 1) // 2
         count += lo2
-    for b in sorted_banned:
+    for b in banned_set:
         if b > prev + 1:
             take_from(prev + 1, b - 1)
         prev = b
@@ -33707,16 +33706,10 @@ def maxCount(banned, n, maxSum):
   'count-strictly-increasing-columns': `
 def countIncreasingColumns(matrix):
     matrix = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (matrix.to_py() if hasattr(matrix, 'to_py') else matrix)]
-    m = len(matrix)
-    n = len(matrix[0])
+    m, n = len(matrix), len(matrix[0])
     count = 0
     for j in range(n):
-        ok = True
-        for i in range(1, m):
-            if matrix[i][j] <= matrix[i-1][j]:
-                ok = False
-                break
-        if ok:
+        if all(matrix[i][j] < matrix[i + 1][j] for i in range(m - 1)):
             count += 1
     return count
 `,
@@ -33737,37 +33730,76 @@ def findXORSumOfAllPairBitwiseAND(arr1, arr2):
   'minimum-cost-to-connect-two-groups': `
 def minCostConnectGroups(cost):
     cost = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (cost.to_py() if hasattr(cost, 'to_py') else cost)]
-    size1 = len(cost)
-    size2 = len(cost[0])
-    full = 1 << size2
-    min_cost2 = [min(cost[i][j] for i in range(size1)) for j in range(size2)]
-    dp = [float('inf')] * full
+    n, m = len(cost), len(cost[0])
+    min_cost = [min(cost[i][j] for i in range(n)) for j in range(m)]
+    INF = float('inf')
+    dp = [INF] * (1 << m)
     dp[0] = 0
-    for i in range(size1):
-        new_dp = [float('inf')] * full
-        for mask in range(full):
-            if dp[mask] == float('inf'):
+    for i in range(n):
+        ndp = [INF] * (1 << m)
+        for mask in range(1 << m):
+            if dp[mask] == INF:
                 continue
-            for j in range(size2):
-                new_mask = mask | (1 << j)
+            for j in range(m):
+                nm = mask | (1 << j)
                 val = dp[mask] + cost[i][j]
-                if val < new_dp[new_mask]:
-                    new_dp[new_mask] = val
-        dp = new_dp
-    ans = float('inf')
-    for mask in range(full):
-        if dp[mask] == float('inf'):
+                if val < ndp[nm]:
+                    ndp[nm] = val
+        dp = ndp
+    ans = INF
+    for mask in range(1 << m):
+        if dp[mask] == INF:
             continue
-        total = dp[mask]
-        for k in range(size2):
-            if not ((mask >> k) & 1):
-                total += min_cost2[k]
-        if total < ans:
-            ans = total
+        extra = sum(min_cost[j] for j in range(m) if not (mask & (1 << j)))
+        ans = min(ans, dp[mask] + extra)
     return ans
 `,
 
-  // batch 137 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
+  // batch 137 — arrays+math/medium, strings+hash-map/easy, arrays/medium
+  'maximum-or': `
+def maximumOr(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    suffix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] | nums[i]
+    for i in range(n - 1, -1, -1):
+        suffix[i] = suffix[i + 1] | nums[i]
+    best = 0
+    for i in range(n):
+        val = (nums[i] << k) | prefix[i] | suffix[i + 1]
+        if val > best:
+            best = val
+    return best
+`,
+
+  'permutation-difference-between-two-strings': `
+def findPermutationDifference(s: str, t: str) -> int:
+    pos_t = {c: i for i, c in enumerate(t)}
+    return sum(abs(i - pos_t[c]) for i, c in enumerate(s))
+`,
+
+  'calculate-the-sum-of-distances': `
+def distance(arr):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    from collections import defaultdict
+    n = len(arr)
+    groups = defaultdict(list)
+    for i, v in enumerate(arr):
+        groups[v].append(i)
+    result = [0] * n
+    for positions in groups.values():
+        m = len(positions)
+        total = sum(positions)
+        prefix = 0
+        for ki, p in enumerate(positions):
+            result[p] = ki * p - prefix + (total - prefix - p) - (m - 1 - ki) * p
+            prefix += p
+    return result
+`,
+
+  // batch 138 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
   'sort-people': `
 def sortPeople(names, heights):
     names = list(names.to_py() if hasattr(names, 'to_py') else names)

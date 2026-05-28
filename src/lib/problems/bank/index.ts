@@ -2385,7 +2385,11 @@ import { problem as maxCountRangeII } from './maximum-number-of-integers-to-choo
 import { problem as countStrictlyIncreasingColumns } from './count-strictly-increasing-columns';
 import { problem as findXORSumOfAllPairsBitwiseAND } from './find-xor-sum-of-all-pairs-bitwise-and';
 import { problem as minCostConnectTwoGroups } from './minimum-cost-to-connect-two-groups';
-// batch 137 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
+// batch 137 — arrays+math/medium, strings+hash-map/easy, arrays/medium
+import { problem as maximumOr } from './maximum-or';
+import { problem as permutationDifferenceBetweenTwoStrings } from './permutation-difference-between-two-strings';
+import { problem as calculateTheSumOfDistances } from './calculate-the-sum-of-distances';
+// batch 138 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
 import { problem as sortPeople } from './sort-people';
 import { problem as countWordsGivenPrefix } from './count-words-given-prefix';
 import { problem as findMissingObservations } from './find-missing-observations';
@@ -4811,7 +4815,11 @@ export const problems: readonly Problem[] = [
   countStrictlyIncreasingColumns,
   findXORSumOfAllPairsBitwiseAND,
   minCostConnectTwoGroups,
-  // batch 137 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
+  // batch 137 — arrays+math/medium, strings+hash-map/easy, arrays/medium
+  maximumOr,
+  permutationDifferenceBetweenTwoStrings,
+  calculateTheSumOfDistances,
+  // batch 138 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
   sortPeople,
   countWordsGivenPrefix,
   findMissingObservations,

@@ -8,12 +8,15 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2180** problems; 6840 tests green. Batches 102–137 complete. TypeScript starters backfilled. UX polish ongoing.
+**Current focus:** Bank at **2186** problems; 6858 tests green. Batches 102–138 complete. TypeScript starters backfilled. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More UX polish; more bank growth; accessibility audit.
 
-### feat(bank): add batch 137 — sort-people, count-words-given-prefix, find-missing-observations (2026-05-28)
-Three problems: `sort-people` (easy/arrays+strings, zip names+heights, sort by height desc O(n log n)), `count-words-given-prefix` (easy/strings, filter by startsWith in O(n×|pref|)), `find-missing-observations` (medium/arrays+math+simulation, missingSum = mean×(n+m)−observed; feasibility check n≤sum≤6n; distribute evenly with floor+remainder). Bank at **2180**; 6840 tests.
+### feat(bank): add batch 138 — sort-people, count-words-given-prefix, find-missing-observations (2026-05-28)
+Three problems: `sort-people` (easy/arrays+strings, zip names+heights, sort by height desc O(n log n)), `count-words-given-prefix` (easy/strings, filter by startsWith in O(n×|pref|)), `find-missing-observations` (medium/arrays+math+simulation, missingSum = mean×(n+m)−observed; feasibility check n≤sum≤6n; distribute evenly with floor+remainder). Bank at **2186**; 6858 tests.
+
+### feat(bank): add batch 137 — maximum-or, permutation-diff, sum-of-distances (2026-05-28)
+Three problems + backfilled Python solutions for batches 133b+134: `maximum-or` (medium/arrays+math, prefix/suffix OR with left-shift, try each element as the one doubled), `permutation-difference-between-two-strings` (easy/strings+hash-map, sum of |posS[i] - posT[s[i]]|), `calculate-the-sum-of-distances` (medium/arrays+math, for each value group: prefix-sum distance contribution O(n)). Bank at **2183**; 6840 tests.
 
 ### feat(bank): add batch 136 — encrypted-string, max-subarray-sum-div-k, redistribute-chars (2026-05-28)
 Three problems: `find-the-encrypted-string` (easy/strings+math, shift each index by k with modulo), `maximum-subarray-sum-with-length-divisible-by-k` (medium/arrays+hash-map, rolling min per mod class over prefix sums), `redistribute-characters-to-make-all-strings-equal` (easy/strings+hash-map, check each char frequency divisible by n). Bank at **2177**; 6822 tests.

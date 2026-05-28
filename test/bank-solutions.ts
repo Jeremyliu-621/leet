@@ -34023,7 +34023,54 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
-  // batch 137 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
+  // batch 137
+  'maximum-or': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const n = nums.length;
+    const prefix = new Array<bigint>(n + 1).fill(0n);
+    const suffix = new Array<bigint>(n + 1).fill(0n);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! | BigInt(nums[i]!);
+    for (let i = n - 1; i >= 0; i--) suffix[i] = suffix[i + 1]! | BigInt(nums[i]!);
+    let best = 0n;
+    for (let i = 0; i < n; i++) {
+      const val = (BigInt(nums[i]!) << BigInt(k)) | prefix[i]! | suffix[i + 1]!;
+      if (val > best) best = val;
+    }
+    return Number(best);
+  },
+
+  'permutation-difference-between-two-strings': (...args: unknown[]) => {
+    const s = args[0] as string, t = args[1] as string;
+    const posT = new Map<string, number>();
+    for (let i = 0; i < t.length; i++) posT.set(t[i]!, i);
+    let sum = 0;
+    for (let i = 0; i < s.length; i++) sum += Math.abs(i - posT.get(s[i]!)!);
+    return sum;
+  },
+
+  'calculate-the-sum-of-distances': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const n = arr.length;
+    const groups = new Map<number, number[]>();
+    for (let i = 0; i < n; i++) {
+      if (!groups.has(arr[i]!)) groups.set(arr[i]!, []);
+      groups.get(arr[i]!)!.push(i);
+    }
+    const result = new Array<number>(n).fill(0);
+    for (const positions of groups.values()) {
+      const m = positions.length;
+      const total = positions.reduce((a, b) => a + b, 0);
+      let prefix = 0;
+      for (let ki = 0; ki < m; ki++) {
+        const p = positions[ki]!;
+        result[p] = ki * p - prefix + (total - prefix - p) - (m - 1 - ki) * p;
+        prefix += p;
+      }
+    }
+    return result;
+  },
+
+  // batch 138 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
   'sort-people': (...args: unknown[]) => {
     const names = args[0] as string[];
     const heights = args[1] as number[];
