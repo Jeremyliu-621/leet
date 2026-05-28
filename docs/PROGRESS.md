@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2165** problems; 6789 tests green. Batches 102–132 complete. TypeScript starters backfilled.
+**Current focus:** Bank at **2168** problems; 6807 tests green. Batches 102–133 complete. TypeScript starters backfilled.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** UI/UX improvements; more bank growth; accessibility polish.
+
+### feat(bank): add batch 133 — check-if-grid-satisfies-conditions, maximum-xor-product, find-the-maximum-sum-of-node-values (2026-05-28)
+Three problems: `check-if-grid-satisfies-conditions` (easy/arrays, iterate cells checking column-uniform and adjacent-column-distinct), `maximum-xor-product` (medium/math, greedy bit-by-bit: same bits→set both to 1; differing bits→give 1 to smaller factor via AM-GM; BigInt for n≤50), `find-the-maximum-sum-of-node-values` (medium/tree+math, even-subset XOR insight: any even-cardinality subset achievable via path composition; sort deltas desc, greedily take positive pairs). Bank at **2168**; 6807 tests.
 
 ### feat(bank): add batch 132 — circular-game-losers, unique-binary-string, balls-in-box (2026-05-28)
 Three problems: `find-the-losers-of-the-circular-game` (easy/simulation, track visited positions set; simulate i*k step passes), `find-unique-binary-string` (medium/strings, Cantor diagonal — flip position i of nums[i] to guarantee uniqueness), `maximum-number-of-balls-in-a-box` (easy/hash-map+math, digit-sum frequency map, max count). Bank at **2165**; 6789 tests.
