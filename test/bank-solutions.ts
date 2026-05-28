@@ -33402,4 +33402,22 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return sum;
   },
 
+  'number-of-steps-to-reduce-a-number-to-zero': (...args: unknown[]) => {
+    let num = args[0] as number, steps = 0;
+    while (num > 0) { num % 2 === 0 ? (num /= 2) : (num -= 1); steps++; }
+    return steps;
+  },
+
+  'convert-date-to-binary': (...args: unknown[]) => {
+    const date = args[0] as string;
+    return date.split('-').map(p => parseInt(p, 10).toString(2)).join('-');
+  },
+
+  'the-two-sneaky-numbers-of-digitville': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+    return [...freq.entries()].filter(([, c]) => c > 1).map(([k]) => k).sort((a, b) => a - b);
+  },
+
 };

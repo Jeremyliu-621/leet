@@ -33123,4 +33123,29 @@ def sumOfSquares(nums):
     return sum(nums[i-1] ** 2 for i in range(1, n+1) if n % i == 0)
 `,
 
+  'number-of-steps-to-reduce-a-number-to-zero': `
+def numberOfSteps(num):
+    steps = 0
+    while num > 0:
+        if num % 2 == 0:
+            num //= 2
+        else:
+            num -= 1
+        steps += 1
+    return steps
+`,
+
+  'convert-date-to-binary': `
+def convertDateToBinary(date):
+    return '-'.join(bin(int(p))[2:] for p in date.split('-'))
+`,
+
+  'the-two-sneaky-numbers-of-digitville': `
+def getSneakyNumbers(nums):
+    freq = {}
+    for n in nums:
+        freq[n] = freq.get(n, 0) + 1
+    return sorted(k for k, v in freq.items() if v > 1)
+`,
+
 };

@@ -2319,6 +2319,10 @@ import { problem as sumOfSquaresOfSpecialElements } from './sum-of-squares-of-sp
 import { problem as findChampionI } from './find-champion-i';
 import { problem as countTheNumberOfConsistentStrings } from './count-the-number-of-consistent-strings';
 import { problem as countNumberOfPairsWithAbsoluteDifferenceK } from './count-number-of-pairs-with-absolute-difference-k';
+// batch 126 — math/easy, strings+math/easy, arrays+hash-map/easy
+import { problem as numberOfStepsToReduceANumberToZero } from './number-of-steps-to-reduce-a-number-to-zero';
+import { problem as convertDateToBinary } from './convert-date-to-binary';
+import { problem as theTwoSneakyNumbersOfDigitville } from './the-two-sneaky-numbers-of-digitville';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4675,4 +4679,8 @@ export const problems: readonly Problem[] = [
   findChampionI,
   countTheNumberOfConsistentStrings,
   countNumberOfPairsWithAbsoluteDifferenceK,
+  // batch 126 — math/easy, strings+math/easy, arrays+hash-map/easy
+  numberOfStepsToReduceANumberToZero,
+  convertDateToBinary,
+  theTwoSneakyNumbersOfDigitville,
 ];
