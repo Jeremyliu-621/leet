@@ -2197,6 +2197,10 @@ import { problem as cousinsInBinaryTreeII } from './cousins-in-binary-tree-ii';
 import { problem as primeArrangements } from './prime-arrangements';
 import { problem as luckyNumbersInAMatrix } from './lucky-numbers-in-a-matrix';
 import { problem as smallestRangeI } from './smallest-range-i';
+// batch 102 — arrays/easy, arrays/easy, linked-list/easy
+import { problem as twoSum } from './two-sum';
+import { problem as squaresOfASortedArray } from './squares-of-a-sorted-array';
+import { problem as middleOfTheLinkedList } from './middle-of-the-linked-list';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4431,4 +4435,8 @@ export const problems: readonly Problem[] = [
   primeArrangements,
   luckyNumbersInAMatrix,
   smallestRangeI,
+  // batch 102 — arrays/easy, arrays/easy, linked-list/easy
+  twoSum,
+  squaresOfASortedArray,
+  middleOfTheLinkedList,
 ];

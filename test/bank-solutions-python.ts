@@ -31431,4 +31431,44 @@ def smallestRangeI(nums, k):
     return max(0, max(nums) - min(nums) - 2 * k)
 `,
 
+  // batch 102
+  'two-sum': `
+def twoSum(nums, target):
+    seen = {}
+    for i, v in enumerate(nums):
+        comp = target - v
+        if comp in seen:
+            return [seen[comp], i]
+        seen[v] = i
+    return []
+`,
+  'squares-of-a-sorted-array': `
+def sortedSquares(nums):
+    n = len(nums)
+    result = [0] * n
+    l, r, pos = 0, n - 1, n - 1
+    while l <= r:
+        if abs(nums[l]) >= abs(nums[r]):
+            result[pos] = nums[l] * nums[l]
+            l += 1
+        else:
+            result[pos] = nums[r] * nums[r]
+            r -= 1
+        pos -= 1
+    return result
+`,
+  'middle-of-the-linked-list': `
+def middleNodeRunner(arr):
+    arr = list(arr)
+    if not arr:
+        return []
+    slow, fast = 0, 0
+    while fast < len(arr) - 1 and fast + 1 < len(arr) - 1:
+        slow += 1
+        fast += 2
+    if fast < len(arr) - 1:
+        slow += 1
+    return arr[slow:]
+`,
+
 };

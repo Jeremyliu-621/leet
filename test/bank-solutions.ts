@@ -31913,4 +31913,43 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Math.max(0, max - min - 2 * k);
   },
 
+  // batch 102
+  'two-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[], target = args[1] as number;
+    const map = new Map<number, number>();
+    for (let i = 0; i < nums.length; i++) {
+      const v = nums[i] as number;
+      const comp = target - v;
+      if (map.has(comp)) return [map.get(comp) as number, i];
+      map.set(v, i);
+    }
+    return [];
+  },
+  'squares-of-a-sorted-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const result: number[] = new Array(n).fill(0) as number[];
+    let l = 0, r = n - 1, pos = n - 1;
+    while (l <= r) {
+      const vl = nums[l] as number, vr = nums[r] as number;
+      if (Math.abs(vl) >= Math.abs(vr)) {
+        result[pos--] = vl * vl; l++;
+      } else {
+        result[pos--] = vr * vr; r--;
+      }
+    }
+    return result;
+  },
+  'middle-of-the-linked-list': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    if (!arr || arr.length === 0) return [];
+    let slow = 0, fast = 0;
+    while (fast < arr.length - 1 && fast + 1 < arr.length - 1) {
+      slow++;
+      fast += 2;
+    }
+    if (fast < arr.length - 1) slow++;
+    return arr.slice(slow);
+  },
+
 };
