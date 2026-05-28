@@ -2377,32 +2377,37 @@ import { problem as maximumXorProduct } from './maximum-xor-product';
 import { problem as findTheEncryptedString } from './find-the-encrypted-string';
 import { problem as maximumSubarraySumDivisibleByK } from './maximum-subarray-sum-with-length-divisible-by-k';
 import { problem as redistributeCharacters } from './redistribute-characters-to-make-all-strings-equal';
-// batch 137 — arrays+hash-map/hard, arrays/medium, strings/easy, math/medium, arrays+hash-map/medium, arrays+dynamic-programming/hard
-import { problem as countNumberOfGoodPartitions } from './count-number-of-good-partitions';
+// batch 133b — strings+hash-map/easy, arrays+hash-map/hard, arrays+binary-search/medium
+import { problem as numberOfSpecialCharsI } from './count-the-number-of-special-characters-i';
+import { problem as numberOfGoodPartitions } from './count-number-of-good-partitions';
+import { problem as maxCountRangeII } from './maximum-number-of-integers-to-choose-from-a-range-ii';
+// batch 134 — arrays+simulation/easy, arrays+math/medium, arrays+dynamic-programming/hard
 import { problem as countStrictlyIncreasingColumns } from './count-strictly-increasing-columns';
-import { problem as countTheNumberOfSpecialCharsI } from './count-the-number-of-special-characters-i';
-import { problem as findXorSumOfAllPairsBitwiseAnd } from './find-xor-sum-of-all-pairs-bitwise-and';
-import { problem as maximumNumberOfIntegersFromRangeII } from './maximum-number-of-integers-to-choose-from-a-range-ii';
-import { problem as minimumCostToConnectTwoGroups } from './minimum-cost-to-connect-two-groups';
-// batch 139 — arrays/easy, arrays+hash-map/easy, arrays/easy, arrays+math/hard
+import { problem as findXORSumOfAllPairsBitwiseAND } from './find-xor-sum-of-all-pairs-bitwise-and';
+import { problem as minCostConnectTwoGroups } from './minimum-cost-to-connect-two-groups';
+// batch 134b — strings+hash-map/medium, arrays+simulation/easy, arrays+hash-map/medium
+import { problem as numberOfSpecialCharsII } from './count-the-number-of-special-characters-ii';
+import { problem as canMakeSquare } from './make-a-square-with-the-same-color';
+// batch 139b — arrays/easy, arrays+hash-map/easy, arrays/easy, arrays+math/hard
 import { problem as elementAppearingMoreThan25Percent } from './element-appearing-more-than-25-percent-in-sorted-array';
 import { problem as minimumOperationsToCollectElements } from './minimum-operations-to-collect-elements';
 import { problem as decodeTheArrayFromAdjacentXors } from './decode-the-array-from-adjacent-xors';
 import { problem as numberOfExcellentPairs } from './number-of-excellent-pairs';
-// batch 138c — arrays+simulation/easy, strings+hash-map/medium
-import { problem as makeASquareWithTheSameColor } from './make-a-square-with-the-same-color';
-import { problem as countTheNumberOfSpecialCharsII } from './count-the-number-of-special-characters-ii';
-// batch 138b — arrays+math/medium, strings+hash-map/easy, arrays/medium
-import { problem as maximumOr } from './maximum-or';
-import { problem as findPermutationDifference } from './permutation-difference-between-two-strings';
-import { problem as calculateSumOfDistances } from './calculate-the-sum-of-distances';
-// batch 138 — strings+dp/medium, arrays+hash-map/medium, arrays+binary-search/medium, arrays+hash-map/medium, arrays+math/easy, graph+tree/hard
-import { problem as longestUnequalAdjacentGroupsSubsequenceII } from './longest-unequal-adjacent-groups-subsequence-ii';
 import { problem as findTheNumberOfGoodPairsII } from './find-the-number-of-good-pairs-ii';
+// batch 137 — arrays+math/medium, strings+hash-map/easy, arrays/medium
+import { problem as maximumOr } from './maximum-or';
+import { problem as permutationDifferenceBetweenTwoStrings } from './permutation-difference-between-two-strings';
+import { problem as calculateTheSumOfDistances } from './calculate-the-sum-of-distances';
+// batch 138 — strings+dp/medium, arrays+binary-search/medium, arrays+hash-map/medium, arrays+math/easy, graph+tree/hard
+import { problem as longestUnequalAdjacentGroupsSubsequenceII } from './longest-unequal-adjacent-groups-subsequence-ii';
 import { problem as zeroArrayTransformationII } from './zero-array-transformation-ii';
 import { problem as minimumArrayChangesToMakeSubarraysDistinct } from './minimum-array-changes-to-make-subarrays-distinct';
 import { problem as countAlmostEqualPairsI } from './count-almost-equal-pairs-i';
 import { problem as findMinimumDiameterAfterMergingTwoTrees } from './find-minimum-diameter-after-merging-two-trees';
+// batch 139 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
+import { problem as sortPeople } from './sort-people';
+import { problem as countWordsGivenPrefix } from './count-words-given-prefix';
+import { problem as findMissingObservations } from './find-missing-observations';
 // batch 140 — arrays+math/easy, arrays+strings/easy, arrays/easy
 import { problem as decryptXoredArray } from './decrypt-xored-array';
 import { problem as countItemsMatchingARule } from './count-items-matching-a-rule';
@@ -4827,32 +4832,37 @@ export const problems: readonly Problem[] = [
   findTheEncryptedString,
   maximumSubarraySumDivisibleByK,
   redistributeCharacters,
-  // batch 137 — arrays+hash-map/hard, arrays/medium, strings/easy, math/medium, arrays+hash-map/medium, arrays+dynamic-programming/hard
-  countNumberOfGoodPartitions,
+  // batch 133b — strings+hash-map/easy, arrays+hash-map/hard, arrays+binary-search/medium
+  numberOfSpecialCharsI,
+  numberOfGoodPartitions,
+  maxCountRangeII,
+  // batch 134 — arrays+simulation/easy, arrays+math/medium, arrays+dynamic-programming/hard
   countStrictlyIncreasingColumns,
-  countTheNumberOfSpecialCharsI,
-  findXorSumOfAllPairsBitwiseAnd,
-  maximumNumberOfIntegersFromRangeII,
-  minimumCostToConnectTwoGroups,
-  // batch 139 — arrays/easy, arrays+hash-map/easy, arrays/easy, arrays+math/hard
+  findXORSumOfAllPairsBitwiseAND,
+  minCostConnectTwoGroups,
+  // batch 134b — strings+hash-map/medium, arrays+simulation/easy, arrays+hash-map/medium
+  numberOfSpecialCharsII,
+  canMakeSquare,
+  // batch 139b — arrays/easy, arrays+hash-map/easy, arrays/easy, arrays+math/hard
   elementAppearingMoreThan25Percent,
   minimumOperationsToCollectElements,
   decodeTheArrayFromAdjacentXors,
   numberOfExcellentPairs,
-  // batch 138c — arrays+simulation/easy, strings+hash-map/medium
-  makeASquareWithTheSameColor,
-  countTheNumberOfSpecialCharsII,
-  // batch 138b — arrays+math/medium, strings+hash-map/easy, arrays/medium
-  maximumOr,
-  findPermutationDifference,
-  calculateSumOfDistances,
-  // batch 138 — strings+dp/medium, arrays+hash-map/medium, arrays+binary-search/medium, arrays+hash-map/medium, arrays+math/easy, graph+tree/hard
-  longestUnequalAdjacentGroupsSubsequenceII,
   findTheNumberOfGoodPairsII,
+  // batch 137 — arrays+math/medium, strings+hash-map/easy, arrays/medium
+  maximumOr,
+  permutationDifferenceBetweenTwoStrings,
+  calculateTheSumOfDistances,
+  // batch 138 — strings+dp/medium, arrays+binary-search/medium, arrays+hash-map/medium, arrays+math/easy, graph+tree/hard
+  longestUnequalAdjacentGroupsSubsequenceII,
   zeroArrayTransformationII,
   minimumArrayChangesToMakeSubarraysDistinct,
   countAlmostEqualPairsI,
   findMinimumDiameterAfterMergingTwoTrees,
+  // batch 139 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
+  sortPeople,
+  countWordsGivenPrefix,
+  findMissingObservations,
   // batch 140 — arrays+math/easy, arrays+strings/easy, arrays/easy
   decryptXoredArray,
   countItemsMatchingARule,

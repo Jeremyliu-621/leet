@@ -33646,7 +33646,20 @@ def makeEqual(words):
     return all(v % n == 0 for v in freq.values())
 `,
 
-  // batch 138
+  // batch 133b — strings+hash-map/easy, arrays+hash-map/hard, arrays+binary-search/medium
+  'count-the-number-of-special-characters-i': `
+def numberOfSpecialChars(word):
+    lower = set()
+    upper = set()
+    for c in word:
+        if c.islower():
+            lower.add(c)
+        else:
+            upper.add(c.lower())
+    return sum(1 for c in lower if c in upper)
+`,
+
+  // batch 138 — strings+dp/medium, arrays+binary-search/medium, arrays+hash-map/medium, arrays+math/easy, graph+tree/hard
   'longest-unequal-adjacent-groups-subsequence-ii': `
 def getWordsInLongestSubsequence(words, groups):
     words = list(words.to_py() if hasattr(words, 'to_py') else words)
@@ -33795,7 +33808,6 @@ def minimumDiameterAfterMerge(edges1, edges2):
     return max(d1, d2, math.ceil(d1 / 2) + math.ceil(d2 / 2) + 1)
 `,
 
-  // batch 137
   'count-number-of-good-partitions': `
 def numberOfGoodPartitions(nums):
     nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
@@ -33812,6 +33824,34 @@ def numberOfGoodPartitions(nums):
     return result
 `,
 
+  'maximum-number-of-integers-to-choose-from-a-range-ii': `
+def maxCount(banned, n, maxSum):
+    banned = list(banned.to_py() if hasattr(banned, 'to_py') else banned)
+    banned_set = sorted(set(x for x in banned if x <= n))
+    count = 0
+    total = 0
+    prev = 0
+    def take_from(lo, hi):
+        nonlocal count, total
+        lo2, hi2 = 0, hi - lo + 1
+        while lo2 < hi2:
+            mid = (lo2 + hi2 + 1) // 2
+            if total + mid * lo + mid * (mid - 1) // 2 <= maxSum:
+                lo2 = mid
+            else:
+                hi2 = mid - 1
+        total += lo2 * lo + lo2 * (lo2 - 1) // 2
+        count += lo2
+    for b in banned_set:
+        if b > prev + 1:
+            take_from(prev + 1, b - 1)
+        prev = b
+    if prev < n:
+        take_from(prev + 1, n)
+    return count
+`,
+
+  // batch 134 — arrays+simulation/easy, arrays+math/medium, arrays+dynamic-programming/hard
   'count-strictly-increasing-columns': `
 def countIncreasingColumns(matrix):
     matrix = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (matrix.to_py() if hasattr(matrix, 'to_py') else matrix)]
@@ -33821,18 +33861,6 @@ def countIncreasingColumns(matrix):
         if all(matrix[i][j] < matrix[i + 1][j] for i in range(m - 1)):
             count += 1
     return count
-`,
-
-  'count-the-number-of-special-characters-i': `
-def numberOfSpecialChars(word):
-    lower = set()
-    upper = set()
-    for c in word:
-        if c.islower():
-            lower.add(c)
-        else:
-            upper.add(c.lower())
-    return sum(1 for c in lower if c in upper)
 `,
 
   'find-xor-sum-of-all-pairs-bitwise-and': `
@@ -33846,37 +33874,6 @@ def findXORSumOfAllPairBitwiseAND(arr1, arr2):
     for x in arr2:
         xor2 ^= x
     return xor1 & xor2
-`,
-
-  'maximum-number-of-integers-to-choose-from-a-range-ii': `
-def maxCount(banned, n, maxSum):
-    banned = list(banned.to_py() if hasattr(banned, 'to_py') else banned)
-    banned_set = sorted(set(b for b in banned if 1 <= b <= n))
-    total = 0
-    count = 0
-    def take_from(lo, hi):
-        nonlocal total, count
-        if lo > hi or total >= maxSum:
-            return
-        rem = maxSum - total
-        import math
-        b = 2 * lo - 1
-        k = int((-b + math.sqrt(b * b + 8 * rem)) / 2)
-        while k < hi - lo + 1 and (k + 1) * lo + (k + 1) * k // 2 <= rem:
-            k += 1
-        while k > 0 and k * lo + k * (k - 1) // 2 > rem:
-            k -= 1
-        k = min(k, hi - lo + 1)
-        total += k * lo + k * (k - 1) // 2
-        count += k
-    prev = 0
-    for b in banned_set:
-        if b > prev + 1:
-            take_from(prev + 1, b - 1)
-        prev = b
-    if prev < n:
-        take_from(prev + 1, n)
-    return count
 `,
 
   'minimum-cost-to-connect-two-groups': `
@@ -33907,7 +33904,7 @@ def minCostConnectGroups(cost):
     return ans
 `,
 
-  // batch 138
+  // batch 137 — arrays+math/medium, strings+hash-map/easy, arrays/medium
   'maximum-or': `
 def maximumOr(nums, k):
     nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
@@ -34027,6 +34024,34 @@ def canMakeSquare(grid):
             if whites >= 3 or whites <= 1:
                 return True
     return False
+`,
+
+  // batch 139 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
+  'sort-people': `
+def sortPeople(names, heights):
+    names = list(names.to_py() if hasattr(names, 'to_py') else names)
+    heights = list(heights.to_py() if hasattr(heights, 'to_py') else heights)
+    paired = sorted(zip(heights, names), reverse=True)
+    return [name for _, name in paired]
+`,
+
+  'count-words-given-prefix': `
+def prefixCount(words, pref):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    return sum(1 for w in words if w.startswith(pref))
+`,
+
+  'find-missing-observations': `
+def missingRolls(rolls, mean, n):
+    rolls = list(rolls.to_py() if hasattr(rolls, 'to_py') else rolls)
+    m = len(rolls)
+    observed_sum = sum(rolls)
+    missing_sum = mean * (n + m) - observed_sum
+    if missing_sum < n or missing_sum > 6 * n:
+        return []
+    base = missing_sum // n
+    extra = missing_sum % n
+    return [base + (1 if i < extra else 0) for i in range(n)]
 `,
 
   // batch 140

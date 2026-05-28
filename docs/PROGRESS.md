@@ -8,18 +8,33 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2197** problems; 6885 tests green. Batches 102–139 complete. TypeScript starters backfilled. UX polish ongoing.
+**Current focus:** Bank at **2221** problems; 6957 tests green. Batches 102–144b complete. TypeScript starters backfilled. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More UX polish; more bank growth; accessibility audit.
 
+### feat(bank): add batch 142b — beautiful-towers-ii, palindromic-grid-ii, balanced-subseq-sum (2026-05-28)
+Three problems: `beautiful-towers-ii` (medium/arrays+stack, O(n) monotone stack with prefix/suffix mountain sums), `minimum-number-of-flips-to-make-binary-grid-palindromic-ii` (medium/arrays, groups-of-4 cell matching + middle row/col pair handling), `maximum-balanced-subsequence-sum` (hard/binary-indexed-tree+dp+arrays, key[i]=nums[i]-i transforms to max non-decreasing subsequence sum, O(n log n) BIT). Bank at **2221**; 6957 tests.
+
+### feat(bank): add batch 144 — min-swaps-balanced, kth-largest-xor-coord, tweet-counts-per-freq (2026-05-28)
+Three problems: `minimum-swaps-to-make-balanced` (medium/strings+stack, ceil(maxDeficit/2) via running balance), `find-kth-largest-xor-coordinate-value` (medium/arrays, 2D prefix XOR + kth order statistic), `tweet-counts-per-frequency` (medium/hash-map+simulation, map of timestamps + delta-chunk counting). Bank at **2218**; 6948 tests.
+
+### feat(bank): add batch 141 — reaching-points, orderly-queue, valid-number, min-moves-ii, super-washing, submatrices-sum (2026-05-28)
+Six problems: `reaching-points` (hard/math, reverse GCD/modulo traversal to check reachability), `orderly-queue` (hard/math+strings, k=1 min rotation, k≥2 sort), `valid-number` (hard/strings, state-machine with seenDigit/seenDot/seenE flags), `minimum-moves-to-equal-array-elements-ii` (medium/math, median minimises L1 sum), `super-washing-machines` (hard/math, cumulative flow bottleneck argument), `number-of-submatrices-that-sum-to-target` (hard/arrays+dp+hash-map, 2D prefix sum reduction to 1D subarray problem). Bank at **2209**; 6921 tests.
+
+### feat(ux): add copy-problem button and fix heading hierarchy (2026-05-28)
+ProblemPanel: added CopyProblemButton in title row — serialises full problem (title, difficulty, tags, description, examples, constraints) as plain text to clipboard for pasting into AI tools. Challenge page: changed "Practice next" label from `<p>` to `<h2>` for correct screen-reader heading hierarchy; added `role="list"` to related-problems list.
+
+### feat(bank): add batch 139 — sort-people, count-words-given-prefix, find-missing-observations (2026-05-28)
+Three problems. Bank at **2203**; 6903 tests.
+
 ### feat(bank): add batch 134b — count-special-chars-ii, make-square-same-color, good-pairs-ii (2026-05-28)
-Three problems: `count-the-number-of-special-characters-ii` (medium/strings+hash-map, track lastLower and firstUpper per char, count chars where lastLower<firstUpper), `make-a-square-with-the-same-color` (easy/arrays+simulation, check all 4 possible 2×2 sub-squares for ≥3 uniform cells), `find-the-number-of-good-pairs-ii` (medium/arrays+hash-map, freq map + iterate multiples up to 10^6 for O(max/k) per element). Bank at **2189**; 6858 tests.
+Three problems: `count-the-number-of-special-characters-ii` (medium/strings+hash-map, track lastLower and firstUpper per char, count chars where lastLower<firstUpper), `make-a-square-with-the-same-color` (easy/arrays+simulation, check all 4 possible 2×2 sub-squares for ≥3 uniform cells), `find-the-number-of-good-pairs-ii` (medium/arrays+hash-map, freq map + iterate multiples up to 10^6 for O(max/k) per element). Bank at **2196**; 6882 tests.
 
-### feat(bank): add batch 138 — longest-unequal-adj-groups-ii, good-pairs-ii, zero-array-ii, min-array-changes, almost-equal-pairs-i, min-diameter-merge (2026-05-28)
-Six problems: `longest-unequal-adjacent-groups-subsequence-ii` (medium/strings+dp, DP with Hamming-1 and group-differ constraints), `find-the-number-of-good-pairs-ii` (medium/arrays+hash-map, divisibility via multiples iteration), `zero-array-transformation-ii` (medium/arrays+binary-search, binary search on k with difference-array feasibility check), `minimum-array-changes-to-make-subarrays-distinct` (medium/arrays+hash-map, greedy spacing per value ≥ k), `count-almost-equal-pairs-i` (easy/arrays+math, pad and check 0 or 2 swappable digit diffs), `find-minimum-diameter-after-merging-two-trees` (hard/graph+tree, two BFS per tree + max(d1,d2,⌈d1/2⌉+⌈d2/2⌉+1)). Bank at **2192**; 6867 tests.
+### feat(bank): add batch 138 — longest-unequal-adj-groups-ii, zero-array-ii, min-array-changes, almost-equal-pairs-i, min-diameter-merge (2026-05-28)
+Five problems: `longest-unequal-adjacent-groups-subsequence-ii` (medium/strings+dp, DP with Hamming-1 and group-differ constraints), `zero-array-transformation-ii` (medium/arrays+binary-search, binary search on k with difference-array feasibility check), `minimum-array-changes-to-make-subarrays-distinct` (medium/arrays+hash-map, greedy spacing per value ≥ k), `count-almost-equal-pairs-i` (easy/arrays+math, pad and check 0 or 2 swappable digit diffs), `find-minimum-diameter-after-merging-two-trees` (hard/graph+tree, two BFS per tree + max(d1,d2,⌈d1/2⌉+⌈d2/2⌉+1)). Bank at **2196**; 6882 tests.
 
-### feat(bank): add batch 137 — good-partitions, incr-columns, special-chars-i, xor-sum, max-integers-ii, min-cost-connect (2026-05-28)
-Six problems: `count-number-of-good-partitions` (hard/arrays+hash-map, sweep with last-occurrence map, multiply result by 2 at each valid boundary), `count-strictly-increasing-columns` (medium/arrays, column-by-column strict monotone check), `count-the-number-of-special-characters-i` (easy/strings, count chars appearing as both lower and upper), `find-xor-sum-of-all-pairs-bitwise-and` (medium/math, XOR distributes over AND: answer = XOR(arr1) & XOR(arr2)), `maximum-number-of-integers-to-choose-from-a-range-ii` (medium/arrays+hash-map, binary search over sorted gap ranges), `minimum-cost-to-connect-two-groups` (hard/arrays+dynamic-programming, bitmask DP over group2 coverage + retroactive min-cost patch). Bank at **2183**; 6840 tests.
+### feat(bank): add batch 137 — maximum-or, permutation-diff, sum-of-distances (2026-05-28)
+Three problems: `maximum-or` (medium/arrays+math, BigInt prefix/suffix OR, concentrate all k doublings on one element), `permutation-difference-between-two-strings` (easy/strings+hash-map, position map + sum of absolute differences), `calculate-the-sum-of-distances` (medium/arrays, per-group O(n) prefix sum). Bank at **2183**; 6840 tests.
 
 ### feat(bank): add batch 136 — encrypted-string, max-subarray-sum-div-k, redistribute-chars (2026-05-28)
 Three problems: `find-the-encrypted-string` (easy/strings+math, shift each index by k with modulo), `maximum-subarray-sum-with-length-divisible-by-k` (medium/arrays+hash-map, rolling min per mod class over prefix sums), `redistribute-characters-to-make-all-strings-equal` (easy/strings+hash-map, check each char frequency divisible by n). Bank at **2177**; 6822 tests.

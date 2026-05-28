@@ -4,6 +4,34 @@ import type { Difficulty } from '../../../lib/types';
 import { ProblemDescription } from './ProblemDescription';
 import { HintsSection } from './HintsSection';
 
+/** Serialises a Problem to plain text suitable for pasting into an AI tool. */
+function problemToText(problem: Problem): string {
+  const lines: string[] = [];
+  lines.push(`# ${problem.title}`);
+  lines.push(`Difficulty: ${problem.difficulty} · Tags: ${problem.tags.join(', ')}`);
+  lines.push('');
+  lines.push(problem.description);
+  if (problem.examples.length > 0) {
+    lines.push('');
+    lines.push('## Examples');
+    for (const [i, ex] of problem.examples.entries()) {
+      lines.push('');
+      lines.push(`**Example ${i + 1}:**`);
+      lines.push(`Input: ${ex.input}`);
+      lines.push(`Output: ${ex.output}`);
+      if (ex.explanation) lines.push(`Explanation: ${ex.explanation}`);
+    }
+  }
+  if (problem.constraints.length > 0) {
+    lines.push('');
+    lines.push('## Constraints');
+    for (const c of problem.constraints) {
+      lines.push(`- ${c}`);
+    }
+  }
+  return lines.join('\n');
+}
+
 /**
  * Renders a single line of text that may contain inline code spans (backticks).
  * Splits on `` `...` `` patterns and renders code spans with the design-system
@@ -48,6 +76,28 @@ function InlineCopy({ value }: { value: string }) {
       style={{ fontSize: '9px', letterSpacing: '0.05em' }}
     >
       {copied ? '✓' : 'copy'}
+    </button>
+  );
+}
+
+/** Header button that copies the full problem as plain text — useful for pasting into AI tools. */
+function CopyProblemButton({ problem }: { problem: Problem }) {
+  const [copied, setCopied] = useState(false);
+  const handleCopy = useCallback(() => {
+    void navigator.clipboard.writeText(problemToText(problem)).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }, [problem]);
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      aria-label="Copy problem statement to clipboard"
+      title="Copy problem as text (for AI tools)"
+      className="ml-auto shrink-0 rounded-sm border border-transparent px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-faint transition-colors hover:border-border hover:text-muted focus:outline-none focus-visible:ring-1 focus-visible:ring-accent focus-visible:rounded-sm"
+    >
+      {copied ? '✓ copied' : 'copy'}
     </button>
   );
 }
@@ -99,6 +149,8 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
           >
             {difficulty}
           </span>
+          {/* Copy problem text — placed at end of title row */}
+          <CopyProblemButton problem={problem} />
         </div>
 
         {/* Tag pills */}

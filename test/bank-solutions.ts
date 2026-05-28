@@ -33904,10 +33904,23 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
-  // batch 137
+  // batch 133b — strings+hash-map/easy, arrays+hash-map/hard, arrays+binary-search/medium
+  'count-the-number-of-special-characters-i': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const lower = new Set<string>();
+    const upper = new Set<string>();
+    for (const c of word) {
+      if (c === c.toLowerCase()) lower.add(c);
+      else upper.add(c.toLowerCase());
+    }
+    let count = 0;
+    for (const c of lower) if (upper.has(c)) count++;
+    return count;
+  },
+
   'count-number-of-good-partitions': (...args: unknown[]) => {
     const nums = args[0] as number[];
-    const MOD = 1000000007n;
+    const MOD = 1_000_000_007n;
     const last = new Map<number, number>();
     for (let i = 0; i < nums.length; i++) last.set(nums[i]!, i);
     let result = 1n, maxEnd = 0;
@@ -33918,54 +33931,28 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(result);
   },
 
-  'count-strictly-increasing-columns': (...args: unknown[]) => {
-    const matrix = args[0] as number[][];
-    const m = matrix.length, n = matrix[0]!.length;
-    let count = 0;
-    for (let j = 0; j < n; j++) {
-      let inc = true;
-      for (let i = 1; i < m; i++) {
-        if (matrix[i]![j]! <= matrix[i - 1]![j]!) { inc = false; break; }
-      }
-      if (inc) count++;
-    }
-    return count;
-  },
-
-  'count-the-number-of-special-characters-i': (...args: unknown[]) => {
-    const word = args[0] as string;
-    const lower = new Set<string>(), upper = new Set<string>();
-    for (const c of word) {
-      if (c >= 'a' && c <= 'z') lower.add(c);
-      else upper.add(c.toLowerCase());
-    }
-    let count = 0;
-    for (const c of lower) if (upper.has(c)) count++;
-    return count;
-  },
-
-  'find-xor-sum-of-all-pairs-bitwise-and': (...args: unknown[]) => {
-    const arr1 = args[0] as number[], arr2 = args[1] as number[];
-    return arr1.reduce((a, b) => a ^ b, 0) & arr2.reduce((a, b) => a ^ b, 0);
-  },
-
   'maximum-number-of-integers-to-choose-from-a-range-ii': (...args: unknown[]) => {
     const banned = args[0] as number[], n = args[1] as number, maxSum = args[2] as number;
-    const sortedBanned = [...new Set(banned)].filter((b) => b >= 1 && b <= n).sort((a, b) => a - b);
-    let sum = 0, count = 0;
+    const bannedSet = new Set(banned);
+    const sorted = [...bannedSet].filter((x: number) => x <= n).sort((a, b) => a - b);
+    let count = 0;
+    let sumBig = 0n;
+    const maxSumBig = BigInt(maxSum);
+    let prev = 0;
     const takeFrom = (lo: number, hi: number) => {
-      if (lo > hi || sum >= maxSum) return;
-      const rem = maxSum - sum;
-      const b = 2 * lo - 1;
-      let k = Math.floor((-b + Math.sqrt(b * b + 8 * rem)) / 2);
-      while (k < hi - lo + 1 && (k + 1) * lo + (k + 1) * k / 2 <= rem) k++;
-      while (k > 0 && k * lo + k * (k - 1) / 2 > rem) k--;
-      const lo2 = Math.min(k, hi - lo + 1);
-      sum += lo2 * lo + lo2 * (lo2 - 1) / 2;
+      let lo2 = 0, hi2 = hi - lo + 1;
+      const loBig = BigInt(lo);
+      while (lo2 < hi2) {
+        const mid = Math.floor((lo2 + hi2 + 1) / 2);
+        const midBig = BigInt(mid);
+        if (sumBig + midBig * loBig + midBig * (midBig - 1n) / 2n <= maxSumBig) lo2 = mid;
+        else hi2 = mid - 1;
+      }
+      const lo2Big = BigInt(lo2);
+      sumBig += lo2Big * loBig + lo2Big * (lo2Big - 1n) / 2n;
       count += lo2;
     };
-    let prev = 0;
-    for (const b of sortedBanned) {
+    for (const b of sorted) {
       if (b > prev + 1) takeFrom(prev + 1, b - 1);
       prev = b;
     }
@@ -33973,32 +33960,65 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  // batch 134 — arrays+simulation/easy, arrays+math/medium, arrays+dynamic-programming/hard
+  'count-strictly-increasing-columns': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const m = matrix.length;
+    const n = matrix[0]!.length;
+    let count = 0;
+    for (let j = 0; j < n; j++) {
+      let ok = true;
+      for (let i = 1; i < m; i++) {
+        if (matrix[i]![j]! <= matrix[i - 1]![j]!) { ok = false; break; }
+      }
+      if (ok) count++;
+    }
+    return count;
+  },
+
+  'find-xor-sum-of-all-pairs-bitwise-and': (...args: unknown[]) => {
+    const arr1 = args[0] as number[];
+    const arr2 = args[1] as number[];
+    let xor1 = 0;
+    for (const x of arr1) xor1 ^= x;
+    let xor2 = 0;
+    for (const x of arr2) xor2 ^= x;
+    return xor1 & xor2;
+  },
+
   'minimum-cost-to-connect-two-groups': (...args: unknown[]) => {
     const cost = args[0] as number[][];
-    const n = cost.length, m = cost[0]!.length;
-    const FULL = (1 << m) - 1;
-    const minCost = Array.from({ length: m }, (_, j) =>
-      Math.min(...cost.map((row) => row[j]!)),
-    );
-    let dp = new Array<number>(1 << m).fill(Infinity);
+    const size1 = cost.length;
+    const size2 = cost[0]!.length;
+    const full = 1 << size2;
+    const minCost2: number[] = new Array(size2).fill(Infinity);
+    for (let i = 0; i < size1; i++) {
+      for (let j = 0; j < size2; j++) {
+        if (cost[i]![j]! < minCost2[j]!) minCost2[j] = cost[i]![j]!;
+      }
+    }
+    let dp: number[] = new Array(full).fill(Infinity);
     dp[0] = 0;
-    for (let i = 0; i < n; i++) {
-      const ndp = new Array<number>(1 << m).fill(Infinity);
-      for (let mask = 0; mask <= FULL; mask++) {
+    for (let i = 0; i < size1; i++) {
+      const newDp: number[] = new Array(full).fill(Infinity);
+      for (let mask = 0; mask < full; mask++) {
         if (dp[mask] === Infinity) continue;
-        for (let j = 0; j < m; j++) {
-          const nm = mask | (1 << j);
-          if (dp[mask]! + cost[i]![j]! < ndp[nm]!) ndp[nm] = dp[mask]! + cost[i]![j]!;
+        for (let j = 0; j < size2; j++) {
+          const newMask = mask | (1 << j);
+          const next = dp[mask]! + cost[i]![j]!;
+          if (next < newDp[newMask]!) newDp[newMask] = next;
         }
       }
-      dp = ndp;
+      dp = newDp;
     }
     let ans = Infinity;
-    for (let mask = 0; mask <= FULL; mask++) {
+    for (let mask = 0; mask < full; mask++) {
       if (dp[mask] === Infinity) continue;
-      let extra = 0;
-      for (let j = 0; j < m; j++) if (!(mask & (1 << j))) extra += minCost[j]!;
-      if (dp[mask]! + extra < ans) ans = dp[mask]! + extra;
+      let total = dp[mask]!;
+      for (let k = 0; k < size2; k++) {
+        if (!((mask >> k) & 1)) total += minCost2[k]!;
+      }
+      if (total < ans) ans = total;
     }
     return ans;
   },
@@ -34074,55 +34094,82 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return count;
   },
-  // batch 138b
+  // batch 137
   'maximum-or': (...args: unknown[]) => {
     const nums = args[0] as number[], k = args[1] as number;
     const n = nums.length;
-    const pre = new Array(n + 1).fill(0n);
-    const suf = new Array(n + 1).fill(0n);
-    for (let i = 0; i < n; i++) pre[i + 1] = pre[i]! | BigInt(nums[i]!);
-    for (let i = n - 1; i >= 0; i--) suf[i] = suf[i + 1]! | BigInt(nums[i]!);
-    let ans = 0n;
+    const prefix = new Array<bigint>(n + 1).fill(0n);
+    const suffix = new Array<bigint>(n + 1).fill(0n);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! | BigInt(nums[i]!);
+    for (let i = n - 1; i >= 0; i--) suffix[i] = suffix[i + 1]! | BigInt(nums[i]!);
+    let best = 0n;
     for (let i = 0; i < n; i++) {
-      const val = (BigInt(nums[i]!) << BigInt(k)) | pre[i]! | suf[i + 1]!;
-      if (val > ans) ans = val;
+      const val = (BigInt(nums[i]!) << BigInt(k)) | prefix[i]! | suffix[i + 1]!;
+      if (val > best) best = val;
     }
-    return Number(ans);
+    return Number(best);
   },
+
   'permutation-difference-between-two-strings': (...args: unknown[]) => {
     const s = args[0] as string, t = args[1] as string;
-    const posInT = new Map<string, number>();
-    for (let i = 0; i < t.length; i++) posInT.set(t[i]!, i);
+    const posT = new Map<string, number>();
+    for (let i = 0; i < t.length; i++) posT.set(t[i]!, i);
     let sum = 0;
-    for (let i = 0; i < s.length; i++) sum += Math.abs(i - posInT.get(s[i]!)!);
+    for (let i = 0; i < s.length; i++) sum += Math.abs(i - posT.get(s[i]!)!);
     return sum;
   },
+
   'calculate-the-sum-of-distances': (...args: unknown[]) => {
     const arr = args[0] as number[];
     const n = arr.length;
-    const result = new Array(n).fill(0);
     const groups = new Map<number, number[]>();
     for (let i = 0; i < n; i++) {
       if (!groups.has(arr[i]!)) groups.set(arr[i]!, []);
       groups.get(arr[i]!)!.push(i);
     }
+    const result = new Array<number>(n).fill(0);
     for (const positions of groups.values()) {
       const m = positions.length;
-      let prefixSum = 0;
-      for (let k = 0; k < m; k++) {
-        const p = positions[k]!;
-        result[p] += k * p - prefixSum;
-        prefixSum += p;
-      }
-      let suffixSum = 0;
-      for (let k = m - 1; k >= 0; k--) {
-        const p = positions[k]!;
-        result[p] += suffixSum - (m - 1 - k) * p;
-        suffixSum += p;
+      const total = positions.reduce((a, b) => a + b, 0);
+      let prefix = 0;
+      for (let ki = 0; ki < m; ki++) {
+        const p = positions[ki]!;
+        result[p] = ki * p - prefix + (total - prefix - p) - (m - 1 - ki) * p;
+        prefix += p;
       }
     }
     return result;
   },
+
+  // batch 139 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
+  'sort-people': (...args: unknown[]) => {
+    const names = args[0] as string[];
+    const heights = args[1] as number[];
+    const paired = names.map((name, i) => ({ name, height: heights[i]! }));
+    paired.sort((a, b) => b.height - a.height);
+    return paired.map(p => p.name);
+  },
+
+  'count-words-given-prefix': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const pref = args[1] as string;
+    return words.filter(w => w.startsWith(pref)).length;
+  },
+
+  'find-missing-observations': (...args: unknown[]) => {
+    const rolls = args[0] as number[];
+    const mean = args[1] as number;
+    const n = args[2] as number;
+    const m = rolls.length;
+    const observedSum = rolls.reduce((s, v) => s + v, 0);
+    const missingSum = mean * (n + m) - observedSum;
+    if (missingSum < n || missingSum > 6 * n) return [];
+    const base = Math.floor(missingSum / n);
+    const extra = missingSum % n;
+    return Array.from({ length: n }, (_, i) => base + (i < extra ? 1 : 0));
+  },
+
+
   // batch 138
   'longest-unequal-adjacent-groups-subsequence-ii': (...args: unknown[]) => {
     const words = args[0] as string[], groups = args[1] as number[];
