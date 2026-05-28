@@ -34406,4 +34406,63 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return -1;
   },
 
+  'count-number-of-max-bitwise-or-subsets': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const maxOr = nums.reduce((a, b) => a | b, 0);
+    let count = 0;
+    for (let mask = 1; mask < (1 << nums.length); mask++) {
+      let or = 0;
+      for (let i = 0; i < nums.length; i++) if (mask >> i & 1) or |= nums[i]!;
+      if (or === maxOr) count++;
+    }
+    return count;
+  },
+
+  'partition-to-k-equal-sum-subsets': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])], k = args[1] as number;
+    const total = nums.reduce((a, b) => a + b, 0);
+    if (total % k !== 0) return false;
+    const target = total / k;
+    nums.sort((a, b) => b - a);
+    if ((nums[0] as number) > target) return false;
+    const buckets: number[] = new Array(k).fill(0);
+    function bt(i: number): boolean {
+      if (i === nums.length) return true;
+      const seen = new Set<number>();
+      for (let j = 0; j < k; j++) {
+        const bj = buckets[j] as number;
+        if (seen.has(bj)) continue;
+        if (bj + (nums[i] as number) <= target) {
+          seen.add(bj);
+          buckets[j] = bj + (nums[i] as number);
+          if (bt(i + 1)) return true;
+          buckets[j] = bj;
+        }
+      }
+      return false;
+    }
+    return bt(0);
+  },
+
+  'minimum-operations-to-make-array-equal-to-target': (...args: unknown[]) => {
+    const nums = args[0] as number[], target = args[1] as number[];
+    let ans = 0, prev = 0;
+    for (let i = 0; i < nums.length; i++) {
+      const d = target[i]! - nums[i]!;
+      if (d > prev) ans += d - prev;
+      prev = d;
+    }
+    if (prev < 0) ans += -prev;
+    return ans;
+  },
+
+  'consecutive-numbers-sum': (...args: unknown[]) => {
+    const n = args[0] as number;
+    let count = 0;
+    for (let k = 1; k * (k + 1) <= 2 * n; k++) {
+      if ((2 * n - k * (k - 1)) % (2 * k) === 0) count++;
+    }
+    return count;
+  },
+
 };

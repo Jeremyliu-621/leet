@@ -34179,4 +34179,77 @@ def minimumOperations(nums, start, goal):
     return -1
 `,
 
+  'count-number-of-max-bitwise-or-subsets': `
+def countMaxOrSubsets(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    max_or = 0
+    for x in nums:
+        max_or |= x
+    count = 0
+    for mask in range(1, 1 << n):
+        cur = 0
+        for i in range(n):
+            if mask >> i & 1:
+                cur |= nums[i]
+        if cur == max_or:
+            count += 1
+    return count
+`,
+
+  'partition-to-k-equal-sum-subsets': `
+def canPartitionKSubsets(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    total = sum(nums)
+    if total % k != 0:
+        return False
+    target = total // k
+    nums.sort(reverse=True)
+    if nums[0] > target:
+        return False
+    buckets = [0] * k
+    def bt(i):
+        if i == len(nums):
+            return True
+        seen = set()
+        for j in range(k):
+            if buckets[j] in seen:
+                continue
+            if buckets[j] + nums[i] <= target:
+                seen.add(buckets[j])
+                buckets[j] += nums[i]
+                if bt(i + 1):
+                    return True
+                buckets[j] -= nums[i]
+        return False
+    return bt(0)
+`,
+
+  'minimum-operations-to-make-array-equal-to-target': `
+def minimumOperations(nums, target):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    target = list(target.to_py() if hasattr(target, 'to_py') else target)
+    ans = 0
+    prev = 0
+    for i in range(len(nums)):
+        d = target[i] - nums[i]
+        if d > prev:
+            ans += d - prev
+        prev = d
+    if prev < 0:
+        ans += -prev
+    return ans
+`,
+
+  'consecutive-numbers-sum': `
+def consecutiveNumbersSum(n):
+    count = 0
+    k = 1
+    while k * (k + 1) <= 2 * n:
+        if (2 * n - k * (k - 1)) % (2 * k) == 0:
+            count += 1
+        k += 1
+    return count
+`,
+
 };

@@ -2418,6 +2418,11 @@ import { problem as maximizeSquareHoleArea } from './maximize-area-of-square-hol
 import { problem as sumTotalStrengthOfWizards } from './sum-of-total-strength-of-wizards';
 import { problem as maxEventsAttendedII } from './maximum-number-of-events-that-can-be-attended-ii';
 import { problem as minimumOpsConvertNumber } from './minimum-operations-to-convert-number';
+// batch 145 — arrays/medium, arrays+backtracking/medium, arrays+backtracking/hard, arrays/hard, math/hard
+import { problem as countMaxBitwiseOrSubsets } from './count-number-of-max-bitwise-or-subsets';
+import { problem as partitionKEqualSumSubsets } from './partition-to-k-equal-sum-subsets';
+import { problem as minOpsArrayEqualToTarget } from './minimum-operations-to-make-array-equal-to-target';
+import { problem as consecutiveNumbersSum } from './consecutive-numbers-sum';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4873,4 +4878,9 @@ export const problems: readonly Problem[] = [
   sumTotalStrengthOfWizards,
   maxEventsAttendedII,
   minimumOpsConvertNumber,
+  // batch 145 — arrays/medium, arrays+backtracking/medium, arrays/hard, math/hard
+  countMaxBitwiseOrSubsets,
+  partitionKEqualSumSubsets,
+  minOpsArrayEqualToTarget,
+  consecutiveNumbersSum,
 ];
