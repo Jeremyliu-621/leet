@@ -32137,5 +32137,65 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return total;
   },
+  'longer-contiguous-segments-of-ones-than-zeros': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const maxRun = (c: string) => {
+      let max = 0, cur = 0;
+      for (const ch of s) { if (ch === c) { cur++; max = Math.max(max, cur); } else cur = 0; }
+      return max;
+    };
+    return maxRun('1') > maxRun('0');
+  },
+  'binary-tree-longest-consecutive-sequence': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    interface N { val: number; left: N | null; right: N | null }
+    const fromArray = (a: (number | null)[]): N | null => {
+      if (!a.length || a[0] == null) return null;
+      const root: N = { val: a[0], left: null, right: null };
+      const q: N[] = [root];
+      let i = 1;
+      while (q.length && i < a.length) {
+        const node = q.shift() as N;
+        if (a[i] != null) { node.left = { val: a[i] as number, left: null, right: null }; q.push(node.left); }
+        i++;
+        if (i < a.length && a[i] != null) { node.right = { val: a[i] as number, left: null, right: null }; q.push(node.right); }
+        i++;
+      }
+      return root;
+    };
+    const root = fromArray(arr);
+    let max = 0;
+    const dfs = (node: N | null, expected: number, len: number) => {
+      if (!node) return;
+      const cur = node.val === expected ? len + 1 : 1;
+      if (cur > max) max = cur;
+      dfs(node.left, node.val + 1, cur);
+      dfs(node.right, node.val + 1, cur);
+    };
+    dfs(root, root ? root.val : 0, 0);
+    return max;
+  },
+  'count-unguarded-cells-in-the-grid': (...args: unknown[]) => {
+    const m = args[0] as number;
+    const n = args[1] as number;
+    const guards = args[2] as number[][];
+    const walls = args[3] as number[][];
+    const grid = Array.from({ length: m }, () => new Array(n).fill(0) as number[]);
+    for (const g of guards) (grid[g[0] as number] as number[])[g[1] as number] = 2;
+    for (const w of walls) (grid[w[0] as number] as number[])[w[1] as number] = 3;
+    const dirs: [number, number][] = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+    for (const g of guards) {
+      for (const [dr, dc] of dirs) {
+        let r = (g[0] as number) + dr, c = (g[1] as number) + dc;
+        while (r >= 0 && r < m && c >= 0 && c < n && (grid[r] as number[])[c] !== 2 && (grid[r] as number[])[c] !== 3) {
+          (grid[r] as number[])[c] = 1;
+          r += dr; c += dc;
+        }
+      }
+    }
+    let count = 0;
+    for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) if ((grid[r] as number[])[c] === 0) count++;
+    return count;
+  },
 
 };

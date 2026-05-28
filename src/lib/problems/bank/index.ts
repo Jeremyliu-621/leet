@@ -2213,6 +2213,10 @@ import { problem as longestIncreasingPathInAMatrix } from './longest-increasing-
 import { problem as mergeTwoBinaryTrees } from './merge-two-binary-trees';
 import { problem as rangeSumQueryImmutable } from './range-sum-query-immutable';
 import { problem as minCostConnectAllPoints } from './min-cost-connect-all-points';
+// batch 106 — strings/easy, tree/medium, arrays/medium
+import { problem as longerContiguousSegmentsOfOnesThanZeros } from './longer-contiguous-segments-of-ones-than-zeros';
+import { problem as binaryTreeLongestConsecutiveSequence } from './binary-tree-longest-consecutive-sequence';
+import { problem as countUnguardedCellsInTheGrid } from './count-unguarded-cells-in-the-grid';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4463,4 +4467,8 @@ export const problems: readonly Problem[] = [
   mergeTwoBinaryTrees,
   rangeSumQueryImmutable,
   minCostConnectAllPoints,
+  // batch 106 — strings/easy, tree/medium, arrays/medium
+  longerContiguousSegmentsOfOnesThanZeros,
+  binaryTreeLongestConsecutiveSequence,
+  countUnguardedCellsInTheGrid,
 ];

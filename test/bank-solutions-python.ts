@@ -31684,5 +31684,82 @@ def minCostConnectPoints(points):
                     dist[v] = d
     return total
 `,
+  'longer-contiguous-segments-of-ones-than-zeros': `
+def checkZeroOnes(s):
+    def max_run(c):
+        mx = cur = 0
+        for ch in s:
+            if ch == c:
+                cur += 1
+                if cur > mx:
+                    mx = cur
+            else:
+                cur = 0
+        return mx
+    return max_run('1') > max_run('0')
+`,
+  'binary-tree-longest-consecutive-sequence': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def __from_array__(raw):
+    raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i])
+            queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i])
+            queue.append(node.right)
+        i += 1
+    return root
+
+def longestConsecutiveRunner(arr):
+    root = __from_array__(arr)
+    result = [0]
+    def dfs(node, expected, length):
+        if node is None:
+            return
+        cur = length + 1 if node.val == expected else 1
+        if cur > result[0]:
+            result[0] = cur
+        dfs(node.left, node.val + 1, cur)
+        dfs(node.right, node.val + 1, cur)
+    if root is not None:
+        dfs(root, root.val, 0)
+    return result[0]
+`,
+  'count-unguarded-cells-in-the-grid': `
+def countUnguarded(m, n, guards, walls):
+    def to_pairs(raw):
+        lst = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+        return [[int(v) for v in (row.to_py() if hasattr(row, 'to_py') else row)] for row in lst]
+    guards = to_pairs(guards)
+    walls = to_pairs(walls)
+    grid = [[0] * n for _ in range(m)]
+    for r, c in guards:
+        grid[r][c] = 2
+    for r, c in walls:
+        grid[r][c] = 3
+    for r, c in guards:
+        for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+            nr, nc = r + dr, c + dc
+            while 0 <= nr < m and 0 <= nc < n and grid[nr][nc] not in (2, 3):
+                grid[nr][nc] = 1
+                nr += dr
+                nc += dc
+    return sum(grid[r][c] == 0 for r in range(m) for c in range(n))
+`,
 
 };
