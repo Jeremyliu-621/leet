@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2131** problems; 6702 tests green. Batches 102–126 + 113b + 117b + 122b + 122c + 123b complete. TypeScript starters backfilled. Site stats at 2,128+.
+**Current focus:** Bank at **2134** problems; 6711 tests green. Batches 102–126 + 113b + 117b + 122b + 122c + 123b + 124b complete. TypeScript starters backfilled. Site stats at 2,128+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 127 bank growth; UI/UX refinements; accessibility audit.
+
+### feat(bank): add batch 124b — max-element-decrement-rearrange, distance-value-two-arrays, min-sum-mountain-triplets-i (2026-05-28)
+Three problems: `maximum-element-after-decreasing-and-rearranging` (medium/arrays, sort+greedy a[0]=1, a[i]=min(arr[i], prev+1), return last), `find-the-distance-value-between-two-arrays` (easy/arrays, count arr1[i] where all |arr1[i]-arr2[j]|>d), `minimum-sum-of-mountain-triplets-i` (easy/arrays, O(n³) brute force over valid (i<j<k) mountain triplets). JS + Python reference solutions. Bank at **2134**; 6711 tests.
 
 ### feat(bank): add batch 126 — number-of-steps, convert-date-to-binary, two-sneaky-numbers (2026-05-28)
 Three easy problems: `number-of-steps-to-reduce-a-number-to-zero` (easy/math, simulate even÷2 / odd−1), `convert-date-to-binary` (easy/strings+math, split "YYYY-MM-DD" and parseInt each part to binary string), `the-two-sneaky-numbers-of-digitville` (easy/arrays+hash-map, freq map returning values with count > 1 sorted ascending). Bank at **2131**; 6702 tests.
