@@ -33578,4 +33578,37 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 128b
+  'check-if-a-number-is-fascinating': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const s = '' + n + (2 * n) + (3 * n);
+    return s.length === 9 && s.split('').sort().join('') === '123456789';
+  },
+
+  'number-of-even-and-odd-bits': (...args: unknown[]) => {
+    let n = args[0] as number;
+    let even = 0, odd = 0, idx = 0;
+    while (n > 0) {
+      if (n & 1) { if (idx % 2 === 0) even++; else odd++; }
+      n >>= 1; idx++;
+    }
+    return [even, odd];
+  },
+
+  'find-valid-matrix-given-row-and-column-sums': (...args: unknown[]) => {
+    const rowSum = [...(args[0] as number[])];
+    const colSum = [...(args[1] as number[])];
+    const m = rowSum.length, n = colSum.length;
+    const mat: number[][] = Array.from({ length: m }, () => Array(n).fill(0));
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        const val = Math.min(rowSum[i]!, colSum[j]!);
+        mat[i]![j] = val;
+        rowSum[i]! -= val;
+        colSum[j]! -= val;
+      }
+    }
+    return mat;
+  },
+
 };

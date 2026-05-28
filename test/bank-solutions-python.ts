@@ -33323,4 +33323,40 @@ def maximumScore(scores, edges):
     return ans
 `,
 
+  // batch 128b
+  'check-if-a-number-is-fascinating': `
+def isFascinating(n):
+    s = str(n) + str(2 * n) + str(3 * n)
+    return len(s) == 9 and sorted(s) == list('123456789')
+`,
+
+  'number-of-even-and-odd-bits': `
+def evenOddBit(n):
+    even, odd, idx = 0, 0, 0
+    while n > 0:
+        if n & 1:
+            if idx % 2 == 0:
+                even += 1
+            else:
+                odd += 1
+        n >>= 1
+        idx += 1
+    return [even, odd]
+`,
+
+  'find-valid-matrix-given-row-and-column-sums': `
+def restoreMatrix(rowSum, colSum):
+    rowSum = list(rowSum.to_py() if hasattr(rowSum, 'to_py') else rowSum)
+    colSum = list(colSum.to_py() if hasattr(colSum, 'to_py') else colSum)
+    m, n = len(rowSum), len(colSum)
+    mat = [[0] * n for _ in range(m)]
+    for i in range(m):
+        for j in range(n):
+            val = min(rowSum[i], colSum[j])
+            mat[i][j] = val
+            rowSum[i] -= val
+            colSum[j] -= val
+    return mat
+`,
+
 };

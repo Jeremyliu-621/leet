@@ -2342,6 +2342,10 @@ import { problem as checkIfStringIsAPrefixOfArray } from './check-if-string-is-a
 import { problem as minimumNumberOfOperationsToMoveAllBallsToEachBox } from './minimum-number-of-operations-to-move-all-balls-to-each-box';
 import { problem as minimumOperationsToMakeASpecialNumber } from './minimum-operations-to-make-a-special-number';
 import { problem as maximumScoreOfANodeSequence } from './maximum-score-of-a-node-sequence';
+// batch 128b — math/easy, math/easy, arrays+math/medium
+import { problem as checkIfANumberIsFascinating } from './check-if-a-number-is-fascinating';
+import { problem as numberOfEvenAndOddBits } from './number-of-even-and-odd-bits';
+import { problem as restoreMatrix } from './find-valid-matrix-given-row-and-column-sums';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4721,4 +4725,8 @@ export const problems: readonly Problem[] = [
   minimumNumberOfOperationsToMoveAllBallsToEachBox,
   minimumOperationsToMakeASpecialNumber,
   maximumScoreOfANodeSequence,
+  // batch 128b — math/easy, math/easy, arrays+math/medium
+  checkIfANumberIsFascinating,
+  numberOfEvenAndOddBits,
+  restoreMatrix,
 ];
