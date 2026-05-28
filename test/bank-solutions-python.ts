@@ -32749,6 +32749,46 @@ def getLongestSubsequence(words, groups):
     return result
 `,
 
+  // batch 117b
+  'find-the-key-of-the-numbers': `
+def generateKey(num1, num2, num3):
+    def d(n, p):
+        return (n // p) % 10
+    return (min(d(num1,1000), d(num2,1000), d(num3,1000)) * 1000
+          + min(d(num1,100), d(num2,100), d(num3,100)) * 100
+          + min(d(num1,10), d(num2,10), d(num3,10)) * 10
+          + min(d(num1,1), d(num2,1), d(num3,1)))
+`,
+
+  'maximize-total-height-of-unique-towers': `
+def maximumTotalSum(maximumHeight):
+    heights = sorted(maximumHeight.to_py() if hasattr(maximumHeight, 'to_py') else maximumHeight, reverse=True)
+    total = heights[0]
+    prev = heights[0]
+    for i in range(1, len(heights)):
+        h = min(heights[i], prev - 1)
+        if h < 1:
+            return -1
+        total += h
+        prev = h
+    return total
+`,
+
+  'maximum-number-of-integers-to-choose-from-a-range-i': `
+def maxCount(banned, n, maxSum):
+    banned_set = set(banned.to_py() if hasattr(banned, 'to_py') else banned)
+    count = 0
+    total = 0
+    for i in range(1, n + 1):
+        if i in banned_set:
+            continue
+        if total + i > maxSum:
+            break
+        total += i
+        count += 1
+    return count
+`,
+
   'find-the-length-of-the-longest-common-prefix': `
 def longestCommonPrefix(arr1, arr2):
     arr1 = list(arr1.to_py() if hasattr(arr1, 'to_py') else arr1)

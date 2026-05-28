@@ -2284,6 +2284,10 @@ import { problem as findMinimumTimeToReachLastRoomI } from './find-minimum-time-
 import { problem as maximumProductOfTwoDigits } from './maximum-product-of-two-digits';
 import { problem as minimumOperationsToMakeColumnsStrictlyIncreasing } from './minimum-operations-to-make-columns-strictly-increasing';
 import { problem as longestUnequalAdjacentGroupsSubsequenceI } from './longest-unequal-adjacent-groups-subsequence-i';
+// batch 117b — math/easy, arrays/medium, arrays+hash-map/medium
+import { problem as findTheKeyOfTheNumbers } from './find-the-key-of-the-numbers';
+import { problem as maximizeTotalHeightOfUniqueTowers } from './maximize-total-height-of-unique-towers';
+import { problem as maximumNumberOfIntegersToChooseFromARangeI } from './maximum-number-of-integers-to-choose-from-a-range-i';
 // batch 121 — arrays+strings+hash-map/medium, arrays+math/medium, strings/medium
 import { problem as findTheLengthOfTheLongestCommonPrefix } from './find-the-length-of-the-longest-common-prefix';
 import { problem as maximumNumberOfDistinctElementsAfterOperations } from './maximum-number-of-distinct-elements-after-operations';
@@ -4609,6 +4613,10 @@ export const problems: readonly Problem[] = [
   maximumProductOfTwoDigits,
   minimumOperationsToMakeColumnsStrictlyIncreasing,
   longestUnequalAdjacentGroupsSubsequenceI,
+  // batch 117b — math/easy, arrays/medium, arrays+hash-map/medium
+  findTheKeyOfTheNumbers,
+  maximizeTotalHeightOfUniqueTowers,
+  maximumNumberOfIntegersToChooseFromARangeI,
   // batch 121 — arrays+strings+hash-map/medium, arrays+math/medium, strings/medium
   findTheLengthOfTheLongestCommonPrefix,
   maximumNumberOfDistinctElementsAfterOperations,

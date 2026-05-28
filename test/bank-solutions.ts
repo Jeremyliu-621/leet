@@ -33046,6 +33046,44 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  // batch 117b
+  'find-the-key-of-the-numbers': (...args: unknown[]) => {
+    const [num1, num2, num3] = args as [number, number, number];
+    const d = (n: number, p: number) => Math.floor(n / p) % 10;
+    return Math.min(d(num1, 1000), d(num2, 1000), d(num3, 1000)) * 1000
+      + Math.min(d(num1, 100), d(num2, 100), d(num3, 100)) * 100
+      + Math.min(d(num1, 10), d(num2, 10), d(num3, 10)) * 10
+      + Math.min(d(num1, 1), d(num2, 1), d(num3, 1));
+  },
+
+  'maximize-total-height-of-unique-towers': (...args: unknown[]) => {
+    const maximumHeight = [...(args[0] as number[])].sort((a, b) => b - a);
+    let total = 0;
+    let prev = maximumHeight[0]!;
+    total += prev;
+    for (let i = 1; i < maximumHeight.length; i++) {
+      const h = Math.min(maximumHeight[i]!, prev - 1);
+      if (h < 1) return -1;
+      total += h;
+      prev = h;
+    }
+    return total;
+  },
+
+  'maximum-number-of-integers-to-choose-from-a-range-i': (...args: unknown[]) => {
+    const banned = new Set(args[0] as number[]);
+    const n = args[1] as number;
+    const maxSum = args[2] as number;
+    let count = 0, sum = 0;
+    for (let i = 1; i <= n; i++) {
+      if (banned.has(i)) continue;
+      if (sum + i > maxSum) break;
+      sum += i;
+      count++;
+    }
+    return count;
+  },
+
   'find-the-length-of-the-longest-common-prefix': (...args: unknown[]) => {
     const arr1 = args[0] as number[], arr2 = args[1] as number[];
     const prefixes = new Set<string>();
