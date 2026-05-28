@@ -2455,6 +2455,14 @@ import { problem as findProductPivot } from './find-product-pivot';
 import { problem as countSubarraysEqualBalance } from './count-subarrays-equal-balance';
 import { problem as longestArithSubarray } from './longest-arithmetic-subarray';
 import { problem as sumAllSubmatrixSums } from './sum-of-all-submatrix-sums';
+
+// batch 146b — arrays+hash-map/medium, tree+graph/medium, arrays+math/medium, math+strings/medium, dp/medium
+import { problem as kDivisibleElementsSubarrays } from './k-divisible-elements-subarrays';
+import { problem as mostProfitablePath } from './most-profitable-path-in-a-tree';
+import { problem as maxGroupsEnteringNextRound } from './maximum-number-of-groups-entering-next-round';
+import { problem as findPalindromeFixedLength } from './find-palindrome-with-fixed-length';
+import { problem as numberOfWaysKSteps } from './number-of-ways-to-reach-a-position-after-exactly-k-steps';
+
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4947,4 +4955,12 @@ export const problems: readonly Problem[] = [
   countSubarraysEqualBalance,
   longestArithSubarray,
   sumAllSubmatrixSums,
+
+  // batch 146b — arrays+hash-map/medium, tree+graph/medium, arrays+math/medium, math+strings/medium, dp/medium
+  kDivisibleElementsSubarrays,
+  mostProfitablePath,
+  maxGroupsEnteringNextRound,
+  findPalindromeFixedLength,
+  numberOfWaysKSteps,
+
 ];

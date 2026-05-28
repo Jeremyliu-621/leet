@@ -34610,43 +34610,52 @@ def maximumTotalCost(nums):
     return max(pos, neg)
 `,
 
-  // batch 142
-  'find-product-pivot': `def findProductPivot(nums):
+  // batch 146
+  'find-product-pivot': `
+def findProductPivot(nums):
+    if hasattr(nums, 'to_py'):
+        nums = nums.to_py()
     n = len(nums)
     prefix = [1] * n
     suffix = [1] * n
     for i in range(1, n):
-        prefix[i] = prefix[i - 1] * nums[i - 1]
-    for i in range(n - 2, -1, -1):
-        suffix[i] = suffix[i + 1] * nums[i + 1]
+        prefix[i] = prefix[i-1] * nums[i-1]
+    for i in range(n-2, -1, -1):
+        suffix[i] = suffix[i+1] * nums[i+1]
     for i in range(n):
         if prefix[i] == suffix[i]:
             return i
     return -1
 `,
 
-  'count-subarrays-equal-balance': `def countBalancedSubarrays(nums):
-    counts = {0: 1}
+  'count-subarrays-equal-balance': `
+def countBalancedSubarrays(nums):
+    if hasattr(nums, 'to_py'):
+        nums = nums.to_py()
+    count_map = {0: 1}
     prefix = 0
-    result = 0
+    count = 0
     for v in nums:
         if v > 0:
             prefix += 1
         elif v < 0:
             prefix -= 1
-        result += counts.get(prefix, 0)
-        counts[prefix] = counts.get(prefix, 0) + 1
-    return result
+        count += count_map.get(prefix, 0)
+        count_map[prefix] = count_map.get(prefix, 0) + 1
+    return count
 `,
 
-  'longest-arithmetic-subarray': `def longestArithmeticSubarray(nums):
+  'longest-arithmetic-subarray': `
+def longestArithmeticSubarray(nums):
+    if hasattr(nums, 'to_py'):
+        nums = nums.to_py()
     if len(nums) <= 1:
         return len(nums)
     max_len = 2
     cur_len = 2
     diff = nums[1] - nums[0]
     for i in range(2, len(nums)):
-        d = nums[i] - nums[i - 1]
+        d = nums[i] - nums[i-1]
         if d == diff:
             cur_len += 1
         else:
@@ -34657,13 +34666,145 @@ def maximumTotalCost(nums):
     return max_len
 `,
 
-  'sum-of-all-submatrix-sums': `def sumSubmatrixSums(matrix):
-    m, n = len(matrix), len(matrix[0])
+  'sum-of-all-submatrix-sums': `
+def sumSubmatrixSums(matrix):
+    if hasattr(matrix, 'to_py'):
+        matrix = matrix.to_py()
+    matrix = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in matrix]
+    m = len(matrix)
+    n = len(matrix[0])
     total = 0
     for i in range(m):
         for j in range(n):
             total += matrix[i][j] * (i + 1) * (m - i) * (j + 1) * (n - j)
     return total
+`,
+
+  'k-divisible-elements-subarrays': `
+def countDistinct(nums, k, p):
+    if hasattr(nums, 'to_py'):
+        nums = nums.to_py()
+
+    n = len(nums)
+    seen = set()
+    for i in range(n):
+        cnt = 0
+        parts = []
+        for j in range(i, n):
+            if nums[j] % p == 0:
+                cnt += 1
+            if cnt > k:
+                break
+            parts.append(nums[j])
+            seen.add(tuple(parts))
+    return len(seen)
+`,
+
+  'most-profitable-path-in-a-tree': `
+def mostProfitablePath(edges, bob, amount):
+    if hasattr(edges, 'to_py'):
+        edges = edges.to_py()
+    if hasattr(amount, 'to_py'):
+        amount = amount.to_py()
+    n = len(amount)
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    bob_time = {}
+    def find_bob(node, parent, t):
+        bob_time[node] = t
+        if node == 0:
+            return True
+        for nb in adj[node]:
+            if nb != parent and find_bob(nb, node, t + 1):
+                return True
+        del bob_time[node]
+        return False
+    find_bob(bob, -1, 0)
+    max_income = [float('-inf')]
+    def dfs(node, parent, t, income):
+        bt = bob_time.get(node)
+        if bt is None or t < bt:
+            gain = amount[node]
+        elif t == bt:
+            gain = amount[node] / 2
+        else:
+            gain = 0
+        income += gain
+        is_leaf = True
+        for nb in adj[node]:
+            if nb != parent:
+                is_leaf = False
+                dfs(nb, node, t + 1, income)
+        if is_leaf:
+            max_income[0] = max(max_income[0], income)
+    dfs(0, -1, 0, 0)
+    return max_income[0]
+`,
+
+  'maximum-number-of-groups-entering-next-round': `
+def numberOfGroups(grades):
+    if hasattr(grades, 'to_py'):
+        grades = grades.to_py()
+    grades = sorted(grades, reverse=True)
+    n = len(grades)
+    def can_form(k):
+        i = 0
+        prev_max = float('inf')
+        for g in range(1, k + 1):
+            while i < n and grades[i] >= prev_max:
+                i += 1
+            if i + g > n:
+                return False
+            prev_max = grades[i + g - 1]
+            i += g
+        return True
+    import math
+    lo, hi = 0, int((-1 + math.sqrt(1 + 8 * n)) / 2)
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_form(mid):
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'find-palindrome-with-fixed-length': `
+def kthPalindrome(queries, intLength):
+    if hasattr(queries, 'to_py'):
+        queries = queries.to_py()
+    import math
+    half_len = math.ceil(intLength / 2)
+    start = 10 ** (half_len - 1)
+    end = 10 ** half_len
+    result = []
+    for k in queries:
+        first = start + k - 1
+        if first >= end:
+            result.append(-1)
+        else:
+            s = str(first)
+            mirror = s[::-1]
+            palindrome = s + mirror if intLength % 2 == 0 else s + mirror[1:]
+            result.append(int(palindrome))
+    return result
+`,
+
+  'number-of-ways-to-reach-a-position-after-exactly-k-steps': `
+def numberOfWays(startPos, endPos, k):
+    MOD = 10 ** 9 + 7
+    diff = abs(startPos - endPos)
+    if (k - diff) < 0 or (k - diff) % 2 != 0:
+        return 0
+    r = (k + diff) // 2
+    dp = [0] * (k + 1)
+    dp[0] = 1
+    for i in range(1, k + 1):
+        for j in range(min(i, r), 0, -1):
+            dp[j] = (dp[j] + dp[j - 1]) % MOD
+    return dp[r]
 `,
 
 };
