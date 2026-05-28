@@ -2300,6 +2300,10 @@ import { problem as minimumOperationsToMakeMedianEqualToK } from './minimum-oper
 import { problem as minimumNumberOfFlipsToMakeBinaryGridPalindromicI } from './minimum-number-of-flips-to-make-binary-grid-palindromic-i';
 import { problem as countSubstringsWithKFrequencyCharactersI } from './count-substrings-with-k-frequency-characters-i';
 import { problem as findIfDigitGameCanBeWon } from './find-if-digit-game-can-be-won';
+// batch 123 — arrays+hash-map/easy, arrays+math/easy, graph+shortest-path/medium
+import { problem as findTheNumberOfWinningPlayers } from './find-the-number-of-winning-players';
+import { problem as maximumSumWithExactlyKElements } from './maximum-sum-with-exactly-k-elements';
+import { problem as minimumTimeToReachLastRoomII } from './minimum-time-to-reach-last-room-ii';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4637,4 +4641,8 @@ export const problems: readonly Problem[] = [
   applyOperationsToAnArray,
   countOfSubstringsContainingEveryVowelAndKConsonantsI,
   minimumOperationsToMakeMedianEqualToK,
+  // batch 123 — arrays+hash-map/easy, arrays+math/easy, graph+shortest-path/medium
+  findTheNumberOfWinningPlayers,
+  maximumSumWithExactlyKElements,
+  minimumTimeToReachLastRoomII,
 ];

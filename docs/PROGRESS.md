@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2116** problems; 6651 tests green. Batches 102–122 + 113b + 117b + 122b complete. TypeScript starters backfilled. Site stats at 2,116+.
+**Current focus:** Bank at **2119** problems; 6660 tests green. Batches 102–123 + 113b + 117b + 122b complete. TypeScript starters backfilled. Site stats at 2,119+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 123 bank growth; UI/UX refinements; accessibility audit.
+**Next up:** Batch 124 bank growth; UI/UX refinements; accessibility audit.
+
+### feat(bank): add batch 123 — winning-players, max-sum-k-elements, min-time-last-room-ii (2026-05-28)
+Three problems: `find-the-number-of-winning-players` (easy/arrays+hash-map, player i wins if max single-color count > i), `maximum-sum-with-exactly-k-elements` (easy/arrays+math, k*max + k*(k-1)/2), `minimum-time-to-reach-last-room-ii` (medium/graph+shortest-path, Dijkstra with parity state — move cost alternates 1,2,1,2,...). Bank at **2113**; 6651 tests.
 
 ### feat(bank): add batch 122b — apply-ops, count-substrings-every-vowel-k-consonants-i, min-ops-median-to-k (2026-05-28)
 Three problems: `apply-operations-to-an-array` (easy/arrays, left-to-right double+zero then shift zeros), `count-of-substrings-containing-every-vowel-and-k-consonants-i` (medium/strings+sliding-window, exactlyK = atLeastK − atLeastK+1), `minimum-operations-to-make-median-equal-to-k` (medium/arrays, sort + count elements on wrong side). JS + Python reference solutions. Bank at **2116**; 6651 tests.

@@ -33196,4 +33196,50 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ops;
   },
 
+  'find-the-number-of-winning-players': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const pick = args[1] as number[][];
+    const cnt: number[][] = Array.from({ length: n }, () => new Array(11).fill(0));
+    for (const p of pick) cnt[p[0]!]![p[1]!]!++;
+    let wins = 0;
+    for (let i = 0; i < n; i++)
+      if (Math.max(...cnt[i]!) > i) wins++;
+    return wins;
+  },
+
+  'maximum-sum-with-exactly-k-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const m = Math.max(...nums);
+    return k * m + (k * (k - 1)) / 2;
+  },
+
+  'minimum-time-to-reach-last-room-ii': (...args: unknown[]) => {
+    const grid = (args[0] as unknown[][]).map(r => r as number[]);
+    const n = grid.length, m = grid[0]!.length;
+    const INF = Infinity;
+    const dist: number[][][] = Array.from({ length: n }, () =>
+      Array.from({ length: m }, () => [INF, INF])
+    );
+    dist[0]![0]![0] = 0;
+    const heap: [number, number, number, number][] = [[0, 0, 0, 0]];
+    const dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+    while (heap.length > 0) {
+      heap.sort((a, b) => a[0]! - b[0]!);
+      const [t, r, c, p] = heap.shift()!;
+      if (t > dist[r]![c]![p]!) continue;
+      const cost = p === 0 ? 1 : 2;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr!, nc = c + dc!;
+        if (nr < 0 || nr >= n || nc < 0 || nc >= m) continue;
+        const nt = Math.max(t, grid[nr]![nc]!) + cost;
+        const np = 1 - p;
+        if (nt < dist[nr]![nc]![np]!) {
+          dist[nr]![nc]![np] = nt;
+          heap.push([nt, nr, nc, np]);
+        }
+      }
+    }
+    return Math.min(dist[n - 1]![m - 1]![0]!, dist[n - 1]![m - 1]![1]!);
+  },
+
 };

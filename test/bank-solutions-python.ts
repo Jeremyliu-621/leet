@@ -32915,4 +32915,46 @@ def minOperationsToMakeMedianK(nums, k):
     return ops
 `,
 
+  'find-the-number-of-winning-players': `
+def winningPlayerCount(n, pick):
+    pick = [list(x.to_py() if hasattr(x, 'to_py') else x) for x in (pick.to_py() if hasattr(pick, 'to_py') else pick)]
+    cnt = [[0] * 11 for _ in range(n)]
+    for x, y in pick:
+        cnt[x][y] += 1
+    return sum(1 for i in range(n) if max(cnt[i]) > i)
+`,
+
+  'maximum-sum-with-exactly-k-elements': `
+def maximizeSum(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    m = max(nums)
+    return k * m + k * (k - 1) // 2
+`,
+
+  'minimum-time-to-reach-last-room-ii': `
+def minTimeToReach(moveTime):
+    import heapq
+    moveTime = [list(x.to_py() if hasattr(x, 'to_py') else x) for x in (moveTime.to_py() if hasattr(moveTime, 'to_py') else moveTime)]
+    n, m = len(moveTime), len(moveTime[0])
+    INF = float('inf')
+    dist = [[[INF, INF] for _ in range(m)] for _ in range(n)]
+    dist[0][0][0] = 0
+    heap = [(0, 0, 0, 0)]
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    while heap:
+        t, r, c, p = heapq.heappop(heap)
+        if t > dist[r][c][p]:
+            continue
+        cost = 1 if p == 0 else 2
+        for dr, dc in dirs:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < n and 0 <= nc < m:
+                nt = max(t, moveTime[nr][nc]) + cost
+                np2 = 1 - p
+                if nt < dist[nr][nc][np2]:
+                    dist[nr][nc][np2] = nt
+                    heapq.heappush(heap, (nt, nr, nc, np2))
+    return min(dist[n-1][m-1])
+`,
+
 };
