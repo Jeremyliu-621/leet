@@ -35095,4 +35095,89 @@ def minimumTotal(triangle):
     return results
 `,
 
+  'queries-on-a-permutation-with-key': `
+def processQueries(queries: list, m: int) -> list:
+    queries = list(queries.to_py() if hasattr(queries, 'to_py') else queries)
+    q = len(queries)
+    size = m + q
+    bit = [0] * (size + 1)
+    def update(i, v):
+        while i <= size:
+            bit[i] += v
+            i += i & (-i)
+    def query(i):
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & (-i)
+        return s
+    pos = [0] * (m + 1)
+    for v in range(1, m + 1):
+        pos[v] = q + v
+        update(q + v, 1)
+    front = q
+    result = []
+    for qv in queries:
+        result.append(query(pos[qv]) - 1)
+        update(pos[qv], -1)
+        pos[qv] = front
+        front -= 1
+        update(pos[qv], 1)
+    return result
+`,
+
+  'sum-of-floored-pairs': `
+def sumOfFlooredPairs(nums: list) -> int:
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    MOD = 10**9 + 7
+    max_val = max(nums)
+    cnt = [0] * (max_val + 1)
+    for n in nums:
+        cnt[n] += 1
+    prefix = [0] * (max_val + 2)
+    for i in range(1, max_val + 1):
+        prefix[i] = prefix[i - 1] + cnt[i]
+    ans = 0
+    for v in range(1, max_val + 1):
+        if not cnt[v]:
+            continue
+        m = 1
+        while m * v <= max_val:
+            lo = m * v
+            hi = min((m + 1) * v - 1, max_val)
+            in_range = prefix[hi] - prefix[lo - 1]
+            ans = (ans + cnt[v] * m * in_range) % MOD
+            m += 1
+    return ans
+`,
+
+  'minimum-cost-to-make-at-least-one-valid-path-in-a-grid': `
+def minCost(grid: list) -> int:
+    if hasattr(grid, 'to_py'):
+        grid = grid.to_py()
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in grid]
+    from collections import deque
+    m, n = len(grid), len(grid[0])
+    dist = [[float('inf')] * n for _ in range(m)]
+    dist[0][0] = 0
+    dq = deque([(0, 0)])
+    dr = [0, 0, 1, -1]
+    dc = [1, -1, 0, 0]
+    while dq:
+        r, c = dq.popleft()
+        d = dist[r][c]
+        for direction in range(4):
+            nr, nc = r + dr[direction], c + dc[direction]
+            if 0 <= nr < m and 0 <= nc < n:
+                cost = 0 if grid[r][c] == direction + 1 else 1
+                if d + cost < dist[nr][nc]:
+                    dist[nr][nc] = d + cost
+                    if cost == 0:
+                        dq.appendleft((nr, nc))
+                    else:
+                        dq.append((nr, nc))
+    return dist[m - 1][n - 1]
+`,
+
+  // batch 142b
 };

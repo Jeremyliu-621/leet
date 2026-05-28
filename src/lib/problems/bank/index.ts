@@ -2483,6 +2483,10 @@ import { problem as calculateAmountPaidInTaxes } from './calculate-amount-paid-i
 import { problem as convertArrayInto2dWithConditions } from './convert-an-array-into-a-2d-array-with-conditions';
 import { problem as replaceSubstringForBalancedString } from './replace-the-substring-for-balanced-string';
 import { problem as allDivisionsHighestScore } from './all-divisions-with-the-highest-score-of-a-binary-array';
+// batch 145b — binary-indexed-tree/medium, binary-indexed-tree+math/hard, shortest-path+graph/hard
+import { problem as queriesOnAPermutationWithKey } from './queries-on-a-permutation-with-key';
+import { problem as sumOfFlooredPairs } from './sum-of-floored-pairs';
+import { problem as minimumCostToMakeAtLeastOneValidPathInAGrid } from './minimum-cost-to-make-at-least-one-valid-path-in-a-grid';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5003,4 +5007,8 @@ export const problems: readonly Problem[] = [
   convertArrayInto2dWithConditions,
   replaceSubstringForBalancedString,
   allDivisionsHighestScore,
+  // batch 145b — binary-indexed-tree/medium, binary-indexed-tree+math/hard, shortest-path+graph/hard
+  queriesOnAPermutationWithKey,
+  sumOfFlooredPairs,
+  minimumCostToMakeAtLeastOneValidPathInAGrid,
 ];

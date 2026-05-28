@@ -35277,5 +35277,72 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'queries-on-a-permutation-with-key': (...args: unknown[]) => {
+    const queries = args[0] as number[], m = args[1] as number;
+    const q = queries.length;
+    const size = m + q;
+    const bit = new Array<number>(size + 1).fill(0);
+    function update(i: number, v: number) { for (; i <= size; i += i & (-i)) bit[i]! += v; }
+    function query(i: number) { let s = 0; for (; i > 0; i -= i & (-i)) s += bit[i]!; return s; }
+    const pos = new Array<number>(m + 1);
+    for (let v = 1; v <= m; v++) { pos[v] = q + v; update(q + v, 1); }
+    let front = q;
+    const result: number[] = [];
+    for (const qv of queries) {
+      result.push(query(pos[qv]!) - 1);
+      update(pos[qv]!, -1);
+      pos[qv] = front--;
+      update(pos[qv]!, 1);
+    }
+    return result;
+  },
+
+  'sum-of-floored-pairs': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const MOD = BigInt(1e9 + 7);
+    const maxVal = Math.max(...nums);
+    const cnt = new Array<number>(maxVal + 1).fill(0);
+    for (const n of nums) cnt[n]!++;
+    const prefix = new Array<number>(maxVal + 2).fill(0);
+    for (let i = 1; i <= maxVal; i++) prefix[i] = prefix[i - 1]! + cnt[i]!;
+    let ans = 0n;
+    for (let v = 1; v <= maxVal; v++) {
+      if (!cnt[v]) continue;
+      const cv = BigInt(cnt[v]!);
+      for (let mlt = 1; mlt * v <= maxVal; mlt++) {
+        const lo = mlt * v, hi = Math.min((mlt + 1) * v - 1, maxVal);
+        const inRange = BigInt(prefix[hi]! - prefix[lo - 1]!);
+        ans = (ans + cv * BigInt(mlt) * inRange) % MOD;
+      }
+    }
+    return Number(ans);
+  },
+
+  'minimum-cost-to-make-at-least-one-valid-path-in-a-grid': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    const dist = Array.from({ length: m }, () => new Array<number>(n).fill(Infinity));
+    dist[0]![0] = 0;
+    const deque: [number, number][] = [[0, 0]];
+    const dr = [0, 0, 1, -1];
+    const dc = [1, -1, 0, 0];
+    let head = 0;
+    while (head < deque.length) {
+      const [r, c] = deque[head++]!;
+      const d = dist[r]![c]!;
+      for (let dir = 0; dir < 4; dir++) {
+        const nr = r + dr[dir]!, nc = c + dc[dir]!;
+        if (nr < 0 || nr >= m || nc < 0 || nc >= n) continue;
+        const cost = grid[r]![c] === dir + 1 ? 0 : 1;
+        if (d + cost < dist[nr]![nc]!) {
+          dist[nr]![nc] = d + cost;
+          if (cost === 0) deque.splice(head, 0, [nr, nc]);
+          else deque.push([nr, nc]);
+        }
+      }
+    }
+    return dist[m - 1]![n - 1]!;
+  },
+
 
 };
