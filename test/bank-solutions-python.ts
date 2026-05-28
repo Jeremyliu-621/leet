@@ -6553,14 +6553,17 @@ def minMovesToSeat(seats, students):
     return result
 `,
 
-  'two-sum-iv-bst': `def findTarget(root, k):
-    vals = set()
-    for v in root:
-        try:
-            vals.add(int(v))
-        except (TypeError, AttributeError):
-            pass
-    return any(k - v in vals and k - v != v for v in vals)
+  'two-sum-iv-bst': `
+def findTarget(root, k):
+    seen = set()
+    def dfs(node):
+        if node is None:
+            return False
+        if k - node.val in seen:
+            return True
+        seen.add(node.val)
+        return dfs(node.left) or dfs(node.right)
+    return dfs(root)
 `,
 
   'sort-array-by-parity-ii': `
@@ -32410,6 +32413,19 @@ def minSwaps(s):
                 swaps += 1
                 balance = 1
     return swaps
+`,
+
+  'remove-nth-node-from-end-of-list': `
+def removeNthFromEnd(head, n):
+    dummy = ListNode(0, head)
+    fast = slow = dummy
+    for _ in range(n):
+        fast = fast.next
+    while fast.next:
+        fast = fast.next
+        slow = slow.next
+    slow.next = slow.next.next
+    return dummy.next
 `,
 
 };

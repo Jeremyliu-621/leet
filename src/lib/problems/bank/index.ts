@@ -2249,6 +2249,9 @@ import { problem as lowestCommonAncestorOfABST } from './lowest-common-ancestor-
 import { problem as lowestCommonAncestorOfABinaryTree } from './lowest-common-ancestor-of-a-binary-tree';
 import { problem as binaryTreeZigzagLevelOrderTraversal } from './binary-tree-zigzag-level-order-traversal';
 import { problem as binaryTreeLevelOrderTraversalII } from './binary-tree-level-order-traversal-ii';
+// batch 113 — arrays/easy, linked-list/medium
+import { problem as maximumProductOfTwoElementsInAnArray } from './maximum-product-of-two-elements-in-an-array';
+import { problem as removeNthNodeFromEndOfList } from './remove-nth-node-from-end-of-list';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4535,4 +4538,7 @@ export const problems: readonly Problem[] = [
   lowestCommonAncestorOfABinaryTree,
   binaryTreeZigzagLevelOrderTraversal,
   binaryTreeLevelOrderTraversalII,
+  // batch 113 — arrays/easy, linked-list/medium
+  maximumProductOfTwoElementsInAnArray,
+  removeNthNodeFromEndOfList,
 ];
