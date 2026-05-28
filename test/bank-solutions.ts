@@ -34703,4 +34703,118 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  'k-divisible-elements-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const p = args[2] as number;
+    const seen = new Set<string>();
+    const n = nums.length;
+    for (let i = 0; i < n; i++) {
+      let cnt = 0;
+      const parts: number[] = [];
+      for (let j = i; j < n; j++) {
+        const v = nums[j] as number;
+        if (v % p === 0) cnt++;
+        if (cnt > k) break;
+        parts.push(v);
+        seen.add(parts.join(','));
+      }
+    }
+    return seen.size;
+  },
+
+  'most-profitable-path-in-a-tree': (...args: unknown[]) => {
+    const edges = args[0] as number[][];
+    const bob = args[1] as number;
+    const amount = args[2] as number[];
+    const n = amount.length;
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const [u, v] of edges) {
+      (adj[u as number] as number[]).push(v as number);
+      (adj[v as number] as number[]).push(u as number);
+    }
+    const bobTime = new Map<number, number>();
+    function findBob(node: number, parent: number, t: number): boolean {
+      bobTime.set(node, t);
+      if (node === 0) return true;
+      for (const nb of (adj[node] as number[])) {
+        if (nb !== parent && findBob(nb, node, t + 1)) return true;
+      }
+      bobTime.delete(node);
+      return false;
+    }
+    findBob(bob, -1, 0);
+    let maxIncome = -Infinity;
+    function dfs(node: number, parent: number, t: number, income: number): void {
+      const bt = bobTime.get(node);
+      const amtNode = amount[node] as number;
+      let gain = 0;
+      if (bt === undefined || t < bt) gain = amtNode;
+      else if (t === bt) gain = amtNode / 2;
+      income += gain;
+      let isLeaf = true;
+      for (const nb of (adj[node] as number[])) {
+        if (nb !== parent) { isLeaf = false; dfs(nb, node, t + 1, income); }
+      }
+      if (isLeaf) maxIncome = Math.max(maxIncome, income);
+    }
+    dfs(0, -1, 0, 0);
+    return maxIncome;
+  },
+
+  'maximum-number-of-groups-entering-next-round': (...args: unknown[]) => {
+    const grades = [...(args[0] as number[])];
+    grades.sort((a, b) => b - a);
+    const n = grades.length;
+    function canForm(k: number): boolean {
+      let i = 0, prevMax = Infinity;
+      for (let g = 1; g <= k; g++) {
+        while (i < n && (grades[i] as number) >= prevMax) i++;
+        if (i + g > n) return false;
+        prevMax = grades[i + g - 1] as number;
+        i += g;
+      }
+      return true;
+    }
+    let lo = 0, hi = Math.floor((-1 + Math.sqrt(1 + 8 * n)) / 2);
+    while (lo < hi) {
+      const mid = (lo + hi + 1) >> 1;
+      if (canForm(mid)) lo = mid; else hi = mid - 1;
+    }
+    return lo;
+  },
+
+  'find-palindrome-with-fixed-length': (...args: unknown[]) => {
+    const queries = args[0] as number[];
+    const intLength = args[1] as number;
+    const halfLen = Math.ceil(intLength / 2);
+    const start = Math.pow(10, halfLen - 1);
+    const end = Math.pow(10, halfLen);
+    return queries.map(k => {
+      const first = start + k - 1;
+      if (first >= end) return -1;
+      const s = first.toString();
+      const mirror = s.split('').reverse().join('');
+      return Number(intLength % 2 === 0 ? s + mirror : s + mirror.slice(1));
+    });
+  },
+
+  'number-of-ways-to-reach-a-position-after-exactly-k-steps': (...args: unknown[]) => {
+    const startPos = args[0] as number;
+    const endPos = args[1] as number;
+    const k = args[2] as number;
+    const MOD = 1000000007n;
+    const diff = Math.abs(startPos - endPos);
+    if ((k - diff) < 0 || (k - diff) % 2 !== 0) return 0;
+    const r = (k + diff) / 2;
+    const dp: bigint[] = new Array(k + 1).fill(0n) as bigint[];
+    dp[0] = 1n;
+    for (let i = 1; i <= k; i++) {
+      for (let j = Math.min(i, r); j >= 1; j--) {
+        dp[j] = ((dp[j] as bigint) + (dp[j - 1] as bigint)) % MOD;
+      }
+    }
+    return Number(dp[r] as bigint);
+  },
+
 };

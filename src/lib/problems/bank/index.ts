@@ -2423,6 +2423,12 @@ import { problem as countMaxBitwiseOrSubsets } from './count-number-of-max-bitwi
 import { problem as partitionKEqualSumSubsets } from './partition-to-k-equal-sum-subsets';
 import { problem as minOpsArrayEqualToTarget } from './minimum-operations-to-make-array-equal-to-target';
 import { problem as consecutiveNumbersSum } from './consecutive-numbers-sum';
+// batch 146 — arrays+hash-map/medium, tree+graph/medium, arrays+math/medium, math+strings/medium, dp/medium
+import { problem as kDivisibleElementsSubarrays } from './k-divisible-elements-subarrays';
+import { problem as mostProfitablePath } from './most-profitable-path-in-a-tree';
+import { problem as maxGroupsEnteringNextRound } from './maximum-number-of-groups-entering-next-round';
+import { problem as findPalindromeFixedLength } from './find-palindrome-with-fixed-length';
+import { problem as numberOfWaysKSteps } from './number-of-ways-to-reach-a-position-after-exactly-k-steps';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4883,4 +4889,10 @@ export const problems: readonly Problem[] = [
   partitionKEqualSumSubsets,
   minOpsArrayEqualToTarget,
   consecutiveNumbersSum,
+  // batch 146 — arrays+hash-map/medium, tree+graph/medium, arrays+math/medium, math+strings/medium, dp/medium
+  kDivisibleElementsSubarrays,
+  mostProfitablePath,
+  maxGroupsEnteringNextRound,
+  findPalindromeFixedLength,
+  numberOfWaysKSteps,
 ];

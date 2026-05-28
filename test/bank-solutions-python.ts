@@ -34490,4 +34490,130 @@ def consecutiveNumbersSum(n):
     return count
 `,
 
+  'k-divisible-elements-subarrays': `
+def countDistinct(nums, k, p):
+    if hasattr(nums, 'to_py'):
+        nums = nums.to_py()
+    n = len(nums)
+    seen = set()
+    for i in range(n):
+        cnt = 0
+        parts = []
+        for j in range(i, n):
+            if nums[j] % p == 0:
+                cnt += 1
+            if cnt > k:
+                break
+            parts.append(nums[j])
+            seen.add(tuple(parts))
+    return len(seen)
+`,
+
+  'most-profitable-path-in-a-tree': `
+def mostProfitablePath(edges, bob, amount):
+    if hasattr(edges, 'to_py'):
+        edges = edges.to_py()
+    if hasattr(amount, 'to_py'):
+        amount = amount.to_py()
+    n = len(amount)
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    bob_time = {}
+    def find_bob(node, parent, t):
+        bob_time[node] = t
+        if node == 0:
+            return True
+        for nb in adj[node]:
+            if nb != parent and find_bob(nb, node, t + 1):
+                return True
+        del bob_time[node]
+        return False
+    find_bob(bob, -1, 0)
+    max_income = [float('-inf')]
+    def dfs(node, parent, t, income):
+        bt = bob_time.get(node)
+        if bt is None or t < bt:
+            gain = amount[node]
+        elif t == bt:
+            gain = amount[node] / 2
+        else:
+            gain = 0
+        income += gain
+        is_leaf = True
+        for nb in adj[node]:
+            if nb != parent:
+                is_leaf = False
+                dfs(nb, node, t + 1, income)
+        if is_leaf:
+            max_income[0] = max(max_income[0], income)
+    dfs(0, -1, 0, 0)
+    return max_income[0]
+`,
+
+  'maximum-number-of-groups-entering-next-round': `
+def numberOfGroups(grades):
+    if hasattr(grades, 'to_py'):
+        grades = grades.to_py()
+    grades = sorted(grades, reverse=True)
+    n = len(grades)
+    def can_form(k):
+        i = 0
+        prev_max = float('inf')
+        for g in range(1, k + 1):
+            while i < n and grades[i] >= prev_max:
+                i += 1
+            if i + g > n:
+                return False
+            prev_max = grades[i + g - 1]
+            i += g
+        return True
+    import math
+    lo, hi = 0, int((-1 + math.sqrt(1 + 8 * n)) / 2)
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_form(mid):
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'find-palindrome-with-fixed-length': `
+def kthPalindrome(queries, intLength):
+    if hasattr(queries, 'to_py'):
+        queries = queries.to_py()
+    import math
+    half_len = math.ceil(intLength / 2)
+    start = 10 ** (half_len - 1)
+    end = 10 ** half_len
+    result = []
+    for k in queries:
+        first = start + k - 1
+        if first >= end:
+            result.append(-1)
+        else:
+            s = str(first)
+            mirror = s[::-1]
+            palindrome = s + mirror if intLength % 2 == 0 else s + mirror[1:]
+            result.append(int(palindrome))
+    return result
+`,
+
+  'number-of-ways-to-reach-a-position-after-exactly-k-steps': `
+def numberOfWays(startPos, endPos, k):
+    MOD = 10 ** 9 + 7
+    diff = abs(startPos - endPos)
+    if (k - diff) < 0 or (k - diff) % 2 != 0:
+        return 0
+    r = (k + diff) // 2
+    dp = [0] * (k + 1)
+    dp[0] = 1
+    for i in range(1, k + 1):
+        for j in range(min(i, r), 0, -1):
+            dp[j] = (dp[j] + dp[j - 1]) % MOD
+    return dp[r]
+`,
+
 };
