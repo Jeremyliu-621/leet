@@ -33729,7 +33729,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return num === 0 || num % 10 !== 0;
   },
 
-  // batch 132
+  // batch 132a
   'find-the-losers-of-the-circular-game': (...args: unknown[]) => {
     const n = args[0] as number, k = args[1] as number;
     const received = new Set<number>();
@@ -33757,6 +33757,42 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       box.set(key, (box.get(key) ?? 0) + 1);
     }
     return Math.max(...box.values());
+  },
+
+  // batch 132b
+  'maximum-possible-number-by-binary-concatenation': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const perms = [[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]];
+    let maxVal = -Infinity;
+    for (const [i0, i1, i2] of perms) {
+      const bin = nums[i0!]!.toString(2) + nums[i1!]!.toString(2) + nums[i2!]!.toString(2);
+      maxVal = Math.max(maxVal, parseInt(bin, 2));
+    }
+    return maxVal;
+  },
+
+  'lexicographically-smallest-string-after-a-swap': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const arr = s.split('');
+    for (let i = 0; i < arr.length - 1; i++) {
+      const a = parseInt(arr[i]!), b = parseInt(arr[i + 1]!);
+      if (a % 2 === b % 2 && b < a) {
+        [arr[i], arr[i + 1]] = [arr[i + 1]!, arr[i]!];
+        return arr.join('');
+      }
+    }
+    return s;
+  },
+
+  'find-the-number-of-good-pairs-i': (...args: unknown[]) => {
+    const nums1 = args[0] as number[], nums2 = args[1] as number[], k = args[2] as number;
+    let count = 0;
+    for (const a of nums1) {
+      for (const b of nums2) {
+        if (a % (b * k) === 0) count++;
+      }
+    }
+    return count;
   },
 
 };
