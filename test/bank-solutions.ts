@@ -32175,6 +32175,24 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     dfs(root, root ? root.val : 0, 0);
     return max;
   },
+  'kth-largest-element-in-an-array': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => b - a);
+    return nums[(args[1] as number) - 1];
+  },
+  'find-missing-positive': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice();
+    const n = nums.length;
+    for (let i = 0; i < n; i++) {
+      while ((nums[i] as number) >= 1 && (nums[i] as number) <= n && (nums[(nums[i] as number) - 1] as number) !== (nums[i] as number)) {
+        const ci = (nums[i] as number) - 1;
+        const tmp = nums[ci] as number;
+        (nums[ci] as unknown) = nums[i];
+        (nums[i] as unknown) = tmp;
+      }
+    }
+    for (let i = 0; i < n; i++) if ((nums[i] as number) !== i + 1) return i + 1;
+    return n + 1;
+  },
   'first-unique-character-in-a-string': (...args: unknown[]) => {
     const s = args[0] as string;
     const freq = new Map<string, number>();

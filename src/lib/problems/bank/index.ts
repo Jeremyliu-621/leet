@@ -2221,6 +2221,10 @@ import { problem as countUnguardedCellsInTheGrid } from './count-unguarded-cells
 import { problem as firstUniqueCharacterInAString } from './first-unique-character-in-a-string';
 import { problem as sumRootToLeafNumbers } from './sum-root-to-leaf-numbers';
 import { problem as flattenBinaryTreeToLinkedList } from './flatten-binary-tree-to-linked-list';
+// batch 108 — arrays/medium, arrays/hard, stack/hard
+import { problem as kthLargestElementInAnArray } from './kth-largest-element-in-an-array';
+import { problem as findMissingPositive } from './find-missing-positive';
+import { problem as largestRectangleInHistogram } from './largest-rectangle-in-histogram';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4479,4 +4483,8 @@ export const problems: readonly Problem[] = [
   firstUniqueCharacterInAString,
   sumRootToLeafNumbers,
   flattenBinaryTreeToLinkedList,
+  // batch 108 — arrays/medium, arrays/hard, stack/hard
+  kthLargestElementInAnArray,
+  findMissingPositive,
+  largestRectangleInHistogram,
 ];

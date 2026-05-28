@@ -31684,6 +31684,23 @@ def minCostConnectPoints(points):
                     dist[v] = d
     return total
 `,
+  'kth-largest-element-in-an-array': `
+def findKthLargest(nums, k):
+    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else list(nums), reverse=True)
+    return nums[int(k) - 1]
+`,
+  'find-missing-positive': `
+def firstMissingPositive(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    for i in range(n):
+        while 1 <= nums[i] <= n and nums[nums[i] - 1] != nums[i]:
+            nums[nums[i] - 1], nums[i] = nums[i], nums[nums[i] - 1]
+    for i in range(n):
+        if nums[i] != i + 1:
+            return i + 1
+    return n + 1
+`,
   'first-unique-character-in-a-string': `
 def firstUniqChar(s):
     from collections import Counter
