@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2223** problems; 6963 tests green. Batches 102–144 complete. TypeScript starters backfilled. UX polish ongoing.
+**Current focus:** Bank at **2233** problems; 6930 tests green. Batches 102–145 complete. TypeScript starters backfilled. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More UX polish; more bank growth; accessibility audit.
+**Next up:** More bank growth; UX polish; accessibility audit.
+
+### feat(bank): add batch 145 — max-bitwise-or-subsets, partition-k-subsets, min-ops-array-equal-target, consecutive-numbers-sum (2026-05-28)
+Four problems: `count-number-of-max-bitwise-or-subsets` (medium/arrays+backtracking, 2^n bitmask enumeration counting subsets with max OR), `partition-to-k-equal-sum-subsets` (medium/arrays+backtracking+dp, descending sort + k-bucket DFS with duplicate-skip pruning), `minimum-operations-to-make-array-equal-to-target` (hard/arrays, diff[i]=target-nums layer-counting formula — sum positive transitions in extended diff sequence), `consecutive-numbers-sum` (hard/math, k consecutive starting at a formula — loop k while k*(k+1)≤2n, check divisibility). Bank at **2233**; 6930 tests.
 
 ### feat(bank): add batch 142b — beautiful-towers-ii, palindromic-grid-ii, balanced-subseq-sum (2026-05-28)
 Three problems: `beautiful-towers-ii` (medium/arrays+stack, O(n) monotone stack with prefix/suffix mountain sums), `minimum-number-of-flips-to-make-binary-grid-palindromic-ii` (medium/arrays, groups-of-4 cell matching + middle row/col pair handling), `maximum-balanced-subsequence-sum` (hard/binary-indexed-tree+dp+arrays, key[i]=nums[i]-i transforms to max non-decreasing subsequence sum, O(n log n) BIT). Bank at **2221**; 6957 tests.
