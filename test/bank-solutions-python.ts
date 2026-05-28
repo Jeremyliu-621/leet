@@ -34834,4 +34834,127 @@ def minimumTotal(triangle):
 `,
 
 
+  // batch 149 — orphaned problems from batches 142b/144
+  'beautiful-towers-ii': `def maximumSumOfHeights(maxHeights):
+    n = len(maxHeights)
+    prefix = [0] * n
+    suffix = [0] * n
+    stk = []
+    for i in range(n):
+        while stk and maxHeights[stk[-1]] >= maxHeights[i]:
+            stk.pop()
+        j = stk[-1] if stk else -1
+        prefix[i] = (prefix[j] if j >= 0 else 0) + maxHeights[i] * (i - j)
+        stk.append(i)
+    stk = []
+    for i in range(n - 1, -1, -1):
+        while stk and maxHeights[stk[-1]] >= maxHeights[i]:
+            stk.pop()
+        j = stk[-1] if stk else n
+        suffix[i] = (suffix[j] if j < n else 0) + maxHeights[i] * (j - i)
+        stk.append(i)
+    return max(prefix[i] + suffix[i] - maxHeights[i] for i in range(n))
+`,
+
+  'maximum-balanced-subsequence-sum': `def maximumBalancedSubsequenceSum(nums):
+    n = len(nums)
+    dp = nums[:]
+    for i in range(1, n):
+        for j in range(i):
+            if nums[j] - j <= nums[i] - i and dp[j] + nums[i] > dp[i]:
+                dp[i] = dp[j] + nums[i]
+    return max(dp)
+`,
+
+  'minimum-number-of-flips-to-make-binary-grid-palindromic-ii': `def minFlips(grid):
+    m, n = len(grid), len(grid[0])
+    flips = 0
+    for i in range(m // 2):
+        for j in range(n // 2):
+            ones = grid[i][j] + grid[i][n-1-j] + grid[m-1-i][j] + grid[m-1-i][n-1-j]
+            if ones == 2:
+                flips += 2
+            else:
+                flips += min(ones, 4 - ones)
+    if n % 2 == 1:
+        mc = n // 2
+        mid_ones = 0
+        for i in range(m // 2):
+            a, b = grid[i][mc], grid[m-1-i][mc]
+            if a != b:
+                flips += 1
+                mid_ones += 1
+            else:
+                mid_ones += 2 * a
+        if m % 2 == 1 and mid_ones % 2 == 1:
+            flips += 1
+    if m % 2 == 1:
+        mr = m // 2
+        mid_ones = 0
+        for j in range(n // 2):
+            a, b = grid[mr][j], grid[mr][n-1-j]
+            if a != b:
+                flips += 1
+                mid_ones += 1
+            else:
+                mid_ones += 2 * a
+        if n % 2 == 1 and mid_ones % 2 == 1:
+            flips += 1
+    return flips
+`,
+
+  'find-kth-largest-xor-coordinate-value': `def kthLargestValue(matrix, k):
+    m, n = len(matrix), len(matrix[0])
+    pre = [[0] * n for _ in range(m)]
+    for i in range(m):
+        for j in range(n):
+            pre[i][j] = (matrix[i][j]
+                ^ (pre[i-1][j] if i > 0 else 0)
+                ^ (pre[i][j-1] if j > 0 else 0)
+                ^ (pre[i-1][j-1] if i > 0 and j > 0 else 0))
+    vals = sorted([pre[i][j] for i in range(m) for j in range(n)], reverse=True)
+    return vals[k - 1]
+`,
+
+  'minimum-swaps-to-make-balanced': `def minSwaps(s):
+    imbalance = 0
+    swaps = 0
+    for ch in s:
+        if ch == '[':
+            imbalance += 1
+        else:
+            if imbalance > 0:
+                imbalance -= 1
+            else:
+                swaps += 1
+                imbalance += 1
+    return swaps
+`,
+
+  'tweet-counts-per-frequency': `def tweetCountsRunner(ops, vals):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    vals = list(vals.to_py() if hasattr(vals, 'to_py') else vals)
+    vals = [list(v.to_py() if hasattr(v, 'to_py') else v) for v in vals]
+    freq2delta = {'minute': 60, 'hour': 3600, 'day': 86400}
+    tweets = {}
+    results = []
+    for op, v in zip(ops, vals):
+        if op == 'recordTweet':
+            name, time = v[0], v[1]
+            if name not in tweets:
+                tweets[name] = []
+            tweets[name].append(time)
+            results.append(None)
+        else:
+            freq, name, start, end = v[0], v[1], v[2], v[3]
+            delta = freq2delta[freq]
+            chunks = (end - start) // delta + 1
+            res = [0] * chunks
+            for t in tweets.get(name, []):
+                if start <= t <= end:
+                    res[(t - start) // delta] += 1
+            results.append(res)
+    return results
+`,
+
 };

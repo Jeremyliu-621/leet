@@ -35005,5 +35005,139 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[0] as number;
   },
 
+  // batch 149 — orphaned problems from batches 142b/144
+  'beautiful-towers-ii': (...args: unknown[]) => {
+    const maxHeights = args[0] as number[];
+    const n = maxHeights.length;
+    const prefix = new Array(n).fill(0) as number[];
+    const suffix = new Array(n).fill(0) as number[];
+    const stk: number[] = [];
+    // prefix[i] = sum of left side with peak at i
+    for (let i = 0; i < n; i++) {
+      while (stk.length && maxHeights[stk[stk.length - 1]!]! >= maxHeights[i]!) stk.pop();
+      const j = stk.length ? stk[stk.length - 1]! : -1;
+      prefix[i] = (j >= 0 ? prefix[j]! : 0) + maxHeights[i]! * (i - j);
+      stk.push(i);
+    }
+    stk.length = 0;
+    // suffix[i] = sum of right side with peak at i
+    for (let i = n - 1; i >= 0; i--) {
+      while (stk.length && maxHeights[stk[stk.length - 1]!]! >= maxHeights[i]!) stk.pop();
+      const j = stk.length ? stk[stk.length - 1]! : n;
+      suffix[i] = (j < n ? suffix[j]! : 0) + maxHeights[i]! * (j - i);
+      stk.push(i);
+    }
+    let ans = 0;
+    for (let i = 0; i < n; i++) ans = Math.max(ans, prefix[i]! + suffix[i]! - maxHeights[i]!);
+    return ans;
+  },
+
+  'maximum-balanced-subsequence-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const dp = nums.slice();
+    for (let i = 1; i < n; i++) {
+      for (let j = 0; j < i; j++) {
+        if (nums[j]! - j <= nums[i]! - i && dp[j]! + nums[i]! > dp[i]!) {
+          dp[i] = dp[j]! + nums[i]!;
+        }
+      }
+    }
+    return Math.max(...dp);
+  },
+
+  'minimum-number-of-flips-to-make-binary-grid-palindromic-ii': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    let flips = 0;
+    // Process groups of 4 (non-middle cells)
+    for (let i = 0; i < Math.floor(m / 2); i++) {
+      for (let j = 0; j < Math.floor(n / 2); j++) {
+        const a = grid[i]![j]!, b = grid[i]![n - 1 - j]!;
+        const c = grid[m - 1 - i]![j]!, d = grid[m - 1 - i]![n - 1 - j]!;
+        const ones = a + b + c + d;
+        if (ones === 2) flips += 2; // cheapest is 2 flips
+        else flips += Math.min(ones, 4 - ones); // flip minority
+      }
+    }
+    // For odd number of columns, process middle column pairs
+    if (n % 2 === 1) {
+      const mc = Math.floor(n / 2);
+      let midColOnes = 0;
+      for (let i = 0; i < Math.floor(m / 2); i++) {
+        const a = grid[i]![mc]!, b = grid[m - 1 - i]![mc]!;
+        if (a !== b) { flips++; midColOnes++; }
+        else midColOnes += 2 * a;
+      }
+      if (m % 2 === 1 && midColOnes % 2 === 1) flips++;
+    }
+    // For odd number of rows, process middle row pairs
+    if (m % 2 === 1) {
+      const mr = Math.floor(m / 2);
+      let midRowOnes = 0;
+      for (let j = 0; j < Math.floor(n / 2); j++) {
+        const a = grid[mr]![j]!, b = grid[mr]![n - 1 - j]!;
+        if (a !== b) { flips++; midRowOnes++; }
+        else midRowOnes += 2 * a;
+      }
+      if (n % 2 === 1 && midRowOnes % 2 === 1) flips++;
+    }
+    return flips;
+  },
+
+  'find-kth-largest-xor-coordinate-value': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const k = args[1] as number;
+    const m = matrix.length, n = matrix[0]!.length;
+    const pre: number[][] = Array.from({ length: m }, () => new Array(n).fill(0) as number[]);
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        pre[i]![j] = matrix[i]![j]!
+          ^ (i > 0 ? pre[i - 1]![j]! : 0)
+          ^ (j > 0 ? pre[i]![j - 1]! : 0)
+          ^ (i > 0 && j > 0 ? pre[i - 1]![j - 1]! : 0);
+      }
+    }
+    const vals = pre.flat().sort((a, b) => b - a);
+    return vals[k - 1]!;
+  },
+
+  'minimum-swaps-to-make-balanced': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let imbalance = 0, swaps = 0;
+    for (const ch of s) {
+      if (ch === '[') imbalance++;
+      else {
+        if (imbalance > 0) imbalance--;
+        else { swaps++; imbalance++; }
+      }
+    }
+    return swaps;
+  },
+
+  'tweet-counts-per-frequency': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const vals = args[1] as Array<[string, ...unknown[]]>;
+    const freq2delta: Record<string, number> = { minute: 60, hour: 3600, day: 86400 };
+    const tweets: Record<string, number[]> = {};
+    return ops.map((op, i) => {
+      const v = vals[i]!;
+      if (op === 'recordTweet') {
+        const name = v[0] as string, time = v[1] as number;
+        if (!tweets[name]) tweets[name] = [];
+        tweets[name]!.push(time);
+        return null;
+      }
+      const freq = v[0] as string, name = v[1] as string;
+      const start = v[2] as number, end = v[3] as number;
+      const delta = freq2delta[freq]!;
+      const chunks = Math.floor((end - start) / delta) + 1;
+      const res = new Array(chunks).fill(0) as number[];
+      for (const t of (tweets[name] ?? [])) {
+        if (t >= start && t <= end) res[Math.floor((t - start) / delta)]!++;
+      }
+      return res;
+    });
+  },
 
 };

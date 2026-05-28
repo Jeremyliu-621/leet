@@ -2465,6 +2465,13 @@ import { problem as numberOfWaysKSteps } from './number-of-ways-to-reach-a-posit
 // batch 148 — math+dp/medium, dp/medium
 import { problem as maxProductAfterCuttingRope } from './max-product-after-cutting-rope';
 import { problem as minimumPathSumTriangle } from './minimum-path-sum-triangle';
+// batch 149 — register orphaned problems from batches 142b/144
+import { problem as beautifulTowersII } from './beautiful-towers-ii';
+import { problem as maxBalancedSubseqSum } from './maximum-balanced-subsequence-sum';
+import { problem as minFlipsBinaryGridPalindromicII } from './minimum-number-of-flips-to-make-binary-grid-palindromic-ii';
+import { problem as findKthLargestXorCoordValue } from './find-kth-largest-xor-coordinate-value';
+import { problem as minSwapsBalanced } from './minimum-swaps-to-make-balanced';
+import { problem as tweetCountsPerFreq } from './tweet-counts-per-frequency';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4967,4 +4974,11 @@ export const problems: readonly Problem[] = [
   // batch 148 — math+dp/medium, dp/medium
   maxProductAfterCuttingRope,
   minimumPathSumTriangle,
+  // batch 149 — register orphaned problems from batches 142b/144
+  beautifulTowersII,
+  maxBalancedSubseqSum,
+  minFlipsBinaryGridPalindromicII,
+  findKthLargestXorCoordValue,
+  minSwapsBalanced,
+  tweetCountsPerFreq,
 ];
