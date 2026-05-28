@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2144** problems; 6726 tests green. Batches 102–127b + 113b + 117b + 122b + 122c + 123b + 124b complete. TypeScript starters backfilled. Site stats at 2,131+.
+**Current focus:** Bank at **2147** problems; 6735 tests green. Batches 102–128 + 113b + 117b + 122b + 122c + 123b + 124b + 127b complete. TypeScript starters backfilled. Site stats at 2,131+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 128 bank growth; UI/UX refinements; accessibility audit.
+**Next up:** Batch 129 bank growth; UI/UX refinements; accessibility audit.
+
+### feat(bank): add batch 128 — removing-stars, min-moves-seat-everyone, check-prefix-of-array (2026-05-28)
+Three problems: `removing-stars-from-a-string` (medium/strings+stack, push non-star/pop on star), `minimum-number-of-moves-to-seat-everyone` (easy/arrays, sort both+sum abs diffs), `check-if-string-is-a-prefix-of-array` (easy/arrays+strings, accumulate until match or exceed). Bank at **2147**; 6735 tests.
 
 ### feat(bank): add batch 127b — find-min-value-digit-sum, count-triplets-xor (2026-05-28)
 Two problems: `find-minimum-value-after-replacing-with-digit-sum` (easy/arrays+math, replace each element with its digit sum, return min), `count-triplets-forming-two-arrays-of-equal-xor` (medium/arrays+math, key insight: a XOR b == 0 iff full segment XOR = 0; for each valid (i,k) pair, all j from i+1..k work → count += k-i). Bank at **2144**; 6726 tests.
