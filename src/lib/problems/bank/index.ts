@@ -2193,6 +2193,10 @@ import { problem as countSubarraysMaxElementKTimes } from './count-subarrays-max
 import { problem as removeAllAdjacentDuplicatesInStringII } from './remove-all-adjacent-duplicates-in-string-ii';
 import { problem as averageOfSubtree } from './average-of-subtree';
 import { problem as cousinsInBinaryTreeII } from './cousins-in-binary-tree-ii';
+// batch 101 — math/easy, arrays/easy, arrays/easy
+import { problem as primeArrangements } from './prime-arrangements';
+import { problem as luckyNumbersInAMatrix } from './lucky-numbers-in-a-matrix';
+import { problem as smallestRangeI } from './smallest-range-i';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4423,4 +4427,8 @@ export const problems: readonly Problem[] = [
   removeAllAdjacentDuplicatesInStringII,
   averageOfSubtree,
   cousinsInBinaryTreeII,
+  // batch 101 — math/easy, arrays/easy, arrays/easy
+  primeArrangements,
+  luckyNumbersInAMatrix,
+  smallestRangeI,
 ];

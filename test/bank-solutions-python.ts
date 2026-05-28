@@ -31395,4 +31395,40 @@ def cousinsInBinaryTreeII(root):
     return root
 `,
 
+  // batch 101
+  'prime-arrangements': `
+def numPrimeArrangements(n):
+    MOD = 10**9 + 7
+    def is_prime(x):
+        if x < 2: return False
+        i = 2
+        while i * i <= x:
+            if x % i == 0: return False
+            i += 1
+        return True
+    p = sum(1 for i in range(2, n + 1) if is_prime(i))
+    def factorial(k):
+        r = 1
+        for i in range(1, k + 1):
+            r = r * i % MOD
+        return r
+    return factorial(p) * factorial(n - p) % MOD
+`,
+  'lucky-numbers-in-a-matrix': `
+def luckyNumbers(matrix):
+    m, n = len(matrix), len(matrix[0])
+    col_max = [max(matrix[i][j] for i in range(m)) for j in range(n)]
+    result = []
+    for row in matrix:
+        min_val = min(row)
+        min_col = row.index(min_val)
+        if min_val == col_max[min_col]:
+            result.append(min_val)
+    return result
+`,
+  'smallest-range-i': `
+def smallestRangeI(nums, k):
+    return max(0, max(nums) - min(nums) - 2 * k)
+`,
+
 };

@@ -31884,4 +31884,33 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return _treeToArr(root);
   },
 
+  // batch 101
+  'prime-arrangements': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const MOD = 1_000_000_007n;
+    const isPrime = (x: number) => { if (x < 2) return false; for (let i = 2; i * i <= x; i++) if (x % i === 0) return false; return true; };
+    let p = 0; for (let i = 2; i <= n; i++) if (isPrime(i)) p++;
+    let r = 1n; for (let i = 1; i <= p; i++) r = r * BigInt(i) % MOD;
+    let s = 1n; for (let i = 1; i <= n - p; i++) s = s * BigInt(i) % MOD;
+    return Number(r * s % MOD);
+  },
+  'lucky-numbers-in-a-matrix': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const m = matrix.length, n = matrix[0]!.length;
+    const colMax = new Array<number>(n).fill(-Infinity);
+    for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) if ((matrix[i]![j] as number) > colMax[j]!) colMax[j] = matrix[i]![j] as number;
+    const result: number[] = [];
+    for (let i = 0; i < m; i++) {
+      let minVal = Infinity, minCol = 0;
+      for (let j = 0; j < n; j++) if ((matrix[i]![j] as number) < minVal) { minVal = matrix[i]![j] as number; minCol = j; }
+      if (minVal === colMax[minCol]) result.push(minVal);
+    }
+    return result;
+  },
+  'smallest-range-i': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const max = Math.max(...nums), min = Math.min(...nums);
+    return Math.max(0, max - min - 2 * k);
+  },
+
 };
