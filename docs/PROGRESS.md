@@ -8,15 +8,18 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2189** problems; 6858 tests green. Batches 102–139 complete. TypeScript starters backfilled. UX polish ongoing.
+**Current focus:** Bank at **2196** problems; 6882 tests green. Batches 102–139 + 134b + 138 complete. TypeScript starters backfilled. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More UX polish; more bank growth; accessibility audit.
 
 ### feat(bank): add batch 139 — sort-people, count-words-given-prefix, find-missing-observations (2026-05-28)
-Three problems: `sort-people` (easy/arrays+strings, zip names+heights, sort by height desc O(n log n)), `count-words-given-prefix` (easy/strings, filter by startsWith in O(n×|pref|)), `find-missing-observations` (medium/arrays+math+simulation, missingSum = mean×(n+m)−observed; feasibility check n≤sum≤6n; distribute evenly with floor+remainder). Bank at **2189**; 6858 tests.
+Three problems: `sort-people` (easy/arrays+strings, zip names+heights, sort by height desc O(n log n)), `count-words-given-prefix` (easy/strings, filter by startsWith in O(n×|pref|)), `find-missing-observations` (medium/arrays+math+simulation, missingSum = mean×(n+m)−observed; feasibility check n≤sum≤6n; distribute evenly with floor+remainder). Bank at **2196**; 6882 tests.
 
-### feat(bank): add batch 138 — wire good-partitions, incr-columns, special-chars-i, xor-sum, max-integers-ii, min-cost-connect (2026-05-28)
-Completed integration of 6 problem files that had .ts + Python solutions but were missing from index.ts and lacked JS solutions. All 6 now fully wired with JS reference solutions. Bank at **2186**; 6849 tests.
+### feat(bank): add batch 134b — count-special-chars-ii, make-square-same-color, good-pairs-ii (2026-05-28)
+Three problems: `count-the-number-of-special-characters-ii` (medium/strings+hash-map, track lastLower and firstUpper per char, count chars where lastLower<firstUpper), `make-a-square-with-the-same-color` (easy/arrays+simulation, check all 4 possible 2×2 sub-squares for ≥3 uniform cells), `find-the-number-of-good-pairs-ii` (medium/arrays+hash-map, freq map + iterate multiples up to 10^6 for O(max/k) per element). Bank at **2196**; 6882 tests.
+
+### feat(bank): add batch 138 — longest-unequal-adj-groups-ii, zero-array-ii, min-array-changes, almost-equal-pairs-i, min-diameter-merge (2026-05-28)
+Five problems: `longest-unequal-adjacent-groups-subsequence-ii` (medium/strings+dp, DP with Hamming-1 and group-differ constraints), `zero-array-transformation-ii` (medium/arrays+binary-search, binary search on k with difference-array feasibility check), `minimum-array-changes-to-make-subarrays-distinct` (medium/arrays+hash-map, greedy spacing per value ≥ k), `count-almost-equal-pairs-i` (easy/arrays+math, pad and check 0 or 2 swappable digit diffs), `find-minimum-diameter-after-merging-two-trees` (hard/graph+tree, two BFS per tree + max(d1,d2,⌈d1/2⌉+⌈d2/2⌉+1)). Bank at **2196**; 6882 tests.
 
 ### feat(bank): add batch 137 — maximum-or, permutation-diff, sum-of-distances (2026-05-28)
 Three problems: `maximum-or` (medium/arrays+math, BigInt prefix/suffix OR, concentrate all k doublings on one element), `permutation-difference-between-two-strings` (easy/strings+hash-map, position map + sum of absolute differences), `calculate-the-sum-of-distances` (medium/arrays, per-group O(n) prefix sum). Bank at **2183**; 6840 tests.

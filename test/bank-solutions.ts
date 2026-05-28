@@ -34098,4 +34098,157 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Array.from({ length: n }, (_, i) => base + (i < extra ? 1 : 0));
   },
 
+
+  // batch 134b — strings+hash-map/medium, arrays+simulation/easy, arrays+hash-map/medium
+  'count-the-number-of-special-characters-ii': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const lastLower: Record<string, number> = {};
+    const firstUpper: Record<string, number> = {};
+    for (let i = 0; i < word.length; i++) {
+      const c = word[i]!;
+      if (c >= 'a' && c <= 'z') lastLower[c] = i;
+      else if (!(c.toLowerCase() in firstUpper)) firstUpper[c.toLowerCase()] = i;
+    }
+    let count = 0;
+    for (const [c, lIdx] of Object.entries(lastLower)) {
+      if (c in firstUpper && lIdx < firstUpper[c]!) count++;
+    }
+    return count;
+  },
+
+  'make-a-square-with-the-same-color': (...args: unknown[]) => {
+    const grid = args[0] as string[][];
+    for (let r = 0; r < 2; r++) {
+      for (let cc = 0; cc < 2; cc++) {
+        const cells = [grid[r]![cc]!, grid[r]![cc + 1]!, grid[r + 1]![cc]!, grid[r + 1]![cc + 1]!];
+        const whites = cells.filter(x => x === 'W').length;
+        if (whites >= 3 || whites <= 1) return true;
+      }
+    }
+    return false;
+  },
+
+  // batch 138
+  'longest-unequal-adjacent-groups-subsequence-ii': (...args: unknown[]) => {
+    const words = args[0] as string[], groups = args[1] as number[];
+    const n = words.length;
+    const hamming = (a: string, b: string) => {
+      if (a.length !== b.length) return Infinity;
+      let d = 0;
+      for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) d++;
+      return d;
+    };
+    const dp = new Array(n).fill(1);
+    const prev = new Array(n).fill(-1);
+    let bestEnd = 0;
+    for (let i = 1; i < n; i++) {
+      for (let j = 0; j < i; j++) {
+        if (groups[i] !== groups[j] && hamming(words[i]!, words[j]!) === 1 && dp[j]! + 1 > dp[i]!) {
+          dp[i] = dp[j]! + 1;
+          prev[i] = j;
+        }
+      }
+      if (dp[i]! > dp[bestEnd]!) bestEnd = i;
+    }
+    const result: string[] = [];
+    for (let cur = bestEnd; cur !== -1; cur = prev[cur]!) result.push(words[cur]!);
+    return result.reverse();
+  },
+  'find-the-number-of-good-pairs-ii': (...args: unknown[]) => {
+    const nums1 = args[0] as number[], nums2 = args[1] as number[], k = args[2] as number;
+    const freq = new Map<number, number>();
+    for (const x of nums1) freq.set(x, (freq.get(x) ?? 0) + 1);
+    const maxN1 = Math.max(...nums1);
+    let ans = 0;
+    for (const x of nums2) {
+      const v = x * k;
+      for (let mult = v; mult <= maxN1; mult += v) ans += freq.get(mult) ?? 0;
+    }
+    return ans;
+  },
+  'zero-array-transformation-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[], queries = args[1] as number[][];
+    const n = nums.length;
+    const check = (k: number) => {
+      const diff = new Array(n + 1).fill(0);
+      for (let i = 0; i < k; i++) {
+        const [l, r, val] = queries[i]!;
+        diff[l!] += val!;
+        if (r! + 1 <= n) diff[r! + 1] -= val!;
+      }
+      let cap = 0;
+      for (let i = 0; i < n; i++) {
+        cap += diff[i]!;
+        if (cap < nums[i]!) return false;
+      }
+      return true;
+    };
+    if (check(0)) return 0;
+    let lo = 1, hi = queries.length;
+    if (!check(hi)) return -1;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (check(mid)) hi = mid;
+      else lo = mid + 1;
+    }
+    return lo;
+  },
+  'minimum-array-changes-to-make-subarrays-distinct': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const positions = new Map<number, number[]>();
+    for (let i = 0; i < nums.length; i++) {
+      if (!positions.has(nums[i]!)) positions.set(nums[i]!, []);
+      positions.get(nums[i]!)!.push(i);
+    }
+    let changes = 0;
+    for (const pos of positions.values()) {
+      let lastKept = -Infinity;
+      for (const p of pos) {
+        if (p >= lastKept + k) lastKept = p;
+        else changes++;
+      }
+    }
+    return changes;
+  },
+  'count-almost-equal-pairs-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const maxLen = Math.max(...nums.map((n) => String(n).length));
+    const padded = nums.map((n) => String(n).padStart(maxLen, '0'));
+    let count = 0;
+    for (let i = 0; i < padded.length; i++) {
+      for (let j = i + 1; j < padded.length; j++) {
+        const a = padded[i]!, b = padded[j]!;
+        if (a === b) { count++; continue; }
+        const diffs: number[] = [];
+        for (let k = 0; k < maxLen; k++) if (a[k] !== b[k]) diffs.push(k);
+        if (diffs.length === 2 && a[diffs[0]!] === b[diffs[1]!] && a[diffs[1]!] === b[diffs[0]!]) count++;
+      }
+    }
+    return count;
+  },
+  'find-minimum-diameter-after-merging-two-trees': (...args: unknown[]) => {
+    const edges1 = args[0] as number[][], edges2 = args[1] as number[][];
+    const getDiameter = (edges: number[][], n: number) => {
+      if (n === 1) return 0;
+      const adj: number[][] = Array.from({ length: n }, () => []);
+      for (const [u, v] of edges) { adj[u!]!.push(v!); adj[v!]!.push(u!); }
+      const bfs = (start: number): [number, number] => {
+        const dist = new Array(n).fill(-1);
+        dist[start] = 0;
+        const q = [start];
+        let far = start;
+        for (let h = 0; h < q.length; h++) {
+          for (const v of adj[q[h]!]!) {
+            if (dist[v] === -1) { dist[v] = dist[q[h]!]! + 1; q.push(v); if (dist[v]! > dist[far]!) far = v; }
+          }
+        }
+        return [far, dist[far]!];
+      };
+      return bfs(bfs(0)[0])[1];
+    };
+    const d1 = getDiameter(edges1, edges1.length + 1);
+    const d2 = getDiameter(edges2, edges2.length + 1);
+    return Math.max(d1, d2, Math.ceil(d1 / 2) + Math.ceil(d2 / 2) + 1);
+  },
+
 };

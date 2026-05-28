@@ -2385,10 +2385,20 @@ import { problem as maxCountRangeII } from './maximum-number-of-integers-to-choo
 import { problem as countStrictlyIncreasingColumns } from './count-strictly-increasing-columns';
 import { problem as findXORSumOfAllPairsBitwiseAND } from './find-xor-sum-of-all-pairs-bitwise-and';
 import { problem as minCostConnectTwoGroups } from './minimum-cost-to-connect-two-groups';
+// batch 134b — strings+hash-map/medium, arrays+simulation/easy, arrays+hash-map/medium
+import { problem as numberOfSpecialCharsII } from './count-the-number-of-special-characters-ii';
+import { problem as canMakeSquare } from './make-a-square-with-the-same-color';
+import { problem as findTheNumberOfGoodPairsII } from './find-the-number-of-good-pairs-ii';
 // batch 137 — arrays+math/medium, strings+hash-map/easy, arrays/medium
 import { problem as maximumOr } from './maximum-or';
 import { problem as permutationDifferenceBetweenTwoStrings } from './permutation-difference-between-two-strings';
 import { problem as calculateTheSumOfDistances } from './calculate-the-sum-of-distances';
+// batch 138 — strings+dp/medium, arrays+binary-search/medium, arrays+hash-map/medium, arrays+math/easy, graph+tree/hard
+import { problem as longestUnequalAdjacentGroupsSubsequenceII } from './longest-unequal-adjacent-groups-subsequence-ii';
+import { problem as zeroArrayTransformationII } from './zero-array-transformation-ii';
+import { problem as minimumArrayChangesToMakeSubarraysDistinct } from './minimum-array-changes-to-make-subarrays-distinct';
+import { problem as countAlmostEqualPairsI } from './count-almost-equal-pairs-i';
+import { problem as findMinimumDiameterAfterMergingTwoTrees } from './find-minimum-diameter-after-merging-two-trees';
 // batch 139 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
 import { problem as sortPeople } from './sort-people';
 import { problem as countWordsGivenPrefix } from './count-words-given-prefix';
@@ -4815,10 +4825,20 @@ export const problems: readonly Problem[] = [
   countStrictlyIncreasingColumns,
   findXORSumOfAllPairsBitwiseAND,
   minCostConnectTwoGroups,
+  // batch 134b — strings+hash-map/medium, arrays+simulation/easy, arrays+hash-map/medium
+  numberOfSpecialCharsII,
+  canMakeSquare,
+  findTheNumberOfGoodPairsII,
   // batch 137 — arrays+math/medium, strings+hash-map/easy, arrays/medium
   maximumOr,
   permutationDifferenceBetweenTwoStrings,
   calculateTheSumOfDistances,
+  // batch 138 — strings+dp/medium, arrays+binary-search/medium, arrays+hash-map/medium, arrays+math/easy, graph+tree/hard
+  longestUnequalAdjacentGroupsSubsequenceII,
+  zeroArrayTransformationII,
+  minimumArrayChangesToMakeSubarraysDistinct,
+  countAlmostEqualPairsI,
+  findMinimumDiameterAfterMergingTwoTrees,
   // batch 139 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
   sortPeople,
   countWordsGivenPrefix,

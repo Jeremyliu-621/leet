@@ -33659,6 +33659,155 @@ def numberOfSpecialChars(word):
     return sum(1 for c in lower if c in upper)
 `,
 
+  // batch 138 — strings+dp/medium, arrays+binary-search/medium, arrays+hash-map/medium, arrays+math/easy, graph+tree/hard
+  'longest-unequal-adjacent-groups-subsequence-ii': `
+def getWordsInLongestSubsequence(words, groups):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    groups = list(groups.to_py() if hasattr(groups, 'to_py') else groups)
+    n = len(words)
+    def hamming(a, b):
+        if len(a) != len(b):
+            return float('inf')
+        return sum(1 for x, y in zip(a, b) if x != y)
+    dp = [1] * n
+    prev = [-1] * n
+    best_end = 0
+    for i in range(1, n):
+        for j in range(i):
+            if groups[i] != groups[j] and hamming(words[i], words[j]) == 1 and dp[j] + 1 > dp[i]:
+                dp[i] = dp[j] + 1
+                prev[i] = j
+        if dp[i] > dp[best_end]:
+            best_end = i
+    result = []
+    cur = best_end
+    while cur != -1:
+        result.append(words[cur])
+        cur = prev[cur]
+    return list(reversed(result))
+`,
+
+  'find-the-number-of-good-pairs-ii': `
+def numberOfPairs(nums1, nums2, k):
+    nums1 = list(nums1.to_py() if hasattr(nums1, 'to_py') else nums1)
+    nums2 = list(nums2.to_py() if hasattr(nums2, 'to_py') else nums2)
+    from collections import Counter
+    freq = Counter(nums1)
+    max_n1 = max(nums1)
+    ans = 0
+    for x in nums2:
+        v = x * k
+        mult = v
+        while mult <= max_n1:
+            ans += freq.get(mult, 0)
+            mult += v
+    return ans
+`,
+
+  'zero-array-transformation-ii': `
+def minZeroArray(nums, queries):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    queries = [list(q.to_py() if hasattr(q, 'to_py') else q) for q in (queries.to_py() if hasattr(queries, 'to_py') else queries)]
+    n = len(nums)
+    def check(k):
+        diff = [0] * (n + 1)
+        for i in range(k):
+            l, r, val = queries[i]
+            diff[l] += val
+            if r + 1 <= n:
+                diff[r + 1] -= val
+        cap = 0
+        for i in range(n):
+            cap += diff[i]
+            if cap < nums[i]:
+                return False
+        return True
+    if check(0):
+        return 0
+    lo, hi = 1, len(queries)
+    if not check(hi):
+        return -1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if check(mid):
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'minimum-array-changes-to-make-subarrays-distinct': `
+def minimumChanges(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    from collections import defaultdict
+    positions = defaultdict(list)
+    for i, v in enumerate(nums):
+        positions[v].append(i)
+    changes = 0
+    for pos in positions.values():
+        last_kept = float('-inf')
+        for p in pos:
+            if p >= last_kept + k:
+                last_kept = p
+            else:
+                changes += 1
+    return changes
+`,
+
+  'count-almost-equal-pairs-i': `
+def countPairs(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    max_len = max(len(str(n)) for n in nums)
+    padded = [str(n).zfill(max_len) for n in nums]
+    count = 0
+    for i in range(len(padded)):
+        for j in range(i + 1, len(padded)):
+            a, b = padded[i], padded[j]
+            if a == b:
+                count += 1
+                continue
+            diffs = [k for k in range(max_len) if a[k] != b[k]]
+            if len(diffs) == 2 and a[diffs[0]] == b[diffs[1]] and a[diffs[1]] == b[diffs[0]]:
+                count += 1
+    return count
+`,
+
+  'find-minimum-diameter-after-merging-two-trees': `
+def minimumDiameterAfterMerge(edges1, edges2):
+    import math
+    from collections import deque
+    edges1 = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (edges1.to_py() if hasattr(edges1, 'to_py') else edges1)]
+    edges2 = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (edges2.to_py() if hasattr(edges2, 'to_py') else edges2)]
+    def get_diameter(edges, n):
+        if n == 1:
+            return 0
+        adj = [[] for _ in range(n)]
+        for u, v in edges:
+            adj[u].append(v)
+            adj[v].append(u)
+        def bfs(start):
+            dist = [-1] * n
+            dist[start] = 0
+            q = deque([start])
+            far = start
+            while q:
+                u = q.popleft()
+                for v in adj[u]:
+                    if dist[v] == -1:
+                        dist[v] = dist[u] + 1
+                        q.append(v)
+                        if dist[v] > dist[far]:
+                            far = v
+            return far, dist[far]
+        far1, _ = bfs(0)
+        _, d = bfs(far1)
+        return d
+    n1, n2 = len(edges1) + 1, len(edges2) + 1
+    d1 = get_diameter(edges1, n1)
+    d2 = get_diameter(edges2, n2)
+    return max(d1, d2, math.ceil(d1 / 2) + math.ceil(d2 / 2) + 1)
+`,
+
   'count-number-of-good-partitions': `
 def numberOfGoodPartitions(nums):
     nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
@@ -33799,7 +33948,33 @@ def distance(arr):
     return result
 `,
 
-  // batch 138 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
+  // batch 134b
+  'count-the-number-of-special-characters-ii': `
+def numberOfSpecialChars(word):
+    last_lower = {}
+    first_upper = {}
+    for i, c in enumerate(word):
+        if c == c.lower():
+            last_lower[c] = i
+        elif c.lower() not in first_upper:
+            first_upper[c.lower()] = i
+    return sum(1 for c, l_idx in last_lower.items()
+               if c in first_upper and l_idx < first_upper[c])
+`,
+
+  'make-a-square-with-the-same-color': `
+def canMakeSquare(grid):
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    for r in range(2):
+        for c in range(2):
+            cells = [grid[r][c], grid[r][c+1], grid[r+1][c], grid[r+1][c+1]]
+            whites = cells.count('W')
+            if whites >= 3 or whites <= 1:
+                return True
+    return False
+`,
+
+  // batch 139 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
   'sort-people': `
 def sortPeople(names, heights):
     names = list(names.to_py() if hasattr(names, 'to_py') else names)
