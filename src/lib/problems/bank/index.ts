@@ -2377,6 +2377,20 @@ import { problem as maximumXorProduct } from './maximum-xor-product';
 import { problem as findTheEncryptedString } from './find-the-encrypted-string';
 import { problem as maximumSubarraySumDivisibleByK } from './maximum-subarray-sum-with-length-divisible-by-k';
 import { problem as redistributeCharacters } from './redistribute-characters-to-make-all-strings-equal';
+// batch 137 — arrays+hash-map/hard, arrays/medium, strings/easy, math/medium, arrays+hash-map/medium, arrays+dynamic-programming/hard
+import { problem as countNumberOfGoodPartitions } from './count-number-of-good-partitions';
+import { problem as countStrictlyIncreasingColumns } from './count-strictly-increasing-columns';
+import { problem as countTheNumberOfSpecialCharsI } from './count-the-number-of-special-characters-i';
+import { problem as findXorSumOfAllPairsBitwiseAnd } from './find-xor-sum-of-all-pairs-bitwise-and';
+import { problem as maximumNumberOfIntegersFromRangeII } from './maximum-number-of-integers-to-choose-from-a-range-ii';
+import { problem as minimumCostToConnectTwoGroups } from './minimum-cost-to-connect-two-groups';
+// batch 138 — strings+dp/medium, arrays+hash-map/medium, arrays+binary-search/medium, arrays+hash-map/medium, arrays+math/easy, graph+tree/hard
+import { problem as longestUnequalAdjacentGroupsSubsequenceII } from './longest-unequal-adjacent-groups-subsequence-ii';
+import { problem as findTheNumberOfGoodPairsII } from './find-the-number-of-good-pairs-ii';
+import { problem as zeroArrayTransformationII } from './zero-array-transformation-ii';
+import { problem as minimumArrayChangesToMakeSubarraysDistinct } from './minimum-array-changes-to-make-subarrays-distinct';
+import { problem as countAlmostEqualPairsI } from './count-almost-equal-pairs-i';
+import { problem as findMinimumDiameterAfterMergingTwoTrees } from './find-minimum-diameter-after-merging-two-trees';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4791,4 +4805,18 @@ export const problems: readonly Problem[] = [
   findTheEncryptedString,
   maximumSubarraySumDivisibleByK,
   redistributeCharacters,
+  // batch 137 — arrays+hash-map/hard, arrays/medium, strings/easy, math/medium, arrays+hash-map/medium, arrays+dynamic-programming/hard
+  countNumberOfGoodPartitions,
+  countStrictlyIncreasingColumns,
+  countTheNumberOfSpecialCharsI,
+  findXorSumOfAllPairsBitwiseAnd,
+  maximumNumberOfIntegersFromRangeII,
+  minimumCostToConnectTwoGroups,
+  // batch 138 — strings+dp/medium, arrays+hash-map/medium, arrays+binary-search/medium, arrays+hash-map/medium, arrays+math/easy, graph+tree/hard
+  longestUnequalAdjacentGroupsSubsequenceII,
+  findTheNumberOfGoodPairsII,
+  zeroArrayTransformationII,
+  minimumArrayChangesToMakeSubarraysDistinct,
+  countAlmostEqualPairsI,
+  findMinimumDiameterAfterMergingTwoTrees,
 ];

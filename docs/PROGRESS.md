@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2183** problems; 6840 tests green. Batches 102–137 complete. TypeScript starters backfilled. UX polish ongoing.
+**Current focus:** Bank at **2189** problems; 6858 tests green. Batches 102–138 complete. TypeScript starters backfilled. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More UX polish; more bank growth; accessibility audit.
+
+### feat(bank): add batch 138 — longest-unequal-adj-groups-ii, good-pairs-ii, zero-array-ii, min-array-changes, almost-equal-pairs-i, min-diameter-merge (2026-05-28)
+Six problems: `longest-unequal-adjacent-groups-subsequence-ii` (medium/strings+dp, DP with Hamming-1 and group-differ constraints), `find-the-number-of-good-pairs-ii` (medium/arrays+hash-map, divisibility via multiples iteration), `zero-array-transformation-ii` (medium/arrays+binary-search, binary search on k with difference-array feasibility check), `minimum-array-changes-to-make-subarrays-distinct` (medium/arrays+hash-map, greedy spacing per value ≥ k), `count-almost-equal-pairs-i` (easy/arrays+math, pad and check 0 or 2 swappable digit diffs), `find-minimum-diameter-after-merging-two-trees` (hard/graph+tree, two BFS per tree + max(d1,d2,⌈d1/2⌉+⌈d2/2⌉+1)). Bank at **2189**; 6858 tests.
 
 ### feat(bank): add batch 137 — good-partitions, incr-columns, special-chars-i, xor-sum, max-integers-ii, min-cost-connect (2026-05-28)
 Six problems: `count-number-of-good-partitions` (hard/arrays+hash-map, sweep with last-occurrence map, multiply result by 2 at each valid boundary), `count-strictly-increasing-columns` (medium/arrays, column-by-column strict monotone check), `count-the-number-of-special-characters-i` (easy/strings, count chars appearing as both lower and upper), `find-xor-sum-of-all-pairs-bitwise-and` (medium/math, XOR distributes over AND: answer = XOR(arr1) & XOR(arr2)), `maximum-number-of-integers-to-choose-from-a-range-ii` (medium/arrays+hash-map, binary search over sorted gap ranges), `minimum-cost-to-connect-two-groups` (hard/arrays+dynamic-programming, bitmask DP over group2 coverage + retroactive min-cost patch). Bank at **2183**; 6840 tests.
