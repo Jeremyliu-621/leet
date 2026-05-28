@@ -34079,6 +34079,107 @@ def kidsWithCandies(candies, extraCandies: int):
 `,
 
   // batch 141
+  'number-of-unequal-triplets-in-array': `
+def unequalTriplets(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    count = 0
+    for i in range(n):
+        for j in range(i+1, n):
+            for k in range(j+1, n):
+                if nums[i] != nums[j] and nums[j] != nums[k] and nums[i] != nums[k]:
+                    count += 1
+    return count
+`,
+
+  'maximize-area-of-square-hole-in-grid': `
+def maximizeSquareHoleArea(n, m, hBars, vBars):
+    hBars = list(hBars.to_py() if hasattr(hBars, 'to_py') else hBars)
+    vBars = list(vBars.to_py() if hasattr(vBars, 'to_py') else vBars)
+    def max_gap(bars):
+        max_run = run = 1
+        for i in range(1, len(bars)):
+            run = run + 1 if bars[i] == bars[i-1] + 1 else 1
+            max_run = max(max_run, run)
+        return max_run + 1
+    side = min(max_gap(hBars), max_gap(vBars))
+    return side * side
+`,
+
+  'sum-of-total-strength-of-wizards': `
+def totalStrength(strength):
+    strength = list(strength.to_py() if hasattr(strength, 'to_py') else strength)
+    MOD = 10**9 + 7
+    n = len(strength)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i+1] = (prefix[i] + strength[i]) % MOD
+    pp = [0] * (n + 2)
+    for i in range(n + 1):
+        pp[i+1] = (pp[i] + prefix[i]) % MOD
+    L = [-1] * n
+    R = [n] * n
+    stack = []
+    for i in range(n):
+        while stack and strength[stack[-1]] >= strength[i]:
+            R[stack.pop()] = i
+        L[i] = stack[-1] if stack else -1
+        stack.append(i)
+    ans = 0
+    for i in range(n):
+        l, r = L[i] + 1, R[i]
+        cL = i - l + 1
+        cR = r - i
+        sR = (pp[r+1] - pp[i+1]) % MOD
+        sL = (pp[i+1] - pp[l]) % MOD
+        ans = (ans + strength[i] * ((cL * sR - cR * sL) % MOD + MOD) % MOD) % MOD
+    return ans
+`,
+
+  'maximum-number-of-events-that-can-be-attended-ii': `
+def maxValue(events, k):
+    events = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (events.to_py() if hasattr(events, 'to_py') else events)]
+    events.sort(key=lambda e: e[1])
+    n = len(events)
+    dp = [[0] * (k + 1) for _ in range(n + 1)]
+    for i in range(1, n + 1):
+        start, end, val = events[i-1]
+        lo, hi = 0, i - 1
+        while lo < hi:
+            mid = (lo + hi + 1) // 2
+            if events[mid-1][1] < start:
+                lo = mid
+            else:
+                hi = mid - 1
+        for j in range(1, k + 1):
+            dp[i][j] = max(dp[i-1][j], dp[lo][j-1] + val)
+    return dp[n][k]
+`,
+
+  'minimum-operations-to-convert-number': `
+def minimumOperations(nums, start, goal):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    if start == goal:
+        return 0
+    visited = {start}
+    queue = [start]
+    steps = 0
+    while queue:
+        steps += 1
+        nxt = []
+        for x in queue:
+            for n in nums:
+                for op in [x ^ n, x + n, x - n]:
+                    if op == goal:
+                        return steps
+                    if 0 <= op <= 1000 and op not in visited:
+                        visited.add(op)
+                        nxt.append(op)
+        queue = nxt
+    return -1
+`,
+
+  // batch 141 python (math/hard + hard)
   'reaching-points': `
 def reachingPoints(sx: int, sy: int, tx: int, ty: int) -> bool:
     while tx >= sx and ty >= sy:
@@ -34176,9 +34277,10 @@ def numSubmatrixSumTarget(matrix: list, target: int) -> int:
                 prefix += s
                 count += prefix_count[prefix - target]
                 prefix_count[prefix] += 1
-    return count`,
+    return count
+`,
 
-  // batch 142
+    // batch 142
   'maximum-height-of-a-triangle': `
 def maxHeightOfTriangle(red, blue):
     def check(a, b):

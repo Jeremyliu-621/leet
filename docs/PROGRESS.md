@@ -8,9 +8,18 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2209** problems; 6921 tests green. Batches 102–141 complete. TypeScript starters backfilled. UX polish ongoing.
+**Current focus:** Bank at **2221** problems; 6957 tests green. Batches 102–144b + 142 complete. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More UX polish; more bank growth; accessibility audit.
+
+### feat(bank): add batch 142 — max-height-triangle, divide-array-min-cost-i, k-constraint-substr-i, final-array-mult-i, first-player-win-k, digit-diff-pairs, monotonic-pairs-i (2026-05-28)
+Seven problems from 2024-era LeetCode (3150-3270 range): `maximum-height-of-a-triangle` (easy/simulation, try both color orderings row-by-row), `divide-array-into-subarrays-with-minimum-cost-i` (easy/arrays, nums[0]+k-1 smallest from rest), `count-substrings-satisfy-k-constraint-i` (easy/strings, O(n²) brute-force), `final-array-state-k-multiplication-i` (easy/simulation, k ops: find leftmost min × multiplier), `find-the-first-player-to-win-k-games-in-a-row` (medium/simulation, king-of-the-hill O(n) scan), `sum-of-digit-differences-of-all-pairs` (medium/math, per-position frequency → C(n,2)−agree pairs), `find-the-count-of-monotonic-pairs-i` (hard/dp, prefix-sum DP enforcing lower bound per transition). Bank at **2221**; 6957 tests.
+
+### feat(bank): add batch 142b — beautiful-towers-ii, palindromic-grid-ii, balanced-subseq-sum (2026-05-28)
+Three problems: `beautiful-towers-ii` (medium/arrays+stack, O(n) monotone stack with prefix/suffix mountain sums), `minimum-number-of-flips-to-make-binary-grid-palindromic-ii` (medium/arrays, groups-of-4 cell matching + middle row/col pair handling), `maximum-balanced-subsequence-sum` (hard/binary-indexed-tree+dp+arrays, key[i]=nums[i]-i transforms to max non-decreasing subsequence sum, O(n log n) BIT). Bank at **2221**; 6957 tests.
+
+### feat(bank): add batch 144 — min-swaps-balanced, kth-largest-xor-coord, tweet-counts-per-freq (2026-05-28)
+Three problems: `minimum-swaps-to-make-balanced` (medium/strings+stack, ceil(maxDeficit/2) via running balance), `find-kth-largest-xor-coordinate-value` (medium/arrays, 2D prefix XOR + kth order statistic), `tweet-counts-per-frequency` (medium/hash-map+simulation, map of timestamps + delta-chunk counting). Bank at **2218**; 6948 tests.
 
 ### feat(bank): add batch 141 — reaching-points, orderly-queue, valid-number, min-moves-ii, super-washing, submatrices-sum (2026-05-28)
 Six problems: `reaching-points` (hard/math, reverse GCD/modulo traversal to check reachability), `orderly-queue` (hard/math+strings, k=1 min rotation, k≥2 sort), `valid-number` (hard/strings, state-machine with seenDigit/seenDot/seenE flags), `minimum-moves-to-equal-array-elements-ii` (medium/math, median minimises L1 sum), `super-washing-machines` (hard/math, cumulative flow bottleneck argument), `number-of-submatrices-that-sum-to-target` (hard/arrays+dp+hash-map, 2D prefix sum reduction to 1D subarray problem). Bank at **2209**; 6921 tests.

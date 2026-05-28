@@ -59,6 +59,11 @@ export function HintsSection({ hints, onReveal, costLabel }: HintsSectionProps) 
         <button
           type="button"
           onClick={handleReveal}
+          aria-label={
+            shown === 0
+              ? `Reveal hint 1 of ${hints.length}${costLabel ? `, costs ${costLabel}` : ''}`
+              : `Reveal next hint, ${next} of ${hints.length}${costLabel ? `, costs ${costLabel}` : ''}`
+          }
           className="mt-3 w-full rounded-card border border-border bg-bg px-3 py-2 font-mono text-[11px] uppercase tracking-wider text-muted transition-colors hover:bg-surface hover:text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
         >
           {shown === 0 ? `Reveal hint 1 of ${hints.length}` : `Reveal next hint (${next} of ${hints.length})`}
