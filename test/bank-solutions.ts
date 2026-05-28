@@ -33242,4 +33242,34 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Math.min(dist[n - 1]![m - 1]![0]!, dist[n - 1]![m - 1]![1]!);
   },
 
+  'minimum-number-of-operations-to-make-array-empty': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+    let ops = 0;
+    for (const f of freq.values()) {
+      if (f === 1) return -1;
+      ops += Math.ceil(f / 3);
+    }
+    return ops;
+  },
+
+  'find-maximum-number-of-string-pairs': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const seen = new Map<string, number>();
+    let pairs = 0;
+    for (const w of words) {
+      const rev = w[1]! + w[0]!;
+      if (seen.get(rev)! > 0) { pairs++; seen.set(rev, seen.get(rev)! - 1); }
+      else seen.set(w, (seen.get(w) ?? 0) + 1);
+    }
+    return pairs;
+  },
+
+  'check-if-a-string-is-an-acronym-of-words': (...args: unknown[]) => {
+    const words = args[0] as string[], s = args[1] as string;
+    if (words.length !== s.length) return false;
+    return words.every((w, i) => w[0] === s[i]);
+  },
+
 };

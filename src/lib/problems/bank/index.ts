@@ -2304,6 +2304,10 @@ import { problem as findIfDigitGameCanBeWon } from './find-if-digit-game-can-be-
 import { problem as findTheNumberOfWinningPlayers } from './find-the-number-of-winning-players';
 import { problem as maximumSumWithExactlyKElements } from './maximum-sum-with-exactly-k-elements';
 import { problem as minimumTimeToReachLastRoomII } from './minimum-time-to-reach-last-room-ii';
+// batch 124 — arrays+hash-map+math/medium, arrays+strings+hash-map/easy, arrays+strings/easy
+import { problem as minimumNumberOfOperationsToMakeArrayEmpty } from './minimum-number-of-operations-to-make-array-empty';
+import { problem as findMaximumNumberOfStringPairs } from './find-maximum-number-of-string-pairs';
+import { problem as checkIfAStringIsAnAcronymOfWords } from './check-if-a-string-is-an-acronym-of-words';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4645,4 +4649,8 @@ export const problems: readonly Problem[] = [
   findTheNumberOfWinningPlayers,
   maximumSumWithExactlyKElements,
   minimumTimeToReachLastRoomII,
+  // batch 124 — arrays+hash-map+math/medium, arrays+strings+hash-map/easy, arrays+strings/easy
+  minimumNumberOfOperationsToMakeArrayEmpty,
+  findMaximumNumberOfStringPairs,
+  checkIfAStringIsAnAcronymOfWords,
 ];

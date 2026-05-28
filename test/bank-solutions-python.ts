@@ -32957,4 +32957,40 @@ def minTimeToReach(moveTime):
     return min(dist[n-1][m-1])
 `,
 
+  'minimum-number-of-operations-to-make-array-empty': `
+def minOperations(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    from collections import Counter
+    freq = Counter(nums)
+    ops = 0
+    for f in freq.values():
+        if f == 1:
+            return -1
+        ops += (f + 2) // 3
+    return ops
+`,
+
+  'find-maximum-number-of-string-pairs': `
+def maximumNumberOfStringPairs(words):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    seen = {}
+    pairs = 0
+    for w in words:
+        rev = w[1] + w[0]
+        if seen.get(rev, 0) > 0:
+            pairs += 1
+            seen[rev] -= 1
+        else:
+            seen[w] = seen.get(w, 0) + 1
+    return pairs
+`,
+
+  'check-if-a-string-is-an-acronym-of-words': `
+def isAcronym(words, s):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    if len(words) != len(s):
+        return False
+    return all(w[0] == s[i] for i, w in enumerate(words))
+`,
+
 };

@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2119** problems; 6660 tests green. Batches 102–123 + 113b + 117b + 122b complete. TypeScript starters backfilled. Site stats at 2,119+.
+**Current focus:** Bank at **2122** problems; 6669 tests green. Batches 102–124 + 113b + 117b + 122b complete. TypeScript starters backfilled. Site stats at 2,122+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 124 bank growth; UI/UX refinements; accessibility audit.
+**Next up:** Batch 125 bank growth; UI/UX refinements; accessibility audit.
+
+### feat(bank): add batch 124 — min-ops-array-empty, max-string-pairs, acronym-check (2026-05-28)
+Three problems: `minimum-number-of-operations-to-make-array-empty` (medium/arrays+hash-map+math, freq map → if any freq=1 return -1, else ops += ceil(f/3)), `find-maximum-number-of-string-pairs` (easy/arrays+strings+hash-map, greedily match each word's reverse in a seen-map), `check-if-a-string-is-an-acronym-of-words` (easy/arrays+strings, lengths equal and every words[i][0]==s[i]). Bank at **2122**; 6669 tests.
 
 ### feat(bank): add batch 123 — winning-players, max-sum-k-elements, min-time-last-room-ii (2026-05-28)
 Three problems: `find-the-number-of-winning-players` (easy/arrays+hash-map, player i wins if max single-color count > i), `maximum-sum-with-exactly-k-elements` (easy/arrays+math, k*max + k*(k-1)/2), `minimum-time-to-reach-last-room-ii` (medium/graph+shortest-path, Dijkstra with parity state — move cost alternates 1,2,1,2,...). Bank at **2113**; 6651 tests.
