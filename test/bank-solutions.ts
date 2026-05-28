@@ -33819,4 +33819,51 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return String.fromCharCode(97 + (offset % 26));
   },
 
+  // batch 135
+  'check-if-grid-satisfies-conditions': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        if (i + 1 < m && grid[i]![j] !== grid[i + 1]![j]) return false;
+        if (j + 1 < n && grid[i]![j] === grid[i]![j + 1]) return false;
+      }
+    }
+    return true;
+  },
+
+  'find-the-maximum-sum-of-node-values': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const deltas = nums.map((v) => (v ^ k) - v).sort((a, b) => b - a);
+    let sum = nums.reduce((s, v) => s + v, 0);
+    for (let i = 0; i + 1 < deltas.length; i += 2) {
+      const pair = deltas[i]! + deltas[i + 1]!;
+      if (pair > 0) sum += pair;
+      else break;
+    }
+    return sum;
+  },
+
+  'maximum-xor-product': (...args: unknown[]) => {
+    const MOD = 1000000007n;
+    let fa = BigInt(args[0] as number), fb = BigInt(args[1] as number);
+    const n = args[2] as number;
+    for (let i = n - 1; i >= 0; i--) {
+      const bit = 1n << BigInt(i);
+      const faBit = (fa >> BigInt(i)) & 1n;
+      const fbBit = (fb >> BigInt(i)) & 1n;
+      if (faBit === fbBit) {
+        fa |= bit;
+        fb |= bit;
+      } else if (fa < fb) {
+        fa |= bit;
+        fb &= ~bit;
+      } else {
+        fb |= bit;
+        fa &= ~bit;
+      }
+    }
+    return Number((fa % MOD) * (fb % MOD) % MOD);
+  },
+
 };

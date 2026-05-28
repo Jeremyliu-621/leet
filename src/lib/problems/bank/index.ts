@@ -2369,6 +2369,10 @@ import { problem as numberOfPairsI } from './find-the-number-of-good-pairs-i';
 // batch 134 — strings+sliding-window/medium, strings+math/hard
 import { problem as maxVowelsInSubstring } from './maximum-number-of-vowels-in-a-substring-of-given-length';
 import { problem as kthCharacterGameII } from './find-the-k-th-character-in-string-game-ii';
+// batch 135 — arrays/easy, tree+math/medium, math/medium
+import { problem as checkIfGridSatisfiesConditions } from './check-if-grid-satisfies-conditions';
+import { problem as findMaximumSumOfNodeValues } from './find-the-maximum-sum-of-node-values';
+import { problem as maximumXorProduct } from './maximum-xor-product';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4775,4 +4779,8 @@ export const problems: readonly Problem[] = [
   // batch 134 — strings+sliding-window/medium, strings+math/hard
   maxVowelsInSubstring,
   kthCharacterGameII,
+  // batch 135 — arrays/easy, tree+math/medium, math/medium
+  checkIfGridSatisfiesConditions,
+  findMaximumSumOfNodeValues,
+  maximumXorProduct,
 ];

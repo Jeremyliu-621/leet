@@ -33561,4 +33561,52 @@ def kthCharacter(k, operations):
     return chr(ord('a') + (offset % 26))
 `,
 
+  // batch 135
+  'check-if-grid-satisfies-conditions': `
+def satisfiesConditions(grid):
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    m, n = len(grid), len(grid[0])
+    for i in range(m):
+        for j in range(n):
+            if i + 1 < m and grid[i][j] != grid[i + 1][j]:
+                return False
+            if j + 1 < n and grid[i][j] == grid[i][j + 1]:
+                return False
+    return True
+`,
+
+  'find-the-maximum-sum-of-node-values': `
+def maximumValueSum(nums, k, edges):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    deltas = sorted([(v ^ k) - v for v in nums], reverse=True)
+    total = sum(nums)
+    for i in range(0, len(deltas) - 1, 2):
+        pair = deltas[i] + deltas[i + 1]
+        if pair > 0:
+            total += pair
+        else:
+            break
+    return total
+`,
+
+  'maximum-xor-product': `
+def maximumXorProduct(a, b, n):
+    MOD = 10**9 + 7
+    fa, fb = a, b
+    for i in range(n - 1, -1, -1):
+        bit = 1 << i
+        fa_bit = (fa >> i) & 1
+        fb_bit = (fb >> i) & 1
+        if fa_bit == fb_bit:
+            fa |= bit
+            fb |= bit
+        elif fa < fb:
+            fa |= bit
+            fb &= ~bit
+        else:
+            fb |= bit
+            fa &= ~bit
+    return (fa % MOD) * (fb % MOD) % MOD
+`,
+
 };

@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2171** problems; 6804 tests green. Batches 102–134 complete. TypeScript starters backfilled. UX polish ongoing.
+**Current focus:** Bank at **2174** problems; 6813 tests green. Batches 102–135 complete. TypeScript starters backfilled. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More UX polish; more bank growth; accessibility audit.
+
+### feat(bank): add batch 135 — check-grid-conditions, max-node-values, max-xor-product (2026-05-28)
+Three problems: `check-if-grid-satisfies-conditions` (easy/arrays, check column-uniform + adjacent-column-distinct), `find-the-maximum-sum-of-node-values` (medium/tree+math, XOR-even-subset insight: sort deltas desc, greedily take positive pairs; edges irrelevant), `maximum-xor-product` (medium/math, greedy bit-by-bit with BigInt for a,b<2^50). Bank at **2174**; 6813 tests.
 
 ### feat(bank): add batch 134 — max-vowels-substring, k-th-char-game-ii (2026-05-28)
 Two problems: `maximum-number-of-vowels-in-a-substring-of-given-length` (medium/strings+sliding-window, window count, O(n)), `find-the-k-th-character-in-string-game-ii` (hard/strings+math, backwards binary reduction with offset accumulation; BigInt for k≤2^55). Bank at **2171**; 6804 tests. Site updated to 2,171+.
