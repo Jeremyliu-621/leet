@@ -33859,7 +33859,6 @@ def maxCount(banned, n, maxSum):
         if lo > hi or total >= maxSum:
             return
         rem = maxSum - total
-        # find largest k such that sum(lo..lo+k-1) = k*lo + k*(k-1)/2 <= rem
         import math
         b = 2 * lo - 1
         k = int((-b + math.sqrt(b * b + 8 * rem)) / 2)
@@ -33884,7 +33883,6 @@ def maxCount(banned, n, maxSum):
 def minCostConnectGroups(cost):
     cost = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (cost.to_py() if hasattr(cost, 'to_py') else cost)]
     n, m = len(cost), len(cost[0])
-    FULL = (1 << m) - 1
     min_cost = [min(cost[i][j] for i in range(n)) for j in range(m)]
     INF = float('inf')
     dp = [INF] * (1 << m)
@@ -33907,6 +33905,50 @@ def minCostConnectGroups(cost):
         extra = sum(min_cost[j] for j in range(m) if not (mask & (1 << j)))
         ans = min(ans, dp[mask] + extra)
     return ans
+`,
+
+  // batch 138
+  'maximum-or': `
+def maximumOr(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    suffix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] | nums[i]
+    for i in range(n - 1, -1, -1):
+        suffix[i] = suffix[i + 1] | nums[i]
+    best = 0
+    for i in range(n):
+        val = (nums[i] << k) | prefix[i] | suffix[i + 1]
+        if val > best:
+            best = val
+    return best
+`,
+
+  'permutation-difference-between-two-strings': `
+def findPermutationDifference(s: str, t: str) -> int:
+    pos_t = {c: i for i, c in enumerate(t)}
+    return sum(abs(i - pos_t[c]) for i, c in enumerate(s))
+`,
+
+  'calculate-the-sum-of-distances': `
+def distance(arr):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    from collections import defaultdict
+    n = len(arr)
+    groups = defaultdict(list)
+    for i, v in enumerate(arr):
+        groups[v].append(i)
+    result = [0] * n
+    for positions in groups.values():
+        m = len(positions)
+        total = sum(positions)
+        prefix = 0
+        for ki, p in enumerate(positions):
+            result[p] = ki * p - prefix + (total - prefix - p) - (m - 1 - ki) * p
+            prefix += p
+    return result
 `,
 
 };
