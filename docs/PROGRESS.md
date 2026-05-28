@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2236** problems; 7002 tests green. Batches 102–147 complete. UX polish ongoing.
+**Current focus:** Bank at **2230** problems; 6984 tests green. Batches 102–148 complete. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth; UX polish; accessibility audit.
 
@@ -20,6 +20,9 @@ Four medium-difficulty problems: `find-product-pivot` (math/arrays, prefix+suffi
 
 ### feat(bank): register batch 146 — 7 orphan problems with existing solutions (2026-05-28)
 Registered 7 problems that had problem files and reference solutions but were not imported in index.ts: `reverse-vowels-of-a-string` (easy/strings+two-pointers), `apply-operations-to-make-string-empty` (medium/strings+hash-map), `find-all-possible-recipes-from-given-supplies` (medium/graph+hash-map), `maximum-total-damage-with-spell-casting` (medium/arrays+dp), `minimum-domino-rotations-for-equal-row` (medium/arrays+simulation), `reorder-routes-to-make-all-paths-lead-to-the-city-zero` (medium/graph), `count-the-number-of-beautiful-subarrays` (medium/arrays+math). Bank at **2232**; 6990 tests.
+
+### feat(bank): add batch 148 — k-divisible-subarrays, most-profitable-tree-path, max-groups-competition, find-palindrome-fixed-length, number-of-ways-k-steps (2026-05-28)
+Five medium problems: `k-divisible-elements-subarrays` (arrays+hash-map, O(n²) enumeration with string-key Set dedup), `most-profitable-path-in-a-tree` (tree+graph, DFS for Bob's timing + DFS for Alice's max leaf income), `maximum-number-of-groups-entering-next-round` (arrays+math+binary-search, binary search on k with greedy tie-skipping canForm), `find-palindrome-with-fixed-length` (math+strings, first-half mirror construction), `number-of-ways-to-reach-a-position-after-exactly-k-steps` (dp, C(k,r) mod 10^9+7 via rolling Pascal row DP). Bank at **2230**; 6984 tests.
 
 ### feat(bank): add batch 145 — max-bitwise-or-subsets, partition-k-subsets, min-ops-array-equal-target, consecutive-numbers-sum (2026-05-28)
 Four problems: `count-number-of-max-bitwise-or-subsets` (medium/arrays+backtracking, 2^n bitmask enumeration counting subsets with max OR), `partition-to-k-equal-sum-subsets` (medium/arrays+backtracking+dp, descending sort + k-bucket DFS with duplicate-skip pruning), `minimum-operations-to-make-array-equal-to-target` (hard/arrays, diff[i]=target-nums layer-counting formula — sum positive transitions in extended diff sequence), `consecutive-numbers-sum` (hard/math, k consecutive starting at a formula — loop k while k*(k+1)≤2n, check divisibility). Bank at **2233**; 6930 tests.
