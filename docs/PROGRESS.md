@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2218** problems; 6948 tests green. Batches 102–144 complete. TypeScript starters backfilled. UX polish ongoing.
+**Current focus:** Bank at **2221** problems; 6957 tests green. Batches 102–144b complete. TypeScript starters backfilled. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More UX polish; more bank growth; accessibility audit.
+
+### feat(bank): add batch 142b — beautiful-towers-ii, palindromic-grid-ii, balanced-subseq-sum (2026-05-28)
+Three problems: `beautiful-towers-ii` (medium/arrays+stack, O(n) monotone stack with prefix/suffix mountain sums), `minimum-number-of-flips-to-make-binary-grid-palindromic-ii` (medium/arrays, groups-of-4 cell matching + middle row/col pair handling), `maximum-balanced-subsequence-sum` (hard/binary-indexed-tree+dp+arrays, key[i]=nums[i]-i transforms to max non-decreasing subsequence sum, O(n log n) BIT). Bank at **2221**; 6957 tests.
 
 ### feat(bank): add batch 144 — min-swaps-balanced, kth-largest-xor-coord, tweet-counts-per-freq (2026-05-28)
 Three problems: `minimum-swaps-to-make-balanced` (medium/strings+stack, ceil(maxDeficit/2) via running balance), `find-kth-largest-xor-coordinate-value` (medium/arrays, 2D prefix XOR + kth order statistic), `tweet-counts-per-frequency` (medium/hash-map+simulation, map of timestamps + delta-chunk counting). Bank at **2218**; 6948 tests.
