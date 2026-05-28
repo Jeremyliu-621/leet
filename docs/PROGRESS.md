@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2092** problems; 6570 tests green. Batches 102–116 complete. All branches merged. Site stats at 2,092+.
+**Current focus:** Bank at **2095** problems; 6579 tests green. Batches 102–117 complete. All branches merged. Site stats at 2,095+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 117 bank growth; UI/UX refinements; accessibility audit.
+**Next up:** Batch 118 bank growth; UI/UX refinements; accessibility audit.
+
+### feat(bank): add batch 117 — longest-monotonic-subarray, k-size-subarray-power-i, count-alternating-subarrays (2026-05-28)
+Three problems: `longest-strictly-increasing-or-strictly-decreasing-subarray` (easy/arrays, two-run inc/dec tracking), `find-the-power-of-k-size-subarrays-i` (medium/arrays+sliding-window, O(n*k) consecutive ascending window check, power=max or -1), `count-alternating-subarrays` (medium/arrays+math, run-length contribution counting — each run of length `r` adds `r` to total). Bank at **2095**; 6579 tests.
 
 ### feat(bank): add batch 116 — check-balanced-string, min-chairs-waiting-room, min-ops-divisible-three (2026-05-28)
 Three easy problems: `check-balanced-string` (easy/strings, even-index digit sum == odd-index digit sum), `minimum-number-of-chairs-in-a-waiting-room` (easy/strings+simulation, track max concurrent E/L occupancy), `find-minimum-operations-to-make-all-elements-divisible-by-three` (easy/arrays+math, count elements where n%3≠0). Bank at **2092**; 6570 tests.
