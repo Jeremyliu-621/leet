@@ -33359,7 +33359,7 @@ def restoreMatrix(rowSum, colSum):
     return mat
 `,
 
-  // batch 130 — arrays+math/easy, arrays+sliding-window/medium, arrays+dynamic-programming/hard
+  // batch 130a — arrays+math/easy, arrays+sliding-window/medium, arrays+dynamic-programming/hard
   'count-even-sum-pairs': `
 def countEvenSumPairs(nums):
     evens = sum(1 for n in nums if n % 2 == 0)
@@ -33397,6 +33397,57 @@ def maxNonAdjacentCircular(nums):
         return prev1
 
     return max(linear_rob(nums[:-1]), linear_rob(nums[1:]))
+`,
+
+  // batch 130b — math/easy, arrays+sliding-window/medium, strings+sliding-window/medium
+  'maximum-difference-by-remapping-a-digit': `
+def minMaxDifference(num):
+    s = str(num)
+    max_c = next((c for c in s if c != '9'), '9')
+    maximum = int(s.replace(max_c, '9'))
+    minimum = int(s.replace(s[0], '0') or '0')
+    return maximum - minimum
+`,
+
+  'find-the-power-of-k-size-subarrays-ii': `
+def resultsArray(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    if k == 1:
+        return nums[:]
+    res = []
+    streak = 1
+    for i in range(1, len(nums)):
+        streak = streak + 1 if nums[i] == nums[i - 1] + 1 else 1
+        if i >= k - 1:
+            res.append(nums[i] if streak >= k else -1)
+    return res
+`,
+
+  'count-of-substrings-containing-every-vowel-and-k-consonants-ii': `
+def countOfSubstrings(word, k):
+    def at_least(min_k):
+        vowels = set('aeiou')
+        vowel_count = {}
+        consonants = 0
+        result = 0
+        left = 0
+        for right, c in enumerate(word):
+            if c in vowels:
+                vowel_count[c] = vowel_count.get(c, 0) + 1
+            else:
+                consonants += 1
+            while len(vowel_count) == 5 and consonants >= min_k:
+                result += len(word) - right
+                lc = word[left]
+                left += 1
+                if lc in vowels:
+                    vowel_count[lc] -= 1
+                    if vowel_count[lc] == 0:
+                        del vowel_count[lc]
+                else:
+                    consonants -= 1
+        return result
+    return at_least(k) - at_least(k + 1)
 `,
 
   // batch 131

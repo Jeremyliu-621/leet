@@ -2346,10 +2346,14 @@ import { problem as maximumScoreOfANodeSequence } from './maximum-score-of-a-nod
 import { problem as checkIfANumberIsFascinating } from './check-if-a-number-is-fascinating';
 import { problem as numberOfEvenAndOddBits } from './number-of-even-and-odd-bits';
 import { problem as restoreMatrix } from './find-valid-matrix-given-row-and-column-sums';
-// batch 130 — arrays+math/easy, arrays+sliding-window/medium, arrays+dynamic-programming/hard
+// batch 130a — arrays+math/easy, arrays+sliding-window/medium, arrays+dynamic-programming/hard
 import { problem as countEvenSumPairs } from './count-even-sum-pairs';
 import { problem as longestBoundedSubarray } from './longest-bounded-subarray';
 import { problem as maxNonadjacentCircular } from './max-nonadjacent-circular';
+// batch 130b — math/easy, arrays+sliding-window/medium, strings+sliding-window/medium
+import { problem as minMaxDifference } from './maximum-difference-by-remapping-a-digit';
+import { problem as resultsArrayII } from './find-the-power-of-k-size-subarrays-ii';
+import { problem as countOfSubstringsII } from './count-of-substrings-containing-every-vowel-and-k-consonants-ii';
 // batch 131 — strings+stack/medium, arrays+hash-map/easy, math/easy
 import { problem as countCollisionsOnARoad } from './count-collisions-on-a-road';
 import { problem as formSmallestNumberFromTwoDigitArrays } from './form-smallest-number-from-two-digit-arrays';
@@ -4737,10 +4741,14 @@ export const problems: readonly Problem[] = [
   checkIfANumberIsFascinating,
   numberOfEvenAndOddBits,
   restoreMatrix,
-  // batch 130 — arrays+math/easy, arrays+sliding-window/medium, arrays+dynamic-programming/hard
+  // batch 130a — arrays+math/easy, arrays+sliding-window/medium, arrays+dynamic-programming/hard
   countEvenSumPairs,
   longestBoundedSubarray,
   maxNonadjacentCircular,
+  // batch 130b — math/easy, arrays+sliding-window/medium, strings+sliding-window/medium
+  minMaxDifference,
+  resultsArrayII,
+  countOfSubstringsII,
   // batch 131 — strings+stack/medium, arrays+hash-map/easy, math/easy
   countCollisionsOnARoad,
   formSmallestNumberFromTwoDigitArrays,
