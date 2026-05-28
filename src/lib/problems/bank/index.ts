@@ -2398,6 +2398,9 @@ import { problem as zeroArrayTransformationII } from './zero-array-transformatio
 import { problem as minimumArrayChangesToMakeSubarraysDistinct } from './minimum-array-changes-to-make-subarrays-distinct';
 import { problem as countAlmostEqualPairsI } from './count-almost-equal-pairs-i';
 import { problem as findMinimumDiameterAfterMergingTwoTrees } from './find-minimum-diameter-after-merging-two-trees';
+// batch 134b — strings+hash-map/medium, arrays+simulation/easy
+import { problem as countTheNumberOfSpecialCharactersII } from './count-the-number-of-special-characters-ii';
+import { problem as canMakeSquare } from './make-a-square-with-the-same-color';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4833,4 +4836,7 @@ export const problems: readonly Problem[] = [
   minimumArrayChangesToMakeSubarraysDistinct,
   countAlmostEqualPairsI,
   findMinimumDiameterAfterMergingTwoTrees,
+  // batch 134b — strings+hash-map/medium, arrays+simulation/easy
+  countTheNumberOfSpecialCharactersII,
+  canMakeSquare,
 ];
