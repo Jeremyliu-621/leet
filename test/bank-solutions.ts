@@ -34736,6 +34736,34 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  // batch 146
+  'find-product-pivot': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const prefix = new Array<number>(n).fill(1);
+    const suffix = new Array<number>(n).fill(1);
+    for (let i = 1; i < n; i++) prefix[i] = prefix[i - 1]! * nums[i - 1]!;
+    for (let i = n - 2; i >= 0; i--) suffix[i] = suffix[i + 1]! * nums[i + 1]!;
+    for (let i = 0; i < n; i++) {
+      if (prefix[i] === suffix[i]) return i;
+    }
+    return -1;
+  },
+
+  'count-subarrays-equal-balance': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const map = new Map<number, number>();
+    map.set(0, 1);
+    let prefix = 0, count = 0;
+    for (const v of nums) {
+      if (v > 0) prefix++;
+      else if (v < 0) prefix--;
+      count += (map.get(prefix) ?? 0);
+      map.set(prefix, (map.get(prefix) ?? 0) + 1);
+    }
+    return count;
+  },
+
   'partition-to-k-equal-sum-subsets': (...args: unknown[]) => {
     const nums = [...(args[0] as number[])], k = args[1] as number;
     const total = nums.reduce((a, b) => a + b, 0);
@@ -34810,6 +34838,36 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       pos = newPos; neg = newNeg;
     }
     return Math.max(pos, neg);
+  },
+
+  'longest-arithmetic-subarray': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    if (nums.length <= 1) return nums.length;
+    let maxLen = 2, curLen = 2, diff = nums[1]! - nums[0]!;
+    for (let i = 2; i < nums.length; i++) {
+      const d = nums[i]! - nums[i - 1]!;
+      if (d === diff) {
+        curLen++;
+      } else {
+        diff = d;
+        curLen = 2;
+      }
+      if (curLen > maxLen) maxLen = curLen;
+    }
+    return maxLen;
+  },
+
+  'sum-of-all-submatrix-sums': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const m = matrix.length, n = matrix[0]!.length;
+    let total = 0;
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        total += matrix[i]![j]! * (i + 1) * (m - i) * (j + 1) * (n - j);
+      }
+    }
+    return total;
+
   },
 
 };
