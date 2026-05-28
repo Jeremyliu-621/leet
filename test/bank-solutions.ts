@@ -34783,4 +34783,33 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  // batch 147
+  'apply-bitwise-operations-to-make-strings-equal': (...args: unknown[]) => {
+    const s = args[0] as string, target = args[1] as string;
+    return s.includes('1') === target.includes('1');
+  },
+
+  'find-the-minimum-area-to-cover-all-ones-i': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    let minR = Infinity, maxR = -Infinity, minC = Infinity, maxC = -Infinity;
+    for (let r = 0; r < grid.length; r++)
+      for (let c = 0; c < grid[r]!.length; c++)
+        if (grid[r]![c] === 1) {
+          minR = Math.min(minR, r); maxR = Math.max(maxR, r);
+          minC = Math.min(minC, c); maxC = Math.max(maxC, c);
+        }
+    return (maxR - minR + 1) * (maxC - minC + 1);
+  },
+
+  'maximum-total-cost-of-alternating-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let pos = nums[0]!, neg = -Infinity;
+    for (let i = 1; i < nums.length; i++) {
+      const newPos = Math.max(pos, neg) + nums[i]!;
+      const newNeg = pos - nums[i]!;
+      pos = newPos; neg = newNeg;
+    }
+    return Math.max(pos, neg);
+  },
+
 };

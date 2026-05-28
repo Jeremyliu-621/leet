@@ -34576,5 +34576,38 @@ def consecutiveNumbersSum(n):
     return count
 `,
 
+  // batch 147
+  'apply-bitwise-operations-to-make-strings-equal': `
+def makeStringsEqual(s, target):
+    return ('1' in s) == ('1' in target)
+`,
+
+  'find-the-minimum-area-to-cover-all-ones-i': `
+def minimumArea(grid):
+    grid = list(grid.to_py() if hasattr(grid, 'to_py') else grid)
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in grid]
+    min_r = min_c = float('inf')
+    max_r = max_c = float('-inf')
+    for r in range(len(grid)):
+        for c in range(len(grid[r])):
+            if grid[r][c] == 1:
+                min_r = min(min_r, r)
+                max_r = max(max_r, r)
+                min_c = min(min_c, c)
+                max_c = max(max_c, c)
+    return (max_r - min_r + 1) * (max_c - min_c + 1)
+`,
+
+  'maximum-total-cost-of-alternating-subarrays': `
+def maximumTotalCost(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    pos = nums[0]
+    neg = float('-inf')
+    for i in range(1, len(nums)):
+        new_pos = max(pos, neg) + nums[i]
+        new_neg = pos - nums[i]
+        pos, neg = new_pos, new_neg
+    return max(pos, neg)
+`,
 
 };

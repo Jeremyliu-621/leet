@@ -2438,6 +2438,10 @@ import { problem as countMaxBitwiseOrSubsets } from './count-number-of-max-bitwi
 import { problem as partitionKEqualSumSubsets } from './partition-to-k-equal-sum-subsets';
 import { problem as minOpsArrayEqualToTarget } from './minimum-operations-to-make-array-equal-to-target';
 import { problem as consecutiveNumbersSum } from './consecutive-numbers-sum';
+// batch 147 — 3 new problems (medium: strings/math, arrays/easy, arrays/dp)
+import { problem as applyBitwiseOpsStringsEqual } from './apply-bitwise-operations-to-make-strings-equal';
+import { problem as minAreaCoverAllOnesI } from './find-the-minimum-area-to-cover-all-ones-i';
+import { problem as maxTotalCostAlternatingSubarrays } from './maximum-total-cost-of-alternating-subarrays';
 // batch 146 — register 7 orphan problems that had reference solutions
 import { problem as reverseVowelsOfString } from './reverse-vowels-of-a-string';
 import { problem as applyOpsToMakeStringEmpty } from './apply-operations-to-make-string-empty';
@@ -4921,6 +4925,10 @@ export const problems: readonly Problem[] = [
   partitionKEqualSumSubsets,
   minOpsArrayEqualToTarget,
   consecutiveNumbersSum,
+  // batch 147 — 3 new problems
+  applyBitwiseOpsStringsEqual,
+  minAreaCoverAllOnesI,
+  maxTotalCostAlternatingSubarrays,
   // batch 146 — register 7 orphan problems (strings/easy, strings/medium, graph/medium, arrays/medium, arrays/hard, graph/medium, arrays/medium)
   reverseVowelsOfString,
   applyOpsToMakeStringEmpty,
