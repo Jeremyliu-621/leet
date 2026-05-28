@@ -33951,6 +33951,58 @@ def distance(arr):
     return result
 `,
 
+  // batch 139
+  'element-appearing-more-than-25-percent-in-sorted-array': `
+def findSpecialInteger(arr):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    n = len(arr)
+    quarter = n // 4
+    for cand in [arr[quarter], arr[2 * quarter], arr[3 * quarter]]:
+        if arr.count(cand) > quarter:
+            return cand
+    return arr[0]
+`,
+
+  'minimum-operations-to-collect-elements': `
+def minOperations(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    need = set(range(1, k + 1))
+    for ops in range(1, len(nums) + 1):
+        need.discard(nums[-ops])
+        if not need:
+            return ops
+    return len(nums)
+`,
+
+  'decode-the-array-from-adjacent-xors': `
+def decode(encoded, first):
+    encoded = list(encoded.to_py() if hasattr(encoded, 'to_py') else encoded)
+    arr = [first]
+    for e in encoded:
+        arr.append(arr[-1] ^ e)
+    return arr
+`,
+
+  'number-of-excellent-pairs': `
+def countExcellentPairs(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    unique = list(set(nums))
+    counts = sorted(bin(n).count('1') for n in unique)
+    m = len(counts)
+    ans = 0
+    for i in range(m):
+        need = k - counts[i]
+        lo, hi = i, m
+        while lo < hi:
+            mid = (lo + hi) // 2
+            if counts[mid] >= need:
+                hi = mid
+            else:
+                lo = mid + 1
+        ans += m - lo
+    return ans
+`,
+
   // batch 134b
   'count-the-number-of-special-characters-ii': `
 def numberOfSpecialChars(word):

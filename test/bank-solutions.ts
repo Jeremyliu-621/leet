@@ -34003,6 +34003,50 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 139
+  'element-appearing-more-than-25-percent-in-sorted-array': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const quarter = Math.floor(arr.length / 4);
+    for (const cand of [arr[quarter]!, arr[2 * quarter]!, arr[3 * quarter]!]) {
+      let count = 0;
+      for (const x of arr) if (x === cand) count++;
+      if (count > quarter) return cand;
+    }
+    return arr[0]!;
+  },
+  'minimum-operations-to-collect-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const need = new Set(Array.from({ length: k }, (_, i) => i + 1));
+    for (let ops = 1; ops <= nums.length; ops++) {
+      need.delete(nums[nums.length - ops]!);
+      if (need.size === 0) return ops;
+    }
+    return nums.length;
+  },
+  'decode-the-array-from-adjacent-xors': (...args: unknown[]) => {
+    const encoded = args[0] as number[], first = args[1] as number;
+    const arr = [first];
+    for (const e of encoded) arr.push(arr[arr.length - 1]! ^ e);
+    return arr;
+  },
+  'number-of-excellent-pairs': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const popcount = (n: number) => { let c = 0; while (n) { c += n & 1; n >>= 1; } return c; };
+    const counts = [...new Set(nums)].map(popcount).sort((a, b) => a - b);
+    const m = counts.length;
+    let ans = 0;
+    for (let i = 0; i < m; i++) {
+      const need = k - counts[i]!;
+      let lo = i, hi = m;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (counts[mid]! >= need) hi = mid;
+        else lo = mid + 1;
+      }
+      ans += m - lo;
+    }
+    return ans;
+  },
   // batch 138c
   'make-a-square-with-the-same-color': (...args: unknown[]) => {
     const grid = args[0] as string[][];

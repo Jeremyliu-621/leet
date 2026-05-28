@@ -2384,6 +2384,11 @@ import { problem as countTheNumberOfSpecialCharsI } from './count-the-number-of-
 import { problem as findXorSumOfAllPairsBitwiseAnd } from './find-xor-sum-of-all-pairs-bitwise-and';
 import { problem as maximumNumberOfIntegersFromRangeII } from './maximum-number-of-integers-to-choose-from-a-range-ii';
 import { problem as minimumCostToConnectTwoGroups } from './minimum-cost-to-connect-two-groups';
+// batch 139 — arrays/easy, arrays+hash-map/easy, arrays/easy, arrays+math/hard
+import { problem as elementAppearingMoreThan25Percent } from './element-appearing-more-than-25-percent-in-sorted-array';
+import { problem as minimumOperationsToCollectElements } from './minimum-operations-to-collect-elements';
+import { problem as decodeTheArrayFromAdjacentXors } from './decode-the-array-from-adjacent-xors';
+import { problem as numberOfExcellentPairs } from './number-of-excellent-pairs';
 // batch 138c — arrays+simulation/easy, strings+hash-map/medium
 import { problem as makeASquareWithTheSameColor } from './make-a-square-with-the-same-color';
 import { problem as countTheNumberOfSpecialCharsII } from './count-the-number-of-special-characters-ii';
@@ -4819,6 +4824,11 @@ export const problems: readonly Problem[] = [
   findXorSumOfAllPairsBitwiseAnd,
   maximumNumberOfIntegersFromRangeII,
   minimumCostToConnectTwoGroups,
+  // batch 139 — arrays/easy, arrays+hash-map/easy, arrays/easy, arrays+math/hard
+  elementAppearingMoreThan25Percent,
+  minimumOperationsToCollectElements,
+  decodeTheArrayFromAdjacentXors,
+  numberOfExcellentPairs,
   // batch 138c — arrays+simulation/easy, strings+hash-map/medium
   makeASquareWithTheSameColor,
   countTheNumberOfSpecialCharsII,
