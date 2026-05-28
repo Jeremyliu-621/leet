@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2159** problems; 6771 tests green. Batches 102–131 complete. TypeScript starters backfilled.
+**Current focus:** Bank at **2162** problems; 6780 tests green. Batches 102–131 + 130b complete. TypeScript starters backfilled.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 132 bank growth; UI/UX refinements; accessibility audit.
 
@@ -17,6 +17,12 @@ Three problems: `count-collisions-on-a-road` (medium/strings+stack, trim leading
 
 ### feat(bank): add batch 130 — count-even-sum-pairs, longest-bounded-subarray, max-nonadjacent-circular (2026-05-28)
 Three problems: `count-even-sum-pairs` (easy/arrays+math, parity counting C(e,2)+C(o,2) in O(n)), `longest-bounded-subarray` (medium/arrays+sliding-window, shrinking two-pointer with all-positive elements for longest sum≤k window), `max-nonadjacent-circular` (hard/arrays+dynamic-programming, circular House Robber via two linear DP subproblems — exclude first or last element). Bank at **2156**; 6762 tests.
+
+### feat(bank): add batch 130b — max-diff-remapping-digit, power-k-subarrays-ii, count-substrings-vowels-k-ii (2026-05-28)
+Three problems: `maximum-difference-by-remapping-a-digit` (easy/math, max=first non-9→9; min=first digit→0), `find-the-power-of-k-size-subarrays-ii` (medium/arrays+sliding-window, O(n) streak counter; streak≥k→power=nums[i] else -1), `count-of-substrings-containing-every-vowel-and-k-consonants-ii` (medium/strings+sliding-window, exactly(k)=atLeast(k)-atLeast(k+1); n≤2*10^5). Bank at **2162**; 6780 tests.
+
+### feat(bank): add batch 128b — check-if-fascinating, even-odd-bits, valid-matrix-row-col (2026-05-28)
+Three problems: `check-if-a-number-is-fascinating` (easy/math, concat n+2n+3n, check sorted=="123456789"), `number-of-even-and-odd-bits` (easy/math, iterate bits tracking even/odd index counts), `find-valid-matrix-given-row-and-column-sums` (medium/arrays+math, greedy: cell[i][j]=min(rowSum[i],colSum[j])). Bank at **2153**; 6753 tests.
 
 ### feat(bank): add batch 129 — min-ops-move-balls, min-ops-special-number, max-score-node-sequence (2026-05-28)
 Three problems: `minimum-number-of-operations-to-move-all-balls-to-each-box` (medium/arrays, O(n²) brute force: answer[i] = sum of |i-j| for all j with box[j]='1'), `minimum-operations-to-make-a-special-number` (medium/strings+math, find last 2-char suffix matching 00/25/50/75 greedy scan; deletion count = n-p1-2), `maximum-score-of-a-node-sequence` (hard/arrays+graph, for each edge (b,c) try all combinations from top-3 neighbors of b and c checking distinctness). Bank at **2150**; 6744 tests.
