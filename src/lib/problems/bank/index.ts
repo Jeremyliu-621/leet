@@ -2446,6 +2446,11 @@ import { problem as maxTotalDamageWithSpellCasting } from './maximum-total-damag
 import { problem as minDominoRotations } from './minimum-domino-rotations-for-equal-row';
 import { problem as reorderRoutesToCity } from './reorder-routes-to-make-all-paths-lead-to-the-city-zero';
 import { problem as countBeautifulSubarrays } from './count-the-number-of-beautiful-subarrays';
+// batch 147 — arrays+math/medium, arrays+hash-map/medium, arrays/medium, arrays+math/medium
+import { problem as findProductPivot } from './find-product-pivot';
+import { problem as countSubarraysEqualBalance } from './count-subarrays-equal-balance';
+import { problem as longestArithSubarray } from './longest-arithmetic-subarray';
+import { problem as sumAllSubmatrixSums } from './sum-of-all-submatrix-sums';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4929,4 +4934,9 @@ export const problems: readonly Problem[] = [
   minDominoRotations,
   reorderRoutesToCity,
   countBeautifulSubarrays,
+  // batch 147 — arrays+math/medium, arrays+hash-map/medium, arrays/medium, arrays+math/medium
+  findProductPivot,
+  countSubarraysEqualBalance,
+  longestArithSubarray,
+  sumAllSubmatrixSums,
 ];
