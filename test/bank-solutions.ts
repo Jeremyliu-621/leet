@@ -33123,4 +33123,38 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
   },
 
+  'minimum-number-of-flips-to-make-binary-grid-palindromic-i': (...args: unknown[]) => {
+    const grid = (args[0] as unknown[][]).map(r => r as number[]);
+    const m = grid.length, n = grid[0]!.length;
+    let rowCost = 0, colCost = 0;
+    for (let r = 0; r < m; r++)
+      for (let c = 0; c < Math.floor(n / 2); c++)
+        if (grid[r]![c] !== grid[r]![n - 1 - c]) rowCost++;
+    for (let c = 0; c < n; c++)
+      for (let r = 0; r < Math.floor(m / 2); r++)
+        if (grid[r]![c] !== grid[m - 1 - r]![c]) colCost++;
+    return Math.min(rowCost, colCost);
+  },
+
+  'count-substrings-with-k-frequency-characters-i': (...args: unknown[]) => {
+    const s = args[0] as string, k = args[1] as number;
+    const n = s.length;
+    let count = 0;
+    for (let i = 0; i < n; i++) {
+      const freq: Record<string, number> = {};
+      for (let j = i; j < n; j++) {
+        freq[s[j]!] = (freq[s[j]!] ?? 0) + 1;
+        if (freq[s[j]!]! >= k) { count += n - j; break; }
+      }
+    }
+    return count;
+  },
+
+  'find-if-digit-game-can-be-won': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let s = 0, d = 0;
+    for (const n of nums) (n < 10 ? (s += n) : (d += n));
+    return s !== d;
+  },
+
 };

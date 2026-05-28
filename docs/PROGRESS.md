@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2110** problems; 6633 tests green. Batches 102–121 + 117b complete. TypeScript starters backfilled. Site stats at 2,110+.
+**Current focus:** Bank at **2110** problems; 6633 tests green. Batches 102–122 complete. TypeScript starters backfilled. Site stats at 2,110+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 122 bank growth; UI/UX refinements; accessibility audit.
+**Next up:** Batch 123 bank growth; UI/UX refinements; accessibility audit.
+
+### feat(bank): add batch 122 — min-flips-palindromic-grid-i, count-substrings-k-freq-i, digit-game (2026-05-28)
+Three problems: `minimum-number-of-flips-to-make-binary-grid-palindromic-i` (medium/arrays, count mismatched mirror pairs per row vs per column, return min), `count-substrings-with-k-frequency-characters-i` (medium/strings+sliding-window+hash-map, for each start extend right until some freq≥k, count += n-j), `find-if-digit-game-can-be-won` (easy/arrays+math, S=single-digit sum, D=double-digit sum, Alice wins iff S≠D). Bank at **2110**; 6633 tests.
 
 ### feat(bank): add batch 117b — find-key-of-numbers, maximize-tower-height, max-integers-choose-range (2026-05-28)
 Three problems: `find-the-key-of-the-numbers` (easy/math, min digit per position across 3 numbers), `maximize-total-height-of-unique-towers` (medium/arrays, sort-desc greedy h[i]=min(maxH, prev-1)), `maximum-number-of-integers-to-choose-from-a-range-i` (medium/arrays+hash-map, greedy banned-set scan 1..n). JS + Python reference solutions for all. Bank at **2110**; 6633 tests.

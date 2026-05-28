@@ -2292,6 +2292,10 @@ import { problem as maximumNumberOfIntegersToChooseFromARangeI } from './maximum
 import { problem as findTheLengthOfTheLongestCommonPrefix } from './find-the-length-of-the-longest-common-prefix';
 import { problem as maximumNumberOfDistinctElementsAfterOperations } from './maximum-number-of-distinct-elements-after-operations';
 import { problem as minimumTimeToRevertWordToInitialStateI } from './minimum-time-to-revert-word-to-initial-state-i';
+// batch 122 — arrays/medium, strings+sliding-window+hash-map/medium, arrays+math/easy
+import { problem as minimumNumberOfFlipsToMakeBinaryGridPalindromicI } from './minimum-number-of-flips-to-make-binary-grid-palindromic-i';
+import { problem as countSubstringsWithKFrequencyCharactersI } from './count-substrings-with-k-frequency-characters-i';
+import { problem as findIfDigitGameCanBeWon } from './find-if-digit-game-can-be-won';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4621,4 +4625,8 @@ export const problems: readonly Problem[] = [
   findTheLengthOfTheLongestCommonPrefix,
   maximumNumberOfDistinctElementsAfterOperations,
   minimumTimeToRevertWordToInitialStateI,
+  // batch 122 — arrays/medium, strings+sliding-window+hash-map/medium, arrays+math/easy
+  minimumNumberOfFlipsToMakeBinaryGridPalindromicI,
+  countSubstringsWithKFrequencyCharactersI,
+  findIfDigitGameCanBeWon,
 ];

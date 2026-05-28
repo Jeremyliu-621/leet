@@ -32836,4 +32836,39 @@ def minimumTimeToInitialState(word, k):
         t += 1
 `,
 
+  'minimum-number-of-flips-to-make-binary-grid-palindromic-i': `
+def minFlips(grid):
+    grid = [list(x.to_py() if hasattr(x, 'to_py') else x) for x in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    m, n = len(grid), len(grid[0])
+    row_cost = sum(
+        1 for r in range(m) for c in range(n // 2) if grid[r][c] != grid[r][n - 1 - c]
+    )
+    col_cost = sum(
+        1 for c in range(n) for r in range(m // 2) if grid[r][c] != grid[m - 1 - r][c]
+    )
+    return min(row_cost, col_cost)
+`,
+
+  'count-substrings-with-k-frequency-characters-i': `
+def numberOfSubstrings(s, k):
+    n = len(s)
+    count = 0
+    for i in range(n):
+        freq = {}
+        for j in range(i, n):
+            freq[s[j]] = freq.get(s[j], 0) + 1
+            if freq[s[j]] >= k:
+                count += n - j
+                break
+    return count
+`,
+
+  'find-if-digit-game-can-be-won': `
+def canAliceWin(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    s = sum(x for x in nums if x < 10)
+    d = sum(x for x in nums if x >= 10)
+    return s != d
+`,
+
 };
