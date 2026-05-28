@@ -33004,4 +33004,46 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dist[n - 1]![m - 1]!;
   },
 
+  'maximum-product-of-two-digits': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const digits: number[] = [];
+    let x = n;
+    while (x > 0) { digits.push(x % 10); x = Math.floor(x / 10); }
+    digits.sort((a, b) => b - a);
+    return digits[0]! * digits[1]!;
+  },
+
+  'minimum-operations-to-make-columns-strictly-increasing': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const n = grid.length, m = grid[0]!.length;
+    let ops = 0;
+    for (let c = 0; c < m; c++) {
+      let prev = grid[0]![c]!;
+      for (let r = 1; r < n; r++) {
+        const cur = grid[r]![c]!;
+        if (cur <= prev) {
+          ops += prev + 1 - cur;
+          grid[r]![c] = prev + 1;
+          prev = prev + 1;
+        } else {
+          prev = cur;
+        }
+      }
+    }
+    return ops;
+  },
+
+  'longest-unequal-adjacent-groups-subsequence-i': (...args: unknown[]) => {
+    const words = args[0] as string[], groups = args[1] as number[];
+    const result: string[] = [words[0]!];
+    let lastGroup = groups[0]!;
+    for (let i = 1; i < words.length; i++) {
+      if (groups[i] !== lastGroup) {
+        result.push(words[i]!);
+        lastGroup = groups[i]!;
+      }
+    }
+    return result;
+  },
+
 };

@@ -32715,4 +32715,38 @@ def minTimeToReach(moveTime):
     return dist[n-1][m-1]
 `,
 
+  'maximum-product-of-two-digits': `
+def maxProduct(n):
+    digits = sorted(int(d) for d in str(n))
+    return digits[-1] * digits[-2]
+`,
+
+  'minimum-operations-to-make-columns-strictly-increasing': `
+def minimumOperations(grid):
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    n, m = len(grid), len(grid[0])
+    ops = 0
+    for c in range(m):
+        prev = grid[0][c]
+        for r in range(1, n):
+            if grid[r][c] <= prev:
+                ops += prev + 1 - grid[r][c]
+                grid[r][c] = prev + 1
+            prev = grid[r][c]
+    return ops
+`,
+
+  'longest-unequal-adjacent-groups-subsequence-i': `
+def getLongestSubsequence(words, groups):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    groups = list(groups.to_py() if hasattr(groups, 'to_py') else groups)
+    result = [words[0]]
+    last = groups[0]
+    for i in range(1, len(words)):
+        if groups[i] != last:
+            result.append(words[i])
+            last = groups[i]
+    return result
+`,
+
 };

@@ -2280,6 +2280,10 @@ import { problem as countPrefixAndSuffixPairsI } from './count-prefix-and-suffix
 import { problem as maximumManhattanDistance } from './maximum-manhattan-distance';
 import { problem as findTheOriginalTypedStringI } from './find-the-original-typed-string-i';
 import { problem as findMinimumTimeToReachLastRoomI } from './find-minimum-time-to-reach-last-room-i';
+// batch 120 — arrays+math/easy, arrays/easy, arrays+strings/easy
+import { problem as maximumProductOfTwoDigits } from './maximum-product-of-two-digits';
+import { problem as minimumOperationsToMakeColumnsStrictlyIncreasing } from './minimum-operations-to-make-columns-strictly-increasing';
+import { problem as longestUnequalAdjacentGroupsSubsequenceI } from './longest-unequal-adjacent-groups-subsequence-i';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4597,4 +4601,8 @@ export const problems: readonly Problem[] = [
   maximumManhattanDistance,
   findTheOriginalTypedStringI,
   findMinimumTimeToReachLastRoomI,
+  // batch 120 — arrays+math/easy, arrays/easy, arrays+strings/easy
+  maximumProductOfTwoDigits,
+  minimumOperationsToMakeColumnsStrictlyIncreasing,
+  longestUnequalAdjacentGroupsSubsequenceI,
 ];

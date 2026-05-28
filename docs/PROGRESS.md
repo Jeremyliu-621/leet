@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2101** problems; 6606 tests green. Batches 102–119 complete. All branches merged. Site stats at 2,101+.
+**Current focus:** Bank at **2104** problems; 6615 tests green. Batches 102–120 complete. All branches merged. Site stats at 2,104+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 120 bank growth; UI/UX refinements; accessibility audit.
+**Next up:** Batch 121 bank growth; UI/UX refinements; accessibility audit.
+
+### feat(bank): add batch 120 — max-product-two-digits, min-ops-columns-strictly-inc, longest-unequal-adjacent-subseq-i (2026-05-28)
+Three easy array problems: `maximum-product-of-two-digits` (easy/arrays+math, extract digits + sort desc, top-2 product), `minimum-operations-to-make-columns-strictly-increasing` (easy/arrays, column-wise greedy max(prev+1, cur)), `longest-unequal-adjacent-groups-subsequence-i` (easy/arrays+strings, greedy take first in each consecutive run of same group). Bank at **2104**; 6615 tests.
 
 ### feat(bank): add batch 119 — max-manhattan-distance, find-original-typed-string-i, min-time-last-room-i (2026-05-28)
 Three problems: `maximum-manhattan-distance` (easy/arrays+math, track |x|+|y| max through NSEW moves), `find-the-original-typed-string-i` (easy/strings, count run decompositions: 1 + sum(run_length-1) per run), `find-minimum-time-to-reach-last-room-i` (medium/graph+shortest-path, Dijkstra with new_time = max(t, moveTime[r][c]) + 1). Bank at **2101**; 6606 tests.
