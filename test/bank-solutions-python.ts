@@ -34341,5 +34341,92 @@ def tweetCountsRunner(ops, vals):
     return results
 `,
 
+  // batch 142b
+  'beautiful-towers-ii': `
+def maximumSumOfHeights(maxHeights: list) -> int:
+    maxHeights = list(maxHeights.to_py() if hasattr(maxHeights, 'to_py') else maxHeights)
+    n = len(maxHeights)
+    prefix = [0] * n
+    suffix = [0] * n
+    stack = []
+    for i in range(n):
+        while stack and maxHeights[stack[-1]] > maxHeights[i]:
+            stack.pop()
+        if not stack:
+            prefix[i] = maxHeights[i] * (i + 1)
+        else:
+            j = stack[-1]
+            prefix[i] = prefix[j] + maxHeights[i] * (i - j)
+        stack.append(i)
+    stack = []
+    for i in range(n - 1, -1, -1):
+        while stack and maxHeights[stack[-1]] > maxHeights[i]:
+            stack.pop()
+        if not stack:
+            suffix[i] = maxHeights[i] * (n - i)
+        else:
+            j = stack[-1]
+            suffix[i] = suffix[j] + maxHeights[i] * (j - i)
+        stack.append(i)
+    return max(prefix[i] + suffix[i] - maxHeights[i] for i in range(n))
+`,
+
+  'minimum-number-of-flips-to-make-binary-grid-palindromic-ii': `
+def minFlips(grid: list) -> int:
+    if hasattr(grid, 'to_py'):
+        grid = grid.to_py()
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in grid]
+    m, n = len(grid), len(grid[0])
+    flips = 0
+    for i in range(m // 2):
+        for j in range(n // 2):
+            ones = grid[i][j] + grid[i][n-1-j] + grid[m-1-i][j] + grid[m-1-i][n-1-j]
+            flips += min(ones, 4 - ones)
+    if m % 2 == 1:
+        mid_row = m // 2
+        for j in range(n // 2):
+            if grid[mid_row][j] != grid[mid_row][n-1-j]:
+                flips += 1
+    if n % 2 == 1:
+        mid_col = n // 2
+        for i in range(m // 2):
+            if grid[i][mid_col] != grid[m-1-i][mid_col]:
+                flips += 1
+    return flips
+`,
+
+  'maximum-balanced-subsequence-sum': `
+def maximumBalancedSubsequenceSum(nums: list) -> int:
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    keys = [nums[i] - i for i in range(n)]
+    sorted_keys = sorted(set(keys))
+    rank = {v: i + 1 for i, v in enumerate(sorted_keys)}
+    m = len(sorted_keys)
+    bit = [-float('inf')] * (m + 2)
+    def update(pos, val):
+        i = pos
+        while i <= m:
+            if val > bit[i]:
+                bit[i] = val
+            i += i & (-i)
+    def query(pos):
+        res = -float('inf')
+        i = pos
+        while i > 0:
+            if bit[i] > res:
+                res = bit[i]
+            i -= i & (-i)
+        return res
+    ans = -float('inf')
+    for i in range(n):
+        r = rank[keys[i]]
+        best = query(r)
+        dp_i = nums[i] + (best if best > 0 else 0)
+        update(r, dp_i)
+        if dp_i > ans:
+            ans = dp_i
+    return ans
+`,
 
 };

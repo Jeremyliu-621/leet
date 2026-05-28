@@ -34562,4 +34562,81 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return results;
   },
 
+  // batch 142b
+  'beautiful-towers-ii': (...args: unknown[]) => {
+    const maxHeights = args[0] as number[];
+    const n = maxHeights.length;
+    const prefix = new Array<number>(n).fill(0);
+    const suffix = new Array<number>(n).fill(0);
+    let stack: number[] = [];
+    for (let i = 0; i < n; i++) {
+      while (stack.length > 0 && maxHeights[stack[stack.length - 1]!]! > maxHeights[i]!) stack.pop();
+      if (stack.length === 0) prefix[i] = maxHeights[i]! * (i + 1);
+      else { const j = stack[stack.length - 1]!; prefix[i] = prefix[j]! + maxHeights[i]! * (i - j); }
+      stack.push(i);
+    }
+    stack = [];
+    for (let i = n - 1; i >= 0; i--) {
+      while (stack.length > 0 && maxHeights[stack[stack.length - 1]!]! > maxHeights[i]!) stack.pop();
+      if (stack.length === 0) suffix[i] = maxHeights[i]! * (n - i);
+      else { const j = stack[stack.length - 1]!; suffix[i] = suffix[j]! + maxHeights[i]! * (j - i); }
+      stack.push(i);
+    }
+    let ans = 0;
+    for (let i = 0; i < n; i++) ans = Math.max(ans, prefix[i]! + suffix[i]! - maxHeights[i]!);
+    return ans;
+  },
+
+  'minimum-number-of-flips-to-make-binary-grid-palindromic-ii': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    let flips = 0;
+    for (let i = 0; i < Math.floor(m / 2); i++) {
+      for (let j = 0; j < Math.floor(n / 2); j++) {
+        const ones = grid[i]![j]! + grid[i]![n - 1 - j]! + grid[m - 1 - i]![j]! + grid[m - 1 - i]![n - 1 - j]!;
+        flips += Math.min(ones, 4 - ones);
+      }
+    }
+    if (m % 2 === 1) {
+      const midRow = Math.floor(m / 2);
+      for (let j = 0; j < Math.floor(n / 2); j++)
+        if (grid[midRow]![j] !== grid[midRow]![n - 1 - j]) flips++;
+    }
+    if (n % 2 === 1) {
+      const midCol = Math.floor(n / 2);
+      for (let i = 0; i < Math.floor(m / 2); i++)
+        if (grid[i]![midCol] !== grid[m - 1 - i]![midCol]) flips++;
+    }
+    return flips;
+  },
+
+  'maximum-balanced-subsequence-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const keys = nums.map((v, i) => v - i);
+    const sorted = [...new Set(keys)].sort((a, b) => a - b);
+    const rank = new Map(sorted.map((v, i) => [v, i + 1]));
+    const m = sorted.length;
+    const bit = new Array<number>(m + 2).fill(-Infinity);
+    function update(pos: number, val: number) {
+      for (let i = pos; i <= m; i += i & (-i))
+        if (val > bit[i]!) bit[i] = val;
+    }
+    function query(pos: number): number {
+      let res = -Infinity;
+      for (let i = pos; i > 0; i -= i & (-i))
+        if (bit[i]! > res) res = bit[i]!;
+      return res;
+    }
+    let ans = -Infinity;
+    for (let i = 0; i < n; i++) {
+      const r = rank.get(keys[i]!)!;
+      const best = query(r);
+      const dpI = nums[i]! + (best > 0 ? best : 0);
+      update(r, dpI);
+      if (dpI > ans) ans = dpI;
+    }
+    return ans;
+  },
+
 };

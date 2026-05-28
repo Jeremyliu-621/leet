@@ -2431,6 +2431,10 @@ import { problem as numberOfSubmatricesThatSumToTarget } from './number-of-subma
 import { problem as minimumSwapsToMakeBalanced } from './minimum-swaps-to-make-balanced';
 import { problem as findKthLargestXorCoordinateValue } from './find-kth-largest-xor-coordinate-value';
 import { problem as tweetCountsPerFrequency } from './tweet-counts-per-frequency';
+// batch 142b — arrays+stack/medium, arrays/medium, binary-indexed-tree+dp+arrays/hard
+import { problem as beautifulTowersII } from './beautiful-towers-ii';
+import { problem as minimumNumberOfFlipsTOMakeBinaryGridPalindromicII } from './minimum-number-of-flips-to-make-binary-grid-palindromic-ii';
+import { problem as maximumBalancedSubsequenceSum } from './maximum-balanced-subsequence-sum';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4899,4 +4903,8 @@ export const problems: readonly Problem[] = [
   minimumSwapsToMakeBalanced,
   findKthLargestXorCoordinateValue,
   tweetCountsPerFrequency,
+  // batch 142b — arrays+stack/medium, arrays/medium, binary-indexed-tree+dp+arrays/hard
+  beautifulTowersII,
+  minimumNumberOfFlipsTOMakeBinaryGridPalindromicII,
+  maximumBalancedSubsequenceSum,
 ];
