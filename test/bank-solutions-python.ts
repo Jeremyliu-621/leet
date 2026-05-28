@@ -33535,4 +33535,30 @@ def numberOfPairs(nums1, nums2, k):
     return sum(1 for a in nums1 for b in nums2 if a % (b * k) == 0)
 `,
 
+  // batch 134
+  'maximum-number-of-vowels-in-a-substring-of-given-length': `
+def maxVowels(s, k):
+    vowels = set('aeiou')
+    count = sum(1 for c in s[:k] if c in vowels)
+    best = count
+    for i in range(k, len(s)):
+        count += (s[i] in vowels) - (s[i - k] in vowels)
+        if count > best:
+            best = count
+    return best
+`,
+
+  'find-the-k-th-character-in-string-game-ii': `
+def kthCharacter(k, operations):
+    ops = list(operations.to_py() if hasattr(operations, 'to_py') else operations)
+    offset = 0
+    for i in range(len(ops) - 1, -1, -1):
+        half = 1 << i
+        if k > half:
+            k -= half
+            if ops[i] == 1:
+                offset += 1
+    return chr(ord('a') + (offset % 26))
+`,
+
 };

@@ -2366,6 +2366,9 @@ import { problem as maximumNumberOfBallsInABox } from './maximum-number-of-balls
 import { problem as maximumBinaryString } from './maximum-possible-number-by-binary-concatenation';
 import { problem as getSmallestString } from './lexicographically-smallest-string-after-a-swap';
 import { problem as numberOfPairsI } from './find-the-number-of-good-pairs-i';
+// batch 134 — strings+sliding-window/medium, strings+math/hard
+import { problem as maxVowelsInSubstring } from './maximum-number-of-vowels-in-a-substring-of-given-length';
+import { problem as kthCharacterGameII } from './find-the-k-th-character-in-string-game-ii';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4769,4 +4772,7 @@ export const problems: readonly Problem[] = [
   maximumBinaryString,
   getSmallestString,
   numberOfPairsI,
+  // batch 134 — strings+sliding-window/medium, strings+math/hard
+  maxVowelsInSubstring,
+  kthCharacterGameII,
 ];

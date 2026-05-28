@@ -4,30 +4,37 @@ export const problem: Problem = {
   id: 'count-substrings-that-differ-by-one-character',
   title: 'Count Substrings That Differ by One Character',
   difficulty: 'medium',
-  tags: ['strings'],
-  description: `Given two strings \`s\` and \`t\`, find the number of ways you can choose a non-empty substring of \`s\` and replace a **single character** by a different character such that the resulting substring is a substring of \`t\`. In other words, find the number of substrings in \`s\` that differ from some substring in \`t\` by **exactly one character**.
+  tags: ['strings', 'dynamic-programming'],
+  description: `Given two strings \`s\` and \`t\`, find the number of ways you can choose a non-empty substring of \`s\` and replace a **single character** by a different character such that the resulting substring is a substring of \`t\`. In other words, find the number of substrings in \`s\` that differ from some substring in \`t\` by **exactly** one character.
 
-Return the number of substrings that satisfy the condition above.`,
+Return the number of substrings that satisfy the condition above.
+
+A **substring** is a contiguous sequence of characters within a string.`,
   constraints: [
     '1 <= s.length, t.length <= 100',
-    's and t consist of lowercase English letters only.',
+    's and t consist of lowercase English letters',
   ],
   examples: [
     {
       input: 's = "aba", t = "baba"',
       output: '6',
-      explanation: '6 pairs of substrings that differ by exactly one character.',
+      explanation: 'The following are the pairs of substrings from s and t that differ by exactly one character: ("a","b"), ("a","b"), ("a","b"), ("ab","ba"), ("ba","ab"), ("aba","bab").',
     },
     {
       input: 's = "ab", t = "bb"',
       output: '3',
-      explanation: '"ab" vs "bb", "a" vs "b" (pos 0), "a" vs "b" (pos 1).',
+      explanation: 'The pairs: ("a","b"), ("ab","bb"), ("a","b"). All have exactly one differing position.',
+    },
+    {
+      input: 's = "a", t = "a"',
+      output: '0',
+      explanation: 'There are no substrings that differ by exactly one character.',
     },
   ],
   hints: [
-    'Enumerate all starting positions (i in s, j in t) for the diagonal comparison.',
-    'Walk along each diagonal: track prev = count of matching substrings ending before the current mismatch, cur = count of matching substrings since the last mismatch.',
-    'At each step: if chars differ, prev = cur + 1, cur = 0; else cur++. Add prev to count.',
+    'Try a brute-force triple loop: for each starting pair (i, j), extend as long as characters match; when exactly one mismatch has been seen, count the current substring and keep extending as long as there are no further mismatches.',
+    'Once diff > 1 you can break early.',
+    'A smarter O(n²) DP: for each pair (i,j), dp[i][j] = length of the longest common suffix of s[0..i] and t[0..j]. Count += dp[i-1][j-1] + 1 when s[i] ≠ t[j].',
   ],
   functionName: 'countSubstrings',
   params: ['s', 't'],
@@ -35,20 +42,20 @@ Return the number of substrings that satisfy the condition above.`,
     javascript: `function countSubstrings(s, t) {
 
 }`,
-    typescript: "function countSubstrings(s: string, t: string): number {\n\n}",
-
     python: `def countSubstrings(s, t):
     pass`,
   },
   visibleTests: [
     { args: ['aba', 'baba'], expected: 6 },
     { args: ['ab', 'bb'], expected: 3 },
+    { args: ['a', 'a'], expected: 0 },
   ],
   hiddenTests: [
-    { args: ['a', 'a'], expected: 0 },
     { args: ['a', 'b'], expected: 1 },
-    { args: ['aa', 'aa'], expected: 0 },
+    { args: ['aa', 'bb'], expected: 4 },
+    { args: ['aaa', 'aaa'], expected: 0 },
+    { args: ['abc', 'abc'], expected: 6 },
+    { args: ['aba', 'bab'], expected: 5 },
     { args: ['ab', 'cd'], expected: 4 },
-    { args: ['abe', 'zabe'], expected: 9 },
   ],
 };

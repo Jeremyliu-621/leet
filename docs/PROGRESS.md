@@ -8,9 +8,18 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2165** problems; 6789 tests green. Batches 102–132 complete. TypeScript starters backfilled.
+**Current focus:** Bank at **2171** problems; 6804 tests green. Batches 102–134 complete. TypeScript starters backfilled. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** UI/UX improvements; more bank growth; accessibility polish.
+**Next up:** More UX polish; more bank growth; accessibility audit.
+
+### feat(bank): add batch 134 — max-vowels-substring, k-th-char-game-ii (2026-05-28)
+Two problems: `maximum-number-of-vowels-in-a-substring-of-given-length` (medium/strings+sliding-window, window count, O(n)), `find-the-k-th-character-in-string-game-ii` (hard/strings+math, backwards binary reduction with offset accumulation; BigInt for k≤2^55). Bank at **2171**; 6804 tests. Site updated to 2,171+.
+
+### feat(ux): language-switch confirmation + attempt warning badge (2026-05-28)
+EditorPanel: inline confirmation banner when user attempts to switch language with modified code (prevents silent loss of work). Attempt-remaining badge now visually prominent (font-semibold, elevated border/bg) when ≤1 attempt left. Arrow-key language navigation routes through the same dirty-check.
+
+### feat(bank): add batch 133 — good-pairs-i, lex-smallest-swap, max-binary-concat (2026-05-28)
+Three problems: `find-the-number-of-good-pairs-i` (easy/arrays+hash-map), `lexicographically-smallest-string-after-a-swap` (easy/strings), `maximum-possible-number-by-binary-concatenation` (medium/arrays). Bank at **2169**; 6798 tests.
 
 ### feat(bank): add batch 132 — circular-game-losers, unique-binary-string, balls-in-box (2026-05-28)
 Three problems: `find-the-losers-of-the-circular-game` (easy/simulation, track visited positions set; simulate i*k step passes), `find-unique-binary-string` (medium/strings, Cantor diagonal — flip position i of nums[i] to guarantee uniqueness), `maximum-number-of-balls-in-a-box` (easy/hash-map+math, digit-sum frequency map, max count). Bank at **2165**; 6789 tests.

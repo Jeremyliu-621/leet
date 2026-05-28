@@ -33795,4 +33795,28 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  // batch 134
+  'maximum-number-of-vowels-in-a-substring-of-given-length': (...args: unknown[]) => {
+    const s = args[0] as string, k = args[1] as number;
+    const vowels = new Set('aeiou');
+    let count = 0, max = 0;
+    for (let i = 0; i < s.length; i++) {
+      if (vowels.has(s[i]!)) count++;
+      if (i >= k && vowels.has(s[i - k]!)) count--;
+      if (i >= k - 1) max = Math.max(max, count);
+    }
+    return max;
+  },
+
+  'find-the-k-th-character-in-string-game-ii': (...args: unknown[]) => {
+    const k = args[0] as number, operations = args[1] as number[];
+    let offset = 0;
+    let kBig = BigInt(k);
+    for (let i = operations.length - 1; i >= 0; i--) {
+      const half = 1n << BigInt(i);
+      if (kBig > half) { kBig -= half; if (operations[i] === 1) offset++; }
+    }
+    return String.fromCharCode(97 + (offset % 26));
+  },
+
 };
