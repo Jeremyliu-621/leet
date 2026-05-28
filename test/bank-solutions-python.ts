@@ -33951,4 +33951,46 @@ def distance(arr):
     return result
 `,
 
+  // batch 134b
+  'count-the-number-of-special-characters-ii': `
+def numberOfSpecialChars(word):
+    last_lower = {}
+    first_upper = {}
+    for i, c in enumerate(word):
+        if c == c.lower():
+            last_lower[c] = i
+        elif c.lower() not in first_upper:
+            first_upper[c.lower()] = i
+    return sum(1 for c, l_idx in last_lower.items()
+               if c in first_upper and l_idx < first_upper[c])
+`,
+
+  'make-a-square-with-the-same-color': `
+def canMakeSquare(grid):
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    for r in range(2):
+        for c in range(2):
+            cells = [grid[r][c], grid[r][c+1], grid[r+1][c], grid[r+1][c+1]]
+            whites = cells.count('W')
+            if whites >= 3 or whites <= 1:
+                return True
+    return False
+`,
+
+  'find-the-number-of-good-pairs-ii': `
+def numberOfPairs(nums1, nums2, k):
+    nums1 = list(nums1.to_py() if hasattr(nums1, 'to_py') else nums1)
+    nums2 = list(nums2.to_py() if hasattr(nums2, 'to_py') else nums2)
+    from collections import Counter
+    freq = Counter(nums1)
+    count = 0
+    for b in nums2:
+        target = b * k
+        mul = target
+        while mul <= 1000000:
+            count += freq.get(mul, 0)
+            mul += target
+    return count
+`,
+
 };
