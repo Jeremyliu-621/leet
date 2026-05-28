@@ -2315,6 +2315,10 @@ import { problem as checkIfAStringIsAnAcronymOfWords } from './check-if-a-string
 // batch 123b — strings/easy, arrays+math/easy
 import { problem as scoreOfAString } from './score-of-a-string';
 import { problem as sumOfSquaresOfSpecialElements } from './sum-of-squares-of-special-elements';
+// batch 124b — arrays/medium, arrays/easy, arrays/easy
+import { problem as maximumElementAfterDecrementingAndRearranging } from './maximum-element-after-decreasing-and-rearranging';
+import { problem as findTheDistanceValueBetweenTwoArrays } from './find-the-distance-value-between-two-arrays';
+import { problem as minimumSumOfMountainTripletsI } from './minimum-sum-of-mountain-triplets-i';
 // batch 125 — arrays/easy, arrays+strings+hash-map/easy, arrays+hash-map/easy
 import { problem as findChampionI } from './find-champion-i';
 import { problem as countTheNumberOfConsistentStrings } from './count-the-number-of-consistent-strings';
@@ -4675,6 +4679,10 @@ export const problems: readonly Problem[] = [
   // batch 123b — strings/easy, arrays+math/easy
   scoreOfAString,
   sumOfSquaresOfSpecialElements,
+  // batch 124b — arrays/medium, arrays/easy, arrays/easy
+  maximumElementAfterDecrementingAndRearranging,
+  findTheDistanceValueBetweenTwoArrays,
+  minimumSumOfMountainTripletsI,
   // batch 125 — arrays/easy, arrays+strings+hash-map/easy, arrays+hash-map/easy
   findChampionI,
   countTheNumberOfConsistentStrings,

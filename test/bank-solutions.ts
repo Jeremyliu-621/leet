@@ -33420,4 +33420,28 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return [...freq.entries()].filter(([, c]) => c > 1).map(([k]) => k).sort((a, b) => a - b);
   },
 
+  // batch 124b
+  'maximum-element-after-decreasing-and-rearranging': (...args: unknown[]) => {
+    const arr = [...(args[0] as number[])].sort((a, b) => a - b);
+    arr[0] = 1;
+    for (let i = 1; i < arr.length; i++) arr[i] = Math.min(arr[i]!, arr[i - 1]! + 1);
+    return arr[arr.length - 1]!;
+  },
+
+  'find-the-distance-value-between-two-arrays': (...args: unknown[]) => {
+    const arr1 = args[0] as number[], arr2 = args[1] as number[], d = args[2] as number;
+    return arr1.filter(a => arr2.every(b => Math.abs(a - b) > d)).length;
+  },
+
+  'minimum-sum-of-mountain-triplets-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let min = Infinity;
+    for (let i = 0; i < nums.length; i++)
+      for (let j = i + 1; j < nums.length; j++)
+        for (let k = j + 1; k < nums.length; k++)
+          if (nums[i]! < nums[j]! && nums[k]! < nums[j]!)
+            min = Math.min(min, nums[i]! + nums[j]! + nums[k]!);
+    return min === Infinity ? -1 : min;
+  },
+
 };

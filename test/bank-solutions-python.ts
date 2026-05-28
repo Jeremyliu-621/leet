@@ -33148,4 +33148,34 @@ def getSneakyNumbers(nums):
     return sorted(k for k, v in freq.items() if v > 1)
 `,
 
+  // batch 124b
+  'maximum-element-after-decreasing-and-rearranging': `
+def maximumElementAfterDecrementingAndRearranging(arr):
+    arr = sorted(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    arr[0] = 1
+    for i in range(1, len(arr)):
+        arr[i] = min(arr[i], arr[i-1] + 1)
+    return arr[-1]
+`,
+
+  'find-the-distance-value-between-two-arrays': `
+def findTheDistanceValue(arr1, arr2, d):
+    arr1 = list(arr1.to_py() if hasattr(arr1, 'to_py') else arr1)
+    arr2 = list(arr2.to_py() if hasattr(arr2, 'to_py') else arr2)
+    return sum(1 for a in arr1 if all(abs(a - b) > d for b in arr2))
+`,
+
+  'minimum-sum-of-mountain-triplets-i': `
+def minimumSumOfMountainTripletsI(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    min_sum = float('inf')
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if nums[i] < nums[j] and nums[k] < nums[j]:
+                    min_sum = min(min_sum, nums[i] + nums[j] + nums[k])
+    return -1 if min_sum == float('inf') else min_sum
+`,
+
 };
