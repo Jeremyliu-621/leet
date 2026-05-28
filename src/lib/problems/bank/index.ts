@@ -2388,6 +2388,10 @@ import { problem as countTheNumberOfSpecialCharactersI } from './count-the-numbe
 import { problem as findXorSumOfAllPairsBitwiseAnd } from './find-xor-sum-of-all-pairs-bitwise-and';
 import { problem as maximumNumberOfIntegersToChooseFromARangeII } from './maximum-number-of-integers-to-choose-from-a-range-ii';
 import { problem as minimumCostToConnectTwoGroups } from './minimum-cost-to-connect-two-groups';
+// batch 134b — strings+hash-map/medium, arrays+simulation/easy, arrays+hash-map/medium
+import { problem as numberOfSpecialCharsII } from './count-the-number-of-special-characters-ii';
+import { problem as canMakeSquare } from './make-a-square-with-the-same-color';
+import { problem as numberOfPairsII } from './find-the-number-of-good-pairs-ii';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4813,4 +4817,8 @@ export const problems: readonly Problem[] = [
   findXorSumOfAllPairsBitwiseAnd,
   maximumNumberOfIntegersToChooseFromARangeII,
   minimumCostToConnectTwoGroups,
+  // batch 134b — strings+hash-map/medium, arrays+simulation/easy, arrays+hash-map/medium
+  numberOfSpecialCharsII,
+  canMakeSquare,
+  numberOfPairsII,
 ];
