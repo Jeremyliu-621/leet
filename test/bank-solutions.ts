@@ -33494,4 +33494,34 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  // batch 128
+  'removing-stars-from-a-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const stack: string[] = [];
+    for (const c of s) {
+      if (c === '*') stack.pop();
+      else stack.push(c);
+    }
+    return stack.join('');
+  },
+
+  'minimum-number-of-moves-to-seat-everyone': (...args: unknown[]) => {
+    const seats = [...(args[0] as number[])].sort((a, b) => a - b);
+    const students = [...(args[1] as number[])].sort((a, b) => a - b);
+    let moves = 0;
+    for (let i = 0; i < seats.length; i++) moves += Math.abs(seats[i]! - students[i]!);
+    return moves;
+  },
+
+  'check-if-string-is-a-prefix-of-array': (...args: unknown[]) => {
+    const s = args[0] as string, words = args[1] as string[];
+    let acc = '';
+    for (const w of words) {
+      acc += w;
+      if (acc === s) return true;
+      if (acc.length >= s.length) return false;
+    }
+    return false;
+  },
+
 };

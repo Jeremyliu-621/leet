@@ -2334,6 +2334,10 @@ import { problem as countPairsWhoseSumIsLessThanTarget } from './count-pairs-who
 // batch 127b — arrays+math/easy, arrays+math/medium
 import { problem as findMinimumValueAfterReplacingWithDigitSum } from './find-minimum-value-after-replacing-with-digit-sum';
 import { problem as countTriplets } from './count-triplets-forming-two-arrays-of-equal-xor';
+// batch 128 — strings+stack/medium, arrays/easy, arrays+strings/easy
+import { problem as removingStarsFromAString } from './removing-stars-from-a-string';
+import { problem as minimumNumberOfMovesToSeatEveryone } from './minimum-number-of-moves-to-seat-everyone';
+import { problem as checkIfStringIsAPrefixOfArray } from './check-if-string-is-a-prefix-of-array';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4705,4 +4709,8 @@ export const problems: readonly Problem[] = [
   // batch 127b — arrays+math/easy, arrays+math/medium
   findMinimumValueAfterReplacingWithDigitSum,
   countTriplets,
+  // batch 128 — strings+stack/medium, arrays/easy, arrays+strings/easy
+  removingStarsFromAString,
+  minimumNumberOfMovesToSeatEveryone,
+  checkIfStringIsAPrefixOfArray,
 ];

@@ -33234,4 +33234,36 @@ def countTriplets(arr):
     return count
 `,
 
+  // batch 128
+  'removing-stars-from-a-string': `
+def removeStars(s):
+    stack = []
+    for c in s:
+        if c == '*':
+            stack.pop()
+        else:
+            stack.append(c)
+    return ''.join(stack)
+`,
+
+  'minimum-number-of-moves-to-seat-everyone': `
+def minMovesToSeat(seats, students):
+    seats = sorted(seats.to_py() if hasattr(seats, 'to_py') else seats)
+    students = sorted(students.to_py() if hasattr(students, 'to_py') else students)
+    return sum(abs(s - t) for s, t in zip(seats, students))
+`,
+
+  'check-if-string-is-a-prefix-of-array': `
+def isPrefixString(s, words):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    acc = ''
+    for w in words:
+        acc += w
+        if acc == s:
+            return True
+        if len(acc) >= len(s):
+            return False
+    return False
+`,
+
 };
