@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2104** problems; 6615 tests green. Batches 102–120 complete. All branches merged. Site stats at 2,104+.
+**Current focus:** Bank at **2107** problems; 6624 tests green. Batches 102–121 complete. All branches merged. Site stats at 2,107+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 121 bank growth; UI/UX refinements; accessibility audit.
+**Next up:** Batch 122 bank growth; UI/UX refinements; accessibility audit.
+
+### feat(bank): add batch 121 — longest-common-prefix-length, max-distinct-elements-ops, min-time-revert-word-i (2026-05-28)
+Three medium problems: `find-the-length-of-the-longest-common-prefix` (medium/arrays+strings+hash-map, store all prefixes of arr1 in a Set, check arr2 prefixes), `maximum-number-of-distinct-elements-after-operations` (medium/arrays+math, sort + greedy assign max(prev+1, n-k) within [n-k,n+k] range), `minimum-time-to-revert-word-to-initial-state-i` (medium/strings, try t=1,2,...; check if word[t*k:] is a prefix of word). Bank at **2107**; 6624 tests.
 
 ### feat(bank): add batch 120 — max-product-two-digits, min-ops-columns-strictly-inc, longest-unequal-adjacent-subseq-i (2026-05-28)
 Three easy array problems: `maximum-product-of-two-digits` (easy/arrays+math, extract digits + sort desc, top-2 product), `minimum-operations-to-make-columns-strictly-increasing` (easy/arrays, column-wise greedy max(prev+1, cur)), `longest-unequal-adjacent-groups-subsequence-i` (easy/arrays+strings, greedy take first in each consecutive run of same group). Bank at **2104**; 6615 tests.

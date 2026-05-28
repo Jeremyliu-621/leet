@@ -33046,4 +33046,43 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'find-the-length-of-the-longest-common-prefix': (...args: unknown[]) => {
+    const arr1 = args[0] as number[], arr2 = args[1] as number[];
+    const prefixes = new Set<string>();
+    for (const n of arr1) {
+      let s = String(n);
+      while (s.length > 0) { prefixes.add(s); s = s.slice(0, -1); }
+    }
+    let ans = 0;
+    for (const n of arr2) {
+      let s = String(n);
+      while (s.length > 0) {
+        if (prefixes.has(s)) { ans = Math.max(ans, s.length); break; }
+        s = s.slice(0, -1);
+      }
+    }
+    return ans;
+  },
+
+  'maximum-number-of-distinct-elements-after-operations': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const k = args[1] as number;
+    let count = 0, prev = -Infinity;
+    for (const n of nums) {
+      const val = Math.max(prev + 1, n - k);
+      if (val <= n + k) { count++; prev = val; }
+    }
+    return count;
+  },
+
+  'minimum-time-to-revert-word-to-initial-state-i': (...args: unknown[]) => {
+    const word = args[0] as string, k = args[1] as number;
+    const n = word.length;
+    for (let t = 1; ; t++) {
+      const offset = t * k;
+      if (offset >= n) return t;
+      if (word.startsWith(word.slice(offset))) return t;
+    }
+  },
+
 };

@@ -32749,4 +32749,51 @@ def getLongestSubsequence(words, groups):
     return result
 `,
 
+  'find-the-length-of-the-longest-common-prefix': `
+def longestCommonPrefix(arr1, arr2):
+    arr1 = list(arr1.to_py() if hasattr(arr1, 'to_py') else arr1)
+    arr2 = list(arr2.to_py() if hasattr(arr2, 'to_py') else arr2)
+    prefixes = set()
+    for n in arr1:
+        s = str(n)
+        while s:
+            prefixes.add(s)
+            s = s[:-1]
+    ans = 0
+    for n in arr2:
+        s = str(n)
+        while s:
+            if s in prefixes:
+                ans = max(ans, len(s))
+                break
+            s = s[:-1]
+    return ans
+`,
+
+  'maximum-number-of-distinct-elements-after-operations': `
+def maxDistinctElements(nums, k):
+    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    count = 0
+    prev = float('-inf')
+    for n in nums:
+        val = max(prev + 1, n - k)
+        if val <= n + k:
+            count += 1
+            prev = val
+    return count
+`,
+
+  'minimum-time-to-revert-word-to-initial-state-i': `
+def minimumTimeToInitialState(word, k):
+    n = len(word)
+    t = 1
+    while True:
+        offset = t * k
+        if offset >= n:
+            return t
+        if word.startswith(word[offset:]):
+            return t
+        t += 1
+`,
+
 };

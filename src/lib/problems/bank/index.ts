@@ -2284,6 +2284,10 @@ import { problem as findMinimumTimeToReachLastRoomI } from './find-minimum-time-
 import { problem as maximumProductOfTwoDigits } from './maximum-product-of-two-digits';
 import { problem as minimumOperationsToMakeColumnsStrictlyIncreasing } from './minimum-operations-to-make-columns-strictly-increasing';
 import { problem as longestUnequalAdjacentGroupsSubsequenceI } from './longest-unequal-adjacent-groups-subsequence-i';
+// batch 121 — arrays+strings+hash-map/medium, arrays+math/medium, strings/medium
+import { problem as findTheLengthOfTheLongestCommonPrefix } from './find-the-length-of-the-longest-common-prefix';
+import { problem as maximumNumberOfDistinctElementsAfterOperations } from './maximum-number-of-distinct-elements-after-operations';
+import { problem as minimumTimeToRevertWordToInitialStateI } from './minimum-time-to-revert-word-to-initial-state-i';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4605,4 +4609,8 @@ export const problems: readonly Problem[] = [
   maximumProductOfTwoDigits,
   minimumOperationsToMakeColumnsStrictlyIncreasing,
   longestUnequalAdjacentGroupsSubsequenceI,
+  // batch 121 — arrays+strings+hash-map/medium, arrays+math/medium, strings/medium
+  findTheLengthOfTheLongestCommonPrefix,
+  maximumNumberOfDistinctElementsAfterOperations,
+  minimumTimeToRevertWordToInitialStateI,
 ];
