@@ -33657,4 +33657,30 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     );
   },
 
+  // batch 131
+  'count-collisions-on-a-road': (...args: unknown[]) => {
+    const directions = args[0] as string;
+    let left = 0;
+    while (left < directions.length && directions[left] === 'L') left++;
+    let right = directions.length - 1;
+    while (right >= 0 && directions[right] === 'R') right--;
+    let count = 0;
+    for (let i = left; i <= right; i++) if (directions[i] !== 'S') count++;
+    return count;
+  },
+
+  'form-smallest-number-from-two-digit-arrays': (...args: unknown[]) => {
+    const nums1 = args[0] as number[], nums2 = args[1] as number[];
+    const set1 = new Set(nums1);
+    const common = nums2.filter(d => set1.has(d));
+    if (common.length > 0) return Math.min(...common);
+    const min1 = Math.min(...nums1), min2 = Math.min(...nums2);
+    return Math.min(min1 * 10 + min2, min2 * 10 + min1);
+  },
+
+  'a-number-after-a-double-reversal': (...args: unknown[]) => {
+    const num = args[0] as number;
+    return num === 0 || num % 10 !== 0;
+  },
+
 };

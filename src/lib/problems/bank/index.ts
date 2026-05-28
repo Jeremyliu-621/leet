@@ -2350,6 +2350,10 @@ import { problem as restoreMatrix } from './find-valid-matrix-given-row-and-colu
 import { problem as countEvenSumPairs } from './count-even-sum-pairs';
 import { problem as longestBoundedSubarray } from './longest-bounded-subarray';
 import { problem as maxNonadjacentCircular } from './max-nonadjacent-circular';
+// batch 131 — strings+stack/medium, arrays+hash-map/easy, math/easy
+import { problem as countCollisionsOnARoad } from './count-collisions-on-a-road';
+import { problem as formSmallestNumberFromTwoDigitArrays } from './form-smallest-number-from-two-digit-arrays';
+import { problem as aNumberAfterADoubleReversal } from './a-number-after-a-double-reversal';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4737,4 +4741,8 @@ export const problems: readonly Problem[] = [
   countEvenSumPairs,
   longestBoundedSubarray,
   maxNonadjacentCircular,
+  // batch 131 — strings+stack/medium, arrays+hash-map/easy, math/easy
+  countCollisionsOnARoad,
+  formSmallestNumberFromTwoDigitArrays,
+  aNumberAfterADoubleReversal,
 ];

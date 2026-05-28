@@ -33399,4 +33399,33 @@ def maxNonAdjacentCircular(nums):
     return max(linear_rob(nums[:-1]), linear_rob(nums[1:]))
 `,
 
+  // batch 131
+  'count-collisions-on-a-road': `
+def countCollisions(directions):
+    left = 0
+    while left < len(directions) and directions[left] == 'L':
+        left += 1
+    right = len(directions) - 1
+    while right >= 0 and directions[right] == 'R':
+        right -= 1
+    return sum(1 for i in range(left, right + 1) if directions[i] != 'S')
+`,
+
+  'form-smallest-number-from-two-digit-arrays': `
+def minNumber(nums1, nums2):
+    nums1 = list(nums1.to_py() if hasattr(nums1, 'to_py') else nums1)
+    nums2 = list(nums2.to_py() if hasattr(nums2, 'to_py') else nums2)
+    set1 = set(nums1)
+    common = [d for d in nums2 if d in set1]
+    if common:
+        return min(common)
+    min1, min2 = min(nums1), min(nums2)
+    return min(min1 * 10 + min2, min2 * 10 + min1)
+`,
+
+  'a-number-after-a-double-reversal': `
+def isSameAfterReversals(num):
+    return num == 0 or num % 10 != 0
+`,
+
 };
