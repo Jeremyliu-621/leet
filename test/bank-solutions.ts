@@ -34266,4 +34266,97 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return candies.map(c => c + extraCandies >= maxC);
   },
 
+  // batch 141
+  'number-of-unequal-triplets-in-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let count = 0;
+    for (let i = 0; i < nums.length; i++)
+      for (let j = i + 1; j < nums.length; j++)
+        for (let k = j + 1; k < nums.length; k++)
+          if (nums[i] !== nums[j] && nums[j] !== nums[k] && nums[i] !== nums[k])
+            count++;
+    return count;
+  },
+
+  'maximize-area-of-square-hole-in-grid': (...args: unknown[]) => {
+    const hBars = args[2] as number[], vBars = args[3] as number[];
+    function maxGap(bars: number[]) {
+      let max = 1, run = 1;
+      for (let i = 1; i < bars.length; i++) {
+        run = (bars[i] as number) === (bars[i - 1] as number) + 1 ? run + 1 : 1;
+        max = Math.max(max, run);
+      }
+      return max + 1;
+    }
+    const side = Math.min(maxGap(hBars), maxGap(vBars));
+    return side * side;
+  },
+
+  'sum-of-total-strength-of-wizards': (...args: unknown[]) => {
+    const strength = args[0] as number[];
+    const MOD = 1000000007n;
+    const n = strength.length;
+    const s = strength.map(BigInt);
+    const prefix: bigint[] = new Array(n + 1).fill(0n);
+    for (let i = 0; i < n; i++) prefix[i + 1] = ((prefix[i] as bigint) + s[i]!) % MOD;
+    const pp: bigint[] = new Array(n + 2).fill(0n);
+    for (let i = 0; i <= n; i++) pp[i + 1] = ((pp[i] as bigint) + (prefix[i] as bigint)) % MOD;
+    const L = new Int32Array(n).fill(-1), R = new Int32Array(n).fill(n);
+    const stack: number[] = [];
+    for (let i = 0; i < n; i++) {
+      while (stack.length && s[stack[stack.length - 1]!]! >= s[i]!) R[stack.pop()!] = i;
+      L[i] = stack.length ? stack[stack.length - 1]! : -1;
+      stack.push(i);
+    }
+    let ans = 0n;
+    for (let i = 0; i < n; i++) {
+      const li = L[i] as number, ri = R[i] as number;
+      const l = BigInt(li + 1), r = BigInt(ri), ii = BigInt(i);
+      const cL = ii - l + 1n, cR = r - ii;
+      const sR = ((pp[Number(r) + 1] as bigint) - (pp[i + 1] as bigint) + MOD) % MOD;
+      const sL = ((pp[i + 1] as bigint) - (pp[li + 1] as bigint) + MOD) % MOD;
+      ans = (ans + (s[i] as bigint) * ((cL * sR - cR * sL) % MOD + MOD) % MOD) % MOD;
+    }
+    return Number(ans);
+  },
+
+  'maximum-number-of-events-that-can-be-attended-ii': (...args: unknown[]) => {
+    const events = (args[0] as number[][]).map(e => [...e] as number[]);
+    const k = args[1] as number;
+    events.sort((a, b) => (a[1] as number) - (b[1] as number));
+    const n = events.length;
+    const dp: number[][] = Array.from({ length: n + 1 }, () => new Array(k + 1).fill(0));
+    for (let i = 1; i <= n; i++) {
+      const ev = events[i - 1] as number[];
+      const start = ev[0] as number, val = ev[2] as number;
+      let lo = 0, hi = i - 1;
+      while (lo < hi) {
+        const mid = (lo + hi + 1) >> 1;
+        if ((events[mid - 1] as number[])[1]! < start) lo = mid; else hi = mid - 1;
+      }
+      for (let j = 1; j <= k; j++)
+        (dp[i] as number[])[j] = Math.max((dp[i - 1] as number[])[j]!, (dp[lo] as number[])[j - 1]! + val);
+    }
+    return (dp[n] as number[])[k]!;
+  },
+
+  'minimum-operations-to-convert-number': (...args: unknown[]) => {
+    const nums = args[0] as number[], start = args[1] as number, goal = args[2] as number;
+    if (start === goal) return 0;
+    const visited = new Set([start]);
+    let queue = [start], steps = 0;
+    while (queue.length) {
+      steps++;
+      const next: number[] = [];
+      for (const x of queue)
+        for (const n of nums)
+          for (const op of [x ^ n, x + n, x - n]) {
+            if (op === goal) return steps;
+            if (op >= 0 && op <= 1000 && !visited.has(op)) { visited.add(op); next.push(op); }
+          }
+      queue = next;
+    }
+    return -1;
+  },
+
 };
