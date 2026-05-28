@@ -32175,6 +32175,63 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     dfs(root, root ? root.val : 0, 0);
     return max;
   },
+  'implement-trie-prefix-tree': (...args: unknown[]) => {
+    const ops = args[0] as [string, unknown[]][];
+    interface TrieNode { children: Map<string, TrieNode>; end: boolean }
+    const mkNode = (): TrieNode => ({ children: new Map(), end: false });
+    let root = mkNode();
+    const results: (boolean | null)[] = [];
+    for (const [method, margs] of ops) {
+      if (method === 'Trie') { root = mkNode(); results.push(null); continue; }
+      const word = margs[0] as string;
+      if (method === 'insert') {
+        let cur = root;
+        for (const c of word) { if (!cur.children.has(c)) cur.children.set(c, mkNode()); cur = cur.children.get(c) as TrieNode; }
+        cur.end = true; results.push(null);
+      } else {
+        let cur: TrieNode | undefined = root;
+        for (const c of word) { if (!cur) break; cur = cur.children.get(c); }
+        if (method === 'search') results.push(cur !== undefined && cur.end);
+        else results.push(cur !== undefined); // startsWith
+      }
+    }
+    return results;
+  },
+  'number-of-recent-calls': (...args: unknown[]) => {
+    const ops = args[0] as [string, number[]][];
+    const queue: number[] = [];
+    const results: (number | null)[] = [];
+    for (const [method, margs] of ops) {
+      if (method === 'RecentCounter') { queue.length = 0; results.push(null); continue; }
+      const t = margs[0] as number;
+      queue.push(t);
+      while ((queue[0] as number) < t - 3000) queue.shift();
+      results.push(queue.length);
+    }
+    return results;
+  },
+  'two-sum-iii-data-structure-design': (...args: unknown[]) => {
+    const ops = args[0] as [string, number[]][];
+    const freq = new Map<number, number>();
+    const results: (boolean | null)[] = [];
+    for (const [method, margs] of ops) {
+      if (method === 'TwoSum') { freq.clear(); results.push(null); continue; }
+      if (method === 'add') {
+        const n = margs[0] as number;
+        freq.set(n, (freq.get(n) ?? 0) + 1);
+        results.push(null);
+      } else {
+        const v = margs[0] as number;
+        let found = false;
+        for (const [n, cnt] of freq) {
+          const complement = v - n;
+          if (freq.has(complement) && (complement !== n || (cnt as number) >= 2)) { found = true; break; }
+        }
+        results.push(found);
+      }
+    }
+    return results;
+  },
   'kth-largest-element-in-an-array': (...args: unknown[]) => {
     const nums = (args[0] as number[]).slice().sort((a, b) => b - a);
     return nums[(args[1] as number) - 1];

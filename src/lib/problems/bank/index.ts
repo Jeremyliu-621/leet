@@ -2229,6 +2229,10 @@ import { problem as flattenBinaryTreeToLinkedList } from './flatten-binary-tree-
 import { problem as kthLargestElementInAnArray } from './kth-largest-element-in-an-array';
 import { problem as findMissingPositive } from './find-missing-positive';
 import { problem as largestRectangleInHistogram } from './largest-rectangle-in-histogram';
+// batch 109 — tree/medium, arrays/easy, hash-map/easy
+import { problem as implementTriePrefixTree } from './implement-trie-prefix-tree';
+import { problem as numberOfRecentCalls } from './number-of-recent-calls';
+import { problem as twoSumIIIDataStructureDesign } from './two-sum-iii-data-structure-design';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4495,4 +4499,8 @@ export const problems: readonly Problem[] = [
   kthLargestElementInAnArray,
   findMissingPositive,
   largestRectangleInHistogram,
+  // batch 109 — tree/medium, arrays/easy, hash-map/easy
+  implementTriePrefixTree,
+  numberOfRecentCalls,
+  twoSumIIIDataStructureDesign,
 ];

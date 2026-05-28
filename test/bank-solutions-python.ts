@@ -31684,6 +31684,98 @@ def minCostConnectPoints(points):
                     dist[v] = d
     return total
 `,
+  'implement-trie-prefix-tree': `
+def trieOps(ops):
+    ops = ops.to_py() if hasattr(ops, 'to_py') else list(ops)
+    results = []
+    trie = None
+    class TrieNode:
+        def __init__(self):
+            self.children = {}
+            self.end = False
+    class Trie:
+        def __init__(self):
+            self.root = TrieNode()
+        def insert(self, word):
+            cur = self.root
+            for c in word:
+                if c not in cur.children:
+                    cur.children[c] = TrieNode()
+                cur = cur.children[c]
+            cur.end = True
+        def search(self, word):
+            cur = self.root
+            for c in word:
+                if c not in cur.children:
+                    return False
+                cur = cur.children[c]
+            return cur.end
+        def startsWith(self, prefix):
+            cur = self.root
+            for c in prefix:
+                if c not in cur.children:
+                    return False
+                cur = cur.children[c]
+            return True
+    for op in ops:
+        op = op.to_py() if hasattr(op, 'to_py') else list(op)
+        method = op[0]
+        args = list(op[1].to_py() if hasattr(op[1], 'to_py') else op[1])
+        if method == 'Trie':
+            trie = Trie()
+            results.append(None)
+        else:
+            res = getattr(trie, method)(*args)
+            results.append(None if res is None else res)
+    return results
+`,
+  'number-of-recent-calls': `
+def recentCounterOps(ops):
+    ops = ops.to_py() if hasattr(ops, 'to_py') else list(ops)
+    results = []
+    queue = []
+    for op in ops:
+        op = op.to_py() if hasattr(op, 'to_py') else list(op)
+        method = op[0]
+        args = list(op[1].to_py() if hasattr(op[1], 'to_py') else op[1])
+        if method == 'RecentCounter':
+            queue = []
+            results.append(None)
+        else:
+            t = int(args[0])
+            queue.append(t)
+            while queue[0] < t - 3000:
+                queue.pop(0)
+            results.append(len(queue))
+    return results
+`,
+  'two-sum-iii-data-structure-design': `
+def twoSumOps(ops):
+    ops = ops.to_py() if hasattr(ops, 'to_py') else list(ops)
+    results = []
+    freq = {}
+    for op in ops:
+        op = op.to_py() if hasattr(op, 'to_py') else list(op)
+        method = op[0]
+        args = list(op[1].to_py() if hasattr(op[1], 'to_py') else op[1])
+        if method == 'TwoSum':
+            freq = {}
+            results.append(None)
+        elif method == 'add':
+            n = int(args[0])
+            freq[n] = freq.get(n, 0) + 1
+            results.append(None)
+        else:
+            v = int(args[0])
+            found = False
+            for n, cnt in freq.items():
+                complement = v - n
+                if complement in freq and (complement != n or cnt >= 2):
+                    found = True
+                    break
+            results.append(found)
+    return results
+`,
   'kth-largest-element-in-an-array': `
 def findKthLargest(nums, k):
     nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else list(nums), reverse=True)
