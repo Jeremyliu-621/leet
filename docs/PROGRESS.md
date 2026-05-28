@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2253** problems; 7053 tests green. Batches 102–149 complete. UX polish ongoing.
+**Current focus:** Bank at **2256** problems; 7053 tests green. Batches 102–150 complete. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth; UX polish; accessibility audit.
+
+### feat(bank): add batch 150 — convert-2d-conditions, replace-balanced-string, all-divisions-score (2026-05-29)
+Three new medium problems: `convert-an-array-into-a-2d-array-with-conditions` (arrays+hash-map, greedy occurrence-row placement — n-th occurrence of value goes to row n-1), `replace-the-substring-for-balanced-string` (strings+two-pointers+sliding-window, shrink window while all outside counts ≤ n/4), `all-divisions-with-the-highest-score-of-a-binary-array` (arrays, score[i] = prefix zeros + suffix ones; linear sweep). Bank at **2256**; tests green.
 
 ### feat(bank): add batch 146/148/149 — new problems + orphan registrations (2026-05-29)
 New: `calculate-amount-paid-in-taxes` (easy/arrays, bracket tax simulation). Registered 6 orphan problems: `beautiful-towers-ii` (medium/arrays+stack, monotone-stack mountain sums), `maximum-balanced-subsequence-sum` (hard/BIT+dp), `minimum-flips-binary-grid-palindromic-ii` (medium/arrays), `minimum-swaps-to-make-balanced` (medium/strings+stack), `tweet-counts-per-frequency` (medium/hash-map), `find-kth-largest-xor-coordinate-value` (medium/arrays). Also added solutions for `max-product-after-cutting-rope`, `minimum-path-sum-triangle`, `find-product-pivot`, `count-subarrays-equal-balance`, `longest-arithmetic-subarray`, `sum-of-all-submatrix-sums`. Bank at **2253**; 7053 tests.
