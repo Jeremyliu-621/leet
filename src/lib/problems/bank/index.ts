@@ -2444,6 +2444,11 @@ import { problem as mostProfitablePath } from './most-profitable-path-in-a-tree'
 import { problem as maxGroupsEnteringNextRound } from './maximum-number-of-groups-entering-next-round';
 import { problem as findPalindromeFixedLength } from './find-palindrome-with-fixed-length';
 import { problem as numberOfWaysKSteps } from './number-of-ways-to-reach-a-position-after-exactly-k-steps';
+// batch 147 — arrays+math/medium, arrays+hash-map/medium, arrays/medium, arrays+math/medium
+import { problem as findProductPivot } from './find-product-pivot';
+import { problem as countSubarraysEqualBalance } from './count-subarrays-equal-balance';
+import { problem as longestArithmeticSubarray } from './longest-arithmetic-subarray';
+import { problem as sumOfAllSubmatrixSums } from './sum-of-all-submatrix-sums';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4925,4 +4930,9 @@ export const problems: readonly Problem[] = [
   maxGroupsEnteringNextRound,
   findPalindromeFixedLength,
   numberOfWaysKSteps,
+  // batch 147 — arrays+math/medium, arrays+hash-map/medium, arrays/medium, arrays+math/medium
+  findProductPivot,
+  countSubarraysEqualBalance,
+  longestArithmeticSubarray,
+  sumOfAllSubmatrixSums,
 ];

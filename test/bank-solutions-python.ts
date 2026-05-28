@@ -34702,4 +34702,74 @@ def numberOfWays(startPos, endPos, k):
     return dp[r]
 `,
 
+  'find-product-pivot': `
+def findProductPivot(nums):
+    if hasattr(nums, 'to_py'):
+        nums = nums.to_py()
+    n = len(nums)
+    prefix = [1] * n
+    suffix = [1] * n
+    for i in range(1, n):
+        prefix[i] = prefix[i - 1] * nums[i - 1]
+    for i in range(n - 2, -1, -1):
+        suffix[i] = suffix[i + 1] * nums[i + 1]
+    for i in range(n):
+        if prefix[i] == suffix[i]:
+            return i
+    return -1
+`,
+
+  'count-subarrays-equal-balance': `
+def countBalancedSubarrays(nums):
+    if hasattr(nums, 'to_py'):
+        nums = nums.to_py()
+    from collections import defaultdict
+    freq = defaultdict(int)
+    freq[0] = 1
+    prefix = 0
+    count = 0
+    for v in nums:
+        if v > 0:
+            prefix += 1
+        elif v < 0:
+            prefix -= 1
+        count += freq[prefix]
+        freq[prefix] += 1
+    return count
+`,
+
+  'longest-arithmetic-subarray': `
+def longestArithmeticSubarray(nums):
+    if hasattr(nums, 'to_py'):
+        nums = nums.to_py()
+    if len(nums) <= 1:
+        return len(nums)
+    max_len = 2
+    cur_len = 2
+    diff = nums[1] - nums[0]
+    for i in range(2, len(nums)):
+        d = nums[i] - nums[i - 1]
+        if d == diff:
+            cur_len += 1
+        else:
+            cur_len = 2
+            diff = d
+        if cur_len > max_len:
+            max_len = cur_len
+    return max_len
+`,
+
+  'sum-of-all-submatrix-sums': `
+def sumSubmatrixSums(matrix):
+    if hasattr(matrix, 'to_py'):
+        matrix = matrix.to_py()
+    m = len(matrix)
+    n = len(matrix[0])
+    total = 0
+    for i in range(m):
+        for j in range(n):
+            total += matrix[i][j] * (i + 1) * (m - i) * (j + 1) * (n - j)
+    return total
+`,
+
 };

@@ -34925,4 +34925,27 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(dp[r] as bigint);
   },
 
+  'longest-arithmetic-subarray': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    if (nums.length <= 1) return nums.length;
+    let maxLen = 2, curLen = 2, diff = (nums[1] as number) - (nums[0] as number);
+    for (let i = 2; i < nums.length; i++) {
+      const d = (nums[i] as number) - (nums[i - 1] as number);
+      if (d === diff) { curLen++; }
+      else { curLen = 2; diff = d; }
+      if (curLen > maxLen) maxLen = curLen;
+    }
+    return maxLen;
+  },
+
+  'sum-of-all-submatrix-sums': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const m = matrix.length, n = (matrix[0] as number[]).length;
+    let total = 0;
+    for (let i = 0; i < m; i++)
+      for (let j = 0; j < n; j++)
+        total += (matrix[i] as number[])[j] as number * (i + 1) * (m - i) * (j + 1) * (n - j);
+    return total;
+  },
+
 };
