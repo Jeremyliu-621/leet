@@ -31593,4 +31593,96 @@ def longestIncreasingPath(matrix):
     return max(dfs(r, c) for r in range(m) for c in range(n))
 `,
 
+  // batch 105
+  'merge-two-binary-trees': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def _norm(raw):
+    lst = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+    return [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in lst]
+
+def from_array(arr):
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i]); queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i]); queue.append(node.right)
+        i += 1
+    return root
+
+def to_array(root):
+    if not root:
+        return []
+    result = []; queue = [root]
+    while queue:
+        node = queue.pop(0)
+        if node is None:
+            result.append(None); continue
+        result.append(node.val)
+        queue.append(node.left); queue.append(node.right)
+    while result and result[-1] is None:
+        result.pop()
+    return result
+
+def merge(n1, n2):
+    if not n1: return n2
+    if not n2: return n1
+    n1.val += n2.val
+    n1.left = merge(n1.left, n2.left)
+    n1.right = merge(n1.right, n2.right)
+    return n1
+
+def mergeTreesRunner(arr1, arr2):
+    return to_array(merge(from_array(_norm(arr1)), from_array(_norm(arr2))))
+`,
+  'range-sum-query-immutable': `
+def numArrayOps(ops):
+    ops = ops.to_py() if hasattr(ops, 'to_py') else list(ops)
+    prefix = []
+    results = []
+    for op in ops:
+        name = op[0] if isinstance(op, (list, tuple)) else op.to_py()[0]
+        args = op[1] if isinstance(op, (list, tuple)) else op.to_py()[1]
+        if hasattr(args, 'to_py'):
+            args = args.to_py()
+        if name == 'NumArray':
+            nums = list(args[0])
+            prefix = [0]
+            for x in nums:
+                prefix.append(prefix[-1] + int(x))
+            results.append(None)
+        else:
+            l, r = int(args[0]), int(args[1])
+            results.append(prefix[r + 1] - prefix[l])
+    return results
+`,
+  'min-cost-connect-all-points': `
+def minCostConnectPoints(points):
+    points = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in (points.to_py() if hasattr(points, 'to_py') else points)]
+    n = len(points)
+    dist = [float('inf')] * n
+    visited = [False] * n
+    dist[0] = 0
+    total = 0
+    for _ in range(n):
+        u = min((j for j in range(n) if not visited[j]), key=lambda j: dist[j])
+        visited[u] = True
+        total += dist[u]
+        for v in range(n):
+            if not visited[v]:
+                d = abs(points[u][0] - points[v][0]) + abs(points[u][1] - points[v][1])
+                if d < dist[v]:
+                    dist[v] = d
+    return total
+`,
+
 };

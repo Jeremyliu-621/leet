@@ -2209,6 +2209,10 @@ import { problem as maxPointsOnALine } from './max-points-on-a-line';
 import { problem as searchA2DMatrixII } from './search-a-2d-matrix-ii';
 import { problem as countNumberOfConnectedComponents } from './count-number-of-connected-components';
 import { problem as longestIncreasingPathInAMatrix } from './longest-increasing-path-in-a-matrix';
+// batch 105 — tree/easy, arrays+dp/easy, graph+greedy/medium
+import { problem as mergeTwoBinaryTrees } from './merge-two-binary-trees';
+import { problem as rangeSumQueryImmutable } from './range-sum-query-immutable';
+import { problem as minCostConnectAllPoints } from './min-cost-connect-all-points';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4455,4 +4459,8 @@ export const problems: readonly Problem[] = [
   searchA2DMatrixII,
   countNumberOfConnectedComponents,
   longestIncreasingPathInAMatrix,
+  // batch 105 — tree/easy, arrays+dp/easy, graph+greedy/medium
+  mergeTwoBinaryTrees,
+  rangeSumQueryImmutable,
+  minCostConnectAllPoints,
 ];

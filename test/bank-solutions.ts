@@ -32052,4 +32052,90 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 105
+  'merge-two-binary-trees': (...args: unknown[]) => {
+    const arr1 = args[0] as (number | null)[], arr2 = args[1] as (number | null)[];
+    interface N { val: number; left: N | null; right: N | null }
+    function fromArray(arr: (number | null)[]): N | null {
+      if (!arr.length || arr[0] == null) return null;
+      const root: N = { val: arr[0] as number, left: null, right: null };
+      const queue: N[] = [root];
+      let i = 1;
+      while (queue.length && i < arr.length) {
+        const node = queue.shift()!;
+        if (i < arr.length && arr[i] != null) { node.left = { val: arr[i] as number, left: null, right: null }; queue.push(node.left); }
+        i++;
+        if (i < arr.length && arr[i] != null) { node.right = { val: arr[i] as number, left: null, right: null }; queue.push(node.right); }
+        i++;
+      }
+      return root;
+    }
+    function toArray(root: N | null): (number | null)[] {
+      if (!root) return [];
+      const result: (number | null)[] = [];
+      const queue: (N | null)[] = [root];
+      while (queue.length) {
+        const node = queue.shift()!;
+        if (!node) { result.push(null); continue; }
+        result.push(node.val);
+        queue.push(node.left);
+        queue.push(node.right);
+      }
+      while (result.length && result[result.length - 1] === null) result.pop();
+      return result;
+    }
+    function merge(n1: N | null, n2: N | null): N | null {
+      if (!n1) return n2;
+      if (!n2) return n1;
+      n1.val += n2.val;
+      n1.left = merge(n1.left, n2.left);
+      n1.right = merge(n1.right, n2.right);
+      return n1;
+    }
+    return toArray(merge(fromArray(arr1), fromArray(arr2)));
+  },
+  'range-sum-query-immutable': (...args: unknown[]) => {
+    const ops = args[0] as [string, unknown[]][];
+    let prefix: number[] = [];
+    const results: (number | null)[] = [];
+    for (const op of ops) {
+      if (op[0] === 'NumArray') {
+        const nums = (op[1] as number[][])[0] as number[];
+        prefix = [0];
+        for (let i = 0; i < nums.length; i++) prefix.push((prefix[i] as number) + (nums[i] as number));
+        results.push(null);
+      } else {
+        const rangeArgs = op[1] as number[];
+        const l = rangeArgs[0] as number, r = rangeArgs[1] as number;
+        results.push((prefix[r + 1] as number) - (prefix[l] as number));
+      }
+    }
+    return results;
+  },
+  'min-cost-connect-all-points': (...args: unknown[]) => {
+    const points = args[0] as number[][];
+    const n = points.length;
+    const dist = new Array(n).fill(Infinity) as number[];
+    const visited = new Array(n).fill(false) as boolean[];
+    dist[0] = 0;
+    let total = 0;
+    for (let i = 0; i < n; i++) {
+      let u = -1;
+      for (let j = 0; j < n; j++) {
+        if (!visited[j] && (u === -1 || (dist[j] as number) < (dist[u] as number))) u = j;
+      }
+      visited[u] = true;
+      total += dist[u] as number;
+      const pu = points[u] as number[];
+      for (let v = 0; v < n; v++) {
+        if (!visited[v]) {
+          const pv = points[v] as number[];
+          const cost = Math.abs((pu[0] as number) - (pv[0] as number)) + Math.abs((pu[1] as number) - (pv[1] as number));
+          if (cost < (dist[v] as number)) dist[v] = cost;
+        }
+      }
+    }
+    return total;
+  },
+
 };
