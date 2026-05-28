@@ -34070,7 +34070,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
-  // batch 138 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
+  // batch 139 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
   'sort-people': (...args: unknown[]) => {
     const names = args[0] as string[];
     const heights = args[1] as number[];

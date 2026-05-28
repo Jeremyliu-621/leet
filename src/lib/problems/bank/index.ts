@@ -2389,7 +2389,7 @@ import { problem as minCostConnectTwoGroups } from './minimum-cost-to-connect-tw
 import { problem as maximumOr } from './maximum-or';
 import { problem as permutationDifferenceBetweenTwoStrings } from './permutation-difference-between-two-strings';
 import { problem as calculateTheSumOfDistances } from './calculate-the-sum-of-distances';
-// batch 138 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
+// batch 139 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
 import { problem as sortPeople } from './sort-people';
 import { problem as countWordsGivenPrefix } from './count-words-given-prefix';
 import { problem as findMissingObservations } from './find-missing-observations';
@@ -4819,7 +4819,7 @@ export const problems: readonly Problem[] = [
   maximumOr,
   permutationDifferenceBetweenTwoStrings,
   calculateTheSumOfDistances,
-  // batch 138 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
+  // batch 139 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
   sortPeople,
   countWordsGivenPrefix,
   findMissingObservations,
