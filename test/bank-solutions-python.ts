@@ -33359,4 +33359,44 @@ def restoreMatrix(rowSum, colSum):
     return mat
 `,
 
+  // batch 130 — arrays+math/easy, arrays+sliding-window/medium, arrays+dynamic-programming/hard
+  'count-even-sum-pairs': `
+def countEvenSumPairs(nums):
+    evens = sum(1 for n in nums if n % 2 == 0)
+    odds = len(nums) - evens
+    return evens * (evens - 1) // 2 + odds * (odds - 1) // 2
+`,
+
+  'longest-bounded-subarray': `
+def longestBoundedSubarray(nums, k):
+    left = 0
+    total = 0
+    max_len = 0
+    for right, val in enumerate(nums):
+        total += val
+        while total > k:
+            total -= nums[left]
+            left += 1
+        max_len = max(max_len, right - left + 1)
+    return max_len
+`,
+
+  'max-nonadjacent-circular': `
+def maxNonAdjacentCircular(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    if n == 1:
+        return nums[0]
+    if n == 2:
+        return max(nums)
+
+    def linear_rob(arr):
+        prev2, prev1 = 0, 0
+        for x in arr:
+            prev2, prev1 = prev1, max(prev1, prev2 + x)
+        return prev1
+
+    return max(linear_rob(nums[:-1]), linear_rob(nums[1:]))
+`,
+
 };

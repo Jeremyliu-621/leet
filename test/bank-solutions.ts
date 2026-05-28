@@ -33611,4 +33611,50 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return mat;
   },
 
+  // batch 130 — arrays+math/easy, arrays+sliding-window/medium, arrays+dynamic-programming/hard
+  'count-even-sum-pairs': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let evens = 0, odds = 0;
+    for (const n of nums) {
+      if (n % 2 === 0) evens++;
+      else odds++;
+    }
+    return (evens * (evens - 1)) / 2 + (odds * (odds - 1)) / 2;
+  },
+
+  'longest-bounded-subarray': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let left = 0, sum = 0, maxLen = 0;
+    for (let right = 0; right < nums.length; right++) {
+      sum += nums[right]!;
+      while (sum > k) {
+        sum -= nums[left]!;
+        left++;
+      }
+      maxLen = Math.max(maxLen, right - left + 1);
+    }
+    return maxLen;
+  },
+
+  'max-nonadjacent-circular': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    if (n === 1) return nums[0]!;
+    if (n === 2) return Math.max(nums[0]!, nums[1]!);
+    function linearRob(arr: number[]): number {
+      let prev2 = 0, prev1 = 0;
+      for (const x of arr) {
+        const curr = Math.max(prev1, prev2 + x);
+        prev2 = prev1;
+        prev1 = curr;
+      }
+      return prev1;
+    }
+    return Math.max(
+      linearRob(nums.slice(0, n - 1)),
+      linearRob(nums.slice(1)),
+    );
+  },
+
 };

@@ -2346,6 +2346,10 @@ import { problem as maximumScoreOfANodeSequence } from './maximum-score-of-a-nod
 import { problem as checkIfANumberIsFascinating } from './check-if-a-number-is-fascinating';
 import { problem as numberOfEvenAndOddBits } from './number-of-even-and-odd-bits';
 import { problem as restoreMatrix } from './find-valid-matrix-given-row-and-column-sums';
+// batch 130 — arrays+math/easy, arrays+sliding-window/medium, arrays+dynamic-programming/hard
+import { problem as countEvenSumPairs } from './count-even-sum-pairs';
+import { problem as longestBoundedSubarray } from './longest-bounded-subarray';
+import { problem as maxNonadjacentCircular } from './max-nonadjacent-circular';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4729,4 +4733,8 @@ export const problems: readonly Problem[] = [
   checkIfANumberIsFascinating,
   numberOfEvenAndOddBits,
   restoreMatrix,
+  // batch 130 — arrays+math/easy, arrays+sliding-window/medium, arrays+dynamic-programming/hard
+  countEvenSumPairs,
+  longestBoundedSubarray,
+  maxNonadjacentCircular,
 ];
