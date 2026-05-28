@@ -21,6 +21,12 @@ EditorPanel: inline confirmation banner when user attempts to switch language wi
 ### feat(bank): add batch 133 — good-pairs-i, lex-smallest-swap, max-binary-concat (2026-05-28)
 Three problems: `find-the-number-of-good-pairs-i` (easy/arrays+hash-map), `lexicographically-smallest-string-after-a-swap` (easy/strings), `maximum-possible-number-by-binary-concatenation` (medium/arrays). Bank at **2169**; 6798 tests.
 
+### feat(bank): add batch 133 — check-if-grid-satisfies-conditions, maximum-xor-product, find-the-maximum-sum-of-node-values (2026-05-28)
+Three problems: `check-if-grid-satisfies-conditions` (easy/arrays, iterate cells checking column-uniform and adjacent-column-distinct), `maximum-xor-product` (medium/math, greedy bit-by-bit: same bits→set both to 1; differing bits→give 1 to smaller factor via AM-GM; BigInt for n≤50), `find-the-maximum-sum-of-node-values` (medium/tree+math, even-subset XOR insight: any even-cardinality subset achievable via path composition; sort deltas desc, greedily take positive pairs). Bank at **2168**; 6807 tests.
+
+### feat(bank): add batch 132b — max-binary-concat, lex-smallest-after-swap, good-pairs-i (2026-05-28)
+Three problems: `maximum-possible-number-by-binary-concatenation` (easy/math, try all 6 permutations of 3 elements, pick max binary concat), `lexicographically-smallest-string-after-a-swap` (easy/strings+math, first left-to-right adjacent pair of same parity where b<a), `find-the-number-of-good-pairs-i` (easy/arrays+math, brute-force O(n*m): count pairs where nums1[i]%(nums2[j]*k)==0). Bank at **2171**; 6807 tests (after merging with batch 133).
+
 ### feat(bank): add batch 132 — circular-game-losers, unique-binary-string, balls-in-box (2026-05-28)
 Three problems: `find-the-losers-of-the-circular-game` (easy/simulation, track visited positions set; simulate i*k step passes), `find-unique-binary-string` (medium/strings, Cantor diagonal — flip position i of nums[i] to guarantee uniqueness), `maximum-number-of-balls-in-a-box` (easy/hash-map+math, digit-sum frequency map, max count). Bank at **2165**; 6789 tests.
 
