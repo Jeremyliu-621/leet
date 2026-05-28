@@ -34178,4 +34178,106 @@ def numSubmatrixSumTarget(matrix: list, target: int) -> int:
                 prefix_count[prefix] += 1
     return count`,
 
+  // batch 142
+  'maximum-height-of-a-triangle': `
+def maxHeightOfTriangle(red, blue):
+    def check(a, b):
+        row = 1
+        while True:
+            if row % 2 == 1:
+                if a < row:
+                    return row - 1
+                a -= row
+            else:
+                if b < row:
+                    return row - 1
+                b -= row
+            row += 1
+    return max(check(red, blue), check(blue, red))`,
+
+  'divide-array-into-subarrays-with-minimum-cost-i': `
+def minimumCost(nums, k):
+    if k == 1:
+        return nums[0]
+    rest = sorted(nums[1:])
+    return nums[0] + sum(rest[:k - 1])`,
+
+  'count-substrings-that-satisfy-k-constraint-i': `
+def countKConstraintSubstrings(s, k):
+    count = 0
+    n = len(s)
+    for i in range(n):
+        zeros = ones = 0
+        for j in range(i, n):
+            if s[j] == '0':
+                zeros += 1
+            else:
+                ones += 1
+            if zeros <= k or ones <= k:
+                count += 1
+    return count`,
+
+  'final-array-state-after-k-multiplication-operations-i': `
+def getFinalState(nums, k, multiplier):
+    nums = list(nums)
+    for _ in range(k):
+        min_idx = 0
+        for i in range(1, len(nums)):
+            if nums[i] < nums[min_idx]:
+                min_idx = i
+        nums[min_idx] *= multiplier
+    return nums`,
+
+  'find-the-first-player-to-win-k-games-in-a-row': `
+def findWinningPlayer(skills, k):
+    n = len(skills)
+    king = 0
+    streak = 0
+    for i in range(1, n):
+        if skills[king] > skills[i]:
+            streak += 1
+        else:
+            king = i
+            streak = 1
+        if streak >= k:
+            return king
+    return king`,
+
+  'sum-of-digit-differences-of-all-pairs': `
+def sumDigitDifferences(nums):
+    n = len(nums)
+    digits = [list(int(d) for d in str(x)) for x in nums]
+    num_digits = len(digits[0])
+    total = 0
+    total_pairs = n * (n - 1) // 2
+    for p in range(num_digits):
+        freq = [0] * 10
+        for i in range(n):
+            freq[digits[i][p]] += 1
+        agreeing = sum(f * (f - 1) // 2 for f in freq)
+        total += total_pairs - agreeing
+    return total`,
+
+  'find-the-count-of-monotonic-pairs-i': `
+def countOfPairs(nums):
+    MOD = 10**9 + 7
+    n = len(nums)
+    dp = [1] * (nums[0] + 1)
+    for i in range(1, n):
+        new_dp = [0] * (nums[i] + 1)
+        diff = max(0, nums[i] - nums[i - 1])
+        prefix = [0] * (len(dp) + 1)
+        for j in range(len(dp)):
+            prefix[j + 1] = (prefix[j] + dp[j]) % MOD
+        for v in range(nums[i] + 1):
+            max_prev = v - diff
+            if max_prev < 0:
+                new_dp[v] = 0
+            elif max_prev >= len(dp):
+                new_dp[v] = prefix[len(dp)]
+            else:
+                new_dp[v] = prefix[max_prev + 1]
+        dp = new_dp
+    return sum(dp) % MOD`,
+
 };

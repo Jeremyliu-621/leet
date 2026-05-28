@@ -2419,6 +2419,14 @@ import { problem as validNumber } from './valid-number';
 import { problem as minimumMovesToEqualArrayElementsII } from './minimum-moves-to-equal-array-elements-ii';
 import { problem as superWashingMachines } from './super-washing-machines';
 import { problem as numberOfSubmatricesThatSumToTarget } from './number-of-submatrices-that-sum-to-target';
+// batch 142 — arrays/easy, arrays+sorting/easy, strings+sliding-window/easy, arrays+simulation/easy, arrays+simulation/medium, arrays+math/medium, arrays+dp/hard
+import { problem as maximumHeightOfATriangle } from './maximum-height-of-a-triangle';
+import { problem as divideArrayMinCostI } from './divide-array-into-subarrays-with-minimum-cost-i';
+import { problem as countKConstraintSubstringsI } from './count-substrings-that-satisfy-k-constraint-i';
+import { problem as getFinalStateKMultiplicationI } from './final-array-state-after-k-multiplication-operations-i';
+import { problem as findWinningPlayer } from './find-the-first-player-to-win-k-games-in-a-row';
+import { problem as sumDigitDifferencesAllPairs } from './sum-of-digit-differences-of-all-pairs';
+import { problem as countOfMonotonicPairsI } from './find-the-count-of-monotonic-pairs-i';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4875,4 +4883,12 @@ export const problems: readonly Problem[] = [
   minimumMovesToEqualArrayElementsII,
   superWashingMachines,
   numberOfSubmatricesThatSumToTarget,
+  // batch 142 — arrays/easy, arrays+sorting/easy, strings+sliding-window/easy, arrays+simulation/easy, arrays+simulation/medium, arrays+math/medium, arrays+dp/hard
+  maximumHeightOfATriangle,
+  divideArrayMinCostI,
+  countKConstraintSubstringsI,
+  getFinalStateKMultiplicationI,
+  findWinningPlayer,
+  sumDigitDifferencesAllPairs,
+  countOfMonotonicPairsI,
 ];

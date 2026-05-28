@@ -34404,4 +34404,99 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  // batch 142
+  'maximum-height-of-a-triangle': (...args: unknown[]) => {
+    const red = args[0] as number, blue = args[1] as number;
+    function check(a: number, b: number): number {
+      let row = 1;
+      for (;;) {
+        if (row % 2 === 1) { if (a < row) return row - 1; a -= row; }
+        else { if (b < row) return row - 1; b -= row; }
+        row++;
+      }
+    }
+    return Math.max(check(red, blue), check(blue, red));
+  },
+
+  'divide-array-into-subarrays-with-minimum-cost-i': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    if (k === 1) return nums[0]!;
+    const rest = nums.slice(1).sort((a, b) => a - b);
+    return nums[0]! + rest.slice(0, k - 1).reduce((s, x) => s + x, 0);
+  },
+
+  'count-substrings-that-satisfy-k-constraint-i': (...args: unknown[]) => {
+    const s = args[0] as string, k = args[1] as number;
+    let count = 0;
+    const n = s.length;
+    for (let i = 0; i < n; i++) {
+      let zeros = 0, ones = 0;
+      for (let j = i; j < n; j++) {
+        if (s[j] === '0') zeros++; else ones++;
+        if (zeros <= k || ones <= k) count++;
+      }
+    }
+    return count;
+  },
+
+  'final-array-state-after-k-multiplication-operations-i': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice(), k = args[1] as number, multiplier = args[2] as number;
+    for (let op = 0; op < k; op++) {
+      let minIdx = 0;
+      for (let i = 1; i < nums.length; i++) if (nums[i]! < nums[minIdx]!) minIdx = i;
+      nums[minIdx]! *= multiplier;
+    }
+    return nums;
+  },
+
+  'find-the-first-player-to-win-k-games-in-a-row': (...args: unknown[]) => {
+    const skills = args[0] as number[], k = args[1] as number;
+    const n = skills.length;
+    let king = 0, streak = 0;
+    for (let i = 1; i < n; i++) {
+      if (skills[king]! > skills[i]!) { streak++; }
+      else { king = i; streak = 1; }
+      if (streak >= k) return king;
+    }
+    return king;
+  },
+
+  'sum-of-digit-differences-of-all-pairs': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const digits = nums.map(x => String(x).split('').map(Number));
+    const numDigits = digits[0]!.length;
+    let total = 0;
+    const totalPairs = n * (n - 1) / 2;
+    for (let p = 0; p < numDigits; p++) {
+      const freq = new Array<number>(10).fill(0);
+      for (let i = 0; i < n; i++) freq[digits[i]![p]!]!++;
+      let agreeingPairs = 0;
+      for (let d = 0; d <= 9; d++) agreeingPairs += freq[d]! * (freq[d]! - 1) / 2;
+      total += totalPairs - agreeingPairs;
+    }
+    return total;
+  },
+
+  'find-the-count-of-monotonic-pairs-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const MOD = 1_000_000_007;
+    let dp = new Array<number>(nums[0]! + 1).fill(1);
+    for (let i = 1; i < n; i++) {
+      const newDp = new Array<number>(nums[i]! + 1).fill(0);
+      const diff = Math.max(0, nums[i]! - nums[i - 1]!);
+      const prefix = new Array<number>(dp.length + 1).fill(0);
+      for (let j = 0; j < dp.length; j++) prefix[j + 1] = (prefix[j]! + dp[j]!) % MOD;
+      for (let v = 0; v <= nums[i]!; v++) {
+        const maxPrev = v - diff;
+        if (maxPrev < 0) newDp[v] = 0;
+        else if (maxPrev >= dp.length) newDp[v] = prefix[dp.length]!;
+        else newDp[v] = prefix[maxPrev + 1]!;
+      }
+      dp = newDp;
+    }
+    return dp.reduce((s, x) => (s + x) % MOD, 0);
+  },
+
 };
