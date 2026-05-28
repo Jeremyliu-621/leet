@@ -34702,4 +34702,25 @@ def numberOfWays(startPos, endPos, k):
     return dp[r]
 `,
 
+  // batch 148
+  'max-product-after-cutting-rope': `def cuttingRope(n):
+    if n == 2:
+        return 1
+    if n == 3:
+        return 2
+    product = 1
+    while n > 4:
+        product *= 3
+        n -= 3
+    return product * n
+`,
+
+  'minimum-path-sum-triangle': `def minimumTotal(triangle):
+    dp = triangle[-1][:]
+    for row in range(len(triangle) - 2, -1, -1):
+        for col in range(row + 1):
+            dp[col] = triangle[row][col] + min(dp[col], dp[col + 1])
+    return dp[0]
+`,
+
 };

@@ -34925,4 +34925,25 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(dp[r] as bigint);
   },
 
+  // batch 148
+  'max-product-after-cutting-rope': (...args: unknown[]) => {
+    let n = args[0] as number;
+    if (n === 2) return 1;
+    if (n === 3) return 2;
+    let product = 1;
+    while (n > 4) { product *= 3; n -= 3; }
+    return product * n;
+  },
+
+  'minimum-path-sum-triangle': (...args: unknown[]) => {
+    const triangle = args[0] as number[][];
+    const dp = [...triangle[triangle.length - 1]!];
+    for (let row = triangle.length - 2; row >= 0; row--) {
+      for (let col = 0; col <= row; col++) {
+        dp[col] = triangle[row]![col]! + Math.min(dp[col]!, dp[col + 1]!);
+      }
+    }
+    return dp[0]!;
+  },
+
 };
