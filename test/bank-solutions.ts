@@ -32655,7 +32655,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return swaps;
   },
 
-  // batch 113
+  // batch 114
   'lexicographically-smallest-equivalent-string': (...args: unknown[]) => {
     const s1 = args[0] as string;
     const s2 = args[1] as string;
@@ -32747,6 +32747,28 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const gap1 = BigInt(ones[k]! - ones[k - 1]!);
     const gap2 = BigInt(ones[2 * k]! - ones[2 * k - 1]!);
     return Number((gap1 * gap2) % MOD);
+  },
+
+  'remove-nth-node-from-end-of-list': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const n = args[1] as number;
+    if (!arr || arr.length === 0) return [];
+    type LN = { val: number; next: LN | null };
+    const buildList = (a: (number | null)[]): LN | null => {
+      if (a.length === 0) return null;
+      const head: LN = { val: a[0] as number, next: null };
+      let cur = head;
+      for (let i = 1; i < a.length; i++) { cur.next = { val: a[i] as number, next: null }; cur = cur.next; }
+      return head;
+    };
+    const toArray = (h: LN | null): number[] => { const r: number[] = []; while (h) { r.push(h.val); h = h.next; } return r; };
+    const dummy: LN = { val: 0, next: buildList(arr) };
+    let fast: LN | null = dummy;
+    let slow: LN | null = dummy;
+    for (let i = 0; i < n; i++) fast = fast!.next;
+    while (fast!.next) { fast = fast!.next; slow = slow!.next; }
+    slow!.next = slow!.next!.next;
+    return toArray(dummy.next);
   },
 
 };

@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2081** problems; 6537 tests green. Batches 102–112 + 110a complete. All branches merged. Site stats at 2,075+.
+**Current focus:** Bank at **2083** problems; 6543 tests green. Batches 102–113 complete. All branches merged. Site stats at 2,083+.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Site stats update (2,081+); batch 113 bank growth; UI/UX refinements.
+**Next up:** Batch 114 bank growth; UI/UX refinements; accessibility audit.
+
+### feat(bank): add batch 113 — max-product-two-elements, remove-nth-node-from-end (2026-05-28)
+Registered `maximum-product-of-two-elements-in-an-array` (easy/arrays, find two largest then multiply decremented values). Added `remove-nth-node-from-end-of-list` (medium/linked-list, two-pointer with dummy head — fast leads n steps, co-advance until fast.next=null, then skip). Upgraded `two-sum-iv-bst` to full preamble/runner pattern (functionName: findTargetRunner); fixed Python reference solution to use DFS+set instead of iterating TreeNode directly. Bank at **2083**; 6543 tests.
 
 ### chore: merge branches + batch 110a + a11y fix (2026-05-28)
 Merged detached-work branch (UI overhaul: TerminalPanel, CustomTestPanel, SubmissionsPanel, sucrase TS transpilation, emacs keymap) into main; resolved conflicts keeping detached-work as the more complete implementation. Added batch 110a: `divide-array-into-equal-pairs` (easy/arrays+hash-map, freq map all-even check), `add-to-array-form-of-integer` (easy/arrays+math, right-to-left carry propagation), `minimum-swaps-to-make-strings-balanced` (medium/strings+two-pointers, greedy balance-dip counting). Applied a11y fix: TestResultCard expand/collapse button now has descriptive aria-label. Bank: 2081 problems; 6537 tests.
