@@ -2403,6 +2403,10 @@ import { problem as zeroArrayTransformationII } from './zero-array-transformatio
 import { problem as minimumArrayChangesToMakeSubarraysDistinct } from './minimum-array-changes-to-make-subarrays-distinct';
 import { problem as countAlmostEqualPairsI } from './count-almost-equal-pairs-i';
 import { problem as findMinimumDiameterAfterMergingTwoTrees } from './find-minimum-diameter-after-merging-two-trees';
+// batch 140 — arrays+math/easy, arrays+strings/easy, arrays/easy
+import { problem as decryptXoredArray } from './decrypt-xored-array';
+import { problem as countItemsMatchingARule } from './count-items-matching-a-rule';
+import { problem as kidsWithTheGreatestNumberOfCandies } from './kids-with-the-greatest-number-of-candies';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4843,4 +4847,8 @@ export const problems: readonly Problem[] = [
   minimumArrayChangesToMakeSubarraysDistinct,
   countAlmostEqualPairsI,
   findMinimumDiameterAfterMergingTwoTrees,
+  // batch 140 — arrays+math/easy, arrays+strings/easy, arrays/easy
+  decryptXoredArray,
+  countItemsMatchingARule,
+  kidsWithTheGreatestNumberOfCandies,
 ];

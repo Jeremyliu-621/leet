@@ -34246,4 +34246,24 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Math.max(d1, d2, Math.ceil(d1 / 2) + Math.ceil(d2 / 2) + 1);
   },
 
+  // batch 140
+  'decrypt-xored-array': (...args: unknown[]) => {
+    const encoded = args[0] as number[], first = args[1] as number;
+    const arr = [first];
+    for (let i = 0; i < encoded.length; i++) arr.push(encoded[i]! ^ arr[i]!);
+    return arr;
+  },
+
+  'count-items-matching-a-rule': (...args: unknown[]) => {
+    const items = args[0] as string[][], ruleKey = args[1] as string, ruleValue = args[2] as string;
+    const idx = ruleKey === 'type' ? 0 : ruleKey === 'color' ? 1 : 2;
+    return items.filter(item => item[idx] === ruleValue).length;
+  },
+
+  'kids-with-the-greatest-number-of-candies': (...args: unknown[]) => {
+    const candies = args[0] as number[], extraCandies = args[1] as number;
+    const maxC = Math.max(...candies);
+    return candies.map(c => c + extraCandies >= maxC);
+  },
+
 };
