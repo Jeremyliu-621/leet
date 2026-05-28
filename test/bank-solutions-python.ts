@@ -33479,7 +33479,7 @@ def isSameAfterReversals(num):
     return num == 0 or num % 10 != 0
 `,
 
-  // batch 132
+  // batch 132a
   'find-the-losers-of-the-circular-game': `
 def circularGameLosers(n, k):
     received = set()
@@ -33504,6 +33504,35 @@ def countBalls(lowLimit, highLimit):
     for i in range(lowLimit, highLimit + 1):
         box[sum(int(c) for c in str(i))] += 1
     return max(box.values())
+`,
+
+  // batch 132b
+  'maximum-possible-number-by-binary-concatenation': `
+def maximumBinaryString(nums):
+    from itertools import permutations
+    best = 0
+    for perm in permutations(nums):
+        bits = ''.join(bin(x)[2:] for x in perm)
+        best = max(best, int(bits, 2))
+    return best
+`,
+
+  'lexicographically-smallest-string-after-a-swap': `
+def getSmallestString(s):
+    arr = list(s)
+    for i in range(len(arr) - 1):
+        a, b = int(arr[i]), int(arr[i + 1])
+        if a % 2 == b % 2 and b < a:
+            arr[i], arr[i + 1] = arr[i + 1], arr[i]
+            return ''.join(arr)
+    return s
+`,
+
+  'find-the-number-of-good-pairs-i': `
+def numberOfPairs(nums1, nums2, k):
+    nums1 = list(nums1.to_py() if hasattr(nums1, 'to_py') else nums1)
+    nums2 = list(nums2.to_py() if hasattr(nums2, 'to_py') else nums2)
+    return sum(1 for a in nums1 for b in nums2 if a % (b * k) == 0)
 `,
 
 };

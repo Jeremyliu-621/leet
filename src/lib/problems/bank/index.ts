@@ -2358,10 +2358,14 @@ import { problem as countOfSubstringsII } from './count-of-substrings-containing
 import { problem as countCollisionsOnARoad } from './count-collisions-on-a-road';
 import { problem as formSmallestNumberFromTwoDigitArrays } from './form-smallest-number-from-two-digit-arrays';
 import { problem as aNumberAfterADoubleReversal } from './a-number-after-a-double-reversal';
-// batch 132 — arrays+simulation/easy, arrays+strings/medium, hash-map+math/easy
+// batch 132a — arrays+simulation/easy, arrays+strings/medium, hash-map+math/easy
 import { problem as findTheLosersOfTheCircularGame } from './find-the-losers-of-the-circular-game';
 import { problem as findUniqueBinaryString } from './find-unique-binary-string';
 import { problem as maximumNumberOfBallsInABox } from './maximum-number-of-balls-in-a-box';
+// batch 132b — math/easy, strings+math/easy, arrays+math/easy
+import { problem as maximumBinaryString } from './maximum-possible-number-by-binary-concatenation';
+import { problem as getSmallestString } from './lexicographically-smallest-string-after-a-swap';
+import { problem as numberOfPairsI } from './find-the-number-of-good-pairs-i';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4757,8 +4761,12 @@ export const problems: readonly Problem[] = [
   countCollisionsOnARoad,
   formSmallestNumberFromTwoDigitArrays,
   aNumberAfterADoubleReversal,
-  // batch 132 — arrays+simulation/easy, arrays+strings/medium, hash-map+math/easy
+  // batch 132a — arrays+simulation/easy, arrays+strings/medium, hash-map+math/easy
   findTheLosersOfTheCircularGame,
   findUniqueBinaryString,
   maximumNumberOfBallsInABox,
+  // batch 132b — math/easy, strings+math/easy, arrays+math/easy
+  maximumBinaryString,
+  getSmallestString,
+  numberOfPairsI,
 ];
