@@ -33904,4 +33904,32 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
+  // batch 136 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
+  'sort-people': (...args: unknown[]) => {
+    const names = args[0] as string[];
+    const heights = args[1] as number[];
+    const paired = names.map((name, i) => ({ name, height: heights[i]! }));
+    paired.sort((a, b) => b.height - a.height);
+    return paired.map(p => p.name);
+  },
+
+  'count-words-given-prefix': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const pref = args[1] as string;
+    return words.filter(w => w.startsWith(pref)).length;
+  },
+
+  'find-missing-observations': (...args: unknown[]) => {
+    const rolls = args[0] as number[];
+    const mean = args[1] as number;
+    const n = args[2] as number;
+    const m = rolls.length;
+    const observedSum = rolls.reduce((s, v) => s + v, 0);
+    const missingSum = mean * (n + m) - observedSum;
+    if (missingSum < n || missingSum > 6 * n) return [];
+    const base = Math.floor(missingSum / n);
+    const extra = missingSum % n;
+    return Array.from({ length: n }, (_, i) => base + (i < extra ? 1 : 0));
+  },
+
 };

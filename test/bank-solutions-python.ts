@@ -33646,4 +33646,32 @@ def makeEqual(words):
     return all(v % n == 0 for v in freq.values())
 `,
 
+  // batch 136 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
+  'sort-people': `
+def sortPeople(names, heights):
+    names = list(names.to_py() if hasattr(names, 'to_py') else names)
+    heights = list(heights.to_py() if hasattr(heights, 'to_py') else heights)
+    paired = sorted(zip(heights, names), reverse=True)
+    return [name for _, name in paired]
+`,
+
+  'count-words-given-prefix': `
+def prefixCount(words, pref):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    return sum(1 for w in words if w.startswith(pref))
+`,
+
+  'find-missing-observations': `
+def missingRolls(rolls, mean, n):
+    rolls = list(rolls.to_py() if hasattr(rolls, 'to_py') else rolls)
+    m = len(rolls)
+    observed_sum = sum(rolls)
+    missing_sum = mean * (n + m) - observed_sum
+    if missing_sum < n or missing_sum > 6 * n:
+        return []
+    base = missing_sum // n
+    extra = missing_sum % n
+    return [base + (1 if i < extra else 0) for i in range(n)]
+`,
+
 };

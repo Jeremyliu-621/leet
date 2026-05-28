@@ -2377,6 +2377,18 @@ import { problem as maximumXorProduct } from './maximum-xor-product';
 import { problem as findTheEncryptedString } from './find-the-encrypted-string';
 import { problem as maximumSubarraySumDivisibleByK } from './maximum-subarray-sum-with-length-divisible-by-k';
 import { problem as redistributeCharacters } from './redistribute-characters-to-make-all-strings-equal';
+// batch 133b — strings+hash-map/easy, arrays+hash-map/hard, arrays+binary-search/medium
+import { problem as numberOfSpecialCharsI } from './count-the-number-of-special-characters-i';
+import { problem as numberOfGoodPartitions } from './count-number-of-good-partitions';
+import { problem as maxCountRangeII } from './maximum-number-of-integers-to-choose-from-a-range-ii';
+// batch 134 — arrays+simulation/easy, arrays+math/medium, arrays+dynamic-programming/hard
+import { problem as countStrictlyIncreasingColumns } from './count-strictly-increasing-columns';
+import { problem as findXORSumOfAllPairsBitwiseAND } from './find-xor-sum-of-all-pairs-bitwise-and';
+import { problem as minCostConnectTwoGroups } from './minimum-cost-to-connect-two-groups';
+// batch 137 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
+import { problem as sortPeople } from './sort-people';
+import { problem as countWordsGivenPrefix } from './count-words-given-prefix';
+import { problem as findMissingObservations } from './find-missing-observations';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4791,4 +4803,16 @@ export const problems: readonly Problem[] = [
   findTheEncryptedString,
   maximumSubarraySumDivisibleByK,
   redistributeCharacters,
+  // batch 133b — strings+hash-map/easy, arrays+hash-map/hard, arrays+binary-search/medium
+  numberOfSpecialCharsI,
+  numberOfGoodPartitions,
+  maxCountRangeII,
+  // batch 134 — arrays+simulation/easy, arrays+math/medium, arrays+dynamic-programming/hard
+  countStrictlyIncreasingColumns,
+  findXORSumOfAllPairsBitwiseAND,
+  minCostConnectTwoGroups,
+  // batch 137 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
+  sortPeople,
+  countWordsGivenPrefix,
+  findMissingObservations,
 ];
