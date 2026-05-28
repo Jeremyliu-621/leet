@@ -10,7 +10,10 @@
 **Current phase:** Phase 13 — Post-MVP polish
 **Current focus:** Bank at **2225** problems; 6969 tests green. Batches 102–145 complete. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More UX polish; more bank growth; accessibility audit.
+**Next up:** More bank growth; UX polish; accessibility audit.
+
+### feat(bank): add batch 145 — max-bitwise-or-subsets, partition-k-subsets, min-ops-array-equal-target, consecutive-numbers-sum (2026-05-28)
+Four problems: `count-number-of-max-bitwise-or-subsets` (medium/arrays+backtracking, 2^n bitmask enumeration counting subsets with max OR), `partition-to-k-equal-sum-subsets` (medium/arrays+backtracking+dp, descending sort + k-bucket DFS with duplicate-skip pruning), `minimum-operations-to-make-array-equal-to-target` (hard/arrays, diff[i]=target-nums layer-counting formula — sum positive transitions in extended diff sequence), `consecutive-numbers-sum` (hard/math, k consecutive starting at a formula — loop k while k*(k+1)≤2n, check divisibility). Bank at **2233**; 6930 tests.
 
 ### feat(bank): add batch 142 — max-height-triangle, divide-array-min-cost-i, k-constraint-substr-i, final-array-mult-i, first-player-win-k, digit-diff-pairs, monotonic-pairs-i (2026-05-28)
 Seven problems from 2024-era LeetCode (3150-3270 range): `maximum-height-of-a-triangle` (easy/simulation, try both color orderings row-by-row), `divide-array-into-subarrays-with-minimum-cost-i` (easy/arrays, nums[0]+k-1 smallest from rest), `count-substrings-satisfy-k-constraint-i` (easy/strings, O(n²) brute-force), `final-array-state-k-multiplication-i` (easy/simulation, k ops: find leftmost min × multiplier), `find-the-first-player-to-win-k-games-in-a-row` (medium/simulation, king-of-the-hill O(n) scan), `sum-of-digit-differences-of-all-pairs` (medium/math, per-position frequency → C(n,2)−agree pairs), `find-the-count-of-monotonic-pairs-i` (hard/dp, prefix-sum DP enforcing lower bound per transition). Bank at **2221**; 6957 tests.
