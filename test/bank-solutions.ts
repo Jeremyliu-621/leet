@@ -33444,4 +33444,35 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return min === Infinity ? -1 : min;
   },
 
+  // batch 127
+  'minimum-sum-of-mountain-triplets-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const prefMin = [...nums];
+    const sufMin = [...nums];
+    for (let i = 1; i < n; i++) prefMin[i] = Math.min(prefMin[i - 1]!, prefMin[i]!);
+    for (let i = n - 2; i >= 0; i--) sufMin[i] = Math.min(sufMin[i + 1]!, sufMin[i]!);
+    let min = Infinity;
+    for (let j = 1; j < n - 1; j++)
+      if (prefMin[j - 1]! < nums[j]! && sufMin[j + 1]! < nums[j]!)
+        min = Math.min(min, prefMin[j - 1]! + nums[j]! + sufMin[j + 1]!);
+    return min === Infinity ? -1 : min;
+  },
+
+  'find-the-xor-of-numbers-in-a-range': (...args: unknown[]) => {
+    const l = args[0] as number, r = args[1] as number;
+    let xor = 0;
+    for (let i = l; i <= r; i++) xor ^= i;
+    return xor;
+  },
+
+  'count-pairs-whose-sum-is-less-than-target': (...args: unknown[]) => {
+    const nums = args[0] as number[], target = args[1] as number;
+    let count = 0;
+    for (let i = 0; i < nums.length; i++)
+      for (let j = i + 1; j < nums.length; j++)
+        if (nums[i]! + nums[j]! < target) count++;
+    return count;
+  },
+
 };

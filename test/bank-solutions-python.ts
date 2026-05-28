@@ -33178,4 +33178,42 @@ def minimumSumOfMountainTripletsI(nums):
     return -1 if min_sum == float('inf') else min_sum
 `,
 
+  // batch 127
+  'minimum-sum-of-mountain-triplets-ii': `
+def minimumSumOfMountainTripletsII(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    pref_min = nums[:]
+    suf_min = nums[:]
+    for i in range(1, n):
+        pref_min[i] = min(pref_min[i-1], pref_min[i])
+    for i in range(n-2, -1, -1):
+        suf_min[i] = min(suf_min[i+1], suf_min[i])
+    min_sum = float('inf')
+    for j in range(1, n-1):
+        if pref_min[j-1] < nums[j] and suf_min[j+1] < nums[j]:
+            min_sum = min(min_sum, pref_min[j-1] + nums[j] + suf_min[j+1])
+    return -1 if min_sum == float('inf') else min_sum
+`,
+
+  'find-the-xor-of-numbers-in-a-range': `
+def xorQuery(l, r):
+    xor = 0
+    for i in range(l, r + 1):
+        xor ^= i
+    return xor
+`,
+
+  'count-pairs-whose-sum-is-less-than-target': `
+def countPairs(nums, target):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    count = 0
+    n = len(nums)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if nums[i] + nums[j] < target:
+                count += 1
+    return count
+`,
+
 };

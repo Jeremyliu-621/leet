@@ -2327,6 +2327,10 @@ import { problem as countNumberOfPairsWithAbsoluteDifferenceK } from './count-nu
 import { problem as numberOfStepsToReduceANumberToZero } from './number-of-steps-to-reduce-a-number-to-zero';
 import { problem as convertDateToBinary } from './convert-date-to-binary';
 import { problem as theTwoSneakyNumbersOfDigitville } from './the-two-sneaky-numbers-of-digitville';
+// batch 127 — arrays/medium, math/easy, arrays+two-pointers/easy
+import { problem as minimumSumOfMountainTripletsII } from './minimum-sum-of-mountain-triplets-ii';
+import { problem as findTheXorOfNumbersInARange } from './find-the-xor-of-numbers-in-a-range';
+import { problem as countPairsWhoseSumIsLessThanTarget } from './count-pairs-whose-sum-is-less-than-target';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4691,4 +4695,8 @@ export const problems: readonly Problem[] = [
   numberOfStepsToReduceANumberToZero,
   convertDateToBinary,
   theTwoSneakyNumbersOfDigitville,
+  // batch 127 — arrays/medium, math/easy, arrays+two-pointers/easy
+  minimumSumOfMountainTripletsII,
+  findTheXorOfNumbersInARange,
+  countPairsWhoseSumIsLessThanTarget,
 ];
