@@ -8,12 +8,15 @@
 
 **Last updated:** 2026-05-28
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2183** problems; 6840 tests green. Batches 102–137 complete. TypeScript starters backfilled. UX polish ongoing.
+**Current focus:** Bank at **2186** problems; 6849 tests green. Batches 102–138 complete. TypeScript starters backfilled. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More UX polish; more bank growth; accessibility audit.
 
-### feat(bank): add batch 137 — good-partitions, incr-columns, special-chars-i, xor-sum, max-integers-ii, min-cost-connect (2026-05-28)
-Six problems: `count-number-of-good-partitions` (hard/arrays+hash-map, sweep with last-occurrence map, multiply result by 2 at each valid boundary), `count-strictly-increasing-columns` (medium/arrays, column-by-column strict monotone check), `count-the-number-of-special-characters-i` (easy/strings, count chars appearing as both lower and upper), `find-xor-sum-of-all-pairs-bitwise-and` (medium/math, XOR distributes over AND: answer = XOR(arr1) & XOR(arr2)), `maximum-number-of-integers-to-choose-from-a-range-ii` (medium/arrays+hash-map, binary search over sorted gap ranges), `minimum-cost-to-connect-two-groups` (hard/arrays+dynamic-programming, bitmask DP over group2 coverage + retroactive min-cost patch). Bank at **2183**; 6840 tests.
+### feat(bank): add batch 138 — wire good-partitions, incr-columns, special-chars-i, xor-sum, max-integers-ii, min-cost-connect (2026-05-28)
+Completed integration of 6 problem files that had .ts + Python solutions but were missing from index.ts and lacked JS solutions. All 6 now fully wired with JS reference solutions. Bank at **2186**; 6849 tests.
+
+### feat(bank): add batch 137 — maximum-or, permutation-diff, sum-of-distances (2026-05-28)
+Three problems: `maximum-or` (medium/arrays+math, BigInt prefix/suffix OR, concentrate all k doublings on one element), `permutation-difference-between-two-strings` (easy/strings+hash-map, position map + sum of absolute differences), `calculate-the-sum-of-distances` (medium/arrays, per-group O(n) prefix sum). Bank at **2180**; 6831 tests.
 
 ### feat(bank): add batch 136 — encrypted-string, max-subarray-sum-div-k, redistribute-chars (2026-05-28)
 Three problems: `find-the-encrypted-string` (easy/strings+math, shift each index by k with modulo), `maximum-subarray-sum-with-length-divisible-by-k` (medium/arrays+hash-map, rolling min per mod class over prefix sums), `redistribute-characters-to-make-all-strings-equal` (easy/strings+hash-map, check each char frequency divisible by n). Bank at **2177**; 6822 tests.
