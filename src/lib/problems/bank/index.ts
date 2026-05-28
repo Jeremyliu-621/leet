@@ -2245,6 +2245,10 @@ import { problem as serializeAndDeserializeBinaryTree } from './serialize-and-de
 import { problem as validateBinarySearchTree } from './validate-binary-search-tree';
 import { problem as kthSmallestElementInABST } from './kth-smallest-element-in-a-bst';
 import { problem as lowestCommonAncestorOfABST } from './lowest-common-ancestor-of-a-bst';
+// batch 112 — tree/medium, tree/medium, tree/medium
+import { problem as lowestCommonAncestorOfABinaryTree } from './lowest-common-ancestor-of-a-binary-tree';
+import { problem as binaryTreeZigzagLevelOrderTraversal } from './binary-tree-zigzag-level-order-traversal';
+import { problem as binaryTreeLevelOrderTraversalII } from './binary-tree-level-order-traversal-ii';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4527,4 +4531,8 @@ export const problems: readonly Problem[] = [
   validateBinarySearchTree,
   kthSmallestElementInABST,
   lowestCommonAncestorOfABST,
+  // batch 112 — tree/medium, tree/medium, tree/medium
+  lowestCommonAncestorOfABinaryTree,
+  binaryTreeZigzagLevelOrderTraversal,
+  binaryTreeLevelOrderTraversalII,
 ];

@@ -31684,6 +31684,142 @@ def minCostConnectPoints(points):
                     dist[v] = d
     return total
 `,
+  'lowest-common-ancestor-of-a-binary-tree': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def __from_array__(raw):
+    raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i])
+            queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i])
+            queue.append(node.right)
+        i += 1
+    return root
+
+def lcaRunner(arr, p, q):
+    p, q = int(p), int(q)
+    root = __from_array__(arr)
+    def lca(node):
+        if node is None:
+            return None
+        if node.val == p or node.val == q:
+            return node
+        left = lca(node.left)
+        right = lca(node.right)
+        if left and right:
+            return node
+        return left or right
+    return lca(root).val
+`,
+  'binary-tree-zigzag-level-order-traversal': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def __from_array__(raw):
+    raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i])
+            queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i])
+            queue.append(node.right)
+        i += 1
+    return root
+
+def zigzagLevelOrderRunner(arr):
+    root = __from_array__(arr)
+    if root is None:
+        return []
+    result = []
+    queue = [root]
+    left_to_right = True
+    while queue:
+        level = []
+        next_queue = []
+        for node in queue:
+            level.append(node.val)
+            if node.left:
+                next_queue.append(node.left)
+            if node.right:
+                next_queue.append(node.right)
+        result.append(level if left_to_right else level[::-1])
+        left_to_right = not left_to_right
+        queue = next_queue
+    return result
+`,
+  'binary-tree-level-order-traversal-ii': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def __from_array__(raw):
+    raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
+    if not arr or arr[0] is None:
+        return None
+    root = TreeNode(arr[0])
+    queue = [root]
+    i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i])
+            queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i])
+            queue.append(node.right)
+        i += 1
+    return root
+
+def levelOrderBottomRunner(arr):
+    root = __from_array__(arr)
+    if root is None:
+        return []
+    result = []
+    queue = [root]
+    while queue:
+        level = []
+        next_queue = []
+        for node in queue:
+            level.append(node.val)
+            if node.left:
+                next_queue.append(node.left)
+            if node.right:
+                next_queue.append(node.right)
+        result.insert(0, level)
+        queue = next_queue
+    return result
+`,
   'validate-binary-search-tree': `
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
