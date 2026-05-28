@@ -33148,7 +33148,6 @@ def getSneakyNumbers(nums):
     return sorted(k for k, v in freq.items() if v > 1)
 `,
 
-  // batch 124b
   'maximum-element-after-decreasing-and-rearranging': `
 def maximumElementAfterDecrementingAndRearranging(arr):
     arr = sorted(arr.to_py() if hasattr(arr, 'to_py') else arr)
@@ -33158,6 +33157,7 @@ def maximumElementAfterDecrementingAndRearranging(arr):
     return arr[-1]
 `,
 
+  // batch 124b
   'find-the-distance-value-between-two-arrays': `
 def findTheDistanceValue(arr1, arr2, d):
     arr1 = list(arr1.to_py() if hasattr(arr1, 'to_py') else arr1)
@@ -33213,6 +33213,24 @@ def countPairs(nums, target):
         for j in range(i + 1, n):
             if nums[i] + nums[j] < target:
                 count += 1
+    return count
+`,
+
+  // batch 127b
+  'find-minimum-value-after-replacing-with-digit-sum': `
+def minValueAfterReplacingWithDigitSum(nums):
+    return min(sum(int(d) for d in str(n)) for n in nums)
+`,
+
+  'count-triplets-forming-two-arrays-of-equal-xor': `
+def countTriplets(arr):
+    count = 0
+    for i in range(len(arr)):
+        xor = arr[i]
+        for k in range(i + 1, len(arr)):
+            xor ^= arr[k]
+            if xor == 0:
+                count += k - i
     return count
 `,
 

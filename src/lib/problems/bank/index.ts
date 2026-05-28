@@ -2331,6 +2331,9 @@ import { problem as theTwoSneakyNumbersOfDigitville } from './the-two-sneaky-num
 import { problem as minimumSumOfMountainTripletsII } from './minimum-sum-of-mountain-triplets-ii';
 import { problem as findTheXorOfNumbersInARange } from './find-the-xor-of-numbers-in-a-range';
 import { problem as countPairsWhoseSumIsLessThanTarget } from './count-pairs-whose-sum-is-less-than-target';
+// batch 127b — arrays+math/easy, arrays+math/medium
+import { problem as findMinimumValueAfterReplacingWithDigitSum } from './find-minimum-value-after-replacing-with-digit-sum';
+import { problem as countTriplets } from './count-triplets-forming-two-arrays-of-equal-xor';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4699,4 +4702,7 @@ export const problems: readonly Problem[] = [
   minimumSumOfMountainTripletsII,
   findTheXorOfNumbersInARange,
   countPairsWhoseSumIsLessThanTarget,
+  // batch 127b — arrays+math/easy, arrays+math/medium
+  findMinimumValueAfterReplacingWithDigitSum,
+  countTriplets,
 ];

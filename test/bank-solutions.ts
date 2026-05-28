@@ -33420,7 +33420,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return [...freq.entries()].filter(([, c]) => c > 1).map(([k]) => k).sort((a, b) => a - b);
   },
 
-  // batch 124b
   'maximum-element-after-decreasing-and-rearranging': (...args: unknown[]) => {
     const arr = [...(args[0] as number[])].sort((a, b) => a - b);
     arr[0] = 1;
@@ -33428,6 +33427,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return arr[arr.length - 1]!;
   },
 
+  // batch 124b
   'find-the-distance-value-between-two-arrays': (...args: unknown[]) => {
     const arr1 = args[0] as number[], arr2 = args[1] as number[], d = args[2] as number;
     return arr1.filter(a => arr2.every(b => Math.abs(a - b) > d)).length;
@@ -33472,6 +33472,25 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     for (let i = 0; i < nums.length; i++)
       for (let j = i + 1; j < nums.length; j++)
         if (nums[i]! + nums[j]! < target) count++;
+    return count;
+  },
+
+  // batch 127b
+  'find-minimum-value-after-replacing-with-digit-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return Math.min(...nums.map(n => String(n).split('').reduce((s, d) => s + Number(d), 0)));
+  },
+
+  'count-triplets-forming-two-arrays-of-equal-xor': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    let count = 0;
+    for (let i = 0; i < arr.length; i++) {
+      let xor = arr[i]!;
+      for (let k = i + 1; k < arr.length; k++) {
+        xor ^= arr[k]!;
+        if (xor === 0) count += k - i;
+      }
+    }
     return count;
   },
 
