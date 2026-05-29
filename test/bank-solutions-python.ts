@@ -38290,6 +38290,90 @@ def removeDuplicates(nums):
     return k
 `,
 
+  // batch 170 — Python solutions
+  'k-th-factor-of-n': `
+def kthFactor(n, k):
+    count = 0
+    for i in range(1, n + 1):
+        if n % i == 0:
+            count += 1
+            if count == k:
+                return i
+    return -1
+`,
+  'check-if-there-is-a-valid-parentheses-string-path': `
+def hasValidPath(grid):
+    grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    m, n = len(grid), len(grid[0])
+    if (m + n - 1) % 2 != 0:
+        return False
+    dp = [[set() for _ in range(n)] for _ in range(m)]
+    start = 1 if grid[0][0] == '(' else -1
+    if start >= 0:
+        dp[0][0].add(start)
+    for i in range(m):
+        for j in range(n):
+            if i == 0 and j == 0:
+                continue
+            delta = 1 if grid[i][j] == '(' else -1
+            sources = []
+            if i > 0: sources.append(dp[i-1][j])
+            if j > 0: sources.append(dp[i][j-1])
+            for src in sources:
+                for bal in src:
+                    new_bal = bal + delta
+                    if new_bal >= 0:
+                        dp[i][j].add(new_bal)
+    return 0 in dp[m-1][n-1]
+`,
+  'maximum-trailing-zeros-in-a-cornered-path': `
+def maxTrailingZeros(grid):
+    grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    m, n = len(grid), len(grid[0])
+    def c2(v):
+        c = 0
+        while v % 2 == 0: c += 1; v //= 2
+        return c
+    def c5(v):
+        c = 0
+        while v % 5 == 0: c += 1; v //= 5
+        return c
+    rp2 = [[0]*(n+1) for _ in range(m)]
+    rp5 = [[0]*(n+1) for _ in range(m)]
+    cp2 = [[0]*n for _ in range(m+1)]
+    cp5 = [[0]*n for _ in range(m+1)]
+    for i in range(m):
+        for j in range(n):
+            rp2[i][j+1] = rp2[i][j] + c2(grid[i][j])
+            rp5[i][j+1] = rp5[i][j] + c5(grid[i][j])
+            cp2[i+1][j] = cp2[i][j] + c2(grid[i][j])
+            cp5[i+1][j] = cp5[i][j] + c5(grid[i][j])
+    ans = 0
+    for i in range(m):
+        for j in range(n):
+            v2, v5 = c2(grid[i][j]), c5(grid[i][j])
+            left2, left5 = rp2[i][j+1], rp5[i][j+1]
+            right2, right5 = rp2[i][n] - rp2[i][j], rp5[i][n] - rp5[i][j]
+            up2, up5 = cp2[i+1][j], cp5[i+1][j]
+            down2, down5 = cp2[m][j] - cp2[i][j], cp5[m][j] - cp5[i][j]
+            for h2, h5, vv2, vv5 in [(left2, left5, up2, up5), (left2, left5, down2, down5),
+                                      (right2, right5, up2, up5), (right2, right5, down2, down5)]:
+                ans = max(ans, min(h2 + vv2 - v2, h5 + vv5 - v5))
+    return ans
+`,
+  'maximum-value-of-ordered-triplet-ii': `
+def maximumTripletValue(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    ans = 0
+    max_i = 0
+    max_diff = 0
+    for k in range(len(nums)):
+        ans = max(ans, max_diff * nums[k])
+        max_diff = max(max_diff, max_i - nums[k])
+        max_i = max(max_i, nums[k])
+    return ans
+`,
+
   // batch 169 — Python solutions for new problems
   'maximum-number-of-eaten-apples': `
 import heapq

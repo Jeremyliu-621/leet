@@ -2655,6 +2655,11 @@ import { problem as allPathsFromSourceToTarget } from './all-paths-from-source-t
 import { problem as countUnreachablePairsOfNodesInUndirectedGraph } from './count-unreachable-pairs-of-nodes-in-an-undirected-graph';
 import { problem as partitionArrayIntoDisjointIntervals } from './partition-array-into-disjoint-intervals';
 import { problem as removeDuplicatesFromSortedArrayII } from './remove-duplicates-from-sorted-array-ii';
+// batch 170 — math/medium, dp+strings/hard, arrays+math/medium, arrays/medium
+import { problem as kthFactorOfN } from './k-th-factor-of-n';
+import { problem as checkValidParenthesesStringPath } from './check-if-there-is-a-valid-parentheses-string-path';
+import { problem as maximumTrailingZerosInCorneredPath } from './maximum-trailing-zeros-in-a-cornered-path';
+import { problem as maximumValueOfOrderedTripletII } from './maximum-value-of-ordered-triplet-ii';
 // batch 169 — new problems: heap+greedy/medium, strings/easy, design+hash-map/medium, strings/easy
 import { problem as maximumNumberOfEatenApples } from './maximum-number-of-eaten-apples';
 import { problem as minimumFlipsToMakeAlternatingBinaryString } from './minimum-flips-to-make-alternating-binary-string';
@@ -5458,6 +5463,11 @@ export const problems: readonly Problem[] = [
   countUnreachablePairsOfNodesInUndirectedGraph,
   partitionArrayIntoDisjointIntervals,
   removeDuplicatesFromSortedArrayII,
+  // batch 170 — 4 new problems
+  kthFactorOfN,
+  checkValidParenthesesStringPath,
+  maximumTrailingZerosInCorneredPath,
+  maximumValueOfOrderedTripletII,
   // batch 169 — 4 new problems
   maximumNumberOfEatenApples,
   minimumFlipsToMakeAlternatingBinaryString,

@@ -38340,6 +38340,94 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return k;
   },
 
+  // batch 170 — new problems
+  'k-th-factor-of-n': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const k = args[1] as number;
+    let count = 0;
+    for (let i = 1; i <= n; i++) {
+      if (n % i === 0) {
+        count++;
+        if (count === k) return i;
+      }
+    }
+    return -1;
+  },
+  'check-if-there-is-a-valid-parentheses-string-path': (...args: unknown[]) => {
+    const grid = args[0] as string[][];
+    const m = grid.length, n = grid[0]!.length;
+    if ((m + n - 1) % 2 !== 0) return false;
+    // dp[i][j] = Set of reachable balances at cell (i,j)
+    let dp: Set<number>[][] = Array.from({length: m}, () => Array.from({length: n}, () => new Set<number>()));
+    const init = grid[0]![0] === '(' ? 1 : -1;
+    if (init >= 0) dp[0]![0]!.add(init);
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        if (i === 0 && j === 0) continue;
+        const delta = grid[i]![j]! === '(' ? 1 : -1;
+        const sources: Set<number>[] = [];
+        if (i > 0) sources.push(dp[i-1]![j]!);
+        if (j > 0) sources.push(dp[i]![j-1]!);
+        for (const src of sources) {
+          for (const bal of src) {
+            const newBal = bal + delta;
+            if (newBal >= 0) dp[i]![j]!.add(newBal);
+          }
+        }
+      }
+    }
+    return dp[m-1]![n-1]!.has(0);
+  },
+  'maximum-trailing-zeros-in-a-cornered-path': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    const count2 = (v: number): number => { let c = 0; while (v % 2 === 0) { c++; v >>= 1; } return c; };
+    const count5 = (v: number): number => { let c = 0; while (v % 5 === 0) { c++; v = Math.floor(v / 5); } return c; };
+    // prefix sums per row and column
+    const rp2 = Array.from({length: m}, () => new Array<number>(n + 1).fill(0));
+    const rp5 = Array.from({length: m}, () => new Array<number>(n + 1).fill(0));
+    const cp2 = Array.from({length: m + 1}, () => new Array<number>(n).fill(0));
+    const cp5 = Array.from({length: m + 1}, () => new Array<number>(n).fill(0));
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        rp2[i]![j+1] = rp2[i]![j]! + count2(grid[i]![j]!);
+        rp5[i]![j+1] = rp5[i]![j]! + count5(grid[i]![j]!);
+        cp2[i+1]![j] = cp2[i]![j]! + count2(grid[i]![j]!);
+        cp5[i+1]![j] = cp5[i]![j]! + count5(grid[i]![j]!);
+      }
+    }
+    let ans = 0;
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        const c2 = count2(grid[i]![j]!), c5 = count5(grid[i]![j]!);
+        // 4 combinations: (left+up), (left+down), (right+up), (right+down)
+        // horizontal: left = rp2[i][j+1]-0 to rp2[i][j]; right = rp2[i][n]-rp2[i][j]
+        const left2 = rp2[i]![j+1]!, left5 = rp5[i]![j+1]!;
+        const right2 = rp2[i]![n]! - rp2[i]![j]!, right5 = rp5[i]![n]! - rp5[i]![j]!;
+        const up2 = cp2[i+1]![j]!, up5 = cp5[i+1]![j]!;
+        const down2 = cp2[m]![j]! - cp2[i]![j]!, down5 = cp5[m]![j]! - cp5[i]![j]!;
+        // left+up: subtract cell once (counted in both)
+        for (const combo of [[left2, left5, up2, up5], [left2, left5, down2, down5],
+                                   [right2, right5, up2, up5], [right2, right5, down2, down5]] as [number,number,number,number][]) {
+          const t2 = combo[0]! + combo[2]! - c2, t5 = combo[1]! + combo[3]! - c5;
+          ans = Math.max(ans, Math.min(t2, t5));
+        }
+      }
+    }
+    return ans;
+  },
+  'maximum-value-of-ordered-triplet-ii': (nums: unknown) => {
+    const a = nums as number[];
+    const n = a.length;
+    let ans = 0, maxI = 0, maxDiff = 0;
+    for (let k = 0; k < n; k++) {
+      ans = Math.max(ans, maxDiff * a[k]!);
+      maxDiff = Math.max(maxDiff, maxI - a[k]!);
+      maxI = Math.max(maxI, a[k]!);
+    }
+    return ans;
+  },
+
   // batch 169 — new problems
   'maximum-number-of-eaten-apples': (...args: unknown[]) => {
     const apples = args[0] as number[];
