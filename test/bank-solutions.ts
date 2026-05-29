@@ -40736,6 +40736,8 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const score = (args[0] as number[][]).map(row => [...row]);
     const k = args[1] as number;
     return score.sort((a, b) => b[k]! - a[k]!);
+  },
+
   // batch 177 — linked-list/medium×3, arrays+greedy/medium, design/medium
   'merge-in-between-linked-lists': (...args: unknown[]) => {
     const arr1 = args[0] as number[];
