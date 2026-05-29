@@ -37179,7 +37179,89 @@ def getAllElementsRunner(arr1, arr2):
                 matches = [(cnt, s) for s, cnt in counts.items() if s.startswith(prefix)]
                 matches.sort(key=lambda x: (-x[0], x[1]))
                 result.append([m[1] for m in matches[:3]])
-    return result
+    return result`,
+
+  // batch 158 — arrays+math/medium, strings/hard, dp/hard×2
+  'minimum-cost-homecoming-of-a-robot-in-a-grid': `
+def minCostHomecomingRobot(startPos, homePos, rowCosts, colCosts):
+    startPos = list(startPos.to_py() if hasattr(startPos, 'to_py') else startPos)
+    homePos = list(homePos.to_py() if hasattr(homePos, 'to_py') else homePos)
+    rowCosts = list(rowCosts.to_py() if hasattr(rowCosts, 'to_py') else rowCosts)
+    colCosts = list(colCosts.to_py() if hasattr(colCosts, 'to_py') else colCosts)
+    r1, c1 = startPos
+    r2, c2 = homePos
+    cost = 0
+    if r2 > r1:
+        cost += sum(rowCosts[r1+1:r2+1])
+    else:
+        cost += sum(rowCosts[r2:r1])
+    if c2 > c1:
+        cost += sum(colCosts[c1+1:c2+1])
+    else:
+        cost += sum(colCosts[c2:c1])
+    return cost
+`,
+
+  'sum-of-scores-of-built-strings': `
+def sumScores(s):
+    n = len(s)
+    Z = [0] * n
+    Z[0] = n
+    l, r = 0, 0
+    for i in range(1, n):
+        if i < r:
+            Z[i] = min(r - i, Z[i - l])
+        while i + Z[i] < n and s[Z[i]] == s[i + Z[i]]:
+            Z[i] += 1
+        if i + Z[i] > r:
+            l, r = i, i + Z[i]
+    return sum(Z)
+`,
+
+  'count-of-integers': `
+def countIntegersWithDigitSum(num1, num2, min_sum, max_sum):
+    MOD = 1_000_000_007
+    def count_up_to(s):
+        n = len(s)
+        from functools import lru_cache
+        @lru_cache(maxsize=None)
+        def dp(pos, tight, started, total):
+            if total > max_sum:
+                return 0
+            if pos == n:
+                return 1 if (started and total >= min_sum) else 0
+            limit = int(s[pos]) if tight else 9
+            res = 0
+            for d in range(0, limit + 1):
+                nt = tight and (d == limit)
+                if not started and d == 0:
+                    res = (res + dp(pos + 1, nt, False, 0)) % MOD
+                else:
+                    res = (res + dp(pos + 1, nt, True, total + d)) % MOD
+            return res
+        return dp(0, True, False, 0)
+    c2 = count_up_to(num2)
+    c1 = count_up_to(num1)
+    digit_sum1 = sum(int(c) for c in num1)
+    v1 = 1 if min_sum <= digit_sum1 <= max_sum else 0
+    return ((c2 - c1 + v1) % MOD + MOD) % MOD
+`,
+
+  'number-of-ways-to-earn-points': `
+def waysToReachTarget(target, types):
+    if hasattr(types, 'to_py'):
+        types = [list(t.to_py() if hasattr(t, 'to_py') else t) for t in types.to_py()]
+    MOD = 1_000_000_007
+    dp = [0] * (target + 1)
+    dp[0] = 1
+    for entry in types:
+        count, marks = int(entry[0]), int(entry[1])
+        for j in range(target, -1, -1):
+            for k in range(1, count + 1):
+                if j - k * marks < 0:
+                    break
+                dp[j] = (dp[j] + dp[j - k * marks]) % MOD
+    return dp[target]
 `,
 
 };

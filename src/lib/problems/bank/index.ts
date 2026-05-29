@@ -2610,6 +2610,11 @@ import { problem as wordFilter } from './word-filter';
 import { problem as lexicographicalNumbers } from './lexicographical-numbers';
 import { problem as kThSmallestInLexicographicOrder } from './k-th-smallest-in-lexicographic-order';
 import { problem as designSearchAutocompleteSystem } from './design-search-autocomplete-system';
+// batch 158 — arrays+math/medium, strings/hard, dp/hard×2
+import { problem as minCostHomecomingRobotInGrid } from './minimum-cost-homecoming-of-a-robot-in-a-grid';
+import { problem as sumOfScoresOfBuiltStrings } from './sum-of-scores-of-built-strings';
+import { problem as countOfIntegers } from './count-of-integers';
+import { problem as numberOfWaysToEarnPoints } from './number-of-ways-to-earn-points';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5257,4 +5262,9 @@ export const problems: readonly Problem[] = [
   lexicographicalNumbers,
   kThSmallestInLexicographicOrder,
   designSearchAutocompleteSystem,
+  // batch 158 — arrays+math/medium, strings/hard, dp/hard×2
+  minCostHomecomingRobotInGrid,
+  sumOfScoresOfBuiltStrings,
+  countOfIntegers,
+  numberOfWaysToEarnPoints,
 ];
