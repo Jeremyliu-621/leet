@@ -2590,6 +2590,14 @@ import { problem as allOOneDataStructure } from './all-o-one-data-structure';
 import { problem as maximumEmployeesInvitedToMeeting } from './maximum-employees-invited-to-meeting';
 import { problem as maximizeMinimumPoweredCity } from './maximize-minimum-powered-city';
 import { problem as minimumTimeRemoveCarsIllegalGoods } from './minimum-time-remove-cars-illegal-goods';
+// batch 156 — strings/medium, trie+backtracking/hard, union-find/hard, shortest-path/medium
+import { problem as camelcaseMatching } from './camelcase-matching';
+import { problem as wordSquares } from './word-squares';
+import { problem as minimizeMalwareSpreadII } from './minimize-malware-spread-ii';
+import { problem as pathWithMaxProbability } from './path-with-max-probability';
+// batch 156b — tree/easy×1, tree/medium×1
+import { problem as averageOfLevelsInBinaryTree } from './average-of-levels-in-binary-tree';
+import { problem as allElementsInTwoBinarySearchTrees } from './all-elements-in-two-binary-search-trees';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5217,4 +5225,12 @@ export const problems: readonly Problem[] = [
   maximumEmployeesInvitedToMeeting,
   maximizeMinimumPoweredCity,
   minimumTimeRemoveCarsIllegalGoods,
+  // batch 156 — strings/medium, trie+backtracking/hard, union-find/hard, shortest-path/medium
+  camelcaseMatching,
+  wordSquares,
+  minimizeMalwareSpreadII,
+  pathWithMaxProbability,
+  // batch 156b — tree/easy×1, tree/medium×1
+  averageOfLevelsInBinaryTree,
+  allElementsInTwoBinarySearchTrees,
 ];

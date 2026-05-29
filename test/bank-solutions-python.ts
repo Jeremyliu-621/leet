@@ -18792,53 +18792,13 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
 `,
 
   'trim-a-binary-search-tree': `def trimBST(root, low, high):
-    root = list(root.to_py() if hasattr(root, 'to_py') else root)
-    low = int(low)
-    high = int(high)
-    def build(arr):
-        if not arr or arr[0] is None:
-            return None
-        node = [arr[0], None, None]
-        q = [node]
-        i = 1
-        while q and i < len(arr):
-            n = q.pop(0)
-            if i < len(arr) and arr[i] is not None:
-                n[1] = [arr[i], None, None]
-                q.append(n[1])
-            i += 1
-            if i < len(arr) and arr[i] is not None:
-                n[2] = [arr[i], None, None]
-                q.append(n[2])
-            i += 1
-        return node
-    def trim(node):
-        if node is None:
-            return None
-        if node[0] < low:
-            return trim(node[2])
-        if node[0] > high:
-            return trim(node[1])
-        node[1] = trim(node[1])
-        node[2] = trim(node[2])
-        return node
-    def to_arr(node):
-        if node is None:
-            return []
-        result = []
-        q = [node]
-        while q:
-            n = q.pop(0)
-            if n is None:
-                result.append(None)
-            else:
-                result.append(n[0])
-                q.append(n[1])
-                q.append(n[2])
-        while result and result[-1] is None:
-            result.pop()
-        return result
-    return to_arr(trim(build(root)))
+    low = int(low); high = int(high)
+    if root is None: return None
+    if root.val < low: return trimBST(root.right, low, high)
+    if root.val > high: return trimBST(root.left, low, high)
+    root.left = trimBST(root.left, low, high)
+    root.right = trimBST(root.right, low, high)
+    return root
 `,
 
   'finding-users-active-minutes': `def findingUsersActiveMinutes(logs, k):
@@ -36765,6 +36725,138 @@ def streamOfCharacters(ops, args):
     for i in range(n-1):
         ans = min(ans, left[i] + right[i+1])
     return ans
+`,
+
+  // batch 156 — strings/medium, trie+backtracking/hard, union-find/hard, shortest-path/medium
+  'camelcase-matching': `
+def camelMatch(queries, pattern):
+    if hasattr(queries, 'to_py'):
+        queries = list(queries.to_py())
+    if hasattr(pattern, 'to_py'):
+        pattern = pattern.to_py()
+    result = []
+    for query in queries:
+        pi = 0
+        ok = True
+        for ch in query:
+            if pi < len(pattern) and ch == pattern[pi]:
+                pi += 1
+            elif ch.isupper():
+                ok = False
+                break
+        result.append(ok and pi == len(pattern))
+    return result
+`,
+
+  'word-squares': `
+def wordSquares(words):
+    if hasattr(words, 'to_py'):
+        words = list(words.to_py())
+    if not words:
+        return []
+    n = len(words[0])
+    prefix_map = {}
+    for w in words:
+        for i in range(n + 1):
+            p = w[:i]
+            if p not in prefix_map:
+                prefix_map[p] = []
+            prefix_map[p].append(w)
+    result = []
+    def bt(sq):
+        if len(sq) == n:
+            result.append(list(sq))
+            return
+        i = len(sq)
+        pref = ''.join(w[i] for w in sq)
+        for w in prefix_map.get(pref, []):
+            sq.append(w)
+            bt(sq)
+            sq.pop()
+    bt([])
+    result.sort(key=lambda sq: ','.join(sq))
+    return result
+`,
+
+  'minimize-malware-spread-ii': `
+def minMalwareSpreadII(graph, initial):
+    if hasattr(graph, 'to_py'):
+        graph = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in graph.to_py()]
+    if hasattr(initial, 'to_py'):
+        initial = list(initial.to_py())
+    n = len(graph)
+    inf_set = set(initial)
+    parent = list(range(n))
+    size = [1] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(a, b):
+        a, b = find(a), find(b)
+        if a == b:
+            return
+        if size[a] < size[b]:
+            a, b = b, a
+        parent[b] = a
+        size[a] += size[b]
+    for u in range(n):
+        if u in inf_set:
+            continue
+        for v in range(n):
+            if v not in inf_set and graph[u][v]:
+                union(u, v)
+    comp_inf = {}
+    for inf in initial:
+        for v in range(n):
+            if v not in inf_set and graph[inf][v]:
+                r = find(v)
+                if r not in comp_inf:
+                    comp_inf[r] = set()
+                comp_inf[r].add(inf)
+    saved = {inf: 0 for inf in initial}
+    for r, infs in comp_inf.items():
+        if len(infs) == 1:
+            inf = next(iter(infs))
+            saved[inf] += size[find(r)]
+    best = -1
+    best_saved = -1
+    for inf in sorted(initial):
+        if saved[inf] > best_saved:
+            best = inf
+            best_saved = saved[inf]
+    return best
+`,
+
+  'path-with-max-probability': `
+import heapq as _heapq
+def maxProbability(n, edges, succProb, start_node, end_node):
+    if hasattr(edges, 'to_py'):
+        edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in edges.to_py()]
+    if hasattr(succProb, 'to_py'):
+        succProb = list(succProb.to_py())
+    adj = [[] for _ in range(n)]
+    for i, (a, b) in enumerate(edges):
+        a, b = int(a), int(b)
+        adj[a].append((b, succProb[i]))
+        adj[b].append((a, succProb[i]))
+    prob = [0.0] * n
+    prob[start_node] = 1.0
+    heap = [(-1.0, start_node)]
+    while heap:
+        neg_p, u = _heapq.heappop(heap)
+        p = -neg_p
+        if u == end_node:
+            return p
+        if p < prob[u]:
+            continue
+        for v, w in adj[u]:
+            nw = p * w
+            if nw > prob[v]:
+                prob[v] = nw
+                _heapq.heappush(heap, (-nw, v))
+    return 0.0
 `,
 
 };
