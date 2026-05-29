@@ -2514,6 +2514,22 @@ import { problem as maximumProductOfThreeNumbers } from './maximum-product-of-th
 import { problem as findingThreeDigitEvenNumbers } from './finding-3-digit-even-numbers';
 import { problem as differenceOnesZerosRowAndColumn } from './difference-between-ones-zeros-in-row-and-column';
 import { problem as countWaysRearrangeSticks } from './count-ways-to-rearrange-sticks-with-k-visible';
+// batch 151 — linked-list/medium, linked-list/hard, union-find/medium, union-find/medium, shortest-path/medium, binary-indexed-tree/medium
+import { problem as swapPairsLinkedList } from './swap-pairs-linked-list';
+import { problem as reverseNodesKGroup } from './reverse-nodes-k-group';
+import { problem as minimumSpanningTreeWeight } from './minimum-spanning-tree-weight';
+import { problem as unionFindDynamicConnectivity } from './union-find-dynamic-connectivity';
+import { problem as bellmanFordShortestPaths } from './bellman-ford-shortest-paths';
+import { problem as bitPrefixSumUpdates } from './bit-prefix-sum-updates';
+// batch 153 — arrays/medium, graph/medium, heap+simulation/medium
+import { problem as equalSumArraysMinOps } from './equal-sum-arrays-with-minimum-number-of-operations';
+import { problem as mapOfHighestPeak } from './map-of-highest-peak';
+import { problem as numberOfOrdersInBacklog } from './number-of-orders-in-the-backlog';
+// batch 151 — dp/hard, arrays/medium, strings+dp/medium, dp+bitset/hard
+import { problem as findTheCountOfMonotonicPairsII } from './find-the-count-of-monotonic-pairs-ii';
+import { problem as maximumStrengthOfAGroup } from './maximum-strength-of-a-group';
+import { problem as minimumNumberOfValidStringsToFormTargetI } from './minimum-number-of-valid-strings-to-form-target-i';
+import { problem as maximumTotalRewardUsingOperationsII } from './maximum-total-reward-using-operations-ii';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5065,4 +5081,20 @@ export const problems: readonly Problem[] = [
   findingThreeDigitEvenNumbers,
   differenceOnesZerosRowAndColumn,
   countWaysRearrangeSticks,
+  // batch 151 — linked-list/medium, linked-list/hard, union-find/medium, union-find/medium, shortest-path/medium, binary-indexed-tree/medium
+  swapPairsLinkedList,
+  reverseNodesKGroup,
+  minimumSpanningTreeWeight,
+  unionFindDynamicConnectivity,
+  bellmanFordShortestPaths,
+  bitPrefixSumUpdates,
+  // batch 153 — arrays/medium, graph/medium, heap+simulation/medium
+  equalSumArraysMinOps,
+  mapOfHighestPeak,
+  numberOfOrdersInBacklog,
+  // batch 151 — dp/hard, arrays/medium, strings+dp/medium, dp+bitset/hard
+  findTheCountOfMonotonicPairsII,
+  maximumStrengthOfAGroup,
+  minimumNumberOfValidStringsToFormTargetI,
+  maximumTotalRewardUsingOperationsII,
 ];

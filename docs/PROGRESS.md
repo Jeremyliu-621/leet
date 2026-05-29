@@ -8,9 +8,24 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2280** problems; 7134 tests green. Batches 102–152 complete. UX polish ongoing.
+**Current focus:** Bank at **2290** problems; 7173 tests green. Batches 102–152 + batch 151b complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 153+); UX polish; accessibility audit.
+
+### fix(a11y): proper role/focus-trap/restoration in PasswordModal + VerifyModal (2026-05-29)
+Moved `role="dialog"`, `aria-modal="true"`, `aria-labelledby` from the backdrop div to the inner panel div in both modals — screen readers now announce them correctly as dialogs. Added `tabIndex={-1}` + `ref={dialogRef}` to inner panel. Extended the `onKeyDown` useEffect to trap Tab/Shift-Tab within focusable elements inside the dialog. Added `returnFocusRef` + cleanup to restore focus to the triggering element when the modal unmounts.
+
+### feat(bank): add batch 151b — monotonic-pairs-ii, max-strength-group, valid-strings-target-i, reward-ops-ii (2026-05-29)
+Four new problems: `find-the-count-of-monotonic-pairs-ii` (hard/dp+arrays, n≤2000 nums≤1000, O(n×max_val) prefix-sum DP), `maximum-strength-of-a-group` (medium/arrays+math, max product of non-empty subset via greedy negative-pairing), `minimum-number-of-valid-strings-to-form-target-i` (medium/strings+dp, prefix-Set + O(n²) DP), `maximum-total-reward-using-operations-ii` (hard/dp+bitset, n≤50000, BigInt bitset DP). Bank at **2290**; 7173 tests.
+
+### chore: update site count to 2,286+; sync test count to 7152 (2026-05-29)
+Marketing site updated from 2,274+ → 2,286+ in all three locations. Test count is 7152 (15 more than the PROGRESS entry recorded).
+
+### fix(a11y): aria-label + aria-expanded on ValueDisplay expand button (2026-05-29)
+`ValueDisplay` truncation toggle in `TerminalPanel.tsx` now has `aria-label` ("Show X more characters" / "Show less of this value") and `aria-expanded` so screen readers can describe the button action and state correctly. Previously the button text "+X chars" / "less" gave no context.
+
+### feat(bank): add batch 151 — 6 new problems (linked-list×2, union-find×2, shortest-path, BIT) (2026-05-29)
+New problems targeting underrepresented tags: `swap-pairs-linked-list` (medium/linked-list, swap every two adjacent nodes iteratively), `reverse-nodes-k-group` (hard/linked-list, reverse in k-groups leaving remainder), `minimum-spanning-tree-weight` (medium/union-find+graph, Kruskal's MST weight via DSU), `union-find-dynamic-connectivity` (medium/union-find+graph, process union/connected queries with path-compressed DSU), `bellman-ford-shortest-paths` (medium/shortest-path+graph, Bellman-Ford supports negative weights), `bit-prefix-sum-updates` (medium/binary-indexed-tree, Fenwick tree point updates and range queries). Bank at **2286**; 7137 tests.
 
 ### feat(bank): add batch 152 — 5 new string problems + fix missing solution (2026-05-29)
 New problems: `number-of-segments-in-a-string` (easy/strings, count non-space segments), `repeated-dna-sequences` (medium/strings+hash-map+sliding-window, 10-char sliding window dedup), `count-the-number-of-vowel-strings-in-range` (easy/strings, check first/last char in range), `remove-all-occurrences-of-a-substring` (medium/strings, repeated leftmost removal), `find-words-that-can-be-formed-by-characters` (easy/strings+hash-map, freq comparison). Fixed missing solution for `count-ways-to-rearrange-sticks-with-k-visible` added by remote. Bank at **2280**; 7134 tests.
