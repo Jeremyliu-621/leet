@@ -34576,10 +34576,115 @@ def consecutiveNumbersSum(n):
     return count
 `,
 
+  // batch 147
+  'apply-bitwise-operations-to-make-strings-equal': `
+def makeStringsEqual(s, target):
+    return ('1' in s) == ('1' in target)
+`,
+
+  'find-the-minimum-area-to-cover-all-ones-i': `
+def minimumArea(grid):
+    grid = list(grid.to_py() if hasattr(grid, 'to_py') else grid)
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in grid]
+    min_r = min_c = float('inf')
+    max_r = max_c = float('-inf')
+    for r in range(len(grid)):
+        for c in range(len(grid[r])):
+            if grid[r][c] == 1:
+                min_r = min(min_r, r)
+                max_r = max(max_r, r)
+                min_c = min(min_c, c)
+                max_c = max(max_c, c)
+    return (max_r - min_r + 1) * (max_c - min_c + 1)
+`,
+
+  'maximum-total-cost-of-alternating-subarrays': `
+def maximumTotalCost(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    pos = nums[0]
+    neg = float('-inf')
+    for i in range(1, len(nums)):
+        new_pos = max(pos, neg) + nums[i]
+        new_neg = pos - nums[i]
+        pos, neg = new_pos, new_neg
+    return max(pos, neg)
+`,
+
+  // batch 146
+  'find-product-pivot': `
+def findProductPivot(nums):
+    if hasattr(nums, 'to_py'):
+        nums = nums.to_py()
+    n = len(nums)
+    prefix = [1] * n
+    suffix = [1] * n
+    for i in range(1, n):
+        prefix[i] = prefix[i-1] * nums[i-1]
+    for i in range(n-2, -1, -1):
+        suffix[i] = suffix[i+1] * nums[i+1]
+    for i in range(n):
+        if prefix[i] == suffix[i]:
+            return i
+    return -1
+`,
+
+  'count-subarrays-equal-balance': `
+def countBalancedSubarrays(nums):
+    if hasattr(nums, 'to_py'):
+        nums = nums.to_py()
+    count_map = {0: 1}
+    prefix = 0
+    count = 0
+    for v in nums:
+        if v > 0:
+            prefix += 1
+        elif v < 0:
+            prefix -= 1
+        count += count_map.get(prefix, 0)
+        count_map[prefix] = count_map.get(prefix, 0) + 1
+    return count
+`,
+
+  'longest-arithmetic-subarray': `
+def longestArithmeticSubarray(nums):
+    if hasattr(nums, 'to_py'):
+        nums = nums.to_py()
+    if len(nums) <= 1:
+        return len(nums)
+    max_len = 2
+    cur_len = 2
+    diff = nums[1] - nums[0]
+    for i in range(2, len(nums)):
+        d = nums[i] - nums[i-1]
+        if d == diff:
+            cur_len += 1
+        else:
+            diff = d
+            cur_len = 2
+        if cur_len > max_len:
+            max_len = cur_len
+    return max_len
+`,
+
+  'sum-of-all-submatrix-sums': `
+def sumSubmatrixSums(matrix):
+    if hasattr(matrix, 'to_py'):
+        matrix = matrix.to_py()
+    matrix = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in matrix]
+    m = len(matrix)
+    n = len(matrix[0])
+    total = 0
+    for i in range(m):
+        for j in range(n):
+            total += matrix[i][j] * (i + 1) * (m - i) * (j + 1) * (n - j)
+    return total
+`,
+
   'k-divisible-elements-subarrays': `
 def countDistinct(nums, k, p):
     if hasattr(nums, 'to_py'):
         nums = nums.to_py()
+
     n = len(nums)
     seen = set()
     for i in range(n):
@@ -34702,75 +34807,6 @@ def numberOfWays(startPos, endPos, k):
     return dp[r]
 `,
 
-  'find-product-pivot': `
-def findProductPivot(nums):
-    if hasattr(nums, 'to_py'):
-        nums = nums.to_py()
-    n = len(nums)
-    prefix = [1] * n
-    suffix = [1] * n
-    for i in range(1, n):
-        prefix[i] = prefix[i - 1] * nums[i - 1]
-    for i in range(n - 2, -1, -1):
-        suffix[i] = suffix[i + 1] * nums[i + 1]
-    for i in range(n):
-        if prefix[i] == suffix[i]:
-            return i
-    return -1
-`,
-
-  'count-subarrays-equal-balance': `
-def countBalancedSubarrays(nums):
-    if hasattr(nums, 'to_py'):
-        nums = nums.to_py()
-    from collections import defaultdict
-    freq = defaultdict(int)
-    freq[0] = 1
-    prefix = 0
-    count = 0
-    for v in nums:
-        if v > 0:
-            prefix += 1
-        elif v < 0:
-            prefix -= 1
-        count += freq[prefix]
-        freq[prefix] += 1
-    return count
-`,
-
-  'longest-arithmetic-subarray': `
-def longestArithmeticSubarray(nums):
-    if hasattr(nums, 'to_py'):
-        nums = nums.to_py()
-    if len(nums) <= 1:
-        return len(nums)
-    max_len = 2
-    cur_len = 2
-    diff = nums[1] - nums[0]
-    for i in range(2, len(nums)):
-        d = nums[i] - nums[i - 1]
-        if d == diff:
-            cur_len += 1
-        else:
-            cur_len = 2
-            diff = d
-        if cur_len > max_len:
-            max_len = cur_len
-    return max_len
-`,
-
-  'sum-of-all-submatrix-sums': `
-def sumSubmatrixSums(matrix):
-    if hasattr(matrix, 'to_py'):
-        matrix = matrix.to_py()
-    m = len(matrix)
-    n = len(matrix[0])
-    total = 0
-    for i in range(m):
-        for j in range(n):
-            total += matrix[i][j] * (i + 1) * (m - i) * (j + 1) * (n - j)
-    return total
-`,
 
   'calculate-amount-paid-in-taxes': `
 def calculateTax(brackets, income):
@@ -34809,6 +34845,130 @@ def minimumTotal(triangle):
         for col in range(row + 1):
             dp[col] = triangle[row][col] + min(dp[col], dp[col + 1])
     return dp[0]
+`,
+
+
+  // batch 149 — orphaned problems from batches 142b/144
+  'beautiful-towers-ii': `def maximumSumOfHeights(maxHeights):
+    n = len(maxHeights)
+    prefix = [0] * n
+    suffix = [0] * n
+    stk = []
+    for i in range(n):
+        while stk and maxHeights[stk[-1]] >= maxHeights[i]:
+            stk.pop()
+        j = stk[-1] if stk else -1
+        prefix[i] = (prefix[j] if j >= 0 else 0) + maxHeights[i] * (i - j)
+        stk.append(i)
+    stk = []
+    for i in range(n - 1, -1, -1):
+        while stk and maxHeights[stk[-1]] >= maxHeights[i]:
+            stk.pop()
+        j = stk[-1] if stk else n
+        suffix[i] = (suffix[j] if j < n else 0) + maxHeights[i] * (j - i)
+        stk.append(i)
+    return max(prefix[i] + suffix[i] - maxHeights[i] for i in range(n))
+`,
+
+  'maximum-balanced-subsequence-sum': `def maximumBalancedSubsequenceSum(nums):
+    n = len(nums)
+    dp = nums[:]
+    for i in range(1, n):
+        for j in range(i):
+            if nums[j] - j <= nums[i] - i and dp[j] + nums[i] > dp[i]:
+                dp[i] = dp[j] + nums[i]
+    return max(dp)
+`,
+
+  'minimum-number-of-flips-to-make-binary-grid-palindromic-ii': `def minFlips(grid):
+    m, n = len(grid), len(grid[0])
+    flips = 0
+    for i in range(m // 2):
+        for j in range(n // 2):
+            ones = grid[i][j] + grid[i][n-1-j] + grid[m-1-i][j] + grid[m-1-i][n-1-j]
+            if ones == 2:
+                flips += 2
+            else:
+                flips += min(ones, 4 - ones)
+    if n % 2 == 1:
+        mc = n // 2
+        mid_ones = 0
+        for i in range(m // 2):
+            a, b = grid[i][mc], grid[m-1-i][mc]
+            if a != b:
+                flips += 1
+                mid_ones += 1
+            else:
+                mid_ones += 2 * a
+        if m % 2 == 1 and mid_ones % 2 == 1:
+            flips += 1
+    if m % 2 == 1:
+        mr = m // 2
+        mid_ones = 0
+        for j in range(n // 2):
+            a, b = grid[mr][j], grid[mr][n-1-j]
+            if a != b:
+                flips += 1
+                mid_ones += 1
+            else:
+                mid_ones += 2 * a
+        if n % 2 == 1 and mid_ones % 2 == 1:
+            flips += 1
+    return flips
+`,
+
+  'find-kth-largest-xor-coordinate-value': `def kthLargestValue(matrix, k):
+    m, n = len(matrix), len(matrix[0])
+    pre = [[0] * n for _ in range(m)]
+    for i in range(m):
+        for j in range(n):
+            pre[i][j] = (matrix[i][j]
+                ^ (pre[i-1][j] if i > 0 else 0)
+                ^ (pre[i][j-1] if j > 0 else 0)
+                ^ (pre[i-1][j-1] if i > 0 and j > 0 else 0))
+    vals = sorted([pre[i][j] for i in range(m) for j in range(n)], reverse=True)
+    return vals[k - 1]
+`,
+
+  'minimum-swaps-to-make-balanced': `def minSwaps(s):
+    imbalance = 0
+    swaps = 0
+    for ch in s:
+        if ch == '[':
+            imbalance += 1
+        else:
+            if imbalance > 0:
+                imbalance -= 1
+            else:
+                swaps += 1
+                imbalance += 1
+    return swaps
+`,
+
+  'tweet-counts-per-frequency': `def tweetCountsRunner(ops, vals):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    vals = list(vals.to_py() if hasattr(vals, 'to_py') else vals)
+    vals = [list(v.to_py() if hasattr(v, 'to_py') else v) for v in vals]
+    freq2delta = {'minute': 60, 'hour': 3600, 'day': 86400}
+    tweets = {}
+    results = []
+    for op, v in zip(ops, vals):
+        if op == 'recordTweet':
+            name, time = v[0], v[1]
+            if name not in tweets:
+                tweets[name] = []
+            tweets[name].append(time)
+            results.append(None)
+        else:
+            freq, name, start, end = v[0], v[1], v[2], v[3]
+            delta = freq2delta[freq]
+            chunks = (end - start) // delta + 1
+            res = [0] * chunks
+            for t in tweets.get(name, []):
+                if start <= t <= end:
+                    res[(t - start) // delta] += 1
+            results.append(res)
+    return results
 `,
 
 };
