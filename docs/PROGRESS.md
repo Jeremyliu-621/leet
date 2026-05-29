@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2579** problems; 8031 tests green. Batches 102–178 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2582** problems; 8040 tests green. Batches 102–180 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 179+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 181+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 180 — binary-search (easy), wiggle-sequence (medium), valid-word-square (easy) (2026-05-29)
+Three new problems: `binary-search` (easy/binary-search, canonical LC#704 template — lo/hi pointers with `>>1` midpoint), `wiggle-subsequence` (medium/arrays+dp, greedy up/down counters — if nums[i]>nums[i-1] then up=down+1, if <  then down=up+1, O(n)), `valid-word-square` (easy/arrays, check words[i][j]===words[j][i] for all valid pairs — fixed incorrect ball/area/lead/lady example which IS a valid word square). Bank at **2582**; 8040 tests.
 
 ### feat(bank): batch 178 (local) — range-sum-2d-immutable (medium), min-job-difficulty (hard), sum-root-to-leaf-binary (easy), linked-list-in-binary-tree (medium) + batch 172 solutions (2026-05-29)
 Four new batch 178 problems: `range-sum-query-2d-immutable` (medium/design, 2D prefix sum for O(1) range sum queries), `minimum-difficulty-of-a-job-schedule` (hard/dp, DP scheduling jobs across d days — dp[day][j] = min cost for first j jobs in day days), `sum-of-root-to-leaf-binary-numbers` (easy/tree, DFS accumulating binary path values), `linked-list-in-binary-tree` (medium/linked-list+tree, DFS subpath matching at each tree node). Also added batch 172 solutions (count-k-reducible, min-area-cover-ones-ii, min-operations-to-make-subsequence, replace-non-coprime, max-books-you-can-take) to fix broken solution files. Bank at **2579**; 8031 tests.
