@@ -2610,6 +2610,11 @@ import { problem as checkKnightTourConfiguration } from './check-knight-tour-con
 import { problem as theNumberOfTheSmallestUnoccupiedChair } from './the-number-of-the-smallest-unoccupied-chair';
 import { problem as intervalsBetweenIdenticalElements } from './intervals-between-identical-elements';
 import { problem as formArrayByConcatenatingSubarraysOfAnotherArray } from './form-array-by-concatenating-subarrays-of-another-array';
+// batch 161 — math/medium, arrays+dp/medium, math+bs/medium, tree/medium
+import { problem as strictlyPalindromicNumber } from './strictly-palindromic-number';
+import { problem as sortingThreeGroups } from './sorting-three-groups';
+import { problem as uglyNumberIii } from './ugly-number-iii';
+import { problem as binaryTreeColoringGame } from './binary-tree-coloring-game';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5257,4 +5262,9 @@ export const problems: readonly Problem[] = [
   theNumberOfTheSmallestUnoccupiedChair,
   intervalsBetweenIdenticalElements,
   formArrayByConcatenatingSubarraysOfAnotherArray,
+  // batch 161 — math/medium, arrays+dp/medium, math+bs/medium, tree/medium
+  strictlyPalindromicNumber,
+  sortingThreeGroups,
+  uglyNumberIii,
+  binaryTreeColoringGame,
 ];

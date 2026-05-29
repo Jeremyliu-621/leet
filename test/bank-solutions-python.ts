@@ -37164,5 +37164,62 @@ def canChoose(groups, nums):
     return True
 `,
 
+  'strictly-palindromic-number': `
+def isStrictlyPalindromic(n):
+    return False
+`,
+
+  'sorting-three-groups': `
+def minimumOperations(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    dp = [0, 0, 0]
+    for x in nums:
+        if x == 1: dp[0] += 1
+        elif x == 2: dp[1] = max(dp[0], dp[1]) + 1
+        else: dp[2] = max(dp[0], dp[1], dp[2]) + 1
+    return len(nums) - max(dp)
+`,
+
+  'ugly-number-iii': `
+def nthUglyNumber(n, a, b, c):
+    from math import gcd
+    def lcm(x, y): return x * y // gcd(x, y)
+    ab, ac, bc = lcm(a, b), lcm(a, c), lcm(b, c)
+    abc = lcm(a, bc)
+    def count(x): return x//a + x//b + x//c - x//ab - x//ac - x//bc + x//abc
+    lo, hi = 1, 2_000_000_000
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if count(mid) < n: lo = mid + 1
+        else: hi = mid
+    return lo
+`,
+
+  'binary-tree-coloring-game': `
+def btreeGameWinningMove(root, n, x):
+    if hasattr(root, 'to_py'): root = list(root.to_py())
+    arr = root
+    def build(i):
+        if i >= len(arr) or arr[i] is None: return None
+        class N: pass
+        node = N()
+        node.val = int(arr[i]) if isinstance(arr[i], (int, float)) else None
+        node.left = build(2*i+1)
+        node.right = build(2*i+2)
+        return node
+    tree = build(0)
+    left_size = [0]; right_size = [0]
+    def count(node):
+        if not node: return 0
+        l, r = count(node.left), count(node.right)
+        if node.val == x:
+            left_size[0] = l; right_size[0] = r
+        return l + r + 1
+    count(tree)
+    parent_size = n - left_size[0] - right_size[0] - 1
+    half = n / 2
+    return left_size[0] > half or right_size[0] > half or parent_size > half
+`,
+
 
 };

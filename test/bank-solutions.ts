@@ -37293,4 +37293,58 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
+  'strictly-palindromic-number': (_n: unknown): unknown => {
+    return false;
+  },
+
+  'sorting-three-groups': (nums: unknown): unknown => {
+    const a = nums as number[];
+    let d1 = 0, d2 = 0, d3 = 0;
+    for (const x of a) {
+      if (x === 1) d1++;
+      else if (x === 2) d2 = Math.max(d1, d2) + 1;
+      else d3 = Math.max(d1, d2, d3) + 1;
+    }
+    return a.length - Math.max(d1, d2, d3);
+  },
+
+  'ugly-number-iii': (n: unknown, a: unknown, b: unknown, c: unknown): unknown => {
+    const gcd = (x: bigint, y: bigint): bigint => y === 0n ? x : gcd(y, x % y);
+    const lcm = (x: bigint, y: bigint): bigint => x / gcd(x, y) * y;
+    const A = BigInt(a as number), B = BigInt(b as number), C = BigInt(c as number);
+    const ab = lcm(A, B), ac = lcm(A, C), bc = lcm(B, C), abc = lcm(A, bc);
+    const count = (x: bigint) =>
+      x / A + x / B + x / C - x / ab - x / ac - x / bc + x / abc;
+    const target = BigInt(n as number);
+    let lo = 1n, hi = 2_000_000_000n;
+    while (lo < hi) {
+      const mid = (lo + hi) / 2n;
+      if (count(mid) < target) lo = mid + 1n;
+      else hi = mid;
+    }
+    return Number(lo);
+  },
+
+  'binary-tree-coloring-game': (root: unknown, n: unknown, x: unknown): unknown => {
+    type TN = { val: number; left: TN | null; right: TN | null };
+    const arr = root as (number | null)[];
+    if (!arr || arr.length === 0 || arr[0] == null) return false;
+    const build = (i: number): TN | null => {
+      if (i >= arr.length || arr[i] == null) return null;
+      return { val: arr[i] as number, left: build(2 * i + 1), right: build(2 * i + 2) };
+    };
+    const root2 = build(0);
+    let leftSize = 0, rightSize = 0;
+    const find = (node: TN | null): number => {
+      if (!node) return 0;
+      const l = find(node.left), r = find(node.right);
+      if (node.val === (x as number)) { leftSize = l; rightSize = r; }
+      return l + r + 1;
+    };
+    find(root2);
+    const parentSize = (n as number) - leftSize - rightSize - 1;
+    const half = (n as number) / 2;
+    return leftSize > half || rightSize > half || parentSize > half;
+  },
+
 };
