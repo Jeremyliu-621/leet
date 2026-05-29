@@ -34806,5 +34806,4 @@ def numberOfWays(startPos, endPos, k):
             dp[j] = (dp[j] + dp[j - 1]) % MOD
     return dp[r]
 `,
-
 };

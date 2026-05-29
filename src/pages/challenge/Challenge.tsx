@@ -610,6 +610,10 @@ export function Challenge() {
   // -------------------------------------------------------------------------
 
   const handleFail = useCallback(async (reason: ChallengeFailureReason, prefs: UserPreferences) => {
+    // In practice / standalone mode there is no blocked site — a timeout or
+    // give-up should not close the tab, redirect, or damage the streak.
+    if (!targetUrl.current) return;
+
     // The SW is about to close or redirect this tab — suppress the
     // beforeunload prompt that would otherwise interrupt that navigation.
     isResolvingRef.current = true;
