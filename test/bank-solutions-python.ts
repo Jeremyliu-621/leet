@@ -41437,4 +41437,188 @@ def maxBottlesDrunk(numBottles, numExchange):
         ans = min(ans, high - low)
     return ans
 `,
+
+  'binary-search': `def search(nums, target):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = [int(x) for x in nums]
+    target = int(target)
+    lo, hi = 0, len(nums) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if nums[mid] == target: return mid
+        if nums[mid] < target: lo = mid + 1
+        else: hi = mid - 1
+    return -1
+`,
+
+  'count-beautiful-splits-in-an-array': `def beautifulSplits(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = [int(x) for x in nums]
+    n = len(nums)
+    lcp = [[0] * (n + 1) for _ in range(n + 1)]
+    for i in range(n - 1, -1, -1):
+        for j in range(n - 1, -1, -1):
+            lcp[i][j] = lcp[i+1][j+1] + 1 if nums[i] == nums[j] else 0
+    count = 0
+    for i in range(1, n - 1):
+        for j in range(i + 1, n):
+            len1, len2, len3 = i, j - i, n - j
+            if (len1 <= len2 and lcp[0][i] >= len1) or (len2 <= len3 and lcp[i][j] >= len2):
+                count += 1
+    return count
+`,
+
+  'find-number-of-ways-to-reach-the-k-th-stair': `def waysToReachStair(k):
+    k = int(k)
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dp(i, jump, used_down):
+        if i > k + 1: return 0
+        ways = 1 if i == k else 0
+        ways += dp(i + (1 << jump), jump + 1, False)
+        if i > 0 and not used_down:
+            ways += dp(i - 1, jump, True)
+        return ways
+    return dp(1, 0, False)
+`,
+
+  'linked-list-in-binary-tree': `def isSubPathRunner(listArr, treeArr):
+    if hasattr(listArr, 'to_py'): listArr = list(listArr.to_py())
+    if hasattr(treeArr, 'to_py'): treeArr = list(treeArr.to_py())
+    listArr = [None if v is None else int(v) for v in listArr]
+    treeArr_clean = []
+    for v in treeArr:
+        if v is None or (isinstance(v, float) and v != v): treeArr_clean.append(None)
+        else:
+            try: treeArr_clean.append(int(v))
+            except: treeArr_clean.append(None)
+    class LN:
+        def __init__(self, v): self.val = v; self.next = None
+    class TN:
+        def __init__(self, v): self.val = v; self.left = None; self.right = None
+    if not listArr: return False
+    head = LN(listArr[0])
+    cur = head
+    for v in listArr[1:]:
+        if v is not None: cur.next = LN(v); cur = cur.next
+    if not treeArr_clean or treeArr_clean[0] is None: return False
+    root = TN(treeArr_clean[0])
+    q = [root]; i = 1
+    while q and i < len(treeArr_clean):
+        node = q.pop(0)
+        if i < len(treeArr_clean) and treeArr_clean[i] is not None:
+            node.left = TN(treeArr_clean[i]); q.append(node.left)
+        i += 1
+        if i < len(treeArr_clean) and treeArr_clean[i] is not None:
+            node.right = TN(treeArr_clean[i]); q.append(node.right)
+        i += 1
+    def match_list(head, node):
+        if head is None: return True
+        if node is None: return False
+        return node.val == head.val and (match_list(head.next, node.left) or match_list(head.next, node.right))
+    def dfs(node, head):
+        if node is None: return False
+        return match_list(head, node) or dfs(node.left, head) or dfs(node.right, head)
+    return dfs(root, head)
+`,
+
+  'minimum-difficulty-of-a-job-schedule': `def minDifficulty(jobDifficulty, d):
+    if hasattr(jobDifficulty, 'to_py'): jobDifficulty = list(jobDifficulty.to_py())
+    jobDifficulty = [int(x) for x in jobDifficulty]
+    d = int(d)
+    n = len(jobDifficulty)
+    if n < d: return -1
+    INF = float('inf')
+    dp = [[INF] * (n + 1) for _ in range(d + 1)]
+    dp[0][0] = 0
+    for day in range(1, d + 1):
+        for j in range(day, n - (d - day) + 1):
+            max_j = 0
+            for i in range(j - 1, day - 2, -1):
+                max_j = max(max_j, jobDifficulty[i])
+                if dp[day-1][i] < INF:
+                    dp[day][j] = min(dp[day][j], dp[day-1][i] + max_j)
+    return -1 if dp[d][n] == INF else dp[d][n]
+`,
+
+  'range-sum-query-2d-immutable': `def numMatrixRunner(ops, args):
+    if hasattr(ops, 'to_py'): ops = list(ops.to_py())
+    if hasattr(args, 'to_py'): args = list(args.to_py())
+    ops = [str(o) for o in ops]
+    results = []
+    pre = []
+    for i, op in enumerate(ops):
+        arg = list(args[i].to_py()) if hasattr(args[i], 'to_py') else list(args[i])
+        if op == 'NumMatrix':
+            mat = []
+            rows = arg  # arg IS the matrix (list of rows)
+            for row in rows:
+                r = list(row.to_py()) if hasattr(row, 'to_py') else list(row)
+                mat.append([int(x) for x in r])
+            m, nc = len(mat), len(mat[0])
+            pre = [[0] * (nc + 1) for _ in range(m + 1)]
+            for r in range(1, m + 1):
+                for c in range(1, nc + 1):
+                    pre[r][c] = mat[r-1][c-1] + pre[r-1][c] + pre[r][c-1] - pre[r-1][c-1]
+            results.append(None)
+        else:
+            r1, c1, r2, c2 = int(arg[0]), int(arg[1]), int(arg[2]), int(arg[3])
+            results.append(pre[r2+1][c2+1] - pre[r1][c2+1] - pre[r2+1][c1] + pre[r1][c1])
+    return results
+`,
+
+  'sum-of-root-to-leaf-binary-numbers': `def sumRootToLeafRunner(arr):
+    if hasattr(arr, 'to_py'): arr = list(arr.to_py())
+    arr_clean = []
+    for v in arr:
+        if v is None or (isinstance(v, float) and v != v): arr_clean.append(None)
+        else:
+            try: arr_clean.append(int(v))
+            except: arr_clean.append(None)
+    if not arr_clean or arr_clean[0] is None: return 0
+    class TN:
+        def __init__(self, v): self.val = v; self.left = None; self.right = None
+    root = TN(arr_clean[0])
+    q = [root]; i = 1
+    while q and i < len(arr_clean):
+        node = q.pop(0)
+        if i < len(arr_clean) and arr_clean[i] is not None:
+            node.left = TN(arr_clean[i]); q.append(node.left)
+        i += 1
+        if i < len(arr_clean) and arr_clean[i] is not None:
+            node.right = TN(arr_clean[i]); q.append(node.right)
+        i += 1
+    total = [0]
+    def dfs(node, cur):
+        if node is None: return
+        cur = cur * 2 + node.val
+        if node.left is None and node.right is None:
+            total[0] += cur; return
+        dfs(node.left, cur); dfs(node.right, cur)
+    dfs(root, 0)
+    return total[0]
+`,
+
+  'valid-word-square': `def validWordSquare(words):
+    if hasattr(words, 'to_py'): words = list(words.to_py())
+    words = [str(w) for w in words]
+    n = len(words)
+    for i in range(n):
+        for j in range(len(words[i])):
+            if j >= n or len(words[j]) <= i or words[j][i] != words[i][j]:
+                return False
+    return True
+`,
+
+  'wiggle-sequence': `def wiggleMaxLength(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = [int(x) for x in nums]
+    n = len(nums)
+    if n < 2: return n
+    up = down = 1
+    for i in range(1, n):
+        if nums[i] > nums[i-1]: up = down + 1
+        elif nums[i] < nums[i-1]: down = up + 1
+    return max(up, down)
+`,
 };

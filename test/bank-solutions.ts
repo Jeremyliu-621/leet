@@ -41421,4 +41421,176 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return ans;
   },
+
+  'binary-search': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    let lo = 0, hi = nums.length - 1;
+    while (lo <= hi) {
+      const mid = Math.floor((lo + hi) / 2);
+      if (nums[mid] === target) return mid;
+      if (nums[mid]! < target) lo = mid + 1; else hi = mid - 1;
+    }
+    return -1;
+  },
+
+  'count-beautiful-splits-in-an-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const lcp = Array.from({ length: n + 1 }, () => new Array(n + 1).fill(0));
+    for (let i = n - 1; i >= 0; i--)
+      for (let j = n - 1; j >= 0; j--)
+        lcp[i]![j] = nums[i] === nums[j] ? lcp[i + 1]![j + 1]! + 1 : 0;
+    let count = 0;
+    for (let i = 1; i < n - 1; i++) {
+      for (let j = i + 1; j < n; j++) {
+        const len1 = i, len2 = j - i, len3 = n - j;
+        if ((len1 <= len2 && lcp[0]![i]! >= len1) || (len2 <= len3 && lcp[i]![j]! >= len2)) count++;
+      }
+    }
+    return count;
+  },
+
+  'find-number-of-ways-to-reach-the-k-th-stair': (...args: unknown[]) => {
+    const k = args[0] as number;
+    const memo = new Map<string, number>();
+    function dp(i: number, jump: number, usedDown: boolean): number {
+      if (i > k + 1) return 0;
+      const key = `${i},${jump},${usedDown ? 1 : 0}`;
+      if (memo.has(key)) return memo.get(key)!;
+      let ways = i === k ? 1 : 0;
+      ways += dp(i + (1 << jump), jump + 1, false);
+      if (i > 0 && !usedDown) ways += dp(i - 1, jump, true);
+      memo.set(key, ways);
+      return ways;
+    }
+    return dp(1, 0, false);
+  },
+
+  'linked-list-in-binary-tree': (...args: unknown[]) => {
+    const listArr = args[0] as (number | null)[];
+    const treeArr = args[1] as (number | null)[];
+    interface LN { val: number; next: LN | null; }
+    interface TN { val: number; left: TN | null; right: TN | null; }
+    function buildList(a: (number | null)[]): LN | null {
+      if (!a.length) return null;
+      const h: LN = { val: a[0]!, next: null }; let c = h;
+      for (let i = 1; i < a.length; i++) { c.next = { val: a[i]!, next: null }; c = c.next; }
+      return h;
+    }
+    function buildTree(a: (number | null)[]): TN | null {
+      if (!a.length || a[0] === null) return null;
+      const root: TN = { val: a[0]!, left: null, right: null };
+      const q: TN[] = [root]; let i = 1;
+      while (q.length && i < a.length) {
+        const node = q.shift()!;
+        if (i < a.length && a[i] !== null) { node.left = { val: a[i]!, left: null, right: null }; q.push(node.left); }
+        i++;
+        if (i < a.length && a[i] !== null) { node.right = { val: a[i]!, left: null, right: null }; q.push(node.right); }
+        i++;
+      }
+      return root;
+    }
+    function matchList(head: LN | null, node: TN | null): boolean {
+      if (!head) return true;
+      if (!node) return false;
+      return node.val === head.val && (matchList(head.next, node.left) || matchList(head.next, node.right));
+    }
+    function dfs(node: TN | null, head: LN | null): boolean {
+      if (!node) return false;
+      return matchList(head, node) || dfs(node.left, head) || dfs(node.right, head);
+    }
+    return dfs(buildTree(treeArr), buildList(listArr));
+  },
+
+  'minimum-difficulty-of-a-job-schedule': (...args: unknown[]) => {
+    const jobs = args[0] as number[];
+    const d = args[1] as number;
+    const n = jobs.length;
+    if (n < d) return -1;
+    const INF = Infinity;
+    const dp = Array.from({ length: d + 1 }, () => new Array(n + 1).fill(INF));
+    dp[0]![0] = 0;
+    for (let day = 1; day <= d; day++) {
+      for (let j = day; j <= n - (d - day); j++) {
+        let maxJ = 0;
+        for (let i = j - 1; i >= day - 1; i--) {
+          maxJ = Math.max(maxJ, jobs[i]!);
+          if (dp[day - 1]![i]! < INF) {
+            dp[day]![j] = Math.min(dp[day]![j]!, dp[day - 1]![i]! + maxJ);
+          }
+        }
+      }
+    }
+    return dp[d]![n]! === INF ? -1 : dp[d]![n]!;
+  },
+
+  'range-sum-query-2d-immutable': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as unknown[][];
+    const results: (null | number)[] = [];
+    let pre: number[][] = [];
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      if (op === 'NumMatrix') {
+        const mat = opArgs[i] as number[][];
+        const m = mat.length, nc = mat[0]!.length;
+        pre = Array.from({ length: m + 1 }, () => new Array(nc + 1).fill(0));
+        for (let r = 1; r <= m; r++)
+          for (let c = 1; c <= nc; c++)
+            pre[r]![c] = mat[r-1]![c-1]! + pre[r-1]![c]! + pre[r]![c-1]! - pre[r-1]![c-1]!;
+        results.push(null);
+      } else {
+        const [r1, c1, r2, c2] = opArgs[i]! as [number, number, number, number];
+        results.push(pre[r2+1]![c2+1]! - pre[r1]![c2+1]! - pre[r2+1]![c1]! + pre[r1]![c1]!);
+      }
+    }
+    return results;
+  },
+
+  'sum-of-root-to-leaf-binary-numbers': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    if (!arr.length || arr[0] === null) return 0;
+    interface TN { val: number; left: TN | null; right: TN | null; }
+    const root: TN = { val: arr[0]!, left: null, right: null };
+    const q: TN[] = [root]; let i = 1;
+    while (q.length && i < arr.length) {
+      const node = q.shift()!;
+      if (arr[i] !== null && arr[i] !== undefined) { node.left = { val: arr[i]!, left: null, right: null }; q.push(node.left); }
+      i++;
+      if (i < arr.length && arr[i] !== null && arr[i] !== undefined) { node.right = { val: arr[i]!, left: null, right: null }; q.push(node.right); }
+      i++;
+    }
+    let total = 0;
+    function dfs(node: TN | null, cur: number): void {
+      if (!node) return;
+      cur = cur * 2 + node.val;
+      if (!node.left && !node.right) { total += cur; return; }
+      dfs(node.left, cur); dfs(node.right, cur);
+    }
+    dfs(root, 0);
+    return total;
+  },
+
+  'valid-word-square': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const n = words.length;
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < (words[i]?.length ?? 0); j++) {
+        if (j >= n || (words[j]?.length ?? 0) <= i || words[j]![i] !== words[i]![j]) return false;
+      }
+    }
+    return true;
+  },
+
+  'wiggle-sequence': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    if (nums.length < 2) return nums.length;
+    let up = 1, down = 1;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i]! > nums[i-1]!) up = down + 1;
+      else if (nums[i]! < nums[i-1]!) down = up + 1;
+    }
+    return Math.max(up, down);
+  },
 };
