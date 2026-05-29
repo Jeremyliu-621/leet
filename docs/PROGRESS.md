@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2415** registered problems; 7539 tests green. Batches 102–167 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2424** registered problems; 7566 tests green. Batches 102–168 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 168+); UX polish (editor QoL, light/dark mode, accessibility).
+**Next up:** More bank growth (batch 169+); UX polish; site count update.
+
+### feat(bank): register batch 168 — 9 orphan problems + solutions (2026-05-29)
+Registered 9 previously-unregistered problem files with full JS+Python reference solutions: `count-of-integers` (hard/dp+strings, digit DP with tight/started/sum states mod 10^9+7), `minimum-cost-homecoming-of-a-robot-in-a-grid` (medium/arrays+math, sum row+col costs traversed excluding start), `number-of-ways-to-earn-points` (hard/dp, bounded knapsack right-to-left), `sum-of-scores-of-built-strings` (hard/strings, Z-function sum), `count-substrings-with-k-frequency-characters-ii` (medium/sliding-window, total minus no-k-window count), `sum-of-imbalance-numbers-of-all-subarrays` (medium/arrays, O(n²) with sorted insertion), `minimum-white-tiles-after-covering-with-carpets` (hard/dp), `special-permutations` (medium/dp+bits), `unique-length-3-palindromic-subsequences` (medium/strings). Bank at **2424**; 7566 tests.
 
 ### chore: update site stats to 2,385+; update PROGRESS header to 2366/7392 (2026-05-29)
 Marketing site index.html updated to 2,385+ in all three stat locations. PROGRESS.md header corrected to reflect batch 161 completion (2366 registered, 7392 tests).
