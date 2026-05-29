@@ -23,7 +23,8 @@ export type ProblemTag =
   | 'simulation'
   | 'shortest-path'
   | 'trie'
-  | 'design';
+  | 'design'
+  | 'bit-manipulation';
 
 /** Every tag, in canonical display order. */
 export const PROBLEM_TAGS: readonly ProblemTag[] = [
@@ -47,6 +48,7 @@ export const PROBLEM_TAGS: readonly ProblemTag[] = [
   'shortest-path',
   'trie',
   'design',
+  'bit-manipulation',
 ];
 
 /** Every difficulty, easiest first. */

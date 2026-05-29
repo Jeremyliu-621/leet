@@ -37293,4 +37293,192 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
+  // batch 158 — arrays+math/medium, strings/hard, dp/hard×2
+  'minimum-cost-homecoming-of-a-robot-in-a-grid': (...args: unknown[]) => {
+    const [startPos, homePos, rowCosts, colCosts] = args as [number[], number[], number[], number[]];
+    let cost = 0;
+    const r1 = startPos[0]!, c1 = startPos[1]!;
+    const r2 = homePos[0]!, c2 = homePos[1]!;
+    if (r2 > r1) for (let r = r1 + 1; r <= r2; r++) cost += rowCosts[r]!;
+    else for (let r = r1 - 1; r >= r2; r--) cost += rowCosts[r]!;
+    if (c2 > c1) for (let c = c1 + 1; c <= c2; c++) cost += colCosts[c]!;
+    else for (let c = c1 - 1; c >= c2; c--) cost += colCosts[c]!;
+    return cost;
+  },
+
+  'sum-of-scores-of-built-strings': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const Z = new Array<number>(n).fill(0);
+    Z[0] = n;
+    let l = 0, r = 0;
+    for (let i = 1; i < n; i++) {
+      if (i < r) Z[i] = Math.min(r - i, Z[i - l]!);
+      while (i + Z[i]! < n && s[Z[i]!] === s[i + Z[i]!]) Z[i]!++;
+      if (i + Z[i]! > r) { l = i; r = i + Z[i]!; }
+    }
+    return Z.reduce((a, b) => a + b, 0);
+  },
+
+  'count-of-integers': (...args: unknown[]) => {
+    const [num1, num2, min_sum, max_sum] = args as [string, string, number, number];
+    const MOD = 1_000_000_007;
+    function countUpTo(s: string): number {
+      const n = s.length;
+      const memo = new Map<string, number>();
+      function dp(pos: number, tight: boolean, started: boolean, sum: number): number {
+        if (sum > max_sum) return 0;
+        if (pos === n) return started ? (sum >= min_sum ? 1 : 0) : 0;
+        const key = `${pos},${tight ? 1 : 0},${started ? 1 : 0},${sum}`;
+        if (memo.has(key)) return memo.get(key)!;
+        const limit = tight ? parseInt(s[pos]!) : 9;
+        let res = 0;
+        for (let d = 0; d <= limit; d++) {
+          const nt = tight && d === limit;
+          if (!started && d === 0) res = (res + dp(pos + 1, nt, false, 0)) % MOD;
+          else res = (res + dp(pos + 1, nt, true, sum + d)) % MOD;
+        }
+        memo.set(key, res);
+        return res;
+      }
+      return dp(0, true, false, 0);
+    }
+    const c2 = countUpTo(num2);
+    const c1 = countUpTo(num1);
+    const sumNum1 = num1.split('').reduce((s, c) => s + parseInt(c), 0);
+    const v1 = sumNum1 >= min_sum && sumNum1 <= max_sum ? 1 : 0;
+    return ((c2 - c1 + v1) % MOD + MOD) % MOD;
+  },
+
+  'number-of-ways-to-earn-points': (...args: unknown[]) => {
+    const [target, types] = args as [number, number[][]];
+    const MOD = 1_000_000_007;
+    const dp = new Array<number>(target + 1).fill(0);
+    dp[0] = 1;
+    for (const entry of types) {
+      const count = entry[0]!, marks = entry[1]!;
+      for (let j = target; j >= 0; j--) {
+        for (let k = 1; k <= count && j - k * marks >= 0; k++) {
+          dp[j] = (dp[j]! + dp[j - k * marks]!) % MOD;
+        }
+      }
+    }
+    return dp[target]!;
+  },
+
+  // batch 159 — hash-map/medium, bit-manipulation/medium×2
+  'tuple-with-same-product': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (let i = 0; i < nums.length; i++) {
+      for (let j = i + 1; j < nums.length; j++) {
+        const prod = nums[i]! * nums[j]!;
+        freq.set(prod, (freq.get(prod) ?? 0) + 1);
+      }
+    }
+    let result = 0;
+    for (const f of freq.values()) result += f * (f - 1) / 2 * 8;
+    return result;
+  },
+
+  'maximum-and-value-of-numbers-in-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let ans = 0;
+    for (let bit = 29; bit >= 0; bit--) {
+      const candidate = ans | (1 << bit);
+      if (nums.filter(x => (x & candidate) === candidate).length >= 2) ans = candidate;
+    }
+    return ans;
+  },
+
+  'minimum-flips-to-make-a-or-b-equal-to-c': (...args: unknown[]) => {
+    const [a, b, c] = args as [number, number, number];
+    let flips = 0;
+    for (let bit = 0; bit < 30; bit++) {
+      const ab = (a >> bit) & 1, bb = (b >> bit) & 1, cb = (c >> bit) & 1;
+      if (cb === 1) { if (ab === 0 && bb === 0) flips++; }
+      else flips += ab + bb;
+    }
+    return flips;
+  },
+
+  // batch 160 — math/medium, design/medium, strings+hash-map/medium, arrays+stack/hard
+  'strictly-palindromic-number': () => false,
+
+  'design-bitset': (...args: unknown[]) => {
+    const [ops, params] = args as [string[], (number | number[])[]];
+    const results: (boolean | number | string | null)[] = [];
+    let bits: number[] = [];
+    let size = 0;
+    let ones = 0;
+    let flipped = false;
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      if (op === 'Bitset') {
+        size = (params[i] as number[])[0]!;
+        bits = new Array<number>(size).fill(0);
+        ones = 0;
+        flipped = false;
+        results.push(null);
+      } else if (op === 'fix') {
+        const idx = (params[i] as number[])[0]!;
+        const val = flipped ? 0 : 1;
+        if (bits[idx] !== val) { bits[idx] = val; ones++; }
+        results.push(null);
+      } else if (op === 'unfix') {
+        const idx = (params[i] as number[])[0]!;
+        const val = flipped ? 0 : 1;
+        if (bits[idx] === val) { bits[idx] = 1 - val; ones--; }
+        results.push(null);
+      } else if (op === 'flip') {
+        flipped = !flipped;
+        ones = size - ones;
+        results.push(null);
+      } else if (op === 'all') {
+        results.push(ones === size);
+      } else if (op === 'one') {
+        results.push(ones > 0);
+      } else if (op === 'count') {
+        results.push(ones);
+      } else if (op === 'toString') {
+        results.push(bits.map(b => flipped ? (b === 1 ? '0' : '1') : String(b)).join(''));
+      }
+    }
+    return results;
+  },
+
+  'count-substrings-with-fixed-ratio': (...args: unknown[]) => {
+    const [s, num1, num2] = args as [string, number, number];
+    const freq = new Map<number, number>();
+    freq.set(0, 1);
+    let zeros = 0, ones = 0, result = 0;
+    for (const ch of s) {
+      if (ch === '0') zeros++; else ones++;
+      const key = zeros * num2 - ones * num1;
+      result += freq.get(key) ?? 0;
+      freq.set(key, (freq.get(key) ?? 0) + 1);
+    }
+    return result;
+  },
+
+  'steps-to-make-array-non-decreasing': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const stack: [number, number][] = []; // [value, steps]
+    let result = 0;
+    for (const x of nums) {
+      let steps = 0;
+      while (stack.length > 0 && stack[stack.length - 1]![0] <= x) {
+        steps = Math.max(steps, stack.pop()![1]);
+      }
+      if (stack.length > 0) {
+        steps++;
+        result = Math.max(result, steps);
+      } else {
+        steps = 0;
+      }
+      stack.push([x, steps]);
+    }
+    return result;
+  },
+
 };

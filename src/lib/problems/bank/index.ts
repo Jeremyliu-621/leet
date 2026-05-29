@@ -2610,6 +2610,20 @@ import { problem as checkKnightTourConfiguration } from './check-knight-tour-con
 import { problem as theNumberOfTheSmallestUnoccupiedChair } from './the-number-of-the-smallest-unoccupied-chair';
 import { problem as intervalsBetweenIdenticalElements } from './intervals-between-identical-elements';
 import { problem as formArrayByConcatenatingSubarraysOfAnotherArray } from './form-array-by-concatenating-subarrays-of-another-array';
+// batch 158 — arrays+math/medium, strings/hard, dp/hard×2
+import { problem as minCostHomecomingRobotInGrid } from './minimum-cost-homecoming-of-a-robot-in-a-grid';
+import { problem as sumOfScoresOfBuiltStrings } from './sum-of-scores-of-built-strings';
+import { problem as countOfIntegers } from './count-of-integers';
+import { problem as numberOfWaysToEarnPoints } from './number-of-ways-to-earn-points';
+// batch 159 — hash-map/medium, bit-manipulation/medium×2
+import { problem as tupleWithSameProduct } from './tuple-with-same-product';
+import { problem as maximumAndValueOfNumbersInArray } from './maximum-and-value-of-numbers-in-array';
+import { problem as minimumFlipsMakeAOrBEqualToC } from './minimum-flips-to-make-a-or-b-equal-to-c';
+// batch 160 — math/medium, design/medium, strings+hash-map/medium, arrays+stack/hard
+import { problem as strictlyPalindromicNumber } from './strictly-palindromic-number';
+import { problem as designBitset } from './design-bitset';
+import { problem as countSubstringsWithFixedRatio } from './count-substrings-with-fixed-ratio';
+import { problem as stepsToMakeArrayNonDecreasing } from './steps-to-make-array-non-decreasing';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5257,4 +5271,18 @@ export const problems: readonly Problem[] = [
   theNumberOfTheSmallestUnoccupiedChair,
   intervalsBetweenIdenticalElements,
   formArrayByConcatenatingSubarraysOfAnotherArray,
+  // batch 158 — arrays+math/medium, strings/hard, dp/hard×2
+  minCostHomecomingRobotInGrid,
+  sumOfScoresOfBuiltStrings,
+  countOfIntegers,
+  numberOfWaysToEarnPoints,
+  // batch 159 — hash-map/medium, bit-manipulation/medium×2
+  tupleWithSameProduct,
+  maximumAndValueOfNumbersInArray,
+  minimumFlipsMakeAOrBEqualToC,
+  // batch 160 — math/medium, design/medium, strings+hash-map/medium, arrays+stack/hard
+  strictlyPalindromicNumber,
+  designBitset,
+  countSubstringsWithFixedRatio,
+  stepsToMakeArrayNonDecreasing,
 ];
