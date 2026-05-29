@@ -43967,4 +43967,44 @@ def countCompleteSubstrings(word, k):
             start = i
     return total
 `,
+  // batch 212 addendum
+  'longest-subarray-with-positive-product': `
+def getMaxLen(nums):
+    pos, neg, ans = 0, 0, 0
+    for x in nums:
+        if x > 0:
+            pos, neg = pos + 1, neg + 1 if neg > 0 else 0
+        elif x < 0:
+            pos, neg = neg + 1 if neg > 0 else 0, pos + 1
+        else:
+            pos, neg = 0, 0
+        ans = max(ans, pos)
+    return ans
+`,
+  'count-special-integers': `
+def countSpecialNumbers(n):
+    digits = [int(d) for d in str(n)]
+    length = len(digits)
+    count = 0
+    for d in range(1, length):
+        c = 9
+        for i in range(1, d):
+            c *= (10 - i)
+        count += c
+    used = set()
+    for i in range(length):
+        d = digits[i]
+        lower = 1 if i == 0 else 0
+        available = sum(1 for x in range(lower, d) if x not in used)
+        free_perms = 1
+        for j in range(length - i - 1):
+            free_perms *= (10 - (i + 1) - j)
+        count += available * free_perms
+        if d in used:
+            break
+        used.add(d)
+        if i == length - 1:
+            count += 1
+    return count
+`,
 };

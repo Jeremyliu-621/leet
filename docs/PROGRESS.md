@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2786** problems; 8652 tests green. Batches 102–213 + 207b + KaTeX UX + a11y fix + total-solved UX complete.
+**Current focus:** Bank at **2788** problems; 8658 tests green. Batches 102–213 + 212-addendum + 207b + KaTeX UX + a11y fix + total-solved UX complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 214+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 212 addendum — longest-subarray-with-positive-product, count-special-integers (2026-05-29)
+Two more problems merged alongside batch 213: `longest-subarray-with-positive-product` (medium/arrays+dp, pos/neg DP tracking, 8 hidden tests verified) and `count-special-integers` (hard/math+dp, digit DP with combinatorial formula, 8 hidden tests including n up to 10^5). Bank at **2788**; 8658 tests.
 
 ### feat(bank): batch 213 — design-neighbor-sum-service, find-valid-matrix-given-row-column-sums, count-complete-substrings (2026-05-29)
 Three new problems: `design-neighbor-sum-service` (easy/design+arrays+hash-map, grid position map, O(1) adjacent/diagonal sums), `find-valid-matrix-given-row-column-sums` (medium/arrays+math, greedy min(rowSum[i],colSum[j]) fill), `count-complete-substrings` (hard/strings+sliding-window+hash-map, segment on adj-diff>2 then fixed-window per alphabet size t). Bank at **2786**; 8652 tests.

@@ -44117,4 +44117,47 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return total;
   },
+  // batch 212 addendum
+  'longest-subarray-with-positive-product': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let pos = 0, neg = 0, ans = 0;
+    for (const x of nums) {
+      if (x > 0) {
+        [pos, neg] = [pos + 1, neg > 0 ? neg + 1 : 0];
+      } else if (x < 0) {
+        [pos, neg] = [neg > 0 ? neg + 1 : 0, pos + 1];
+      } else {
+        pos = 0; neg = 0;
+      }
+      ans = Math.max(ans, pos);
+    }
+    return ans;
+  },
+  'count-special-integers': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const digits = String(n).split('').map(Number);
+    const len = digits.length;
+    let count = 0;
+    for (let d = 1; d < len; d++) {
+      let c = 9;
+      for (let i = 1; i < d; i++) c *= (10 - i);
+      count += c;
+    }
+    const used = new Set<number>();
+    for (let i = 0; i < len; i++) {
+      const d = digits[i]!;
+      const lower = i === 0 ? 1 : 0;
+      let available = 0;
+      for (let x = lower; x < d; x++) {
+        if (!used.has(x)) available++;
+      }
+      let freePerms = 1;
+      for (let j = 0; j < len - i - 1; j++) freePerms *= (10 - (i + 1) - j);
+      count += available * freePerms;
+      if (used.has(d)) break;
+      used.add(d);
+      if (i === len - 1) count++;
+    }
+    return count;
+  },
 };

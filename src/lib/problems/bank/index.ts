@@ -3129,6 +3129,8 @@ import { problem as sumOfAbsoluteDifferencesInASortedArray } from './sum-of-abso
 import { problem as designNeighborSumService } from './design-neighbor-sum-service';
 import { problem as findValidMatrixGivenRowColumnSums } from './find-valid-matrix-given-row-column-sums';
 import { problem as countCompleteSubstrings } from './count-complete-substrings';
+import { problem as longestSubarrayWithPositiveProduct } from './longest-subarray-with-positive-product';
+import { problem as countSpecialIntegers } from './count-special-integers';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6299,4 +6301,7 @@ export const problems: readonly Problem[] = [
   designNeighborSumService,
   findValidMatrixGivenRowColumnSums,
   countCompleteSubstrings,
+  // batch 212 addendum — medium/arrays+dp, hard/math+dp
+  longestSubarrayWithPositiveProduct,
+  countSpecialIntegers,
 ];
