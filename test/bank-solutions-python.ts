@@ -40870,4 +40870,48 @@ def logSystemRunner(ops, args):
     return results
 `,
 
+    // batch 177 — arrays/easy, graph/medium, strings+dp/hard
+  'special-array-i': `def isArraySpecial(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    return all(nums[i] % 2 != nums[i-1] % 2 for i in range(1, len(nums)))
+`,
+
+  'find-champion-ii': `def findChampion(n, edges):
+    if hasattr(edges, 'to_py'): edges = [[int(x) for x in e.to_py()] if hasattr(e, 'to_py') else [int(x) for x in e] for e in edges.to_py()]
+    in_degree = [0] * int(n)
+    for e in edges:
+        in_degree[int(e[1])] += 1
+    champions = [i for i in range(int(n)) if in_degree[i] == 0]
+    return champions[0] if len(champions) == 1 else -1
+`,
+
+  'count-palindromic-subsequences': `def countPalindromes(s):
+    if hasattr(s, 'to_py'): s = str(s.to_py())
+    s = str(s)
+    MOD = 10**9 + 7
+    n = len(s)
+    ans = 0
+    for c1 in set(s):
+        l1 = s.index(c1)
+        r1 = n - 1 - s[::-1].index(c1)
+        for c2 in set(s):
+            l2 = -1
+            for i in range(l1 + 1, n):
+                if s[i] == c2:
+                    l2 = i
+                    break
+            if l2 == -1:
+                continue
+            r2 = -1
+            for i in range(r1 - 1, -1, -1):
+                if s[i] == c2:
+                    r2 = i
+                    break
+            if r2 == -1 or l2 >= r2:
+                continue
+            middle = set(s[l2+1:r2])
+            ans = (ans + len(middle)) % MOD
+    return ans
+`,
+
 };

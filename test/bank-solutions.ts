@@ -40814,4 +40814,60 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return results;
   },
 
+  // batch 177 — arrays/easy, graph/medium, strings+dp/medium, arrays+binary-search/medium, strings+dp/hard
+  'special-array-i': (nums: unknown) => {
+    const a = nums as number[];
+    for (let i = 1; i < a.length; i++) {
+      if (a[i]! % 2 === a[i - 1]! % 2) return false;
+    }
+    return true;
+  },
+
+  'find-champion-ii': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const inDegree = new Array(n).fill(0) as number[];
+    for (const edge of edges) {
+      const v = edge[1] as number;
+      inDegree[v] = (inDegree[v] ?? 0) + 1;
+    }
+    let champion = -1;
+    for (let i = 0; i < n; i++) {
+      if (inDegree[i] === 0) {
+        if (champion !== -1) return -1;
+        champion = i;
+      }
+    }
+    return champion;
+  },
+
+  'count-palindromic-subsequences': (s: unknown) => {
+    const str = s as string;
+    const MOD = 1_000_000_007;
+    const n = str.length;
+    let ans = 0;
+    for (let a = 0; a < 26; a++) {
+      const c1 = String.fromCharCode(97 + a);
+      const l1 = str.indexOf(c1);
+      if (l1 === -1) continue;
+      const r1 = str.lastIndexOf(c1);
+      for (let b = 0; b < 26; b++) {
+        const c2 = String.fromCharCode(97 + b);
+        let l2 = -1;
+        for (let i = l1 + 1; i < n; i++) {
+          if (str[i] === c2) { l2 = i; break; }
+        }
+        if (l2 === -1) continue;
+        let r2 = -1;
+        for (let i = r1 - 1; i >= 0; i--) {
+          if (str[i] === c2) { r2 = i; break; }
+        }
+        if (r2 === -1 || l2 >= r2) continue;
+        const seen = new Set(str.slice(l2 + 1, r2));
+        ans = (ans + seen.size) % MOD;
+      }
+    }
+    return ans;
+  },
+
 };

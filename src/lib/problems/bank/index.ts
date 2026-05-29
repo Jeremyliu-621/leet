@@ -2817,6 +2817,10 @@ import { problem as minimumCostToConvertStringII } from './minimum-cost-to-conve
 import { problem as findBeautifulIndicesInTheGivenArrayI } from './find-beautiful-indices-in-the-given-array-i';
 import { problem as makeKSubarraySumsEqual } from './make-k-subarray-sums-equal';
 import { problem as maximumSumOfAnHourglass } from './maximum-sum-of-an-hourglass';
+// batch 177 — arrays/easy, graph/medium, strings+dp/hard
+import { problem as specialArrayI } from './special-array-i';
+import { problem as findChampionII } from './find-champion-ii';
+import { problem as countPalindromicSubsequences } from './count-palindromic-subsequences';
 
 // batch 172 — strings+sliding-window/medium, arrays+math/easy, arrays+math/medium, arrays+math/medium
 import { problem as longestSubstringWithAtMostTwoDistinctChars } from './longest-substring-with-at-most-two-distinct-chars';
@@ -5683,6 +5687,10 @@ export const problems: readonly Problem[] = [
   findBeautifulIndicesInTheGivenArrayI,
   makeKSubarraySumsEqual,
   maximumSumOfAnHourglass,
+  // batch 177 — arrays/easy, graph/medium, strings+dp/hard
+  specialArrayI,
+  findChampionII,
+  countPalindromicSubsequences,
 
   // batch 172 — strings+sliding-window/medium, arrays+math/easy, arrays+math/medium, arrays+math/medium
   longestSubstringWithAtMostTwoDistinctChars,
