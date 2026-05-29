@@ -43243,4 +43243,21 @@ def countElementsEqualToK(nums, k):
 def totalStringLength(words):
     return sum(len(w) for w in words)
 `,
+  // batch 206 ---------------------------------------------------------------
+  'max-of-first-and-last': `
+def maxOfFirstAndLast(nums):
+    return max(nums[0], nums[-1])
+`,
+  'sum-of-first-and-last': `
+def sumOfFirstAndLast(nums):
+    return nums[0] + nums[-1]
+`,
+  'remove-duplicates-from-array': `
+def removeDuplicatesFromArray(nums):
+    return list(dict.fromkeys(nums))
+`,
+  'concatenate-two-arrays': `
+def concatenateTwoArrays(nums1, nums2):
+    return nums1 + nums2
+`,
 };

@@ -43414,4 +43414,22 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const words = args[0] as string[];
     return words.reduce((s, w) => s + w.length, 0);
   },
+  // batch 206 ---------------------------------------------------------------
+  'max-of-first-and-last': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return Math.max(nums[0]!, nums[nums.length - 1]!);
+  },
+  'sum-of-first-and-last': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return nums[0]! + nums[nums.length - 1]!;
+  },
+  'remove-duplicates-from-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return [...new Set(nums)];
+  },
+  'concatenate-two-arrays': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    return [...nums1, ...nums2];
+  },
 };

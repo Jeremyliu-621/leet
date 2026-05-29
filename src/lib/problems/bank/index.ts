@@ -3058,6 +3058,11 @@ import { problem as arrayAverage } from './array-average';
 import { problem as findElementsAppearingExactlyTwice } from './find-elements-appearing-exactly-twice';
 import { problem as countElementsEqualToK } from './count-elements-equal-to-k';
 import { problem as totalStringLength } from './total-string-length';
+// batch 206 — easy/arrays, easy/arrays+math, easy/arrays+hash-map, easy/arrays
+import { problem as maxOfFirstAndLast } from './max-of-first-and-last';
+import { problem as sumOfFirstAndLast } from './sum-of-first-and-last';
+import { problem as removeDuplicatesFromArray } from './remove-duplicates-from-array';
+import { problem as concatenateTwoArrays } from './concatenate-two-arrays';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6157,4 +6162,9 @@ export const problems: readonly Problem[] = [
   findElementsAppearingExactlyTwice,
   countElementsEqualToK,
   totalStringLength,
+  // batch 206 — easy/arrays, easy/arrays+math, easy/arrays+hash-map, easy/arrays
+  maxOfFirstAndLast,
+  sumOfFirstAndLast,
+  removeDuplicatesFromArray,
+  concatenateTwoArrays,
 ];
