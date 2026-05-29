@@ -376,6 +376,15 @@ export function EditorPanel({
           ...defaultKeymap,
           // Tab inserts spaces — respects indent size.
           indentWithTab,
+          // Mod-J: toggle terminal panel (mirrors VS Code panel toggle).
+          {
+            key: 'Mod-j',
+            preventDefault: true,
+            run() {
+              toggleTerminalRef.current();
+              return true;
+            },
+          },
         ]),
         themeCompartmentRef.current.of(
           resolvedTheme === 'light' ? leetlockEditorThemeLight : leetlockEditorThemeDark,
@@ -588,6 +597,10 @@ export function EditorPanel({
   const [terminalCollapsed, setTerminalCollapsed] = useState(false);
   const toggleTerminal = useCallback(() => setTerminalCollapsed((v) => !v), []);
 
+  // Ref-forwarded toggleTerminal so the CM keymap (built once) can call the latest version.
+  const toggleTerminalRef = useRef(toggleTerminal);
+  useEffect(() => { toggleTerminalRef.current = toggleTerminal; }, [toggleTerminal]);
+
   // Terminal resize — drag handle above the terminal panel.
   const [terminalHeight, setTerminalHeight] = useState(TERMINAL_DEFAULT_PX);
   const isResizingTerminalRef = useRef(false);
@@ -778,6 +791,7 @@ export function EditorPanel({
       {pendingLang !== null && (
         <div
           role="alert"
+          onKeyDown={(e) => { if (e.key === 'Escape') { e.stopPropagation(); setPendingLang(null); } }}
           className="shrink-0 flex items-center justify-between gap-3 border-b border-border bg-surface-2 px-3 py-1.5"
         >
           <span className="font-mono text-[11px] text-muted">

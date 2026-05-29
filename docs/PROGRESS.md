@@ -12,6 +12,12 @@
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 153+); UX polish; accessibility audit.
 
+### fix(a11y): FormField injects aria-describedby onto control; backdrop role=presentation (2026-05-29)
+`FormField` was placing `aria-describedby` on a wrapper `<div>` instead of the actual input element, making the association useless for screen readers. Fixed by using `React.cloneElement` to inject the attribute directly onto the child form control. `PasswordModal` and `VerifyModal` backdrops now have `role="presentation"` so they aren't announced as generic containers alongside the inner `role="dialog"` panel.
+
+### feat(ux): Mod-J terminal toggle, Escape lang-switch dismiss, remove dead VerdictPanel (2026-05-29)
+Three UX improvements: (1) Cmd+J / Ctrl+J keyboard shortcut in the CodeMirror keymap toggles the terminal panel, mirroring VS Code's panel toggle — uses a stable ref so the closure doesn't capture a stale version of toggleTerminal; (2) Escape key on the lang-switch confirmation banner dismisses it without needing to click Cancel; (3) Deleted VerdictPanel.tsx (218 lines of dead code — TerminalPanel fully replaced it and has been the active component since Phase 9). The new Ctrl+J shortcut is documented in KeyboardShortcutsModal.
+
 ### fix(a11y): proper role/focus-trap/restoration in PasswordModal + VerifyModal (2026-05-29)
 Moved `role="dialog"`, `aria-modal="true"`, `aria-labelledby` from the backdrop div to the inner panel div in both modals — screen readers now announce them correctly as dialogs. Added `tabIndex={-1}` + `ref={dialogRef}` to inner panel. Extended the `onKeyDown` useEffect to trap Tab/Shift-Tab within focusable elements inside the dialog. Added `returnFocusRef` + cleanup to restore focus to the triggering element when the modal unmounts.
 
