@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2716** problems; 8442 tests green. Batches 102–203 + KaTeX UX complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2722** problems; 8457 tests green. Batches 102–203 + 201b + KaTeX UX complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 204+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 201b — winning-player-coin, snake-matrix, distribute-elements-i, max-len-substr-2occ, partition-diff-k (2026-05-29)
+Five new problems: `find-the-winning-player-in-coin-game` (easy/math, floor(y/3)<x → Alice wins), `snake-in-matrix` (easy/simulation, track r/c from direction commands, return r*n+c), `distribute-elements-into-two-arrays-i` (easy/simulation, greedy split on last-element comparison), `maximum-length-substring-with-two-occurrences` (easy/sliding-window, shrink when any char freq>2), `partition-array-such-that-maximum-difference-is-k` (medium/arrays, sort+greedy group by max-min≤k). Also installed remark-math + rehype-katex + katex for math rendering. Bank at **2722**; 8457 tests.
 
 ### feat(bank): batch 203 — sum-of-last-k, count-strings-length-k, max-of-min-values, product-of-last-two (2026-05-29)
 Four new easy problems: `sum-of-last-k-elements` (easy/arrays+math, slice last k and sum), `count-strings-of-length-k` (easy/arrays+strings, filter by word.length===k), `maximum-of-minimum-values` (easy/arrays+math, max of per-row minimums in 2D matrix), `product-of-last-two` (easy/arrays+math, nums[n-2]*nums[n-1]). Bank at **2716**; 8442 tests.
