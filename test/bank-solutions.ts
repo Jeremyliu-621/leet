@@ -43308,4 +43308,23 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const matrix = args[0] as number[][];
     return matrix.filter(row => row.every(v => v === 0)).length;
   },
+  // batch 203 ---------------------------------------------------------------
+  'sum-of-last-k-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    return nums.slice(nums.length - k).reduce((s, v) => s + v, 0);
+  },
+  'count-strings-of-length-k': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const k = args[1] as number;
+    return words.filter(w => w.length === k).length;
+  },
+  'maximum-of-minimum-values': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    return Math.max(...matrix.map(row => Math.min(...row)));
+  },
+  'product-of-last-two': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return nums[nums.length - 2]! * nums[nums.length - 1]!;
+  },
 };

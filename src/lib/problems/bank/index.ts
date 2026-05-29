@@ -3037,6 +3037,11 @@ import { problem as tripleSum } from './triple-sum';
 import { problem as countEvenLengthStrings } from './count-even-length-strings';
 import { problem as largestElementInEachRow } from './largest-element-in-each-row';
 import { problem as countRowsWithAllZeros } from './count-rows-with-all-zeros';
+// batch 203 — easy/arrays+math, easy/arrays+strings, easy/arrays+math, easy/arrays+math
+import { problem as sumOfLastKElements } from './sum-of-last-k-elements';
+import { problem as countStringsOfLengthK } from './count-strings-of-length-k';
+import { problem as maximumOfMinimumValues } from './maximum-of-minimum-values';
+import { problem as productOfLastTwo } from './product-of-last-two';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6115,4 +6120,9 @@ export const problems: readonly Problem[] = [
   countEvenLengthStrings,
   largestElementInEachRow,
   countRowsWithAllZeros,
+  // batch 203 — easy/arrays+math, easy/arrays+strings, easy/arrays+math, easy/arrays+math
+  sumOfLastKElements,
+  countStringsOfLengthK,
+  maximumOfMinimumValues,
+  productOfLastTwo,
 ];

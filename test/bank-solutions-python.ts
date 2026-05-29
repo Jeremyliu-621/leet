@@ -43139,4 +43139,21 @@ def largestElementInEachRow(matrix):
 def countRowsWithAllZeros(matrix):
     return sum(1 for row in matrix if all(v == 0 for v in row))
 `,
+  // batch 203 ---------------------------------------------------------------
+  'sum-of-last-k-elements': `
+def sumOfLastKElements(nums, k):
+    return sum(nums[-k:])
+`,
+  'count-strings-of-length-k': `
+def countStringsOfLengthK(words, k):
+    return sum(1 for w in words if len(w) == k)
+`,
+  'maximum-of-minimum-values': `
+def maximumOfMinimumValues(matrix):
+    return max(min(row) for row in matrix)
+`,
+  'product-of-last-two': `
+def productOfLastTwo(nums):
+    return nums[-2] * nums[-1]
+`,
 };
