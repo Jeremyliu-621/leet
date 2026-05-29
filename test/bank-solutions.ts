@@ -44418,4 +44418,74 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     words[0] = words[0]![0]!.toUpperCase() + words[0]!.slice(1);
     return words.join(' ');
   },
+
+  // batch 215 ---------------------------------------------------------------
+  'partition-string-into-substrings-with-values-at-most-k': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    let count = 1, cur = 0;
+    for (const c of s) {
+      const d = parseInt(c, 10);
+      if (d > k) return -1;
+      const next = cur * 10 + d;
+      if (next > k) { count++; cur = d; }
+      else cur = next;
+    }
+    return count;
+  },
+  'find-consecutive-integers-from-a-data-stream': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const argsList = args[1] as number[][];
+    const [value, k] = argsList[0]!;
+    let streak = 0;
+    const results: (boolean | null)[] = [null];
+    for (let i = 1; i < ops.length; i++) {
+      const num = argsList[i]![0]!;
+      streak = num === value ? streak + 1 : 0;
+      results.push(streak >= k!);
+    }
+    return results;
+  },
+  'make-number-of-distinct-characters-equal': (...args: unknown[]) => {
+    const word1 = args[0] as string;
+    const word2 = args[1] as string;
+    const freq1 = new Array(26).fill(0);
+    const freq2 = new Array(26).fill(0);
+    for (const c of word1) freq1[c.charCodeAt(0) - 97]++;
+    for (const c of word2) freq2[c.charCodeAt(0) - 97]++;
+    const f1 = freq1.filter(x => x > 0).length;
+    const f2 = freq2.filter(x => x > 0).length;
+    for (let i = 0; i < 26; i++) {
+      if (freq1[i] === 0) continue;
+      for (let j = 0; j < 26; j++) {
+        if (freq2[j] === 0) continue;
+        if (i === j) { if (f1 === f2) return true; continue; }
+        const d1 = (freq1[i] === 1 ? -1 : 0) + (freq1[j] === 0 ? 1 : 0);
+        const d2 = (freq2[j] === 1 ? -1 : 0) + (freq2[i] === 0 ? 1 : 0);
+        if (f1 + d1 === f2 + d2) return true;
+      }
+    }
+    return false;
+  },
+  'shortest-string-that-contains-three-strings': (...args: unknown[]) => {
+    const a = args[0] as string, b = args[1] as string, c = args[2] as string;
+    const ov = (s: string, t: string): number => {
+      for (let l = Math.min(s.length, t.length); l > 0; l--)
+        if (s.endsWith(t.slice(0, l))) return l;
+      return 0;
+    };
+    const mg = (s: string, t: string): string => {
+      if (s.includes(t)) return s;
+      if (t.includes(s)) return t;
+      return s + t.slice(ov(s, t));
+    };
+    const strs = [a, b, c];
+    const perms: [number, number, number][] = [[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]];
+    let best = '';
+    for (const [i, j, k] of perms) {
+      const s = mg(mg(strs[i]!, strs[j]!), strs[k]!);
+      if (!best || s.length < best.length || (s.length === best.length && s < best)) best = s;
+    }
+    return best;
+  },
 };

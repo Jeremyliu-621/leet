@@ -3150,6 +3150,11 @@ import { problem as countArtifactsThatCanBeExtracted } from './count-artifacts-t
 import { problem as closestDessertCost } from './closest-dessert-cost';
 import { problem as wateringPlantsII } from './watering-plants-ii';
 import { problem as rearrangeWordsInASentence } from './rearrange-words-in-a-sentence';
+// batch 215 — medium/strings+dp, medium/design+simulation, medium/hash-map+strings, medium/strings
+import { problem as partitionStringIntoSubstringsWithValuesAtMostK } from './partition-string-into-substrings-with-values-at-most-k';
+import { problem as findConsecutiveIntegersFromADataStream } from './find-consecutive-integers-from-a-data-stream';
+import { problem as makeNumberOfDistinctCharactersEqual } from './make-number-of-distinct-characters-equal';
+import { problem as shortestStringThatContainsThreeStrings } from './shortest-string-that-contains-three-strings';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6341,4 +6346,9 @@ export const problems: readonly Problem[] = [
   closestDessertCost,
   wateringPlantsII,
   rearrangeWordsInASentence,
+  // batch 215
+  partitionStringIntoSubstringsWithValuesAtMostK,
+  findConsecutiveIntegersFromADataStream,
+  makeNumberOfDistinctCharactersEqual,
+  shortestStringThatContainsThreeStrings,
 ];

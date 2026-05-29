@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2802** problems; 8688+ tests green. Batches 102–214 + 212-addendum + concurrent 213b + 214b + a11y + total-solved UX complete.
+**Current focus:** Bank at **2806** problems; 8712 tests green. Batches 102–215 + concurrent 212-addendum + 213b + 214b + a11y + total-solved UX complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 215+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 216+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 215 — partition-string-values-at-most-k, consecutive-integers-data-stream, make-distinct-chars-equal, shortest-string-contains-three (2026-05-29)
+Four new medium problems: `partition-string-into-substrings-with-values-at-most-k` (greedy digit extension), `find-consecutive-integers-from-a-data-stream` (design/simulation, streak counter), `make-number-of-distinct-characters-equal` (hash-map, enumerate 676 pairs, check delta per swap), `shortest-string-that-contains-three-strings` (try all 6 orderings, greedy overlap merge + lex tiebreak). Bank at **2806**; 8712 tests.
 
 ### feat(bank): batch 214b (concurrent) — count-artifacts, closest-dessert, watering-plants-ii, rearrange-words (2026-05-29)
 Four new medium problems: `count-artifacts-that-can-be-extracted` (medium/arrays+hash-map+simulation, Set-based cell lookup for rectangle coverage), `closest-dessert-cost` (medium/dynamic-programming+arrays+backtracking, DFS over toppings with pruning + tie-breaking), `watering-plants-ii` (medium/arrays+two-pointers+simulation, two-pointer meeting-in-middle with per-person refill tracking), `rearrange-words-in-a-sentence` (medium/strings+simulation, stable sort by word length + capitalize). Bank at **2802**.

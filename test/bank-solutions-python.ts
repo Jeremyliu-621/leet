@@ -44220,4 +44220,70 @@ def arrangeWords(text):
     words[0] = words[0][0].upper() + words[0][1:]
     return ' '.join(words)
 `,
+
+  // batch 215 ---------------------------------------------------------------
+  'partition-string-into-substrings-with-values-at-most-k': `
+def minimumPartition(s, k):
+    count, cur = 1, 0
+    for c in s:
+        d = int(c)
+        if d > k:
+            return -1
+        nxt = cur * 10 + d
+        if nxt > k:
+            count += 1
+            cur = d
+        else:
+            cur = nxt
+    return count
+`,
+  'find-consecutive-integers-from-a-data-stream': `
+def dataStream(ops, args):
+    value, k = args[0][0], args[0][1]
+    streak = 0
+    results = [None]
+    for i in range(1, len(ops)):
+        num = args[i][0]
+        streak = streak + 1 if num == value else 0
+        results.append(streak >= k)
+    return results
+`,
+  'make-number-of-distinct-characters-equal': `
+def isItPossible(word1, word2):
+    from collections import Counter
+    freq1 = Counter(word1)
+    freq2 = Counter(word2)
+    f1 = len(freq1)
+    f2 = len(freq2)
+    for c1 in list(freq1.keys()):
+        for c2 in list(freq2.keys()):
+            if c1 == c2:
+                if f1 == f2:
+                    return True
+                continue
+            d1 = (-1 if freq1[c1] == 1 else 0) + (1 if freq1.get(c2, 0) == 0 else 0)
+            d2 = (-1 if freq2[c2] == 1 else 0) + (1 if freq2.get(c1, 0) == 0 else 0)
+            if f1 + d1 == f2 + d2:
+                return True
+    return False
+`,
+  'shortest-string-that-contains-three-strings': `
+def minimumString(a, b, c):
+    def overlap(s, t):
+        for l in range(min(len(s), len(t)), 0, -1):
+            if s.endswith(t[:l]):
+                return l
+        return 0
+    def merge(s, t):
+        if t in s: return s
+        if s in t: return t
+        return s + t[overlap(s, t):]
+    from itertools import permutations
+    best = None
+    for perm in permutations([a, b, c]):
+        s = merge(merge(perm[0], perm[1]), perm[2])
+        if best is None or len(s) < len(best) or (len(s) == len(best) and s < best):
+            best = s
+    return best
+`,
 };
