@@ -3064,11 +3064,11 @@ import { problem as flatten2dArray } from './flatten-2d-array';
 import { problem as countElementsGreaterThanK } from './count-elements-greater-than-k';
 import { problem as sortWordsByLength } from './sort-words-by-length';
 import { problem as sumOfPositiveElements } from './sum-of-positive-elements';
-// batch 204b — easy/strings+arrays, medium/arrays+bit-manipulation, medium/arrays+sliding-window, easy/arrays+hash-map
+// batch 204b — easy/strings+arrays, medium/arrays+bit-manipulation, easy/arrays+hash-map, medium/arrays+sliding-window
 import { problem as firstPalindromeInArray } from './first-palindrome-in-array';
 import { problem as rangeProductQueriesOfPowers } from './range-product-queries-of-powers';
-import { problem as maximumFrequencyAfterOperationsI } from './maximum-frequency-after-operations-i';
 import { problem as checkIfAnArrayIsConsecutive } from './check-if-an-array-is-consecutive';
+import { problem as maximumFrequencyAfterOperationsI } from './maximum-frequency-after-operations-i';
 // batch 205 — easy/arrays+math, easy/arrays+hash-map, easy/arrays, easy/arrays+strings
 import { problem as arrayAverage } from './array-average';
 import { problem as findElementsAppearingExactlyTwice } from './find-elements-appearing-exactly-twice';
@@ -6189,11 +6189,11 @@ export const problems: readonly Problem[] = [
   countElementsGreaterThanK,
   sortWordsByLength,
   sumOfPositiveElements,
-  // batch 204b — easy/strings+arrays, medium/arrays+bit-manipulation, medium/arrays+sliding-window, easy/arrays+hash-map
+  // batch 204b — easy/strings+arrays, medium/arrays+bit-manipulation, easy/arrays+hash-map, medium/arrays+sliding-window
   firstPalindromeInArray,
   rangeProductQueriesOfPowers,
-  maximumFrequencyAfterOperationsI,
   checkIfAnArrayIsConsecutive,
+  maximumFrequencyAfterOperationsI,
   // batch 205 — easy/arrays+math, easy/arrays+hash-map, easy/arrays, easy/arrays+strings
   arrayAverage,
   findElementsAppearingExactlyTwice,

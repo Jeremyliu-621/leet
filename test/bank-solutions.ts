@@ -43530,6 +43530,13 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       return Number(prod);
     });
   },
+  'check-if-an-array-is-consecutive': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const mn = Math.min(...nums);
+    const mx = Math.max(...nums);
+    return mx - mn + 1 === n && new Set(nums).size === n;
+  },
   'maximum-frequency-after-operations-i': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const k = args[1] as number;
@@ -43608,12 +43615,5 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   'all-elements-positive': (...args: unknown[]) => {
     const nums = args[0] as number[];
     return nums.every(v => v > 0);
-  },
-  'check-if-an-array-is-consecutive': (...args: unknown[]) => {
-    const nums = args[0] as number[];
-    const n = nums.length;
-    const mn = Math.min(...nums);
-    const mx = Math.max(...nums);
-    return mx - mn + 1 === n && new Set(nums).size === n;
   },
 };
