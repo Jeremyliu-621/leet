@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2274** problems; 7116 tests green. Batches 102–151 complete. UX polish ongoing.
+**Current focus:** Bank at **2275** problems; 7119 tests green. Batches 102–151 complete. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 152+); UX polish; accessibility audit.
+
+### feat(bank): add count-ways-to-rearrange-sticks-with-k-visible (hard/math+dp) (2026-05-29)
+Unsigned Stirling numbers of the first kind via DP. BigInt reference solution to avoid overflow. Bank at **2275**; 7119 tests.
 
 ### feat(bank): add batch 151 — 6 orphan registrations + 3 new solutions (2026-05-29)
 Registered 6 previously unregistered problem files: `all-divisions-with-the-highest-score-of-a-binary-array` (medium/arrays, linear sweep score), `convert-an-array-into-a-2d-array-with-conditions` (medium/arrays+hash-map, occurrence-based row assignment), `replace-the-substring-for-balanced-string` (medium/strings+sliding-window, shrink window while external counts ≤ n/4), `minimum-cost-to-make-at-least-one-valid-path-in-a-grid` (hard/shortest-path, 0-1 BFS), `queries-on-a-permutation-with-key` (medium/BIT+simulation, move-to-front array), `sum-of-floored-pairs` (hard/BIT+math, O(MAX·log MAX) harmonic series). Added JS+Python solutions for the 3 missing ones. Bank at **2271**; 7107 tests.
