@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2487** problems; 7755 tests green. Batches 102–173 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2491** problems; 7767 tests green. Batches 102–174 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 174+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 175+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 174 — books-on-shelf (medium), subarray-pattern-match (medium), adjacent-color (medium), special-substring-ii (medium) (2026-05-29)
+Four new problems: `maximum-number-of-books-on-a-shelf` (medium/dp, O(n²) DP — dp[i]=min height for first i books, scan back while width≤shelfWidth), `number-of-subarrays-that-match-a-pattern` (medium/arrays+strings, transform to sign array then KMP O(n+m)), `number-of-adjacent-elements-with-the-same-color` (medium/simulation, O(1) per query — track running adjacent-pair count, update on each coloring), `find-longest-special-substring-that-occurs-thrice-ii` (medium/strings, run-length encoding per char + binary search on length — max l with ≥3 total occurrences). Bank at **2491**; 7767 tests.
 
 ### feat(bank): batch 173 — 4 new problems (dp/easy, dp/medium, graph/medium, binary-search/medium) (2026-05-29)
 n-th-tribonacci-number (easy/dp+math, rolling 3-variable iteration T0=0,T1=1,T2=1), solving-questions-with-brainpower (medium/dp, right-to-left DP: dp[i]=max(points[i]+dp[i+bp+1], dp[i+1])), detonate-the-maximum-bombs (medium/graph, directed graph edge i→j if dist²≤ri², BFS from each start), h-index-ii (medium/binary-search, binary search on sorted citations: find max h where citations[n-h]≥h). Bank at **2487**; 7755 tests.
