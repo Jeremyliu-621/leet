@@ -2873,6 +2873,10 @@ import { problem as minimumAreaToCovertAllOnesII } from './minimum-area-to-cover
 import { problem as minimumOperationsToMakeSubsequence } from './minimum-operations-to-make-a-subsequence';
 import { problem as replaceNonCoprimeNumbers } from './replace-non-coprime-numbers-in-array';
 import { problem as maximumNumberOfBooks } from './maximum-number-of-books-you-can-take';
+// batch 180 — easy/binary-search, medium/arrays+dp, easy/arrays
+import { problem as binarySearch } from './binary-search';
+import { problem as wiggleSequence } from './wiggle-sequence';
+import { problem as validWordSquare } from './valid-word-square';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5785,4 +5789,8 @@ export const problems: readonly Problem[] = [
   minimumOperationsToMakeSubsequence,
   replaceNonCoprimeNumbers,
   maximumNumberOfBooks,
+  // batch 180 — easy/binary-search, medium/arrays+dp, easy/arrays
+  binarySearch,
+  wiggleSequence,
+  validWordSquare,
 ];

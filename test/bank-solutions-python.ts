@@ -41518,4 +41518,45 @@ def isSubPathRunner(list_arr, tree_arr):
     return is_sub_path(build_list(list_arr), build_tree(tree_arr))
 `,
 
+  // batch 180 — easy/binary-search, medium/arrays+dp, easy/arrays
+  'binary-search': `
+def search(nums, target):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    lo, hi = 0, len(nums) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if nums[mid] == target:
+            return mid
+        elif nums[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return -1
+`,
+
+  'wiggle-sequence': `
+def wiggleMaxLength(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    if not nums:
+        return 0
+    up = down = 1
+    for i in range(1, len(nums)):
+        if nums[i] > nums[i - 1]:
+            up = down + 1
+        elif nums[i] < nums[i - 1]:
+            down = up + 1
+    return max(up, down)
+`,
+
+  'valid-word-square': `
+def validWordSquare(words):
+    if hasattr(words, 'to_py'): words = list(words.to_py())
+    words = [str(w) if not isinstance(w, str) else w for w in words]
+    for i in range(len(words)):
+        for j in range(len(words[i])):
+            if j >= len(words) or i >= len(words[j]) or words[i][j] != words[j][i]:
+                return False
+    return True
+`,
+
 };

@@ -41450,4 +41450,41 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return isSubPath(buildList(listArr), buildTree(treeArr));
   },
 
+  // batch 180 — easy/binary-search, medium/arrays+dp, easy/arrays
+  'binary-search': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    let lo = 0, hi = nums.length - 1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (nums[mid] === target) return mid;
+      if (nums[mid]! < target) lo = mid + 1;
+      else hi = mid - 1;
+    }
+    return -1;
+  },
+
+  'wiggle-sequence': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    if (nums.length === 0) return 0;
+    let up = 1, down = 1;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i]! > nums[i - 1]!) up = down + 1;
+      else if (nums[i]! < nums[i - 1]!) down = up + 1;
+    }
+    return Math.max(up, down);
+  },
+
+  'valid-word-square': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    for (let i = 0; i < words.length; i++) {
+      for (let j = 0; j < words[i]!.length; j++) {
+        if (j >= words.length || i >= words[j]!.length || words[i]![j] !== words[j]![i]) {
+          return false;
+        }
+      }
+    }
+    return true;
+  },
+
 };
