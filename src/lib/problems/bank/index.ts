@@ -3131,6 +3131,10 @@ import { problem as checkIfAll1sAreAtLeastLengthKPlacesApart } from './check-if-
 import { problem as checkIfBinaryStringHasAtMostOneSegmentOfOnes } from './check-if-binary-string-has-at-most-one-segment-of-ones';
 import { problem as countDistinctIntegersAfterReverseOperations } from './count-distinct-integers-after-reverse-operations';
 import { problem as maximizeTheConfusionOfAnExam } from './maximize-the-confusion-of-an-exam';
+// batch 214 — medium/math+dp, medium/arrays+dp, easy/arrays+simulation
+import { problem as countSpecialIntegers } from './count-special-integers';
+import { problem as minimumMovesToSpreadStonesOverGrid } from './minimum-moves-to-spread-stones-over-grid';
+import { problem as minMaxGame } from './min-max-game';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6303,4 +6307,8 @@ export const problems: readonly Problem[] = [
   checkIfBinaryStringHasAtMostOneSegmentOfOnes,
   countDistinctIntegersAfterReverseOperations,
   maximizeTheConfusionOfAnExam,
+  // batch 214
+  countSpecialIntegers,
+  minimumMovesToSpreadStonesOverGrid,
+  minMaxGame,
 ];

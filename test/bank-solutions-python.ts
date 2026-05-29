@@ -43944,4 +43944,75 @@ def maxConsecutiveAnswers(answerKey, k):
         return best
     return max(max_window('T'), max_window('F'))
 `,
+  'count-special-integers': `
+def countSpecialNumbers(n):
+    s = str(n)
+    digits = [int(c) for c in s]
+    length = len(digits)
+    result = 0
+    for k in range(1, length):
+        if k == 1:
+            result += 9
+        else:
+            perm = 1
+            for j in range(k - 1):
+                perm *= (9 - j)
+            result += 9 * perm
+    used = set()
+    for i, d in enumerate(digits):
+        start = 1 if i == 0 else 0
+        for x in range(start, d):
+            if x not in used:
+                p = 1
+                avail = 10 - len(used) - 1
+                for _ in range(length - i - 1):
+                    p *= avail
+                    avail -= 1
+                result += p
+        if d in used:
+            break
+        used.add(d)
+        if i == length - 1:
+            result += 1
+    return result
+`,
+  'minimum-moves-to-spread-stones-over-grid': `
+def minimumMoves(grid):
+    zeros, extras = [], []
+    for r in range(3):
+        for c in range(3):
+            if grid[r][c] == 0:
+                zeros.append((r, c))
+            for _ in range(grid[r][c] - 1):
+                extras.append((r, c))
+    if not zeros:
+        return 0
+    n = len(zeros)
+    best = [float('inf')]
+    perm = list(range(n))
+    def bt(i):
+        if i == n:
+            cost = sum(abs(zeros[j][0]-extras[perm[j]][0])+abs(zeros[j][1]-extras[perm[j]][1]) for j in range(n))
+            best[0] = min(best[0], cost)
+            return
+        for j in range(i, n):
+            perm[i], perm[j] = perm[j], perm[i]
+            bt(i + 1)
+            perm[i], perm[j] = perm[j], perm[i]
+    bt(0)
+    return best[0]
+`,
+  'min-max-game': `
+def minMaxGame(nums):
+    while len(nums) > 1:
+        new_nums = []
+        for i in range(0, len(nums), 2):
+            half = i // 2
+            if half % 2 == 0:
+                new_nums.append(min(nums[i], nums[i+1]))
+            else:
+                new_nums.append(max(nums[i], nums[i+1]))
+        nums = new_nums
+    return nums[0]
+`,
 };

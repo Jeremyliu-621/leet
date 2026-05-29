@@ -44131,4 +44131,77 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     };
     return Math.max(maxWindow('T'), maxWindow('F'));
   },
+  'count-special-integers': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const s = String(n);
+    const digits = s.split('').map(Number);
+    const len = digits.length;
+    let result = 0;
+    for (let k = 1; k < len; k++) {
+      if (k === 1) { result += 9; continue; }
+      let perm = 1;
+      for (let j = 0; j < k - 1; j++) perm *= (9 - j);
+      result += 9 * perm;
+    }
+    const used = new Set<number>();
+    for (let i = 0; i < len; i++) {
+      const d = digits[i]!;
+      const start = i === 0 ? 1 : 0;
+      for (let x = start; x < d; x++) {
+        if (!used.has(x)) {
+          let p = 1;
+          let avail = 10 - used.size - 1;
+          for (let j = 0; j < len - i - 1; j++) p *= avail--;
+          result += p;
+        }
+      }
+      if (used.has(d)) break;
+      used.add(d);
+      if (i === len - 1) result++;
+    }
+    return result;
+  },
+  'minimum-moves-to-spread-stones-over-grid': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const zeros: number[][] = [], extras: number[][] = [];
+    for (let r = 0; r < 3; r++)
+      for (let c = 0; c < 3; c++) {
+        if (grid[r]![c] === 0) zeros.push([r, c]);
+        for (let k = 1; k < grid[r]![c]!; k++) extras.push([r, c]);
+      }
+    if (zeros.length === 0) return 0;
+    const n = zeros.length;
+    const perm = [...Array(n).keys()];
+    let best = Infinity;
+    const bt = (i: number): void => {
+      if (i === n) {
+        let cost = 0;
+        for (let j = 0; j < n; j++) {
+          const z = zeros[j]!, e = extras[perm[j]!]!;
+          cost += Math.abs(z[0]! - e[0]!) + Math.abs(z[1]! - e[1]!);
+        }
+        best = Math.min(best, cost);
+        return;
+      }
+      for (let j = i; j < n; j++) {
+        [perm[i], perm[j]] = [perm[j]!, perm[i]!];
+        bt(i + 1);
+        [perm[i], perm[j]] = [perm[j]!, perm[i]!];
+      }
+    };
+    bt(0);
+    return best;
+  },
+  'min-max-game': (...args: unknown[]) => {
+    let nums = [...(args[0] as number[])];
+    while (nums.length > 1) {
+      const newNums: number[] = [];
+      for (let i = 0; i < nums.length; i += 2) {
+        const half = i / 2;
+        newNums.push(half % 2 === 0 ? Math.min(nums[i]!, nums[i + 1]!) : Math.max(nums[i]!, nums[i + 1]!));
+      }
+      nums = newNums;
+    }
+    return nums[0]!;
+  },
 };
