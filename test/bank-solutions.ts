@@ -41680,4 +41680,38 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return result;
   },
+  'count-submatrices-with-all-ones': (...args: unknown[]) => {
+    const mat = args[0] as number[][];
+    const n = mat[0]!.length;
+    let total = 0;
+    const height = new Array<number>(n).fill(0);
+    for (const row of mat) {
+      for (let j = 0; j < n; j++) height[j] = row[j] === 0 ? 0 : height[j]! + 1;
+      for (let j = 0; j < n; j++) {
+        let minH = height[j]!;
+        for (let k = j; k >= 0; k--) { minH = Math.min(minH, height[k]!); total += minH; }
+      }
+    }
+    return total;
+  },
+  'minimum-swaps-to-make-strings-equal': (...args: unknown[]) => {
+    const s1 = args[0] as string, s2 = args[1] as string;
+    let xy = 0, yx = 0;
+    for (let i = 0; i < s1.length; i++) {
+      if (s1[i] !== s2[i]) { if (s1[i] === 'x') xy++; else yx++; }
+    }
+    if ((xy + yx) % 2 !== 0) return -1;
+    return Math.floor(xy / 2) + Math.floor(yx / 2) + 2 * (xy % 2);
+  },
+  'count-number-of-special-subsequences': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const MOD = 1e9 + 7;
+    let dp0 = 0, dp1 = 0, dp2 = 0;
+    for (const n of nums) {
+      if (n === 0) dp0 = (2 * dp0 + 1) % MOD;
+      else if (n === 1) dp1 = (2 * dp1 + dp0) % MOD;
+      else if (n === 2) dp2 = (2 * dp2 + dp1) % MOD;
+    }
+    return dp2;
+  },
 };
