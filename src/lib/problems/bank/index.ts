@@ -3004,6 +3004,11 @@ import { problem as findAllAnagrams } from './find-all-anagrams';
 import { problem as rotateArrayLeft } from './rotate-array-left';
 // batch 199 — medium/arrays+sliding-window, easy/arrays+simulation, easy/arrays+simulation, easy/arrays+two-pointers
 import { problem as mergeSortedArrays } from './merge-sorted-arrays';
+// batch 200 — easy/arrays, easy/arrays, easy/arrays, easy/strings+arrays
+import { problem as sumOfRowMinimums } from './sum-of-row-minimums';
+import { problem as longestRunOfEqualElements } from './longest-run-of-equal-elements';
+import { problem as sumOfColumnMaximums } from './sum-of-column-maximums';
+import { problem as countWordsStartingWithVowel } from './count-words-starting-with-vowel';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6049,4 +6054,9 @@ export const problems: readonly Problem[] = [
   rotateArrayLeft,
   // batch 199 — medium/arrays+sliding-window, easy/arrays+simulation, easy/arrays+simulation, easy/arrays+two-pointers
   mergeSortedArrays,
+  // batch 200 — easy/arrays, easy/arrays, easy/arrays, easy/strings+arrays
+  sumOfRowMinimums,
+  longestRunOfEqualElements,
+  sumOfColumnMaximums,
+  countWordsStartingWithVowel,
 ];

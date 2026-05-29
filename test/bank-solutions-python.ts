@@ -42762,6 +42762,32 @@ def minWindowAllVowels(s):
             lo += 1
     return best if best != float('inf') else -1
 `,
+  // batch 198 ---------------------------------------------------------------
+  'sum-of-row-minimums': `
+def sumOfRowMinimums(grid):
+    return sum(min(row) for row in grid)
+`,
+  'longest-run-of-equal-elements': `
+def longestRunOfEqualElements(nums):
+    cur = max_run = 1
+    for i in range(1, len(nums)):
+        if nums[i] == nums[i - 1]:
+            cur += 1
+            if cur > max_run:
+                max_run = cur
+        else:
+            cur = 1
+    return max_run
+`,
+  'sum-of-column-maximums': `
+def sumOfColumnMaximums(grid):
+    return sum(max(grid[i][j] for i in range(len(grid))) for j in range(len(grid[0])))
+`,
+  'count-words-starting-with-vowel': `
+def countWordsStartingWithVowel(words):
+    vowels = set('aeiou')
+    return sum(1 for w in words if w[0] in vowels)
+`,
   // batch 197 ---------------------------------------------------------------
   'sum-of-even-indexed-elements': `
 def sumEvenIndexed(nums):

@@ -8,15 +8,18 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2685** problems; 8349 tests green. Batches 102–199 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2689** problems; 8361 tests green. Batches 102–200 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 200+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 201+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 200 — sum-row-mins, longest-equal-run, sum-col-maxes, count-vowel-start-words (2026-05-29)
+Four new easy problems: `sum-of-row-minimums` (easy/arrays, sum min of each row), `longest-run-of-equal-elements` (easy/arrays, linear scan cur/max run), `sum-of-column-maximums` (easy/arrays, sum max of each column), `count-words-starting-with-vowel` (easy/strings+arrays, vowel Set check on first char). Bank at **2689**; 8361 tests.
 
 ### feat(bank): batch 199 — merge-sorted-arrays (2026-05-29)
 One genuinely new problem added (3 others — longest-turbulent-subarray, transpose-matrix, count-good-triplets — already existed). `merge-sorted-arrays` (easy/arrays+two-pointers, classic two-pointer merge). Bank at **2685**; 8349 tests.
 
 ### feat(bank): batch 198 — count-substrings-no-repeat, max-product-two-elements, find-all-anagrams, rotate-array-left (2026-05-29)
-Four new problems: `count-substrings-without-repeating` (medium/strings+sliding-window+hash-map, two-pointer shrink + right-left+1 count), `maximum-product-of-two-elements` (easy/arrays+math, find top-2 values, return (max1-1)*(max2-1)), `find-all-anagrams` (medium/strings+sliding-window+hash-map, diff-count approach: count=p−window, track non-zeros), `rotate-array-left` (easy/arrays+math, k%n slice-and-concat). Fixed find-all-anagrams reference solution (was incorrectly checking matches===26; corrected to track diff of zero-count). Bank at **2685**; 8346 tests.
+Four new problems: `count-substrings-without-repeating` (medium/strings+sliding-window+hash-map, two-pointer shrink + right-left+1 count), `maximum-product-of-two-elements` (easy/arrays+math, find top-2 values, return (max1-1)*(max2-1)), `find-all-anagrams` (medium/strings+sliding-window+hash-map, diff-count approach: count=p−window, track non-zeros), `rotate-array-left` (easy/arrays+math, k%n slice-and-concat). Bank at **2685**; 8346 tests.
 
 ### feat(bank): batch 195b — k-distant-indices, remove-colored-pieces, count-negatives-matrix, odd-cells-matrix, min-ops-maximize-last (2026-05-29)
 Five new problems from concurrent batch: `find-all-k-distant-indices-in-an-array` (easy/arrays+two-pointers), `remove-colored-pieces-if-both-neighbors-are-the-same-color` (medium/strings+math), `count-negative-numbers-in-a-sorted-matrix` (easy/arrays+binary-search), `cells-with-odd-values-in-a-matrix` (easy/arrays+math+simulation), `minimum-operations-to-maximize-last-elements-in-arrays` (medium/arrays). Bank at **2685** total.

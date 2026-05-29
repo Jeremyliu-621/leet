@@ -42924,6 +42924,32 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return best === Infinity ? -1 : best;
   },
+  // batch 198 ---------------------------------------------------------------
+  'sum-of-row-minimums': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    return grid.reduce((s, row) => s + Math.min(...row), 0);
+  },
+  'longest-run-of-equal-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let cur = 1, max = 1;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i] === nums[i - 1]) { cur++; if (cur > max) max = cur; }
+      else cur = 1;
+    }
+    return max;
+  },
+  'sum-of-column-maximums': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const cols = grid[0]!.length;
+    let sum = 0;
+    for (let j = 0; j < cols; j++) sum += Math.max(...grid.map(r => r[j]!));
+    return sum;
+  },
+  'count-words-starting-with-vowel': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const VOWELS = new Set(['a', 'e', 'i', 'o', 'u']);
+    return words.filter(w => VOWELS.has(w[0]!)).length;
+  },
   // batch 197 ---------------------------------------------------------------
   'sum-of-even-indexed-elements': (...args: unknown[]) => {
     const nums = args[0] as number[];
