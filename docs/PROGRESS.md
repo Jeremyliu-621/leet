@@ -8,12 +8,15 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2797** problems; 8685 tests green. Batches 102–214 + concurrent 213b + a11y + total-solved UX complete.
+**Current focus:** Bank at **2798** problems; 8685+ tests green. Batches 102–214 + 212-addendum + concurrent 213b + a11y + total-solved UX complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 215+); UX polish per LEETCODE_PARITY.md.
 
 ### feat(bank): batch 214 — count-special-integers, minimum-moves-spread-stones, min-max-game (2026-05-29)
-Three new problems: `count-special-integers` (medium/math+dp, digit DP with bitmask of used digits), `minimum-moves-to-spread-stones-over-grid` (medium/arrays+dp, permutation backtracking minimizing Manhattan distance), `min-max-game` (easy/arrays+simulation, alternating min/max halving). Bank at **2791**; 8667 tests.
+Three new problems: `count-special-integers` (hard/math+dp, digit DP with bitmask, 10 hidden tests including n up to 1.2B), `minimum-moves-to-spread-stones-over-grid` (medium/arrays+dp, permutation backtracking minimizing Manhattan distance), `min-max-game` (easy/arrays+simulation, alternating min/max halving). Bank at **2797**; 8685 tests.
+
+### feat(bank): batch 212 addendum — longest-subarray-with-positive-product (2026-05-29)
+One more problem: `longest-subarray-with-positive-product` (medium/arrays+dp, pos/neg DP tracking, 8 hidden tests verified). Bank at **2798**.
 
 ### feat(bank): batch 213b (concurrent) — design-neighbor-sum-service, find-valid-matrix-given-row-column-sums, count-complete-substrings (2026-05-29)
 Three new problems: `design-neighbor-sum-service` (easy/design+arrays+hash-map, grid position map, O(1) adjacent/diagonal sums), `find-valid-matrix-given-row-column-sums` (medium/arrays+math, greedy min(rowSum[i],colSum[j]) fill), `count-complete-substrings` (hard/strings+sliding-window+hash-map, segment on adj-diff>2 then fixed-window per alphabet size t). Bank at **2786**; 8652 tests.

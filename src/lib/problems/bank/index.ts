@@ -3139,7 +3139,9 @@ import { problem as maximizeTheConfusionOfAnExam } from './maximize-the-confusio
 import { problem as designNeighborSumService } from './design-neighbor-sum-service';
 import { problem as findValidMatrixGivenRowColumnSums } from './find-valid-matrix-given-row-column-sums';
 import { problem as countCompleteSubstrings } from './count-complete-substrings';
-// batch 214 — medium/math+dp, medium/arrays+dp, easy/arrays+simulation
+// batch 212 addendum — medium/arrays+dp
+import { problem as longestSubarrayWithPositiveProduct } from './longest-subarray-with-positive-product';
+// batch 214 — hard/math+dp, medium/arrays+dp, easy/arrays+simulation
 import { problem as countSpecialIntegers } from './count-special-integers';
 import { problem as minimumMovesToSpreadStonesOverGrid } from './minimum-moves-to-spread-stones-over-grid';
 import { problem as minMaxGame } from './min-max-game';
@@ -6323,6 +6325,8 @@ export const problems: readonly Problem[] = [
   designNeighborSumService,
   findValidMatrixGivenRowColumnSums,
   countCompleteSubstrings,
+  // batch 212 addendum
+  longestSubarrayWithPositiveProduct,
   // batch 214
   countSpecialIntegers,
   minimumMovesToSpreadStonesOverGrid,

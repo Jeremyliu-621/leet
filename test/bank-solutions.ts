@@ -44326,4 +44326,20 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return total;
   },
+  // batch 212 addendum
+  'longest-subarray-with-positive-product': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let pos = 0, neg = 0, ans = 0;
+    for (const x of nums) {
+      if (x > 0) {
+        [pos, neg] = [pos + 1, neg > 0 ? neg + 1 : 0];
+      } else if (x < 0) {
+        [pos, neg] = [neg > 0 ? neg + 1 : 0, pos + 1];
+      } else {
+        pos = 0; neg = 0;
+      }
+      ans = Math.max(ans, pos);
+    }
+    return ans;
+  },
 };
