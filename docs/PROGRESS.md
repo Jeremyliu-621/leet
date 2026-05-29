@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2371** problems; 7413 tests green. Batches 102–160 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2376** problems; 7428 tests green. Batches 102–161 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 161+); update site count; UX polish.
+**Next up:** More bank growth (batch 162+); update site count; UX polish.
+
+### feat(bank): add batch 161 — frog-jump-ii, collecting-chocolates, partitioning-min-deci-binary, where-will-ball-fall, split-string-max-unique (2026-05-29)
+Five new medium problems: `frog-jump-ii` (medium/arrays+binary-search, two frogs alternate stones — max gap = max of every-other-stone diff), `collecting-chocolates` (medium/arrays+simulation, O(n²) rotation DP with rolling minCost array), `partitioning-into-minimum-number-of-deci-binary-numbers` (medium/strings+math, trivial greedy — answer = max digit), `where-will-the-ball-fall` (medium/arrays+simulation, stuck if nj OOB or grid[r][nj]≠direction), `split-a-string-into-the-maximum-number-of-unique-substrings` (medium/strings+backtracking, DFS with used-set maximize count). JS + Python reference solutions added. Bank at **2376**; 7428 tests.
 
 ### feat(bank): add batch 160 (user-directed) — strictly-palindromic-number, design-bitset, count-substrings-with-fixed-ratio, number-of-integers-with-even-digit-sum (2026-05-29)
 Four new problems: `strictly-palindromic-number` (medium/math, always returns false since n in base n-2 is always "12" — never palindrome), `design-bitset` (medium/design, flip-flag O(1) ops with stored-vs-logical inversion; fix tracked by ones count), `count-substrings-with-fixed-ratio` (medium/strings+hash-map, prefix key = zeros×num2 − ones×num1 hash map), `number-of-integers-with-even-digit-sum` (easy/math, O(1): num//2 if digitSum(num) even else (num-1)//2). Bank at **2371**; 7413 tests.
