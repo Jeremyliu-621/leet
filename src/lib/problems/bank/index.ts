@@ -2456,6 +2456,18 @@ import { problem as countSubarraysEqualBalance } from './count-subarrays-equal-b
 import { problem as longestArithSubarray } from './longest-arithmetic-subarray';
 import { problem as sumAllSubmatrixSums } from './sum-of-all-submatrix-sums';
 
+// batch 144 — strings+stack/medium, arrays/medium, hash-map+simulation/medium
+import { problem as minimumSwapsToMakeBalanced } from './minimum-swaps-to-make-balanced';
+import { problem as findKthLargestXorCoordinateValue } from './find-kth-largest-xor-coordinate-value';
+import { problem as tweetCountsPerFrequency } from './tweet-counts-per-frequency';
+// batch 142b — arrays+stack/medium, arrays/medium, binary-indexed-tree+dp+arrays/hard
+import { problem as beautifulTowersII } from './beautiful-towers-ii';
+import { problem as minimumNumberOfFlipsTOMakeBinaryGridPalindromicII } from './minimum-number-of-flips-to-make-binary-grid-palindromic-ii';
+import { problem as maximumBalancedSubsequenceSum } from './maximum-balanced-subsequence-sum';
+// batch 145b — strings+hash-map/medium, arrays+dp/medium, arrays+dp/medium
+import { problem as findTheLongestSubstringContainingVowelsInEvenCounts } from './find-the-longest-substring-containing-vowels-in-even-counts';
+import { problem as minimizeTheDifferenceBetweenTargetAndChosenElements } from './minimize-the-difference-between-target-and-chosen-elements';
+import { problem as maximumNumberOfOperationsWithTheSameScoreII } from './maximum-number-of-operations-with-the-same-score-ii';
 // batch 146b — arrays+hash-map/medium, tree+graph/medium, arrays+math/medium, math+strings/medium, dp/medium
 import { problem as kDivisibleElementsSubarrays } from './k-divisible-elements-subarrays';
 import { problem as mostProfitablePath } from './most-profitable-path-in-a-tree';
@@ -2469,14 +2481,8 @@ import { problem as minimumPathSumTriangle } from './minimum-path-sum-triangle';
 import { problem as maximizeScoreNumbersInRanges } from './maximize-score-numbers-in-ranges';
 import { problem as maximumEnergyBoostFromTwoDrinks } from './maximum-energy-boost-from-two-drinks';
 import { problem as kthNearestObstacleQueries } from './k-th-nearest-obstacle-queries';
-// batch 149b — arrays/easy, arrays+stack/medium, arrays+dp+BIT/hard, arrays/medium, strings+stack/medium, hash-map/medium
+// batch 149b — arrays/easy
 import { problem as calculateAmountPaidInTaxes } from './calculate-amount-paid-in-taxes';
-import { problem as beautifulTowersII } from './beautiful-towers-ii';
-import { problem as maximumBalancedSubsequenceSum } from './maximum-balanced-subsequence-sum';
-import { problem as minimumFlipsBinaryGridPalindromicII } from './minimum-number-of-flips-to-make-binary-grid-palindromic-ii';
-import { problem as minimumSwapsMakeBalanced } from './minimum-swaps-to-make-balanced';
-import { problem as tweetCountsPerFrequency } from './tweet-counts-per-frequency';
-import { problem as findKthLargestXorCoordinateValue } from './find-kth-largest-xor-coordinate-value';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4956,7 +4962,7 @@ export const problems: readonly Problem[] = [
   applyBitwiseOpsStringsEqual,
   minAreaCoverAllOnesI,
   maxTotalCostAlternatingSubarrays,
-  // batch 146 — register 7 orphan problems (strings/easy, strings/medium, graph/medium, arrays/medium, arrays/hard, graph/medium, arrays/medium)
+  // batch 146 — register 7 orphan problems
   reverseVowelsOfString,
   applyOpsToMakeStringEmpty,
   findAllRecipesFromSupplies,
@@ -4970,6 +4976,18 @@ export const problems: readonly Problem[] = [
   longestArithSubarray,
   sumAllSubmatrixSums,
 
+  // batch 144 — strings+stack/medium, arrays/medium, hash-map+simulation/medium
+  minimumSwapsToMakeBalanced,
+  findKthLargestXorCoordinateValue,
+  tweetCountsPerFrequency,
+  // batch 142b — arrays+stack/medium, arrays/medium, binary-indexed-tree+dp+arrays/hard
+  beautifulTowersII,
+  minimumNumberOfFlipsTOMakeBinaryGridPalindromicII,
+  maximumBalancedSubsequenceSum,
+  // batch 145b — strings+hash-map/medium, arrays+dp/medium, arrays+dp/medium
+  findTheLongestSubstringContainingVowelsInEvenCounts,
+  minimizeTheDifferenceBetweenTargetAndChosenElements,
+  maximumNumberOfOperationsWithTheSameScoreII,
   // batch 146b — arrays+hash-map/medium, tree+graph/medium, arrays+math/medium, math+strings/medium, dp/medium
   kDivisibleElementsSubarrays,
   mostProfitablePath,
@@ -4983,12 +5001,6 @@ export const problems: readonly Problem[] = [
   maximizeScoreNumbersInRanges,
   maximumEnergyBoostFromTwoDrinks,
   kthNearestObstacleQueries,
-  // batch 149b — arrays/easy + 6 orphan problems
+  // batch 149b — arrays/easy
   calculateAmountPaidInTaxes,
-  beautifulTowersII,
-  maximumBalancedSubsequenceSum,
-  minimumFlipsBinaryGridPalindromicII,
-  minimumSwapsMakeBalanced,
-  tweetCountsPerFrequency,
-  findKthLargestXorCoordinateValue,
 ];
