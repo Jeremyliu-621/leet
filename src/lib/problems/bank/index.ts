@@ -10,67 +10,48 @@ import { problem as containsDuplicate } from './contains-duplicate';
 import { problem as containsDuplicateII } from './contains-duplicate-ii';
 import { problem as pascalsTriangle } from './pascals-triangle';
 import { problem as richestCustomerWealth } from './richest-customer-wealth';
-import { problem as maximumUnitsOnTruck } from './maximum-units-on-truck';
 import { problem as shuffleTheArray } from './shuffle-the-array';
-import { problem as countItemsMatchingRule } from './count-items-matching-rule';
 import { problem as summaryRanges } from './summary-ranges';
 import { problem as findMaxMin } from './find-max-min';
 import { problem as findPositiveIntegerWithNegative } from './find-positive-integer-with-negative';
 import { problem as findPivotIndex } from './find-pivot-index';
 import { problem as maxConsecutiveOnes } from './max-consecutive-ones';
 import { problem as plusOne } from './plus-one';
-import { problem as kidsWithCandies } from './kids-with-candies';
 import { problem as monotonicArray } from './monotonic-array';
 import { problem as buildArrayFromPermutation } from './build-array-from-permutation';
 import { problem as concatenationOfArray } from './concatenation-of-array';
 import { problem as thirdMaximumNumber } from './third-maximum-number';
-import { problem as replaceElementsWithGreatest } from './replace-elements-with-greatest';
 import { problem as highestAltitude } from './highest-altitude';
 import { problem as maximumDifferenceIncreasingElements } from './maximum-difference-increasing-elements';
-import { problem as rangeSum } from './range-sum-query';
-import { problem as findAllNumbersDisappeared } from './find-all-numbers-disappeared';
-import { problem as checkIfNAndDoubleExist } from './check-if-n-and-double-exist';
-import { problem as largestNumberAtLeastTwice } from './largest-number-at-least-twice';
 import { problem as specialPositionsBinaryMatrix } from './special-positions-binary-matrix';
-import { problem as matrixDiagonalSum } from './matrix-diagonal-sum';
 import { problem as sortArrayByParity } from './sort-array-by-parity';
 import { problem as leftAndRightSumDifferences } from './left-and-right-sum-differences';
 import { problem as minimumValuePositiveStepSum } from './minimum-value-positive-step-sum';
 import { problem as countNumberOfPairs } from './count-number-of-pairs';
 import { problem as validMountainArray } from './valid-mountain-array';
 import { problem as canPlaceFlowers } from './can-place-flowers';
-import { problem as maximumProductTwoElements } from './maximum-product-two-elements';
 import { problem as increasingTripletSubsequence } from './increasing-triplet-subsequence';
-import { problem as numberOfRectangles } from './number-of-rectangles';
 import { problem as largestAltitude } from './largest-altitude';
-import { problem as sumOfOddLengthSubarrays } from './sum-of-odd-length-subarrays';
 import { problem as minimumSumMountainTriplet } from './minimum-sum-mountain-triplet';
-import { problem as findNumbersEvenDigits } from './find-numbers-even-digits';
 import { problem as rearrangeArrayElementsBySign } from './rearrange-array-elements-by-sign';
 import { problem as numberOfZeroFilledSubarrays } from './number-of-zero-filled-subarrays';
 // arrays — easy (additional)
 import { problem as mergeSortedArray } from './merge-sorted-array';
 import { problem as assignCookies } from './assign-cookies';
 import { problem as relativeRanks } from './relative-ranks';
-import { problem as maximumCount } from './maximum-count';
 import { problem as addDigits } from './add-digits';
 import { problem as degreeOfArray } from './degree-of-array';
 import { problem as checkArrayArithmeticProgression } from './check-array-arithmetic-progression';
 import { problem as howManyNumbersSmallerThanCurrent } from './how-many-numbers-smaller-than-current';
-import { problem as findTargetIndicesAfterSorting } from './find-target-indices-after-sorting';
 import { problem as toeplitzMatrix } from './toeplitz-matrix';
 import { problem as transposeMatrix } from './transpose-matrix';
-import { problem as minimumNumberOfMovesSeat } from './minimum-number-of-moves-seat';
-import { problem as numberOfLaserBeams } from './number-of-laser-beams';
 import { problem as maxAverageSubarray } from './max-average-subarray';
 import { problem as consecutiveCharacters } from './consecutive-characters';
 import { problem as countItemsWithTheGivenSum } from './count-items-with-the-given-sum';
 import { problem as numberOfEmployeesCanMeet } from './number-of-employees-can-meet';
 import { problem as partitionArrayAccordingToGivenPivot } from './partition-array-according-to-given-pivot';
-import { problem as sortEvenOddIndices } from './sort-even-odd-indices';
 import { problem as sortArrayByParityII } from './sort-array-by-parity-ii';
 import { problem as numberOfArithmeticTriplets } from './number-of-arithmetic-triplets';
-import { problem as countEqualAndDivisiblePairs } from './count-equal-and-divisible-pairs';
 import { problem as countElementsWithMaximumFrequency } from './count-elements-with-maximum-frequency';
 import { problem as xorOperationInAnArray } from './xor-operation-in-an-array';
 import { problem as getMaximumInGeneratedArray } from './get-maximum-in-generated-array';
@@ -78,12 +59,9 @@ import { problem as flippingAnImage } from './flipping-an-image';
 import { problem as countGoodTriplets } from './count-good-triplets';
 import { problem as matrixBlockSum } from './matrix-block-sum';
 // arrays — medium
-import { problem as countFairPairs } from './count-fair-pairs';
 import { problem as minimumAverageDifference } from './minimum-average-difference';
 import { problem as rangeSumQuery2D } from './range-sum-query-2d';
-import { problem as minimumArrowsBurstBalloons } from './minimum-arrows-burst-balloons';
 import { problem as setMatrixZeroes } from './set-matrix-zeroes';
-import { problem as removeDuplicatesSortedArrayII } from './remove-duplicates-sorted-array-ii';
 import { problem as meetingRoomsII } from './meeting-rooms-ii';
 import { problem as hIndex } from './h-index';
 import { problem as mergeIntervals } from './merge-intervals';
@@ -99,7 +77,6 @@ import { problem as generateParentheses } from './generate-parentheses';
 import { problem as palindromePartitioning } from './palindrome-partitioning';
 import { problem as rotateArray } from './rotate-array';
 import { problem as maxProductSubarray } from './max-product-subarray';
-import { problem as productExceptSelf } from './product-except-self';
 import { problem as sortColors } from './sort-colors';
 import { problem as trapRainWater } from './trap-rain-water';
 import { problem as containerWithMostWater } from './container-with-most-water';
@@ -120,23 +97,18 @@ import { problem as queueReconstructionByHeight } from './queue-reconstruction-b
 
 // strings — easy
 import { problem as reverseWordsInStringIII } from './reverse-words-in-string-iii';
-import { problem as makeStringGreat } from './make-string-great';
 import { problem as minimumStringLength } from './minimum-string-length';
 import { problem as maximumScoreAfterSplittingString } from './maximum-score-after-splitting-string';
 import { problem as findCommonCharacters } from './find-common-characters';
-import { problem as countingWordsWithGivenPrefix } from './counting-words-with-given-prefix';
 import { problem as addBinary } from './add-binary';
-import { problem as goalParser } from './goal-parser';
 import { problem as designGoalParser } from './design-goal-parser';
 import { problem as detectCapital } from './detect-capital';
 import { problem as repeatedSubstringPattern } from './repeated-substring-pattern';
 import { problem as checkIfPangram } from './check-if-pangram';
 import { problem as truncateSentence } from './truncate-sentence';
 import { problem as reverseStringII } from './reverse-string-ii';
-import { problem as determineIfHalvesAlike } from './determine-if-halves-alike';
 import { problem as shuffleString } from './shuffle-string';
 import { problem as decodeTheMessage } from './decode-the-message';
-import { problem as removeTrailingZeros } from './remove-trailing-zeros';
 import { problem as reversePrefixOfWord } from './reverse-prefix-of-word';
 import { problem as countWordsWithGivenPrefix } from './count-words-with-given-prefix';
 import { problem as largestOddNumberInString } from './largest-odd-number-in-string';
@@ -149,10 +121,7 @@ import { problem as splitStringBalance } from './split-string-balance';
 import { problem as candy } from './candy';
 import { problem as maximumWidthRamp } from './maximum-width-ramp';
 // arrays — medium (additional)
-import { problem as checkIfArrayPairsDivisibleByK } from './check-if-array-pairs-divisible-by-k';
 import { problem as validTriangleNumber } from './valid-triangle-number';
-import { problem as maxNumberKSumPairs } from './max-number-k-sum-pairs';
-import { problem as minimumTimeRopeColorful } from './minimum-time-rope-colorful';
 import { problem as numberOfSubsequencesTargetSum } from './number-of-subsequences-target-sum';
 import { problem as carPooling } from './car-pooling';
 import { problem as mostProfitAssigningWork } from './most-profit-assigning-work';
@@ -162,8 +131,6 @@ import { problem as sumOfSubarrayRanges } from './sum-of-subarray-ranges';
 import { problem as maximizeConfusionExam } from './maximize-confusion-exam';
 import { problem as sumOfAllSubsetXorTotals } from './sum-of-all-subset-xor-totals';
 import { problem as continuousSubarraySum } from './continuous-subarray-sum';
-import { problem as equalRowColumnPairs } from './equal-row-column-pairs';
-import { problem as determineIfTwoStringsClose } from './determine-if-two-strings-close';
 // arrays — medium (additional)
 import { problem as shortestUnsortedContinuousSubarray } from './shortest-unsorted-continuous-subarray';
 import { problem as maxChunksToMakeSorted } from './max-chunks-to-make-sorted';
@@ -182,16 +149,9 @@ import { problem as lengthOfLastWord } from './length-of-last-word';
 import { problem as defangingIpAddress } from './defanging-ip-address';
 import { problem as toLowerCase } from './to-lower-case';
 import { problem as checkIfTwoStringArraysEquivalent } from './check-if-two-string-arrays-equivalent';
-import { problem as cellsInRange } from './cells-in-range';
 import { problem as rotateString } from './rotate-string';
 import { problem as percentageOfLetterInString } from './percentage-of-letter-in-string';
-import { problem as countCommonWordsOneOccurrence } from './count-common-words-one-occurrence';
-import { problem as checkTwoStringsAlmostEquivalent } from './check-two-strings-almost-equivalent';
-import { problem as rearrangeCharactersToMakeTarget } from './rearrange-characters-to-make-target';
-import { problem as divideStringIntoGroups } from './divide-string-into-groups';
-import { problem as countVowelSubstrings } from './count-vowel-substrings';
 import { problem as checkPrefixString } from './check-prefix-string';
-import { problem as sumDigitsStringConvert } from './sum-digits-string-convert';
 import { problem as maximumNumberOfStringPairs } from './maximum-number-of-string-pairs';
 import { problem as countPairsSumLessThanTarget } from './count-pairs-sum-less-than-target';
 import { problem as neitherMinimumNorMaximum } from './neither-minimum-nor-maximum';
@@ -202,15 +162,12 @@ import { problem as largestIntegerDigitSwaps } from './largest-integer-digit-swa
 import { problem as uniqueMorseCodeWords } from './unique-morse-code-words';
 import { problem as increasingDecreasingString } from './increasing-decreasing-string';
 import { problem as numberOfGoodPairs } from './number-of-good-pairs';
-import { problem as checkIfArraySortedRotated } from './check-if-array-sorted-rotated';
-import { problem as maximumProductDifference } from './maximum-product-difference';
 import { problem as maximumProductAdjacentElements } from './maximum-product-adjacent-elements';
 import { problem as replaceWords } from './replace-words';
 import { problem as minimumTimeDifference } from './minimum-time-difference';
 import { problem as stringToIntegerAtoi } from './string-to-integer-atoi';
 import { problem as minimumDeletionsCharFrequencies } from './minimum-deletions-char-frequencies';
 import { problem as bullsAndCows } from './bulls-and-cows';
-import { problem as minimumSumFourDigitNumber } from './minimum-sum-four-digit-number';
 import { problem as countPairsAbsoluteDifferenceK } from './count-pairs-absolute-difference-k';
 import { problem as findClosestNumberToZero } from './find-closest-number-to-zero';
 import { problem as checkIfAllCharsHaveEqualOccurrences } from './check-if-all-chars-have-equal-occurrences';
@@ -224,7 +181,6 @@ import { problem as maximumSumCircularSubarray } from './maximum-sum-circular-su
 import { problem as numberOfDistinctAverages } from './number-of-distinct-averages';
 // strings — medium
 import { problem as zigzagConversion } from './zigzag-conversion';
-import { problem as implementTrie } from './implement-trie';
 import { problem as customSortString } from './custom-sort-string';
 import { problem as longestPalindromicString } from './longest-palindromic-string';
 import { problem as countPalindromicSubstrings } from './count-palindromic-substrings';
@@ -233,16 +189,12 @@ import { problem as minimumRemoveToMakeValid } from './minimum-remove-to-make-va
 import { problem as reverseStringWords } from './reverse-string-words';
 import { problem as stringMultiply } from './string-multiply';
 import { problem as isSubsequenceMedium } from './is-subsequence-medium';
-import { problem as characterReplacement } from './character-replacement';
 import { problem as stringCompression } from './string-compression';
 import { problem as restoreIpAddresses } from './restore-ip-addresses';
-import { problem as countHomogenousSubstrings } from './count-homogenous-substrings';
-import { problem as appendCharactersToMakeSubsequence } from './append-characters-to-make-subsequence';
 // hash-map — easy
 import { problem as findWordsFormedByCharacters } from './find-words-formed-by-characters';
 import { problem as twoOutOfThree } from './two-out-of-three';
 import { problem as checkIfAllCharactersAppearTwice } from './check-if-all-characters-appear-twice';
-import { problem as findDifferenceOfTwoArrays } from './find-difference-of-two-arrays';
 import { problem as findAnagramMappings } from './find-anagram-mappings';
 import { problem as validAnagram } from './valid-anagram';
 import { problem as pathCrossing } from './path-crossing';
@@ -250,22 +202,18 @@ import { problem as firstUniqueChar } from './first-unique-char';
 import { problem as findWordsFromChars } from './word-pattern-ii';
 import { problem as jewelsAndStones } from './jewels-and-stones';
 import { problem as minimumOperationsAlternating } from './minimum-operations-alternating';
-import { problem as minimumOperationsMakeArrayEmpty } from './minimum-operations-make-array-empty';
 import { problem as maximumNumberOfBalloons } from './maximum-number-of-balloons';
 import { problem as countCharacters } from './count-characters';
 import { problem as uniqueNumberOfOccurrences } from './unique-number-of-occurrences';
 import { problem as findLuckyInteger } from './find-lucky-integer';
 import { problem as minimumIndexSumOfTwoLists } from './minimum-index-sum-of-two-lists';
 // hash-map — medium (additional)
-import { problem as minimumRoundsToCompleteTasks } from './minimum-rounds-to-complete-tasks';
-import { problem as minimumStepsMakeAnagram } from './minimum-steps-make-anagram';
 import { problem as longestWordInDictionary } from './longest-word-in-dictionary';
 import { problem as twoSumIndices } from './two-sum-indices';
 import { problem as mostFrequentValue } from './most-frequent-value';
 import { problem as anagramCheck } from './anagram-check';
 import { problem as wordFrequency } from './word-frequency';
 import { problem as countGoodPairs } from './count-good-pairs';
-import { problem as intersectionTwoArrays } from './intersection-two-arrays';
 import { problem as subarraySumEqualsK } from './subarray-sum-equals-k';
 import { problem as ransomNote } from './ransom-note';
 import { problem as isomorphicStrings } from './isomorphic-strings';
@@ -276,14 +224,11 @@ import { problem as findWinners } from './find-winners';
 import { problem as groupAnagrams } from './group-anagrams';
 import { problem as topKFrequentElements } from './top-k-frequent-elements';
 import { problem as longestConsecutiveSequence } from './longest-consecutive-sequence';
-import { problem as findAllAnagramsInString } from './find-all-anagrams-in-string';
 import { problem as maximumErasureValue } from './maximum-erasure-value';
-import { problem as maxSumPairEqualDigits } from './max-sum-of-pair-with-equal-sum-of-digits';
 // hash-map — medium (binary-search)
 import { problem as timeBasedKeyValueStore } from './time-based-key-value-store';
 // hash-map — hard
 import { problem as fourSumII } from './four-sum-ii';
-import { problem as maxPointsOnLine } from './max-points-on-line';
 import { problem as lruCache } from './lru-cache';
 import { problem as lfuCache } from './lfu-cache';
 
@@ -293,7 +238,6 @@ import { problem as fourSum } from './four-sum';
 import { problem as sortList } from './sort-list';
 import { problem as subarraysKDistinct } from './subarrays-k-distinct';
 // two-pointers — medium
-import { problem as findDuplicateNumber } from './find-duplicate-number';
 import { problem as threeSumClosest } from './three-sum-closest';
 import { problem as boatsToSavePeople } from './boats-to-save-people';
 import { problem as partitionLabels } from './partition-labels';
@@ -314,18 +258,14 @@ import { problem as maxConsecutiveFlips } from './max-consecutive-flips';
 import { problem as countSubarraysBoundedMax } from './count-subarrays-bounded-max';
 
 // sliding-window — medium
-import { problem as countNiceSubarrays } from './count-nice-subarrays';
-import { problem as frequencyOfMostFrequentElement } from './frequency-of-most-frequent-element';
 import { problem as minimumSizeSubarraySum } from './minimum-size-subarray-sum';
 import { problem as atMostKDistinct } from './at-most-k-distinct';
 import { problem as permutationInString } from './permutation-in-string';
 import { problem as subarrayProductLessThanK } from './subarray-product-less-than-k';
 import { problem as minimumOperationsReduceX } from './minimum-operations-reduce-x';
 
-import { problem as numberOfSubstrings } from './number-of-substrings';
 import { problem as longestTurbulentSubarray } from './longest-turbulent-subarray';
 // sliding-window — easy
-import { problem as minimumRecolorsToGetKConsecutiveBlack } from './minimum-recolors-to-get-k-consecutive-black';
 import { problem as minimumDifferenceKScores } from './minimum-difference-k-scores';
 import { problem as maxWindowSum } from './max-window-sum';
 import { problem as maximumAverageSubarray } from './maximum-average-subarray';
@@ -345,20 +285,14 @@ import { problem as isPerfectSquare } from './is-perfect-square';
 import { problem as searchInsertPosition } from './search-insert-position';
 // binary-search — medium
 import { problem as findKClosestElements } from './find-k-closest-elements';
-import { problem as search2dMatrixII } from './search-2d-matrix-ii';
-import { problem as findKPairsSmallestSums } from './find-k-pairs-smallest-sums';
-import { problem as searchRotatedSorted } from './search-rotated-sorted';
-import { problem as findMinimumRotated } from './find-minimum-rotated';
 import { problem as singleElementSorted } from './single-element-sorted';
 import { problem as findFirstAndLastPosition } from './find-first-and-last-position';
-import { problem as search2dMatrix } from './search-2d-matrix';
 import { problem as kokoEatingBananas } from './koko-eating-bananas';
 import { problem as findPeakElement } from './find-peak-element';
 import { problem as countRectanglesContainingPoint } from './count-number-of-rectangles';
 // binary-search — hard
 import { problem as findKthSmallestPairDistance } from './find-k-th-smallest-pair-distance';
 import { problem as findMinRotatedII } from './find-min-rotated-ii';
-import { problem as medianTwoSortedArrays } from './median-two-sorted-arrays';
 import { problem as splitArrayLargestSum } from './split-array-largest-sum';
 import { problem as capacityToShip } from './capacity-to-ship';
 
@@ -371,7 +305,6 @@ import { problem as nextGreaterElement } from './next-greater-element';
 import { problem as dailyTemperatures } from './daily-temperatures';
 import { problem as evaluateRpn } from './evaluate-rpn';
 import { problem as minStack } from './min-stack';
-import { problem as maximumNestingDepth } from './maximum-nesting-depth';
 // stack — medium
 import { problem as minimumRemoveToMakeValidParentheses } from './minimum-remove-to-make-valid-parentheses';
 import { problem as onlineStockSpan } from './online-stock-span';
@@ -385,12 +318,10 @@ import { problem as validateStackSequences } from './validate-stack-sequences';
 import { problem as pattern132 } from './132-pattern';
 // stack — hard
 import { problem as basicCalculator } from './basic-calculator';
-import { problem as sumSubarrayMinimums } from './sum-subarray-minimums';
 import { problem as removeKDigits } from './remove-k-digits';
 
 // math — easy
 import { problem as sumOfMultiples } from './sum-of-multiples';
-import { problem as numberOfSteps } from './number-of-steps';
 import { problem as findTheDifference } from './find-the-difference';
 import { problem as hammingWeight } from './hamming-weight';
 import { problem as digitSum } from './digit-sum';
@@ -412,29 +343,20 @@ import { problem as reverseBits } from './reverse-bits';
 import { problem as countAndSay } from './count-and-say';
 import { problem as fibonacciNumber } from './fibonacci-number';
 import { problem as sumOfSquares } from './sum-of-squares';
-import { problem as sumOfSquaresSpecialElements } from './sum-of-squares-special-elements';
 import { problem as climbingStairs } from './climbing-stairs';
 import { problem as romanToInteger } from './roman-to-integer';
 import { problem as palindromeNumber } from './palindrome-number';
-import { problem as excelColumnNumber } from './excel-column-number';
 import { problem as sumOfTwoIntegers } from './sum-of-two-integers';
 import { problem as largestPerimeterTriangle } from './largest-perimeter-triangle';
-import { problem as countOddNumbersInInterval } from './count-odd-numbers-in-interval';
-import { problem as maximumProductThreeNumbers } from './maximum-product-three-numbers';
 import { problem as averageSalaryExcludingMinMax } from './average-salary-excluding-min-max';
-import { problem as findNUniqueIntegersSumToZero } from './find-n-unique-integers-sum-to-zero';
 import { problem as decodeXoredArray } from './decode-xored-array';
-import { problem as signOfProductArray } from './sign-of-product-array';
-import { problem as convertTemperature } from './convert-temperature';
 import { problem as maximum69Number } from './maximum-69-number';
-import { problem as countOfMatchesTournament } from './count-of-matches-tournament';
 import { problem as nthTribonacciNumber } from './nth-tribonacci-number';
 // math — hard
 import { problem as fractionToRecurringDecimal } from './fraction-to-recurring-decimal';
 import { problem as integerToEnglishWords } from './integer-to-english-words';
 // math — medium
 import { problem as bitwiseAndOfNumbersRange } from './bitwise-and-of-numbers-range';
-import { problem as minimumMovesEqualArray } from './minimum-moves-equal-array';
 import { problem as multiplyStrings } from './multiply-strings';
 import { problem as waterAndJug } from './water-and-jug';
 import { problem as countTripletsXor } from './count-triplets-xor';
@@ -455,7 +377,6 @@ import { problem as insertInterval } from './insert-interval';
 import { problem as nQueens } from './n-queens';
 import { problem as firstMissingPositive } from './first-missing-positive';
 import { problem as jumpGameII } from './jump-game-ii';
-import { problem as largestRectangleHistogram } from './largest-rectangle-histogram';
 import { problem as slidingWindowMaximum } from './sliding-window-maximum';
 import { problem as largestNumber } from './largest-number';
 import { problem as longestIncreasingSubsequence } from './longest-increasing-subsequence';
@@ -492,28 +413,18 @@ import { problem as nthUglyNumber } from './nth-ugly-number';
 import { problem as triangle } from './triangle';
 import { problem as interleavingString } from './interleaving-string';
 import { problem as uniquePathsII } from './unique-paths-ii';
-import { problem as numberOfDiceRolls } from './number-of-dice-rolls';
 import { problem as coinChangeII } from './coin-change-ii';
-import { problem as bestTimeBuySellCooldown } from './best-time-buy-sell-cooldown';
 import { problem as longestArithmeticSubsequence } from './longest-arithmetic-subsequence';
 import { problem as spiralMatrixII } from './spiral-matrix-ii';
 import { problem as maxConsecutiveOnesIII } from './max-consecutive-ones-iii';
 import { problem as jumpGameIII } from './jump-game-iii';
-import { problem as kClosestPoints } from './k-closest-points';
 import { problem as topKFrequentWords } from './top-k-frequent-words';
-import { problem as findDisappearedNumbers } from './find-disappeared-numbers';
-import { problem as squaresOfSortedArray } from './squares-of-sorted-array';
 import { problem as minimumAbsoluteDifference } from './minimum-absolute-difference';
 import { problem as countNegativesInSortedMatrix } from './count-negatives-in-sorted-matrix';
 import { problem as gasStation } from './gas-station';
-import { problem as minimumCostTickets } from './minimum-cost-tickets';
 import { problem as maxSubarrayCircular } from './max-subarray-circular';
-import { problem as checkSortedRotated } from './check-sorted-rotated';
-import { problem as maximumVowels } from './maximum-vowels';
 import { problem as longestSubarrayAfterDeleting } from './longest-subarray-after-deleting';
-import { problem as reverseVowels } from './reverse-vowels';
 import { problem as fizzBuzz } from './fizz-buzz';
-import { problem as luckyNumbersInMatrix } from './lucky-numbers-in-matrix';
 import { problem as countNumberOfTexts } from './count-number-of-texts';
 // dynamic-programming — hard
 import { problem as wordBreakII } from './word-break-ii';
@@ -532,12 +443,10 @@ import { problem as deleteNodeInLinkedList } from './delete-node-in-linked-list'
 import { problem as reverseLinkedList } from './reverse-linked-list';
 import { problem as linkedListCycle } from './linked-list-cycle';
 import { problem as mergeTwoSortedLinkedLists } from './merge-two-sorted-linked-lists';
-import { problem as middleOfLinkedList } from './middle-of-linked-list';
 import { problem as palindromeLinkedList } from './palindrome-linked-list';
 import { problem as intersectionTwoLinkedLists } from './intersection-two-linked-lists';
 // linked-list — medium
 import { problem as splitLinkedListInParts } from './split-linked-list-in-parts';
-import { problem as removeNthFromEnd } from './remove-nth-from-end';
 import { problem as oddEvenLinkedList } from './odd-even-linked-list';
 import { problem as addTwoNumbers } from './add-two-numbers';
 import { problem as reorderList } from './reorder-list';
@@ -555,9 +464,7 @@ import { problem as findCenterOfStarGraph } from './find-center-of-star-graph';
 import { problem as floodFill } from './flood-fill';
 import { problem as findTheTownJudge } from './find-the-town-judge';
 import { problem as numberOfProvinces } from './number-of-provinces';
-import { problem as findIfPathExists } from './find-if-path-exists';
 // graph — medium (additional)
-import { problem as shortestPathBinaryMatrix } from './shortest-path-binary-matrix';
 import { problem as accountsMerge } from './accounts-merge';
 import { problem as wordSearch } from './word-search';
 import { problem as surroundedRegions } from './surrounded-regions';
@@ -572,12 +479,10 @@ import { problem as rottingOranges } from './rotting-oranges';
 import { problem as keysAndRooms } from './keys-and-rooms';
 import { problem as cloneGraph } from './clone-graph';
 import { problem as courseScheduleII } from './course-schedule-ii';
-import { problem as pacificAtlantic } from './pacific-atlantic';
 import { problem as networkDelayTime } from './network-delay-time';
 import { problem as numberOfConnectedComponents } from './number-of-connected-components';
 import { problem as redundantConnection } from './redundant-connection';
 import { problem as isGraphBipartite } from './is-graph-bipartite';
-import { problem as allPathsSourceTarget } from './all-paths-source-target';
 import { problem as minimumHeightTrees } from './minimum-height-trees';
 import { problem as findEventualSafeStates } from './find-eventual-safe-states';
 // graph — hard
@@ -585,8 +490,6 @@ import { problem as shortestBridge } from './shortest-bridge';
 import { problem as jumpGameIV } from './jump-game-iv';
 import { problem as wordLadder } from './word-ladder';
 import { problem as alienDictionary } from './alien-dictionary';
-import { problem as criticalConnections } from './critical-connections';
-import { problem as longestIncreasingPathMatrix } from './longest-increasing-path-matrix';
 import { problem as minimumGeneticMutation } from './minimum-genetic-mutation';
 import { problem as busRoutes } from './bus-routes';
 import { problem as sudokuSolver } from './sudoku-solver';
@@ -600,7 +503,6 @@ import { problem as maxScoreWordsFormed } from './maximum-score-words-formed';
 
 // tree — easy (additional)
 import { problem as balancedBinaryTree } from './balanced-binary-tree';
-import { problem as minimumDepthBinaryTree } from './minimum-depth-binary-tree';
 import { problem as binaryTreeLevelOrderBottom } from './binary-tree-level-order-bottom';
 // tree — easy
 import { problem as maxDepthBinaryTree } from './max-depth-binary-tree';
@@ -610,44 +512,29 @@ import { problem as binaryTreePaths } from './binary-tree-paths';
 import { problem as pathSum } from './path-sum';
 import { problem as diameterOfBinaryTree } from './diameter-of-binary-tree';
 import { problem as sameTree } from './same-tree';
-import { problem as sumOfLeftLeaves } from './sum-of-left-leaves';
 import { problem as leafSimilarTrees } from './leaf-similar-trees';
 import { problem as twoSumIVBST } from './two-sum-iv-bst';
 import { problem as binaryTreeTilt } from './binary-tree-tilt';
-import { problem as averageOfLevels } from './average-of-levels';
 import { problem as rangeSumOfBST } from './range-sum-of-bst';
 // tree — medium
 import { problem as binaryTreePruning } from './binary-tree-pruning';
 import { problem as countCompleteTreeNodes } from './count-complete-tree-nodes';
 import { problem as populatingNextRightPointers } from './populating-next-right-pointers';
 import { problem as validateBst } from './validate-bst';
-import { problem as levelOrderTraversal } from './level-order-traversal';
 import { problem as binaryTreeRightSideView } from './binary-tree-right-side-view';
 import { problem as lowestCommonAncestorBst } from './lowest-common-ancestor-bst';
-import { problem as countGoodNodes } from './count-good-nodes';
-import { problem as constructBinaryTree } from './construct-binary-tree';
-import { problem as kthSmallestBst } from './kth-smallest-bst';
-import { problem as zigzagLevelOrder } from './zigzag-level-order';
-import { problem as flattenBinaryTree } from './flatten-binary-tree';
-import { problem as lowestCommonAncestorBinaryTree } from './lowest-common-ancestor-binary-tree';
-import { problem as sumRootToLeaf } from './sum-root-to-leaf';
 import { problem as houseRobberIII } from './house-robber-iii';
-import { problem as maximumWidthBinaryTree } from './maximum-width-binary-tree';
 import { problem as pathSumIII } from './path-sum-iii';
 // tree — hard
 import { problem as binaryTreeMaxPathSum } from './binary-tree-max-path-sum';
-import { problem as serializeBinaryTree } from './serialize-binary-tree';
 import { problem as verticalOrderTraversal } from './vertical-order-traversal';
 
 // heap
 import { problem as lastStoneWeight } from './last-stone-weight';
-import { problem as kthLargestInStream } from './kth-largest-in-stream';
 import { problem as reorganizeString } from './reorganize-string';
 import { problem as minimumCostToConnectSticks } from './minimum-cost-to-connect-sticks';
-import { problem as medianFromDataStream } from './median-from-data-stream';
 import { problem as sortCharactersByFrequency } from './sort-characters-by-frequency';
 import { problem as maximumFrequencyStack } from './maximum-frequency-stack';
-import { problem as totalCostHireKWorkers } from './total-cost-hire-k-workers';
 import { problem as maximumSubsequenceScore } from './maximum-subsequence-score';
 import { problem as processTasksUsingServers } from './process-tasks-using-servers';
 import { problem as smallestNumberInInfiniteSet } from './smallest-number-in-infinite-set';
@@ -657,7 +544,6 @@ import { problem as snakesAndLadders } from './snakes-and-ladders';
 import { problem as swimInRisingWater } from './swim-in-rising-water';
 import { problem as nQueensII } from './n-queens-ii';
 import { problem as removeInvalidParentheses } from './remove-invalid-parentheses';
-import { problem as numberOfWaysArriveDestination } from './number-of-ways-arrive-destination';
 import { problem as minimumCostCutStick } from './minimum-cost-cut-stick';
 import { problem as kthMissingPositiveNumber } from './kth-missing-positive-number';
 import { problem as strangePrinter } from './strange-printer';
@@ -667,15 +553,10 @@ import { problem as maximumAscendingSubarraySum } from './maximum-ascending-suba
 import { problem as minimumConsecutiveCardsPickup } from './minimum-consecutive-cards-pickup';
 import { problem as divisorGame } from './divisor-game';
 import { problem as minimumTimeVisitingAllPoints } from './minimum-time-visiting-all-points';
-import { problem as largestLocalValuesMatrix } from './largest-local-values-matrix';
 import { problem as percentageLetterInString } from './percentage-letter-in-string';
-import { problem as numberOfWeakCharacters } from './number-of-weak-characters';
 import { problem as arithmeticSlices } from './arithmetic-slices';
-import { problem as maximumNumberVowelsSubstring } from './maximum-number-vowels-substring';
-import { problem as minimumSwapsGroupAllOnes } from './minimum-swaps-group-all-ones';
 import { problem as kDiffPairsInArray } from './k-diff-pairs-in-array';
 import { problem as handOfStraights } from './hand-of-straights';
-import { problem as minimumDominoRotations } from './minimum-domino-rotations';
 import { problem as furthestBuildingLadders } from './furthest-building-ladders';
 import { problem as ipo } from './ipo';
 import { problem as smallestRangeCoveringKLists } from './smallest-range-covering-k-lists';
@@ -684,15 +565,11 @@ import { problem as permutationsII } from './permutations-ii';
 import { problem as letterTilePossibilities } from './letter-tile-possibilities';
 import { problem as differentWaysAddParentheses } from './different-ways-add-parentheses';
 import { problem as integerBreak } from './integer-break';
-import { problem as minimumCostMoveChips } from './minimum-cost-move-chips';
 import { problem as binaryWatch } from './binary-watch';
 import { problem as minimumAddMakeValidParentheses } from './minimum-add-make-valid-parentheses';
 import { problem as palindromicSubstrings } from './palindromic-substrings';
-import { problem as partitionString } from './partition-string';
 import { problem as uglyNumberII } from './ugly-number-ii';
-import { problem as deleteNodeInBst } from './delete-node-in-bst';
 import { problem as minimumCostConnectPoints } from './minimum-cost-connect-points';
-import { problem as numberOfVisiblePeopleInQueue } from './number-of-visible-people-in-queue';
 import { problem as insertIntoBst } from './insert-into-bst';
 import { problem as combinationSumIv } from './combination-sum-iv';
 import { problem as validParentheses } from './valid-parentheses';
@@ -703,39 +580,25 @@ import { problem as uncrossedLines } from './uncrossed-lines';
 import { problem as courseScheduleIII } from './course-schedule-iii';
 import { problem as buyTwoChocolates } from './buy-two-chocolates';
 import { problem as mostFrequentEvenElement } from './most-frequent-even-element';
-import { problem as findFirstPalindromicString } from './find-first-palindromic-string';
-import { problem as minimumNumberOperationsMakeArrayEmpty } from './minimum-number-operations-make-array-empty';
 import { problem as maximumDifferenceBetweenNodeAndAncestor } from './maximum-difference-between-node-and-ancestor';
 import { problem as jumpGameVI } from './jump-game-vi';
 import { problem as longestSubarrayMaxBitwiseAnd } from './longest-subarray-max-bitwise-and';
 import { problem as maximumEventsCanAttend } from './maximum-events-can-attend';
-import { problem as countNodesEqualAverageSubtree } from './count-nodes-equal-average-subtree';
 import { problem as maximumLevelSumBinaryTree } from './maximum-level-sum-binary-tree';
 import { problem as minimumDistanceValue } from './minimum-distance-value';
-import { problem as minimumOperationsMakeArrayAlternating } from './minimum-operations-make-array-alternating';
-import { problem as redistributeCharactersMakeAllStringsEqual } from './redistribute-characters-make-all-strings-equal';
-import { problem as checkCompletenessBinaryTree } from './check-completeness-binary-tree';
 import { problem as maximumTwinSumLinkedList } from './maximum-twin-sum-of-a-linked-list';
 import { problem as kRadiusSubarrayAverages } from './k-radius-subarray-averages';
-import { problem as numberOfWaysSelectBuildings } from './number-of-ways-select-buildings';
-import { problem as findCitySmallestNumberNeighbors } from './find-city-smallest-number-neighbors';
-import { problem as totalAppealOfString } from './total-appeal-of-string';
-import { problem as minimumFuelCostReportCapital } from './minimum-fuel-cost-report-capital';
 import { problem as maximumProductOfWordLengths } from './maximum-product-of-word-lengths';
 import { problem as asFarFromLandAsPossible } from './as-far-from-land-as-possible';
 import { problem as cheapestFlightsWithinKStops } from './cheapest-flights-within-k-stops';
-import { problem as sortedArrayToBst } from './sorted-array-to-bst';
 import { problem as countSortedVowelStrings } from './count-sorted-vowel-strings';
 import { problem as exclusiveTimeOfFunctions } from './exclusive-time-of-functions';
 import { problem as robotReturnToOrigin } from './robot-return-to-origin';
 import { problem as factorialTrailingZeroes } from './factorial-trailing-zeroes';
 import { problem as uniqueBinarySearchTrees } from './unique-binary-search-trees';
 import { problem as nonDecreasingArray } from './non-decreasing-array';
-import { problem as bestTimeBuySellIII } from './best-time-buy-sell-iii';
 import { problem as deepestLeavesSum } from './deepest-leaves-sum';
-import { problem as countSubarraysFixedBounds } from './count-subarrays-fixed-bounds';
 import { problem as amountOfTimeForBinaryTreeToBeInfected } from './amount-of-time-for-binary-tree-to-be-infected';
-import { problem as countCollisionsOnRoad } from './count-collisions-on-road';
 import { problem as maximumAlternatingSubsequenceSum } from './maximum-alternating-subsequence-sum';
 import { problem as countHillsValleys } from './count-hills-valleys';
 import { problem as findAllLonelyNumbers } from './find-all-lonely-numbers';
@@ -743,25 +606,19 @@ import { problem as countPrefixesOfGivenString } from './count-prefixes-of-given
 import { problem as minimumNumberGame } from './minimum-number-game';
 import { problem as findWordsContainingCharacter } from './find-words-containing-character';
 import { problem as countGoodNumbers } from './count-good-numbers';
-import { problem as maximumSumExactlyKElements } from './maximum-sum-exactly-k-elements';
 import { problem as minimumCommonValue } from './minimum-common-value';
-import { problem as findPivotInteger } from './find-pivot-integer';
 import { problem as compareVersionNumbers } from './compare-version-numbers';
 import { problem as openTheLock } from './open-the-lock';
 import { problem as diagonalTraverse } from './diagonal-traverse';
 import { problem as reshapeTheMatrix } from './reshape-the-matrix';
-import { problem as findTownJudge } from './find-town-judge';
 import { problem as possibleBipartition } from './possible-bipartition';
 import { problem as flipStringToMonotoneIncreasing } from './flip-string-to-monotone-increasing';
 import { problem as maximumLengthSubarrayPositiveProduct } from './maximum-length-subarray-positive-product';
-import { problem as minimumDaysToMakeMBouquets } from './minimum-days-to-make-m-bouquets';
 import { problem as findResultantArrayAfterRemovingAnagrams } from './find-resultant-array-after-removing-anagrams';
-import { problem as longestZigZagPathBinaryTree } from './longest-zigzag-path-binary-tree';
 import { problem as twoSumII } from './two-sum-ii';
 import { problem as setMismatch } from './set-mismatch';
 import { problem as maximumGap } from './maximum-gap';
 import { problem as arrayPartition } from './array-partition';
-import { problem as powerOfFour } from './power-of-four';
 import { problem as validPalindromeII } from './valid-palindrome-ii';
 import { problem as bulbSwitcher } from './bulb-switcher';
 import { problem as selfDividingNumbers } from './self-dividing-numbers';
@@ -782,12 +639,10 @@ import { problem as designHashmap } from './design-hashmap';
 import { problem as contiguousArray } from './contiguous-array';
 import { problem as shiftingLetters } from './shifting-letters';
 import { problem as convertBstToGreaterTree } from './convert-bst-to-greater-tree';
-import { problem as distributeCoinsBinaryTree } from './distribute-coins-binary-tree';
 import { problem as distributeCoinsInBinaryTree } from './distribute-coins-in-binary-tree';
 import { problem as flipColumnsForMaximumEqualRows } from './flip-columns-for-maximum-equal-rows';
 import { problem as deleteColumnsSortedIII } from './delete-columns-sorted-iii';
 
-import { problem as finalValueAfterOperations } from './final-value-after-operations';
 import { problem as findOriginalArrayFromDoubled } from './find-original-array-from-doubled';
 import { problem as numberOfStudentsUnableToEatLunch } from './number-of-students-unable-to-eat-lunch';
 import { problem as maximumNumberOfWordsFoundInSentences } from './maximum-number-of-words-found-in-sentences';
@@ -795,34 +650,23 @@ import { problem as capitalizeTheTitle } from './capitalize-the-title';
 import { problem as hammingDistance } from './hamming-distance';
 import { problem as singleNumberIII } from './single-number-iii';
 import { problem as minimumOperationsMakeArrayIncreasing } from './minimum-operations-to-make-array-increasing';
-import { problem as rankTransformArray } from './rank-transform-array';
-import { problem as finalValueOperations } from './final-value-operations';
 import { problem as twoCityScheduling } from './two-city-scheduling';
-import { problem as checkIfStraightLine } from './check-if-straight-line';
 import { problem as binaryGap } from './binary-gap';
-import { problem as minimumBitFlips } from './minimum-bit-flips';
 import { problem as smallestEvenMultiple } from './smallest-even-multiple';
 import { problem as specialArrayGreaterEqual } from './special-array-greater-equal';
 import { problem as countPairsTwoArrays } from './count-pairs-two-arrays';
 import { problem as convertTimeHhmm } from './convert-time-hhmm';
 import { problem as findPlayersZeroLosses } from './find-players-zero-losses';
 import { problem as checkDistancesFairNodes } from './check-distances-fair-nodes';
-import { problem as minimumRoundsCompleteTasks } from './minimum-rounds-complete-tasks';
-import { problem as largestCombinationBitwiseAnd } from './largest-combination-bitwise-and';
 import { problem as sortThePeople } from './sort-the-people';
 import { problem as baseballGame } from './baseball-game';
 import { problem as findChampionGraph } from './find-champion-graph';
 import { problem as countDigits } from './count-digits';
-import { problem as applyOperations } from './apply-operations-to-array';
-import { problem as minimumMovesToSeat } from './minimum-moves-to-seat';
 import { problem as ringsAndRods } from './rings-and-rods';
 import { problem as findGcdOfArray } from './find-gcd-of-array';
 import { problem as keepMultiplyingFoundValues } from './keep-multiplying-found-values';
 import { problem as percentagesOfLetter } from './percentages-of-letter';
-import { problem as maximumBagsFullCapacity } from './maximum-bags-full-capacity';
-import { problem as findSubsequenceOfLengthK } from './find-subsequence-of-length-k';
 import { problem as oddStringDifference } from './odd-string-difference';
-import { problem as bestTimeBuySellTransactionFee } from './best-time-buy-sell-transaction-fee';
 import { problem as maximalRectangle } from './maximal-rectangle';
 import { problem as stoneGameIII } from './stone-game-iii';
 import { problem as maximumProfitJobScheduling } from './maximum-profit-job-scheduling';
@@ -830,12 +674,9 @@ import { problem as countOfSmallerNumbersAfterSelf } from './count-of-smaller-nu
 import { problem as kThSymbolInGrammar } from './k-th-symbol-in-grammar';
 import { problem as longestSubstringWithoutRepeating } from './longest-substring-without-repeating';
 import { problem as decompressRunLengthEncoding } from './decompress-run-length-encoding';
-import { problem as checkAlmostEquivalentStrings } from './check-almost-equivalent-strings';
 import { problem as minimumValuePositiveSteps } from './minimum-value-positive-steps';
 import { problem as checkIfAllAsBeforeBs } from './check-if-all-as-before-bs';
 import { problem as checkIfWordEqualsSummation } from './check-if-word-equals-summation';
-import { problem as waysToBuyPensPencils } from './ways-to-buy-pens-pencils';
-import { problem as checkArraySortedRotated } from './check-array-sorted-rotated';
 import { problem as interpretString } from './interpret-string';
 import { problem as mergeSimilarItems } from './merge-similar-items';
 import { problem as countGoodRectangles } from './count-good-rectangles';
@@ -846,7 +687,6 @@ import { problem as designUndergroundSystem } from './design-underground-system'
 import { problem as sortVowelsInAString } from './sort-vowels-in-a-string';
 import { problem as minimumTimeToRepairCars } from './minimum-time-to-repair-cars';
 import { problem as numberOfMatchingSubsequences } from './number-of-matching-subsequences';
-import { problem as largestPositiveIntegerWithNegative } from './largest-positive-integer-with-negative';
 import { problem as maximizeSumKElements } from './maximize-sum-k-elements';
 import { problem as checkIfAcronym } from './check-if-acronym';
 import { problem as countPairsAbsoluteDiffK } from './count-pairs-absolute-diff-k';
@@ -855,34 +695,24 @@ import { problem as checkValidMatrix } from './check-valid-matrix';
 import { problem as countMaxFrequencyElements } from './count-max-frequency-elements';
 import { problem as minimumDifferenceAfterKRemovals } from './minimum-difference-after-k-removals';
 import { problem as numberOfValidClockTimes } from './number-of-valid-clock-times';
-import { problem as calculateMoneyInBank } from './calculate-money-in-bank';
-import { problem as scoreOfString } from './score-of-string';
 import { problem as chalkReplacer } from './chalk-replacer';
 import { problem as splitWithMinimumSum } from './split-with-minimum-sum';
 import { problem as maxDifferenceIncreasingElements } from './max-difference-increasing-elements';
 import { problem as longestNiceSubarray } from './longest-nice-subarray';
-import { problem as interchangeableRectangles } from './interchangeable-rectangles';
 import { problem as findTriangularSum } from './find-triangular-sum';
 import { problem as twoFurthestHousesDifferentColors } from './two-furthest-houses-different-colors';
-import { problem as countLatticePointsCircle } from './count-lattice-points-circle';
-import { problem as nearestExitMaze } from './nearest-exit-maze';
 import { problem as climbingStairsKSteps } from './climbing-stairs-k-steps';
-import { problem as maximumXorTwoNumbers } from './maximum-xor-two-numbers';
-import { problem as removeStonesToMinimizeTotal } from './remove-stones-to-minimize-total';
 import { problem as maximizeHappinessOfSelectedChildren } from './maximize-happiness-of-selected-children';
 import { problem as findTheMaximumAchievableNumber } from './find-the-maximum-achievable-number';
-import { problem as partitionArrayMaximumDifference } from './partition-array-maximum-difference';
 import { problem as removeDuplicatesFromSortedListII } from './remove-duplicates-from-sorted-list-ii';
 import { problem as countNumberOfHomogenousSubstrings } from './count-number-of-homogenous-substrings';
 import { problem as stoneGameVI } from './stone-game-vi';
 import { problem as countSpecialQuadruplets } from './count-special-quadruplets';
 import { problem as findAllDuplicatesInArray } from './find-all-duplicates-in-array';
 import { problem as checkIfWordOccursAsPrefix } from './check-if-word-occurs-as-prefix';
-import { problem as countSubarraysScoreLessThanK } from './count-subarrays-score-less-than-k';
 import { problem as excelSheetColumnNumber } from './excel-sheet-column-number';
 import { problem as jumpGameVII } from './jump-game-vii';
 import { problem as longestSquareStreak } from './longest-square-streak';
-import { problem as maximumBeautyArrayAfterApplyingOperation } from './maximum-beauty-array-after-applying-operation';
 import { problem as maximumProductAfterKIncrements } from './maximum-product-after-k-increments';
 import { problem as pairsOfSongsTotalDivisibleBy60 } from './pairs-of-songs-total-divisible-60';
 import { problem as alternatingDigitSum } from './alternating-digit-sum';
@@ -892,49 +722,35 @@ import { problem as maximumNumberOfPairsInArray } from './maximum-number-of-pair
 import { problem as minimizeMaximumPairSumInArray } from './minimize-maximum-pair-sum-in-array';
 import { problem as minimumOperationsToExceedThresholdValueII } from './minimum-operations-to-exceed-threshold-value-ii';
 import { problem as numberOfWaysToSplitArray } from './number-of-ways-to-split-array';
-import { problem as findTheIndexOfFirstOccurrence } from './find-the-index-of-first-occurrence';
 import { problem as integerReplacement } from './integer-replacement';
 import { problem as numberOfSmoothDescentPeriods } from './number-of-smooth-descent-periods';
 import { problem as maximumMatrixSum } from './maximum-matrix-sum';
-import { problem as countNodesWithHighestScore } from './count-nodes-with-highest-score';
 import { problem as findRightInterval } from './find-right-interval';
 import { problem as circularSentence } from './circular-sentence';
 import { problem as minimumGardenPerimeter } from './minimum-garden-perimeter';
 import { problem as groupPeopleGivenGroupSize } from './group-people-given-group-size';
 import { problem as countNumberOfBadPairs } from './count-number-of-bad-pairs';
 import { problem as minimumChangesToMakeBinaryStringBeautiful } from './minimum-changes-to-make-binary-string-beautiful';
-import { problem as removeAllOccurrencesOfSubstring } from './remove-all-occurrences-of-substring';
 import { problem as minimumTimeToCompleteTrips } from './minimum-time-to-complete-trips';
 import { problem as minimumSpeedToArriveOnTime } from './minimum-speed-to-arrive-on-time';
 import { problem as sumOfBeautyInTheArray } from './sum-of-beauty-in-the-array';
-import { problem as findAllPossibleRecipes } from './find-all-possible-recipes';
 import { problem as takeKOfEachCharacterFromLeftAndRight } from './take-k-of-each-character-from-left-and-right';
-import { problem as minimumOperationsToMakeArrayXorEqualK } from './minimum-operations-to-make-array-xor-equal-k';
 import { problem as maximumOddBinaryNumber } from './maximum-odd-binary-number';
-import { problem as minimumEqualSumTwoArrays } from './minimum-equal-sum-two-arrays';
-import { problem as findScoreOfArrayAfterMarking } from './find-score-of-array-after-marking';
 import { problem as countCompleteDayPairs } from './count-complete-day-pairs';
 import { problem as checkIfMatrixIsXMatrix } from './check-if-matrix-is-x-matrix';
 import { problem as determineColorOfChessboardSquare } from './determine-color-of-chessboard-square';
 import { problem as faultyKeyboard } from './faulty-keyboard';
-import { problem as sumMultiples } from './sum-multiples';
 import { problem as countBeautifulPairs } from './count-beautiful-pairs';
-import { problem as minimumTimeToCollectAllApples } from './minimum-time-to-collect-all-apples';
-import { problem as findPrefixCommonArrayOfTwoArrays } from './find-prefix-common-array-of-two-arrays';
 import { problem as minimumTimeToCollectGarbage } from './minimum-time-to-collect-garbage';
 import { problem as longestSubarrayOfOnesAfterDeleting } from './longest-subarray-of-ones-after-deleting';
-import { problem as minimumVerticesToReachAllNodes } from './minimum-vertices-to-reach-all-nodes';
 import { problem as countOddNumbersInIntervalRange } from './count-odd-numbers-in-interval-range';
 import { problem as makeSumDivisibleByP } from './make-sum-divisible-by-p';
 import { problem as countZeroFilledSubarrays } from './count-zero-filled-subarrays';
 import { problem as checkWhetherTwoStringArraysEqual } from './check-whether-two-string-arrays-equal';
-import { problem as minimumFlipsToMakeAOrBEqualC } from './minimum-flips-to-make-a-or-b-equal-c';
 import { problem as makeArrayZeroBySubtractingEqualAmounts } from './make-array-zero-by-subtracting-equal-amounts';
 import { problem as findAllGroupsOfFarmland } from './find-all-groups-of-farmland';
 import { problem as mergeTripletsToFormTargetTriplet } from './merge-triplets-to-form-target-triplet';
-import { problem as replaceElementsWithGreatestOnRight } from './replace-elements-with-greatest-on-right';
 import { problem as destroyAsteroids } from './destroy-asteroids';
-import { problem as maximumCountOfPositiveAndNegative } from './maximum-count-of-positive-and-negative';
 import { problem as findTheOriginalArrayOfPrefixXor } from './find-the-original-array-of-prefix-xor';
 import { problem as separateDigitsInArray } from './separate-digits-in-array';
 import { problem as numberOfPairsOfInterchangeableRectangles } from './number-of-pairs-of-interchangeable-rectangles';
@@ -946,11 +762,9 @@ import { problem as maximizeNumberOfSubsequencesInAString } from './maximize-num
 import { problem as numberOfWaysToBuyPensAndPencils } from './number-of-ways-to-buy-pens-and-pencils';
 import { problem as sumOfDigitsOfStringAfterConvert } from './sum-of-digits-of-string-after-convert';
 import { problem as smallestValueOfRearrangedNumber } from './smallest-value-of-rearranged-number';
-import { problem as removingStarsFromString } from './removing-stars-from-string';
 import { problem as findThePeaks } from './find-the-peaks';
 import { problem as minimumPenaltyForAShop } from './minimum-penalty-for-a-shop';
 import { problem as kthDistinctStringInArray } from './kth-distinct-string-in-array';
-import { problem as countElementsWithStrictlySmallerAndGreater } from './count-elements-with-strictly-smaller-and-greater';
 import { problem as largestPositiveIntegerThatExistsWithNegative } from './largest-positive-integer-that-exists-with-negative';
 import { problem as checkIfNumberHasEqualDigitCountAndDigitValue } from './check-if-number-has-equal-digit-count-and-digit-value';
 import { problem as decodeXorArray } from './decode-xor-array';
@@ -961,7 +775,6 @@ import { problem as numberOfSubarraysWithGcdEqualToK } from './number-of-subarra
 import { problem as findSubsequenceOfLengthKWithLargestSum } from './find-subsequence-of-length-k-with-largest-sum';
 import { problem as minimumAbsoluteSumDifference } from './minimum-absolute-sum-difference';
 import { problem as findTheKBeautyOfANumber } from './find-the-k-beauty-of-a-number';
-import { problem as firstUniqueCharacterInString } from './first-unique-character-in-string';
 import { problem as longPressedName } from './long-pressed-name';
 import { problem as removeOutermostParentheses } from './remove-outermost-parentheses';
 import { problem as maximumNestingDepthOfParentheses } from './maximum-nesting-depth-of-parentheses';
@@ -974,7 +787,6 @@ import { problem as findTargetIndicesAfterSortingArray } from './find-target-ind
 import { problem as numberOfEmployeesWhoMetTheTarget } from './number-of-employees-who-met-the-target';
 import { problem as intersectionOfTwoArraysIi } from './intersection-of-two-arrays-ii';
 import { problem as largestSubarrayLengthK } from './largest-subarray-length-k';
-import { problem as minimumTimeToTypeWord } from './minimum-time-to-type-word-using-typewriter';
 import { problem as checkIfOneStringSwapCanMakeStringsEqual } from './check-if-one-string-swap-can-make-strings-equal';
 import { problem as numberOfDifferentIntegersInString } from './number-of-different-integers-in-string';
 import { problem as checkIfArrayIsGood } from './check-if-array-is-good';
@@ -983,8 +795,6 @@ import { problem as findTheDifferenceOfTwoArrays } from './find-the-difference-o
 import { problem as longestContinuousIncreasingSubsequence } from './longest-continuous-increasing-subsequence';
 import { problem as findNumbersWithEvenNumberOfDigits } from './find-numbers-with-even-number-of-digits';
 import { problem as countNicePairsInAnArray } from './count-nice-pairs-in-an-array';
-import { problem as checkIfStringIsPrefixOfArray } from './check-if-string-is-prefix-of-array';
-import { problem as removeTrailingZerosFromString } from './remove-trailing-zeros-from-string';
 import { problem as rearrangeSpacesBetweenWords } from './rearrange-spaces-between-words';
 import { problem as splitAStringInBalancedStrings } from './split-a-string-in-balanced-strings';
 import { problem as findGreatestCommonDivisorOfArray } from './find-greatest-common-divisor-of-array';
@@ -1008,37 +818,28 @@ import { problem as appendCharactersToStringToMakeSubsequence } from './append-c
 import { problem as countTotalNumberOfColoredCells } from './count-total-number-of-colored-cells';
 import { problem as differenceBetweenElementSumAndDigitSumOfArray } from './difference-between-element-sum-and-digit-sum-of-array';
 import { problem as minimumLengthOfStringAfterDeletingSimilarEnds } from './minimum-length-of-string-after-deleting-similar-ends';
-import { problem as maximumNumberOfVowelsInSubstringOfGivenLength } from './maximum-number-of-vowels-in-substring-of-given-length';
 import { problem as categorizeBoxAccordingToCriteria } from './categorize-box-according-to-criteria';
 import { problem as findTheMiddleIndexInArray } from './find-the-middle-index-in-array';
 import { problem as maximumAbsoluteSumOfAnySubarray } from './maximum-absolute-sum-of-any-subarray';
 import { problem as countSubstringsWithOnlyOneDistinctLetter } from './count-substrings-with-only-one-distinct-letter';
 import { problem as sumOfNumberAndItsReverse } from './sum-of-number-and-its-reverse';
-import { problem as sumOfAbsoluteDifferencesInSortedArray } from './sum-of-absolute-differences-in-sorted-array';
 import { problem as numberOfSubarraysWithOddSum } from './number-of-subarrays-with-odd-sum';
-import { problem as numberOfPeopleAwareOfSecret } from './number-of-people-aware-of-secret';
 import { problem as validWordAbbreviation } from './valid-word-abbreviation';
-import { problem as numberOfValidWordsInSentence } from './number-of-valid-words-in-sentence';
 import { problem as isSubsequence } from './is-subsequence';
-import { problem as findTheLongestBalancedSubstringOfBinaryString } from './find-the-longest-balanced-substring-of-binary-string';
 import { problem as countNumberOfDistinctIntegersAfterReverseOperations } from './count-number-of-distinct-integers-after-reverse-operations';
 import { problem as mostFrequentNumberFollowingKey } from './most-frequent-number-following-key';
 import { problem as minimumDifferenceBetweenHighestAndLowestOfKScores } from './minimum-difference-between-highest-and-lowest-of-k-scores';
 import { problem as findTheArrayConcVal } from './find-the-array-concat-val';
 import { problem as sortArrayByIncreasingFrequency } from './sort-array-by-increasing-frequency';
-import { problem as findAllKDistantIndices } from './find-all-k-distant-indices';
 import { problem as numberOfBeautifulPairs } from './number-of-beautiful-pairs';
 import { problem as splitStringBySeparator } from './split-string-by-separator';
 import { problem as countVowelStringsInRanges } from './count-vowel-strings-in-ranges';
-import { problem as numberOfEvenOddBits } from './number-of-even-odd-bits';
 import { problem as averageValueOfEvenNumbersDivisibleByThree } from './average-value-of-even-numbers-divisible-by-three';
-import { problem as countPrefixSuffixPairs } from './count-prefix-suffix-pairs';
 import { problem as minimumCostOfBuyingCandiesWithDiscount } from './minimum-cost-of-buying-candies-with-discount';
 import { problem as findOriginalArrayFromPrefixXor } from './find-original-array-from-prefix-xor';
 import { problem as totalDistanceTraveled } from './total-distance-traveled';
 import { problem as deleteCharactersToMakeFancyString } from './delete-characters-to-make-fancy-string';
 import { problem as threeConsecutiveOdds } from './three-consecutive-odds';
-import { problem as countEqualAndDivisiblePairsInArray } from './count-equal-and-divisible-pairs-in-array';
 import { problem as minimumChangesToMakeAlternatingBinaryString } from './minimum-changes-to-make-alternating-binary-string';
 import { problem as rotateFunction } from './rotate-function';
 import { problem as maximumSumOfDistinctSubarraysWithLengthK } from './maximum-sum-of-distinct-subarrays-with-length-k';
@@ -1050,12 +851,10 @@ import { problem as minimumIndexOfAValidSplit } from './minimum-index-of-a-valid
 import { problem as lastMomentBeforeAntsFallOffAPlank } from './last-moment-before-ants-fall-off-a-plank';
 import { problem as checkIfTwoChessboardSquaresHaveSameColor } from './check-if-two-chessboard-squares-have-same-color';
 import { problem as countNumberOfTeams } from './count-number-of-teams';
-import { problem as removeColoredPiecesIfBothNeighborsAreSameColor } from './remove-colored-pieces-if-both-neighbors-are-same-color';
 import { problem as longestAlternatingSubarray } from './longest-alternating-subarray';
 import { problem as divisibleAndNonDivisibleSumsDifference } from './divisible-and-non-divisible-sums-difference';
 import { problem as minimumElementAfterReplacementWithDigitSum } from './minimum-element-after-replacement-with-digit-sum';
 import { problem as pickGifts } from './pick-gifts';
-import { problem as minimumOperationsToMakeArrayXorEqualToK } from './minimum-operations-to-make-array-xor-equal-to-k';
 import { problem as maximumCountOfPositiveIntegerAndNegativeInteger } from './maximum-count-of-positive-integer-and-negative-integer';
 import { problem as numberOfStudentsDoingHomeworkAtAGivenTime } from './number-of-students-doing-homework-at-a-given-time';
 import { problem as findTheXorOfNumbersWhichAppearTwice } from './find-the-xor-of-numbers-which-appear-twice';
@@ -1065,7 +864,6 @@ import { problem as maximumSubarray } from './maximum-subarray';
 import { problem as meetingRooms } from './meeting-rooms';
 import { problem as brickWall } from './brick-wall';
 import { problem as numberOfLongestIncreasingSubsequence } from './number-of-longest-increasing-subsequence';
-import { problem as kthSmallestElementInSortedMatrix } from './kth-smallest-element-in-sorted-matrix';
 import { problem as minimumKnightMoves } from './minimum-knight-moves';
 import { problem as palindromePairs } from './palindrome-pairs';
 import { problem as searchSuggestionsSystem } from './search-suggestions-system';
@@ -1086,10 +884,8 @@ import { problem as addStrings } from './add-strings';
 import { problem as palindromePartitioningII } from './palindrome-partitioning-ii';
 import { problem as wiggleSortII } from './wiggle-sort-ii';
 import { problem as stoneGameIV } from './stone-game-iv';
-import { problem as minimumRefuelingStops } from './minimum-refueling-stops';
 import { problem as snapshotArray } from './snapshot-array';
 import { problem as paintHouseII } from './paint-house-ii';
-import { problem as minimumMovesEqualArrayII } from './minimum-moves-equal-array-ii';
 import { problem as frogJump } from './frog-jump';
 import { problem as kInversePairsArray } from './k-inverse-pairs-array';
 import { problem as minimumCostHireKWorkers } from './minimum-cost-to-hire-k-workers';
@@ -1112,25 +908,18 @@ import { problem as spiralMatrixIII } from './spiral-matrix-iii';
 import { problem as textJustification } from './text-justification';
 import { problem as minimumOperationsMakeArrayContinuous } from './minimum-operations-make-array-continuous';
 import { problem as arithmeticSubarrays } from './arithmetic-subarrays';
-import { problem as minimumScorePath } from './minimum-score-path';
 import { problem as maximumPointsFromCards } from './maximum-points-from-cards';
 import { problem as minimumAsciiDeleteSum } from './minimum-ascii-delete-sum';
 import { problem as sumOfDistancesInTree } from './sum-of-distances-in-tree';
 import { problem as couplesHoldingHands } from './couples-holding-hands';
 import { problem as fallingSquares } from './falling-squares';
 import { problem as constrainedSubsequenceSum } from './constrained-subsequence-sum';
-import { problem as pseudoPalindromicPaths } from './pseudo-palindromic-paths';
-import { problem as numberOfNodesSameLabel } from './number-of-nodes-same-label';
-import { problem as minimumCostTreeLeafValues } from './minimum-cost-tree-leaf-values';
-import { problem as validPartitionArray } from './valid-partition-array';
 import { problem as paintFence } from './paint-fence';
 import { problem as minimumInsertionStepsPalindrome } from './minimum-insertion-steps-palindrome';
 import { problem as longestSubarrayAbsDiffLimit } from './longest-subarray-abs-diff-limit';
-import { problem as maximumSumTwoNonOverlappingSubarrays } from './maximum-sum-two-non-overlapping-subarrays';
 import { problem as numberOfClosedIslands } from './number-of-closed-islands';
 import { problem as destinationCity } from './destination-city';
 import { problem as findWinnerTictactoe } from './find-winner-tictactoe';
-import { problem as maximumEatenApples } from './maximum-eaten-apples';
 import { problem as splitArrayFibonacci } from './split-array-fibonacci';
 import { problem as maximumScorePerformingMultiplication } from './maximum-score-performing-multiplication';
 import { problem as cherryPickup } from './cherry-pickup';
@@ -1140,7 +929,6 @@ import { problem as countSquareSubmatrices } from './count-square-submatrices';
 import { problem as freedomTrail } from './freedom-trail';
 import { problem as guessNumberHigherOrLowerII } from './guess-number-higher-or-lower-ii';
 import { problem as removePalindromicSubsequences } from './remove-palindromic-subsequences';
-import { problem as checkArrayFormation } from './check-array-formation';
 import { problem as minimumFallingPathSumII } from './minimum-falling-path-sum-ii';
 import { problem as scrambleString } from './scramble-string';
 import { problem as predictTheWinner } from './predict-the-winner';
@@ -1156,7 +944,6 @@ import { problem as countOfRangeSum } from './count-of-range-sum';
 import { problem as designLinkedList } from './design-linked-list';
 import { problem as maximumProductSubarray } from './maximum-product-subarray';
 import { problem as deleteAndEarn } from './delete-and-earn';
-import { problem as minimumTimeCollectApples } from './minimum-time-collect-apples';
 import { problem as xorQueriesOfSubarray } from './xor-queries-of-subarray';
 import { problem as sequentialDigits } from './sequential-digits';
 import { problem as countSubIslands } from './count-sub-islands';
@@ -1164,7 +951,6 @@ import { problem as maximumProfitAssignment } from './maximum-profit-assignment'
 import { problem as longestPalindromicSubstring } from './longest-palindromic-substring';
 import { problem as maxProductWordLengths } from './max-product-word-lengths';
 import { problem as slidingWindowMedian } from './sliding-window-median';
-import { problem as minimumDifficultyJobSchedule } from './minimum-difficulty-of-job-schedule';
 import { problem as tallestBillboard } from './tallest-billboard';
 import { problem as concatenatedWords } from './concatenated-words';
 import { problem as maxValueOfEquation } from './max-value-of-equation';
@@ -1180,7 +966,6 @@ import { problem as palindromePartitioningIii } from './palindrome-partitioning-
 import { problem as maximumHeightByStackingCuboids } from './maximum-height-by-stacking-cuboids';
 import { problem as minimumDaysToEatOranges } from './minimum-number-of-days-to-eat-n-oranges';
 import { problem as bestTeamWithNoConflicts } from './best-team-with-no-conflicts';
-import { problem as numberOfWaysToFormTarget } from './number-of-ways-to-form-target-given-dictionary';
 import { problem as minimumXorSumOfTwoArrays } from './minimum-xor-sum-of-two-arrays';
 import { problem as numberOfWaysToRearrangeSticksWithKSticksVisible } from './number-of-ways-to-rearrange-sticks-with-k-sticks-visible';
 import { problem as numberOfWaysToStayInSamePlaceAfterSomeSteps } from './number-of-ways-to-stay-in-same-place-after-some-steps';
@@ -1195,20 +980,16 @@ import { problem as maximumProfitInJobScheduling } from './maximum-profit-in-job
 import { problem as dota2Senate } from './dota2-senate';
 import { problem as timeNeededToInformAllEmployees } from './time-needed-to-inform-all-employees';
 import { problem as minesweeper } from './minesweeper';
-import { problem as minimumScoreTriangulation } from './minimum-score-triangulation';
 import { problem as scoreAfterFlippingMatrix } from './score-after-flipping-matrix';
 import { problem as beautifulArray } from './beautiful-array';
 import { problem as recoverBinarySearchTree } from './recover-binary-search-tree';
-import { problem as findDuplicateSubtrees } from './find-duplicate-subtrees';
 import { problem as allPossibleFullBinaryTrees } from './all-possible-full-binary-trees';
 import { problem as cherryPickupII } from './cherry-pickup-ii';
-import { problem as detonateMaximumBombs } from './detonate-maximum-bombs';
 import { problem as stoneGameVII } from './stone-game-vii';
 import { problem as designBrowserHistory } from './design-browser-history';
 import { problem as knightDialer } from './knight-dialer';
 import { problem as paintHouseIII } from './paint-house-iii';
 import { problem as maximizeDistanceToClosestPerson } from './maximize-distance-to-closest-person';
-import { problem as minimumNumberOfVertices } from './minimum-number-of-vertices';
 import { problem as pathWithMinimumEffort } from './path-with-minimum-effort';
 import { problem as pathWithMaximumProbability } from './path-with-maximum-probability';
 import { problem as videoStitching } from './video-stitching';
@@ -1225,16 +1006,13 @@ import { problem as minimumObstacleRemovalToReachCorner } from './minimum-obstac
 import { problem as maxSumOfRectangleNoLargerThanK } from './max-sum-of-rectangle-no-larger-than-k';
 import { problem as countUniqueCharactersOfAllSubstrings } from './count-unique-characters-of-all-substrings';
 import { problem as zumaGame } from './zuma-game';
-import { problem as findLongestValidObstacleCourse } from './find-longest-valid-obstacle-course';
 import { problem as bestSightseeingPair } from './best-sightseeing-pair';
-import { problem as findLongestSubstringVowelsEven } from './find-longest-substring-vowels-even';
 import { problem as reverseSubstringsBetweenParentheses } from './reverse-substrings-between-parentheses';
 import { problem as designStackWithIncrement } from './design-stack-with-increment';
 import { problem as minimumNumberOfFrogsCroaking } from './minimum-number-of-frogs-croaking';
 import { problem as shortestPathVisitingAllNodes } from './shortest-path-visiting-all-nodes';
 import { problem as minimumNumberOfWorkSessions } from './minimum-number-of-work-sessions';
 import { problem as minimizeProductSum } from './minimize-product-sum';
-import { problem as countRangeSum } from './count-range-sum';
 import { problem as allPathsFromSourceLeadToDestination } from './all-paths-from-source-lead-to-destination';
 import { problem as jumpGameV } from './jump-game-v';
 import { problem as wordSubsets } from './word-subsets';
@@ -1261,16 +1039,13 @@ import { problem as numberOfWaysToDivideALongCorridor } from './number-of-ways-t
 import { problem as deleteOperationForTwoStrings } from './delete-operation-for-two-strings';
 import { problem as productOfArrayExceptSelf } from './product-of-array-except-self';
 import { problem as minimumMovesToEqualArrayElements } from './minimum-moves-to-equal-array-elements';
-import { problem as smallestDivisorGivenThreshold } from './smallest-divisor-given-threshold';
 import { problem as additiveNumber } from './additive-number';
 import { problem as uniquePathsIii } from './unique-paths-iii';
 import { problem as raceCar } from './race-car';
 import { problem as minimumCostToMakeValidParentheses } from './minimum-cost-to-make-valid-parentheses';
-import { problem as minimumScoreOfPath } from './minimum-score-of-path';
 import { problem as countOperationsToObtainZeroIi } from './count-operations-to-obtain-zero-ii';
 import { problem as minimumDeletionsToBalanceParentheses } from './minimum-deletions-to-balance-parentheses';
 import { problem as minimumPathCostInAGrid } from './minimum-path-cost-in-a-grid';
-import { problem as countWaysGroupOverlappingRanges } from './count-ways-group-overlapping-ranges';
 import { problem as takeGiftsFromTheRichestPile } from './take-gifts-from-the-richest-pile';
 import { problem as findAllGoodIndices } from './find-all-good-indices';
 import { problem as partitionArrayIntoThreePartsWithEqualSum } from './partition-array-into-three-parts-with-equal-sum';
@@ -1290,9 +1065,7 @@ import { problem as grumpyBookstoreOwner } from './grumpy-bookstore-owner';
 import { problem as mostStonesRemovedWithSameRowOrColumn } from './most-stones-removed-with-same-row-or-column';
 import { problem as longestSubsequenceWithLimitedSum } from './longest-subsequence-with-limited-sum';
 import { problem as minimumNumberOfArrowsToBurstBalloons } from './minimum-number-of-arrows-to-burst-balloons';
-import { problem as findLargestValueEachTreeRow } from './find-largest-value-each-tree-row';
 import { problem as findBottomLeftTreeValue } from './find-bottom-left-tree-value';
-import { problem as mostStonesRemovedSameRowOrColumn } from './most-stones-removed-same-row-or-column';
 import { problem as countUnreachablePairsOfNodes } from './count-unreachable-pairs-of-nodes';
 import { problem as myCalendarI } from './my-calendar-i';
 import { problem as findPlayersWithZeroOrOneLosses } from './find-players-with-zero-or-one-losses';
@@ -1306,7 +1079,6 @@ import { problem as longestCycleInGraph } from './longest-cycle-in-graph';
 import { problem as maximumSubarrayMinProduct } from './maximum-subarray-min-product';
 import { problem as stepsToMakeArrayNondecreasing } from './steps-to-make-array-nondecreasing';
 import { problem as countSubstringsDifferByOne } from './count-substrings-that-differ-by-one-character';
-import { problem as minimumOperationsToMoveBalls } from './minimum-operations-to-move-balls';
 import { problem as maximumAreaOfPieceOfCake } from './maximum-area-of-piece-of-cake';
 import { problem as minimumAreaRectangle } from './minimum-area-rectangle';
 import { problem as minimumOperationsToHalveArraySum } from './minimum-operations-to-halve-array-sum';
@@ -1315,7 +1087,6 @@ import { problem as circularArrayLoop } from './circular-array-loop';
 import { problem as longestArithmeticSubsequenceOfGivenDifference } from './longest-arithmetic-subsequence-of-given-difference';
 import { problem as timeNeededToBuyTickets } from './time-needed-to-buy-tickets';
 import { problem as numberOfSubarraysWithBoundedMaximum } from './number-of-subarrays-with-bounded-maximum';
-import { problem as kthSmallestElementInBst } from './kth-smallest-element-in-bst';
 import { problem as findMinimumInRotatedSortedArray } from './find-minimum-in-rotated-sorted-array';
 import { problem as searchInRotatedSortedArray } from './search-in-rotated-sorted-array';
 import { problem as minimumNumberOfDaysToMakeMBouquets } from './minimum-number-of-days-to-make-m-bouquets';
@@ -1328,7 +1099,6 @@ import { problem as largestMergeOfTwoStrings } from './largest-merge-of-two-stri
 import { problem as removeCoveredIntervals } from './remove-covered-intervals';
 import { problem as minimizeArrayValue } from './minimize-array-value';
 import { problem as validateIpAddress } from './validate-ip-address';
-import { problem as maximumSumHourglass } from './maximum-sum-hourglass';
 import { problem as reverseOddLevelsBinaryTree } from './reverse-odd-levels-binary-tree';
 import { problem as findClosestNodeToGivenTwoNodes } from './find-closest-node-to-given-two-nodes';
 import { problem as numberOfFlowersInFullBloom } from './number-of-flowers-in-full-bloom';
@@ -1358,7 +1128,6 @@ import { problem as minimumHealthToBeatTheGame } from './minimum-health-to-beat-
 import { problem as checkIfStringContainsAllBinaryCodesOfSizeK } from './check-if-string-contains-all-binary-codes-of-size-k';
 import { problem as longestNiceSubstring } from './longest-nice-substring';
 import { problem as minimumAddToMakeParenthesesValid } from './minimum-add-to-make-parentheses-valid';
-import { problem as predictWinner } from './predict-winner';
 import { problem as canIWin } from './can-i-win';
 import { problem as optimalDivision } from './optimal-division';
 import { problem as minimumInsertionsToBalanceParentheses } from './minimum-insertions-to-balance-parentheses';
@@ -1374,7 +1143,6 @@ import { problem as countPrimeSetBits } from './count-prime-set-bits';
 import { problem as verifyingAlienDictionary } from './verifying-alien-dictionary';
 import { problem as rectangleArea } from './rectangle-area';
 import { problem as encodeDecodeStrings } from './encode-decode-strings';
-import { problem as shortestDistanceToCharacter } from './shortest-distance-to-character';
 import { problem as utf8Validation } from './utf-8-validation';
 import { problem as rangeAddition } from './range-addition';
 import { problem as countTheNumberOfFairPairs } from './count-the-number-of-fair-pairs';
@@ -1383,7 +1151,6 @@ import { problem as constructStringWithRepeatLimit } from './construct-string-wi
 import { problem as countWaysToSelectBuildings } from './count-ways-to-select-buildings';
 import { problem as powerOfHeroes } from './power-of-heroes';
 import { problem as numberOfWaysToArriveAtDestination } from './number-of-ways-to-arrive-at-destination';
-import { problem as reorderRoutesToMakeAllPathsLeadToCityZero } from './reorder-routes-to-make-all-paths-lead-to-city-zero';
 import { problem as maximumLengthOfPairChain } from './maximum-length-of-pair-chain';
 import { problem as countServersThatCommunicate } from './count-servers-that-communicate';
 import { problem as validPalindrome } from './valid-palindrome';
@@ -1398,7 +1165,6 @@ import { problem as lastStoneWeightII } from './last-stone-weight-ii';
 import { problem as divideTwoIntegers } from './divide-two-integers';
 import { problem as longestHarmoniousSubsequence } from './longest-harmonious-subsequence';
 import { problem as buddyStrings } from './buddy-strings';
-import { problem as beautifulSubsets } from './beautiful-subsets';
 import { problem as myCalendarIi } from './my-calendar-ii';
 import { problem as taskSchedulerIi } from './task-scheduler-ii';
 import { problem as swappingNodesInALinkedList } from './swapping-nodes-in-a-linked-list';
@@ -1408,14 +1174,11 @@ import { problem as maximumDistanceInArrays } from './maximum-distance-in-arrays
 import { problem as pathWithMaximumGold } from './path-with-maximum-gold';
 import { problem as convertSortedArrayToBST } from './convert-sorted-array-to-bst';
 import { problem as trimABinarySearchTree } from './trim-a-binary-search-tree';
-import { problem as findingUsersActiveMinutes } from './finding-users-active-minutes';
 import { problem as dayOfTheYear } from './day-of-the-year';
 import { problem as typeOfTriangle } from './type-of-triangle';
 import { problem as maximumEnemyForts } from './maximum-enemy-forts-that-can-be-captured';
 import { problem as minimumAmountTimeToCollectGarbage } from './minimum-amount-of-time-to-collect-garbage';
 import { problem as checkIfArraySortedAndRotated } from './check-if-array-is-sorted-and-rotated';
-import { problem as nodesBetweenCriticalPoints } from './nodes-between-critical-points';
-import { problem as numberAfterDoubleReversal } from './number-after-a-double-reversal';
 import { problem as dominoAndTrominoTiling } from './domino-and-tromino-tiling';
 import { problem as numberOfLinesToWriteString } from './number-of-lines-to-write-string';
 import { problem as findTheMinimumAndMaximumNumberOfNodesBetweenCriticalPoints } from './find-the-minimum-and-maximum-number-of-nodes-between-critical-points';
@@ -1448,7 +1211,6 @@ import { problem as reformatTheString } from './reformat-the-string';
 import { problem as findNUniqueIntegersSumUpToZero } from './find-n-unique-integers-sum-up-to-zero';
 import { problem as checkArrayFormationThroughConcatenation } from './check-array-formation-through-concatenation';
 import { problem as minimizeStringLength } from './minimize-string-length';
-import { problem as findScoreOfArrayAfterMarkingElements } from './find-score-of-array-after-marking-elements';
 import { problem as elementsAppearingMoreThan25Percent } from './elements-appearing-more-than-25-percent';
 import { problem as makeStringASubsequenceUsingCyclicIncrements } from './make-string-a-subsequence-using-cyclic-increments';
 import { problem as numberOfBeautifulIntegersInRange } from './number-of-beautiful-integers-in-range';
@@ -1458,28 +1220,23 @@ import { problem as pascalsTriangleIi } from './pascals-triangle-ii';
 import { problem as superEggDrop } from './super-egg-drop';
 import { problem as maximumScoreSplicedArray } from './maximum-score-spliced-array';
 import { problem as countIncreasingQuadruplets } from './count-increasing-quadruplets';
-import { problem as waysToMakeFairArray } from './ways-to-make-fair-array';
 import { problem as minimumInitialEnergyToFinishTasks } from './minimum-initial-energy-to-finish-tasks';
 import { problem as constructTargetArrayWithMultipleSums } from './construct-target-array-with-multiple-sums';
-import { problem as minimizeMaximumDifferenceOfPairs } from './minimize-maximum-difference-of-pairs';
 import { problem as minimumNumberOfKeypresses } from './minimum-number-of-keypresses';
 import { problem as longestSubarrayAtMostKFrequency } from './longest-subarray-at-most-k-frequency';
 import { problem as minimumDeletionsToMakeStringKSpecial } from './minimum-deletions-to-make-string-k-special';
 import { problem as cousinsInBinaryTree } from './cousins-in-binary-tree';
 import { problem as allNodesDistanceKInBinaryTree } from './all-nodes-distance-k-in-binary-tree';
-import { problem as openLock } from './open-lock';
 import { problem as maximizeSumOfArrayAfterKNegations } from './maximize-sum-of-array-after-k-negations';
 import { problem as removeDuplicatesFromSortedList } from './remove-duplicates-from-sorted-list';
 import { problem as intersectionOfTwoArrays } from './intersection-of-two-arrays';
 import { problem as climbingStairsMemo } from './climbing-stairs-memo';
 import { problem as countVowelsInString } from './count-vowels-in-string';
 import { problem as percentageOfLetter } from './percentage-of-letter';
-import { problem as reverseWordsInString } from './reverse-words-in-string';
 import { problem as dayOfTheWeek } from './day-of-the-week';
 import { problem as guessNumberHigherOrLower } from './guess-number-higher-or-lower';
 import { problem as largestTriangleArea } from './largest-triangle-area';
 import { problem as minimumValueToGetPositiveStepSum } from './minimum-value-to-get-positive-step-sum';
-import { problem as numberOfRectanglesThatCanFormLargestSquare } from './number-of-rectangles-that-can-form-largest-square';
 import { problem as successfulPairsOfSpellsAndPotions } from './successful-pairs-of-spells-and-potions';
 import { problem as minimumOperationsToReduceXToZero } from './minimum-operations-to-reduce-x-to-zero';
 import { problem as largestSubmatrixWithRearrangements } from './largest-submatrix-with-rearrangements';
@@ -1491,7 +1248,6 @@ import { problem as bstFromPreorder } from './bst-from-preorder';
 import { problem as balanceABinarySearchTree } from './balance-a-binary-search-tree';
 import { problem as maximumSumBstInBinaryTree } from './maximum-sum-bst-in-binary-tree';
 import { problem as stockPriceFluctuation } from './stock-price-fluctuation';
-import { problem as minimumReplacementsToSortArray } from './minimum-replacements-to-sort-array';
 import { problem as largestColorValueInDirectedGraph } from './largest-color-value-in-directed-graph';
 import { problem as stringWithoutAaaOrBbb } from './string-without-aaa-or-bbb';
 import { problem as countTheHiddenSequences } from './count-the-hidden-sequences';
@@ -1535,7 +1291,6 @@ import { problem as brokenCalculator } from './broken-calculator';
 import { problem as countDaysWithoutMeetings } from './count-days-without-meetings';
 import { problem as stringCompressionIII } from './string-compression-iii';
 import { problem as strangePrinterII } from './strange-printer-ii';
-import { problem as kthSmallestInSortedMatrix } from './kth-smallest-in-sorted-matrix';
 import { problem as theSkylineProblem } from './the-skyline-problem';
 import { problem as islandPerimeter } from './island-perimeter';
 import { problem as matrixChainMultiplication } from './matrix-chain-multiplication';
@@ -1576,22 +1331,18 @@ import { problem as waysToSplitArrayIntoThreeSubarrays } from './ways-to-split-a
 import { problem as nextClosestTime } from './next-closest-time';
 import { problem as employeeFreeTime } from './employee-free-time';
 import { problem as maximumSumOf3NonOverlappingSubarrays } from './maximum-sum-of-3-non-overlapping-subarrays';
-import { problem as dominoTrominoTiling } from './domino-tromino-tiling';
 import { problem as splitArrayWithSameAverage } from './split-array-with-same-average';
 // batch 57
-import { problem as convertBinaryLinkedList } from './convert-binary-linked-list';
 import { problem as diagonalTraverseII } from './diagonal-traverse-ii';
 import { problem as designCircularDeque } from './design-circular-deque';
 import { problem as beautifulTowersI } from './beautiful-towers-i';
 import { problem as maximumTastinessCandyBasket } from './maximum-tastiness-candy-basket';
-import { problem as shortestSubarraySumAtLeastK } from './shortest-subarray-sum-at-least-k';
 import { problem as substringWithConcatenationOfAllWords } from './substring-with-concatenation-of-all-words';
 import { problem as minimumPeopleToTeach } from './minimum-people-to-teach';
 import { problem as punishmentNumberOfInteger } from './punishment-number-of-integer';
 import { problem as minimumCostToSeparateSentenceIntoRows } from './minimum-cost-to-separate-sentence-into-rows';
 import { problem as maximumRunningTimeOfNComputers } from './maximum-running-time-of-n-computers';
 import { problem as countStrictlyIncreasingSubarrays } from './count-strictly-increasing-subarrays';
-import { problem as minimumScorePathBetweenTwoCities } from './minimum-score-path-between-two-cities';
 import { problem as splitMessageBasedOnLimit } from './split-message-based-on-limit';
 import { problem as longestWordInDictDeleting } from './longest-word-in-dict-deleting';
 import { problem as countAllValidPickupAndDeliveryOptions } from './count-all-valid-pickup-and-delivery-options';
@@ -1609,7 +1360,6 @@ import { problem as minimumOperationsToMakeArrayDivisibleByThree } from './minim
 import { problem as findThePunishmentNumberOfIntegers } from './find-the-punishment-number-of-integers';
 import { problem as minimumAdditionsToMakeValidString } from './minimum-additions-to-make-valid-string';
 // batch 57 (local)
-import { problem as minimumNumberOfMovesToSeat } from './minimum-number-of-moves-to-seat';
 import { problem as numberOfSeniorCitizens } from './number-of-senior-citizens';
 import { problem as maximumNumberOfGroupsWithIncreasingLength } from './maximum-number-of-groups-with-increasing-length';
 import { problem as makeIntegerBeautiful } from './make-integer-beautiful';
@@ -1658,7 +1408,6 @@ import { problem as maximumPrimeDifference } from './maximum-prime-difference';
 // batch 62 (local)
 import { problem as findTheMinimumNumberOfFibonacciNumbersWhoseSumIsK } from './find-the-minimum-number-of-fibonacci-numbers-whose-sum-is-k';
 import { problem as countPairsOfSimilarStrings } from './count-pairs-of-similar-strings';
-import { problem as numberOfBeautifulSubarrays } from './number-of-beautiful-subarrays';
 import { problem as zeroArrayTransformationI } from './zero-array-transformation-i';
 import { problem as maximumBuildingHeight } from './maximum-building-height';
 import { problem as countNumberOfSpecialIntegers } from './count-number-of-special-integers';
@@ -1683,9 +1432,7 @@ import { problem as minimumCostToCutAStick } from './minimum-cost-to-cut-a-stick
 // batch 61
 import { problem as kClosestPointsToOrigin } from './k-closest-points-to-origin';
 import { problem as findAllAnagramsInAString } from './find-all-anagrams-in-a-string';
-import { problem as longestPalindrome } from './longest-palindrome';
 import { problem as reverseWordsInAString } from './reverse-words-in-a-string';
-import { problem as countPrimes } from './count-primes';
 // batch 63
 import { problem as designHitCounter } from './design-hit-counter';
 import { problem as removeColoredPieces } from './remove-colored-pieces';
@@ -1693,15 +1440,12 @@ import { problem as swapAdjacentInLrString } from './swap-adjacent-in-lr-string'
 import { problem as nextGreaterElementIV } from './next-greater-element-iv';
 import { problem as minimumNumberOfOperationsToMakeArraysSimilar } from './minimum-number-of-operations-to-make-arrays-similar';
 // batch 66
-import { problem as findAllNumbersDisappearedInArray } from './find-all-numbers-disappeared-in-array';
-import { problem as kthLargestElementInArray } from './kth-largest-element-in-array';
 import { problem as bestTimeToBuyAndSellStockII } from './best-time-to-buy-and-sell-stock-ii';
 import { problem as countGoodNodesInBinaryTree } from './count-good-nodes-in-binary-tree';
 import { problem as minimumDepthOfBinaryTree } from './minimum-depth-of-binary-tree';
 // batch 62
 import { problem as gridGame } from './grid-game';
 import { problem as maximumNumberOfPointsWithCost } from './maximum-number-of-points-with-cost';
-import { problem as findThreeConsecutiveIntegersThatSumToGivenNumber } from './find-three-consecutive-integers-that-sum-to-given-number';
 import { problem as minimumSumOfFourDigitNumberAfterSplittingDigits } from './minimum-sum-of-four-digit-number-after-splitting-digits';
 import { problem as kItemsWithTheMaximumSum } from './k-items-with-the-maximum-sum';
 
@@ -1712,10 +1456,8 @@ import { problem as numberOfBeautifulSubsets } from './number-of-beautiful-subse
 import { problem as maximumNumberOfFishInAGrid } from './maximum-number-of-fish-in-a-grid';
 
 // batch 64
-import { problem as minimumCostValidPathInGrid } from './minimum-cost-valid-path-in-grid';
 import { problem as decreaseElementsToMakeArrayZigzag } from './decrease-elements-to-make-array-zigzag';
 import { problem as maximalNetworkRank } from './maximal-network-rank';
-import { problem as minimumTapsToOpenToWaterAGarden } from './minimum-taps-to-open-to-water-a-garden';
 import { problem as putMarblesInBags } from './put-marbles-in-bags';
 
 // batch 66
@@ -1727,7 +1469,6 @@ import { problem as gridIllumination } from './grid-illumination';
 // batch 67
 import { problem as minimumOperationsToMakeUniValueGrid } from './minimum-operations-to-make-uni-value-grid';
 import { problem as minimumMovesToMakeArrayComplementary } from './minimum-moves-to-make-array-complementary';
-import { problem as findWinnerOfArrayGame } from './find-winner-of-array-game';
 import { problem as maximumNumberOfRobotsWithinBudget } from './maximum-number-of-robots-within-budget';
 import { problem as minimumSizeOfBag } from './minimum-limit-of-balls-in-a-bag';
 import { problem as maximumRowsCoveredByColumns } from './maximum-rows-covered-by-columns';
@@ -1754,7 +1495,6 @@ import { problem as numberOfIslandsII } from './number-of-islands-ii';
 import { problem as findTheCelebrity } from './find-the-celebrity';
 import { problem as minimumNumberOfDaysToDisconnectIsland } from './minimum-number-of-days-to-disconnect-island';
 // batch 71
-import { problem as maximumProductOfTwoElementsInArray } from './maximum-product-of-two-elements-in-array';
 import { problem as findTheHighestAltitude } from './find-the-highest-altitude';
 import { problem as findTheArrayConcatenationValue } from './find-the-array-concatenation-value';
 import { problem as runningSumOf1dArray } from './running-sum-of-1d-array';
@@ -1775,27 +1515,19 @@ import { problem as maximumSumQueries } from './maximum-sum-queries';
 import { problem as findSubarraysWithEqualSum } from './find-subarrays-with-equal-sum';
 import { problem as bestPokerHand } from './best-poker-hand';
 import { problem as countIncremovableSubarrays } from './count-incremovable-subarrays';
-import { problem as stepByStepDirections } from './step-by-step-directions';
-import { problem as minimumNumberOfFoodBuckets } from './minimum-number-of-food-buckets';
 import { problem as superUglyNumber } from './super-ugly-number';
 import { problem as rewardTopKStudents } from './reward-top-k-students';
 import { problem as countSubarraysWithScoreLessThanK } from './count-subarrays-with-score-less-than-k';
-import { problem as maximumNumberOfJumpsToReachLastIndex } from './maximum-number-of-jumps-to-reach-last-index';
 import { problem as minimumNumberOfCoinsForFruits } from './minimum-number-of-coins-for-fruits';
 // batch 59 (new problems)
 import { problem as freqStack } from './freq-stack';
 import { problem as minimumCostToEqualizeArray } from './minimum-cost-to-equalize-array';
-import { problem as maximumTotalDamage } from './maximum-total-damage';
 import { problem as specialArrayII } from './special-array-ii';
-import { problem as findMaximumLengthValidSubsequence } from './find-maximum-length-valid-subsequence';
 import { problem as countSubmatricesAllOnes } from './count-submatrices-all-ones';
 import { problem as minimumLengthOfStringAfterOperations } from './minimum-length-of-string-after-operations';
-import { problem as countSpecialCharactersI } from './count-special-characters-i';
-import { problem as maximumJumpsToReachLastIndex } from './maximum-jumps-to-reach-last-index';
 import { problem as minimumOperationsToMakeArrayEqualII } from './minimum-operations-to-make-array-equal-ii';
 import { problem as minimumCostForCuttingCakeI } from './minimum-cost-for-cutting-cake-i';
 // batch 63 (local)
-import { problem as countConsistentStrings } from './count-consistent-strings';
 import { problem as maxPointsFromCards } from './max-points-you-can-obtain-from-cards';
 import { problem as numStepsBinaryToOne } from './number-of-steps-to-reduce-number-in-binary-representation-to-one';
 import { problem as minimizeSumTwoChanges } from './minimum-score-by-changing-two-elements';
@@ -1803,7 +1535,6 @@ import { problem as sqrtX } from './sqrtx';
 // batch 62 (local)
 import { problem as seatReservationManager } from './seat-reservation-manager';
 import { problem as subarrayDivByK } from './subarray-sum-divisible-by-k';
-import { problem as minimumPathCostInGrid } from './minimum-path-cost-in-grid';
 import { problem as maximumDistanceBetweenAPairOfValues } from './maximum-distance-between-a-pair-of-values';
 
 // batch 62
@@ -1882,7 +1613,6 @@ import { problem as sumGame } from './sum-game';
 import { problem as findTheKthLuckyNumber } from './find-the-k-th-lucky-number';
 // batch 68-local
 import { problem as findMedianFromDataStream } from './find-median-from-data-stream';
-import { problem as checkCompletenessBinaryTreeNew } from './check-completeness-of-binary-tree';
 import { problem as earliestFullBloom } from './earliest-possible-day-of-full-bloom';
 import { problem as longestObstacleCourse } from './find-the-longest-valid-obstacle-course-at-each-position';
 import { problem as minimumTimeFinishRace } from './minimum-time-to-finish-the-race';
@@ -1910,14 +1640,10 @@ import { problem as minimumOneBitOperations } from './minimum-one-bit-operations
 import { problem as longestContinuousSubarrayAbsDiff } from './longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit';
 // batch 72
 import { problem as walkingRobotSimulation } from './walking-robot-simulation';
-import { problem as findDistinctDifferenceArray } from './find-distinct-difference-array';
 import { problem as maximumNumberOfAlloys } from './maximum-number-of-alloys';
 import { problem as minimumOpsDistinctElements } from './minimum-ops-distinct-elements';
 import { problem as minimumCoinsToAdd } from './minimum-coins-to-add';
-import { problem as countSpecialCharactersII } from './count-special-characters-ii';
 import { problem as findMaximumK } from './find-maximum-k';
-import { problem as minimumChairsWaitingRoom } from './minimum-chairs-waiting-room';
-import { problem as maximumBallsInBox } from './maximum-balls-in-box';
 import { problem as satisfiabilityOfEqualityEquations } from './satisfiability-of-equality-equations';
 import { problem as pourWater } from './pour-water';
 import { problem as bricksFallingWhenHit } from './bricks-falling-when-hit';
@@ -1941,10 +1667,8 @@ import { problem as wiggleSort } from './wiggle-sort';
 import { problem as candyCrush } from './candy-crush';
 // batch 76
 import { problem as removeMaxNumberOfEdgesToKeepGraphFullyTraversable } from './remove-max-number-of-edges-to-keep-graph-fully-traversable';
-import { problem as examRoom } from './exam-room';
 import { problem as checkingExistenceOfEdgeLengthLimitedPaths } from './checking-existence-of-edge-length-limited-paths';
 import { problem as lastDayWhereYouCanStillCross } from './last-day-where-you-can-still-cross';
-import { problem as minimumCostWalkInWeightedGraph } from './minimum-cost-walk-in-weighted-graph';
 import { problem as maximumAveragePassRatio } from './maximum-average-pass-ratio';
 import { problem as countGoodMeals } from './count-good-meals';
 import { problem as rankTeamsByVotes } from './rank-teams-by-votes';
@@ -1995,7 +1719,6 @@ import { problem as findTheKSumOfAnArray } from './find-the-k-sum-of-an-array';
 import { problem as minimumTimeToVisitDisappearingNodes } from './minimum-time-to-visit-disappearing-nodes';
 import { problem as countBeautifulSubstringsI } from './count-beautiful-substrings-i';
 import { problem as sortTransformedArray } from './sort-transformed-array';
-import { problem as checkIfParenthesesStringCanBeValid } from './check-if-parentheses-string-can-be-valid';
 import { problem as findTheNumberOfDistinctColorsAmongTheBalls } from './find-the-number-of-distinct-colors-among-the-balls';
 import { problem as countTheNumberOfArraysWithKMatchingAdjacentElements } from './count-the-number-of-arrays-with-k-matching-adjacent-elements';
 // batch 79 — DP, stack, binary-search
@@ -2008,7 +1731,6 @@ import { problem as findTheSmallestDivisorGivenAThreshold } from './find-the-sma
 import { problem as magneticForceBetweenTwoBalls } from './magnetic-force-between-two-balls';
 import { problem as nthMagicalNumber } from './nth-magical-number';
 import { problem as getEqualSubstringsWithinBudget } from './get-equal-substrings-within-budget';
-import { problem as longestEqualSubarray } from './longest-equal-subarray';
 import { problem as threeSumWithMultiplicity } from './three-sum-with-multiplicity';
 import { problem as new21Game } from './new-21-game';
 import { problem as shortestCommonSupersequence } from './shortest-common-supersequence';
@@ -2038,13 +1760,11 @@ import { problem as minimumFuelCostToReportToTheCapital } from './minimum-fuel-c
 import { problem as minimumOperationsToMakeTheArrayAlternating } from './minimum-operations-to-make-the-array-alternating';
 // batch 83 — strings, dp, graph
 import { problem as countPalindromes } from './count-palindromes';
-import { problem as flowerPlantingNoAdjacent } from './flower-planting-no-adjacent';
 import { problem as longestDupSubstring } from './longest-duplicate-substring';
 import { problem as shortestPalindrome } from './shortest-palindrome';
 import { problem as sumPrefixScores } from './sum-of-prefix-scores-of-strings';
 import { problem as fillingBookcaseShelves } from './filling-bookcase-shelves';
 import { problem as maximumLengthRepeatedSubarray } from './maximum-length-of-repeated-subarray';
-import { problem as minimumTapsToWaterGarden } from './minimum-number-of-taps-to-water-garden';
 import { problem as numberOfWaysToPaintN3Grid } from './number-of-ways-to-paint-n-3-grid';
 import { problem as frogPositionAfterTSeconds } from './frog-position-after-t-seconds';
 import { problem as loudAndRich } from './loud-and-rich';
@@ -2178,12 +1898,9 @@ import { problem as largestNumberAtLeastTwiceOfOthers } from './largest-number-a
 import { problem as fourSumVariant } from './4sum';
 import { problem as dailyTemperaturesVariant } from './monotonic-stack-daily-temperatures';
 // batch 95 — tree/easy, tree/medium, tree/hard
-import { problem as rangeSumBst } from './range-sum-bst';
 import { problem as deleteNodeInABst } from './delete-node-in-a-bst';
 import { problem as binaryTreeMaximumPathSum } from './binary-tree-maximum-path-sum';
 // batch 96 (remote) — arrays/easy, arrays+hash-map/easy, strings+hash-map/easy
-import { problem as checkIfArraySortedAndRotatedB96 } from './check-if-array-sorted-and-rotated';
-import { problem as findAllLonelyNumbersInArray } from './find-all-lonely-numbers-in-array';
 import { problem as checkIfAllCharactersHaveEqualNumberOfOccurrences } from './check-if-all-characters-have-equal-number-of-occurrences';
 // batch 99 (remote) — strings/easy, arrays/easy, arrays/medium, sliding-window/medium
 import { problem as findLongestBalancedBinarySubstring } from './find-longest-balanced-binary-substring';
@@ -2260,7 +1977,6 @@ import { problem as countNonSpecialNumbers } from './count-non-special-numbers';
 // batch 114 — strings+union-find/medium, heap+simulation/medium, strings+math/medium
 import { problem as lexicographicallySmallestEquivalentString } from './lexicographically-smallest-equivalent-string';
 import { problem as singleThreadedCpu } from './single-threaded-cpu';
-import { problem as numberOfWaysToSplitString } from './number-of-ways-to-split-string';
 // batch 115 — arrays/easy, arrays/easy, arrays/easy
 import { problem as minimumOperationsBinaryArrayEqualToOneI } from './minimum-operations-to-make-binary-array-elements-equal-to-one-i';
 import { problem as findCommonElementsBetweenTwoArrays } from './find-common-elements-between-two-arrays';
@@ -2308,7 +2024,6 @@ import { problem as minimumOperationsToWriteLetterYOnGrid } from './minimum-oper
 // batch 123 — arrays+hash-map/easy, arrays+math/easy, graph+shortest-path/medium
 import { problem as findTheNumberOfWinningPlayers } from './find-the-number-of-winning-players';
 import { problem as maximumSumWithExactlyKElements } from './maximum-sum-with-exactly-k-elements';
-import { problem as minimumTimeToReachLastRoomII } from './minimum-time-to-reach-last-room-ii';
 // batch 124 — arrays+hash-map+math/medium, arrays+strings+hash-map/easy, arrays+strings/easy
 import { problem as minimumNumberOfOperationsToMakeArrayEmpty } from './minimum-number-of-operations-to-make-array-empty';
 import { problem as findMaximumNumberOfStringPairs } from './find-maximum-number-of-string-pairs';
@@ -2407,7 +2122,6 @@ import { problem as countAlmostEqualPairsI } from './count-almost-equal-pairs-i'
 import { problem as findMinimumDiameterAfterMergingTwoTrees } from './find-minimum-diameter-after-merging-two-trees';
 // batch 139 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
 import { problem as sortPeople } from './sort-people';
-import { problem as countWordsGivenPrefix } from './count-words-given-prefix';
 import { problem as findMissingObservations } from './find-missing-observations';
 // batch 140 — arrays+math/easy, arrays+strings/easy, arrays/easy
 import { problem as decryptXoredArray } from './decrypt-xored-array';
@@ -2422,7 +2136,6 @@ import { problem as superWashingMachines } from './super-washing-machines';
 import { problem as numberOfSubmatricesThatSumToTarget } from './number-of-submatrices-that-sum-to-target';
 // batch 142 — arrays/easy, arrays+sorting/easy, strings+sliding-window/easy, arrays+simulation/easy, arrays+simulation/medium, arrays+math/medium, arrays+dp/hard
 import { problem as maximumHeightOfATriangle } from './maximum-height-of-a-triangle';
-import { problem as divideArrayMinCostI } from './divide-array-into-subarrays-with-minimum-cost-i';
 import { problem as countKConstraintSubstringsI } from './count-substrings-that-satisfy-k-constraint-i';
 import { problem as getFinalStateKMultiplicationI } from './final-array-state-after-k-multiplication-operations-i';
 import { problem as findWinningPlayer } from './find-the-first-player-to-win-k-games-in-a-row';
@@ -2479,7 +2192,6 @@ import { problem as numberOfWaysKSteps } from './number-of-ways-to-reach-a-posit
 import { problem as maxProductAfterCuttingRope } from './max-product-after-cutting-rope';
 import { problem as minimumPathSumTriangle } from './minimum-path-sum-triangle';
 // batch 149 — arrays+binary-search/medium, arrays+dp/medium, arrays+heap/medium
-import { problem as maximizeScoreNumbersInRanges } from './maximize-score-numbers-in-ranges';
 import { problem as maximumEnergyBoostFromTwoDrinks } from './maximum-energy-boost-from-two-drinks';
 import { problem as kthNearestObstacleQueries } from './k-th-nearest-obstacle-queries';
 // batch 149b — arrays/easy
@@ -2517,7 +2229,6 @@ import { problem as differenceOnesZerosRowAndColumn } from './difference-between
 import { problem as countWaysRearrangeSticks } from './count-ways-to-rearrange-sticks-with-k-visible';
 // batch 151 — linked-list/medium, linked-list/hard, union-find/medium, union-find/medium, shortest-path/medium, binary-indexed-tree/medium
 import { problem as swapPairsLinkedList } from './swap-pairs-linked-list';
-import { problem as reverseNodesKGroup } from './reverse-nodes-k-group';
 import { problem as minimumSpanningTreeWeight } from './minimum-spanning-tree-weight';
 import { problem as unionFindDynamicConnectivity } from './union-find-dynamic-connectivity';
 import { problem as bellmanFordShortestPaths } from './bellman-ford-shortest-paths';
@@ -2582,7 +2293,6 @@ import { problem as minimumRectanglesToCoverPoints } from './minimum-rectangles-
 import { problem as shortestWayToFormString } from './shortest-way-to-form-string';
 import { problem as smallestNumberWithAllSetBits } from './smallest-number-with-all-set-bits';
 // batch 155r — dp/medium×2, dp/hard×2, arrays/medium, strings/hard, sliding-window/medium
-import { problem as minimumScoreTriangulationPolygon } from './minimum-score-triangulation-polygon';
 import { problem as nonNegativeIntegersWithoutConsecutiveOnes } from './non-negative-integers-without-consecutive-ones';
 import { problem as countWaysToBuildGoodStrings } from './count-ways-to-build-good-strings';
 import { problem as restoreTheArray } from './restore-the-array';
@@ -2624,7 +2334,6 @@ import { problem as formArrayByConcatenatingSubarraysOfAnotherArray } from './fo
 // batch 158 — arrays+math/medium, strings/hard, dp/hard×2
 import { problem as minCostHomecomingRobotInGrid } from './minimum-cost-homecoming-of-a-robot-in-a-grid';
 import { problem as sumOfScoresOfBuiltStrings } from './sum-of-scores-of-built-strings';
-import { problem as countOfIntegers } from './count-of-integers';
 import { problem as numberOfWaysToEarnPoints } from './number-of-ways-to-earn-points';
 // batch 159 — strings+hash-map/medium, dp/hard, arrays+dp/medium
 import { problem as uniqueLength3PalindromicSubsequences } from './unique-length-3-palindromic-subsequences';
@@ -2660,7 +2369,6 @@ import { problem as removeDuplicatesFromSortedArrayII } from './remove-duplicate
 import { problem as kthFactorOfN } from './k-th-factor-of-n';
 import { problem as checkValidParenthesesStringPath } from './check-if-there-is-a-valid-parentheses-string-path';
 import { problem as maximumTrailingZerosInCorneredPath } from './maximum-trailing-zeros-in-a-cornered-path';
-import { problem as maximumValueOfOrderedTripletII } from './maximum-value-of-ordered-triplet-ii';
 import { problem as maximumNumberOfBooksOnAShelf } from './maximum-number-of-books-on-a-shelf';
 import { problem as numberOfSubarraysThatMatchAPattern } from './number-of-subarrays-that-match-a-pattern';
 import { problem as numberOfAdjacentElementsWithTheSameColor } from './number-of-adjacent-elements-with-the-same-color';
@@ -2670,8 +2378,6 @@ import { problem as countPathsWithGivenXorValue } from './count-paths-with-given
 import { problem as countPairsOfConnectableServersInAWeightedTree } from './count-pairs-of-connectable-servers-in-a-weighted-tree';
 import { problem as minimumNumberOfOperationsToSortBinaryTreeByLevel } from './minimum-number-of-operations-to-sort-binary-tree-by-level';
 import { problem as maximumPointsYouCanObtainFromCards } from './maximum-points-you-can-obtain-from-cards';
-import { problem as minimumPushesToTypeWordI } from './minimum-pushes-to-type-word-i';
-import { problem as minimumPushesToTypeWordII } from './minimum-pushes-to-type-word-ii';
 import { problem as minimumAdditionToMakeIntegerBeautiful } from './minimum-addition-to-make-integer-beautiful';
 // batch 177 — hash-map+sorting/medium, arrays+dp/medium, simulation/medium, arrays+prefix-sums/medium
 import { problem as mostPopularVideoCreator } from './most-popular-video-creator';
@@ -2765,8 +2471,6 @@ import { problem as addedIntegerI } from './find-the-integer-added-to-array-i';
 import { problem as minimumAddedInteger } from './find-the-integer-added-to-array-ii';
 // batch 169 (local) — strings/medium, arrays+sliding-window/medium, graph+union-find/medium
 import { problem as minimumSwapsToMakeStringBalanced } from './minimum-swaps-to-make-string-balanced';
-import { problem as maximumSumDistinctSubarraysWithLengthK } from './maximum-sum-distinct-subarrays-with-length-k';
-import { problem as countNumberOfCompleteComponents } from './count-number-of-complete-components';
 // batch 169b — graph/medium×2, arrays+sliding-window/medium, tree/medium
 import { problem as shortestPathInBinaryMatrix } from './shortest-path-in-binary-matrix';
 import { problem as minimumCostToConnectAllPoints } from './minimum-cost-to-connect-all-points';
@@ -2779,7 +2483,6 @@ import { problem as usingRobotToPrintLexicographicallySmallestString } from './u
 import { problem as removeLetterToEqualizeFrequency } from './remove-letter-to-equalize-frequency';
 import { problem as minimizeTheMaximumDifferenceOfPairs } from './minimize-the-maximum-difference-of-pairs';
 import { problem as checkIfPointIsReachable } from './check-if-point-is-reachable';
-import { problem as buildArrayWithStackOperations } from './build-array-with-stack-operations';
 // batch 171 — strings/easy, tree/medium, arrays/medium, math/medium×2
 import { problem as stringMatchingInAnArray } from './string-matching-in-an-array';
 import { problem as countNodesEqualToAverageOfSubtree } from './count-nodes-equal-to-average-of-subtree';
@@ -2845,7 +2548,6 @@ import { problem as countPalindromicSubsequences } from './count-palindromic-sub
 // batch 172 — strings+sliding-window/medium, arrays+math/easy, arrays+math/medium, arrays+math/medium
 import { problem as longestSubstringWithAtMostTwoDistinctChars } from './longest-substring-with-at-most-two-distinct-chars';
 import { problem as rangeAdditionII } from './range-addition-ii';
-import { problem as maximumConsecutiveValuesYouCanMake } from './maximum-consecutive-values-you-can-make';
 import { problem as findTheMaximumLengthOfValidSubsequenceI } from './find-the-maximum-length-of-valid-subsequence-i';
 // batch 174 — medium/math+trie, hard/dp, hard/tree+design, hard/dp+digit, easy/arrays+math
 import { problem as lexicographicNumbers } from './lexicographic-numbers';
@@ -2914,7 +2616,6 @@ import { problem as findTheNumberOfSubarraysWhereBoundaryElementsAreMaximum } fr
 import { problem as countTripletsThatCanFormTwoArraysOfEqualXor } from './count-triplets-that-can-form-two-arrays-of-equal-xor';
 import { problem as maximumNumberOfJumpsToReachTheLastIndex } from './maximum-number-of-jumps-to-reach-the-last-index';
 // batch 185 — medium/arrays+hash-map, medium/arrays+binary-search, medium/arrays, easy/arrays
-import { problem as minimumOperationsToMakeArrayEmpty } from './minimum-operations-to-make-array-empty';
 import { problem as minimumOperationsToMakeArrayContinuous } from './minimum-operations-to-make-array-continuous';
 import { problem as minimumDistanceToTheTargetElement } from './minimum-distance-to-the-target-element';
 import { problem as maximumAreaOfLongestDiagonalRectangle } from './maximum-area-of-longest-diagonal-rectangle';
@@ -3008,7 +2709,6 @@ import { problem as findTheIndexOfTheFirstOccurrenceInAString } from './find-the
 // batch 196 — easy/arrays+math, easy/arrays+sliding-window, medium/arrays
 import { problem as countPairsWithEvenSum } from './count-pairs-with-even-sum';
 import { problem as findXSumOfAllKLongSubarraysI } from './find-x-sum-of-all-k-long-subarrays-i';
-import { problem as minimumOperationsToMakeMedianEqualK } from './minimum-operations-to-make-median-equal-k';
 // batch 198 — easy/math+simulation, easy/math, easy/simulation, medium/arrays+bit-manipulation, easy/math+simulation
 import { problem as checkIfTheNumberIsFascinating } from './check-if-the-number-is-fascinating';
 import { problem as countTheDigitsThatDivideANumber } from './count-the-digits-that-divide-a-number';
@@ -3057,7 +2757,6 @@ import { problem as productOfLastTwo } from './product-of-last-two';
 // batch 202 (new) — easy/math, easy/arrays+simulation, medium/strings+math, medium/arrays+binary-search
 import { problem as threeDivisors } from './three-divisors';
 import { problem as checkThreeConsecutiveOdds } from './check-three-consecutive-odds';
-import { problem as minimumSwapsToMakeAlternating } from './minimum-swaps-to-make-alternating';
 
 // batch 204 — easy/arrays, easy/arrays, easy/arrays+strings, easy/arrays+math
 import { problem as flatten2dArray } from './flatten-2d-array';
@@ -3087,7 +2786,6 @@ import { problem as allElementsPositive } from './all-elements-positive';
 // batch 208 — easy/math, easy/simulation, medium/math, medium/arrays+stack, medium/strings
 import { problem as harshadNumber } from './harshad-number';
 import { problem as furthestPointFromOrigin } from './furthest-point-from-origin';
-import { problem as minimumPossibleSumOfBeautifulArray } from './minimum-possible-sum-of-beautiful-array';
 import { problem as maximalRangeEachElementIsMaximumIn } from './maximal-range-each-element-is-maximum-in';
 import { problem as lexicographicallySmallestStringOperationsConstraint } from './lexicographically-smallest-string-operations-constraint';
 // batch 209 — easy/arrays+hash-map, easy/arrays+math, easy/arrays, easy/arrays
@@ -3129,7 +2827,6 @@ import { problem as maximumNumberOfCoinsYouCanGet } from './maximum-number-of-co
 import { problem as minimumNumberOfOperationsToMakeWordKPeriodic } from './minimum-number-of-operations-to-make-word-k-periodic';
 import { problem as zeroArrayTransformationIII } from './zero-array-transformation-iii';
 import { problem as maximumCoinsHeroesCanCollect } from './maximum-coins-heroes-can-collect';
-import { problem as minimumOperationsToMoveAllBallsToEachBox } from './minimum-operations-to-move-all-balls-to-each-box';
 // batch 213a — easy/arrays, easy/strings, medium/arrays+hash-map, medium/strings+sliding-window
 import { problem as checkIfAll1sAreAtLeastLengthKPlacesApart } from './check-if-all-1s-are-at-least-length-k-places-apart';
 import { problem as checkIfBinaryStringHasAtMostOneSegmentOfOnes } from './check-if-binary-string-has-at-most-one-segment-of-ones';
@@ -3201,60 +2898,41 @@ export const problems: readonly Problem[] = [
   containsDuplicateII,
   pascalsTriangle,
   richestCustomerWealth,
-  maximumUnitsOnTruck,
   shuffleTheArray,
-  countItemsMatchingRule,
   summaryRanges,
   findMaxMin,
   findPositiveIntegerWithNegative,
   findPivotIndex,
   maxConsecutiveOnes,
   plusOne,
-  kidsWithCandies,
   monotonicArray,
   buildArrayFromPermutation,
   concatenationOfArray,
   thirdMaximumNumber,
-  replaceElementsWithGreatest,
   highestAltitude,
   maximumDifferenceIncreasingElements,
-  rangeSum,
-  findAllNumbersDisappeared,
-  checkIfNAndDoubleExist,
-  largestNumberAtLeastTwice,
   specialPositionsBinaryMatrix,
-  matrixDiagonalSum,
   sortArrayByParity,
   leftAndRightSumDifferences,
   minimumValuePositiveStepSum,
   countNumberOfPairs,
   validMountainArray,
   canPlaceFlowers,
-  maximumProductTwoElements,
   increasingTripletSubsequence,
-  numberOfRectangles,
   largestAltitude,
-  sumOfOddLengthSubarrays,
   minimumSumMountainTriplet,
-  findNumbersEvenDigits,
   mergeSortedArray,
   assignCookies,
   relativeRanks,
-  maximumCount,
   addDigits,
   degreeOfArray,
   checkArrayArithmeticProgression,
   howManyNumbersSmallerThanCurrent,
-  findTargetIndicesAfterSorting,
-  minimumNumberOfMovesSeat,
-  numberOfLaserBeams,
   maxAverageSubarray,
   consecutiveCharacters,
   countItemsWithTheGivenSum,
   numberOfEmployeesCanMeet,
   partitionArrayAccordingToGivenPivot,
-  sortEvenOddIndices,
-  countEqualAndDivisiblePairs,
   countElementsWithMaximumFrequency,
   xorOperationInAnArray,
   getMaximumInGeneratedArray,
@@ -3267,14 +2945,11 @@ export const problems: readonly Problem[] = [
   sortArrayByParityII,
   numberOfArithmeticTriplets,
   // arrays — medium
-  countFairPairs,
   minimumAverageDifference,
   rearrangeArrayElementsBySign,
   numberOfZeroFilledSubarrays,
   rangeSumQuery2D,
-  minimumArrowsBurstBalloons,
   setMatrixZeroes,
-  removeDuplicatesSortedArrayII,
   meetingRoomsII,
   hIndex,
   majorityElementII,
@@ -3289,17 +2964,12 @@ export const problems: readonly Problem[] = [
   combinationSumII,
   permutations,
   spiralMatrixII,
-  kClosestPoints,
-  findDisappearedNumbers,
   minimumAbsoluteDifference,
-  luckyNumbersInMatrix,
   countNumberOfTexts,
   gasStation,
   maxSubarrayCircular,
-  checkSortedRotated,
   rotateArray,
   maxProductSubarray,
-  productExceptSelf,
   sortColors,
   trapRainWater,
   containerWithMostWater,
@@ -3317,10 +2987,7 @@ export const problems: readonly Problem[] = [
   gameOfLife,
   missingRanges,
   queueReconstructionByHeight,
-  checkIfArrayPairsDivisibleByK,
   validTriangleNumber,
-  maxNumberKSumPairs,
-  minimumTimeRopeColorful,
   numberOfSubsequencesTargetSum,
   carPooling,
   fruitIntoBaskets,
@@ -3330,23 +2997,18 @@ export const problems: readonly Problem[] = [
   maxChunksToMakeSorted,
   // strings — easy
   reverseWordsInStringIII,
-  makeStringGreat,
   minimumStringLength,
   maximumScoreAfterSplittingString,
   findCommonCharacters,
-  countingWordsWithGivenPrefix,
   addBinary,
-  goalParser,
   designGoalParser,
   detectCapital,
   repeatedSubstringPattern,
   checkIfPangram,
   truncateSentence,
   reverseStringII,
-  determineIfHalvesAlike,
   shuffleString,
   decodeTheMessage,
-  removeTrailingZeros,
   reversePrefixOfWord,
   countWordsWithGivenPrefix,
   largestOddNumberInString,
@@ -3367,16 +3029,9 @@ export const problems: readonly Problem[] = [
   defangingIpAddress,
   toLowerCase,
   checkIfTwoStringArraysEquivalent,
-  cellsInRange,
   rotateString,
   percentageOfLetterInString,
-  countCommonWordsOneOccurrence,
-  checkTwoStringsAlmostEquivalent,
-  rearrangeCharactersToMakeTarget,
-  divideStringIntoGroups,
-  countVowelSubstrings,
   checkPrefixString,
-  sumDigitsStringConvert,
   maximumNumberOfStringPairs,
   countPairsSumLessThanTarget,
   neitherMinimumNorMaximum,
@@ -3387,10 +3042,8 @@ export const problems: readonly Problem[] = [
   uniqueMorseCodeWords,
   increasingDecreasingString,
   numberOfGoodPairs,
-  checkIfArraySortedRotated,
-  maximumProductDifference,
+  checkIfArraySortedAndRotated,
   maximumProductAdjacentElements,
-  minimumSumFourDigitNumber,
   countPairsAbsoluteDifferenceK,
   findClosestNumberToZero,
   checkIfAllCharsHaveEqualOccurrences,
@@ -3409,7 +3062,6 @@ export const problems: readonly Problem[] = [
   replaceWords,
   minimumTimeDifference,
   stringToIntegerAtoi,
-  implementTrie,
   customSortString,
   generateParentheses,
   palindromePartitioning,
@@ -3420,16 +3072,12 @@ export const problems: readonly Problem[] = [
   reverseStringWords,
   stringMultiply,
   isSubsequenceMedium,
-  characterReplacement,
   stringCompression,
   zigzagConversion,
   integerToRoman,
-  countHomogenousSubstrings,
-  appendCharactersToMakeSubsequence,
   // hash-map — easy
   twoOutOfThree,
   checkIfAllCharactersAppearTwice,
-  findDifferenceOfTwoArrays,
   findAnagramMappings,
   validAnagram,
   pathCrossing,
@@ -3437,7 +3085,6 @@ export const problems: readonly Problem[] = [
   findWordsFromChars,
   jewelsAndStones,
   minimumOperationsAlternating,
-  minimumOperationsMakeArrayEmpty,
   maximumNumberOfBalloons,
   countCharacters,
   findWordsFormedByCharacters,
@@ -3449,7 +3096,6 @@ export const problems: readonly Problem[] = [
   anagramCheck,
   wordFrequency,
   countGoodPairs,
-  intersectionTwoArrays,
   subarraySumEqualsK,
   ransomNote,
   isomorphicStrings,
@@ -3457,20 +3103,15 @@ export const problems: readonly Problem[] = [
   sumOfUniqueElements,
   findWinners,
   // hash-map — medium
-  minimumRoundsToCompleteTasks,
-  minimumStepsMakeAnagram,
   topKFrequentWords,
   groupAnagrams,
   topKFrequentElements,
   longestConsecutiveSequence,
-  findAllAnagramsInString,
   maximumErasureValue,
   longestWordInDictionary,
-  maxSumPairEqualDigits,
   timeBasedKeyValueStore,
   // hash-map — hard
   fourSumII,
-  maxPointsOnLine,
   lruCache,
   lfuCache,
   // two-pointers — hard
@@ -3479,7 +3120,6 @@ export const problems: readonly Problem[] = [
   sortList,
   subarraysKDistinct,
   // two-pointers — medium
-  findDuplicateNumber,
   threeSumClosest,
   boatsToSavePeople,
   partitionLabels,
@@ -3488,8 +3128,6 @@ export const problems: readonly Problem[] = [
   longestMountainInArray,
   // two-pointers — easy
   twoSumLessThanK,
-  squaresOfSortedArray,
-  reverseVowels,
   reverseArrayInplace,
   sortedPairExists,
   mergeSortedLists,
@@ -3501,20 +3139,15 @@ export const problems: readonly Problem[] = [
   countSubarraysBoundedMax,
   // sliding-window — medium
   maximizeConfusionExam,
-  countNiceSubarrays,
-  frequencyOfMostFrequentElement,
   maxConsecutiveOnesIII,
-  maximumVowels,
   longestSubarrayAfterDeleting,
   minimumSizeSubarraySum,
   atMostKDistinct,
   permutationInString,
   subarrayProductLessThanK,
   minimumOperationsReduceX,
-  numberOfSubstrings,
   longestTurbulentSubarray,
   // sliding-window — easy
-  minimumRecolorsToGetKConsecutiveBlack,
   minimumDifferenceKScores,
   maxWindowSum,
   maximumAverageSubarray,
@@ -3534,25 +3167,16 @@ export const problems: readonly Problem[] = [
   searchInsertPosition,
   // binary-search — medium
   findKClosestElements,
-  search2dMatrixII,
-  findKPairsSmallestSums,
-  searchRotatedSorted,
-  findMinimumRotated,
   singleElementSorted,
   findFirstAndLastPosition,
-  search2dMatrix,
   kokoEatingBananas,
   findPeakElement,
   countRectanglesContainingPoint,
   mostProfitAssigningWork,
   continuousSubarraySum,
-  equalRowColumnPairs,
-  determineIfTwoStringsClose,
-  minimumDaysToMakeMBouquets,
   // binary-search — hard
   findKthSmallestPairDistance,
   findMinRotatedII,
-  medianTwoSortedArrays,
   splitArrayLargestSum,
   capacityToShip,
   // stack — easy
@@ -3564,7 +3188,6 @@ export const problems: readonly Problem[] = [
   dailyTemperatures,
   evaluateRpn,
   minStack,
-  maximumNestingDepth,
   // stack — medium
   minimumRemoveToMakeValidParentheses,
   validateStackSequences,
@@ -3578,20 +3201,16 @@ export const problems: readonly Problem[] = [
   carFleet,
   // stack — hard
   basicCalculator,
-  sumSubarrayMinimums,
   removeKDigits,
   // heap — easy
   lastStoneWeight,
   // heap — medium
-  kthLargestInStream,
   reorganizeString,
   minimumCostToConnectSticks,
   sortCharactersByFrequency,
   // heap — hard
-  medianFromDataStream,
   maximumFrequencyStack,
   // heap — medium (new)
-  totalCostHireKWorkers,
   maximumSubsequenceScore,
   processTasksUsingServers,
   smallestNumberInInfiniteSet,
@@ -3604,7 +3223,6 @@ export const problems: readonly Problem[] = [
   // graph — new
   snakesAndLadders,
   swimInRisingWater,
-  numberOfWaysArriveDestination,
   // backtracking — new
   nQueensII,
   removeInvalidParentheses,
@@ -3612,7 +3230,6 @@ export const problems: readonly Problem[] = [
   kthMissingPositiveNumber,
   // math — easy
   sumOfMultiples,
-  numberOfSteps,
   findTheDifference,
   fizzBuzz,
   hammingWeight,
@@ -3635,22 +3252,14 @@ export const problems: readonly Problem[] = [
   countAndSay,
   fibonacciNumber,
   sumOfSquares,
-  sumOfSquaresSpecialElements,
   climbingStairs,
   romanToInteger,
   palindromeNumber,
-  excelColumnNumber,
   sumOfTwoIntegers,
   largestPerimeterTriangle,
-  countOddNumbersInInterval,
-  maximumProductThreeNumbers,
   averageSalaryExcludingMinMax,
-  findNUniqueIntegersSumToZero,
   decodeXoredArray,
-  signOfProductArray,
-  convertTemperature,
   maximum69Number,
-  countOfMatchesTournament,
   nthTribonacciNumber,
   sumOfAllSubsetXorTotals,
   // math — hard
@@ -3659,7 +3268,6 @@ export const problems: readonly Problem[] = [
   // math — medium
   factorialTrailingZeroes,
   bitwiseAndOfNumbersRange,
-  minimumMovesEqualArray,
   multiplyStrings,
   waterAndJug,
   countTripletsXor,
@@ -3677,7 +3285,6 @@ export const problems: readonly Problem[] = [
   nQueens,
   firstMissingPositive,
   jumpGameII,
-  largestRectangleHistogram,
   slidingWindowMaximum,
   largestNumber,
   longestIncreasingSubsequence,
@@ -3713,16 +3320,12 @@ export const problems: readonly Problem[] = [
   triangle,
   interleavingString,
   uniquePathsII,
-  numberOfDiceRolls,
   coinChangeII,
-  bestTimeBuySellCooldown,
   longestArithmeticSubsequence,
-  minimumCostTickets,
   uniqueBinarySearchTrees,
   flipStringToMonotoneIncreasing,
   maximumLengthSubarrayPositiveProduct,
   // dynamic-programming — hard
-  bestTimeBuySellIII,
   wordBreakII,
   decodeWaysII,
   longestPalindromicSubsequence,
@@ -3738,12 +3341,10 @@ export const problems: readonly Problem[] = [
   reverseLinkedList,
   linkedListCycle,
   mergeTwoSortedLinkedLists,
-  middleOfLinkedList,
   palindromeLinkedList,
   intersectionTwoLinkedLists,
   // linked-list — medium
   splitLinkedListInParts,
-  removeNthFromEnd,
   oddEvenLinkedList,
   addTwoNumbers,
   reorderList,
@@ -3760,10 +3361,8 @@ export const problems: readonly Problem[] = [
   floodFill,
   findTheTownJudge,
   numberOfProvinces,
-  findIfPathExists,
   // graph — medium
   numberOfEnclaves,
-  shortestPathBinaryMatrix,
   accountsMerge,
   wordSearch,
   surroundedRegions,
@@ -3776,12 +3375,10 @@ export const problems: readonly Problem[] = [
   keysAndRooms,
   cloneGraph,
   courseScheduleII,
-  pacificAtlantic,
   networkDelayTime,
   numberOfConnectedComponents,
   redundantConnection,
   isGraphBipartite,
-  allPathsSourceTarget,
   minimumHeightTrees,
   findEventualSafeStates,
   jumpGameIII,
@@ -3790,8 +3387,6 @@ export const problems: readonly Problem[] = [
   jumpGameIV,
   wordLadder,
   alienDictionary,
-  criticalConnections,
-  longestIncreasingPathMatrix,
   minimumGeneticMutation,
   busRoutes,
   // graph + backtracking — hard
@@ -3812,7 +3407,6 @@ export const problems: readonly Problem[] = [
   letterCasePermutation,
   // tree — easy
   balancedBinaryTree,
-  minimumDepthBinaryTree,
   binaryTreeLevelOrderBottom,
   maxDepthBinaryTree,
   symmetricTree,
@@ -3821,34 +3415,22 @@ export const problems: readonly Problem[] = [
   pathSum,
   diameterOfBinaryTree,
   sameTree,
-  sumOfLeftLeaves,
   leafSimilarTrees,
   twoSumIVBST,
   binaryTreeTilt,
-  averageOfLevels,
   rangeSumOfBST,
   // tree — medium
   binaryTreePruning,
   countCompleteTreeNodes,
   populatingNextRightPointers,
   validateBst,
-  levelOrderTraversal,
   binaryTreeRightSideView,
   lowestCommonAncestorBst,
-  countGoodNodes,
-  constructBinaryTree,
-  kthSmallestBst,
-  zigzagLevelOrder,
-  flattenBinaryTree,
-  lowestCommonAncestorBinaryTree,
-  sumRootToLeaf,
   pathSumIII,
   houseRobberIII,
-  maximumWidthBinaryTree,
   deepestLeavesSum,
   // tree — hard
   binaryTreeMaxPathSum,
-  serializeBinaryTree,
   verticalOrderTraversal,
   // arrays — easy (new batch)
   studentsUnableToEatLunch,
@@ -3860,20 +3442,15 @@ export const problems: readonly Problem[] = [
   // math — easy (new)
   divisorGame,
   // arrays — easy (new)
-  largestLocalValuesMatrix,
   // strings — easy (new)
   percentageLetterInString,
   // arrays — medium (new)
   nonDecreasingArray,
-  numberOfWeakCharacters,
   arithmeticSlices,
-  minimumSwapsGroupAllOnes,
   // strings + sliding-window — medium
-  maximumNumberVowelsSubstring,
   // arrays + hash-map — medium (new)
   kDiffPairsInArray,
   handOfStraights,
-  minimumDominoRotations,
   // heap — medium (new)
   furthestBuildingLadders,
   // heap — hard (new)
@@ -3887,21 +3464,17 @@ export const problems: readonly Problem[] = [
   differentWaysAddParentheses,
   // math + dp — medium/easy (new)
   integerBreak,
-  minimumCostMoveChips,
   binaryWatch,
   // strings — medium (new)
   minimumAddMakeValidParentheses,
   palindromicSubstrings,
-  partitionString,
   // math + dp — medium (new)
   uglyNumberII,
   // tree — medium (new)
-  deleteNodeInBst,
   insertIntoBst,
   // heap — medium (new)
   minimumCostConnectPoints,
   // stack — medium (new)
-  numberOfVisiblePeopleInQueue,
   // dp — medium (new)
   combinationSumIv,
   countSortedVowelStrings,
@@ -3924,9 +3497,7 @@ export const problems: readonly Problem[] = [
   // arrays + hash-map — easy (new)
   mostFrequentEvenElement,
   // strings — easy (new)
-  findFirstPalindromicString,
   // arrays + hash-map — medium (new)
-  minimumNumberOperationsMakeArrayEmpty,
   // tree — medium (new)
   maximumDifferenceBetweenNodeAndAncestor,
   // dp + sliding-window — medium (new)
@@ -3936,40 +3507,29 @@ export const problems: readonly Problem[] = [
   // heap — medium (new)
   maximumEventsCanAttend,
   // tree — medium (new)
-  countNodesEqualAverageSubtree,
   maximumLevelSumBinaryTree,
   // arrays — easy (new)
   minimumDistanceValue,
   // arrays + hash-map — medium (new)
-  minimumOperationsMakeArrayAlternating,
   // strings — easy (new)
-  redistributeCharactersMakeAllStringsEqual,
   // tree — medium (new)
-  checkCompletenessBinaryTree,
   // linked-list — medium (new)
   maximumTwinSumLinkedList,
   // arrays + sliding-window — medium (new)
   kRadiusSubarrayAverages,
   // strings + dp — medium/hard (new)
-  numberOfWaysSelectBuildings,
-  totalAppealOfString,
   // graph — medium (new)
-  findCitySmallestNumberNeighbors,
   // tree + graph — medium (new)
-  minimumFuelCostReportCapital,
   // arrays + math — medium (new)
   maximumProductOfWordLengths,
   // graph — medium (new)
   asFarFromLandAsPossible,
   cheapestFlightsWithinKStops,
   // tree + binary-search — easy (new)
-  sortedArrayToBst,
   // arrays + sliding-window — hard (new)
-  countSubarraysFixedBounds,
   // tree + graph — medium (new)
   amountOfTimeForBinaryTreeToBeInfected,
   // arrays + stack — medium (new)
-  countCollisionsOnRoad,
   // arrays + dp — medium (new)
   maximumAlternatingSubsequenceSum,
   // arrays — easy (new)
@@ -3981,25 +3541,20 @@ export const problems: readonly Problem[] = [
   // arrays + heap — easy (new)
   minimumNumberGame,
   // arrays + math — easy (new)
-  maximumSumExactlyKElements,
   // arrays + two-pointers — easy (new)
   minimumCommonValue,
   // math — medium (new)
   countGoodNumbers,
-  findPivotInteger,
   compareVersionNumbers,
   openTheLock,
   diagonalTraverse,
   reshapeTheMatrix,
-  findTownJudge,
   possibleBipartition,
   findResultantArrayAfterRemovingAnagrams,
-  longestZigZagPathBinaryTree,
   twoSumII,
   setMismatch,
   maximumGap,
   arrayPartition,
-  powerOfFour,
   validPalindromeII,
   bulbSwitcher,
   selfDividingNumbers,
@@ -4016,7 +3571,6 @@ export const problems: readonly Problem[] = [
   firstBadVersion,
   numberOfSegmentsInString,
   findModeBst,
-  finalValueAfterOperations,
   findOriginalArrayFromDoubled,
   numberOfStudentsUnableToEatLunch,
   maximumNumberOfWordsFoundInSentences,
@@ -4024,41 +3578,29 @@ export const problems: readonly Problem[] = [
   hammingDistance,
   singleNumberIII,
   minimumOperationsMakeArrayIncreasing,
-  rankTransformArray,
-  finalValueOperations,
   twoCityScheduling,
-  checkIfStraightLine,
   binaryGap,
   designHashmap,
   contiguousArray,
   shiftingLetters,
   convertBstToGreaterTree,
-  distributeCoinsBinaryTree,
   flipColumnsForMaximumEqualRows,
   deleteColumnsSortedIII,
-  minimumBitFlips,
   smallestEvenMultiple,
   specialArrayGreaterEqual,
   countPairsTwoArrays,
   convertTimeHhmm,
   findPlayersZeroLosses,
   checkDistancesFairNodes,
-  minimumRoundsCompleteTasks,
-  largestCombinationBitwiseAnd,
   sortThePeople,
   baseballGame,
   findChampionGraph,
   countDigits,
-  applyOperations,
-  minimumMovesToSeat,
   ringsAndRods,
   findGcdOfArray,
   keepMultiplyingFoundValues,
   percentagesOfLetter,
-  maximumBagsFullCapacity,
-  findSubsequenceOfLengthK,
   oddStringDifference,
-  bestTimeBuySellTransactionFee,
   maximalRectangle,
   stoneGameIII,
   maximumProfitJobScheduling,
@@ -4066,12 +3608,9 @@ export const problems: readonly Problem[] = [
   kThSymbolInGrammar,
   longestSubstringWithoutRepeating,
   decompressRunLengthEncoding,
-  checkAlmostEquivalentStrings,
   minimumValuePositiveSteps,
   checkIfAllAsBeforeBs,
   checkIfWordEqualsSummation,
-  waysToBuyPensPencils,
-  checkArraySortedRotated,
   interpretString,
   mergeSimilarItems,
   countGoodRectangles,
@@ -4082,7 +3621,6 @@ export const problems: readonly Problem[] = [
   sortVowelsInAString,
   minimumTimeToRepairCars,
   numberOfMatchingSubsequences,
-  largestPositiveIntegerWithNegative,
   maximizeSumKElements,
   checkIfAcronym,
   countPairsAbsoluteDiffK,
@@ -4091,34 +3629,24 @@ export const problems: readonly Problem[] = [
   countMaxFrequencyElements,
   minimumDifferenceAfterKRemovals,
   numberOfValidClockTimes,
-  calculateMoneyInBank,
-  scoreOfString,
   chalkReplacer,
   splitWithMinimumSum,
   maxDifferenceIncreasingElements,
   longestNiceSubarray,
-  interchangeableRectangles,
   findTriangularSum,
   twoFurthestHousesDifferentColors,
-  countLatticePointsCircle,
-  nearestExitMaze,
   climbingStairsKSteps,
-  maximumXorTwoNumbers,
-  removeStonesToMinimizeTotal,
   maximizeHappinessOfSelectedChildren,
   findTheMaximumAchievableNumber,
-  partitionArrayMaximumDifference,
   removeDuplicatesFromSortedListII,
   countNumberOfHomogenousSubstrings,
   stoneGameVI,
   countSpecialQuadruplets,
   findAllDuplicatesInArray,
   checkIfWordOccursAsPrefix,
-  countSubarraysScoreLessThanK,
   excelSheetColumnNumber,
   jumpGameVII,
   longestSquareStreak,
-  maximumBeautyArrayAfterApplyingOperation,
   maximumProductAfterKIncrements,
   pairsOfSongsTotalDivisibleBy60,
   alternatingDigitSum,
@@ -4128,49 +3656,35 @@ export const problems: readonly Problem[] = [
   minimizeMaximumPairSumInArray,
   minimumOperationsToExceedThresholdValueII,
   numberOfWaysToSplitArray,
-  findTheIndexOfFirstOccurrence,
   integerReplacement,
   numberOfSmoothDescentPeriods,
   maximumMatrixSum,
-  countNodesWithHighestScore,
   findRightInterval,
   circularSentence,
   minimumGardenPerimeter,
   groupPeopleGivenGroupSize,
   countNumberOfBadPairs,
   minimumChangesToMakeBinaryStringBeautiful,
-  removeAllOccurrencesOfSubstring,
   minimumTimeToCompleteTrips,
   minimumSpeedToArriveOnTime,
   sumOfBeautyInTheArray,
-  findAllPossibleRecipes,
   takeKOfEachCharacterFromLeftAndRight,
-  minimumOperationsToMakeArrayXorEqualK,
   maximumOddBinaryNumber,
-  minimumEqualSumTwoArrays,
-  findScoreOfArrayAfterMarking,
   countCompleteDayPairs,
   checkIfMatrixIsXMatrix,
   determineColorOfChessboardSquare,
   faultyKeyboard,
-  sumMultiples,
   countBeautifulPairs,
-  minimumTimeToCollectAllApples,
-  findPrefixCommonArrayOfTwoArrays,
   minimumTimeToCollectGarbage,
   longestSubarrayOfOnesAfterDeleting,
-  minimumVerticesToReachAllNodes,
   countOddNumbersInIntervalRange,
   makeSumDivisibleByP,
   countZeroFilledSubarrays,
   checkWhetherTwoStringArraysEqual,
-  minimumFlipsToMakeAOrBEqualC,
   makeArrayZeroBySubtractingEqualAmounts,
   findAllGroupsOfFarmland,
   mergeTripletsToFormTargetTriplet,
-  replaceElementsWithGreatestOnRight,
   destroyAsteroids,
-  maximumCountOfPositiveAndNegative,
   findTheOriginalArrayOfPrefixXor,
   separateDigitsInArray,
   numberOfPairsOfInterchangeableRectangles,
@@ -4182,11 +3696,9 @@ export const problems: readonly Problem[] = [
   numberOfWaysToBuyPensAndPencils,
   sumOfDigitsOfStringAfterConvert,
   smallestValueOfRearrangedNumber,
-  removingStarsFromString,
   findThePeaks,
   minimumPenaltyForAShop,
   kthDistinctStringInArray,
-  countElementsWithStrictlySmallerAndGreater,
   largestPositiveIntegerThatExistsWithNegative,
   checkIfNumberHasEqualDigitCountAndDigitValue,
   decodeXorArray,
@@ -4197,7 +3709,6 @@ export const problems: readonly Problem[] = [
   findSubsequenceOfLengthKWithLargestSum,
   minimumAbsoluteSumDifference,
   findTheKBeautyOfANumber,
-  firstUniqueCharacterInString,
   longPressedName,
   removeOutermostParentheses,
   maximumNestingDepthOfParentheses,
@@ -4210,7 +3721,6 @@ export const problems: readonly Problem[] = [
   numberOfEmployeesWhoMetTheTarget,
   intersectionOfTwoArraysIi,
   largestSubarrayLengthK,
-  minimumTimeToTypeWord,
   checkIfOneStringSwapCanMakeStringsEqual,
   numberOfDifferentIntegersInString,
   checkIfArrayIsGood,
@@ -4219,8 +3729,6 @@ export const problems: readonly Problem[] = [
   longestContinuousIncreasingSubsequence,
   findNumbersWithEvenNumberOfDigits,
   countNicePairsInAnArray,
-  checkIfStringIsPrefixOfArray,
-  removeTrailingZerosFromString,
   rearrangeSpacesBetweenWords,
   splitAStringInBalancedStrings,
   findGreatestCommonDivisorOfArray,
@@ -4244,37 +3752,28 @@ export const problems: readonly Problem[] = [
   countTotalNumberOfColoredCells,
   differenceBetweenElementSumAndDigitSumOfArray,
   minimumLengthOfStringAfterDeletingSimilarEnds,
-  maximumNumberOfVowelsInSubstringOfGivenLength,
   categorizeBoxAccordingToCriteria,
   findTheMiddleIndexInArray,
   maximumAbsoluteSumOfAnySubarray,
   countSubstringsWithOnlyOneDistinctLetter,
   sumOfNumberAndItsReverse,
-  sumOfAbsoluteDifferencesInSortedArray,
   numberOfSubarraysWithOddSum,
-  numberOfPeopleAwareOfSecret,
   validWordAbbreviation,
-  numberOfValidWordsInSentence,
   isSubsequence,
-  findTheLongestBalancedSubstringOfBinaryString,
   countNumberOfDistinctIntegersAfterReverseOperations,
   mostFrequentNumberFollowingKey,
   minimumDifferenceBetweenHighestAndLowestOfKScores,
   findTheArrayConcVal,
   sortArrayByIncreasingFrequency,
-  findAllKDistantIndices,
   numberOfBeautifulPairs,
   splitStringBySeparator,
   countVowelStringsInRanges,
-  numberOfEvenOddBits,
   averageValueOfEvenNumbersDivisibleByThree,
-  countPrefixSuffixPairs,
   minimumCostOfBuyingCandiesWithDiscount,
   findOriginalArrayFromPrefixXor,
   totalDistanceTraveled,
   deleteCharactersToMakeFancyString,
   threeConsecutiveOdds,
-  countEqualAndDivisiblePairsInArray,
   minimumChangesToMakeAlternatingBinaryString,
   rotateFunction,
   maximumSumOfDistinctSubarraysWithLengthK,
@@ -4286,12 +3785,10 @@ export const problems: readonly Problem[] = [
   lastMomentBeforeAntsFallOffAPlank,
   checkIfTwoChessboardSquaresHaveSameColor,
   countNumberOfTeams,
-  removeColoredPiecesIfBothNeighborsAreSameColor,
   longestAlternatingSubarray,
   divisibleAndNonDivisibleSumsDifference,
   minimumElementAfterReplacementWithDigitSum,
   pickGifts,
-  minimumOperationsToMakeArrayXorEqualToK,
   maximumCountOfPositiveIntegerAndNegativeInteger,
   numberOfStudentsDoingHomeworkAtAGivenTime,
   findTheXorOfNumbersWhichAppearTwice,
@@ -4301,7 +3798,6 @@ export const problems: readonly Problem[] = [
   meetingRooms,
   brickWall,
   numberOfLongestIncreasingSubsequence,
-  kthSmallestElementInSortedMatrix,
   minimumKnightMoves,
   palindromePairs,
   searchSuggestionsSystem,
@@ -4322,10 +3818,8 @@ export const problems: readonly Problem[] = [
   palindromePartitioningII,
   wiggleSortII,
   stoneGameIV,
-  minimumRefuelingStops,
   snapshotArray,
   paintHouseII,
-  minimumMovesEqualArrayII,
   frogJump,
   kInversePairsArray,
   minimumCostHireKWorkers,
@@ -4348,25 +3842,18 @@ export const problems: readonly Problem[] = [
   textJustification,
   minimumOperationsMakeArrayContinuous,
   arithmeticSubarrays,
-  minimumScorePath,
   maximumPointsFromCards,
   minimumAsciiDeleteSum,
   sumOfDistancesInTree,
   couplesHoldingHands,
   fallingSquares,
   constrainedSubsequenceSum,
-  pseudoPalindromicPaths,
-  numberOfNodesSameLabel,
-  minimumCostTreeLeafValues,
-  validPartitionArray,
   paintFence,
   minimumInsertionStepsPalindrome,
   longestSubarrayAbsDiffLimit,
-  maximumSumTwoNonOverlappingSubarrays,
   numberOfClosedIslands,
   destinationCity,
   findWinnerTictactoe,
-  maximumEatenApples,
   splitArrayFibonacci,
   maximumScorePerformingMultiplication,
   cherryPickup,
@@ -4376,7 +3863,6 @@ export const problems: readonly Problem[] = [
   freedomTrail,
   guessNumberHigherOrLowerII,
   removePalindromicSubsequences,
-  checkArrayFormation,
   minimumFallingPathSumII,
   scrambleString,
   predictTheWinner,
@@ -4392,7 +3878,6 @@ export const problems: readonly Problem[] = [
   designLinkedList,
   maximumProductSubarray,
   deleteAndEarn,
-  minimumTimeCollectApples,
   xorQueriesOfSubarray,
   sequentialDigits,
   countSubIslands,
@@ -4400,7 +3885,6 @@ export const problems: readonly Problem[] = [
   longestPalindromicSubstring,
   maxProductWordLengths,
   slidingWindowMedian,
-  minimumDifficultyJobSchedule,
   tallestBillboard,
   concatenatedWords,
   maxValueOfEquation,
@@ -4416,7 +3900,6 @@ export const problems: readonly Problem[] = [
   maximumHeightByStackingCuboids,
   minimumDaysToEatOranges,
   bestTeamWithNoConflicts,
-  numberOfWaysToFormTarget,
   minimumXorSumOfTwoArrays,
   numberOfWaysToRearrangeSticksWithKSticksVisible,
   numberOfWaysToStayInSamePlaceAfterSomeSteps,
@@ -4431,20 +3914,16 @@ export const problems: readonly Problem[] = [
   dota2Senate,
   timeNeededToInformAllEmployees,
   minesweeper,
-  minimumScoreTriangulation,
   scoreAfterFlippingMatrix,
   beautifulArray,
   recoverBinarySearchTree,
-  findDuplicateSubtrees,
   allPossibleFullBinaryTrees,
   cherryPickupII,
-  detonateMaximumBombs,
   stoneGameVII,
   designBrowserHistory,
   knightDialer,
   paintHouseIII,
   maximizeDistanceToClosestPerson,
-  minimumNumberOfVertices,
   pathWithMinimumEffort,
   pathWithMaximumProbability,
   videoStitching,
@@ -4461,16 +3940,13 @@ export const problems: readonly Problem[] = [
   maxSumOfRectangleNoLargerThanK,
   countUniqueCharactersOfAllSubstrings,
   zumaGame,
-  findLongestValidObstacleCourse,
   bestSightseeingPair,
-  findLongestSubstringVowelsEven,
   reverseSubstringsBetweenParentheses,
   designStackWithIncrement,
   minimumNumberOfFrogsCroaking,
   shortestPathVisitingAllNodes,
   minimumNumberOfWorkSessions,
   minimizeProductSum,
-  countRangeSum,
   allPathsFromSourceLeadToDestination,
   jumpGameV,
   wordSubsets,
@@ -4497,16 +3973,13 @@ export const problems: readonly Problem[] = [
   deleteOperationForTwoStrings,
   productOfArrayExceptSelf,
   minimumMovesToEqualArrayElements,
-  smallestDivisorGivenThreshold,
   additiveNumber,
   uniquePathsIii,
   raceCar,
   minimumCostToMakeValidParentheses,
-  minimumScoreOfPath,
   countOperationsToObtainZeroIi,
   minimumDeletionsToBalanceParentheses,
   minimumPathCostInAGrid,
-  countWaysGroupOverlappingRanges,
   takeGiftsFromTheRichestPile,
   findAllGoodIndices,
   partitionArrayIntoThreePartsWithEqualSum,
@@ -4526,9 +3999,7 @@ export const problems: readonly Problem[] = [
   mostStonesRemovedWithSameRowOrColumn,
   longestSubsequenceWithLimitedSum,
   minimumNumberOfArrowsToBurstBalloons,
-  findLargestValueEachTreeRow,
   findBottomLeftTreeValue,
-  mostStonesRemovedSameRowOrColumn,
   countUnreachablePairsOfNodes,
   myCalendarI,
   findPlayersWithZeroOrOneLosses,
@@ -4542,7 +4013,6 @@ export const problems: readonly Problem[] = [
   maximumSubarrayMinProduct,
   stepsToMakeArrayNondecreasing,
   countSubstringsDifferByOne,
-  minimumOperationsToMoveBalls,
   maximumAreaOfPieceOfCake,
   minimumAreaRectangle,
   minimumOperationsToHalveArraySum,
@@ -4551,7 +4021,6 @@ export const problems: readonly Problem[] = [
   longestArithmeticSubsequenceOfGivenDifference,
   timeNeededToBuyTickets,
   numberOfSubarraysWithBoundedMaximum,
-  kthSmallestElementInBst,
   findMinimumInRotatedSortedArray,
   searchInRotatedSortedArray,
   minimumNumberOfDaysToMakeMBouquets,
@@ -4564,7 +4033,6 @@ export const problems: readonly Problem[] = [
   removeCoveredIntervals,
   minimizeArrayValue,
   validateIpAddress,
-  maximumSumHourglass,
   reverseOddLevelsBinaryTree,
   findClosestNodeToGivenTwoNodes,
   numberOfFlowersInFullBloom,
@@ -4594,7 +4062,6 @@ export const problems: readonly Problem[] = [
   checkIfStringContainsAllBinaryCodesOfSizeK,
   longestNiceSubstring,
   minimumAddToMakeParenthesesValid,
-  predictWinner,
   canIWin,
   optimalDivision,
   minimumInsertionsToBalanceParentheses,
@@ -4610,7 +4077,6 @@ export const problems: readonly Problem[] = [
   verifyingAlienDictionary,
   rectangleArea,
   encodeDecodeStrings,
-  shortestDistanceToCharacter,
   utf8Validation,
   rangeAddition,
   countTheNumberOfFairPairs,
@@ -4619,7 +4085,6 @@ export const problems: readonly Problem[] = [
   countWaysToSelectBuildings,
   powerOfHeroes,
   numberOfWaysToArriveAtDestination,
-  reorderRoutesToMakeAllPathsLeadToCityZero,
   maximumLengthOfPairChain,
   countServersThatCommunicate,
   validPalindrome,
@@ -4634,7 +4099,6 @@ export const problems: readonly Problem[] = [
   divideTwoIntegers,
   longestHarmoniousSubsequence,
   buddyStrings,
-  beautifulSubsets,
   myCalendarIi,
   taskSchedulerIi,
   swappingNodesInALinkedList,
@@ -4644,14 +4108,10 @@ export const problems: readonly Problem[] = [
   pathWithMaximumGold,
   convertSortedArrayToBST,
   trimABinarySearchTree,
-  findingUsersActiveMinutes,
   dayOfTheYear,
   typeOfTriangle,
   maximumEnemyForts,
   minimumAmountTimeToCollectGarbage,
-  checkIfArraySortedAndRotated,
-  nodesBetweenCriticalPoints,
-  numberAfterDoubleReversal,
   dominoAndTrominoTiling,
   numberOfLinesToWriteString,
   findTheMinimumAndMaximumNumberOfNodesBetweenCriticalPoints,
@@ -4684,7 +4144,6 @@ export const problems: readonly Problem[] = [
   findNUniqueIntegersSumUpToZero,
   checkArrayFormationThroughConcatenation,
   minimizeStringLength,
-  findScoreOfArrayAfterMarkingElements,
   elementsAppearingMoreThan25Percent,
   makeStringASubsequenceUsingCyclicIncrements,
   numberOfBeautifulIntegersInRange,
@@ -4694,28 +4153,23 @@ export const problems: readonly Problem[] = [
   superEggDrop,
   maximumScoreSplicedArray,
   countIncreasingQuadruplets,
-  waysToMakeFairArray,
   minimumInitialEnergyToFinishTasks,
   constructTargetArrayWithMultipleSums,
-  minimizeMaximumDifferenceOfPairs,
   minimumNumberOfKeypresses,
   longestSubarrayAtMostKFrequency,
   minimumDeletionsToMakeStringKSpecial,
   cousinsInBinaryTree,
   allNodesDistanceKInBinaryTree,
-  openLock,
   maximizeSumOfArrayAfterKNegations,
   removeDuplicatesFromSortedList,
   intersectionOfTwoArrays,
   climbingStairsMemo,
   countVowelsInString,
   percentageOfLetter,
-  reverseWordsInString,
   dayOfTheWeek,
   guessNumberHigherOrLower,
   largestTriangleArea,
   minimumValueToGetPositiveStepSum,
-  numberOfRectanglesThatCanFormLargestSquare,
   successfulPairsOfSpellsAndPotions,
   minimumOperationsToReduceXToZero,
   largestSubmatrixWithRearrangements,
@@ -4727,7 +4181,6 @@ export const problems: readonly Problem[] = [
   balanceABinarySearchTree,
   maximumSumBstInBinaryTree,
   stockPriceFluctuation,
-  minimumReplacementsToSortArray,
   largestColorValueInDirectedGraph,
   stringWithoutAaaOrBbb,
   countTheHiddenSequences,
@@ -4771,7 +4224,6 @@ export const problems: readonly Problem[] = [
   countDaysWithoutMeetings,
   stringCompressionIII,
   strangePrinterII,
-  kthSmallestInSortedMatrix,
   theSkylineProblem,
   islandPerimeter,
   matrixChainMultiplication,
@@ -4801,19 +4253,16 @@ export const problems: readonly Problem[] = [
   numberOfSquarefulArrays,
   sellingPiecesOfWood,
   numberOfDiceRollsWithTargetSum,
-  convertBinaryLinkedList,
   diagonalTraverseII,
   designCircularDeque,
   beautifulTowersI,
   maximumTastinessCandyBasket,
-  shortestSubarraySumAtLeastK,
   substringWithConcatenationOfAllWords,
   minimumPeopleToTeach,
   punishmentNumberOfInteger,
   minimumCostToSeparateSentenceIntoRows,
   maximumRunningTimeOfNComputers,
   countStrictlyIncreasingSubarrays,
-  minimumScorePathBetweenTwoCities,
   splitMessageBasedOnLimit,
   longestWordInDictDeleting,
   countAllValidPickupAndDeliveryOptions,
@@ -4837,7 +4286,6 @@ export const problems: readonly Problem[] = [
   minimumCostToConvertStringI,
   waysToSplitArrayIntoThreeSubarrays,
   // batch 57 (local)
-  minimumNumberOfMovesToSeat,
   numberOfSeniorCitizens,
   maximumNumberOfGroupsWithIncreasingLength,
   makeIntegerBeautiful,
@@ -4845,7 +4293,6 @@ export const problems: readonly Problem[] = [
   nextClosestTime,
   employeeFreeTime,
   maximumSumOf3NonOverlappingSubarrays,
-  dominoTrominoTiling,
   splitArrayWithSameAverage,
   // batch 58 (local)
   minimumTimeToBuyTickets,
@@ -4892,7 +4339,6 @@ export const problems: readonly Problem[] = [
   // batch 62 (local)
   findTheMinimumNumberOfFibonacciNumbersWhoseSumIsK,
   countPairsOfSimilarStrings,
-  numberOfBeautifulSubarrays,
   zeroArrayTransformationI,
   maximumBuildingHeight,
   countNumberOfSpecialIntegers,
@@ -4917,9 +4363,7 @@ export const problems: readonly Problem[] = [
   // batch 61
   kClosestPointsToOrigin,
   findAllAnagramsInAString,
-  longestPalindrome,
   reverseWordsInAString,
-  countPrimes,
   // batch 58
   maxConsecutiveOnesII,
   lengthOfLongestFibonacciSubsequence,
@@ -4934,33 +4378,24 @@ export const problems: readonly Problem[] = [
   findSubarraysWithEqualSum,
   bestPokerHand,
   countIncremovableSubarrays,
-  stepByStepDirections,
-  minimumNumberOfFoodBuckets,
   superUglyNumber,
   rewardTopKStudents,
   countSubarraysWithScoreLessThanK,
-  maximumNumberOfJumpsToReachLastIndex,
   minimumNumberOfCoinsForFruits,
   // batch 59 (new problems)
   freqStack,
   minimumCostToEqualizeArray,
-  maximumTotalDamage,
   specialArrayII,
-  findMaximumLengthValidSubsequence,
   countSubmatricesAllOnes,
   minimumLengthOfStringAfterOperations,
-  countSpecialCharactersI,
-  maximumJumpsToReachLastIndex,
   minimumOperationsToMakeArrayEqualII,
   minimumCostForCuttingCakeI,
   // batch 62 (local)
   seatReservationManager,
   subarrayDivByK,
-  minimumPathCostInGrid,
   maximumDistanceBetweenAPairOfValues,
   // batch 62
   maximumNumberOfPointsWithCost,
-  findThreeConsecutiveIntegersThatSumToGivenNumber,
   minimumSumOfFourDigitNumberAfterSplittingDigits,
   kItemsWithTheMaximumSum,
   // batch 62 (this session)
@@ -4975,7 +4410,6 @@ export const problems: readonly Problem[] = [
   numberOfBeautifulSubsets,
   maximumNumberOfFishInAGrid,
   // batch 63 (local)
-  countConsistentStrings,
   maxPointsFromCards,
   numStepsBinaryToOne,
   minimizeSumTwoChanges,
@@ -4987,10 +4421,8 @@ export const problems: readonly Problem[] = [
   nextGreaterElementIV,
   minimumNumberOfOperationsToMakeArraysSimilar,
   // batch 64
-  minimumCostValidPathInGrid,
   decreaseElementsToMakeArrayZigzag,
   maximalNetworkRank,
-  minimumTapsToOpenToWaterAGarden,
   putMarblesInBags,
   // batch 66 (origin)
   soupServings,
@@ -4999,8 +4431,6 @@ export const problems: readonly Problem[] = [
   maximumVacationDays,
   gridIllumination,
   // batch 66 (origin)
-  findAllNumbersDisappearedInArray,
-  kthLargestElementInArray,
   bestTimeToBuyAndSellStockII,
   countGoodNodesInBinaryTree,
   minimumDepthOfBinaryTree,
@@ -5026,7 +4456,6 @@ export const problems: readonly Problem[] = [
   minimumOperationsToMakeArrayValuesEqualToK,
   minimumOperationsToMakeUniValueGrid,
   minimumMovesToMakeArrayComplementary,
-  findWinnerOfArrayGame,
   maximumNumberOfRobotsWithinBudget,
   minimumSizeOfBag,
   maximumRowsCoveredByColumns,
@@ -5081,7 +4510,6 @@ export const problems: readonly Problem[] = [
   findTheKthLuckyNumber,
   // batch 68-local
   findMedianFromDataStream,
-  checkCompletenessBinaryTreeNew,
   earliestFullBloom,
   longestObstacleCourse,
   minimumTimeFinishRace,
@@ -5091,11 +4519,11 @@ export const problems: readonly Problem[] = [
   findTheCelebrity,
   minimumNumberOfDaysToDisconnectIsland,
   // batch 71
-  maximumProductOfTwoElementsInArray,
   findTheHighestAltitude,
   findTheArrayConcatenationValue,
   runningSumOf1dArray,
   checkDistancesBetweenSameLetters,
+  checkCompletenessOfBinaryTree,
   findMissingAndRepeatedValues,
   findIndicesOfStableMountains,
   // batch 71-local
@@ -5110,7 +4538,6 @@ export const problems: readonly Problem[] = [
   numberOfRestrictedPaths,
   minimumSwapsToSortAnArray,
   findPeakElementII,
-  checkCompletenessOfBinaryTree,
   allAncestorsOfNodeInDag,
   numberOfNodesInSubtreeWithSameLabel,
   determineIfCellIsReachableAtGivenTime,
@@ -5135,14 +4562,10 @@ export const problems: readonly Problem[] = [
   longestContinuousSubarrayAbsDiff,
   // batch 72
   walkingRobotSimulation,
-  findDistinctDifferenceArray,
   maximumNumberOfAlloys,
   minimumOpsDistinctElements,
   minimumCoinsToAdd,
-  countSpecialCharactersII,
   findMaximumK,
-  minimumChairsWaitingRoom,
-  maximumBallsInBox,
   satisfiabilityOfEqualityEquations,
   pourWater,
   bricksFallingWhenHit,
@@ -5166,10 +4589,8 @@ export const problems: readonly Problem[] = [
   candyCrush,
   // batch 76
   removeMaxNumberOfEdgesToKeepGraphFullyTraversable,
-  examRoom,
   checkingExistenceOfEdgeLengthLimitedPaths,
   lastDayWhereYouCanStillCross,
-  minimumCostWalkInWeightedGraph,
   maximumAveragePassRatio,
   countGoodMeals,
   rankTeamsByVotes,
@@ -5220,7 +4641,6 @@ export const problems: readonly Problem[] = [
   minimumTimeToVisitDisappearingNodes,
   countBeautifulSubstringsI,
   sortTransformedArray,
-  checkIfParenthesesStringCanBeValid,
   findTheNumberOfDistinctColorsAmongTheBalls,
   countTheNumberOfArraysWithKMatchingAdjacentElements,
   // batch 79 — DP, stack, binary-search
@@ -5233,7 +4653,6 @@ export const problems: readonly Problem[] = [
   magneticForceBetweenTwoBalls,
   nthMagicalNumber,
   getEqualSubstringsWithinBudget,
-  longestEqualSubarray,
   threeSumWithMultiplicity,
   new21Game,
   shortestCommonSupersequence,
@@ -5263,13 +4682,11 @@ export const problems: readonly Problem[] = [
   minimumOperationsToMakeTheArrayAlternating,
   // batch 83 — strings, dp, graph
   countPalindromes,
-  flowerPlantingNoAdjacent,
   longestDupSubstring,
   shortestPalindrome,
   sumPrefixScores,
   fillingBookcaseShelves,
   maximumLengthRepeatedSubarray,
-  minimumTapsToWaterGarden,
   numberOfWaysToPaintN3Grid,
   frogPositionAfterTSeconds,
   loudAndRich,
@@ -5404,12 +4821,9 @@ export const problems: readonly Problem[] = [
   fourSumVariant,
   dailyTemperaturesVariant,
   // batch 95 — tree/easy, tree/medium, tree/hard
-  rangeSumBst,
   deleteNodeInABst,
   binaryTreeMaximumPathSum,
   // batch 96 (remote) — arrays/easy, arrays+hash-map/easy, strings+hash-map/easy
-  checkIfArraySortedAndRotatedB96,
-  findAllLonelyNumbersInArray,
   checkIfAllCharactersHaveEqualNumberOfOccurrences,
   // batch 99 (remote) — strings/easy, arrays/easy, arrays/medium, sliding-window/medium
   findLongestBalancedBinarySubstring,
@@ -5486,7 +4900,6 @@ export const problems: readonly Problem[] = [
   // batch 114 — strings+union-find/medium, heap+simulation/medium, strings+math/medium
   lexicographicallySmallestEquivalentString,
   singleThreadedCpu,
-  numberOfWaysToSplitString,
   // batch 115 — arrays/easy, arrays/easy, arrays/easy
   minimumOperationsBinaryArrayEqualToOneI,
   findCommonElementsBetweenTwoArrays,
@@ -5534,7 +4947,6 @@ export const problems: readonly Problem[] = [
   // batch 123 — arrays+hash-map/easy, arrays+math/easy, graph+shortest-path/medium
   findTheNumberOfWinningPlayers,
   maximumSumWithExactlyKElements,
-  minimumTimeToReachLastRoomII,
   // batch 124 — arrays+hash-map+math/medium, arrays+strings+hash-map/easy, arrays+strings/easy
   minimumNumberOfOperationsToMakeArrayEmpty,
   findMaximumNumberOfStringPairs,
@@ -5633,7 +5045,6 @@ export const problems: readonly Problem[] = [
   findMinimumDiameterAfterMergingTwoTrees,
   // batch 139 — arrays+strings/easy, strings/easy, arrays+math+simulation/medium
   sortPeople,
-  countWordsGivenPrefix,
   findMissingObservations,
   // batch 140 — arrays+math/easy, arrays+strings/easy, arrays/easy
   decryptXoredArray,
@@ -5648,7 +5059,6 @@ export const problems: readonly Problem[] = [
   numberOfSubmatricesThatSumToTarget,
   // batch 142 — arrays/easy, arrays+sorting/easy, strings+sliding-window/easy, arrays+simulation/easy, arrays+simulation/medium, arrays+math/medium, arrays+dp/hard
   maximumHeightOfATriangle,
-  divideArrayMinCostI,
   countKConstraintSubstringsI,
   getFinalStateKMultiplicationI,
   findWinningPlayer,
@@ -5705,7 +5115,6 @@ export const problems: readonly Problem[] = [
   maxProductAfterCuttingRope,
   minimumPathSumTriangle,
   // batch 149 — arrays+binary-search/medium, arrays+dp/medium, arrays+heap/medium
-  maximizeScoreNumbersInRanges,
   maximumEnergyBoostFromTwoDrinks,
   kthNearestObstacleQueries,
   // batch 149b — arrays/easy
@@ -5743,7 +5152,6 @@ export const problems: readonly Problem[] = [
   countWaysRearrangeSticks,
   // batch 151 — linked-list/medium, linked-list/hard, union-find/medium, union-find/medium, shortest-path/medium, binary-indexed-tree/medium
   swapPairsLinkedList,
-  reverseNodesKGroup,
   minimumSpanningTreeWeight,
   unionFindDynamicConnectivity,
   bellmanFordShortestPaths,
@@ -5808,7 +5216,6 @@ export const problems: readonly Problem[] = [
   insertDeleteGetRandomDuplicatesAllowed,
   matchsticksToSquare,
   // batch 155r — dp/medium×2, dp/hard×2, arrays/medium, strings/hard, sliding-window/medium
-  minimumScoreTriangulationPolygon,
   nonNegativeIntegersWithoutConsecutiveOnes,
   countWaysToBuildGoodStrings,
   restoreTheArray,
@@ -5849,7 +5256,6 @@ export const problems: readonly Problem[] = [
   // batch 158
   minCostHomecomingRobotInGrid,
   sumOfScoresOfBuiltStrings,
-  countOfIntegers,
   numberOfWaysToEarnPoints,
   // batch 159 — strings+hash-map/medium, dp/hard, arrays+dp/medium
   uniqueLength3PalindromicSubsequences,
@@ -5915,7 +5321,6 @@ export const problems: readonly Problem[] = [
   kthFactorOfN,
   checkValidParenthesesStringPath,
   maximumTrailingZerosInCorneredPath,
-  maximumValueOfOrderedTripletII,
   // batch 169 — 4 new problems
   maximumNumberOfEatenApples,
   minimumFlipsToMakeAlternatingBinaryString,
@@ -5957,8 +5362,6 @@ export const problems: readonly Problem[] = [
   distributeCoinsInBinaryTree,
   // batch 169 (local) — strings/medium, arrays+sliding-window/medium, graph+union-find/medium
   minimumSwapsToMakeStringBalanced,
-  maximumSumDistinctSubarraysWithLengthK,
-  countNumberOfCompleteComponents,
   // batch 169b — graph/medium×2, arrays+sliding-window/medium, tree/medium
   shortestPathInBinaryMatrix,
   minimumCostToConnectAllPoints,
@@ -5971,7 +5374,6 @@ export const problems: readonly Problem[] = [
   removeLetterToEqualizeFrequency,
   minimizeTheMaximumDifferenceOfPairs,
   checkIfPointIsReachable,
-  buildArrayWithStackOperations,
   // batch 171 — strings/easy, tree/medium, arrays/medium, math/medium×2
   stringMatchingInAnArray,
   countNodesEqualToAverageOfSubtree,
@@ -6013,8 +5415,6 @@ export const problems: readonly Problem[] = [
   numberOfGoodSubsets,
   // batch 176 — medium/sliding-window, easy/math, medium/math+hash-map, medium/math
   maximumPointsYouCanObtainFromCards,
-  minimumPushesToTypeWordI,
-  minimumPushesToTypeWordII,
   minimumAdditionToMakeIntegerBeautiful,
   // batch 173 — easy/math, hard/arrays+math, hard/arrays+stack, medium/design+simulation, medium/arrays+hash-map+math
   confusingNumber,
@@ -6041,7 +5441,6 @@ export const problems: readonly Problem[] = [
   // batch 172 — strings+sliding-window/medium, arrays+math/easy, arrays+math/medium, arrays+math/medium
   longestSubstringWithAtMostTwoDistinctChars,
   rangeAdditionII,
-  maximumConsecutiveValuesYouCanMake,
   findTheMaximumLengthOfValidSubsequenceI,
   // batch 174 — medium/math+trie, hard/dp, hard/tree+design, hard/dp+digit, easy/arrays+math
   lexicographicNumbers,
@@ -6145,7 +5544,6 @@ export const problems: readonly Problem[] = [
   countTripletsThatCanFormTwoArraysOfEqualXor,
   maximumNumberOfJumpsToReachTheLastIndex,
   // batch 185 — medium/arrays+hash-map, medium/arrays+binary-search, medium/arrays, easy/arrays
-  minimumOperationsToMakeArrayEmpty,
   minimumOperationsToMakeArrayContinuous,
   minimumDistanceToTheTargetElement,
   maximumAreaOfLongestDiagonalRectangle,
@@ -6227,7 +5625,6 @@ export const problems: readonly Problem[] = [
   // batch 196 — easy/arrays+math, easy/arrays+sliding-window, medium/arrays
   countPairsWithEvenSum,
   findXSumOfAllKLongSubarraysI,
-  minimumOperationsToMakeMedianEqualK,
   // batch 198 — easy/math+simulation, easy/math, easy/simulation, medium/arrays+bit-manipulation, easy/math+simulation
   checkIfTheNumberIsFascinating,
   countTheDigitsThatDivideANumber,
@@ -6288,7 +5685,6 @@ export const problems: readonly Problem[] = [
   // batch 202 (new) — easy/math, easy/arrays+simulation, medium/strings+math, medium/arrays+binary-search
   threeDivisors,
   checkThreeConsecutiveOdds,
-  minimumSwapsToMakeAlternating,
 
   // batch 204 — easy/arrays, easy/arrays, easy/arrays+strings, easy/arrays+math
   flatten2dArray,
@@ -6318,7 +5714,6 @@ export const problems: readonly Problem[] = [
   // batch 208 — easy/math, easy/simulation, medium/math, medium/arrays+stack, medium/strings
   harshadNumber,
   furthestPointFromOrigin,
-  minimumPossibleSumOfBeautifulArray,
   maximalRangeEachElementIsMaximumIn,
   lexicographicallySmallestStringOperationsConstraint,
   // batch 209 — easy/arrays+hash-map, easy/arrays+math, easy/arrays, easy/arrays
@@ -6360,7 +5755,6 @@ export const problems: readonly Problem[] = [
   minimumNumberOfOperationsToMakeWordKPeriodic,
   zeroArrayTransformationIII,
   maximumCoinsHeroesCanCollect,
-  minimumOperationsToMoveAllBallsToEachBox,
   // batch 213a
   checkIfAll1sAreAtLeastLengthKPlacesApart,
   checkIfBinaryStringHasAtMostOneSegmentOfOnes,

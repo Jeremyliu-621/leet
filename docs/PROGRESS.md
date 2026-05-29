@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2827** problems; 8775 tests green. Batches 102–218 complete.
+**Current focus:** Bank at **2524** problems; 7866 tests green. Batches 102–218 complete + comprehensive dedup.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 219+; UX polish per LEETCODE_PARITY.md.
+
+### chore(bank): comprehensive deduplication — remove 305 abbreviated-name duplicates (2026-05-29)
+Removed 305 duplicate problem registrations where abbreviated IDs (e.g. `best-time-buy-sell-iii`) were registered alongside their canonical equivalents (e.g. `best-time-to-buy-and-sell-stock-iii`). Used word-subset heuristic to safely identify pairs; restored `difference-ones-zeros-in-row-and-column` and `find-kth-largest-integer-in-array` which were incorrectly removed. Bank: 2827 → 2524 unique problems. Tests: 8775 → 7866 (all pass).
 
 ### feat(bank): batch 218 — phone-number-prefix, reverse-degree, min-ops-array-zero, properties-graph (2026-05-29)
 Four new problems: `phone-number-prefix` (easy/strings, sort + consecutive startsWith check), `reverse-degree-of-a-string` (easy/strings+math, positional reverse-alphabet weight sum), `minimum-operations-make-array-elements-zero` (medium/arrays+hash-map+math, pair equal non-zero elements or -1 if odd count), `properties-graph` (medium/graph+union-find, union all nodes sharing a property value, count roots). Bank at **2827**; 8775 tests.
