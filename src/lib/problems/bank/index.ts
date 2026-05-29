@@ -2929,6 +2929,11 @@ import { problem as countVowelsInRange } from './count-vowels-in-range';
 import { problem as countEqualAndDivisiblePairsInAnArray } from './count-equal-and-divisible-pairs-in-an-array';
 import { problem as findAllLonelyNumbersInTheArray } from './find-all-lonely-numbers-in-the-array';
 import { problem as checkIfAParenthesesStringCanBeValid } from './check-if-a-parentheses-string-can-be-valid';
+// batch 188 — easy/simulation, easy/arrays, easy/bit-manipulation, medium/math
+import { problem as teemoAttacking } from './teemo-attacking';
+import { problem as distanceBetweenBusStops } from './distance-between-bus-stops';
+import { problem as binaryNumberWithAlternatingBits } from './binary-number-with-alternating-bits';
+import { problem as monotonicIncreasingDigits } from './monotonic-increasing-digits';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5899,4 +5904,9 @@ export const problems: readonly Problem[] = [
   countEqualAndDivisiblePairsInAnArray,
   findAllLonelyNumbersInTheArray,
   checkIfAParenthesesStringCanBeValid,
+  // batch 188 — easy/simulation, easy/arrays, easy/bit-manipulation, medium/math
+  teemoAttacking,
+  distanceBetweenBusStops,
+  binaryNumberWithAlternatingBits,
+  monotonicIncreasingDigits,
 ];

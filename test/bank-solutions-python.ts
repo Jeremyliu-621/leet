@@ -42266,4 +42266,41 @@ def canBeValid(s, locked):
         lo = max(lo, 0)
     return lo == 0
 `,
+  'teemo-attacking': `
+def findPoisonedDuration(timeSeries, duration):
+    total = 0
+    for i in range(len(timeSeries) - 1):
+        total += min(timeSeries[i + 1] - timeSeries[i], duration)
+    return total + duration
+`,
+  'distance-between-bus-stops': `
+def distanceBetweenBusStops(distance, source, destination):
+    if source == destination:
+        return 0
+    n = len(distance)
+    total = sum(distance)
+    cw = 0
+    i = source
+    while i != destination:
+        cw += distance[i]
+        i = (i + 1) % n
+    return min(cw, total - cw)
+`,
+  'binary-number-with-alternating-bits': `
+def hasAlternatingBits(n):
+    m = n ^ (n >> 1)
+    return (m & (m + 1)) == 0
+`,
+  'monotonic-increasing-digits': `
+def monotoneIncreasingDigits(n):
+    digits = list(str(n))
+    mark = len(digits)
+    for i in range(len(digits) - 1, 0, -1):
+        if digits[i - 1] > digits[i]:
+            mark = i
+            digits[i - 1] = str(int(digits[i - 1]) - 1)
+    for i in range(mark, len(digits)):
+        digits[i] = '9'
+    return int(''.join(digits))
+`,
 };

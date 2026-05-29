@@ -42336,4 +42336,55 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return lo === 0;
   },
+  'teemo-attacking': (...args: unknown[]) => {
+    const timeSeries = args[0] as number[];
+    const duration = args[1] as number;
+    let total = 0;
+    for (let i = 0; i < timeSeries.length - 1; i++) {
+      total += Math.min(timeSeries[i + 1]! - timeSeries[i]!, duration);
+    }
+    total += duration;
+    return total;
+  },
+  'distance-between-bus-stops': (...args: unknown[]) => {
+    const distance = args[0] as number[];
+    let source = args[1] as number;
+    const destination = args[2] as number;
+    if (source === destination) return 0;
+    const n = distance.length;
+    const total = distance.reduce((a, b) => a + b, 0);
+    let cw = 0;
+    let i = source;
+    while (i !== destination) {
+      cw += distance[i]!;
+      i = (i + 1) % n;
+    }
+    return Math.min(cw, total - cw);
+  },
+  'binary-number-with-alternating-bits': (...args: unknown[]) => {
+    let n = args[0] as number;
+    let prev = n & 1;
+    n >>= 1;
+    while (n > 0) {
+      const cur = n & 1;
+      if (cur === prev) return false;
+      prev = cur;
+      n >>= 1;
+    }
+    return true;
+  },
+  'monotonic-increasing-digits': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const digits = n.toString().split('').map(Number);
+    const len = digits.length;
+    let mark = len;
+    for (let i = len - 1; i > 0; i--) {
+      if (digits[i - 1]! > digits[i]!) {
+        mark = i;
+        digits[i - 1]!--;
+      }
+    }
+    for (let i = mark; i < len; i++) digits[i] = 9;
+    return parseInt(digits.join(''), 10);
+  },
 };

@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2626** problems; 8169 tests green. Batches 102–187 + 179b complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2630** problems; 8181 tests green. Batches 102–188 + 179b complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 188+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 189+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 188 — teemo-attacking, distance-bus-stops, alternating-bits, monotonic-digits (2026-05-29)
+Four new problems: `teemo-attacking` (easy/simulation, min(gap,duration) per interval + last duration), `distance-between-bus-stops` (easy/arrays, clockwise sum vs total-cw, take min), `binary-number-with-alternating-bits` (easy/bit-manipulation, n^(n>>1) all-1s check via m&(m+1)==0), `monotonic-increasing-digits` (medium/math, right-to-left: decrement when violated, fill suffix with 9s). Bank at **2630**; 8181 tests.
 
 ### feat(bank): batch 187 — count-vowels-range, equal-divisible-pairs, lonely-numbers, parentheses-valid (2026-05-29)
 Four new problems: `count-vowel-strings-in-a-range` (easy/strings+arrays, iterate [left,right] checking first+last char are vowels), `count-equal-and-divisible-pairs-in-an-array` (easy/arrays, O(n²) brute force — pair (i,j): nums[i]==nums[j] AND (i*j)%k==0), `find-all-lonely-numbers-in-the-array` (medium/arrays+hash-map, freq map — x lonely if freq[x]==1 AND no x±1 in map), `check-if-a-parentheses-string-can-be-valid` (medium/strings+stack, range [lo,hi] of open-bracket counts — clamp lo≥0, return false if hi<0, done when lo==0). Bank at **2626**; 8169 tests.
