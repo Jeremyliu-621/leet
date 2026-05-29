@@ -40855,4 +40855,55 @@ def countSpecialSubsequences(nums):
             dp2 = (2 * dp2 + dp1) % MOD
     return dp2
 `,
+  'count-odd-numbers-in-an-interval-range': `
+def countOdds(low, high):
+    return (high + 1) // 2 - low // 2
+`,
+  'find-kth-bit-in-nth-binary-string': `
+def findKthBit(n, k):
+    if n == 1:
+        return "0"
+    mid = 1 << (n - 1)
+    if k == mid:
+        return "1"
+    if k < mid:
+        return findKthBit(n - 1, k)
+    mirrored = findKthBit(n - 1, mid * 2 - k)
+    return "1" if mirrored == "0" else "0"
+`,
+  'check-if-a-string-can-break-another-string': `
+def checkIfCanBreak(s1, s2):
+    a = sorted(s1)
+    b = sorted(s2)
+    s1_breaks_s2 = all(a[i] >= b[i] for i in range(len(a)))
+    s2_breaks_s1 = all(b[i] >= a[i] for i in range(len(a)))
+    return s1_breaks_s2 or s2_breaks_s1
+`,
+  'convert-an-array-into-2d-array-with-conditions': `
+def findMatrix(nums):
+    freq = {}
+    result = []
+    for n in nums:
+        cnt = freq.get(n, 0)
+        if cnt >= len(result):
+            result.append([])
+        result[cnt].append(n)
+        freq[n] = cnt + 1
+    return result
+`,
+  'k-weakest-rows-in-a-matrix': `
+def kWeakestRows(mat, k):
+    def count_soldiers(row):
+        lo, hi = 0, len(row)
+        while lo < hi:
+            mid = (lo + hi) // 2
+            if row[mid] == 1:
+                lo = mid + 1
+            else:
+                hi = mid
+        return lo
+    strengths = [(count_soldiers(row), i) for i, row in enumerate(mat)]
+    strengths.sort()
+    return [i for _, i in strengths[:k]]
+`,
 };
