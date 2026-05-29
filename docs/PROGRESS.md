@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2372** problems; 7410 tests green. Batches 102–159 + 156c complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2373** problems; 7413 tests green. Batches 102–160 + 156c complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 160+); update site count; UX polish.
+**Next up:** More bank growth (batch 161+); update site count; UX polish.
+
+### feat(bank): add batch 160 — minimum-cost-walk-weighted-graph (hard) + register 3 orphaned problems (2026-05-29)
+New: `minimum-cost-to-walk-weighted-graph` (hard/graph+union-find, min cost path = bitwise AND of all edges in component; UF tracks per-component AND as edges are added). Registered orphans already in bank: `maximum-alternating-subsequence-sum` (medium/arrays+dp), `count-number-of-bad-pairs` (medium/arrays+hash-map), `make-array-zero-by-subtracting-equal-amounts` (easy/arrays+math). Bank at **2373**; 7413 tests.
 
 ### feat(bank): add batch 159 — unique-length-3-palindromic-subsequences (medium), minimum-white-tiles-after-covering-with-carpets (hard), special-permutations (medium) (2026-05-29)
 Three new problems: `unique-length-3-palindromic-subsequences` (medium/strings+hash-map, for each char find leftmost/rightmost occurrence and count distinct chars between them), `minimum-white-tiles-after-covering-with-carpets` (hard/dynamic-programming, 2D DP dp[j][i]=min white tiles visible in floor[0..i-1] using j carpets), `special-permutations` (medium/arrays+dynamic-programming, bitmask DP counting permutations where each adjacent pair has a divisibility relation, mod 10^9+7). JS and Python reference solutions included. Bank at **2372**; 7410 tests.
