@@ -2515,6 +2515,10 @@ import { problem as minimumSpanningTreeWeight } from './minimum-spanning-tree-we
 import { problem as unionFindDynamicConnectivity } from './union-find-dynamic-connectivity';
 import { problem as bellmanFordShortestPaths } from './bellman-ford-shortest-paths';
 import { problem as bitPrefixSumUpdates } from './bit-prefix-sum-updates';
+// batch 153 — arrays/medium, graph/medium, heap+simulation/medium
+import { problem as equalSumArraysMinOps } from './equal-sum-arrays-with-minimum-number-of-operations';
+import { problem as mapOfHighestPeak } from './map-of-highest-peak';
+import { problem as numberOfOrdersInBacklog } from './number-of-orders-in-the-backlog';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5067,4 +5071,8 @@ export const problems: readonly Problem[] = [
   unionFindDynamicConnectivity,
   bellmanFordShortestPaths,
   bitPrefixSumUpdates,
+  // batch 153 — arrays/medium, graph/medium, heap+simulation/medium
+  equalSumArraysMinOps,
+  mapOfHighestPeak,
+  numberOfOrdersInBacklog,
 ];

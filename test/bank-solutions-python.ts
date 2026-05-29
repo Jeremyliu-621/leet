@@ -34320,6 +34320,83 @@ def maxScoreIndices(nums) -> list:
     return [i for i, s in enumerate(scores) if s == max_score]
 `,
 
+  // batch 151 — arrays/medium, graph/medium, heap+simulation/medium
+  'equal-sum-arrays-with-minimum-number-of-operations': `
+def minOperations(nums1, nums2) -> int:
+    nums1 = list(nums1.to_py() if hasattr(nums1, 'to_py') else nums1)
+    nums2 = list(nums2.to_py() if hasattr(nums2, 'to_py') else nums2)
+    s1, s2 = sum(nums1), sum(nums2)
+    if s1 == s2:
+        return 0
+    if s1 > s2:
+        nums1, nums2 = nums2, nums1
+        s1, s2 = s2, s1
+    diff = s2 - s1
+    gains = sorted([6 - x for x in nums1] + [x - 1 for x in nums2], reverse=True)
+    ops = 0
+    for g in gains:
+        if diff <= 0:
+            break
+        diff -= g
+        ops += 1
+    return ops if diff <= 0 else -1
+`,
+  'map-of-highest-peak': `
+def highestPeak(isWater) -> list:
+    from collections import deque
+    if hasattr(isWater, 'to_py'):
+        isWater = isWater.to_py()
+    isWater = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in isWater]
+    m, n = len(isWater), len(isWater[0])
+    height = [[-1] * n for _ in range(m)]
+    q = deque()
+    for i in range(m):
+        for j in range(n):
+            if isWater[i][j] == 1:
+                height[i][j] = 0
+                q.append((i, j))
+    dirs = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    while q:
+        r, c = q.popleft()
+        for dr, dc in dirs:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n and height[nr][nc] == -1:
+                height[nr][nc] = height[r][c] + 1
+                q.append((nr, nc))
+    return height
+`,
+  'number-of-orders-in-the-backlog': `
+def getNumberOfBacklogOrders(orders) -> int:
+    import heapq
+    orders = [list(o.to_py() if hasattr(o, 'to_py') else o) for o in (orders.to_py() if hasattr(orders, 'to_py') else orders)]
+    buy = []   # max-heap: store negative price
+    sell = []  # min-heap
+    for price, amount, order_type in orders:
+        rem = amount
+        if order_type == 0:
+            while rem > 0 and sell and sell[0][0] <= price:
+                sp, sa = heapq.heappop(sell)
+                if sa <= rem:
+                    rem -= sa
+                else:
+                    heapq.heappush(sell, (sp, sa - rem))
+                    rem = 0
+            if rem > 0:
+                heapq.heappush(buy, (-price, rem))
+        else:
+            while rem > 0 and buy and -buy[0][0] >= price:
+                bp, ba = heapq.heappop(buy)
+                if ba <= rem:
+                    rem -= ba
+                else:
+                    heapq.heappush(buy, (bp, ba - rem))
+                    rem = 0
+            if rem > 0:
+                heapq.heappush(sell, (price, rem))
+    total = sum(a for _, a in buy) + sum(a for _, a in sell)
+    return total % (10 ** 9 + 7)
+`,
+
   // batch 144
   'reorder-routes-to-make-all-paths-lead-to-the-city-zero': `
 def minReorder(n: int, connections) -> int:

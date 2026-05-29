@@ -34365,6 +34365,78 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return scores.map((s, i) => [s, i] as [number, number]).filter(([s]) => s === maxScore).map(([, i]) => i);
   },
 
+  // batch 151 — arrays/medium, graph/medium, heap+simulation/medium
+  'equal-sum-arrays-with-minimum-number-of-operations': (...args: unknown[]) => {
+    let nums1 = [...(args[0] as number[])];
+    let nums2 = [...(args[1] as number[])];
+    let s1 = nums1.reduce((a, b) => a + b, 0);
+    let s2 = nums2.reduce((a, b) => a + b, 0);
+    if (s1 === s2) return 0;
+    if (s1 > s2) { [nums1, nums2] = [nums2, nums1]; [s1, s2] = [s2, s1]; }
+    let diff = s2 - s1;
+    const gains = [...nums1.map(x => 6 - x), ...nums2.map(x => x - 1)].sort((a, b) => b - a);
+    let ops = 0;
+    for (const g of gains) {
+      if (diff <= 0) break;
+      diff -= g;
+      ops++;
+    }
+    return diff <= 0 ? ops : -1;
+  },
+  'map-of-highest-peak': (...args: unknown[]) => {
+    const isWater = args[0] as number[][];
+    const m = isWater.length, n = isWater[0]!.length;
+    const height: number[][] = Array.from({ length: m }, () => new Array(n).fill(-1));
+    const queue: [number, number][] = [];
+    for (let i = 0; i < m; i++)
+      for (let j = 0; j < n; j++)
+        if (isWater[i]![j] === 1) { height[i]![j] = 0; queue.push([i, j]); }
+    const dirs: [number, number][] = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+    let head = 0;
+    while (head < queue.length) {
+      const [r, c] = queue[head++]!;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr, nc = c + dc;
+        if (nr >= 0 && nr < m && nc >= 0 && nc < n && height[nr]![nc] === -1) {
+          height[nr]![nc] = height[r]![c]! + 1;
+          queue.push([nr, nc]);
+        }
+      }
+    }
+    return height;
+  },
+  'number-of-orders-in-the-backlog': (...args: unknown[]) => {
+    const orders = args[0] as number[][];
+    const buyMap = new Map<number, number>();
+    const sellMap = new Map<number, number>();
+    for (const [price, amount, type] of orders) {
+      let rem = amount!;
+      if (type === 0) {
+        const sps = [...sellMap.keys()].filter(p => p <= price!).sort((a, b) => a - b);
+        for (const sp of sps) {
+          if (rem <= 0) break;
+          const avail = sellMap.get(sp)!;
+          if (avail <= rem) { rem -= avail; sellMap.delete(sp); }
+          else { sellMap.set(sp, avail - rem); rem = 0; }
+        }
+        if (rem > 0) buyMap.set(price!, (buyMap.get(price!) ?? 0) + rem);
+      } else {
+        const bps = [...buyMap.keys()].filter(p => p >= price!).sort((a, b) => b - a);
+        for (const bp of bps) {
+          if (rem <= 0) break;
+          const avail = buyMap.get(bp)!;
+          if (avail <= rem) { rem -= avail; buyMap.delete(bp); }
+          else { buyMap.set(bp, avail - rem); rem = 0; }
+        }
+        if (rem > 0) sellMap.set(price!, (sellMap.get(price!) ?? 0) + rem);
+      }
+    }
+    let total = 0;
+    for (const a of buyMap.values()) total += a;
+    for (const a of sellMap.values()) total += a;
+    return total % 1_000_000_007;
+  },
+
   // batch 144
   'reorder-routes-to-make-all-paths-lead-to-the-city-zero': (...args: unknown[]) => {
     const n = args[0] as number, connections = args[1] as number[][];
