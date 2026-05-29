@@ -2981,6 +2981,12 @@ import { problem as largestUniqueNumber } from './largest-unique-number';
 import { problem as minimumWindowContainingAllVowels } from './minimum-window-containing-all-vowels';
 import { problem as maximumSumIncreasingSubsequence } from './maximum-sum-increasing-subsequence';
 import { problem as sumOfEveryKthNumber } from './sum-of-every-kth-number';
+// batch 199b — easy/arrays+two-pointers, easy/arrays, easy/arrays+strings+two-pointers, easy/strings, medium/strings
+import { problem as findIndicesWithIndexAndValueDifferenceI } from './find-indices-with-index-and-value-difference-i';
+import { problem as countElementsWithStrictlySmallerAndGreaterElements } from './count-elements-with-strictly-smaller-and-greater-elements';
+import { problem as findFirstPalindromicStringInTheArray } from './find-first-palindromic-string-in-the-array';
+import { problem as removeTrailingZerosFromAString } from './remove-trailing-zeros-from-a-string';
+import { problem as numberOfValidWordsInASentence } from './number-of-valid-words-in-a-sentence';
 // batch 196 — easy/arrays+math, easy/arrays+sliding-window, medium/arrays
 import { problem as countPairsWithEvenSum } from './count-pairs-with-even-sum';
 import { problem as findXSumOfAllKLongSubarraysI } from './find-x-sum-of-all-k-long-subarrays-i';
@@ -6037,6 +6043,12 @@ export const problems: readonly Problem[] = [
   minimumWindowContainingAllVowels,
   maximumSumIncreasingSubsequence,
   sumOfEveryKthNumber,
+  // batch 199b — easy/arrays+two-pointers, easy/arrays, easy/arrays+strings+two-pointers, easy/strings, medium/strings
+  findIndicesWithIndexAndValueDifferenceI,
+  countElementsWithStrictlySmallerAndGreaterElements,
+  findFirstPalindromicStringInTheArray,
+  removeTrailingZerosFromAString,
+  numberOfValidWordsInASentence,
   // batch 196 — easy/arrays+math, easy/arrays+sliding-window, medium/arrays
   countPairsWithEvenSum,
   findXSumOfAllKLongSubarraysI,

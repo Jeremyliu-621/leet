@@ -43012,4 +43012,56 @@ def largestCombination(candidates):
 def totalMoney(n):
     return sum(i // 7 + i % 7 + 1 for i in range(n))
 `,
+  // batch 199b ---------------------------------------------------------------
+  'find-indices-with-index-and-value-difference-i': `
+def findIndices(nums, indexDifference, valueDifference):
+    for i in range(len(nums)):
+        for j in range(len(nums)):
+            if abs(i - j) >= indexDifference and abs(nums[i] - nums[j]) >= valueDifference:
+                return [i, j]
+    return [-1, -1]
+`,
+  'count-elements-with-strictly-smaller-and-greater-elements': `
+def countElements(nums):
+    mn, mx = min(nums), max(nums)
+    return sum(1 for n in nums if n != mn and n != mx)
+`,
+  'find-first-palindromic-string-in-the-array': `
+def firstPalindrome(words):
+    for w in words:
+        if w == w[::-1]:
+            return w
+    return ''
+`,
+  'remove-trailing-zeros-from-a-string': `
+def removeTrailingZeros(num):
+    return num.rstrip('0')
+`,
+  'number-of-valid-words-in-a-sentence': `
+def countValidWords(sentence):
+    count = 0
+    for token in sentence.split(' '):
+        if not token:
+            continue
+        hyphens = puncts = 0
+        valid = True
+        for k, c in enumerate(token):
+            if c.islower():
+                continue
+            elif c == '-':
+                hyphens += 1
+                if hyphens > 1 or k == 0 or k == len(token) - 1:
+                    valid = False; break
+                if not token[k-1].islower() or not token[k+1].islower():
+                    valid = False; break
+            elif c in '!.,':
+                puncts += 1
+                if puncts > 1 or k != len(token) - 1:
+                    valid = False; break
+            else:
+                valid = False; break
+        if valid:
+            count += 1
+    return count
+`,
 };

@@ -43187,4 +43187,47 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     for (let i = 0; i < n; i++) total += Math.floor(i / 7) + (i % 7) + 1;
     return total;
   },
+  // batch 199b ---------------------------------------------------------------
+  'find-indices-with-index-and-value-difference-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const indexDiff = args[1] as number;
+    const valueDiff = args[2] as number;
+    for (let i = 0; i < nums.length; i++) {
+      for (let j = 0; j < nums.length; j++) {
+        if (Math.abs(i - j) >= indexDiff && Math.abs(nums[i]! - nums[j]!) >= valueDiff) return [i, j];
+      }
+    }
+    return [-1, -1];
+  },
+  'count-elements-with-strictly-smaller-and-greater-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const mn = Math.min(...nums), mx = Math.max(...nums);
+    return nums.filter(n => n !== mn && n !== mx).length;
+  },
+  'find-first-palindromic-string-in-the-array': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    for (const w of words) if (w === w.split('').reverse().join('')) return w;
+    return '';
+  },
+  'remove-trailing-zeros-from-a-string': (...args: unknown[]) => {
+    return (args[0] as string).replace(/0+$/, '');
+  },
+  'number-of-valid-words-in-a-sentence': (...args: unknown[]) => {
+    const sentence = args[0] as string;
+    return sentence.split(' ').filter(token => {
+      if (!token) return false;
+      let hyphens = 0, puncts = 0;
+      for (let k = 0; k < token.length; k++) {
+        const c = token[k]!;
+        if (/[a-z]/.test(c)) continue;
+        if (c === '-') {
+          if (++hyphens > 1 || k === 0 || k === token.length - 1) return false;
+          if (!/[a-z]/.test(token[k - 1]!) || !/[a-z]/.test(token[k + 1]!)) return false;
+        } else if (c === '!' || c === '.' || c === ',') {
+          if (++puncts > 1 || k !== token.length - 1) return false;
+        } else return false;
+      }
+      return true;
+    }).length;
+  },
 };
