@@ -34365,6 +34365,78 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return scores.map((s, i) => [s, i] as [number, number]).filter(([s]) => s === maxScore).map(([, i]) => i);
   },
 
+  // batch 151 — arrays/medium, graph/medium, heap+simulation/medium
+  'equal-sum-arrays-with-minimum-number-of-operations': (...args: unknown[]) => {
+    let nums1 = [...(args[0] as number[])];
+    let nums2 = [...(args[1] as number[])];
+    let s1 = nums1.reduce((a, b) => a + b, 0);
+    let s2 = nums2.reduce((a, b) => a + b, 0);
+    if (s1 === s2) return 0;
+    if (s1 > s2) { [nums1, nums2] = [nums2, nums1]; [s1, s2] = [s2, s1]; }
+    let diff = s2 - s1;
+    const gains = [...nums1.map(x => 6 - x), ...nums2.map(x => x - 1)].sort((a, b) => b - a);
+    let ops = 0;
+    for (const g of gains) {
+      if (diff <= 0) break;
+      diff -= g;
+      ops++;
+    }
+    return diff <= 0 ? ops : -1;
+  },
+  'map-of-highest-peak': (...args: unknown[]) => {
+    const isWater = args[0] as number[][];
+    const m = isWater.length, n = isWater[0]!.length;
+    const height: number[][] = Array.from({ length: m }, () => new Array(n).fill(-1));
+    const queue: [number, number][] = [];
+    for (let i = 0; i < m; i++)
+      for (let j = 0; j < n; j++)
+        if (isWater[i]![j] === 1) { height[i]![j] = 0; queue.push([i, j]); }
+    const dirs: [number, number][] = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+    let head = 0;
+    while (head < queue.length) {
+      const [r, c] = queue[head++]!;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr, nc = c + dc;
+        if (nr >= 0 && nr < m && nc >= 0 && nc < n && height[nr]![nc] === -1) {
+          height[nr]![nc] = height[r]![c]! + 1;
+          queue.push([nr, nc]);
+        }
+      }
+    }
+    return height;
+  },
+  'number-of-orders-in-the-backlog': (...args: unknown[]) => {
+    const orders = args[0] as number[][];
+    const buyMap = new Map<number, number>();
+    const sellMap = new Map<number, number>();
+    for (const [price, amount, type] of orders) {
+      let rem = amount!;
+      if (type === 0) {
+        const sps = [...sellMap.keys()].filter(p => p <= price!).sort((a, b) => a - b);
+        for (const sp of sps) {
+          if (rem <= 0) break;
+          const avail = sellMap.get(sp)!;
+          if (avail <= rem) { rem -= avail; sellMap.delete(sp); }
+          else { sellMap.set(sp, avail - rem); rem = 0; }
+        }
+        if (rem > 0) buyMap.set(price!, (buyMap.get(price!) ?? 0) + rem);
+      } else {
+        const bps = [...buyMap.keys()].filter(p => p >= price!).sort((a, b) => b - a);
+        for (const bp of bps) {
+          if (rem <= 0) break;
+          const avail = buyMap.get(bp)!;
+          if (avail <= rem) { rem -= avail; buyMap.delete(bp); }
+          else { buyMap.set(bp, avail - rem); rem = 0; }
+        }
+        if (rem > 0) sellMap.set(price!, (sellMap.get(price!) ?? 0) + rem);
+      }
+    }
+    let total = 0;
+    for (const a of buyMap.values()) total += a;
+    for (const a of sellMap.values()) total += a;
+    return total % 1_000_000_007;
+  },
+
   // batch 144
   'reorder-routes-to-make-all-paths-lead-to-the-city-zero': (...args: unknown[]) => {
     const n = args[0] as number, connections = args[1] as number[][];
@@ -35527,19 +35599,271 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   },
 
   // batch 152
-  'maximum-strength-of-a-group': (...args: unknown[]) => {
-    const nums = args[0] as number[];
-    const n = nums.length;
-    let max = -Infinity;
-    for (let mask = 1; mask < (1 << n); mask++) {
-      let prod = 1;
-      for (let i = 0; i < n; i++) {
-        if (mask & (1 << i)) prod *= nums[i]!;
-      }
-      max = Math.max(max, prod);
+
+  'number-of-segments-in-a-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let count = 0;
+    for (let i = 0; i < s.length; i++) {
+      if (s[i] !== ' ' && (i === 0 || s[i - 1] === ' ')) count++;
     }
-    return max;
+    return count;
   },
+
+  'repeated-dna-sequences': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const seen = new Map<string, number>();
+    const result: string[] = [];
+    for (let i = 0; i <= s.length - 10; i++) {
+      const sub = s.slice(i, i + 10);
+      seen.set(sub, (seen.get(sub) ?? 0) + 1);
+      if (seen.get(sub) === 2) result.push(sub);
+    }
+    return result.sort();
+  },
+
+  'count-the-number-of-vowel-strings-in-range': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const left = args[1] as number, right = args[2] as number;
+    const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+    let count = 0;
+    for (let i = left; i <= right; i++) {
+      const w = words[i]!;
+      if (vowels.has(w[0]!) && vowels.has(w[w.length - 1]!)) count++;
+    }
+    return count;
+  },
+
+  'remove-all-occurrences-of-a-substring': (...args: unknown[]) => {
+    let s = args[0] as string;
+    const part = args[1] as string;
+    while (s.includes(part)) s = s.replace(part, '');
+    return s;
+  },
+
+  'find-words-that-can-be-formed-by-characters': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const chars = args[1] as string;
+    const cc: Record<string, number> = {};
+    for (const c of chars) cc[c] = (cc[c] ?? 0) + 1;
+    let res = 0;
+    for (const w of words) {
+      const wc: Record<string, number> = {};
+      for (const c of w) wc[c] = (wc[c] ?? 0) + 1;
+      let good = true;
+      for (const [c, cnt] of Object.entries(wc)) {
+        if ((cc[c] ?? 0) < cnt) { good = false; break; }
+      }
+      if (good) res += w.length;
+    }
+    return res;
+  },
+
+  // merge: count-ways-to-rearrange-sticks-with-k-visible (remote added problem, missing solution)
+  'count-ways-to-rearrange-sticks-with-k-visible': (...args: unknown[]) => {
+    const n = args[0] as number, k = args[1] as number;
+    const MOD = 1000000007n;
+    const dp: bigint[][] = Array.from({ length: n + 1 }, () => new Array(n + 1).fill(0n) as bigint[]);
+    dp[1]![1] = 1n;
+    for (let i = 2; i <= n; i++) {
+      for (let j = 1; j <= i; j++) {
+        dp[i]![j] = (dp[i - 1]![j - 1]! + BigInt(i - 1) * dp[i - 1]![j]!) % MOD;
+      }
+    }
+    return Number(dp[n]![k]!);
+  },
+
+  // batch 151
+  'swap-pairs-linked-list': (...args: unknown[]) => {
+    const vals = args[0] as number[];
+    const result = [...vals];
+    for (let i = 0; i + 1 < result.length; i += 2) {
+      [result[i], result[i + 1]] = [result[i + 1]!, result[i]!];
+    }
+    return result;
+  },
+
+  'reverse-nodes-k-group': (...args: unknown[]) => {
+    const vals = args[0] as number[];
+    const k = args[1] as number;
+    const result = [...vals];
+    for (let i = 0; i + k <= result.length; i += k) {
+      result.splice(i, k, ...result.slice(i, i + k).reverse());
+    }
+    return result;
+  },
+
+  'minimum-spanning-tree-weight': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    if (n === 1) return 0;
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const rank = new Array<number>(n).fill(0);
+    function find(x: number): number {
+      if (parent[x] !== x) parent[x] = find(parent[x]!);
+      return parent[x]!;
+    }
+    function union(a: number, b: number): boolean {
+      const ra = find(a), rb = find(b);
+      if (ra === rb) return false;
+      if (rank[ra]! < rank[rb]!) parent[ra] = rb;
+      else if (rank[ra]! > rank[rb]!) parent[rb] = ra;
+      else { parent[rb] = ra; rank[ra]!++; }
+      return true;
+    }
+    const sorted = [...edges].sort((a, b) => (a[2] as number) - (b[2] as number));
+    let weight = 0, count = 0;
+    for (const edge of sorted) {
+      if (union(edge[0] as number, edge[1] as number)) {
+        weight += edge[2] as number;
+        count++;
+      }
+    }
+    return count === n - 1 ? weight : -1;
+  },
+
+  'union-find-dynamic-connectivity': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const ops = args[1] as (string | number)[][];
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const rank = new Array<number>(n).fill(0);
+    function find(x: number): number {
+      if (parent[x] !== x) parent[x] = find(parent[x]!);
+      return parent[x]!;
+    }
+    function union(a: number, b: number): void {
+      const ra = find(a), rb = find(b);
+      if (ra === rb) return;
+      if (rank[ra]! < rank[rb]!) parent[ra] = rb;
+      else if (rank[ra]! > rank[rb]!) parent[rb] = ra;
+      else { parent[rb] = ra; rank[ra]!++; }
+    }
+    const result: boolean[] = [];
+    for (const op of ops) {
+      const type = op[0] as string;
+      const u = op[1] as number, v = op[2] as number;
+      if (type === 'union') union(u, v);
+      else result.push(find(u) === find(v));
+    }
+    return result;
+  },
+
+  'bellman-ford-shortest-paths': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const source = args[2] as number;
+    const INF = Infinity;
+    const dist = new Array<number>(n + 1).fill(INF);
+    dist[source] = 0;
+    for (let iter = 0; iter < n - 1; iter++) {
+      for (const edge of edges) {
+        const u = edge[0] as number, v = edge[1] as number, w = edge[2] as number;
+        if (dist[u] !== INF && dist[u]! + w < dist[v]!) {
+          dist[v] = dist[u]! + w;
+        }
+      }
+    }
+    dist[0] = 0;
+    return dist.map(d => d === INF ? -1 : d);
+  },
+
+  'bit-prefix-sum-updates': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice();
+    const ops = args[1] as (string | number)[][];
+    const n = nums.length;
+    const bit = new Array<number>(n + 1).fill(0);
+    function update(i: number, delta: number): void {
+      for (; i <= n; i += i & -i) bit[i]! += delta;
+    }
+    function query(i: number): number {
+      let s = 0;
+      for (; i > 0; i -= i & -i) s += bit[i]!;
+      return s;
+    }
+    for (let i = 0; i < n; i++) update(i + 1, nums[i]!);
+    const result: number[] = [];
+    for (const op of ops) {
+      const type = op[0] as string;
+      if (type === 'update') {
+        const i = op[1] as number, delta = op[2] as number;
+        update(i, delta);
+      } else {
+        const l = op[1] as number, r = op[2] as number;
+        result.push(query(r) - query(l - 1));
+      }
+    }
+    return result;
+  },
+  'find-the-count-of-monotonic-pairs-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const MOD = 1_000_000_007n;
+    const maxV = Math.max(...nums);
+    let dp = new Array<bigint>(maxV + 1).fill(0n);
+    for (let v = 0; v <= nums[0]!; v++) dp[v] = 1n;
+    for (let i = 1; i < nums.length; i++) {
+      const delta = Math.max(0, nums[i]! - nums[i - 1]!);
+      const prefix = new Array<bigint>(maxV + 2).fill(0n);
+      for (let v = 0; v <= maxV; v++) prefix[v + 1] = (prefix[v]! + dp[v]!) % MOD;
+      const newDp = new Array<bigint>(maxV + 1).fill(0n);
+      for (let v = 0; v <= nums[i]!; v++) {
+        const bound = v - delta;
+        if (bound >= 0) newDp[v] = prefix[bound + 1]!;
+      }
+      dp = newDp;
+    }
+    return Number(dp.reduce((s, x) => (s + x) % MOD, 0n));
+  },
+
+  'maximum-strength-of-a-group': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    let prod = 1, hasProduct = false;
+    let i = 0;
+    while (i + 1 < nums.length && nums[i]! < 0 && nums[i + 1]! < 0) {
+      prod *= nums[i]! * nums[i + 1]!;
+      hasProduct = true;
+      i += 2;
+    }
+    while (i < nums.length && nums[i]! <= 0) i++;
+    while (i < nums.length) {
+      prod *= nums[i]!;
+      hasProduct = true;
+      i++;
+    }
+    if (!hasProduct) {
+      const max = Math.max(...nums);
+      return max < 0 ? max : 0;
+    }
+    return prod;
+  },
+
+  'minimum-number-of-valid-strings-to-form-target-i': (...args: unknown[]) => {
+    const words = args[0] as string[], target = args[1] as string;
+    const prefixes = new Set<string>();
+    for (const w of words) {
+      for (let k = 1; k <= w.length; k++) prefixes.add(w.slice(0, k));
+    }
+    const n = target.length;
+    const dp = new Array<number>(n + 1).fill(Infinity);
+    dp[0] = 0;
+    for (let s = 0; s < n; s++) {
+      if (dp[s] === Infinity) continue;
+      for (let e = s + 1; e <= n; e++) {
+        if (prefixes.has(target.slice(s, e))) dp[e] = Math.min(dp[e]!, dp[s]! + 1);
+      }
+    }
+    return dp[n]! === Infinity ? -1 : dp[n]!;
+  },
+
+  'maximum-total-reward-using-operations-ii': (...args: unknown[]) => {
+    const rewardValues = args[0] as number[];
+    const sorted = [...new Set(rewardValues)].sort((a, b) => a - b);
+    let dp = 1n;
+    for (const v of sorted) {
+      const mask = (1n << BigInt(v)) - 1n;
+      dp |= (dp & mask) << BigInt(v);
+    }
+    return dp.toString(2).length - 1;
+  },
+
 
   'minimum-moves-to-capture-the-queen': (...args: unknown[]) => {
     const a = args[0] as number, b = args[1] as number;
@@ -35629,5 +35953,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return score;
   },
+
 
 };

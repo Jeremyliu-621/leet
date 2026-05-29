@@ -48,16 +48,31 @@ export function PasswordModal({
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const firstInputRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const returnFocusRef = useRef<HTMLElement | null>(null);
 
-  // Focus the first field when the modal mounts.
+  // Capture return-focus target and restore it on unmount.
   useEffect(() => {
+    returnFocusRef.current = document.activeElement as HTMLElement | null;
     firstInputRef.current?.focus();
+    return () => { returnFocusRef.current?.focus(); };
   }, []);
 
-  // Close on Escape.
+  // Escape to close + Tab key trap.
   useEffect(() => {
+    const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     function onKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') onCancel();
+      if (e.key === 'Escape') { onCancel(); return; }
+      if (e.key !== 'Tab' || !dialogRef.current) return;
+      const focusable = Array.from(dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE));
+      if (focusable.length === 0) return;
+      const first = focusable[0]!;
+      const last = focusable[focusable.length - 1]!;
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
     }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -91,14 +106,18 @@ export function PasswordModal({
     /* Backdrop */
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-bg/80 backdrop-blur-sm"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby={`${uid}-title`}
       onClick={(e) => {
         if (e.target === e.currentTarget) onCancel();
       }}
     >
-      <div className="w-full max-w-sm rounded-card border border-border bg-surface shadow-2xl">
+      <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={`${uid}-title`}
+        tabIndex={-1}
+        className="w-full max-w-sm rounded-card border border-border bg-surface shadow-2xl focus:outline-none"
+      >
         {/* Header */}
         <div className="border-b border-border px-5 py-4">
           <h3

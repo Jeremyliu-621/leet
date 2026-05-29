@@ -2483,6 +2483,12 @@ import { problem as maximumEnergyBoostFromTwoDrinks } from './maximum-energy-boo
 import { problem as kthNearestObstacleQueries } from './k-th-nearest-obstacle-queries';
 // batch 149b — arrays/easy
 import { problem as calculateAmountPaidInTaxes } from './calculate-amount-paid-in-taxes';
+// batch 152 — 5 new problems (strings+arrays/easy+medium)
+import { problem as countSegmentsInAString } from './number-of-segments-in-a-string';
+import { problem as repeatedDnaSequences } from './repeated-dna-sequences';
+import { problem as countVowelStringsRange } from './count-the-number-of-vowel-strings-in-range';
+import { problem as removeAllOccurrencesSubstring } from './remove-all-occurrences-of-a-substring';
+import { problem as findWordsFormedByChars } from './find-words-that-can-be-formed-by-characters';
 // batch 151 — 6 orphan problems (medium+hard)
 import { problem as allDivisionsHighestScore } from './all-divisions-with-the-highest-score-of-a-binary-array';
 import { problem as convertArrayInto2D } from './convert-an-array-into-a-2d-array-with-conditions';
@@ -2501,8 +2507,24 @@ import { problem as findLuckyNumberInMatrix } from './find-lucky-number-in-matri
 import { problem as maximumProductOfThreeNumbers } from './maximum-product-of-three-numbers';
 import { problem as findingThreeDigitEvenNumbers } from './finding-3-digit-even-numbers';
 import { problem as differenceOnesZerosRowAndColumn } from './difference-between-ones-zeros-in-row-and-column';
-// batch 152 — arrays+dp/medium, simulation/medium, strings+dp+hash-map/medium, arrays+hash-map/medium, arrays+heap/medium
+import { problem as countWaysRearrangeSticks } from './count-ways-to-rearrange-sticks-with-k-visible';
+// batch 151 — linked-list/medium, linked-list/hard, union-find/medium, union-find/medium, shortest-path/medium, binary-indexed-tree/medium
+import { problem as swapPairsLinkedList } from './swap-pairs-linked-list';
+import { problem as reverseNodesKGroup } from './reverse-nodes-k-group';
+import { problem as minimumSpanningTreeWeight } from './minimum-spanning-tree-weight';
+import { problem as unionFindDynamicConnectivity } from './union-find-dynamic-connectivity';
+import { problem as bellmanFordShortestPaths } from './bellman-ford-shortest-paths';
+import { problem as bitPrefixSumUpdates } from './bit-prefix-sum-updates';
+// batch 153 — arrays/medium, graph/medium, heap+simulation/medium
+import { problem as equalSumArraysMinOps } from './equal-sum-arrays-with-minimum-number-of-operations';
+import { problem as mapOfHighestPeak } from './map-of-highest-peak';
+import { problem as numberOfOrdersInBacklog } from './number-of-orders-in-the-backlog';
+// batch 151 — dp/hard, arrays/medium, strings+dp/medium, dp+bitset/hard
+import { problem as findTheCountOfMonotonicPairsII } from './find-the-count-of-monotonic-pairs-ii';
 import { problem as maximumStrengthOfAGroup } from './maximum-strength-of-a-group';
+import { problem as minimumNumberOfValidStringsToFormTargetI } from './minimum-number-of-valid-strings-to-form-target-i';
+import { problem as maximumTotalRewardUsingOperationsII } from './maximum-total-reward-using-operations-ii';
+// batch 152 — simulation/medium, strings+dp/medium, arrays+hash-map/medium, arrays+heap/medium
 import { problem as minimumMovesToCaptureTheQueen } from './minimum-moves-to-capture-the-queen';
 import { problem as minimumSubstringPartitionEqualCharFreq } from './minimum-substring-partition-of-equal-character-frequency';
 import { problem as maximumGoodSubarraySum } from './maximum-good-subarray-sum';
@@ -5027,6 +5049,12 @@ export const problems: readonly Problem[] = [
   kthNearestObstacleQueries,
   // batch 149b — arrays/easy
   calculateAmountPaidInTaxes,
+  // batch 152 — strings/easy, strings/medium, strings/easy, strings/medium, strings/easy
+  countSegmentsInAString,
+  repeatedDnaSequences,
+  countVowelStringsRange,
+  removeAllOccurrencesSubstring,
+  findWordsFormedByChars,
   // batch 151 — 6 orphan problems (arrays/medium, arrays/medium, strings/medium, shortest-path/hard, BIT/medium, BIT+math/hard)
   allDivisionsHighestScore,
   convertArrayInto2D,
@@ -5040,13 +5068,29 @@ export const problems: readonly Problem[] = [
   numberOfWaysToSplitAString,
   meanArrayAfterRemovingSomeElements,
   minimumOpsConvertTime,
-  // batch 150b — easy/arrays+hash-map, easy/arrays+math, easy/arrays+hash-map, easy/arrays+matrix
+  // batch 150b — easy/arrays+hash-map, easy/arrays+math, easy/arrays+hash-map, easy/arrays+matrix, hard/math+dp
   findLuckyNumberInMatrix,
   maximumProductOfThreeNumbers,
   findingThreeDigitEvenNumbers,
   differenceOnesZerosRowAndColumn,
-  // batch 152 — arrays+dp/medium, simulation/medium, strings+dp/medium, arrays+hash-map/medium, arrays+heap/medium
+  countWaysRearrangeSticks,
+  // batch 151 — linked-list/medium, linked-list/hard, union-find/medium, union-find/medium, shortest-path/medium, binary-indexed-tree/medium
+  swapPairsLinkedList,
+  reverseNodesKGroup,
+  minimumSpanningTreeWeight,
+  unionFindDynamicConnectivity,
+  bellmanFordShortestPaths,
+  bitPrefixSumUpdates,
+  // batch 153 — arrays/medium, graph/medium, heap+simulation/medium
+  equalSumArraysMinOps,
+  mapOfHighestPeak,
+  numberOfOrdersInBacklog,
+  // batch 151 — dp/hard, arrays/medium, strings+dp/medium, dp+bitset/hard
+  findTheCountOfMonotonicPairsII,
   maximumStrengthOfAGroup,
+  minimumNumberOfValidStringsToFormTargetI,
+  maximumTotalRewardUsingOperationsII,
+  // batch 152 — simulation/medium, strings+dp/medium, arrays+hash-map/medium, arrays+heap/medium
   minimumMovesToCaptureTheQueen,
   minimumSubstringPartitionEqualCharFreq,
   maximumGoodSubarraySum,

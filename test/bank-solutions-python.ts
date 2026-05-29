@@ -34320,6 +34320,83 @@ def maxScoreIndices(nums) -> list:
     return [i for i, s in enumerate(scores) if s == max_score]
 `,
 
+  // batch 151 — arrays/medium, graph/medium, heap+simulation/medium
+  'equal-sum-arrays-with-minimum-number-of-operations': `
+def minOperations(nums1, nums2) -> int:
+    nums1 = list(nums1.to_py() if hasattr(nums1, 'to_py') else nums1)
+    nums2 = list(nums2.to_py() if hasattr(nums2, 'to_py') else nums2)
+    s1, s2 = sum(nums1), sum(nums2)
+    if s1 == s2:
+        return 0
+    if s1 > s2:
+        nums1, nums2 = nums2, nums1
+        s1, s2 = s2, s1
+    diff = s2 - s1
+    gains = sorted([6 - x for x in nums1] + [x - 1 for x in nums2], reverse=True)
+    ops = 0
+    for g in gains:
+        if diff <= 0:
+            break
+        diff -= g
+        ops += 1
+    return ops if diff <= 0 else -1
+`,
+  'map-of-highest-peak': `
+def highestPeak(isWater) -> list:
+    from collections import deque
+    if hasattr(isWater, 'to_py'):
+        isWater = isWater.to_py()
+    isWater = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in isWater]
+    m, n = len(isWater), len(isWater[0])
+    height = [[-1] * n for _ in range(m)]
+    q = deque()
+    for i in range(m):
+        for j in range(n):
+            if isWater[i][j] == 1:
+                height[i][j] = 0
+                q.append((i, j))
+    dirs = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    while q:
+        r, c = q.popleft()
+        for dr, dc in dirs:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n and height[nr][nc] == -1:
+                height[nr][nc] = height[r][c] + 1
+                q.append((nr, nc))
+    return height
+`,
+  'number-of-orders-in-the-backlog': `
+def getNumberOfBacklogOrders(orders) -> int:
+    import heapq
+    orders = [list(o.to_py() if hasattr(o, 'to_py') else o) for o in (orders.to_py() if hasattr(orders, 'to_py') else orders)]
+    buy = []   # max-heap: store negative price
+    sell = []  # min-heap
+    for price, amount, order_type in orders:
+        rem = amount
+        if order_type == 0:
+            while rem > 0 and sell and sell[0][0] <= price:
+                sp, sa = heapq.heappop(sell)
+                if sa <= rem:
+                    rem -= sa
+                else:
+                    heapq.heappush(sell, (sp, sa - rem))
+                    rem = 0
+            if rem > 0:
+                heapq.heappush(buy, (-price, rem))
+        else:
+            while rem > 0 and buy and -buy[0][0] >= price:
+                bp, ba = heapq.heappop(buy)
+                if ba <= rem:
+                    rem -= ba
+                else:
+                    heapq.heappush(buy, (bp, ba - rem))
+                    rem = 0
+            if rem > 0:
+                heapq.heappush(sell, (price, rem))
+    total = sum(a for _, a in buy) + sum(a for _, a in sell)
+    return total % (10 ** 9 + 7)
+`,
+
   // batch 144
   'reorder-routes-to-make-all-paths-lead-to-the-city-zero': `
 def minReorder(n: int, connections) -> int:
@@ -35327,19 +35404,272 @@ def resultsArray(queries, k):
 `,
 
   // batch 152
-  'maximum-strength-of-a-group': `def maxStrength(nums):
-    if hasattr(nums, 'to_py'):
-        nums = nums.to_py()
-    n = len(nums)
-    max_prod = float('-inf')
-    for mask in range(1, 1 << n):
-        prod = 1
-        for i in range(n):
-            if mask & (1 << i):
-                prod *= nums[i]
-        max_prod = max(max_prod, prod)
-    return max_prod
+
+  'number-of-segments-in-a-string': `def countSegments(s):
+    count = 0
+    for i in range(len(s)):
+        if s[i] != ' ' and (i == 0 or s[i - 1] == ' '):
+            count += 1
+    return count
 `,
+
+  'repeated-dna-sequences': `def findRepeatedDnaSequences(s):
+    seen = {}
+    result = []
+    for i in range(len(s) - 9):
+        sub = s[i:i + 10]
+        seen[sub] = seen.get(sub, 0) + 1
+        if seen[sub] == 2:
+            result.append(sub)
+    return sorted(result)
+`,
+
+  'count-the-number-of-vowel-strings-in-range': `def vowelStrings(words, left, right):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    vowels = set('aeiou')
+    count = 0
+    for i in range(left, right + 1):
+        w = words[i]
+        if w[0] in vowels and w[-1] in vowels:
+            count += 1
+    return count
+`,
+
+  'remove-all-occurrences-of-a-substring': `def removeOccurrences(s, part):
+    while part in s:
+        idx = s.find(part)
+        s = s[:idx] + s[idx + len(part):]
+    return s
+`,
+
+  'find-words-that-can-be-formed-by-characters': `def countCharacters(words, chars):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    from collections import Counter
+    cc = Counter(chars)
+    res = 0
+    for w in words:
+        wc = Counter(w)
+        if all(cc[c] >= cnt for c, cnt in wc.items()):
+            res += len(w)
+    return res
+`,
+
+  // merge: count-ways-to-rearrange-sticks-with-k-visible (remote added problem, missing solution)
+  'count-ways-to-rearrange-sticks-with-k-visible': `def rearrangeSticks(n, k):
+    MOD = 10**9 + 7
+    dp = [[0] * (n + 1) for _ in range(n + 1)]
+    dp[1][1] = 1
+    for i in range(2, n + 1):
+        for j in range(1, i + 1):
+            dp[i][j] = (dp[i-1][j-1] + (i-1) * dp[i-1][j]) % MOD
+    return dp[n][k]
+`,
+
+  // batch 151
+  'swap-pairs-linked-list': `def swapPairsRunner(vals):
+    vals = list(vals.to_py() if hasattr(vals, 'to_py') else vals)
+    result = list(vals)
+    i = 0
+    while i + 1 < len(result):
+        result[i], result[i + 1] = result[i + 1], result[i]
+        i += 2
+    return result
+`,
+
+  'reverse-nodes-k-group': `def reverseKGroupRunner(vals, k):
+    vals = list(vals.to_py() if hasattr(vals, 'to_py') else vals)
+    result = list(vals)
+    i = 0
+    while i + k <= len(result):
+        result[i:i+k] = result[i:i+k][::-1]
+        i += k
+    return result
+`,
+
+  'minimum-spanning-tree-weight': `def minimumSpanningTreeWeight(n, edges):
+    edges = list(edges.to_py() if hasattr(edges, 'to_py') else edges)
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in edges]
+    if n == 1:
+        return 0
+    parent = list(range(n))
+    rank = [0] * n
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    def union(a, b):
+        ra, rb = find(a), find(b)
+        if ra == rb:
+            return False
+        if rank[ra] < rank[rb]:
+            parent[ra] = rb
+        elif rank[ra] > rank[rb]:
+            parent[rb] = ra
+        else:
+            parent[rb] = ra
+            rank[ra] += 1
+        return True
+    edges.sort(key=lambda e: e[2])
+    weight, count = 0, 0
+    for u, v, w in edges:
+        if union(u, v):
+            weight += w
+            count += 1
+    return weight if count == n - 1 else -1
+`,
+
+  'union-find-dynamic-connectivity': `def dynamicConnectivity(n, ops):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    ops = [list(op.to_py() if hasattr(op, 'to_py') else op) for op in ops]
+    parent = list(range(n))
+    rank = [0] * n
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    def union(a, b):
+        ra, rb = find(a), find(b)
+        if ra == rb:
+            return
+        if rank[ra] < rank[rb]:
+            parent[ra] = rb
+        elif rank[ra] > rank[rb]:
+            parent[rb] = ra
+        else:
+            parent[rb] = ra
+            rank[ra] += 1
+    result = []
+    for op in ops:
+        op_type, u, v = op[0], int(op[1]), int(op[2])
+        if op_type == 'union':
+            union(u, v)
+        else:
+            result.append(find(u) == find(v))
+    return result
+`,
+
+  'bellman-ford-shortest-paths': `def bellmanFord(n, edges, source):
+    edges = list(edges.to_py() if hasattr(edges, 'to_py') else edges)
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in edges]
+    INF = float('inf')
+    dist = [INF] * (n + 1)
+    dist[source] = 0
+    for _ in range(n - 1):
+        for u, v, w in edges:
+            if dist[u] != INF and dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+    dist[0] = 0
+    return [-1 if d == INF else d for d in dist]
+`,
+
+  'bit-prefix-sum-updates': `def bitPrefixSumUpdates(nums, ops):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    ops = [list(op.to_py() if hasattr(op, 'to_py') else op) for op in ops]
+    n = len(nums)
+    bit = [0] * (n + 1)
+    def update(i, delta):
+        while i <= n:
+            bit[i] += delta
+            i += i & -i
+    def query(i):
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & -i
+        return s
+    for i, v in enumerate(nums):
+        update(i + 1, v)
+    result = []
+    for op in ops:
+        op_type = op[0]
+        if op_type == 'update':
+            i, delta = int(op[1]), int(op[2])
+            update(i, delta)
+        else:
+            l, r = int(op[1]), int(op[2])
+            result.append(query(r) - query(l - 1))
+    return result
+`,
+
+  // batch 151 — dp/hard, arrays/medium, strings+dp/medium, dp+bitset/hard
+  'find-the-count-of-monotonic-pairs-ii': `
+def countOfPairs(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    MOD = 10**9 + 7
+    max_v = max(nums) if nums else 0
+    dp = [0] * (max_v + 1)
+    for v in range(nums[0] + 1):
+        dp[v] = 1
+    for i in range(1, len(nums)):
+        delta = max(0, nums[i] - nums[i - 1])
+        prefix = [0] * (max_v + 2)
+        for v in range(max_v + 1):
+            prefix[v + 1] = (prefix[v] + dp[v]) % MOD
+        new_dp = [0] * (max_v + 1)
+        for v in range(nums[i] + 1):
+            bound = v - delta
+            if bound >= 0:
+                new_dp[v] = prefix[bound + 1]
+        dp = new_dp
+    return sum(dp) % MOD
+`,
+
+  'maximum-strength-of-a-group': `
+def maxStrength(nums):
+    nums = sorted(list(nums.to_py() if hasattr(nums, 'to_py') else nums))
+    prod = 1
+    has_product = False
+    i = 0
+    while i + 1 < len(nums) and nums[i] < 0 and nums[i + 1] < 0:
+        prod *= nums[i] * nums[i + 1]
+        has_product = True
+        i += 2
+    while i < len(nums) and nums[i] <= 0:
+        i += 1
+    while i < len(nums):
+        prod *= nums[i]
+        has_product = True
+        i += 1
+    if not has_product:
+        m = max(nums)
+        return m if m < 0 else 0
+    return prod
+`,
+
+  'minimum-number-of-valid-strings-to-form-target-i': `
+def minValidStrings(words, target):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    if hasattr(target, 'to_py'):
+        target = target.to_py()
+    prefixes = set()
+    for w in words:
+        for k in range(1, len(w) + 1):
+            prefixes.add(w[:k])
+    n = len(target)
+    dp = [float('inf')] * (n + 1)
+    dp[0] = 0
+    for s in range(n):
+        if dp[s] == float('inf'):
+            continue
+        for e in range(s + 1, n + 1):
+            if target[s:e] in prefixes:
+                dp[e] = min(dp[e], dp[s] + 1)
+    return -1 if dp[n] == float('inf') else dp[n]
+`,
+
+  'maximum-total-reward-using-operations-ii': `
+def maxTotalReward(rewardValues):
+    rewardValues = list(rewardValues.to_py() if hasattr(rewardValues, 'to_py') else rewardValues)
+    sorted_vals = sorted(set(rewardValues))
+    dp = 1
+    for v in sorted_vals:
+        mask = (1 << v) - 1
+        dp |= (dp & mask) << v
+    return dp.bit_length() - 1
+`,
+
+
 
   'minimum-moves-to-capture-the-queen': `def minMovesToCaptureTheQueen(a, b, c, d, e, f):
     # Rook same col, bishop not blocking
@@ -35418,5 +35748,6 @@ def maxKelements(nums, k):
         heapq.heappush(heap, -math.ceil(x / 3))
     return score
 `,
+
 
 };
