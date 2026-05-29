@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2308** problems; 7218 tests green. Batches 102–154 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2311** problems; 7227 tests green. Batches 102–154 + 152b complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 155+); UX polish; accessibility audit.
+
+### feat(bank): add batch 152b — even-product-subarrays, max-sum-div-3, product-matrix (2026-05-29)
+Three new arrays+math problems: `number-of-subarrays-having-even-product` (medium/arrays+math, count subarrays with at least one even element by subtracting all-odd-subarray triangular runs), `greatest-sum-divisible-by-three` (medium/arrays+dp, track max achievable sum per mod-3 remainder with dp[0..2]), `construct-product-matrix` (hard/arrays+math, 2D product-except-self via flat prefix/suffix products mod 12345). Bank at **2311**; 7227 tests.
 
 ### feat(bank): add batch 154 — min-edge-reversals, range-update-range-sum-bit, critical-mst-edges (2026-05-29)
 Three new problems targeting underrepresented tags: `minimum-edge-reversals-to-reach-destination` (medium/shortest-path+graph, 0-1 BFS bidirectional cost), `range-update-range-sum-bit` (medium/binary-indexed-tree, two-BIT range-add+range-query in O(log n)), `find-critical-and-pseudo-critical-edges-in-mst` (hard/union-find+graph, Kruskal's O(E²α) with skip/force passes). Bank at **2313**; 7236 tests.
