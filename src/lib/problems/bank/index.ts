@@ -2604,6 +2604,12 @@ import { problem as pathWithMaxProbability } from './path-with-max-probability';
 // batch 156b — tree/easy×1, tree/medium×1
 import { problem as averageOfLevelsInBinaryTree } from './average-of-levels-in-binary-tree';
 import { problem as allElementsInTwoBinarySearchTrees } from './all-elements-in-two-binary-search-trees';
+// batch 157 — trie×4, trie+design×1
+import { problem as implementTrieII } from './implement-trie-ii-prefix-tree';
+import { problem as wordFilter } from './word-filter';
+import { problem as lexicographicalNumbers } from './lexicographical-numbers';
+import { problem as kThSmallestInLexicographicOrder } from './k-th-smallest-in-lexicographic-order';
+import { problem as designSearchAutocompleteSystem } from './design-search-autocomplete-system';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5245,4 +5251,10 @@ export const problems: readonly Problem[] = [
   // batch 156b — tree/easy×1, tree/medium×1
   averageOfLevelsInBinaryTree,
   allElementsInTwoBinarySearchTrees,
+  // batch 157 — trie×4, trie+design×1
+  implementTrieII,
+  wordFilter,
+  lexicographicalNumbers,
+  kThSmallestInLexicographicOrder,
+  designSearchAutocompleteSystem,
 ];

@@ -37076,4 +37076,110 @@ def getAllElementsRunner(arr1, arr2):
     return merged
 `,
 
+  // batch 157 — trie×4, trie+design×1
+  'implement-trie-ii-prefix-tree': `def implementTrieII(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = [list(a.to_py() if hasattr(a, 'to_py') else a) for a in (args.to_py() if hasattr(args, 'to_py') else args)]
+    class Node:
+        def __init__(self): self.ch = {}; self.end = 0; self.pre = 0
+    root = Node()
+    result = []
+    for i, op in enumerate(ops):
+        arg = args[i][0] if args[i] else ''
+        if op == 'Trie':
+            root = Node(); result.append(None)
+        elif op == 'insert':
+            nd = root
+            for c in arg: nd.ch.setdefault(c, Node()); nd = nd.ch[c]; nd.pre += 1
+            nd.end += 1; result.append(None)
+        elif op == 'countWordsEqualTo':
+            nd = root
+            for c in arg:
+                if c not in nd.ch: nd = None; break
+                nd = nd.ch[c]
+            result.append(nd.end if nd else 0)
+        elif op == 'countWordsStartingWith':
+            nd = root
+            for c in arg:
+                if c not in nd.ch: nd = None; break
+                nd = nd.ch[c]
+            result.append(nd.pre if nd else 0)
+        elif op == 'erase':
+            nd = root
+            for c in arg: nd.ch[c].pre -= 1; nd = nd.ch[c]
+            nd.end -= 1; result.append(None)
+    return result
+`,
+
+  'word-filter': `def wordFilter(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = [list(a.to_py() if hasattr(a, 'to_py') else a) for a in (args.to_py() if hasattr(args, 'to_py') else args)]
+    mp = {}
+    result = []
+    for i, op in enumerate(ops):
+        if op == 'WordFilter':
+            words = list(args[i][0].to_py() if hasattr(args[i][0], 'to_py') else args[i][0])
+            for idx, w in enumerate(words):
+                for p in range(len(w) + 1):
+                    for s in range(len(w) + 1):
+                        mp[w[:p] + '|' + w[len(w)-s:]] = idx
+            result.append(None)
+        else:
+            pref, suff = args[i][0], args[i][1]
+            result.append(mp.get(pref + '|' + suff, -1))
+    return result
+`,
+
+  'lexicographical-numbers': `def lexicalOrder(n):
+    n = int(n)
+    result = []
+    curr = 1
+    while len(result) < n:
+        result.append(curr)
+        if curr * 10 <= n:
+            curr *= 10
+        else:
+            while curr % 10 == 9 or curr + 1 > n: curr //= 10
+            curr += 1
+    return result
+`,
+
+  'k-th-smallest-in-lexicographic-order': `def findKthNumber(n, k):
+    n = int(n); k = int(k)
+    curr = 1; k -= 1
+    while k > 0:
+        steps = 0; a, b = curr, curr + 1
+        while a <= n:
+            steps += min(n + 1, b) - a
+            a *= 10; b *= 10
+        if steps <= k: k -= steps; curr += 1
+        else: k -= 1; curr *= 10
+    return curr
+`,
+
+  'design-search-autocomplete-system': `def autoCompleteSystem(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = [list(a.to_py() if hasattr(a, 'to_py') else a) for a in (args.to_py() if hasattr(args, 'to_py') else args)]
+    counts = {}
+    prefix = ''
+    result = []
+    for i, op in enumerate(ops):
+        if op == 'AutocompleteSystem':
+            sentences = list(args[i][0].to_py() if hasattr(args[i][0], 'to_py') else args[i][0])
+            times = list(args[i][1].to_py() if hasattr(args[i][1], 'to_py') else args[i][1])
+            for s, t in zip(sentences, times): counts[s] = int(t)
+            prefix = ''; result.append(None)
+        else:
+            c = str(args[i][0])
+            if c == '#':
+                counts[prefix] = counts.get(prefix, 0) + 1
+                prefix = ''; result.append([])
+            else:
+                prefix += c
+                matches = [(cnt, s) for s, cnt in counts.items() if s.startswith(prefix)]
+                matches.sort(key=lambda x: (-x[0], x[1]))
+                result.append([m[1] for m in matches[:3]])
+    return result
+`,
+
 };
