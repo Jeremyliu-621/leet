@@ -8,12 +8,15 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2473** registered problems; 7713 tests green. Batches 102–170 (both local+remote) complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2478** registered problems; 7728 tests green. Batches 102–171 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 171+); site count update; UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 172+); site count update; UX polish per LEETCODE_PARITY.md.
 
 ### feat(bank): batch 169 (local) — minimum-swaps-string-balanced (medium), maximum-sum-distinct-subarrays-k (medium), count-complete-components (medium) (2026-05-29)
 Three new problems: `minimum-swaps-to-make-string-balanced` (medium/strings+stack+math, scan and count unmatched `]`, answer is ceil(count/2)), `maximum-sum-distinct-subarrays-with-length-k` (medium/arrays+sliding-window+hash-map, freq map to track uniqueness, update max when window has exactly k distinct), `count-number-of-complete-components` (medium/graph+union-find, union-find tracking node/edge counts per component, complete iff edges==nodes*(nodes-1)/2). Bank at **2472**; 7710 tests.
+
+### feat(bank): batch 171 — string-matching (easy), avg-subtree (medium), rope-colorful (medium), prime-factor-sum (medium), add-rungs (medium) (2026-05-29)
+Five new problems: `string-matching-in-an-array` (easy/strings, filter words that are substrings of another word), `count-nodes-equal-to-average-of-subtree` (medium/tree, DFS returning sum+count, check floor(sum/count)==val), `minimum-time-to-make-rope-colorful` (medium/arrays, greedy scan: remove all in same-color group except most expensive one), `smallest-value-after-replacing-with-sum-of-prime-factors` (medium/math, iterate prime-factor sum until fixed point), `add-minimum-number-of-rungs` (medium/arrays+math, ceil(gap/dist)-1 rungs per oversized gap). Bank at **2477**; 7725 tests.
 
 ### feat(bank): batch 170 — robot-print-smallest (medium), remove-letter-equalize-freq (easy), minimize-max-diff-pairs (medium), check-point-reachable (hard), build-array-stack-ops (easy) (2026-05-29)
 Five new problems: `using-robot-to-print-lexicographically-smallest-string` (medium/strings+stack, precompute suffix min → greedy pop when top ≤ suffix min of remaining), `remove-letter-to-equalize-frequency` (easy/strings+hash-map, try removing each character position, check uniform frequencies), `minimize-the-maximum-difference-of-pairs` (medium/arrays+binary-search, sort + binary search on answer + greedy feasibility count), `check-if-point-is-reachable` (hard/math, GCD must be a power of 2 — strip 2-factors from both coords then check coprimality), `build-array-with-stack-operations` (easy/arrays+stack+simulation, push each stream element; also pop if not in target; stop at last target element). Bank at **2464**; 7686 tests.

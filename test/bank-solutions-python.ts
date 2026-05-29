@@ -39296,4 +39296,88 @@ def countCompleteComponents(n, edges):
     return result
 `,
 
+  // batch 171
+  'string-matching-in-an-array': `
+def stringMatching(words):
+    if hasattr(words, 'to_py'): words = list(words.to_py())
+    words = [str(w) for w in words]
+    result = []
+    for w in words:
+        if any(w != other and w in other for other in words):
+            result.append(w)
+    return result
+`,
+
+  'count-nodes-equal-to-average-of-subtree': `
+def averageOfSubtree(root):
+    if hasattr(root, 'to_py'): root = list(root.to_py())
+    arr = [int(x) if isinstance(x, (int, float)) and not isinstance(x, bool) else None for x in root]
+    count = [0]
+    def dfs(i):
+        if i >= len(arr) or arr[i] is None:
+            return 0, 0
+        l_sum, l_cnt = dfs(2 * i + 1)
+        r_sum, r_cnt = dfs(2 * i + 2)
+        total = arr[i] + l_sum + r_sum
+        total_cnt = 1 + l_cnt + r_cnt
+        if total // total_cnt == arr[i]:
+            count[0] += 1
+        return total, total_cnt
+    dfs(0)
+    return count[0]
+`,
+
+  'minimum-time-to-make-rope-colorful': `
+def minCost(colors, neededTime):
+    if hasattr(neededTime, 'to_py'): neededTime = list(neededTime.to_py())
+    colors = str(colors)
+    neededTime = [int(x) for x in neededTime]
+    total = 0
+    i = 0
+    while i < len(colors):
+        j = i
+        group_max = 0
+        group_sum = 0
+        while j < len(colors) and colors[j] == colors[i]:
+            group_sum += neededTime[j]
+            group_max = max(group_max, neededTime[j])
+            j += 1
+        total += group_sum - group_max
+        i = j
+    return total
+`,
+
+  'smallest-value-after-replacing-with-sum-of-prime-factors': `
+def smallestValue(n):
+    n = int(n)
+    while True:
+        s = 0
+        m = n
+        p = 2
+        while p * p <= m:
+            while m % p == 0:
+                s += p
+                m //= p
+            p += 1
+        if m > 1:
+            s += m
+        if s == n:
+            return n
+        n = s
+`,
+
+  'add-minimum-number-of-rungs': `
+def addRungs(rungs, dist):
+    if hasattr(rungs, 'to_py'): rungs = list(rungs.to_py())
+    rungs = [int(x) for x in rungs]
+    dist = int(dist)
+    count = 0
+    prev = 0
+    for rung in rungs:
+        gap = rung - prev
+        if gap > dist:
+            import math
+            count += math.ceil(gap / dist) - 1
+        prev = rung
+    return count`,
 };
