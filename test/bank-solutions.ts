@@ -36616,6 +36616,113 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return ans;
   },
+  // batch 155b — design/easy, design/medium×2, design/hard
+  'recent-counter': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as number[][];
+    const queue: number[] = [];
+    const result: (number | null)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      if (ops[i] === 'RecentCounter') {
+        result.push(null);
+      } else {
+        const t = opArgs[i]![0]!;
+        queue.push(t);
+        while (queue[0]! < t - 3000) queue.shift();
+        result.push(queue.length);
+      }
+    }
+    return result;
+  },
+
+  'peeking-iterator': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as (number[] | [])[];
+    let nums: number[] = [];
+    let idx = 0;
+    const result: (number | boolean | null)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      if (op === 'PeekingIterator') {
+        nums = (opArgs[i] as number[][])[0]!;
+        idx = 0;
+        result.push(null);
+      } else if (op === 'next') {
+        result.push(nums[idx++]!);
+      } else if (op === 'peek') {
+        result.push(nums[idx]!);
+      } else {
+        result.push(idx < nums.length);
+      }
+    }
+    return result;
+  },
+
+  'flatten-nested-list-iterator': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as unknown[][];
+    let flat: number[] = [];
+    let idx = 0;
+    const result: (number | boolean | null)[] = [];
+
+    const flatten = (v: unknown): void => {
+      if (typeof v === 'number') { flat.push(v); return; }
+      for (const x of v as unknown[]) flatten(x);
+    };
+
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      if (op === 'NestedIterator') {
+        flat = [];
+        idx = 0;
+        flatten(opArgs[i]![0]);
+        result.push(null);
+      } else if (op === 'next') {
+        result.push(flat[idx++]!);
+      } else {
+        result.push(idx < flat.length);
+      }
+    }
+    return result;
+  },
+
+  'all-o-one-data-structure': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as string[][];
+    const counts = new Map<string, number>();
+    const result: (string | null)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      if (op === 'AllOne') {
+        result.push(null);
+      } else if (op === 'inc') {
+        const key = opArgs[i]![0]!;
+        counts.set(key, (counts.get(key) ?? 0) + 1);
+        result.push(null);
+      } else if (op === 'dec') {
+        const key = opArgs[i]![0]!;
+        const cnt = counts.get(key)! - 1;
+        if (cnt === 0) counts.delete(key);
+        else counts.set(key, cnt);
+        result.push(null);
+      } else if (op === 'getMaxKey') {
+        if (counts.size === 0) { result.push(''); continue; }
+        let maxKey = '', maxVal = -1;
+        for (const [k, v] of counts) {
+          if (v > maxVal) { maxVal = v; maxKey = k; }
+        }
+        result.push(maxKey);
+      } else {
+        if (counts.size === 0) { result.push(''); continue; }
+        let minKey = '', minVal = Infinity;
+        for (const [k, v] of counts) {
+          if (v < minVal) { minVal = v; minKey = k; }
+        }
+        result.push(minKey);
+      }
+    }
+    return result;
+  },
 
   '24-game': (...args: unknown[]) => {
     const cards = args[0] as number[];

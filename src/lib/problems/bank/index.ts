@@ -2570,6 +2570,11 @@ import { problem as countWaysToBuildGoodStrings } from './count-ways-to-build-go
 import { problem as restoreTheArray } from './restore-the-array';
 import { problem as numberOfWaysToFormATargetStringGivenADictionary } from './number-of-ways-to-form-a-target-string-given-a-dictionary';
 import { problem as longestSubarrayWithAtMostKSum } from './longest-subarray-with-at-most-k-sum';
+// batch 155b — design/easy, design/medium×2, design/hard
+import { problem as recentCounter } from './recent-counter';
+import { problem as peekingIterator } from './peeking-iterator';
+import { problem as flattenNestedListIterator } from './flatten-nested-list-iterator';
+import { problem as allOOneDataStructure } from './all-o-one-data-structure';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5177,4 +5182,9 @@ export const problems: readonly Problem[] = [
   restoreTheArray,
   numberOfWaysToFormATargetStringGivenADictionary,
   longestSubarrayWithAtMostKSum,
+  // batch 155b — design/easy, design/medium×2, design/hard
+  recentCounter,
+  peekingIterator,
+  flattenNestedListIterator,
+  allOOneDataStructure,
 ];

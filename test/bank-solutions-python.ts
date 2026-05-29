@@ -36374,6 +36374,113 @@ def longestSubarrayAtMostKSum(nums, k):
         ans = max(ans, right - left + 1)
     return ans
 `,
+  // batch 155b — design/easy, design/medium×2, design/hard
+  'recent-counter': `
+def recentCounter(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = list(args.to_py() if hasattr(args, 'to_py') else args)
+    from collections import deque
+    queue = deque()
+    result = []
+    for op, a in zip(ops, args):
+        a = list(a)
+        if op == 'RecentCounter':
+            result.append(None)
+        else:
+            t = a[0]
+            queue.append(t)
+            while queue[0] < t - 3000:
+                queue.popleft()
+            result.append(len(queue))
+    return result
+`,
+
+  'peeking-iterator': `
+def peekingIterator(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = list(args.to_py() if hasattr(args, 'to_py') else args)
+    nums = []
+    idx = 0
+    result = []
+    for op, a in zip(ops, args):
+        a = list(a)
+        if op == 'PeekingIterator':
+            nums = list(a[0])
+            idx = 0
+            result.append(None)
+        elif op == 'next':
+            result.append(nums[idx])
+            idx += 1
+        elif op == 'peek':
+            result.append(nums[idx])
+        else:
+            result.append(idx < len(nums))
+    return result
+`,
+
+  'flatten-nested-list-iterator': `
+def flattenNestedListIterator(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = list(args.to_py() if hasattr(args, 'to_py') else args)
+    flat = []
+    idx = 0
+
+    def flatten_list(lst):
+        for item in lst:
+            if isinstance(item, list):
+                flatten_list(item)
+            else:
+                flat.append(int(item))
+
+    result = []
+    for op, a in zip(ops, args):
+        a = list(a)
+        if op == 'NestedIterator':
+            flat.clear()
+            idx_box = [0]
+            flatten_list(list(a[0]))
+            idx = 0
+            result.append(None)
+        elif op == 'next':
+            result.append(flat[idx])
+            idx += 1
+        else:
+            result.append(idx < len(flat))
+    return result
+`,
+
+  'all-o-one-data-structure': `
+def allOOneDataStructure(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = list(args.to_py() if hasattr(args, 'to_py') else args)
+    counts = {}
+    result = []
+    for op, a in zip(ops, args):
+        a = list(a)
+        if op == 'AllOne':
+            result.append(None)
+        elif op == 'inc':
+            key = a[0]
+            counts[key] = counts.get(key, 0) + 1
+            result.append(None)
+        elif op == 'dec':
+            key = a[0]
+            counts[key] -= 1
+            if counts[key] == 0:
+                del counts[key]
+            result.append(None)
+        elif op == 'getMaxKey':
+            if not counts:
+                result.append('')
+            else:
+                result.append(max(counts, key=lambda k: counts[k]))
+        else:
+            if not counts:
+                result.append('')
+            else:
+                result.append(min(counts, key=lambda k: counts[k]))
+    return result
+`,
 
   '24-game': `
 def judgePoint24(cards):
