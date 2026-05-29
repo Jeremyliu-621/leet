@@ -3159,6 +3159,11 @@ import { problem as shortestStringThatContainsThreeStrings } from './shortest-st
 import { problem as distributeCandiesAmongChildrenI } from './distribute-candies-among-children-i';
 import { problem as minimumAreaRectangleII } from './minimum-area-rectangle-ii';
 import { problem as minimumTotalPriceOfTrips } from './minimum-total-price-of-trips';
+import { problem as minimumImpossibleOr } from './minimum-impossible-or';
+import { problem as findSubstringWithMaximumCost } from './find-substring-with-maximum-cost';
+import { problem as findWidthOfColumnsOfGrid } from './find-the-width-of-columns-of-a-grid';
+import { problem as countNumberOfRectanglesContainingEachPoint } from './count-number-of-rectangles-containing-each-point';
+import { problem as removeDigitFromNumberToMaximizeResult } from './remove-digit-from-number-to-maximize-result';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6359,4 +6364,10 @@ export const problems: readonly Problem[] = [
   distributeCandiesAmongChildrenI,
   minimumAreaRectangleII,
   minimumTotalPriceOfTrips,
+  // batch 216 — medium/bit-manipulation, medium/strings+dp, easy/arrays+simulation, medium/arrays+binary-search, easy/strings+simulation
+  minimumImpossibleOr,
+  findSubstringWithMaximumCost,
+  findWidthOfColumnsOfGrid,
+  countNumberOfRectanglesContainingEachPoint,
+  removeDigitFromNumberToMaximizeResult,
 ];

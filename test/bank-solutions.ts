@@ -44572,4 +44572,66 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return best;
   },
+  // batch 216
+  'minimum-impossible-or': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const set = new Set(nums);
+    let x = 1;
+    while (set.has(x)) x *= 2;
+    return x;
+  },
+  'find-substring-with-maximum-cost': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const chars = args[1] as string;
+    const vals = args[2] as number[];
+    const costOf = new Map<string, number>();
+    for (let i = 0; i < chars.length; i++) costOf.set(chars[i]!, vals[i]!);
+    let cur = 0, ans = 0;
+    for (const ch of s) {
+      const c = costOf.has(ch) ? costOf.get(ch)! : ch.charCodeAt(0) - 96;
+      cur = Math.max(0, cur + c);
+      ans = Math.max(ans, cur);
+    }
+    return ans;
+  },
+  'find-the-width-of-columns-of-a-grid': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const n = grid[0]!.length;
+    const res = new Array<number>(n).fill(0);
+    for (const row of grid)
+      for (let j = 0; j < n; j++)
+        res[j] = Math.max(res[j]!, String(row[j]).length);
+    return res;
+  },
+  'count-number-of-rectangles-containing-each-point': (...args: unknown[]) => {
+    const rectangles = args[0] as number[][];
+    const points = args[1] as number[][];
+    const byH: number[][] = Array.from({ length: 101 }, () => []);
+    for (const [l, h] of rectangles) byH[h!]!.push(l!);
+    for (let h = 0; h <= 100; h++) byH[h]!.sort((a, b) => a - b);
+    return points.map(([x, y]) => {
+      let cnt = 0;
+      for (let h = y!; h <= 100; h++) {
+        const w = byH[h]!;
+        let lo = 0, hi = w.length;
+        while (lo < hi) { const m = (lo + hi) >> 1; if (w[m]! >= x!) hi = m; else lo = m + 1; }
+        cnt += w.length - lo;
+      }
+      return cnt;
+    });
+  },
+  'remove-digit-from-number-to-maximize-result': (...args: unknown[]) => {
+    const number = args[0] as string;
+    const digit = args[1] as string;
+    let last = -1;
+    for (let i = 0; i < number.length; i++) {
+      if (number[i] === digit) {
+        last = i;
+        if (i + 1 < number.length && number[i + 1]! > digit) {
+          return number.slice(0, i) + number.slice(i + 1);
+        }
+      }
+    }
+    return number.slice(0, last) + number.slice(last + 1);
+  },
 };

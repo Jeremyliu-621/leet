@@ -44355,4 +44355,59 @@ def minimumString(a, b, c):
             best = s
     return best
 `,
+  // batch 216
+  'minimum-impossible-or': `
+def minImpossibleOR(nums):
+    s = set(nums)
+    x = 1
+    while x in s:
+        x *= 2
+    return x
+`,
+  'find-substring-with-maximum-cost': `
+def maximumCostSubstring(s, chars, vals):
+    cost_of = {c: v for c, v in zip(chars, vals)}
+    cur = ans = 0
+    for ch in s:
+        c = cost_of.get(ch, ord(ch) - ord('a') + 1)
+        cur = max(0, cur + c)
+        ans = max(ans, cur)
+    return ans
+`,
+  'find-the-width-of-columns-of-a-grid': `
+def findColumnWidth(grid):
+    n = len(grid[0])
+    res = [0] * n
+    for row in grid:
+        for j in range(n):
+            res[j] = max(res[j], len(str(row[j])))
+    return res
+`,
+  'count-number-of-rectangles-containing-each-point': `
+from bisect import bisect_left
+
+def countRectangles(rectangles, points):
+    by_h = [[] for _ in range(101)]
+    for l, h in rectangles:
+        by_h[h].append(l)
+    for h in range(101):
+        by_h[h].sort()
+    result = []
+    for x, y in points:
+        cnt = 0
+        for h in range(y, 101):
+            cnt += len(by_h[h]) - bisect_left(by_h[h], x)
+        result.append(cnt)
+    return result
+`,
+  'remove-digit-from-number-to-maximize-result': `
+def removeDigit(number, digit):
+    last = -1
+    for i in range(len(number)):
+        if number[i] == digit:
+            last = i
+            if i + 1 < len(number) and number[i + 1] > digit:
+                return number[:i] + number[i+1:]
+    return number[:last] + number[last+1:]
+`,
 };
