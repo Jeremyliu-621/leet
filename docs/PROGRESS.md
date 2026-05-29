@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2249** problems; 7050 tests green. Batches 102–149 complete. UX polish ongoing.
+**Current focus:** Bank at **2253** problems; 7053 tests green. Batches 102–149 complete. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth; UX polish; accessibility audit.
+
+### feat(bank): add batch 146/148/149 — new problems + orphan registrations (2026-05-29)
+New: `calculate-amount-paid-in-taxes` (easy/arrays, bracket tax simulation). Registered 6 orphan problems: `beautiful-towers-ii` (medium/arrays+stack, monotone-stack mountain sums), `maximum-balanced-subsequence-sum` (hard/BIT+dp), `minimum-flips-binary-grid-palindromic-ii` (medium/arrays), `minimum-swaps-to-make-balanced` (medium/strings+stack), `tweet-counts-per-frequency` (medium/hash-map), `find-kth-largest-xor-coordinate-value` (medium/arrays). Also added solutions for `max-product-after-cutting-rope`, `minimum-path-sum-triangle`, `find-product-pivot`, `count-subarrays-equal-balance`, `longest-arithmetic-subarray`, `sum-of-all-submatrix-sums`. Bank at **2253**; 7053 tests.
 
 ### feat(bank): register batch 149 — 11 orphaned problems from batches 142b/144/146b (2026-05-29)
 Registered problem files that had been created but never imported in index.ts: `beautiful-towers-ii` (medium/arrays+stack, O(n) monotone stack mountain sum), `maximum-balanced-subsequence-sum` (hard/arrays+dp, max-sum LIS with key=nums[i]-i), `minimum-number-of-flips-to-make-binary-grid-palindromic-ii` (medium/arrays, groups-of-4 + middle row/col pair handling), `find-kth-largest-xor-coordinate-value` (medium/arrays, 2D prefix XOR + kth order stat), `minimum-swaps-to-make-balanced` (medium/strings, greedy imbalance tracking), `tweet-counts-per-frequency` (medium/hash-map+simulation, class design), plus 5 that were already in origin/main's batch 146b. JS+Python solutions added for the 6 that were missing them. Bank at **2249**; 7050 tests.
