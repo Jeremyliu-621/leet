@@ -41593,4 +41593,148 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return Math.max(up, down);
   },
+
+  'binary-tree-level-order-traversal': (...args: unknown[]) => {
+    interface TN { val: number; left: TN | null; right: TN | null; }
+    const arr = args[0] as (number | null)[];
+    if (!arr || arr.length === 0 || arr[0] == null) return [];
+    const build = (a: (number | null)[]): TN | null => {
+      if (!a || a.length === 0 || a[0] == null) return null;
+      const root: TN = { val: a[0], left: null, right: null };
+      const q: TN[] = [root];
+      let i = 1;
+      while (q.length > 0 && i < a.length) {
+        const node = q.shift()!;
+        if (i < a.length && a[i] != null) { node.left = { val: a[i]!, left: null, right: null }; q.push(node.left); }
+        i++;
+        if (i < a.length && a[i] != null) { node.right = { val: a[i]!, left: null, right: null }; q.push(node.right); }
+        i++;
+      }
+      return root;
+    };
+    const root = build(arr);
+    if (!root) return [];
+    const result: number[][] = [];
+    let q: TN[] = [root];
+    while (q.length) {
+      result.push(q.map(n => n.val));
+      q = q.flatMap(n => [n.left, n.right].filter((x): x is TN => x !== null));
+    }
+    return result;
+  },
+
+  'find-k-pairs-with-smallest-sums': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const k = args[2] as number;
+    type H = [number, number, number]; // [sum, i, j]
+    const heap: H[] = [];
+    const push = (item: H) => {
+      heap.push(item); let i = heap.length - 1;
+      while (i > 0) {
+        const p = (i - 1) >> 1;
+        if (heap[p]![0] <= heap[i]![0]) break;
+        [heap[p], heap[i]] = [heap[i]!, heap[p]!]; i = p;
+      }
+    };
+    const pop = (): H => {
+      const top = heap[0]!; const last = heap.pop()!;
+      if (heap.length > 0) {
+        heap[0] = last; let i = 0;
+        while (true) {
+          const l = 2*i+1, r = 2*i+2;
+          let sm = i;
+          if (l < heap.length && heap[l]![0] < heap[sm]![0]) sm = l;
+          if (r < heap.length && heap[r]![0] < heap[sm]![0]) sm = r;
+          if (sm === i) break;
+          [heap[i], heap[sm]] = [heap[sm]!, heap[i]!]; i = sm;
+        }
+      }
+      return top;
+    };
+    for (let i = 0; i < Math.min(nums1.length, k); i++) push([nums1[i]! + nums2[0]!, i, 0]);
+    const result: number[][] = [];
+    while (result.length < k && heap.length) {
+      const [, i, j] = pop();
+      result.push([nums1[i]!, nums2[j]!]);
+      if (j + 1 < nums2.length) push([nums1[i]! + nums2[j + 1]!, i, j + 1]);
+    }
+    return result;
+  },
+
+  'sequence-reconstruction': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const sequences = args[1] as number[][];
+    const n = nums.length;
+    const pos = new Map<number, number>();
+    for (let i = 0; i < n; i++) pos.set(nums[i]!, i);
+    const indegree = new Array(n).fill(0);
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const seq of sequences) {
+      for (let i = 1; i < seq.length; i++) {
+        const u = pos.get(seq[i-1]!)!, v = pos.get(seq[i]!)!;
+        if (u >= v) return false;
+        adj[u]!.push(v); indegree[v]++;
+      }
+    }
+    let q: number[] = [];
+    for (let i = 0; i < n; i++) if (indegree[i] === 0) q.push(i);
+    while (q.length === 1) {
+      const cur = q[0]!; q = [];
+      for (const nb of adj[cur]!) { if (--indegree[nb] === 0) q.push(nb); }
+    }
+    return q.length === 0;
+  },
+
+  'inorder-successor-in-bst': (...args: unknown[]) => {
+    interface TN { val: number; left: TN | null; right: TN | null; }
+    const arr = args[0] as (number | null)[];
+    const pVal = args[1] as number;
+    if (!arr || arr.length === 0 || arr[0] == null) return null;
+    const buildBST = (a: (number | null)[]): TN | null => {
+      if (!a || a.length === 0 || a[0] == null) return null;
+      const root: TN = { val: a[0], left: null, right: null };
+      const q: TN[] = [root]; let i = 1;
+      while (q.length > 0 && i < a.length) {
+        const node = q.shift()!;
+        if (i < a.length && a[i] != null) { node.left = { val: a[i]!, left: null, right: null }; q.push(node.left); } i++;
+        if (i < a.length && a[i] != null) { node.right = { val: a[i]!, left: null, right: null }; q.push(node.right); } i++;
+      }
+      return root;
+    };
+    let result: TN | null = null, cur: TN | null = buildBST(arr);
+    while (cur) {
+      if (cur.val > pVal) { result = cur; cur = cur.left; }
+      else cur = cur.right;
+    }
+    return result ? result.val : null;
+  },
+
+  'closest-binary-search-tree-value-ii': (...args: unknown[]) => {
+    interface TN { val: number; left: TN | null; right: TN | null; }
+    const arr = args[0] as (number | null)[];
+    const target = args[1] as number;
+    const k = args[2] as number;
+    const buildBST = (a: (number | null)[]): TN | null => {
+      if (!a || a.length === 0 || a[0] == null) return null;
+      const root: TN = { val: a[0], left: null, right: null };
+      const q: TN[] = [root]; let i = 1;
+      while (q.length > 0 && i < a.length) {
+        const node = q.shift()!;
+        if (i < a.length && a[i] != null) { node.left = { val: a[i]!, left: null, right: null }; q.push(node.left); } i++;
+        if (i < a.length && a[i] != null) { node.right = { val: a[i]!, left: null, right: null }; q.push(node.right); } i++;
+      }
+      return root;
+    };
+    const root = buildBST(arr);
+    const vals: number[] = [];
+    const inorder = (n: TN | null): void => { if (!n) return; inorder(n.left); vals.push(n.val); inorder(n.right); };
+    inorder(root);
+    let l = 0, r = vals.length - 1;
+    while (r - l + 1 > k) {
+      if (Math.abs(vals[l]! - target) > Math.abs(vals[r]! - target)) l++;
+      else r--;
+    }
+    return vals.slice(l, r + 1).sort((a, b) => a - b);
+  },
 };
