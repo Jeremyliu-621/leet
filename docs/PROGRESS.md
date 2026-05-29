@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2334** problems; 7296 tests green. Batches 102–155 (all sub-batches) complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2337** problems; 7305 tests green. Batches 102–155c complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 156+); UX polish; accessibility audit.
+
+### feat(bank): add batch 155c — maximum-employees-invited-to-meeting, maximize-minimum-powered-city, minimum-time-remove-cars-illegal-goods (2026-05-29)
+Three problems: `maximum-employees-invited-to-meeting` (hard/graph, functional graph cycle detection — topological-sort to find chain depths, then max(longest ≥3 cycle, sum of mutual-pair chains)), `maximize-minimum-powered-city` (hard/binary-search+arrays, binary search on minimum power with greedy diff-array station placement), `minimum-time-remove-cars-illegal-goods` (medium/arrays+dynamic-programming, prefix/suffix DP where left[i] = min cost to clear 1s in s[0..i] and answer = min over all split points). Bank at **2337**; 7305 tests.
 
 ### feat(bank): add batch 155b — recent-counter (easy), peeking-iterator, flatten-nested-list-iterator (medium), all-o-one (hard) (2026-05-29)
 Four design problems: `recent-counter` (easy/design+simulation, queue sliding window over 3000ms), `peeking-iterator` (medium/design, index-based peek without advance), `flatten-nested-list-iterator` (medium/design+stack, recursive pre-flatten into flat array), `all-o-one-data-structure` (hard/design+hash-map, hash map with O(N) max/min scan). Bank at **2334**; 7296 tests.
