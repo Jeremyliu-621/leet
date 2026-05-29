@@ -41018,4 +41018,36 @@ def maxXorSum(nums, k):
             break
     return base + extra
 `,
+  'minimum-operations-to-make-all-characters-equal': `
+def minimumOperations(s):
+    return sum(1 for i in range(len(s) - 1) if s[i] != s[i+1])
+`,
+  'number-of-bit-changes-to-make-two-integers-equal': `
+def minChanges(n, k):
+    if k & ~n:
+        return -1
+    return bin(n & ~k).count('1')
+`,
+  'find-occurrences-of-an-element-in-an-array': `
+def findOccurrences(nums, target, k):
+    count = 0
+    for i, x in enumerate(nums):
+        if x == target:
+            count += 1
+            if count == k:
+                return i
+    return -1
+`,
+  'number-of-substrings-with-only-1s': `
+def numSub(s):
+    MOD = 10**9 + 7
+    res = run = 0
+    for c in s:
+        if c == '1':
+            run += 1
+            res = (res + run) % MOD
+        else:
+            run = 0
+    return res
+`,
 };

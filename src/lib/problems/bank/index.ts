@@ -2922,6 +2922,10 @@ import { problem as isReachableAtTime } from './determine-if-a-cell-is-reachable
 import { problem as countBalancedSubarrays } from './count-balanced-subarrays';
 import { problem as longestDivisibleRun } from './longest-divisible-run';
 import { problem as maximumSumAfterXorOperations } from './maximum-sum-after-xor-operations';
+import { problem as minimumOperationsAllCharsEqual } from './minimum-operations-to-make-all-characters-equal';
+import { problem as minChanges } from './number-of-bit-changes-to-make-two-integers-equal';
+import { problem as findOccurrences } from './find-occurrences-of-an-element-in-an-array';
+import { problem as numSubOnes } from './number-of-substrings-with-only-1s';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5884,4 +5888,8 @@ export const problems: readonly Problem[] = [
   countBalancedSubarrays,
   longestDivisibleRun,
   maximumSumAfterXorOperations,
+  minimumOperationsAllCharsEqual,
+  minChanges,
+  findOccurrences,
+  numSubOnes,
 ];

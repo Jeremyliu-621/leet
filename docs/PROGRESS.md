@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2556** problems; 7962 tests green. Batches 102–223 complete.
+**Current focus:** Bank at **2560** problems; 7974 tests green. Batches 102–223 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 224+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 223 addendum — min-ops-all-chars-equal, bit-changes-equal, find-occurrences, substrings-only-1s (2026-05-29)
+Four new problems: `minimum-operations-to-make-all-characters-equal` (medium/strings, count transition boundaries), `number-of-bit-changes-to-make-two-integers-equal` (easy/bit-manipulation, check k&~n==0, return popcount(n&~k)), `find-occurrences-of-an-element-in-an-array` (easy/arrays, k-th occurrence scan), `number-of-substrings-with-only-1s` (medium/strings+math, running run-length × mod). Bank at **2560**; 7974 tests.
 
 ### feat(bank): batch 223 — count-balanced-subarrays, longest-divisible-run, maximum-sum-after-xor-operations (2026-05-29)
 Three new problems: `count-balanced-subarrays` (medium/arrays+hash-map, alternating prefix-diff + frequency map, O(n)), `longest-divisible-run` (easy/arrays, greedy scan checking each adjacent pair for divisibility), `maximum-sum-after-xor-operations` (medium/arrays+bit-manipulation+math, XOR even-subset constraint → sort gains, greedily take positive pairs). Bank at **2556**; 7962 tests.

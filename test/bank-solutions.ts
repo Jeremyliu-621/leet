@@ -41874,4 +41874,34 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return base + extra;
   },
+  'minimum-operations-to-make-all-characters-equal': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let transitions = 0;
+    for (let i = 0; i < s.length - 1; i++) if (s[i] !== s[i + 1]) transitions++;
+    return transitions;
+  },
+  'number-of-bit-changes-to-make-two-integers-equal': (...args: unknown[]) => {
+    const [n, k] = args as number[];
+    function popcount(x: number): number { let c = 0; while (x) { c += x & 1; x >>>= 1; } return c; }
+    if ((k! & ~n!) !== 0) return -1;
+    return popcount(n! & ~k!);
+  },
+  'find-occurrences-of-an-element-in-an-array': (...args: unknown[]) => {
+    const [nums, target, k] = args as [number[], number, number];
+    let count = 0;
+    for (let i = 0; i < nums.length; i++) {
+      if (nums[i] === target && ++count === k) return i;
+    }
+    return -1;
+  },
+  'number-of-substrings-with-only-1s': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const MOD = 1_000_000_007n;
+    let res = 0n, run = 0n;
+    for (const c of s) {
+      if (c === '1') { run++; res = (res + run) % MOD; }
+      else run = 0n;
+    }
+    return Number(res);
+  },
 };
