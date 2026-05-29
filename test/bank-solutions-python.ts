@@ -38791,6 +38791,121 @@ def pseudoPalindromicPathsRunner(arr):
     return count[0]
 `,
 
+  // batch 169 — graph/medium×2, arrays+sliding-window/medium×2, tree/medium
+  'shortest-path-in-binary-matrix': `
+def shortestPathBinaryMatrix(grid):
+    if hasattr(grid, 'to_py'):
+        grid = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in grid.to_py()]
+    grid = [[int(v) for v in row] for row in grid]
+    n = len(grid)
+    if grid[0][0] == 1 or grid[n-1][n-1] == 1:
+        return -1
+    if n == 1:
+        return 1
+    dirs = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
+    visited = [[False]*n for _ in range(n)]
+    visited[0][0] = True
+    queue = [(0, 0, 1)]
+    while queue:
+        r, c, dist = queue.pop(0)
+        for dr, dc in dirs:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < n and 0 <= nc < n and not visited[nr][nc] and grid[nr][nc] == 0:
+                if nr == n-1 and nc == n-1:
+                    return dist + 1
+                visited[nr][nc] = True
+                queue.append((nr, nc, dist+1))
+    return -1
+`,
+
+  'minimum-cost-to-connect-all-points': `
+def minCostConnectPoints(points):
+    if hasattr(points, 'to_py'):
+        points = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in points.to_py()]
+    points = [[int(v) for v in p] for p in points]
+    n = len(points)
+    min_cost = [float('inf')] * n
+    in_mst = [False] * n
+    min_cost[0] = 0
+    total = 0
+    for _ in range(n):
+        u = -1
+        for i in range(n):
+            if not in_mst[i] and (u == -1 or min_cost[i] < min_cost[u]):
+                u = i
+        in_mst[u] = True
+        total += min_cost[u]
+        for v in range(n):
+            if in_mst[v]:
+                continue
+            d = abs(points[u][0] - points[v][0]) + abs(points[u][1] - points[v][1])
+            if d < min_cost[v]:
+                min_cost[v] = d
+    return total
+`,
+
+  'minimum-swaps-to-group-all-1s-together': `
+def minSwaps(data):
+    if hasattr(data, 'to_py'):
+        data = list(data.to_py())
+    data = [int(v) for v in data]
+    ones = sum(data)
+    if ones == 0:
+        return 0
+    zeros = sum(1 for i in range(ones) if not data[i])
+    min_zeros = zeros
+    for i in range(ones, len(data)):
+        if not data[i]:
+            zeros += 1
+        if not data[i - ones]:
+            zeros -= 1
+        if zeros < min_zeros:
+            min_zeros = zeros
+    return min_zeros
+`,
+
+  'maximum-width-of-binary-tree': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def widthOfBinaryTreeRunner(arr):
+    if hasattr(arr, 'to_py'):
+        arr = list(arr.to_py())
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in arr]
+    if not arr or arr[0] is None:
+        return 0
+    root = TreeNode(arr[0])
+    bfs = [root]
+    i = 1
+    while bfs and i < len(arr):
+        node = bfs.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i])
+            bfs.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i])
+            bfs.append(node.right)
+        i += 1
+    max_width = 0
+    queue = [(root, 0)]
+    while queue:
+        level_len = len(queue)
+        left_idx = queue[0][1]
+        right_idx = left_idx
+        for _ in range(level_len):
+            node, idx = queue.pop(0)
+            ni = idx - left_idx
+            right_idx = ni
+            if node.left:
+                queue.append((node.left, ni * 2))
+            if node.right:
+                queue.append((node.right, ni * 2 + 1))
+        max_width = max(max_width, right_idx + 1)
+    return max_width
+`,
+
   'step-by-step-directions-from-a-binary-tree-node-to-another': `
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):

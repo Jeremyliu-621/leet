@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2455** registered problems; 7659 tests green. Batches 102–169 (both variants) complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2459** problems; 7671 tests green. Batches 102–169 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 170+); UX polish per LEETCODE_PARITY.md.
 
@@ -24,8 +24,13 @@ Three UX improvements: (1) TopBar timer gains a 2-minute warning state (isWarnin
 ### feat(bank): batch 163 — number-of-same-end-substrings (medium), count-fertile-pyramids (hard), maximum-deletions-on-a-string (hard), collect-coins-in-a-tree (hard), maximum-and-sum-of-array (hard) (2026-05-29)
 Five new problems: `number-of-same-end-substrings` (medium/strings+arrays, prefix count → m*(m+1)/2 per char), `count-fertile-pyramids-in-a-land` (hard/arrays+dp, upward+inverted pyramid DP with max(0,dp-1) sum), `maximum-deletions-on-a-string` (hard/strings+dp, LCP table + DP; dp[i]=max 1+dp[i+k] when lcp[i][i+k]≥k), `collect-coins-in-a-tree` (hard/arrays+graph, topological leaf-removal: strip zero-coin leaves, then 2 rounds of all leaves, answer = 2×remaining edges), `maximum-and-sum-of-array` (hard/arrays+dp, bitmask DP over 2×numSlots positions, slot = pos//2+1). Bank at **2434**; 7596 tests.
 
+<<<<<<< HEAD
 ### feat(bank): batch 166 — replace-elements (easy), find-disappeared-numbers (easy), final-value-after-ops (easy), steps-to-non-decreasing (medium), flower-planting-no-adj (medium) (2026-05-29)
 Five new problems: `replace-elements-with-greatest-element-on-right-side` (easy/arrays, right-to-left scan with running max), `find-all-numbers-disappeared-in-an-array` (easy/arrays+hash-map, Set lookup for missing 1..n), `final-value-of-variable-after-performing-operations` (easy/simulation, x += +1 if op contains '+' else -1), `steps-to-make-array-non-decreasing` (medium/arrays+stack, monotone decreasing stack tracking max removal round per element), `flower-planting-with-no-adjacent` (medium/graph, greedy 4-coloring: assign smallest color not used by any neighbor). Bank at **2443**; 7623 tests.
+=======
+### feat(bank): batch 169 — 4 new problems (graph×2, sliding-window, tree) (2026-05-29)
+shortest-path-in-binary-matrix (medium/graph+shortest-path, BFS 8-directional), minimum-cost-to-connect-all-points (medium/graph+union-find, Prim's MST O(n²)), minimum-swaps-to-group-all-1s-together (medium/arrays+sliding-window, min zeros in window of size k), maximum-width-of-binary-tree (medium/tree, BFS with position normalization using BigInt). Bank at **2442**; 7620 tests.
+>>>>>>> bd0f91e (feat(bank): batch 169 — 4 new problems (graph×2, sliding-window, tree); site 2,442+)
 
 ### feat(bank): batch 165 — minimum-stack (easy), max-chunks-sorted (medium), most-competitive-subseq (medium), mct-leaf-values (medium), shortest-subarray-sum-k (hard) (2026-05-29)
 Five new problems: `minimum-stack` (easy/design+stack, parallel min-stack for O(1) getMin), `maximum-chunks-to-make-sorted` (medium/arrays+stack, greedy max==index split), `find-the-most-competitive-subsequence` (medium/arrays+stack, monotone stack with feasibility guard), `minimum-cost-tree-from-leaf-values` (medium/arrays+stack+dp, greedy merge — pop when top<=val, cost+=mid*min(top,val)), `shortest-subarray-with-sum-at-least-k` (hard/arrays+sliding-window, monotone deque on prefix sums O(n)). Bank at **2429**; 7581 tests.

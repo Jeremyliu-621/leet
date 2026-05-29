@@ -2724,6 +2724,11 @@ import { problem as beautifulSubstringsII } from './count-beautiful-substrings-i
 import { problem as makeThreeStringsEqual } from './make-three-strings-equal';
 import { problem as addedIntegerI } from './find-the-integer-added-to-array-i';
 import { problem as minimumAddedInteger } from './find-the-integer-added-to-array-ii';
+// batch 169 — graph/medium×2, arrays+sliding-window/medium, tree/medium
+import { problem as shortestPathInBinaryMatrix } from './shortest-path-in-binary-matrix';
+import { problem as minimumCostToConnectAllPoints } from './minimum-cost-to-connect-all-points';
+import { problem as minimumSwapsToGroupAll1sTogether } from './minimum-swaps-to-group-all-1s-together';
+import { problem as maximumWidthOfBinaryTree } from './maximum-width-of-binary-tree';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5482,4 +5487,9 @@ export const problems: readonly Problem[] = [
   makeThreeStringsEqual,
   addedIntegerI,
   minimumAddedInteger,
+  // batch 169 — graph/medium×2, arrays+sliding-window/medium, tree/medium
+  shortestPathInBinaryMatrix,
+  minimumCostToConnectAllPoints,
+  minimumSwapsToGroupAll1sTogether,
+  maximumWidthOfBinaryTree,
 ];

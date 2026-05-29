@@ -38865,6 +38865,100 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  // batch 169 — graph/medium×2, arrays+sliding-window/medium×2, tree/medium
+  'shortest-path-in-binary-matrix': (grid: unknown) => {
+    const g = grid as number[][];
+    const n = g.length;
+    if (g[0]![0] === 1 || g[n - 1]![n - 1] === 1) return -1;
+    if (n === 1) return 1;
+    const dirs = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+    const visited = Array.from({ length: n }, () => new Array<boolean>(n).fill(false));
+    visited[0]![0] = true;
+    const queue: [number, number, number][] = [[0, 0, 1]];
+    while (queue.length) {
+      const item = queue.shift()!;
+      const r = item[0], c = item[1], dist = item[2];
+      for (const d of dirs) {
+        const nr = r + d[0]!, nc = c + d[1]!;
+        if (nr < 0 || nr >= n || nc < 0 || nc >= n) continue;
+        if (visited[nr]![nc] || g[nr]![nc] === 1) continue;
+        if (nr === n - 1 && nc === n - 1) return dist + 1;
+        visited[nr]![nc] = true;
+        queue.push([nr, nc, dist + 1]);
+      }
+    }
+    return -1;
+  },
+
+  'minimum-cost-to-connect-all-points': (points: unknown) => {
+    const pts = points as number[][];
+    const n = pts.length;
+    const minCost = new Array<number>(n).fill(Infinity);
+    const inMST = new Array<boolean>(n).fill(false);
+    minCost[0] = 0;
+    let total = 0;
+    for (let iter = 0; iter < n; iter++) {
+      let u = -1;
+      for (let i = 0; i < n; i++) if (!inMST[i] && (u === -1 || minCost[i]! < minCost[u]!)) u = i;
+      inMST[u] = true;
+      total += minCost[u]!;
+      for (let v = 0; v < n; v++) {
+        if (inMST[v]) continue;
+        const d = Math.abs(pts[u]![0]! - pts[v]![0]!) + Math.abs(pts[u]![1]! - pts[v]![1]!);
+        if (d < minCost[v]!) minCost[v] = d;
+      }
+    }
+    return total;
+  },
+
+  'minimum-swaps-to-group-all-1s-together': (data: unknown) => {
+    const d = data as number[];
+    const ones = d.reduce((a, b) => a + b, 0);
+    if (ones === 0) return 0;
+    let zeros = 0;
+    for (let i = 0; i < ones; i++) if (!d[i]) zeros++;
+    let minZeros = zeros;
+    for (let i = ones; i < d.length; i++) {
+      if (!d[i]) zeros++;
+      if (!d[i - ones]) zeros--;
+      if (zeros < minZeros) minZeros = zeros;
+    }
+    return minZeros;
+  },
+
+  'maximum-width-of-binary-tree': (arr: unknown) => {
+    const a = arr as (number | null)[];
+    if (!a || a.length === 0 || a[0] == null) return 0;
+    interface TN { val: number; left: TN | null; right: TN | null; }
+    const root: TN = { val: a[0] as number, left: null, right: null };
+    const bfsQ: TN[] = [root];
+    let idx = 1;
+    while (bfsQ.length && idx < a.length) {
+      const node = bfsQ.shift()!;
+      if (idx < a.length && a[idx] != null) { node.left = { val: a[idx] as number, left: null, right: null }; bfsQ.push(node.left); }
+      idx++;
+      if (idx < a.length && a[idx] != null) { node.right = { val: a[idx] as number, left: null, right: null }; bfsQ.push(node.right); }
+      idx++;
+    }
+    let max = 0;
+    const queue: [TN, bigint][] = [[root, 0n]];
+    while (queue.length) {
+      const len = queue.length;
+      const left = queue[0]![1];
+      let right = left;
+      for (let i = 0; i < len; i++) {
+        const [node, nidx] = queue.shift()!;
+        const ni = nidx - left;
+        right = ni;
+        if (node.left) queue.push([node.left, ni * 2n]);
+        if (node.right) queue.push([node.right, ni * 2n + 1n]);
+      }
+      const w = Number(right + 1n);
+      if (w > max) max = w;
+    }
+    return max;
+  },
+
   'step-by-step-directions-from-a-binary-tree-node-to-another': (...args: unknown[]) => {
     const arr = args[0] as (number | null)[];
     const startValue = args[1] as number;
