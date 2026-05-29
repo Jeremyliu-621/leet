@@ -38063,6 +38063,119 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return steps;
   },
 
+  'minimum-cost-homecoming-of-a-robot-in-a-grid': (...args: unknown[]): unknown => {
+    const startPos = args[0] as number[], homePos = args[1] as number[];
+    const rowCosts = args[2] as number[], colCosts = args[3] as number[];
+    const r1 = startPos[0] as number, c1 = startPos[1] as number;
+    const r2 = homePos[0] as number, c2 = homePos[1] as number;
+    let cost = 0;
+    if (r2 > r1) { for (let r = r1 + 1; r <= r2; r++) cost += rowCosts[r] as number; }
+    else { for (let r = r2; r < r1; r++) cost += rowCosts[r] as number; }
+    if (c2 > c1) { for (let c = c1 + 1; c <= c2; c++) cost += colCosts[c] as number; }
+    else { for (let c = c2; c < c1; c++) cost += colCosts[c] as number; }
+    return cost;
+  },
+
+  'sum-of-scores-of-built-strings': (...args: unknown[]): unknown => {
+    const s = args[0] as string;
+    const n = s.length;
+    const Z = new Array<number>(n).fill(0);
+    Z[0] = n;
+    let l = 0, r = 0;
+    for (let i = 1; i < n; i++) {
+      if (i < r) Z[i] = Math.min(r - i, Z[i - l] as number);
+      while (i + Z[i]! < n && s[Z[i]!] === s[i + Z[i]!]) Z[i]!++;
+      if (i + Z[i]! > r) { l = i; r = i + Z[i]!; }
+    }
+    return Z.reduce((a, b) => a + b, 0);
+  },
+
+  'count-of-integers': (...args: unknown[]): unknown => {
+    const num1 = args[0] as string, num2 = args[1] as string;
+    const minSum = args[2] as number, maxSum = args[3] as number;
+    const MOD = 1_000_000_007n;
+    const countUpTo = (s: string): bigint => {
+      const n = s.length;
+      const memo = new Map<string, bigint>();
+      const dp = (pos: number, tight: boolean, started: boolean, total: number): bigint => {
+        if (total > maxSum) return 0n;
+        if (pos === n) return started && total >= minSum ? 1n : 0n;
+        const key = `${pos},${tight ? 1 : 0},${started ? 1 : 0},${total}`;
+        const cached = memo.get(key);
+        if (cached !== undefined) return cached;
+        const limit = tight ? parseInt(s[pos]!, 10) : 9;
+        let res = 0n;
+        for (let d = 0; d <= limit; d++) {
+          const nt = tight && d === limit;
+          if (!started && d === 0) res = (res + dp(pos + 1, nt, false, 0)) % MOD;
+          else res = (res + dp(pos + 1, nt, true, total + d)) % MOD;
+        }
+        memo.set(key, res);
+        return res;
+      };
+      return dp(0, true, false, 0);
+    };
+    const c2 = countUpTo(num2);
+    const c1 = countUpTo(num1);
+    const digitSum1 = num1.split('').reduce((a, c) => a + parseInt(c, 10), 0);
+    const v1 = digitSum1 >= minSum && digitSum1 <= maxSum ? 1n : 0n;
+    return Number(((c2 - c1 + v1) % MOD + MOD) % MOD);
+  },
+
+  'number-of-ways-to-earn-points': (...args: unknown[]): unknown => {
+    const target = args[0] as number;
+    const types = args[1] as number[][];
+    const MOD = 1_000_000_007;
+    const dp = new Array<number>(target + 1).fill(0);
+    dp[0] = 1;
+    for (const entry of types) {
+      const count = entry[0] as number, marks = entry[1] as number;
+      for (let j = target; j >= 0; j--) {
+        for (let k = 1; k <= count; k++) {
+          if (j - k * marks < 0) break;
+          dp[j] = ((dp[j] as number) + (dp[j - k * marks] as number)) % MOD;
+        }
+      }
+    }
+    return dp[target];
+  },
+
+  'count-substrings-with-k-frequency-characters-ii': (...args: unknown[]): unknown => {
+    const s = args[0] as string, k = args[1] as number;
+    const n = s.length;
+    const total = (n * (n + 1)) / 2;
+    const freq = new Array<number>(26).fill(0);
+    let bad = 0, left = 0, noK = 0;
+    for (let r = 0; r < n; r++) {
+      const ri = s.charCodeAt(r) - 97;
+      (freq[ri] as number)++;
+      if (freq[ri] === k) bad++;
+      while (bad > 0) {
+        const li = s.charCodeAt(left) - 97;
+        if (freq[li] === k) bad--;
+        (freq[li] as number)--;
+        left++;
+      }
+      noK += (r - left + 1);
+    }
+    return total - noK;
+  },
+
+  'sum-of-imbalance-numbers-of-all-subarrays': (...args: unknown[]): unknown => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    let ans = 0;
+    for (let i = 0; i < n; i++) {
+      for (let j = i; j < n; j++) {
+        const sub = nums.slice(i, j + 1).sort((a, b) => a - b);
+        for (let k = 0; k + 1 < sub.length; k++) {
+          if ((sub[k + 1] as number) - (sub[k] as number) > 1) ans++;
+        }
+      }
+    }
+    return ans;
+  },
+
   'count-lattice-points-inside-a-circle': (...args: unknown[]): unknown => {
     const circles = args[0] as number[][];
     const points = new Set<string>();

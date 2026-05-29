@@ -2642,6 +2642,16 @@ import { problem as allPathsFromSourceToTarget } from './all-paths-from-source-t
 import { problem as countUnreachablePairsOfNodesInUndirectedGraph } from './count-unreachable-pairs-of-nodes-in-an-undirected-graph';
 import { problem as partitionArrayIntoDisjointIntervals } from './partition-array-into-disjoint-intervals';
 import { problem as removeDuplicatesFromSortedArrayII } from './remove-duplicates-from-sorted-array-ii';
+// batch 168 — 9 orphaned problems now registered (batches 158/159 that lost registration during merges)
+import { problem as minimumCostHomecomingRobotInGrid } from './minimum-cost-homecoming-of-a-robot-in-a-grid';
+import { problem as sumOfScoresOfBuiltStrings } from './sum-of-scores-of-built-strings';
+import { problem as countOfIntegers } from './count-of-integers';
+import { problem as numberOfWaysToEarnPoints } from './number-of-ways-to-earn-points';
+import { problem as uniqueLength3PalindromicSubsequences } from './unique-length-3-palindromic-subsequences';
+import { problem as minimumWhiteTilesAfterCoveringWithCarpets } from './minimum-white-tiles-after-covering-with-carpets';
+import { problem as specialPermutations } from './special-permutations';
+import { problem as countSubstringsWithKFrequencyCharactersII } from './count-substrings-with-k-frequency-characters-ii';
+import { problem as sumOfImbalanceNumbersOfAllSubarrays } from './sum-of-imbalance-numbers-of-all-subarrays';
 // batch 164 — simulation/hard, bit-manipulation/easy, math/medium, arrays/medium, binary-search/medium,
 //             trie/hard, bit-manipulation/hard, arrays/hard, arrays/hard
 import { problem as amountOfNewAreaPaintedEachDay } from './amount-of-new-area-painted-each-day';
@@ -5382,4 +5392,14 @@ export const problems: readonly Problem[] = [
   countUnreachablePairsOfNodesInUndirectedGraph,
   partitionArrayIntoDisjointIntervals,
   removeDuplicatesFromSortedArrayII,
+  // batch 168 — 9 orphaned problems restored (lost registration during merges)
+  minimumCostHomecomingRobotInGrid,
+  sumOfScoresOfBuiltStrings,
+  countOfIntegers,
+  numberOfWaysToEarnPoints,
+  uniqueLength3PalindromicSubsequences,
+  minimumWhiteTilesAfterCoveringWithCarpets,
+  specialPermutations,
+  countSubstringsWithKFrequencyCharactersII,
+  sumOfImbalanceNumbersOfAllSubarrays,
 ];

@@ -38076,6 +38076,43 @@ def numSteps(s):
     return steps
 `,
 
+  'count-substrings-with-k-frequency-characters-ii': `
+def countSubstringsWithKFrequencyII(s, k):
+    n = len(s)
+    total = n * (n + 1) // 2
+    freq = {}
+    bad = 0
+    left = 0
+    no_k = 0
+    for r in range(n):
+        c = s[r]
+        freq[c] = freq.get(c, 0) + 1
+        if freq[c] == k:
+            bad += 1
+        while bad > 0:
+            lc = s[left]
+            if freq[lc] == k:
+                bad -= 1
+            freq[lc] -= 1
+            left += 1
+        no_k += (r - left + 1)
+    return total - no_k
+`,
+
+  'sum-of-imbalance-numbers-of-all-subarrays': `
+def sumImbalanceNumbers(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    ans = 0
+    for i in range(n):
+        for j in range(i, n):
+            sub = sorted(nums[i:j+1])
+            for k in range(len(sub) - 1):
+                if sub[k+1] - sub[k] > 1:
+                    ans += 1
+    return ans
+`,
+
   'count-lattice-points-inside-a-circle': `
 def countLatticePoints(circles):
     raw = list(circles.to_py() if hasattr(circles, 'to_py') else circles)
