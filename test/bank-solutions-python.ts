@@ -35267,4 +35267,54 @@ def minimumTotal(triangle):
     return ops
 `,
 
+  // batch 152
+  'number-of-segments-in-a-string': `def countSegments(s):
+    count = 0
+    for i in range(len(s)):
+        if s[i] != ' ' and (i == 0 or s[i - 1] == ' '):
+            count += 1
+    return count
+`,
+
+  'repeated-dna-sequences': `def findRepeatedDnaSequences(s):
+    seen = {}
+    result = []
+    for i in range(len(s) - 9):
+        sub = s[i:i + 10]
+        seen[sub] = seen.get(sub, 0) + 1
+        if seen[sub] == 2:
+            result.append(sub)
+    return sorted(result)
+`,
+
+  'count-the-number-of-vowel-strings-in-range': `def vowelStrings(words, left, right):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    vowels = set('aeiou')
+    count = 0
+    for i in range(left, right + 1):
+        w = words[i]
+        if w[0] in vowels and w[-1] in vowels:
+            count += 1
+    return count
+`,
+
+  'remove-all-occurrences-of-a-substring': `def removeOccurrences(s, part):
+    while part in s:
+        idx = s.find(part)
+        s = s[:idx] + s[idx + len(part):]
+    return s
+`,
+
+  'find-words-that-can-be-formed-by-characters': `def countCharacters(words, chars):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    from collections import Counter
+    cc = Counter(chars)
+    res = 0
+    for w in words:
+        wc = Counter(w)
+        if all(cc[c] >= cnt for c, cnt in wc.items()):
+            res += len(w)
+    return res
+`,
+
 };

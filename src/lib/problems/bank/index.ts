@@ -2479,6 +2479,12 @@ import { problem as maxProductAfterCuttingRope } from './max-product-after-cutti
 import { problem as minimumPathSumTriangle } from './minimum-path-sum-triangle';
 // batch 149 — arrays/easy
 import { problem as calculateAmountPaidInTaxes } from './calculate-amount-paid-in-taxes';
+// batch 152 — 5 new problems (strings+arrays/easy+medium)
+import { problem as countSegmentsInAString } from './number-of-segments-in-a-string';
+import { problem as repeatedDnaSequences } from './repeated-dna-sequences';
+import { problem as countVowelStringsRange } from './count-the-number-of-vowel-strings-in-range';
+import { problem as removeAllOccurrencesSubstring } from './remove-all-occurrences-of-a-substring';
+import { problem as findWordsFormedByChars } from './find-words-that-can-be-formed-by-characters';
 // batch 151 — 6 orphan problems (medium+hard)
 import { problem as allDivisionsHighestScore } from './all-divisions-with-the-highest-score-of-a-binary-array';
 import { problem as convertArrayInto2D } from './convert-an-array-into-a-2d-array-with-conditions';
@@ -5013,6 +5019,12 @@ export const problems: readonly Problem[] = [
   minimumPathSumTriangle,
   // batch 149 — arrays/easy
   calculateAmountPaidInTaxes,
+  // batch 152 — strings/easy, strings/medium, strings/easy, strings/medium, strings/easy
+  countSegmentsInAString,
+  repeatedDnaSequences,
+  countVowelStringsRange,
+  removeAllOccurrencesSubstring,
+  findWordsFormedByChars,
   // batch 151 — 6 orphan problems (arrays/medium, arrays/medium, strings/medium, shortest-path/hard, BIT/medium, BIT+math/hard)
   allDivisionsHighestScore,
   convertArrayInto2D,

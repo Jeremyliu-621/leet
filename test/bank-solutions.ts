@@ -35458,4 +35458,63 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ops;
   },
 
+  // batch 152
+  'number-of-segments-in-a-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let count = 0;
+    for (let i = 0; i < s.length; i++) {
+      if (s[i] !== ' ' && (i === 0 || s[i - 1] === ' ')) count++;
+    }
+    return count;
+  },
+
+  'repeated-dna-sequences': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const seen = new Map<string, number>();
+    const result: string[] = [];
+    for (let i = 0; i <= s.length - 10; i++) {
+      const sub = s.slice(i, i + 10);
+      seen.set(sub, (seen.get(sub) ?? 0) + 1);
+      if (seen.get(sub) === 2) result.push(sub);
+    }
+    return result.sort();
+  },
+
+  'count-the-number-of-vowel-strings-in-range': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const left = args[1] as number, right = args[2] as number;
+    const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+    let count = 0;
+    for (let i = left; i <= right; i++) {
+      const w = words[i]!;
+      if (vowels.has(w[0]!) && vowels.has(w[w.length - 1]!)) count++;
+    }
+    return count;
+  },
+
+  'remove-all-occurrences-of-a-substring': (...args: unknown[]) => {
+    let s = args[0] as string;
+    const part = args[1] as string;
+    while (s.includes(part)) s = s.replace(part, '');
+    return s;
+  },
+
+  'find-words-that-can-be-formed-by-characters': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const chars = args[1] as string;
+    const cc: Record<string, number> = {};
+    for (const c of chars) cc[c] = (cc[c] ?? 0) + 1;
+    let res = 0;
+    for (const w of words) {
+      const wc: Record<string, number> = {};
+      for (const c of w) wc[c] = (wc[c] ?? 0) + 1;
+      let good = true;
+      for (const [c, cnt] of Object.entries(wc)) {
+        if ((cc[c] ?? 0) < cnt) { good = false; break; }
+      }
+      if (good) res += w.length;
+    }
+    return res;
+  },
+
 };
