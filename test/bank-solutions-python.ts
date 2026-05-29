@@ -43587,4 +43587,25 @@ def countSteppingNumbers(low, high):
     lo = count_up_to(subtract_one(low))
     return (hi - lo + MOD) % MOD
 `,
+  'count-elements-in-range': `
+def countElementsInRange(nums, lo, hi):
+    return sum(1 for v in nums if lo <= v <= hi)
+`,
+  'min-word-length': `
+def minWordLength(words):
+    return min(len(w) for w in words)
+`,
+  'transpose-2d-array': `
+def transpose2dArray(matrix):
+    return [[matrix[i][j] for i in range(len(matrix))] for j in range(len(matrix[0]))]
+`,
+  'count-pairs-with-same-sum': `
+def countPairsWithSameSum(nums, k):
+    count = 0
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            if nums[i] + nums[j] == k:
+                count += 1
+    return count
+`,
 };

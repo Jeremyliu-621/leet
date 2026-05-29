@@ -3095,7 +3095,12 @@ import { problem as modeOfArray } from './mode-of-array';
 import { problem as rowWithMaxSum } from './row-with-max-sum';
 import { problem as findMiddleElement } from './find-middle-element';
 import { problem as countRowsEqualToFirst } from './count-rows-equal-to-first';
-// batch 210 — easy/arrays, easy/arrays+bit-manipulation, easy/arrays+simulation, medium/dynamic-programming+math
+// batch 210 — easy/arrays, easy/arrays+strings, easy/arrays, easy/arrays+hash-map
+import { problem as countElementsInRange } from './count-elements-in-range';
+import { problem as minWordLength } from './min-word-length';
+import { problem as transpose2dArray } from './transpose-2d-array';
+import { problem as countPairsWithSameSum } from './count-pairs-with-same-sum';
+// batch 210b — easy/arrays, easy/arrays+bit-manipulation, easy/arrays+simulation, medium/dynamic-programming+math
 import { problem as secondMaximumNumberInArray } from './second-maximum-number-in-array';
 import { problem as sumOfValuesAtIndicesWithKSetBits } from './sum-of-values-at-indices-with-k-set-bits';
 import { problem as pointsThatIntersectWithCars } from './points-that-intersect-with-cars';
@@ -6236,7 +6241,12 @@ export const problems: readonly Problem[] = [
   rowWithMaxSum,
   findMiddleElement,
   countRowsEqualToFirst,
-  // batch 210 — easy/arrays, easy/arrays+bit-manipulation, easy/arrays+simulation, medium/dynamic-programming+math
+  // batch 210 — easy/arrays, easy/arrays+strings, easy/arrays, easy/arrays+hash-map
+  countElementsInRange,
+  minWordLength,
+  transpose2dArray,
+  countPairsWithSameSum,
+  // batch 210b — easy/arrays, easy/arrays+bit-manipulation, easy/arrays+simulation, medium/dynamic-programming+math
   secondMaximumNumberInArray,
   sumOfValuesAtIndicesWithKSetBits,
   pointsThatIntersectWithCars,
