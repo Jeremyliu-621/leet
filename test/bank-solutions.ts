@@ -43212,6 +43212,42 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     for (let i = 0; i < n; i++) total += Math.floor(i / 7) + (i % 7) + 1;
     return total;
   },
+  // batch 200b ---------------------------------------------------------------
+  'minimum-value-to-get-positive-step-by-step-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let minPrefix = 0, prefix = 0;
+    for (const n of nums) { prefix += n; minPrefix = Math.min(minPrefix, prefix); }
+    return Math.max(1, 1 - minPrefix);
+  },
+  'maximum-difference-between-adjacent-elements-in-a-circular-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let max = 0;
+    for (let i = 0; i < nums.length; i++) max = Math.max(max, Math.abs(nums[i]! - nums[(i + 1) % nums.length]!));
+    return max;
+  },
+  'binary-string-with-substrings-representing-1-to-n': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = args[1] as number;
+    for (let i = 1; i <= n; i++) {
+      if (!s.includes(i.toString(2))) return false;
+      if (i.toString(2).length > s.length) return false;
+    }
+    return true;
+  },
+  'sign-of-the-product-of-an-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let negCount = 0;
+    for (const n of nums) {
+      if (n === 0) return 0;
+      if (n < 0) negCount++;
+    }
+    return negCount % 2 === 0 ? 1 : -1;
+  },
+  'find-the-index-of-the-first-occurrence-in-a-string': (...args: unknown[]) => {
+    const haystack = args[0] as string;
+    const needle = args[1] as string;
+    return haystack.indexOf(needle);
+  },
   // batch 199b ---------------------------------------------------------------
   'find-indices-with-index-and-value-difference-i': (...args: unknown[]) => {
     const nums = args[0] as number[];
