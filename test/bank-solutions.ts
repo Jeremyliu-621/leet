@@ -43615,13 +43615,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     if (count0 === count1) return Math.min(swaps('0'), swaps('1'));
     return count0 > count1 ? swaps('0') : swaps('1');
   },
-  'count-rectangles-containing-points': (...args: unknown[]) => {
-    const rectangles = args[0] as number[][];
-    const points = args[1] as number[][];
-    return points.map(([px, py]) =>
-      rectangles.filter(([rx, ry]) => (px as number) <= (rx as number) && (py as number) <= (ry as number)).length
-    );
-  },
   // batch 204 ---------------------------------------------------------------
   'flatten-2d-array': (...args: unknown[]) => {
     const matrix = args[0] as number[][];
@@ -44198,23 +44191,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     for (const n of nums) set.add(parseInt(String(n).split('').reverse().join(''), 10));
     return set.size;
   },
-  'maximize-the-confusion-of-an-exam': (...args: unknown[]) => {
-    const answerKey = args[0] as string;
-    const k = args[1] as number;
-    const maxWindow = (target: string): number => {
-      let count = 0, left = 0, best = 0;
-      for (let right = 0; right < answerKey.length; right++) {
-        if (answerKey[right] !== target) count++;
-        while (count > k) {
-          if (answerKey[left] !== target) count--;
-          left++;
-        }
-        best = Math.max(best, right - left + 1);
-      }
-      return best;
-    };
-    return Math.max(maxWindow('T'), maxWindow('F'));
-  },
   'count-special-integers': (...args: unknown[]) => {
     const n = args[0] as number;
     const s = String(n);
@@ -44355,22 +44331,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       }
     }
     return results;
-  },
-
-  'find-valid-matrix-given-row-column-sums': (...args: unknown[]) => {
-    const rs = (args[0] as number[]).slice();
-    const cs = (args[1] as number[]).slice();
-    const m = rs.length, n = cs.length;
-    const mat: number[][] = Array.from({ length: m }, () => Array(n).fill(0));
-    for (let i = 0; i < m; i++) {
-      for (let j = 0; j < n; j++) {
-        const val = Math.min(rs[i]!, cs[j]!);
-        mat[i]![j] = val;
-        rs[i] = rs[i]! - val;
-        cs[j] = cs[j]! - val;
-      }
-    }
-    return mat;
   },
 
   'count-complete-substrings': (...args: unknown[]) => {
@@ -44626,25 +44586,159 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
         res[j] = Math.max(res[j]!, String(row[j]).length);
     return res;
   },
-  'count-number-of-rectangles-containing-each-point': (...args: unknown[]) => {
-    const rectangles = args[0] as number[][];
-    const points = args[1] as number[][];
-    const byHeight: number[][] = Array.from({ length: 101 }, () => []);
-    for (const rect of rectangles) byHeight[rect[1]!]!.push(rect[0]!);
-    for (let h = 1; h <= 100; h++) byHeight[h]!.sort((a, b) => a - b);
-    return points.map(([px, py]) => {
-      let count = 0;
-      for (let h = py!; h <= 100; h++) {
-        const arr = byHeight[h]!;
-        let lo = 0, hi = arr.length;
-        while (lo < hi) {
-          const mid = (lo + hi) >> 1;
-          if (arr[mid]! >= px!) hi = mid; else lo = mid + 1;
-        }
-        count += arr.length - lo;
+
+  'count-groups-of-special-equivalent-strings': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const canonical = (w: string): string => {
+      const even = [...w].filter((_, i) => i % 2 === 0).sort().join('');
+      const odd = [...w].filter((_, i) => i % 2 === 1).sort().join('');
+      return even + '|' + odd;
+    };
+    return new Set(words.map(canonical)).size;
+  },
+
+  'difference-ones-zeros-in-row-and-column': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length;
+    const n = grid[0]!.length;
+    const rowOnes = grid.map(r => r.reduce((a, b) => a + b, 0));
+    const colOnes = Array.from({ length: n }, (_, j) => grid.reduce((a, r) => a + r[j]!, 0));
+    return grid.map((r, i) => r.map((_, j) => 2 * rowOnes[i]! - n + 2 * colOnes[j]! - m));
+  },
+
+  'find-kth-largest-integer-in-array': (...args: unknown[]) => {
+    const nums = [...(args[0] as string[])];
+    const k = args[1] as number;
+    nums.sort((a, b) => a.length !== b.length ? b.length - a.length : b.localeCompare(a));
+    return nums[k - 1];
+  },
+
+  // batch 215 (addendum)
+  'valid-tic-tac-toe-state': (...args: unknown[]) => {
+    const board = args[0] as string[];
+    let xs = 0, os = 0;
+    for (const row of board) {
+      for (const c of row) {
+        if (c === 'X') xs++;
+        else if (c === 'O') os++;
       }
-      return count;
+    }
+    if (os > xs || xs > os + 1) return false;
+    function wins(player: string): boolean {
+      for (let i = 0; i < 3; i++) {
+        if (board[i]![0] === player && board[i]![1] === player && board[i]![2] === player) return true;
+        if (board[0]![i] === player && board[1]![i] === player && board[2]![i] === player) return true;
+      }
+      if (board[0]![0] === player && board[1]![1] === player && board[2]![2] === player) return true;
+      if (board[0]![2] === player && board[1]![1] === player && board[2]![0] === player) return true;
+      return false;
+    }
+    const xWins = wins('X'), oWins = wins('O');
+    if (xWins && oWins) return false;
+    if (xWins && xs !== os + 1) return false;
+    if (oWins && xs !== os) return false;
+    return true;
+  },
+
+  'kth-smallest-number-in-multiplication-table': (...args: unknown[]) => {
+    const [m, n, k] = args as [number, number, number];
+    function count(v: number): number {
+      let c = 0;
+      for (let i = 1; i <= m; i++) c += Math.min(Math.floor(v / i), n);
+      return c;
+    }
+    let lo = 1, hi = m * n;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (count(mid) >= k) hi = mid;
+      else lo = mid + 1;
+    }
+    return lo;
+  },
+
+  'confusing-number-ii': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const rotation: Record<number, number> = { 0: 0, 1: 1, 6: 9, 8: 8, 9: 6 };
+    const digits = [0, 1, 6, 8, 9];
+    let count = 0;
+    function isConfusing(num: number): boolean {
+      let original = num, rotated = 0;
+      while (num > 0) {
+        rotated = rotated * 10 + rotation[num % 10]!;
+        num = Math.floor(num / 10);
+      }
+      return original !== rotated;
+    }
+    function dfs(curr: number): void {
+      if (curr > n) return;
+      if (curr > 0 && isConfusing(curr)) count++;
+      for (const d of digits) {
+        if (curr === 0 && d === 0) continue;
+        const next = curr * 10 + d;
+        if (next > n) break;
+        dfs(next);
+      }
+    }
+    dfs(0);
+    return count;
+  },
+
+  'minimum-swaps-to-arrange-a-binary-grid': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const n = grid.length;
+    const t = grid.map(row => {
+      let zeros = 0;
+      for (let j = n - 1; j >= 0; j--) {
+        if (row[j] === 0) zeros++;
+        else break;
+      }
+      return zeros;
     });
+    let swaps = 0;
+    for (let i = 0; i < n; i++) {
+      const need = n - 1 - i;
+      let j = i;
+      while (j < n && t[j]! < need) j++;
+      if (j === n) return -1;
+      while (j > i) {
+        [t[j]!, t[j - 1]!] = [t[j - 1]!, t[j]!];
+        j--;
+        swaps++;
+      }
+    }
+    return swaps;
+  },
+
+  'solve-the-equation': (...args: unknown[]) => {
+    const equation = args[0] as string;
+    function parse(s: string): { coeff: number; constant: number } {
+      let coeff = 0, constant = 0, i = 0, sign = 1;
+      while (i < s.length) {
+        if (s[i] === '+') { sign = 1; i++; }
+        else if (s[i] === '-') { sign = -1; i++; }
+        else {
+          let j = i;
+          while (j < s.length && s[j] !== '+' && s[j] !== '-') j++;
+          const token = s.slice(i, j);
+          if (token === 'x') coeff += sign;
+          else if (token.endsWith('x')) {
+            const num = token.slice(0, -1);
+            coeff += sign * (num === '' ? 1 : parseInt(num, 10));
+          } else {
+            constant += sign * parseInt(token, 10);
+          }
+          i = j;
+        }
+      }
+      return { coeff, constant };
+    }
+    const eqIdx = equation.indexOf('=');
+    const l = parse(equation.slice(0, eqIdx));
+    const r = parse(equation.slice(eqIdx + 1));
+    const xCoeff = l.coeff - r.coeff;
+    const constVal = r.constant - l.constant;
+    if (xCoeff === 0) return constVal === 0 ? 'Infinite solutions' : 'No solution';
+    return `x=${constVal / xCoeff}`;
   },
 
   // batch 217 ---------------------------------------------------------------
