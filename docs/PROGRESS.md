@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2553** problems; 7953 tests green. Batches 102–222 complete.
+**Current focus:** Bank at **2556** problems; 7962 tests green. Batches 102–223 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 223+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 224+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 223 — count-balanced-subarrays, longest-divisible-run, maximum-sum-after-xor-operations (2026-05-29)
+Three new problems: `count-balanced-subarrays` (medium/arrays+hash-map, alternating prefix-diff + frequency map, O(n)), `longest-divisible-run` (easy/arrays, greedy scan checking each adjacent pair for divisibility), `maximum-sum-after-xor-operations` (medium/arrays+bit-manipulation+math, XOR even-subset constraint → sort gains, greedily take positive pairs). Bank at **2556**; 7962 tests.
 
 ### feat(bank): batch 222 — count-tested-devices, people-aware-of-secret, reachable-cell-at-given-time (2026-05-29)
 Three new problems (find-beautiful-indices was duplicate): `count-tested-devices-after-test-operations` (easy/arrays+simulation), `number-of-people-aware-of-secret` (medium/dp, daily window DP), `determine-if-a-cell-is-reachable-at-a-given-time` (medium/math, Chebyshev distance + (0,1) edge case). Merged concurrent batch. Bank at **2553**; 7953 tests.
