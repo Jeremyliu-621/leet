@@ -40515,6 +40515,64 @@ def maximumLength(nums):
     return max(even, odd, alternating)
 `,
 
+  // batch 178 — Python solutions
+  'maximize-number-of-nice-divisors': `
+def maxNiceDivisors(primeFactors):
+    MOD = 10**9 + 7
+    p = primeFactors
+    if p == 1: return 1
+    if p % 3 == 0: return pow(3, p // 3, MOD)
+    if p % 3 == 1: return pow(3, p // 3 - 1, MOD) * 4 % MOD
+    return pow(3, p // 3, MOD) * 2 % MOD
+`,
+
+  'expressive-words': `
+def expressiveWords(s, words):
+    if hasattr(words, 'to_py'): words = list(words.to_py())
+    def isStretchy(s, w):
+        i = j = 0
+        while i < len(s) and j < len(w):
+            if s[i] != w[j]: return False
+            si, wj = i, j
+            while i < len(s) and s[i] == s[si]: i += 1
+            while j < len(w) and w[j] == w[wj]: j += 1
+            rs, rw = i - si, j - wj
+            if rs == rw: continue
+            if rs >= 3 and rs > rw: continue
+            return False
+        return i == len(s) and j == len(w)
+    return sum(1 for w in words if isStretchy(s, w))
+`,
+
+  'global-local-inversions': `
+def isIdealPermutation(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    return all(abs(x - i) <= 1 for i, x in enumerate(nums))
+`,
+
+  'smallest-range-ii': `
+def smallestRangeII(nums, k):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums.sort()
+    n = len(nums)
+    res = nums[-1] - nums[0]
+    for i in range(n - 1):
+        high = max(nums[i] + k, nums[-1] - k)
+        low = min(nums[0] + k, nums[i + 1] - k)
+        res = min(res, high - low)
+    return res
+`,
+
+  'check-if-word-is-valid-after-substitutions': `
+def isValid(s):
+    stack = []
+    for c in s:
+        stack.append(c)
+        if len(stack) >= 3 and stack[-3] == 'a' and stack[-2] == 'b' and stack[-1] == 'c':
+            stack.pop(); stack.pop(); stack.pop()
+    return len(stack) == 0
+`,
+
   // batch 174
   'lexicographic-numbers': `
 def lexicalOrder(n):

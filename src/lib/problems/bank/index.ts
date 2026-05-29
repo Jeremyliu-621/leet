@@ -2678,6 +2678,12 @@ import { problem as mostPopularVideoCreator } from './most-popular-video-creator
 import { problem as lengthOfLongestSubsequenceThatSumsToTarget } from './length-of-longest-subsequence-that-sums-to-target';
 import { problem as minimumNumberOfOperationsToReinitializeAPermutation } from './minimum-number-of-operations-to-reinitialize-a-permutation';
 import { problem as takingMaximumEnergyFromTheMysticDungeon } from './taking-maximum-energy-from-the-mystic-dungeon';
+// batch 178 — math/hard, strings+two-pointers/medium, arrays+math/medium×2, stack+strings/medium
+import { problem as maximizeNumberOfNiceDivisors } from './maximize-number-of-nice-divisors';
+import { problem as expressiveWords } from './expressive-words';
+import { problem as globalLocalInversions } from './global-local-inversions';
+import { problem as smallestRangeII } from './smallest-range-ii';
+import { problem as checkIfWordIsValidAfterSubstitutions } from './check-if-word-is-valid-after-substitutions';
 // batch 175 — math/medium, arrays/medium, strings/medium, arrays+dp/hard, graph/hard
 import { problem as minimumNonZeroProductOfTheArrayElements } from './minimum-non-zero-product-of-the-array-elements';
 import { problem as removeOneElementToMakeArrayStrictlyIncreasing } from './remove-one-element-to-make-array-strictly-increasing';
@@ -5724,6 +5730,13 @@ export const problems: readonly Problem[] = [
   minimumNumberOfOperationsToReinitializeAPermutation,
   takingMaximumEnergyFromTheMysticDungeon,
   // batch 175 (remote) — math/medium, arrays/medium, strings/medium, arrays+dp/hard, graph/hard
+  // batch 178 — math/hard, strings+two-pointers/medium, arrays+math/medium×2, stack+strings/medium
+  maximizeNumberOfNiceDivisors,
+  expressiveWords,
+  globalLocalInversions,
+  smallestRangeII,
+  checkIfWordIsValidAfterSubstitutions,
+  // batch 175 — math/medium, arrays/medium, strings/medium, arrays+dp/hard, graph/hard
   minimumNonZeroProductOfTheArrayElements,
   removeOneElementToMakeArrayStrictlyIncreasing,
   reconstructOriginalDigitsFromEnglish,

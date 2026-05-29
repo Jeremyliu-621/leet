@@ -40821,6 +40821,49 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
+  // batch 178
+  'maximize-number-of-nice-divisors': (primeFactors: unknown) => {
+    const MOD = 1_000_000_007n;
+    const p = BigInt(primeFactors as number);
+    if (p === 1n) return 1;
+    function modpow(b: bigint, e: bigint, m: bigint): bigint {
+      let r = 1n; b = b % m;
+      while (e > 0n) { if (e & 1n) r = r * b % m; e >>= 1n; b = b * b % m; }
+      return r;
+    }
+    if (p % 3n === 0n) return Number(modpow(3n, p / 3n, MOD));
+    if (p % 3n === 1n) return Number(modpow(3n, p / 3n - 1n, MOD) * 4n % MOD);
+    return Number(modpow(3n, p / 3n, MOD) * 2n % MOD);
+  },
+
+  'expressive-words': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const words = args[1] as string[];
+    function isStretchy(s: string, w: string): boolean {
+      let i = 0, j = 0;
+      while (i < s.length && j < w.length) {
+        if (s[i] !== w[j]) return false;
+        const si = i, wj = j;
+        while (i < s.length && s[i] === s[si]) i++;
+        while (j < w.length && w[j] === w[wj]) j++;
+        const rs = i - si, rw = j - wj;
+        if (rs === rw) continue;
+        if (rs >= 3 && rs > rw) continue;
+        return false;
+      }
+      return i === s.length && j === w.length;
+    }
+    return words.filter(w => isStretchy(s, w)).length;
+  },
+
+  'global-local-inversions': (nums: unknown) => {
+    const arr = nums as number[];
+    for (let i = 0; i < arr.length; i++) {
+      if (Math.abs(arr[i]! - i) > 1) return false;
+    }
+    return true;
+  },
+
   'find-champion-ii': (...args: unknown[]) => {
     const n = args[0] as number;
     const edges = args[1] as number[][];
@@ -41146,6 +41189,30 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       }
     }
     return ans;
+  },
+
+  'smallest-range-ii': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const k = args[1] as number;
+    const n = nums.length;
+    let res = nums[n - 1]! - nums[0]!;
+    for (let i = 0; i < n - 1; i++) {
+      const high = Math.max(nums[i]! + k, nums[n - 1]! - k);
+      const low = Math.min(nums[0]! + k, nums[i + 1]! - k);
+      res = Math.min(res, high - low);
+    }
+    return res;
+  },
+
+  'check-if-word-is-valid-after-substitutions': (s: unknown) => {
+    const stack: string[] = [];
+    for (const c of s as string) {
+      stack.push(c);
+      if (stack.length >= 3 && stack[stack.length - 3] === 'a' && stack[stack.length - 2] === 'b' && stack[stack.length - 1] === 'c') {
+        stack.pop(); stack.pop(); stack.pop();
+      }
+    }
+    return stack.length === 0;
   },
 
 };
