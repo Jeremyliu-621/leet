@@ -40844,33 +40844,34 @@ def maxOperations(s):
 `,
 
   'design-log-storage-system': `
-def logSystemRunner(ops, args):
-    if hasattr(ops, 'to_py'): ops = list(ops.to_py())
-    ops = [str(op) for op in ops]
+def logSystem(operations, args):
+    if hasattr(operations, 'to_py'): operations = list(operations.to_py())
     if hasattr(args, 'to_py'): args = list(args.to_py())
     gran_map = {'Year': 4, 'Month': 7, 'Day': 10, 'Hour': 13, 'Minute': 16, 'Second': 19}
     logs = []
     results = []
-    for i, op in enumerate(ops):
+    for i in range(len(operations)):
+        op = str(operations[i])
         a = args[i]
         if hasattr(a, 'to_py'): a = list(a.to_py())
         a = list(a)
         if op == 'LogSystem':
+            logs.clear()
             results.append(None)
         elif op == 'put':
-            logs.append((str(a[1]), int(a[0])))
+            logs.append({'id': int(a[0]), 'timestamp': str(a[1])})
             results.append(None)
         else:
             start, end, gran = str(a[0]), str(a[1]), str(a[2])
             length = gran_map[gran]
             s = start[:length]
             e = end[:length]
-            ids = [lid for ts, lid in logs if s <= ts[:length] <= e]
+            ids = [log['id'] for log in logs if s <= log['timestamp'][:length] <= e]
             results.append(ids)
     return results
 `,
 
-    // batch 177 — arrays/easy, graph/medium, strings+dp/hard
+  // batch 177 — arrays/easy, graph/medium, strings+dp/hard
   'special-array-i': `def isArraySpecial(nums):
     if hasattr(nums, 'to_py'): nums = list(nums.to_py())
     return all(nums[i] % 2 != nums[i-1] % 2 for i in range(1, len(nums)))
@@ -40976,6 +40977,115 @@ def validStrings(n):
         dfs(cur + '1')
     dfs('')
     return result
+`,
+
+  'maximum-sum-of-two-non-overlapping-subarrays': `def maxSumTwoNoOverlap(nums, firstLen, secondLen):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = [int(x) for x in nums]
+    firstLen, secondLen = int(firstLen), int(secondLen)
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + nums[i]
+
+    def max_sum(L, M):
+        result = 0
+        max_l = 0
+        for i in range(L + M, n + 1):
+            max_l = max(max_l, prefix[i - M] - prefix[i - M - L])
+            result = max(result, max_l + prefix[i] - prefix[i - M])
+        return result
+
+    return max(max_sum(firstLen, secondLen), max_sum(secondLen, firstLen))
+`,
+
+  'design-phone-directory': `def phoneDirectory(operations, args):
+    if hasattr(operations, 'to_py'): operations = list(operations.to_py())
+    if hasattr(args, 'to_py'): args = list(args.to_py())
+    results = []
+    queue = []
+    available = set()
+
+    for i in range(len(operations)):
+        op = operations[i]
+        arg = list(args[i]) if hasattr(args[i], 'to_py') else list(args[i])
+
+        if op == 'PhoneDirectory':
+            n = int(arg[0])
+            queue = list(range(n))
+            available = set(range(n))
+            results.append(None)
+        elif op == 'get':
+            while queue and queue[0] not in available:
+                queue.pop(0)
+            if not queue:
+                results.append(-1)
+            else:
+                num = queue.pop(0)
+                available.discard(num)
+                results.append(num)
+        elif op == 'check':
+            results.append(int(arg[0]) in available)
+        else:
+            num = int(arg[0])
+            if num not in available:
+                available.add(num)
+                queue.append(num)
+            results.append(None)
+    return results
+`,
+
+  'count-almost-equal-pairs-ii': `def countPairs(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = [int(x) for x in nums]
+    PAD = 7
+
+    def reachable(num):
+        s = str(num).zfill(PAD)
+        reached = {num}
+        one_swaps = []
+        chars = list(s)
+        for i in range(PAD):
+            for j in range(i + 1, PAD):
+                t = chars[:]
+                t[i], t[j] = t[j], t[i]
+                joined = ''.join(t)
+                reached.add(int(joined))
+                one_swaps.append(joined)
+        for s1 in one_swaps:
+            chars1 = list(s1)
+            for i in range(PAD):
+                for j in range(i + 1, PAD):
+                    t = chars1[:]
+                    t[i], t[j] = t[j], t[i]
+                    reached.add(int(''.join(t)))
+        return reached
+
+    count = 0
+    n = len(nums)
+    for i in range(n):
+        reach = reachable(nums[i])
+        for j in range(i + 1, n):
+            if nums[j] in reach:
+                count += 1
+    return count
+`,
+
+  'least-number-of-unique-integers-after-k-removals': `def findLeastNumOfUniqueInts(arr, k):
+    if hasattr(arr, 'to_py'): arr = list(arr.to_py())
+    arr = [int(x) for x in arr]
+    k = int(k)
+    from collections import Counter
+    freq = Counter(arr)
+    freqs = sorted(freq.values())
+    remaining = len(freqs)
+    for f in freqs:
+        if k >= f:
+            k -= f
+            remaining -= 1
+        else:
+            break
+    return remaining
 `,
 
 };

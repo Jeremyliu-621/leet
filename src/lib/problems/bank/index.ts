@@ -2788,6 +2788,11 @@ import { problem as imageOverlap } from './image-overlap';
 import { problem as largest1BorderedSquare } from './largest-1-bordered-square';
 import { problem as waterBottlesII } from './water-bottles-ii';
 import { problem as designMostRecentlyUsedQueue } from './design-most-recently-used-queue';
+// batch 177 (local) — medium/sliding-window, medium/design, hard/math, medium/hash-map
+import { problem as maximumSumOfTwoNonOverlappingSubarrays } from './maximum-sum-of-two-non-overlapping-subarrays';
+import { problem as designPhoneDirectory } from './design-phone-directory';
+import { problem as countAlmostEqualPairsII } from './count-almost-equal-pairs-ii';
+import { problem as leastNumberOfUniqueIntegersAfterKRemovals } from './least-number-of-unique-integers-after-k-removals';
 // batch 172 — arrays+simulation/medium, arrays+hash-map/medium, math/medium×2, arrays/medium
 import { problem as findTheWinnerOfAnArrayGame } from './find-the-winner-of-an-array-game';
 import { problem as shortestImpossibleSequenceOfRolls } from './shortest-impossible-sequence-of-rolls';
@@ -5707,22 +5712,22 @@ export const problems: readonly Problem[] = [
   kthAncestorOfATreeNode,
   countIntegersInRanges,
   maximumSubarrayWithEqualProducts,
-  // batch 177 — hash-map+sorting/medium, arrays+dp/medium, simulation/medium, arrays+prefix-sums/medium
+  // batch 177 (remote) — hash-map+sorting/medium, arrays+dp/medium, simulation/medium, arrays+prefix-sums/medium
   mostPopularVideoCreator,
   lengthOfLongestSubsequenceThatSumsToTarget,
   minimumNumberOfOperationsToReinitializeAPermutation,
   takingMaximumEnergyFromTheMysticDungeon,
-  // batch 175 — math/medium, arrays/medium, strings/medium, arrays+dp/hard, graph/hard
+  // batch 175 (remote) — math/medium, arrays/medium, strings/medium, arrays+dp/hard, graph/hard
   minimumNonZeroProductOfTheArrayElements,
   removeOneElementToMakeArrayStrictlyIncreasing,
   reconstructOriginalDigitsFromEnglish,
   minimumSkipsAfterMeetings,
   maximumPathQualityOfAGraph,
-  // batch 178 — math/medium, hash-map/medium, arrays/medium
+  // batch 178 (remote) — math/medium, hash-map/medium, arrays/medium
   countDistinctPrimeFactorsOfArray,
   numberOfBlackBlocks,
   sortTheStudentsByTheirKthScore,
-  // batch 177 — linked-list/medium×3, arrays+greedy/medium, design/medium
+  // batch 177 (remote) — linked-list/medium×3, arrays+greedy/medium, design/medium
   mergeInBetweenLinkedLists,
   insertGreatestCommonDivisorsInLinkedList,
   doubleANumberRepresentedAsLinkedList,
@@ -5732,4 +5737,9 @@ export const problems: readonly Problem[] = [
   mostFrequentIDs,
   numberOfPeopleAwareOfASecret,
   generateBinaryStringsWithoutAdjacentZeros,
+  // batch 177 (local) — medium/sliding-window, medium/design, hard/math, medium/hash-map
+  maximumSumOfTwoNonOverlappingSubarrays,
+  designPhoneDirectory,
+  countAlmostEqualPairsII,
+  leastNumberOfUniqueIntegersAfterKRemovals,
 ];

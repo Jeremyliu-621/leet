@@ -40774,6 +40774,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       const op = ops[i]!;
       const a = opArgs[i]!;
       if (op === 'LogSystem') {
+        logs.length = 0;
         results.push(null);
       } else if (op === 'put') {
         logs.push([a[1] as string, a[0] as number]);
@@ -40913,6 +40914,116 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     dfs('');
     return result;
+  },
+
+  'maximum-sum-of-two-non-overlapping-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const firstLen = args[1] as number;
+    const secondLen = args[2] as number;
+    const n = nums.length;
+    const prefix = new Array(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + nums[i]!;
+
+    function maxSum(L: number, M: number): number {
+      let result = 0;
+      let maxL = 0;
+      for (let i = L + M; i <= n; i++) {
+        maxL = Math.max(maxL, prefix[i - M]! - prefix[i - M - L]!);
+        result = Math.max(result, maxL + prefix[i]! - prefix[i - M]!);
+      }
+      return result;
+    }
+
+    return Math.max(maxSum(firstLen, secondLen), maxSum(secondLen, firstLen));
+  },
+
+  'design-phone-directory': (...args: unknown[]) => {
+    const operations = args[0] as string[];
+    const opArgs = args[1] as number[][];
+    const results: (null | number | boolean)[] = [];
+    let queue: number[] = [];
+    let available = new Set<number>();
+
+    for (let i = 0; i < operations.length; i++) {
+      const op = operations[i]!;
+      const arg = opArgs[i]!;
+      if (op === 'PhoneDirectory') {
+        const n = arg[0]!;
+        queue = Array.from({ length: n }, (_, k) => k);
+        available = new Set(queue);
+        results.push(null);
+      } else if (op === 'get') {
+        while (queue.length > 0 && !available.has(queue[0]!)) queue.shift();
+        if (queue.length === 0) {
+          results.push(-1);
+        } else {
+          const num = queue.shift()!;
+          available.delete(num);
+          results.push(num);
+        }
+      } else if (op === 'check') {
+        results.push(available.has(arg[0]!));
+      } else {
+        if (!available.has(arg[0]!)) {
+          available.add(arg[0]!);
+          queue.push(arg[0]!);
+        }
+        results.push(null);
+      }
+    }
+    return results;
+  },
+
+  'count-almost-equal-pairs-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const PAD = 7;
+
+    function reachable(num: number): Set<number> {
+      const s = String(num).padStart(PAD, '0');
+      const reached = new Set<number>([num]);
+      const oneSwaps: string[] = [];
+      for (let i = 0; i < PAD; i++) {
+        for (let j = i + 1; j < PAD; j++) {
+          const t = s.split('');
+          [t[i], t[j]] = [t[j]!, t[i]!];
+          const joined = t.join('');
+          reached.add(parseInt(joined, 10));
+          oneSwaps.push(joined);
+        }
+      }
+      for (const s1 of oneSwaps) {
+        for (let i = 0; i < PAD; i++) {
+          for (let j = i + 1; j < PAD; j++) {
+            const t = s1.split('');
+            [t[i], t[j]] = [t[j]!, t[i]!];
+            reached.add(parseInt(t.join(''), 10));
+          }
+        }
+      }
+      return reached;
+    }
+
+    let count = 0;
+    for (let i = 0; i < nums.length; i++) {
+      const reach = reachable(nums[i]!);
+      for (let j = i + 1; j < nums.length; j++) {
+        if (reach.has(nums[j]!)) count++;
+      }
+    }
+    return count;
+  },
+
+  'least-number-of-unique-integers-after-k-removals': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    let k = args[1] as number;
+    const freq = new Map<number, number>();
+    for (const n of arr) freq.set(n, (freq.get(n) ?? 0) + 1);
+    const freqs = [...freq.values()].sort((a, b) => a - b);
+    let remaining = freqs.length;
+    for (const f of freqs) {
+      if (k >= f) { k -= f; remaining--; } else break;
+    }
+    return remaining;
   },
 
 };
