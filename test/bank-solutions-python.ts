@@ -38284,6 +38284,116 @@ def removeDuplicates(nums):
     return k
 `,
 
+  // batch 169 — Python solutions for new problems
+  'maximum-number-of-eaten-apples': `
+import heapq
+def eatenApples(apples, days):
+    if hasattr(apples, 'to_py'):
+        apples = list(apples.to_py())
+    if hasattr(days, 'to_py'):
+        days = list(days.to_py())
+    n = len(apples)
+    heap = []  # (expire_day, count)
+    eaten = 0
+    day = 0
+    while day < n or heap:
+        if day < n and apples[day] > 0:
+            heapq.heappush(heap, (day + days[day], apples[day]))
+        while heap and heap[0][0] <= day:
+            heapq.heappop(heap)
+        if heap:
+            expire, cnt = heapq.heappop(heap)
+            eaten += 1
+            if cnt - 1 > 0:
+                heapq.heappush(heap, (expire, cnt - 1))
+        day += 1
+    return eaten
+`,
+  'minimum-flips-to-make-alternating-binary-string': `
+def minFlips(s):
+    n = len(s)
+    t = s + s
+    flips0 = sum(1 for i in range(n) if t[i] != ('0' if i % 2 == 0 else '1'))
+    ans = min(flips0, n - flips0)
+    for i in range(n, 2 * n):
+        out_char = t[i - n]
+        out_exp0 = '0' if (i - n) % 2 == 0 else '1'
+        if out_char != out_exp0:
+            flips0 -= 1
+        in_char = t[i]
+        in_exp0 = '0' if i % 2 == 0 else '1'
+        if in_char != in_exp0:
+            flips0 += 1
+        ans = min(ans, min(flips0, n - flips0))
+    return ans
+`,
+  'finding-pairs-with-a-certain-sum': `
+def findSumPairsClass(ops, args):
+    if hasattr(ops, 'to_py'):
+        ops = list(ops.to_py())
+    if hasattr(args, 'to_py'):
+        args = list(args.to_py())
+    nums1 = []
+    nums2 = []
+    freq = {}
+    results = []
+    for op, arg in zip(ops, args):
+        if hasattr(arg, 'to_py'):
+            arg = list(arg.to_py())
+        if op == 'FindSumPairs':
+            n1 = list(arg[0].to_py()) if hasattr(arg[0], 'to_py') else list(arg[0])
+            n2 = list(arg[1].to_py()) if hasattr(arg[1], 'to_py') else list(arg[1])
+            nums1[:] = n1
+            nums2[:] = n2
+            freq.clear()
+            for v in nums2:
+                freq[v] = freq.get(v, 0) + 1
+            results.append(None)
+        elif op == 'add':
+            idx, val = int(arg[0]), int(arg[1])
+            old = nums2[idx]
+            freq[old] -= 1
+            nums2[idx] = old + val
+            freq[nums2[idx]] = freq.get(nums2[idx], 0) + 1
+            results.append(None)
+        else:  # count
+            tot = int(arg[0])
+            cnt = sum(freq.get(tot - v, 0) for v in nums1)
+            results.append(cnt)
+    return results
+`,
+  'count-valid-words-in-a-sentence': `
+def countValidWords(sentence):
+    tokens = sentence.split(' ')
+    count = 0
+    for tok in tokens:
+        if not tok:
+            continue
+        has_hyphen = False
+        has_punct = False
+        valid = True
+        for i, c in enumerate(tok):
+            if c.isdigit():
+                valid = False
+                break
+            if c == '-':
+                if has_hyphen or i == 0 or i == len(tok) - 1:
+                    valid = False
+                    break
+                if not tok[i-1].islower() or not tok[i+1].islower():
+                    valid = False
+                    break
+                has_hyphen = True
+            elif c in '!.,':
+                if has_punct or i != len(tok) - 1:
+                    valid = False
+                    break
+                has_punct = True
+        if valid:
+            count += 1
+    return count
+`,
+
   // batch 165
   'minimum-stack': `
 def minStack(ops, args):

@@ -2655,6 +2655,11 @@ import { problem as allPathsFromSourceToTarget } from './all-paths-from-source-t
 import { problem as countUnreachablePairsOfNodesInUndirectedGraph } from './count-unreachable-pairs-of-nodes-in-an-undirected-graph';
 import { problem as partitionArrayIntoDisjointIntervals } from './partition-array-into-disjoint-intervals';
 import { problem as removeDuplicatesFromSortedArrayII } from './remove-duplicates-from-sorted-array-ii';
+// batch 169 — new problems: heap+greedy/medium, strings/easy, design+hash-map/medium, strings/easy
+import { problem as maximumNumberOfEatenApples } from './maximum-number-of-eaten-apples';
+import { problem as minimumFlipsToMakeAlternatingBinaryString } from './minimum-flips-to-make-alternating-binary-string';
+import { problem as findingPairsWithACertainSum } from './finding-pairs-with-a-certain-sum';
+import { problem as countValidWordsInASentence } from './count-valid-words-in-a-sentence';
 // batch 168 — 2 new problems added
 import { problem as countSubstringsWithKFrequencyCharactersII } from './count-substrings-with-k-frequency-characters-ii';
 import { problem as sumOfImbalanceNumbersOfAllSubarrays } from './sum-of-imbalance-numbers-of-all-subarrays';
@@ -5434,6 +5439,11 @@ export const problems: readonly Problem[] = [
   countUnreachablePairsOfNodesInUndirectedGraph,
   partitionArrayIntoDisjointIntervals,
   removeDuplicatesFromSortedArrayII,
+  // batch 169 — 4 new problems
+  maximumNumberOfEatenApples,
+  minimumFlipsToMakeAlternatingBinaryString,
+  findingPairsWithACertainSum,
+  countValidWordsInASentence,
   // batch 168 — 2 new problems
   countSubstringsWithKFrequencyCharactersII,
   sumOfImbalanceNumbersOfAllSubarrays,

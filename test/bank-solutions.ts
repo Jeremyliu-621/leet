@@ -38340,6 +38340,129 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return k;
   },
 
+  // batch 169 — new problems
+  'maximum-number-of-eaten-apples': (...args: unknown[]) => {
+    const apples = args[0] as number[];
+    const days = args[1] as number[];
+    const n = apples.length;
+    // min-heap: [expireDay, count]
+    const heap: [number, number][] = [];
+    const push = (item: [number, number]) => {
+      heap.push(item);
+      let i = heap.length - 1;
+      while (i > 0) {
+        const p = (i - 1) >> 1;
+        if (heap[p]![0] <= heap[i]![0]) break;
+        [heap[p], heap[i]] = [heap[i]!, heap[p]!];
+        i = p;
+      }
+    };
+    const pop = (): [number, number] => {
+      const top = heap[0]!;
+      const last = heap.pop()!;
+      if (heap.length > 0) {
+        heap[0] = last;
+        let i = 0;
+        while (true) {
+          let s = i;
+          const l = 2 * i + 1, r = 2 * i + 2;
+          if (l < heap.length && heap[l]![0] < heap[s]![0]) s = l;
+          if (r < heap.length && heap[r]![0] < heap[s]![0]) s = r;
+          if (s === i) break;
+          [heap[s], heap[i]] = [heap[i]!, heap[s]!];
+          i = s;
+        }
+      }
+      return top;
+    };
+    let eaten = 0;
+    let day = 0;
+    while (day < n || heap.length > 0) {
+      if (day < n && apples[day]! > 0) push([day + days[day]!, apples[day]!]);
+      while (heap.length > 0 && heap[0]![0] <= day) pop();
+      if (heap.length > 0) {
+        const top = heap[0]!;
+        top[1]--;
+        eaten++;
+        if (top[1] === 0) pop();
+      }
+      day++;
+    }
+    return eaten;
+  },
+  'minimum-flips-to-make-alternating-binary-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const t = s + s;
+    let flips0 = 0; // flips to match "010101..." pattern
+    for (let i = 0; i < n; i++) {
+      if (t[i] !== (i % 2 === 0 ? '0' : '1')) flips0++;
+    }
+    let ans = Math.min(flips0, n - flips0);
+    for (let i = n; i < 2 * n; i++) {
+      const outChar = t[i - n]!;
+      const outExpected0 = (i - n) % 2 === 0 ? '0' : '1';
+      if (outChar !== outExpected0) flips0--; // remove leaving char's mismatch
+      const inChar = t[i]!;
+      const inExpected0 = i % 2 === 0 ? '0' : '1';
+      if (inChar !== inExpected0) flips0++; // add entering char's mismatch
+      ans = Math.min(ans, Math.min(flips0, n - flips0));
+    }
+    return ans;
+  },
+  'finding-pairs-with-a-certain-sum': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as unknown[][];
+    let nums1: number[] = [];
+    let nums2: number[] = [];
+    const freq = new Map<number, number>();
+    return ops.map((op, i) => {
+      if (op === 'FindSumPairs') {
+        const init = opArgs[i] as number[][];
+        nums1 = init[0]!;
+        nums2 = [...init[1]!];
+        for (const v of nums2) freq.set(v, (freq.get(v) ?? 0) + 1);
+        return null;
+      }
+      if (op === 'add') {
+        const [idx, val] = opArgs[i] as number[];
+        const old = nums2[idx!]!;
+        freq.set(old, freq.get(old)! - 1);
+        nums2[idx!] = old + val!;
+        freq.set(nums2[idx!]!, (freq.get(nums2[idx!]!) ?? 0) + 1);
+        return null;
+      }
+      // count
+      const tot = (opArgs[i] as number[])[0]!;
+      let cnt = 0;
+      for (const v of nums1) cnt += freq.get(tot - v) ?? 0;
+      return cnt;
+    });
+  },
+  'count-valid-words-in-a-sentence': (...args: unknown[]) => {
+    const sentence = args[0] as string;
+    const tokens = sentence.split(' ').filter(t => t.length > 0);
+    let count = 0;
+    for (const tok of tokens) {
+      let hasHyphen = false, hasPunct = false, valid = true;
+      for (let i = 0; i < tok.length; i++) {
+        const c = tok[i]!;
+        if (c >= '0' && c <= '9') { valid = false; break; }
+        if (c === '-') {
+          if (hasHyphen || i === 0 || i === tok.length - 1 ||
+              !(tok[i - 1]! >= 'a' && tok[i - 1]! <= 'z') ||
+              !(tok[i + 1]! >= 'a' && tok[i + 1]! <= 'z')) { valid = false; break; }
+          hasHyphen = true;
+        } else if (c === '!' || c === '.' || c === ',') {
+          if (hasPunct || i !== tok.length - 1) { valid = false; break; }
+          hasPunct = true;
+        }
+      }
+      if (valid) count++;
+    }
+    return count;
+  },
+
   // batch 165 — design+stack/easy, arrays+stack/medium×2, arrays+stack+dp/medium, arrays+sliding-window/hard
   'minimum-stack': (...args: unknown[]) => {
     const ops = args[0] as string[];
