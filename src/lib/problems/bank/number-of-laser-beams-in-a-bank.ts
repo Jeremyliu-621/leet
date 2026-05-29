@@ -50,9 +50,9 @@ Return the total number of laser beams in the bank.`,
     { args: [["000","111","000"]], expected: 0 },
   ],
   hiddenTests: [
-    { args: [["1","1"]], expected: 1 },
-    { args: [["1","0","1"]], expected: 1 },
-    { args: [["11","00","11"]], expected: 4 },
-    { args: [["0"]], expected: 0 },
+    { args: [['1', '1', '1']], expected: 2 },
+    { args: [['1']], expected: 0 },
+    { args: [['10', '00', '01']], expected: 1 },
+    { args: [['11', '11']], expected: 4 },
   ],
 };

@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'largest-divisible-subset',
   title: 'Largest Divisible Subset',
   difficulty: 'medium',
-  tags: ['dynamic-programming'],
+  tags: ['arrays', 'dynamic-programming', 'math'],
   description: `Given a set of **distinct** positive integers \`nums\`, return the largest subset \`answer\` such that every pair \`(answer[i], answer[j])\` of elements in this subset satisfies:
 
 - \`answer[i] % answer[j] == 0\`, or
@@ -59,9 +59,9 @@ If there are multiple solutions, return **any** of them.`,
     { args: [[1]], expected: [1] },
   ],
   hiddenTests: [
-    { args: [[2, 3, 4, 9, 8]], expected: [2, 4, 8] },
-    { args: [[3, 5, 10, 20, 15]], expected: [5, 10, 20] },
-    { args: [[1, 2, 3, 6]], expected: [1, 2, 6] },
-    { args: [[5, 9, 18, 54, 108]], expected: [9, 18, 54, 108] },
+    { args: [[1]], expected: [1] },
+    { args: [[1, 2]], expected: [1, 2] },
+    { args: [[3, 4, 6, 8, 12]], expected: [3, 6, 12] },
+    { args: [[1, 3, 6, 24]], expected: [1, 3, 6, 24] },
   ],
 };

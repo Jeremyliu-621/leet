@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'find-if-path-exists-in-graph',
   title: 'Find if Path Exists in Graph',
   difficulty: 'easy',
-  tags: ['graph'],
+  tags: ['graph', 'union-find'],
   description: `There is a **bi-directional** graph with \`n\` vertices, where each vertex is labeled from \`0\` to \`n - 1\`. The edges in the graph are represented as a 2D integer array \`edges\`, where each \`edges[i] = [u_i, v_i]\` denotes a bi-directional edge between vertex \`u_i\` and vertex \`v_i\`.
 
 Given \`source\` and \`destination\`, return \`true\` if there is a **valid path** from \`source\` to \`destination\`, or \`false\` otherwise.`,
@@ -50,13 +50,11 @@ Given \`source\` and \`destination\`, return \`true\` if there is a **valid path
   visibleTests: [
     { args: [3, [[0, 1], [1, 2], [2, 0]], 0, 2], expected: true },
     { args: [6, [[0, 1], [0, 2], [3, 5], [5, 4], [4, 3]], 0, 5], expected: false },
-    { args: [1, [], 0, 0], expected: true },
   ],
   hiddenTests: [
-    { args: [5, [[0, 1], [2, 3]], 0, 4], expected: false },
-    { args: [4, [[0, 1], [1, 2], [2, 3]], 0, 3], expected: true },
-    { args: [3, [[0, 1]], 2, 2], expected: true },
-    { args: [2, [[0, 1]], 1, 0], expected: true },
-    { args: [10, [[0, 1], [0, 2], [5, 6], [5, 7], [1, 9]], 0, 9], expected: true },
+    { args: [1, [], 0, 0], expected: true },
+    { args: [5, [[0, 1], [1, 2], [2, 3], [3, 4]], 0, 4], expected: true },
+    { args: [5, [[0, 1], [1, 2], [2, 3], [3, 4]], 0, 3], expected: true },
+    { args: [4, [[0, 1], [2, 3]], 0, 3], expected: false },
   ],
 };
