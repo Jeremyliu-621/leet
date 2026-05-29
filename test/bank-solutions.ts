@@ -40736,6 +40736,80 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const score = (args[0] as number[][]).map(row => [...row]);
     const k = args[1] as number;
     return score.sort((a, b) => b[k]! - a[k]!);
+  // batch 177 — linked-list/medium×3, arrays+greedy/medium, design/medium
+  'merge-in-between-linked-lists': (...args: unknown[]) => {
+    const arr1 = args[0] as number[];
+    const a = args[1] as number;
+    const b = args[2] as number;
+    const arr2 = args[3] as number[];
+    // Build result by splicing arr2 into arr1 at [a..b]
+    return [...arr1.slice(0, a), ...arr2, ...arr1.slice(b + 1)];
+  },
+
+  'insert-greatest-common-divisors-in-linked-list': (arr: unknown) => {
+    const nums = arr as number[];
+    const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+    const result: number[] = [nums[0]!];
+    for (let i = 1; i < nums.length; i++) {
+      result.push(gcd(nums[i - 1]!, nums[i]!));
+      result.push(nums[i]!);
+    }
+    return result;
+  },
+
+  'double-a-number-represented-as-linked-list': (arr: unknown) => {
+    const digits = arr as number[];
+    const result = [...digits];
+    let carry = 0;
+    for (let i = result.length - 1; i >= 0; i--) {
+      const val = result[i]! * 2 + carry;
+      result[i] = val % 10;
+      carry = Math.floor(val / 10);
+    }
+    if (carry > 0) result.unshift(carry);
+    return result;
+  },
+
+  'maximum-number-of-operations-to-move-ones-to-the-end': (s: unknown) => {
+    const str = s as string;
+    let ops = 0, ones = 0;
+    for (const ch of str) {
+      if (ch === '1') ones++;
+      else ops += ones;
+    }
+    return ops;
+  },
+
+  'design-log-storage-system': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as (number | string)[][];
+    const granMap: Record<string, number> = { Year: 4, Month: 7, Day: 10, Hour: 13, Minute: 16, Second: 19 };
+    const logs: [string, number][] = [];
+    const results: (null | number[])[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      const a = opArgs[i]!;
+      if (op === 'LogSystem') {
+        results.push(null);
+      } else if (op === 'put') {
+        logs.push([a[1] as string, a[0] as number]);
+        results.push(null);
+      } else {
+        const start = a[0] as string;
+        const end = a[1] as string;
+        const gran = a[2] as string;
+        const len = granMap[gran]!;
+        const s = start.slice(0, len);
+        const e = end.slice(0, len);
+        const ids: number[] = [];
+        for (const [ts, id] of logs) {
+          const t = ts.slice(0, len);
+          if (t >= s && t <= e) ids.push(id);
+        }
+        results.push(ids);
+      }
+    }
+    return results;
   },
 
 };

@@ -40790,4 +40790,84 @@ def sortTheStudents(score, k):
     return sorted(score, key=lambda row: -row[k])
 `,
 
+  // batch 177 — linked-list/medium×3, arrays+greedy/medium, design/medium
+  'merge-in-between-linked-lists': `
+def mergeInBetweenRunner(arr1, a, b, arr2):
+    if hasattr(arr1, 'to_py'): arr1 = list(arr1.to_py())
+    if hasattr(arr2, 'to_py'): arr2 = list(arr2.to_py())
+    arr1 = [int(x) for x in arr1]
+    arr2 = [int(x) for x in arr2]
+    a, b = int(a), int(b)
+    return arr1[:a] + arr2 + arr1[b+1:]
+`,
+
+  'insert-greatest-common-divisors-in-linked-list': `
+from math import gcd
+
+def insertGCDRunner(arr):
+    if hasattr(arr, 'to_py'): arr = list(arr.to_py())
+    nums = [int(x) for x in arr]
+    if len(nums) <= 1:
+        return nums
+    result = [nums[0]]
+    for i in range(1, len(nums)):
+        result.append(gcd(nums[i-1], nums[i]))
+        result.append(nums[i])
+    return result
+`,
+
+  'double-a-number-represented-as-linked-list': `
+def doubleItRunner(arr):
+    if hasattr(arr, 'to_py'): arr = list(arr.to_py())
+    digits = [int(x) for x in arr]
+    carry = 0
+    for i in range(len(digits) - 1, -1, -1):
+        val = digits[i] * 2 + carry
+        digits[i] = val % 10
+        carry = val // 10
+    if carry:
+        digits.insert(0, carry)
+    return digits
+`,
+
+  'maximum-number-of-operations-to-move-ones-to-the-end': `
+def maxOperations(s):
+    if hasattr(s, 'to_py'): s = str(s.to_py())
+    s = str(s)
+    ops, ones = 0, 0
+    for ch in s:
+        if ch == '1':
+            ones += 1
+        else:
+            ops += ones
+    return ops
+`,
+
+  'design-log-storage-system': `
+def logSystemRunner(ops, args):
+    if hasattr(ops, 'to_py'): ops = list(ops.to_py())
+    ops = [str(op) for op in ops]
+    if hasattr(args, 'to_py'): args = list(args.to_py())
+    gran_map = {'Year': 4, 'Month': 7, 'Day': 10, 'Hour': 13, 'Minute': 16, 'Second': 19}
+    logs = []
+    results = []
+    for i, op in enumerate(ops):
+        a = args[i]
+        if hasattr(a, 'to_py'): a = list(a.to_py())
+        a = list(a)
+        if op == 'LogSystem':
+            results.append(None)
+        elif op == 'put':
+            logs.append((str(a[1]), int(a[0])))
+            results.append(None)
+        else:
+            start, end, gran = str(a[0]), str(a[1]), str(a[2])
+            length = gran_map[gran]
+            s = start[:length]
+            e = end[:length]
+            ids = [lid for ts, lid in logs if s <= ts[:length] <= e]
+            results.append(ids)
+    return results
+`,
+
 };

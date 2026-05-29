@@ -2833,6 +2833,12 @@ import { problem as maximumSubarrayWithEqualProducts } from './maximum-subarray-
 import { problem as countDistinctPrimeFactorsOfArray } from './count-distinct-prime-factors-of-array';
 import { problem as numberOfBlackBlocks } from './number-of-black-blocks';
 import { problem as sortTheStudentsByTheirKthScore } from './sort-the-students-by-their-kth-score';
+// batch 177 — linked-list/medium×3, arrays+greedy/medium, design/medium
+import { problem as mergeInBetweenLinkedLists } from './merge-in-between-linked-lists';
+import { problem as insertGreatestCommonDivisorsInLinkedList } from './insert-greatest-common-divisors-in-linked-list';
+import { problem as doubleANumberRepresentedAsLinkedList } from './double-a-number-represented-as-linked-list';
+import { problem as maximumNumberOfOperationsToMoveOnesToTheEnd } from './maximum-number-of-operations-to-move-ones-to-the-end';
+import { problem as designLogStorageSystem } from './design-log-storage-system';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5704,4 +5710,10 @@ export const problems: readonly Problem[] = [
   countDistinctPrimeFactorsOfArray,
   numberOfBlackBlocks,
   sortTheStudentsByTheirKthScore,
+  // batch 177 — linked-list/medium×3, arrays+greedy/medium, design/medium
+  mergeInBetweenLinkedLists,
+  insertGreatestCommonDivisorsInLinkedList,
+  doubleANumberRepresentedAsLinkedList,
+  maximumNumberOfOperationsToMoveOnesToTheEnd,
+  designLogStorageSystem,
 ];
