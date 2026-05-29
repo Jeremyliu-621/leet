@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2617** problems; 8142 tests green. Batches 102–185 + 179b complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2618** problems; 8145 tests green. Batches 102–186 + 179b complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 186+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 187+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 186 — vowel-consonant substrings (medium) + fix median/interesting-subarray solutions (2026-05-29)
+Add `count-substrings-with-every-vowel-and-k-consonants-i` (medium/strings+sliding-window, O(n²) brute force: fix start i, extend j tracking vowelFreq map + consonant count, valid when freq.size===5 && consonants===k). Also fix `minimum-operations-to-make-median-equal-to-k` reference solutions (JS + Python): old solutions incorrectly counted *elements* needing change instead of total cost — corrected to sum of differences. Fix `count-of-interesting-subarrays` hidden tests (10 values were wrong). Bank at **2618**; 8145 tests.
 
 ### feat(bank): batch 185 — array-empty ops (medium), array-continuous ops (medium), min-distance-target (easy), max-diagonal-rect (easy) (2026-05-29)
 Four new problems: `minimum-operations-to-make-array-empty` (medium/arrays+hash-map, count frequencies — if any freq==1 return -1, else sum ceil(f/3) over all groups), `minimum-operations-to-make-array-continuous` (medium/arrays+binary-search, sort+dedup then sliding window of value-range n: max elements kept = max window unique count, answer = n - max), `minimum-distance-to-the-target-element` (easy/arrays, linear scan for minimum |i-start| where nums[i]==target), `maximum-area-of-longest-diagonal-rectangle` (easy/arrays, track max diag² = l²+w² with tie-break on area). Bank at **2617**; 8142 tests.
