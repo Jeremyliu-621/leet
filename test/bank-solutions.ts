@@ -44771,4 +44771,51 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
             result.add(digits[i]! * 100 + digits[j]! * 10 + digits[k]!);
     return [...result].sort((a, b) => a - b);
   },
+  'phone-number-prefix': (...args: unknown[]) => {
+    const numbers = (args[0] as string[]).slice().sort();
+    for (let i = 0; i < numbers.length - 1; i++)
+      if (numbers[i + 1]!.startsWith(numbers[i]!)) return false;
+    return true;
+  },
+  'reverse-degree-of-a-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let sum = 0;
+    for (let i = 0; i < s.length; i++) sum += (i + 1) * (26 - (s.charCodeAt(i) - 97));
+    return sum;
+  },
+  'minimum-operations-make-array-elements-zero': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const n of nums) {
+      if (n === 0) continue;
+      freq.set(n, (freq.get(n) ?? 0) + 1);
+    }
+    let ops = 0;
+    for (const [, c] of freq) {
+      if (c % 2 !== 0) return -1;
+      ops += c / 2;
+    }
+    return ops;
+  },
+  'properties-graph': (...args: unknown[]) => {
+    const properties = args[0] as number[][];
+    const n = properties.length;
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const find = (x: number): number => {
+      while (parent[x] !== x) { parent[x] = parent[parent[x]!]!; x = parent[x]!; }
+      return x;
+    };
+    const union = (a: number, b: number) => { parent[find(a)] = find(b); };
+    const valToNodes = new Map<number, number[]>();
+    for (let i = 0; i < n; i++)
+      for (const p of properties[i]!) {
+        if (!valToNodes.has(p)) valToNodes.set(p, []);
+        valToNodes.get(p)!.push(i);
+      }
+    for (const nodes of valToNodes.values())
+      for (let k = 1; k < nodes.length; k++) union(nodes[0]!, nodes[k]!);
+    let count = 0;
+    for (let i = 0; i < n; i++) if (find(i) === i) count++;
+    return count;
+  },
 };

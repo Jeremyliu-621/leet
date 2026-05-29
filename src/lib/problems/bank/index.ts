@@ -3180,6 +3180,11 @@ import { problem as largestAlmostMissingInteger } from './find-the-largest-almos
 import { problem as transformArrayByParity } from './transform-array-by-parity';
 import { problem as maxContainersOnShip } from './maximum-containers-on-a-ship';
 import { problem as findEvenNumbers } from './unique-3-digit-even-numbers';
+// batch 218 — easy/strings, easy/strings+math, medium/arrays+hash-map+math, medium/graph+union-find
+import { problem as phonePrefix } from './phone-number-prefix';
+import { problem as reverseDegree } from './reverse-degree-of-a-string';
+import { problem as minOpsArrayZero } from './minimum-operations-make-array-elements-zero';
+import { problem as propertiesGraph } from './properties-graph';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6400,4 +6405,9 @@ export const problems: readonly Problem[] = [
   transformArrayByParity,
   maxContainersOnShip,
   findEvenNumbers,
+  // batch 218
+  phonePrefix,
+  reverseDegree,
+  minOpsArrayZero,
+  propertiesGraph,
 ];

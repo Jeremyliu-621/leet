@@ -44551,4 +44551,55 @@ def findEvenNumbers(digits):
                     result.add(digits[i] * 100 + digits[j] * 10 + digits[k])
     return sorted(result)
 `,
+  'phone-number-prefix': `
+def phonePrefix(numbers):
+    numbers = sorted(numbers)
+    for i in range(len(numbers) - 1):
+        if numbers[i + 1].startswith(numbers[i]):
+            return False
+    return True
+`,
+  'reverse-degree-of-a-string': `
+def reverseDegree(s):
+    total = 0
+    for i, c in enumerate(s):
+        total += (i + 1) * (26 - (ord(c) - ord('a')))
+    return total
+`,
+  'minimum-operations-make-array-elements-zero': `
+def minOperations(nums):
+    from collections import Counter
+    freq = Counter(x for x in nums if x != 0)
+    ops = 0
+    for c in freq.values():
+        if c % 2 != 0:
+            return -1
+        ops += c // 2
+    return ops
+`,
+  'properties-graph': `
+def numberOfComponents(properties):
+    n = len(properties)
+    parent = list(range(n))
+
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    def union(a, b):
+        parent[find(a)] = find(b)
+
+    val_to_nodes = {}
+    for i, props in enumerate(properties):
+        for p in props:
+            val_to_nodes.setdefault(p, []).append(i)
+
+    for nodes in val_to_nodes.values():
+        for k in range(1, len(nodes)):
+            union(nodes[0], nodes[k])
+
+    return sum(1 for i in range(n) if find(i) == i)
+`,
 };
