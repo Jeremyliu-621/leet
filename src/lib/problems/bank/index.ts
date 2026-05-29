@@ -2541,6 +2541,22 @@ import { problem as minimumMovesToCaptureTheQueen } from './minimum-moves-to-cap
 import { problem as minimumSubstringPartitionEqualCharFreq } from './minimum-substring-partition-of-equal-character-frequency';
 import { problem as maximumGoodSubarraySum } from './maximum-good-subarray-sum';
 import { problem as maximalScoreAfterApplyingKOps } from './maximal-score-after-applying-k-operations';
+// batch 153 — arrays/easy, graph/hard
+import { problem as lastVisitedIntegers } from './last-visited-integers';
+import { problem as countVisitedNodesInADirectedGraph } from './count-visited-nodes-in-a-directed-graph';
+// batch 154 — shortest-path/medium, binary-indexed-tree/medium, union-find/hard
+import { problem as minEdgeReversalsToDestination } from './minimum-edge-reversals-to-reach-destination';
+import { problem as rangeUpdateRangeSumBit } from './range-update-range-sum-bit';
+import { problem as findCriticalPseudoCriticalEdges } from './find-critical-and-pseudo-critical-edges-in-mst';
+// batch 152b — arrays+math/medium, arrays+math+dp/medium, arrays+math/hard
+import { problem as numberOfSubarraysHavingEvenProduct } from './number-of-subarrays-having-even-product';
+import { problem as greatestSumDivisibleByThree } from './greatest-sum-divisible-by-three';
+import { problem as constructProductMatrix } from './construct-product-matrix';
+// batch 154b — trie/medium×3, trie/hard
+import { problem as mapSumPairs } from './map-sum-pairs';
+import { problem as magicDictionary } from './magic-dictionary';
+import { problem as shortEncodingOfWords } from './short-encoding-of-words';
+import { problem as implementMagicTrieStream } from './implement-magic-trie-stream';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5080,7 +5096,7 @@ export const problems: readonly Problem[] = [
   numberOfWaysToSplitAString,
   meanArrayAfterRemovingSomeElements,
   minimumOpsConvertTime,
-  // batch 150b — easy/arrays+hash-map, easy/arrays+math, easy/arrays+hash-map, easy/arrays+matrix, hard/math+dp
+  // batch 150b — easy/arrays+hash-map, easy/arrays+math, easy/arrays+hash-map, easy/arrays+matrix
   findLuckyNumberInMatrix,
   maximumProductOfThreeNumbers,
   findingThreeDigitEvenNumbers,
@@ -5119,4 +5135,20 @@ export const problems: readonly Problem[] = [
   findLongestSpecialSubstringThrice,
   minimumCostMakeArrayEqualindromic,
   identifyLargestOutlier,
+  // batch 153 — arrays/easy, graph/hard
+  lastVisitedIntegers,
+  countVisitedNodesInADirectedGraph,
+  // batch 154b — shortest-path/medium, binary-indexed-tree/medium, union-find/hard
+  minEdgeReversalsToDestination,
+  rangeUpdateRangeSumBit,
+  findCriticalPseudoCriticalEdges,
+  // batch 152b — arrays+math/medium, arrays+math+dp/medium, arrays+math/hard
+  numberOfSubarraysHavingEvenProduct,
+  greatestSumDivisibleByThree,
+  constructProductMatrix,
+  // batch 154c — trie/medium×3, trie/hard
+  mapSumPairs,
+  magicDictionary,
+  shortEncodingOfWords,
+  implementMagicTrieStream,
 ];

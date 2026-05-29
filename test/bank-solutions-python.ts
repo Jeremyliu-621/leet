@@ -34397,6 +34397,104 @@ def getNumberOfBacklogOrders(orders) -> int:
     return total % (10 ** 9 + 7)
 `,
 
+  // batch 154 — shortest-path/medium, binary-indexed-tree/medium, union-find/hard
+  'minimum-edge-reversals-to-reach-destination': `
+def minEdgeReversals(n, edges, source, destination) -> int:
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (edges.to_py() if hasattr(edges, 'to_py') else edges)]
+    from collections import defaultdict, deque
+    adj = defaultdict(list)
+    for u, v in edges:
+        adj[u].append((v, 0))
+        adj[v].append((u, 1))
+    dist = [float('inf')] * n
+    dist[source] = 0
+    dq = deque([(0, source)])
+    while dq:
+        d, u = dq.popleft()
+        if d > dist[u]:
+            continue
+        for v, w in adj[u]:
+            nd = d + w
+            if nd < dist[v]:
+                dist[v] = nd
+                if w == 0:
+                    dq.appendleft((nd, v))
+                else:
+                    dq.append((nd, v))
+    return -1 if dist[destination] == float('inf') else dist[destination]
+`,
+
+  'range-update-range-sum-bit': `
+def rangeUpdateRangeSum(n, operations) -> list:
+    ops = [list(op.to_py() if hasattr(op, 'to_py') else op) for op in (operations.to_py() if hasattr(operations, 'to_py') else operations)]
+    b1 = [0] * (n + 2)
+    b2 = [0] * (n + 2)
+    def upd(b, i, v):
+        i += 1
+        while i <= n:
+            b[i] += v
+            i += i & -i
+    def pre(b, i):
+        s, i = 0, i + 1
+        while i > 0:
+            s += b[i]
+            i -= i & -i
+        return s
+    def add_range(l, r, v):
+        upd(b1, l, v); upd(b1, r + 1, -v)
+        upd(b2, l, v * l); upd(b2, r + 1, -v * (r + 1))
+    def pref_sum(i):
+        return pre(b1, i) * (i + 1) - pre(b2, i)
+    res = []
+    for op in ops:
+        t, l, r, v = int(op[0]), int(op[1]), int(op[2]), int(op[3])
+        if t == 0:
+            add_range(l, r, v)
+        else:
+            res.append(pref_sum(r) - pref_sum(l - 1))
+    return res
+`,
+
+  'find-critical-and-pseudo-critical-edges-in-mst': `
+def findCriticalAndPseudoCriticalEdges(n, edges) -> list:
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (edges.to_py() if hasattr(edges, 'to_py') else edges)]
+    E = len(edges)
+    indexed = sorted(range(E), key=lambda i: edges[i][2])
+    def build_mst(skip, force):
+        parent = list(range(n))
+        def find(x):
+            while parent[x] != x:
+                parent[x] = parent[parent[x]]
+                x = parent[x]
+            return x
+        def union(x, y):
+            px, py = find(x), find(y)
+            if px == py: return False
+            parent[px] = py
+            return True
+        w, cnt = 0, 0
+        if force != -1:
+            union(edges[force][0], edges[force][1])
+            w += edges[force][2]
+            cnt += 1
+        for i in indexed:
+            if i == skip or i == force:
+                continue
+            u, v, wt = edges[i]
+            if union(u, v):
+                w += wt
+                cnt += 1
+        return float('inf') if cnt < n - 1 else w
+    base = build_mst(-1, -1)
+    critical, pseudo = [], []
+    for i in range(E):
+        if build_mst(i, -1) > base:
+            critical.append(i)
+        elif build_mst(-1, i) == base:
+            pseudo.append(i)
+    return [critical, pseudo]
+`,
+
   // batch 144
   'reorder-routes-to-make-all-paths-lead-to-the-city-zero': `
 def minReorder(n: int, connections) -> int:
@@ -35465,6 +35563,56 @@ def resultsArray(queries, k):
     return dp[n][k]
 `,
 
+  // batch 152b — arrays+math/medium, arrays+math+dp/medium, arrays+math/hard
+  'number-of-subarrays-having-even-product': `def countEvenProductSubarrays(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    total = n * (n + 1) // 2
+    all_odd = 0
+    run = 0
+    for x in nums:
+        if x % 2 == 1:
+            run += 1
+        else:
+            all_odd += run * (run + 1) // 2
+            run = 0
+    all_odd += run * (run + 1) // 2
+    return total - all_odd
+`,
+
+  'greatest-sum-divisible-by-three': `def maxSumDivThree(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    dp = [0, float('-inf'), float('-inf')]
+    for num in nums:
+        ndp = dp[:]
+        r = num % 3
+        for i in range(3):
+            if dp[i] > float('-inf'):
+                nr = (i + r) % 3
+                ndp[nr] = max(ndp[nr], dp[i] + num)
+        dp = ndp
+    return max(dp[0], 0)
+`,
+
+  'construct-product-matrix': `def constructProductMatrix(grid):
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    MOD = 12345
+    n, m = len(grid), len(grid[0])
+    flat = [grid[i][j] for i in range(n) for j in range(m)]
+    N = n * m
+    prefix = [1] * (N + 1)
+    for i in range(N):
+        prefix[i + 1] = prefix[i] * flat[i] % MOD
+    suffix = [1] * (N + 1)
+    for i in range(N - 1, -1, -1):
+        suffix[i] = suffix[i + 1] * flat[i] % MOD
+    result = [[0] * m for _ in range(n)]
+    for idx in range(N):
+        i, j = divmod(idx, m)
+        result[i][j] = prefix[idx] * suffix[idx + 1] % MOD
+    return result
+`,
+
   // batch 151
   'swap-pairs-linked-list': `def swapPairsRunner(vals):
     vals = list(vals.to_py() if hasattr(vals, 'to_py') else vals)
@@ -35936,6 +36084,159 @@ def maxKelements(nums, k):
         if valid and x > best:
             best = x
     return best
+`,
+
+  // batch 153 — arrays/easy, graph/hard
+  'last-visited-integers': `
+def lastVisitedIntegers(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    result = []
+    seen = []
+    k = 0
+    for n in nums:
+        if n > 0:
+            seen.append(n)
+            k = 0
+        else:
+            k += 1
+            result.append(seen[-k] if k <= len(seen) else -1)
+    return result
+`,
+
+  'count-visited-nodes-in-a-directed-graph': `
+def countVisitedNodes(edges):
+    edges = list(edges.to_py() if hasattr(edges, 'to_py') else edges)
+    n = len(edges)
+    answer = [0] * n
+    visited = [-1] * n
+    for start in range(n):
+        if answer[start] != 0:
+            continue
+        path = []
+        pos_in_path = {}
+        cur = start
+        while visited[cur] == -1 and cur not in pos_in_path:
+            pos_in_path[cur] = len(path)
+            path.append(cur)
+            cur = edges[cur]
+        if cur in pos_in_path:
+            cycle_start = pos_in_path[cur]
+            cycle_len = len(path) - cycle_start
+            for i in range(cycle_start, len(path)):
+                answer[path[i]] = cycle_len
+                visited[path[i]] = 1
+            for i in range(cycle_start - 1, -1, -1):
+                node = path[i]
+                answer[node] = cycle_len + (cycle_start - i)
+                visited[node] = 1
+        else:
+            resolved_len = answer[cur]
+            for i in range(len(path) - 1, -1, -1):
+                node = path[i]
+                answer[node] = resolved_len + (len(path) - i)
+                visited[node] = 1
+    return answer
+`,
+  // batch 154b — trie/medium×3, trie/hard
+  'map-sum-pairs': `
+def mapSumPairs(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = list(args.to_py() if hasattr(args, 'to_py') else args)
+    store = {}
+    result = []
+    for op, a in zip(ops, args):
+        a = list(a)
+        if op == 'MapSum':
+            result.append(None)
+        elif op == 'insert':
+            store[a[0]] = a[1]
+            result.append(None)
+        else:
+            prefix = a[0]
+            result.append(sum(v for k, v in store.items() if k.startswith(prefix)))
+    return result
+`,
+
+  'magic-dictionary': `
+def magicDictionary(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = list(args.to_py() if hasattr(args, 'to_py') else args)
+    dictionary = []
+    result = []
+    for op, a in zip(ops, args):
+        a = list(a)
+        if op == 'MagicDictionary':
+            result.append(None)
+        elif op == 'buildDict':
+            dictionary = list(a[0])
+            result.append(None)
+        else:
+            word = a[0]
+            if word in dictionary:
+                result.append(False)
+                continue
+            found = False
+            for w in dictionary:
+                if len(w) != len(word):
+                    continue
+                diffs = sum(1 for x, y in zip(w, word) if x != y)
+                if diffs == 1:
+                    found = True
+                    break
+            result.append(found)
+    return result
+`,
+
+  'short-encoding-of-words': `
+def minimumLengthEncoding(words):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    word_set = set(words)
+    for word in words:
+        for k in range(1, len(word)):
+            word_set.discard(word[k:])
+    return sum(len(w) + 1 for w in word_set)
+`,
+
+  'implement-magic-trie-stream': `
+def streamOfCharacters(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = list(args.to_py() if hasattr(args, 'to_py') else args)
+    root = {}
+    stream = []
+    max_len = 0
+    result = []
+    for op, a in zip(ops, args):
+        a = list(a)
+        if op == 'StreamChecker':
+            root = {}
+            stream = []
+            max_len = 0
+            for w in list(a[0]):
+                if len(w) > max_len:
+                    max_len = len(w)
+                node = root
+                for ch in reversed(w):
+                    if ch not in node:
+                        node[ch] = {}
+                    node = node[ch]
+                node['#'] = True
+            result.append(None)
+        else:
+            letter = a[0]
+            stream.append(letter)
+            found = False
+            node = root
+            limit = min(len(stream), max_len)
+            for j in range(limit):
+                ch = stream[-(j + 1)]
+                if ch not in node:
+                    break
+                node = node[ch]
+                if '#' in node:
+                    found = True
+                    break
+            result.append(found)
+    return result
 `,
 
 };

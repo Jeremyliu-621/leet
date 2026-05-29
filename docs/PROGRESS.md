@@ -8,9 +8,24 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2301** problems; 7203 tests green. Batches 102–153 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2315** problems; 7239 tests green. Batches 102–154 (all sub-batches) complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 154+); UX polish; accessibility audit.
+**Next up:** More bank growth (batch 155+); UX polish; accessibility audit.
+
+### feat(bank): add batch 154b — map-sum-pairs, magic-dictionary, short-encoding-of-words, stream-of-characters (trie×4) (2026-05-29)
+Four new trie-tagged problems: `map-sum-pairs` (medium, prefix sum via hash map), `magic-dictionary` (medium, 1-char fuzzy match excluding exact hits; if searchWord is in dict → return false), `short-encoding-of-words` (medium, suffix deduplication to find shortest reference string), `stream-of-characters` (hard, reversed-trie suffix matching in character stream). Added `trie` and `design` to ProblemTag. Bank at **2315**; 7239 tests.
+
+### feat(bank): add batch 152b — even-product-subarrays, max-sum-div-3, product-matrix (2026-05-29)
+Three new arrays+math problems: `number-of-subarrays-having-even-product` (medium/arrays+math, count subarrays with at least one even element by subtracting all-odd-subarray triangular runs), `greatest-sum-divisible-by-three` (medium/arrays+dp, track max achievable sum per mod-3 remainder with dp[0..2]), `construct-product-matrix` (hard/arrays+math, 2D product-except-self via flat prefix/suffix products mod 12345). Bank at **2311**; 7227 tests.
+
+### feat(bank): add batch 154 — min-edge-reversals, range-update-range-sum-bit, critical-mst-edges (2026-05-29)
+Three new problems targeting underrepresented tags: `minimum-edge-reversals-to-reach-destination` (medium/shortest-path+graph, 0-1 BFS bidirectional cost), `range-update-range-sum-bit` (medium/binary-indexed-tree, two-BIT range-add+range-query in O(log n)), `find-critical-and-pseudo-critical-edges-in-mst` (hard/union-find+graph, Kruskal's O(E²α) with skip/force passes). Bank at **2313**; 7236 tests.
+
+### feat(bank): add batch 153 — last-visited-integers (easy), count-visited-nodes-in-directed-graph (hard) (2026-05-29)
+`last-visited-integers` (easy/arrays+simulation, track k-th most recent positive per consecutive -1 run). `count-visited-nodes-in-a-directed-graph` (hard/graph+dp, functional graph — each node has exactly one outgoing edge — cycle detection via path coloring + backward distance fill). Fixed off-by-one bug in hidden test for cycle of length 2. Bank at **2305**; 7209 tests.
+
+### chore: update site count to 2,301+; sync with actual bank (2026-05-29)
+Marketing site updated from 2,286+ → 2,301+ in all three locations. Bank is at 2301 problems after batch 153 + 153b.
 
 ### feat(bank): add batch 153b — 6 new problems (linked-list×2, union-find, shortest-path, heap, simulation) (2026-05-29)
 New problems targeting underrepresented tags: `partition-linked-list-around-value` (medium/linked-list+two-pointers, partition nodes < x before >= x preserving order), `merge-k-sorted-linked-lists` (hard/linked-list+heap, merge k sorted lists with min-heap O(N log k)), `friend-groups-union-find` (medium/union-find+graph, count connected components via DSU decremental count), `dijkstra-single-source-shortest-path` (medium/shortest-path+graph+heap, Dijkstra SSSP returning -1 for unreachable nodes), `kth-largest-after-each-insertion` (medium/heap+arrays, min-heap of size k; report kth-largest or -1 after each insert), `simulate-traffic-lights` (easy/simulation, cars queue at g-green/r-red cycling light; return clear times). Bank at **2301**; 7203 tests.

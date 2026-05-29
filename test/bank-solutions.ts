@@ -34437,6 +34437,95 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return total % 1_000_000_007;
   },
 
+  // batch 154 — shortest-path/medium, binary-indexed-tree/medium, union-find/hard
+  'minimum-edge-reversals-to-reach-destination': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const source = args[2] as number;
+    const destination = args[3] as number;
+    const adj: [number, number][][] = Array.from({ length: n }, () => []);
+    for (const e of edges) {
+      const u = e[0]!, v = e[1]!;
+      adj[u]!.push([v, 0]);
+      adj[v]!.push([u, 1]);
+    }
+    const dist = new Array(n).fill(Infinity);
+    dist[source] = 0;
+    const pq: [number, number][] = [[0, source]];
+    while (pq.length > 0) {
+      pq.sort((a, b) => a[0]! - b[0]!);
+      const [d, u] = pq.shift()!;
+      if (d! > dist[u!]!) continue;
+      for (const [v, w] of adj[u!]!) {
+        if (dist[u!]! + w < dist[v]!) {
+          dist[v]! = dist[u!]! + w;
+          pq.push([dist[v]!, v]);
+        }
+      }
+    }
+    return dist[destination]! === Infinity ? -1 : dist[destination]!;
+  },
+
+  'range-update-range-sum-bit': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const operations = args[1] as number[][];
+    const b1 = new Array<number>(n + 2).fill(0);
+    const b2 = new Array<number>(n + 2).fill(0);
+    const upd = (b: number[], i: number, v: number) => {
+      for (i++; i <= n; i += i & -i) b[i]! += v;
+    };
+    const pre = (b: number[], i: number) => {
+      let s = 0;
+      for (i++; i > 0; i -= i & -i) s += b[i]!;
+      return s;
+    };
+    const addRange = (l: number, r: number, v: number) => {
+      upd(b1, l, v); upd(b1, r + 1, -v);
+      upd(b2, l, v * l); upd(b2, r + 1, -v * (r + 1));
+    };
+    const prefSum = (i: number) => pre(b1, i) * (i + 1) - pre(b2, i);
+    const res: number[] = [];
+    for (const op of operations) {
+      const [t, l, r, v] = op as [number, number, number, number];
+      if (t === 0) addRange(l, r, v);
+      else res.push(prefSum(r) - prefSum(l - 1));
+    }
+    return res;
+  },
+
+  'find-critical-and-pseudo-critical-edges-in-mst': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const sorted = edges.map((e, i) => [...e, i]).sort((a, b) => a[2]! - b[2]!);
+    const mkDsu = (sz: number) => {
+      const p = Array.from({ length: sz }, (_, i) => i);
+      const find = (x: number): number => (p[x] === x ? x : (p[x] = find(p[x]!)));
+      const union = (x: number, y: number) => {
+        const px = find(x), py = find(y);
+        if (px === py) return false;
+        p[px] = py; return true;
+      };
+      return { find, union };
+    };
+    const build = (skip: number, force: number) => {
+      const dsu = mkDsu(n);
+      let w = 0, cnt = 0;
+      if (force !== -1) { dsu.union(edges[force]![0]!, edges[force]![1]!); w += edges[force]![2]!; cnt++; }
+      for (const [u, v, wt, idx] of sorted) {
+        if (idx === skip || idx === force) continue;
+        if (dsu.union(u!, v!)) { w += wt!; cnt++; }
+      }
+      return cnt < n - 1 ? Infinity : w;
+    };
+    const base = build(-1, -1);
+    const crit: number[] = [], pseudo: number[] = [];
+    for (let i = 0; i < edges.length; i++) {
+      if (build(i, -1) > base) { crit.push(i); continue; }
+      if (build(-1, i) === base) pseudo.push(i);
+    }
+    return [crit.sort((a, b) => a - b), pseudo.sort((a, b) => a - b)];
+  },
+
   // batch 144
   'reorder-routes-to-make-all-paths-lead-to-the-city-zero': (...args: unknown[]) => {
     const n = args[0] as number, connections = args[1] as number[][];
@@ -35669,7 +35758,59 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
         dp[i]![j] = (dp[i - 1]![j - 1]! + BigInt(i - 1) * dp[i - 1]![j]!) % MOD;
       }
     }
-    return Number(dp[n]![k]!);
+    return Number(dp[n]![k] ?? 0n);
+  },
+
+  // batch 152b — arrays+math/medium, arrays+math+dp/medium, arrays+math/hard
+  'number-of-subarrays-having-even-product': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const total = n * (n + 1) / 2;
+    let allOdd = 0, run = 0;
+    for (const x of nums) {
+      if (x % 2 === 1) {
+        run++;
+      } else {
+        allOdd += run * (run + 1) / 2;
+        run = 0;
+      }
+    }
+    allOdd += run * (run + 1) / 2;
+    return total - allOdd;
+  },
+
+  'greatest-sum-divisible-by-three': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const dp = [0, -Infinity, -Infinity];
+    for (const num of nums) {
+      const ndp = [...dp];
+      const r = num % 3;
+      for (let i = 0; i < 3; i++) {
+        if ((dp[i] as number) > -Infinity) {
+          const nr = (i + r) % 3;
+          ndp[nr] = Math.max(ndp[nr] as number, (dp[i] as number) + num);
+        }
+      }
+      dp.splice(0, 3, ...ndp);
+    }
+    return Math.max(dp[0] as number, 0);
+  },
+
+  'construct-product-matrix': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const MOD = 12345;
+    const n = grid.length, m = (grid[0] as number[]).length;
+    const flat = (grid as number[][]).flatMap(row => row);
+    const N = n * m;
+    const prefix = new Array<number>(N + 1).fill(1);
+    for (let i = 0; i < N; i++) prefix[i + 1] = (prefix[i]! * flat[i]!) % MOD;
+    const suffix = new Array<number>(N + 1).fill(1);
+    for (let i = N - 1; i >= 0; i--) suffix[i] = (suffix[i + 1]! * flat[i]!) % MOD;
+    const result: number[][] = Array.from({ length: n }, () => new Array<number>(m).fill(0));
+    for (let idx = 0; idx < N; idx++) {
+      result[Math.floor(idx / m)]![idx % m] = (prefix[idx]! * suffix[idx + 1]!) % MOD;
+    }
+    return result;
   },
 
   // batch 151
@@ -36180,6 +36321,180 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       if (valid && x > best) best = x;
     }
     return best;
+  },
+
+  // batch 153 — arrays/easy, graph/hard
+  'last-visited-integers': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const result: number[] = [];
+    const seen: number[] = [];
+    let k = 0;
+    for (const n of nums) {
+      if (n > 0) {
+        seen.push(n);
+        k = 0;
+      } else {
+        k++;
+        result.push(k <= seen.length ? seen[seen.length - k]! : -1);
+      }
+    }
+    return result;
+  },
+
+  'count-visited-nodes-in-a-directed-graph': (...args: unknown[]) => {
+    const edges = args[0] as number[];
+    const n = edges.length;
+    const answer = new Array<number>(n).fill(0);
+    const visited = new Array<number>(n).fill(-1);
+    for (let start = 0; start < n; start++) {
+      if (answer[start] !== 0) continue;
+      const path: number[] = [];
+      const posInPath = new Map<number, number>();
+      let cur = start;
+      while (visited[cur] === -1 && !posInPath.has(cur)) {
+        posInPath.set(cur, path.length);
+        path.push(cur);
+        cur = edges[cur]!;
+      }
+      if (posInPath.has(cur)) {
+        const cycleStart = posInPath.get(cur)!;
+        const cycleLen = path.length - cycleStart;
+        for (let i = cycleStart; i < path.length; i++) {
+          answer[path[i]!] = cycleLen;
+          visited[path[i]!] = 1;
+        }
+        for (let i = cycleStart - 1; i >= 0; i--) {
+          answer[path[i]!] = cycleLen + (cycleStart - i);
+          visited[path[i]!] = 1;
+        }
+      } else {
+        const resolvedLen = answer[cur]!;
+        for (let i = path.length - 1; i >= 0; i--) {
+          answer[path[i]!] = resolvedLen + (path.length - i);
+          visited[path[i]!] = 1;
+        }
+      }
+    }
+    return answer;
+  },
+  // batch 154b — trie/medium×3, trie/hard
+  'map-sum-pairs': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as (string | number)[][];
+    const map = new Map<string, number>();
+    const result: (number | null)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      const a = opArgs[i]!;
+      if (op === 'MapSum') {
+        result.push(null);
+      } else if (op === 'insert') {
+        map.set(a[0] as string, a[1] as number);
+        result.push(null);
+      } else {
+        const prefix = a[0] as string;
+        let sum = 0;
+        for (const [k, v] of map) {
+          if (k.startsWith(prefix)) sum += v;
+        }
+        result.push(sum);
+      }
+    }
+    return result;
+  },
+
+  'magic-dictionary': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as (string | string[])[][];
+    let dict: string[] = [];
+    const result: (boolean | null)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      const a = opArgs[i]!;
+      if (op === 'MagicDictionary') {
+        result.push(null);
+      } else if (op === 'buildDict') {
+        dict = a[0] as string[];
+        result.push(null);
+      } else {
+        const word = a[0] as string;
+        if (dict.includes(word)) { result.push(false); continue; }
+        let found = false;
+        for (const w of dict) {
+          if (w.length !== word.length) continue;
+          let diffs = 0;
+          for (let j = 0; j < w.length; j++) {
+            if (w[j] !== word[j]) diffs++;
+            if (diffs > 1) break;
+          }
+          if (diffs === 1) { found = true; break; }
+        }
+        result.push(found);
+      }
+    }
+    return result;
+  },
+
+  'short-encoding-of-words': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const wordSet = new Set(words);
+    for (const word of words) {
+      for (let k = 1; k < word.length; k++) {
+        wordSet.delete(word.slice(k));
+      }
+    }
+    let len = 0;
+    for (const w of wordSet) len += w.length + 1;
+    return len;
+  },
+
+  'implement-magic-trie-stream': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as (string | string[])[][];
+
+    interface TrieNode { children: Map<string, TrieNode>; isEnd: boolean; }
+    const newNode = (): TrieNode => ({ children: new Map(), isEnd: false });
+
+    let root: TrieNode = newNode();
+    let stream: string[] = [];
+    let maxLen = 0;
+    const result: (boolean | null)[] = [];
+
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      const a = opArgs[i]!;
+      if (op === 'StreamChecker') {
+        root = newNode();
+        stream = [];
+        maxLen = 0;
+        const words = a[0] as string[];
+        for (const w of words) {
+          if (w.length > maxLen) maxLen = w.length;
+          let node = root;
+          for (let j = w.length - 1; j >= 0; j--) {
+            const c = w[j]!;
+            if (!node.children.has(c)) node.children.set(c, newNode());
+            node = node.children.get(c)!;
+          }
+          node.isEnd = true;
+        }
+        result.push(null);
+      } else {
+        const letter = a[0] as string;
+        stream.push(letter);
+        let found = false;
+        let node = root;
+        const limit = Math.min(stream.length, maxLen);
+        for (let j = 0; j < limit; j++) {
+          const c = stream[stream.length - 1 - j]!;
+          if (!node.children.has(c)) break;
+          node = node.children.get(c)!;
+          if (node.isEnd) { found = true; break; }
+        }
+        result.push(found);
+      }
+    }
+    return result;
   },
 
 };
