@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2809** problems; 8712+ tests green. Batches 102–215a+215b + concurrent 212-addendum + 213b + 214b + a11y + total-solved UX complete.
+**Current focus:** Bank at **2814** problems; 8736 tests green. Batches 102–216 + concurrent sessions complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 216+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 217+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 216 — minimum-impossible-or, find-substring-with-maximum-cost, find-the-width-of-columns-of-a-grid, count-number-of-rectangles-containing-each-point, remove-digit-from-number-to-maximize-result (2026-05-29)
+Five new problems: `minimum-impossible-or` (medium/bit-manipulation, smallest power-of-2 not in set), `find-substring-with-maximum-cost` (medium/strings+dp, Kadane's with custom char costs), `find-the-width-of-columns-of-a-grid` (easy/arrays+simulation, max string len per column), `count-number-of-rectangles-containing-each-point` (medium/arrays+binary-search, group by height≤100, binary search per bucket), `remove-digit-from-number-to-maximize-result` (easy/strings+simulation, greedy first-larger-next removal). Bank at **2814**; 8736 tests.
 
 ### feat(bank): batch 215b (concurrent) — distribute-candies-i, minimum-area-rectangle-ii, minimum-total-price-of-trips (2026-05-29)
 Three problems from concurrent session: `distribute-candies-among-children-i` (easy/math+simulation), `minimum-area-rectangle-ii` (medium/math+hash-map), `minimum-total-price-of-trips` (hard/tree+dp). Bank at **2809**.
