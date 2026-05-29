@@ -2918,6 +2918,10 @@ import { problem as findLongestBalancedSubstring } from './find-the-longest-bala
 import { problem as countTestedDevices } from './count-tested-devices-after-test-operations';
 import { problem as peopleAwareOfSecret } from './number-of-people-aware-of-secret';
 import { problem as isReachableAtTime } from './determine-if-a-cell-is-reachable-at-a-given-time';
+// batch 223 — medium/arrays+hash-map, easy/arrays, medium/arrays+bit-manipulation+math
+import { problem as countBalancedSubarrays } from './count-balanced-subarrays';
+import { problem as longestDivisibleRun } from './longest-divisible-run';
+import { problem as maximumSumAfterXorOperations } from './maximum-sum-after-xor-operations';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5876,4 +5880,8 @@ export const problems: readonly Problem[] = [
   countTestedDevices,
   peopleAwareOfSecret,
   isReachableAtTime,
+  // batch 223
+  countBalancedSubarrays,
+  longestDivisibleRun,
+  maximumSumAfterXorOperations,
 ];

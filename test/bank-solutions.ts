@@ -41838,4 +41838,40 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     if (dist === 0 && t === 1) return false;
     return t! >= dist;
   },
+  'count-balanced-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>([[0, 1]]);
+    let diff = 0, count = 0;
+    for (let i = 0; i < nums.length; i++) {
+      diff += i % 2 === 0 ? nums[i]! : -nums[i]!;
+      count += freq.get(diff) ?? 0;
+      freq.set(diff, (freq.get(diff) ?? 0) + 1);
+    }
+    return count;
+  },
+  'longest-divisible-run': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let best = 1, cur = 1;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i]! % nums[i - 1]! === 0 || nums[i - 1]! % nums[i]! === 0) {
+        cur++;
+        if (cur > best) best = cur;
+      } else {
+        cur = 1;
+      }
+    }
+    return best;
+  },
+  'maximum-sum-after-xor-operations': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const base = nums.reduce((s, x) => s + x, 0);
+    const gains = nums.map(x => (x ^ k) - x).sort((a, b) => b - a);
+    let extra = 0;
+    for (let i = 0; i + 1 < gains.length; i += 2) {
+      const pair = gains[i]! + gains[i + 1]!;
+      if (pair > 0) extra += pair;
+      else break;
+    }
+    return base + extra;
+  },
 };

@@ -40981,4 +40981,41 @@ def isReachableAtTime(sx, sy, fx, fy, t):
         return False
     return t >= dist
 `,
+  'count-balanced-subarrays': `
+def countBalanced(nums):
+    freq = {0: 1}
+    diff = 0
+    count = 0
+    for i, x in enumerate(nums):
+        diff += x if i % 2 == 0 else -x
+        count += freq.get(diff, 0)
+        freq[diff] = freq.get(diff, 0) + 1
+    return count
+`,
+  'longest-divisible-run': `
+def longestDivisibleRun(nums):
+    best = cur = 1
+    for i in range(1, len(nums)):
+        if nums[i] % nums[i-1] == 0 or nums[i-1] % nums[i] == 0:
+            cur += 1
+            best = max(best, cur)
+        else:
+            cur = 1
+    return best
+`,
+  'maximum-sum-after-xor-operations': `
+def maxXorSum(nums, k):
+    base = sum(nums)
+    gains = sorted([(x ^ k) - x for x in nums], reverse=True)
+    extra = 0
+    i = 0
+    while i + 1 < len(gains):
+        pair = gains[i] + gains[i + 1]
+        if pair > 0:
+            extra += pair
+            i += 2
+        else:
+            break
+    return base + extra
+`,
 };
