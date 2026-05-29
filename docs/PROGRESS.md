@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2528** problems; 7878 tests green. Batches 102–219 complete + comprehensive dedup (−303 abbreviated-name duplicates).
+**Current focus:** Bank at **2533** problems; 7893 tests green. Batches 102–219 + 217-addendum complete + comprehensive dedup.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 220+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 217 addendum — reach-a-number, minimum-degree-connected-trio, valid-square, count-subarrays-odd-sum, separate-digits-in-array (2026-05-29)
+Five new problems: `reach-a-number` (medium/math+binary-search, find min k with k*(k+1)/2 ≥ target and even parity gap), `minimum-degree-of-a-connected-trio` (hard/graph, O(n³) trio enumeration, degree=sum−6), `valid-square` (medium/math, 6 pairwise distances, 2 distinct values with 2:1 ratio), `count-subarrays-with-odd-sum` (medium/arrays+math, prefix parity tracking, mod 10⁹+7), `separate-the-digits-in-an-array` (easy/arrays+simulation, flatMap digit extraction). Bank at **2533**; 7893 tests.
 
 ### feat(bank): batch 219 — non-special-count, same-digits-ops-i, smallest-string-constraint, grid-cut-sections (2026-05-29)
 Four new problems: `find-the-count-of-numbers-which-are-not-special` (easy/math, count p² for primes in [l,r] via sieve), `check-if-digits-are-equal-in-string-after-operations-i` (easy/strings+simulation, reduce adjacent-sum-mod-10 until 2 chars, check equality), `lexicographically-smallest-string-after-operations-with-constraint` (medium/strings, greedy left-to-right rotation budget), `check-if-grid-can-be-cut-into-sections` (medium/arrays, interval sweep on x/y projections for ≥3 groups). Bank at **2528** (after dedup merger); 7878 tests.
