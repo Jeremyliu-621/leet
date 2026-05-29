@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2747** problems; 8535 tests green. Batches 102–208 + KaTeX UX complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2755** problems; 8559 tests green. Batches 102–208 + batch 209 (three-divisors, check-three-consecutive-odds, min-swaps-alternating, count-rectangles-points, check-if-array-consecutive, first-palindrome-in-array, range-product-queries-of-powers, max-frequency-after-operations-i) + KaTeX UX complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 209+); UX polish per LEETCODE_PARITY.md; light-mode contrast audit.
 
