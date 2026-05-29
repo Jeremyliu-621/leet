@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2712** problems; 8430 tests green. Batches 102–202 + KaTeX UX complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2716** problems; 8442 tests green. Batches 102–203 + KaTeX UX complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 203+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 204+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 203 — sum-of-last-k, count-strings-length-k, max-of-min-values, product-of-last-two (2026-05-29)
+Four new easy problems: `sum-of-last-k-elements` (easy/arrays+math, slice last k and sum), `count-strings-of-length-k` (easy/arrays+strings, filter by word.length===k), `maximum-of-minimum-values` (easy/arrays+math, max of per-row minimums in 2D matrix), `product-of-last-two` (easy/arrays+math, nums[n-2]*nums[n-1]). Bank at **2716**; 8442 tests.
 
 ### feat(bank): batch 202 — triple-sum, count-even-length-strings, largest-element-in-each-row, count-rows-with-all-zeros (2026-05-29)
 Four new easy problems: `triple-sum` (easy/arrays+math, sum of first 3 elements), `count-even-length-strings` (easy/arrays+strings, count words with even length), `largest-element-in-each-row` (easy/arrays+math, max per row into result array), `count-rows-with-all-zeros` (easy/arrays+math, count rows where every element is 0). Bank at **2707**; 8415 tests.
