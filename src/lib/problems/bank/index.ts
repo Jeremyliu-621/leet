@@ -2667,6 +2667,11 @@ import { problem as countSpecialNumbers } from './count-special-numbers';
 import { problem as minimumDeletionsToMakeArrayBeautiful } from './minimum-deletions-to-make-array-beautiful';
 import { problem as amountOfNewAreaPaintedEachDay } from './amount-of-new-area-painted-each-day';
 import { problem as convertNumberToHexadecimal } from './convert-number-to-hexadecimal';
+// batch 164 — graph/medium×2, union-find/medium, arrays/medium×2
+import { problem as allPathsFromSourceToTarget } from './all-paths-from-source-to-target';
+import { problem as countUnreachablePairs } from './count-unreachable-pairs-of-nodes-in-an-undirected-graph';
+import { problem as partitionArrayIntoDisjointIntervals } from './partition-array-into-disjoint-intervals';
+import { problem as removeDuplicatesFromSortedArrayII } from './remove-duplicates-from-sorted-array-ii';
 // batch 163 — bit-manipulation enrichment (5 new problems)
 import { problem as flipAndInvertImage } from './flip-and-invert-image';
 import { problem as checkIfAStringContainsAllBinaryCodesOfSizeK } from './check-if-a-string-contains-all-binary-codes-of-size-k';
@@ -5394,4 +5399,9 @@ export const problems: readonly Problem[] = [
   findingTheUsersActiveMinutes,
   removeStonesToMinimizeTheTotal,
   numberOfVisiblePeopleInAQueue,
+  // batch 164
+  allPathsFromSourceToTarget,
+  countUnreachablePairs,
+  partitionArrayIntoDisjointIntervals,
+  removeDuplicatesFromSortedArrayII,
 ];

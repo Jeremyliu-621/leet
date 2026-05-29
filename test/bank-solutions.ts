@@ -38344,4 +38344,68 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 164 — graph/medium×2, union-find/medium, arrays/medium×2
+  'all-paths-from-source-to-target': (graph: unknown) => {
+    const g = graph as number[][];
+    const result: number[][] = [];
+    const target = g.length - 1;
+    const path = [0];
+    function dfs(node: number) {
+      if (node === target) { result.push([...path]); return; }
+      for (const next of g[node]!) {
+        path.push(next);
+        dfs(next);
+        path.pop();
+      }
+    }
+    dfs(0);
+    return result;
+  },
+
+  'count-unreachable-pairs-of-nodes-in-an-undirected-graph': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const size = new Array<number>(n).fill(1);
+    function find(x: number): number {
+      while (parent[x] !== x) { parent[x] = parent[parent[x]!]!; x = parent[x]!; }
+      return x;
+    }
+    for (const [u, v] of edges) {
+      const ru = find(u!), rv = find(v!);
+      if (ru !== rv) {
+        if (size[ru]! < size[rv]!) { parent[ru] = rv; size[rv]! += size[ru]!; }
+        else { parent[rv] = ru; size[ru]! += size[rv]!; }
+      }
+    }
+    const seen = new Set<number>();
+    const compSizes: number[] = [];
+    for (let i = 0; i < n; i++) {
+      const root = find(i);
+      if (!seen.has(root)) { seen.add(root); compSizes.push(size[root]!); }
+    }
+    let result = 0, cumulative = 0;
+    for (const s of compSizes) { result += cumulative * s; cumulative += s; }
+    return result;
+  },
+
+  'partition-array-into-disjoint-intervals': (nums: unknown) => {
+    const a = nums as number[];
+    let maxLeft = a[0]!, potMax = a[0]!, partition = 0;
+    for (let i = 1; i < a.length; i++) {
+      if (a[i]! < maxLeft) { partition = i; maxLeft = potMax; }
+      else { potMax = Math.max(potMax, a[i]!); }
+    }
+    return partition + 1;
+  },
+
+  'remove-duplicates-from-sorted-array-ii': (nums: unknown) => {
+    const a = nums as number[];
+    let k = 0;
+    for (const n of a) {
+      if (k < 2 || a[k - 2] !== n) a[k++] = n;
+    }
+    return k;
+  },
+
 };
