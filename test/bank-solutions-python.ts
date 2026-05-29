@@ -39455,6 +39455,7 @@ def addRungs(rungs, dist):
             count += math.ceil(gap / dist) - 1
         prev = rung
     return count`,
+
   'find-xor-of-numbers-appearing-twice': `
 def duplicateNumbersXOR(nums):
     if hasattr(nums, 'to_py'): nums = list(nums.to_py())
@@ -39660,6 +39661,88 @@ def hIndex(citations):
         else:
             hi = mid - 1
     return lo
+`,
+
+  // batch 172
+  'find-the-winner-of-an-array-game': `
+def getWinner(arr, k):
+    if hasattr(arr, 'to_py'): arr = list(arr.to_py())
+    arr = [int(x) for x in arr]
+    k = int(k)
+    winner = arr[0]
+    streak = 0
+    for i in range(1, len(arr)):
+        if arr[i] > winner:
+            winner = arr[i]
+            streak = 1
+        else:
+            streak += 1
+        if streak >= k:
+            return winner
+    return winner
+`,
+
+  'shortest-impossible-sequence-of-rolls': `
+def shortestSequence(rolls, k):
+    if hasattr(rolls, 'to_py'): rolls = list(rolls.to_py())
+    rolls = [int(x) for x in rolls]
+    k = int(k)
+    seen = set()
+    rounds = 0
+    for roll in rolls:
+        seen.add(roll)
+        if len(seen) == k:
+            rounds += 1
+            seen.clear()
+    return rounds + 1
+`,
+
+  'next-greater-numerically-balanced-number': `
+def nextBeautifulNumber(n):
+    n = int(n)
+    x = n + 1
+    while True:
+        count = [0] * 10
+        for c in str(x):
+            count[int(c)] += 1
+        if all(count[d] == 0 or count[d] == d for d in range(10)):
+            return x
+        x += 1
+`,
+
+  'number-of-sub-arrays-with-odd-sum': `
+def numOfSubarrays(arr):
+    if hasattr(arr, 'to_py'): arr = list(arr.to_py())
+    arr = [int(x) for x in arr]
+    MOD = 10**9 + 7
+    even = 1
+    odd = 0
+    ans = 0
+    prefix = 0
+    for v in arr:
+        prefix = (prefix + v) % 2
+        if prefix == 1:
+            ans = (ans + even) % MOD
+            odd += 1
+        else:
+            ans = (ans + odd) % MOD
+            even += 1
+    return ans
+`,
+
+  'rearrange-array-to-maximize-prefix-score': `
+def maxScore(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = sorted([int(x) for x in nums], reverse=True)
+    total = 0
+    count = 0
+    for v in nums:
+        total += v
+        if total > 0:
+            count += 1
+        else:
+            break
+    return count
 `,
 
 };

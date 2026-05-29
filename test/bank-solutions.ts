@@ -39552,7 +39552,9 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       if (gap > dist) count += Math.ceil(gap / dist) - 1;
       prev = rung;
     }
-    return count;  },
+    return count;
+  },
+
   'make-lexicographically-smallest-array-by-swapping-elements': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const limit = args[1] as number;
@@ -39621,6 +39623,62 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
 
     return countUpTo(finish) - countUpTo(start - 1);
+  },
+
+  // batch 172
+  'find-the-winner-of-an-array-game': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const k = args[1] as number;
+    let winner = arr[0]!, streak = 0;
+    for (let i = 1; i < arr.length; i++) {
+      if (arr[i]! > winner) { winner = arr[i]!; streak = 1; } else { streak++; }
+      if (streak >= k) return winner;
+    }
+    return winner;
+  },
+
+  'shortest-impossible-sequence-of-rolls': (...args: unknown[]) => {
+    const rolls = args[0] as number[];
+    const k = args[1] as number;
+    const seen = new Set<number>();
+    let rounds = 0;
+    for (const roll of rolls) {
+      seen.add(roll);
+      if (seen.size === k) { rounds++; seen.clear(); }
+    }
+    return rounds + 1;
+  },
+
+  'next-greater-numerically-balanced-number': (n: unknown) => {
+    let x = (n as number) + 1;
+    while (true) {
+      const count = new Array<number>(10).fill(0);
+      for (const c of String(x)) count[+c]! ++;
+      if (count.every((c, d) => c === 0 || c === d)) return x;
+      x++;
+    }
+  },
+
+  'number-of-sub-arrays-with-odd-sum': (arr: unknown) => {
+    const MOD = 1_000_000_007;
+    let even = 1, odd = 0, ans = 0, prefix = 0;
+    for (const v of arr as number[]) {
+      prefix = (prefix + v) % 2;
+      if (prefix === 1) { ans = (ans + even) % MOD; odd++; }
+      else { ans = (ans + odd) % MOD; even++; }
+    }
+    return ans;
+  },
+
+  'rearrange-array-to-maximize-prefix-score': (nums: unknown) => {
+    const sorted = [...(nums as number[])].sort((a, b) => b - a);
+    let sum = 0, count = 0;
+    for (const v of sorted) {
+      sum += v;
+      if (sum > 0) count++;
+      else break;
+    }
+    return count;
   },
 
 };

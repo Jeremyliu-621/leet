@@ -2763,7 +2763,13 @@ import { problem as maximumNumberOfOperationsWithTheSameScoreI } from './maximum
 import { problem as makeLexicographicallySmallestArrayBySwappingElements } from './make-lexicographically-smallest-array-by-swapping-elements';
 import { problem as maximizeConsecutiveElementsInAnArrayAfterModification } from './maximize-consecutive-elements-in-an-array-after-modification';
 import { problem as countTheNumberOfPowerfulIntegers } from './count-the-number-of-powerful-integers';
-// batch 171 (our) — easy/dp, medium/dp, medium/graph, medium/binary-search
+// batch 172 — arrays+simulation/medium, arrays+hash-map/medium, math/medium×2, arrays/medium
+import { problem as findTheWinnerOfAnArrayGame } from './find-the-winner-of-an-array-game';
+import { problem as shortestImpossibleSequenceOfRolls } from './shortest-impossible-sequence-of-rolls';
+import { problem as nextGreaterNumericallyBalancedNumber } from './next-greater-numerically-balanced-number';
+import { problem as numberOfSubArraysWithOddSum } from './number-of-sub-arrays-with-odd-sum';
+import { problem as rearrangeArrayToMaximizePrefixScore } from './rearrange-array-to-maximize-prefix-score';
+// batch 173 — easy/dp, medium/dp, medium/graph, medium/binary-search
 import { problem as nThTribonacciNumber } from './n-th-tribonacci-number';
 import { problem as solvingQuestionsWithBrainpower } from './solving-questions-with-brainpower';
 import { problem as detonateTheMaximumBombs } from './detonate-the-maximum-bombs';
@@ -5562,6 +5568,12 @@ export const problems: readonly Problem[] = [
   makeLexicographicallySmallestArrayBySwappingElements,
   maximizeConsecutiveElementsInAnArrayAfterModification,
   countTheNumberOfPowerfulIntegers,
+  // batch 172 — arrays+simulation/medium, arrays+hash-map/medium, math/medium×2, arrays/medium
+  findTheWinnerOfAnArrayGame,
+  shortestImpossibleSequenceOfRolls,
+  nextGreaterNumericallyBalancedNumber,
+  numberOfSubArraysWithOddSum,
+  rearrangeArrayToMaximizePrefixScore,
   // batch 173 — easy/dp, medium/dp, medium/graph, medium/binary-search
   nThTribonacciNumber,
   solvingQuestionsWithBrainpower,
