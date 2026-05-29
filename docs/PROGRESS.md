@@ -12,6 +12,9 @@
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 153+); UX polish; accessibility audit.
 
+### fix(a11y): proper role/focus-trap/restoration in PasswordModal + VerifyModal (2026-05-29)
+Moved `role="dialog"`, `aria-modal="true"`, `aria-labelledby` from the backdrop div to the inner panel div in both modals — screen readers now announce them correctly as dialogs. Added `tabIndex={-1}` + `ref={dialogRef}` to inner panel. Extended the `onKeyDown` useEffect to trap Tab/Shift-Tab within focusable elements inside the dialog. Added `returnFocusRef` + cleanup to restore focus to the triggering element when the modal unmounts.
+
 ### feat(bank): add batch 151b — monotonic-pairs-ii, max-strength-group, valid-strings-target-i, reward-ops-ii (2026-05-29)
 Four new problems: `find-the-count-of-monotonic-pairs-ii` (hard/dp+arrays, n≤2000 nums≤1000, O(n×max_val) prefix-sum DP), `maximum-strength-of-a-group` (medium/arrays+math, max product of non-empty subset via greedy negative-pairing), `minimum-number-of-valid-strings-to-form-target-i` (medium/strings+dp, prefix-Set + O(n²) DP), `maximum-total-reward-using-operations-ii` (hard/dp+bitset, n≤50000, BigInt bitset DP). Bank at **2290**; 7173 tests.
 
