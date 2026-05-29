@@ -5803,6 +5803,12 @@ export const problems: readonly Problem[] = [
   designPhoneDirectory,
   countAlmostEqualPairsII,
   leastNumberOfUniqueIntegersAfterKRemovals,
+  // batch 179 — tree/medium×3, tree+heap/hard, heap+graph/medium
+  binaryTreeLevelOrderTraversal,
+  findKPairsWithSmallestSums,
+  sequenceReconstruction,
+  inorderSuccessorInBST,
+  closestBinarySearchTreeValueII,
   // batch 179 — math/medium, math/medium, dp/medium, bfs/hard, enumeration/hard
   primePairsWithTargetSum,
   determineTheMinimumSumOfAKAvoidingArray,

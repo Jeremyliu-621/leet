@@ -41551,4 +41551,263 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count.reduce((sum, v) => sum + Math.abs(v), 0);
   },
 
+  // batch 180 extensions — dp+bit-manipulation/hard, dp/medium
+  'find-number-of-ways-to-reach-the-k-th-stair': (kArg: unknown) => {
+    const k = kArg as number;
+    const memo = new Map<string, number>();
+    function dp(i: number, jump: number, usedDown: boolean): number {
+      if (i > k + 1) return 0;
+      const key = i + ',' + jump + ',' + (usedDown ? 1 : 0);
+      const cached = memo.get(key);
+      if (cached !== undefined) return cached;
+      let ways = (i === k) ? 1 : 0;
+      ways += dp(i + Math.pow(2, jump), jump + 1, false);
+      if (i > 0 && !usedDown) ways += dp(i - 1, jump, true);
+      memo.set(key, ways);
+      return ways;
+    }
+    return dp(1, 0, false);
+  },
+
+  'count-beautiful-splits-in-an-array': (numsArg: unknown) => {
+    const nums = numsArg as number[];
+    const n = nums.length;
+    const lcp: number[][] = Array.from({length: n + 1}, () => new Array(n + 1).fill(0));
+    for (let i = n - 1; i >= 0; i--) {
+      for (let j = n - 1; j >= 0; j--) {
+        lcp[i]![j] = (nums[i] === nums[j]) ? lcp[i+1]![j+1]! + 1 : 0;
+      }
+    }
+    let count = 0;
+    for (let i = 1; i < n; i++) {
+      for (let j = i + 1; j < n; j++) {
+        const cond1 = (i <= j - i) && (lcp[0]![i]! >= i);
+        const cond2 = (j - i <= n - j) && (lcp[i]![j]! >= j - i);
+        if (cond1 || cond2) count++;
+      }
+    }
+    return count;
+  },
+
+  // batch 179 — tree/medium×3, tree+heap/hard, heap+graph/medium
+  'binary-tree-level-order-traversal': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    if (!arr || arr.length === 0) return [];
+    interface TN { val: number; left: TN | null; right: TN | null }
+    function build(a: (number | null)[]): TN | null {
+      if (!a[0] && a[0] !== 0) return null;
+      const root: TN = { val: a[0]!, left: null, right: null };
+      const q: TN[] = [root];
+      let i = 1;
+      while (q.length > 0 && i < a.length) {
+        const node = q.shift()!;
+        if (i < a.length && a[i] != null) { node.left = { val: a[i]!, left: null, right: null }; q.push(node.left); }
+        i++;
+        if (i < a.length && a[i] != null) { node.right = { val: a[i]!, left: null, right: null }; q.push(node.right); }
+        i++;
+      }
+      return root;
+    }
+    const root = build(arr);
+    if (!root) return [];
+    const result: number[][] = [];
+    const q: TN[] = [root];
+    while (q.length > 0) {
+      const size = q.length;
+      const level: number[] = [];
+      for (let i = 0; i < size; i++) {
+        const node = q.shift()!;
+        level.push(node.val);
+        if (node.left) q.push(node.left);
+        if (node.right) q.push(node.right);
+      }
+      result.push(level);
+    }
+    return result;
+  },
+
+  'find-k-pairs-with-smallest-sums': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const k = args[2] as number;
+    if (!nums1.length || !nums2.length) return [];
+    type Entry = [number, number, number];
+    const heap: Entry[] = [];
+    function push(e: Entry) {
+      heap.push(e);
+      let i = heap.length - 1;
+      while (i > 0) {
+        const p = (i - 1) >> 1;
+        if (heap[p]![0] <= heap[i]![0]) break;
+        [heap[p], heap[i]] = [heap[i]!, heap[p]!];
+        i = p;
+      }
+    }
+    function pop(): Entry {
+      const top = heap[0]!;
+      const last = heap.pop()!;
+      if (heap.length > 0) {
+        heap[0] = last;
+        let i = 0;
+        while (true) {
+          let s = i;
+          const l = 2 * i + 1, r = 2 * i + 2;
+          if (l < heap.length && heap[l]![0] < heap[s]![0]) s = l;
+          if (r < heap.length && heap[r]![0] < heap[s]![0]) s = r;
+          if (s === i) break;
+          [heap[i], heap[s]] = [heap[s]!, heap[i]!];
+          i = s;
+        }
+      }
+      return top;
+    }
+    for (let i = 0; i < Math.min(k, nums1.length); i++) push([nums1[i]! + nums2[0]!, i, 0]);
+    const result: number[][] = [];
+    while (result.length < k && heap.length > 0) {
+      const [, i, j] = pop();
+      result.push([nums1[i]!, nums2[j]!]);
+      if (j + 1 < nums2.length) push([nums1[i]! + nums2[j + 1]!, i, j + 1]);
+    }
+    return result;
+  },
+
+  'sequence-reconstruction': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const sequences = args[1] as number[][];
+    const n = nums.length;
+    const pos = new Map<number, number>();
+    for (let i = 0; i < n; i++) pos.set(nums[i]!, i);
+    const inDeg = new Array(n).fill(0) as number[];
+    const required = new Set<string>();
+    for (const seq of sequences) {
+      for (let i = 1; i < seq.length; i++) {
+        const u = seq[i - 1]!, v = seq[i]!;
+        const pu = pos.get(u)!, pv = pos.get(v)!;
+        const key = `${pu},${pv}`;
+        if (!required.has(key)) {
+          required.add(key);
+          inDeg[pv]! += 1;
+        }
+      }
+    }
+    const queue: number[] = [];
+    for (let i = 0; i < n; i++) if (inDeg[i] === 0) queue.push(i);
+    let order = 0;
+    while (queue.length === 1) {
+      const idx = queue.shift()!;
+      const u = nums[idx]!;
+      for (const seq of sequences) {
+        for (let i = 0; i < seq.length - 1; i++) {
+          if (seq[i] === u) {
+            const v = seq[i + 1]!;
+            const pv = pos.get(v)!;
+            inDeg[pv]! -= 1;
+            if (inDeg[pv] === 0) queue.push(pv);
+          }
+        }
+      }
+      order++;
+    }
+    return order === n && queue.length === 0;
+  },
+
+  'inorder-successor-in-bst': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const p = args[1] as number;
+    if (!arr || arr.length === 0) return null;
+    interface TN { val: number; left: TN | null; right: TN | null }
+    function build(a: (number | null)[]): TN | null {
+      if (!a[0] && a[0] !== 0) return null;
+      const root: TN = { val: a[0]!, left: null, right: null };
+      const q: TN[] = [root];
+      let i = 1;
+      while (q.length > 0 && i < a.length) {
+        const node = q.shift()!;
+        if (i < a.length && a[i] != null) { node.left = { val: a[i]!, left: null, right: null }; q.push(node.left); }
+        i++;
+        if (i < a.length && a[i] != null) { node.right = { val: a[i]!, left: null, right: null }; q.push(node.right); }
+        i++;
+      }
+      return root;
+    }
+    const root = build(arr);
+    let node: TN | null = root;
+    let succ: TN | null = null;
+    while (node) {
+      if (node.val > p) { succ = node; node = node.left; }
+      else { node = node.right; }
+    }
+    return succ ? succ.val : null;
+  },
+
+  'closest-binary-search-tree-value-ii': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const target = args[1] as number;
+    const k = args[2] as number;
+    interface TN { val: number; left: TN | null; right: TN | null }
+    function build(a: (number | null)[]): TN | null {
+      if (!a[0] && a[0] !== 0) return null;
+      const root: TN = { val: a[0]!, left: null, right: null };
+      const q: TN[] = [root];
+      let i = 1;
+      while (q.length > 0 && i < a.length) {
+        const node = q.shift()!;
+        if (i < a.length && a[i] != null) { node.left = { val: a[i]!, left: null, right: null }; q.push(node.left); }
+        i++;
+        if (i < a.length && a[i] != null) { node.right = { val: a[i]!, left: null, right: null }; q.push(node.right); }
+        i++;
+      }
+      return root;
+    }
+    const vals: number[] = [];
+    function inorder(node: TN | null) {
+      if (!node) return;
+      inorder(node.left);
+      vals.push(node.val);
+      inorder(node.right);
+    }
+    inorder(build(arr));
+    let lo = 0, hi = vals.length - 1;
+    while (hi - lo + 1 > k) {
+      if (Math.abs(vals[lo]! - target) <= Math.abs(vals[hi]! - target)) hi--;
+      else lo++;
+    }
+    return vals.slice(lo, hi + 1).sort((a, b) => a - b);
+  },
+
+  // batch 179 (local)
+  'maximum-number-of-groups-entering-a-competition': (grades: unknown) => {
+    const n = (grades as number[]).length;
+    let k = 0;
+    while ((k + 1) * (k + 2) / 2 <= n) k++;
+    return k;
+  },
+
+  'find-the-longest-semi-repetitive-substring': (s: unknown) => {
+    const str = s as string;
+    let l = 0, pairs = 0, best = 1;
+    for (let r = 1; r < str.length; r++) {
+      if (str[r] === str[r - 1]) pairs++;
+      while (pairs > 1) {
+        if (str[l] === str[l + 1]) pairs--;
+        l++;
+      }
+      best = Math.max(best, r - l + 1);
+    }
+    return best;
+  },
+
+  'count-the-number-of-incremovable-subarrays-i': (nums: unknown) => {
+    const arr = nums as number[];
+    const n = arr.length;
+    let count = 0;
+    for (let l = 0; l < n; l++) {
+      for (let r = l; r < n; r++) {
+        const remaining = [...arr.slice(0, l), ...arr.slice(r + 1)];
+        if (remaining.every((v, i) => i === 0 || remaining[i - 1]! < v)) count++;
+      }
+    }
+    return count;
+  },
+
 };
