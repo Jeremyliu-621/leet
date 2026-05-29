@@ -8,9 +8,13 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2455** registered problems; 7659 tests green. Batches 102–169 (both variants) complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2456** registered problems; 7662 tests green. Batches 102–170 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 170+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 170 — word-break-ii, number-of-atoms, design-twitter, distribute-coins-in-binary-tree, minimum-genetic-mutation (2026-05-29)
+Five new problems targeting underrepresented tags: `word-break-ii` (hard/dynamic-programming+backtracking+strings, memoized DFS returning all valid segmentations sorted), `number-of-atoms` (hard/strings+hash-map+stack, stack-based parser for nested chemical formulas returning sorted element counts), `design-twitter` (medium/design+hash-map+heap, social feed with postTweet/follow/unfollow/getNewsFeed ops-array pattern), `distribute-coins-in-binary-tree` (medium/tree+math, post-order DFS accumulating |excess| per edge; excess = subtreeCoins − subtreeSize), `minimum-genetic-mutation` (medium/graph+shortest-path, BFS on 8-char gene strings mutating one char at a time through a valid bank). Also fixed LaTeX `$$...$$` in two problem descriptions (converted to inline code) and removed TODO comments from starter code template. Bank at **2456**; 7662 tests.
+
 
 ### feat(bank): batch 169b — 5 new problems (strings/medium, strings/hard, strings/easy, arrays/easy×2) (2026-05-29)
 Five new problems: `maximum-palindromes-after-operations` (medium/strings+hash-map, pool all chars → count pairs, greedy assign floor(len/2) pairs to shortest words first), `count-beautiful-substrings-ii` (hard/strings+hash-map+math, prefix-diff + find smallest v₀ s.t. v₀²%k=0 → group by (prefix, index%2v₀)), `make-three-strings-equal` (easy/strings, find longest common prefix → min total tail deletions, -1 if prefix empty), `find-the-integer-added-to-array-i` (easy/arrays+math, min(nums2)−min(nums1)), `find-the-integer-added-to-array-ii` (medium/arrays+two-pointers, sort+try 3 x-candidates+two-pointer validate, return min valid non-negative x). JS+Python reference solutions for all 5.

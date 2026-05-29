@@ -11,7 +11,7 @@ You can perform **at most** \`k1\` operations on \`nums1\` and **at most** \`k2\
 
 Your goal is to minimize the **sum of squared differences** — that is, minimize:
 
-$$\\sum_{i=0}^{n-1} (\\text{nums1}[i] - \\text{nums2}[i])^2$$
+\`sum( (nums1[i] - nums2[i])^2 )\` for all \`i\` from \`0\` to \`n-1\`.
 
 Return the **minimum** possible value of this sum after applying at most \`k1 + k2\` total operations.`,
   constraints: [

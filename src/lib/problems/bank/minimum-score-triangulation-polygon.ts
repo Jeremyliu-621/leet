@@ -51,21 +51,17 @@ The minimum is **144**.`,
   starterCode: {
     javascript: `function minScoreTriangulation(values) {
   const n = values.length;
-  // dp[i][j] = min triangulation score for sub-polygon i..j
   const dp = Array.from({length: n}, () => new Array(n).fill(0));
-  // TODO: fill with interval DP
+
 }`,
     typescript: `function minScoreTriangulation(values: number[]): number {
   const n = values.length;
-  // dp[i][j] = min triangulation score for sub-polygon i..j
   const dp: number[][] = Array.from({length: n}, () => new Array<number>(n).fill(0));
-  // TODO: fill with interval DP
+
 }`,
     python: `def minScoreTriangulation(values):
     n = len(values)
-    # dp[i][j] = min triangulation score for sub-polygon i..j
     dp = [[0] * n for _ in range(n)]
-    # TODO: fill with interval DP
 `,
   },
   visibleTests: [

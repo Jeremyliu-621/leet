@@ -9830,6 +9830,20 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return moves;
   },
 
+  'distribute-coins-in-binary-tree': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const root = _buildTree(arr);
+    let moves = 0;
+    const dfs = (n: _TN | null): number => {
+      if (!n) return 0;
+      const l = dfs(n.l), r = dfs(n.r);
+      moves += Math.abs(l) + Math.abs(r);
+      return n.v + l + r - 1;
+    };
+    dfs(root);
+    return moves;
+  },
+
   'flip-columns-for-maximum-equal-rows': (...args: unknown[]) => {
     const matrix = args[0] as number[][];
     const freq = new Map<string, number>();

@@ -7,9 +7,9 @@ export const problem: Problem = {
   tags: ['strings', 'hash-map', 'math'],
   description: `You are given a binary string \`s\` and two integers \`num1\` and \`num2\`. A binary string is a string consisting only of \`'0'\`s and \`'1'\`s.
 
-A substring \`s[l..r]\` is said to have a **fixed ratio** if
+A substring \`s[l..r]\` is said to have a **fixed ratio** if:
 
-$$\\frac{\\text{count}('0')}{\\text{count}('1')} = \\frac{\\text{num1}}{\\text{num2}}$$
+\`count('0') / count('1') == num1 / num2\`
 
 In other words, \`count('0') * num2 == count('1') * num1\`.
 

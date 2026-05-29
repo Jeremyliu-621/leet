@@ -783,6 +783,7 @@ import { problem as contiguousArray } from './contiguous-array';
 import { problem as shiftingLetters } from './shifting-letters';
 import { problem as convertBstToGreaterTree } from './convert-bst-to-greater-tree';
 import { problem as distributeCoinsBinaryTree } from './distribute-coins-binary-tree';
+import { problem as distributeCoinsInBinaryTree } from './distribute-coins-in-binary-tree';
 import { problem as flipColumnsForMaximumEqualRows } from './flip-columns-for-maximum-equal-rows';
 import { problem as deleteColumnsSortedIII } from './delete-columns-sorted-iii';
 
@@ -5482,4 +5483,6 @@ export const problems: readonly Problem[] = [
   makeThreeStringsEqual,
   addedIntegerI,
   minimumAddedInteger,
+  // batch 170 — dp+backtracking/hard, strings+stack/hard, design/medium, tree/medium, graph/medium
+  distributeCoinsInBinaryTree,
 ];

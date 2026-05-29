@@ -9440,6 +9440,19 @@ def distributeCoins(root):
     return moves[0]
 `,
 
+  'distribute-coins-in-binary-tree': `
+def distribute_coins_bt(root):
+    moves = [0]
+    def dfs(node):
+        if not node:
+            return 0
+        l, r = dfs(node.left), dfs(node.right)
+        moves[0] += abs(l) + abs(r)
+        return node.val + l + r - 1
+    dfs(root)
+    return moves[0]
+`,
+
   'flip-columns-for-maximum-equal-rows': `
 def maxEqualRowsAfterFlips(matrix):
     matrix = [list(row) for row in matrix]
@@ -20099,7 +20112,7 @@ def distanceK(root, target, k):
     return results
 `,
 
-  'design-twitter': `def designTwitter(actions, args):
+  'design-twitter': `def twitterRunner(actions, args):
     def conv(x):
         return list(x.to_py() if hasattr(x, 'to_py') else x)
     actions = conv(actions)
