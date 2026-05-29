@@ -39843,4 +39843,173 @@ def maxScore(nums):
     return count
 `,
 
+  'maximum-good-people-based-on-statements': `
+def maximumGood(statements):
+    if hasattr(statements, 'to_py'): statements = list(statements.to_py())
+    statements = [[int(x) for x in row] for row in statements]
+    n = len(statements)
+    best = 0
+    for mask in range(1, 1 << n):
+        ok = True
+        for i in range(n):
+            if not (mask >> i & 1):
+                continue
+            for j in range(n):
+                stmt = statements[i][j]
+                if stmt == 2:
+                    continue
+                j_good = bool(mask >> j & 1)
+                if (stmt == 1) != j_good:
+                    ok = False
+                    break
+            if not ok:
+                break
+        if ok:
+            best = max(best, bin(mask).count('1'))
+    return best
+`,
+
+  'maximum-product-of-palindromic-subsequences': `
+def maxProduct(s):
+    if hasattr(s, 'to_py'): s = str(s.to_py())
+    s = str(s)
+    n = len(s)
+    pal_len = [0] * (1 << n)
+    for mask in range(1, 1 << n):
+        chars = [s[i] for i in range(n) if mask >> i & 1]
+        lo, hi, ok = 0, len(chars) - 1, True
+        while lo < hi:
+            if chars[lo] != chars[hi]:
+                ok = False
+                break
+            lo += 1
+            hi -= 1
+        pal_len[mask] = len(chars) if ok else 0
+    best = 0
+    full = (1 << n) - 1
+    for mask1 in range(1, 1 << n):
+        if not pal_len[mask1]:
+            continue
+        comp = (~mask1) & full
+        mask2 = comp
+        while mask2 > 0:
+            if pal_len[mask2]:
+                prod = pal_len[mask1] * pal_len[mask2]
+                if prod > best:
+                    best = prod
+            mask2 = (mask2 - 1) & comp
+    return best
+`,
+
+  'count-integers-in-intervals': `
+def countIntegersInIntervals(operations):
+    if hasattr(operations, 'to_py'): operations = list(operations.to_py())
+    operations = [[str(op[0])] + [int(x) for x in op[1:]] for op in operations]
+    import bisect
+    starts = []
+    ends = []
+    total = 0
+    results = []
+
+    def add(left, right):
+        nonlocal total
+        lo = bisect.bisect_left(ends, left)
+        hi = bisect.bisect_right(starts, right)
+        new_left = left
+        new_right = right
+        for k in range(lo, hi):
+            new_left = min(new_left, starts[k])
+            new_right = max(new_right, ends[k])
+            total -= ends[k] - starts[k] + 1
+        del starts[lo:hi]
+        del ends[lo:hi]
+        starts.insert(lo, new_left)
+        ends.insert(lo, new_right)
+        total += new_right - new_left + 1
+
+    for op in operations:
+        if op[0] == 'add':
+            add(op[1], op[2])
+        else:
+            results.append(total)
+    return results
+`,
+
+  'longest-increasing-subsequence-ii': `
+def lengthOfLIS(nums, k):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = [int(x) for x in nums]
+    k = int(k)
+    MAX = 100001
+    tree = [0] * (4 * MAX)
+
+    def update(node, start, end, idx, val):
+        if start == end:
+            tree[node] = val
+            return
+        mid = (start + end) >> 1
+        if idx <= mid:
+            update(2*node, start, mid, idx, val)
+        else:
+            update(2*node+1, mid+1, end, idx, val)
+        tree[node] = max(tree[2*node], tree[2*node+1])
+
+    def query(node, start, end, l, r):
+        if r < start or end < l:
+            return 0
+        if l <= start <= end <= r:
+            return tree[node]
+        mid = (start + end) >> 1
+        return max(query(2*node, start, mid, l, r),
+                   query(2*node+1, mid+1, end, l, r))
+
+    ans = 1
+    for v in nums:
+        lo = max(1, v - k)
+        prev = query(1, 0, MAX-1, lo, v-1) if lo < v else 0
+        dp = prev + 1
+        ans = max(ans, dp)
+        cur = query(1, 0, MAX-1, v, v)
+        update(1, 0, MAX-1, v, max(cur, dp))
+    return ans
+`,
+
+  'number-of-good-subsets': `
+def numberOfGoodSubsets(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = [int(x) for x in nums]
+    MOD = 10**9 + 7
+    PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+    prime_mask = {}
+    for v in range(2, 31):
+        x, mask, ok = v, 0, True
+        for pi, p in enumerate(PRIMES):
+            if x % p == 0:
+                mask |= (1 << pi)
+                x //= p
+                if x % p == 0:
+                    ok = False
+                    break
+        prime_mask[v] = mask if ok else -1
+    from collections import Counter
+    freq = Counter(nums)
+    ones = freq.get(1, 0)
+    dp = [0] * (1 << 10)
+    dp[0] = 1
+    for v in range(2, 31):
+        mask = prime_mask[v]
+        if mask == -1 or freq.get(v, 0) == 0:
+            continue
+        cnt = freq[v]
+        for m in range((1 << 10) - 1, -1, -1):
+            if not dp[m]:
+                continue
+            if m & mask:
+                continue
+            dp[m | mask] = (dp[m | mask] + dp[m] * cnt) % MOD
+    ans = sum(dp[1:]) % MOD
+    ans = ans * pow(2, ones, MOD) % MOD
+    return ans
+`,
+
 };

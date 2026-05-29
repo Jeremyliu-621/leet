@@ -39759,6 +39759,135 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 175 — arrays+bitmask/hard×3, dp+bitmask/medium, arrays+segment-tree/hard
+  'maximum-good-people-based-on-statements': (...args: unknown[]) => {
+    const statements = args[0] as number[][];
+    const n = statements.length;
+    let best = 0;
+    for (let mask = 1; mask < (1 << n); mask++) {
+      let ok = true;
+      for (let i = 0; i < n && ok; i++) {
+        if (!(mask >> i & 1)) continue;
+        for (let j = 0; j < n; j++) {
+          const stmt = statements[i]![j]!;
+          if (stmt === 2) continue;
+          const jGood = !!(mask >> j & 1);
+          if ((stmt === 1) !== jGood) { ok = false; break; }
+        }
+      }
+      if (ok) {
+        const count = (mask >>> 0).toString(2).split('').filter(c => c === '1').length;
+        best = Math.max(best, count);
+      }
+    }
+    return best;
+  },
+
+  'maximum-product-of-palindromic-subsequences': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const palLen = new Int32Array(1 << n);
+    for (let mask = 1; mask < (1 << n); mask++) {
+      const chars: string[] = [];
+      for (let i = 0; i < n; i++) {
+        if (mask >> i & 1) chars.push(s[i]!);
+      }
+      let lo = 0, hi = chars.length - 1, ok = true;
+      while (lo < hi) {
+        if (chars[lo++] !== chars[hi--]) { ok = false; break; }
+      }
+      palLen[mask] = ok ? chars.length : 0;
+    }
+    let best = 0;
+    const full = (1 << n) - 1;
+    for (let mask1 = 1; mask1 < (1 << n); mask1++) {
+      if (!palLen[mask1]) continue;
+      let comp = (~mask1) & full;
+      for (let mask2 = comp; mask2 > 0; mask2 = (mask2 - 1) & comp) {
+        if (palLen[mask2]) {
+          best = Math.max(best, palLen[mask1]! * palLen[mask2]!);
+        }
+      }
+    }
+    return best;
+  },
+
+  'count-integers-in-intervals': (...args: unknown[]) => {
+    const operations = args[0] as (string | number)[][];
+    const intervals: [number, number][] = [];
+    let total = 0;
+    const results: number[] = [];
+
+    function add(left: number, right: number) {
+      let lo = 0, hi = intervals.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (intervals[mid]![1] < left) lo = mid + 1;
+        else hi = mid;
+      }
+      const mergeStart = lo;
+      let lo2 = mergeStart, hi2 = intervals.length;
+      while (lo2 < hi2) {
+        const mid = (lo2 + hi2) >> 1;
+        if (intervals[mid]![0] > right) hi2 = mid;
+        else lo2 = mid + 1;
+      }
+      const mergeEnd = lo2;
+      let newLeft = left, newRight = right;
+      for (let k = mergeStart; k < mergeEnd; k++) {
+        newLeft = Math.min(newLeft, intervals[k]![0]);
+        newRight = Math.max(newRight, intervals[k]![1]);
+        total -= intervals[k]![1] - intervals[k]![0] + 1;
+      }
+      total += newRight - newLeft + 1;
+      intervals.splice(mergeStart, mergeEnd - mergeStart, [newLeft, newRight]);
+    }
+
+    for (const op of operations) {
+      if (op[0] === 'add') {
+        add(op[1] as number, op[2] as number);
+      } else {
+        results.push(total);
+      }
+    }
+    return results;
+  },
+
+  'longest-increasing-subsequence-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const MAX = 100001;
+    const tree = new Int32Array(4 * MAX);
+
+    function update(node: number, start: number, end: number, idx: number, val: number): void {
+      if (start === end) { tree[node] = val; return; }
+      const mid = (start + end) >> 1;
+      if (idx <= mid) update(2*node, start, mid, idx, val);
+      else update(2*node+1, mid+1, end, idx, val);
+      tree[node] = Math.max(tree[2*node]!, tree[2*node+1]!);
+    }
+
+    function query(node: number, start: number, end: number, l: number, r: number): number {
+      if (r < start || end < l) return 0;
+      if (l <= start && end <= r) return tree[node]!;
+      const mid = (start + end) >> 1;
+      return Math.max(
+        query(2*node, start, mid, l, r),
+        query(2*node+1, mid+1, end, l, r)
+      );
+    }
+
+    let ans = 1;
+    for (const v of nums) {
+      const lo = Math.max(1, v - k);
+      const prev = lo < v ? query(1, 0, MAX-1, lo, v - 1) : 0;
+      const dp = prev + 1;
+      ans = Math.max(ans, dp);
+      update(1, 0, MAX-1, v, Math.max(query(1, 0, MAX-1, v, v), dp));
+    }
+    return ans;
+  },
+
   'rearrange-array-to-maximize-prefix-score': (nums: unknown) => {
     const sorted = [...(nums as number[])].sort((a, b) => b - a);
     let sum = 0, count = 0;
@@ -39768,6 +39897,49 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       else break;
     }
     return count;
+  },
+
+  'number-of-good-subsets': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const MOD = BigInt(1_000_000_007);
+    const PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29];
+    const primeMask = new Array<number>(31).fill(0);
+    for (let v = 2; v <= 30; v++) {
+      let x = v, mask = 0, ok = true;
+      for (let pi = 0; pi < PRIMES.length; pi++) {
+        const p = PRIMES[pi]!;
+        if (x % p === 0) {
+          mask |= (1 << pi);
+          x = Math.floor(x / p);
+          if (x % p === 0) { ok = false; break; }
+        }
+      }
+      primeMask[v] = ok ? mask : -1;
+    }
+    const freq = new Array<number>(31).fill(0);
+    let ones = 0n;
+    for (const n of nums) {
+      if (n === 1) ones++;
+      else freq[n] = (freq[n] ?? 0) + 1;
+    }
+    const dp = new Array<bigint>(1 << 10).fill(0n);
+    dp[0] = 1n;
+    for (let v = 2; v <= 30; v++) {
+      const mask = primeMask[v]!;
+      if (mask === -1 || freq[v] === 0) continue;
+      const cnt = BigInt(freq[v]!);
+      for (let m = (1 << 10) - 1; m >= 0; m--) {
+        if (!dp[m]) continue;
+        if (m & mask) continue;
+        dp[m | mask] = (dp[m | mask]! + dp[m]! * cnt) % MOD;
+      }
+    }
+    let ans = 0n;
+    for (let m = 1; m < (1 << 10); m++) ans = (ans + dp[m]!) % MOD;
+    let pow2 = 1n;
+    for (let i = 0n; i < ones; i++) pow2 = pow2 * 2n % MOD;
+    return Number(ans * pow2 % MOD);
+
   },
 
 };

@@ -2778,6 +2778,12 @@ import { problem as nThTribonacciNumber } from './n-th-tribonacci-number';
 import { problem as solvingQuestionsWithBrainpower } from './solving-questions-with-brainpower';
 import { problem as detonateTheMaximumBombs } from './detonate-the-maximum-bombs';
 import { problem as hIndexII } from './h-index-ii';
+// batch 175 — arrays+bitmask/hard×3, dp+bitmask/medium, arrays+segment-tree/hard
+import { problem as maximumGoodPeopleBasedOnStatements } from './maximum-good-people-based-on-statements';
+import { problem as maximumProductOfPalindromicSubsequences } from './maximum-product-of-palindromic-subsequences';
+import { problem as countIntegersInIntervals } from './count-integers-in-intervals';
+import { problem as longestIncreasingSubsequenceII } from './longest-increasing-subsequence-ii';
+import { problem as numberOfGoodSubsets } from './number-of-good-subsets';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5593,4 +5599,10 @@ export const problems: readonly Problem[] = [
   countPathsWithGivenXorValue,
   countPairsOfConnectableServersInAWeightedTree,
   minimumNumberOfOperationsToSortBinaryTreeByLevel,
+  // batch 175 — arrays+bitmask/hard×3, dp+bitmask/medium, arrays+segment-tree/hard
+  maximumGoodPeopleBasedOnStatements,
+  maximumProductOfPalindromicSubsequences,
+  countIntegersInIntervals,
+  longestIncreasingSubsequenceII,
+  numberOfGoodSubsets,
 ];
