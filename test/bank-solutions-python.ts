@@ -38368,6 +38368,8 @@ def shortestSubarray(nums, k):
             dq.pop()
         dq.append(j)
     return ans if ans <= n else -1
+`,
+
   // batch 160b — design/medium×2, strings+math/medium
   'design-leaderboard': `
 def leaderboard(ops, params):
