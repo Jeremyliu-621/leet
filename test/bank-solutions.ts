@@ -36921,6 +36921,80 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return bt(0);
   },
+  // batch 156 — tree/easy×1, tree/medium×1
+  'average-of-levels-in-binary-tree': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    interface TNode { val: number; left: TNode | null; right: TNode | null; }
+    const build = (a: (number | null)[]): TNode | null => {
+      if (!a.length || a[0] == null) return null;
+      const root: TNode = { val: a[0], left: null, right: null };
+      const q: (TNode | null)[] = [root];
+      let i = 1;
+      while (q.length && i < a.length) {
+        const nd = q.shift()!;
+        if (nd === null) continue;
+        if (i < a.length && a[i] != null) { nd.left = { val: a[i]!, left: null, right: null }; q.push(nd.left); } else q.push(null);
+        i++;
+        if (i < a.length && a[i] != null) { nd.right = { val: a[i]!, left: null, right: null }; q.push(nd.right); } else q.push(null);
+        i++;
+      }
+      return root;
+    };
+    const root = build(arr);
+    if (!root) return [];
+    const result: number[] = [];
+    let level: (TNode | null)[] = [root];
+    while (level.length > 0) {
+      const sum = level.reduce((s, n) => s + (n?.val ?? 0), 0);
+      result.push(sum / level.length);
+      const next: TNode[] = [];
+      for (const nd of level) {
+        if (nd?.left) next.push(nd.left);
+        if (nd?.right) next.push(nd.right);
+      }
+      level = next;
+    }
+    return result;
+  },
+
+  'all-elements-in-two-binary-search-trees': (...args: unknown[]) => {
+    const arr1 = args[0] as (number | null)[];
+    const arr2 = args[1] as (number | null)[];
+    interface TNode { val: number; left: TNode | null; right: TNode | null; }
+    const build = (a: (number | null)[]): TNode | null => {
+      if (!a.length || a[0] == null) return null;
+      const root: TNode = { val: a[0], left: null, right: null };
+      const q: (TNode | null)[] = [root];
+      let i = 1;
+      while (q.length && i < a.length) {
+        const nd = q.shift()!;
+        if (nd === null) continue;
+        if (i < a.length && a[i] != null) { nd.left = { val: a[i]!, left: null, right: null }; q.push(nd.left); } else q.push(null);
+        i++;
+        if (i < a.length && a[i] != null) { nd.right = { val: a[i]!, left: null, right: null }; q.push(nd.right); } else q.push(null);
+        i++;
+      }
+      return root;
+    };
+    const inorder = (nd: TNode | null, out: number[]): void => {
+      if (!nd) return;
+      inorder(nd.left, out);
+      out.push(nd.val);
+      inorder(nd.right, out);
+    };
+    const a: number[] = [], b: number[] = [];
+    inorder(build(arr1), a);
+    inorder(build(arr2), b);
+    const merged: number[] = [];
+    let i = 0, j = 0;
+    while (i < a.length && j < b.length) {
+      if (a[i]! <= b[j]!) merged.push(a[i++]!);
+      else merged.push(b[j++]!);
+    }
+    while (i < a.length) merged.push(a[i++]!);
+    while (j < b.length) merged.push(b[j++]!);
+    return merged;
+  },
 
   // batch 155 — graph/hard, binary-search+arrays/hard, arrays+dp/medium
   'maximum-employees-invited-to-meeting': (...args: unknown[]) => {

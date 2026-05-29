@@ -18792,53 +18792,13 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
 `,
 
   'trim-a-binary-search-tree': `def trimBST(root, low, high):
-    root = list(root.to_py() if hasattr(root, 'to_py') else root)
-    low = int(low)
-    high = int(high)
-    def build(arr):
-        if not arr or arr[0] is None:
-            return None
-        node = [arr[0], None, None]
-        q = [node]
-        i = 1
-        while q and i < len(arr):
-            n = q.pop(0)
-            if i < len(arr) and arr[i] is not None:
-                n[1] = [arr[i], None, None]
-                q.append(n[1])
-            i += 1
-            if i < len(arr) and arr[i] is not None:
-                n[2] = [arr[i], None, None]
-                q.append(n[2])
-            i += 1
-        return node
-    def trim(node):
-        if node is None:
-            return None
-        if node[0] < low:
-            return trim(node[2])
-        if node[0] > high:
-            return trim(node[1])
-        node[1] = trim(node[1])
-        node[2] = trim(node[2])
-        return node
-    def to_arr(node):
-        if node is None:
-            return []
-        result = []
-        q = [node]
-        while q:
-            n = q.pop(0)
-            if n is None:
-                result.append(None)
-            else:
-                result.append(n[0])
-                q.append(n[1])
-                q.append(n[2])
-        while result and result[-1] is None:
-            result.pop()
-        return result
-    return to_arr(trim(build(root)))
+    low = int(low); high = int(high)
+    if root is None: return None
+    if root.val < low: return trimBST(root.right, low, high)
+    if root.val > high: return trimBST(root.left, low, high)
+    root.left = trimBST(root.left, low, high)
+    root.right = trimBST(root.right, low, high)
+    return root
 `,
 
   'finding-users-active-minutes': `def findingUsersActiveMinutes(logs, k):
@@ -36704,6 +36664,57 @@ def makesquare(matchsticks):
                 buckets[j] -= matchsticks[i]
         return False
     return bt(0)
+`,
+  // batch 156 — tree/easy×1, tree/medium×1
+  'average-of-levels-in-binary-tree': `def averageOfLevelsRunner(arr):
+    raw = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
+    a = [int(v) if isinstance(v, (int, float)) else None for v in raw]
+    if not a or a[0] is None: return []
+    class TreeNode:
+        def __init__(self, v): self.val = v; self.left = None; self.right = None
+    root = TreeNode(a[0]); q = [root]; i = 1
+    while q and i < len(a):
+        nd = q.pop(0)
+        if i < len(a) and a[i] is not None: nd.left = TreeNode(a[i]); q.append(nd.left)
+        i += 1
+        if i < len(a) and a[i] is not None: nd.right = TreeNode(a[i]); q.append(nd.right)
+        i += 1
+    result = []
+    level = [root]
+    while level:
+        result.append(sum(n.val for n in level) / len(level))
+        level = [c for nd in level for c in (nd.left, nd.right) if c]
+    return result
+`,
+
+  'all-elements-in-two-binary-search-trees': `def getAllElementsRunner(arr1, arr2):
+    def build(raw):
+        a = [int(v) if isinstance(v, (int, float)) else None for v in (raw.to_py() if hasattr(raw, 'to_py') else list(raw))]
+        if not a or a[0] is None: return None
+        class TreeNode:
+            def __init__(self, v): self.val = v; self.left = None; self.right = None
+        root = TreeNode(a[0]); q = [root]; i = 1
+        while q and i < len(a):
+            nd = q.pop(0)
+            if i < len(a) and a[i] is not None: nd.left = TreeNode(a[i]); q.append(nd.left)
+            i += 1
+            if i < len(a) and a[i] is not None: nd.right = TreeNode(a[i]); q.append(nd.right)
+            i += 1
+        return root
+    def inorder(nd, out):
+        if not nd: return
+        inorder(nd.left, out)
+        out.append(nd.val)
+        inorder(nd.right, out)
+    a, b = [], []
+    inorder(build(arr1), a)
+    inorder(build(arr2), b)
+    merged = []; i = j = 0
+    while i < len(a) and j < len(b):
+        if a[i] <= b[j]: merged.append(a[i]); i += 1
+        else: merged.append(b[j]); j += 1
+    merged.extend(a[i:]); merged.extend(b[j:])
+    return merged
 `,
 
   // batch 155 — graph/hard, binary-search+arrays/hard, arrays+dp/medium
