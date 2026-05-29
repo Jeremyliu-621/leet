@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2439** problems; 7611 tests green. Batches 102–169 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2444** problems; 7623 tests green. Batches 102–169 + 166 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 170+); UX polish per LEETCODE_PARITY.md.
 
@@ -23,6 +23,9 @@ Five new problems: `number-of-same-end-substrings` (medium/strings+arrays, prefi
 
 ### feat(bank): batch 165 — minimum-stack (easy), max-chunks-sorted (medium), most-competitive-subseq (medium), mct-leaf-values (medium), shortest-subarray-sum-k (hard) (2026-05-29)
 Five new problems: `minimum-stack` (easy/design+stack, parallel min-stack for O(1) getMin), `maximum-chunks-to-make-sorted` (medium/arrays+stack, greedy max==index split), `find-the-most-competitive-subsequence` (medium/arrays+stack, monotone stack with feasibility guard), `minimum-cost-tree-from-leaf-values` (medium/arrays+stack+dp, greedy merge — pop when top<=val, cost+=mid*min(top,val)), `shortest-subarray-with-sum-at-least-k` (hard/arrays+sliding-window, monotone deque on prefix sums O(n)). Bank at **2429**; 7581 tests.
+
+### feat(bank): batch 165 — 5 new problems (dp×2, tree×3) (2026-05-29)
+best-time-to-buy-and-sell-stock-with-transaction-fee (medium/dp, cash/hold state machine with fee deducted on sell), minimum-cost-for-cutting-stick (hard/dp, interval DP on augmented endpoints), pseudo-palindromic-paths-in-a-binary-tree (medium/tree+bit-manipulation, DFS bitmask — count leaves where mask&(mask-1)==0), binary-tree-coloring-game (medium/tree+math, player 2 wins iff max(leftSize, rightSize, rest) > n/2), step-by-step-directions-from-a-binary-tree-node-to-another (medium/tree, LCA-via-root-paths: root→start + root→dest, strip common prefix, convert start portion to 'U's).
 
 ### feat(bank): register batch 168 — 9 orphan problems + solutions (2026-05-29)
 Registered 9 previously-unregistered problem files with full JS+Python reference solutions: `count-of-integers` (hard/dp+strings, digit DP with tight/started/sum states mod 10^9+7), `minimum-cost-homecoming-of-a-robot-in-a-grid` (medium/arrays+math, sum row+col costs traversed excluding start), `number-of-ways-to-earn-points` (hard/dp, bounded knapsack right-to-left), `sum-of-scores-of-built-strings` (hard/strings, Z-function sum), `count-substrings-with-k-frequency-characters-ii` (medium/sliding-window, total minus no-k-window count), `sum-of-imbalance-numbers-of-all-subarrays` (medium/arrays, O(n²) with sorted insertion), `minimum-white-tiles-after-covering-with-carpets` (hard/dp), `special-permutations` (medium/dp+bits), `unique-length-3-palindromic-subsequences` (medium/strings). Bank at **2424**; 7566 tests.

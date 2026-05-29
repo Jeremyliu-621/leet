@@ -37383,29 +37383,38 @@ def nthUglyNumber(n, a, b, c):
 `,
 
   'binary-tree-coloring-game': `
-def btreeGameWinningMove(root, n, x):
-    if hasattr(root, 'to_py'): root = list(root.to_py())
-    arr = root
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def btreeGameWinningMoveRunner(n, arr, x):
+    if hasattr(arr, 'to_py'):
+        arr = list(arr.to_py())
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in arr]
+    if not arr or arr[0] is None:
+        return False
     def build(i):
-        if i >= len(arr) or arr[i] is None: return None
-        class N: pass
-        node = N()
-        node.val = int(arr[i]) if isinstance(arr[i], (int, float)) else None
-        node.left = build(2*i+1)
-        node.right = build(2*i+2)
-        return node
-    tree = build(0)
-    left_size = [0]; right_size = [0]
-    def count(node):
-        if not node: return 0
-        l, r = count(node.left), count(node.right)
-        if node.val == x:
-            left_size[0] = l; right_size[0] = r
-        return l + r + 1
-    count(tree)
-    parent_size = n - left_size[0] - right_size[0] - 1
-    half = n / 2
-    return left_size[0] > half or right_size[0] > half or parent_size > half
+        if i >= len(arr) or arr[i] is None:
+            return None
+        return TreeNode(arr[i], build(2*i+1), build(2*i+2))
+    def count_size(node):
+        if not node:
+            return 0
+        return 1 + count_size(node.left) + count_size(node.right)
+    left_count = [0]
+    right_count = [0]
+    def find_x(node):
+        if not node:
+            return
+        if node.val == int(x):
+            left_count[0] = count_size(node.left)
+            right_count[0] = count_size(node.right)
+            return
+        find_x(node.left)
+        find_x(node.right)
+    find_x(build(0))
+    rest = int(n) - left_count[0] - right_count[0] - 1
+    return max(left_count[0], right_count[0], rest) > int(n) / 2
 `,
 
 
@@ -38548,6 +38557,167 @@ def minimumAddedInteger(nums1, nums2):
         if x >= 0 and is_valid(x):
             ans = min(ans, x)
     return ans
+`,
+
+  // batch 165 — dp/medium×2, tree/medium×3
+  'best-time-to-buy-and-sell-stock-with-transaction-fee': `
+def maxProfit(prices, fee):
+    if hasattr(prices, 'to_py'):
+        prices = list(prices.to_py())
+    cash = 0
+    hold = float('-inf')
+    for price in prices:
+        new_cash = max(cash, hold + price - fee)
+        hold = max(hold, cash - price)
+        cash = new_cash
+    return cash
+`,
+
+  'minimum-cost-for-cutting-stick': `
+def minCost(n, cuts):
+    if hasattr(cuts, 'to_py'):
+        cuts = list(cuts.to_py())
+    cuts = sorted([int(c) for c in cuts])
+    endpoints = [0] + cuts + [n]
+    m = len(endpoints)
+    dp = [[0] * m for _ in range(m)]
+    for length in range(2, m):
+        for i in range(m - length):
+            j = i + length
+            dp[i][j] = float('inf')
+            for k in range(i + 1, j):
+                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j] + endpoints[j] - endpoints[i])
+    return dp[0][m - 1]
+`,
+
+  'pseudo-palindromic-paths-in-a-binary-tree': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def pseudoPalindromicPathsRunner(arr):
+    if hasattr(arr, 'to_py'):
+        arr = list(arr.to_py())
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in arr]
+    if not arr or arr[0] is None:
+        return 0
+    def build(i):
+        if i >= len(arr) or arr[i] is None:
+            return None
+        return TreeNode(arr[i], build(2*i+1), build(2*i+2))
+    count = [0]
+    def dfs(node, mask):
+        if not node:
+            return
+        m = mask ^ (1 << node.val)
+        if not node.left and not node.right:
+            if m & (m - 1) == 0:
+                count[0] += 1
+            return
+        dfs(node.left, m)
+        dfs(node.right, m)
+    dfs(build(0), 0)
+    return count[0]
+`,
+
+  'step-by-step-directions-from-a-binary-tree-node-to-another': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def getDirectionsRunner(arr, start_value, dest_value):
+    if hasattr(arr, 'to_py'):
+        arr = list(arr.to_py())
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in arr]
+    def build(i):
+        if i >= len(arr) or arr[i] is None:
+            return None
+        return TreeNode(arr[i], build(2*i+1), build(2*i+2))
+    def find_path(node, target, path):
+        if not node:
+            return False
+        if node.val == target:
+            return True
+        path.append('L')
+        if find_path(node.left, target, path):
+            return True
+        path.pop()
+        path.append('R')
+        if find_path(node.right, target, path):
+            return True
+        path.pop()
+        return False
+    root = build(0)
+    start_path = []
+    dest_path = []
+    find_path(root, int(start_value), start_path)
+    find_path(root, int(dest_value), dest_path)
+    i = 0
+    while i < len(start_path) and i < len(dest_path) and start_path[i] == dest_path[i]:
+        i += 1
+    return 'U' * (len(start_path) - i) + ''.join(dest_path[i:])
+`,
+
+  // batch 166
+  'replace-elements-with-greatest-element-on-right-side': `
+def replaceElements(arr):
+    if hasattr(arr, 'to_py'): arr = list(arr.to_py())
+    max_right = -1
+    for i in range(len(arr) - 1, -1, -1):
+        tmp = arr[i]
+        arr[i] = max_right
+        max_right = max(max_right, tmp)
+    return arr
+`,
+
+  'find-all-numbers-disappeared-in-an-array': `
+def findDisappearedNumbers(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    n = len(nums)
+    seen = set(nums)
+    return [i for i in range(1, n + 1) if i not in seen]
+`,
+
+  'final-value-of-variable-after-performing-operations': `
+def finalValueAfterOperations(operations):
+    if hasattr(operations, 'to_py'): operations = list(operations.to_py())
+    x = 0
+    for op in operations:
+        x += 1 if '+' in str(op) else -1
+    return x
+`,
+
+  'steps-to-make-array-non-decreasing': `
+def totalSteps(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    n = len(nums)
+    d = [0] * n
+    stack = []
+    for j in range(n):
+        max_d = 0
+        while stack and nums[stack[-1]] <= nums[j]:
+            max_d = max(max_d, d[stack.pop()])
+        d[j] = max_d + 1 if stack else 0
+        stack.append(j)
+    return max(d) if d else 0
+`,
+
+  'flower-planting-with-no-adjacent': `
+def gardenNoAdj(n, paths):
+    if hasattr(paths, 'to_py'): paths = [list(p.to_py()) if hasattr(p, 'to_py') else list(p) for p in paths]
+    adj = [[] for _ in range(n + 1)]
+    for p in paths:
+        u, v = int(p[0]), int(p[1])
+        adj[u].append(v)
+        adj[v].append(u)
+    result = [0] * (n + 1)
+    for g in range(1, n + 1):
+        used = set(result[nb] for nb in adj[g])
+        for c in range(1, 5):
+            if c not in used:
+                result[g] = c
+                break
+    return result[1:]
 `,
 
 };

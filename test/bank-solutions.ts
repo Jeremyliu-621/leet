@@ -37325,26 +37325,26 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(lo);
   },
 
-  'binary-tree-coloring-game': (root: unknown, n: unknown, x: unknown): unknown => {
+  'binary-tree-coloring-game': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const arr = args[1] as (number | null)[];
+    const x = args[2] as number;
     type TN = { val: number; left: TN | null; right: TN | null };
-    const arr = root as (number | null)[];
     if (!arr || arr.length === 0 || arr[0] == null) return false;
     const build = (i: number): TN | null => {
       if (i >= arr.length || arr[i] == null) return null;
       return { val: arr[i] as number, left: build(2 * i + 1), right: build(2 * i + 2) };
     };
-    const root2 = build(0);
     let leftSize = 0, rightSize = 0;
-    const find = (node: TN | null): number => {
+    const count = (node: TN | null): number => {
       if (!node) return 0;
-      const l = find(node.left), r = find(node.right);
-      if (node.val === (x as number)) { leftSize = l; rightSize = r; }
+      const l = count(node.left), r = count(node.right);
+      if (node.val === x) { leftSize = l; rightSize = r; }
       return l + r + 1;
     };
-    find(root2);
-    const parentSize = (n as number) - leftSize - rightSize - 1;
-    const half = (n as number) / 2;
-    return leftSize > half || rightSize > half || parentSize > half;
+    count(build(0));
+    const rest = n - leftSize - rightSize - 1;
+    return Math.max(leftSize, rightSize, rest) > n / 2;
   },
 
   // batch 156c/157r — missing solutions (graph, simulation, trie, design)
@@ -38556,6 +38556,8 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 165 — dp/medium×2, tree/medium×3 (merged from remote)
+  // (these solutions are inserted below in full by the remote merge)
   // batch 169 — strings/medium, strings/hard, strings/easy, arrays/easy×2
   'maximum-palindromes-after-operations': (words: unknown) => {
     const ws = words as string[];
@@ -38627,6 +38629,143 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       if (x >= 0 && isValid(x)) ans = Math.min(ans, x);
     }
     return ans;
+  },
+
+  // batch 165 — dp/medium×2, tree/medium×3
+  'best-time-to-buy-and-sell-stock-with-transaction-fee': (...args: unknown[]) => {
+    const prices = args[0] as number[];
+    const fee = args[1] as number;
+    let cash = 0, hold = -Infinity;
+    for (const price of prices) {
+      const newCash = Math.max(cash, hold + price - fee);
+      hold = Math.max(hold, cash - price);
+      cash = newCash;
+    }
+    return cash;
+  },
+
+  'minimum-cost-for-cutting-stick': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const cuts = (args[1] as number[]).slice().sort((a, b) => a - b);
+    const endpoints = [0, ...cuts, n];
+    const m = endpoints.length;
+    const dp: number[][] = Array.from({ length: m }, () => new Array<number>(m).fill(0));
+    for (let len = 2; len < m; len++) {
+      for (let i = 0; i + len < m; i++) {
+        const j = i + len;
+        dp[i]![j] = Infinity;
+        for (let k = i + 1; k < j; k++) {
+          dp[i]![j] = Math.min(dp[i]![j]!, dp[i]![k]! + dp[k]![j]! + endpoints[j]! - endpoints[i]!);
+        }
+      }
+    }
+    return dp[0]![m - 1]!;
+  },
+
+  'pseudo-palindromic-paths-in-a-binary-tree': (arr: unknown) => {
+    const a = arr as (number | null)[];
+    if (!a || a.length === 0 || a[0] == null) return 0;
+    interface TreeNode { val: number; left: TreeNode | null; right: TreeNode | null; }
+    function build(i: number): TreeNode | null {
+      if (i >= a.length || a[i] == null) return null;
+      return { val: a[i] as number, left: build(2 * i + 1), right: build(2 * i + 2) };
+    }
+    let count = 0;
+    function dfs(node: TreeNode | null, mask: number) {
+      if (!node) return;
+      const m = mask ^ (1 << node.val);
+      if (!node.left && !node.right) { if ((m & (m - 1)) === 0) count++; return; }
+      dfs(node.left, m);
+      dfs(node.right, m);
+    }
+    dfs(build(0), 0);
+    return count;
+  },
+
+  'step-by-step-directions-from-a-binary-tree-node-to-another': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const startValue = args[1] as number;
+    const destValue = args[2] as number;
+    interface TreeNode { val: number; left: TreeNode | null; right: TreeNode | null; }
+    function build(i: number): TreeNode | null {
+      if (i >= arr.length || arr[i] == null) return null;
+      return { val: arr[i] as number, left: build(2 * i + 1), right: build(2 * i + 2) };
+    }
+    function findPath(node: TreeNode | null, target: number, path: string[]): boolean {
+      if (!node) return false;
+      if (node.val === target) return true;
+      path.push('L');
+      if (findPath(node.left, target, path)) return true;
+      path.pop();
+      path.push('R');
+      if (findPath(node.right, target, path)) return true;
+      path.pop();
+      return false;
+    }
+    const root = build(0);
+    const startPath: string[] = [], destPath: string[] = [];
+    findPath(root, startValue, startPath);
+    findPath(root, destValue, destPath);
+    let i = 0;
+    while (i < startPath.length && i < destPath.length && startPath[i] === destPath[i]) i++;
+    return 'U'.repeat(startPath.length - i) + destPath.slice(i).join('');
+  },
+
+
+
+  // batch 166 — arrays/easy×3, arrays+stack/medium, graph/medium
+  'replace-elements-with-greatest-element-on-right-side': (arr: unknown) => {
+    const a = [...(arr as number[])];
+    let maxRight = -1;
+    for (let i = a.length - 1; i >= 0; i--) {
+      const tmp = a[i]!;
+      a[i] = maxRight;
+      maxRight = Math.max(maxRight, tmp);
+    }
+    return a;
+  },
+
+  'find-all-numbers-disappeared-in-an-array': (nums: unknown) => {
+    const n = (nums as number[]).length;
+    const seen = new Set(nums as number[]);
+    const result: number[] = [];
+    for (let i = 1; i <= n; i++) if (!seen.has(i)) result.push(i);
+    return result;
+  },
+
+  'final-value-of-variable-after-performing-operations': (operations: unknown) => {
+    let x = 0;
+    for (const op of operations as string[]) x += op.includes('+') ? 1 : -1;
+    return x;
+  },
+
+  'steps-to-make-array-non-decreasing': (nums: unknown) => {
+    const a = nums as number[];
+    const n = a.length;
+    const d = new Array<number>(n).fill(0);
+    const stack: number[] = [];
+    for (let j = 0; j < n; j++) {
+      let maxD = 0;
+      while (stack.length > 0 && a[stack[stack.length - 1]!]! <= a[j]!) {
+        maxD = Math.max(maxD, d[stack.pop()!]!);
+      }
+      d[j] = stack.length > 0 ? maxD + 1 : 0;
+      stack.push(j);
+    }
+    return n > 0 ? Math.max(...d) : 0;
+  },
+
+  'flower-planting-with-no-adjacent': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const paths = args[1] as number[][];
+    const adj: number[][] = Array.from({ length: n + 1 }, () => []);
+    for (const [u, v] of paths) { adj[u!]!.push(v!); adj[v!]!.push(u!); }
+    const result = new Array<number>(n + 1).fill(0);
+    for (let g = 1; g <= n; g++) {
+      const used = new Set(adj[g]!.map(nb => result[nb]!));
+      for (let c = 1; c <= 4; c++) { if (!used.has(c)) { result[g] = c; break; } }
+    }
+    return result.slice(1);
   },
 
 };
