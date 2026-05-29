@@ -2934,6 +2934,12 @@ import { problem as teemoAttacking } from './teemo-attacking';
 import { problem as distanceBetweenBusStops } from './distance-between-bus-stops';
 import { problem as binaryNumberWithAlternatingBits } from './binary-number-with-alternating-bits';
 import { problem as monotonicIncreasingDigits } from './monotonic-increasing-digits';
+// batch 189 — medium/arrays, easy/strings+hash-map, medium/arrays+hash-map, easy/arrays+hash-map, medium/arrays
+import { problem as countHiddenSequences } from './count-hidden-sequences';
+import { problem as existenceOfASubstringInAStringAndItsReverse } from './existence-of-a-substring-in-a-string-and-its-reverse';
+import { problem as countPairsWithSumDivisibleByK } from './count-pairs-with-sum-divisible-by-k';
+import { problem as findTheDistinctDifferenceArray } from './find-the-distinct-difference-array';
+import { problem as theKStrongestValuesInAnArray } from './the-k-strongest-values-in-an-array';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5909,4 +5915,10 @@ export const problems: readonly Problem[] = [
   distanceBetweenBusStops,
   binaryNumberWithAlternatingBits,
   monotonicIncreasingDigits,
+  // batch 189 — medium/arrays, easy/strings+hash-map, medium/arrays+hash-map, easy/arrays+hash-map, medium/arrays
+  countHiddenSequences,
+  existenceOfASubstringInAStringAndItsReverse,
+  countPairsWithSumDivisibleByK,
+  findTheDistinctDifferenceArray,
+  theKStrongestValuesInAnArray,
 ];

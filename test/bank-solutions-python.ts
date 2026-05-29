@@ -42303,4 +42303,62 @@ def monotoneIncreasingDigits(n):
         digits[i] = '9'
     return int(''.join(digits))
 `,
+
+  'count-hidden-sequences': `
+def countHiddenSequences(differences: list[int], lower: int, upper: int) -> int:
+    prefix = 0
+    min_p = 0
+    max_p = 0
+    for d in differences:
+        prefix += d
+        if prefix < min_p:
+            min_p = prefix
+        if prefix > max_p:
+            max_p = prefix
+    return max(0, (upper - max_p) - (lower - min_p) + 1)
+`,
+
+  'existence-of-a-substring-in-a-string-and-its-reverse': `
+def isSubstringPresent(s: str) -> bool:
+    rev = s[::-1]
+    rev_set = {rev[i:i+2] for i in range(len(rev) - 1)}
+    for i in range(len(s) - 1):
+        if s[i:i+2] in rev_set:
+            return True
+    return False
+`,
+
+  'count-pairs-with-sum-divisible-by-k': `
+def countPairs(nums: list[int], k: int) -> int:
+    freq = [0] * k
+    count = 0
+    for n in nums:
+        r = n % k
+        count += freq[(k - r) % k]
+        freq[r] += 1
+    return count
+`,
+
+  'find-the-distinct-difference-array': `
+def distinctDifferenceArray(nums: list[int]) -> list[int]:
+    n = len(nums)
+    prefix_distinct = []
+    seen = set()
+    for x in nums:
+        seen.add(x)
+        prefix_distinct.append(len(seen))
+    suffix_distinct = [0] * (n + 1)
+    seen_suf = set()
+    for i in range(n - 1, -1, -1):
+        seen_suf.add(nums[i])
+        suffix_distinct[i] = len(seen_suf)
+    return [prefix_distinct[i] - suffix_distinct[i + 1] for i in range(n)]
+`,
+
+  'the-k-strongest-values-in-an-array': `
+def getStrongest(nums: list[int], k: int) -> list[int]:
+    sorted_nums = sorted(nums)
+    m = sorted_nums[(len(nums) - 1) // 2]
+    return sorted(nums, key=lambda x: (abs(x - m), x), reverse=True)[:k]
+`,
 };

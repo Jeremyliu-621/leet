@@ -42348,7 +42348,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   },
   'distance-between-bus-stops': (...args: unknown[]) => {
     const distance = args[0] as number[];
-    let source = args[1] as number;
+    const source = args[1] as number;
     const destination = args[2] as number;
     if (source === destination) return 0;
     const n = distance.length;
@@ -42386,5 +42386,77 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     for (let i = mark; i < len; i++) digits[i] = 9;
     return parseInt(digits.join(''), 10);
+  },
+
+  'count-hidden-sequences': (...args: unknown[]) => {
+    const differences = args[0] as number[];
+    const lower = args[1] as number;
+    const upper = args[2] as number;
+    let prefix = 0;
+    let minP = 0;
+    let maxP = 0;
+    for (const d of differences) {
+      prefix += d;
+      if (prefix < minP) minP = prefix;
+      if (prefix > maxP) maxP = prefix;
+    }
+    return Math.max(0, (upper - maxP) - (lower - minP) + 1);
+  },
+
+  'existence-of-a-substring-in-a-string-and-its-reverse': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const rev = s.split('').reverse().join('');
+    const revSet = new Set<string>();
+    for (let i = 0; i + 1 < rev.length; i++) revSet.add(rev[i]! + rev[i + 1]!);
+    for (let i = 0; i + 1 < s.length; i++) {
+      if (revSet.has(s[i]! + s[i + 1]!)) return true;
+    }
+    return false;
+  },
+
+  'count-pairs-with-sum-divisible-by-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const freq = new Array<number>(k).fill(0);
+    let count = 0;
+    for (const n of nums) {
+      const r = n % k;
+      count += freq[(k - r) % k]!;
+      freq[r]!++;
+    }
+    return count;
+  },
+
+  'find-the-distinct-difference-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const prefixDistinct = new Array<number>(n);
+    const seen = new Set<number>();
+    for (let i = 0; i < n; i++) {
+      seen.add(nums[i]!);
+      prefixDistinct[i] = seen.size;
+    }
+    const suffixDistinct = new Array<number>(n + 1).fill(0);
+    const seenSuffix = new Set<number>();
+    for (let i = n - 1; i >= 0; i--) {
+      seenSuffix.add(nums[i]!);
+      suffixDistinct[i] = seenSuffix.size;
+    }
+    return Array.from({ length: n }, (_, i) => prefixDistinct[i]! - suffixDistinct[i + 1]!);
+  },
+
+  'the-k-strongest-values-in-an-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const sorted = [...nums].sort((a, b) => a - b);
+    const m = sorted[Math.floor((nums.length - 1) / 2)]!;
+    return [...nums]
+      .sort((a, b) => {
+        const sa = Math.abs(a - m);
+        const sb = Math.abs(b - m);
+        if (sb !== sa) return sb - sa;
+        return b - a;
+      })
+      .slice(0, k);
   },
 };
