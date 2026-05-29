@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2348** problems; 7302 tests green. Batches 102–156b complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2362** problems; 7365 tests green. Batches 102–157 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 157+); update site count; UX polish.
+**Next up:** More bank growth (batch 158+); update site count; UX polish.
+
+### feat(bank): add batch 157 — implement-trie-ii (medium), word-filter (hard), lexicographical-numbers (medium), k-th-smallest-lex (hard), design-autocomplete (hard) (2026-05-29)
+Five new trie/design problems: `implement-trie-ii-prefix-tree` (medium/trie+design, endCount/prefixCount per node for insert/countWordsEqualTo/countWordsStartingWith/erase), `word-filter` (hard/trie, prefix+suffix search via hash map enumeration O(n·L²)), `lexicographical-numbers` (medium/trie, O(n) iterative DFS trie traversal), `k-th-smallest-in-lexicographic-order` (hard/trie, trie step-counting O(log²n) algorithm), `design-search-autocomplete-system` (hard/trie+design, hash-map autocomplete with count-based ranking). Trie tag: 5 → 10 problems. Bank at **2362**; 7365 tests.
 
 ### feat(bank): add batch 156b — average-of-levels-in-binary-tree (easy), all-elements-in-two-bsts (medium); fix trim-bst runner (2026-05-29)
 Two new tree problems: `average-of-levels-in-binary-tree` (easy/tree, BFS level average), `all-elements-in-two-binary-search-trees` (medium/tree+binary-search, in-order traversal of each BST + merge). Upgraded `trim-a-binary-search-tree` to runner pattern (TreeNode preamble); updated Python reference solution to accept TreeNode arg. Fixed path-sum hidden test (1→2→5=8 is true). Bank at **2348**; 7302 tests.
