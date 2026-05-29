@@ -36617,4 +36617,123 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  '24-game': (...args: unknown[]) => {
+    const cards = args[0] as number[];
+    const EPS = 1e-6;
+    function solve(nums: number[]): boolean {
+      if (nums.length === 1) return Math.abs(nums[0]! - 24) < EPS;
+      for (let i = 0; i < nums.length; i++) {
+        for (let j = 0; j < nums.length; j++) {
+          if (i === j) continue;
+          const rest = nums.filter((_, k) => k !== i && k !== j);
+          const a = nums[i]!, b = nums[j]!;
+          const candidates = [a + b, a - b, a * b];
+          if (Math.abs(b) > EPS) candidates.push(a / b);
+          for (const c of candidates) {
+            if (solve([...rest, c])) return true;
+          }
+        }
+      }
+      return false;
+    }
+    return solve(cards.map(Number));
+  },
+
+  'range-module': (...args: unknown[]) => {
+    const operations = args[0] as [string, number, number][];
+    const ranges: [number, number][] = [];
+    const results: boolean[] = [];
+    function findStart(x: number): number {
+      let lo = 0, hi = ranges.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (ranges[mid]![1] < x) lo = mid + 1; else hi = mid;
+      }
+      return lo;
+    }
+    for (const [op, left, right] of operations) {
+      if (op === 'addRange') {
+        let i = findStart(left), j = findStart(right);
+        const newLeft = (i < ranges.length && ranges[i]![0] <= left) ? ranges[i]![0] : left;
+        let jEnd = (j < ranges.length && ranges[j]![0] <= right) ? j : j - 1;
+        const newRight = (jEnd >= 0 && ranges[jEnd] && ranges[jEnd]![0] <= right && ranges[jEnd]![1] > right) ? ranges[jEnd]![1] : right;
+        const count = jEnd >= i ? jEnd - i + 1 : 0;
+        ranges.splice(i, count, [newLeft, newRight]);
+      } else if (op === 'removeRange') {
+        let i = findStart(left), j = findStart(right);
+        const toAdd: [number, number][] = [];
+        if (i < ranges.length && ranges[i]![0] < left) toAdd.push([ranges[i]![0], left]);
+        if (j < ranges.length && ranges[j]![0] <= right && ranges[j]![1] > right) toAdd.push([right, ranges[j]![1]]);
+        let jEnd = (j < ranges.length && ranges[j]![0] <= right) ? j : j - 1;
+        const count = jEnd >= i ? jEnd - i + 1 : 0;
+        ranges.splice(i, count, ...toAdd);
+      } else {
+        const i = findStart(left);
+        results.push(i < ranges.length && ranges[i]![0] <= left && ranges[i]![1] >= right);
+      }
+    }
+    return results;
+  },
+
+  'insert-delete-getrandom-duplicates-allowed': (...args: unknown[]) => {
+    const operations = args[0] as [string, number][];
+    const vals: number[] = [];
+    const idx = new Map<number, Set<number>>();
+    return operations.map(([op, val]) => {
+      if (op === 'insert') {
+        const isNew = !idx.has(val) || idx.get(val)!.size === 0;
+        if (!idx.has(val)) idx.set(val, new Set());
+        idx.get(val)!.add(vals.length);
+        vals.push(val);
+        return isNew;
+      } else if (op === 'remove') {
+        if (!idx.has(val) || idx.get(val)!.size === 0) return false;
+        const i = idx.get(val)!.values().next().value as number;
+        const lastIdx = vals.length - 1;
+        const last = vals[lastIdx]!;
+        if (i === lastIdx) {
+          idx.get(val)!.delete(i);
+        } else if (last === val) {
+          vals[i] = last;
+          idx.get(val)!.delete(lastIdx);
+          // index i stays in idx[val] since val is now at i (moved from lastIdx)
+        } else {
+          vals[i] = last;
+          idx.get(last)!.delete(lastIdx);
+          idx.get(last)!.add(i);
+          idx.get(val)!.delete(i);
+        }
+        vals.pop();
+        return true;
+      } else {
+        return vals[Math.floor(Math.random() * vals.length)]!;
+      }
+    });
+  },
+
+  'matchsticks-to-square': (...args: unknown[]) => {
+    const matchsticks = args[0] as number[];
+    const total = matchsticks.reduce((a, b) => a + b, 0);
+    if (total % 4 !== 0) return false;
+    const side = total / 4;
+    matchsticks.sort((a, b) => b - a);
+    if (matchsticks[0]! > side) return false;
+    const buckets = [0, 0, 0, 0];
+    function bt(i: number): boolean {
+      if (i === matchsticks.length) return buckets.every(b => b === side);
+      const seen = new Set<number>();
+      for (let j = 0; j < 4; j++) {
+        if (seen.has(buckets[j]!)) continue;
+        if (buckets[j]! + matchsticks[i]! <= side) {
+          seen.add(buckets[j]!);
+          buckets[j]! += matchsticks[i]!;
+          if (bt(i + 1)) return true;
+          buckets[j]! -= matchsticks[i]!;
+        }
+      }
+      return false;
+    }
+    return bt(0);
+  },
+
 };

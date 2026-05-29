@@ -2526,11 +2526,16 @@ import { problem as friendGroupsUnionFind } from './friend-groups-union-find';
 import { problem as dijkstraSingleSourceShortestPath } from './dijkstra-single-source-shortest-path';
 import { problem as kthLargestAfterEachInsertion } from './kth-largest-after-each-insertion';
 import { problem as simulateTrafficLights } from './simulate-traffic-lights';
-// batch 154 — heap+arrays/medium, dp+binary-search/medium, strings+hash-map/medium, math+arrays/medium, arrays+hash-map+math/medium
+// batch 154a — heap+arrays/medium, dp+binary-search/medium, strings+hash-map/medium, math+arrays/medium, arrays+hash-map+math/medium
 import { problem as maximumEarningsFromTaxi } from './maximum-earnings-from-taxi';
 import { problem as findLongestSpecialSubstringThrice } from './find-the-longest-special-substring-that-occurs-thrice-i';
 import { problem as minimumCostMakeArrayEqualindromic } from './minimum-cost-to-make-array-equalindromic';
 import { problem as identifyLargestOutlier } from './identify-the-largest-outlier-in-an-array';
+// batch 154c — backtracking/hard, simulation/hard, simulation+binary-search/hard, hash-map+simulation/hard
+import { problem as twentyFourGame } from './24-game';
+import { problem as rangeModule } from './range-module';
+import { problem as insertDeleteGetRandomDuplicatesAllowed } from './insert-delete-getrandom-duplicates-allowed';
+import { problem as matchsticksToSquare } from './matchsticks-to-square';
 // batch 151 — dp/hard, arrays/medium, strings+dp/medium, dp+bitset/hard
 import { problem as findTheCountOfMonotonicPairsII } from './find-the-count-of-monotonic-pairs-ii';
 import { problem as maximumStrengthOfAGroup } from './maximum-strength-of-a-group';
@@ -5159,6 +5164,11 @@ export const problems: readonly Problem[] = [
   magicDictionary,
   shortEncodingOfWords,
   implementMagicTrieStream,
+  // batch 154c — backtracking/hard, simulation/hard, simulation+binary-search/hard, hash-map+simulation/hard
+  twentyFourGame,
+  rangeModule,
+  insertDeleteGetRandomDuplicatesAllowed,
+  matchsticksToSquare,
   // batch 155 — dp/medium×2, dp/hard×2, arrays/medium, strings/hard, sliding-window/medium
   minimumScoreTriangulationPolygon,
   nonNegativeIntegersWithoutConsecutiveOnes,

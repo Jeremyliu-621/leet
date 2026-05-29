@@ -36375,4 +36375,141 @@ def longestSubarrayAtMostKSum(nums, k):
     return ans
 `,
 
+  '24-game': `
+def judgePoint24(cards):
+    if hasattr(cards, 'to_py'):
+        cards = list(cards.to_py())
+    EPS = 1e-6
+    def solve(nums):
+        if len(nums) == 1:
+            return abs(nums[0] - 24) < EPS
+        for i in range(len(nums)):
+            for j in range(len(nums)):
+                if i == j:
+                    continue
+                rest = [nums[k] for k in range(len(nums)) if k != i and k != j]
+                a, b = nums[i], nums[j]
+                candidates = [a + b, a - b, a * b]
+                if abs(b) > EPS:
+                    candidates.append(a / b)
+                for c in candidates:
+                    if solve(rest + [c]):
+                        return True
+        return False
+    return solve([float(x) for x in cards])
+`,
+
+  'range-module': `
+def rangeModule(operations):
+    if hasattr(operations, 'to_py'):
+        operations = list(operations.to_py())
+    ranges = []
+    results = []
+    def find_start(x):
+        lo, hi = 0, len(ranges)
+        while lo < hi:
+            mid = (lo + hi) // 2
+            if ranges[mid][1] < x:
+                lo = mid + 1
+            else:
+                hi = mid
+        return lo
+    for entry in operations:
+        op, left, right = entry[0], int(entry[1]), int(entry[2])
+        if op == 'addRange':
+            i = find_start(left)
+            j = find_start(right)
+            new_left = ranges[i][0] if i < len(ranges) and ranges[i][0] <= left else left
+            j_end = j if j < len(ranges) and ranges[j][0] <= right else j - 1
+            new_right = ranges[j_end][1] if j_end >= 0 and j_end < len(ranges) and ranges[j_end][0] <= right and ranges[j_end][1] > right else right
+            count = j_end - i + 1 if j_end >= i else 0
+            ranges[i:i+count] = [[new_left, new_right]]
+        elif op == 'removeRange':
+            i = find_start(left)
+            j = find_start(right)
+            to_add = []
+            if i < len(ranges) and ranges[i][0] < left:
+                to_add.append([ranges[i][0], left])
+            if j < len(ranges) and ranges[j][0] <= right and ranges[j][1] > right:
+                to_add.append([right, ranges[j][1]])
+            j_end = j if j < len(ranges) and ranges[j][0] <= right else j - 1
+            count = j_end - i + 1 if j_end >= i else 0
+            ranges[i:i+count] = to_add
+        else:
+            i = find_start(left)
+            results.append(i < len(ranges) and ranges[i][0] <= left and ranges[i][1] >= right)
+    return results
+`,
+
+  'insert-delete-getrandom-duplicates-allowed': `
+import random as _random
+def insertDeleteGetRandomDups(operations):
+    if hasattr(operations, 'to_py'):
+        operations = list(operations.to_py())
+    vals = []
+    idx = {}
+    results = []
+    for entry in operations:
+        op, val = entry[0], int(entry[1])
+        if op == 'insert':
+            is_new = val not in idx or len(idx[val]) == 0
+            if val not in idx:
+                idx[val] = set()
+            idx[val].add(len(vals))
+            vals.append(val)
+            results.append(is_new)
+        elif op == 'remove':
+            if val not in idx or len(idx[val]) == 0:
+                results.append(False)
+            else:
+                i = next(iter(idx[val]))
+                last_idx = len(vals) - 1
+                last = vals[last_idx]
+                if i == last_idx:
+                    idx[val].discard(i)
+                elif last == val:
+                    vals[i] = last
+                    idx[val].discard(last_idx)
+                    # index i stays in idx[val] (val is now at i)
+                else:
+                    vals[i] = last
+                    idx[last].discard(last_idx)
+                    idx[last].add(i)
+                    idx[val].discard(i)
+                vals.pop()
+                results.append(True)
+        else:
+            results.append(vals[_random.randint(0, len(vals) - 1)])
+    return results
+`,
+
+  'matchsticks-to-square': `
+def makesquare(matchsticks):
+    if hasattr(matchsticks, 'to_py'):
+        matchsticks = list(matchsticks.to_py())
+    total = sum(matchsticks)
+    if total % 4 != 0:
+        return False
+    side = total // 4
+    matchsticks.sort(reverse=True)
+    if matchsticks[0] > side:
+        return False
+    buckets = [0, 0, 0, 0]
+    def bt(i):
+        if i == len(matchsticks):
+            return all(b == side for b in buckets)
+        seen = set()
+        for j in range(4):
+            if buckets[j] in seen:
+                continue
+            if buckets[j] + matchsticks[i] <= side:
+                seen.add(buckets[j])
+                buckets[j] += matchsticks[i]
+                if bt(i + 1):
+                    return True
+                buckets[j] -= matchsticks[i]
+        return False
+    return bt(0)
+`,
+
 };
