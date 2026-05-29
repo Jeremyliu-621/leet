@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2733** problems; 8493 tests green. Batches 102–206 + KaTeX UX complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2739** problems; 8508 tests green. Batches 102–206 + 201b + 202b + KaTeX UX complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 207+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 202b — append-k-min-sum, good-partitions, max-height-towers, more-ones-subarrays, longest-new-string (2026-05-29)
+Five new problems: `append-k-integers-with-minimal-sum` (medium/math, greedy gap-filling + BigInt sum formula), `count-the-number-of-good-partitions` (hard/hash-map, last-occurrence sweep counting partition boundaries, ans=2^(count-1) mod), `maximum-sum-of-heights-of-the-towers` (hard/arrays+stack, monotone stack left/right prefix arrays for peak optimization), `count-subarrays-with-more-ones-than-zeros` (medium/binary-indexed-tree, BIT counting prefixes less than current), `construct-the-longest-new-string` (medium/math, formula 2*(2*min(x,y)+z)+(x≠y?2:0)). Bank at **2739**; 8508 tests.
 
 ### feat(bank): batch 206 — max-first-last, sum-first-last, remove-duplicates, concatenate-arrays (2026-05-29)
 Four new easy problems: `max-of-first-and-last` (easy/arrays, Math.max(first,last)), `sum-of-first-and-last` (easy/arrays+math, first+last), `remove-duplicates-from-array` (easy/arrays+hash-map, Set preserving order), `concatenate-two-arrays` (easy/arrays, spread/concat). Bank at **2733**; 8493 tests.
