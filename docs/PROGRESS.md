@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2478** registered problems; 7728 tests green. Batches 102–171 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2483** registered problems; 7743 tests green. Batches 102–171 + batch 169 extra complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 172+); site count update; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 169 extra — find-xor-appearing-twice (easy), max-ops-same-score-i (easy), lexi-smallest-array-swapping (medium), maximize-consecutive-after-mod (medium), count-powerful-ints (hard) (2026-05-29)
+Five new problems: `find-xor-of-numbers-appearing-twice` (easy/bit-manipulation, XOR elements appearing exactly twice using frequency map), `maximum-number-of-operations-with-the-same-score-i` (easy/simulation, score=first pair sum, count consecutive matching pairs), `make-lexicographically-smallest-array-by-swapping-elements` (medium/arrays, sort by value; consecutive diff≤limit = same group; assign sorted values to sorted indices), `maximize-consecutive-elements-in-an-array-after-modification` (medium/dp, sort + DP: dp[x]=max(dp[x],dp[x-1]+1), dp[x+1]=max(dp[x+1],dp[x]+1)), `count-the-number-of-powerful-integers` (hard/digit-dp, digit DP on prefix length, countUpTo(n)−countUpTo(start−1)). Bank at **2483**; 7743 tests.
 
 ### feat(bank): batch 169 (local) — minimum-swaps-string-balanced (medium), maximum-sum-distinct-subarrays-k (medium), count-complete-components (medium) (2026-05-29)
 Three new problems: `minimum-swaps-to-make-string-balanced` (medium/strings+stack+math, scan and count unmatched `]`, answer is ceil(count/2)), `maximum-sum-distinct-subarrays-with-length-k` (medium/arrays+sliding-window+hash-map, freq map to track uniqueness, update max when window has exactly k distinct), `count-number-of-complete-components` (medium/graph+union-find, union-find tracking node/edge counts per component, complete iff edges==nodes*(nodes-1)/2). Bank at **2472**; 7710 tests.
