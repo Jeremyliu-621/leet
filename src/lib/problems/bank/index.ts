@@ -4959,10 +4959,6 @@ export const problems: readonly Problem[] = [
   sumTotalStrengthOfWizards,
   maxEventsAttendedII,
   minimumOpsConvertNumber,
-  // batch 148 — arrays+hash-map/medium, strings+two-pointers+sliding-window/medium, arrays/medium
-  convertArrayInto2dWithConditions,
-  replaceSubstringForBalancedString,
-  allDivisionsHighestScore,
   // batch 145 — arrays/medium, arrays+backtracking/medium, arrays/hard, math/hard
   countMaxBitwiseOrSubsets,
   partitionKEqualSumSubsets,
