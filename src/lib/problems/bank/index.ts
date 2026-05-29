@@ -2637,6 +2637,11 @@ import { problem as findingTheUsersActiveMinutes } from './finding-the-users-act
 import { problem as numberOfVisiblePeopleInAQueue } from './number-of-visible-people-in-a-queue';
 import { problem as primeInDiagonal } from './prime-in-diagonal';
 import { problem as removeStonesToMinimizeTheTotal } from './remove-stones-to-minimize-the-total';
+// batch 167 — graph+backtracking/medium, graph+union-find/medium, arrays+two-pointers/medium, arrays+two-pointers/medium
+import { problem as allPathsFromSourceToTarget } from './all-paths-from-source-to-target';
+import { problem as countUnreachablePairsOfNodesInUndirectedGraph } from './count-unreachable-pairs-of-nodes-in-an-undirected-graph';
+import { problem as partitionArrayIntoDisjointIntervals } from './partition-array-into-disjoint-intervals';
+import { problem as removeDuplicatesFromSortedArrayII } from './remove-duplicates-from-sorted-array-ii';
 // batch 164 — simulation/hard, bit-manipulation/easy, math/medium, arrays/medium, binary-search/medium,
 //             trie/hard, bit-manipulation/hard, arrays/hard, arrays/hard
 import { problem as amountOfNewAreaPaintedEachDay } from './amount-of-new-area-painted-each-day';
@@ -5372,4 +5377,9 @@ export const problems: readonly Problem[] = [
   numberOfVisiblePeopleInAQueue,
   primeInDiagonal,
   removeStonesToMinimizeTheTotal,
+  // batch 167 — 4 new problems from latest remote session
+  allPathsFromSourceToTarget,
+  countUnreachablePairsOfNodesInUndirectedGraph,
+  partitionArrayIntoDisjointIntervals,
+  removeDuplicatesFromSortedArrayII,
 ];
