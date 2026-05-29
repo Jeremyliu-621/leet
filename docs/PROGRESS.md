@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2642** problems; 8217 tests green. Batches 102–191 + 179b complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2646** problems; 8229 tests green. Batches 102–192 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 192+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 193+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 192 — adjacent-subarrays, rearrange-k-substrings, lex-largest-box, min-time-locks (2026-05-29)
+Four new problems: `adjacent-increasing-subarrays-detection-i` (easy/arrays, inc[i] run-length precompute, check inc[i]>=k && inc[i+k]>=k), `rearrange-k-substrings-to-form-target` (easy/strings+hash-map, split both into k equal chunks, sort multisets, compare), `find-the-lexicographically-largest-string-from-the-box-i` (easy/strings, maxLen=n-numFriends+1, find lex-largest substring of that length), `minimum-time-to-break-locks-i` (medium/arrays+dynamic-programming, total=n+max((i+1)*sorted_desc[i]), greedy descending). Bank at **2646**; 8229 tests.
 
 ### feat(bank): batch 191 — sort-even-odd-indices, candy-favorite-day, count-hills-valleys (2026-05-29)
 Three new problems: `sort-even-and-odd-indices-independently` (easy/arrays, sort even-indexed asc + odd-indexed desc, interleave), `can-you-eat-your-favorite-candy-on-your-favorite-day` (medium/arrays+math, prefix sums + two conditions: cond1=day+1<=prefix[type+1], cond2=(day+1)*cap>prefix[type]), `count-hills-and-valleys-in-an-array` (easy/simulation, deduplicate consecutive, then check interior peaks/valleys). Bank at **2642**; 8217 tests.
