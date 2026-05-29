@@ -2598,6 +2598,12 @@ import { problem as pathWithMaxProbability } from './path-with-max-probability';
 // batch 156b — tree/easy×1, tree/medium×1
 import { problem as averageOfLevelsInBinaryTree } from './average-of-levels-in-binary-tree';
 import { problem as allElementsInTwoBinarySearchTrees } from './all-elements-in-two-binary-search-trees';
+// batch 157 — simulation/easy, simulation/medium×2, graph/medium, arrays/medium×2
+import { problem as theEmployeeThatWorkedOnTheLongestTask } from './the-employee-that-worked-on-the-longest-task';
+import { problem as checkKnightTourConfiguration } from './check-knight-tour-configuration';
+import { problem as theNumberOfTheSmallestUnoccupiedChair } from './the-number-of-the-smallest-unoccupied-chair';
+import { problem as intervalsBetweenIdenticalElements } from './intervals-between-identical-elements';
+import { problem as formArrayByConcatenatingSubarraysOfAnotherArray } from './form-array-by-concatenating-subarrays-of-another-array';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5233,4 +5239,10 @@ export const problems: readonly Problem[] = [
   // batch 156b — tree/easy×1, tree/medium×1
   averageOfLevelsInBinaryTree,
   allElementsInTwoBinarySearchTrees,
+  // batch 157 — simulation/easy, simulation/medium×2, graph/medium, arrays/medium×2
+  theEmployeeThatWorkedOnTheLongestTask,
+  checkKnightTourConfiguration,
+  theNumberOfTheSmallestUnoccupiedChair,
+  intervalsBetweenIdenticalElements,
+  formArrayByConcatenatingSubarraysOfAnotherArray,
 ];

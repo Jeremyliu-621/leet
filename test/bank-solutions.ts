@@ -37075,4 +37075,96 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return 0;
   },
 
+  'the-employee-that-worked-on-the-longest-task': (_n: unknown, logs: unknown): unknown => {
+    const ls = logs as number[][];
+    let best = -1, bestId = -1, prev = 0;
+    for (const row of ls) {
+      const id = row[0]!, leave = row[1]!;
+      const dur = leave - prev;
+      if (dur > best || (dur === best && id < bestId)) { best = dur; bestId = id; }
+      prev = leave;
+    }
+    return bestId;
+  },
+
+  'check-knight-tour-configuration': (grid: unknown): unknown => {
+    const g = grid as number[][];
+    const n = g.length;
+    const pos = new Array(n * n) as [number, number][];
+    for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) pos[g[r]![c]!] = [r, c];
+    if (pos[0]![0] !== 0 || pos[0]![1] !== 0) {
+      // knight can start anywhere; just check all consecutive pairs
+    }
+    for (let k = 0; k < n * n - 1; k++) {
+      const [r1, c1] = pos[k]!;
+      const [r2, c2] = pos[k + 1]!;
+      const dr = Math.abs(r1 - r2), dc = Math.abs(c1 - c2);
+      if (!((dr === 1 && dc === 2) || (dr === 2 && dc === 1))) return false;
+    }
+    return true;
+  },
+
+  'the-number-of-the-smallest-unoccupied-chair': (times: unknown, targetFriend: unknown): unknown => {
+    const ts = (times as number[][]).map((t, i) => [t[0]!, t[1]!, i] as [number, number, number]);
+    ts.sort((a, b) => a[0] - b[0]);
+    const n = ts.length;
+    const available: number[] = Array.from({ length: n }, (_, i) => i);
+    const leaving: [number, number][] = [];
+    let ans = 0;
+    for (const [arr, dep, idx] of ts) {
+      // free chairs where leaveTime <= arrival
+      const freed: [number, number][] = [];
+      for (const e of leaving) {
+        if (e[0] <= arr) available.push(e[1]);
+        else freed.push(e);
+      }
+      leaving.length = 0;
+      for (const e of freed) leaving.push(e);
+      available.sort((a, b) => a - b);
+      const chair = available.shift()!;
+      if (idx === (targetFriend as number)) { ans = chair; break; }
+      leaving.push([dep, chair]);
+    }
+    return ans;
+  },
+
+  'intervals-between-identical-elements': (arr: unknown): unknown => {
+    const a = arr as number[];
+    const indices = new Map<number, number[]>();
+    for (let i = 0; i < a.length; i++) {
+      if (!indices.has(a[i]!)) indices.set(a[i]!, []);
+      indices.get(a[i]!)!.push(i);
+    }
+    const res = new Array(a.length).fill(0) as number[];
+    for (const idxs of indices.values()) {
+      const m = idxs.length;
+      const prefix = new Array(m + 1).fill(0) as number[];
+      for (let j = 0; j < m; j++) prefix[j + 1] = prefix[j]! + idxs[j]!;
+      for (let j = 0; j < m; j++) {
+        const i = idxs[j]!;
+        const left = i * j - prefix[j]!;
+        const right = (prefix[m]! - prefix[j + 1]!) - i * (m - j - 1);
+        res[i] = left + right;
+      }
+    }
+    return res;
+  },
+
+  'form-array-by-concatenating-subarrays-of-another-array': (groups: unknown, nums: unknown): unknown => {
+    const gs = groups as number[][], ns = nums as number[];
+    let pos = 0;
+    outer: for (const g of gs) {
+      while (pos + g.length <= ns.length) {
+        let match = true;
+        for (let k = 0; k < g.length; k++) {
+          if (ns[pos + k] !== g[k]) { match = false; break; }
+        }
+        if (match) { pos += g.length; continue outer; }
+        pos++;
+      }
+      return false;
+    }
+    return true;
+  },
+
 };

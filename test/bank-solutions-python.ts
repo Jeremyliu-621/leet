@@ -36950,4 +36950,96 @@ def getAllElementsRunner(arr1, arr2):
     return merged
 `,
 
+  'the-employee-that-worked-on-the-longest-task': `
+def hardestWorker(n, logs):
+    if hasattr(logs, 'to_py'): logs = logs.to_py()
+    logs = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in logs]
+    best = -1; best_id = -1; prev = 0
+    for id_, leave in logs:
+        dur = leave - prev
+        if dur > best or (dur == best and id_ < best_id):
+            best = dur; best_id = id_
+        prev = leave
+    return best_id
+`,
+
+  'check-knight-tour-configuration': `
+def checkValidGrid(grid):
+    if hasattr(grid, 'to_py'): grid = grid.to_py()
+    grid = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in grid]
+    n = len(grid)
+    pos = [None] * (n * n)
+    for r in range(n):
+        for c in range(n):
+            pos[grid[r][c]] = (r, c)
+    for k in range(n * n - 1):
+        r1, c1 = pos[k]
+        r2, c2 = pos[k + 1]
+        dr, dc = abs(r1 - r2), abs(c1 - c2)
+        if not ((dr == 1 and dc == 2) or (dr == 2 and dc == 1)):
+            return False
+    return True
+`,
+
+  'the-number-of-the-smallest-unoccupied-chair': `
+import heapq
+def smallestChair(times, targetFriend):
+    if hasattr(times, 'to_py'): times = times.to_py()
+    times = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in times]
+    n = len(times)
+    order = sorted(range(n), key=lambda i: times[i][0])
+    avail = list(range(n))
+    heapq.heapify(avail)
+    leaving = []  # (leaveTime, chair)
+    for i in order:
+        arr, dep = times[i]
+        while leaving and leaving[0][0] <= arr:
+            _, ch = heapq.heappop(leaving)
+            heapq.heappush(avail, ch)
+        chair = heapq.heappop(avail)
+        if i == targetFriend:
+            return chair
+        heapq.heappush(leaving, (dep, chair))
+    return 0
+`,
+
+  'intervals-between-identical-elements': `
+def getDistances(arr):
+    if hasattr(arr, 'to_py'): arr = list(arr.to_py())
+    from collections import defaultdict
+    indices = defaultdict(list)
+    for i, v in enumerate(arr):
+        indices[v].append(i)
+    res = [0] * len(arr)
+    for idxs in indices.values():
+        m = len(idxs)
+        prefix = [0] * (m + 1)
+        for j in range(m):
+            prefix[j + 1] = prefix[j] + idxs[j]
+        for j in range(m):
+            i = idxs[j]
+            left = i * j - prefix[j]
+            right = (prefix[m] - prefix[j + 1]) - i * (m - j - 1)
+            res[i] = left + right
+    return res
+`,
+
+  'form-array-by-concatenating-subarrays-of-another-array': `
+def canChoose(groups, nums):
+    if hasattr(groups, 'to_py'): groups = groups.to_py()
+    groups = [list(g.to_py() if hasattr(g, 'to_py') else g) for g in groups]
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    pos = 0
+    for g in groups:
+        matched = False
+        while pos + len(g) <= len(nums):
+            if nums[pos:pos+len(g)] == g:
+                pos += len(g); matched = True; break
+            pos += 1
+        if not matched:
+            return False
+    return True
+`,
+
+
 };
