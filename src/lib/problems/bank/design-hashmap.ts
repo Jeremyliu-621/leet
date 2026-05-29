@@ -51,7 +51,7 @@ export const problem: Problem = {
   id: 'design-hashmap',
   title: 'Design HashMap',
   difficulty: 'easy',
-  tags: ['arrays', 'hash-map'],
+  tags: ['design', 'arrays', 'hash-map'],
   description: `Design a HashMap without using any built-in hash table libraries.
 
 Implement the \`MyHashMap\` class:

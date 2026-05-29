@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'find-kth-bit-nth-binary-string',
   title: 'Find Kth Bit in Nth Binary String',
   difficulty: 'medium',
-  tags: ['strings', 'math'],
+  tags: ['bit-manipulation', 'strings', 'math'],
   description: `Given two positive integers \`n\` and \`k\`, the binary string \`Sn\` is formed as follows:
 
 - \`S1 = "0"\`

@@ -31,7 +31,7 @@ export const problem: Problem = {
   id: 'lru-cache',
   title: 'LRU Cache',
   difficulty: 'hard',
-  tags: ['hash-map'],
+  tags: ['design', 'hash-map'],
   description: `Design a data structure that follows the constraints of a **Least Recently Used (LRU) cache**.
 
 Implement the \`LRUCache\` class:

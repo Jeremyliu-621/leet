@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'design-underground-system',
   title: 'Design Underground System',
   difficulty: 'medium',
-  tags: ['hash-map'],
+  tags: ['design', 'hash-map'],
   description: `Design an underground system that tracks customer travel times between different stations.
 
 Implement the \`undergroundSystem\` function that processes a list of operations:

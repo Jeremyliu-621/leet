@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'single-number-ii',
   title: 'Single Number II',
   difficulty: 'medium',
-  tags: ['math', 'arrays'],
+  tags: ['bit-manipulation', 'math', 'arrays'],
   description: `Given an integer array \`nums\` where every element appears **exactly three times** except for one element which appears **exactly once**, find and return the single element.
 
 You must implement a solution with linear runtime complexity and use only constant extra space.`,

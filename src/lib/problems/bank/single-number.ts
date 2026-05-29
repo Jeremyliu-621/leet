@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'single-number',
   title: 'Single Number',
   difficulty: 'easy',
-  tags: ['arrays'],
+  tags: ['bit-manipulation', 'arrays'],
   description: `Given a **non-empty** array of integers \`nums\`, every element appears **twice** except for one. Find that single one.
 
 You must implement a solution with a linear runtime complexity and use only constant extra space.`,

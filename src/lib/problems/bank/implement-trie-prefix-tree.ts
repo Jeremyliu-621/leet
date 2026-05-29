@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'implement-trie-prefix-tree',
   title: 'Implement Trie (Prefix Tree)',
   difficulty: 'medium',
-  tags: ['tree', 'strings', 'hash-map'],
+  tags: ['design', 'tree', 'strings', 'hash-map'],
   description: `A **trie** (pronounced as "try") or **prefix tree** is a tree data structure used to efficiently store and retrieve keys in a dataset of strings. There are various applications of this data structure, such as autocomplete and spellchecker.
 
 Implement the \`Trie\` class:

@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'insert-delete-getrandom-o1',
   title: 'Insert Delete GetRandom O(1)',
   difficulty: 'medium',
-  tags: ['arrays', 'hash-map', 'simulation'],
+  tags: ['design', 'arrays', 'hash-map', 'simulation'],
   description: `Implement a data structure that supports all the following operations in **average O(1)** time:
 
 - \`insert(val)\` — Inserts \`val\` into the set if not present. Returns \`true\` if the item was not present, \`false\` otherwise.

@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'implement-stack-using-queues',
   title: 'Implement Stack using Queues',
   difficulty: 'easy',
-  tags: ['stack'],
+  tags: ['design', 'stack'],
   description: `Implement a **last-in-first-out (LIFO) stack** using only two queues. The implemented stack should support all the functions of a normal stack: \`push\`, \`top\`, \`pop\`, and \`empty\`.
 
 Implement the \`MyStack\` class:

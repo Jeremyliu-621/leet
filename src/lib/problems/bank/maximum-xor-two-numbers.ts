@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'maximum-xor-two-numbers',
   title: 'Maximum XOR of Two Numbers in an Array',
   difficulty: 'medium',
-  tags: ['arrays', 'math'],
+  tags: ['bit-manipulation', 'arrays', 'math'],
   description: `Given an integer array \`nums\`, return the **maximum result** of \`nums[i] XOR nums[j]\`, where \`0 <= i <= j < n\`.`,
   constraints: [
     '1 <= nums.length <= 2 * 10^5',

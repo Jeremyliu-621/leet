@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'minimum-xor-sum-of-two-arrays',
   title: 'Minimum XOR Sum of Two Arrays',
   difficulty: 'hard',
-  tags: ['dynamic-programming'],
+  tags: ['bit-manipulation', 'dynamic-programming'],
   description: `The **XOR sum** of two integer arrays \`a\` and \`b\` (same length) is defined as \`(a[0] XOR b[0]) + (a[1] XOR b[1]) + ... + (a[a.length - 1] XOR b[b.length - 1])\`.
 
 You are given two integer arrays \`nums1\` and \`nums2\`. Rearrange the elements of \`nums2\` such that the resulting XOR sum of \`nums1\` and \`nums2\` is **minimized**.

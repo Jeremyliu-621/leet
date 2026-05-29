@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'design-food-rating-system',
   title: 'Design a Food Rating System',
   difficulty: 'medium',
-  tags: ['simulation', 'heap', 'hash-map'],
+  tags: ['design', 'simulation', 'heap', 'hash-map'],
   description: `Design a food rating system that can do the following:
 - **Modify** the rating of a food item listed in the system.
 - Return the **highest-rated** food item for a type of cuisine.

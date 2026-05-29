@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'design-goal-parser',
   title: 'Goal Parser Interpretation',
   difficulty: 'easy',
-  tags: ['simulation', 'strings'],
+  tags: ['design', 'simulation', 'strings'],
   description: `You own a **Goal Parser** that can interpret a string \`command\`. The \`command\` consists of \`"()"\`, \`"(al)"\`, and lowercase English letters.
 
 The Goal Parser interprets \`command\` as follows:

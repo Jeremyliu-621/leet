@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'missing-number',
   title: 'Find the Missing Number',
   difficulty: 'easy',
-  tags: ['arrays'],
+  tags: ['bit-manipulation', 'arrays'],
   description: `Given an array \`nums\` containing **n** distinct integers in the range \`[0, n]\`, return the one integer in the range that is missing from the array.
 
 The array has exactly one missing number — your job is to find it.

@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'find-xor-beauty-of-array',
   title: 'Find XOR Beauty of Array',
   difficulty: 'easy',
-  tags: ['arrays', 'math'],
+  tags: ['bit-manipulation', 'arrays', 'math'],
   description: `You are given a **0-indexed** integer array \`nums\`.
 
 Define the **beauty** of the array as the XOR of all \`nums[i] | nums[j]\` for all valid pairs \`(i, j)\` where \`i <= j\`.

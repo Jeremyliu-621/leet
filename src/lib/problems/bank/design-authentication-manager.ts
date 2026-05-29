@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'design-authentication-manager',
   title: 'Design Authentication Manager',
   difficulty: 'medium',
-  tags: ['simulation', 'hash-map'],
+  tags: ['design', 'simulation', 'hash-map'],
   description: `There is an authentication system that works with authentication tokens. For each session, the user will receive a new authentication token that will expire \`timeToLive\` seconds after the \`currentTime\`. If the token is renewed, the expiry time will be extended to expire \`timeToLive\` seconds after the **renewed** time.
 
 Implement \`authManager(operations, args)\` where:

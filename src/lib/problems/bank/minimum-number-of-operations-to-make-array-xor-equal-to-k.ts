@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'minimum-number-of-operations-to-make-array-xor-equal-to-k',
   title: 'Minimum Number of Operations to Make Array XOR Equal to K',
   difficulty: 'medium',
-  tags: ['arrays', 'math'],
+  tags: ['bit-manipulation', 'arrays', 'math'],
   description: `You are given a **0-indexed** integer array \`nums\` and a positive integer \`k\`.
 
 In one operation you may choose **any** element of \`nums\` and **flip one of its bits** (change a 0-bit to 1 or vice versa).

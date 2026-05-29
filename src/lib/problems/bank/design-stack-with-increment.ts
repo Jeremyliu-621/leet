@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'design-stack-with-increment',
   title: 'Design a Stack With Increment Operation',
   difficulty: 'medium',
-  tags: ['stack', 'arrays'],
+  tags: ['design', 'stack', 'arrays'],
   description: `Design a stack that supports increment operations on its elements.
 
 Implement the \`CustomStack\` class:

@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'find-the-xor-of-numbers-which-appear-twice',
   title: 'Find the XOR of Numbers Which Appear Twice',
   difficulty: 'easy',
-  tags: ['arrays', 'hash-map', 'math'],
+  tags: ['bit-manipulation', 'arrays', 'hash-map', 'math'],
   description: `You are given an array \`nums\`, where each number in the range \`[1, 50]\` appears **either once or twice**.
 
 Return the bitwise \`XOR\` of all numbers that appear **twice** in the array, or \`0\` if no number appears twice.`,

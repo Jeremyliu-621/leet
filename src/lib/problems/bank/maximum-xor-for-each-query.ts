@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'maximum-xor-for-each-query',
   title: 'Maximum XOR for Each Query',
   difficulty: 'medium',
-  tags: ['arrays', 'math'],
+  tags: ['bit-manipulation', 'arrays', 'math'],
   description: `You are given a **sorted** 0-indexed integer array \`nums\` and an integer \`maximumBit\`. You want to apply the following query \`n\` times:
 1. Find a non-negative integer \`k < 2^maximumBit\` such that the XOR of all elements in \`nums\` XOR \`k\` is **maximized**. \`k\` is the answer to the ith query.
 2. Remove the **last** element from \`nums\`.

@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'find-the-original-array-of-prefix-xor',
   title: 'Find the Original Array of Prefix XOR',
   difficulty: 'medium',
-  tags: ['arrays', 'math'],
+  tags: ['bit-manipulation', 'arrays', 'math'],
   description: `You are given an integer array \`pref\` of size \`n\`. Find and return the array \`arr\` of size \`n\` that satisfies:
 
 - \`pref[i] = arr[0] XOR arr[1] XOR ... XOR arr[i]\`.

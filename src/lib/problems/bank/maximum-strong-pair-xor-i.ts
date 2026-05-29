@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'maximum-strong-pair-xor-i',
   title: 'Maximum Strong Pair XOR I',
   difficulty: 'easy',
-  tags: ['arrays', 'math'],
+  tags: ['bit-manipulation', 'arrays', 'math'],
   description: `You are given a **0-indexed** integer array \`nums\`. A pair of integers \`x\` and \`y\` is called a **strong pair** if it satisfies: \`|x - y| <= min(x, y)\`.
 
 Return the **maximum** XOR value of any strong pair in the array \`nums\`.`,

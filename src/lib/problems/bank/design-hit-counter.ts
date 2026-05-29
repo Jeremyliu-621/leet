@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'design-hit-counter',
   title: 'Design Hit Counter',
   difficulty: 'medium',
-  tags: ['hash-map'],
+  tags: ['design', 'hash-map'],
   description: `Design a hit counter that counts the number of hits received in the past **5 minutes** (300 seconds).
 
 Implement \`hitCounter(operations, args)\` where:

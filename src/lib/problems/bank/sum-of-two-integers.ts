@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'sum-of-two-integers',
   title: 'Sum of Two Integers',
   difficulty: 'medium',
-  tags: ['math'],
+  tags: ['bit-manipulation', 'math'],
   description: `Given two integers \`a\` and \`b\`, return the *sum of the two integers* without using the operators \`+\` and \`-\`.`,
   constraints: [
     '-1000 <= a <= 1000',

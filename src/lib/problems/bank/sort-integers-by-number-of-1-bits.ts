@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'sort-integers-by-number-of-1-bits',
   title: 'Sort Integers by The Number of 1 Bits',
   difficulty: 'easy',
-  tags: ['arrays', 'math'],
+  tags: ['bit-manipulation', 'arrays', 'math'],
   description: `You are given an integer array \`arr\`. Sort the integers in the array in ascending order by the number of \`1\`s in their binary representation, breaking ties by their **decimal value**.
 
 Return the sorted array.`,

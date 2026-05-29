@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'find-the-xor-of-numbers-in-a-range',
   title: 'Find the XOR of Numbers in a Range',
   difficulty: 'easy',
-  tags: ['math'],
+  tags: ['bit-manipulation', 'math'],
   description: `Given two integers \`l\` and \`r\`, return the **XOR of all numbers** from \`l\` to \`r\` (inclusive).
 
 That is, return \`l XOR (l+1) XOR ... XOR r\`.`,

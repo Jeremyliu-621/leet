@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'minimize-xor',
   title: 'Minimize XOR',
   difficulty: 'medium',
-  tags: ['math'],
+  tags: ['bit-manipulation', 'math'],
   description: `Given two positive integers \`num1\` and \`num2\`, find the positive integer \`x\` such that:
 - \`x\` has the same number of set bits as \`num2\`, and
 - The value \`x XOR num1\` is **minimized**.

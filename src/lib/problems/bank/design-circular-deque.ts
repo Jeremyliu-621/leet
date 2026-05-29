@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'design-circular-deque',
   title: 'Design Circular Deque',
   difficulty: 'medium',
-  tags: ['arrays'],
+  tags: ['design', 'arrays'],
   description: `Design your implementation of the circular double-ended queue (deque).
 
 Implement \`designCircularDeque(k, actions, values)\` which simulates the following operations on a deque with capacity \`k\`:

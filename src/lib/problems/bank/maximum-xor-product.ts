@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'maximum-xor-product',
   title: 'Maximum XOR Product',
   difficulty: 'medium',
-  tags: ['math'],
+  tags: ['bit-manipulation', 'math'],
   description: `Given three integers \`a\`, \`b\`, and \`n\`, return the **maximum value** of \`(a XOR x) * (b XOR x)\` where \`0 <= x < 2^n\`, modulo \`10^9 + 7\`.
 
 Since the answer may be too large, return it **modulo** \`10^9 + 7\`.

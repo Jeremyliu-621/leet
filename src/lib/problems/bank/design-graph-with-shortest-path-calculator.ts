@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'design-graph-with-shortest-path-calculator',
   title: 'Design Graph With Shortest Path Calculator',
   difficulty: 'hard',
-  tags: ['shortest-path', 'graph'],
+  tags: ['design', 'shortest-path', 'graph'],
   description: `There is a **directed weighted** graph that consists of \`n\` nodes numbered from \`0\` to \`n - 1\`. The edges of the graph are represented by a given 2D integer array \`edges\`, where \`edges[i] = [fromi, toi, edgeCosti]\` denotes that there is an edge from \`fromi\` to \`toi\` with cost \`edgeCosti\`.
 
 Implement the \`Graph\` class:
