@@ -2483,6 +2483,12 @@ import { problem as maximumEnergyBoostFromTwoDrinks } from './maximum-energy-boo
 import { problem as kthNearestObstacleQueries } from './k-th-nearest-obstacle-queries';
 // batch 149b — arrays/easy
 import { problem as calculateAmountPaidInTaxes } from './calculate-amount-paid-in-taxes';
+// batch 153 — 5 new problems (graph/medium, graph/medium, arrays/medium, arrays/medium, graph/medium)
+import { problem as minVerticesReachAllNodes } from './minimum-number-of-vertices-to-reach-all-nodes';
+import { problem as validPathInGrid } from './check-if-there-is-a-valid-path-in-a-grid';
+import { problem as freqMostFreqElement } from './frequency-of-the-most-frequent-element';
+import { problem as waysToMakeAFairArray } from './ways-to-make-a-fair-array';
+import { problem as nearestExitFromEntranceMaze } from './nearest-exit-from-entrance-in-maze';
 // batch 152 — 5 new problems (strings+arrays/easy+medium)
 import { problem as countSegmentsInAString } from './number-of-segments-in-a-string';
 import { problem as repeatedDnaSequences } from './repeated-dna-sequences';
@@ -5028,6 +5034,12 @@ export const problems: readonly Problem[] = [
   kthNearestObstacleQueries,
   // batch 149b — arrays/easy
   calculateAmountPaidInTaxes,
+  // batch 153 — graph/medium, graph/medium, arrays/medium, arrays/medium, graph/medium
+  minVerticesReachAllNodes,
+  validPathInGrid,
+  freqMostFreqElement,
+  waysToMakeAFairArray,
+  nearestExitFromEntranceMaze,
   // batch 152 — strings/easy, strings/medium, strings/easy, strings/medium, strings/easy
   countSegmentsInAString,
   repeatedDnaSequences,

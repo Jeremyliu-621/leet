@@ -35387,4 +35387,93 @@ def resultsArray(queries, k):
     return dp[n][k]
 `,
 
+  // batch 153
+  'minimum-number-of-vertices-to-reach-all-nodes': `def findSmallestSetOfVertices(n, edges):
+    edges = list(edges.to_py() if hasattr(edges, 'to_py') else edges)
+    has_parent = [False] * n
+    for e in edges:
+        e = list(e.to_py() if hasattr(e, 'to_py') else e)
+        has_parent[e[1]] = True
+    return [i for i in range(n) if not has_parent[i]]
+`,
+
+  'check-if-there-is-a-valid-path-in-a-grid': `def hasValidPath(grid):
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    m, n = len(grid), len(grid[0])
+    conn = [
+        [],
+        [(0, -1, {1,4,6}), (0, 1, {1,3,5})],
+        [(-1, 0, {2,3,4}), (1, 0, {2,5,6})],
+        [(0, -1, {1,4,6}), (1, 0, {2,5,6})],
+        [(0, 1, {1,3,5}), (1, 0, {2,5,6})],
+        [(0, -1, {1,4,6}), (-1, 0, {2,3,4})],
+        [(0, 1, {1,3,5}), (-1, 0, {2,3,4})],
+    ]
+    vis = [[False]*n for _ in range(m)]
+    q = [(0, 0)]
+    vis[0][0] = True
+    while q:
+        r, c = q.pop(0)
+        if r == m-1 and c == n-1:
+            return True
+        for dr, dc, valid in conn[grid[r][c]]:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < m and 0 <= nc < n and not vis[nr][nc] and grid[nr][nc] in valid:
+                vis[nr][nc] = True
+                q.append((nr, nc))
+    return vis[m-1][n-1]
+`,
+
+  'frequency-of-the-most-frequent-element': `def maxFrequency(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    nums.sort()
+    left = 0
+    s = 0
+    res = 1
+    for right in range(1, len(nums)):
+        s += (nums[right] - nums[right-1]) * (right - left)
+        while s > k:
+            s -= nums[right] - nums[left]
+            left += 1
+        res = max(res, right - left + 1)
+    return res
+`,
+
+  'ways-to-make-a-fair-array': `def waysToMakeFair(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    even_sum = sum(nums[i] for i in range(0, len(nums), 2))
+    odd_sum = sum(nums[i] for i in range(1, len(nums), 2))
+    prev_even = prev_odd = count = 0
+    for i, v in enumerate(nums):
+        new_even = prev_even + odd_sum - prev_odd - (v if i % 2 == 1 else 0)
+        new_odd = prev_odd + even_sum - prev_even - (v if i % 2 == 0 else 0)
+        if new_even == new_odd:
+            count += 1
+        if i % 2 == 0:
+            prev_even += v
+        else:
+            prev_odd += v
+    return count
+`,
+
+  'nearest-exit-from-entrance-in-maze': `def nearestExit(maze, entrance):
+    maze = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (maze.to_py() if hasattr(maze, 'to_py') else maze)]
+    entrance = list(entrance.to_py() if hasattr(entrance, 'to_py') else entrance)
+    m, n = len(maze), len(maze[0])
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    vis = [[False]*n for _ in range(m)]
+    vis[entrance[0]][entrance[1]] = True
+    q = [(entrance[0], entrance[1], 0)]
+    while q:
+        r, c, dist = q.pop(0)
+        for dr, dc in dirs:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < m and 0 <= nc < n and not vis[nr][nc] and maze[nr][nc] != '+':
+                if nr == 0 or nr == m-1 or nc == 0 or nc == n-1:
+                    return dist + 1
+                vis[nr][nc] = True
+                q.append((nr, nc, dist+1))
+    return -1
+`,
+
 };

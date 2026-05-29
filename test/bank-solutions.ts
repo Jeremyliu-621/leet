@@ -35599,4 +35599,90 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(dp[n]![k]!);
   },
 
+  // batch 153
+  'minimum-number-of-vertices-to-reach-all-nodes': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const hasParent = new Array(n).fill(false) as boolean[];
+    for (const edge of edges) hasParent[edge[1] as number] = true;
+    return [...Array(n).keys()].filter(i => !hasParent[i]);
+  },
+
+  'check-if-there-is-a-valid-path-in-a-grid': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    const conn: Array<Array<[number, number, number[]]>> = [
+      [],
+      [[0, -1, [1, 4, 6]], [0, 1, [1, 3, 5]]],
+      [[-1, 0, [2, 3, 4]], [1, 0, [2, 5, 6]]],
+      [[0, -1, [1, 4, 6]], [1, 0, [2, 5, 6]]],
+      [[0, 1, [1, 3, 5]], [1, 0, [2, 5, 6]]],
+      [[0, -1, [1, 4, 6]], [-1, 0, [2, 3, 4]]],
+      [[0, 1, [1, 3, 5]], [-1, 0, [2, 3, 4]]],
+    ];
+    const vis: boolean[][] = Array.from({ length: m }, () => new Array(n).fill(false) as boolean[]);
+    const q: [number, number][] = [[0, 0]];
+    vis[0]![0] = true;
+    while (q.length) {
+      const [r, c] = q.shift()!;
+      if (r === m - 1 && c === n - 1) return true;
+      for (const [dr, dc, valid] of conn[grid[r]![c]!]!) {
+        const nr = r + dr, nc = c + dc;
+        if (nr < 0 || nr >= m || nc < 0 || nc >= n || vis[nr]![nc] || !valid.includes(grid[nr]![nc]!)) continue;
+        vis[nr]![nc] = true;
+        q.push([nr, nc]);
+      }
+    }
+    return vis[m - 1]![n - 1]!;
+  },
+
+  'frequency-of-the-most-frequent-element': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const k = args[1] as number;
+    let left = 0, sum = 0, res = 1;
+    for (let right = 1; right < nums.length; right++) {
+      sum += (nums[right]! - nums[right - 1]!) * (right - left);
+      while (sum > k) { sum -= nums[right]! - nums[left]!; left++; }
+      res = Math.max(res, right - left + 1);
+    }
+    return res;
+  },
+
+  'ways-to-make-a-fair-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let evenSum = 0, oddSum = 0;
+    for (let i = 0; i < nums.length; i++) {
+      if (i % 2 === 0) evenSum += nums[i]!; else oddSum += nums[i]!;
+    }
+    let prevEven = 0, prevOdd = 0, count = 0;
+    for (let i = 0; i < nums.length; i++) {
+      const newEven = prevEven + oddSum - prevOdd - (i % 2 === 1 ? nums[i]! : 0);
+      const newOdd = prevOdd + evenSum - prevEven - (i % 2 === 0 ? nums[i]! : 0);
+      if (newEven === newOdd) count++;
+      if (i % 2 === 0) prevEven += nums[i]!; else prevOdd += nums[i]!;
+    }
+    return count;
+  },
+
+  'nearest-exit-from-entrance-in-maze': (...args: unknown[]) => {
+    const maze = args[0] as string[][];
+    const entrance = args[1] as number[];
+    const m = maze.length, n = maze[0]!.length;
+    const dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+    const visited: boolean[][] = Array.from({ length: m }, () => new Array(n).fill(false) as boolean[]);
+    const queue: [number, number, number][] = [[entrance[0]!, entrance[1]!, 0]];
+    visited[entrance[0]!]![entrance[1]!] = true;
+    while (queue.length > 0) {
+      const [r, c, dist] = queue.shift()!;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr!, nc = c + dc!;
+        if (nr < 0 || nr >= m || nc < 0 || nc >= n || visited[nr]![nc] || maze[nr]![nc] === '+') continue;
+        if (nr === 0 || nr === m - 1 || nc === 0 || nc === n - 1) return dist + 1;
+        visited[nr]![nc] = true;
+        queue.push([nr, nc, dist + 1]);
+      }
+    }
+    return -1;
+  },
+
 };
