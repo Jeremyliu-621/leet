@@ -36239,4 +36239,140 @@ def streamOfCharacters(ops, args):
     return result
 `,
 
+  'minimum-score-triangulation-polygon': `
+def minScoreTriangulation(values):
+    values = list(values.to_py() if hasattr(values, 'to_py') else values)
+    n = len(values)
+    dp = [[0] * n for _ in range(n)]
+    for length in range(2, n):
+        for i in range(n - length):
+            j = i + length
+            dp[i][j] = float('inf')
+            for k in range(i + 1, j):
+                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j] + values[i] * values[k] * values[j])
+    return dp[0][n - 1]
+`,
+
+  'non-negative-integers-without-consecutive-ones': `
+def findIntegers(n):
+    bits = []
+    x = n
+    while x:
+        bits.append(x & 1)
+        x >>= 1
+    bits.reverse()
+    length = len(bits)
+    fib = [0] * (length + 2)
+    fib[0] = 1
+    fib[1] = 2
+    for i in range(2, length + 2):
+        fib[i] = fib[i - 1] + fib[i - 2]
+    ans = 0
+    prev = 0
+    valid = True
+    for i, bit in enumerate(bits):
+        if bit == 1:
+            ans += fib[length - i - 1]
+            if prev == 1:
+                valid = False
+                break
+        prev = bit
+    if valid:
+        ans += 1
+    return ans
+`,
+
+  'ways-to-make-a-fair-array': `
+def waysToMakeFair(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    total_even = sum(v for i, v in enumerate(nums) if i % 2 == 0)
+    total_odd = sum(v for i, v in enumerate(nums) if i % 2 == 1)
+    pref_even = 0
+    pref_odd = 0
+    ans = 0
+    for i, v in enumerate(nums):
+        rem_even = total_even - (v if i % 2 == 0 else 0)
+        rem_odd = total_odd - (v if i % 2 == 1 else 0)
+        new_even = pref_even + (rem_odd - pref_odd)
+        new_odd = pref_odd + (rem_even - pref_even)
+        if new_even == new_odd:
+            ans += 1
+        if i % 2 == 0:
+            pref_even += v
+        else:
+            pref_odd += v
+    return ans
+`,
+
+  'count-ways-to-build-good-strings': `
+def countGoodStrings(low, high, zero, one):
+    MOD = 10**9 + 7
+    dp = [0] * (high + 1)
+    dp[0] = 1
+    for i in range(1, high + 1):
+        if i >= zero:
+            dp[i] = (dp[i] + dp[i - zero]) % MOD
+        if i >= one:
+            dp[i] = (dp[i] + dp[i - one]) % MOD
+    return sum(dp[low:high + 1]) % MOD
+`,
+
+  'restore-the-array': `
+def numberOfArrays(s, k):
+    if hasattr(s, 'to_py'):
+        s = s.to_py()
+    MOD = 10**9 + 7
+    n = len(s)
+    k_len = len(str(k))
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    for i in range(1, n + 1):
+        for j in range(i - 1, -1, -1):
+            if i - j > k_len:
+                break
+            if s[j] == '0':
+                continue
+            num = int(s[j:i])
+            if num > k:
+                break
+            dp[i] = (dp[i] + dp[j]) % MOD
+    return dp[n]
+`,
+
+  'number-of-ways-to-form-a-target-string-given-a-dictionary': `
+def numWays(words, target):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    if hasattr(target, 'to_py'):
+        target = target.to_py()
+    MOD = 10**9 + 7
+    m = len(words[0])
+    t = len(target)
+    freq = [[0] * 26 for _ in range(m)]
+    for word in words:
+        for j, c in enumerate(word):
+            freq[j][ord(c) - ord('a')] += 1
+    dp = [0] * (t + 1)
+    dp[0] = 1
+    for j in range(m):
+        for i in range(t, 0, -1):
+            c = ord(target[i - 1]) - ord('a')
+            dp[i] = (dp[i] + dp[i - 1] * freq[j][c]) % MOD
+    return dp[t]
+`,
+
+  'longest-subarray-with-at-most-k-sum': `
+def longestSubarrayAtMostKSum(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    left = 0
+    cur = 0
+    ans = 0
+    for right, v in enumerate(nums):
+        cur += v
+        while cur > k:
+            cur -= nums[left]
+            left += 1
+        ans = max(ans, right - left + 1)
+    return ans
+`,
+
 };

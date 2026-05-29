@@ -2557,6 +2557,14 @@ import { problem as mapSumPairs } from './map-sum-pairs';
 import { problem as magicDictionary } from './magic-dictionary';
 import { problem as shortEncodingOfWords } from './short-encoding-of-words';
 import { problem as implementMagicTrieStream } from './implement-magic-trie-stream';
+// batch 155 — dp/medium×2, dp/hard×2, arrays/medium, strings/hard, sliding-window/medium
+import { problem as minimumScoreTriangulationPolygon } from './minimum-score-triangulation-polygon';
+import { problem as nonNegativeIntegersWithoutConsecutiveOnes } from './non-negative-integers-without-consecutive-ones';
+import { problem as waysToMakeAFairArray } from './ways-to-make-a-fair-array';
+import { problem as countWaysToBuildGoodStrings } from './count-ways-to-build-good-strings';
+import { problem as restoreTheArray } from './restore-the-array';
+import { problem as numberOfWaysToFormATargetStringGivenADictionary } from './number-of-ways-to-form-a-target-string-given-a-dictionary';
+import { problem as longestSubarrayWithAtMostKSum } from './longest-subarray-with-at-most-k-sum';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5151,4 +5159,12 @@ export const problems: readonly Problem[] = [
   magicDictionary,
   shortEncodingOfWords,
   implementMagicTrieStream,
+  // batch 155 — dp/medium×2, dp/hard×2, arrays/medium, strings/hard, sliding-window/medium
+  minimumScoreTriangulationPolygon,
+  nonNegativeIntegersWithoutConsecutiveOnes,
+  waysToMakeAFairArray,
+  countWaysToBuildGoodStrings,
+  restoreTheArray,
+  numberOfWaysToFormATargetStringGivenADictionary,
+  longestSubarrayWithAtMostKSum,
 ];

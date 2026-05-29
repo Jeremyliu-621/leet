@@ -36497,4 +36497,124 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'minimum-score-triangulation-polygon': (...args: unknown[]) => {
+    const values = args[0] as number[];
+    const n = values.length;
+    const dp: number[][] = Array.from({ length: n }, () => new Array<number>(n).fill(0));
+    for (let len = 2; len < n; len++) {
+      for (let i = 0; i + len < n; i++) {
+        const j = i + len;
+        dp[i]![j] = Infinity;
+        for (let k = i + 1; k < j; k++) {
+          dp[i]![j] = Math.min(dp[i]![j]!, dp[i]![k]! + dp[k]![j]! + values[i]! * values[k]! * values[j]!);
+        }
+      }
+    }
+    return dp[0]![n - 1]!;
+  },
+
+  'non-negative-integers-without-consecutive-ones': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const bits: number[] = [];
+    let x = n;
+    while (x) { bits.push(x & 1); x >>= 1; }
+    bits.reverse();
+    const len = bits.length;
+    const fib = new Array<number>(len + 2).fill(0);
+    fib[0] = 1; fib[1] = 2;
+    for (let i = 2; i <= len; i++) fib[i] = fib[i - 1]! + fib[i - 2]!;
+    let ans = 0, prev = 0;
+    let valid = true;
+    for (let i = 0; i < len; i++) {
+      if (bits[i] === 1) {
+        ans += fib[len - i - 1]!;
+        if (prev === 1) { valid = false; break; }
+      }
+      prev = bits[i]!;
+    }
+    if (valid) ans++;
+    return ans;
+  },
+
+  'ways-to-make-a-fair-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const totalEven = nums.reduce((s, v, i) => s + (i % 2 === 0 ? v : 0), 0);
+    const totalOdd = nums.reduce((s, v, i) => s + (i % 2 === 1 ? v : 0), 0);
+    let prefEven = 0, prefOdd = 0, ans = 0;
+    for (let i = 0; i < n; i++) {
+      const v = nums[i]!;
+      const remEven = totalEven - (i % 2 === 0 ? v : 0);
+      const remOdd = totalOdd - (i % 2 === 1 ? v : 0);
+      const newEven = prefEven + (remOdd - prefOdd);
+      const newOdd = prefOdd + (remEven - prefEven);
+      if (newEven === newOdd) ans++;
+      if (i % 2 === 0) prefEven += v; else prefOdd += v;
+    }
+    return ans;
+  },
+
+  'count-ways-to-build-good-strings': (...args: unknown[]) => {
+    const [low, high, zero, one] = args as [number, number, number, number];
+    const MOD = 1_000_000_007;
+    const dp = new Array<number>(high + 1).fill(0);
+    dp[0] = 1;
+    for (let i = 1; i <= high; i++) {
+      if (i >= zero) dp[i] = (dp[i]! + dp[i - zero]!) % MOD;
+      if (i >= one) dp[i] = (dp[i]! + dp[i - one]!) % MOD;
+    }
+    let ans = 0;
+    for (let i = low; i <= high; i++) ans = (ans + dp[i]!) % MOD;
+    return ans;
+  },
+
+  'restore-the-array': (...args: unknown[]) => {
+    const s = args[0] as string, k = args[1] as number;
+    const MOD = 1_000_000_007;
+    const n = s.length;
+    const kLen = String(k).length;
+    const dp = new Array<number>(n + 1).fill(0);
+    dp[0] = 1;
+    for (let i = 1; i <= n; i++) {
+      for (let j = i - 1; j >= 0; j--) {
+        if (i - j > kLen) break;
+        if (s[j] === '0') continue;
+        const num = Number(s.slice(j, i));
+        if (num > k) break;
+        dp[i] = (dp[i]! + dp[j]!) % MOD;
+      }
+    }
+    return dp[n]!;
+  },
+
+  'number-of-ways-to-form-a-target-string-given-a-dictionary': (...args: unknown[]) => {
+    const words = args[0] as string[], target = args[1] as string;
+    const m = words[0]!.length, t = target.length;
+    const MOD = 1_000_000_007;
+    const freq: number[][] = Array.from({ length: m }, () => new Array<number>(26).fill(0));
+    for (const word of words) {
+      for (let j = 0; j < m; j++) freq[j]![word.charCodeAt(j) - 97]!++;
+    }
+    const dp = new Array<number>(t + 1).fill(0);
+    dp[0] = 1;
+    for (let j = 0; j < m; j++) {
+      for (let i = t; i >= 1; i--) {
+        const c = target.charCodeAt(i - 1) - 97;
+        dp[i] = (dp[i]! + dp[i - 1]! * freq[j]![c]!) % MOD;
+      }
+    }
+    return dp[t]!;
+  },
+
+  'longest-subarray-with-at-most-k-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    let left = 0, cur = 0, ans = 0;
+    for (let right = 0; right < nums.length; right++) {
+      cur += nums[right]!;
+      while (cur > k) cur -= nums[left++]!;
+      ans = Math.max(ans, right - left + 1);
+    }
+    return ans;
+  },
+
 };
