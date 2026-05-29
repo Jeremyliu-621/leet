@@ -2519,6 +2519,13 @@ import { problem as bitPrefixSumUpdates } from './bit-prefix-sum-updates';
 import { problem as equalSumArraysMinOps } from './equal-sum-arrays-with-minimum-number-of-operations';
 import { problem as mapOfHighestPeak } from './map-of-highest-peak';
 import { problem as numberOfOrdersInBacklog } from './number-of-orders-in-the-backlog';
+// batch 153b — linked-list×2, union-find, shortest-path, heap, simulation
+import { problem as partitionLinkedListAroundValue } from './partition-linked-list-around-value';
+import { problem as mergeKSortedLinkedLists } from './merge-k-sorted-linked-lists';
+import { problem as friendGroupsUnionFind } from './friend-groups-union-find';
+import { problem as dijkstraSingleSourceShortestPath } from './dijkstra-single-source-shortest-path';
+import { problem as kthLargestAfterEachInsertion } from './kth-largest-after-each-insertion';
+import { problem as simulateTrafficLights } from './simulate-traffic-lights';
 // batch 151 — dp/hard, arrays/medium, strings+dp/medium, dp+bitset/hard
 import { problem as findTheCountOfMonotonicPairsII } from './find-the-count-of-monotonic-pairs-ii';
 import { problem as maximumStrengthOfAGroup } from './maximum-strength-of-a-group';
@@ -5095,4 +5102,11 @@ export const problems: readonly Problem[] = [
   minimumSubstringPartitionEqualCharFreq,
   maximumGoodSubarraySum,
   maximalScoreAfterApplyingKOps,
+  // batch 153b — linked-list×2, union-find, shortest-path, heap, simulation
+  partitionLinkedListAroundValue,
+  mergeKSortedLinkedLists,
+  friendGroupsUnionFind,
+  dijkstraSingleSourceShortestPath,
+  kthLargestAfterEachInsertion,
+  simulateTrafficLights,
 ];

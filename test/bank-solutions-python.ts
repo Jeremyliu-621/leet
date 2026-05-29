@@ -35669,6 +35669,99 @@ def maxTotalReward(rewardValues):
     return dp.bit_length() - 1
 `,
 
+  'partition-linked-list-around-value': `def partitionListRunner(vals, x):
+    vals = list(vals.to_py() if hasattr(vals, 'to_py') else vals)
+    less_list = [v for v in vals if v < x]
+    geq_list = [v for v in vals if v >= x]
+    return less_list + geq_list
+`,
+
+  'merge-k-sorted-linked-lists': `def mergeKListsRunner(arrays):
+    arrays = list(arrays.to_py() if hasattr(arrays, 'to_py') else arrays)
+    arrays = [list(a.to_py() if hasattr(a, 'to_py') else a) for a in arrays]
+    import heapq
+    result = []
+    heap = []
+    for i, arr in enumerate(arrays):
+        if arr:
+            heapq.heappush(heap, (arr[0], i, 0))
+    while heap:
+        val, i, j = heapq.heappop(heap)
+        result.append(val)
+        if j + 1 < len(arrays[i]):
+            heapq.heappush(heap, (arrays[i][j + 1], i, j + 1))
+    return result
+`,
+
+  'friend-groups-union-find': `def countFriendGroups(n, pairs):
+    pairs = list(pairs.to_py() if hasattr(pairs, 'to_py') else pairs)
+    pairs = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in pairs]
+    parent = list(range(n))
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    count = n
+    for a, b in pairs:
+        ra, rb = find(int(a)), find(int(b))
+        if ra != rb:
+            parent[ra] = rb
+            count -= 1
+    return count
+`,
+
+  'dijkstra-single-source-shortest-path': `def dijkstra(n, edges, source):
+    edges = list(edges.to_py() if hasattr(edges, 'to_py') else edges)
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in edges]
+    import heapq
+    INF = float('inf')
+    adj = [[] for _ in range(n + 1)]
+    for u, v, w in edges:
+        adj[u].append((v, w))
+    dist = [INF] * (n + 1)
+    dist[source] = 0
+    heap = [(0, source)]
+    while heap:
+        d, u = heapq.heappop(heap)
+        if d > dist[u]:
+            continue
+        for v, w in adj[u]:
+            nd = dist[u] + w
+            if nd < dist[v]:
+                dist[v] = nd
+                heapq.heappush(heap, (nd, v))
+    dist[0] = 0
+    return [-1 if d == INF else d for d in dist]
+`,
+
+  'kth-largest-after-each-insertion': `def kthLargestAfterEachInsertion(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    import heapq
+    heap = []  # min-heap of size k
+    result = []
+    for num in nums:
+        heapq.heappush(heap, num)
+        if len(heap) > k:
+            heapq.heappop(heap)
+        result.append(heap[0] if len(heap) == k else -1)
+    return result
+`,
+
+  'simulate-traffic-lights': `def simulateTrafficLights(arrivals, g, r):
+    arrivals = list(arrivals.to_py() if hasattr(arrivals, 'to_py') else arrivals)
+    cycle = g + r
+    clear_time = 0
+    result = []
+    for arrival in arrivals:
+        t = max(arrival, clear_time)
+        pos = t % cycle
+        if pos >= g:
+            t = (t // cycle + 1) * cycle
+        clear_time = t + 1
+        result.append(clear_time)
+    return result
+`,
+
 
 
   'minimum-moves-to-capture-the-queen': `def minMovesToCaptureTheQueen(a, b, c, d, e, f):

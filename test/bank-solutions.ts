@@ -35864,6 +35864,127 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp.toString(2).length - 1;
   },
 
+  'partition-linked-list-around-value': (...args: unknown[]) => {
+    const vals = args[0] as number[];
+    const x = args[1] as number;
+    const less: number[] = [];
+    const geq: number[] = [];
+    for (const v of vals) {
+      if (v < x) less.push(v);
+      else geq.push(v);
+    }
+    return [...less, ...geq];
+  },
+
+  'merge-k-sorted-linked-lists': (...args: unknown[]) => {
+    const arrays = (args[0] as number[][]).map(a => [...a]);
+    const result: number[] = [];
+    // merge using indices
+    const indices = arrays.map(() => 0);
+    while (true) {
+      let minVal = Infinity;
+      let minIdx = -1;
+      for (let i = 0; i < arrays.length; i++) {
+        if (indices[i]! < arrays[i]!.length && arrays[i]![indices[i]!]! < minVal) {
+          minVal = arrays[i]![indices[i]!]!;
+          minIdx = i;
+        }
+      }
+      if (minIdx === -1) break;
+      result.push(minVal);
+      indices[minIdx]!++;
+    }
+    return result;
+  },
+
+  'friend-groups-union-find': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const pairs = args[1] as number[][];
+    const parent = Array.from({ length: n }, (_, i) => i);
+    function find(x: number): number {
+      if (parent[x] !== x) parent[x] = find(parent[x]!);
+      return parent[x]!;
+    }
+    let count = n;
+    for (const [a, b] of pairs) {
+      const ra = find(a as number), rb = find(b as number);
+      if (ra !== rb) {
+        parent[ra] = rb;
+        count--;
+      }
+    }
+    return count;
+  },
+
+  'dijkstra-single-source-shortest-path': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const source = args[2] as number;
+    const INF = Infinity;
+    const adj: [number, number][][] = Array.from({ length: n + 1 }, () => []);
+    for (const [u, v, w] of edges) {
+      adj[u as number]!.push([v as number, w as number]);
+    }
+    const dist = new Array<number>(n + 1).fill(INF);
+    dist[source] = 0;
+    // simple priority queue via sorted array
+    const heap: [number, number][] = [[0, source]];
+    while (heap.length > 0) {
+      heap.sort((a, b) => a[0] - b[0]);
+      const [d, u] = heap.shift()!;
+      if (d > dist[u]!) continue;
+      for (const [v, w] of adj[u]!) {
+        const nd = dist[u]! + w;
+        if (nd < dist[v]!) {
+          dist[v] = nd;
+          heap.push([nd, v]);
+        }
+      }
+    }
+    dist[0] = 0;
+    return dist.map(d => d === INF ? -1 : d);
+  },
+
+  'kth-largest-after-each-insertion': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const result: number[] = [];
+    const top: number[] = []; // maintained as sorted ascending, size <= k
+    for (const num of nums) {
+      // binary insert
+      let lo = 0, hi = top.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (top[mid]! < num) lo = mid + 1;
+        else hi = mid;
+      }
+      top.splice(lo, 0, num);
+      if (top.length > k) top.shift();
+      result.push(top.length === k ? top[0]! : -1);
+    }
+    return result;
+  },
+
+  'simulate-traffic-lights': (...args: unknown[]) => {
+    const arrivals = args[0] as number[];
+    const g = args[1] as number;
+    const r = args[2] as number;
+    const cycle = g + r;
+    let clearTime = 0;
+    const result: number[] = [];
+    for (const arrival of arrivals) {
+      let t = Math.max(arrival, clearTime);
+      const pos = t % cycle;
+      if (pos >= g) {
+        // red: wait for next green
+        t = Math.floor(t / cycle + 1) * cycle;
+      }
+      clearTime = t + 1;
+      result.push(clearTime);
+    }
+    return result;
+  },
+
 
   'minimum-moves-to-capture-the-queen': (...args: unknown[]) => {
     const a = args[0] as number, b = args[1] as number;
