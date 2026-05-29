@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2747** problems; 8535 tests green. Batches 102–208 + KaTeX UX complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2759** problems; 8571 tests green. Batches 102–209 + KaTeX UX complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 209+); UX polish per LEETCODE_PARITY.md; light-mode contrast audit.
+**Next up:** More bank growth (batch 210+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 209 — mode-of-array, row-with-max-sum, find-middle, count-rows-equal-first (2026-05-29)
+Four new easy problems: `mode-of-array` (easy/arrays+hash-map, freq map min at maxFreq), `row-with-max-sum` (easy/arrays+math, row index with largest row sum), `find-middle-element` (easy/arrays, nums[floor(n/2)]), `count-rows-equal-to-first` (easy/arrays, rows matching matrix[0]). Bank at **2759**; 8571 tests.
 
 ### feat(bank): batch 208 — harshad, furthest-point, beautiful-array-sum, maximal-range, lex-smallest-ops (2026-05-29)
 Five new problems: `harshad-number` (easy/math+simulation, digit-sum divisibility), `furthest-point-from-origin` (easy/simulation, |L−R|+zeros), `minimum-possible-sum-of-beautiful-array` (medium/math, BigInt mod 10^9+7, use 1..floor(target/2) then target..), `maximal-range-each-element-is-maximum-in` (medium/arrays+stack, monotone stack prev/next strictly-greater → r−l−1), `lexicographically-smallest-string-operations-constraint` (medium/strings, greedy left-to-right budget: reach 'a' or go left). Bank at **2747**; 8535 tests.
