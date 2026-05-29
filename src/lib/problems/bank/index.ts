@@ -2696,6 +2696,12 @@ import { problem as maximumChunksToMakeSorted } from './maximum-chunks-to-make-s
 import { problem as findTheMostCompetitiveSubsequence } from './find-the-most-competitive-subsequence';
 import { problem as minimumCostTreeFromLeafValues } from './minimum-cost-tree-from-leaf-values';
 import { problem as shortestSubarrayWithSumAtLeastK } from './shortest-subarray-with-sum-at-least-k';
+// batch 169 — strings/medium, strings/hard, strings/easy, arrays/easy×2
+import { problem as maximumPalindromesAfterOperations } from './maximum-palindromes-after-operations';
+import { problem as beautifulSubstringsII } from './count-beautiful-substrings-ii';
+import { problem as makeThreeStringsEqual } from './make-three-strings-equal';
+import { problem as addedIntegerI } from './find-the-integer-added-to-array-i';
+import { problem as minimumAddedInteger } from './find-the-integer-added-to-array-ii';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5426,4 +5432,10 @@ export const problems: readonly Problem[] = [
   findTheMostCompetitiveSubsequence,
   minimumCostTreeFromLeafValues,
   shortestSubarrayWithSumAtLeastK,
+  // batch 169 — strings/medium, strings/hard, strings/easy, arrays/easy×2
+  maximumPalindromesAfterOperations,
+  beautifulSubstringsII,
+  makeThreeStringsEqual,
+  addedIntegerI,
+  minimumAddedInteger,
 ];

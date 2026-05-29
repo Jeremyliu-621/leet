@@ -38476,4 +38476,78 @@ def maximumANDSum(nums, numSlots):
     return max(dp)
 `,
 
+  // batch 169 — strings/medium, strings/hard, strings/easy, arrays/easy×2
+  'maximum-palindromes-after-operations': `
+def maxPalindromesAfterOperations(words):
+    freq = [0] * 26
+    for word in words:
+        for ch in word:
+            freq[ord(ch) - ord('a')] += 1
+    pairs = sum(f // 2 for f in freq)
+    lengths = sorted(len(w) for w in words)
+    count = 0
+    for length in lengths:
+        need = length // 2
+        if pairs >= need:
+            pairs -= need
+            count += 1
+    return count
+`,
+
+  'count-beautiful-substrings-ii': `
+def beautifulSubstrings(s, k):
+    vowels = set('aeiou')
+    v0 = 1
+    while (v0 * v0) % k != 0:
+        v0 += 1
+    period = 2 * v0
+    freq = {}
+    prefix = 0
+    count = 0
+    freq[(0, 0)] = 1
+    for i, ch in enumerate(s):
+        prefix += 1 if ch in vowels else -1
+        key = (prefix, (i + 1) % period)
+        count += freq.get(key, 0)
+        freq[key] = freq.get(key, 0) + 1
+    return count
+`,
+
+  'make-three-strings-equal': `
+def equalStrings(s1, s2, s3):
+    prefix_len = 0
+    min_len = min(len(s1), len(s2), len(s3))
+    while prefix_len < min_len and s1[prefix_len] == s2[prefix_len] and s1[prefix_len] == s3[prefix_len]:
+        prefix_len += 1
+    if prefix_len == 0:
+        return -1
+    return (len(s1) - prefix_len) + (len(s2) - prefix_len) + (len(s3) - prefix_len)
+`,
+
+  'find-the-integer-added-to-array-i': `
+def addedInteger(nums1, nums2):
+    return min(nums2) - min(nums1)
+`,
+
+  'find-the-integer-added-to-array-ii': `
+def minimumAddedInteger(nums1, nums2):
+    a = sorted(nums1)
+    b = sorted(nums2)
+    def is_valid(x):
+        j = 0
+        skipped = 0
+        for val in a:
+            if j < len(b) and val + x == b[j]:
+                j += 1
+            else:
+                skipped += 1
+        return j == len(b) and skipped <= 2
+    ans = float('inf')
+    for i in range(3):
+        x = b[0] - a[i]
+        if x >= 0 and is_valid(x):
+            ans = min(ans, x)
+    return ans
+`,
+
 };

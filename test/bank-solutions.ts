@@ -38556,4 +38556,77 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 169 — strings/medium, strings/hard, strings/easy, arrays/easy×2
+  'maximum-palindromes-after-operations': (words: unknown) => {
+    const ws = words as string[];
+    const freq = new Array(26).fill(0) as number[];
+    for (const word of ws) {
+      for (const ch of word) freq[ch.charCodeAt(0) - 97]!++;
+    }
+    let pairs = 0;
+    for (const f of freq) pairs += Math.floor(f / 2);
+    const lengths = ws.map(w => w.length).sort((a, b) => a - b);
+    let count = 0;
+    for (const len of lengths) {
+      const need = Math.floor(len / 2);
+      if (pairs >= need) { pairs -= need; count++; }
+    }
+    return count;
+  },
+
+  'count-beautiful-substrings-ii': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    const VOWELS = new Set(['a', 'e', 'i', 'o', 'u']);
+    let v0 = 1;
+    while ((v0 * v0) % k !== 0) v0++;
+    const period = 2 * v0;
+    const map = new Map<string, number>();
+    let prefix = 0;
+    let count = 0;
+    map.set(`${prefix},${0 % period}`, 1);
+    for (let i = 0; i < s.length; i++) {
+      prefix += VOWELS.has(s[i]!) ? 1 : -1;
+      const key = `${prefix},${(i + 1) % period}`;
+      count += map.get(key) ?? 0;
+      map.set(key, (map.get(key) ?? 0) + 1);
+    }
+    return count;
+  },
+
+  'make-three-strings-equal': (...args: unknown[]) => {
+    const [a, b, c] = args as [string, string, string];
+    let prefixLen = 0;
+    const minLen = Math.min(a.length, b.length, c.length);
+    while (prefixLen < minLen && a[prefixLen] === b[prefixLen] && a[prefixLen] === c[prefixLen]) {
+      prefixLen++;
+    }
+    if (prefixLen === 0) return -1;
+    return (a.length - prefixLen) + (b.length - prefixLen) + (c.length - prefixLen);
+  },
+
+  'find-the-integer-added-to-array-i': (...args: unknown[]) => {
+    const [nums1, nums2] = args as [number[], number[]];
+    return Math.min(...nums2) - Math.min(...nums1);
+  },
+
+  'find-the-integer-added-to-array-ii': (...args: unknown[]) => {
+    const a = [...(args[0] as number[])].sort((x, y) => x - y);
+    const b = [...(args[1] as number[])].sort((x, y) => x - y);
+    const isValid = (x: number) => {
+      let j = 0, skipped = 0;
+      for (let i = 0; i < a.length && j < b.length; i++) {
+        if (a[i]! + x === b[j]!) j++;
+        else skipped++;
+      }
+      return j === b.length && skipped <= 2;
+    };
+    let ans = Infinity;
+    for (let i = 0; i < 3; i++) {
+      const x = b[0]! - a[i]!;
+      if (x >= 0 && isValid(x)) ans = Math.min(ans, x);
+    }
+    return ans;
+  },
+
 };
