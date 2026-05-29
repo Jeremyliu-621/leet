@@ -2832,7 +2832,6 @@ import { problem as maximumSumOfAnHourglass } from './maximum-sum-of-an-hourglas
 import { problem as specialArrayI } from './special-array-i';
 import { problem as findChampionII } from './find-champion-ii';
 import { problem as countPalindromicSubsequences } from './count-palindromic-subsequences';
-
 // batch 172 — strings+sliding-window/medium, arrays+math/easy, arrays+math/medium, arrays+math/medium
 import { problem as longestSubstringWithAtMostTwoDistinctChars } from './longest-substring-with-at-most-two-distinct-chars';
 import { problem as rangeAdditionII } from './range-addition-ii';
@@ -2864,6 +2863,12 @@ import { problem as determineTheMinimumSumOfAKAvoidingArray } from './determine-
 import { problem as maximumPointsTouristCanEarn } from './maximum-points-tourist-can-earn';
 import { problem as minimumReverseOperations } from './minimum-reverse-operations';
 import { problem as findTheMinimumAreaToCoverAllOnesII } from './find-the-minimum-area-to-cover-all-ones-ii';
+// batch 172 hard — strings+dp+math, arrays+math, arrays+binary-search, arrays+math+stack, arrays+stack+dp
+import { problem as countKReducibleNumbers } from './count-k-reducible-numbers-less-than-n';
+import { problem as minimumAreaToCovertAllOnesII } from './minimum-area-to-cover-all-ones-ii';
+import { problem as minimumOperationsToMakeSubsequence } from './minimum-operations-to-make-a-subsequence';
+import { problem as replaceNonCoprimeNumbers } from './replace-non-coprime-numbers-in-array';
+import { problem as maximumNumberOfBooks } from './maximum-number-of-books-you-can-take';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5712,7 +5717,6 @@ export const problems: readonly Problem[] = [
   specialArrayI,
   findChampionII,
   countPalindromicSubsequences,
-
   // batch 172 — strings+sliding-window/medium, arrays+math/easy, arrays+math/medium, arrays+math/medium
   longestSubstringWithAtMostTwoDistinctChars,
   rangeAdditionII,
@@ -5767,4 +5771,10 @@ export const problems: readonly Problem[] = [
   maximumPointsTouristCanEarn,
   minimumReverseOperations,
   findTheMinimumAreaToCoverAllOnesII,
+  // batch 172 hard — strings+dp+math, arrays+math, arrays+binary-search, arrays+math+stack, arrays+stack+dp
+  countKReducibleNumbers,
+  minimumAreaToCovertAllOnesII,
+  minimumOperationsToMakeSubsequence,
+  replaceNonCoprimeNumbers,
+  maximumNumberOfBooks,
 ];
