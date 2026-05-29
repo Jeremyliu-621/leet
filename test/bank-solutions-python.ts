@@ -41813,4 +41813,97 @@ def incremovableSubarrayCount(nums):
                 count += 1
     return count
 `,
+
+  'check-if-the-grid-can-be-cut-into-sections': `
+def checkValidCuts(n, rectangles):
+    if hasattr(rectangles, 'to_py'): rectangles = list(rectangles.to_py())
+    rectangles = [list(r) for r in rectangles]
+    def can_cut(segs):
+        segs.sort(key=lambda x: x[0])
+        groups = 0
+        max_end = float('-inf')
+        for s, e in segs:
+            if s >= max_end:
+                groups += 1
+            max_end = max(max_end, e)
+        return groups >= 3
+    x_segs = [[r[0], r[2]] for r in rectangles]
+    y_segs = [[r[1], r[3]] for r in rectangles]
+    return can_cut(x_segs) or can_cut(y_segs)
+`,
+
+  'minimum-ops-make-elements-distinct': `
+def minimumOperations(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    seen = set()
+    for i in range(len(nums) - 1, -1, -1):
+        if nums[i] in seen:
+            return (i + 3) // 3
+        seen.add(nums[i])
+    return 0
+`,
+
+  'zigzag-grid-traversal-with-skip': `
+def zigzagTraversal(grid):
+    if hasattr(grid, 'to_py'): grid = list(grid.to_py())
+    grid = [list(row) for row in grid]
+    result = []
+    count = 0
+    for r, row in enumerate(grid):
+        cells = row if r % 2 == 0 else row[::-1]
+        for val in cells:
+            if count % 2 == 0:
+                result.append(val)
+            count += 1
+    return result
+`,
+
+  'sum-of-variable-length-subarrays': `
+def subarraySum(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + nums[i]
+    total = 0
+    for i in range(n):
+        start = max(0, i - nums[i])
+        total += prefix[i + 1] - prefix[start]
+    return total
+`,
+
+  'maximum-amount-of-money-robot-can-earn': `
+def maximumAmount(coins):
+    if hasattr(coins, 'to_py'): coins = list(coins.to_py())
+    coins = [list(row) for row in coins]
+    n, m = len(coins), len(coins[0])
+    NEG_INF = float('-inf')
+    dp = [[[NEG_INF, NEG_INF, NEG_INF] for _ in range(m)] for _ in range(n)]
+    c = coins[0][0]
+    dp[0][0][0] = c
+    if c < 0:
+        dp[0][0][1] = 0
+    for i in range(n):
+        for j in range(m):
+            if i == 0 and j == 0:
+                continue
+            c = coins[i][j]
+            prev = [NEG_INF, NEG_INF, NEG_INF]
+            if i > 0:
+                for k in range(3):
+                    prev[k] = max(prev[k], dp[i-1][j][k])
+            if j > 0:
+                for k in range(3):
+                    prev[k] = max(prev[k], dp[i][j-1][k])
+            if c >= 0:
+                for k in range(3):
+                    dp[i][j][k] = (prev[k] + c) if prev[k] != NEG_INF else NEG_INF
+            else:
+                for k in range(3):
+                    take = (prev[k] + c) if prev[k] != NEG_INF else NEG_INF
+                    neut = prev[k-1] if k > 0 and prev[k-1] != NEG_INF else NEG_INF
+                    dp[i][j][k] = max(take, neut)
+    return max(dp[n-1][m-1])
+`,
+
 };

@@ -2889,6 +2889,11 @@ import { problem as wiggleSequence } from './wiggle-sequence';
 import { problem as validWordSquare } from './valid-word-square';
 import { problem as findNumberOfWaysToReachTheKthStair } from './find-number-of-ways-to-reach-the-k-th-stair';
 import { problem as countBeautifulSplitsInAnArray } from './count-beautiful-splits-in-an-array';
+import { problem as checkIfTheGridCanBeCutIntoSections } from './check-if-the-grid-can-be-cut-into-sections';
+import { problem as minimumOpsMakeElementsDistinct } from './minimum-ops-make-elements-distinct';
+import { problem as zigzagGridTraversalWithSkip } from './zigzag-grid-traversal-with-skip';
+import { problem as sumOfVariableLengthSubarrays } from './sum-of-variable-length-subarrays';
+import { problem as maximumAmountOfMoneyRobotCanEarn } from './maximum-amount-of-money-robot-can-earn';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5818,4 +5823,10 @@ export const problems: readonly Problem[] = [
   // batch 180 — dp+bit-manipulation/hard, dp/medium
   findNumberOfWaysToReachTheKthStair,
   countBeautifulSplitsInAnArray,
+  // batch 181 — arrays/medium, easy/hash-map, easy/simulation, easy/arrays, medium/dp
+  checkIfTheGridCanBeCutIntoSections,
+  minimumOpsMakeElementsDistinct,
+  zigzagGridTraversalWithSkip,
+  sumOfVariableLengthSubarrays,
+  maximumAmountOfMoneyRobotCanEarn,
 ];
