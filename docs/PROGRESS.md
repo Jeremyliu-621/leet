@@ -15,6 +15,12 @@
 ### feat(bank): batch 180 — binary-search (easy), wiggle-sequence (medium), valid-word-square (easy) (2026-05-29)
 Three new problems: `binary-search` (easy/binary-search, canonical LC#704 template — lo/hi pointers with `>>1` midpoint), `wiggle-subsequence` (medium/arrays+dp, greedy up/down counters — if nums[i]>nums[i-1] then up=down+1, if <  then down=up+1, O(n)), `valid-word-square` (easy/arrays, check words[i][j]===words[j][i] for all valid pairs — fixed incorrect ball/area/lead/lady example which IS a valid word square). Bank at **2582**; 8040 tests.
 
+### fix(bank): restore solutions truncated by 6c5536c rebase conflict (2026-05-29)
+Commit 6c5536c accidentally deleted ~1846 JS and ~1886 Python solution lines while adding batch 172 hard problems, causing 187 test failures. Restored by merging the 54e9e02 (pre-truncation) solution base with batch 172 entries. 8031 tests green.
+
+### fix(bank): correct problem descriptions, constraints, and examples for 5 existing problems (2026-05-29)
+Improved accuracy of minimum-ops-increasing, max-element-decreasing-rearranging, eliminate-monsters, largest-odd-string, and removing-magic-beans; removed duplicate index.ts registration.
+
 ### feat(bank): batch 178 (local) — range-sum-2d-immutable (medium), min-job-difficulty (hard), sum-root-to-leaf-binary (easy), linked-list-in-binary-tree (medium) + batch 172 solutions (2026-05-29)
 Four new batch 178 problems: `range-sum-query-2d-immutable` (medium/design, 2D prefix sum for O(1) range sum queries), `minimum-difficulty-of-a-job-schedule` (hard/dp, DP scheduling jobs across d days — dp[day][j] = min cost for first j jobs in day days), `sum-of-root-to-leaf-binary-numbers` (easy/tree, DFS accumulating binary path values), `linked-list-in-binary-tree` (medium/linked-list+tree, DFS subpath matching at each tree node). Also added batch 172 solutions (count-k-reducible, min-area-cover-ones-ii, min-operations-to-make-subsequence, replace-non-coprime, max-books-you-can-take) to fix broken solution files. Bank at **2579**; 8031 tests.
 
