@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2509** problems; 7821 tests green. Batches 102–176 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2514** problems; 7851 tests green. Batches 102–176 + batch 172 extra complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 176+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 177+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 172 extra — check-if-n-and-double (easy), image-overlap (medium), largest-1-bordered-square (medium), water-bottles-ii (medium), design-mru-queue (medium) (2026-05-29)
+Five new problems: `check-if-n-and-its-double-exist` (easy/arrays+hash-map, hash set scan), `image-overlap` (medium/arrays, O(n^4) translation brute force), `largest-1-bordered-square` (medium/dp, precompute horizontal/vertical consecutive 1s), `water-bottles-ii` (medium/simulation, simulate with growing exchange rate), `design-most-recently-used-queue` (medium/design, functional splice+append). Bank at **2514**; 7851 tests.
 
 ### feat(bank): batch 176 — cards-max-score (medium), pushes-type-i (easy), pushes-type-ii (medium), integer-beautiful (medium) (2026-05-29)
 Four new problems: `maximum-points-you-can-obtain-from-cards` (medium/sliding-window, minimize complement middle subarray of size n-k), `minimum-pushes-to-type-word-i` (easy/math, n distinct letters: floor(i/8)+1 pushes), `minimum-pushes-to-type-word-ii` (medium/math+hash-map, sort letter frequencies descending, greedily assign), `minimum-addition-to-make-integer-beautiful` (medium/math, round up digit by digit until digit_sum ≤ target). Bank at **2509**; 7821 tests.
