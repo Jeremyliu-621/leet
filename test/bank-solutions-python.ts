@@ -36061,5 +36061,106 @@ def resultsArray(queries, k):
                 val += 1
     return ans
 `,
+  // batch 154b — trie/medium×3, trie/hard
+  'map-sum-pairs': `
+def mapSumPairs(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = list(args.to_py() if hasattr(args, 'to_py') else args)
+    store = {}
+    result = []
+    for op, a in zip(ops, args):
+        a = list(a)
+        if op == 'MapSum':
+            result.append(None)
+        elif op == 'insert':
+            store[a[0]] = a[1]
+            result.append(None)
+        else:
+            prefix = a[0]
+            result.append(sum(v for k, v in store.items() if k.startswith(prefix)))
+    return result
+`,
+
+  'magic-dictionary': `
+def magicDictionary(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = list(args.to_py() if hasattr(args, 'to_py') else args)
+    dictionary = []
+    result = []
+    for op, a in zip(ops, args):
+        a = list(a)
+        if op == 'MagicDictionary':
+            result.append(None)
+        elif op == 'buildDict':
+            dictionary = list(a[0])
+            result.append(None)
+        else:
+            word = a[0]
+            if word in dictionary:
+                result.append(False)
+                continue
+            found = False
+            for w in dictionary:
+                if len(w) != len(word):
+                    continue
+                diffs = sum(1 for x, y in zip(w, word) if x != y)
+                if diffs == 1:
+                    found = True
+                    break
+            result.append(found)
+    return result
+`,
+
+  'short-encoding-of-words': `
+def minimumLengthEncoding(words):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    word_set = set(words)
+    for word in words:
+        for k in range(1, len(word)):
+            word_set.discard(word[k:])
+    return sum(len(w) + 1 for w in word_set)
+`,
+
+  'implement-magic-trie-stream': `
+def streamOfCharacters(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = list(args.to_py() if hasattr(args, 'to_py') else args)
+    root = {}
+    stream = []
+    max_len = 0
+    result = []
+    for op, a in zip(ops, args):
+        a = list(a)
+        if op == 'StreamChecker':
+            root = {}
+            stream = []
+            max_len = 0
+            for w in list(a[0]):
+                if len(w) > max_len:
+                    max_len = len(w)
+                node = root
+                for ch in reversed(w):
+                    if ch not in node:
+                        node[ch] = {}
+                    node = node[ch]
+                node['#'] = True
+            result.append(None)
+        else:
+            letter = a[0]
+            stream.append(letter)
+            found = False
+            node = root
+            limit = min(len(stream), max_len)
+            for j in range(limit):
+                ch = stream[-(j + 1)]
+                if ch not in node:
+                    break
+                node = node[ch]
+                if '#' in node:
+                    found = True
+                    break
+            result.append(found)
+    return result
+`,
 
 };

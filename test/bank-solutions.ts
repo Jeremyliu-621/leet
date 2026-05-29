@@ -36235,5 +36235,124 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return ans;
   },
+  // batch 154b — trie/medium×3, trie/hard
+  'map-sum-pairs': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as (string | number)[][];
+    const map = new Map<string, number>();
+    const result: (number | null)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      const a = opArgs[i]!;
+      if (op === 'MapSum') {
+        result.push(null);
+      } else if (op === 'insert') {
+        map.set(a[0] as string, a[1] as number);
+        result.push(null);
+      } else {
+        const prefix = a[0] as string;
+        let sum = 0;
+        for (const [k, v] of map) {
+          if (k.startsWith(prefix)) sum += v;
+        }
+        result.push(sum);
+      }
+    }
+    return result;
+  },
+
+  'magic-dictionary': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as (string | string[])[][];
+    let dict: string[] = [];
+    const result: (boolean | null)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      const a = opArgs[i]!;
+      if (op === 'MagicDictionary') {
+        result.push(null);
+      } else if (op === 'buildDict') {
+        dict = a[0] as string[];
+        result.push(null);
+      } else {
+        const word = a[0] as string;
+        if (dict.includes(word)) { result.push(false); continue; }
+        let found = false;
+        for (const w of dict) {
+          if (w.length !== word.length) continue;
+          let diffs = 0;
+          for (let j = 0; j < w.length; j++) {
+            if (w[j] !== word[j]) diffs++;
+            if (diffs > 1) break;
+          }
+          if (diffs === 1) { found = true; break; }
+        }
+        result.push(found);
+      }
+    }
+    return result;
+  },
+
+  'short-encoding-of-words': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const wordSet = new Set(words);
+    for (const word of words) {
+      for (let k = 1; k < word.length; k++) {
+        wordSet.delete(word.slice(k));
+      }
+    }
+    let len = 0;
+    for (const w of wordSet) len += w.length + 1;
+    return len;
+  },
+
+  'implement-magic-trie-stream': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as (string | string[])[][];
+
+    interface TrieNode { children: Map<string, TrieNode>; isEnd: boolean; }
+    const newNode = (): TrieNode => ({ children: new Map(), isEnd: false });
+
+    let root: TrieNode = newNode();
+    let stream: string[] = [];
+    let maxLen = 0;
+    const result: (boolean | null)[] = [];
+
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      const a = opArgs[i]!;
+      if (op === 'StreamChecker') {
+        root = newNode();
+        stream = [];
+        maxLen = 0;
+        const words = a[0] as string[];
+        for (const w of words) {
+          if (w.length > maxLen) maxLen = w.length;
+          let node = root;
+          for (let j = w.length - 1; j >= 0; j--) {
+            const c = w[j]!;
+            if (!node.children.has(c)) node.children.set(c, newNode());
+            node = node.children.get(c)!;
+          }
+          node.isEnd = true;
+        }
+        result.push(null);
+      } else {
+        const letter = a[0] as string;
+        stream.push(letter);
+        let found = false;
+        let node = root;
+        const limit = Math.min(stream.length, maxLen);
+        for (let j = 0; j < limit; j++) {
+          const c = stream[stream.length - 1 - j]!;
+          if (!node.children.has(c)) break;
+          node = node.children.get(c)!;
+          if (node.isEnd) { found = true; break; }
+        }
+        result.push(found);
+      }
+    }
+    return result;
+  },
 
 };

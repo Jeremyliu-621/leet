@@ -2532,6 +2532,11 @@ import { problem as friendGroupsUnionFind } from './friend-groups-union-find';
 import { problem as dijkstraSingleSourceShortestPath } from './dijkstra-single-source-shortest-path';
 import { problem as kthLargestAfterEachInsertion } from './kth-largest-after-each-insertion';
 import { problem as simulateTrafficLights } from './simulate-traffic-lights';
+// batch 154 — heap+arrays/medium, dp+binary-search/medium, strings+hash-map/medium, math+arrays/medium, arrays+hash-map+math/medium
+import { problem as maximumEarningsFromTaxi } from './maximum-earnings-from-taxi';
+import { problem as findLongestSpecialSubstringThrice } from './find-the-longest-special-substring-that-occurs-thrice-i';
+import { problem as minimumCostMakeArrayEqualindromic } from './minimum-cost-to-make-array-equalindromic';
+import { problem as identifyLargestOutlier } from './identify-the-largest-outlier-in-an-array';
 // batch 151 — dp/hard, arrays/medium, strings+dp/medium, dp+bitset/hard
 import { problem as findTheCountOfMonotonicPairsII } from './find-the-count-of-monotonic-pairs-ii';
 import { problem as maximumStrengthOfAGroup } from './maximum-strength-of-a-group';
@@ -2553,6 +2558,11 @@ import { problem as findCriticalPseudoCriticalEdges } from './find-critical-and-
 import { problem as numberOfSubarraysHavingEvenProduct } from './number-of-subarrays-having-even-product';
 import { problem as greatestSumDivisibleByThree } from './greatest-sum-divisible-by-three';
 import { problem as constructProductMatrix } from './construct-product-matrix';
+// batch 154b — trie/medium×3, trie/hard
+import { problem as mapSumPairs } from './map-sum-pairs';
+import { problem as magicDictionary } from './magic-dictionary';
+import { problem as shortEncodingOfWords } from './short-encoding-of-words';
+import { problem as implementMagicTrieStream } from './implement-magic-trie-stream';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5132,10 +5142,15 @@ export const problems: readonly Problem[] = [
   dijkstraSingleSourceShortestPath,
   kthLargestAfterEachInsertion,
   simulateTrafficLights,
+  // batch 154 — heap+arrays/medium, strings/medium, math/medium, arrays+hash-map/medium
+  maximumEarningsFromTaxi,
+  findLongestSpecialSubstringThrice,
+  minimumCostMakeArrayEqualindromic,
+  identifyLargestOutlier,
   // batch 153 — arrays/easy, graph/hard
   lastVisitedIntegers,
   countVisitedNodesInADirectedGraph,
-  // batch 154 — shortest-path/medium, binary-indexed-tree/medium, union-find/hard
+  // batch 154b — shortest-path/medium, binary-indexed-tree/medium, union-find/hard
   minEdgeReversalsToDestination,
   rangeUpdateRangeSumBit,
   findCriticalPseudoCriticalEdges,
@@ -5143,4 +5158,9 @@ export const problems: readonly Problem[] = [
   numberOfSubarraysHavingEvenProduct,
   greatestSumDivisibleByThree,
   constructProductMatrix,
+  // batch 154c — trie/medium×3, trie/hard
+  mapSumPairs,
+  magicDictionary,
+  shortEncodingOfWords,
+  implementMagicTrieStream,
 ];
