@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2776** problems; 8622 tests green. Batches 102–211 + 207b + KaTeX UX complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2780** problems; 8634 tests green. Batches 102–212 + 207b + KaTeX UX complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 211+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 213+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 212 — max-sum-of-a-pair-with-equal-sum-of-digits, finding-pairs-with-certain-difference, number-of-subarrays-with-and-value-of-k, maximum-number-of-coins-you-can-get (2026-05-29)
+Four new medium problems: `max-sum-of-a-pair-with-equal-sum-of-digits` (medium/arrays+hash-map+math, group by digit sum, track best per group), `finding-pairs-with-certain-difference` (medium/arrays+hash-map, Set dedup + check x+k exists), `number-of-subarrays-with-and-value-of-k` (medium/arrays+bit-manipulation, sliding map of distinct AND values ending at each index), `maximum-number-of-coins-you-can-get` (medium/arrays+math, sort + take every other from n-2 down to n/3). Bank at **2780**; 8634 tests.
 
 ### feat(bank): batch 207b — find-occurrences-of-element-in-array, ways-to-express-as-sum-of-powers, minimum-right-shifts, sliding-subarray-beauty, maximum-strong-pair-xor-ii (2026-05-29)
 Five new problems: `find-occurrences-of-element-in-array` (easy/arrays, precompute positions array, 1-indexed query lookup), `ways-to-express-an-integer-as-sum-of-powers` (medium/dynamic-programming+math, 0/1 knapsack over i^x items, mod 10^9+7), `minimum-right-shifts-to-sort-the-array` (easy/arrays, count break points in circular array), `sliding-subarray-beauty` (medium/arrays+sliding-window, freq array of negatives, x-th smallest via linear scan), `maximum-strong-pair-xor-ii` (hard/bit-manipulation+trie, sliding window trie with flat arrays, 21-bit max XOR). Bank at **2772**; 8610 tests.
