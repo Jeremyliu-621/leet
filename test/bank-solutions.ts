@@ -36439,4 +36439,303 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  '24-game': (...args: unknown[]) => {
+    const cards = args[0] as number[];
+    const eps = 1e-6;
+    function check(nums: number[]): boolean {
+      if (nums.length === 1) return Math.abs(nums[0]! - 24) < eps;
+      for (let i = 0; i < nums.length; i++) {
+        for (let j = 0; j < nums.length; j++) {
+          if (i === j) continue;
+          const rest = nums.filter((_, k) => k !== i && k !== j);
+          const a = nums[i]!, b = nums[j]!;
+          const ops: (number | null)[] = [a + b, a - b, a * b, Math.abs(b) > eps ? a / b : null];
+          for (const v of ops) {
+            if (v !== null && check([...rest, v])) return true;
+          }
+        }
+      }
+      return false;
+    }
+    return check(cards.map(Number));
+  },
+
+  'range-module': (...args: unknown[]) => {
+    const operations = args[0] as [string, number, number][];
+    const intervals: [number, number][] = [];
+    const results: boolean[] = [];
+    function add(l: number, r: number) {
+      const next: [number, number][] = [];
+      let merged: [number, number] = [l, r];
+      for (const [a, b] of intervals) {
+        if (b < merged[0] || a > merged[1]) { next.push([a, b]); }
+        else { merged = [Math.min(merged[0], a), Math.max(merged[1], b)]; }
+      }
+      next.push(merged);
+      next.sort((x, y) => x[0] - y[0]);
+      intervals.length = 0;
+      for (const iv of next) intervals.push(iv);
+    }
+    function remove(l: number, r: number) {
+      const next: [number, number][] = [];
+      for (const [a, b] of intervals) {
+        if (b <= l || a >= r) { next.push([a, b]); }
+        else {
+          if (a < l) next.push([a, l]);
+          if (b > r) next.push([r, b]);
+        }
+      }
+      intervals.length = 0;
+      for (const iv of next) intervals.push(iv);
+    }
+    function query(l: number, r: number): boolean {
+      for (const [a, b] of intervals) {
+        if (a <= l && b >= r) return true;
+      }
+      return false;
+    }
+    for (const [op, l, r] of operations) {
+      if (op === 'addRange') { add(l, r); }
+      else if (op === 'removeRange') { remove(l, r); }
+      else { results.push(query(l, r)); }
+    }
+    return results;
+  },
+
+  'insert-delete-getrandom-duplicates-allowed': (...args: unknown[]) => {
+    const operations = args[0] as (string | number)[][];
+    const vals: number[] = [];
+    const idx = new Map<number, Set<number>>();
+    return operations.map(([op, val]) => {
+      const v = val as number;
+      if (op === 'insert') {
+        const isNew = !idx.has(v) || idx.get(v)!.size === 0;
+        if (!idx.has(v)) idx.set(v, new Set());
+        idx.get(v)!.add(vals.length);
+        vals.push(v);
+        return isNew;
+      } else if (op === 'remove') {
+        if (!idx.has(v) || idx.get(v)!.size === 0) return false;
+        const i = idx.get(v)!.values().next().value as number;
+        const lastIdx = vals.length - 1;
+        const last = vals[lastIdx]!;
+        if (i === lastIdx) {
+          idx.get(v)!.delete(i);
+        } else if (last === v) {
+          vals[i] = last;
+          idx.get(v)!.delete(lastIdx);
+        } else {
+          vals[i] = last;
+          idx.get(last)!.delete(lastIdx);
+          idx.get(last)!.add(i);
+          idx.get(v)!.delete(i);
+        }
+        vals.pop();
+        return true;
+      } else {
+        return vals[Math.floor(Math.random() * vals.length)]!;
+      }
+    });
+  },
+
+  'matchsticks-to-square': (...args: unknown[]) => {
+    const matchsticks = args[0] as number[];
+    const total = matchsticks.reduce((a, b) => a + b, 0);
+    if (total % 4 !== 0) return false;
+    const side = total / 4;
+    const sticks = matchsticks.slice().sort((a, b) => b - a);
+    if (sticks[0]! > side) return false;
+    const buckets = [0, 0, 0, 0];
+    const seen = new Set<string>();
+    function bt(i: number): boolean {
+      if (i === sticks.length) return buckets.every(b => b === side);
+      const key = buckets.join(',');
+      if (seen.has(key)) return false;
+      seen.add(key);
+      const tried = new Set<number>();
+      for (let k = 0; k < 4; k++) {
+        if (tried.has(buckets[k]!)) continue;
+        if (buckets[k]! + sticks[i]! <= side) {
+          tried.add(buckets[k]!);
+          buckets[k]! += sticks[i]!;
+          if (bt(i + 1)) return true;
+          buckets[k]! -= sticks[i]!;
+        }
+      }
+      return false;
+    }
+    return bt(0);
+  },
+
+  'minimum-score-triangulation-polygon': (...args: unknown[]) => {
+    const values = args[0] as number[];
+    const n = values.length;
+    const dp: number[][] = Array.from({ length: n }, () => new Array(n).fill(0));
+    for (let len = 2; len < n; len++) {
+      for (let i = 0; i + len < n; i++) {
+        const j = i + len;
+        dp[i]![j] = Infinity;
+        for (let k = i + 1; k < j; k++) {
+          dp[i]![j] = Math.min(dp[i]![j]!, dp[i]![k]! + dp[k]![j]! + values[i]! * values[k]! * values[j]!);
+        }
+      }
+    }
+    return dp[0]![n - 1]!;
+  },
+
+  'non-negative-integers-without-consecutive-ones': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const f: number[] = [1, 2];
+    for (let i = 2; i <= 31; i++) f.push(f[i - 1]! + f[i - 2]!);
+    let count = 0, prev = 0;
+    for (let i = 30; i >= 0; i--) {
+      if (n & (1 << i)) {
+        count += f[i]!;
+        if (prev) return count;
+        prev = 1;
+      } else {
+        prev = 0;
+      }
+    }
+    return count + 1;
+  },
+
+  'count-ways-to-build-good-strings': (...args: unknown[]) => {
+    const [low, high, zero, one] = args as [number, number, number, number];
+    const MOD = 1_000_000_007;
+    const dp = new Array(high + 1).fill(0) as number[];
+    dp[0] = 1;
+    for (let i = 1; i <= high; i++) {
+      if (i >= zero) dp[i] = (dp[i]! + dp[i - zero]!) % MOD;
+      if (i >= one) dp[i] = (dp[i]! + dp[i - one]!) % MOD;
+    }
+    let ans = 0;
+    for (let i = low; i <= high; i++) ans = (ans + dp[i]!) % MOD;
+    return ans;
+  },
+
+  'restore-the-array': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    const MOD = 1_000_000_007;
+    const n = s.length;
+    const kStr = String(k);
+    const dp = new Array(n + 1).fill(0) as number[];
+    dp[0] = 1;
+    for (let i = 1; i <= n; i++) {
+      for (let j = i - 1; j >= 0 && i - j <= 10; j--) {
+        const sub = s.slice(j, i);
+        if (sub[0] === '0') continue;
+        if (sub.length > kStr.length) continue;
+        if (sub.length === kStr.length && sub > kStr) continue;
+        dp[i] = (dp[i]! + dp[j]!) % MOD;
+      }
+    }
+    return dp[n]!;
+  },
+
+  'number-of-ways-to-form-a-target-string-given-a-dictionary': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const target = args[1] as string;
+    const MOD = 1_000_000_007;
+    const m = words[0]!.length;
+    const t = target.length;
+    const freq: number[][] = Array.from({ length: m }, () => new Array(26).fill(0));
+    for (const w of words) {
+      for (let j = 0; j < m; j++) freq[j]![w.charCodeAt(j) - 97]!++;
+    }
+    const dp = new Array(t + 1).fill(0) as number[];
+    dp[0] = 1;
+    for (let j = 0; j < m; j++) {
+      for (let i = Math.min(j, t - 1); i >= 0; i--) {
+        const c = target.charCodeAt(i) - 97;
+        dp[i + 1] = (dp[i + 1]! + dp[i]! * freq[j]![c]!) % MOD;
+      }
+    }
+    return dp[t]!;
+  },
+
+  'longest-subarray-with-at-most-k-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let left = 0, sum = 0, ans = 0;
+    for (let right = 0; right < nums.length; right++) {
+      sum += nums[right]!;
+      while (sum > k) sum -= nums[left++]!;
+      ans = Math.max(ans, right - left + 1);
+    }
+    return ans;
+  },
+
+  'recent-counter': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as number[][];
+    const queue: number[] = [];
+    return ops.map((op, i) => {
+      if (op === 'RecentCounter') return null;
+      const t = opArgs[i]![0]!;
+      queue.push(t);
+      while (queue[0]! < t - 3000) queue.shift();
+      return queue.length;
+    });
+  },
+
+  'peeking-iterator': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as (number[] | [])[][];
+    let arr: number[] = [];
+    let idx = 0;
+    return ops.map((op, i) => {
+      if (op === 'PeekingIterator') { arr = opArgs[i]![0] as number[]; idx = 0; return null; }
+      if (op === 'next') return arr[idx++]!;
+      if (op === 'peek') return arr[idx]!;
+      return idx < arr.length;
+    });
+  },
+
+  'flatten-nested-list-iterator': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as unknown[][];
+    let flat: number[] = [];
+    let idx = 0;
+    function flatten(val: unknown): void {
+      if (typeof val === 'number') { flat.push(val); return; }
+      if (Array.isArray(val)) { for (const v of val) flatten(v); }
+    }
+    return ops.map((op, i) => {
+      if (op === 'NestedIterator') { flat = []; idx = 0; flatten(opArgs[i]![0]); return null; }
+      if (op === 'next') return flat[idx++]!;
+      return idx < flat.length;
+    });
+  },
+
+  'all-o-one-data-structure': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as string[][];
+    const cnt = new Map<string, number>();
+    return ops.map((op, i) => {
+      if (op === 'AllOne') return null;
+      if (op === 'inc') {
+        const k = opArgs[i]![0]!;
+        cnt.set(k, (cnt.get(k) ?? 0) + 1);
+        return null;
+      }
+      if (op === 'dec') {
+        const k = opArgs[i]![0]!;
+        const v = cnt.get(k)! - 1;
+        if (v === 0) cnt.delete(k); else cnt.set(k, v);
+        return null;
+      }
+      if (cnt.size === 0) return '';
+      if (op === 'getMaxKey') {
+        let best = '', bestV = -Infinity;
+        for (const [k, v] of cnt) if (v > bestV) { bestV = v; best = k; }
+        return best;
+      }
+      let best = '', bestV = Infinity;
+      for (const [k, v] of cnt) if (v < bestV) { bestV = v; best = k; }
+      return best;
+    });
+  },
+
 };

@@ -36249,4 +36249,344 @@ def streamOfCharacters(ops, args):
     return ans
 `,
 
+  '24-game': `def judgePoint24(cards):
+    cards = list(cards.to_py() if hasattr(cards, 'to_py') else cards)
+    eps = 1e-6
+    def check(nums):
+        if len(nums) == 1:
+            return abs(nums[0] - 24) < eps
+        for i in range(len(nums)):
+            for j in range(len(nums)):
+                if i == j:
+                    continue
+                rest = [nums[k] for k in range(len(nums)) if k != i and k != j]
+                a, b = nums[i], nums[j]
+                candidates = [a + b, a - b, a * b]
+                if abs(b) > eps:
+                    candidates.append(a / b)
+                for v in candidates:
+                    if check(rest + [v]):
+                        return True
+        return False
+    return check([float(c) for c in cards])
+`,
+
+  'range-module': `def rangeModule(operations):
+    operations = list(operations.to_py() if hasattr(operations, 'to_py') else operations)
+    intervals = []
+    results = []
+    def add(l, r):
+        merged = [l, r]
+        next_ivs = []
+        for a, b in intervals:
+            if b < merged[0] or a > merged[1]:
+                next_ivs.append([a, b])
+            else:
+                merged[0] = min(merged[0], a)
+                merged[1] = max(merged[1], b)
+        next_ivs.append(merged)
+        next_ivs.sort()
+        intervals.clear()
+        intervals.extend(next_ivs)
+    def remove(l, r):
+        next_ivs = []
+        for a, b in intervals:
+            if b <= l or a >= r:
+                next_ivs.append([a, b])
+            else:
+                if a < l:
+                    next_ivs.append([a, l])
+                if b > r:
+                    next_ivs.append([r, b])
+        intervals.clear()
+        intervals.extend(next_ivs)
+    def query(l, r):
+        for a, b in intervals:
+            if a <= l and b >= r:
+                return True
+        return False
+    for op in operations:
+        op = list(op.to_py() if hasattr(op, 'to_py') else op)
+        name, l, r = op[0], op[1], op[2]
+        if name == 'addRange':
+            add(l, r)
+        elif name == 'removeRange':
+            remove(l, r)
+        else:
+            results.append(query(l, r))
+    return results
+`,
+
+  'insert-delete-getrandom-duplicates-allowed': `def insertDeleteGetRandomDups(operations):
+    import random
+    operations = list(operations.to_py() if hasattr(operations, 'to_py') else operations)
+    vals = []
+    idx = {}
+    results = []
+    for op_pair in operations:
+        op_pair = list(op_pair.to_py() if hasattr(op_pair, 'to_py') else op_pair)
+        op, val = op_pair[0], op_pair[1]
+        if op == 'insert':
+            is_new = val not in idx or len(idx[val]) == 0
+            if val not in idx:
+                idx[val] = set()
+            idx[val].add(len(vals))
+            vals.append(val)
+            results.append(is_new)
+        elif op == 'remove':
+            if val not in idx or len(idx[val]) == 0:
+                results.append(False)
+                continue
+            i = next(iter(idx[val]))
+            last_i = len(vals) - 1
+            last = vals[last_i]
+            if i == last_i:
+                idx[val].discard(i)
+            elif last == val:
+                vals[i] = last
+                idx[val].discard(last_i)
+            else:
+                vals[i] = last
+                idx[last].discard(last_i)
+                idx[last].add(i)
+                idx[val].discard(i)
+            vals.pop()
+            results.append(True)
+        else:
+            results.append(vals[int(random.random() * len(vals))])
+    return results
+`,
+
+  'matchsticks-to-square': `def makesquare(matchsticks):
+    matchsticks = list(matchsticks.to_py() if hasattr(matchsticks, 'to_py') else matchsticks)
+    total = sum(matchsticks)
+    if total % 4 != 0:
+        return False
+    side = total // 4
+    matchsticks.sort(reverse=True)
+    if matchsticks[0] > side:
+        return False
+    buckets = [0, 0, 0, 0]
+    seen = set()
+    def bt(i):
+        if i == len(matchsticks):
+            return all(b == side for b in buckets)
+        key = tuple(buckets)
+        if key in seen:
+            return False
+        seen.add(key)
+        tried = set()
+        for k in range(4):
+            if buckets[k] in tried:
+                continue
+            if buckets[k] + matchsticks[i] <= side:
+                tried.add(buckets[k])
+                buckets[k] += matchsticks[i]
+                if bt(i + 1):
+                    return True
+                buckets[k] -= matchsticks[i]
+        return False
+    return bt(0)
+`,
+
+  'minimum-score-triangulation-polygon': `def minScoreTriangulation(values):
+    values = list(values.to_py() if hasattr(values, 'to_py') else values)
+    n = len(values)
+    dp = [[0] * n for _ in range(n)]
+    for length in range(2, n):
+        for i in range(n - length):
+            j = i + length
+            dp[i][j] = float('inf')
+            for k in range(i + 1, j):
+                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j] + values[i] * values[k] * values[j])
+    return dp[0][n - 1]
+`,
+
+  'non-negative-integers-without-consecutive-ones': `def findIntegers(n):
+    f = [1, 2]
+    for i in range(2, 32):
+        f.append(f[i-1] + f[i-2])
+    count = 0
+    prev = 0
+    for i in range(30, -1, -1):
+        if n & (1 << i):
+            count += f[i]
+            if prev:
+                return count
+            prev = 1
+        else:
+            prev = 0
+    return count + 1
+`,
+
+  'count-ways-to-build-good-strings': `def countGoodStrings(low, high, zero, one):
+    MOD = 10**9 + 7
+    dp = [0] * (high + 1)
+    dp[0] = 1
+    for i in range(1, high + 1):
+        if i >= zero:
+            dp[i] = (dp[i] + dp[i - zero]) % MOD
+        if i >= one:
+            dp[i] = (dp[i] + dp[i - one]) % MOD
+    return sum(dp[low:high+1]) % MOD
+`,
+
+  'restore-the-array': `def numberOfArrays(s, k):
+    MOD = 10**9 + 7
+    n = len(s)
+    k_str = str(k)
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    for i in range(1, n + 1):
+        for j in range(i - 1, max(i - 11, -1), -1):
+            sub = s[j:i]
+            if sub[0] == '0':
+                continue
+            if len(sub) > len(k_str):
+                continue
+            if len(sub) == len(k_str) and sub > k_str:
+                continue
+            dp[i] = (dp[i] + dp[j]) % MOD
+    return dp[n]
+`,
+
+  'number-of-ways-to-form-a-target-string-given-a-dictionary': `def numWays(words, target):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    words = [str(w) for w in words]
+    target = str(target.to_py() if hasattr(target, 'to_py') else target)
+    MOD = 10**9 + 7
+    m = len(words[0])
+    t = len(target)
+    freq = [[0] * 26 for _ in range(m)]
+    for w in words:
+        for j, c in enumerate(w):
+            freq[j][ord(c) - 97] += 1
+    dp = [0] * (t + 1)
+    dp[0] = 1
+    for j in range(m):
+        for i in range(min(j, t - 1), -1, -1):
+            c = ord(target[i]) - 97
+            dp[i + 1] = (dp[i + 1] + dp[i] * freq[j][c]) % MOD
+    return dp[t]
+`,
+
+  'longest-subarray-with-at-most-k-sum': `def longestSubarrayAtMostKSum(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    left = 0
+    total = 0
+    ans = 0
+    for right in range(len(nums)):
+        total += nums[right]
+        while total > k:
+            total -= nums[left]
+            left += 1
+        ans = max(ans, right - left + 1)
+    return ans
+`,
+
+  'recent-counter': `def recentCounter(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = list(args.to_py() if hasattr(args, 'to_py') else args)
+    from collections import deque
+    queue = deque()
+    results = []
+    for i, op in enumerate(ops):
+        if op == 'RecentCounter':
+            results.append(None)
+        else:
+            a = list(args[i].to_py() if hasattr(args[i], 'to_py') else args[i])
+            t = a[0]
+            queue.append(t)
+            while queue[0] < t - 3000:
+                queue.popleft()
+            results.append(len(queue))
+    return results
+`,
+
+  'peeking-iterator': `def peekingIterator(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = list(args.to_py() if hasattr(args, 'to_py') else args)
+    arr = []
+    idx = 0
+    results = []
+    for i, op in enumerate(ops):
+        a = list(args[i].to_py() if hasattr(args[i], 'to_py') else args[i])
+        if op == 'PeekingIterator':
+            inner = list(a[0].to_py() if hasattr(a[0], 'to_py') else a[0])
+            arr = [int(x) for x in inner]
+            idx = 0
+            results.append(None)
+        elif op == 'next':
+            results.append(arr[idx])
+            idx += 1
+        elif op == 'peek':
+            results.append(arr[idx])
+        else:
+            results.append(idx < len(arr))
+    return results
+`,
+
+  'flatten-nested-list-iterator': `def flattenNestedListIterator(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = list(args.to_py() if hasattr(args, 'to_py') else args)
+    flat = []
+    idx = 0
+    def flatten(val):
+        if hasattr(val, 'to_py'):
+            val = val.to_py()
+        if isinstance(val, (int, float)):
+            flat.append(int(val))
+        elif isinstance(val, (list, tuple)):
+            for v in val:
+                flatten(v)
+    results = []
+    for i, op in enumerate(ops):
+        a = list(args[i].to_py() if hasattr(args[i], 'to_py') else args[i])
+        if op == 'NestedIterator':
+            flat.clear()
+            idx = 0
+            nested = a[0].to_py() if hasattr(a[0], 'to_py') else a[0]
+            for item in nested:
+                flatten(item)
+            results.append(None)
+        elif op == 'next':
+            results.append(flat[idx])
+            idx += 1
+        else:
+            results.append(idx < len(flat))
+    return results
+`,
+
+  'all-o-one-data-structure': `def allOOneDataStructure(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = list(args.to_py() if hasattr(args, 'to_py') else args)
+    cnt = {}
+    results = []
+    for i, op in enumerate(ops):
+        a = list(args[i].to_py() if hasattr(args[i], 'to_py') else args[i])
+        if op == 'AllOne':
+            results.append(None)
+        elif op == 'inc':
+            k = str(a[0])
+            cnt[k] = cnt.get(k, 0) + 1
+            results.append(None)
+        elif op == 'dec':
+            k = str(a[0])
+            cnt[k] -= 1
+            if cnt[k] == 0:
+                del cnt[k]
+            results.append(None)
+        elif op == 'getMaxKey':
+            if not cnt:
+                results.append('')
+            else:
+                results.append(max(cnt, key=lambda x: cnt[x]))
+        else:
+            if not cnt:
+                results.append('')
+            else:
+                results.append(min(cnt, key=lambda x: cnt[x]))
+    return results
+`,
+
 };
