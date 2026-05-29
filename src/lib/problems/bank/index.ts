@@ -3054,11 +3054,21 @@ import { problem as sumOfLastKElements } from './sum-of-last-k-elements';
 import { problem as countStringsOfLengthK } from './count-strings-of-length-k';
 import { problem as maximumOfMinimumValues } from './maximum-of-minimum-values';
 import { problem as productOfLastTwo } from './product-of-last-two';
+// batch 202 (new) — easy/math, easy/arrays+simulation, medium/strings+math, medium/arrays+binary-search
+import { problem as threeDivisors } from './three-divisors';
+import { problem as checkThreeConsecutiveOdds } from './check-three-consecutive-odds';
+import { problem as minimumSwapsToMakeAlternating } from './minimum-swaps-to-make-alternating';
+import { problem as countRectanglesContainingPoints } from './count-rectangles-containing-points';
 // batch 204 — easy/arrays, easy/arrays, easy/arrays+strings, easy/arrays+math
 import { problem as flatten2dArray } from './flatten-2d-array';
 import { problem as countElementsGreaterThanK } from './count-elements-greater-than-k';
 import { problem as sortWordsByLength } from './sort-words-by-length';
 import { problem as sumOfPositiveElements } from './sum-of-positive-elements';
+// batch 204b — easy/strings+arrays, medium/arrays+bit-manipulation, medium/arrays+sliding-window, easy/arrays+hash-map
+import { problem as firstPalindromeInArray } from './first-palindrome-in-array';
+import { problem as rangeProductQueriesOfPowers } from './range-product-queries-of-powers';
+import { problem as maximumFrequencyAfterOperationsI } from './maximum-frequency-after-operations-i';
+import { problem as checkIfAnArrayIsConsecutive } from './check-if-an-array-is-consecutive';
 // batch 205 — easy/arrays+math, easy/arrays+hash-map, easy/arrays, easy/arrays+strings
 import { problem as arrayAverage } from './array-average';
 import { problem as findElementsAppearingExactlyTwice } from './find-elements-appearing-exactly-twice';
@@ -6169,11 +6179,21 @@ export const problems: readonly Problem[] = [
   distributeElementsIntoTwoArraysI,
   maximumLengthSubstringWithTwoOccurrences,
   partitionArraySuchThatMaximumDifferenceIsK,
+  // batch 202 (new) — easy/math, easy/arrays+simulation, medium/strings+math, medium/arrays+binary-search
+  threeDivisors,
+  checkThreeConsecutiveOdds,
+  minimumSwapsToMakeAlternating,
+  countRectanglesContainingPoints,
   // batch 204 — easy/arrays, easy/arrays, easy/arrays+strings, easy/arrays+math
   flatten2dArray,
   countElementsGreaterThanK,
   sortWordsByLength,
   sumOfPositiveElements,
+  // batch 204b — easy/strings+arrays, medium/arrays+bit-manipulation, medium/arrays+sliding-window, easy/arrays+hash-map
+  firstPalindromeInArray,
+  rangeProductQueriesOfPowers,
+  maximumFrequencyAfterOperationsI,
+  checkIfAnArrayIsConsecutive,
   // batch 205 — easy/arrays+math, easy/arrays+hash-map, easy/arrays, easy/arrays+strings
   arrayAverage,
   findElementsAppearingExactlyTwice,

@@ -43310,6 +43310,94 @@ def sortWordsByLength(words):
 def sumOfPositiveElements(nums):
     return sum(v for v in nums if v > 0)
 `,
+  // batch 202 (new) ---------------------------------------------------------------
+  'three-divisors': `
+def isThree(n):
+    count = sum(1 for i in range(1, n + 1) if n % i == 0)
+    return count == 3
+`,
+  'check-three-consecutive-odds': `
+def threeConsecutiveOdds(arr):
+    count = 0
+    for x in arr:
+        if x % 2 == 1:
+            count += 1
+            if count >= 3:
+                return True
+        else:
+            count = 0
+    return False
+`,
+  'minimum-swaps-to-make-alternating': `
+def minSwaps2(s):
+    count0 = s.count('0')
+    count1 = len(s) - count0
+    if abs(count0 - count1) > 1:
+        return -1
+    def count_mismatches(start_char):
+        mismatches = 0
+        for i, c in enumerate(s):
+            expected = start_char if i % 2 == 0 else ('1' if start_char == '0' else '0')
+            if c != expected:
+                mismatches += 1
+        return mismatches
+    if count0 == count1:
+        return min(count_mismatches('0'), count_mismatches('1')) // 2
+    start_char = '0' if count0 > count1 else '1'
+    return count_mismatches(start_char) // 2
+`,
+  'count-rectangles-containing-points': `
+def countRectangles(rectangles, points):
+    result = []
+    for x, y in points:
+        count = sum(1 for l, h in rectangles if x <= l and y <= h)
+        result.append(count)
+    return result
+`,
+  // batch 204b ---------------------------------------------------------------
+  'first-palindrome-in-array': `
+def firstPalindrome(words):
+    for word in words:
+        if word == word[::-1]:
+            return word
+    return ""
+`,
+  'range-product-queries-of-powers': `
+def productQueries(n, queries):
+    MOD = 10**9 + 7
+    powers = []
+    for i in range(30):
+        if (n >> i) & 1:
+            powers.append(1 << i)
+    result = []
+    for l, r in queries:
+        prod = 1
+        for i in range(l, r + 1):
+            prod = (prod * powers[i]) % MOD
+        result.append(prod)
+    return result
+`,
+  'maximum-frequency-after-operations-i': `
+def maxFrequency(nums, k, numOperations):
+    candidates = set()
+    for x in nums:
+        candidates.add(x)
+        candidates.add(x + k)
+        candidates.add(x - k)
+    ans = 0
+    for t in candidates:
+        eq = sum(1 for x in nums if x == t)
+        reach = sum(1 for x in nums if x != t and abs(x - t) <= k)
+        freq = eq + min(reach, numOperations)
+        if freq > ans:
+            ans = freq
+    return ans
+`,
+  'check-if-an-array-is-consecutive': `
+def isConsecutive(nums):
+    n = len(nums)
+    return len(set(nums)) == n and max(nums) - min(nums) == n - 1
+`,
   // batch 205 ---------------------------------------------------------------
   'array-average': `
 def arrayAverage(nums):

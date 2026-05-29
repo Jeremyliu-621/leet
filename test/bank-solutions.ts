@@ -43449,6 +43449,45 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const nums = args[0] as number[];
     return nums[nums.length - 2]! * nums[nums.length - 1]!;
   },
+  // batch 202 (new) ---------------------------------------------------------------
+  'three-divisors': (...args: unknown[]) => {
+    const n = args[0] as number;
+    let count = 0;
+    for (let i = 1; i <= n; i++) {
+      if (n % i === 0) count++;
+    }
+    return count === 3;
+  },
+  'check-three-consecutive-odds': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    for (let i = 0; i <= arr.length - 3; i++) {
+      if ((arr[i]! % 2 === 1) && (arr[i + 1]! % 2 === 1) && (arr[i + 2]! % 2 === 1)) return true;
+    }
+    return false;
+  },
+  'minimum-swaps-to-make-alternating': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const count0 = s.split('').filter(c => c === '0').length;
+    const count1 = s.length - count0;
+    if (Math.abs(count0 - count1) > 1) return -1;
+    const swaps = (startChar: string): number => {
+      let mismatches = 0;
+      for (let i = 0; i < s.length; i++) {
+        const expected = i % 2 === 0 ? startChar : (startChar === '0' ? '1' : '0');
+        if (s[i] !== expected) mismatches++;
+      }
+      return mismatches / 2;
+    };
+    if (count0 === count1) return Math.min(swaps('0'), swaps('1'));
+    return count0 > count1 ? swaps('0') : swaps('1');
+  },
+  'count-rectangles-containing-points': (...args: unknown[]) => {
+    const rectangles = args[0] as number[][];
+    const points = args[1] as number[][];
+    return points.map(([px, py]) =>
+      rectangles.filter(([rx, ry]) => (px as number) <= (rx as number) && (py as number) <= (ry as number)).length
+    );
+  },
   // batch 204 ---------------------------------------------------------------
   'flatten-2d-array': (...args: unknown[]) => {
     const matrix = args[0] as number[][];
@@ -43466,6 +43505,53 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   'sum-of-positive-elements': (...args: unknown[]) => {
     const nums = args[0] as number[];
     return nums.filter(v => v > 0).reduce((s, v) => s + v, 0);
+  },
+  // batch 204b ---------------------------------------------------------------
+  'first-palindrome-in-array': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    for (const word of words) {
+      if (word === word.split('').reverse().join('')) return word;
+    }
+    return '';
+  },
+  'range-product-queries-of-powers': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const queries = args[1] as number[][];
+    const MOD = 1_000_000_007n;
+    const powers: bigint[] = [];
+    for (let i = 0; i < 30; i++) {
+      if ((n >> i) & 1) powers.push(BigInt(1 << i));
+    }
+    return queries.map(([l, r]) => {
+      let prod = 1n;
+      for (let i = l as number; i <= (r as number); i++) {
+        prod = (prod * (powers[i] as bigint)) % MOD;
+      }
+      return Number(prod);
+    });
+  },
+  'maximum-frequency-after-operations-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const numOperations = args[2] as number;
+    const candidates = new Set<number>();
+    for (const x of nums) {
+      candidates.add(x);
+      candidates.add(x + k);
+      candidates.add(x - k);
+    }
+    let ans = 0;
+    for (const t of candidates) {
+      let eq = 0;
+      let reach = 0;
+      for (const x of nums) {
+        if (x === t) eq++;
+        else if (Math.abs(x - t) <= k) reach++;
+      }
+      const freq = eq + Math.min(reach, numOperations);
+      if (freq > ans) ans = freq;
+    }
+    return ans;
   },
   // batch 205 ---------------------------------------------------------------
   'array-average': (...args: unknown[]) => {
@@ -43522,5 +43608,12 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   'all-elements-positive': (...args: unknown[]) => {
     const nums = args[0] as number[];
     return nums.every(v => v > 0);
+  },
+  'check-if-an-array-is-consecutive': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const mn = Math.min(...nums);
+    const mx = Math.max(...nums);
+    return mx - mn + 1 === n && new Set(nums).size === n;
   },
 };
