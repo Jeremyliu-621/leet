@@ -2759,6 +2759,11 @@ import { problem as maximumNumberOfOperationsWithTheSameScoreI } from './maximum
 import { problem as makeLexicographicallySmallestArrayBySwappingElements } from './make-lexicographically-smallest-array-by-swapping-elements';
 import { problem as maximizeConsecutiveElementsInAnArrayAfterModification } from './maximize-consecutive-elements-in-an-array-after-modification';
 import { problem as countTheNumberOfPowerfulIntegers } from './count-the-number-of-powerful-integers';
+// batch 171 (our) — easy/dp, medium/dp, medium/graph, medium/binary-search
+import { problem as nThTribonacciNumber } from './n-th-tribonacci-number';
+import { problem as solvingQuestionsWithBrainpower } from './solving-questions-with-brainpower';
+import { problem as detonateTheMaximumBombs } from './detonate-the-maximum-bombs';
+import { problem as hIndexII } from './h-index-ii';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5553,4 +5558,9 @@ export const problems: readonly Problem[] = [
   makeLexicographicallySmallestArrayBySwappingElements,
   maximizeConsecutiveElementsInAnArrayAfterModification,
   countTheNumberOfPowerfulIntegers,
+  // batch 171 (our) — easy/dp, medium/dp, medium/graph, medium/binary-search
+  nThTribonacciNumber,
+  solvingQuestionsWithBrainpower,
+  detonateTheMaximumBombs,
+  hIndexII,
 ];

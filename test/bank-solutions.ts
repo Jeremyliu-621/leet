@@ -39198,6 +39198,91 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return lo;
   },
 
+  'n-th-tribonacci-number': (n: unknown) => {
+    const ni = n as number;
+    if (ni === 0) return 0;
+    if (ni <= 2) return 1;
+    let a = 0, b = 1, c = 1;
+    for (let i = 3; i <= ni; i++) { const d = a + b + c; a = b; b = c; c = d; }
+    return c;
+  },
+
+  'solving-questions-with-brainpower': (questions: unknown) => {
+    const q = questions as number[][];
+    const n = q.length;
+    const dp = new Array<number>(n + 1).fill(0);
+    for (let i = n - 1; i >= 0; i--) {
+      const next = Math.min(n, i + q[i]![1]! + 1);
+      dp[i] = Math.max(q[i]![0]! + dp[next]!, dp[i + 1]!);
+    }
+    return dp[0]!;
+  },
+
+  'count-nodes-equal-to-average-of-subtree': (arr: unknown) => {
+    const a = arr as (number | null)[];
+    if (!a || a.length === 0 || a[0] == null) return 0;
+    interface TN { val: number; left: TN | null; right: TN | null; }
+    const root: TN = { val: a[0] as number, left: null, right: null };
+    const bfsQ: TN[] = [root];
+    let idx = 1;
+    while (bfsQ.length && idx < a.length) {
+      const node = bfsQ.shift()!;
+      if (idx < a.length && a[idx] != null) { node.left = { val: a[idx] as number, left: null, right: null }; bfsQ.push(node.left); }
+      idx++;
+      if (idx < a.length && a[idx] != null) { node.right = { val: a[idx] as number, left: null, right: null }; bfsQ.push(node.right); }
+      idx++;
+    }
+    let count = 0;
+    function dfs(node: TN | null): [number, number] {
+      if (!node) return [0, 0];
+      const [ls, lc] = dfs(node.left);
+      const [rs, rc] = dfs(node.right);
+      const s = ls + rs + node.val;
+      const c = lc + rc + 1;
+      if (Math.floor(s / c) === node.val) count++;
+      return [s, c];
+    }
+    dfs(root);
+    return count;
+  },
+
+  'detonate-the-maximum-bombs': (bombs: unknown) => {
+    const b = bombs as number[][];
+    const n = b.length;
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) {
+        if (i === j) continue;
+        const dx = b[i]![0]! - b[j]![0]!;
+        const dy = b[i]![1]! - b[j]![1]!;
+        if (dx * dx + dy * dy <= b[i]![2]! * b[i]![2]!) adj[i]!.push(j);
+      }
+    }
+    let best = 0;
+    for (let s = 0; s < n; s++) {
+      const visited = new Set<number>([s]);
+      const queue = [s];
+      while (queue.length) {
+        const cur = queue.shift()!;
+        for (const nb of adj[cur]!) { if (!visited.has(nb)) { visited.add(nb); queue.push(nb); } }
+      }
+      if (visited.size > best) best = visited.size;
+    }
+    return best;
+  },
+
+  'h-index-ii': (citations: unknown) => {
+    const c = citations as number[];
+    const n = c.length;
+    let lo = 0, hi = n;
+    while (lo < hi) {
+      const mid = Math.ceil((lo + hi) / 2);
+      if (c[n - mid]! >= mid) lo = mid;
+      else hi = mid - 1;
+    }
+    return lo;
+  },
+
   'check-if-point-is-reachable': (...args: unknown[]) => {
     let a = args[0] as number;
     let b = args[1] as number;
@@ -39334,22 +39419,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   'string-matching-in-an-array': (words: unknown) => {
     const ws = words as string[];
     return ws.filter(w => ws.some(other => other !== w && other.includes(w)));
-  },
-
-  'count-nodes-equal-to-average-of-subtree': (root: unknown) => {
-    const arr = root as (number | null)[];
-    let count = 0;
-    const dfs = (i: number): [number, number] => {
-      if (i >= arr.length || arr[i] === null || arr[i] === undefined) return [0, 0];
-      const [lSum, lCnt] = dfs(2 * i + 1);
-      const [rSum, rCnt] = dfs(2 * i + 2);
-      const total = (arr[i] as number) + lSum + rSum;
-      const totalCnt = 1 + lCnt + rCnt;
-      if (Math.floor(total / totalCnt) === (arr[i] as number)) count++;
-      return [total, totalCnt];
-    };
-    dfs(0);
-    return count;
   },
 
   'minimum-time-to-make-rope-colorful': (...args: unknown[]) => {

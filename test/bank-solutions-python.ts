@@ -39311,25 +39311,6 @@ def stringMatching(words):
     return result
 `,
 
-  'count-nodes-equal-to-average-of-subtree': `
-def averageOfSubtree(root):
-    if hasattr(root, 'to_py'): root = list(root.to_py())
-    arr = [int(x) if isinstance(x, (int, float)) and not isinstance(x, bool) else None for x in root]
-    count = [0]
-    def dfs(i):
-        if i >= len(arr) or arr[i] is None:
-            return 0, 0
-        l_sum, l_cnt = dfs(2 * i + 1)
-        r_sum, r_cnt = dfs(2 * i + 2)
-        total = arr[i] + l_sum + r_sum
-        total_cnt = 1 + l_cnt + r_cnt
-        if total // total_cnt == arr[i]:
-            count[0] += 1
-        return total, total_cnt
-    dfs(0)
-    return count[0]
-`,
-
   'minimum-time-to-make-rope-colorful': `
 def minCost(colors, neededTime):
     if hasattr(neededTime, 'to_py'): neededTime = list(neededTime.to_py())
@@ -39484,6 +39465,110 @@ def numberOfPowerfulInt(start, finish, limit, s):
         return ans
 
     return count_up_to(finish) - count_up_to(start - 1)
+`,
+
+  'n-th-tribonacci-number': `
+def tribonacci(n):
+    if n == 0: return 0
+    if n <= 2: return 1
+    a, b, c = 0, 1, 1
+    for _ in range(3, n + 1):
+        a, b, c = b, c, a + b + c
+    return c
+`,
+
+  'solving-questions-with-brainpower': `
+def mostPoints(questions):
+    if hasattr(questions, 'to_py'): questions = [list(q.to_py()) if hasattr(q, 'to_py') else list(q) for q in questions]
+    questions = [[int(q[0]), int(q[1])] for q in questions]
+    n = len(questions)
+    dp = [0] * (n + 1)
+    for i in range(n - 1, -1, -1):
+        nxt = min(n, i + questions[i][1] + 1)
+        dp[i] = max(questions[i][0] + dp[nxt], dp[i + 1])
+    return dp[0]
+`,
+
+  'count-nodes-equal-to-average-of-subtree': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def averageOfSubtreeRunner(arr):
+    if hasattr(arr, 'to_py'):
+        arr = list(arr.to_py())
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in arr]
+    if not arr or arr[0] is None:
+        return 0
+    root = TreeNode(arr[0])
+    bfs = [root]
+    i = 1
+    while bfs and i < len(arr):
+        node = bfs.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i])
+            bfs.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i])
+            bfs.append(node.right)
+        i += 1
+    count = [0]
+    def dfs(node):
+        if not node:
+            return 0, 0
+        ls, lc = dfs(node.left)
+        rs, rc = dfs(node.right)
+        s = ls + rs + node.val
+        c = lc + rc + 1
+        if s // c == node.val:
+            count[0] += 1
+        return s, c
+    dfs(root)
+    return count[0]
+`,
+
+  'detonate-the-maximum-bombs': `
+def maximumDetonation(bombs):
+    if hasattr(bombs, 'to_py'): bombs = [list(b.to_py()) if hasattr(b, 'to_py') else list(b) for b in bombs]
+    bombs = [[int(v) for v in b] for b in bombs]
+    n = len(bombs)
+    adj = [[] for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            if i == j: continue
+            dx = bombs[i][0] - bombs[j][0]
+            dy = bombs[i][1] - bombs[j][1]
+            if dx*dx + dy*dy <= bombs[i][2]*bombs[i][2]:
+                adj[i].append(j)
+    best = 0
+    for s in range(n):
+        visited = {s}
+        queue = [s]
+        while queue:
+            cur = queue.pop(0)
+            for nb in adj[cur]:
+                if nb not in visited:
+                    visited.add(nb)
+                    queue.append(nb)
+        best = max(best, len(visited))
+    return best
+`,
+
+  'h-index-ii': `
+def hIndex(citations):
+    if hasattr(citations, 'to_py'): citations = list(citations.to_py())
+    citations = [int(v) for v in citations]
+    n = len(citations)
+    lo, hi = 0, n
+    while lo < hi:
+        import math
+        mid = math.ceil((lo + hi) / 2)
+        if citations[n - mid] >= mid:
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
 `,
 
 };
