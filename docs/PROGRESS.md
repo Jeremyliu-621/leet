@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2496** problems; 7782 tests green. Batches 102–174 + batch 172 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2500** problems; 7794 tests green. Batches 102–175 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 175+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 176+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 175 — bitwise-or-trailing-zeros (easy), xor-paths (medium), connectable-servers (medium), sort-tree-level (medium) (2026-05-29)
+Four new problems with JS + Python reference solutions: `check-if-bitwise-or-has-trailing-zeros` (easy/bit, count even numbers ≥ 2), `count-paths-with-given-xor-value` (medium/dp, dp[i][j][x]=count paths to (i,j) with XOR x; O(m×n×16)), `count-pairs-of-connectable-servers-in-a-weighted-tree` (medium/tree, DFS per branch per node + running-product trick for pair counting), `minimum-number-of-operations-to-sort-binary-tree-by-level` (medium/tree, BFS level-by-level + cycle-sort to count minimum swaps). Bank at **2500**; 7794 tests.
 
 ### feat(bank): batch 172 — winner-array-game, impossible-rolls, numerically-balanced, odd-subarray-sum, prefix-score (2026-05-29)
 Five new medium problems: `find-the-winner-of-an-array-game` (simulation, linear scan tracking winner+streak), `shortest-impossible-sequence-of-rolls` (greedy rounds counting with set), `next-greater-numerically-balanced-number` (brute force digit frequency check), `number-of-sub-arrays-with-odd-sum` (prefix parity counting with modular arithmetic), `rearrange-array-to-maximize-prefix-score` (sort descending, scan positive prefix sums). Bank at **2496**; 7782 tests.
