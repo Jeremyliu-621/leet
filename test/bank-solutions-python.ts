@@ -36859,4 +36859,95 @@ def maxProbability(n, edges, succProb, start_node, end_node):
     return 0.0
 `,
 
+  'average-of-levels-in-binary-tree': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def __from_array__(arr):
+    if hasattr(arr, 'to_py'):
+        raw = arr.to_py()
+    else:
+        raw = list(arr)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
+    if not arr or arr[0] is None:
+        return None
+    from collections import deque
+    root = TreeNode(arr[0])
+    queue = deque([root])
+    i = 1
+    while queue and i < len(arr):
+        node = queue.popleft()
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i]); queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i]); queue.append(node.right)
+        i += 1
+    return root
+
+def averageOfLevelsRunner(arr):
+    from collections import deque
+    root = __from_array__(arr)
+    if not root:
+        return []
+    result = []
+    level = deque([root])
+    while level:
+        n = len(level)
+        total = 0
+        for _ in range(n):
+            node = level.popleft()
+            total += node.val
+            if node.left: level.append(node.left)
+            if node.right: level.append(node.right)
+        result.append(total / n)
+    return result
+`,
+
+  'all-elements-in-two-binary-search-trees': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def __from_array__(arr):
+    if hasattr(arr, 'to_py'):
+        raw = arr.to_py()
+    else:
+        raw = list(arr)
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw]
+    if not arr or arr[0] is None:
+        return None
+    from collections import deque
+    root = TreeNode(arr[0])
+    queue = deque([root])
+    i = 1
+    while queue and i < len(arr):
+        node = queue.popleft()
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i]); queue.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i]); queue.append(node.right)
+        i += 1
+    return root
+
+def getAllElementsRunner(arr1, arr2):
+    def inorder(node, out):
+        if not node: return
+        inorder(node.left, out)
+        out.append(node.val)
+        inorder(node.right, out)
+    a, b = [], []
+    inorder(__from_array__(arr1), a)
+    inorder(__from_array__(arr2), b)
+    merged = []
+    i = j = 0
+    while i < len(a) and j < len(b):
+        if a[i] <= b[j]: merged.append(a[i]); i += 1
+        else: merged.append(b[j]); j += 1
+    merged.extend(a[i:]); merged.extend(b[j:])
+    return merged
+`,
+
 };
