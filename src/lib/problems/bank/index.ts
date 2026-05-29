@@ -3058,7 +3058,7 @@ import { problem as productOfLastTwo } from './product-of-last-two';
 import { problem as threeDivisors } from './three-divisors';
 import { problem as checkThreeConsecutiveOdds } from './check-three-consecutive-odds';
 import { problem as minimumSwapsToMakeAlternating } from './minimum-swaps-to-make-alternating';
-import { problem as countRectanglesContainingPoints } from './count-rectangles-containing-points';
+
 // batch 204 — easy/arrays, easy/arrays, easy/arrays+strings, easy/arrays+math
 import { problem as flatten2dArray } from './flatten-2d-array';
 import { problem as countElementsGreaterThanK } from './count-elements-greater-than-k';
@@ -3134,10 +3134,10 @@ import { problem as minimumOperationsToMoveAllBallsToEachBox } from './minimum-o
 import { problem as checkIfAll1sAreAtLeastLengthKPlacesApart } from './check-if-all-1s-are-at-least-length-k-places-apart';
 import { problem as checkIfBinaryStringHasAtMostOneSegmentOfOnes } from './check-if-binary-string-has-at-most-one-segment-of-ones';
 import { problem as countDistinctIntegersAfterReverseOperations } from './count-distinct-integers-after-reverse-operations';
-import { problem as maximizeTheConfusionOfAnExam } from './maximize-the-confusion-of-an-exam';
+
 // batch 213b (concurrent) — easy/design+arrays+hash-map, medium/arrays+math, hard/strings+sliding-window+hash-map
 import { problem as designNeighborSumService } from './design-neighbor-sum-service';
-import { problem as findValidMatrixGivenRowColumnSums } from './find-valid-matrix-given-row-column-sums';
+
 import { problem as countCompleteSubstrings } from './count-complete-substrings';
 // batch 212 addendum — medium/arrays+dp
 import { problem as longestSubarrayWithPositiveProduct } from './longest-subarray-with-positive-product';
@@ -3162,19 +3162,18 @@ import { problem as minimumTotalPriceOfTrips } from './minimum-total-price-of-tr
 // batch 216 — easy/arrays, medium/arrays+simulation, medium/tree+simulation, medium/design+simulation
 import { problem as removeDigitFromNumberToMaximizeResult } from './remove-digit-from-number-to-maximize-result';
 import { problem as checkIfNumberIsASumOfPowersOfThree } from './check-if-number-is-a-sum-of-powers-of-three';
-import { problem as countNumberOfRectanglesContainingEachPoint } from './count-number-of-rectangles-containing-each-point';
+
 import { problem as minimumImpossibleOr } from './minimum-impossible-or';
 import { problem as findSubstringWithMaximumCost } from './find-substring-with-maximum-cost';
 import { problem as findWidthOfColumnsOfGrid } from './find-the-width-of-columns-of-a-grid';
-import { problem as minimumSumOfMountainTriplets } from './minimum-sum-of-mountain-triplets';
-import { problem as minimumNumberOfFlipsToMakeBinaryGridPalindrome } from './minimum-number-of-flips-to-make-binary-grid-palindrome';
-import { problem as minimumNumberOfOperationsToSortABinaryTreeByLevel } from './minimum-number-of-operations-to-sort-a-binary-tree-by-level';
-import { problem as designAnAtmMachine } from './design-an-atm-machine';
 import { problem as validTicTacToe } from './valid-tic-tac-toe-state';
 import { problem as findKthNumber } from './kth-smallest-number-in-multiplication-table';
 import { problem as confusingNumberII } from './confusing-number-ii';
 import { problem as minSwapsArrangeBinaryGrid } from './minimum-swaps-to-arrange-a-binary-grid';
 import { problem as solveTheEquation } from './solve-the-equation';
+import { problem as countGroupsOfSpecialEquivalentStrings } from './count-groups-of-special-equivalent-strings';
+import { problem as differenceOnesZerosInRowAndColumn } from './difference-ones-zeros-in-row-and-column';
+import { problem as findKthLargestIntegerInArray } from './find-kth-largest-integer-in-array';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6274,7 +6273,7 @@ export const problems: readonly Problem[] = [
   threeDivisors,
   checkThreeConsecutiveOdds,
   minimumSwapsToMakeAlternating,
-  countRectanglesContainingPoints,
+
   // batch 204 — easy/arrays, easy/arrays, easy/arrays+strings, easy/arrays+math
   flatten2dArray,
   countElementsGreaterThanK,
@@ -6350,10 +6349,10 @@ export const problems: readonly Problem[] = [
   checkIfAll1sAreAtLeastLengthKPlacesApart,
   checkIfBinaryStringHasAtMostOneSegmentOfOnes,
   countDistinctIntegersAfterReverseOperations,
-  maximizeTheConfusionOfAnExam,
+
   // batch 213b (concurrent)
   designNeighborSumService,
-  findValidMatrixGivenRowColumnSums,
+
   countCompleteSubstrings,
   // batch 212 addendum
   longestSubarrayWithPositiveProduct,
@@ -6378,18 +6377,16 @@ export const problems: readonly Problem[] = [
   // batch 216
   removeDigitFromNumberToMaximizeResult,
   checkIfNumberIsASumOfPowersOfThree,
-  countNumberOfRectanglesContainingEachPoint,
   minimumImpossibleOr,
   findSubstringWithMaximumCost,
   findWidthOfColumnsOfGrid,
-  minimumSumOfMountainTriplets,
-  minimumNumberOfFlipsToMakeBinaryGridPalindrome,
-  minimumNumberOfOperationsToSortABinaryTreeByLevel,
-  designAnAtmMachine,
   // batch 215 (addendum)
   validTicTacToe,
   findKthNumber,
   confusingNumberII,
   minSwapsArrangeBinaryGrid,
   solveTheEquation,
+  countGroupsOfSpecialEquivalentStrings,
+  differenceOnesZerosInRowAndColumn,
+  findKthLargestIntegerInArray,
 ];
