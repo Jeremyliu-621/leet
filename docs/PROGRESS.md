@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2630** problems; 8181 tests green. Batches 102–188 + 179b complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2635** problems; 8196 tests green. Batches 102–189 + 179b complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 189+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 190+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 189 — hidden-sequences, substring-reverse, div-k-pairs, distinct-diff, k-strongest (2026-05-29)
+Five new problems: `count-hidden-sequences` (medium/arrays, prefix-sum range counting — track min/max prefix, count = max(0, (upper-maxP)-(lower-minP)+1)), `existence-of-a-substring-in-a-string-and-its-reverse` (easy/strings+hash-map, build set of 2-char substrings of reversed s, scan for match in s), `count-pairs-with-sum-divisible-by-k` (medium/arrays+hash-map, O(n) remainder frequency — for r=n%k add freq[(k-r)%k]), `find-the-distinct-difference-array` (easy/arrays+hash-map, prefix+suffix distinct count arrays in O(n)), `the-k-strongest-values-in-an-array` (medium/arrays, sort by |x-m| desc then x desc where m=sorted[⌊(n-1)/2⌋]). Bank at **2635**; 8196 tests.
 
 ### feat(bank): batch 188 — teemo-attacking, distance-bus-stops, alternating-bits, monotonic-digits (2026-05-29)
 Four new problems: `teemo-attacking` (easy/simulation, min(gap,duration) per interval + last duration), `distance-between-bus-stops` (easy/arrays, clockwise sum vs total-cw, take min), `binary-number-with-alternating-bits` (easy/bit-manipulation, n^(n>>1) all-1s check via m&(m+1)==0), `monotonic-increasing-digits` (medium/math, right-to-left: decrement when violated, fill suffix with 9s). Bank at **2630**; 8181 tests.
