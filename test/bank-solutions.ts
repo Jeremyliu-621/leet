@@ -42102,6 +42102,70 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(ans);
   },
 
+  'apply-discount-to-prices': (...args: unknown[]) => {
+    const sentence = args[0] as string;
+    const discount = args[1] as number;
+    return sentence.split(' ').map(word => {
+      if (/^\$[1-9]\d*$/.test(word)) {
+        const price = parseInt(word.slice(1), 10);
+        const raw = price * (100 - discount);
+        const dollars = Math.floor(raw / 100);
+        const cents = raw % 100;
+        return `$${dollars}.${String(cents).padStart(2, '0')}`;
+      }
+      return word;
+    }).join(' ');
+  },
+
+  'maximum-difference-score-in-a-grid': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    const dp = Array.from({ length: m }, () => new Array<number>(n).fill(0));
+    dp[0]![0] = grid[0]![0]!;
+    for (let j = 1; j < n; j++) dp[0]![j] = Math.min(dp[0]![j - 1]!, grid[0]![j]!);
+    for (let i = 1; i < m; i++) dp[i]![0] = Math.min(dp[i - 1]![0]!, grid[i]![0]!);
+    let ans = -Infinity;
+    for (let i = 1; i < m; i++) {
+      for (let j = 1; j < n; j++) {
+        ans = Math.max(ans, grid[i]![j]! - dp[i - 1]![j - 1]!);
+        dp[i]![j] = Math.min(dp[i - 1]![j]!, dp[i]![j - 1]!, grid[i]![j]!);
+      }
+    }
+    return ans;
+  },
+
+  'minimum-number-of-food-buckets-to-feed-the-hamsters': (...args: unknown[]) => {
+    const street = (args[0] as string).split('');
+    const n = street.length;
+    let count = 0;
+    for (let i = 0; i < n; i++) {
+      if (street[i] === 'H') {
+        if (i > 0 && street[i - 1] === 'B') {
+          // already fed by bucket placed to the left
+        } else if (i + 1 < n && street[i + 1] === '.') {
+          street[i + 1] = 'B';
+          count++;
+        } else if (i > 0 && street[i - 1] === '.') {
+          street[i - 1] = 'B';
+          count++;
+        } else {
+          return -1;
+        }
+      }
+    }
+    return count;
+  },
+
+  'thousand-separator': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const s = String(n);
+    const parts: string[] = [];
+    for (let i = s.length; i > 0; i -= 3) {
+      parts.unshift(s.slice(Math.max(0, i - 3), i));
+    }
+    return parts.join('.');
+  },
+
   'minimum-operations-to-make-array-empty': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const freq = new Map<number, number>();

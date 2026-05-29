@@ -2918,8 +2918,12 @@ import { problem as minimumOperationsToMakeArrayEmpty } from './minimum-operatio
 import { problem as minimumOperationsToMakeArrayContinuous } from './minimum-operations-to-make-array-continuous';
 import { problem as minimumDistanceToTheTargetElement } from './minimum-distance-to-the-target-element';
 import { problem as maximumAreaOfLongestDiagonalRectangle } from './maximum-area-of-longest-diagonal-rectangle';
-// batch 186 — medium/strings+sliding-window
+// batch 186 — medium/strings+sliding-window, medium/strings, medium/arrays+dp, medium/simulation, easy/strings
 import { problem as countSubstringsWithEveryVowelAndKConsonantsI } from './count-substrings-with-every-vowel-and-k-consonants-i';
+import { problem as applyDiscountToPrices } from './apply-discount-to-prices';
+import { problem as maximumDifferenceScoreInAGrid } from './maximum-difference-score-in-a-grid';
+import { problem as minimumNumberOfFoodBucketsToFeedTheHamsters } from './minimum-number-of-food-buckets-to-feed-the-hamsters';
+import { problem as thousandSeparator } from './thousand-separator';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5879,6 +5883,10 @@ export const problems: readonly Problem[] = [
   minimumOperationsToMakeArrayContinuous,
   minimumDistanceToTheTargetElement,
   maximumAreaOfLongestDiagonalRectangle,
-  // batch 186 — medium/strings+sliding-window
+  // batch 186 — medium/strings+sliding-window, medium/strings, medium/arrays+dp, medium/simulation, easy/strings
   countSubstringsWithEveryVowelAndKConsonantsI,
+  applyDiscountToPrices,
+  maximumDifferenceScoreInAGrid,
+  minimumNumberOfFoodBucketsToFeedTheHamsters,
+  thousandSeparator,
 ];

@@ -42074,6 +42074,64 @@ def maxBottlesDrunk(numBottles, numExchange):
     return ans
 `,
 
+  'apply-discount-to-prices': `def discountPrices(sentence, discount):
+    import re
+    def apply(word):
+        if re.fullmatch(r'\\$[1-9]\\d*', word):
+            price = int(word[1:])
+            raw = price * (100 - discount)
+            dollars = raw // 100
+            cents = raw % 100
+            return f'\${dollars}.{cents:02d}'
+        return word
+    return ' '.join(apply(w) for w in sentence.split())
+`,
+
+  'maximum-difference-score-in-a-grid': `def maxScore(grid):
+    m, n = len(grid), len(grid[0])
+    dp = [[0] * n for _ in range(m)]
+    dp[0][0] = grid[0][0]
+    for j in range(1, n):
+        dp[0][j] = min(dp[0][j-1], grid[0][j])
+    for i in range(1, m):
+        dp[i][0] = min(dp[i-1][0], grid[i][0])
+    ans = float('-inf')
+    for i in range(1, m):
+        for j in range(1, n):
+            ans = max(ans, grid[i][j] - dp[i-1][j-1])
+            dp[i][j] = min(dp[i-1][j], dp[i][j-1], grid[i][j])
+    return ans
+`,
+
+  'minimum-number-of-food-buckets-to-feed-the-hamsters': `def minimumBuckets(street):
+    street = list(street)
+    n = len(street)
+    count = 0
+    for i in range(n):
+        if street[i] == 'H':
+            if i > 0 and street[i - 1] == 'B':
+                pass  # already fed by bucket to the left
+            elif i + 1 < n and street[i + 1] == '.':
+                street[i + 1] = 'B'
+                count += 1
+            elif i > 0 and street[i - 1] == '.':
+                street[i - 1] = 'B'
+                count += 1
+            else:
+                return -1
+    return count
+`,
+
+  'thousand-separator': `def thousandSeparator(n):
+    s = str(n)
+    result = []
+    for i, c in enumerate(reversed(s)):
+        if i > 0 and i % 3 == 0:
+            result.append('.')
+        result.append(c)
+    return ''.join(reversed(result))
+`,
+
   'minimum-operations-to-make-array-empty': `def minOperations(nums):
     from collections import Counter
     freq = Counter(nums)
