@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2271** problems; 7071 tests green. Batches 102–150b + merge-fix complete. UX polish ongoing.
+**Current focus:** Bank at **2271** problems; 7098 tests green. Batches 102–150b + a11y-fix complete. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 151+); UX polish; accessibility audit.
+
+### fix(a11y): focus solved-standalone heading on mount; update site count to 2,265+ (2026-05-29)
+When the challenge page transitions to the solved-standalone screen (practice mode accepted), keyboard focus was lost. Fixed by adding `useRef`+`useEffect` in `SolvedStandaloneScreen` to focus the `<h1>` on mount (`tabIndex={-1}`). Also fixed `'matrix'` invalid ProblemTag in `difference-between-ones-zeros-in-row-and-column.ts` (changed to `'math'`). Marketing site updated to **2,265+** problems.
 
 ### feat(bank): add batch 150 — 5 new problems (tree/medium, arrays×2/easy, strings/medium+easy) (2026-05-29)
 Added `minimum-time-to-collect-all-apples-in-a-tree` (medium/tree+graph+dp, DFS from root; enter child subtree only if it has apples; cost=childTime+2 per needed child), `maximum-units-on-a-truck` (easy/arrays, sort by units/box desc, greedy take), `number-of-ways-to-split-a-string` (medium/strings+math, gap counting between section boundaries; BigInt mod), `mean-of-array-after-removing-some-elements` (easy/arrays, sort+trim 5% each end+average), `minimum-number-of-operations-to-convert-time` (easy/strings+math, convert to minutes, greedy subtract [60,15,5,1]). Bank at **2261**; 7077 tests.
