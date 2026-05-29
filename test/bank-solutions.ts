@@ -43376,4 +43376,22 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const nums = args[0] as number[];
     return nums[nums.length - 2]! * nums[nums.length - 1]!;
   },
+  // batch 204 ---------------------------------------------------------------
+  'flatten-2d-array': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    return matrix.flat();
+  },
+  'count-elements-greater-than-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    return nums.filter(v => v > k).length;
+  },
+  'sort-words-by-length': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    return [...words].sort((a, b) => a.length - b.length);
+  },
+  'sum-of-positive-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return nums.filter(v => v > 0).reduce((s, v) => s + v, 0);
+  },
 };

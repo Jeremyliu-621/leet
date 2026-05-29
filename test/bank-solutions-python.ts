@@ -43207,4 +43207,21 @@ def maximumOfMinimumValues(matrix):
 def productOfLastTwo(nums):
     return nums[-2] * nums[-1]
 `,
+  // batch 204 ---------------------------------------------------------------
+  'flatten-2d-array': `
+def flatten2dArray(matrix):
+    return [v for row in matrix for v in row]
+`,
+  'count-elements-greater-than-k': `
+def countElementsGreaterThanK(nums, k):
+    return sum(1 for v in nums if v > k)
+`,
+  'sort-words-by-length': `
+def sortWordsByLength(words):
+    return sorted(words, key=lambda w: len(w))
+`,
+  'sum-of-positive-elements': `
+def sumOfPositiveElements(nums):
+    return sum(v for v in nums if v > 0)
+`,
 };

@@ -3048,6 +3048,11 @@ import { problem as sumOfLastKElements } from './sum-of-last-k-elements';
 import { problem as countStringsOfLengthK } from './count-strings-of-length-k';
 import { problem as maximumOfMinimumValues } from './maximum-of-minimum-values';
 import { problem as productOfLastTwo } from './product-of-last-two';
+// batch 204 — easy/arrays, easy/arrays, easy/arrays+strings, easy/arrays+math
+import { problem as flatten2dArray } from './flatten-2d-array';
+import { problem as countElementsGreaterThanK } from './count-elements-greater-than-k';
+import { problem as sortWordsByLength } from './sort-words-by-length';
+import { problem as sumOfPositiveElements } from './sum-of-positive-elements';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6137,4 +6142,9 @@ export const problems: readonly Problem[] = [
   distributeElementsIntoTwoArraysI,
   maximumLengthSubstringWithTwoOccurrences,
   partitionArraySuchThatMaximumDifferenceIsK,
+  // batch 204 — easy/arrays, easy/arrays, easy/arrays+strings, easy/arrays+math
+  flatten2dArray,
+  countElementsGreaterThanK,
+  sortWordsByLength,
+  sumOfPositiveElements,
 ];
