@@ -43996,4 +43996,100 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return ans;
   },
+  // batch 211 ---------------------------------------------------------------
+  'minimum-number-of-operations-to-make-word-k-periodic': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const k = args[1] as number;
+    const n = word.length;
+    const freq = new Map<string, number>();
+    for (let i = 0; i < n; i += k) {
+      const chunk = word.slice(i, i + k);
+      freq.set(chunk, (freq.get(chunk) ?? 0) + 1);
+    }
+    let maxFreq = 0;
+    for (const v of freq.values()) maxFreq = Math.max(maxFreq, v);
+    return n / k - maxFreq;
+  },
+  'zero-array-transformation-iii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const queries = args[1] as number[][];
+    const n = nums.length;
+    const diff = new Array(n + 1).fill(0);
+    const qs = [...queries].sort((a, b) => a[0]! - b[0]!);
+    const heap: number[] = [];
+    const push = (v: number) => {
+      heap.push(v);
+      for (let i = heap.length - 1; i > 0;) {
+        const p = (i - 1) >> 1;
+        if ((heap[p] ?? 0) < (heap[i] ?? 0)) { [heap[p], heap[i]] = [heap[i]!, heap[p]!]; i = p; } else break;
+      }
+    };
+    const pop = (): number => {
+      const top = heap[0]!;
+      const last = heap.pop()!;
+      if (heap.length > 0) {
+        heap[0] = last;
+        for (let i = 0;;) {
+          const l = 2 * i + 1, r = 2 * i + 2;
+          let m = i;
+          if (l < heap.length && (heap[l] ?? 0) > (heap[m] ?? 0)) m = l;
+          if (r < heap.length && (heap[r] ?? 0) > (heap[m] ?? 0)) m = r;
+          if (m === i) break;
+          [heap[i], heap[m]] = [heap[m]!, heap[i]!]; i = m;
+        }
+      }
+      return top;
+    };
+    let qi = 0, coverage = 0, kept = 0;
+    for (let i = 0; i < n; i++) {
+      while (qi < qs.length && qs[qi]![0]! <= i) push(qs[qi++]![1]!);
+      coverage += diff[i]!;
+      while (coverage < nums[i]!) {
+        while (heap.length > 0 && heap[0]! < i) pop();
+        if (heap.length === 0) return -1;
+        const r = pop();
+        diff[r + 1]--;
+        coverage++;
+        kept++;
+      }
+    }
+    return queries.length - kept;
+  },
+  'maximum-coins-heroes-can-collect': (...args: unknown[]) => {
+    const heroes = args[0] as number[];
+    const health = args[1] as number[];
+    const coins = args[2] as number[];
+    const m = health.length;
+    const order = Array.from({ length: m }, (_, i) => i).sort((a, b) => health[a]! - health[b]!);
+    const sortedHealth = order.map(i => health[i]!);
+    const prefix = new Array(m + 1).fill(0);
+    for (let j = 0; j < m; j++) prefix[j + 1] = prefix[j] + coins[order[j]!]!;
+    return heroes.map(h => {
+      let lo = 0, hi = m;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (sortedHealth[mid]! <= h) lo = mid + 1;
+        else hi = mid;
+      }
+      return prefix[lo];
+    });
+  },
+  'minimum-operations-to-move-all-balls-to-each-box': (...args: unknown[]) => {
+    const boxes = args[0] as string;
+    const n = boxes.length;
+    const ans = new Array(n).fill(0);
+    let balls = 0, cost = 0;
+    for (let i = 0; i < n; i++) {
+      ans[i] += cost;
+      if (boxes[i] === '1') balls++;
+      cost += balls;
+    }
+    balls = 0; cost = 0;
+    for (let i = n - 1; i >= 0; i--) {
+      ans[i] += cost;
+      if (boxes[i] === '1') balls++;
+      cost += balls;
+    }
+    return ans;
+  },
 };

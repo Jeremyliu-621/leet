@@ -3121,6 +3121,11 @@ import { problem as maxSumOfAPairWithEqualSumOfDigits } from './max-sum-of-a-pai
 import { problem as findingPairsWithCertainDifference } from './finding-pairs-with-certain-difference';
 import { problem as numberOfSubarraysWithAndValueOfK } from './number-of-subarrays-with-and-value-of-k';
 import { problem as maximumNumberOfCoinsYouCanGet } from './maximum-number-of-coins-you-can-get';
+// batch 211b — medium/strings+hash-map, hard/arrays+heap, medium/arrays+binary-search, medium/arrays+strings
+import { problem as minimumNumberOfOperationsToMakeWordKPeriodic } from './minimum-number-of-operations-to-make-word-k-periodic';
+import { problem as zeroArrayTransformationIII } from './zero-array-transformation-iii';
+import { problem as maximumCoinsHeroesCanCollect } from './maximum-coins-heroes-can-collect';
+import { problem as minimumOperationsToMoveAllBallsToEachBox } from './minimum-operations-to-move-all-balls-to-each-box';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6283,4 +6288,9 @@ export const problems: readonly Problem[] = [
   findingPairsWithCertainDifference,
   numberOfSubarraysWithAndValueOfK,
   maximumNumberOfCoinsYouCanGet,
+  // batch 211b
+  minimumNumberOfOperationsToMakeWordKPeriodic,
+  zeroArrayTransformationIII,
+  maximumCoinsHeroesCanCollect,
+  minimumOperationsToMoveAllBallsToEachBox,
 ];

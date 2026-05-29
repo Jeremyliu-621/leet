@@ -43839,4 +43839,73 @@ def maximumStrongPairXor(nums):
         ans = max(ans, query(nums[right]))
     return ans
 `,
+  // batch 211 ---------------------------------------------------------------
+  'minimum-number-of-operations-to-make-word-k-periodic': `
+def minimumOperationsToMakeWordKPeriodic(word, k):
+    n = len(word)
+    freq = {}
+    for i in range(0, n, k):
+        chunk = word[i:i+k]
+        freq[chunk] = freq.get(chunk, 0) + 1
+    return n // k - max(freq.values())
+`,
+  'zero-array-transformation-iii': `
+import heapq
+def maxRemoval(nums, queries):
+    n = len(nums)
+    diff = [0] * (n + 1)
+    qs = sorted(queries, key=lambda q: q[0])
+    heap = []  # max-heap (negated right endpoints)
+    qi = 0
+    coverage = 0
+    kept = 0
+    for i in range(n):
+        while qi < len(qs) and qs[qi][0] <= i:
+            heapq.heappush(heap, -qs[qi][1])
+            qi += 1
+        coverage += diff[i]
+        while coverage < nums[i]:
+            while heap and -heap[0] < i:
+                heapq.heappop(heap)
+            if not heap:
+                return -1
+            r = -heapq.heappop(heap)
+            diff[r + 1] -= 1
+            coverage += 1
+            kept += 1
+    return len(queries) - kept
+`,
+  'maximum-coins-heroes-can-collect': `
+import bisect
+def maximumCoins(heroes, health, coins):
+    m = len(health)
+    order = sorted(range(m), key=lambda i: health[i])
+    sorted_health = [health[i] for i in order]
+    prefix = [0] * (m + 1)
+    for j in range(m):
+        prefix[j + 1] = prefix[j] + coins[order[j]]
+    result = []
+    for h in heroes:
+        idx = bisect.bisect_right(sorted_health, h)
+        result.append(prefix[idx])
+    return result
+`,
+  'minimum-operations-to-move-all-balls-to-each-box': `
+def minOperations(boxes):
+    n = len(boxes)
+    ans = [0] * n
+    balls = cost = 0
+    for i in range(n):
+        ans[i] += cost
+        if boxes[i] == '1':
+            balls += 1
+        cost += balls
+    balls = cost = 0
+    for i in range(n - 1, -1, -1):
+        ans[i] += cost
+        if boxes[i] == '1':
+            balls += 1
+        cost += balls
+    return ans
+`,
 };
