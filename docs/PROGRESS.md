@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2301** problems; 7203 tests green. Batches 102–153 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2305** problems; 7209 tests green. Batches 102–153 (all sub-batches) complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 154+); UX polish; accessibility audit.
+
+### feat(bank): add batch 153 — last-visited-integers (easy), count-visited-nodes-in-directed-graph (hard) (2026-05-29)
+`last-visited-integers` (easy/arrays+simulation, track k-th most recent positive per consecutive -1 run). `count-visited-nodes-in-a-directed-graph` (hard/graph+dp, functional graph — each node has exactly one outgoing edge — cycle detection via path coloring + backward distance fill). Fixed off-by-one bug in hidden test for cycle of length 2. Bank at **2305**; 7209 tests.
 
 ### chore: update site count to 2,301+; sync with actual bank (2026-05-29)
 Marketing site updated from 2,286+ → 2,301+ in all three locations. Bank is at 2301 problems after batch 153 + 153b.
