@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2265** problems; 7089 tests green. Batches 102–150 complete. UX polish ongoing.
+**Current focus:** Bank at **2271** problems; 7107 tests green. Batches 102–151 complete. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 151+); UX polish; accessibility audit.
+**Next up:** More bank growth (batch 152+); UX polish; accessibility audit.
+
+### feat(bank): add batch 151 — 6 orphan registrations + 3 new solutions (2026-05-29)
+Registered 6 previously unregistered problem files: `all-divisions-with-the-highest-score-of-a-binary-array` (medium/arrays, linear sweep score), `convert-an-array-into-a-2d-array-with-conditions` (medium/arrays+hash-map, occurrence-based row assignment), `replace-the-substring-for-balanced-string` (medium/strings+sliding-window, shrink window while external counts ≤ n/4), `minimum-cost-to-make-at-least-one-valid-path-in-a-grid` (hard/shortest-path, 0-1 BFS), `queries-on-a-permutation-with-key` (medium/BIT+simulation, move-to-front array), `sum-of-floored-pairs` (hard/BIT+math, O(MAX·log MAX) harmonic series). Added JS+Python solutions for the 3 missing ones. Bank at **2271**; 7107 tests.
 
 ### fix(a11y): focus solved-standalone heading on mount; update site count to 2,265+ (2026-05-29)
 When the challenge page transitions to the solved-standalone screen (practice mode accepted), keyboard focus was lost. Fixed by adding `useRef`+`useEffect` in `SolvedStandaloneScreen` to focus the `<h1>` on mount (`tabIndex={-1}`). Also fixed `'matrix'` invalid ProblemTag in `difference-between-ones-zeros-in-row-and-column.ts` (changed to `'math'`). Marketing site updated to **2,265+** problems.
