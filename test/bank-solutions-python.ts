@@ -21827,7 +21827,7 @@ def secondMinimum(n, edges, time, change):
     return ans
 `,
 
-  'minimum-cost-to-convert-string-i': `def minimumCost(source, target, original, changed, cost):
+  'minimum-cost-to-convert-string-i': `def minimumCostConvertString(source, target, original, changed, cost):
     if hasattr(original, 'to_py'):
         original = list(original.to_py())
     if hasattr(changed, 'to_py'):
