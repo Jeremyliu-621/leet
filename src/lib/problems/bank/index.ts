@@ -2483,6 +2483,13 @@ import { problem as maximumEnergyBoostFromTwoDrinks } from './maximum-energy-boo
 import { problem as kthNearestObstacleQueries } from './k-th-nearest-obstacle-queries';
 // batch 149b — arrays/easy
 import { problem as calculateAmountPaidInTaxes } from './calculate-amount-paid-in-taxes';
+// batch 151 — 6 orphan problems (medium+hard)
+import { problem as allDivisionsHighestScore } from './all-divisions-with-the-highest-score-of-a-binary-array';
+import { problem as convertArrayInto2D } from './convert-an-array-into-a-2d-array-with-conditions';
+import { problem as replaceSubstringBalancedString } from './replace-the-substring-for-balanced-string';
+import { problem as minimumCostValidPath } from './minimum-cost-to-make-at-least-one-valid-path-in-a-grid';
+import { problem as queriesPermutationWithKey } from './queries-on-a-permutation-with-key';
+import { problem as sumFlooredPairs } from './sum-of-floored-pairs';
 // batch 150
 import { problem as minimumTimeCollectAllApplesTree } from './minimum-time-to-collect-all-apples-in-a-tree';
 import { problem as maximumUnitsOnATruck } from './maximum-units-on-a-truck';
@@ -5014,6 +5021,13 @@ export const problems: readonly Problem[] = [
   kthNearestObstacleQueries,
   // batch 149b — arrays/easy
   calculateAmountPaidInTaxes,
+  // batch 151 — 6 orphan problems (arrays/medium, arrays/medium, strings/medium, shortest-path/hard, BIT/medium, BIT+math/hard)
+  allDivisionsHighestScore,
+  convertArrayInto2D,
+  replaceSubstringBalancedString,
+  minimumCostValidPath,
+  queriesPermutationWithKey,
+  sumFlooredPairs,
   // batch 150 — tree/medium, arrays/easy, strings/medium, arrays/easy, strings/easy
   minimumTimeCollectAllApplesTree,
   maximumUnitsOnATruck,

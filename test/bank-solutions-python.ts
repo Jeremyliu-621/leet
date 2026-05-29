@@ -35190,6 +35190,65 @@ def resultsArray(queries, k):
     return results
 `,
 
+  // batch 151 — solutions for unregistered orphan problems
+  'minimum-cost-to-make-at-least-one-valid-path-in-a-grid': `def minCost(grid):
+    from collections import deque
+    m, n = len(grid), len(grid[0])
+    dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+    dist = [[float('inf')] * n for _ in range(m)]
+    dist[0][0] = 0
+    dq = deque([(0, 0)])
+    while dq:
+        r, c = dq.popleft()
+        for d, (dr, dc) in enumerate(dirs):
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n:
+                cost = 0 if grid[r][c] == d + 1 else 1
+                if dist[r][c] + cost < dist[nr][nc]:
+                    dist[nr][nc] = dist[r][c] + cost
+                    if cost == 0:
+                        dq.appendleft((nr, nc))
+                    else:
+                        dq.append((nr, nc))
+    return dist[m - 1][n - 1]
+`,
+
+  'queries-on-a-permutation-with-key': `def processQueries(queries, m):
+    queries = list(queries.to_py() if hasattr(queries, 'to_py') else queries)
+    perm = list(range(1, m + 1))
+    result = []
+    for q in queries:
+        idx = perm.index(q)
+        result.append(idx)
+        perm.pop(idx)
+        perm.insert(0, q)
+    return result
+`,
+
+  'sum-of-floored-pairs': `def sumOfFlooredPairs(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    MOD = 10**9 + 7
+    MAX = max(nums)
+    cnt = [0] * (MAX + 1)
+    for n in nums:
+        cnt[n] += 1
+    prefix = [0] * (MAX + 2)
+    for i in range(1, MAX + 1):
+        prefix[i] = prefix[i - 1] + cnt[i]
+    ans = 0
+    for v in range(1, MAX + 1):
+        if cnt[v] == 0:
+            continue
+        mul = 1
+        while mul * v <= MAX:
+            lo = mul * v
+            hi = min((mul + 1) * v - 1, MAX)
+            in_range = prefix[hi] - prefix[lo - 1]
+            ans = (ans + cnt[v] * mul * in_range) % MOD
+            mul += 1
+    return ans
+`,
+
   // batch 150
   'minimum-time-to-collect-all-apples-in-a-tree': `def minTime(n, edges, hasApple):
     edges = list(edges.to_py() if hasattr(edges, 'to_py') else edges)

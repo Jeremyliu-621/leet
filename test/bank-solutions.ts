@@ -35392,6 +35392,65 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 151 — solutions for unregistered orphan problems
+  'minimum-cost-to-make-at-least-one-valid-path-in-a-grid': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    const dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+    const dist: number[][] = Array.from({ length: m }, () => new Array(n).fill(Infinity) as number[]);
+    dist[0]![0] = 0;
+    const deque: [number, number][] = [[0, 0]];
+    while (deque.length > 0) {
+      const [r, c] = deque.shift()!;
+      for (let d = 0; d < 4; d++) {
+        const nr = r + dirs[d]![0]!, nc = c + dirs[d]![1]!;
+        if (nr < 0 || nr >= m || nc < 0 || nc >= n) continue;
+        const cost = grid[r]![c] === d + 1 ? 0 : 1;
+        if (dist[r]![c]! + cost < dist[nr]![nc]!) {
+          dist[nr]![nc] = dist[r]![c]! + cost;
+          if (cost === 0) deque.unshift([nr, nc]);
+          else deque.push([nr, nc]);
+        }
+      }
+    }
+    return dist[m - 1]![n - 1]!;
+  },
+
+  'queries-on-a-permutation-with-key': (...args: unknown[]) => {
+    const queries = args[0] as number[];
+    const m = args[1] as number;
+    const perm = Array.from({ length: m }, (_, i) => i + 1);
+    const result: number[] = [];
+    for (const q of queries) {
+      const idx = perm.indexOf(q);
+      result.push(idx);
+      perm.splice(idx, 1);
+      perm.unshift(q);
+    }
+    return result;
+  },
+
+  'sum-of-floored-pairs': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const MOD = 1000000007n;
+    const MAX = Math.max(...nums);
+    const cnt = new Array(MAX + 1).fill(0) as number[];
+    for (const n of nums) cnt[n]!++;
+    const prefix = new Array(MAX + 2).fill(0) as number[];
+    for (let i = 1; i <= MAX; i++) prefix[i] = prefix[i - 1]! + cnt[i]!;
+    let ans = 0n;
+    for (let v = 1; v <= MAX; v++) {
+      if (cnt[v] === 0) continue;
+      for (let mul = 1; mul * v <= MAX; mul++) {
+        const lo = mul * v;
+        const hi = Math.min((mul + 1) * v - 1, MAX);
+        const inRange = prefix[hi]! - prefix[lo - 1]!;
+        ans = (ans + BigInt(cnt[v]!) * BigInt(mul) * BigInt(inRange)) % MOD;
+      }
+    }
+    return Number(ans);
+  },
+
   // batch 150
   'minimum-time-to-collect-all-apples-in-a-tree': (...args: unknown[]) => {
     const n = args[0] as number;
