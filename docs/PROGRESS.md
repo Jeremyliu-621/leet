@@ -8,12 +8,18 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2271** problems; 7107 tests green. Batches 102–151 complete. UX polish ongoing.
+**Current focus:** Bank at **2275** problems; 7119 tests green. Batches 102–151 complete. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 152+); UX polish; accessibility audit.
 
+### feat(bank): add count-ways-to-rearrange-sticks-with-k-visible (hard/math+dp) (2026-05-29)
+Unsigned Stirling numbers of the first kind via DP. BigInt reference solution to avoid overflow. Bank at **2275**; 7119 tests.
+
 ### feat(bank): add batch 151 — 6 orphan registrations + 3 new solutions (2026-05-29)
 Registered 6 previously unregistered problem files: `all-divisions-with-the-highest-score-of-a-binary-array` (medium/arrays, linear sweep score), `convert-an-array-into-a-2d-array-with-conditions` (medium/arrays+hash-map, occurrence-based row assignment), `replace-the-substring-for-balanced-string` (medium/strings+sliding-window, shrink window while external counts ≤ n/4), `minimum-cost-to-make-at-least-one-valid-path-in-a-grid` (hard/shortest-path, 0-1 BFS), `queries-on-a-permutation-with-key` (medium/BIT+simulation, move-to-front array), `sum-of-floored-pairs` (hard/BIT+math, O(MAX·log MAX) harmonic series). Added JS+Python solutions for the 3 missing ones. Bank at **2271**; 7107 tests.
+
+### feat(ux): NoProblemScreen settings link; LoadingScreen aria-live; site count 2,274+ (2026-05-29)
+NoProblemScreen now shows "Open Settings" link in practice mode so users can adjust filters. LoadingScreen gains `role="status" aria-live="polite"` for screen reader support. Marketing site updated to **2,274+**.
 
 ### fix(a11y): focus solved-standalone heading on mount; update site count to 2,265+ (2026-05-29)
 When the challenge page transitions to the solved-standalone screen (practice mode accepted), keyboard focus was lost. Fixed by adding `useRef`+`useEffect` in `SolvedStandaloneScreen` to focus the `<h1>` on mount (`tabIndex={-1}`). Also fixed `'matrix'` invalid ProblemTag in `difference-between-ones-zeros-in-row-and-column.ts` (changed to `'math'`). Marketing site updated to **2,265+** problems.
@@ -38,6 +44,12 @@ Timer expiry and give-up in practice mode (no targetUrl) were calling handleFail
 
 ### feat(ux): streak + today count on solved screen; custom-test pre-fill from first example (2026-05-28)
 Challenge page solved-standalone screen: streak display (`Nd` badge with "X today" sub-label) now shown when user has a streak. CustomTestPanel now pre-fills arg inputs from `problem.visibleTests[0].args` when opened, so the first example is ready to run immediately. Both changes are additive — no regressions.
+### feat(bank): merge batch 148 — max-product-after-cutting-rope, minimum-path-sum-triangle (2026-05-29)
+Two new DP/math problems: `max-product-after-cutting-rope` (medium/math, greedy factor-3 decomposition with n=2,3 base cases), `minimum-path-sum-triangle` (medium/dp, bottom-up in-place triangle DP). Resolved concurrent merge conflicts; 7032 tests green. Bank at **2246**.
+
+### fix(bank): repair merge artifacts in solution files (2026-05-29)
+Restored missing `longest-arithmetic-subarray` body and `sum-of-all-submatrix-sums` entry in JS solutions. Added `find-product-pivot`, `count-subarrays-equal-balance`, `longest-arithmetic-subarray`, `sum-of-all-submatrix-sums` Python solutions lost during merge concat. Removed stray `return total;` and multiple duplicate entries from concurrent merges.
+
 ### feat(bank): add batch 147 — find-product-pivot, count-subarrays-equal-balance, longest-arithmetic-subarray, sum-of-all-submatrix-sums (2026-05-28)
 Four medium-difficulty problems: `find-product-pivot` (math/arrays, prefix+suffix product comparison to find leftmost equal-product index), `count-subarrays-equal-balance` (arrays+hash-map, prefix sum + hash map for equal positive/negative count subarrays), `longest-arithmetic-subarray` (arrays, O(n) consecutive diff tracking for contiguous arithmetic subarray), `sum-of-all-submatrix-sums` (arrays+math, O(mn) per-cell contribution formula). Bank at **2236**; 7002 tests.
 

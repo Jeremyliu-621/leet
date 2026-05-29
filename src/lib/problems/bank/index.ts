@@ -2477,7 +2477,11 @@ import { problem as numberOfWaysKSteps } from './number-of-ways-to-reach-a-posit
 // batch 148 — math+dp/medium, dp/medium
 import { problem as maxProductAfterCuttingRope } from './max-product-after-cutting-rope';
 import { problem as minimumPathSumTriangle } from './minimum-path-sum-triangle';
-// batch 149 — arrays/easy
+// batch 149 — arrays+binary-search/medium, arrays+dp/medium, arrays+heap/medium
+import { problem as maximizeScoreNumbersInRanges } from './maximize-score-numbers-in-ranges';
+import { problem as maximumEnergyBoostFromTwoDrinks } from './maximum-energy-boost-from-two-drinks';
+import { problem as kthNearestObstacleQueries } from './k-th-nearest-obstacle-queries';
+// batch 149b — arrays/easy
 import { problem as calculateAmountPaidInTaxes } from './calculate-amount-paid-in-taxes';
 // batch 152 — 5 new problems (strings+arrays/easy+medium)
 import { problem as countSegmentsInAString } from './number-of-segments-in-a-string';
@@ -2503,6 +2507,7 @@ import { problem as findLuckyNumberInMatrix } from './find-lucky-number-in-matri
 import { problem as maximumProductOfThreeNumbers } from './maximum-product-of-three-numbers';
 import { problem as findingThreeDigitEvenNumbers } from './finding-3-digit-even-numbers';
 import { problem as differenceOnesZerosRowAndColumn } from './difference-between-ones-zeros-in-row-and-column';
+import { problem as countWaysRearrangeSticks } from './count-ways-to-rearrange-sticks-with-k-visible';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5017,7 +5022,11 @@ export const problems: readonly Problem[] = [
   // batch 148 — math+dp/medium, dp/medium
   maxProductAfterCuttingRope,
   minimumPathSumTriangle,
-  // batch 149 — arrays/easy
+  // batch 149 — arrays+binary-search/medium, arrays+dp/medium, arrays+heap/medium
+  maximizeScoreNumbersInRanges,
+  maximumEnergyBoostFromTwoDrinks,
+  kthNearestObstacleQueries,
+  // batch 149b — arrays/easy
   calculateAmountPaidInTaxes,
   // batch 152 — strings/easy, strings/medium, strings/easy, strings/medium, strings/easy
   countSegmentsInAString,
@@ -5038,9 +5047,10 @@ export const problems: readonly Problem[] = [
   numberOfWaysToSplitAString,
   meanArrayAfterRemovingSomeElements,
   minimumOpsConvertTime,
-  // batch 150b — easy/arrays+hash-map, easy/arrays+math, easy/arrays+hash-map, easy/arrays+matrix
+  // batch 150b — easy/arrays+hash-map, easy/arrays+math, easy/arrays+hash-map, easy/arrays+matrix, hard/math+dp
   findLuckyNumberInMatrix,
   maximumProductOfThreeNumbers,
   findingThreeDigitEvenNumbers,
   differenceOnesZerosRowAndColumn,
+  countWaysRearrangeSticks,
 ];

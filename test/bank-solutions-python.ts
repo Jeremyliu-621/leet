@@ -34971,6 +34971,65 @@ def minimumTotal(triangle):
     return dp[0]
 `,
 
+  // batch 149
+  'maximize-score-numbers-in-ranges': `
+def maxScore(start, d):
+    if hasattr(start, 'to_py'):
+        start = start.to_py()
+    start = sorted(start)
+    n = len(start)
+    def can_achieve(min_diff):
+        prev = start[0]
+        for i in range(1, n):
+            need = prev + min_diff
+            if need > start[i] + d:
+                return False
+            prev = max(start[i], need)
+        return True
+    lo, hi = 0, start[-1] + d - start[0]
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_achieve(mid):
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'maximum-energy-boost-from-two-drinks': `
+def maxEnergyBoost(energyDrinkA, energyDrinkB):
+    if hasattr(energyDrinkA, 'to_py'):
+        energyDrinkA = energyDrinkA.to_py()
+    if hasattr(energyDrinkB, 'to_py'):
+        energyDrinkB = energyDrinkB.to_py()
+    n = len(energyDrinkA)
+    prev_prev_a = prev_prev_b = 0
+    prev_a, prev_b = energyDrinkA[0], energyDrinkB[0]
+    for i in range(1, n):
+        new_a = max(prev_a + energyDrinkA[i], prev_prev_b + energyDrinkA[i])
+        new_b = max(prev_b + energyDrinkB[i], prev_prev_a + energyDrinkB[i])
+        prev_prev_a, prev_prev_b = prev_a, prev_b
+        prev_a, prev_b = new_a, new_b
+    return max(prev_a, prev_b)
+`,
+
+  'k-th-nearest-obstacle-queries': `
+import heapq
+def resultsArray(queries, k):
+    if hasattr(queries, 'to_py'):
+        queries = queries.to_py()
+    heap = []
+    result = []
+    for q in queries:
+        x, y = q[0], q[1]
+        dist = abs(x) + abs(y)
+        if len(heap) < k:
+            heapq.heappush(heap, -dist)
+        elif dist < -heap[0]:
+            heapq.heapreplace(heap, -dist)
+        result.append(-heap[0] if len(heap) == k else -1)
+    return result
+`,
 
   // batch 149 — orphaned problems from batches 142b/144
   'beautiful-towers-ii': `def maximumSumOfHeights(maxHeights):
