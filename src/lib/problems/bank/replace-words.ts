@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'replace-words',
   title: 'Replace Words',
   difficulty: 'medium',
-  tags: ['hash-map', 'strings'],
+  tags: ['trie', 'hash-map', 'strings'],
   description: `In English, a **root** can be followed by some other word to form a longer word called a **derivative**. For example, the root \`"help"\` can be followed by words like \`"ful"\` or \`"ing"\` to form \`"helpful"\` or \`"helping"\`.
 
 Given a dictionary consisting of many **roots** and a \`sentence\` string, replace all the derivatives in the sentence with the **shortest** root in the dictionary. If a derivative can be replaced by more than one root in the dictionary, replace it with the **shortest** root.

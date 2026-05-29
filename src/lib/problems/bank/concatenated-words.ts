@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'concatenated-words',
   title: 'Concatenated Words',
   difficulty: 'hard',
-  tags: ['dynamic-programming', 'strings'],
+  tags: ['trie', 'dynamic-programming', 'strings'],
   description: `Given an array of strings \`words\` (**unique**), return all the **concatenated words** in the given list of \`words\`.
 
 A **concatenated word** is a string that is entirely composed of at least two shorter words in the given list.

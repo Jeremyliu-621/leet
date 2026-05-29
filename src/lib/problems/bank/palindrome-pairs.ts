@@ -18,7 +18,7 @@ export const problem: Problem = {
   id: 'palindrome-pairs',
   title: 'Palindrome Pairs',
   difficulty: 'hard',
-  tags: ['hash-map', 'strings'],
+  tags: ['trie', 'hash-map', 'strings'],
   description: `You are given a **0-indexed** array of **unique** strings \`words\`.
 
 A **palindrome pair** is a pair of integers \`(i, j)\` such that:

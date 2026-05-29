@@ -37494,4 +37494,152 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     });
   },
 
+  // batch 160
+  'reformat-date': (...args: unknown[]) => {
+    const date = args[0] as string;
+    const MONTHS: Record<string, string> = {
+      Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
+      Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12',
+    };
+    const parts = date.split(' ');
+    const day = parts[0]!.replace(/\D/g, '').padStart(2, '0');
+    return `${parts[2]}-${MONTHS[parts[1]!]}-${day}`;
+  },
+
+  'maximum-value-after-insertion': (...args: unknown[]) => {
+    const n = args[0] as string;
+    const x = args[1] as number;
+    const neg = n[0] === '-';
+    const digits = neg ? n.slice(1) : n;
+    let i = 0;
+    while (i < digits.length) {
+      if (neg ? parseInt(digits[i]!) > x : parseInt(digits[i]!) < x) break;
+      i++;
+    }
+    const inserted = digits.slice(0, i) + String(x) + digits.slice(i);
+    return neg ? '-' + inserted : inserted;
+  },
+
+  'recover-the-original-array': (...args: unknown[]) => {
+    const numsIn = [...(args[0] as number[])].sort((a, b) => a - b);
+    const n = numsIn.length / 2;
+    for (let i = 1; i < numsIn.length; i++) {
+      const diff = numsIn[i]! - numsIn[0]!;
+      if (diff === 0 || diff % 2 !== 0) continue;
+      const k = diff / 2;
+      const freq = new Map<number, number>();
+      for (const v of numsIn) freq.set(v, (freq.get(v) ?? 0) + 1);
+      const result: number[] = [];
+      let ok = true;
+      for (const v of numsIn) {
+        if (!freq.get(v)) continue;
+        const high = v + 2 * k;
+        if (!freq.get(high)) { ok = false; break; }
+        freq.set(v, freq.get(v)! - 1);
+        freq.set(high, freq.get(high)! - 1);
+        result.push(v + k);
+      }
+      if (ok && result.length === n) return result.sort((a, b) => a - b);
+    }
+    return [];
+  },
+
+  'construct-smallest-number-from-di-string': (...args: unknown[]) => {
+    const pattern = args[0] as string;
+    const result: number[] = [];
+    const stack: number[] = [];
+    for (let i = 0; i <= pattern.length; i++) {
+      stack.push(i + 1);
+      if (i === pattern.length || pattern[i] === 'I') {
+        while (stack.length) result.push(stack.pop()!);
+      }
+    }
+    return result.join('');
+  },
+
+  'minimum-difference-highest-lowest-k-scores': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const k = args[1] as number;
+    let min = Infinity;
+    for (let i = 0; i + k - 1 < nums.length; i++) {
+      min = Math.min(min, nums[i + k - 1]! - nums[i]!);
+    }
+    return min;
+  },
+
+  'unique-length-3-palindromic-subsequences': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let count = 0;
+    for (let c = 0; c < 26; c++) {
+      const ch = String.fromCharCode(97 + c);
+      const left = s.indexOf(ch), right = s.lastIndexOf(ch);
+      if (left === -1 || left === right) continue;
+      const between = new Set<string>();
+      for (let i = left + 1; i < right; i++) between.add(s[i]!);
+      count += between.size;
+    }
+    return count;
+  },
+
+  'minimum-white-tiles-after-covering-with-carpets': (...args: unknown[]) => {
+    const floor = args[0] as string;
+    const numCarpets = args[1] as number;
+    const carpetLen = args[2] as number;
+    const n = floor.length;
+    const dp: number[][] = Array.from({ length: numCarpets + 1 }, () => new Array<number>(n + 1).fill(0));
+    for (let i = 1; i <= n; i++) dp[0]![i] = dp[0]![i - 1]! + (floor[i - 1] === '1' ? 1 : 0);
+    for (let j = 1; j <= numCarpets; j++) {
+      for (let i = 1; i <= n; i++) {
+        dp[j]![i] = Math.min(
+          dp[j]![i - 1]! + (floor[i - 1] === '1' ? 1 : 0),
+          dp[j - 1]![Math.max(0, i - carpetLen)]!
+        );
+      }
+    }
+    return dp[numCarpets]![n]!;
+  },
+
+  'special-permutations': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length, MOD = 1_000_000_007;
+    const dp: number[][] = Array.from({ length: 1 << n }, () => new Array<number>(n).fill(0));
+    for (let i = 0; i < n; i++) dp[1 << i]![i] = 1;
+    for (let mask = 1; mask < (1 << n); mask++) {
+      for (let last = 0; last < n; last++) {
+        if (!(mask & (1 << last)) || !dp[mask]![last]) continue;
+        for (let next = 0; next < n; next++) {
+          if (mask & (1 << next)) continue;
+          if (nums[last]! % nums[next]! === 0 || nums[next]! % nums[last]! === 0) {
+            dp[mask | (1 << next)]![next] = (dp[mask | (1 << next)]![next]! + dp[mask]![last]!) % MOD;
+          }
+        }
+      }
+    }
+    const full = (1 << n) - 1;
+    return dp[full]!.reduce((a, b) => (a + b) % MOD, 0);
+  },
+
+  // batch 160 — graph+union-find/hard, arrays+dp/medium, arrays+hash-map/medium, arrays+math/easy
+  'minimum-cost-to-walk-weighted-graph': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const query = args[2] as number[][];
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const compAnd = new Array<number>(n).fill(0x3FFFFFFF);
+    function find(x: number): number {
+      while (parent[x] !== x) { parent[x] = parent[parent[x]!]!; x = parent[x]!; }
+      return x;
+    }
+    for (const [u, v, w] of edges) {
+      const ru = find(u!), rv = find(v!);
+      if (ru === rv) { compAnd[ru]! &= w!; }
+      else { compAnd[rv]! = compAnd[ru]! & compAnd[rv]! & w!; parent[ru] = rv; }
+    }
+    return query.map(([s, t]) => {
+      if (s === t) return 0;
+      const rs = find(s!), rt = find(t!);
+      return rs === rt ? compAnd[rt]! : -1;
+    });
+  },
+
 };

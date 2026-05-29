@@ -37305,6 +37305,88 @@ def waysToReachTarget(target, types):
     return dp[target]
 `,
 
+  'unique-length-3-palindromic-subsequences': `
+def countPalindromicSubsequence(s):
+    count = 0
+    for c in range(26):
+        ch = chr(ord('a') + c)
+        left = s.find(ch)
+        right = s.rfind(ch)
+        if left == -1 or left == right:
+            continue
+        count += len(set(s[left + 1:right]))
+    return count
+`,
+
+  'minimum-white-tiles-after-covering-with-carpets': `
+def minimumWhiteTiles(floor, numCarpets, carpetLen):
+    n = len(floor)
+    dp = [[0] * (n + 1) for _ in range(numCarpets + 1)]
+    for i in range(1, n + 1):
+        dp[0][i] = dp[0][i - 1] + (1 if floor[i - 1] == '1' else 0)
+    for j in range(1, numCarpets + 1):
+        for i in range(1, n + 1):
+            dp[j][i] = min(
+                dp[j][i - 1] + (1 if floor[i - 1] == '1' else 0),
+                dp[j - 1][max(0, i - carpetLen)]
+            )
+    return dp[numCarpets][n]
+`,
+
+  'special-permutations': `
+def specialPerm(nums):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    n = len(nums)
+    MOD = 10 ** 9 + 7
+    dp = [[0] * n for _ in range(1 << n)]
+    for i in range(n):
+        dp[1 << i][i] = 1
+    for mask in range(1, 1 << n):
+        for last in range(n):
+            if not (mask & (1 << last)) or not dp[mask][last]:
+                continue
+            for nxt in range(n):
+                if mask & (1 << nxt):
+                    continue
+                if nums[last] % nums[nxt] == 0 or nums[nxt] % nums[last] == 0:
+                    dp[mask | (1 << nxt)][nxt] = (dp[mask | (1 << nxt)][nxt] + dp[mask][last]) % MOD
+    full = (1 << n) - 1
+    return sum(dp[full]) % MOD
+`,
+
+  'minimum-cost-to-walk-weighted-graph': `
+def minimumCost(n, edges, query):
+    if hasattr(edges, 'to_py'):
+        edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in edges.to_py()]
+    if hasattr(query, 'to_py'):
+        query = [list(q.to_py() if hasattr(q, 'to_py') else q) for q in query.to_py()]
+    parent = list(range(n))
+    comp_and = [0x3FFFFFFF] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    for e in edges:
+        u, v, w = int(e[0]), int(e[1]), int(e[2])
+        ru, rv = find(u), find(v)
+        if ru == rv:
+            comp_and[ru] &= w
+        else:
+            comp_and[rv] = comp_and[ru] & comp_and[rv] & w
+            parent[ru] = rv
+    result = []
+    for q in query:
+        s, t = int(q[0]), int(q[1])
+        if s == t:
+            result.append(0)
+        else:
+            rs, rt = find(s), find(t)
+            result.append(comp_and[rt] if rs == rt else -1)
+    return result
+`,
+
   // batch 159 — hash-map/medium, bit-manipulation/medium×2
   'tuple-with-same-product': `
 def tupleSameProduct(nums):
@@ -37476,6 +37558,79 @@ def maxUniqueSplit(s):
                 used.remove(sub)
     dfs(0)
     return max_count[0]
+`,
+
+  // batch 160
+  'reformat-date': `
+def reformatDate(date):
+    MONTHS = {'Jan':'01','Feb':'02','Mar':'03','Apr':'04','May':'05','Jun':'06',
+               'Jul':'07','Aug':'08','Sep':'09','Oct':'10','Nov':'11','Dec':'12'}
+    parts = date.split(' ')
+    day = ''.join(c for c in parts[0] if c.isdigit()).zfill(2)
+    return f"{parts[2]}-{MONTHS[parts[1]]}-{day}"
+`,
+
+  'maximum-value-after-insertion': `
+def maxValue(n, x):
+    neg = n[0] == '-'
+    digits = n[1:] if neg else n
+    i = 0
+    while i < len(digits):
+        if (neg and int(digits[i]) > x) or (not neg and int(digits[i]) < x):
+            break
+        i += 1
+    inserted = digits[:i] + str(x) + digits[i:]
+    return '-' + inserted if neg else inserted
+`,
+
+  'recover-the-original-array': `
+def recoverArray(nums):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    nums_sorted = sorted(nums)
+    n = len(nums_sorted) // 2
+    from collections import Counter
+    for i in range(1, len(nums_sorted)):
+        diff = nums_sorted[i] - nums_sorted[0]
+        if diff == 0 or diff % 2 != 0:
+            continue
+        k = diff // 2
+        freq = Counter(nums_sorted)
+        result = []
+        ok = True
+        for v in nums_sorted:
+            if freq[v] == 0:
+                continue
+            high = v + 2 * k
+            if freq[high] == 0:
+                ok = False
+                break
+            freq[v] -= 1
+            freq[high] -= 1
+            result.append(v + k)
+        if ok and len(result) == n:
+            return sorted(result)
+    return []
+`,
+
+  'construct-smallest-number-from-di-string': `
+def smallestNumber(pattern):
+    result = []
+    stack = []
+    for i in range(len(pattern) + 1):
+        stack.append(i + 1)
+        if i == len(pattern) or pattern[i] == 'I':
+            while stack:
+                result.append(stack.pop())
+    return ''.join(str(x) for x in result)
+`,
+
+  'minimum-difference-highest-lowest-k-scores': `
+def minimumDifference(nums, k):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    nums = sorted(nums)
+    return min(nums[i + k - 1] - nums[i] for i in range(len(nums) - k + 1))
 `,
 
 };

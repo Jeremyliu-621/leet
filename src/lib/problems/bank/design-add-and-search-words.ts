@@ -31,7 +31,7 @@ export const problem: Problem = {
   id: 'design-add-and-search-words',
   title: 'Design Add and Search Words Data Structure',
   difficulty: 'medium',
-  tags: ['strings'],
+  tags: ['trie', 'design', 'strings'],
   description: `Design a data structure that supports adding new words and finding if a string matches any previously added string.
 
 Implement the \`WordDictionary\` class:
