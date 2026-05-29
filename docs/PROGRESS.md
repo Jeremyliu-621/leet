@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2767** problems; 8595 tests green. Batches 102–210b + KaTeX UX complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2772** problems; 8610 tests green. Batches 102–210b + 207b + KaTeX UX complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 211+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 207b — find-occurrences-of-element-in-array, ways-to-express-as-sum-of-powers, minimum-right-shifts, sliding-subarray-beauty, maximum-strong-pair-xor-ii (2026-05-29)
+Five new problems: `find-occurrences-of-element-in-array` (easy/arrays, precompute positions array, 1-indexed query lookup), `ways-to-express-an-integer-as-sum-of-powers` (medium/dynamic-programming+math, 0/1 knapsack over i^x items, mod 10^9+7), `minimum-right-shifts-to-sort-the-array` (easy/arrays, count break points in circular array), `sliding-subarray-beauty` (medium/arrays+sliding-window, freq array of negatives, x-th smallest via linear scan), `maximum-strong-pair-xor-ii` (hard/bit-manipulation+trie, sliding window trie with flat arrays, 21-bit max XOR). Bank at **2772**; 8610 tests.
 
 ### feat(bank): batch 210b — second-maximum-number-in-array, sum-of-values-at-indices-with-k-set-bits, points-that-intersect-with-cars, count-stepping-numbers-in-range (2026-05-29)
 Four new problems: `second-maximum-number-in-array` (easy/arrays, find max then max of remaining below max), `sum-of-values-at-indices-with-k-set-bits` (easy/arrays+bit-manipulation, popcount(i)==k), `points-that-intersect-with-cars` (easy/arrays+simulation, Set of all covered integer points), `count-stepping-numbers-in-range` (medium/dynamic-programming+math, digit DP with tight/started flags, mod 10^9+7). Bank at **2767**; 8595 tests.
