@@ -2853,6 +2853,10 @@ import { problem as insertGreatestCommonDivisorsInLinkedList } from './insert-gr
 import { problem as doubleANumberRepresentedAsLinkedList } from './double-a-number-represented-as-linked-list';
 import { problem as maximumNumberOfOperationsToMoveOnesToTheEnd } from './maximum-number-of-operations-to-move-ones-to-the-end';
 import { problem as designLogStorageSystem } from './design-log-storage-system';
+import { problem as rangeSumQuery2dImmutable } from './range-sum-query-2d-immutable';
+import { problem as minimumDifficultyOfAJobSchedule } from './minimum-difficulty-of-a-job-schedule';
+import { problem as sumOfRootToLeafBinaryNumbers } from './sum-of-root-to-leaf-binary-numbers';
+import { problem as linkedListInBinaryTree } from './linked-list-in-binary-tree';
 // batch 177 — hash-map/medium, dp/medium, strings+backtracking/medium
 import { problem as mostFrequentIDs } from './most-frequent-ids';
 import { problem as numberOfPeopleAwareOfASecret } from './number-of-people-aware-of-a-secret';
@@ -5746,10 +5750,14 @@ export const problems: readonly Problem[] = [
   reconstructOriginalDigitsFromEnglish,
   minimumSkipsAfterMeetings,
   maximumPathQualityOfAGraph,
-  // batch 178 (remote) — math/medium, hash-map/medium, arrays/medium
+  // batch 178 — math/medium, hash-map/medium, arrays/medium, design/medium, dp/hard, tree/easy, mixed/medium
   countDistinctPrimeFactorsOfArray,
   numberOfBlackBlocks,
   sortTheStudentsByTheirKthScore,
+  rangeSumQuery2dImmutable,
+  minimumDifficultyOfAJobSchedule,
+  sumOfRootToLeafBinaryNumbers,
+  linkedListInBinaryTree,
   // batch 177 (remote) — linked-list/medium×3, arrays+greedy/medium, design/medium
   mergeInBetweenLinkedLists,
   insertGreatestCommonDivisorsInLinkedList,
