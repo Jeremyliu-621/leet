@@ -41897,6 +41897,106 @@ def maxBottlesDrunk(numBottles, numExchange):
     return max(v for v in dp[n-1][m-1] if v != NEG)
 `,
 
+  'maximize-score-of-numbers-in-ranges': `def maxScore(start, d):
+    start = sorted(start)
+    n = len(start)
+    def can(m):
+        curr = start[0]
+        for i in range(1, n):
+            curr = max(start[i], curr + m)
+            if curr > start[i] + d:
+                return False
+        return True
+    lo, hi = 0, start[-1] + d - start[0] + 1
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can(mid):
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'find-building-where-alice-and-bob-can-meet': `def leftmostBuildingQueries(heights, queries):
+    n = len(heights)
+    ans = []
+    for a, b in queries:
+        if a > b:
+            a, b = b, a
+        if a == b:
+            ans.append(a)
+        elif heights[b] > heights[a]:
+            ans.append(b)
+        else:
+            need = heights[a]
+            found = -1
+            for j in range(b + 1, n):
+                if heights[j] > need:
+                    found = j
+                    break
+            ans.append(found)
+    return ans
+`,
+
+  'minimum-number-of-seconds-to-make-mountain-array': `def minimumSeconds(nums):
+    n = len(nums)
+    left = [0] * n
+    right = [0] * n
+    left[0] = nums[0]
+    for i in range(1, n):
+        left[i] = max(nums[i], left[i-1] + 1)
+    right[n-1] = nums[n-1]
+    for i in range(n-2, -1, -1):
+        right[i] = max(nums[i], right[i+1] + 1)
+    left_cost = [0] * n
+    for i in range(n):
+        left_cost[i] = (left_cost[i-1] if i > 0 else 0) + (left[i] - nums[i])
+    right_cost = [0] * n
+    for i in range(n-1, -1, -1):
+        right_cost[i] = (right_cost[i+1] if i < n-1 else 0) + (right[i] - nums[i])
+    ans = float('inf')
+    for p in range(1, n-1):
+        peak_val = max(left[p-1] + 1, right[p+1] + 1, nums[p])
+        cost = (left_cost[p-1] if p > 0 else 0) + (right_cost[p+1] if p < n-1 else 0) + (peak_val - nums[p])
+        ans = min(ans, cost)
+    return ans
+`,
+
+  'minimum-cost-walk-in-a-weighted-graph': `def minimumCost(n, edges, queries):
+    parent = list(range(n))
+    rank = [0] * n
+    comp_and = [-1] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(x, y):
+        px, py = find(x), find(y)
+        if px == py:
+            return px
+        if rank[px] < rank[py]:
+            px, py = py, px
+        parent[py] = px
+        if rank[px] == rank[py]:
+            rank[px] += 1
+        return px
+    for u, v, w in edges:
+        pu, pv = find(u), find(v)
+        and_val = comp_and[pu] & comp_and[pv] & w
+        root = union(u, v)
+        comp_and[root] = and_val
+    result = []
+    for s, t in queries:
+        if s == t:
+            result.append(0)
+        elif find(s) != find(t):
+            result.append(-1)
+        else:
+            result.append(comp_and[find(s)])
+    return result
+`,
+
   'minimum-time-to-revert-word-to-initial-state-ii': `def minimumTimeToInitialState(word, k):
     n = len(word)
     z = [0] * n

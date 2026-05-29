@@ -2904,6 +2904,11 @@ import { problem as minimumTimeToRevertWordToInitialStateII } from './minimum-ti
 import { problem as findTheMaximumLengthOfValidSubsequenceII } from './find-the-maximum-length-of-valid-subsequence-ii';
 import { problem as countPrefixAndSuffixPairsII } from './count-prefix-and-suffix-pairs-ii';
 import { problem as countSubstringsThatCanBeRearrangedToContainAStringI } from './count-substrings-that-can-be-rearranged-to-contain-a-string-i';
+// batch 183 — medium/binary-search, hard/arrays+stack, medium/dp, medium/graph+union-find
+import { problem as maximizeScoreOfNumbersInRanges } from './maximize-score-of-numbers-in-ranges';
+import { problem as findBuildingWhereAliceAndBobCanMeet } from './find-building-where-alice-and-bob-can-meet';
+import { problem as minimumNumberOfSecondsToMakeMountainArray } from './minimum-number-of-seconds-to-make-mountain-array';
+import { problem as minimumCostWalkInAWeightedGraph } from './minimum-cost-walk-in-a-weighted-graph';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5849,4 +5854,9 @@ export const problems: readonly Problem[] = [
   findTheMaximumLengthOfValidSubsequenceII,
   countPrefixAndSuffixPairsII,
   countSubstringsThatCanBeRearrangedToContainAStringI,
+  // batch 183 — medium/binary-search, hard/arrays+stack, medium/dp, medium/graph+union-find
+  maximizeScoreOfNumbersInRanges,
+  findBuildingWhereAliceAndBobCanMeet,
+  minimumNumberOfSecondsToMakeMountainArray,
+  minimumCostWalkInAWeightedGraph,
 ];

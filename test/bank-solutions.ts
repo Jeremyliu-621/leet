@@ -41927,6 +41927,38 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Math.max(...dp[n - 1]![m - 1]!.filter(v => v !== NEG));
   },
 
+  'minimum-cost-walk-in-a-weighted-graph': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const queries = args[2] as number[][];
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const rank = new Array<number>(n).fill(0);
+    const compAnd = new Array<number>(n).fill(-1);
+    function find(x: number): number {
+      if (parent[x] !== x) parent[x] = find(parent[x]!);
+      return parent[x]!;
+    }
+    function union(x: number, y: number): number {
+      const px = find(x), py = find(y);
+      if (px === py) return px;
+      if (rank[px]! < rank[py]!) { parent[px] = py; return py; }
+      if (rank[px]! > rank[py]!) { parent[py] = px; return px; }
+      parent[py] = px; rank[px]!++; return px;
+    }
+    for (const [u, v, w] of edges) {
+      const pu = find(u!), pv = find(v!);
+      const andVal = compAnd[pu]! & compAnd[pv]! & w!;
+      const root = union(u!, v!);
+      compAnd[root] = andVal;
+    }
+    return queries.map(([s, t]) => {
+      if (s === t) return 0;
+      const ps = find(s!), pt = find(t!);
+      if (ps !== pt) return -1;
+      return compAnd[ps]!;
+    });
+  },
+
   'minimum-time-to-revert-word-to-initial-state-ii': (...args: unknown[]) => {
     const word = args[0] as string;
     const k = args[1] as number;
@@ -41985,6 +42017,66 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       ins.count++;
     }
     return result;
+  },
+
+  'maximize-score-of-numbers-in-ranges': (...args: unknown[]) => {
+    const start = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const d = args[1] as number;
+    const n = start.length;
+    function canAchieve(m: number): boolean {
+      let curr = start[0]!;
+      for (let i = 1; i < n; i++) {
+        curr = Math.max(start[i]!, curr + m);
+        if (curr > start[i]! + d) return false;
+      }
+      return true;
+    }
+    let lo = 0, hi = (start[n - 1]! + d - start[0]!) + 1;
+    while (lo < hi) {
+      const mid = Math.floor((lo + hi + 1) / 2);
+      if (canAchieve(mid)) lo = mid;
+      else hi = mid - 1;
+    }
+    return lo;
+  },
+
+  'find-building-where-alice-and-bob-can-meet': (...args: unknown[]) => {
+    const heights = args[0] as number[];
+    const queries = args[1] as number[][];
+    const n = heights.length;
+    return queries.map(([a, b]) => {
+      let sa = a!, sb = b!;
+      if (sa > sb) [sa, sb] = [sb, sa];
+      if (sa === sb) return sa;
+      if (heights[sb]! > heights[sa]!) return sb;
+      const need = heights[sa]!;
+      for (let j = sb + 1; j < n; j++) {
+        if (heights[j]! > need) return j;
+      }
+      return -1;
+    });
+  },
+
+  'minimum-number-of-seconds-to-make-mountain-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const left = new Array<number>(n);
+    const right = new Array<number>(n);
+    left[0] = nums[0]!;
+    for (let i = 1; i < n; i++) left[i] = Math.max(nums[i]!, left[i - 1]! + 1);
+    right[n - 1] = nums[n - 1]!;
+    for (let i = n - 2; i >= 0; i--) right[i] = Math.max(nums[i]!, right[i + 1]! + 1);
+    const leftCost = new Array<number>(n).fill(0);
+    for (let i = 0; i < n; i++) leftCost[i] = (i > 0 ? leftCost[i - 1]! : 0) + (left[i]! - nums[i]!);
+    const rightCost = new Array<number>(n).fill(0);
+    for (let i = n - 1; i >= 0; i--) rightCost[i] = (i < n - 1 ? rightCost[i + 1]! : 0) + (right[i]! - nums[i]!);
+    let ans = Infinity;
+    for (let p = 1; p < n - 1; p++) {
+      const peakVal = Math.max(left[p - 1]! + 1, right[p + 1]! + 1, nums[p]!);
+      const cost = (leftCost[p - 1] ?? 0) + (rightCost[p + 1] ?? 0) + (peakVal - nums[p]!);
+      if (cost < ans) ans = cost;
+    }
+    return ans;
   },
 
   'count-substrings-that-can-be-rearranged-to-contain-a-string-i': (...args: unknown[]) => {
