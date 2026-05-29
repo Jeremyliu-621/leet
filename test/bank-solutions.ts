@@ -41551,6 +41551,101 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count.reduce((sum, v) => sum + Math.abs(v), 0);
   },
 
+  // batch 181 — interval-merge/medium, arrays/easy, arrays/easy, arrays/easy, dp/medium
+  'check-if-the-grid-can-be-cut-into-sections': (...args: unknown[]) => {
+    const rectangles = args[1] as number[][];
+    function canCut(segs: number[][]): boolean {
+      segs.sort((a, b) => a[0]! - b[0]!);
+      let groups = 0, maxEnd = -Infinity;
+      for (const [s, e] of segs) {
+        if (s! >= maxEnd) groups++;
+        maxEnd = Math.max(maxEnd, e!);
+      }
+      return groups >= 3;
+    }
+    const xSegs = rectangles.map(r => [r[0]!, r[2]!]);
+    const ySegs = rectangles.map(r => [r[1]!, r[3]!]);
+    return canCut(xSegs) || canCut(ySegs);
+  },
+
+  'minimum-ops-make-elements-distinct': (numsArg: unknown) => {
+    const nums = numsArg as number[];
+    const seen = new Set<number>();
+    for (let i = nums.length - 1; i >= 0; i--) {
+      if (seen.has(nums[i]!)) return Math.ceil((i + 1) / 3);
+      seen.add(nums[i]!);
+    }
+    return 0;
+  },
+
+  'zigzag-grid-traversal-with-skip': (gridArg: unknown) => {
+    const grid = gridArg as number[][];
+    const result: number[] = [];
+    let count = 0;
+    for (let r = 0; r < grid.length; r++) {
+      const row = grid[r]!;
+      if (r % 2 === 0) {
+        for (let c = 0; c < row.length; c++) {
+          if (count % 2 === 0) result.push(row[c]!);
+          count++;
+        }
+      } else {
+        for (let c = row.length - 1; c >= 0; c--) {
+          if (count % 2 === 0) result.push(row[c]!);
+          count++;
+        }
+      }
+    }
+    return result;
+  },
+
+  'sum-of-variable-length-subarrays': (numsArg: unknown) => {
+    const nums = numsArg as number[];
+    const n = nums.length;
+    const prefix = new Array(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + nums[i]!;
+    let total = 0;
+    for (let i = 0; i < n; i++) {
+      const start = Math.max(0, i - nums[i]!);
+      total += prefix[i + 1]! - prefix[start]!;
+    }
+    return total;
+  },
+
+  'maximum-amount-of-money-robot-can-earn': (coinsArg: unknown) => {
+    const coins = coinsArg as number[][];
+    const n = coins.length, m = coins[0]!.length;
+    const NEG_INF = -Infinity;
+    const dp: number[][][] = Array.from({length: n}, (_, i) =>
+      Array.from({length: m}, (__, j) => {
+        const c = coins[i]![j]!;
+        return [c >= 0 ? c : NEG_INF, NEG_INF, NEG_INF];
+      })
+    );
+    const c00 = coins[0]![0]!;
+    dp[0]![0]![0] = c00;
+    if (c00 < 0) { dp[0]![0]![1] = 0; }
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < m; j++) {
+        if (i === 0 && j === 0) continue;
+        const c = coins[i]![j]!;
+        const prev: number[] = [NEG_INF, NEG_INF, NEG_INF];
+        if (i > 0) for (let k = 0; k < 3; k++) prev[k] = Math.max(prev[k]!, dp[i-1]![j]![k]!);
+        if (j > 0) for (let k = 0; k < 3; k++) prev[k] = Math.max(prev[k]!, dp[i]![j-1]![k]!);
+        if (c >= 0) {
+          for (let k = 0; k < 3; k++) dp[i]![j]![k] = prev[k]! === NEG_INF ? NEG_INF : prev[k]! + c;
+        } else {
+          for (let k = 0; k < 3; k++) {
+            const take = prev[k]! === NEG_INF ? NEG_INF : prev[k]! + c;
+            const neut = k > 0 && prev[k-1]! !== NEG_INF ? prev[k-1]! : NEG_INF;
+            dp[i]![j]![k] = Math.max(take, neut);
+          }
+        }
+      }
+    }
+    return Math.max(...dp[n-1]![m-1]!);
+  },
+
   // batch 180 extensions — dp+bit-manipulation/hard, dp/medium
   'find-number-of-ways-to-reach-the-k-th-stair': (kArg: unknown) => {
     const k = kArg as number;
