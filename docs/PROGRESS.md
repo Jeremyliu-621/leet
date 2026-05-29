@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2342** problems; 7320 tests green. Batches 102–155c + 155 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2346** problems; 7332 tests green. Batches 102–156 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 156+); UX polish; accessibility audit.
+**Next up:** More bank growth (batch 157+); update site count; UX polish.
+
+### feat(bank): add batch 156 — camelcase-matching, word-squares, minimize-malware-spread-ii, path-with-max-probability (2026-05-29)
+Four new problems targeting underrepresented tags: `camelcase-matching` (medium/strings+two-pointers, two-pointer pattern-as-subsequence with uppercase constraint), `word-squares` (hard/trie+backtracking, prefix-map + DFS for symmetric word grids; sort output for determinism), `minimize-malware-spread-ii` (hard/union-find, build UF without infected nodes; save components with single exclusive infected neighbour), `path-with-max-probability` (medium/graph+shortest-path+heap, Dijkstra max-probability variant with max-heap). Bank at **2346**; 7332 tests.
 
 ### feat(bank): add batch 155 — house-robber-iv, substring-xor-queries, min-rectangles-cover-points, shortest-way-form-string, smallest-number-all-set-bits (2026-05-29)
 Five problems: `house-robber-iv` (medium/binary-search, binary search on capability with greedy non-adjacent count), `substring-xor-queries` (medium/strings+hash-map, precompute XOR map up to 30-bit substrings; answer = map[first^second]), `minimum-rectangles-to-cover-points` (medium/arrays+math, sort x-coords, greedy: start rectangle at each uncovered x extending x+w), `shortest-way-to-form-string` (medium/strings+two-pointers, check all target chars in source then two-pointer greedy with copy count), `smallest-number-with-all-set-bits` (easy/math, find smallest 2^k-1 ≥ n via bit-shift mask). Bank at **2342**; 7320 tests.
