@@ -2532,11 +2532,16 @@ import { problem as friendGroupsUnionFind } from './friend-groups-union-find';
 import { problem as dijkstraSingleSourceShortestPath } from './dijkstra-single-source-shortest-path';
 import { problem as kthLargestAfterEachInsertion } from './kth-largest-after-each-insertion';
 import { problem as simulateTrafficLights } from './simulate-traffic-lights';
-// batch 154 — heap+arrays/medium, dp+binary-search/medium, strings+hash-map/medium, math+arrays/medium, arrays+hash-map+math/medium
+// batch 154a — heap+arrays/medium, dp+binary-search/medium, strings+hash-map/medium, math+arrays/medium, arrays+hash-map+math/medium
 import { problem as maximumEarningsFromTaxi } from './maximum-earnings-from-taxi';
 import { problem as findLongestSpecialSubstringThrice } from './find-the-longest-special-substring-that-occurs-thrice-i';
 import { problem as minimumCostMakeArrayEqualindromic } from './minimum-cost-to-make-array-equalindromic';
 import { problem as identifyLargestOutlier } from './identify-the-largest-outlier-in-an-array';
+// batch 154c — backtracking/hard, simulation/hard, simulation+binary-search/hard, hash-map+simulation/hard
+import { problem as twentyFourGame } from './24-game';
+import { problem as rangeModule } from './range-module';
+import { problem as insertDeleteGetRandomDuplicatesAllowed } from './insert-delete-getrandom-duplicates-allowed';
+import { problem as matchsticksToSquare } from './matchsticks-to-square';
 // batch 151 — dp/hard, arrays/medium, strings+dp/medium, dp+bitset/hard
 import { problem as findTheCountOfMonotonicPairsII } from './find-the-count-of-monotonic-pairs-ii';
 import { problem as maximumStrengthOfAGroup } from './maximum-strength-of-a-group';
@@ -2563,6 +2568,19 @@ import { problem as mapSumPairs } from './map-sum-pairs';
 import { problem as magicDictionary } from './magic-dictionary';
 import { problem as shortEncodingOfWords } from './short-encoding-of-words';
 import { problem as implementMagicTrieStream } from './implement-magic-trie-stream';
+// batch 155 — dp/medium×2, dp/hard×2, arrays/medium, strings/hard, sliding-window/medium
+import { problem as minimumScoreTriangulationPolygon } from './minimum-score-triangulation-polygon';
+import { problem as nonNegativeIntegersWithoutConsecutiveOnes } from './non-negative-integers-without-consecutive-ones';
+import { problem as waysToMakeAFairArray } from './ways-to-make-a-fair-array';
+import { problem as countWaysToBuildGoodStrings } from './count-ways-to-build-good-strings';
+import { problem as restoreTheArray } from './restore-the-array';
+import { problem as numberOfWaysToFormATargetStringGivenADictionary } from './number-of-ways-to-form-a-target-string-given-a-dictionary';
+import { problem as longestSubarrayWithAtMostKSum } from './longest-subarray-with-at-most-k-sum';
+// batch 155b — design/easy, design/medium×2, design/hard
+import { problem as recentCounter } from './recent-counter';
+import { problem as peekingIterator } from './peeking-iterator';
+import { problem as flattenNestedListIterator } from './flatten-nested-list-iterator';
+import { problem as allOOneDataStructure } from './all-o-one-data-structure';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5163,4 +5181,22 @@ export const problems: readonly Problem[] = [
   magicDictionary,
   shortEncodingOfWords,
   implementMagicTrieStream,
+  // batch 154c — backtracking/hard, simulation/hard, simulation+binary-search/hard, hash-map+simulation/hard
+  twentyFourGame,
+  rangeModule,
+  insertDeleteGetRandomDuplicatesAllowed,
+  matchsticksToSquare,
+  // batch 155 — dp/medium×2, dp/hard×2, arrays/medium, strings/hard, sliding-window/medium
+  minimumScoreTriangulationPolygon,
+  nonNegativeIntegersWithoutConsecutiveOnes,
+  waysToMakeAFairArray,
+  countWaysToBuildGoodStrings,
+  restoreTheArray,
+  numberOfWaysToFormATargetStringGivenADictionary,
+  longestSubarrayWithAtMostKSum,
+  // batch 155b — design/easy, design/medium×2, design/hard
+  recentCounter,
+  peekingIterator,
+  flattenNestedListIterator,
+  allOOneDataStructure,
 ];
