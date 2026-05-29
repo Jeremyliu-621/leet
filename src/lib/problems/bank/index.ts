@@ -2746,6 +2746,12 @@ import { problem as removeLetterToEqualizeFrequency } from './remove-letter-to-e
 import { problem as minimizeTheMaximumDifferenceOfPairs } from './minimize-the-maximum-difference-of-pairs';
 import { problem as checkIfPointIsReachable } from './check-if-point-is-reachable';
 import { problem as buildArrayWithStackOperations } from './build-array-with-stack-operations';
+// batch 171 — strings/easy, tree/medium, arrays/medium, math/medium×2
+import { problem as stringMatchingInAnArray } from './string-matching-in-an-array';
+import { problem as countNodesEqualToAverageOfSubtree } from './count-nodes-equal-to-average-of-subtree';
+import { problem as minimumTimeToMakeRopeColorful } from './minimum-time-to-make-rope-colorful';
+import { problem as smallestValueAfterReplacingWithSumOfPrimeFactors } from './smallest-value-after-replacing-with-sum-of-prime-factors';
+import { problem as addMinimumNumberOfRungs } from './add-minimum-number-of-rungs';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5526,4 +5532,10 @@ export const problems: readonly Problem[] = [
   minimizeTheMaximumDifferenceOfPairs,
   checkIfPointIsReachable,
   buildArrayWithStackOperations,
+  // batch 171 — strings/easy, tree/medium, arrays/medium, math/medium×2
+  stringMatchingInAnArray,
+  countNodesEqualToAverageOfSubtree,
+  minimumTimeToMakeRopeColorful,
+  smallestValueAfterReplacingWithSumOfPrimeFactors,
+  addMinimumNumberOfRungs,
 ];

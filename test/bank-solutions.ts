@@ -39295,4 +39295,66 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return complete;
   },
 
+  // batch 171
+  'string-matching-in-an-array': (words: unknown) => {
+    const ws = words as string[];
+    return ws.filter(w => ws.some(other => other !== w && other.includes(w)));
+  },
+
+  'count-nodes-equal-to-average-of-subtree': (root: unknown) => {
+    const arr = root as (number | null)[];
+    let count = 0;
+    const dfs = (i: number): [number, number] => {
+      if (i >= arr.length || arr[i] === null || arr[i] === undefined) return [0, 0];
+      const [lSum, lCnt] = dfs(2 * i + 1);
+      const [rSum, rCnt] = dfs(2 * i + 2);
+      const total = (arr[i] as number) + lSum + rSum;
+      const totalCnt = 1 + lCnt + rCnt;
+      if (Math.floor(total / totalCnt) === (arr[i] as number)) count++;
+      return [total, totalCnt];
+    };
+    dfs(0);
+    return count;
+  },
+
+  'minimum-time-to-make-rope-colorful': (...args: unknown[]) => {
+    const colors = args[0] as string;
+    const neededTime = args[1] as number[];
+    let total = 0, i = 0;
+    while (i < colors.length) {
+      let j = i, groupMax = 0, groupSum = 0;
+      while (j < colors.length && colors[j] === colors[i]) {
+        groupSum += neededTime[j]!;
+        groupMax = Math.max(groupMax, neededTime[j]!);
+        j++;
+      }
+      total += groupSum - groupMax;
+      i = j;
+    }
+    return total;
+  },
+
+  'smallest-value-after-replacing-with-sum-of-prime-factors': (n: unknown) => {
+    let val = n as number;
+    while (true) {
+      let sum = 0, m = val;
+      for (let p = 2; p * p <= m; p++) {
+        while (m % p === 0) { sum += p; m = Math.floor(m / p); }
+      }
+      if (m > 1) sum += m;
+      if (sum === val) return val;
+      val = sum;
+    }
+  },
+
+  'add-minimum-number-of-rungs': (...args: unknown[]) => {
+    const rungs = args[0] as number[];
+    const dist = args[1] as number;
+    let count = 0, prev = 0;
+    for (const rung of rungs) {
+      const gap = rung - prev;
+      if (gap > dist) count += Math.ceil(gap / dist) - 1;
+      prev = rung;
+    }
+    return count;  },
 };
