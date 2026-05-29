@@ -2462,6 +2462,9 @@ import { problem as mostProfitablePath } from './most-profitable-path-in-a-tree'
 import { problem as maxGroupsEnteringNextRound } from './maximum-number-of-groups-entering-next-round';
 import { problem as findPalindromeFixedLength } from './find-palindrome-with-fixed-length';
 import { problem as numberOfWaysKSteps } from './number-of-ways-to-reach-a-position-after-exactly-k-steps';
+// batch 148 — math+dp/medium, dp/medium
+import { problem as maxProductAfterCuttingRope } from './max-product-after-cutting-rope';
+import { problem as minimumPathSumTriangle } from './minimum-path-sum-triangle';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4961,4 +4964,7 @@ export const problems: readonly Problem[] = [
   maxGroupsEnteringNextRound,
   findPalindromeFixedLength,
   numberOfWaysKSteps,
+  // batch 148 — math+dp/medium, dp/medium
+  maxProductAfterCuttingRope,
+  minimumPathSumTriangle,
 ];
