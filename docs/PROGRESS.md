@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2729** problems; 8481 tests green. Batches 102–205 + KaTeX UX complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2733** problems; 8493 tests green. Batches 102–206 + KaTeX UX complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 206+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 207+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 206 — max-first-last, sum-first-last, remove-duplicates, concatenate-arrays (2026-05-29)
+Four new easy problems: `max-of-first-and-last` (easy/arrays, Math.max(first,last)), `sum-of-first-and-last` (easy/arrays+math, first+last), `remove-duplicates-from-array` (easy/arrays+hash-map, Set preserving order), `concatenate-two-arrays` (easy/arrays, spread/concat). Bank at **2733**; 8493 tests.
 
 ### feat(bank): batch 205 — array-average, find-elements-exactly-twice, count-equal-k, total-string-len (2026-05-29)
 Four new easy problems: `array-average` (easy/arrays+math, sum/length), `find-elements-appearing-exactly-twice` (easy/arrays+hash-map, freq map filter count==2 sorted), `count-elements-equal-to-k` (easy/arrays, filter ===k count), `total-string-length` (easy/arrays+strings, sum word lengths). Bank at **2729**; 8481 tests.
