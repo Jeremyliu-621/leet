@@ -40211,6 +40211,114 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return count;
   },
+  // batch 175
+  'minimum-non-zero-product-of-the-array-elements': (p: unknown) => {
+    const MOD = 1_000_000_007n;
+    const pp = BigInt(p as number);
+    const maxVal = (2n ** pp - 1n) % MOD;
+    const base = (2n ** pp - 2n) % MOD;
+    const exp = 2n ** (pp - 1n) - 1n;
+    function modpow(b: bigint, e: bigint, m: bigint): bigint {
+      let r = 1n;
+      b = b % m;
+      while (e > 0n) {
+        if (e & 1n) r = r * b % m;
+        e >>= 1n;
+        b = b * b % m;
+      }
+      return r;
+    }
+    return Number(maxVal * modpow(base, exp, MOD) % MOD);
+  },
+
+  'remove-one-element-to-make-array-strictly-increasing': (nums: unknown) => {
+    const arr = nums as number[];
+    function isIncreasing(skip: number): boolean {
+      let prev = -Infinity;
+      for (let i = 0; i < arr.length; i++) {
+        if (i === skip) continue;
+        if (arr[i]! <= prev) return false;
+        prev = arr[i]!;
+      }
+      return true;
+    }
+    for (let i = 0; i < arr.length - 1; i++) {
+      if (arr[i]! >= arr[i + 1]!) return isIncreasing(i) || isIncreasing(i + 1);
+    }
+    return true;
+  },
+
+  'reconstruct-original-digits-from-english': (s: unknown) => {
+    const freq = new Array<number>(26).fill(0);
+    for (const c of s as string) freq[c.charCodeAt(0) - 97]!++;
+    const a = (c: string) => freq[c.charCodeAt(0) - 97]!;
+    const count = new Array<number>(10).fill(0);
+    count[0] = a('z');
+    count[2] = a('w');
+    count[4] = a('u');
+    count[6] = a('x');
+    count[8] = a('g');
+    count[1] = a('o') - count[0] - count[2] - count[4];
+    count[3] = a('h') - count[8];
+    count[5] = a('f') - count[4];
+    count[7] = a('s') - count[6];
+    count[9] = a('i') - count[5] - count[6] - count[8];
+    return count.map((c, d) => String(d).repeat(c)).join('');
+  },
+
+  'minimum-skips-after-meetings': (...args: unknown[]) => {
+    const dist = args[0] as number[];
+    const speed = args[1] as number;
+    const hoursBefore = args[2] as number;
+    const n = dist.length;
+    const INF = Infinity;
+    const dp = Array.from({ length: n + 1 }, () => new Array<number>(n + 1).fill(INF));
+    dp[0]![0] = 0;
+    for (let i = 1; i <= n; i++) {
+      const d = dist[i - 1]!;
+      for (let j = 0; j <= i; j++) {
+        if (dp[i - 1]![j]! < INF) {
+          const val = dp[i - 1]![j]! + d;
+          dp[i]![j] = Math.min(dp[i]![j]!, i < n ? val + ((-val % speed) + speed) % speed : val);
+        }
+        if (j > 0 && dp[i - 1]![j - 1]! < INF) {
+          dp[i]![j] = Math.min(dp[i]![j]!, dp[i - 1]![j - 1]! + d);
+        }
+      }
+    }
+    for (let j = 0; j <= n; j++) {
+      if (dp[n]![j]! <= speed * hoursBefore) return j;
+    }
+    return -1;
+  },
+
+  'maximum-path-quality-of-a-graph': (...args: unknown[]) => {
+    const values = args[0] as number[];
+    const edges = args[1] as number[][];
+    const maxTime = args[2] as number;
+    const graph = new Map<number, [number, number][]>();
+    for (const [u, v, t] of edges) {
+      if (!graph.has(u!)) graph.set(u!, []);
+      if (!graph.has(v!)) graph.set(v!, []);
+      graph.get(u!)!.push([v!, t!]);
+      graph.get(v!)!.push([u!, t!]);
+    }
+    let best = values[0]!;
+    const visited = new Set<number>([0]);
+    function dfs(node: number, timeLeft: number, score: number): void {
+      if (node === 0) best = Math.max(best, score);
+      for (const [nbr, t] of graph.get(node) ?? []) {
+        if (t <= timeLeft) {
+          const extra = visited.has(nbr) ? 0 : values[nbr]!;
+          visited.add(nbr);
+          dfs(nbr, timeLeft - t, score + extra);
+          if (extra > 0) visited.delete(nbr);
+        }
+      }
+    }
+    dfs(0, maxTime, values[0]!);
+    return best;
+  },
 
   'number-of-good-subsets': (...args: unknown[]) => {
     const nums = args[0] as number[];

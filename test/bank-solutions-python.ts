@@ -40640,4 +40640,105 @@ def maxLength(nums):
     return best
 `,
 
+  // batch 175
+  'minimum-non-zero-product-of-the-array-elements': `
+def minNonZeroProduct(p):
+    MOD = 10**9 + 7
+    p = int(p)
+    max_val = (1 << p) - 1
+    base = (1 << p) - 2
+    exp = (1 << (p - 1)) - 1
+    return (max_val % MOD) * pow(base, exp, MOD) % MOD
+`,
+
+  'remove-one-element-to-make-array-strictly-increasing': `
+def canBeIncreasing(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = [int(x) for x in nums]
+    def is_increasing(skip):
+        prev = float('-inf')
+        for i, v in enumerate(nums):
+            if i == skip:
+                continue
+            if v <= prev:
+                return False
+            prev = v
+        return True
+    for i in range(len(nums) - 1):
+        if nums[i] >= nums[i + 1]:
+            return is_increasing(i) or is_increasing(i + 1)
+    return True
+`,
+
+  'reconstruct-original-digits-from-english': `
+def originalDigits(s):
+    from collections import Counter
+    freq = Counter(s)
+    count = [0] * 10
+    count[0] = freq['z']
+    count[2] = freq['w']
+    count[4] = freq['u']
+    count[6] = freq['x']
+    count[8] = freq['g']
+    count[1] = freq['o'] - count[0] - count[2] - count[4]
+    count[3] = freq['h'] - count[8]
+    count[5] = freq['f'] - count[4]
+    count[7] = freq['s'] - count[6]
+    count[9] = freq['i'] - count[5] - count[6] - count[8]
+    return ''.join(str(d) * count[d] for d in range(10))
+`,
+
+  'minimum-skips-after-meetings': `
+def minSkips(dist, speed, hoursBefore):
+    if hasattr(dist, 'to_py'): dist = list(dist.to_py())
+    dist = [int(x) for x in dist]
+    speed = int(speed)
+    hoursBefore = int(hoursBefore)
+    n = len(dist)
+    INF = float('inf')
+    dp = [[INF] * (n + 1) for _ in range(n + 1)]
+    dp[0][0] = 0
+    for i in range(1, n + 1):
+        d = dist[i - 1]
+        for j in range(i + 1):
+            if dp[i - 1][j] < INF:
+                val = dp[i - 1][j] + d
+                if i < n:
+                    val = val + (-val % speed)
+                dp[i][j] = min(dp[i][j], val)
+            if j > 0 and dp[i - 1][j - 1] < INF:
+                dp[i][j] = min(dp[i][j], dp[i - 1][j - 1] + d)
+    for j in range(n + 1):
+        if dp[n][j] <= speed * hoursBefore:
+            return j
+    return -1
+`,
+
+  'maximum-path-quality-of-a-graph': `
+def maximalPathQuality(values, edges, maxTime):
+    if hasattr(values, 'to_py'): values = list(values.to_py())
+    values = [int(v) for v in values]
+    if hasattr(edges, 'to_py'): edges = [list(e.to_py()) if hasattr(e, 'to_py') else list(e) for e in edges]
+    edges = [[int(x) for x in e] for e in edges]
+    maxTime = int(maxTime)
+    from collections import defaultdict
+    graph = defaultdict(list)
+    for u, v, t in edges:
+        graph[u].append((v, t))
+        graph[v].append((u, t))
+    best = [values[0]]
+    def dfs(node, time_left, score, visited):
+        if node == 0:
+            best[0] = max(best[0], score)
+        for nbr, t in graph[node]:
+            if t <= time_left:
+                extra = values[nbr] if nbr not in visited else 0
+                visited.add(nbr)
+                dfs(nbr, time_left - t, score + extra, visited)
+                if extra > 0:
+                    visited.discard(nbr)
+    dfs(0, maxTime, values[0], {0})
+    return best[0]
+`,
+
 };

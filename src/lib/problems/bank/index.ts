@@ -2678,6 +2678,12 @@ import { problem as mostPopularVideoCreator } from './most-popular-video-creator
 import { problem as lengthOfLongestSubsequenceThatSumsToTarget } from './length-of-longest-subsequence-that-sums-to-target';
 import { problem as minimumNumberOfOperationsToReinitializeAPermutation } from './minimum-number-of-operations-to-reinitialize-a-permutation';
 import { problem as takingMaximumEnergyFromTheMysticDungeon } from './taking-maximum-energy-from-the-mystic-dungeon';
+// batch 175 — math/medium, arrays/medium, strings/medium, arrays+dp/hard, graph/hard
+import { problem as minimumNonZeroProductOfTheArrayElements } from './minimum-non-zero-product-of-the-array-elements';
+import { problem as removeOneElementToMakeArrayStrictlyIncreasing } from './remove-one-element-to-make-array-strictly-increasing';
+import { problem as reconstructOriginalDigitsFromEnglish } from './reconstruct-original-digits-from-english';
+import { problem as minimumSkipsAfterMeetings } from './minimum-skips-after-meetings';
+import { problem as maximumPathQualityOfAGraph } from './maximum-path-quality-of-a-graph';
 // batch 169 — new problems: heap+greedy/medium, strings/easy, design+hash-map/medium, strings/easy
 import { problem as maximumNumberOfEatenApples } from './maximum-number-of-eaten-apples';
 import { problem as minimumFlipsToMakeAlternatingBinaryString } from './minimum-flips-to-make-alternating-binary-string';
@@ -5684,4 +5690,10 @@ export const problems: readonly Problem[] = [
   lengthOfLongestSubsequenceThatSumsToTarget,
   minimumNumberOfOperationsToReinitializeAPermutation,
   takingMaximumEnergyFromTheMysticDungeon,
+  // batch 175 — math/medium, arrays/medium, strings/medium, arrays+dp/hard, graph/hard
+  minimumNonZeroProductOfTheArrayElements,
+  removeOneElementToMakeArrayStrictlyIncreasing,
+  reconstructOriginalDigitsFromEnglish,
+  minimumSkipsAfterMeetings,
+  maximumPathQualityOfAGraph,
 ];
