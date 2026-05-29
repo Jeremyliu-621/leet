@@ -3002,6 +3002,8 @@ import { problem as countSubstringsWithoutRepeating } from './count-substrings-w
 import { problem as maximumProductOfTwoElements } from './maximum-product-of-two-elements';
 import { problem as findAllAnagrams } from './find-all-anagrams';
 import { problem as rotateArrayLeft } from './rotate-array-left';
+// batch 199 — medium/arrays+sliding-window, easy/arrays+simulation, easy/arrays+simulation, easy/arrays+two-pointers
+import { problem as mergeSortedArrays } from './merge-sorted-arrays';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6045,4 +6047,6 @@ export const problems: readonly Problem[] = [
   maximumProductOfTwoElements,
   findAllAnagrams,
   rotateArrayLeft,
+  // batch 199 — medium/arrays+sliding-window, easy/arrays+simulation, easy/arrays+simulation, easy/arrays+two-pointers
+  mergeSortedArrays,
 ];

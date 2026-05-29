@@ -43100,4 +43100,21 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const steps = k % n;
     return [...nums.slice(steps), ...nums.slice(0, steps)];
   },
+  // batch 199
+  'merge-sorted-arrays': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const result: number[] = [];
+    let i = 0, j = 0;
+    while (i < nums1.length && j < nums2.length) {
+      if ((nums1[i] as number) <= (nums2[j] as number)) {
+        result.push(nums1[i++] as number);
+      } else {
+        result.push(nums2[j++] as number);
+      }
+    }
+    while (i < nums1.length) result.push(nums1[i++] as number);
+    while (j < nums2.length) result.push(nums2[j++] as number);
+    return result;
+  },
 };
