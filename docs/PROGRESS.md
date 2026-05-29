@@ -8,9 +8,15 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2334** problems; 7296 tests green. Batches 102–155 (all sub-batches) complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2342** problems; 7320 tests green. Batches 102–155c + 155 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 156+); UX polish; accessibility audit.
+
+### feat(bank): add batch 155 — house-robber-iv, substring-xor-queries, min-rectangles-cover-points, shortest-way-form-string, smallest-number-all-set-bits (2026-05-29)
+Five problems: `house-robber-iv` (medium/binary-search, binary search on capability with greedy non-adjacent count), `substring-xor-queries` (medium/strings+hash-map, precompute XOR map up to 30-bit substrings; answer = map[first^second]), `minimum-rectangles-to-cover-points` (medium/arrays+math, sort x-coords, greedy: start rectangle at each uncovered x extending x+w), `shortest-way-to-form-string` (medium/strings+two-pointers, check all target chars in source then two-pointer greedy with copy count), `smallest-number-with-all-set-bits` (easy/math, find smallest 2^k-1 ≥ n via bit-shift mask). Bank at **2342**; 7320 tests.
+
+### feat(bank): add batch 155c — maximum-employees-invited-to-meeting, maximize-minimum-powered-city, minimum-time-remove-cars-illegal-goods (2026-05-29)
+Three problems: `maximum-employees-invited-to-meeting` (hard/graph, functional graph cycle detection — topological-sort to find chain depths, then max(longest ≥3 cycle, sum of mutual-pair chains)), `maximize-minimum-powered-city` (hard/binary-search+arrays, binary search on minimum power with greedy diff-array station placement), `minimum-time-remove-cars-illegal-goods` (medium/arrays+dynamic-programming, prefix/suffix DP where left[i] = min cost to clear 1s in s[0..i] and answer = min over all split points). Bank at **2337**; 7305 tests.
 
 ### feat(bank): add batch 155b — recent-counter (easy), peeking-iterator, flatten-nested-list-iterator (medium), all-o-one (hard) (2026-05-29)
 Four design problems: `recent-counter` (easy/design+simulation, queue sliding window over 3000ms), `peeking-iterator` (medium/design, index-based peek without advance), `flatten-nested-list-iterator` (medium/design+stack, recursive pre-flatten into flat array), `all-o-one-data-structure` (hard/design+hash-map, hash map with O(N) max/min scan). Bank at **2334**; 7296 tests.

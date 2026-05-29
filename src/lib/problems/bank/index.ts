@@ -2568,7 +2568,13 @@ import { problem as mapSumPairs } from './map-sum-pairs';
 import { problem as magicDictionary } from './magic-dictionary';
 import { problem as shortEncodingOfWords } from './short-encoding-of-words';
 import { problem as implementMagicTrieStream } from './implement-magic-trie-stream';
-// batch 155 — dp/medium×2, dp/hard×2, arrays/medium, strings/hard, sliding-window/medium
+// batch 155 — binary-search/medium, strings+hash-map/medium, arrays+math/medium, strings+two-pointers/medium, math/easy
+import { problem as houseRobberIV } from './house-robber-iv';
+import { problem as substringXorQueries } from './substring-xor-queries';
+import { problem as minimumRectanglesToCoverPoints } from './minimum-rectangles-to-cover-points';
+import { problem as shortestWayToFormString } from './shortest-way-to-form-string';
+import { problem as smallestNumberWithAllSetBits } from './smallest-number-with-all-set-bits';
+// batch 155r — dp/medium×2, dp/hard×2, arrays/medium, strings/hard, sliding-window/medium
 import { problem as minimumScoreTriangulationPolygon } from './minimum-score-triangulation-polygon';
 import { problem as nonNegativeIntegersWithoutConsecutiveOnes } from './non-negative-integers-without-consecutive-ones';
 import { problem as waysToMakeAFairArray } from './ways-to-make-a-fair-array';
@@ -2581,6 +2587,10 @@ import { problem as recentCounter } from './recent-counter';
 import { problem as peekingIterator } from './peeking-iterator';
 import { problem as flattenNestedListIterator } from './flatten-nested-list-iterator';
 import { problem as allOOneDataStructure } from './all-o-one-data-structure';
+// batch 155c — graph/hard, binary-search+arrays/hard, arrays+dp/medium
+import { problem as maximumEmployeesInvitedToMeeting } from './maximum-employees-invited-to-meeting';
+import { problem as maximizeMinimumPoweredCity } from './maximize-minimum-powered-city';
+import { problem as minimumTimeRemoveCarsIllegalGoods } from './minimum-time-remove-cars-illegal-goods';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5181,12 +5191,18 @@ export const problems: readonly Problem[] = [
   magicDictionary,
   shortEncodingOfWords,
   implementMagicTrieStream,
+  // batch 155 — binary-search/medium, strings+hash-map/medium, arrays+math/medium, strings+two-pointers/medium, math/easy
+  houseRobberIV,
+  substringXorQueries,
+  minimumRectanglesToCoverPoints,
+  shortestWayToFormString,
+  smallestNumberWithAllSetBits,
   // batch 154c — backtracking/hard, simulation/hard, simulation+binary-search/hard, hash-map+simulation/hard
   twentyFourGame,
   rangeModule,
   insertDeleteGetRandomDuplicatesAllowed,
   matchsticksToSquare,
-  // batch 155 — dp/medium×2, dp/hard×2, arrays/medium, strings/hard, sliding-window/medium
+  // batch 155r — dp/medium×2, dp/hard×2, arrays/medium, strings/hard, sliding-window/medium
   minimumScoreTriangulationPolygon,
   nonNegativeIntegersWithoutConsecutiveOnes,
   waysToMakeAFairArray,
@@ -5199,4 +5215,8 @@ export const problems: readonly Problem[] = [
   peekingIterator,
   flattenNestedListIterator,
   allOOneDataStructure,
+  // batch 155c — graph/hard, binary-search+arrays/hard, arrays+dp/medium
+  maximumEmployeesInvitedToMeeting,
+  maximizeMinimumPoweredCity,
+  minimumTimeRemoveCarsIllegalGoods,
 ];
