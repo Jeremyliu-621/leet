@@ -37169,6 +37169,193 @@ def isStrictlyPalindromic(n):
     return False
 `,
 
+  // batch 156c/157r — missing Python solutions
+  'find-edges-in-shortest-paths': `
+import heapq
+def findAnswer(n, edges):
+    if hasattr(edges, 'to_py'):
+        raw = list(edges.to_py())
+        edges = [list(e.to_py()) if hasattr(e, 'to_py') else list(e) for e in raw]
+    else:
+        edges = [list(e) for e in edges]
+    adj = [[] for _ in range(n)]
+    for i, (u, v, w) in enumerate(edges):
+        adj[u].append((v, w)); adj[v].append((u, w))
+    def dijkstra(src):
+        dist = [float('inf')] * n
+        dist[src] = 0
+        pq = [(0, src)]
+        while pq:
+            d, u = heapq.heappop(pq)
+            if d > dist[u]: continue
+            for v, w in adj[u]:
+                if dist[u] + w < dist[v]:
+                    dist[v] = dist[u] + w
+                    heapq.heappush(pq, (dist[v], v))
+        return dist
+    d0 = dijkstra(0); dn = dijkstra(n-1); total = d0[n-1]
+    return [d0[u]+w+dn[v]==total or d0[v]+w+dn[u]==total for u,v,w in edges]
+`,
+
+  'avoid-flood-in-the-city': `
+import bisect
+def avoidFlood(rains):
+    rains = list(rains.to_py() if hasattr(rains, 'to_py') else rains)
+    result = [-1] * len(rains)
+    full = {}
+    dry_days = []
+    for i, lake in enumerate(rains):
+        if lake == 0:
+            dry_days.append(i)
+            result[i] = 1
+        else:
+            if lake in full:
+                last = full[lake]
+                idx = bisect.bisect_right(dry_days, last)
+                if idx >= len(dry_days):
+                    return []
+                result[dry_days[idx]] = lake
+                dry_days.pop(idx)
+            full[lake] = i
+    return result
+`,
+
+  'minimum-time-to-accomplish-all-tasks': `
+def findMinimumTime(tasks):
+    tasks = [list(t.to_py() if hasattr(t, 'to_py') else t) for t in (tasks.to_py() if hasattr(tasks, 'to_py') else tasks)]
+    tasks.sort(key=lambda x: x[1])
+    running = [False] * 2001
+    for s, e, d in tasks:
+        needed = d - sum(running[s:e+1])
+        for i in range(e, s-1, -1):
+            if needed <= 0: break
+            if not running[i]:
+                running[i] = True
+                needed -= 1
+    return sum(running)
+`,
+
+  'implement-trie-ii-prefix-tree': `
+def implementTrieII(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = [list(a.to_py() if hasattr(a, 'to_py') else a) for a in (args.to_py() if hasattr(args, 'to_py') else args)]
+    root = {'end': 0, 'prefix': 0, 'ch': {}}
+    results = []
+    for op, arg in zip(ops, args):
+        word = arg[0] if arg else ''
+        if op == 'Trie':
+            root = {'end': 0, 'prefix': 0, 'ch': {}}
+            results.append(None)
+        elif op == 'insert':
+            n = root
+            for c in word:
+                if c not in n['ch']: n['ch'][c] = {'end': 0, 'prefix': 0, 'ch': {}}
+                n = n['ch'][c]; n['prefix'] += 1
+            n['end'] += 1; results.append(None)
+        elif op == 'countWordsEqualTo':
+            n = root
+            for c in word:
+                if c not in n['ch']: n = None; break
+                n = n['ch'][c]
+            results.append(n['end'] if n else 0)
+        elif op == 'countWordsStartingWith':
+            n = root
+            for c in word:
+                if c not in n['ch']: n = None; break
+                n = n['ch'][c]
+            results.append(n['prefix'] if n else 0)
+        elif op == 'erase':
+            n = root
+            for c in word: n['ch'][c]['prefix'] -= 1; n = n['ch'][c]
+            n['end'] -= 1; results.append(None)
+        else:
+            results.append(None)
+    return results
+`,
+
+  'word-filter': `
+def wordFilter(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = [list(a.to_py() if hasattr(a, 'to_py') else a) for a in (args.to_py() if hasattr(args, 'to_py') else args)]
+    table = {}
+    results = []
+    for op, arg in zip(ops, args):
+        if op == 'WordFilter':
+            words = list(arg[0].to_py() if hasattr(arg[0], 'to_py') else arg[0])
+            for wi, w in enumerate(words):
+                for p in range(len(w)+1):
+                    for s in range(len(w)+1):
+                        key = w[:p] + '#' + w[len(w)-s:]
+                        table[key] = wi
+            results.append(None)
+        elif op == 'f':
+            pref, suf = arg[0], arg[1]
+            results.append(table.get(pref + '#' + suf, -1))
+        else:
+            results.append(None)
+    return results
+`,
+
+  'lexicographical-numbers': `
+def lexicalOrder(n):
+    result = []
+    curr = 1
+    while len(result) < n:
+        result.append(curr)
+        if curr * 10 <= n:
+            curr *= 10
+        else:
+            while curr % 10 == 9 or curr + 1 > n:
+                curr //= 10
+            curr += 1
+    return result
+`,
+
+  'k-th-smallest-in-lexicographic-order': `
+def findKthNumber(n, k):
+    def count_steps(prefix, n):
+        count, cur, nxt = 0, prefix, prefix + 1
+        while cur <= n:
+            count += min(n + 1, nxt) - cur
+            cur *= 10; nxt *= 10
+        return count
+    curr, steps = 1, k - 1
+    while steps > 0:
+        cnt = count_steps(curr, n)
+        if steps >= cnt: steps -= cnt; curr += 1
+        else: steps -= 1; curr *= 10
+    return curr
+`,
+
+  'design-search-autocomplete-system': `
+def autoCompleteSystem(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = [list(a.to_py() if hasattr(a, 'to_py') else a) for a in (args.to_py() if hasattr(args, 'to_py') else args)]
+    counts = {}
+    current = ''
+    def get_top3():
+        matches = [(s, c) for s, c in counts.items() if s.startswith(current)]
+        matches.sort(key=lambda x: (-x[1], x[0]))
+        return [s for s, _ in matches[:3]]
+    results = []
+    for op, arg in zip(ops, args):
+        if op == 'AutocompleteSystem':
+            sentences = list(arg[0].to_py() if hasattr(arg[0], 'to_py') else arg[0])
+            times = list(arg[1].to_py() if hasattr(arg[1], 'to_py') else arg[1])
+            for s, t in zip(sentences, times): counts[s] = int(t)
+            current = ''; results.append(None)
+        elif op == 'input':
+            c = arg[0]
+            if c == '#':
+                counts[current] = counts.get(current, 0) + 1
+                current = ''; results.append([])
+            else:
+                current += c; results.append(get_top3())
+        else:
+            results.append(None)
+    return results
+`,
+
   'sorting-three-groups': `
 def minimumOperations(nums):
     if hasattr(nums, 'to_py'): nums = list(nums.to_py())
@@ -37631,6 +37818,28 @@ def minimumDifference(nums, k):
         nums = list(nums.to_py())
     nums = sorted(nums)
     return min(nums[i + k - 1] - nums[i] for i in range(len(nums) - k + 1))
+`,
+
+  'count-pairs-with-xor-in-a-range': `
+def countPairs(nums, low, high):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    count = 0
+    for i in range(len(nums)):
+        for j in range(i+1, len(nums)):
+            xor = nums[i] ^ nums[j]
+            if low <= xor <= high:
+                count += 1
+    return count
+`,
+
+  'maximum-xor-with-element-from-array': `
+def maximizeXor(nums, queries):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    if hasattr(queries, 'to_py'):
+        queries = [list(q.to_py() if hasattr(q, 'to_py') else q) for q in queries.to_py()]
+    return [max((nums[j] ^ q[0] for j in range(len(nums)) if nums[j] <= q[1]), default=-1) for q in queries]
 `,
 
 };

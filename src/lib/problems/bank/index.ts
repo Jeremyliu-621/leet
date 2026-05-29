@@ -2624,6 +2624,14 @@ import { problem as strictlyPalindromicNumber } from './strictly-palindromic-num
 import { problem as sortingThreeGroups } from './sorting-three-groups';
 import { problem as uglyNumberIii } from './ugly-number-iii';
 import { problem as binaryTreeColoringGame } from './binary-tree-coloring-game';
+// batch 163 — strings/easy, strings/medium, arrays/hard, strings/medium, arrays/easy, trie/hard×2
+import { problem as reformatDate } from './reformat-date';
+import { problem as maximumValueAfterInsertion } from './maximum-value-after-insertion';
+import { problem as recoverTheOriginalArray } from './recover-the-original-array';
+import { problem as constructSmallestNumberFromDiString } from './construct-smallest-number-from-di-string';
+import { problem as minimumDifferenceHighestLowestKScores } from './minimum-difference-highest-lowest-k-scores';
+import { problem as countPairsWithXorInARange } from './count-pairs-with-xor-in-a-range';
+import { problem as maximumXorWithElementFromArray } from './maximum-xor-with-element-from-array';
 // batch 162 — arrays/medium, strings/medium, design/medium, arrays/medium, arrays/medium,
 //             bit-manipulation/medium×2, math/easy, strings/medium×2, arrays/medium
 import { problem as collectingChocolates } from './collecting-chocolates';
@@ -5310,4 +5318,12 @@ export const problems: readonly Problem[] = [
   splitStringIntoMaximumNumberOfUniqueSubstrings,
   tupleWithSameProduct,
   whereWillTheBallFall,
+  // batch 163 — 7 new problems from latest remote session
+  reformatDate,
+  maximumValueAfterInsertion,
+  recoverTheOriginalArray,
+  constructSmallestNumberFromDiString,
+  minimumDifferenceHighestLowestKScores,
+  countPairsWithXorInARange,
+  maximumXorWithElementFromArray,
 ];

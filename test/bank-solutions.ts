@@ -37347,6 +37347,193 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return leftSize > half || rightSize > half || parentSize > half;
   },
 
+  // batch 156c/157r — missing solutions (graph, simulation, trie, design)
+  'find-edges-in-shortest-paths': (n: unknown, edges: unknown): unknown => {
+    const N = n as number;
+    const E = edges as number[][];
+    const adj: Array<Array<[number, number]>> = Array.from({ length: N }, () => []);
+    for (const edge of E) {
+      const u = edge[0] as number, v = edge[1] as number, w = edge[2] as number;
+      adj[u]!.push([v, w]); adj[v]!.push([u, w]);
+    }
+    const dijkstra = (src: number): number[] => {
+      const dist = new Array<number>(N).fill(Infinity);
+      dist[src] = 0;
+      const pq: Array<[number, number]> = [[0, src]];
+      while (pq.length) {
+        pq.sort((a, b) => (a[0] as number) - (b[0] as number));
+        const top = pq.shift() as [number, number];
+        const d = top[0], u = top[1];
+        if (d > (dist[u] as number)) continue;
+        for (const nb of adj[u]!) {
+          const v2 = nb[0], w2 = nb[1];
+          if ((dist[u] as number) + w2 < (dist[v2] as number)) {
+            dist[v2] = (dist[u] as number) + w2;
+            pq.push([dist[v2] as number, v2]);
+          }
+        }
+      }
+      return dist;
+    };
+    const dist0 = dijkstra(0), distN = dijkstra(N - 1);
+    const total = dist0[N - 1] as number;
+    return E.map(edge => {
+      const u = edge[0] as number, v = edge[1] as number, w = edge[2] as number;
+      return (dist0[u] as number) + w + (distN[v] as number) === total || (dist0[v] as number) + w + (distN[u] as number) === total;
+    });
+  },
+
+  'avoid-flood-in-the-city': (rains: unknown): unknown => {
+    const r = rains as number[];
+    const result = new Array<number>(r.length).fill(-1);
+    const full = new Map<number, number>();
+    const dryDays: number[] = [];
+    for (let i = 0; i < r.length; i++) {
+      const lake = r[i] as number;
+      if (lake === 0) {
+        dryDays.push(i); result[i] = 1;
+      } else {
+        if (full.has(lake)) {
+          const lastDay = full.get(lake) as number;
+          let lo = 0, hi = dryDays.length;
+          while (lo < hi) { const mid = (lo + hi) >> 1; if ((dryDays[mid] as number) > lastDay) hi = mid; else lo = mid + 1; }
+          if (lo >= dryDays.length) return [];
+          result[dryDays[lo] as number] = lake;
+          dryDays.splice(lo, 1);
+        }
+        full.set(lake, i);
+      }
+    }
+    return result;
+  },
+
+  'minimum-time-to-accomplish-all-tasks': (tasks: unknown): unknown => {
+    const t = (tasks as number[][]).slice().sort((a, b) => (a[1] as number) - (b[1] as number));
+    const MAX = 2001;
+    const running = new Array<boolean>(MAX).fill(false);
+    for (const task of t) {
+      const [s, e, d] = task as [number, number, number];
+      let needed = d;
+      for (let i = s; i <= e; i++) if (running[i]) needed--;
+      for (let i = e; i >= s && needed > 0; i--) { if (!running[i]) { running[i] = true; needed--; } }
+    }
+    return running.filter(Boolean).length;
+  },
+
+  'implement-trie-ii-prefix-tree': (ops: unknown, args: unknown): unknown => {
+    type Node = { end: number; prefix: number; ch: Record<string, Node> };
+    const newNode = (): Node => ({ end: 0, prefix: 0, ch: {} });
+    let root = newNode();
+    const opArr = ops as string[], argArr = args as string[][];
+    return opArr.map((op, i) => {
+      const word = (argArr[i] as string[])[0] ?? '';
+      if (op === 'Trie') { root = newNode(); return null; }
+      if (op === 'insert') {
+        let n = root;
+        for (const c of word) { if (!n.ch[c]) n.ch[c] = newNode(); n = n.ch[c] as Node; n.prefix++; }
+        n.end++; return null;
+      }
+      if (op === 'countWordsEqualTo') {
+        let n = root;
+        for (const c of word) { if (!n.ch[c]) return 0; n = n.ch[c] as Node; }
+        return n.end;
+      }
+      if (op === 'countWordsStartingWith') {
+        let n = root;
+        for (const c of word) { if (!n.ch[c]) return 0; n = n.ch[c] as Node; }
+        return n.prefix;
+      }
+      if (op === 'erase') {
+        let n = root;
+        for (const c of word) { (n.ch[c] as Node).prefix--; n = n.ch[c] as Node; }
+        n.end--; return null;
+      }
+      return null;
+    });
+  },
+
+  'word-filter': (ops: unknown, args: unknown): unknown => {
+    const opArr = ops as string[], argArr = args as unknown[][];
+    const map = new Map<string, number>();
+    return opArr.map((op, i) => {
+      if (op === 'WordFilter') {
+        const words = (argArr[i] as unknown[])[0] as string[];
+        for (let wi = 0; wi < words.length; wi++) {
+          const w = words[wi] as string;
+          for (let p = 0; p <= w.length; p++) {
+            for (let s = 0; s <= w.length; s++) {
+              map.set(w.slice(0, p) + '#' + w.slice(w.length - s), wi);
+            }
+          }
+        }
+        return null;
+      }
+      if (op === 'f') {
+        const pref = (argArr[i] as string[])[0] as string;
+        const suf = (argArr[i] as string[])[1] as string;
+        return map.get(pref + '#' + suf) ?? -1;
+      }
+      return null;
+    });
+  },
+
+  'lexicographical-numbers': (n: unknown): unknown => {
+    const num = n as number;
+    const result: number[] = [];
+    let curr = 1;
+    while (result.length < num) {
+      result.push(curr);
+      if (curr * 10 <= num) {
+        curr *= 10;
+      } else {
+        while (curr % 10 === 9 || curr + 1 > num) curr = Math.floor(curr / 10);
+        curr++;
+      }
+    }
+    return result;
+  },
+
+  'k-th-smallest-in-lexicographic-order': (n: unknown, k: unknown): unknown => {
+    const num = n as number;
+    let curr = 1, steps = (k as number) - 1;
+    const countSteps = (prefix: number, n2: number): number => {
+      let count = 0, cur = prefix, next = prefix + 1;
+      while (cur <= n2) { count += Math.min(n2 + 1, next) - cur; cur *= 10; next *= 10; }
+      return count;
+    };
+    while (steps > 0) {
+      const cnt = countSteps(curr, num);
+      if (steps >= cnt) { steps -= cnt; curr++; } else { steps--; curr *= 10; }
+    }
+    return curr;
+  },
+
+  'design-search-autocomplete-system': (ops: unknown, args: unknown): unknown => {
+    const opArr = ops as string[], argArr = args as unknown[][];
+    const counts = new Map<string, number>();
+    let current = '';
+    const getTop3 = (): string[] => {
+      const matches: [string, number][] = [];
+      for (const [s, c] of counts) if (s.startsWith(current)) matches.push([s, c]);
+      matches.sort((a, b) => (b[1] as number) - (a[1] as number) || (a[0] as string).localeCompare(b[0] as string));
+      return matches.slice(0, 3).map(m => m[0] as string);
+    };
+    return opArr.map((op, i) => {
+      if (op === 'AutocompleteSystem') {
+        const sentences = (argArr[i] as unknown[])[0] as string[];
+        const times = (argArr[i] as unknown[])[1] as number[];
+        for (let j = 0; j < sentences.length; j++) counts.set(sentences[j] as string, times[j] as number);
+        current = ''; return null;
+      }
+      if (op === 'input') {
+        const c = (argArr[i] as string[])[0] as string;
+        if (c === '#') { counts.set(current, (counts.get(current) ?? 0) + 1); current = ''; return []; }
+        current += c; return getTop3();
+      }
+      return null;
+    });
+  },
+
   // batch 162 — 11 new problems from remote session
   'collecting-chocolates': (nums: unknown, x: unknown): unknown => {
     const a = nums as number[];
@@ -37639,6 +37826,29 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       if (s === t) return 0;
       const rs = find(s!), rt = find(t!);
       return rs === rt ? compAnd[rt]! : -1;
+    });
+  },
+
+  // batch 163 — 2 missing solutions from remote session
+  'count-pairs-with-xor-in-a-range': (...args: unknown[]): unknown => {
+    const nums = args[0] as number[], low = args[1] as number, high = args[2] as number;
+    let count = 0;
+    for (let i = 0; i < nums.length; i++) {
+      for (let j = i + 1; j < nums.length; j++) {
+        const xor = (nums[i] as number) ^ (nums[j] as number);
+        if (xor >= low && xor <= high) count++;
+      }
+    }
+    return count;
+  },
+
+  'maximum-xor-with-element-from-array': (...args: unknown[]): unknown => {
+    const nums = args[0] as number[], queries = args[1] as number[][];
+    return queries.map(q => {
+      const x = q[0] as number, m = q[1] as number;
+      let best = -1;
+      for (const num of nums) if ((num as number) <= m) best = Math.max(best, x ^ (num as number));
+      return best;
     });
   },
 
