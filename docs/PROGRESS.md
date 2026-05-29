@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2722** problems; 8457 tests green. Batches 102–203 + 201b + KaTeX UX complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2725** problems; 8469 tests green. Batches 102–204 + KaTeX UX complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 204+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 205+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 204 — flatten-2d-array, count-elements-gt-k, sort-words-by-length, sum-positive (2026-05-29)
+Four new easy problems: `flatten-2d-array` (easy/arrays, matrix.flat() row-major), `count-elements-greater-than-k` (easy/arrays, filter v>k), `sort-words-by-length` (easy/arrays+strings, sort by word.length ascending), `sum-of-positive-elements` (easy/arrays+math, sum v>0). Bank at **2725**; 8469 tests.
 
 ### feat(bank): batch 201b — winning-player-coin, snake-matrix, distribute-elements-i, max-len-substr-2occ, partition-diff-k (2026-05-29)
 Five new problems: `find-the-winning-player-in-coin-game` (easy/math, floor(y/3)<x → Alice wins), `snake-in-matrix` (easy/simulation, track r/c from direction commands, return r*n+c), `distribute-elements-into-two-arrays-i` (easy/simulation, greedy split on last-element comparison), `maximum-length-substring-with-two-occurrences` (easy/sliding-window, shrink when any char freq>2), `partition-array-such-that-maximum-difference-is-k` (medium/arrays, sort+greedy group by max-min≤k). Also installed remark-math + rehype-katex + katex for math rendering. Bank at **2722**; 8457 tests.
