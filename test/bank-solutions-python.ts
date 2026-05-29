@@ -40596,6 +40596,67 @@ def findEvenNumbers(digits):
                     result.add(digits[i] * 100 + digits[j] * 10 + digits[k])
     return sorted(result)
 `,
+  // batch 217 (addendum)
+  'reach-a-number': `
+def reachNumber(target):
+    target = abs(target)
+    total, k = 0, 0
+    while total < target or (total - target) % 2 != 0:
+        k += 1
+        total += k
+    return k
+`,
+  'minimum-degree-of-a-connected-trio': `
+def minTrioDegree(n, edges):
+    adj = [set() for _ in range(n + 1)]
+    deg = [0] * (n + 1)
+    for u, v in edges:
+        adj[u].add(v)
+        adj[v].add(u)
+        deg[u] += 1
+        deg[v] += 1
+    ans = float('inf')
+    for u in range(1, n + 1):
+        for v in adj[u]:
+            for w in adj[u]:
+                if v < w and w in adj[v]:
+                    ans = min(ans, deg[u] + deg[v] + deg[w] - 6)
+    return -1 if ans == float('inf') else ans
+`,
+  'valid-square': `
+def validSquare(p1, p2, p3, p4):
+    def dist2(a, b):
+        return (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2
+    pts = [p1, p2, p3, p4]
+    dists = sorted(dist2(pts[i], pts[j]) for i in range(4) for j in range(i + 1, 4))
+    return (dists[0] > 0 and
+            dists[0] == dists[1] == dists[2] == dists[3] and
+            dists[4] == dists[5] and
+            dists[3] * 2 == dists[4])
+`,
+  'count-subarrays-with-odd-sum': `
+def numOfSubarrays(arr):
+    MOD = 10 ** 9 + 7
+    even, odd, total, ans = 1, 0, 0, 0
+    for n in arr:
+        total += n
+        if total % 2 == 0:
+            ans = (ans + odd) % MOD
+            even += 1
+        else:
+            ans = (ans + even) % MOD
+            odd += 1
+    return ans
+`,
+  'separate-the-digits-in-an-array': `
+def separateDigits(nums):
+    result = []
+    for n in nums:
+        for ch in str(n):
+            result.append(int(ch))
+    return result
+`,
+  // batch 218 ---------------------------------------------------------------
   'phone-number-prefix': `
 def phonePrefix(numbers):
     numbers = sorted(numbers)

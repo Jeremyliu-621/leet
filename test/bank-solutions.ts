@@ -41468,6 +41468,67 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
             result.add(digits[i]! * 100 + digits[j]! * 10 + digits[k]!);
     return [...result].sort((a, b) => a - b);
   },
+  // batch 217 (addendum)
+  'reach-a-number': (...args: unknown[]) => {
+    let target = Math.abs(args[0] as number);
+    let sum = 0, k = 0;
+    while (sum < target || (sum - target) % 2 !== 0) {
+      k++;
+      sum += k;
+    }
+    return k;
+  },
+  'minimum-degree-of-a-connected-trio': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const adj: Set<number>[] = Array.from({length: n + 1}, () => new Set<number>());
+    const deg = new Array<number>(n + 1).fill(0);
+    for (const [u, v] of edges) {
+      adj[u as number]!.add(v as number); adj[v as number]!.add(u as number);
+      deg[u as number]!++; deg[v as number]!++;
+    }
+    let ans = Infinity;
+    for (let u = 1; u <= n; u++) {
+      for (const v of adj[u]!) {
+        for (const w of adj[u]!) {
+          if (v < w && adj[v]!.has(w)) {
+            ans = Math.min(ans, deg[u]! + deg[v]! + deg[w]! - 6);
+          }
+        }
+      }
+    }
+    return ans === Infinity ? -1 : ans;
+  },
+  'valid-square': (...args: unknown[]) => {
+    const pts = [args[0], args[1], args[2], args[3]] as number[][];
+    function dist2(a: number[], b: number[]): number {
+      return (a[0]! - b[0]!) ** 2 + (a[1]! - b[1]!) ** 2;
+    }
+    const dists: number[] = [];
+    for (let i = 0; i < 4; i++)
+      for (let j = i + 1; j < 4; j++)
+        dists.push(dist2(pts[i]!, pts[j]!));
+    dists.sort((a, b) => a - b);
+    return dists[0]! > 0 &&
+      dists[0] === dists[1] && dists[1] === dists[2] && dists[2] === dists[3] &&
+      dists[4] === dists[5] && dists[3]! * 2 === dists[4]!;
+  },
+  'count-subarrays-with-odd-sum': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const MOD = 1_000_000_007;
+    let even = 1, odd = 0, sum = 0, ans = 0;
+    for (const n of arr) {
+      sum += n;
+      if (sum % 2 === 0) { ans = (ans + odd) % MOD; even++; }
+      else { ans = (ans + even) % MOD; odd++; }
+    }
+    return ans;
+  },
+  'separate-the-digits-in-an-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return nums.flatMap(n => n.toString().split('').map(Number));
+  },
+  // batch 218 ---------------------------------------------------------------
   'phone-number-prefix': (...args: unknown[]) => {
     const numbers = (args[0] as string[]).slice().sort();
     for (let i = 0; i < numbers.length - 1; i++)

@@ -2877,6 +2877,12 @@ import { problem as largestAlmostMissingInteger } from './find-the-largest-almos
 import { problem as transformArrayByParity } from './transform-array-by-parity';
 import { problem as maxContainersOnShip } from './maximum-containers-on-a-ship';
 import { problem as findEvenNumbers } from './unique-3-digit-even-numbers';
+// batch 217 (addendum) — medium/math, hard/graph, medium/math, medium/arrays+math, easy/arrays+simulation
+import { problem as reachANumber } from './reach-a-number';
+import { problem as minTrioDegree } from './minimum-degree-of-a-connected-trio';
+import { problem as validSquare } from './valid-square';
+import { problem as countSubarraysOddSum } from './count-subarrays-with-odd-sum';
+import { problem as separateDigits } from './separate-the-digits-in-an-array';
 // batch 218 — easy/strings, easy/strings+math, medium/arrays+hash-map+math, medium/graph+union-find
 import { problem as phonePrefix } from './phone-number-prefix';
 import { problem as reverseDegree } from './reverse-degree-of-a-string';
@@ -5808,6 +5814,12 @@ export const problems: readonly Problem[] = [
   transformArrayByParity,
   maxContainersOnShip,
   findEvenNumbers,
+  // batch 217 (addendum)
+  reachANumber,
+  minTrioDegree,
+  validSquare,
+  countSubarraysOddSum,
+  separateDigits,
   // batch 218
   phonePrefix,
   reverseDegree,
