@@ -36197,6 +36197,93 @@ def minimumLengthEncoding(words):
     return sum(len(w) + 1 for w in word_set)
 `,
 
+  'house-robber-iv': `
+def minCapability(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    lo, hi = min(nums), max(nums)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        count, skip = 0, False
+        for v in nums:
+            if skip:
+                skip = False
+                continue
+            if v <= mid:
+                count += 1
+                skip = True
+        if count >= k:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'substring-xor-queries': `
+def substringXorQueries(s, queries):
+    if hasattr(queries, 'to_py'):
+        queries = queries.to_py()
+    queries = [list(q.to_py()) if hasattr(q, 'to_py') else list(q) for q in queries]
+    n = len(s)
+    mp = {}
+    for i in range(n):
+        if s[i] == '0':
+            if 0 not in mp:
+                mp[0] = [i, i]
+            continue
+        val = 0
+        for j in range(i, min(n, i + 30)):
+            val = (val << 1) | (1 if s[j] == '1' else 0)
+            if val not in mp:
+                mp[val] = [i, j]
+    result = []
+    for q in queries:
+        target = q[0] ^ q[1]
+        result.append(mp[target] if target in mp else [-1, -1])
+    return result
+`,
+
+  'minimum-rectangles-to-cover-points': `
+def minRectanglesToCoverPoints(points, w):
+    if hasattr(points, 'to_py'):
+        points = points.to_py()
+    points = [list(p.to_py()) if hasattr(p, 'to_py') else list(p) for p in points]
+    xs = sorted(p[0] for p in points)
+    count = 0
+    i = 0
+    while i < len(xs):
+        start = xs[i]
+        count += 1
+        while i < len(xs) and xs[i] <= start + w:
+            i += 1
+    return count
+`,
+
+  'shortest-way-to-form-string': `
+def shortestWay(source, target):
+    in_source = set(source)
+    for c in target:
+        if c not in in_source:
+            return -1
+    count, si, ti = 1, 0, 0
+    while ti < len(target):
+        if source[si] == target[ti]:
+            ti += 1
+        si += 1
+        if si == len(source):
+            si = 0
+            if ti < len(target):
+                count += 1
+    return count
+`,
+
+  'smallest-number-with-all-set-bits': `
+def smallestNumber(n):
+    mask = 1
+    while mask < n:
+        mask = (mask << 1) | 1
+    return mask
+`,
+
   'implement-magic-trie-stream': `
 def streamOfCharacters(ops, args):
     ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)

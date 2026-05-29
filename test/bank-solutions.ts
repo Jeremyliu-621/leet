@@ -36448,6 +36448,85 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return len;
   },
 
+  'house-robber-iv': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let lo = Math.min(...nums), hi = Math.max(...nums);
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      let count = 0, skip = false;
+      for (const v of nums) {
+        if (skip) { skip = false; continue; }
+        if (v <= mid) { count++; skip = true; }
+      }
+      if (count >= k) hi = mid;
+      else lo = mid + 1;
+    }
+    return lo;
+  },
+
+  'substring-xor-queries': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const queries = args[1] as number[][];
+    const n = s.length;
+    const map = new Map<number, [number, number]>();
+    for (let i = 0; i < n; i++) {
+      if (s[i] === '0') {
+        if (!map.has(0)) map.set(0, [i, i]);
+        continue;
+      }
+      let val = 0;
+      for (let j = i; j < n && j - i < 30; j++) {
+        val = (val << 1) | (s[j] === '1' ? 1 : 0);
+        if (!map.has(val)) map.set(val, [i, j]);
+      }
+    }
+    return queries.map(([first, second]) => {
+      const target = first! ^ second!;
+      const entry = map.get(target);
+      return entry ? [entry[0], entry[1]] : [-1, -1];
+    });
+  },
+
+  'minimum-rectangles-to-cover-points': (...args: unknown[]) => {
+    const points = args[0] as number[][];
+    const w = args[1] as number;
+    const xs = points.map(p => p[0]!).sort((a, b) => a - b);
+    let count = 0, i = 0;
+    while (i < xs.length) {
+      const start = xs[i]!;
+      count++;
+      while (i < xs.length && xs[i]! <= start + w) i++;
+    }
+    return count;
+  },
+
+  'shortest-way-to-form-string': (...args: unknown[]) => {
+    const source = args[0] as string;
+    const target = args[1] as string;
+    const inSource = new Set(source);
+    for (const c of target) {
+      if (!inSource.has(c)) return -1;
+    }
+    let count = 1, si = 0, ti = 0;
+    while (ti < target.length) {
+      if (source[si] === target[ti]) ti++;
+      si++;
+      if (si === source.length) {
+        si = 0;
+        if (ti < target.length) count++;
+      }
+    }
+    return count;
+  },
+
+  'smallest-number-with-all-set-bits': (...args: unknown[]) => {
+    const n = args[0] as number;
+    let mask = 1;
+    while (mask < n) mask = (mask << 1) | 1;
+    return mask;
+  },
+
   'implement-magic-trie-stream': (...args: unknown[]) => {
     const ops = args[0] as string[];
     const opArgs = args[1] as (string | string[])[][];

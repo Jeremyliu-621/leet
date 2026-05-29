@@ -2557,6 +2557,12 @@ import { problem as mapSumPairs } from './map-sum-pairs';
 import { problem as magicDictionary } from './magic-dictionary';
 import { problem as shortEncodingOfWords } from './short-encoding-of-words';
 import { problem as implementMagicTrieStream } from './implement-magic-trie-stream';
+// batch 155
+import { problem as houseRobberIV } from './house-robber-iv';
+import { problem as substringXorQueries } from './substring-xor-queries';
+import { problem as minimumRectanglesToCoverPoints } from './minimum-rectangles-to-cover-points';
+import { problem as shortestWayToFormString } from './shortest-way-to-form-string';
+import { problem as smallestNumberWithAllSetBits } from './smallest-number-with-all-set-bits';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5151,4 +5157,10 @@ export const problems: readonly Problem[] = [
   magicDictionary,
   shortEncodingOfWords,
   implementMagicTrieStream,
+  // batch 155 — binary-search/medium, strings+hash-map/medium, arrays+math/medium, strings+two-pointers/medium, math/easy
+  houseRobberIV,
+  substringXorQueries,
+  minimumRectanglesToCoverPoints,
+  shortestWayToFormString,
+  smallestNumberWithAllSetBits,
 ];
