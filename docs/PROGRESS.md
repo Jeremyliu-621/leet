@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2384** problems; 7476 tests green. Batches 102–162 + 156b/156c/158b/161b complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2407** problems; 7515 tests green. Batches 102–162 + local batch 161 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 163+); update site count; UX polish.
+**Next up:** More bank growth (batch 163+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): add batch 161 (local) — 5 new problems (binary-search, digit-DP, arrays, simulation, bit-manipulation) (2026-05-29)
+New problems: `minimum-time-to-finish-trips` (medium/arrays+binary-search, binary search on T: sum(T÷time[i]) ≥ totalTrips), `count-special-numbers` (medium/math+dp, digit DP counting integers with all distinct digits in [1,n]; verified n=20→19, n=135→110, n=9876543→712890), `minimum-deletions-to-make-array-beautiful` (medium/arrays, greedy: delete at even logical indices when nums[i]==nums[i+1]; add 1 more if odd length), `amount-of-new-area-painted-each-day` (hard/arrays+simulation, union-find "next unpainted" with path compression, O(n log n)), `convert-number-to-hexadecimal` (easy/bit-manipulation+math, unsigned 32-bit >>> 0, nibble extraction via & 0xF). Bank at **2407**; 7515 tests.
 
 ### feat(bank): add batch 158b — count-substrings-k-freq-ii, sum-of-imbalance-numbers; fix 3 existing problems (2026-05-29)
 New: `count-substrings-with-k-frequency-characters-ii` (medium/strings+sliding-window, complement sliding window — total minus subarrays where all chars appear < k times), `sum-of-imbalance-numbers-of-all-subarrays` (medium/arrays+hash-map, O(n²) sorted-insert + incremental gap tracking). Fixed: `maximum-sum-of-almost-unique-subarray` (m/k params were swapped in both JS+Python solutions and examples), `count-the-number-of-good-subarrays` (functionName countGood→countGoodSubarrays, wrong hidden tests), `minimum-array-length-after-pair-removals` (updated description/examples/hidden tests for correctness). Bank at **2375**; 7419 tests.
