@@ -2729,6 +2729,10 @@ import { problem as beautifulSubstringsII } from './count-beautiful-substrings-i
 import { problem as makeThreeStringsEqual } from './make-three-strings-equal';
 import { problem as addedIntegerI } from './find-the-integer-added-to-array-i';
 import { problem as minimumAddedInteger } from './find-the-integer-added-to-array-ii';
+// batch 169 (local) — strings/medium, arrays+sliding-window/medium, graph+union-find/medium
+import { problem as minimumSwapsToMakeStringBalanced } from './minimum-swaps-to-make-string-balanced';
+import { problem as maximumSumDistinctSubarraysWithLengthK } from './maximum-sum-distinct-subarrays-with-length-k';
+import { problem as countNumberOfCompleteComponents } from './count-number-of-complete-components';
 // batch 169b — graph/medium×2, arrays+sliding-window/medium, tree/medium
 import { problem as shortestPathInBinaryMatrix } from './shortest-path-in-binary-matrix';
 import { problem as minimumCostToConnectAllPoints } from './minimum-cost-to-connect-all-points';
@@ -5505,6 +5509,10 @@ export const problems: readonly Problem[] = [
   makeThreeStringsEqual,
   addedIntegerI,
   minimumAddedInteger,
+  // batch 169 (local) — strings/medium, arrays+sliding-window/medium, graph+union-find/medium
+  minimumSwapsToMakeStringBalanced,
+  maximumSumDistinctSubarraysWithLengthK,
+  countNumberOfCompleteComponents,
   // batch 169b — graph/medium×2, arrays+sliding-window/medium, tree/medium
   shortestPathInBinaryMatrix,
   minimumCostToConnectAllPoints,

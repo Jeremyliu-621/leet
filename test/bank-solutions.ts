@@ -39236,4 +39236,63 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[full - 1]!;
   },
 
+  // batch 169 (local) — strings/medium, arrays+sliding-window/medium, graph+union-find/medium
+  'minimum-swaps-to-make-string-balanced': (s: unknown) => {
+    const str = s as string;
+    let open = 0, swaps = 0;
+    for (const ch of str) {
+      if (ch === '[') open++;
+      else if (open > 0) open--;
+      else swaps++;
+    }
+    return Math.ceil(swaps / 2);
+  },
+
+  'maximum-sum-distinct-subarrays-with-length-k': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const freq = new Map<number, number>();
+    let windowSum = 0, ans = 0;
+    for (let i = 0; i < nums.length; i++) {
+      const v = nums[i]!;
+      freq.set(v, (freq.get(v) ?? 0) + 1);
+      windowSum += v;
+      if (i >= k) {
+        const out = nums[i - k]!;
+        windowSum -= out;
+        const f = freq.get(out)! - 1;
+        if (f === 0) freq.delete(out); else freq.set(out, f);
+      }
+      if (i >= k - 1 && freq.size === k) ans = Math.max(ans, windowSum);
+    }
+    return ans;
+  },
+
+  'count-number-of-complete-components': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const nodeCount = new Array<number>(n).fill(1);
+    const edgeCount = new Array<number>(n).fill(0);
+    const find = (x: number): number => {
+      if (parent[x] !== x) parent[x] = find(parent[x]!);
+      return parent[x]!;
+    };
+    const union = (a: number, b: number) => {
+      const ra = find(a), rb = find(b);
+      if (ra === rb) { edgeCount[ra]!++; return; }
+      parent[ra] = rb;
+      nodeCount[rb] = nodeCount[rb]! + nodeCount[ra]!;
+      edgeCount[rb] = edgeCount[rb]! + edgeCount[ra]! + 1;
+    };
+    for (const [a, b] of edges) union(a!, b!);
+    let complete = 0;
+    for (let i = 0; i < n; i++) {
+      if (find(i) === i) {
+        const k = nodeCount[i]!;
+        if (edgeCount[i] === k * (k - 1) / 2) complete++;
+      }
+    }
+    return complete;
+  },
+
 };

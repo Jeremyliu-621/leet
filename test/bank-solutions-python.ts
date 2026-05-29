@@ -39215,4 +39215,72 @@ def minimumTimeRequired(jobs, k):
     return dp[full - 1]
 `,
 
+  // batch 169 (local) — strings/medium, arrays+sliding-window/medium, graph+union-find/medium
+  'minimum-swaps-to-make-string-balanced': `
+def minSwaps(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    s = str(s)
+    open_count = 0
+    swaps = 0
+    for ch in s:
+        if ch == '[':
+            open_count += 1
+        elif open_count > 0:
+            open_count -= 1
+        else:
+            swaps += 1
+    return (swaps + 1) // 2
+`,
+
+  'maximum-sum-distinct-subarrays-with-length-k': `
+def maximumSubarraySum(nums, k):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    from collections import defaultdict
+    freq = defaultdict(int)
+    window_sum = 0
+    ans = 0
+    for i, v in enumerate(nums):
+        freq[v] += 1
+        window_sum += v
+        if i >= k:
+            out = nums[i - k]
+            window_sum -= out
+            freq[out] -= 1
+            if freq[out] == 0:
+                del freq[out]
+        if i >= k - 1 and len(freq) == k:
+            ans = max(ans, window_sum)
+    return ans
+`,
+
+  'count-number-of-complete-components': `
+def countCompleteComponents(n, edges):
+    if hasattr(edges, 'to_py'): edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in edges]
+    parent = list(range(n))
+    node_count = [1] * n
+    edge_count = [0] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(a, b):
+        ra, rb = find(a), find(b)
+        if ra == rb:
+            edge_count[ra] += 1
+            return
+        parent[ra] = rb
+        node_count[rb] += node_count[ra]
+        edge_count[rb] += edge_count[ra] + 1
+    for e in edges:
+        union(int(e[0]), int(e[1]))
+    result = 0
+    for i in range(n):
+        if find(i) == i:
+            k = node_count[i]
+            if edge_count[i] == k * (k - 1) // 2:
+                result += 1
+    return result
+`,
+
 };
