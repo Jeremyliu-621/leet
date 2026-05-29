@@ -2771,6 +2771,12 @@ import { problem as maximumNumberOfOperationsWithTheSameScoreI } from './maximum
 import { problem as makeLexicographicallySmallestArrayBySwappingElements } from './make-lexicographically-smallest-array-by-swapping-elements';
 import { problem as maximizeConsecutiveElementsInAnArrayAfterModification } from './maximize-consecutive-elements-in-an-array-after-modification';
 import { problem as countTheNumberOfPowerfulIntegers } from './count-the-number-of-powerful-integers';
+// batch 172 extra — easy/arrays+hash-map, medium/arrays×2, medium/simulation, medium/design
+import { problem as checkIfNAndItsDoubleExist } from './check-if-n-and-its-double-exist';
+import { problem as imageOverlap } from './image-overlap';
+import { problem as largest1BorderedSquare } from './largest-1-bordered-square';
+import { problem as waterBottlesII } from './water-bottles-ii';
+import { problem as designMostRecentlyUsedQueue } from './design-most-recently-used-queue';
 // batch 172 — arrays+simulation/medium, arrays+hash-map/medium, math/medium×2, arrays/medium
 import { problem as findTheWinnerOfAnArrayGame } from './find-the-winner-of-an-array-game';
 import { problem as shortestImpossibleSequenceOfRolls } from './shortest-impossible-sequence-of-rolls';
@@ -2788,6 +2794,12 @@ import { problem as maximumProductOfPalindromicSubsequences } from './maximum-pr
 import { problem as countIntegersInIntervals } from './count-integers-in-intervals';
 import { problem as longestIncreasingSubsequenceII } from './longest-increasing-subsequence-ii';
 import { problem as numberOfGoodSubsets } from './number-of-good-subsets';
+// batch 173 — easy/math, hard/arrays+math, hard/arrays+stack, medium/design+simulation, medium/arrays+hash-map+math
+import { problem as confusingNumber } from './confusing-number';
+import { problem as patchingArray } from './patching-array';
+import { problem as createMaximumNumber } from './create-maximum-number';
+import { problem as throneInheritance } from './throne-inheritance';
+import { problem as lineReflection } from './line-reflection';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5614,4 +5626,16 @@ export const problems: readonly Problem[] = [
   minimumPushesToTypeWordI,
   minimumPushesToTypeWordII,
   minimumAdditionToMakeIntegerBeautiful,
+  // batch 173 — easy/math, hard/arrays+math, hard/arrays+stack, medium/design+simulation, medium/arrays+hash-map+math
+  confusingNumber,
+  patchingArray,
+  createMaximumNumber,
+  throneInheritance,
+  lineReflection,
+  // batch 172 extra — easy/arrays+hash-map, medium/arrays×2, medium/simulation, medium/design
+  checkIfNAndItsDoubleExist,
+  imageOverlap,
+  largest1BorderedSquare,
+  waterBottlesII,
+  designMostRecentlyUsedQueue,
 ];

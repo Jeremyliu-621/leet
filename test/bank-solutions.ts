@@ -39986,7 +39986,221 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     let pow2 = 1n;
     for (let i = 0n; i < ones; i++) pow2 = pow2 * 2n % MOD;
     return Number(ans * pow2 % MOD);
+  },
 
+  // batch 173
+  'check-if-n-and-its-double-exist': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const seen = new Set<number>();
+    for (const x of arr) {
+      if (seen.has(2 * x) || (x % 2 === 0 && seen.has(x / 2))) return true;
+      seen.add(x);
+    }
+    return false;
+  },
+
+  'image-overlap': (...args: unknown[]) => {
+    const img1 = args[0] as number[][];
+    const img2 = args[1] as number[][];
+    const n = img1.length;
+    let best = 0;
+    for (let dr = -(n - 1); dr <= n - 1; dr++) {
+      for (let dc = -(n - 1); dc <= n - 1; dc++) {
+        let count = 0;
+        for (let r = 0; r < n; r++) {
+          for (let c = 0; c < n; c++) {
+            const r2 = r + dr, c2 = c + dc;
+            if (r2 >= 0 && r2 < n && c2 >= 0 && c2 < n) {
+              if (img1[r]![c] === 1 && img2[r2]![c2] === 1) count++;
+            }
+          }
+        }
+        best = Math.max(best, count);
+      }
+    }
+    return best;
+  },
+
+  'largest-1-bordered-square': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    const horiz = Array.from({ length: m }, () => new Array<number>(n).fill(0));
+    const vert = Array.from({ length: m }, () => new Array<number>(n).fill(0));
+    for (let r = 0; r < m; r++) {
+      for (let c = 0; c < n; c++) {
+        if (grid[r]![c] === 1) {
+          horiz[r]![c] = (c > 0 ? horiz[r]![c - 1]! : 0) + 1;
+          vert[r]![c] = (r > 0 ? vert[r - 1]![c]! : 0) + 1;
+        }
+      }
+    }
+    let ans = 0;
+    for (let r = 0; r < m; r++) {
+      for (let c = 0; c < n; c++) {
+        const maxK = Math.min(horiz[r]![c]!, vert[r]![c]!);
+        for (let k = maxK; k >= 1; k--) {
+          if (horiz[r - k + 1]![c]! >= k && vert[r]![c - k + 1]! >= k) {
+            ans = Math.max(ans, k * k);
+            break;
+          }
+        }
+      }
+    }
+    return ans;
+  },
+
+  'water-bottles-ii': (...args: unknown[]) => {
+    let full = args[0] as number;
+    let numExchange = args[1] as number;
+    let empty = 0, drunk = 0;
+    while (full > 0) {
+      if (full + empty >= numExchange) {
+        const toDrink = numExchange - empty;
+        if (toDrink > full) { drunk += full; full = 0; break; }
+        drunk += toDrink;
+        full -= toDrink;
+        empty += toDrink;
+        empty -= numExchange;
+        full += 1;
+        numExchange += 1;
+      } else {
+        drunk += full;
+        full = 0;
+      }
+    }
+    return drunk;
+  },
+
+  'design-most-recently-used-queue': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const ops = args[1] as number[];
+    const q = Array.from({ length: n }, (_, i) => i + 1);
+    return ops.map(k => {
+      const val = q.splice(k - 1, 1)[0]!;
+      q.push(val);
+      return val;
+    });
+  },
+
+  // batch 173
+  'confusing-number': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const rotMap: Record<number, number> = { 0: 0, 1: 1, 6: 9, 8: 8, 9: 6 };
+    const digits = String(n).split('').map(Number);
+    if (digits.some(d => !(d in rotMap))) return false;
+    const rotated = parseInt(digits.slice().reverse().map(d => rotMap[d]).join(''), 10);
+    return rotated !== n;
+  },
+
+  'patching-array': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice();
+    const n = args[1] as number;
+    let patches = 0;
+    let miss = 1;
+    let i = 0;
+    while (miss <= n) {
+      if (i < nums.length && nums[i]! <= miss) {
+        miss += nums[i++]!;
+      } else {
+        miss += miss;
+        patches++;
+      }
+    }
+    return patches;
+  },
+
+  'create-maximum-number': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const k = args[2] as number;
+
+    function maxSubseq(nums: number[], len: number): number[] {
+      const stack: number[] = [];
+      let drop = nums.length - len;
+      for (const num of nums) {
+        while (drop > 0 && stack.length > 0 && stack[stack.length - 1]! < num) {
+          stack.pop();
+          drop--;
+        }
+        stack.push(num);
+      }
+      return stack.slice(0, len);
+    }
+
+    function cmp(a: number[], ia: number, b: number[], ib: number): number {
+      while (ia < a.length && ib < b.length) {
+        if (a[ia] !== b[ib]) return a[ia]! - b[ib]!;
+        ia++; ib++;
+      }
+      return (a.length - ia) - (b.length - ib);
+    }
+
+    function merge(a: number[], b: number[]): number[] {
+      const result: number[] = [];
+      let ia = 0, ib = 0;
+      while (ia < a.length || ib < b.length) {
+        if (ia < a.length && (ib >= b.length || cmp(a, ia, b, ib) >= 0)) {
+          result.push(a[ia++]!);
+        } else {
+          result.push(b[ib++]!);
+        }
+      }
+      return result;
+    }
+
+    const m = nums1.length, n2 = nums2.length;
+    let best: number[] = [];
+    for (let i = Math.max(0, k - n2); i <= Math.min(k, m); i++) {
+      const s1 = maxSubseq(nums1, i);
+      const s2 = maxSubseq(nums2, k - i);
+      const merged = merge(s1, s2);
+      if (cmp(merged, 0, best, 0) > 0) best = merged;
+    }
+    return best;
+  },
+
+  'throne-inheritance': (...args: unknown[]) => {
+    const operations = args[0] as string[];
+    const opArgs = args[1] as string[][];
+    const results: (null | string[])[] = [];
+    let king = '';
+    const children = new Map<string, string[]>();
+    const dead = new Set<string>();
+
+    for (let i = 0; i < operations.length; i++) {
+      const op = operations[i]!;
+      const arg = opArgs[i]!;
+      if (op === 'ThroneInheritance') {
+        king = arg[0]!;
+        children.set(king, []);
+        results.push(null);
+      } else if (op === 'birth') {
+        const parent = arg[0]!, child = arg[1]!;
+        children.get(parent)!.push(child);
+        children.set(child, []);
+        results.push(null);
+      } else if (op === 'death') {
+        dead.add(arg[0]!);
+        results.push(null);
+      } else {
+        const order: string[] = [];
+        const dfs = (name: string) => {
+          if (!dead.has(name)) order.push(name);
+          for (const child of children.get(name) ?? []) dfs(child);
+        };
+        dfs(king);
+        results.push(order);
+      }
+    }
+    return results;
+  },
+
+  'line-reflection': (...args: unknown[]) => {
+    const points = args[0] as number[][];
+    const set = new Set(points.map(([x, y]) => `${x},${y}`));
+    const xs = points.map(([x]) => x!);
+    const sum = Math.min(...xs) + Math.max(...xs);
+    return points.every(([x, y]) => set.has(`${sum - x!},${y}`));
   },
 
 };

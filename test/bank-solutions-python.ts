@@ -40070,4 +40070,211 @@ def numberOfGoodSubsets(nums):
     return ans
 `,
 
+  // batch 173
+  'check-if-n-and-its-double-exist': `def checkIfExist(arr):
+    if hasattr(arr, 'to_py'): arr = list(arr.to_py())
+    arr = [int(x) for x in arr]
+    seen = set()
+    for x in arr:
+        if 2 * x in seen or (x % 2 == 0 and x // 2 in seen):
+            return True
+        seen.add(x)
+    return False
+`,
+
+  'image-overlap': `def largestOverlap(img1, img2):
+    img1 = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (img1.to_py() if hasattr(img1, 'to_py') else img1)]
+    img2 = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (img2.to_py() if hasattr(img2, 'to_py') else img2)]
+    n = len(img1)
+    best = 0
+    for dr in range(-(n-1), n):
+        for dc in range(-(n-1), n):
+            count = 0
+            for r in range(n):
+                for c in range(n):
+                    r2, c2 = r + dr, c + dc
+                    if 0 <= r2 < n and 0 <= c2 < n:
+                        if img1[r][c] == 1 and img2[r2][c2] == 1:
+                            count += 1
+            best = max(best, count)
+    return best
+`,
+
+  'largest-1-bordered-square': `def largest1BorderedSquare(grid):
+    grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    m, n = len(grid), len(grid[0])
+    horiz = [[0]*n for _ in range(m)]
+    vert = [[0]*n for _ in range(m)]
+    for r in range(m):
+        for c in range(n):
+            if grid[r][c] == 1:
+                horiz[r][c] = (horiz[r][c-1] if c > 0 else 0) + 1
+                vert[r][c] = (vert[r-1][c] if r > 0 else 0) + 1
+    ans = 0
+    for r in range(m):
+        for c in range(n):
+            max_k = min(horiz[r][c], vert[r][c])
+            for k in range(max_k, 0, -1):
+                if horiz[r-k+1][c] >= k and vert[r][c-k+1] >= k:
+                    ans = max(ans, k * k)
+                    break
+    return ans
+`,
+
+  'water-bottles-ii': `def maxBottlesDrunk(numBottles, numExchange):
+    numBottles = int(numBottles)
+    numExchange = int(numExchange)
+    full, empty, drunk = numBottles, 0, 0
+    while full > 0:
+        if full + empty >= numExchange:
+            to_drink = numExchange - empty
+            if to_drink > full:
+                drunk += full
+                full = 0
+                break
+            drunk += to_drink
+            full -= to_drink
+            empty += to_drink
+            empty -= numExchange
+            full += 1
+            numExchange += 1
+        else:
+            drunk += full
+            full = 0
+    return drunk
+`,
+
+  'design-most-recently-used-queue': `def mruQueue(n, ops):
+    n = int(n)
+    if hasattr(ops, 'to_py'): ops = list(ops.to_py())
+    ops = [int(k) for k in ops]
+    q = list(range(1, n + 1))
+    result = []
+    for k in ops:
+        val = q.pop(k - 1)
+        q.append(val)
+        result.append(val)
+    return result
+`,
+
+  'confusing-number': `def confusingNumber(n):
+    n = int(n)
+    rot_map = {0: 0, 1: 1, 6: 9, 8: 8, 9: 6}
+    digits = [int(d) for d in str(n)]
+    if any(d not in rot_map for d in digits):
+        return False
+    rotated = int(''.join(str(rot_map[d]) for d in reversed(digits)))
+    return rotated != n
+`,
+
+  'patching-array': `def minPatches(nums, n):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = [int(x) for x in nums]
+    n = int(n)
+    patches = 0
+    miss = 1
+    i = 0
+    while miss <= n:
+        if i < len(nums) and nums[i] <= miss:
+            miss += nums[i]
+            i += 1
+        else:
+            miss += miss
+            patches += 1
+    return patches
+`,
+
+  'create-maximum-number': `def createMaximumNumber(nums1, nums2, k):
+    if hasattr(nums1, 'to_py'): nums1 = list(nums1.to_py())
+    if hasattr(nums2, 'to_py'): nums2 = list(nums2.to_py())
+    nums1 = [int(x) for x in nums1]
+    nums2 = [int(x) for x in nums2]
+    k = int(k)
+
+    def max_subseq(nums, length):
+        drop = len(nums) - length
+        stack = []
+        for num in nums:
+            while drop > 0 and stack and stack[-1] < num:
+                stack.pop()
+                drop -= 1
+            stack.append(num)
+        return stack[:length]
+
+    def cmp(a, ia, b, ib):
+        while ia < len(a) and ib < len(b):
+            if a[ia] != b[ib]:
+                return a[ia] - b[ib]
+            ia += 1
+            ib += 1
+        return (len(a) - ia) - (len(b) - ib)
+
+    def merge(a, b):
+        result = []
+        ia, ib = 0, 0
+        while ia < len(a) or ib < len(b):
+            if ia < len(a) and (ib >= len(b) or cmp(a, ia, b, ib) >= 0):
+                result.append(a[ia])
+                ia += 1
+            else:
+                result.append(b[ib])
+                ib += 1
+        return result
+
+    m, n2 = len(nums1), len(nums2)
+    best = []
+    for i in range(max(0, k - n2), min(k, m) + 1):
+        s1 = max_subseq(nums1, i)
+        s2 = max_subseq(nums2, k - i)
+        merged = merge(s1, s2)
+        if cmp(merged, 0, best, 0) > 0:
+            best = merged
+    return best
+`,
+
+  'throne-inheritance': `def throneInheritance(operations, args):
+    if hasattr(operations, 'to_py'): operations = list(operations.to_py())
+    if hasattr(args, 'to_py'): args = [list(a.to_py()) if hasattr(a, 'to_py') else list(a) for a in args.to_py()]
+    results = []
+    king = ''
+    children = {}
+    dead = set()
+
+    for i in range(len(operations)):
+        op = str(operations[i])
+        arg = [str(x) for x in args[i]] if args[i] else []
+        if op == 'ThroneInheritance':
+            king = arg[0]
+            children[king] = []
+            results.append(None)
+        elif op == 'birth':
+            parent, child = arg[0], arg[1]
+            children[parent].append(child)
+            children[child] = []
+            results.append(None)
+        elif op == 'death':
+            dead.add(arg[0])
+            results.append(None)
+        else:
+            order = []
+            def dfs(name):
+                if name not in dead:
+                    order.append(name)
+                for c in children.get(name, []):
+                    dfs(c)
+            dfs(king)
+            results.append(order)
+    return results
+`,
+
+  'line-reflection': `def isReflected(points):
+    if hasattr(points, 'to_py'): points = [[int(x) for x in p.to_py()] if hasattr(p, 'to_py') else [int(x) for x in p] for p in points.to_py()]
+    point_set = set()
+    for p in points:
+        point_set.add((int(p[0]), int(p[1])))
+    xs = [int(p[0]) for p in points]
+    total = min(xs) + max(xs)
+    return all((total - x, y) in point_set for x, y in point_set)
+`,
+
 };
