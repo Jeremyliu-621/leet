@@ -2985,6 +2985,12 @@ import { problem as sumOfEveryKthNumber } from './sum-of-every-kth-number';
 import { problem as countPairsWithEvenSum } from './count-pairs-with-even-sum';
 import { problem as findXSumOfAllKLongSubarraysI } from './find-x-sum-of-all-k-long-subarrays-i';
 import { problem as minimumOperationsToMakeMedianEqualK } from './minimum-operations-to-make-median-equal-k';
+// batch 198 — easy/math+simulation, easy/math, easy/simulation, medium/arrays+bit-manipulation, easy/math+simulation
+import { problem as checkIfTheNumberIsFascinating } from './check-if-the-number-is-fascinating';
+import { problem as countTheDigitsThatDivideANumber } from './count-the-digits-that-divide-a-number';
+import { problem as minimumTimeToTypeWordUsingSpecialTypewriter } from './minimum-time-to-type-word-using-special-typewriter';
+import { problem as largestCombinationWithBitwiseAndGreaterThanZero } from './largest-combination-with-bitwise-and-greater-than-zero';
+import { problem as calculateMoneyInLeetcodeBank } from './calculate-money-in-leetcode-bank';
 // batch 197 — five easy problems
 import { problem as sumOfEvenIndexedElements } from './sum-of-even-indexed-elements';
 import { problem as countStringsWithUniqueCharacters } from './count-strings-with-unique-characters';
@@ -6035,6 +6041,12 @@ export const problems: readonly Problem[] = [
   countPairsWithEvenSum,
   findXSumOfAllKLongSubarraysI,
   minimumOperationsToMakeMedianEqualK,
+  // batch 198 — easy/math+simulation, easy/math, easy/simulation, medium/arrays+bit-manipulation, easy/math+simulation
+  checkIfTheNumberIsFascinating,
+  countTheDigitsThatDivideANumber,
+  minimumTimeToTypeWordUsingSpecialTypewriter,
+  largestCombinationWithBitwiseAndGreaterThanZero,
+  calculateMoneyInLeetcodeBank,
   // batch 197 — five easy problems
   sumOfEvenIndexedElements,
   countStringsWithUniqueCharacters,

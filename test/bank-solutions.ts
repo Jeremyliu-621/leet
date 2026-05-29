@@ -43067,7 +43067,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const best = Math.min(c1, c2);
     return best === Infinity ? -1 : best;
   },
-  // batch 198
+  // batch 198 (concurrent) --------------------------------------------------
   'count-substrings-without-repeating': (...args: unknown[]) => {
     const s = args[0] as string;
     const freq = new Map<string, number>();
@@ -43126,7 +43126,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const steps = k % n;
     return [...nums.slice(steps), ...nums.slice(0, steps)];
   },
-  // batch 199
+  // batch 199 ---------------------------------------------------------------
   'merge-sorted-arrays': (...args: unknown[]) => {
     const nums1 = args[0] as number[];
     const nums2 = args[1] as number[];
@@ -43142,5 +43142,49 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     while (i < nums1.length) result.push(nums1[i++] as number);
     while (j < nums2.length) result.push(nums2[j++] as number);
     return result;
+  },
+  // batch 198b ---------------------------------------------------------------
+  'check-if-the-number-is-fascinating': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const s = String(n) + String(2 * n) + String(3 * n);
+    if (s.length !== 9) return false;
+    return s.split('').sort().join('') === '123456789';
+  },
+  'count-the-digits-that-divide-a-number': (...args: unknown[]) => {
+    const num = args[0] as number;
+    let count = 0, n = num;
+    while (n > 0) {
+      const d = n % 10;
+      if (d !== 0 && num % d === 0) count++;
+      n = Math.floor(n / 10);
+    }
+    return count;
+  },
+  'minimum-time-to-type-word-using-special-typewriter': (...args: unknown[]) => {
+    const word = args[0] as string;
+    let time = 0, cur = 0;
+    for (const c of word) {
+      const target = c.charCodeAt(0) - 97;
+      const diff = Math.abs(target - cur);
+      time += Math.min(diff, 26 - diff) + 1;
+      cur = target;
+    }
+    return time;
+  },
+  'largest-combination-with-bitwise-and-greater-than-zero': (...args: unknown[]) => {
+    const candidates = args[0] as number[];
+    let max = 0;
+    for (let b = 0; b < 24; b++) {
+      let cnt = 0;
+      for (const c of candidates) if ((c >> b) & 1) cnt++;
+      max = Math.max(max, cnt);
+    }
+    return max;
+  },
+  'calculate-money-in-leetcode-bank': (...args: unknown[]) => {
+    const n = args[0] as number;
+    let total = 0;
+    for (let i = 0; i < n; i++) total += Math.floor(i / 7) + (i % 7) + 1;
+    return total;
   },
 };

@@ -42898,7 +42898,7 @@ def minOperations(nums1, nums2):
     best = min(c1, c2)
     return -1 if best == float('inf') else best
 `,
-  // batch 198
+  // batch 198 (concurrent) --------------------------------------------------
   'count-substrings-without-repeating': `
 def countSubstringsNoRepeat(s):
     freq = {}
@@ -42960,7 +42960,7 @@ def rotateArrayLeft(nums, k):
     steps = k % n
     return nums[steps:] + nums[:steps]
 `,
-  // batch 199
+  // batch 199 ---------------------------------------------------------------
   'merge-sorted-arrays': `
 def mergeSortedArrays(nums1, nums2):
     result = []
@@ -42975,5 +42975,41 @@ def mergeSortedArrays(nums1, nums2):
     result.extend(nums1[i:])
     result.extend(nums2[j:])
     return result
+`,
+  // batch 198b ---------------------------------------------------------------
+  'check-if-the-number-is-fascinating': `
+def isFascinating(n):
+    s = str(n) + str(2 * n) + str(3 * n)
+    return len(s) == 9 and sorted(s) == list('123456789')
+`,
+  'count-the-digits-that-divide-a-number': `
+def countDigits(num):
+    count = 0
+    n = num
+    while n > 0:
+        d = n % 10
+        if d != 0 and num % d == 0:
+            count += 1
+        n //= 10
+    return count
+`,
+  'minimum-time-to-type-word-using-special-typewriter': `
+def minTimeToType(word):
+    time = 0
+    cur = 0
+    for c in word:
+        target = ord(c) - ord('a')
+        diff = abs(target - cur)
+        time += min(diff, 26 - diff) + 1
+        cur = target
+    return time
+`,
+  'largest-combination-with-bitwise-and-greater-than-zero': `
+def largestCombination(candidates):
+    return max(sum((c >> b) & 1 for c in candidates) for b in range(24))
+`,
+  'calculate-money-in-leetcode-bank': `
+def totalMoney(n):
+    return sum(i // 7 + i % 7 + 1 for i in range(n))
 `,
 };
