@@ -2882,6 +2882,12 @@ import { problem as phonePrefix } from './phone-number-prefix';
 import { problem as reverseDegree } from './reverse-degree-of-a-string';
 import { problem as minOpsArrayZero } from './minimum-operations-make-array-elements-zero';
 import { problem as propertiesGraph } from './properties-graph';
+// batch 219 — easy/math, medium/simulation+bit-manipulation, medium/strings+hash-map, medium/arrays+hash-map, easy/arrays+binary-search
+import { problem as countOddsInIntervalRange } from './count-odd-numbers-in-an-interval-range';
+import { problem as findKthBitInNthBinaryString } from './find-kth-bit-in-nth-binary-string';
+import { problem as checkIfStringCanBreakAnotherString } from './check-if-a-string-can-break-another-string';
+import { problem as convertArrayInto2dArrayWithConditions } from './convert-an-array-into-2d-array-with-conditions';
+import { problem as kWeakestRowsInMatrix } from './k-weakest-rows-in-a-matrix';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5804,4 +5810,10 @@ export const problems: readonly Problem[] = [
   reverseDegree,
   minOpsArrayZero,
   propertiesGraph,
+  // batch 219
+  countOddsInIntervalRange,
+  findKthBitInNthBinaryString,
+  checkIfStringCanBreakAnotherString,
+  convertArrayInto2dArrayWithConditions,
+  kWeakestRowsInMatrix,
 ];

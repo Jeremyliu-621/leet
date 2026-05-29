@@ -41515,4 +41515,60 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     for (let i = 0; i < n; i++) if (find(i) === i) count++;
     return count;
   },
+  'count-odd-numbers-in-an-interval-range': (...args: unknown[]) => {
+    const low = args[0] as number;
+    const high = args[1] as number;
+    return Math.floor((high + 1) / 2) - Math.floor(low / 2);
+  },
+  'find-kth-bit-in-nth-binary-string': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const k = args[1] as number;
+    const findKthBit = (n: number, k: number): string => {
+      if (n === 1) return '0';
+      const mid = 1 << (n - 1);
+      if (k === mid) return '1';
+      if (k < mid) return findKthBit(n - 1, k);
+      const mirrored = findKthBit(n - 1, mid * 2 - k);
+      return mirrored === '0' ? '1' : '0';
+    };
+    return findKthBit(n, k);
+  },
+  'check-if-a-string-can-break-another-string': (...args: unknown[]) => {
+    const s1 = args[0] as string;
+    const s2 = args[1] as string;
+    const a = [...s1].sort();
+    const b = [...s2].sort();
+    let s1BreaksS2 = true, s2BreaksS1 = true;
+    for (let i = 0; i < a.length; i++) {
+      if (a[i]! < b[i]!) s1BreaksS2 = false;
+      if (b[i]! < a[i]!) s2BreaksS1 = false;
+    }
+    return s1BreaksS2 || s2BreaksS1;
+  },
+  'convert-an-array-into-2d-array-with-conditions': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    const result: number[][] = [];
+    for (const n of nums) {
+      const cnt = freq.get(n) ?? 0;
+      if (cnt >= result.length) result.push([]);
+      result[cnt]!.push(n);
+      freq.set(n, cnt + 1);
+    }
+    return result;
+  },
+  'k-weakest-rows-in-a-matrix': (...args: unknown[]) => {
+    const mat = args[0] as number[][];
+    const k = args[1] as number;
+    const strengths = mat.map((row, i) => {
+      let lo = 0, hi = row.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (row[mid] === 1) lo = mid + 1; else hi = mid;
+      }
+      return [lo, i] as [number, number];
+    });
+    strengths.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    return strengths.slice(0, k).map(([, i]) => i);
+  },
 };
