@@ -38256,4 +38256,92 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  // batch 164 — math/easy×2, hash-map/medium, heap/medium, stack/hard
+  'prime-in-diagonal': (...args: unknown[]) => {
+    const nums = args[0] as number[][];
+    const n = nums.length;
+    function isPrime(v: number) {
+      if (v < 2) return false;
+      if (v < 4) return true;
+      if (v % 2 === 0 || v % 3 === 0) return false;
+      for (let i = 5; i * i <= v; i += 6) if (v % i === 0 || v % (i + 2) === 0) return false;
+      return true;
+    }
+    let ans = 0;
+    for (let i = 0; i < n; i++) {
+      if (isPrime(nums[i]![i]!)) ans = Math.max(ans, nums[i]![i]!);
+      if (isPrime(nums[i]![n - 1 - i]!)) ans = Math.max(ans, nums[i]![n - 1 - i]!);
+    }
+    return ans;
+  },
+
+  'count-lattice-points-inside-a-circle': (...args: unknown[]) => {
+    const circles = args[0] as number[][];
+    const points = new Set<number>();
+    for (const [cx, cy, r] of circles) {
+      for (let x = cx! - r!; x <= cx! + r!; x++) {
+        for (let y = cy! - r!; y <= cy! + r!; y++) {
+          if ((x - cx!) ** 2 + (y - cy!) ** 2 <= r! * r!) points.add(x * 1000 + y);
+        }
+      }
+    }
+    return points.size;
+  },
+
+  'finding-the-users-active-minutes': (...args: unknown[]) => {
+    const logs = args[0] as number[][], k = args[1] as number;
+    const userMinutes = new Map<number, Set<number>>();
+    for (const [user, time] of logs) {
+      if (!userMinutes.has(user!)) userMinutes.set(user!, new Set());
+      userMinutes.get(user!)!.add(time!);
+    }
+    const answer = new Array(k).fill(0);
+    for (const minutes of userMinutes.values()) {
+      const uam = minutes.size;
+      if (uam >= 1 && uam <= k) answer[uam - 1]++;
+    }
+    return answer;
+  },
+
+  'remove-stones-to-minimize-the-total': (...args: unknown[]) => {
+    const piles = [...(args[0] as number[])];
+    const k = args[1] as number;
+    function siftDown(h: number[], i: number) {
+      const n = h.length;
+      while (true) {
+        let max = i;
+        const l = 2 * i + 1, r = 2 * i + 2;
+        if (l < n && h[l]! > h[max]!) max = l;
+        if (r < n && h[r]! > h[max]!) max = r;
+        if (max === i) break;
+        [h[i], h[max]] = [h[max]!, h[i]!];
+        i = max;
+      }
+    }
+    for (let i = Math.floor(piles.length / 2) - 1; i >= 0; i--) siftDown(piles, i);
+    for (let i = 0; i < k; i++) {
+      piles[0] = piles[0]! - Math.floor(piles[0]! / 2);
+      siftDown(piles, 0);
+    }
+    return piles.reduce((a, b) => a + b, 0);
+  },
+
+  'number-of-visible-people-in-a-queue': (...args: unknown[]) => {
+    const heights = args[0] as number[];
+    const n = heights.length;
+    const ans = new Array(n).fill(0);
+    const stack: number[] = [];
+    for (let i = n - 1; i >= 0; i--) {
+      let count = 0;
+      while (stack.length > 0 && heights[stack[stack.length - 1]!]! < heights[i]!) {
+        stack.pop();
+        count++;
+      }
+      if (stack.length > 0) count++;
+      ans[i] = count;
+      stack.push(i);
+    }
+    return ans;
+  },
+
 };

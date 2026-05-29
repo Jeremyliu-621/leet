@@ -38139,4 +38139,79 @@ def baseNeg2(n):
     return result
 `,
 
+  // batch 164
+  'prime-in-diagonal': `
+def diagonalPrime(nums):
+    n = len(nums)
+    def is_prime(v):
+        if v < 2: return False
+        if v < 4: return True
+        if v % 2 == 0 or v % 3 == 0: return False
+        i = 5
+        while i * i <= v:
+            if v % i == 0 or v % (i + 2) == 0: return False
+            i += 6
+        return True
+    ans = 0
+    for i in range(n):
+        if is_prime(nums[i][i]):
+            ans = max(ans, nums[i][i])
+        if is_prime(nums[i][n - 1 - i]):
+            ans = max(ans, nums[i][n - 1 - i])
+    return ans
+`,
+
+  'count-lattice-points-inside-a-circle': `
+def countLatticePoints(circles):
+    points = set()
+    for cx, cy, r in circles:
+        for x in range(cx - r, cx + r + 1):
+            for y in range(cy - r, cy + r + 1):
+                if (x - cx) ** 2 + (y - cy) ** 2 <= r * r:
+                    points.add((x, y))
+    return len(points)
+`,
+
+  'finding-the-users-active-minutes': `
+def findingUsersActiveMinutes(logs, k):
+    from collections import defaultdict
+    user_minutes = defaultdict(set)
+    for user, time in logs:
+        user_minutes[user].add(time)
+    answer = [0] * k
+    for minutes in user_minutes.values():
+        uam = len(minutes)
+        if 1 <= uam <= k:
+            answer[uam - 1] += 1
+    return answer
+`,
+
+  'remove-stones-to-minimize-the-total': `
+import heapq
+def minStoneSum(piles, k):
+    heap = [-p for p in piles]
+    heapq.heapify(heap)
+    for _ in range(k):
+        top = -heapq.heappop(heap)
+        heapq.heappush(heap, -(top - top // 2))
+    return -sum(heap)
+`,
+
+  'number-of-visible-people-in-a-queue': `
+def canSeePersonsCount(heights):
+    n = len(heights)
+    ans = [0] * n
+    stack = []
+    for i in range(n - 1, -1, -1):
+        count = 0
+        while stack and heights[stack[-1]] < heights[i]:
+            stack.pop()
+            count += 1
+        if stack:
+            count += 1
+        ans[i] = count
+        stack.append(i)
+    return ans
+`,
+
 };

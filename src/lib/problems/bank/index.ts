@@ -2673,6 +2673,12 @@ import { problem as checkIfAStringContainsAllBinaryCodesOfSizeK } from './check-
 import { problem as bitwiseOrsOfSubarrays } from './bitwise-ors-of-subarrays';
 import { problem as numberOfStepsToReduceInBinary } from './number-of-steps-to-reduce-a-number-in-binary-representation';
 import { problem as convertToBaseNeg2 } from './convert-to-base-2';
+// batch 164 — math/easy×2, hash-map/medium, heap/medium, stack/hard
+import { problem as primeInDiagonal } from './prime-in-diagonal';
+import { problem as countLatticePointsInsideACircle } from './count-lattice-points-inside-a-circle';
+import { problem as findingTheUsersActiveMinutes } from './finding-the-users-active-minutes';
+import { problem as removeStonesToMinimizeTheTotal } from './remove-stones-to-minimize-the-total';
+import { problem as numberOfVisiblePeopleInAQueue } from './number-of-visible-people-in-a-queue';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5382,4 +5388,10 @@ export const problems: readonly Problem[] = [
   bitwiseOrsOfSubarrays,
   numberOfStepsToReduceInBinary,
   convertToBaseNeg2,
+  // batch 164 — math/easy×2, hash-map/medium, heap/medium, stack/hard
+  primeInDiagonal,
+  countLatticePointsInsideACircle,
+  findingTheUsersActiveMinutes,
+  removeStonesToMinimizeTheTotal,
+  numberOfVisiblePeopleInAQueue,
 ];
