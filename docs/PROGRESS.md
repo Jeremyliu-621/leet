@@ -8,9 +8,18 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2456** registered problems; 7662 tests green. Batches 102–170 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2473** registered problems; 7713 tests green. Batches 102–170 (both local+remote) complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 170+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 171+); site count update; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 169 (local) — minimum-swaps-string-balanced (medium), maximum-sum-distinct-subarrays-k (medium), count-complete-components (medium) (2026-05-29)
+Three new problems: `minimum-swaps-to-make-string-balanced` (medium/strings+stack+math, scan and count unmatched `]`, answer is ceil(count/2)), `maximum-sum-distinct-subarrays-with-length-k` (medium/arrays+sliding-window+hash-map, freq map to track uniqueness, update max when window has exactly k distinct), `count-number-of-complete-components` (medium/graph+union-find, union-find tracking node/edge counts per component, complete iff edges==nodes*(nodes-1)/2). Bank at **2472**; 7710 tests.
+
+### feat(bank): batch 170 — robot-print-smallest (medium), remove-letter-equalize-freq (easy), minimize-max-diff-pairs (medium), check-point-reachable (hard), build-array-stack-ops (easy) (2026-05-29)
+Five new problems: `using-robot-to-print-lexicographically-smallest-string` (medium/strings+stack, precompute suffix min → greedy pop when top ≤ suffix min of remaining), `remove-letter-to-equalize-frequency` (easy/strings+hash-map, try removing each character position, check uniform frequencies), `minimize-the-maximum-difference-of-pairs` (medium/arrays+binary-search, sort + binary search on answer + greedy feasibility count), `check-if-point-is-reachable` (hard/math, GCD must be a power of 2 — strip 2-factors from both coords then check coprimality), `build-array-with-stack-operations` (easy/arrays+stack+simulation, push each stream element; also pop if not in target; stop at last target element). Bank at **2464**; 7686 tests.
+
+### feat(bank): batch 169c — minimum-time-to-finish-all-jobs (hard) (2026-05-29)
+One new problem: `minimum-time-to-finish-all-jobs` (hard/arrays+dp, bitmask DP over job subsets — precompute subSum[mask], then dp across k workers: ndp[mask|sub]=min(ndp[...], max(dp[mask], subSum[sub]))). Also fixes Python function name for `minimum-cost-to-convert-string-i` (was `minimumCost`, must be `minimumCostConvertString`). Bank at **2456**; 7662 tests.
 
 ### feat(bank): batch 170 — word-break-ii, number-of-atoms, design-twitter, distribute-coins-in-binary-tree, minimum-genetic-mutation (2026-05-29)
 Five new problems targeting underrepresented tags: `word-break-ii` (hard/dynamic-programming+backtracking+strings, memoized DFS returning all valid segmentations sorted), `number-of-atoms` (hard/strings+hash-map+stack, stack-based parser for nested chemical formulas returning sorted element counts), `design-twitter` (medium/design+hash-map+heap, social feed with postTweet/follow/unfollow/getNewsFeed ops-array pattern), `distribute-coins-in-binary-tree` (medium/tree+math, post-order DFS accumulating |excess| per edge; excess = subtreeCoins − subtreeSize), `minimum-genetic-mutation` (medium/graph+shortest-path, BFS on 8-char gene strings mutating one char at a time through a valid bank). Also fixed LaTeX `$$...$$` in two problem descriptions (converted to inline code) and removed TODO comments from starter code template. Bank at **2456**; 7662 tests.
@@ -27,6 +36,9 @@ Three UX improvements: (1) TopBar timer gains a 2-minute warning state (isWarnin
 
 ### feat(bank): batch 163 — number-of-same-end-substrings (medium), count-fertile-pyramids (hard), maximum-deletions-on-a-string (hard), collect-coins-in-a-tree (hard), maximum-and-sum-of-array (hard) (2026-05-29)
 Five new problems: `number-of-same-end-substrings` (medium/strings+arrays, prefix count → m*(m+1)/2 per char), `count-fertile-pyramids-in-a-land` (hard/arrays+dp, upward+inverted pyramid DP with max(0,dp-1) sum), `maximum-deletions-on-a-string` (hard/strings+dp, LCP table + DP; dp[i]=max 1+dp[i+k] when lcp[i][i+k]≥k), `collect-coins-in-a-tree` (hard/arrays+graph, topological leaf-removal: strip zero-coin leaves, then 2 rounds of all leaves, answer = 2×remaining edges), `maximum-and-sum-of-array` (hard/arrays+dp, bitmask DP over 2×numSlots positions, slot = pos//2+1). Bank at **2434**; 7596 tests.
+
+### feat(bank): batch 169 — 4 new problems (graph×2, sliding-window, tree) (2026-05-29)
+shortest-path-in-binary-matrix (medium/graph+shortest-path, BFS 8-directional), minimum-cost-to-connect-all-points (medium/graph+union-find, Prim's MST O(n²)), minimum-swaps-to-group-all-1s-together (medium/arrays+sliding-window, min zeros in window of size k), maximum-width-of-binary-tree (medium/tree, BFS with position normalization using BigInt). Bank at **2442**; 7620 tests.
 
 ### feat(bank): batch 166 — replace-elements (easy), find-disappeared-numbers (easy), final-value-after-ops (easy), steps-to-non-decreasing (medium), flower-planting-no-adj (medium) (2026-05-29)
 Five new problems: `replace-elements-with-greatest-element-on-right-side` (easy/arrays, right-to-left scan with running max), `find-all-numbers-disappeared-in-an-array` (easy/arrays+hash-map, Set lookup for missing 1..n), `final-value-of-variable-after-performing-operations` (easy/simulation, x += +1 if op contains '+' else -1), `steps-to-make-array-non-decreasing` (medium/arrays+stack, monotone decreasing stack tracking max removal round per element), `flower-planting-with-no-adjacent` (medium/graph, greedy 4-coloring: assign smallest color not used by any neighbor). Bank at **2443**; 7623 tests.

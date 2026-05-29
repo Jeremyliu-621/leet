@@ -2656,6 +2656,11 @@ import { problem as allPathsFromSourceToTarget } from './all-paths-from-source-t
 import { problem as countUnreachablePairsOfNodesInUndirectedGraph } from './count-unreachable-pairs-of-nodes-in-an-undirected-graph';
 import { problem as partitionArrayIntoDisjointIntervals } from './partition-array-into-disjoint-intervals';
 import { problem as removeDuplicatesFromSortedArrayII } from './remove-duplicates-from-sorted-array-ii';
+// batch 170 — math/medium, dp+strings/hard, arrays+math/medium, arrays/medium
+import { problem as kthFactorOfN } from './k-th-factor-of-n';
+import { problem as checkValidParenthesesStringPath } from './check-if-there-is-a-valid-parentheses-string-path';
+import { problem as maximumTrailingZerosInCorneredPath } from './maximum-trailing-zeros-in-a-cornered-path';
+import { problem as maximumValueOfOrderedTripletII } from './maximum-value-of-ordered-triplet-ii';
 // batch 169 — new problems: heap+greedy/medium, strings/easy, design+hash-map/medium, strings/easy
 import { problem as maximumNumberOfEatenApples } from './maximum-number-of-eaten-apples';
 import { problem as minimumFlipsToMakeAlternatingBinaryString } from './minimum-flips-to-make-alternating-binary-string';
@@ -2719,12 +2724,29 @@ import { problem as findAllNumbersDisappearedInAnArray } from './find-all-number
 import { problem as finalValueOfVariableAfterPerformingOperations } from './final-value-of-variable-after-performing-operations';
 import { problem as stepsToMakeArrayNonDecreasing } from './steps-to-make-array-non-decreasing';
 import { problem as flowerPlantingWithNoAdjacent } from './flower-planting-with-no-adjacent';
-// batch 169 — strings/medium, strings/hard, strings/easy, arrays/easy×2
+// batch 169a — strings/medium, strings/hard, strings/easy, arrays/easy×2
 import { problem as maximumPalindromesAfterOperations } from './maximum-palindromes-after-operations';
 import { problem as beautifulSubstringsII } from './count-beautiful-substrings-ii';
 import { problem as makeThreeStringsEqual } from './make-three-strings-equal';
 import { problem as addedIntegerI } from './find-the-integer-added-to-array-i';
 import { problem as minimumAddedInteger } from './find-the-integer-added-to-array-ii';
+// batch 169 (local) — strings/medium, arrays+sliding-window/medium, graph+union-find/medium
+import { problem as minimumSwapsToMakeStringBalanced } from './minimum-swaps-to-make-string-balanced';
+import { problem as maximumSumDistinctSubarraysWithLengthK } from './maximum-sum-distinct-subarrays-with-length-k';
+import { problem as countNumberOfCompleteComponents } from './count-number-of-complete-components';
+// batch 169b — graph/medium×2, arrays+sliding-window/medium, tree/medium
+import { problem as shortestPathInBinaryMatrix } from './shortest-path-in-binary-matrix';
+import { problem as minimumCostToConnectAllPoints } from './minimum-cost-to-connect-all-points';
+import { problem as minimumSwapsToGroupAll1sTogether } from './minimum-swaps-to-group-all-1s-together';
+import { problem as maximumWidthOfBinaryTree } from './maximum-width-of-binary-tree';
+// batch 169c — arrays+dp/hard
+import { problem as minimumTimeToFinishAllJobs } from './minimum-time-to-finish-all-jobs';
+// batch 170 — strings+stack/medium, strings+hash-map/easy, arrays+binary-search/medium, math/hard, arrays+stack+simulation/easy
+import { problem as usingRobotToPrintLexicographicallySmallestString } from './using-robot-to-print-lexicographically-smallest-string';
+import { problem as removeLetterToEqualizeFrequency } from './remove-letter-to-equalize-frequency';
+import { problem as minimizeTheMaximumDifferenceOfPairs } from './minimize-the-maximum-difference-of-pairs';
+import { problem as checkIfPointIsReachable } from './check-if-point-is-reachable';
+import { problem as buildArrayWithStackOperations } from './build-array-with-stack-operations';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5446,6 +5468,11 @@ export const problems: readonly Problem[] = [
   countUnreachablePairsOfNodesInUndirectedGraph,
   partitionArrayIntoDisjointIntervals,
   removeDuplicatesFromSortedArrayII,
+  // batch 170 — 4 new problems
+  kthFactorOfN,
+  checkValidParenthesesStringPath,
+  maximumTrailingZerosInCorneredPath,
+  maximumValueOfOrderedTripletII,
   // batch 169 — 4 new problems
   maximumNumberOfEatenApples,
   minimumFlipsToMakeAlternatingBinaryString,
@@ -5477,7 +5504,7 @@ export const problems: readonly Problem[] = [
   finalValueOfVariableAfterPerformingOperations,
   stepsToMakeArrayNonDecreasing,
   flowerPlantingWithNoAdjacent,
-  // batch 169 — strings/medium, strings/hard, strings/easy, arrays/easy×2
+  // batch 169a — strings/medium, strings/hard, strings/easy, arrays/easy×2
   maximumPalindromesAfterOperations,
   beautifulSubstringsII,
   makeThreeStringsEqual,
@@ -5485,4 +5512,21 @@ export const problems: readonly Problem[] = [
   minimumAddedInteger,
   // batch 170 — dp+backtracking/hard, strings+stack/hard, design/medium, tree/medium, graph/medium
   distributeCoinsInBinaryTree,
+  // batch 169 (local) — strings/medium, arrays+sliding-window/medium, graph+union-find/medium
+  minimumSwapsToMakeStringBalanced,
+  maximumSumDistinctSubarraysWithLengthK,
+  countNumberOfCompleteComponents,
+  // batch 169b — graph/medium×2, arrays+sliding-window/medium, tree/medium
+  shortestPathInBinaryMatrix,
+  minimumCostToConnectAllPoints,
+  minimumSwapsToGroupAll1sTogether,
+  maximumWidthOfBinaryTree,
+  // batch 169c — arrays+dp/hard
+  minimumTimeToFinishAllJobs,
+  // batch 170 — strings+stack/medium, strings+hash-map/easy, arrays+binary-search/medium, math/hard, arrays+stack+simulation/easy
+  usingRobotToPrintLexicographicallySmallestString,
+  removeLetterToEqualizeFrequency,
+  minimizeTheMaximumDifferenceOfPairs,
+  checkIfPointIsReachable,
+  buildArrayWithStackOperations,
 ];

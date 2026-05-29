@@ -21840,7 +21840,13 @@ def secondMinimum(n, edges, time, change):
     return ans
 `,
 
-  'minimum-cost-to-convert-string-i': `def minimumCost(source, target, original, changed, cost):
+  'minimum-cost-to-convert-string-i': `def minimumCostConvertString(source, target, original, changed, cost):
+    if hasattr(original, 'to_py'):
+        original = list(original.to_py())
+    if hasattr(changed, 'to_py'):
+        changed = list(changed.to_py())
+    if hasattr(cost, 'to_py'):
+        cost = list(cost.to_py())
     INF = float('inf')
     dist = [[INF] * 26 for _ in range(26)]
     for i in range(26):
@@ -38297,6 +38303,90 @@ def removeDuplicates(nums):
     return k
 `,
 
+  // batch 170 — Python solutions
+  'k-th-factor-of-n': `
+def kthFactor(n, k):
+    count = 0
+    for i in range(1, n + 1):
+        if n % i == 0:
+            count += 1
+            if count == k:
+                return i
+    return -1
+`,
+  'check-if-there-is-a-valid-parentheses-string-path': `
+def hasValidPath(grid):
+    grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    m, n = len(grid), len(grid[0])
+    if (m + n - 1) % 2 != 0:
+        return False
+    dp = [[set() for _ in range(n)] for _ in range(m)]
+    start = 1 if grid[0][0] == '(' else -1
+    if start >= 0:
+        dp[0][0].add(start)
+    for i in range(m):
+        for j in range(n):
+            if i == 0 and j == 0:
+                continue
+            delta = 1 if grid[i][j] == '(' else -1
+            sources = []
+            if i > 0: sources.append(dp[i-1][j])
+            if j > 0: sources.append(dp[i][j-1])
+            for src in sources:
+                for bal in src:
+                    new_bal = bal + delta
+                    if new_bal >= 0:
+                        dp[i][j].add(new_bal)
+    return 0 in dp[m-1][n-1]
+`,
+  'maximum-trailing-zeros-in-a-cornered-path': `
+def maxTrailingZeros(grid):
+    grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    m, n = len(grid), len(grid[0])
+    def c2(v):
+        c = 0
+        while v % 2 == 0: c += 1; v //= 2
+        return c
+    def c5(v):
+        c = 0
+        while v % 5 == 0: c += 1; v //= 5
+        return c
+    rp2 = [[0]*(n+1) for _ in range(m)]
+    rp5 = [[0]*(n+1) for _ in range(m)]
+    cp2 = [[0]*n for _ in range(m+1)]
+    cp5 = [[0]*n for _ in range(m+1)]
+    for i in range(m):
+        for j in range(n):
+            rp2[i][j+1] = rp2[i][j] + c2(grid[i][j])
+            rp5[i][j+1] = rp5[i][j] + c5(grid[i][j])
+            cp2[i+1][j] = cp2[i][j] + c2(grid[i][j])
+            cp5[i+1][j] = cp5[i][j] + c5(grid[i][j])
+    ans = 0
+    for i in range(m):
+        for j in range(n):
+            v2, v5 = c2(grid[i][j]), c5(grid[i][j])
+            left2, left5 = rp2[i][j+1], rp5[i][j+1]
+            right2, right5 = rp2[i][n] - rp2[i][j], rp5[i][n] - rp5[i][j]
+            up2, up5 = cp2[i+1][j], cp5[i+1][j]
+            down2, down5 = cp2[m][j] - cp2[i][j], cp5[m][j] - cp5[i][j]
+            for h2, h5, vv2, vv5 in [(left2, left5, up2, up5), (left2, left5, down2, down5),
+                                      (right2, right5, up2, up5), (right2, right5, down2, down5)]:
+                ans = max(ans, min(h2 + vv2 - v2, h5 + vv5 - v5))
+    return ans
+`,
+  'maximum-value-of-ordered-triplet-ii': `
+def maximumTripletValue(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    ans = 0
+    max_i = 0
+    max_diff = 0
+    for k in range(len(nums)):
+        ans = max(ans, max_diff * nums[k])
+        max_diff = max(max_diff, max_i - nums[k])
+        max_i = max(max_i, nums[k])
+    return ans
+`,
+
   // batch 169 — Python solutions for new problems
   'maximum-number-of-eaten-apples': `
 import heapq
@@ -38669,7 +38759,7 @@ def maximumANDSum(nums, numSlots):
     return max(dp)
 `,
 
-  // batch 169 — strings/medium, strings/hard, strings/easy, arrays/easy×2
+  // batch 169a — strings/medium, strings/hard, strings/easy, arrays/easy×2
   'maximum-palindromes-after-operations': `
 def maxPalindromesAfterOperations(words):
     freq = [0] * 26
@@ -38804,6 +38894,121 @@ def pseudoPalindromicPathsRunner(arr):
     return count[0]
 `,
 
+  // batch 169 — graph/medium×2, arrays+sliding-window/medium×2, tree/medium
+  'shortest-path-in-binary-matrix': `
+def shortestPathBinaryMatrix(grid):
+    if hasattr(grid, 'to_py'):
+        grid = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in grid.to_py()]
+    grid = [[int(v) for v in row] for row in grid]
+    n = len(grid)
+    if grid[0][0] == 1 or grid[n-1][n-1] == 1:
+        return -1
+    if n == 1:
+        return 1
+    dirs = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
+    visited = [[False]*n for _ in range(n)]
+    visited[0][0] = True
+    queue = [(0, 0, 1)]
+    while queue:
+        r, c, dist = queue.pop(0)
+        for dr, dc in dirs:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < n and 0 <= nc < n and not visited[nr][nc] and grid[nr][nc] == 0:
+                if nr == n-1 and nc == n-1:
+                    return dist + 1
+                visited[nr][nc] = True
+                queue.append((nr, nc, dist+1))
+    return -1
+`,
+
+  'minimum-cost-to-connect-all-points': `
+def minCostConnectPoints(points):
+    if hasattr(points, 'to_py'):
+        points = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in points.to_py()]
+    points = [[int(v) for v in p] for p in points]
+    n = len(points)
+    min_cost = [float('inf')] * n
+    in_mst = [False] * n
+    min_cost[0] = 0
+    total = 0
+    for _ in range(n):
+        u = -1
+        for i in range(n):
+            if not in_mst[i] and (u == -1 or min_cost[i] < min_cost[u]):
+                u = i
+        in_mst[u] = True
+        total += min_cost[u]
+        for v in range(n):
+            if in_mst[v]:
+                continue
+            d = abs(points[u][0] - points[v][0]) + abs(points[u][1] - points[v][1])
+            if d < min_cost[v]:
+                min_cost[v] = d
+    return total
+`,
+
+  'minimum-swaps-to-group-all-1s-together': `
+def minSwaps(data):
+    if hasattr(data, 'to_py'):
+        data = list(data.to_py())
+    data = [int(v) for v in data]
+    ones = sum(data)
+    if ones == 0:
+        return 0
+    zeros = sum(1 for i in range(ones) if not data[i])
+    min_zeros = zeros
+    for i in range(ones, len(data)):
+        if not data[i]:
+            zeros += 1
+        if not data[i - ones]:
+            zeros -= 1
+        if zeros < min_zeros:
+            min_zeros = zeros
+    return min_zeros
+`,
+
+  'maximum-width-of-binary-tree': `
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val; self.left = left; self.right = right
+
+def widthOfBinaryTreeRunner(arr):
+    if hasattr(arr, 'to_py'):
+        arr = list(arr.to_py())
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in arr]
+    if not arr or arr[0] is None:
+        return 0
+    root = TreeNode(arr[0])
+    bfs = [root]
+    i = 1
+    while bfs and i < len(arr):
+        node = bfs.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = TreeNode(arr[i])
+            bfs.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = TreeNode(arr[i])
+            bfs.append(node.right)
+        i += 1
+    max_width = 0
+    queue = [(root, 0)]
+    while queue:
+        level_len = len(queue)
+        left_idx = queue[0][1]
+        right_idx = left_idx
+        for _ in range(level_len):
+            node, idx = queue.pop(0)
+            ni = idx - left_idx
+            right_idx = ni
+            if node.left:
+                queue.append((node.left, ni * 2))
+            if node.right:
+                queue.append((node.right, ni * 2 + 1))
+        max_width = max(max_width, right_idx + 1)
+    return max_width
+`,
+
   'step-by-step-directions-from-a-binary-tree-node-to-another': `
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
@@ -38902,6 +39107,193 @@ def gardenNoAdj(n, paths):
                 result[g] = c
                 break
     return result[1:]
+`,
+
+  // batch 170
+  'using-robot-to-print-lexicographically-smallest-string': `
+def robotWithString(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    s = str(s)
+    n = len(s)
+    suf_min = [''] * n
+    suf_min[n - 1] = s[n - 1]
+    for i in range(n - 2, -1, -1):
+        suf_min[i] = s[i] if s[i] < suf_min[i + 1] else suf_min[i + 1]
+    stack = []
+    result = []
+    for i in range(n):
+        stack.append(s[i])
+        next_min = suf_min[i + 1] if i + 1 < n else chr(ord('{'))
+        while stack and stack[-1] <= next_min:
+            result.append(stack.pop())
+    while stack:
+        result.append(stack.pop())
+    return ''.join(result)
+`,
+
+  'remove-letter-to-equalize-frequency': `
+def equalFrequency(word):
+    if hasattr(word, 'to_py'): word = word.to_py()
+    word = str(word)
+    from collections import Counter
+    for i in range(len(word)):
+        c = Counter(word[:i] + word[i+1:])
+        if not c:
+            return True
+        if len(set(c.values())) == 1:
+            return True
+    return False
+`,
+
+  'minimize-the-maximum-difference-of-pairs': `
+def minimizeMax(nums, p):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = sorted(int(x) for x in nums)
+    p = int(p)
+    if p == 0:
+        return 0
+    def can_form(d):
+        count = 0
+        i = 1
+        while i < len(nums) and count < p:
+            if nums[i] - nums[i - 1] <= d:
+                count += 1
+                i += 2
+            else:
+                i += 1
+        return count >= p
+    lo, hi = 0, nums[-1] - nums[0]
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if can_form(mid):
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'check-if-point-is-reachable': `
+def isReachable(targetX, targetY):
+    from math import gcd
+    a, b = int(targetX), int(targetY)
+    while a % 2 == 0:
+        a //= 2
+    while b % 2 == 0:
+        b //= 2
+    return gcd(a, b) == 1
+`,
+
+  'build-array-with-stack-operations': `
+def buildArray(target, n):
+    if hasattr(target, 'to_py'): target = list(target.to_py())
+    target = [int(x) for x in target]
+    n = int(n)
+    target_set = set(target)
+    ops = []
+    last = target[-1]
+    for i in range(1, last + 1):
+        ops.append('Push')
+        if i not in target_set:
+            ops.append('Pop')
+    return ops
+`,
+
+  // batch 169c — arrays+dp/hard
+  'minimum-time-to-finish-all-jobs': `
+def minimumTimeRequired(jobs, k):
+    if hasattr(jobs, 'to_py'):
+        jobs = list(jobs.to_py())
+    n = len(jobs)
+    full = 1 << n
+    sub_sum = [0] * full
+    for mask in range(1, full):
+        lsb = mask & (-mask)
+        bit = lsb.bit_length() - 1
+        sub_sum[mask] = sub_sum[mask ^ lsb] + jobs[bit]
+    dp = [float('inf')] * full
+    dp[0] = 0
+    for _ in range(k):
+        ndp = [float('inf')] * full
+        for mask in range(full):
+            if dp[mask] == float('inf'):
+                continue
+            ndp[mask] = min(ndp[mask], dp[mask])
+            comp = (full - 1) ^ mask
+            sub = comp
+            while sub > 0:
+                new_mask = mask | sub
+                ndp[new_mask] = min(ndp[new_mask], max(dp[mask], sub_sum[sub]))
+                sub = (sub - 1) & comp
+        dp = ndp
+    return dp[full - 1]
+`,
+
+  // batch 169 (local) — strings/medium, arrays+sliding-window/medium, graph+union-find/medium
+  'minimum-swaps-to-make-string-balanced': `
+def minSwaps(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    s = str(s)
+    open_count = 0
+    swaps = 0
+    for ch in s:
+        if ch == '[':
+            open_count += 1
+        elif open_count > 0:
+            open_count -= 1
+        else:
+            swaps += 1
+    return (swaps + 1) // 2
+`,
+
+  'maximum-sum-distinct-subarrays-with-length-k': `
+def maximumSubarraySum(nums, k):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    from collections import defaultdict
+    freq = defaultdict(int)
+    window_sum = 0
+    ans = 0
+    for i, v in enumerate(nums):
+        freq[v] += 1
+        window_sum += v
+        if i >= k:
+            out = nums[i - k]
+            window_sum -= out
+            freq[out] -= 1
+            if freq[out] == 0:
+                del freq[out]
+        if i >= k - 1 and len(freq) == k:
+            ans = max(ans, window_sum)
+    return ans
+`,
+
+  'count-number-of-complete-components': `
+def countCompleteComponents(n, edges):
+    if hasattr(edges, 'to_py'): edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in edges]
+    parent = list(range(n))
+    node_count = [1] * n
+    edge_count = [0] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(a, b):
+        ra, rb = find(a), find(b)
+        if ra == rb:
+            edge_count[ra] += 1
+            return
+        parent[ra] = rb
+        node_count[rb] += node_count[ra]
+        edge_count[rb] += edge_count[ra] + 1
+    for e in edges:
+        union(int(e[0]), int(e[1]))
+    result = 0
+    for i in range(n):
+        if find(i) == i:
+            k = node_count[i]
+            if edge_count[i] == k * (k - 1) // 2:
+                result += 1
+    return result
 `,
 
 };
