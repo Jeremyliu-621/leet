@@ -35156,6 +35156,53 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return vals[k - 1]!;
   },
 
+  'find-lucky-number-in-matrix': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const result: number[] = [];
+    for (const row of matrix) {
+      const rowMin = Math.min(...row);
+      const colIdx = row.indexOf(rowMin);
+      const colMax = Math.max(...matrix.map(r => r[colIdx]!));
+      if (colMax === rowMin) result.push(rowMin);
+    }
+    return result;
+  },
+
+  'maximum-product-of-three-numbers': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const n = nums.length;
+    const res = Math.max(
+      nums[n - 1]! * nums[n - 2]! * nums[n - 3]!,
+      nums[0]! * nums[1]! * nums[n - 1]!,
+    );
+    return res === 0 ? 0 : res;
+  },
+
+  'finding-3-digit-even-numbers': (...args: unknown[]) => {
+    const digits = args[0] as number[];
+    const freq = new Array(10).fill(0) as number[];
+    for (const d of digits) freq[d]!++;
+    const result: number[] = [];
+    for (let n = 100; n <= 998; n += 2) {
+      const f = new Array(10).fill(0) as number[];
+      const ds = [Math.floor(n / 100), Math.floor(n / 10) % 10, n % 10];
+      for (const d of ds) f[d]!++;
+      if (ds.every((d) => f[d]! <= freq[d]!)) result.push(n);
+    }
+    return result;
+  },
+
+  'difference-between-ones-zeros-in-row-and-column': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length;
+    const n = grid[0]!.length;
+    const onesRow = grid.map(row => row.reduce((a, v) => a + v, 0));
+    const onesCol = Array.from({ length: n }, (_, j) => grid.reduce((a, row) => a + row[j]!, 0));
+    return grid.map((row, i) =>
+      row.map((_, j) => 2 * onesRow[i]! + 2 * onesCol[j]! - m - n),
+    );
+  },
+
   'tweet-counts-per-frequency': (...args: unknown[]) => {
     const ops = args[0] as string[], vals = args[1] as Array<[string, number] | [string, string, number, number]>;
     const store = new Map<string, number[]>();

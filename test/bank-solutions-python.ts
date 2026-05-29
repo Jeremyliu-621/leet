@@ -35069,6 +35069,42 @@ def minimumTotal(triangle):
     return swaps
 `,
 
+  'find-lucky-number-in-matrix': `def luckyNumbers(matrix):
+    result = []
+    for row in matrix:
+        row_min = min(row)
+        col_idx = row.index(row_min)
+        col_max = max(r[col_idx] for r in matrix)
+        if col_max == row_min:
+            result.append(row_min)
+    return result
+`,
+
+  'maximum-product-of-three-numbers': `def maximumProduct(nums):
+    nums = sorted(nums)
+    n = len(nums)
+    return max(nums[n-1] * nums[n-2] * nums[n-3], nums[0] * nums[1] * nums[n-1])
+`,
+
+  'finding-3-digit-even-numbers': `def findEvenNumbers(digits):
+    from collections import Counter
+    freq = Counter(digits)
+    result = []
+    for n in range(100, 999, 2):
+        need = Counter([n // 100, (n // 10) % 10, n % 10])
+        if all(need[d] <= freq[d] for d in need):
+            result.append(n)
+    return result
+`,
+
+  'difference-between-ones-zeros-in-row-and-column': `def onesMinusZeros(grid):
+    m = len(grid)
+    n = len(grid[0])
+    ones_row = [sum(row) for row in grid]
+    ones_col = [sum(grid[i][j] for i in range(m)) for j in range(n)]
+    return [[2 * ones_row[i] + 2 * ones_col[j] - m - n for j in range(n)] for i in range(m)]
+`,
+
   'tweet-counts-per-frequency': `def tweetCountsRunner(ops, vals):
     ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
     vals = list(vals.to_py() if hasattr(vals, 'to_py') else vals)
