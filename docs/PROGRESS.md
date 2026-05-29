@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2358** problems; 7365 tests green. Batches 102–157 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2371** problems; 7413 tests green. Batches 102–160 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 161+); update site count; UX polish.
+
+### feat(bank): add batch 160 (user-directed) — strictly-palindromic-number, design-bitset, count-substrings-with-fixed-ratio, number-of-integers-with-even-digit-sum (2026-05-29)
+Four new problems: `strictly-palindromic-number` (medium/math, always returns false since n in base n-2 is always "12" — never palindrome), `design-bitset` (medium/design, flip-flag O(1) ops with stored-vs-logical inversion; fix tracked by ones count), `count-substrings-with-fixed-ratio` (medium/strings+hash-map, prefix key = zeros×num2 − ones×num1 hash map), `number-of-integers-with-even-digit-sum` (easy/math, O(1): num//2 if digitSum(num) even else (num-1)//2). Bank at **2371**; 7413 tests.
 
 ### feat(bank): add batch 160 — minimum-cost-walk-weighted-graph (hard) + register 3 orphaned problems (2026-05-29)
 New: `minimum-cost-to-walk-weighted-graph` (hard/graph+union-find, min cost path = bitwise AND of all edges in component; UF tracks per-component AND as edges are added). Registered orphans already in bank: `maximum-alternating-subsequence-sum` (medium/arrays+dp), `count-number-of-bad-pairs` (medium/arrays+hash-map), `make-array-zero-by-subtracting-equal-amounts` (easy/arrays+math). Bank at **2373**; 7413 tests.
