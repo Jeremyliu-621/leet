@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2550** problems; 7944 tests green. Batches 102–221 complete + concurrent agent merges.
+**Current focus:** Bank at **2553** problems; 7953 tests green. Batches 102–222 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 222+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 223+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 222 — count-tested-devices, people-aware-of-secret, reachable-cell-at-given-time (2026-05-29)
+Three new problems (find-beautiful-indices was duplicate): `count-tested-devices-after-test-operations` (easy/arrays+simulation), `number-of-people-aware-of-secret` (medium/dp, daily window DP), `determine-if-a-cell-is-reachable-at-a-given-time` (medium/math, Chebyshev distance + (0,1) edge case). Merged concurrent batch. Bank at **2553**; 7953 tests.
 
 ### feat(bank): batch 221 — longest-valid-substring, add-spaces, colored-pieces, longest-balanced-binary (2026-05-29)
 Four new problems: `length-of-the-longest-valid-substring` (hard/strings+hash-map+sliding-window, 10-suffix check per window position), `add-spaces-to-string` (medium/strings+simulation, space insertion at given indices), `remove-colored-pieces-if-both-neighbors-same-color` (medium/strings+math, independent Alice/Bob move counts), `find-the-longest-balanced-substring-of-binary-string` (easy/strings, consecutive 0+1 block scan). Bank at **2540**; 7914 tests.
