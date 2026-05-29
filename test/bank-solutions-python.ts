@@ -6791,6 +6791,64 @@ def maximumSum(nums):
     return ans
 `,
 
+  'max-sum-of-a-pair-with-equal-sum-of-digits': `
+def maximumSum(nums):
+    def digit_sum(n):
+        s = 0
+        while n > 0:
+            s += n % 10
+            n //= 10
+        return s
+    best = {}
+    ans = -1
+    for n in nums:
+        ds = digit_sum(n)
+        if ds in best:
+            ans = max(ans, best[ds] + n)
+            best[ds] = max(best[ds], n)
+        else:
+            best[ds] = n
+    return ans
+`,
+
+  'finding-pairs-with-certain-difference': `
+def findPairs(nums, k):
+    unique = set(nums)
+    count = 0
+    for x in unique:
+        if x + k in unique:
+            count += 1
+    return count
+`,
+
+  'number-of-subarrays-with-and-value-of-k': `
+def countSubarrays(nums, k):
+    ans = 0
+    cur = {}
+    for x in nums:
+        nxt = {}
+        def add(v, c):
+            nxt[v] = nxt.get(v, 0) + c
+        add(x, 1)
+        for v, c in cur.items():
+            add(v & x, c)
+        ans += nxt.get(k, 0)
+        cur = nxt
+    return ans
+`,
+
+  'maximum-number-of-coins-you-can-get': `
+def maxCoins(piles):
+    piles = sorted(piles)
+    n = len(piles)
+    ans = 0
+    i = n - 2
+    while i >= n // 3:
+        ans += piles[i]
+        i -= 2
+    return ans
+`,
+
   'count-number-of-rectangles': `
 def countRectangles(rectangles, points):
     import bisect

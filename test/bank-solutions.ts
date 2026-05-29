@@ -7368,6 +7368,56 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'max-sum-of-a-pair-with-equal-sum-of-digits': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const digitSum = (n: number) => { let s = 0; while (n > 0) { s += n % 10; n = Math.floor(n / 10); } return s; };
+    const best = new Map<number, number>();
+    let ans = -1;
+    for (const n of nums) {
+      const ds = digitSum(n);
+      if (best.has(ds)) { ans = Math.max(ans, best.get(ds)! + n); best.set(ds, Math.max(best.get(ds)!, n)); }
+      else best.set(ds, n);
+    }
+    return ans;
+  },
+
+  'finding-pairs-with-certain-difference': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const set = new Set(nums);
+    let count = 0;
+    for (const x of set) {
+      if (set.has(x + k)) count++;
+    }
+    return count;
+  },
+
+  'number-of-subarrays-with-and-value-of-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let ans = 0;
+    // map: AND value -> count of subarrays ending here with that AND
+    let cur = new Map<number, number>();
+    for (const x of nums) {
+      const next = new Map<number, number>();
+      const add = (v: number, c: number) => next.set(v, (next.get(v) ?? 0) + c);
+      add(x, 1);
+      for (const [v, c] of cur) add(v & x, c);
+      for (const [v, c] of next) if (v === k) ans += c;
+      cur = next;
+    }
+    return ans;
+  },
+
+  'maximum-number-of-coins-you-can-get': (...args: unknown[]) => {
+    const piles = [...(args[0] as number[])].sort((a, b) => a - b);
+    const n = piles.length;
+    let ans = 0;
+    // Sorted ascending: skip first n/3 (Alice's); from the back, every 2nd is yours
+    for (let i = n - 2; i >= n / 3; i -= 2) ans += piles[i]!;
+    return ans;
+  },
+
   'range-sum-of-bst': (...args: unknown[]) => {
     const arr = args[0] as (number | null)[];
     const low = args[1] as number, high = args[2] as number;

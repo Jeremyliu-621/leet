@@ -3116,6 +3116,11 @@ import { problem as strongPasswordCheckerII } from './strong-password-checker-ii
 import { problem as checkIfAllIntegersInRangeAreCovered } from './check-if-all-the-integers-in-a-range-are-covered';
 import { problem as findOriginalArrayOfDoubledPairs } from './find-the-original-array-of-doubled-pairs';
 import { problem as constructMinimumBitwiseArrayI } from './construct-the-minimum-bitwise-array-i';
+// batch 212 — medium/arrays+hash-map+math, medium/arrays+hash-map, medium/arrays+bit-manipulation, medium/arrays+math
+import { problem as maxSumOfAPairWithEqualSumOfDigits } from './max-sum-of-a-pair-with-equal-sum-of-digits';
+import { problem as findingPairsWithCertainDifference } from './finding-pairs-with-certain-difference';
+import { problem as numberOfSubarraysWithAndValueOfK } from './number-of-subarrays-with-and-value-of-k';
+import { problem as maximumNumberOfCoinsYouCanGet } from './maximum-number-of-coins-you-can-get';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6273,4 +6278,9 @@ export const problems: readonly Problem[] = [
   checkIfAllIntegersInRangeAreCovered,
   findOriginalArrayOfDoubledPairs,
   constructMinimumBitwiseArrayI,
+  // batch 212 — medium/arrays+hash-map+math, medium/arrays+hash-map, medium/arrays+bit-manipulation, medium/arrays+math
+  maxSumOfAPairWithEqualSumOfDigits,
+  findingPairsWithCertainDifference,
+  numberOfSubarraysWithAndValueOfK,
+  maximumNumberOfCoinsYouCanGet,
 ];
