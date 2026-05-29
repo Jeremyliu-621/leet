@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2253** problems; 7053 tests green. Batches 102–149 complete. UX polish ongoing.
+**Current focus:** Bank at **2256** problems; 7053 tests green. Batches 102–150 complete. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth; UX polish; accessibility audit.
+
+### feat(bank): add batch 150 — convert-2d-conditions, replace-balanced-string, all-divisions-score (2026-05-29)
+Three new medium problems: `convert-an-array-into-a-2d-array-with-conditions` (arrays+hash-map, greedy occurrence-row placement — n-th occurrence of value goes to row n-1), `replace-the-substring-for-balanced-string` (strings+two-pointers+sliding-window, shrink window while all outside counts ≤ n/4), `all-divisions-with-the-highest-score-of-a-binary-array` (arrays, score[i] = prefix zeros + suffix ones; linear sweep). Bank at **2256**; tests green.
 
 ### feat(bank): add batch 146/148/149 — new problems + orphan registrations (2026-05-29)
 New: `calculate-amount-paid-in-taxes` (easy/arrays, bracket tax simulation). Registered 6 orphan problems: `beautiful-towers-ii` (medium/arrays+stack, monotone-stack mountain sums), `maximum-balanced-subsequence-sum` (hard/BIT+dp), `minimum-flips-binary-grid-palindromic-ii` (medium/arrays), `minimum-swaps-to-make-balanced` (medium/strings+stack), `tweet-counts-per-frequency` (medium/hash-map), `find-kth-largest-xor-coordinate-value` (medium/arrays). Also added solutions for `max-product-after-cutting-rope`, `minimum-path-sum-triangle`, `find-product-pivot`, `count-subarrays-equal-balance`, `longest-arithmetic-subarray`, `sum-of-all-submatrix-sums`. Bank at **2253**; 7053 tests.
@@ -40,8 +43,14 @@ Five medium problems: `k-divisible-elements-subarrays` (arrays+hash-map, O(n²) 
 ### feat(bank): add batch 145 — max-bitwise-or-subsets, partition-k-subsets, min-ops-array-equal-target, consecutive-numbers-sum (2026-05-28)
 Four problems: `count-number-of-max-bitwise-or-subsets` (medium/arrays+backtracking, 2^n bitmask enumeration counting subsets with max OR), `partition-to-k-equal-sum-subsets` (medium/arrays+backtracking+dp, descending sort + k-bucket DFS with duplicate-skip pruning), `minimum-operations-to-make-array-equal-to-target` (hard/arrays, diff[i]=target-nums layer-counting formula — sum positive transitions in extended diff sequence), `consecutive-numbers-sum` (hard/math, k consecutive starting at a formula — loop k while k*(k+1)≤2n, check divisibility). Bank at **2233**; 6930 tests.
 
+### feat(bank): add batch 145b + 144 + 142b + 141 — vowels-even-substr, minimize-diff-target, max-ops-same-score-ii, + 12 more (2026-05-28)
+Registered: `count-substrings-that-satisfy-k-constraint-i` (easy/strings+sliding-window). Added batch 141 (reaching-points, orderly-queue, valid-number, min-moves-ii, super-washing, submatrices-sum), batch 144 (min-swaps-balanced, kth-largest-xor-coord, tweet-counts), batch 142b (beautiful-towers-ii, palindromic-grid-ii, max-balanced-subseq), batch 145b (vowels-even-substr, minimize-diff-target, max-ops-same-score-ii) with JS+Python reference solutions.
+
 ### feat(bank): add batch 142 — max-height-triangle, divide-array-min-cost-i, k-constraint-substr-i, final-array-mult-i, first-player-win-k, digit-diff-pairs, monotonic-pairs-i (2026-05-28)
 Seven problems from 2024-era LeetCode (3150-3270 range): `maximum-height-of-a-triangle` (easy/simulation, try both color orderings row-by-row), `divide-array-into-subarrays-with-minimum-cost-i` (easy/arrays, nums[0]+k-1 smallest from rest), `count-substrings-satisfy-k-constraint-i` (easy/strings, O(n²) brute-force), `final-array-state-k-multiplication-i` (easy/simulation, k ops: find leftmost min × multiplier), `find-the-first-player-to-win-k-games-in-a-row` (medium/simulation, king-of-the-hill O(n) scan), `sum-of-digit-differences-of-all-pairs` (medium/math, per-position frequency → C(n,2)−agree pairs), `find-the-count-of-monotonic-pairs-i` (hard/dp, prefix-sum DP enforcing lower bound per transition). Bank at **2221**; 6957 tests.
+
+### fix(a11y): hint reveal button aria-label + problem browser aria-controls (2026-05-28)
+`HintsSection` reveal button now has a descriptive `aria-label` including hint index and optional cost penalty for screen-reader announcement. `ProblemBrowserSection` collapse toggle now has `aria-controls="problem-browser-list"` linking to the controlled content `div` (added `id="problem-browser-list"`).
 
 ### feat(bank): add batch 142b — beautiful-towers-ii, palindromic-grid-ii, balanced-subseq-sum (2026-05-28)
 Three problems: `beautiful-towers-ii` (medium/arrays+stack, O(n) monotone stack with prefix/suffix mountain sums), `minimum-number-of-flips-to-make-binary-grid-palindromic-ii` (medium/arrays, groups-of-4 cell matching + middle row/col pair handling), `maximum-balanced-subsequence-sum` (hard/binary-indexed-tree+dp+arrays, key[i]=nums[i]-i transforms to max non-decreasing subsequence sum, O(n log n) BIT). Bank at **2221**; 6957 tests.

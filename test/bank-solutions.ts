@@ -34313,6 +34313,58 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return candies.map(c => c + extraCandies >= maxC);
   },
 
+  // batch 145
+  'convert-an-array-into-a-2d-array-with-conditions': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    const result: number[][] = [];
+    for (const num of nums) {
+      const row = freq.get(num) ?? 0;
+      if (row === result.length) result.push([]);
+      result[row]!.push(num);
+      freq.set(num, row + 1);
+    }
+    return result;
+  },
+
+  'replace-the-substring-for-balanced-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length, target = n / 4;
+    const count: Record<string, number> = { Q: 0, W: 0, E: 0, R: 0 };
+    for (const c of s) count[c]!++;
+    const isValid = () => count['Q']! <= target && count['W']! <= target && count['E']! <= target && count['R']! <= target;
+    if (isValid()) return 0;
+    let ans = n, l = 0;
+    for (let r = 0; r < n; r++) {
+      count[s[r]!]!--;
+      while (isValid()) {
+        ans = Math.min(ans, r - l + 1);
+        count[s[l]!]!++;
+        l++;
+      }
+    }
+    return ans;
+  },
+
+  'all-divisions-with-the-highest-score-of-a-binary-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const totalOnes = nums.reduce((s, v) => s + v, 0);
+    let zeros = 0, ones = totalOnes;
+    let maxScore = 0;
+    const scores: number[] = [];
+    for (let i = 0; i <= n; i++) {
+      const score = zeros + ones;
+      scores.push(score);
+      if (score > maxScore) maxScore = score;
+      if (i < n) {
+        if (nums[i] === 0) zeros++;
+        else ones--;
+      }
+    }
+    return scores.map((s, i) => [s, i] as [number, number]).filter(([s]) => s === maxScore).map(([, i]) => i);
+  },
+
   // batch 144
   'reorder-routes-to-make-all-paths-lead-to-the-city-zero': (...args: unknown[]) => {
     const n = args[0] as number, connections = args[1] as number[][];
@@ -34840,6 +34892,62 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  // batch 145
+  'find-the-longest-substring-containing-vowels-in-even-counts': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const vowelBit: Record<string, number> = { a: 1, e: 2, i: 4, o: 8, u: 16 };
+    const seen = new Map<number, number>([[0, -1]]);
+    let state = 0, ans = 0;
+    for (let i = 0; i < s.length; i++) {
+      const b = vowelBit[s[i]!];
+      if (b !== undefined) state ^= b;
+      if (seen.has(state)) ans = Math.max(ans, i - seen.get(state)!);
+      else seen.set(state, i);
+    }
+    return ans;
+  },
+
+  'minimize-the-difference-between-target-and-chosen-elements': (...args: unknown[]) => {
+    const mat = args[0] as number[][];
+    const target = args[1] as number;
+    let sums = new Set<number>([0]);
+    for (const row of mat) {
+      const next = new Set<number>();
+      for (const s of sums) for (const v of row) next.add(s + v);
+      let minAbove = Infinity;
+      for (const x of next) if (x >= target && x < minAbove) minAbove = x;
+      sums = new Set<number>();
+      for (const x of next) if (x <= minAbove) sums.add(x);
+    }
+    let ans = Infinity;
+    for (const s of sums) ans = Math.min(ans, Math.abs(s - target));
+    return ans;
+  },
+
+  'maximum-number-of-operations-with-the-same-score-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    function solve(l: number, r: number, tgt: number, memo: Map<number, number>): number {
+      if (r - l < 1) return 0;
+      const key = l * 2001 + r;
+      if (memo.has(key)) return memo.get(key)!;
+      let res = 0;
+      if (nums[l]! + nums[l + 1]! === tgt) res = Math.max(res, 1 + solve(l + 2, r, tgt, memo));
+      if (nums[r - 1]! + nums[r]! === tgt) res = Math.max(res, 1 + solve(l, r - 2, tgt, memo));
+      if (nums[l]! + nums[r]! === tgt) res = Math.max(res, 1 + solve(l + 1, r - 1, tgt, memo));
+      memo.set(key, res);
+      return res;
+    }
+    let best = 0;
+    const t1 = nums[0]! + nums[1]!;
+    best = Math.max(best, 1 + solve(2, n - 1, t1, new Map()));
+    const t2 = nums[n - 2]! + nums[n - 1]!;
+    best = Math.max(best, 1 + solve(0, n - 3, t2, new Map()));
+    const t3 = nums[0]! + nums[n - 1]!;
+    best = Math.max(best, 1 + solve(1, n - 2, t3, new Map()));
+    return best;
+  },
+
   // batch 147
   'apply-bitwise-operations-to-make-strings-equal': (...args: unknown[]) => {
     const s = args[0] as string, target = args[1] as string;
@@ -35018,45 +35126,89 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[0] as number;
   },
 
-  // batch 149 — orphaned problems from batches 142b/144
-  'beautiful-towers-ii': (...args: unknown[]) => {
-    const maxHeights = args[0] as number[];
-    const n = maxHeights.length;
-    const prefix = new Array(n).fill(0) as number[];
-    const suffix = new Array(n).fill(0) as number[];
-    const stk: number[] = [];
-    // prefix[i] = sum of left side with peak at i
-    for (let i = 0; i < n; i++) {
-      while (stk.length && maxHeights[stk[stk.length - 1]!]! >= maxHeights[i]!) stk.pop();
-      const j = stk.length ? stk[stk.length - 1]! : -1;
-      prefix[i] = (j >= 0 ? prefix[j]! : 0) + maxHeights[i]! * (i - j);
-      stk.push(i);
+  // batch 144
+  'minimum-swaps-to-make-balanced': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let open = 0, unmatched = 0;
+    for (const c of s) {
+      if (c === '[') open++;
+      else if (open > 0) open--;
+      else unmatched++;
     }
-    stk.length = 0;
-    // suffix[i] = sum of right side with peak at i
-    for (let i = n - 1; i >= 0; i--) {
-      while (stk.length && maxHeights[stk[stk.length - 1]!]! >= maxHeights[i]!) stk.pop();
-      const j = stk.length ? stk[stk.length - 1]! : n;
-      suffix[i] = (j < n ? suffix[j]! : 0) + maxHeights[i]! * (j - i);
-      stk.push(i);
-    }
-    let ans = 0;
-    for (let i = 0; i < n; i++) ans = Math.max(ans, prefix[i]! + suffix[i]! - maxHeights[i]!);
-    return ans;
+    return Math.ceil(unmatched / 2);
   },
 
-  'maximum-balanced-subsequence-sum': (...args: unknown[]) => {
-    const nums = args[0] as number[];
-    const n = nums.length;
-    const dp = nums.slice();
-    for (let i = 1; i < n; i++) {
-      for (let j = 0; j < i; j++) {
-        if (nums[j]! - j <= nums[i]! - i && dp[j]! + nums[i]! > dp[i]!) {
-          dp[i] = dp[j]! + nums[i]!;
-        }
+  'find-kth-largest-xor-coordinate-value': (...args: unknown[]) => {
+    const matrix = args[0] as number[][], k = args[1] as number;
+    const m = matrix.length, n = matrix[0]!.length;
+    const xor = Array.from({ length: m }, () => new Array<number>(n).fill(0));
+    const vals: number[] = [];
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        xor[i]![j] = matrix[i]![j]!
+          ^ (i > 0 ? xor[i - 1]![j]! : 0)
+          ^ (j > 0 ? xor[i]![j - 1]! : 0)
+          ^ (i > 0 && j > 0 ? xor[i - 1]![j - 1]! : 0);
+        vals.push(xor[i]![j]!);
       }
     }
-    return Math.max(...dp);
+    vals.sort((a, b) => b - a);
+    return vals[k - 1]!;
+  },
+
+  'tweet-counts-per-frequency': (...args: unknown[]) => {
+    const ops = args[0] as string[], vals = args[1] as Array<[string, number] | [string, string, number, number]>;
+    const store = new Map<string, number[]>();
+    const delta: Record<string, number> = { minute: 60, hour: 3600, day: 86400 };
+    return ops.map((op, i) => {
+      if (op === 'recordTweet') {
+        const [name, time] = vals[i] as [string, number];
+        if (!store.has(name)) store.set(name, []);
+        store.get(name)!.push(time);
+        return null;
+      }
+      const [freq, name, start, end] = vals[i] as [string, string, number, number];
+      const d = delta[freq]!;
+      const chunks = Math.floor((end - start) / d) + 1;
+      const counts = new Array<number>(chunks).fill(0);
+      for (const t of (store.get(name) ?? [])) {
+        if (t >= start && t <= end) counts[Math.floor((t - start) / d)]!++;
+      }
+      return counts;
+    });
+  },
+
+  // batch 142b
+  'beautiful-towers-ii': (...args: unknown[]) => {
+    const h = args[0] as number[];
+    const n = h.length;
+    // prefix[i] = max sum of mountain left side when peak is i
+    const prefix = new Array<number>(n).fill(0);
+    const stk: Array<[number, number]> = []; // [index, segment_length]
+    for (let i = 0; i < n; i++) {
+      let len = 1;
+      while (stk.length && h[stk[stk.length - 1]![0]]! >= h[i]!) {
+        const [, sl] = stk.pop()!;
+        len += sl;
+      }
+      prefix[i] = (stk.length ? prefix[stk[stk.length - 1]![0]]! : 0) + h[i]! * len;
+      stk.push([i, len]);
+    }
+    // suffix[i] = max sum of mountain right side when peak is i
+    const suffix = new Array<number>(n).fill(0);
+    const stk2: Array<[number, number]> = [];
+    for (let i = n - 1; i >= 0; i--) {
+      let len = 1;
+      while (stk2.length && h[stk2[stk2.length - 1]![0]]! >= h[i]!) {
+        const [, sl] = stk2.pop()!;
+        len += sl;
+      }
+      suffix[i] = (stk2.length ? suffix[stk2[stk2.length - 1]![0]]! : 0) + h[i]! * len;
+      stk2.push([i, len]);
+    }
+    let ans = 0;
+    for (let i = 0; i < n; i++) ans = Math.max(ans, prefix[i]! + suffix[i]! - h[i]!);
+    return ans;
   },
 
   'minimum-number-of-flips-to-make-binary-grid-palindromic-ii': (...args: unknown[]) => {
@@ -35098,59 +35250,31 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return flips;
   },
 
-  'find-kth-largest-xor-coordinate-value': (...args: unknown[]) => {
-    const matrix = args[0] as number[][];
-    const k = args[1] as number;
-    const m = matrix.length, n = matrix[0]!.length;
-    const pre: number[][] = Array.from({ length: m }, () => new Array(n).fill(0) as number[]);
-    for (let i = 0; i < m; i++) {
-      for (let j = 0; j < n; j++) {
-        pre[i]![j] = matrix[i]![j]!
-          ^ (i > 0 ? pre[i - 1]![j]! : 0)
-          ^ (j > 0 ? pre[i]![j - 1]! : 0)
-          ^ (i > 0 && j > 0 ? pre[i - 1]![j - 1]! : 0);
-      }
+  'maximum-balanced-subsequence-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const keys = nums.map((v, i) => v - i);
+    const sorted = [...new Set(keys)].sort((a, b) => a - b);
+    const rank = new Map(sorted.map((v, i) => [v, i + 1]));
+    const sz = sorted.length;
+    const bit = new Array<number>(sz + 1).fill(-Infinity);
+    function update(pos: number, val: number) {
+      for (; pos <= sz; pos += pos & -pos) if (val > bit[pos]!) bit[pos] = val;
     }
-    const vals = pre.flat().sort((a, b) => b - a);
-    return vals[k - 1]!;
-  },
-
-  'minimum-swaps-to-make-balanced': (...args: unknown[]) => {
-    const s = args[0] as string;
-    let imbalance = 0, swaps = 0;
-    for (const ch of s) {
-      if (ch === '[') imbalance++;
-      else {
-        if (imbalance > 0) imbalance--;
-        else { swaps++; imbalance++; }
-      }
-    }
-    return swaps;
-  },
-
-  'tweet-counts-per-frequency': (...args: unknown[]) => {
-    const ops = args[0] as string[];
-    const vals = args[1] as Array<[string, ...unknown[]]>;
-    const freq2delta: Record<string, number> = { minute: 60, hour: 3600, day: 86400 };
-    const tweets: Record<string, number[]> = {};
-    return ops.map((op, i) => {
-      const v = vals[i]!;
-      if (op === 'recordTweet') {
-        const name = v[0] as string, time = v[1] as number;
-        if (!tweets[name]) tweets[name] = [];
-        tweets[name]!.push(time);
-        return null;
-      }
-      const freq = v[0] as string, name = v[1] as string;
-      const start = v[2] as number, end = v[3] as number;
-      const delta = freq2delta[freq]!;
-      const chunks = Math.floor((end - start) / delta) + 1;
-      const res = new Array(chunks).fill(0) as number[];
-      for (const t of (tweets[name] ?? [])) {
-        if (t >= start && t <= end) res[Math.floor((t - start) / delta)]!++;
-      }
+    function query(pos: number): number {
+      let res = -Infinity;
+      for (; pos > 0; pos -= pos & -pos) if (bit[pos]! > res) res = bit[pos]!;
       return res;
-    });
+    }
+    let ans = -Infinity;
+    for (let i = 0; i < n; i++) {
+      const r = rank.get(keys[i]!)!;
+      const best = query(r);
+      const dp = nums[i]! + Math.max(0, best);
+      ans = Math.max(ans, dp);
+      update(r, dp);
+    }
+    return ans;
   },
 
   // batch 150

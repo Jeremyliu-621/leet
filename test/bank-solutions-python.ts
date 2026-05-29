@@ -34263,6 +34263,63 @@ def minDominoRotations(tops, bottoms) -> int:
     return -1 if res == float('inf') else res
 `,
 
+  // batch 145
+  'convert-an-array-into-a-2d-array-with-conditions': `
+def findMatrix(nums):
+    freq = {}
+    result = []
+    for num in nums:
+        row = freq.get(num, 0)
+        if row == len(result):
+            result.append([])
+        result[row].append(num)
+        freq[num] = row + 1
+    return result
+`,
+
+  'replace-the-substring-for-balanced-string': `
+def balancedString(s: str) -> int:
+    from collections import Counter
+    n = len(s)
+    target = n // 4
+    count = Counter(s)
+    def is_valid():
+        return all(count.get(c, 0) <= target for c in 'QWER')
+    if is_valid():
+        return 0
+    ans = n
+    l = 0
+    for r in range(n):
+        count[s[r]] -= 1
+        while is_valid():
+            ans = min(ans, r - l + 1)
+            count[s[l]] += 1
+            l += 1
+    return ans
+`,
+
+  'all-divisions-with-the-highest-score-of-a-binary-array': `
+def maxScoreIndices(nums) -> list:
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    total_ones = sum(nums)
+    zeros = 0
+    ones = total_ones
+    max_score = 0
+    scores = []
+    for i in range(n + 1):
+        score = zeros + ones
+        scores.append(score)
+        if score > max_score:
+            max_score = score
+        if i < n:
+            if nums[i] == 0:
+                zeros += 1
+            else:
+                ones -= 1
+    return [i for i, s in enumerate(scores) if s == max_score]
+`,
+
   // batch 144
   'reorder-routes-to-make-all-paths-lead-to-the-city-zero': `
 def minReorder(n: int, connections) -> int:
@@ -34823,6 +34880,73 @@ def calculateTax(brackets, income):
     return tax
 `,
 
+
+  // batch 145
+  'find-the-longest-substring-containing-vowels-in-even-counts': `
+def findTheLongestSubstring(s):
+    vowel_bit = {'a': 1, 'e': 2, 'i': 4, 'o': 8, 'u': 16}
+    seen = {0: -1}
+    state = 0
+    ans = 0
+    for i, c in enumerate(s):
+        if c in vowel_bit:
+            state ^= vowel_bit[c]
+        if state in seen:
+            ans = max(ans, i - seen[state])
+        else:
+            seen[state] = i
+    return ans
+`,
+
+  'minimize-the-difference-between-target-and-chosen-elements': `
+def minimizeTheDifference(mat, target):
+    mat = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (mat.to_py() if hasattr(mat, 'to_py') else mat)]
+    sums = {0}
+    for row in mat:
+        new_sums = set()
+        for s in sums:
+            for v in row:
+                new_sums.add(s + v)
+        min_above = min((x for x in new_sums if x >= target), default=float('inf'))
+        sums = {x for x in new_sums if x <= min_above}
+    return min(abs(s - target) for s in sums)
+`,
+
+  'maximum-number-of-operations-with-the-same-score-ii': `
+from functools import lru_cache
+
+def maxOperations(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+
+    def make_solve(tgt):
+        @lru_cache(maxsize=None)
+        def solve(l, r):
+            if r - l < 1:
+                return 0
+            res = 0
+            if nums[l] + nums[l+1] == tgt:
+                res = max(res, 1 + solve(l+2, r))
+            if nums[r-1] + nums[r] == tgt:
+                res = max(res, 1 + solve(l, r-2))
+            if nums[l] + nums[r] == tgt:
+                res = max(res, 1 + solve(l+1, r-1))
+            return res
+        return solve
+
+    best = 0
+    t1 = nums[0] + nums[1]
+    s1 = make_solve(t1)
+    best = max(best, 1 + s1(2, n-1))
+    t2 = nums[n-2] + nums[n-1]
+    s2 = make_solve(t2)
+    best = max(best, 1 + s2(0, n-3))
+    t3 = nums[0] + nums[n-1]
+    s3 = make_solve(t3)
+    best = max(best, 1 + s3(1, n-2))
+    return best
+`,
+  // batch 148
   'max-product-after-cutting-rope': `
 def cuttingRope(n):
     if n == 2:
