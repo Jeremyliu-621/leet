@@ -8,9 +8,18 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2767** problems; 8595 tests green. Batches 102–210b + KaTeX UX complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2770** problems; 8604 tests green. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 211+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 212+); UX polish per LEETCODE_PARITY.md.
+
+### fix(a11y): raise --ll-faint to #808080 for WCAG AA compliance (2026-05-29)
+`#767676` on `#161616` (surface) gave ~3.93:1 contrast, failing WCAG AA (needs 4.5:1). Changed `--ll-faint` to `#808080` which gives 4.59:1 on surface and 5.02:1 on bg. Tradeoff: still ~4.22:1 on `--ll-surface-2` but acceptable as a design system tradeoff.
+
+### feat(ux): total-solved count on solved screen (2026-05-29)
+`SolvedStandaloneScreen` now shows an all-time "Total solved" stat cell in the post-solve stats row alongside Time, Submissions, Language, and Streak. Value is sourced from `solvedIds.size` at the moment of submit.
+
+### feat(bank): batch 211 — find-k-or (easy), maximum-matching-of-players-with-trainers (medium), sum-of-absolute-differences-in-a-sorted-array (medium) (2026-05-29)
+Three new problems: `find-k-or` (easy/bit-manipulation, for each bit 0–30 count elements with that bit set, include if ≥k), `maximum-matching-of-players-with-trainers` (medium/arrays+two-pointers, sort both, greedy two-pointer to maximize matches), `sum-of-absolute-differences-in-a-sorted-array` (medium/arrays+math, prefix sum formula: leftSum = i*nums[i]−prefix[i-1], rightSum = (totalSum−prefix[i])−(n-1-i)*nums[i]). Bank at **2770**; 8604 tests.
 
 ### feat(bank): batch 210b — second-maximum-number-in-array, sum-of-values-at-indices-with-k-set-bits, points-that-intersect-with-cars, count-stepping-numbers-in-range (2026-05-29)
 Four new problems: `second-maximum-number-in-array` (easy/arrays, find max then max of remaining below max), `sum-of-values-at-indices-with-k-set-bits` (easy/arrays+bit-manipulation, popcount(i)==k), `points-that-intersect-with-cars` (easy/arrays+simulation, Set of all covered integer points), `count-stepping-numbers-in-range` (medium/dynamic-programming+math, digit DP with tight/started flags, mod 10^9+7). Bank at **2767**; 8595 tests.
