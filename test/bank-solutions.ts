@@ -44572,4 +44572,48 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return best;
   },
+
+  // batch 216 ---------------------------------------------------------------
+  'remove-digit-from-number-to-maximize-result': (...args: unknown[]) => {
+    const number = args[0] as string;
+    const digit = args[1] as string;
+    let lastIdx = -1;
+    for (let i = 0; i < number.length; i++) {
+      if (number[i] === digit) {
+        if (i < number.length - 1 && number[i + 1]! > digit) {
+          return number.slice(0, i) + number.slice(i + 1);
+        }
+        lastIdx = i;
+      }
+    }
+    return number.slice(0, lastIdx) + number.slice(lastIdx + 1);
+  },
+  'check-if-number-is-a-sum-of-powers-of-three': (...args: unknown[]) => {
+    let n = args[0] as number;
+    while (n > 0) {
+      if (n % 3 === 2) return false;
+      n = Math.floor(n / 3);
+    }
+    return true;
+  },
+  'count-number-of-rectangles-containing-each-point': (...args: unknown[]) => {
+    const rectangles = args[0] as number[][];
+    const points = args[1] as number[][];
+    const byHeight: number[][] = Array.from({ length: 101 }, () => []);
+    for (const rect of rectangles) byHeight[rect[1]!]!.push(rect[0]!);
+    for (let h = 1; h <= 100; h++) byHeight[h]!.sort((a, b) => a - b);
+    return points.map(([px, py]) => {
+      let count = 0;
+      for (let h = py!; h <= 100; h++) {
+        const arr = byHeight[h]!;
+        let lo = 0, hi = arr.length;
+        while (lo < hi) {
+          const mid = (lo + hi) >> 1;
+          if (arr[mid]! >= px!) hi = mid; else lo = mid + 1;
+        }
+        count += arr.length - lo;
+      }
+      return count;
+    });
+  },
 };

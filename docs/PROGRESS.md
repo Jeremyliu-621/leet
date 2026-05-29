@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2809** problems; 8712+ tests green. Batches 102–215a+215b + concurrent 212-addendum + 213b + 214b + a11y + total-solved UX complete.
+**Current focus:** Bank at **2812** problems; 8730 tests green. Batches 102–216 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 216+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 217+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 216 — remove-digit-maximize, check-powers-of-three, count-rectangles-containing-point (2026-05-29)
+Three new problems: `remove-digit-from-number-to-maximize-result` (easy/strings+simulation, greedy first-occurrence-followed-by-larger or last-occurrence fallback), `check-if-number-is-a-sum-of-powers-of-three` (medium/math, base-3 digit check — any digit==2 → false), `count-number-of-rectangles-containing-each-point` (medium/arrays+binary-search, group by height 1–100, binary search widths ≥ px for each query height). Bank at **2812**; 8730 tests. (Note: `maximum-twin-sum-of-a-linked-list` excluded — ID already registered in bank.)
 
 ### feat(bank): batch 215b (concurrent) — distribute-candies-i, minimum-area-rectangle-ii, minimum-total-price-of-trips (2026-05-29)
 Three problems from concurrent session: `distribute-candies-among-children-i` (easy/math+simulation), `minimum-area-rectangle-ii` (medium/math+hash-map), `minimum-total-price-of-trips` (hard/tree+dp). Bank at **2809**.

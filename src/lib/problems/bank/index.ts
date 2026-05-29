@@ -3159,6 +3159,10 @@ import { problem as shortestStringThatContainsThreeStrings } from './shortest-st
 import { problem as distributeCandiesAmongChildrenI } from './distribute-candies-among-children-i';
 import { problem as minimumAreaRectangleII } from './minimum-area-rectangle-ii';
 import { problem as minimumTotalPriceOfTrips } from './minimum-total-price-of-trips';
+// batch 216 — easy/strings+simulation, medium/math, medium/arrays+binary-search, medium/linked-list+two-pointers
+import { problem as removeDigitFromNumberToMaximizeResult } from './remove-digit-from-number-to-maximize-result';
+import { problem as checkIfNumberIsASumOfPowersOfThree } from './check-if-number-is-a-sum-of-powers-of-three';
+import { problem as countNumberOfRectanglesContainingEachPoint } from './count-number-of-rectangles-containing-each-point';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6359,4 +6363,8 @@ export const problems: readonly Problem[] = [
   distributeCandiesAmongChildrenI,
   minimumAreaRectangleII,
   minimumTotalPriceOfTrips,
+  // batch 216
+  removeDigitFromNumberToMaximizeResult,
+  checkIfNumberIsASumOfPowersOfThree,
+  countNumberOfRectanglesContainingEachPoint,
 ];

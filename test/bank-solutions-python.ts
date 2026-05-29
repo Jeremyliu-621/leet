@@ -44355,4 +44355,42 @@ def minimumString(a, b, c):
             best = s
     return best
 `,
+
+  // batch 216 ---------------------------------------------------------------
+  'remove-digit-from-number-to-maximize-result': `
+def removeDigit(number, digit):
+    last_idx = -1
+    for i in range(len(number)):
+        if number[i] == digit:
+            if i < len(number) - 1 and number[i + 1] > digit:
+                return number[:i] + number[i + 1:]
+            last_idx = i
+    return number[:last_idx] + number[last_idx + 1:]
+`,
+  'check-if-number-is-a-sum-of-powers-of-three': `
+def checkPowersOfThree(n):
+    while n > 0:
+        if n % 3 == 2:
+            return False
+        n //= 3
+    return True
+`,
+  'count-number-of-rectangles-containing-each-point': `
+import bisect
+def countRectangles(rectangles, points):
+    by_height = [[] for _ in range(101)]
+    for l, h in rectangles:
+        by_height[h].append(l)
+    for h in range(1, 101):
+        by_height[h].sort()
+    result = []
+    for px, py in points:
+        count = 0
+        for h in range(py, 101):
+            arr = by_height[h]
+            lo = bisect.bisect_left(arr, px)
+            count += len(arr) - lo
+        result.append(count)
+    return result
+`,
 };
