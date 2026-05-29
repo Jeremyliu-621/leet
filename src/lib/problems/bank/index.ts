@@ -2949,11 +2949,17 @@ import { problem as theNumberOfWeakCharactersInTheGame } from './the-number-of-w
 import { problem as sortEvenAndOddIndicesIndependently } from './sort-even-and-odd-indices-independently';
 import { problem as canYouEatYourFavoriteCandyOnYourFavoriteDay } from './can-you-eat-your-favorite-candy-on-your-favorite-day';
 import { problem as countHillsAndValleysInAnArray } from './count-hills-and-valleys-in-an-array';
-// batch 192 — easy/arrays, easy/strings+hash-map, easy/strings, medium/arrays+dynamic-programming
+// batch 192a — easy/arrays, easy/strings+hash-map, easy/strings, medium/arrays+dynamic-programming
 import { problem as adjacentIncreasingSubarraysDetectionI } from './adjacent-increasing-subarrays-detection-i';
 import { problem as rearrangeKSubstringsToFormTarget } from './rearrange-k-substrings-to-form-target';
 import { problem as findTheLexicographicallyLargestStringFromTheBoxI } from './find-the-lexicographically-largest-string-from-the-box-i';
 import { problem as minimumTimeToBreakLocksI } from './minimum-time-to-break-locks-i';
+// batch 192b — easy/simulation, medium/bit-manipulation, medium/bit-manipulation, easy/hash-map, medium/stack
+import { problem as findTheChildWhoHasTheBallAfterKSeconds } from './find-the-child-who-has-the-ball-after-k-seconds';
+import { problem as countNumberOfMaximumBitwiseOrSubsets } from './count-number-of-maximum-bitwise-or-subsets';
+import { problem as decodeXoredPermutation } from './decode-xored-permutation';
+import { problem as countLargestGroup } from './count-largest-group';
+import { problem as secondGreaterElement } from './second-greater-element';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5944,9 +5950,15 @@ export const problems: readonly Problem[] = [
   sortEvenAndOddIndicesIndependently,
   canYouEatYourFavoriteCandyOnYourFavoriteDay,
   countHillsAndValleysInAnArray,
-  // batch 192 — easy/arrays, easy/strings+hash-map, easy/strings, medium/arrays+dynamic-programming
+  // batch 192a — easy/arrays, easy/strings+hash-map, easy/strings, medium/arrays+dynamic-programming
   adjacentIncreasingSubarraysDetectionI,
   rearrangeKSubstringsToFormTarget,
   findTheLexicographicallyLargestStringFromTheBoxI,
   minimumTimeToBreakLocksI,
+  // batch 192b — easy/simulation, medium/bit-manipulation, medium/bit-manipulation, easy/hash-map, medium/stack
+  findTheChildWhoHasTheBallAfterKSeconds,
+  countNumberOfMaximumBitwiseOrSubsets,
+  decodeXoredPermutation,
+  countLargestGroup,
+  secondGreaterElement,
 ];

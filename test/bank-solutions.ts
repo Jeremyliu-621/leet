@@ -42586,4 +42586,69 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return n + maxProduct;
   },
+  'find-the-child-who-has-the-ball-after-k-seconds': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const k = args[1] as number;
+    const period = 2 * (n - 1);
+    const pos = k % period;
+    return pos <= n - 1 ? pos : period - pos;
+  },
+  'count-number-of-maximum-bitwise-or-subsets': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const maxOr = nums.reduce((a, b) => a | b, 0);
+    let count = 0;
+    const n = nums.length;
+    for (let mask = 1; mask < (1 << n); mask++) {
+      let or = 0;
+      for (let i = 0; i < n; i++) {
+        if (mask & (1 << i)) or |= nums[i]!;
+      }
+      if (or === maxOr) count++;
+    }
+    return count;
+  },
+  'decode-xored-permutation': (...args: unknown[]) => {
+    const encoded = args[0] as number[];
+    const n = encoded.length + 1;
+    let total = 0;
+    for (let i = 1; i <= n; i++) total ^= i;
+    let suffixXor = 0;
+    for (let i = 1; i < encoded.length; i += 2) suffixXor ^= encoded[i]!;
+    const perm: number[] = new Array(n);
+    perm[0] = total ^ suffixXor;
+    for (let i = 1; i < n; i++) perm[i] = perm[i - 1]! ^ encoded[i - 1]!;
+    return perm;
+  },
+  'count-largest-group': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const freq = new Map<number, number>();
+    for (let x = 1; x <= n; x++) {
+      let s = 0, v = x;
+      while (v > 0) { s += v % 10; v = Math.floor(v / 10); }
+      freq.set(s, (freq.get(s) ?? 0) + 1);
+    }
+    const maxSize = Math.max(...freq.values());
+    let count = 0;
+    for (const v of freq.values()) if (v === maxSize) count++;
+    return count;
+  },
+  'second-greater-element': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const ans = new Array<number>(n).fill(-1);
+    const main: number[] = [];
+    const second: number[] = [];
+    for (let i = 0; i < n; i++) {
+      while (second.length && nums[second[second.length - 1]!]! < nums[i]!) {
+        ans[second.pop()!] = nums[i]!;
+      }
+      const temp: number[] = [];
+      while (main.length && nums[main[main.length - 1]!]! < nums[i]!) {
+        temp.push(main.pop()!);
+      }
+      while (temp.length) second.push(temp.pop()!);
+      main.push(i);
+    }
+    return ans;
+  },
 };

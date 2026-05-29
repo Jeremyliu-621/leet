@@ -42486,4 +42486,66 @@ def findMinimumTime(strength):
     max_product = max((i + 1) * s[i] for i in range(n))
     return n + max_product
 `,
+  'find-the-child-who-has-the-ball-after-k-seconds': `
+def numberOfChild(n, k):
+    period = 2 * (n - 1)
+    pos = k % period
+    return pos if pos <= n - 1 else period - pos
+`,
+  'count-number-of-maximum-bitwise-or-subsets': `
+def countMaxOrSubsets(nums):
+    from functools import reduce
+    max_or = reduce(lambda a, b: a | b, nums)
+    n = len(nums)
+    count = 0
+    for mask in range(1, 1 << n):
+        cur = 0
+        for i in range(n):
+            if mask & (1 << i):
+                cur |= nums[i]
+        if cur == max_or:
+            count += 1
+    return count
+`,
+  'decode-xored-permutation': `
+def decode(encoded):
+    n = len(encoded) + 1
+    total = 0
+    for i in range(1, n + 1):
+        total ^= i
+    suffix_xor = 0
+    for i in range(1, len(encoded), 2):
+        suffix_xor ^= encoded[i]
+    perm = [0] * n
+    perm[0] = total ^ suffix_xor
+    for i in range(1, n):
+        perm[i] = perm[i - 1] ^ encoded[i - 1]
+    return perm
+`,
+  'count-largest-group': `
+def countLargestGroup(n):
+    freq = {}
+    for x in range(1, n + 1):
+        s = sum(int(d) for d in str(x))
+        freq[s] = freq.get(s, 0) + 1
+    max_size = max(freq.values())
+    return sum(1 for v in freq.values() if v == max_size)
+`,
+  'second-greater-element': `
+def secondGreaterElement(nums):
+    n = len(nums)
+    ans = [-1] * n
+    main = []
+    second = []
+    for i in range(n):
+        while second and nums[second[-1]] < nums[i]:
+            ans[second.pop()] = nums[i]
+        temp = []
+        while main and nums[main[-1]] < nums[i]:
+            temp.append(main.pop())
+        while temp:
+            second.append(temp.pop())
+        main.append(i)
+    return ans
+`,
 };
