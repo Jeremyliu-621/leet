@@ -2609,6 +2609,7 @@ import { problem as findEdgesInShortestPaths } from './find-edges-in-shortest-pa
 import { problem as avoidFloodInTheCity } from './avoid-flood-in-the-city';
 import { problem as minimumTimeToAccomplishAllTasks } from './minimum-time-to-accomplish-all-tasks';
 // batch 157 — trie×4, trie+design×1, simulation×3, graph×1, arrays×2
+// batch 157 — trie×4, trie+design×1; simulation/easy, simulation/medium×2, graph/medium, arrays/medium×2
 import { problem as implementTrieII } from './implement-trie-ii-prefix-tree';
 import { problem as wordFilter } from './word-filter';
 import { problem as lexicographicalNumbers } from './lexicographical-numbers';
@@ -2625,16 +2626,22 @@ import { problem as minCostHomecomingRobotInGrid } from './minimum-cost-homecomi
 import { problem as sumOfScoresOfBuiltStrings } from './sum-of-scores-of-built-strings';
 import { problem as countOfIntegers } from './count-of-integers';
 import { problem as numberOfWaysToEarnPoints } from './number-of-ways-to-earn-points';
-// batch 159 — hash-map/medium, bit-manipulation/medium×2
+// batch 159 (other) — hash-map/medium, bit-manipulation/medium×2
 import { problem as tupleWithSameProduct } from './tuple-with-same-product';
 import { problem as maximumAndValueOfNumbersInArray } from './maximum-and-value-of-numbers-in-array';
 import { problem as minimumFlipsMakeAOrBEqualToC } from './minimum-flips-to-make-a-or-b-equal-to-c';
-// batch 160 — math/medium, design/medium, strings+hash-map/medium, math/easy
+// batch 159 — strings+hash-map/medium, dp/hard, arrays+dp/medium
+import { problem as uniqueLength3PalindromicSubsequences } from './unique-length-3-palindromic-subsequences';
+import { problem as minimumWhiteTilesAfterCovering } from './minimum-white-tiles-after-covering-with-carpets';
+import { problem as specialPermutations } from './special-permutations';
+// batch 160 (other) — math/medium, design/medium, strings+hash-map/medium, math/easy
 import { problem as strictlyPalindromicNumber } from './strictly-palindromic-number';
 import { problem as designBitset } from './design-bitset';
 import { problem as countSubstringsWithFixedRatio } from './count-substrings-with-fixed-ratio';
 import { problem as numberOfIntegersWithEvenDigitSum } from './number-of-integers-with-even-digit-sum';
-// batch 161 — arrays/medium×3, strings/medium×2
+// batch 160 — graph+union-find/hard (new)
+import { problem as minimumCostWalkWeightedGraph } from './minimum-cost-to-walk-weighted-graph';
+// batch 161 (other) — arrays/medium×3, strings/medium×2
 import { problem as frogJumpII } from './frog-jump-ii';
 import { problem as collectingChocolates } from './collecting-chocolates';
 import { problem as partitioningIntoMinDeciB } from './partitioning-into-minimum-number-of-deci-binary-numbers';
@@ -2648,15 +2655,14 @@ import { problem as constructSmallestNumberFromDiString } from './construct-smal
 import { problem as minimumDifferenceHighestLowestKScores } from './minimum-difference-highest-lowest-k-scores';
 import { problem as countSubstringsKFreqII } from './count-substrings-with-k-frequency-characters-ii';
 import { problem as sumImbalanceNumbers } from './sum-of-imbalance-numbers-of-all-subarrays';
-// batch 159 — strings+hash-map/medium, dp/hard, arrays+dp/medium
-import { problem as uniqueLength3PalindromicSubsequences } from './unique-length-3-palindromic-subsequences';
-import { problem as minimumWhiteTilesAfterCovering } from './minimum-white-tiles-after-covering-with-carpets';
-import { problem as specialPermutations } from './special-permutations';
-// batch 160 — graph+union-find/hard
-import { problem as minimumCostWalkWeightedGraph } from './minimum-cost-to-walk-weighted-graph';
 // batch 161 — trie enrichment + new hard trie/xor problems
 import { problem as maximumXorWithElementFromArray } from './maximum-xor-with-element-from-array';
 import { problem as countPairsWithXorInRange } from './count-pairs-with-xor-in-a-range';
+// batch 161 — backtracking/medium, dp/hard, arrays+heap/hard, dp/medium
+import { problem as pyramidTransitionNumbers } from './pyramid-transition-numbers';
+import { problem as paintingGridThreeColors } from './painting-a-grid-with-three-different-colors';
+import { problem as maximumSpendingAfterBuyingItems } from './maximum-spending-after-buying-items';
+import { problem as numberOfGoodBinaryStrings } from './number-of-good-binary-strings';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5302,7 +5308,7 @@ export const problems: readonly Problem[] = [
   findEdgesInShortestPaths,
   avoidFloodInTheCity,
   minimumTimeToAccomplishAllTasks,
-  // batch 157
+  // batch 157 — trie×4, trie+design×1; simulation/easy, simulation/medium×2, graph/medium, arrays/medium×2
   implementTrieII,
   wordFilter,
   lexicographicalNumbers,
@@ -5319,16 +5325,22 @@ export const problems: readonly Problem[] = [
   sumOfScoresOfBuiltStrings,
   countOfIntegers,
   numberOfWaysToEarnPoints,
-  // batch 159 — hash-map/medium, bit-manipulation/medium×2
+  // batch 159 (other) — hash-map/medium, bit-manipulation/medium×2
   tupleWithSameProduct,
   maximumAndValueOfNumbersInArray,
   minimumFlipsMakeAOrBEqualToC,
-  // batch 160 — math/medium, design/medium, strings+hash-map/medium, math/easy
+  // batch 159 — strings+hash-map/medium, dp/hard, arrays+dp/medium
+  uniqueLength3PalindromicSubsequences,
+  minimumWhiteTilesAfterCovering,
+  specialPermutations,
+  // batch 160 (other) — math/medium, design/medium, strings+hash-map/medium, math/easy
   strictlyPalindromicNumber,
   designBitset,
   countSubstringsWithFixedRatio,
   numberOfIntegersWithEvenDigitSum,
-  // batch 161 — arrays/medium×3, strings/medium×2
+  // batch 160 — graph+union-find/hard (new)
+  minimumCostWalkWeightedGraph,
+  // batch 161 (other) — arrays/medium×3, strings/medium×2
   frogJumpII,
   collectingChocolates,
   partitioningIntoMinDeciB,
@@ -5342,13 +5354,12 @@ export const problems: readonly Problem[] = [
   minimumDifferenceHighestLowestKScores,
   countSubstringsKFreqII,
   sumImbalanceNumbers,
-  // batch 159
-  uniqueLength3PalindromicSubsequences,
-  minimumWhiteTilesAfterCovering,
-  specialPermutations,
-  // batch 160
-  minimumCostWalkWeightedGraph,
   // batch 161
   maximumXorWithElementFromArray,
   countPairsWithXorInRange,
+  // batch 161 — backtracking/medium, dp/hard, arrays+heap/hard, dp/medium
+  pyramidTransitionNumbers,
+  paintingGridThreeColors,
+  maximumSpendingAfterBuyingItems,
+  numberOfGoodBinaryStrings,
 ];

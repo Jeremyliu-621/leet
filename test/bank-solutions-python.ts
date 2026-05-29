@@ -37217,57 +37217,95 @@ def canChoose(groups, nums):
     return sum(run)
 `,
 
-  'implement-trie-ii-prefix-tree': `def implementTrieII(ops, args):
-    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
-    args = [list(a.to_py() if hasattr(a, 'to_py') else a) for a in (args.to_py() if hasattr(args, 'to_py') else args)]
+  'implement-trie-ii-prefix-tree': `
+def implementTrieII(ops, args):
+    if hasattr(ops, 'to_py'):
+        ops = list(ops.to_py())
+    if hasattr(args, 'to_py'):
+        args = list(args.to_py())
+    ops = [str(o) for o in ops]
     class Node:
-        def __init__(self): self.ch = {}; self.end = 0; self.pre = 0
+        def __init__(self):
+            self.ch = {}
+            self.end = 0
+            self.prefix = 0
     root = Node()
-    result = []
+    results = []
     for i, op in enumerate(ops):
-        arg = args[i][0] if args[i] else ''
+        a = args[i]
+        if hasattr(a, 'to_py'):
+            a = list(a.to_py())
         if op == 'Trie':
-            root = Node(); result.append(None)
+            root = Node()
+            results.append(None)
         elif op == 'insert':
-            nd = root
-            for c in arg: nd.ch.setdefault(c, Node()); nd = nd.ch[c]; nd.pre += 1
-            nd.end += 1; result.append(None)
+            word = str(a[0]) if isinstance(a, list) and a else ''
+            node = root
+            for c in word:
+                if c not in node.ch:
+                    node.ch[c] = Node()
+                node = node.ch[c]
+                node.prefix += 1
+            node.end += 1
+            results.append(None)
         elif op == 'countWordsEqualTo':
-            nd = root
-            for c in arg:
-                if c not in nd.ch: nd = None; break
-                nd = nd.ch[c]
-            result.append(nd.end if nd else 0)
+            word = str(a[0]) if isinstance(a, list) and a else ''
+            node = root
+            for c in word:
+                if c not in node.ch:
+                    node = None
+                    break
+                node = node.ch[c]
+            results.append(node.end if node else 0)
         elif op == 'countWordsStartingWith':
-            nd = root
-            for c in arg:
-                if c not in nd.ch: nd = None; break
-                nd = nd.ch[c]
-            result.append(nd.pre if nd else 0)
+            word = str(a[0]) if isinstance(a, list) and a else ''
+            node = root
+            for c in word:
+                if c not in node.ch:
+                    node = None
+                    break
+                node = node.ch[c]
+            results.append(node.prefix if node else 0)
         elif op == 'erase':
-            nd = root
-            for c in arg: nd.ch[c].pre -= 1; nd = nd.ch[c]
-            nd.end -= 1; result.append(None)
-    return result
+            word = str(a[0]) if isinstance(a, list) and a else ''
+            node = root
+            for c in word:
+                node.ch[c].prefix -= 1
+                node = node.ch[c]
+            node.end -= 1
+            results.append(None)
+    return results
 `,
 
-  'word-filter': `def wordFilter(ops, args):
-    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
-    args = [list(a.to_py() if hasattr(a, 'to_py') else a) for a in (args.to_py() if hasattr(args, 'to_py') else args)]
+  'word-filter': `
+def wordFilter(ops, params):
+    if hasattr(ops, 'to_py'):
+        ops = list(ops.to_py())
+    if hasattr(params, 'to_py'):
+        params = list(params.to_py())
+    ops = [str(o) for o in ops]
     mp = {}
-    result = []
+    results = []
     for i, op in enumerate(ops):
+        p = params[i]
+        if hasattr(p, 'to_py'):
+            p = list(p.to_py())
         if op == 'WordFilter':
-            words = list(args[i][0].to_py() if hasattr(args[i][0], 'to_py') else args[i][0])
+            words_raw = p[0] if isinstance(p, list) and p else p
+            if hasattr(words_raw, 'to_py'):
+                words_raw = list(words_raw.to_py())
+            words = [str(w) for w in words_raw]
             for idx, w in enumerate(words):
-                for p in range(len(w) + 1):
-                    for s in range(len(w) + 1):
-                        mp[w[:p] + '|' + w[len(w)-s:]] = idx
-            result.append(None)
-        else:
-            pref, suff = args[i][0], args[i][1]
-            result.append(mp.get(pref + '|' + suff, -1))
-    return result
+                for plen in range(len(w) + 1):
+                    for slen in range(len(w) + 1):
+                        key = w[:plen] + '#' + w[len(w)-slen:]
+                        mp[key] = idx
+            results.append(None)
+        elif op == 'f':
+            prefix = str(p[0]) if isinstance(p, list) else ''
+            suffix = str(p[1]) if isinstance(p, list) and len(p) > 1 else ''
+            results.append(mp.get(prefix + '#' + suffix, -1))
+    return results
 `,
 
   'lexicographical-numbers': `def lexicalOrder(n):
@@ -37563,6 +37601,101 @@ def specialPerm(nums):
                     dp[mask | (1 << nxt)][nxt] = (dp[mask | (1 << nxt)][nxt] + dp[mask][last]) % MOD
     full = (1 << n) - 1
     return sum(dp[full]) % MOD
+`,
+
+  // batch 161 — backtracking/medium, dp/hard, arrays+heap/hard, dp/medium
+  'pyramid-transition-numbers': `
+def pyramidTransition(bottom, allowed):
+    if hasattr(allowed, 'to_py'):
+        allowed = list(allowed.to_py())
+    allowed = [str(s) for s in allowed]
+    bottom = str(bottom)
+    from collections import defaultdict
+    mp = defaultdict(list)
+    for s in allowed:
+        mp[s[:2]].append(s[2])
+    def build_next(row, idx, nxt):
+        if idx == len(row) - 1:
+            return solve(''.join(nxt))
+        key = row[idx] + row[idx + 1]
+        for c in mp[key]:
+            nxt.append(c)
+            if build_next(row, idx + 1, nxt):
+                return True
+            nxt.pop()
+        return False
+    def solve(row):
+        if len(row) == 1:
+            return True
+        return build_next(row, 0, [])
+    return solve(bottom)
+`,
+
+  'painting-a-grid-with-three-different-colors': `
+def colorTheGrid(m, n):
+    MOD = 10 ** 9 + 7
+    max_state = 3 ** m
+    valid_cols = []
+    for state in range(max_state):
+        s, valid, prev = state, True, -1
+        for _ in range(m):
+            c = s % 3
+            s //= 3
+            if c == prev:
+                valid = False
+                break
+            prev = c
+        if valid:
+            valid_cols.append(state)
+    compat = {}
+    for a in valid_cols:
+        compatible = []
+        for b in valid_cols:
+            sa, sb, ok = a, b, True
+            for _ in range(m):
+                if sa % 3 == sb % 3:
+                    ok = False
+                    break
+                sa //= 3
+                sb //= 3
+            if ok:
+                compatible.append(b)
+        compat[a] = compatible
+    dp = {p: 1 for p in valid_cols}
+    for _ in range(1, n):
+        ndp = {p: 0 for p in valid_cols}
+        for q, cnt in dp.items():
+            for p in compat[q]:
+                ndp[p] = (ndp[p] + cnt) % MOD
+        dp = ndp
+    return sum(dp.values()) % MOD
+`,
+
+  'maximum-spending-after-buying-items': `
+def maxSpending(values):
+    if hasattr(values, 'to_py'):
+        values = values.to_py()
+    rows = []
+    for row in values:
+        if hasattr(row, 'to_py'):
+            row = list(row.to_py())
+        rows.append([int(v) for v in row])
+    items = [v for row in rows for v in row]
+    items.sort()
+    return sum(v * (i + 1) for i, v in enumerate(items))
+`,
+
+  'number-of-good-binary-strings': `
+def countGoodStrings(low, high, zero, one):
+    MOD = 10 ** 9 + 7
+    dp = [0] * (high + 1)
+    dp[0] = 1
+    for i in range(1, high + 1):
+        if i >= zero:
+            dp[i] = (dp[i] + dp[i - zero]) % MOD
+        if i >= one:
+            dp[i] = (dp[i] + dp[i - one]) % MOD
+    return sum(dp[low:high + 1]) % MOD
 `,
 
   'minimum-cost-to-walk-weighted-graph': `

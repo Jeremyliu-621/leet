@@ -37293,34 +37293,37 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
+  // batch 156c — graph+shortest-path/hard, hash-map+binary-search/medium, binary-indexed-tree/hard
   'find-edges-in-shortest-paths': (...args: unknown[]) => {
     const n = args[0] as number;
     const edges = args[1] as number[][];
-    const adj: [number, number][][] = Array.from({length: n}, () => []);
-    for (const e of edges) { const u = e[0]!, v = e[1]!, w = e[2]!; adj[u]!.push([v, w]); adj[v]!.push([u, w]); }
-    const dijkstra = (src: number): number[] => {
-      const dist = new Array<number>(n).fill(Infinity);
+    const INF = Infinity;
+    function dijkstra(src: number): number[] {
+      const dist = new Array<number>(n).fill(INF);
       dist[src] = 0;
-      const heap: [number, number][] = [[0, src]];
-      while (heap.length > 0) {
-        let mi = 0;
-        for (let i = 1; i < heap.length; i++) if (heap[i]![0] < heap[mi]![0]) mi = i;
-        const item = heap.splice(mi, 1)[0]!;
-        const d = item[0], u = item[1];
+      const pq: [number, number][] = [[0, src]];
+      while (pq.length) {
+        pq.sort((a, b) => a[0] - b[0]);
+        const [d, u] = pq.shift()!;
         if (d > dist[u]!) continue;
-        for (const nv of adj[u]!) {
-          const nd = dist[u]! + nv[1];
-          if (nd < dist[nv[0]]!) { dist[nv[0]] = nd; heap.push([nd, nv[0]]); }
+        for (const [a, b, w] of edges) {
+          const v = a === u ? b! : b === u ? a! : -1;
+          if (v === -1) continue;
+          if (dist[u]! + w! < dist[v]!) {
+            dist[v] = dist[u]! + w!;
+            pq.push([dist[v]!, v]);
+          }
         }
       }
       return dist;
-    };
+    }
     const dist0 = dijkstra(0);
     const distN = dijkstra(n - 1);
     const total = dist0[n - 1]!;
-    return edges.map(e => {
-      const u = e[0]!, v = e[1]!, w = e[2]!;
-      return dist0[u]! + w + distN[v]! === total || dist0[v]! + w + distN[u]! === total;
+    return edges.map(([a, b, w]) => {
+      if (total === INF) return false;
+      return dist0[a!]! + w! + distN[b!]! === total ||
+             dist0[b!]! + w! + distN[a!]! === total;
     });
   },
 
@@ -37700,7 +37703,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[target]!;
   },
 
-  // batch 159 — hash-map/medium, bit-manipulation/medium×2
+  // batch 159 (other) — hash-map/medium, bit-manipulation/medium×2
   'tuple-with-same-product': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const freq = new Map<number, number>();
@@ -37939,6 +37942,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return min;
   },
 
+  // batch 159 — strings+hash-map/medium, dp/hard, arrays+dp/medium
   'unique-length-3-palindromic-subsequences': (...args: unknown[]) => {
     const s = args[0] as string;
     let count = 0;
@@ -37989,6 +37993,103 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     const full = (1 << n) - 1;
     return dp[full]!.reduce((a, b) => (a + b) % MOD, 0);
+  },
+
+  // batch 161 — backtracking/medium, dp/hard, arrays+heap/hard, dp/medium
+  'pyramid-transition-numbers': (...args: unknown[]) => {
+    const bottom = args[0] as string;
+    const allowed = args[1] as string[];
+    const map = new Map<string, string[]>();
+    for (const s of allowed) {
+      const key = s.slice(0, 2);
+      if (!map.has(key)) map.set(key, []);
+      map.get(key)!.push(s[2]!);
+    }
+    function buildNext(row: string, idx: number, next: string[]): boolean {
+      if (idx === row.length - 1) return solve(next.join(''));
+      const choices = map.get(row[idx]! + row[idx + 1]!) ?? [];
+      for (const c of choices) {
+        next.push(c);
+        if (buildNext(row, idx + 1, next)) return true;
+        next.pop();
+      }
+      return false;
+    }
+    function solve(row: string): boolean {
+      if (row.length === 1) return true;
+      return buildNext(row, 0, []);
+    }
+    return solve(bottom);
+  },
+
+  'painting-a-grid-with-three-different-colors': (...args: unknown[]) => {
+    const m = args[0] as number;
+    const n = args[1] as number;
+    const MOD = 1_000_000_007;
+    const maxState = Math.pow(3, m);
+    const validCols: number[] = [];
+    for (let state = 0; state < maxState; state++) {
+      let s = state, valid = true, prev = -1;
+      for (let r = 0; r < m; r++) {
+        const c = s % 3; s = Math.floor(s / 3);
+        if (c === prev) { valid = false; break; }
+        prev = c;
+      }
+      if (valid) validCols.push(state);
+    }
+    const compat = new Map<number, number[]>();
+    for (const a of validCols) {
+      const compatible: number[] = [];
+      for (const b of validCols) {
+        let sa = a, sb = b, ok = true;
+        for (let r = 0; r < m; r++) {
+          if (sa % 3 === sb % 3) { ok = false; break; }
+          sa = Math.floor(sa / 3); sb = Math.floor(sb / 3);
+        }
+        if (ok) compatible.push(b);
+      }
+      compat.set(a, compatible);
+    }
+    let dp = new Map<number, number>();
+    for (const p of validCols) dp.set(p, 1);
+    for (let col = 1; col < n; col++) {
+      const ndp = new Map<number, number>();
+      for (const p of validCols) ndp.set(p, 0);
+      for (const [q, cnt] of dp) {
+        for (const p of compat.get(q)!) {
+          ndp.set(p, ((ndp.get(p) ?? 0) + cnt) % MOD);
+        }
+      }
+      dp = ndp;
+    }
+    let ans = 0;
+    for (const cnt of dp.values()) ans = (ans + cnt) % MOD;
+    return ans;
+  },
+
+  'maximum-spending-after-buying-items': (...args: unknown[]) => {
+    const values = args[0] as number[][];
+    const items: number[] = [];
+    for (const row of values) for (const v of row) items.push(v);
+    items.sort((a, b) => a - b);
+    let total = 0;
+    for (let i = 0; i < items.length; i++) total += items[i]! * (i + 1);
+    return total;
+  },
+
+  'number-of-good-binary-strings': (...args: unknown[]) => {
+    const low = args[0] as number, high = args[1] as number;
+    const zero = args[2] as number, one = args[3] as number;
+    const MOD = 1_000_000_007;
+    const dp = new Array<number>(high + 1).fill(0);
+    dp[0] = 1;
+    for (let i = 1; i <= high; i++) {
+      if (i >= zero) dp[i] = (dp[i]! + dp[i - zero]!) % MOD;
+      if (i >= one) dp[i] = (dp[i]! + dp[i - one]!) % MOD;
+    }
+    let ans = 0;
+    for (let i = low; i <= high; i++) ans = (ans + dp[i]!) % MOD;
+    return ans;
   },
 
   // batch 160 — graph+union-find/hard, arrays+dp/medium, arrays+hash-map/medium, arrays+math/easy
