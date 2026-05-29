@@ -8,15 +8,21 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2261** problems; 7077 tests green. Batches 102–150 complete. UX polish ongoing.
+**Current focus:** Bank at **2265** problems; 7089 tests green. Batches 102–150 complete. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 151+); UX polish; accessibility audit.
+
+### fix(a11y): focus solved-standalone heading on mount; update site count to 2,265+ (2026-05-29)
+When the challenge page transitions to the solved-standalone screen (practice mode accepted), keyboard focus was lost. Fixed by adding `useRef`+`useEffect` in `SolvedStandaloneScreen` to focus the `<h1>` on mount (`tabIndex={-1}`). Also fixed `'matrix'` invalid ProblemTag in `difference-between-ones-zeros-in-row-and-column.ts` (changed to `'math'`). Marketing site updated to **2,265+** problems.
 
 ### feat(bank): add batch 150 — 5 new problems (tree/medium, arrays×2/easy, strings/medium+easy) (2026-05-29)
 Added `minimum-time-to-collect-all-apples-in-a-tree` (medium/tree+graph+dp, DFS from root; enter child subtree only if it has apples; cost=childTime+2 per needed child), `maximum-units-on-a-truck` (easy/arrays, sort by units/box desc, greedy take), `number-of-ways-to-split-a-string` (medium/strings+math, gap counting between section boundaries; BigInt mod), `mean-of-array-after-removing-some-elements` (easy/arrays, sort+trim 5% each end+average), `minimum-number-of-operations-to-convert-time` (easy/strings+math, convert to minutes, greedy subtract [60,15,5,1]). Bank at **2261**; 7077 tests.
 
 ### feat(bank): add batch 150 — convert-2d-conditions, replace-balanced-string, all-divisions-score (2026-05-29)
 Three new medium problems: `convert-an-array-into-a-2d-array-with-conditions` (arrays+hash-map, greedy occurrence-row placement — n-th occurrence of value goes to row n-1), `replace-the-substring-for-balanced-string` (strings+two-pointers+sliding-window, shrink window while all outside counts ≤ n/4), `all-divisions-with-the-highest-score-of-a-binary-array` (arrays, score[i] = prefix zeros + suffix ones; linear sweep). Bank at **2256**; tests green.
+
+### feat(bank): add batch 150 — find-lucky-number-in-matrix, maximum-product-of-three-numbers, finding-3-digit-even-numbers, difference-between-ones-zeros-in-row-and-column (2026-05-29)
+Four easy problems: `find-lucky-number-in-matrix` (easy/arrays+hash-map, row-min × col-max check), `maximum-product-of-three-numbers` (easy/arrays+math, sort + compare top-3 vs bottom-2×top-1), `finding-3-digit-even-numbers` (easy/arrays+hash-map, enumerate 100–998 even and freq-check), `difference-between-ones-zeros-in-row-and-column` (easy/arrays+matrix, 2×onesRow+2×onesCol−m−n formula). Also fixed duplicate imports in index.ts from interrupted rebase. Bank at **2260**; 7074 tests.
 
 ### feat(bank): add batch 146/148/149 — new problems + orphan registrations (2026-05-29)
 New: `calculate-amount-paid-in-taxes` (easy/arrays, bracket tax simulation). Registered 6 orphan problems: `beautiful-towers-ii` (medium/arrays+stack, monotone-stack mountain sums), `maximum-balanced-subsequence-sum` (hard/BIT+dp), `minimum-flips-binary-grid-palindromic-ii` (medium/arrays), `minimum-swaps-to-make-balanced` (medium/strings+stack), `tweet-counts-per-frequency` (medium/hash-map), `find-kth-largest-xor-coordinate-value` (medium/arrays). Also added solutions for `max-product-after-cutting-rope`, `minimum-path-sum-triangle`, `find-product-pivot`, `count-subarrays-equal-balance`, `longest-arithmetic-subarray`, `sum-of-all-submatrix-sums`. Bank at **2253**; 7053 tests.
