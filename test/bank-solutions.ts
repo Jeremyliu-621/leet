@@ -37927,6 +37927,74 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     });
   },
 
+  // batch 164 — 5 missing solutions from latest remote session
+  'amount-of-new-area-painted-each-day': (...args: unknown[]): unknown => {
+    const paint = args[0] as number[][];
+    const MAX = 50001;
+    const jump = new Int32Array(MAX);
+    for (let i = 0; i < MAX; i++) jump[i] = i;
+    const find = (x: number): number => { while (jump[x] !== x) { jump[x] = jump[jump[x] as number] as number; x = jump[x] as number; } return x; };
+    return paint.map(seg => {
+      const s = seg[0] as number, e = seg[1] as number;
+      let count = 0, pos = find(s);
+      while (pos < e) { count++; jump[pos] = pos + 1; pos = find(pos + 1); }
+      return count;
+    });
+  },
+
+  'convert-number-to-hexadecimal': (...args: unknown[]): unknown => {
+    const num = args[0] as number;
+    if (num === 0) return '0';
+    return (num >>> 0).toString(16);
+  },
+
+  'count-special-numbers': (...args: unknown[]): unknown => {
+    const n = args[0] as number;
+    const s = String(n), d = s.length;
+    let result = 0, choices = 9;
+    for (let k = 1; k < d; k++) { result += choices; choices *= 10 - k; }
+    const used = new Array<boolean>(10).fill(false);
+    let tight = true;
+    for (let pos = 0; pos < d && tight; pos++) {
+      const dig = parseInt(s[pos] as string);
+      const start = pos === 0 ? 1 : 0;
+      let completions = 1;
+      for (let x = start; x < dig; x++) {
+        if (!used[x]) {
+          completions = 1;
+          for (let r = 0; r < d - pos - 1; r++) completions *= 10 - pos - 1 - r;
+          result += completions;
+        }
+      }
+      if (used[dig]) tight = false;
+      else used[dig] = true;
+    }
+    if (tight) result++;
+    return result;
+  },
+
+  'minimum-deletions-to-make-array-beautiful': (...args: unknown[]): unknown => {
+    const nums = args[0] as number[];
+    let deletions = 0, i = 0;
+    while (i < nums.length - 1) {
+      if ((nums[i] as number) === (nums[i + 1] as number)) { deletions++; i++; }
+      else i += 2;
+    }
+    if ((nums.length - deletions) % 2 !== 0) deletions++;
+    return deletions;
+  },
+
+  'minimum-time-to-finish-trips': (...args: unknown[]): unknown => {
+    const time = args[0] as number[], totalTrips = args[1] as number;
+    let lo = 1, hi = Math.min(...time) * totalTrips;
+    while (lo < hi) {
+      const mid = Math.floor((lo + hi) / 2);
+      const trips = time.reduce((s, t) => s + Math.floor(mid / (t as number)), 0);
+      if (trips >= totalTrips) hi = mid; else lo = mid + 1;
+    }
+    return lo;
+  },
+
   // batch 163 — 2 missing solutions from remote session
   'count-pairs-with-xor-in-a-range': (...args: unknown[]): unknown => {
     const nums = args[0] as number[], low = args[1] as number, high = args[2] as number;

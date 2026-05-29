@@ -2625,6 +2625,17 @@ import { problem as strictlyPalindromicNumber } from './strictly-palindromic-num
 import { problem as sortingThreeGroups } from './sorting-three-groups';
 import { problem as uglyNumberIii } from './ugly-number-iii';
 import { problem as binaryTreeColoringGame } from './binary-tree-coloring-game';
+// batch 164 — simulation/hard, bit-manipulation/easy, math/medium, arrays/medium, binary-search/medium,
+//             trie/hard, bit-manipulation/hard, arrays/hard, arrays/hard
+import { problem as amountOfNewAreaPaintedEachDay } from './amount-of-new-area-painted-each-day';
+import { problem as convertNumberToHexadecimal } from './convert-number-to-hexadecimal';
+import { problem as countSpecialNumbers } from './count-special-numbers';
+import { problem as minimumDeletionsToMakeArrayBeautiful } from './minimum-deletions-to-make-array-beautiful';
+import { problem as minimumTimeToFinishTrips } from './minimum-time-to-finish-trips';
+import { problem as pyramidTransitionNumbers } from './pyramid-transition-numbers';
+import { problem as paintingAGridWithThreeDifferentColors } from './painting-a-grid-with-three-different-colors';
+import { problem as maximumSpendingAfterBuyingItems } from './maximum-spending-after-buying-items';
+import { problem as numberOfGoodBinaryStrings } from './number-of-good-binary-strings';
 // batch 163 — strings/easy, strings/medium, arrays/hard, strings/medium, arrays/easy, trie/hard×2
 import { problem as reformatDate } from './reformat-date';
 import { problem as maximumValueAfterInsertion } from './maximum-value-after-insertion';
@@ -5327,4 +5338,14 @@ export const problems: readonly Problem[] = [
   minimumDifferenceHighestLowestKScores,
   countPairsWithXorInARange,
   maximumXorWithElementFromArray,
+  // batch 164 — 9 new problems from latest remote session (+ 5 missing solutions)
+  amountOfNewAreaPaintedEachDay,
+  convertNumberToHexadecimal,
+  countSpecialNumbers,
+  minimumDeletionsToMakeArrayBeautiful,
+  minimumTimeToFinishTrips,
+  pyramidTransitionNumbers,
+  paintingAGridWithThreeDifferentColors,
+  maximumSpendingAfterBuyingItems,
+  numberOfGoodBinaryStrings,
 ];

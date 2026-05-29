@@ -37915,6 +37915,95 @@ def minimumDifference(nums, k):
     return min(nums[i + k - 1] - nums[i] for i in range(len(nums) - k + 1))
 `,
 
+  // batch 164 — 5 missing Python solutions from latest remote session
+  'amount-of-new-area-painted-each-day': `
+def amountPainted(paint):
+    paint = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in (paint.to_py() if hasattr(paint, 'to_py') else paint)]
+    MAX = 50001
+    jump = list(range(MAX))
+    def find(x):
+        while jump[x] != x:
+            jump[x] = jump[jump[x]]
+            x = jump[x]
+        return x
+    result = []
+    for seg in paint:
+        s, e = int(seg[0]), int(seg[1])
+        count = 0
+        pos = find(s)
+        while pos < e:
+            count += 1
+            jump[pos] = pos + 1
+            pos = find(pos + 1)
+        result.append(count)
+    return result
+`,
+
+  'convert-number-to-hexadecimal': `
+def toHex(num):
+    if num == 0: return '0'
+    if num < 0: num += 2**32
+    return hex(num)[2:]
+`,
+
+  'count-special-numbers': `
+def countSpecialNumbers(n):
+    s = str(n)
+    d = len(s)
+    result = 0
+    choices = 9
+    for k in range(1, d):
+        result += choices
+        choices *= 10 - k
+    used = [False] * 10
+    tight = True
+    for pos in range(d):
+        if not tight: break
+        dig = int(s[pos])
+        start = 1 if pos == 0 else 0
+        for x in range(start, dig):
+            if not used[x]:
+                compl = 1
+                for r in range(d - pos - 1):
+                    compl *= 10 - pos - 1 - r
+                result += compl
+        if used[dig]: tight = False
+        else: used[dig] = True
+    if tight: result += 1
+    return result
+`,
+
+  'minimum-deletions-to-make-array-beautiful': `
+def minDeletion(nums):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    deletions = 0
+    i = 0
+    while i < len(nums) - 1:
+        if nums[i] == nums[i+1]:
+            deletions += 1
+            i += 1
+        else:
+            i += 2
+    if (len(nums) - deletions) % 2 != 0:
+        deletions += 1
+    return deletions
+`,
+
+  'minimum-time-to-finish-trips': `
+def minimumTime(time, totalTrips):
+    if hasattr(time, 'to_py'):
+        time = list(time.to_py())
+    lo, hi = 1, min(time) * totalTrips
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if sum(mid // t for t in time) >= totalTrips:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
   'count-pairs-with-xor-in-a-range': `
 def countPairs(nums, low, high):
     if hasattr(nums, 'to_py'):
