@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2275** problems; 7119 tests green. Batches 102–151 complete. UX polish ongoing.
+**Current focus:** Bank at **2280** problems; 7134 tests green. Batches 102–152 complete. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 152+); UX polish; accessibility audit.
+**Next up:** More bank growth (batch 153+); UX polish; accessibility audit.
+
+### feat(bank): add batch 152 — 5 new string problems + fix missing solution (2026-05-29)
+New problems: `number-of-segments-in-a-string` (easy/strings, count non-space segments), `repeated-dna-sequences` (medium/strings+hash-map+sliding-window, 10-char sliding window dedup), `count-the-number-of-vowel-strings-in-range` (easy/strings, check first/last char in range), `remove-all-occurrences-of-a-substring` (medium/strings, repeated leftmost removal), `find-words-that-can-be-formed-by-characters` (easy/strings+hash-map, freq comparison). Fixed missing solution for `count-ways-to-rearrange-sticks-with-k-visible` added by remote. Bank at **2280**; 7134 tests.
 
 ### feat(bank): add count-ways-to-rearrange-sticks-with-k-visible (hard/math+dp) (2026-05-29)
 Unsigned Stirling numbers of the first kind via DP. BigInt reference solution to avoid overflow. Bank at **2275**; 7119 tests.
