@@ -36817,4 +36817,85 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     });
   },
 
+  'maximum-employees-invited-to-meeting': (...args: unknown[]) => {
+    const fav = args[0] as number[];
+    const n = fav.length;
+    const indeg = new Array(n).fill(0) as number[];
+    for (const f of fav) indeg[f]!++;
+    const depth = new Array(n).fill(1) as number[];
+    const queue: number[] = [];
+    for (let i = 0; i < n; i++) if (indeg[i] === 0) queue.push(i);
+    while (queue.length) {
+      const u = queue.shift()!;
+      const v = fav[u]!;
+      depth[v] = Math.max(depth[v]!, depth[u]! + 1);
+      if (--indeg[v]! === 0) queue.push(v);
+    }
+    let maxCycle = 0, pairSum = 0;
+    const visited = new Array(n).fill(false) as boolean[];
+    for (let i = 0; i < n; i++) {
+      if (visited[i] || indeg[i] === 0) continue;
+      const cycle: number[] = [];
+      let cur = i;
+      while (!visited[cur]) { visited[cur] = true; cycle.push(cur); cur = fav[cur]!; }
+      if (cycle.length === 2) {
+        pairSum += depth[cycle[0]!]! + depth[cycle[1]!]!;
+      } else {
+        maxCycle = Math.max(maxCycle, cycle.length);
+      }
+    }
+    return Math.max(maxCycle, pairSum);
+  },
+
+  'maximize-minimum-powered-city': (...args: unknown[]) => {
+    const stations = args[0] as number[];
+    const r = args[1] as number;
+    const k = args[2] as number;
+    const n = stations.length;
+    const prefix = new Array(n + 1).fill(0) as number[];
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + stations[i]!;
+    function canDo(minPow: number): boolean {
+      const diff = new Array(n + 2).fill(0) as number[];
+      let extra = 0, added = 0;
+      for (let i = 0; i < n; i++) {
+        extra += diff[i]!;
+        const lo = Math.max(0, i - r), hi = Math.min(n - 1, i + r);
+        const cur = prefix[hi + 1]! - prefix[lo]! + extra;
+        if (cur < minPow) {
+          const need = minPow - cur;
+          if (added + need > k) return false;
+          added += need;
+          extra += need;
+          const placeAt = Math.min(i + r, n - 1);
+          diff[Math.min(placeAt + r, n - 1) + 1]! -= need;
+        }
+      }
+      return true;
+    }
+    let lo = 0, hi = prefix[n]! + k;
+    while (lo < hi) {
+      const mid = Math.floor((lo + hi + 1) / 2);
+      if (canDo(mid)) lo = mid; else hi = mid - 1;
+    }
+    return lo;
+  },
+
+  'minimum-time-remove-cars-illegal-goods': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const left = new Array(n).fill(0) as number[];
+    left[0] = s[0] === '1' ? 1 : 0;
+    for (let i = 1; i < n; i++) {
+      left[i] = s[i] === '1' ? Math.min(left[i - 1]! + 2, i + 1) : left[i - 1]!;
+    }
+    const right = new Array(n).fill(0) as number[];
+    right[n - 1] = s[n - 1] === '1' ? 1 : 0;
+    for (let i = n - 2; i >= 0; i--) {
+      right[i] = s[i] === '1' ? Math.min(right[i + 1]! + 2, n - i) : right[i + 1]!;
+    }
+    let ans = Math.min(left[n - 1]!, right[0]!);
+    for (let i = 0; i < n - 1; i++) ans = Math.min(ans, left[i]! + right[i + 1]!);
+    return ans;
+  },
+
 };

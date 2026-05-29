@@ -2577,7 +2577,6 @@ import { problem as smallestNumberWithAllSetBits } from './smallest-number-with-
 // batch 155r — dp/medium×2, dp/hard×2, arrays/medium, strings/hard, sliding-window/medium
 import { problem as minimumScoreTriangulationPolygon } from './minimum-score-triangulation-polygon';
 import { problem as nonNegativeIntegersWithoutConsecutiveOnes } from './non-negative-integers-without-consecutive-ones';
-import { problem as waysToMakeAFairArray } from './ways-to-make-a-fair-array';
 import { problem as countWaysToBuildGoodStrings } from './count-ways-to-build-good-strings';
 import { problem as restoreTheArray } from './restore-the-array';
 import { problem as numberOfWaysToFormATargetStringGivenADictionary } from './number-of-ways-to-form-a-target-string-given-a-dictionary';
@@ -5205,7 +5204,6 @@ export const problems: readonly Problem[] = [
   // batch 155r — dp/medium×2, dp/hard×2, arrays/medium, strings/hard, sliding-window/medium
   minimumScoreTriangulationPolygon,
   nonNegativeIntegersWithoutConsecutiveOnes,
-  waysToMakeAFairArray,
   countWaysToBuildGoodStrings,
   restoreTheArray,
   numberOfWaysToFormATargetStringGivenADictionary,

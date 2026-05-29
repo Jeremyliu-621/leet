@@ -36676,4 +36676,95 @@ def streamOfCharacters(ops, args):
     return results
 `,
 
+  'maximum-employees-invited-to-meeting': `def maximumInvitations(employees):
+    employees = list(employees.to_py() if hasattr(employees, 'to_py') else employees)
+    n = len(employees)
+    indeg = [0] * n
+    for f in employees:
+        indeg[f] += 1
+    depth = [1] * n
+    from collections import deque
+    queue = deque(i for i in range(n) if indeg[i] == 0)
+    while queue:
+        u = queue.popleft()
+        v = employees[u]
+        depth[v] = max(depth[v], depth[u] + 1)
+        indeg[v] -= 1
+        if indeg[v] == 0:
+            queue.append(v)
+    max_cycle = 0
+    pair_sum = 0
+    visited = [False] * n
+    for i in range(n):
+        if visited[i] or indeg[i] == 0:
+            continue
+        cycle = []
+        cur = i
+        while not visited[cur]:
+            visited[cur] = True
+            cycle.append(cur)
+            cur = employees[cur]
+        if len(cycle) == 2:
+            pair_sum += depth[cycle[0]] + depth[cycle[1]]
+        else:
+            max_cycle = max(max_cycle, len(cycle))
+    return max(max_cycle, pair_sum)
+`,
+
+  'maximize-minimum-powered-city': `def maximizeMinimumPower(stations, r, k):
+    stations = list(stations.to_py() if hasattr(stations, 'to_py') else stations)
+    n = len(stations)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + stations[i]
+    def can_do(min_pow):
+        diff = [0] * (n + 2)
+        extra = 0
+        added = 0
+        for i in range(n):
+            extra += diff[i]
+            lo_i = max(0, i - r)
+            hi_i = min(n - 1, i + r)
+            cur = prefix[hi_i + 1] - prefix[lo_i] + extra
+            if cur < min_pow:
+                need = min_pow - cur
+                if added + need > k:
+                    return False
+                added += need
+                extra += need
+                place_at = min(i + r, n - 1)
+                diff[min(place_at + r, n - 1) + 1] -= need
+        return True
+    lo, hi = 0, prefix[n] + k
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_do(mid):
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'minimum-time-remove-cars-illegal-goods': `def minimumTime(s):
+    n = len(s)
+    left = [0] * n
+    left[0] = 1 if s[0] == '1' else 0
+    for i in range(1, n):
+        if s[i] == '1':
+            left[i] = min(left[i-1] + 2, i + 1)
+        else:
+            left[i] = left[i-1]
+    right = [0] * n
+    right[n-1] = 1 if s[n-1] == '1' else 0
+    for i in range(n-2, -1, -1):
+        if s[i] == '1':
+            right[i] = min(right[i+1] + 2, n - i)
+        else:
+            right[i] = right[i+1]
+    ans = min(left[n-1], right[0])
+    for i in range(n-1):
+        ans = min(ans, left[i] + right[i+1])
+    return ans
+`,
+
 };
