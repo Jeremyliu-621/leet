@@ -2852,6 +2852,12 @@ import { problem as designLogStorageSystem } from './design-log-storage-system';
 import { problem as mostFrequentIDs } from './most-frequent-ids';
 import { problem as numberOfPeopleAwareOfASecret } from './number-of-people-aware-of-a-secret';
 import { problem as generateBinaryStringsWithoutAdjacentZeros } from './generate-binary-strings-without-adjacent-zeros';
+// batch 179 — math/medium, math/medium, dp/medium, bfs/hard, enumeration/hard
+import { problem as primePairsWithTargetSum } from './prime-pairs-with-target-sum';
+import { problem as determineTheMinimumSumOfAKAvoidingArray } from './determine-the-minimum-sum-of-a-k-avoiding-array';
+import { problem as maximumPointsTouristCanEarn } from './maximum-points-tourist-can-earn';
+import { problem as minimumReverseOperations } from './minimum-reverse-operations';
+import { problem as findTheMinimumAreaToCoverAllOnesII } from './find-the-minimum-area-to-cover-all-ones-ii';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5742,4 +5748,10 @@ export const problems: readonly Problem[] = [
   designPhoneDirectory,
   countAlmostEqualPairsII,
   leastNumberOfUniqueIntegersAfterKRemovals,
+  // batch 179 — math/medium, math/medium, dp/medium, bfs/hard, enumeration/hard
+  primePairsWithTargetSum,
+  determineTheMinimumSumOfAKAvoidingArray,
+  maximumPointsTouristCanEarn,
+  minimumReverseOperations,
+  findTheMinimumAreaToCoverAllOnesII,
 ];

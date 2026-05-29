@@ -40741,6 +40741,21 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  // batch 179 — math/medium, math/medium, dp/medium, bfs/hard, enumeration/hard
+  'prime-pairs-with-target-sum': (n: unknown) => {
+    const num = n as number;
+    const sieve = Array(num + 1).fill(true);
+    sieve[0] = sieve[1] = false;
+    for (let p = 2; p * p <= num; p++) {
+      if (sieve[p]) for (let i = p * p; i <= num; i += p) sieve[i] = false;
+    }
+    const result: number[][] = [];
+    for (let x = 2; x <= Math.floor(num / 2); x++) {
+      if (sieve[x] && sieve[num - x]) result.push([x, num - x]);
+    }
+    return result;
+  },
+
   'double-a-number-represented-as-linked-list': (arr: unknown) => {
     const digits = arr as number[];
     const result = [...digits];
@@ -40878,6 +40893,73 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
         while (maxC > 0 && !coc.has(maxC)) maxC--;
       }
       ans.push(maxC);
+    }
+    return ans;
+  },
+
+  'determine-the-minimum-sum-of-a-k-avoiding-array': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const k = args[1] as number;
+    const chosen = new Set<number>();
+    let sum = 0, count = 0;
+    for (let i = 1; count < n; i++) {
+      if (!chosen.has(k - i)) {
+        chosen.add(i);
+        sum += i;
+        count++;
+      }
+    }
+    return sum;
+  },
+
+  'maximum-points-tourist-can-earn': (...args: unknown[]) => {
+    const stayScore = args[0] as number[][];
+    const travelScore = args[1] as number[][];
+    const m = travelScore.length;
+    const days = stayScore.length;
+    let dp = stayScore[0]!.slice();
+    for (let day = 1; day < days; day++) {
+      const ndp = Array(m).fill(0) as number[];
+      for (let c = 0; c < m; c++) {
+        ndp[c] = dp[c]! + stayScore[day]![c]!;
+        for (let c2 = 0; c2 < m; c2++) {
+          if (c2 !== c) ndp[c] = Math.max(ndp[c]!, dp[c2]! + travelScore[c2]![c]!);
+        }
+      }
+      dp = ndp;
+    }
+    return Math.max(...dp);
+  },
+
+  'minimum-reverse-operations': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const p = args[1] as number;
+    const banned = new Set(args[2] as number[]);
+    const k = args[3] as number;
+    const ans = Array(n).fill(-1) as number[];
+    ans[p] = 0;
+    const sets: Set<number>[] = [new Set<number>(), new Set<number>()];
+    for (let i = 0; i < n; i++) {
+      if (i !== p && !banned.has(i)) sets[i % 2]!.add(i);
+    }
+    const queue: number[] = [p];
+    let qi = 0;
+    while (qi < queue.length) {
+      const cur = queue[qi++]!;
+      const lMin = Math.max(0, cur - k + 1);
+      const lMax = Math.min(n - k, cur);
+      const lo = 2 * lMin + k - 1 - cur;
+      const hi = 2 * lMax + k - 1 - cur;
+      const set = sets[((lo % 2) + 2) % 2]!;
+      const toVisit: number[] = [];
+      for (const v of set) {
+        if (v >= lo && v <= hi) toVisit.push(v);
+      }
+      for (const v of toVisit) {
+        set.delete(v);
+        ans[v] = ans[cur]! + 1;
+        queue.push(v);
+      }
     }
     return ans;
   },
@@ -41024,6 +41106,46 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       if (k >= f) { k -= f; remaining--; } else break;
     }
     return remaining;
+  },
+
+  'find-the-minimum-area-to-cover-all-ones-ii': (grid: unknown) => {
+    const g = grid as number[][];
+    const rows = g.length, cols = g[0]!.length;
+    const minBox = (r1: number, c1: number, r2: number, c2: number): number => {
+      let minR = r2 + 1, maxR = r1 - 1, minC = c2 + 1, maxC = c1 - 1;
+      for (let r = r1; r <= r2; r++) {
+        for (let c = c1; c <= c2; c++) {
+          if (g[r]![c] === 1) {
+            if (r < minR) minR = r; if (r > maxR) maxR = r;
+            if (c < minC) minC = c; if (c > maxC) maxC = c;
+          }
+        }
+      }
+      if (minR > maxR) return 0;
+      return (maxR - minR + 1) * (maxC - minC + 1);
+    };
+    let ans = Infinity;
+    for (let i = 1; i < rows; i++) {
+      for (let j = i + 1; j < rows; j++) {
+        ans = Math.min(ans, minBox(0,0,i-1,cols-1) + minBox(i,0,j-1,cols-1) + minBox(j,0,rows-1,cols-1));
+      }
+    }
+    for (let i = 1; i < cols; i++) {
+      for (let j = i + 1; j < cols; j++) {
+        ans = Math.min(ans, minBox(0,0,rows-1,i-1) + minBox(0,i,rows-1,j-1) + minBox(0,j,rows-1,cols-1));
+      }
+    }
+    for (let i = 1; i < rows; i++) {
+      for (let j = 1; j < cols; j++) {
+        ans = Math.min(ans,
+          minBox(0,0,i-1,cols-1) + minBox(i,0,rows-1,j-1) + minBox(i,j,rows-1,cols-1),
+          minBox(0,0,i-1,j-1) + minBox(0,j,i-1,cols-1) + minBox(i,0,rows-1,cols-1),
+          minBox(0,0,rows-1,j-1) + minBox(0,j,i-1,cols-1) + minBox(i,j,rows-1,cols-1),
+          minBox(0,0,i-1,j-1) + minBox(i,0,rows-1,j-1) + minBox(0,j,rows-1,cols-1),
+        );
+      }
+    }
+    return ans;
   },
 
 };

@@ -41088,4 +41088,121 @@ def validStrings(n):
     return remaining
 `,
 
+  // batch 179 — math/medium, math/medium, dp/medium, bfs/hard, enumeration/hard
+  'prime-pairs-with-target-sum': `
+def findPrimePairs(n):
+    n = int(n)
+    sieve = [True] * (n + 1)
+    if n >= 0: sieve[0] = False
+    if n >= 1: sieve[1] = False
+    p = 2
+    while p * p <= n:
+        if sieve[p]:
+            for i in range(p * p, n + 1, p):
+                sieve[i] = False
+        p += 1
+    result = []
+    for x in range(2, n // 2 + 1):
+        if sieve[x] and sieve[n - x]:
+            result.append([x, n - x])
+    return result
+`,
+
+  'determine-the-minimum-sum-of-a-k-avoiding-array': `
+def minimumSum(n, k):
+    n, k = int(n), int(k)
+    chosen = set()
+    total = 0
+    count = 0
+    i = 1
+    while count < n:
+        if (k - i) not in chosen:
+            chosen.add(i)
+            total += i
+            count += 1
+        i += 1
+    return total
+`,
+
+  'maximum-points-tourist-can-earn': `
+def maxPoints(stayScore, travelScore):
+    if hasattr(stayScore, 'to_py'): stayScore = list(stayScore.to_py())
+    if hasattr(travelScore, 'to_py'): travelScore = list(travelScore.to_py())
+    stayScore = [[int(x) for x in row] for row in stayScore]
+    travelScore = [[int(x) for x in row] for row in travelScore]
+    m = len(travelScore)
+    days = len(stayScore)
+    dp = list(stayScore[0])
+    for day in range(1, days):
+        ndp = [0] * m
+        for c in range(m):
+            ndp[c] = dp[c] + stayScore[day][c]
+            for c2 in range(m):
+                if c2 != c:
+                    ndp[c] = max(ndp[c], dp[c2] + travelScore[c2][c])
+        dp = ndp
+    return max(dp)
+`,
+
+  'minimum-reverse-operations': `
+def minReverseOperations(n, p, banned, k):
+    n, p, k = int(n), int(p), int(k)
+    if hasattr(banned, 'to_py'): banned = list(banned.to_py())
+    banned = set(int(x) for x in banned)
+    ans = [-1] * n
+    ans[p] = 0
+    sets = [set(), set()]
+    for i in range(n):
+        if i != p and i not in banned:
+            sets[i % 2].add(i)
+    from collections import deque
+    queue = deque([p])
+    while queue:
+        cur = queue.popleft()
+        l_min = max(0, cur - k + 1)
+        l_max = min(n - k, cur)
+        lo = 2 * l_min + k - 1 - cur
+        hi = 2 * l_max + k - 1 - cur
+        parity = lo % 2
+        s = sets[parity]
+        to_visit = [v for v in s if lo <= v <= hi]
+        for v in to_visit:
+            s.discard(v)
+            ans[v] = ans[cur] + 1
+            queue.append(v)
+    return ans
+`,
+
+  'find-the-minimum-area-to-cover-all-ones-ii': `
+def minimumSum(grid):
+    if hasattr(grid, 'to_py'): grid = list(grid.to_py())
+    grid = [[int(x) for x in row] for row in grid]
+    rows, cols = len(grid), len(grid[0])
+    def min_box(r1, c1, r2, c2):
+        min_r, max_r, min_c, max_c = r2+1, r1-1, c2+1, c1-1
+        for r in range(r1, r2+1):
+            for c in range(c1, c2+1):
+                if grid[r][c] == 1:
+                    min_r = min(min_r, r); max_r = max(max_r, r)
+                    min_c = min(min_c, c); max_c = max(max_c, c)
+        if min_r > max_r: return 0
+        return (max_r - min_r + 1) * (max_c - min_c + 1)
+    ans = float('inf')
+    for i in range(1, rows):
+        for j in range(i+1, rows):
+            ans = min(ans, min_box(0,0,i-1,cols-1) + min_box(i,0,j-1,cols-1) + min_box(j,0,rows-1,cols-1))
+    for i in range(1, cols):
+        for j in range(i+1, cols):
+            ans = min(ans, min_box(0,0,rows-1,i-1) + min_box(0,i,rows-1,j-1) + min_box(0,j,rows-1,cols-1))
+    for i in range(1, rows):
+        for j in range(1, cols):
+            ans = min(ans,
+                min_box(0,0,i-1,cols-1) + min_box(i,0,rows-1,j-1) + min_box(i,j,rows-1,cols-1),
+                min_box(0,0,i-1,j-1) + min_box(0,j,i-1,cols-1) + min_box(i,0,rows-1,cols-1),
+                min_box(0,0,rows-1,j-1) + min_box(0,j,i-1,cols-1) + min_box(i,j,rows-1,cols-1),
+                min_box(0,0,i-1,j-1) + min_box(i,0,rows-1,j-1) + min_box(0,j,rows-1,cols-1),
+            )
+    return ans
+`,
+
 };

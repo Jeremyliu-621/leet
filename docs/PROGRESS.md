@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2556** problems; 7974 tests green. Batches 102–178 + local 177 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2561** problems; 7989 tests green. Batches 102–179 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 179+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 180+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 179 — prime-pairs-target-sum (medium), min-sum-k-avoiding (medium), max-points-tourist (medium), min-reverse-ops (hard), min-area-cover-ones-ii (hard) (2026-05-29)
+Five new problems: `prime-pairs-with-target-sum` (medium/math, sieve + scan x to n/2), `determine-the-minimum-sum-of-a-k-avoiding-array` (medium/math, greedy skip-partner), `maximum-points-tourist-can-earn` (medium/dp, day-by-day DP over cities), `minimum-reverse-operations` (hard/graph, BFS with sorted-set range extraction), `find-the-minimum-area-to-cover-all-ones-ii` (hard/arrays, 6-way partition enumeration). Bank at **2561**; 7989 tests.
 
 ### feat(bank): batch 177 (local) — max-sum-two-non-overlapping (medium), phone-directory (medium), almost-equal-pairs-ii (hard), least-unique-integers-k-removals (medium) (2026-05-29)
 Four new problems: `maximum-sum-of-two-non-overlapping-subarrays` (medium/arrays+sliding-window, prefix sums + try L-before-M and M-before-L orderings; for each M-window end keep running maxL), `design-phone-directory` (medium/design+hash-map, queue+Set pattern: get() dequeues front while !available, release() adds to set+queue if not already available), `count-almost-equal-pairs-ii` (hard/arrays+math, pad each number to 7 digits, enumerate all ≤2-swap neighbors via C(7,2)=21 one-swaps × 441 two-swaps, check each pair), `least-number-of-unique-integers-after-k-removals` (medium/arrays+hash-map+heap, count frequencies, sort ascending, greedily subtract from k). Bank at **2556**; 7974 tests.
