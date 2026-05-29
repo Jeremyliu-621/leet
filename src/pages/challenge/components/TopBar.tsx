@@ -1,3 +1,4 @@
+import { useRef, useEffect } from 'react';
 import type { UserPreferences } from '../../../lib/types';
 
 interface TopBarProps {
@@ -34,11 +35,30 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
   const isCritical = secondsLeft <= 30 && secondsLeft > 0;
   const isExpired = secondsLeft <= 0;
 
+  const announcedRef = useRef<Set<number>>(new Set());
+  const liveRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const thresholds = [60, 30, 10];
+    for (const t of thresholds) {
+      if (secondsLeft <= t && !announcedRef.current.has(t) && secondsLeft > 0) {
+        announcedRef.current.add(t);
+        if (liveRef.current) liveRef.current.textContent = `${t} seconds remaining`;
+      }
+    }
+    if (secondsLeft <= 0 && !announcedRef.current.has(0)) {
+      announcedRef.current.add(0);
+      if (liveRef.current) liveRef.current.textContent = 'Time is up';
+    }
+  }, [secondsLeft]);
+
   return (
     <header
       className="flex h-12 shrink-0 items-center justify-between border-b border-border bg-surface px-5"
       role="banner"
     >
+      {/* Screen-reader-only threshold announcements */}
+      <div ref={liveRef} className="sr-only" aria-live="polite" aria-atomic="true" />
       {/* Wordmark */}
       <div className="flex items-center gap-3">
         {settingsHref && (
