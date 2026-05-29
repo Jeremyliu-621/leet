@@ -37222,4 +37222,265 @@ def btreeGameWinningMove(root, n, x):
 `,
 
 
+  // batch 158 — arrays+math/medium, strings/hard, dp/hard×2
+  'minimum-cost-homecoming-of-a-robot-in-a-grid': `
+def minCostHomecomingRobot(startPos, homePos, rowCosts, colCosts):
+    startPos = list(startPos.to_py() if hasattr(startPos, 'to_py') else startPos)
+    homePos = list(homePos.to_py() if hasattr(homePos, 'to_py') else homePos)
+    rowCosts = list(rowCosts.to_py() if hasattr(rowCosts, 'to_py') else rowCosts)
+    colCosts = list(colCosts.to_py() if hasattr(colCosts, 'to_py') else colCosts)
+    r1, c1 = startPos
+    r2, c2 = homePos
+    cost = 0
+    if r2 > r1:
+        cost += sum(rowCosts[r1+1:r2+1])
+    else:
+        cost += sum(rowCosts[r2:r1])
+    if c2 > c1:
+        cost += sum(colCosts[c1+1:c2+1])
+    else:
+        cost += sum(colCosts[c2:c1])
+    return cost
+`,
+
+  'sum-of-scores-of-built-strings': `
+def sumScores(s):
+    n = len(s)
+    Z = [0] * n
+    Z[0] = n
+    l, r = 0, 0
+    for i in range(1, n):
+        if i < r:
+            Z[i] = min(r - i, Z[i - l])
+        while i + Z[i] < n and s[Z[i]] == s[i + Z[i]]:
+            Z[i] += 1
+        if i + Z[i] > r:
+            l, r = i, i + Z[i]
+    return sum(Z)
+`,
+
+  'count-of-integers': `
+def countIntegersWithDigitSum(num1, num2, min_sum, max_sum):
+    MOD = 1_000_000_007
+    def count_up_to(s):
+        n = len(s)
+        from functools import lru_cache
+        @lru_cache(maxsize=None)
+        def dp(pos, tight, started, total):
+            if total > max_sum:
+                return 0
+            if pos == n:
+                return 1 if (started and total >= min_sum) else 0
+            limit = int(s[pos]) if tight else 9
+            res = 0
+            for d in range(0, limit + 1):
+                nt = tight and (d == limit)
+                if not started and d == 0:
+                    res = (res + dp(pos + 1, nt, False, 0)) % MOD
+                else:
+                    res = (res + dp(pos + 1, nt, True, total + d)) % MOD
+            return res
+        return dp(0, True, False, 0)
+    c2 = count_up_to(num2)
+    c1 = count_up_to(num1)
+    digit_sum1 = sum(int(c) for c in num1)
+    v1 = 1 if min_sum <= digit_sum1 <= max_sum else 0
+    return ((c2 - c1 + v1) % MOD + MOD) % MOD
+`,
+
+  'number-of-ways-to-earn-points': `
+def waysToReachTarget(target, types):
+    if hasattr(types, 'to_py'):
+        types = [list(t.to_py() if hasattr(t, 'to_py') else t) for t in types.to_py()]
+    MOD = 1_000_000_007
+    dp = [0] * (target + 1)
+    dp[0] = 1
+    for entry in types:
+        count, marks = int(entry[0]), int(entry[1])
+        for j in range(target, -1, -1):
+            for k in range(1, count + 1):
+                if j - k * marks < 0:
+                    break
+                dp[j] = (dp[j] + dp[j - k * marks]) % MOD
+    return dp[target]
+`,
+
+  // batch 159 — hash-map/medium, bit-manipulation/medium×2
+  'tuple-with-same-product': `
+def tupleSameProduct(nums):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    from collections import defaultdict
+    freq = defaultdict(int)
+    n = len(nums)
+    for i in range(n):
+        for j in range(i+1, n):
+            freq[nums[i]*nums[j]] += 1
+    return sum(v*(v-1)//2*8 for v in freq.values())
+`,
+
+  'maximum-and-value-of-numbers-in-array': `
+def maximumANDSum(nums):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    ans = 0
+    for bit in range(29, -1, -1):
+        candidate = ans | (1 << bit)
+        if sum(1 for x in nums if (x & candidate) == candidate) >= 2:
+            ans = candidate
+    return ans
+`,
+
+  'minimum-flips-to-make-a-or-b-equal-to-c': `
+def minFlips(a, b, c):
+    flips = 0
+    for bit in range(30):
+        ab = (a >> bit) & 1
+        bb = (b >> bit) & 1
+        cb = (c >> bit) & 1
+        if cb == 1:
+            if ab == 0 and bb == 0:
+                flips += 1
+        else:
+            flips += ab + bb
+    return flips
+`,
+
+  // batch 160 — math/medium, design/medium, strings+hash-map/medium, arrays+stack/hard
+  'strictly-palindromic-number': `
+def isStrictlyPalindromic(n):
+    return False
+`,
+
+  'design-bitset': `
+def designBitset(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = list(args.to_py() if hasattr(args, 'to_py') else args)
+    results = []
+    bits = []
+    size = 0
+    ones = 0
+    flipped = False
+    for op, arg in zip(ops, args):
+        arg = list(arg.to_py() if hasattr(arg, 'to_py') else arg)
+        if op == 'Bitset':
+            size = int(arg[0])
+            bits = [0] * size
+            ones = 0
+            flipped = False
+            results.append(None)
+        elif op == 'fix':
+            idx = int(arg[0])
+            val = 0 if flipped else 1
+            if bits[idx] != val:
+                bits[idx] = val
+                ones += 1
+            results.append(None)
+        elif op == 'unfix':
+            idx = int(arg[0])
+            val = 0 if flipped else 1
+            if bits[idx] == val:
+                bits[idx] = 1 - val
+                ones -= 1
+            results.append(None)
+        elif op == 'flip':
+            flipped = not flipped
+            ones = size - ones
+            results.append(None)
+        elif op == 'all':
+            results.append(ones == size)
+        elif op == 'one':
+            results.append(ones > 0)
+        elif op == 'count':
+            results.append(ones)
+        elif op == 'toString':
+            results.append(''.join(('0' if b == 1 else '1') if flipped else str(b) for b in bits))
+    return results
+`,
+
+  'count-substrings-with-fixed-ratio': `
+def fixedRatio(s, num1, num2):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    freq[0] = 1
+    zeros = ones = result = 0
+    for ch in s:
+        if ch == '0': zeros += 1
+        else: ones += 1
+        key = zeros * num2 - ones * num1
+        result += freq[key]
+        freq[key] += 1
+    return result
+`,
+
+  'number-of-integers-with-even-digit-sum': `
+def countEven(num):
+    digit_sum = sum(int(d) for d in str(num))
+    return num // 2 if digit_sum % 2 == 0 else (num - 1) // 2
+`,
+
+  // batch 161
+  'frog-jump-ii': `
+def maxJump(stones):
+    ans = stones[1] - stones[0]
+    for i in range(2, len(stones)):
+        ans = max(ans, stones[i] - stones[i-2])
+    return ans
+`,
+
+  'collecting-chocolates': `
+def collectChocolates(nums, x):
+    n = len(nums)
+    min_cost = list(nums)
+    ans = sum(min_cost)
+    for k in range(1, n):
+        for i in range(n):
+            min_cost[i] = min(min_cost[i], nums[(i + k) % n])
+        total = k * x + sum(min_cost)
+        if total < ans:
+            ans = total
+    return ans
+`,
+
+  'partitioning-into-minimum-number-of-deci-binary-numbers': `
+def minPartitions(n):
+    return max(int(c) for c in n)
+`,
+
+  'where-will-the-ball-fall': `
+def findBall(grid):
+    m = len(grid)
+    cols = len(grid[0])
+    result = []
+    for start in range(cols):
+        j = start
+        for r in range(m):
+            d = grid[r][j]
+            nj = j + d
+            if nj < 0 or nj >= cols or grid[r][nj] != d:
+                j = -1
+                break
+            j = nj
+        result.append(j)
+    return result
+`,
+
+  'split-a-string-into-the-maximum-number-of-unique-substrings': `
+def maxUniqueSplit(s):
+    used = set()
+    max_count = [0]
+    def dfs(start):
+        if start == len(s):
+            max_count[0] = max(max_count[0], len(used))
+            return
+        for end in range(start + 1, len(s) + 1):
+            sub = s[start:end]
+            if sub not in used:
+                used.add(sub)
+                dfs(end)
+                used.remove(sub)
+    dfs(0)
+    return max_count[0]
+`,
+
 };
