@@ -43531,4 +43531,60 @@ def countRowsEqualToFirst(matrix):
     first = matrix[0]
     return sum(1 for row in matrix if len(row) == len(first) and all(row[i] == first[i] for i in range(len(first))))
 `,
+  // batch 210 ---------------------------------------------------------------
+  'second-maximum-number-in-array': `
+def secondMax(nums):
+    mx = max(nums)
+    candidates = [n for n in nums if n < mx]
+    return max(candidates) if candidates else -1
+`,
+  'sum-of-values-at-indices-with-k-set-bits': `
+def sumIndicesWithKSetBits(nums, k):
+    return sum(nums[i] for i in range(len(nums)) if bin(i).count('1') == k)
+`,
+  'points-that-intersect-with-cars': `
+def numberOfPoints(nums):
+    covered = set()
+    for s, e in nums:
+        for i in range(s, e + 1):
+            covered.add(i)
+    return len(covered)
+`,
+  'count-stepping-numbers-in-range': `
+def countSteppingNumbers(low, high):
+    MOD = 10**9 + 7
+    from functools import lru_cache
+    def count_up_to(s):
+        n = len(s)
+        @lru_cache(maxsize=None)
+        def dp(pos, last, tight, started):
+            if pos == n:
+                return 1 if started else 0
+            limit = int(s[pos]) if tight else 9
+            res = 0
+            for d in range(0, limit + 1):
+                new_tight = tight and d == limit
+                if not started and d == 0:
+                    res = (res + dp(pos + 1, -1, new_tight, False)) % MOD
+                    continue
+                if started and abs(d - last) != 1:
+                    continue
+                res = (res + dp(pos + 1, d, new_tight, True)) % MOD
+            return res
+        return dp(0, -1, True, False)
+    def subtract_one(s):
+        a = list(s)
+        i = len(a) - 1
+        while i >= 0 and a[i] == '0':
+            a[i] = '9'
+            i -= 1
+        if i < 0:
+            return '0'
+        a[i] = str(int(a[i]) - 1)
+        result = ''.join(a).lstrip('0') or '0'
+        return result
+    hi = count_up_to(high)
+    lo = count_up_to(subtract_one(low))
+    return (hi - lo + MOD) % MOD
+`,
 };

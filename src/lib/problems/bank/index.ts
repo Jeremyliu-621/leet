@@ -3095,6 +3095,11 @@ import { problem as modeOfArray } from './mode-of-array';
 import { problem as rowWithMaxSum } from './row-with-max-sum';
 import { problem as findMiddleElement } from './find-middle-element';
 import { problem as countRowsEqualToFirst } from './count-rows-equal-to-first';
+// batch 210 — easy/arrays, easy/arrays+bit-manipulation, easy/arrays+simulation, medium/dynamic-programming+math
+import { problem as secondMaximumNumberInArray } from './second-maximum-number-in-array';
+import { problem as sumOfValuesAtIndicesWithKSetBits } from './sum-of-values-at-indices-with-k-set-bits';
+import { problem as pointsThatIntersectWithCars } from './points-that-intersect-with-cars';
+import { problem as countSteppingNumbersInRange } from './count-stepping-numbers-in-range';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6231,4 +6236,9 @@ export const problems: readonly Problem[] = [
   rowWithMaxSum,
   findMiddleElement,
   countRowsEqualToFirst,
+  // batch 210 — easy/arrays, easy/arrays+bit-manipulation, easy/arrays+simulation, medium/dynamic-programming+math
+  secondMaximumNumberInArray,
+  sumOfValuesAtIndicesWithKSetBits,
+  pointsThatIntersectWithCars,
+  countSteppingNumbersInRange,
 ];

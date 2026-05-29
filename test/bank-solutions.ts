@@ -43707,4 +43707,66 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const first = matrix[0]!;
     return matrix.filter(row => row.every((v, i) => v === first[i])).length;
   },
+  // batch 210 ---------------------------------------------------------------
+  'second-maximum-number-in-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const max = Math.max(...nums);
+    const candidates = nums.filter(n => n < max);
+    return candidates.length > 0 ? Math.max(...candidates) : -1;
+  },
+  'sum-of-values-at-indices-with-k-set-bits': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let sum = 0;
+    for (let i = 0; i < nums.length; i++) {
+      let bits = 0, n = i;
+      while (n > 0) { bits += n & 1; n >>= 1; }
+      if (bits === k) sum += nums[i]!;
+    }
+    return sum;
+  },
+  'points-that-intersect-with-cars': (...args: unknown[]) => {
+    const nums = args[0] as number[][];
+    const covered = new Set<number>();
+    for (const seg of nums) {
+      const [s, e] = seg as [number, number];
+      for (let i = s; i <= e; i++) covered.add(i);
+    }
+    return covered.size;
+  },
+  'count-stepping-numbers-in-range': (...args: unknown[]) => {
+    const low = args[0] as string;
+    const high = args[1] as string;
+    const MOD = 1_000_000_007n;
+    function countUpTo(s: string): bigint {
+      const n = s.length;
+      const memo = new Map<string, bigint>();
+      function dp(pos: number, last: number, tight: boolean, started: boolean): bigint {
+        if (pos === n) return started ? 1n : 0n;
+        const key = `${pos},${last},${tight ? 1 : 0},${started ? 1 : 0}`;
+        if (memo.has(key)) return memo.get(key)!;
+        const limit = tight ? +s[pos]! : 9;
+        let res = 0n;
+        for (let d = 0; d <= limit; d++) {
+          const newTight = tight && d === limit;
+          if (!started && d === 0) { res = (res + dp(pos + 1, -1, newTight, false)) % MOD; continue; }
+          if (started && Math.abs(d - last) !== 1) continue;
+          res = (res + dp(pos + 1, d, newTight, true)) % MOD;
+        }
+        memo.set(key, res);
+        return res;
+      }
+      return dp(0, -1, true, false);
+    }
+    function subtractOne(s: string): string {
+      const a = s.split('').map(Number);
+      let i = a.length - 1;
+      while (i >= 0 && a[i] === 0) { a[i] = 9; i--; }
+      a[i]!--;
+      return a.join('').replace(/^0+/, '') || '0';
+    }
+    const hi = countUpTo(high);
+    const lo = countUpTo(subtractOne(low));
+    return Number((hi - lo + MOD) % MOD);
+  },
 };
