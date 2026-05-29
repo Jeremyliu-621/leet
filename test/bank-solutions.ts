@@ -41738,6 +41738,66 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return vals.slice(l, r + 1).sort((a, b) => a - b);
   },
 
+  'collect-garbage-by-collecting-trucks': (...args: unknown[]) => {
+    const garbage = args[0] as string[];
+    const travel = args[1] as number[];
+    let total = 0;
+    for (const s of garbage) total += s.length;
+    for (const c of ['M', 'P', 'G']) {
+      let last = -1;
+      for (let i = 0; i < garbage.length; i++) {
+        if (garbage[i]!.includes(c)) last = i;
+      }
+      for (let i = 0; i < last; i++) total += travel[i]!;
+    }
+    return total;
+  },
+
+  'largest-local-values-in-a-matrix': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const n = grid.length;
+    const result: number[][] = [];
+    for (let i = 1; i < n - 1; i++) {
+      const row: number[] = [];
+      for (let j = 1; j < n - 1; j++) {
+        let best = 0;
+        for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) best = Math.max(best, grid[i + dr]![j + dc]!);
+        row.push(best);
+      }
+      result.push(row);
+    }
+    return result;
+  },
+
+  'the-number-of-beautiful-subsets': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const k = args[1] as number;
+    const freq = new Map<number, number>();
+    let count = 0;
+    const bt = (idx: number) => {
+      if (idx === nums.length) return;
+      for (let i = idx; i < nums.length; i++) {
+        const v = nums[i]!;
+        if (!freq.has(v - k) || freq.get(v - k)! === 0) {
+          freq.set(v, (freq.get(v) ?? 0) + 1);
+          count++;
+          bt(i + 1);
+          freq.set(v, freq.get(v)! - 1);
+        }
+      }
+    };
+    bt(0);
+    return count;
+  },
+
+  'minimum-number-of-steps-to-make-two-strings-anagram-ii': (...args: unknown[]) => {
+    const s = args[0] as string, t = args[1] as string;
+    const freq = new Array(26).fill(0);
+    for (const c of s) freq[c.charCodeAt(0) - 97]!++;
+    for (const c of t) freq[c.charCodeAt(0) - 97]!--;
+    return freq.reduce((acc, v) => acc + Math.abs(v), 0);
+  },
+
   'maximum-number-of-groups-entering-a-competition': (...args: unknown[]) => {
     const grades = args[0] as number[];
     const n = grades.length;

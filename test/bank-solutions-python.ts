@@ -41705,6 +41705,65 @@ def maxBottlesDrunk(numBottles, numExchange):
     return sorted(vals[l:r+1])
 `,
 
+  'collect-garbage-by-collecting-trucks': `def garbageCollection(garbage, travel):
+    if hasattr(garbage, 'to_py'): garbage = list(garbage.to_py())
+    if hasattr(travel, 'to_py'): travel = list(travel.to_py())
+    garbage = [str(x) for x in garbage]
+    travel = [int(x) for x in travel]
+    total = sum(len(s) for s in garbage)
+    for c in ['M', 'P', 'G']:
+        last = -1
+        for i, s in enumerate(garbage):
+            if c in s:
+                last = i
+        for i in range(last):
+            total += travel[i]
+    return total
+`,
+
+  'largest-local-values-in-a-matrix': `def largestLocal(grid):
+    if hasattr(grid, 'to_py'): grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in grid.to_py()]
+    else: grid = [list(row) for row in grid]
+    n = len(grid)
+    result = []
+    for i in range(1, n - 1):
+        row = []
+        for j in range(1, n - 1):
+            best = 0
+            for dr in range(-1, 2):
+                for dc in range(-1, 2):
+                    best = max(best, grid[i + dr][j + dc])
+            row.append(best)
+        result.append(row)
+    return result
+`,
+
+  'the-number-of-beautiful-subsets': `def beautifulSubsets(nums, k):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = sorted(int(x) for x in nums)
+    k = int(k)
+    freq = {}
+    count = [0]
+    def bt(idx):
+        for i in range(idx, len(nums)):
+            v = nums[i]
+            if freq.get(v - k, 0) == 0:
+                freq[v] = freq.get(v, 0) + 1
+                count[0] += 1
+                bt(i + 1)
+                freq[v] -= 1
+    bt(0)
+    return count[0]
+`,
+
+  'minimum-number-of-steps-to-make-two-strings-anagram-ii': `def minSteps(s, t):
+    from collections import Counter
+    cs = Counter(s)
+    ct = Counter(t)
+    all_chars = set(cs) | set(ct)
+    return sum(abs(cs.get(c, 0) - ct.get(c, 0)) for c in all_chars)
+`,
+
   'maximum-number-of-groups-entering-a-competition': `def maximumGroups(grades):
     if hasattr(grades, 'to_py'): grades = list(grades.to_py())
     n = len(grades)
