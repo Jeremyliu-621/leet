@@ -41554,7 +41554,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const words = args[0] as string[];
     const freq = (w: string) => {
       const f = new Array(26).fill(0) as number[];
-      for (const c of w) f[c.charCodeAt(0) - 97]++;
+      for (const c of w) f[c.charCodeAt(0) - 97]!++;
       return f;
     };
     const minFreq = freq(words[0]!);
