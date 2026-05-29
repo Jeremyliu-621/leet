@@ -8,12 +8,18 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2680** problems; 8334 tests green. Batches 102–197 + 195b complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2685** problems; 8346 tests green. Batches 102–198 + 195b + 196b complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 198+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 199+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 198 — count-substrings-no-repeat, max-product-two-elements, find-all-anagrams, rotate-array-left (2026-05-29)
+Four new problems: `count-substrings-without-repeating` (medium/strings+sliding-window+hash-map, two-pointer shrink + right-left+1 count), `maximum-product-of-two-elements` (easy/arrays+math, find top-2 values, return (max1-1)*(max2-1)), `find-all-anagrams` (medium/strings+sliding-window+hash-map, diff-count approach: count=p−window, track non-zeros), `rotate-array-left` (easy/arrays+math, k%n slice-and-concat). Fixed find-all-anagrams reference solution (was incorrectly checking matches===26; corrected to track diff of zero-count). Bank at **2685**; 8346 tests.
+
+### feat(bank): batch 195b — k-distant-indices, remove-colored-pieces, count-negatives-matrix, odd-cells-matrix, min-ops-maximize-last (2026-05-29)
+Five new problems from concurrent batch: `find-all-k-distant-indices-in-an-array` (easy/arrays+two-pointers), `remove-colored-pieces-if-both-neighbors-are-the-same-color` (medium/strings+math), `count-negative-numbers-in-a-sorted-matrix` (easy/arrays+binary-search), `cells-with-odd-values-in-a-matrix` (easy/arrays+math+simulation), `minimum-operations-to-maximize-last-elements-in-arrays` (medium/arrays). Bank at **2685** total.
 
 ### feat(bank): batch 197 — sum-even-indexed, count-unique-char-strings, max-prefix-sum, count-divisible, second-smallest (2026-05-29)
-Five new easy problems: `sum-of-even-indexed-elements` (easy/arrays, sum indices 0,2,4,... with reduce), `count-strings-with-unique-characters` (easy/strings+hash-map, Set size === length check), `maximum-prefix-sum` (easy/arrays+prefix-sum, running max clamped to 0), `count-elements-divisible-by-k` (easy/arrays+math, filter by n%k===0), `second-smallest-in-array` (easy/arrays, deduplicate+sort+index[1]). Bank at **2675**; 8319 tests.
+Five new easy problems: `sum-of-even-indexed-elements` (easy/arrays, sum indices 0,2,4,... with reduce), `count-strings-with-unique-characters` (easy/strings+hash-map, Set size === length check), `maximum-prefix-sum` (easy/arrays+prefix-sum, running max clamped to 0), `count-elements-divisible-by-k` (easy/arrays+math, filter by n%k===0), `second-smallest-in-array` (easy/arrays, deduplicate+sort+index[1]). Bank at **2685** total.
 
 ### feat(bank): batch 196 — count-pairs-even-sum, find-x-sum-subarrays-i, min-ops-median-k (2026-05-29)
 Three new problems: `count-pairs-with-even-sum` (easy/arrays+math, count evens e and odds o, return e*(e-1)/2 + o*(o-1)/2), `find-x-sum-of-all-k-long-subarrays-i` (easy/arrays+sliding-window, O(k) freq map per window, sort by freq desc then value desc, sum top-x), `minimum-operations-to-make-median-equal-k` (medium/arrays, sort, mid=(n-1)>>1, sum excess-above-k for left half + |median-k| + excess-below-k for right half). Fixed `design-a-number-container-system` functionName to `numberContainers` and `find-the-key-of-the-numbers` functionName to `generateKey` to match existing Python solutions. Bank at **2670**; 8298 tests.
