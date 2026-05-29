@@ -3150,6 +3150,10 @@ import { problem as countArtifactsThatCanBeExtracted } from './count-artifacts-t
 import { problem as closestDessertCost } from './closest-dessert-cost';
 import { problem as wateringPlantsII } from './watering-plants-ii';
 import { problem as rearrangeWordsInASentence } from './rearrange-words-in-a-sentence';
+// batch 215 — easy/math+simulation, medium/math+hash-map+arrays, hard/tree+dp
+import { problem as distributeCandiesAmongChildrenI } from './distribute-candies-among-children-i';
+import { problem as minimumAreaRectangleII } from './minimum-area-rectangle-ii';
+import { problem as minimumTotalPriceOfTrips } from './minimum-total-price-of-trips';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6341,4 +6345,8 @@ export const problems: readonly Problem[] = [
   closestDessertCost,
   wateringPlantsII,
   rearrangeWordsInASentence,
+  // batch 215 — easy/math+simulation, medium/math+hash-map+arrays, hard/tree+dp
+  distributeCandiesAmongChildrenI,
+  minimumAreaRectangleII,
+  minimumTotalPriceOfTrips,
 ];

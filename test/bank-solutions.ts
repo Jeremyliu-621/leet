@@ -18586,6 +18586,90 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
+  // batch 215
+  'distribute-candies-among-children-i': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const limit = args[1] as number;
+    let count = 0;
+    for (let i = 0; i <= Math.min(n, limit); i++) {
+      for (let j = 0; j <= Math.min(n - i, limit); j++) {
+        const k = n - i - j;
+        if (k >= 0 && k <= limit) count++;
+      }
+    }
+    return count;
+  },
+
+  'minimum-area-rectangle-ii': (...args: unknown[]) => {
+    const points = args[0] as number[][];
+    const n = points.length;
+    const map = new Map<string, number[][]>();
+    for (let i = 0; i < n; i++) {
+      for (let j = i + 1; j < n; j++) {
+        const [x1, y1] = points[i]!;
+        const [x2, y2] = points[j]!;
+        const mx2 = x1! + x2!, my2 = y1! + y2!;
+        const sq = (x2! - x1!) ** 2 + (y2! - y1!) ** 2;
+        const key = `${mx2},${my2},${sq}`;
+        if (!map.has(key)) map.set(key, []);
+        map.get(key)!.push([x1!, y1!, x2!, y2!]);
+      }
+    }
+    let ans = Infinity;
+    for (const pairs of map.values()) {
+      if (pairs.length < 2) continue;
+      for (let a = 0; a < pairs.length; a++) {
+        for (let b = a + 1; b < pairs.length; b++) {
+          const [x1, y1, x2, y2] = pairs[a]!;
+          const [x3, y3, x4, y4] = pairs[b]!;
+          const dx1 = x2! - x1!, dy1 = y2! - y1!;
+          const dx2 = x4! - x3!, dy2 = y4! - y3!;
+          const area = Math.abs(dx1 * dy2 - dy1 * dx2) / 2;
+          if (area > 0) ans = Math.min(ans, area);
+        }
+      }
+    }
+    return ans === Infinity ? 0 : ans;
+  },
+
+  'minimum-total-price-of-trips': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const price = args[2] as number[];
+    const trips = args[3] as number[][];
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const [u, v] of edges) { adj[u!]!.push(v!); adj[v!]!.push(u!); }
+    const count = new Array<number>(n).fill(0);
+    function findPath(node: number, parent: number, dst: number, path: number[]): boolean {
+      path.push(node);
+      if (node === dst) return true;
+      for (const next of adj[node]!) {
+        if (next !== parent && findPath(next, node, dst, path)) return true;
+      }
+      path.pop();
+      return false;
+    }
+    for (const [s, e] of trips) {
+      const path: number[] = [];
+      findPath(s!, -1, e!, path);
+      for (const node of path) { count[node] = (count[node] ?? 0) + 1; }
+    }
+    function dp(node: number, parent: number): [number, number] {
+      let notH = price[node]! * count[node]!;
+      let halv = Math.floor(price[node]! / 2) * count[node]!;
+      for (const next of adj[node]!) {
+        if (next !== parent) {
+          const [cNotH, cH] = dp(next, node);
+          notH += Math.min(cNotH, cH);
+          halv += cNotH;
+        }
+      }
+      return [notH, halv];
+    }
+    const [notH, halv] = dp(0, -1);
+    return Math.min(notH, halv);
+  },
+
   'rectangle-area': (ax1: unknown, ay1: unknown, ax2: unknown, ay2: unknown, bx1: unknown, by1: unknown, bx2: unknown, by2: unknown) => {
     const A = (ax2 as number - (ax1 as number)) * (ay2 as number - (ay1 as number));
     const B = (bx2 as number - (bx1 as number)) * (by2 as number - (by1 as number));

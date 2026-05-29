@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2802** problems; 8688+ tests green. Batches 102–214 + 212-addendum + concurrent 213b + 214b + a11y + total-solved UX complete.
+**Current focus:** Bank at **2805** problems; 8709+ tests green. Batches 102–215 + 212-addendum + concurrent 213b + 214b + a11y + total-solved UX complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 215+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 216+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 215 — distribute-candies-among-children-i, minimum-area-rectangle-ii, find-if-array-can-be-sorted, minimum-total-price-of-trips (2026-05-29)
+Four new problems: `distribute-candies-among-children-i` (easy/math+simulation, brute-force triple-loop over child allocations with limit cap), `minimum-area-rectangle-ii` (medium/math+hash-map+arrays, group diagonal pairs by midpoint+length, cross-product area), `find-if-array-can-be-sorted` (medium/arrays+bit-manipulation, segment by popcount then check group-max < next-group-min), `minimum-total-price-of-trips` (hard/tree+dynamic-programming, DFS path counting + tree DP halving with no-adjacent constraint). Bank at **2805**; 8709 tests.
 
 ### feat(bank): batch 214b (concurrent) — count-artifacts, closest-dessert, watering-plants-ii, rearrange-words (2026-05-29)
 Four new medium problems: `count-artifacts-that-can-be-extracted` (medium/arrays+hash-map+simulation, Set-based cell lookup for rectangle coverage), `closest-dessert-cost` (medium/dynamic-programming+arrays+backtracking, DFS over toppings with pruning + tie-breaking), `watering-plants-ii` (medium/arrays+two-pointers+simulation, two-pointer meeting-in-middle with per-person refill tracking), `rearrange-words-in-a-sentence` (medium/strings+simulation, stable sort by word length + capitalize). Bank at **2802**.
