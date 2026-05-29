@@ -2525,11 +2525,34 @@ import { problem as bitPrefixSumUpdates } from './bit-prefix-sum-updates';
 import { problem as equalSumArraysMinOps } from './equal-sum-arrays-with-minimum-number-of-operations';
 import { problem as mapOfHighestPeak } from './map-of-highest-peak';
 import { problem as numberOfOrdersInBacklog } from './number-of-orders-in-the-backlog';
+// batch 153b — linked-list×2, union-find, shortest-path, heap, simulation
+import { problem as partitionLinkedListAroundValue } from './partition-linked-list-around-value';
+import { problem as mergeKSortedLinkedLists } from './merge-k-sorted-linked-lists';
+import { problem as friendGroupsUnionFind } from './friend-groups-union-find';
+import { problem as dijkstraSingleSourceShortestPath } from './dijkstra-single-source-shortest-path';
+import { problem as kthLargestAfterEachInsertion } from './kth-largest-after-each-insertion';
+import { problem as simulateTrafficLights } from './simulate-traffic-lights';
 // batch 151 — dp/hard, arrays/medium, strings+dp/medium, dp+bitset/hard
 import { problem as findTheCountOfMonotonicPairsII } from './find-the-count-of-monotonic-pairs-ii';
 import { problem as maximumStrengthOfAGroup } from './maximum-strength-of-a-group';
 import { problem as minimumNumberOfValidStringsToFormTargetI } from './minimum-number-of-valid-strings-to-form-target-i';
 import { problem as maximumTotalRewardUsingOperationsII } from './maximum-total-reward-using-operations-ii';
+// batch 152 — simulation/medium, strings+dp/medium, arrays+hash-map/medium, arrays+heap/medium
+import { problem as minimumMovesToCaptureTheQueen } from './minimum-moves-to-capture-the-queen';
+import { problem as minimumSubstringPartitionEqualCharFreq } from './minimum-substring-partition-of-equal-character-frequency';
+import { problem as maximumGoodSubarraySum } from './maximum-good-subarray-sum';
+import { problem as maximalScoreAfterApplyingKOps } from './maximal-score-after-applying-k-operations';
+// batch 153 — arrays/easy, graph/hard
+import { problem as lastVisitedIntegers } from './last-visited-integers';
+import { problem as countVisitedNodesInADirectedGraph } from './count-visited-nodes-in-a-directed-graph';
+// batch 154 — shortest-path/medium, binary-indexed-tree/medium, union-find/hard
+import { problem as minEdgeReversalsToDestination } from './minimum-edge-reversals-to-reach-destination';
+import { problem as rangeUpdateRangeSumBit } from './range-update-range-sum-bit';
+import { problem as findCriticalPseudoCriticalEdges } from './find-critical-and-pseudo-critical-edges-in-mst';
+// batch 152b — arrays+math/medium, arrays+math+dp/medium, arrays+math/hard
+import { problem as numberOfSubarraysHavingEvenProduct } from './number-of-subarrays-having-even-product';
+import { problem as greatestSumDivisibleByThree } from './greatest-sum-divisible-by-three';
+import { problem as constructProductMatrix } from './construct-product-matrix';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5075,7 +5098,7 @@ export const problems: readonly Problem[] = [
   numberOfWaysToSplitAString,
   meanArrayAfterRemovingSomeElements,
   minimumOpsConvertTime,
-  // batch 150b — easy/arrays+hash-map, easy/arrays+math, easy/arrays+hash-map, easy/arrays+matrix, hard/math+dp
+  // batch 150b — easy/arrays+hash-map, easy/arrays+math, easy/arrays+hash-map, easy/arrays+matrix
   findLuckyNumberInMatrix,
   maximumProductOfThreeNumbers,
   findingThreeDigitEvenNumbers,
@@ -5097,4 +5120,27 @@ export const problems: readonly Problem[] = [
   maximumStrengthOfAGroup,
   minimumNumberOfValidStringsToFormTargetI,
   maximumTotalRewardUsingOperationsII,
+  // batch 152 — simulation/medium, strings+dp/medium, arrays+hash-map/medium, arrays+heap/medium
+  minimumMovesToCaptureTheQueen,
+  minimumSubstringPartitionEqualCharFreq,
+  maximumGoodSubarraySum,
+  maximalScoreAfterApplyingKOps,
+  // batch 153b — linked-list×2, union-find, shortest-path, heap, simulation
+  partitionLinkedListAroundValue,
+  mergeKSortedLinkedLists,
+  friendGroupsUnionFind,
+  dijkstraSingleSourceShortestPath,
+  kthLargestAfterEachInsertion,
+  simulateTrafficLights,
+  // batch 153 — arrays/easy, graph/hard
+  lastVisitedIntegers,
+  countVisitedNodesInADirectedGraph,
+  // batch 154 — shortest-path/medium, binary-indexed-tree/medium, union-find/hard
+  minEdgeReversalsToDestination,
+  rangeUpdateRangeSumBit,
+  findCriticalPseudoCriticalEdges,
+  // batch 152b — arrays+math/medium, arrays+math+dp/medium, arrays+math/hard
+  numberOfSubarraysHavingEvenProduct,
+  greatestSumDivisibleByThree,
+  constructProductMatrix,
 ];

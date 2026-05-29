@@ -34397,6 +34397,104 @@ def getNumberOfBacklogOrders(orders) -> int:
     return total % (10 ** 9 + 7)
 `,
 
+  // batch 154 — shortest-path/medium, binary-indexed-tree/medium, union-find/hard
+  'minimum-edge-reversals-to-reach-destination': `
+def minEdgeReversals(n, edges, source, destination) -> int:
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (edges.to_py() if hasattr(edges, 'to_py') else edges)]
+    from collections import defaultdict, deque
+    adj = defaultdict(list)
+    for u, v in edges:
+        adj[u].append((v, 0))
+        adj[v].append((u, 1))
+    dist = [float('inf')] * n
+    dist[source] = 0
+    dq = deque([(0, source)])
+    while dq:
+        d, u = dq.popleft()
+        if d > dist[u]:
+            continue
+        for v, w in adj[u]:
+            nd = d + w
+            if nd < dist[v]:
+                dist[v] = nd
+                if w == 0:
+                    dq.appendleft((nd, v))
+                else:
+                    dq.append((nd, v))
+    return -1 if dist[destination] == float('inf') else dist[destination]
+`,
+
+  'range-update-range-sum-bit': `
+def rangeUpdateRangeSum(n, operations) -> list:
+    ops = [list(op.to_py() if hasattr(op, 'to_py') else op) for op in (operations.to_py() if hasattr(operations, 'to_py') else operations)]
+    b1 = [0] * (n + 2)
+    b2 = [0] * (n + 2)
+    def upd(b, i, v):
+        i += 1
+        while i <= n:
+            b[i] += v
+            i += i & -i
+    def pre(b, i):
+        s, i = 0, i + 1
+        while i > 0:
+            s += b[i]
+            i -= i & -i
+        return s
+    def add_range(l, r, v):
+        upd(b1, l, v); upd(b1, r + 1, -v)
+        upd(b2, l, v * l); upd(b2, r + 1, -v * (r + 1))
+    def pref_sum(i):
+        return pre(b1, i) * (i + 1) - pre(b2, i)
+    res = []
+    for op in ops:
+        t, l, r, v = int(op[0]), int(op[1]), int(op[2]), int(op[3])
+        if t == 0:
+            add_range(l, r, v)
+        else:
+            res.append(pref_sum(r) - pref_sum(l - 1))
+    return res
+`,
+
+  'find-critical-and-pseudo-critical-edges-in-mst': `
+def findCriticalAndPseudoCriticalEdges(n, edges) -> list:
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (edges.to_py() if hasattr(edges, 'to_py') else edges)]
+    E = len(edges)
+    indexed = sorted(range(E), key=lambda i: edges[i][2])
+    def build_mst(skip, force):
+        parent = list(range(n))
+        def find(x):
+            while parent[x] != x:
+                parent[x] = parent[parent[x]]
+                x = parent[x]
+            return x
+        def union(x, y):
+            px, py = find(x), find(y)
+            if px == py: return False
+            parent[px] = py
+            return True
+        w, cnt = 0, 0
+        if force != -1:
+            union(edges[force][0], edges[force][1])
+            w += edges[force][2]
+            cnt += 1
+        for i in indexed:
+            if i == skip or i == force:
+                continue
+            u, v, wt = edges[i]
+            if union(u, v):
+                w += wt
+                cnt += 1
+        return float('inf') if cnt < n - 1 else w
+    base = build_mst(-1, -1)
+    critical, pseudo = [], []
+    for i in range(E):
+        if build_mst(i, -1) > base:
+            critical.append(i)
+        elif build_mst(-1, i) == base:
+            pseudo.append(i)
+    return [critical, pseudo]
+`,
+
   // batch 144
   'reorder-routes-to-make-all-paths-lead-to-the-city-zero': `
 def minReorder(n: int, connections) -> int:
@@ -35404,6 +35502,7 @@ def resultsArray(queries, k):
 `,
 
   // batch 152
+
   'number-of-segments-in-a-string': `def countSegments(s):
     count = 0
     for i in range(len(s)):

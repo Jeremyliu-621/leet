@@ -3,12 +3,14 @@
  * Wires up aria-describedby for help and error text automatically.
  */
 
+import React from 'react';
+
 interface FormFieldProps {
   label: string;
   htmlFor: string;
   help?: string;
   error?: string | null;
-  children: React.ReactNode;
+  children: React.ReactElement<{ 'aria-describedby'?: string }>;
   /** Extra class on the outer wrapper. */
   className?: string;
 }
@@ -17,6 +19,10 @@ export function FormField({ label, htmlFor, help, error, children, className = '
   const helpId = help ? `${htmlFor}-help` : undefined;
   const errorId = error ? `${htmlFor}-error` : undefined;
   const describedBy = [helpId, errorId].filter(Boolean).join(' ') || undefined;
+
+  const control = describedBy
+    ? React.cloneElement(children, { 'aria-describedby': describedBy })
+    : children;
 
   return (
     <div className={`flex flex-col gap-1.5 ${className}`}>
@@ -27,8 +33,7 @@ export function FormField({ label, htmlFor, help, error, children, className = '
         {label}
       </label>
 
-      {/* Clone child and inject aria-describedby */}
-      <div aria-describedby={describedBy}>{children}</div>
+      {control}
 
       {help && !error && (
         <p id={helpId} className="text-[11px] leading-relaxed text-muted">

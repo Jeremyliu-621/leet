@@ -105,6 +105,7 @@ export function PasswordModal({
   return (
     /* Backdrop */
     <div
+      role="presentation"
       className="fixed inset-0 z-50 flex items-center justify-center bg-bg/80 backdrop-blur-sm"
       onClick={(e) => {
         if (e.target === e.currentTarget) onCancel();

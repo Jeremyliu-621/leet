@@ -30,9 +30,11 @@ Return the **maximum** strength of a group the teacher can create.`,
     },
   ],
   hints: [
+    'With n ≤ 13 you can enumerate all 2^n non-empty subsets.',
     'Sort the array. Zeros never help (multiply by 0 gives 0) unless all non-zero elements give a negative product with no better option.',
-    'Pair negatives from largest absolute value first (i.e., from the left of the sorted array): each such pair contributes a positive factor. Include all positive numbers.',
-    'If an odd number of negatives remain after pairing, skip the one with the smallest absolute value (closest to 0 — the rightmost negative in the sorted array). If only a single negative and no positives remain, return 0 if any zero is available, else return that negative.',
+    'Pair negatives from largest absolute value first: each pair contributes a positive factor. Include all positive numbers.',
+    'If an odd number of negatives remain after pairing, skip the one with the smallest absolute value (closest to 0).',
+    'If only a single negative and no positives remain, return 0 if any zero is available, else return that negative.',
   ],
   functionName: 'maxStrength',
   params: ['nums'],
@@ -40,7 +42,9 @@ Return the **maximum** strength of a group the teacher can create.`,
     javascript: `function maxStrength(nums) {
 
 }`,
-    typescript: 'function maxStrength(nums: number[]): number {\n\n}',
+    typescript: `function maxStrength(nums: number[]): number {
+
+}`,
     python: `def maxStrength(nums):
     pass`,
   },
