@@ -37385,4 +37385,36 @@ def specialPerm(nums):
     return sum(dp[full]) % MOD
 `,
 
+  'minimum-cost-to-walk-weighted-graph': `
+def minimumCost(n, edges, query):
+    if hasattr(edges, 'to_py'):
+        edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in edges.to_py()]
+    if hasattr(query, 'to_py'):
+        query = [list(q.to_py() if hasattr(q, 'to_py') else q) for q in query.to_py()]
+    parent = list(range(n))
+    comp_and = [0x3FFFFFFF] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    for e in edges:
+        u, v, w = int(e[0]), int(e[1]), int(e[2])
+        ru, rv = find(u), find(v)
+        if ru == rv:
+            comp_and[ru] &= w
+        else:
+            comp_and[rv] = comp_and[ru] & comp_and[rv] & w
+            parent[ru] = rv
+    result = []
+    for q in query:
+        s, t = int(q[0]), int(q[1])
+        if s == t:
+            result.append(0)
+        else:
+            rs, rt = find(s), find(t)
+            result.append(comp_and[rt] if rs == rt else -1)
+    return result
+`,
+
 };

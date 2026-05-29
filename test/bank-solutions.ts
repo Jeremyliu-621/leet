@@ -37542,4 +37542,27 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[full]!.reduce((a, b) => (a + b) % MOD, 0);
   },
 
+  // batch 160 — graph+union-find/hard, arrays+dp/medium, arrays+hash-map/medium, arrays+math/easy
+  'minimum-cost-to-walk-weighted-graph': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const query = args[2] as number[][];
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const compAnd = new Array<number>(n).fill(0x3FFFFFFF);
+    function find(x: number): number {
+      while (parent[x] !== x) { parent[x] = parent[parent[x]!]!; x = parent[x]!; }
+      return x;
+    }
+    for (const [u, v, w] of edges) {
+      const ru = find(u!), rv = find(v!);
+      if (ru === rv) { compAnd[ru]! &= w!; }
+      else { compAnd[rv]! = compAnd[ru]! & compAnd[rv]! & w!; parent[ru] = rv; }
+    }
+    return query.map(([s, t]) => {
+      if (s === t) return 0;
+      const rs = find(s!), rt = find(t!);
+      return rs === rt ? compAnd[rt]! : -1;
+    });
+  },
+
 };

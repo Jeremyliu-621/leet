@@ -2623,6 +2623,8 @@ import { problem as numberOfWaysToEarnPoints } from './number-of-ways-to-earn-po
 import { problem as uniqueLength3PalindromicSubsequences } from './unique-length-3-palindromic-subsequences';
 import { problem as minimumWhiteTilesAfterCovering } from './minimum-white-tiles-after-covering-with-carpets';
 import { problem as specialPermutations } from './special-permutations';
+// batch 160 — graph+union-find/hard, arrays+math/easy (new); arrays+dp/medium + arrays+hash-map/medium already registered
+import { problem as minimumCostWalkWeightedGraph } from './minimum-cost-to-walk-weighted-graph';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5283,4 +5285,6 @@ export const problems: readonly Problem[] = [
   uniqueLength3PalindromicSubsequences,
   minimumWhiteTilesAfterCovering,
   specialPermutations,
+  // batch 160 — graph+union-find/hard (new)
+  minimumCostWalkWeightedGraph,
 ];
