@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2319** problems; 7251 tests green. Batches 102–154 (all sub-batches) complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2322** problems; 7272 tests green. Batches 102–155 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 155+); UX polish; accessibility audit.
+**Next up:** More bank growth (batch 156+); UX polish; accessibility audit.
+
+### feat(bank): add batch 155 — 7 new DP/sliding-window problems (2026-05-29)
+Seven new problems: `minimum-score-triangulation-polygon` (medium/dp, interval DP dp[i][j] for convex polygon triangulation — minimize sum of vertex-value products), `non-negative-integers-without-consecutive-ones` (hard/dp, Fibonacci digit-walk: at each 1-bit in n, add Fibonacci count of valid completions), `ways-to-make-a-fair-array` (medium/arrays, track prefix even/odd sums; removing index i flips all subsequent parities), `count-ways-to-build-good-strings` (medium/dp, 1D DP with +zero/'a' or +one/'b' steps mod 10^9+7), `restore-the-array` (hard/dp+strings, O(n·digits(k)) DP counting ways to split string into 1..k segments without leading zeros), `number-of-ways-to-form-a-target-string-given-a-dictionary` (hard/dp, column-frequency pre-computation + 1D backwards DP), `longest-subarray-with-at-most-k-sum` (medium/sliding-window, two-pointer for non-negative arrays). Bank at **2322**; 7272 tests.
 
 ### feat(bank): add batch 154 — maximum-earnings-from-taxi, find-longest-special-substring-thrice-i, minimum-cost-make-array-equalindromic, identify-largest-outlier (2026-05-29)
 Four new medium problems: `maximum-earnings-from-taxi` (medium/dp, weighted interval scheduling — dp[i]=max earnings at road position i), `find-the-longest-special-substring-that-occurs-thrice-i` (medium/strings, run-length encoding + count occurrences from max length downward), `minimum-cost-to-make-array-equalindromic` (medium/math, find palindromic number near median minimising L1 cost — mirror first half with ±1 delta), `identify-the-largest-outlier-in-an-array` (medium/arrays+hash-map, S=(total−outlier)/2 must be present in remaining array — O(n) frequency map). Bank at **2319**; 7251 tests.
