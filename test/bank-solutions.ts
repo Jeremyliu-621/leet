@@ -44646,4 +44646,132 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       return count;
     });
   },
+
+  // batch 215 (addendum)
+  'valid-tic-tac-toe-state': (...args: unknown[]) => {
+    const board = args[0] as string[];
+    let xs = 0, os = 0;
+    for (const row of board) {
+      for (const c of row) {
+        if (c === 'X') xs++;
+        else if (c === 'O') os++;
+      }
+    }
+    if (os > xs || xs > os + 1) return false;
+    function wins(player: string): boolean {
+      for (let i = 0; i < 3; i++) {
+        if (board[i]![0] === player && board[i]![1] === player && board[i]![2] === player) return true;
+        if (board[0]![i] === player && board[1]![i] === player && board[2]![i] === player) return true;
+      }
+      if (board[0]![0] === player && board[1]![1] === player && board[2]![2] === player) return true;
+      if (board[0]![2] === player && board[1]![1] === player && board[2]![0] === player) return true;
+      return false;
+    }
+    const xWins = wins('X'), oWins = wins('O');
+    if (xWins && oWins) return false;
+    if (xWins && xs !== os + 1) return false;
+    if (oWins && xs !== os) return false;
+    return true;
+  },
+
+  'kth-smallest-number-in-multiplication-table': (...args: unknown[]) => {
+    const [m, n, k] = args as [number, number, number];
+    function count(v: number): number {
+      let c = 0;
+      for (let i = 1; i <= m; i++) c += Math.min(Math.floor(v / i), n);
+      return c;
+    }
+    let lo = 1, hi = m * n;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (count(mid) >= k) hi = mid;
+      else lo = mid + 1;
+    }
+    return lo;
+  },
+
+  'confusing-number-ii': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const rotation: Record<number, number> = { 0: 0, 1: 1, 6: 9, 8: 8, 9: 6 };
+    const digits = [0, 1, 6, 8, 9];
+    let count = 0;
+    function isConfusing(num: number): boolean {
+      let original = num, rotated = 0;
+      while (num > 0) {
+        rotated = rotated * 10 + rotation[num % 10]!;
+        num = Math.floor(num / 10);
+      }
+      return original !== rotated;
+    }
+    function dfs(curr: number): void {
+      if (curr > n) return;
+      if (curr > 0 && isConfusing(curr)) count++;
+      for (const d of digits) {
+        if (curr === 0 && d === 0) continue;
+        const next = curr * 10 + d;
+        if (next > n) break;
+        dfs(next);
+      }
+    }
+    dfs(0);
+    return count;
+  },
+
+  'minimum-swaps-to-arrange-a-binary-grid': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const n = grid.length;
+    const t = grid.map(row => {
+      let zeros = 0;
+      for (let j = n - 1; j >= 0; j--) {
+        if (row[j] === 0) zeros++;
+        else break;
+      }
+      return zeros;
+    });
+    let swaps = 0;
+    for (let i = 0; i < n; i++) {
+      const need = n - 1 - i;
+      let j = i;
+      while (j < n && t[j]! < need) j++;
+      if (j === n) return -1;
+      while (j > i) {
+        [t[j]!, t[j - 1]!] = [t[j - 1]!, t[j]!];
+        j--;
+        swaps++;
+      }
+    }
+    return swaps;
+  },
+
+  'solve-the-equation': (...args: unknown[]) => {
+    const equation = args[0] as string;
+    function parse(s: string): { coeff: number; constant: number } {
+      let coeff = 0, constant = 0, i = 0, sign = 1;
+      while (i < s.length) {
+        if (s[i] === '+') { sign = 1; i++; }
+        else if (s[i] === '-') { sign = -1; i++; }
+        else {
+          let j = i;
+          while (j < s.length && s[j] !== '+' && s[j] !== '-') j++;
+          const token = s.slice(i, j);
+          if (token === 'x') coeff += sign;
+          else if (token.endsWith('x')) {
+            const num = token.slice(0, -1);
+            coeff += sign * (num === '' ? 1 : parseInt(num, 10));
+          } else {
+            constant += sign * parseInt(token, 10);
+          }
+          i = j;
+        }
+      }
+      return { coeff, constant };
+    }
+    const eqIdx = equation.indexOf('=');
+    const l = parse(equation.slice(0, eqIdx));
+    const r = parse(equation.slice(eqIdx + 1));
+    const xCoeff = l.coeff - r.coeff;
+    const constVal = r.constant - l.constant;
+    if (xCoeff === 0) return constVal === 0 ? 'Infinite solutions' : 'No solution';
+    return `x=${constVal / xCoeff}`;
+  },
 };

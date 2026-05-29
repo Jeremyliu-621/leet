@@ -44420,4 +44420,137 @@ def countRectangles(rectangles, points):
         result.append(count)
     return result
 `,
+
+  // batch 215 (addendum)
+  'valid-tic-tac-toe-state': `
+def validTicTacToe(board):
+    xs = sum(row.count('X') for row in board)
+    os = sum(row.count('O') for row in board)
+    if os > xs or xs > os + 1:
+        return False
+    def wins(p):
+        for i in range(3):
+            if board[i][0] == p and board[i][1] == p and board[i][2] == p:
+                return True
+            if board[0][i] == p and board[1][i] == p and board[2][i] == p:
+                return True
+        if board[0][0] == p and board[1][1] == p and board[2][2] == p:
+            return True
+        if board[0][2] == p and board[1][1] == p and board[2][0] == p:
+            return True
+        return False
+    x_wins = wins('X')
+    o_wins = wins('O')
+    if x_wins and o_wins:
+        return False
+    if x_wins and xs != os + 1:
+        return False
+    if o_wins and xs != os:
+        return False
+    return True
+`,
+
+  'kth-smallest-number-in-multiplication-table': `
+def findKthNumber(m, n, k):
+    def count(v):
+        return sum(min(v // i, n) for i in range(1, m + 1))
+    lo, hi = 1, m * n
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if count(mid) >= k:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'confusing-number-ii': `
+def confusingNumberII(n):
+    rotation = {0: 0, 1: 1, 6: 9, 8: 8, 9: 6}
+    digits = [0, 1, 6, 8, 9]
+    count = [0]
+    def is_confusing(num):
+        original, rotated = num, 0
+        while num > 0:
+            rotated = rotated * 10 + rotation[num % 10]
+            num //= 10
+        return original != rotated
+    def dfs(curr):
+        if curr > n:
+            return
+        if curr > 0 and is_confusing(curr):
+            count[0] += 1
+        for d in digits:
+            if curr == 0 and d == 0:
+                continue
+            nxt = curr * 10 + d
+            if nxt > n:
+                break
+            dfs(nxt)
+    dfs(0)
+    return count[0]
+`,
+
+  'minimum-swaps-to-arrange-a-binary-grid': `
+def minSwaps(grid):
+    n = len(grid)
+    t = []
+    for row in grid:
+        zeros = 0
+        for j in range(n - 1, -1, -1):
+            if row[j] == 0:
+                zeros += 1
+            else:
+                break
+        t.append(zeros)
+    swaps = 0
+    for i in range(n):
+        need = n - 1 - i
+        j = i
+        while j < n and t[j] < need:
+            j += 1
+        if j == n:
+            return -1
+        while j > i:
+            t[j], t[j - 1] = t[j - 1], t[j]
+            j -= 1
+            swaps += 1
+    return swaps
+`,
+
+  'solve-the-equation': `
+def solveEquation(equation):
+    def parse(s):
+        coeff, constant = 0, 0
+        i, sign = 0, 1
+        while i < len(s):
+            if s[i] == '+':
+                sign = 1
+                i += 1
+            elif s[i] == '-':
+                sign = -1
+                i += 1
+            else:
+                j = i
+                while j < len(s) and s[j] not in ('+', '-'):
+                    j += 1
+                token = s[i:j]
+                if token == 'x':
+                    coeff += sign
+                elif token.endswith('x'):
+                    num = token[:-1]
+                    coeff += sign * (1 if num == '' else int(num))
+                else:
+                    constant += sign * int(token)
+                i = j
+        return coeff, constant
+    left, right = equation.split('=')
+    lc, lk = parse(left)
+    rc, rk = parse(right)
+    x_coeff = lc - rc
+    const_val = rk - lk
+    if x_coeff == 0:
+        return 'Infinite solutions' if const_val == 0 else 'No solution'
+    return 'x=' + str(const_val // x_coeff)
+`,
 };
