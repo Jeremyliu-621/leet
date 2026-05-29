@@ -38361,4 +38361,119 @@ def shortestSubarray(nums, k):
     return ans if ans <= n else -1
 `,
 
+  // batch 163 — strings+arrays/medium, arrays+dp/hard, strings+dp/hard, arrays+graph/hard, arrays+dp/hard
+  'number-of-same-end-substrings': `
+def sameEndSubstrings(s, queries):
+    queries = [list(q.to_py() if hasattr(q, 'to_py') else q) for q in queries]
+    n = len(s)
+    # prefix[c][i] = count of char c in s[0..i-1]
+    prefix = [[0] * (n + 1) for _ in range(26)]
+    for i, ch in enumerate(s):
+        for c in range(26):
+            prefix[c][i + 1] = prefix[c][i]
+        prefix[ord(ch) - ord('a')][i + 1] += 1
+    result = []
+    for l, r in queries:
+        ans = 0
+        for c in range(26):
+            m = prefix[c][r + 1] - prefix[c][l]
+            ans += m * (m + 1) // 2
+        result.append(ans)
+    return result
+`,
+
+  'count-fertile-pyramids-in-a-land': `
+def countPyramids(grid):
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in grid]
+    m, n = len(grid), len(grid[0])
+    def count(g):
+        rows = len(g)
+        dp = [row[:] for row in g]
+        for i in range(rows - 2, -1, -1):
+            for j in range(1, n - 1):
+                if dp[i][j]:
+                    dp[i][j] = min(dp[i + 1][j - 1], dp[i + 1][j], dp[i + 1][j + 1]) + 1
+        return sum(max(0, dp[i][j] - 1) for i in range(rows) for j in range(n))
+    return count(grid) + count(grid[::-1])
+`,
+
+  'maximum-deletions-on-a-string': `
+def deleteString(s):
+    n = len(s)
+    # lcp[i][j] = LCP(s[i:], s[j:])
+    lcp = [[0] * (n + 1) for _ in range(n + 1)]
+    for i in range(n - 1, -1, -1):
+        for j in range(n - 1, -1, -1):
+            if s[i] == s[j]:
+                lcp[i][j] = lcp[i + 1][j + 1] + 1
+    dp = [0] * (n + 1)
+    for i in range(n - 2, -1, -1):
+        k = 1
+        while i + 2 * k <= n:
+            if lcp[i][i + k] >= k:
+                dp[i] = max(dp[i], 1 + dp[i + k])
+            k += 1
+    return dp[0]
+`,
+
+  'collect-coins-in-a-tree': `
+def collectCoins(coins, edges):
+    coins = list(coins.to_py() if hasattr(coins, 'to_py') else coins)
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in edges]
+    n = len(coins)
+    if n == 1:
+        return 0
+    from collections import deque
+    adj = [[] for _ in range(n)]
+    degree = [0] * n
+    for a, b in edges:
+        adj[a].append(b)
+        adj[b].append(a)
+        degree[a] += 1
+        degree[b] += 1
+    removed = [False] * n
+    # Step 1: remove zero-coin leaves
+    q = deque(i for i in range(n) if degree[i] == 1 and coins[i] == 0)
+    while q:
+        node = q.popleft()
+        removed[node] = True
+        for nb in adj[node]:
+            if not removed[nb]:
+                degree[nb] -= 1
+                if degree[nb] == 1 and coins[nb] == 0:
+                    q.append(nb)
+    # Step 2: two more rounds of leaf removal
+    for _ in range(2):
+        leaves = [i for i in range(n) if not removed[i] and degree[i] == 1]
+        for node in leaves:
+            removed[node] = True
+            for nb in adj[node]:
+                if not removed[nb]:
+                    degree[nb] -= 1
+    # Count remaining edges
+    edge_count = sum(1 for a, b in edges if not removed[a] and not removed[b])
+    return edge_count * 2
+`,
+
+  'maximum-and-sum-of-array': `
+def maximumANDSum(nums, numSlots):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    total = 2 * numSlots
+    dp = [0] * (1 << total)
+    for mask in range(1 << total):
+        used = bin(mask).count('1')
+        if used >= n:
+            continue
+        for pos in range(total):
+            if mask & (1 << pos):
+                continue
+            slot = pos // 2 + 1
+            new_mask = mask | (1 << pos)
+            val = dp[mask] + (nums[used] & slot)
+            if val > dp[new_mask]:
+                dp[new_mask] = val
+    return max(dp)
+`,
+
 };

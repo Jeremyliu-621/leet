@@ -2684,6 +2684,12 @@ import { problem as partitioningIntoMinimumNumberOfDeciBinaryNumbers } from './p
 import { problem as splitStringIntoMaximumNumberOfUniqueSubstrings } from './split-a-string-into-the-maximum-number-of-unique-substrings';
 import { problem as tupleWithSameProduct } from './tuple-with-same-product';
 import { problem as whereWillTheBallFall } from './where-will-the-ball-fall';
+// batch 163 — strings+arrays/medium, arrays+dp/hard, strings+dp/hard, arrays+graph/hard, arrays+dp/hard
+import { problem as numberOfSameEndSubstrings } from './number-of-same-end-substrings';
+import { problem as countFertilePyramidsInALand } from './count-fertile-pyramids-in-a-land';
+import { problem as maximumDeletionsOnAString } from './maximum-deletions-on-a-string';
+import { problem as collectCoinsInATree } from './collect-coins-in-a-tree';
+import { problem as maximumAndSumOfArray } from './maximum-and-sum-of-array';
 // batch 165 — design+stack/easy, arrays+stack/medium×2, arrays+stack+dp/medium, arrays+sliding-window/hard
 import { problem as minimumStack } from './minimum-stack';
 import { problem as maximumChunksToMakeSorted } from './maximum-chunks-to-make-sorted';
@@ -5408,6 +5414,12 @@ export const problems: readonly Problem[] = [
   specialPermutations,
   countSubstringsWithKFrequencyCharactersII,
   sumOfImbalanceNumbersOfAllSubarrays,
+  // batch 163 — strings+arrays/medium, arrays+dp/hard, strings+dp/hard, arrays+graph/hard, arrays+dp/hard
+  numberOfSameEndSubstrings,
+  countFertilePyramidsInALand,
+  maximumDeletionsOnAString,
+  collectCoinsInATree,
+  maximumAndSumOfArray,
   // batch 165 — design+stack/easy, arrays+stack/medium×2, arrays+stack+dp/medium, arrays+sliding-window/hard
   minimumStack,
   maximumChunksToMakeSorted,

@@ -38423,4 +38423,137 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans === n + 1 ? -1 : ans;
   },
 
+  // batch 163 — strings+arrays/medium, arrays+dp/hard, strings+dp/hard, arrays+graph/hard, arrays+dp/hard
+  'number-of-same-end-substrings': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const queries = args[1] as number[][];
+    const n = s.length;
+    // prefix[c][i] = count of char c in s[0..i-1]
+    const prefix: number[][] = Array.from({ length: 26 }, () => new Array(n + 1).fill(0));
+    for (let i = 0; i < n; i++) {
+      for (let c = 0; c < 26; c++) prefix[c]![i + 1] = prefix[c]![i]!;
+      prefix[s.charCodeAt(i) - 97]![i + 1]!++;
+    }
+    return queries.map(([l, r]) => {
+      let ans = 0;
+      for (let c = 0; c < 26; c++) {
+        const m = prefix[c]![r! + 1]! - prefix[c]![l!]!;
+        ans += m * (m + 1) / 2;
+      }
+      return ans;
+    });
+  },
+
+  'count-fertile-pyramids-in-a-land': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const n = grid[0]!.length;
+    function count(g: number[][]): number {
+      const rows = g.length;
+      const dp = Array.from({ length: rows }, (_, i) => [...g[i]!]);
+      for (let i = rows - 2; i >= 0; i--) {
+        for (let j = 1; j < n - 1; j++) {
+          if (dp[i]![j]) {
+            dp[i]![j] = Math.min(dp[i + 1]![j - 1]!, dp[i + 1]![j]!, dp[i + 1]![j + 1]!) + 1;
+          }
+        }
+      }
+      let total = 0;
+      for (let i = 0; i < rows; i++) for (let j = 0; j < n; j++) total += Math.max(0, dp[i]![j]! - 1);
+      return total;
+    }
+    return count(grid) + count([...grid].reverse());
+  },
+
+  'maximum-deletions-on-a-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    // lcp[i][j] = LCP(s[i..], s[j..])
+    const lcp = Array.from({ length: n + 1 }, () => new Array(n + 1).fill(0));
+    for (let i = n - 1; i >= 0; i--) {
+      for (let j = n - 1; j >= 0; j--) {
+        if (s[i] === s[j]) lcp[i]![j] = lcp[i + 1]![j + 1]! + 1;
+      }
+    }
+    const dp = new Array(n + 1).fill(0);
+    for (let i = n - 2; i >= 0; i--) {
+      for (let k = 1; i + 2 * k <= n; k++) {
+        if (lcp[i]![i + k]! >= k) dp[i] = Math.max(dp[i], 1 + dp[i + k]);
+      }
+    }
+    return dp[0];
+  },
+
+  'collect-coins-in-a-tree': (...args: unknown[]) => {
+    const coins = args[0] as number[];
+    const edges = args[1] as number[][];
+    const n = coins.length;
+    if (n === 1) return 0;
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    const degree = new Array(n).fill(0);
+    for (const [a, b] of edges) {
+      adj[a!]!.push(b!);
+      adj[b!]!.push(a!);
+      degree[a!]!++;
+      degree[b!]!++;
+    }
+    // Step 1: remove leaf nodes with coins[leaf]==0
+    const removed = new Array(n).fill(false);
+    let queue: number[] = [];
+    for (let i = 0; i < n; i++) if (degree[i] === 1 && coins[i] === 0) queue.push(i);
+    while (queue.length) {
+      const next: number[] = [];
+      for (const node of queue) {
+        removed[node] = true;
+        for (const nb of adj[node]!) {
+          if (!removed[nb]) {
+            degree[nb]!--;
+            if (degree[nb] === 1 && coins[nb] === 0) next.push(nb);
+          }
+        }
+      }
+      queue = next;
+    }
+    // Step 2: two more rounds of leaf removal
+    for (let round = 0; round < 2; round++) {
+      const leaves: number[] = [];
+      for (let i = 0; i < n; i++) if (!removed[i] && degree[i] === 1) leaves.push(i);
+      for (const node of leaves) {
+        removed[node] = true;
+        for (const nb of adj[node]!) {
+          if (!removed[nb]) degree[nb]!--;
+        }
+      }
+    }
+    // Count remaining edges
+    let edgeCount = 0;
+    for (const [a, b] of edges) {
+      if (!removed[a!] && !removed[b!]) edgeCount++;
+    }
+    return edgeCount * 2;
+  },
+
+  'maximum-and-sum-of-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const numSlots = args[1] as number;
+    const n = nums.length;
+    const total = 2 * numSlots;
+    const dp = new Array(1 << total).fill(0);
+    for (let mask = 0; mask < (1 << total); mask++) {
+      const cnt = dp[mask]; // current AND sum
+      const used = mask.toString(2).split('').filter(c => c === '1').length;
+      if (used >= n) continue;
+      for (let pos = 0; pos < total; pos++) {
+        if (mask & (1 << pos)) continue;
+        const slot = (pos >> 1) + 1;
+        const newMask = mask | (1 << pos);
+        if (dp[newMask] < cnt + (nums[used]! & slot)) {
+          dp[newMask] = cnt + (nums[used]! & slot);
+        }
+      }
+    }
+    let ans = 0;
+    for (const val of dp) if (val > ans) ans = val;
+    return ans;
+  },
+
 };
