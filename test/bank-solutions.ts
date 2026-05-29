@@ -41661,4 +41661,48 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return dp2;
   },
+  'length-of-the-longest-valid-substring': (...args: unknown[]) => {
+    const word = args[0] as string, forbidden = args[1] as string[];
+    const forbSet = new Set(forbidden);
+    let left = 0, ans = 0;
+    for (let right = 0; right < word.length; right++) {
+      for (let k = Math.min(right - left + 1, 10); k >= 1; k--) {
+        if (forbSet.has(word.substring(right - k + 1, right + 1))) { left = right - k + 2; break; }
+      }
+      ans = Math.max(ans, right - left + 1);
+    }
+    return ans;
+  },
+  'add-spaces-to-string': (...args: unknown[]) => {
+    const s = args[0] as string, spaces = args[1] as number[];
+    const spaceSet = new Set(spaces);
+    const result: string[] = [];
+    for (let i = 0; i < s.length; i++) {
+      if (spaceSet.has(i)) result.push(' ');
+      result.push(s[i]!);
+    }
+    return result.join('');
+  },
+  'remove-colored-pieces-if-both-neighbors-same-color': (...args: unknown[]) => {
+    const colors = args[0] as string;
+    let alice = 0, bob = 0;
+    for (let i = 1; i < colors.length - 1; i++) {
+      if (colors[i] === 'A' && colors[i-1] === 'A' && colors[i+1] === 'A') alice++;
+      if (colors[i] === 'B' && colors[i-1] === 'B' && colors[i+1] === 'B') bob++;
+    }
+    return alice > bob;
+  },
+  'find-the-longest-balanced-substring-of-binary-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let ans = 0;
+    for (let i = 0; i < s.length; i++) {
+      if (s[i] === '0') {
+        let zeros = 0, ones = 0, j = i;
+        while (j < s.length && s[j] === '0') { zeros++; j++; }
+        while (j < s.length && s[j] === '1') { ones++; j++; }
+        ans = Math.max(ans, 2 * Math.min(zeros, ones));
+      }
+    }
+    return ans;
+  },
 };
