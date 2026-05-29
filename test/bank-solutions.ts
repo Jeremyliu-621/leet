@@ -35757,4 +35757,170 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return -1;
   },
 
+  'swap-pairs-linked-list': (...args: unknown[]) => {
+    const r = [...(args[0] as number[])];
+    for (let i = 0; i + 1 < r.length; i += 2) [r[i], r[i + 1]] = [r[i + 1]!, r[i]!];
+    return r;
+  },
+
+  'reverse-nodes-k-group': (...args: unknown[]) => {
+    const r = [...(args[0] as number[])];
+    const k = args[1] as number;
+    for (let i = 0; i + k <= r.length; i += k) {
+      let l = i, rr = i + k - 1;
+      while (l < rr) { [r[l], r[rr]] = [r[rr]!, r[l]!]; l++; rr--; }
+    }
+    return r;
+  },
+
+  'minimum-spanning-tree-weight': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = (args[1] as number[][]).slice().sort((a, b) => a[2]! - b[2]!);
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const rank = new Array<number>(n).fill(0);
+    function mstFind(x: number): number { return parent[x] === x ? x : (parent[x] = mstFind(parent[x]!)); }
+    function mstUnion(a: number, b: number): boolean {
+      const pa = mstFind(a), pb = mstFind(b);
+      if (pa === pb) return false;
+      if (rank[pa]! < rank[pb]!) parent[pa] = pb;
+      else if (rank[pa]! > rank[pb]!) parent[pb] = pa;
+      else { parent[pb] = pa; rank[pa]!++; }
+      return true;
+    }
+    let weight = 0, count = 0;
+    for (const edge of edges) {
+      const u = edge[0] as number, v = edge[1] as number, w = edge[2] as number;
+      if (mstUnion(u, v)) { weight += w; count++; }
+    }
+    return count === n - 1 ? weight : -1;
+  },
+
+  'union-find-dynamic-connectivity': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const ops = args[1] as string[][];
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const rank = new Array<number>(n).fill(0);
+    function ufFind(x: number): number { return parent[x] === x ? x : (parent[x] = ufFind(parent[x]!)); }
+    function ufUnion(a: number, b: number): void {
+      const pa = ufFind(a), pb = ufFind(b);
+      if (pa === pb) return;
+      if (rank[pa]! < rank[pb]!) parent[pa] = pb;
+      else if (rank[pa]! > rank[pb]!) parent[pb] = pa;
+      else { parent[pb] = pa; rank[pa]!++; }
+    }
+    const result: boolean[] = [];
+    for (const op of ops) {
+      if (op[0] === 'union') ufUnion(Number(op[1]), Number(op[2]));
+      else result.push(ufFind(Number(op[1])) === ufFind(Number(op[2])));
+    }
+    return result;
+  },
+
+  'bellman-ford-shortest-paths': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const source = args[2] as number;
+    const dist = new Array(n + 1).fill(Infinity) as number[];
+    dist[source] = 0;
+    for (let i = 0; i < n - 1; i++) {
+      for (const edge of edges) {
+        const u = edge[0] as number, v = edge[1] as number, w = edge[2] as number;
+        if (dist[u]! !== Infinity && dist[u]! + w < dist[v]!) dist[v] = dist[u]! + w;
+      }
+    }
+    return [0, ...dist.slice(1).map(d => d === Infinity ? -1 : d)];
+  },
+
+  'bit-prefix-sum-updates': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const ops = args[1] as (string | number)[][];
+    const n = nums.length;
+    const tree = new Array<number>(n + 1).fill(0);
+    function bitUpdate(i: number, delta: number): void {
+      for (; i <= n; i += i & -i) tree[i]! += delta;
+    }
+    function bitQuery(i: number): number {
+      let s = 0;
+      for (; i > 0; i -= i & -i) s += tree[i]!;
+      return s;
+    }
+    for (let i = 0; i < n; i++) bitUpdate(i + 1, nums[i]!);
+    const result: number[] = [];
+    for (const op of ops) {
+      if (op[0] === 'update') bitUpdate(Number(op[1]), Number(op[2]));
+      else result.push(bitQuery(Number(op[2])) - bitQuery(Number(op[1]) - 1));
+    }
+    return result;
+  },
+
+  'find-the-count-of-monotonic-pairs-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const MOD = 1000000007n;
+    let dp = new Array<bigint>(nums[0]! + 1).fill(1n);
+    for (let i = 1; i < nums.length; i++) {
+      const d = Math.max(0, nums[i]! - nums[i - 1]!);
+      const m = nums[i]! + 1;
+      const prefix = new Array<bigint>(dp.length + 1).fill(0n);
+      for (let v = 0; v < dp.length; v++) prefix[v + 1] = (prefix[v]! + dp[v]!) % MOD;
+      const newDp = new Array<bigint>(m).fill(0n);
+      for (let v = 0; v < m; v++) {
+        const limit = v - d;
+        if (limit >= 0) newDp[v] = prefix[Math.min(limit + 1, prefix.length - 1)]!;
+      }
+      dp = newDp;
+    }
+    return Number(dp.reduce((a, b) => (a + b) % MOD, 0n));
+  },
+
+  'maximum-strength-of-a-group': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    if (nums.length === 1) return nums[0]!;
+    const negCount = nums.filter(n => n < 0).length;
+    let result = 1n, hasNonZero = false;
+    if (negCount % 2 === 0) {
+      for (const n of nums) { if (n !== 0) { result *= BigInt(n); hasNonZero = true; } }
+    } else {
+      let excluded = false;
+      for (let i = nums.length - 1; i >= 0; i--) {
+        if (nums[i]! < 0 && !excluded) { excluded = true; continue; }
+        if (nums[i] !== 0) { result *= BigInt(nums[i]!); hasNonZero = true; }
+      }
+    }
+    return hasNonZero ? Number(result) : 0;
+  },
+
+  'minimum-number-of-valid-strings-to-form-target-i': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const target = args[1] as string;
+    const n = target.length;
+    const maxJump = new Array<number>(n).fill(0);
+    for (const word of words) {
+      for (let i = 0; i < n; i++) {
+        let l = 0;
+        while (i + l < n && l < word.length && target[i + l] === word[l]) l++;
+        if (l > maxJump[i]!) maxJump[i] = l;
+      }
+    }
+    let pos = 0, count = 0;
+    while (pos < n) {
+      if (maxJump[pos] === 0) return -1;
+      pos += maxJump[pos]!;
+      count++;
+    }
+    return count;
+  },
+
+  'maximum-total-reward-using-operations-ii': (...args: unknown[]) => {
+    const vals = [...new Set(args[0] as number[])].sort((a, b) => a - b);
+    let dp = 1n;
+    for (const v of vals) {
+      const mask = (1n << BigInt(v)) - 1n;
+      dp |= (dp & mask) << BigInt(v);
+    }
+    let ans = 0;
+    let tmp = dp;
+    while (tmp > 0n) { ans++; tmp >>= 1n; }
+    return ans - 1;
+  },
+
 };

@@ -35553,4 +35553,184 @@ def resultsArray(queries, k):
     return -1
 `,
 
+  'swap-pairs-linked-list': `def swapPairsRunner(vals):
+    vals = list(vals.to_py() if hasattr(vals, 'to_py') else vals)
+    for i in range(0, len(vals) - 1, 2):
+        vals[i], vals[i+1] = vals[i+1], vals[i]
+    return vals
+`,
+
+  'reverse-nodes-k-group': `def reverseKGroupRunner(vals, k):
+    vals = list(vals.to_py() if hasattr(vals, 'to_py') else vals)
+    n = len(vals)
+    i = 0
+    while i + k <= n:
+        l, r = i, i + k - 1
+        while l < r:
+            vals[l], vals[r] = vals[r], vals[l]
+            l += 1
+            r -= 1
+        i += k
+    return vals
+`,
+
+  'minimum-spanning-tree-weight': `def minimumSpanningTreeWeight(n, edges):
+    edges = sorted([list(e.to_py() if hasattr(e, 'to_py') else e) for e in (edges.to_py() if hasattr(edges, 'to_py') else edges)], key=lambda x: x[2])
+    parent = list(range(n))
+    rank = [0] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(a, b):
+        pa, pb = find(a), find(b)
+        if pa == pb: return False
+        if rank[pa] < rank[pb]: parent[pa] = pb
+        elif rank[pa] > rank[pb]: parent[pb] = pa
+        else: parent[pb] = pa; rank[pa] += 1
+        return True
+    weight = count = 0
+    for e in edges:
+        if union(e[0], e[1]):
+            weight += e[2]
+            count += 1
+    return weight if count == n - 1 else -1
+`,
+
+  'union-find-dynamic-connectivity': `def dynamicConnectivity(n, ops):
+    ops = [list(op.to_py() if hasattr(op, 'to_py') else op) for op in (ops.to_py() if hasattr(ops, 'to_py') else ops)]
+    parent = list(range(n))
+    rank = [0] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(a, b):
+        pa, pb = find(a), find(b)
+        if pa == pb: return
+        if rank[pa] < rank[pb]: parent[pa] = pb
+        elif rank[pa] > rank[pb]: parent[pb] = pa
+        else: parent[pb] = pa; rank[pa] += 1
+    result = []
+    for op in ops:
+        if op[0] == 'union':
+            union(int(op[1]), int(op[2]))
+        else:
+            result.append(find(int(op[1])) == find(int(op[2])))
+    return result
+`,
+
+  'bellman-ford-shortest-paths': `def bellmanFord(n, edges, source):
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (edges.to_py() if hasattr(edges, 'to_py') else edges)]
+    INF = float('inf')
+    dist = [INF] * (n + 1)
+    dist[source] = 0
+    for _ in range(n - 1):
+        for u, v, w in edges:
+            if dist[u] != INF and dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+    return [0] + [-1 if d == INF else d for d in dist[1:]]
+`,
+
+  'bit-prefix-sum-updates': `def bitPrefixSumUpdates(nums, ops):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    ops = [list(op.to_py() if hasattr(op, 'to_py') else op) for op in (ops.to_py() if hasattr(ops, 'to_py') else ops)]
+    n = len(nums)
+    tree = [0] * (n + 1)
+    def update(i, delta):
+        while i <= n:
+            tree[i] += delta
+            i += i & -i
+    def query(i):
+        s = 0
+        while i > 0:
+            s += tree[i]
+            i -= i & -i
+        return s
+    for i, v in enumerate(nums, 1):
+        update(i, v)
+    result = []
+    for op in ops:
+        if op[0] == 'update':
+            update(int(op[1]), int(op[2]))
+        else:
+            result.append(query(int(op[2])) - query(int(op[1]) - 1))
+    return result
+`,
+
+  'find-the-count-of-monotonic-pairs-ii': `def countOfPairs(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    MOD = 10**9 + 7
+    dp = [1] * (nums[0] + 1)
+    for i in range(1, len(nums)):
+        d = max(0, nums[i] - nums[i-1])
+        m = nums[i] + 1
+        prefix = [0] * (len(dp) + 1)
+        for v in range(len(dp)):
+            prefix[v+1] = (prefix[v] + dp[v]) % MOD
+        new_dp = [0] * m
+        for v in range(m):
+            limit = v - d
+            if limit >= 0:
+                new_dp[v] = prefix[min(limit + 1, len(prefix) - 1)]
+        dp = new_dp
+    return sum(dp) % MOD
+`,
+
+  'maximum-strength-of-a-group': `def maxStrength(nums):
+    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    if len(nums) == 1:
+        return nums[0]
+    neg_count = sum(1 for n in nums if n < 0)
+    result = 1
+    has_non_zero = False
+    if neg_count % 2 == 0:
+        for n in nums:
+            if n != 0:
+                result *= n
+                has_non_zero = True
+    else:
+        excluded = False
+        for n in reversed(nums):
+            if n < 0 and not excluded:
+                excluded = True
+                continue
+            if n != 0:
+                result *= n
+                has_non_zero = True
+    return result if has_non_zero else 0
+`,
+
+  'minimum-number-of-valid-strings-to-form-target-i': `def minValidStrings(words, target):
+    words = [str(w) for w in (words.to_py() if hasattr(words, 'to_py') else words)]
+    target = str(target.to_py() if hasattr(target, 'to_py') else target)
+    n = len(target)
+    max_jump = [0] * n
+    for word in words:
+        for i in range(n):
+            l = 0
+            while i + l < n and l < len(word) and target[i + l] == word[l]:
+                l += 1
+            if l > max_jump[i]:
+                max_jump[i] = l
+    pos = count = 0
+    while pos < n:
+        if max_jump[pos] == 0:
+            return -1
+        pos += max_jump[pos]
+        count += 1
+    return count
+`,
+
+  'maximum-total-reward-using-operations-ii': `def maxTotalReward(rewardValues):
+    vals = sorted(set(rewardValues.to_py() if hasattr(rewardValues, 'to_py') else rewardValues))
+    dp = 1
+    for v in vals:
+        mask = (1 << v) - 1
+        dp |= (dp & mask) << v
+    return dp.bit_length() - 1
+`,
+
 };
