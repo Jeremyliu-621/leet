@@ -42924,6 +42924,30 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return best === Infinity ? -1 : best;
   },
+  // batch 197 ---------------------------------------------------------------
+  'sum-of-even-indexed-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return nums.reduce((s, v, i) => (i % 2 === 0 ? s + v : s), 0);
+  },
+  'count-strings-with-unique-characters': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    return words.filter(w => new Set(w).size === w.length).length;
+  },
+  'maximum-prefix-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let sum = 0, max = 0;
+    for (const n of nums) { sum += n; if (sum > max) max = sum; }
+    return max;
+  },
+  'count-elements-divisible-by-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    return nums.filter(n => n % k === 0).length;
+  },
+  'second-smallest-in-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return [...new Set(nums)].sort((a, b) => a - b)[1];
+  },
   // batch 196 ---------------------------------------------------------------
   'count-pairs-with-even-sum': (...args: unknown[]) => {
     const nums = args[0] as number[];

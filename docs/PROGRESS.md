@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2670** problems; 8298 tests green. Batches 102–196 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2675** problems; 8319 tests green. Batches 102–197 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 197+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 198+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 197 — sum-even-indexed, count-unique-char-strings, max-prefix-sum, count-divisible, second-smallest (2026-05-29)
+Five new easy problems: `sum-of-even-indexed-elements` (easy/arrays, sum indices 0,2,4,... with reduce), `count-strings-with-unique-characters` (easy/strings+hash-map, Set size === length check), `maximum-prefix-sum` (easy/arrays+prefix-sum, running max clamped to 0), `count-elements-divisible-by-k` (easy/arrays+math, filter by n%k===0), `second-smallest-in-array` (easy/arrays, deduplicate+sort+index[1]). Bank at **2675**; 8319 tests.
 
 ### feat(bank): batch 196 — count-pairs-even-sum, find-x-sum-subarrays-i, min-ops-median-k (2026-05-29)
 Three new problems: `count-pairs-with-even-sum` (easy/arrays+math, count evens e and odds o, return e*(e-1)/2 + o*(o-1)/2), `find-x-sum-of-all-k-long-subarrays-i` (easy/arrays+sliding-window, O(k) freq map per window, sort by freq desc then value desc, sum top-x), `minimum-operations-to-make-median-equal-k` (medium/arrays, sort, mid=(n-1)>>1, sum excess-above-k for left half + |median-k| + excess-below-k for right half). Fixed `design-a-number-container-system` functionName to `numberContainers` and `find-the-key-of-the-numbers` functionName to `generateKey` to match existing Python solutions. Bank at **2670**; 8298 tests.

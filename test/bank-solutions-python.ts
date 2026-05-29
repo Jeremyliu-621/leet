@@ -42762,6 +42762,33 @@ def minWindowAllVowels(s):
             lo += 1
     return best if best != float('inf') else -1
 `,
+  // batch 197 ---------------------------------------------------------------
+  'sum-of-even-indexed-elements': `
+def sumEvenIndexed(nums):
+    return sum(nums[i] for i in range(0, len(nums), 2))
+`,
+  'count-strings-with-unique-characters': `
+def countStringsWithUniqueChars(words):
+    return sum(1 for w in words if len(set(w)) == len(w))
+`,
+  'maximum-prefix-sum': `
+def maximumPrefixSum(nums):
+    total = 0
+    max_sum = 0
+    for n in nums:
+        total += n
+        if total > max_sum:
+            max_sum = total
+    return max_sum
+`,
+  'count-elements-divisible-by-k': `
+def countDivisibleByK(nums, k):
+    return sum(1 for n in nums if n % k == 0)
+`,
+  'second-smallest-in-array': `
+def secondSmallest(nums):
+    return sorted(set(nums))[1]
+`,
   // batch 196 ---------------------------------------------------------------
   'count-pairs-with-even-sum': `
 def countPairsWithEvenSum(nums):

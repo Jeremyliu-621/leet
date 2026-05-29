@@ -2985,6 +2985,12 @@ import { problem as sumOfEveryKthNumber } from './sum-of-every-kth-number';
 import { problem as countPairsWithEvenSum } from './count-pairs-with-even-sum';
 import { problem as findXSumOfAllKLongSubarraysI } from './find-x-sum-of-all-k-long-subarrays-i';
 import { problem as minimumOperationsToMakeMedianEqualK } from './minimum-operations-to-make-median-equal-k';
+// batch 197 — five easy problems
+import { problem as sumOfEvenIndexedElements } from './sum-of-even-indexed-elements';
+import { problem as countStringsWithUniqueCharacters } from './count-strings-with-unique-characters';
+import { problem as maximumPrefixSum } from './maximum-prefix-sum';
+import { problem as countElementsDivisibleByK } from './count-elements-divisible-by-k';
+import { problem as secondSmallestInArray } from './second-smallest-in-array';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6011,4 +6017,10 @@ export const problems: readonly Problem[] = [
   countPairsWithEvenSum,
   findXSumOfAllKLongSubarraysI,
   minimumOperationsToMakeMedianEqualK,
+  // batch 197 — five easy problems
+  sumOfEvenIndexedElements,
+  countStringsWithUniqueCharacters,
+  maximumPrefixSum,
+  countElementsDivisibleByK,
+  secondSmallestInArray,
 ];
