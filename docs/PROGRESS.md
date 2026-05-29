@@ -10,7 +10,25 @@
 **Current phase:** Phase 13 — Post-MVP polish
 **Current focus:** Bank at **2348** problems; 7350 tests green. Batches 102–156b complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 157+); update site count; UX polish.
+**Next up:** More bank growth (batch 161+); update site count; UX polish.
+
+### feat(bank): add batch 160 — minimum-cost-walk-weighted-graph (hard) + register 3 orphaned problems (2026-05-29)
+New: `minimum-cost-to-walk-weighted-graph` (hard/graph+union-find, min cost path = bitwise AND of all edges in component; UF tracks per-component AND as edges are added). Registered orphans already in bank: `maximum-alternating-subsequence-sum` (medium/arrays+dp), `count-number-of-bad-pairs` (medium/arrays+hash-map), `make-array-zero-by-subtracting-equal-amounts` (easy/arrays+math). Bank at **2373**; 7413 tests.
+
+### feat(bank): add batch 159 — unique-length-3-palindromic-subsequences (medium), minimum-white-tiles-after-covering-with-carpets (hard), special-permutations (medium) (2026-05-29)
+Three new problems: `unique-length-3-palindromic-subsequences` (medium/strings+hash-map, for each char find leftmost/rightmost occurrence and count distinct chars between them), `minimum-white-tiles-after-covering-with-carpets` (hard/dynamic-programming, 2D DP dp[j][i]=min white tiles visible in floor[0..i-1] using j carpets), `special-permutations` (medium/arrays+dynamic-programming, bitmask DP counting permutations where each adjacent pair has a divisibility relation, mod 10^9+7). JS and Python reference solutions included. Bank at **2372**; 7410 tests.
+
+### feat(bank): add batch 156c — find-edges-in-shortest-paths (hard), avoid-flood-in-the-city (medium), minimum-time-to-accomplish-all-tasks (hard) (2026-05-29)
+Three problems targeting graph/shortest-path, hash-map+binary-search, and binary-indexed-tree: `find-edges-in-shortest-paths` (hard/graph+shortest-path, Dijkstra from both node 0 and node n-1; edge on shortest path iff dist0[u]+w+distN[v]==total or symmetrically), `avoid-flood-in-the-city` (medium/hash-map+binary-search, track filled lakes with binary-search on sorted dry days to find earliest valid drain day; return [] if impossible), `minimum-time-to-accomplish-all-tasks` (hard/binary-indexed-tree, sort tasks by end time, greedily assign CPU time right-to-left within each task's window respecting already-running intervals). Bank at **2370**; 7401 tests.
+
+### feat(bank): add batch 158 — minimum-cost-homecoming-robot (medium), sum-of-scores-of-built-strings (hard), count-of-integers (hard), number-of-ways-to-earn-points (hard) (2026-05-29)
+Four new problems: `minimum-cost-homecoming-of-a-robot-in-a-grid` (medium/arrays+math, sum rowCosts and colCosts traversed excluding start position), `sum-of-scores-of-built-strings` (hard/strings, Z-function where Z[0]=n then sum all values), `count-of-integers` (hard/dp+strings, digit DP with tight/started/sum states mod 10^9+7), `number-of-ways-to-earn-points` (hard/dp+arrays, bounded knapsack right-to-left). JS and Python reference solutions included. Bank at **2367**; 7392 tests.
+
+### feat(bank): add batch 157 — implement-trie-ii (medium), word-filter (hard), lexicographical-numbers (medium), k-th-smallest-lex (hard), design-autocomplete (hard) (2026-05-29)
+Five new trie/design problems: `implement-trie-ii-prefix-tree` (medium/trie+design, endCount/prefixCount per node for insert/countWordsEqualTo/countWordsStartingWith/erase), `word-filter` (hard/trie, prefix+suffix search via hash map enumeration O(n·L²)), `lexicographical-numbers` (medium/trie, O(n) iterative DFS trie traversal), `k-th-smallest-in-lexicographic-order` (hard/trie, trie step-counting O(log²n) algorithm), `design-search-autocomplete-system` (hard/trie+design, hash-map autocomplete with count-based ranking). Trie tag: 5 → 10 problems. Bank at **2362**; 7365 tests.
+
+### feat(bank): add batch 156 (local) — rotating-the-box, max-star-sum-graph, build-matrix-conditions, count-integers-digit-sum, apply-ops-maximize-frequency-score (2026-05-29)
+Five problems: `rotating-the-box` (medium/simulation, gravity+90°CW rotation), `maximum-star-sum-of-a-graph` (medium/graph, pick top-k positive neighbor edge values per center), `build-a-matrix-with-conditions` (hard/graph, two topological sorts then place elements), `count-of-integers-with-digit-sum` (hard/dp+math, digit DP mod 10^9+7), `apply-operations-to-maximize-frequency-score` (hard/binary-search+sliding-window, sorted window + frequency×value score with remaining ops d = floor(leftover/size)). Bank at **2358**; 7365 tests.
 
 ### feat(bank): add batch 156b — average-of-levels-in-binary-tree (easy), all-elements-in-two-bsts (medium); fix trim-bst runner (2026-05-29)
 Two new tree problems: `average-of-levels-in-binary-tree` (easy/tree, BFS level average), `all-elements-in-two-binary-search-trees` (medium/tree+binary-search, in-order traversal of each BST + merge). Upgraded `trim-a-binary-search-tree` to runner pattern (TreeNode preamble); updated Python reference solution to accept TreeNode arg. Fixed path-sum hidden test (1→2→5=8 is true). Bank at **2348**; 7302 tests.
