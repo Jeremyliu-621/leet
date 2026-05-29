@@ -190,13 +190,13 @@ type PageState =
 
 function LoadingScreen() {
   return (
-    <div className="flex h-full items-center justify-center bg-bg">
+    <div className="flex h-full items-center justify-center bg-bg" role="status" aria-live="polite">
       <span className="font-mono text-xs text-faint">Loading challenge…</span>
     </div>
   );
 }
 
-function NoProblemScreen() {
+function NoProblemScreen({ settingsHref }: { settingsHref?: string }) {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-3 bg-bg px-8 text-center">
       <span className="font-mono text-sm font-semibold text-text">No problem available</span>
@@ -204,6 +204,14 @@ function NoProblemScreen() {
         The problem bank could not return a challenge matching your current settings. Adjust your
         difficulty and tag preferences in Settings, then try again.
       </p>
+      {settingsHref && (
+        <a
+          href={settingsHref}
+          className="mt-2 rounded-sm border border-border px-4 py-1.5 font-mono text-xs text-muted transition-colors hover:border-border-strong hover:text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+        >
+          Open Settings
+        </a>
+      )}
     </div>
   );
 }
@@ -1081,7 +1089,7 @@ export function Challenge() {
   }
 
   if (pageState.status === 'no-problem') {
-    return <NoProblemScreen />;
+    return <NoProblemScreen settingsHref={settingsHref} />;
   }
 
   if (pageState.status === 'solved-standalone') {
