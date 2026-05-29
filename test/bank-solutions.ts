@@ -33197,15 +33197,13 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   },
 
   'minimum-operations-to-make-median-equal-to-k': (...args: unknown[]) => {
-    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const sorted = [...(args[0] as number[])].sort((a, b) => a - b);
     const k = args[1] as number;
-    const m = Math.floor(nums.length / 2);
+    const m = Math.floor(sorted.length / 2);
     let ops = 0;
-    if (nums[m]! > k) {
-      for (let i = m; i < nums.length; i++) if (nums[i]! > k) ops++;
-    } else if (nums[m]! < k) {
-      for (let i = 0; i <= m; i++) if (nums[i]! < k) ops++;
-    }
+    for (let i = 0; i < m; i++) ops += Math.max(0, sorted[i]! - k);
+    ops += Math.abs(sorted[m]! - k);
+    for (let i = m + 1; i < sorted.length; i++) ops += Math.max(0, k - sorted[i]!);
     return ops;
   },
 
@@ -42204,4 +42202,25 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[n - 1]!;
   },
 
+  'count-substrings-with-every-vowel-and-k-consonants-i': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+    let count = 0;
+    for (let i = 0; i < s.length; i++) {
+      const freq = new Map<string, number>();
+      let consonants = 0;
+      for (let j = i; j < s.length; j++) {
+        const c = s[j]!;
+        if (vowels.has(c)) {
+          freq.set(c, (freq.get(c) ?? 0) + 1);
+        } else {
+          consonants++;
+        }
+        if (consonants > k) break;
+        if (freq.size === 5 && consonants === k) count++;
+      }
+    }
+    return count;
+  },
 };

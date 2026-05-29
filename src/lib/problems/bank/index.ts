@@ -2918,6 +2918,8 @@ import { problem as minimumOperationsToMakeArrayEmpty } from './minimum-operatio
 import { problem as minimumOperationsToMakeArrayContinuous } from './minimum-operations-to-make-array-continuous';
 import { problem as minimumDistanceToTheTargetElement } from './minimum-distance-to-the-target-element';
 import { problem as maximumAreaOfLongestDiagonalRectangle } from './maximum-area-of-longest-diagonal-rectangle';
+// batch 186 — medium/strings+sliding-window
+import { problem as countSubstringsWithEveryVowelAndKConsonantsI } from './count-substrings-with-every-vowel-and-k-consonants-i';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5877,4 +5879,6 @@ export const problems: readonly Problem[] = [
   minimumOperationsToMakeArrayContinuous,
   minimumDistanceToTheTargetElement,
   maximumAreaOfLongestDiagonalRectangle,
+  // batch 186 — medium/strings+sliding-window
+  countSubstringsWithEveryVowelAndKConsonantsI,
 ];

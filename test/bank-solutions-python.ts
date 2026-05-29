@@ -32875,18 +32875,15 @@ def countOfSubstrings(word, k):
 `,
 
   'minimum-operations-to-make-median-equal-to-k': `
-def minOperationsToMakeMedianK(nums, k):
-    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else nums)
-    m = len(nums) // 2
+def minOperationsToMakeMedianEqualK(nums, k):
+    sorted_nums = sorted(nums)
+    m = len(sorted_nums) // 2
     ops = 0
-    if nums[m] > k:
-        for i in range(m, len(nums)):
-            if nums[i] > k:
-                ops += 1
-    elif nums[m] < k:
-        for i in range(m + 1):
-            if nums[i] < k:
-                ops += 1
+    for i in range(m):
+        ops += max(0, sorted_nums[i] - k)
+    ops += abs(sorted_nums[m] - k)
+    for i in range(m + 1, len(sorted_nums)):
+        ops += max(0, k - sorted_nums[i])
     return ops
 `,
 
@@ -42158,4 +42155,23 @@ def maxBottlesDrunk(numBottles, numExchange):
     return dp[-1]
 `,
 
+  'count-substrings-with-every-vowel-and-k-consonants-i': `
+def countOfSubstrings(s: str, k: int) -> int:
+    vowels = set('aeiou')
+    count = 0
+    for i in range(len(s)):
+        freq = {}
+        consonants = 0
+        for j in range(i, len(s)):
+            c = s[j]
+            if c in vowels:
+                freq[c] = freq.get(c, 0) + 1
+            else:
+                consonants += 1
+            if consonants > k:
+                break
+            if len(freq) == 5 and consonants == k:
+                count += 1
+    return count
+`,
 };
