@@ -35585,4 +35585,18 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return res;
   },
 
+  // merge: count-ways-to-rearrange-sticks-with-k-visible (remote added problem, missing solution)
+  'count-ways-to-rearrange-sticks-with-k-visible': (...args: unknown[]) => {
+    const n = args[0] as number, k = args[1] as number;
+    const MOD = 1000000007n;
+    const dp: bigint[][] = Array.from({ length: n + 1 }, () => new Array(n + 1).fill(0n) as bigint[]);
+    dp[1]![1] = 1n;
+    for (let i = 2; i <= n; i++) {
+      for (let j = 1; j <= i; j++) {
+        dp[i]![j] = (dp[i - 1]![j - 1]! + BigInt(i - 1) * dp[i - 1]![j]!) % MOD;
+      }
+    }
+    return Number(dp[n]![k]!);
+  },
+
 };
