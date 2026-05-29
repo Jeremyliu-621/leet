@@ -950,7 +950,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   },
 
 
-
   // ---------------------------------------------------------------------------
   // Medium-difficulty problems (batch expansion)
   // ---------------------------------------------------------------------------
@@ -1134,7 +1133,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return best;
   },
-
 
   // -------------------------------------------------------------------------
   // 1. group-anagrams
@@ -1385,7 +1383,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return best;
   },
-
 
   // --- binary-search --------------------------------------------------------
 
@@ -4600,7 +4597,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result.sort();
   },
 
-
   'combinations': (...args: unknown[]) => {
     const [n, k] = args as [number, number];
     const result: number[][] = [];
@@ -5975,7 +5971,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     for (let i = left; i <= right; i++) sum += nums[i]!;
     return sum;
   },
-
 
   'reverse-string-ii': (...args: unknown[]) => {
     const s = args[0] as string;
@@ -15557,7 +15552,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
-
   'dota2-senate': (senate: unknown) => {
     const s = senate as string;
     const n = s.length;
@@ -17770,7 +17764,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const odds = Object.values(freq).filter(v => v % 2 === 1).length;
     return odds <= K && K <= str.length;
   },
-
 
   'push-dominoes': (dominoes: unknown) => {
     const s = dominoes as string;
@@ -22861,7 +22854,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
-
   'max-consecutive-ones-ii': (nums: unknown) => {
     const a = nums as number[];
     let left = 0, lastZero = -1, ans = 0;
@@ -23037,7 +23029,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     });
   },
 
-
   'find-subarrays-with-equal-sum': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const seen = new Set<number>();
@@ -23060,7 +23051,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     if (max === 2) return 'Pair';
     return 'High Card';
   },
-
 
   'count-incremovable-subarrays': (...args: unknown[]) => {
     const nums = args[0] as number[];
@@ -23408,7 +23398,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return total;
   },
-
 
   'seat-reservation-manager': (...args: unknown[]) => {
     const n = args[0] as number;
@@ -24466,7 +24455,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return balls.length;
   },
-
 
   // batch 66 (origin)
   'soup-servings': (n: unknown) => {
@@ -27154,7 +27142,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return ans;
   },
-
 
   'minimum-ops-distinct-elements': (...args: unknown[]) => {
     const nums = args[0] as number[];
@@ -30287,7 +30274,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
-
   'maximum-value-of-an-ordered-triplet-ii': (...args: unknown[]) => {
     const [nums] = args as [number[]];
     let maxI = -Infinity, maxDiff = -Infinity, ans = 0;
@@ -30328,7 +30314,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return chars.join('');
   },
-
 
   'maximize-the-profit-as-the-salesman': (...args: unknown[]) => {
     const [n, offers] = args as [number, number[][]];
@@ -34183,7 +34168,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Array.from({ length: n }, (_, i) => base + (i < extra ? 1 : 0));
   },
 
-
   // batch 138
   'longest-unequal-adjacent-groups-subsequence-ii': (...args: unknown[]) => {
     const words = args[0] as string[], groups = args[1] as number[];
@@ -35266,7 +35250,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return Number(dp[r] as bigint);
   },
-
 
   'max-product-after-cutting-rope': (...args: unknown[]) => {
     let n = args[0] as number;
@@ -39375,7 +39358,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   },
 
 
-
   // batch 166 — arrays/easy×3, arrays+stack/medium, graph/medium
   'replace-elements-with-greatest-element-on-right-side': (arr: unknown) => {
     const a = [...(arr as number[])];
@@ -40868,6 +40850,69 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       }
     }
     return ans;
+  },
+
+  'most-frequent-ids': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = args[1] as number[];
+    const count = new Map<number, number>();
+    const coc = new Map<number, number>();
+    let maxC = 0;
+    const ans: number[] = [];
+    for (let i = 0; i < nums.length; i++) {
+      const id = nums[i]!;
+      const f = freq[i]!;
+      const old = count.get(id) ?? 0;
+      const nw = old + f;
+      count.set(id, nw);
+      if (old > 0) {
+        coc.set(old, (coc.get(old) ?? 0) - 1);
+        if (coc.get(old) === 0) coc.delete(old);
+        if (old === maxC && !coc.has(old)) maxC--;
+      }
+      if (nw > 0) {
+        coc.set(nw, (coc.get(nw) ?? 0) + 1);
+        if (nw > maxC) maxC = nw;
+      } else {
+        while (maxC > 0 && !coc.has(maxC)) maxC--;
+      }
+      ans.push(maxC);
+    }
+    return ans;
+  },
+
+
+
+
+  'number-of-people-aware-of-a-secret': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const delay = args[1] as number;
+    const forget = args[2] as number;
+    const MOD = 1_000_000_007n;
+    const dp = new Array<bigint>(n + 1).fill(0n);
+    const prefix = new Array<bigint>(n + 2).fill(0n);
+    dp[1] = 1n;
+    prefix[1] = 1n;
+    for (let d = 2; d <= n; d++) {
+      const lo = Math.max(1, d - forget + 1);
+      const hi = d - delay;
+      if (hi >= lo) dp[d] = ((prefix[hi]! - prefix[lo - 1]!) % MOD + MOD) % MOD;
+      prefix[d] = (prefix[d - 1]! + dp[d]!) % MOD;
+    }
+    const lo = Math.max(1, n - forget + 1);
+    return Number(((prefix[n]! - prefix[lo - 1]!) % MOD + MOD) % MOD);
+  },
+
+  'generate-binary-strings-without-adjacent-zeros': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const result: string[] = [];
+    function dfs(cur: string) {
+      if (cur.length === n) { result.push(cur); return; }
+      if (cur.length === 0 || cur[cur.length - 1] === '1') dfs(cur + '0');
+      dfs(cur + '1');
+    }
+    dfs('');
+    return result;
   },
 
 };

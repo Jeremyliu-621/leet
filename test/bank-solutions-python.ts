@@ -40914,4 +40914,68 @@ def logSystemRunner(ops, args):
     return ans
 `,
 
+  'most-frequent-ids': `
+def mostFrequentIDs(nums, freq):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    if hasattr(freq, 'to_py'): freq = list(freq.to_py())
+    count = {}
+    coc = {}
+    max_c = 0
+    ans = []
+    for id_, f in zip(nums, freq):
+        old = count.get(id_, 0)
+        new = old + f
+        count[id_] = new
+        if old > 0:
+            coc[old] = coc.get(old, 0) - 1
+            if coc[old] == 0:
+                del coc[old]
+            if old == max_c and old not in coc:
+                max_c -= 1
+        if new > 0:
+            coc[new] = coc.get(new, 0) + 1
+            if new > max_c:
+                max_c = new
+        else:
+            while max_c > 0 and max_c not in coc:
+                max_c -= 1
+        ans.append(max_c)
+    return ans
+`,
+
+
+
+
+
+  'number-of-people-aware-of-a-secret': `
+def peopleAwareOfSecret(n, delay, forget):
+    MOD = 10**9 + 7
+    dp = [0] * (n + 1)
+    prefix = [0] * (n + 2)
+    dp[1] = 1
+    prefix[1] = 1
+    for d in range(2, n + 1):
+        lo = max(1, d - forget + 1)
+        hi = d - delay
+        if hi >= lo:
+            dp[d] = (prefix[hi] - prefix[lo - 1]) % MOD
+        prefix[d] = (prefix[d - 1] + dp[d]) % MOD
+    lo = max(1, n - forget + 1)
+    return (prefix[n] - prefix[lo - 1]) % MOD
+`,
+
+  'generate-binary-strings-without-adjacent-zeros': `
+def validStrings(n):
+    result = []
+    def dfs(cur):
+        if len(cur) == n:
+            result.append(cur)
+            return
+        if not cur or cur[-1] == '1':
+            dfs(cur + '0')
+        dfs(cur + '1')
+    dfs('')
+    return result
+`,
+
 };

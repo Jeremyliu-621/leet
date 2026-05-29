@@ -2843,6 +2843,10 @@ import { problem as insertGreatestCommonDivisorsInLinkedList } from './insert-gr
 import { problem as doubleANumberRepresentedAsLinkedList } from './double-a-number-represented-as-linked-list';
 import { problem as maximumNumberOfOperationsToMoveOnesToTheEnd } from './maximum-number-of-operations-to-move-ones-to-the-end';
 import { problem as designLogStorageSystem } from './design-log-storage-system';
+// batch 177 — hash-map/medium, dp/medium, strings+backtracking/medium
+import { problem as mostFrequentIDs } from './most-frequent-ids';
+import { problem as numberOfPeopleAwareOfASecret } from './number-of-people-aware-of-a-secret';
+import { problem as generateBinaryStringsWithoutAdjacentZeros } from './generate-binary-strings-without-adjacent-zeros';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5724,4 +5728,8 @@ export const problems: readonly Problem[] = [
   doubleANumberRepresentedAsLinkedList,
   maximumNumberOfOperationsToMoveOnesToTheEnd,
   designLogStorageSystem,
+  // batch 177 — hash-map/medium, dp/medium, strings+backtracking/medium
+  mostFrequentIDs,
+  numberOfPeopleAwareOfASecret,
+  generateBinaryStringsWithoutAdjacentZeros,
 ];
