@@ -2913,6 +2913,11 @@ import { problem as minimumCostWalkInAWeightedGraph } from './minimum-cost-walk-
 import { problem as findTheNumberOfSubarraysWhereBoundaryElementsAreMaximum } from './find-the-number-of-subarrays-where-boundary-elements-are-maximum';
 import { problem as countTripletsThatCanFormTwoArraysOfEqualXor } from './count-triplets-that-can-form-two-arrays-of-equal-xor';
 import { problem as maximumNumberOfJumpsToReachTheLastIndex } from './maximum-number-of-jumps-to-reach-the-last-index';
+// batch 185 — medium/arrays+hash-map, medium/arrays+binary-search, medium/arrays, easy/arrays
+import { problem as minimumOperationsToMakeArrayEmpty } from './minimum-operations-to-make-array-empty';
+import { problem as minimumOperationsToMakeArrayContinuous } from './minimum-operations-to-make-array-continuous';
+import { problem as minimumDistanceToTheTargetElement } from './minimum-distance-to-the-target-element';
+import { problem as maximumAreaOfLongestDiagonalRectangle } from './maximum-area-of-longest-diagonal-rectangle';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5867,4 +5872,9 @@ export const problems: readonly Problem[] = [
   findTheNumberOfSubarraysWhereBoundaryElementsAreMaximum,
   countTripletsThatCanFormTwoArraysOfEqualXor,
   maximumNumberOfJumpsToReachTheLastIndex,
+  // batch 185 — medium/arrays+hash-map, medium/arrays+binary-search, medium/arrays, easy/arrays
+  minimumOperationsToMakeArrayEmpty,
+  minimumOperationsToMakeArrayContinuous,
+  minimumDistanceToTheTargetElement,
+  maximumAreaOfLongestDiagonalRectangle,
 ];

@@ -42077,6 +42077,46 @@ def maxBottlesDrunk(numBottles, numExchange):
     return ans
 `,
 
+  'minimum-operations-to-make-array-empty': `def minOperations(nums):
+    from collections import Counter
+    freq = Counter(nums)
+    ops = 0
+    for f in freq.values():
+        if f == 1:
+            return -1
+        ops += (f + 2) // 3
+    return ops
+`,
+
+  'minimum-operations-to-make-array-continuous': `def minOperations(nums):
+    n = len(nums)
+    arr = sorted(set(nums))
+    m = len(arr)
+    max_keep = 0
+    r = 0
+    for l in range(m):
+        while r < m and arr[r] <= arr[l] + n - 1:
+            r += 1
+        max_keep = max(max_keep, r - l)
+    return n - max_keep
+`,
+
+  'minimum-distance-to-the-target-element': `def getMinDistance(nums, target, start):
+    return min(abs(i - start) for i, x in enumerate(nums) if x == target)
+`,
+
+  'maximum-area-of-longest-diagonal-rectangle': `def areaOfMaxDiagonal(dimensions):
+    max_diag2 = 0
+    max_area = 0
+    for l, w in dimensions:
+        diag2 = l * l + w * w
+        area = l * w
+        if diag2 > max_diag2 or (diag2 == max_diag2 and area > max_area):
+            max_diag2 = diag2
+            max_area = area
+    return max_area
+`,
+
   'find-the-number-of-subarrays-where-boundary-elements-are-maximum': `def numberOfSubarrays(nums):
     stack = []
     ans = 0

@@ -42104,6 +42104,57 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(ans);
   },
 
+  'minimum-operations-to-make-array-empty': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const x of nums) freq.set(x, (freq.get(x) ?? 0) + 1);
+    let ops = 0;
+    for (const f of freq.values()) {
+      if (f === 1) return -1;
+      ops += Math.ceil(f / 3);
+    }
+    return ops;
+  },
+
+  'minimum-operations-to-make-array-continuous': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const arr = [...new Set(nums)].sort((a, b) => a - b);
+    const m = arr.length;
+    let maxKeep = 0;
+    let r = 0;
+    for (let l = 0; l < m; l++) {
+      while (r < m && arr[r]! <= arr[l]! + n - 1) r++;
+      maxKeep = Math.max(maxKeep, r - l);
+    }
+    return n - maxKeep;
+  },
+
+  'minimum-distance-to-the-target-element': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    const start = args[2] as number;
+    let minDist = Infinity;
+    for (let i = 0; i < nums.length; i++) {
+      if (nums[i] === target) minDist = Math.min(minDist, Math.abs(i - start));
+    }
+    return minDist;
+  },
+
+  'maximum-area-of-longest-diagonal-rectangle': (...args: unknown[]) => {
+    const dimensions = args[0] as number[][];
+    let maxDiag2 = 0, maxArea = 0;
+    for (const [l, w] of dimensions) {
+      const diag2 = l! * l! + w! * w!;
+      const area = l! * w!;
+      if (diag2 > maxDiag2 || (diag2 === maxDiag2 && area > maxArea)) {
+        maxDiag2 = diag2;
+        maxArea = area;
+      }
+    }
+    return maxArea;
+  },
+
   'find-the-number-of-subarrays-where-boundary-elements-are-maximum': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const stack: [number, number][] = [];

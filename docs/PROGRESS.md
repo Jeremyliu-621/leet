@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2613** problems; 8130 tests green. Batches 102–184 + 179b complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2617** problems; 8142 tests green. Batches 102–185 + 179b complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 185+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 186+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 185 — array-empty ops (medium), array-continuous ops (medium), min-distance-target (easy), max-diagonal-rect (easy) (2026-05-29)
+Four new problems: `minimum-operations-to-make-array-empty` (medium/arrays+hash-map, count frequencies — if any freq==1 return -1, else sum ceil(f/3) over all groups), `minimum-operations-to-make-array-continuous` (medium/arrays+binary-search, sort+dedup then sliding window of value-range n: max elements kept = max window unique count, answer = n - max), `minimum-distance-to-the-target-element` (easy/arrays, linear scan for minimum |i-start| where nums[i]==target), `maximum-area-of-longest-diagonal-rectangle` (easy/arrays, track max diag² = l²+w² with tie-break on area). Bank at **2617**; 8142 tests.
 
 ### feat(bank): batch 184 — boundary-max subarrays (hard), XOR triplets (medium), max jumps DP (medium) (2026-05-29)
 Three new problems: `find-the-number-of-subarrays-where-boundary-elements-are-maximum` (hard/arrays+stack, monotone decreasing stack of (value,count) pairs — when top.val==x add count+1, increment count; else push(x,1), add 1), `count-triplets-that-can-form-two-arrays-of-equal-xor` (medium/arrays+bit-manipulation, prefix XOR — for each pair (i,k) with prefix[i]==prefix[k+1] add k-i valid j positions), `maximum-number-of-jumps-to-reach-the-last-index` (medium/dp, dp[i]=max jumps from 0, try all forward j with |nums[j]-nums[i]|≤target, return dp[n-1] or -1). Bank at **2613**; 8130 tests.
