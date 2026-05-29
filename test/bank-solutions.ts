@@ -34313,6 +34313,58 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return candies.map(c => c + extraCandies >= maxC);
   },
 
+  // batch 145
+  'convert-an-array-into-a-2d-array-with-conditions': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    const result: number[][] = [];
+    for (const num of nums) {
+      const row = freq.get(num) ?? 0;
+      if (row === result.length) result.push([]);
+      result[row]!.push(num);
+      freq.set(num, row + 1);
+    }
+    return result;
+  },
+
+  'replace-the-substring-for-balanced-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length, target = n / 4;
+    const count: Record<string, number> = { Q: 0, W: 0, E: 0, R: 0 };
+    for (const c of s) count[c]!++;
+    const isValid = () => count['Q']! <= target && count['W']! <= target && count['E']! <= target && count['R']! <= target;
+    if (isValid()) return 0;
+    let ans = n, l = 0;
+    for (let r = 0; r < n; r++) {
+      count[s[r]!]!--;
+      while (isValid()) {
+        ans = Math.min(ans, r - l + 1);
+        count[s[l]!]!++;
+        l++;
+      }
+    }
+    return ans;
+  },
+
+  'all-divisions-with-the-highest-score-of-a-binary-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const totalOnes = nums.reduce((s, v) => s + v, 0);
+    let zeros = 0, ones = totalOnes;
+    let maxScore = 0;
+    const scores: number[] = [];
+    for (let i = 0; i <= n; i++) {
+      const score = zeros + ones;
+      scores.push(score);
+      if (score > maxScore) maxScore = score;
+      if (i < n) {
+        if (nums[i] === 0) zeros++;
+        else ones--;
+      }
+    }
+    return scores.map((s, i) => [s, i] as [number, number]).filter(([s]) => s === maxScore).map(([, i]) => i);
+  },
+
   // batch 144
   'reorder-routes-to-make-all-paths-lead-to-the-city-zero': (...args: unknown[]) => {
     const n = args[0] as number, connections = args[1] as number[][];
@@ -35172,6 +35224,53 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return vals[k - 1]!;
   },
 
+  'find-lucky-number-in-matrix': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const result: number[] = [];
+    for (const row of matrix) {
+      const rowMin = Math.min(...row);
+      const colIdx = row.indexOf(rowMin);
+      const colMax = Math.max(...matrix.map(r => r[colIdx]!));
+      if (colMax === rowMin) result.push(rowMin);
+    }
+    return result;
+  },
+
+  'maximum-product-of-three-numbers': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const n = nums.length;
+    const res = Math.max(
+      nums[n - 1]! * nums[n - 2]! * nums[n - 3]!,
+      nums[0]! * nums[1]! * nums[n - 1]!,
+    );
+    return res === 0 ? 0 : res;
+  },
+
+  'finding-3-digit-even-numbers': (...args: unknown[]) => {
+    const digits = args[0] as number[];
+    const freq = new Array(10).fill(0) as number[];
+    for (const d of digits) freq[d]!++;
+    const result: number[] = [];
+    for (let n = 100; n <= 998; n += 2) {
+      const f = new Array(10).fill(0) as number[];
+      const ds = [Math.floor(n / 100), Math.floor(n / 10) % 10, n % 10];
+      for (const d of ds) f[d]!++;
+      if (ds.every((d) => f[d]! <= freq[d]!)) result.push(n);
+    }
+    return result;
+  },
+
+  'difference-between-ones-zeros-in-row-and-column': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length;
+    const n = grid[0]!.length;
+    const onesRow = grid.map(row => row.reduce((a, v) => a + v, 0));
+    const onesCol = Array.from({ length: n }, (_, j) => grid.reduce((a, row) => a + row[j]!, 0));
+    return grid.map((row, i) =>
+      row.map((_, j) => 2 * onesRow[i]! + 2 * onesCol[j]! - m - n),
+    );
+  },
+
   'tweet-counts-per-frequency': (...args: unknown[]) => {
     const ops = args[0] as string[], vals = args[1] as Array<[string, number] | [string, string, number, number]>;
     const store = new Map<string, number[]>();
@@ -35293,5 +35392,79 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 150
+  'minimum-time-to-collect-all-apples-in-a-tree': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const hasApple = args[2] as boolean[];
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const edge of edges) { const u = edge[0] as number, v = edge[1] as number; adj[u]!.push(v); adj[v]!.push(u); }
+    function dfs(node: number, parent: number): number {
+      let time = 0;
+      for (const child of adj[node]!) {
+        if (child === parent) continue;
+        const childTime = dfs(child, node);
+        if (childTime > 0 || hasApple[child]) time += childTime + 2;
+      }
+      return time;
+    }
+    return dfs(0, -1);
+  },
+
+  'maximum-units-on-a-truck': (...args: unknown[]) => {
+    const boxTypes = args[0] as number[][];
+    let truckSize = args[1] as number;
+    boxTypes.sort((a, b) => (b[1] as number) - (a[1] as number));
+    let units = 0;
+    for (const box of boxTypes) {
+      const count = box[0] as number, unitsPerBox = box[1] as number;
+      const take = Math.min(count, truckSize);
+      units += take * unitsPerBox;
+      truckSize -= take;
+      if (truckSize === 0) break;
+    }
+    return units;
+  },
+
+  'number-of-ways-to-split-a-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const MOD = 1000000007n;
+    const n = s.length;
+    const ones = [...s].filter(c => c === '1').length;
+    if (ones % 3 !== 0) return 0;
+    if (ones === 0) return Number((BigInt(n - 1) * BigInt(n - 2) / 2n) % MOD);
+    const third = ones / 3;
+    let cnt = 0, pos1 = -1, pos2 = -1, pos3 = -1, pos4 = -1;
+    for (let i = 0; i < n; i++) {
+      if (s[i] === '1') {
+        cnt++;
+        if (cnt === third) pos1 = i;
+        if (cnt === third + 1) pos2 = i;
+        if (cnt === 2 * third) pos3 = i;
+        if (cnt === 2 * third + 1) pos4 = i;
+      }
+    }
+    return Number((BigInt(pos2 - pos1) * BigInt(pos4 - pos3)) % MOD);
+  },
+
+  'mean-of-array-after-removing-some-elements': (...args: unknown[]) => {
+    const arr = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const n = arr.length;
+    const trim = n * 0.05;
+    const sliced = arr.slice(trim, n - trim);
+    return sliced.reduce((a, b) => a + b, 0) / sliced.length;
+  },
+
+  'minimum-number-of-operations-to-convert-time': (...args: unknown[]) => {
+    const current = args[0] as string, correct = args[1] as string;
+    const toMins = (t: string) => parseInt(t.slice(0, 2)) * 60 + parseInt(t.slice(3));
+    let diff = toMins(correct) - toMins(current);
+    let ops = 0;
+    for (const step of [60, 15, 5, 1]) {
+      ops += Math.floor(diff / step);
+      diff %= step;
+    }
+    return ops;
+  },
 
 };

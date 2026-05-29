@@ -34263,6 +34263,63 @@ def minDominoRotations(tops, bottoms) -> int:
     return -1 if res == float('inf') else res
 `,
 
+  // batch 145
+  'convert-an-array-into-a-2d-array-with-conditions': `
+def findMatrix(nums):
+    freq = {}
+    result = []
+    for num in nums:
+        row = freq.get(num, 0)
+        if row == len(result):
+            result.append([])
+        result[row].append(num)
+        freq[num] = row + 1
+    return result
+`,
+
+  'replace-the-substring-for-balanced-string': `
+def balancedString(s: str) -> int:
+    from collections import Counter
+    n = len(s)
+    target = n // 4
+    count = Counter(s)
+    def is_valid():
+        return all(count.get(c, 0) <= target for c in 'QWER')
+    if is_valid():
+        return 0
+    ans = n
+    l = 0
+    for r in range(n):
+        count[s[r]] -= 1
+        while is_valid():
+            ans = min(ans, r - l + 1)
+            count[s[l]] += 1
+            l += 1
+    return ans
+`,
+
+  'all-divisions-with-the-highest-score-of-a-binary-array': `
+def maxScoreIndices(nums) -> list:
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    total_ones = sum(nums)
+    zeros = 0
+    ones = total_ones
+    max_score = 0
+    scores = []
+    for i in range(n + 1):
+        score = zeros + ones
+        scores.append(score)
+        if score > max_score:
+            max_score = score
+        if i < n:
+            if nums[i] == 0:
+                zeros += 1
+            else:
+                ones -= 1
+    return [i for i, s in enumerate(scores) if s == max_score]
+`,
+
   // batch 144
   'reorder-routes-to-make-all-paths-lead-to-the-city-zero': `
 def minReorder(n: int, connections) -> int:
@@ -35071,6 +35128,42 @@ def resultsArray(queries, k):
     return swaps
 `,
 
+  'find-lucky-number-in-matrix': `def luckyNumbers(matrix):
+    result = []
+    for row in matrix:
+        row_min = min(row)
+        col_idx = row.index(row_min)
+        col_max = max(r[col_idx] for r in matrix)
+        if col_max == row_min:
+            result.append(row_min)
+    return result
+`,
+
+  'maximum-product-of-three-numbers': `def maximumProduct(nums):
+    nums = sorted(nums)
+    n = len(nums)
+    return max(nums[n-1] * nums[n-2] * nums[n-3], nums[0] * nums[1] * nums[n-1])
+`,
+
+  'finding-3-digit-even-numbers': `def findEvenNumbers(digits):
+    from collections import Counter
+    freq = Counter(digits)
+    result = []
+    for n in range(100, 999, 2):
+        need = Counter([n // 100, (n // 10) % 10, n % 10])
+        if all(need[d] <= freq[d] for d in need):
+            result.append(n)
+    return result
+`,
+
+  'difference-between-ones-zeros-in-row-and-column': `def onesMinusZeros(grid):
+    m = len(grid)
+    n = len(grid[0])
+    ones_row = [sum(row) for row in grid]
+    ones_col = [sum(grid[i][j] for i in range(m)) for j in range(n)]
+    return [[2 * ones_row[i] + 2 * ones_col[j] - m - n for j in range(n)] for i in range(m)]
+`,
+
   'tweet-counts-per-frequency': `def tweetCountsRunner(ops, vals):
     ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
     vals = list(vals.to_py() if hasattr(vals, 'to_py') else vals)
@@ -35095,6 +35188,83 @@ def resultsArray(queries, k):
                     res[(t - start) // delta] += 1
             results.append(res)
     return results
+`,
+
+  // batch 150
+  'minimum-time-to-collect-all-apples-in-a-tree': `def minTime(n, edges, hasApple):
+    edges = list(edges.to_py() if hasattr(edges, 'to_py') else edges)
+    hasApple = list(hasApple.to_py() if hasattr(hasApple, 'to_py') else hasApple)
+    adj = [[] for _ in range(n)]
+    for e in edges:
+        e = list(e.to_py() if hasattr(e, 'to_py') else e)
+        u, v = e[0], e[1]
+        adj[u].append(v)
+        adj[v].append(u)
+    def dfs(node, parent):
+        time = 0
+        for child in adj[node]:
+            if child == parent:
+                continue
+            child_time = dfs(child, node)
+            if child_time > 0 or hasApple[child]:
+                time += child_time + 2
+        return time
+    return dfs(0, -1)
+`,
+
+  'maximum-units-on-a-truck': `def maximumUnits(boxTypes, truckSize):
+    boxTypes = list(boxTypes.to_py() if hasattr(boxTypes, 'to_py') else boxTypes)
+    boxTypes = [list(b.to_py() if hasattr(b, 'to_py') else b) for b in boxTypes]
+    boxTypes.sort(key=lambda x: -x[1])
+    units = 0
+    for count, units_per_box in boxTypes:
+        take = min(count, truckSize)
+        units += take * units_per_box
+        truckSize -= take
+        if truckSize == 0:
+            break
+    return units
+`,
+
+  'number-of-ways-to-split-a-string': `def numWays(s):
+    MOD = 10**9 + 7
+    n = len(s)
+    ones = s.count('1')
+    if ones % 3 != 0:
+        return 0
+    if ones == 0:
+        return ((n - 1) * (n - 2) // 2) % MOD
+    third = ones // 3
+    cnt = 0
+    pos1 = pos2 = pos3 = pos4 = -1
+    for i, c in enumerate(s):
+        if c == '1':
+            cnt += 1
+            if cnt == third: pos1 = i
+            if cnt == third + 1: pos2 = i
+            if cnt == 2 * third: pos3 = i
+            if cnt == 2 * third + 1: pos4 = i
+    return ((pos2 - pos1) * (pos4 - pos3)) % MOD
+`,
+
+  'mean-of-array-after-removing-some-elements': `def trimMean(arr):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    arr.sort()
+    n = len(arr)
+    trim = int(n * 0.05)
+    sliced = arr[trim:n - trim]
+    return sum(sliced) / len(sliced)
+`,
+
+  'minimum-number-of-operations-to-convert-time': `def convertTime(current, correct):
+    def to_mins(t):
+        return int(t[:2]) * 60 + int(t[3:])
+    diff = to_mins(correct) - to_mins(current)
+    ops = 0
+    for step in [60, 15, 5, 1]:
+        ops += diff // step
+        diff %= step
+    return ops
 `,
 
 };

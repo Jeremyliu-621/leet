@@ -2483,6 +2483,17 @@ import { problem as maximumEnergyBoostFromTwoDrinks } from './maximum-energy-boo
 import { problem as kthNearestObstacleQueries } from './k-th-nearest-obstacle-queries';
 // batch 149b — arrays/easy
 import { problem as calculateAmountPaidInTaxes } from './calculate-amount-paid-in-taxes';
+// batch 150
+import { problem as minimumTimeCollectAllApplesTree } from './minimum-time-to-collect-all-apples-in-a-tree';
+import { problem as maximumUnitsOnATruck } from './maximum-units-on-a-truck';
+import { problem as numberOfWaysToSplitAString } from './number-of-ways-to-split-a-string';
+import { problem as meanArrayAfterRemovingSomeElements } from './mean-of-array-after-removing-some-elements';
+import { problem as minimumOpsConvertTime } from './minimum-number-of-operations-to-convert-time';
+// batch 150b — easy/arrays+hash-map, easy/arrays+math, easy/arrays+hash-map, easy/arrays+matrix
+import { problem as findLuckyNumberInMatrix } from './find-lucky-number-in-matrix';
+import { problem as maximumProductOfThreeNumbers } from './maximum-product-of-three-numbers';
+import { problem as findingThreeDigitEvenNumbers } from './finding-3-digit-even-numbers';
+import { problem as differenceOnesZerosRowAndColumn } from './difference-between-ones-zeros-in-row-and-column';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5003,4 +5014,15 @@ export const problems: readonly Problem[] = [
   kthNearestObstacleQueries,
   // batch 149b — arrays/easy
   calculateAmountPaidInTaxes,
+  // batch 150 — tree/medium, arrays/easy, strings/medium, arrays/easy, strings/easy
+  minimumTimeCollectAllApplesTree,
+  maximumUnitsOnATruck,
+  numberOfWaysToSplitAString,
+  meanArrayAfterRemovingSomeElements,
+  minimumOpsConvertTime,
+  // batch 150b — easy/arrays+hash-map, easy/arrays+math, easy/arrays+hash-map, easy/arrays+matrix
+  findLuckyNumberInMatrix,
+  maximumProductOfThreeNumbers,
+  findingThreeDigitEvenNumbers,
+  differenceOnesZerosRowAndColumn,
 ];
