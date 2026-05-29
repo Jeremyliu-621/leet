@@ -35813,77 +35813,147 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
-  // batch 151
-  'swap-pairs-linked-list': (...args: unknown[]) => {
-    const vals = args[0] as number[];
-    const result = [...vals];
-    for (let i = 0; i + 1 < result.length; i += 2) {
-      [result[i], result[i + 1]] = [result[i + 1]!, result[i]!];
+  // batch 153
+  'minimum-number-of-vertices-to-reach-all-nodes': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const hasParent = new Array(n).fill(false) as boolean[];
+    for (const edge of edges) hasParent[edge[1] as number] = true;
+    return [...Array(n).keys()].filter(i => !hasParent[i]);
+  },
+
+  'check-if-there-is-a-valid-path-in-a-grid': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    const conn: Array<Array<[number, number, number[]]>> = [
+      [],
+      [[0, -1, [1, 4, 6]], [0, 1, [1, 3, 5]]],
+      [[-1, 0, [2, 3, 4]], [1, 0, [2, 5, 6]]],
+      [[0, -1, [1, 4, 6]], [1, 0, [2, 5, 6]]],
+      [[0, 1, [1, 3, 5]], [1, 0, [2, 5, 6]]],
+      [[0, -1, [1, 4, 6]], [-1, 0, [2, 3, 4]]],
+      [[0, 1, [1, 3, 5]], [-1, 0, [2, 3, 4]]],
+    ];
+    const vis: boolean[][] = Array.from({ length: m }, () => new Array(n).fill(false) as boolean[]);
+    const q: [number, number][] = [[0, 0]];
+    vis[0]![0] = true;
+    while (q.length) {
+      const [r, c] = q.shift()!;
+      if (r === m - 1 && c === n - 1) return true;
+      for (const [dr, dc, valid] of conn[grid[r]![c]!]!) {
+        const nr = r + dr, nc = c + dc;
+        if (nr < 0 || nr >= m || nc < 0 || nc >= n || vis[nr]![nc] || !valid.includes(grid[nr]![nc]!)) continue;
+        vis[nr]![nc] = true;
+        q.push([nr, nc]);
+      }
     }
-    return result;
+    return vis[m - 1]![n - 1]!;
+  },
+
+  'frequency-of-the-most-frequent-element': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const k = args[1] as number;
+    let left = 0, sum = 0, res = 1;
+    for (let right = 1; right < nums.length; right++) {
+      sum += (nums[right]! - nums[right - 1]!) * (right - left);
+      while (sum > k) { sum -= nums[right]! - nums[left]!; left++; }
+      res = Math.max(res, right - left + 1);
+    }
+    return res;
+  },
+
+  'ways-to-make-a-fair-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let evenSum = 0, oddSum = 0;
+    for (let i = 0; i < nums.length; i++) {
+      if (i % 2 === 0) evenSum += nums[i]!; else oddSum += nums[i]!;
+    }
+    let prevEven = 0, prevOdd = 0, count = 0;
+    for (let i = 0; i < nums.length; i++) {
+      const newEven = prevEven + oddSum - prevOdd - (i % 2 === 1 ? nums[i]! : 0);
+      const newOdd = prevOdd + evenSum - prevEven - (i % 2 === 0 ? nums[i]! : 0);
+      if (newEven === newOdd) count++;
+      if (i % 2 === 0) prevEven += nums[i]!; else prevOdd += nums[i]!;
+    }
+    return count;
+  },
+
+  'nearest-exit-from-entrance-in-maze': (...args: unknown[]) => {
+    const maze = args[0] as string[][];
+    const entrance = args[1] as number[];
+    const m = maze.length, n = maze[0]!.length;
+    const dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+    const visited: boolean[][] = Array.from({ length: m }, () => new Array(n).fill(false) as boolean[]);
+    const queue: [number, number, number][] = [[entrance[0]!, entrance[1]!, 0]];
+    visited[entrance[0]!]![entrance[1]!] = true;
+    while (queue.length > 0) {
+      const [r, c, dist] = queue.shift()!;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr!, nc = c + dc!;
+        if (nr < 0 || nr >= m || nc < 0 || nc >= n || visited[nr]![nc] || maze[nr]![nc] === '+') continue;
+        if (nr === 0 || nr === m - 1 || nc === 0 || nc === n - 1) return dist + 1;
+        visited[nr]![nc] = true;
+        queue.push([nr, nc, dist + 1]);
+      }
+    }
+    return -1;
+  },
+
+  'swap-pairs-linked-list': (...args: unknown[]) => {
+    const r = [...(args[0] as number[])];
+    for (let i = 0; i + 1 < r.length; i += 2) [r[i], r[i + 1]] = [r[i + 1]!, r[i]!];
+    return r;
   },
 
   'reverse-nodes-k-group': (...args: unknown[]) => {
-    const vals = args[0] as number[];
+    const r = [...(args[0] as number[])];
     const k = args[1] as number;
-    const result = [...vals];
-    for (let i = 0; i + k <= result.length; i += k) {
-      result.splice(i, k, ...result.slice(i, i + k).reverse());
+    for (let i = 0; i + k <= r.length; i += k) {
+      let l = i, rr = i + k - 1;
+      while (l < rr) { [r[l], r[rr]] = [r[rr]!, r[l]!]; l++; rr--; }
     }
-    return result;
+    return r;
   },
 
   'minimum-spanning-tree-weight': (...args: unknown[]) => {
     const n = args[0] as number;
-    const edges = args[1] as number[][];
-    if (n === 1) return 0;
+    const edges = (args[1] as number[][]).slice().sort((a, b) => a[2]! - b[2]!);
     const parent = Array.from({ length: n }, (_, i) => i);
     const rank = new Array<number>(n).fill(0);
-    function find(x: number): number {
-      if (parent[x] !== x) parent[x] = find(parent[x]!);
-      return parent[x]!;
-    }
-    function union(a: number, b: number): boolean {
-      const ra = find(a), rb = find(b);
-      if (ra === rb) return false;
-      if (rank[ra]! < rank[rb]!) parent[ra] = rb;
-      else if (rank[ra]! > rank[rb]!) parent[rb] = ra;
-      else { parent[rb] = ra; rank[ra]!++; }
+    function mstFind(x: number): number { return parent[x] === x ? x : (parent[x] = mstFind(parent[x]!)); }
+    function mstUnion(a: number, b: number): boolean {
+      const pa = mstFind(a), pb = mstFind(b);
+      if (pa === pb) return false;
+      if (rank[pa]! < rank[pb]!) parent[pa] = pb;
+      else if (rank[pa]! > rank[pb]!) parent[pb] = pa;
+      else { parent[pb] = pa; rank[pa]!++; }
       return true;
     }
-    const sorted = [...edges].sort((a, b) => (a[2] as number) - (b[2] as number));
     let weight = 0, count = 0;
-    for (const edge of sorted) {
-      if (union(edge[0] as number, edge[1] as number)) {
-        weight += edge[2] as number;
-        count++;
-      }
+    for (const edge of edges) {
+      const u = edge[0] as number, v = edge[1] as number, w = edge[2] as number;
+      if (mstUnion(u, v)) { weight += w; count++; }
     }
     return count === n - 1 ? weight : -1;
   },
 
   'union-find-dynamic-connectivity': (...args: unknown[]) => {
     const n = args[0] as number;
-    const ops = args[1] as (string | number)[][];
+    const ops = args[1] as string[][];
     const parent = Array.from({ length: n }, (_, i) => i);
     const rank = new Array<number>(n).fill(0);
-    function find(x: number): number {
-      if (parent[x] !== x) parent[x] = find(parent[x]!);
-      return parent[x]!;
-    }
-    function union(a: number, b: number): void {
-      const ra = find(a), rb = find(b);
-      if (ra === rb) return;
-      if (rank[ra]! < rank[rb]!) parent[ra] = rb;
-      else if (rank[ra]! > rank[rb]!) parent[rb] = ra;
-      else { parent[rb] = ra; rank[ra]!++; }
+    function ufFind(x: number): number { return parent[x] === x ? x : (parent[x] = ufFind(parent[x]!)); }
+    function ufUnion(a: number, b: number): void {
+      const pa = ufFind(a), pb = ufFind(b);
+      if (pa === pb) return;
+      if (rank[pa]! < rank[pb]!) parent[pa] = pb;
+      else if (rank[pa]! > rank[pb]!) parent[pb] = pa;
+      else { parent[pb] = pa; rank[pa]!++; }
     }
     const result: boolean[] = [];
     for (const op of ops) {
-      const type = op[0] as string;
-      const u = op[1] as number, v = op[2] as number;
-      if (type === 'union') union(u, v);
-      else result.push(find(u) === find(v));
+      if (op[0] === 'union') ufUnion(Number(op[1]), Number(op[2]));
+      else result.push(ufFind(Number(op[1])) === ufFind(Number(op[2])));
     }
     return result;
   },
@@ -35892,218 +35962,226 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const n = args[0] as number;
     const edges = args[1] as number[][];
     const source = args[2] as number;
-    const INF = Infinity;
-    const dist = new Array<number>(n + 1).fill(INF);
+    const dist = new Array(n + 1).fill(Infinity) as number[];
     dist[source] = 0;
-    for (let iter = 0; iter < n - 1; iter++) {
+    for (let i = 0; i < n - 1; i++) {
       for (const edge of edges) {
         const u = edge[0] as number, v = edge[1] as number, w = edge[2] as number;
-        if (dist[u] !== INF && dist[u]! + w < dist[v]!) {
-          dist[v] = dist[u]! + w;
-        }
+        if (dist[u]! !== Infinity && dist[u]! + w < dist[v]!) dist[v] = dist[u]! + w;
       }
     }
-    dist[0] = 0;
-    return dist.map(d => d === INF ? -1 : d);
+    return [0, ...dist.slice(1).map(d => d === Infinity ? -1 : d)];
   },
 
   'bit-prefix-sum-updates': (...args: unknown[]) => {
-    const nums = (args[0] as number[]).slice();
+    const nums = args[0] as number[];
     const ops = args[1] as (string | number)[][];
     const n = nums.length;
-    const bit = new Array<number>(n + 1).fill(0);
-    function update(i: number, delta: number): void {
-      for (; i <= n; i += i & -i) bit[i]! += delta;
+    const tree = new Array<number>(n + 1).fill(0);
+    function bitUpdate(i: number, delta: number): void {
+      for (; i <= n; i += i & -i) tree[i]! += delta;
     }
-    function query(i: number): number {
+    function bitQuery(i: number): number {
       let s = 0;
-      for (; i > 0; i -= i & -i) s += bit[i]!;
+      for (; i > 0; i -= i & -i) s += tree[i]!;
       return s;
     }
-    for (let i = 0; i < n; i++) update(i + 1, nums[i]!);
+    for (let i = 0; i < n; i++) bitUpdate(i + 1, nums[i]!);
     const result: number[] = [];
     for (const op of ops) {
-      const type = op[0] as string;
-      if (type === 'update') {
-        const i = op[1] as number, delta = op[2] as number;
-        update(i, delta);
-      } else {
-        const l = op[1] as number, r = op[2] as number;
-        result.push(query(r) - query(l - 1));
-      }
+      if (op[0] === 'update') bitUpdate(Number(op[1]), Number(op[2]));
+      else result.push(bitQuery(Number(op[2])) - bitQuery(Number(op[1]) - 1));
     }
     return result;
   },
+
   'find-the-count-of-monotonic-pairs-ii': (...args: unknown[]) => {
     const nums = args[0] as number[];
-    const MOD = 1_000_000_007n;
-    const maxV = Math.max(...nums);
-    let dp = new Array<bigint>(maxV + 1).fill(0n);
-    for (let v = 0; v <= nums[0]!; v++) dp[v] = 1n;
+    const MOD = 1000000007n;
+    let dp = new Array<bigint>(nums[0]! + 1).fill(1n);
     for (let i = 1; i < nums.length; i++) {
-      const delta = Math.max(0, nums[i]! - nums[i - 1]!);
-      const prefix = new Array<bigint>(maxV + 2).fill(0n);
-      for (let v = 0; v <= maxV; v++) prefix[v + 1] = (prefix[v]! + dp[v]!) % MOD;
-      const newDp = new Array<bigint>(maxV + 1).fill(0n);
-      for (let v = 0; v <= nums[i]!; v++) {
-        const bound = v - delta;
-        if (bound >= 0) newDp[v] = prefix[bound + 1]!;
+      const d = Math.max(0, nums[i]! - nums[i - 1]!);
+      const m = nums[i]! + 1;
+      const prefix = new Array<bigint>(dp.length + 1).fill(0n);
+      for (let v = 0; v < dp.length; v++) prefix[v + 1] = (prefix[v]! + dp[v]!) % MOD;
+      const newDp = new Array<bigint>(m).fill(0n);
+      for (let v = 0; v < m; v++) {
+        const limit = v - d;
+        if (limit >= 0) newDp[v] = prefix[Math.min(limit + 1, prefix.length - 1)]!;
       }
       dp = newDp;
     }
-    return Number(dp.reduce((s, x) => (s + x) % MOD, 0n));
+    return Number(dp.reduce((a, b) => (a + b) % MOD, 0n));
   },
 
   'maximum-strength-of-a-group': (...args: unknown[]) => {
-    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
-    let prod = 1, hasProduct = false;
-    let i = 0;
-    while (i + 1 < nums.length && nums[i]! < 0 && nums[i + 1]! < 0) {
-      prod *= nums[i]! * nums[i + 1]!;
-      hasProduct = true;
-      i += 2;
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    if (nums.length === 1) return nums[0]!;
+    const negCount = nums.filter(n => n < 0).length;
+    let result = 1n, hasNonZero = false;
+    if (negCount % 2 === 0) {
+      for (const n of nums) { if (n !== 0) { result *= BigInt(n); hasNonZero = true; } }
+    } else {
+      let excluded = false;
+      for (let i = nums.length - 1; i >= 0; i--) {
+        if (nums[i]! < 0 && !excluded) { excluded = true; continue; }
+        if (nums[i] !== 0) { result *= BigInt(nums[i]!); hasNonZero = true; }
+      }
     }
-    while (i < nums.length && nums[i]! <= 0) i++;
-    while (i < nums.length) {
-      prod *= nums[i]!;
-      hasProduct = true;
-      i++;
-    }
-    if (!hasProduct) {
-      const max = Math.max(...nums);
-      return max < 0 ? max : 0;
-    }
-    return prod;
+    return hasNonZero ? Number(result) : 0;
   },
 
   'minimum-number-of-valid-strings-to-form-target-i': (...args: unknown[]) => {
-    const words = args[0] as string[], target = args[1] as string;
-    const prefixes = new Set<string>();
-    for (const w of words) {
-      for (let k = 1; k <= w.length; k++) prefixes.add(w.slice(0, k));
-    }
+    const words = args[0] as string[];
+    const target = args[1] as string;
     const n = target.length;
-    const dp = new Array<number>(n + 1).fill(Infinity);
-    dp[0] = 0;
-    for (let s = 0; s < n; s++) {
-      if (dp[s] === Infinity) continue;
-      for (let e = s + 1; e <= n; e++) {
-        if (prefixes.has(target.slice(s, e))) dp[e] = Math.min(dp[e]!, dp[s]! + 1);
+    const maxJump = new Array<number>(n).fill(0);
+    for (const word of words) {
+      for (let i = 0; i < n; i++) {
+        let l = 0;
+        while (i + l < n && l < word.length && target[i + l] === word[l]) l++;
+        if (l > maxJump[i]!) maxJump[i] = l;
       }
     }
-    return dp[n]! === Infinity ? -1 : dp[n]!;
+    let pos = 0, count = 0;
+    while (pos < n) {
+      if (maxJump[pos] === 0) return -1;
+      pos += maxJump[pos]!;
+      count++;
+    }
+    return count;
   },
 
   'maximum-total-reward-using-operations-ii': (...args: unknown[]) => {
-    const rewardValues = args[0] as number[];
-    const sorted = [...new Set(rewardValues)].sort((a, b) => a - b);
+    const vals = [...new Set(args[0] as number[])].sort((a, b) => a - b);
     let dp = 1n;
-    for (const v of sorted) {
+    for (const v of vals) {
       const mask = (1n << BigInt(v)) - 1n;
       dp |= (dp & mask) << BigInt(v);
     }
-    return dp.toString(2).length - 1;
+    let ans = 0;
+    let tmp = dp;
+    while (tmp > 0n) { ans++; tmp >>= 1n; }
+    return ans - 1;
+  },
+
+  // batch 154 — new remote batch
+  'minimum-moves-to-capture-the-queen': (...args: unknown[]) => {
+    const [a, b, c, d, e, f] = args as number[];
+    // Rook at (a,b), bishop at (c,d), queen at (e,f)
+    if (a === e && !(c === a && Math.min(b!, f!) < d! && d! < Math.max(b!, f!))) return 1;
+    if (b === f && !(d === b && Math.min(a!, e!) < c! && c! < Math.max(a!, e!))) return 1;
+    if (c! - e! === d! - f! && !(a! - b! === c! - d! && Math.min(c!, e!) < a! && a! < Math.max(c!, e!))) return 1;
+    if (c! + d! === e! + f! && !(a! + b! === c! + d! && Math.min(c!, e!) < a! && a! < Math.max(c!, e!))) return 1;
+    return 2;
+  },
+
+  'minimum-substring-partition-of-equal-character-frequency': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const dp = new Array(n + 1).fill(Infinity) as number[];
+    dp[0] = 0;
+    for (let i = 1; i <= n; i++) {
+      const cnt = new Map<string, number>();
+      for (let j = i; j >= 1; j--) {
+        const ch = s[j - 1]!;
+        cnt.set(ch, (cnt.get(ch) ?? 0) + 1);
+        const vals = [...cnt.values()];
+        const maxV = Math.max(...vals), minV = Math.min(...vals);
+        if (maxV === minV && dp[j - 1]! < Infinity) dp[i] = Math.min(dp[i]!, dp[j - 1]! + 1);
+      }
+    }
+    return dp[n]!;
+  },
+
+  'maximum-good-subarray-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const n = nums.length;
+    const prefix = new Array(n + 1).fill(0) as number[];
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + nums[i]!;
+    const best = new Map<number, number>();
+    let ans = -Infinity, found = false;
+    for (let j = 0; j < n; j++) {
+      for (const target of [nums[j]! - k, nums[j]! + k]) {
+        if (best.has(target)) {
+          const sum = prefix[j + 1]! - best.get(target)!;
+          if (!found || sum > ans) { ans = sum; found = true; }
+        }
+      }
+      if (!best.has(nums[j]!) || prefix[j]! > best.get(nums[j]!)!) best.set(nums[j]!, prefix[j]!);
+    }
+    return found ? ans : 0;
+  },
+
+  'maximal-score-after-applying-k-operations': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const h: number[] = [];
+    const up = (i: number) => { while (i > 0) { const p = (i - 1) >> 1; if (h[p]! >= h[i]!) break; [h[p], h[i]] = [h[i]!, h[p]!]; i = p; } };
+    const dn = (i: number) => { const len = h.length; while (true) { let m = i; const l = 2 * i + 1, r = 2 * i + 2; if (l < len && h[l]! > h[m]!) m = l; if (r < len && h[r]! > h[m]!) m = r; if (m === i) break; [h[m], h[i]] = [h[i]!, h[m]!]; i = m; } };
+    for (const n of nums) { h.push(n); up(h.length - 1); }
+    let ans = 0;
+    for (let i = 0; i < k; i++) {
+      const x = h[0]!;
+      ans += x;
+      const last = h.pop()!;
+      if (h.length > 0) { h[0] = last; dn(0); }
+      h.push(Math.ceil(x / 3));
+      up(h.length - 1);
+    }
+    return ans;
   },
 
   'partition-linked-list-around-value': (...args: unknown[]) => {
     const vals = args[0] as number[];
     const x = args[1] as number;
-    const less: number[] = [];
-    const geq: number[] = [];
-    for (const v of vals) {
-      if (v < x) less.push(v);
-      else geq.push(v);
-    }
-    return [...less, ...geq];
+    return [...vals.filter(v => v < x), ...vals.filter(v => v >= x)];
   },
 
   'merge-k-sorted-linked-lists': (...args: unknown[]) => {
-    const arrays = (args[0] as number[][]).map(a => [...a]);
-    const result: number[] = [];
-    // merge using indices
-    const indices = arrays.map(() => 0);
-    while (true) {
-      let minVal = Infinity;
-      let minIdx = -1;
-      for (let i = 0; i < arrays.length; i++) {
-        if (indices[i]! < arrays[i]!.length && arrays[i]![indices[i]!]! < minVal) {
-          minVal = arrays[i]![indices[i]!]!;
-          minIdx = i;
-        }
-      }
-      if (minIdx === -1) break;
-      result.push(minVal);
-      indices[minIdx]!++;
-    }
-    return result;
+    const arrays = args[0] as number[][];
+    return arrays.flat().sort((a, b) => a - b);
   },
 
   'friend-groups-union-find': (...args: unknown[]) => {
     const n = args[0] as number;
     const pairs = args[1] as number[][];
     const parent = Array.from({ length: n }, (_, i) => i);
-    function find(x: number): number {
-      if (parent[x] !== x) parent[x] = find(parent[x]!);
-      return parent[x]!;
-    }
-    let count = n;
-    for (const [a, b] of pairs) {
-      const ra = find(a as number), rb = find(b as number);
-      if (ra !== rb) {
-        parent[ra] = rb;
-        count--;
-      }
-    }
-    return count;
+    function fgFind(x: number): number { return parent[x] === x ? x : (parent[x] = fgFind(parent[x]!)); }
+    for (const pair of pairs) parent[fgFind(pair[0] as number)] = fgFind(pair[1] as number);
+    return new Set(Array.from({ length: n }, (_, i) => fgFind(i))).size;
   },
 
   'dijkstra-single-source-shortest-path': (...args: unknown[]) => {
     const n = args[0] as number;
     const edges = args[1] as number[][];
     const source = args[2] as number;
-    const INF = Infinity;
     const adj: [number, number][][] = Array.from({ length: n + 1 }, () => []);
-    for (const [u, v, w] of edges) {
-      adj[u as number]!.push([v as number, w as number]);
-    }
-    const dist = new Array<number>(n + 1).fill(INF);
+    for (const edge of edges) adj[edge[0] as number]!.push([edge[1] as number, edge[2] as number]);
+    const dist = new Array(n + 1).fill(Infinity) as number[];
+    const visited = new Array(n + 1).fill(false) as boolean[];
     dist[source] = 0;
-    // simple priority queue via sorted array
-    const heap: [number, number][] = [[0, source]];
-    while (heap.length > 0) {
-      heap.sort((a, b) => a[0] - b[0]);
-      const [d, u] = heap.shift()!;
-      if (d > dist[u]!) continue;
-      for (const [v, w] of adj[u]!) {
-        const nd = dist[u]! + w;
-        if (nd < dist[v]!) {
-          dist[v] = nd;
-          heap.push([nd, v]);
-        }
-      }
+    for (let iter = 0; iter < n; iter++) {
+      let u = -1;
+      for (let v = 1; v <= n; v++) if (!visited[v] && (u === -1 || dist[v]! < dist[u]!)) u = v;
+      if (u === -1 || dist[u] === Infinity) break;
+      visited[u] = true;
+      for (const [v, w] of adj[u]!) if (dist[u]! + w < dist[v]!) dist[v] = dist[u]! + w;
     }
-    dist[0] = 0;
-    return dist.map(d => d === INF ? -1 : d);
+    return [0, ...dist.slice(1).map(d => d === Infinity ? -1 : d)];
   },
 
   'kth-largest-after-each-insertion': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const k = args[1] as number;
-    const result: number[] = [];
-    const top: number[] = []; // maintained as sorted ascending, size <= k
-    for (const num of nums) {
-      // binary insert
-      let lo = 0, hi = top.length;
-      while (lo < hi) {
-        const mid = (lo + hi) >> 1;
-        if (top[mid]! < num) lo = mid + 1;
-        else hi = mid;
-      }
-      top.splice(lo, 0, num);
-      if (top.length > k) top.shift();
-      result.push(top.length === k ? top[0]! : -1);
-    }
-    return result;
+    const sorted: number[] = [];
+    return nums.map(n => {
+      let lo = 0, hi = sorted.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (sorted[mid]! >= n) lo = mid + 1; else hi = mid; }
+      sorted.splice(lo, 0, n);
+      return sorted.length < k ? -1 : sorted[k - 1]!;
+    });
   },
 
   'simulate-traffic-lights': (...args: unknown[]) => {
@@ -36111,232 +36189,25 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const g = args[1] as number;
     const r = args[2] as number;
     const cycle = g + r;
-    let clearTime = 0;
     const result: number[] = [];
+    let prevPass = -1;
     for (const arrival of arrivals) {
-      let t = Math.max(arrival, clearTime);
-      const pos = t % cycle;
-      if (pos >= g) {
-        // red: wait for next green
-        t = Math.floor(t / cycle + 1) * cycle;
-      }
-      clearTime = t + 1;
-      result.push(clearTime);
+      const t = Math.max(arrival, prevPass);
+      const mod = t % cycle;
+      if (mod < g) { result.push(t + 1); prevPass = t + 1; }
+      else { const ng = t + (cycle - mod); result.push(ng + 1); prevPass = ng + 1; }
     }
     return result;
   },
 
-
-  'minimum-moves-to-capture-the-queen': (...args: unknown[]) => {
-    const a = args[0] as number, b = args[1] as number;
-    const c = args[2] as number, d = args[3] as number;
-    const e = args[4] as number, f = args[5] as number;
-    // Rook same col (a==e): blocked if bishop in same col between rook and queen
-    if (a === e && !(c === a && Math.min(b, f) < d && d < Math.max(b, f))) return 1;
-    // Rook same row (b==f): blocked if bishop in same row between rook and queen
-    if (b === f && !(d === f && Math.min(a, e) < c && c < Math.max(a, e))) return 1;
-    // Bishop same diagonal: blocked if rook lies on the diagonal path
-    if (Math.abs(c - e) === Math.abs(d - f)) {
-      const dr = Math.sign(e - c), dc = Math.sign(f - d);
-      let rx = c + dr, ry = d + dc;
-      let blocked = false;
-      while (rx !== e || ry !== f) {
-        if (rx === a && ry === b) { blocked = true; break; }
-        rx += dr; ry += dc;
-      }
-      if (!blocked) return 1;
-    }
-    return 2;
-  },
-
-  'minimum-substring-partition-of-equal-character-frequency': (...args: unknown[]) => {
-    const s = args[0] as string;
-    const n = s.length;
-    const dp = new Array<number>(n + 1).fill(Infinity);
-    dp[0] = 0;
-    for (let i = 0; i < n; i++) {
-      if (dp[i] === Infinity) continue;
-      const freq = new Map<string, number>();
-      let maxFreq = 0, distinct = 0;
-      for (let j = i; j < n; j++) {
-        const c = s[j]!;
-        const f = (freq.get(c) ?? 0) + 1;
-        freq.set(c, f);
-        if (f === 1) distinct++;
-        if (f > maxFreq) maxFreq = f;
-        if (maxFreq * distinct === j - i + 1) {
-          dp[j + 1] = Math.min(dp[j + 1]!, dp[i]! + 1);
-        }
-      }
-    }
-    return dp[n]!;
-  },
-
-  'maximum-good-subarray-sum': (...args: unknown[]) => {
-    const nums = args[0] as number[], k = args[1] as number;
-    const minPrefix = new Map<number, number>();
-    let prefix = 0, ans = -Infinity;
-    let hasGood = false;
-    for (const num of nums) {
-      // update map first (handles l==r for k=0)
-      const prev = minPrefix.get(num);
-      if (prev === undefined || prefix < prev) minPrefix.set(num, prefix);
-      prefix += num;
-      for (const target of [num - k, num + k]) {
-        const mp = minPrefix.get(target);
-        if (mp !== undefined) { ans = Math.max(ans, prefix - mp); hasGood = true; }
-      }
-    }
-    return hasGood ? ans : 0;
-  },
-
-  'maximal-score-after-applying-k-operations': (...args: unknown[]) => {
-    const nums = (args[0] as number[]).slice();
-    const k = args[1] as number;
-    const heap: number[] = [...nums];
-    // max-heap via negation trick
-    const sift = (i: number) => {
-      while (true) {
-        let max = i;
-        const l = 2 * i + 1, r = 2 * i + 2;
-        if (l < heap.length && heap[l]! > heap[max]!) max = l;
-        if (r < heap.length && heap[r]! > heap[max]!) max = r;
-        if (max === i) break;
-        [heap[i], heap[max]] = [heap[max]!, heap[i]!]; i = max;
-      }
-    };
-    for (let i = Math.floor(heap.length / 2) - 1; i >= 0; i--) sift(i);
-    let score = 0;
-    for (let op = 0; op < k; op++) {
-      const top = heap[0]!;
-      score += top;
-      heap[0] = Math.ceil(top / 3);
-      sift(0);
-    }
-    return score;
-  },
-
-  'maximum-earnings-from-taxi': (...args: unknown[]) => {
-    const n = args[0] as number;
-    const rides = args[1] as number[][];
-    const byEnd: number[][][] = Array.from({ length: n + 1 }, () => []);
-    for (const r of rides) byEnd[r[1]!]!.push(r);
-    const dp = new Array(n + 1).fill(0);
-    for (let i = 1; i <= n; i++) {
-      dp[i] = dp[i - 1]!;
-      for (const [s, e, t] of byEnd[i]!) {
-        const earn = (e! - s!) + t!;
-        dp[i] = Math.max(dp[i]!, dp[s!]! + earn);
-      }
-    }
-    return dp[n]!;
-  },
-
-  'find-the-longest-special-substring-that-occurs-thrice-i': (...args: unknown[]) => {
-    const s = args[0] as string;
-    const n = s.length;
-    // collect run lengths per character
-    const runs = new Map<string, number[]>();
-    let i = 0;
-    while (i < n) {
-      let j = i;
-      while (j < n && s[j] === s[i]) j++;
-      const c = s[i]!;
-      if (!runs.has(c)) runs.set(c, []);
-      runs.get(c)!.push(j - i);
-      i = j;
-    }
-    let best = -1;
-    for (const [, lens] of runs) {
-      lens.sort((a, b) => b - a);
-      // count occurrences of length k across all runs
-      // a run of length L contributes L-k+1 substrings of length k
-      // check from large k downward
-      const maxLen = lens[0]!;
-      for (let k = maxLen; k >= 1; k--) {
-        let count = 0;
-        for (const l of lens) {
-          if (l >= k) count += l - k + 1;
-        }
-        if (count >= 3) { best = Math.max(best, k); break; }
-      }
-    }
-    return best;
-  },
-
-  'minimum-cost-to-make-array-equalindromic': (...args: unknown[]) => {
-    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
-    const n = nums.length;
-    const isPalin = (x: number) => {
-      const s = x.toString();
-      return s === s.split('').reverse().join('');
-    };
-    const candidates = (x: number): number[] => {
-      const s = x.toString();
-      const len = s.length;
-      const halfLen = Math.ceil(len / 2);
-      const half = parseInt(s.slice(0, halfLen));
-      const result: number[] = [];
-      for (const dh of [-1, 0, 1]) {
-        const h = half + dh;
-        if (h <= 0) continue;
-        const hs = h.toString();
-        let pal: string;
-        if (len % 2 === 0) {
-          pal = hs + hs.split('').reverse().join('');
-        } else {
-          pal = hs + hs.slice(0, -1).split('').reverse().join('');
-        }
-        const p = parseInt(pal);
-        if (p > 0 && isPalin(p)) result.push(p);
-      }
-      if (len > 1) result.push(Math.pow(10, len - 1) - 1);
-      result.push(Math.pow(10, len) + 1);
-      return result;
-    };
-    const seen = new Set<number>();
-    for (const idx of [Math.floor((n - 1) / 2), Math.floor(n / 2)]) {
-      for (const p of candidates(nums[idx]!)) seen.add(p);
-    }
-    let best = Infinity;
-    for (const p of seen) {
-      const cost = nums.reduce((s, x) => s + Math.abs(x - p), 0);
-      if (cost < best) best = cost;
-    }
-    return best;
-  },
-
-  'identify-the-largest-outlier-in-an-array': (...args: unknown[]) => {
-    const nums = args[0] as number[];
-    const total = nums.reduce((s, x) => s + x, 0);
-    const freq = new Map<number, number>();
-    for (const x of nums) freq.set(x, (freq.get(x) ?? 0) + 1);
-    let best = -Infinity;
-    for (const x of nums) {
-      const rem = total - x;
-      if (rem % 2 !== 0) continue;
-      const target = rem / 2;
-      const tf = freq.get(target) ?? 0;
-      const valid = x === target ? tf >= 2 : tf >= 1;
-      if (valid && x > best) best = x;
-    }
-    return best;
-  },
-
-  // batch 153 — arrays/easy, graph/hard
   'last-visited-integers': (...args: unknown[]) => {
     const nums = args[0] as number[];
-    const result: number[] = [];
     const seen: number[] = [];
+    const result: number[] = [];
     let k = 0;
     for (const n of nums) {
-      if (n > 0) {
-        seen.push(n);
-        k = 0;
-      } else {
-        k++;
-        result.push(k <= seen.length ? seen[seen.length - k]! : -1);
-      }
+      if (n !== -1) { seen.push(n); k = 0; }
+      else { k++; result.push(k > seen.length ? -1 : seen[seen.length - k]!); }
     }
     return result;
   },
@@ -36344,38 +36215,25 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   'count-visited-nodes-in-a-directed-graph': (...args: unknown[]) => {
     const edges = args[0] as number[];
     const n = edges.length;
-    const answer = new Array<number>(n).fill(0);
-    const visited = new Array<number>(n).fill(-1);
+    const ans = new Array(n).fill(0) as number[];
     for (let start = 0; start < n; start++) {
-      if (answer[start] !== 0) continue;
+      if (ans[start] !== 0) continue;
       const path: number[] = [];
-      const posInPath = new Map<number, number>();
+      const inPath = new Map<number, number>();
       let cur = start;
-      while (visited[cur] === -1 && !posInPath.has(cur)) {
-        posInPath.set(cur, path.length);
-        path.push(cur);
-        cur = edges[cur]!;
-      }
-      if (posInPath.has(cur)) {
-        const cycleStart = posInPath.get(cur)!;
-        const cycleLen = path.length - cycleStart;
-        for (let i = cycleStart; i < path.length; i++) {
-          answer[path[i]!] = cycleLen;
-          visited[path[i]!] = 1;
-        }
-        for (let i = cycleStart - 1; i >= 0; i--) {
-          answer[path[i]!] = cycleLen + (cycleStart - i);
-          visited[path[i]!] = 1;
-        }
+      while (ans[cur] === 0 && !inPath.has(cur)) { inPath.set(cur, path.length); path.push(cur); cur = edges[cur]!; }
+      if (ans[cur] !== 0) {
+        let val = ans[cur]! + 1;
+        for (let j = path.length - 1; j >= 0; j--) ans[path[j]!] = val++;
       } else {
-        const resolvedLen = answer[cur]!;
-        for (let i = path.length - 1; i >= 0; i--) {
-          answer[path[i]!] = resolvedLen + (path.length - i);
-          visited[path[i]!] = 1;
-        }
+        const cycleIdx = inPath.get(cur)!;
+        const cycleLen = path.length - cycleIdx;
+        for (let j = cycleIdx; j < path.length; j++) ans[path[j]!] = cycleLen;
+        let val = cycleLen + 1;
+        for (let j = cycleIdx - 1; j >= 0; j--) ans[path[j]!] = val++;
       }
     }
-    return answer;
+    return ans;
   },
   // batch 154b — trie/medium×3, trie/hard
   'map-sum-pairs': (...args: unknown[]) => {
@@ -36702,318 +36560,180 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
-  'minimum-score-triangulation-polygon': (...args: unknown[]) => {
-    const values = args[0] as number[];
-    const n = values.length;
-    const dp: number[][] = Array.from({ length: n }, () => new Array<number>(n).fill(0));
-    for (let len = 2; len < n; len++) {
-      for (let i = 0; i + len < n; i++) {
-        const j = i + len;
-        dp[i]![j] = Infinity;
-        for (let k = i + 1; k < j; k++) {
-          dp[i]![j] = Math.min(dp[i]![j]!, dp[i]![k]! + dp[k]![j]! + values[i]! * values[k]! * values[j]!);
-        }
-      }
-    }
-    return dp[0]![n - 1]!;
-  },
-
-  'non-negative-integers-without-consecutive-ones': (...args: unknown[]) => {
+  'maximum-earnings-from-taxi': (...args: unknown[]) => {
     const n = args[0] as number;
-    const bits: number[] = [];
-    let x = n;
-    while (x) { bits.push(x & 1); x >>= 1; }
-    bits.reverse();
-    const len = bits.length;
-    const fib = new Array<number>(len + 2).fill(0);
-    fib[0] = 1; fib[1] = 2;
-    for (let i = 2; i <= len; i++) fib[i] = fib[i - 1]! + fib[i - 2]!;
-    let ans = 0, prev = 0;
-    let valid = true;
-    for (let i = 0; i < len; i++) {
-      if (bits[i] === 1) {
-        ans += fib[len - i - 1]!;
-        if (prev === 1) { valid = false; break; }
-      }
-      prev = bits[i]!;
+    const rides = args[1] as number[][];
+    const byEnd = new Map<number, [number, number][]>();
+    for (const ride of rides) {
+      const [a, b, tip] = ride as [number, number, number];
+      if (!byEnd.has(b)) byEnd.set(b, []);
+      byEnd.get(b)!.push([a, b - a + tip]);
     }
-    if (valid) ans++;
-    return ans;
-  },
-
-  'ways-to-make-a-fair-array': (...args: unknown[]) => {
-    const nums = args[0] as number[];
-    const n = nums.length;
-    const totalEven = nums.reduce((s, v, i) => s + (i % 2 === 0 ? v : 0), 0);
-    const totalOdd = nums.reduce((s, v, i) => s + (i % 2 === 1 ? v : 0), 0);
-    let prefEven = 0, prefOdd = 0, ans = 0;
-    for (let i = 0; i < n; i++) {
-      const v = nums[i]!;
-      const remEven = totalEven - (i % 2 === 0 ? v : 0);
-      const remOdd = totalOdd - (i % 2 === 1 ? v : 0);
-      const newEven = prefEven + (remOdd - prefOdd);
-      const newOdd = prefOdd + (remEven - prefEven);
-      if (newEven === newOdd) ans++;
-      if (i % 2 === 0) prefEven += v; else prefOdd += v;
-    }
-    return ans;
-  },
-
-  'count-ways-to-build-good-strings': (...args: unknown[]) => {
-    const [low, high, zero, one] = args as [number, number, number, number];
-    const MOD = 1_000_000_007;
-    const dp = new Array<number>(high + 1).fill(0);
-    dp[0] = 1;
-    for (let i = 1; i <= high; i++) {
-      if (i >= zero) dp[i] = (dp[i]! + dp[i - zero]!) % MOD;
-      if (i >= one) dp[i] = (dp[i]! + dp[i - one]!) % MOD;
-    }
-    let ans = 0;
-    for (let i = low; i <= high; i++) ans = (ans + dp[i]!) % MOD;
-    return ans;
-  },
-
-  'restore-the-array': (...args: unknown[]) => {
-    const s = args[0] as string, k = args[1] as number;
-    const MOD = 1_000_000_007;
-    const n = s.length;
-    const kLen = String(k).length;
     const dp = new Array<number>(n + 1).fill(0);
-    dp[0] = 1;
     for (let i = 1; i <= n; i++) {
-      for (let j = i - 1; j >= 0; j--) {
-        if (i - j > kLen) break;
-        if (s[j] === '0') continue;
-        const num = Number(s.slice(j, i));
-        if (num > k) break;
-        dp[i] = (dp[i]! + dp[j]!) % MOD;
+      dp[i] = dp[i - 1]!;
+      for (const [start, earn] of (byEnd.get(i) ?? [])) {
+        dp[i] = Math.max(dp[i]!, dp[start]! + earn);
       }
     }
     return dp[n]!;
   },
 
-  'number-of-ways-to-form-a-target-string-given-a-dictionary': (...args: unknown[]) => {
-    const words = args[0] as string[], target = args[1] as string;
-    const m = words[0]!.length, t = target.length;
-    const MOD = 1_000_000_007;
-    const freq: number[][] = Array.from({ length: m }, () => new Array<number>(26).fill(0));
-    for (const word of words) {
-      for (let j = 0; j < m; j++) freq[j]![word.charCodeAt(j) - 97]!++;
+  'find-the-longest-special-substring-that-occurs-thrice-i': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const runs = new Map<string, number[]>();
+    let i = 0;
+    while (i < s.length) {
+      const c = s[i]!;
+      let j = i;
+      while (j < s.length && s[j] === c) j++;
+      if (!runs.has(c)) runs.set(c, []);
+      runs.get(c)!.push(j - i);
+      i = j;
     }
-    const dp = new Array<number>(t + 1).fill(0);
-    dp[0] = 1;
-    for (let j = 0; j < m; j++) {
-      for (let i = t; i >= 1; i--) {
-        const c = target.charCodeAt(i - 1) - 97;
-        dp[i] = (dp[i]! + dp[i - 1]! * freq[j]![c]!) % MOD;
+    let ans = -1;
+    for (const lengths of runs.values()) {
+      let lo = 1, hi = Math.max(...lengths);
+      while (lo <= hi) {
+        const mid = (lo + hi) >> 1;
+        const cnt = lengths.reduce((acc, R) => acc + Math.max(0, R - mid + 1), 0);
+        if (cnt >= 3) { ans = Math.max(ans, mid); lo = mid + 1; }
+        else hi = mid - 1;
       }
-    }
-    return dp[t]!;
-  },
-
-  'longest-subarray-with-at-most-k-sum': (...args: unknown[]) => {
-    const nums = args[0] as number[], k = args[1] as number;
-    let left = 0, cur = 0, ans = 0;
-    for (let right = 0; right < nums.length; right++) {
-      cur += nums[right]!;
-      while (cur > k) cur -= nums[left++]!;
-      ans = Math.max(ans, right - left + 1);
     }
     return ans;
   },
-  // batch 155b — design/easy, design/medium×2, design/hard
-  'recent-counter': (...args: unknown[]) => {
-    const ops = args[0] as string[];
-    const opArgs = args[1] as number[][];
-    const queue: number[] = [];
-    const result: (number | null)[] = [];
-    for (let i = 0; i < ops.length; i++) {
-      if (ops[i] === 'RecentCounter') {
-        result.push(null);
-      } else {
-        const t = opArgs[i]![0]!;
-        queue.push(t);
-        while (queue[0]! < t - 3000) queue.shift();
-        result.push(queue.length);
-      }
+
+  'minimum-cost-to-make-array-equalindromic': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const n = nums.length;
+    const median = nums[Math.floor(n / 2)]!;
+    function mcCost(p: number): number { return nums.reduce((acc, x) => acc + Math.abs(x - p), 0); }
+    function mcPalin(h: number, totalLen: number): number {
+      const hs = String(h);
+      const rev = hs.split('').reverse();
+      const full = totalLen % 2 === 0 ? hs + rev.join('') : hs + rev.slice(1).join('');
+      const p = parseInt(full);
+      return String(p).length === totalLen ? p : -1;
     }
-    return result;
+    const len = String(median).length;
+    const halfLen = Math.ceil(len / 2);
+    const firstHalf = parseInt(String(median).substring(0, halfLen));
+    const cands: number[] = [];
+    for (let d = -1; d <= 1; d++) {
+      const p = mcPalin(firstHalf + d, len);
+      if (p > 0) cands.push(p);
+    }
+    cands.push(Math.pow(10, len - 1) - 1, Math.pow(10, len) + 1);
+    return Math.min(...cands.filter(p => p > 0).map(mcCost));
   },
 
-  'peeking-iterator': (...args: unknown[]) => {
-    const ops = args[0] as string[];
-    const opArgs = args[1] as (number[] | [])[];
-    let nums: number[] = [];
-    let idx = 0;
-    const result: (number | boolean | null)[] = [];
-    for (let i = 0; i < ops.length; i++) {
-      const op = ops[i]!;
-      if (op === 'PeekingIterator') {
-        nums = (opArgs[i] as number[][])[0]!;
-        idx = 0;
-        result.push(null);
-      } else if (op === 'next') {
-        result.push(nums[idx++]!);
-      } else if (op === 'peek') {
-        result.push(nums[idx]!);
-      } else {
-        result.push(idx < nums.length);
-      }
+  'identify-the-largest-outlier-in-an-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const total = nums.reduce((a, b) => a + b, 0);
+    const freq = new Map<number, number>();
+    for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+    let ans = -Infinity;
+    for (const x of nums) {
+      const remaining = total - x;
+      if (remaining % 2 !== 0) continue;
+      const special = remaining / 2;
+      const cnt = freq.get(special) ?? 0;
+      if (cnt > 0 && (special !== x || cnt >= 2) && x > ans) ans = x;
     }
-    return result;
-  },
-
-  'flatten-nested-list-iterator': (...args: unknown[]) => {
-    const ops = args[0] as string[];
-    const opArgs = args[1] as unknown[][];
-    let flat: number[] = [];
-    let idx = 0;
-    const result: (number | boolean | null)[] = [];
-
-    const flatten = (v: unknown): void => {
-      if (typeof v === 'number') { flat.push(v); return; }
-      for (const x of v as unknown[]) flatten(x);
-    };
-
-    for (let i = 0; i < ops.length; i++) {
-      const op = ops[i]!;
-      if (op === 'NestedIterator') {
-        flat = [];
-        idx = 0;
-        flatten(opArgs[i]![0]);
-        result.push(null);
-      } else if (op === 'next') {
-        result.push(flat[idx++]!);
-      } else {
-        result.push(idx < flat.length);
-      }
-    }
-    return result;
-  },
-
-  'all-o-one-data-structure': (...args: unknown[]) => {
-    const ops = args[0] as string[];
-    const opArgs = args[1] as string[][];
-    const counts = new Map<string, number>();
-    const result: (string | null)[] = [];
-    for (let i = 0; i < ops.length; i++) {
-      const op = ops[i]!;
-      if (op === 'AllOne') {
-        result.push(null);
-      } else if (op === 'inc') {
-        const key = opArgs[i]![0]!;
-        counts.set(key, (counts.get(key) ?? 0) + 1);
-        result.push(null);
-      } else if (op === 'dec') {
-        const key = opArgs[i]![0]!;
-        const cnt = counts.get(key)! - 1;
-        if (cnt === 0) counts.delete(key);
-        else counts.set(key, cnt);
-        result.push(null);
-      } else if (op === 'getMaxKey') {
-        if (counts.size === 0) { result.push(''); continue; }
-        let maxKey = '', maxVal = -1;
-        for (const [k, v] of counts) {
-          if (v > maxVal) { maxVal = v; maxKey = k; }
-        }
-        result.push(maxKey);
-      } else {
-        if (counts.size === 0) { result.push(''); continue; }
-        let minKey = '', minVal = Infinity;
-        for (const [k, v] of counts) {
-          if (v < minVal) { minVal = v; minKey = k; }
-        }
-        result.push(minKey);
-      }
-    }
-    return result;
+    return ans;
   },
 
   '24-game': (...args: unknown[]) => {
     const cards = args[0] as number[];
-    const EPS = 1e-6;
-    function solve(nums: number[]): boolean {
-      if (nums.length === 1) return Math.abs(nums[0]! - 24) < EPS;
+    const eps = 1e-6;
+    function check(nums: number[]): boolean {
+      if (nums.length === 1) return Math.abs(nums[0]! - 24) < eps;
       for (let i = 0; i < nums.length; i++) {
         for (let j = 0; j < nums.length; j++) {
           if (i === j) continue;
           const rest = nums.filter((_, k) => k !== i && k !== j);
           const a = nums[i]!, b = nums[j]!;
-          const candidates = [a + b, a - b, a * b];
-          if (Math.abs(b) > EPS) candidates.push(a / b);
-          for (const c of candidates) {
-            if (solve([...rest, c])) return true;
+          const ops: (number | null)[] = [a + b, a - b, a * b, Math.abs(b) > eps ? a / b : null];
+          for (const v of ops) {
+            if (v !== null && check([...rest, v])) return true;
           }
         }
       }
       return false;
     }
-    return solve(cards.map(Number));
+    return check(cards.map(Number));
   },
 
   'range-module': (...args: unknown[]) => {
     const operations = args[0] as [string, number, number][];
-    const ranges: [number, number][] = [];
+    const intervals: [number, number][] = [];
     const results: boolean[] = [];
-    function findStart(x: number): number {
-      let lo = 0, hi = ranges.length;
-      while (lo < hi) {
-        const mid = (lo + hi) >> 1;
-        if (ranges[mid]![1] < x) lo = mid + 1; else hi = mid;
+    function add(l: number, r: number) {
+      const next: [number, number][] = [];
+      let merged: [number, number] = [l, r];
+      for (const [a, b] of intervals) {
+        if (b < merged[0] || a > merged[1]) { next.push([a, b]); }
+        else { merged = [Math.min(merged[0], a), Math.max(merged[1], b)]; }
       }
-      return lo;
+      next.push(merged);
+      next.sort((x, y) => x[0] - y[0]);
+      intervals.length = 0;
+      for (const iv of next) intervals.push(iv);
     }
-    for (const [op, left, right] of operations) {
-      if (op === 'addRange') {
-        let i = findStart(left), j = findStart(right);
-        const newLeft = (i < ranges.length && ranges[i]![0] <= left) ? ranges[i]![0] : left;
-        let jEnd = (j < ranges.length && ranges[j]![0] <= right) ? j : j - 1;
-        const newRight = (jEnd >= 0 && ranges[jEnd] && ranges[jEnd]![0] <= right && ranges[jEnd]![1] > right) ? ranges[jEnd]![1] : right;
-        const count = jEnd >= i ? jEnd - i + 1 : 0;
-        ranges.splice(i, count, [newLeft, newRight]);
-      } else if (op === 'removeRange') {
-        let i = findStart(left), j = findStart(right);
-        const toAdd: [number, number][] = [];
-        if (i < ranges.length && ranges[i]![0] < left) toAdd.push([ranges[i]![0], left]);
-        if (j < ranges.length && ranges[j]![0] <= right && ranges[j]![1] > right) toAdd.push([right, ranges[j]![1]]);
-        let jEnd = (j < ranges.length && ranges[j]![0] <= right) ? j : j - 1;
-        const count = jEnd >= i ? jEnd - i + 1 : 0;
-        ranges.splice(i, count, ...toAdd);
-      } else {
-        const i = findStart(left);
-        results.push(i < ranges.length && ranges[i]![0] <= left && ranges[i]![1] >= right);
+    function remove(l: number, r: number) {
+      const next: [number, number][] = [];
+      for (const [a, b] of intervals) {
+        if (b <= l || a >= r) { next.push([a, b]); }
+        else {
+          if (a < l) next.push([a, l]);
+          if (b > r) next.push([r, b]);
+        }
       }
+      intervals.length = 0;
+      for (const iv of next) intervals.push(iv);
+    }
+    function query(l: number, r: number): boolean {
+      for (const [a, b] of intervals) {
+        if (a <= l && b >= r) return true;
+      }
+      return false;
+    }
+    for (const [op, l, r] of operations) {
+      if (op === 'addRange') { add(l, r); }
+      else if (op === 'removeRange') { remove(l, r); }
+      else { results.push(query(l, r)); }
     }
     return results;
   },
 
   'insert-delete-getrandom-duplicates-allowed': (...args: unknown[]) => {
-    const operations = args[0] as [string, number][];
+    const operations = args[0] as (string | number)[][];
     const vals: number[] = [];
     const idx = new Map<number, Set<number>>();
     return operations.map(([op, val]) => {
+      const v = val as number;
       if (op === 'insert') {
-        const isNew = !idx.has(val) || idx.get(val)!.size === 0;
-        if (!idx.has(val)) idx.set(val, new Set());
-        idx.get(val)!.add(vals.length);
-        vals.push(val);
+        const isNew = !idx.has(v) || idx.get(v)!.size === 0;
+        if (!idx.has(v)) idx.set(v, new Set());
+        idx.get(v)!.add(vals.length);
+        vals.push(v);
         return isNew;
       } else if (op === 'remove') {
-        if (!idx.has(val) || idx.get(val)!.size === 0) return false;
-        const i = idx.get(val)!.values().next().value as number;
+        if (!idx.has(v) || idx.get(v)!.size === 0) return false;
+        const i = idx.get(v)!.values().next().value as number;
         const lastIdx = vals.length - 1;
         const last = vals[lastIdx]!;
         if (i === lastIdx) {
-          idx.get(val)!.delete(i);
-        } else if (last === val) {
+          idx.get(v)!.delete(i);
+        } else if (last === v) {
           vals[i] = last;
-          idx.get(val)!.delete(lastIdx);
-          // index i stays in idx[val] since val is now at i (moved from lastIdx)
+          idx.get(v)!.delete(lastIdx);
         } else {
           vals[i] = last;
           idx.get(last)!.delete(lastIdx);
           idx.get(last)!.add(i);
-          idx.get(val)!.delete(i);
+          idx.get(v)!.delete(i);
         }
         vals.pop();
         return true;
@@ -37028,68 +36748,302 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const total = matchsticks.reduce((a, b) => a + b, 0);
     if (total % 4 !== 0) return false;
     const side = total / 4;
-    matchsticks.sort((a, b) => b - a);
-    if (matchsticks[0]! > side) return false;
+    const sticks = matchsticks.slice().sort((a, b) => b - a);
+    if (sticks[0]! > side) return false;
     const buckets = [0, 0, 0, 0];
+    const seen = new Set<string>();
     function bt(i: number): boolean {
-      if (i === matchsticks.length) return buckets.every(b => b === side);
-      const seen = new Set<number>();
-      for (let j = 0; j < 4; j++) {
-        if (seen.has(buckets[j]!)) continue;
-        if (buckets[j]! + matchsticks[i]! <= side) {
-          seen.add(buckets[j]!);
-          buckets[j]! += matchsticks[i]!;
+      if (i === sticks.length) return buckets.every(b => b === side);
+      const key = buckets.join(',');
+      if (seen.has(key)) return false;
+      seen.add(key);
+      const tried = new Set<number>();
+      for (let k = 0; k < 4; k++) {
+        if (tried.has(buckets[k]!)) continue;
+        if (buckets[k]! + sticks[i]! <= side) {
+          tried.add(buckets[k]!);
+          buckets[k]! += sticks[i]!;
           if (bt(i + 1)) return true;
-          buckets[j]! -= matchsticks[i]!;
+          buckets[k]! -= sticks[i]!;
         }
       }
       return false;
     }
     return bt(0);
   },
-
-  // batch 155 — graph/hard, binary-search+arrays/hard, arrays+dp/medium
-  'maximum-employees-invited-to-meeting': (...args: unknown[]) => {
-    const employees = args[0] as number[];
-    const n = employees.length;
-    const inDeg = new Array<number>(n).fill(0);
-    for (const f of employees) { inDeg[f] = (inDeg[f] ?? 0) + 1; }
-
-    const depth = new Array<number>(n).fill(0);
-    const queue: number[] = [];
-    for (let i = 0; i < n; i++) if (inDeg[i] === 0) queue.push(i);
-
-    let qi = 0;
-    while (qi < queue.length) {
-      const u = queue[qi++]!;
-      const v = employees[u] as number;
-      depth[v] = Math.max(depth[v] as number, (depth[u] as number) + 1);
-      if (--(inDeg[v] as number) === 0) queue.push(v);
+  // batch 156 — tree/easy×1, tree/medium×1
+  'average-of-levels-in-binary-tree': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    interface TNode { val: number; left: TNode | null; right: TNode | null; }
+    const build = (a: (number | null)[]): TNode | null => {
+      if (!a.length || a[0] == null) return null;
+      const root: TNode = { val: a[0], left: null, right: null };
+      const q: (TNode | null)[] = [root];
+      let i = 1;
+      while (q.length && i < a.length) {
+        const nd = q.shift()!;
+        if (nd === null) continue;
+        if (i < a.length && a[i] != null) { nd.left = { val: a[i]!, left: null, right: null }; q.push(nd.left); } else q.push(null);
+        i++;
+        if (i < a.length && a[i] != null) { nd.right = { val: a[i]!, left: null, right: null }; q.push(nd.right); } else q.push(null);
+        i++;
+      }
+      return root;
+    };
+    const root = build(arr);
+    if (!root) return [];
+    const result: number[] = [];
+    let level: (TNode | null)[] = [root];
+    while (level.length > 0) {
+      const sum = level.reduce((s, n) => s + (n?.val ?? 0), 0);
+      result.push(sum / level.length);
+      const next: TNode[] = [];
+      for (const nd of level) {
+        if (nd?.left) next.push(nd.left);
+        if (nd?.right) next.push(nd.right);
+      }
+      level = next;
     }
+    return result;
+  },
 
-    let maxCycle = 0;
-    let pairSum = 0;
-    const visited = new Array<boolean>(n).fill(false);
+  'all-elements-in-two-binary-search-trees': (...args: unknown[]) => {
+    const arr1 = args[0] as (number | null)[];
+    const arr2 = args[1] as (number | null)[];
+    interface TNode { val: number; left: TNode | null; right: TNode | null; }
+    const build = (a: (number | null)[]): TNode | null => {
+      if (!a.length || a[0] == null) return null;
+      const root: TNode = { val: a[0], left: null, right: null };
+      const q: (TNode | null)[] = [root];
+      let i = 1;
+      while (q.length && i < a.length) {
+        const nd = q.shift()!;
+        if (nd === null) continue;
+        if (i < a.length && a[i] != null) { nd.left = { val: a[i]!, left: null, right: null }; q.push(nd.left); } else q.push(null);
+        i++;
+        if (i < a.length && a[i] != null) { nd.right = { val: a[i]!, left: null, right: null }; q.push(nd.right); } else q.push(null);
+        i++;
+      }
+      return root;
+    };
+    const inorder = (nd: TNode | null, out: number[]): void => {
+      if (!nd) return;
+      inorder(nd.left, out);
+      out.push(nd.val);
+      inorder(nd.right, out);
+    };
+    const a: number[] = [], b: number[] = [];
+    inorder(build(arr1), a);
+    inorder(build(arr2), b);
+    const merged: number[] = [];
+    let i = 0, j = 0;
+    while (i < a.length && j < b.length) {
+      if (a[i]! <= b[j]!) merged.push(a[i++]!);
+      else merged.push(b[j++]!);
+    }
+    while (i < a.length) merged.push(a[i++]!);
+    while (j < b.length) merged.push(b[j++]!);
+    return merged;
+  },
 
-    for (let i = 0; i < n; i++) {
-      if (!visited[i] && (inDeg[i] as number) > 0) {
-        const cycleNodes: number[] = [];
-        let cur = i;
-        while (!visited[cur]) {
-          visited[cur] = true;
-          cycleNodes.push(cur);
-          cur = employees[cur] as number;
-        }
-        const cycleLen = cycleNodes.length;
-        if (cycleLen === 2) {
-          const a = cycleNodes[0] as number, b = cycleNodes[1] as number;
-          pairSum += 2 + (depth[a] as number) + (depth[b] as number);
-        } else {
-          maxCycle = Math.max(maxCycle, cycleLen);
+  'minimum-score-triangulation-polygon': (...args: unknown[]) => {
+    const values = args[0] as number[];
+    const n = values.length;
+    const dp: number[][] = Array.from({ length: n }, () => new Array(n).fill(0));
+    for (let len = 2; len < n; len++) {
+      for (let i = 0; i + len < n; i++) {
+        const j = i + len;
+        dp[i]![j] = Infinity;
+        for (let k = i + 1; k < j; k++) {
+          dp[i]![j] = Math.min(dp[i]![j]!, dp[i]![k]! + dp[k]![j]! + values[i]! * values[k]! * values[j]!);
         }
       }
     }
+    return dp[0]![n - 1]!;
+  },
 
+  'non-negative-integers-without-consecutive-ones': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const f: number[] = [1, 2];
+    for (let i = 2; i <= 31; i++) f.push(f[i - 1]! + f[i - 2]!);
+    let count = 0, prev = 0;
+    for (let i = 30; i >= 0; i--) {
+      if (n & (1 << i)) {
+        count += f[i]!;
+        if (prev) return count;
+        prev = 1;
+      } else {
+        prev = 0;
+      }
+    }
+    return count + 1;
+  },
+
+  'count-ways-to-build-good-strings': (...args: unknown[]) => {
+    const [low, high, zero, one] = args as [number, number, number, number];
+    const MOD = 1_000_000_007;
+    const dp = new Array(high + 1).fill(0) as number[];
+    dp[0] = 1;
+    for (let i = 1; i <= high; i++) {
+      if (i >= zero) dp[i] = (dp[i]! + dp[i - zero]!) % MOD;
+      if (i >= one) dp[i] = (dp[i]! + dp[i - one]!) % MOD;
+    }
+    let ans = 0;
+    for (let i = low; i <= high; i++) ans = (ans + dp[i]!) % MOD;
+    return ans;
+  },
+
+  'restore-the-array': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    const MOD = 1_000_000_007;
+    const n = s.length;
+    const kStr = String(k);
+    const dp = new Array(n + 1).fill(0) as number[];
+    dp[0] = 1;
+    for (let i = 1; i <= n; i++) {
+      for (let j = i - 1; j >= 0 && i - j <= 10; j--) {
+        const sub = s.slice(j, i);
+        if (sub[0] === '0') continue;
+        if (sub.length > kStr.length) continue;
+        if (sub.length === kStr.length && sub > kStr) continue;
+        dp[i] = (dp[i]! + dp[j]!) % MOD;
+      }
+    }
+    return dp[n]!;
+  },
+
+  'number-of-ways-to-form-a-target-string-given-a-dictionary': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const target = args[1] as string;
+    const MOD = 1_000_000_007;
+    const m = words[0]!.length;
+    const t = target.length;
+    const freq: number[][] = Array.from({ length: m }, () => new Array(26).fill(0));
+    for (const w of words) {
+      for (let j = 0; j < m; j++) freq[j]![w.charCodeAt(j) - 97]!++;
+    }
+    const dp = new Array(t + 1).fill(0) as number[];
+    dp[0] = 1;
+    for (let j = 0; j < m; j++) {
+      for (let i = Math.min(j, t - 1); i >= 0; i--) {
+        const c = target.charCodeAt(i) - 97;
+        dp[i + 1] = (dp[i + 1]! + dp[i]! * freq[j]![c]!) % MOD;
+      }
+    }
+    return dp[t]!;
+  },
+
+  'longest-subarray-with-at-most-k-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let left = 0, sum = 0, ans = 0;
+    for (let right = 0; right < nums.length; right++) {
+      sum += nums[right]!;
+      while (sum > k) sum -= nums[left++]!;
+      ans = Math.max(ans, right - left + 1);
+    }
+    return ans;
+  },
+
+  'recent-counter': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as number[][];
+    const queue: number[] = [];
+    return ops.map((op, i) => {
+      if (op === 'RecentCounter') return null;
+      const t = opArgs[i]![0]!;
+      queue.push(t);
+      while (queue[0]! < t - 3000) queue.shift();
+      return queue.length;
+    });
+  },
+
+  'peeking-iterator': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as (number[] | [])[][];
+    let arr: number[] = [];
+    let idx = 0;
+    return ops.map((op, i) => {
+      if (op === 'PeekingIterator') { arr = opArgs[i]![0] as number[]; idx = 0; return null; }
+      if (op === 'next') return arr[idx++]!;
+      if (op === 'peek') return arr[idx]!;
+      return idx < arr.length;
+    });
+  },
+
+  'flatten-nested-list-iterator': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as unknown[][];
+    let flat: number[] = [];
+    let idx = 0;
+    function flatten(val: unknown): void {
+      if (typeof val === 'number') { flat.push(val); return; }
+      if (Array.isArray(val)) { for (const v of val) flatten(v); }
+    }
+    return ops.map((op, i) => {
+      if (op === 'NestedIterator') { flat = []; idx = 0; flatten(opArgs[i]![0]); return null; }
+      if (op === 'next') return flat[idx++]!;
+      return idx < flat.length;
+    });
+  },
+
+  'all-o-one-data-structure': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as string[][];
+    const cnt = new Map<string, number>();
+    return ops.map((op, i) => {
+      if (op === 'AllOne') return null;
+      if (op === 'inc') {
+        const k = opArgs[i]![0]!;
+        cnt.set(k, (cnt.get(k) ?? 0) + 1);
+        return null;
+      }
+      if (op === 'dec') {
+        const k = opArgs[i]![0]!;
+        const v = cnt.get(k)! - 1;
+        if (v === 0) cnt.delete(k); else cnt.set(k, v);
+        return null;
+      }
+      if (cnt.size === 0) return '';
+      if (op === 'getMaxKey') {
+        let best = '', bestV = -Infinity;
+        for (const [k, v] of cnt) if (v > bestV) { bestV = v; best = k; }
+        return best;
+      }
+      let best = '', bestV = Infinity;
+      for (const [k, v] of cnt) if (v < bestV) { bestV = v; best = k; }
+      return best;
+    });
+  },
+
+  'maximum-employees-invited-to-meeting': (...args: unknown[]) => {
+    const fav = args[0] as number[];
+    const n = fav.length;
+    const indeg = new Array(n).fill(0) as number[];
+    for (const f of fav) indeg[f]!++;
+    const depth = new Array(n).fill(1) as number[];
+    const queue: number[] = [];
+    for (let i = 0; i < n; i++) if (indeg[i] === 0) queue.push(i);
+    while (queue.length) {
+      const u = queue.shift()!;
+      const v = fav[u]!;
+      depth[v] = Math.max(depth[v]!, depth[u]! + 1);
+      if (--indeg[v]! === 0) queue.push(v);
+    }
+    let maxCycle = 0, pairSum = 0;
+    const visited = new Array(n).fill(false) as boolean[];
+    for (let i = 0; i < n; i++) {
+      if (visited[i] || indeg[i] === 0) continue;
+      const cycle: number[] = [];
+      let cur = i;
+      while (!visited[cur]) { visited[cur] = true; cycle.push(cur); cur = fav[cur]!; }
+      if (cycle.length === 2) {
+        pairSum += depth[cycle[0]!]! + depth[cycle[1]!]!;
+      } else {
+        maxCycle = Math.max(maxCycle, cycle.length);
+      }
+    }
     return Math.max(maxCycle, pairSum);
   },
 
@@ -37098,39 +37052,30 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const r = args[1] as number;
     const k = args[2] as number;
     const n = stations.length;
-
-    const pfx = new Array<number>(n + 1).fill(0);
-    for (let i = 0; i < n; i++) pfx[i + 1] = pfx[i]! + stations[i]!;
-    const power = new Array<number>(n).fill(0);
-    for (let i = 0; i < n; i++) {
-      power[i] = pfx[Math.min(n, i + r + 1)]! - pfx[Math.max(0, i - r)]!;
-    }
-
-    const canAchieve = (minPow: number): boolean => {
-      const diff = new Array<number>(n + 1).fill(0);
-      let addSum = 0;
-      let kUsed = 0;
+    const prefix = new Array(n + 1).fill(0) as number[];
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + stations[i]!;
+    function canDo(minPow: number): boolean {
+      const diff = new Array(n + 2).fill(0) as number[];
+      let extra = 0, added = 0;
       for (let i = 0; i < n; i++) {
-        addSum += diff[i]!;
-        const cur = power[i]! + addSum;
+        extra += diff[i]!;
+        const lo = Math.max(0, i - r), hi = Math.min(n - 1, i + r);
+        const cur = prefix[hi + 1]! - prefix[lo]! + extra;
         if (cur < minPow) {
           const need = minPow - cur;
-          kUsed += need;
-          if (kUsed > k) return false;
-          addSum += need;
-          const end = Math.min(i + 2 * r + 1, n);
-          diff[end] = (diff[end] ?? 0) - need;
+          if (added + need > k) return false;
+          added += need;
+          extra += need;
+          const placeAt = Math.min(i + r, n - 1);
+          diff[Math.min(placeAt + r, n - 1) + 1]! -= need;
         }
       }
       return true;
-    };
-
-    let lo = 0;
-    let hi = Math.max(...power) + k;
+    }
+    let lo = 0, hi = prefix[n]! + k;
     while (lo < hi) {
       const mid = Math.floor((lo + hi + 1) / 2);
-      if (canAchieve(mid)) lo = mid;
-      else hi = mid - 1;
+      if (canDo(mid)) lo = mid; else hi = mid - 1;
     }
     return lo;
   },
@@ -37138,23 +37083,122 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   'minimum-time-remove-cars-illegal-goods': (...args: unknown[]) => {
     const s = args[0] as string;
     const n = s.length;
-    const left = new Array<number>(n).fill(0);
-    if (s[0] === '1') left[0] = 1;
+    const left = new Array(n).fill(0) as number[];
+    left[0] = s[0] === '1' ? 1 : 0;
     for (let i = 1; i < n; i++) {
-      if (s[i] === '0') left[i] = left[i - 1]!;
-      else left[i] = Math.min((left[i - 1] ?? 0) + 2, i + 1);
+      left[i] = s[i] === '1' ? Math.min(left[i - 1]! + 2, i + 1) : left[i - 1]!;
     }
-    const right = new Array<number>(n).fill(0);
-    if (s[n - 1] === '1') right[n - 1] = 1;
+    const right = new Array(n).fill(0) as number[];
+    right[n - 1] = s[n - 1] === '1' ? 1 : 0;
     for (let i = n - 2; i >= 0; i--) {
-      if (s[i] === '0') right[i] = right[i + 1]!;
-      else right[i] = Math.min((right[i + 1] ?? 0) + 2, n - i);
+      right[i] = s[i] === '1' ? Math.min(right[i + 1]! + 2, n - i) : right[i + 1]!;
     }
-    let ans = Math.min(right[0]!, left[n - 1]!);
-    for (let i = 0; i < n - 1; i++) {
-      ans = Math.min(ans, left[i]! + right[i + 1]!);
-    }
+    let ans = Math.min(left[n - 1]!, right[0]!);
+    for (let i = 0; i < n - 1; i++) ans = Math.min(ans, left[i]! + right[i + 1]!);
     return ans;
+  },
+
+  // batch 156 — strings/medium, trie+backtracking/hard, union-find/hard, shortest-path/medium
+  'camelcase-matching': (...args: unknown[]) => {
+    const queries = args[0] as string[], pattern = args[1] as string;
+    return queries.map(query => {
+      let pi = 0;
+      for (let qi = 0; qi < query.length; qi++) {
+        if (pi < pattern.length && query[qi] === pattern[pi]) {
+          pi++;
+        } else if (query[qi]! >= 'A' && query[qi]! <= 'Z') {
+          return false;
+        }
+      }
+      return pi === pattern.length;
+    });
+  },
+
+  'word-squares': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const n = words[0]?.length ?? 0;
+    const map = new Map<string, string[]>();
+    for (const w of words) {
+      for (let i = 0; i <= n; i++) {
+        const p = w.slice(0, i);
+        if (!map.has(p)) map.set(p, []);
+        map.get(p)!.push(w);
+      }
+    }
+    const result: string[][] = [];
+    function bt(sq: string[]) {
+      if (sq.length === n) { result.push([...sq]); return; }
+      const i = sq.length;
+      const pref = sq.map(w => w[i]).join('');
+      for (const w of (map.get(pref) ?? [])) {
+        sq.push(w); bt(sq); sq.pop();
+      }
+    }
+    bt([]);
+    return result.sort((a, b) => a.join(',').localeCompare(b.join(',')));
+  },
+
+  'minimize-malware-spread-ii': (...args: unknown[]) => {
+    const graph = args[0] as number[][], initial = args[1] as number[];
+    const n = graph.length;
+    const infSet = new Set(initial);
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const size = new Array<number>(n).fill(1);
+    function find(x: number): number {
+      while (parent[x] !== x) { parent[x] = parent[parent[x]!]!; x = parent[x]!; }
+      return x;
+    }
+    function union(a: number, b: number) {
+      a = find(a); b = find(b);
+      if (a === b) return;
+      if (size[a]! < size[b]!) { const t = a; a = b; b = t; }
+      parent[b] = a; size[a]! += size[b]!;
+    }
+    for (let u = 0; u < n; u++) if (!infSet.has(u)) for (let v = 0; v < n; v++) if (!infSet.has(v) && graph[u]![v]) union(u, v);
+    const compInf = new Map<number, Set<number>>();
+    for (const inf of initial) for (let v = 0; v < n; v++) if (!infSet.has(v) && graph[inf]![v]) {
+      const r = find(v);
+      if (!compInf.has(r)) compInf.set(r, new Set());
+      compInf.get(r)!.add(inf);
+    }
+    const saved = new Map<number, number>(initial.map(i => [i, 0]));
+    for (const [r, infs] of compInf) if (infs.size === 1) {
+      const inf = [...infs][0]!;
+      saved.set(inf, saved.get(inf)! + size[find(r)]!);
+    }
+    return [...initial].sort((a, b) => a - b).reduce((best, inf) =>
+      saved.get(inf)! > saved.get(best)! ? inf : best
+    );
+  },
+
+  'path-with-max-probability': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const succProb = args[2] as number[];
+    const start = args[3] as number;
+    const end = args[4] as number;
+    const adj: [number, number][][] = Array.from({ length: n }, () => []);
+    for (let i = 0; i < edges.length; i++) {
+      const [a, b] = edges[i]!;
+      adj[a!]!.push([b!, succProb[i]!]);
+      adj[b!]!.push([a!, succProb[i]!]);
+    }
+    const prob = new Array<number>(n).fill(0);
+    prob[start] = 1;
+    const heap: [number, number][] = [[1, start]];
+    while (heap.length) {
+      heap.sort((a, b) => b[0] - a[0]);
+      const [p, u] = heap.shift()!;
+      if (u === end) return p;
+      if (p < prob[u]!) continue;
+      for (const [v, w] of adj[u]!) {
+        if (p * w > prob[v]!) {
+          prob[v] = p * w;
+          heap.push([prob[v]!, v]);
+        }
+      }
+    }
+    return 0;
   },
 
 };

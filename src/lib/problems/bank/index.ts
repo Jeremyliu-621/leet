@@ -2483,6 +2483,12 @@ import { problem as maximumEnergyBoostFromTwoDrinks } from './maximum-energy-boo
 import { problem as kthNearestObstacleQueries } from './k-th-nearest-obstacle-queries';
 // batch 149b — arrays/easy
 import { problem as calculateAmountPaidInTaxes } from './calculate-amount-paid-in-taxes';
+// batch 153 — 5 new problems (graph/medium, graph/medium, arrays/medium, arrays/medium, graph/medium)
+import { problem as minVerticesReachAllNodes } from './minimum-number-of-vertices-to-reach-all-nodes';
+import { problem as validPathInGrid } from './check-if-there-is-a-valid-path-in-a-grid';
+import { problem as freqMostFreqElement } from './frequency-of-the-most-frequent-element';
+import { problem as waysToMakeAFairArray } from './ways-to-make-a-fair-array';
+import { problem as nearestExitFromEntranceMaze } from './nearest-exit-from-entrance-in-maze';
 // batch 152 — 5 new problems (strings+arrays/easy+medium)
 import { problem as countSegmentsInAString } from './number-of-segments-in-a-string';
 import { problem as repeatedDnaSequences } from './repeated-dna-sequences';
@@ -2577,7 +2583,6 @@ import { problem as smallestNumberWithAllSetBits } from './smallest-number-with-
 // batch 155r — dp/medium×2, dp/hard×2, arrays/medium, strings/hard, sliding-window/medium
 import { problem as minimumScoreTriangulationPolygon } from './minimum-score-triangulation-polygon';
 import { problem as nonNegativeIntegersWithoutConsecutiveOnes } from './non-negative-integers-without-consecutive-ones';
-import { problem as waysToMakeAFairArray } from './ways-to-make-a-fair-array';
 import { problem as countWaysToBuildGoodStrings } from './count-ways-to-build-good-strings';
 import { problem as restoreTheArray } from './restore-the-array';
 import { problem as numberOfWaysToFormATargetStringGivenADictionary } from './number-of-ways-to-form-a-target-string-given-a-dictionary';
@@ -2591,6 +2596,14 @@ import { problem as allOOneDataStructure } from './all-o-one-data-structure';
 import { problem as maximumEmployeesInvitedToMeeting } from './maximum-employees-invited-to-meeting';
 import { problem as maximizeMinimumPoweredCity } from './maximize-minimum-powered-city';
 import { problem as minimumTimeRemoveCarsIllegalGoods } from './minimum-time-remove-cars-illegal-goods';
+// batch 156 — strings/medium, trie+backtracking/hard, union-find/hard, shortest-path/medium
+import { problem as camelcaseMatching } from './camelcase-matching';
+import { problem as wordSquares } from './word-squares';
+import { problem as minimizeMalwareSpreadII } from './minimize-malware-spread-ii';
+import { problem as pathWithMaxProbability } from './path-with-max-probability';
+// batch 156b — tree/easy×1, tree/medium×1
+import { problem as averageOfLevelsInBinaryTree } from './average-of-levels-in-binary-tree';
+import { problem as allElementsInTwoBinarySearchTrees } from './all-elements-in-two-binary-search-trees';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5111,6 +5124,12 @@ export const problems: readonly Problem[] = [
   kthNearestObstacleQueries,
   // batch 149b — arrays/easy
   calculateAmountPaidInTaxes,
+  // batch 153 — graph/medium, graph/medium, arrays/medium, arrays/medium, graph/medium
+  minVerticesReachAllNodes,
+  validPathInGrid,
+  freqMostFreqElement,
+  waysToMakeAFairArray,
+  nearestExitFromEntranceMaze,
   // batch 152 — strings/easy, strings/medium, strings/easy, strings/medium, strings/easy
   countSegmentsInAString,
   repeatedDnaSequences,
@@ -5205,7 +5224,6 @@ export const problems: readonly Problem[] = [
   // batch 155r — dp/medium×2, dp/hard×2, arrays/medium, strings/hard, sliding-window/medium
   minimumScoreTriangulationPolygon,
   nonNegativeIntegersWithoutConsecutiveOnes,
-  waysToMakeAFairArray,
   countWaysToBuildGoodStrings,
   restoreTheArray,
   numberOfWaysToFormATargetStringGivenADictionary,
@@ -5219,4 +5237,12 @@ export const problems: readonly Problem[] = [
   maximumEmployeesInvitedToMeeting,
   maximizeMinimumPoweredCity,
   minimumTimeRemoveCarsIllegalGoods,
+  // batch 156 — strings/medium, trie+backtracking/hard, union-find/hard, shortest-path/medium
+  camelcaseMatching,
+  wordSquares,
+  minimizeMalwareSpreadII,
+  pathWithMaxProbability,
+  // batch 156b — tree/easy×1, tree/medium×1
+  averageOfLevelsInBinaryTree,
+  allElementsInTwoBinarySearchTrees,
 ];
