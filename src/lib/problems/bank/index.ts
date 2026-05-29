@@ -3131,6 +3131,11 @@ import { problem as findValidMatrixGivenRowColumnSums } from './find-valid-matri
 import { problem as countCompleteSubstrings } from './count-complete-substrings';
 import { problem as longestSubarrayWithPositiveProduct } from './longest-subarray-with-positive-product';
 import { problem as countSpecialIntegers } from './count-special-integers';
+// batch 214 — medium/arrays+hash-map+simulation, medium/dynamic-programming+arrays+backtracking, medium/arrays+two-pointers+simulation, medium/strings+simulation
+import { problem as countArtifactsThatCanBeExtracted } from './count-artifacts-that-can-be-extracted';
+import { problem as closestDessertCost } from './closest-dessert-cost';
+import { problem as wateringPlantsII } from './watering-plants-ii';
+import { problem as rearrangeWordsInASentence } from './rearrange-words-in-a-sentence';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6304,4 +6309,9 @@ export const problems: readonly Problem[] = [
   // batch 212 addendum — medium/arrays+dp, hard/math+dp
   longestSubarrayWithPositiveProduct,
   countSpecialIntegers,
+  // batch 214 — medium/arrays+hash-map+simulation, medium/dynamic-programming+arrays+backtracking, medium/arrays+two-pointers+simulation, medium/strings+simulation
+  countArtifactsThatCanBeExtracted,
+  closestDessertCost,
+  wateringPlantsII,
+  rearrangeWordsInASentence,
 ];

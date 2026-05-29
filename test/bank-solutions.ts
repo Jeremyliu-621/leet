@@ -44160,4 +44160,81 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return count;
   },
+
+  // batch 214 — count-artifacts-that-can-be-extracted, closest-dessert-cost, watering-plants-ii, rearrange-words-in-a-sentence
+  'count-artifacts-that-can-be-extracted': (...args: unknown[]) => {
+    const n = args[0] as number;
+    void n;
+    const artifacts = args[1] as number[][];
+    const dig = args[2] as number[][];
+    const dug = new Set(dig.map(([r, c]) => `${r},${c}`));
+    let count = 0;
+    for (const [r1, c1, r2, c2] of artifacts) {
+      let ok = true;
+      outer: for (let r = r1!; r <= r2!; r++) {
+        for (let c = c1!; c <= c2!; c++) {
+          if (!dug.has(`${r},${c}`)) { ok = false; break outer; }
+        }
+      }
+      if (ok) count++;
+    }
+    return count;
+  },
+
+  'closest-dessert-cost': (...args: unknown[]) => {
+    const baseCosts = args[0] as number[];
+    const toppingCosts = args[1] as number[];
+    const target = args[2] as number;
+    let best = Infinity;
+    function update(cost: number) {
+      if (Math.abs(cost - target) < Math.abs(best - target) ||
+          (Math.abs(cost - target) === Math.abs(best - target) && cost < best)) {
+        best = cost;
+      }
+    }
+    function dfs(idx: number, cost: number) {
+      update(cost);
+      if (idx === toppingCosts.length || cost >= target) return;
+      for (let k = 0; k <= 2; k++) {
+        dfs(idx + 1, cost + k * toppingCosts[idx]!);
+      }
+    }
+    for (const base of baseCosts) {
+      dfs(0, base);
+    }
+    return best;
+  },
+
+  'watering-plants-ii': (...args: unknown[]) => {
+    const plants = args[0] as number[];
+    const capacityA = args[1] as number;
+    const capacityB = args[2] as number;
+    let wa = capacityA, wb = capacityB;
+    let refills = 0;
+    let i = 0, j = plants.length - 1;
+    while (i < j) {
+      if (wa < plants[i]!) { refills++; wa = capacityA; }
+      wa -= plants[i]!;
+      i++;
+      if (wb < plants[j]!) { refills++; wb = capacityB; }
+      wb -= plants[j]!;
+      j--;
+    }
+    if (i === j) {
+      if (wa >= wb) {
+        if (wa < plants[i]!) { refills++; }
+      } else {
+        if (wb < plants[i]!) { refills++; }
+      }
+    }
+    return refills;
+  },
+
+  'rearrange-words-in-a-sentence': (...args: unknown[]) => {
+    const text = args[0] as string;
+    const words = text.toLowerCase().split(' ');
+    words.sort((a, b) => a.length - b.length);
+    words[0] = words[0]![0]!.toUpperCase() + words[0]!.slice(1);
+    return words.join(' ');
+  },
 };
