@@ -41926,4 +41926,89 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return Math.max(...dp[n - 1]![m - 1]!.filter(v => v !== NEG));
   },
+
+  'minimum-time-to-revert-word-to-initial-state-ii': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const k = args[1] as number;
+    const n = word.length;
+    const z = new Array<number>(n).fill(0);
+    let l = 0, r = 0;
+    for (let i = 1; i < n; i++) {
+      if (i < r) z[i] = Math.min(r - i, z[i - l]!);
+      while (i + z[i]! < n && word[z[i]!] === word[i + z[i]!]) z[i]!++;
+      if (i + z[i]! > r) { l = i; r = i + z[i]!; }
+    }
+    for (let t = 1; ; t++) {
+      const pos = t * k;
+      if (pos >= n) return t;
+      if (z[pos]! >= n - pos) return t;
+    }
+  },
+
+  'find-the-maximum-length-of-valid-subsequence-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const dp: number[][] = Array.from({ length: k }, () => new Array<number>(k).fill(0));
+    let ans = 1;
+    for (const x of nums) {
+      const j = x % k;
+      for (let r = 0; r < k; r++) {
+        const prev = (r - j + k) % k;
+        const val = dp[r]![prev]! + 1;
+        if (val > dp[r]![j]!) dp[r]![j] = val;
+        if (dp[r]![j]! > ans) ans = dp[r]![j]!;
+      }
+    }
+    return ans;
+  },
+
+  'count-prefix-and-suffix-pairs-ii': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    type TrieNode = { children: Map<number, TrieNode>; count: number };
+    const newNode = (): TrieNode => ({ children: new Map(), count: 0 });
+    const root = newNode();
+    let result = 0;
+    for (const w of words) {
+      const L = w.length;
+      let node = root;
+      for (let i = 0; i < Math.ceil(L / 2); i++) {
+        const key = w.charCodeAt(i) * 26 + w.charCodeAt(L - 1 - i);
+        if (!node.children.has(key)) node.children.set(key, newNode());
+        node = node.children.get(key)!;
+        result += node.count;
+      }
+      let ins = root;
+      for (let i = 0; i < Math.ceil(L / 2); i++) {
+        const key = w.charCodeAt(i) * 26 + w.charCodeAt(L - 1 - i);
+        ins = ins.children.get(key)!;
+      }
+      ins.count++;
+    }
+    return result;
+  },
+
+  'count-substrings-that-can-be-rearranged-to-contain-a-string-i': (...args: unknown[]) => {
+    const word1 = args[0] as string;
+    const word2 = args[1] as string;
+    const MOD = 1_000_000_007n;
+    const need = new Array<number>(26).fill(0);
+    for (const c of word2) need[c.charCodeAt(0) - 97]!++;
+    const have = new Array<number>(26).fill(0);
+    let deficit = 0;
+    for (let i = 0; i < 26; i++) if (need[i]! > 0) deficit++;
+    let left = 0, ans = 0n;
+    for (let right = 0; right < word1.length; right++) {
+      const rc = word1.charCodeAt(right) - 97;
+      have[rc]!++;
+      if (have[rc]! === need[rc]!) deficit--;
+      while (deficit === 0) {
+        const lc = word1.charCodeAt(left) - 97;
+        if (have[lc]! === need[lc]!) break;
+        have[lc]!--;
+        left++;
+      }
+      if (deficit === 0) ans = (ans + BigInt(left + 1)) % MOD;
+    }
+    return Number(ans);
+  },
 };

@@ -41896,4 +41896,84 @@ def maxBottlesDrunk(numBottles, numExchange):
                             dp[ni][nj][k+1] = cur
     return max(v for v in dp[n-1][m-1] if v != NEG)
 `,
+
+  'minimum-time-to-revert-word-to-initial-state-ii': `def minimumTimeToInitialState(word, k):
+    n = len(word)
+    z = [0] * n
+    l = r = 0
+    for i in range(1, n):
+        if i < r:
+            z[i] = min(r - i, z[i - l])
+        while i + z[i] < n and word[z[i]] == word[i + z[i]]:
+            z[i] += 1
+        if i + z[i] > r:
+            l, r = i, i + z[i]
+    t = 1
+    while True:
+        pos = t * k
+        if pos >= n:
+            return t
+        if z[pos] >= n - pos:
+            return t
+        t += 1
+`,
+
+  'find-the-maximum-length-of-valid-subsequence-ii': `def maximumLength(nums, k):
+    dp = [[0] * k for _ in range(k)]
+    ans = 1
+    for x in nums:
+        j = x % k
+        for r in range(k):
+            prev = (r - j) % k
+            dp[r][j] = max(dp[r][j], dp[r][prev] + 1)
+            if dp[r][j] > ans:
+                ans = dp[r][j]
+    return ans
+`,
+
+  'count-prefix-and-suffix-pairs-ii': `def countPrefixSuffixPairs(words):
+    result = 0
+    root = {}
+    for w in words:
+        L = len(w)
+        node = root
+        half = (L + 1) // 2
+        for i in range(half):
+            key = (ord(w[i]), ord(w[L - 1 - i]))
+            if key not in node:
+                node[key] = {'_cnt': 0}
+            node = node[key]
+            result += node['_cnt']
+        ins = root
+        for i in range(half):
+            key = (ord(w[i]), ord(w[L - 1 - i]))
+            ins = ins[key]
+        ins['_cnt'] += 1
+    return result
+`,
+
+  'count-substrings-that-can-be-rearranged-to-contain-a-string-i': `def validSubstringCount(word1, word2):
+    MOD = 10**9 + 7
+    need = [0] * 26
+    for c in word2:
+        need[ord(c) - 97] += 1
+    have = [0] * 26
+    deficit = sum(1 for x in need if x > 0)
+    left = 0
+    ans = 0
+    for right in range(len(word1)):
+        rc = ord(word1[right]) - 97
+        have[rc] += 1
+        if have[rc] == need[rc]:
+            deficit -= 1
+        while deficit == 0:
+            lc = ord(word1[left]) - 97
+            if have[lc] == need[lc]:
+                break
+            have[lc] -= 1
+            left += 1
+        if deficit == 0:
+            ans = (ans + left + 1) % MOD
+    return ans
+`,
 };

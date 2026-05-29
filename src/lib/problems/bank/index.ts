@@ -2899,6 +2899,11 @@ import { problem as minimumOpsMakeElementsDistinct } from './minimum-ops-make-el
 import { problem as zigzagGridTraversalWithSkip } from './zigzag-grid-traversal-with-skip';
 import { problem as sumOfVariableLengthSubarrays } from './sum-of-variable-length-subarrays';
 import { problem as maximumAmountOfMoneyRobotCanEarn } from './maximum-amount-of-money-robot-can-earn';
+// batch 182 — hard/strings, medium/dp+arrays, hard/strings+trie, medium/strings+sliding-window+hash-map
+import { problem as minimumTimeToRevertWordToInitialStateII } from './minimum-time-to-revert-word-to-initial-state-ii';
+import { problem as findTheMaximumLengthOfValidSubsequenceII } from './find-the-maximum-length-of-valid-subsequence-ii';
+import { problem as countPrefixAndSuffixPairsII } from './count-prefix-and-suffix-pairs-ii';
+import { problem as countSubstringsThatCanBeRearrangedToContainAStringI } from './count-substrings-that-can-be-rearranged-to-contain-a-string-i';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5839,4 +5844,9 @@ export const problems: readonly Problem[] = [
   zigzagGridTraversalWithSkip,
   sumOfVariableLengthSubarrays,
   maximumAmountOfMoneyRobotCanEarn,
+  // batch 182 — hard/strings, medium/dp+arrays, hard/strings+trie, medium/strings+sliding-window+hash-map
+  minimumTimeToRevertWordToInitialStateII,
+  findTheMaximumLengthOfValidSubsequenceII,
+  countPrefixAndSuffixPairsII,
+  countSubstringsThatCanBeRearrangedToContainAStringI,
 ];
