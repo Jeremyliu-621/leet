@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2725** problems; 8469 tests green. Batches 102–204 + KaTeX UX complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2729** problems; 8481 tests green. Batches 102–205 + KaTeX UX complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 205+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 206+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 205 — array-average, find-elements-exactly-twice, count-equal-k, total-string-len (2026-05-29)
+Four new easy problems: `array-average` (easy/arrays+math, sum/length), `find-elements-appearing-exactly-twice` (easy/arrays+hash-map, freq map filter count==2 sorted), `count-elements-equal-to-k` (easy/arrays, filter ===k count), `total-string-length` (easy/arrays+strings, sum word lengths). Bank at **2729**; 8481 tests.
 
 ### feat(bank): batch 204 — flatten-2d-array, count-elements-gt-k, sort-words-by-length, sum-positive (2026-05-29)
 Four new easy problems: `flatten-2d-array` (easy/arrays, matrix.flat() row-major), `count-elements-greater-than-k` (easy/arrays, filter v>k), `sort-words-by-length` (easy/arrays+strings, sort by word.length ascending), `sum-of-positive-elements` (easy/arrays+math, sum v>0). Bank at **2725**; 8469 tests.
