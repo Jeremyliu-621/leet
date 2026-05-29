@@ -35758,7 +35758,59 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
         dp[i]![j] = (dp[i - 1]![j - 1]! + BigInt(i - 1) * dp[i - 1]![j]!) % MOD;
       }
     }
-    return Number(dp[n]![k]!);
+    return Number(dp[n]![k] ?? 0n);
+  },
+
+  // batch 152b — arrays+math/medium, arrays+math+dp/medium, arrays+math/hard
+  'number-of-subarrays-having-even-product': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const total = n * (n + 1) / 2;
+    let allOdd = 0, run = 0;
+    for (const x of nums) {
+      if (x % 2 === 1) {
+        run++;
+      } else {
+        allOdd += run * (run + 1) / 2;
+        run = 0;
+      }
+    }
+    allOdd += run * (run + 1) / 2;
+    return total - allOdd;
+  },
+
+  'greatest-sum-divisible-by-three': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const dp = [0, -Infinity, -Infinity];
+    for (const num of nums) {
+      const ndp = [...dp];
+      const r = num % 3;
+      for (let i = 0; i < 3; i++) {
+        if ((dp[i] as number) > -Infinity) {
+          const nr = (i + r) % 3;
+          ndp[nr] = Math.max(ndp[nr] as number, (dp[i] as number) + num);
+        }
+      }
+      dp.splice(0, 3, ...ndp);
+    }
+    return Math.max(dp[0] as number, 0);
+  },
+
+  'construct-product-matrix': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const MOD = 12345;
+    const n = grid.length, m = (grid[0] as number[]).length;
+    const flat = (grid as number[][]).flatMap(row => row);
+    const N = n * m;
+    const prefix = new Array<number>(N + 1).fill(1);
+    for (let i = 0; i < N; i++) prefix[i + 1] = (prefix[i]! * flat[i]!) % MOD;
+    const suffix = new Array<number>(N + 1).fill(1);
+    for (let i = N - 1; i >= 0; i--) suffix[i] = (suffix[i + 1]! * flat[i]!) % MOD;
+    const result: number[][] = Array.from({ length: n }, () => new Array<number>(m).fill(0));
+    for (let idx = 0; idx < N; idx++) {
+      result[Math.floor(idx / m)]![idx % m] = (prefix[idx]! * suffix[idx + 1]!) % MOD;
+    }
+    return result;
   },
 
   // batch 151

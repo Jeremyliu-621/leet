@@ -2543,6 +2543,10 @@ import { problem as countVisitedNodesInADirectedGraph } from './count-visited-no
 import { problem as minEdgeReversalsToDestination } from './minimum-edge-reversals-to-reach-destination';
 import { problem as rangeUpdateRangeSumBit } from './range-update-range-sum-bit';
 import { problem as findCriticalPseudoCriticalEdges } from './find-critical-and-pseudo-critical-edges-in-mst';
+// batch 152b — arrays+math/medium, arrays+math+dp/medium, arrays+math/hard
+import { problem as numberOfSubarraysHavingEvenProduct } from './number-of-subarrays-having-even-product';
+import { problem as greatestSumDivisibleByThree } from './greatest-sum-divisible-by-three';
+import { problem as constructProductMatrix } from './construct-product-matrix';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5082,7 +5086,7 @@ export const problems: readonly Problem[] = [
   numberOfWaysToSplitAString,
   meanArrayAfterRemovingSomeElements,
   minimumOpsConvertTime,
-  // batch 150b — easy/arrays+hash-map, easy/arrays+math, easy/arrays+hash-map, easy/arrays+matrix, hard/math+dp
+  // batch 150b — easy/arrays+hash-map, easy/arrays+math, easy/arrays+hash-map, easy/arrays+matrix
   findLuckyNumberInMatrix,
   maximumProductOfThreeNumbers,
   findingThreeDigitEvenNumbers,
@@ -5123,4 +5127,8 @@ export const problems: readonly Problem[] = [
   minEdgeReversalsToDestination,
   rangeUpdateRangeSumBit,
   findCriticalPseudoCriticalEdges,
+  // batch 152b — arrays+math/medium, arrays+math+dp/medium, arrays+math/hard
+  numberOfSubarraysHavingEvenProduct,
+  greatestSumDivisibleByThree,
+  constructProductMatrix,
 ];

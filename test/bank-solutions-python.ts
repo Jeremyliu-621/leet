@@ -35563,6 +35563,56 @@ def resultsArray(queries, k):
     return dp[n][k]
 `,
 
+  // batch 152b — arrays+math/medium, arrays+math+dp/medium, arrays+math/hard
+  'number-of-subarrays-having-even-product': `def countEvenProductSubarrays(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    total = n * (n + 1) // 2
+    all_odd = 0
+    run = 0
+    for x in nums:
+        if x % 2 == 1:
+            run += 1
+        else:
+            all_odd += run * (run + 1) // 2
+            run = 0
+    all_odd += run * (run + 1) // 2
+    return total - all_odd
+`,
+
+  'greatest-sum-divisible-by-three': `def maxSumDivThree(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    dp = [0, float('-inf'), float('-inf')]
+    for num in nums:
+        ndp = dp[:]
+        r = num % 3
+        for i in range(3):
+            if dp[i] > float('-inf'):
+                nr = (i + r) % 3
+                ndp[nr] = max(ndp[nr], dp[i] + num)
+        dp = ndp
+    return max(dp[0], 0)
+`,
+
+  'construct-product-matrix': `def constructProductMatrix(grid):
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    MOD = 12345
+    n, m = len(grid), len(grid[0])
+    flat = [grid[i][j] for i in range(n) for j in range(m)]
+    N = n * m
+    prefix = [1] * (N + 1)
+    for i in range(N):
+        prefix[i + 1] = prefix[i] * flat[i] % MOD
+    suffix = [1] * (N + 1)
+    for i in range(N - 1, -1, -1):
+        suffix[i] = suffix[i + 1] * flat[i] % MOD
+    result = [[0] * m for _ in range(n)]
+    for idx in range(N):
+        i, j = divmod(idx, m)
+        result[i][j] = prefix[idx] * suffix[idx + 1] % MOD
+    return result
+`,
+
   // batch 151
   'swap-pairs-linked-list': `def swapPairsRunner(vals):
     vals = list(vals.to_py() if hasattr(vals, 'to_py') else vals)
