@@ -43363,4 +43363,63 @@ def allElementsDistinct(nums):
 def allElementsPositive(nums):
     return all(v > 0 for v in nums)
 `,
+  // batch 208 ----------------------------------------------------------------
+  'harshad-number': `
+def sumOfTheDigitsOfHarshadNumber(x):
+    s = sum(int(c) for c in str(x))
+    return s if x % s == 0 else -1
+`,
+  'furthest-point-from-origin': `
+def furthestDistanceFromOrigin(moves):
+    l = moves.count('L')
+    r = moves.count('R')
+    z = moves.count('_')
+    return abs(l - r) + z
+`,
+  'minimum-possible-sum-of-beautiful-array': `
+def minimumPossibleSum(n, target):
+    MOD = 10**9 + 7
+    half = target // 2
+    if n <= half:
+        return n * (n + 1) // 2 % MOD
+    base = half * (half + 1) // 2 % MOD
+    extra = n - half
+    extra_sum = (extra * target % MOD + extra * (extra - 1) // 2 % MOD) % MOD
+    return (base + extra_sum) % MOD
+`,
+  'maximal-range-each-element-is-maximum-in': `
+def maximumSizeSubarray(nums):
+    n = len(nums)
+    prev = [-1] * n
+    nxt = [n] * n
+    stack = []
+    for i in range(n):
+        while stack and nums[stack[-1]] <= nums[i]:
+            stack.pop()
+        prev[i] = stack[-1] if stack else -1
+        stack.append(i)
+    stack = []
+    for i in range(n - 1, -1, -1):
+        while stack and nums[stack[-1]] <= nums[i]:
+            stack.pop()
+        nxt[i] = stack[-1] if stack else n
+        stack.append(i)
+    return [nxt[i] - prev[i] - 1 for i in range(n)]
+`,
+  'lexicographically-smallest-string-operations-constraint': `
+def getSmallestString(s, k):
+    arr = list(s)
+    for i in range(len(arr)):
+        if k == 0:
+            break
+        d = ord(arr[i]) - ord('a')
+        cost = min(d, 26 - d)
+        if k >= cost:
+            arr[i] = 'a'
+            k -= cost
+        else:
+            arr[i] = chr(ord(arr[i]) - k)
+            k = 0
+    return ''.join(arr)
+`,
 };

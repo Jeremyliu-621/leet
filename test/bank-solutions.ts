@@ -43523,4 +43523,69 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const nums = args[0] as number[];
     return nums.every(v => v > 0);
   },
+  // batch 208 ----------------------------------------------------------------
+  'harshad-number': (...args: unknown[]) => {
+    const x = args[0] as number;
+    const s = String(x).split('').reduce((sum, c) => sum + Number(c), 0);
+    return x % s === 0 ? s : -1;
+  },
+  'furthest-point-from-origin': (...args: unknown[]) => {
+    const moves = args[0] as string;
+    let l = 0, r = 0, z = 0;
+    for (const c of moves) {
+      if (c === 'L') l++;
+      else if (c === 'R') r++;
+      else z++;
+    }
+    return Math.abs(l - r) + z;
+  },
+  'minimum-possible-sum-of-beautiful-array': (...args: unknown[]) => {
+    const n = BigInt(args[0] as number);
+    const target = BigInt(args[1] as number);
+    const MOD = 1000000007n;
+    const half = target / 2n;
+    if (n <= half) {
+      return Number(n * (n + 1n) / 2n % MOD);
+    }
+    const base = half * (half + 1n) / 2n % MOD;
+    const extra = n - half;
+    const extraSum = (extra * target % MOD + extra * (extra - 1n) / 2n % MOD) % MOD;
+    return Number((base + extraSum) % MOD);
+  },
+  'maximal-range-each-element-is-maximum-in': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const prev = new Array<number>(n).fill(-1);
+    const next = new Array<number>(n).fill(n);
+    const stack: number[] = [];
+    for (let i = 0; i < n; i++) {
+      while (stack.length && nums[stack[stack.length - 1]!]! <= nums[i]!) stack.pop();
+      prev[i] = stack.length ? stack[stack.length - 1]! : -1;
+      stack.push(i);
+    }
+    stack.length = 0;
+    for (let i = n - 1; i >= 0; i--) {
+      while (stack.length && nums[stack[stack.length - 1]!]! <= nums[i]!) stack.pop();
+      next[i] = stack.length ? stack[stack.length - 1]! : n;
+      stack.push(i);
+    }
+    return nums.map((_, i) => next[i]! - prev[i]! - 1);
+  },
+  'lexicographically-smallest-string-operations-constraint': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let k = args[1] as number;
+    const arr = s.split('');
+    for (let i = 0; i < arr.length && k > 0; i++) {
+      const d = arr[i]!.charCodeAt(0) - 97;
+      const cost = Math.min(d, 26 - d);
+      if (k >= cost) {
+        arr[i] = 'a';
+        k -= cost;
+      } else {
+        arr[i] = String.fromCharCode(arr[i]!.charCodeAt(0) - k);
+        k = 0;
+      }
+    }
+    return arr.join('');
+  },
 };
