@@ -43034,6 +43034,42 @@ def largestCombination(candidates):
 def totalMoney(n):
     return sum(i // 7 + i % 7 + 1 for i in range(n))
 `,
+  // batch 200b ---------------------------------------------------------------
+  'minimum-value-to-get-positive-step-by-step-sum': `
+def minStartValue(nums):
+    min_prefix = prefix = 0
+    for n in nums:
+        prefix += n
+        min_prefix = min(min_prefix, prefix)
+    return max(1, 1 - min_prefix)
+`,
+  'maximum-difference-between-adjacent-elements-in-a-circular-array': `
+def maxAdjacentDistance(nums):
+    return max(abs(nums[i] - nums[(i + 1) % len(nums)]) for i in range(len(nums)))
+`,
+  'binary-string-with-substrings-representing-1-to-n': `
+def queryString(s, n):
+    for i in range(1, n + 1):
+        if bin(i)[2:] not in s:
+            return False
+        if len(bin(i)[2:]) > len(s):
+            return False
+    return True
+`,
+  'sign-of-the-product-of-an-array': `
+def arraySign(nums):
+    neg_count = 0
+    for n in nums:
+        if n == 0:
+            return 0
+        if n < 0:
+            neg_count += 1
+    return 1 if neg_count % 2 == 0 else -1
+`,
+  'find-the-index-of-the-first-occurrence-in-a-string': `
+def strStr(haystack, needle):
+    return haystack.find(needle)
+`,
   // batch 199b ---------------------------------------------------------------
   'find-indices-with-index-and-value-difference-i': `
 def findIndices(nums, indexDifference, valueDifference):

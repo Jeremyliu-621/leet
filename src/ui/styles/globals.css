@@ -110,6 +110,22 @@ body {
   color: var(--ll-muted);
 }
 
+/* KaTeX math rendering — force all math text to inherit our design tokens so
+   dark/light mode works correctly. KaTeX's own colors are hardcoded black which
+   looks wrong on the dark background. */
+.katex,
+.katex-display,
+.katex-html {
+  color: var(--ll-text);
+  font-size: 1em;
+}
+
+.katex-display {
+  margin: 0.75em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
 /* Hide scrollbar but keep scrollable (used in language selector) */
 .scrollbar-none {
   -ms-overflow-style: none;

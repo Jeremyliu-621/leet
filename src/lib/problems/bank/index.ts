@@ -2987,6 +2987,12 @@ import { problem as countElementsWithStrictlySmallerAndGreaterElements } from '.
 import { problem as findFirstPalindromicStringInTheArray } from './find-first-palindromic-string-in-the-array';
 import { problem as removeTrailingZerosFromAString } from './remove-trailing-zeros-from-a-string';
 import { problem as numberOfValidWordsInASentence } from './number-of-valid-words-in-a-sentence';
+// batch 200b — easy/arrays+prefix-sum, easy/arrays, medium/strings, easy/math, easy/strings+two-pointers
+import { problem as minimumValueToGetPositiveStepByStepSum } from './minimum-value-to-get-positive-step-by-step-sum';
+import { problem as maximumDifferenceBetweenAdjacentElementsInACircularArray } from './maximum-difference-between-adjacent-elements-in-a-circular-array';
+import { problem as binaryStringWithSubstringsRepresenting1ToN } from './binary-string-with-substrings-representing-1-to-n';
+import { problem as signOfTheProductOfAnArray } from './sign-of-the-product-of-an-array';
+import { problem as findTheIndexOfTheFirstOccurrenceInAString } from './find-the-index-of-the-first-occurrence-in-a-string';
 // batch 196 — easy/arrays+math, easy/arrays+sliding-window, medium/arrays
 import { problem as countPairsWithEvenSum } from './count-pairs-with-even-sum';
 import { problem as findXSumOfAllKLongSubarraysI } from './find-x-sum-of-all-k-long-subarrays-i';
@@ -6048,6 +6054,12 @@ export const problems: readonly Problem[] = [
   minimumWindowContainingAllVowels,
   maximumSumIncreasingSubsequence,
   sumOfEveryKthNumber,
+  // batch 200b — easy/arrays+prefix-sum, easy/arrays, medium/strings, easy/math, easy/strings+two-pointers
+  minimumValueToGetPositiveStepByStepSum,
+  maximumDifferenceBetweenAdjacentElementsInACircularArray,
+  binaryStringWithSubstringsRepresenting1ToN,
+  signOfTheProductOfAnArray,
+  findTheIndexOfTheFirstOccurrenceInAString,
   // batch 199b — easy/arrays+two-pointers, easy/arrays, easy/arrays+strings+two-pointers, easy/strings, medium/strings
   findIndicesWithIndexAndValueDifferenceI,
   countElementsWithStrictlySmallerAndGreaterElements,
