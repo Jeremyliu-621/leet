@@ -2642,6 +2642,17 @@ import { problem as allPathsFromSourceToTarget } from './all-paths-from-source-t
 import { problem as countUnreachablePairsOfNodesInUndirectedGraph } from './count-unreachable-pairs-of-nodes-in-an-undirected-graph';
 import { problem as partitionArrayIntoDisjointIntervals } from './partition-array-into-disjoint-intervals';
 import { problem as removeDuplicatesFromSortedArrayII } from './remove-duplicates-from-sorted-array-ii';
+// batch 168 — orphan registrations: dp+strings/hard, arrays+math/medium, dp+arrays/hard, strings+z-function/hard,
+//             strings+sliding-window/medium, arrays+hash-map/medium, dp/hard, dp/medium, dp/hard, arrays+hash-map/medium
+import { problem as countOfIntegers } from './count-of-integers';
+import { problem as minimumCostHomecomingRobotInGrid } from './minimum-cost-homecoming-of-a-robot-in-a-grid';
+import { problem as numberOfWaysToEarnPoints } from './number-of-ways-to-earn-points';
+import { problem as sumOfScoresOfBuiltStrings } from './sum-of-scores-of-built-strings';
+import { problem as countSubstringsWithKFrequencyCharactersII } from './count-substrings-with-k-frequency-characters-ii';
+import { problem as sumOfImbalanceNumbersOfAllSubarrays } from './sum-of-imbalance-numbers-of-all-subarrays';
+import { problem as minimumWhiteTilesAfterCovering } from './minimum-white-tiles-after-covering-with-carpets';
+import { problem as specialPermutations } from './special-permutations';
+import { problem as uniqueLength3PalindromicSubsequences } from './unique-length-3-palindromic-subsequences';
 // batch 164 — simulation/hard, bit-manipulation/easy, math/medium, arrays/medium, binary-search/medium,
 //             trie/hard, bit-manipulation/hard, arrays/hard, arrays/hard
 import { problem as amountOfNewAreaPaintedEachDay } from './amount-of-new-area-painted-each-day';
@@ -5382,4 +5393,14 @@ export const problems: readonly Problem[] = [
   countUnreachablePairsOfNodesInUndirectedGraph,
   partitionArrayIntoDisjointIntervals,
   removeDuplicatesFromSortedArrayII,
+  // batch 168 — 9 orphan registrations (minimumSwapsToSortAnArray already registered in batch 71)
+  countOfIntegers,
+  minimumCostHomecomingRobotInGrid,
+  numberOfWaysToEarnPoints,
+  sumOfScoresOfBuiltStrings,
+  countSubstringsWithKFrequencyCharactersII,
+  sumOfImbalanceNumbersOfAllSubarrays,
+  minimumWhiteTilesAfterCovering,
+  specialPermutations,
+  uniqueLength3PalindromicSubsequences,
 ];
