@@ -39900,6 +39900,140 @@ def maxScore(nums):
             break
     return count
 `,
+  'delete-leaves-with-given-value': `
+def removeLeafNodesRunner(arr, target):
+    if hasattr(arr, 'to_py'): arr = list(arr.to_py())
+    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in arr]
+    target = int(target)
+    class TreeNode:
+        def __init__(self, val=0): self.val = val; self.left = None; self.right = None
+    def from_array(a):
+        if not a or a[0] is None: return None
+        root = TreeNode(a[0]); queue = [root]; i = 1
+        while queue and i < len(a):
+            node = queue.pop(0)
+            if i < len(a) and a[i] is not None: node.left = TreeNode(a[i]); queue.append(node.left)
+            i += 1
+            if i < len(a) and a[i] is not None: node.right = TreeNode(a[i]); queue.append(node.right)
+            i += 1
+        return root
+    def to_array(root):
+        if not root: return []
+        result = []; queue = [root]
+        while queue:
+            node = queue.pop(0)
+            if node is None: result.append(None); continue
+            result.append(node.val); queue.append(node.left); queue.append(node.right)
+        while result and result[-1] is None: result.pop()
+        return result
+    def remove_leaves(node):
+        if not node: return None
+        node.left = remove_leaves(node.left)
+        node.right = remove_leaves(node.right)
+        if not node.left and not node.right and node.val == target: return None
+        return node
+    return to_array(remove_leaves(from_array(arr)))
+`,
+
+  'minimum-cost-to-convert-string-ii': `
+def minimumCost(source, target, original, changed, cost):
+    if hasattr(source, 'to_py'): source = str(source.to_py())
+    if hasattr(target, 'to_py'): target = str(target.to_py())
+    if hasattr(original, 'to_py'): original = [str(x) for x in original.to_py()]
+    if hasattr(changed, 'to_py'): changed = [str(x) for x in changed.to_py()]
+    if hasattr(cost, 'to_py'): cost = list(cost.to_py())
+    else:
+        original = [str(x) for x in original]
+        changed = [str(x) for x in changed]
+        cost = [int(x) for x in cost]
+    source = str(source); target = str(target)
+    n = len(source)
+    strs = list(set(original) | set(changed))
+    str_id = {s: i for i, s in enumerate(strs)}
+    m = len(strs)
+    INF = float('inf')
+    dist = [[INF]*m for _ in range(m)]
+    for i in range(m): dist[i][i] = 0
+    for o, c, w in zip(original, changed, cost):
+        u, v = str_id[o], str_id[c]
+        if int(w) < dist[u][v]: dist[u][v] = int(w)
+    for k in range(m):
+        for u in range(m):
+            for v in range(m):
+                if dist[u][k] < INF and dist[k][v] < INF:
+                    if dist[u][k] + dist[k][v] < dist[u][v]:
+                        dist[u][v] = dist[u][k] + dist[k][v]
+    dp = [INF] * (n + 1)
+    dp[0] = 0
+    for i in range(n):
+        if dp[i] == INF: continue
+        for length in range(1, n - i + 1):
+            ss = source[i:i+length]
+            st = target[i:i+length]
+            if ss == st:
+                if dp[i] < dp[i+length]: dp[i+length] = dp[i]
+            u = str_id.get(ss); v = str_id.get(st)
+            if u is not None and v is not None and dist[u][v] < INF:
+                cand = dp[i] + dist[u][v]
+                if cand < dp[i+length]: dp[i+length] = cand
+    return -1 if dp[n] == INF else dp[n]
+`,
+
+  'find-beautiful-indices-in-the-given-array-i': `
+def beautifulIndices(s, a, b, k):
+    if hasattr(s, 'to_py'): s = str(s.to_py())
+    if hasattr(a, 'to_py'): a = str(a.to_py())
+    if hasattr(b, 'to_py'): b = str(b.to_py())
+    s = str(s); a = str(a); b = str(b); k = int(k)
+    a_matches = [i for i in range(len(s) - len(a) + 1) if s[i:i+len(a)] == a]
+    b_matches = [j for j in range(len(s) - len(b) + 1) if s[j:j+len(b)] == b]
+    result = []
+    bp = 0
+    for i in a_matches:
+        while bp < len(b_matches) and b_matches[bp] < i - k:
+            bp += 1
+        if bp < len(b_matches) and b_matches[bp] <= i + k:
+            result.append(i)
+    return result
+`,
+
+  'make-k-subarray-sums-equal': `
+def makeSubKSumEqual(arr, k):
+    if hasattr(arr, 'to_py'): arr = list(arr.to_py())
+    arr = [int(x) for x in arr]; k = int(k)
+    from math import gcd
+    n = len(arr)
+    visited = [False] * n
+    total = 0
+    for start in range(n):
+        if visited[start]: continue
+        group = []
+        cur = start
+        while not visited[cur]:
+            visited[cur] = True
+            group.append(arr[cur])
+            cur = (cur + k) % n
+        group.sort()
+        median = group[len(group) // 2]
+        total += sum(abs(v - median) for v in group)
+    return total
+`,
+
+  'maximum-sum-of-an-hourglass': `
+def maxSum(grid):
+    if hasattr(grid, 'to_py'): grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in grid.to_py()]
+    else: grid = [list(row) for row in grid]
+    m = len(grid); n = len(grid[0])
+    best = float('-inf')
+    for i in range(m - 2):
+        for j in range(n - 2):
+            s = (grid[i][j] + grid[i][j+1] + grid[i][j+2]
+                 + grid[i+1][j+1]
+                 + grid[i+2][j] + grid[i+2][j+1] + grid[i+2][j+2])
+            if s > best: best = s
+    return best
+`,
+
 
   'maximum-good-people-based-on-statements': `
 def maximumGood(statements):

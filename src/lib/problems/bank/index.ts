@@ -2800,6 +2800,13 @@ import { problem as patchingArray } from './patching-array';
 import { problem as createMaximumNumber } from './create-maximum-number';
 import { problem as throneInheritance } from './throne-inheritance';
 import { problem as lineReflection } from './line-reflection';
+// batch 171b — tree/medium, strings+graph+dp/hard, strings+two-pointers+binary-search/medium, arrays+math/medium, arrays/medium
+import { problem as deleteLeavesWithGivenValue } from './delete-leaves-with-given-value';
+import { problem as minimumCostToConvertStringII } from './minimum-cost-to-convert-string-ii';
+import { problem as findBeautifulIndicesInTheGivenArrayI } from './find-beautiful-indices-in-the-given-array-i';
+import { problem as makeKSubarraySumsEqual } from './make-k-subarray-sums-equal';
+import { problem as maximumSumOfAnHourglass } from './maximum-sum-of-an-hourglass';
+
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5638,4 +5645,11 @@ export const problems: readonly Problem[] = [
   largest1BorderedSquare,
   waterBottlesII,
   designMostRecentlyUsedQueue,
+  // batch 171b — tree/medium, strings+graph+dp/hard, strings+two-pointers+binary-search/medium, arrays+math/medium, arrays/medium
+  deleteLeavesWithGivenValue,
+  minimumCostToConvertStringII,
+  findBeautifulIndicesInTheGivenArrayI,
+  makeKSubarraySumsEqual,
+  maximumSumOfAnHourglass,
+
 ];

@@ -39710,6 +39710,130 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  // batch 171b — tree/medium, strings+graph+dp/hard, strings+two-pointers/medium, arrays+math/medium, arrays/medium
+  'delete-leaves-with-given-value': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const target = args[1] as number;
+    class TreeNode {
+      val: number; left: TreeNode | null = null; right: TreeNode | null = null;
+      constructor(v: number) { this.val = v; }
+    }
+    const fromArray = (a: (number | null)[]): TreeNode | null => {
+      if (!a || a.length === 0) return null;
+      const root = new TreeNode(a[0]!);
+      const queue: TreeNode[] = [root];
+      let i = 1;
+      while (queue.length > 0 && i < a.length) {
+        const node = queue.shift()!;
+        if (a[i] !== null && a[i] !== undefined) { node.left = new TreeNode(a[i]!); queue.push(node.left); }
+        i++;
+        if (i < a.length && a[i] !== null && a[i] !== undefined) { node.right = new TreeNode(a[i]!); queue.push(node.right); }
+        i++;
+      }
+      return root;
+    };
+    const toArray = (root: TreeNode | null): (number | null)[] => {
+      if (!root) return [];
+      const result: (number | null)[] = [];
+      const queue: (TreeNode | null)[] = [root];
+      while (queue.length > 0) {
+        const node = queue.shift()!;
+        if (node === null) { result.push(null); continue; }
+        result.push(node.val);
+        queue.push(node.left ?? null);
+        queue.push(node.right ?? null);
+      }
+      while (result.length > 0 && result[result.length - 1] === null) result.pop();
+      return result;
+    };
+    const removeLeafNodes = (node: TreeNode | null): TreeNode | null => {
+      if (!node) return null;
+      node.left = removeLeafNodes(node.left);
+      node.right = removeLeafNodes(node.right);
+      if (!node.left && !node.right && node.val === target) return null;
+      return node;
+    };
+    return toArray(removeLeafNodes(fromArray(arr)));
+  },
+
+  'minimum-cost-to-convert-string-ii': (...args: unknown[]) => {
+    const source = args[0] as string;
+    const target = args[1] as string;
+    const original = args[2] as string[];
+    const changed = args[3] as string[];
+    const cost = args[4] as number[];
+    const n = source.length;
+    // Collect all unique substrings
+    const strSet = new Set<string>();
+    for (const s of original) strSet.add(s);
+    for (const s of changed) strSet.add(s);
+    const strId = new Map<string, number>();
+    let id = 0;
+    for (const s of strSet) strId.set(s, id++);
+    const INF = Infinity;
+    const dist = Array.from({ length: id }, () => new Array<number>(id).fill(INF));
+    for (let i = 0; i < id; i++) dist[i]![i] = 0;
+    for (let i = 0; i < original.length; i++) {
+      const u = strId.get(original[i]!)!;
+      const v = strId.get(changed[i]!)!;
+      dist[u]![v] = Math.min(dist[u]![v]!, cost[i]!);
+    }
+    // Floyd-Warshall
+    for (let k = 0; k < id; k++) {
+      for (let u = 0; u < id; u++) {
+        for (let v = 0; v < id; v++) {
+          if (dist[u]![k]! < INF && dist[k]![v]! < INF) {
+            dist[u]![v] = Math.min(dist[u]![v]!, dist[u]![k]! + dist[k]![v]!);
+          }
+        }
+      }
+    }
+    // DP: dp[i] = min cost to convert source[0..i-1] to target[0..i-1]
+    const dp = new Array<number>(n + 1).fill(INF);
+    dp[0] = 0;
+    for (let i = 0; i <= n; i++) {
+      if (dp[i] === INF) continue;
+      if (i === n) break;
+      // Try all lengths
+      for (let len = 1; len <= n - i; len++) {
+        const ss = source.slice(i, i + len);
+        const st = target.slice(i, i + len);
+        if (ss === st) {
+          dp[i + len] = Math.min(dp[i + len]!, dp[i]!);
+        }
+        const u = strId.get(ss);
+        const v = strId.get(st);
+        if (u !== undefined && v !== undefined && dist[u]![v]! < INF) {
+          dp[i + len] = Math.min(dp[i + len]!, dp[i]! + dist[u]![v]!);
+        }
+      }
+    }
+    return dp[n] === INF ? -1 : dp[n];
+  },
+
+  'find-beautiful-indices-in-the-given-array-i': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const a = args[1] as string;
+    const b = args[2] as string;
+    const k = args[3] as number;
+    const aMatches: number[] = [];
+    const bMatches: number[] = [];
+    for (let i = 0; i <= s.length - a.length; i++) {
+      if (s.startsWith(a, i)) aMatches.push(i);
+    }
+    for (let j = 0; j <= s.length - b.length; j++) {
+      if (s.startsWith(b, j)) bMatches.push(j);
+    }
+    const result: number[] = [];
+    let bp = 0;
+    for (const i of aMatches) {
+      while (bp < bMatches.length && bMatches[bp]! < i - k) bp++;
+      if (bp < bMatches.length && bMatches[bp]! <= i + k) result.push(i);
+
+    }
+    return result;
+  },
+
   'maximize-consecutive-elements-in-an-array-after-modification': (...args: unknown[]) => {
     const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
     const dp = new Map<number, number>();
@@ -40201,6 +40325,46 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const xs = points.map(([x]) => x!);
     const sum = Math.min(...xs) + Math.max(...xs);
     return points.every(([x, y]) => set.has(`${sum - x!},${y}`));
+  },
+
+  // batch 171b — tree/medium, strings+graph+dp/hard, strings+two-pointers/medium, arrays+math/medium, arrays/medium
+  'make-k-subarray-sums-equal': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const k = args[1] as number;
+    const n = arr.length;
+    let total = 0;
+    const visited = new Uint8Array(n);
+    for (let start = 0; start < n; start++) {
+      if (visited[start]) continue;
+      const group: number[] = [];
+      let cur = start;
+      while (!visited[cur]) {
+        visited[cur] = 1;
+        group.push(arr[cur]!);
+        cur = (cur + k) % n;
+      }
+      group.sort((a, b) => a - b);
+      const median = group[Math.floor(group.length / 2)]!;
+      for (const v of group) total += Math.abs(v - median);
+    }
+    return total;
+  },
+
+  'maximum-sum-of-an-hourglass': (grid: unknown) => {
+    const g = grid as number[][];
+    const m = g.length, n = g[0]!.length;
+    let best = -Infinity;
+    for (let i = 0; i <= m - 3; i++) {
+      for (let j = 0; j <= n - 3; j++) {
+        const s = g[i]![j]! + g[i]![j+1]! + g[i]![j+2]!
+                + g[i+1]![j+1]!
+                + g[i+2]![j]! + g[i+2]![j+1]! + g[i+2]![j+2]!;
+        if (s > best) best = s;
+      }
+    }
+    return best;
+
+
   },
 
 };
