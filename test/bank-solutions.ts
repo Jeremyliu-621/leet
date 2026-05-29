@@ -38063,4 +38063,108 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return steps;
   },
 
+  'count-lattice-points-inside-a-circle': (...args: unknown[]): unknown => {
+    const circles = args[0] as number[][];
+    const points = new Set<string>();
+    for (const c of circles) {
+      const cx = c[0] as number, cy = c[1] as number, r = c[2] as number;
+      for (let x = cx - r; x <= cx + r; x++) {
+        for (let y = cy - r; y <= cy + r; y++) {
+          if ((x - cx) ** 2 + (y - cy) ** 2 <= r * r) points.add(`${x},${y}`);
+        }
+      }
+    }
+    return points.size;
+  },
+
+  'finding-the-users-active-minutes': (...args: unknown[]): unknown => {
+    const logs = args[0] as number[][];
+    const k = args[1] as number;
+    const userMinutes = new Map<number, Set<number>>();
+    for (const log of logs) {
+      const id = log[0] as number, time = log[1] as number;
+      if (!userMinutes.has(id)) userMinutes.set(id, new Set());
+      userMinutes.get(id)!.add(time);
+    }
+    const answer = new Array<number>(k).fill(0);
+    for (const minuteSet of userMinutes.values()) {
+      const uam = minuteSet.size;
+      if (uam >= 1 && uam <= k) (answer[uam - 1] as number)++;
+    }
+    return answer;
+  },
+
+  'number-of-visible-people-in-a-queue': (...args: unknown[]): unknown => {
+    const heights = args[0] as number[];
+    const n = heights.length;
+    const answer = new Array<number>(n).fill(0);
+    const stack: number[] = [];
+    for (let i = n - 1; i >= 0; i--) {
+      let count = 0;
+      while (stack.length > 0 && stack[stack.length - 1]! < heights[i]!) { stack.pop(); count++; }
+      if (stack.length > 0) count++;
+      answer[i] = count;
+      stack.push(heights[i]!);
+    }
+    return answer;
+  },
+
+  'prime-in-diagonal': (...args: unknown[]): unknown => {
+    const nums = args[0] as number[][];
+    const isPrime = (n: number): boolean => {
+      if (n < 2) return false;
+      if (n < 4) return true;
+      if (n % 2 === 0 || n % 3 === 0) return false;
+      for (let i = 5; i * i <= n; i += 6) if (n % i === 0 || n % (i + 2) === 0) return false;
+      return true;
+    };
+    const size = nums.length;
+    let maxPrime = 0;
+    for (let i = 0; i < size; i++) {
+      const row = nums[i] as number[];
+      const main = row[i] as number;
+      const anti = row[size - 1 - i] as number;
+      if (isPrime(main) && main > maxPrime) maxPrime = main;
+      if (isPrime(anti) && anti > maxPrime) maxPrime = anti;
+    }
+    return maxPrime;
+  },
+
+  'remove-stones-to-minimize-the-total': (...args: unknown[]): unknown => {
+    const piles = args[0] as number[];
+    const k = args[1] as number;
+    const heap: number[] = [];
+    const push = (val: number) => {
+      heap.push(val);
+      let i = heap.length - 1;
+      while (i > 0) {
+        const p = (i - 1) >> 1;
+        if (heap[p]! >= heap[i]!) break;
+        [heap[p], heap[i]] = [heap[i]!, heap[p]!];
+        i = p;
+      }
+    };
+    const pop = (): number => {
+      const top = heap[0]!;
+      const last = heap.pop()!;
+      if (heap.length > 0) {
+        heap[0] = last;
+        let i = 0;
+        while (true) {
+          const l = 2 * i + 1, r = 2 * i + 2;
+          let lg = i;
+          if (l < heap.length && heap[l]! > heap[lg]!) lg = l;
+          if (r < heap.length && heap[r]! > heap[lg]!) lg = r;
+          if (lg === i) break;
+          [heap[i], heap[lg]] = [heap[lg]!, heap[i]!];
+          i = lg;
+        }
+      }
+      return top;
+    };
+    for (const p of piles) push(p);
+    for (let i = 0; i < k; i++) { const m = pop(); push(m - Math.floor(m / 2)); }
+    return heap.reduce((a, b) => a + b, 0);
+  },
+
 };

@@ -38076,4 +38076,85 @@ def numSteps(s):
     return steps
 `,
 
+  'count-lattice-points-inside-a-circle': `
+def countLatticePoints(circles):
+    raw = list(circles.to_py() if hasattr(circles, 'to_py') else circles)
+    circles = [list(c.to_py() if hasattr(c, 'to_py') else c) for c in raw]
+    points = set()
+    for cx, cy, r in circles:
+        for x in range(cx - r, cx + r + 1):
+            for y in range(cy - r, cy + r + 1):
+                if (x - cx)**2 + (y - cy)**2 <= r*r:
+                    points.add((x, y))
+    return len(points)
+`,
+
+  'finding-the-users-active-minutes': `
+def findingUsersActiveMinutes(logs, k):
+    from collections import defaultdict
+    raw = list(logs.to_py() if hasattr(logs, 'to_py') else logs)
+    logs = [list(l.to_py() if hasattr(l, 'to_py') else l) for l in raw]
+    user_minutes = defaultdict(set)
+    for id_, time in logs:
+        user_minutes[id_].add(time)
+    answer = [0] * k
+    for minutes in user_minutes.values():
+        uam = len(minutes)
+        if 1 <= uam <= k:
+            answer[uam - 1] += 1
+    return answer
+`,
+
+  'number-of-visible-people-in-a-queue': `
+def canSeePersonsCount(heights):
+    heights = list(heights.to_py() if hasattr(heights, 'to_py') else heights)
+    n = len(heights)
+    answer = [0] * n
+    stack = []
+    for i in range(n - 1, -1, -1):
+        count = 0
+        while stack and stack[-1] < heights[i]:
+            stack.pop()
+            count += 1
+        if stack:
+            count += 1
+        answer[i] = count
+        stack.append(heights[i])
+    return answer
+`,
+
+  'prime-in-diagonal': `
+def diagonalPrime(nums):
+    raw = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    nums = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in raw]
+    def is_prime(n):
+        if n < 2: return False
+        if n < 4: return True
+        if n % 2 == 0 or n % 3 == 0: return False
+        i = 5
+        while i * i <= n:
+            if n % i == 0 or n % (i+2) == 0: return False
+            i += 6
+        return True
+    size = len(nums)
+    max_prime = 0
+    for i in range(size):
+        for v in (nums[i][i], nums[i][size - 1 - i]):
+            if is_prime(v) and v > max_prime:
+                max_prime = v
+    return max_prime
+`,
+
+  'remove-stones-to-minimize-the-total': `
+def minStoneSum(piles, k):
+    import heapq
+    piles = list(piles.to_py() if hasattr(piles, 'to_py') else piles)
+    heap = [-p for p in piles]
+    heapq.heapify(heap)
+    for _ in range(k):
+        max_val = -heapq.heappop(heap)
+        heapq.heappush(heap, -(max_val - max_val // 2))
+    return -sum(heap)
+`,
+
 };

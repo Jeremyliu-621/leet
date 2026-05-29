@@ -2631,6 +2631,12 @@ import { problem as checkIfAStringContainsAllBinaryCodesOfSizeK } from './check-
 import { problem as convertToBase2 } from './convert-to-base-2';
 import { problem as flipAndInvertImage } from './flip-and-invert-image';
 import { problem as numberOfStepsToReduceNumberInBinaryRepresentation } from './number-of-steps-to-reduce-a-number-in-binary-representation';
+// batch 166 — arrays/easy, arrays+hash-map/medium, arrays+stack/hard, arrays+math/easy, arrays+heap/medium
+import { problem as countLatticePointsInsideACircle } from './count-lattice-points-inside-a-circle';
+import { problem as findingTheUsersActiveMinutes } from './finding-the-users-active-minutes';
+import { problem as numberOfVisiblePeopleInAQueue } from './number-of-visible-people-in-a-queue';
+import { problem as primeInDiagonal } from './prime-in-diagonal';
+import { problem as removeStonesToMinimizeTheTotal } from './remove-stones-to-minimize-the-total';
 // batch 164 — simulation/hard, bit-manipulation/easy, math/medium, arrays/medium, binary-search/medium,
 //             trie/hard, bit-manipulation/hard, arrays/hard, arrays/hard
 import { problem as amountOfNewAreaPaintedEachDay } from './amount-of-new-area-painted-each-day';
@@ -5360,4 +5366,10 @@ export const problems: readonly Problem[] = [
   convertToBase2,
   flipAndInvertImage,
   numberOfStepsToReduceNumberInBinaryRepresentation,
+  // batch 166 — 5 new problems from latest remote session
+  countLatticePointsInsideACircle,
+  findingTheUsersActiveMinutes,
+  numberOfVisiblePeopleInAQueue,
+  primeInDiagonal,
+  removeStonesToMinimizeTheTotal,
 ];
