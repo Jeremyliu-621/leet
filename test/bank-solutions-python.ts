@@ -37426,4 +37426,77 @@ def maxUniqueSplit(s):
     return max_count[0]
 `,
 
+  // batch 160
+  'reformat-date': `
+def reformatDate(date):
+    MONTHS = {'Jan':'01','Feb':'02','Mar':'03','Apr':'04','May':'05','Jun':'06',
+               'Jul':'07','Aug':'08','Sep':'09','Oct':'10','Nov':'11','Dec':'12'}
+    parts = date.split(' ')
+    day = ''.join(c for c in parts[0] if c.isdigit()).zfill(2)
+    return f"{parts[2]}-{MONTHS[parts[1]]}-{day}"
+`,
+
+  'maximum-value-after-insertion': `
+def maxValue(n, x):
+    neg = n[0] == '-'
+    digits = n[1:] if neg else n
+    i = 0
+    while i < len(digits):
+        if (neg and int(digits[i]) > x) or (not neg and int(digits[i]) < x):
+            break
+        i += 1
+    inserted = digits[:i] + str(x) + digits[i:]
+    return '-' + inserted if neg else inserted
+`,
+
+  'recover-the-original-array': `
+def recoverArray(nums):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    nums_sorted = sorted(nums)
+    n = len(nums_sorted) // 2
+    from collections import Counter
+    for i in range(1, len(nums_sorted)):
+        diff = nums_sorted[i] - nums_sorted[0]
+        if diff == 0 or diff % 2 != 0:
+            continue
+        k = diff // 2
+        freq = Counter(nums_sorted)
+        result = []
+        ok = True
+        for v in nums_sorted:
+            if freq[v] == 0:
+                continue
+            high = v + 2 * k
+            if freq[high] == 0:
+                ok = False
+                break
+            freq[v] -= 1
+            freq[high] -= 1
+            result.append(v + k)
+        if ok and len(result) == n:
+            return sorted(result)
+    return []
+`,
+
+  'construct-smallest-number-from-di-string': `
+def smallestNumber(pattern):
+    result = []
+    stack = []
+    for i in range(len(pattern) + 1):
+        stack.append(i + 1)
+        if i == len(pattern) or pattern[i] == 'I':
+            while stack:
+                result.append(stack.pop())
+    return ''.join(str(x) for x in result)
+`,
+
+  'minimum-difference-highest-lowest-k-scores': `
+def minimumDifference(nums, k):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    nums = sorted(nums)
+    return min(nums[i + k - 1] - nums[i] for i in range(len(nums) - k + 1))
+`,
+
 };

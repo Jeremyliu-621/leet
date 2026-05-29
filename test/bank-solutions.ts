@@ -37532,4 +37532,77 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return max;
   },
 
+  // batch 160
+  'reformat-date': (...args: unknown[]) => {
+    const date = args[0] as string;
+    const MONTHS: Record<string, string> = {
+      Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
+      Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12',
+    };
+    const parts = date.split(' ');
+    const day = parts[0]!.replace(/\D/g, '').padStart(2, '0');
+    return `${parts[2]}-${MONTHS[parts[1]!]}-${day}`;
+  },
+
+  'maximum-value-after-insertion': (...args: unknown[]) => {
+    const n = args[0] as string;
+    const x = args[1] as number;
+    const neg = n[0] === '-';
+    const digits = neg ? n.slice(1) : n;
+    let i = 0;
+    while (i < digits.length) {
+      if (neg ? parseInt(digits[i]!) > x : parseInt(digits[i]!) < x) break;
+      i++;
+    }
+    const inserted = digits.slice(0, i) + String(x) + digits.slice(i);
+    return neg ? '-' + inserted : inserted;
+  },
+
+  'recover-the-original-array': (...args: unknown[]) => {
+    const numsIn = [...(args[0] as number[])].sort((a, b) => a - b);
+    const n = numsIn.length / 2;
+    for (let i = 1; i < numsIn.length; i++) {
+      const diff = numsIn[i]! - numsIn[0]!;
+      if (diff === 0 || diff % 2 !== 0) continue;
+      const k = diff / 2;
+      const freq = new Map<number, number>();
+      for (const v of numsIn) freq.set(v, (freq.get(v) ?? 0) + 1);
+      const result: number[] = [];
+      let ok = true;
+      for (const v of numsIn) {
+        if (!freq.get(v)) continue;
+        const high = v + 2 * k;
+        if (!freq.get(high)) { ok = false; break; }
+        freq.set(v, freq.get(v)! - 1);
+        freq.set(high, freq.get(high)! - 1);
+        result.push(v + k);
+      }
+      if (ok && result.length === n) return result.sort((a, b) => a - b);
+    }
+    return [];
+  },
+
+  'construct-smallest-number-from-di-string': (...args: unknown[]) => {
+    const pattern = args[0] as string;
+    const result: number[] = [];
+    const stack: number[] = [];
+    for (let i = 0; i <= pattern.length; i++) {
+      stack.push(i + 1);
+      if (i === pattern.length || pattern[i] === 'I') {
+        while (stack.length) result.push(stack.pop()!);
+      }
+    }
+    return result.join('');
+  },
+
+  'minimum-difference-highest-lowest-k-scores': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const k = args[1] as number;
+    let min = Infinity;
+    for (let i = 0; i + k - 1 < nums.length; i++) {
+      min = Math.min(min, nums[i + k - 1]! - nums[i]!);
+    }
+    return min;
+  },
+
 };

@@ -2630,6 +2630,12 @@ import { problem as collectingChocolates } from './collecting-chocolates';
 import { problem as partitioningIntoMinDeciB } from './partitioning-into-minimum-number-of-deci-binary-numbers';
 import { problem as whereWillBallFall } from './where-will-the-ball-fall';
 import { problem as splitStringMaxUniqueSubstrings } from './split-a-string-into-the-maximum-number-of-unique-substrings';
+// batch 162 — strings/easy, strings+math/medium, arrays+hash-map+two-pointers/hard, strings+stack/medium, arrays+sliding-window/easy
+import { problem as reformatDate } from './reformat-date';
+import { problem as maximumValueAfterInsertion } from './maximum-value-after-insertion';
+import { problem as recoverTheOriginalArray } from './recover-the-original-array';
+import { problem as constructSmallestNumberFromDiString } from './construct-smallest-number-from-di-string';
+import { problem as minimumDifferenceHighestLowestKScores } from './minimum-difference-highest-lowest-k-scores';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5297,4 +5303,10 @@ export const problems: readonly Problem[] = [
   partitioningIntoMinDeciB,
   whereWillBallFall,
   splitStringMaxUniqueSubstrings,
+  // batch 162 — strings/easy, strings+math/medium, arrays+hash-map+two-pointers/hard, strings+stack/medium, arrays+sliding-window/easy
+  reformatDate,
+  maximumValueAfterInsertion,
+  recoverTheOriginalArray,
+  constructSmallestNumberFromDiString,
+  minimumDifferenceHighestLowestKScores,
 ];
