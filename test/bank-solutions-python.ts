@@ -43034,6 +43034,92 @@ def largestCombination(candidates):
 def totalMoney(n):
     return sum(i // 7 + i % 7 + 1 for i in range(n))
 `,
+  // batch 202b ---------------------------------------------------------------
+  'append-k-integers-with-minimal-sum': `
+def minimalKSum(nums, k):
+    nums = sorted(set(nums))
+    result = 0
+    curr = 0
+    remaining = k
+    for n in nums:
+        if remaining <= 0:
+            break
+        if n > curr + 1:
+            take = min(n - 1 - curr, remaining)
+            result += (curr + 1 + curr + take) * take // 2
+            remaining -= take
+            curr += take
+        if n > curr:
+            curr = n
+    if remaining > 0:
+        result += (curr + 1 + curr + remaining) * remaining // 2
+    return result
+`,
+  'count-the-number-of-good-partitions': `
+def numberOfGoodPartitions(nums):
+    MOD = 10**9 + 7
+    last_pos = {v: i for i, v in enumerate(nums)}
+    count = 0
+    max_right = -1
+    for i, v in enumerate(nums):
+        max_right = max(max_right, last_pos[v])
+        if i == max_right:
+            count += 1
+    return pow(2, count - 1, MOD)
+`,
+  'maximum-sum-of-heights-of-the-towers': `
+def maximumSumOfHeights(heights):
+    n = len(heights)
+    left = [0] * n
+    right = [0] * n
+    stk = [-1]
+    for i in range(n):
+        while len(stk) > 1 and heights[stk[-1]] >= heights[i]:
+            stk.pop()
+        j = stk[-1]
+        left[i] = (0 if j == -1 else left[j]) + heights[i] * (i - j)
+        stk.append(i)
+    stk = [n]
+    for i in range(n - 1, -1, -1):
+        while len(stk) > 1 and heights[stk[-1]] >= heights[i]:
+            stk.pop()
+        j = stk[-1]
+        right[i] = (0 if j == n else right[j]) + heights[i] * (j - i)
+        stk.append(i)
+    return max(left[i] + right[i] - heights[i] for i in range(n))
+`,
+  'count-subarrays-with-more-ones-than-zeros': `
+def subarraysWithMoreZerosThanOnes(nums):
+    MOD = 10**9 + 7
+    n = len(nums)
+    offset = n
+    bit = [0] * (2 * n + 2)
+    def update(i):
+        i += 1
+        while i < len(bit):
+            bit[i] += 1
+            i += i & (-i)
+    def query(i):
+        i += 1
+        res = 0
+        while i > 0:
+            res += bit[i]
+            i -= i & (-i)
+        return res
+    ans = 0
+    prefix = 0
+    update(prefix + offset)
+    for x in nums:
+        prefix += 1 if x == 1 else -1
+        if prefix > -n:
+            ans = (ans + query(prefix - 1 + offset)) % MOD
+        update(prefix + offset)
+    return ans
+`,
+  'construct-the-longest-new-string': `
+def longestString(x, y, z):
+    return 2 * (2 * min(x, y) + z) + (2 if x != y else 0)
+`,
   // batch 201b ---------------------------------------------------------------
   'find-the-winning-player-in-coin-game': `
 def winningPlayer(x, y):

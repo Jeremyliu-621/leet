@@ -43212,6 +43212,79 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     for (let i = 0; i < n; i++) total += Math.floor(i / 7) + (i % 7) + 1;
     return total;
   },
+  // batch 202b ---------------------------------------------------------------
+  'append-k-integers-with-minimal-sum': (...args: unknown[]) => {
+    const sorted = [...new Set(args[0] as number[])].sort((a, b) => a - b);
+    const k = args[1] as number;
+    let result = BigInt(0), curr = 0, remaining = k;
+    for (const n of sorted) {
+      if (remaining <= 0) break;
+      if (n > curr + 1) {
+        const take = Math.min(n - 1 - curr, remaining);
+        result += BigInt(curr + 1 + curr + take) * BigInt(take) / 2n;
+        remaining -= take; curr += take;
+      }
+      if (n > curr) curr = n;
+    }
+    if (remaining > 0) result += BigInt(curr + 1 + curr + remaining) * BigInt(remaining) / 2n;
+    return Number(result);
+  },
+  'count-the-number-of-good-partitions': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const MOD = 1000000007n;
+    const lastPos = new Map<number, number>();
+    for (let i = 0; i < nums.length; i++) lastPos.set(nums[i]!, i);
+    let count = 0, maxRight = -1;
+    for (let i = 0; i < nums.length; i++) {
+      maxRight = Math.max(maxRight, lastPos.get(nums[i]!)!);
+      if (i === maxRight) count++;
+    }
+    let result = 1n;
+    for (let i = 0; i < count - 1; i++) result = result * 2n % MOD;
+    return Number(result);
+  },
+  'maximum-sum-of-heights-of-the-towers': (...args: unknown[]) => {
+    const heights = args[0] as number[];
+    const n = heights.length;
+    const left = new Array<number>(n).fill(0), right = new Array<number>(n).fill(0);
+    let stk: number[] = [-1];
+    for (let i = 0; i < n; i++) {
+      while (stk.length > 1 && heights[stk[stk.length - 1]!]! >= heights[i]!) stk.pop();
+      const j = stk[stk.length - 1]!;
+      left[i] = (j === -1 ? 0 : left[j]!) + heights[i]! * (i - j);
+      stk.push(i);
+    }
+    stk = [n];
+    for (let i = n - 1; i >= 0; i--) {
+      while (stk.length > 1 && heights[stk[stk.length - 1]!]! >= heights[i]!) stk.pop();
+      const j = stk[stk.length - 1]!;
+      right[i] = (j === n ? 0 : right[j]!) + heights[i]! * (j - i);
+      stk.push(i);
+    }
+    let ans = 0;
+    for (let i = 0; i < n; i++) ans = Math.max(ans, left[i]! + right[i]! - heights[i]!);
+    return ans;
+  },
+  'count-subarrays-with-more-ones-than-zeros': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const MOD = 1000000007, n = nums.length;
+    const bit = new Array<number>(2 * n + 2).fill(0);
+    const offset = n;
+    const upd = (i: number) => { for (i++; i < bit.length; i += i & -i) bit[i]!++; };
+    const qry = (i: number) => { let r = 0; for (i++; i > 0; i -= i & -i) r += bit[i]!; return r; };
+    let ans = 0, prefix = 0;
+    upd(prefix + offset);
+    for (const x of nums) {
+      prefix += x === 1 ? 1 : -1;
+      if (prefix > -n) ans = (ans + qry(prefix - 1 + offset)) % MOD;
+      upd(prefix + offset);
+    }
+    return ans;
+  },
+  'construct-the-longest-new-string': (...args: unknown[]) => {
+    const x = args[0] as number, y = args[1] as number, z = args[2] as number;
+    return 2 * (2 * Math.min(x, y) + z) + (x !== y ? 2 : 0);
+  },
   // batch 201b ---------------------------------------------------------------
   'find-the-winning-player-in-coin-game': (...args: unknown[]) => {
     const x = args[0] as number;

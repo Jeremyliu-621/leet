@@ -2987,6 +2987,12 @@ import { problem as countElementsWithStrictlySmallerAndGreaterElements } from '.
 import { problem as findFirstPalindromicStringInTheArray } from './find-first-palindromic-string-in-the-array';
 import { problem as removeTrailingZerosFromAString } from './remove-trailing-zeros-from-a-string';
 import { problem as numberOfValidWordsInASentence } from './number-of-valid-words-in-a-sentence';
+// batch 202b — medium/math, hard/arrays+hash-map, hard/arrays+stack, medium/arrays+binary-search, medium/math
+import { problem as appendKIntegersWithMinimalSum } from './append-k-integers-with-minimal-sum';
+import { problem as countTheNumberOfGoodPartitions } from './count-the-number-of-good-partitions';
+import { problem as maximumSumOfHeightsOfTheTowers } from './maximum-sum-of-heights-of-the-towers';
+import { problem as countSubarraysWithMoreOnesThanZeros } from './count-subarrays-with-more-ones-than-zeros';
+import { problem as constructTheLongestNewString } from './construct-the-longest-new-string';
 // batch 201b — easy/math+simulation, easy/arrays+simulation, easy/arrays+simulation, easy/strings+sliding-window+hash-map, medium/arrays+two-pointers
 import { problem as findTheWinningPlayerInCoinGame } from './find-the-winning-player-in-coin-game';
 import { problem as snakeInMatrix } from './snake-in-matrix';
@@ -6146,6 +6152,12 @@ export const problems: readonly Problem[] = [
   countStringsOfLengthK,
   maximumOfMinimumValues,
   productOfLastTwo,
+  // batch 202b — medium/math, hard/hash-map, hard/arrays+stack, medium/binary-search, medium/math
+  appendKIntegersWithMinimalSum,
+  countTheNumberOfGoodPartitions,
+  maximumSumOfHeightsOfTheTowers,
+  countSubarraysWithMoreOnesThanZeros,
+  constructTheLongestNewString,
   // batch 201b — easy/math, easy/simulation, easy/simulation, easy/sliding-window, medium/arrays
   findTheWinningPlayerInCoinGame,
   snakeInMatrix,
