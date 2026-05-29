@@ -44375,6 +44375,33 @@ def checkPowersOfThree(n):
         n //= 3
     return True
 `,
+  'minimum-impossible-or': `
+def minImpossibleOR(nums):
+    s = set(nums)
+    x = 1
+    while x in s:
+        x *= 2
+    return x
+`,
+  'find-substring-with-maximum-cost': `
+def maximumCostSubstring(s, chars, vals):
+    cost_of = {c: v for c, v in zip(chars, vals)}
+    cur = ans = 0
+    for ch in s:
+        c = cost_of.get(ch, ord(ch) - ord('a') + 1)
+        cur = max(0, cur + c)
+        ans = max(ans, cur)
+    return ans
+`,
+  'find-the-width-of-columns-of-a-grid': `
+def findColumnWidth(grid):
+    n = len(grid[0])
+    res = [0] * n
+    for row in grid:
+        for j in range(n):
+            res[j] = max(res[j], len(str(row[j])))
+    return res
+`,
   'count-number-of-rectangles-containing-each-point': `
 import bisect
 def countRectangles(rectangles, points):

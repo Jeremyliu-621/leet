@@ -10,9 +10,9 @@ export const problem: Problem = {
 Return the resulting string after removing **exactly one occurrence** of \`digit\` from \`number\` such that the value of the resulting string in **decimal form** is **maximized**. The test cases are generated such that \`digit\` occurs at least once in \`number\`.`,
   constraints: [
     '`2 <= number.length <= 100`',
-    '`number` consists of digits from `1` to `9`',
-    '`digit` is a digit from `1` to `9`',
-    '`digit` occurs at least once in `number`',
+    '`number` consists of digits from `\'1\'` to `\'9\'`.',
+    '`digit` is a digit from `\'1\'` to `\'9\'`.',
+    '`digit` occurs at least once in `number`.',
   ],
   examples: [
     {
@@ -23,18 +23,18 @@ Return the resulting string after removing **exactly one occurrence** of \`digit
     {
       input: 'number = "1231", digit = "1"',
       output: '"231"',
-      explanation: 'Removing the first "1" gives "231" (greater than "123" from removing the last).',
+      explanation: 'Removing the 1 at index 0 gives "231". Removing the 1 at index 3 gives "123". "231" > "123", so return "231".',
     },
     {
       input: 'number = "551", digit = "5"',
       output: '"51"',
-      explanation: 'Removing the first "5" gives "51" > "51"... both give "51", return either (here "51").',
+      explanation: 'Removing the 5 at index 0 gives "51". Removing the 5 at index 1 gives "51". Both give "51".',
     },
   ],
   hints: [
-    'Scan left to right. Remove the first occurrence of `digit` that is immediately followed by a character greater than `digit`.',
-    'If no such occurrence exists (all are followed by equal or smaller digits), remove the last occurrence.',
-    'Track the index of the last occurrence as a fallback; return `number.slice(0,i) + number.slice(i+1)` for the chosen index `i`.',
+    'If the digit immediately after an occurrence of `digit` is strictly greater than `digit`, removing that occurrence maximizes the result.',
+    'Scan left to right; the first occurrence where the next character is larger is the optimal removal point. If none found, remove the last occurrence.',
+    '```js\nfunction removeDigit(number, digit) {\n  let last = -1;\n  for (let i = 0; i < number.length; i++) {\n    if (number[i] === digit) {\n      last = i;\n      if (i + 1 < number.length && number[i + 1] > digit) {\n        return number.slice(0, i) + number.slice(i + 1);\n      }\n    }\n  }\n  return number.slice(0, last) + number.slice(last + 1);\n}\n```',
   ],
   functionName: 'removeDigit',
   params: ['number', 'digit'],
@@ -62,5 +62,9 @@ Return the resulting string after removing **exactly one occurrence** of \`digit
     { args: ['9999', '9'], expected: '999' },
     { args: ['321', '2'], expected: '31' },
     { args: ['3333', '3'], expected: '333' },
+    { args: ['9325', '9'], expected: '325' },
+    { args: ['1111', '1'], expected: '111' },
+    { args: ['123', '2'], expected: '13' },
+    { args: ['391', '3'], expected: '91' },
   ],
 };

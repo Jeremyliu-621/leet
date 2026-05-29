@@ -5,18 +5,18 @@ export const problem: Problem = {
   title: 'Count Number of Rectangles Containing Each Point',
   difficulty: 'medium',
   tags: ['arrays', 'binary-search'],
-  description: `You are given a 2D integer array \`rectangles\` where \`rectangles[i] = [li, hi]\` indicates the \`i\`-th rectangle with lower-left corner \`(0, 0)\` and upper-right corner \`(li, hi)\`.
+  description: `You are given a 2D integer array \`rectangles\` where \`rectangles[i] = [l_i, h_i]\` indicates that the \`i\`th rectangle has length \`l_i\` and height \`h_i\`. Its **bottom-left corner** is at the origin \`(0, 0)\` and its **top-right corner** is at \`(l_i, h_i)\`.
 
-You are also given a 2D integer array \`points\` where \`points[j] = [xj, yj]\` is a point.
+You are also given a 2D integer array \`points\` where \`points[j] = [x_j, y_j]\` is a point.
 
-The \`i\`-th rectangle **contains** the \`j\`-th point if \`0 <= xj <= li\` and \`0 <= yj <= hi\`. Points on the **boundary** of a rectangle are considered inside.
+The \`i\`th rectangle **contains** the \`j\`th point if \`0 <= x_j <= l_i\` and \`0 <= y_j <= h_i\`. Points on the **boundary** of a rectangle are considered inside.
 
-Return an integer array \`count\` of length \`points.length\` where \`count[j]\` is the number of rectangles that contain the \`j\`-th point.`,
+Return an integer array \`count\` of length \`points.length\` where \`count[j]\` is the number of rectangles that contain the \`j\`th point.`,
   constraints: [
     '`1 <= rectangles.length, points.length <= 5 * 10^4`',
     '`rectangles[i].length == points[j].length == 2`',
-    '`1 <= li, xj <= 10^9`',
-    '`1 <= hi, yj <= 100`',
+    '`1 <= l_i, x_j <= 10^9`',
+    '`1 <= h_i, y_j <= 100`',
   ],
   examples: [
     {
@@ -57,5 +57,9 @@ Return an integer array \`count\` of length \`points.length\` where \`count[j]\`
     { args: [[[5, 5], [3, 3], [10, 1]], [[4, 4], [5, 5], [1, 1]]], expected: [1, 1, 3] },
     { args: [[[2, 2]], [[1, 1], [2, 2], [3, 3]]], expected: [1, 1, 0] },
     { args: [[[10, 10], [5, 3], [7, 7]], [[5, 5], [8, 3], [10, 10]]], expected: [2, 1, 1] },
+    { args: [[[1, 1]], [[0, 0]]], expected: [1] },
+    { args: [[[5, 5], [3, 3]], [[3, 3]]], expected: [2] },
+    { args: [[[1, 3], [3, 1]], [[2, 2]]], expected: [0] },
+    { args: [[[1, 2], [2, 3], [2, 2]], [[2, 1], [1, 3]]], expected: [2, 1] },
   ],
 };
