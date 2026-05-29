@@ -3126,6 +3126,11 @@ import { problem as minimumNumberOfOperationsToMakeWordKPeriodic } from './minim
 import { problem as zeroArrayTransformationIII } from './zero-array-transformation-iii';
 import { problem as maximumCoinsHeroesCanCollect } from './maximum-coins-heroes-can-collect';
 import { problem as minimumOperationsToMoveAllBallsToEachBox } from './minimum-operations-to-move-all-balls-to-each-box';
+// batch 213 — easy/arrays, easy/strings, medium/arrays+hash-map, medium/strings+sliding-window
+import { problem as checkIfAll1sAreAtLeastLengthKPlacesApart } from './check-if-all-1s-are-at-least-length-k-places-apart';
+import { problem as checkIfBinaryStringHasAtMostOneSegmentOfOnes } from './check-if-binary-string-has-at-most-one-segment-of-ones';
+import { problem as countDistinctIntegersAfterReverseOperations } from './count-distinct-integers-after-reverse-operations';
+import { problem as maximizeTheConfusionOfAnExam } from './maximize-the-confusion-of-an-exam';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6293,4 +6298,9 @@ export const problems: readonly Problem[] = [
   zeroArrayTransformationIII,
   maximumCoinsHeroesCanCollect,
   minimumOperationsToMoveAllBallsToEachBox,
+  // batch 213
+  checkIfAll1sAreAtLeastLengthKPlacesApart,
+  checkIfBinaryStringHasAtMostOneSegmentOfOnes,
+  countDistinctIntegersAfterReverseOperations,
+  maximizeTheConfusionOfAnExam,
 ];

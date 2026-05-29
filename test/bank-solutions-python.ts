@@ -43908,4 +43908,40 @@ def minOperations(boxes):
         cost += balls
     return ans
 `,
+  'check-if-all-1s-are-at-least-length-k-places-apart': `
+def kLengthApart(nums, k):
+    prev = -k - 1
+    for i, v in enumerate(nums):
+        if v == 1:
+            if i - prev < k + 1:
+                return False
+            prev = i
+    return True
+`,
+  'check-if-binary-string-has-at-most-one-segment-of-ones': `
+def checkOnesSegment(s):
+    return '01' not in s
+`,
+  'count-distinct-integers-after-reverse-operations': `
+def countDistinctIntegers(nums):
+    s = set(nums)
+    for n in nums:
+        s.add(int(str(n)[::-1]))
+    return len(s)
+`,
+  'maximize-the-confusion-of-an-exam': `
+def maxConsecutiveAnswers(answerKey, k):
+    def max_window(target):
+        count = left = best = 0
+        for right in range(len(answerKey)):
+            if answerKey[right] != target:
+                count += 1
+            while count > k:
+                if answerKey[left] != target:
+                    count -= 1
+                left += 1
+            best = max(best, right - left + 1)
+        return best
+    return max(max_window('T'), max_window('F'))
+`,
 };
