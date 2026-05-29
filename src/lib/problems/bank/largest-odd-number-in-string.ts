@@ -7,64 +7,50 @@ export const problem: Problem = {
   tags: ['strings', 'math'],
   description: `You are given a string \`num\`, representing a large integer. Return the **largest-valued odd** integer (as a string) that is a **non-empty substring** of \`num\`, or an empty string \`""\` if no odd integer exists.
 
-A **substring** is a contiguous sequence of characters within a string.
-
-**Note:** The largest-valued odd substring is always a prefix of \`num\` — you just need to find the rightmost odd digit and return everything up to and including it.`,
+A **substring** is a contiguous sequence of characters within a string.`,
   constraints: [
-    '`1 <= num.length <= 10^5`',
-    '`num` only consists of digits and does not contain any leading zeros.',
+    '1 <= num.length <= 10^5',
+    'num consists only of digits 0-9 and does not have leading zeros.',
   ],
   examples: [
     {
       input: 'num = "52"',
       output: '"5"',
-      explanation: 'The only non-empty substrings are "5", "2", and "52". "5" is the only odd number.',
+      explanation: 'The non-empty substrings are "5", "2", and "52". "5" is the only odd number, so it is the answer.',
     },
     {
       input: 'num = "4206"',
       output: '""',
-      explanation: 'There are no odd numbers in "4206".',
+      explanation: 'All digits are even, so no odd integer exists as a substring.',
     },
     {
       input: 'num = "35427"',
       output: '"35427"',
-      explanation: 'The last digit 7 is odd, so the entire string is the answer.',
+      explanation: 'The last digit 7 is odd, so the entire string "35427" is the largest odd substring.',
     },
   ],
   hints: [
-    'A number is odd if and only if its last digit is odd.',
-    'Scan from right to left. The first odd digit you encounter gives you the answer: return the prefix of `num` ending at that index.',
-    `\`\`\`js
-function largestOddNumber(num) {
-  for (let i = num.length-1; i >= 0; i--)
-    if (Number(num[i]) % 2 === 1) return num.slice(0,i+1);
-  return "";
-}\`\`\``,
+    'The largest odd substring must start from index 0 (otherwise we could always extend it leftward to get a larger value).',
+    'So the problem reduces to finding the rightmost odd digit: return num[0..i] where i is the index of the last odd digit.',
+    'Iterate from right to left and return the prefix ending at the first odd digit you find.',
   ],
   functionName: 'largestOddNumber',
   params: ['num'],
   starterCode: {
-    javascript: `function largestOddNumber(num) {
-
-}`,
-    typescript: "function largestOddNumber(num: string): string {\n\n}",
-
-    python: `def largestOddNumber(num):
-    pass`,
+    javascript: 'function largestOddNumber(num) {\n\n}\n',
+    typescript: 'function largestOddNumber(num: string): string {\n\n}',
+    python: 'def largestOddNumber(num):\n    pass\n',
   },
   visibleTests: [
     { args: ['52'], expected: '5' },
     { args: ['4206'], expected: '' },
-    { args: ['35427'], expected: '35427' },
   ],
   hiddenTests: [
+    { args: ['35427'], expected: '35427' },
     { args: ['1'], expected: '1' },
     { args: ['2'], expected: '' },
-    { args: ['10'], expected: '1' },
-    { args: ['102'], expected: '1' },
-    { args: ['12345'], expected: '12345' },
+    { args: ['100'], expected: '1' },
     { args: ['13'], expected: '13' },
     { args: ['24680'], expected: '' },
-    { args: ['13579'], expected: '13579' },
   ],
 };
