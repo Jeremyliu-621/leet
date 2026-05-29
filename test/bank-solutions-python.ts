@@ -44015,4 +44015,40 @@ def minMaxGame(nums):
         nums = new_nums
     return nums[0]
 `,
+  // batch 211 (concurrent)
+  'find-k-or': `
+def findKOr(nums, k):
+    result = 0
+    for bit in range(31):
+        count = sum(1 for n in nums if (n >> bit) & 1)
+        if count >= k:
+            result |= (1 << bit)
+    return result
+`,
+  'maximum-matching-of-players-with-trainers': `
+def matchPlayersAndTrainers(players, trainers):
+    players = sorted(players)
+    trainers = sorted(trainers)
+    i = j = count = 0
+    while i < len(players) and j < len(trainers):
+        if players[i] <= trainers[j]:
+            count += 1
+            i += 1
+        j += 1
+    return count
+`,
+  'sum-of-absolute-differences-in-a-sorted-array': `
+def getSumAbsoluteDifferences(nums):
+    n = len(nums)
+    prefix = [0] * n
+    prefix[0] = nums[0]
+    for i in range(1, n):
+        prefix[i] = prefix[i - 1] + nums[i]
+    result = []
+    for i in range(n):
+        left_sum = i * nums[i] - (prefix[i - 1] if i > 0 else 0)
+        right_sum = (prefix[n - 1] - prefix[i]) - (n - 1 - i) * nums[i]
+        result.append(left_sum + right_sum)
+    return result
+`,
 };

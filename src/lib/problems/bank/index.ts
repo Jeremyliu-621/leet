@@ -3111,7 +3111,11 @@ import { problem as waysToExpressAnIntegerAsSumOfPowers } from './ways-to-expres
 import { problem as minimumRightShiftsToSortTheArray } from './minimum-right-shifts-to-sort-the-array';
 import { problem as slidingSubarrayBeauty } from './sliding-subarray-beauty';
 import { problem as maximumStrongPairXorII } from './maximum-strong-pair-xor-ii';
-// batch 211 — easy/strings+simulation, easy/arrays+simulation, medium/arrays+hash-map+sorting, medium/arrays+bit-manipulation
+// batch 211 (concurrent) — easy/bit-manipulation, medium/arrays+two-pointers, medium/arrays+prefix-sum
+import { problem as findKOr } from './find-k-or';
+import { problem as maximumMatchingOfPlayersWithTrainers } from './maximum-matching-of-players-with-trainers';
+import { problem as sumOfAbsoluteDifferencesInASortedArray } from './sum-of-absolute-differences-in-a-sorted-array';
+// batch 211 (ours) — easy/strings+simulation, easy/arrays+simulation, medium/arrays+hash-map+sorting, medium/arrays+bit-manipulation
 import { problem as strongPasswordCheckerII } from './strong-password-checker-ii';
 import { problem as checkIfAllIntegersInRangeAreCovered } from './check-if-all-the-integers-in-a-range-are-covered';
 import { problem as findOriginalArrayOfDoubledPairs } from './find-the-original-array-of-doubled-pairs';
@@ -6287,7 +6291,11 @@ export const problems: readonly Problem[] = [
   minimumRightShiftsToSortTheArray,
   slidingSubarrayBeauty,
   maximumStrongPairXorII,
-  // batch 211 — easy/strings+simulation, easy/arrays+simulation, medium/arrays+hash-map+sorting, medium/arrays+bit-manipulation
+  // batch 211 (concurrent) — easy/bit-manipulation, medium/arrays+two-pointers, medium/arrays+prefix-sum
+  findKOr,
+  maximumMatchingOfPlayersWithTrainers,
+  sumOfAbsoluteDifferencesInASortedArray,
+  // batch 211 (ours) — easy/strings+simulation, easy/arrays+simulation, medium/arrays+hash-map+sorting, medium/arrays+bit-manipulation
   strongPasswordCheckerII,
   checkIfAllIntegersInRangeAreCovered,
   findOriginalArrayOfDoubledPairs,

@@ -44204,4 +44204,38 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return nums[0]!;
   },
+  // batch 211 (concurrent)
+  'find-k-or': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let result = 0;
+    for (let bit = 0; bit < 31; bit++) {
+      let count = 0;
+      for (const n of nums) if ((n >> bit) & 1) count++;
+      if (count >= k) result |= (1 << bit);
+    }
+    return result;
+  },
+  'maximum-matching-of-players-with-trainers': (...args: unknown[]) => {
+    const players = [...(args[0] as number[])].sort((a, b) => a - b);
+    const trainers = [...(args[1] as number[])].sort((a, b) => a - b);
+    let i = 0, j = 0, count = 0;
+    while (i < players.length && j < trainers.length) {
+      if (players[i]! <= trainers[j]!) { count++; i++; }
+      j++;
+    }
+    return count;
+  },
+  'sum-of-absolute-differences-in-a-sorted-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const prefix = new Array<number>(n);
+    prefix[0] = nums[0]!;
+    for (let i = 1; i < n; i++) prefix[i] = prefix[i - 1]! + nums[i]!;
+    return nums.map((v, i) => {
+      const leftSum = i * v - (i > 0 ? prefix[i - 1]! : 0);
+      const rightSum = (prefix[n - 1]! - prefix[i]!) - (n - 1 - i) * v;
+      return leftSum + rightSum;
+    });
+  },
 };
