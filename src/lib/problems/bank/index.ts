@@ -2519,6 +2519,11 @@ import { problem as bitPrefixSumUpdates } from './bit-prefix-sum-updates';
 import { problem as equalSumArraysMinOps } from './equal-sum-arrays-with-minimum-number-of-operations';
 import { problem as mapOfHighestPeak } from './map-of-highest-peak';
 import { problem as numberOfOrdersInBacklog } from './number-of-orders-in-the-backlog';
+// batch 151 — dp/hard, arrays/medium, strings+dp/medium, dp+bitset/hard
+import { problem as findTheCountOfMonotonicPairsII } from './find-the-count-of-monotonic-pairs-ii';
+import { problem as maximumStrengthOfAGroup } from './maximum-strength-of-a-group';
+import { problem as minimumNumberOfValidStringsToFormTargetI } from './minimum-number-of-valid-strings-to-form-target-i';
+import { problem as maximumTotalRewardUsingOperationsII } from './maximum-total-reward-using-operations-ii';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5075,4 +5080,9 @@ export const problems: readonly Problem[] = [
   equalSumArraysMinOps,
   mapOfHighestPeak,
   numberOfOrdersInBacklog,
+  // batch 151 — dp/hard, arrays/medium, strings+dp/medium, dp+bitset/hard
+  findTheCountOfMonotonicPairsII,
+  maximumStrengthOfAGroup,
+  minimumNumberOfValidStringsToFormTargetI,
+  maximumTotalRewardUsingOperationsII,
 ];

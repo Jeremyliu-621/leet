@@ -35792,5 +35792,76 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return result;
   },
+  'find-the-count-of-monotonic-pairs-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const MOD = 1_000_000_007n;
+    const maxV = Math.max(...nums);
+    let dp = new Array<bigint>(maxV + 1).fill(0n);
+    for (let v = 0; v <= nums[0]!; v++) dp[v] = 1n;
+    for (let i = 1; i < nums.length; i++) {
+      const delta = Math.max(0, nums[i]! - nums[i - 1]!);
+      const prefix = new Array<bigint>(maxV + 2).fill(0n);
+      for (let v = 0; v <= maxV; v++) prefix[v + 1] = (prefix[v]! + dp[v]!) % MOD;
+      const newDp = new Array<bigint>(maxV + 1).fill(0n);
+      for (let v = 0; v <= nums[i]!; v++) {
+        const bound = v - delta;
+        if (bound >= 0) newDp[v] = prefix[bound + 1]!;
+      }
+      dp = newDp;
+    }
+    return Number(dp.reduce((s, x) => (s + x) % MOD, 0n));
+  },
+
+  'maximum-strength-of-a-group': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    let prod = 1, hasProduct = false;
+    let i = 0;
+    while (i + 1 < nums.length && nums[i]! < 0 && nums[i + 1]! < 0) {
+      prod *= nums[i]! * nums[i + 1]!;
+      hasProduct = true;
+      i += 2;
+    }
+    while (i < nums.length && nums[i]! <= 0) i++;
+    while (i < nums.length) {
+      prod *= nums[i]!;
+      hasProduct = true;
+      i++;
+    }
+    if (!hasProduct) {
+      const max = Math.max(...nums);
+      return max < 0 ? max : 0;
+    }
+    return prod;
+  },
+
+  'minimum-number-of-valid-strings-to-form-target-i': (...args: unknown[]) => {
+    const words = args[0] as string[], target = args[1] as string;
+    const prefixes = new Set<string>();
+    for (const w of words) {
+      for (let k = 1; k <= w.length; k++) prefixes.add(w.slice(0, k));
+    }
+    const n = target.length;
+    const dp = new Array<number>(n + 1).fill(Infinity);
+    dp[0] = 0;
+    for (let s = 0; s < n; s++) {
+      if (dp[s] === Infinity) continue;
+      for (let e = s + 1; e <= n; e++) {
+        if (prefixes.has(target.slice(s, e))) dp[e] = Math.min(dp[e]!, dp[s]! + 1);
+      }
+    }
+    return dp[n]! === Infinity ? -1 : dp[n]!;
+  },
+
+  'maximum-total-reward-using-operations-ii': (...args: unknown[]) => {
+    const rewardValues = args[0] as number[];
+    const sorted = [...new Set(rewardValues)].sort((a, b) => a - b);
+    let dp = 1n;
+    for (const v of sorted) {
+      const mask = (1n << BigInt(v)) - 1n;
+      dp |= (dp & mask) << BigInt(v);
+    }
+    return dp.toString(2).length - 1;
+  },
+
 
 };

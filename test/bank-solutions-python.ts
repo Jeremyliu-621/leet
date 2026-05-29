@@ -35591,4 +35591,84 @@ def resultsArray(queries, k):
     return result
 `,
 
+  // batch 151 — dp/hard, arrays/medium, strings+dp/medium, dp+bitset/hard
+  'find-the-count-of-monotonic-pairs-ii': `
+def countOfPairs(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    MOD = 10**9 + 7
+    max_v = max(nums) if nums else 0
+    dp = [0] * (max_v + 1)
+    for v in range(nums[0] + 1):
+        dp[v] = 1
+    for i in range(1, len(nums)):
+        delta = max(0, nums[i] - nums[i - 1])
+        prefix = [0] * (max_v + 2)
+        for v in range(max_v + 1):
+            prefix[v + 1] = (prefix[v] + dp[v]) % MOD
+        new_dp = [0] * (max_v + 1)
+        for v in range(nums[i] + 1):
+            bound = v - delta
+            if bound >= 0:
+                new_dp[v] = prefix[bound + 1]
+        dp = new_dp
+    return sum(dp) % MOD
+`,
+
+  'maximum-strength-of-a-group': `
+def maxStrength(nums):
+    nums = sorted(list(nums.to_py() if hasattr(nums, 'to_py') else nums))
+    prod = 1
+    has_product = False
+    i = 0
+    while i + 1 < len(nums) and nums[i] < 0 and nums[i + 1] < 0:
+        prod *= nums[i] * nums[i + 1]
+        has_product = True
+        i += 2
+    while i < len(nums) and nums[i] <= 0:
+        i += 1
+    while i < len(nums):
+        prod *= nums[i]
+        has_product = True
+        i += 1
+    if not has_product:
+        m = max(nums)
+        return m if m < 0 else 0
+    return prod
+`,
+
+  'minimum-number-of-valid-strings-to-form-target-i': `
+def minValidStrings(words, target):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    if hasattr(target, 'to_py'):
+        target = target.to_py()
+    prefixes = set()
+    for w in words:
+        for k in range(1, len(w) + 1):
+            prefixes.add(w[:k])
+    n = len(target)
+    dp = [float('inf')] * (n + 1)
+    dp[0] = 0
+    for s in range(n):
+        if dp[s] == float('inf'):
+            continue
+        for e in range(s + 1, n + 1):
+            if target[s:e] in prefixes:
+                dp[e] = min(dp[e], dp[s] + 1)
+    return -1 if dp[n] == float('inf') else dp[n]
+`,
+
+  'maximum-total-reward-using-operations-ii': `
+def maxTotalReward(rewardValues):
+    rewardValues = list(rewardValues.to_py() if hasattr(rewardValues, 'to_py') else rewardValues)
+    sorted_vals = sorted(set(rewardValues))
+    dp = 1
+    for v in sorted_vals:
+        mask = (1 << v) - 1
+        dp |= (dp & mask) << v
+    return dp.bit_length() - 1
+`,
+
+
+
+
 };
