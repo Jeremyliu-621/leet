@@ -2501,6 +2501,12 @@ import { problem as findLuckyNumberInMatrix } from './find-lucky-number-in-matri
 import { problem as maximumProductOfThreeNumbers } from './maximum-product-of-three-numbers';
 import { problem as findingThreeDigitEvenNumbers } from './finding-3-digit-even-numbers';
 import { problem as differenceOnesZerosRowAndColumn } from './difference-between-ones-zeros-in-row-and-column';
+// batch 152 — arrays+dp/medium, simulation/medium, strings+dp+hash-map/medium, arrays+hash-map/medium, arrays+heap/medium
+import { problem as maximumStrengthOfAGroup } from './maximum-strength-of-a-group';
+import { problem as minimumMovesToCaptureTheQueen } from './minimum-moves-to-capture-the-queen';
+import { problem as minimumSubstringPartitionEqualCharFreq } from './minimum-substring-partition-of-equal-character-frequency';
+import { problem as maximumGoodSubarraySum } from './maximum-good-subarray-sum';
+import { problem as maximalScoreAfterApplyingKOps } from './maximal-score-after-applying-k-operations';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5039,4 +5045,10 @@ export const problems: readonly Problem[] = [
   maximumProductOfThreeNumbers,
   findingThreeDigitEvenNumbers,
   differenceOnesZerosRowAndColumn,
+  // batch 152 — arrays+dp/medium, simulation/medium, strings+dp/medium, arrays+hash-map/medium, arrays+heap/medium
+  maximumStrengthOfAGroup,
+  minimumMovesToCaptureTheQueen,
+  minimumSubstringPartitionEqualCharFreq,
+  maximumGoodSubarraySum,
+  maximalScoreAfterApplyingKOps,
 ];

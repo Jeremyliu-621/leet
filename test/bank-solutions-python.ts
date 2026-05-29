@@ -35326,4 +35326,97 @@ def resultsArray(queries, k):
     return ops
 `,
 
+  // batch 152
+  'maximum-strength-of-a-group': `def maxStrength(nums):
+    if hasattr(nums, 'to_py'):
+        nums = nums.to_py()
+    n = len(nums)
+    max_prod = float('-inf')
+    for mask in range(1, 1 << n):
+        prod = 1
+        for i in range(n):
+            if mask & (1 << i):
+                prod *= nums[i]
+        max_prod = max(max_prod, prod)
+    return max_prod
+`,
+
+  'minimum-moves-to-capture-the-queen': `def minMovesToCaptureTheQueen(a, b, c, d, e, f):
+    # Rook same col, bishop not blocking
+    if a == e and not (c == a and min(b, f) < d < max(b, f)):
+        return 1
+    # Rook same row, bishop not blocking
+    if b == f and not (d == f and min(a, e) < c < max(a, e)):
+        return 1
+    # Bishop same diagonal, rook not blocking
+    if abs(c - e) == abs(d - f):
+        dr = (1 if e > c else -1)
+        dc = (1 if f > d else -1)
+        rx, ry = c + dr, d + dc
+        while rx != e or ry != f:
+            if rx == a and ry == b:
+                return 2
+            rx += dr
+            ry += dc
+        return 1
+    return 2
+`,
+
+  'minimum-substring-partition-of-equal-character-frequency': `def minimumSubstringsInPartition(s):
+    n = len(s)
+    dp = [float('inf')] * (n + 1)
+    dp[0] = 0
+    for i in range(n):
+        if dp[i] == float('inf'):
+            continue
+        freq = {}
+        max_freq = 0
+        distinct = 0
+        for j in range(i, n):
+            c = s[j]
+            freq[c] = freq.get(c, 0) + 1
+            if freq[c] == 1:
+                distinct += 1
+            if freq[c] > max_freq:
+                max_freq = freq[c]
+            if max_freq * distinct == j - i + 1:
+                dp[j + 1] = min(dp[j + 1], dp[i] + 1)
+    return dp[n]
+`,
+
+  'maximum-good-subarray-sum': `def maximumSubarraySum(nums, k):
+    if hasattr(nums, 'to_py'):
+        nums = nums.to_py()
+    min_prefix = {}
+    prefix = 0
+    ans = float('-inf')
+    has_good = False
+    for num in nums:
+        prev = min_prefix.get(num)
+        if prev is None or prefix < prev:
+            min_prefix[num] = prefix
+        prefix += num
+        for target in [num - k, num + k]:
+            mp = min_prefix.get(target)
+            if mp is not None:
+                ans = max(ans, prefix - mp)
+                has_good = True
+    return ans if has_good else 0
+`,
+
+  'maximal-score-after-applying-k-operations': `import heapq
+import math
+def maxKelements(nums, k):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    heap = [-x for x in nums]
+    heapq.heapify(heap)
+    score = 0
+    for _ in range(k):
+        x = -heapq.heappop(heap)
+        score += x
+        heapq.heappush(heap, -math.ceil(x / 3))
+    return score
+`,
+
 };

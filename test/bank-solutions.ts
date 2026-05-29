@@ -35526,4 +35526,108 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ops;
   },
 
+  // batch 152
+  'maximum-strength-of-a-group': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    let max = -Infinity;
+    for (let mask = 1; mask < (1 << n); mask++) {
+      let prod = 1;
+      for (let i = 0; i < n; i++) {
+        if (mask & (1 << i)) prod *= nums[i]!;
+      }
+      max = Math.max(max, prod);
+    }
+    return max;
+  },
+
+  'minimum-moves-to-capture-the-queen': (...args: unknown[]) => {
+    const a = args[0] as number, b = args[1] as number;
+    const c = args[2] as number, d = args[3] as number;
+    const e = args[4] as number, f = args[5] as number;
+    // Rook same col (a==e): blocked if bishop in same col between rook and queen
+    if (a === e && !(c === a && Math.min(b, f) < d && d < Math.max(b, f))) return 1;
+    // Rook same row (b==f): blocked if bishop in same row between rook and queen
+    if (b === f && !(d === f && Math.min(a, e) < c && c < Math.max(a, e))) return 1;
+    // Bishop same diagonal: blocked if rook lies on the diagonal path
+    if (Math.abs(c - e) === Math.abs(d - f)) {
+      const dr = Math.sign(e - c), dc = Math.sign(f - d);
+      let rx = c + dr, ry = d + dc;
+      let blocked = false;
+      while (rx !== e || ry !== f) {
+        if (rx === a && ry === b) { blocked = true; break; }
+        rx += dr; ry += dc;
+      }
+      if (!blocked) return 1;
+    }
+    return 2;
+  },
+
+  'minimum-substring-partition-of-equal-character-frequency': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const dp = new Array<number>(n + 1).fill(Infinity);
+    dp[0] = 0;
+    for (let i = 0; i < n; i++) {
+      if (dp[i] === Infinity) continue;
+      const freq = new Map<string, number>();
+      let maxFreq = 0, distinct = 0;
+      for (let j = i; j < n; j++) {
+        const c = s[j]!;
+        const f = (freq.get(c) ?? 0) + 1;
+        freq.set(c, f);
+        if (f === 1) distinct++;
+        if (f > maxFreq) maxFreq = f;
+        if (maxFreq * distinct === j - i + 1) {
+          dp[j + 1] = Math.min(dp[j + 1]!, dp[i]! + 1);
+        }
+      }
+    }
+    return dp[n]!;
+  },
+
+  'maximum-good-subarray-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const minPrefix = new Map<number, number>();
+    let prefix = 0, ans = -Infinity;
+    let hasGood = false;
+    for (const num of nums) {
+      // update map first (handles l==r for k=0)
+      const prev = minPrefix.get(num);
+      if (prev === undefined || prefix < prev) minPrefix.set(num, prefix);
+      prefix += num;
+      for (const target of [num - k, num + k]) {
+        const mp = minPrefix.get(target);
+        if (mp !== undefined) { ans = Math.max(ans, prefix - mp); hasGood = true; }
+      }
+    }
+    return hasGood ? ans : 0;
+  },
+
+  'maximal-score-after-applying-k-operations': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice();
+    const k = args[1] as number;
+    const heap: number[] = [...nums];
+    // max-heap via negation trick
+    const sift = (i: number) => {
+      while (true) {
+        let max = i;
+        const l = 2 * i + 1, r = 2 * i + 2;
+        if (l < heap.length && heap[l]! > heap[max]!) max = l;
+        if (r < heap.length && heap[r]! > heap[max]!) max = r;
+        if (max === i) break;
+        [heap[i], heap[max]] = [heap[max]!, heap[i]!]; i = max;
+      }
+    };
+    for (let i = Math.floor(heap.length / 2) - 1; i >= 0; i--) sift(i);
+    let score = 0;
+    for (let op = 0; op < k; op++) {
+      const top = heap[0]!;
+      score += top;
+      heap[0] = Math.ceil(top / 3);
+      sift(0);
+    }
+    return score;
+  },
+
 };
