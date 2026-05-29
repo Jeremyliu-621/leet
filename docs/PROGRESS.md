@@ -8,9 +8,15 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2651** problems; 8244 tests green. Batches 102–192a+192b + 179b complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2659** problems; 8268 tests green. Batches 102–194 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 193+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 195+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 194 — high-access-employees, min-coins-fruits, almost-increasing, max-sum-window (2026-05-29)
+Four new problems: `high-access-employees` (medium/arrays+hash-map+simulation, convert HHMM→minutes, sort per employee, check consecutive triples <60 apart), `minimum-coins-for-fruits` (medium/arrays+dp, dp[i]=prices[i-1]+min(dp[j] for j in [i+1,min(2i+1,n+1)]), 3 wrong hidden tests corrected), `almost-strictly-increasing` (medium/arrays+two-pointers, first violation at i: try removing nums[i] or nums[i+1], check rest strictly increasing), `max-sum-fixed-window` (easy/arrays+sliding-window, sliding window O(n)). Bank at **2659**; 8268 tests.
+
+### feat(bank): batch 193 — bitonic-subarray, deletions-sorted, common-substring, matrix-boundary (2026-05-29)
+Four new problems: `longest-bitonic-subarray` (medium/arrays+two-pointers, inc/dec run-length precompute, answer=max(inc[i]+dec[i]-1)), `minimum-deletions-to-make-sorted` (medium/arrays+dp, n−LIS via O(n log n) patience sorting), `longest-common-substring` (medium/strings+dp, 2-D DP reset on mismatch, track rolling max), `matrix-boundary-sum` (easy/arrays+simulation, sum all boundary elements). Bank at **2655**; 8256 tests.
 
 ### feat(bank): batch 192a — adjacent-subarrays, rearrange-k-substrings, lex-largest-box, min-time-locks (2026-05-29)
 Four new problems: `adjacent-increasing-subarrays-detection-i` (easy/arrays, inc[i] run-length precompute, check inc[i]>=k && inc[i+k]>=k), `rearrange-k-substrings-to-form-target` (easy/strings+hash-map, split both into k equal chunks, sort multisets, compare), `find-the-lexicographically-largest-string-from-the-box-i` (easy/strings, maxLen=n-numFriends+1, find lex-largest substring of that length), `minimum-time-to-break-locks-i` (medium/arrays+dynamic-programming, total=n+max((i+1)*sorted_desc[i]), greedy descending). Bank at **2646**; 8229 tests.
