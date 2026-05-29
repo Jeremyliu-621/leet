@@ -38275,4 +38275,37 @@ def removeDuplicates(nums):
     return k
 `,
 
+  // batch 168 — Python solutions for newly-registered orphans
+  'count-substrings-with-k-frequency-characters-ii': `
+def countSubstringsWithKFrequencyII(s, k):
+    n = len(s)
+    total = n * (n + 1) // 2
+    freq = [0] * 26
+    no_k = 0
+    left = 0
+    for right in range(n):
+        freq[ord(s[right]) - 97] += 1
+        while freq[ord(s[right]) - 97] >= k:
+            freq[ord(s[left]) - 97] -= 1
+            left += 1
+        no_k += right - left + 1
+    return total - no_k
+`,
+
+  'sum-of-imbalance-numbers-of-all-subarrays': `
+def sumImbalanceNumbers(nums):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    import bisect
+    n = len(nums)
+    total = 0
+    for i in range(n):
+        s = []
+        for j in range(i, n):
+            bisect.insort(s, nums[j])
+            imb = sum(1 for x in range(len(s)-1) if s[x+1] - s[x] > 1)
+            total += imb
+    return total
+`,
+
 };
