@@ -42788,6 +42788,28 @@ def countWordsStartingWithVowel(words):
     vowels = set('aeiou')
     return sum(1 for w in words if w[0] in vowels)
 `,
+  // batch 201 ---------------------------------------------------------------
+  'count-pairs-with-absolute-difference-k': `
+def countPairsWithAbsoluteDifferenceK(nums, k):
+    count = 0
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            if abs(nums[i] - nums[j]) == k:
+                count += 1
+    return count
+`,
+  'maximum-difference-between-adjacent-elements': `
+def maximumDifferenceBetweenAdjacentElements(nums):
+    return max(abs(nums[i] - nums[i + 1]) for i in range(len(nums) - 1))
+`,
+  'sum-of-odd-indexed-elements': `
+def sumOddIndexed(nums):
+    return sum(nums[i] for i in range(1, len(nums), 2))
+`,
+  'alternating-sum': `
+def alternatingSum(nums):
+    return sum(v if i % 2 == 0 else -v for i, v in enumerate(nums))
+`,
   // batch 197 ---------------------------------------------------------------
   'sum-of-even-indexed-elements': `
 def sumEvenIndexed(nums):

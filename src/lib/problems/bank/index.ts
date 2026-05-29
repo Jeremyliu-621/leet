@@ -3021,6 +3021,11 @@ import { problem as sumOfRowMinimums } from './sum-of-row-minimums';
 import { problem as longestRunOfEqualElements } from './longest-run-of-equal-elements';
 import { problem as sumOfColumnMaximums } from './sum-of-column-maximums';
 import { problem as countWordsStartingWithVowel } from './count-words-starting-with-vowel';
+// batch 201 — easy/arrays+hash-map, easy/arrays, easy/arrays, easy/arrays
+import { problem as countPairsWithAbsoluteDifferenceK } from './count-pairs-with-absolute-difference-k';
+import { problem as maximumDifferenceBetweenAdjacentElements } from './maximum-difference-between-adjacent-elements';
+import { problem as sumOfOddIndexedElements } from './sum-of-odd-indexed-elements';
+import { problem as alternatingSum } from './alternating-sum';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6083,4 +6088,9 @@ export const problems: readonly Problem[] = [
   longestRunOfEqualElements,
   sumOfColumnMaximums,
   countWordsStartingWithVowel,
+  // batch 201 — easy/arrays+hash-map, easy/arrays, easy/arrays, easy/arrays
+  countPairsWithAbsoluteDifferenceK,
+  maximumDifferenceBetweenAdjacentElements,
+  sumOfOddIndexedElements,
+  alternatingSum,
 ];

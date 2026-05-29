@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2699** problems; 8391 tests green. Batches 102–200 + 198b + 199b complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2703** problems; 8391 tests green. Batches 102–201 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 201+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 202+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 201 — count-pairs-abs-diff-k, max-diff-adjacent, sum-odd-indexed, alternating-sum (2026-05-29)
+Four new easy problems: `count-pairs-with-absolute-difference-k` (easy/arrays+hash-map, O(n²) brute-force pairs), `maximum-difference-between-adjacent-elements` (easy/arrays, linear scan abs diff), `sum-of-odd-indexed-elements` (easy/arrays, reduce at odd indices), `alternating-sum` (easy/arrays+math, reduce with sign flip). Bank at **2693**; 8373 tests.
 
 ### feat(bank): batch 200 — sum-row-mins, longest-equal-run, sum-col-maxes, count-vowel-start-words (2026-05-29)
 Four new easy problems: `sum-of-row-minimums` (easy/arrays, sum min of each row), `longest-run-of-equal-elements` (easy/arrays, linear scan cur/max run), `sum-of-column-maximums` (easy/arrays, sum max of each column), `count-words-starting-with-vowel` (easy/strings+arrays, vowel Set check on first char). Bank at **2689**; 8361 tests.

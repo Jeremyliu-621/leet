@@ -42950,6 +42950,31 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const VOWELS = new Set(['a', 'e', 'i', 'o', 'u']);
     return words.filter(w => VOWELS.has(w[0]!)).length;
   },
+  // batch 201 ---------------------------------------------------------------
+  'count-pairs-with-absolute-difference-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let count = 0;
+    for (let i = 0; i < nums.length; i++)
+      for (let j = i + 1; j < nums.length; j++)
+        if (Math.abs(nums[i]! - nums[j]!) === k) count++;
+    return count;
+  },
+  'maximum-difference-between-adjacent-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let max = 0;
+    for (let i = 0; i < nums.length - 1; i++)
+      max = Math.max(max, Math.abs(nums[i]! - nums[i + 1]!));
+    return max;
+  },
+  'sum-of-odd-indexed-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return nums.reduce((s, v, i) => (i % 2 === 1 ? s + v : s), 0);
+  },
+  'alternating-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return nums.reduce((s, v, i) => s + (i % 2 === 0 ? v : -v), 0);
+  },
   // batch 197 ---------------------------------------------------------------
   'sum-of-even-indexed-elements': (...args: unknown[]) => {
     const nums = args[0] as number[];
