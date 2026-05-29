@@ -2991,6 +2991,12 @@ import { problem as countStringsWithUniqueCharacters } from './count-strings-wit
 import { problem as maximumPrefixSum } from './maximum-prefix-sum';
 import { problem as countElementsDivisibleByK } from './count-elements-divisible-by-k';
 import { problem as secondSmallestInArray } from './second-smallest-in-array';
+// batch 195b — easy/arrays+two-pointers, medium/strings+math, easy/arrays+binary-search, easy/arrays+math+simulation, medium/arrays
+import { problem as findAllKDistantIndicesInAnArray } from './find-all-k-distant-indices-in-an-array';
+import { problem as removeColoredPiecesIfBothNeighborsAreTheSameColor } from './remove-colored-pieces-if-both-neighbors-are-the-same-color';
+import { problem as countNegativeNumbersInASortedMatrix } from './count-negative-numbers-in-a-sorted-matrix';
+import { problem as cellsWithOddValuesInAMatrix } from './cells-with-odd-values-in-a-matrix';
+import { problem as minimumOperationsToMaximizeLastElementsInArrays } from './minimum-operations-to-maximize-last-elements-in-arrays';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6023,4 +6029,10 @@ export const problems: readonly Problem[] = [
   maximumPrefixSum,
   countElementsDivisibleByK,
   secondSmallestInArray,
+  // batch 195b — easy/arrays+two-pointers, medium/strings+math, easy/arrays+binary-search, easy/arrays+math+simulation, medium/arrays
+  findAllKDistantIndicesInAnArray,
+  removeColoredPiecesIfBothNeighborsAreTheSameColor,
+  countNegativeNumbersInASortedMatrix,
+  cellsWithOddValuesInAMatrix,
+  minimumOperationsToMaximizeLastElementsInArrays,
 ];

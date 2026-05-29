@@ -42824,4 +42824,52 @@ def minimumOperationsToMakeMedianEqualK(nums, k):
             ops += max(0, k - v)
     return ops
 `,
+  // batch 195b ---------------------------------------------------------------
+  'find-all-k-distant-indices-in-an-array': `
+def findKDistantIndices(nums, key, k):
+    key_positions = [j for j, v in enumerate(nums) if v == key]
+    result = []
+    for i in range(len(nums)):
+        if any(abs(i - j) <= k for j in key_positions):
+            result.append(i)
+    return result
+`,
+  'remove-colored-pieces-if-both-neighbors-are-the-same-color': `
+def winnerOfGame(colors):
+    alice = sum(1 for i in range(1, len(colors) - 1) if colors[i-1] == colors[i] == colors[i+1] == 'A')
+    bob = sum(1 for i in range(1, len(colors) - 1) if colors[i-1] == colors[i] == colors[i+1] == 'B')
+    return alice > bob
+`,
+  'count-negative-numbers-in-a-sorted-matrix': `
+def countNegatives(grid):
+    return sum(v < 0 for row in grid for v in row)
+`,
+  'cells-with-odd-values-in-a-matrix': `
+def oddCells(m, n, indices):
+    row_count = [0] * m
+    col_count = [0] * n
+    for r, c in indices:
+        row_count[r] += 1
+        col_count[c] += 1
+    return sum((row_count[i] + col_count[j]) % 2 for i in range(m) for j in range(n))
+`,
+  'minimum-operations-to-maximize-last-elements-in-arrays': `
+def minOperations(nums1, nums2):
+    n = len(nums1)
+    def try_case(a, b):
+        count = 0
+        for i in range(n - 1):
+            x, y = nums1[i], nums2[i]
+            if x <= a and y <= b:
+                continue
+            elif x <= b and y <= a:
+                count += 1
+            else:
+                return float('inf')
+        return count
+    c1 = try_case(nums1[n-1], nums2[n-1])
+    c2 = try_case(nums2[n-1], nums1[n-1]) + 1
+    best = min(c1, c2)
+    return -1 if best == float('inf') else best
+`,
 };

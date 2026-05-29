@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2675** problems; 8319 tests green. Batches 102–197 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2680** problems; 8334 tests green. Batches 102–197 + 195b complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 198+); UX polish per LEETCODE_PARITY.md.
 
@@ -17,6 +17,9 @@ Five new easy problems: `sum-of-even-indexed-elements` (easy/arrays, sum indices
 
 ### feat(bank): batch 196 — count-pairs-even-sum, find-x-sum-subarrays-i, min-ops-median-k (2026-05-29)
 Three new problems: `count-pairs-with-even-sum` (easy/arrays+math, count evens e and odds o, return e*(e-1)/2 + o*(o-1)/2), `find-x-sum-of-all-k-long-subarrays-i` (easy/arrays+sliding-window, O(k) freq map per window, sort by freq desc then value desc, sum top-x), `minimum-operations-to-make-median-equal-k` (medium/arrays, sort, mid=(n-1)>>1, sum excess-above-k for left half + |median-k| + excess-below-k for right half). Fixed `design-a-number-container-system` functionName to `numberContainers` and `find-the-key-of-the-numbers` functionName to `generateKey` to match existing Python solutions. Bank at **2670**; 8298 tests.
+
+### feat(bank): batch 195b — k-distant-indices, remove-colored-pieces, count-negatives-matrix, odd-cells-matrix, min-ops-maximize-last (2026-05-29)
+Five new problems: `find-all-k-distant-indices-in-an-array` (easy/arrays+two-pointers, collect key positions, check |i-j|<=k), `remove-colored-pieces-if-both-neighbors-are-the-same-color` (medium/strings+math, count interior same-color sandwiched pieces; alice wins iff alice_count>bob_count), `count-negative-numbers-in-a-sorted-matrix` (easy/arrays+binary-search, O(m*n) or staircase O(m+n)), `cells-with-odd-values-in-a-matrix` (easy/arrays+math, rowCount[i]+colCount[j] odd), `minimum-operations-to-maximize-last-elements-in-arrays` (medium/arrays, try 2 cases: no-swap/swap at last index, greedily determine per-element swaps). Bank at **2672**; 8310 tests.
 
 ### feat(bank): batch 195 — largest-unique, min-window-vowels, max-sum-increasing-subseq, sum-kth (2026-05-29)
 Four new problems: `largest-unique-number` (easy/arrays+hash-map, freq map, max with count 1), `minimum-window-containing-all-vowels` (medium/strings+sliding-window+hash-map, two-pointer shrink when all 5 vowels present), `maximum-sum-increasing-subsequence` (medium/arrays+dp, O(n²) DP tracking sum instead of length, similar to LIS), `sum-of-every-kth-number` (easy/math+simulation, O(1) arithmetic formula k*m*(m+1)/2 where m=floor(n/k)). Bank at **2667**; 8295 tests.

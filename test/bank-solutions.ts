@@ -42981,4 +42981,64 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return ops;
   },
+  // batch 195b ---------------------------------------------------------------
+  'find-all-k-distant-indices-in-an-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const key = args[1] as number;
+    const k = args[2] as number;
+    const keyPositions: number[] = [];
+    for (let j = 0; j < nums.length; j++) if (nums[j] === key) keyPositions.push(j);
+    const result: number[] = [];
+    for (let i = 0; i < nums.length; i++) {
+      for (const j of keyPositions) {
+        if (Math.abs(i - j) <= k) { result.push(i); break; }
+      }
+    }
+    return result;
+  },
+  'remove-colored-pieces-if-both-neighbors-are-the-same-color': (...args: unknown[]) => {
+    const colors = args[0] as string;
+    let alice = 0, bob = 0;
+    for (let i = 1; i < colors.length - 1; i++) {
+      if (colors[i] === 'A' && colors[i - 1] === 'A' && colors[i + 1] === 'A') alice++;
+      if (colors[i] === 'B' && colors[i - 1] === 'B' && colors[i + 1] === 'B') bob++;
+    }
+    return alice > bob;
+  },
+  'count-negative-numbers-in-a-sorted-matrix': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    let count = 0;
+    for (const row of grid) for (const v of row) if (v < 0) count++;
+    return count;
+  },
+  'cells-with-odd-values-in-a-matrix': (...args: unknown[]) => {
+    const m = args[0] as number;
+    const n = args[1] as number;
+    const indices = args[2] as number[][];
+    const rowCount = new Array<number>(m).fill(0);
+    const colCount = new Array<number>(n).fill(0);
+    for (const [r, c] of indices) { rowCount[r!]!++; colCount[c!]!++; }
+    let odd = 0;
+    for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) if ((rowCount[i]! + colCount[j]!) % 2 === 1) odd++;
+    return odd;
+  },
+  'minimum-operations-to-maximize-last-elements-in-arrays': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const n = nums1.length;
+    const tryCase = (a: number, b: number): number => {
+      let count = 0;
+      for (let i = 0; i < n - 1; i++) {
+        const x = nums1[i]!, y = nums2[i]!;
+        if (x <= a && y <= b) continue;
+        if (x <= b && y <= a) { count++; continue; }
+        return Infinity;
+      }
+      return count;
+    };
+    const c1 = tryCase(nums1[n - 1]!, nums2[n - 1]!);
+    const c2 = tryCase(nums2[n - 1]!, nums1[n - 1]!) + 1;
+    const best = Math.min(c1, c2);
+    return best === Infinity ? -1 : best;
+  },
 };
