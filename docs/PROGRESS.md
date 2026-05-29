@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2348** problems; 7302 tests green. Batches 102–156b complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2358** problems; 7365 tests green. Batches 102–156 complete (local+remote). UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 157+); update site count; UX polish.
+
+### feat(bank): add batch 156 (local) — rotating-the-box, max-star-sum-graph, build-matrix-conditions, count-integers-digit-sum, apply-ops-maximize-frequency-score (2026-05-29)
+Five problems: `rotating-the-box` (medium/simulation, gravity+90°CW rotation), `maximum-star-sum-of-a-graph` (medium/graph, pick top-k positive neighbor edge values per center), `build-a-matrix-with-conditions` (hard/graph, two topological sorts then place elements), `count-of-integers-with-digit-sum` (hard/dp+math, digit DP mod 10^9+7), `apply-operations-to-maximize-frequency-score` (hard/binary-search+sliding-window, sorted window + frequency×value score with remaining ops d = floor(leftover/size)). Bank at **2358**; 7365 tests.
 
 ### feat(bank): add batch 156b — average-of-levels-in-binary-tree (easy), all-elements-in-two-bsts (medium); fix trim-bst runner (2026-05-29)
 Two new tree problems: `average-of-levels-in-binary-tree` (easy/tree, BFS level average), `all-elements-in-two-binary-search-trees` (medium/tree+binary-search, in-order traversal of each BST + merge). Upgraded `trim-a-binary-search-tree` to runner pattern (TreeNode preamble); updated Python reference solution to accept TreeNode arg. Fixed path-sum hidden test (1→2→5=8 is true). Bank at **2348**; 7302 tests.
