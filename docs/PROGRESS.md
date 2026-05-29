@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2424** registered problems; 7566 tests green. Batches 102–168 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2429** problems; 7581 tests green. Batches 102–168 + batch 165. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 169+); UX polish; site count update.
+**Next up:** More bank growth (batch 169+); site count update; UX polish.
+
+### feat(bank): batch 165 — minimum-stack (easy), max-chunks-sorted (medium), most-competitive-subseq (medium), mct-leaf-values (medium), shortest-subarray-sum-k (hard) (2026-05-29)
+Five new problems: `minimum-stack` (easy/design+stack, parallel min-stack for O(1) getMin), `maximum-chunks-to-make-sorted` (medium/arrays+stack, greedy max==index split), `find-the-most-competitive-subsequence` (medium/arrays+stack, monotone stack with feasibility guard), `minimum-cost-tree-from-leaf-values` (medium/arrays+stack+dp, greedy merge — pop when top<=val, cost+=mid*min(top,val)), `shortest-subarray-with-sum-at-least-k` (hard/arrays+sliding-window, monotone deque on prefix sums O(n)). Bank at **2429**; 7581 tests.
 
 ### feat(bank): register batch 168 — 9 orphan problems + solutions (2026-05-29)
 Registered 9 previously-unregistered problem files with full JS+Python reference solutions: `count-of-integers` (hard/dp+strings, digit DP with tight/started/sum states mod 10^9+7), `minimum-cost-homecoming-of-a-robot-in-a-grid` (medium/arrays+math, sum row+col costs traversed excluding start), `number-of-ways-to-earn-points` (hard/dp, bounded knapsack right-to-left), `sum-of-scores-of-built-strings` (hard/strings, Z-function sum), `count-substrings-with-k-frequency-characters-ii` (medium/sliding-window, total minus no-k-window count), `sum-of-imbalance-numbers-of-all-subarrays` (medium/arrays, O(n²) with sorted insertion), `minimum-white-tiles-after-covering-with-carpets` (hard/dp), `special-permutations` (medium/dp+bits), `unique-length-3-palindromic-subsequences` (medium/strings). Bank at **2424**; 7566 tests.
