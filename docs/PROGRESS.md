@@ -8,9 +8,15 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2358** problems; 7365 tests green. Batches 102–157 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2366** registered problems; 7392 tests green. Batches 102–161 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 161+); update site count; UX polish.
+**Next up:** More bank growth (batch 162+); UX polish (editor QoL, light/dark mode, accessibility).
+
+### chore: update site stats to 2,385+; update PROGRESS header to 2366/7392 (2026-05-29)
+Marketing site index.html updated to 2,385+ in all three stat locations. PROGRESS.md header corrected to reflect batch 161 completion (2366 registered, 7392 tests).
+
+### feat(bank): add batch 161 — strictly-palindromic-number, sorting-three-groups, ugly-number-iii, binary-tree-coloring-game (2026-05-29)
+Four medium problems: `strictly-palindromic-number` (medium/math, always returns false for n≥4 — proven fact), `sorting-three-groups` (medium/arrays+dp, min replacements = n − LIS with 3-variable DP), `ugly-number-iii` (medium/math+binary-search, binary search + inclusion-exclusion with BigInt for overflow safety), `binary-tree-coloring-game` (medium/tree, second player wins iff any of {leftSubtree, rightSubtree, parentSide} of x > n/2). JS and Python reference solutions included. Bank at **2366**; 7392 tests.
 
 ### feat(bank): add batch 160 — minimum-cost-walk-weighted-graph (hard) + register 3 orphaned problems (2026-05-29)
 New: `minimum-cost-to-walk-weighted-graph` (hard/graph+union-find, min cost path = bitwise AND of all edges in component; UF tracks per-component AND as edges are added). Registered orphans already in bank: `maximum-alternating-subsequence-sum` (medium/arrays+dp), `count-number-of-bad-pairs` (medium/arrays+hash-map), `make-array-zero-by-subtracting-equal-amounts` (easy/arrays+math). Bank at **2373**; 7413 tests.
