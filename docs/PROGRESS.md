@@ -8,12 +8,15 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2659** problems; 8268 tests green. Batches 102–194 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2664** problems; 8283 tests green. Batches 102–194 + 193b complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 195+); UX polish per LEETCODE_PARITY.md.
 
 ### feat(bank): batch 194 — high-access-employees, min-coins-fruits, almost-increasing, max-sum-window (2026-05-29)
 Four new problems: `high-access-employees` (medium/arrays+hash-map+simulation, convert HHMM→minutes, sort per employee, check consecutive triples <60 apart), `minimum-coins-for-fruits` (medium/arrays+dp, dp[i]=prices[i-1]+min(dp[j] for j in [i+1,min(2i+1,n+1)]), 3 wrong hidden tests corrected), `almost-strictly-increasing` (medium/arrays+two-pointers, first violation at i: try removing nums[i] or nums[i+1], check rest strictly increasing), `max-sum-fixed-window` (easy/arrays+sliding-window, sliding window O(n)). Bank at **2659**; 8268 tests.
+
+### feat(bank): batch 193b — divide-subarrays-cost-i, min-processing-time, count-pairs-distance-k, lex-min-remove-stars, count-winning-sequences (2026-05-29)
+Five new problems: `divide-an-array-into-subarrays-with-minimum-cost-i` (easy/arrays, cost=nums[0]+two smallest of nums[1..]), `minimum-processing-time` (medium/arrays+heap, sort proc asc + tasks desc, proc[i] completes at processorTime[i]+tasks[4i], return max), `count-pairs-of-points-with-distance-k` (medium/arrays+hash-map+bit-manipulation, XOR distance=(x1^x2)+(y1^y2)=k, enumerate all k+1 xorX splits and hash-map lookup), `lexicographically-minimum-string-after-removing-stars` (medium/strings+stack, 26-bucket + per-'*' pop rightmost from smallest non-empty bucket), `count-the-number-of-winning-sequences` (medium/strings+dynamic-programming, DP[last][score+n] with 3 spells, score>0 wins, MOD=10^9+7). Bank at **2664**; 8283 tests.
 
 ### feat(bank): batch 193 — bitonic-subarray, deletions-sorted, common-substring, matrix-boundary (2026-05-29)
 Four new problems: `longest-bitonic-subarray` (medium/arrays+two-pointers, inc/dec run-length precompute, answer=max(inc[i]+dec[i]-1)), `minimum-deletions-to-make-sorted` (medium/arrays+dp, n−LIS via O(n log n) patience sorting), `longest-common-substring` (medium/strings+dp, 2-D DP reset on mismatch, track rolling max), `matrix-boundary-sum` (easy/arrays+simulation, sum all boundary elements). Bank at **2655**; 8256 tests.

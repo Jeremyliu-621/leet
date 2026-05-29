@@ -42771,4 +42771,103 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return max;
   },
+  // batch 193b ---------------------------------------------------------------
+  'divide-an-array-into-subarrays-with-minimum-cost-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const rest = nums.slice(1).sort((a, b) => a - b);
+    return nums[0]! + rest[0]! + rest[1]!;
+  },
+  'minimum-processing-time': (...args: unknown[]) => {
+    const processorTime = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const tasks = (args[1] as number[]).slice().sort((a, b) => b - a);
+    let ans = 0;
+    for (let i = 0; i < processorTime.length; i++) {
+      ans = Math.max(ans, processorTime[i]! + tasks[4 * i]!);
+    }
+    return ans;
+  },
+  'count-pairs-of-points-with-distance-k': (...args: unknown[]) => {
+    const coordinates = args[0] as number[][];
+    const k = args[1] as number;
+    const map = new Map<number, Map<number, number>>();
+    let count = 0;
+    for (const [x, y] of coordinates) {
+      for (let xorX = 0; xorX <= k; xorX++) {
+        const xorY = k - xorX;
+        const nx = x! ^ xorX;
+        const ny = y! ^ xorY;
+        const inner = map.get(nx);
+        if (inner) count += inner.get(ny) ?? 0;
+      }
+      const inner = map.get(x!) ?? new Map<number, number>();
+      inner.set(y!, (inner.get(y!) ?? 0) + 1);
+      map.set(x!, inner);
+    }
+    return count;
+  },
+  'lexicographically-minimum-string-after-removing-stars': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const buckets: number[][] = Array.from({ length: 26 }, () => []);
+    const deleted = new Set<number>();
+    for (let i = 0; i < s.length; i++) {
+      if (s[i] === '*') {
+        for (let c = 0; c < 26; c++) {
+          if (buckets[c]!.length > 0) {
+            deleted.add(buckets[c]!.pop()!);
+            deleted.add(i);
+            break;
+          }
+        }
+      } else {
+        buckets[s.charCodeAt(i) - 97]!.push(i);
+      }
+    }
+    let result = '';
+    for (let i = 0; i < s.length; i++) {
+      if (!deleted.has(i) && s[i] !== '*') result += s[i];
+    }
+    return result;
+  },
+  'count-the-number-of-winning-sequences': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const MOD = 1_000_000_007n;
+    const n = s.length;
+    const spells = ['F', 'W', 'E'];
+    const delta = (bob: string, alice: string): number => {
+      if (bob === alice) return 0;
+      if ((bob === 'F' && alice === 'E') || (bob === 'E' && alice === 'W') || (bob === 'W' && alice === 'F')) return 1;
+      return -1;
+    };
+    // dp[last][score+n] = count
+    const offset = n;
+    let dp: bigint[][] = Array.from({ length: 3 }, () => new Array<bigint>(2 * n + 1).fill(0n));
+    for (let m = 0; m < 3; m++) {
+      const d = delta(spells[m]!, s[0]!);
+      dp[m]![offset + d] = 1n;
+    }
+    for (let i = 1; i < n; i++) {
+      const ndp: bigint[][] = Array.from({ length: 3 }, () => new Array<bigint>(2 * n + 1).fill(0n));
+      for (let last = 0; last < 3; last++) {
+        for (let sc = 0; sc <= 2 * n; sc++) {
+          if (dp[last]![sc] === 0n) continue;
+          for (let m = 0; m < 3; m++) {
+            if (m === last) continue;
+            const d = delta(spells[m]!, s[i]!);
+            const nsc = sc + d;
+            if (nsc >= 0 && nsc <= 2 * n) {
+              ndp[m]![nsc] = (ndp[m]![nsc]! + dp[last]![sc]!) % MOD;
+            }
+          }
+        }
+      }
+      dp = ndp;
+    }
+    let ans = 0n;
+    for (let last = 0; last < 3; last++) {
+      for (let sc = offset + 1; sc <= 2 * n; sc++) {
+        ans = (ans + dp[last]![sc]!) % MOD;
+      }
+    }
+    return Number(ans);
+  },
 };

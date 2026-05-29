@@ -2970,6 +2970,12 @@ import { problem as highAccessEmployees } from './high-access-employees';
 import { problem as minimumCoinsForFruits } from './minimum-coins-for-fruits';
 import { problem as almostStrictlyIncreasing } from './almost-strictly-increasing';
 import { problem as maxSumFixedWindow } from './max-sum-fixed-window';
+// batch 193b — easy/arrays, medium/arrays+heap, medium/arrays+hash-map+bit-manipulation, medium/strings+stack, medium/strings+dynamic-programming
+import { problem as divideAnArrayIntoSubarraysWithMinimumCostI } from './divide-an-array-into-subarrays-with-minimum-cost-i';
+import { problem as minimumProcessingTime } from './minimum-processing-time';
+import { problem as countPairsOfPointsWithDistanceK } from './count-pairs-of-points-with-distance-k';
+import { problem as lexicographicallyMinimumStringAfterRemovingStars } from './lexicographically-minimum-string-after-removing-stars';
+import { problem as countTheNumberOfWinningSequences } from './count-the-number-of-winning-sequences';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5981,4 +5987,10 @@ export const problems: readonly Problem[] = [
   minimumCoinsForFruits,
   almostStrictlyIncreasing,
   maxSumFixedWindow,
+  // batch 193b — easy/arrays, medium/arrays+heap, medium/arrays+hash-map+bit-manipulation, medium/strings+stack, medium/strings+dynamic-programming
+  divideAnArrayIntoSubarraysWithMinimumCostI,
+  minimumProcessingTime,
+  countPairsOfPointsWithDistanceK,
+  lexicographicallyMinimumStringAfterRemovingStars,
+  countTheNumberOfWinningSequences,
 ];

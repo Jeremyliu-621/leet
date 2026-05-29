@@ -42650,4 +42650,71 @@ def maxSumFixedWindow(nums, k):
             max_sum = window_sum
     return max_sum
 `,
+  // batch 193b ---------------------------------------------------------------
+  'divide-an-array-into-subarrays-with-minimum-cost-i': `
+def minimumCost(nums):
+    rest = sorted(nums[1:])
+    return nums[0] + rest[0] + rest[1]
+`,
+  'minimum-processing-time': `
+def minProcessingTime(processorTime, tasks):
+    processorTime = sorted(processorTime)
+    tasks = sorted(tasks, reverse=True)
+    return max(processorTime[i] + tasks[4 * i] for i in range(len(processorTime)))
+`,
+  'count-pairs-of-points-with-distance-k': `
+def countPairs(coordinates, k):
+    from collections import defaultdict
+    count = 0
+    seen = defaultdict(int)
+    for x, y in coordinates:
+        for xor_x in range(k + 1):
+            xor_y = k - xor_x
+            count += seen[(x ^ xor_x, y ^ xor_y)]
+        seen[(x, y)] += 1
+    return count
+`,
+  'lexicographically-minimum-string-after-removing-stars': `
+def clearStars(s):
+    buckets = [[] for _ in range(26)]
+    deleted = set()
+    for i, c in enumerate(s):
+        if c == '*':
+            for j in range(26):
+                if buckets[j]:
+                    deleted.add(buckets[j].pop())
+                    deleted.add(i)
+                    break
+        else:
+            buckets[ord(c) - ord('a')].append(i)
+    return ''.join(c for i, c in enumerate(s) if i not in deleted and c != '*')
+`,
+  'count-the-number-of-winning-sequences': `
+def countWinningSequences(s):
+    MOD = 10**9 + 7
+    n = len(s)
+    spells = ['F', 'W', 'E']
+    def delta(bob, alice):
+        if bob == alice: return 0
+        if (bob, alice) in [('F','E'),('E','W'),('W','F')]: return 1
+        return -1
+    offset = n
+    dp = [[0] * (2 * n + 1) for _ in range(3)]
+    for m in range(3):
+        d = delta(spells[m], s[0])
+        dp[m][offset + d] = 1
+    for i in range(1, n):
+        ndp = [[0] * (2 * n + 1) for _ in range(3)]
+        for last in range(3):
+            for sc in range(2 * n + 1):
+                if dp[last][sc] == 0: continue
+                for m in range(3):
+                    if m == last: continue
+                    d = delta(spells[m], s[i])
+                    nsc = sc + d
+                    if 0 <= nsc <= 2 * n:
+                        ndp[m][nsc] = (ndp[m][nsc] + dp[last][sc]) % MOD
+        dp = ndp
+    return sum(dp[last][sc] for last in range(3) for sc in range(offset + 1, 2 * n + 1)) % MOD
+`,
 };
