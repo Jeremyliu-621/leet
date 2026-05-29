@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2348** problems; 7350 tests green. Batches 102–156b complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2358** problems; 7365 tests green. Batches 102–157 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 161+); update site count; UX polish.
 
@@ -24,8 +24,11 @@ Three problems targeting graph/shortest-path, hash-map+binary-search, and binary
 ### feat(bank): add batch 158 — minimum-cost-homecoming-robot (medium), sum-of-scores-of-built-strings (hard), count-of-integers (hard), number-of-ways-to-earn-points (hard) (2026-05-29)
 Four new problems: `minimum-cost-homecoming-of-a-robot-in-a-grid` (medium/arrays+math, sum rowCosts and colCosts traversed excluding start position), `sum-of-scores-of-built-strings` (hard/strings, Z-function where Z[0]=n then sum all values), `count-of-integers` (hard/dp+strings, digit DP with tight/started/sum states mod 10^9+7), `number-of-ways-to-earn-points` (hard/dp+arrays, bounded knapsack right-to-left). JS and Python reference solutions included. Bank at **2367**; 7392 tests.
 
-### feat(bank): add batch 157 — implement-trie-ii (medium), word-filter (hard), lexicographical-numbers (medium), k-th-smallest-lex (hard), design-autocomplete (hard) (2026-05-29)
+### feat(bank): add batch 157r — implement-trie-ii (medium), word-filter (hard), lexicographical-numbers (medium), k-th-smallest-lex (hard), design-autocomplete (hard) (2026-05-29)
 Five new trie/design problems: `implement-trie-ii-prefix-tree` (medium/trie+design, endCount/prefixCount per node for insert/countWordsEqualTo/countWordsStartingWith/erase), `word-filter` (hard/trie, prefix+suffix search via hash map enumeration O(n·L²)), `lexicographical-numbers` (medium/trie, O(n) iterative DFS trie traversal), `k-th-smallest-in-lexicographic-order` (hard/trie, trie step-counting O(log²n) algorithm), `design-search-autocomplete-system` (hard/trie+design, hash-map autocomplete with count-based ranking). Trie tag: 5 → 10 problems. Bank at **2362**; 7365 tests.
+
+### feat(bank): add batch 157 — 5 new problems (simulation/easy×1, simulation+heap/medium×4) (2026-05-29)
+Five new problems: `the-employee-that-worked-on-the-longest-task` (easy/simulation, track max task duration with tie-breaking on smallest id), `check-knight-tour-configuration` (medium/simulation, verify each consecutive step is a valid knight move via position-array), `the-number-of-the-smallest-unoccupied-chair` (medium/heap+simulation, min-heap for available chairs and sorted departure events), `intervals-between-identical-elements` (medium/arrays+math, prefix-sum per value group for O(n) computation of index-distance sums), `form-array-by-concatenating-subarrays-of-another-array` (medium/arrays+two-pointers, greedy left-to-right matching of each group). Bank at **2358**; 7365 tests.
 
 ### feat(bank): add batch 156 (local) — rotating-the-box, max-star-sum-graph, build-matrix-conditions, count-integers-digit-sum, apply-ops-maximize-frequency-score (2026-05-29)
 Five problems: `rotating-the-box` (medium/simulation, gravity+90°CW rotation), `maximum-star-sum-of-a-graph` (medium/graph, pick top-k positive neighbor edge values per center), `build-a-matrix-with-conditions` (hard/graph, two topological sorts then place elements), `count-of-integers-with-digit-sum` (hard/dp+math, digit DP mod 10^9+7), `apply-operations-to-maximize-frequency-score` (hard/binary-search+sliding-window, sorted window + frequency×value score with remaining ops d = floor(leftover/size)). Bank at **2358**; 7365 tests.
