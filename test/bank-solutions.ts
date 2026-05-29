@@ -41296,8 +41296,19 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     };
     return new Set(words.map(canonical)).size;
   },
-
-
+  'difference-ones-zeros-in-row-and-column': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    const rowOnes = grid.map(r => r.reduce((a, b) => a + b, 0));
+    const colOnes = Array.from({ length: n }, (_, j) => grid.reduce((a, r) => a + r[j]!, 0));
+    return grid.map((r, i) => r.map((_, j) => 2 * rowOnes[i]! - n + 2 * colOnes[j]! - m));
+  },
+  'find-kth-largest-integer-in-array': (...args: unknown[]) => {
+    const nums = [...(args[0] as string[])];
+    const k = args[1] as number;
+    nums.sort((a, b) => a.length !== b.length ? b.length - a.length : b.localeCompare(a));
+    return nums[k - 1];
+  },
 
   // batch 215 (addendum)
   'valid-tic-tac-toe-state': (...args: unknown[]) => {
@@ -41425,5 +41436,36 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const constVal = r.constant - l.constant;
     if (xCoeff === 0) return constVal === 0 ? 'Infinite solutions' : 'No solution';
     return `x=${constVal / xCoeff}`;
+  },
+
+  // batch 217 ---------------------------------------------------------------
+  'find-the-largest-almost-missing-integer': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+    let best = -1;
+    for (const [v, c] of freq) if (c === 1 && v > best) best = v;
+    return best;
+  },
+  'transform-array-by-parity': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let evens = 0;
+    for (const n of nums) if (n % 2 === 0) evens++;
+    return Array(evens).fill(0).concat(Array(nums.length - evens).fill(1));
+  },
+  'maximum-containers-on-a-ship': (...args: unknown[]) => {
+    const n = args[0] as number;
+    return Math.floor((-1 + Math.sqrt(1 + 8 * n * n)) / 2);
+  },
+  'unique-3-digit-even-numbers': (...args: unknown[]) => {
+    const digits = args[0] as number[];
+    const result = new Set<number>();
+    const len = digits.length;
+    for (let i = 0; i < len; i++)
+      for (let j = 0; j < len; j++)
+        for (let k = 0; k < len; k++)
+          if (i !== j && j !== k && i !== k && digits[i] !== 0 && digits[k]! % 2 === 0)
+            result.add(digits[i]! * 100 + digits[j]! * 10 + digits[k]!);
+    return [...result].sort((a, b) => a - b);
   },
 };

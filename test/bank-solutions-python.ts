@@ -40418,8 +40418,18 @@ def numSpecialEquivGroups(words):
         return (''.join(even), ''.join(odd))
     return len(set(canonical(w) for w in words))
 `,
-
-
+  'difference-ones-zeros-in-row-and-column': `
+def onesMinusZeros(grid):
+    m, n = len(grid), len(grid[0])
+    row_ones = [sum(r) for r in grid]
+    col_ones = [sum(grid[i][j] for i in range(m)) for j in range(n)]
+    return [[2*row_ones[i] - n + 2*col_ones[j] - m for j in range(n)] for i in range(m)]
+`,
+  'find-kth-largest-integer-in-array': `
+def kthLargestNumber(nums, k):
+    nums = sorted(nums, key=lambda x: (len(x), x), reverse=True)
+    return nums[k - 1]
+`,
 
   // batch 215 (addendum)
   'valid-tic-tac-toe-state': `
@@ -40552,5 +40562,38 @@ def solveEquation(equation):
     if x_coeff == 0:
         return 'Infinite solutions' if const_val == 0 else 'No solution'
     return 'x=' + str(const_val // x_coeff)
+`,
+
+  // batch 217 ---------------------------------------------------------------
+  'find-the-largest-almost-missing-integer': `
+from collections import Counter
+def largestAlmostMissingInteger(nums):
+    freq = Counter(nums)
+    result = -1
+    for v, c in freq.items():
+        if c == 1 and v > result:
+            result = v
+    return result
+`,
+  'transform-array-by-parity': `
+def transformArray(nums):
+    evens = sum(1 for n in nums if n % 2 == 0)
+    return [0] * evens + [1] * (len(nums) - evens)
+`,
+  'maximum-containers-on-a-ship': `
+import math
+def maxContainers(n):
+    return int((-1 + math.sqrt(1 + 8 * n * n)) / 2)
+`,
+  'unique-3-digit-even-numbers': `
+def findEvenNumbers(digits):
+    result = set()
+    n = len(digits)
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                if i != j and j != k and i != k and digits[i] != 0 and digits[k] % 2 == 0:
+                    result.add(digits[i] * 100 + digits[j] * 10 + digits[k])
+    return sorted(result)
 `,
 };

@@ -2863,12 +2863,20 @@ import { problem as checkIfNumberIsASumOfPowersOfThree } from './check-if-number
 import { problem as minimumImpossibleOr } from './minimum-impossible-or';
 import { problem as findSubstringWithMaximumCost } from './find-substring-with-maximum-cost';
 import { problem as findWidthOfColumnsOfGrid } from './find-the-width-of-columns-of-a-grid';
+// batch 215 (addendum)
 import { problem as validTicTacToe } from './valid-tic-tac-toe-state';
 import { problem as findKthNumber } from './kth-smallest-number-in-multiplication-table';
 import { problem as confusingNumberII } from './confusing-number-ii';
 import { problem as minSwapsArrangeBinaryGrid } from './minimum-swaps-to-arrange-a-binary-grid';
 import { problem as solveTheEquation } from './solve-the-equation';
 import { problem as countGroupsOfSpecialEquivalentStrings } from './count-groups-of-special-equivalent-strings';
+import { problem as differenceOnesZerosInRowAndColumn } from './difference-ones-zeros-in-row-and-column';
+import { problem as findKthLargestIntegerInArray } from './find-kth-largest-integer-in-array';
+// batch 217 — easy/arrays+hash-map, easy/arrays+simulation, easy/math, easy/arrays+hash-map+simulation
+import { problem as largestAlmostMissingInteger } from './find-the-largest-almost-missing-integer';
+import { problem as transformArrayByParity } from './transform-array-by-parity';
+import { problem as maxContainersOnShip } from './maximum-containers-on-a-ship';
+import { problem as findEvenNumbers } from './unique-3-digit-even-numbers';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5779,4 +5787,11 @@ export const problems: readonly Problem[] = [
   minSwapsArrangeBinaryGrid,
   solveTheEquation,
   countGroupsOfSpecialEquivalentStrings,
+  differenceOnesZerosInRowAndColumn,
+  findKthLargestIntegerInArray,
+  // batch 217
+  largestAlmostMissingInteger,
+  transformArrayByParity,
+  maxContainersOnShip,
+  findEvenNumbers,
 ];
