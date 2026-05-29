@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2739** problems; 8508 tests green. Batches 102–206 + 201b + 202b + KaTeX UX complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2742** problems; 8520 tests green. Batches 102–207 + KaTeX UX complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 207+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 208+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 207 — count-words-longer-k, longest-string, all-distinct, all-positive (2026-05-29)
+Four new easy problems: `count-words-longer-than-k` (easy/arrays+strings, filter length>k), `longest-string-in-array` (easy/arrays+strings, reduce by length first wins), `all-elements-distinct` (easy/arrays+hash-map, Set.size===length), `all-elements-positive` (easy/arrays, every v>0). Bank at **2742**; 8520 tests.
 
 ### feat(bank): batch 202b — append-k-min-sum, good-partitions, max-height-towers, more-ones-subarrays, longest-new-string (2026-05-29)
 Five new problems: `append-k-integers-with-minimal-sum` (medium/math, greedy gap-filling + BigInt sum formula), `count-the-number-of-good-partitions` (hard/hash-map, last-occurrence sweep counting partition boundaries, ans=2^(count-1) mod), `maximum-sum-of-heights-of-the-towers` (hard/arrays+stack, monotone stack left/right prefix arrays for peak optimization), `count-subarrays-with-more-ones-than-zeros` (medium/binary-indexed-tree, BIT counting prefixes less than current), `construct-the-longest-new-string` (medium/math, formula 2*(2*min(x,y)+z)+(x≠y?2:0)). Bank at **2739**; 8508 tests.
