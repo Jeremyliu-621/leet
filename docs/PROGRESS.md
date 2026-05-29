@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2561** problems; 7989 tests green. Batches 102–179 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2570** problems; 8004 tests green. Batches 102–178 (local) complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 180+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 179+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 178 — nice-divisors (hard), expressive-words (medium), global-local-inversions (medium), smallest-range-ii (medium), word-valid-after-subs (medium) (2026-05-29)
+Five new problems: `maximize-number-of-nice-divisors` (hard/math, max product of exponents summing to p → split into 3s, BigInt modular exponentiation), `expressive-words` (medium/strings, run-length encoding stretch check — s-run must equal w-run or s-run≥3 and s-run>w-run), `global-local-inversions` (medium/arrays, global==local iff |A[i]-i|≤1 for all i), `smallest-range-ii` (medium/arrays, sort + try all +k/-k prefix splits for min max-min), `check-if-word-is-valid-after-substitutions` (medium/stack, push chars and pop top 3 when they form 'abc'). Bank at **2570**; 8004 tests.
 
 ### feat(bank): batch 179 — prime-pairs-target-sum (medium), min-sum-k-avoiding (medium), max-points-tourist (medium), min-reverse-ops (hard), min-area-cover-ones-ii (hard) (2026-05-29)
 Five new problems: `prime-pairs-with-target-sum` (medium/math, sieve + scan x to n/2), `determine-the-minimum-sum-of-a-k-avoiding-array` (medium/math, greedy skip-partner), `maximum-points-tourist-can-earn` (medium/dp, day-by-day DP over cities), `minimum-reverse-operations` (hard/graph, BFS with sorted-set range extraction), `find-the-minimum-area-to-cover-all-ones-ii` (hard/arrays, 6-way partition enumeration). Bank at **2561**; 7989 tests.
