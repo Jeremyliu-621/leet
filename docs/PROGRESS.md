@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2780** problems; 8634 tests green. Batches 102–212 + 207b + KaTeX UX complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2784** problems; 8646 tests green. Batches 102–212 + 211b + 207b + KaTeX UX complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 213+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 211b — word-k-periodic, zero-array-transformation-iii, maximum-coins-heroes, balls-to-boxes (2026-05-29)
+Four new problems: `minimum-number-of-operations-to-make-word-k-periodic` (medium/strings+hash-map, split into n/k chunks, count freq, answer=total_chunks−max_freq), `zero-array-transformation-iii` (hard/arrays+heap, greedy max-heap by right endpoint, diff array coverage tracking), `maximum-coins-heroes-can-collect` (medium/arrays+binary-search, sort monsters by health, prefix sum coins, bisect per hero), `minimum-operations-to-move-all-balls-to-each-box` (medium/arrays+strings, two-pass O(n) accumulating cost+count from left then right). Bank at **2784**; 8646 tests.
 
 ### feat(bank): batch 212 — max-sum-of-a-pair-with-equal-sum-of-digits, finding-pairs-with-certain-difference, number-of-subarrays-with-and-value-of-k, maximum-number-of-coins-you-can-get (2026-05-29)
 Four new medium problems: `max-sum-of-a-pair-with-equal-sum-of-digits` (medium/arrays+hash-map+math, group by digit sum, track best per group), `finding-pairs-with-certain-difference` (medium/arrays+hash-map, Set dedup + check x+k exists), `number-of-subarrays-with-and-value-of-k` (medium/arrays+bit-manipulation, sliding map of distinct AND values ending at each index), `maximum-number-of-coins-you-can-get` (medium/arrays+math, sort + take every other from n-2 down to n/3). Bank at **2780**; 8634 tests.
