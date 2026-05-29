@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2606** problems; 8109 tests green. Batches 102–182 + 179b complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2610** problems; 8121 tests green. Batches 102–183 + 179b complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 183+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 184+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 183 — binary-search (medium), monotone-stack (hard), mountain-DP (medium), DSU+AND (medium) (2026-05-29)
+Four new problems: `maximize-score-of-numbers-in-ranges` (medium/binary-search, binary search on min gap then greedy placement in O(n log max)), `find-building-where-alice-and-bob-can-meet` (hard/arrays+stack, WLOG a≤b, direct answer for trivial cases, offline + monotone stack + binary search for the rest), `minimum-number-of-seconds-to-make-mountain-array` (medium/dp, precompute left[] and right[] strictly-increasing arrays in O(n), scan all valid peaks in O(1) each), `minimum-cost-walk-in-a-weighted-graph` (medium/graph+union-find, DSU tracking bitwise AND of all edges per component — more edges = lower AND, so use all edges in component). Bank at **2610**; 8121 tests.
 
 ### feat(bank): batch 182 — Z-function (hard), k-modular DP (medium), paired-char trie (hard), sliding-window mod count (medium) (2026-05-29)
 Four new problems: `minimum-time-to-revert-word-to-initial-state-ii` (hard/strings, Z-algorithm O(n) to check if word[t*k:] is prefix of word), `find-the-maximum-length-of-valid-subsequence-ii` (medium/dp, k×k DP table dp[r][j]=max subseq len with pair-sum-rem r and last elem ≡ j mod k), `count-prefix-and-suffix-pairs-ii` (hard/strings+trie, trie on paired chars (w[i],w[L-1-i]) for O(total_length) pairwise isPrefixAndSuffix), `count-substrings-that-can-be-rearranged-to-contain-a-string-i` (medium/strings+sliding-window+hash-map, shrink-only-when-safe window with modular count). Bank at **2606**; 8109 tests.
