@@ -105,6 +105,8 @@ interface EditorPanelProps {
   wordWrap?: boolean;
   /** Called when the user toggles word-wrap so the caller can persist it. */
   onWordWrapChange?: (wrap: boolean) => void;
+  /** Timestamp (Date.now()) set each time a draft save completes; triggers a brief "saved" indicator. */
+  draftSavedAt?: number | null;
 }
 
 function indentSpaces(n: 2 | 4): string {
@@ -213,6 +215,7 @@ export function EditorPanel({
   resetCode,
   wordWrap: wordWrapProp,
   onWordWrapChange,
+  draftSavedAt,
 }: EditorPanelProps) {
   const editorContainerRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
@@ -563,6 +566,16 @@ export function EditorPanel({
     [handleGiveUpClick],
   );
 
+  // "Draft saved" flash — shows for 2s after each successful save.
+  const [showSaved, setShowSaved] = useState(false);
+  const savedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => {
+    if (!draftSavedAt) return;
+    setShowSaved(true);
+    if (savedTimerRef.current) clearTimeout(savedTimerRef.current);
+    savedTimerRef.current = setTimeout(() => setShowSaved(false), 2000);
+  }, [draftSavedAt]);
+
   // Line / column state — updated on every selection change.
   const [cursorPos, setCursorPos] = useState<{ line: number; col: number }>({ line: 1, col: 1 });
   const setCursorPosRef = useRef(setCursorPos);
@@ -908,6 +921,17 @@ export function EditorPanel({
               className="tabular-nums"
             >
               Ln {cursorPos.line}, Col {cursorPos.col}
+            </span>
+            {/* Draft saved flash */}
+            <span
+              aria-live="polite"
+              aria-atomic="true"
+              className={[
+                'font-mono text-[10px] transition-opacity duration-500',
+                showSaved ? 'opacity-100 text-muted' : 'opacity-0 pointer-events-none',
+              ].join(' ')}
+            >
+              ✓ saved
             </span>
           </div>
 

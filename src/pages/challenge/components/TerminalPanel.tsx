@@ -206,7 +206,7 @@ function StringDiffHint({ expected, actual }: { expected: unknown; actual: unkno
  *   error → filled muted square
  */
 function TestDotMatrix({ verdicts, scrollContainerRef }: { verdicts: readonly TestVerdict[]; scrollContainerRef: RefObject<HTMLDivElement | null> }) {
-  if (verdicts.length <= 3) return null;
+  if (verdicts.length === 0) return null;
   const passed = verdicts.filter(v => v.status === 'pass').length;
   const failed = verdicts.length - passed;
   return (

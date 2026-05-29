@@ -490,6 +490,9 @@ export function Challenge() {
   const [isEditorFullscreen, setIsEditorFullscreen] = useState(false);
   const handleToggleFullscreen = useCallback(() => setIsEditorFullscreen((v) => !v), []);
 
+  // Timestamp updated each time a draft save completes — triggers the "saved" flash in EditorPanel.
+  const [draftSavedAt, setDraftSavedAt] = useState<number | null>(null);
+
   // Ref for the two-column container — used by DraggableSplitter to compute
   // pointer positions as a fraction of the container width.
   const splitContainerRef = useRef<HTMLElement | null>(null);
@@ -1020,6 +1023,7 @@ export function Challenge() {
             );
             return { ...pruned, [problem.id]: { code, language, savedAt: Date.now() } };
           });
+          setDraftSavedAt(Date.now());
         } catch {
           /* storage unavailable — draft lost silently */
         }
@@ -1207,6 +1211,7 @@ export function Challenge() {
             resetCode={resetCode}
             wordWrap={prefs.editorWordWrap}
             onWordWrapChange={handleWordWrapChange}
+            draftSavedAt={draftSavedAt}
           />
           {/* Custom test drawer — collapses below the verdict/action bar */}
           <CustomTestPanel

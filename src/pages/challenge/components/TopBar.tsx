@@ -31,6 +31,7 @@ function formatUnlockDuration(minutes: number): string {
 }
 
 export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, settingsHref, targetDomain }: TopBarProps) {
+  const isWarning = secondsLeft <= 120 && secondsLeft > 60;
   const isLow = secondsLeft <= 60 && secondsLeft > 0;
   const isCritical = secondsLeft <= 30 && secondsLeft > 0;
   const isExpired = secondsLeft <= 0;
@@ -39,7 +40,7 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
   const liveRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const thresholds = [60, 30, 10];
+    const thresholds = [120, 60, 30, 10];
     for (const t of thresholds) {
       if (secondsLeft <= t && !announcedRef.current.has(t) && secondsLeft > 0) {
         announcedRef.current.add(t);
@@ -122,14 +123,16 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
         {/* Timer — always visible, prominent */}
         <div
           className={[
-            'flex items-center gap-1.5 rounded-sm border px-3 py-1 transition-colors',
+            'flex items-center gap-1.5 rounded-sm border px-3 py-1 transition-colors duration-500',
             isExpired
               ? 'border-accent bg-accent/10'
               : isCritical
                 ? 'border-border-strong bg-surface-2'
                 : isLow
                   ? 'border-border-strong'
-                  : 'border-border',
+                  : isWarning
+                    ? 'border-border bg-surface-2/50'
+                    : 'border-border',
           ].join(' ')}
           aria-label={`Time remaining: ${formatTime(secondsLeft)}`}
           aria-live="off"
@@ -137,8 +140,8 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
           <span className="font-mono text-[10px] text-faint uppercase tracking-wider">time</span>
           <span
             className={[
-              'font-mono text-sm font-bold tabular-nums',
-              isExpired ? 'text-accent' : isLow ? 'text-text' : 'text-muted',
+              'font-mono text-sm font-bold tabular-nums transition-colors duration-500',
+              isExpired ? 'text-accent' : isLow ? 'text-text' : isWarning ? 'text-text' : 'text-muted',
               isCritical ? 'motion-safe:animate-pulse' : '',
             ]
               .filter(Boolean)
