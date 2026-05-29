@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2540** problems; 7914 tests green. Batches 102–221 complete.
+**Current focus:** Bank at **2550** problems; 7944 tests green. Batches 102–221 complete + concurrent agent merges.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 222+; UX polish per LEETCODE_PARITY.md.
 
