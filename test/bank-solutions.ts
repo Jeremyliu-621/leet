@@ -42924,4 +42924,37 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return best === Infinity ? -1 : best;
   },
+  // batch 196 ---------------------------------------------------------------
+  'count-pairs-with-even-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let evens = 0, odds = 0;
+    for (const n of nums) { if (n % 2 === 0) evens++; else odds++; }
+    return (evens * (evens - 1)) / 2 + (odds * (odds - 1)) / 2;
+  },
+  'find-x-sum-of-all-k-long-subarrays-i': (...args: unknown[]) => {
+    const [nums, k, x] = args as [number[], number, number];
+    const n = nums.length;
+    const result: number[] = [];
+    for (let i = 0; i <= n - k; i++) {
+      const freq = new Map<number, number>();
+      for (let j = i; j < i + k; j++) freq.set(nums[j]!, (freq.get(nums[j]!) ?? 0) + 1);
+      const sorted = [...freq.entries()].sort((a, b) => b[1] - a[1] || b[0] - a[0]);
+      let sum = 0;
+      for (let j = 0; j < Math.min(x, sorted.length); j++) sum += sorted[j]![0] * sorted[j]![1];
+      result.push(sum);
+    }
+    return result;
+  },
+  'minimum-operations-to-make-median-equal-k': (...args: unknown[]) => {
+    const [nums, k] = args as [number[], number];
+    const a = [...nums].sort((x, y) => x - y);
+    const mid = (a.length - 1) >> 1;
+    let ops = 0;
+    for (let i = 0; i < a.length; i++) {
+      if (i < mid) ops += Math.max(0, a[i]! - k);
+      else if (i === mid) ops += Math.abs(a[i]! - k);
+      else ops += Math.max(0, k - a[i]!);
+    }
+    return ops;
+  },
 };

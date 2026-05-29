@@ -2981,6 +2981,10 @@ import { problem as largestUniqueNumber } from './largest-unique-number';
 import { problem as minimumWindowContainingAllVowels } from './minimum-window-containing-all-vowels';
 import { problem as maximumSumIncreasingSubsequence } from './maximum-sum-increasing-subsequence';
 import { problem as sumOfEveryKthNumber } from './sum-of-every-kth-number';
+// batch 196 — easy/arrays+math, easy/arrays+sliding-window, medium/arrays
+import { problem as countPairsWithEvenSum } from './count-pairs-with-even-sum';
+import { problem as findXSumOfAllKLongSubarraysI } from './find-x-sum-of-all-k-long-subarrays-i';
+import { problem as minimumOperationsToMakeMedianEqualK } from './minimum-operations-to-make-median-equal-k';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6003,4 +6007,8 @@ export const problems: readonly Problem[] = [
   minimumWindowContainingAllVowels,
   maximumSumIncreasingSubsequence,
   sumOfEveryKthNumber,
+  // batch 196 — easy/arrays+math, easy/arrays+sliding-window, medium/arrays
+  countPairsWithEvenSum,
+  findXSumOfAllKLongSubarraysI,
+  minimumOperationsToMakeMedianEqualK,
 ];

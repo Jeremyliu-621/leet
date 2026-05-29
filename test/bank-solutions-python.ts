@@ -42762,4 +42762,39 @@ def minWindowAllVowels(s):
             lo += 1
     return best if best != float('inf') else -1
 `,
+  // batch 196 ---------------------------------------------------------------
+  'count-pairs-with-even-sum': `
+def countPairsWithEvenSum(nums):
+    evens = sum(1 for n in nums if n % 2 == 0)
+    odds = len(nums) - evens
+    return evens * (evens - 1) // 2 + odds * (odds - 1) // 2
+`,
+  'find-x-sum-of-all-k-long-subarrays-i': `
+def findXSumOfAllKLongSubarraysI(nums, k, x):
+    n = len(nums)
+    result = []
+    for i in range(n - k + 1):
+        window = nums[i:i+k]
+        freq = {}
+        for v in window:
+            freq[v] = freq.get(v, 0) + 1
+        sorted_items = sorted(freq.items(), key=lambda p: (-p[1], -p[0]))
+        total = sum(v * c for v, c in sorted_items[:x])
+        result.append(total)
+    return result
+`,
+  'minimum-operations-to-make-median-equal-k': `
+def minimumOperationsToMakeMedianEqualK(nums, k):
+    a = sorted(nums)
+    mid = (len(a) - 1) // 2
+    ops = 0
+    for i, v in enumerate(a):
+        if i < mid:
+            ops += max(0, v - k)
+        elif i == mid:
+            ops += abs(v - k)
+        else:
+            ops += max(0, k - v)
+    return ops
+`,
 };
