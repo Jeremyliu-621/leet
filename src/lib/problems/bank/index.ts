@@ -2893,6 +2893,12 @@ import { problem as nonSpecialCount } from './find-the-count-of-numbers-which-ar
 import { problem as hasSameDigits } from './check-if-digits-are-equal-in-string-after-operations-i';
 import { problem as getSmallestStringConstraint } from './lexicographically-smallest-string-after-operations-with-constraint';
 import { problem as checkValidCuts } from './check-if-grid-can-be-cut-into-sections';
+// batch 220 — medium/math, medium/arrays+simulation, easy/math+bit-manipulation, hard/graph, medium/arrays
+import { problem as isReachableAtTime } from './determine-if-a-cell-is-reachable-at-a-given-time';
+import { problem as findScoreMarking } from './find-score-after-marking-all-elements';
+import { problem as primeSetBitsCount } from './prime-number-of-set-bits-in-binary-representation';
+import { problem as minEdgeReversalsEvery } from './minimum-edge-reversals-so-every-node-is-reachable';
+import { problem as countNumInversions } from './count-the-number-of-inversions';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5826,4 +5832,10 @@ export const problems: readonly Problem[] = [
   hasSameDigits,
   getSmallestStringConstraint,
   checkValidCuts,
+  // batch 220
+  isReachableAtTime,
+  findScoreMarking,
+  primeSetBitsCount,
+  minEdgeReversalsEvery,
+  countNumInversions,
 ];

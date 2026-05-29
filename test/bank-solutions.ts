@@ -41627,4 +41627,88 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     };
     return canSplit(rectangles.map(r => [r[0]!, r[2]!])) || canSplit(rectangles.map(r => [r[1]!, r[3]!]));
   },
+  // batch 220
+  'determine-if-a-cell-is-reachable-at-a-given-time': (...args: unknown[]) => {
+    const [sx, sy, fx, fy, t] = args as number[];
+    if (sx === fx && sy === fy && t === 1) return false;
+    return t! >= Math.max(Math.abs(fx! - sx!), Math.abs(fy! - sy!));
+  },
+  'find-score-after-marking-all-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const order = Array.from({length: n}, (_, i) => i).sort((a, b) => nums[a]! - nums[b]! || a - b);
+    const marked = new Array<boolean>(n).fill(false);
+    let score = 0;
+    for (const i of order) {
+      if (marked[i]) continue;
+      score += nums[i]!;
+      marked[i] = true;
+      if (i > 0) marked[i - 1] = true;
+      if (i < n - 1) marked[i + 1] = true;
+    }
+    return score;
+  },
+  'prime-number-of-set-bits-in-binary-representation': (...args: unknown[]) => {
+    const [left, right] = args as number[];
+    const primes = new Set([2, 3, 5, 7, 11, 13, 17, 19]);
+    let count = 0;
+    for (let n = left!; n <= right!; n++) {
+      let bits = 0, x = n;
+      while (x) { bits += x & 1; x >>= 1; }
+      if (primes.has(bits)) count++;
+    }
+    return count;
+  },
+  'minimum-edge-reversals-so-every-node-is-reachable': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const adj: [number, number][][] = Array.from({length: n}, () => []);
+    for (const [u, v] of edges) {
+      adj[u as number]!.push([v as number, 0]);
+      adj[v as number]!.push([u as number, 1]);
+    }
+    const dp = new Array<number>(n).fill(0);
+    const visited = new Array<boolean>(n).fill(false);
+    const dfs = (node: number): void => {
+      visited[node] = true;
+      for (const [next, weight] of adj[node]!) {
+        if (!visited[next]) { dfs(next); dp[node] = dp[node]! + dp[next]! + weight; }
+      }
+    };
+    dfs(0);
+    const ans = new Array<number>(n).fill(0);
+    ans[0] = dp[0]!;
+    const bfs = (node: number, parent: number): void => {
+      for (const [next, weight] of adj[node]!) {
+        if (next !== parent) {
+          ans[next] = ans[node]! + 1 - 2 * weight;
+          bfs(next, node);
+        }
+      }
+    };
+    bfs(0, -1);
+    return ans;
+  },
+  'count-the-number-of-inversions': (...args: unknown[]) => {
+    const arr = [...(args[0] as number[])];
+    let count = 0;
+    const merge = (left: number[], right: number[]): number[] => {
+      const result: number[] = [];
+      let i = 0, j = 0;
+      while (i < left.length && j < right.length) {
+        if (left[i]! <= right[j]!) { result.push(left[i]!); i++; }
+        else { count += left.length - i; result.push(right[j]!); j++; }
+      }
+      while (i < left.length) result.push(left[i++]!);
+      while (j < right.length) result.push(right[j++]!);
+      return result;
+    };
+    const sort = (a: number[]): number[] => {
+      if (a.length <= 1) return a;
+      const mid = a.length >> 1;
+      return merge(sort(a.slice(0, mid)), sort(a.slice(mid)));
+    };
+    sort(arr);
+    return count;
+  },
 };
