@@ -42232,4 +42232,38 @@ def countOfSubstrings(s: str, k: int) -> int:
                 count += 1
     return count
 `,
+  'count-vowels-in-range': `
+def vowelStrings(words, left, right):
+    vowels = set('aeiou')
+    return sum(1 for i in range(left, right + 1) if words[i][0] in vowels and words[i][-1] in vowels)
+`,
+  'count-equal-and-divisible-pairs-in-an-array': `
+def countPairs(nums, k):
+    count = 0
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            if nums[i] == nums[j] and (i * j) % k == 0:
+                count += 1
+    return count
+`,
+  'find-all-lonely-numbers-in-the-array': `
+def findLonely(nums):
+    from collections import Counter
+    freq = Counter(nums)
+    return sorted(x for x, c in freq.items() if c == 1 and x - 1 not in freq and x + 1 not in freq)
+`,
+  'check-if-a-parentheses-string-can-be-valid': `
+def canBeValid(s, locked):
+    n = len(s)
+    if n % 2 != 0: return False
+    lo = hi = 0
+    for i in range(n):
+        if locked[i] == '1':
+            delta = 1 if s[i] == '(' else -1
+            lo += delta; hi += delta
+        else: lo -= 1; hi += 1
+        if hi < 0: return False
+        lo = max(lo, 0)
+    return lo == 0
+`,
 };

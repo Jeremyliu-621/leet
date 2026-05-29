@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2622** problems; 8157 tests green. Batches 102–186 + 179b complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2626** problems; 8169 tests green. Batches 102–187 + 179b complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 187+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 188+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 187 — count-vowels-range, equal-divisible-pairs, lonely-numbers, parentheses-valid (2026-05-29)
+Four new problems: `count-vowel-strings-in-a-range` (easy/strings+arrays, iterate [left,right] checking first+last char are vowels), `count-equal-and-divisible-pairs-in-an-array` (easy/arrays, O(n²) brute force — pair (i,j): nums[i]==nums[j] AND (i*j)%k==0), `find-all-lonely-numbers-in-the-array` (medium/arrays+hash-map, freq map — x lonely if freq[x]==1 AND no x±1 in map), `check-if-a-parentheses-string-can-be-valid` (medium/strings+stack, range [lo,hi] of open-bracket counts — clamp lo≥0, return false if hi<0, done when lo==0). Bank at **2626**; 8169 tests.
 
 ### feat(bank): batch 186 — vowel-consonant substrings + apply-discount + max-diff-grid + food-buckets + thousand-separator (2026-05-29)
 Five new problems: `count-substrings-with-every-vowel-and-k-consonants-i` (medium/strings+sliding-window, O(n²) brute force with vowelFreq map + consonant count), `apply-discount-to-prices` (medium/strings, regex validate then 2dp price formatting), `maximum-difference-score-in-a-grid` (medium/arrays+dp, telescoping score = last-first, min-prefix DP), `minimum-number-of-food-buckets-to-feed-the-hamsters` (medium/simulation, greedy: check left-fed first, then place right, else left, else -1), `thousand-separator` (easy/strings, insert dots every 3 digits). Bank at **2622**; 8157 tests.

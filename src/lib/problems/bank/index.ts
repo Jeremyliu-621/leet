@@ -2924,6 +2924,11 @@ import { problem as applyDiscountToPrices } from './apply-discount-to-prices';
 import { problem as maximumDifferenceScoreInAGrid } from './maximum-difference-score-in-a-grid';
 import { problem as minimumNumberOfFoodBucketsToFeedTheHamsters } from './minimum-number-of-food-buckets-to-feed-the-hamsters';
 import { problem as thousandSeparator } from './thousand-separator';
+// batch 187 — easy/strings+arrays, easy/arrays, medium/arrays+hash-map, medium/strings+stack
+import { problem as countVowelsInRange } from './count-vowels-in-range';
+import { problem as countEqualAndDivisiblePairsInAnArray } from './count-equal-and-divisible-pairs-in-an-array';
+import { problem as findAllLonelyNumbersInTheArray } from './find-all-lonely-numbers-in-the-array';
+import { problem as checkIfAParenthesesStringCanBeValid } from './check-if-a-parentheses-string-can-be-valid';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5889,4 +5894,9 @@ export const problems: readonly Problem[] = [
   maximumDifferenceScoreInAGrid,
   minimumNumberOfFoodBucketsToFeedTheHamsters,
   thousandSeparator,
+  // batch 187 — easy/strings+arrays, easy/arrays, medium/arrays+hash-map, medium/strings+stack
+  countVowelsInRange,
+  countEqualAndDivisiblePairsInAnArray,
+  findAllLonelyNumbersInTheArray,
+  checkIfAParenthesesStringCanBeValid,
 ];

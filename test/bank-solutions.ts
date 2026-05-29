@@ -42287,4 +42287,53 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return count;
   },
+  'count-vowels-in-range': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const left = args[1] as number;
+    const right = args[2] as number;
+    const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+    let count = 0;
+    for (let i = left; i <= right; i++) {
+      const w = words[i]!;
+      if (vowels.has(w[0]!) && vowels.has(w[w.length - 1]!)) count++;
+    }
+    return count;
+  },
+  'count-equal-and-divisible-pairs-in-an-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let count = 0;
+    for (let i = 0; i < nums.length; i++) {
+      for (let j = i + 1; j < nums.length; j++) {
+        if (nums[i] === nums[j] && (i * j) % k === 0) count++;
+      }
+    }
+    return count;
+  },
+  'find-all-lonely-numbers-in-the-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const x of nums) freq.set(x, (freq.get(x) ?? 0) + 1);
+    const result: number[] = [];
+    for (const [x, c] of freq) {
+      if (c === 1 && !freq.has(x - 1) && !freq.has(x + 1)) result.push(x);
+    }
+    return result.sort((a, b) => a - b);
+  },
+  'check-if-a-parentheses-string-can-be-valid': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const locked = args[1] as string;
+    const n = s.length;
+    if (n % 2 !== 0) return false;
+    let lo = 0, hi = 0;
+    for (let i = 0; i < n; i++) {
+      if (locked[i] === '1') {
+        const delta = s[i] === '(' ? 1 : -1;
+        lo += delta; hi += delta;
+      } else { lo--; hi++; }
+      if (hi < 0) return false;
+      lo = Math.max(lo, 0);
+    }
+    return lo === 0;
+  },
 };
