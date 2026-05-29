@@ -37442,7 +37442,7 @@ def btreeGameWinningMoveRunner(n, arr, x):
 
   // batch 158 — arrays+math/medium, strings/hard, dp/hard×2
   'minimum-cost-homecoming-of-a-robot-in-a-grid': `
-def minCostHomecomingRobot(startPos, homePos, rowCosts, colCosts):
+def minCost(startPos, homePos, rowCosts, colCosts):
     startPos = list(startPos.to_py() if hasattr(startPos, 'to_py') else startPos)
     homePos = list(homePos.to_py() if hasattr(homePos, 'to_py') else homePos)
     rowCosts = list(rowCosts.to_py() if hasattr(rowCosts, 'to_py') else rowCosts)
@@ -41777,4 +41777,40 @@ def closestKValuesRunner(arr, target, k):
     return sorted(vals[lo:hi+1])
 `,
 
+
+  // batch 179 (local)
+  'maximum-number-of-groups-entering-a-competition': `
+def maximumGroups(grades):
+    if hasattr(grades, 'to_py'): grades = list(grades.to_py())
+    n = len(grades)
+    k = 0
+    while (k + 1) * (k + 2) // 2 <= n:
+        k += 1
+    return k
+`,
+
+  'find-the-longest-semi-repetitive-substring': `
+def longestSemiRepetitiveSubstring(s):
+    l = 0; pairs = 0; best = 1
+    for r in range(1, len(s)):
+        if s[r] == s[r - 1]: pairs += 1
+        while pairs > 1:
+            if s[l] == s[l + 1]: pairs -= 1
+            l += 1
+        best = max(best, r - l + 1)
+    return best
+`,
+
+  'count-the-number-of-incremovable-subarrays-i': `
+def incremovableSubarrayCount(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    n = len(nums)
+    count = 0
+    for l in range(n):
+        for r in range(l, n):
+            remaining = nums[:l] + nums[r+1:]
+            if all(remaining[i] < remaining[i+1] for i in range(len(remaining)-1)):
+                count += 1
+    return count
+`,
 };

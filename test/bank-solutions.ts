@@ -41711,4 +41711,39 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return vals.slice(lo, hi + 1).sort((a, b) => a - b);
   },
 
+
+  // batch 179 (local)
+  'maximum-number-of-groups-entering-a-competition': (grades: unknown) => {
+    const n = (grades as number[]).length;
+    let k = 0;
+    while ((k + 1) * (k + 2) / 2 <= n) k++;
+    return k;
+  },
+
+  'find-the-longest-semi-repetitive-substring': (s: unknown) => {
+    const str = s as string;
+    let l = 0, pairs = 0, best = 1;
+    for (let r = 1; r < str.length; r++) {
+      if (str[r] === str[r - 1]) pairs++;
+      while (pairs > 1) {
+        if (str[l] === str[l + 1]) pairs--;
+        l++;
+      }
+      best = Math.max(best, r - l + 1);
+    }
+    return best;
+  },
+
+  'count-the-number-of-incremovable-subarrays-i': (nums: unknown) => {
+    const arr = nums as number[];
+    const n = arr.length;
+    let count = 0;
+    for (let l = 0; l < n; l++) {
+      for (let r = l; r < n; r++) {
+        const remaining = [...arr.slice(0, l), ...arr.slice(r + 1)];
+        if (remaining.every((v, i) => i === 0 || remaining[i - 1]! < v)) count++;
+      }
+    }
+    return count;
+  },
 };

@@ -2678,6 +2678,10 @@ import { problem as mostPopularVideoCreator } from './most-popular-video-creator
 import { problem as lengthOfLongestSubsequenceThatSumsToTarget } from './length-of-longest-subsequence-that-sums-to-target';
 import { problem as minimumNumberOfOperationsToReinitializeAPermutation } from './minimum-number-of-operations-to-reinitialize-a-permutation';
 import { problem as takingMaximumEnergyFromTheMysticDungeon } from './taking-maximum-energy-from-the-mystic-dungeon';
+// batch 179 — arrays+math/medium, strings+sliding-window/medium, arrays/easy
+import { problem as maximumNumberOfGroupsEnteringACompetition } from './maximum-number-of-groups-entering-a-competition';
+import { problem as findTheLongestSemiRepetitiveSubstring } from './find-the-longest-semi-repetitive-substring';
+import { problem as countTheNumberOfIncremovableSubarraysI } from './count-the-number-of-incremovable-subarrays-i';
 // batch 178 — math/hard, strings+two-pointers/medium, arrays+math/medium×2, stack+strings/medium
 import { problem as maximizeNumberOfNiceDivisors } from './maximize-number-of-nice-divisors';
 import { problem as expressiveWords } from './expressive-words';
@@ -5749,6 +5753,10 @@ export const problems: readonly Problem[] = [
   lengthOfLongestSubsequenceThatSumsToTarget,
   minimumNumberOfOperationsToReinitializeAPermutation,
   takingMaximumEnergyFromTheMysticDungeon,
+  // batch 179 — arrays+math/medium, strings+sliding-window/medium, arrays/easy
+  maximumNumberOfGroupsEnteringACompetition,
+  findTheLongestSemiRepetitiveSubstring,
+  countTheNumberOfIncremovableSubarraysI,
   // batch 175 (remote) — math/medium, arrays/medium, strings/medium, arrays+dp/hard, graph/hard
   // batch 178 — math/hard, strings+two-pointers/medium, arrays+math/medium×2, stack+strings/medium
   maximizeNumberOfNiceDivisors,
