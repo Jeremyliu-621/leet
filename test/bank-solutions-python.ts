@@ -38157,4 +38157,85 @@ def minStoneSum(piles, k):
     return -sum(heap)
 `,
 
+  // batch 164 — graph/medium×2, union-find/medium, arrays/medium×2
+  'all-paths-from-source-to-target': `
+def allPathsSourceTarget(graph):
+    if hasattr(graph, 'to_py'):
+        graph = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in graph.to_py()]
+    target = len(graph) - 1
+    result = []
+    def dfs(node, path):
+        if node == target:
+            result.append(list(path))
+            return
+        for nxt in graph[node]:
+            path.append(nxt)
+            dfs(nxt, path)
+            path.pop()
+    dfs(0, [0])
+    return result
+`,
+
+  'count-unreachable-pairs-of-nodes-in-an-undirected-graph': `
+def countPairs(n, edges):
+    if hasattr(edges, 'to_py'):
+        edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in edges.to_py()]
+    parent = list(range(n))
+    size = [1] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    for e in edges:
+        u, v = int(e[0]), int(e[1])
+        ru, rv = find(u), find(v)
+        if ru != rv:
+            if size[ru] < size[rv]:
+                parent[ru] = rv; size[rv] += size[ru]
+            else:
+                parent[rv] = ru; size[ru] += size[rv]
+    seen = set()
+    comp_sizes = []
+    for i in range(n):
+        root = find(i)
+        if root not in seen:
+            seen.add(root)
+            comp_sizes.append(size[root])
+    result = 0
+    cumulative = 0
+    for s in comp_sizes:
+        result += cumulative * s
+        cumulative += s
+    return result
+`,
+
+  'partition-array-into-disjoint-intervals': `
+def partitionDisjoint(nums):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    max_left = nums[0]
+    pot_max = nums[0]
+    partition = 0
+    for i in range(1, len(nums)):
+        if nums[i] < max_left:
+            partition = i
+            max_left = pot_max
+        else:
+            pot_max = max(pot_max, nums[i])
+    return partition + 1
+`,
+
+  'remove-duplicates-from-sorted-array-ii': `
+def removeDuplicates(nums):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    k = 0
+    for n in nums:
+        if k < 2 or nums[k-2] != n:
+            nums[k] = n
+            k += 1
+    return k
+`,
+
 };
