@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2537** problems; 7905 tests green. Batches 102–177 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2542** problems; 7920 tests green. Batches 102–177 + batch 175 (local) complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 178+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 175 — min-nonzero-product (medium), remove-one-element (medium), reconstruct-digits (medium), min-skips (hard), max-path-quality (hard) (2026-05-29)
+Five new problems: `minimum-non-zero-product-of-the-array-elements` (medium/math+bit-manipulation, formula: (2^p-1)×(2^p-2)^(2^(p-1)-1) mod 10^9+7 using BigInt for p≤60), `remove-one-element-to-make-array-strictly-increasing` (medium/arrays, find first bad pair then try removing either endpoint), `reconstruct-original-digits-from-english` (medium/strings+hash-map, unique letter trick z→0,w→2,u→4,x→6,g→8 then derive rest), `minimum-skips-after-meetings` (hard/arrays+dp, scaled DP dp[i][j]=min total distance×speed after i roads with j skips), `maximum-path-quality-of-a-graph` (hard/graph+backtracking, DFS with backtracking from node 0 tracking visited set). Bank at **2542**; 7920 tests.
 
 ### feat(bank): batch 177 — most-popular-creator (medium), longest-subseq-sum (medium), reinitialize-perm (medium), mystic-dungeon-energy (medium) (2026-05-29)
 Four new problems: `most-popular-video-creator` (medium/hash-map, accumulate total views per creator + track best video by max views then lex-min id, return creators with max total sorted by name), `length-of-longest-subsequence-that-sums-to-target` (medium/dp, 0-1 knapsack variant — dp[j]=max subsequence length summing to j, iterate right-to-left), `minimum-number-of-operations-to-reinitialize-a-permutation` (medium/simulation, simulate perm operation until identity; order = LCM of cycle lengths), `taking-maximum-energy-from-the-mystic-dungeon` (medium/arrays, suffix sums stepping by k — answer = max of suf[0..k-1]). Bank at **2537**; 7905 tests.
