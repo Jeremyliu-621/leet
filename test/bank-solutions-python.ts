@@ -43608,4 +43608,115 @@ def countPairsWithSameSum(nums, k):
                 count += 1
     return count
 `,
+  // batch 207b ---------------------------------------------------------------
+  'find-occurrences-of-element-in-array': `
+def occurrencesOfElement(nums, queries, x):
+    positions = [i for i, v in enumerate(nums) if v == x]
+    return [positions[q - 1] if q - 1 < len(positions) else -1 for q in queries]
+`,
+  'ways-to-express-an-integer-as-sum-of-powers': `
+def numberOfWays(n, x):
+    MOD = 10**9 + 7
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    base = 1
+    while base ** x <= n:
+        power = base ** x
+        for j in range(n, power - 1, -1):
+            dp[j] = (dp[j] + dp[j - power]) % MOD
+        base += 1
+    return dp[n]
+`,
+  'minimum-right-shifts-to-sort-the-array': `
+def minimumRightShifts(nums):
+    n = len(nums)
+    break_count = 0
+    break_idx = -1
+    for i in range(n):
+        if nums[i] > nums[(i + 1) % n]:
+            break_count += 1
+            break_idx = i
+    if break_count == 0:
+        return 0
+    if break_count == 1:
+        return n - 1 - break_idx
+    return -1
+`,
+  'sliding-subarray-beauty': `
+def getSubarrayBeauty(nums, k, x):
+    freq = [0] * 50
+    result = []
+    for i, v in enumerate(nums):
+        if v < 0:
+            freq[v + 50] += 1
+        if i >= k and nums[i - k] < 0:
+            freq[nums[i - k] + 50] -= 1
+        if i >= k - 1:
+            count = 0
+            beauty = 0
+            for v2 in range(50):
+                count += freq[v2]
+                if count >= x:
+                    beauty = v2 - 50
+                    break
+            result.append(beauty)
+    return result
+`,
+  'maximum-strong-pair-xor-ii': `
+def maximumStrongPairXor(nums):
+    nums = sorted(nums)
+    n = len(nums)
+    BITS = 20
+    children = []
+    cnt = []
+    node_count = 0
+
+    def new_node():
+        nonlocal node_count
+        children.append(-1)
+        children.append(-1)
+        cnt.append(0)
+        idx = node_count
+        node_count += 1
+        return idx
+
+    new_node()  # root = 0
+
+    def update(num, delta):
+        node = 0
+        for b in range(BITS, -1, -1):
+            bit = (num >> b) & 1
+            if children[node * 2 + bit] == -1:
+                children[node * 2 + bit] = new_node()
+            node = children[node * 2 + bit]
+            cnt[node] += delta
+
+    def query(num):
+        node = 0
+        result = 0
+        for b in range(BITS, -1, -1):
+            bit = (num >> b) & 1
+            want = 1 - bit
+            wc = children[node * 2 + want]
+            if wc != -1 and cnt[wc] > 0:
+                result |= (1 << b)
+                node = wc
+            else:
+                oc = children[node * 2 + bit]
+                if oc != -1:
+                    node = oc
+                else:
+                    break
+        return result
+
+    left = 0
+    ans = 0
+    for right in range(n):
+        update(nums[right], 1)
+        while nums[left] * 2 < nums[right]:
+            update(nums[left], -1)
+            left += 1
+        ans = max(ans, query(nums[right]))
+    return ans
+`,
 };

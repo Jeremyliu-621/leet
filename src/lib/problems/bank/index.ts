@@ -3079,7 +3079,7 @@ import { problem as maxOfFirstAndLast } from './max-of-first-and-last';
 import { problem as sumOfFirstAndLast } from './sum-of-first-and-last';
 import { problem as removeDuplicatesFromArray } from './remove-duplicates-from-array';
 import { problem as concatenateTwoArrays } from './concatenate-two-arrays';
-// batch 207 — easy/arrays+strings, easy/arrays+strings, easy/arrays+hash-map, easy/arrays
+// batch 207 (concurrent) — easy/arrays+strings, easy/arrays+strings, easy/arrays+hash-map, easy/arrays
 import { problem as countWordsLongerThanK } from './count-words-longer-than-k';
 import { problem as longestStringInArray } from './longest-string-in-array';
 import { problem as allElementsDistinct } from './all-elements-distinct';
@@ -3105,6 +3105,12 @@ import { problem as secondMaximumNumberInArray } from './second-maximum-number-i
 import { problem as sumOfValuesAtIndicesWithKSetBits } from './sum-of-values-at-indices-with-k-set-bits';
 import { problem as pointsThatIntersectWithCars } from './points-that-intersect-with-cars';
 import { problem as countSteppingNumbersInRange } from './count-stepping-numbers-in-range';
+// batch 207b — easy/arrays, medium/dp, easy/arrays, medium/arrays+sliding-window, hard/bit-manipulation+trie
+import { problem as findOccurrencesOfElementInArray } from './find-occurrences-of-element-in-array';
+import { problem as waysToExpressAnIntegerAsSumOfPowers } from './ways-to-express-an-integer-as-sum-of-powers';
+import { problem as minimumRightShiftsToSortTheArray } from './minimum-right-shifts-to-sort-the-array';
+import { problem as slidingSubarrayBeauty } from './sliding-subarray-beauty';
+import { problem as maximumStrongPairXorII } from './maximum-strong-pair-xor-ii';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6225,7 +6231,7 @@ export const problems: readonly Problem[] = [
   sumOfFirstAndLast,
   removeDuplicatesFromArray,
   concatenateTwoArrays,
-  // batch 207 — easy/arrays+strings, easy/arrays+strings, easy/arrays+hash-map, easy/arrays
+  // batch 207 (concurrent) — easy/arrays+strings, easy/arrays+strings, easy/arrays+hash-map, easy/arrays
   countWordsLongerThanK,
   longestStringInArray,
   allElementsDistinct,
@@ -6251,4 +6257,10 @@ export const problems: readonly Problem[] = [
   sumOfValuesAtIndicesWithKSetBits,
   pointsThatIntersectWithCars,
   countSteppingNumbersInRange,
+  // batch 207b — easy/arrays, medium/dp, easy/arrays, medium/arrays+sliding-window, hard/bit-manipulation+trie
+  findOccurrencesOfElementInArray,
+  waysToExpressAnIntegerAsSumOfPowers,
+  minimumRightShiftsToSortTheArray,
+  slidingSubarrayBeauty,
+  maximumStrongPairXorII,
 ];
