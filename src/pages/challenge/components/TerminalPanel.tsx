@@ -249,7 +249,8 @@ type TerminalEntry =
   | { type: 'pass'; testIndex: number; input: string; durationMs?: number }
   | { type: 'fail'; testIndex: number; input: string; expected: string; actual: string; rawExpected: unknown; rawActual: unknown }
   | { type: 'error'; testIndex: number; input: string; error: string }
-  | { type: 'summary'; outcome: string; passed: number; total: number; durationMs?: number; mode: 'run' | 'submit' };
+  | { type: 'summary'; outcome: string; passed: number; total: number; durationMs?: number; mode: 'run' | 'submit' }
+  | { type: 'run-separator'; runNumber: number };
 
 function displayValue(v: unknown): string {
   if (v === undefined) return 'undefined';
@@ -365,6 +366,16 @@ interface TerminalPanelProps {
 
 function TerminalEntry({ entry }: { entry: TerminalEntry }) {
   switch (entry.type) {
+    case 'run-separator':
+      return (
+        <div className="flex items-center gap-2 py-1 select-none" aria-hidden="true">
+          <div className="flex-1 h-px bg-border" />
+          <span className="font-mono text-[9px] uppercase tracking-widest text-faint">
+            Run {entry.runNumber}
+          </span>
+          <div className="flex-1 h-px bg-border" />
+        </div>
+      );
     case 'system':
       return <div className="text-faint select-text">{entry.text}</div>;
     case 'stdout':
@@ -420,7 +431,10 @@ function TerminalEntry({ entry }: { entry: TerminalEntry }) {
             <span className="text-text font-semibold">ERROR</span>
             <span className="text-faint ml-2">Test {entry.testIndex + 1}</span>
           </div>
-          <div className="pl-4 text-text">{entry.error}</div>
+          <div className="pl-4 flex items-start gap-1">
+            <span className="text-text break-all">{entry.error}</span>
+            <CopyButton value={entry.error} />
+          </div>
         </div>
       );
     case 'summary': {
@@ -484,7 +498,12 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
   useEffect(() => {
     if (result && result !== prevResultRef.current && result !== undefined) {
       const entries = buildEntries(result, mode);
-      setHistory((prev) => [...prev, entries]);
+      setHistory((prev) => {
+        // Insert a run separator before every run after the first
+        const runNumber = prev.length + 1;
+        const separator: TerminalEntry = { type: 'run-separator', runNumber };
+        return prev.length === 0 ? [entries] : [...prev, [separator, ...entries]];
+      });
       prevResultRef.current = result;
       // Reset filter so stale "failures only" doesn't carry over to a new run.
       setShowFailuresOnly(false);
@@ -540,6 +559,8 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
           const label = e.outcome === 'accepted' && e.mode === 'run' ? 'TESTS PASSED' : (OUTCOME_LABELS[e.outcome] ?? e.outcome.toUpperCase());
           return `${label}  ${e.passed}/${e.total} passed${e.durationMs !== undefined ? ` ${e.durationMs}ms` : ''}`;
         }
+        case 'run-separator':
+          return `\n──── Run ${e.runNumber} ────`;
       }
     });
     void navigator.clipboard.writeText(lines.join('\n')).then(() => {
