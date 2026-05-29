@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2311** problems; 7227 tests green. Batches 102–154 + 152b complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2315** problems; 7239 tests green. Batches 102–154 (all sub-batches) complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 155+); UX polish; accessibility audit.
+
+### feat(bank): add batch 154b — map-sum-pairs, magic-dictionary, short-encoding-of-words, stream-of-characters (trie×4) (2026-05-29)
+Four new trie-tagged problems: `map-sum-pairs` (medium, prefix sum via hash map), `magic-dictionary` (medium, 1-char fuzzy match excluding exact hits; if searchWord is in dict → return false), `short-encoding-of-words` (medium, suffix deduplication to find shortest reference string), `stream-of-characters` (hard, reversed-trie suffix matching in character stream). Added `trie` and `design` to ProblemTag. Bank at **2315**; 7239 tests.
 
 ### feat(bank): add batch 152b — even-product-subarrays, max-sum-div-3, product-matrix (2026-05-29)
 Three new arrays+math problems: `number-of-subarrays-having-even-product` (medium/arrays+math, count subarrays with at least one even element by subtracting all-odd-subarray triangular runs), `greatest-sum-divisible-by-three` (medium/arrays+dp, track max achievable sum per mod-3 remainder with dp[0..2]), `construct-product-matrix` (hard/arrays+math, 2D product-except-self via flat prefix/suffix products mod 12345). Bank at **2311**; 7227 tests.
