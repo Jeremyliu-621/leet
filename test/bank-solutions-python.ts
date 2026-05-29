@@ -38481,6 +38481,104 @@ def maximumLength(s):
     return ans
 `,
 
+  // batch 175 — Python solutions
+  'check-if-bitwise-or-has-trailing-zeros': `
+def hasTrailingZeros(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    return sum(1 for x in nums if x % 2 == 0) >= 2
+`,
+  'count-paths-with-given-xor-value': `
+def countPathsWithXorValue(grid, k):
+    grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    k = int(k)
+    m, n = len(grid), len(grid[0])
+    dp = [[[0]*16 for _ in range(n)] for _ in range(m)]
+    dp[0][0][grid[0][0]] = 1
+    for i in range(m):
+        for j in range(n):
+            if i == 0 and j == 0:
+                continue
+            v = grid[i][j]
+            for x in range(16):
+                cnt = 0
+                if i > 0: cnt += dp[i-1][j][x ^ v]
+                if j > 0: cnt += dp[i][j-1][x ^ v]
+                dp[i][j][x] += cnt
+    return dp[m-1][n-1][k]
+`,
+  'count-pairs-of-connectable-servers-in-a-weighted-tree': `
+def countPairsOfConnectableServers(edges, signalSpeed):
+    edges = [list(e.to_py()) if hasattr(e, 'to_py') else list(e) for e in (edges.to_py() if hasattr(edges, 'to_py') else edges)]
+    signalSpeed = int(signalSpeed)
+    n = len(edges) + 1
+    adj = [[] for _ in range(n)]
+    for u, v, w in edges:
+        adj[u].append((v, w))
+        adj[v].append((u, w))
+    def dfs(node, parent, dist):
+        cnt = 1 if dist % signalSpeed == 0 else 0
+        for nxt, w in adj[node]:
+            if nxt != parent:
+                cnt += dfs(nxt, node, dist + w)
+        return cnt
+    result = [0] * n
+    for k in range(n):
+        prev = 0
+        for nxt, w in adj[k]:
+            c = dfs(nxt, k, w)
+            result[k] += prev * c
+            prev += c
+    return result
+`,
+  'minimum-number-of-operations-to-sort-binary-tree-by-level': `
+def minimumOperations(root_arr):
+    def to_int(x):
+        try: return int(x)
+        except: return None
+    if hasattr(root_arr, 'to_py'): root_arr = list(root_arr.to_py())
+    arr = [to_int(x) for x in root_arr]
+    if not arr or arr[0] is None: return 0
+    class N:
+        def __init__(self, v): self.val = v; self.left = None; self.right = None
+    root = N(arr[0])
+    q = [root]
+    i = 1
+    while q and i < len(arr):
+        node = q.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node.left = N(arr[i]); q.append(node.left)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node.right = N(arr[i]); q.append(node.right)
+        i += 1
+    ops = 0
+    from collections import deque
+    queue = deque([root])
+    while queue:
+        size = len(queue)
+        level = []
+        for _ in range(size):
+            node = queue.popleft()
+            level.append(node.val)
+            if node.left: queue.append(node.left)
+            if node.right: queue.append(node.right)
+        if len(level) <= 1: continue
+        sorted_level = sorted(level)
+        pos = {v: i for i, v in enumerate(sorted_level)}
+        perm = [pos[v] for v in level]
+        visited = [False] * len(perm)
+        cycles = 0
+        for i in range(len(perm)):
+            if not visited[i]:
+                cycles += 1
+                j = i
+                while not visited[j]:
+                    visited[j] = True
+                    j = perm[j]
+        ops += len(perm) - cycles
+    return ops
+`,
+
   // batch 169 — Python solutions for new problems
   'maximum-number-of-eaten-apples': `
 import heapq

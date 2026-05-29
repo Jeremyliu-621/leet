@@ -38534,6 +38534,95 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 175 — easy/bit, medium/dp, medium/tree, medium/tree
+  'check-if-bitwise-or-has-trailing-zeros': (nums: unknown) => {
+    const a = nums as number[];
+    return a.filter(x => (x & 1) === 0).length >= 2;
+  },
+  'count-paths-with-given-xor-value': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const k = args[1] as number;
+    const m = grid.length, n = grid[0]!.length;
+    const dp: number[][][] = Array.from({length: m}, () =>
+      Array.from({length: n}, () => new Array<number>(16).fill(0)));
+    dp[0]![0]![grid[0]![0]!] = 1;
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        if (i === 0 && j === 0) continue;
+        const v = grid[i]![j]!;
+        for (let x = 0; x < 16; x++) {
+          let cnt = 0;
+          if (i > 0) cnt += dp[i - 1]![j]![x ^ v]!;
+          if (j > 0) cnt += dp[i]![j - 1]![x ^ v]!;
+          dp[i]![j]![x]! += cnt;
+        }
+      }
+    }
+    return dp[m - 1]![n - 1]![k]!;
+  },
+  'count-pairs-of-connectable-servers-in-a-weighted-tree': (...args: unknown[]) => {
+    const edges = args[0] as number[][];
+    const signalSpeed = args[1] as number;
+    const n = edges.length + 1;
+    const adj: [number, number][][] = Array.from({length: n}, () => []);
+    for (const e of edges) {
+      const u = e[0]!, v = e[1]!, w = e[2]!;
+      adj[u]!.push([v, w]);
+      adj[v]!.push([u, w]);
+    }
+    const dfs = (node: number, parent: number, dist: number): number => {
+      let cnt = dist % signalSpeed === 0 ? 1 : 0;
+      for (const [nxt, w] of adj[node]!) {
+        if (nxt !== parent) cnt += dfs(nxt, node, dist + w);
+      }
+      return cnt;
+    };
+    const result = new Array<number>(n).fill(0);
+    for (let k = 0; k < n; k++) {
+      let prev = 0;
+      for (const [nxt, w] of adj[k]!) {
+        const c = dfs(nxt, k, w);
+        result[k]! += prev * c;
+        prev += c;
+      }
+    }
+    return result;
+  },
+  'minimum-number-of-operations-to-sort-binary-tree-by-level': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    let ops = 0;
+    const bfsQ: _TN[] = [];
+    if (root) bfsQ.push(root);
+    let head = 0;
+    while (head < bfsQ.length) {
+      const levelEnd = bfsQ.length;
+      const level: number[] = [];
+      for (let i = head; i < levelEnd; i++) {
+        const node = bfsQ[i]!;
+        level.push(node.v);
+        if (node.l) bfsQ.push(node.l);
+        if (node.r) bfsQ.push(node.r);
+      }
+      head = levelEnd;
+      if (level.length <= 1) continue;
+      const sorted = [...level].sort((a, b) => a - b);
+      const pos = new Map<number, number>();
+      sorted.forEach((v, i) => pos.set(v, i));
+      const perm = level.map(v => pos.get(v)!);
+      const visited = new Array<boolean>(perm.length).fill(false);
+      let cycles = 0;
+      for (let i = 0; i < perm.length; i++) {
+        if (!visited[i]) {
+          cycles++;
+          let j = i;
+          while (!visited[j]!) { visited[j] = true; j = perm[j]!; }
+        }
+      }
+      ops += perm.length - cycles;
+    }
+    return ops;
+  },
+
   // batch 169 — new problems
   'maximum-number-of-eaten-apples': (...args: unknown[]) => {
     const apples = args[0] as number[];

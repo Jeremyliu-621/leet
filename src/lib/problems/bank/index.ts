@@ -2665,6 +2665,10 @@ import { problem as maximumNumberOfBooksOnAShelf } from './maximum-number-of-boo
 import { problem as numberOfSubarraysThatMatchAPattern } from './number-of-subarrays-that-match-a-pattern';
 import { problem as numberOfAdjacentElementsWithTheSameColor } from './number-of-adjacent-elements-with-the-same-color';
 import { problem as findLongestSpecialSubstringThatOccursThriceII } from './find-longest-special-substring-that-occurs-thrice-ii';
+import { problem as checkIfBitwiseOrHasTrailingZeros } from './check-if-bitwise-or-has-trailing-zeros';
+import { problem as countPathsWithGivenXorValue } from './count-paths-with-given-xor-value';
+import { problem as countPairsOfConnectableServersInAWeightedTree } from './count-pairs-of-connectable-servers-in-a-weighted-tree';
+import { problem as minimumNumberOfOperationsToSortBinaryTreeByLevel } from './minimum-number-of-operations-to-sort-binary-tree-by-level';
 // batch 169 — new problems: heap+greedy/medium, strings/easy, design+hash-map/medium, strings/easy
 import { problem as maximumNumberOfEatenApples } from './maximum-number-of-eaten-apples';
 import { problem as minimumFlipsToMakeAlternatingBinaryString } from './minimum-flips-to-make-alternating-binary-string';
@@ -5584,4 +5588,9 @@ export const problems: readonly Problem[] = [
   numberOfSubarraysThatMatchAPattern,
   numberOfAdjacentElementsWithTheSameColor,
   findLongestSpecialSubstringThatOccursThriceII,
+  // batch 175 — easy/bit, medium/dp, medium/tree, medium/tree
+  checkIfBitwiseOrHasTrailingZeros,
+  countPathsWithGivenXorValue,
+  countPairsOfConnectableServersInAWeightedTree,
+  minimumNumberOfOperationsToSortBinaryTreeByLevel,
 ];
