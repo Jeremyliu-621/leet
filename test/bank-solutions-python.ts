@@ -40647,4 +40647,52 @@ def numberOfComponents(properties):
 
     return sum(1 for i in range(n) if find(i) == i)
 `,
+  'sum-multiples': `
+def sumOfMultiples(n):
+    total = 0
+    for i in range(1, n + 1):
+        if i % 3 == 0 or i % 5 == 0 or i % 7 == 0:
+            total += i
+    return total
+`,
+  'minimum-operations-to-make-the-array-increasing': `
+def minOperations(nums):
+    nums = list(nums)
+    ops = 0
+    for i in range(1, len(nums)):
+        if nums[i] <= nums[i - 1]:
+            ops += nums[i - 1] + 1 - nums[i]
+            nums[i] = nums[i - 1] + 1
+    return ops
+`,
+  'remove-trailing-zeros-from-string': `
+def removeTrailingZeros(num):
+    return num.rstrip('0')
+`,
+  'check-if-numbers-are-ascending-in-a-sentence': `
+def areNumbersAscending(s):
+    prev = -1
+    for token in s.split():
+        if token.isdigit():
+            n = int(token)
+            if n <= prev:
+                return False
+            prev = n
+    return True
+`,
+  'count-common-characters': `
+def commonChars(words):
+    from collections import Counter
+    min_freq = Counter(words[0])
+    for word in words[1:]:
+        word_freq = Counter(word)
+        for ch in list(min_freq.keys()):
+            min_freq[ch] = min(min_freq[ch], word_freq.get(ch, 0))
+            if min_freq[ch] == 0:
+                del min_freq[ch]
+    result = []
+    for ch, cnt in sorted(min_freq.items()):
+        result.extend([ch] * cnt)
+    return result
+`,
 };

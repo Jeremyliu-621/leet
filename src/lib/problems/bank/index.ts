@@ -2882,6 +2882,12 @@ import { problem as phonePrefix } from './phone-number-prefix';
 import { problem as reverseDegree } from './reverse-degree-of-a-string';
 import { problem as minOpsArrayZero } from './minimum-operations-make-array-elements-zero';
 import { problem as propertiesGraph } from './properties-graph';
+// batch 220 — easy/math, easy/arrays, easy/strings, easy/strings, easy/strings+hash-map
+import { problem as sumMultiples } from './sum-multiples';
+import { problem as minOpsArrayIncreasing } from './minimum-operations-to-make-the-array-increasing';
+import { problem as removeTrailingZeros } from './remove-trailing-zeros-from-string';
+import { problem as numbersAscendingInSentence } from './check-if-numbers-are-ascending-in-a-sentence';
+import { problem as countCommonChars } from './count-common-characters';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5804,4 +5810,10 @@ export const problems: readonly Problem[] = [
   reverseDegree,
   minOpsArrayZero,
   propertiesGraph,
+  // batch 220
+  sumMultiples,
+  minOpsArrayIncreasing,
+  removeTrailingZeros,
+  numbersAscendingInSentence,
+  countCommonChars,
 ];

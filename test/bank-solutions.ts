@@ -41515,4 +41515,57 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     for (let i = 0; i < n; i++) if (find(i) === i) count++;
     return count;
   },
+  'sum-multiples': (...args: unknown[]) => {
+    const n = args[0] as number;
+    let sum = 0;
+    for (let i = 1; i <= n; i++) {
+      if (i % 3 === 0 || i % 5 === 0 || i % 7 === 0) sum += i;
+    }
+    return sum;
+  },
+  'minimum-operations-to-make-the-array-increasing': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice();
+    let ops = 0;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i]! <= nums[i - 1]!) {
+        ops += nums[i - 1]! + 1 - nums[i]!;
+        nums[i] = nums[i - 1]! + 1;
+      }
+    }
+    return ops;
+  },
+  'remove-trailing-zeros-from-string': (...args: unknown[]) => {
+    const num = args[0] as string;
+    return num.replace(/0+$/, '');
+  },
+  'check-if-numbers-are-ascending-in-a-sentence': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let prev = -1;
+    for (const token of s.split(' ')) {
+      if (/^\d+$/.test(token)) {
+        const n = parseInt(token, 10);
+        if (n <= prev) return false;
+        prev = n;
+      }
+    }
+    return true;
+  },
+  'count-common-characters': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const freq = (w: string) => {
+      const f = new Array(26).fill(0) as number[];
+      for (const c of w) f[c.charCodeAt(0) - 97]++;
+      return f;
+    };
+    const minFreq = freq(words[0]!);
+    for (let i = 1; i < words.length; i++) {
+      const f = freq(words[i]!);
+      for (let j = 0; j < 26; j++) minFreq[j] = Math.min(minFreq[j]!, f[j]!);
+    }
+    const result: string[] = [];
+    for (let j = 0; j < 26; j++) {
+      for (let k = 0; k < minFreq[j]!; k++) result.push(String.fromCharCode(97 + j));
+    }
+    return result;
+  },
 };
