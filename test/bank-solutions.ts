@@ -38739,9 +38739,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
-  // batch 165 — dp/medium×2, tree/medium×3 (merged from remote)
-  // (these solutions are inserted below in full by the remote merge)
-  // batch 169 — strings/medium, strings/hard, strings/easy, arrays/easy×2
+  // batch 169a — strings/medium, strings/hard, strings/easy, arrays/easy×2
   'maximum-palindromes-after-operations': (words: unknown) => {
     const ws = words as string[];
     const freq = new Array(26).fill(0) as number[];
@@ -39045,7 +39043,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result.slice(1);
   },
 
-  // batch 169
+  // batch 170
   'using-robot-to-print-lexicographically-smallest-string': (s: unknown) => {
     const str = s as string;
     const n = str.length;
@@ -39118,6 +39116,36 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       if (!targetSet.has(i)) ops.push('Pop');
     }
     return ops;
+  },
+
+  // batch 169c — arrays+dp/hard
+  'minimum-time-to-finish-all-jobs': (...args: unknown[]) => {
+    const jobs = args[0] as number[];
+    const k = args[1] as number;
+    const n = jobs.length;
+    const full = 1 << n;
+    const subSum = new Array<number>(full).fill(0);
+    for (let mask = 1; mask < full; mask++) {
+      const lsb = mask & -mask;
+      const bit = Math.log2(lsb);
+      subSum[mask] = subSum[mask ^ lsb]! + jobs[bit]!;
+    }
+    let dp = new Array<number>(full).fill(Infinity);
+    dp[0] = 0;
+    for (let w = 0; w < k; w++) {
+      const ndp = new Array<number>(full).fill(Infinity);
+      for (let mask = 0; mask < full; mask++) {
+        if (dp[mask]! === Infinity) continue;
+        for (let sub = (full - 1 - mask); sub > 0; sub = (sub - 1) & (full - 1 - mask)) {
+          const newMask = mask | sub;
+          ndp[newMask] = Math.min(ndp[newMask]!, Math.max(dp[mask]!, subSum[sub]!));
+          if (sub === 0) break;
+        }
+        ndp[mask] = Math.min(ndp[mask]!, dp[mask]!);
+      }
+      dp = ndp;
+    }
+    return dp[full - 1]!;
   },
 
 };

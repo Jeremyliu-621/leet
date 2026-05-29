@@ -2718,7 +2718,7 @@ import { problem as findAllNumbersDisappearedInAnArray } from './find-all-number
 import { problem as finalValueOfVariableAfterPerformingOperations } from './final-value-of-variable-after-performing-operations';
 import { problem as stepsToMakeArrayNonDecreasing } from './steps-to-make-array-non-decreasing';
 import { problem as flowerPlantingWithNoAdjacent } from './flower-planting-with-no-adjacent';
-// batch 169 — strings/medium, strings/hard, strings/easy, arrays/easy×2
+// batch 169a — strings/medium, strings/hard, strings/easy, arrays/easy×2
 import { problem as maximumPalindromesAfterOperations } from './maximum-palindromes-after-operations';
 import { problem as beautifulSubstringsII } from './count-beautiful-substrings-ii';
 import { problem as makeThreeStringsEqual } from './make-three-strings-equal';
@@ -2729,6 +2729,8 @@ import { problem as shortestPathInBinaryMatrix } from './shortest-path-in-binary
 import { problem as minimumCostToConnectAllPoints } from './minimum-cost-to-connect-all-points';
 import { problem as minimumSwapsToGroupAll1sTogether } from './minimum-swaps-to-group-all-1s-together';
 import { problem as maximumWidthOfBinaryTree } from './maximum-width-of-binary-tree';
+// batch 169c — arrays+dp/hard
+import { problem as minimumTimeToFinishAllJobs } from './minimum-time-to-finish-all-jobs';
 // batch 170 — strings+stack/medium, strings+hash-map/easy, arrays+binary-search/medium, math/hard, arrays+stack+simulation/easy
 import { problem as usingRobotToPrintLexicographicallySmallestString } from './using-robot-to-print-lexicographically-smallest-string';
 import { problem as removeLetterToEqualizeFrequency } from './remove-letter-to-equalize-frequency';
@@ -5487,7 +5489,7 @@ export const problems: readonly Problem[] = [
   finalValueOfVariableAfterPerformingOperations,
   stepsToMakeArrayNonDecreasing,
   flowerPlantingWithNoAdjacent,
-  // batch 169 — strings/medium, strings/hard, strings/easy, arrays/easy×2
+  // batch 169a — strings/medium, strings/hard, strings/easy, arrays/easy×2
   maximumPalindromesAfterOperations,
   beautifulSubstringsII,
   makeThreeStringsEqual,
@@ -5498,6 +5500,8 @@ export const problems: readonly Problem[] = [
   minimumCostToConnectAllPoints,
   minimumSwapsToGroupAll1sTogether,
   maximumWidthOfBinaryTree,
+  // batch 169c — arrays+dp/hard
+  minimumTimeToFinishAllJobs,
   // batch 170 — strings+stack/medium, strings+hash-map/easy, arrays+binary-search/medium, math/hard, arrays+stack+simulation/easy
   usingRobotToPrintLexicographicallySmallestString,
   removeLetterToEqualizeFrequency,

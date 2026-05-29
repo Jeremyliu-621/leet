@@ -21828,6 +21828,12 @@ def secondMinimum(n, edges, time, change):
 `,
 
   'minimum-cost-to-convert-string-i': `def minimumCost(source, target, original, changed, cost):
+    if hasattr(original, 'to_py'):
+        original = list(original.to_py())
+    if hasattr(changed, 'to_py'):
+        changed = list(changed.to_py())
+    if hasattr(cost, 'to_py'):
+        cost = list(cost.to_py())
     INF = float('inf')
     dist = [[INF] * 26 for _ in range(26)]
     for i in range(26):
@@ -38656,7 +38662,7 @@ def maximumANDSum(nums, numSlots):
     return max(dp)
 `,
 
-  // batch 169 — strings/medium, strings/hard, strings/easy, arrays/easy×2
+  // batch 169a — strings/medium, strings/hard, strings/easy, arrays/easy×2
   'maximum-palindromes-after-operations': `
 def maxPalindromesAfterOperations(words):
     freq = [0] * 26
@@ -39006,7 +39012,7 @@ def gardenNoAdj(n, paths):
     return result[1:]
 `,
 
-  // batch 169
+  // batch 170
   'using-robot-to-print-lexicographically-smallest-string': `
 def robotWithString(s):
     if hasattr(s, 'to_py'): s = s.to_py()
@@ -39093,6 +39099,36 @@ def buildArray(target, n):
         if i not in target_set:
             ops.append('Pop')
     return ops
+`,
+
+  // batch 169c — arrays+dp/hard
+  'minimum-time-to-finish-all-jobs': `
+def minimumTimeRequired(jobs, k):
+    if hasattr(jobs, 'to_py'):
+        jobs = list(jobs.to_py())
+    n = len(jobs)
+    full = 1 << n
+    sub_sum = [0] * full
+    for mask in range(1, full):
+        lsb = mask & (-mask)
+        bit = lsb.bit_length() - 1
+        sub_sum[mask] = sub_sum[mask ^ lsb] + jobs[bit]
+    dp = [float('inf')] * full
+    dp[0] = 0
+    for _ in range(k):
+        ndp = [float('inf')] * full
+        for mask in range(full):
+            if dp[mask] == float('inf'):
+                continue
+            ndp[mask] = min(ndp[mask], dp[mask])
+            comp = (full - 1) ^ mask
+            sub = comp
+            while sub > 0:
+                new_mask = mask | sub
+                ndp[new_mask] = min(ndp[new_mask], max(dp[mask], sub_sum[sub]))
+                sub = (sub - 1) & comp
+        dp = ndp
+    return dp[full - 1]
 `,
 
 };
