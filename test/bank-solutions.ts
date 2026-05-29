@@ -37031,4 +37031,107 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 156 — strings/medium, trie+backtracking/hard, union-find/hard, shortest-path/medium
+  'camelcase-matching': (...args: unknown[]) => {
+    const queries = args[0] as string[], pattern = args[1] as string;
+    return queries.map(query => {
+      let pi = 0;
+      for (let qi = 0; qi < query.length; qi++) {
+        if (pi < pattern.length && query[qi] === pattern[pi]) {
+          pi++;
+        } else if (query[qi]! >= 'A' && query[qi]! <= 'Z') {
+          return false;
+        }
+      }
+      return pi === pattern.length;
+    });
+  },
+
+  'word-squares': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const n = words[0]?.length ?? 0;
+    const map = new Map<string, string[]>();
+    for (const w of words) {
+      for (let i = 0; i <= n; i++) {
+        const p = w.slice(0, i);
+        if (!map.has(p)) map.set(p, []);
+        map.get(p)!.push(w);
+      }
+    }
+    const result: string[][] = [];
+    function bt(sq: string[]) {
+      if (sq.length === n) { result.push([...sq]); return; }
+      const i = sq.length;
+      const pref = sq.map(w => w[i]).join('');
+      for (const w of (map.get(pref) ?? [])) {
+        sq.push(w); bt(sq); sq.pop();
+      }
+    }
+    bt([]);
+    return result.sort((a, b) => a.join(',').localeCompare(b.join(',')));
+  },
+
+  'minimize-malware-spread-ii': (...args: unknown[]) => {
+    const graph = args[0] as number[][], initial = args[1] as number[];
+    const n = graph.length;
+    const infSet = new Set(initial);
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const size = new Array<number>(n).fill(1);
+    function find(x: number): number {
+      while (parent[x] !== x) { parent[x] = parent[parent[x]!]!; x = parent[x]!; }
+      return x;
+    }
+    function union(a: number, b: number) {
+      a = find(a); b = find(b);
+      if (a === b) return;
+      if (size[a]! < size[b]!) { const t = a; a = b; b = t; }
+      parent[b] = a; size[a]! += size[b]!;
+    }
+    for (let u = 0; u < n; u++) if (!infSet.has(u)) for (let v = 0; v < n; v++) if (!infSet.has(v) && graph[u]![v]) union(u, v);
+    const compInf = new Map<number, Set<number>>();
+    for (const inf of initial) for (let v = 0; v < n; v++) if (!infSet.has(v) && graph[inf]![v]) {
+      const r = find(v);
+      if (!compInf.has(r)) compInf.set(r, new Set());
+      compInf.get(r)!.add(inf);
+    }
+    const saved = new Map<number, number>(initial.map(i => [i, 0]));
+    for (const [r, infs] of compInf) if (infs.size === 1) {
+      const inf = [...infs][0]!;
+      saved.set(inf, saved.get(inf)! + size[find(r)]!);
+    }
+    return [...initial].sort((a, b) => a - b).reduce((best, inf) =>
+      saved.get(inf)! > saved.get(best)! ? inf : best
+    );
+  },
+
+  'path-with-max-probability': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const succProb = args[2] as number[];
+    const start = args[3] as number;
+    const end = args[4] as number;
+    const adj: [number, number][][] = Array.from({ length: n }, () => []);
+    for (let i = 0; i < edges.length; i++) {
+      const [a, b] = edges[i]!;
+      adj[a!]!.push([b!, succProb[i]!]);
+      adj[b!]!.push([a!, succProb[i]!]);
+    }
+    const prob = new Array<number>(n).fill(0);
+    prob[start] = 1;
+    const heap: [number, number][] = [[1, start]];
+    while (heap.length) {
+      heap.sort((a, b) => b[0] - a[0]);
+      const [p, u] = heap.shift()!;
+      if (u === end) return p;
+      if (p < prob[u]!) continue;
+      for (const [v, w] of adj[u]!) {
+        if (p * w > prob[v]!) {
+          prob[v] = p * w;
+          heap.push([prob[v]!, v]);
+        }
+      }
+    }
+    return 0;
+  },
+
 };
