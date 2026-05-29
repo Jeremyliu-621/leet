@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2446** problems; 7632 tests green. Batches 102–168. UX + a11y polish ongoing.
+**Current focus:** Bank at **2450** registered problems; 7644 tests green. Batches 102–169 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 169+); site count update; UX polish.
+**Next up:** More bank growth (batch 170+); UX polish; site count update.
+
+### feat(bank): add batch 169 — eaten-apples, min-flips-alternating, finding-pairs, count-valid-words (2026-05-29)
+Four new problems with JS + Python reference solutions: `maximum-number-of-eaten-apples` (medium/heap, greedy min-heap by expiry date — eat soonest-expiring batch each day, continue post-n days until heap empty), `minimum-flips-to-make-alternating-binary-string` (easy/strings, sliding window on doubled string — count mismatches vs "010..." pattern, use n-cost complement for "101..." pattern), `finding-pairs-with-a-certain-sum` (medium/design+hash-map, freq-map for O(|nums1|) count queries, O(1) add updates), `count-valid-words-in-a-sentence` (easy/strings, token validation: no digits, at most one hyphen between letters, at most one punctuation at end). Bank at **2450**; 7644 tests.
 
 ### feat(bank): batch 163 — number-of-same-end-substrings (medium), count-fertile-pyramids (hard), maximum-deletions-on-a-string (hard), collect-coins-in-a-tree (hard), maximum-and-sum-of-array (hard) (2026-05-29)
 Five new problems: `number-of-same-end-substrings` (medium/strings+arrays, prefix count → m*(m+1)/2 per char), `count-fertile-pyramids-in-a-land` (hard/arrays+dp, upward+inverted pyramid DP with max(0,dp-1) sum), `maximum-deletions-on-a-string` (hard/strings+dp, LCP table + DP; dp[i]=max 1+dp[i+k] when lcp[i][i+k]≥k), `collect-coins-in-a-tree` (hard/arrays+graph, topological leaf-removal: strip zero-coin leaves, then 2 rounds of all leaves, answer = 2×remaining edges), `maximum-and-sum-of-array` (hard/arrays+dp, bitmask DP over 2×numSlots positions, slot = pos//2+1). Bank at **2434**; 7596 tests.
