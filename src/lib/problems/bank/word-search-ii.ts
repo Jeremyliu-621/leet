@@ -17,7 +17,7 @@ export const problem: Problem = {
   id: 'word-search-ii',
   title: 'Word Search II',
   difficulty: 'hard',
-  tags: ['graph', 'backtracking'],
+  tags: ['trie', 'graph', 'backtracking'],
   description: `Given an \`m × n\` board of characters and a list of strings \`words\`, return all words on the board.
 
 A word is found if it can be constructed from letters of **sequentially adjacent cells** (horizontally or vertically neighboring). The **same cell may not be used more than once** in a word.

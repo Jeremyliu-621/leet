@@ -2604,13 +2604,23 @@ import { problem as pathWithMaxProbability } from './path-with-max-probability';
 // batch 156b — tree/easy×1, tree/medium×1
 import { problem as averageOfLevelsInBinaryTree } from './average-of-levels-in-binary-tree';
 import { problem as allElementsInTwoBinarySearchTrees } from './all-elements-in-two-binary-search-trees';
-// batch 157 — simulation/easy, simulation/medium×2, graph/medium, arrays/medium×2
+// batch 156c — graph+shortest-path/hard, hash-map+binary-search/medium, binary-indexed-tree/hard
+import { problem as findEdgesInShortestPaths } from './find-edges-in-shortest-paths';
+import { problem as avoidFloodInTheCity } from './avoid-flood-in-the-city';
+import { problem as minimumTimeToAccomplishAllTasks } from './minimum-time-to-accomplish-all-tasks';
+// batch 157 — trie×4, trie+design×1, simulation×3, graph×1, arrays×2
+import { problem as implementTrieII } from './implement-trie-ii-prefix-tree';
+import { problem as wordFilter } from './word-filter';
+import { problem as lexicographicalNumbers } from './lexicographical-numbers';
+import { problem as kThSmallestInLexicographicOrder } from './k-th-smallest-in-lexicographic-order';
+import { problem as designSearchAutocompleteSystem } from './design-search-autocomplete-system';
 import { problem as theEmployeeThatWorkedOnTheLongestTask } from './the-employee-that-worked-on-the-longest-task';
 import { problem as checkKnightTourConfiguration } from './check-knight-tour-configuration';
 import { problem as theNumberOfTheSmallestUnoccupiedChair } from './the-number-of-the-smallest-unoccupied-chair';
 import { problem as intervalsBetweenIdenticalElements } from './intervals-between-identical-elements';
 import { problem as formArrayByConcatenatingSubarraysOfAnotherArray } from './form-array-by-concatenating-subarrays-of-another-array';
 // batch 158 — arrays+math/medium, strings/hard, dp/hard×2
+// batch 158 — arrays+math/medium, strings/hard, dp/hard×2, sliding-window/medium
 import { problem as minCostHomecomingRobotInGrid } from './minimum-cost-homecoming-of-a-robot-in-a-grid';
 import { problem as sumOfScoresOfBuiltStrings } from './sum-of-scores-of-built-strings';
 import { problem as countOfIntegers } from './count-of-integers';
@@ -2636,6 +2646,17 @@ import { problem as maximumValueAfterInsertion } from './maximum-value-after-ins
 import { problem as recoverTheOriginalArray } from './recover-the-original-array';
 import { problem as constructSmallestNumberFromDiString } from './construct-smallest-number-from-di-string';
 import { problem as minimumDifferenceHighestLowestKScores } from './minimum-difference-highest-lowest-k-scores';
+import { problem as countSubstringsKFreqII } from './count-substrings-with-k-frequency-characters-ii';
+import { problem as sumImbalanceNumbers } from './sum-of-imbalance-numbers-of-all-subarrays';
+// batch 159 — strings+hash-map/medium, dp/hard, arrays+dp/medium
+import { problem as uniqueLength3PalindromicSubsequences } from './unique-length-3-palindromic-subsequences';
+import { problem as minimumWhiteTilesAfterCovering } from './minimum-white-tiles-after-covering-with-carpets';
+import { problem as specialPermutations } from './special-permutations';
+// batch 160 — graph+union-find/hard
+import { problem as minimumCostWalkWeightedGraph } from './minimum-cost-to-walk-weighted-graph';
+// batch 161 — trie enrichment + new hard trie/xor problems
+import { problem as maximumXorWithElementFromArray } from './maximum-xor-with-element-from-array';
+import { problem as countPairsWithXorInRange } from './count-pairs-with-xor-in-a-range';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5277,13 +5298,23 @@ export const problems: readonly Problem[] = [
   // batch 156b — tree/easy×1, tree/medium×1
   averageOfLevelsInBinaryTree,
   allElementsInTwoBinarySearchTrees,
-  // batch 157 — simulation/easy, simulation/medium×2, graph/medium, arrays/medium×2
+  // batch 156c
+  findEdgesInShortestPaths,
+  avoidFloodInTheCity,
+  minimumTimeToAccomplishAllTasks,
+  // batch 157
+  implementTrieII,
+  wordFilter,
+  lexicographicalNumbers,
+  kThSmallestInLexicographicOrder,
+  designSearchAutocompleteSystem,
   theEmployeeThatWorkedOnTheLongestTask,
   checkKnightTourConfiguration,
   theNumberOfTheSmallestUnoccupiedChair,
   intervalsBetweenIdenticalElements,
   formArrayByConcatenatingSubarraysOfAnotherArray,
   // batch 158 — arrays+math/medium, strings/hard, dp/hard×2
+  // batch 158
   minCostHomecomingRobotInGrid,
   sumOfScoresOfBuiltStrings,
   countOfIntegers,
@@ -5309,4 +5340,15 @@ export const problems: readonly Problem[] = [
   recoverTheOriginalArray,
   constructSmallestNumberFromDiString,
   minimumDifferenceHighestLowestKScores,
+  countSubstringsKFreqII,
+  sumImbalanceNumbers,
+  // batch 159
+  uniqueLength3PalindromicSubsequences,
+  minimumWhiteTilesAfterCovering,
+  specialPermutations,
+  // batch 160
+  minimumCostWalkWeightedGraph,
+  // batch 161
+  maximumXorWithElementFromArray,
+  countPairsWithXorInRange,
 ];

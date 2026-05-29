@@ -37293,6 +37293,338 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
+  'find-edges-in-shortest-paths': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const adj: [number, number][][] = Array.from({length: n}, () => []);
+    for (const e of edges) { const u = e[0]!, v = e[1]!, w = e[2]!; adj[u]!.push([v, w]); adj[v]!.push([u, w]); }
+    const dijkstra = (src: number): number[] => {
+      const dist = new Array<number>(n).fill(Infinity);
+      dist[src] = 0;
+      const heap: [number, number][] = [[0, src]];
+      while (heap.length > 0) {
+        let mi = 0;
+        for (let i = 1; i < heap.length; i++) if (heap[i]![0] < heap[mi]![0]) mi = i;
+        const item = heap.splice(mi, 1)[0]!;
+        const d = item[0], u = item[1];
+        if (d > dist[u]!) continue;
+        for (const nv of adj[u]!) {
+          const nd = dist[u]! + nv[1];
+          if (nd < dist[nv[0]]!) { dist[nv[0]] = nd; heap.push([nd, nv[0]]); }
+        }
+      }
+      return dist;
+    };
+    const dist0 = dijkstra(0);
+    const distN = dijkstra(n - 1);
+    const total = dist0[n - 1]!;
+    return edges.map(e => {
+      const u = e[0]!, v = e[1]!, w = e[2]!;
+      return dist0[u]! + w + distN[v]! === total || dist0[v]! + w + distN[u]! === total;
+    });
+  },
+
+  'avoid-flood-in-the-city': (...args: unknown[]) => {
+    const rains = args[0] as number[];
+    const filled = new Map<number, number>();
+    const dryDays: number[] = [];
+    const result = new Array<number>(rains.length).fill(-1);
+    for (let i = 0; i < rains.length; i++) {
+      if (rains[i] === 0) { dryDays.push(i); }
+      else {
+        const lake = rains[i]!;
+        if (filled.has(lake)) {
+          const lastFill = filled.get(lake)!;
+          let lo = 0, hi = dryDays.length;
+          while (lo < hi) { const mid = (lo + hi) >> 1; if (dryDays[mid]! > lastFill) hi = mid; else lo = mid + 1; }
+          if (lo === dryDays.length) return [];
+          const dayIdx = dryDays[lo]!;
+          result[dayIdx] = lake;
+          dryDays.splice(lo, 1);
+        }
+        filled.set(lake, i);
+        result[i] = -1;
+      }
+    }
+    for (const day of dryDays) result[day] = 1;
+    return result;
+  },
+
+  'minimum-time-to-accomplish-all-tasks': (...args: unknown[]) => {
+    const tasks = args[0] as number[][];
+    const maxTime = 2000;
+    const run = new Array<number>(maxTime + 2).fill(0);
+    const sorted = [...tasks].sort((a, b) => a[1]! - b[1]!);
+    for (const task of sorted) {
+      const s = task[0]!, e = task[1]!, d = task[2]!;
+      let already = 0;
+      for (let t = s; t <= e; t++) already += run[t]!;
+      let need = d - already;
+      for (let t = e; t >= s && need > 0; t--) {
+        if (!run[t]) { run[t] = 1; need--; }
+      }
+    }
+    return run.reduce((a, b) => a + b, 0);
+  },
+
+  // batch 157 — trie×4, trie+design×1
+  'implement-trie-ii-prefix-tree': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const params = args[1] as (string[] | [])[];
+    interface Node { children: Record<string, Node>; end: number; prefix: number; }
+    const newNode = (): Node => ({ children: {}, end: 0, prefix: 0 });
+    let root: Node = newNode();
+    const results: (number | null)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      const arg = (params[i] as string[])[0] ?? '';
+      if (op === 'Trie') { root = newNode(); results.push(null); }
+      else if (op === 'insert') {
+        let node = root;
+        for (const ch of arg) {
+          if (!node.children[ch]) node.children[ch] = newNode();
+          node = node.children[ch]!;
+          node.prefix++;
+        }
+        node.end++;
+        results.push(null);
+      } else if (op === 'countWordsEqualTo') {
+        let node: Node | undefined = root;
+        for (const ch of arg) { node = node?.children[ch]; if (!node) break; }
+        results.push(node ? node.end : 0);
+      } else if (op === 'countWordsStartingWith') {
+        let node: Node | undefined = root;
+        for (const ch of arg) { node = node?.children[ch]; if (!node) break; }
+        results.push(node ? node.prefix : 0);
+      } else if (op === 'erase') {
+        let node = root;
+        for (const ch of arg) {
+          node.children[ch]!.prefix--;
+          node = node.children[ch]!;
+        }
+        node.end--;
+        results.push(null);
+      }
+    }
+    return results;
+  },
+
+  'word-filter': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const params = args[1] as unknown[][];
+    const map = new Map<string, number>();
+    const results: (number | null)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      if (op === 'WordFilter') {
+        const words = params[i] as string[][];
+        const wordList = words[0]!;
+        for (let idx = 0; idx < wordList.length; idx++) {
+          const w = wordList[idx]!;
+          for (let p = 0; p <= w.length; p++) {
+            for (let s = 0; s <= w.length; s++) {
+              map.set(w.slice(0, p) + '|' + w.slice(w.length - s), idx);
+            }
+          }
+        }
+        results.push(null);
+      } else {
+        const pref = (params[i] as string[])[0]!;
+        const suff = (params[i] as string[])[1]!;
+        results.push(map.get(pref + '|' + suff) ?? -1);
+      }
+    }
+    return results;
+  },
+
+  'lexicographical-numbers': (n: unknown) => {
+    const num = n as number;
+    const result: number[] = [];
+    let curr = 1;
+    while (result.length < num) {
+      result.push(curr);
+      if (curr * 10 <= num) {
+        curr *= 10;
+      } else {
+        while (curr % 10 === 9 || curr + 1 > num) curr = Math.floor(curr / 10);
+        curr++;
+      }
+    }
+    return result;
+  },
+
+  'k-th-smallest-in-lexicographic-order': (n: unknown, k: unknown) => {
+    const num = n as number;
+    let remaining = k as number;
+    let curr = 1;
+    remaining--;
+    while (remaining > 0) {
+      let steps = 0;
+      let a = curr, b = curr + 1;
+      while (a <= num) {
+        steps += Math.min(num + 1, b) - a;
+        a *= 10; b *= 10;
+      }
+      if (steps <= remaining) { remaining -= steps; curr++; }
+      else { remaining--; curr *= 10; }
+    }
+    return curr;
+  },
+
+  'maximum-xor-with-element-from-array': (nums: unknown, queries: unknown) => {
+    const arr = nums as number[];
+    const qs = queries as number[][];
+    const BITS = 14;
+    const ch: [number, number][] = [[0, 0]];
+    let nc = 1;
+    const ct: number[] = [0];
+    function insert(n: number) {
+      let node = 0;
+      for (let i = BITS; i >= 0; i--) {
+        const bit = (n >> i) & 1;
+        if (!ch[node]![bit]) { ch.push([0,0]); ct.push(0); ch[node]![bit] = nc++; }
+        node = ch[node]![bit]!; ct[node]!++;
+      }
+    }
+    function query(x: number): number {
+      let node = 0, res = 0;
+      for (let i = BITS; i >= 0; i--) {
+        const want = 1 - ((x >> i) & 1);
+        if (ch[node]![want] && ct[ch[node]![want]!]! > 0) { res |= (1 << i); node = ch[node]![want]!; }
+        else if (ch[node]![1-want] && ct[ch[node]![1-want]!]! > 0) node = ch[node]![1-want]!;
+        else return -1;
+      }
+      return res;
+    }
+    const sorted = [...arr].sort((a, b) => a - b);
+    const indexed = qs.map((q, i) => [q[0]!, q[1]!, i] as [number, number, number]);
+    indexed.sort((a, b) => a[1]! - b[1]!);
+    const result: number[] = new Array(qs.length);
+    let ni = 0;
+    for (const [xi, mi, idx] of indexed) {
+      while (ni < sorted.length && sorted[ni]! <= mi) { insert(sorted[ni]!); ni++; }
+      result[idx] = ni === 0 ? -1 : query(xi);
+    }
+    return result;
+  },
+
+  'count-pairs-with-xor-in-a-range': (nums: unknown, low: unknown, high: unknown) => {
+    const arr = nums as number[];
+    const lo = low as number, hi = high as number;
+    const BITS = 14;
+    const ch2: [number, number][] = [[0, 0]];
+    let nc2 = 1;
+    const ct2: number[] = [0];
+    function insert2(n: number) {
+      let node = 0;
+      for (let i = BITS; i >= 0; i--) {
+        const bit = (n >> i) & 1;
+        if (!ch2[node]![bit]) { ch2.push([0,0]); ct2.push(0); ch2[node]![bit] = nc2++; }
+        node = ch2[node]![bit]!; ct2[node]!++;
+      }
+    }
+    function countBelow(x: number, limit: number): number {
+      let node = 0, res = 0;
+      for (let i = BITS; i >= 0; i--) {
+        const xBit = (x >> i) & 1, lBit = (limit >> i) & 1;
+        if (lBit === 1) {
+          const same = ch2[node]![xBit]; if (same) res += ct2[same]!;
+          const diff = ch2[node]![1-xBit]; if (!diff) return res; node = diff;
+        } else {
+          const same = ch2[node]![xBit]; if (!same) return res; node = same;
+        }
+      }
+      return res;
+    }
+    let total = 0;
+    for (const n of arr) { total += countBelow(n, hi+1) - countBelow(n, lo); insert2(n); }
+    return total;
+  },
+
+  'count-substrings-with-k-frequency-characters-ii': (s: unknown, k: unknown) => {
+    const str = s as string;
+    const freq2 = k as number;
+    const n = str.length;
+    const total = n * (n + 1) / 2;
+    const freq = new Array(26).fill(0);
+    let left = 0, noK = 0;
+    for (let right = 0; right < n; right++) {
+      freq[str.charCodeAt(right) - 97]++;
+      while (freq[str.charCodeAt(right) - 97] >= freq2) {
+        freq[str.charCodeAt(left) - 97]--;
+        left++;
+      }
+      noK += right - left + 1;
+    }
+    return total - noK;
+  },
+
+  'sum-of-imbalance-numbers-of-all-subarrays': (nums: unknown) => {
+    const arr = nums as number[];
+    const n = arr.length;
+    let total = 0;
+    for (let i = 0; i < n; i++) {
+      const sorted: number[] = [];
+      const seen = new Set<number>();
+      let imbalance = 0;
+      for (let j = i; j < n; j++) {
+        const v = arr[j]!;
+        if (!seen.has(v)) {
+          seen.add(v);
+          let lo = 0, hi = sorted.length;
+          while (lo < hi) {
+            const mid = (lo + hi) >> 1;
+            if (sorted[mid]! < v) lo = mid + 1;
+            else hi = mid;
+          }
+          const pos = lo;
+          const prev = pos > 0 ? sorted[pos - 1]! : null;
+          const next = pos < sorted.length ? sorted[pos]! : null;
+          if (prev !== null && next !== null && next - prev > 1) imbalance--;
+          if (prev !== null && v - prev > 1) imbalance++;
+          if (next !== null && next - v > 1) imbalance++;
+          sorted.splice(pos, 0, v);
+        }
+        total += imbalance;
+      }
+    }
+    return total;
+  },
+
+  'design-search-autocomplete-system': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const params = args[1] as unknown[][];
+    const counts = new Map<string, number>();
+    let prefix = '';
+    const results: (string[] | null)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      if (op === 'AutocompleteSystem') {
+        const sentences = (params[i] as [string[], number[]])[0];
+        const times = (params[i] as [string[], number[]])[1];
+        for (let j = 0; j < sentences.length; j++) counts.set(sentences[j]!, times[j]!);
+        prefix = '';
+        results.push(null);
+      } else {
+        const c = (params[i] as string[])[0]!;
+        if (c === '#') {
+          counts.set(prefix, (counts.get(prefix) ?? 0) + 1);
+          prefix = '';
+          results.push([]);
+        } else {
+          prefix += c;
+          const matches: [number, string][] = [];
+          for (const [sentence, cnt] of counts) {
+            if (sentence.startsWith(prefix)) matches.push([cnt, sentence]);
+          }
+          matches.sort((a, b) => b[0]! - a[0]! || a[1]!.localeCompare(b[1]!));
+          results.push(matches.slice(0, 3).map(m => m[1]!));
+        }
+      }
+    }
+    return results;
+  },
+
   // batch 158 — arrays+math/medium, strings/hard, dp/hard×2
   'minimum-cost-homecoming-of-a-robot-in-a-grid': (...args: unknown[]) => {
     const [startPos, homePos, rowCosts, colCosts] = args as [number[], number[], number[], number[]];
@@ -37323,6 +37655,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   'count-of-integers': (...args: unknown[]) => {
     const [num1, num2, min_sum, max_sum] = args as [string, string, number, number];
     const MOD = 1_000_000_007;
+
     function countUpTo(s: string): number {
       const n = s.length;
       const memo = new Map<string, number>();
@@ -37343,6 +37676,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       }
       return dp(0, true, false, 0);
     }
+
     const c2 = countUpTo(num2);
     const c1 = countUpTo(num1);
     const sumNum1 = num1.split('').reduce((s, c) => s + parseInt(c), 0);
@@ -37603,6 +37937,81 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       min = Math.min(min, nums[i + k - 1]! - nums[i]!);
     }
     return min;
+  },
+
+  'unique-length-3-palindromic-subsequences': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let count = 0;
+    for (let c = 0; c < 26; c++) {
+      const ch = String.fromCharCode(97 + c);
+      const left = s.indexOf(ch), right = s.lastIndexOf(ch);
+      if (left === -1 || left === right) continue;
+      const between = new Set<string>();
+      for (let i = left + 1; i < right; i++) between.add(s[i]!);
+      count += between.size;
+    }
+    return count;
+  },
+
+  'minimum-white-tiles-after-covering-with-carpets': (...args: unknown[]) => {
+    const floor = args[0] as string;
+    const numCarpets = args[1] as number;
+    const carpetLen = args[2] as number;
+    const n = floor.length;
+    const dp: number[][] = Array.from({ length: numCarpets + 1 }, () => new Array<number>(n + 1).fill(0));
+    for (let i = 1; i <= n; i++) dp[0]![i] = dp[0]![i - 1]! + (floor[i - 1] === '1' ? 1 : 0);
+    for (let j = 1; j <= numCarpets; j++) {
+      for (let i = 1; i <= n; i++) {
+        dp[j]![i] = Math.min(
+          dp[j]![i - 1]! + (floor[i - 1] === '1' ? 1 : 0),
+          dp[j - 1]![Math.max(0, i - carpetLen)]!
+        );
+      }
+    }
+    return dp[numCarpets]![n]!;
+  },
+
+  'special-permutations': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length, MOD = 1_000_000_007;
+    const dp: number[][] = Array.from({ length: 1 << n }, () => new Array<number>(n).fill(0));
+    for (let i = 0; i < n; i++) dp[1 << i]![i] = 1;
+    for (let mask = 1; mask < (1 << n); mask++) {
+      for (let last = 0; last < n; last++) {
+        if (!(mask & (1 << last)) || !dp[mask]![last]) continue;
+        for (let next = 0; next < n; next++) {
+          if (mask & (1 << next)) continue;
+          if (nums[last]! % nums[next]! === 0 || nums[next]! % nums[last]! === 0) {
+            dp[mask | (1 << next)]![next] = (dp[mask | (1 << next)]![next]! + dp[mask]![last]!) % MOD;
+          }
+        }
+      }
+    }
+    const full = (1 << n) - 1;
+    return dp[full]!.reduce((a, b) => (a + b) % MOD, 0);
+  },
+
+  // batch 160 — graph+union-find/hard, arrays+dp/medium, arrays+hash-map/medium, arrays+math/easy
+  'minimum-cost-to-walk-weighted-graph': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const query = args[2] as number[][];
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const compAnd = new Array<number>(n).fill(0x3FFFFFFF);
+    function find(x: number): number {
+      while (parent[x] !== x) { parent[x] = parent[parent[x]!]!; x = parent[x]!; }
+      return x;
+    }
+    for (const [u, v, w] of edges) {
+      const ru = find(u!), rv = find(v!);
+      if (ru === rv) { compAnd[ru]! &= w!; }
+      else { compAnd[rv]! = compAnd[ru]! & compAnd[rv]! & w!; parent[ru] = rv; }
+    }
+    return query.map(([s, t]) => {
+      if (s === t) return 0;
+      const rs = find(s!), rt = find(t!);
+      return rs === rt ? compAnd[rt]! : -1;
+    });
   },
 
 };

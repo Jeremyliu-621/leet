@@ -8,7 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2381** problems; 7443 tests green. Batches 102–162 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2384** problems; 7476 tests green. Batches 102–162 + 156b/156c/158b/161b complete. UX + a11y polish ongoing.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green.
+**Next up:** More bank growth (batch 163+); update site count; UX polish.
+
+### feat(bank): add batch 158b — count-substrings-k-freq-ii, sum-of-imbalance-numbers; fix 3 existing problems (2026-05-29)
+New: `count-substrings-with-k-frequency-characters-ii` (medium/strings+sliding-window, complement sliding window — total minus subarrays where all chars appear < k times), `sum-of-imbalance-numbers-of-all-subarrays` (medium/arrays+hash-map, O(n²) sorted-insert + incremental gap tracking). Fixed: `maximum-sum-of-almost-unique-subarray` (m/k params were swapped in both JS+Python solutions and examples), `count-the-number-of-good-subarrays` (functionName countGood→countGoodSubarrays, wrong hidden tests), `minimum-array-length-after-pair-removals` (updated description/examples/hidden tests for correctness). Bank at **2375**; 7419 tests.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 163+); update site count; UX polish.
 

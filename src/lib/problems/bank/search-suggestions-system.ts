@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'search-suggestions-system',
   title: 'Search Suggestions System',
   difficulty: 'medium',
-  tags: ['binary-search', 'strings'],
+  tags: ['trie', 'binary-search', 'strings'],
   description: `You are given an array of strings \`products\` and a string \`searchWord\`.
 
 Design a system that suggests at most three product names from \`products\` after each character of \`searchWord\` is typed. Suggested products should have common prefix with \`searchWord\`. If there are more than three products with a common prefix, return the three lexicographically minimum products.

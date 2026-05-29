@@ -37164,6 +37164,273 @@ def canChoose(groups, nums):
     return True
 `,
 
+  'find-edges-in-shortest-paths': `def findAnswer(n, edges):
+    import heapq
+    edges_raw = list(edges.to_py() if hasattr(edges, 'to_py') else edges)
+    edges_list = [[int(x) for x in (row.to_py() if hasattr(row, 'to_py') else row)] for row in edges_raw]
+    n = int(n)
+    adj = [[] for _ in range(n)]
+    for u, v, w in edges_list:
+        adj[u].append((v, w)); adj[v].append((u, w))
+    def dijkstra(src):
+        dist = [float('inf')] * n; dist[src] = 0
+        heap = [(0, src)]
+        while heap:
+            d, u = heapq.heappop(heap)
+            if d > dist[u]: continue
+            for v, w in adj[u]:
+                if dist[u] + w < dist[v]: dist[v] = dist[u] + w; heapq.heappush(heap, (dist[v], v))
+        return dist
+    dist0 = dijkstra(0); dist_n = dijkstra(n - 1); total = dist0[n - 1]
+    return [dist0[u] + w + dist_n[v] == total or dist0[v] + w + dist_n[u] == total for u, v, w in edges_list]
+`,
+
+  'avoid-flood-in-the-city': `def avoidFlood(rains):
+    rains = list(rains.to_py() if hasattr(rains, 'to_py') else rains)
+    import bisect
+    filled = {}; dry_days = []; result = [-1] * len(rains)
+    for i, lake in enumerate(rains):
+        if lake == 0:
+            bisect.insort(dry_days, i)
+        else:
+            if lake in filled:
+                last_fill = filled[lake]
+                idx = bisect.bisect_right(dry_days, last_fill)
+                if idx == len(dry_days): return []
+                day_idx = dry_days.pop(idx); result[day_idx] = lake
+            filled[lake] = i; result[i] = -1
+    for day in dry_days: result[day] = 1
+    return result
+`,
+
+  'minimum-time-to-accomplish-all-tasks': `def findMinimumTime(tasks):
+    tasks_raw = list(tasks.to_py() if hasattr(tasks, 'to_py') else tasks)
+    tasks_list = [[int(x) for x in (row.to_py() if hasattr(row, 'to_py') else row)] for row in tasks_raw]
+    run = [0] * 2002
+    tasks_list.sort(key=lambda x: x[1])
+    for s, e, d in tasks_list:
+        already = sum(run[s:e+1]); need = d - already
+        t = e
+        while t >= s and need > 0:
+            if not run[t]: run[t] = 1; need -= 1
+            t -= 1
+    return sum(run)
+`,
+
+  'implement-trie-ii-prefix-tree': `def implementTrieII(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = [list(a.to_py() if hasattr(a, 'to_py') else a) for a in (args.to_py() if hasattr(args, 'to_py') else args)]
+    class Node:
+        def __init__(self): self.ch = {}; self.end = 0; self.pre = 0
+    root = Node()
+    result = []
+    for i, op in enumerate(ops):
+        arg = args[i][0] if args[i] else ''
+        if op == 'Trie':
+            root = Node(); result.append(None)
+        elif op == 'insert':
+            nd = root
+            for c in arg: nd.ch.setdefault(c, Node()); nd = nd.ch[c]; nd.pre += 1
+            nd.end += 1; result.append(None)
+        elif op == 'countWordsEqualTo':
+            nd = root
+            for c in arg:
+                if c not in nd.ch: nd = None; break
+                nd = nd.ch[c]
+            result.append(nd.end if nd else 0)
+        elif op == 'countWordsStartingWith':
+            nd = root
+            for c in arg:
+                if c not in nd.ch: nd = None; break
+                nd = nd.ch[c]
+            result.append(nd.pre if nd else 0)
+        elif op == 'erase':
+            nd = root
+            for c in arg: nd.ch[c].pre -= 1; nd = nd.ch[c]
+            nd.end -= 1; result.append(None)
+    return result
+`,
+
+  'word-filter': `def wordFilter(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = [list(a.to_py() if hasattr(a, 'to_py') else a) for a in (args.to_py() if hasattr(args, 'to_py') else args)]
+    mp = {}
+    result = []
+    for i, op in enumerate(ops):
+        if op == 'WordFilter':
+            words = list(args[i][0].to_py() if hasattr(args[i][0], 'to_py') else args[i][0])
+            for idx, w in enumerate(words):
+                for p in range(len(w) + 1):
+                    for s in range(len(w) + 1):
+                        mp[w[:p] + '|' + w[len(w)-s:]] = idx
+            result.append(None)
+        else:
+            pref, suff = args[i][0], args[i][1]
+            result.append(mp.get(pref + '|' + suff, -1))
+    return result
+`,
+
+  'lexicographical-numbers': `def lexicalOrder(n):
+    n = int(n)
+    result = []
+    curr = 1
+    while len(result) < n:
+        result.append(curr)
+        if curr * 10 <= n:
+            curr *= 10
+        else:
+            while curr % 10 == 9 or curr + 1 > n: curr //= 10
+            curr += 1
+    return result
+`,
+
+  'k-th-smallest-in-lexicographic-order': `def findKthNumber(n, k):
+    n = int(n); k = int(k)
+    curr = 1; k -= 1
+    while k > 0:
+        steps = 0; a, b = curr, curr + 1
+        while a <= n:
+            steps += min(n + 1, b) - a
+            a *= 10; b *= 10
+        if steps <= k: k -= steps; curr += 1
+        else: k -= 1; curr *= 10
+    return curr
+`,
+
+  'maximum-xor-with-element-from-array': `def maximizeXor(nums, queries):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    queries = [list(q.to_py() if hasattr(q, 'to_py') else q) for q in (queries.to_py() if hasattr(queries, 'to_py') else queries)]
+    BITS = 14
+    ch = [[0, 0]]; ct = [0]; nc = 1
+    def insert(n):
+        nonlocal nc
+        node = 0
+        for i in range(BITS, -1, -1):
+            bit = (n >> i) & 1
+            if not ch[node][bit]:
+                ch.append([0, 0]); ct.append(0)
+                ch[node][bit] = nc; nc += 1
+            node = ch[node][bit]; ct[node] += 1
+    def query(x):
+        node = 0; res = 0
+        for i in range(BITS, -1, -1):
+            want = 1 - ((x >> i) & 1)
+            if ch[node][want] and ct[ch[node][want]] > 0:
+                res |= (1 << i); node = ch[node][want]
+            elif ch[node][1 - want] and ct[ch[node][1 - want]] > 0:
+                node = ch[node][1 - want]
+            else:
+                return -1
+        return res
+    sorted_nums = sorted(nums)
+    indexed = sorted(enumerate(queries), key=lambda t: t[1][1])
+    result = [0] * len(queries)
+    ni = 0
+    for orig_idx, q in indexed:
+        xi, mi = int(q[0]), int(q[1])
+        while ni < len(sorted_nums) and sorted_nums[ni] <= mi:
+            insert(sorted_nums[ni]); ni += 1
+        result[orig_idx] = -1 if ni == 0 else query(xi)
+    return result
+`,
+
+  'count-pairs-with-xor-in-a-range': `def countPairs(nums, low, high):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    low = int(low); high = int(high)
+    BITS = 14
+    ch = [[0, 0]]; ct = [0]; nc = 1
+    def insert(n):
+        nonlocal nc
+        node = 0
+        for i in range(BITS, -1, -1):
+            bit = (n >> i) & 1
+            if not ch[node][bit]:
+                ch.append([0, 0]); ct.append(0)
+                ch[node][bit] = nc; nc += 1
+            node = ch[node][bit]; ct[node] += 1
+    def count_below(x, limit):
+        node = 0; res = 0
+        for i in range(BITS, -1, -1):
+            xbit = (x >> i) & 1; lbit = (limit >> i) & 1
+            if lbit == 1:
+                same = ch[node][xbit]
+                if same: res += ct[same]
+                diff = ch[node][1 - xbit]
+                if not diff: return res
+                node = diff
+            else:
+                same = ch[node][xbit]
+                if not same: return res
+                node = same
+        return res
+    total = 0
+    for n in nums:
+        total += count_below(n, high + 1) - count_below(n, low)
+        insert(n)
+    return total
+`,
+
+  'count-substrings-with-k-frequency-characters-ii': `def countSubstringsWithKFrequencyII(s, k):
+    k = int(k)
+    n = len(s)
+    total = n * (n + 1) // 2
+    freq = [0] * 26
+    left = 0
+    no_k = 0
+    for right in range(n):
+        freq[ord(s[right]) - 97] += 1
+        while freq[ord(s[right]) - 97] >= k:
+            freq[ord(s[left]) - 97] -= 1
+            left += 1
+        no_k += right - left + 1
+    return total - no_k
+`,
+
+  'sum-of-imbalance-numbers-of-all-subarrays': `def sumImbalanceNumbers(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    import bisect
+    n = len(nums)
+    total = 0
+    for i in range(n):
+        sorted_vals = []; seen = set(); imbalance = 0
+        for j in range(i, n):
+            v = nums[j]
+            if v not in seen:
+                seen.add(v)
+                pos = bisect.bisect_left(sorted_vals, v)
+                prev = sorted_vals[pos-1] if pos > 0 else None
+                nxt = sorted_vals[pos] if pos < len(sorted_vals) else None
+                if prev is not None and nxt is not None and nxt - prev > 1: imbalance -= 1
+                if prev is not None and v - prev > 1: imbalance += 1
+                if nxt is not None and nxt - v > 1: imbalance += 1
+                sorted_vals.insert(pos, v)
+            total += imbalance
+    return total
+`,
+
+  'design-search-autocomplete-system': `def autoCompleteSystem(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = [list(a.to_py() if hasattr(a, 'to_py') else a) for a in (args.to_py() if hasattr(args, 'to_py') else args)]
+    counts = {}
+    prefix = ''
+    result = []
+    for i, op in enumerate(ops):
+        if op == 'AutocompleteSystem':
+            sentences = list(args[i][0].to_py() if hasattr(args[i][0], 'to_py') else args[i][0])
+            times = list(args[i][1].to_py() if hasattr(args[i][1], 'to_py') else args[i][1])
+            for s, t in zip(sentences, times): counts[s] = int(t)
+            prefix = ''; result.append(None)
+        else:
+            c = str(args[i][0])
+            if c == '#':
+                counts[prefix] = counts.get(prefix, 0) + 1
+                prefix = ''; result.append([])
+            else:
+                prefix += c
+                matches = [(cnt, s) for s, cnt in counts.items() if s.startswith(prefix)]
+                matches.sort(key=lambda x: (-x[0], x[1]))
+                result.append([m[1] for m in matches[:3]])
+    return result`,
 
   // batch 158 — arrays+math/medium, strings/hard, dp/hard×2
   'minimum-cost-homecoming-of-a-robot-in-a-grid': `
@@ -37246,6 +37513,88 @@ def waysToReachTarget(target, types):
                     break
                 dp[j] = (dp[j] + dp[j - k * marks]) % MOD
     return dp[target]
+`,
+
+  'unique-length-3-palindromic-subsequences': `
+def countPalindromicSubsequence(s):
+    count = 0
+    for c in range(26):
+        ch = chr(ord('a') + c)
+        left = s.find(ch)
+        right = s.rfind(ch)
+        if left == -1 or left == right:
+            continue
+        count += len(set(s[left + 1:right]))
+    return count
+`,
+
+  'minimum-white-tiles-after-covering-with-carpets': `
+def minimumWhiteTiles(floor, numCarpets, carpetLen):
+    n = len(floor)
+    dp = [[0] * (n + 1) for _ in range(numCarpets + 1)]
+    for i in range(1, n + 1):
+        dp[0][i] = dp[0][i - 1] + (1 if floor[i - 1] == '1' else 0)
+    for j in range(1, numCarpets + 1):
+        for i in range(1, n + 1):
+            dp[j][i] = min(
+                dp[j][i - 1] + (1 if floor[i - 1] == '1' else 0),
+                dp[j - 1][max(0, i - carpetLen)]
+            )
+    return dp[numCarpets][n]
+`,
+
+  'special-permutations': `
+def specialPerm(nums):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    n = len(nums)
+    MOD = 10 ** 9 + 7
+    dp = [[0] * n for _ in range(1 << n)]
+    for i in range(n):
+        dp[1 << i][i] = 1
+    for mask in range(1, 1 << n):
+        for last in range(n):
+            if not (mask & (1 << last)) or not dp[mask][last]:
+                continue
+            for nxt in range(n):
+                if mask & (1 << nxt):
+                    continue
+                if nums[last] % nums[nxt] == 0 or nums[nxt] % nums[last] == 0:
+                    dp[mask | (1 << nxt)][nxt] = (dp[mask | (1 << nxt)][nxt] + dp[mask][last]) % MOD
+    full = (1 << n) - 1
+    return sum(dp[full]) % MOD
+`,
+
+  'minimum-cost-to-walk-weighted-graph': `
+def minimumCost(n, edges, query):
+    if hasattr(edges, 'to_py'):
+        edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in edges.to_py()]
+    if hasattr(query, 'to_py'):
+        query = [list(q.to_py() if hasattr(q, 'to_py') else q) for q in query.to_py()]
+    parent = list(range(n))
+    comp_and = [0x3FFFFFFF] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    for e in edges:
+        u, v, w = int(e[0]), int(e[1]), int(e[2])
+        ru, rv = find(u), find(v)
+        if ru == rv:
+            comp_and[ru] &= w
+        else:
+            comp_and[rv] = comp_and[ru] & comp_and[rv] & w
+            parent[ru] = rv
+    result = []
+    for q in query:
+        s, t = int(q[0]), int(q[1])
+        if s == t:
+            result.append(0)
+        else:
+            rs, rt = find(s), find(t)
+            result.append(comp_and[rt] if rs == rt else -1)
+    return result
 `,
 
   // batch 159 — hash-map/medium, bit-manipulation/medium×2
