@@ -3032,6 +3032,11 @@ import { problem as countPairsWithAbsoluteDifferenceK } from './count-pairs-with
 import { problem as maximumDifferenceBetweenAdjacentElements } from './maximum-difference-between-adjacent-elements';
 import { problem as sumOfOddIndexedElements } from './sum-of-odd-indexed-elements';
 import { problem as alternatingSum } from './alternating-sum';
+// batch 202 — easy/arrays+math, easy/arrays+strings, easy/arrays, easy/arrays
+import { problem as tripleSum } from './triple-sum';
+import { problem as countEvenLengthStrings } from './count-even-length-strings';
+import { problem as largestElementInEachRow } from './largest-element-in-each-row';
+import { problem as countRowsWithAllZeros } from './count-rows-with-all-zeros';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6105,4 +6110,9 @@ export const problems: readonly Problem[] = [
   maximumDifferenceBetweenAdjacentElements,
   sumOfOddIndexedElements,
   alternatingSum,
+  // batch 202 — easy/arrays+math, easy/arrays+strings, easy/arrays, easy/arrays
+  tripleSum,
+  countEvenLengthStrings,
+  largestElementInEachRow,
+  countRowsWithAllZeros,
 ];

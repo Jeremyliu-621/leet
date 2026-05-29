@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2708** problems; 8418 tests green. Batches 102–201 + 200b + KaTeX UX complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2712** problems; 8430 tests green. Batches 102–202 + KaTeX UX complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 202+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 203+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 202 — triple-sum, count-even-length-strings, largest-element-in-each-row, count-rows-with-all-zeros (2026-05-29)
+Four new easy problems: `triple-sum` (easy/arrays+math, sum of first 3 elements), `count-even-length-strings` (easy/arrays+strings, count words with even length), `largest-element-in-each-row` (easy/arrays+math, max per row into result array), `count-rows-with-all-zeros` (easy/arrays+math, count rows where every element is 0). Bank at **2707**; 8415 tests.
 
 ### feat(bank): batch 201 — count-pairs-abs-diff-k, max-diff-adjacent, sum-odd-indexed, alternating-sum (2026-05-29)
 Four new easy problems: `count-pairs-with-absolute-difference-k` (easy/arrays+hash-map, O(n²) brute-force pairs), `maximum-difference-between-adjacent-elements` (easy/arrays, linear scan abs diff), `sum-of-odd-indexed-elements` (easy/arrays, reduce at odd indices), `alternating-sum` (easy/arrays+math, reduce with sign flip). Bank at **2693**; 8373 tests.

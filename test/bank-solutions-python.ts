@@ -43122,4 +43122,21 @@ def countValidWords(sentence):
             count += 1
     return count
 `,
+  // batch 202 ---------------------------------------------------------------
+  'triple-sum': `
+def tripleSum(nums):
+    return nums[0] + nums[1] + nums[2]
+`,
+  'count-even-length-strings': `
+def countEvenLengthStrings(words):
+    return sum(1 for w in words if len(w) % 2 == 0)
+`,
+  'largest-element-in-each-row': `
+def largestElementInEachRow(matrix):
+    return [max(row) for row in matrix]
+`,
+  'count-rows-with-all-zeros': `
+def countRowsWithAllZeros(matrix):
+    return sum(1 for row in matrix if all(v == 0 for v in row))
+`,
 };
