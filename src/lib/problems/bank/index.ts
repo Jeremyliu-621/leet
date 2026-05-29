@@ -2960,6 +2960,11 @@ import { problem as countNumberOfMaximumBitwiseOrSubsets } from './count-number-
 import { problem as decodeXoredPermutation } from './decode-xored-permutation';
 import { problem as countLargestGroup } from './count-largest-group';
 import { problem as secondGreaterElement } from './second-greater-element';
+// batch 193 — medium/arrays+two-pointers, medium/arrays+dp, medium/strings+dp, easy/arrays+simulation
+import { problem as longestBitonicSubarray } from './longest-bitonic-subarray';
+import { problem as minimumDeletionsToMakeSorted } from './minimum-deletions-to-make-sorted';
+import { problem as longestCommonSubstring } from './longest-common-substring';
+import { problem as matrixBoundarySum } from './matrix-boundary-sum';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5961,4 +5966,9 @@ export const problems: readonly Problem[] = [
   decodeXoredPermutation,
   countLargestGroup,
   secondGreaterElement,
+  // batch 193 — medium/arrays+two-pointers, medium/arrays+dp, medium/strings+dp, easy/arrays+simulation
+  longestBitonicSubarray,
+  minimumDeletionsToMakeSorted,
+  longestCommonSubstring,
+  matrixBoundarySum,
 ];

@@ -42651,4 +42651,63 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return ans;
   },
+  // batch 193 ---------------------------------------------------------------
+  'longest-bitonic-subarray': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const inc = new Array<number>(n).fill(1);
+    const dec = new Array<number>(n).fill(1);
+    for (let i = 1; i < n; i++) {
+      if ((nums[i] as number) > (nums[i - 1] as number)) inc[i] = (inc[i - 1] as number) + 1;
+    }
+    for (let i = n - 2; i >= 0; i--) {
+      if ((nums[i] as number) > (nums[i + 1] as number)) dec[i] = (dec[i + 1] as number) + 1;
+    }
+    let max = 1;
+    for (let i = 0; i < n; i++) max = Math.max(max, (inc[i] as number) + (dec[i] as number) - 1);
+    return max;
+  },
+  'minimum-deletions-to-make-sorted': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const tails: number[] = [];
+    for (const num of nums) {
+      let lo = 0, hi = tails.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if ((tails[mid] as number) < num) lo = mid + 1;
+        else hi = mid;
+      }
+      tails[lo] = num;
+    }
+    return nums.length - tails.length;
+  },
+  'longest-common-substring': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const t = args[1] as string;
+    const m = s.length, n = t.length;
+    const dp: number[][] = Array.from({ length: m + 1 }, () => new Array<number>(n + 1).fill(0));
+    let maxLen = 0;
+    for (let i = 1; i <= m; i++) {
+      for (let j = 1; j <= n; j++) {
+        if (s[i - 1] === t[j - 1]) {
+          dp[i]![j] = (dp[i - 1]![j - 1] as number) + 1;
+          if ((dp[i]![j] as number) > maxLen) maxLen = dp[i]![j] as number;
+        }
+      }
+    }
+    return maxLen;
+  },
+  'matrix-boundary-sum': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    let sum = 0;
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        if (i === 0 || i === m - 1 || j === 0 || j === n - 1) {
+          sum += grid[i]![j] as number;
+        }
+      }
+    }
+    return sum;
+  },
 };

@@ -42548,4 +42548,54 @@ def secondGreaterElement(nums):
         main.append(i)
     return ans
 `,
+  // batch 193 ---------------------------------------------------------------
+  'longest-bitonic-subarray': `
+def longestBitonicSubarray(nums):
+    n = len(nums)
+    inc = [1] * n
+    dec = [1] * n
+    for i in range(1, n):
+        if nums[i] > nums[i - 1]:
+            inc[i] = inc[i - 1] + 1
+    for i in range(n - 2, -1, -1):
+        if nums[i] > nums[i + 1]:
+            dec[i] = dec[i + 1] + 1
+    return max(inc[i] + dec[i] - 1 for i in range(n))
+`,
+  'minimum-deletions-to-make-sorted': `
+import bisect
+
+def minDeletionsToSort(nums):
+    tails = []
+    for num in nums:
+        pos = bisect.bisect_left(tails, num)
+        if pos == len(tails):
+            tails.append(num)
+        else:
+            tails[pos] = num
+    return len(nums) - len(tails)
+`,
+  'longest-common-substring': `
+def longestCommonSubstring(s, t):
+    m, n = len(s), len(t)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    max_len = 0
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if s[i - 1] == t[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+                if dp[i][j] > max_len:
+                    max_len = dp[i][j]
+    return max_len
+`,
+  'matrix-boundary-sum': `
+def matrixBoundarySum(grid):
+    m, n = len(grid), len(grid[0])
+    total = 0
+    for i in range(m):
+        for j in range(n):
+            if i == 0 or i == m - 1 or j == 0 or j == n - 1:
+                total += grid[i][j]
+    return total
+`,
 };
