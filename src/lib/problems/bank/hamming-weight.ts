@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'hamming-weight',
   title: 'Number of 1 Bits',
   difficulty: 'easy',
-  tags: ['math'],
+  tags: ['bit-manipulation', 'math'],
   description: `Given a positive integer \`n\`, write a function that returns the number of **set bits** (bits equal to 1) in its binary representation. This is also known as the **Hamming weight**.`,
   constraints: [
     '`1 <= n <= 2³¹ - 1`',

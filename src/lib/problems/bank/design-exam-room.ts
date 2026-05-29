@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'design-exam-room',
   title: 'Exam Room',
   difficulty: 'medium',
-  tags: ['simulation', 'arrays', 'binary-search'],
+  tags: ['design', 'simulation', 'arrays', 'binary-search'],
   description: `There is an exam room with \`n\` seats in a single row, numbered \`0\` to \`n - 1\`.
 
 When a student enters the room, they sit in the seat that **maximizes the distance to the closest person already sitting**. If there are multiple such seats, they sit in the **seat with the lowest number**. If the room is empty, the student sits at seat \`0\`.

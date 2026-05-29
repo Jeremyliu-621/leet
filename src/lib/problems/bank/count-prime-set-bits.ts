@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'count-prime-set-bits',
   title: 'Prime Number of Set Bits in Binary Representation',
   difficulty: 'easy',
-  tags: ['math'],
+  tags: ['bit-manipulation', 'math'],
   description: `Given two integers \`left\` and \`right\`, return the **count** of numbers in the inclusive range \`[left, right]\` whose binary representation has a **prime** number of set bits.
 
 A **set bit** is a bit equal to \`1\`. A number is **prime** if it is greater than 1 and has no positive divisors other than 1 and itself.

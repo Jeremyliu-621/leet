@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'smallest-subarrays-with-maximum-bitwise-or',
   title: 'Smallest Subarrays With Maximum Bitwise OR',
   difficulty: 'medium',
-  tags: ['arrays', 'sliding-window'],
+  tags: ['bit-manipulation', 'arrays', 'sliding-window'],
   description: `You are given a 0-indexed array \`nums\` of length \`n\`, consisting of non-negative integers. For each index \`i\` from \`0\` to \`n - 1\`, you must find the **smallest** (shortest) subarray starting at index \`i\` such that the bitwise OR of the subarray equals the maximum possible bitwise OR starting from index \`i\`.
 
 More formally, let \`B[i]\` be the maximum value of \`nums[i] | nums[i+1] | ... | nums[j]\` for any \`j\` in \`[i, n - 1]\`. Then the answer at index \`i\` is the **length** of the shortest subarray starting at \`i\` whose bitwise OR equals \`B[i]\`.

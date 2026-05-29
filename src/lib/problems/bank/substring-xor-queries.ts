@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'substring-xor-queries',
   title: 'Substring XOR Queries',
   difficulty: 'medium',
-  tags: ['strings', 'hash-map', 'binary-search'],
+  tags: ['bit-manipulation', 'strings', 'hash-map', 'binary-search'],
   description: `You are given a **binary string** \`s\`, and a **2D** integer array \`queries\` where \`queries[i] = [first_i, second_i]\`.
 
 For the \`i\`-th query, find the **shortest** substring of \`s\` whose **decimal value**, \`val\`, yields \`second_i\` when **bitwise XORed** with \`first_i\`. In other words, \`val ^ first_i == second_i\`.

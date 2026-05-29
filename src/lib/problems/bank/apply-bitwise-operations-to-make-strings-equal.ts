@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'apply-bitwise-operations-to-make-strings-equal',
   title: 'Apply Bitwise Operations to Make Strings Equal',
   difficulty: 'medium',
-  tags: ['strings', 'math'],
+  tags: ['bit-manipulation', 'strings', 'math'],
   description: `You are given two **0-indexed** binary strings \`s\` and \`target\`, both of length \`n\`. You can do the following operation on \`s\` any number of times:
 
 Choose two different indices \`i\` and \`j\` where \`0 <= i, j < n\`.

@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'find-xor-sum-of-all-pairs-bitwise-and',
   title: 'Find XOR Sum of All Pairs Bitwise AND',
   difficulty: 'medium',
-  tags: ['arrays', 'math'],
+  tags: ['bit-manipulation', 'arrays', 'math'],
   description: `Given two integer arrays \`arr1\` and \`arr2\`, compute the **XOR** of the bitwise AND of every pair \`(arr1[i], arr2[j])\` for all valid indices \`i\` and \`j\`.
 
 That is, return \`(arr1[0] & arr2[0]) XOR (arr1[0] & arr2[1]) XOR ... XOR (arr1[n-1] & arr2[m-1])\`.

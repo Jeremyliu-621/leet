@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'minimum-bit-flips',
   title: 'Minimum Bit Flips to Convert Number',
   difficulty: 'easy',
-  tags: ['math'],
+  tags: ['bit-manipulation', 'math'],
   description: `A **bit flip** of a number \`x\` is choosing a bit in the binary representation of \`x\` and **flipping** it from either \`0\` to \`1\` or \`1\` to \`0\`.
 
 Given two integers \`start\` and \`goal\`, return the **minimum** number of bit flips to convert \`start\` to \`goal\`.`,

@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'two-sum-iii-data-structure-design',
   title: 'Two Sum III - Data Structure Design',
   difficulty: 'easy',
-  tags: ['arrays', 'hash-map'],
+  tags: ['design', 'arrays', 'hash-map'],
   description: `Design a data structure that accepts a stream of integers and checks if it has a pair of integers that sum to a particular value.
 
 Implement the \`TwoSum\` class:

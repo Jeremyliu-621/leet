@@ -28,7 +28,7 @@ export const problem: Problem = {
   id: 'design-parking-system',
   title: 'Design Parking System',
   difficulty: 'easy',
-  tags: ['arrays'],
+  tags: ['design', 'arrays'],
   description: `Design a parking system for a parking lot with three types of spaces: big, medium, and small, with a fixed number of each.
 
 Implement \`ParkingSystem\`:

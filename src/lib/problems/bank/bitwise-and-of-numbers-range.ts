@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'bitwise-and-of-numbers-range',
   title: 'Bitwise AND of Numbers Range',
   difficulty: 'medium',
-  tags: ['math'],
+  tags: ['bit-manipulation', 'math'],
   description: `Given two integers \`left\` and \`right\` that represent a range \`[left, right]\`, return the **bitwise AND** of all numbers in this range, inclusive.`,
   constraints: [
     '0 <= left <= right <= 2^31 - 1',

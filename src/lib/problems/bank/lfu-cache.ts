@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'lfu-cache',
   title: 'LFU Cache',
   difficulty: 'hard',
-  tags: ['hash-map'],
+  tags: ['design', 'hash-map'],
   description: `Design and implement a data structure for a **Least Frequently Used (LFU)** cache.
 
 Implement a \`lfuCache(capacity, operations)\` function where \`operations\` is an array of \`["get", key]\` or \`["put", key, value]\` arrays. Return an array of results from \`get\` calls (-1 if not found).

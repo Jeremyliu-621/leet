@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'counting-bits',
   title: 'Counting Bits',
   difficulty: 'easy',
-  tags: ['dynamic-programming', 'math'],
+  tags: ['bit-manipulation', 'dynamic-programming', 'math'],
   description: `Given an integer \`n\`, return an array \`ans\` of length \`n + 1\` where \`ans[i]\` is the number of 1's in the binary representation of \`i\`.
 
 Solve it in **O(n)** time — do not call a built-in popcount function for each number independently.`,

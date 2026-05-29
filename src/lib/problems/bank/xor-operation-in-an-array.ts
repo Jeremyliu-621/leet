@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'xor-operation-in-an-array',
   title: 'XOR Operation in an Array',
   difficulty: 'easy',
-  tags: ['arrays', 'math'],
+  tags: ['bit-manipulation', 'arrays', 'math'],
   description: `You are given two integers \`n\` and \`start\`. Define a zero-indexed array \`nums\` where \`nums[i] = start + 2 * i\` (**0-indexed**) and \`n == nums.length\`.
 
 Return *the bitwise XOR of all elements of* \`nums\`.`,

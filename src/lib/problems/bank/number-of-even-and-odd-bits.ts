@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'number-of-even-and-odd-bits',
   title: 'Number of Even and Odd Bits',
   difficulty: 'easy',
-  tags: ['math'],
+  tags: ['bit-manipulation', 'math'],
   description: `You are given a **positive** integer \`n\`.
 
 Let \`even\` denote the number of even-indexed bits in the binary representation of \`n\` (**0-indexed** from right) that are equal to \`1\`.

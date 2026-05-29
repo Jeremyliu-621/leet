@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'total-hamming-distance',
   title: 'Total Hamming Distance',
   difficulty: 'medium',
-  tags: ['math'],
+  tags: ['bit-manipulation', 'math'],
   description: `The [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance) between two integers is the number of positions at which the corresponding bits differ.
 
 Given an integer array \`nums\`, return the **sum of Hamming distances** between all the pairs of integers in \`nums\`.

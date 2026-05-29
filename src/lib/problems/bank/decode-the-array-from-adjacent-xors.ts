@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'decode-the-array-from-adjacent-xors',
   title: 'Decode the Array from Adjacent XORs',
   difficulty: 'easy',
-  tags: ['arrays'],
+  tags: ['bit-manipulation', 'arrays'],
   description: `There is a **hidden** integer array \`arr\` that consists of \`n\` non-negative integers.
 
 It was encoded into another array \`encoded\` of length \`n - 1\`, such that \`encoded[i] = arr[i] XOR arr[i + 1]\`. You are also given an integer \`first\`, that equals \`arr[0]\`.

@@ -17,7 +17,7 @@ export const problem: Problem = {
   id: 'random-pick-with-weight',
   title: 'Random Pick with Weight',
   difficulty: 'medium',
-  tags: ['binary-search', 'math'],
+  tags: ['design', 'binary-search', 'math'],
   description: `You are given a **0-indexed** array of positive integers \`w\` where \`w[i]\` describes the **weight** of the \`i-th\` index.
 
 Implement the function \`pickIndex()\`, which **randomly** picks an index in the range \`[0, w.length - 1]\` (inclusive) and returns it. The probability of picking an index \`i\` is \`w[i] / sum(w)\`.

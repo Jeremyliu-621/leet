@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'smallest-number-with-all-set-bits',
   title: 'Smallest Number With All Set Bits',
   difficulty: 'easy',
-  tags: ['math'],
+  tags: ['bit-manipulation', 'math'],
   description: `You are given a positive integer \`n\`.
 
 Return the **smallest** number that is **greater than or equal to** \`n\` and has **all set bits** — that is, every bit in the binary representation of the returned number is \`1\`.

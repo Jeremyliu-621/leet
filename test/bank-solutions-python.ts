@@ -37542,6 +37542,101 @@ def specialPerm(nums):
     return sum(dp[full]) % MOD
 `,
 
+  // batch 161 — backtracking/medium, dp/hard, arrays+heap/hard, dp/medium
+  'pyramid-transition-numbers': `
+def pyramidTransition(bottom, allowed):
+    if hasattr(allowed, 'to_py'):
+        allowed = list(allowed.to_py())
+    allowed = [str(s) for s in allowed]
+    bottom = str(bottom)
+    from collections import defaultdict
+    mp = defaultdict(list)
+    for s in allowed:
+        mp[s[:2]].append(s[2])
+    def build_next(row, idx, nxt):
+        if idx == len(row) - 1:
+            return solve(''.join(nxt))
+        key = row[idx] + row[idx + 1]
+        for c in mp[key]:
+            nxt.append(c)
+            if build_next(row, idx + 1, nxt):
+                return True
+            nxt.pop()
+        return False
+    def solve(row):
+        if len(row) == 1:
+            return True
+        return build_next(row, 0, [])
+    return solve(bottom)
+`,
+
+  'painting-a-grid-with-three-different-colors': `
+def colorTheGrid(m, n):
+    MOD = 10 ** 9 + 7
+    max_state = 3 ** m
+    valid_cols = []
+    for state in range(max_state):
+        s, valid, prev = state, True, -1
+        for _ in range(m):
+            c = s % 3
+            s //= 3
+            if c == prev:
+                valid = False
+                break
+            prev = c
+        if valid:
+            valid_cols.append(state)
+    compat = {}
+    for a in valid_cols:
+        compatible = []
+        for b in valid_cols:
+            sa, sb, ok = a, b, True
+            for _ in range(m):
+                if sa % 3 == sb % 3:
+                    ok = False
+                    break
+                sa //= 3
+                sb //= 3
+            if ok:
+                compatible.append(b)
+        compat[a] = compatible
+    dp = {p: 1 for p in valid_cols}
+    for _ in range(1, n):
+        ndp = {p: 0 for p in valid_cols}
+        for q, cnt in dp.items():
+            for p in compat[q]:
+                ndp[p] = (ndp[p] + cnt) % MOD
+        dp = ndp
+    return sum(dp.values()) % MOD
+`,
+
+  'maximum-spending-after-buying-items': `
+def maxSpending(values):
+    if hasattr(values, 'to_py'):
+        values = values.to_py()
+    rows = []
+    for row in values:
+        if hasattr(row, 'to_py'):
+            row = list(row.to_py())
+        rows.append([int(v) for v in row])
+    items = [v for row in rows for v in row]
+    items.sort()
+    return sum(v * (i + 1) for i, v in enumerate(items))
+`,
+
+  'number-of-good-binary-strings': `
+def countGoodStrings(low, high, zero, one):
+    MOD = 10 ** 9 + 7
+    dp = [0] * (high + 1)
+    dp[0] = 1
+    for i in range(1, high + 1):
+        if i >= zero:
+            dp[i] = (dp[i] + dp[i - zero]) % MOD
+        if i >= one:
+            dp[i] = (dp[i] + dp[i - one]) % MOD
+    return sum(dp[low:high + 1]) % MOD
+`,
+
   'minimum-cost-to-walk-weighted-graph': `
 def minimumCost(n, edges, query):
     if hasattr(edges, 'to_py'):
@@ -37683,7 +37778,7 @@ def countEven(num):
     return num // 2 if digit_sum % 2 == 0 else (num - 1) // 2
 `,
 
-  // batch 161
+  // batch 161 (remote) — arrays/medium×3, strings/medium×2
   'frog-jump-ii': `
 def maxJump(stones):
     ans = stones[1] - stones[0]

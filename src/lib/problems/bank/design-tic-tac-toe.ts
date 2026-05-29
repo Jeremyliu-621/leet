@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'design-tic-tac-toe',
   title: 'Design Tic-Tac-Toe',
   difficulty: 'medium',
-  tags: ['simulation', 'arrays'],
+  tags: ['design', 'simulation', 'arrays'],
   description: `Assume the following rules are for a tic-tac-toe game on an \`n × n\` board between two players:
 
 1. A move is guaranteed to be valid and is placed on an empty block.

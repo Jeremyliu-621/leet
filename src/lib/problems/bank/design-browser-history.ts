@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'design-browser-history',
   title: 'Design Browser History',
   difficulty: 'medium',
-  tags: ['stack'],
+  tags: ['design', 'stack'],
   description: `You have a **browser** of one tab where you start on the \`homepage\` and you can visit another \`url\`, get back in the history a number of \`steps\` or move forward in the history a number of \`steps\`.
 
 Implement the \`BrowserHistory\` class:

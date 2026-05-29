@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'count-triplets-xor',
   title: 'Count Triplets That Can Form Two Arrays of Equal XOR',
   difficulty: 'medium',
-  tags: ['arrays', 'math'],
+  tags: ['bit-manipulation', 'arrays', 'math'],
   description: `Given an array of integers \`arr\`, return *the number of triplets* \`(i, j, k)\` such that \`0 <= i < j <= k < arr.length\` and \`a == b\`, where:
 
 - \`a = arr[i] XOR arr[i + 1] XOR ... XOR arr[j - 1]\`

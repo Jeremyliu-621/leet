@@ -40,7 +40,7 @@ export const problem: Problem = {
   id: 'design-hashset',
   title: 'Design HashSet',
   difficulty: 'easy',
-  tags: ['hash-map', 'arrays'],
+  tags: ['design', 'hash-map', 'arrays'],
   description: `Design a HashSet without using any built-in hash table libraries.
 
 Implement \`MyHashSet\`:

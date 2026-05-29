@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'design-twitter',
   title: 'Design Twitter',
   difficulty: 'medium',
-  tags: ['hash-map', 'heap'],
+  tags: ['design', 'hash-map', 'heap'],
   description: `Design a simplified version of Twitter where users can post tweets, follow/unfollow other users, and see the 10 most recent tweets in their news feed.
 
 Implement \`designTwitter(actions, args)\` which simulates the following operations:

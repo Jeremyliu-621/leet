@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'longest-subarray-max-bitwise-and',
   title: 'Longest Subarray With Maximum Bitwise AND',
   difficulty: 'medium',
-  tags: ['arrays'],
+  tags: ['bit-manipulation', 'arrays'],
   description: `You are given an integer array \`nums\` of size \`n\`.
 
 Consider a **non-empty** subarray from \`nums\` that has the **maximum** possible **bitwise AND**.

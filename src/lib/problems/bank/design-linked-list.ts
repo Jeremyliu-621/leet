@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'design-linked-list',
   title: 'Design Linked List',
   difficulty: 'medium',
-  tags: ['linked-list', 'arrays'],
+  tags: ['design', 'linked-list', 'arrays'],
   description: `Design your implementation of the linked list. You can choose to use a singly or doubly linked list.
 
 A node in a singly linked list should have two attributes: \`val\` and \`next\`. For a doubly linked list, you need one more attribute \`prev\`.

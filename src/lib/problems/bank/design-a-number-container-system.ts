@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'design-a-number-container-system',
   title: 'Design a Number Container System',
   difficulty: 'medium',
-  tags: ['hash-map', 'heap'],
+  tags: ['design', 'hash-map', 'heap'],
   description: `Design a number container system that can:
 
 - **Insert** or **Replace** a number at a given index.

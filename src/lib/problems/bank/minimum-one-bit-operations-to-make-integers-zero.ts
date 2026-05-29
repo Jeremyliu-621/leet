@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'minimum-one-bit-operations-to-make-integers-zero',
   title: 'Minimum One Bit Operations to Make Integers Zero',
   difficulty: 'hard',
-  tags: ['math', 'binary-search'],
+  tags: ['bit-manipulation', 'math', 'binary-search'],
   description: `Given an integer \`n\`, you must transform it into \`0\` using the following operations any number of times:
 
 - Change the rightmost (\`0th\`) bit in the binary representation of \`n\`.

@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'insert-delete-getrandom-duplicates-allowed',
   title: 'Insert Delete GetRandom O(1) — Duplicates Allowed',
   difficulty: 'hard',
-  tags: ['arrays', 'hash-map', 'simulation'],
+  tags: ['design', 'arrays', 'hash-map', 'simulation'],
   description: `Implement a data structure that supports all the following operations in **average O(1)** time, where **duplicate values are allowed**:
 
 - \`insert(val)\` — Inserts \`val\` into the multiset. Returns \`true\` if the multiset did not already contain \`val\`, \`false\` otherwise.

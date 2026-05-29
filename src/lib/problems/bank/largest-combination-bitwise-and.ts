@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'largest-combination-bitwise-and',
   title: 'Largest Combination With Bitwise AND Greater Than Zero',
   difficulty: 'medium',
-  tags: ['arrays', 'hash-map'],
+  tags: ['bit-manipulation', 'arrays', 'hash-map'],
   description: `The **bitwise AND** of an array \`nums\` is the bitwise AND of all integers in \`nums\`.
 
 - For example, for \`nums = [1, 5, 3]\`, the bitwise AND is \`1 & 5 & 3 = 1\`.

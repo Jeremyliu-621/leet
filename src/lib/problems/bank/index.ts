@@ -2609,6 +2609,7 @@ import { problem as findEdgesInShortestPaths } from './find-edges-in-shortest-pa
 import { problem as avoidFloodInTheCity } from './avoid-flood-in-the-city';
 import { problem as minimumTimeToAccomplishAllTasks } from './minimum-time-to-accomplish-all-tasks';
 // batch 157 — trie×4, trie+design×1, simulation×3, graph×1, arrays×2
+// batch 157 — trie×4, trie+design×1; simulation/easy, simulation/medium×2, graph/medium, arrays/medium×2
 import { problem as implementTrieII } from './implement-trie-ii-prefix-tree';
 import { problem as wordFilter } from './word-filter';
 import { problem as lexicographicalNumbers } from './lexicographical-numbers';
@@ -5290,7 +5291,7 @@ export const problems: readonly Problem[] = [
   findEdgesInShortestPaths,
   avoidFloodInTheCity,
   minimumTimeToAccomplishAllTasks,
-  // batch 157
+  // batch 157 — trie×4, trie+design×1; simulation/easy, simulation/medium×2, graph/medium, arrays/medium×2
   implementTrieII,
   wordFilter,
   lexicographicalNumbers,

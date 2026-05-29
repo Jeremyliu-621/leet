@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'number-of-1-bits',
   title: 'Number of 1 Bits',
   difficulty: 'easy',
-  tags: ['math'],
+  tags: ['bit-manipulation', 'math'],
   description: `Write a function that takes a positive integer and returns the number of set bits in its binary representation (also known as the **Hamming weight**).`,
   constraints: [
     '`1 <= n <= 2^31 - 1`',

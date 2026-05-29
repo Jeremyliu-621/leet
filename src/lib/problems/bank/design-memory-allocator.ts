@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'design-memory-allocator',
   title: 'Design Memory Allocator',
   difficulty: 'medium',
-  tags: ['arrays'],
+  tags: ['design', 'arrays'],
   description: `You are given an integer \`n\` representing the size of a **0-indexed** memory array. All memory units are initially free.
 
 You need to implement a memory allocator with the following interface:

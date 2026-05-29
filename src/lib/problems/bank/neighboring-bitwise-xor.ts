@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'neighboring-bitwise-xor',
   title: 'Neighboring Bitwise XOR',
   difficulty: 'medium',
-  tags: ['arrays', 'math'],
+  tags: ['bit-manipulation', 'arrays', 'math'],
   description: `A **0-indexed** array \`derived\` with length \`n\` is derived by computing the **bitwise XOR** of adjacent values in a **binary array** \`original\` of length \`n\`.
 
 Specifically, for each index \`i\` in the range \`[0, n - 1]\`:
