@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2367** problems; 7392 tests green. Batches 102–158 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2370** problems; 7401 tests green. Batches 102–158 + 156c complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 159+); update site count; UX polish.
+
+### feat(bank): add batch 156c — find-edges-in-shortest-paths (hard), avoid-flood-in-the-city (medium), minimum-time-to-accomplish-all-tasks (hard) (2026-05-29)
+Three problems targeting graph/shortest-path, hash-map+binary-search, and binary-indexed-tree: `find-edges-in-shortest-paths` (hard/graph+shortest-path, Dijkstra from both node 0 and node n-1; edge on shortest path iff dist0[u]+w+distN[v]==total or symmetrically), `avoid-flood-in-the-city` (medium/hash-map+binary-search, track filled lakes with binary-search on sorted dry days to find earliest valid drain day; return [] if impossible), `minimum-time-to-accomplish-all-tasks` (hard/binary-indexed-tree, sort tasks by end time, greedily assign CPU time right-to-left within each task's window respecting already-running intervals). Bank at **2370**; 7401 tests.
 
 ### feat(bank): add batch 158 — minimum-cost-homecoming-robot (medium), sum-of-scores-of-built-strings (hard), count-of-integers (hard), number-of-ways-to-earn-points (hard) (2026-05-29)
 Four new problems: `minimum-cost-homecoming-of-a-robot-in-a-grid` (medium/arrays+math, sum rowCosts and colCosts traversed excluding start position), `sum-of-scores-of-built-strings` (hard/strings, Z-function where Z[0]=n then sum all values), `count-of-integers` (hard/dp+strings, digit DP with tight/started/sum states mod 10^9+7), `number-of-ways-to-earn-points` (hard/dp+arrays, bounded knapsack right-to-left). JS and Python reference solutions included. Bank at **2367**; 7392 tests.
