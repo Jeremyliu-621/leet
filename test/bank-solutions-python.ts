@@ -43510,4 +43510,25 @@ def getSmallestString(s, k):
             k = 0
     return ''.join(arr)
 `,
+  // batch 209 ---------------------------------------------------------------
+  'mode-of-array': `
+def modeOfArray(nums):
+    from collections import Counter
+    c = Counter(nums)
+    max_freq = max(c.values())
+    return min(k for k, v in c.items() if v == max_freq)
+`,
+  'row-with-max-sum': `
+def rowWithMaxSum(matrix):
+    return max(range(len(matrix)), key=lambda i: sum(matrix[i]))
+`,
+  'find-middle-element': `
+def findMiddleElement(nums):
+    return nums[len(nums) // 2]
+`,
+  'count-rows-equal-to-first': `
+def countRowsEqualToFirst(matrix):
+    first = matrix[0]
+    return sum(1 for row in matrix if len(row) == len(first) and all(row[i] == first[i] for i in range(len(first))))
+`,
 };

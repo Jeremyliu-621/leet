@@ -3090,6 +3090,11 @@ import { problem as furthestPointFromOrigin } from './furthest-point-from-origin
 import { problem as minimumPossibleSumOfBeautifulArray } from './minimum-possible-sum-of-beautiful-array';
 import { problem as maximalRangeEachElementIsMaximumIn } from './maximal-range-each-element-is-maximum-in';
 import { problem as lexicographicallySmallestStringOperationsConstraint } from './lexicographically-smallest-string-operations-constraint';
+// batch 209 — easy/arrays+hash-map, easy/arrays+math, easy/arrays, easy/arrays
+import { problem as modeOfArray } from './mode-of-array';
+import { problem as rowWithMaxSum } from './row-with-max-sum';
+import { problem as findMiddleElement } from './find-middle-element';
+import { problem as countRowsEqualToFirst } from './count-rows-equal-to-first';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6221,4 +6226,9 @@ export const problems: readonly Problem[] = [
   minimumPossibleSumOfBeautifulArray,
   maximalRangeEachElementIsMaximumIn,
   lexicographicallySmallestStringOperationsConstraint,
+  // batch 209 — easy/arrays+hash-map, easy/arrays+math, easy/arrays, easy/arrays
+  modeOfArray,
+  rowWithMaxSum,
+  findMiddleElement,
+  countRowsEqualToFirst,
 ];
