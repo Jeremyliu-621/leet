@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2491** problems; 7767 tests green. Batches 102–174 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2496** problems; 7782 tests green. Batches 102–174 + batch 172 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 175+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 172 — winner-array-game, impossible-rolls, numerically-balanced, odd-subarray-sum, prefix-score (2026-05-29)
+Five new medium problems: `find-the-winner-of-an-array-game` (simulation, linear scan tracking winner+streak), `shortest-impossible-sequence-of-rolls` (greedy rounds counting with set), `next-greater-numerically-balanced-number` (brute force digit frequency check), `number-of-sub-arrays-with-odd-sum` (prefix parity counting with modular arithmetic), `rearrange-array-to-maximize-prefix-score` (sort descending, scan positive prefix sums). Bank at **2496**; 7782 tests.
 
 ### feat(bank): batch 174 — books-on-shelf (medium), subarray-pattern-match (medium), adjacent-color (medium), special-substring-ii (medium) (2026-05-29)
 Four new problems: `maximum-number-of-books-on-a-shelf` (medium/dp, O(n²) DP — dp[i]=min height for first i books, scan back while width≤shelfWidth), `number-of-subarrays-that-match-a-pattern` (medium/arrays+strings, transform to sign array then KMP O(n+m)), `number-of-adjacent-elements-with-the-same-color` (medium/simulation, O(1) per query — track running adjacent-pair count, update on each coloring), `find-longest-special-substring-that-occurs-thrice-ii` (medium/strings, run-length encoding per char + binary search on length — max l with ≥3 total occurrences). Bank at **2491**; 7767 tests.
