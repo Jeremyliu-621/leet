@@ -35153,4 +35153,79 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     });
   },
 
+  // batch 150
+  'minimum-time-to-collect-all-apples-in-a-tree': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const hasApple = args[2] as boolean[];
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const edge of edges) { const u = edge[0] as number, v = edge[1] as number; adj[u]!.push(v); adj[v]!.push(u); }
+    function dfs(node: number, parent: number): number {
+      let time = 0;
+      for (const child of adj[node]!) {
+        if (child === parent) continue;
+        const childTime = dfs(child, node);
+        if (childTime > 0 || hasApple[child]) time += childTime + 2;
+      }
+      return time;
+    }
+    return dfs(0, -1);
+  },
+
+  'maximum-units-on-a-truck': (...args: unknown[]) => {
+    const boxTypes = args[0] as number[][];
+    let truckSize = args[1] as number;
+    boxTypes.sort((a, b) => (b[1] as number) - (a[1] as number));
+    let units = 0;
+    for (const box of boxTypes) {
+      const count = box[0] as number, unitsPerBox = box[1] as number;
+      const take = Math.min(count, truckSize);
+      units += take * unitsPerBox;
+      truckSize -= take;
+      if (truckSize === 0) break;
+    }
+    return units;
+  },
+
+  'number-of-ways-to-split-a-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const MOD = 1000000007n;
+    const n = s.length;
+    const ones = [...s].filter(c => c === '1').length;
+    if (ones % 3 !== 0) return 0;
+    if (ones === 0) return Number((BigInt(n - 1) * BigInt(n - 2) / 2n) % MOD);
+    const third = ones / 3;
+    let cnt = 0, pos1 = -1, pos2 = -1, pos3 = -1, pos4 = -1;
+    for (let i = 0; i < n; i++) {
+      if (s[i] === '1') {
+        cnt++;
+        if (cnt === third) pos1 = i;
+        if (cnt === third + 1) pos2 = i;
+        if (cnt === 2 * third) pos3 = i;
+        if (cnt === 2 * third + 1) pos4 = i;
+      }
+    }
+    return Number((BigInt(pos2 - pos1) * BigInt(pos4 - pos3)) % MOD);
+  },
+
+  'mean-of-array-after-removing-some-elements': (...args: unknown[]) => {
+    const arr = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const n = arr.length;
+    const trim = n * 0.05;
+    const sliced = arr.slice(trim, n - trim);
+    return sliced.reduce((a, b) => a + b, 0) / sliced.length;
+  },
+
+  'minimum-number-of-operations-to-convert-time': (...args: unknown[]) => {
+    const current = args[0] as string, correct = args[1] as string;
+    const toMins = (t: string) => parseInt(t.slice(0, 2)) * 60 + parseInt(t.slice(3));
+    let diff = toMins(correct) - toMins(current);
+    let ops = 0;
+    for (const step of [60, 15, 5, 1]) {
+      ops += Math.floor(diff / step);
+      diff %= step;
+    }
+    return ops;
+  },
+
 };

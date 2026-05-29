@@ -2473,6 +2473,12 @@ import { problem as minimumFlipsBinaryGridPalindromicII } from './minimum-number
 import { problem as minimumSwapsMakeBalanced } from './minimum-swaps-to-make-balanced';
 import { problem as tweetCountsPerFrequency } from './tweet-counts-per-frequency';
 import { problem as findKthLargestXorCoordinateValue } from './find-kth-largest-xor-coordinate-value';
+// batch 150
+import { problem as minimumTimeCollectAllApplesTree } from './minimum-time-to-collect-all-apples-in-a-tree';
+import { problem as maximumUnitsOnATruck } from './maximum-units-on-a-truck';
+import { problem as numberOfWaysToSplitAString } from './number-of-ways-to-split-a-string';
+import { problem as meanArrayAfterRemovingSomeElements } from './mean-of-array-after-removing-some-elements';
+import { problem as minimumOpsConvertTime } from './minimum-number-of-operations-to-convert-time';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4983,4 +4989,10 @@ export const problems: readonly Problem[] = [
   minimumSwapsMakeBalanced,
   tweetCountsPerFrequency,
   findKthLargestXorCoordinateValue,
+  // batch 150 — tree/medium, arrays/easy, strings/medium, arrays/easy, strings/easy
+  minimumTimeCollectAllApplesTree,
+  maximumUnitsOnATruck,
+  numberOfWaysToSplitAString,
+  meanArrayAfterRemovingSomeElements,
+  minimumOpsConvertTime,
 ];

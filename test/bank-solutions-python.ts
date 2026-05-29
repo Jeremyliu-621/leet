@@ -34971,4 +34971,81 @@ def minimumTotal(triangle):
     return results
 `,
 
+  // batch 150
+  'minimum-time-to-collect-all-apples-in-a-tree': `def minTime(n, edges, hasApple):
+    edges = list(edges.to_py() if hasattr(edges, 'to_py') else edges)
+    hasApple = list(hasApple.to_py() if hasattr(hasApple, 'to_py') else hasApple)
+    adj = [[] for _ in range(n)]
+    for e in edges:
+        e = list(e.to_py() if hasattr(e, 'to_py') else e)
+        u, v = e[0], e[1]
+        adj[u].append(v)
+        adj[v].append(u)
+    def dfs(node, parent):
+        time = 0
+        for child in adj[node]:
+            if child == parent:
+                continue
+            child_time = dfs(child, node)
+            if child_time > 0 or hasApple[child]:
+                time += child_time + 2
+        return time
+    return dfs(0, -1)
+`,
+
+  'maximum-units-on-a-truck': `def maximumUnits(boxTypes, truckSize):
+    boxTypes = list(boxTypes.to_py() if hasattr(boxTypes, 'to_py') else boxTypes)
+    boxTypes = [list(b.to_py() if hasattr(b, 'to_py') else b) for b in boxTypes]
+    boxTypes.sort(key=lambda x: -x[1])
+    units = 0
+    for count, units_per_box in boxTypes:
+        take = min(count, truckSize)
+        units += take * units_per_box
+        truckSize -= take
+        if truckSize == 0:
+            break
+    return units
+`,
+
+  'number-of-ways-to-split-a-string': `def numWays(s):
+    MOD = 10**9 + 7
+    n = len(s)
+    ones = s.count('1')
+    if ones % 3 != 0:
+        return 0
+    if ones == 0:
+        return ((n - 1) * (n - 2) // 2) % MOD
+    third = ones // 3
+    cnt = 0
+    pos1 = pos2 = pos3 = pos4 = -1
+    for i, c in enumerate(s):
+        if c == '1':
+            cnt += 1
+            if cnt == third: pos1 = i
+            if cnt == third + 1: pos2 = i
+            if cnt == 2 * third: pos3 = i
+            if cnt == 2 * third + 1: pos4 = i
+    return ((pos2 - pos1) * (pos4 - pos3)) % MOD
+`,
+
+  'mean-of-array-after-removing-some-elements': `def trimMean(arr):
+    arr = list(arr.to_py() if hasattr(arr, 'to_py') else arr)
+    arr.sort()
+    n = len(arr)
+    trim = int(n * 0.05)
+    sliced = arr[trim:n - trim]
+    return sum(sliced) / len(sliced)
+`,
+
+  'minimum-number-of-operations-to-convert-time': `def convertTime(current, correct):
+    def to_mins(t):
+        return int(t[:2]) * 60 + int(t[3:])
+    diff = to_mins(correct) - to_mins(current)
+    ops = 0
+    for step in [60, 15, 5, 1]:
+        ops += diff // step
+        diff %= step
+    return ops
+`,
+
 };
