@@ -5,84 +5,62 @@ export const problem: Problem = {
   title: 'Maximum Number of Alloys',
   difficulty: 'medium',
   tags: ['arrays', 'binary-search'],
-  description: `You are the owner of a company that manufactures alloys using various types of metals. There are \`n\` metal types. You have \`k\` machines, each of which can manufacture alloys. The \`i-th\` machine requires \`composition[i][j]\` units of metal \`j\` to create one alloy.
+  description: `You are the owner of a company that creates alloys using various types of metals. There are \`n\` different types of metals and \`k\` machines.
 
-You have a stock of \`stock[j]\` units of metal \`j\`, and you can buy additional units of metal \`j\` for \`cost[j]\` coins each.
+The \`i\`-th machine uses \`composition[i][j]\` units of the \`j\`-th metal to create **one** alloy. You currently have \`stock[j]\` units of the \`j\`-th metal and a \`budget\` to buy additional units. You can buy any number of units of the \`j\`-th metal at \`cost[j]\` per unit.
 
-Given a budget of \`budget\` coins, return the **maximum number of alloys** any single machine can produce. Each machine manufactures alloys independently.
-
-**Note:** You can only use one machine at a time to maximize output.`,
+You can only use **one machine** at a time. Return the **maximum number of alloys** you can create using any single machine.`,
   constraints: [
-    '1 <= n, k <= 100',
-    '0 <= budget <= 10^8',
-    'composition.length == k',
-    'composition[i].length == n',
-    '1 <= composition[i][j] <= 100',
-    'stock.length == n',
-    '0 <= stock[j] <= 10^8',
-    'cost.length == n',
-    '1 <= cost[j] <= 100',
+    '`1 <= k, n <= 100`',
+    '`0 <= budget <= 10^8`',
+    '`composition.length == k`',
+    '`composition[i].length == n`',
+    '`1 <= composition[i][j] <= 100`',
+    '`stock.length == cost.length == n`',
+    '`0 <= stock[i] <= 10^8`',
+    '`1 <= cost[i] <= 100`',
   ],
   examples: [
     {
-      input: 'n=3, k=2, budget=15, composition=[[1,1,1],[1,1,10]], stock=[0,0,100], cost=[1,2,3]',
+      input: 'n = 2, k = 3, budget = 15, composition = [[1,1],[1,2],[1,3]], stock = [0,0], cost = [1,2]',
       output: '5',
-      explanation: 'Machine 0 uses metals 0,1,2. stock[2]=100 so metal 2 is free. Need to buy x of metal 0 (cost 1 each) and x of metal 1 (cost 2 each). Total cost = 3x ≤ 15 → x=5.',
+      explanation: 'Use machine 0 to create 5 alloys. Need 5 of metal 0 (cost 5) and 5 of metal 1 (cost 10). Total 15 ≤ budget.',
     },
     {
-      input: 'n=3, k=2, budget=15, composition=[[1,1,1],[1,1,10]], stock=[0,0,0], cost=[1,2,3]',
-      output: '2',
-      explanation: 'Machine 0: cost = x*(1+2+3) = 6x ≤ 15 → x=2. Machine 1: 33x ≤ 15 → x=0. Max = 2.',
+      input: 'n = 2, k = 1, budget = 10, composition = [[1,1]], stock = [0,0], cost = [1,2]',
+      output: '3',
+      explanation: 'Machine 0 needs 1 of each metal. For 3 alloys: buy 3 of metal 0 (cost 3) and 3 of metal 1 (cost 6). Total 9 ≤ 10. For 4 alloys: cost 4+8=12 > 10.',
     },
     {
-      input: 'n=2, k=3, budget=10, composition=[[2,1],[1,2],[1,1]], stock=[1,1], cost=[5,5]',
-      output: '2',
-      explanation: 'Machine 2 (composition=[1,1]): at x=2, need 1 more of each (stock covers 1) → cost = 2*5 = 10 ≤ 10. Max = 2.',
+      input: 'n = 2, k = 2, budget = 10, composition = [[1,1],[3,1]], stock = [0,0], cost = [1,2]',
+      output: '3',
+      explanation: 'Machine 0 gives 3 alloys (cost 9 ≤ 10). Machine 1 gives 2 alloys (cost 6+2=8 ≤ 10, but 4 alloys cost 12+2=14 > 10 wait, 3 alloys cost 9+6=15>10... actually machine 1 for 2: 3×2+1×2=6+2=8≤10). Max=3 from machine 0.',
     },
   ],
   hints: [
-    'Binary search on the answer: can we produce at least `x` alloys using machine `i`?',
-    'For a given machine `i` and target `x`, the cost to buy missing metals is `sum over j of max(0, x * composition[i][j] - stock[j]) * cost[j]`.',
-    'Binary search on `x` in range [1, 10^8]. For each candidate `x`, check if any machine can produce `x` alloys within the budget.',
+    'Binary search on the answer: can we make `mid` alloys using any machine within budget?',
+    'For a given machine i and target `mid`, compute the total purchase cost: for each metal j, buy max(0, composition[i][j]*mid - stock[j]) units.',
+    'If the total cost ≤ budget for any machine, then `mid` alloys is achievable.',
   ],
   functionName: 'maxNumberOfAlloys',
   params: ['n', 'k', 'budget', 'composition', 'stock', 'cost'],
   starterCode: {
-    javascript: 'function maxNumberOfAlloys(n, k, budget, composition, stock, cost) {\n  // your code here\n}\n',
-    typescript: "function maxNumberOfAlloys(n: number, k: number, budget: number, composition: number[][], stock: number[], cost: number[]): number {\n  // your code here\n}",
+    javascript: `function maxNumberOfAlloys(n, k, budget, composition, stock, cost) {
 
-    python: 'def maxNumberOfAlloys(n, k, budget, composition, stock, cost):\n    # your code here\n    pass\n',
+}`,
+    python: `def maxNumberOfAlloys(n, k, budget, composition, stock, cost):
+    pass`,
   },
   visibleTests: [
-    {
-      args: [3, 2, 15, [[1, 1, 1], [1, 1, 10]], [0, 0, 100], [1, 2, 3]],
-      expected: 5,
-    },
-    {
-      args: [3, 2, 15, [[1, 1, 1], [1, 1, 10]], [0, 0, 0], [1, 2, 3]],
-      expected: 2,
-    },
-    {
-      args: [2, 3, 10, [[2, 1], [1, 2], [1, 1]], [1, 1], [5, 5]],
-      expected: 2,
-    },
+    { args: [2, 3, 15, [[1, 1], [1, 2], [1, 3]], [0, 0], [1, 2]], expected: 5 },
+    { args: [2, 1, 10, [[1, 1]], [0, 0], [1, 2]], expected: 3 },
+    { args: [2, 2, 10, [[1, 1], [3, 1]], [0, 0], [1, 2]], expected: 3 },
   ],
   hiddenTests: [
-    {
-      args: [1, 1, 0, [[1]], [0], [1]],
-      expected: 0,
-    },
-    {
-      args: [1, 1, 100, [[1]], [50], [1]],
-      expected: 150,
-    },
-    {
-      args: [2, 2, 20, [[1, 2], [2, 1]], [5, 5], [3, 3]],
-      expected: 5,
-    },
-    {
-      args: [3, 1, 0, [[1, 1, 1]], [10, 10, 10], [1, 1, 1]],
-      expected: 10,
-    },
+    { args: [1, 1, 0, [[1]], [0], [1]], expected: 0 },
+    { args: [1, 1, 100, [[1]], [0], [1]], expected: 100 },
+    { args: [1, 1, 0, [[1]], [5], [1]], expected: 5 },
+    { args: [2, 2, 10, [[1, 1], [2, 2]], [0, 0], [1, 1]], expected: 5 },
+    { args: [2, 1, 100, [[1, 2]], [10, 10], [3, 5]], expected: 13 },
   ],
 };
