@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2824** problems; 8766 tests green. Batches 102–216 + 215-addendum (fully merged) complete.
+**Current focus:** Bank at **2819** problems; 8751 tests green. Batches 102–216 + 215-addendum complete. 8 near-dups removed, 3 new problems added (count-groups-special-equiv, difference-ones-zeros, find-kth-largest-int).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 217+); UX polish per LEETCODE_PARITY.md.
+**Next up:** Comprehensive deduplication of ~300 abbreviated-name duplicate registrations; batch 217+; UX polish per LEETCODE_PARITY.md.
+
+### chore(bank): remove 8 near-duplicate problems, register 3 new (count-groups-special-equiv, difference-ones-zeros, find-kth-largest-int) (2026-05-29)
+Removed 8 near-duplicate registrations (design-an-atm-machine, minimum-number-of-flips-to-make-binary-grid-palindrome, minimum-number-of-operations-to-sort-a-binary-tree-by-level, minimum-sum-of-mountain-triplets, find-valid-matrix-given-row-column-sums, maximize-the-confusion-of-an-exam, count-rectangles-containing-points, count-number-of-rectangles-containing-each-point). Added 3 genuinely new problems: `count-groups-of-special-equivalent-strings` (easy/strings+hash-map, group by sorted even/odd chars), `difference-ones-zeros-in-row-and-column` (medium/arrays+simulation, diff[i][j]=2*rowOnes[i]-n+2*colOnes[j]-m), `find-kth-largest-integer-in-array` (medium/strings+two-pointers, sort by length then lex). Net: 2824→2819 (−5). 8751 tests.
 
 ### feat(bank): batch 215 addendum — valid-tic-tac-toe-state, kth-smallest-multiplication-table, confusing-number-ii, minimum-swaps-arrange-binary-grid, solve-the-equation (2026-05-29)
 Five new problems: `valid-tic-tac-toe-state` (medium/arrays+simulation, count X/O, check wins, validate win-count consistency), `kth-smallest-number-in-multiplication-table` (hard/binary-search, count elements ≤ v via O(m) sum over rows), `confusing-number-ii` (hard/math+backtracking, DFS over valid-digit numbers, check 180° rotation), `minimum-swaps-to-arrange-a-binary-grid` (medium/arrays+simulation, greedy: count trailing zeros per row, bubble up), `solve-the-equation` (medium/math+strings+simulation, parse both sides into coeff/constant, handle 3 cases). Bank at **2824**; 8766 tests.
