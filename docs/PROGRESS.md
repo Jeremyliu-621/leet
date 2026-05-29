@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2548** problems; 7953 tests green. Batches 102–178 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2556** problems; 7974 tests green. Batches 102–178 + local 177 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 179+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 177 (local) — max-sum-two-non-overlapping (medium), phone-directory (medium), almost-equal-pairs-ii (hard), least-unique-integers-k-removals (medium) (2026-05-29)
+Four new problems: `maximum-sum-of-two-non-overlapping-subarrays` (medium/arrays+sliding-window, prefix sums + try L-before-M and M-before-L orderings; for each M-window end keep running maxL), `design-phone-directory` (medium/design+hash-map, queue+Set pattern: get() dequeues front while !available, release() adds to set+queue if not already available), `count-almost-equal-pairs-ii` (hard/arrays+math, pad each number to 7 digits, enumerate all ≤2-swap neighbors via C(7,2)=21 one-swaps × 441 two-swaps, check each pair), `least-number-of-unique-integers-after-k-removals` (medium/arrays+hash-map+heap, count frequencies, sort ascending, greedily subtract from k). Bank at **2556**; 7974 tests.
 
 ### feat(bank): batch 177 — special-array-i (easy), find-champion-ii (medium), count-palindromic-subsequences (hard) (2026-05-29)
 Three new problems: `special-array-i` (easy/arrays, O(n) parity alternation check — return false if any adjacent pair has same parity), `find-champion-ii` (medium/graph, unique in-degree-0 node in a DAG tournament — count nodes with in-degree 0, return champion if unique else -1), `count-palindromic-subsequences` (hard/strings+dynamic-programming, count distinct 5-char palindromic subsequences via 676 greedy boundary scans — for each (c1,c2) pair find leftmost/rightmost boundaries, count distinct middle chars). Also fix count-number-of-texts hidden tests (added 2222→7, 77777→15, 7777777777→401) and maximum-number-of-alloys visible test examples. Bank at **2548**; 7953 tests.
