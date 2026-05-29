@@ -43849,4 +43849,101 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       return -1;
     });
   },
+  // batch 207b ---------------------------------------------------------------
+  'find-occurrences-of-element-in-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const queries = args[1] as number[];
+    const x = args[2] as number;
+    const positions: number[] = [];
+    for (let i = 0; i < nums.length; i++) {
+      if (nums[i] === x) positions.push(i);
+    }
+    return queries.map(q => positions[q - 1] ?? -1);
+  },
+  'ways-to-express-an-integer-as-sum-of-powers': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const x = args[1] as number;
+    const MOD = 1000000007;
+    const dp = new Array(n + 1).fill(0);
+    dp[0] = 1;
+    for (let base = 1; Math.pow(base, x) <= n; base++) {
+      const power = Math.pow(base, x);
+      for (let j = n; j >= power; j--) {
+        dp[j] = (dp[j] + dp[j - power]) % MOD;
+      }
+    }
+    return dp[n];
+  },
+  'minimum-right-shifts-to-sort-the-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    let breakCount = 0, breakIdx = -1;
+    for (let i = 0; i < n; i++) {
+      if (nums[i]! > nums[(i + 1) % n]!) {
+        breakCount++;
+        breakIdx = i;
+      }
+    }
+    if (breakCount === 0) return 0;
+    if (breakCount === 1) return n - 1 - breakIdx;
+    return -1;
+  },
+  'sliding-subarray-beauty': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const x = args[2] as number;
+    const freq = new Array(50).fill(0);
+    const result: number[] = [];
+    for (let i = 0; i < nums.length; i++) {
+      if (nums[i]! < 0) freq[nums[i]! + 50]++;
+      if (i >= k && nums[i - k]! < 0) freq[nums[i - k]! + 50]--;
+      if (i >= k - 1) {
+        let count = 0, beauty = 0;
+        for (let v = 0; v < 50; v++) {
+          count += freq[v]!;
+          if (count >= x) { beauty = v - 50; break; }
+        }
+        result.push(beauty);
+      }
+    }
+    return result;
+  },
+  'maximum-strong-pair-xor-ii': (...args: unknown[]) => {
+    const input = args[0] as number[];
+    const nums = [...input].sort((a, b) => a - b);
+    const n = nums.length;
+    const BITS = 20;
+    const children: number[] = [];
+    const cnt: number[] = [];
+    let nodeCount = 0;
+    const newNode = () => { children.push(-1, -1); cnt.push(0); return nodeCount++; };
+    newNode();
+    const update = (num: number, delta: number) => {
+      let node = 0;
+      for (let b = BITS; b >= 0; b--) {
+        const bit = (num >> b) & 1;
+        if (children[node * 2 + bit]! === -1) children[node * 2 + bit] = newNode();
+        node = children[node * 2 + bit]!;
+        cnt[node] = (cnt[node] ?? 0) + delta;
+      }
+    };
+    const query = (num: number) => {
+      let node = 0, result = 0;
+      for (let b = BITS; b >= 0; b--) {
+        const bit = (num >> b) & 1;
+        const want = 1 - bit;
+        const wc = children[node * 2 + want]!;
+        if (wc !== -1 && (cnt[wc] ?? 0) > 0) { result |= (1 << b); node = wc; }
+        else { const oc = children[node * 2 + bit]!; if (oc !== -1) node = oc; else break; }
+      }
+      return result;
+    };
+    let left = 0, ans = 0;
+    for (let right = 0; right < n; right++) {
+      update(nums[right]!, 1);
+      while (nums[left]! * 2 < nums[right]!) { update(nums[left]!, -1); left++; }
+      ans = Math.max(ans, query(nums[right]!));
+    }
+    return ans;
+  },
 };
