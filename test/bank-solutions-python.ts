@@ -40741,4 +40741,53 @@ def maximalPathQuality(values, edges, maxTime):
     return best[0]
 `,
 
+  // batch 178 — math/medium, hash-map/medium, arrays/medium
+  'count-distinct-prime-factors-of-array': `
+def countDistinctPrimeFactors(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = [int(x) for x in nums]
+    primes = set()
+    for n in nums:
+        p = 2
+        while p * p <= n:
+            if n % p == 0:
+                primes.add(p)
+                while n % p == 0:
+                    n //= p
+            p += 1
+        if n > 1:
+            primes.add(n)
+    return len(primes)
+`,
+
+  'number-of-black-blocks': `
+def countBlackBlocks(m, n, coordinates):
+    if hasattr(coordinates, 'to_py'): coordinates = list(coordinates.to_py())
+    coordinates = [[int(x) for x in row] for row in coordinates]
+    m, n = int(m), int(n)
+    from collections import defaultdict
+    block_count = defaultdict(int)
+    for x, y in coordinates:
+        for dr in (-1, 0):
+            for dc in (-1, 0):
+                r, c = x + dr, y + dc
+                if 0 <= r < m - 1 and 0 <= c < n - 1:
+                    block_count[(r, c)] += 1
+    result = [0] * 5
+    filled = 0
+    for v in block_count.values():
+        result[v] += 1
+        filled += 1
+    result[0] = (m - 1) * (n - 1) - filled
+    return result
+`,
+
+  'sort-the-students-by-their-kth-score': `
+def sortTheStudents(score, k):
+    if hasattr(score, 'to_py'): score = list(score.to_py())
+    score = [[int(x) for x in row] for row in score]
+    k = int(k)
+    return sorted(score, key=lambda row: -row[k])
+`,
+
 };

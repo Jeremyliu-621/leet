@@ -2829,6 +2829,10 @@ import { problem as paintingWalls } from './painting-walls';
 import { problem as kthAncestorOfATreeNode } from './kth-ancestor-of-a-tree-node';
 import { problem as countIntegersInRanges } from './count-integers-in-ranges';
 import { problem as maximumSubarrayWithEqualProducts } from './maximum-subarray-with-equal-products';
+// batch 178 — math/medium, hash-map/medium, arrays/medium
+import { problem as countDistinctPrimeFactorsOfArray } from './count-distinct-prime-factors-of-array';
+import { problem as numberOfBlackBlocks } from './number-of-black-blocks';
+import { problem as sortTheStudentsByTheirKthScore } from './sort-the-students-by-their-kth-score';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5696,4 +5700,8 @@ export const problems: readonly Problem[] = [
   reconstructOriginalDigitsFromEnglish,
   minimumSkipsAfterMeetings,
   maximumPathQualityOfAGraph,
+  // batch 178 — math/medium, hash-map/medium, arrays/medium
+  countDistinctPrimeFactorsOfArray,
+  numberOfBlackBlocks,
+  sortTheStudentsByTheirKthScore,
 ];

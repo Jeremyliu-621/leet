@@ -8,15 +8,18 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2542** problems; 7920 tests green. Batches 102–177 + batch 175 (local) complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2545** problems; 7929 tests green. Batches 102–178 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 178+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 179+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 178 — count-distinct-prime-factors (medium), number-of-black-blocks (medium), sort-students-kth-score (medium) (2026-05-29)
+Three new problems: `count-distinct-prime-factors-of-array` (medium/math, trial division + Set deduplication), `number-of-black-blocks` (medium/hash-map, each black cell contributes to up to 4 blocks — Map counting, total−filled=zero-black blocks), `sort-the-students-by-their-kth-score` (medium/arrays, single `.sort()` descending on column k). Bank at **2540**; 7914 tests.
 
 ### feat(bank): batch 175 — min-nonzero-product (medium), remove-one-element (medium), reconstruct-digits (medium), min-skips (hard), max-path-quality (hard) (2026-05-29)
 Five new problems: `minimum-non-zero-product-of-the-array-elements` (medium/math+bit-manipulation, formula: (2^p-1)×(2^p-2)^(2^(p-1)-1) mod 10^9+7 using BigInt for p≤60), `remove-one-element-to-make-array-strictly-increasing` (medium/arrays, find first bad pair then try removing either endpoint), `reconstruct-original-digits-from-english` (medium/strings+hash-map, unique letter trick z→0,w→2,u→4,x→6,g→8 then derive rest), `minimum-skips-after-meetings` (hard/arrays+dp, scaled DP dp[i][j]=min total distance×speed after i roads with j skips), `maximum-path-quality-of-a-graph` (hard/graph+backtracking, DFS with backtracking from node 0 tracking visited set). Bank at **2542**; 7920 tests.
 
 ### feat(bank): batch 177 — most-popular-creator (medium), longest-subseq-sum (medium), reinitialize-perm (medium), mystic-dungeon-energy (medium) (2026-05-29)
-Four new problems: `most-popular-video-creator` (medium/hash-map, accumulate total views per creator + track best video by max views then lex-min id, return creators with max total sorted by name), `length-of-longest-subsequence-that-sums-to-target` (medium/dp, 0-1 knapsack variant — dp[j]=max subsequence length summing to j, iterate right-to-left), `minimum-number-of-operations-to-reinitialize-a-permutation` (medium/simulation, simulate perm operation until identity; order = LCM of cycle lengths), `taking-maximum-energy-from-the-mystic-dungeon` (medium/arrays, suffix sums stepping by k — answer = max of suf[0..k-1]). Bank at **2537**; 7905 tests.
+Four new problems: `most-popular-video-creator` (medium/hash-map, accumulate total views per creator + track best video by max views then lex-min id, return creators with max total sorted by name), `length-of-longest-subsequence-that-sums-to-target` (medium/dp, 0-1 knapsack variant — dp[j]=max subsequence length summing to j, iterate right-to-left), `minimum-number-of-operations-to-reinitialize-a-permutation` (medium/simulation, simulate perm operation until identity; order = LCM of cycle lengths), `taking-maximum-energy-from-the-mystic-dungeon` (medium/arrays, suffix sums stepping by k — answer = max of suf[0..k-1]). Bank at **2540**; 7905 tests.
 
 ### feat(bank): batch 171b — 5 new problems (tree/medium, strings+graph+dp/hard, strings+two-pointers/medium, arrays+math/medium, arrays/medium) (2026-05-29)
 Five new problems: `delete-leaves-with-given-value` (medium/tree, post-order DFS removing leaves equal to target repeatedly until stable), `minimum-cost-to-convert-string-ii` (hard/strings+graph+dp, Floyd-Warshall on substring ID graph + 1D DP minimising total conversion cost), `find-beautiful-indices-in-the-given-array-i` (medium/strings+two-pointers, collect a-matches and b-matches then two-pointer within distance k), `make-k-subarray-sums-equal` (medium/arrays+math, circular array: group indices by i→(i+k)%n cycles, equalise each group at median), `maximum-sum-of-an-hourglass` (medium/arrays, O(m×n) scan computing 7-cell hourglass sum for each valid top-left corner). Bank at **2519**; 7866 tests.

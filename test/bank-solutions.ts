@@ -40689,4 +40689,53 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Math.max(even, odd, alternating);
   },
 
+  // batch 176 — math/medium, hash-map/medium, math/easy, arrays/medium, graph/easy
+  'count-distinct-prime-factors-of-array': (nums: unknown) => {
+    const arr = nums as number[];
+    const primes = new Set<number>();
+    for (let n of arr) {
+      for (let p = 2; p * p <= n; p++) {
+        if (n % p === 0) {
+          primes.add(p);
+          while (n % p === 0) n = Math.floor(n / p);
+        }
+      }
+      if (n > 1) primes.add(n);
+    }
+    return primes.size;
+  },
+
+  'number-of-black-blocks': (...args: unknown[]) => {
+    const m = args[0] as number;
+    const n = args[1] as number;
+    const coordinates = args[2] as number[][];
+    const blockCount = new Map<string, number>();
+    for (const coord of coordinates) {
+      const x = coord[0]!, y = coord[1]!;
+      for (let dr = -1; dr <= 0; dr++) {
+        for (let dc = -1; dc <= 0; dc++) {
+          const r = x + dr, c = y + dc;
+          if (r >= 0 && r < m - 1 && c >= 0 && c < n - 1) {
+            const key = `${r},${c}`;
+            blockCount.set(key, (blockCount.get(key) ?? 0) + 1);
+          }
+        }
+      }
+    }
+    const result = [0, 0, 0, 0, 0];
+    let filled = 0;
+    for (const v of blockCount.values()) {
+      result[v]!++;
+      filled++;
+    }
+    result[0] = (m - 1) * (n - 1) - filled;
+    return result;
+  },
+
+  'sort-the-students-by-their-kth-score': (...args: unknown[]) => {
+    const score = (args[0] as number[][]).map(row => [...row]);
+    const k = args[1] as number;
+    return score.sort((a, b) => b[k]! - a[k]!);
+  },
+
 };
