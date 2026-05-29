@@ -37439,7 +37439,7 @@ def btreeGameWinningMoveRunner(n, arr, x):
 
   // batch 158 — arrays+math/medium, strings/hard, dp/hard×2
   'minimum-cost-homecoming-of-a-robot-in-a-grid': `
-def minCostHomecomingRobot(startPos, homePos, rowCosts, colCosts):
+def minCost(startPos, homePos, rowCosts, colCosts):
     startPos = list(startPos.to_py() if hasattr(startPos, 'to_py') else startPos)
     homePos = list(homePos.to_py() if hasattr(homePos, 'to_py') else homePos)
     rowCosts = list(rowCosts.to_py() if hasattr(rowCosts, 'to_py') else rowCosts)
@@ -41620,5 +41620,221 @@ def maxBottlesDrunk(numBottles, numExchange):
         if nums[i] > nums[i-1]: up = down + 1
         elif nums[i] < nums[i-1]: down = up + 1
     return max(up, down)
+`,
+
+  'binary-tree-level-order-traversal': `def levelOrder(root):
+    if root is None: return []
+    result = []
+    q = [root]
+    while q:
+        result.append([node.val for node in q])
+        q = [child for node in q for child in [node.left, node.right] if child]
+    return result
+`,
+
+  'find-k-pairs-with-smallest-sums': `def kSmallestPairs(nums1, nums2, k):
+    if hasattr(nums1, 'to_py'): nums1 = list(nums1.to_py())
+    if hasattr(nums2, 'to_py'): nums2 = list(nums2.to_py())
+    nums1 = [int(x) for x in nums1]
+    nums2 = [int(x) for x in nums2]
+    k = int(k)
+    import heapq
+    heap = []
+    for i in range(min(len(nums1), k)):
+        heapq.heappush(heap, (nums1[i] + nums2[0], i, 0))
+    result = []
+    while heap and len(result) < k:
+        s, i, j = heapq.heappop(heap)
+        result.append([nums1[i], nums2[j]])
+        if j + 1 < len(nums2):
+            heapq.heappush(heap, (nums1[i] + nums2[j+1], i, j+1))
+    return result
+`,
+
+  'sequence-reconstruction': `def sequenceReconstruction(nums, sequences):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    if hasattr(sequences, 'to_py'): sequences = list(sequences.to_py())
+    nums = [int(x) for x in nums]
+    seqs = []
+    for s in sequences:
+        seqs.append([int(x) for x in (s.to_py() if hasattr(s, 'to_py') else s)])
+    n = len(nums)
+    pos = {v: i for i, v in enumerate(nums)}
+    indegree = [0] * n
+    adj = [[] for _ in range(n)]
+    for seq in seqs:
+        for i in range(1, len(seq)):
+            u, v = pos.get(seq[i-1], -1), pos.get(seq[i], -1)
+            if u < 0 or v < 0 or u >= v: return False
+            adj[u].append(v); indegree[v] += 1
+    from collections import deque
+    q = deque(i for i in range(n) if indegree[i] == 0)
+    while len(q) == 1:
+        cur = q.popleft()
+        for nb in adj[cur]:
+            indegree[nb] -= 1
+            if indegree[nb] == 0: q.append(nb)
+    return len(q) == 0
+`,
+
+  'inorder-successor-in-bst': `def inorderSuccessor(root, p):
+    result = None
+    cur = root
+    target = p.val
+    while cur:
+        if cur.val > target:
+            result = cur
+            cur = cur.left
+        else:
+            cur = cur.right
+    return result
+`,
+
+  'closest-binary-search-tree-value-ii': `def closestKValues(root, target, k):
+    vals = []
+    def inorder(node):
+        if not node: return
+        inorder(node.left)
+        vals.append(node.val)
+        inorder(node.right)
+    inorder(root)
+    l, r = 0, len(vals) - 1
+    while r - l + 1 > k:
+        if abs(vals[l] - target) > abs(vals[r] - target): l += 1
+        else: r -= 1
+    return sorted(vals[l:r+1])
+`,
+
+  'maximum-number-of-groups-entering-a-competition': `def maximumGroups(grades):
+    if hasattr(grades, 'to_py'): grades = list(grades.to_py())
+    n = len(grades)
+    k = 0
+    while (k + 1) * (k + 2) // 2 <= n:
+        k += 1
+    return k
+`,
+
+  'find-the-longest-semi-repetitive-substring': `def longestSemiRepetitiveSubstring(s):
+    left = 0
+    pairs = 0
+    best = 1
+    for right in range(1, len(s)):
+        if s[right] == s[right - 1]:
+            pairs += 1
+        while pairs > 1:
+            if s[left] == s[left + 1]:
+                pairs -= 1
+            left += 1
+        best = max(best, right - left + 1)
+    return best
+`,
+
+  'count-the-number-of-incremovable-subarrays-i': `def incremovableSubarrayCount(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = [int(x) for x in nums]
+    n = len(nums)
+    def is_si(skip_l, skip_r):
+        prev = float('-inf')
+        for i in range(n):
+            if skip_l <= i <= skip_r:
+                continue
+            if nums[i] <= prev:
+                return False
+            prev = nums[i]
+        return True
+    count = 0
+    for l in range(n):
+        for r in range(l, n):
+            if is_si(l, r):
+                count += 1
+    return count
+`,
+
+  'check-if-the-grid-can-be-cut-into-sections': `def checkValidCuts(n, rectangles):
+    if hasattr(rectangles, 'to_py'): rectangles = [list(r.to_py()) if hasattr(r, 'to_py') else list(r) for r in rectangles.to_py()]
+    else: rectangles = [list(r) for r in rectangles]
+    rectangles = [[int(x) for x in r] for r in rectangles]
+    def can_cut(intervals):
+        intervals.sort()
+        groups = 0
+        end = -1
+        for s, e in intervals:
+            if s >= end:
+                groups += 1
+            end = max(end, e)
+        return groups >= 3
+    x_intervals = [(r[0], r[2]) for r in rectangles]
+    y_intervals = [(r[1], r[3]) for r in rectangles]
+    return can_cut(x_intervals) or can_cut(y_intervals)
+`,
+
+  'minimum-ops-make-elements-distinct': `def minimumOperations(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = [int(x) for x in nums]
+    n = len(nums)
+    seen = set()
+    for i in range(n - 1, -1, -1):
+        if nums[i] in seen:
+            return -(-( i + 1) // 3)
+        seen.add(nums[i])
+    return 0
+`,
+
+  'zigzag-grid-traversal-with-skip': `def zigzagTraversal(grid):
+    if hasattr(grid, 'to_py'): grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in grid.to_py()]
+    else: grid = [list(row) for row in grid]
+    result = []
+    pos = 0
+    for r, row in enumerate(grid):
+        ordered = row if r % 2 == 0 else row[::-1]
+        for v in ordered:
+            if pos % 2 == 0:
+                result.append(v)
+            pos += 1
+    return result
+`,
+
+  'sum-of-variable-length-subarrays': `def subarraySum(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = [int(x) for x in nums]
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + nums[i]
+    total = 0
+    for i in range(n):
+        start = max(0, i - nums[i])
+        total += prefix[i + 1] - prefix[start]
+    return total
+`,
+
+  'maximum-amount-of-money-robot-can-earn': `def maximumAmount(coins):
+    if hasattr(coins, 'to_py'): coins = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in coins.to_py()]
+    else: coins = [list(row) for row in coins]
+    coins = [[int(x) for x in row] for row in coins]
+    n = len(coins)
+    m = len(coins[0])
+    NEG = float('-inf')
+    dp = [[[NEG, NEG, NEG] for _ in range(m)] for _ in range(n)]
+    c00 = coins[0][0]
+    dp[0][0][0] = c00
+    if c00 < 0:
+        dp[0][0][1] = 0
+    for i in range(n):
+        for j in range(m):
+            for k in range(3):
+                cur = dp[i][j][k]
+                if cur == NEG:
+                    continue
+                for ni, nj in [(i+1, j), (i, j+1)]:
+                    if ni >= n or nj >= m:
+                        continue
+                    nval = coins[ni][nj]
+                    if dp[ni][nj][k] < cur + nval:
+                        dp[ni][nj][k] = cur + nval
+                    if nval < 0 and k < 2:
+                        if dp[ni][nj][k+1] < cur:
+                            dp[ni][nj][k+1] = cur
+    return max(v for v in dp[n-1][m-1] if v != NEG)
 `,
 };

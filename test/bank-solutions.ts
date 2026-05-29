@@ -41737,4 +41737,133 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return vals.slice(l, r + 1).sort((a, b) => a - b);
   },
+
+  'maximum-number-of-groups-entering-a-competition': (...args: unknown[]) => {
+    const grades = args[0] as number[];
+    const n = grades.length;
+    let k = 0;
+    while ((k + 1) * (k + 2) / 2 <= n) k++;
+    return k;
+  },
+
+  'find-the-longest-semi-repetitive-substring': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let left = 0, pairs = 0, best = 1;
+    for (let right = 1; right < s.length; right++) {
+      if (s[right] === s[right - 1]) pairs++;
+      while (pairs > 1) {
+        if (s[left] === s[left + 1]) pairs--;
+        left++;
+      }
+      best = Math.max(best, right - left + 1);
+    }
+    return best;
+  },
+
+  'count-the-number-of-incremovable-subarrays-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const isStrictlyIncreasing = (skip_l: number, skip_r: number): boolean => {
+      let prev = -Infinity;
+      for (let i = 0; i < n; i++) {
+        if (i >= skip_l && i <= skip_r) continue;
+        if (nums[i]! <= prev) return false;
+        prev = nums[i]!;
+      }
+      return true;
+    };
+    let count = 0;
+    for (let l = 0; l < n; l++) {
+      for (let r = l; r < n; r++) {
+        if (isStrictlyIncreasing(l, r)) count++;
+      }
+    }
+    return count;
+  },
+
+  'check-if-the-grid-can-be-cut-into-sections': (...args: unknown[]) => {
+    const rects = args[1] as number[][];
+    const canCut = (intervals: [number, number][]): boolean => {
+      intervals.sort((a, b) => a[0] - b[0]);
+      let groups = 0, end = -1;
+      for (const [s, e] of intervals) {
+        if (s >= end) groups++;
+        end = Math.max(end, e);
+      }
+      return groups >= 3;
+    };
+    const xIntervals: [number, number][] = rects.map(r => [r[0]!, r[2]!]);
+    const yIntervals: [number, number][] = rects.map(r => [r[1]!, r[3]!]);
+    return canCut(xIntervals) || canCut(yIntervals);
+  },
+
+  'minimum-ops-make-elements-distinct': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const seen = new Set<number>();
+    for (let i = n - 1; i >= 0; i--) {
+      if (seen.has(nums[i]!)) {
+        return Math.ceil((i + 1) / 3);
+      }
+      seen.add(nums[i]!);
+    }
+    return 0;
+  },
+
+  'zigzag-grid-traversal-with-skip': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const result: number[] = [];
+    let pos = 0;
+    for (let r = 0; r < grid.length; r++) {
+      const row = r % 2 === 0 ? grid[r]! : [...grid[r]!].reverse();
+      for (const v of row) {
+        if (pos % 2 === 0) result.push(v);
+        pos++;
+      }
+    }
+    return result;
+  },
+
+  'sum-of-variable-length-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const prefix = new Array(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + nums[i]!;
+    let total = 0;
+    for (let i = 0; i < n; i++) {
+      const start = Math.max(0, i - nums[i]!);
+      total += prefix[i + 1]! - prefix[start]!;
+    }
+    return total;
+  },
+
+  'maximum-amount-of-money-robot-can-earn': (...args: unknown[]) => {
+    const coins = args[0] as number[][];
+    const n = coins.length, m = coins[0]!.length;
+    const NEG = -1e15;
+    const dp: number[][][] = Array.from({ length: n }, () =>
+      Array.from({ length: m }, () => [NEG, NEG, NEG])
+    );
+    const c00 = coins[0]![0]!;
+    dp[0]![0]![0] = c00;
+    if (c00 < 0) dp[0]![0]![1] = 0;
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < m; j++) {
+        for (let k = 0; k <= 2; k++) {
+          const cur = dp[i]![j]![k]!;
+          if (cur === NEG) continue;
+          const dirs: [number, number][] = [[i + 1, j], [i, j + 1]];
+          for (const [ni, nj] of dirs) {
+            if (ni >= n || nj >= m) continue;
+            const nval = coins[ni]![nj]!;
+            if (dp[ni]![nj]![k]! < cur + nval) dp[ni]![nj]![k] = cur + nval;
+            if (nval < 0 && k < 2) {
+              if (dp[ni]![nj]![k + 1]! < cur) dp[ni]![nj]![k + 1] = cur;
+            }
+          }
+        }
+      }
+    }
+    return Math.max(...dp[n - 1]![m - 1]!.filter(v => v !== NEG));
+  },
 };
