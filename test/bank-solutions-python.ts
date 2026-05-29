@@ -35842,5 +35842,56 @@ def maxKelements(nums, k):
     return score
 `,
 
+  // batch 153 — arrays/easy, graph/hard
+  'last-visited-integers': `
+def lastVisitedIntegers(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    result = []
+    seen = []
+    k = 0
+    for n in nums:
+        if n > 0:
+            seen.append(n)
+            k = 0
+        else:
+            k += 1
+            result.append(seen[-k] if k <= len(seen) else -1)
+    return result
+`,
+
+  'count-visited-nodes-in-a-directed-graph': `
+def countVisitedNodes(edges):
+    edges = list(edges.to_py() if hasattr(edges, 'to_py') else edges)
+    n = len(edges)
+    answer = [0] * n
+    visited = [-1] * n
+    for start in range(n):
+        if answer[start] != 0:
+            continue
+        path = []
+        pos_in_path = {}
+        cur = start
+        while visited[cur] == -1 and cur not in pos_in_path:
+            pos_in_path[cur] = len(path)
+            path.append(cur)
+            cur = edges[cur]
+        if cur in pos_in_path:
+            cycle_start = pos_in_path[cur]
+            cycle_len = len(path) - cycle_start
+            for i in range(cycle_start, len(path)):
+                answer[path[i]] = cycle_len
+                visited[path[i]] = 1
+            for i in range(cycle_start - 1, -1, -1):
+                node = path[i]
+                answer[node] = cycle_len + (cycle_start - i)
+                visited[node] = 1
+        else:
+            resolved_len = answer[cur]
+            for i in range(len(path) - 1, -1, -1):
+                node = path[i]
+                answer[node] = resolved_len + (len(path) - i)
+                visited[node] = 1
+    return answer
+`,
 
 };

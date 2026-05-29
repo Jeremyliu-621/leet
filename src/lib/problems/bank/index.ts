@@ -2536,6 +2536,9 @@ import { problem as minimumMovesToCaptureTheQueen } from './minimum-moves-to-cap
 import { problem as minimumSubstringPartitionEqualCharFreq } from './minimum-substring-partition-of-equal-character-frequency';
 import { problem as maximumGoodSubarraySum } from './maximum-good-subarray-sum';
 import { problem as maximalScoreAfterApplyingKOps } from './maximal-score-after-applying-k-operations';
+// batch 153 — arrays/easy, graph/hard
+import { problem as lastVisitedIntegers } from './last-visited-integers';
+import { problem as countVisitedNodesInADirectedGraph } from './count-visited-nodes-in-a-directed-graph';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5109,4 +5112,7 @@ export const problems: readonly Problem[] = [
   dijkstraSingleSourceShortestPath,
   kthLargestAfterEachInsertion,
   simulateTrafficLights,
+  // batch 153 — arrays/easy, graph/hard
+  lastVisitedIntegers,
+  countVisitedNodesInADirectedGraph,
 ];

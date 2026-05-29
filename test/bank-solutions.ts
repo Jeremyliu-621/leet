@@ -36075,5 +36075,59 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return score;
   },
 
+  // batch 153 — arrays/easy, graph/hard
+  'last-visited-integers': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const result: number[] = [];
+    const seen: number[] = [];
+    let k = 0;
+    for (const n of nums) {
+      if (n > 0) {
+        seen.push(n);
+        k = 0;
+      } else {
+        k++;
+        result.push(k <= seen.length ? seen[seen.length - k]! : -1);
+      }
+    }
+    return result;
+  },
+
+  'count-visited-nodes-in-a-directed-graph': (...args: unknown[]) => {
+    const edges = args[0] as number[];
+    const n = edges.length;
+    const answer = new Array<number>(n).fill(0);
+    const visited = new Array<number>(n).fill(-1);
+    for (let start = 0; start < n; start++) {
+      if (answer[start] !== 0) continue;
+      const path: number[] = [];
+      const posInPath = new Map<number, number>();
+      let cur = start;
+      while (visited[cur] === -1 && !posInPath.has(cur)) {
+        posInPath.set(cur, path.length);
+        path.push(cur);
+        cur = edges[cur]!;
+      }
+      if (posInPath.has(cur)) {
+        const cycleStart = posInPath.get(cur)!;
+        const cycleLen = path.length - cycleStart;
+        for (let i = cycleStart; i < path.length; i++) {
+          answer[path[i]!] = cycleLen;
+          visited[path[i]!] = 1;
+        }
+        for (let i = cycleStart - 1; i >= 0; i--) {
+          answer[path[i]!] = cycleLen + (cycleStart - i);
+          visited[path[i]!] = 1;
+        }
+      } else {
+        const resolvedLen = answer[cur]!;
+        for (let i = path.length - 1; i >= 0; i--) {
+          answer[path[i]!] = resolvedLen + (path.length - i);
+          visited[path[i]!] = 1;
+        }
+      }
+    }
+    return answer;
+  },
 
 };
