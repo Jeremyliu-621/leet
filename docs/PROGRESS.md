@@ -8,9 +8,15 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2407** problems; 7515 tests green. Batches 102–162 + local batch 161 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2412** problems; 7530 tests green. Batches 102–163 complete. bit-manipulation: 2→60 (tag enrichment). UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 163+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 164+); site count update; UX polish per LEETCODE_PARITY.md.
+
+### chore(bank): add bit-manipulation tag to 58 problems + design tag to 29 problems; site count 2,384+→2,412+ (2026-05-29)
+bit-manipulation was critically underrepresented (2 → 60 problems after tagging all XOR/hamming/single-number/bit-flip/power-of-2/reverse-bits problems). design tag added to all 29 design/implement/lru/lfu/insert-delete problems (10 → 39). Marketing site updated to 2,412+.
+
+### feat(bank): batch 163 — 5 new bit-manipulation problems (2026-05-29)
+flip-and-invert-image (easy/bit-manipulation, reverse+XOR), check-if-a-string-contains-all-binary-codes-of-size-k (medium/bit-manipulation+strings+hash-map, Set of k-length windows), bitwise-ors-of-subarrays (medium/bit-manipulation+arrays+dp, O(n·log max) rolling Set), number-of-steps-to-reduce-a-number-in-binary-representation (medium/bit-manipulation+strings, right-to-left carry simulation), convert-to-base-2 (medium/bit-manipulation+math, base -2 via rem=((n%2)+2)%2). Bank at **2412**; 7530 tests.
 
 ### feat(bank): add batch 161 (local) — 5 new problems (binary-search, digit-DP, arrays, simulation, bit-manipulation) (2026-05-29)
 New problems: `minimum-time-to-finish-trips` (medium/arrays+binary-search, binary search on T: sum(T÷time[i]) ≥ totalTrips), `count-special-numbers` (medium/math+dp, digit DP counting integers with all distinct digits in [1,n]; verified n=20→19, n=135→110, n=9876543→712890), `minimum-deletions-to-make-array-beautiful` (medium/arrays, greedy: delete at even logical indices when nums[i]==nums[i+1]; add 1 more if odd length), `amount-of-new-area-painted-each-day` (hard/arrays+simulation, union-find "next unpainted" with path compression, O(n log n)), `convert-number-to-hexadecimal` (easy/bit-manipulation+math, unsigned 32-bit >>> 0, nibble extraction via & 0xF). Bank at **2407**; 7515 tests.
