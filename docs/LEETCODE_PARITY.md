@@ -59,7 +59,7 @@ honest, frictionless gate that *feels* like LeetCode when you hit it.
 | Markdown rendering                       | Full markdown — headings, bold, italic, lists, links, code blocks                                   | Full GFM markdown via `react-markdown`; custom grayscale component map; raw HTML disabled | ✅ | — | Shipped in Phase 13 polish.                                                                                               |
 | Inline code (`` `like this` ``)          | Yes                                                                                                 | Yes (comes with react-markdown)             |   ✅   |    —     |                                                                                                                          |
 | Fenced code blocks in description        | Syntax-highlighted (e.g. for input/output schemas)                                                  | Grayscale syntax highlighting via `rehype-highlight` (JS + Python) | ✅ | — | Token classes map to `--ll-text`/`--ll-muted`/`--ll-faint`; zero hue. Shipped in Phase 13 polish.                        |
-| LaTeX / math rendering                   | KaTeX in newer problems (sums, big-O notation)                                                      | No                                          |   ❌   |    L     | Useful for graph/math problems. Defer until the bank has any.                                                              |
+| LaTeX / math rendering                   | KaTeX in newer problems (sums, big-O notation)                                                      | `remark-math` + `rehype-katex`; inline `$...$` and display `$$...$$` work in problem descriptions | ✅ | — | Shipped Phase 13. CSS vars override KaTeX's hardcoded black for dark/light theme compat. |
 | Image support in examples                | Yes — many problems include diagrams (trees, grids)                                                 | No                                          |   ❌   |    L     | Real friction for tree/graph problems. Cost: bundle images + alt text in the problem bank.                                |
 | Worked examples block                    | Each example: Input, Output, Explanation                                                            | Same shape                                  |   ✅   |    —     |                                                                                                                          |
 | Collapsible examples                     | No — always expanded                                                                                | Always expanded                             |   ✅   |    —     | Parity.                                                                                                                  |
@@ -170,10 +170,11 @@ These are quotable, screenshot-able wins. Put them on the marketing page.
 All H/M priority items have been addressed. Remaining gaps are L priority:
 
 1. **Browser-zoom QA** — quick check at 150% and 200% before 1.0.
-2. **LaTeX / math rendering** — useful for graph/math problems; defer until the bank has any.
-3. **Image support in problem descriptions** — needed for tree/grid problems; significant authoring cost.
-4. Everything else (runtime/memory percentiles, snippet expansion, font family picker)
+2. **Image support in problem descriptions** — needed for tree/grid problems; significant authoring cost.
+3. Everything else (runtime/memory percentiles, snippet expansion, font family picker)
    is post-1.0 and should be evaluated against actual user feedback.
+
+*Completed since last audit: LaTeX / math rendering ✅ (`remark-math` + `rehype-katex`, Phase 13).*
 
 *Completed from previous iterations: Emacs keymap ✅; Recover last submitted code ✅; Syntax highlighting in code blocks ✅; Persistent submission history ✅; Per-test input in verdict ✅.*
 
