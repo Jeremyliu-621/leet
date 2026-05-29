@@ -2877,11 +2877,22 @@ import { problem as largestAlmostMissingInteger } from './find-the-largest-almos
 import { problem as transformArrayByParity } from './transform-array-by-parity';
 import { problem as maxContainersOnShip } from './maximum-containers-on-a-ship';
 import { problem as findEvenNumbers } from './unique-3-digit-even-numbers';
+// batch 217 (addendum) — medium/math, hard/graph, medium/math, medium/arrays+math, easy/arrays+simulation
+import { problem as reachANumber } from './reach-a-number';
+import { problem as minTrioDegree } from './minimum-degree-of-a-connected-trio';
+import { problem as validSquare } from './valid-square';
+import { problem as countSubarraysOddSum } from './count-subarrays-with-odd-sum';
+import { problem as separateDigits } from './separate-the-digits-in-an-array';
 // batch 218 — easy/strings, easy/strings+math, medium/arrays+hash-map+math, medium/graph+union-find
 import { problem as phonePrefix } from './phone-number-prefix';
 import { problem as reverseDegree } from './reverse-degree-of-a-string';
 import { problem as minOpsArrayZero } from './minimum-operations-make-array-elements-zero';
 import { problem as propertiesGraph } from './properties-graph';
+// batch 219 — easy/math, easy/strings+math+simulation, medium/strings+two-pointers, medium/arrays+simulation
+import { problem as nonSpecialCount } from './find-the-count-of-numbers-which-are-not-special';
+import { problem as hasSameDigits } from './check-if-digits-are-equal-in-string-after-operations-i';
+import { problem as getSmallestStringConstraint } from './lexicographically-smallest-string-after-operations-with-constraint';
+import { problem as checkValidCuts } from './check-if-grid-can-be-cut-into-sections';
 // batch 220 — easy/math, easy/arrays, easy/strings, easy/strings, easy/strings+hash-map
 import { problem as sumMultiples } from './sum-multiples';
 import { problem as minOpsArrayIncreasing } from './minimum-operations-to-make-the-array-increasing';
@@ -5805,11 +5816,22 @@ export const problems: readonly Problem[] = [
   transformArrayByParity,
   maxContainersOnShip,
   findEvenNumbers,
+  // batch 217 (addendum)
+  reachANumber,
+  minTrioDegree,
+  validSquare,
+  countSubarraysOddSum,
+  separateDigits,
   // batch 218
   phonePrefix,
   reverseDegree,
   minOpsArrayZero,
   propertiesGraph,
+  // batch 219
+  nonSpecialCount,
+  hasSameDigits,
+  getSmallestStringConstraint,
+  checkValidCuts,
   // batch 220
   sumMultiples,
   minOpsArrayIncreasing,

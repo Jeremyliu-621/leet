@@ -40596,6 +40596,67 @@ def findEvenNumbers(digits):
                     result.add(digits[i] * 100 + digits[j] * 10 + digits[k])
     return sorted(result)
 `,
+  // batch 217 (addendum)
+  'reach-a-number': `
+def reachNumber(target):
+    target = abs(target)
+    total, k = 0, 0
+    while total < target or (total - target) % 2 != 0:
+        k += 1
+        total += k
+    return k
+`,
+  'minimum-degree-of-a-connected-trio': `
+def minTrioDegree(n, edges):
+    adj = [set() for _ in range(n + 1)]
+    deg = [0] * (n + 1)
+    for u, v in edges:
+        adj[u].add(v)
+        adj[v].add(u)
+        deg[u] += 1
+        deg[v] += 1
+    ans = float('inf')
+    for u in range(1, n + 1):
+        for v in adj[u]:
+            for w in adj[u]:
+                if v < w and w in adj[v]:
+                    ans = min(ans, deg[u] + deg[v] + deg[w] - 6)
+    return -1 if ans == float('inf') else ans
+`,
+  'valid-square': `
+def validSquare(p1, p2, p3, p4):
+    def dist2(a, b):
+        return (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2
+    pts = [p1, p2, p3, p4]
+    dists = sorted(dist2(pts[i], pts[j]) for i in range(4) for j in range(i + 1, 4))
+    return (dists[0] > 0 and
+            dists[0] == dists[1] == dists[2] == dists[3] and
+            dists[4] == dists[5] and
+            dists[3] * 2 == dists[4])
+`,
+  'count-subarrays-with-odd-sum': `
+def numOfSubarrays(arr):
+    MOD = 10 ** 9 + 7
+    even, odd, total, ans = 1, 0, 0, 0
+    for n in arr:
+        total += n
+        if total % 2 == 0:
+            ans = (ans + odd) % MOD
+            even += 1
+        else:
+            ans = (ans + even) % MOD
+            odd += 1
+    return ans
+`,
+  'separate-the-digits-in-an-array': `
+def separateDigits(nums):
+    result = []
+    for n in nums:
+        for ch in str(n):
+            result.append(int(ch))
+    return result
+`,
+  // batch 218 ---------------------------------------------------------------
   'phone-number-prefix': `
 def phonePrefix(numbers):
     numbers = sorted(numbers)
@@ -40646,6 +40707,64 @@ def numberOfComponents(properties):
             union(nodes[0], nodes[k])
 
     return sum(1 for i in range(n) if find(i) == i)
+`,
+  'find-the-count-of-numbers-which-are-not-special': `
+def nonSpecialCount(l, r):
+    import math
+    limit = math.isqrt(r)
+    sieve = [True] * (limit + 1)
+    if limit >= 0: sieve[0] = False
+    if limit >= 1: sieve[1] = False
+    for i in range(2, limit + 1):
+        if i * i > limit: break
+        if sieve[i]:
+            for j in range(i * i, limit + 1, i):
+                sieve[j] = False
+    special = sum(1 for p in range(2, limit + 1) if sieve[p] and l <= p * p <= r)
+    return (r - l + 1) - special
+`,
+  'check-if-digits-are-equal-in-string-after-operations-i': `
+def hasSameDigits(s):
+    arr = [int(c) for c in s]
+    while len(arr) > 2:
+        arr = [(arr[i] + arr[i + 1]) % 10 for i in range(len(arr) - 1)]
+    return arr[0] == arr[1]
+`,
+  'lexicographically-smallest-string-after-operations-with-constraint': `
+def getSmallestString(s, k):
+    arr = list(s)
+    for i in range(len(arr)):
+        c = ord(arr[i]) - ord('a')
+        dist_to_a = min(c, 26 - c)
+        if k >= dist_to_a:
+            k -= dist_to_a
+            arr[i] = 'a'
+        else:
+            best = arr[i]
+            for t in range(26):
+                cost = min((c - t) % 26, (t - c) % 26)
+                if cost <= k and chr(ord('a') + t) < best:
+                    best = chr(ord('a') + t)
+            arr[i] = best
+            break
+    return ''.join(arr)
+`,
+  'check-if-grid-can-be-cut-into-sections': `
+def checkValidCuts(n, rectangles):
+    def can_split(intervals):
+        intervals.sort()
+        count, max_end = 0, float('-inf')
+        for start, end in intervals:
+            if start >= max_end:
+                count += 1
+                if count >= 3:
+                    return True
+            max_end = max(max_end, end)
+        return False
+
+    x_intervals = [(r[0], r[2]) for r in rectangles]
+    y_intervals = [(r[1], r[3]) for r in rectangles]
+    return can_split(x_intervals) or can_split(y_intervals)
 `,
   'sum-multiples': `
 def sumOfMultiples(n):
