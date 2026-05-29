@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2689** problems; 8361 tests green. Batches 102–200 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2694** problems; 8379 tests green. Batches 102–200 + 198b complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 201+); UX polish per LEETCODE_PARITY.md.
 
@@ -20,6 +20,9 @@ One genuinely new problem added (3 others — longest-turbulent-subarray, transp
 
 ### feat(bank): batch 198 — count-substrings-no-repeat, max-product-two-elements, find-all-anagrams, rotate-array-left (2026-05-29)
 Four new problems: `count-substrings-without-repeating` (medium/strings+sliding-window+hash-map, two-pointer shrink + right-left+1 count), `maximum-product-of-two-elements` (easy/arrays+math, find top-2 values, return (max1-1)*(max2-1)), `find-all-anagrams` (medium/strings+sliding-window+hash-map, diff-count approach: count=p−window, track non-zeros), `rotate-array-left` (easy/arrays+math, k%n slice-and-concat). Bank at **2685**; 8346 tests.
+
+### feat(bank): batch 198b — fascinating-number, count-dividing-digits, typewriter-time, largest-and-combo, money-bank (2026-05-29)
+Five new problems: `check-if-the-number-is-fascinating` (easy/math+simulation, concat n+2n+3n must use digits 1-9 each once), `count-the-digits-that-divide-a-number` (easy/math, count non-zero digits d where num%d==0), `minimum-time-to-type-word-using-special-typewriter` (easy/simulation, circular keyboard min-rotation+press per char), `largest-combination-with-bitwise-and-greater-than-zero` (medium/arrays+bit-manipulation, per-bit count of set elements, return max), `calculate-money-in-leetcode-bank` (easy/math+simulation, week w day d deposit = w+d+1, sum over n days). Bank at **2694**; 8379 tests.
 
 ### feat(bank): batch 195b — k-distant-indices, remove-colored-pieces, count-negatives-matrix, odd-cells-matrix, min-ops-maximize-last (2026-05-29)
 Five new problems from concurrent batch: `find-all-k-distant-indices-in-an-array` (easy/arrays+two-pointers), `remove-colored-pieces-if-both-neighbors-are-the-same-color` (medium/strings+math), `count-negative-numbers-in-a-sorted-matrix` (easy/arrays+binary-search), `cells-with-odd-values-in-a-matrix` (easy/arrays+math+simulation), `minimum-operations-to-maximize-last-elements-in-arrays` (medium/arrays). Bank at **2685** total.
