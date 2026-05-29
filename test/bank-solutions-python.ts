@@ -18472,6 +18472,75 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
     return True
 `,
 
+  // batch 215
+  'distribute-candies-among-children-i': `def distributeCandies(n, limit):
+    count = 0
+    for i in range(min(n, limit) + 1):
+        for j in range(min(n - i, limit) + 1):
+            k = n - i - j
+            if 0 <= k <= limit:
+                count += 1
+    return count
+`,
+
+  'minimum-area-rectangle-ii': `def minAreaFreeRect(points):
+    from collections import defaultdict
+    n = len(points)
+    groups = defaultdict(list)
+    for i in range(n):
+        for j in range(i+1, n):
+            x1, y1 = points[i]
+            x2, y2 = points[j]
+            groups[(x1+x2, y1+y2, (x2-x1)**2+(y2-y1)**2)].append((x1, y1, x2, y2))
+    ans = float('inf')
+    for pairs in groups.values():
+        m = len(pairs)
+        if m < 2:
+            continue
+        for a in range(m):
+            for b in range(a+1, m):
+                x1, y1, x2, y2 = pairs[a]
+                x3, y3, x4, y4 = pairs[b]
+                area = abs((x2-x1)*(y4-y3) - (y2-y1)*(x4-x3)) / 2
+                if area > 0:
+                    ans = min(ans, area)
+    return 0 if ans == float('inf') else ans
+`,
+
+  'minimum-total-price-of-trips': `def minimumTotalPrice(n, edges, price, trips):
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    count = [0] * n
+    def find_path(node, parent, dst, path):
+        path.append(node)
+        if node == dst:
+            return True
+        for nxt in adj[node]:
+            if nxt != parent:
+                if find_path(nxt, node, dst, path):
+                    return True
+        path.pop()
+        return False
+    for s, e in trips:
+        path = []
+        find_path(s, -1, e, path)
+        for node in path:
+            count[node] += 1
+    def dp(node, parent):
+        not_h = price[node] * count[node]
+        halv = (price[node] // 2) * count[node]
+        for nxt in adj[node]:
+            if nxt != parent:
+                c_not_h, c_h = dp(nxt, node)
+                not_h += min(c_not_h, c_h)
+                halv += c_not_h
+        return not_h, halv
+    not_h, halv = dp(0, -1)
+    return min(not_h, halv)
+`,
+
   'construct-string-with-repeat-limit': `def repeatLimitedString(s, repeatLimit):
     limit = int(repeatLimit)
     from collections import Counter

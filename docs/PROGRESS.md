@@ -8,11 +8,14 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2806** problems; 8712 tests green. Batches 102–215 + concurrent 212-addendum + 213b + 214b + a11y + total-solved UX complete.
+**Current focus:** Bank at **2809** problems; 8712+ tests green. Batches 102–215a+215b + concurrent 212-addendum + 213b + 214b + a11y + total-solved UX complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 216+); UX polish per LEETCODE_PARITY.md.
 
-### feat(bank): batch 215 — partition-string-values-at-most-k, consecutive-integers-data-stream, make-distinct-chars-equal, shortest-string-contains-three (2026-05-29)
+### feat(bank): batch 215b (concurrent) — distribute-candies-i, minimum-area-rectangle-ii, minimum-total-price-of-trips (2026-05-29)
+Three problems from concurrent session: `distribute-candies-among-children-i` (easy/math+simulation), `minimum-area-rectangle-ii` (medium/math+hash-map), `minimum-total-price-of-trips` (hard/tree+dp). Bank at **2809**.
+
+### feat(bank): batch 215a — partition-string-values-at-most-k, consecutive-integers-data-stream, make-distinct-chars-equal, shortest-string-contains-three (2026-05-29)
 Four new medium problems: `partition-string-into-substrings-with-values-at-most-k` (greedy digit extension), `find-consecutive-integers-from-a-data-stream` (design/simulation, streak counter), `make-number-of-distinct-characters-equal` (hash-map, enumerate 676 pairs, check delta per swap), `shortest-string-that-contains-three-strings` (try all 6 orderings, greedy overlap merge + lex tiebreak). Bank at **2806**; 8712 tests.
 
 ### feat(bank): batch 214b (concurrent) — count-artifacts, closest-dessert, watering-plants-ii, rearrange-words (2026-05-29)
