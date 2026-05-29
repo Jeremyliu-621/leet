@@ -2949,6 +2949,11 @@ import { problem as theNumberOfWeakCharactersInTheGame } from './the-number-of-w
 import { problem as sortEvenAndOddIndicesIndependently } from './sort-even-and-odd-indices-independently';
 import { problem as canYouEatYourFavoriteCandyOnYourFavoriteDay } from './can-you-eat-your-favorite-candy-on-your-favorite-day';
 import { problem as countHillsAndValleysInAnArray } from './count-hills-and-valleys-in-an-array';
+// batch 192 — easy/arrays, easy/strings+hash-map, easy/strings, medium/arrays+dynamic-programming
+import { problem as adjacentIncreasingSubarraysDetectionI } from './adjacent-increasing-subarrays-detection-i';
+import { problem as rearrangeKSubstringsToFormTarget } from './rearrange-k-substrings-to-form-target';
+import { problem as findTheLexicographicallyLargestStringFromTheBoxI } from './find-the-lexicographically-largest-string-from-the-box-i';
+import { problem as minimumTimeToBreakLocksI } from './minimum-time-to-break-locks-i';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5939,4 +5944,9 @@ export const problems: readonly Problem[] = [
   sortEvenAndOddIndicesIndependently,
   canYouEatYourFavoriteCandyOnYourFavoriteDay,
   countHillsAndValleysInAnArray,
+  // batch 192 — easy/arrays, easy/strings+hash-map, easy/strings, medium/arrays+dynamic-programming
+  adjacentIncreasingSubarraysDetectionI,
+  rearrangeKSubstringsToFormTarget,
+  findTheLexicographicallyLargestStringFromTheBoxI,
+  minimumTimeToBreakLocksI,
 ];

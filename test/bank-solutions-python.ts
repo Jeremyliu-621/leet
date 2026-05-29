@@ -42446,4 +42446,44 @@ def countHillValley(nums):
             count += 1
     return count
 `,
+  'adjacent-increasing-subarrays-detection-i': `
+def hasIncreasingSubarrays(nums, k):
+    n = len(nums)
+    inc = [1] * n
+    for i in range(n - 2, -1, -1):
+        if nums[i] < nums[i + 1]:
+            inc[i] = inc[i + 1] + 1
+    for i in range(n - 2 * k + 1):
+        if inc[i] >= k and inc[i + k] >= k:
+            return True
+    return False
+`,
+  'rearrange-k-substrings-to-form-target': `
+def isPossibleToRearrange(s, t, k):
+    n = len(s)
+    chunk_len = n // k
+    s_chunks = sorted(s[i*chunk_len:(i+1)*chunk_len] for i in range(k))
+    t_chunks = sorted(t[i*chunk_len:(i+1)*chunk_len] for i in range(k))
+    return s_chunks == t_chunks
+`,
+  'find-the-lexicographically-largest-string-from-the-box-i': `
+def answerString(word, numFriends):
+    if numFriends == 1:
+        return word
+    n = len(word)
+    max_len = n - numFriends + 1
+    best = ''
+    for i in range(n - max_len + 1):
+        sub = word[i:i + max_len]
+        if sub > best:
+            best = sub
+    return best
+`,
+  'minimum-time-to-break-locks-i': `
+def findMinimumTime(strength):
+    s = sorted(strength, reverse=True)
+    n = len(s)
+    max_product = max((i + 1) * s[i] for i in range(n))
+    return n + max_product
+`,
 };

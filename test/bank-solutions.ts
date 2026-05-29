@@ -42536,4 +42536,54 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return count;
   },
+  'adjacent-increasing-subarrays-detection-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const n = nums.length;
+    const inc = new Array<number>(n).fill(1);
+    for (let i = n - 2; i >= 0; i--) {
+      if ((nums[i] as number) < (nums[i + 1] as number)) inc[i] = (inc[i + 1] as number) + 1;
+    }
+    for (let i = 0; i + 2 * k <= n; i++) {
+      if ((inc[i] as number) >= k && (inc[i + k] as number) >= k) return true;
+    }
+    return false;
+  },
+  'rearrange-k-substrings-to-form-target': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const t = args[1] as string;
+    const k = args[2] as number;
+    const chunkLen = s.length / k;
+    const sChunks: string[] = [];
+    const tChunks: string[] = [];
+    for (let i = 0; i < k; i++) {
+      sChunks.push(s.slice(i * chunkLen, (i + 1) * chunkLen));
+      tChunks.push(t.slice(i * chunkLen, (i + 1) * chunkLen));
+    }
+    sChunks.sort();
+    tChunks.sort();
+    return sChunks.every((chunk, i) => chunk === tChunks[i]);
+  },
+  'find-the-lexicographically-largest-string-from-the-box-i': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const numFriends = args[1] as number;
+    const n = word.length;
+    if (numFriends === 1) return word;
+    const maxLen = n - numFriends + 1;
+    let best = '';
+    for (let i = 0; i + maxLen <= n; i++) {
+      const sub = word.slice(i, i + maxLen);
+      if (sub > best) best = sub;
+    }
+    return best;
+  },
+  'minimum-time-to-break-locks-i': (...args: unknown[]) => {
+    const strength = [...(args[0] as number[])].sort((a, b) => b - a);
+    const n = strength.length;
+    let maxProduct = 0;
+    for (let i = 0; i < n; i++) {
+      maxProduct = Math.max(maxProduct, (i + 1) * (strength[i] as number));
+    }
+    return n + maxProduct;
+  },
 };
