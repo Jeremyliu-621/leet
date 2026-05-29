@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2589** problems; 8061 tests green. Batches 102–180 + batch 179 (local tree) complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2594** problems; 8085 tests green. Batches 102–181 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 181+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 182+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 181 — grid-sections (medium), distinct-elements (easy), zigzag-skip (easy), variable-subarrays (easy), robot-money (medium) (2026-05-29)
+Five new problems: `check-if-the-grid-can-be-cut-into-sections` (medium/arrays, LC#3394 — sort x/y interval projections and count non-overlapping groups, ≥3 on either axis means valid 2-cut), `minimum-ops-make-elements-distinct` (easy/arrays+hash-map, LC#3396 — scan right-to-left; first duplicate at index i requires ceil((i+1)/3) remove-3 operations), `zigzag-grid-traversal-with-skip` (easy/arrays+simulation, LC#3417 — global counter over zigzag row-order, collect cells at even counter positions), `sum-of-variable-length-subarrays` (easy/arrays, LC#3427 — prefix sum for O(1) range queries, each i contributes sum of nums[max(0,i-nums[i])..i]), `maximum-amount-of-money-robot-can-earn` (medium/dp, LC#3418 — 3D DP dp[i][j][k]=max coins at (i,j) having neutralized k of up to 2 robber cells). Bank at **2594**; 8085 tests.
 
 ### feat(bank): batch 179 (local) — binary-tree-level-order-traversal (medium), find-k-pairs-with-smallest-sums (medium), sequence-reconstruction (medium), inorder-successor-in-bst (medium), closest-binary-search-tree-value-ii (hard) (2026-05-29)
 Five new problems: `binary-tree-level-order-traversal` (medium/tree, BFS with level-size tracking), `find-k-pairs-with-smallest-sums` (medium/heap, min-heap with (sum,i,j) entries seeded from all nums1[i]+nums2[0]), `sequence-reconstruction` (medium/graph, topological sort uniqueness — queue must never have >1 node), `inorder-successor-in-bst` (medium/tree+binary-search, walk BST saving last left-turn node), `closest-binary-search-tree-value-ii` (hard/tree+heap, in-order traversal + two-pointer on sorted values). Also fixed JS/Python reference solutions for maximize-number-of-nice-divisors (BigInt integer division), maximum-points-tourist-can-earn (day-0 initialization), and added 13 missing Python solutions for batch 178/179 problems. Bank at **2589**; 8061 tests.
