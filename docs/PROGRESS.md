@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2570** problems; 8004 tests green. Batches 102–178 (local) complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2579** problems; 8031 tests green. Batches 102–178 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 179+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 178 (local) — range-sum-2d-immutable (medium), min-job-difficulty (hard), sum-root-to-leaf-binary (easy), linked-list-in-binary-tree (medium) + batch 172 solutions (2026-05-29)
+Four new batch 178 problems: `range-sum-query-2d-immutable` (medium/design, 2D prefix sum for O(1) range sum queries), `minimum-difficulty-of-a-job-schedule` (hard/dp, DP scheduling jobs across d days — dp[day][j] = min cost for first j jobs in day days), `sum-of-root-to-leaf-binary-numbers` (easy/tree, DFS accumulating binary path values), `linked-list-in-binary-tree` (medium/linked-list+tree, DFS subpath matching at each tree node). Also added batch 172 solutions (count-k-reducible, min-area-cover-ones-ii, min-operations-to-make-subsequence, replace-non-coprime, max-books-you-can-take) to fix broken solution files. Bank at **2579**; 8031 tests.
 
 ### feat(bank): batch 178 — nice-divisors (hard), expressive-words (medium), global-local-inversions (medium), smallest-range-ii (medium), word-valid-after-subs (medium) (2026-05-29)
 Five new problems: `maximize-number-of-nice-divisors` (hard/math, max product of exponents summing to p → split into 3s, BigInt modular exponentiation), `expressive-words` (medium/strings, run-length encoding stretch check — s-run must equal w-run or s-run≥3 and s-run>w-run), `global-local-inversions` (medium/arrays, global==local iff |A[i]-i|≤1 for all i), `smallest-range-ii` (medium/arrays, sort + try all +k/-k prefix splits for min max-min), `check-if-word-is-valid-after-substitutions` (medium/stack, push chars and pop top 3 when they form 'abc'). Bank at **2570**; 8004 tests.
