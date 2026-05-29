@@ -37467,4 +37467,69 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return digitSum % 2 === 0 ? Math.floor(num / 2) : Math.floor((num - 1) / 2);
   },
 
+  // batch 158 — arrays/medium×3, strings/medium×2
+  'frog-jump-ii': (...args: unknown[]) => {
+    const stones = args[0] as number[];
+    let ans = stones[1]! - stones[0]!;
+    for (let i = 2; i < stones.length; i++) {
+      ans = Math.max(ans, stones[i]! - stones[i - 2]!);
+    }
+    return ans;
+  },
+
+  'collecting-chocolates': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const x = args[1] as number;
+    const n = nums.length;
+    const minCost = [...nums];
+    let ans = minCost.reduce((a, b) => a + b, 0);
+    for (let k = 1; k < n; k++) {
+      for (let i = 0; i < n; i++) {
+        minCost[i] = Math.min(minCost[i]!, nums[(i + k) % n]!);
+      }
+      const total = k * x + minCost.reduce((a, b) => a + b, 0);
+      if (total < ans) ans = total;
+    }
+    return ans;
+  },
+
+  'partitioning-into-minimum-number-of-deci-binary-numbers': (n: unknown) => {
+    return Math.max(...(n as string).split('').map(Number));
+  },
+
+  'where-will-the-ball-fall': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length;
+    const cols = grid[0]!.length;
+    return Array.from({ length: cols }, (_, start) => {
+      let j = start;
+      for (let r = 0; r < m; r++) {
+        const d = grid[r]![j]!;
+        const nj = j + d;
+        if (nj < 0 || nj >= cols || grid[r]![nj] !== d) { j = -1; break; }
+        j = nj;
+      }
+      return j;
+    });
+  },
+
+  'split-a-string-into-the-maximum-number-of-unique-substrings': (s: unknown) => {
+    const str = s as string;
+    let max = 0;
+    const used = new Set<string>();
+    function dfs(start: number) {
+      if (start === str.length) { max = Math.max(max, used.size); return; }
+      for (let end = start + 1; end <= str.length; end++) {
+        const sub = str.slice(start, end);
+        if (!used.has(sub)) {
+          used.add(sub);
+          dfs(end);
+          used.delete(sub);
+        }
+      }
+    }
+    dfs(0);
+    return max;
+  },
+
 };

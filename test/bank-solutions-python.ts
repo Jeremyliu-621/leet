@@ -37362,4 +37362,68 @@ def countEven(num):
     return num // 2 if digit_sum % 2 == 0 else (num - 1) // 2
 `,
 
+  // batch 161
+  'frog-jump-ii': `
+def maxJump(stones):
+    ans = stones[1] - stones[0]
+    for i in range(2, len(stones)):
+        ans = max(ans, stones[i] - stones[i-2])
+    return ans
+`,
+
+  'collecting-chocolates': `
+def collectChocolates(nums, x):
+    n = len(nums)
+    min_cost = list(nums)
+    ans = sum(min_cost)
+    for k in range(1, n):
+        for i in range(n):
+            min_cost[i] = min(min_cost[i], nums[(i + k) % n])
+        total = k * x + sum(min_cost)
+        if total < ans:
+            ans = total
+    return ans
+`,
+
+  'partitioning-into-minimum-number-of-deci-binary-numbers': `
+def minPartitions(n):
+    return max(int(c) for c in n)
+`,
+
+  'where-will-the-ball-fall': `
+def findBall(grid):
+    m = len(grid)
+    cols = len(grid[0])
+    result = []
+    for start in range(cols):
+        j = start
+        for r in range(m):
+            d = grid[r][j]
+            nj = j + d
+            if nj < 0 or nj >= cols or grid[r][nj] != d:
+                j = -1
+                break
+            j = nj
+        result.append(j)
+    return result
+`,
+
+  'split-a-string-into-the-maximum-number-of-unique-substrings': `
+def maxUniqueSplit(s):
+    used = set()
+    max_count = [0]
+    def dfs(start):
+        if start == len(s):
+            max_count[0] = max(max_count[0], len(used))
+            return
+        for end in range(start + 1, len(s) + 1):
+            sub = s[start:end]
+            if sub not in used:
+                used.add(sub)
+                dfs(end)
+                used.remove(sub)
+    dfs(0)
+    return max_count[0]
+`,
+
 };

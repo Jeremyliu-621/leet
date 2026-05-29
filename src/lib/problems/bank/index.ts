@@ -2624,6 +2624,12 @@ import { problem as strictlyPalindromicNumber } from './strictly-palindromic-num
 import { problem as designBitset } from './design-bitset';
 import { problem as countSubstringsWithFixedRatio } from './count-substrings-with-fixed-ratio';
 import { problem as numberOfIntegersWithEvenDigitSum } from './number-of-integers-with-even-digit-sum';
+// batch 161 — arrays/medium×3, strings/medium×2
+import { problem as frogJumpII } from './frog-jump-ii';
+import { problem as collectingChocolates } from './collecting-chocolates';
+import { problem as partitioningIntoMinDeciB } from './partitioning-into-minimum-number-of-deci-binary-numbers';
+import { problem as whereWillBallFall } from './where-will-the-ball-fall';
+import { problem as splitStringMaxUniqueSubstrings } from './split-a-string-into-the-maximum-number-of-unique-substrings';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5285,4 +5291,10 @@ export const problems: readonly Problem[] = [
   designBitset,
   countSubstringsWithFixedRatio,
   numberOfIntegersWithEvenDigitSum,
+  // batch 161 — arrays/medium×3, strings/medium×2
+  frogJumpII,
+  collectingChocolates,
+  partitioningIntoMinDeciB,
+  whereWillBallFall,
+  splitStringMaxUniqueSubstrings,
 ];
