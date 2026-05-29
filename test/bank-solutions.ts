@@ -40042,6 +40042,72 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return results;
   },
 
+  // batch 174
+  'lexicographic-numbers': (n: unknown) => {
+    const ni = n as number;
+    const result: number[] = [];
+    let curr = 1;
+    while (result.length < ni) {
+      result.push(curr);
+      if (curr * 10 <= ni) {
+        curr *= 10;
+      } else {
+        while (curr % 10 === 9 || curr + 1 > ni) curr = Math.floor(curr / 10);
+        curr++;
+      }
+    }
+    return result;
+  },
+
+  'painting-walls': (...args: unknown[]) => {
+    const cost = args[0] as number[];
+    const time = args[1] as number[];
+    const n = cost.length;
+    const dp = new Array<number>(n + 1).fill(Infinity);
+    dp[0] = 0;
+    for (let i = 0; i < n; i++) {
+      for (let j = n; j >= 0; j--) {
+        if (dp[j] === Infinity) continue;
+        const covered = Math.min(n, j + time[i]! + 1);
+        dp[covered] = Math.min(dp[covered]!, dp[j]! + cost[i]!);
+      }
+    }
+    return dp[n]!;
+  },
+
+  'kth-ancestor-of-a-tree-node': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as number[][];
+    const LOG = 16;
+    let anc: number[][] = [];
+    let n = 0;
+    const results: (number | null)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      const a = opArgs[i]!;
+      if (op === 'TreeAncestor') {
+        n = a[0]!;
+        const parent = a[1] as unknown as number[];
+        anc = Array.from({ length: n }, () => new Array<number>(LOG).fill(-1));
+        for (let v = 0; v < n; v++) anc[v]![0] = parent[v]!;
+        for (let j = 1; j < LOG; j++) {
+          for (let v = 0; v < n; v++) {
+            const up = anc[v]![j - 1]!;
+            anc[v]![j] = up === -1 ? -1 : anc[up]![j - 1]!;
+          }
+        }
+        results.push(null);
+      } else {
+        let node = a[0]!, k = a[1]!;
+        for (let j = 0; j < LOG && node !== -1; j++) {
+          if ((k >> j) & 1) node = anc[node]![j]!;
+        }
+        results.push(node);
+      }
+    }
+    return results;
+  },
+
   'longest-increasing-subsequence-ii': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const k = args[1] as number;
@@ -40158,6 +40224,52 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
           }
         }
         best = Math.max(best, count);
+      }
+    }
+    return best;
+  },
+
+  'count-integers-in-ranges': (...args: unknown[]) => {
+    const lo = args[0] as number;
+    const hi = args[1] as number;
+    const MOD = 1e9 + 7;
+    function countUpTo(n: number): number {
+      if (n < 0) return 0;
+      const s = String(n);
+      const len = s.length;
+      const memo = new Map<string, number>();
+      function dp(pos: number, lastDigit: number, tight: boolean, started: boolean): number {
+        if (pos === len) return started ? 1 : 1;
+        const key = `${pos},${lastDigit},${tight},${started}`;
+        if (memo.has(key)) return memo.get(key)!;
+        const limit = tight ? Number(s[pos]!) : 9;
+        let res = 0;
+        for (let d = 0; d <= limit; d++) {
+          if (!started && d === 0) { res = (res + dp(pos + 1, -1, tight && d === limit, false)) % MOD; continue; }
+          if (started && Math.abs(d - lastDigit) !== 1) continue;
+          res = (res + dp(pos + 1, d, tight && d === limit, true)) % MOD;
+        }
+        memo.set(key, res);
+        return res;
+      }
+      return dp(0, -1, true, false);
+    }
+    return ((countUpTo(hi) - countUpTo(lo - 1)) % MOD + MOD) % MOD;
+  },
+
+  'maximum-subarray-with-equal-products': (nums: unknown) => {
+    const a = nums as number[];
+    const gcd = (x: number, y: number): number => y === 0 ? x : gcd(y, x % y);
+    const lcm = (x: number, y: number): number => x / gcd(x, y) * y;
+    let best = 1;
+    for (let i = 0; i < a.length; i++) {
+      let prod = a[i]!, g = a[i]!, l = a[i]!;
+      if (prod === l * g) best = Math.max(best, 1);
+      for (let j = i + 1; j < a.length; j++) {
+        prod *= a[j]!;
+        g = gcd(g, a[j]!);
+        l = lcm(l, a[j]!);
+        if (prod === l * g) best = Math.max(best, j - i + 1);
       }
     }
     return best;

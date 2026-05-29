@@ -40459,4 +40459,129 @@ def maximumLength(nums):
     return max(even, odd, alternating)
 `,
 
+  // batch 174
+  'lexicographic-numbers': `
+def lexicalOrder(n):
+    result = []
+    curr = 1
+    while len(result) < n:
+        result.append(curr)
+        if curr * 10 <= n:
+            curr *= 10
+        else:
+            while curr % 10 == 9 or curr + 1 > n:
+                curr //= 10
+            curr += 1
+    return result
+`,
+
+  'painting-walls': `
+def paintWalls(cost, time):
+    if hasattr(cost, 'to_py'): cost = list(cost.to_py())
+    if hasattr(time, 'to_py'): time = list(time.to_py())
+    cost = [int(x) for x in cost]
+    time = [int(x) for x in time]
+    n = len(cost)
+    dp = [float('inf')] * (n + 1)
+    dp[0] = 0
+    for i in range(n):
+        for j in range(n, -1, -1):
+            if dp[j] == float('inf'):
+                continue
+            covered = min(n, j + time[i] + 1)
+            if dp[j] + cost[i] < dp[covered]:
+                dp[covered] = dp[j] + cost[i]
+    return dp[n]
+`,
+
+  'kth-ancestor-of-a-tree-node': `
+def treeAncestorRunner(ops, args):
+    if hasattr(ops, 'to_py'): ops = list(ops.to_py())
+    ops = [str(op) for op in ops]
+    if hasattr(args, 'to_py'): args = list(args.to_py())
+    parsed = []
+    for a in args:
+        if hasattr(a, 'to_py'): a = list(a.to_py())
+        a = list(a)
+        parsed.append(a)
+    LOG = 16
+    anc = []
+    results = []
+    for i, op in enumerate(ops):
+        a = parsed[i]
+        if op == 'TreeAncestor':
+            n = int(a[0])
+            parent_raw = a[1]
+            if hasattr(parent_raw, 'to_py'): parent_raw = list(parent_raw.to_py())
+            parent = [int(x) for x in parent_raw]
+            anc = [[-1]*LOG for _ in range(n)]
+            for v in range(n):
+                anc[v][0] = parent[v]
+            for j in range(1, LOG):
+                for v in range(n):
+                    up = anc[v][j-1]
+                    anc[v][j] = anc[up][j-1] if up != -1 else -1
+            results.append(None)
+        else:
+            node, k = int(a[0]), int(a[1])
+            for j in range(LOG):
+                if node == -1: break
+                if (k >> j) & 1:
+                    node = anc[node][j]
+            results.append(node)
+    return results
+`,
+
+  'count-integers-in-ranges': `
+def countSteppingNumbers(lo, hi):
+    MOD = 10**9 + 7
+    def count_up_to(n):
+        if n < 0:
+            return 0
+        s = str(n)
+        length = len(s)
+        from functools import lru_cache
+        @lru_cache(maxsize=None)
+        def dp(pos, last, tight, started):
+            if pos == length:
+                return 1 if started else 1
+            limit = int(s[pos]) if tight else 9
+            res = 0
+            for d in range(0, limit + 1):
+                if not started and d == 0:
+                    res = (res + dp(pos + 1, -1, tight and d == limit, False)) % MOD
+                    continue
+                if started and abs(d - last) != 1:
+                    continue
+                res = (res + dp(pos + 1, d, tight and d == limit, True)) % MOD
+            return res
+        result = dp(0, -1, True, False)
+        dp.cache_clear()
+        return result
+    return ((count_up_to(hi) - count_up_to(lo - 1)) % MOD + MOD) % MOD
+`,
+
+  'maximum-subarray-with-equal-products': `
+from math import gcd
+
+def maxLength(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = [int(x) for x in nums]
+    n = len(nums)
+    best = 1
+    for i in range(n):
+        prod = nums[i]
+        g = nums[i]
+        l = nums[i]
+        if prod == l * g:
+            best = max(best, 1)
+        for j in range(i + 1, n):
+            prod *= nums[j]
+            g = gcd(g, nums[j])
+            l = l // gcd(l, nums[j]) * nums[j]
+            if prod == l * g:
+                best = max(best, j - i + 1)
+    return best
+`,
+
 };

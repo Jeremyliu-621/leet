@@ -2812,6 +2812,12 @@ import { problem as longestSubstringWithAtMostTwoDistinctChars } from './longest
 import { problem as rangeAdditionII } from './range-addition-ii';
 import { problem as maximumConsecutiveValuesYouCanMake } from './maximum-consecutive-values-you-can-make';
 import { problem as findTheMaximumLengthOfValidSubsequenceI } from './find-the-maximum-length-of-valid-subsequence-i';
+// batch 174 — medium/math+trie, hard/dp, hard/tree+design, hard/dp+digit, easy/arrays+math
+import { problem as lexicographicNumbers } from './lexicographic-numbers';
+import { problem as paintingWalls } from './painting-walls';
+import { problem as kthAncestorOfATreeNode } from './kth-ancestor-of-a-tree-node';
+import { problem as countIntegersInRanges } from './count-integers-in-ranges';
+import { problem as maximumSubarrayWithEqualProducts } from './maximum-subarray-with-equal-products';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5662,4 +5668,10 @@ export const problems: readonly Problem[] = [
   rangeAdditionII,
   maximumConsecutiveValuesYouCanMake,
   findTheMaximumLengthOfValidSubsequenceI,
+  // batch 174 — medium/math+trie, hard/dp, hard/tree+design, hard/dp+digit, easy/arrays+math
+  lexicographicNumbers,
+  paintingWalls,
+  kthAncestorOfATreeNode,
+  countIntegersInRanges,
+  maximumSubarrayWithEqualProducts,
 ];
