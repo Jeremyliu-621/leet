@@ -3159,13 +3159,17 @@ import { problem as shortestStringThatContainsThreeStrings } from './shortest-st
 import { problem as distributeCandiesAmongChildrenI } from './distribute-candies-among-children-i';
 import { problem as minimumAreaRectangleII } from './minimum-area-rectangle-ii';
 import { problem as minimumTotalPriceOfTrips } from './minimum-total-price-of-trips';
-// batch 216
+// batch 216 — easy/arrays, medium/arrays+simulation, medium/tree+simulation, medium/design+simulation
 import { problem as removeDigitFromNumberToMaximizeResult } from './remove-digit-from-number-to-maximize-result';
 import { problem as checkIfNumberIsASumOfPowersOfThree } from './check-if-number-is-a-sum-of-powers-of-three';
 import { problem as countNumberOfRectanglesContainingEachPoint } from './count-number-of-rectangles-containing-each-point';
 import { problem as minimumImpossibleOr } from './minimum-impossible-or';
 import { problem as findSubstringWithMaximumCost } from './find-substring-with-maximum-cost';
 import { problem as findWidthOfColumnsOfGrid } from './find-the-width-of-columns-of-a-grid';
+import { problem as minimumSumOfMountainTriplets } from './minimum-sum-of-mountain-triplets';
+import { problem as minimumNumberOfFlipsToMakeBinaryGridPalindrome } from './minimum-number-of-flips-to-make-binary-grid-palindrome';
+import { problem as minimumNumberOfOperationsToSortABinaryTreeByLevel } from './minimum-number-of-operations-to-sort-a-binary-tree-by-level';
+import { problem as designAnAtmMachine } from './design-an-atm-machine';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6373,4 +6377,8 @@ export const problems: readonly Problem[] = [
   minimumImpossibleOr,
   findSubstringWithMaximumCost,
   findWidthOfColumnsOfGrid,
+  minimumSumOfMountainTriplets,
+  minimumNumberOfFlipsToMakeBinaryGridPalindrome,
+  minimumNumberOfOperationsToSortABinaryTreeByLevel,
+  designAnAtmMachine,
 ];
