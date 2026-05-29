@@ -37347,4 +37347,151 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return leftSize > half || rightSize > half || parentSize > half;
   },
 
+  // batch 162 — 11 new problems from remote session
+  'collecting-chocolates': (nums: unknown, x: unknown): unknown => {
+    const a = nums as number[];
+    const cost = x as number;
+    const n = a.length;
+    const minCost = [...a];
+    let ans = minCost.reduce((s, v) => s + v, 0);
+    for (let k = 1; k < n; k++) {
+      for (let i = 0; i < n; i++) minCost[i] = Math.min(minCost[i] as number, a[(i + k) % n] as number);
+      const total = k * cost + minCost.reduce((s, v) => s + v, 0);
+      if (total < ans) ans = total;
+    }
+    return ans;
+  },
+
+  'count-substrings-with-fixed-ratio': (s: unknown, num1: unknown, num2: unknown): unknown => {
+    const str = s as string;
+    const n1 = num1 as number, n2 = num2 as number;
+    const freq = new Map<number, number>([[0, 1]]);
+    let zeros = 0, ones = 0, result = 0;
+    for (const ch of str) {
+      if (ch === '0') zeros++; else ones++;
+      const key = zeros * n2 - ones * n1;
+      result += freq.get(key) ?? 0;
+      freq.set(key, (freq.get(key) ?? 0) + 1);
+    }
+    return result;
+  },
+
+  'design-bitset': (ops: unknown, args: unknown): unknown => {
+    const opArr = ops as string[];
+    const argArr = args as number[][];
+    let bits: number[] = [];
+    let size = 0, ones = 0, flipped = false;
+    return opArr.map((op, i) => {
+      const arg: number[] = argArr[i] ?? [];
+      if (op === 'Bitset') {
+        size = arg[0] as number; bits = new Array(size).fill(0); ones = 0; flipped = false; return null;
+      }
+      if (op === 'fix') {
+        const idx = arg[0] as number, val = flipped ? 0 : 1;
+        if (bits[idx] !== val) { bits[idx] = val; ones++; }
+        return null;
+      }
+      if (op === 'unfix') {
+        const idx = arg[0] as number, val = flipped ? 0 : 1;
+        if (bits[idx] === val) { bits[idx] = 1 - val; ones--; }
+        return null;
+      }
+      if (op === 'flip') { flipped = !flipped; ones = size - ones; return null; }
+      if (op === 'all') return ones === size;
+      if (op === 'one') return ones > 0;
+      if (op === 'count') return ones;
+      if (op === 'toString') return bits.map(b => (flipped ? 1 - b : b)).join('');
+      return null;
+    });
+  },
+
+  'frog-jump-ii': (stones: unknown): unknown => {
+    const a = stones as number[];
+    let ans = (a[1] as number) - (a[0] as number);
+    for (let i = 2; i < a.length; i++) ans = Math.max(ans, (a[i] as number) - (a[i - 2] as number));
+    return ans;
+  },
+
+  'maximum-and-value-of-numbers-in-array': (nums: unknown): unknown => {
+    const a = nums as number[];
+    let ans = 0;
+    for (let bit = 29; bit >= 0; bit--) {
+      const candidate = ans | (1 << bit);
+      const count = a.filter(x => (x & candidate) === candidate).length;
+      if (count >= 2) ans = candidate;
+    }
+    return ans;
+  },
+
+  'minimum-flips-to-make-a-or-b-equal-to-c': (a: unknown, b: unknown, c: unknown): unknown => {
+    let flips = 0;
+    for (let bit = 0; bit < 30; bit++) {
+      const ab = ((a as number) >> bit) & 1;
+      const bb = ((b as number) >> bit) & 1;
+      const cb = ((c as number) >> bit) & 1;
+      if (cb === 1) { if (ab === 0 && bb === 0) flips++; }
+      else flips += ab + bb;
+    }
+    return flips;
+  },
+
+  'number-of-integers-with-even-digit-sum': (num: unknown): unknown => {
+    const n = num as number;
+    const digitSum = String(n).split('').reduce((s, d) => s + Number(d), 0);
+    return digitSum % 2 === 0 ? Math.floor(n / 2) : Math.floor((n - 1) / 2);
+  },
+
+  'partitioning-into-minimum-number-of-deci-binary-numbers': (n: unknown): unknown => {
+    return Math.max(...(n as string).split('').map(Number));
+  },
+
+  'split-a-string-into-the-maximum-number-of-unique-substrings': (s: unknown): unknown => {
+    const str = s as string;
+    let best = 0;
+    const used = new Set<string>();
+    const dfs = (start: number): void => {
+      if (start === str.length) { best = Math.max(best, used.size); return; }
+      for (let end = start + 1; end <= str.length; end++) {
+        const sub = str.slice(start, end);
+        if (!used.has(sub)) {
+          used.add(sub);
+          dfs(end);
+          used.delete(sub);
+        }
+      }
+    };
+    dfs(0);
+    return best;
+  },
+
+  'tuple-with-same-product': (nums: unknown): unknown => {
+    const a = nums as number[];
+    const freq = new Map<number, number>();
+    for (let i = 0; i < a.length; i++) {
+      for (let j = i + 1; j < a.length; j++) {
+        const p = (a[i] as number) * (a[j] as number);
+        freq.set(p, (freq.get(p) ?? 0) + 1);
+      }
+    }
+    let result = 0;
+    for (const f of freq.values()) result += f * (f - 1) / 2 * 8;
+    return result;
+  },
+
+  'where-will-the-ball-fall': (grid: unknown): unknown => {
+    const g = grid as number[][];
+    const m = g.length, cols = (g[0] as number[]).length;
+    return Array.from({ length: cols }, (_, start) => {
+      let j = start;
+      for (let r = 0; r < m; r++) {
+        const row = g[r] as number[];
+        const d = row[j] as number;
+        const nj = j + d;
+        if (nj < 0 || nj >= cols || (row[nj] as number) !== d) { j = -1; break; }
+        j = nj;
+      }
+      return j;
+    });
+  },
+
 };

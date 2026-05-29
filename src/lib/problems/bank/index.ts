@@ -2615,6 +2615,19 @@ import { problem as strictlyPalindromicNumber } from './strictly-palindromic-num
 import { problem as sortingThreeGroups } from './sorting-three-groups';
 import { problem as uglyNumberIii } from './ugly-number-iii';
 import { problem as binaryTreeColoringGame } from './binary-tree-coloring-game';
+// batch 162 — arrays/medium, strings/medium, design/medium, arrays/medium, arrays/medium,
+//             bit-manipulation/medium×2, math/easy, strings/medium×2, arrays/medium
+import { problem as collectingChocolates } from './collecting-chocolates';
+import { problem as countSubstringsWithFixedRatio } from './count-substrings-with-fixed-ratio';
+import { problem as designBitset } from './design-bitset';
+import { problem as frogJumpII } from './frog-jump-ii';
+import { problem as maximumAndValueOfNumbersInArray } from './maximum-and-value-of-numbers-in-array';
+import { problem as minimumFlipsToMakeAOrBEqualToC } from './minimum-flips-to-make-a-or-b-equal-to-c';
+import { problem as numberOfIntegersWithEvenDigitSum } from './number-of-integers-with-even-digit-sum';
+import { problem as partitioningIntoMinimumNumberOfDeciBinaryNumbers } from './partitioning-into-minimum-number-of-deci-binary-numbers';
+import { problem as splitStringIntoMaximumNumberOfUniqueSubstrings } from './split-a-string-into-the-maximum-number-of-unique-substrings';
+import { problem as tupleWithSameProduct } from './tuple-with-same-product';
+import { problem as whereWillTheBallFall } from './where-will-the-ball-fall';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5267,4 +5280,16 @@ export const problems: readonly Problem[] = [
   sortingThreeGroups,
   uglyNumberIii,
   binaryTreeColoringGame,
+  // batch 162 — 11 new problems from remote session
+  collectingChocolates,
+  countSubstringsWithFixedRatio,
+  designBitset,
+  frogJumpII,
+  maximumAndValueOfNumbersInArray,
+  minimumFlipsToMakeAOrBEqualToC,
+  numberOfIntegersWithEvenDigitSum,
+  partitioningIntoMinimumNumberOfDeciBinaryNumbers,
+  splitStringIntoMaximumNumberOfUniqueSubstrings,
+  tupleWithSameProduct,
+  whereWillTheBallFall,
 ];

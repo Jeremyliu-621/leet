@@ -37346,12 +37346,7 @@ def minFlips(a, b, c):
     return flips
 `,
 
-  // batch 160 — math/medium, design/medium, strings+hash-map/medium, arrays+stack/hard
-  'strictly-palindromic-number': `
-def isStrictlyPalindromic(n):
-    return False
-`,
-
+  // batch 162 — design/medium, strings+hash-map/medium
   'design-bitset': `
 def designBitset(ops, args):
     ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
