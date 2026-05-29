@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2514** problems; 7851 tests green. Batches 102–176 + batch 172 extra complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2519** problems; 7866 tests green. Batches 102–176 + batch 172 extra + batch 171b complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 177+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 171b — 5 new problems (tree/medium, strings+graph+dp/hard, strings+two-pointers/medium, arrays+math/medium, arrays/medium) (2026-05-29)
+Five new problems: `delete-leaves-with-given-value` (medium/tree, post-order DFS removing leaves equal to target repeatedly until stable), `minimum-cost-to-convert-string-ii` (hard/strings+graph+dp, Floyd-Warshall on substring ID graph + 1D DP minimising total conversion cost), `find-beautiful-indices-in-the-given-array-i` (medium/strings+two-pointers, collect a-matches and b-matches then two-pointer within distance k), `make-k-subarray-sums-equal` (medium/arrays+math, circular array: group indices by i→(i+k)%n cycles, equalise each group at median), `maximum-sum-of-an-hourglass` (medium/arrays, O(m×n) scan computing 7-cell hourglass sum for each valid top-left corner). Bank at **2519**; 7866 tests.
 
 ### feat(bank): batch 172 extra — check-if-n-and-double (easy), image-overlap (medium), largest-1-bordered-square (medium), water-bottles-ii (medium), design-mru-queue (medium) (2026-05-29)
 Five new problems: `check-if-n-and-its-double-exist` (easy/arrays+hash-map, hash set scan), `image-overlap` (medium/arrays, O(n^4) translation brute force), `largest-1-bordered-square` (medium/dp, precompute horizontal/vertical consecutive 1s), `water-bottles-ii` (medium/simulation, simulate with growing exchange rate), `design-most-recently-used-queue` (medium/design, functional splice+append). Bank at **2514**; 7851 tests.
