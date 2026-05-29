@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2819** problems; 8751 tests green. Batches 102–216 (fully merged) complete.
+**Current focus:** Bank at **2824** problems; 8766 tests green. Batches 102–216 + 215-addendum (fully merged) complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 217+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 215 addendum — valid-tic-tac-toe-state, kth-smallest-multiplication-table, confusing-number-ii, minimum-swaps-arrange-binary-grid, solve-the-equation (2026-05-29)
+Five new problems: `valid-tic-tac-toe-state` (medium/arrays+simulation, count X/O, check wins, validate win-count consistency), `kth-smallest-number-in-multiplication-table` (hard/binary-search, count elements ≤ v via O(m) sum over rows), `confusing-number-ii` (hard/math+backtracking, DFS over valid-digit numbers, check 180° rotation), `minimum-swaps-to-arrange-a-binary-grid` (medium/arrays+simulation, greedy: count trailing zeros per row, bubble up), `solve-the-equation` (medium/math+strings+simulation, parse both sides into coeff/constant, handle 3 cases). Bank at **2824**; 8766 tests.
 
 ### feat(bank): batch 216 (merged) — 10 problems: remove-digit, check-powers-of-three, count-rectangles, minimum-impossible-or, find-substring-max-cost, find-width-of-columns, minimum-sum-mountain-triplets, flips-binary-grid-palindrome, sort-binary-tree-by-level, design-an-atm-machine (2026-05-29)
 Ten new problems merged from two concurrent sessions: `remove-digit-from-number-to-maximize-result` (easy/strings+simulation), `check-if-number-is-a-sum-of-powers-of-three` (medium/math), `count-number-of-rectangles-containing-each-point` (medium/arrays+binary-search), `minimum-impossible-or` (medium/bit-manipulation), `find-substring-with-maximum-cost` (medium/strings+dp), `find-the-width-of-columns-of-a-grid` (easy/arrays+simulation), `minimum-sum-of-mountain-triplets` (easy/arrays), `minimum-number-of-flips-to-make-binary-grid-palindrome` (medium/arrays+simulation), `minimum-number-of-operations-to-sort-a-binary-tree-by-level` (medium/tree+simulation), `design-an-atm-machine` (medium/design+simulation). Bank at **2819**; 8751 tests.
