@@ -36197,6 +36197,132 @@ def minimumLengthEncoding(words):
     return sum(len(w) + 1 for w in word_set)
 `,
 
+  'rotating-the-box': `
+def rotateTheBox(box):
+    if hasattr(box, 'to_py'):
+        box = box.to_py()
+    box = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in box]
+    m, n = len(box), len(box[0])
+    for i in range(m):
+        right = n - 1
+        for j in range(n - 1, -1, -1):
+            if box[i][j] == '*':
+                right = j - 1
+            elif box[i][j] == '#':
+                box[i][j] = '.'
+                box[i][right] = '#'
+                right -= 1
+    result = [['.' for _ in range(m)] for _ in range(n)]
+    for i in range(m):
+        for j in range(n):
+            result[j][m - 1 - i] = box[i][j]
+    return result
+`,
+
+  'maximum-star-sum-of-a-graph': `
+def maxStarSum(vals, edges, k):
+    vals = list(vals.to_py() if hasattr(vals, 'to_py') else vals)
+    if hasattr(edges, 'to_py'):
+        edges = edges.to_py()
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in edges]
+    n = len(vals)
+    adj = [[] for _ in range(n)]
+    for a, b in edges:
+        adj[a].append(vals[b])
+        adj[b].append(vals[a])
+    best = float('-inf')
+    for i in range(n):
+        pos = sorted([v for v in adj[i] if v > 0], reverse=True)[:k]
+        best = max(best, vals[i] + sum(pos))
+    return best
+`,
+
+  'build-a-matrix-with-conditions': `
+def buildMatrix(k, rowConditions, colConditions):
+    if hasattr(rowConditions, 'to_py'):
+        rowConditions = rowConditions.to_py()
+    if hasattr(colConditions, 'to_py'):
+        colConditions = colConditions.to_py()
+    rowConditions = [list(c.to_py() if hasattr(c, 'to_py') else c) for c in rowConditions]
+    colConditions = [list(c.to_py() if hasattr(c, 'to_py') else c) for c in colConditions]
+    import heapq
+    def topo_sort(conds):
+        graph = [[] for _ in range(k + 1)]
+        indeg = [0] * (k + 1)
+        for a, b in conds:
+            graph[a].append(b)
+            indeg[b] += 1
+        heap = [i for i in range(1, k + 1) if indeg[i] == 0]
+        heapq.heapify(heap)
+        order = []
+        while heap:
+            node = heapq.heappop(heap)
+            order.append(node)
+            for nb in graph[node]:
+                indeg[nb] -= 1
+                if indeg[nb] == 0:
+                    heapq.heappush(heap, nb)
+        return order if len(order) == k else None
+    row_order = topo_sort(rowConditions)
+    col_order = topo_sort(colConditions)
+    if row_order is None or col_order is None:
+        return []
+    row_pos = [0] * (k + 1)
+    col_pos = [0] * (k + 1)
+    for i, num in enumerate(row_order):
+        row_pos[num] = i
+    for i, num in enumerate(col_order):
+        col_pos[num] = i
+    result = [[0] * k for _ in range(k)]
+    for num in range(1, k + 1):
+        result[row_pos[num]][col_pos[num]] = num
+    return result
+`,
+
+  'count-of-integers-with-digit-sum': `
+def count(num1, num2, min_sum, max_sum):
+    MOD = 10**9 + 7
+    def count_up_to(num):
+        digits = [int(c) for c in str(num)]
+        n = len(digits)
+        from functools import lru_cache
+        @lru_cache(maxsize=None)
+        def dp(pos, tight, cur_sum, started):
+            if pos == n:
+                return 1 if started and min_sum <= cur_sum <= max_sum else 0
+            limit = digits[pos] if tight else 9
+            res = 0
+            for d in range(limit + 1):
+                new_started = started or d > 0
+                new_sum = cur_sum + d if new_started else 0
+                if new_sum > max_sum:
+                    break
+                res += dp(pos + 1, tight and d == limit, new_sum, new_started)
+            return res % MOD
+        return dp(0, True, 0, False)
+    digit_sum1 = sum(int(c) for c in num1)
+    valid1 = 1 if min_sum <= digit_sum1 <= max_sum else 0
+    return (count_up_to(num2) - count_up_to(num1) + valid1 + MOD) % MOD
+`,
+
+  'apply-operations-to-maximize-frequency-score': `
+def maxFrequencyScore(nums, k):
+    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + nums[i]
+    ans, l = 0, 0
+    for r in range(n):
+        while nums[r] * (r - l + 1) - (prefix[r + 1] - prefix[l]) > k:
+            l += 1
+        size = r - l + 1
+        cost0 = nums[r] * size - (prefix[r + 1] - prefix[l])
+        d = (k - cost0) // size
+        ans = max(ans, size * (nums[r] + d))
+    return ans
+`,
+
   'house-robber-iv': `
 def minCapability(nums, k):
     nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)

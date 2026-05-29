@@ -36448,6 +36448,132 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return len;
   },
 
+  'rotating-the-box': (...args: unknown[]) => {
+    const box = (args[0] as string[][]).map(r => [...r]);
+    const m = box.length;
+    const n = box[0]!.length;
+    for (let i = 0; i < m; i++) {
+      let right = n - 1;
+      for (let j = n - 1; j >= 0; j--) {
+        if (box[i]![j] === '*') {
+          right = j - 1;
+        } else if (box[i]![j] === '#') {
+          box[i]![j] = '.';
+          box[i]![right] = '#';
+          right--;
+        }
+      }
+    }
+    const result: string[][] = Array.from({ length: n }, () => new Array(m).fill('.'));
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        result[j]![m - 1 - i] = box[i]![j]!;
+      }
+    }
+    return result;
+  },
+
+  'maximum-star-sum-of-a-graph': (...args: unknown[]) => {
+    const vals = args[0] as number[];
+    const edges = args[1] as number[][];
+    const k = args[2] as number;
+    const n = vals.length;
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const [a, b] of edges) {
+      adj[a!]!.push(vals[b!]!);
+      adj[b!]!.push(vals[a!]!);
+    }
+    let best = -Infinity;
+    for (let i = 0; i < n; i++) {
+      const pos = adj[i]!.filter(v => v > 0).sort((a, b) => b - a).slice(0, k);
+      best = Math.max(best, vals[i]! + pos.reduce((s, v) => s + v, 0));
+    }
+    return best;
+  },
+
+  'build-a-matrix-with-conditions': (...args: unknown[]) => {
+    const k = args[0] as number;
+    const rowConditions = args[1] as number[][];
+    const colConditions = args[2] as number[][];
+    function topoSort(conds: number[][]): number[] | null {
+      const graph: number[][] = Array.from({ length: k + 1 }, () => []);
+      const indeg = new Array(k + 1).fill(0);
+      for (const [a, b] of conds) { graph[a!]!.push(b!); indeg[b!]++; }
+      const queue: number[] = [];
+      for (let i = 1; i <= k; i++) if (indeg[i] === 0) queue.push(i);
+      queue.sort((a, b) => a - b);
+      const order: number[] = [];
+      while (queue.length) {
+        queue.sort((a, b) => a - b);
+        const node = queue.shift()!;
+        order.push(node);
+        for (const nb of graph[node]!) {
+          if (--indeg[nb] === 0) queue.push(nb);
+        }
+      }
+      return order.length === k ? order : null;
+    }
+    const rowOrder = topoSort(rowConditions);
+    const colOrder = topoSort(colConditions);
+    if (!rowOrder || !colOrder) return [];
+    const rowPos = new Array(k + 1).fill(0);
+    const colPos = new Array(k + 1).fill(0);
+    for (let i = 0; i < k; i++) { rowPos[rowOrder[i]!] = i; colPos[colOrder[i]!] = i; }
+    const result: number[][] = Array.from({ length: k }, () => new Array(k).fill(0));
+    for (let num = 1; num <= k; num++) result[rowPos[num]]![colPos[num]] = num;
+    return result;
+  },
+
+  'count-of-integers-with-digit-sum': (...args: unknown[]) => {
+    const num1 = args[0] as string;
+    const num2 = args[1] as string;
+    const min_sum = args[2] as number;
+    const max_sum = args[3] as number;
+    const MOD = 1_000_000_007n;
+    function countUpTo(num: string): bigint {
+      const digits = num.split('').map(Number);
+      const n = digits.length;
+      const memo = new Map<string, bigint>();
+      function dp(pos: number, tight: boolean, curSum: number, started: boolean): bigint {
+        if (pos === n) return started && curSum >= min_sum && curSum <= max_sum ? 1n : 0n;
+        const key = `${pos},${tight},${curSum},${started}`;
+        if (memo.has(key)) return memo.get(key)!;
+        const limit = tight ? digits[pos]! : 9;
+        let res = 0n;
+        for (let d = 0; d <= limit; d++) {
+          const newStarted = started || d > 0;
+          const newSum = newStarted ? curSum + d : 0;
+          if (newSum > max_sum) break;
+          res = (res + dp(pos + 1, tight && d === limit, newSum, newStarted)) % MOD;
+        }
+        memo.set(key, res);
+        return res;
+      }
+      return dp(0, true, 0, false);
+    }
+    const sum1 = num1.split('').reduce((a, b) => a + parseInt(b), 0);
+    const valid1 = sum1 >= min_sum && sum1 <= max_sum ? 1n : 0n;
+    return Number((countUpTo(num2) - countUpTo(num1) + valid1 + MOD) % MOD);
+  },
+
+  'apply-operations-to-maximize-frequency-score': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    const k = args[1] as number;
+    nums.sort((a, b) => a - b);
+    const n = nums.length;
+    const prefix = new Array(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + nums[i]!;
+    let ans = 0, l = 0;
+    for (let r = 0; r < n; r++) {
+      while (nums[r]! * (r - l + 1) - (prefix[r + 1]! - prefix[l]!) > k) l++;
+      const size = r - l + 1;
+      const cost0 = nums[r]! * size - (prefix[r + 1]! - prefix[l]!);
+      const d = Math.floor((k - cost0) / size);
+      ans = Math.max(ans, size * (nums[r]! + d));
+    }
+    return ans;
+  },
+
   'house-robber-iv': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const k = args[1] as number;

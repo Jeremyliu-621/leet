@@ -2562,6 +2562,12 @@ import { problem as mapSumPairs } from './map-sum-pairs';
 import { problem as magicDictionary } from './magic-dictionary';
 import { problem as shortEncodingOfWords } from './short-encoding-of-words';
 import { problem as implementMagicTrieStream } from './implement-magic-trie-stream';
+// batch 156 — simulation/medium, graph/medium, graph/hard, dp+math/hard, binary-search+sliding-window/hard
+import { problem as rotatingTheBox } from './rotating-the-box';
+import { problem as maximumStarSumOfAGraph } from './maximum-star-sum-of-a-graph';
+import { problem as buildAMatrixWithConditions } from './build-a-matrix-with-conditions';
+import { problem as countOfIntegersWithDigitSum } from './count-of-integers-with-digit-sum';
+import { problem as applyOperationsToMaximizeFrequencyScore } from './apply-operations-to-maximize-frequency-score';
 // batch 155 — binary-search/medium, strings+hash-map/medium, arrays+math/medium, strings+two-pointers/medium, math/easy
 import { problem as houseRobberIV } from './house-robber-iv';
 import { problem as substringXorQueries } from './substring-xor-queries';
@@ -5179,6 +5185,12 @@ export const problems: readonly Problem[] = [
   magicDictionary,
   shortEncodingOfWords,
   implementMagicTrieStream,
+  // batch 156 — simulation/medium, graph/medium, graph/hard, dp+math/hard, binary-search+sliding-window/hard
+  rotatingTheBox,
+  maximumStarSumOfAGraph,
+  buildAMatrixWithConditions,
+  countOfIntegersWithDigitSum,
+  applyOperationsToMaximizeFrequencyScore,
   // batch 155 — binary-search/medium, strings+hash-map/medium, arrays+math/medium, strings+two-pointers/medium, math/easy
   houseRobberIV,
   substringXorQueries,
