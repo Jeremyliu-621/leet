@@ -43707,4 +43707,30 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const first = matrix[0]!;
     return matrix.filter(row => row.every((v, i) => v === first[i])).length;
   },
+  // batch 210 ---------------------------------------------------------------
+  'count-elements-in-range': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const lo = args[1] as number;
+    const hi = args[2] as number;
+    return nums.filter(v => v >= lo && v <= hi).length;
+  },
+  'min-word-length': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    return Math.min(...words.map(w => w.length));
+  },
+  'transpose-2d-array': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const m = matrix.length;
+    const n = matrix[0]!.length;
+    return Array.from({ length: n }, (_, j) => Array.from({ length: m }, (__, i) => matrix[i]![j]!));
+  },
+  'count-pairs-with-same-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let count = 0;
+    for (let i = 0; i < nums.length; i++)
+      for (let j = i + 1; j < nums.length; j++)
+        if (nums[i]! + nums[j]! === k) count++;
+    return count;
+  },
 };
