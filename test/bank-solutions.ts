@@ -36843,4 +36843,113 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return bt(0);
   },
 
+  // batch 155 — graph/hard, binary-search+arrays/hard, arrays+dp/medium
+  'maximum-employees-invited-to-meeting': (...args: unknown[]) => {
+    const employees = args[0] as number[];
+    const n = employees.length;
+    const inDeg = new Array<number>(n).fill(0);
+    for (const f of employees) { inDeg[f] = (inDeg[f] ?? 0) + 1; }
+
+    const depth = new Array<number>(n).fill(0);
+    const queue: number[] = [];
+    for (let i = 0; i < n; i++) if (inDeg[i] === 0) queue.push(i);
+
+    let qi = 0;
+    while (qi < queue.length) {
+      const u = queue[qi++]!;
+      const v = employees[u] as number;
+      depth[v] = Math.max(depth[v] as number, (depth[u] as number) + 1);
+      if (--(inDeg[v] as number) === 0) queue.push(v);
+    }
+
+    let maxCycle = 0;
+    let pairSum = 0;
+    const visited = new Array<boolean>(n).fill(false);
+
+    for (let i = 0; i < n; i++) {
+      if (!visited[i] && (inDeg[i] as number) > 0) {
+        const cycleNodes: number[] = [];
+        let cur = i;
+        while (!visited[cur]) {
+          visited[cur] = true;
+          cycleNodes.push(cur);
+          cur = employees[cur] as number;
+        }
+        const cycleLen = cycleNodes.length;
+        if (cycleLen === 2) {
+          const a = cycleNodes[0] as number, b = cycleNodes[1] as number;
+          pairSum += 2 + (depth[a] as number) + (depth[b] as number);
+        } else {
+          maxCycle = Math.max(maxCycle, cycleLen);
+        }
+      }
+    }
+
+    return Math.max(maxCycle, pairSum);
+  },
+
+  'maximize-minimum-powered-city': (...args: unknown[]) => {
+    const stations = args[0] as number[];
+    const r = args[1] as number;
+    const k = args[2] as number;
+    const n = stations.length;
+
+    const pfx = new Array<number>(n + 1).fill(0);
+    for (let i = 0; i < n; i++) pfx[i + 1] = pfx[i]! + stations[i]!;
+    const power = new Array<number>(n).fill(0);
+    for (let i = 0; i < n; i++) {
+      power[i] = pfx[Math.min(n, i + r + 1)]! - pfx[Math.max(0, i - r)]!;
+    }
+
+    const canAchieve = (minPow: number): boolean => {
+      const diff = new Array<number>(n + 1).fill(0);
+      let addSum = 0;
+      let kUsed = 0;
+      for (let i = 0; i < n; i++) {
+        addSum += diff[i]!;
+        const cur = power[i]! + addSum;
+        if (cur < minPow) {
+          const need = minPow - cur;
+          kUsed += need;
+          if (kUsed > k) return false;
+          addSum += need;
+          const end = Math.min(i + 2 * r + 1, n);
+          diff[end] = (diff[end] ?? 0) - need;
+        }
+      }
+      return true;
+    };
+
+    let lo = 0;
+    let hi = Math.max(...power) + k;
+    while (lo < hi) {
+      const mid = Math.floor((lo + hi + 1) / 2);
+      if (canAchieve(mid)) lo = mid;
+      else hi = mid - 1;
+    }
+    return lo;
+  },
+
+  'minimum-time-remove-cars-illegal-goods': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const left = new Array<number>(n).fill(0);
+    if (s[0] === '1') left[0] = 1;
+    for (let i = 1; i < n; i++) {
+      if (s[i] === '0') left[i] = left[i - 1]!;
+      else left[i] = Math.min((left[i - 1] ?? 0) + 2, i + 1);
+    }
+    const right = new Array<number>(n).fill(0);
+    if (s[n - 1] === '1') right[n - 1] = 1;
+    for (let i = n - 2; i >= 0; i--) {
+      if (s[i] === '0') right[i] = right[i + 1]!;
+      else right[i] = Math.min((right[i + 1] ?? 0) + 2, n - i);
+    }
+    let ans = Math.min(right[0]!, left[n - 1]!);
+    for (let i = 0; i < n - 1; i++) {
+      ans = Math.min(ans, left[i]! + right[i + 1]!);
+    }
+    return ans;
+  },
+
 };

@@ -2575,6 +2575,10 @@ import { problem as recentCounter } from './recent-counter';
 import { problem as peekingIterator } from './peeking-iterator';
 import { problem as flattenNestedListIterator } from './flatten-nested-list-iterator';
 import { problem as allOOneDataStructure } from './all-o-one-data-structure';
+// batch 155c — graph/hard, binary-search+arrays/hard, arrays+dp/medium
+import { problem as maximumEmployeesInvitedToMeeting } from './maximum-employees-invited-to-meeting';
+import { problem as maximizeMinimumPoweredCity } from './maximize-minimum-powered-city';
+import { problem as minimumTimeRemoveCarsIllegalGoods } from './minimum-time-remove-cars-illegal-goods';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5187,4 +5191,8 @@ export const problems: readonly Problem[] = [
   peekingIterator,
   flattenNestedListIterator,
   allOOneDataStructure,
+  // batch 155c — graph/hard, binary-search+arrays/hard, arrays+dp/medium
+  maximumEmployeesInvitedToMeeting,
+  maximizeMinimumPoweredCity,
+  minimumTimeRemoveCarsIllegalGoods,
 ];

@@ -36619,4 +36619,104 @@ def makesquare(matchsticks):
     return bt(0)
 `,
 
+  // batch 155 — graph/hard, binary-search+arrays/hard, arrays+dp/medium
+  'maximum-employees-invited-to-meeting': `def maximumInvitations(employees):
+    employees = list(employees.to_py() if hasattr(employees, 'to_py') else employees)
+    n = len(employees)
+    in_deg = [0] * n
+    for f in employees:
+        in_deg[f] += 1
+
+    depth = [0] * n
+    from collections import deque
+    q = deque(i for i in range(n) if in_deg[i] == 0)
+    while q:
+        u = q.popleft()
+        v = employees[u]
+        depth[v] = max(depth[v], depth[u] + 1)
+        in_deg[v] -= 1
+        if in_deg[v] == 0:
+            q.append(v)
+
+    max_cycle = 0
+    pair_sum = 0
+    visited = [False] * n
+
+    for i in range(n):
+        if not visited[i] and in_deg[i] > 0:
+            cycle_nodes = []
+            cur = i
+            while not visited[cur]:
+                visited[cur] = True
+                cycle_nodes.append(cur)
+                cur = employees[cur]
+            cycle_len = len(cycle_nodes)
+            if cycle_len == 2:
+                a, b = cycle_nodes[0], cycle_nodes[1]
+                pair_sum += 2 + depth[a] + depth[b]
+            else:
+                max_cycle = max(max_cycle, cycle_len)
+
+    return max(max_cycle, pair_sum)
+`,
+
+  'maximize-minimum-powered-city': `def maximizeMinimumPower(stations, r, k):
+    stations = list(stations.to_py() if hasattr(stations, 'to_py') else stations)
+    n = len(stations)
+    pfx = [0] * (n + 1)
+    for i in range(n):
+        pfx[i + 1] = pfx[i] + stations[i]
+    power = [pfx[min(n, i + r + 1)] - pfx[max(0, i - r)] for i in range(n)]
+
+    def can_achieve(min_pow):
+        diff = [0] * (n + 1)
+        add_sum = 0
+        k_used = 0
+        for i in range(n):
+            add_sum += diff[i]
+            cur = power[i] + add_sum
+            if cur < min_pow:
+                need = min_pow - cur
+                k_used += need
+                if k_used > k:
+                    return False
+                add_sum += need
+                end = min(i + 2 * r + 1, n)
+                diff[end] -= need
+        return True
+
+    lo, hi = 0, max(power) + k
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_achieve(mid):
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'minimum-time-remove-cars-illegal-goods': `def minimumTime(s):
+    n = len(s)
+    left = [0] * n
+    if s[0] == '1':
+        left[0] = 1
+    for i in range(1, n):
+        if s[i] == '0':
+            left[i] = left[i - 1]
+        else:
+            left[i] = min(left[i - 1] + 2, i + 1)
+    right = [0] * n
+    if s[-1] == '1':
+        right[-1] = 1
+    for i in range(n - 2, -1, -1):
+        if s[i] == '0':
+            right[i] = right[i + 1]
+        else:
+            right[i] = min(right[i + 1] + 2, n - i)
+    ans = min(right[0], left[-1])
+    for i in range(n - 1):
+        ans = min(ans, left[i] + right[i + 1])
+    return ans
+`,
+
 };
