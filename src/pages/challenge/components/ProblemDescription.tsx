@@ -1,8 +1,11 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
 import rehypeHighlight from 'rehype-highlight';
+import rehypeKatex from 'rehype-katex';
 import javascript from 'highlight.js/lib/languages/javascript';
 import python from 'highlight.js/lib/languages/python';
+import 'katex/dist/katex.min.css';
 import type { Components } from 'react-markdown';
 import type { ReactNode } from 'react';
 
@@ -103,8 +106,8 @@ export function ProblemDescription({ markdown }: ProblemDescriptionProps) {
   return (
     <div className="space-y-3 text-text">
       <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
-        rehypePlugins={[[rehypeHighlight, rehypeHighlightOptions]]}
+        remarkPlugins={[remarkGfm, remarkMath]}
+        rehypePlugins={[[rehypeHighlight, rehypeHighlightOptions], rehypeKatex]}
         components={components}
       >
         {markdown}
