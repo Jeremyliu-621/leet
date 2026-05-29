@@ -3084,6 +3084,12 @@ import { problem as countWordsLongerThanK } from './count-words-longer-than-k';
 import { problem as longestStringInArray } from './longest-string-in-array';
 import { problem as allElementsDistinct } from './all-elements-distinct';
 import { problem as allElementsPositive } from './all-elements-positive';
+// batch 208 — easy/math, easy/simulation, medium/math, medium/arrays+stack, medium/strings
+import { problem as harshadNumber } from './harshad-number';
+import { problem as furthestPointFromOrigin } from './furthest-point-from-origin';
+import { problem as minimumPossibleSumOfBeautifulArray } from './minimum-possible-sum-of-beautiful-array';
+import { problem as maximalRangeEachElementIsMaximumIn } from './maximal-range-each-element-is-maximum-in';
+import { problem as lexicographicallySmallestStringOperationsConstraint } from './lexicographically-smallest-string-operations-constraint';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6209,4 +6215,10 @@ export const problems: readonly Problem[] = [
   longestStringInArray,
   allElementsDistinct,
   allElementsPositive,
+  // batch 208 — easy/math, easy/simulation, medium/math, medium/arrays+stack, medium/strings
+  harshadNumber,
+  furthestPointFromOrigin,
+  minimumPossibleSumOfBeautifulArray,
+  maximalRangeEachElementIsMaximumIn,
+  lexicographicallySmallestStringOperationsConstraint,
 ];

@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2742** problems; 8520 tests green. Batches 102–207 + KaTeX UX complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2747** problems; 8535 tests green. Batches 102–208 + KaTeX UX complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 208+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 209+); UX polish per LEETCODE_PARITY.md; light-mode contrast audit.
+
+### feat(bank): batch 208 — harshad, furthest-point, beautiful-array-sum, maximal-range, lex-smallest-ops (2026-05-29)
+Five new problems: `harshad-number` (easy/math+simulation, digit-sum divisibility), `furthest-point-from-origin` (easy/simulation, |L−R|+zeros), `minimum-possible-sum-of-beautiful-array` (medium/math, BigInt mod 10^9+7, use 1..floor(target/2) then target..), `maximal-range-each-element-is-maximum-in` (medium/arrays+stack, monotone stack prev/next strictly-greater → r−l−1), `lexicographically-smallest-string-operations-constraint` (medium/strings, greedy left-to-right budget: reach 'a' or go left). Bank at **2747**; 8535 tests.
 
 ### feat(bank): batch 207 — count-words-longer-k, longest-string, all-distinct, all-positive (2026-05-29)
 Four new easy problems: `count-words-longer-than-k` (easy/arrays+strings, filter length>k), `longest-string-in-array` (easy/arrays+strings, reduce by length first wins), `all-elements-distinct` (easy/arrays+hash-map, Set.size===length), `all-elements-positive` (easy/arrays, every v>0). Bank at **2742**; 8520 tests.
@@ -35,6 +38,9 @@ Four new easy problems: `sum-of-last-k-elements` (easy/arrays+math, slice last k
 
 ### feat(bank): batch 202 — triple-sum, count-even-length-strings, largest-element-in-each-row, count-rows-with-all-zeros (2026-05-29)
 Four new easy problems: `triple-sum` (easy/arrays+math, sum of first 3 elements), `count-even-length-strings` (easy/arrays+strings, count words with even length), `largest-element-in-each-row` (easy/arrays+math, max per row into result array), `count-rows-with-all-zeros` (easy/arrays+math, count rows where every element is 0). Bank at **2707**; 8415 tests.
+
+### feat(ux): KaTeX math rendering + marketing site 21-category fix (2026-05-29)
+Added `remark-math` + `rehype-katex` so inline `$...$` and display `$$...$$` LaTeX in problem descriptions and hints renders properly. KaTeX CSS imported with design-token overrides so math text adapts to dark/light theme. Also fixed marketing site: topic-category count updated from 18 → 21 (trie, design, bit-manipulation were added but the site stat wasn't updated), tag list completed, feature-section description now lists all 21 tags.
 
 ### feat(bank): batch 201 — count-pairs-abs-diff-k, max-diff-adjacent, sum-odd-indexed, alternating-sum (2026-05-29)
 Four new easy problems: `count-pairs-with-absolute-difference-k` (easy/arrays+hash-map, O(n²) brute-force pairs), `maximum-difference-between-adjacent-elements` (easy/arrays, linear scan abs diff), `sum-of-odd-indexed-elements` (easy/arrays, reduce at odd indices), `alternating-sum` (easy/arrays+math, reduce with sign flip). Bank at **2693**; 8373 tests.
