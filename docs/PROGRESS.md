@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2610** problems; 8121 tests green. Batches 102–183 + 179b complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2613** problems; 8130 tests green. Batches 102–184 + 179b complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 184+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 185+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 184 — boundary-max subarrays (hard), XOR triplets (medium), max jumps DP (medium) (2026-05-29)
+Three new problems: `find-the-number-of-subarrays-where-boundary-elements-are-maximum` (hard/arrays+stack, monotone decreasing stack of (value,count) pairs — when top.val==x add count+1, increment count; else push(x,1), add 1), `count-triplets-that-can-form-two-arrays-of-equal-xor` (medium/arrays+bit-manipulation, prefix XOR — for each pair (i,k) with prefix[i]==prefix[k+1] add k-i valid j positions), `maximum-number-of-jumps-to-reach-the-last-index` (medium/dp, dp[i]=max jumps from 0, try all forward j with |nums[j]-nums[i]|≤target, return dp[n-1] or -1). Bank at **2613**; 8130 tests.
 
 ### feat(bank): batch 183 — binary-search (medium), monotone-stack (hard), mountain-DP (medium), DSU+AND (medium) (2026-05-29)
 Four new problems: `maximize-score-of-numbers-in-ranges` (medium/binary-search, binary search on min gap then greedy placement in O(n log max)), `find-building-where-alice-and-bob-can-meet` (hard/arrays+stack, WLOG a≤b, direct answer for trivial cases, offline + monotone stack + binary search for the rest), `minimum-number-of-seconds-to-make-mountain-array` (medium/dp, precompute left[] and right[] strictly-increasing arrays in O(n), scan all valid peaks in O(1) each), `minimum-cost-walk-in-a-weighted-graph` (medium/graph+union-find, DSU tracking bitwise AND of all edges per component — more edges = lower AND, so use all edges in component). Bank at **2610**; 8121 tests.

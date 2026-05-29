@@ -42103,4 +42103,54 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return Number(ans);
   },
+
+  'find-the-number-of-subarrays-where-boundary-elements-are-maximum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const stack: [number, number][] = [];
+    let ans = 0;
+    for (const x of nums) {
+      while (stack.length > 0 && stack[stack.length - 1]![0] < x) stack.pop();
+      if (stack.length > 0 && stack[stack.length - 1]![0] === x) {
+        const top = stack[stack.length - 1]!;
+        ans += top[1] + 1;
+        top[1]++;
+      } else {
+        stack.push([x, 1]);
+        ans += 1;
+      }
+    }
+    return ans;
+  },
+
+  'count-triplets-that-can-form-two-arrays-of-equal-xor': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const prefix = new Array<number>(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! ^ nums[i]!;
+    let count = 0;
+    for (let i = 0; i < n; i++) {
+      for (let k = i + 1; k < n; k++) {
+        if (prefix[i]! === prefix[k + 1]!) count += k - i;
+      }
+    }
+    return count;
+  },
+
+  'maximum-number-of-jumps-to-reach-the-last-index': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    const n = nums.length;
+    const dp = new Array<number>(n).fill(-1);
+    dp[0] = 0;
+    for (let i = 0; i < n; i++) {
+      if (dp[i] === -1) continue;
+      for (let j = i + 1; j < n; j++) {
+        if (Math.abs(nums[j]! - nums[i]!) <= target) {
+          dp[j] = Math.max(dp[j]!, dp[i]! + 1);
+        }
+      }
+    }
+    return dp[n - 1]!;
+  },
+
 };

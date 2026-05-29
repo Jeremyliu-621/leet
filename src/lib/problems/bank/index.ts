@@ -2909,6 +2909,10 @@ import { problem as maximizeScoreOfNumbersInRanges } from './maximize-score-of-n
 import { problem as findBuildingWhereAliceAndBobCanMeet } from './find-building-where-alice-and-bob-can-meet';
 import { problem as minimumNumberOfSecondsToMakeMountainArray } from './minimum-number-of-seconds-to-make-mountain-array';
 import { problem as minimumCostWalkInAWeightedGraph } from './minimum-cost-walk-in-a-weighted-graph';
+// batch 184 — hard/arrays+stack, medium/arrays+bit-manipulation, medium/dp
+import { problem as findTheNumberOfSubarraysWhereBoundaryElementsAreMaximum } from './find-the-number-of-subarrays-where-boundary-elements-are-maximum';
+import { problem as countTripletsThatCanFormTwoArraysOfEqualXor } from './count-triplets-that-can-form-two-arrays-of-equal-xor';
+import { problem as maximumNumberOfJumpsToReachTheLastIndex } from './maximum-number-of-jumps-to-reach-the-last-index';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5859,4 +5863,8 @@ export const problems: readonly Problem[] = [
   findBuildingWhereAliceAndBobCanMeet,
   minimumNumberOfSecondsToMakeMountainArray,
   minimumCostWalkInAWeightedGraph,
+  // batch 184 — hard/arrays+stack, medium/arrays+bit-manipulation, medium/dp
+  findTheNumberOfSubarraysWhereBoundaryElementsAreMaximum,
+  countTripletsThatCanFormTwoArraysOfEqualXor,
+  maximumNumberOfJumpsToReachTheLastIndex,
 ];

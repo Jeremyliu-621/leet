@@ -42076,4 +42076,46 @@ def maxBottlesDrunk(numBottles, numExchange):
             ans = (ans + left + 1) % MOD
     return ans
 `,
+
+  'find-the-number-of-subarrays-where-boundary-elements-are-maximum': `def numberOfSubarrays(nums):
+    stack = []
+    ans = 0
+    for x in nums:
+        while stack and stack[-1][0] < x:
+            stack.pop()
+        if stack and stack[-1][0] == x:
+            ans += stack[-1][1] + 1
+            stack[-1][1] += 1
+        else:
+            stack.append([x, 1])
+            ans += 1
+    return ans
+`,
+
+  'count-triplets-that-can-form-two-arrays-of-equal-xor': `def countTriplets(nums):
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] ^ nums[i]
+    count = 0
+    for i in range(n):
+        for k in range(i + 1, n):
+            if prefix[i] == prefix[k + 1]:
+                count += k - i
+    return count
+`,
+
+  'maximum-number-of-jumps-to-reach-the-last-index': `def maximumJumps(nums, target):
+    n = len(nums)
+    dp = [-1] * n
+    dp[0] = 0
+    for i in range(n):
+        if dp[i] == -1:
+            continue
+        for j in range(i + 1, n):
+            if abs(nums[j] - nums[i]) <= target:
+                dp[j] = max(dp[j], dp[i] + 1)
+    return dp[-1]
+`,
+
 };
