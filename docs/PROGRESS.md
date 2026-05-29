@@ -6,11 +6,17 @@
 
 ---
 
-**Last updated:** 2026-05-28
+**Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2244** problems; 7026 tests green. Batches 102–148 + 147 complete. UX polish ongoing.
+**Current focus:** Bank at **2249** problems; 7050 tests green. Batches 102–149 complete. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth; UX polish; accessibility audit.
+
+### feat(bank): register batch 149 — 11 orphaned problems from batches 142b/144/146b (2026-05-29)
+Registered problem files that had been created but never imported in index.ts: `beautiful-towers-ii` (medium/arrays+stack, O(n) monotone stack mountain sum), `maximum-balanced-subsequence-sum` (hard/arrays+dp, max-sum LIS with key=nums[i]-i), `minimum-number-of-flips-to-make-binary-grid-palindromic-ii` (medium/arrays, groups-of-4 + middle row/col pair handling), `find-kth-largest-xor-coordinate-value` (medium/arrays, 2D prefix XOR + kth order stat), `minimum-swaps-to-make-balanced` (medium/strings, greedy imbalance tracking), `tweet-counts-per-frequency` (medium/hash-map+simulation, class design), plus 5 that were already in origin/main's batch 146b. JS+Python solutions added for the 6 that were missing them. Bank at **2249**; 7050 tests.
+
+### fix(challenge): skip fail-flow in practice/standalone mode (2026-05-29)
+Timer expiry and give-up in practice mode (no targetUrl) were calling handleFail which sent fail-challenge to SW, potentially closing the tab and marking streak as damaged. Fixed with early return when targetUrl is absent.
 
 ### feat(ux): streak + today count on solved screen; custom-test pre-fill from first example (2026-05-28)
 Challenge page solved-standalone screen: streak display (`Nd` badge with "X today" sub-label) now shown when user has a streak. CustomTestPanel now pre-fills arg inputs from `problem.visibleTests[0].args` when opened, so the first example is ready to run immediately. Both changes are additive — no regressions.
