@@ -3802,6 +3802,9 @@ def deserialize(data):
 `,
 
   'jump-game-iii': `def canReach(arr, start):
+    if hasattr(arr, 'to_py'): arr = list(arr.to_py())
+    arr = [int(x) for x in arr]
+    start = int(start)
     from collections import deque
     n = len(arr)
     visited = [False] * n
