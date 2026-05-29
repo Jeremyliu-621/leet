@@ -39220,6 +39220,27 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ops;
   },
 
+  // batch 169 — easy/bit, easy/simulation, medium/arrays, medium/arrays+dp, hard/dp
+  'find-xor-of-numbers-appearing-twice': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+    let ans = 0;
+    for (const [n, c] of freq) if (c === 2) ans ^= n;
+    return ans;
+  },
+
+  'maximum-number-of-operations-with-the-same-score-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const score = nums[0]! + nums[1]!;
+    let ops = 0;
+    for (let i = 0; i + 1 < nums.length; i += 2) {
+      if (nums[i]! + nums[i + 1]! === score) ops++;
+      else break;
+    }
+    return ops;
+  },
+
   // batch 169c — arrays+dp/hard
   'minimum-time-to-finish-all-jobs': (...args: unknown[]) => {
     const jobs = args[0] as number[];
@@ -39371,4 +39392,74 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       prev = rung;
     }
     return count;  },
+  'make-lexicographically-smallest-array-by-swapping-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const limit = args[1] as number;
+    const n = nums.length;
+    const indexed = nums.map((v, i) => [v, i] as [number, number]).sort((a, b) => a[0] - b[0]);
+    const result = new Array<number>(n);
+    let i = 0;
+    while (i < n) {
+      let j = i + 1;
+      while (j < n && indexed[j]![0] - indexed[j - 1]![0] <= limit) j++;
+      const group = indexed.slice(i, j);
+      const sortedIdx = group.map(([, idx]) => idx).sort((a, b) => a - b);
+      const sortedVal = group.map(([v]) => v);
+      for (let k = 0; k < group.length; k++) result[sortedIdx[k]!] = sortedVal[k]!;
+      i = j;
+    }
+    return result;
+  },
+
+  'maximize-consecutive-elements-in-an-array-after-modification': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const dp = new Map<number, number>();
+    for (const x of nums) {
+      const keepVal = (dp.get(x - 1) ?? 0) + 1;
+      const incVal = (dp.get(x) ?? 0) + 1;
+      dp.set(x, Math.max(dp.get(x) ?? 0, keepVal));
+      dp.set(x + 1, Math.max(dp.get(x + 1) ?? 0, incVal));
+    }
+    return Math.max(...dp.values());
+  },
+
+  'count-the-number-of-powerful-integers': (...args: unknown[]) => {
+    const start = args[0] as number;
+    const finish = args[1] as number;
+    const limit = args[2] as number;
+    const s = args[3] as string;
+    if (![...s].every(d => +d <= limit)) return 0;
+    const sv = parseInt(s, 10);
+    const sl = s.length;
+    const pow10 = Math.pow(10, sl);
+
+    function countWithAllDigits(n: number, lim: number): number {
+      if (n <= 0) return 0;
+      const ns = String(n);
+      const nl = ns.length;
+      let ans = 0;
+      for (let len = 1; len < nl; len++) ans += lim * Math.pow(lim + 1, len - 1);
+      let tight = true;
+      for (let i = 0; i < nl && tight; i++) {
+        const d = +ns[i]!;
+        const lo = i === 0 ? 1 : 0;
+        const hi = Math.min(d - 1, lim);
+        if (hi >= lo) ans += (hi - lo + 1) * Math.pow(lim + 1, nl - i - 1);
+        if (d > lim) tight = false;
+      }
+      if (tight) ans++;
+      return ans;
+    }
+
+    function countUpTo(n: number): number {
+      if (n < sv) return 0;
+      let ans = 1; // sv itself
+      const maxK = Math.floor((n - sv) / pow10);
+      if (maxK >= 1) ans += countWithAllDigits(maxK, limit);
+      return ans;
+    }
+
+    return countUpTo(finish) - countUpTo(start - 1);
+  },
+
 };

@@ -2753,6 +2753,12 @@ import { problem as countNodesEqualToAverageOfSubtree } from './count-nodes-equa
 import { problem as minimumTimeToMakeRopeColorful } from './minimum-time-to-make-rope-colorful';
 import { problem as smallestValueAfterReplacingWithSumOfPrimeFactors } from './smallest-value-after-replacing-with-sum-of-prime-factors';
 import { problem as addMinimumNumberOfRungs } from './add-minimum-number-of-rungs';
+// batch 169 extra — easy/bit, easy/simulation, medium/arrays+sorting, medium/arrays+dp, hard/digit-dp
+import { problem as findXorOfNumbersAppearingTwice } from './find-xor-of-numbers-appearing-twice';
+import { problem as maximumNumberOfOperationsWithTheSameScoreI } from './maximum-number-of-operations-with-the-same-score-i';
+import { problem as makeLexicographicallySmallestArrayBySwappingElements } from './make-lexicographically-smallest-array-by-swapping-elements';
+import { problem as maximizeConsecutiveElementsInAnArrayAfterModification } from './maximize-consecutive-elements-in-an-array-after-modification';
+import { problem as countTheNumberOfPowerfulIntegers } from './count-the-number-of-powerful-integers';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5541,4 +5547,10 @@ export const problems: readonly Problem[] = [
   minimumTimeToMakeRopeColorful,
   smallestValueAfterReplacingWithSumOfPrimeFactors,
   addMinimumNumberOfRungs,
+  // batch 169 extra — easy/bit, easy/simulation, medium/arrays+sorting, medium/arrays+dp, hard/digit-dp
+  findXorOfNumbersAppearingTwice,
+  maximumNumberOfOperationsWithTheSameScoreI,
+  makeLexicographicallySmallestArrayBySwappingElements,
+  maximizeConsecutiveElementsInAnArrayAfterModification,
+  countTheNumberOfPowerfulIntegers,
 ];

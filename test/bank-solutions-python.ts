@@ -39380,4 +39380,107 @@ def addRungs(rungs, dist):
             count += math.ceil(gap / dist) - 1
         prev = rung
     return count`,
+  'find-xor-of-numbers-appearing-twice': `
+def duplicateNumbersXOR(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    freq = {}
+    for n in nums:
+        freq[n] = freq.get(n, 0) + 1
+    ans = 0
+    for n, c in freq.items():
+        if c == 2:
+            ans ^= n
+    return ans
+`,
+
+  'maximum-number-of-operations-with-the-same-score-i': `
+def maxOperations(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    score = nums[0] + nums[1]
+    ops = 0
+    i = 0
+    while i + 1 < len(nums):
+        if nums[i] + nums[i + 1] == score:
+            ops += 1
+            i += 2
+        else:
+            break
+    return ops
+`,
+
+  'make-lexicographically-smallest-array-by-swapping-elements': `
+def lexicographicallySmallestArray(nums, limit):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    n = len(nums)
+    indexed = sorted(enumerate(nums), key=lambda x: x[1])
+    result = [0] * n
+    i = 0
+    while i < n:
+        j = i + 1
+        while j < n and indexed[j][1] - indexed[j - 1][1] <= limit:
+            j += 1
+        group = indexed[i:j]
+        sorted_idx = sorted(idx for idx, _ in group)
+        sorted_val = [val for _, val in group]
+        for k in range(len(group)):
+            result[sorted_idx[k]] = sorted_val[k]
+        i = j
+    return result
+`,
+
+  'maximize-consecutive-elements-in-an-array-after-modification': `
+def maxSelectedElements(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums.sort()
+    dp = {}
+    for x in nums:
+        keep_val = dp.get(x - 1, 0) + 1
+        inc_val = dp.get(x, 0) + 1
+        dp[x] = max(dp.get(x, 0), keep_val)
+        dp[x + 1] = max(dp.get(x + 1, 0), inc_val)
+    return max(dp.values())
+`,
+
+  'count-the-number-of-powerful-integers': `
+def numberOfPowerfulInt(start, finish, limit, s):
+    if not all(int(d) <= limit for d in s):
+        return 0
+    sv = int(s)
+    sl = len(s)
+    pow10 = 10 ** sl
+
+    def count_with_all_digits(n, lim):
+        if n <= 0:
+            return 0
+        ns = str(n)
+        nl = len(ns)
+        ans = 0
+        for length in range(1, nl):
+            ans += lim * ((lim + 1) ** (length - 1))
+        tight = True
+        for i in range(nl):
+            d = int(ns[i])
+            lo = 1 if i == 0 else 0
+            hi = min(d - 1, lim)
+            if hi >= lo:
+                ans += (hi - lo + 1) * ((lim + 1) ** (nl - i - 1))
+            if d > lim:
+                tight = False
+                break
+        if tight:
+            ans += 1
+        return ans
+
+    def count_up_to(n):
+        if n < sv:
+            return 0
+        ans = 1
+        max_k = (n - sv) // pow10
+        if max_k >= 1:
+            ans += count_with_all_digits(max_k, limit)
+        return ans
+
+    return count_up_to(finish) - count_up_to(start - 1)
+`,
+
 };
