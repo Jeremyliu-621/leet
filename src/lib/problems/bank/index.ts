@@ -2887,6 +2887,10 @@ import { problem as nonSpecialCount } from './find-the-count-of-numbers-which-ar
 import { problem as hasSameDigits } from './check-if-digits-are-equal-in-string-after-operations-i';
 import { problem as getSmallestStringConstraint } from './lexicographically-smallest-string-after-operations-with-constraint';
 import { problem as checkValidCuts } from './check-if-grid-can-be-cut-into-sections';
+// batch 220 — medium/arrays+dp, medium/strings+math, hard/arrays+dp
+import { problem as numSubmat } from './count-submatrices-with-all-ones';
+import { problem as minimumSwap } from './minimum-swaps-to-make-strings-equal';
+import { problem as countSpecialSubsequences } from './count-number-of-special-subsequences';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5814,4 +5818,8 @@ export const problems: readonly Problem[] = [
   hasSameDigits,
   getSmallestStringConstraint,
   checkValidCuts,
+  // batch 220
+  numSubmat,
+  minimumSwap,
+  countSpecialSubsequences,
 ];

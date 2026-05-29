@@ -40705,4 +40705,45 @@ def checkValidCuts(n, rectangles):
     y_intervals = [(r[1], r[3]) for r in rectangles]
     return can_split(x_intervals) or can_split(y_intervals)
 `,
+  'count-submatrices-with-all-ones': `
+def numSubmat(mat):
+    m, n = len(mat), len(mat[0])
+    total = 0
+    height = [0] * n
+    for i in range(m):
+        for j in range(n):
+            height[j] = 0 if mat[i][j] == 0 else height[j] + 1
+        for j in range(n):
+            min_h = height[j]
+            for k in range(j, -1, -1):
+                min_h = min(min_h, height[k])
+                total += min_h
+    return total
+`,
+  'minimum-swaps-to-make-strings-equal': `
+def minimumSwap(s1, s2):
+    xy = yx = 0
+    for a, b in zip(s1, s2):
+        if a != b:
+            if a == 'x':
+                xy += 1
+            else:
+                yx += 1
+    if (xy + yx) % 2 != 0:
+        return -1
+    return xy // 2 + yx // 2 + 2 * (xy % 2)
+`,
+  'count-number-of-special-subsequences': `
+def countSpecialSubsequences(nums):
+    MOD = 10**9 + 7
+    dp0 = dp1 = dp2 = 0
+    for n in nums:
+        if n == 0:
+            dp0 = (2 * dp0 + 1) % MOD
+        elif n == 1:
+            dp1 = (2 * dp1 + dp0) % MOD
+        else:
+            dp2 = (2 * dp2 + dp1) % MOD
+    return dp2
+`,
 };
