@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2533** problems; 7893 tests green. Batches 102–219 + 217-addendum complete + comprehensive dedup.
+**Current focus:** Bank at **2536** problems; 7902 tests green. Batches 102–220 + 217-addendum + concurrent complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 220+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 221+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 220 — count-submatrices-all-ones, min-swaps-strings-equal, count-special-subsequences (2026-05-29)
+Three new problems (removed duplicate minimum-recolors): `count-submatrices-with-all-ones` (medium/arrays+dp, O(mn²) height sweep), `minimum-swaps-to-make-strings-equal` (medium/strings+math, count XY/YX mismatches), `count-number-of-special-subsequences` (hard/arrays+dp, O(n) DP for 0+1+2+ patterns). Bank at **2531** post-batch-220. Then merged concurrent 217-addendum (+5 problems) → **2536**; 7902 tests.
 
 ### feat(bank): batch 217 addendum — reach-a-number, minimum-degree-connected-trio, valid-square, count-subarrays-odd-sum, separate-digits-in-array (2026-05-29)
 Five new problems: `reach-a-number` (medium/math+binary-search, find min k with k*(k+1)/2 ≥ target and even parity gap), `minimum-degree-of-a-connected-trio` (hard/graph, O(n³) trio enumeration, degree=sum−6), `valid-square` (medium/math, 6 pairwise distances, 2 distinct values with 2:1 ratio), `count-subarrays-with-odd-sum` (medium/arrays+math, prefix parity tracking, mod 10⁹+7), `separate-the-digits-in-an-array` (easy/arrays+simulation, flatMap digit extraction). Bank at **2533**; 7893 tests.
