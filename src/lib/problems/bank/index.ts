@@ -2547,6 +2547,11 @@ import { problem as findCriticalPseudoCriticalEdges } from './find-critical-and-
 import { problem as numberOfSubarraysHavingEvenProduct } from './number-of-subarrays-having-even-product';
 import { problem as greatestSumDivisibleByThree } from './greatest-sum-divisible-by-three';
 import { problem as constructProductMatrix } from './construct-product-matrix';
+// batch 154b — trie/medium×3, trie/hard
+import { problem as mapSumPairs } from './map-sum-pairs';
+import { problem as magicDictionary } from './magic-dictionary';
+import { problem as shortEncodingOfWords } from './short-encoding-of-words';
+import { problem as implementMagicTrieStream } from './implement-magic-trie-stream';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5131,4 +5136,9 @@ export const problems: readonly Problem[] = [
   numberOfSubarraysHavingEvenProduct,
   greatestSumDivisibleByThree,
   constructProductMatrix,
+  // batch 154b — trie/medium×3, trie/hard
+  mapSumPairs,
+  magicDictionary,
+  shortEncodingOfWords,
+  implementMagicTrieStream,
 ];

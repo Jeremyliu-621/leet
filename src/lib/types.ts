@@ -21,7 +21,9 @@ export type ProblemTag =
   | 'union-find'
   | 'binary-indexed-tree'
   | 'simulation'
-  | 'shortest-path';
+  | 'shortest-path'
+  | 'trie'
+  | 'design';
 
 /** Every tag, in canonical display order. */
 export const PROBLEM_TAGS: readonly ProblemTag[] = [
@@ -43,6 +45,8 @@ export const PROBLEM_TAGS: readonly ProblemTag[] = [
   'binary-indexed-tree',
   'simulation',
   'shortest-path',
+  'trie',
+  'design',
 ];
 
 /** Every difficulty, easiest first. */
