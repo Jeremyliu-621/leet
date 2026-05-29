@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2376** problems; 7428 tests green. Batches 102–161 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2381** problems; 7443 tests green. Batches 102–162 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 162+); update site count; UX polish.
+**Next up:** More bank growth (batch 163+); update site count; UX polish.
+
+### feat(bank): add batch 162 — reformat-date (easy), maximum-value-after-insertion (medium), recover-the-original-array (hard), construct-smallest-number-from-di-string (medium), minimum-difference-highest-lowest-k-scores (easy) (2026-05-29)
+Five new problems: `reformat-date` (easy/strings, split on space, strip ordinal suffix with regex, look up month in map, zero-pad day), `maximum-value-after-insertion` (medium/strings+math, insert before first smaller/larger digit depending on sign), `recover-the-original-array` (hard/arrays+hash-map+two-pointers, sorted merged lower+higher array; try each candidate k from nums[0] pairing; frequency-map greedy matching), `construct-smallest-number-from-di-string` (medium/strings+stack, monotone stack: push digits, pop entire stack on 'I' or end), `minimum-difference-highest-lowest-k-scores` (easy/arrays+sliding-window, sort + slide window of size k, min(nums[i+k-1]-nums[i])). Fixed invalid hidden tests in recover-the-original-array (replaced impossible inputs with valid arr/k constructions). Bank at **2381**; 7443 tests.
 
 ### feat(bank): add batch 161 — frog-jump-ii, collecting-chocolates, partitioning-min-deci-binary, where-will-ball-fall, split-string-max-unique (2026-05-29)
 Five new medium problems: `frog-jump-ii` (medium/arrays+binary-search, two frogs alternate stones — max gap = max of every-other-stone diff), `collecting-chocolates` (medium/arrays+simulation, O(n²) rotation DP with rolling minCost array), `partitioning-into-minimum-number-of-deci-binary-numbers` (medium/strings+math, trivial greedy — answer = max digit), `where-will-the-ball-fall` (medium/arrays+simulation, stuck if nj OOB or grid[r][nj]≠direction), `split-a-string-into-the-maximum-number-of-unique-substrings` (medium/strings+backtracking, DFS with used-set maximize count). JS + Python reference solutions added. Bank at **2376**; 7428 tests.
