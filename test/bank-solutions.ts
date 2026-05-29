@@ -37201,6 +37201,81 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return 0;
   },
 
+  // batch 156c — graph+shortest-path/hard, hash-map+binary-search/medium, binary-indexed-tree/hard
+  'find-edges-in-shortest-paths': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const adj: [number, number][][] = Array.from({length: n}, () => []);
+    for (const e of edges) { const u = e[0]!, v = e[1]!, w = e[2]!; adj[u]!.push([v, w]); adj[v]!.push([u, w]); }
+    const dijkstra = (src: number): number[] => {
+      const dist = new Array<number>(n).fill(Infinity);
+      dist[src] = 0;
+      const heap: [number, number][] = [[0, src]];
+      while (heap.length > 0) {
+        let mi = 0;
+        for (let i = 1; i < heap.length; i++) if (heap[i]![0] < heap[mi]![0]) mi = i;
+        const item = heap.splice(mi, 1)[0]!;
+        const d = item[0], u = item[1];
+        if (d > dist[u]!) continue;
+        for (const nv of adj[u]!) {
+          const nd = dist[u]! + nv[1];
+          if (nd < dist[nv[0]]!) { dist[nv[0]] = nd; heap.push([nd, nv[0]]); }
+        }
+      }
+      return dist;
+    };
+    const dist0 = dijkstra(0);
+    const distN = dijkstra(n - 1);
+    const total = dist0[n - 1]!;
+    return edges.map(e => {
+      const u = e[0]!, v = e[1]!, w = e[2]!;
+      return dist0[u]! + w + distN[v]! === total || dist0[v]! + w + distN[u]! === total;
+    });
+  },
+
+  'avoid-flood-in-the-city': (...args: unknown[]) => {
+    const rains = args[0] as number[];
+    const filled = new Map<number, number>();
+    const dryDays: number[] = [];
+    const result = new Array<number>(rains.length).fill(-1);
+    for (let i = 0; i < rains.length; i++) {
+      if (rains[i] === 0) { dryDays.push(i); }
+      else {
+        const lake = rains[i]!;
+        if (filled.has(lake)) {
+          const lastFill = filled.get(lake)!;
+          let lo = 0, hi = dryDays.length;
+          while (lo < hi) { const mid = (lo + hi) >> 1; if (dryDays[mid]! > lastFill) hi = mid; else lo = mid + 1; }
+          if (lo === dryDays.length) return [];
+          const dayIdx = dryDays[lo]!;
+          result[dayIdx] = lake;
+          dryDays.splice(lo, 1);
+        }
+        filled.set(lake, i);
+        result[i] = -1;
+      }
+    }
+    for (const day of dryDays) result[day] = 1;
+    return result;
+  },
+
+  'minimum-time-to-accomplish-all-tasks': (...args: unknown[]) => {
+    const tasks = args[0] as number[][];
+    const maxTime = 2000;
+    const run = new Array<number>(maxTime + 2).fill(0);
+    const sorted = [...tasks].sort((a, b) => a[1]! - b[1]!);
+    for (const task of sorted) {
+      const s = task[0]!, e = task[1]!, d = task[2]!;
+      let already = 0;
+      for (let t = s; t <= e; t++) already += run[t]!;
+      let need = d - already;
+      for (let t = e; t >= s && need > 0; t--) {
+        if (!run[t]) { run[t] = 1; need--; }
+      }
+    }
+    return run.reduce((a, b) => a + b, 0);
+  },
+
   // batch 157 — trie×4, trie+design×1
   'implement-trie-ii-prefix-tree': (...args: unknown[]) => {
     const ops = args[0] as string[];

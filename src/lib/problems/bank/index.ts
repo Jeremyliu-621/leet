@@ -2604,6 +2604,10 @@ import { problem as pathWithMaxProbability } from './path-with-max-probability';
 // batch 156b — tree/easy×1, tree/medium×1
 import { problem as averageOfLevelsInBinaryTree } from './average-of-levels-in-binary-tree';
 import { problem as allElementsInTwoBinarySearchTrees } from './all-elements-in-two-binary-search-trees';
+// batch 156c — graph+shortest-path/hard, hash-map+binary-search/medium, binary-indexed-tree/hard
+import { problem as findEdgesInShortestPaths } from './find-edges-in-shortest-paths';
+import { problem as avoidFloodInTheCity } from './avoid-flood-in-the-city';
+import { problem as minimumTimeToAccomplishAllTasks } from './minimum-time-to-accomplish-all-tasks';
 // batch 157 — trie×4, trie+design×1
 import { problem as implementTrieII } from './implement-trie-ii-prefix-tree';
 import { problem as wordFilter } from './word-filter';
@@ -5256,6 +5260,10 @@ export const problems: readonly Problem[] = [
   // batch 156b — tree/easy×1, tree/medium×1
   averageOfLevelsInBinaryTree,
   allElementsInTwoBinarySearchTrees,
+  // batch 156c — graph+shortest-path/hard, hash-map+binary-search/medium, binary-indexed-tree/hard
+  findEdgesInShortestPaths,
+  avoidFloodInTheCity,
+  minimumTimeToAccomplishAllTasks,
   // batch 157 — trie×4, trie+design×1
   implementTrieII,
   wordFilter,

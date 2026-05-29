@@ -37076,6 +37076,77 @@ def getAllElementsRunner(arr1, arr2):
     return merged
 `,
 
+  // batch 156c — graph+shortest-path/hard, hash-map+binary-search/medium, binary-indexed-tree/hard
+  'find-edges-in-shortest-paths': `def findAnswer(n, edges):
+    import heapq
+    edges_raw = list(edges.to_py() if hasattr(edges, 'to_py') else edges)
+    edges_list = [[int(x) for x in (row.to_py() if hasattr(row, 'to_py') else row)] for row in edges_raw]
+    adj = [[] for _ in range(n)]
+    for u, v, w in edges_list:
+        adj[u].append((v, w))
+        adj[v].append((u, w))
+    def dijkstra(src):
+        dist = [float('inf')] * n
+        dist[src] = 0
+        heap = [(0, src)]
+        while heap:
+            d, u = heapq.heappop(heap)
+            if d > dist[u]:
+                continue
+            for v, w in adj[u]:
+                if dist[u] + w < dist[v]:
+                    dist[v] = dist[u] + w
+                    heapq.heappush(heap, (dist[v], v))
+        return dist
+    dist0 = dijkstra(0)
+    dist_n = dijkstra(n - 1)
+    total = dist0[n - 1]
+    return [dist0[u] + w + dist_n[v] == total or dist0[v] + w + dist_n[u] == total
+            for u, v, w in edges_list]
+`,
+
+  'avoid-flood-in-the-city': `def avoidFlood(rains):
+    rains = list(rains.to_py() if hasattr(rains, 'to_py') else rains)
+    import bisect
+    filled = {}
+    dry_days = []
+    result = [-1] * len(rains)
+    for i, lake in enumerate(rains):
+        if lake == 0:
+            bisect.insort(dry_days, i)
+        else:
+            if lake in filled:
+                last_fill = filled[lake]
+                idx = bisect.bisect_right(dry_days, last_fill)
+                if idx == len(dry_days):
+                    return []
+                day_idx = dry_days.pop(idx)
+                result[day_idx] = lake
+            filled[lake] = i
+            result[i] = -1
+    for day in dry_days:
+        result[day] = 1
+    return result
+`,
+
+  'minimum-time-to-accomplish-all-tasks': `def findMinimumTime(tasks):
+    tasks_raw = list(tasks.to_py() if hasattr(tasks, 'to_py') else tasks)
+    tasks_list = [[int(x) for x in (row.to_py() if hasattr(row, 'to_py') else row)] for row in tasks_raw]
+    max_time = 2000
+    run = [0] * (max_time + 2)
+    tasks_list.sort(key=lambda x: x[1])
+    for s, e, d in tasks_list:
+        already = sum(run[s:e+1])
+        need = d - already
+        t = e
+        while t >= s and need > 0:
+            if not run[t]:
+                run[t] = 1
+                need -= 1
+            t -= 1
+    return sum(run)
+`,
+
   // batch 157 — trie×4, trie+design×1
   'implement-trie-ii-prefix-tree': `def implementTrieII(ops, args):
     ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
