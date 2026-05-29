@@ -36355,4 +36355,88 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  'maximum-earnings-from-taxi': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const rides = args[1] as number[][];
+    const byEnd = new Map<number, [number, number][]>();
+    for (const ride of rides) {
+      const [a, b, tip] = ride as [number, number, number];
+      if (!byEnd.has(b)) byEnd.set(b, []);
+      byEnd.get(b)!.push([a, b - a + tip]);
+    }
+    const dp = new Array<number>(n + 1).fill(0);
+    for (let i = 1; i <= n; i++) {
+      dp[i] = dp[i - 1]!;
+      for (const [start, earn] of (byEnd.get(i) ?? [])) {
+        dp[i] = Math.max(dp[i]!, dp[start]! + earn);
+      }
+    }
+    return dp[n]!;
+  },
+
+  'find-the-longest-special-substring-that-occurs-thrice-i': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const runs = new Map<string, number[]>();
+    let i = 0;
+    while (i < s.length) {
+      const c = s[i]!;
+      let j = i;
+      while (j < s.length && s[j] === c) j++;
+      if (!runs.has(c)) runs.set(c, []);
+      runs.get(c)!.push(j - i);
+      i = j;
+    }
+    let ans = -1;
+    for (const lengths of runs.values()) {
+      let lo = 1, hi = Math.max(...lengths);
+      while (lo <= hi) {
+        const mid = (lo + hi) >> 1;
+        const cnt = lengths.reduce((acc, R) => acc + Math.max(0, R - mid + 1), 0);
+        if (cnt >= 3) { ans = Math.max(ans, mid); lo = mid + 1; }
+        else hi = mid - 1;
+      }
+    }
+    return ans;
+  },
+
+  'minimum-cost-to-make-array-equalindromic': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const n = nums.length;
+    const median = nums[Math.floor(n / 2)]!;
+    function mcCost(p: number): number { return nums.reduce((acc, x) => acc + Math.abs(x - p), 0); }
+    function mcPalin(h: number, totalLen: number): number {
+      const hs = String(h);
+      const rev = hs.split('').reverse();
+      const full = totalLen % 2 === 0 ? hs + rev.join('') : hs + rev.slice(1).join('');
+      const p = parseInt(full);
+      return String(p).length === totalLen ? p : -1;
+    }
+    const len = String(median).length;
+    const halfLen = Math.ceil(len / 2);
+    const firstHalf = parseInt(String(median).substring(0, halfLen));
+    const cands: number[] = [];
+    for (let d = -1; d <= 1; d++) {
+      const p = mcPalin(firstHalf + d, len);
+      if (p > 0) cands.push(p);
+    }
+    cands.push(Math.pow(10, len - 1) - 1, Math.pow(10, len) + 1);
+    return Math.min(...cands.filter(p => p > 0).map(mcCost));
+  },
+
+  'identify-the-largest-outlier-in-an-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const total = nums.reduce((a, b) => a + b, 0);
+    const freq = new Map<number, number>();
+    for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+    let ans = -Infinity;
+    for (const x of nums) {
+      const remaining = total - x;
+      if (remaining % 2 !== 0) continue;
+      const special = remaining / 2;
+      const cnt = freq.get(special) ?? 0;
+      if (cnt > 0 && (special !== x || cnt >= 2) && x > ans) ans = x;
+    }
+    return ans;
+  },
+
 };

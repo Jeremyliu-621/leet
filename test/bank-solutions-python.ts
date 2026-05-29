@@ -36163,4 +36163,90 @@ def streamOfCharacters(ops, args):
     return result
 `,
 
+  'maximum-earnings-from-taxi': `def maxTaxiEarnings(n, rides):
+    rides = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in (rides.to_py() if hasattr(rides, 'to_py') else rides)]
+    from collections import defaultdict
+    by_end = defaultdict(list)
+    for a, b, tip in rides:
+        by_end[b].append((a, b - a + tip))
+    dp = [0] * (n + 1)
+    for i in range(1, n + 1):
+        dp[i] = dp[i-1]
+        for start, earn in by_end[i]:
+            dp[i] = max(dp[i], dp[start] + earn)
+    return dp[n]
+`,
+
+  'find-the-longest-special-substring-that-occurs-thrice-i': `def maximumLength(s):
+    from collections import defaultdict
+    runs = defaultdict(list)
+    i = 0
+    while i < len(s):
+        c = s[i]
+        j = i
+        while j < len(s) and s[j] == c:
+            j += 1
+        runs[c].append(j - i)
+        i = j
+    ans = -1
+    for lengths in runs.values():
+        lo, hi = 1, max(lengths)
+        while lo <= hi:
+            mid = (lo + hi) // 2
+            cnt = sum(max(0, R - mid + 1) for R in lengths)
+            if cnt >= 3:
+                ans = max(ans, mid)
+                lo = mid + 1
+            else:
+                hi = mid - 1
+    return ans
+`,
+
+  'minimum-cost-to-make-array-equalindromic': `def minimumCost(nums):
+    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    median = nums[n // 2]
+    def cost(p):
+        return sum(abs(x - p) for x in nums)
+    def make_palin(h, total_len):
+        hs = str(h)
+        rev = hs[::-1]
+        if total_len % 2 == 0:
+            full = hs + rev
+        else:
+            full = hs + rev[1:]
+        p = int(full)
+        return p if len(str(p)) == total_len else -1
+    s = str(median)
+    length = len(s)
+    half_len = (length + 1) // 2
+    first_half = int(s[:half_len])
+    cands = []
+    for d in [-1, 0, 1]:
+        p = make_palin(first_half + d, length)
+        if p > 0:
+            cands.append(p)
+    cands.append(10**(length-1) - 1)
+    cands.append(10**length + 1)
+    cands = [p for p in cands if p > 0]
+    return min(cost(p) for p in cands)
+`,
+
+  'identify-the-largest-outlier-in-an-array': `def largestOutlier(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    total = sum(nums)
+    from collections import Counter
+    freq = Counter(nums)
+    ans = float('-inf')
+    for x in nums:
+        remaining = total - x
+        if remaining % 2 != 0:
+            continue
+        special = remaining // 2
+        cnt = freq[special]
+        if cnt > 0 and (special != x or cnt >= 2) and x > ans:
+            ans = x
+    return ans
+`,
+
 };
