@@ -37201,4 +37201,142 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return 0;
   },
 
+  // batch 157 — trie×4, trie+design×1
+  'implement-trie-ii-prefix-tree': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const params = args[1] as (string[] | [])[];
+    interface Node { children: Record<string, Node>; end: number; prefix: number; }
+    const newNode = (): Node => ({ children: {}, end: 0, prefix: 0 });
+    let root: Node = newNode();
+    const results: (number | null)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      const arg = (params[i] as string[])[0] ?? '';
+      if (op === 'Trie') { root = newNode(); results.push(null); }
+      else if (op === 'insert') {
+        let node = root;
+        for (const ch of arg) {
+          if (!node.children[ch]) node.children[ch] = newNode();
+          node = node.children[ch]!;
+          node.prefix++;
+        }
+        node.end++;
+        results.push(null);
+      } else if (op === 'countWordsEqualTo') {
+        let node: Node | undefined = root;
+        for (const ch of arg) { node = node?.children[ch]; if (!node) break; }
+        results.push(node ? node.end : 0);
+      } else if (op === 'countWordsStartingWith') {
+        let node: Node | undefined = root;
+        for (const ch of arg) { node = node?.children[ch]; if (!node) break; }
+        results.push(node ? node.prefix : 0);
+      } else if (op === 'erase') {
+        let node = root;
+        for (const ch of arg) {
+          node.children[ch]!.prefix--;
+          node = node.children[ch]!;
+        }
+        node.end--;
+        results.push(null);
+      }
+    }
+    return results;
+  },
+
+  'word-filter': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const params = args[1] as unknown[][];
+    const map = new Map<string, number>();
+    const results: (number | null)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      if (op === 'WordFilter') {
+        const words = params[i] as string[][];
+        const wordList = words[0]!;
+        for (let idx = 0; idx < wordList.length; idx++) {
+          const w = wordList[idx]!;
+          for (let p = 0; p <= w.length; p++) {
+            for (let s = 0; s <= w.length; s++) {
+              map.set(w.slice(0, p) + '|' + w.slice(w.length - s), idx);
+            }
+          }
+        }
+        results.push(null);
+      } else {
+        const pref = (params[i] as string[])[0]!;
+        const suff = (params[i] as string[])[1]!;
+        results.push(map.get(pref + '|' + suff) ?? -1);
+      }
+    }
+    return results;
+  },
+
+  'lexicographical-numbers': (n: unknown) => {
+    const num = n as number;
+    const result: number[] = [];
+    let curr = 1;
+    while (result.length < num) {
+      result.push(curr);
+      if (curr * 10 <= num) {
+        curr *= 10;
+      } else {
+        while (curr % 10 === 9 || curr + 1 > num) curr = Math.floor(curr / 10);
+        curr++;
+      }
+    }
+    return result;
+  },
+
+  'k-th-smallest-in-lexicographic-order': (n: unknown, k: unknown) => {
+    const num = n as number;
+    let remaining = k as number;
+    let curr = 1;
+    remaining--;
+    while (remaining > 0) {
+      let steps = 0;
+      let a = curr, b = curr + 1;
+      while (a <= num) {
+        steps += Math.min(num + 1, b) - a;
+        a *= 10; b *= 10;
+      }
+      if (steps <= remaining) { remaining -= steps; curr++; }
+      else { remaining--; curr *= 10; }
+    }
+    return curr;
+  },
+
+  'design-search-autocomplete-system': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const params = args[1] as unknown[][];
+    const counts = new Map<string, number>();
+    let prefix = '';
+    const results: (string[] | null)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      if (op === 'AutocompleteSystem') {
+        const sentences = (params[i] as [string[], number[]])[0];
+        const times = (params[i] as [string[], number[]])[1];
+        for (let j = 0; j < sentences.length; j++) counts.set(sentences[j]!, times[j]!);
+        prefix = '';
+        results.push(null);
+      } else {
+        const c = (params[i] as string[])[0]!;
+        if (c === '#') {
+          counts.set(prefix, (counts.get(prefix) ?? 0) + 1);
+          prefix = '';
+          results.push([]);
+        } else {
+          prefix += c;
+          const matches: [number, string][] = [];
+          for (const [sentence, cnt] of counts) {
+            if (sentence.startsWith(prefix)) matches.push([cnt, sentence]);
+          }
+          matches.sort((a, b) => b[0]! - a[0]! || a[1]!.localeCompare(b[1]!));
+          results.push(matches.slice(0, 3).map(m => m[1]!));
+        }
+      }
+    }
+    return results;
+  },
+
 };
