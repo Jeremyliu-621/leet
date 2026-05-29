@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2784** problems; 8646 tests green. Batches 102–212 + 211b + 207b + KaTeX UX complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2788** problems; 8658 tests green. Batches 102–213 + 211b + 207b + KaTeX UX complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 213+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 214+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 213 — all-1s-k-apart, binary-string-one-segment, count-distinct-reverse, maximize-confusion (2026-05-29)
+Four new problems: `check-if-all-1s-are-at-least-length-k-places-apart` (easy/arrays, track previous-1 index, gap >= k+1), `check-if-binary-string-has-at-most-one-segment-of-ones` (easy/strings, no "01" substring), `count-distinct-integers-after-reverse-operations` (medium/arrays+hash-map, Set union of nums and digit-reversed nums), `maximize-the-confusion-of-an-exam` (medium/strings+sliding-window, two-pass window replacing T's then F's). Bank at **2788**; 8658 tests.
 
 ### feat(bank): batch 211b — word-k-periodic, zero-array-transformation-iii, maximum-coins-heroes, balls-to-boxes (2026-05-29)
 Four new problems: `minimum-number-of-operations-to-make-word-k-periodic` (medium/strings+hash-map, split into n/k chunks, count freq, answer=total_chunks−max_freq), `zero-array-transformation-iii` (hard/arrays+heap, greedy max-heap by right endpoint, diff array coverage tracking), `maximum-coins-heroes-can-collect` (medium/arrays+binary-search, sort monsters by health, prefix sum coins, bisect per hero), `minimum-operations-to-move-all-balls-to-each-box` (medium/arrays+strings, two-pass O(n) accumulating cost+count from left then right). Bank at **2784**; 8646 tests.
