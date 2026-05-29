@@ -34963,6 +34963,19 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return product * n;
   },
 
+  'calculate-amount-paid-in-taxes': (...args: unknown[]) => {
+    const brackets = args[0] as number[][];
+    const income = args[1] as number;
+    let tax = 0, prev = 0;
+    for (const [upper, percent] of brackets) {
+      if (income <= prev) break;
+      const taxable = Math.min(income, upper as number) - prev;
+      tax += taxable * (percent as number) / 100;
+      prev = upper as number;
+    }
+    return tax;
+  },
+
   'minimum-path-sum-triangle': (...args: unknown[]) => {
     const triangle = args[0] as number[][];
     const dp = [...(triangle[triangle.length - 1] as number[])];

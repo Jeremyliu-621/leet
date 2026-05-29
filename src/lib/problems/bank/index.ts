@@ -2452,6 +2452,8 @@ import { problem as sumOfAllSubmatrixSums } from './sum-of-all-submatrix-sums';
 // batch 148 — math+dp/medium, dp/medium
 import { problem as maxProductAfterCuttingRope } from './max-product-after-cutting-rope';
 import { problem as minimumPathSumTriangle } from './minimum-path-sum-triangle';
+// batch 149 — arrays/easy
+import { problem as calculateAmountPaidInTaxes } from './calculate-amount-paid-in-taxes';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4941,4 +4943,6 @@ export const problems: readonly Problem[] = [
   // batch 148 — math+dp/medium, dp/medium
   maxProductAfterCuttingRope,
   minimumPathSumTriangle,
+  // batch 149 — arrays/easy
+  calculateAmountPaidInTaxes,
 ];

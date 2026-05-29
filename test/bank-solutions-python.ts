@@ -34772,6 +34772,21 @@ def sumSubmatrixSums(matrix):
     return total
 `,
 
+  'calculate-amount-paid-in-taxes': `
+def calculateTax(brackets, income):
+    if hasattr(brackets, 'to_py'):
+        brackets = brackets.to_py()
+    tax = 0.0
+    prev = 0
+    for upper, percent in brackets:
+        if income <= prev:
+            break
+        taxable = min(income, upper) - prev
+        tax += taxable * percent / 100
+        prev = upper
+    return tax
+`,
+
   'max-product-after-cutting-rope': `
 def cuttingRope(n):
     if n == 2:
