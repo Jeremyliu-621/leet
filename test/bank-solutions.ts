@@ -35599,4 +35599,126 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(dp[n]![k]!);
   },
 
+  // batch 151
+  'swap-pairs-linked-list': (...args: unknown[]) => {
+    const vals = args[0] as number[];
+    const result = [...vals];
+    for (let i = 0; i + 1 < result.length; i += 2) {
+      [result[i], result[i + 1]] = [result[i + 1]!, result[i]!];
+    }
+    return result;
+  },
+
+  'reverse-nodes-k-group': (...args: unknown[]) => {
+    const vals = args[0] as number[];
+    const k = args[1] as number;
+    const result = [...vals];
+    for (let i = 0; i + k <= result.length; i += k) {
+      result.splice(i, k, ...result.slice(i, i + k).reverse());
+    }
+    return result;
+  },
+
+  'minimum-spanning-tree-weight': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    if (n === 1) return 0;
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const rank = new Array<number>(n).fill(0);
+    function find(x: number): number {
+      if (parent[x] !== x) parent[x] = find(parent[x]!);
+      return parent[x]!;
+    }
+    function union(a: number, b: number): boolean {
+      const ra = find(a), rb = find(b);
+      if (ra === rb) return false;
+      if (rank[ra]! < rank[rb]!) parent[ra] = rb;
+      else if (rank[ra]! > rank[rb]!) parent[rb] = ra;
+      else { parent[rb] = ra; rank[ra]!++; }
+      return true;
+    }
+    const sorted = [...edges].sort((a, b) => (a[2] as number) - (b[2] as number));
+    let weight = 0, count = 0;
+    for (const edge of sorted) {
+      if (union(edge[0] as number, edge[1] as number)) {
+        weight += edge[2] as number;
+        count++;
+      }
+    }
+    return count === n - 1 ? weight : -1;
+  },
+
+  'union-find-dynamic-connectivity': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const ops = args[1] as (string | number)[][];
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const rank = new Array<number>(n).fill(0);
+    function find(x: number): number {
+      if (parent[x] !== x) parent[x] = find(parent[x]!);
+      return parent[x]!;
+    }
+    function union(a: number, b: number): void {
+      const ra = find(a), rb = find(b);
+      if (ra === rb) return;
+      if (rank[ra]! < rank[rb]!) parent[ra] = rb;
+      else if (rank[ra]! > rank[rb]!) parent[rb] = ra;
+      else { parent[rb] = ra; rank[ra]!++; }
+    }
+    const result: boolean[] = [];
+    for (const op of ops) {
+      const type = op[0] as string;
+      const u = op[1] as number, v = op[2] as number;
+      if (type === 'union') union(u, v);
+      else result.push(find(u) === find(v));
+    }
+    return result;
+  },
+
+  'bellman-ford-shortest-paths': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const source = args[2] as number;
+    const INF = Infinity;
+    const dist = new Array<number>(n + 1).fill(INF);
+    dist[source] = 0;
+    for (let iter = 0; iter < n - 1; iter++) {
+      for (const edge of edges) {
+        const u = edge[0] as number, v = edge[1] as number, w = edge[2] as number;
+        if (dist[u] !== INF && dist[u]! + w < dist[v]!) {
+          dist[v] = dist[u]! + w;
+        }
+      }
+    }
+    dist[0] = 0;
+    return dist.map(d => d === INF ? -1 : d);
+  },
+
+  'bit-prefix-sum-updates': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice();
+    const ops = args[1] as (string | number)[][];
+    const n = nums.length;
+    const bit = new Array<number>(n + 1).fill(0);
+    function update(i: number, delta: number): void {
+      for (; i <= n; i += i & -i) bit[i]! += delta;
+    }
+    function query(i: number): number {
+      let s = 0;
+      for (; i > 0; i -= i & -i) s += bit[i]!;
+      return s;
+    }
+    for (let i = 0; i < n; i++) update(i + 1, nums[i]!);
+    const result: number[] = [];
+    for (const op of ops) {
+      const type = op[0] as string;
+      if (type === 'update') {
+        const i = op[1] as number, delta = op[2] as number;
+        update(i, delta);
+      } else {
+        const l = op[1] as number, r = op[2] as number;
+        result.push(query(r) - query(l - 1));
+      }
+    }
+    return result;
+  },
+
 };

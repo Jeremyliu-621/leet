@@ -35387,4 +35387,131 @@ def resultsArray(queries, k):
     return dp[n][k]
 `,
 
+  // batch 151
+  'swap-pairs-linked-list': `def swapPairsRunner(vals):
+    vals = list(vals.to_py() if hasattr(vals, 'to_py') else vals)
+    result = list(vals)
+    i = 0
+    while i + 1 < len(result):
+        result[i], result[i + 1] = result[i + 1], result[i]
+        i += 2
+    return result
+`,
+
+  'reverse-nodes-k-group': `def reverseKGroupRunner(vals, k):
+    vals = list(vals.to_py() if hasattr(vals, 'to_py') else vals)
+    result = list(vals)
+    i = 0
+    while i + k <= len(result):
+        result[i:i+k] = result[i:i+k][::-1]
+        i += k
+    return result
+`,
+
+  'minimum-spanning-tree-weight': `def minimumSpanningTreeWeight(n, edges):
+    edges = list(edges.to_py() if hasattr(edges, 'to_py') else edges)
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in edges]
+    if n == 1:
+        return 0
+    parent = list(range(n))
+    rank = [0] * n
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    def union(a, b):
+        ra, rb = find(a), find(b)
+        if ra == rb:
+            return False
+        if rank[ra] < rank[rb]:
+            parent[ra] = rb
+        elif rank[ra] > rank[rb]:
+            parent[rb] = ra
+        else:
+            parent[rb] = ra
+            rank[ra] += 1
+        return True
+    edges.sort(key=lambda e: e[2])
+    weight, count = 0, 0
+    for u, v, w in edges:
+        if union(u, v):
+            weight += w
+            count += 1
+    return weight if count == n - 1 else -1
+`,
+
+  'union-find-dynamic-connectivity': `def dynamicConnectivity(n, ops):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    ops = [list(op.to_py() if hasattr(op, 'to_py') else op) for op in ops]
+    parent = list(range(n))
+    rank = [0] * n
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    def union(a, b):
+        ra, rb = find(a), find(b)
+        if ra == rb:
+            return
+        if rank[ra] < rank[rb]:
+            parent[ra] = rb
+        elif rank[ra] > rank[rb]:
+            parent[rb] = ra
+        else:
+            parent[rb] = ra
+            rank[ra] += 1
+    result = []
+    for op in ops:
+        op_type, u, v = op[0], int(op[1]), int(op[2])
+        if op_type == 'union':
+            union(u, v)
+        else:
+            result.append(find(u) == find(v))
+    return result
+`,
+
+  'bellman-ford-shortest-paths': `def bellmanFord(n, edges, source):
+    edges = list(edges.to_py() if hasattr(edges, 'to_py') else edges)
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in edges]
+    INF = float('inf')
+    dist = [INF] * (n + 1)
+    dist[source] = 0
+    for _ in range(n - 1):
+        for u, v, w in edges:
+            if dist[u] != INF and dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+    dist[0] = 0
+    return [-1 if d == INF else d for d in dist]
+`,
+
+  'bit-prefix-sum-updates': `def bitPrefixSumUpdates(nums, ops):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    ops = [list(op.to_py() if hasattr(op, 'to_py') else op) for op in ops]
+    n = len(nums)
+    bit = [0] * (n + 1)
+    def update(i, delta):
+        while i <= n:
+            bit[i] += delta
+            i += i & -i
+    def query(i):
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & -i
+        return s
+    for i, v in enumerate(nums):
+        update(i + 1, v)
+    result = []
+    for op in ops:
+        op_type = op[0]
+        if op_type == 'update':
+            i, delta = int(op[1]), int(op[2])
+            update(i, delta)
+        else:
+            l, r = int(op[1]), int(op[2])
+            result.append(query(r) - query(l - 1))
+    return result
+`,
+
 };
