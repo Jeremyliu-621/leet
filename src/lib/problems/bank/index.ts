@@ -2465,6 +2465,10 @@ import { problem as numberOfWaysKSteps } from './number-of-ways-to-reach-a-posit
 // batch 148 — math+dp/medium, dp/medium
 import { problem as maxProductAfterCuttingRope } from './max-product-after-cutting-rope';
 import { problem as minimumPathSumTriangle } from './minimum-path-sum-triangle';
+// batch 149 — arrays+binary-search/medium, arrays+dp/medium, arrays+heap/medium
+import { problem as maximizeScoreNumbersInRanges } from './maximize-score-numbers-in-ranges';
+import { problem as maximumEnergyBoostFromTwoDrinks } from './maximum-energy-boost-from-two-drinks';
+import { problem as kthNearestObstacleQueries } from './k-th-nearest-obstacle-queries';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -4967,4 +4971,8 @@ export const problems: readonly Problem[] = [
   // batch 148 — math+dp/medium, dp/medium
   maxProductAfterCuttingRope,
   minimumPathSumTriangle,
+  // batch 149 — arrays+binary-search/medium, arrays+dp/medium, arrays+heap/medium
+  maximizeScoreNumbersInRanges,
+  maximumEnergyBoostFromTwoDrinks,
+  kthNearestObstacleQueries,
 ];

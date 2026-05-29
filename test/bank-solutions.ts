@@ -35005,5 +35005,72 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[0] as number;
   },
 
+  // batch 149
+  'maximize-score-numbers-in-ranges': (...args: unknown[]) => {
+    const start = [...(args[0] as number[])].sort((a, b) => a - b);
+    const d = args[1] as number;
+    const n = start.length;
+    function canAchieve(minDiff: number): boolean {
+      let prev = start[0]!;
+      for (let i = 1; i < n; i++) {
+        const need = prev + minDiff;
+        if (need > start[i]! + d) return false;
+        prev = Math.max(start[i]!, need);
+      }
+      return true;
+    }
+    let lo = 0, hi = start[n - 1]! + d - start[0]!;
+    while (lo < hi) {
+      const mid = Math.floor((lo + hi + 1) / 2);
+      if (canAchieve(mid)) lo = mid; else hi = mid - 1;
+    }
+    return lo;
+  },
+
+  'maximum-energy-boost-from-two-drinks': (...args: unknown[]) => {
+    const A = args[0] as number[], B = args[1] as number[];
+    const n = A.length;
+    let prevPrevA = 0, prevPrevB = 0, prevA = A[0]!, prevB = B[0]!;
+    for (let i = 1; i < n; i++) {
+      const newA = Math.max(prevA + A[i]!, prevPrevB + A[i]!);
+      const newB = Math.max(prevB + B[i]!, prevPrevA + B[i]!);
+      prevPrevA = prevA; prevPrevB = prevB;
+      prevA = newA; prevB = newB;
+    }
+    return Math.max(prevA, prevB);
+  },
+
+  'k-th-nearest-obstacle-queries': (...args: unknown[]) => {
+    const queries = args[0] as number[][], k = args[1] as number;
+    const heap: number[] = [];
+    const push = (v: number) => {
+      heap.push(v);
+      let i = heap.length - 1;
+      while (i > 0) {
+        const p = (i - 1) >> 1;
+        if (heap[p]! >= heap[i]!) break;
+        [heap[p], heap[i]] = [heap[i]!, heap[p]!]; i = p;
+      }
+    };
+    const pop = () => {
+      if (heap.length === 1) { heap.pop(); return; }
+      heap[0] = heap.pop()!;
+      let i = 0;
+      while (true) {
+        let max = i;
+        const l = 2 * i + 1, r = 2 * i + 2;
+        if (l < heap.length && heap[l]! > heap[max]!) max = l;
+        if (r < heap.length && heap[r]! > heap[max]!) max = r;
+        if (max === i) break;
+        [heap[i], heap[max]] = [heap[max]!, heap[i]!]; i = max;
+      }
+    };
+    return queries.map(([x, y]) => {
+      const dist = Math.abs(x as number) + Math.abs(y as number);
+      if (heap.length < k) push(dist);
+      else if (dist < heap[0]!) { pop(); push(dist); }
+      return heap.length === k ? heap[0]! : -1;
+    });
+  },
 
 };
