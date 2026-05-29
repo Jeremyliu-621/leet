@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2505** problems; 7809 tests green. Batches 102–175 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2509** problems; 7821 tests green. Batches 102–176 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 176+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 176 — cards-max-score (medium), pushes-type-i (easy), pushes-type-ii (medium), integer-beautiful (medium) (2026-05-29)
+Four new problems: `maximum-points-you-can-obtain-from-cards` (medium/sliding-window, minimize complement middle subarray of size n-k), `minimum-pushes-to-type-word-i` (easy/math, n distinct letters: floor(i/8)+1 pushes), `minimum-pushes-to-type-word-ii` (medium/math+hash-map, sort letter frequencies descending, greedily assign), `minimum-addition-to-make-integer-beautiful` (medium/math, round up digit by digit until digit_sum ≤ target). Bank at **2509**; 7821 tests.
 
 ### feat(bank): batch 175 — bitwise-or-trailing-zeros (easy), xor-paths (medium), connectable-servers (medium), sort-tree-level (medium) (2026-05-29)
 Four new problems with JS + Python reference solutions: `check-if-bitwise-or-has-trailing-zeros` (easy/bit, count even numbers ≥ 2), `count-paths-with-given-xor-value` (medium/dp, dp[i][j][x]=count paths to (i,j) with XOR x; O(m×n×16)), `count-pairs-of-connectable-servers-in-a-weighted-tree` (medium/tree, DFS per branch per node + running-product trick for pair counting), `minimum-number-of-operations-to-sort-binary-tree-by-level` (medium/tree, BFS level-by-level + cycle-sort to count minimum swaps). Bank at **2500**; 7794 tests.
