@@ -8,14 +8,17 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2791** problems; 8667 tests green. Batches 102–214 + a11y + total-solved UX complete. UX polish ongoing.
+**Current focus:** Bank at **2797** problems; 8685 tests green. Batches 102–214 + concurrent 213b + a11y + total-solved UX complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 215+); UX polish per LEETCODE_PARITY.md.
 
 ### feat(bank): batch 214 — count-special-integers, minimum-moves-spread-stones, min-max-game (2026-05-29)
 Three new problems: `count-special-integers` (medium/math+dp, digit DP with bitmask of used digits), `minimum-moves-to-spread-stones-over-grid` (medium/arrays+dp, permutation backtracking minimizing Manhattan distance), `min-max-game` (easy/arrays+simulation, alternating min/max halving). Bank at **2791**; 8667 tests.
 
-### feat(bank): batch 213 — all-1s-k-apart, binary-string-one-segment, count-distinct-reverse, maximize-confusion (2026-05-29)
+### feat(bank): batch 213b (concurrent) — design-neighbor-sum-service, find-valid-matrix-given-row-column-sums, count-complete-substrings (2026-05-29)
+Three new problems: `design-neighbor-sum-service` (easy/design+arrays+hash-map, grid position map, O(1) adjacent/diagonal sums), `find-valid-matrix-given-row-column-sums` (medium/arrays+math, greedy min(rowSum[i],colSum[j]) fill), `count-complete-substrings` (hard/strings+sliding-window+hash-map, segment on adj-diff>2 then fixed-window per alphabet size t). Bank at **2786**; 8652 tests.
+
+### feat(bank): batch 213a — all-1s-k-apart, binary-string-one-segment, count-distinct-reverse, maximize-confusion (2026-05-29)
 Four new problems: `check-if-all-1s-are-at-least-length-k-places-apart` (easy/arrays, track previous-1 index, gap >= k+1), `check-if-binary-string-has-at-most-one-segment-of-ones` (easy/strings, no "01" substring), `count-distinct-integers-after-reverse-operations` (medium/arrays+hash-map, Set union of nums and digit-reversed nums), `maximize-the-confusion-of-an-exam` (medium/strings+sliding-window, two-pass window replacing T's then F's). Bank at **2788**; 8658 tests.
 
 ### feat(bank): batch 211b — word-k-periodic, zero-array-transformation-iii, maximum-coins-heroes, balls-to-boxes (2026-05-29)

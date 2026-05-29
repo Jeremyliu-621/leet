@@ -27,10 +27,10 @@ Return *a 2D array representing any matrix that fulfills the requirements*. It's
     },
   ],
   hints: [
-    'Use a greedy approach: for each cell (i, j), place min(rowSum[i], colSum[j]) and subtract from both.',
-    'After placing the greedy value, either the row is fully satisfied and moves to i+1, or the column is and moves to j+1.',
+    'For each cell (i, j), place min(rowSum[i], colSum[j]) and subtract from both.',
+    'After placing the value, either the row is fully satisfied and moves to i+1, or the column is and moves to j+1.',
     `\`\`\`js
-function restoreMatrix(rowSum, colSum) {
+function findValidMatrixGivenRowAndColumnSums(rowSum, colSum) {
   const m = rowSum.length, n = colSum.length;
   const mat = Array.from({length: m}, () => Array(n).fill(0));
   for (let i = 0; i < m; i++) {
@@ -44,14 +44,14 @@ function restoreMatrix(rowSum, colSum) {
   return mat;
 }\`\`\``,
   ],
-  functionName: 'restoreMatrix',
+  functionName: 'findValidMatrixGivenRowAndColumnSums',
   params: ['rowSum', 'colSum'],
   starterCode: {
-    javascript: `function restoreMatrix(rowSum, colSum) {
+    javascript: `function findValidMatrixGivenRowAndColumnSums(rowSum, colSum) {
 
 }`,
-    typescript: 'function restoreMatrix(rowSum: number[], colSum: number[]): number[][] {\n\n}',
-    python: `def restoreMatrix(rowSum, colSum):
+    typescript: 'function findValidMatrixGivenRowAndColumnSums(rowSum: number[], colSum: number[]): number[][] {\n\n}',
+    python: `def findValidMatrixGivenRowAndColumnSums(rowSum, colSum):
     pass`,
   },
   visibleTests: [

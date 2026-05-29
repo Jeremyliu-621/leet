@@ -3130,11 +3130,15 @@ import { problem as minimumNumberOfOperationsToMakeWordKPeriodic } from './minim
 import { problem as zeroArrayTransformationIII } from './zero-array-transformation-iii';
 import { problem as maximumCoinsHeroesCanCollect } from './maximum-coins-heroes-can-collect';
 import { problem as minimumOperationsToMoveAllBallsToEachBox } from './minimum-operations-to-move-all-balls-to-each-box';
-// batch 213 — easy/arrays, easy/strings, medium/arrays+hash-map, medium/strings+sliding-window
+// batch 213a — easy/arrays, easy/strings, medium/arrays+hash-map, medium/strings+sliding-window
 import { problem as checkIfAll1sAreAtLeastLengthKPlacesApart } from './check-if-all-1s-are-at-least-length-k-places-apart';
 import { problem as checkIfBinaryStringHasAtMostOneSegmentOfOnes } from './check-if-binary-string-has-at-most-one-segment-of-ones';
 import { problem as countDistinctIntegersAfterReverseOperations } from './count-distinct-integers-after-reverse-operations';
 import { problem as maximizeTheConfusionOfAnExam } from './maximize-the-confusion-of-an-exam';
+// batch 213b (concurrent) — easy/design+arrays+hash-map, medium/arrays+math, hard/strings+sliding-window+hash-map
+import { problem as designNeighborSumService } from './design-neighbor-sum-service';
+import { problem as findValidMatrixGivenRowColumnSums } from './find-valid-matrix-given-row-column-sums';
+import { problem as countCompleteSubstrings } from './count-complete-substrings';
 // batch 214 — medium/math+dp, medium/arrays+dp, easy/arrays+simulation
 import { problem as countSpecialIntegers } from './count-special-integers';
 import { problem as minimumMovesToSpreadStonesOverGrid } from './minimum-moves-to-spread-stones-over-grid';
@@ -6310,11 +6314,15 @@ export const problems: readonly Problem[] = [
   zeroArrayTransformationIII,
   maximumCoinsHeroesCanCollect,
   minimumOperationsToMoveAllBallsToEachBox,
-  // batch 213
+  // batch 213a
   checkIfAll1sAreAtLeastLengthKPlacesApart,
   checkIfBinaryStringHasAtMostOneSegmentOfOnes,
   countDistinctIntegersAfterReverseOperations,
   maximizeTheConfusionOfAnExam,
+  // batch 213b (concurrent)
+  designNeighborSumService,
+  findValidMatrixGivenRowColumnSums,
+  countCompleteSubstrings,
   // batch 214
   countSpecialIntegers,
   minimumMovesToSpreadStonesOverGrid,

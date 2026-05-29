@@ -38,16 +38,16 @@ Return a 2D array of strings \`ans\` where \`ans[i] = [creator_i, id_i]\` repres
     'Use another hash map to track the best video per creator: highest views, then smallest id on tie.',
     'Find the maximum total, filter creators with that total, and return [creator, best_id] sorted by creator name.',
   ],
-  functionName: 'mostPopularCreator',
+  functionName: 'mostPopularVideoCreator',
   params: ['creators', 'ids', 'views'],
   starterCode: {
-    javascript: `function mostPopularCreator(creators, ids, views) {
+    javascript: `function mostPopularVideoCreator(creators, ids, views) {
 
 }`,
-    typescript: `function mostPopularCreator(creators: string[], ids: string[], views: number[]): string[][] {
+    typescript: `function mostPopularVideoCreator(creators: string[], ids: string[], views: number[]): string[][] {
 
 }`,
-    python: `def mostPopularCreator(creators, ids, views):
+    python: `def mostPopularVideoCreator(creators, ids, views):
     pass`,
   },
   visibleTests: [

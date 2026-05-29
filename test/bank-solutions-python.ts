@@ -33376,7 +33376,7 @@ def evenOddBit(n):
 `,
 
   'find-valid-matrix-given-row-and-column-sums': `
-def restoreMatrix(rowSum, colSum):
+def findValidMatrixGivenRowAndColumnSums(rowSum, colSum):
     rowSum = list(rowSum.to_py() if hasattr(rowSum, 'to_py') else rowSum)
     colSum = list(colSum.to_py() if hasattr(colSum, 'to_py') else colSum)
     m, n = len(rowSum), len(colSum)
@@ -40797,7 +40797,7 @@ def mostFrequentIDs(nums, freq):
     return ans`,
 
   'most-popular-video-creator': `
-def mostPopularCreator(creators, ids, views):
+def mostPopularVideoCreator(creators, ids, views):
     if hasattr(creators, 'to_py'): creators = list(creators.to_py())
     if hasattr(ids, 'to_py'): ids = list(ids.to_py())
     if hasattr(views, 'to_py'): views = list(views.to_py())
@@ -44050,5 +44050,98 @@ def getSumAbsoluteDifferences(nums):
         right_sum = (prefix[n - 1] - prefix[i]) - (n - 1 - i) * nums[i]
         result.append(left_sum + right_sum)
     return result
+`,
+
+  // batch 213 ----------------------------------------------------------------
+  'design-neighbor-sum-service': `
+def designNeighborSumService(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = args.to_py() if hasattr(args, 'to_py') else list(args)
+    grid = None
+    n = 0
+    pos = {}
+    results = []
+    for i, op in enumerate(ops):
+        if op == 'NeighborSum':
+            raw = args[i]
+            raw = raw.to_py() if hasattr(raw, 'to_py') else raw
+            grid = [[int(v) for v in row] for row in raw]
+            n = len(grid)
+            pos = {}
+            for r in range(n):
+                for c in range(n):
+                    pos[grid[r][c]] = (r, c)
+            results.append(None)
+        else:
+            arg = args[i]
+            arg = arg.to_py() if hasattr(arg, 'to_py') else arg
+            value = int(list(arg)[0])
+            r, c = pos[value]
+            if op == 'adjacentSum':
+                directions = [(-1,0),(1,0),(0,-1),(0,1)]
+            else:
+                directions = [(-1,-1),(-1,1),(1,-1),(1,1)]
+            total = 0
+            for dr, dc in directions:
+                nr, nc = r + dr, c + dc
+                if 0 <= nr < n and 0 <= nc < n:
+                    total += grid[nr][nc]
+            results.append(total)
+    return results
+`,
+
+  'find-valid-matrix-given-row-column-sums': `
+def findValidMatrixGivenRowAndColumnSums(rowSum, colSum):
+    rowSum = list(rowSum.to_py() if hasattr(rowSum, 'to_py') else rowSum)
+    colSum = list(colSum.to_py() if hasattr(colSum, 'to_py') else colSum)
+    m, n = len(rowSum), len(colSum)
+    rs = rowSum[:]
+    cs = colSum[:]
+    mat = [[0]*n for _ in range(m)]
+    for i in range(m):
+        for j in range(n):
+            val = min(rs[i], cs[j])
+            mat[i][j] = val
+            rs[i] -= val
+            cs[j] -= val
+    return mat
+`,
+
+  'count-complete-substrings': `
+def countCompleteSubstrings(word, k):
+    total = 0
+    n = len(word)
+
+    def count_segment(seg):
+        nonlocal total
+        for t in range(1, 27):
+            length = t * k
+            if length > len(seg):
+                break
+            freq = [0] * 26
+            exact_k = 0
+            for j in range(len(seg)):
+                c = ord(seg[j]) - 97
+                freq[c] += 1
+                if freq[c] == k:
+                    exact_k += 1
+                elif freq[c] == k + 1:
+                    exact_k -= 1
+                if j >= length:
+                    old = ord(seg[j - length]) - 97
+                    if freq[old] == k:
+                        exact_k -= 1
+                    elif freq[old] == k + 1:
+                        exact_k += 1
+                    freq[old] -= 1
+                if j >= length - 1 and exact_k == t:
+                    total += 1
+
+    start = 0
+    for i in range(1, n + 1):
+        if i == n or abs(ord(word[i]) - ord(word[i-1])) > 2:
+            count_segment(word[start:i])
+            start = i
+    return total
 `,
 };
