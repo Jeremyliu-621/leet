@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2584** problems; 8046 tests green. Batches 102–180 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2589** problems; 8061 tests green. Batches 102–180 + batch 179 (local tree) complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 181+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 179 (local) — binary-tree-level-order-traversal (medium), find-k-pairs-with-smallest-sums (medium), sequence-reconstruction (medium), inorder-successor-in-bst (medium), closest-binary-search-tree-value-ii (hard) (2026-05-29)
+Five new problems: `binary-tree-level-order-traversal` (medium/tree, BFS with level-size tracking), `find-k-pairs-with-smallest-sums` (medium/heap, min-heap with (sum,i,j) entries seeded from all nums1[i]+nums2[0]), `sequence-reconstruction` (medium/graph, topological sort uniqueness — queue must never have >1 node), `inorder-successor-in-bst` (medium/tree+binary-search, walk BST saving last left-turn node), `closest-binary-search-tree-value-ii` (hard/tree+heap, in-order traversal + two-pointer on sorted values). Also fixed JS/Python reference solutions for maximize-number-of-nice-divisors (BigInt integer division), maximum-points-tourist-can-earn (day-0 initialization), and added 13 missing Python solutions for batch 178/179 problems. Bank at **2589**; 8061 tests.
 
 ### feat(bank): batch 180 (local) — find-ways-reach-kth-stair (hard), count-beautiful-splits (medium) (2026-05-29)
 Two new problems: `find-number-of-ways-to-reach-the-k-th-stair` (hard/dp+bit-manipulation, memoized recursion with state (i, jump, usedDown)), `count-beautiful-splits-in-an-array` (medium/dp, O(n²) LCP table — check if left is prefix of mid or mid is prefix of right for each strict 0<i<j<n split). Bank at **2584**; 8046 tests.
