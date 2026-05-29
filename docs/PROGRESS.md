@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2330** problems; 7284 tests green. Batches 102–155 + 154c complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2334** problems; 7296 tests green. Batches 102–155 (all sub-batches) complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 156+); UX polish; accessibility audit.
+
+### feat(bank): add batch 155b — recent-counter (easy), peeking-iterator, flatten-nested-list-iterator (medium), all-o-one (hard) (2026-05-29)
+Four design problems: `recent-counter` (easy/design+simulation, queue sliding window over 3000ms), `peeking-iterator` (medium/design, index-based peek without advance), `flatten-nested-list-iterator` (medium/design+stack, recursive pre-flatten into flat array), `all-o-one-data-structure` (hard/design+hash-map, hash map with O(N) max/min scan). Bank at **2334**; 7296 tests.
 
 ### feat(bank): add batch 154c — 24-game, range-module, insert-delete-dup, matchsticks-to-square (2026-05-29)
 Four new hard problems targeting underrepresented tags: `24-game` (hard/backtracking+math, exhaustive pair-reduction with floating-point EPS=1e-6), `range-module` (hard/simulation+binary-search, sorted interval list with merge/split/query in O(n) worst-case), `insert-delete-getrandom-duplicates-allowed` (hard/hash-map+simulation, multiset O(1) via array+index-set with swap-last trick; key bugfix when last===val), `matchsticks-to-square` (medium/backtracking, partition-4-equal-subsets with sorted-desc pruning and seen-set dedup). Bank at **2330**; 7284 tests.
