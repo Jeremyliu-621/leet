@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2703** problems; 8391 tests green. Batches 102–201 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2708** problems; 8421 tests green. Batches 102–201 + 200b complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 202+); UX polish per LEETCODE_PARITY.md.
 
@@ -23,6 +23,9 @@ One genuinely new problem added (3 others — longest-turbulent-subarray, transp
 
 ### feat(bank): batch 198 — count-substrings-no-repeat, max-product-two-elements, find-all-anagrams, rotate-array-left (2026-05-29)
 Four new problems: `count-substrings-without-repeating` (medium/strings+sliding-window+hash-map, two-pointer shrink + right-left+1 count), `maximum-product-of-two-elements` (easy/arrays+math, find top-2 values, return (max1-1)*(max2-1)), `find-all-anagrams` (medium/strings+sliding-window+hash-map, diff-count approach: count=p−window, track non-zeros), `rotate-array-left` (easy/arrays+math, k%n slice-and-concat). Bank at **2685**; 8346 tests.
+
+### feat(bank): batch 200b — min-start-value, max-circular-diff, binary-subs-1-to-n, array-sign, strstr (2026-05-29)
+Five new problems: `minimum-value-to-get-positive-step-by-step-sum` (easy), `maximum-difference-between-adjacent-elements-in-a-circular-array` (easy), `binary-string-with-substrings-representing-1-to-n` (medium), `sign-of-the-product-of-an-array` (easy), `find-the-index-of-the-first-occurrence-in-a-string` (easy). Bank at **2704**; 8406 tests.
 
 ### feat(bank): batch 199b — find-indices-diff-i, count-smaller-greater, first-palindrome, remove-trailing-zeros, valid-words (2026-05-29)
 Five new problems: `find-indices-with-index-and-value-difference-i` (easy/arrays, O(n²) brute force), `count-elements-with-strictly-smaller-and-greater-elements` (easy/arrays, count != min and != max), `find-first-palindromic-string-in-the-array` (easy/strings, first palindrome), `remove-trailing-zeros-from-a-string` (easy/strings, rstrip), `number-of-valid-words-in-a-sentence` (medium/strings, validate hyphen/punct rules). Bank at **2699**; 8391 tests.
