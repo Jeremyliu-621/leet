@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2286** problems; 7137 tests green. Batches 102–152 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2286** problems; 7152 tests green. Batches 102–152 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 153+); UX polish; accessibility audit.
+
+### chore: update site count to 2,286+; sync test count to 7152 (2026-05-29)
+Marketing site updated from 2,274+ → 2,286+ in all three locations. Test count is 7152 (15 more than the PROGRESS entry recorded).
 
 ### fix(a11y): aria-label + aria-expanded on ValueDisplay expand button (2026-05-29)
 `ValueDisplay` truncation toggle in `TerminalPanel.tsx` now has `aria-label` ("Show X more characters" / "Show less of this value") and `aria-expanded` so screen readers can describe the button action and state correctly. Previously the button text "+X chars" / "less" gave no context.
