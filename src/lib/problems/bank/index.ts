@@ -2696,6 +2696,11 @@ import { problem as maximumChunksToMakeSorted } from './maximum-chunks-to-make-s
 import { problem as findTheMostCompetitiveSubsequence } from './find-the-most-competitive-subsequence';
 import { problem as minimumCostTreeFromLeafValues } from './minimum-cost-tree-from-leaf-values';
 import { problem as shortestSubarrayWithSumAtLeastK } from './shortest-subarray-with-sum-at-least-k';
+// batch 165 — dp/medium×2, tree/medium×3
+import { problem as bestTimeBuySellStockWithFee } from './best-time-to-buy-and-sell-stock-with-transaction-fee';
+import { problem as minimumCostForCuttingStick } from './minimum-cost-for-cutting-stick';
+import { problem as pseudoPalindromicPathsInBinaryTree } from './pseudo-palindromic-paths-in-a-binary-tree';
+import { problem as stepByStepDirectionsFromBinaryTreeNode } from './step-by-step-directions-from-a-binary-tree-node-to-another';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5426,4 +5431,9 @@ export const problems: readonly Problem[] = [
   findTheMostCompetitiveSubsequence,
   minimumCostTreeFromLeafValues,
   shortestSubarrayWithSumAtLeastK,
+  // batch 165 — dp/medium×2, tree/medium×3
+  bestTimeBuySellStockWithFee,
+  minimumCostForCuttingStick,
+  pseudoPalindromicPathsInBinaryTree,
+  stepByStepDirectionsFromBinaryTreeNode,
 ];
