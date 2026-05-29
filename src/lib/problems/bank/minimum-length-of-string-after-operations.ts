@@ -7,53 +7,63 @@ export const problem: Problem = {
   tags: ['strings', 'hash-map'],
   description: `You are given a string \`s\`.
 
-You can perform the following operation on the string **any** number of times:
+You can perform the following operation **any number of times**:
+- Choose an index \`i\` in \`s\` such that \`s[i]\` also appears at **some index to the left** of \`i\` **and** at **some index to the right** of \`i\`. Delete the **closest** occurrence of \`s[i]\` to the **left** of \`i\` and the **closest** occurrence of \`s[i]\` to the **right** of \`i\`.
 
-- Choose an index \`i\` in the string such that there is **at least one** character to the left of index \`i\` that is equal to \`s[i]\`, and at least one character to the right of index \`i\` that is also equal to \`s[i]\`.
-- Delete the **closest** character to the left of index \`i\` that is equal to \`s[i]\`.
-- Delete the **closest** character to the right of index \`i\` that is equal to \`s[i]\`.
+(The character at index \`i\` itself is **not** deleted — only its two nearest same-character neighbours are.)
 
-Return the **minimum** possible length of the final string.`,
+Return the **minimum possible length** of the resulting string after any number of such operations.`,
   constraints: [
     '1 <= s.length <= 2 * 10^5',
     's consists only of lowercase English letters.',
   ],
   examples: [
     {
-      input: 's = "abaacbcbb"',
-      output: '5',
-      explanation: 'We can reduce "abaacbcbb" by repeatedly removing pairs of equal characters around a center.',
+      input: 's = "abaaa"',
+      output: '3',
+      explanation: 'In "abaaa", choose index 3 (\'a\'): delete the nearest \'a\' to its left (index 2) and the nearest \'a\' to its right (index 4), giving "aba". No further operations are possible. Length = 3.',
     },
     {
-      input: 's = "aa"',
-      output: '2',
-      explanation: 'We cannot perform any operation since there are no characters on both sides of any position.',
+      input: 's = "aaa"',
+      output: '1',
+      explanation: 'Choose index 1 (\'a\'): delete index 0 and index 2, leaving "a". Length = 1.',
+    },
+    {
+      input: 's = "abbc"',
+      output: '4',
+      explanation: 'No character appears with same-character neighbours on both sides, so no operations are possible. Length = 4.',
     },
   ],
   hints: [
-    'Each character can be reduced independently. Count frequency of each character.',
-    'If a character appears k times, you can reduce it: if k is odd, 1 remains; if k is even, 2 remain.',
-    'Sum up the reduced counts for all characters.',
+    'The operation always removes exactly 2 copies of a character (the two closest neighbours of the chosen position). So for a character with frequency `f`, you can keep subtracting 2 from `f` as long as `f >= 3`.',
+    'For each character, the minimum remaining count is: 1 if the original frequency is odd, 2 if it is even. (A single remaining copy has no neighbours; two copies have no "middle" to choose.)',
+    'The answer is the sum over all distinct characters of `(f % 2 === 0 ? 2 : 1)` — regardless of the actual positions.',
   ],
   functionName: 'minimumLength',
   params: ['s'],
   starterCode: {
-    javascript: 'function minimumLength(s) {\n\n}',
-    typescript: "function minimumLength(s: string): number {\n\n}",
-
-    python: 'def minimumLength(s):\n    pass',
+    javascript: `function minimumLength(s) {\n\n}`,
+    python: `def minimumLength(s: str) -> int:\n    pass`,
   },
   visibleTests: [
-    { args: ['abaacbcbb'], expected: 5 },
-    { args: ['aa'], expected: 2 },
+    { args: ['abaaa'], expected: 3 },
+    { args: ['aaa'], expected: 1 },
+    { args: ['abbc'], expected: 4 },
   ],
   hiddenTests: [
     { args: ['a'], expected: 1 },
-    { args: ['aaa'], expected: 1 },
+    { args: ['aa'], expected: 2 },
     { args: ['aaaa'], expected: 2 },
-    { args: ['abcabc'], expected: 6 },
-    { args: ['aabbcc'], expected: 6 },
+    // freq(a)=3→1, freq(b)=1→1. Total=2.
+    { args: ['aaab'], expected: 2 },
     { args: ['aaabbb'], expected: 2 },
-    { args: ['abcdefg'], expected: 7 },
+    { args: ['aabbcc'], expected: 6 },
+    { args: ['aaabbbccc'], expected: 3 },
+    { args: ['abcde'], expected: 5 },
+    { args: ['aaaaaa'], expected: 2 },
+    // freq(a)=7→1, freq(b)=1→1. Total=2.
+    { args: ['aaaaaaab'], expected: 2 },
+    { args: ['zzzzz'], expected: 1 },
+    { args: ['abcdefghijklmnopqrstuvwxyz'], expected: 26 },
   ],
 };
