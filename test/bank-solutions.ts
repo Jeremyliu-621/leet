@@ -43041,4 +43041,63 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const best = Math.min(c1, c2);
     return best === Infinity ? -1 : best;
   },
+  // batch 198
+  'count-substrings-without-repeating': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const freq = new Map<string, number>();
+    let left = 0;
+    let count = 0;
+    for (let right = 0; right < s.length; right++) {
+      const c = s[right]!;
+      freq.set(c, (freq.get(c) ?? 0) + 1);
+      while ((freq.get(c) ?? 0) > 1) {
+        const lc = s[left]!;
+        freq.set(lc, freq.get(lc)! - 1);
+        left++;
+      }
+      count += right - left + 1;
+    }
+    return count;
+  },
+  'maximum-product-of-two-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let max1 = 0;
+    let max2 = 0;
+    for (const n of nums) {
+      if (n >= max1) { max2 = max1; max1 = n; }
+      else if (n > max2) { max2 = n; }
+    }
+    return (max1 - 1) * (max2 - 1);
+  },
+  'find-all-anagrams': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const p = args[1] as string;
+    if (p.length > s.length) return [];
+    const count = new Array<number>(26).fill(0) as number[];
+    const a = 'a'.charCodeAt(0);
+    for (const c of p) (count[c.charCodeAt(0) - a] as number)++;
+    for (let i = 0; i < p.length; i++) (count[s.charCodeAt(i) - a] as number)--;
+    let diff = count.filter(x => x !== 0).length;
+    const result: number[] = [];
+    if (diff === 0) result.push(0);
+    for (let i = p.length; i < s.length; i++) {
+      const add = s.charCodeAt(i) - a;
+      const rem = s.charCodeAt(i - p.length) - a;
+      (count[add] as number)--;
+      if ((count[add] as number) === 0) diff--;
+      else if ((count[add] as number) === -1) diff++;
+      (count[rem] as number)++;
+      if ((count[rem] as number) === 0) diff--;
+      else if ((count[rem] as number) === 1) diff++;
+      if (diff === 0) result.push(i - p.length + 1);
+    }
+    return result;
+  },
+  'rotate-array-left': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const n = nums.length;
+    const steps = k % n;
+    return [...nums.slice(steps), ...nums.slice(0, steps)];
+  },
 };

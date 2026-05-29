@@ -42872,4 +42872,66 @@ def minOperations(nums1, nums2):
     best = min(c1, c2)
     return -1 if best == float('inf') else best
 `,
+  // batch 198
+  'count-substrings-without-repeating': `
+def countSubstringsNoRepeat(s):
+    freq = {}
+    left = 0
+    count = 0
+    for right, c in enumerate(s):
+        freq[c] = freq.get(c, 0) + 1
+        while freq[c] > 1:
+            lc = s[left]
+            freq[lc] -= 1
+            left += 1
+        count += right - left + 1
+    return count
+`,
+  'maximum-product-of-two-elements': `
+def maxProduct(nums):
+    max1 = max2 = 0
+    for n in nums:
+        if n >= max1:
+            max2 = max1
+            max1 = n
+        elif n > max2:
+            max2 = n
+    return (max1 - 1) * (max2 - 1)
+`,
+  'find-all-anagrams': `
+def findAnagrams(s, p):
+    if len(p) > len(s):
+        return []
+    count = [0] * 26
+    for c in p:
+        count[ord(c) - ord('a')] += 1
+    for c in s[:len(p)]:
+        count[ord(c) - ord('a')] -= 1
+    diff = sum(1 for x in count if x != 0)
+    result = []
+    if diff == 0:
+        result.append(0)
+    for i in range(len(p), len(s)):
+        add = ord(s[i]) - ord('a')
+        rem = ord(s[i - len(p)]) - ord('a')
+        count[add] -= 1
+        if count[add] == 0:
+            diff -= 1
+        elif count[add] == -1:
+            diff += 1
+        count[rem] += 1
+        if count[rem] == 0:
+            diff -= 1
+        elif count[rem] == 1:
+            diff += 1
+        if diff == 0:
+            result.append(i - len(p) + 1)
+    return result
+`,
+  'rotate-array-left': `
+def rotateArrayLeft(nums, k):
+    n = len(nums)
+    steps = k % n
+    return nums[steps:] + nums[:steps]
+`,
 };

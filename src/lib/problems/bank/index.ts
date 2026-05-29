@@ -2997,6 +2997,11 @@ import { problem as removeColoredPiecesIfBothNeighborsAreTheSameColor } from './
 import { problem as countNegativeNumbersInASortedMatrix } from './count-negative-numbers-in-a-sorted-matrix';
 import { problem as cellsWithOddValuesInAMatrix } from './cells-with-odd-values-in-a-matrix';
 import { problem as minimumOperationsToMaximizeLastElementsInArrays } from './minimum-operations-to-maximize-last-elements-in-arrays';
+// batch 198 — medium/strings+sliding-window+hash-map, easy/arrays+math, medium/strings+sliding-window+hash-map, easy/arrays+math+two-pointers
+import { problem as countSubstringsWithoutRepeating } from './count-substrings-without-repeating';
+import { problem as maximumProductOfTwoElements } from './maximum-product-of-two-elements';
+import { problem as findAllAnagrams } from './find-all-anagrams';
+import { problem as rotateArrayLeft } from './rotate-array-left';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6035,4 +6040,9 @@ export const problems: readonly Problem[] = [
   countNegativeNumbersInASortedMatrix,
   cellsWithOddValuesInAMatrix,
   minimumOperationsToMaximizeLastElementsInArrays,
+  // batch 198 — medium/strings+sliding-window+hash-map, easy/arrays+math, medium/strings+sliding-window+hash-map, easy/arrays+math+two-pointers
+  countSubstringsWithoutRepeating,
+  maximumProductOfTwoElements,
+  findAllAnagrams,
+  rotateArrayLeft,
 ];
