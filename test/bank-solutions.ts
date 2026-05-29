@@ -43996,4 +43996,125 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return ans;
   },
+  'find-k-or': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let result = 0;
+    for (let bit = 0; bit < 31; bit++) {
+      let count = 0;
+      for (const n of nums) if ((n >> bit) & 1) count++;
+      if (count >= k) result |= (1 << bit);
+    }
+    return result;
+  },
+  'maximum-matching-of-players-with-trainers': (...args: unknown[]) => {
+    const players = [...(args[0] as number[])].sort((a, b) => a - b);
+    const trainers = [...(args[1] as number[])].sort((a, b) => a - b);
+    let i = 0, j = 0, count = 0;
+    while (i < players.length && j < trainers.length) {
+      if (players[i]! <= trainers[j]!) { count++; i++; }
+      j++;
+    }
+    return count;
+  },
+  'sum-of-absolute-differences-in-a-sorted-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const prefix = new Array<number>(n);
+    prefix[0] = nums[0]!;
+    for (let i = 1; i < n; i++) prefix[i] = prefix[i - 1]! + nums[i]!;
+    return nums.map((v, i) => {
+      const leftSum = i * v - (i > 0 ? prefix[i - 1]! : 0);
+      const rightSum = (prefix[n - 1]! - prefix[i]!) - (n - 1 - i) * v;
+      return leftSum + rightSum;
+    });
+  },
+
+  // batch 213 ---------------------------------------------------------------
+  'design-neighbor-sum-service': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const argsList = args[1] as (number[][] | number[])[];
+    let grid: number[][] = [];
+    let n = 0;
+    const pos = new Map<number, [number, number]>();
+    const results: (number | null)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      if (ops[i] === 'NeighborSum') {
+        grid = argsList[i] as number[][];
+        n = grid.length;
+        pos.clear();
+        for (let r = 0; r < n; r++)
+          for (let c = 0; c < n; c++)
+            pos.set(grid[r]![c]!, [r, c]);
+        results.push(null);
+      } else {
+        const value = (argsList[i] as number[])[0]!;
+        const [r, c] = pos.get(value)!;
+        const dirs = ops[i] === 'adjacentSum'
+          ? [[-1, 0], [1, 0], [0, -1], [0, 1]] as const
+          : [[-1, -1], [-1, 1], [1, -1], [1, 1]] as const;
+        let sum = 0;
+        for (const [dr, dc] of dirs) {
+          const nr = r + dr, nc = c + dc;
+          if (nr >= 0 && nr < n && nc >= 0 && nc < n) sum += grid[nr]![nc]!;
+        }
+        results.push(sum);
+      }
+    }
+    return results;
+  },
+
+  'find-valid-matrix-given-row-column-sums': (...args: unknown[]) => {
+    const rs = (args[0] as number[]).slice();
+    const cs = (args[1] as number[]).slice();
+    const m = rs.length, n = cs.length;
+    const mat: number[][] = Array.from({ length: m }, () => Array(n).fill(0));
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        const val = Math.min(rs[i]!, cs[j]!);
+        mat[i]![j] = val;
+        rs[i] = rs[i]! - val;
+        cs[j] = cs[j]! - val;
+      }
+    }
+    return mat;
+  },
+
+  'count-complete-substrings': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const k = args[1] as number;
+    let total = 0;
+    const n = word.length;
+
+    function countSeg(seg: string) {
+      for (let t = 1; t <= 26; t++) {
+        const len = t * k;
+        if (len > seg.length) break;
+        const freq = new Array(26).fill(0) as number[];
+        let exactK = 0;
+        for (let j = 0; j < seg.length; j++) {
+          const c = seg.charCodeAt(j) - 97;
+          freq[c]!++;
+          if (freq[c] === k) exactK++;
+          else if (freq[c] === k + 1) exactK--;
+          if (j >= len) {
+            const old = seg.charCodeAt(j - len) - 97;
+            if (freq[old] === k) exactK--;
+            else if (freq[old] === k + 1) exactK++;
+            freq[old]!--;
+          }
+          if (j >= len - 1 && exactK === t) total++;
+        }
+      }
+    }
+
+    let start = 0;
+    for (let i = 1; i <= n; i++) {
+      if (i === n || Math.abs(word.charCodeAt(i) - word.charCodeAt(i - 1)) > 2) {
+        countSeg(word.slice(start, i));
+        start = i;
+      }
+    }
+    return total;
+  },
 };

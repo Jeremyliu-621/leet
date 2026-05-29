@@ -3121,6 +3121,14 @@ import { problem as maxSumOfAPairWithEqualSumOfDigits } from './max-sum-of-a-pai
 import { problem as findingPairsWithCertainDifference } from './finding-pairs-with-certain-difference';
 import { problem as numberOfSubarraysWithAndValueOfK } from './number-of-subarrays-with-and-value-of-k';
 import { problem as maximumNumberOfCoinsYouCanGet } from './maximum-number-of-coins-you-can-get';
+// remote batch 211 additions — easy/bit-manipulation, medium/arrays+two-pointers, medium/arrays+prefix-sum+math
+import { problem as findKOr } from './find-k-or';
+import { problem as maximumMatchingOfPlayersWithTrainers } from './maximum-matching-of-players-with-trainers';
+import { problem as sumOfAbsoluteDifferencesInASortedArray } from './sum-of-absolute-differences-in-a-sorted-array';
+// batch 213 — easy/design+arrays+hash-map, medium/arrays+math, hard/strings+sliding-window+hash-map
+import { problem as designNeighborSumService } from './design-neighbor-sum-service';
+import { problem as findValidMatrixGivenRowColumnSums } from './find-valid-matrix-given-row-column-sums';
+import { problem as countCompleteSubstrings } from './count-complete-substrings';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6283,4 +6291,12 @@ export const problems: readonly Problem[] = [
   findingPairsWithCertainDifference,
   numberOfSubarraysWithAndValueOfK,
   maximumNumberOfCoinsYouCanGet,
+  // remote batch 211 additions — easy/bit-manipulation, medium/arrays+two-pointers, medium/arrays+prefix-sum+math
+  findKOr,
+  maximumMatchingOfPlayersWithTrainers,
+  sumOfAbsoluteDifferencesInASortedArray,
+  // batch 213 — easy/design+arrays+hash-map, medium/arrays+math, hard/strings+sliding-window+hash-map
+  designNeighborSumService,
+  findValidMatrixGivenRowColumnSums,
+  countCompleteSubstrings,
 ];
