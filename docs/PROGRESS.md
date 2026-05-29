@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2763** problems; 8583 tests green. Batches 102–210 + KaTeX UX complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2767** problems; 8595 tests green. Batches 102–210b + KaTeX UX complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 211+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 210b — second-maximum-number-in-array, sum-of-values-at-indices-with-k-set-bits, points-that-intersect-with-cars, count-stepping-numbers-in-range (2026-05-29)
+Four new problems: `second-maximum-number-in-array` (easy/arrays, find max then max of remaining below max), `sum-of-values-at-indices-with-k-set-bits` (easy/arrays+bit-manipulation, popcount(i)==k), `points-that-intersect-with-cars` (easy/arrays+simulation, Set of all covered integer points), `count-stepping-numbers-in-range` (medium/dynamic-programming+math, digit DP with tight/started flags, mod 10^9+7). Bank at **2767**; 8595 tests.
 
 ### feat(bank): batch 210 — count-elements-in-range, min-word-length, transpose-2d, count-pairs-same-sum (2026-05-29)
 Four new easy problems: `count-elements-in-range` (easy/arrays, filter lo<=v<=hi), `min-word-length` (easy/arrays+strings, min word length), `transpose-2d-array` (easy/arrays, result[j][i]=matrix[i][j]), `count-pairs-with-same-sum` (easy/arrays+hash-map, O(n²) pairs summing to k). Bank at **2763**; 8583 tests.
