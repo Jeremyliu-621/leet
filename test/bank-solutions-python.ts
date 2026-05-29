@@ -40906,4 +40906,54 @@ def kWeakestRows(mat, k):
     strengths.sort()
     return [i for _, i in strengths[:k]]
 `,
+  'length-of-the-longest-valid-substring': `
+def longestValidSubstring(word, forbidden):
+    forb_set = set(forbidden)
+    left, ans = 0, 0
+    for right in range(len(word)):
+        for k in range(min(right - left + 1, 10), 0, -1):
+            if word[right - k + 1:right + 1] in forb_set:
+                left = right - k + 2
+                break
+        ans = max(ans, right - left + 1)
+    return ans
+`,
+  'add-spaces-to-string': `
+def addSpaces(s, spaces):
+    space_set = set(spaces)
+    result = []
+    for i, c in enumerate(s):
+        if i in space_set:
+            result.append(' ')
+        result.append(c)
+    return ''.join(result)
+`,
+  'remove-colored-pieces-if-both-neighbors-same-color': `
+def winnerOfGame(colors):
+    alice = bob = 0
+    for i in range(1, len(colors) - 1):
+        if colors[i] == 'A' == colors[i-1] == colors[i+1]:
+            alice += 1
+        elif colors[i] == 'B' == colors[i-1] == colors[i+1]:
+            bob += 1
+    return alice > bob
+`,
+  'find-the-longest-balanced-substring-of-binary-string': `
+def findTheLongestBalancedSubstring(s):
+    ans = 0
+    i = 0
+    while i < len(s):
+        if s[i] == '0':
+            zeros = ones = 0
+            while i < len(s) and s[i] == '0':
+                zeros += 1
+                i += 1
+            while i < len(s) and s[i] == '1':
+                ones += 1
+                i += 1
+            ans = max(ans, 2 * min(zeros, ones))
+        else:
+            i += 1
+    return ans
+`,
 };

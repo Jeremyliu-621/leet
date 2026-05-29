@@ -2909,6 +2909,11 @@ import { problem as countCommonChars } from './count-common-characters';
 import { problem as numSubmat } from './count-submatrices-with-all-ones';
 import { problem as minimumSwap } from './minimum-swaps-to-make-strings-equal';
 import { problem as countSpecialSubsequences } from './count-number-of-special-subsequences';
+// batch 221 — hard/strings+sliding-window, medium/strings+simulation, medium/strings+math, easy/strings
+import { problem as longestValidSubstring } from './length-of-the-longest-valid-substring';
+import { problem as addSpacesToString } from './add-spaces-to-string';
+import { problem as winnerOfGame } from './remove-colored-pieces-if-both-neighbors-same-color';
+import { problem as findLongestBalancedSubstring } from './find-the-longest-balanced-substring-of-binary-string';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5858,4 +5863,9 @@ export const problems: readonly Problem[] = [
   numSubmat,
   minimumSwap,
   countSpecialSubsequences,
+  // batch 221
+  longestValidSubstring,
+  addSpacesToString,
+  winnerOfGame,
+  findLongestBalancedSubstring,
 ];
