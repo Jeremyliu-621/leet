@@ -3,45 +3,40 @@ import type { Problem } from '../types';
 export const problem: Problem = {
   id: 'find-beautiful-indices-in-the-given-array-i',
   title: 'Find Beautiful Indices in the Given Array I',
-  difficulty: 'medium',
-  tags: ['strings', 'two-pointers', 'binary-search'],
+  difficulty: 'easy',
+  tags: ['strings', 'two-pointers'],
   description: `You are given a **0-indexed** string \`s\`, a string \`a\`, a string \`b\`, and an integer \`k\`.
 
 An index \`i\` is **beautiful** if:
 - \`0 <= i <= s.length - a.length\`
-- \`s[i..i + a.length - 1] == a\`
+- \`s[i..i+a.length-1] == a\`
 - There exists an index \`j\` such that:
   - \`0 <= j <= s.length - b.length\`
-  - \`s[j..j + b.length - 1] == b\`
+  - \`s[j..j+b.length-1] == b\`
   - \`|i - j| <= k\`
 
-Return the array containing beautiful indices in **sorted order** from smallest to largest.`,
+Return an array of **all beautiful indices** in sorted order.`,
   constraints: [
     '`1 <= k <= s.length <= 10^5`',
-    '`1 <= a.length, b.length <= 10^5`',
+    '`1 <= a.length, b.length <= 10`',
     '`s`, `a`, and `b` consist only of lowercase English letters.',
   ],
   examples: [
     {
-      input: 's = "abcd", a = "a", b = "a", k = 4',
+      input: 's = "abcd", a = "a", b = "d", k = 3',
       output: '[0]',
-      explanation: 'Index 0: s[0]="a" (matches a). j=0 where s[0]="a" (matches b), |0-0|=0 <= 4.',
+      explanation: '"a" starts at 0, "d" starts at 3. |0-3|=3<=3, so index 0 is beautiful.',
     },
     {
-      input: 's = "ababab", a = "ab", b = "ab", k = 1',
-      output: '[0,2,4]',
-      explanation: '"ab" starts at 0,2,4. Each index i has a matching j=i with |i-j|=0 <= 1.',
-    },
-    {
-      input: 's = "aabaa", a = "aa", b = "aa", k = 0',
-      output: '[0,3]',
-      explanation: '"aa" starts at 0 and 3. For i=0, j=0 works (|0-0|=0). For i=3, j=3 works.',
+      input: 's = "abcd", a = "a", b = "z", k = 3',
+      output: '[]',
+      explanation: '"z" does not appear in s, so no beautiful indices exist.',
     },
   ],
   hints: [
-    'Collect all starting indices of `a` in `s` and all starting indices of `b` in `s` (use string search or simple scan).',
-    'For each index `i` in the `a`-match list, check if any index in the `b`-match list is within distance `k`. Binary search for the nearest `b`-index.',
-    'Two-pointer also works: advance a pointer into the sorted `b`-match list as `i` increases.',
+    'First collect all indices where string `a` appears and all indices where `b` appears.',
+    'For each index `i` where `a` appears, use a two-pointer or binary search to check if any `j` where `b` appears satisfies `|i - j| <= k`.',
+    'Since both occurrence lists are sorted, a two-pointer approach works efficiently: advance the `b`-index pointer past indices that are too far behind, then check if the current pointer is within range.',
   ],
   functionName: 'beautifulIndices',
   params: ['s', 'a', 'b', 'k'],
@@ -49,19 +44,22 @@ Return the array containing beautiful indices in **sorted order** from smallest 
     javascript: `function beautifulIndices(s, a, b, k) {
 
 }`,
+    typescript: `function beautifulIndices(s: string, a: string, b: string, k: number): number[] {
+
+}`,
     python: `def beautifulIndices(s, a, b, k):
     pass`,
   },
   visibleTests: [
-    { args: ['abcd', 'a', 'a', 4], expected: [0] },
-    { args: ['ababab', 'ab', 'ab', 1], expected: [0, 2, 4] },
-    { args: ['aabaa', 'aa', 'aa', 0], expected: [0, 3] },
+    { args: ['abcd', 'a', 'd', 3], expected: [0] },
+    { args: ['abcd', 'a', 'z', 3], expected: [] },
   ],
   hiddenTests: [
-    { args: ['abc', 'a', 'c', 2], expected: [0] },
-    { args: ['hello', 'he', 'lo', 10], expected: [0] },
-    { args: ['abcabc', 'abc', 'abc', 0], expected: [0, 3] },
-    { args: ['xyz', 'a', 'b', 5], expected: [] },
-    { args: ['aaa', 'a', 'a', 1], expected: [0, 1, 2] },
+    { args: ['abcabc', 'a', 'c', 2], expected: [0, 3] },
+    { args: ['aaa', 'a', 'a', 0], expected: [0, 1, 2] },
+    { args: ['hello', 'e', 'o', 1], expected: [] },
+    { args: ['hello', 'e', 'o', 3], expected: [1] },
+    { args: ['xyxy', 'x', 'y', 1], expected: [0, 2] },
+    { args: ['abcdef', 'abc', 'def', 3], expected: [0] },
   ],
 };

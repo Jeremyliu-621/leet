@@ -41705,4 +41705,28 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return ans;
   },
+  'count-tested-devices-after-test-operations': (...args: unknown[]) => {
+    const bp = args[0] as number[];
+    let tested = 0;
+    for (const b of bp) if (b - tested >= 1) tested++;
+    return tested;
+  },
+  'number-of-people-aware-of-secret': (...args: unknown[]) => {
+    const n = args[0] as number, delay = args[1] as number, forget = args[2] as number;
+    const MOD = 1e9 + 7;
+    const dp = new Array<number>(n + 1).fill(0);
+    dp[1] = 1;
+    for (let d = 2; d <= n; d++)
+      for (let L = Math.max(1, d - forget + 1); L <= d - delay; L++)
+        dp[d] = (dp[d]! + dp[L]!) % MOD;
+    let ans = 0;
+    for (let L = Math.max(1, n - forget + 1); L <= n; L++) ans = (ans + dp[L]!) % MOD;
+    return ans;
+  },
+  'determine-if-a-cell-is-reachable-at-a-given-time': (...args: unknown[]) => {
+    const [sx, sy, fx, fy, t] = args as number[];
+    const dist = Math.max(Math.abs(sx! - fx!), Math.abs(sy! - fy!));
+    if (dist === 0 && t === 1) return false;
+    return t! >= dist;
+  },
 };

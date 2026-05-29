@@ -40857,4 +40857,29 @@ def findTheLongestBalancedSubstring(s):
             i += 1
     return ans
 `,
+  'count-tested-devices-after-test-operations': `
+def countTestedDevices(batteryPercentages):
+    tested = 0
+    for b in batteryPercentages:
+        if b - tested >= 1:
+            tested += 1
+    return tested
+`,
+  'number-of-people-aware-of-secret': `
+def peopleAwareOfSecret(n, delay, forget):
+    MOD = 10**9 + 7
+    dp = [0] * (n + 1)
+    dp[1] = 1
+    for d in range(2, n + 1):
+        for L in range(max(1, d - forget + 1), d - delay + 1):
+            dp[d] = (dp[d] + dp[L]) % MOD
+    return sum(dp[max(1, n - forget + 1):n + 1]) % MOD
+`,
+  'determine-if-a-cell-is-reachable-at-a-given-time': `
+def isReachableAtTime(sx, sy, fx, fy, t):
+    dist = max(abs(sx - fx), abs(sy - fy))
+    if dist == 0 and t == 1:
+        return False
+    return t >= dist
+`,
 };

@@ -2902,6 +2902,10 @@ import { problem as longestValidSubstring } from './length-of-the-longest-valid-
 import { problem as addSpacesToString } from './add-spaces-to-string';
 import { problem as winnerOfGame } from './remove-colored-pieces-if-both-neighbors-same-color';
 import { problem as findLongestBalancedSubstring } from './find-the-longest-balanced-substring-of-binary-string';
+// batch 222 — easy/arrays+simulation, medium/dp+simulation, medium/math
+import { problem as countTestedDevices } from './count-tested-devices-after-test-operations';
+import { problem as peopleAwareOfSecret } from './number-of-people-aware-of-secret';
+import { problem as isReachableAtTime } from './determine-if-a-cell-is-reachable-at-a-given-time';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5844,4 +5848,8 @@ export const problems: readonly Problem[] = [
   addSpacesToString,
   winnerOfGame,
   findLongestBalancedSubstring,
+  // batch 222
+  countTestedDevices,
+  peopleAwareOfSecret,
+  isReachableAtTime,
 ];
