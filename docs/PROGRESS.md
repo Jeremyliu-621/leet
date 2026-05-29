@@ -12,6 +12,9 @@
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 154+); UX polish; accessibility audit.
 
+### chore: update site count to 2,301+; sync with actual bank (2026-05-29)
+Marketing site updated from 2,286+ → 2,301+ in all three locations. Bank is at 2301 problems after batch 153 + 153b.
+
 ### feat(bank): add batch 153b — 6 new problems (linked-list×2, union-find, shortest-path, heap, simulation) (2026-05-29)
 New problems targeting underrepresented tags: `partition-linked-list-around-value` (medium/linked-list+two-pointers, partition nodes < x before >= x preserving order), `merge-k-sorted-linked-lists` (hard/linked-list+heap, merge k sorted lists with min-heap O(N log k)), `friend-groups-union-find` (medium/union-find+graph, count connected components via DSU decremental count), `dijkstra-single-source-shortest-path` (medium/shortest-path+graph+heap, Dijkstra SSSP returning -1 for unreachable nodes), `kth-largest-after-each-insertion` (medium/heap+arrays, min-heap of size k; report kth-largest or -1 after each insert), `simulate-traffic-lights` (easy/simulation, cars queue at g-green/r-red cycling light; return clear times). Bank at **2301**; 7203 tests.
 
