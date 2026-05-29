@@ -37754,6 +37754,79 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return min;
   },
 
+  // batch 158 — arrays+math/medium, strings/hard, dp/hard×2
+  'minimum-cost-homecoming-of-a-robot-in-a-grid': (...args: unknown[]) => {
+    const [startPos, homePos, rowCosts, colCosts] = args as [number[], number[], number[], number[]];
+    let cost = 0;
+    const r1 = startPos[0]!, c1 = startPos[1]!;
+    const r2 = homePos[0]!, c2 = homePos[1]!;
+    if (r2 > r1) for (let r = r1 + 1; r <= r2; r++) cost += rowCosts[r]!;
+    else for (let r = r1 - 1; r >= r2; r--) cost += rowCosts[r]!;
+    if (c2 > c1) for (let c = c1 + 1; c <= c2; c++) cost += colCosts[c]!;
+    else for (let c = c1 - 1; c >= c2; c--) cost += colCosts[c]!;
+    return cost;
+  },
+
+  'sum-of-scores-of-built-strings': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const Z = new Array<number>(n).fill(0);
+    Z[0] = n;
+    let l = 0, r = 0;
+    for (let i = 1; i < n; i++) {
+      if (i < r) Z[i] = Math.min(r - i, Z[i - l]!);
+      while (i + Z[i]! < n && s[Z[i]!] === s[i + Z[i]!]) Z[i]!++;
+      if (i + Z[i]! > r) { l = i; r = i + Z[i]!; }
+    }
+    return Z.reduce((a, b) => a + b, 0);
+  },
+
+  'count-of-integers': (...args: unknown[]) => {
+    const [num1, num2, min_sum, max_sum] = args as [string, string, number, number];
+    const MOD = 1_000_000_007;
+    function countUpTo(s: string): number {
+      const n = s.length;
+      const memo = new Map<string, number>();
+      function dp(pos: number, tight: boolean, started: boolean, sum: number): number {
+        if (sum > max_sum) return 0;
+        if (pos === n) return started ? (sum >= min_sum ? 1 : 0) : 0;
+        const key = `${pos},${tight ? 1 : 0},${started ? 1 : 0},${sum}`;
+        if (memo.has(key)) return memo.get(key)!;
+        const limit = tight ? parseInt(s[pos]!) : 9;
+        let res = 0;
+        for (let d = 0; d <= limit; d++) {
+          const nt = tight && d === limit;
+          if (!started && d === 0) res = (res + dp(pos + 1, nt, false, 0)) % MOD;
+          else res = (res + dp(pos + 1, nt, true, sum + d)) % MOD;
+        }
+        memo.set(key, res);
+        return res;
+      }
+      return dp(0, true, false, 0);
+    }
+    const c2 = countUpTo(num2);
+    const c1 = countUpTo(num1);
+    const sumNum1 = num1.split('').reduce((s, c) => s + parseInt(c), 0);
+    const v1 = sumNum1 >= min_sum && sumNum1 <= max_sum ? 1 : 0;
+    return ((c2 - c1 + v1) % MOD + MOD) % MOD;
+  },
+
+  'number-of-ways-to-earn-points': (...args: unknown[]) => {
+    const [target, types] = args as [number, number[][]];
+    const MOD = 1_000_000_007;
+    const dp = new Array<number>(target + 1).fill(0);
+    dp[0] = 1;
+    for (const entry of types) {
+      const count = entry[0]!, marks = entry[1]!;
+      for (let j = target; j >= 0; j--) {
+        for (let k = 1; k <= count && j - k * marks >= 0; k++) {
+          dp[j] = (dp[j]! + dp[j - k * marks]!) % MOD;
+        }
+      }
+    }
+    return dp[target]!;
+  },
+
   // batch 159 — strings+hash-map/medium, dp/hard, arrays+dp/medium
   'unique-length-3-palindromic-subsequences': (...args: unknown[]) => {
     const s = args[0] as string;
@@ -38450,12 +38523,12 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
 
   'rle-iterator': (...args: unknown[]) => {
     const ops = args[0] as string[];
-    const params = args[1] as number[][];
-    const enc = [...params[0]!];
+    const params = args[1] as unknown[][];
+    const enc = [...(params[0]![0] as number[])];
     let idx = 0;
     const result: (number | null)[] = [null];
     for (let i = 1; i < ops.length; i++) {
-      let n = params[i]![0]!;
+      let n = (params[i]! as number[])[0]!;
       let res = -1;
       while (idx < enc.length && n > 0) {
         if (enc[idx]! >= n) {
