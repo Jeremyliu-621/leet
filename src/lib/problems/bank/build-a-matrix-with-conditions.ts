@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'build-a-matrix-with-conditions',
   title: 'Build a Matrix With Conditions',
   difficulty: 'hard',
-  tags: ['arrays', 'graph'],
+  tags: ['graph', 'arrays'],
   description: `You are given a **positive** integer \`k\`. You are also given:
 
 - a 2D integer array \`rowConditions\` where \`rowConditions[i] = [above_i, below_i]\` means \`above_i\` must appear in a **strictly higher row** than \`below_i\`, and
@@ -35,7 +35,7 @@ Build a \`k × k\` matrix containing each integer from \`1\` to \`k\` **exactly 
     'Run topological sort on rowConditions: build a directed graph where edge above→below means "above must come before below in row order".',
     'If topological sort finds a cycle in either graph, return [].',
     'Do the same for colConditions to get a column ordering.',
-    'Once you have rowPos[num] and colPos[num] for each num 1..k, set result[rowPos[num]][colPos[num]] = num.',
+    '```js\nfunction buildMatrix(k, rowConditions, colConditions) {\n  function topo(edges) {\n    const adj = Array.from({length: k+1}, () => []);\n    const deg = new Array(k+1).fill(0);\n    for (const [a,b] of edges) { adj[a].push(b); deg[b]++; }\n    const q = [];\n    for (let i = 1; i <= k; i++) if (!deg[i]) q.push(i);\n    const order = [], qi = 0;\n    while (qi < q.length) { const u = q[qi++]; order.push(u); for (const v of adj[u]) if (!--deg[v]) q.push(v); }\n    return order.length === k ? order : null;\n  }\n  const ro = topo(rowConditions), co = topo(colConditions);\n  if (!ro || !co) return [];\n  const rp = new Array(k+1), cp = new Array(k+1);\n  for (let i = 0; i < k; i++) { rp[ro[i]] = i; cp[co[i]] = i; }\n  const mat = Array.from({length: k}, () => new Array(k).fill(0));\n  for (let n = 1; n <= k; n++) mat[rp[n]][cp[n]] = n;\n  return mat;\n}\n```',
   ],
   functionName: 'buildMatrix',
   params: ['k', 'rowConditions', 'colConditions'],
@@ -46,7 +46,7 @@ Build a \`k × k\` matrix containing each integer from \`1\` to \`k\` **exactly 
     typescript: `function buildMatrix(k: number, rowConditions: number[][], colConditions: number[][]): number[][] {
 
 }`,
-    python: `def buildMatrix(k, rowConditions, colConditions):
+    python: `def buildMatrix(k: int, rowConditions: list[list[int]], colConditions: list[list[int]]) -> list[list[int]]:
     pass`,
   },
   visibleTests: [
@@ -58,12 +58,28 @@ Build a \`k × k\` matrix containing each integer from \`1\` to \`k\` **exactly 
       args: [3, [[1, 2], [2, 3], [3, 1]], [[1, 2]]],
       expected: [],
     },
+    {
+      args: [2, [[1, 2]], [[2, 1]]],
+      expected: [[0, 1], [2, 0]],
+    },
   ],
   hiddenTests: [
-    { args: [2, [[1, 2]], [[2, 1]]], expected: [[0, 1], [2, 0]] },
-    { args: [2, [[1, 2], [2, 1]], [[1, 2]]], expected: [] },
-    { args: [1, [], []], expected: [[1]] },
-    { args: [3, [], []], expected: [[1, 0, 0], [0, 2, 0], [0, 0, 3]] },
+    {
+      args: [2, [[1, 2]], [[1, 2]]],
+      expected: [[1, 0], [0, 2]],
+    },
+    {
+      args: [3, [[1, 2], [2, 3]], [[3, 2], [2, 1]]],
+      expected: [[0, 0, 1], [0, 2, 0], [3, 0, 0]],
+    },
+    {
+      args: [2, [[1, 2], [2, 1]], [[1, 2]]],
+      expected: [],
+    },
+    {
+      args: [3, [], []],
+      expected: [[1, 0, 0], [0, 2, 0], [0, 0, 3]],
+    },
     {
       args: [4, [[1, 2], [2, 3], [3, 4]], [[4, 3], [3, 2], [2, 1]]],
       expected: [[0, 0, 0, 1], [0, 0, 2, 0], [0, 3, 0, 0], [4, 0, 0, 0]],

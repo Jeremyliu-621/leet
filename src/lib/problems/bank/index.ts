@@ -2619,6 +2619,10 @@ import { problem as minCostHomecomingRobotInGrid } from './minimum-cost-homecomi
 import { problem as sumOfScoresOfBuiltStrings } from './sum-of-scores-of-built-strings';
 import { problem as countOfIntegers } from './count-of-integers';
 import { problem as numberOfWaysToEarnPoints } from './number-of-ways-to-earn-points';
+// batch 159 — strings+hash-map/medium, dp/hard, arrays+dp/medium
+import { problem as uniqueLength3PalindromicSubsequences } from './unique-length-3-palindromic-subsequences';
+import { problem as minimumWhiteTilesAfterCovering } from './minimum-white-tiles-after-covering-with-carpets';
+import { problem as specialPermutations } from './special-permutations';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5275,4 +5279,8 @@ export const problems: readonly Problem[] = [
   sumOfScoresOfBuiltStrings,
   countOfIntegers,
   numberOfWaysToEarnPoints,
+  // batch 159 — strings+hash-map/medium, dp/hard, arrays+dp/medium
+  uniqueLength3PalindromicSubsequences,
+  minimumWhiteTilesAfterCovering,
+  specialPermutations,
 ];

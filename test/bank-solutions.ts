@@ -37489,4 +37489,57 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[target]!;
   },
 
+  // batch 159 — strings+hash-map/medium, dp/hard, arrays+dp/medium
+  'unique-length-3-palindromic-subsequences': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let count = 0;
+    for (let c = 0; c < 26; c++) {
+      const ch = String.fromCharCode(97 + c);
+      const left = s.indexOf(ch), right = s.lastIndexOf(ch);
+      if (left === -1 || left === right) continue;
+      const between = new Set<string>();
+      for (let i = left + 1; i < right; i++) between.add(s[i]!);
+      count += between.size;
+    }
+    return count;
+  },
+
+  'minimum-white-tiles-after-covering-with-carpets': (...args: unknown[]) => {
+    const floor = args[0] as string;
+    const numCarpets = args[1] as number;
+    const carpetLen = args[2] as number;
+    const n = floor.length;
+    const dp: number[][] = Array.from({ length: numCarpets + 1 }, () => new Array<number>(n + 1).fill(0));
+    for (let i = 1; i <= n; i++) dp[0]![i] = dp[0]![i - 1]! + (floor[i - 1] === '1' ? 1 : 0);
+    for (let j = 1; j <= numCarpets; j++) {
+      for (let i = 1; i <= n; i++) {
+        dp[j]![i] = Math.min(
+          dp[j]![i - 1]! + (floor[i - 1] === '1' ? 1 : 0),
+          dp[j - 1]![Math.max(0, i - carpetLen)]!
+        );
+      }
+    }
+    return dp[numCarpets]![n]!;
+  },
+
+  'special-permutations': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length, MOD = 1_000_000_007;
+    const dp: number[][] = Array.from({ length: 1 << n }, () => new Array<number>(n).fill(0));
+    for (let i = 0; i < n; i++) dp[1 << i]![i] = 1;
+    for (let mask = 1; mask < (1 << n); mask++) {
+      for (let last = 0; last < n; last++) {
+        if (!(mask & (1 << last)) || !dp[mask]![last]) continue;
+        for (let next = 0; next < n; next++) {
+          if (mask & (1 << next)) continue;
+          if (nums[last]! % nums[next]! === 0 || nums[next]! % nums[last]! === 0) {
+            dp[mask | (1 << next)]![next] = (dp[mask | (1 << next)]![next]! + dp[mask]![last]!) % MOD;
+          }
+        }
+      }
+    }
+    const full = (1 << n) - 1;
+    return dp[full]!.reduce((a, b) => (a + b) % MOD, 0);
+  },
+
 };

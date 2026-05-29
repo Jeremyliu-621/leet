@@ -37335,4 +37335,54 @@ def waysToReachTarget(target, types):
     return dp[target]
 `,
 
+  'unique-length-3-palindromic-subsequences': `
+def countPalindromicSubsequence(s):
+    count = 0
+    for c in range(26):
+        ch = chr(ord('a') + c)
+        left = s.find(ch)
+        right = s.rfind(ch)
+        if left == -1 or left == right:
+            continue
+        count += len(set(s[left + 1:right]))
+    return count
+`,
+
+  'minimum-white-tiles-after-covering-with-carpets': `
+def minimumWhiteTiles(floor, numCarpets, carpetLen):
+    n = len(floor)
+    dp = [[0] * (n + 1) for _ in range(numCarpets + 1)]
+    for i in range(1, n + 1):
+        dp[0][i] = dp[0][i - 1] + (1 if floor[i - 1] == '1' else 0)
+    for j in range(1, numCarpets + 1):
+        for i in range(1, n + 1):
+            dp[j][i] = min(
+                dp[j][i - 1] + (1 if floor[i - 1] == '1' else 0),
+                dp[j - 1][max(0, i - carpetLen)]
+            )
+    return dp[numCarpets][n]
+`,
+
+  'special-permutations': `
+def specialPerm(nums):
+    if hasattr(nums, 'to_py'):
+        nums = list(nums.to_py())
+    n = len(nums)
+    MOD = 10 ** 9 + 7
+    dp = [[0] * n for _ in range(1 << n)]
+    for i in range(n):
+        dp[1 << i][i] = 1
+    for mask in range(1, 1 << n):
+        for last in range(n):
+            if not (mask & (1 << last)) or not dp[mask][last]:
+                continue
+            for nxt in range(n):
+                if mask & (1 << nxt):
+                    continue
+                if nums[last] % nums[nxt] == 0 or nums[nxt] % nums[last] == 0:
+                    dp[mask | (1 << nxt)][nxt] = (dp[mask | (1 << nxt)][nxt] + dp[mask][last]) % MOD
+    full = (1 << n) - 1
+    return sum(dp[full]) % MOD
+`,
+
 };
