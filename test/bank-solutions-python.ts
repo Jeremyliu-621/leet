@@ -44602,4 +44602,62 @@ def numberOfComponents(properties):
 
     return sum(1 for i in range(n) if find(i) == i)
 `,
+  'find-the-count-of-numbers-which-are-not-special': `
+def nonSpecialCount(l, r):
+    import math
+    limit = math.isqrt(r)
+    sieve = [True] * (limit + 1)
+    if limit >= 0: sieve[0] = False
+    if limit >= 1: sieve[1] = False
+    for i in range(2, limit + 1):
+        if i * i > limit: break
+        if sieve[i]:
+            for j in range(i * i, limit + 1, i):
+                sieve[j] = False
+    special = sum(1 for p in range(2, limit + 1) if sieve[p] and l <= p * p <= r)
+    return (r - l + 1) - special
+`,
+  'check-if-digits-are-equal-in-string-after-operations-i': `
+def hasSameDigits(s):
+    arr = [int(c) for c in s]
+    while len(arr) > 2:
+        arr = [(arr[i] + arr[i + 1]) % 10 for i in range(len(arr) - 1)]
+    return arr[0] == arr[1]
+`,
+  'lexicographically-smallest-string-after-operations-with-constraint': `
+def getSmallestString(s, k):
+    arr = list(s)
+    for i in range(len(arr)):
+        c = ord(arr[i]) - ord('a')
+        dist_to_a = min(c, 26 - c)
+        if k >= dist_to_a:
+            k -= dist_to_a
+            arr[i] = 'a'
+        else:
+            best = arr[i]
+            for t in range(26):
+                cost = min((c - t) % 26, (t - c) % 26)
+                if cost <= k and chr(ord('a') + t) < best:
+                    best = chr(ord('a') + t)
+            arr[i] = best
+            break
+    return ''.join(arr)
+`,
+  'check-if-grid-can-be-cut-into-sections': `
+def checkValidCuts(n, rectangles):
+    def can_split(intervals):
+        intervals.sort()
+        count, max_end = 0, float('-inf')
+        for start, end in intervals:
+            if start >= max_end:
+                count += 1
+                if count >= 3:
+                    return True
+            max_end = max(max_end, end)
+        return False
+
+    x_intervals = [(r[0], r[2]) for r in rectangles]
+    y_intervals = [(r[1], r[3]) for r in rectangles]
+    return can_split(x_intervals) or can_split(y_intervals)
+`,
 };

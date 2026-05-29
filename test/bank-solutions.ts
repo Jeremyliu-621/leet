@@ -44818,4 +44818,55 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     for (let i = 0; i < n; i++) if (find(i) === i) count++;
     return count;
   },
+  'find-the-count-of-numbers-which-are-not-special': (...args: unknown[]) => {
+    const l = args[0] as number, r = args[1] as number;
+    const limit = Math.ceil(Math.sqrt(r));
+    const sieve = new Array(limit + 1).fill(true) as boolean[];
+    sieve[0] = sieve[1] = false;
+    for (let i = 2; i * i <= limit; i++) if (sieve[i]) for (let j = i * i; j <= limit; j += i) sieve[j] = false;
+    let special = 0;
+    for (let p = 2; p <= limit; p++) if (sieve[p] && p * p >= l && p * p <= r) special++;
+    return (r - l + 1) - special;
+  },
+  'check-if-digits-are-equal-in-string-after-operations-i': (...args: unknown[]) => {
+    let arr = (args[0] as string).split('').map(Number);
+    while (arr.length > 2) {
+      const next: number[] = [];
+      for (let i = 0; i < arr.length - 1; i++) next.push((arr[i]! + arr[i + 1]!) % 10);
+      arr = next;
+    }
+    return arr[0] === arr[1];
+  },
+  'lexicographically-smallest-string-after-operations-with-constraint': (...args: unknown[]) => {
+    const arr = (args[0] as string).split('');
+    let k = args[1] as number;
+    for (let i = 0; i < arr.length; i++) {
+      const c = arr[i]!.charCodeAt(0) - 97;
+      const distToA = Math.min(c, 26 - c);
+      if (k >= distToA) { k -= distToA; arr[i] = 'a'; }
+      else {
+        let best = arr[i]!;
+        for (let t = 0; t < 26; t++) {
+          const cost = Math.min((c - t + 26) % 26, (t - c + 26) % 26);
+          if (cost <= k && String.fromCharCode(97 + t) < best) best = String.fromCharCode(97 + t);
+        }
+        arr[i] = best;
+        break;
+      }
+    }
+    return arr.join('');
+  },
+  'check-if-grid-can-be-cut-into-sections': (...args: unknown[]) => {
+    const rectangles = args[1] as number[][];
+    const canSplit = (intervals: number[][]) => {
+      intervals.sort((a, b) => a[0]! - b[0]! || a[1]! - b[1]!);
+      let count = 0, maxEnd = -Infinity;
+      for (const iv of intervals) {
+        if (iv[0]! >= maxEnd) { count++; if (count >= 3) return true; }
+        maxEnd = Math.max(maxEnd, iv[1]!);
+      }
+      return false;
+    };
+    return canSplit(rectangles.map(r => [r[0]!, r[2]!])) || canSplit(rectangles.map(r => [r[1]!, r[3]!]));
+  },
 };

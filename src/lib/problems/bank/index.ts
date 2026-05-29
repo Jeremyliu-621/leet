@@ -3185,6 +3185,11 @@ import { problem as phonePrefix } from './phone-number-prefix';
 import { problem as reverseDegree } from './reverse-degree-of-a-string';
 import { problem as minOpsArrayZero } from './minimum-operations-make-array-elements-zero';
 import { problem as propertiesGraph } from './properties-graph';
+// batch 219 — easy/math, easy/strings+math+simulation, medium/strings+two-pointers, medium/arrays+simulation
+import { problem as nonSpecialCount } from './find-the-count-of-numbers-which-are-not-special';
+import { problem as hasSameDigits } from './check-if-digits-are-equal-in-string-after-operations-i';
+import { problem as getSmallestStringConstraint } from './lexicographically-smallest-string-after-operations-with-constraint';
+import { problem as checkValidCuts } from './check-if-grid-can-be-cut-into-sections';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6410,4 +6415,9 @@ export const problems: readonly Problem[] = [
   reverseDegree,
   minOpsArrayZero,
   propertiesGraph,
+  // batch 219
+  nonSpecialCount,
+  hasSameDigits,
+  getSmallestStringConstraint,
+  checkValidCuts,
 ];
