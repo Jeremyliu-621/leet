@@ -42459,4 +42459,50 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       })
       .slice(0, k);
   },
+  'fair-candy-swap': (...args: unknown[]) => {
+    const aliceSizes = args[0] as number[];
+    const bobSizes = args[1] as number[];
+    const sumA = aliceSizes.reduce((a, b) => a + b, 0);
+    const sumB = bobSizes.reduce((a, b) => a + b, 0);
+    const bobSet = new Set(bobSizes);
+    const diff = (sumB - sumA) / 2;
+    for (const a of aliceSizes) {
+      if (bobSet.has(a + diff)) return [a, a + diff];
+    }
+    return [];
+  },
+  'large-group-positions': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const result: number[][] = [];
+    let start = 0;
+    for (let i = 1; i <= s.length; i++) {
+      if (i === s.length || s[i] !== s[start]) {
+        if (i - start >= 3) result.push([start, i - 1]);
+        start = i;
+      }
+    }
+    return result;
+  },
+  'number-of-equivalent-domino-pairs': (...args: unknown[]) => {
+    const dominoes = args[0] as number[][];
+    const count = new Map<number, number>();
+    let pairs = 0;
+    for (const [a, b] of dominoes) {
+      const key = Math.min(a!, b!) * 10 + Math.max(a!, b!);
+      const c = count.get(key) ?? 0;
+      pairs += c;
+      count.set(key, c + 1);
+    }
+    return pairs;
+  },
+  'the-number-of-weak-characters-in-the-game': (...args: unknown[]) => {
+    const props = args[0] as number[][];
+    props.sort((a, b) => a[0] !== b[0] ? b[0]! - a[0]! : a[1]! - b[1]!);
+    let maxDef = 0, weak = 0;
+    for (const [, d] of props) {
+      if (d! < maxDef) weak++;
+      else maxDef = d!;
+    }
+    return weak;
+  },
 };

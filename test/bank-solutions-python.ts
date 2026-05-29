@@ -42304,6 +42304,7 @@ def monotoneIncreasingDigits(n):
     return int(''.join(digits))
 `,
 
+
   'count-hidden-sequences': `
 def countHiddenSequences(differences: list[int], lower: int, upper: int) -> int:
     prefix = 0
@@ -42360,5 +42361,50 @@ def getStrongest(nums: list[int], k: int) -> list[int]:
     sorted_nums = sorted(nums)
     m = sorted_nums[(len(nums) - 1) // 2]
     return sorted(nums, key=lambda x: (abs(x - m), x), reverse=True)[:k]
+`,
+  'fair-candy-swap': `
+def fairCandySwap(aliceSizes, bobSizes):
+    sum_a = sum(aliceSizes)
+    sum_b = sum(bobSizes)
+    bob_set = set(bobSizes)
+    diff = (sum_b - sum_a) // 2
+    for a in aliceSizes:
+        if a + diff in bob_set:
+            return [a, a + diff]
+`,
+  'large-group-positions': `
+def largeGroupPositions(s):
+    result = []
+    start = 0
+    for i in range(1, len(s) + 1):
+        if i == len(s) or s[i] != s[start]:
+            if i - start >= 3:
+                result.append([start, i - 1])
+            start = i
+    return result
+`,
+  'number-of-equivalent-domino-pairs': `
+def numEquivDominoPairs(dominoes):
+    from collections import defaultdict
+    count = defaultdict(int)
+    pairs = 0
+    for a, b in dominoes:
+        key = (min(a, b), max(a, b))
+        pairs += count[key]
+        count[key] += 1
+    return pairs
+`,
+  'the-number-of-weak-characters-in-the-game': `
+def numberOfWeakCharacters(properties):
+    props = sorted(properties, key=lambda x: (-x[0], x[1]))
+    max_def = 0
+    weak = 0
+    for p in props:
+        d = p[1]
+        if d < max_def:
+            weak += 1
+        else:
+            max_def = d
+    return weak
 `,
 };

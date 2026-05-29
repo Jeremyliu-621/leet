@@ -2940,6 +2940,11 @@ import { problem as existenceOfASubstringInAStringAndItsReverse } from './existe
 import { problem as countPairsWithSumDivisibleByK } from './count-pairs-with-sum-divisible-by-k';
 import { problem as findTheDistinctDifferenceArray } from './find-the-distinct-difference-array';
 import { problem as theKStrongestValuesInAnArray } from './the-k-strongest-values-in-an-array';
+// batch 190 — easy/arrays+hash-map+math, easy/simulation, easy/arrays+hash-map, medium/arrays
+import { problem as fairCandySwap } from './fair-candy-swap';
+import { problem as largeGroupPositions } from './large-group-positions';
+import { problem as numberOfEquivalentDominoPairs } from './number-of-equivalent-domino-pairs';
+import { problem as theNumberOfWeakCharactersInTheGame } from './the-number-of-weak-characters-in-the-game';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5921,4 +5926,9 @@ export const problems: readonly Problem[] = [
   countPairsWithSumDivisibleByK,
   findTheDistinctDifferenceArray,
   theKStrongestValuesInAnArray,
+  // batch 190 — easy/arrays+hash-map+math, easy/simulation, easy/arrays+hash-map, medium/arrays
+  fairCandySwap,
+  largeGroupPositions,
+  numberOfEquivalentDominoPairs,
+  theNumberOfWeakCharactersInTheGame,
 ];
