@@ -8,9 +8,21 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2319** problems; 7251 tests green. Batches 102–154 (all sub-batches) complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2337** problems; 7305 tests green. Batches 102–155c complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 155+); UX polish; accessibility audit.
+**Next up:** More bank growth (batch 156+); UX polish; accessibility audit.
+
+### feat(bank): add batch 155c — maximum-employees-invited-to-meeting, maximize-minimum-powered-city, minimum-time-remove-cars-illegal-goods (2026-05-29)
+Three problems: `maximum-employees-invited-to-meeting` (hard/graph, functional graph cycle detection — topological-sort to find chain depths, then max(longest ≥3 cycle, sum of mutual-pair chains)), `maximize-minimum-powered-city` (hard/binary-search+arrays, binary search on minimum power with greedy diff-array station placement), `minimum-time-remove-cars-illegal-goods` (medium/arrays+dynamic-programming, prefix/suffix DP where left[i] = min cost to clear 1s in s[0..i] and answer = min over all split points). Bank at **2337**; 7305 tests.
+
+### feat(bank): add batch 155b — recent-counter (easy), peeking-iterator, flatten-nested-list-iterator (medium), all-o-one (hard) (2026-05-29)
+Four design problems: `recent-counter` (easy/design+simulation, queue sliding window over 3000ms), `peeking-iterator` (medium/design, index-based peek without advance), `flatten-nested-list-iterator` (medium/design+stack, recursive pre-flatten into flat array), `all-o-one-data-structure` (hard/design+hash-map, hash map with O(N) max/min scan). Bank at **2334**; 7296 tests.
+
+### feat(bank): add batch 154c — 24-game, range-module, insert-delete-dup, matchsticks-to-square (2026-05-29)
+Four new hard problems targeting underrepresented tags: `24-game` (hard/backtracking+math, exhaustive pair-reduction with floating-point EPS=1e-6), `range-module` (hard/simulation+binary-search, sorted interval list with merge/split/query in O(n) worst-case), `insert-delete-getrandom-duplicates-allowed` (hard/hash-map+simulation, multiset O(1) via array+index-set with swap-last trick; key bugfix when last===val), `matchsticks-to-square` (medium/backtracking, partition-4-equal-subsets with sorted-desc pruning and seen-set dedup). Bank at **2330**; 7284 tests.
+
+### feat(bank): add batch 155 — 7 new DP/sliding-window problems (2026-05-29)
+Seven new problems: `minimum-score-triangulation-polygon` (medium/dp, interval DP dp[i][j] for convex polygon triangulation — minimize sum of vertex-value products), `non-negative-integers-without-consecutive-ones` (hard/dp, Fibonacci digit-walk: at each 1-bit in n, add Fibonacci count of valid completions), `ways-to-make-a-fair-array` (medium/arrays, track prefix even/odd sums; removing index i flips all subsequent parities), `count-ways-to-build-good-strings` (medium/dp, 1D DP with +zero/'a' or +one/'b' steps mod 10^9+7), `restore-the-array` (hard/dp+strings, O(n·digits(k)) DP counting ways to split string into 1..k segments without leading zeros), `number-of-ways-to-form-a-target-string-given-a-dictionary` (hard/dp, column-frequency pre-computation + 1D backwards DP), `longest-subarray-with-at-most-k-sum` (medium/sliding-window, two-pointer for non-negative arrays). Bank at **2322**; 7272 tests.
 
 ### feat(bank): add batch 154 — maximum-earnings-from-taxi, find-longest-special-substring-thrice-i, minimum-cost-make-array-equalindromic, identify-largest-outlier (2026-05-29)
 Four new medium problems: `maximum-earnings-from-taxi` (medium/dp, weighted interval scheduling — dp[i]=max earnings at road position i), `find-the-longest-special-substring-that-occurs-thrice-i` (medium/strings, run-length encoding + count occurrences from max length downward), `minimum-cost-to-make-array-equalindromic` (medium/math, find palindromic number near median minimising L1 cost — mirror first half with ±1 delta), `identify-the-largest-outlier-in-an-array` (medium/arrays+hash-map, S=(total−outlier)/2 must be present in remaining array — O(n) frequency map). Bank at **2319**; 7251 tests.

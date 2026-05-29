@@ -36326,4 +36326,484 @@ def streamOfCharacters(ops, args):
     return result
 `,
 
+  'minimum-score-triangulation-polygon': `
+def minScoreTriangulation(values):
+    values = list(values.to_py() if hasattr(values, 'to_py') else values)
+    n = len(values)
+    dp = [[0] * n for _ in range(n)]
+    for length in range(2, n):
+        for i in range(n - length):
+            j = i + length
+            dp[i][j] = float('inf')
+            for k in range(i + 1, j):
+                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j] + values[i] * values[k] * values[j])
+    return dp[0][n - 1]
+`,
+
+  'non-negative-integers-without-consecutive-ones': `
+def findIntegers(n):
+    bits = []
+    x = n
+    while x:
+        bits.append(x & 1)
+        x >>= 1
+    bits.reverse()
+    length = len(bits)
+    fib = [0] * (length + 2)
+    fib[0] = 1
+    fib[1] = 2
+    for i in range(2, length + 2):
+        fib[i] = fib[i - 1] + fib[i - 2]
+    ans = 0
+    prev = 0
+    valid = True
+    for i, bit in enumerate(bits):
+        if bit == 1:
+            ans += fib[length - i - 1]
+            if prev == 1:
+                valid = False
+                break
+        prev = bit
+    if valid:
+        ans += 1
+    return ans
+`,
+
+  'ways-to-make-a-fair-array': `
+def waysToMakeFair(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    total_even = sum(v for i, v in enumerate(nums) if i % 2 == 0)
+    total_odd = sum(v for i, v in enumerate(nums) if i % 2 == 1)
+    pref_even = 0
+    pref_odd = 0
+    ans = 0
+    for i, v in enumerate(nums):
+        rem_even = total_even - (v if i % 2 == 0 else 0)
+        rem_odd = total_odd - (v if i % 2 == 1 else 0)
+        new_even = pref_even + (rem_odd - pref_odd)
+        new_odd = pref_odd + (rem_even - pref_even)
+        if new_even == new_odd:
+            ans += 1
+        if i % 2 == 0:
+            pref_even += v
+        else:
+            pref_odd += v
+    return ans
+`,
+
+  'count-ways-to-build-good-strings': `
+def countGoodStrings(low, high, zero, one):
+    MOD = 10**9 + 7
+    dp = [0] * (high + 1)
+    dp[0] = 1
+    for i in range(1, high + 1):
+        if i >= zero:
+            dp[i] = (dp[i] + dp[i - zero]) % MOD
+        if i >= one:
+            dp[i] = (dp[i] + dp[i - one]) % MOD
+    return sum(dp[low:high + 1]) % MOD
+`,
+
+  'restore-the-array': `
+def numberOfArrays(s, k):
+    if hasattr(s, 'to_py'):
+        s = s.to_py()
+    MOD = 10**9 + 7
+    n = len(s)
+    k_len = len(str(k))
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    for i in range(1, n + 1):
+        for j in range(i - 1, -1, -1):
+            if i - j > k_len:
+                break
+            if s[j] == '0':
+                continue
+            num = int(s[j:i])
+            if num > k:
+                break
+            dp[i] = (dp[i] + dp[j]) % MOD
+    return dp[n]
+`,
+
+  'number-of-ways-to-form-a-target-string-given-a-dictionary': `
+def numWays(words, target):
+    words = list(words.to_py() if hasattr(words, 'to_py') else words)
+    if hasattr(target, 'to_py'):
+        target = target.to_py()
+    MOD = 10**9 + 7
+    m = len(words[0])
+    t = len(target)
+    freq = [[0] * 26 for _ in range(m)]
+    for word in words:
+        for j, c in enumerate(word):
+            freq[j][ord(c) - ord('a')] += 1
+    dp = [0] * (t + 1)
+    dp[0] = 1
+    for j in range(m):
+        for i in range(t, 0, -1):
+            c = ord(target[i - 1]) - ord('a')
+            dp[i] = (dp[i] + dp[i - 1] * freq[j][c]) % MOD
+    return dp[t]
+`,
+
+  'longest-subarray-with-at-most-k-sum': `
+def longestSubarrayAtMostKSum(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    left = 0
+    cur = 0
+    ans = 0
+    for right, v in enumerate(nums):
+        cur += v
+        while cur > k:
+            cur -= nums[left]
+            left += 1
+        ans = max(ans, right - left + 1)
+    return ans
+`,
+  // batch 155b — design/easy, design/medium×2, design/hard
+  'recent-counter': `
+def recentCounter(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = list(args.to_py() if hasattr(args, 'to_py') else args)
+    from collections import deque
+    queue = deque()
+    result = []
+    for op, a in zip(ops, args):
+        a = list(a)
+        if op == 'RecentCounter':
+            result.append(None)
+        else:
+            t = a[0]
+            queue.append(t)
+            while queue[0] < t - 3000:
+                queue.popleft()
+            result.append(len(queue))
+    return result
+`,
+
+  'peeking-iterator': `
+def peekingIterator(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = list(args.to_py() if hasattr(args, 'to_py') else args)
+    nums = []
+    idx = 0
+    result = []
+    for op, a in zip(ops, args):
+        a = list(a)
+        if op == 'PeekingIterator':
+            nums = list(a[0])
+            idx = 0
+            result.append(None)
+        elif op == 'next':
+            result.append(nums[idx])
+            idx += 1
+        elif op == 'peek':
+            result.append(nums[idx])
+        else:
+            result.append(idx < len(nums))
+    return result
+`,
+
+  'flatten-nested-list-iterator': `
+def flattenNestedListIterator(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = list(args.to_py() if hasattr(args, 'to_py') else args)
+    flat = []
+    idx = 0
+
+    def flatten_list(lst):
+        for item in lst:
+            if isinstance(item, list):
+                flatten_list(item)
+            else:
+                flat.append(int(item))
+
+    result = []
+    for op, a in zip(ops, args):
+        a = list(a)
+        if op == 'NestedIterator':
+            flat.clear()
+            idx_box = [0]
+            flatten_list(list(a[0]))
+            idx = 0
+            result.append(None)
+        elif op == 'next':
+            result.append(flat[idx])
+            idx += 1
+        else:
+            result.append(idx < len(flat))
+    return result
+`,
+
+  'all-o-one-data-structure': `
+def allOOneDataStructure(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = list(args.to_py() if hasattr(args, 'to_py') else args)
+    counts = {}
+    result = []
+    for op, a in zip(ops, args):
+        a = list(a)
+        if op == 'AllOne':
+            result.append(None)
+        elif op == 'inc':
+            key = a[0]
+            counts[key] = counts.get(key, 0) + 1
+            result.append(None)
+        elif op == 'dec':
+            key = a[0]
+            counts[key] -= 1
+            if counts[key] == 0:
+                del counts[key]
+            result.append(None)
+        elif op == 'getMaxKey':
+            if not counts:
+                result.append('')
+            else:
+                result.append(max(counts, key=lambda k: counts[k]))
+        else:
+            if not counts:
+                result.append('')
+            else:
+                result.append(min(counts, key=lambda k: counts[k]))
+    return result
+`,
+
+  '24-game': `
+def judgePoint24(cards):
+    if hasattr(cards, 'to_py'):
+        cards = list(cards.to_py())
+    EPS = 1e-6
+    def solve(nums):
+        if len(nums) == 1:
+            return abs(nums[0] - 24) < EPS
+        for i in range(len(nums)):
+            for j in range(len(nums)):
+                if i == j:
+                    continue
+                rest = [nums[k] for k in range(len(nums)) if k != i and k != j]
+                a, b = nums[i], nums[j]
+                candidates = [a + b, a - b, a * b]
+                if abs(b) > EPS:
+                    candidates.append(a / b)
+                for c in candidates:
+                    if solve(rest + [c]):
+                        return True
+        return False
+    return solve([float(x) for x in cards])
+`,
+
+  'range-module': `
+def rangeModule(operations):
+    if hasattr(operations, 'to_py'):
+        operations = list(operations.to_py())
+    ranges = []
+    results = []
+    def find_start(x):
+        lo, hi = 0, len(ranges)
+        while lo < hi:
+            mid = (lo + hi) // 2
+            if ranges[mid][1] < x:
+                lo = mid + 1
+            else:
+                hi = mid
+        return lo
+    for entry in operations:
+        op, left, right = entry[0], int(entry[1]), int(entry[2])
+        if op == 'addRange':
+            i = find_start(left)
+            j = find_start(right)
+            new_left = ranges[i][0] if i < len(ranges) and ranges[i][0] <= left else left
+            j_end = j if j < len(ranges) and ranges[j][0] <= right else j - 1
+            new_right = ranges[j_end][1] if j_end >= 0 and j_end < len(ranges) and ranges[j_end][0] <= right and ranges[j_end][1] > right else right
+            count = j_end - i + 1 if j_end >= i else 0
+            ranges[i:i+count] = [[new_left, new_right]]
+        elif op == 'removeRange':
+            i = find_start(left)
+            j = find_start(right)
+            to_add = []
+            if i < len(ranges) and ranges[i][0] < left:
+                to_add.append([ranges[i][0], left])
+            if j < len(ranges) and ranges[j][0] <= right and ranges[j][1] > right:
+                to_add.append([right, ranges[j][1]])
+            j_end = j if j < len(ranges) and ranges[j][0] <= right else j - 1
+            count = j_end - i + 1 if j_end >= i else 0
+            ranges[i:i+count] = to_add
+        else:
+            i = find_start(left)
+            results.append(i < len(ranges) and ranges[i][0] <= left and ranges[i][1] >= right)
+    return results
+`,
+
+  'insert-delete-getrandom-duplicates-allowed': `
+import random as _random
+def insertDeleteGetRandomDups(operations):
+    if hasattr(operations, 'to_py'):
+        operations = list(operations.to_py())
+    vals = []
+    idx = {}
+    results = []
+    for entry in operations:
+        op, val = entry[0], int(entry[1])
+        if op == 'insert':
+            is_new = val not in idx or len(idx[val]) == 0
+            if val not in idx:
+                idx[val] = set()
+            idx[val].add(len(vals))
+            vals.append(val)
+            results.append(is_new)
+        elif op == 'remove':
+            if val not in idx or len(idx[val]) == 0:
+                results.append(False)
+            else:
+                i = next(iter(idx[val]))
+                last_idx = len(vals) - 1
+                last = vals[last_idx]
+                if i == last_idx:
+                    idx[val].discard(i)
+                elif last == val:
+                    vals[i] = last
+                    idx[val].discard(last_idx)
+                    # index i stays in idx[val] (val is now at i)
+                else:
+                    vals[i] = last
+                    idx[last].discard(last_idx)
+                    idx[last].add(i)
+                    idx[val].discard(i)
+                vals.pop()
+                results.append(True)
+        else:
+            results.append(vals[_random.randint(0, len(vals) - 1)])
+    return results
+`,
+
+  'matchsticks-to-square': `
+def makesquare(matchsticks):
+    if hasattr(matchsticks, 'to_py'):
+        matchsticks = list(matchsticks.to_py())
+    total = sum(matchsticks)
+    if total % 4 != 0:
+        return False
+    side = total // 4
+    matchsticks.sort(reverse=True)
+    if matchsticks[0] > side:
+        return False
+    buckets = [0, 0, 0, 0]
+    def bt(i):
+        if i == len(matchsticks):
+            return all(b == side for b in buckets)
+        seen = set()
+        for j in range(4):
+            if buckets[j] in seen:
+                continue
+            if buckets[j] + matchsticks[i] <= side:
+                seen.add(buckets[j])
+                buckets[j] += matchsticks[i]
+                if bt(i + 1):
+                    return True
+                buckets[j] -= matchsticks[i]
+        return False
+    return bt(0)
+`,
+
+  // batch 155 — graph/hard, binary-search+arrays/hard, arrays+dp/medium
+  'maximum-employees-invited-to-meeting': `def maximumInvitations(employees):
+    employees = list(employees.to_py() if hasattr(employees, 'to_py') else employees)
+    n = len(employees)
+    in_deg = [0] * n
+    for f in employees:
+        in_deg[f] += 1
+
+    depth = [0] * n
+    from collections import deque
+    q = deque(i for i in range(n) if in_deg[i] == 0)
+    while q:
+        u = q.popleft()
+        v = employees[u]
+        depth[v] = max(depth[v], depth[u] + 1)
+        in_deg[v] -= 1
+        if in_deg[v] == 0:
+            q.append(v)
+
+    max_cycle = 0
+    pair_sum = 0
+    visited = [False] * n
+
+    for i in range(n):
+        if not visited[i] and in_deg[i] > 0:
+            cycle_nodes = []
+            cur = i
+            while not visited[cur]:
+                visited[cur] = True
+                cycle_nodes.append(cur)
+                cur = employees[cur]
+            cycle_len = len(cycle_nodes)
+            if cycle_len == 2:
+                a, b = cycle_nodes[0], cycle_nodes[1]
+                pair_sum += 2 + depth[a] + depth[b]
+            else:
+                max_cycle = max(max_cycle, cycle_len)
+
+    return max(max_cycle, pair_sum)
+`,
+
+  'maximize-minimum-powered-city': `def maximizeMinimumPower(stations, r, k):
+    stations = list(stations.to_py() if hasattr(stations, 'to_py') else stations)
+    n = len(stations)
+    pfx = [0] * (n + 1)
+    for i in range(n):
+        pfx[i + 1] = pfx[i] + stations[i]
+    power = [pfx[min(n, i + r + 1)] - pfx[max(0, i - r)] for i in range(n)]
+
+    def can_achieve(min_pow):
+        diff = [0] * (n + 1)
+        add_sum = 0
+        k_used = 0
+        for i in range(n):
+            add_sum += diff[i]
+            cur = power[i] + add_sum
+            if cur < min_pow:
+                need = min_pow - cur
+                k_used += need
+                if k_used > k:
+                    return False
+                add_sum += need
+                end = min(i + 2 * r + 1, n)
+                diff[end] -= need
+        return True
+
+    lo, hi = 0, max(power) + k
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_achieve(mid):
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'minimum-time-remove-cars-illegal-goods': `def minimumTime(s):
+    n = len(s)
+    left = [0] * n
+    if s[0] == '1':
+        left[0] = 1
+    for i in range(1, n):
+        if s[i] == '0':
+            left[i] = left[i - 1]
+        else:
+            left[i] = min(left[i - 1] + 2, i + 1)
+    right = [0] * n
+    if s[-1] == '1':
+        right[-1] = 1
+    for i in range(n - 2, -1, -1):
+        if s[i] == '0':
+            right[i] = right[i + 1]
+        else:
+            right[i] = min(right[i + 1] + 2, n - i)
+    ans = min(right[0], left[-1])
+    for i in range(n - 1):
+        ans = min(ans, left[i] + right[i + 1])
+    return ans
+`,
+
 };
