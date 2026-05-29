@@ -38390,6 +38390,97 @@ def maximumTripletValue(nums):
     return ans
 `,
 
+  // batch 171 — Python solutions
+  'maximum-number-of-books-on-a-shelf': `
+def minHeightShelves(books, shelfWidth):
+    books = [list(b.to_py()) if hasattr(b, 'to_py') else list(b) for b in (books.to_py() if hasattr(books, 'to_py') else books)]
+    shelfWidth = int(shelfWidth)
+    n = len(books)
+    dp = [float('inf')] * (n + 1)
+    dp[0] = 0
+    for i in range(1, n + 1):
+        w = 0
+        max_h = 0
+        for j in range(i, 0, -1):
+            w += books[j-1][0]
+            if w > shelfWidth:
+                break
+            max_h = max(max_h, books[j-1][1])
+            dp[i] = min(dp[i], dp[j-1] + max_h)
+    return dp[n]
+`,
+  'number-of-subarrays-that-match-a-pattern': `
+def countMatchingSubarrays(nums, pattern):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    if hasattr(pattern, 'to_py'): pattern = list(pattern.to_py())
+    n, m = len(nums), len(pattern)
+    s = []
+    for i in range(n - 1):
+        if nums[i+1] > nums[i]: s.append(1)
+        elif nums[i+1] == nums[i]: s.append(0)
+        else: s.append(-1)
+    fail = [0] * m
+    for i in range(1, m):
+        j = fail[i-1]
+        while j > 0 and pattern[i] != pattern[j]: j = fail[j-1]
+        if pattern[i] == pattern[j]: j += 1
+        fail[i] = j
+    count = 0
+    j = 0
+    for i in range(len(s)):
+        while j > 0 and s[i] != pattern[j]: j = fail[j-1]
+        if s[i] == pattern[j]: j += 1
+        if j == m:
+            count += 1
+            j = fail[j-1]
+    return count
+`,
+  'number-of-adjacent-elements-with-the-same-color': `
+def colorTheArray(n, queries):
+    n = int(n)
+    if hasattr(queries, 'to_py'): queries = [list(q.to_py()) if hasattr(q, 'to_py') else list(q) for q in queries.to_py()]
+    nums = [0] * n
+    count = 0
+    result = []
+    for q in queries:
+        index, color = int(q[0]), int(q[1])
+        old = nums[index]
+        if old != 0:
+            if index > 0 and nums[index-1] == old: count -= 1
+            if index < n-1 and nums[index+1] == old: count -= 1
+        nums[index] = color
+        if color != 0:
+            if index > 0 and nums[index-1] == color: count += 1
+            if index < n-1 and nums[index+1] == color: count += 1
+        result.append(count)
+    return result
+`,
+  'find-longest-special-substring-that-occurs-thrice-ii': `
+def maximumLength(s):
+    if hasattr(s, 'to_py'): s = str(s.to_py())
+    runs = {}
+    i = 0
+    while i < len(s):
+        j = i
+        while j < len(s) and s[j] == s[i]: j += 1
+        c = s[i]
+        if c not in runs: runs[c] = []
+        runs[c].append(j - i)
+        i = j
+    ans = -1
+    for rs in runs.values():
+        lo, hi = 1, max(rs)
+        while lo <= hi:
+            mid = (lo + hi) // 2
+            cnt = sum(max(0, r - mid + 1) for r in rs)
+            if cnt >= 3:
+                ans = max(ans, mid)
+                lo = mid + 1
+            else:
+                hi = mid - 1
+    return ans
+`,
+
   // batch 169 — Python solutions for new problems
   'maximum-number-of-eaten-apples': `
 import heapq

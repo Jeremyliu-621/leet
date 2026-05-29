@@ -38442,6 +38442,98 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 171 — arrays+dp/medium, arrays+strings/medium, arrays/medium, strings+hash-map/medium
+  'maximum-number-of-books-on-a-shelf': (...args: unknown[]) => {
+    const books = args[0] as number[][];
+    const shelfWidth = args[1] as number;
+    const n = books.length;
+    const dp = new Array<number>(n + 1).fill(Infinity);
+    dp[0] = 0;
+    for (let i = 1; i <= n; i++) {
+      let w = 0, maxH = 0;
+      for (let j = i; j >= 1; j--) {
+        w += books[j - 1]![0]!;
+        if (w > shelfWidth) break;
+        maxH = Math.max(maxH, books[j - 1]![1]!);
+        dp[i] = Math.min(dp[i]!, dp[j - 1]! + maxH);
+      }
+    }
+    return dp[n];
+  },
+  'number-of-subarrays-that-match-a-pattern': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const pattern = args[1] as number[];
+    const n = nums.length, m = pattern.length;
+    const s = new Array<number>(n - 1);
+    for (let i = 0; i < n - 1; i++) {
+      if (nums[i + 1]! > nums[i]!) s[i] = 1;
+      else if (nums[i + 1]! === nums[i]!) s[i] = 0;
+      else s[i] = -1;
+    }
+    const fail = new Array<number>(m).fill(0);
+    for (let i = 1; i < m; i++) {
+      let j = fail[i - 1]!;
+      while (j > 0 && pattern[i] !== pattern[j]) j = fail[j - 1]!;
+      if (pattern[i] === pattern[j]) j++;
+      fail[i] = j;
+    }
+    let count = 0, j = 0;
+    for (let i = 0; i < s.length; i++) {
+      while (j > 0 && s[i] !== pattern[j]) j = fail[j - 1]!;
+      if (s[i] === pattern[j]) j++;
+      if (j === m) { count++; j = fail[j - 1]!; }
+    }
+    return count;
+  },
+  'number-of-adjacent-elements-with-the-same-color': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const queries = args[1] as number[][];
+    const nums = new Array<number>(n).fill(0);
+    let count = 0;
+    const result: number[] = [];
+    for (const q of queries) {
+      const index = q[0]!, color = q[1]!;
+      const old = nums[index]!;
+      if (old !== 0) {
+        if (index > 0 && nums[index - 1] === old) count--;
+        if (index < n - 1 && nums[index + 1] === old) count--;
+      }
+      nums[index] = color;
+      if (color !== 0) {
+        if (index > 0 && nums[index - 1] === color) count++;
+        if (index < n - 1 && nums[index + 1] === color) count++;
+      }
+      result.push(count);
+    }
+    return result;
+  },
+  'find-longest-special-substring-that-occurs-thrice-ii': (s: unknown) => {
+    const str = s as string;
+    const runs: Record<string, number[]> = {};
+    let i = 0;
+    while (i < str.length) {
+      let j = i;
+      while (j < str.length && str[j] === str[i]) j++;
+      const c = str[i]!;
+      if (!runs[c]) runs[c] = [];
+      runs[c]!.push(j - i);
+      i = j;
+    }
+    let ans = -1;
+    for (const rs of Object.values(runs)) {
+      const maxRun = Math.max(...rs);
+      let lo = 1, hi = maxRun;
+      while (lo <= hi) {
+        const mid = (lo + hi) >> 1;
+        let cnt = 0;
+        for (const r of rs) cnt += Math.max(0, r - mid + 1);
+        if (cnt >= 3) { ans = Math.max(ans, mid); lo = mid + 1; }
+        else hi = mid - 1;
+      }
+    }
+    return ans;
+  },
+
   // batch 169 — new problems
   'maximum-number-of-eaten-apples': (...args: unknown[]) => {
     const apples = args[0] as number[];

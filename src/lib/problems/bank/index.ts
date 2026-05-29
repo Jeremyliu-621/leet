@@ -2661,6 +2661,10 @@ import { problem as kthFactorOfN } from './k-th-factor-of-n';
 import { problem as checkValidParenthesesStringPath } from './check-if-there-is-a-valid-parentheses-string-path';
 import { problem as maximumTrailingZerosInCorneredPath } from './maximum-trailing-zeros-in-a-cornered-path';
 import { problem as maximumValueOfOrderedTripletII } from './maximum-value-of-ordered-triplet-ii';
+import { problem as maximumNumberOfBooksOnAShelf } from './maximum-number-of-books-on-a-shelf';
+import { problem as numberOfSubarraysThatMatchAPattern } from './number-of-subarrays-that-match-a-pattern';
+import { problem as numberOfAdjacentElementsWithTheSameColor } from './number-of-adjacent-elements-with-the-same-color';
+import { problem as findLongestSpecialSubstringThatOccursThriceII } from './find-longest-special-substring-that-occurs-thrice-ii';
 // batch 169 — new problems: heap+greedy/medium, strings/easy, design+hash-map/medium, strings/easy
 import { problem as maximumNumberOfEatenApples } from './maximum-number-of-eaten-apples';
 import { problem as minimumFlipsToMakeAlternatingBinaryString } from './minimum-flips-to-make-alternating-binary-string';
@@ -5558,9 +5562,14 @@ export const problems: readonly Problem[] = [
   makeLexicographicallySmallestArrayBySwappingElements,
   maximizeConsecutiveElementsInAnArrayAfterModification,
   countTheNumberOfPowerfulIntegers,
-  // batch 171 (our) — easy/dp, medium/dp, medium/graph, medium/binary-search
+  // batch 173 — easy/dp, medium/dp, medium/graph, medium/binary-search
   nThTribonacciNumber,
   solvingQuestionsWithBrainpower,
   detonateTheMaximumBombs,
   hIndexII,
+  // batch 174 — arrays+dp/medium, arrays+strings/medium, arrays/medium, strings+hash-map/medium
+  maximumNumberOfBooksOnAShelf,
+  numberOfSubarraysThatMatchAPattern,
+  numberOfAdjacentElementsWithTheSameColor,
+  findLongestSpecialSubstringThatOccursThriceII,
 ];
