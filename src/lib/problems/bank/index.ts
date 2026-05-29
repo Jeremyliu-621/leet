@@ -2539,6 +2539,10 @@ import { problem as maximalScoreAfterApplyingKOps } from './maximal-score-after-
 // batch 153 — arrays/easy, graph/hard
 import { problem as lastVisitedIntegers } from './last-visited-integers';
 import { problem as countVisitedNodesInADirectedGraph } from './count-visited-nodes-in-a-directed-graph';
+// batch 154 — shortest-path/medium, binary-indexed-tree/medium, union-find/hard
+import { problem as minEdgeReversalsToDestination } from './minimum-edge-reversals-to-reach-destination';
+import { problem as rangeUpdateRangeSumBit } from './range-update-range-sum-bit';
+import { problem as findCriticalPseudoCriticalEdges } from './find-critical-and-pseudo-critical-edges-in-mst';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5115,4 +5119,8 @@ export const problems: readonly Problem[] = [
   // batch 153 — arrays/easy, graph/hard
   lastVisitedIntegers,
   countVisitedNodesInADirectedGraph,
+  // batch 154 — shortest-path/medium, binary-indexed-tree/medium, union-find/hard
+  minEdgeReversalsToDestination,
+  rangeUpdateRangeSumBit,
+  findCriticalPseudoCriticalEdges,
 ];

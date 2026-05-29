@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2305** problems; 7209 tests green. Batches 102–153 (all sub-batches) complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2308** problems; 7218 tests green. Batches 102–154 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 154+); UX polish; accessibility audit.
+**Next up:** More bank growth (batch 155+); UX polish; accessibility audit.
+
+### feat(bank): add batch 154 — min-edge-reversals, range-update-range-sum-bit, critical-mst-edges (2026-05-29)
+Three new problems targeting underrepresented tags: `minimum-edge-reversals-to-reach-destination` (medium/shortest-path+graph, 0-1 BFS bidirectional cost), `range-update-range-sum-bit` (medium/binary-indexed-tree, two-BIT range-add+range-query in O(log n)), `find-critical-and-pseudo-critical-edges-in-mst` (hard/union-find+graph, Kruskal's O(E²α) with skip/force passes). Bank at **2313**; 7236 tests.
 
 ### feat(bank): add batch 153 — last-visited-integers (easy), count-visited-nodes-in-directed-graph (hard) (2026-05-29)
 `last-visited-integers` (easy/arrays+simulation, track k-th most recent positive per consecutive -1 run). `count-visited-nodes-in-a-directed-graph` (hard/graph+dp, functional graph — each node has exactly one outgoing edge — cycle detection via path coloring + backward distance fill). Fixed off-by-one bug in hidden test for cycle of length 2. Bank at **2305**; 7209 tests.

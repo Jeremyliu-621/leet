@@ -34437,6 +34437,95 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return total % 1_000_000_007;
   },
 
+  // batch 154 — shortest-path/medium, binary-indexed-tree/medium, union-find/hard
+  'minimum-edge-reversals-to-reach-destination': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const source = args[2] as number;
+    const destination = args[3] as number;
+    const adj: [number, number][][] = Array.from({ length: n }, () => []);
+    for (const e of edges) {
+      const u = e[0]!, v = e[1]!;
+      adj[u]!.push([v, 0]);
+      adj[v]!.push([u, 1]);
+    }
+    const dist = new Array(n).fill(Infinity);
+    dist[source] = 0;
+    const pq: [number, number][] = [[0, source]];
+    while (pq.length > 0) {
+      pq.sort((a, b) => a[0]! - b[0]!);
+      const [d, u] = pq.shift()!;
+      if (d! > dist[u!]!) continue;
+      for (const [v, w] of adj[u!]!) {
+        if (dist[u!]! + w < dist[v]!) {
+          dist[v]! = dist[u!]! + w;
+          pq.push([dist[v]!, v]);
+        }
+      }
+    }
+    return dist[destination]! === Infinity ? -1 : dist[destination]!;
+  },
+
+  'range-update-range-sum-bit': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const operations = args[1] as number[][];
+    const b1 = new Array<number>(n + 2).fill(0);
+    const b2 = new Array<number>(n + 2).fill(0);
+    const upd = (b: number[], i: number, v: number) => {
+      for (i++; i <= n; i += i & -i) b[i]! += v;
+    };
+    const pre = (b: number[], i: number) => {
+      let s = 0;
+      for (i++; i > 0; i -= i & -i) s += b[i]!;
+      return s;
+    };
+    const addRange = (l: number, r: number, v: number) => {
+      upd(b1, l, v); upd(b1, r + 1, -v);
+      upd(b2, l, v * l); upd(b2, r + 1, -v * (r + 1));
+    };
+    const prefSum = (i: number) => pre(b1, i) * (i + 1) - pre(b2, i);
+    const res: number[] = [];
+    for (const op of operations) {
+      const [t, l, r, v] = op as [number, number, number, number];
+      if (t === 0) addRange(l, r, v);
+      else res.push(prefSum(r) - prefSum(l - 1));
+    }
+    return res;
+  },
+
+  'find-critical-and-pseudo-critical-edges-in-mst': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const sorted = edges.map((e, i) => [...e, i]).sort((a, b) => a[2]! - b[2]!);
+    const mkDsu = (sz: number) => {
+      const p = Array.from({ length: sz }, (_, i) => i);
+      const find = (x: number): number => (p[x] === x ? x : (p[x] = find(p[x]!)));
+      const union = (x: number, y: number) => {
+        const px = find(x), py = find(y);
+        if (px === py) return false;
+        p[px] = py; return true;
+      };
+      return { find, union };
+    };
+    const build = (skip: number, force: number) => {
+      const dsu = mkDsu(n);
+      let w = 0, cnt = 0;
+      if (force !== -1) { dsu.union(edges[force]![0]!, edges[force]![1]!); w += edges[force]![2]!; cnt++; }
+      for (const [u, v, wt, idx] of sorted) {
+        if (idx === skip || idx === force) continue;
+        if (dsu.union(u!, v!)) { w += wt!; cnt++; }
+      }
+      return cnt < n - 1 ? Infinity : w;
+    };
+    const base = build(-1, -1);
+    const crit: number[] = [], pseudo: number[] = [];
+    for (let i = 0; i < edges.length; i++) {
+      if (build(i, -1) > base) { crit.push(i); continue; }
+      if (build(-1, i) === base) pseudo.push(i);
+    }
+    return [crit.sort((a, b) => a - b), pseudo.sort((a, b) => a - b)];
+  },
+
   // batch 144
   'reorder-routes-to-make-all-paths-lead-to-the-city-zero': (...args: unknown[]) => {
     const n = args[0] as number, connections = args[1] as number[][];
