@@ -42838,7 +42838,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       if ((bob === 'F' && alice === 'E') || (bob === 'E' && alice === 'W') || (bob === 'W' && alice === 'F')) return 1;
       return -1;
     };
-    // dp[last][score+n] = count
     const offset = n;
     let dp: bigint[][] = Array.from({ length: 3 }, () => new Array<bigint>(2 * n + 1).fill(0n));
     for (let m = 0; m < 3; m++) {
@@ -42869,5 +42868,60 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       }
     }
     return Number(ans);
+  },
+  // batch 195 — easy/arrays+hash-map, medium/strings+sliding-window+hash-map, medium/arrays+dp, easy/math+simulation
+  'maximum-sum-increasing-subsequence': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const dp = [...nums] as number[];
+    for (let i = 1; i < n; i++) {
+      for (let j = 0; j < i; j++) {
+        if ((nums[j] as number) < (nums[i] as number)) {
+          dp[i] = Math.max(dp[i] as number, (dp[j] as number) + (nums[i] as number));
+        }
+      }
+    }
+    return Math.max(...(dp as number[]));
+  },
+  'sum-of-every-kth-number': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const k = args[1] as number;
+    const m = Math.floor(n / k);
+    return k * m * (m + 1) / 2;
+  },
+  'largest-unique-number': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+    let best = -1;
+    for (const [v, c] of freq) if (c === 1 && v > best) best = v;
+    return best;
+  },
+  'minimum-window-containing-all-vowels': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const VOWELS = new Set(['a', 'e', 'i', 'o', 'u']);
+    const freq = new Map<string, number>();
+    let have = 0;
+    let best = Infinity;
+    let lo = 0;
+    for (let hi = 0; hi < s.length; hi++) {
+      const c = s[hi]!;
+      if (VOWELS.has(c)) {
+        const cnt = (freq.get(c) ?? 0) + 1;
+        freq.set(c, cnt);
+        if (cnt === 1) have++;
+      }
+      while (have === 5) {
+        best = Math.min(best, hi - lo + 1);
+        const lc = s[lo]!;
+        if (VOWELS.has(lc)) {
+          const cnt = freq.get(lc)! - 1;
+          freq.set(lc, cnt);
+          if (cnt === 0) have--;
+        }
+        lo++;
+      }
+    }
+    return best === Infinity ? -1 : best;
   },
 };

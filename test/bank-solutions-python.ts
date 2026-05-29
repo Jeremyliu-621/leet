@@ -42717,4 +42717,49 @@ def countWinningSequences(s):
         dp = ndp
     return sum(dp[last][sc] for last in range(3) for sc in range(offset + 1, 2 * n + 1)) % MOD
 `,
+  // batch 195 — easy/arrays+hash-map, medium/strings+sliding-window+hash-map, medium/arrays+dp, easy/math+simulation
+  'maximum-sum-increasing-subsequence': `
+def maxSumIncreasingSubseq(nums):
+    n = len(nums)
+    dp = nums[:]
+    for i in range(1, n):
+        for j in range(i):
+            if nums[j] < nums[i]:
+                dp[i] = max(dp[i], dp[j] + nums[i])
+    return max(dp)
+`,
+  'sum-of-every-kth-number': `
+def sumEveryKth(n, k):
+    m = n // k
+    return k * m * (m + 1) // 2
+`,
+  'largest-unique-number': `
+def largestUniqueNumber(nums):
+    from collections import Counter
+    freq = Counter(nums)
+    unique = [v for v, c in freq.items() if c == 1]
+    return max(unique) if unique else -1
+`,
+  'minimum-window-containing-all-vowels': `
+def minWindowAllVowels(s):
+    vowels = set('aeiou')
+    freq = {}
+    have = 0
+    best = float('inf')
+    lo = 0
+    for hi, c in enumerate(s):
+        if c in vowels:
+            freq[c] = freq.get(c, 0) + 1
+            if freq[c] == 1:
+                have += 1
+        while have == 5:
+            best = min(best, hi - lo + 1)
+            lc = s[lo]
+            if lc in vowels:
+                freq[lc] -= 1
+                if freq[lc] == 0:
+                    have -= 1
+            lo += 1
+    return best if best != float('inf') else -1
+`,
 };

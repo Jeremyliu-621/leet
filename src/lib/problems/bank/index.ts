@@ -2976,6 +2976,11 @@ import { problem as minimumProcessingTime } from './minimum-processing-time';
 import { problem as countPairsOfPointsWithDistanceK } from './count-pairs-of-points-with-distance-k';
 import { problem as lexicographicallyMinimumStringAfterRemovingStars } from './lexicographically-minimum-string-after-removing-stars';
 import { problem as countTheNumberOfWinningSequences } from './count-the-number-of-winning-sequences';
+// batch 195 — easy/arrays+hash-map, medium/strings+sliding-window+hash-map, medium/arrays+dynamic-programming, easy/math+simulation
+import { problem as largestUniqueNumber } from './largest-unique-number';
+import { problem as minimumWindowContainingAllVowels } from './minimum-window-containing-all-vowels';
+import { problem as maximumSumIncreasingSubsequence } from './maximum-sum-increasing-subsequence';
+import { problem as sumOfEveryKthNumber } from './sum-of-every-kth-number';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5993,4 +5998,9 @@ export const problems: readonly Problem[] = [
   countPairsOfPointsWithDistanceK,
   lexicographicallyMinimumStringAfterRemovingStars,
   countTheNumberOfWinningSequences,
+  // batch 195 — easy/arrays+hash-map, medium/strings+sliding-window+hash-map, medium/arrays+dynamic-programming, easy/math+simulation
+  largestUniqueNumber,
+  minimumWindowContainingAllVowels,
+  maximumSumIncreasingSubsequence,
+  sumOfEveryKthNumber,
 ];
