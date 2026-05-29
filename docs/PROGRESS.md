@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2280** problems; 7134 tests green. Batches 102–152 complete. UX polish ongoing.
+**Current focus:** Bank at **2286** problems; 7137 tests green. Batches 102–152 complete + batch 151 new problems. UX polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 153+); UX polish; accessibility audit.
+
+### feat(bank): add batch 151 — 6 new problems (linked-list×2, union-find×2, shortest-path, BIT) (2026-05-29)
+New problems targeting underrepresented tags: `swap-pairs-linked-list` (medium/linked-list, swap every two adjacent nodes iteratively), `reverse-nodes-k-group` (hard/linked-list, reverse in k-groups leaving remainder), `minimum-spanning-tree-weight` (medium/union-find+graph, Kruskal's MST weight via DSU), `union-find-dynamic-connectivity` (medium/union-find+graph, process union/connected queries with path-compressed DSU), `bellman-ford-shortest-paths` (medium/shortest-path+graph, Bellman-Ford supports negative weights), `bit-prefix-sum-updates` (medium/binary-indexed-tree, Fenwick tree point updates and range queries). Bank at **2286**; 7137 tests.
 
 ### feat(bank): add batch 152 — 5 new string problems + fix missing solution (2026-05-29)
 New problems: `number-of-segments-in-a-string` (easy/strings, count non-space segments), `repeated-dna-sequences` (medium/strings+hash-map+sliding-window, 10-char sliding window dedup), `count-the-number-of-vowel-strings-in-range` (easy/strings, check first/last char in range), `remove-all-occurrences-of-a-substring` (medium/strings, repeated leftmost removal), `find-words-that-can-be-formed-by-characters` (easy/strings+hash-map, freq comparison). Fixed missing solution for `count-ways-to-rearrange-sticks-with-k-visible` added by remote. Bank at **2280**; 7134 tests.
