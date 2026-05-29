@@ -2639,9 +2639,7 @@ import { problem as strictlyPalindromicNumber } from './strictly-palindromic-num
 import { problem as designBitset } from './design-bitset';
 import { problem as countSubstringsWithFixedRatio } from './count-substrings-with-fixed-ratio';
 import { problem as numberOfIntegersWithEvenDigitSum } from './number-of-integers-with-even-digit-sum';
-// batch 160 — graph+union-find/hard (new)
-import { problem as minimumCostWalkWeightedGraph } from './minimum-cost-to-walk-weighted-graph';
-// batch 161 (other) — arrays/medium×3, strings/medium×2
+// batch 161 (remote) — arrays/medium×3, strings/medium×2
 import { problem as frogJumpII } from './frog-jump-ii';
 import { problem as collectingChocolates } from './collecting-chocolates';
 import { problem as partitioningIntoMinDeciB } from './partitioning-into-minimum-number-of-deci-binary-numbers';
@@ -2663,6 +2661,12 @@ import { problem as pyramidTransitionNumbers } from './pyramid-transition-number
 import { problem as paintingGridThreeColors } from './painting-a-grid-with-three-different-colors';
 import { problem as maximumSpendingAfterBuyingItems } from './maximum-spending-after-buying-items';
 import { problem as numberOfGoodBinaryStrings } from './number-of-good-binary-strings';
+// batch 161 (local) — binary-search/medium, dp+math/medium, arrays/medium, simulation/hard, bit-manipulation/easy
+import { problem as minimumTimeToFinishTrips } from './minimum-time-to-finish-trips';
+import { problem as countSpecialNumbers } from './count-special-numbers';
+import { problem as minimumDeletionsToMakeArrayBeautiful } from './minimum-deletions-to-make-array-beautiful';
+import { problem as amountOfNewAreaPaintedEachDay } from './amount-of-new-area-painted-each-day';
+import { problem as convertNumberToHexadecimal } from './convert-number-to-hexadecimal';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5338,9 +5342,7 @@ export const problems: readonly Problem[] = [
   designBitset,
   countSubstringsWithFixedRatio,
   numberOfIntegersWithEvenDigitSum,
-  // batch 160 — graph+union-find/hard (new)
-  minimumCostWalkWeightedGraph,
-  // batch 161 (other) — arrays/medium×3, strings/medium×2
+  // batch 161 (remote) — arrays/medium×3, strings/medium×2
   frogJumpII,
   collectingChocolates,
   partitioningIntoMinDeciB,
@@ -5354,7 +5356,7 @@ export const problems: readonly Problem[] = [
   minimumDifferenceHighestLowestKScores,
   countSubstringsKFreqII,
   sumImbalanceNumbers,
-  // batch 161
+  // batch 161 — trie/xor problems
   maximumXorWithElementFromArray,
   countPairsWithXorInRange,
   // batch 161 — backtracking/medium, dp/hard, arrays+heap/hard, dp/medium
@@ -5362,4 +5364,10 @@ export const problems: readonly Problem[] = [
   paintingGridThreeColors,
   maximumSpendingAfterBuyingItems,
   numberOfGoodBinaryStrings,
+  // batch 161 (local) — binary-search/medium, dp+math/medium, arrays/medium, simulation/hard, bit-manipulation/easy
+  minimumTimeToFinishTrips,
+  countSpecialNumbers,
+  minimumDeletionsToMakeArrayBeautiful,
+  amountOfNewAreaPaintedEachDay,
+  convertNumberToHexadecimal,
 ];

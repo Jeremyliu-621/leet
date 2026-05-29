@@ -37804,7 +37804,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return digitSum % 2 === 0 ? Math.floor(num / 2) : Math.floor((num - 1) / 2);
   },
 
-  // batch 158 — arrays/medium×3, strings/medium×2
+  // batch 161 (remote) — arrays/medium×3, strings/medium×2
   'frog-jump-ii': (...args: unknown[]) => {
     const stones = args[0] as number[];
     let ans = stones[1]! - stones[0]!;
@@ -37995,7 +37995,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[full]!.reduce((a, b) => (a + b) % MOD, 0);
   },
 
-  // batch 161 — backtracking/medium, dp/hard, arrays+heap/hard, dp/medium
+  // batch 161 (remote) — backtracking/medium, dp/hard, arrays+heap/hard, dp/medium
   'pyramid-transition-numbers': (...args: unknown[]) => {
     const bottom = args[0] as string;
     const allowed = args[1] as string[];
@@ -38092,7 +38092,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
-  // batch 160 — graph+union-find/hard, arrays+dp/medium, arrays+hash-map/medium, arrays+math/easy
+  // batch 160 (remote) — graph+union-find/hard
   'minimum-cost-to-walk-weighted-graph': (...args: unknown[]) => {
     const n = args[0] as number;
     const edges = args[1] as number[][];
@@ -38113,6 +38113,95 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       const rs = find(s!), rt = find(t!);
       return rs === rt ? compAnd[rt]! : -1;
     });
+  },
+
+  // batch 161 (local) — binary-search/medium, dp+math/medium, arrays/medium, simulation/hard, bit-manipulation/easy
+  'minimum-time-to-finish-trips': (...args: unknown[]) => {
+    const [time, totalTrips] = args as [number[], number];
+    let minT = time[0]!;
+    for (const t of time) if (t < minT) minT = t;
+    let lo = 1, hi = minT * totalTrips;
+    while (lo < hi) {
+      const mid = Math.floor((lo + hi) / 2);
+      const trips = time.reduce((s, t) => s + Math.floor(mid / t), 0);
+      if (trips >= totalTrips) hi = mid;
+      else lo = mid + 1;
+    }
+    return lo;
+  },
+
+  'count-special-numbers': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const s = String(n);
+    const L = s.length;
+    let result = 0;
+    for (let d = 1; d < L; d++) {
+      let count = 9;
+      for (let i = 0; i < d - 1; i++) count *= 9 - i;
+      result += count;
+    }
+    const used = new Set<number>();
+    for (let i = 0; i < L; i++) {
+      const digit = parseInt(s[i]!);
+      const start = i === 0 ? 1 : 0;
+      let available = 0;
+      for (let d = start; d < digit; d++) if (!used.has(d)) available++;
+      let completions = 1;
+      const avail = 10 - i - 1;
+      for (let j = 0; j < L - i - 1; j++) completions *= avail - j;
+      result += available * completions;
+      if (used.has(digit)) break;
+      used.add(digit);
+      if (i === L - 1) result++;
+    }
+    return result;
+  },
+
+  'minimum-deletions-to-make-array-beautiful': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    let deleted = 0;
+    for (let i = 0; i < n - 1; i++) {
+      if ((i - deleted) % 2 === 0 && nums[i] === nums[i + 1]) deleted++;
+    }
+    if ((n - deleted) % 2 === 1) deleted++;
+    return deleted;
+  },
+
+  'amount-of-new-area-painted-each-day': (...args: unknown[]) => {
+    const paint = args[0] as number[][];
+    const MAX = 50001;
+    const next = Array.from({ length: MAX }, (_, i) => i);
+    function find(x: number): number {
+      while (next[x] !== x) {
+        next[x] = next[next[x]!]!;
+        x = next[x]!;
+      }
+      return x;
+    }
+    return paint.map(([l, r]) => {
+      let count = 0;
+      let pos = find(l!);
+      while (pos < r!) {
+        count++;
+        next[pos] = r!;
+        pos = find(pos + 1);
+      }
+      return count;
+    });
+  },
+
+  'convert-number-to-hexadecimal': (...args: unknown[]) => {
+    const num = args[0] as number;
+    if (num === 0) return '0';
+    const hex = '0123456789abcdef';
+    let result = '';
+    let n = num >>> 0;
+    while (n > 0) {
+      result = hex[n & 15]! + result;
+      n >>>= 4;
+    }
+    return result;
   },
 
 };

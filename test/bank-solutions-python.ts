@@ -37844,7 +37844,7 @@ def countEven(num):
     return num // 2 if digit_sum % 2 == 0 else (num - 1) // 2
 `,
 
-  // batch 161
+  // batch 161 (remote) — arrays/medium×3, strings/medium×2
   'frog-jump-ii': `
 def maxJump(stones):
     ans = stones[1] - stones[0]
@@ -37979,6 +37979,97 @@ def minimumDifference(nums, k):
         nums = list(nums.to_py())
     nums = sorted(nums)
     return min(nums[i + k - 1] - nums[i] for i in range(len(nums) - k + 1))
+`,
+
+  // batch 161 (local) — binary-search/medium, dp+math/medium, arrays/medium, simulation/hard, bit-manipulation/easy
+  'minimum-time-to-finish-trips': `
+def minimumTime(time, totalTrips):
+    time = list(time.to_py() if hasattr(time, 'to_py') else time)
+    lo, hi = 1, min(time) * totalTrips
+    while lo < hi:
+        mid = (lo + hi) // 2
+        trips = sum(mid // t for t in time)
+        if trips >= totalTrips:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'count-special-numbers': `
+def countSpecialNumbers(n):
+    s = str(n)
+    L = len(s)
+    result = 0
+    for d in range(1, L):
+        count = 9
+        for i in range(d - 1):
+            count *= 9 - i
+        result += count
+    used = set()
+    for i, c in enumerate(s):
+        digit = int(c)
+        start = 1 if i == 0 else 0
+        available = sum(1 for d in range(start, digit) if d not in used)
+        completions = 1
+        avail = 10 - i - 1
+        for j in range(L - i - 1):
+            completions *= avail - j
+        result += available * completions
+        if digit in used:
+            break
+        used.add(digit)
+        if i == L - 1:
+            result += 1
+    return result
+`,
+
+  'minimum-deletions-to-make-array-beautiful': `
+def minDeletion(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    deleted = 0
+    for i in range(n - 1):
+        if (i - deleted) % 2 == 0 and nums[i] == nums[i + 1]:
+            deleted += 1
+    if (n - deleted) % 2 == 1:
+        deleted += 1
+    return deleted
+`,
+
+  'amount-of-new-area-painted-each-day': `
+def amountPainted(paint):
+    paint = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in paint]
+    MAX = 50001
+    nxt = list(range(MAX))
+    def find(x):
+        while nxt[x] != x:
+            nxt[x] = nxt[nxt[x]]
+            x = nxt[x]
+        return x
+    result = []
+    for l, r in paint:
+        count = 0
+        pos = find(l)
+        while pos < r:
+            count += 1
+            nxt[pos] = r
+            pos = find(pos + 1)
+        result.append(count)
+    return result
+`,
+
+  'convert-number-to-hexadecimal': `
+def toHex(num):
+    if num == 0:
+        return '0'
+    num = num & 0xFFFFFFFF  # two's complement 32-bit
+    hex_chars = '0123456789abcdef'
+    result = ''
+    while num > 0:
+        result = hex_chars[num & 15] + result
+        num >>= 4
+    return result
 `,
 
 };
