@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2536** problems; 7902 tests green. Batches 102–220 + 217-addendum + concurrent complete.
+**Current focus:** Bank at **2540** problems; 7914 tests green. Batches 102–221 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 221+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 222+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 221 — longest-valid-substring, add-spaces, colored-pieces, longest-balanced-binary (2026-05-29)
+Four new problems: `length-of-the-longest-valid-substring` (hard/strings+hash-map+sliding-window, 10-suffix check per window position), `add-spaces-to-string` (medium/strings+simulation, space insertion at given indices), `remove-colored-pieces-if-both-neighbors-same-color` (medium/strings+math, independent Alice/Bob move counts), `find-the-longest-balanced-substring-of-binary-string` (easy/strings, consecutive 0+1 block scan). Bank at **2540**; 7914 tests.
 
 ### feat(bank): batch 220 — count-submatrices-all-ones, min-swaps-strings-equal, count-special-subsequences (2026-05-29)
 Three new problems (removed duplicate minimum-recolors): `count-submatrices-with-all-ones` (medium/arrays+dp, O(mn²) height sweep), `minimum-swaps-to-make-strings-equal` (medium/strings+math, count XY/YX mismatches), `count-number-of-special-subsequences` (hard/arrays+dp, O(n) DP for 0+1+2+ patterns). Bank at **2531** post-batch-220. Then merged concurrent 217-addendum (+5 problems) → **2536**; 7902 tests.
