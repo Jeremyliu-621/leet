@@ -3069,6 +3069,11 @@ import { problem as maxOfFirstAndLast } from './max-of-first-and-last';
 import { problem as sumOfFirstAndLast } from './sum-of-first-and-last';
 import { problem as removeDuplicatesFromArray } from './remove-duplicates-from-array';
 import { problem as concatenateTwoArrays } from './concatenate-two-arrays';
+// batch 207 — easy/arrays+strings, easy/arrays+strings, easy/arrays+hash-map, easy/arrays
+import { problem as countWordsLongerThanK } from './count-words-longer-than-k';
+import { problem as longestStringInArray } from './longest-string-in-array';
+import { problem as allElementsDistinct } from './all-elements-distinct';
+import { problem as allElementsPositive } from './all-elements-positive';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6179,4 +6184,9 @@ export const problems: readonly Problem[] = [
   sumOfFirstAndLast,
   removeDuplicatesFromArray,
   concatenateTwoArrays,
+  // batch 207 — easy/arrays+strings, easy/arrays+strings, easy/arrays+hash-map, easy/arrays
+  countWordsLongerThanK,
+  longestStringInArray,
+  allElementsDistinct,
+  allElementsPositive,
 ];

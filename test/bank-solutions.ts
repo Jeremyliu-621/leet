@@ -43505,4 +43505,22 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const nums2 = args[1] as number[];
     return [...nums1, ...nums2];
   },
+  // batch 207 ---------------------------------------------------------------
+  'count-words-longer-than-k': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const k = args[1] as number;
+    return words.filter(w => w.length > k).length;
+  },
+  'longest-string-in-array': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    return words.reduce((best, w) => w.length > best.length ? w : best);
+  },
+  'all-elements-distinct': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return new Set(nums).size === nums.length;
+  },
+  'all-elements-positive': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return nums.every(v => v > 0);
+  },
 };

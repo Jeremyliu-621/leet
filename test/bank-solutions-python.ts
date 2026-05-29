@@ -43346,4 +43346,21 @@ def removeDuplicatesFromArray(nums):
 def concatenateTwoArrays(nums1, nums2):
     return nums1 + nums2
 `,
+  // batch 207 ---------------------------------------------------------------
+  'count-words-longer-than-k': `
+def countWordsLongerThanK(words, k):
+    return sum(1 for w in words if len(w) > k)
+`,
+  'longest-string-in-array': `
+def longestStringInArray(words):
+    return max(words, key=len)
+`,
+  'all-elements-distinct': `
+def allElementsDistinct(nums):
+    return len(set(nums)) == len(nums)
+`,
+  'all-elements-positive': `
+def allElementsPositive(nums):
+    return all(v > 0 for v in nums)
+`,
 };
