@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2598** problems; 8097 tests green. Batches 102–181 + 179b complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2606** problems; 8109 tests green. Batches 102–182 + 179b complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 182+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 183+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 182 — Z-function (hard), k-modular DP (medium), paired-char trie (hard), sliding-window mod count (medium) (2026-05-29)
+Four new problems: `minimum-time-to-revert-word-to-initial-state-ii` (hard/strings, Z-algorithm O(n) to check if word[t*k:] is prefix of word), `find-the-maximum-length-of-valid-subsequence-ii` (medium/dp, k×k DP table dp[r][j]=max subseq len with pair-sum-rem r and last elem ≡ j mod k), `count-prefix-and-suffix-pairs-ii` (hard/strings+trie, trie on paired chars (w[i],w[L-1-i]) for O(total_length) pairwise isPrefixAndSuffix), `count-substrings-that-can-be-rearranged-to-contain-a-string-i` (medium/strings+sliding-window+hash-map, shrink-only-when-safe window with modular count). Bank at **2606**; 8109 tests.
 
 ### fix: add missing reference solutions after multi-session rebase (2026-05-29)
 Reconciled concurrent sessions — restored JS+Python solutions missing after rebase for: batch 181 (5 problems), batch 180 extensions (2), batch 179 tree/heap (5), batch 179 local (3), batch 179b (4). 8097 tests passing.
