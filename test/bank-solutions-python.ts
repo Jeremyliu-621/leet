@@ -39006,4 +39006,93 @@ def gardenNoAdj(n, paths):
     return result[1:]
 `,
 
+  // batch 169
+  'using-robot-to-print-lexicographically-smallest-string': `
+def robotWithString(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    s = str(s)
+    n = len(s)
+    suf_min = [''] * n
+    suf_min[n - 1] = s[n - 1]
+    for i in range(n - 2, -1, -1):
+        suf_min[i] = s[i] if s[i] < suf_min[i + 1] else suf_min[i + 1]
+    stack = []
+    result = []
+    for i in range(n):
+        stack.append(s[i])
+        next_min = suf_min[i + 1] if i + 1 < n else chr(ord('{'))
+        while stack and stack[-1] <= next_min:
+            result.append(stack.pop())
+    while stack:
+        result.append(stack.pop())
+    return ''.join(result)
+`,
+
+  'remove-letter-to-equalize-frequency': `
+def equalFrequency(word):
+    if hasattr(word, 'to_py'): word = word.to_py()
+    word = str(word)
+    from collections import Counter
+    for i in range(len(word)):
+        c = Counter(word[:i] + word[i+1:])
+        if not c:
+            return True
+        if len(set(c.values())) == 1:
+            return True
+    return False
+`,
+
+  'minimize-the-maximum-difference-of-pairs': `
+def minimizeMax(nums, p):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = sorted(int(x) for x in nums)
+    p = int(p)
+    if p == 0:
+        return 0
+    def can_form(d):
+        count = 0
+        i = 1
+        while i < len(nums) and count < p:
+            if nums[i] - nums[i - 1] <= d:
+                count += 1
+                i += 2
+            else:
+                i += 1
+        return count >= p
+    lo, hi = 0, nums[-1] - nums[0]
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if can_form(mid):
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'check-if-point-is-reachable': `
+def isReachable(targetX, targetY):
+    from math import gcd
+    a, b = int(targetX), int(targetY)
+    while a % 2 == 0:
+        a //= 2
+    while b % 2 == 0:
+        b //= 2
+    return gcd(a, b) == 1
+`,
+
+  'build-array-with-stack-operations': `
+def buildArray(target, n):
+    if hasattr(target, 'to_py'): target = list(target.to_py())
+    target = [int(x) for x in target]
+    n = int(n)
+    target_set = set(target)
+    ops = []
+    last = target[-1]
+    for i in range(1, last + 1):
+        ops.append('Push')
+        if i not in target_set:
+            ops.append('Pop')
+    return ops
+`,
+
 };

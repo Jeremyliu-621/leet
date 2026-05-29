@@ -2724,11 +2724,17 @@ import { problem as beautifulSubstringsII } from './count-beautiful-substrings-i
 import { problem as makeThreeStringsEqual } from './make-three-strings-equal';
 import { problem as addedIntegerI } from './find-the-integer-added-to-array-i';
 import { problem as minimumAddedInteger } from './find-the-integer-added-to-array-ii';
-// batch 169 — graph/medium×2, arrays+sliding-window/medium, tree/medium
+// batch 169b — graph/medium×2, arrays+sliding-window/medium, tree/medium
 import { problem as shortestPathInBinaryMatrix } from './shortest-path-in-binary-matrix';
 import { problem as minimumCostToConnectAllPoints } from './minimum-cost-to-connect-all-points';
 import { problem as minimumSwapsToGroupAll1sTogether } from './minimum-swaps-to-group-all-1s-together';
 import { problem as maximumWidthOfBinaryTree } from './maximum-width-of-binary-tree';
+// batch 170 — strings+stack/medium, strings+hash-map/easy, arrays+binary-search/medium, math/hard, arrays+stack+simulation/easy
+import { problem as usingRobotToPrintLexicographicallySmallestString } from './using-robot-to-print-lexicographically-smallest-string';
+import { problem as removeLetterToEqualizeFrequency } from './remove-letter-to-equalize-frequency';
+import { problem as minimizeTheMaximumDifferenceOfPairs } from './minimize-the-maximum-difference-of-pairs';
+import { problem as checkIfPointIsReachable } from './check-if-point-is-reachable';
+import { problem as buildArrayWithStackOperations } from './build-array-with-stack-operations';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5487,9 +5493,15 @@ export const problems: readonly Problem[] = [
   makeThreeStringsEqual,
   addedIntegerI,
   minimumAddedInteger,
-  // batch 169 — graph/medium×2, arrays+sliding-window/medium, tree/medium
+  // batch 169b — graph/medium×2, arrays+sliding-window/medium, tree/medium
   shortestPathInBinaryMatrix,
   minimumCostToConnectAllPoints,
   minimumSwapsToGroupAll1sTogether,
   maximumWidthOfBinaryTree,
+  // batch 170 — strings+stack/medium, strings+hash-map/easy, arrays+binary-search/medium, math/hard, arrays+stack+simulation/easy
+  usingRobotToPrintLexicographicallySmallestString,
+  removeLetterToEqualizeFrequency,
+  minimizeTheMaximumDifferenceOfPairs,
+  checkIfPointIsReachable,
+  buildArrayWithStackOperations,
 ];

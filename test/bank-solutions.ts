@@ -39045,4 +39045,79 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result.slice(1);
   },
 
+  // batch 169
+  'using-robot-to-print-lexicographically-smallest-string': (s: unknown) => {
+    const str = s as string;
+    const n = str.length;
+    const suffMin = new Array<string>(n);
+    suffMin[n - 1] = str[n - 1]!;
+    for (let i = n - 2; i >= 0; i--) suffMin[i] = str[i]! < suffMin[i + 1]! ? str[i]! : suffMin[i + 1]!;
+    const stack: string[] = [];
+    let result = '';
+    for (let i = 0; i < n; i++) {
+      stack.push(str[i]!);
+      const nextMin = i + 1 < n ? suffMin[i + 1]! : '{'; // '{' > 'z' in ASCII
+      while (stack.length > 0 && stack[stack.length - 1]! <= nextMin) {
+        result += stack.pop()!;
+      }
+    }
+    while (stack.length > 0) result += stack.pop()!;
+    return result;
+  },
+
+  'remove-letter-to-equalize-frequency': (word: unknown) => {
+    const w = word as string;
+    for (let i = 0; i < w.length; i++) {
+      const freq = new Map<string, number>();
+      for (let j = 0; j < w.length; j++) {
+        if (j !== i) freq.set(w[j]!, (freq.get(w[j]!) ?? 0) + 1);
+      }
+      if (freq.size === 0) return true;
+      const vals = [...freq.values()];
+      if (vals.every(v => v === vals[0]!)) return true;
+    }
+    return false;
+  },
+
+  'minimize-the-maximum-difference-of-pairs': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const p = args[1] as number;
+    if (p === 0) return 0;
+    const canForm = (d: number): boolean => {
+      let count = 0;
+      for (let i = 1; i < nums.length && count < p; i++) {
+        if (nums[i]! - nums[i - 1]! <= d) { count++; i++; }
+      }
+      return count >= p;
+    };
+    let lo = 0, hi = nums[nums.length - 1]! - nums[0]!;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (canForm(mid)) hi = mid; else lo = mid + 1;
+    }
+    return lo;
+  },
+
+  'check-if-point-is-reachable': (...args: unknown[]) => {
+    let a = args[0] as number;
+    let b = args[1] as number;
+    const gcd = (x: number, y: number): number => y === 0 ? x : gcd(y, x % y);
+    while (a % 2 === 0) a >>= 1;
+    while (b % 2 === 0) b >>= 1;
+    return gcd(a, b) === 1;
+  },
+
+  'build-array-with-stack-operations': (...args: unknown[]) => {
+    const target = args[0] as number[];
+    const n = args[1] as number;
+    const targetSet = new Set(target);
+    const ops: string[] = [];
+    const last = target[target.length - 1]!;
+    for (let i = 1; i <= n && i <= last; i++) {
+      ops.push('Push');
+      if (!targetSet.has(i)) ops.push('Pop');
+    }
+    return ops;
+  },
+
 };
