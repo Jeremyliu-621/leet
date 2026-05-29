@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2286** problems; 7152 tests green. Batches 102–152 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2290** problems; 7173 tests green. Batches 102–152 + batch 151b complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 153+); UX polish; accessibility audit.
+
+### feat(bank): add batch 151b — monotonic-pairs-ii, max-strength-group, valid-strings-target-i, reward-ops-ii (2026-05-29)
+Four new problems: `find-the-count-of-monotonic-pairs-ii` (hard/dp+arrays, n≤2000 nums≤1000, O(n×max_val) prefix-sum DP), `maximum-strength-of-a-group` (medium/arrays+math, max product of non-empty subset via greedy negative-pairing), `minimum-number-of-valid-strings-to-form-target-i` (medium/strings+dp, prefix-Set + O(n²) DP), `maximum-total-reward-using-operations-ii` (hard/dp+bitset, n≤50000, BigInt bitset DP). Bank at **2290**; 7173 tests.
 
 ### chore: update site count to 2,286+; sync test count to 7152 (2026-05-29)
 Marketing site updated from 2,274+ → 2,286+ in all three locations. Test count is 7152 (15 more than the PROGRESS entry recorded).
