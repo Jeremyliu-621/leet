@@ -42710,4 +42710,65 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return sum;
   },
+  // batch 194 ---------------------------------------------------------------
+  'high-access-employees': (...args: unknown[]) => {
+    const accessTimes = args[0] as string[][];
+    const map = new Map<string, number[]>();
+    for (const [name, time] of accessTimes) {
+      const mins = parseInt(time!.slice(0, 2), 10) * 60 + parseInt(time!.slice(2), 10);
+      if (!map.has(name!)) map.set(name!, []);
+      map.get(name!)!.push(mins);
+    }
+    const result: string[] = [];
+    for (const [name, times] of map) {
+      times.sort((a, b) => a - b);
+      for (let i = 0; i + 2 < times.length; i++) {
+        if ((times[i + 2] as number) - (times[i] as number) < 60) { result.push(name); break; }
+      }
+    }
+    return result.sort();
+  },
+  'minimum-coins-for-fruits': (...args: unknown[]) => {
+    const prices = args[0] as number[];
+    const n = prices.length;
+    const dp = new Array<number>(n + 2).fill(0);
+    for (let i = n; i >= 1; i--) {
+      let minNext = Infinity;
+      for (let j = i + 1; j <= Math.min(2 * i + 1, n + 1); j++) {
+        if ((dp[j] as number) < minNext) minNext = dp[j] as number;
+      }
+      dp[i] = (prices[i - 1] as number) + (minNext === Infinity ? 0 : minNext);
+    }
+    return dp[1] as number;
+  },
+  'almost-strictly-increasing': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const isStrictlyIncreasing = (skip: number) => {
+      let prev = -Infinity;
+      for (let i = 0; i < nums.length; i++) {
+        if (i === skip) continue;
+        if ((nums[i] as number) <= prev) return false;
+        prev = nums[i] as number;
+      }
+      return true;
+    };
+    for (let i = 0; i + 1 < nums.length; i++) {
+      if ((nums[i] as number) >= (nums[i + 1] as number)) {
+        return isStrictlyIncreasing(i) || isStrictlyIncreasing(i + 1);
+      }
+    }
+    return true;
+  },
+  'max-sum-fixed-window': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let windowSum = 0;
+    for (let i = 0; i < k; i++) windowSum += nums[i] as number;
+    let max = windowSum;
+    for (let i = k; i < nums.length; i++) {
+      windowSum += (nums[i] as number) - (nums[i - k] as number);
+      if (windowSum > max) max = windowSum;
+    }
+    return max;
+  },
 };

@@ -2965,6 +2965,11 @@ import { problem as longestBitonicSubarray } from './longest-bitonic-subarray';
 import { problem as minimumDeletionsToMakeSorted } from './minimum-deletions-to-make-sorted';
 import { problem as longestCommonSubstring } from './longest-common-substring';
 import { problem as matrixBoundarySum } from './matrix-boundary-sum';
+// batch 194 — medium/arrays+hash-map+simulation, medium/arrays+dynamic-programming, medium/arrays+two-pointers, easy/arrays+sliding-window
+import { problem as highAccessEmployees } from './high-access-employees';
+import { problem as minimumCoinsForFruits } from './minimum-coins-for-fruits';
+import { problem as almostStrictlyIncreasing } from './almost-strictly-increasing';
+import { problem as maxSumFixedWindow } from './max-sum-fixed-window';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5971,4 +5976,9 @@ export const problems: readonly Problem[] = [
   minimumDeletionsToMakeSorted,
   longestCommonSubstring,
   matrixBoundarySum,
+  // batch 194 — medium/arrays+hash-map+simulation, medium/arrays+dp, medium/arrays+two-pointers, easy/arrays+sliding-window
+  highAccessEmployees,
+  minimumCoinsForFruits,
+  almostStrictlyIncreasing,
+  maxSumFixedWindow,
 ];

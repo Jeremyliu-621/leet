@@ -42598,4 +42598,56 @@ def matrixBoundarySum(grid):
                 total += grid[i][j]
     return total
 `,
+  // batch 194 ---------------------------------------------------------------
+  'high-access-employees': `
+def findHighAccessEmployees(accessTimes):
+    from collections import defaultdict
+    emp_times = defaultdict(list)
+    for name, time in accessTimes:
+        mins = int(time[:2]) * 60 + int(time[2:])
+        emp_times[name].append(mins)
+    result = []
+    for name, times in emp_times.items():
+        times.sort()
+        for i in range(len(times) - 2):
+            if times[i + 2] - times[i] < 60:
+                result.append(name)
+                break
+    return sorted(result)
+`,
+  'minimum-coins-for-fruits': `
+def minimumCoins(prices):
+    n = len(prices)
+    dp = [0] * (n + 2)
+    for i in range(n, 0, -1):
+        min_next = min(dp[i + 1:min(2 * i + 2, n + 2)])
+        dp[i] = prices[i - 1] + min_next
+    return dp[1]
+`,
+  'almost-strictly-increasing': `
+def canBeStrictlyIncreasing(nums):
+    def is_strictly_increasing(skip):
+        prev = float('-inf')
+        for i, x in enumerate(nums):
+            if i == skip:
+                continue
+            if x <= prev:
+                return False
+            prev = x
+        return True
+    for i in range(len(nums) - 1):
+        if nums[i] >= nums[i + 1]:
+            return is_strictly_increasing(i) or is_strictly_increasing(i + 1)
+    return True
+`,
+  'max-sum-fixed-window': `
+def maxSumFixedWindow(nums, k):
+    window_sum = sum(nums[:k])
+    max_sum = window_sum
+    for i in range(k, len(nums)):
+        window_sum += nums[i] - nums[i - k]
+        if window_sum > max_sum:
+            max_sum = window_sum
+    return max_sum
+`,
 };
