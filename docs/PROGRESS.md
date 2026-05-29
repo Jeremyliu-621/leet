@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2545** problems; 7929 tests green. Batches 102–178 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2548** problems; 7953 tests green. Batches 102–178 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 179+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 177 — special-array-i (easy), find-champion-ii (medium), count-palindromic-subsequences (hard) (2026-05-29)
+Three new problems: `special-array-i` (easy/arrays, O(n) parity alternation check — return false if any adjacent pair has same parity), `find-champion-ii` (medium/graph, unique in-degree-0 node in a DAG tournament — count nodes with in-degree 0, return champion if unique else -1), `count-palindromic-subsequences` (hard/strings+dynamic-programming, count distinct 5-char palindromic subsequences via 676 greedy boundary scans — for each (c1,c2) pair find leftmost/rightmost boundaries, count distinct middle chars). Also fix count-number-of-texts hidden tests (added 2222→7, 77777→15, 7777777777→401) and maximum-number-of-alloys visible test examples. Bank at **2548**; 7953 tests.
 
 ### feat(bank): batch 178 — count-distinct-prime-factors (medium), number-of-black-blocks (medium), sort-students-kth-score (medium) (2026-05-29)
 Three new problems: `count-distinct-prime-factors-of-array` (medium/math, trial division + Set deduplication), `number-of-black-blocks` (medium/hash-map, each black cell contributes to up to 4 blocks — Map counting, total−filled=zero-black blocks), `sort-the-students-by-their-kth-score` (medium/arrays, single `.sort()` descending on column k). Bank at **2540**; 7914 tests.
