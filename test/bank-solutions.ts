@@ -18670,6 +18670,165 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Math.min(notH, halv);
   },
 
+  // batch 216
+  'minimum-sum-of-mountain-triplets': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    let ans = Infinity;
+    for (let j = 1; j < n - 1; j++) {
+      let leftMin = Infinity;
+      for (let i = 0; i < j; i++) if (nums[i]! < nums[j]!) leftMin = Math.min(leftMin, nums[i]!);
+      let rightMin = Infinity;
+      for (let k = j + 1; k < n; k++) if (nums[k]! < nums[j]!) rightMin = Math.min(rightMin, nums[k]!);
+      if (leftMin !== Infinity && rightMin !== Infinity) ans = Math.min(ans, leftMin + nums[j]! + rightMin);
+    }
+    return ans === Infinity ? -1 : ans;
+  },
+
+  'minimum-number-of-flips-to-make-binary-grid-palindrome': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length;
+    const n = grid[0]!.length;
+    let flips = 0;
+    // Step 1: Process quads (r < m/2, c < n/2). Make all 4 symmetric cells equal.
+    // Each quad will contribute 0 or 4 ones → always divisible by 4. Cost = min(ones, 4-ones).
+    for (let r = 0; r < Math.floor(m / 2); r++) {
+      for (let c = 0; c < Math.floor(n / 2); c++) {
+        const ones = grid[r]![c]! + grid[r]![n - 1 - c]! + grid[m - 1 - r]![c]! + grid[m - 1 - r]![n - 1 - c]!;
+        flips += Math.min(ones, 4 - ones);
+      }
+    }
+    // Step 2: Handle center row/col/cell for divisibility by 4.
+    // After quads are done, extra ones come from center row pairs, center col pairs, center cell.
+    let extraOnes = 0;
+    // Center row (m odd): pairs (r_mid, c) & (r_mid, n-1-c) must match.
+    if (m % 2 === 1) {
+      const r = Math.floor(m / 2);
+      for (let c = 0; c < Math.floor(n / 2); c++) {
+        const a = grid[r]![c]!;
+        const b = grid[r]![n - 1 - c]!;
+        if (a !== b) flips++; // make them match at cost 1; doesn't change extraOnes (pair becomes 0 or 2, but we pick 1 → odd? no, pair = 11 or 00)
+        // After matching, both are max(a,b) (we flip the 0 to 1 greedily? or flip 1 to 0?)
+        // For div-by-4, we track how many ones there will be.
+        // If a=b: contribute 2*a ones. If a≠b: we'll match; consider the chosen value.
+        // We defer the choice and just count for now assuming we pick the majority:
+        extraOnes += a === 1 && b === 1 ? 2 : 0;
+        // Note: if a≠b, we flip one (cost 1 already counted), result = 0 or 2.
+        // We don't add to extraOnes (the choice won't affect the parity analysis since
+        // we can pick either and it would change by 2, but 2 mod 4 can shift parity).
+        // For simplicity and correctness: when a≠b, after flip we get (0,0) or (1,1);
+        // minimum flips approach would prefer (0,0) [adds 0] unless (1,1) saves a later fix.
+        // Standard approach: count paired ones only if BOTH are 1 after palindrome enforcement.
+        // If a≠b: after cost-1 flip, we get matching; contribute 0 (prefer 0).
+      }
+    }
+    // Center col (n odd): pairs (r, c_mid) & (m-1-r, c_mid) must match.
+    if (n % 2 === 1) {
+      const c = Math.floor(n / 2);
+      for (let r = 0; r < Math.floor(m / 2); r++) {
+        const a = grid[r]![c]!;
+        const b = grid[m - 1 - r]![c]!;
+        if (a !== b) flips++;
+        extraOnes += a === 1 && b === 1 ? 2 : 0;
+      }
+    }
+    // Center cell (both m and n odd): free; must be 0 or 1.
+    const hasCenterCell = m % 2 === 1 && n % 2 === 1;
+    const centerCell = hasCenterCell ? grid[Math.floor(m / 2)]![Math.floor(n / 2)]! : 0;
+    extraOnes += centerCell;
+    // Adjust extraOnes to be divisible by 4.
+    const rem = extraOnes % 4;
+    if (rem !== 0) {
+      // Cheapest fix: if center cell exists and rem is odd (1 or 3), flip it (cost 1).
+      // If rem is even (2) or no center cell: flip a pair (cost 2).
+      if (hasCenterCell && rem % 2 === 1) flips++;
+      else flips += 2;
+    }
+    return flips;
+  },
+
+  'minimum-number-of-operations-to-sort-a-binary-tree-by-level': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    // BFS: build levels
+    const n = arr.length;
+    const levels: number[][] = [];
+    let level: number[] = [];
+    let i = 0;
+    // root
+    if (n === 0 || arr[0] == null) return 0;
+    level.push(arr[0] as number);
+    i = 1;
+    while (i < n) {
+      levels.push(level);
+      const nextLevel: number[] = [];
+      for (let j = 0; j < level.length; j++) {
+        const left = arr[i++];
+        if (left != null) nextLevel.push(left as number);
+        const right = arr[i++];
+        if (right != null) nextLevel.push(right as number);
+        if (i >= n) break;
+      }
+      level = nextLevel;
+      if (level.length === 0) break;
+    }
+    if (level.length > 0) levels.push(level);
+    // Count min swaps per level using cycle detection
+    const minSwaps = (a: number[]): number => {
+      const sorted = [...a].sort((x, y) => x - y);
+      const pos = new Map<number, number>();
+      sorted.forEach((v, idx) => pos.set(v, idx));
+      const visited = new Array(a.length).fill(false);
+      let swaps = 0;
+      for (let s = 0; s < a.length; s++) {
+        if (visited[s] || pos.get(a[s]!) === s) { visited[s] = true; continue; }
+        let cycleLen = 0;
+        let cur = s;
+        while (!visited[cur]) {
+          visited[cur] = true;
+          cur = pos.get(a[cur]!)!;
+          cycleLen++;
+        }
+        swaps += cycleLen - 1;
+      }
+      return swaps;
+    };
+    return levels.reduce((total, lv) => total + minSwaps(lv), 0);
+  },
+
+  'design-an-atm-machine': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as (number[] | number[][] | number[])[];
+    const denoms = [20, 50, 100, 200, 500];
+    const counts = [0, 0, 0, 0, 0];
+    const results: (null | number[])[] = [];
+    for (let idx = 0; idx < ops.length; idx++) {
+      const op = ops[idx]!;
+      if (op === 'ATM') {
+        results.push(null);
+      } else if (op === 'deposit') {
+        const bc = (opArgs[idx] as number[][])[0] as number[];
+        for (let d = 0; d < 5; d++) counts[d]! += bc[d]!;
+        results.push(null);
+      } else {
+        const amount = (opArgs[idx] as number[])[0]!;
+        const used = [0, 0, 0, 0, 0];
+        let rem = amount;
+        for (let d = 4; d >= 0; d--) {
+          const take = Math.min(counts[d]!, Math.floor(rem / denoms[d]!));
+          used[d] = take;
+          rem -= take * denoms[d]!;
+        }
+        if (rem !== 0) {
+          results.push([-1]);
+        } else {
+          for (let d = 0; d < 5; d++) counts[d]! -= used[d]!;
+          results.push(used);
+        }
+      }
+    }
+    return results;
+  },
+
   'rectangle-area': (ax1: unknown, ay1: unknown, ax2: unknown, ay2: unknown, bx1: unknown, by1: unknown, bx2: unknown, by2: unknown) => {
     const A = (ax2 as number - (ax1 as number)) * (ay2 as number - (ay1 as number));
     const B = (bx2 as number - (bx1 as number)) * (by2 as number - (by1 as number));

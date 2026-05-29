@@ -8,12 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2815** problems; 8748+ tests green. Batches 102–216 (merged) complete.
+**Current focus:** Bank at **2819** problems; 8751 tests green. Batches 102–216 (fully merged) complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 217+); UX polish per LEETCODE_PARITY.md.
 
-### feat(bank): batch 216 (merged) — 6 problems: remove-digit, check-powers-of-three, count-rectangles, minimum-impossible-or, find-substring-max-cost, find-width-of-columns (2026-05-29)
-Six new problems merged from two concurrent sessions: `remove-digit-from-number-to-maximize-result` (easy/strings+simulation), `check-if-number-is-a-sum-of-powers-of-three` (medium/math), `count-number-of-rectangles-containing-each-point` (medium/arrays+binary-search), `minimum-impossible-or` (medium/bit-manipulation), `find-substring-with-maximum-cost` (medium/strings+dp), `find-the-width-of-columns-of-a-grid` (easy/arrays+simulation). Bank at **2815**.
+### feat(bank): batch 216 (merged) — 10 problems: remove-digit, check-powers-of-three, count-rectangles, minimum-impossible-or, find-substring-max-cost, find-width-of-columns, minimum-sum-mountain-triplets, flips-binary-grid-palindrome, sort-binary-tree-by-level, design-an-atm-machine (2026-05-29)
+Ten new problems merged from two concurrent sessions: `remove-digit-from-number-to-maximize-result` (easy/strings+simulation), `check-if-number-is-a-sum-of-powers-of-three` (medium/math), `count-number-of-rectangles-containing-each-point` (medium/arrays+binary-search), `minimum-impossible-or` (medium/bit-manipulation), `find-substring-with-maximum-cost` (medium/strings+dp), `find-the-width-of-columns-of-a-grid` (easy/arrays+simulation), `minimum-sum-of-mountain-triplets` (easy/arrays), `minimum-number-of-flips-to-make-binary-grid-palindrome` (medium/arrays+simulation), `minimum-number-of-operations-to-sort-a-binary-tree-by-level` (medium/tree+simulation), `design-an-atm-machine` (medium/design+simulation). Bank at **2819**; 8751 tests.
 
 ### feat(bank): batch 215b (concurrent) — distribute-candies-i, minimum-area-rectangle-ii, minimum-total-price-of-trips (2026-05-29)
 Three problems from concurrent session: `distribute-candies-among-children-i` (easy/math+simulation), `minimum-area-rectangle-ii` (medium/math+hash-map), `minimum-total-price-of-trips` (hard/tree+dp). Bank at **2809**.

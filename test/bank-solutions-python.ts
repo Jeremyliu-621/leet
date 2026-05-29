@@ -18541,6 +18541,132 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
     return min(not_h, halv)
 `,
 
+  // batch 216
+  'minimum-sum-of-mountain-triplets': `def minimumSum(nums):
+    n = len(nums)
+    ans = float('inf')
+    for j in range(1, n - 1):
+        left_min = min((nums[i] for i in range(j) if nums[i] < nums[j]), default=float('inf'))
+        right_min = min((nums[k] for k in range(j + 1, n) if nums[k] < nums[j]), default=float('inf'))
+        if left_min < float('inf') and right_min < float('inf'):
+            ans = min(ans, left_min + nums[j] + right_min)
+    return -1 if ans == float('inf') else ans
+`,
+
+  'minimum-number-of-flips-to-make-binary-grid-palindrome': `def minFlips(grid):
+    m, n = len(grid), len(grid[0])
+    flips = 0
+    for r in range(m // 2):
+        for c in range(n // 2):
+            ones = grid[r][c] + grid[r][n-1-c] + grid[m-1-r][c] + grid[m-1-r][n-1-c]
+            flips += min(ones, 4 - ones)
+    extra_ones = 0
+    if m % 2 == 1:
+        r = m // 2
+        for c in range(n // 2):
+            a, b = grid[r][c], grid[r][n-1-c]
+            if a != b:
+                flips += 1
+            else:
+                extra_ones += 2 if a == 1 else 0
+    if n % 2 == 1:
+        c = n // 2
+        for r in range(m // 2):
+            a, b = grid[r][c], grid[m-1-r][c]
+            if a != b:
+                flips += 1
+            else:
+                extra_ones += 2 if a == 1 else 0
+    has_center = m % 2 == 1 and n % 2 == 1
+    if has_center:
+        extra_ones += grid[m // 2][n // 2]
+    rem = extra_ones % 4
+    if rem != 0:
+        if has_center and rem % 2 == 1:
+            flips += 1
+        else:
+            flips += 2
+    return flips
+`,
+
+  'minimum-number-of-operations-to-sort-a-binary-tree-by-level': `def minimumOperations(root):
+    def is_val(v):
+        try: return int(v) == v and v is not None
+        except: return False
+    arr = list(root)
+    n = len(arr)
+    if n == 0 or not is_val(arr[0]):
+        return 0
+    # Build tree levels using BFS simulation on array
+    levels = []
+    cur_level = [int(arr[0])]
+    i = 1
+    while i < n:
+        levels.append(cur_level)
+        next_level = []
+        for _ in cur_level:
+            if i < n and is_val(arr[i]):
+                next_level.append(int(arr[i]))
+            i += 1
+            if i < n and is_val(arr[i]):
+                next_level.append(int(arr[i]))
+            i += 1
+            if i >= n:
+                break
+        cur_level = next_level
+        if not cur_level:
+            break
+    if cur_level:
+        levels.append(cur_level)
+    def min_swaps(a):
+        sorted_a = sorted(a)
+        pos = {v: idx for idx, v in enumerate(sorted_a)}
+        visited = [False] * len(a)
+        swaps = 0
+        for s in range(len(a)):
+            if visited[s] or pos[a[s]] == s:
+                visited[s] = True
+                continue
+            cycle_len = 0
+            cur = s
+            while not visited[cur]:
+                visited[cur] = True
+                cur = pos[a[cur]]
+                cycle_len += 1
+            swaps += cycle_len - 1
+        return swaps
+    return sum(min_swaps(level) for level in levels)
+`,
+
+  'design-an-atm-machine': `def atm(ops, args):
+    denoms = [20, 50, 100, 200, 500]
+    counts = [0, 0, 0, 0, 0]
+    results = []
+    for op, arg in zip(ops, args):
+        if op == 'ATM':
+            results.append(None)
+        elif op == 'deposit':
+            bc = arg[0]
+            for d in range(5):
+                counts[d] += bc[d]
+            results.append(None)
+        else:
+            amount = arg[0]
+            used = [0, 0, 0, 0, 0]
+            rem = amount
+            for d in range(4, -1, -1):
+                take = min(counts[d], rem // denoms[d])
+                used[d] = take
+                rem -= take * denoms[d]
+            if rem != 0:
+                results.append([-1])
+            else:
+                for d in range(5):
+                    counts[d] -= used[d]
+                results.append(used)
+    return results
+`,
+
   'construct-string-with-repeat-limit': `def repeatLimitedString(s, repeatLimit):
     limit = int(repeatLimit)
     from collections import Counter
