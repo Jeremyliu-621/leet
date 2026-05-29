@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2524** problems; 7866 tests green. Batches 102–218 complete + comprehensive dedup.
+**Current focus:** Bank at **2528** problems; 7878 tests green. Batches 102–219 complete + comprehensive dedup (−303 abbreviated-name duplicates).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 219+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 220+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 219 — non-special-count, same-digits-ops-i, smallest-string-constraint, grid-cut-sections (2026-05-29)
+Four new problems: `find-the-count-of-numbers-which-are-not-special` (easy/math, count p² for primes in [l,r] via sieve), `check-if-digits-are-equal-in-string-after-operations-i` (easy/strings+simulation, reduce adjacent-sum-mod-10 until 2 chars, check equality), `lexicographically-smallest-string-after-operations-with-constraint` (medium/strings, greedy left-to-right rotation budget), `check-if-grid-can-be-cut-into-sections` (medium/arrays, interval sweep on x/y projections for ≥3 groups). Bank at **2528** (after dedup merger); 7878 tests.
 
 ### chore(bank): comprehensive deduplication — remove 305 abbreviated-name duplicates (2026-05-29)
 Removed 305 duplicate problem registrations where abbreviated IDs (e.g. `best-time-buy-sell-iii`) were registered alongside their canonical equivalents (e.g. `best-time-to-buy-and-sell-stock-iii`). Used word-subset heuristic to safely identify pairs; restored `difference-ones-zeros-in-row-and-column` and `find-kth-largest-integer-in-array` which were incorrectly removed. Bank: 2827 → 2524 unique problems. Tests: 8775 → 7866 (all pass).
