@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2412** problems; 7530 tests green. Batches 102–163 complete. bit-manipulation: 2→60 (tag enrichment). UX + a11y polish ongoing.
+**Current focus:** Bank at **2417** problems; 7545 tests green. Batches 102–164 complete. Site count 2,417+. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 164+); site count update; UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 165+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 164 — prime-in-diagonal (easy), count-lattice-points (easy), finding-users-active-minutes (medium), remove-stones-minimize (medium), visible-people-queue (hard) (2026-05-29)
+Five problems: `prime-in-diagonal` (easy/arrays+math, trial-division primality, scan main+anti diagonal), `count-lattice-points-inside-a-circle` (easy/arrays+math, brute-force Set dedup), `finding-the-users-active-minutes` (medium/arrays+hash-map, Map<userId, Set<min>>, count per UAM value), `remove-stones-to-minimize-the-total` (medium/arrays+heap, max-heap greedy: each op removes floor(max/2) from largest pile), `number-of-visible-people-in-a-queue` (hard/arrays+stack, monotonic decreasing stack right-to-left: each popped=visible, +1 if stack non-empty). Bank at **2417**; 7545 tests. Deleted duplicate minimum-cost-to-walk-weighted-graph.ts orphan.
 
 ### chore(bank): add bit-manipulation tag to 58 problems + design tag to 29 problems; site count 2,384+→2,412+ (2026-05-29)
 bit-manipulation was critically underrepresented (2 → 60 problems after tagging all XOR/hamming/single-number/bit-flip/power-of-2/reverse-bits problems). design tag added to all 29 design/implement/lru/lfu/insert-delete problems (10 → 39). Marketing site updated to 2,412+.
