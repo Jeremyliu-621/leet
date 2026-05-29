@@ -43608,4 +43608,66 @@ def countPairsWithSameSum(nums, k):
                 count += 1
     return count
 `,
+  'strong-password-checker-ii': `
+def strongPasswordCheckerII(password):
+    if len(password) < 8:
+        return False
+    special = set('!@#$%^&*()-+')
+    has_lower = has_upper = has_digit = has_special = False
+    for i, c in enumerate(password):
+        if i > 0 and c == password[i - 1]:
+            return False
+        if c.islower():
+            has_lower = True
+        elif c.isupper():
+            has_upper = True
+        elif c.isdigit():
+            has_digit = True
+        elif c in special:
+            has_special = True
+    return has_lower and has_upper and has_digit and has_special
+`,
+  'check-if-all-the-integers-in-a-range-are-covered': `
+def isCovered(ranges, left, right):
+    for i in range(left, right + 1):
+        if not any(s <= i <= e for s, e in ranges):
+            return False
+    return True
+`,
+  'find-the-original-array-of-doubled-pairs': `
+def findOriginalArray(changed):
+    if len(changed) % 2 != 0:
+        return []
+    changed.sort()
+    from collections import Counter
+    freq = Counter(changed)
+    result = []
+    for x in changed:
+        if freq[x] == 0:
+            continue
+        if x == 0:
+            if freq[0] % 2 != 0:
+                return []
+            result.extend([0] * (freq[0] // 2))
+            freq[0] = 0
+            continue
+        if freq[2 * x] == 0:
+            return []
+        result.append(x)
+        freq[x] -= 1
+        freq[2 * x] -= 1
+    return result
+`,
+  'construct-the-minimum-bitwise-array-i': `
+def minBitwiseArray(nums):
+    result = []
+    for p in nums:
+        found = -1
+        for x in range(p):
+            if (x | (x + 1)) == p:
+                found = x
+                break
+        result.append(found)
+    return result
+`,
 };

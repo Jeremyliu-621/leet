@@ -3105,6 +3105,11 @@ import { problem as secondMaximumNumberInArray } from './second-maximum-number-i
 import { problem as sumOfValuesAtIndicesWithKSetBits } from './sum-of-values-at-indices-with-k-set-bits';
 import { problem as pointsThatIntersectWithCars } from './points-that-intersect-with-cars';
 import { problem as countSteppingNumbersInRange } from './count-stepping-numbers-in-range';
+// batch 211 — easy/strings+simulation, easy/arrays+simulation, medium/arrays+hash-map+sorting, medium/arrays+bit-manipulation
+import { problem as strongPasswordCheckerII } from './strong-password-checker-ii';
+import { problem as checkIfAllIntegersInRangeAreCovered } from './check-if-all-the-integers-in-a-range-are-covered';
+import { problem as findOriginalArrayOfDoubledPairs } from './find-the-original-array-of-doubled-pairs';
+import { problem as constructMinimumBitwiseArrayI } from './construct-the-minimum-bitwise-array-i';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6251,4 +6256,9 @@ export const problems: readonly Problem[] = [
   sumOfValuesAtIndicesWithKSetBits,
   pointsThatIntersectWithCars,
   countSteppingNumbersInRange,
+  // batch 211 — easy/strings+simulation, easy/arrays+simulation, medium/arrays+hash-map+sorting, medium/arrays+bit-manipulation
+  strongPasswordCheckerII,
+  checkIfAllIntegersInRangeAreCovered,
+  findOriginalArrayOfDoubledPairs,
+  constructMinimumBitwiseArrayI,
 ];

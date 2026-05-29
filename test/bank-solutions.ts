@@ -43794,4 +43794,59 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
         if (nums[i]! + nums[j]! === k) count++;
     return count;
   },
+  'strong-password-checker-ii': (...args: unknown[]) => {
+    const password = args[0] as string;
+    if (password.length < 8) return false;
+    const special = new Set('!@#$%^&*()-+');
+    let hasLower = false, hasUpper = false, hasDigit = false, hasSpecial = false;
+    for (let i = 0; i < password.length; i++) {
+      if (i > 0 && password[i] === password[i - 1]) return false;
+      const c = password[i]!;
+      if (c >= 'a' && c <= 'z') hasLower = true;
+      else if (c >= 'A' && c <= 'Z') hasUpper = true;
+      else if (c >= '0' && c <= '9') hasDigit = true;
+      else if (special.has(c)) hasSpecial = true;
+    }
+    return hasLower && hasUpper && hasDigit && hasSpecial;
+  },
+  'check-if-all-the-integers-in-a-range-are-covered': (...args: unknown[]) => {
+    const ranges = args[0] as number[][];
+    const left = args[1] as number;
+    const right = args[2] as number;
+    for (let i = left; i <= right; i++) {
+      if (!ranges.some(([s, e]) => s! <= i && i <= e!)) return false;
+    }
+    return true;
+  },
+  'find-the-original-array-of-doubled-pairs': (...args: unknown[]) => {
+    const changed = (args[0] as number[]).slice().sort((a, b) => a - b);
+    if (changed.length % 2 !== 0) return [];
+    const freq = new Map<number, number>();
+    for (const x of changed) freq.set(x, (freq.get(x) ?? 0) + 1);
+    const result: number[] = [];
+    for (const x of changed) {
+      if ((freq.get(x) ?? 0) === 0) continue;
+      if (x === 0) {
+        const cnt = freq.get(0)!;
+        if (cnt % 2 !== 0) return [];
+        for (let i = 0; i < cnt / 2; i++) result.push(0);
+        freq.set(0, 0);
+        continue;
+      }
+      if ((freq.get(2 * x) ?? 0) === 0) return [];
+      result.push(x);
+      freq.set(x, freq.get(x)! - 1);
+      freq.set(2 * x, freq.get(2 * x)! - 1);
+    }
+    return result;
+  },
+  'construct-the-minimum-bitwise-array-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return nums.map(p => {
+      for (let x = 0; x < p; x++) {
+        if ((x | (x + 1)) === p) return x;
+      }
+      return -1;
+    });
+  },
 };
