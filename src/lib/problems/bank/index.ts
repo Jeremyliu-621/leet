@@ -2807,6 +2807,11 @@ import { problem as findBeautifulIndicesInTheGivenArrayI } from './find-beautifu
 import { problem as makeKSubarraySumsEqual } from './make-k-subarray-sums-equal';
 import { problem as maximumSumOfAnHourglass } from './maximum-sum-of-an-hourglass';
 
+// batch 172 — strings+sliding-window/medium, arrays+math/easy, arrays+math/medium, arrays+math/medium
+import { problem as longestSubstringWithAtMostTwoDistinctChars } from './longest-substring-with-at-most-two-distinct-chars';
+import { problem as rangeAdditionII } from './range-addition-ii';
+import { problem as maximumConsecutiveValuesYouCanMake } from './maximum-consecutive-values-you-can-make';
+import { problem as findTheMaximumLengthOfValidSubsequenceI } from './find-the-maximum-length-of-valid-subsequence-i';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5652,4 +5657,9 @@ export const problems: readonly Problem[] = [
   makeKSubarraySumsEqual,
   maximumSumOfAnHourglass,
 
+  // batch 172 — strings+sliding-window/medium, arrays+math/easy, arrays+math/medium, arrays+math/medium
+  longestSubstringWithAtMostTwoDistinctChars,
+  rangeAdditionII,
+  maximumConsecutiveValuesYouCanMake,
+  findTheMaximumLengthOfValidSubsequenceI,
 ];

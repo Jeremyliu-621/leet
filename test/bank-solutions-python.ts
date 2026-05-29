@@ -40411,4 +40411,52 @@ def numberOfGoodSubsets(nums):
     return all((total - x, y) in point_set for x, y in point_set)
 `,
 
+  'longest-substring-with-at-most-two-distinct-chars': `
+def lengthOfLongestSubstringTwoDistinct(s):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    left = 0
+    best = 0
+    for right, c in enumerate(s):
+        freq[c] += 1
+        while len(freq) > 2:
+            lc = s[left]
+            freq[lc] -= 1
+            if freq[lc] == 0:
+                del freq[lc]
+            left += 1
+        best = max(best, right - left + 1)
+    return best
+`,
+
+  'range-addition-ii': `
+def maxCount(m, n, ops):
+    if not ops:
+        return m * n
+    min_a = min(op[0] for op in ops)
+    min_b = min(op[1] for op in ops)
+    return min_a * min_b
+`,
+
+  'maximum-consecutive-values-you-can-make': `
+def getMaximumConsecutive(coins):
+    if hasattr(coins, 'to_py'): coins = list(coins.to_py())
+    coins.sort()
+    reach = 0
+    for coin in coins:
+        if coin > reach + 1:
+            break
+        reach += coin
+    return reach + 1
+`,
+
+  'find-the-maximum-length-of-valid-subsequence-i': `
+def maximumLength(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    even = sum(1 for x in nums if x % 2 == 0)
+    odd = len(nums) - even
+    alternating = 2 * min(even, odd) + min(1, abs(even - odd))
+    return max(even, odd, alternating)
+`,
+
 };

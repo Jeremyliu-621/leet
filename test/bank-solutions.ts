@@ -39983,6 +39983,24 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best;
   },
 
+  'longest-substring-with-at-most-two-distinct-chars': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const freq = new Map<string, number>();
+    let left = 0, best = 0;
+    for (let right = 0; right < s.length; right++) {
+      const c = s[right]!;
+      freq.set(c, (freq.get(c) ?? 0) + 1);
+      while (freq.size > 2) {
+        const lc = s[left]!;
+        freq.set(lc, freq.get(lc)! - 1);
+        if (freq.get(lc) === 0) freq.delete(lc);
+        left++;
+      }
+      best = Math.max(best, right - left + 1);
+    }
+    return best;
+  },
+
   'count-integers-in-intervals': (...args: unknown[]) => {
     const operations = args[0] as (string | number)[][];
     const intervals: [number, number][] = [];
@@ -40363,8 +40381,34 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       }
     }
     return best;
+  },
 
+  'range-addition-ii': (...args: unknown[]) => {
+    const m = args[0] as number;
+    const n = args[1] as number;
+    const ops = args[2] as number[][];
+    if (ops.length === 0) return m * n;
+    const minA = Math.min(...ops.map(op => op[0]!));
+    const minB = Math.min(...ops.map(op => op[1]!));
+    return minA * minB;
+  },
 
+  'maximum-consecutive-values-you-can-make': (...args: unknown[]) => {
+    const coins = (args[0] as number[]).slice().sort((a, b) => a - b);
+    let reach = 0;
+    for (const coin of coins) {
+      if (coin > reach + 1) break;
+      reach += coin;
+    }
+    return reach + 1;
+  },
+
+  'find-the-maximum-length-of-valid-subsequence-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let even = 0, odd = 0;
+    for (const n of nums) n % 2 === 0 ? even++ : odd++;
+    const alternating = 2 * Math.min(even, odd) + Math.min(1, Math.abs(even - odd));
+    return Math.max(even, odd, alternating);
   },
 
 };
