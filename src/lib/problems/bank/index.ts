@@ -2619,11 +2619,11 @@ import { problem as numberOfWaysToEarnPoints } from './number-of-ways-to-earn-po
 import { problem as tupleWithSameProduct } from './tuple-with-same-product';
 import { problem as maximumAndValueOfNumbersInArray } from './maximum-and-value-of-numbers-in-array';
 import { problem as minimumFlipsMakeAOrBEqualToC } from './minimum-flips-to-make-a-or-b-equal-to-c';
-// batch 160 — math/medium, design/medium, strings+hash-map/medium, arrays+stack/hard
+// batch 160 — math/medium, design/medium, strings+hash-map/medium, math/easy
 import { problem as strictlyPalindromicNumber } from './strictly-palindromic-number';
 import { problem as designBitset } from './design-bitset';
 import { problem as countSubstringsWithFixedRatio } from './count-substrings-with-fixed-ratio';
-import { problem as stepsToMakeArrayNonDecreasing } from './steps-to-make-array-non-decreasing';
+import { problem as numberOfIntegersWithEvenDigitSum } from './number-of-integers-with-even-digit-sum';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5280,9 +5280,9 @@ export const problems: readonly Problem[] = [
   tupleWithSameProduct,
   maximumAndValueOfNumbersInArray,
   minimumFlipsMakeAOrBEqualToC,
-  // batch 160 — math/medium, design/medium, strings+hash-map/medium, arrays+stack/hard
+  // batch 160 — math/medium, design/medium, strings+hash-map/medium, math/easy
   strictlyPalindromicNumber,
   designBitset,
   countSubstringsWithFixedRatio,
-  stepsToMakeArrayNonDecreasing,
+  numberOfIntegersWithEvenDigitSum,
 ];

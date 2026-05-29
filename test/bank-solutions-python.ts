@@ -37356,22 +37356,10 @@ def fixedRatio(s, num1, num2):
     return result
 `,
 
-  'steps-to-make-array-non-decreasing': `
-def totalSteps(nums):
-    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
-    stack = []  # (value, steps)
-    result = 0
-    for x in nums:
-        steps = 0
-        while stack and stack[-1][0] <= x:
-            steps = max(steps, stack.pop()[1])
-        if stack:
-            steps += 1
-            result = max(result, steps)
-        else:
-            steps = 0
-        stack.append((x, steps))
-    return result
+  'number-of-integers-with-even-digit-sum': `
+def countEven(num):
+    digit_sum = sum(int(d) for d in str(num))
+    return num // 2 if digit_sum % 2 == 0 else (num - 1) // 2
 `,
 
 };

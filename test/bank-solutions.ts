@@ -37461,24 +37461,10 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
-  'steps-to-make-array-non-decreasing': (...args: unknown[]) => {
-    const nums = args[0] as number[];
-    const stack: [number, number][] = []; // [value, steps]
-    let result = 0;
-    for (const x of nums) {
-      let steps = 0;
-      while (stack.length > 0 && stack[stack.length - 1]![0] <= x) {
-        steps = Math.max(steps, stack.pop()![1]);
-      }
-      if (stack.length > 0) {
-        steps++;
-        result = Math.max(result, steps);
-      } else {
-        steps = 0;
-      }
-      stack.push([x, steps]);
-    }
-    return result;
+  'number-of-integers-with-even-digit-sum': (...args: unknown[]) => {
+    const num = args[0] as number;
+    const digitSum = String(num).split('').reduce((s, d) => s + parseInt(d), 0);
+    return digitSum % 2 === 0 ? Math.floor(num / 2) : Math.floor((num - 1) / 2);
   },
 
 };
