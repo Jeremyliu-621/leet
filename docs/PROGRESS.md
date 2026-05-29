@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2798** problems; 8685+ tests green. Batches 102–214 + 212-addendum + concurrent 213b + a11y + total-solved UX complete.
+**Current focus:** Bank at **2802** problems; 8688+ tests green. Batches 102–214 + 212-addendum + concurrent 213b + 214b + a11y + total-solved UX complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 215+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 214b (concurrent) — count-artifacts, closest-dessert, watering-plants-ii, rearrange-words (2026-05-29)
+Four new medium problems: `count-artifacts-that-can-be-extracted` (medium/arrays+hash-map+simulation, Set-based cell lookup for rectangle coverage), `closest-dessert-cost` (medium/dynamic-programming+arrays+backtracking, DFS over toppings with pruning + tie-breaking), `watering-plants-ii` (medium/arrays+two-pointers+simulation, two-pointer meeting-in-middle with per-person refill tracking), `rearrange-words-in-a-sentence` (medium/strings+simulation, stable sort by word length + capitalize). Bank at **2802**.
 
 ### feat(bank): batch 214 — count-special-integers, minimum-moves-spread-stones, min-max-game (2026-05-29)
 Three new problems: `count-special-integers` (hard/math+dp, digit DP with bitmask, 10 hidden tests including n up to 1.2B), `minimum-moves-to-spread-stones-over-grid` (medium/arrays+dp, permutation backtracking minimizing Manhattan distance), `min-max-game` (easy/arrays+simulation, alternating min/max halving). Bank at **2797**; 8685 tests.

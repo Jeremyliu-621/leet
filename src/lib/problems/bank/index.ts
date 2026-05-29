@@ -3145,6 +3145,11 @@ import { problem as longestSubarrayWithPositiveProduct } from './longest-subarra
 import { problem as countSpecialIntegers } from './count-special-integers';
 import { problem as minimumMovesToSpreadStonesOverGrid } from './minimum-moves-to-spread-stones-over-grid';
 import { problem as minMaxGame } from './min-max-game';
+// batch 214b (concurrent) — medium/arrays, medium/dp+backtracking, medium/arrays+simulation, medium/strings
+import { problem as countArtifactsThatCanBeExtracted } from './count-artifacts-that-can-be-extracted';
+import { problem as closestDessertCost } from './closest-dessert-cost';
+import { problem as wateringPlantsII } from './watering-plants-ii';
+import { problem as rearrangeWordsInASentence } from './rearrange-words-in-a-sentence';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6331,4 +6336,9 @@ export const problems: readonly Problem[] = [
   countSpecialIntegers,
   minimumMovesToSpreadStonesOverGrid,
   minMaxGame,
+  // batch 214b (concurrent)
+  countArtifactsThatCanBeExtracted,
+  closestDessertCost,
+  wateringPlantsII,
+  rearrangeWordsInASentence,
 ];

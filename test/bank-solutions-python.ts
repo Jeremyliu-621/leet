@@ -44158,4 +44158,66 @@ def getMaxLen(nums):
         ans = max(ans, pos)
     return ans
 `,
+  // batch 214b (concurrent) — count-artifacts, closest-dessert, watering-plants-ii, rearrange-words
+  'count-artifacts-that-can-be-extracted': `
+def digArtifacts(n, artifacts, dig):
+    dug = {(r, c) for r, c in dig}
+    count = 0
+    for r1, c1, r2, c2 in artifacts:
+        if all((r, c) in dug for r in range(r1, r2+1) for c in range(c1, c2+1)):
+            count += 1
+    return count
+`,
+
+  'closest-dessert-cost': `
+def closestCost(baseCosts, toppingCosts, target):
+    best = [float('inf')]
+    def update(cost):
+        if (abs(cost - target) < abs(best[0] - target) or
+                (abs(cost - target) == abs(best[0] - target) and cost < best[0])):
+            best[0] = cost
+    def dfs(idx, cost):
+        update(cost)
+        if idx == len(toppingCosts) or cost >= target:
+            return
+        for k in range(3):
+            dfs(idx + 1, cost + k * toppingCosts[idx])
+    for base in baseCosts:
+        dfs(0, base)
+    return best[0]
+`,
+
+  'watering-plants-ii': `
+def minimumRefill(plants, capacityA, capacityB):
+    wa, wb = capacityA, capacityB
+    refills = 0
+    i, j = 0, len(plants) - 1
+    while i < j:
+        if wa < plants[i]:
+            refills += 1
+            wa = capacityA
+        wa -= plants[i]
+        i += 1
+        if wb < plants[j]:
+            refills += 1
+            wb = capacityB
+        wb -= plants[j]
+        j -= 1
+    if i == j:
+        if wa >= wb:
+            if wa < plants[i]:
+                refills += 1
+        else:
+            if wb < plants[i]:
+                refills += 1
+    return refills
+`,
+
+  'rearrange-words-in-a-sentence': `
+def arrangeWords(text):
+    words = text.lower().split()
+    words.sort(key=len)
+    words[0] = words[0][0].upper() + words[0][1:]
+    return ' '.join(words)
+`,
 };
