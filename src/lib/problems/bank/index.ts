@@ -2799,6 +2799,12 @@ import { problem as maximumSumOfTwoNonOverlappingSubarrays } from './maximum-sum
 import { problem as designPhoneDirectory } from './design-phone-directory';
 import { problem as countAlmostEqualPairsII } from './count-almost-equal-pairs-ii';
 import { problem as leastNumberOfUniqueIntegersAfterKRemovals } from './least-number-of-unique-integers-after-k-removals';
+// batch 179 — tree/medium×3, tree+heap/hard, heap+graph/medium
+import { problem as binaryTreeLevelOrderTraversal } from './binary-tree-level-order-traversal';
+import { problem as findKPairsWithSmallestSums } from './find-k-pairs-with-smallest-sums';
+import { problem as sequenceReconstruction } from './sequence-reconstruction';
+import { problem as inorderSuccessorInBST } from './inorder-successor-in-bst';
+import { problem as closestBinarySearchTreeValueII } from './closest-binary-search-tree-value-ii';
 // batch 172 — arrays+simulation/medium, arrays+hash-map/medium, math/medium×2, arrays/medium
 import { problem as findTheWinnerOfAnArrayGame } from './find-the-winner-of-an-array-game';
 import { problem as shortestImpossibleSequenceOfRolls } from './shortest-impossible-sequence-of-rolls';
@@ -5791,6 +5797,12 @@ export const problems: readonly Problem[] = [
   minimumOperationsToMakeSubsequence,
   replaceNonCoprimeNumbers,
   maximumNumberOfBooks,
+  // batch 179 (local) — tree/medium×3, tree+heap/hard, heap+graph/medium
+  binaryTreeLevelOrderTraversal,
+  findKPairsWithSmallestSums,
+  sequenceReconstruction,
+  inorderSuccessorInBST,
+  closestBinarySearchTreeValueII,
   // batch 180 — easy/binary-search, medium/arrays+dp, easy/arrays
   binarySearch,
   wiggleSequence,
