@@ -44420,4 +44420,37 @@ def countRectangles(rectangles, points):
         result.append(count)
     return result
 `,
+
+  // batch 217 ---------------------------------------------------------------
+  'find-the-largest-almost-missing-integer': `
+from collections import Counter
+def largestAlmostMissingInteger(nums):
+    freq = Counter(nums)
+    result = -1
+    for v, c in freq.items():
+        if c == 1 and v > result:
+            result = v
+    return result
+`,
+  'transform-array-by-parity': `
+def transformArray(nums):
+    evens = sum(1 for n in nums if n % 2 == 0)
+    return [0] * evens + [1] * (len(nums) - evens)
+`,
+  'maximum-containers-on-a-ship': `
+import math
+def maxContainers(n):
+    return int((-1 + math.sqrt(1 + 8 * n * n)) / 2)
+`,
+  'unique-3-digit-even-numbers': `
+def findEvenNumbers(digits):
+    result = set()
+    n = len(digits)
+    for i in range(n):
+        for j in range(n):
+            for k in range(n):
+                if i != j and j != k and i != k and digits[i] != 0 and digits[k] % 2 == 0:
+                    result.add(digits[i] * 100 + digits[j] * 10 + digits[k])
+    return sorted(result)
+`,
 };

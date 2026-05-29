@@ -3166,6 +3166,11 @@ import { problem as countNumberOfRectanglesContainingEachPoint } from './count-n
 import { problem as minimumImpossibleOr } from './minimum-impossible-or';
 import { problem as findSubstringWithMaximumCost } from './find-substring-with-maximum-cost';
 import { problem as findWidthOfColumnsOfGrid } from './find-the-width-of-columns-of-a-grid';
+// batch 217 — easy/arrays+hash-map, easy/arrays+simulation, easy/math, easy/arrays+hash-map+simulation
+import { problem as largestAlmostMissingInteger } from './find-the-largest-almost-missing-integer';
+import { problem as transformArrayByParity } from './transform-array-by-parity';
+import { problem as maxContainersOnShip } from './maximum-containers-on-a-ship';
+import { problem as findEvenNumbers } from './unique-3-digit-even-numbers';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6373,4 +6378,9 @@ export const problems: readonly Problem[] = [
   minimumImpossibleOr,
   findSubstringWithMaximumCost,
   findWidthOfColumnsOfGrid,
+  // batch 217
+  largestAlmostMissingInteger,
+  transformArrayByParity,
+  maxContainersOnShip,
+  findEvenNumbers,
 ];
