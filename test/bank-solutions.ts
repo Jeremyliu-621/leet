@@ -38018,4 +38018,49 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     });
   },
 
+  // batch 165 — 5 new problems from remote session
+  'bitwise-ors-of-subarrays': (...args: unknown[]): unknown => {
+    const arr = args[0] as number[];
+    const result = new Set<number>();
+    let prev = new Set<number>([0]);
+    for (const x of arr) {
+      const curr = new Set<number>([x as number]);
+      for (const v of prev) curr.add(v | (x as number));
+      for (const v of curr) result.add(v);
+      prev = curr;
+    }
+    return result.size;
+  },
+
+  'check-if-a-string-contains-all-binary-codes-of-size-k': (...args: unknown[]): unknown => {
+    const s = args[0] as string, k = args[1] as number;
+    const seen = new Set<string>();
+    for (let i = 0; i + k <= s.length; i++) seen.add(s.slice(i, i + k));
+    return seen.size === (1 << k);
+  },
+
+  'convert-to-base-2': (...args: unknown[]): unknown => {
+    let n = args[0] as number;
+    if (n === 0) return '0';
+    let result = '';
+    while (n !== 0) {
+      const rem = n & 1;
+      result = rem + result;
+      n = -(n >> 1);
+    }
+    return result;
+  },
+
+  'flip-and-invert-image': (...args: unknown[]): unknown => {
+    const image = args[0] as number[][];
+    return image.map(row => [...row].reverse().map(x => (x as number) ^ 1));
+  },
+
+  'number-of-steps-to-reduce-a-number-in-binary-representation': (...args: unknown[]): unknown => {
+    let n = BigInt('0b' + (args[0] as string));
+    let steps = 0;
+    while (n > 1n) { if (n & 1n) n++; else n >>= 1n; steps++; }
+    return steps;
+  },
+
 };

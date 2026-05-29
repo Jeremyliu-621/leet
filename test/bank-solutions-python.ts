@@ -38026,4 +38026,54 @@ def maximizeXor(nums, queries):
     return [max((nums[j] ^ q[0] for j in range(len(nums)) if nums[j] <= q[1]), default=-1) for q in queries]
 `,
 
+  // batch 165 — 5 new problems from latest remote session
+  'bitwise-ors-of-subarrays': `
+def subarrayBitwiseORs(arr):
+    if hasattr(arr, 'to_py'):
+        arr = list(arr.to_py())
+    result = set()
+    prev = {0}
+    for x in arr:
+        curr = {x} | {v | x for v in prev}
+        result |= curr
+        prev = curr
+    return len(result)
+`,
+
+  'check-if-a-string-contains-all-binary-codes-of-size-k': `
+def hasAllCodes(s, k):
+    seen = set()
+    for i in range(len(s) - k + 1):
+        seen.add(s[i:i+k])
+    return len(seen) == 1 << k
+`,
+
+  'convert-to-base-2': `
+def baseNeg2(n):
+    if n == 0: return '0'
+    result = ''
+    while n != 0:
+        rem = n & 1
+        result = str(rem) + result
+        n = -(n >> 1)
+    return result
+`,
+
+  'flip-and-invert-image': `
+def flipAndInvertImage(image):
+    image = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (image.to_py() if hasattr(image, 'to_py') else image)]
+    return [list(map(lambda x: x ^ 1, reversed(row))) for row in image]
+`,
+
+  'number-of-steps-to-reduce-a-number-in-binary-representation': `
+def numSteps(s):
+    n = int(s, 2)
+    steps = 0
+    while n > 1:
+        if n & 1: n += 1
+        else: n >>= 1
+        steps += 1
+    return steps
+`,
+
 };

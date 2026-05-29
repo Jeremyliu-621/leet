@@ -2625,6 +2625,12 @@ import { problem as strictlyPalindromicNumber } from './strictly-palindromic-num
 import { problem as sortingThreeGroups } from './sorting-three-groups';
 import { problem as uglyNumberIii } from './ugly-number-iii';
 import { problem as binaryTreeColoringGame } from './binary-tree-coloring-game';
+// batch 165 — bit-manipulation/medium, strings/medium, bit-manipulation/medium, arrays/easy, strings/medium
+import { problem as bitwiseOrsOfSubarrays } from './bitwise-ors-of-subarrays';
+import { problem as checkIfAStringContainsAllBinaryCodesOfSizeK } from './check-if-a-string-contains-all-binary-codes-of-size-k';
+import { problem as convertToBase2 } from './convert-to-base-2';
+import { problem as flipAndInvertImage } from './flip-and-invert-image';
+import { problem as numberOfStepsToReduceNumberInBinaryRepresentation } from './number-of-steps-to-reduce-a-number-in-binary-representation';
 // batch 164 — simulation/hard, bit-manipulation/easy, math/medium, arrays/medium, binary-search/medium,
 //             trie/hard, bit-manipulation/hard, arrays/hard, arrays/hard
 import { problem as amountOfNewAreaPaintedEachDay } from './amount-of-new-area-painted-each-day';
@@ -5348,4 +5354,10 @@ export const problems: readonly Problem[] = [
   paintingAGridWithThreeDifferentColors,
   maximumSpendingAfterBuyingItems,
   numberOfGoodBinaryStrings,
+  // batch 165 — 5 new problems from latest remote session
+  bitwiseOrsOfSubarrays,
+  checkIfAStringContainsAllBinaryCodesOfSizeK,
+  convertToBase2,
+  flipAndInvertImage,
+  numberOfStepsToReduceNumberInBinaryRepresentation,
 ];
