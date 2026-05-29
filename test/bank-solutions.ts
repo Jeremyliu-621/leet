@@ -37754,6 +37754,79 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return min;
   },
 
+  // batch 158 — arrays+math/medium, strings/hard, dp/hard×2
+  'minimum-cost-homecoming-of-a-robot-in-a-grid': (...args: unknown[]) => {
+    const [startPos, homePos, rowCosts, colCosts] = args as [number[], number[], number[], number[]];
+    let cost = 0;
+    const r1 = startPos[0]!, c1 = startPos[1]!;
+    const r2 = homePos[0]!, c2 = homePos[1]!;
+    if (r2 > r1) for (let r = r1 + 1; r <= r2; r++) cost += rowCosts[r]!;
+    else for (let r = r1 - 1; r >= r2; r--) cost += rowCosts[r]!;
+    if (c2 > c1) for (let c = c1 + 1; c <= c2; c++) cost += colCosts[c]!;
+    else for (let c = c1 - 1; c >= c2; c--) cost += colCosts[c]!;
+    return cost;
+  },
+
+  'sum-of-scores-of-built-strings': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const Z = new Array<number>(n).fill(0);
+    Z[0] = n;
+    let l = 0, r = 0;
+    for (let i = 1; i < n; i++) {
+      if (i < r) Z[i] = Math.min(r - i, Z[i - l]!);
+      while (i + Z[i]! < n && s[Z[i]!] === s[i + Z[i]!]) Z[i]!++;
+      if (i + Z[i]! > r) { l = i; r = i + Z[i]!; }
+    }
+    return Z.reduce((a, b) => a + b, 0);
+  },
+
+  'count-of-integers': (...args: unknown[]) => {
+    const [num1, num2, min_sum, max_sum] = args as [string, string, number, number];
+    const MOD = 1_000_000_007;
+    function countUpTo(s: string): number {
+      const n = s.length;
+      const memo = new Map<string, number>();
+      function dp(pos: number, tight: boolean, started: boolean, sum: number): number {
+        if (sum > max_sum) return 0;
+        if (pos === n) return started ? (sum >= min_sum ? 1 : 0) : 0;
+        const key = `${pos},${tight ? 1 : 0},${started ? 1 : 0},${sum}`;
+        if (memo.has(key)) return memo.get(key)!;
+        const limit = tight ? parseInt(s[pos]!) : 9;
+        let res = 0;
+        for (let d = 0; d <= limit; d++) {
+          const nt = tight && d === limit;
+          if (!started && d === 0) res = (res + dp(pos + 1, nt, false, 0)) % MOD;
+          else res = (res + dp(pos + 1, nt, true, sum + d)) % MOD;
+        }
+        memo.set(key, res);
+        return res;
+      }
+      return dp(0, true, false, 0);
+    }
+    const c2 = countUpTo(num2);
+    const c1 = countUpTo(num1);
+    const sumNum1 = num1.split('').reduce((s, c) => s + parseInt(c), 0);
+    const v1 = sumNum1 >= min_sum && sumNum1 <= max_sum ? 1 : 0;
+    return ((c2 - c1 + v1) % MOD + MOD) % MOD;
+  },
+
+  'number-of-ways-to-earn-points': (...args: unknown[]) => {
+    const [target, types] = args as [number, number[][]];
+    const MOD = 1_000_000_007;
+    const dp = new Array<number>(target + 1).fill(0);
+    dp[0] = 1;
+    for (const entry of types) {
+      const count = entry[0]!, marks = entry[1]!;
+      for (let j = target; j >= 0; j--) {
+        for (let k = 1; k <= count && j - k * marks >= 0; k++) {
+          dp[j] = (dp[j]! + dp[j - k * marks]!) % MOD;
+        }
+      }
+    }
+    return dp[target]!;
+  },
+
   // batch 159 — strings+hash-map/medium, dp/hard, arrays+dp/medium
   'unique-length-3-palindromic-subsequences': (...args: unknown[]) => {
     const s = args[0] as string;
@@ -38063,83 +38136,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return steps;
   },
 
-  'minimum-cost-homecoming-of-a-robot-in-a-grid': (...args: unknown[]): unknown => {
-    const startPos = args[0] as number[], homePos = args[1] as number[];
-    const rowCosts = args[2] as number[], colCosts = args[3] as number[];
-    const r1 = startPos[0] as number, c1 = startPos[1] as number;
-    const r2 = homePos[0] as number, c2 = homePos[1] as number;
-    let cost = 0;
-    if (r2 > r1) { for (let r = r1 + 1; r <= r2; r++) cost += rowCosts[r] as number; }
-    else { for (let r = r2; r < r1; r++) cost += rowCosts[r] as number; }
-    if (c2 > c1) { for (let c = c1 + 1; c <= c2; c++) cost += colCosts[c] as number; }
-    else { for (let c = c2; c < c1; c++) cost += colCosts[c] as number; }
-    return cost;
-  },
-
-  'sum-of-scores-of-built-strings': (...args: unknown[]): unknown => {
-    const s = args[0] as string;
-    const n = s.length;
-    const Z = new Array<number>(n).fill(0);
-    Z[0] = n;
-    let l = 0, r = 0;
-    for (let i = 1; i < n; i++) {
-      if (i < r) Z[i] = Math.min(r - i, Z[i - l] as number);
-      while (i + Z[i]! < n && s[Z[i]!] === s[i + Z[i]!]) Z[i]!++;
-      if (i + Z[i]! > r) { l = i; r = i + Z[i]!; }
-    }
-    return Z.reduce((a, b) => a + b, 0);
-  },
-
-  'count-of-integers': (...args: unknown[]): unknown => {
-    const num1 = args[0] as string, num2 = args[1] as string;
-    const minSum = args[2] as number, maxSum = args[3] as number;
-    const MOD = 1_000_000_007n;
-    const countUpTo = (s: string): bigint => {
-      const n = s.length;
-      const memo = new Map<string, bigint>();
-      const dp = (pos: number, tight: boolean, started: boolean, total: number): bigint => {
-        if (total > maxSum) return 0n;
-        if (pos === n) return started && total >= minSum ? 1n : 0n;
-        const key = `${pos},${tight ? 1 : 0},${started ? 1 : 0},${total}`;
-        const cached = memo.get(key);
-        if (cached !== undefined) return cached;
-        const limit = tight ? parseInt(s[pos]!, 10) : 9;
-        let res = 0n;
-        for (let d = 0; d <= limit; d++) {
-          const nt = tight && d === limit;
-          if (!started && d === 0) res = (res + dp(pos + 1, nt, false, 0)) % MOD;
-          else res = (res + dp(pos + 1, nt, true, total + d)) % MOD;
-        }
-        memo.set(key, res);
-        return res;
-      };
-      return dp(0, true, false, 0);
-    };
-    const c2 = countUpTo(num2);
-    const c1 = countUpTo(num1);
-    const digitSum1 = num1.split('').reduce((a, c) => a + parseInt(c, 10), 0);
-    const v1 = digitSum1 >= minSum && digitSum1 <= maxSum ? 1n : 0n;
-    return Number(((c2 - c1 + v1) % MOD + MOD) % MOD);
-  },
-
-  'number-of-ways-to-earn-points': (...args: unknown[]): unknown => {
-    const target = args[0] as number;
-    const types = args[1] as number[][];
-    const MOD = 1_000_000_007;
-    const dp = new Array<number>(target + 1).fill(0);
-    dp[0] = 1;
-    for (const entry of types) {
-      const count = entry[0] as number, marks = entry[1] as number;
-      for (let j = target; j >= 0; j--) {
-        for (let k = 1; k <= count; k++) {
-          if (j - k * marks < 0) break;
-          dp[j] = ((dp[j] as number) + (dp[j - k * marks] as number)) % MOD;
-        }
-      }
-    }
-    return dp[target];
-  },
-
   'count-substrings-with-k-frequency-characters-ii': (...args: unknown[]): unknown => {
     const s = args[0] as string, k = args[1] as number;
     const n = s.length;
@@ -38344,6 +38340,129 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return k;
   },
 
+  // batch 169 — new problems
+  'maximum-number-of-eaten-apples': (...args: unknown[]) => {
+    const apples = args[0] as number[];
+    const days = args[1] as number[];
+    const n = apples.length;
+    // min-heap: [expireDay, count]
+    const heap: [number, number][] = [];
+    const push = (item: [number, number]) => {
+      heap.push(item);
+      let i = heap.length - 1;
+      while (i > 0) {
+        const p = (i - 1) >> 1;
+        if (heap[p]![0] <= heap[i]![0]) break;
+        [heap[p], heap[i]] = [heap[i]!, heap[p]!];
+        i = p;
+      }
+    };
+    const pop = (): [number, number] => {
+      const top = heap[0]!;
+      const last = heap.pop()!;
+      if (heap.length > 0) {
+        heap[0] = last;
+        let i = 0;
+        while (true) {
+          let s = i;
+          const l = 2 * i + 1, r = 2 * i + 2;
+          if (l < heap.length && heap[l]![0] < heap[s]![0]) s = l;
+          if (r < heap.length && heap[r]![0] < heap[s]![0]) s = r;
+          if (s === i) break;
+          [heap[s], heap[i]] = [heap[i]!, heap[s]!];
+          i = s;
+        }
+      }
+      return top;
+    };
+    let eaten = 0;
+    let day = 0;
+    while (day < n || heap.length > 0) {
+      if (day < n && apples[day]! > 0) push([day + days[day]!, apples[day]!]);
+      while (heap.length > 0 && heap[0]![0] <= day) pop();
+      if (heap.length > 0) {
+        const top = heap[0]!;
+        top[1]--;
+        eaten++;
+        if (top[1] === 0) pop();
+      }
+      day++;
+    }
+    return eaten;
+  },
+  'minimum-flips-to-make-alternating-binary-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const t = s + s;
+    let flips0 = 0; // flips to match "010101..." pattern
+    for (let i = 0; i < n; i++) {
+      if (t[i] !== (i % 2 === 0 ? '0' : '1')) flips0++;
+    }
+    let ans = Math.min(flips0, n - flips0);
+    for (let i = n; i < 2 * n; i++) {
+      const outChar = t[i - n]!;
+      const outExpected0 = (i - n) % 2 === 0 ? '0' : '1';
+      if (outChar !== outExpected0) flips0--; // remove leaving char's mismatch
+      const inChar = t[i]!;
+      const inExpected0 = i % 2 === 0 ? '0' : '1';
+      if (inChar !== inExpected0) flips0++; // add entering char's mismatch
+      ans = Math.min(ans, Math.min(flips0, n - flips0));
+    }
+    return ans;
+  },
+  'finding-pairs-with-a-certain-sum': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const opArgs = args[1] as unknown[][];
+    let nums1: number[] = [];
+    let nums2: number[] = [];
+    const freq = new Map<number, number>();
+    return ops.map((op, i) => {
+      if (op === 'FindSumPairs') {
+        const init = opArgs[i] as number[][];
+        nums1 = init[0]!;
+        nums2 = [...init[1]!];
+        for (const v of nums2) freq.set(v, (freq.get(v) ?? 0) + 1);
+        return null;
+      }
+      if (op === 'add') {
+        const [idx, val] = opArgs[i] as number[];
+        const old = nums2[idx!]!;
+        freq.set(old, freq.get(old)! - 1);
+        nums2[idx!] = old + val!;
+        freq.set(nums2[idx!]!, (freq.get(nums2[idx!]!) ?? 0) + 1);
+        return null;
+      }
+      // count
+      const tot = (opArgs[i] as number[])[0]!;
+      let cnt = 0;
+      for (const v of nums1) cnt += freq.get(tot - v) ?? 0;
+      return cnt;
+    });
+  },
+  'count-valid-words-in-a-sentence': (...args: unknown[]) => {
+    const sentence = args[0] as string;
+    const tokens = sentence.split(' ').filter(t => t.length > 0);
+    let count = 0;
+    for (const tok of tokens) {
+      let hasHyphen = false, hasPunct = false, valid = true;
+      for (let i = 0; i < tok.length; i++) {
+        const c = tok[i]!;
+        if (c >= '0' && c <= '9') { valid = false; break; }
+        if (c === '-') {
+          if (hasHyphen || i === 0 || i === tok.length - 1 ||
+              !(tok[i - 1]! >= 'a' && tok[i - 1]! <= 'z') ||
+              !(tok[i + 1]! >= 'a' && tok[i + 1]! <= 'z')) { valid = false; break; }
+          hasHyphen = true;
+        } else if (c === '!' || c === '.' || c === ',') {
+          if (hasPunct || i !== tok.length - 1) { valid = false; break; }
+          hasPunct = true;
+        }
+      }
+      if (valid) count++;
+    }
+    return count;
+  },
+
   // batch 165 — design+stack/easy, arrays+stack/medium×2, arrays+stack+dp/medium, arrays+sliding-window/hard
   'minimum-stack': (...args: unknown[]) => {
     const ops = args[0] as string[];
@@ -38421,6 +38540,70 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       deque.push(j);
     }
     return ans === n + 1 ? -1 : ans;
+  },
+
+  // batch 160b — design/medium×2, strings+math/medium
+  'design-leaderboard': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const params = args[1] as number[][];
+    const scores: Record<number, number> = {};
+    const result: (number | null)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      const p = params[i]!;
+      if (op === 'Leaderboard') {
+        result.push(null);
+      } else if (op === 'addScore') {
+        const id = p[0]!, score = p[1]!;
+        scores[id] = (scores[id] ?? 0) + score;
+        result.push(null);
+      } else if (op === 'top') {
+        const k = p[0]!;
+        const sorted = Object.values(scores).sort((a, b) => b - a);
+        result.push(sorted.slice(0, k).reduce((s, v) => s + v, 0));
+      } else {
+        scores[p[0]!] = 0;
+        result.push(null);
+      }
+    }
+    return result;
+  },
+
+  'rle-iterator': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const params = args[1] as unknown[][];
+    const enc = [...(params[0]![0] as number[])];
+    let idx = 0;
+    const result: (number | null)[] = [null];
+    for (let i = 1; i < ops.length; i++) {
+      let n = (params[i]! as number[])[0]!;
+      let res = -1;
+      while (idx < enc.length && n > 0) {
+        if (enc[idx]! >= n) {
+          enc[idx] = enc[idx]! - n;
+          res = enc[idx + 1]!;
+          n = 0;
+        } else {
+          n -= enc[idx]!;
+          enc[idx] = 0;
+          idx += 2;
+        }
+      }
+      result.push(n > 0 ? -1 : res);
+    }
+    return result;
+  },
+
+  'find-the-divisibility-array-of-a-string': (word: unknown, m: unknown) => {
+    const w = word as string;
+    const mod_m = m as number;
+    let mod = 0;
+    const result: number[] = [];
+    for (const ch of w) {
+      mod = (mod * 10 + parseInt(ch)) % mod_m;
+      result.push(mod === 0 ? 1 : 0);
+    }
+    return result;
   },
 
   // batch 163 — strings+arrays/medium, arrays+dp/hard, strings+dp/hard, arrays+graph/hard, arrays+dp/hard

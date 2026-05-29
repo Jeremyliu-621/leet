@@ -2620,6 +2620,19 @@ import { problem as checkKnightTourConfiguration } from './check-knight-tour-con
 import { problem as theNumberOfTheSmallestUnoccupiedChair } from './the-number-of-the-smallest-unoccupied-chair';
 import { problem as intervalsBetweenIdenticalElements } from './intervals-between-identical-elements';
 import { problem as formArrayByConcatenatingSubarraysOfAnotherArray } from './form-array-by-concatenating-subarrays-of-another-array';
+// batch 158 — arrays+math/medium, strings/hard, dp/hard×2
+import { problem as minCostHomecomingRobotInGrid } from './minimum-cost-homecoming-of-a-robot-in-a-grid';
+import { problem as sumOfScoresOfBuiltStrings } from './sum-of-scores-of-built-strings';
+import { problem as countOfIntegers } from './count-of-integers';
+import { problem as numberOfWaysToEarnPoints } from './number-of-ways-to-earn-points';
+// batch 159 — strings+hash-map/medium, dp/hard, arrays+dp/medium
+import { problem as uniqueLength3PalindromicSubsequences } from './unique-length-3-palindromic-subsequences';
+import { problem as minimumWhiteTilesAfterCovering } from './minimum-white-tiles-after-covering-with-carpets';
+import { problem as specialPermutations } from './special-permutations';
+// batch 160 — design/medium×2, strings+math/medium
+import { problem as designLeaderboard } from './design-leaderboard';
+import { problem as rleIterator } from './rle-iterator';
+import { problem as findDivisibilityArrayOfAString } from './find-the-divisibility-array-of-a-string';
 // batch 161 — math/medium, arrays+dp/medium, math+bs/medium, tree/medium
 import { problem as strictlyPalindromicNumber } from './strictly-palindromic-number';
 import { problem as sortingThreeGroups } from './sorting-three-groups';
@@ -2642,14 +2655,12 @@ import { problem as allPathsFromSourceToTarget } from './all-paths-from-source-t
 import { problem as countUnreachablePairsOfNodesInUndirectedGraph } from './count-unreachable-pairs-of-nodes-in-an-undirected-graph';
 import { problem as partitionArrayIntoDisjointIntervals } from './partition-array-into-disjoint-intervals';
 import { problem as removeDuplicatesFromSortedArrayII } from './remove-duplicates-from-sorted-array-ii';
-// batch 168 — 9 orphaned problems now registered (batches 158/159 that lost registration during merges)
-import { problem as minimumCostHomecomingRobotInGrid } from './minimum-cost-homecoming-of-a-robot-in-a-grid';
-import { problem as sumOfScoresOfBuiltStrings } from './sum-of-scores-of-built-strings';
-import { problem as countOfIntegers } from './count-of-integers';
-import { problem as numberOfWaysToEarnPoints } from './number-of-ways-to-earn-points';
-import { problem as uniqueLength3PalindromicSubsequences } from './unique-length-3-palindromic-subsequences';
-import { problem as minimumWhiteTilesAfterCoveringWithCarpets } from './minimum-white-tiles-after-covering-with-carpets';
-import { problem as specialPermutations } from './special-permutations';
+// batch 169 — new problems: heap+greedy/medium, strings/easy, design+hash-map/medium, strings/easy
+import { problem as maximumNumberOfEatenApples } from './maximum-number-of-eaten-apples';
+import { problem as minimumFlipsToMakeAlternatingBinaryString } from './minimum-flips-to-make-alternating-binary-string';
+import { problem as findingPairsWithACertainSum } from './finding-pairs-with-a-certain-sum';
+import { problem as countValidWordsInASentence } from './count-valid-words-in-a-sentence';
+// batch 168 — 2 new problems added
 import { problem as countSubstringsWithKFrequencyCharactersII } from './count-substrings-with-k-frequency-characters-ii';
 import { problem as sumOfImbalanceNumbersOfAllSubarrays } from './sum-of-imbalance-numbers-of-all-subarrays';
 // batch 164 — simulation/hard, bit-manipulation/easy, math/medium, arrays/medium, binary-search/medium,
@@ -5369,6 +5380,19 @@ export const problems: readonly Problem[] = [
   theNumberOfTheSmallestUnoccupiedChair,
   intervalsBetweenIdenticalElements,
   formArrayByConcatenatingSubarraysOfAnotherArray,
+  // batch 158
+  minCostHomecomingRobotInGrid,
+  sumOfScoresOfBuiltStrings,
+  countOfIntegers,
+  numberOfWaysToEarnPoints,
+  // batch 159 — strings+hash-map/medium, dp/hard, arrays+dp/medium
+  uniqueLength3PalindromicSubsequences,
+  minimumWhiteTilesAfterCovering,
+  specialPermutations,
+  // batch 160 — design/medium×2, strings+math/medium
+  designLeaderboard,
+  rleIterator,
+  findDivisibilityArrayOfAString,
   // batch 161 — math/medium, arrays+dp/medium, math+bs/medium, tree/medium
   strictlyPalindromicNumber,
   sortingThreeGroups,
@@ -5421,14 +5445,12 @@ export const problems: readonly Problem[] = [
   countUnreachablePairsOfNodesInUndirectedGraph,
   partitionArrayIntoDisjointIntervals,
   removeDuplicatesFromSortedArrayII,
-  // batch 168 — 9 orphaned problems restored (lost registration during merges)
-  minimumCostHomecomingRobotInGrid,
-  sumOfScoresOfBuiltStrings,
-  countOfIntegers,
-  numberOfWaysToEarnPoints,
-  uniqueLength3PalindromicSubsequences,
-  minimumWhiteTilesAfterCoveringWithCarpets,
-  specialPermutations,
+  // batch 169 — 4 new problems
+  maximumNumberOfEatenApples,
+  minimumFlipsToMakeAlternatingBinaryString,
+  findingPairsWithACertainSum,
+  countValidWordsInASentence,
+  // batch 168 — 2 new problems
   countSubstringsWithKFrequencyCharactersII,
   sumOfImbalanceNumbersOfAllSubarrays,
   // batch 163 — strings+arrays/medium, arrays+dp/hard, strings+dp/hard, arrays+graph/hard, arrays+dp/hard
