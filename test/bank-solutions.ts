@@ -43212,6 +43212,55 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     for (let i = 0; i < n; i++) total += Math.floor(i / 7) + (i % 7) + 1;
     return total;
   },
+  // batch 201b ---------------------------------------------------------------
+  'find-the-winning-player-in-coin-game': (...args: unknown[]) => {
+    const x = args[0] as number;
+    const y = args[1] as number;
+    return Math.floor(y / 3) < x ? 'Alice' : 'Bob';
+  },
+  'snake-in-matrix': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const commands = args[1] as string[];
+    let r = 0, c = 0;
+    for (const cmd of commands) {
+      if (cmd === 'UP') r--;
+      else if (cmd === 'DOWN') r++;
+      else if (cmd === 'LEFT') c--;
+      else c++;
+    }
+    return r * n + c;
+  },
+  'distribute-elements-into-two-arrays-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const arr1: number[] = [], arr2: number[] = [];
+    if (nums[0]! > nums[1]!) { arr1.push(nums[0]!); arr2.push(nums[1]!); }
+    else { arr1.push(nums[1]!); arr2.push(nums[0]!); }
+    for (let i = 2; i < nums.length; i++) {
+      if (arr1[arr1.length - 1]! > arr2[arr2.length - 1]!) arr1.push(nums[i]!);
+      else arr2.push(nums[i]!);
+    }
+    return [...arr1, ...arr2];
+  },
+  'maximum-length-substring-with-two-occurrences': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const freq: Record<string, number> = {};
+    let left = 0, ans = 0;
+    for (let right = 0; right < s.length; right++) {
+      freq[s[right]!] = (freq[s[right]!] ?? 0) + 1;
+      while (freq[s[right]!]! > 2) { freq[s[left]!]!--; left++; }
+      ans = Math.max(ans, right - left + 1);
+    }
+    return ans;
+  },
+  'partition-array-such-that-maximum-difference-is-k': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const k = args[1] as number;
+    let groups = 1, start = nums[0]!;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i]! - start > k) { groups++; start = nums[i]!; }
+    }
+    return groups;
+  },
   // batch 200b ---------------------------------------------------------------
   'minimum-value-to-get-positive-step-by-step-sum': (...args: unknown[]) => {
     const nums = args[0] as number[];

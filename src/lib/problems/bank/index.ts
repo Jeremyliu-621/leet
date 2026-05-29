@@ -2987,6 +2987,12 @@ import { problem as countElementsWithStrictlySmallerAndGreaterElements } from '.
 import { problem as findFirstPalindromicStringInTheArray } from './find-first-palindromic-string-in-the-array';
 import { problem as removeTrailingZerosFromAString } from './remove-trailing-zeros-from-a-string';
 import { problem as numberOfValidWordsInASentence } from './number-of-valid-words-in-a-sentence';
+// batch 201b — easy/math+simulation, easy/arrays+simulation, easy/arrays+simulation, easy/strings+sliding-window+hash-map, medium/arrays+two-pointers
+import { problem as findTheWinningPlayerInCoinGame } from './find-the-winning-player-in-coin-game';
+import { problem as snakeInMatrix } from './snake-in-matrix';
+import { problem as distributeElementsIntoTwoArraysI } from './distribute-elements-into-two-arrays-i';
+import { problem as maximumLengthSubstringWithTwoOccurrences } from './maximum-length-substring-with-two-occurrences';
+import { problem as partitionArraySuchThatMaximumDifferenceIsK } from './partition-array-such-that-maximum-difference-is-k';
 // batch 200b — easy/arrays+prefix-sum, easy/arrays, medium/strings, easy/math, easy/strings+two-pointers
 import { problem as minimumValueToGetPositiveStepByStepSum } from './minimum-value-to-get-positive-step-by-step-sum';
 import { problem as maximumDifferenceBetweenAdjacentElementsInACircularArray } from './maximum-difference-between-adjacent-elements-in-a-circular-array';
@@ -6125,4 +6131,10 @@ export const problems: readonly Problem[] = [
   countStringsOfLengthK,
   maximumOfMinimumValues,
   productOfLastTwo,
+  // batch 201b — easy/math, easy/simulation, easy/simulation, easy/sliding-window, medium/arrays
+  findTheWinningPlayerInCoinGame,
+  snakeInMatrix,
+  distributeElementsIntoTwoArraysI,
+  maximumLengthSubstringWithTwoOccurrences,
+  partitionArraySuchThatMaximumDifferenceIsK,
 ];

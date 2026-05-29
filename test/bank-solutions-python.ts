@@ -43034,6 +43034,57 @@ def largestCombination(candidates):
 def totalMoney(n):
     return sum(i // 7 + i % 7 + 1 for i in range(n))
 `,
+  // batch 201b ---------------------------------------------------------------
+  'find-the-winning-player-in-coin-game': `
+def winningPlayer(x, y):
+    return "Alice" if y // 3 < x else "Bob"
+`,
+  'snake-in-matrix': `
+def finalPositionOfSnake(n, commands):
+    r, c = 0, 0
+    for cmd in commands:
+        if cmd == "UP": r -= 1
+        elif cmd == "DOWN": r += 1
+        elif cmd == "LEFT": c -= 1
+        else: c += 1
+    return r * n + c
+`,
+  'distribute-elements-into-two-arrays-i': `
+def resultArray(nums):
+    if nums[0] > nums[1]:
+        arr1, arr2 = [nums[0]], [nums[1]]
+    else:
+        arr1, arr2 = [nums[1]], [nums[0]]
+    for i in range(2, len(nums)):
+        if arr1[-1] > arr2[-1]:
+            arr1.append(nums[i])
+        else:
+            arr2.append(nums[i])
+    return arr1 + arr2
+`,
+  'maximum-length-substring-with-two-occurrences': `
+def maximumLengthSubstring(s):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    left = ans = 0
+    for right, ch in enumerate(s):
+        freq[ch] += 1
+        while freq[ch] > 2:
+            freq[s[left]] -= 1
+            left += 1
+        ans = max(ans, right - left + 1)
+    return ans
+`,
+  'partition-array-such-that-maximum-difference-is-k': `
+def partitionArray(nums, k):
+    nums = sorted(nums)
+    groups, start = 1, nums[0]
+    for i in range(1, len(nums)):
+        if nums[i] - start > k:
+            groups += 1
+            start = nums[i]
+    return groups
+`,
   // batch 200b ---------------------------------------------------------------
   'minimum-value-to-get-positive-step-by-step-sum': `
 def minStartValue(nums):
