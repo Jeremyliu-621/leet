@@ -38539,6 +38539,62 @@ def makeIntegerBeautiful(n, target):
     return x
 `,
 
+  // batch 177 — Python solutions
+  'most-popular-video-creator': `
+def mostPopularCreator(creators, ids, views):
+    if hasattr(creators, 'to_py'): creators = list(creators.to_py())
+    if hasattr(ids, 'to_py'): ids = list(ids.to_py())
+    if hasattr(views, 'to_py'): views = list(views.to_py())
+    from collections import defaultdict
+    total = defaultdict(int)
+    best = {}
+    for c, i, v in zip(creators, ids, views):
+        total[c] += v
+        if c not in best or v > best[c][0] or (v == best[c][0] and i < best[c][1]):
+            best[c] = (v, i)
+    max_total = max(total.values())
+    result = sorted([[c, best[c][1]] for c, t in total.items() if t == max_total])
+    return result
+`,
+  'length-of-longest-subsequence-that-sums-to-target': `
+def lengthOfLongestSubsequence(nums, target):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    target = int(target)
+    dp = [-float('inf')] * (target + 1)
+    dp[0] = 0
+    for num in nums:
+        num = int(num)
+        for j in range(target, num - 1, -1):
+            if dp[j - num] != -float('inf'):
+                dp[j] = max(dp[j], dp[j - num] + 1)
+    return dp[target] if dp[target] != -float('inf') else -1
+`,
+  'minimum-number-of-operations-to-reinitialize-a-permutation': `
+def reinitializePermutation(n):
+    n = int(n)
+    perm = list(range(n))
+    steps = 0
+    while True:
+        nxt = [0] * n
+        for i in range(n):
+            nxt[i] = perm[i // 2] if i % 2 == 0 else perm[n // 2 + (i - 1) // 2]
+        perm = nxt
+        steps += 1
+        if perm == list(range(n)):
+            break
+    return steps
+`,
+  'taking-maximum-energy-from-the-mystic-dungeon': `
+def maximumEnergy(energy, k):
+    if hasattr(energy, 'to_py'): energy = list(energy.to_py())
+    k = int(k)
+    n = len(energy)
+    suf = energy[:]
+    for i in range(n - k - 1, -1, -1):
+        suf[i] += suf[i + k]
+    return max(suf[:k])
+`,
+
   // batch 175 — Python solutions
   'check-if-bitwise-or-has-trailing-zeros': `
 def hasTrailingZeros(nums):

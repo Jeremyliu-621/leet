@@ -38581,6 +38581,64 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return x;
   },
 
+  // batch 177 — hash-map+sorting/medium, arrays+dp/medium, simulation/medium, arrays+prefix-sums/medium
+  'most-popular-video-creator': (...args: unknown[]) => {
+    const creators = args[0] as string[];
+    const ids = args[1] as string[];
+    const views = args[2] as number[];
+    const totalViews = new Map<string, number>();
+    const bestVideo = new Map<string, { views: number; id: string }>();
+    for (let i = 0; i < creators.length; i++) {
+      const c = creators[i]!, id = ids[i]!, v = views[i]!;
+      totalViews.set(c, (totalViews.get(c) ?? 0) + v);
+      const cur = bestVideo.get(c);
+      if (!cur || v > cur.views || (v === cur.views && id < cur.id)) {
+        bestVideo.set(c, { views: v, id });
+      }
+    }
+    let maxTotal = 0;
+    for (const v of totalViews.values()) if (v > maxTotal) maxTotal = v;
+    const result: string[][] = [];
+    for (const [c, total] of totalViews) {
+      if (total === maxTotal) result.push([c, bestVideo.get(c)!.id]);
+    }
+    return result.sort((a, b) => (a[0]! < b[0]! ? -1 : a[0]! > b[0]! ? 1 : 0));
+  },
+  'length-of-longest-subsequence-that-sums-to-target': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    const dp = new Array<number>(target + 1).fill(-Infinity);
+    dp[0] = 0;
+    for (const num of nums) {
+      for (let j = target; j >= num; j--) {
+        if (dp[j - num]! !== -Infinity) dp[j] = Math.max(dp[j]!, dp[j - num]! + 1);
+      }
+    }
+    return dp[target] === -Infinity ? -1 : dp[target];
+  },
+  'minimum-number-of-operations-to-reinitialize-a-permutation': (n: unknown) => {
+    const size = n as number;
+    let perm = Array.from({ length: size }, (_, i) => i);
+    let steps = 0;
+    do {
+      const next = new Array<number>(size);
+      for (let i = 0; i < size; i++) {
+        next[i] = i % 2 === 0 ? perm[i >> 1]! : perm[size / 2 + ((i - 1) >> 1)]!;
+      }
+      perm = next;
+      steps++;
+    } while (perm.some((v, i) => v !== i));
+    return steps;
+  },
+  'taking-maximum-energy-from-the-mystic-dungeon': (...args: unknown[]) => {
+    const energy = args[0] as number[];
+    const k = args[1] as number;
+    const n = energy.length;
+    const suf = [...energy];
+    for (let i = n - k - 1; i >= 0; i--) suf[i] = suf[i]! + suf[i + k]!;
+    return Math.max(...suf.slice(0, k));
+  },
+
   // batch 175 — easy/bit, medium/dp, medium/tree, medium/tree
   'check-if-bitwise-or-has-trailing-zeros': (nums: unknown) => {
     const a = nums as number[];

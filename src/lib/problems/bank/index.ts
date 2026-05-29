@@ -2673,6 +2673,11 @@ import { problem as maximumPointsYouCanObtainFromCards } from './maximum-points-
 import { problem as minimumPushesToTypeWordI } from './minimum-pushes-to-type-word-i';
 import { problem as minimumPushesToTypeWordII } from './minimum-pushes-to-type-word-ii';
 import { problem as minimumAdditionToMakeIntegerBeautiful } from './minimum-addition-to-make-integer-beautiful';
+// batch 177 — hash-map+sorting/medium, arrays+dp/medium, simulation/medium, arrays+prefix-sums/medium
+import { problem as mostPopularVideoCreator } from './most-popular-video-creator';
+import { problem as lengthOfLongestSubsequenceThatSumsToTarget } from './length-of-longest-subsequence-that-sums-to-target';
+import { problem as minimumNumberOfOperationsToReinitializeAPermutation } from './minimum-number-of-operations-to-reinitialize-a-permutation';
+import { problem as takingMaximumEnergyFromTheMysticDungeon } from './taking-maximum-energy-from-the-mystic-dungeon';
 // batch 169 — new problems: heap+greedy/medium, strings/easy, design+hash-map/medium, strings/easy
 import { problem as maximumNumberOfEatenApples } from './maximum-number-of-eaten-apples';
 import { problem as minimumFlipsToMakeAlternatingBinaryString } from './minimum-flips-to-make-alternating-binary-string';
@@ -5674,4 +5679,9 @@ export const problems: readonly Problem[] = [
   kthAncestorOfATreeNode,
   countIntegersInRanges,
   maximumSubarrayWithEqualProducts,
+  // batch 177 — hash-map+sorting/medium, arrays+dp/medium, simulation/medium, arrays+prefix-sums/medium
+  mostPopularVideoCreator,
+  lengthOfLongestSubsequenceThatSumsToTarget,
+  minimumNumberOfOperationsToReinitializeAPermutation,
+  takingMaximumEnergyFromTheMysticDungeon,
 ];
