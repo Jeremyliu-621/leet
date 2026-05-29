@@ -1118,6 +1118,19 @@ export function Challenge() {
 
   return (
     <div className="flex h-full flex-col overflow-hidden bg-bg text-text">
+      {/* Skip-navigation links — sr-only until focused */}
+      <a
+        href="#problem-description"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:rounded-sm focus:bg-accent focus:px-3 focus:py-1.5 focus:font-mono focus:text-xs focus:font-bold focus:text-on-accent focus:top-2 focus:left-2"
+      >
+        Skip to problem
+      </a>
+      <a
+        href="#code-editor"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:rounded-sm focus:bg-accent focus:px-3 focus:py-1.5 focus:font-mono focus:text-xs focus:font-bold focus:text-on-accent focus:top-2 focus:left-28"
+      >
+        Skip to editor
+      </a>
       <TopBar secondsLeft={secondsLeft} prefs={prefs} streak={streak} practiceMode={!targetUrl.current} settingsHref={settingsHref} targetDomain={domain.current} />
 
       {/* No-target banner — informational only, does not block usage */}
@@ -1140,6 +1153,7 @@ export function Challenge() {
             overrides the inline percentage style. On desktop (flex-row), the
             inline width drives the draggable split. */}
         <div
+          id="problem-description"
           className={`flex flex-col overflow-hidden border-border lg:border-r max-lg:border-b max-lg:max-h-[45vh] max-lg:!w-full${isEditorFullscreen ? ' hidden' : ''}`}
           style={{ width: `${panelPct}%` }}
         >
@@ -1164,7 +1178,7 @@ export function Challenge() {
         )}
 
         {/* Editor panel — fixed, no scroll on the outer shell */}
-        <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+        <div id="code-editor" className="flex min-h-0 flex-1 flex-col overflow-hidden">
           <EditorPanel
             starterCode={starterCodeFor(problem, language)}
             language={language}
