@@ -2614,11 +2614,13 @@ import { problem as wordFilter } from './word-filter';
 import { problem as lexicographicalNumbers } from './lexicographical-numbers';
 import { problem as kThSmallestInLexicographicOrder } from './k-th-smallest-in-lexicographic-order';
 import { problem as designSearchAutocompleteSystem } from './design-search-autocomplete-system';
-// batch 158 — arrays+math/medium, strings/hard, dp/hard×2
+// batch 158 — arrays+math/medium, strings/hard, dp/hard×2, sliding-window/medium
 import { problem as minCostHomecomingRobotInGrid } from './minimum-cost-homecoming-of-a-robot-in-a-grid';
 import { problem as sumOfScoresOfBuiltStrings } from './sum-of-scores-of-built-strings';
 import { problem as countOfIntegers } from './count-of-integers';
 import { problem as numberOfWaysToEarnPoints } from './number-of-ways-to-earn-points';
+import { problem as countSubstringsKFreqII } from './count-substrings-with-k-frequency-characters-ii';
+import { problem as sumImbalanceNumbers } from './sum-of-imbalance-numbers-of-all-subarrays';
 // batch 159 — strings+hash-map/medium, dp/hard, arrays+dp/medium
 import { problem as uniqueLength3PalindromicSubsequences } from './unique-length-3-palindromic-subsequences';
 import { problem as minimumWhiteTilesAfterCovering } from './minimum-white-tiles-after-covering-with-carpets';
@@ -5276,15 +5278,17 @@ export const problems: readonly Problem[] = [
   lexicographicalNumbers,
   kThSmallestInLexicographicOrder,
   designSearchAutocompleteSystem,
-  // batch 158 — arrays+math/medium, strings/hard, dp/hard×2
+  // batch 158
   minCostHomecomingRobotInGrid,
   sumOfScoresOfBuiltStrings,
   countOfIntegers,
   numberOfWaysToEarnPoints,
-  // batch 159 — strings+hash-map/medium, dp/hard, arrays+dp/medium
+  countSubstringsKFreqII,
+  sumImbalanceNumbers,
+  // batch 159
   uniqueLength3PalindromicSubsequences,
   minimumWhiteTilesAfterCovering,
   specialPermutations,
-  // batch 160 — graph+union-find/hard (new)
+  // batch 160
   minimumCostWalkWeightedGraph,
 ];

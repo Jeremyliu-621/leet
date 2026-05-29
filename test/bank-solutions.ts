@@ -24957,13 +24957,13 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       freqMap.set(right, (freqMap.get(right) ?? 0) + 1);
       if ((freqMap.get(right) ?? 0) === 1) distinct++;
       windowSum += right;
-      if (i >= k) {
-        const left = nums[i - k] ?? 0;
+      if (i >= m) {
+        const left = nums[i - m] ?? 0;
         windowSum -= left;
         freqMap.set(left, (freqMap.get(left) ?? 0) - 1);
         if ((freqMap.get(left) ?? 0) === 0) { freqMap.delete(left); distinct--; }
       }
-      if (i >= k - 1 && distinct >= m) best = Math.max(best, windowSum);
+      if (i >= m - 1 && distinct >= k) best = Math.max(best, windowSum);
     }
     return best;
   },
@@ -37378,6 +37378,56 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       else { remaining--; curr *= 10; }
     }
     return curr;
+  },
+
+  'count-substrings-with-k-frequency-characters-ii': (s: unknown, k: unknown) => {
+    const str = s as string;
+    const freq2 = k as number;
+    const n = str.length;
+    const total = n * (n + 1) / 2;
+    const freq = new Array(26).fill(0);
+    let left = 0, noK = 0;
+    for (let right = 0; right < n; right++) {
+      freq[str.charCodeAt(right) - 97]++;
+      while (freq[str.charCodeAt(right) - 97] >= freq2) {
+        freq[str.charCodeAt(left) - 97]--;
+        left++;
+      }
+      noK += right - left + 1;
+    }
+    return total - noK;
+  },
+
+  'sum-of-imbalance-numbers-of-all-subarrays': (nums: unknown) => {
+    const arr = nums as number[];
+    const n = arr.length;
+    let total = 0;
+    for (let i = 0; i < n; i++) {
+      const sorted: number[] = [];
+      const seen = new Set<number>();
+      let imbalance = 0;
+      for (let j = i; j < n; j++) {
+        const v = arr[j]!;
+        if (!seen.has(v)) {
+          seen.add(v);
+          let lo = 0, hi = sorted.length;
+          while (lo < hi) {
+            const mid = (lo + hi) >> 1;
+            if (sorted[mid]! < v) lo = mid + 1;
+            else hi = mid;
+          }
+          const pos = lo;
+          const prev = pos > 0 ? sorted[pos - 1]! : null;
+          const next = pos < sorted.length ? sorted[pos]! : null;
+          if (prev !== null && next !== null && next - prev > 1) imbalance--;
+          if (prev !== null && v - prev > 1) imbalance++;
+          if (next !== null && next - v > 1) imbalance++;
+          sorted.splice(pos, 0, v);
+        }
+        total += imbalance;
+      }
+    }
+    return total;
   },
 
   'design-search-autocomplete-system': (...args: unknown[]) => {

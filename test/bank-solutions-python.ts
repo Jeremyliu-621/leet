@@ -23914,25 +23914,22 @@ def secondMinimum(n, edges, time, change):
     return min(dp)
 `,
 
-  'maximum-sum-of-almost-unique-subarray': `def maxSum(nums, m, k):
+  'maximum-sum-of-almost-unique-subarray': `def maxSumAlmostUniqueSubarray(nums, m, k):
     from collections import defaultdict
+    m = int(m); k = int(k)
     freq = defaultdict(int)
     window_sum = 0
-    distinct = 0
     best = 0
     for i, v in enumerate(nums):
         freq[v] += 1
-        if freq[v] == 1:
-            distinct += 1
         window_sum += v
-        if i >= k:
-            left = nums[i - k]
+        if i >= m:
+            left = nums[i - m]
             window_sum -= left
             freq[left] -= 1
             if freq[left] == 0:
                 del freq[left]
-                distinct -= 1
-        if i >= k - 1 and distinct >= m:
+        if i >= m - 1 and len(freq) >= k:
             best = max(best, window_sum)
     return best
 `,
@@ -24417,20 +24414,20 @@ def secondMinimum(n, edges, time, change):
     return results
 `,
 
-  'count-the-number-of-good-subarrays': `def countGood(nums, k):
+  'count-the-number-of-good-subarrays': `def countGoodSubarrays(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    k = int(k)
     from collections import defaultdict
     freq = defaultdict(int)
-    pairs = 0
-    left = 0
-    result = 0
+    pairs = 0; left = 0; result = 0
     for right in range(len(nums)):
         pairs += freq[nums[right]]
         freq[nums[right]] += 1
         while pairs >= k:
-            result += len(nums) - right
             freq[nums[left]] -= 1
             pairs -= freq[nums[left]]
             left += 1
+        result += left
     return result
 `,
 
@@ -37226,6 +37223,44 @@ def getAllElementsRunner(arr1, arr2):
         if steps <= k: k -= steps; curr += 1
         else: k -= 1; curr *= 10
     return curr
+`,
+
+  'count-substrings-with-k-frequency-characters-ii': `def countSubstringsWithKFrequencyII(s, k):
+    k = int(k)
+    n = len(s)
+    total = n * (n + 1) // 2
+    freq = [0] * 26
+    left = 0
+    no_k = 0
+    for right in range(n):
+        freq[ord(s[right]) - 97] += 1
+        while freq[ord(s[right]) - 97] >= k:
+            freq[ord(s[left]) - 97] -= 1
+            left += 1
+        no_k += right - left + 1
+    return total - no_k
+`,
+
+  'sum-of-imbalance-numbers-of-all-subarrays': `def sumImbalanceNumbers(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    import bisect
+    n = len(nums)
+    total = 0
+    for i in range(n):
+        sorted_vals = []; seen = set(); imbalance = 0
+        for j in range(i, n):
+            v = nums[j]
+            if v not in seen:
+                seen.add(v)
+                pos = bisect.bisect_left(sorted_vals, v)
+                prev = sorted_vals[pos-1] if pos > 0 else None
+                nxt = sorted_vals[pos] if pos < len(sorted_vals) else None
+                if prev is not None and nxt is not None and nxt - prev > 1: imbalance -= 1
+                if prev is not None and v - prev > 1: imbalance += 1
+                if nxt is not None and nxt - v > 1: imbalance += 1
+                sorted_vals.insert(pos, v)
+            total += imbalance
+    return total
 `,
 
   'design-search-autocomplete-system': `def autoCompleteSystem(ops, args):

@@ -4,58 +4,54 @@ export const problem: Problem = {
   id: 'minimum-array-length-after-pair-removals',
   title: 'Minimum Array Length After Pair Removals',
   difficulty: 'medium',
-  tags: ['arrays', 'hash-map'],
+  tags: ['arrays', 'hash-map', 'binary-search'],
   description: `You are given a **0-indexed** sorted array of integers \`nums\`.
 
-You can perform the following operation any number of times:
-- Choose two indices \`i\` and \`j\` where \`i < j\` and \`nums[i] < nums[j]\`, and remove the elements at indices \`i\` and \`j\`.
+In one operation, you can pick two indices \`i\` and \`j\` where \`0 <= i < j < nums.length\` such that \`nums[i] < nums[j]\` and remove both \`nums[i]\` and \`nums[j]\` from \`nums\`.
 
-Return the **minimum** length of \`nums\` after performing the operation any number of times.`,
+Return the **minimum** length of \`nums\` after applying the above operations any number of times.`,
+  constraints: [
+    '`1 <= nums.length <= 10^5`',
+    '`1 <= nums[i] <= 10^9`',
+    '`nums` is sorted in **non-decreasing** order.',
+  ],
   examples: [
     {
-      input: 'nums = [1,2,3,4]',
+      input: 'nums = [1,3,4,9]',
       output: '0',
-      explanation: 'Remove pairs (1,2), (3,4) or (1,3), (2,4) or (1,4), (2,3). All elements removed.',
+      explanation: 'Remove (1,3) and (4,9). All elements removed.',
     },
     {
-      input: 'nums = [1,1,2,2,3,3]',
-      output: '0',
-      explanation: 'Remove pairs: (1,2), (1,2), (3,3)? No — we need nums[i] < nums[j]. Remove (1,2),(1,3),(2,3). All removed.',
-    },
-    {
-      input: 'nums = [1,1,1,1]',
-      output: '4',
-      explanation: 'All elements are equal, so no pair has nums[i] < nums[j]. Cannot remove anything.',
+      input: 'nums = [1,1,2]',
+      output: '1',
+      explanation: 'Remove (1,2). One element [1] remains.',
     },
   ],
-  constraints: [
-    '1 <= nums.length <= 10^5',
-    'nums is sorted in non-decreasing order',
-    '-10^9 <= nums[i] <= 10^9',
+  hints: [
+    'Think about the most frequent element. If max_freq <= n/2, we can pair everything and clear the array. Otherwise, the most frequent element limits us.',
+    'The minimum remaining length = max(0, 2 * max_freq - n), where max_freq is the frequency of the most common element.',
+    'Greedy: we always want to pair the most frequent element with something else. If there are more of it than all other elements combined, the excess stays.',
   ],
   functionName: 'minLengthAfterRemovals',
   params: ['nums'],
   starterCode: {
-    javascript: 'function minLengthAfterRemovals(nums) {\n  // your code here\n}\n',
-    typescript: "function minLengthAfterRemovals(nums: number[]): number {\n  // your code here\n}",
+    javascript: `function minLengthAfterRemovals(nums) {
 
-    python: 'def minLengthAfterRemovals(nums):\n    # your code here\n    pass\n',
+}`,
+    typescript: 'function minLengthAfterRemovals(nums: number[]): number {\n\n}',
+    python: `def minLengthAfterRemovals(nums):
+    pass`,
   },
-  hints: [
-    'Find the frequency of the most common element. Call it `maxFreq` and the total length `n`.',
-    'If `maxFreq > n / 2`, the dominant element will "block" and leave `2 * maxFreq - n` elements.',
-    'Otherwise, all elements can be paired up, and the answer is `n % 2` (0 if even length, 1 if odd).',
-  ],
   visibleTests: [
-    { args: [[1, 2, 3, 4]], expected: 0 },
-    { args: [[1, 1, 2, 2, 3, 3]], expected: 0 },
-    { args: [[1, 1, 1, 1]], expected: 4 },
+    { args: [[1, 3, 4, 9]], expected: 0 },
+    { args: [[1, 1, 2]], expected: 1 },
   ],
   hiddenTests: [
     { args: [[1]], expected: 1 },
+    { args: [[1, 1]], expected: 2 },
     { args: [[1, 2]], expected: 0 },
-    { args: [[1, 1, 1, 2]], expected: 2 },
-    { args: [[1, 1, 2, 2, 2, 3]], expected: 0 },
-    { args: [[2, 2, 2, 2, 2, 3, 3]], expected: 3 },
+    { args: [[1, 1, 1, 1, 2, 3]], expected: 2 },
+    { args: [[1, 1, 2, 2, 3, 3]], expected: 0 },
+    { args: [[1, 2, 3, 4, 5]], expected: 1 },
   ],
 };
