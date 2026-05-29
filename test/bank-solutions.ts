@@ -38204,4 +38204,56 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  // batch 163 — bit-manipulation enrichment
+  'flip-and-invert-image': (image: unknown) => {
+    const grid = image as number[][];
+    return grid.map(row => row.slice().reverse().map(x => x ^ 1));
+  },
+
+  'check-if-a-string-contains-all-binary-codes-of-size-k': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    if (s.length < (1 << k)) return false;
+    const seen = new Set<string>();
+    for (let i = 0; i <= s.length - k; i++) seen.add(s.slice(i, i + k));
+    return seen.size === (1 << k);
+  },
+
+  'bitwise-ors-of-subarrays': (arr: unknown) => {
+    const a = arr as number[];
+    const result = new Set<number>();
+    let prev = new Set<number>();
+    for (const n of a) {
+      const curr = new Set<number>([n]);
+      for (const x of prev) curr.add(x | n);
+      for (const x of curr) result.add(x);
+      prev = curr;
+    }
+    return result.size;
+  },
+
+  'number-of-steps-to-reduce-a-number-in-binary-representation': (s: unknown) => {
+    const str = s as string;
+    let steps = 0, carry = 0;
+    for (let i = str.length - 1; i > 0; i--) {
+      const bit = (str[i] === '1' ? 1 : 0) + carry;
+      if (bit === 0) { steps++; carry = 0; }
+      else if (bit === 1) { steps += 2; carry = 1; }
+      else { steps++; carry = 1; }
+    }
+    return steps + carry;
+  },
+
+  'convert-to-base-2': (n: unknown) => {
+    const num = n as number;
+    if (num === 0) return '0';
+    let result = '', x = num;
+    while (x !== 0) {
+      const rem = ((x % 2) + 2) % 2;
+      result = rem + result;
+      x = (x - rem) / (-2);
+    }
+    return result;
+  },
+
 };

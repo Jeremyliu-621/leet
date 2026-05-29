@@ -2667,6 +2667,12 @@ import { problem as countSpecialNumbers } from './count-special-numbers';
 import { problem as minimumDeletionsToMakeArrayBeautiful } from './minimum-deletions-to-make-array-beautiful';
 import { problem as amountOfNewAreaPaintedEachDay } from './amount-of-new-area-painted-each-day';
 import { problem as convertNumberToHexadecimal } from './convert-number-to-hexadecimal';
+// batch 163 — bit-manipulation enrichment (5 new problems)
+import { problem as flipAndInvertImage } from './flip-and-invert-image';
+import { problem as checkIfAStringContainsAllBinaryCodesOfSizeK } from './check-if-a-string-contains-all-binary-codes-of-size-k';
+import { problem as bitwiseOrsOfSubarrays } from './bitwise-ors-of-subarrays';
+import { problem as numberOfStepsToReduceInBinary } from './number-of-steps-to-reduce-a-number-in-binary-representation';
+import { problem as convertToBaseNeg2 } from './convert-to-base-2';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5370,4 +5376,10 @@ export const problems: readonly Problem[] = [
   minimumDeletionsToMakeArrayBeautiful,
   amountOfNewAreaPaintedEachDay,
   convertNumberToHexadecimal,
+  // batch 163 — bit-manipulation enrichment
+  flipAndInvertImage,
+  checkIfAStringContainsAllBinaryCodesOfSizeK,
+  bitwiseOrsOfSubarrays,
+  numberOfStepsToReduceInBinary,
+  convertToBaseNeg2,
 ];

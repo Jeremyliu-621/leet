@@ -38072,4 +38072,71 @@ def toHex(num):
     return result
 `,
 
+  // batch 163 — bit-manipulation enrichment
+  'flip-and-invert-image': `
+def flipAndInvertImage(image):
+    if hasattr(image, 'to_py'):
+        image = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in image.to_py()]
+    return [list(map(lambda x: x ^ 1, reversed(row))) for row in image]
+`,
+
+  'check-if-a-string-contains-all-binary-codes-of-size-k': `
+def hasAllCodes(s, k):
+    total = 1 << k
+    if len(s) < total:
+        return False
+    seen = set()
+    for i in range(len(s) - k + 1):
+        seen.add(s[i:i+k])
+        if len(seen) == total:
+            return True
+    return False
+`,
+
+  'bitwise-ors-of-subarrays': `
+def subarrayBitwiseORs(arr):
+    if hasattr(arr, 'to_py'):
+        arr = list(arr.to_py())
+    result = set()
+    prev = set()
+    for n in arr:
+        curr = {n}
+        for x in prev:
+            curr.add(x | n)
+        result |= curr
+        prev = curr
+    return len(result)
+`,
+
+  'number-of-steps-to-reduce-a-number-in-binary-representation': `
+def numSteps(s):
+    steps = 0
+    carry = 0
+    for i in range(len(s) - 1, 0, -1):
+        bit = (1 if s[i] == '1' else 0) + carry
+        if bit == 0:
+            steps += 1
+            carry = 0
+        elif bit == 1:
+            steps += 2
+            carry = 1
+        else:
+            steps += 1
+            carry = 1
+    return steps + carry
+`,
+
+  'convert-to-base-2': `
+def baseNeg2(n):
+    if n == 0:
+        return '0'
+    result = ''
+    x = n
+    while x != 0:
+        rem = ((x % 2) + 2) % 2
+        result = str(rem) + result
+        x = (x - rem) // (-2)
+    return result
+`,
+
 };
