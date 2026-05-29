@@ -38344,4 +38344,83 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return k;
   },
 
+  // batch 165 — design+stack/easy, arrays+stack/medium×2, arrays+stack+dp/medium, arrays+sliding-window/hard
+  'minimum-stack': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const argv = args[1] as (number | null)[][];
+    const stack: number[] = [];
+    const minStk: number[] = [];
+    return ops.map((op, i) => {
+      if (op === 'MinStack') return null;
+      if (op === 'push') {
+        const v = argv[i]![0] as number;
+        stack.push(v);
+        minStk.push(minStk.length === 0 ? v : Math.min(v, minStk[minStk.length - 1]!));
+        return null;
+      }
+      if (op === 'pop') { stack.pop(); minStk.pop(); return null; }
+      if (op === 'top') return stack[stack.length - 1]!;
+      return minStk[minStk.length - 1]!; // getMin
+    });
+  },
+
+  'maximum-chunks-to-make-sorted': (arr: unknown) => {
+    const a = arr as number[];
+    let chunks = 0, maxSoFar = -1;
+    for (let i = 0; i < a.length; i++) {
+      maxSoFar = Math.max(maxSoFar, a[i]!);
+      if (maxSoFar === i) chunks++;
+    }
+    return chunks;
+  },
+
+  'find-the-most-competitive-subsequence': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const n = nums.length;
+    const stack: number[] = [];
+    for (let i = 0; i < n; i++) {
+      while (stack.length > 0 && stack[stack.length - 1]! > nums[i]! && stack.length - 1 + (n - i) >= k) {
+        stack.pop();
+      }
+      if (stack.length < k) stack.push(nums[i]!);
+    }
+    return stack;
+  },
+
+  'minimum-cost-tree-from-leaf-values': (arr: unknown) => {
+    const a = arr as number[];
+    const stack: number[] = [];
+    let cost = 0;
+    for (const val of a) {
+      while (stack.length > 0 && stack[stack.length - 1]! <= val) {
+        const mid = stack.pop()!;
+        cost += mid * Math.min(stack.length > 0 ? stack[stack.length - 1]! : Infinity, val);
+      }
+      stack.push(val);
+    }
+    while (stack.length > 1) cost += stack.pop()! * stack[stack.length - 1]!;
+    return cost;
+  },
+
+  'shortest-subarray-with-sum-at-least-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const n = nums.length;
+    const prefix = new Array<number>(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + nums[i]!;
+    const deque: number[] = [];
+    let ans = n + 1;
+    for (let j = 0; j <= n; j++) {
+      while (deque.length > 0 && prefix[j]! - prefix[deque[0]!]! >= k) {
+        ans = Math.min(ans, j - deque.shift()!);
+      }
+      while (deque.length > 0 && prefix[deque[deque.length - 1]!]! >= prefix[j]!) {
+        deque.pop();
+      }
+      deque.push(j);
+    }
+    return ans === n + 1 ? -1 : ans;
+  },
+
 };

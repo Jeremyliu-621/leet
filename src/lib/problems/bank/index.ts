@@ -2684,6 +2684,12 @@ import { problem as partitioningIntoMinimumNumberOfDeciBinaryNumbers } from './p
 import { problem as splitStringIntoMaximumNumberOfUniqueSubstrings } from './split-a-string-into-the-maximum-number-of-unique-substrings';
 import { problem as tupleWithSameProduct } from './tuple-with-same-product';
 import { problem as whereWillTheBallFall } from './where-will-the-ball-fall';
+// batch 165 — design+stack/easy, arrays+stack/medium×2, arrays+stack+dp/medium, arrays+sliding-window/hard
+import { problem as minimumStack } from './minimum-stack';
+import { problem as maximumChunksToMakeSorted } from './maximum-chunks-to-make-sorted';
+import { problem as findTheMostCompetitiveSubsequence } from './find-the-most-competitive-subsequence';
+import { problem as minimumCostTreeFromLeafValues } from './minimum-cost-tree-from-leaf-values';
+import { problem as shortestSubarrayWithSumAtLeastK } from './shortest-subarray-with-sum-at-least-k';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5402,4 +5408,10 @@ export const problems: readonly Problem[] = [
   specialPermutations,
   countSubstringsWithKFrequencyCharactersII,
   sumOfImbalanceNumbersOfAllSubarrays,
+  // batch 165 — design+stack/easy, arrays+stack/medium×2, arrays+stack+dp/medium, arrays+sliding-window/hard
+  minimumStack,
+  maximumChunksToMakeSorted,
+  findTheMostCompetitiveSubsequence,
+  minimumCostTreeFromLeafValues,
+  shortestSubarrayWithSumAtLeastK,
 ];

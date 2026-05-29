@@ -38275,4 +38275,90 @@ def removeDuplicates(nums):
     return k
 `,
 
+  // batch 165
+  'minimum-stack': `
+def minStack(ops, args):
+    if hasattr(ops, 'to_py'): ops = list(ops.to_py())
+    if hasattr(args, 'to_py'): args = [list(a.to_py()) if hasattr(a, 'to_py') else list(a) for a in args]
+    stack = []
+    min_stk = []
+    results = []
+    for op, arg in zip(ops, args):
+        if op == 'MinStack':
+            results.append(None)
+        elif op == 'push':
+            v = int(arg[0])
+            stack.append(v)
+            min_stk.append(v if not min_stk else min(v, min_stk[-1]))
+            results.append(None)
+        elif op == 'pop':
+            stack.pop()
+            min_stk.pop()
+            results.append(None)
+        elif op == 'top':
+            results.append(stack[-1])
+        else:
+            results.append(min_stk[-1])
+    return results
+`,
+
+  'maximum-chunks-to-make-sorted': `
+def maxChunksToSorted(arr):
+    if hasattr(arr, 'to_py'): arr = list(arr.to_py())
+    chunks = 0
+    max_so_far = -1
+    for i, v in enumerate(arr):
+        max_so_far = max(max_so_far, v)
+        if max_so_far == i:
+            chunks += 1
+    return chunks
+`,
+
+  'find-the-most-competitive-subsequence': `
+def mostCompetitive(nums, k):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    n = len(nums)
+    stack = []
+    for i in range(n):
+        while stack and stack[-1] > nums[i] and len(stack) - 1 + (n - i) >= k:
+            stack.pop()
+        if len(stack) < k:
+            stack.append(nums[i])
+    return stack
+`,
+
+  'minimum-cost-tree-from-leaf-values': `
+def mctFromLeafValues(arr):
+    if hasattr(arr, 'to_py'): arr = list(arr.to_py())
+    stack = []
+    cost = 0
+    for val in arr:
+        while stack and stack[-1] <= val:
+            mid = stack.pop()
+            cost += mid * min(stack[-1] if stack else float('inf'), val)
+        stack.append(val)
+    while len(stack) > 1:
+        cost += stack.pop() * stack[-1]
+    return cost
+`,
+
+  'shortest-subarray-with-sum-at-least-k': `
+from collections import deque
+def shortestSubarray(nums, k):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i+1] = prefix[i] + nums[i]
+    dq = deque()
+    ans = n + 1
+    for j in range(n + 1):
+        while dq and prefix[j] - prefix[dq[0]] >= k:
+            ans = min(ans, j - dq.popleft())
+        while dq and prefix[dq[-1]] >= prefix[j]:
+            dq.pop()
+        dq.append(j)
+    return ans if ans <= n else -1
+`,
+
 };
