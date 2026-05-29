@@ -3105,6 +3105,9 @@ import { problem as secondMaximumNumberInArray } from './second-maximum-number-i
 import { problem as sumOfValuesAtIndicesWithKSetBits } from './sum-of-values-at-indices-with-k-set-bits';
 import { problem as pointsThatIntersectWithCars } from './points-that-intersect-with-cars';
 import { problem as countSteppingNumbersInRange } from './count-stepping-numbers-in-range';
+import { problem as findKOr } from './find-k-or';
+import { problem as maximumMatchingOfPlayersWithTrainers } from './maximum-matching-of-players-with-trainers';
+import { problem as sumOfAbsoluteDifferencesInASortedArray } from './sum-of-absolute-differences-in-a-sorted-array';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6251,4 +6254,8 @@ export const problems: readonly Problem[] = [
   sumOfValuesAtIndicesWithKSetBits,
   pointsThatIntersectWithCars,
   countSteppingNumbersInRange,
+  // batch 211 — easy/bit-manipulation, medium/arrays+two-pointers, medium/arrays+prefix-sum+math
+  findKOr,
+  maximumMatchingOfPlayersWithTrainers,
+  sumOfAbsoluteDifferencesInASortedArray,
 ];

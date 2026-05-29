@@ -182,6 +182,8 @@ type PageState =
       streak: number;
       /** Number of distinct problems solved today (including this one). */
       solvedTodayCount: number;
+      /** All-time total distinct problems solved (including this one). */
+      totalSolved: number;
     };
 
 // ---------------------------------------------------------------------------
@@ -246,6 +248,7 @@ function SolvedStandaloneScreen({
   prevBestSec,
   streak,
   solvedTodayCount,
+  totalSolved,
 }: {
   problemTitle: string;
   difficulty: string;
@@ -258,6 +261,7 @@ function SolvedStandaloneScreen({
   prevBestSec: number | null;
   streak: number;
   solvedTodayCount: number;
+  totalSolved: number;
 }) {
   const challengeBase = window.location.pathname;
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -312,6 +316,11 @@ function SolvedStandaloneScreen({
         <div className="text-center">
           <p className="font-mono text-[9px] uppercase tracking-widest text-faint">Submissions</p>
           <p className="font-mono text-sm font-semibold text-text tabular-nums mt-0.5">{attempts}</p>
+        </div>
+        <div className="h-6 w-px bg-border" aria-hidden="true" />
+        <div className="text-center">
+          <p className="font-mono text-[9px] uppercase tracking-widest text-faint">Total solved</p>
+          <p className="font-mono text-sm font-semibold text-text tabular-nums mt-0.5">{totalSolved}</p>
         </div>
         <div className="h-6 w-px bg-border" aria-hidden="true" />
         <div className="text-center">
@@ -911,6 +920,7 @@ export function Challenge() {
             prevBestSec,
             streak: solvedScreenStreak,
             solvedTodayCount,
+            totalSolved: solvedIds.size,
           });
         }
       } else {
@@ -1110,6 +1120,7 @@ export function Challenge() {
         prevBestSec={pageState.prevBestSec}
         streak={pageState.streak}
         solvedTodayCount={pageState.solvedTodayCount}
+        totalSolved={pageState.totalSolved}
       />
     );
   }
