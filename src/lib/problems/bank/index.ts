@@ -2888,12 +2888,24 @@ import { problem as phonePrefix } from './phone-number-prefix';
 import { problem as reverseDegree } from './reverse-degree-of-a-string';
 import { problem as minOpsArrayZero } from './minimum-operations-make-array-elements-zero';
 import { problem as propertiesGraph } from './properties-graph';
-// batch 219 — easy/math, easy/strings+math+simulation, medium/strings+two-pointers, medium/arrays+simulation
+// batch 219 (remote) — easy/math, easy/strings+math+simulation, medium/strings+two-pointers, medium/arrays+simulation
 import { problem as nonSpecialCount } from './find-the-count-of-numbers-which-are-not-special';
 import { problem as hasSameDigits } from './check-if-digits-are-equal-in-string-after-operations-i';
 import { problem as getSmallestStringConstraint } from './lexicographically-smallest-string-after-operations-with-constraint';
 import { problem as checkValidCuts } from './check-if-grid-can-be-cut-into-sections';
-// batch 220 — medium/arrays+dp, medium/strings+math, hard/arrays+dp
+// batch 219 (worktree) — easy/math, medium/simulation+bit-manipulation, medium/strings+hash-map, medium/arrays+hash-map, easy/arrays+binary-search
+import { problem as countOddsInIntervalRange } from './count-odd-numbers-in-an-interval-range';
+import { problem as findKthBitInNthBinaryString } from './find-kth-bit-in-nth-binary-string';
+import { problem as checkIfStringCanBreakAnotherString } from './check-if-a-string-can-break-another-string';
+import { problem as convertArrayInto2dArrayWithConditions } from './convert-an-array-into-2d-array-with-conditions';
+import { problem as kWeakestRowsInMatrix } from './k-weakest-rows-in-a-matrix';
+// batch 220a — easy/math, easy/arrays, easy/strings, easy/strings, easy/strings+hash-map
+import { problem as sumMultiples } from './sum-multiples';
+import { problem as minOpsArrayIncreasing } from './minimum-operations-to-make-the-array-increasing';
+import { problem as removeTrailingZeros } from './remove-trailing-zeros-from-string';
+import { problem as numbersAscendingInSentence } from './check-if-numbers-are-ascending-in-a-sentence';
+import { problem as countCommonChars } from './count-common-characters';
+// batch 220b — medium/arrays+dp, medium/strings+math, hard/arrays+dp
 import { problem as numSubmat } from './count-submatrices-with-all-ones';
 import { problem as minimumSwap } from './minimum-swaps-to-make-strings-equal';
 import { problem as countSpecialSubsequences } from './count-number-of-special-subsequences';
@@ -5834,12 +5846,24 @@ export const problems: readonly Problem[] = [
   reverseDegree,
   minOpsArrayZero,
   propertiesGraph,
-  // batch 219
+  // batch 219 (remote)
   nonSpecialCount,
   hasSameDigits,
   getSmallestStringConstraint,
   checkValidCuts,
-  // batch 220
+  // batch 219 (worktree)
+  countOddsInIntervalRange,
+  findKthBitInNthBinaryString,
+  checkIfStringCanBreakAnotherString,
+  convertArrayInto2dArrayWithConditions,
+  kWeakestRowsInMatrix,
+  // batch 220a
+  sumMultiples,
+  minOpsArrayIncreasing,
+  removeTrailingZeros,
+  numbersAscendingInSentence,
+  countCommonChars,
+  // batch 220b
   numSubmat,
   minimumSwap,
   countSpecialSubsequences,

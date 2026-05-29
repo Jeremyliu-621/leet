@@ -41627,6 +41627,59 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     };
     return canSplit(rectangles.map(r => [r[0]!, r[2]!])) || canSplit(rectangles.map(r => [r[1]!, r[3]!]));
   },
+  'sum-multiples': (...args: unknown[]) => {
+    const n = args[0] as number;
+    let sum = 0;
+    for (let i = 1; i <= n; i++) {
+      if (i % 3 === 0 || i % 5 === 0 || i % 7 === 0) sum += i;
+    }
+    return sum;
+  },
+  'minimum-operations-to-make-the-array-increasing': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice();
+    let ops = 0;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i]! <= nums[i - 1]!) {
+        ops += nums[i - 1]! + 1 - nums[i]!;
+        nums[i] = nums[i - 1]! + 1;
+      }
+    }
+    return ops;
+  },
+  'remove-trailing-zeros-from-string': (...args: unknown[]) => {
+    const num = args[0] as string;
+    return num.replace(/0+$/, '');
+  },
+  'check-if-numbers-are-ascending-in-a-sentence': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let prev = -1;
+    for (const token of s.split(' ')) {
+      if (/^\d+$/.test(token)) {
+        const n = parseInt(token, 10);
+        if (n <= prev) return false;
+        prev = n;
+      }
+    }
+    return true;
+  },
+  'count-common-characters': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const freq = (w: string) => {
+      const f = new Array(26).fill(0) as number[];
+      for (const c of w) f[c.charCodeAt(0) - 97]!++;
+      return f;
+    };
+    const minFreq = freq(words[0]!);
+    for (let i = 1; i < words.length; i++) {
+      const f = freq(words[i]!);
+      for (let j = 0; j < 26; j++) minFreq[j] = Math.min(minFreq[j]!, f[j]!);
+    }
+    const result: string[] = [];
+    for (let j = 0; j < 26; j++) {
+      for (let k = 0; k < minFreq[j]!; k++) result.push(String.fromCharCode(97 + j));
+    }
+    return result;
+  },
   'count-submatrices-with-all-ones': (...args: unknown[]) => {
     const mat = args[0] as number[][];
     const n = mat[0]!.length;
@@ -41660,6 +41713,62 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       else if (n === 2) dp2 = (2 * dp2 + dp1) % MOD;
     }
     return dp2;
+  },
+  'count-odd-numbers-in-an-interval-range': (...args: unknown[]) => {
+    const low = args[0] as number;
+    const high = args[1] as number;
+    return Math.floor((high + 1) / 2) - Math.floor(low / 2);
+  },
+  'find-kth-bit-in-nth-binary-string': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const k = args[1] as number;
+    const findKthBit = (n: number, k: number): string => {
+      if (n === 1) return '0';
+      const mid = 1 << (n - 1);
+      if (k === mid) return '1';
+      if (k < mid) return findKthBit(n - 1, k);
+      const mirrored = findKthBit(n - 1, mid * 2 - k);
+      return mirrored === '0' ? '1' : '0';
+    };
+    return findKthBit(n, k);
+  },
+  'check-if-a-string-can-break-another-string': (...args: unknown[]) => {
+    const s1 = args[0] as string;
+    const s2 = args[1] as string;
+    const a = [...s1].sort();
+    const b = [...s2].sort();
+    let s1BreaksS2 = true, s2BreaksS1 = true;
+    for (let i = 0; i < a.length; i++) {
+      if (a[i]! < b[i]!) s1BreaksS2 = false;
+      if (b[i]! < a[i]!) s2BreaksS1 = false;
+    }
+    return s1BreaksS2 || s2BreaksS1;
+  },
+  'convert-an-array-into-2d-array-with-conditions': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    const result: number[][] = [];
+    for (const n of nums) {
+      const cnt = freq.get(n) ?? 0;
+      if (cnt >= result.length) result.push([]);
+      result[cnt]!.push(n);
+      freq.set(n, cnt + 1);
+    }
+    return result;
+  },
+  'k-weakest-rows-in-a-matrix': (...args: unknown[]) => {
+    const mat = args[0] as number[][];
+    const k = args[1] as number;
+    const strengths = mat.map((row, i) => {
+      let lo = 0, hi = row.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (row[mid] === 1) lo = mid + 1; else hi = mid;
+      }
+      return [lo, i] as [number, number];
+    });
+    strengths.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    return strengths.slice(0, k).map(([, i]) => i);
   },
   'length-of-the-longest-valid-substring': (...args: unknown[]) => {
     const word = args[0] as string, forbidden = args[1] as string[];

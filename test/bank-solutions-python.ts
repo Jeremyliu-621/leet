@@ -40766,6 +40766,54 @@ def checkValidCuts(n, rectangles):
     y_intervals = [(r[1], r[3]) for r in rectangles]
     return can_split(x_intervals) or can_split(y_intervals)
 `,
+  'sum-multiples': `
+def sumOfMultiples(n):
+    total = 0
+    for i in range(1, n + 1):
+        if i % 3 == 0 or i % 5 == 0 or i % 7 == 0:
+            total += i
+    return total
+`,
+  'minimum-operations-to-make-the-array-increasing': `
+def minOperations(nums):
+    nums = list(nums)
+    ops = 0
+    for i in range(1, len(nums)):
+        if nums[i] <= nums[i - 1]:
+            ops += nums[i - 1] + 1 - nums[i]
+            nums[i] = nums[i - 1] + 1
+    return ops
+`,
+  'remove-trailing-zeros-from-string': `
+def removeTrailingZeros(num):
+    return num.rstrip('0')
+`,
+  'check-if-numbers-are-ascending-in-a-sentence': `
+def areNumbersAscending(s):
+    prev = -1
+    for token in s.split():
+        if token.isdigit():
+            n = int(token)
+            if n <= prev:
+                return False
+            prev = n
+    return True
+`,
+  'count-common-characters': `
+def commonChars(words):
+    from collections import Counter
+    min_freq = Counter(words[0])
+    for word in words[1:]:
+        word_freq = Counter(word)
+        for ch in list(min_freq.keys()):
+            min_freq[ch] = min(min_freq[ch], word_freq.get(ch, 0))
+            if min_freq[ch] == 0:
+                del min_freq[ch]
+    result = []
+    for ch, cnt in sorted(min_freq.items()):
+        result.extend([ch] * cnt)
+    return result
+`,
   'count-submatrices-with-all-ones': `
 def numSubmat(mat):
     m, n = len(mat), len(mat[0])
@@ -40806,6 +40854,57 @@ def countSpecialSubsequences(nums):
         else:
             dp2 = (2 * dp2 + dp1) % MOD
     return dp2
+`,
+  'count-odd-numbers-in-an-interval-range': `
+def countOdds(low, high):
+    return (high + 1) // 2 - low // 2
+`,
+  'find-kth-bit-in-nth-binary-string': `
+def findKthBit(n, k):
+    if n == 1:
+        return "0"
+    mid = 1 << (n - 1)
+    if k == mid:
+        return "1"
+    if k < mid:
+        return findKthBit(n - 1, k)
+    mirrored = findKthBit(n - 1, mid * 2 - k)
+    return "1" if mirrored == "0" else "0"
+`,
+  'check-if-a-string-can-break-another-string': `
+def checkIfCanBreak(s1, s2):
+    a = sorted(s1)
+    b = sorted(s2)
+    s1_breaks_s2 = all(a[i] >= b[i] for i in range(len(a)))
+    s2_breaks_s1 = all(b[i] >= a[i] for i in range(len(a)))
+    return s1_breaks_s2 or s2_breaks_s1
+`,
+  'convert-an-array-into-2d-array-with-conditions': `
+def findMatrix(nums):
+    freq = {}
+    result = []
+    for n in nums:
+        cnt = freq.get(n, 0)
+        if cnt >= len(result):
+            result.append([])
+        result[cnt].append(n)
+        freq[n] = cnt + 1
+    return result
+`,
+  'k-weakest-rows-in-a-matrix': `
+def kWeakestRows(mat, k):
+    def count_soldiers(row):
+        lo, hi = 0, len(row)
+        while lo < hi:
+            mid = (lo + hi) // 2
+            if row[mid] == 1:
+                lo = mid + 1
+            else:
+                hi = mid
+        return lo
+    strengths = [(count_soldiers(row), i) for i, row in enumerate(mat)]
+    strengths.sort()
+    return [i for _, i in strengths[:k]]
 `,
   'length-of-the-longest-valid-substring': `
 def longestValidSubstring(word, forbidden):
