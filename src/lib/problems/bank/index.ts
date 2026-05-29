@@ -2620,6 +2620,19 @@ import { problem as checkKnightTourConfiguration } from './check-knight-tour-con
 import { problem as theNumberOfTheSmallestUnoccupiedChair } from './the-number-of-the-smallest-unoccupied-chair';
 import { problem as intervalsBetweenIdenticalElements } from './intervals-between-identical-elements';
 import { problem as formArrayByConcatenatingSubarraysOfAnotherArray } from './form-array-by-concatenating-subarrays-of-another-array';
+// batch 158 — arrays+math/medium, strings/hard, dp/hard×2
+import { problem as minCostHomecomingRobotInGrid } from './minimum-cost-homecoming-of-a-robot-in-a-grid';
+import { problem as sumOfScoresOfBuiltStrings } from './sum-of-scores-of-built-strings';
+import { problem as countOfIntegers } from './count-of-integers';
+import { problem as numberOfWaysToEarnPoints } from './number-of-ways-to-earn-points';
+// batch 159 — strings+hash-map/medium, dp/hard, arrays+dp/medium
+import { problem as uniqueLength3PalindromicSubsequences } from './unique-length-3-palindromic-subsequences';
+import { problem as minimumWhiteTilesAfterCovering } from './minimum-white-tiles-after-covering-with-carpets';
+import { problem as specialPermutations } from './special-permutations';
+// batch 160 — design/medium×2, strings+math/medium
+import { problem as designLeaderboard } from './design-leaderboard';
+import { problem as rleIterator } from './rle-iterator';
+import { problem as findDivisibilityArrayOfAString } from './find-the-divisibility-array-of-a-string';
 // batch 161 — math/medium, arrays+dp/medium, math+bs/medium, tree/medium
 import { problem as strictlyPalindromicNumber } from './strictly-palindromic-number';
 import { problem as sortingThreeGroups } from './sorting-three-groups';
@@ -5363,6 +5376,19 @@ export const problems: readonly Problem[] = [
   theNumberOfTheSmallestUnoccupiedChair,
   intervalsBetweenIdenticalElements,
   formArrayByConcatenatingSubarraysOfAnotherArray,
+  // batch 158
+  minCostHomecomingRobotInGrid,
+  sumOfScoresOfBuiltStrings,
+  countOfIntegers,
+  numberOfWaysToEarnPoints,
+  // batch 159 — strings+hash-map/medium, dp/hard, arrays+dp/medium
+  uniqueLength3PalindromicSubsequences,
+  minimumWhiteTilesAfterCovering,
+  specialPermutations,
+  // batch 160 — design/medium×2, strings+math/medium
+  designLeaderboard,
+  rleIterator,
+  findDivisibilityArrayOfAString,
   // batch 161 — math/medium, arrays+dp/medium, math+bs/medium, tree/medium
   strictlyPalindromicNumber,
   sortingThreeGroups,

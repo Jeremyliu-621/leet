@@ -29,6 +29,9 @@ Marketing site index.html updated to 2,385+ in all three stat locations. PROGRES
 
 ### feat(bank): add batch 161 — strictly-palindromic-number, sorting-three-groups, ugly-number-iii, binary-tree-coloring-game (2026-05-29)
 Four medium problems: `strictly-palindromic-number` (medium/math, always returns false for n≥4 — proven fact), `sorting-three-groups` (medium/arrays+dp, min replacements = n − LIS with 3-variable DP), `ugly-number-iii` (medium/math+binary-search, binary search + inclusion-exclusion with BigInt for overflow safety), `binary-tree-coloring-game` (medium/tree, second player wins iff any of {leftSubtree, rightSubtree, parentSide} of x > n/2). JS and Python reference solutions included. Bank at **2366**; 7392 tests.
+### feat(bank): add batch 160b — design-leaderboard (medium), rle-iterator (medium), find-the-divisibility-array-of-a-string (medium) (2026-05-29)
+Three new problems: `design-leaderboard` (medium/design+hash-map, addScore accumulates, top(K) sums top-K scores descending, reset zeroes player), `rle-iterator` (medium/design+simulation, iterate over run-length encoded sequence [freq,val,...] with next(n) consuming n elements returning last or -1), `find-the-divisibility-array-of-a-string` (medium/strings+math, maintain running modulo `(mod*10+digit)%m` returning 1 when zero). JS and Python reference solutions included. Bank at **2415**; 7554 tests.
+
 
 ### feat(bank): add batch 160 — minimum-cost-walk-weighted-graph (hard) + register 3 orphaned problems (2026-05-29)
 New: `minimum-cost-to-walk-weighted-graph` (hard/graph+union-find, min cost path = bitwise AND of all edges in component; UF tracks per-component AND as edges are added). Registered orphans already in bank: `maximum-alternating-subsequence-sum` (medium/arrays+dp), `count-number-of-bad-pairs` (medium/arrays+hash-map), `make-array-zero-by-subtracting-equal-amounts` (easy/arrays+math). Bank at **2373**; 7413 tests.

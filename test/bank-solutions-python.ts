@@ -38368,6 +38368,65 @@ def shortestSubarray(nums, k):
             dq.pop()
         dq.append(j)
     return ans if ans <= n else -1
+  // batch 160b — design/medium×2, strings+math/medium
+  'design-leaderboard': `
+def leaderboard(ops, params):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    params = list(params.to_py() if hasattr(params, 'to_py') else params)
+    scores = {}
+    result = []
+    for op, p in zip(ops, params):
+        p = list(p)
+        if op == 'Leaderboard':
+            result.append(None)
+        elif op == 'addScore':
+            scores[p[0]] = scores.get(p[0], 0) + p[1]
+            result.append(None)
+        elif op == 'top':
+            k = p[0]
+            sorted_scores = sorted(scores.values(), reverse=True)
+            result.append(sum(sorted_scores[:k]))
+        else:
+            scores[p[0]] = 0
+            result.append(None)
+    return result
+`,
+
+  'rle-iterator': `
+def rleIterator(ops, params):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    params = list(params.to_py() if hasattr(params, 'to_py') else params)
+    # params[0] is [[encoding]], so params[0][0] is the encoding
+    enc = list(list(params[0])[0])
+    idx = 0
+    result = [None]
+    for i in range(1, len(ops)):
+        p = list(params[i])
+        n = p[0]
+        res = -1
+        while idx < len(enc) and n > 0:
+            if enc[idx] >= n:
+                enc[idx] -= n
+                res = enc[idx + 1]
+                n = 0
+            else:
+                n -= enc[idx]
+                enc[idx] = 0
+                idx += 2
+        result.append(-1 if n > 0 else res)
+    return result
+`,
+
+  'find-the-divisibility-array-of-a-string': `
+def findDivisibilityArray(word, m):
+    if hasattr(word, 'to_py'):
+        word = word.to_py()
+    mod = 0
+    result = []
+    for ch in str(word):
+        mod = (mod * 10 + int(ch)) % m
+        result.append(1 if mod == 0 else 0)
+    return result
 `,
 
   // batch 163 — strings+arrays/medium, arrays+dp/hard, strings+dp/hard, arrays+graph/hard, arrays+dp/hard

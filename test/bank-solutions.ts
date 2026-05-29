@@ -38421,6 +38421,68 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       deque.push(j);
     }
     return ans === n + 1 ? -1 : ans;
+  // batch 160b — design/medium×2, strings+math/medium
+  'design-leaderboard': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const params = args[1] as number[][];
+    const scores: Record<number, number> = {};
+    const result: (number | null)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!;
+      const p = params[i]!;
+      if (op === 'Leaderboard') {
+        result.push(null);
+      } else if (op === 'addScore') {
+        const id = p[0]!, score = p[1]!;
+        scores[id] = (scores[id] ?? 0) + score;
+        result.push(null);
+      } else if (op === 'top') {
+        const k = p[0]!;
+        const sorted = Object.values(scores).sort((a, b) => b - a);
+        result.push(sorted.slice(0, k).reduce((s, v) => s + v, 0));
+      } else {
+        scores[p[0]!] = 0;
+        result.push(null);
+      }
+    }
+    return result;
+  },
+
+  'rle-iterator': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    const params = args[1] as number[][];
+    const enc = [...params[0]!];
+    let idx = 0;
+    const result: (number | null)[] = [null];
+    for (let i = 1; i < ops.length; i++) {
+      let n = params[i]![0]!;
+      let res = -1;
+      while (idx < enc.length && n > 0) {
+        if (enc[idx]! >= n) {
+          enc[idx] = enc[idx]! - n;
+          res = enc[idx + 1]!;
+          n = 0;
+        } else {
+          n -= enc[idx]!;
+          enc[idx] = 0;
+          idx += 2;
+        }
+      }
+      result.push(n > 0 ? -1 : res);
+    }
+    return result;
+  },
+
+  'find-the-divisibility-array-of-a-string': (word: unknown, m: unknown) => {
+    const w = word as string;
+    const mod_m = m as number;
+    let mod = 0;
+    const result: number[] = [];
+    for (const ch of w) {
+      mod = (mod * 10 + parseInt(ch)) % mod_m;
+      result.push(mod === 0 ? 1 : 0);
+    }
+    return result;
   },
 
   // batch 163 — strings+arrays/medium, arrays+dp/hard, strings+dp/hard, arrays+graph/hard, arrays+dp/hard
