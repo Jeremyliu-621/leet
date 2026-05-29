@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2823** problems; 8763 tests green. Batches 102–217 (merged) complete.
+**Current focus:** Bank at **2827** problems; 8775 tests green. Batches 102–218 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 218+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 219+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 218 — phone-number-prefix, reverse-degree, min-ops-array-zero, properties-graph (2026-05-29)
+Four new problems: `phone-number-prefix` (easy/strings, sort + consecutive startsWith check), `reverse-degree-of-a-string` (easy/strings+math, positional reverse-alphabet weight sum), `minimum-operations-make-array-elements-zero` (medium/arrays+hash-map+math, pair equal non-zero elements or -1 if odd count), `properties-graph` (medium/graph+union-find, union all nodes sharing a property value, count roots). Bank at **2827**; 8775 tests.
 
 ### feat(bank): batch 217 — largest-almost-missing, unique-3-digit-even, transform-by-parity, max-containers + 215-addendum merge (2026-05-29)
 Four new problems: `find-the-largest-almost-missing-integer` (easy/arrays+hash-map, max freq-1 element or -1), `unique-3-digit-even-numbers` (easy/arrays+simulation, brute-force all index triplets for 3-digit evens), `transform-array-by-parity` (easy/arrays+simulation, count evens→0s, odds→1s, return sorted), `maximum-containers-on-a-ship` (easy/math, k*(k+1)/2 ≤ n², quadratic formula). Also merged concurrent 215-addendum (valid-tic-tac-toe, kth-multiplication-table, confusing-number-ii, min-swaps-binary-grid, solve-equation, count-groups-special-equiv, difference-ones-zeros, find-kth-largest-int). Bank at **2823**; 8763 tests.
