@@ -41559,351 +41559,70 @@ def validWordSquare(words):
     return True
 `,
 
-
-
-  'find-number-of-ways-to-reach-the-k-th-stair': `
-def waysToReachStair(k):
-    from functools import lru_cache
-    @lru_cache(maxsize=None)
-    def dp(i, jump, used_down):
-        if i > k + 1:
-            return 0
-        ways = 1 if i == k else 0
-        ways += dp(i + (1 << jump), jump + 1, False)
-        if i > 0 and not used_down:
-            ways += dp(i - 1, jump, True)
-        return ways
-    return dp(1, 0, False)
-`,
-
-
-  'count-beautiful-splits-in-an-array': `
-def beautifulSplits(nums):
-    n = len(nums)
-    lcp = [[0] * (n + 1) for _ in range(n + 1)]
-    for i in range(n - 1, -1, -1):
-        for j in range(n - 1, -1, -1):
-            lcp[i][j] = lcp[i+1][j+1] + 1 if nums[i] == nums[j] else 0
-    count = 0
-    for i in range(1, n):
-        for j in range(i + 1, n):
-            cond1 = (i <= j - i) and (lcp[0][i] >= i)
-            cond2 = (j - i <= n - j) and (lcp[i][j] >= j - i)
-            if cond1 or cond2:
-                count += 1
-    return count
-`,
-
-  'binary-tree-level-order-traversal': `
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
-
-def __from_array__(raw):
-    raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
-    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
-    if not arr or arr[0] is None:
-        return None
-    root = TreeNode(arr[0])
-    queue = [root]
-    i = 1
-    while queue and i < len(arr):
-        node = queue.pop(0)
-        if i < len(arr) and arr[i] is not None:
-            node.left = TreeNode(arr[i]); queue.append(node.left)
-        i += 1
-        if i < len(arr) and arr[i] is not None:
-            node.right = TreeNode(arr[i]); queue.append(node.right)
-        i += 1
-    return root
-
-def levelOrderRunner(arr):
-    root = __from_array__(arr)
-    if root is None:
-        return []
-    result = []
-    queue = [root]
-    while queue:
-        size = len(queue)
-        level = []
-        for _ in range(size):
-            node = queue.pop(0)
-            level.append(node.val)
-            if node.left: queue.append(node.left)
-            if node.right: queue.append(node.right)
-        result.append(level)
-    return result
-`,
-
-  'find-k-pairs-with-smallest-sums': `
-def kSmallestPairs(nums1, nums2, k):
-    if hasattr(nums1, 'to_py'): nums1 = list(nums1.to_py())
-    if hasattr(nums2, 'to_py'): nums2 = list(nums2.to_py())
-    nums1 = [int(x) for x in nums1]
-    nums2 = [int(x) for x in nums2]
-    k = int(k)
-    import heapq
-    if not nums1 or not nums2:
-        return []
-    heap = []
-    for i in range(min(k, len(nums1))):
-        heapq.heappush(heap, (nums1[i] + nums2[0], i, 0))
-    result = []
-    while result.__len__() < k and heap:
-        s, i, j = heapq.heappop(heap)
-        result.append([nums1[i], nums2[j]])
-        if j + 1 < len(nums2):
-            heapq.heappush(heap, (nums1[i] + nums2[j + 1], i, j + 1))
-    return result
-`,
-
-  'sequence-reconstruction': `
-def sequenceReconstruction(nums, sequences):
-    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
-    if hasattr(sequences, 'to_py'): sequences = [list(s.to_py()) if hasattr(s, 'to_py') else list(s) for s in sequences.to_py()]
-    nums = [int(x) for x in nums]
-    seqs = [[int(x) for x in s] for s in sequences]
-    n = len(nums)
-    pos = {v: i for i, v in enumerate(nums)}
-    in_deg = [0] * n
-    required = set()
-    for seq in seqs:
-        for i in range(1, len(seq)):
-            u, v = seq[i-1], seq[i]
-            pu, pv = pos[u], pos[v]
-            key = (pu, pv)
-            if key not in required:
-                required.add(key)
-                in_deg[pv] += 1
-    queue = [i for i in range(n) if in_deg[i] == 0]
-    order = 0
-    while len(queue) == 1:
-        idx = queue.pop(0)
-        u = nums[idx]
-        for seq in seqs:
-            for i in range(len(seq) - 1):
-                if seq[i] == u:
-                    pv = pos[seq[i+1]]
-                    in_deg[pv] -= 1
-                    if in_deg[pv] == 0:
-                        queue.append(pv)
-        order += 1
-    return order == n and len(queue) == 0
-`,
-
-  'inorder-successor-in-bst': `
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
-
-def __from_array_bst__(raw):
-    raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
-    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
-    if not arr or arr[0] is None:
-        return None
-    root = TreeNode(arr[0])
-    queue = [root]
-    i = 1
-    while queue and i < len(arr):
-        node = queue.pop(0)
-        if i < len(arr) and arr[i] is not None:
-            node.left = TreeNode(arr[i]); queue.append(node.left)
-        i += 1
-        if i < len(arr) and arr[i] is not None:
-            node.right = TreeNode(arr[i]); queue.append(node.right)
-        i += 1
-    return root
-
-def inorderSuccessorRunner(arr, p):
-    p = int(p)
-    root = __from_array_bst__(arr)
-    node = root
-    succ = None
-    while node:
-        if node.val > p:
-            succ = node
-            node = node.left
-        else:
-            node = node.right
-    return succ.val if succ else None
-`,
-
-  'closest-binary-search-tree-value-ii': `
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
-
-def __from_array_cbst__(raw):
-    raw_list = raw.to_py() if hasattr(raw, 'to_py') else list(raw)
-    arr = [int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None for v in raw_list]
-    if not arr or arr[0] is None:
-        return None
-    root = TreeNode(arr[0])
-    queue = [root]
-    i = 1
-    while queue and i < len(arr):
-        node = queue.pop(0)
-        if i < len(arr) and arr[i] is not None:
-            node.left = TreeNode(arr[i]); queue.append(node.left)
-        i += 1
-        if i < len(arr) and arr[i] is not None:
-            node.right = TreeNode(arr[i]); queue.append(node.right)
-        i += 1
-    return root
-
-def __inorder_cbst__(node, vals):
-    if not node: return
-    __inorder_cbst__(node.left, vals)
-    vals.append(node.val)
-    __inorder_cbst__(node.right, vals)
-
-def closestKValuesRunner(arr, target, k):
-    target = float(target)
-    k = int(k)
-    vals = []
-    __inorder_cbst__(__from_array_cbst__(arr), vals)
-    lo, hi = 0, len(vals) - 1
-    while hi - lo + 1 > k:
-        if abs(vals[lo] - target) <= abs(vals[hi] - target):
-            hi -= 1
-        else:
-            lo += 1
-    return sorted(vals[lo:hi+1])
-`,
-
-
-  // batch 179 (local)
-  'maximum-number-of-groups-entering-a-competition': `
-def maximumGroups(grades):
-    if hasattr(grades, 'to_py'): grades = list(grades.to_py())
-    n = len(grades)
-    k = 0
-    while (k + 1) * (k + 2) // 2 <= n:
-        k += 1
-    return k
-`,
-
-  'find-the-longest-semi-repetitive-substring': `
-def longestSemiRepetitiveSubstring(s):
-    l = 0; pairs = 0; best = 1
-    for r in range(1, len(s)):
-        if s[r] == s[r - 1]: pairs += 1
-        while pairs > 1:
-            if s[l] == s[l + 1]: pairs -= 1
-            l += 1
-        best = max(best, r - l + 1)
-    return best
-`,
-
-  'count-the-number-of-incremovable-subarrays-i': `
-def incremovableSubarrayCount(nums):
-    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
-    n = len(nums)
-    count = 0
-    for l in range(n):
-        for r in range(l, n):
-            remaining = nums[:l] + nums[r+1:]
-            if all(remaining[i] < remaining[i+1] for i in range(len(remaining)-1)):
-                count += 1
-    return count
-`,
-
-  'check-if-the-grid-can-be-cut-into-sections': `
-def checkValidCuts(n, rectangles):
-    if hasattr(rectangles, 'to_py'): rectangles = list(rectangles.to_py())
-    rectangles = [list(r) for r in rectangles]
-    def can_cut(segs):
-        segs.sort(key=lambda x: x[0])
-        groups = 0
-        max_end = float('-inf')
-        for s, e in segs:
-            if s >= max_end:
-                groups += 1
-            max_end = max(max_end, e)
-        return groups >= 3
-    x_segs = [[r[0], r[2]] for r in rectangles]
-    y_segs = [[r[1], r[3]] for r in rectangles]
-    return can_cut(x_segs) or can_cut(y_segs)
-`,
-
-  'minimum-ops-make-elements-distinct': `
-def minimumOperations(nums):
-    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
-    seen = set()
-    for i in range(len(nums) - 1, -1, -1):
-        if nums[i] in seen:
-            return (i + 3) // 3
-        seen.add(nums[i])
-    return 0
-`,
-
-  'zigzag-grid-traversal-with-skip': `
-def zigzagTraversal(grid):
-    if hasattr(grid, 'to_py'): grid = list(grid.to_py())
-    grid = [list(row) for row in grid]
-    result = []
-    count = 0
-    for r, row in enumerate(grid):
-        cells = row if r % 2 == 0 else row[::-1]
-        for val in cells:
-            if count % 2 == 0:
-                result.append(val)
-            count += 1
-    return result
-`,
-
-  'sum-of-variable-length-subarrays': `
-def subarraySum(nums):
-    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
-    n = len(nums)
-    prefix = [0] * (n + 1)
-    for i in range(n):
-        prefix[i + 1] = prefix[i] + nums[i]
+  // batch 179b — arrays+simulation/medium, arrays/easy, arrays+backtracking/medium, strings+hash-map/medium
+  'collect-garbage-by-collecting-trucks': `
+def garbageCollection(garbage, travel):
+    if hasattr(garbage, 'to_py'): garbage = list(garbage.to_py())
+    if hasattr(travel, 'to_py'): travel = list(travel.to_py())
     total = 0
-    for i in range(n):
-        start = max(0, i - nums[i])
-        total += prefix[i + 1] - prefix[start]
+    for t in ['G', 'M', 'P']:
+        last_idx = -1
+        for i, g in enumerate(garbage):
+            for ch in g:
+                if ch == t:
+                    total += 1
+                    last_idx = i
+        for i in range(last_idx):
+            total += travel[i]
     return total
 `,
 
-  'maximum-amount-of-money-robot-can-earn': `
-def maximumAmount(coins):
-    if hasattr(coins, 'to_py'): coins = list(coins.to_py())
-    coins = [list(row) for row in coins]
-    n, m = len(coins), len(coins[0])
-    NEG_INF = float('-inf')
-    dp = [[[NEG_INF, NEG_INF, NEG_INF] for _ in range(m)] for _ in range(n)]
-    c = coins[0][0]
-    dp[0][0][0] = c
-    if c < 0:
-        dp[0][0][1] = 0
-    for i in range(n):
-        for j in range(m):
-            if i == 0 and j == 0:
-                continue
-            c = coins[i][j]
-            prev = [NEG_INF, NEG_INF, NEG_INF]
-            if i > 0:
-                for k in range(3):
-                    prev[k] = max(prev[k], dp[i-1][j][k])
-            if j > 0:
-                for k in range(3):
-                    prev[k] = max(prev[k], dp[i][j-1][k])
-            if c >= 0:
-                for k in range(3):
-                    dp[i][j][k] = (prev[k] + c) if prev[k] != NEG_INF else NEG_INF
-            else:
-                for k in range(3):
-                    take = (prev[k] + c) if prev[k] != NEG_INF else NEG_INF
-                    neut = prev[k-1] if k > 0 and prev[k-1] != NEG_INF else NEG_INF
-                    dp[i][j][k] = max(take, neut)
-    return max(dp[n-1][m-1])
+  'largest-local-values-in-a-matrix': `
+def largestLocal(grid):
+    if hasattr(grid, 'to_py'):
+        grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in grid.to_py()]
+    else:
+        grid = [list(row) for row in grid]
+    n = len(grid)
+    res = []
+    for i in range(1, n - 1):
+        row = []
+        for j in range(1, n - 1):
+            max_val = 0
+            for di in [-1, 0, 1]:
+                for dj in [-1, 0, 1]:
+                    max_val = max(max_val, grid[i + di][j + dj])
+            row.append(max_val)
+        res.append(row)
+    return res
+`,
+
+  'the-number-of-beautiful-subsets': `
+def beautifulSubsets(nums, k):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums.sort()
+    count = 0
+    freq = {}
+    def backtrack(idx):
+        nonlocal count
+        for i in range(idx, len(nums)):
+            if freq.get(nums[i] - k, 0) == 0:
+                freq[nums[i]] = freq.get(nums[i], 0) + 1
+                count += 1
+                backtrack(i + 1)
+                freq[nums[i]] -= 1
+                if freq[nums[i]] == 0:
+                    del freq[nums[i]]
+    backtrack(0)
+    return count
+`,
+
+  'minimum-number-of-steps-to-make-two-strings-anagram-ii': `
+def minSteps(s, t):
+    count = [0] * 26
+    for ch in s: count[ord(ch) - ord('a')] += 1
+    for ch in t: count[ord(ch) - ord('a')] -= 1
+    return sum(abs(v) for v in count)
 `,
 
 };

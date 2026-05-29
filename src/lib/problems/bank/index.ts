@@ -2883,6 +2883,11 @@ import { problem as minimumAreaToCovertAllOnesII } from './minimum-area-to-cover
 import { problem as minimumOperationsToMakeSubsequence } from './minimum-operations-to-make-a-subsequence';
 import { problem as replaceNonCoprimeNumbers } from './replace-non-coprime-numbers-in-array';
 import { problem as maximumNumberOfBooks } from './maximum-number-of-books-you-can-take';
+// batch 179b — arrays+simulation/medium, arrays/easy, arrays+backtracking/medium, strings+hash-map/medium
+import { problem as collectGarbageByCollectingTrucks } from './collect-garbage-by-collecting-trucks';
+import { problem as largestLocalValuesInAMatrix } from './largest-local-values-in-a-matrix';
+import { problem as theNumberOfBeautifulSubsets } from './the-number-of-beautiful-subsets';
+import { problem as minimumNumberOfStepsToMakeTwoStringsAnagramII } from './minimum-number-of-steps-to-make-two-strings-anagram-ii';
 // batch 180 — easy/binary-search, medium/arrays+dp, easy/arrays
 import { problem as binarySearch } from './binary-search';
 import { problem as wiggleSequence } from './wiggle-sequence';
@@ -5810,12 +5815,11 @@ export const problems: readonly Problem[] = [
   minimumOperationsToMakeSubsequence,
   replaceNonCoprimeNumbers,
   maximumNumberOfBooks,
-  // batch 179 (local) — tree/medium×3, tree+heap/hard, heap+graph/medium
-  binaryTreeLevelOrderTraversal,
-  findKPairsWithSmallestSums,
-  sequenceReconstruction,
-  inorderSuccessorInBST,
-  closestBinarySearchTreeValueII,
+  // batch 179b — arrays+simulation/medium, arrays/easy, arrays+backtracking/medium, strings+hash-map/medium
+  collectGarbageByCollectingTrucks,
+  largestLocalValuesInAMatrix,
+  theNumberOfBeautifulSubsets,
+  minimumNumberOfStepsToMakeTwoStringsAnagramII,
   // batch 180 — easy/binary-search, medium/arrays+dp, easy/arrays
   binarySearch,
   wiggleSequence,
