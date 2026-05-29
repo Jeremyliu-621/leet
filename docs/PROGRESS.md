@@ -8,9 +8,15 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2434** problems; 7596 tests green. Batches 102–168 + batch 163 (5 new). UX + a11y polish ongoing.
+**Current focus:** Bank at **2439** problems; 7611 tests green. Batches 102–169 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 169+); site count update; UX polish.
+**Next up:** More bank growth (batch 170+); UX polish per LEETCODE_PARITY.md.
+
+### feat(ux): timer 2-min warning, always-show test dots, draft-saved indicator (2026-05-29)
+Three UX improvements: (1) TopBar timer gains a 2-minute warning state (isWarning = ≤120s > 60s) with subtle tint, escalating to existing isLow/isCritical stages; screen-reader threshold announcements extended to 120s. (2) TestDotMatrix no longer hides for ≤3 verdicts — dot row shows for every non-empty result. (3) EditorPanel status bar shows a brief "✓ saved" flash (2s, fade-out) after each successful draft auto-save.
+
+### feat(bank): batch 169 — 5 new problems (strings/medium, strings/hard, strings/easy, arrays/easy×2) (2026-05-29)
+Five new problems: `maximum-palindromes-after-operations` (medium/strings+hash-map, pool all chars → count pairs, greedy assign floor(len/2) pairs to shortest words first), `count-beautiful-substrings-ii` (hard/strings+hash-map+math, prefix-diff + find smallest v₀ s.t. v₀²%k=0 → group by (prefix, index%2v₀)), `make-three-strings-equal` (easy/strings, find longest common prefix → min total tail deletions, -1 if prefix empty), `find-the-integer-added-to-array-i` (easy/arrays+math, min(nums2)−min(nums1)), `find-the-integer-added-to-array-ii` (medium/arrays+two-pointers, sort+try 3 x-candidates+two-pointer validate, return min valid non-negative x). JS+Python reference solutions for all 5. Bank at **2439**; 7611 tests.
 
 ### feat(bank): batch 163 — number-of-same-end-substrings (medium), count-fertile-pyramids (hard), maximum-deletions-on-a-string (hard), collect-coins-in-a-tree (hard), maximum-and-sum-of-array (hard) (2026-05-29)
 Five new problems: `number-of-same-end-substrings` (medium/strings+arrays, prefix count → m*(m+1)/2 per char), `count-fertile-pyramids-in-a-land` (hard/arrays+dp, upward+inverted pyramid DP with max(0,dp-1) sum), `maximum-deletions-on-a-string` (hard/strings+dp, LCP table + DP; dp[i]=max 1+dp[i+k] when lcp[i][i+k]≥k), `collect-coins-in-a-tree` (hard/arrays+graph, topological leaf-removal: strip zero-coin leaves, then 2 rounds of all leaves, answer = 2×remaining edges), `maximum-and-sum-of-array` (hard/arrays+dp, bitmask DP over 2×numSlots positions, slot = pos//2+1). Bank at **2434**; 7596 tests.
