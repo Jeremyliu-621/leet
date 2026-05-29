@@ -35832,4 +35832,234 @@ def resultsArray(queries, k):
     return dp.bit_length() - 1
 `,
 
+  'number-of-subarrays-having-even-product': `def countEvenProductSubarrays(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    total = n * (n + 1) // 2
+    all_odd = 0
+    run = 0
+    for x in nums:
+        if x % 2 == 1:
+            run += 1
+        else:
+            all_odd += run * (run + 1) // 2
+            run = 0
+    all_odd += run * (run + 1) // 2
+    return total - all_odd
+`,
+
+  'greatest-sum-divisible-by-three': `def maxSumDivThree(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    dp = [0, float('-inf'), float('-inf')]
+    for num in nums:
+        ndp = dp[:]
+        r = num % 3
+        for i in range(3):
+            if dp[i] > float('-inf'):
+                nr = (i + r) % 3
+                ndp[nr] = max(ndp[nr], dp[i] + num)
+        dp = ndp
+    return max(dp[0], 0)
+`,
+
+  'construct-product-matrix': `def constructProductMatrix(grid):
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    MOD = 12345
+    m, n = len(grid), len(grid[0])
+    flat = [grid[i][j] for i in range(m) for j in range(n)]
+    N = m * n
+    prefix = [1] * (N + 1)
+    for i in range(N):
+        prefix[i+1] = prefix[i] * flat[i] % MOD
+    suffix = [1] * (N + 1)
+    for i in range(N-1, -1, -1):
+        suffix[i] = suffix[i+1] * flat[i] % MOD
+    result = [[0]*n for _ in range(m)]
+    for idx in range(N):
+        result[idx//n][idx%n] = prefix[idx] * suffix[idx+1] % MOD
+    return result
+`,
+
+  'minimum-moves-to-capture-the-queen': `def minMovesToCaptureTheQueen(a, b, c, d, e, f):
+    if a == e and not (c == a and min(b, f) < d < max(b, f)):
+        return 1
+    if b == f and not (d == b and min(a, e) < c < max(a, e)):
+        return 1
+    if c - e == d - f and not (a - b == c - d and min(c, e) < a < max(c, e)):
+        return 1
+    if c + d == e + f and not (a + b == c + d and min(c, e) < a < max(c, e)):
+        return 1
+    return 2
+`,
+
+  'minimum-substring-partition-of-equal-character-frequency': `def minimumSubstringsInPartition(s):
+    n = len(s)
+    dp = [float('inf')] * (n + 1)
+    dp[0] = 0
+    for i in range(1, n + 1):
+        cnt = {}
+        for j in range(i, 0, -1):
+            ch = s[j-1]
+            cnt[ch] = cnt.get(ch, 0) + 1
+            if len(set(cnt.values())) == 1 and dp[j-1] < float('inf'):
+                dp[i] = min(dp[i], dp[j-1] + 1)
+    return dp[n]
+`,
+
+  'maximum-good-subarray-sum': `def maximumSubarraySum(nums, k):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i+1] = prefix[i] + nums[i]
+    best = {}
+    ans = float('-inf')
+    found = False
+    for j in range(n):
+        for target in [nums[j] - k, nums[j] + k]:
+            if target in best:
+                s = prefix[j+1] - best[target]
+                if not found or s > ans:
+                    ans = s
+                    found = True
+        if nums[j] not in best or prefix[j] > best[nums[j]]:
+            best[nums[j]] = prefix[j]
+    return ans if found else 0
+`,
+
+  'maximal-score-after-applying-k-operations': `def maxKelements(nums, k):
+    import heapq
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    h = [-x for x in nums]
+    heapq.heapify(h)
+    ans = 0
+    for _ in range(k):
+        x = -heapq.heappop(h)
+        ans += x
+        heapq.heappush(h, -((x + 2) // 3))
+    return ans
+`,
+
+  'partition-linked-list-around-value': `def partitionListRunner(vals, x):
+    vals = list(vals.to_py() if hasattr(vals, 'to_py') else vals)
+    less = [v for v in vals if v < x]
+    geq = [v for v in vals if v >= x]
+    return less + geq
+`,
+
+  'merge-k-sorted-linked-lists': `def mergeKListsRunner(arrays):
+    arrays = [list(a.to_py() if hasattr(a, 'to_py') else a) for a in (arrays.to_py() if hasattr(arrays, 'to_py') else arrays)]
+    flat = [x for arr in arrays for x in arr]
+    flat.sort()
+    return flat
+`,
+
+  'friend-groups-union-find': `def countFriendGroups(n, pairs):
+    pairs = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in (pairs.to_py() if hasattr(pairs, 'to_py') else pairs)]
+    parent = list(range(n))
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    for a, b in pairs:
+        parent[find(a)] = find(b)
+    return len(set(find(i) for i in range(n)))
+`,
+
+  'dijkstra-single-source-shortest-path': `def dijkstra(n, edges, source):
+    import heapq
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (edges.to_py() if hasattr(edges, 'to_py') else edges)]
+    INF = float('inf')
+    adj = [[] for _ in range(n + 1)]
+    for u, v, w in edges:
+        adj[u].append((v, w))
+    dist = [INF] * (n + 1)
+    dist[source] = 0
+    heap = [(0, source)]
+    while heap:
+        d, u = heapq.heappop(heap)
+        if d > dist[u]: continue
+        for v, w in adj[u]:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                heapq.heappush(heap, (dist[v], v))
+    return [0] + [-1 if d == INF else d for d in dist[1:]]
+`,
+
+  'kth-largest-after-each-insertion': `def kthLargestAfterEachInsertion(nums, k):
+    import bisect
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    neg = []
+    result = []
+    for n in nums:
+        bisect.insort(neg, -n)
+        result.append(-1 if len(neg) < k else -neg[k-1])
+    return result
+`,
+
+  'simulate-traffic-lights': `def simulateTrafficLights(arrivals, g, r):
+    arrivals = list(arrivals.to_py() if hasattr(arrivals, 'to_py') else arrivals)
+    cycle = g + r
+    result = []
+    prev_pass = -1
+    for arrival in arrivals:
+        t = max(arrival, prev_pass)
+        mod = t % cycle
+        if mod < g:
+            result.append(t + 1)
+            prev_pass = t + 1
+        else:
+            ng = t + (cycle - mod)
+            result.append(ng + 1)
+            prev_pass = ng + 1
+    return result
+`,
+
+  'last-visited-integers': `def lastVisitedIntegers(nums):
+    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    seen = []
+    result = []
+    k = 0
+    for n in nums:
+        if n != -1:
+            seen.append(n)
+            k = 0
+        else:
+            k += 1
+            result.append(-1 if k > len(seen) else seen[-k])
+    return result
+`,
+
+  'count-visited-nodes-in-a-directed-graph': `def countVisitedNodes(edges):
+    edges = list(edges.to_py() if hasattr(edges, 'to_py') else edges)
+    n = len(edges)
+    ans = [0] * n
+    for start in range(n):
+        if ans[start] != 0:
+            continue
+        path = []
+        in_path = {}
+        cur = start
+        while ans[cur] == 0 and cur not in in_path:
+            in_path[cur] = len(path)
+            path.append(cur)
+            cur = edges[cur]
+        if ans[cur] != 0:
+            val = ans[cur] + 1
+            for node in reversed(path):
+                ans[node] = val
+                val += 1
+        else:
+            cycle_idx = in_path[cur]
+            cycle_len = len(path) - cycle_idx
+            for j in range(cycle_idx, len(path)):
+                ans[path[j]] = cycle_len
+            val = cycle_len + 1
+            for j in range(cycle_idx - 1, -1, -1):
+                ans[path[j]] = val
+                val += 1
+    return ans
+`,
+
 };

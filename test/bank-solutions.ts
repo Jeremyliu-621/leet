@@ -36065,4 +36065,175 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans - 1;
   },
 
+  // batch 154 — new remote batch
+  'minimum-moves-to-capture-the-queen': (...args: unknown[]) => {
+    const [a, b, c, d, e, f] = args as number[];
+    // Rook at (a,b), bishop at (c,d), queen at (e,f)
+    if (a === e && !(c === a && Math.min(b!, f!) < d! && d! < Math.max(b!, f!))) return 1;
+    if (b === f && !(d === b && Math.min(a!, e!) < c! && c! < Math.max(a!, e!))) return 1;
+    if (c! - e! === d! - f! && !(a! - b! === c! - d! && Math.min(c!, e!) < a! && a! < Math.max(c!, e!))) return 1;
+    if (c! + d! === e! + f! && !(a! + b! === c! + d! && Math.min(c!, e!) < a! && a! < Math.max(c!, e!))) return 1;
+    return 2;
+  },
+
+  'minimum-substring-partition-of-equal-character-frequency': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const dp = new Array(n + 1).fill(Infinity) as number[];
+    dp[0] = 0;
+    for (let i = 1; i <= n; i++) {
+      const cnt = new Map<string, number>();
+      for (let j = i; j >= 1; j--) {
+        const ch = s[j - 1]!;
+        cnt.set(ch, (cnt.get(ch) ?? 0) + 1);
+        const vals = [...cnt.values()];
+        const maxV = Math.max(...vals), minV = Math.min(...vals);
+        if (maxV === minV && dp[j - 1]! < Infinity) dp[i] = Math.min(dp[i]!, dp[j - 1]! + 1);
+      }
+    }
+    return dp[n]!;
+  },
+
+  'maximum-good-subarray-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const n = nums.length;
+    const prefix = new Array(n + 1).fill(0) as number[];
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + nums[i]!;
+    const best = new Map<number, number>();
+    let ans = -Infinity, found = false;
+    for (let j = 0; j < n; j++) {
+      for (const target of [nums[j]! - k, nums[j]! + k]) {
+        if (best.has(target)) {
+          const sum = prefix[j + 1]! - best.get(target)!;
+          if (!found || sum > ans) { ans = sum; found = true; }
+        }
+      }
+      if (!best.has(nums[j]!) || prefix[j]! > best.get(nums[j]!)!) best.set(nums[j]!, prefix[j]!);
+    }
+    return found ? ans : 0;
+  },
+
+  'maximal-score-after-applying-k-operations': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const h: number[] = [];
+    const up = (i: number) => { while (i > 0) { const p = (i - 1) >> 1; if (h[p]! >= h[i]!) break; [h[p], h[i]] = [h[i]!, h[p]!]; i = p; } };
+    const dn = (i: number) => { const len = h.length; while (true) { let m = i; const l = 2 * i + 1, r = 2 * i + 2; if (l < len && h[l]! > h[m]!) m = l; if (r < len && h[r]! > h[m]!) m = r; if (m === i) break; [h[m], h[i]] = [h[i]!, h[m]!]; i = m; } };
+    for (const n of nums) { h.push(n); up(h.length - 1); }
+    let ans = 0;
+    for (let i = 0; i < k; i++) {
+      const x = h[0]!;
+      ans += x;
+      const last = h.pop()!;
+      if (h.length > 0) { h[0] = last; dn(0); }
+      h.push(Math.ceil(x / 3));
+      up(h.length - 1);
+    }
+    return ans;
+  },
+
+  'partition-linked-list-around-value': (...args: unknown[]) => {
+    const vals = args[0] as number[];
+    const x = args[1] as number;
+    return [...vals.filter(v => v < x), ...vals.filter(v => v >= x)];
+  },
+
+  'merge-k-sorted-linked-lists': (...args: unknown[]) => {
+    const arrays = args[0] as number[][];
+    return arrays.flat().sort((a, b) => a - b);
+  },
+
+  'friend-groups-union-find': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const pairs = args[1] as number[][];
+    const parent = Array.from({ length: n }, (_, i) => i);
+    function fgFind(x: number): number { return parent[x] === x ? x : (parent[x] = fgFind(parent[x]!)); }
+    for (const pair of pairs) parent[fgFind(pair[0] as number)] = fgFind(pair[1] as number);
+    return new Set(Array.from({ length: n }, (_, i) => fgFind(i))).size;
+  },
+
+  'dijkstra-single-source-shortest-path': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const source = args[2] as number;
+    const adj: [number, number][][] = Array.from({ length: n + 1 }, () => []);
+    for (const edge of edges) adj[edge[0] as number]!.push([edge[1] as number, edge[2] as number]);
+    const dist = new Array(n + 1).fill(Infinity) as number[];
+    const visited = new Array(n + 1).fill(false) as boolean[];
+    dist[source] = 0;
+    for (let iter = 0; iter < n; iter++) {
+      let u = -1;
+      for (let v = 1; v <= n; v++) if (!visited[v] && (u === -1 || dist[v]! < dist[u]!)) u = v;
+      if (u === -1 || dist[u] === Infinity) break;
+      visited[u] = true;
+      for (const [v, w] of adj[u]!) if (dist[u]! + w < dist[v]!) dist[v] = dist[u]! + w;
+    }
+    return [0, ...dist.slice(1).map(d => d === Infinity ? -1 : d)];
+  },
+
+  'kth-largest-after-each-insertion': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const sorted: number[] = [];
+    return nums.map(n => {
+      let lo = 0, hi = sorted.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (sorted[mid]! >= n) lo = mid + 1; else hi = mid; }
+      sorted.splice(lo, 0, n);
+      return sorted.length < k ? -1 : sorted[k - 1]!;
+    });
+  },
+
+  'simulate-traffic-lights': (...args: unknown[]) => {
+    const arrivals = args[0] as number[];
+    const g = args[1] as number;
+    const r = args[2] as number;
+    const cycle = g + r;
+    const result: number[] = [];
+    let prevPass = -1;
+    for (const arrival of arrivals) {
+      const t = Math.max(arrival, prevPass);
+      const mod = t % cycle;
+      if (mod < g) { result.push(t + 1); prevPass = t + 1; }
+      else { const ng = t + (cycle - mod); result.push(ng + 1); prevPass = ng + 1; }
+    }
+    return result;
+  },
+
+  'last-visited-integers': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const seen: number[] = [];
+    const result: number[] = [];
+    let k = 0;
+    for (const n of nums) {
+      if (n !== -1) { seen.push(n); k = 0; }
+      else { k++; result.push(k > seen.length ? -1 : seen[seen.length - k]!); }
+    }
+    return result;
+  },
+
+  'count-visited-nodes-in-a-directed-graph': (...args: unknown[]) => {
+    const edges = args[0] as number[];
+    const n = edges.length;
+    const ans = new Array(n).fill(0) as number[];
+    for (let start = 0; start < n; start++) {
+      if (ans[start] !== 0) continue;
+      const path: number[] = [];
+      const inPath = new Map<number, number>();
+      let cur = start;
+      while (ans[cur] === 0 && !inPath.has(cur)) { inPath.set(cur, path.length); path.push(cur); cur = edges[cur]!; }
+      if (ans[cur] !== 0) {
+        let val = ans[cur]! + 1;
+        for (let j = path.length - 1; j >= 0; j--) ans[path[j]!] = val++;
+      } else {
+        const cycleIdx = inPath.get(cur)!;
+        const cycleLen = path.length - cycleIdx;
+        for (let j = cycleIdx; j < path.length; j++) ans[path[j]!] = cycleLen;
+        let val = cycleLen + 1;
+        for (let j = cycleIdx - 1; j >= 0; j--) ans[path[j]!] = val++;
+      }
+    }
+    return ans;
+  },
+
 };
