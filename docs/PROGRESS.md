@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2664** problems; 8283 tests green. Batches 102–194 + 193b complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2667** problems; 8295 tests green. Batches 102–195 + 192b + 193b complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 195+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 196+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 195 — largest-unique, min-window-vowels, max-sum-increasing-subseq, sum-kth (2026-05-29)
+Four new problems: `largest-unique-number` (easy/arrays+hash-map, freq map, max with count 1), `minimum-window-containing-all-vowels` (medium/strings+sliding-window+hash-map, two-pointer shrink when all 5 vowels present), `maximum-sum-increasing-subsequence` (medium/arrays+dp, O(n²) DP tracking sum instead of length, similar to LIS), `sum-of-every-kth-number` (easy/math+simulation, O(1) arithmetic formula k*m*(m+1)/2 where m=floor(n/k)). Bank at **2667**; 8295 tests.
 
 ### feat(bank): batch 194 — high-access-employees, min-coins-fruits, almost-increasing, max-sum-window (2026-05-29)
 Four new problems: `high-access-employees` (medium/arrays+hash-map+simulation, convert HHMM→minutes, sort per employee, check consecutive triples <60 apart), `minimum-coins-for-fruits` (medium/arrays+dp, dp[i]=prices[i-1]+min(dp[j] for j in [i+1,min(2i+1,n+1)]), 3 wrong hidden tests corrected), `almost-strictly-increasing` (medium/arrays+two-pointers, first violation at i: try removing nums[i] or nums[i+1], check rest strictly increasing), `max-sum-fixed-window` (easy/arrays+sliding-window, sliding window O(n)). Bank at **2659**; 8268 tests.
