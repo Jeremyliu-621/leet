@@ -3053,6 +3053,11 @@ import { problem as flatten2dArray } from './flatten-2d-array';
 import { problem as countElementsGreaterThanK } from './count-elements-greater-than-k';
 import { problem as sortWordsByLength } from './sort-words-by-length';
 import { problem as sumOfPositiveElements } from './sum-of-positive-elements';
+// batch 205 — easy/arrays+math, easy/arrays+hash-map, easy/arrays, easy/arrays+strings
+import { problem as arrayAverage } from './array-average';
+import { problem as findElementsAppearingExactlyTwice } from './find-elements-appearing-exactly-twice';
+import { problem as countElementsEqualToK } from './count-elements-equal-to-k';
+import { problem as totalStringLength } from './total-string-length';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6147,4 +6152,9 @@ export const problems: readonly Problem[] = [
   countElementsGreaterThanK,
   sortWordsByLength,
   sumOfPositiveElements,
+  // batch 205 — easy/arrays+math, easy/arrays+hash-map, easy/arrays, easy/arrays+strings
+  arrayAverage,
+  findElementsAppearingExactlyTwice,
+  countElementsEqualToK,
+  totalStringLength,
 ];

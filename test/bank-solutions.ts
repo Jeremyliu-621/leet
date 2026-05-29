@@ -43394,4 +43394,24 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const nums = args[0] as number[];
     return nums.filter(v => v > 0).reduce((s, v) => s + v, 0);
   },
+  // batch 205 ---------------------------------------------------------------
+  'array-average': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return nums.reduce((s, v) => s + v, 0) / nums.length;
+  },
+  'find-elements-appearing-exactly-twice': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const v of nums) freq.set(v, (freq.get(v) ?? 0) + 1);
+    return [...freq.entries()].filter(([, c]) => c === 2).map(([v]) => v).sort((a, b) => a - b);
+  },
+  'count-elements-equal-to-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    return nums.filter(v => v === k).length;
+  },
+  'total-string-length': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    return words.reduce((s, w) => s + w.length, 0);
+  },
 };

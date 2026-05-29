@@ -43224,4 +43224,23 @@ def sortWordsByLength(words):
 def sumOfPositiveElements(nums):
     return sum(v for v in nums if v > 0)
 `,
+  // batch 205 ---------------------------------------------------------------
+  'array-average': `
+def arrayAverage(nums):
+    return sum(nums) / len(nums)
+`,
+  'find-elements-appearing-exactly-twice': `
+def findElementsAppearingExactlyTwice(nums):
+    from collections import Counter
+    c = Counter(nums)
+    return sorted(k for k, v in c.items() if v == 2)
+`,
+  'count-elements-equal-to-k': `
+def countElementsEqualToK(nums, k):
+    return nums.count(k)
+`,
+  'total-string-length': `
+def totalStringLength(words):
+    return sum(len(w) for w in words)
+`,
 };
