@@ -38481,6 +38481,64 @@ def maximumLength(s):
     return ans
 `,
 
+  // batch 176 — Python solutions
+  'maximum-points-you-can-obtain-from-cards': `
+def maxScore(cardPoints, k):
+    if hasattr(cardPoints, 'to_py'): cardPoints = list(cardPoints.to_py())
+    k = int(k)
+    n = len(cardPoints)
+    total = sum(cardPoints)
+    if k == n: return total
+    window_size = n - k
+    window_sum = sum(cardPoints[:window_size])
+    min_window = window_sum
+    for i in range(1, k + 1):
+        window_sum += cardPoints[i + window_size - 1] - cardPoints[i - 1]
+        min_window = min(min_window, window_sum)
+    return total - min_window
+`,
+  'minimum-pushes-to-type-word-i': `
+def minimumPushes(word):
+    if hasattr(word, 'to_py'): word = str(word.to_py())
+    ans = 0
+    for i in range(len(word)):
+        ans += i // 8 + 1
+    return ans
+`,
+  'minimum-pushes-to-type-word-ii': `
+def minimumPushes(word):
+    if hasattr(word, 'to_py'): word = str(word.to_py())
+    from collections import Counter
+    freq = sorted(Counter(word).values(), reverse=True)
+    ans = 0
+    for i, f in enumerate(freq):
+        ans += (i // 8 + 1) * f
+    return ans
+`,
+  'minimum-addition-to-make-integer-beautiful': `
+def makeIntegerBeautiful(n, target):
+    n = int(n)
+    target = int(target)
+    def digit_sum(m):
+        s = 0
+        while m > 0:
+            s += m % 10
+            m //= 10
+        return s
+    if digit_sum(n) <= target:
+        return 0
+    x = 0
+    power = 1
+    while digit_sum(n) > target:
+        power10 = power * 10
+        rem = n % power10
+        if rem != 0:
+            x += power10 - rem
+            n += power10 - rem
+        power *= 10
+    return x
+`,
+
   // batch 175 — Python solutions
   'check-if-bitwise-or-has-trailing-zeros': `
 def hasTrailingZeros(nums):

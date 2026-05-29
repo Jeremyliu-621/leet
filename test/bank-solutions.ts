@@ -38534,6 +38534,53 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 176 — medium/sliding-window, easy/math, medium/math+hash-map, medium/math
+  'maximum-points-you-can-obtain-from-cards': (...args: unknown[]) => {
+    const cardPoints = args[0] as number[];
+    const k = args[1] as number;
+    const n = cardPoints.length;
+    const total = cardPoints.reduce((a, b) => a + b, 0);
+    if (k === n) return total;
+    const windowSize = n - k;
+    let windowSum = 0;
+    for (let i = 0; i < windowSize; i++) windowSum += cardPoints[i]!;
+    let minWindow = windowSum;
+    for (let i = 1; i <= k; i++) {
+      windowSum += cardPoints[i + windowSize - 1]! - cardPoints[i - 1]!;
+      minWindow = Math.min(minWindow, windowSum);
+    }
+    return total - minWindow;
+  },
+  'minimum-pushes-to-type-word-i': (word: unknown) => {
+    const w = word as string;
+    let ans = 0;
+    for (let i = 0; i < w.length; i++) ans += Math.floor(i / 8) + 1;
+    return ans;
+  },
+  'minimum-pushes-to-type-word-ii': (word: unknown) => {
+    const w = word as string;
+    const freq: Record<string, number> = {};
+    for (const c of w) freq[c] = (freq[c] ?? 0) + 1;
+    const freqs = Object.values(freq).sort((a, b) => b - a);
+    let ans = 0;
+    for (let i = 0; i < freqs.length; i++) ans += (Math.floor(i / 8) + 1) * freqs[i]!;
+    return ans;
+  },
+  'minimum-addition-to-make-integer-beautiful': (...args: unknown[]) => {
+    const digitSum = (m: number) => { let s = 0; while (m > 0) { s += m % 10; m = Math.floor(m / 10); } return s; };
+    let n = args[0] as number;
+    const target = args[1] as number;
+    if (digitSum(n) <= target) return 0;
+    let x = 0, power = 1;
+    while (digitSum(n) > target) {
+      const power10 = power * 10;
+      const rem = n % power10;
+      if (rem !== 0) { x += power10 - rem; n += power10 - rem; }
+      power *= 10;
+    }
+    return x;
+  },
+
   // batch 175 — easy/bit, medium/dp, medium/tree, medium/tree
   'check-if-bitwise-or-has-trailing-zeros': (nums: unknown) => {
     const a = nums as number[];

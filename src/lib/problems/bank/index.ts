@@ -2669,6 +2669,10 @@ import { problem as checkIfBitwiseOrHasTrailingZeros } from './check-if-bitwise-
 import { problem as countPathsWithGivenXorValue } from './count-paths-with-given-xor-value';
 import { problem as countPairsOfConnectableServersInAWeightedTree } from './count-pairs-of-connectable-servers-in-a-weighted-tree';
 import { problem as minimumNumberOfOperationsToSortBinaryTreeByLevel } from './minimum-number-of-operations-to-sort-binary-tree-by-level';
+import { problem as maximumPointsYouCanObtainFromCards } from './maximum-points-you-can-obtain-from-cards';
+import { problem as minimumPushesToTypeWordI } from './minimum-pushes-to-type-word-i';
+import { problem as minimumPushesToTypeWordII } from './minimum-pushes-to-type-word-ii';
+import { problem as minimumAdditionToMakeIntegerBeautiful } from './minimum-addition-to-make-integer-beautiful';
 // batch 169 — new problems: heap+greedy/medium, strings/easy, design+hash-map/medium, strings/easy
 import { problem as maximumNumberOfEatenApples } from './maximum-number-of-eaten-apples';
 import { problem as minimumFlipsToMakeAlternatingBinaryString } from './minimum-flips-to-make-alternating-binary-string';
@@ -5605,4 +5609,9 @@ export const problems: readonly Problem[] = [
   countIntegersInIntervals,
   longestIncreasingSubsequenceII,
   numberOfGoodSubsets,
+  // batch 176 — medium/sliding-window, easy/math, medium/math+hash-map, medium/math
+  maximumPointsYouCanObtainFromCards,
+  minimumPushesToTypeWordI,
+  minimumPushesToTypeWordII,
+  minimumAdditionToMakeIntegerBeautiful,
 ];
