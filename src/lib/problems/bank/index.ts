@@ -2945,6 +2945,10 @@ import { problem as fairCandySwap } from './fair-candy-swap';
 import { problem as largeGroupPositions } from './large-group-positions';
 import { problem as numberOfEquivalentDominoPairs } from './number-of-equivalent-domino-pairs';
 import { problem as theNumberOfWeakCharactersInTheGame } from './the-number-of-weak-characters-in-the-game';
+// batch 191 — easy/arrays, medium/arrays+math, medium/arrays+two-pointers, easy/simulation
+import { problem as sortEvenAndOddIndicesIndependently } from './sort-even-and-odd-indices-independently';
+import { problem as canYouEatYourFavoriteCandyOnYourFavoriteDay } from './can-you-eat-your-favorite-candy-on-your-favorite-day';
+import { problem as countHillsAndValleysInAnArray } from './count-hills-and-valleys-in-an-array';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5931,4 +5935,8 @@ export const problems: readonly Problem[] = [
   largeGroupPositions,
   numberOfEquivalentDominoPairs,
   theNumberOfWeakCharactersInTheGame,
+  // batch 191 — easy/arrays, medium/arrays+math, easy/simulation
+  sortEvenAndOddIndicesIndependently,
+  canYouEatYourFavoriteCandyOnYourFavoriteDay,
+  countHillsAndValleysInAnArray,
 ];

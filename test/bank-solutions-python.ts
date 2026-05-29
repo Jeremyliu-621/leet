@@ -42407,4 +42407,43 @@ def numberOfWeakCharacters(properties):
             max_def = d
     return weak
 `,
+  'sort-even-and-odd-indices-independently': `
+def sortEvenOdd(nums):
+    even = sorted(nums[0::2])
+    odd = sorted(nums[1::2], reverse=True)
+    result = []
+    ei = oi = 0
+    for i in range(len(nums)):
+        if i % 2 == 0:
+            result.append(even[ei]); ei += 1
+        else:
+            result.append(odd[oi]); oi += 1
+    return result
+`,
+  'can-you-eat-your-favorite-candy-on-your-favorite-day': `
+def canEat(candiesCount, queries):
+    prefix = [0] * (len(candiesCount) + 1)
+    for i, c in enumerate(candiesCount):
+        prefix[i + 1] = prefix[i] + c
+    result = []
+    for ftype, fday, cap in queries:
+        cond1 = fday + 1 <= prefix[ftype + 1]
+        cond2 = (fday + 1) * cap > prefix[ftype]
+        result.append(cond1 and cond2)
+    return result
+`,
+  'count-hills-and-valleys-in-an-array': `
+def countHillValley(nums):
+    dedup = []
+    for x in nums:
+        if not dedup or dedup[-1] != x:
+            dedup.append(x)
+    count = 0
+    for i in range(1, len(dedup) - 1):
+        if dedup[i] > dedup[i - 1] and dedup[i] > dedup[i + 1]:
+            count += 1
+        elif dedup[i] < dedup[i - 1] and dedup[i] < dedup[i + 1]:
+            count += 1
+    return count
+`,
 };

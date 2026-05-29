@@ -42505,4 +42505,35 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return weak;
   },
+  'sort-even-and-odd-indices-independently': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const even = nums.filter((_, i) => i % 2 === 0).sort((a, b) => a - b);
+    const odd = nums.filter((_, i) => i % 2 === 1).sort((a, b) => b - a);
+    return nums.map((_, i) => i % 2 === 0 ? even[i >> 1]! : odd[(i - 1) >> 1]!);
+  },
+  'can-you-eat-your-favorite-candy-on-your-favorite-day': (...args: unknown[]) => {
+    const candiesCount = args[0] as number[];
+    const queries = args[1] as number[][];
+    const n = candiesCount.length;
+    const prefix = new Array<number>(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + candiesCount[i]!;
+    return queries.map(([type, day, cap]) => {
+      const cond1 = day! + 1 <= prefix[type! + 1]!;
+      const cond2 = (day! + 1) * cap! > prefix[type!]!;
+      return cond1 && cond2;
+    });
+  },
+  'count-hills-and-valleys-in-an-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const dedup: number[] = [];
+    for (const x of nums) {
+      if (dedup.length === 0 || dedup[dedup.length - 1] !== x) dedup.push(x);
+    }
+    let count = 0;
+    for (let i = 1; i < dedup.length - 1; i++) {
+      if (dedup[i]! > dedup[i - 1]! && dedup[i]! > dedup[i + 1]!) count++;
+      else if (dedup[i]! < dedup[i - 1]! && dedup[i]! < dedup[i + 1]!) count++;
+    }
+    return count;
+  },
 };

@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2639** problems; 8208 tests green. Batches 102–190 + 179b complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2642** problems; 8217 tests green. Batches 102–191 + 179b complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 191+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 192+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 191 — sort-even-odd-indices, candy-favorite-day, count-hills-valleys (2026-05-29)
+Three new problems: `sort-even-and-odd-indices-independently` (easy/arrays, sort even-indexed asc + odd-indexed desc, interleave), `can-you-eat-your-favorite-candy-on-your-favorite-day` (medium/arrays+math, prefix sums + two conditions: cond1=day+1<=prefix[type+1], cond2=(day+1)*cap>prefix[type]), `count-hills-and-valleys-in-an-array` (easy/simulation, deduplicate consecutive, then check interior peaks/valleys). Bank at **2642**; 8217 tests.
 
 ### feat(bank): batch 190 — fair-candy-swap, large-group-positions, equivalent-domino-pairs, weak-characters (2026-05-29)
 Four new problems: `fair-candy-swap` (easy/arrays+hash-map+math, b = a + (sumB-sumA)/2, hash set lookup), `large-group-positions` (easy/simulation, scan for groups of ≥3 consecutive same chars), `number-of-equivalent-domino-pairs` (easy/arrays+hash-map, normalize key = min*10+max, accumulate pair count), `the-number-of-weak-characters-in-the-game` (medium/arrays, sort by attack desc + defense asc, track max defense). Bank at **2639**.
