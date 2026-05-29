@@ -38584,4 +38584,66 @@ def getDirectionsRunner(arr, start_value, dest_value):
     return 'U' * (len(start_path) - i) + ''.join(dest_path[i:])
 `,
 
+  // batch 166
+  'replace-elements-with-greatest-element-on-right-side': `
+def replaceElements(arr):
+    if hasattr(arr, 'to_py'): arr = list(arr.to_py())
+    max_right = -1
+    for i in range(len(arr) - 1, -1, -1):
+        tmp = arr[i]
+        arr[i] = max_right
+        max_right = max(max_right, tmp)
+    return arr
+`,
+
+  'find-all-numbers-disappeared-in-an-array': `
+def findDisappearedNumbers(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    n = len(nums)
+    seen = set(nums)
+    return [i for i in range(1, n + 1) if i not in seen]
+`,
+
+  'final-value-of-variable-after-performing-operations': `
+def finalValueAfterOperations(operations):
+    if hasattr(operations, 'to_py'): operations = list(operations.to_py())
+    x = 0
+    for op in operations:
+        x += 1 if '+' in str(op) else -1
+    return x
+`,
+
+  'steps-to-make-array-non-decreasing': `
+def totalSteps(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    n = len(nums)
+    d = [0] * n
+    stack = []
+    for j in range(n):
+        max_d = 0
+        while stack and nums[stack[-1]] <= nums[j]:
+            max_d = max(max_d, d[stack.pop()])
+        d[j] = max_d + 1 if stack else 0
+        stack.append(j)
+    return max(d) if d else 0
+`,
+
+  'flower-planting-with-no-adjacent': `
+def gardenNoAdj(n, paths):
+    if hasattr(paths, 'to_py'): paths = [list(p.to_py()) if hasattr(p, 'to_py') else list(p) for p in paths]
+    adj = [[] for _ in range(n + 1)]
+    for p in paths:
+        u, v = int(p[0]), int(p[1])
+        adj[u].append(v)
+        adj[v].append(u)
+    result = [0] * (n + 1)
+    for g in range(1, n + 1):
+        used = set(result[nb] for nb in adj[g])
+        for c in range(1, 5):
+            if c not in used:
+                result[g] = c
+                break
+    return result[1:]
+`,
+
 };

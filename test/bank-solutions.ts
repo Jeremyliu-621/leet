@@ -38636,4 +38636,61 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return 'U'.repeat(startPath.length - i) + destPath.slice(i).join('');
   },
 
+
+
+  // batch 166 — arrays/easy×3, arrays+stack/medium, graph/medium
+  'replace-elements-with-greatest-element-on-right-side': (arr: unknown) => {
+    const a = [...(arr as number[])];
+    let maxRight = -1;
+    for (let i = a.length - 1; i >= 0; i--) {
+      const tmp = a[i]!;
+      a[i] = maxRight;
+      maxRight = Math.max(maxRight, tmp);
+    }
+    return a;
+  },
+
+  'find-all-numbers-disappeared-in-an-array': (nums: unknown) => {
+    const n = (nums as number[]).length;
+    const seen = new Set(nums as number[]);
+    const result: number[] = [];
+    for (let i = 1; i <= n; i++) if (!seen.has(i)) result.push(i);
+    return result;
+  },
+
+  'final-value-of-variable-after-performing-operations': (operations: unknown) => {
+    let x = 0;
+    for (const op of operations as string[]) x += op.includes('+') ? 1 : -1;
+    return x;
+  },
+
+  'steps-to-make-array-non-decreasing': (nums: unknown) => {
+    const a = nums as number[];
+    const n = a.length;
+    const d = new Array<number>(n).fill(0);
+    const stack: number[] = [];
+    for (let j = 0; j < n; j++) {
+      let maxD = 0;
+      while (stack.length > 0 && a[stack[stack.length - 1]!]! <= a[j]!) {
+        maxD = Math.max(maxD, d[stack.pop()!]!);
+      }
+      d[j] = stack.length > 0 ? maxD + 1 : 0;
+      stack.push(j);
+    }
+    return n > 0 ? Math.max(...d) : 0;
+  },
+
+  'flower-planting-with-no-adjacent': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const paths = args[1] as number[][];
+    const adj: number[][] = Array.from({ length: n + 1 }, () => []);
+    for (const [u, v] of paths) { adj[u!]!.push(v!); adj[v!]!.push(u!); }
+    const result = new Array<number>(n + 1).fill(0);
+    for (let g = 1; g <= n; g++) {
+      const used = new Set(adj[g]!.map(nb => result[nb]!));
+      for (let c = 1; c <= 4; c++) { if (!used.has(c)) { result[g] = c; break; } }
+    }
+    return result.slice(1);
+  },
+
 };

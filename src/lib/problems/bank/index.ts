@@ -2701,6 +2701,12 @@ import { problem as bestTimeBuySellStockWithFee } from './best-time-to-buy-and-s
 import { problem as minimumCostForCuttingStick } from './minimum-cost-for-cutting-stick';
 import { problem as pseudoPalindromicPathsInBinaryTree } from './pseudo-palindromic-paths-in-a-binary-tree';
 import { problem as stepByStepDirectionsFromBinaryTreeNode } from './step-by-step-directions-from-a-binary-tree-node-to-another';
+// batch 166 — arrays/easy×3, arrays+stack/medium, graph/medium
+import { problem as replaceElementsWithGreatestElementOnRightSide } from './replace-elements-with-greatest-element-on-right-side';
+import { problem as findAllNumbersDisappearedInAnArray } from './find-all-numbers-disappeared-in-an-array';
+import { problem as finalValueOfVariableAfterPerformingOperations } from './final-value-of-variable-after-performing-operations';
+import { problem as stepsToMakeArrayNonDecreasing } from './steps-to-make-array-non-decreasing';
+import { problem as flowerPlantingWithNoAdjacent } from './flower-planting-with-no-adjacent';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5436,4 +5442,10 @@ export const problems: readonly Problem[] = [
   minimumCostForCuttingStick,
   pseudoPalindromicPathsInBinaryTree,
   stepByStepDirectionsFromBinaryTreeNode,
+  // batch 166 — arrays/easy×3, arrays+stack/medium, graph/medium
+  replaceElementsWithGreatestElementOnRightSide,
+  findAllNumbersDisappearedInAnArray,
+  finalValueOfVariableAfterPerformingOperations,
+  stepsToMakeArrayNonDecreasing,
+  flowerPlantingWithNoAdjacent,
 ];
