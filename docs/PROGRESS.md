@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2685** problems; 8346 tests green. Batches 102–198 + 195b + 196b complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2685** problems; 8349 tests green. Batches 102–199 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** More bank growth (batch 199+); UX polish per LEETCODE_PARITY.md.
+**Next up:** More bank growth (batch 200+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 199 — merge-sorted-arrays (2026-05-29)
+One genuinely new problem added (3 others — longest-turbulent-subarray, transpose-matrix, count-good-triplets — already existed). `merge-sorted-arrays` (easy/arrays+two-pointers, classic two-pointer merge). Bank at **2685**; 8349 tests.
 
 ### feat(bank): batch 198 — count-substrings-no-repeat, max-product-two-elements, find-all-anagrams, rotate-array-left (2026-05-29)
 Four new problems: `count-substrings-without-repeating` (medium/strings+sliding-window+hash-map, two-pointer shrink + right-left+1 count), `maximum-product-of-two-elements` (easy/arrays+math, find top-2 values, return (max1-1)*(max2-1)), `find-all-anagrams` (medium/strings+sliding-window+hash-map, diff-count approach: count=p−window, track non-zeros), `rotate-array-left` (easy/arrays+math, k%n slice-and-concat). Fixed find-all-anagrams reference solution (was incorrectly checking matches===26; corrected to track diff of zero-count). Bank at **2685**; 8346 tests.
