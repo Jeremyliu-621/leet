@@ -8,9 +8,15 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2594** problems; 8085 tests green. Batches 102–181 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2598** problems; 8097 tests green. Batches 102–181 + 179b complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 182+); UX polish per LEETCODE_PARITY.md.
+
+### fix: add missing reference solutions after multi-session rebase (2026-05-29)
+Reconciled concurrent sessions — restored JS+Python solutions missing after rebase for: batch 181 (5 problems), batch 180 extensions (2), batch 179 tree/heap (5), batch 179 local (3), batch 179b (4). 8097 tests passing.
+
+### feat(bank): batch 179b — collect-garbage (medium), largest-local (easy), beautiful-subsets (medium), anagram-steps-ii (medium) (2026-05-29)
+Four new problems: `collect-garbage-by-collecting-trucks` (medium/simulation, per-truck travel accumulation to last house with that type), `largest-local-values-in-a-matrix` (easy/arrays, 3×3 window max for each (n-2)×(n-2) cell), `the-number-of-beautiful-subsets` (medium/backtracking, DFS+freq-map to avoid |x-y|=k pairs, count each inclusion), `minimum-number-of-steps-to-make-two-strings-anagram-ii` (medium/hash-map, sum of |freq_s[c]-freq_t[c]| for each char). Bank at **2598**; 8097 tests.
 
 ### feat(bank): batch 181 — grid-sections (medium), distinct-elements (easy), zigzag-skip (easy), variable-subarrays (easy), robot-money (medium) (2026-05-29)
 Five new problems: `check-if-the-grid-can-be-cut-into-sections` (medium/arrays, LC#3394 — sort x/y interval projections and count non-overlapping groups, ≥3 on either axis means valid 2-cut), `minimum-ops-make-elements-distinct` (easy/arrays+hash-map, LC#3396 — scan right-to-left; first duplicate at index i requires ceil((i+1)/3) remove-3 operations), `zigzag-grid-traversal-with-skip` (easy/arrays+simulation, LC#3417 — global counter over zigzag row-order, collect cells at even counter positions), `sum-of-variable-length-subarrays` (easy/arrays, LC#3427 — prefix sum for O(1) range queries, each i contributes sum of nums[max(0,i-nums[i])..i]), `maximum-amount-of-money-robot-can-earn` (medium/dp, LC#3418 — 3D DP dp[i][j][k]=max coins at (i,j) having neutralized k of up to 2 robber cells). Bank at **2594**; 8085 tests.
