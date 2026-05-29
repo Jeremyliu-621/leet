@@ -36075,5 +36075,111 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return score;
   },
 
+  'maximum-earnings-from-taxi': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const rides = args[1] as number[][];
+    const byEnd: number[][][] = Array.from({ length: n + 1 }, () => []);
+    for (const r of rides) byEnd[r[1]!]!.push(r);
+    const dp = new Array(n + 1).fill(0);
+    for (let i = 1; i <= n; i++) {
+      dp[i] = dp[i - 1]!;
+      for (const [s, e, t] of byEnd[i]!) {
+        const earn = (e! - s!) + t!;
+        dp[i] = Math.max(dp[i]!, dp[s!]! + earn);
+      }
+    }
+    return dp[n]!;
+  },
+
+  'find-the-longest-special-substring-that-occurs-thrice-i': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    // collect run lengths per character
+    const runs = new Map<string, number[]>();
+    let i = 0;
+    while (i < n) {
+      let j = i;
+      while (j < n && s[j] === s[i]) j++;
+      const c = s[i]!;
+      if (!runs.has(c)) runs.set(c, []);
+      runs.get(c)!.push(j - i);
+      i = j;
+    }
+    let best = -1;
+    for (const [, lens] of runs) {
+      lens.sort((a, b) => b - a);
+      // count occurrences of length k across all runs
+      // a run of length L contributes L-k+1 substrings of length k
+      // check from large k downward
+      const maxLen = lens[0]!;
+      for (let k = maxLen; k >= 1; k--) {
+        let count = 0;
+        for (const l of lens) {
+          if (l >= k) count += l - k + 1;
+        }
+        if (count >= 3) { best = Math.max(best, k); break; }
+      }
+    }
+    return best;
+  },
+
+  'minimum-cost-to-make-array-equalindromic': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const n = nums.length;
+    const isPalin = (x: number) => {
+      const s = x.toString();
+      return s === s.split('').reverse().join('');
+    };
+    const candidates = (x: number): number[] => {
+      const s = x.toString();
+      const len = s.length;
+      const halfLen = Math.ceil(len / 2);
+      const half = parseInt(s.slice(0, halfLen));
+      const result: number[] = [];
+      for (const dh of [-1, 0, 1]) {
+        const h = half + dh;
+        if (h <= 0) continue;
+        const hs = h.toString();
+        let pal: string;
+        if (len % 2 === 0) {
+          pal = hs + hs.split('').reverse().join('');
+        } else {
+          pal = hs + hs.slice(0, -1).split('').reverse().join('');
+        }
+        const p = parseInt(pal);
+        if (p > 0 && isPalin(p)) result.push(p);
+      }
+      if (len > 1) result.push(Math.pow(10, len - 1) - 1);
+      result.push(Math.pow(10, len) + 1);
+      return result;
+    };
+    const seen = new Set<number>();
+    for (const idx of [Math.floor((n - 1) / 2), Math.floor(n / 2)]) {
+      for (const p of candidates(nums[idx]!)) seen.add(p);
+    }
+    let best = Infinity;
+    for (const p of seen) {
+      const cost = nums.reduce((s, x) => s + Math.abs(x - p), 0);
+      if (cost < best) best = cost;
+    }
+    return best;
+  },
+
+  'identify-the-largest-outlier-in-an-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const total = nums.reduce((s, x) => s + x, 0);
+    const freq = new Map<number, number>();
+    for (const x of nums) freq.set(x, (freq.get(x) ?? 0) + 1);
+    let best = -Infinity;
+    for (const x of nums) {
+      const rem = total - x;
+      if (rem % 2 !== 0) continue;
+      const target = rem / 2;
+      const tf = freq.get(target) ?? 0;
+      const valid = x === target ? tf >= 2 : tf >= 1;
+      if (valid && x > best) best = x;
+    }
+    return best;
+  },
 
 };

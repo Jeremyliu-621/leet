@@ -35842,5 +35842,100 @@ def maxKelements(nums, k):
     return score
 `,
 
+  'maximum-earnings-from-taxi': `def maxTaxiEarnings(n, rides):
+    if hasattr(rides, 'to_py'):
+        rides = rides.to_py()
+    rides = [list(r.to_py()) if hasattr(r, 'to_py') else list(r) for r in rides]
+    from collections import defaultdict
+    by_end = defaultdict(list)
+    for r in rides:
+        by_end[r[1]].append(r)
+    dp = [0] * (n + 1)
+    for i in range(1, n + 1):
+        dp[i] = dp[i - 1]
+        for s, e, t in by_end[i]:
+            dp[i] = max(dp[i], dp[s] + (e - s) + t)
+    return dp[n]
+`,
+
+  'find-the-longest-special-substring-that-occurs-thrice-i': `def maximumLength(s):
+    from collections import defaultdict
+    runs = defaultdict(list)
+    i = 0
+    n = len(s)
+    while i < n:
+        j = i
+        while j < n and s[j] == s[i]:
+            j += 1
+        runs[s[i]].append(j - i)
+        i = j
+    best = -1
+    for c, lens in runs.items():
+        lens.sort(reverse=True)
+        max_len = lens[0]
+        for k in range(max_len, 0, -1):
+            count = sum(l - k + 1 for l in lens if l >= k)
+            if count >= 3:
+                best = max(best, k)
+                break
+    return best
+`,
+
+  'minimum-cost-to-make-array-equalindromic': `def minimumCost(nums):
+    nums = sorted(nums)
+    n = len(nums)
+    def is_palindrome(x):
+        s = str(x)
+        return s == s[::-1]
+    def get_candidates(x):
+        s = str(x)
+        length = len(s)
+        half_len = (length + 1) // 2
+        half = int(s[:half_len])
+        result = []
+        for dh in [-1, 0, 1]:
+            h = half + dh
+            if h <= 0:
+                continue
+            hs = str(h)
+            if length % 2 == 0:
+                pal = hs + hs[::-1]
+            else:
+                pal = hs + hs[:-1][::-1]
+            p = int(pal)
+            if p > 0 and is_palindrome(p):
+                result.append(p)
+        if length > 1:
+            result.append(10 ** (length - 1) - 1)
+        result.append(10 ** length + 1)
+        return result
+    seen = set()
+    for idx in [(n - 1) // 2, n // 2]:
+        for p in get_candidates(nums[idx]):
+            seen.add(p)
+    best = float('inf')
+    for p in seen:
+        cost = sum(abs(x - p) for x in nums)
+        if cost < best:
+            best = cost
+    return best
+`,
+
+  'identify-the-largest-outlier-in-an-array': `def largestOutlier(nums):
+    from collections import Counter
+    total = sum(nums)
+    freq = Counter(nums)
+    best = float('-inf')
+    for x in nums:
+        rem = total - x
+        if rem % 2 != 0:
+            continue
+        target = rem // 2
+        tf = freq[target]
+        valid = (tf >= 2) if x == target else (tf >= 1)
+        if valid and x > best:
+            best = x
+    return best
+`,
 
 };
