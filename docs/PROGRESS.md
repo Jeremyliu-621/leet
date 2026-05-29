@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-29
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2582** problems; 8040 tests green. Batches 102–180 complete. UX + a11y polish ongoing.
+**Current focus:** Bank at **2584** problems; 8046 tests green. Batches 102–180 complete. UX + a11y polish ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** More bank growth (batch 181+); UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 180 (local) — find-ways-reach-kth-stair (hard), count-beautiful-splits (medium) (2026-05-29)
+Two new problems: `find-number-of-ways-to-reach-the-k-th-stair` (hard/dp+bit-manipulation, memoized recursion with state (i, jump, usedDown)), `count-beautiful-splits-in-an-array` (medium/dp, O(n²) LCP table — check if left is prefix of mid or mid is prefix of right for each strict 0<i<j<n split). Bank at **2584**; 8046 tests.
 
 ### feat(bank): batch 180 — binary-search (easy), wiggle-sequence (medium), valid-word-square (easy) (2026-05-29)
 Three new problems: `binary-search` (easy/binary-search, canonical LC#704 template — lo/hi pointers with `>>1` midpoint), `wiggle-subsequence` (medium/arrays+dp, greedy up/down counters — if nums[i]>nums[i-1] then up=down+1, if <  then down=up+1, O(n)), `valid-word-square` (easy/arrays, check words[i][j]===words[j][i] for all valid pairs — fixed incorrect ball/area/lead/lady example which IS a valid word square). Bank at **2582**; 8040 tests.

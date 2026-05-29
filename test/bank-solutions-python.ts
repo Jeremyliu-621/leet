@@ -41559,4 +41559,39 @@ def validWordSquare(words):
     return True
 `,
 
+
+
+  'find-number-of-ways-to-reach-the-k-th-stair': `
+def waysToReachStair(k):
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dp(i, jump, used_down):
+        if i > k + 1:
+            return 0
+        ways = 1 if i == k else 0
+        ways += dp(i + (1 << jump), jump + 1, False)
+        if i > 0 and not used_down:
+            ways += dp(i - 1, jump, True)
+        return ways
+    return dp(1, 0, False)
+`,
+
+
+  'count-beautiful-splits-in-an-array': `
+def beautifulSplits(nums):
+    n = len(nums)
+    lcp = [[0] * (n + 1) for _ in range(n + 1)]
+    for i in range(n - 1, -1, -1):
+        for j in range(n - 1, -1, -1):
+            lcp[i][j] = lcp[i+1][j+1] + 1 if nums[i] == nums[j] else 0
+    count = 0
+    for i in range(1, n):
+        for j in range(i + 1, n):
+            cond1 = (i <= j - i) and (lcp[0][i] >= i)
+            cond2 = (j - i <= n - j) and (lcp[i][j] >= j - i)
+            if cond1 or cond2:
+                count += 1
+    return count
+`,
+
 };

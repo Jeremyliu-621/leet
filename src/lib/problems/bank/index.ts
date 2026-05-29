@@ -2877,6 +2877,8 @@ import { problem as maximumNumberOfBooks } from './maximum-number-of-books-you-c
 import { problem as binarySearch } from './binary-search';
 import { problem as wiggleSequence } from './wiggle-sequence';
 import { problem as validWordSquare } from './valid-word-square';
+import { problem as findNumberOfWaysToReachTheKthStair } from './find-number-of-ways-to-reach-the-k-th-stair';
+import { problem as countBeautifulSplitsInAnArray } from './count-beautiful-splits-in-an-array';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5793,4 +5795,7 @@ export const problems: readonly Problem[] = [
   binarySearch,
   wiggleSequence,
   validWordSquare,
+  // batch 180 — dp+bit-manipulation/hard, dp/medium
+  findNumberOfWaysToReachTheKthStair,
+  countBeautifulSplitsInAnArray,
 ];

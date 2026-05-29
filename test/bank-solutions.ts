@@ -41487,4 +41487,43 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return true;
   },
 
+
+
+  'find-number-of-ways-to-reach-the-k-th-stair': (kArg: unknown) => {
+    const k = kArg as number;
+    const memo = new Map<string, number>();
+    function dp(i: number, jump: number, usedDown: boolean): number {
+      if (i > k + 1) return 0;
+      const key = i + ',' + jump + ',' + (usedDown ? 1 : 0);
+      const cached = memo.get(key);
+      if (cached !== undefined) return cached;
+      let ways = (i === k) ? 1 : 0;
+      ways += dp(i + Math.pow(2, jump), jump + 1, false);
+      if (i > 0 && !usedDown) ways += dp(i - 1, jump, true);
+      memo.set(key, ways);
+      return ways;
+    }
+    return dp(1, 0, false);
+  },
+
+  'count-beautiful-splits-in-an-array': (numsArg: unknown) => {
+    const nums = numsArg as number[];
+    const n = nums.length;
+    const lcp: number[][] = Array.from({length: n + 1}, () => new Array(n + 1).fill(0));
+    for (let i = n - 1; i >= 0; i--) {
+      for (let j = n - 1; j >= 0; j--) {
+        lcp[i]![j] = (nums[i] === nums[j]) ? lcp[i+1]![j+1]! + 1 : 0;
+      }
+    }
+    let count = 0;
+    for (let i = 1; i < n; i++) {
+      for (let j = i + 1; j < n; j++) {
+        const cond1 = (i <= j - i) && (lcp[0]![i]! >= i);
+        const cond2 = (j - i <= n - j) && (lcp[i]![j]! >= j - i);
+        if (cond1 || cond2) count++;
+      }
+    }
+    return count;
+  },
+
 };
