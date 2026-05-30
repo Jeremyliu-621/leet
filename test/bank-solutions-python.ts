@@ -41487,4 +41487,81 @@ def sumOfPower(nums, k):
         ans = (ans + dp[length][k] * pow2[n - length]) % MOD
     return ans
 `,
+  // batch 229
+  'find-a-peak-element-ii': `
+def findPeakGrid(mat):
+    lo, hi = 0, len(mat) - 1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        max_col = mat[mid].index(max(mat[mid]))
+        if mat[mid][max_col] < mat[mid + 1][max_col]:
+            lo = mid + 1
+        else:
+            hi = mid
+    max_col = mat[lo].index(max(mat[lo]))
+    return [lo, max_col]
+`,
+  'group-the-people-given-the-group-size-they-belong-to': `
+def groupThePeople(groupSizes):
+    from collections import defaultdict
+    buckets = defaultdict(list)
+    for i, s in enumerate(groupSizes):
+        buckets[s].append(i)
+    result = []
+    for size, people in buckets.items():
+        for i in range(0, len(people), size):
+            result.append(people[i:i + size])
+    result.sort(key=lambda g: g[0])
+    return result
+`,
+  'matrix-diagonal-sum': `
+def diagonalSum(mat):
+    n = len(mat)
+    total = 0
+    for i in range(n):
+        total += mat[i][i] + mat[i][n - 1 - i]
+    if n % 2 == 1:
+        total -= mat[n // 2][n // 2]
+    return total
+`,
+  'closest-fair-integer': `
+def closestFair(n):
+    def is_fair(x):
+        s = str(x)
+        e = sum(1 for c in s if int(c) % 2 == 0)
+        o = len(s) - e
+        return e == o
+    while True:
+        d = len(str(n))
+        if d % 2 == 1:
+            n = 10 ** d
+            continue
+        if is_fair(n):
+            return n
+        n += 1
+`,
+  'find-original-array-from-doubled-array': `
+def findOriginalArray(changed):
+    if len(changed) % 2 != 0:
+        return []
+    from collections import Counter
+    cnt = Counter(changed)
+    original = []
+    for x in sorted(changed):
+        if cnt[x] == 0:
+            continue
+        doubled = 2 * x
+        if x == doubled:
+            if cnt[x] < 2:
+                return []
+            original.append(x)
+            cnt[x] -= 2
+        else:
+            if cnt[doubled] == 0:
+                return []
+            original.append(x)
+            cnt[x] -= 1
+            cnt[doubled] -= 1
+    return original
+`,
 };

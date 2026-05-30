@@ -2966,6 +2966,12 @@ import { problem as maxFactorScoreArray } from './find-the-maximum-factor-score-
 import { problem as countPartitionsEvenSum } from './count-partitions-with-even-sum-difference';
 import { problem as beautifulIndicesII } from './find-beautiful-indices-in-the-given-array-ii';
 import { problem as sumOfPowerSubseq } from './find-the-sum-of-the-power-of-all-subsequences';
+// batch 229
+import { problem as findPeakGridII } from './find-a-peak-element-ii';
+import { problem as groupPeopleBySize } from './group-the-people-given-the-group-size-they-belong-to';
+import { problem as matrixDiagSum } from './matrix-diagonal-sum';
+import { problem as closestFairInt } from './closest-fair-integer';
+import { problem as findOriginalDoubled } from './find-original-array-from-doubled-array';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5970,4 +5976,10 @@ export const problems: readonly Problem[] = [
   countPartitionsEvenSum,
   beautifulIndicesII,
   sumOfPowerSubseq,
+  // batch 229
+  findPeakGridII,
+  groupPeopleBySize,
+  matrixDiagSum,
+  closestFairInt,
+  findOriginalDoubled,
 ];

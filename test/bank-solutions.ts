@@ -42346,4 +42346,80 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return Number(ans);
   },
+  // batch 229
+  'find-a-peak-element-ii': (...args: unknown[]) => {
+    const mat = args[0] as number[][];
+    let lo = 0, hi = mat.length - 1;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      const maxCol = mat[mid]!.indexOf(Math.max(...mat[mid]!));
+      if (mat[mid]![maxCol]! < mat[mid + 1]![maxCol]!) lo = mid + 1;
+      else hi = mid;
+    }
+    const maxCol = mat[lo]!.indexOf(Math.max(...mat[lo]!));
+    return [lo, maxCol];
+  },
+  'group-the-people-given-the-group-size-they-belong-to': (...args: unknown[]) => {
+    const groupSizes = args[0] as number[];
+    const buckets = new Map<number, number[]>();
+    for (let i = 0; i < groupSizes.length; i++) {
+      const s = groupSizes[i]!;
+      if (!buckets.has(s)) buckets.set(s, []);
+      buckets.get(s)!.push(i);
+    }
+    const result: number[][] = [];
+    for (const [size, people] of buckets) {
+      for (let i = 0; i < people.length; i += size) {
+        result.push(people.slice(i, i + size));
+      }
+    }
+    result.sort((a, b) => a[0]! - b[0]!);
+    return result;
+  },
+  'matrix-diagonal-sum': (...args: unknown[]) => {
+    const mat = args[0] as number[][];
+    const n = mat.length;
+    let sum = 0;
+    for (let i = 0; i < n; i++) sum += mat[i]![i]! + mat[i]![n - 1 - i]!;
+    if (n % 2 === 1) sum -= mat[(n - 1) / 2]![(n - 1) / 2]!;
+    return sum;
+  },
+  'closest-fair-integer': (...args: unknown[]) => {
+    let n = args[0] as number;
+    const isFair = (x: number): boolean => {
+      const s = x.toString();
+      let e = 0, o = 0;
+      for (const c of s) parseInt(c) % 2 === 0 ? e++ : o++;
+      return e === o;
+    };
+    while (true) {
+      const d = n.toString().length;
+      if (d % 2 === 1) { n = Math.pow(10, d); continue; }
+      if (isFair(n)) return n;
+      n++;
+    }
+  },
+  'find-original-array-from-doubled-array': (...args: unknown[]) => {
+    const changed = args[0] as number[];
+    if (changed.length % 2 !== 0) return [];
+    const sorted = [...changed].sort((a, b) => a - b);
+    const cnt = new Map<number, number>();
+    for (const x of sorted) cnt.set(x, (cnt.get(x) ?? 0) + 1);
+    const original: number[] = [];
+    for (const x of sorted) {
+      if ((cnt.get(x) ?? 0) === 0) continue;
+      const doubled = 2 * x;
+      if (x === doubled) {
+        if ((cnt.get(x) ?? 0) < 2) return [];
+        original.push(x);
+        cnt.set(x, cnt.get(x)! - 2);
+      } else {
+        if ((cnt.get(doubled) ?? 0) === 0) return [];
+        original.push(x);
+        cnt.set(x, cnt.get(x)! - 1);
+        cnt.set(doubled, cnt.get(doubled)! - 1);
+      }
+    }
+    return original;
+  },
 };
