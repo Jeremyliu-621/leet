@@ -2926,12 +2926,6 @@ import { problem as minimumOperationsAllCharsEqual } from './minimum-operations-
 import { problem as minChanges } from './number-of-bit-changes-to-make-two-integers-equal';
 import { problem as findOccurrences } from './find-occurrences-of-an-element-in-an-array';
 import { problem as numSubOnes } from './number-of-substrings-with-only-1s';
-// batch 226 — easy/strings, easy/math, easy/arrays+hash-map, easy/arrays, easy/strings
-import { problem as checkAllABeforeB } from './check-if-all-a-appears-before-all-b';
-import { problem as squareIsWhiteColor } from './determine-color-of-a-chessboard-square';
-import { problem as mostFrequentAfterKey } from './most-frequent-number-following-key-in-an-array';
-import { problem as numRectanglesLargestSq } from './number-of-rectangles-that-can-form-largest-square';
-import { problem as firstPalindrome } from './find-first-palindromic-string-in-array';
 // batch 224
 import { problem as numberOfCuts } from './minimum-cuts-to-divide-a-circle';
 import { problem as numSplitsGood } from './number-of-good-ways-to-split-a-string';
@@ -2942,7 +2936,6 @@ import { problem as removingMinMax } from './removing-minimum-and-maximum-from-a
 import { problem as isSameAfterReversals } from './number-after-double-reversal';
 import { problem as executeInstructions } from './execution-of-all-suffix-instructions-staying-in-a-grid';
 import { problem as goodDaysToRobBank } from './find-good-days-to-rob-the-bank';
-// batch 225 — medium/arrays+simulation, easy/math+bit-manipulation, hard/graph, medium/arrays
 import { problem as findScoreMarking } from './find-score-after-marking-all-elements';
 import { problem as primeSetBitsCount } from './prime-number-of-set-bits-in-binary-representation';
 import { problem as minEdgeReversalsEvery } from './minimum-edge-reversals-so-every-node-is-reachable';
@@ -2953,6 +2946,26 @@ import { problem as maximizeTopmost } from './maximize-the-topmost-element-after
 import { problem as areSentencesSimilarIII } from './sentence-similarity-iii';
 import { problem as decodeSlantedCipher } from './decode-the-slanted-ciphertext';
 import { problem as minDeletionSizeSorted } from './delete-columns-to-make-sorted';
+// batch 226
+import { problem as heightChecker } from './height-checker';
+import { problem as reorderLogFiles } from './reorder-log-files';
+import { problem as largestTimeFromDigits } from './largest-time-for-given-digits';
+import { problem as arrayChange } from './replace-elements-in-an-array';
+// batch 226 — easy/strings, easy/math, easy/arrays+hash-map, easy/arrays, easy/strings
+import { problem as checkAllABeforeB } from './check-if-all-a-appears-before-all-b';
+import { problem as squareIsWhiteColor } from './determine-color-of-a-chessboard-square';
+import { problem as mostFrequentAfterKey } from './most-frequent-number-following-key-in-an-array';
+import { problem as numRectanglesLargestSq } from './number-of-rectangles-that-can-form-largest-square';
+import { problem as firstPalindrome } from './find-first-palindromic-string-in-array';
+// batch 227 — medium/arrays, medium/strings+sliding-window, hard/strings+math
+import { problem as adjacentIncreasingSubarraysDetectionIi } from './adjacent-increasing-subarrays-detection-ii';
+import { problem as countSubstringsEveryVowelKConsonantsIi } from './count-substrings-with-every-vowel-and-k-consonants-ii';
+import { problem as checkDigitsEqualAfterOperationsIi } from './check-if-digits-are-equal-in-string-after-operations-ii';
+// batch 228 — medium/arrays+math, easy/arrays+math, hard/strings, hard/dp
+import { problem as maxFactorScoreArray } from './find-the-maximum-factor-score-of-array';
+import { problem as countPartitionsEvenSum } from './count-partitions-with-even-sum-difference';
+import { problem as beautifulIndicesII } from './find-beautiful-indices-in-the-given-array-ii';
+import { problem as sumOfPowerSubseq } from './find-the-sum-of-the-power-of-all-subsequences';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5934,6 +5947,10 @@ export const problems: readonly Problem[] = [
   minEdgeReversalsEvery,
   countNumInversions,
   // batch 226
+  heightChecker,
+  reorderLogFiles,
+  largestTimeFromDigits,
+  arrayChange,
   checkAllABeforeB,
   squareIsWhiteColor,
   mostFrequentAfterKey,
@@ -5945,4 +5962,12 @@ export const problems: readonly Problem[] = [
   areSentencesSimilarIII,
   decodeSlantedCipher,
   minDeletionSizeSorted,
+  adjacentIncreasingSubarraysDetectionIi,
+  countSubstringsEveryVowelKConsonantsIi,
+  checkDigitsEqualAfterOperationsIi,
+  // batch 228
+  maxFactorScoreArray,
+  countPartitionsEvenSum,
+  beautifulIndicesII,
+  sumOfPowerSubseq,
 ];

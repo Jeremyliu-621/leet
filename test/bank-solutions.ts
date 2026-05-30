@@ -42063,6 +42063,59 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     sort(arr);
     return count;
   },
+  'height-checker': (...args: unknown[]) => {
+    const heights = args[0] as number[];
+    const sorted = [...heights].sort((a, b) => a - b);
+    return heights.filter((h, i) => h !== sorted[i]).length;
+  },
+  'reorder-log-files': (...args: unknown[]) => {
+    const logs = args[0] as string[];
+    const letters: string[] = [], digits: string[] = [];
+    for (const log of logs) {
+      const second = log[log.indexOf(' ') + 1]!;
+      if (second >= '0' && second <= '9') digits.push(log);
+      else letters.push(log);
+    }
+    letters.sort((a, b) => {
+      const ac = a.substring(a.indexOf(' ') + 1);
+      const bc = b.substring(b.indexOf(' ') + 1);
+      if (ac !== bc) return ac < bc ? -1 : 1;
+      return a < b ? -1 : a > b ? 1 : 0;
+    });
+    return [...letters, ...digits];
+  },
+  'largest-time-for-given-digits': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    let best = -1;
+    const perm = (a: number[], remaining: number[]): void => {
+      if (a.length === 4) {
+        if (a[0]! * 10 + a[1]! <= 23 && a[2]! * 10 + a[3]! <= 59) {
+          const t = a[0]! * 1000 + a[1]! * 100 + a[2]! * 10 + a[3]!;
+          if (t > best) best = t;
+        }
+        return;
+      }
+      for (let i = 0; i < remaining.length; i++) {
+        perm([...a, remaining[i]!], [...remaining.slice(0, i), ...remaining.slice(i + 1)]);
+      }
+    };
+    perm([], arr);
+    if (best === -1) return '';
+    const h = Math.floor(best / 100), m = best % 100;
+    return `${Math.floor(h / 10)}${h % 10}:${Math.floor(m / 10)}${m % 10}`;
+  },
+  'replace-elements-in-an-array': (...args: unknown[]) => {
+    const [nums, operations] = args as [number[], number[][]];
+    const map = new Map(nums.map((v, i) => [v, i]));
+    for (const op of operations) {
+      const [oldVal, newVal] = op as [number, number];
+      const idx = map.get(oldVal)!;
+      nums[idx] = newVal;
+      map.delete(oldVal);
+      map.set(newVal, idx);
+    }
+    return nums;
+  },
   // batch 226
   'check-if-all-a-appears-before-all-b': (...args: unknown[]) => {
     return !(args[0] as string).includes('ba');
@@ -42150,5 +42203,147 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       }
     }
     return del;
+  },
+  'adjacent-increasing-subarrays-detection-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const leftLen = new Array<number>(n).fill(1);
+    const rightLen = new Array<number>(n).fill(1);
+    for (let i = 1; i < n; i++) {
+      if (nums[i]! > nums[i - 1]!) leftLen[i] = leftLen[i - 1]! + 1;
+    }
+    for (let i = n - 2; i >= 0; i--) {
+      if (nums[i]! < nums[i + 1]!) rightLen[i] = rightLen[i + 1]! + 1;
+    }
+    let ans = 0;
+    for (let b = 1; b < n; b++) {
+      const v = Math.min(leftLen[b - 1]!, rightLen[b]!);
+      if (v > ans) ans = v;
+    }
+    return ans;
+  },
+  'count-substrings-with-every-vowel-and-k-consonants-ii': (...args: unknown[]) => {
+    const s = args[0] as string, k = args[1] as number;
+    const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+    function atLeast(threshold: number): number {
+      let count = 0, l = 0, consonants = 0;
+      const freq = new Map<string, number>();
+      for (let r = 0; r < s.length; r++) {
+        const c = s[r]!;
+        if (vowels.has(c)) freq.set(c, (freq.get(c) ?? 0) + 1);
+        else consonants++;
+        while (freq.size === 5 && consonants >= threshold) {
+          const lc = s[l]!;
+          if (vowels.has(lc)) {
+            const nv = freq.get(lc)! - 1;
+            if (nv === 0) freq.delete(lc); else freq.set(lc, nv);
+          } else {
+            consonants--;
+          }
+          l++;
+        }
+        count += l;
+      }
+      return count;
+    }
+    return atLeast(k) - atLeast(k + 1);
+  },
+  'check-if-digits-are-equal-in-string-after-operations-ii': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const m = n - 2;
+    const pascal5 = [[1,0,0,0,0],[1,1,0,0,0],[1,2,1,0,0],[1,3,3,1,0],[1,4,1,4,1]];
+    function lucas5(mv: number, iv: number): number {
+      let result = 1, mm = mv, ii = iv;
+      while (ii > 0) {
+        result = (result * (pascal5[mm % 5]![ii % 5]!)) % 5;
+        mm = Math.floor(mm / 5);
+        ii = Math.floor(ii / 5);
+      }
+      return result;
+    }
+    let sumA = 0, sumB = 0;
+    for (let i = 0; i <= m; i++) {
+      const c2 = (i & m) === i ? 1 : 0;
+      const c5 = lucas5(m, i);
+      const coeff = (5 * c2 + 6 * c5) % 10;
+      sumA = (sumA + coeff * parseInt(s[i]!)) % 10;
+      sumB = (sumB + coeff * parseInt(s[i + 1]!)) % 10;
+    }
+    return sumA === sumB;
+  },
+  'find-the-maximum-factor-score-of-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const gcd = (a: number, b: number): number => { while (b) { [a, b] = [b, a % b]; } return a; };
+    const lcm = (a: number, b: number): number => a / gcd(a, b) * b;
+    const score = (arr: number[]): number => {
+      if (arr.length === 0) return 0;
+      let g = arr[0]!, l = arr[0]!;
+      for (let i = 1; i < arr.length; i++) { g = gcd(g, arr[i]!); l = lcm(l, arr[i]!); }
+      return g * l;
+    };
+    let best = score(nums);
+    for (let i = 0; i < nums.length; i++) {
+      best = Math.max(best, score(nums.filter((_, j) => j !== i)));
+    }
+    return best;
+  },
+  'count-partitions-with-even-sum-difference': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const total = nums.reduce((a, b) => a + b, 0);
+    return total % 2 === 0 ? nums.length - 1 : 0;
+  },
+  'find-beautiful-indices-in-the-given-array-ii': (...args: unknown[]) => {
+    const [s, a, b, k] = args as [string, string, string, number];
+    const kmpSearch = (text: string, pattern: string): number[] => {
+      if (pattern.length === 0) return [];
+      const combined = pattern + '#' + text;
+      const fail = new Array<number>(combined.length).fill(0);
+      for (let i = 1; i < combined.length; i++) {
+        let j = fail[i - 1]!;
+        while (j > 0 && combined[i] !== combined[j]) j = fail[j - 1]!;
+        if (combined[i] === combined[j]) j++;
+        fail[i] = j;
+      }
+      const m = pattern.length;
+      const matches: number[] = [];
+      for (let i = m + 1; i < combined.length; i++) {
+        if (fail[i] === m) matches.push(i - 2 * m);
+      }
+      return matches;
+    };
+    const aMatches = kmpSearch(s, a);
+    const bMatches = kmpSearch(s, b);
+    const result: number[] = [];
+    let j = 0;
+    for (const i of aMatches) {
+      while (j < bMatches.length && bMatches[j]! < i - k) j++;
+      for (let jj = j; jj < bMatches.length && bMatches[jj]! <= i + k; jj++) {
+        result.push(i);
+        break;
+      }
+    }
+    return result;
+  },
+  'find-the-sum-of-the-power-of-all-subsequences': (...args: unknown[]) => {
+    const [nums, k] = args as [number[], number];
+    const MOD = 1_000_000_007n;
+    const n = nums.length;
+    const dp: bigint[][] = Array.from({ length: n + 1 }, () => new Array<bigint>(k + 1).fill(0n));
+    dp[0]![0] = 1n;
+    for (const x of nums) {
+      for (let len = n; len >= 1; len--) {
+        for (let s = k; s >= x; s--) {
+          dp[len]![s] = (dp[len]![s]! + dp[len - 1]![s - x]!) % MOD;
+        }
+      }
+    }
+    const pow2 = new Array<bigint>(n + 1).fill(1n);
+    for (let i = 1; i <= n; i++) pow2[i] = pow2[i - 1]! * 2n % MOD;
+    let ans = 0n;
+    for (let len = 1; len <= n; len++) {
+      ans = (ans + dp[len]![k]! * pow2[n - len]!) % MOD;
+    }
+    return Number(ans);
   },
 };

@@ -8,9 +8,21 @@
 
 **Last updated:** 2026-05-30
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2577** problems; 8025 tests green. Batches 102–226 complete.
+**Current focus:** Bank at **2588** problems; 8058 tests green. Batches 102–228 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 227+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 229+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 228 — max-factor-score, count-partitions-even-sum, beautiful-indices-ii, sum-of-power-subsequences (2026-05-30)
+Four new problems: `find-the-maximum-factor-score-of-array` (medium/arrays+math, try all n+1 removals + gcd/lcm, GCD via Euclidean), `count-partitions-with-even-sum-difference` (easy/arrays+math, O(1) total%2 check → n−1 or 0), `find-beautiful-indices-in-the-given-array-ii` (hard/strings, KMP O(n) match + two-pointer scan), `find-the-sum-of-the-power-of-all-subsequences` (hard/dp, 2D DP on length+sum × 2^(n−len) multiplier mod 1e9+7). Bank at **2588**; 8058 tests.
+
+### feat(bank): batch 226 — height-checker, reorder-log-files, largest-time-for-given-digits, replace-elements-in-array (2026-05-30)
+Four new problems: `height-checker` (easy/arrays, sorted comparison), `reorder-log-files` (easy/strings, letter-logs sorted by (content,id) then digit-logs), `largest-time-for-given-digits` (medium/simulation, 24-permutation brute force), `replace-elements-in-an-array` (medium/arrays+hash-map, val→idx map updated per operation O(m)). Bank at **2576**; 8022 tests.
+**Current focus:** Bank at **2580** problems; 8034 tests green. Batches 102–227 complete.
+**Build status:** 🟢 `npm run typecheck` + `npm run test` green.
+**Next up:** Batch 228+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 227 — adjacent-increasing-ii, vowel-k-consonants-ii, digits-equal-ops-ii (2026-05-30)
+Three new problems: `adjacent-increasing-subarrays-detection-ii` (medium/arrays, find max k for two adjacent strictly increasing subarrays, O(n) leftLen/rightLen precompute + boundary scan), `count-substrings-with-every-vowel-and-k-consonants-ii` (medium/strings+sliding-window, atLeast(k)−atLeast(k+1) O(n) sliding window, handles n up to 5×10⁴), `check-if-digits-are-equal-in-string-after-operations-ii` (hard/strings+math, binomial formula after m=n−2 passes, Lucas' theorem mod 2 and mod 5 via iterative base-p decomposition, CRT for mod 10, O(n log n)). Bank at **2580**; 8034 tests.
 
 ### feat(bank): batch 226 — check-a-before-b, chessboard-color, most-frequent-after-key, rectangles-largest-square, first-palindromic (2026-05-30)
 Five new easy problems: `check-if-all-a-appears-before-all-b` (easy/strings, "ba" not in string), `determine-color-of-a-chessboard-square` (easy/math, (col+row)%2 parity), `most-frequent-number-following-key-in-an-array` (easy/arrays+hash-map, count targets after key), `number-of-rectangles-that-can-form-largest-square` (easy/arrays, max min(l,w)), `find-first-palindromic-string-in-array` (easy/strings, first word = reverse). Bank at **2577**; 8025 tests.
