@@ -2951,6 +2951,11 @@ import { problem as squareIsWhiteColor } from './determine-color-of-a-chessboard
 import { problem as mostFrequentAfterKey } from './most-frequent-number-following-key-in-an-array';
 import { problem as numRectanglesLargestSq } from './number-of-rectangles-that-can-form-largest-square';
 import { problem as firstPalindrome } from './find-first-palindromic-string-in-array';
+// batch 228 — easy/arrays+simulation, medium/arrays+binary-search, medium/arrays, medium/arrays
+import { problem as mostVisitedSector } from './most-visited-sector-in-a-circular-track';
+import { problem as maxSemiDecreasingSubarray } from './maximum-length-of-a-semi-decreasing-subarray';
+import { problem as minOpsBinaryArrayI } from './minimum-number-of-operations-to-make-binary-array-elements-equal-to-one-i';
+import { problem as minOpsBinaryArrayII } from './minimum-number-of-operations-to-make-binary-array-elements-equal-to-one-ii';
 // batch 227 — medium/arrays, medium/strings+sliding-window, hard/strings+math
 import { problem as adjacentIncreasingSubarraysDetectionIi } from './adjacent-increasing-subarrays-detection-ii';
 import { problem as countSubstringsEveryVowelKConsonantsIi } from './count-substrings-with-every-vowel-and-k-consonants-ii';
@@ -5949,4 +5954,9 @@ export const problems: readonly Problem[] = [
   adjacentIncreasingSubarraysDetectionIi,
   countSubstringsEveryVowelKConsonantsIi,
   checkDigitsEqualAfterOperationsIi,
+  // batch 228
+  mostVisitedSector,
+  maxSemiDecreasingSubarray,
+  minOpsBinaryArrayI,
+  minOpsBinaryArrayII,
 ];

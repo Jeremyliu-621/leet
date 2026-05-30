@@ -41351,4 +41351,60 @@ def hasSameDigits(s):
         sum_b = (sum_b + coeff * int(s[i + 1])) % 10
     return sum_a == sum_b
 `,
+  // batch 228
+  'most-visited-sector-in-a-circular-track': `
+def mostVisited(n, rounds):
+    freq = [0] * (n + 1)
+    for start, finish in rounds:
+        if start <= finish:
+            for i in range(start, finish + 1):
+                freq[i] += 1
+        else:
+            for i in range(start, n + 1):
+                freq[i] += 1
+            for i in range(1, finish + 1):
+                freq[i] += 1
+    max_f = max(freq[1:])
+    return [i for i in range(1, n + 1) if freq[i] == max_f]
+`,
+  'maximum-length-of-a-semi-decreasing-subarray': `
+import bisect
+def maxSubarrayLength(nums):
+    n = len(nums)
+    pref_vals, pref_idxs = [], []
+    for i, v in enumerate(nums):
+        if not pref_vals or v > pref_vals[-1]:
+            pref_vals.append(v)
+            pref_idxs.append(i)
+    ans = 0
+    for j in range(n):
+        lo = bisect.bisect_right(pref_vals, nums[j])
+        if lo < len(pref_vals) and pref_idxs[lo] < j:
+            ans = max(ans, j - pref_idxs[lo] + 1)
+    return ans
+`,
+  'minimum-number-of-operations-to-make-binary-array-elements-equal-to-one-i': `
+def minOperations(nums):
+    nums = list(nums)
+    n = len(nums)
+    ops = 0
+    for i in range(n - 2):
+        if nums[i] == 0:
+            nums[i] ^= 1
+            nums[i + 1] ^= 1
+            nums[i + 2] ^= 1
+            ops += 1
+    if 0 in nums[n - 2:]:
+        return -1
+    return ops
+`,
+  'minimum-number-of-operations-to-make-binary-array-elements-equal-to-one-ii': `
+def minOperations(nums):
+    ops, prev = 0, 1
+    for v in nums:
+        if v != prev:
+            ops += 1
+            prev = v
+    return ops
+`,
 };
