@@ -2926,7 +2926,12 @@ import { problem as minimumOperationsAllCharsEqual } from './minimum-operations-
 import { problem as minChanges } from './number-of-bit-changes-to-make-two-integers-equal';
 import { problem as findOccurrences } from './find-occurrences-of-an-element-in-an-array';
 import { problem as numSubOnes } from './number-of-substrings-with-only-1s';
-// batch 224 — medium/arrays+simulation, easy/math+bit-manipulation, hard/graph, medium/arrays
+// batch 224
+import { problem as numberOfCuts } from './minimum-cuts-to-divide-a-circle';
+import { problem as numSplitsGood } from './number-of-good-ways-to-split-a-string';
+import { problem as closetTarget } from './shortest-distance-to-target-string-in-a-circular-array';
+import { problem as mergeArrays2D } from './merge-two-2d-arrays-by-summing-values';
+// batch 225 — medium/arrays+simulation, easy/math+bit-manipulation, hard/graph, medium/arrays
 import { problem as findScoreMarking } from './find-score-after-marking-all-elements';
 import { problem as primeSetBitsCount } from './prime-number-of-set-bits-in-binary-representation';
 import { problem as minEdgeReversalsEvery } from './minimum-edge-reversals-so-every-node-is-reachable';
@@ -5898,6 +5903,11 @@ export const problems: readonly Problem[] = [
   findOccurrences,
   numSubOnes,
   // batch 224
+  numberOfCuts,
+  numSplitsGood,
+  closetTarget,
+  mergeArrays2D,
+  // batch 225
   findScoreMarking,
   primeSetBitsCount,
   minEdgeReversalsEvery,

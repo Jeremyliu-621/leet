@@ -6,11 +6,14 @@
 
 ---
 
-**Last updated:** 2026-05-29
+**Last updated:** 2026-05-30
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2560** problems; 7974 tests green. Batches 102–223 complete.
+**Current focus:** Bank at **2564** problems; 7986 tests green. Batches 102–224 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 224+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 225+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 224 — min-cuts-circle, good-split-string, shortest-dist-circular, merge-2d-arrays (2026-05-30)
+Four new problems: `minimum-cuts-to-divide-a-circle` (easy/math, 0 if n=1; n/2 if even; n if odd), `number-of-good-ways-to-split-a-string` (medium/strings+hash-map, prefix/suffix distinct-char count, O(n)), `shortest-distance-to-target-string-in-a-circular-array` (easy/arrays, min circular distance to each target match), `merge-two-2d-arrays-by-summing-values` (easy/arrays, two-pointer merge by id). Bank at **2564**; 7986 tests.
 
 ### feat(bank): batch 223 addendum — min-ops-all-chars-equal, bit-changes-equal, find-occurrences, substrings-only-1s (2026-05-29)
 Four new problems: `minimum-operations-to-make-all-characters-equal` (medium/strings, count transition boundaries), `number-of-bit-changes-to-make-two-integers-equal` (easy/bit-manipulation, check k&~n==0, return popcount(n&~k)), `find-occurrences-of-an-element-in-an-array` (easy/arrays, k-th occurrence scan), `number-of-substrings-with-only-1s` (medium/strings+math, running run-length × mod). Bank at **2560**; 7974 tests.

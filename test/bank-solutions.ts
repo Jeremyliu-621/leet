@@ -41904,7 +41904,43 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return Number(res);
   },
-  // batch 224
+  'minimum-cuts-to-divide-a-circle': (...args: unknown[]) => {
+    const n = args[0] as number;
+    if (n === 1) return 0;
+    return n % 2 === 0 ? n / 2 : n;
+  },
+  'number-of-good-ways-to-split-a-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const pre: number[] = [], suf: number[] = [];
+    const seen = new Set<string>();
+    for (let i = 0; i < n; i++) { seen.add(s[i]!); pre.push(seen.size); }
+    seen.clear();
+    for (let i = n - 1; i >= 0; i--) { seen.add(s[i]!); suf.unshift(seen.size); }
+    let count = 0;
+    for (let i = 0; i < n - 1; i++) if (pre[i] === suf[i + 1]) count++;
+    return count;
+  },
+  'shortest-distance-to-target-string-in-a-circular-array': (...args: unknown[]) => {
+    const [words, target, startIndex] = args as [string[], string, number];
+    const n = words.length;
+    let min = Infinity;
+    for (let i = 0; i < n; i++) {
+      if (words[i] === target) {
+        const d = Math.abs(i - startIndex);
+        min = Math.min(min, d, n - d);
+      }
+    }
+    return min === Infinity ? -1 : min;
+  },
+  'merge-two-2d-arrays-by-summing-values': (...args: unknown[]) => {
+    const [nums1, nums2] = args as [number[][], number[][]];
+    const map = new Map<number, number>();
+    for (const [id, val] of nums1) map.set(id!, (map.get(id!) ?? 0) + val!);
+    for (const [id, val] of nums2) map.set(id!, (map.get(id!) ?? 0) + val!);
+    return [...map.entries()].sort((a, b) => a[0]! - b[0]!);
+  },
+  // batch 225
   'find-score-after-marking-all-elements': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const n = nums.length;
