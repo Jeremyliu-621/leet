@@ -12,8 +12,8 @@
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 226+; UX polish per LEETCODE_PARITY.md.
 
-### feat(bank): batch 225 — removing-min-max, number-after-double-reversal, execute-suffix-instructions, good-days-rob-bank (2026-05-30)
-Four new problems: `removing-minimum-and-maximum-from-array` (medium/arrays, 3-strategy: both-front/both-back/split, min over lo+hi), `number-after-double-reversal` (easy/math, return num==0 || num%10!=0), `execution-of-all-suffix-instructions-staying-in-a-grid` (medium/simulation, O(m²) suffix scan), `find-good-days-to-rob-the-bank` (medium/dp, prefix/suffix non-increasing/non-decreasing lengths). Also restored missing `minimum-cost-of-buying-candies-with-discount` .ts file. Bank at **2568**; 7998 tests.
+### feat(bank): batch 225 (merged) — removing-min-max, double-reversal, suffix-instructions, good-days-rob + find-score-marking, prime-set-bits, edge-reversals, count-inversions (2026-05-30)
+Eight problems across two concurrent sessions: `removing-minimum-and-maximum-from-array` (medium/arrays, 3-strategy cost), `number-after-double-reversal` (easy/math), `execution-of-all-suffix-instructions-staying-in-a-grid` (medium/simulation), `find-good-days-to-rob-the-bank` (medium/dp), `find-score-after-marking-all-elements` (medium/arrays+simulation), `prime-number-of-set-bits-in-binary-representation` (easy/math+bit-manipulation), `minimum-edge-reversals-so-every-node-is-reachable` (hard/graph), `count-the-number-of-inversions` (medium/arrays, merge-sort O(n log n)).
 
 ### feat(bank): batch 224 — min-cuts-circle, good-split-string, shortest-dist-circular, merge-2d-arrays (2026-05-30)
 Four new problems: `minimum-cuts-to-divide-a-circle` (easy/math, 0 if n=1; n/2 if even; n if odd), `number-of-good-ways-to-split-a-string` (medium/strings+hash-map, prefix/suffix distinct-char count, O(n)), `shortest-distance-to-target-string-in-a-circular-array` (easy/arrays, min circular distance to each target match), `merge-two-2d-arrays-by-summing-values` (easy/arrays, two-pointer merge by id). Bank at **2564**; 7986 tests.

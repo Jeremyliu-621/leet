@@ -41136,4 +41136,85 @@ def goodDaysToRobBank(security, time):
             right[i] = right[i+1] + 1
     return [i for i in range(n) if left[i] >= time and right[i] >= time]
 `,
+  // batch 225
+  'find-score-after-marking-all-elements': `
+def findScore(nums):
+    n = len(nums)
+    order = sorted(range(n), key=lambda i: (nums[i], i))
+    marked = [False] * n
+    score = 0
+    for i in order:
+        if marked[i]:
+            continue
+        score += nums[i]
+        marked[i] = True
+        if i > 0:
+            marked[i - 1] = True
+        if i < n - 1:
+            marked[i + 1] = True
+    return score
+`,
+  'prime-number-of-set-bits-in-binary-representation': `
+def countPrimeSetBits(left, right):
+    primes = {2, 3, 5, 7, 11, 13, 17, 19}
+    count = 0
+    for n in range(left, right + 1):
+        if bin(n).count('1') in primes:
+            count += 1
+    return count
+`,
+  'minimum-edge-reversals-so-every-node-is-reachable': `
+def minEdgeReversals(n, edges):
+    from collections import defaultdict
+    import sys
+    sys.setrecursionlimit(200000)
+    adj = defaultdict(list)
+    for u, v in edges:
+        adj[u].append((v, 0))
+        adj[v].append((u, 1))
+    dp = [0] * n
+    visited = [False] * n
+    def dfs(node):
+        visited[node] = True
+        for nxt, weight in adj[node]:
+            if not visited[nxt]:
+                dfs(nxt)
+                dp[node] += dp[nxt] + weight
+    dfs(0)
+    ans = [0] * n
+    ans[0] = dp[0]
+    def bfs(node, parent):
+        for nxt, weight in adj[node]:
+            if nxt != parent:
+                ans[nxt] = ans[node] + 1 - 2 * weight
+                bfs(nxt, node)
+    bfs(0, -1)
+    return ans
+`,
+  'count-the-number-of-inversions': `
+def countInversions(nums):
+    count = 0
+    def merge_sort(arr):
+        nonlocal count
+        if len(arr) <= 1:
+            return arr
+        mid = len(arr) // 2
+        left = merge_sort(arr[:mid])
+        right = merge_sort(arr[mid:])
+        merged = []
+        i = j = 0
+        while i < len(left) and j < len(right):
+            if left[i] <= right[j]:
+                merged.append(left[i])
+                i += 1
+            else:
+                count += len(left) - i
+                merged.append(right[j])
+                j += 1
+        merged.extend(left[i:])
+        merged.extend(right[j:])
+        return merged
+    merge_sort(nums)
+    return count
+`,
 };

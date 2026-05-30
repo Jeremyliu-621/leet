@@ -2936,6 +2936,11 @@ import { problem as removingMinMax } from './removing-minimum-and-maximum-from-a
 import { problem as isSameAfterReversals } from './number-after-double-reversal';
 import { problem as executeInstructions } from './execution-of-all-suffix-instructions-staying-in-a-grid';
 import { problem as goodDaysToRobBank } from './find-good-days-to-rob-the-bank';
+// batch 225 — medium/arrays+simulation, easy/math+bit-manipulation, hard/graph, medium/arrays
+import { problem as findScoreMarking } from './find-score-after-marking-all-elements';
+import { problem as primeSetBitsCount } from './prime-number-of-set-bits-in-binary-representation';
+import { problem as minEdgeReversalsEvery } from './minimum-edge-reversals-so-every-node-is-reachable';
+import { problem as countNumInversions } from './count-the-number-of-inversions';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5912,4 +5917,8 @@ export const problems: readonly Problem[] = [
   isSameAfterReversals,
   executeInstructions,
   goodDaysToRobBank,
+  findScoreMarking,
+  primeSetBitsCount,
+  minEdgeReversalsEvery,
+  countNumInversions,
 ];
