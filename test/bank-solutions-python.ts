@@ -41091,4 +41091,49 @@ def mergeArrays(nums1, nums2):
         d[id_] += val
     return sorted(d.items())
 `,
+  'removing-minimum-and-maximum-from-array': `
+def minimumDeletions(nums):
+    n = len(nums)
+    min_v, max_v = min(nums), max(nums)
+    min_idx = max_idx = -1
+    for i, x in enumerate(nums):
+        if x == min_v: min_idx = i
+        if x == max_v: max_idx = i
+    lo, hi = min(min_idx, max_idx), max(min_idx, max_idx)
+    return min(hi + 1, n - lo, lo + 1 + n - hi)
+`,
+  'number-after-double-reversal': `
+def isSameAfterReversals(num):
+    return num == 0 or num % 10 != 0
+`,
+  'execution-of-all-suffix-instructions-staying-in-a-grid': `
+def executeInstructions(n, startPos, s):
+    m = len(s)
+    moves = {'L': (0,-1), 'R': (0,1), 'U': (-1,0), 'D': (1,0)}
+    res = []
+    for i in range(m):
+        r, c = startPos
+        count = 0
+        for j in range(i, m):
+            dr, dc = moves[s[j]]
+            r += dr; c += dc
+            if r < 0 or r >= n or c < 0 or c >= n:
+                break
+            count += 1
+        res.append(count)
+    return res
+`,
+  'find-good-days-to-rob-the-bank': `
+def goodDaysToRobBank(security, time):
+    n = len(security)
+    left = [0] * n
+    right = [0] * n
+    for i in range(1, n):
+        if security[i-1] >= security[i]:
+            left[i] = left[i-1] + 1
+    for i in range(n-2, -1, -1):
+        if security[i] <= security[i+1]:
+            right[i] = right[i+1] + 1
+    return [i for i in range(n) if left[i] >= time and right[i] >= time]
+`,
 };

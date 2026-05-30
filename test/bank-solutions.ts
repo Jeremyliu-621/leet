@@ -10429,6 +10429,17 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     for (let i = 0; i < cost.length; i++) if ((i + 1) % 3 !== 0) total += cost[i] as number;
     return total;
   },
+  'find-good-days-to-rob-the-bank': (...args: unknown[]) => {
+    const [security, time] = args as [number[], number];
+    const n = security.length;
+    const left = new Array(n).fill(0);
+    const right = new Array(n).fill(0);
+    for (let i = 1; i < n; i++) if (security[i - 1]! >= security[i]!) left[i] = left[i - 1] + 1;
+    for (let i = n - 2; i >= 0; i--) if (security[i]! <= security[i + 1]!) right[i] = right[i + 1] + 1;
+    const result: number[] = [];
+    for (let i = 0; i < n; i++) if (left[i] >= time && right[i] >= time) result.push(i);
+    return result;
+  },
 
   'find-original-array-from-prefix-xor': (...args: unknown[]) => {
     const pref = args[0] as number[];
@@ -41939,5 +41950,38 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     for (const [id, val] of nums1) map.set(id!, (map.get(id!) ?? 0) + val!);
     for (const [id, val] of nums2) map.set(id!, (map.get(id!) ?? 0) + val!);
     return [...map.entries()].sort((a, b) => a[0]! - b[0]!);
+  },
+  'removing-minimum-and-maximum-from-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const min = Math.min(...nums), max = Math.max(...nums);
+    let minIdx = -1, maxIdx = -1;
+    for (let i = 0; i < n; i++) {
+      if (nums[i] === min) minIdx = i;
+      if (nums[i] === max) maxIdx = i;
+    }
+    const lo = Math.min(minIdx, maxIdx), hi = Math.max(minIdx, maxIdx);
+    return Math.min(hi + 1, n - lo, lo + 1 + n - hi);
+  },
+  'number-after-double-reversal': (...args: unknown[]) => {
+    const num = args[0] as number;
+    return num === 0 || num % 10 !== 0;
+  },
+  'execution-of-all-suffix-instructions-staying-in-a-grid': (...args: unknown[]) => {
+    const [n, startPos, s] = args as [number, number[], string];
+    const m = s.length;
+    const res: number[] = [];
+    const moves: Record<string, [number, number]> = { L: [0, -1], R: [0, 1], U: [-1, 0], D: [1, 0] };
+    for (let i = 0; i < m; i++) {
+      let r = startPos[0]!, c = startPos[1]!, count = 0;
+      for (let j = i; j < m; j++) {
+        const [dr, dc] = moves[s[j]!]!;
+        r += dr; c += dc;
+        if (r < 0 || r >= n || c < 0 || c >= n) break;
+        count++;
+      }
+      res.push(count);
+    }
+    return res;
   },
 };

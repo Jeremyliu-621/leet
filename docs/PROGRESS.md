@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-30
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2564** problems; 7986 tests green. Batches 102–224 complete.
+**Current focus:** Bank at **2568** problems; 7998 tests green. Batches 102–225 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 225+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 226+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 225 — removing-min-max, number-after-double-reversal, execute-suffix-instructions, good-days-rob-bank (2026-05-30)
+Four new problems: `removing-minimum-and-maximum-from-array` (medium/arrays, 3-strategy: both-front/both-back/split, min over lo+hi), `number-after-double-reversal` (easy/math, return num==0 || num%10!=0), `execution-of-all-suffix-instructions-staying-in-a-grid` (medium/simulation, O(m²) suffix scan), `find-good-days-to-rob-the-bank` (medium/dp, prefix/suffix non-increasing/non-decreasing lengths). Also restored missing `minimum-cost-of-buying-candies-with-discount` .ts file. Bank at **2568**; 7998 tests.
 
 ### feat(bank): batch 224 — min-cuts-circle, good-split-string, shortest-dist-circular, merge-2d-arrays (2026-05-30)
 Four new problems: `minimum-cuts-to-divide-a-circle` (easy/math, 0 if n=1; n/2 if even; n if odd), `number-of-good-ways-to-split-a-string` (medium/strings+hash-map, prefix/suffix distinct-char count, O(n)), `shortest-distance-to-target-string-in-a-circular-array` (easy/arrays, min circular distance to each target match), `merge-two-2d-arrays-by-summing-values` (easy/arrays, two-pointer merge by id). Bank at **2564**; 7986 tests.

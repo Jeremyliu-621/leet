@@ -5,36 +5,36 @@ export const problem: Problem = {
   title: 'Minimum Cost of Buying Candies With Discount',
   difficulty: 'easy',
   tags: ['arrays'],
-  description: `A shop is selling candies at a discount. For every two candies sold, the shop gives a **third** candy for free.
+  description: `A store is selling candies at a discount. For **every two candies bought**, the store gives a **third candy for free**.
 
-The discount is given on the **least expensive** candy among the three chosen. In other words, if you buy candies valued \`x\` and \`y\` (\`x <= y\`), you get the third candy valued \`z\` for free if \`z <= x\`.
+The customer can choose **any** candy to take for free as long as its cost is less than or equal to the **minimum** cost of the two bought candies.
 
-You are given a **1-indexed** integer array \`cost\`, where \`cost[i]\` denotes the cost of the \`i\`th candy. Return the **minimum cost** of buying all \`cost.length\` candies.`,
+Given a **0-indexed** integer array \`cost\`, where \`cost[i]\` is the cost of the \`i\`th candy, return the **minimum** cost of buying **all** the candies.`,
   constraints: [
-    '1 <= cost.length <= 100',
-    '1 <= cost[i] <= 100',
+    '`1 <= cost.length <= 100`',
+    '`1 <= cost[i] <= 100`',
   ],
   examples: [
     {
       input: 'cost = [1,2,3]',
       output: '5',
-      explanation: 'Buy the 3-cost and 2-cost candy. Get the 1-cost for free. Total = 3+2 = 5.',
+      explanation: 'Buy the candy with cost 3 and cost 2 (total 5). The candy with cost 1 is free.',
     },
     {
       input: 'cost = [6,5,7,9,2,2]',
       output: '23',
-      explanation: 'Sort: [9,7,6,5,2,2]. Buy 9,7 (free 6). Buy 5,2 (free 2). Total = 9+7+5+2 = 23.',
+      explanation: 'Sort descending: [9,7,6,5,2,2]. Pay 9+7 (free 6), pay 5+2 (free 2). Total = 23.',
     },
     {
       input: 'cost = [5,5]',
       output: '10',
-      explanation: 'Only 2 candies, no free one. Total = 10.',
+      explanation: 'Only 2 candies — no free candy applies.',
     },
   ],
   hints: [
-    'Sort in descending order. Every third candy (index 2, 5, 8, ...) is free.',
-    'Iterate: buy index 0, buy index 1, skip index 2, buy index 3, buy index 4, skip index 5, ...',
-    'Total = sum of cost[i] for all i where (i+1) % 3 !== 0.',
+    'To minimize cost, always make the cheapest candy in each group of three free.',
+    'Sort in descending order. After sorting, every 3rd candy (0-indexed positions 2, 5, 8, ...) is free.',
+    'Sum all costs, skipping every position where (i+1) % 3 === 0.',
   ],
   functionName: 'minimumCost',
   params: ['cost'],
@@ -42,8 +42,9 @@ You are given a **1-indexed** integer array \`cost\`, where \`cost[i]\` denotes 
     javascript: `function minimumCost(cost) {
 
 }`,
-    typescript: "function minimumCost(cost: number[]): number {\n\n}",
+    typescript: `function minimumCost(cost: number[]): number {
 
+}`,
     python: `def minimumCost(cost):
     pass`,
   },
@@ -54,8 +55,10 @@ You are given a **1-indexed** integer array \`cost\`, where \`cost[i]\` denotes 
   ],
   hiddenTests: [
     { args: [[1]], expected: 1 },
-    { args: [[1, 2, 3, 4]], expected: 8 },
-    { args: [[10, 10, 10]], expected: 20 },
-    { args: [[3, 3, 3, 3]], expected: 9 },
+    { args: [[3, 3, 3]], expected: 6 },
+    { args: [[1, 1, 1, 1, 1]], expected: 4 },
+    { args: [[10, 9, 8, 7, 6, 5]], expected: 32 },
+    { args: [[100, 100, 100]], expected: 200 },
+    { args: [[1, 2, 3, 4, 5, 6]], expected: 16 },
   ],
 };
