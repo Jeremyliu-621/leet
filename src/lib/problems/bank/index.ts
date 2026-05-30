@@ -2996,6 +2996,11 @@ import { problem as countVowelsAllSubstrings } from './count-vowels-in-all-subst
 import { problem as twoFurthestHouses } from './two-furthest-houses-with-different-colors';
 import { problem as maxScoreRemovingStones } from './maximum-score-from-removing-stones';
 import { problem as stringCompressionCount } from './string-compression-count';
+// batch 232 — easy/arrays, medium/strings, medium/arrays+hash-map, easy/strings
+import { problem as maxDiffAscending } from './maximum-difference-between-ascending-elements';
+import { problem as minSwapsBalancedStr } from './minimum-number-of-swaps-to-make-the-string-balanced';
+import { problem as countSubarraysEqualEnds } from './count-subarrays-with-equal-ends';
+import { problem as splitStringsBySep } from './split-strings-by-separator';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6027,4 +6032,9 @@ export const problems: readonly Problem[] = [
   twoFurthestHouses,
   maxScoreRemovingStones,
   stringCompressionCount,
+  // batch 232
+  maxDiffAscending,
+  minSwapsBalancedStr,
+  countSubarraysEqualEnds,
+  splitStringsBySep,
 ];

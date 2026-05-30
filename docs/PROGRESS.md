@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-30
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2617** problems; 8145 tests green. Batches 102–231 complete.
+**Current focus:** Bank at **2621** problems; 8157 tests green. Batches 102–232 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 232+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 233+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 232 — max-diff-ascending, min-swaps-balanced-str, count-subarrays-equal-ends, split-strings-by-separator (2026-05-30)
+Four new problems: `maximum-difference-between-ascending-elements` (easy/arrays, running min scan, return max diff or -1), `minimum-number-of-swaps-to-make-the-string-balanced` (medium/strings, count misplaced "]" with open-bracket counter, ceil(bad/2)), `count-subarrays-with-equal-ends` (medium/arrays+hash-map, frequency map O(n): add freq[v] then increment), `split-strings-by-separator` (easy/strings, split+filter empty strings). Bank at **2621**; 8157 tests.
 
 ### feat(bank): batch 231 — count-vowels-all-substrings, two-furthest-houses-diff-colors, max-score-removing-stones, string-compression-count (2026-05-30)
 Four new problems: `count-vowels-in-all-substrings` (easy/strings+math, contribution technique: vowel at i contributes (i+1)*(n-i) substrings), `two-furthest-houses-with-different-colors` (easy/arrays, scan from each end for furthest differing-color house), `maximum-score-from-removing-stones` (easy/math+heap, min(floor((a+b+c)/2), total-max)), `string-compression-count` (easy/strings+simulation, run-length-encoding char count without building string). Bank at **2617**; 8145 tests.

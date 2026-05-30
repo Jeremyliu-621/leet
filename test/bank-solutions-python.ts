@@ -41827,4 +41827,46 @@ def compressedLength(s):
         i = j
     return length
 `,
+  // batch 232
+  'maximum-difference-between-ascending-elements': `
+def maximumDifference(nums):
+    min_val = nums[0]
+    ans = -1
+    for i in range(1, len(nums)):
+        if nums[i] > min_val:
+            ans = max(ans, nums[i] - min_val)
+        else:
+            min_val = min(min_val, nums[i])
+    return ans
+`,
+  'minimum-number-of-swaps-to-make-the-string-balanced': `
+def minSwaps(s):
+    import math
+    open_count, bad = 0, 0
+    for c in s:
+        if c == '[':
+            open_count += 1
+        elif open_count > 0:
+            open_count -= 1
+        else:
+            bad += 1
+    return math.ceil(bad / 2)
+`,
+  'count-subarrays-with-equal-ends': `
+def countSubarraysWithEqualEnds(nums):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    ans = 0
+    for v in nums:
+        ans += freq[v]
+        freq[v] += 1
+    return ans
+`,
+  'split-strings-by-separator': `
+def splitWordsBySeparator(words, separator):
+    result = []
+    for w in words:
+        result.extend(p for p in w.split(separator) if p)
+    return result
+`,
 };

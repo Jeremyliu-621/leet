@@ -42670,4 +42670,38 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return len;
   },
+  // batch 232
+  'maximum-difference-between-ascending-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let minVal = nums[0]!, ans = -1;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i]! > minVal) ans = Math.max(ans, nums[i]! - minVal);
+      else minVal = Math.min(minVal, nums[i]!);
+    }
+    return ans;
+  },
+  'minimum-number-of-swaps-to-make-the-string-balanced': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let open = 0, bad = 0;
+    for (const c of s) {
+      if (c === '[') open++;
+      else if (open > 0) open--;
+      else bad++;
+    }
+    return Math.ceil(bad / 2);
+  },
+  'count-subarrays-with-equal-ends': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    let ans = 0;
+    for (const v of nums) {
+      ans += freq.get(v) ?? 0;
+      freq.set(v, (freq.get(v) ?? 0) + 1);
+    }
+    return ans;
+  },
+  'split-strings-by-separator': (...args: unknown[]) => {
+    const [words, sep] = args as [string[], string];
+    return words.flatMap(w => w.split(sep).filter(s => s.length > 0));
+  },
 };
