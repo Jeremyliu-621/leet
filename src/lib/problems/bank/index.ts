@@ -2926,6 +2926,11 @@ import { problem as minimumOperationsAllCharsEqual } from './minimum-operations-
 import { problem as minChanges } from './number-of-bit-changes-to-make-two-integers-equal';
 import { problem as findOccurrences } from './find-occurrences-of-an-element-in-an-array';
 import { problem as numSubOnes } from './number-of-substrings-with-only-1s';
+// batch 224
+import { problem as numberOfCuts } from './minimum-cuts-to-divide-a-circle';
+import { problem as numSplitsGood } from './number-of-good-ways-to-split-a-string';
+import { problem as closetTarget } from './shortest-distance-to-target-string-in-a-circular-array';
+import { problem as mergeArrays2D } from './merge-two-2d-arrays-by-summing-values';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5892,4 +5897,9 @@ export const problems: readonly Problem[] = [
   minChanges,
   findOccurrences,
   numSubOnes,
+  // batch 224
+  numberOfCuts,
+  numSplitsGood,
+  closetTarget,
+  mergeArrays2D,
 ];

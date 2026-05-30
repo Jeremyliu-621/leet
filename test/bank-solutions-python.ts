@@ -41050,4 +41050,45 @@ def numSub(s):
             run = 0
     return res
 `,
+  'minimum-cuts-to-divide-a-circle': `
+def numberOfCuts(n):
+    if n == 1:
+        return 0
+    return n // 2 if n % 2 == 0 else n
+`,
+  'number-of-good-ways-to-split-a-string': `
+def numSplits(s):
+    n = len(s)
+    pre = []
+    suf = [0] * n
+    seen = set()
+    for c in s:
+        seen.add(c)
+        pre.append(len(seen))
+    seen.clear()
+    for i in range(n - 1, -1, -1):
+        seen.add(s[i])
+        suf[i] = len(seen)
+    return sum(1 for i in range(n - 1) if pre[i] == suf[i + 1])
+`,
+  'shortest-distance-to-target-string-in-a-circular-array': `
+def closetTarget(words, target, startIndex):
+    n = len(words)
+    res = float('inf')
+    for i, w in enumerate(words):
+        if w == target:
+            d = abs(i - startIndex)
+            res = min(res, d, n - d)
+    return -1 if res == float('inf') else res
+`,
+  'merge-two-2d-arrays-by-summing-values': `
+def mergeArrays(nums1, nums2):
+    from collections import defaultdict
+    d = defaultdict(int)
+    for id_, val in nums1:
+        d[id_] += val
+    for id_, val in nums2:
+        d[id_] += val
+    return sorted(d.items())
+`,
 };
