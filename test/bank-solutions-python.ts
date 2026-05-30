@@ -41252,4 +41252,103 @@ def arrayChange(nums, operations):
         val_to_idx[new] = idx
     return nums
 `,
+  // batch 226
+  'check-if-all-a-appears-before-all-b': `
+def checkString(s):
+    return 'ba' not in s
+`,
+  'determine-color-of-a-chessboard-square': `
+def squareIsWhite(coordinates):
+    col = ord(coordinates[0]) - ord('a') + 1
+    row = int(coordinates[1])
+    return (col + row) % 2 != 0
+`,
+  'most-frequent-number-following-key-in-an-array': `
+def mostFrequent(nums, key):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    for i in range(len(nums) - 1):
+        if nums[i] == key:
+            freq[nums[i + 1]] += 1
+    return max(freq, key=freq.get)
+`,
+  'number-of-rectangles-that-can-form-largest-square': `
+def countGoodRectangles(rectangles):
+    mins = [min(l, w) for l, w in rectangles]
+    max_len = max(mins)
+    return sum(1 for m in mins if m == max_len)
+`,
+  'find-first-palindromic-string-in-array': `
+def firstPalindrome(words):
+    for w in words:
+        if w == w[::-1]:
+            return w
+    return ''
+`,
+  'adjacent-increasing-subarrays-detection-ii': `
+def maxIncreasingSubarrays(nums):
+    n = len(nums)
+    left_len = [1] * n
+    right_len = [1] * n
+    for i in range(1, n):
+        if nums[i] > nums[i - 1]:
+            left_len[i] = left_len[i - 1] + 1
+    for i in range(n - 2, -1, -1):
+        if nums[i] < nums[i + 1]:
+            right_len[i] = right_len[i + 1] + 1
+    ans = 0
+    for b in range(1, n):
+        v = min(left_len[b - 1], right_len[b])
+        if v > ans:
+            ans = v
+    return ans
+`,
+  'count-substrings-with-every-vowel-and-k-consonants-ii': `
+def countOfSubstrings(s, k):
+    vowels = set('aeiou')
+    def at_least(threshold):
+        count = 0
+        l = 0
+        consonants = 0
+        freq = {}
+        for r, c in enumerate(s):
+            if c in vowels:
+                freq[c] = freq.get(c, 0) + 1
+            else:
+                consonants += 1
+            while len(freq) == 5 and consonants >= threshold:
+                lc = s[l]
+                if lc in vowels:
+                    freq[lc] -= 1
+                    if freq[lc] == 0:
+                        del freq[lc]
+                else:
+                    consonants -= 1
+                l += 1
+            count += l
+        return count
+    return at_least(k) - at_least(k + 1)
+`,
+  'check-if-digits-are-equal-in-string-after-operations-ii': `
+def hasSameDigits(s):
+    n = len(s)
+    m = n - 2
+    pascal5 = [[1,0,0,0,0],[1,1,0,0,0],[1,2,1,0,0],[1,3,3,1,0],[1,4,1,4,1]]
+    def lucas5(mv, iv):
+        result = 1
+        while iv > 0:
+            result = (result * pascal5[mv % 5][iv % 5]) % 5
+            mv //= 5
+            iv //= 5
+        return result
+    sum_a = 0
+    sum_b = 0
+    for i in range(m + 1):
+        c2 = 1 if (i & m) == i else 0
+        c5 = lucas5(m, i)
+        coeff = (5 * c2 + 6 * c5) % 10
+        sum_a = (sum_a + coeff * int(s[i])) % 10
+        sum_b = (sum_b + coeff * int(s[i + 1])) % 10
+    return sum_a == sum_b
+`,
 };

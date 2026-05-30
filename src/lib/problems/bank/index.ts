@@ -2936,7 +2936,6 @@ import { problem as removingMinMax } from './removing-minimum-and-maximum-from-a
 import { problem as isSameAfterReversals } from './number-after-double-reversal';
 import { problem as executeInstructions } from './execution-of-all-suffix-instructions-staying-in-a-grid';
 import { problem as goodDaysToRobBank } from './find-good-days-to-rob-the-bank';
-// batch 225 — medium/arrays+simulation, easy/math+bit-manipulation, hard/graph, medium/arrays
 import { problem as findScoreMarking } from './find-score-after-marking-all-elements';
 import { problem as primeSetBitsCount } from './prime-number-of-set-bits-in-binary-representation';
 import { problem as minEdgeReversalsEvery } from './minimum-edge-reversals-so-every-node-is-reachable';
@@ -2946,6 +2945,16 @@ import { problem as heightChecker } from './height-checker';
 import { problem as reorderLogFiles } from './reorder-log-files';
 import { problem as largestTimeFromDigits } from './largest-time-for-given-digits';
 import { problem as arrayChange } from './replace-elements-in-an-array';
+// batch 226 — easy/strings, easy/math, easy/arrays+hash-map, easy/arrays, easy/strings
+import { problem as checkAllABeforeB } from './check-if-all-a-appears-before-all-b';
+import { problem as squareIsWhiteColor } from './determine-color-of-a-chessboard-square';
+import { problem as mostFrequentAfterKey } from './most-frequent-number-following-key-in-an-array';
+import { problem as numRectanglesLargestSq } from './number-of-rectangles-that-can-form-largest-square';
+import { problem as firstPalindrome } from './find-first-palindromic-string-in-array';
+// batch 227 — medium/arrays, medium/strings+sliding-window, hard/strings+math
+import { problem as adjacentIncreasingSubarraysDetectionIi } from './adjacent-increasing-subarrays-detection-ii';
+import { problem as countSubstringsEveryVowelKConsonantsIi } from './count-substrings-with-every-vowel-and-k-consonants-ii';
+import { problem as checkDigitsEqualAfterOperationsIi } from './check-if-digits-are-equal-in-string-after-operations-ii';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5931,4 +5940,13 @@ export const problems: readonly Problem[] = [
   reorderLogFiles,
   largestTimeFromDigits,
   arrayChange,
+  checkAllABeforeB,
+  squareIsWhiteColor,
+  mostFrequentAfterKey,
+  numRectanglesLargestSq,
+  firstPalindrome,
+  // batch 227
+  adjacentIncreasingSubarraysDetectionIi,
+  countSubstringsEveryVowelKConsonantsIi,
+  checkDigitsEqualAfterOperationsIi,
 ];

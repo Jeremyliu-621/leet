@@ -42116,4 +42116,103 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return nums;
   },
+  // batch 226
+  'check-if-all-a-appears-before-all-b': (...args: unknown[]) => {
+    return !(args[0] as string).includes('ba');
+  },
+  'determine-color-of-a-chessboard-square': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const col = s.charCodeAt(0) - 96;
+    const row = parseInt(s[1]!, 10);
+    return (col + row) % 2 !== 0;
+  },
+  'most-frequent-number-following-key-in-an-array': (...args: unknown[]) => {
+    const nums = args[0] as number[], key = args[1] as number;
+    const freq = new Map<number, number>();
+    for (let i = 0; i < nums.length - 1; i++) {
+      if (nums[i] === key) freq.set(nums[i + 1]!, (freq.get(nums[i + 1]!) ?? 0) + 1);
+    }
+    let best = -1, bestCount = 0;
+    for (const [val, cnt] of freq) { if (cnt > bestCount) { bestCount = cnt; best = val; } }
+    return best;
+  },
+  'number-of-rectangles-that-can-form-largest-square': (...args: unknown[]) => {
+    const rects = args[0] as number[][];
+    const mins = rects.map(r => Math.min(r[0]!, r[1]!));
+    const maxLen = Math.max(...mins);
+    return mins.filter(m => m === maxLen).length;
+  },
+  'find-first-palindromic-string-in-array': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    for (const w of words) { if (w === w.split('').reverse().join('')) return w; }
+    return '';
+  },
+  'adjacent-increasing-subarrays-detection-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const leftLen = new Array<number>(n).fill(1);
+    const rightLen = new Array<number>(n).fill(1);
+    for (let i = 1; i < n; i++) {
+      if (nums[i]! > nums[i - 1]!) leftLen[i] = leftLen[i - 1]! + 1;
+    }
+    for (let i = n - 2; i >= 0; i--) {
+      if (nums[i]! < nums[i + 1]!) rightLen[i] = rightLen[i + 1]! + 1;
+    }
+    let ans = 0;
+    for (let b = 1; b < n; b++) {
+      const v = Math.min(leftLen[b - 1]!, rightLen[b]!);
+      if (v > ans) ans = v;
+    }
+    return ans;
+  },
+  'count-substrings-with-every-vowel-and-k-consonants-ii': (...args: unknown[]) => {
+    const s = args[0] as string, k = args[1] as number;
+    const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+    function atLeast(threshold: number): number {
+      let count = 0, l = 0, consonants = 0;
+      const freq = new Map<string, number>();
+      for (let r = 0; r < s.length; r++) {
+        const c = s[r]!;
+        if (vowels.has(c)) freq.set(c, (freq.get(c) ?? 0) + 1);
+        else consonants++;
+        while (freq.size === 5 && consonants >= threshold) {
+          const lc = s[l]!;
+          if (vowels.has(lc)) {
+            const nv = freq.get(lc)! - 1;
+            if (nv === 0) freq.delete(lc); else freq.set(lc, nv);
+          } else {
+            consonants--;
+          }
+          l++;
+        }
+        count += l;
+      }
+      return count;
+    }
+    return atLeast(k) - atLeast(k + 1);
+  },
+  'check-if-digits-are-equal-in-string-after-operations-ii': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const m = n - 2;
+    const pascal5 = [[1,0,0,0,0],[1,1,0,0,0],[1,2,1,0,0],[1,3,3,1,0],[1,4,1,4,1]];
+    function lucas5(mv: number, iv: number): number {
+      let result = 1, mm = mv, ii = iv;
+      while (ii > 0) {
+        result = (result * (pascal5[mm % 5]![ii % 5]!)) % 5;
+        mm = Math.floor(mm / 5);
+        ii = Math.floor(ii / 5);
+      }
+      return result;
+    }
+    let sumA = 0, sumB = 0;
+    for (let i = 0; i <= m; i++) {
+      const c2 = (i & m) === i ? 1 : 0;
+      const c5 = lucas5(m, i);
+      const coeff = (5 * c2 + 6 * c5) % 10;
+      sumA = (sumA + coeff * parseInt(s[i]!)) % 10;
+      sumB = (sumB + coeff * parseInt(s[i + 1]!)) % 10;
+    }
+    return sumA === sumB;
+  },
 };
