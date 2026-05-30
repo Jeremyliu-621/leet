@@ -40766,13 +40766,291 @@ def checkValidCuts(n, rectangles):
     y_intervals = [(r[1], r[3]) for r in rectangles]
     return can_split(x_intervals) or can_split(y_intervals)
 `,
-  // batch 220
+  'sum-multiples': `
+def sumOfMultiples(n):
+    total = 0
+    for i in range(1, n + 1):
+        if i % 3 == 0 or i % 5 == 0 or i % 7 == 0:
+            total += i
+    return total
+`,
+  'minimum-operations-to-make-the-array-increasing': `
+def minOperations(nums):
+    nums = list(nums)
+    ops = 0
+    for i in range(1, len(nums)):
+        if nums[i] <= nums[i - 1]:
+            ops += nums[i - 1] + 1 - nums[i]
+            nums[i] = nums[i - 1] + 1
+    return ops
+`,
+  'remove-trailing-zeros-from-string': `
+def removeTrailingZeros(num):
+    return num.rstrip('0')
+`,
+  'check-if-numbers-are-ascending-in-a-sentence': `
+def areNumbersAscending(s):
+    prev = -1
+    for token in s.split():
+        if token.isdigit():
+            n = int(token)
+            if n <= prev:
+                return False
+            prev = n
+    return True
+`,
+  'count-common-characters': `
+def commonChars(words):
+    from collections import Counter
+    min_freq = Counter(words[0])
+    for word in words[1:]:
+        word_freq = Counter(word)
+        for ch in list(min_freq.keys()):
+            min_freq[ch] = min(min_freq[ch], word_freq.get(ch, 0))
+            if min_freq[ch] == 0:
+                del min_freq[ch]
+    result = []
+    for ch, cnt in sorted(min_freq.items()):
+        result.extend([ch] * cnt)
+    return result
+`,
+  'count-submatrices-with-all-ones': `
+def numSubmat(mat):
+    m, n = len(mat), len(mat[0])
+    total = 0
+    height = [0] * n
+    for i in range(m):
+        for j in range(n):
+            height[j] = 0 if mat[i][j] == 0 else height[j] + 1
+        for j in range(n):
+            min_h = height[j]
+            for k in range(j, -1, -1):
+                min_h = min(min_h, height[k])
+                total += min_h
+    return total
+`,
+  'minimum-swaps-to-make-strings-equal': `
+def minimumSwap(s1, s2):
+    xy = yx = 0
+    for a, b in zip(s1, s2):
+        if a != b:
+            if a == 'x':
+                xy += 1
+            else:
+                yx += 1
+    if (xy + yx) % 2 != 0:
+        return -1
+    return xy // 2 + yx // 2 + 2 * (xy % 2)
+`,
+  'count-number-of-special-subsequences': `
+def countSpecialSubsequences(nums):
+    MOD = 10**9 + 7
+    dp0 = dp1 = dp2 = 0
+    for n in nums:
+        if n == 0:
+            dp0 = (2 * dp0 + 1) % MOD
+        elif n == 1:
+            dp1 = (2 * dp1 + dp0) % MOD
+        else:
+            dp2 = (2 * dp2 + dp1) % MOD
+    return dp2
+`,
+  'count-odd-numbers-in-an-interval-range': `
+def countOdds(low, high):
+    return (high + 1) // 2 - low // 2
+`,
+  'find-kth-bit-in-nth-binary-string': `
+def findKthBit(n, k):
+    if n == 1:
+        return "0"
+    mid = 1 << (n - 1)
+    if k == mid:
+        return "1"
+    if k < mid:
+        return findKthBit(n - 1, k)
+    mirrored = findKthBit(n - 1, mid * 2 - k)
+    return "1" if mirrored == "0" else "0"
+`,
+  'check-if-a-string-can-break-another-string': `
+def checkIfCanBreak(s1, s2):
+    a = sorted(s1)
+    b = sorted(s2)
+    s1_breaks_s2 = all(a[i] >= b[i] for i in range(len(a)))
+    s2_breaks_s1 = all(b[i] >= a[i] for i in range(len(a)))
+    return s1_breaks_s2 or s2_breaks_s1
+`,
+  'convert-an-array-into-2d-array-with-conditions': `
+def findMatrix(nums):
+    freq = {}
+    result = []
+    for n in nums:
+        cnt = freq.get(n, 0)
+        if cnt >= len(result):
+            result.append([])
+        result[cnt].append(n)
+        freq[n] = cnt + 1
+    return result
+`,
+  'k-weakest-rows-in-a-matrix': `
+def kWeakestRows(mat, k):
+    def count_soldiers(row):
+        lo, hi = 0, len(row)
+        while lo < hi:
+            mid = (lo + hi) // 2
+            if row[mid] == 1:
+                lo = mid + 1
+            else:
+                hi = mid
+        return lo
+    strengths = [(count_soldiers(row), i) for i, row in enumerate(mat)]
+    strengths.sort()
+    return [i for _, i in strengths[:k]]
+`,
+  'length-of-the-longest-valid-substring': `
+def longestValidSubstring(word, forbidden):
+    forb_set = set(forbidden)
+    left, ans = 0, 0
+    for right in range(len(word)):
+        for k in range(min(right - left + 1, 10), 0, -1):
+            if word[right - k + 1:right + 1] in forb_set:
+                left = right - k + 2
+                break
+        ans = max(ans, right - left + 1)
+    return ans
+`,
+  'add-spaces-to-string': `
+def addSpaces(s, spaces):
+    space_set = set(spaces)
+    result = []
+    for i, c in enumerate(s):
+        if i in space_set:
+            result.append(' ')
+        result.append(c)
+    return ''.join(result)
+`,
+  'remove-colored-pieces-if-both-neighbors-same-color': `
+def winnerOfGame(colors):
+    alice = bob = 0
+    for i in range(1, len(colors) - 1):
+        if colors[i] == 'A' == colors[i-1] == colors[i+1]:
+            alice += 1
+        elif colors[i] == 'B' == colors[i-1] == colors[i+1]:
+            bob += 1
+    return alice > bob
+`,
+  'find-the-longest-balanced-substring-of-binary-string': `
+def findTheLongestBalancedSubstring(s):
+    ans = 0
+    i = 0
+    while i < len(s):
+        if s[i] == '0':
+            zeros = ones = 0
+            while i < len(s) and s[i] == '0':
+                zeros += 1
+                i += 1
+            while i < len(s) and s[i] == '1':
+                ones += 1
+                i += 1
+            ans = max(ans, 2 * min(zeros, ones))
+        else:
+            i += 1
+    return ans
+`,
+  'count-tested-devices-after-test-operations': `
+def countTestedDevices(batteryPercentages):
+    tested = 0
+    for b in batteryPercentages:
+        if b - tested >= 1:
+            tested += 1
+    return tested
+`,
+  'number-of-people-aware-of-secret': `
+def peopleAwareOfSecret(n, delay, forget):
+    MOD = 10**9 + 7
+    dp = [0] * (n + 1)
+    dp[1] = 1
+    for d in range(2, n + 1):
+        for L in range(max(1, d - forget + 1), d - delay + 1):
+            dp[d] = (dp[d] + dp[L]) % MOD
+    return sum(dp[max(1, n - forget + 1):n + 1]) % MOD
+`,
   'determine-if-a-cell-is-reachable-at-a-given-time': `
 def isReachableAtTime(sx, sy, fx, fy, t):
-    if sx == fx and sy == fy and t == 1:
+    dist = max(abs(sx - fx), abs(sy - fy))
+    if dist == 0 and t == 1:
         return False
-    return t >= max(abs(fx - sx), abs(fy - sy))
+    return t >= dist
 `,
+  'count-balanced-subarrays': `
+def countBalanced(nums):
+    freq = {0: 1}
+    diff = 0
+    count = 0
+    for i, x in enumerate(nums):
+        diff += x if i % 2 == 0 else -x
+        count += freq.get(diff, 0)
+        freq[diff] = freq.get(diff, 0) + 1
+    return count
+`,
+  'longest-divisible-run': `
+def longestDivisibleRun(nums):
+    best = cur = 1
+    for i in range(1, len(nums)):
+        if nums[i] % nums[i-1] == 0 or nums[i-1] % nums[i] == 0:
+            cur += 1
+            best = max(best, cur)
+        else:
+            cur = 1
+    return best
+`,
+  'maximum-sum-after-xor-operations': `
+def maxXorSum(nums, k):
+    base = sum(nums)
+    gains = sorted([(x ^ k) - x for x in nums], reverse=True)
+    extra = 0
+    i = 0
+    while i + 1 < len(gains):
+        pair = gains[i] + gains[i + 1]
+        if pair > 0:
+            extra += pair
+            i += 2
+        else:
+            break
+    return base + extra
+`,
+  'minimum-operations-to-make-all-characters-equal': `
+def minimumOperations(s):
+    return sum(1 for i in range(len(s) - 1) if s[i] != s[i+1])
+`,
+  'number-of-bit-changes-to-make-two-integers-equal': `
+def minChanges(n, k):
+    if k & ~n:
+        return -1
+    return bin(n & ~k).count('1')
+`,
+  'find-occurrences-of-an-element-in-an-array': `
+def findOccurrences(nums, target, k):
+    count = 0
+    for i, x in enumerate(nums):
+        if x == target:
+            count += 1
+            if count == k:
+                return i
+    return -1
+`,
+  'number-of-substrings-with-only-1s': `
+def numSub(s):
+    MOD = 10**9 + 7
+    res = run = 0
+    for c in s:
+        if c == '1':
+            run += 1
+            res = (res + run) % MOD
+        else:
+            run = 0
+    return res
+`,
+  // batch 224
   'find-score-after-marking-all-elements': `
 def findScore(nums):
     n = len(nums)
@@ -40802,6 +41080,8 @@ def countPrimeSetBits(left, right):
   'minimum-edge-reversals-so-every-node-is-reachable': `
 def minEdgeReversals(n, edges):
     from collections import defaultdict
+    import sys
+    sys.setrecursionlimit(200000)
     adj = defaultdict(list)
     for u, v in edges:
         adj[u].append((v, 0))
@@ -40814,8 +41094,6 @@ def minEdgeReversals(n, edges):
             if not visited[nxt]:
                 dfs(nxt)
                 dp[node] += dp[nxt] + weight
-    import sys
-    sys.setrecursionlimit(200000)
     dfs(0)
     ans = [0] * n
     ans[0] = dp[0]

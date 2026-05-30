@@ -41627,12 +41627,284 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     };
     return canSplit(rectangles.map(r => [r[0]!, r[2]!])) || canSplit(rectangles.map(r => [r[1]!, r[3]!]));
   },
-  // batch 220
+  'sum-multiples': (...args: unknown[]) => {
+    const n = args[0] as number;
+    let sum = 0;
+    for (let i = 1; i <= n; i++) {
+      if (i % 3 === 0 || i % 5 === 0 || i % 7 === 0) sum += i;
+    }
+    return sum;
+  },
+  'minimum-operations-to-make-the-array-increasing': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice();
+    let ops = 0;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i]! <= nums[i - 1]!) {
+        ops += nums[i - 1]! + 1 - nums[i]!;
+        nums[i] = nums[i - 1]! + 1;
+      }
+    }
+    return ops;
+  },
+  'remove-trailing-zeros-from-string': (...args: unknown[]) => {
+    const num = args[0] as string;
+    return num.replace(/0+$/, '');
+  },
+  'check-if-numbers-are-ascending-in-a-sentence': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let prev = -1;
+    for (const token of s.split(' ')) {
+      if (/^\d+$/.test(token)) {
+        const n = parseInt(token, 10);
+        if (n <= prev) return false;
+        prev = n;
+      }
+    }
+    return true;
+  },
+  'count-common-characters': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const freq = (w: string) => {
+      const f = new Array(26).fill(0) as number[];
+      for (const c of w) f[c.charCodeAt(0) - 97]!++;
+      return f;
+    };
+    const minFreq = freq(words[0]!);
+    for (let i = 1; i < words.length; i++) {
+      const f = freq(words[i]!);
+      for (let j = 0; j < 26; j++) minFreq[j] = Math.min(minFreq[j]!, f[j]!);
+    }
+    const result: string[] = [];
+    for (let j = 0; j < 26; j++) {
+      for (let k = 0; k < minFreq[j]!; k++) result.push(String.fromCharCode(97 + j));
+    }
+    return result;
+  },
+  'count-submatrices-with-all-ones': (...args: unknown[]) => {
+    const mat = args[0] as number[][];
+    const n = mat[0]!.length;
+    let total = 0;
+    const height = new Array<number>(n).fill(0);
+    for (const row of mat) {
+      for (let j = 0; j < n; j++) height[j] = row[j] === 0 ? 0 : height[j]! + 1;
+      for (let j = 0; j < n; j++) {
+        let minH = height[j]!;
+        for (let k = j; k >= 0; k--) { minH = Math.min(minH, height[k]!); total += minH; }
+      }
+    }
+    return total;
+  },
+  'minimum-swaps-to-make-strings-equal': (...args: unknown[]) => {
+    const s1 = args[0] as string, s2 = args[1] as string;
+    let xy = 0, yx = 0;
+    for (let i = 0; i < s1.length; i++) {
+      if (s1[i] !== s2[i]) { if (s1[i] === 'x') xy++; else yx++; }
+    }
+    if ((xy + yx) % 2 !== 0) return -1;
+    return Math.floor(xy / 2) + Math.floor(yx / 2) + 2 * (xy % 2);
+  },
+  'count-number-of-special-subsequences': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const MOD = 1e9 + 7;
+    let dp0 = 0, dp1 = 0, dp2 = 0;
+    for (const n of nums) {
+      if (n === 0) dp0 = (2 * dp0 + 1) % MOD;
+      else if (n === 1) dp1 = (2 * dp1 + dp0) % MOD;
+      else if (n === 2) dp2 = (2 * dp2 + dp1) % MOD;
+    }
+    return dp2;
+  },
+  'count-odd-numbers-in-an-interval-range': (...args: unknown[]) => {
+    const low = args[0] as number;
+    const high = args[1] as number;
+    return Math.floor((high + 1) / 2) - Math.floor(low / 2);
+  },
+  'find-kth-bit-in-nth-binary-string': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const k = args[1] as number;
+    const findKthBit = (n: number, k: number): string => {
+      if (n === 1) return '0';
+      const mid = 1 << (n - 1);
+      if (k === mid) return '1';
+      if (k < mid) return findKthBit(n - 1, k);
+      const mirrored = findKthBit(n - 1, mid * 2 - k);
+      return mirrored === '0' ? '1' : '0';
+    };
+    return findKthBit(n, k);
+  },
+  'check-if-a-string-can-break-another-string': (...args: unknown[]) => {
+    const s1 = args[0] as string;
+    const s2 = args[1] as string;
+    const a = [...s1].sort();
+    const b = [...s2].sort();
+    let s1BreaksS2 = true, s2BreaksS1 = true;
+    for (let i = 0; i < a.length; i++) {
+      if (a[i]! < b[i]!) s1BreaksS2 = false;
+      if (b[i]! < a[i]!) s2BreaksS1 = false;
+    }
+    return s1BreaksS2 || s2BreaksS1;
+  },
+  'convert-an-array-into-2d-array-with-conditions': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>();
+    const result: number[][] = [];
+    for (const n of nums) {
+      const cnt = freq.get(n) ?? 0;
+      if (cnt >= result.length) result.push([]);
+      result[cnt]!.push(n);
+      freq.set(n, cnt + 1);
+    }
+    return result;
+  },
+  'k-weakest-rows-in-a-matrix': (...args: unknown[]) => {
+    const mat = args[0] as number[][];
+    const k = args[1] as number;
+    const strengths = mat.map((row, i) => {
+      let lo = 0, hi = row.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (row[mid] === 1) lo = mid + 1; else hi = mid;
+      }
+      return [lo, i] as [number, number];
+    });
+    strengths.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    return strengths.slice(0, k).map(([, i]) => i);
+  },
+  'length-of-the-longest-valid-substring': (...args: unknown[]) => {
+    const word = args[0] as string, forbidden = args[1] as string[];
+    const forbSet = new Set(forbidden);
+    let left = 0, ans = 0;
+    for (let right = 0; right < word.length; right++) {
+      for (let k = Math.min(right - left + 1, 10); k >= 1; k--) {
+        if (forbSet.has(word.substring(right - k + 1, right + 1))) { left = right - k + 2; break; }
+      }
+      ans = Math.max(ans, right - left + 1);
+    }
+    return ans;
+  },
+  'add-spaces-to-string': (...args: unknown[]) => {
+    const s = args[0] as string, spaces = args[1] as number[];
+    const spaceSet = new Set(spaces);
+    const result: string[] = [];
+    for (let i = 0; i < s.length; i++) {
+      if (spaceSet.has(i)) result.push(' ');
+      result.push(s[i]!);
+    }
+    return result.join('');
+  },
+  'remove-colored-pieces-if-both-neighbors-same-color': (...args: unknown[]) => {
+    const colors = args[0] as string;
+    let alice = 0, bob = 0;
+    for (let i = 1; i < colors.length - 1; i++) {
+      if (colors[i] === 'A' && colors[i-1] === 'A' && colors[i+1] === 'A') alice++;
+      if (colors[i] === 'B' && colors[i-1] === 'B' && colors[i+1] === 'B') bob++;
+    }
+    return alice > bob;
+  },
+  'find-the-longest-balanced-substring-of-binary-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let ans = 0;
+    for (let i = 0; i < s.length; i++) {
+      if (s[i] === '0') {
+        let zeros = 0, ones = 0, j = i;
+        while (j < s.length && s[j] === '0') { zeros++; j++; }
+        while (j < s.length && s[j] === '1') { ones++; j++; }
+        ans = Math.max(ans, 2 * Math.min(zeros, ones));
+      }
+    }
+    return ans;
+  },
+  'count-tested-devices-after-test-operations': (...args: unknown[]) => {
+    const bp = args[0] as number[];
+    let tested = 0;
+    for (const b of bp) if (b - tested >= 1) tested++;
+    return tested;
+  },
+  'number-of-people-aware-of-secret': (...args: unknown[]) => {
+    const n = args[0] as number, delay = args[1] as number, forget = args[2] as number;
+    const MOD = 1e9 + 7;
+    const dp = new Array<number>(n + 1).fill(0);
+    dp[1] = 1;
+    for (let d = 2; d <= n; d++)
+      for (let L = Math.max(1, d - forget + 1); L <= d - delay; L++)
+        dp[d] = (dp[d]! + dp[L]!) % MOD;
+    let ans = 0;
+    for (let L = Math.max(1, n - forget + 1); L <= n; L++) ans = (ans + dp[L]!) % MOD;
+    return ans;
+  },
   'determine-if-a-cell-is-reachable-at-a-given-time': (...args: unknown[]) => {
     const [sx, sy, fx, fy, t] = args as number[];
-    if (sx === fx && sy === fy && t === 1) return false;
-    return t! >= Math.max(Math.abs(fx! - sx!), Math.abs(fy! - sy!));
+    const dist = Math.max(Math.abs(sx! - fx!), Math.abs(sy! - fy!));
+    if (dist === 0 && t === 1) return false;
+    return t! >= dist;
   },
+  'count-balanced-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq = new Map<number, number>([[0, 1]]);
+    let diff = 0, count = 0;
+    for (let i = 0; i < nums.length; i++) {
+      diff += i % 2 === 0 ? nums[i]! : -nums[i]!;
+      count += freq.get(diff) ?? 0;
+      freq.set(diff, (freq.get(diff) ?? 0) + 1);
+    }
+    return count;
+  },
+  'longest-divisible-run': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let best = 1, cur = 1;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i]! % nums[i - 1]! === 0 || nums[i - 1]! % nums[i]! === 0) {
+        cur++;
+        if (cur > best) best = cur;
+      } else {
+        cur = 1;
+      }
+    }
+    return best;
+  },
+  'maximum-sum-after-xor-operations': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const base = nums.reduce((s, x) => s + x, 0);
+    const gains = nums.map(x => (x ^ k) - x).sort((a, b) => b - a);
+    let extra = 0;
+    for (let i = 0; i + 1 < gains.length; i += 2) {
+      const pair = gains[i]! + gains[i + 1]!;
+      if (pair > 0) extra += pair;
+      else break;
+    }
+    return base + extra;
+  },
+  'minimum-operations-to-make-all-characters-equal': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let transitions = 0;
+    for (let i = 0; i < s.length - 1; i++) if (s[i] !== s[i + 1]) transitions++;
+    return transitions;
+  },
+  'number-of-bit-changes-to-make-two-integers-equal': (...args: unknown[]) => {
+    const [n, k] = args as number[];
+    function popcount(x: number): number { let c = 0; while (x) { c += x & 1; x >>>= 1; } return c; }
+    if ((k! & ~n!) !== 0) return -1;
+    return popcount(n! & ~k!);
+  },
+  'find-occurrences-of-an-element-in-an-array': (...args: unknown[]) => {
+    const [nums, target, k] = args as [number[], number, number];
+    let count = 0;
+    for (let i = 0; i < nums.length; i++) {
+      if (nums[i] === target && ++count === k) return i;
+    }
+    return -1;
+  },
+  'number-of-substrings-with-only-1s': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const MOD = 1_000_000_007n;
+    let res = 0n, run = 0n;
+    for (const c of s) {
+      if (c === '1') { run++; res = (res + run) % MOD; }
+      else run = 0n;
+    }
+    return Number(res);
+  },
+  // batch 224
   'find-score-after-marking-all-elements': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const n = nums.length;

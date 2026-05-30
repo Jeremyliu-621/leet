@@ -2888,13 +2888,45 @@ import { problem as phonePrefix } from './phone-number-prefix';
 import { problem as reverseDegree } from './reverse-degree-of-a-string';
 import { problem as minOpsArrayZero } from './minimum-operations-make-array-elements-zero';
 import { problem as propertiesGraph } from './properties-graph';
-// batch 219 — easy/math, easy/strings+math+simulation, medium/strings+two-pointers, medium/arrays+simulation
+// batch 219 (remote) — easy/math, easy/strings+math+simulation, medium/strings+two-pointers, medium/arrays+simulation
 import { problem as nonSpecialCount } from './find-the-count-of-numbers-which-are-not-special';
 import { problem as hasSameDigits } from './check-if-digits-are-equal-in-string-after-operations-i';
 import { problem as getSmallestStringConstraint } from './lexicographically-smallest-string-after-operations-with-constraint';
 import { problem as checkValidCuts } from './check-if-grid-can-be-cut-into-sections';
-// batch 220 — medium/math, medium/arrays+simulation, easy/math+bit-manipulation, hard/graph, medium/arrays
+// batch 219 (worktree) — easy/math, medium/simulation+bit-manipulation, medium/strings+hash-map, medium/arrays+hash-map, easy/arrays+binary-search
+import { problem as countOddsInIntervalRange } from './count-odd-numbers-in-an-interval-range';
+import { problem as findKthBitInNthBinaryString } from './find-kth-bit-in-nth-binary-string';
+import { problem as checkIfStringCanBreakAnotherString } from './check-if-a-string-can-break-another-string';
+import { problem as convertArrayInto2dArrayWithConditions } from './convert-an-array-into-2d-array-with-conditions';
+import { problem as kWeakestRowsInMatrix } from './k-weakest-rows-in-a-matrix';
+// batch 220a — easy/math, easy/arrays, easy/strings, easy/strings, easy/strings+hash-map
+import { problem as sumMultiples } from './sum-multiples';
+import { problem as minOpsArrayIncreasing } from './minimum-operations-to-make-the-array-increasing';
+import { problem as removeTrailingZeros } from './remove-trailing-zeros-from-string';
+import { problem as numbersAscendingInSentence } from './check-if-numbers-are-ascending-in-a-sentence';
+import { problem as countCommonChars } from './count-common-characters';
+// batch 220b — medium/arrays+dp, medium/strings+math, hard/arrays+dp
+import { problem as numSubmat } from './count-submatrices-with-all-ones';
+import { problem as minimumSwap } from './minimum-swaps-to-make-strings-equal';
+import { problem as countSpecialSubsequences } from './count-number-of-special-subsequences';
+// batch 221 — hard/strings+sliding-window, medium/strings+simulation, medium/strings+math, easy/strings
+import { problem as longestValidSubstring } from './length-of-the-longest-valid-substring';
+import { problem as addSpacesToString } from './add-spaces-to-string';
+import { problem as winnerOfGame } from './remove-colored-pieces-if-both-neighbors-same-color';
+import { problem as findLongestBalancedSubstring } from './find-the-longest-balanced-substring-of-binary-string';
+// batch 222 — easy/arrays+simulation, medium/dp+simulation, medium/math
+import { problem as countTestedDevices } from './count-tested-devices-after-test-operations';
+import { problem as peopleAwareOfSecret } from './number-of-people-aware-of-secret';
 import { problem as isReachableAtTime } from './determine-if-a-cell-is-reachable-at-a-given-time';
+// batch 223 — medium/arrays+hash-map, easy/arrays, medium/arrays+bit-manipulation+math
+import { problem as countBalancedSubarrays } from './count-balanced-subarrays';
+import { problem as longestDivisibleRun } from './longest-divisible-run';
+import { problem as maximumSumAfterXorOperations } from './maximum-sum-after-xor-operations';
+import { problem as minimumOperationsAllCharsEqual } from './minimum-operations-to-make-all-characters-equal';
+import { problem as minChanges } from './number-of-bit-changes-to-make-two-integers-equal';
+import { problem as findOccurrences } from './find-occurrences-of-an-element-in-an-array';
+import { problem as numSubOnes } from './number-of-substrings-with-only-1s';
+// batch 224 — medium/arrays+simulation, easy/math+bit-manipulation, hard/graph, medium/arrays
 import { problem as findScoreMarking } from './find-score-after-marking-all-elements';
 import { problem as primeSetBitsCount } from './prime-number-of-set-bits-in-binary-representation';
 import { problem as minEdgeReversalsEvery } from './minimum-edge-reversals-so-every-node-is-reachable';
@@ -5827,13 +5859,45 @@ export const problems: readonly Problem[] = [
   reverseDegree,
   minOpsArrayZero,
   propertiesGraph,
-  // batch 219
+  // batch 219 (remote)
   nonSpecialCount,
   hasSameDigits,
   getSmallestStringConstraint,
   checkValidCuts,
-  // batch 220
+  // batch 219 (worktree)
+  countOddsInIntervalRange,
+  findKthBitInNthBinaryString,
+  checkIfStringCanBreakAnotherString,
+  convertArrayInto2dArrayWithConditions,
+  kWeakestRowsInMatrix,
+  // batch 220a
+  sumMultiples,
+  minOpsArrayIncreasing,
+  removeTrailingZeros,
+  numbersAscendingInSentence,
+  countCommonChars,
+  // batch 220b
+  numSubmat,
+  minimumSwap,
+  countSpecialSubsequences,
+  // batch 221
+  longestValidSubstring,
+  addSpacesToString,
+  winnerOfGame,
+  findLongestBalancedSubstring,
+  // batch 222
+  countTestedDevices,
+  peopleAwareOfSecret,
   isReachableAtTime,
+  // batch 223
+  countBalancedSubarrays,
+  longestDivisibleRun,
+  maximumSumAfterXorOperations,
+  minimumOperationsAllCharsEqual,
+  minChanges,
+  findOccurrences,
+  numSubOnes,
+  // batch 224
   findScoreMarking,
   primeSetBitsCount,
   minEdgeReversalsEvery,
