@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-30
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2606** problems; 8112 tests green. Batches 102–230 complete.
+**Current focus:** Bank at **2614** problems; 8127 tests green. Batches 102–230 complete (both local and remote).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 231+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 230 (local) — count-special-triplets, kth-char-string-game-i, smallest-missing-after-ops, largest-square-two-rects, min-ops-reduce-to-0 (2026-05-30)
+Five new problems: `count-number-of-special-triplets` (medium/arrays+hash-map, prefix/suffix freq map O(n·k) counting i<j<k where nums[j]=nums[i]+nums[k]), `kth-character-in-string-game-i` (easy/bit-manipulation, popcount of k-1 gives char offset from 'a'), `smallest-missing-non-negative-integer-after-operations` (medium/arrays+hash-map, MEX via remainder class counts—count[r]≤floor(x/value) is the gap), `find-the-largest-area-of-square-inside-two-rectangles` (medium/arrays, O(n²) pairwise intersection min(w,h)²), `minimum-operations-to-reduce-an-integer-to-0` (medium/math+bit-manipulation, greedy: subtract when (n&3)==1 or n≤3, add when (n&3)==3 and n>3). Bank at **2614**; 8127 tests.
 
 ### feat(bank): batch 230 — calculate-digit-sum, find-prefix-common-array, apply-ops-sum-gte-k, max-k-divisible-components (2026-05-30)
 Four new problems: `calculate-digit-sum-of-a-string` (easy/strings+simulation, group-k digit-sum reduction until len≤k), `find-prefix-common-array-of-two-arrays` (medium/arrays+hash-map, 4-state seen array for O(n) intersection count), `apply-operations-to-make-sum-gte-k` (medium/arrays+math, try all (d,m) pairs minimizing d+m for (1+d)*(m+1)≥k), `maximum-number-of-k-divisible-components` (hard/tree+dp, DFS subtree-sum%k to count max cut components). Bank at **2606**; 8112 tests.
