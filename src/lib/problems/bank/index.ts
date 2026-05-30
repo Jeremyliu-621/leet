@@ -2941,6 +2941,11 @@ import { problem as findScoreMarking } from './find-score-after-marking-all-elem
 import { problem as primeSetBitsCount } from './prime-number-of-set-bits-in-binary-representation';
 import { problem as minEdgeReversalsEvery } from './minimum-edge-reversals-so-every-node-is-reachable';
 import { problem as countNumInversions } from './count-the-number-of-inversions';
+// batch 226
+import { problem as heightChecker } from './height-checker';
+import { problem as reorderLogFiles } from './reorder-log-files';
+import { problem as largestTimeFromDigits } from './largest-time-for-given-digits';
+import { problem as arrayChange } from './replace-elements-in-an-array';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5921,4 +5926,9 @@ export const problems: readonly Problem[] = [
   primeSetBitsCount,
   minEdgeReversalsEvery,
   countNumInversions,
+  // batch 226
+  heightChecker,
+  reorderLogFiles,
+  largestTimeFromDigits,
+  arrayChange,
 ];

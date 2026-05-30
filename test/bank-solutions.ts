@@ -42063,4 +42063,57 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     sort(arr);
     return count;
   },
+  'height-checker': (...args: unknown[]) => {
+    const heights = args[0] as number[];
+    const sorted = [...heights].sort((a, b) => a - b);
+    return heights.filter((h, i) => h !== sorted[i]).length;
+  },
+  'reorder-log-files': (...args: unknown[]) => {
+    const logs = args[0] as string[];
+    const letters: string[] = [], digits: string[] = [];
+    for (const log of logs) {
+      const second = log[log.indexOf(' ') + 1]!;
+      if (second >= '0' && second <= '9') digits.push(log);
+      else letters.push(log);
+    }
+    letters.sort((a, b) => {
+      const ac = a.substring(a.indexOf(' ') + 1);
+      const bc = b.substring(b.indexOf(' ') + 1);
+      if (ac !== bc) return ac < bc ? -1 : 1;
+      return a < b ? -1 : a > b ? 1 : 0;
+    });
+    return [...letters, ...digits];
+  },
+  'largest-time-for-given-digits': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    let best = -1;
+    const perm = (a: number[], remaining: number[]): void => {
+      if (a.length === 4) {
+        if (a[0]! * 10 + a[1]! <= 23 && a[2]! * 10 + a[3]! <= 59) {
+          const t = a[0]! * 1000 + a[1]! * 100 + a[2]! * 10 + a[3]!;
+          if (t > best) best = t;
+        }
+        return;
+      }
+      for (let i = 0; i < remaining.length; i++) {
+        perm([...a, remaining[i]!], [...remaining.slice(0, i), ...remaining.slice(i + 1)]);
+      }
+    };
+    perm([], arr);
+    if (best === -1) return '';
+    const h = Math.floor(best / 100), m = best % 100;
+    return `${Math.floor(h / 10)}${h % 10}:${Math.floor(m / 10)}${m % 10}`;
+  },
+  'replace-elements-in-an-array': (...args: unknown[]) => {
+    const [nums, operations] = args as [number[], number[][]];
+    const map = new Map(nums.map((v, i) => [v, i]));
+    for (const op of operations) {
+      const [oldVal, newVal] = op as [number, number];
+      const idx = map.get(oldVal)!;
+      nums[idx] = newVal;
+      map.delete(oldVal);
+      map.set(newVal, idx);
+    }
+    return nums;
+  },
 };

@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-30
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2572** problems; 8010 tests green. Batches 102–225 complete.
+**Current focus:** Bank at **2576** problems; 8022 tests green. Batches 102–226 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 226+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 227+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 226 — height-checker, reorder-log-files, largest-time-for-given-digits, replace-elements-in-array (2026-05-30)
+Four new problems: `height-checker` (easy/arrays, sorted comparison), `reorder-log-files` (easy/strings, letter-logs sorted by (content,id) then digit-logs), `largest-time-for-given-digits` (medium/simulation, 24-permutation brute force), `replace-elements-in-an-array` (medium/arrays+hash-map, val→idx map updated per operation O(m)). Bank at **2576**; 8022 tests.
 
 ### feat(bank): batch 225 (merged) — removing-min-max, double-reversal, suffix-instructions, good-days-rob + find-score-marking, prime-set-bits, edge-reversals, count-inversions (2026-05-30)
 Eight problems across two concurrent sessions: `removing-minimum-and-maximum-from-array` (medium/arrays, 3-strategy cost), `number-after-double-reversal` (easy/math), `execution-of-all-suffix-instructions-staying-in-a-grid` (medium/simulation), `find-good-days-to-rob-the-bank` (medium/dp), `find-score-after-marking-all-elements` (medium/arrays+simulation), `prime-number-of-set-bits-in-binary-representation` (easy/math+bit-manipulation), `minimum-edge-reversals-so-every-node-is-reachable` (hard/graph), `count-the-number-of-inversions` (medium/arrays, merge-sort O(n log n)).

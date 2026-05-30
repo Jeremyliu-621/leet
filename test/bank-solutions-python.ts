@@ -41217,4 +41217,39 @@ def countInversions(nums):
     merge_sort(nums)
     return count
 `,
+  'height-checker': `
+def heightChecker(heights):
+    sorted_h = sorted(heights)
+    return sum(1 for i in range(len(heights)) if heights[i] != sorted_h[i])
+`,
+  'reorder-log-files': `
+def reorderLogFiles(logs):
+    def key(log):
+        ident, rest = log.split(' ', 1)
+        return (0, rest, ident) if rest[0].isalpha() else (1,)
+    return sorted(logs, key=key)
+`,
+  'largest-time-for-given-digits': `
+from itertools import permutations
+def largestTimeFromDigits(arr):
+    best = -1
+    for perm in permutations(arr):
+        h, m = perm[0]*10+perm[1], perm[2]*10+perm[3]
+        if h <= 23 and m <= 59:
+            t = h*100+m
+            if t > best:
+                best = t
+    if best == -1:
+        return ""
+    return f"{best//100:02d}:{best%100:02d}"
+`,
+  'replace-elements-in-an-array': `
+def arrayChange(nums, operations):
+    val_to_idx = {v: i for i, v in enumerate(nums)}
+    for old, new in operations:
+        idx = val_to_idx.pop(old)
+        nums[idx] = new
+        val_to_idx[new] = idx
+    return nums
+`,
 };
