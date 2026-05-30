@@ -8,15 +8,12 @@
 
 **Last updated:** 2026-05-30
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2614** problems; 8127 tests green. Batches 102–230 complete (both local and remote).
+**Current focus:** Bank at **2613** problems; 8133 tests green. Batches 102–230 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 231+; UX polish per LEETCODE_PARITY.md.
 
-### feat(bank): batch 230 (local) — count-special-triplets, kth-char-string-game-i, smallest-missing-after-ops, largest-square-two-rects, min-ops-reduce-to-0 (2026-05-30)
-Five new problems: `count-number-of-special-triplets` (medium/arrays+hash-map, prefix/suffix freq map O(n·k) counting i<j<k where nums[j]=nums[i]+nums[k]), `kth-character-in-string-game-i` (easy/bit-manipulation, popcount of k-1 gives char offset from 'a'), `smallest-missing-non-negative-integer-after-operations` (medium/arrays+hash-map, MEX via remainder class counts—count[r]≤floor(x/value) is the gap), `find-the-largest-area-of-square-inside-two-rectangles` (medium/arrays, O(n²) pairwise intersection min(w,h)²), `minimum-operations-to-reduce-an-integer-to-0` (medium/math+bit-manipulation, greedy: subtract when (n&3)==1 or n≤3, add when (n&3)==3 and n>3). Bank at **2614**; 8127 tests.
-
-### feat(bank): batch 230 — calculate-digit-sum, find-prefix-common-array, apply-ops-sum-gte-k, max-k-divisible-components (2026-05-30)
-Four new problems: `calculate-digit-sum-of-a-string` (easy/strings+simulation, group-k digit-sum reduction until len≤k), `find-prefix-common-array-of-two-arrays` (medium/arrays+hash-map, 4-state seen array for O(n) intersection count), `apply-operations-to-make-sum-gte-k` (medium/arrays+math, try all (d,m) pairs minimizing d+m for (1+d)*(m+1)≥k), `maximum-number-of-k-divisible-components` (hard/tree+dp, DFS subtree-sum%k to count max cut components). Bank at **2606**; 8112 tests.
+### feat(bank): batch 230 — count-special-triplets, kth-char-string-game-i, smallest-missing-after-ops, largest-square-two-rects, min-ops-reduce-to-0, calculate-digit-sum, find-prefix-common-array, apply-ops-sum-gte-k, max-k-divisible-comps, count-nodes-largest-group, minimum-replacements-balanced (2026-05-30)
+Eleven new problems merged from multiple sessions. Highlights: `count-number-of-special-triplets` (medium/arrays+hash-map), `kth-character-in-string-game-i` (easy/bit-manipulation), `smallest-missing-non-negative-integer-after-operations` (medium/arrays+hash-map), `find-the-largest-area-of-square-inside-two-rectangles` (medium/arrays), `minimum-operations-to-reduce-an-integer-to-0` (medium/bit-manipulation), `calculate-digit-sum-of-a-string` (easy/strings), `find-prefix-common-array-of-two-arrays` (medium/arrays+hash-map), `apply-operations-to-make-sum-gte-k` (medium/math), `maximum-number-of-k-divisible-components` (hard/tree+dp), `count-number-of-nodes-in-the-largest-group` (easy/math), `minimum-replacements-to-make-string-balanced` (easy/strings). Bank at **2613**; 8133 tests.
 
 ### feat(bank): batch 229 — find-peak-ii, group-people-by-size, matrix-diag-sum, closest-fair, find-original-from-doubled (2026-05-30)
 Five new problems: `find-a-peak-element-ii` (medium/arrays+binary-search, row binary search selecting row with max-col, O(m log n)), `group-the-people-given-group-size` (medium/arrays+hash-map, bucket by size, chunk people, sort output by first ID), `matrix-diagonal-sum` (easy/arrays, primary+secondary diagonals minus center if odd n), `closest-fair-integer` (medium/math, odd-digit → jump to next even-digit count, then increment until even≡odd), `find-original-array-from-doubled-array` (medium/arrays+hash-map, sort+counter greedy: pair each x with 2x). Bank at **2604**; 8100 tests.

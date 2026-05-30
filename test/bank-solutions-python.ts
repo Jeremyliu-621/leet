@@ -41768,4 +41768,24 @@ def maxKDivisibleComponents(n, edges, values, k):
     dfs(0, -1)
     return count[0]
 `,
+  'count-number-of-nodes-in-the-largest-group': `
+from collections import defaultdict
+def countLargestGroup(n):
+    freq = defaultdict(int)
+    for i in range(1, n + 1):
+        freq[sum(int(c) for c in str(i))] += 1
+    max_f = max(freq.values())
+    return sum(1 for v in freq.values() if v == max_f)
+`,
+  'minimum-replacements-to-make-string-balanced': `
+def minimumReplacement(s):
+    ops, b_count = 0, 0
+    for c in s:
+        if c == 'b':
+            b_count += 1
+        elif b_count > 0:
+            ops += 1
+            b_count -= 1
+    return ops
+`,
 };

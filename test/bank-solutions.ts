@@ -42610,4 +42610,25 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     dfs(0, -1);
     return count;
   },
+  'count-number-of-nodes-in-the-largest-group': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const freq = new Map<number, number>();
+    for (let i = 1; i <= n; i++) {
+      const s = String(i).split('').reduce((a, c) => a + Number(c), 0);
+      freq.set(s, (freq.get(s) ?? 0) + 1);
+    }
+    const maxF = Math.max(...freq.values());
+    let count = 0;
+    for (const v of freq.values()) { if (v === maxF) count++; }
+    return count;
+  },
+  'minimum-replacements-to-make-string-balanced': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let ops = 0, bCount = 0;
+    for (const c of s) {
+      if (c === 'b') { bCount++; }
+      else if (bCount > 0) { ops++; bCount--; }
+    }
+    return ops;
+  },
 };

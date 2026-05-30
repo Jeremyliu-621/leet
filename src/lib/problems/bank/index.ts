@@ -2988,6 +2988,9 @@ import { problem as calculateDigitSum } from './calculate-digit-sum-of-a-string'
 import { problem as findPrefixCommonArray } from './find-prefix-common-array-of-two-arrays';
 import { problem as applyOpsSumGteK } from './apply-operations-to-make-sum-of-array-greater-than-or-equal-to-k';
 import { problem as maxKDivisibleComps } from './maximum-number-of-k-divisible-components';
+// batch 230 — easy/math, easy/strings
+import { problem as countNodesInLargestGroup } from './count-number-of-nodes-in-the-largest-group';
+import { problem as minReplacementsBalanced } from './minimum-replacements-to-make-string-balanced';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6012,4 +6015,6 @@ export const problems: readonly Problem[] = [
   findPrefixCommonArray,
   applyOpsSumGteK,
   maxKDivisibleComps,
+  countNodesInLargestGroup,
+  minReplacementsBalanced,
 ];
