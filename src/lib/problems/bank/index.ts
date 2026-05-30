@@ -2983,6 +2983,11 @@ import { problem as kthCharStringGame } from './kth-character-in-string-game-i';
 import { problem as smallestMissingAfterOps } from './smallest-missing-non-negative-integer-after-operations';
 import { problem as largestSquareTwoRects } from './find-the-largest-area-of-square-inside-two-rectangles';
 import { problem as minOpsReduceToZero } from './minimum-operations-to-reduce-an-integer-to-0';
+// batch 230 — easy/strings, medium/arrays+hash-map, medium/math, hard/tree+dp
+import { problem as calculateDigitSum } from './calculate-digit-sum-of-a-string';
+import { problem as findPrefixCommonArray } from './find-prefix-common-array-of-two-arrays';
+import { problem as applyOpsSumGteK } from './apply-operations-to-make-sum-of-array-greater-than-or-equal-to-k';
+import { problem as maxKDivisibleComps } from './maximum-number-of-k-divisible-components';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6003,4 +6008,8 @@ export const problems: readonly Problem[] = [
   smallestMissingAfterOps,
   largestSquareTwoRects,
   minOpsReduceToZero,
+  calculateDigitSum,
+  findPrefixCommonArray,
+  applyOpsSumGteK,
+  maxKDivisibleComps,
 ];

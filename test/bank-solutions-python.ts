@@ -41697,4 +41697,75 @@ def minOperations(n):
         ops += 1
     return ops
 `,
+  // batch 230 (remote)
+  'calculate-digit-sum-of-a-string': `
+def calculateDigitSum(num, k):
+    s = num
+    while len(s) > k:
+        next_s = ''
+        for i in range(0, len(s), k):
+            group = s[i:i+k]
+            next_s += str(sum(int(c) for c in group))
+        s = next_s
+    return s
+`,
+  'find-prefix-common-array-of-two-arrays': `
+def findThePrefixCommonArray(A, B):
+    n = len(A)
+    seen = [0] * (n + 1)
+    count = 0
+    C = []
+    for i in range(n):
+        a, b = A[i], B[i]
+        if seen[a] == 2:
+            count += 1
+            seen[a] = 3
+        elif seen[a] == 0:
+            seen[a] = 1
+        if b == a:
+            if seen[b] == 1:
+                count += 1
+                seen[b] = 3
+        else:
+            if seen[b] == 1:
+                count += 1
+                seen[b] = 3
+            elif seen[b] == 0:
+                seen[b] = 2
+        C.append(count)
+    return C
+`,
+  'apply-operations-to-make-sum-of-array-greater-than-or-equal-to-k': `
+import math
+def minOperations(k):
+    if k == 1:
+        return 0
+    best = k - 1
+    for d in range(k):
+        x = 1 + d
+        m = math.ceil(k / x) - 1
+        best = min(best, d + m)
+    return best
+`,
+  'maximum-number-of-k-divisible-components': `
+def maxKDivisibleComponents(n, edges, values, k):
+    import sys
+    sys.setrecursionlimit(100000)
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    count = [0]
+    def dfs(node, parent):
+        s = values[node]
+        for nxt in adj[node]:
+            if nxt != parent:
+                s += dfs(nxt, node)
+        if s % k == 0:
+            count[0] += 1
+            return 0
+        return s % k
+    dfs(0, -1)
+    return count[0]
+`,
 };

@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-30
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2604** problems; 8100 tests green. Batches 102–229 complete.
+**Current focus:** Bank at **2606** problems; 8112 tests green. Batches 102–230 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 230+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 231+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 230 — calculate-digit-sum, find-prefix-common-array, apply-ops-sum-gte-k, max-k-divisible-components (2026-05-30)
+Four new problems: `calculate-digit-sum-of-a-string` (easy/strings+simulation, group-k digit-sum reduction until len≤k), `find-prefix-common-array-of-two-arrays` (medium/arrays+hash-map, 4-state seen array for O(n) intersection count), `apply-operations-to-make-sum-gte-k` (medium/arrays+math, try all (d,m) pairs minimizing d+m for (1+d)*(m+1)≥k), `maximum-number-of-k-divisible-components` (hard/tree+dp, DFS subtree-sum%k to count max cut components). Bank at **2606**; 8112 tests.
 
 ### feat(bank): batch 229 — find-peak-ii, group-people-by-size, matrix-diag-sum, closest-fair, find-original-from-doubled (2026-05-30)
 Five new problems: `find-a-peak-element-ii` (medium/arrays+binary-search, row binary search selecting row with max-col, O(m log n)), `group-the-people-given-group-size` (medium/arrays+hash-map, bucket by size, chunk people, sort output by first ID), `matrix-diagonal-sum` (easy/arrays, primary+secondary diagonals minus center if odd n), `closest-fair-integer` (medium/math, odd-digit → jump to next even-digit count, then increment until even≡odd), `find-original-array-from-doubled-array` (medium/arrays+hash-map, sort+counter greedy: pair each x with 2x). Bank at **2604**; 8100 tests.
