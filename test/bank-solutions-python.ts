@@ -41351,4 +41351,77 @@ def hasSameDigits(s):
         sum_b = (sum_b + coeff * int(s[i + 1])) % 10
     return sum_a == sum_b
 `,
+  'find-the-maximum-factor-score-of-array': `
+def maxFactorScore(nums):
+    from math import gcd
+    def lcm(a, b):
+        return a // gcd(a, b) * b
+    def score(arr):
+        if not arr:
+            return 0
+        g = arr[0]
+        l = arr[0]
+        for x in arr[1:]:
+            g = gcd(g, x)
+            l = lcm(l, x)
+        return g * l
+    best = score(nums)
+    for i in range(len(nums)):
+        best = max(best, score(nums[:i] + nums[i+1:]))
+    return best
+`,
+  'count-partitions-with-even-sum-difference': `
+def countPartitions(nums):
+    total = sum(nums)
+    return len(nums) - 1 if total % 2 == 0 else 0
+`,
+  'find-beautiful-indices-in-the-given-array-ii': `
+def beautifulIndices(s, a, b, k):
+    def kmp_search(text, pattern):
+        if not pattern:
+            return []
+        combined = pattern + '#' + text
+        fail = [0] * len(combined)
+        for i in range(1, len(combined)):
+            j = fail[i - 1]
+            while j > 0 and combined[i] != combined[j]:
+                j = fail[j - 1]
+            if combined[i] == combined[j]:
+                j += 1
+            fail[i] = j
+        m = len(pattern)
+        return [i - 2 * m for i in range(m + 1, len(combined)) if fail[i] == m]
+    a_matches = kmp_search(s, a)
+    b_matches = kmp_search(s, b)
+    result = []
+    j = 0
+    for i in a_matches:
+        while j < len(b_matches) and b_matches[j] < i - k:
+            j += 1
+        for jj in range(j, len(b_matches)):
+            if b_matches[jj] <= i + k:
+                result.append(i)
+                break
+            else:
+                break
+    return result
+`,
+  'find-the-sum-of-the-power-of-all-subsequences': `
+def sumOfPower(nums, k):
+    MOD = 10**9 + 7
+    n = len(nums)
+    dp = [[0] * (k + 1) for _ in range(n + 1)]
+    dp[0][0] = 1
+    for x in nums:
+        for length in range(n, 0, -1):
+            for s in range(k, x - 1, -1):
+                dp[length][s] = (dp[length][s] + dp[length - 1][s - x]) % MOD
+    pow2 = [1] * (n + 1)
+    for i in range(1, n + 1):
+        pow2[i] = pow2[i - 1] * 2 % MOD
+    ans = 0
+    for length in range(1, n + 1):
+        ans = (ans + dp[length][k] * pow2[n - length]) % MOD
+    return ans
+`,
 };

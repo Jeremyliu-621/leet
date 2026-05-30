@@ -42215,4 +42215,78 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return sumA === sumB;
   },
+  'find-the-maximum-factor-score-of-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const gcd = (a: number, b: number): number => { while (b) { [a, b] = [b, a % b]; } return a; };
+    const lcm = (a: number, b: number): number => a / gcd(a, b) * b;
+    const score = (arr: number[]): number => {
+      if (arr.length === 0) return 0;
+      let g = arr[0]!, l = arr[0]!;
+      for (let i = 1; i < arr.length; i++) { g = gcd(g, arr[i]!); l = lcm(l, arr[i]!); }
+      return g * l;
+    };
+    let best = score(nums);
+    for (let i = 0; i < nums.length; i++) {
+      best = Math.max(best, score(nums.filter((_, j) => j !== i)));
+    }
+    return best;
+  },
+  'count-partitions-with-even-sum-difference': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const total = nums.reduce((a, b) => a + b, 0);
+    return total % 2 === 0 ? nums.length - 1 : 0;
+  },
+  'find-beautiful-indices-in-the-given-array-ii': (...args: unknown[]) => {
+    const [s, a, b, k] = args as [string, string, string, number];
+    const kmpSearch = (text: string, pattern: string): number[] => {
+      if (pattern.length === 0) return [];
+      const combined = pattern + '#' + text;
+      const fail = new Array<number>(combined.length).fill(0);
+      for (let i = 1; i < combined.length; i++) {
+        let j = fail[i - 1]!;
+        while (j > 0 && combined[i] !== combined[j]) j = fail[j - 1]!;
+        if (combined[i] === combined[j]) j++;
+        fail[i] = j;
+      }
+      const m = pattern.length;
+      const matches: number[] = [];
+      for (let i = m + 1; i < combined.length; i++) {
+        if (fail[i] === m) matches.push(i - 2 * m);
+      }
+      return matches;
+    };
+    const aMatches = kmpSearch(s, a);
+    const bMatches = kmpSearch(s, b);
+    const result: number[] = [];
+    let j = 0;
+    for (const i of aMatches) {
+      while (j < bMatches.length && bMatches[j]! < i - k) j++;
+      for (let jj = j; jj < bMatches.length && bMatches[jj]! <= i + k; jj++) {
+        result.push(i);
+        break;
+      }
+    }
+    return result;
+  },
+  'find-the-sum-of-the-power-of-all-subsequences': (...args: unknown[]) => {
+    const [nums, k] = args as [number[], number];
+    const MOD = 1_000_000_007n;
+    const n = nums.length;
+    const dp: bigint[][] = Array.from({ length: n + 1 }, () => new Array<bigint>(k + 1).fill(0n));
+    dp[0]![0] = 1n;
+    for (const x of nums) {
+      for (let len = n; len >= 1; len--) {
+        for (let s = k; s >= x; s--) {
+          dp[len]![s] = (dp[len]![s]! + dp[len - 1]![s - x]!) % MOD;
+        }
+      }
+    }
+    const pow2 = new Array<bigint>(n + 1).fill(1n);
+    for (let i = 1; i <= n; i++) pow2[i] = pow2[i - 1]! * 2n % MOD;
+    let ans = 0n;
+    for (let len = 1; len <= n; len++) {
+      ans = (ans + dp[len]![k]! * pow2[n - len]!) % MOD;
+    }
+    return Number(ans);
+  },
 };

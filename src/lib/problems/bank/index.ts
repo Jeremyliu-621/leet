@@ -2955,6 +2955,11 @@ import { problem as firstPalindrome } from './find-first-palindromic-string-in-a
 import { problem as adjacentIncreasingSubarraysDetectionIi } from './adjacent-increasing-subarrays-detection-ii';
 import { problem as countSubstringsEveryVowelKConsonantsIi } from './count-substrings-with-every-vowel-and-k-consonants-ii';
 import { problem as checkDigitsEqualAfterOperationsIi } from './check-if-digits-are-equal-in-string-after-operations-ii';
+// batch 228 — medium/arrays+math, easy/arrays+math, hard/strings, hard/dp
+import { problem as maxFactorScoreArray } from './find-the-maximum-factor-score-of-array';
+import { problem as countPartitionsEvenSum } from './count-partitions-with-even-sum-difference';
+import { problem as beautifulIndicesII } from './find-beautiful-indices-in-the-given-array-ii';
+import { problem as sumOfPowerSubseq } from './find-the-sum-of-the-power-of-all-subsequences';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5949,4 +5954,9 @@ export const problems: readonly Problem[] = [
   adjacentIncreasingSubarraysDetectionIi,
   countSubstringsEveryVowelKConsonantsIi,
   checkDigitsEqualAfterOperationsIi,
+  // batch 228
+  maxFactorScoreArray,
+  countPartitionsEvenSum,
+  beautifulIndicesII,
+  sumOfPowerSubseq,
 ];
