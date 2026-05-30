@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-30
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2577** problems; 8025 tests green. Batches 102–226 complete.
+**Current focus:** Bank at **2580** problems; 8034 tests green. Batches 102–227 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 227+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 228+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 227 — adjacent-increasing-ii, vowel-k-consonants-ii, digits-equal-ops-ii (2026-05-30)
+Three new problems: `adjacent-increasing-subarrays-detection-ii` (medium/arrays, find max k for two adjacent strictly increasing subarrays, O(n) leftLen/rightLen precompute + boundary scan), `count-substrings-with-every-vowel-and-k-consonants-ii` (medium/strings+sliding-window, atLeast(k)−atLeast(k+1) O(n) sliding window, handles n up to 5×10⁴), `check-if-digits-are-equal-in-string-after-operations-ii` (hard/strings+math, binomial formula after m=n−2 passes, Lucas' theorem mod 2 and mod 5 via iterative base-p decomposition, CRT for mod 10, O(n log n)). Bank at **2580**; 8034 tests.
 
 ### feat(bank): batch 226 — check-a-before-b, chessboard-color, most-frequent-after-key, rectangles-largest-square, first-palindromic (2026-05-30)
 Five new easy problems: `check-if-all-a-appears-before-all-b` (easy/strings, "ba" not in string), `determine-color-of-a-chessboard-square` (easy/math, (col+row)%2 parity), `most-frequent-number-following-key-in-an-array` (easy/arrays+hash-map, count targets after key), `number-of-rectangles-that-can-form-largest-square` (easy/arrays, max min(l,w)), `find-first-palindromic-string-in-array` (easy/strings, first word = reverse). Bank at **2577**; 8025 tests.
