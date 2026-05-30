@@ -42473,4 +42473,84 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return original;
   },
+  'count-number-of-special-triplets': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const right = new Map<number, number>();
+    for (const v of nums) right.set(v, (right.get(v) ?? 0) + 1);
+    const left = new Map<number, number>();
+    let count = 0;
+    for (let j = 0; j < n; j++) {
+      right.set(nums[j]!, (right.get(nums[j]!) ?? 0) - 1);
+      if (right.get(nums[j]!) === 0) right.delete(nums[j]!);
+      for (const [kVal, kCnt] of right) {
+        const needed = nums[j]! - kVal;
+        if (left.has(needed)) count += left.get(needed)! * kCnt;
+      }
+      left.set(nums[j]!, (left.get(nums[j]!) ?? 0) + 1);
+    }
+    return count;
+  },
+  'kth-character-in-string-game-i': (...args: unknown[]) => {
+    const k = args[0] as number;
+    let bits = 0;
+    let pos = k - 1;
+    while (pos > 0) { bits += pos & 1; pos >>= 1; }
+    return String.fromCharCode('a'.charCodeAt(0) + bits);
+  },
+  'smallest-missing-non-negative-integer-after-operations': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const value = args[1] as number;
+    if (value === 0) {
+      const s = new Set(nums.filter(x => x >= 0));
+      let x = 0;
+      while (s.has(x)) x++;
+      return x;
+    }
+    const cnt = new Map<number, number>();
+    for (const n of nums) {
+      const r = ((n % value) + value) % value;
+      cnt.set(r, (cnt.get(r) ?? 0) + 1);
+    }
+    let x = 0;
+    while (true) {
+      const r = x % value;
+      const k = Math.floor(x / value);
+      if ((cnt.get(r) ?? 0) <= k) return x;
+      x++;
+    }
+  },
+  'find-the-largest-area-of-square-inside-two-rectangles': (...args: unknown[]) => {
+    const l = args[0] as number[];
+    const r = args[1] as number[];
+    const b = args[2] as number[];
+    const t = args[3] as number[];
+    const n = l.length;
+    let best = 0;
+    for (let i = 0; i < n; i++) {
+      for (let j = i + 1; j < n; j++) {
+        const iL = Math.max(l[i]!, l[j]!);
+        const iR = Math.min(r[i]!, r[j]!);
+        const iB = Math.max(b[i]!, b[j]!);
+        const iT = Math.min(t[i]!, t[j]!);
+        const w = iR - iL, h = iT - iB;
+        if (w > 0 && h > 0) {
+          const side = Math.min(w, h);
+          best = Math.max(best, side * side);
+        }
+      }
+    }
+    return best;
+  },
+  'minimum-operations-to-reduce-an-integer-to-0': (...args: unknown[]) => {
+    let n = args[0] as number;
+    let ops = 0;
+    while (n > 0) {
+      if ((n & 1) === 0) n >>= 1;
+      else if (n === 1 || n === 3 || (n & 3) === 1) n--;
+      else n++;
+      ops++;
+    }
+    return ops;
+  },
 };

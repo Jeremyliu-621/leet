@@ -2977,6 +2977,12 @@ import { problem as groupPeopleBySize } from './group-the-people-given-the-group
 import { problem as matrixDiagSum } from './matrix-diagonal-sum';
 import { problem as closestFairInt } from './closest-fair-integer';
 import { problem as findOriginalDoubled } from './find-original-array-from-doubled-array';
+// batch 230
+import { problem as countSpecialTriplets } from './count-number-of-special-triplets';
+import { problem as kthCharStringGame } from './kth-character-in-string-game-i';
+import { problem as smallestMissingAfterOps } from './smallest-missing-non-negative-integer-after-operations';
+import { problem as largestSquareTwoRects } from './find-the-largest-area-of-square-inside-two-rectangles';
+import { problem as minOpsReduceToZero } from './minimum-operations-to-reduce-an-integer-to-0';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5991,4 +5997,10 @@ export const problems: readonly Problem[] = [
   matrixDiagSum,
   closestFairInt,
   findOriginalDoubled,
+  // batch 230
+  countSpecialTriplets,
+  kthCharStringGame,
+  smallestMissingAfterOps,
+  largestSquareTwoRects,
+  minOpsReduceToZero,
 ];

@@ -41620,4 +41620,81 @@ def findOriginalArray(changed):
             cnt[doubled] -= 1
     return original
 `,
+  'count-number-of-special-triplets': `
+def countSpecialTriplets(nums):
+    from collections import defaultdict
+    n = len(nums)
+    right = defaultdict(int)
+    for v in nums:
+        right[v] += 1
+    left = defaultdict(int)
+    count = 0
+    for j in range(n):
+        right[nums[j]] -= 1
+        if right[nums[j]] == 0:
+            del right[nums[j]]
+        for k_val, k_cnt in list(right.items()):
+            needed = nums[j] - k_val
+            if needed in left:
+                count += left[needed] * k_cnt
+        left[nums[j]] += 1
+    return count
+`,
+  'kth-character-in-string-game-i': `
+def kthCharacter(k):
+    pos = k - 1
+    bits = bin(pos).count('1')
+    return chr(ord('a') + bits)
+`,
+  'smallest-missing-non-negative-integer-after-operations': `
+def findSmallestInteger(nums, value):
+    from collections import defaultdict
+    if value == 0:
+        s = set(x for x in nums if x >= 0)
+        x = 0
+        while x in s:
+            x += 1
+        return x
+    cnt = defaultdict(int)
+    for n in nums:
+        r = n % value
+        cnt[r] += 1
+    x = 0
+    while True:
+        r = x % value
+        k = x // value
+        if cnt[r] <= k:
+            return x
+        x += 1
+`,
+  'find-the-largest-area-of-square-inside-two-rectangles': `
+def largestSquareInsideTwoRectangles(l, r, b, t):
+    n = len(l)
+    best = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            iL = max(l[i], l[j])
+            iR = min(r[i], r[j])
+            iB = max(b[i], b[j])
+            iT = min(t[i], t[j])
+            w = iR - iL
+            h = iT - iB
+            if w > 0 and h > 0:
+                side = min(w, h)
+                best = max(best, side * side)
+    return best
+`,
+  'minimum-operations-to-reduce-an-integer-to-0': `
+def minOperations(n):
+    ops = 0
+    while n > 0:
+        if n % 2 == 0:
+            n >>= 1
+        elif n == 1 or n == 3 or (n & 3) == 1:
+            n -= 1
+        else:
+            n += 1
+        ops += 1
+    return ops
+`,
 };
