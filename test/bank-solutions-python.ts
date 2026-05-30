@@ -41172,4 +41172,37 @@ def countInversions(nums):
     merge_sort(nums)
     return count
 `,
+  // batch 226
+  'check-if-all-a-appears-before-all-b': `
+def checkString(s):
+    return 'ba' not in s
+`,
+  'determine-color-of-a-chessboard-square': `
+def squareIsWhite(coordinates):
+    col = ord(coordinates[0]) - ord('a') + 1
+    row = int(coordinates[1])
+    return (col + row) % 2 != 0
+`,
+  'most-frequent-number-following-key-in-an-array': `
+def mostFrequent(nums, key):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    for i in range(len(nums) - 1):
+        if nums[i] == key:
+            freq[nums[i + 1]] += 1
+    return max(freq, key=freq.get)
+`,
+  'number-of-rectangles-that-can-form-largest-square': `
+def countGoodRectangles(rectangles):
+    mins = [min(l, w) for l, w in rectangles]
+    max_len = max(mins)
+    return sum(1 for m in mins if m == max_len)
+`,
+  'find-first-palindromic-string-in-array': `
+def firstPalindrome(words):
+    for w in words:
+        if w == w[::-1]:
+            return w
+    return ''
+`,
 };

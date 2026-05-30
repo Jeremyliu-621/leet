@@ -2926,6 +2926,12 @@ import { problem as minimumOperationsAllCharsEqual } from './minimum-operations-
 import { problem as minChanges } from './number-of-bit-changes-to-make-two-integers-equal';
 import { problem as findOccurrences } from './find-occurrences-of-an-element-in-an-array';
 import { problem as numSubOnes } from './number-of-substrings-with-only-1s';
+// batch 226 — easy/strings, easy/math, easy/arrays+hash-map, easy/arrays, easy/strings
+import { problem as checkAllABeforeB } from './check-if-all-a-appears-before-all-b';
+import { problem as squareIsWhiteColor } from './determine-color-of-a-chessboard-square';
+import { problem as mostFrequentAfterKey } from './most-frequent-number-following-key-in-an-array';
+import { problem as numRectanglesLargestSq } from './number-of-rectangles-that-can-form-largest-square';
+import { problem as firstPalindrome } from './find-first-palindromic-string-in-array';
 // batch 224
 import { problem as numberOfCuts } from './minimum-cuts-to-divide-a-circle';
 import { problem as numSplitsGood } from './number-of-good-ways-to-split-a-string';
@@ -5912,4 +5918,10 @@ export const problems: readonly Problem[] = [
   primeSetBitsCount,
   minEdgeReversalsEvery,
   countNumInversions,
+  // batch 226
+  checkAllABeforeB,
+  squareIsWhiteColor,
+  mostFrequentAfterKey,
+  numRectanglesLargestSq,
+  firstPalindrome,
 ];
