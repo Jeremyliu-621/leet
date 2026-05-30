@@ -41250,4 +41250,70 @@ def firstPalindrome(words):
             return w
     return ''
 `,
+  'adjacent-increasing-subarrays-detection-ii': `
+def maxIncreasingSubarrays(nums):
+    n = len(nums)
+    left_len = [1] * n
+    right_len = [1] * n
+    for i in range(1, n):
+        if nums[i] > nums[i - 1]:
+            left_len[i] = left_len[i - 1] + 1
+    for i in range(n - 2, -1, -1):
+        if nums[i] < nums[i + 1]:
+            right_len[i] = right_len[i + 1] + 1
+    ans = 0
+    for b in range(1, n):
+        v = min(left_len[b - 1], right_len[b])
+        if v > ans:
+            ans = v
+    return ans
+`,
+  'count-substrings-with-every-vowel-and-k-consonants-ii': `
+def countOfSubstrings(s, k):
+    vowels = set('aeiou')
+    def at_least(threshold):
+        count = 0
+        l = 0
+        consonants = 0
+        freq = {}
+        for r, c in enumerate(s):
+            if c in vowels:
+                freq[c] = freq.get(c, 0) + 1
+            else:
+                consonants += 1
+            while len(freq) == 5 and consonants >= threshold:
+                lc = s[l]
+                if lc in vowels:
+                    freq[lc] -= 1
+                    if freq[lc] == 0:
+                        del freq[lc]
+                else:
+                    consonants -= 1
+                l += 1
+            count += l
+        return count
+    return at_least(k) - at_least(k + 1)
+`,
+  'check-if-digits-are-equal-in-string-after-operations-ii': `
+def hasSameDigits(s):
+    n = len(s)
+    m = n - 2
+    pascal5 = [[1,0,0,0,0],[1,1,0,0,0],[1,2,1,0,0],[1,3,3,1,0],[1,4,1,4,1]]
+    def lucas5(mv, iv):
+        result = 1
+        while iv > 0:
+            result = (result * pascal5[mv % 5][iv % 5]) % 5
+            mv //= 5
+            iv //= 5
+        return result
+    sum_a = 0
+    sum_b = 0
+    for i in range(m + 1):
+        c2 = 1 if (i & m) == i else 0
+        c5 = lucas5(m, i)
+        coeff = (5 * c2 + 6 * c5) % 10
+        sum_a = (sum_a + coeff * int(s[i])) % 10
+        sum_b = (sum_b + coeff * int(s[i + 1])) % 10
+    return sum_a == sum_b
+`,
 };
