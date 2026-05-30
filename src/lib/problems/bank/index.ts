@@ -2937,6 +2937,11 @@ import { problem as numberOfCuts } from './minimum-cuts-to-divide-a-circle';
 import { problem as numSplitsGood } from './number-of-good-ways-to-split-a-string';
 import { problem as closetTarget } from './shortest-distance-to-target-string-in-a-circular-array';
 import { problem as mergeArrays2D } from './merge-two-2d-arrays-by-summing-values';
+// batch 225
+import { problem as removingMinMax } from './removing-minimum-and-maximum-from-array';
+import { problem as isSameAfterReversals } from './number-after-double-reversal';
+import { problem as executeInstructions } from './execution-of-all-suffix-instructions-staying-in-a-grid';
+import { problem as goodDaysToRobBank } from './find-good-days-to-rob-the-bank';
 // batch 225 — medium/arrays+simulation, easy/math+bit-manipulation, hard/graph, medium/arrays
 import { problem as findScoreMarking } from './find-score-after-marking-all-elements';
 import { problem as primeSetBitsCount } from './prime-number-of-set-bits-in-binary-representation';
@@ -5914,6 +5919,10 @@ export const problems: readonly Problem[] = [
   closetTarget,
   mergeArrays2D,
   // batch 225
+  removingMinMax,
+  isSameAfterReversals,
+  executeInstructions,
+  goodDaysToRobBank,
   findScoreMarking,
   primeSetBitsCount,
   minEdgeReversalsEvery,

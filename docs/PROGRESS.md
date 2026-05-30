@@ -8,12 +8,12 @@
 
 **Last updated:** 2026-05-30
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2568** problems; 7998 tests green. Batches 102–225 complete.
+**Current focus:** Bank at **2572** problems; 8010 tests green. Batches 102–225 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 226+; UX polish per LEETCODE_PARITY.md.
 
-### feat(bank): batch 225 — find-score-marking, prime-set-bits, edge-reversals-every-node, count-inversions (2026-05-30)
-Four new problems: `find-score-after-marking-all-elements` (medium/arrays+simulation, sort by (value,index), greedily mark ±1 neighbors), `prime-number-of-set-bits-in-binary-representation` (easy/math+bit-manipulation, count set bits per number, check against prime set {2,3,5,7,11,13,17,19}), `minimum-edge-reversals-so-every-node-is-reachable` (hard/graph, re-rooting DP: DFS from 0 for dp[0], rerooted[child]=rerooted[parent]+1−2w), `count-the-number-of-inversions` (medium/arrays, merge sort inversion count O(n log n)). Bank at **2568**; 7998 tests.
+### feat(bank): batch 225 (merged) — removing-min-max, double-reversal, suffix-instructions, good-days-rob + find-score-marking, prime-set-bits, edge-reversals, count-inversions (2026-05-30)
+Eight problems across two concurrent sessions: `removing-minimum-and-maximum-from-array` (medium/arrays, 3-strategy cost), `number-after-double-reversal` (easy/math), `execution-of-all-suffix-instructions-staying-in-a-grid` (medium/simulation), `find-good-days-to-rob-the-bank` (medium/dp), `find-score-after-marking-all-elements` (medium/arrays+simulation), `prime-number-of-set-bits-in-binary-representation` (easy/math+bit-manipulation), `minimum-edge-reversals-so-every-node-is-reachable` (hard/graph), `count-the-number-of-inversions` (medium/arrays, merge-sort O(n log n)).
 
 ### feat(bank): batch 224 — min-cuts-circle, good-split-string, shortest-dist-circular, merge-2d-arrays (2026-05-30)
 Four new problems: `minimum-cuts-to-divide-a-circle` (easy/math, 0 if n=1; n/2 if even; n if odd), `number-of-good-ways-to-split-a-string` (medium/strings+hash-map, prefix/suffix distinct-char count, O(n)), `shortest-distance-to-target-string-in-a-circular-array` (easy/arrays, min circular distance to each target match), `merge-two-2d-arrays-by-summing-values` (easy/arrays, two-pointer merge by id). Bank at **2564**; 7986 tests.
