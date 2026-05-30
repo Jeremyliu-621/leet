@@ -2991,6 +2991,11 @@ import { problem as maxKDivisibleComps } from './maximum-number-of-k-divisible-c
 // batch 230 — easy/math, easy/strings
 import { problem as countNodesInLargestGroup } from './count-number-of-nodes-in-the-largest-group';
 import { problem as minReplacementsBalanced } from './minimum-replacements-to-make-string-balanced';
+// batch 231 — easy/strings+math, easy/arrays, easy/math+heap, easy/strings+simulation
+import { problem as countVowelsAllSubstrings } from './count-vowels-in-all-substrings';
+import { problem as twoFurthestHouses } from './two-furthest-houses-with-different-colors';
+import { problem as maxScoreRemovingStones } from './maximum-score-from-removing-stones';
+import { problem as stringCompressionCount } from './string-compression-count';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6017,4 +6022,9 @@ export const problems: readonly Problem[] = [
   maxKDivisibleComps,
   countNodesInLargestGroup,
   minReplacementsBalanced,
+  // batch 231
+  countVowelsAllSubstrings,
+  twoFurthestHouses,
+  maxScoreRemovingStones,
+  stringCompressionCount,
 ];

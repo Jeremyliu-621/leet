@@ -41788,4 +41788,43 @@ def minimumReplacement(s):
             b_count -= 1
     return ops
 `,
+  // batch 231
+  'count-vowels-in-all-substrings': `
+def countVowels(word):
+    MOD = 10**9 + 7
+    vowels = set('aeiou')
+    n = len(word)
+    return sum((i + 1) * (n - i) for i, c in enumerate(word) if c in vowels) % MOD
+`,
+  'two-furthest-houses-with-different-colors': `
+def maxDistance(colors):
+    n = len(colors)
+    res = 0
+    for i in range(n - 1, -1, -1):
+        if colors[i] != colors[0]:
+            res = max(res, i)
+            break
+    for i in range(n):
+        if colors[i] != colors[-1]:
+            res = max(res, n - 1 - i)
+            break
+    return res
+`,
+  'maximum-score-from-removing-stones': `
+def maximumScore(a, b, c):
+    return min((a + b + c) // 2, a + b + c - max(a, b, c))
+`,
+  'string-compression-count': `
+def compressedLength(s):
+    length = 0
+    i = 0
+    while i < len(s):
+        j = i
+        while j < len(s) and s[j] == s[i]:
+            j += 1
+        count = j - i
+        length += 1 + (len(str(count)) if count > 1 else 0)
+        i = j
+    return length
+`,
 };

@@ -42631,4 +42631,43 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return ops;
   },
+  // batch 231
+  'count-vowels-in-all-substrings': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const MOD = 1_000_000_007n;
+    const vowels = new Set(["a", "e", "i", "o", "u"]);
+    const n = word.length;
+    let sum = 0n;
+    for (let i = 0; i < n; i++) {
+      if (vowels.has(word[i]!)) sum = (sum + BigInt(i + 1) * BigInt(n - i)) % MOD;
+    }
+    return Number(sum);
+  },
+  'two-furthest-houses-with-different-colors': (...args: unknown[]) => {
+    const colors = args[0] as number[];
+    const n = colors.length;
+    let res = 0;
+    for (let i = n - 1; i >= 0; i--) {
+      if (colors[i] !== colors[0]) { res = Math.max(res, i); break; }
+    }
+    for (let i = 0; i < n; i++) {
+      if (colors[i] !== colors[n - 1]) { res = Math.max(res, n - 1 - i); break; }
+    }
+    return res;
+  },
+  'maximum-score-from-removing-stones': (...args: unknown[]) => {
+    const [a, b, c] = args as [number, number, number];
+    return Math.min(Math.floor((a + b + c) / 2), a + b + c - Math.max(a, b, c));
+  },
+  'string-compression-count': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let len = 0, i = 0;
+    while (i < s.length) {
+      let j = i;
+      while (j < s.length && s[j] === s[i]) j++;
+      len += 1 + (j - i > 1 ? String(j - i).length : 0);
+      i = j;
+    }
+    return len;
+  },
 };

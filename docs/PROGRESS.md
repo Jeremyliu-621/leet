@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-30
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2613** problems; 8133 tests green. Batches 102–230 complete.
+**Current focus:** Bank at **2617** problems; 8145 tests green. Batches 102–231 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 231+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 232+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 231 — count-vowels-all-substrings, two-furthest-houses-diff-colors, max-score-removing-stones, string-compression-count (2026-05-30)
+Four new problems: `count-vowels-in-all-substrings` (easy/strings+math, contribution technique: vowel at i contributes (i+1)*(n-i) substrings), `two-furthest-houses-with-different-colors` (easy/arrays, scan from each end for furthest differing-color house), `maximum-score-from-removing-stones` (easy/math+heap, min(floor((a+b+c)/2), total-max)), `string-compression-count` (easy/strings+simulation, run-length-encoding char count without building string). Bank at **2617**; 8145 tests.
 
 ### feat(bank): batch 230 — count-special-triplets, kth-char-string-game-i, smallest-missing-after-ops, largest-square-two-rects, min-ops-reduce-to-0, calculate-digit-sum, find-prefix-common-array, apply-ops-sum-gte-k, max-k-divisible-comps, count-nodes-largest-group, minimum-replacements-balanced (2026-05-30)
 Eleven new problems merged from multiple sessions. Highlights: `count-number-of-special-triplets` (medium/arrays+hash-map), `kth-character-in-string-game-i` (easy/bit-manipulation), `smallest-missing-non-negative-integer-after-operations` (medium/arrays+hash-map), `find-the-largest-area-of-square-inside-two-rectangles` (medium/arrays), `minimum-operations-to-reduce-an-integer-to-0` (medium/bit-manipulation), `calculate-digit-sum-of-a-string` (easy/strings), `find-prefix-common-array-of-two-arrays` (medium/arrays+hash-map), `apply-operations-to-make-sum-gte-k` (medium/math), `maximum-number-of-k-divisible-components` (hard/tree+dp), `count-number-of-nodes-in-the-largest-group` (easy/math), `minimum-replacements-to-make-string-balanced` (easy/strings). Bank at **2613**; 8133 tests.
