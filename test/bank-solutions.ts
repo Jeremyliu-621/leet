@@ -42147,6 +42147,63 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     for (const w of words) { if (w === w.split('').reverse().join('')) return w; }
     return '';
   },
+  // batch 227
+  'make-the-prefix-sum-non-negative': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    // min-heap via sorted insertion
+    const heap: number[] = [];
+    let sum = 0, ops = 0;
+    for (const n of nums) {
+      let lo = 0, hi = heap.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (heap[mid]! < n) lo = mid + 1; else hi = mid; }
+      heap.splice(lo, 0, n);
+      sum += n;
+      if (sum < 0) { sum -= heap.shift()!; ops++; }
+    }
+    return ops;
+  },
+  'maximize-the-topmost-element-after-k-moves': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const n = nums.length;
+    if (n === 1) return k % 2 === 0 ? nums[0]! : -1;
+    let ans = -1;
+    for (let i = 0; i <= Math.min(k, n - 1); i++) {
+      if ((k - i) % 2 === 0) ans = Math.max(ans, nums[i]!);
+    }
+    return ans;
+  },
+  'sentence-similarity-iii': (...args: unknown[]) => {
+    const w1 = (args[0] as string).split(' ');
+    const w2 = (args[1] as string).split(' ');
+    let lead = 0, trail = 0;
+    while (lead < w1.length && lead < w2.length && w1[lead] === w2[lead]) lead++;
+    while (trail < w1.length - lead && trail < w2.length - lead && w1[w1.length - 1 - trail] === w2[w2.length - 1 - trail]) trail++;
+    return lead + trail >= Math.min(w1.length, w2.length);
+  },
+  'decode-the-slanted-ciphertext': (...args: unknown[]) => {
+    const encoded = args[0] as string, rows = args[1] as number;
+    if (encoded.length === 0) return '';
+    const cols = encoded.length / rows;
+    let result = '';
+    for (let d = 0; d < cols; d++) {
+      for (let row = 0; row < rows; row++) {
+        const col = d + row;
+        if (col < cols) result += encoded[row * cols + col];
+      }
+    }
+    return result.trimEnd();
+  },
+  'delete-columns-to-make-sorted': (...args: unknown[]) => {
+    const strs = args[0] as string[];
+    const m = strs.length, n = strs[0]!.length;
+    let del = 0;
+    for (let j = 0; j < n; j++) {
+      for (let i = 0; i < m - 1; i++) {
+        if (strs[i]![j]! > strs[i + 1]![j]!) { del++; break; }
+      }
+    }
+    return del;
+  },
   'adjacent-increasing-subarrays-detection-ii': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const n = nums.length;
@@ -42264,5 +42321,80 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     let ops = 0, prev = 1;
     for (const v of nums) { if (v !== prev) { ops++; prev = v; } }
     return ops;
+  },
+  // batch 229
+  'find-the-maximum-factor-score-of-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const gcd = (a: number, b: number): number => { while (b) { [a, b] = [b, a % b]; } return a; };
+    const lcm = (a: number, b: number): number => a / gcd(a, b) * b;
+    const score = (arr: number[]): number => {
+      if (arr.length === 0) return 0;
+      let g = arr[0]!, l = arr[0]!;
+      for (let i = 1; i < arr.length; i++) { g = gcd(g, arr[i]!); l = lcm(l, arr[i]!); }
+      return g * l;
+    };
+    let best = score(nums);
+    for (let i = 0; i < nums.length; i++) {
+      best = Math.max(best, score(nums.filter((_, j) => j !== i)));
+    }
+    return best;
+  },
+  'count-partitions-with-even-sum-difference': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const total = nums.reduce((a, b) => a + b, 0);
+    return total % 2 === 0 ? nums.length - 1 : 0;
+  },
+  'find-beautiful-indices-in-the-given-array-ii': (...args: unknown[]) => {
+    const [s, a, b, k] = args as [string, string, string, number];
+    const kmpSearch = (text: string, pattern: string): number[] => {
+      if (pattern.length === 0) return [];
+      const combined = pattern + '#' + text;
+      const fail = new Array<number>(combined.length).fill(0);
+      for (let i = 1; i < combined.length; i++) {
+        let j = fail[i - 1]!;
+        while (j > 0 && combined[i] !== combined[j]) j = fail[j - 1]!;
+        if (combined[i] === combined[j]) j++;
+        fail[i] = j;
+      }
+      const m = pattern.length;
+      const matches: number[] = [];
+      for (let i = m + 1; i < combined.length; i++) {
+        if (fail[i] === m) matches.push(i - 2 * m);
+      }
+      return matches;
+    };
+    const aMatches = kmpSearch(s, a);
+    const bMatches = kmpSearch(s, b);
+    const result: number[] = [];
+    let j = 0;
+    for (const i of aMatches) {
+      while (j < bMatches.length && bMatches[j]! < i - k) j++;
+      for (let jj = j; jj < bMatches.length && bMatches[jj]! <= i + k; jj++) {
+        result.push(i);
+        break;
+      }
+    }
+    return result;
+  },
+  'find-the-sum-of-the-power-of-all-subsequences': (...args: unknown[]) => {
+    const [nums, k] = args as [number[], number];
+    const MOD = 1_000_000_007n;
+    const n = nums.length;
+    const dp: bigint[][] = Array.from({ length: n + 1 }, () => new Array<bigint>(k + 1).fill(0n));
+    dp[0]![0] = 1n;
+    for (const x of nums) {
+      for (let len = n; len >= 1; len--) {
+        for (let s = k; s >= x; s--) {
+          dp[len]![s] = (dp[len]![s]! + dp[len - 1]![s - x]!) % MOD;
+        }
+      }
+    }
+    const pow2 = new Array<bigint>(n + 1).fill(1n);
+    for (let i = 1; i <= n; i++) pow2[i] = pow2[i - 1]! * 2n % MOD;
+    let ans = 0n;
+    for (let len = 1; len <= n; len++) {
+      ans = (ans + dp[len]![k]! * pow2[n - len]!) % MOD;
+    }
+    return Number(ans);
   },
 };

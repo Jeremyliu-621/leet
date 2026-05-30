@@ -2940,6 +2940,12 @@ import { problem as findScoreMarking } from './find-score-after-marking-all-elem
 import { problem as primeSetBitsCount } from './prime-number-of-set-bits-in-binary-representation';
 import { problem as minEdgeReversalsEvery } from './minimum-edge-reversals-so-every-node-is-reachable';
 import { problem as countNumInversions } from './count-the-number-of-inversions';
+// batch 227
+import { problem as makePrefNonNeg } from './make-the-prefix-sum-non-negative';
+import { problem as maximizeTopmost } from './maximize-the-topmost-element-after-k-moves';
+import { problem as areSentencesSimilarIII } from './sentence-similarity-iii';
+import { problem as decodeSlantedCipher } from './decode-the-slanted-ciphertext';
+import { problem as minDeletionSizeSorted } from './delete-columns-to-make-sorted';
 // batch 226
 import { problem as heightChecker } from './height-checker';
 import { problem as reorderLogFiles } from './reorder-log-files';
@@ -2960,6 +2966,11 @@ import { problem as minOpsBinaryArrayII } from './minimum-number-of-operations-t
 import { problem as adjacentIncreasingSubarraysDetectionIi } from './adjacent-increasing-subarrays-detection-ii';
 import { problem as countSubstringsEveryVowelKConsonantsIi } from './count-substrings-with-every-vowel-and-k-consonants-ii';
 import { problem as checkDigitsEqualAfterOperationsIi } from './check-if-digits-are-equal-in-string-after-operations-ii';
+// batch 228 — medium/arrays+math, easy/arrays+math, hard/strings, hard/dp
+import { problem as maxFactorScoreArray } from './find-the-maximum-factor-score-of-array';
+import { problem as countPartitionsEvenSum } from './count-partitions-with-even-sum-difference';
+import { problem as beautifulIndicesII } from './find-beautiful-indices-in-the-given-array-ii';
+import { problem as sumOfPowerSubseq } from './find-the-sum-of-the-power-of-all-subsequences';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5951,6 +5962,11 @@ export const problems: readonly Problem[] = [
   numRectanglesLargestSq,
   firstPalindrome,
   // batch 227
+  makePrefNonNeg,
+  maximizeTopmost,
+  areSentencesSimilarIII,
+  decodeSlantedCipher,
+  minDeletionSizeSorted,
   adjacentIncreasingSubarraysDetectionIi,
   countSubstringsEveryVowelKConsonantsIi,
   checkDigitsEqualAfterOperationsIi,
@@ -5959,4 +5975,8 @@ export const problems: readonly Problem[] = [
   maxSemiDecreasingSubarray,
   minOpsBinaryArrayI,
   minOpsBinaryArrayII,
+  maxFactorScoreArray,
+  countPartitionsEvenSum,
+  beautifulIndicesII,
+  sumOfPowerSubseq,
 ];

@@ -41285,6 +41285,69 @@ def firstPalindrome(words):
             return w
     return ''
 `,
+  // batch 227
+  'make-the-prefix-sum-non-negative': `
+def makePrefSumNonNegative(nums):
+    import heapq
+    heap = []
+    total = 0
+    ops = 0
+    for n in nums:
+        heapq.heappush(heap, n)
+        total += n
+        if total < 0:
+            total -= heapq.heappop(heap)
+            ops += 1
+    return ops
+`,
+  'maximize-the-topmost-element-after-k-moves': `
+def maximumTop(nums, k):
+    n = len(nums)
+    if n == 1:
+        return nums[0] if k % 2 == 0 else -1
+    ans = -1
+    for i in range(min(k, n - 1) + 1):
+        if (k - i) % 2 == 0:
+            ans = max(ans, nums[i])
+    return ans
+`,
+  'sentence-similarity-iii': `
+def areSentencesSimilar(sentence1, sentence2):
+    w1 = sentence1.split()
+    w2 = sentence2.split()
+    lead = 0
+    while lead < len(w1) and lead < len(w2) and w1[lead] == w2[lead]:
+        lead += 1
+    trail = 0
+    while (trail < len(w1) - lead and trail < len(w2) - lead
+           and w1[len(w1) - 1 - trail] == w2[len(w2) - 1 - trail]):
+        trail += 1
+    return lead + trail >= min(len(w1), len(w2))
+`,
+  'decode-the-slanted-ciphertext': `
+def decodeCiphertext(encodedText, rows):
+    if not encodedText:
+        return ''
+    cols = len(encodedText) // rows
+    result = []
+    for d in range(cols):
+        for row in range(rows):
+            col = d + row
+            if col < cols:
+                result.append(encodedText[row * cols + col])
+    return ''.join(result).rstrip()
+`,
+  'delete-columns-to-make-sorted': `
+def minDeletionSize(strs):
+    m, n = len(strs), len(strs[0])
+    count = 0
+    for j in range(n):
+        for i in range(m - 1):
+            if strs[i][j] > strs[i + 1][j]:
+                count += 1
+                break
+    return count
+`,
   'adjacent-increasing-subarrays-detection-ii': `
 def maxIncreasingSubarrays(nums):
     n = len(nums)
@@ -41406,5 +41469,78 @@ def minOperations(nums):
             ops += 1
             prev = v
     return ops
+`,
+  'find-the-maximum-factor-score-of-array': `
+def maxFactorScore(nums):
+    from math import gcd
+    def lcm(a, b):
+        return a // gcd(a, b) * b
+    def score(arr):
+        if not arr:
+            return 0
+        g = arr[0]
+        l = arr[0]
+        for x in arr[1:]:
+            g = gcd(g, x)
+            l = lcm(l, x)
+        return g * l
+    best = score(nums)
+    for i in range(len(nums)):
+        best = max(best, score(nums[:i] + nums[i+1:]))
+    return best
+`,
+  'count-partitions-with-even-sum-difference': `
+def countPartitions(nums):
+    total = sum(nums)
+    return len(nums) - 1 if total % 2 == 0 else 0
+`,
+  'find-beautiful-indices-in-the-given-array-ii': `
+def beautifulIndices(s, a, b, k):
+    def kmp_search(text, pattern):
+        if not pattern:
+            return []
+        combined = pattern + '#' + text
+        fail = [0] * len(combined)
+        for i in range(1, len(combined)):
+            j = fail[i - 1]
+            while j > 0 and combined[i] != combined[j]:
+                j = fail[j - 1]
+            if combined[i] == combined[j]:
+                j += 1
+            fail[i] = j
+        m = len(pattern)
+        return [i - 2 * m for i in range(m + 1, len(combined)) if fail[i] == m]
+    a_matches = kmp_search(s, a)
+    b_matches = kmp_search(s, b)
+    result = []
+    j = 0
+    for i in a_matches:
+        while j < len(b_matches) and b_matches[j] < i - k:
+            j += 1
+        for jj in range(j, len(b_matches)):
+            if b_matches[jj] <= i + k:
+                result.append(i)
+                break
+            else:
+                break
+    return result
+`,
+  'find-the-sum-of-the-power-of-all-subsequences': `
+def sumOfPower(nums, k):
+    MOD = 10**9 + 7
+    n = len(nums)
+    dp = [[0] * (k + 1) for _ in range(n + 1)]
+    dp[0][0] = 1
+    for x in nums:
+        for length in range(n, 0, -1):
+            for s in range(k, x - 1, -1):
+                dp[length][s] = (dp[length][s] + dp[length - 1][s - x]) % MOD
+    pow2 = [1] * (n + 1)
+    for i in range(1, n + 1):
+        pow2[i] = pow2[i - 1] * 2 % MOD
+    ans = 0
+    for length in range(1, n + 1):
+        ans = (ans + dp[length][k] * pow2[n - length]) % MOD
+    return ans
 `,
 };
