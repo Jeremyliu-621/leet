@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-05-30
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2595** problems; 8073 tests green. Batches 102–228 complete (local batch 227 merged).
+**Current focus:** Bank at **2597** problems; 8085 tests green. Batches 102–229 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 229+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 230+; UX polish per LEETCODE_PARITY.md.
 
 ### feat(bank): batch 227 (local) — make-prefix-sum-non-neg, maximize-topmost-after-k, sentence-sim-iii, decode-slanted-ciphertext, delete-columns-sorted (2026-05-30)
 Five new problems: `make-the-prefix-sum-non-negative` (medium/arrays+heap, greedy min-heap: when prefix<0 pop min negative and move to end), `maximize-the-topmost-element-after-k-moves` (medium/arrays, parity check (k-i)%2==0 for reachable indices), `sentence-similarity-iii` (medium/strings+two-pointers, lead+trail prefix/suffix word match ≥ min length), `decode-the-slanted-ciphertext` (medium/strings+simulation, diagonal→row-major grid decode+trimEnd), `delete-columns-to-make-sorted` (easy/arrays, column-wise pair comparison). Bank at **2595**; 8073 tests.
@@ -20,9 +20,9 @@ Four new problems: `find-the-maximum-factor-score-of-array` (medium/arrays+math,
 
 ### feat(bank): batch 226 — height-checker, reorder-log-files, largest-time-for-given-digits, replace-elements-in-array (2026-05-30)
 Four new problems: `height-checker` (easy/arrays, sorted comparison), `reorder-log-files` (easy/strings, letter-logs sorted by (content,id) then digit-logs), `largest-time-for-given-digits` (medium/simulation, 24-permutation brute force), `replace-elements-in-an-array` (medium/arrays+hash-map, val→idx map updated per operation O(m)). Bank at **2576**; 8022 tests.
-**Current focus:** Bank at **2580** problems; 8034 tests green. Batches 102–227 complete.
-**Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 228+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 228 — most-visited-sector, max-semi-decreasing-subarray, binary-array-ops-i, binary-array-ops-ii (2026-05-30)
+Four new problems: `most-visited-sector-in-a-circular-track` (easy/arrays+simulation, frequency count with clockwise wrap), `maximum-length-of-a-semi-decreasing-subarray` (medium/arrays+binary-search, prefix-maxima + binary search O(n log n)), `minimum-number-of-operations-to-make-binary-array-elements-equal-to-one-i` (medium/arrays, greedy flip-3-consecutive left-to-right, -1 if last 2 remain 0), `minimum-number-of-operations-to-make-binary-array-elements-equal-to-one-ii` (medium/arrays, greedy suffix-flip, count transitions from virtual leading 1). Bank at **2588**; 8058 tests.
 
 ### feat(bank): batch 227 — adjacent-increasing-ii, vowel-k-consonants-ii, digits-equal-ops-ii (2026-05-30)
 Three new problems: `adjacent-increasing-subarrays-detection-ii` (medium/arrays, find max k for two adjacent strictly increasing subarrays, O(n) leftLen/rightLen precompute + boundary scan), `count-substrings-with-every-vowel-and-k-consonants-ii` (medium/strings+sliding-window, atLeast(k)−atLeast(k+1) O(n) sliding window, handles n up to 5×10⁴), `check-if-digits-are-equal-in-string-after-operations-ii` (hard/strings+math, binomial formula after m=n−2 passes, Lucas' theorem mod 2 and mod 5 via iterative base-p decomposition, CRT for mod 10, O(n log n)). Bank at **2580**; 8034 tests.

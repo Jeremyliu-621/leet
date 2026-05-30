@@ -42272,6 +42272,57 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return sumA === sumB;
   },
+  // batch 228
+  'most-visited-sector-in-a-circular-track': (...args: unknown[]) => {
+    const [n, rounds] = args as [number, number[][]];
+    const freq = new Array<number>(n + 1).fill(0);
+    for (const r of rounds) {
+      const [enter, leave] = r as [number, number];
+      if (enter <= leave) {
+        for (let i = enter; i <= leave; i++) freq[i]!++;
+      } else {
+        for (let i = enter; i <= n; i++) freq[i]!++;
+        for (let i = 1; i <= leave; i++) freq[i]!++;
+      }
+    }
+    const maxF = Math.max(...freq.slice(1));
+    return freq.map((v, i) => (v === maxF ? i : 0)).filter(v => v > 0);
+  },
+  'maximum-length-of-a-semi-decreasing-subarray': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const prefMaxVals: number[] = [], prefMaxIdxs: number[] = [];
+    for (let i = 0; i < n; i++) {
+      if (prefMaxVals.length === 0 || nums[i]! > prefMaxVals[prefMaxVals.length - 1]!) {
+        prefMaxVals.push(nums[i]!);
+        prefMaxIdxs.push(i);
+      }
+    }
+    let ans = 0;
+    for (let j = 0; j < n; j++) {
+      let lo = 0, hi = prefMaxVals.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (prefMaxVals[mid]! > nums[j]!) hi = mid; else lo = mid + 1; }
+      if (lo < prefMaxVals.length && prefMaxIdxs[lo]! < j) ans = Math.max(ans, j - prefMaxIdxs[lo]! + 1);
+    }
+    return ans;
+  },
+  'minimum-number-of-operations-to-make-binary-array-elements-equal-to-one-i': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    const n = nums.length;
+    let ops = 0;
+    for (let i = 0; i <= n - 3; i++) {
+      if (nums[i] === 0) { nums[i]! ^= 1; nums[i + 1]! ^= 1; nums[i + 2]! ^= 1; ops++; }
+    }
+    for (let i = n - 2; i < n; i++) { if (nums[i] === 0) return -1; }
+    return ops;
+  },
+  'minimum-number-of-operations-to-make-binary-array-elements-equal-to-one-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let ops = 0, prev = 1;
+    for (const v of nums) { if (v !== prev) { ops++; prev = v; } }
+    return ops;
+  },
+  // batch 229
   'find-the-maximum-factor-score-of-array': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const gcd = (a: number, b: number): number => { while (b) { [a, b] = [b, a % b]; } return a; };
