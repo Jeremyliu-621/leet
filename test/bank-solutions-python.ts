@@ -41250,4 +41250,67 @@ def firstPalindrome(words):
             return w
     return ''
 `,
+  // batch 227
+  'make-the-prefix-sum-non-negative': `
+def makePrefSumNonNegative(nums):
+    import heapq
+    heap = []
+    total = 0
+    ops = 0
+    for n in nums:
+        heapq.heappush(heap, n)
+        total += n
+        if total < 0:
+            total -= heapq.heappop(heap)
+            ops += 1
+    return ops
+`,
+  'maximize-the-topmost-element-after-k-moves': `
+def maximumTop(nums, k):
+    n = len(nums)
+    if n == 1:
+        return nums[0] if k % 2 == 0 else -1
+    ans = -1
+    for i in range(min(k, n - 1) + 1):
+        if (k - i) % 2 == 0:
+            ans = max(ans, nums[i])
+    return ans
+`,
+  'sentence-similarity-iii': `
+def areSentencesSimilar(sentence1, sentence2):
+    w1 = sentence1.split()
+    w2 = sentence2.split()
+    lead = 0
+    while lead < len(w1) and lead < len(w2) and w1[lead] == w2[lead]:
+        lead += 1
+    trail = 0
+    while (trail < len(w1) - lead and trail < len(w2) - lead
+           and w1[len(w1) - 1 - trail] == w2[len(w2) - 1 - trail]):
+        trail += 1
+    return lead + trail >= min(len(w1), len(w2))
+`,
+  'decode-the-slanted-ciphertext': `
+def decodeCiphertext(encodedText, rows):
+    if not encodedText:
+        return ''
+    cols = len(encodedText) // rows
+    result = []
+    for d in range(cols):
+        for row in range(rows):
+            col = d + row
+            if col < cols:
+                result.append(encodedText[row * cols + col])
+    return ''.join(result).rstrip()
+`,
+  'delete-columns-to-make-sorted': `
+def minDeletionSize(strs):
+    m, n = len(strs), len(strs[0])
+    count = 0
+    for j in range(n):
+        for i in range(m - 1):
+            if strs[i][j] > strs[i + 1][j]:
+                count += 1
+                break
+    return count
+`,
 };

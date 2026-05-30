@@ -42094,4 +42094,61 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     for (const w of words) { if (w === w.split('').reverse().join('')) return w; }
     return '';
   },
+  // batch 227
+  'make-the-prefix-sum-non-negative': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    // min-heap via sorted insertion
+    const heap: number[] = [];
+    let sum = 0, ops = 0;
+    for (const n of nums) {
+      let lo = 0, hi = heap.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (heap[mid]! < n) lo = mid + 1; else hi = mid; }
+      heap.splice(lo, 0, n);
+      sum += n;
+      if (sum < 0) { sum -= heap.shift()!; ops++; }
+    }
+    return ops;
+  },
+  'maximize-the-topmost-element-after-k-moves': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const n = nums.length;
+    if (n === 1) return k % 2 === 0 ? nums[0]! : -1;
+    let ans = -1;
+    for (let i = 0; i <= Math.min(k, n - 1); i++) {
+      if ((k - i) % 2 === 0) ans = Math.max(ans, nums[i]!);
+    }
+    return ans;
+  },
+  'sentence-similarity-iii': (...args: unknown[]) => {
+    const w1 = (args[0] as string).split(' ');
+    const w2 = (args[1] as string).split(' ');
+    let lead = 0, trail = 0;
+    while (lead < w1.length && lead < w2.length && w1[lead] === w2[lead]) lead++;
+    while (trail < w1.length - lead && trail < w2.length - lead && w1[w1.length - 1 - trail] === w2[w2.length - 1 - trail]) trail++;
+    return lead + trail >= Math.min(w1.length, w2.length);
+  },
+  'decode-the-slanted-ciphertext': (...args: unknown[]) => {
+    const encoded = args[0] as string, rows = args[1] as number;
+    if (encoded.length === 0) return '';
+    const cols = encoded.length / rows;
+    let result = '';
+    for (let d = 0; d < cols; d++) {
+      for (let row = 0; row < rows; row++) {
+        const col = d + row;
+        if (col < cols) result += encoded[row * cols + col];
+      }
+    }
+    return result.trimEnd();
+  },
+  'delete-columns-to-make-sorted': (...args: unknown[]) => {
+    const strs = args[0] as string[];
+    const m = strs.length, n = strs[0]!.length;
+    let del = 0;
+    for (let j = 0; j < n; j++) {
+      for (let i = 0; i < m - 1; i++) {
+        if (strs[i]![j]! > strs[i + 1]![j]!) { del++; break; }
+      }
+    }
+    return del;
+  },
 };

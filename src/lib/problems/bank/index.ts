@@ -2947,6 +2947,12 @@ import { problem as findScoreMarking } from './find-score-after-marking-all-elem
 import { problem as primeSetBitsCount } from './prime-number-of-set-bits-in-binary-representation';
 import { problem as minEdgeReversalsEvery } from './minimum-edge-reversals-so-every-node-is-reachable';
 import { problem as countNumInversions } from './count-the-number-of-inversions';
+// batch 227
+import { problem as makePrefNonNeg } from './make-the-prefix-sum-non-negative';
+import { problem as maximizeTopmost } from './maximize-the-topmost-element-after-k-moves';
+import { problem as areSentencesSimilarIII } from './sentence-similarity-iii';
+import { problem as decodeSlantedCipher } from './decode-the-slanted-ciphertext';
+import { problem as minDeletionSizeSorted } from './delete-columns-to-make-sorted';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5933,4 +5939,10 @@ export const problems: readonly Problem[] = [
   mostFrequentAfterKey,
   numRectanglesLargestSq,
   firstPalindrome,
+  // batch 227
+  makePrefNonNeg,
+  maximizeTopmost,
+  areSentencesSimilarIII,
+  decodeSlantedCipher,
+  minDeletionSizeSorted,
 ];
