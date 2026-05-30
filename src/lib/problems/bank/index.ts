@@ -2977,6 +2977,11 @@ import { problem as groupPeopleBySize } from './group-the-people-given-the-group
 import { problem as matrixDiagSum } from './matrix-diagonal-sum';
 import { problem as closestFairInt } from './closest-fair-integer';
 import { problem as findOriginalDoubled } from './find-original-array-from-doubled-array';
+// batch 230 — easy/strings, medium/arrays+hash-map, medium/math, hard/tree+dp
+import { problem as calculateDigitSum } from './calculate-digit-sum-of-a-string';
+import { problem as findPrefixCommonArray } from './find-prefix-common-array-of-two-arrays';
+import { problem as applyOpsSumGteK } from './apply-operations-to-make-sum-of-array-greater-than-or-equal-to-k';
+import { problem as maxKDivisibleComps } from './maximum-number-of-k-divisible-components';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -5991,4 +5996,9 @@ export const problems: readonly Problem[] = [
   matrixDiagSum,
   closestFairInt,
   findOriginalDoubled,
+  // batch 230
+  calculateDigitSum,
+  findPrefixCommonArray,
+  applyOpsSumGteK,
+  maxKDivisibleComps,
 ];

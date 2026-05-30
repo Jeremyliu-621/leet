@@ -42473,4 +42473,61 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return original;
   },
+  // batch 230
+  'calculate-digit-sum-of-a-string': (...args: unknown[]) => {
+    let s = args[0] as string;
+    const k = args[1] as number;
+    while (s.length > k) {
+      let next = '';
+      for (let i = 0; i < s.length; i += k) {
+        const group = s.slice(i, i + k);
+        next += group.split('').reduce((a, c) => a + parseInt(c, 10), 0);
+      }
+      s = next;
+    }
+    return s;
+  },
+  'find-prefix-common-array-of-two-arrays': (...args: unknown[]) => {
+    const [A, B] = args as [number[], number[]];
+    const n = A.length;
+    const seen = new Array<number>(n + 1).fill(0);
+    let count = 0;
+    const C: number[] = [];
+    for (let i = 0; i < n; i++) {
+      const a = A[i]!, b = B[i]!;
+      if (seen[a] === 2) { count++; seen[a] = 3; } else if (seen[a] === 0) { seen[a] = 1; }
+      if (b === a) { if (seen[b] === 1) { count++; seen[b] = 3; } }
+      else { if (seen[b] === 1) { count++; seen[b] = 3; } else if (seen[b] === 0) { seen[b] = 2; } }
+      C.push(count);
+    }
+    return C;
+  },
+  'apply-operations-to-make-sum-of-array-greater-than-or-equal-to-k': (...args: unknown[]) => {
+    const k = args[0] as number;
+    if (k === 1) return 0;
+    let best = k - 1;
+    for (let d = 0; d < k; d++) {
+      const x = 1 + d;
+      const m = Math.ceil(k / x) - 1;
+      best = Math.min(best, d + m);
+    }
+    return best;
+  },
+  'maximum-number-of-k-divisible-components': (...args: unknown[]) => {
+    const [n, edges, values, k] = args as [number, number[][], number[], number];
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const [u, v] of edges) { adj[u as number]!.push(v as number); adj[v as number]!.push(u as number); }
+    let count = 0;
+    const dfs = (node: number, parent: number): number => {
+      let sum = values[node]!;
+      for (const next of adj[node]!) {
+        if (next === parent) continue;
+        sum += dfs(next, node);
+      }
+      if (sum % k === 0) { count++; return 0; }
+      return sum % k;
+    };
+    dfs(0, -1);
+    return count;
+  },
 };
