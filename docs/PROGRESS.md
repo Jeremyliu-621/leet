@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-30
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2584** problems; 8046 tests green. Batches 102–227 complete.
+**Current focus:** Bank at **2588** problems; 8058 tests green. Batches 102–228 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 228+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 229+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 228 — max-factor-score, count-partitions-even-sum, beautiful-indices-ii, sum-of-power-subsequences (2026-05-30)
+Four new problems: `find-the-maximum-factor-score-of-array` (medium/arrays+math, try all n+1 removals + gcd/lcm, GCD via Euclidean), `count-partitions-with-even-sum-difference` (easy/arrays+math, O(1) total%2 check → n−1 or 0), `find-beautiful-indices-in-the-given-array-ii` (hard/strings, KMP O(n) match + two-pointer scan), `find-the-sum-of-the-power-of-all-subsequences` (hard/dp, 2D DP on length+sum × 2^(n−len) multiplier mod 1e9+7). Bank at **2588**; 8058 tests.
 
 ### feat(bank): batch 226 — height-checker, reorder-log-files, largest-time-for-given-digits, replace-elements-in-array (2026-05-30)
 Four new problems: `height-checker` (easy/arrays, sorted comparison), `reorder-log-files` (easy/strings, letter-logs sorted by (content,id) then digit-logs), `largest-time-for-given-digits` (medium/simulation, 24-permutation brute force), `replace-elements-in-an-array` (medium/arrays+hash-map, val→idx map updated per operation O(m)). Bank at **2576**; 8022 tests.
