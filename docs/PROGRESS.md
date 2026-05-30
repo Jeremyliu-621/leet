@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-05-30
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2572** problems; 8010 tests green. Batches 102–225 complete.
+**Current focus:** Bank at **2577** problems; 8025 tests green. Batches 102–226 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 226+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 227+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 226 — check-a-before-b, chessboard-color, most-frequent-after-key, rectangles-largest-square, first-palindromic (2026-05-30)
+Five new easy problems: `check-if-all-a-appears-before-all-b` (easy/strings, "ba" not in string), `determine-color-of-a-chessboard-square` (easy/math, (col+row)%2 parity), `most-frequent-number-following-key-in-an-array` (easy/arrays+hash-map, count targets after key), `number-of-rectangles-that-can-form-largest-square` (easy/arrays, max min(l,w)), `find-first-palindromic-string-in-array` (easy/strings, first word = reverse). Bank at **2577**; 8025 tests.
 
 ### feat(bank): batch 225 (merged) — removing-min-max, double-reversal, suffix-instructions, good-days-rob + find-score-marking, prime-set-bits, edge-reversals, count-inversions (2026-05-30)
 Eight problems across two concurrent sessions: `removing-minimum-and-maximum-from-array` (medium/arrays, 3-strategy cost), `number-after-double-reversal` (easy/math), `execution-of-all-suffix-instructions-staying-in-a-grid` (medium/simulation), `find-good-days-to-rob-the-bank` (medium/dp), `find-score-after-marking-all-elements` (medium/arrays+simulation), `prime-number-of-set-bits-in-binary-representation` (easy/math+bit-manipulation), `minimum-edge-reversals-so-every-node-is-reachable` (hard/graph), `count-the-number-of-inversions` (medium/arrays, merge-sort O(n log n)).
