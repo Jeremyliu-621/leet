@@ -38,9 +38,44 @@ Note that you may visit a stair more than once.`,
   functionName: 'waysToReachStair',
   params: ['k'],
   starterCode: {
-    javascript: 'function waysToReachStair(k) {\n  // your code here\n}\n',
-    typescript: 'function waysToReachStair(k: number): number {\n  // your code here\n}\n',
-    python: 'def waysToReachStair(k):\n    # your code here\n    pass\n',
+    javascript: `function waysToReachStair(k) {
+  const memo = new Map();
+  function dp(i, j, lastDown) {
+    if (i > k + 1) return 0;
+    const key = i + ',' + j + ',' + lastDown;
+    if (memo.has(key)) return memo.get(key);
+    let ways = i === k ? 1 : 0;
+    ways += dp(i + (1 << j), j + 1, false);
+    if (i > 0 && !lastDown) ways += dp(i - 1, j, true);
+    memo.set(key, ways);
+    return ways;
+  }
+  return dp(1, 0, false);
+}`,
+    typescript: `function waysToReachStair(k: number): number {
+  const memo = new Map<string, number>();
+  function dp(i: number, j: number, lastDown: boolean): number {
+    if (i > k + 1) return 0;
+    const key = i + ',' + j + ',' + lastDown;
+    if (memo.has(key)) return memo.get(key)!;
+    let ways = i === k ? 1 : 0;
+    ways += dp(i + (1 << j), j + 1, false);
+    if (i > 0 && !lastDown) ways += dp(i - 1, j, true);
+    memo.set(key, ways);
+    return ways;
+  }
+  return dp(1, 0, false);
+}`,
+    python: `def waysToReachStair(k):
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dp(i, j, last_down):
+        if i > k + 1: return 0
+        ways = 1 if i == k else 0
+        ways += dp(i + (1 << j), j + 1, False)
+        if i > 0 and not last_down: ways += dp(i - 1, j, True)
+        return ways
+    return dp(1, 0, False)`,
   },
   visibleTests: [
     {

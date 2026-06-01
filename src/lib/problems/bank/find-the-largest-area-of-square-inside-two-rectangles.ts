@@ -37,14 +37,48 @@ Return the **area** of the largest square that can fit inside the **intersection
   params: ['l', 'r', 'b', 't'],
   starterCode: {
     javascript: `function largestSquareInsideTwoRectangles(l, r, b, t) {
-  // your code here
+  const n = l.length;
+  let best = 0;
+  for (let i = 0; i < n; i++) {
+    for (let j = i + 1; j < n; j++) {
+      const w = Math.min(r[i], r[j]) - Math.max(l[i], l[j]);
+      const h = Math.min(t[i], t[j]) - Math.max(b[i], b[j]);
+      if (w > 0 && h > 0) {
+        const side = Math.min(w, h);
+        best = Math.max(best, side * side);
+      }
+    }
+  }
+  return best;
 }`,
     typescript: `function largestSquareInsideTwoRectangles(l: number[], r: number[], b: number[], t: number[]): number {
-  // your code here
+  const n = l.length;
+  let best = 0;
+  for (let i = 0; i < n; i++) {
+    for (let j = i + 1; j < n; j++) {
+      const w = Math.min(r[i]!, r[j]!) - Math.max(l[i]!, l[j]!);
+      const h = Math.min(t[i]!, t[j]!) - Math.max(b[i]!, b[j]!);
+      if (w > 0 && h > 0) {
+        const side = Math.min(w, h);
+        best = Math.max(best, side * side);
+      }
+    }
+  }
+  return best;
 }`,
     python: `def largestSquareInsideTwoRectangles(l, r, b, t):
-    # your code here
-    pass`,
+    l = list(l.to_py() if hasattr(l, 'to_py') else l)
+    r = list(r.to_py() if hasattr(r, 'to_py') else r)
+    b = list(b.to_py() if hasattr(b, 'to_py') else b)
+    t = list(t.to_py() if hasattr(t, 'to_py') else t)
+    n, best = len(l), 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            w = min(r[i], r[j]) - max(l[i], l[j])
+            h = min(t[i], t[j]) - max(b[i], b[j])
+            if w > 0 and h > 0:
+                best = max(best, min(w, h) ** 2)
+    return best`,
   },
   visibleTests: [
     { args: [[1, 2], [5, 4], [1, 2], [5, 4]], expected: 4 },

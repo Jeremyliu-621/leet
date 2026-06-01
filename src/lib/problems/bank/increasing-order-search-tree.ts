@@ -112,10 +112,50 @@ Return the root of the rearranged tree.`,
     python: PY_PREAMBLE,
   },
   starterCode: {
-    javascript: 'function increasingBST(root) {\n  // your code here\n}\n',
-    typescript: "function increasingBSTRunner(root: (number | null)[]): (number | null)[] {\n  // your code here\n}",
-
-    python: 'def increasingBST(root):\n    # your code here\n    pass\n',
+    javascript: `function increasingBST(root) {
+  const vals = [];
+  function dfs(n) { if (!n) return; dfs(n.left); vals.push(n.val); dfs(n.right); }
+  dfs(root);
+  const dummy = new TreeNode(0);
+  let cur = dummy;
+  for (const v of vals) { cur.right = new TreeNode(v); cur = cur.right; }
+  return dummy.right;
+}`,
+    typescript: `function increasingBSTRunner(root: (number | null)[]): (number | null)[] {
+  class TN { constructor(public val: number, public left: TN | null = null, public right: TN | null = null) {} }
+  function build(arr: (number | null)[]): TN | null {
+    if (!arr.length || arr[0] == null) return null;
+    const r = new TN(arr[0]!); const q = [r]; let i = 1;
+    while (q.length && i < arr.length) {
+      const n = q.shift()!;
+      if (arr[i] != null) { n.left = new TN(arr[i]!); q.push(n.left); } i++;
+      if (i < arr.length && arr[i] != null) { n.right = new TN(arr[i]!); q.push(n.right); } i++;
+    }
+    return r;
+  }
+  function toArr(r: TN | null): (number | null)[] {
+    if (!r) return [];
+    const res: (number | null)[] = [], q: (TN | null)[] = [r];
+    while (q.length) { const n = q.shift()!; if (n) { res.push(n.val); q.push(n.left, n.right); } else res.push(null); }
+    while (res.length && res[res.length - 1] === null) res.pop();
+    return res;
+  }
+  const vals: number[] = [];
+  function dfs(n: TN | null) { if (!n) return; dfs(n.left); vals.push(n.val); dfs(n.right); }
+  dfs(build(root));
+  const dummy = new TN(0); let cur = dummy;
+  for (const v of vals) { cur.right = new TN(v); cur = cur.right; }
+  return toArr(dummy.right);
+}`,
+    python: `def increasingBST(root):
+    vals = []
+    def dfs(n):
+        if not n: return
+        dfs(n.left); vals.append(n.val); dfs(n.right)
+    dfs(root)
+    dummy = TreeNode(0); cur = dummy
+    for v in vals: cur.right = TreeNode(v); cur = cur.right
+    return dummy.right`,
   },
   visibleTests: [
     { args: [[5, 3, 6, 2, 4, null, 8, 1, null, null, null, 7, 9]], expected: [1, null, 2, null, 3, null, 4, null, 5, null, 6, null, 7, null, 8, null, 9] },

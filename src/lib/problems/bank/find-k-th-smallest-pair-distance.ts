@@ -37,10 +37,51 @@ Given an integer array \`nums\` and an integer \`k\`, return the **k-th smallest
   functionName: 'smallestDistancePair',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function smallestDistancePair(nums, k) {\n  // your code here\n}\n',
-    typescript: "function smallestDistancePair(nums: number[], k: number): number {\n  // your code here\n}",
-
-    python: 'def smallestDistancePair(nums, k):\n    # your code here\n    pass\n',
+    javascript: `function smallestDistancePair(nums, k) {
+  nums.sort((a, b) => a - b);
+  const n = nums.length;
+  let lo = 0, hi = nums[n - 1] - nums[0];
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    let cnt = 0, l = 0;
+    for (let r = 0; r < n; r++) {
+      while (nums[r] - nums[l] > mid) l++;
+      cnt += r - l;
+    }
+    if (cnt >= k) hi = mid;
+    else lo = mid + 1;
+  }
+  return lo;
+}`,
+    typescript: `function smallestDistancePair(nums: number[], k: number): number {
+  nums.sort((a, b) => a - b);
+  const n = nums.length;
+  let lo = 0, hi = nums[n - 1]! - nums[0]!;
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    let cnt = 0, l = 0;
+    for (let r = 0; r < n; r++) {
+      while (nums[r]! - nums[l]! > mid) l++;
+      cnt += r - l;
+    }
+    if (cnt >= k) hi = mid;
+    else lo = mid + 1;
+  }
+  return lo;
+}`,
+    python: `def smallestDistancePair(nums, k):
+    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else nums)
+    n = len(nums)
+    lo, hi = 0, nums[-1] - nums[0]
+    while lo < hi:
+        mid = (lo + hi) // 2
+        cnt = l = 0
+        for r in range(n):
+            while nums[r] - nums[l] > mid: l += 1
+            cnt += r - l
+        if cnt >= k: hi = mid
+        else: lo = mid + 1
+    return lo`,
   },
   visibleTests: [
     { args: [[1, 3, 1], 1], expected: 0 },

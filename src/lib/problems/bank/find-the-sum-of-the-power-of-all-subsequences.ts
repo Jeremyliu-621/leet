@@ -43,14 +43,58 @@ Since the answer may be very large, return it modulo \`10^9 + 7\`.`,
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function sumOfPower(nums, k) {
-  // your code here
+  const MOD = 1e9 + 7;
+  const n = nums.length;
+  const dp = Array.from({ length: n + 1 }, () => new Array(k + 1).fill(0));
+  dp[0][0] = 1;
+  for (const v of nums) {
+    for (let len = n - 1; len >= 0; len--) {
+      for (let s = 0; s + v <= k; s++) {
+        dp[len + 1][s + v] = (dp[len + 1][s + v] + dp[len][s]) % MOD;
+      }
+    }
+  }
+  let ans = 0, pow2 = 1;
+  for (let i = n; i >= 0; i--) {
+    ans = (ans + dp[i][k] * pow2) % MOD;
+    pow2 = pow2 * 2 % MOD;
+  }
+  return ans;
 }`,
     typescript: `function sumOfPower(nums: number[], k: number): number {
-  // your code here
+  const MOD = 1e9 + 7;
+  const n = nums.length;
+  const dp: number[][] = Array.from({ length: n + 1 }, () => new Array(k + 1).fill(0));
+  dp[0]![0] = 1;
+  for (const v of nums) {
+    for (let len = n - 1; len >= 0; len--) {
+      for (let s = 0; s + v <= k; s++) {
+        dp[len + 1]![s + v]! = (dp[len + 1]![s + v]! + dp[len]![s]!) % MOD;
+      }
+    }
+  }
+  let ans = 0, pow2 = 1;
+  for (let i = n; i >= 0; i--) {
+    ans = (ans + dp[i]![k]! * pow2) % MOD;
+    pow2 = pow2 * 2 % MOD;
+  }
+  return ans;
 }`,
     python: `def sumOfPower(nums, k):
-    # your code here
-    pass`,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    MOD = 10**9 + 7
+    n = len(nums)
+    dp = [[0] * (k + 1) for _ in range(n + 1)]
+    dp[0][0] = 1
+    for v in nums:
+        for length in range(n - 1, -1, -1):
+            for s in range(k - v + 1):
+                dp[length + 1][s + v] = (dp[length + 1][s + v] + dp[length][s]) % MOD
+    ans, pow2 = 0, 1
+    for i in range(n, -1, -1):
+        ans = (ans + dp[i][k] * pow2) % MOD
+        pow2 = pow2 * 2 % MOD
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 2, 3], 3], expected: 6 },
