@@ -25,6 +25,11 @@ describe('buildVerdict', () => {
     expect(result.verdicts.every((v) => v.status === 'pass')).toBe(true);
     expect(result.verdicts[0]?.input).toBe('1, 2');
     expect(result.verdicts[1]?.input).toBe('10, 5');
+    // output field carries the actual return value for display
+    const v0 = result.verdicts[0];
+    const v1 = result.verdicts[1];
+    if (v0?.status === 'pass') expect(v0.output).toBe(3);
+    if (v1?.status === 'pass') expect(v1.output).toBe(15);
   });
 
   it('reports wrong-answer when a result mismatches', () => {

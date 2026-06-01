@@ -246,7 +246,7 @@ type TerminalEntry =
   | { type: 'system'; text: string }
   | { type: 'stdout'; text: string }
   | { type: 'stderr'; text: string }
-  | { type: 'pass'; testIndex: number; input: string; durationMs?: number }
+  | { type: 'pass'; testIndex: number; input: string; output: string; durationMs?: number }
   | { type: 'fail'; testIndex: number; input: string; expected: string; actual: string; rawExpected: unknown; rawActual: unknown }
   | { type: 'error'; testIndex: number; input: string; error: string }
   | { type: 'summary'; outcome: string; passed: number; total: number; durationMs?: number; mode: 'run' | 'submit' }
@@ -303,6 +303,7 @@ function buildEntries(result: JudgeResult, mode: 'run' | 'submit'): TerminalEntr
         type: 'pass',
         testIndex: verdict.index,
         input: verdict.input,
+        output: displayValue(verdict.output),
         durationMs: verdict.durationMs,
       });
     } else if (verdict.status === 'fail') {
@@ -880,6 +881,13 @@ function TestResultCard({ verdict, autoExpand }: { verdict: TestVerdict; autoExp
               <span className="text-faint shrink-0">Input: </span>
               <span className="text-muted break-all">{verdict.input}</span>
               <CopyButton value={verdict.input} />
+            </div>
+          )}
+          {verdict.status === 'pass' && (
+            <div className="flex items-start gap-1">
+              <span className="text-faint shrink-0">Output:</span>
+              <ValueDisplay value={displayValue(verdict.output)} />
+              <CopyButton value={displayValue(verdict.output)} />
             </div>
           )}
           {verdict.status === 'fail' && (

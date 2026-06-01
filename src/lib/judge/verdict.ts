@@ -4,7 +4,7 @@ import { deepEqual } from './deep-equal';
 
 /** Result for a single test, after comparing the Worker's output to `expected`. */
 export type TestVerdict =
-  | { index: number; status: 'pass'; input: string; logs: readonly string[]; durationMs?: number }
+  | { index: number; status: 'pass'; input: string; output: unknown; logs: readonly string[]; durationMs?: number }
   | {
       index: number;
       status: 'fail';
@@ -94,7 +94,7 @@ export function buildVerdict(tests: readonly TestCase[], response: RunResponse):
 
     if (deepEqual(outcome.value, test.expected)) {
       passed++;
-      verdicts.push({ index: i, status: 'pass', input, logs: outcome.logs, durationMs });
+      verdicts.push({ index: i, status: 'pass', input, output: outcome.value, logs: outcome.logs, durationMs });
     } else {
       verdicts.push({
         index: i,
