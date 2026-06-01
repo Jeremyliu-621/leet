@@ -3098,6 +3098,8 @@ import { problem as sumKMirrorNumbers } from './sum-of-k-mirror-numbers';
 import { problem as buildSturdyBrickWall } from './number-of-ways-to-build-sturdy-brick-wall';
 import { problem as countSubMultisetsBounded } from './count-of-sub-multisets-with-bounded-sum';
 import { problem as biggestThreeRhombusSums } from './get-biggest-three-rhombus-sums-in-a-grid';
+import { problem as maximumNumElementsTwoArrays } from './maximum-number-of-elements-in-two-arrays';
+import { problem as rangeFrequencyQueries } from './range-frequency-queries';
 // batch 254
 import { problem as globalAndLocalInversions } from './global-and-local-inversions';
 import { problem as minimizeTotalPriceTrips } from './minimize-the-total-price-of-the-trips';
@@ -6339,6 +6341,8 @@ export const problems: readonly Problem[] = [
   buildSturdyBrickWall,
   countSubMultisetsBounded,
   biggestThreeRhombusSums,
+  maximumNumElementsTwoArrays,
+  rangeFrequencyQueries,
   // batch 254
   globalAndLocalInversions,
   minimizeTotalPriceTrips,

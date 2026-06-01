@@ -5,15 +5,15 @@ export const problem: Problem = {
   title: 'Find the Value of the Partition',
   difficulty: 'medium',
   tags: ['arrays', 'math'],
-  description: `You are given a positive integer array \`nums\` of length \`n\`.
+  description: `You are given a **positive** integer array \`nums\`.
 
 Partition \`nums\` into two arrays, \`nums1\` and \`nums2\`, such that:
-- Each element of the array \`nums\` belongs to exactly one of the arrays.
-- Both \`nums1\` and \`nums2\` are non-empty.
+- Each element of \`nums\` belongs to **exactly one** of the two arrays.
+- **Both arrays are non-empty.**
 
 The **value** of the partition is \`|min(nums1) - max(nums2)|\`.
 
-Return the **minimum** value of the partition over all possible partitions.`,
+Return the **minimum** value of the partition over all possible partitions of \`nums\`.`,
   constraints: [
     '2 <= nums.length <= 10^5',
     '1 <= nums[i] <= 10^9',
@@ -22,26 +22,42 @@ Return the **minimum** value of the partition over all possible partitions.`,
     {
       input: 'nums = [1,3,2,4]',
       output: '1',
-      explanation: 'Sort to [1,2,3,4]. Split after position 1: nums1=[1,2], nums2=[3,4]. |min(1,2) - max(3,4)| = |1-4|=3. Better: split [1,2,3] and [4]: |1-4|=3. Best: [1] and [2,3,4]: |1-4|=3. Wait — minimum gap approach: min adjacent gap in sorted = |2-1|=1 (split [1] and [2,3,4]: |1-4|=3). Actually try {1,2} and {3,4}: |min{1,2}-max{3,4}|=|1-4|=3. Hmm. Try {1,3,4} and {2}: |min{1,3,4}-max{2}|=|1-2|=1. ✓',
+      explanation: 'Sort to [1,2,3,4]. Put {1,3,4} in nums1 and {2} in nums2: |min{1,3,4} - max{2}| = |1-2| = 1.',
     },
     {
       input: 'nums = [100,1,10]',
       output: '9',
-      explanation: 'Sorted [1,10,100]. Best split: {1,10} and {100}: |1-100|=99; or {10,100} and {1}: |10-1|=9. Answer: 9.',
+      explanation: 'Sort to [1,10,100]. Put {10,100} in nums1 and {1} in nums2: |10-1| = 9.',
     },
   ],
   hints: [
-    'Sort the array. The optimal partition has nums1 = sorted[0..k] and nums2 = sorted[k+1..n-1].',
-    'The value of such a partition is sorted[k+1] - sorted[k] (since min(nums1)=sorted[0] and max(nums2)=sorted[n-1] in general — but think about which group each element belongs to).',
-    'The minimum value equals the minimum difference between any two adjacent elements in the sorted array.',
+    'Sort the array. The key insight is that the minimum |min(nums1) - max(nums2)| equals the minimum difference between any two adjacent elements in the sorted array.',
+    'For any adjacent pair (sorted[i], sorted[i+1]): put sorted[i] in nums1 alone (or with smaller elements), and sorted[i+1] in nums2 (or with larger). Then min(nums1) = sorted[i] and max(nums2) = sorted[i+1].',
+    'This gives |sorted[i] - sorted[i+1]| = sorted[i+1] - sorted[i] for the value.',
+    'Minimize over all adjacent pairs: answer = min(sorted[i+1] - sorted[i]) for i = 0..n-2.',
   ],
   functionName: 'findValueOfPartition',
   params: ['nums'],
   starterCode: {
-    javascript: 'function findValueOfPartition(nums) {\n  \n}\n',
-    typescript: "function findValueOfPartition(nums: number[]): number {\n  \n}",
-
-    python: 'def findValueOfPartition(nums):\n    pass\n',
+    javascript: `function findValueOfPartition(nums) {
+  nums.sort((a, b) => a - b);
+  let ans = Infinity;
+  for (let i = 0; i < nums.length - 1; i++) {
+    ans = Math.min(ans, nums[i + 1] - nums[i]);
+  }
+  return ans;
+}`,
+    typescript: `function findValueOfPartition(nums: number[]): number {
+  nums.sort((a, b) => a - b);
+  let ans = Infinity;
+  for (let i = 0; i < nums.length - 1; i++) {
+    ans = Math.min(ans, nums[i + 1]! - nums[i]!);
+  }
+  return ans;
+}`,
+    python: `def findValueOfPartition(nums):
+    nums.sort()
+    return min(nums[i+1] - nums[i] for i in range(len(nums) - 1))`,
   },
   visibleTests: [
     { args: [[1, 3, 2, 4]], expected: 1 },
@@ -53,5 +69,6 @@ Return the **minimum** value of the partition over all possible partitions.`,
     { args: [[10, 10]], expected: 0 },
     { args: [[1, 5, 3]], expected: 2 },
     { args: [[1, 1000000000]], expected: 999999999 },
+    { args: [[2, 4, 6, 8]], expected: 2 },
   ],
 };

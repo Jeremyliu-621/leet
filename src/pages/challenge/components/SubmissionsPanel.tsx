@@ -56,6 +56,7 @@ export function SubmissionsPanel({ submissions, onRestore }: SubmissionsPanelPro
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-controls="submissions-panel-body"
+        aria-label={open ? 'Collapse submissions panel' : 'Expand submissions panel'}
         className="flex w-full items-center justify-between px-4 py-2 text-left transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
       >
         <div className="flex items-center gap-2">

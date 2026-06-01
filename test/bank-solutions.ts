@@ -45786,4 +45786,46 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return [...top3].sort((a, b) => b - a);
   },
+
+  'maximum-number-of-elements-in-two-arrays': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const set1 = new Set(nums1);
+    const set2 = new Set(nums2);
+    let count = 0;
+    for (const x of set1) if (!set2.has(x)) count++;
+    for (const x of set2) if (!set1.has(x)) count++;
+    return count;
+  },
+
+  'range-frequency-queries': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const queries = args[1] as number[][];
+
+    const index: Record<number, number[]> = {};
+    for (let i = 0; i < arr.length; i++) {
+      const v = arr[i]!;
+      if (!index[v]) index[v] = [];
+      index[v]!.push(i);
+    }
+
+    function query(left: number, right: number, value: number): number {
+      const positions = index[value];
+      if (!positions) return 0;
+      let lo = 0, hi = positions.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (positions[mid]! < left) lo = mid + 1; else hi = mid;
+      }
+      const start = lo;
+      lo = 0; hi = positions.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (positions[mid]! <= right) lo = mid + 1; else hi = mid;
+      }
+      return lo - start;
+    }
+
+    return (queries as [number, number, number][]).map(([left, right, value]) => query(left, right, value));
+  },
 };
