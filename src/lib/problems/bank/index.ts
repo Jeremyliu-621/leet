@@ -3092,6 +3092,12 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 249
+import { problem as countCollisionsMonkeys } from './count-collisions-of-monkeys-on-a-polygon';
+import { problem as countSquareFreeSubsets } from './count-the-number-of-square-free-subsets';
+import { problem as countDistinctNumbersOnBoard } from './count-distinct-numbers-on-board';
+import { problem as determineBowlingWinner } from './determine-the-winner-of-a-bowling-game';
+import { problem as sumOfDistances } from './sum-of-distances';
 // batch 248
 import { problem as validPalindromeIii } from './valid-palindrome-iii';
 import { problem as palindromePartitioningIv } from './palindrome-partitioning-iv';
@@ -6283,6 +6289,12 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 249
+  countCollisionsMonkeys,
+  countSquareFreeSubsets,
+  countDistinctNumbersOnBoard,
+  determineBowlingWinner,
+  sumOfDistances,
   // batch 248
   validPalindromeIii,
   palindromePartitioningIv,

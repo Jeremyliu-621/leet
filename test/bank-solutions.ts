@@ -44892,4 +44892,96 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const usedP = Math.min(p!, 2 * (q! + r! + 1));
     return usedP + q! + r!;
   },
+
+  'count-collisions-of-monkeys-on-a-polygon': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const MOD = 1000000007n;
+    let result = 1n;
+    let exp = BigInt(n);
+    let base = 2n;
+    while (exp > 0n) {
+      if (exp % 2n === 1n) result = (result * base) % MOD;
+      base = (base * base) % MOD;
+      exp /= 2n;
+    }
+    return Number((result - 2n + MOD) % MOD);
+  },
+
+  'count-the-number-of-square-free-subsets': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const MOD = 1000000007n;
+    const primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29];
+    const dp = new Array<bigint>(1 << 10).fill(0n);
+    dp[0] = 1n;
+    for (const num of nums) {
+      let mask = 0;
+      let squareFree = true;
+      let x = num;
+      for (let pi = 0; pi < primes.length; pi++) {
+        const p = primes[pi]!;
+        if (x % p === 0) {
+          mask |= (1 << pi);
+          x = Math.floor(x / p);
+          if (x % p === 0) { squareFree = false; break; }
+        }
+      }
+      if (!squareFree) continue;
+      for (let m = (1 << 10) - 1; m >= 0; m--) {
+        if ((m & mask) === 0 && dp[m]! > 0n) {
+          dp[m | mask] = (dp[m | mask]! + dp[m]!) % MOD;
+        }
+      }
+    }
+    let total = 0n;
+    for (const v of dp) total = (total + v) % MOD;
+    return Number((total - 1n + MOD) % MOD);
+  },
+
+  'count-distinct-numbers-on-board': (...args: unknown[]) => {
+    const n = args[0] as number;
+    return n === 1 ? 1 : n - 1;
+  },
+
+  'determine-the-winner-of-a-bowling-game': (...args: unknown[]) => {
+    const p1 = args[0] as number[];
+    const p2 = args[1] as number[];
+    const score = (turns: number[]) => {
+      let s = 0;
+      for (let i = 0; i < turns.length; i++) {
+        const doubled = (i >= 1 && turns[i - 1] === 10) || (i >= 2 && turns[i - 2] === 10);
+        s += doubled ? turns[i]! * 2 : turns[i]!;
+      }
+      return s;
+    };
+    const s1 = score(p1);
+    const s2 = score(p2);
+    return s1 > s2 ? 1 : s2 > s1 ? 2 : 0;
+  },
+
+  'sum-of-distances': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const n = arr.length;
+    const answer = new Array<number>(n).fill(0);
+    const groups = new Map<number, number[]>();
+    for (let i = 0; i < n; i++) {
+      if (!groups.has(arr[i]!)) groups.set(arr[i]!, []);
+      groups.get(arr[i]!)!.push(i);
+    }
+    for (const indices of groups.values()) {
+      const m = indices.length;
+      let prefixSum = 0;
+      for (let k = 0; k < m; k++) {
+        const idx = indices[k]!;
+        answer[idx] = idx * k - prefixSum + (0);
+        prefixSum += idx;
+      }
+      let suffixSum = 0;
+      for (let k = m - 1; k >= 0; k--) {
+        const idx = indices[k]!;
+        answer[idx]! += suffixSum - idx * (m - 1 - k);
+        suffixSum += idx;
+      }
+    }
+    return answer;
+  },
 };

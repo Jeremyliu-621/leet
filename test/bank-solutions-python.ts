@@ -44192,4 +44192,76 @@ def longestDiverseString(a, b, c):
                 heapq.heappush(heap, (cnt1 + 1, ch1))
     return ''.join(res)
 `,
+
+  'count-collisions-of-monkeys-on-a-polygon': `
+def monkeyMove(n):
+    MOD = 10**9 + 7
+    return (pow(2, n, MOD) - 2) % MOD
+`,
+
+  'count-the-number-of-square-free-subsets': `
+def squareFreeSubsets(nums):
+    MOD = 10**9 + 7
+    primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+    dp = [0] * (1 << 10)
+    dp[0] = 1
+    for num in nums:
+        mask = 0
+        square_free = True
+        x = num
+        for pi, p in enumerate(primes):
+            if x % p == 0:
+                mask |= (1 << pi)
+                x //= p
+                if x % p == 0:
+                    square_free = False
+                    break
+        if not square_free:
+            continue
+        for m in range((1 << 10) - 1, -1, -1):
+            if (m & mask) == 0 and dp[m] > 0:
+                dp[m | mask] = (dp[m | mask] + dp[m]) % MOD
+    return (sum(dp) - 1) % MOD
+`,
+
+  'count-distinct-numbers-on-board': `
+def distinctIntegers(n):
+    return 1 if n == 1 else n - 1
+`,
+
+  'determine-the-winner-of-a-bowling-game': `
+def isWinner(player1, player2):
+    def score(turns):
+        s = 0
+        for i, t in enumerate(turns):
+            if (i >= 1 and turns[i-1] == 10) or (i >= 2 and turns[i-2] == 10):
+                s += t * 2
+            else:
+                s += t
+        return s
+    s1, s2 = score(player1), score(player2)
+    return 1 if s1 > s2 else 2 if s2 > s1 else 0
+`,
+
+  'sum-of-distances': `
+def distance(arr):
+    from collections import defaultdict
+    n = len(arr)
+    answer = [0] * n
+    groups = defaultdict(list)
+    for i, v in enumerate(arr):
+        groups[v].append(i)
+    for indices in groups.values():
+        m = len(indices)
+        prefix = 0
+        for k, idx in enumerate(indices):
+            answer[idx] = idx * k - prefix
+            prefix += idx
+        suffix = 0
+        for k in range(m - 1, -1, -1):
+            idx = indices[k]
+            answer[idx] += suffix - idx * (m - 1 - k)
+            suffix += idx
+    return answer
+`,
 };
