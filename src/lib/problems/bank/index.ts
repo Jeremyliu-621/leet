@@ -3092,6 +3092,11 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 248
+import { problem as validPalindromeIii } from './valid-palindrome-iii';
+import { problem as palindromePartitioningIv } from './palindrome-partitioning-iv';
+import { problem as constructDistancedSequence } from './construct-the-lexicographically-largest-valid-sequence';
+import { problem as findTheLongestHappyString } from './find-the-longest-happy-string';
 // batch 247
 import { problem as minOpsSortTreeByLevel } from './minimum-operations-to-sort-binary-tree-by-level';
 import { problem as sumSubseqWidths } from './sum-of-subsequence-widths';
@@ -6278,4 +6283,9 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 248
+  validPalindromeIii,
+  palindromePartitioningIv,
+  constructDistancedSequence,
+  findTheLongestHappyString,
 ];

@@ -44824,4 +44824,72 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return [sa, lcp];
   },
+
+  'valid-palindrome-iii': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    const n = s.length;
+    const dp: number[][] = Array.from({ length: n }, () => new Array(n).fill(0));
+    for (let i = n - 2; i >= 0; i--) {
+      for (let j = i + 1; j < n; j++) {
+        dp[i]![j] = s[i] === s[j] ? dp[i + 1]![j - 1]! : 1 + Math.min(dp[i + 1]![j]!, dp[i]![j - 1]!);
+      }
+    }
+    return dp[0]![n - 1]! <= k;
+  },
+
+  'palindrome-partitioning-iv': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const isPalin: boolean[][] = Array.from({ length: n }, () => new Array(n).fill(false));
+    for (let i = 0; i < n; i++) isPalin[i]![i] = true;
+    for (let i = 0; i < n - 1; i++) isPalin[i]![i + 1] = s[i] === s[i + 1];
+    for (let len = 3; len <= n; len++) {
+      for (let i = 0; i <= n - len; i++) {
+        const j = i + len - 1;
+        isPalin[i]![j] = s[i] === s[j] && isPalin[i + 1]![j - 1]!;
+      }
+    }
+    for (let i = 1; i < n - 1; i++) {
+      for (let j = i + 1; j < n; j++) {
+        if (isPalin[0]![i - 1]! && isPalin[i]![j - 1]! && isPalin[j]![n - 1]!) return true;
+      }
+    }
+    return false;
+  },
+
+  'construct-the-lexicographically-largest-valid-sequence': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const res = new Array<number>(2 * n - 1).fill(0);
+    const used = new Array<boolean>(n + 1).fill(false);
+    function backtrack(idx: number): boolean {
+      if (idx === res.length) return true;
+      if (res[idx] !== 0) return backtrack(idx + 1);
+      for (let num = n; num >= 1; num--) {
+        if (used[num]) continue;
+        if (num === 1) {
+          res[idx] = 1; used[1] = true;
+          if (backtrack(idx + 1)) return true;
+          res[idx] = 0; used[1] = false;
+        } else if (idx + num < res.length && res[idx + num] === 0) {
+          res[idx] = num; res[idx + num] = num; used[num] = true;
+          if (backtrack(idx + 1)) return true;
+          res[idx] = 0; res[idx + num] = 0; used[num] = false;
+        }
+      }
+      return false;
+    }
+    backtrack(0);
+    return res;
+  },
+
+  'find-the-longest-happy-string': (...args: unknown[]) => {
+    const a = args[0] as number;
+    const b = args[1] as number;
+    const c = args[2] as number;
+    const counts = [a, b, c].sort((x, y) => y - x) as [number, number, number];
+    const [p, q, r] = counts;
+    const usedP = Math.min(p!, 2 * (q! + r! + 1));
+    return usedP + q! + r!;
+  },
 };

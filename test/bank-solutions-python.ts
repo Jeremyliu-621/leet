@@ -44106,4 +44106,90 @@ def suffixArrayLCP(s: str) -> list:
             h -= 1
     return [sa, lcp]
 `,
+
+  'valid-palindrome-iii': `
+def isValidPalindrome(s, k):
+    n = len(s)
+    dp = [[0]*n for _ in range(n)]
+    for i in range(n-2, -1, -1):
+        for j in range(i+1, n):
+            dp[i][j] = dp[i+1][j-1] if s[i] == s[j] else 1 + min(dp[i+1][j], dp[i][j-1])
+    return dp[0][n-1] <= k
+`,
+
+  'palindrome-partitioning-iv': `
+def checkPartitioning(s):
+    n = len(s)
+    is_palin = [[False]*n for _ in range(n)]
+    for i in range(n):
+        is_palin[i][i] = True
+    for i in range(n-1):
+        is_palin[i][i+1] = s[i] == s[i+1]
+    for length in range(3, n+1):
+        for i in range(n-length+1):
+            j = i + length - 1
+            is_palin[i][j] = s[i] == s[j] and is_palin[i+1][j-1]
+    for i in range(1, n-1):
+        for j in range(i+1, n):
+            if is_palin[0][i-1] and is_palin[i][j-1] and is_palin[j][n-1]:
+                return True
+    return False
+`,
+
+  'construct-the-lexicographically-largest-valid-sequence': `
+def constructDistancedSequence(n):
+    res = [0] * (2*n - 1)
+    used = [False] * (n + 1)
+    def backtrack(idx):
+        if idx == len(res):
+            return True
+        if res[idx] != 0:
+            return backtrack(idx + 1)
+        for num in range(n, 0, -1):
+            if used[num]:
+                continue
+            if num == 1:
+                res[idx] = 1
+                used[1] = True
+                if backtrack(idx + 1):
+                    return True
+                res[idx] = 0
+                used[1] = False
+            elif idx + num < len(res) and res[idx + num] == 0:
+                res[idx] = num
+                res[idx + num] = num
+                used[num] = True
+                if backtrack(idx + 1):
+                    return True
+                res[idx] = 0
+                res[idx + num] = 0
+                used[num] = False
+        return False
+    backtrack(0)
+    return res
+`,
+
+  'find-the-longest-happy-string': `
+def longestDiverseString(a, b, c):
+    import heapq
+    heap = [(-cnt, ch) for cnt, ch in [(a, 'a'), (b, 'b'), (c, 'c')] if cnt > 0]
+    heapq.heapify(heap)
+    res = []
+    while heap:
+        cnt1, ch1 = heapq.heappop(heap)
+        n = len(res)
+        if n >= 2 and res[-1] == ch1 and res[-2] == ch1:
+            if not heap:
+                break
+            cnt2, ch2 = heapq.heappop(heap)
+            res.append(ch2)
+            if cnt2 + 1 < 0:
+                heapq.heappush(heap, (cnt2 + 1, ch2))
+            heapq.heappush(heap, (cnt1, ch1))
+        else:
+            res.append(ch1)
+            if cnt1 + 1 < 0:
+                heapq.heappush(heap, (cnt1 + 1, ch1))
+    return ''.join(res)
+`,
 };
